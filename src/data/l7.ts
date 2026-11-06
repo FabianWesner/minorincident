@@ -13,9 +13,10 @@ export const l7DefaultArsenal = {
 export const l7Encounters = {
   finalGroup: 700, firstStreetGroup: 701,
   horde: { x: -64, z: 46 }, passage: { x: -76, z: 46 },
-  // The first pack's 25 m-wide ranks must clear the incoming community's
-  // formation. At x259 they spawned among its rear rows before the pickup.
-  streets: [{ x: 239, z: 15 }, { x: 173, z: 15 }, { x: 113, z: 15 }, { x: 35, z: 46 }],
+  // The party forms east of the courier, behind the westbound escape heading.
+  // Keep the opening pack close enough to engage at pickup; its east rank
+  // still clears the nearest follower by 3 m including both body radii.
+  streets: [{ x: 259, z: 15 }, { x: 173, z: 15 }, { x: 113, z: 15 }, { x: 35, z: 46 }],
 } as const;
 
 /**

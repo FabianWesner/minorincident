@@ -87,7 +87,8 @@ for (const tier of ['high', 'low'] as const) for (const level of missionIds) {
     const world = await loadLevel(level, 1, tier);
     try {
       world.tick = 7200;
-      missionControls(world).teleport('player', { x: group.at[0], z: group.at[1] });
+      const centre = tier === 'low' ? group.atLow ?? group.at : group.at;
+      missionControls(world).teleport('player', { x: centre[0], z: centre[1] });
       world.chunks!.update();
       // Same visible encounter fixture as Scene Lab: production slots, placement and spawn;
       // bypass only the off-screen admission gate, which cannot admit a group around a test camera.

@@ -1,37 +1,37 @@
 {
   "row": "L7-05",
-  "status": "FAIL",
-  "reviewer": "Codex sweep-c3",
-  "date": "2026-11-05",
-  "commit": "7085d27818bb3bdc3b7c1355bc2877910bacb42f",
+  "status": "PASS",
+  "reviewer": "Codex fix65-c",
+  "date": "2026-11-06",
+  "commit": "26b922875b73df57766a37f0d6cee7030dbf45f0",
   "clauses": [
     {
       "clause": "combat: reachable \u2265 90 %; passive first attack \u2264 10 s (measured 4.6 s); attacks on player + group \u2265 6/min (tune).",
-      "verdict": "FAIL",
-      "note": "Fresh current-source 8765679a low/high complete and stationary receipts. Bounded-path reachability passes 100% at all four policies. The full unchanged row still fails: low complete player/group windups 0.8131917777275808/min (<6); high complete has zero windups and zero/min. Passive first attacks are 83.9667 s low and 22.6667 s high (>10 s). Five measured clause failures; no design or criterion change."
+      "verdict": "PASS",
+      "note": "All14 clauses pass on fresh low/high complete/stationary receipts. Skilled14/8 player windups yield11.1801/6.5188 per minute; both passive first windups0.0667s; minimum bounded-path reachability100% in every policy. The isolated x239\u2192259 opening anchor reverses the failures while preserving current regroup/alarm/boarding/protection code. Initial living follower clearance\u22653m."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-c3/L7-05/L7-low-complete.json.gz",
-      "sha256": "a7a04b0832d78cea5ec8fbe6c7529a2917bbd44c950c332b09ef0028e4cb2dd2",
-      "what": "Fresh current-source qa:accept receipt; full native policy observation and clause values at the named tier."
+      "file": "docs/reports/fix65-c/L7-98ba7f93-low-complete.json.gz",
+      "sha256": "7a56adf601a36d2264bca4178359469991ecbf7415ddd18e63fd9af17a488262",
+      "what": "Final-source native low/complete; reviewed opening pressure, passive first windup and bounded-path reach measurements."
     },
     {
-      "file": "docs/reports/sweep-c3/L7-05/L7-low-stationary.json.gz",
-      "sha256": "8bc599fa46237cfdb1b5f48a887184ad5ea7500e16e0a0e015db3375a0f459fe",
-      "what": "Fresh current-source qa:accept receipt; full native policy observation and clause values at the named tier."
+      "file": "docs/reports/fix65-c/L7-98ba7f93-low-stationary.json.gz",
+      "sha256": "05f0c75d64d6291764dac2fdd97b2bfd141a916a7812b9336d0f4b51d4a192b8",
+      "what": "Final-source native low/stationary; reviewed opening pressure, passive first windup and bounded-path reach measurements."
     },
     {
-      "file": "docs/reports/sweep-c3/L7-05/L7-high-complete.json.gz",
-      "sha256": "6198ee7ca54afb00bb2fbdcaf94bdc4615376f653e73f8f1a37ef9c9a536e46a",
-      "what": "Fresh current-source qa:accept receipt; full native policy observation and clause values at the named tier."
+      "file": "docs/reports/fix65-c/L7-98ba7f93-high-complete.json.gz",
+      "sha256": "6b450b8f8c6bb06cacf4d4d15fc9287d382925ecd1144b1dd45eb3ce72bca23b",
+      "what": "Final-source native high/complete; reviewed opening pressure, passive first windup and bounded-path reach measurements."
     },
     {
-      "file": "docs/reports/sweep-c3/L7-05/L7-high-stationary.json.gz",
-      "sha256": "fffb3abb491bd0bd3ed1a1a048a874765a6cfbb483325cc3e9353287de3ba08e",
-      "what": "Fresh current-source qa:accept receipt; full native policy observation and clause values at the named tier."
+      "file": "docs/reports/fix65-c/L7-98ba7f93-high-stationary.json.gz",
+      "sha256": "b4d77643431102bddfd8d3fa688607c31fc6bd4f1d47a39ec193fca68950b944",
+      "what": "Final-source native high/stationary; reviewed opening pressure, passive first windup and bounded-path reach measurements."
     }
   ],
-  "notes": "Historical FAIL remains open after full current-source remeasurement. No visual/manual clauses apply."
+  "notes": "Prior measured regression retained in historical review and one-factor bisect receipts; no targets, timers, caps or newer shared escort behavior changed."
 }

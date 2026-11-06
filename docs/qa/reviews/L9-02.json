@@ -1,22 +1,26 @@
 {
   "row": "L9-02",
-  "status": "FAIL",
-  "reviewer": "Codex sweep-c3",
-  "date": "2026-11-05",
-  "commit": "f4f8d7a12070150defdf6c51dc4152b38d84e2fd",
+  "status": "PASS",
+  "reviewer": "Codex fix65-c",
+  "date": "2026-11-06",
+  "commit": "26b922875b73df57766a37f0d6cee7030dbf45f0",
   "clauses": [
     {
       "clause": "Groups on routes: road 2 \u00d7 6, countryside 3 \u00d7 6, shortcut 6 \u00d7 8 incl. 2 Alphas; each avoidable by a detour \u2265 20 m.",
-      "verdict": "FAIL",
-      "note": "Current-source first admitted entity census on all six ordinary native routes, each repeated without observer and final states identical. Both tiers retain actual9 entities in each of dry-shortcut-3 and dry-shortcut-6 against literal8 inclusive-of-Alpha criterion:8 runners plus1Alpha. Shortcut total2Alphas is correct. The other four shortcut groups have8 and road/countryside6 each; no actor/count/target/cap changed. Actual detour>=20m remains unmeasured; current count counterexample suffices for FAIL."
+      "verdict": "PASS",
+      "note": "Both tiers and all three ordinary native InputFrame routes complete; independent observer-free final states identical. Exact admitted IDs give road2\u00d76, countryside3\u00d76, shortcut6\u00d78 including exactly2Alphas (groups3/6:7runners+1Alpha). Per-tick driven clearance from all11 authored group centres is at least22.6466m, above20m. No route/target/cap changed."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-c3/L9-02/census.json",
-      "sha256": "35a0881c21ea61419355607d4d354521fe08a2bd295ffc843f44941b84ddd2c0",
-      "what": "Immutable current exact entity IDs/archetypes at first resident admission; all six routes and observer-free state controls finish identically."
+      "file": "docs/reports/fix65-c/L9-02-98ba7f93-census.json.gz",
+      "sha256": "a5538097c69fff8151d849bed9ad165e03369fc3193ee186c1949fd3552de8a4",
+      "what": "Reviewed full admitted actor ID/archetype records, complete-route controls and per-tick minimum driven clearances for every authored group; no rendered pose claim."
+    },
+    {
+      "file": "docs/reports/fix65-c/L9-02-adapter-controls-98ba7f93.json",
+      "sha256": "9b2dac6a4c57a4607f3778e67201043ecf2cfe6aa1846c2cb17dc41efde535e9",
+      "what": "Actual evidence qualifies; nine fault cases reject oversized groups, missing Alpha, duplicate/mismatched actor IDs, missing group/detour, short clearance, stale source and observer side effects. Original census bytes restored."
     }
-  ],
-  "notes": "Measured literal count failure. Authored eight runners are not eight total infected when a ninth Alpha is admitted. Detour route clause remains open."
+  ]
 }

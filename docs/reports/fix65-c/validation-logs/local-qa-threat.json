@@ -1,0 +1,29 @@
+{
+  "name": "qa-threat",
+  "cases": 150,
+  "counts": {
+    "vitest": 129,
+    "e2e": 9,
+    "invariantsBrowser": 12
+  },
+  "files": 43,
+  "limits": {
+    "cases": 150,
+    "files": 45,
+    "seconds": 600
+  },
+  "command": [
+    "node",
+    "--import",
+    "tsx/esm",
+    "tools/qa/threat-audit.ts"
+  ],
+  "seconds": 601.1854975830001,
+  "exitCode": 124,
+  "signal": null,
+  "failures": [
+    "qa-threat failed (exit 124)",
+    "qa-threat took 601.2 s, over the 600 s budget"
+  ],
+  "at": "2026-11-06T03:02:09.369Z"
+}

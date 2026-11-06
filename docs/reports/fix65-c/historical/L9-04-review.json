@@ -1,0 +1,42 @@
+{
+  "row": "L9-04",
+  "status": "FAIL",
+  "reviewer": "Codex sweep-c4",
+  "date": "2026-11-05",
+  "commit": "ab4aeeb44728478caaf3fa8478344647bd90c5aa",
+  "clauses": [
+    {
+      "clause": "Every contact onset −10 durability (no per-tick billing); stopped/surrounded attacks 10 dmg, ≥ 0.6 s windup; safe route ends with more HP than the shortcut.",
+      "verdict": "FAIL",
+      "note": "Fresh matched seed1 physical WASD drives at both tiers: low safe detour ends670HP versus shortcut890HP (FAIL); high safe940HP versus shortcut870HP (PASS). Normal occupied APC starts1000HP each; read-only pre-crash durability and actual vehicle transactions retained. Every infected contact/attack hit charges10 once per transaction. Native stopped-surround capability fixtures verify36tick windups and10damage hits. Low safe drive included recovery delays; record the failed run without attributing driver versus game cause. All24 captures personally inspected; no targets/counts/timers/caps changed."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/sweep-c4/L9-04-low-physical.json.gz",
+      "sha256": "c39aa668061d6bc1085eeee6d70aa9c2dadc62551269c58f2312e3fcd0b8061e",
+      "what": "Source-bound actual input, durability and contact/event ledger, or personally inspected capture hashes and observations. Low safe-versus-shortcut result fails; high passes."
+    },
+    {
+      "file": "docs/reports/sweep-c4/L9-04-high-physical.json.gz",
+      "sha256": "b61672ed0af8effc5f4f494c3267c1a647987447cdc708c1085b86a91272c4a5",
+      "what": "Source-bound actual input, durability and contact/event ledger, or personally inspected capture hashes and observations. Low safe-versus-shortcut result fails; high passes."
+    },
+    {
+      "file": "docs/reports/sweep-c4/L9-04-review.json",
+      "sha256": "ae3dfec14a74a3f6f117b4b0e1ed5272f9eb6f5d226675f525dfa5040cfacd5c",
+      "what": "Source-bound actual input, durability and contact/event ledger, or personally inspected capture hashes and observations. Low safe-versus-shortcut result fails; high passes."
+    },
+    {
+      "file": "docs/reports/sweep-c3/L9-04/stopped-contact.json.gz",
+      "sha256": "e6d0e97a24961de842d19d0f45b200e7f6f70f4754ef9275fef64f3fc8caebeb",
+      "what": "Source-bound actual input, durability and contact/event ledger, or personally inspected capture hashes and observations. Low safe-versus-shortcut result fails; high passes."
+    },
+    {
+      "file": "docs/reports/sweep-c4/L9-04-producer.mjs",
+      "sha256": "b836c54b81d822ae14eb96ebae0685afc43b89b8aecf367962f9499dc41f23ed",
+      "what": "Exact immutable producer used for measured input and damage routes."
+    }
+  ],
+  "notes": "Prior native-only PASS does not qualify the physical route clause. The full row is FAIL on this current source; no game fix attempted without a causal diagnosis."
+}

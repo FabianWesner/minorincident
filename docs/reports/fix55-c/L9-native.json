@@ -1,7 +1,7 @@
 {
-  "sourceHash": "3e6e650651f853dcdd7960a9cc912de97f5c184153973c26983123cc64e3532d",
-  "observerHash": "c064240bbd1dfb4a4ffb12922fa39e6d24b69753af3eda1e03e9a81a51ce4a4a",
-  "revision": "2cc5adb25d06a3597a31fe4e3ec6d4d8a8c299c7",
+  "sourceHash": "98ba7f93a1d4798849f83f7c62a78bf324ae793ae7c85a6795138e29a7e1fd80",
+  "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
+  "revision": "26b922875b73df57766a37f0d6cee7030dbf45f0",
   "toolSha256": "d3ffb85142bec9ff5becd5cd469d0476bfbbd7cf90f90abb8adba543698437b3",
   "method": "Native simulation, seed1 both tiers. Canonical exact state control; explicitly separate zero-durability and risky-shortcut capability runs. No rendered pose/smoke/HUD/seam or frame-time claim.",
   "groups": [
@@ -89,7 +89,7 @@
         -60,
         -30
       ],
-      "runners": 8,
+      "runners": 7,
       "alphas": 1,
       "detourClearance": 40
     },
@@ -122,7 +122,7 @@
         240,
         -30
       ],
-      "runners": 8,
+      "runners": 7,
       "alphas": 1,
       "detourClearance": 40
     },
@@ -314,7 +314,7 @@
         ]
       },
       "finished": true,
-      "finalHash": "3a335ef4",
+      "finalHash": "970c818b",
       "controlIdentical": true,
       "firstDrive": 0,
       "firstMotion": 2,
@@ -540,23 +540,22 @@
             1009,
             1010,
             1011,
-            1012,
-            1013
+            1012
           ],
           "shortcut-wanderer-4": [
-            1014
+            1013
           ],
           "crossing-patrol-8": [
-            1057
+            1056
           ],
           "countryside-wanderer-0": [
-            1119
+            1118
           ],
           "countryside-wanderer-1": [
-            1120
+            1119
           ],
           "crossing-patrol-9": [
-            1163
+            1162
           ]
         },
         "patrol": {
@@ -597,7 +596,7 @@
         ]
       },
       "finished": true,
-      "finalHash": "9883fa62",
+      "finalHash": "b995316f",
       "controlIdentical": null,
       "firstDrive": 0,
       "firstMotion": 2,
@@ -977,22 +976,22 @@
         },
         {
           "type": "vehicle.durability-hit",
-          "tick": 14862,
+          "tick": 12661,
           "sourceId": 667,
-          "targetId": 1094,
+          "targetId": 1015,
           "source": "contact",
-          "contactId": 36,
+          "contactId": 37,
           "attackId": null,
           "before": 0,
           "after": 0
         },
         {
           "type": "vehicle.durability-hit",
-          "tick": 15093,
+          "tick": 15026,
           "sourceId": 667,
           "targetId": 1014,
           "source": "contact",
-          "contactId": 37,
+          "contactId": 38,
           "attackId": null,
           "before": 0,
           "after": 0
@@ -1224,44 +1223,43 @@
             1020,
             1021,
             1022,
-            1023,
-            1024
+            1023
           ],
           "shortcut-wanderer-4": [
-            1025
+            1024
           ],
           "crossing-patrol-13": [
-            1088
+            1087
           ],
           "crossing-patrol-14": [
-            1089
+            1088
           ],
           "crossing-patrol-15": [
-            1090
+            1089
           ],
           "crossing-patrol-16": [
-            1091
+            1090
           ],
           "crossing-patrol-17": [
-            1092
+            1091
           ],
           "crossing-patrol-18": [
-            1094
+            1093
           ],
           "crossing-patrol-19": [
-            1095
+            1094
           ],
           "crossing-patrol-20": [
-            1096
+            1095
           ],
           "crossing-patrol-21": [
-            1139
+            1138
           ],
           "countryside-wanderer-0": [
-            1140
+            1139
           ],
           "countryside-wanderer-1": [
-            1141
+            1140
           ]
         },
         "patrol": {
@@ -1302,7 +1300,7 @@
         ]
       },
       "finished": true,
-      "finalHash": "e4174977",
+      "finalHash": "58e3d188",
       "controlIdentical": null,
       "firstDrive": 0,
       "firstMotion": 2,
@@ -1315,7 +1313,7 @@
         "smokingTicks": 0
       },
       "peakChunks": 9,
-      "preCrashDurability": 880,
+      "preCrashDurability": 830,
       "hits": [
         {
           "type": "vehicle.durability-hit",
@@ -1341,7 +1339,7 @@
         },
         {
           "type": "vehicle.durability-hit",
-          "tick": 1989,
+          "tick": 1988,
           "sourceId": 667,
           "targetId": 756,
           "source": "contact",
@@ -1352,9 +1350,9 @@
         },
         {
           "type": "vehicle.durability-hit",
-          "tick": 2018,
+          "tick": 2398,
           "sourceId": 667,
-          "targetId": 751,
+          "targetId": 791,
           "source": "contact",
           "contactId": 4,
           "attackId": null,
@@ -1363,9 +1361,9 @@
         },
         {
           "type": "vehicle.durability-hit",
-          "tick": 2403,
+          "tick": 2438,
           "sourceId": 667,
-          "targetId": 793,
+          "targetId": 797,
           "source": "contact",
           "contactId": 5,
           "attackId": null,
@@ -1376,7 +1374,7 @@
           "type": "vehicle.durability-hit",
           "tick": 2439,
           "sourceId": 667,
-          "targetId": 791,
+          "targetId": 796,
           "source": "contact",
           "contactId": 6,
           "attackId": null,
@@ -1385,9 +1383,9 @@
         },
         {
           "type": "vehicle.durability-hit",
-          "tick": 2989,
+          "tick": 2446,
           "sourceId": 667,
-          "targetId": 827,
+          "targetId": 795,
           "source": "contact",
           "contactId": 7,
           "attackId": null,
@@ -1396,9 +1394,9 @@
         },
         {
           "type": "vehicle.durability-hit",
-          "tick": 3026,
+          "tick": 3015,
           "sourceId": 667,
-          "targetId": 829,
+          "targetId": 827,
           "source": "contact",
           "contactId": 8,
           "attackId": null,
@@ -1407,9 +1405,9 @@
         },
         {
           "type": "vehicle.durability-hit",
-          "tick": 3035,
+          "tick": 3037,
           "sourceId": 667,
-          "targetId": 828,
+          "targetId": 831,
           "source": "contact",
           "contactId": 9,
           "attackId": null,
@@ -1418,9 +1416,9 @@
         },
         {
           "type": "vehicle.durability-hit",
-          "tick": 3458,
+          "tick": 3464,
           "sourceId": 667,
-          "targetId": 876,
+          "targetId": 871,
           "source": "contact",
           "contactId": 10,
           "attackId": null,
@@ -1429,9 +1427,9 @@
         },
         {
           "type": "vehicle.durability-hit",
-          "tick": 3472,
+          "tick": 3471,
           "sourceId": 667,
-          "targetId": 879,
+          "targetId": 877,
           "source": "contact",
           "contactId": 11,
           "attackId": null,
@@ -1440,14 +1438,69 @@
         },
         {
           "type": "vehicle.durability-hit",
-          "tick": 3945,
+          "tick": 3474,
           "sourceId": 667,
-          "targetId": 914,
+          "targetId": 875,
           "source": "contact",
           "contactId": 12,
           "attackId": null,
           "before": 890,
           "after": 880
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 3904,
+          "sourceId": 667,
+          "targetId": 912,
+          "source": "contact",
+          "contactId": 13,
+          "attackId": null,
+          "before": 880,
+          "after": 870
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 3908,
+          "sourceId": 667,
+          "targetId": 907,
+          "source": "contact",
+          "contactId": 14,
+          "attackId": null,
+          "before": 870,
+          "after": 860
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 3949,
+          "sourceId": 667,
+          "targetId": 913,
+          "source": "contact",
+          "contactId": 15,
+          "attackId": null,
+          "before": 860,
+          "after": 850
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 3999,
+          "sourceId": 667,
+          "targetId": 909,
+          "source": "contact",
+          "contactId": 16,
+          "attackId": null,
+          "before": 850,
+          "after": 840
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 4589,
+          "sourceId": 667,
+          "targetId": 950,
+          "source": "contact",
+          "contactId": 17,
+          "attackId": null,
+          "before": 840,
+          "after": 830
         }
       ],
       "signals": [
@@ -1492,7 +1545,7 @@
         {
           "tick": 5108,
           "phase": "approach",
-          "hp": 880,
+          "hp": 830,
           "position": {
             "x": 468.2391357421875,
             "y": 0.9954321384429932,
@@ -1506,7 +1559,7 @@
         {
           "tick": 5288,
           "phase": "fall",
-          "hp": 880,
+          "hp": 830,
           "position": {
             "x": 508,
             "y": 1.0499999999999998,
@@ -1626,72 +1679,70 @@
             795,
             796,
             797,
-            798,
-            799
+            798
           ],
           "crossing-patrol-2": [
-            826
+            825
           ],
           "dry-shortcut-4": [
+            826,
             827,
             828,
             829,
             830,
             831,
             832,
-            833,
-            834
+            833
           ],
           "shortcut-wanderer-2": [
-            835
+            834
           ],
           "crossing-patrol-3": [
-            871
+            870
           ],
           "dry-shortcut-5": [
+            871,
             872,
             873,
             874,
             875,
             876,
             877,
-            878,
-            879
+            878
           ],
           "shortcut-wanderer-3": [
-            880
+            879
           ],
           "dry-shortcut-6": [
+            906,
             907,
             908,
             909,
             910,
             911,
             912,
-            913,
-            914,
-            915
+            913
           ],
           "crossing-patrol-4": [
-            951
+            949
           ],
           "shortcut-wanderer-4": [
-            952
+            950
           ],
           "crossing-patrol-5": [
-            978
+            976
           ],
           "road-wanderer-4": [
-            1015
+            1013
           ],
           "crossing-patrol-6": [
-            1042
+            1040
           ],
           "countryside-wanderer-0": [
-            1043
+            1041
           ],
           "countryside-wanderer-1": [
-            1044
+            1042
           ]
         },
         "patrol": {
@@ -1732,7 +1783,7 @@
         ]
       },
       "finished": true,
-      "finalHash": "bf08aa33",
+      "finalHash": "42d0758b",
       "controlIdentical": true,
       "firstDrive": 0,
       "firstMotion": 2,
@@ -1995,34 +2046,33 @@
             1089,
             1090,
             1091,
-            1092,
-            1093
+            1092
           ],
           "shortcut-wanderer-3": [
-            1094
+            1093
           ],
           "shortcut-wanderer-4": [
-            1095
+            1094
           ],
           "crossing-patrol-8": [
-            1096
+            1095
           ],
           "countryside-wanderer-0": [
-            1136
+            1135
           ],
           "countryside-wanderer-1": [
-            1137
+            1136
           ],
           "countryside-3": [
+            1207,
             1208,
             1209,
             1210,
             1211,
-            1212,
-            1213
+            1212
           ],
           "crossing-patrol-9": [
-            1284
+            1283
           ]
         },
         "patrol": {
@@ -2063,7 +2113,7 @@
         ]
       },
       "finished": true,
-      "finalHash": "f5507b89",
+      "finalHash": "19a9dc85",
       "controlIdentical": null,
       "firstDrive": 0,
       "firstMotion": 2,
@@ -2091,20 +2141,31 @@
         },
         {
           "type": "vehicle.durability-hit",
-          "tick": 11558,
+          "tick": 11394,
+          "sourceId": 667,
+          "targetId": 1045,
+          "source": "attack",
+          "contactId": null,
+          "attackId": 2,
+          "before": 0,
+          "after": 0
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 11488,
           "sourceId": 667,
           "targetId": 1045,
           "source": "contact",
-          "contactId": 2,
+          "contactId": 3,
           "attackId": null,
           "before": 0,
           "after": 0
         },
         {
           "type": "vehicle.durability-hit",
-          "tick": 11740,
+          "tick": 11562,
           "sourceId": 667,
-          "targetId": 990,
+          "targetId": 1045,
           "source": "contact",
           "contactId": 4,
           "attackId": null,
@@ -2113,18 +2174,7 @@
         },
         {
           "type": "vehicle.durability-hit",
-          "tick": 11746,
-          "sourceId": 667,
-          "targetId": 990,
-          "source": "attack",
-          "contactId": null,
-          "attackId": 3,
-          "before": 0,
-          "after": 0
-        },
-        {
-          "type": "vehicle.durability-hit",
-          "tick": 11842,
+          "tick": 11663,
           "sourceId": 667,
           "targetId": 990,
           "source": "attack",
@@ -2135,18 +2185,18 @@
         },
         {
           "type": "vehicle.durability-hit",
-          "tick": 11938,
+          "tick": 11665,
           "sourceId": 667,
           "targetId": 990,
-          "source": "attack",
-          "contactId": null,
-          "attackId": 6,
+          "source": "contact",
+          "contactId": 6,
+          "attackId": null,
           "before": 0,
           "after": 0
         },
         {
           "type": "vehicle.durability-hit",
-          "tick": 12034,
+          "tick": 11759,
           "sourceId": 667,
           "targetId": 990,
           "source": "attack",
@@ -2157,7 +2207,7 @@
         },
         {
           "type": "vehicle.durability-hit",
-          "tick": 12130,
+          "tick": 11855,
           "sourceId": 667,
           "targetId": 990,
           "source": "attack",
@@ -2168,7 +2218,7 @@
         },
         {
           "type": "vehicle.durability-hit",
-          "tick": 12226,
+          "tick": 11951,
           "sourceId": 667,
           "targetId": 990,
           "source": "attack",
@@ -2179,7 +2229,7 @@
         },
         {
           "type": "vehicle.durability-hit",
-          "tick": 12322,
+          "tick": 12047,
           "sourceId": 667,
           "targetId": 990,
           "source": "attack",
@@ -2190,7 +2240,7 @@
         },
         {
           "type": "vehicle.durability-hit",
-          "tick": 12418,
+          "tick": 12143,
           "sourceId": 667,
           "targetId": 990,
           "source": "attack",
@@ -2201,9 +2251,9 @@
         },
         {
           "type": "vehicle.durability-hit",
-          "tick": 12482,
+          "tick": 12239,
           "sourceId": 667,
-          "targetId": 1045,
+          "targetId": 990,
           "source": "attack",
           "contactId": null,
           "attackId": 12,
@@ -2212,7 +2262,7 @@
         },
         {
           "type": "vehicle.durability-hit",
-          "tick": 12514,
+          "tick": 12335,
           "sourceId": 667,
           "targetId": 990,
           "source": "attack",
@@ -2223,7 +2273,29 @@
         },
         {
           "type": "vehicle.durability-hit",
-          "tick": 12620,
+          "tick": 12431,
+          "sourceId": 667,
+          "targetId": 990,
+          "source": "attack",
+          "contactId": null,
+          "attackId": 14,
+          "before": 0,
+          "after": 0
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 12527,
+          "sourceId": 667,
+          "targetId": 990,
+          "source": "attack",
+          "contactId": null,
+          "attackId": 15,
+          "before": 0,
+          "after": 0
+        },
+        {
+          "type": "vehicle.durability-hit",
+          "tick": 12603,
           "sourceId": 667,
           "targetId": 990,
           "source": "contact",
@@ -2234,22 +2306,11 @@
         },
         {
           "type": "vehicle.durability-hit",
-          "tick": 12654,
+          "tick": 12726,
           "sourceId": 667,
           "targetId": 1045,
           "source": "contact",
-          "contactId": 18,
-          "attackId": null,
-          "before": 0,
-          "after": 0
-        },
-        {
-          "type": "vehicle.durability-hit",
-          "tick": 14949,
-          "sourceId": 667,
-          "targetId": 991,
-          "source": "contact",
-          "contactId": 19,
+          "contactId": 17,
           "attackId": null,
           "before": 0,
           "after": 0
@@ -2515,58 +2576,57 @@
             1096,
             1097,
             1098,
-            1099,
-            1100
+            1099
           ],
           "shortcut-wanderer-3": [
-            1101
+            1100
           ],
           "shortcut-wanderer-4": [
-            1102
+            1101
           ],
           "crossing-patrol-12": [
-            1103
+            1102
           ],
           "crossing-patrol-13": [
-            1143
+            1142
           ],
           "crossing-patrol-14": [
-            1144
+            1143
           ],
           "crossing-patrol-15": [
-            1145
+            1144
           ],
           "crossing-patrol-16": [
-            1146
+            1145
           ],
           "crossing-patrol-17": [
-            1147
+            1146
           ],
           "crossing-patrol-18": [
-            1148
+            1147
           ],
           "crossing-patrol-19": [
-            1149
+            1148
           ],
           "crossing-patrol-20": [
-            1150
+            1149
           ],
           "countryside-wanderer-0": [
-            1151
+            1150
           ],
           "countryside-wanderer-1": [
-            1152
+            1151
           ],
           "crossing-patrol-21": [
-            1223
+            1222
           ],
           "countryside-3": [
+            1293,
             1294,
             1295,
             1296,
             1297,
-            1298,
-            1299
+            1298
           ]
         },
         "patrol": {
@@ -2607,7 +2667,7 @@
         ]
       },
       "finished": true,
-      "finalHash": "0f4672b2",
+      "finalHash": "2a74edf2",
       "controlIdentical": null,
       "firstDrive": 0,
       "firstMotion": 2,
@@ -2620,7 +2680,7 @@
         "smokingTicks": 0
       },
       "peakChunks": 25,
-      "preCrashDurability": 860,
+      "preCrashDurability": 940,
       "hits": [
         {
           "type": "vehicle.durability-hit",
@@ -2635,9 +2695,9 @@
         },
         {
           "type": "vehicle.durability-hit",
-          "tick": 1994,
+          "tick": 1943,
           "sourceId": 667,
-          "targetId": 762,
+          "targetId": 760,
           "source": "contact",
           "contactId": 2,
           "attackId": null,
@@ -2646,9 +2706,9 @@
         },
         {
           "type": "vehicle.durability-hit",
-          "tick": 2410,
+          "tick": 1954,
           "sourceId": 667,
-          "targetId": 769,
+          "targetId": 758,
           "source": "contact",
           "contactId": 3,
           "attackId": null,
@@ -2657,9 +2717,9 @@
         },
         {
           "type": "vehicle.durability-hit",
-          "tick": 2424,
+          "tick": 2370,
           "sourceId": 667,
-          "targetId": 774,
+          "targetId": 769,
           "source": "contact",
           "contactId": 4,
           "attackId": null,
@@ -2668,9 +2728,9 @@
         },
         {
           "type": "vehicle.durability-hit",
-          "tick": 3036,
+          "tick": 2386,
           "sourceId": 667,
-          "targetId": 814,
+          "targetId": 773,
           "source": "contact",
           "contactId": 5,
           "attackId": null,
@@ -2679,102 +2739,14 @@
         },
         {
           "type": "vehicle.durability-hit",
-          "tick": 3047,
+          "tick": 3941,
           "sourceId": 667,
-          "targetId": 815,
+          "targetId": 918,
           "source": "contact",
           "contactId": 6,
           "attackId": null,
           "before": 950,
           "after": 940
-        },
-        {
-          "type": "vehicle.durability-hit",
-          "tick": 3055,
-          "sourceId": 667,
-          "targetId": 816,
-          "source": "contact",
-          "contactId": 7,
-          "attackId": null,
-          "before": 940,
-          "after": 930
-        },
-        {
-          "type": "vehicle.durability-hit",
-          "tick": 3398,
-          "sourceId": 667,
-          "targetId": 864,
-          "source": "contact",
-          "contactId": 8,
-          "attackId": null,
-          "before": 930,
-          "after": 920
-        },
-        {
-          "type": "vehicle.durability-hit",
-          "tick": 3423,
-          "sourceId": 667,
-          "targetId": 861,
-          "source": "contact",
-          "contactId": 9,
-          "attackId": null,
-          "before": 920,
-          "after": 910
-        },
-        {
-          "type": "vehicle.durability-hit",
-          "tick": 3483,
-          "sourceId": 667,
-          "targetId": 867,
-          "source": "contact",
-          "contactId": 10,
-          "attackId": null,
-          "before": 910,
-          "after": 900
-        },
-        {
-          "type": "vehicle.durability-hit",
-          "tick": 3542,
-          "sourceId": 667,
-          "targetId": 866,
-          "source": "contact",
-          "contactId": 11,
-          "attackId": null,
-          "before": 900,
-          "after": 890
-        },
-        {
-          "type": "vehicle.durability-hit",
-          "tick": 3920,
-          "sourceId": 667,
-          "targetId": 922,
-          "source": "contact",
-          "contactId": 12,
-          "attackId": null,
-          "before": 890,
-          "after": 880
-        },
-        {
-          "type": "vehicle.durability-hit",
-          "tick": 3951,
-          "sourceId": 667,
-          "targetId": 919,
-          "source": "contact",
-          "contactId": 13,
-          "attackId": null,
-          "before": 880,
-          "after": 870
-        },
-        {
-          "type": "vehicle.durability-hit",
-          "tick": 3990,
-          "sourceId": 667,
-          "targetId": 926,
-          "source": "contact",
-          "contactId": 14,
-          "attackId": null,
-          "before": 870,
-          "after": 860
         }
       ],
       "signals": [
@@ -2819,7 +2791,7 @@
         {
           "tick": 5108,
           "phase": "approach",
-          "hp": 860,
+          "hp": 940,
           "position": {
             "x": 468.2391357421875,
             "y": 0.9954321384429932,
@@ -2833,7 +2805,7 @@
         {
           "tick": 5288,
           "phase": "fall",
-          "hp": 860,
+          "hp": 940,
           "position": {
             "x": 508,
             "y": 1.0499999999999998,
@@ -2967,80 +2939,78 @@
             772,
             773,
             774,
-            775,
-            776
+            775
           ],
           "dry-shortcut-4": [
+            813,
             814,
             815,
             816,
             817,
             818,
             819,
-            820,
-            821
+            820
           ],
           "shortcut-wanderer-2": [
-            822
+            821
           ],
           "crossing-patrol-2": [
-            859
+            858
           ],
           "dry-shortcut-5": [
+            859,
             860,
             861,
             862,
             863,
             864,
             865,
-            866,
-            867
+            866
           ],
           "shortcut-wanderer-3": [
-            868
+            867
           ],
           "crossing-patrol-3": [
-            918
+            917
           ],
           "dry-shortcut-6": [
+            918,
             919,
             920,
             921,
             922,
             923,
             924,
-            925,
-            926,
-            927
+            925
           ],
           "countryside-wanderer-0": [
-            968
+            966
           ],
           "shortcut-wanderer-4": [
-            969
+            967
           ],
           "crossing-patrol-4": [
-            1006
+            1004
           ],
           "road-wanderer-4": [
-            1007
+            1005
           ],
           "countryside-wanderer-1": [
-            1008
+            1006
           ],
           "crossing-patrol-5": [
-            1058
+            1056
           ],
           "crossing-patrol-6": [
-            1133
+            1131
           ],
           "countryside-3": [
+            1132,
+            1133,
             1134,
             1135,
             1136,
-            1137,
-            1138,
-            1139
+            1137
           ]
         },
         "patrol": {

@@ -1,0 +1,295 @@
+{
+  "sourceHash": "dad460c1a64eaaef012d09583576a8aa924cec26b92646b77fc3d6f331be41bd",
+  "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
+  "revision": "4b2400edadbd3aadb6dbeda4c00f77ddf454ba6e",
+  "samples": [
+    {
+      "tick": 43760,
+      "player": {
+        "x": 3020.466064453125,
+        "z": 93.75817108154297
+      },
+      "ids": [
+        267,
+        268,
+        269,
+        270,
+        271,
+        272,
+        273,
+        274,
+        275,
+        276,
+        277,
+        278,
+        279,
+        280,
+        281,
+        282,
+        283,
+        284,
+        285
+      ],
+      "living": [
+        267,
+        268,
+        269,
+        270,
+        271,
+        272,
+        273,
+        274,
+        275,
+        276,
+        277,
+        278,
+        279,
+        280,
+        281,
+        282,
+        283,
+        284,
+        285
+      ],
+      "cap": 75,
+      "count": 75,
+      "reserved": 0,
+      "byRegion": {
+        "residential-fringe": 2,
+        "unassigned": 1,
+        "industrial-area": 2,
+        "research-campus": 50,
+        "destroyed-corridor": 20
+      },
+      "dogs": [
+        {
+          "id": 115,
+          "region": "residential-fringe",
+          "slot": "fringe-patrol:infected.dog:0"
+        },
+        {
+          "id": 116,
+          "region": "residential-fringe",
+          "slot": "fringe-patrol:infected.dog:1"
+        },
+        {
+          "id": 125,
+          "region": "industrial-area",
+          "slot": "industrial-area-direct-0:infected.dog:0"
+        },
+        {
+          "id": 126,
+          "region": "industrial-area",
+          "slot": "industrial-area-direct-0:infected.dog:1"
+        }
+      ]
+    },
+    {
+      "tick": 44830,
+      "player": {
+        "x": 3100.663818359375,
+        "z": 94.20195770263672
+      },
+      "ids": [
+        267,
+        268,
+        269,
+        270,
+        271,
+        272,
+        273,
+        274,
+        275,
+        276,
+        277,
+        278,
+        279,
+        280,
+        281,
+        282,
+        283,
+        284,
+        285,
+        286
+      ],
+      "living": [
+        267,
+        268,
+        269,
+        270,
+        271,
+        272,
+        273,
+        274,
+        275,
+        276,
+        277,
+        278,
+        279,
+        280,
+        281,
+        282,
+        283,
+        284,
+        285,
+        286
+      ],
+      "cap": 75,
+      "count": 75,
+      "reserved": 0,
+      "byRegion": {
+        "residential-fringe": 2,
+        "unassigned": 1,
+        "industrial-area": 2,
+        "research-campus": 48,
+        "destroyed-corridor": 22
+      },
+      "dogs": [
+        {
+          "id": 115,
+          "region": "residential-fringe",
+          "slot": "fringe-patrol:infected.dog:0"
+        },
+        {
+          "id": 116,
+          "region": "residential-fringe",
+          "slot": "fringe-patrol:infected.dog:1"
+        },
+        {
+          "id": 125,
+          "region": "industrial-area",
+          "slot": "industrial-area-direct-0:infected.dog:0"
+        },
+        {
+          "id": 126,
+          "region": "industrial-area",
+          "slot": "industrial-area-direct-0:infected.dog:1"
+        },
+        {
+          "id": 287,
+          "region": "destroyed-corridor",
+          "slot": "corridor-line:infected.dog:0"
+        }
+      ]
+    }
+  ],
+  "peak": {
+    "corridor-line": 20
+  },
+  "regions": {
+    "crash-outskirts": {
+      "ticks": 3962,
+      "attacks": 184,
+      "groupAttacks": 0,
+      "peak": 7,
+      "normalPeak": 7,
+      "regularPeak": 7,
+      "dogPeak": 0,
+      "alphaPeak": 0,
+      "regularGroupPeaks": {
+        "crash-singletons": 2,
+        "crash-road-pair": 2,
+        "crash-bend": 2,
+        "crash-pair": 1
+      }
+    },
+    "residential-fringe": {
+      "ticks": 7518,
+      "attacks": 813,
+      "groupAttacks": 0,
+      "peak": 18,
+      "normalPeak": 17,
+      "regularPeak": 15,
+      "dogPeak": 2,
+      "alphaPeak": 0,
+      "regularGroupPeaks": {
+        "residential-fringe-direct-0": 2,
+        "fringe-patrol": 4,
+        "fringe-hedges": 1
+      }
+    },
+    "industrial-area": {
+      "ticks": 10232,
+      "attacks": 1500,
+      "groupAttacks": 0,
+      "peak": 28,
+      "normalPeak": 27,
+      "regularPeak": 23,
+      "dogPeak": 4,
+      "alphaPeak": 1,
+      "regularGroupPeaks": {
+        "industrial-area-direct-0": 6,
+        "depot-workers": 6,
+        "depot-alpha": 2,
+        "depot-exit": 1
+      }
+    },
+    "military-zone": {
+      "ticks": 11995,
+      "attacks": 1004,
+      "groupAttacks": 0,
+      "peak": 45,
+      "normalPeak": 44,
+      "regularPeak": 39,
+      "dogPeak": 4,
+      "alphaPeak": 2,
+      "regularGroupPeaks": {
+        "military-zone-direct-0": 6,
+        "military-breach": 15,
+        "military-column": 14,
+        "military-exit": 10
+      }
+    },
+    "research-campus": {
+      "ticks": 8048,
+      "attacks": 1464,
+      "groupAttacks": 0,
+      "peak": 55,
+      "normalPeak": 54,
+      "regularPeak": 50,
+      "dogPeak": 4,
+      "alphaPeak": 2,
+      "regularGroupPeaks": {
+        "research-campus-direct-0": 6,
+        "research-approach": 22,
+        "research-lab": 21,
+        "research-campus-direct-4": 2,
+        "research-quarantine": 1
+      }
+    },
+    "destroyed-corridor": {
+      "ticks": 13847,
+      "attacks": 753,
+      "groupAttacks": 0,
+      "peak": 75,
+      "normalPeak": 74,
+      "regularPeak": 68,
+      "dogPeak": 5,
+      "alphaPeak": 2,
+      "regularGroupPeaks": {
+        "corridor-line": 20
+      }
+    },
+    "dispersal-complex": {
+      "ticks": 18960,
+      "attacks": 5292,
+      "groupAttacks": 0,
+      "peak": 95,
+      "normalPeak": 94,
+      "regularPeak": 87,
+      "dogPeak": 5,
+      "alphaPeak": 2,
+      "regularGroupPeaks": {
+        "complex-approach-0": 2,
+        "complex-approach-1": 2,
+        "complex-approach-2": 2,
+        "complex-approach-3": 2,
+        "complex-approach-4": 2,
+        "complex-approach-5": 2,
+        "dispersal-assault": 74
+      }
+    }
+  },
+  "nativeStateHash": "3fae02ac",
+  "sameAsControl": false
+}

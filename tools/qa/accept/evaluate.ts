@@ -722,6 +722,7 @@ export const completeNativeRows = new Map<string, { clause: string; policy: stri
   ['L6-08', [{ clause: 'observed human follower pace versus phase group median', policy: 'complete' }, { clause: 'all original follower settled speed and per-ID visible bars', policy: 'controlled-fixture' }]],
   ['L6-09', [{ clause: 'actual gates width collision endurance refusal and persistent prompt', policy: 'controlled-fixture' }]],
   ['L9-08', [{ clause: 'actual crossing transaction into L10', policy: 'controlled-fixture' }]],
+  ['L9-02', [{ clause: 'actual admitted route group census and driven detour clearance', policy: 'controlled-physical' }]],
   ['L9-04', [
     ...['shortcut durability billing per unique contact onset', 'stopped-surround attacks deal10 damage after at least0.6s windup'].map(clause => ({ clause, policy: 'controlled-fixture' })),
     ...['physical matched safe route retains more durability than shortcut', 'physical route contact and attack billing'].map(clause => ({ clause, policy: 'real-input-webgl2' })),
