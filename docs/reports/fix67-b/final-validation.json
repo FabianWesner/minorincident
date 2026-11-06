@@ -1,0 +1,218 @@
+{
+  "sourceHash": "1bf35209e3871fea6acf6f754941fd41f22f544460fce6b031b7459776d93214",
+  "codeCommit": "dd26478ea061e8c0092e8e80939aeea6b76bb3b6",
+  "staticAndUnit": [
+    {
+      "name": "typescript",
+      "command": "npx tsc --noEmit",
+      "exitCode": 0,
+      "log": "docs/reports/fix67-b/final-typecheck.log.gz",
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "name": "sim-typescript",
+      "command": "npx tsc --noEmit -p tsconfig.sim.json",
+      "exitCode": 0,
+      "log": "docs/reports/fix67-b/final-sim-typecheck.log.gz",
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "name": "lint",
+      "command": "npm run lint",
+      "exitCode": 0,
+      "log": "docs/reports/fix67-b/final-lint.log.gz",
+      "sha256": "c5b26b09786bbc5b8bc114c76a44f37326546a071280383cc8c16fb22f335692"
+    },
+    {
+      "name": "unit",
+      "command": "npm test",
+      "exitCode": 0,
+      "log": "docs/reports/fix67-b/final-test.log.gz",
+      "sha256": "d14bccd52a554b5d419e2a58ee1bd35e68357c7508acd7ea35542e48572ced04"
+    }
+  ],
+  "unitSummary": {
+    "files": 27,
+    "passed": 107,
+    "failed": 0
+  },
+  "nativeAcceptance": [
+    {
+      "level": "L4",
+      "command": "npm run qa:accept -- --level L4 --reuse --skip-browser",
+      "exitCode": 1,
+      "report": "docs/reports/fix51-verify/L4.json",
+      "sha256": "f4ceb9290df1071e5d2db393c796f4e03f817c4b33acde7b9a39f84ef193af54",
+      "fixtures": [
+        {
+          "tier": "low",
+          "checks": 10,
+          "errors": 0
+        },
+        {
+          "tier": "high",
+          "checks": 10,
+          "errors": 0
+        }
+      ],
+      "checkpointControls": [
+        {
+          "tier": "low",
+          "checks": 6,
+          "identical": true
+        },
+        {
+          "tier": "high",
+          "checks": 6,
+          "identical": true
+        }
+      ],
+      "freshRowFails": [],
+      "incompleteRows": [
+        "L4-02",
+        "L4-03",
+        "L4-05",
+        "L4-07",
+        "L4-08",
+        "L4-10",
+        "L4-11",
+        "L4-12",
+        "L4-13",
+        "L4-14",
+        "L4-15",
+        "L4-16",
+        "L4-17",
+        "L4-18"
+      ],
+      "freshGlobalFails": [
+        "G-22"
+      ],
+      "log": "docs/reports/fix67-b/final-summary-L4.log.gz",
+      "logSha256": "bd7a4a00d7473f83ab038f5003b2beb800eadb60f3915aec4c31cab920c6c9a6"
+    },
+    {
+      "level": "L5",
+      "command": "npm run qa:accept -- --level L5 --reuse --skip-browser",
+      "exitCode": 1,
+      "report": "docs/reports/fix51-verify/L5.json",
+      "sha256": "34971ba11521e24f18ffcf5a98f4e67add64d7b257c428d6767888f0af7fc41e",
+      "fixtures": [
+        {
+          "tier": "low",
+          "checks": 10,
+          "errors": 0
+        },
+        {
+          "tier": "high",
+          "checks": 10,
+          "errors": 0
+        }
+      ],
+      "checkpointControls": [
+        {
+          "tier": "low",
+          "checks": 6,
+          "identical": true
+        },
+        {
+          "tier": "high",
+          "checks": 6,
+          "identical": true
+        }
+      ],
+      "freshRowFails": [
+        "L5-05",
+        "L5-08"
+      ],
+      "incompleteRows": [
+        "L5-02",
+        "L5-03",
+        "L5-06",
+        "L5-07",
+        "L5-09",
+        "L5-10",
+        "L5-11",
+        "L5-12",
+        "L5-14"
+      ],
+      "freshGlobalFails": [],
+      "log": "docs/reports/fix67-b/final-summary-L5.log.gz",
+      "logSha256": "e22f3c452fa95eb2a542840b0bb3e152cbb40923e555bcca7233224896f1d9e8"
+    },
+    {
+      "level": "L6",
+      "command": "npm run qa:accept -- --level L6 --reuse --skip-browser",
+      "exitCode": 1,
+      "report": "docs/reports/fix51-verify/L6.json",
+      "sha256": "d398f4fcba79ec2df6bd917b1531193d15a3a4ddc8fa1aa13acb3baf22e4ea58",
+      "fixtures": [
+        {
+          "tier": "low",
+          "checks": 8,
+          "errors": 0
+        },
+        {
+          "tier": "high",
+          "checks": 8,
+          "errors": 0
+        }
+      ],
+      "checkpointControls": [
+        {
+          "tier": "low",
+          "checks": 7,
+          "identical": true
+        },
+        {
+          "tier": "high",
+          "checks": 7,
+          "identical": true
+        }
+      ],
+      "freshRowFails": [
+        "L6-06",
+        "L6-11"
+      ],
+      "incompleteRows": [
+        "L6-01",
+        "L6-02",
+        "L6-04",
+        "L6-08",
+        "L6-09",
+        "L6-12",
+        "L6-14"
+      ],
+      "freshGlobalFails": [
+        "G-22"
+      ],
+      "log": "docs/reports/fix67-b/final-summary-L6.log.gz",
+      "logSha256": "040760fde735ab3bdbc786be8219139ed84e4411a971c08acae69fba2eb81e21"
+    }
+  ],
+  "threat": {
+    "command": "npm run qa:threat",
+    "exitCode": 0,
+    "levels": 10,
+    "ranAlone": true,
+    "budgetSeconds": 600,
+    "audit": "docs/reports/fix67-b/final-threat-audit.json.gz",
+    "auditSha256": "6b8642899ccb35e90d822611659401b06f3b57eb1fbee97a71e35f0669a6cb79",
+    "log": "docs/reports/fix67-b/final-threat.log.gz",
+    "logSha256": "26e6957d0b1688879a4ecc3c527340897a7521f585fc14d577f80d85f7406eca",
+    "budgetReceipt": "docs/reports/fix67-b/final-threat-budget.json.gz",
+    "flags": []
+  },
+  "limitations": [
+    "Full level acceptance is not green.",
+    "Truck relocation introduces L5-05 bounded-path reachability87.5% vs90%; baseline100.",
+    "L5-08 escort tolerance remains a baseline failure.",
+    "L6-06 side-entry counts and L6-11 protection remain measured failures.",
+    "Final qa:accept uses native --skip-browser; visual evidence is commit-scoped."
+  ],
+  "captures": {
+    "generated": 40,
+    "personallyInspected": 40,
+    "sha256Recorded": true,
+    "rawDeleted": true
+  }
+}

@@ -1,52 +1,80 @@
 {
-  "sourceHash": "aec13daf090fd1d27a23e0e5ca5469729cc461885d10a55fafa2feeb4c937f2d",
-  "ledger": "docs/reports/sweep-b/L6-carry-ledger.json.gz",
-  "ledgerSha256": "871e6d545f1167b9361333b72295a543dc658273bfa15145bf82b22e95785701",
-  "observation": "Both actual current physical L5 campaign saves (24residents+0rescued, permitted roster) hand over identical IDs at fullHP. But all24 retain only L5 idle/npc-gesture presentation clips throughout the first4s; none uses sit, lying/rest, treatment or sharing poses despite five sit/five treat/four rest/four share routine labels. All four reviewed current captures show residents standing in rows on the tracks outside the furnished shelter, with empty beds/benches in the normal opening. This actual carry defect is absent from L6-default and closes FAIL through required routines; no blanket PASS for all3s activity or seated/lying gun handling. Source cause: LevelSixSubway.prepare restores resident.story after assigning the L6 routine and subtracts the L5 station origin from positions.",
+  "row": "L6-01",
+  "status": "PASS",
+  "sourceHash": "df8ffdf25365a76fc19237460626a704a2f02ded98addef44508d1aae51d6b1c",
+  "observation": "Both qualities load actual completed mortal L5 campaign saves, preserving24 station occupants plus5 low /4 high rescues with identical IDs and full health. All five non-guard routines are present; every-tick four-second census records zero idle ticks, matched routine clips and no gun on any sitting/resting person. All6 final frames personally inspected: carried people occupy the furnished shelter, not the old track rows; sit, rest, gesture and treatment poses are visible. Real L5 inputs and before/after state are retained; the before fixture failed routine and placement checks at both tiers.",
+  "producerSha256": "cdd0cf01d040f19ed3d91ecdf96b94b9dc840858fe5686b8ab5adfccacfb995c",
+  "renderProducerSha256": "38eb6e94dda375c5dcc8d973804681f0e49863c95097529715709da24f0ea0c2",
+  "evidence": [
+    {
+      "file": "docs/reports/fix67-b/l6-handover-after.json.gz",
+      "sha256": "5a9c628da88441ed7228d937119f9218fa9ceb4e07217d4d7bc7d5be3bb6832c"
+    },
+    {
+      "file": "docs/reports/fix67-b/l6-carry-render-after.json.gz",
+      "sha256": "c619382093df13171f910fbbf45b82c8680569c365680cfd4c08342de84331e0"
+    }
+  ],
   "rows": [
     {
       "tier": "low",
-      "carriedCount": 24,
-      "identicalIds": true,
-      "allFullHealth": true,
-      "assignedRoutines": {
-        "sit": 5,
-        "talk": 5,
-        "treat": 5,
-        "rest": 4,
-        "share": 4
-      },
-      "actualStoryClips": {
-        "idle": 8,
-        "npc-gesture": 16,
-        "npc-sit": 0,
-        "death-side": 0,
-        "npc-cower": 0,
-        "npc-give": 0
-      },
-      "throughTick": 240
+      "identityPreserved": true,
+      "fullHealth": true,
+      "routineClipsMatch": true,
+      "allRoutinesPresent": true,
+      "noSeatedGuns": true,
+      "maxIdleTicks": 0,
+      "withinShelter": true,
+      "occupants": 29
     },
     {
       "tier": "high",
-      "carriedCount": 24,
-      "identicalIds": true,
-      "allFullHealth": true,
-      "assignedRoutines": {
-        "sit": 5,
-        "talk": 5,
-        "treat": 5,
-        "rest": 4,
-        "share": 4
-      },
-      "actualStoryClips": {
-        "idle": 8,
-        "npc-gesture": 16,
-        "npc-sit": 0,
-        "death-side": 0,
-        "npc-cower": 0,
-        "npc-give": 0
-      },
-      "throughTick": 240
+      "identityPreserved": true,
+      "fullHealth": true,
+      "routineClipsMatch": true,
+      "allRoutinesPresent": true,
+      "noSeatedGuns": true,
+      "maxIdleTicks": 0,
+      "withinShelter": true,
+      "occupants": 28
+    }
+  ],
+  "captures": [
+    {
+      "file": "test-results/fix67-b/l6-carry-render/low-opening.png",
+      "sha256": "db5b9902f7aed9b666d7dd6f60a00212c689d87cd07677cc077bc2b38600ed19",
+      "inspected": true,
+      "whatSaw": "Carried residents occupy the furnished shelter around benches and treatment/rest space, with seated, lying, gesturing and treating poses. Opening and four-second views retain this arrangement; overview confirms no crowd rows left on the tracks. No gun identified on a seated or lying person. Guard uses look-around in the native census."
+    },
+    {
+      "file": "test-results/fix67-b/l6-carry-render/low-four-seconds.png",
+      "sha256": "c51093c84c84d2de150b9212f9bc7ea68ec613cea142d9c1ed447fef2e0c7793",
+      "inspected": true,
+      "whatSaw": "Carried residents occupy the furnished shelter around benches and treatment/rest space, with seated, lying, gesturing and treating poses. Opening and four-second views retain this arrangement; overview confirms no crowd rows left on the tracks. No gun identified on a seated or lying person. Guard uses look-around in the native census."
+    },
+    {
+      "file": "test-results/fix67-b/l6-carry-render/low-overview.png",
+      "sha256": "1f08c39eeeb36f6f7d96e21b19df992ad3bb099977bf8266e84331b0d8a5b935",
+      "inspected": true,
+      "whatSaw": "Carried residents occupy the furnished shelter around benches and treatment/rest space, with seated, lying, gesturing and treating poses. Opening and four-second views retain this arrangement; overview confirms no crowd rows left on the tracks. No gun identified on a seated or lying person. Guard uses look-around in the native census."
+    },
+    {
+      "file": "test-results/fix67-b/l6-carry-render/high-opening.png",
+      "sha256": "15b5008142c2e79c2c8efe71c361b39131ae853203d928a4e42d36714efed8d7",
+      "inspected": true,
+      "whatSaw": "Carried residents occupy the furnished shelter around benches and treatment/rest space, with seated, lying, gesturing and treating poses. Opening and four-second views retain this arrangement; overview confirms no crowd rows left on the tracks. No gun identified on a seated or lying person. Guard uses look-around in the native census."
+    },
+    {
+      "file": "test-results/fix67-b/l6-carry-render/high-four-seconds.png",
+      "sha256": "569155f5f4a767620c9182b688d13a556eae836a46bc6f1fbb97875d17aaf75f",
+      "inspected": true,
+      "whatSaw": "Carried residents occupy the furnished shelter around benches and treatment/rest space, with seated, lying, gesturing and treating poses. Opening and four-second views retain this arrangement; overview confirms no crowd rows left on the tracks. No gun identified on a seated or lying person. Guard uses look-around in the native census."
+    },
+    {
+      "file": "test-results/fix67-b/l6-carry-render/high-overview.png",
+      "sha256": "f64fc722bc0fbc67064b71eb1129528e8ffd9eb0a76079d41e4a0358f918b52d",
+      "inspected": true,
+      "whatSaw": "Carried residents occupy the furnished shelter around benches and treatment/rest space, with seated, lying, gesturing and treating poses. Opening and four-second views retain this arrangement; overview confirms no crowd rows left on the tracks. No gun identified on a seated or lying person. Guard uses look-around in the native census."
     }
   ]
 }

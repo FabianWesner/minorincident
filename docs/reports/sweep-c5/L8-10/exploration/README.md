@@ -1,0 +1,5 @@
+# Rejected predeparture Resume trials
+
+These trials do not qualify L8-10. The low-tier snapshot was captured during the action run-out and its L8 Resume path produced repeated null-navigation errors; no incoming measurement exists. The high-tier trial reached L9 in8.9871s with its native APC intact, but this private Resume fixture is not the established campaign handover diagnostic or the qualified physical departure save.
+
+All three trial images were personally inspected. Their SHA256 and observations remain in the compressed trial manifests; raw captures were deleted. Exact native seeds/proof and producer snapshots remain here without rebinding their identities. The accepted method in the parent directory follows the existing campaign-handover-time probe with the actual physical L7/L8 campaign, a normally loaded outgoing L8, and production continueCampaign toL9. Its before/after durability comparison uses the actual physical departure transfer, not the reconstructed initial outgoing hull.

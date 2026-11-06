@@ -1,0 +1,72 @@
+{
+  "row": "L4-06",
+  "status": "PASS",
+  "sourceHash": "3bdc893166f3e0d13b6514693a636b5ca986859da9d02cf95549cfd481a45719",
+  "change": "Increase original low-tier alarm infected9\u219218. High18 unchanged. No cap, timer, threshold or policy changes.",
+  "observation": "Both exact production stationary policies complete the190s hold. First physical breach52.7167s at both tiers;61 low/66 high living; sustained post45s plaza minima66/66. Original current-source low census59 failed. All fixed numeric horde criteria pass. Candidate12 was rejected for low bounded-path86.885%; selected18 has95.833% complete bounded reachability and actual2\u20135 cohorts in its diagnostic route. Final source-qualified cohort replays also have min2/max5 at both tiers, with exact canonical hashes; see final-native-rechecks.json. Tank replay catches an independent high-tier721-tick cadence failure, retained as L4-10 FAIL.",
+  "before": "docs/reports/fix67-b/L4-06-before.json.gz",
+  "rejected12": "docs/reports/fix67-b/L4-06-rejected-12-report.json.gz",
+  "trials": [
+    "docs/reports/fix67-b/l4-alarm-route-trials.json.gz",
+    "docs/reports/fix67-b/l4-alarm-census-trials.json",
+    "docs/reports/fix67-b/l4-alarm-final-trials.json.gz"
+  ],
+  "rows": [
+    {
+      "tier": "low",
+      "receipt": "docs/reports/fix51-verify/receipts/L4-low-stationary.json",
+      "sha256": "6aa4f83daf73bbb9e2b47899483f6d74ae7ebc9bfbdf1a17ce81ac0372220b45",
+      "hold": {
+        "tier": "low",
+        "holdComplete": true,
+        "firstBreachLevelSeconds": 52.71666666666667,
+        "firstBreachAfterTurnSeconds": 19.9,
+        "aliveAtFirstBreach": 61,
+        "peakAlive": 80,
+        "peakPlazaAlive": 79,
+        "minPlazaAliveAfter45Seconds": 66,
+        "samplesAfter45Seconds": 8892,
+        "arrivalEdges": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "threeDirectionsAtLeast60Degrees": true,
+        "maxGroupAtOneSourcePerTick": 5,
+        "firstAttackSeconds": 8.766666666666667,
+        "lineBreakAfterTurnSeconds": 190
+      }
+    },
+    {
+      "tier": "high",
+      "receipt": "docs/reports/fix51-verify/receipts/L4-high-stationary.json",
+      "sha256": "a78fcc16f3abffb9442b2bd130025621e53abd443fd3d20bdd6e0ed2ed351f09",
+      "hold": {
+        "tier": "high",
+        "holdComplete": true,
+        "firstBreachLevelSeconds": 52.71666666666667,
+        "firstBreachAfterTurnSeconds": 19.9,
+        "aliveAtFirstBreach": 66,
+        "peakAlive": 94,
+        "peakPlazaAlive": 90,
+        "minPlazaAliveAfter45Seconds": 66,
+        "samplesAfter45Seconds": 8892,
+        "arrivalEdges": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "threeDirectionsAtLeast60Degrees": true,
+        "maxGroupAtOneSourcePerTick": 5,
+        "firstAttackSeconds": 7.716666666666667,
+        "lineBreakAfterTurnSeconds": 190
+      }
+    }
+  ]
+}

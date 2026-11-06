@@ -1,0 +1,15 @@
+{
+  "baselineCommit": "202ee5a69f032bc2c903fe5b420aadc71180984a",
+  "method": "All six src files differing from baseline temporarily restored to exact baseline bytes; current bytes restored and verified in finally. Navigation test/helper, layouts and assets have no diff from baseline. No other owned checks running.",
+  "filesRestored": [
+    "src/data/infected.ts",
+    "src/data/l4.ts",
+    "src/render/GameView.ts",
+    "src/sim/interact/Barricades.ts",
+    "src/sim/missions/LevelFourWar.ts",
+    "src/sim/missions/LevelSixSubway.ts"
+  ],
+  "command": "npx vitest run tests/engine/navigation.test.ts --maxWorkers=1 --configLoader runner",
+  "exitCode": 0,
+  "logSha256": "1cff2d7fa4afbb49ca22bfbae44226c739f7e67b36d5587c7eb0553b9b8a40bb"
+}

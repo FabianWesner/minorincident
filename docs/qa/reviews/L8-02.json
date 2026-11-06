@@ -1,77 +1,106 @@
 {
   "row": "L8-02",
   "status": "PASS",
-  "reviewer": "Codex sweep-c3",
-  "date": "2026-11-05",
-  "commit": "ca788289cedc027c74ef3c2ebc416442c31d4ffe",
+  "reviewer": "Codex sweep-c5",
+  "date": "2026-11-06",
+  "commit": "4a87ab2105e73e3839c16d96d923a21ab4e66b68",
   "clauses": [
     {
       "clause": "Exactly 60 active sim seconds without objective/waypoint/scripted attack.",
       "verdict": "PASS",
-      "note": "Current physical L7\u2192L8 entry in both tiers: reviewed marker-free calm arrival, no text/pin/world marker beforetick3600, sampled at<=33tick gaps fromtick0 through>=3583. Breach text/pin/worldmarker appear exactlytick3600. Native every-tick four-policy ledger proves zero scripted infected attacks and no objective during3600tick calm. All104 physical panels personally inspected and individual seen/hashes retained underL8-01, raws deleted. Before receipt falsely rejected complete60-second evidence solely for later low APC cannot-finish and roundoffzoom1.5000000000000002. Consumer now requires completed unskipped L7 and actual unskipped L8 entry, preserves allcalm coverage and console/page-error rejection, and leaves later departure to itsownrow. Eight original negative controls reject missingtick0, earlytext/pin/marker, breach3599/3601, samplinggap and missingtier. No timer/coverage/target changed."
+      "note": "Fresh current-source low/high production L7\u2192L8 handovers, no skips and no console/page errors. Personally inspected all75 frames: calm views lack objective text and world/minimap objective markers; breach views show them. Low/high HUD samples [{'tier': 'low', 'samples': 120, 'firstTick': 0, 'lastCalmTick': 3573, 'maxGapTicks': 34, 'emptyHud': True, 'breach': {'elapsedMs': 65130.69999999998, 'tick': 3600, 'text': 'Bring the survivors to the armored vehicle and board \u00b7 97\\xa0m', 'pin': True, 'marker': True, 'breached': True}}, {'tier': 'high', 'samples': 121, 'firstTick': 0, 'lastCalmTick': 3589, 'maxGapTicks': 33, 'emptyHud': True, 'breach': {'elapsedMs': 64397.5, 'tick': 3600, 'text': 'Bring the survivors to the armored vehicle and board \u00b7 97\\xa0m', 'pin': True, 'marker': True, 'breached': True}}]; native every-tick complete/stationary receipts independently prove3600 calm ticks, zero objective markers and zero scripted combat events. Read-only controls remain identical. Eight malformed or missing-coverage controls rejected; unchanged timers and targets."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-c3/L8-01/evidence/low-L7-L8-carried-low-input.json.gz",
-      "sha256": "3f57c3e24e3d5320107c1ceca073699d31314847a8f0e357fde2fe8df2b999bc",
-      "what": "Immutable current-source docs/reports/fix51-r10c/L7-L8-carried-low-input.json; exact actor, rack, HP, selection or native pickup data retained"
+      "file": "docs/reports/sweep-c5/L8-02/evidence/low-L7-L8-carried-low-input.json.gz",
+      "sha256": "4ac9ea3a249d680a70c51bb9bad3308a37a3136714e0b8e589562f26af388a72",
+      "what": "Immutable current-source docs/reports/fix51-r10c/L7-L8-carried-low-input.json; physical calm HUD audit, reviewed frames, production handover or native every-tick attack/marker ledger."
     },
     {
-      "file": "docs/reports/sweep-c3/L8-01/evidence/low-review.json.gz",
-      "sha256": "653867d83afda26a0ba837cfb08bff364814993233c6865a874f297c068345af",
-      "what": "Immutable current-source docs/reports/fix51-r10c/L7-L8-carried-low/review.json; all capture cells personally inspected and individually described"
+      "file": "docs/reports/sweep-c5/L8-02/evidence/low-review.json.gz",
+      "sha256": "78dc29321be256c8f910e89114edfea5ddf39edc13f4ec44d4afe277eb36c13f",
+      "what": "Immutable current-source docs/reports/fix51-r10c/L7-L8-carried-low/review.json; physical calm HUD audit, reviewed frames, production handover or native every-tick attack/marker ledger."
     },
     {
-      "file": "docs/reports/sweep-c3/L8-01/evidence/high-L7-L8-carried-high-input.json.gz",
-      "sha256": "2f6b5103bab2d794c5a9b564e868fc3b745ca4246850afde5106165a99b5b5d2",
-      "what": "Immutable current-source docs/reports/fix51-r10c/L7-L8-carried-high-input.json; exact actor, rack, HP, selection or native pickup data retained"
+      "file": "docs/reports/sweep-c5/L8-02/evidence/low-handover-audit-late-input.json.gz",
+      "sha256": "9148b3f7d79f1511e8727617eb035f9f50fb07fb331d1cf28debae327f917d69",
+      "what": "Immutable current-source docs/reports/fix51-r10c/L7-L8-carried-low/handover-audit-late-input.json.gz; physical calm HUD audit, reviewed frames, production handover or native every-tick attack/marker ledger."
     },
     {
-      "file": "docs/reports/sweep-c3/L8-01/evidence/high-review.json.gz",
-      "sha256": "1018797745ba189710daa7f98b49eadcf87e8140a63ac024281d9b09aa5b6aa5",
-      "what": "Immutable current-source docs/reports/fix51-r10c/L7-L8-carried-high/review.json; all capture cells personally inspected and individually described"
+      "file": "docs/reports/sweep-c5/L8-02/evidence/low-late-input-completion.json.gz",
+      "sha256": "8b518d64f9bec26c20550cab963261ad8ecd540a33b196bedf0bfa5a08239ca0",
+      "what": "Immutable current-source docs/reports/fix51-r10c/L7-L8-carried-low/late-input-completion.json.gz; physical calm HUD audit, reviewed frames, production handover or native every-tick attack/marker ledger."
     },
     {
-      "file": "docs/reports/sweep-c3/L8-01/evidence/arrival-proof.json.gz",
-      "sha256": "0650a267dea40e1d2f11a73949d2327dfdc8d7fa630a58a38a4b1ba3a8681562",
-      "what": "Immutable current-source docs/reports/fix51-r10c/L8-arrival-proof.json; exact actor, rack, HP, selection or native pickup data retained"
+      "file": "docs/reports/sweep-c5/L8-02/evidence/low-late-input-acceptance-ledger.json.gz",
+      "sha256": "f461a5c1457b0ee8b0fbba6dd523b457c84d14626558fd726cc67645faaf1985",
+      "what": "Immutable current-source docs/reports/fix51-r10c/L7-L8-carried-low/late-input-acceptance-ledger.json.gz; physical calm HUD audit, reviewed frames, production handover or native every-tick attack/marker ledger."
     },
     {
-      "file": "docs/reports/sweep-c3/L8-01/evidence/L8-low-complete.json.gz",
-      "sha256": "dad9ed4018afebcf4165aede9b78c419ef5124fe87736d7b36dadd085981e3be",
-      "what": "Immutable current-source docs/reports/fix51-verify/receipts/L8-low-complete.json; exact actor, rack, HP, selection or native pickup data retained"
+      "file": "docs/reports/sweep-c5/L8-02/evidence/low-log-late-input.jsonl.gz",
+      "sha256": "84246444c8a32c88797c7abb52abbe4d478ce2526b54fa147d7e3419fd844ee5",
+      "what": "Immutable current-source docs/reports/fix51-r10c/L7-L8-carried-low/log-late-input.jsonl.gz; physical calm HUD audit, reviewed frames, production handover or native every-tick attack/marker ledger."
     },
     {
-      "file": "docs/reports/sweep-c3/L8-01/evidence/L8-low-stationary.json.gz",
-      "sha256": "52c4521bfc1317527e6045039cd53148c8cc94f945b8b3cd38e788f3811e8711",
-      "what": "Immutable current-source docs/reports/fix51-verify/receipts/L8-low-stationary.json; exact actor, rack, HP, selection or native pickup data retained"
+      "file": "docs/reports/sweep-c5/L8-02/evidence/low-L8-low-complete.json.gz",
+      "sha256": "52edf0db369ec4a08321a08764de6120643a3c570d42541bff8b51f301b70ce9",
+      "what": "Immutable current-source docs/reports/fix51-verify/receipts/L8-low-complete.json; physical calm HUD audit, reviewed frames, production handover or native every-tick attack/marker ledger."
     },
     {
-      "file": "docs/reports/sweep-c3/L8-01/evidence/L8-high-complete.json.gz",
-      "sha256": "e26c4ef749f93440ddc98577ce419a5f9a4057f73541d4ca069cbcaeb0f0d255",
-      "what": "Immutable current-source docs/reports/fix51-verify/receipts/L8-high-complete.json; exact actor, rack, HP, selection or native pickup data retained"
+      "file": "docs/reports/sweep-c5/L8-02/evidence/low-L8-low-stationary.json.gz",
+      "sha256": "d21cab8a8cf7b2cb62d4690db90f57523dc46557740d265a4eb1821b561d10eb",
+      "what": "Immutable current-source docs/reports/fix51-verify/receipts/L8-low-stationary.json; physical calm HUD audit, reviewed frames, production handover or native every-tick attack/marker ledger."
     },
     {
-      "file": "docs/reports/sweep-c3/L8-01/evidence/L8-high-stationary.json.gz",
-      "sha256": "8fe1017f485d6faab2c35f1918ce9056a360c745da4af3e26ac37cf99e37324c",
-      "what": "Immutable current-source docs/reports/fix51-verify/receipts/L8-high-stationary.json; exact actor, rack, HP, selection or native pickup data retained"
+      "file": "docs/reports/sweep-c5/L8-02/evidence/high-L7-L8-carried-high-input.json.gz",
+      "sha256": "21986630379983a8fdac10c6fd1cda846cb93732f4c05242b75d9be062ae6223",
+      "what": "Immutable current-source docs/reports/fix51-r10c/L7-L8-carried-high-input.json; physical calm HUD audit, reviewed frames, production handover or native every-tick attack/marker ledger."
     },
     {
-      "file": "docs/reports/sweep-c3/L8-02/checker-before.json",
-      "sha256": "c36db17a9987270feebae87114dd7820c6ad23451ced6e8db5f6c735bba27c2f",
-      "what": "Exact before rejection or actual production consumer negative control; correct calm timing still enforced."
+      "file": "docs/reports/sweep-c5/L8-02/evidence/high-review.json.gz",
+      "sha256": "f9dd859901ceddafbde6c2dfb2cf1f16e39c0343ec5174bc96972f2c71e35928",
+      "what": "Immutable current-source docs/reports/fix51-r10c/L7-L8-carried-high/review.json; physical calm HUD audit, reviewed frames, production handover or native every-tick attack/marker ledger."
     },
     {
-      "file": "docs/reports/sweep-c3/L8-02/checker-before.ts",
-      "sha256": "b49dbb189ad799ccf8ccc48adc14e1d95248c6df1c5a4f71231a69274dc41cbb",
-      "what": "Exact before rejection or actual production consumer negative control; correct calm timing still enforced."
+      "file": "docs/reports/sweep-c5/L8-02/evidence/high-handover-audit-late-input.json.gz",
+      "sha256": "a516d3bcfe04aff19f5f980e8f0cb33d7bc7d040fbb5f9427088add6c9896938",
+      "what": "Immutable current-source docs/reports/fix51-r10c/L7-L8-carried-high/handover-audit-late-input.json.gz; physical calm HUD audit, reviewed frames, production handover or native every-tick attack/marker ledger."
     },
     {
-      "file": "docs/reports/sweep-c3/L8-02/coverage-proof.json",
-      "sha256": "1652a71867f0c8df0596d76cf622e1580ef75f262a6b1eb5c2e2d23a59466919",
-      "what": "Exact before rejection or actual production consumer negative control; correct calm timing still enforced."
+      "file": "docs/reports/sweep-c5/L8-02/evidence/high-late-input-completion.json.gz",
+      "sha256": "cb0524a5db684087cdeffb195b376d92ee89b992ae0e1f1e6b15ed09766a30b1",
+      "what": "Immutable current-source docs/reports/fix51-r10c/L7-L8-carried-high/late-input-completion.json.gz; physical calm HUD audit, reviewed frames, production handover or native every-tick attack/marker ledger."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L8-02/evidence/high-late-input-acceptance-ledger.json.gz",
+      "sha256": "e5d86326c2632e9c30e83db36366e10d02f323d395aac123f4c437162e0bb2ae",
+      "what": "Immutable current-source docs/reports/fix51-r10c/L7-L8-carried-high/late-input-acceptance-ledger.json.gz; physical calm HUD audit, reviewed frames, production handover or native every-tick attack/marker ledger."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L8-02/evidence/high-log-late-input.jsonl.gz",
+      "sha256": "7f3289c4c28c98d3b994f5a0cf04327405ffeba872fc5117c28dbc3a27688286",
+      "what": "Immutable current-source docs/reports/fix51-r10c/L7-L8-carried-high/log-late-input.jsonl.gz; physical calm HUD audit, reviewed frames, production handover or native every-tick attack/marker ledger."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L8-02/evidence/high-L8-high-complete.json.gz",
+      "sha256": "2f6533e79c22f324ea7fdcfbbccc138f69fd4979a33cb4ea870f5ed31eae7c40",
+      "what": "Immutable current-source docs/reports/fix51-verify/receipts/L8-high-complete.json; physical calm HUD audit, reviewed frames, production handover or native every-tick attack/marker ledger."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L8-02/evidence/high-L8-high-stationary.json.gz",
+      "sha256": "fc89ccd43188d1d738289acb841ff0a318e2a8c79a09aae5c51a17e1c049b621",
+      "what": "Immutable current-source docs/reports/fix51-verify/receipts/L8-high-stationary.json; physical calm HUD audit, reviewed frames, production handover or native every-tick attack/marker ledger."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L8-02/coverage-proof.json",
+      "sha256": "a1dd7c9198f21c5abfc0bbfc549177bd645faa45f7453aa7155b8a5bd0ad08fb",
+      "what": "Eight counterexamples rejected by the actual calm consumer; exact original physical artifacts restored."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L8-02/summary.json",
+      "sha256": "757fef45b87122b5557dfb0a87387e55e3b4ddabea1f5b882ab53d803cca871c",
+      "what": "Both calm arrivals show lit bus-side road, courier/corgi and carried green-bar humans without objective text, world waypoint or minimap pin. Post-breach views show APC boarding guidance. All75 captures personally inspected on original-size four-frame sheets. L7 blast occlusion and L8 roof-adjacent boarding views are outside this calm criterion. Raws deleted after hashing and inspection; sheets remain in ignored test-results."
     }
-  ],
-  "notes": "Full unchanged60-second criterion; independent later low APC failure retained, no game changes."
+  ]
 }

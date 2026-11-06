@@ -1,32 +1,46 @@
 {
   "row": "L9-04",
   "status": "PASS",
-  "reviewer": "Codex fix65-c",
+  "reviewer": "Codex sweep-c5",
   "date": "2026-11-06",
-  "commit": "26b922875b73df57766a37f0d6cee7030dbf45f0",
+  "commit": "78e80beb45ee2c68381e3cd147c8b9b238d6b070",
   "clauses": [
     {
       "clause": "Every contact onset \u221210 durability (no per-tick billing); stopped/surrounded attacks 10 dmg, \u2265 0.6 s windup; safe route ends with more HP than the shortcut.",
       "verdict": "PASS",
-      "note": "Matched full physical routes: low990 vs860HP and high990 vs900HP, safe strictly greater. Unique actual contact/attack transactions each cost10. Current native fixture windup/attack clauses are separately retained. Corrected physical driver follows the unchanged authored segments instead of drifting into verge props; same controller on both routes."
+      "note": "Fresh current source matched healthy seed1 physical WASD drives follow unchanged authored safe road detour and all six shortcut risk anchors, same established fix65 controller/ordinary damage/AI. Both finishapproach: safe990bothtiers, shortcut860low/900high, safe strictlygreater. All actual contact/attack events unique by source/target/contact/attack ID and cost10. Fresh stopped fixture4ordinaryrunners/600brakedticks:18completedattacks pertier, each10damage and36tickwindup. Native shortcut ledgers independently confirm unique10damageonsets andcanonicalcompletefinalstates match controls. All24 originalsize panels personallyinspected and SHAverified/deleted: grasssafedetour, contactmarkedshortcutAPC, litbridgeapproach with matchingHUD. Eleven actualconsumer rehashed semanticfaultsreject/restoreexactbytes. Produceraddsui1/8mincontextcap only; consumer unchanged, acceptanceaddsC5artifactroot. No game/criteria change."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix65-c/L9-04-98ba7f93-review.json",
-      "sha256": "a2d5fac7e8dccbe08f643672db466e9e5e12beaca583983be2cce35b273d36c3",
-      "what": "Personally inspected all24 final paired-zoom captures; raw file hashes, full path/input/contact ledgers, producer digest and both-tier HP comparisons. Early safe grass detour and shortcut contact-marked APC are visible; final frames show the normal bridge approach."
+      "file": "docs/reports/sweep-c5/L9-04/L9-04-review.json",
+      "sha256": "ed83eb0c496b32e54adcd162145ac2fbee117bf33b44651082ad8f542bcc3c86",
+      "what": "Both tier current matched safe/shortcut physical route/contact ledgers, SHA256 personally inspected captures, native canonical controls, stopped-surround hit/windup fixtures and11 consumer faultcontrols."
     },
     {
-      "file": "docs/reports/fix65-c/L9-04-98ba7f93-native.json.gz",
-      "sha256": "2bfcb4a138a1b9182fb8dd841ec6d235b9030925c8d93bc90383ab40a471440e",
-      "what": "Reviewed unique native shortcut contact transactions, each ten damage; both tiers canonical states equal independent controls."
+      "file": "docs/reports/sweep-c5/L9-04/L9-04-low-physical.json.gz",
+      "sha256": "4cd14fcfcb541ec176cbb44df928d5d2404996191d9d7b8a34870298a4b26389",
+      "what": "Both tier current matched safe/shortcut physical route/contact ledgers, SHA256 personally inspected captures, native canonical controls, stopped-surround hit/windup fixtures and11 consumer faultcontrols."
     },
     {
-      "file": "docs/reports/fix65-c/L9-04-98ba7f93-stopped-contact.json.gz",
-      "sha256": "bd1e6bb25e048c94779dbbeb416c0798f68a47803384617a909791d27e4017ab",
-      "what": "Reviewed both-tier stopped/surrounded windup ledger: at least36 ticks before hits, exactly ten damage per distinct completed attack."
+      "file": "docs/reports/sweep-c5/L9-04/L9-04-high-physical.json.gz",
+      "sha256": "cc74aa73a29398c0b9356564df2203f181d46387f02061f8dbd92031131b1162",
+      "what": "Both tier current matched safe/shortcut physical route/contact ledgers, SHA256 personally inspected captures, native canonical controls, stopped-surround hit/windup fixtures and11 consumer faultcontrols."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L9-04/coverage-proof.json",
+      "sha256": "ebabe3a0cf04df855312182cc33ea4307179e9e796f3a3b1abd4e6a09de7cee1",
+      "what": "Both tier current matched safe/shortcut physical route/contact ledgers, SHA256 personally inspected captures, native canonical controls, stopped-surround hit/windup fixtures and11 consumer faultcontrols."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L9-04/native.json",
+      "sha256": "965c454123cc7af418bc7da6f33b702efa0823ea66e19ca4c8bba520e9b46917",
+      "what": "Both tier current matched safe/shortcut physical route/contact ledgers, SHA256 personally inspected captures, native canonical controls, stopped-surround hit/windup fixtures and11 consumer faultcontrols."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L9-04/stopped-contact.json.gz",
+      "sha256": "d21d0c1ee2d2a13a8b5920dbbe8e794ab8d8d249d21b001cfaddb6c0c65218eb",
+      "what": "Both tier current matched safe/shortcut physical route/contact ledgers, SHA256 personally inspected captures, native canonical controls, stopped-surround hit/windup fixtures and11 consumer faultcontrols."
     }
-  ],
-  "notes": "Historical low safe failure retained in before/trial proofs; this fixes a proven physical route producer defect, with no L9-04 gameplay or criterion change. Final source-bound fixtures required for complete automated row coverage."
+  ]
 }

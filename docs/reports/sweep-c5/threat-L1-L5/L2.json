@@ -1,0 +1,2487 @@
+{
+  "level": "L2",
+  "quality": "low",
+  "definitions": [
+    {
+      "id": "calm",
+      "text": "Take the fire axe",
+      "type": "custom"
+    },
+    {
+      "id": "board",
+      "text": "Get on the fire truck",
+      "type": "interact"
+    },
+    {
+      "id": "ride",
+      "text": "Ride with Engine 3 to Grove Market",
+      "type": "custom"
+    },
+    {
+      "id": "doors",
+      "text": "Cover the firefighters while they force the doors",
+      "type": "custom"
+    },
+    {
+      "id": "bridge",
+      "text": "Reach the police checkpoint at the bridge",
+      "type": "reach"
+    },
+    {
+      "id": "axe",
+      "text": "Take the fire axe",
+      "type": "interact"
+    }
+  ],
+  "run": {
+    "level": "L2",
+    "policy": "complete",
+    "seed": 1,
+    "completed": true,
+    "time": 156.11666666666667,
+    "deaths": 0,
+    "kills": 0,
+    "damageTaken": 36,
+    "failures": {},
+    "objectiveTimeline": [
+      {
+        "id": "axe",
+        "t": 23.1
+      },
+      {
+        "id": "calm",
+        "t": 23.15
+      },
+      {
+        "id": "board",
+        "t": 24.716666666666665
+      },
+      {
+        "id": "ride",
+        "t": 49.05
+      },
+      {
+        "id": "doors",
+        "t": 58.6
+      },
+      {
+        "id": "bridge",
+        "t": 151.11666666666667
+      }
+    ],
+    "furthestObjective": "bridge",
+    "activeObjectives": [],
+    "outcome": "complete",
+    "blocker": null,
+    "collision": {
+      "failures": 0,
+      "pending": 0,
+      "admitted": 208,
+      "deferred": 0,
+      "requests": [],
+      "offenders": []
+    }
+  },
+  "observation": {
+    "ticks": 9367,
+    "followerWait": {
+      "escortTicks": 7906,
+      "stationaryFarTicks": 0,
+      "upperBoundPercent": 0,
+      "followers": [
+        {
+          "id": 107,
+          "escortTicks": 7906,
+          "stationaryFarTicks": 0
+        }
+      ]
+    },
+    "phases": [
+      {
+        "key": "step/calm",
+        "label": "calm: Take the fire axe",
+        "threat": false,
+        "startSeconds": 0,
+        "seconds": 23.15,
+        "spawned": 0,
+        "initial": 0,
+        "observed": 0,
+        "reachableEver": 0,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 107,
+            "samples": 1,
+            "median": 0.5367359407733515
+          }
+        ],
+        "followerMin": null,
+        "followerMedian": null,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 1386,
+          "alive": 0,
+          "reachable": 0,
+          "playerX": -73.97700500488281,
+          "playerZ": 47.08124923706055,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "step/axe",
+        "label": "axe: Take the fire axe",
+        "threat": false,
+        "startSeconds": 0,
+        "seconds": 23.1,
+        "spawned": 0,
+        "initial": 0,
+        "observed": 0,
+        "reachableEver": 0,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 107,
+            "samples": 1,
+            "median": 0.5367359407733515
+          }
+        ],
+        "followerMin": null,
+        "followerMedian": null,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 1321,
+          "alive": 0,
+          "reachable": 0,
+          "playerX": -73.19989776611328,
+          "playerZ": 45.20000076293945,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "phase/calm",
+        "label": "controller: calm",
+        "threat": false,
+        "startSeconds": 0,
+        "seconds": 23.15,
+        "spawned": 0,
+        "initial": 0,
+        "observed": 0,
+        "reachableEver": 0,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 107,
+            "samples": 1,
+            "median": 0.5367359407733515
+          }
+        ],
+        "followerMin": null,
+        "followerMedian": null,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 1386,
+          "alive": 0,
+          "reachable": 0,
+          "playerX": -73.97700500488281,
+          "playerZ": 47.08124923706055,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "step/board",
+        "label": "board: Get on the fire truck",
+        "threat": false,
+        "startSeconds": 23.15,
+        "seconds": 1.5666666666666667,
+        "spawned": 0,
+        "initial": 0,
+        "observed": 0,
+        "reachableEver": 0,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 107,
+            "samples": 3,
+            "median": 3.24204033678396
+          }
+        ],
+        "followerMin": null,
+        "followerMedian": null,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 1389,
+          "alive": 0,
+          "reachable": 0,
+          "playerX": -73.97750091552734,
+          "playerZ": 47.08244323730469,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "phase/alarm",
+        "label": "controller: alarm",
+        "threat": false,
+        "startSeconds": 23.15,
+        "seconds": 1.5833333333333333,
+        "spawned": 0,
+        "initial": 0,
+        "observed": 0,
+        "reachableEver": 0,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 107,
+            "samples": 3,
+            "median": 3.24204033678396
+          }
+        ],
+        "followerMin": null,
+        "followerMedian": null,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 1483,
+          "alive": 0,
+          "reachable": 0,
+          "playerX": -70.82028198242188,
+          "playerZ": 41.50457763671875,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "step/ride",
+        "label": "ride: Ride with Engine 3 to Grove Market",
+        "threat": false,
+        "startSeconds": 24.716666666666665,
+        "seconds": 24.333333333333332,
+        "spawned": 0,
+        "initial": 0,
+        "observed": 0,
+        "reachableEver": 0,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [],
+        "followerMin": null,
+        "followerMedian": null,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 2924,
+          "alive": 0,
+          "reachable": 0,
+          "playerX": -42.84156799316406,
+          "playerZ": -32,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "phase/ride",
+        "label": "controller: ride",
+        "threat": false,
+        "startSeconds": 24.733333333333334,
+        "seconds": 24.316666666666666,
+        "spawned": 0,
+        "initial": 0,
+        "observed": 0,
+        "reachableEver": 0,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [],
+        "followerMin": null,
+        "followerMedian": null,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 2924,
+          "alive": 0,
+          "reachable": 0,
+          "playerX": -42.84156799316406,
+          "playerZ": -32,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "step/doors",
+        "label": "doors: Cover the firefighters while they force the doors",
+        "threat": false,
+        "startSeconds": 49.05,
+        "seconds": 9.55,
+        "spawned": 0,
+        "initial": 0,
+        "observed": 0,
+        "reachableEver": 0,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 107,
+            "samples": 2,
+            "median": 1.5264005791498478
+          }
+        ],
+        "followerMin": null,
+        "followerMedian": null,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 3396,
+          "alive": 0,
+          "reachable": 0,
+          "playerX": -45.97011184692383,
+          "playerZ": -36.76974105834961,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "phase/arrived",
+        "label": "controller: arrived",
+        "threat": false,
+        "startSeconds": 49.05,
+        "seconds": 5.55,
+        "spawned": 0,
+        "initial": 0,
+        "observed": 0,
+        "reachableEver": 0,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 107,
+            "samples": 2,
+            "median": 1.5264005791498478
+          }
+        ],
+        "followerMin": null,
+        "followerMedian": null,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 3183,
+          "alive": 0,
+          "reachable": 0,
+          "playerX": -45.97011184692383,
+          "playerZ": -36.76974105834961,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "phase/doors",
+        "label": "controller: doors",
+        "threat": false,
+        "startSeconds": 54.6,
+        "seconds": 4,
+        "spawned": 0,
+        "initial": 0,
+        "observed": 0,
+        "reachableEver": 0,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [],
+        "followerMin": null,
+        "followerMedian": null,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 3396,
+          "alive": 0,
+          "reachable": 0,
+          "playerX": -45.97011184692383,
+          "playerZ": -36.76974105834961,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "step/bridge",
+        "label": "bridge: Reach the police checkpoint at the bridge",
+        "threat": false,
+        "startSeconds": 58.6,
+        "seconds": 92.51666666666667,
+        "spawned": 59,
+        "initial": 0,
+        "observed": 59,
+        "reachableEver": 58,
+        "within2_5m": 27,
+        "attacks": 16,
+        "attacksPerMinute": 10.376508737164475,
+        "firstAttackSeconds": 3.283333333333333,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 107,
+            "samples": 140,
+            "median": 3.8397718869456137
+          }
+        ],
+        "followerMin": 3.8397718869456137,
+        "followerMedian": 3.8397718869456137,
+        "boundedPaths": {
+          "samples": 47,
+          "minimumPercent": 0,
+          "worstTick": 9031,
+          "nearby": 1,
+          "reachable": 0,
+          "blockedIds": [
+            259
+          ]
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 9031,
+          "alive": 27,
+          "reachable": 0,
+          "playerX": 81.40206909179688,
+          "playerZ": 32.958251953125,
+          "positions": [
+            {
+              "identity": "185@2",
+              "id": 185,
+              "x": 12.475650100214683,
+              "z": -29.63045892911256,
+              "playerX": 81.40206909179688,
+              "playerZ": 32.958251953125
+            },
+            {
+              "identity": "191@5",
+              "id": 191,
+              "x": -57.577796608918725,
+              "z": -26.71056961359004,
+              "playerX": 81.40206909179688,
+              "playerZ": 32.958251953125
+            },
+            {
+              "identity": "201@10",
+              "id": 201,
+              "x": 5.3733857217621175,
+              "z": -4.297873651596107,
+              "playerX": 81.40206909179688,
+              "playerZ": 32.958251953125
+            },
+            {
+              "identity": "209@14",
+              "id": 209,
+              "x": -25.99990088635093,
+              "z": 4.331205648469608,
+              "playerX": 81.40206909179688,
+              "playerZ": 32.958251953125
+            },
+            {
+              "identity": "217@18",
+              "id": 217,
+              "x": -54.8374326850491,
+              "z": 37.50556852348037,
+              "playerX": 81.40206909179688,
+              "playerZ": 32.958251953125
+            },
+            {
+              "identity": "219@19",
+              "id": 219,
+              "x": -51.98210648228589,
+              "z": 14.696900138269978,
+              "playerX": 81.40206909179688,
+              "playerZ": 32.958251953125
+            },
+            {
+              "identity": "233@27",
+              "id": 233,
+              "x": -68.89486009844815,
+              "z": 2.963079099077812,
+              "playerX": 81.40206909179688,
+              "playerZ": 32.958251953125
+            },
+            {
+              "identity": "235@28",
+              "id": 235,
+              "x": -67.10390634866282,
+              "z": 14.458877162093769,
+              "playerX": 81.40206909179688,
+              "playerZ": 32.958251953125
+            },
+            {
+              "identity": "237@29",
+              "id": 237,
+              "x": -68.02664290955012,
+              "z": 15.212301185836912,
+              "playerX": 81.40206909179688,
+              "playerZ": 32.958251953125
+            },
+            {
+              "identity": "239@30",
+              "id": 239,
+              "x": -64.68237537285877,
+              "z": -4.157046558428825,
+              "playerX": 81.40206909179688,
+              "playerZ": 32.958251953125
+            },
+            {
+              "identity": "241@31",
+              "id": 241,
+              "x": -24.81356125094951,
+              "z": 48.63042464103934,
+              "playerX": 81.40206909179688,
+              "playerZ": 32.958251953125
+            },
+            {
+              "identity": "243@32",
+              "id": 243,
+              "x": -55.09268701736458,
+              "z": 30.418896428734392,
+              "playerX": 81.40206909179688,
+              "playerZ": 32.958251953125
+            },
+            {
+              "identity": "245@33",
+              "id": 245,
+              "x": -54.26739839859411,
+              "z": 28.314247092674336,
+              "playerX": 81.40206909179688,
+              "playerZ": 32.958251953125
+            },
+            {
+              "identity": "247@34",
+              "id": 247,
+              "x": -66.95095125148157,
+              "z": 18.09894583123468,
+              "playerX": 81.40206909179688,
+              "playerZ": 32.958251953125
+            },
+            {
+              "identity": "249@35",
+              "id": 249,
+              "x": 33.54851645790182,
+              "z": -27.018174216131282,
+              "playerX": 81.40206909179688,
+              "playerZ": 32.958251953125
+            },
+            {
+              "identity": "251@36",
+              "id": 251,
+              "x": 36.457687608568556,
+              "z": -28.3614455126723,
+              "playerX": 81.40206909179688,
+              "playerZ": 32.958251953125
+            },
+            {
+              "identity": "253@37",
+              "id": 253,
+              "x": 39.15101243476506,
+              "z": -31.4635653694719,
+              "playerX": 81.40206909179688,
+              "playerZ": 32.958251953125
+            },
+            {
+              "identity": "255@38",
+              "id": 255,
+              "x": 42.667729227069856,
+              "z": -32.914890193953276,
+              "playerX": 81.40206909179688,
+              "playerZ": 32.958251953125
+            },
+            {
+              "identity": "257@39",
+              "id": 257,
+              "x": -7.117493531430933,
+              "z": 48.031811883353065,
+              "playerX": 81.40206909179688,
+              "playerZ": 32.958251953125
+            },
+            {
+              "identity": "259@40",
+              "id": 259,
+              "x": 81.2790545667174,
+              "z": 42.181059903534404,
+              "playerX": 81.40206909179688,
+              "playerZ": 32.958251953125
+            },
+            {
+              "identity": "261@41",
+              "id": 261,
+              "x": -33.73696629046945,
+              "z": -15.819671196349603,
+              "playerX": 81.40206909179688,
+              "playerZ": 32.958251953125
+            },
+            {
+              "identity": "263@42",
+              "id": 263,
+              "x": -34.412684950494096,
+              "z": 2.0460356560250097,
+              "playerX": 81.40206909179688,
+              "playerZ": 32.958251953125
+            },
+            {
+              "identity": "265@43",
+              "id": 265,
+              "x": -28.968665658366607,
+              "z": 18.44174214215722,
+              "playerX": 81.40206909179688,
+              "playerZ": 32.958251953125
+            },
+            {
+              "identity": "267@44",
+              "id": 267,
+              "x": -11.497388117617879,
+              "z": 28.34053608055268,
+              "playerX": 81.40206909179688,
+              "playerZ": 32.958251953125
+            },
+            {
+              "identity": "269@45",
+              "id": 269,
+              "x": 7.741056024318641,
+              "z": 26.233613392255656,
+              "playerX": 81.40206909179688,
+              "playerZ": 32.958251953125
+            },
+            {
+              "identity": "271@46",
+              "id": 271,
+              "x": 26.464125795658752,
+              "z": 27.035933564266454,
+              "playerX": 81.40206909179688,
+              "playerZ": 32.958251953125
+            },
+            {
+              "identity": "275@48",
+              "id": 275,
+              "x": 45.79890029041735,
+              "z": 29.69723937127624,
+              "playerX": 81.40206909179688,
+              "playerZ": 32.958251953125
+            }
+          ]
+        },
+        "flags": []
+      },
+      {
+        "key": "phase/collapse",
+        "label": "controller: collapse",
+        "threat": true,
+        "startSeconds": 58.6,
+        "seconds": 12.933333333333334,
+        "spawned": 48,
+        "initial": 0,
+        "observed": 48,
+        "reachableEver": 47,
+        "within2_5m": 14,
+        "attacks": 7,
+        "attacksPerMinute": 32.47422680412371,
+        "firstAttackSeconds": 3.283333333333333,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 107,
+            "samples": 14,
+            "median": 3.860681064347601
+          }
+        ],
+        "followerMin": 3.860681064347601,
+        "followerMedian": 3.860681064347601,
+        "boundedPaths": {
+          "samples": 6,
+          "minimumPercent": 100,
+          "worstTick": 4236,
+          "nearby": 8,
+          "reachable": 8,
+          "blockedIds": []
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 4236,
+          "alive": 30,
+          "reachable": 30,
+          "playerX": -65.35172271728516,
+          "playerZ": -26.241891860961914,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "phase/escape",
+        "label": "controller: escape",
+        "threat": true,
+        "startSeconds": 71.53333333333333,
+        "seconds": 76.98333333333333,
+        "spawned": 11,
+        "initial": 30,
+        "observed": 43,
+        "reachableEver": 43,
+        "within2_5m": 16,
+        "attacks": 9,
+        "attacksPerMinute": 7.014505304178393,
+        "firstAttackSeconds": 3.066666666666667,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 107,
+            "samples": 125,
+            "median": 3.824403948716494
+          }
+        ],
+        "followerMin": 3.824403948716494,
+        "followerMedian": 3.824403948716494,
+        "boundedPaths": {
+          "samples": 39,
+          "minimumPercent": 100,
+          "worstTick": 8852,
+          "nearby": 1,
+          "reachable": 1,
+          "blockedIds": []
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 8852,
+          "alive": 27,
+          "reachable": 27,
+          "playerX": 81.41915893554688,
+          "playerZ": 37.559226989746094,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "phase/checkpoint",
+        "label": "controller: checkpoint",
+        "threat": false,
+        "startSeconds": 148.51666666666668,
+        "seconds": 2.6,
+        "spawned": 0,
+        "initial": 27,
+        "observed": 27,
+        "reachableEver": 27,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 107,
+            "samples": 1,
+            "median": 3.8551398251747337
+          }
+        ],
+        "followerMin": null,
+        "followerMedian": null,
+        "boundedPaths": {
+          "samples": 2,
+          "minimumPercent": 0,
+          "worstTick": 9031,
+          "nearby": 1,
+          "reachable": 0,
+          "blockedIds": [
+            259
+          ]
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 9031,
+          "alive": 27,
+          "reachable": 0,
+          "playerX": 81.40206909179688,
+          "playerZ": 32.958251953125,
+          "positions": [
+            {
+              "identity": "185@2",
+              "id": 185,
+              "x": 12.475650100214683,
+              "z": -29.63045892911256,
+              "playerX": 81.40206909179688,
+              "playerZ": 32.958251953125
+            },
+            {
+              "identity": "191@5",
+              "id": 191,
+              "x": -57.577796608918725,
+              "z": -26.71056961359004,
+              "playerX": 81.40206909179688,
+              "playerZ": 32.958251953125
+            },
+            {
+              "identity": "201@10",
+              "id": 201,
+              "x": 5.3733857217621175,
+              "z": -4.297873651596107,
+              "playerX": 81.40206909179688,
+              "playerZ": 32.958251953125
+            },
+            {
+              "identity": "209@14",
+              "id": 209,
+              "x": -25.99990088635093,
+              "z": 4.331205648469608,
+              "playerX": 81.40206909179688,
+              "playerZ": 32.958251953125
+            },
+            {
+              "identity": "217@18",
+              "id": 217,
+              "x": -54.8374326850491,
+              "z": 37.50556852348037,
+              "playerX": 81.40206909179688,
+              "playerZ": 32.958251953125
+            },
+            {
+              "identity": "219@19",
+              "id": 219,
+              "x": -51.98210648228589,
+              "z": 14.696900138269978,
+              "playerX": 81.40206909179688,
+              "playerZ": 32.958251953125
+            },
+            {
+              "identity": "233@27",
+              "id": 233,
+              "x": -68.89486009844815,
+              "z": 2.963079099077812,
+              "playerX": 81.40206909179688,
+              "playerZ": 32.958251953125
+            },
+            {
+              "identity": "235@28",
+              "id": 235,
+              "x": -67.10390634866282,
+              "z": 14.458877162093769,
+              "playerX": 81.40206909179688,
+              "playerZ": 32.958251953125
+            },
+            {
+              "identity": "237@29",
+              "id": 237,
+              "x": -68.02664290955012,
+              "z": 15.212301185836912,
+              "playerX": 81.40206909179688,
+              "playerZ": 32.958251953125
+            },
+            {
+              "identity": "239@30",
+              "id": 239,
+              "x": -64.68237537285877,
+              "z": -4.157046558428825,
+              "playerX": 81.40206909179688,
+              "playerZ": 32.958251953125
+            },
+            {
+              "identity": "241@31",
+              "id": 241,
+              "x": -24.81356125094951,
+              "z": 48.63042464103934,
+              "playerX": 81.40206909179688,
+              "playerZ": 32.958251953125
+            },
+            {
+              "identity": "243@32",
+              "id": 243,
+              "x": -55.09268701736458,
+              "z": 30.418896428734392,
+              "playerX": 81.40206909179688,
+              "playerZ": 32.958251953125
+            },
+            {
+              "identity": "245@33",
+              "id": 245,
+              "x": -54.26739839859411,
+              "z": 28.314247092674336,
+              "playerX": 81.40206909179688,
+              "playerZ": 32.958251953125
+            },
+            {
+              "identity": "247@34",
+              "id": 247,
+              "x": -66.95095125148157,
+              "z": 18.09894583123468,
+              "playerX": 81.40206909179688,
+              "playerZ": 32.958251953125
+            },
+            {
+              "identity": "249@35",
+              "id": 249,
+              "x": 33.54851645790182,
+              "z": -27.018174216131282,
+              "playerX": 81.40206909179688,
+              "playerZ": 32.958251953125
+            },
+            {
+              "identity": "251@36",
+              "id": 251,
+              "x": 36.457687608568556,
+              "z": -28.3614455126723,
+              "playerX": 81.40206909179688,
+              "playerZ": 32.958251953125
+            },
+            {
+              "identity": "253@37",
+              "id": 253,
+              "x": 39.15101243476506,
+              "z": -31.4635653694719,
+              "playerX": 81.40206909179688,
+              "playerZ": 32.958251953125
+            },
+            {
+              "identity": "255@38",
+              "id": 255,
+              "x": 42.667729227069856,
+              "z": -32.914890193953276,
+              "playerX": 81.40206909179688,
+              "playerZ": 32.958251953125
+            },
+            {
+              "identity": "257@39",
+              "id": 257,
+              "x": -7.117493531430933,
+              "z": 48.031811883353065,
+              "playerX": 81.40206909179688,
+              "playerZ": 32.958251953125
+            },
+            {
+              "identity": "259@40",
+              "id": 259,
+              "x": 81.2790545667174,
+              "z": 42.181059903534404,
+              "playerX": 81.40206909179688,
+              "playerZ": 32.958251953125
+            },
+            {
+              "identity": "261@41",
+              "id": 261,
+              "x": -33.73696629046945,
+              "z": -15.819671196349603,
+              "playerX": 81.40206909179688,
+              "playerZ": 32.958251953125
+            },
+            {
+              "identity": "263@42",
+              "id": 263,
+              "x": -34.412684950494096,
+              "z": 2.0460356560250097,
+              "playerX": 81.40206909179688,
+              "playerZ": 32.958251953125
+            },
+            {
+              "identity": "265@43",
+              "id": 265,
+              "x": -28.968665658366607,
+              "z": 18.44174214215722,
+              "playerX": 81.40206909179688,
+              "playerZ": 32.958251953125
+            },
+            {
+              "identity": "267@44",
+              "id": 267,
+              "x": -11.497388117617879,
+              "z": 28.34053608055268,
+              "playerX": 81.40206909179688,
+              "playerZ": 32.958251953125
+            },
+            {
+              "identity": "269@45",
+              "id": 269,
+              "x": 7.741056024318641,
+              "z": 26.233613392255656,
+              "playerX": 81.40206909179688,
+              "playerZ": 32.958251953125
+            },
+            {
+              "identity": "271@46",
+              "id": 271,
+              "x": 26.464125795658752,
+              "z": 27.035933564266454,
+              "playerX": 81.40206909179688,
+              "playerZ": 32.958251953125
+            },
+            {
+              "identity": "275@48",
+              "id": 275,
+              "x": 45.79890029041735,
+              "z": 29.69723937127624,
+              "playerX": 81.40206909179688,
+              "playerZ": 32.958251953125
+            }
+          ]
+        },
+        "flags": []
+      },
+      {
+        "key": "phase/run-out",
+        "label": "level-end run-out",
+        "threat": false,
+        "startSeconds": 151.11666666666667,
+        "seconds": 5,
+        "spawned": 1,
+        "initial": 27,
+        "observed": 29,
+        "reachableEver": 0,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [],
+        "followerMin": null,
+        "followerMedian": null,
+        "boundedPaths": {
+          "samples": 2,
+          "minimumPercent": 0,
+          "worstTick": 9307,
+          "nearby": 1,
+          "reachable": 0,
+          "blockedIds": [
+            297
+          ]
+        },
+        "maxBlockedSeconds": 4,
+        "blockedEvidence": {
+          "tick": 9307,
+          "alive": 28,
+          "reachable": 0,
+          "playerX": 81.95327758789062,
+          "playerZ": 32.29509353637695,
+          "positions": [
+            {
+              "identity": "185@2",
+              "id": 185,
+              "x": 14.124915303135229,
+              "z": -29.735526206173567,
+              "playerX": 81.95327758789062,
+              "playerZ": 32.29509353637695
+            },
+            {
+              "identity": "191@5",
+              "id": 191,
+              "x": -51.82250127854192,
+              "z": -26.744428094200664,
+              "playerX": 81.95327758789062,
+              "playerZ": 32.29509353637695
+            },
+            {
+              "identity": "201@10",
+              "id": 201,
+              "x": 5.757410388448158,
+              "z": -2.140685216551298,
+              "playerX": 81.95327758789062,
+              "playerZ": 32.29509353637695
+            },
+            {
+              "identity": "209@14",
+              "id": 209,
+              "x": -26.255209431756082,
+              "z": 9.626233690100955,
+              "playerX": 81.95327758789062,
+              "playerZ": 32.29509353637695
+            },
+            {
+              "identity": "217@18",
+              "id": 217,
+              "x": -51.67692508898891,
+              "z": 34.24630207353851,
+              "playerX": 81.95327758789062,
+              "playerZ": 32.29509353637695
+            },
+            {
+              "identity": "219@19",
+              "id": 219,
+              "x": -46.66647194018936,
+              "z": 14.452943503721876,
+              "playerX": 81.95327758789062,
+              "playerZ": 32.29509353637695
+            },
+            {
+              "identity": "233@27",
+              "id": 233,
+              "x": -67.09929365187152,
+              "z": 4.040423020374103,
+              "playerX": 81.95327758789062,
+              "playerZ": 32.29509353637695
+            },
+            {
+              "identity": "235@28",
+              "id": 235,
+              "x": -68.76641871775225,
+              "z": 14.9162544493649,
+              "playerX": 81.95327758789062,
+              "playerZ": 32.29509353637695
+            },
+            {
+              "identity": "237@29",
+              "id": 237,
+              "x": -68.59115089877888,
+              "z": 13.74929028115049,
+              "playerX": 81.95327758789062,
+              "playerZ": 32.29509353637695
+            },
+            {
+              "identity": "239@30",
+              "id": 239,
+              "x": -66.04188459937819,
+              "z": 1.2728064139096416,
+              "playerX": 81.95327758789062,
+              "playerZ": 32.29509353637695
+            },
+            {
+              "identity": "241@31",
+              "id": 241,
+              "x": -26.565607516875218,
+              "z": 49.06442638713463,
+              "playerX": 81.95327758789062,
+              "playerZ": 32.29509353637695
+            },
+            {
+              "identity": "243@32",
+              "id": 243,
+              "x": -56.92347409884095,
+              "z": 31.548527243546925,
+              "playerX": 81.95327758789062,
+              "playerZ": 32.29509353637695
+            },
+            {
+              "identity": "245@33",
+              "id": 245,
+              "x": -56.654586720900305,
+              "z": 33.2485433709848,
+              "playerX": 81.95327758789062,
+              "playerZ": 32.29509353637695
+            },
+            {
+              "identity": "247@34",
+              "id": 247,
+              "x": -66.32714924701212,
+              "z": 20.946972458793887,
+              "playerX": 81.95327758789062,
+              "playerZ": 32.29509353637695
+            },
+            {
+              "identity": "249@35",
+              "id": 249,
+              "x": 36.85970880127018,
+              "z": -29.061826805824612,
+              "playerX": 81.95327758789062,
+              "playerZ": 32.29509353637695
+            },
+            {
+              "identity": "251@36",
+              "id": 251,
+              "x": 37.19283001096746,
+              "z": -30.642634356672797,
+              "playerX": 81.95327758789062,
+              "playerZ": 32.29509353637695
+            },
+            {
+              "identity": "253@37",
+              "id": 253,
+              "x": 39.96391100704757,
+              "z": -33.458364001629505,
+              "playerX": 81.95327758789062,
+              "playerZ": 32.29509353637695
+            },
+            {
+              "identity": "255@38",
+              "id": 255,
+              "x": 38.421770897378764,
+              "z": -30.396591448527136,
+              "playerX": 81.95327758789062,
+              "playerZ": 32.29509353637695
+            },
+            {
+              "identity": "257@39",
+              "id": 257,
+              "x": -5.623306063983052,
+              "z": 48.5760910091416,
+              "playerX": 81.95327758789062,
+              "playerZ": 32.29509353637695
+            },
+            {
+              "identity": "261@41",
+              "id": 261,
+              "x": -33.93857827304798,
+              "z": -14.415465984620932,
+              "playerX": 81.95327758789062,
+              "playerZ": 32.29509353637695
+            },
+            {
+              "identity": "263@42",
+              "id": 263,
+              "x": -35.94491454185259,
+              "z": 3.469409221029802,
+              "playerX": 81.95327758789062,
+              "playerZ": 32.29509353637695
+            },
+            {
+              "identity": "265@43",
+              "id": 265,
+              "x": -26.42617158876209,
+              "z": 17.042422499365244,
+              "playerX": 81.95327758789062,
+              "playerZ": 32.29509353637695
+            },
+            {
+              "identity": "267@44",
+              "id": 267,
+              "x": -11.176125248868034,
+              "z": 26.478583295175394,
+              "playerX": 81.95327758789062,
+              "playerZ": 32.29509353637695
+            },
+            {
+              "identity": "269@45",
+              "id": 269,
+              "x": 6.274711812135655,
+              "z": 28.285595352897953,
+              "playerX": 81.95327758789062,
+              "playerZ": 32.29509353637695
+            },
+            {
+              "identity": "271@46",
+              "id": 271,
+              "x": 25.44872559761755,
+              "z": 26.631213060439684,
+              "playerX": 81.95327758789062,
+              "playerZ": 32.29509353637695
+            },
+            {
+              "identity": "275@48",
+              "id": 275,
+              "x": 46.153596692870906,
+              "z": 34.17561735340068,
+              "playerX": 81.95327758789062,
+              "playerZ": 32.29509353637695
+            },
+            {
+              "identity": "297@59",
+              "id": 297,
+              "x": 81.36314323884271,
+              "z": 39.56103630141942,
+              "playerX": 81.95327758789062,
+              "playerZ": 32.29509353637695
+            },
+            {
+              "identity": "175@60",
+              "id": 175,
+              "x": 5.889117872374797,
+              "z": -4.945833350789674,
+              "playerX": 81.95327758789062,
+              "playerZ": 32.29509353637695
+            }
+          ]
+        },
+        "last": {
+          "tick": 9307,
+          "alive": 28,
+          "reachable": 0,
+          "playerX": 81.95327758789062,
+          "playerZ": 32.29509353637695,
+          "positions": [
+            {
+              "identity": "185@2",
+              "id": 185,
+              "x": 14.124915303135229,
+              "z": -29.735526206173567,
+              "playerX": 81.95327758789062,
+              "playerZ": 32.29509353637695
+            },
+            {
+              "identity": "191@5",
+              "id": 191,
+              "x": -51.82250127854192,
+              "z": -26.744428094200664,
+              "playerX": 81.95327758789062,
+              "playerZ": 32.29509353637695
+            },
+            {
+              "identity": "201@10",
+              "id": 201,
+              "x": 5.757410388448158,
+              "z": -2.140685216551298,
+              "playerX": 81.95327758789062,
+              "playerZ": 32.29509353637695
+            },
+            {
+              "identity": "209@14",
+              "id": 209,
+              "x": -26.255209431756082,
+              "z": 9.626233690100955,
+              "playerX": 81.95327758789062,
+              "playerZ": 32.29509353637695
+            },
+            {
+              "identity": "217@18",
+              "id": 217,
+              "x": -51.67692508898891,
+              "z": 34.24630207353851,
+              "playerX": 81.95327758789062,
+              "playerZ": 32.29509353637695
+            },
+            {
+              "identity": "219@19",
+              "id": 219,
+              "x": -46.66647194018936,
+              "z": 14.452943503721876,
+              "playerX": 81.95327758789062,
+              "playerZ": 32.29509353637695
+            },
+            {
+              "identity": "233@27",
+              "id": 233,
+              "x": -67.09929365187152,
+              "z": 4.040423020374103,
+              "playerX": 81.95327758789062,
+              "playerZ": 32.29509353637695
+            },
+            {
+              "identity": "235@28",
+              "id": 235,
+              "x": -68.76641871775225,
+              "z": 14.9162544493649,
+              "playerX": 81.95327758789062,
+              "playerZ": 32.29509353637695
+            },
+            {
+              "identity": "237@29",
+              "id": 237,
+              "x": -68.59115089877888,
+              "z": 13.74929028115049,
+              "playerX": 81.95327758789062,
+              "playerZ": 32.29509353637695
+            },
+            {
+              "identity": "239@30",
+              "id": 239,
+              "x": -66.04188459937819,
+              "z": 1.2728064139096416,
+              "playerX": 81.95327758789062,
+              "playerZ": 32.29509353637695
+            },
+            {
+              "identity": "241@31",
+              "id": 241,
+              "x": -26.565607516875218,
+              "z": 49.06442638713463,
+              "playerX": 81.95327758789062,
+              "playerZ": 32.29509353637695
+            },
+            {
+              "identity": "243@32",
+              "id": 243,
+              "x": -56.92347409884095,
+              "z": 31.548527243546925,
+              "playerX": 81.95327758789062,
+              "playerZ": 32.29509353637695
+            },
+            {
+              "identity": "245@33",
+              "id": 245,
+              "x": -56.654586720900305,
+              "z": 33.2485433709848,
+              "playerX": 81.95327758789062,
+              "playerZ": 32.29509353637695
+            },
+            {
+              "identity": "247@34",
+              "id": 247,
+              "x": -66.32714924701212,
+              "z": 20.946972458793887,
+              "playerX": 81.95327758789062,
+              "playerZ": 32.29509353637695
+            },
+            {
+              "identity": "249@35",
+              "id": 249,
+              "x": 36.85970880127018,
+              "z": -29.061826805824612,
+              "playerX": 81.95327758789062,
+              "playerZ": 32.29509353637695
+            },
+            {
+              "identity": "251@36",
+              "id": 251,
+              "x": 37.19283001096746,
+              "z": -30.642634356672797,
+              "playerX": 81.95327758789062,
+              "playerZ": 32.29509353637695
+            },
+            {
+              "identity": "253@37",
+              "id": 253,
+              "x": 39.96391100704757,
+              "z": -33.458364001629505,
+              "playerX": 81.95327758789062,
+              "playerZ": 32.29509353637695
+            },
+            {
+              "identity": "255@38",
+              "id": 255,
+              "x": 38.421770897378764,
+              "z": -30.396591448527136,
+              "playerX": 81.95327758789062,
+              "playerZ": 32.29509353637695
+            },
+            {
+              "identity": "257@39",
+              "id": 257,
+              "x": -5.623306063983052,
+              "z": 48.5760910091416,
+              "playerX": 81.95327758789062,
+              "playerZ": 32.29509353637695
+            },
+            {
+              "identity": "261@41",
+              "id": 261,
+              "x": -33.93857827304798,
+              "z": -14.415465984620932,
+              "playerX": 81.95327758789062,
+              "playerZ": 32.29509353637695
+            },
+            {
+              "identity": "263@42",
+              "id": 263,
+              "x": -35.94491454185259,
+              "z": 3.469409221029802,
+              "playerX": 81.95327758789062,
+              "playerZ": 32.29509353637695
+            },
+            {
+              "identity": "265@43",
+              "id": 265,
+              "x": -26.42617158876209,
+              "z": 17.042422499365244,
+              "playerX": 81.95327758789062,
+              "playerZ": 32.29509353637695
+            },
+            {
+              "identity": "267@44",
+              "id": 267,
+              "x": -11.176125248868034,
+              "z": 26.478583295175394,
+              "playerX": 81.95327758789062,
+              "playerZ": 32.29509353637695
+            },
+            {
+              "identity": "269@45",
+              "id": 269,
+              "x": 6.274711812135655,
+              "z": 28.285595352897953,
+              "playerX": 81.95327758789062,
+              "playerZ": 32.29509353637695
+            },
+            {
+              "identity": "271@46",
+              "id": 271,
+              "x": 25.44872559761755,
+              "z": 26.631213060439684,
+              "playerX": 81.95327758789062,
+              "playerZ": 32.29509353637695
+            },
+            {
+              "identity": "275@48",
+              "id": 275,
+              "x": 46.153596692870906,
+              "z": 34.17561735340068,
+              "playerX": 81.95327758789062,
+              "playerZ": 32.29509353637695
+            },
+            {
+              "identity": "297@59",
+              "id": 297,
+              "x": 81.36314323884271,
+              "z": 39.56103630141942,
+              "playerX": 81.95327758789062,
+              "playerZ": 32.29509353637695
+            },
+            {
+              "identity": "175@60",
+              "id": 175,
+              "x": 5.889117872374797,
+              "z": -4.945833350789674,
+              "playerX": 81.95327758789062,
+              "playerZ": 32.29509353637695
+            }
+          ]
+        },
+        "flags": []
+      }
+    ],
+    "waves": [
+      {
+        "key": "market-ambush",
+        "source": "l2.doorsOpen",
+        "startSeconds": 58.6,
+        "observedSeconds": 97.51666666666667,
+        "expected": 24,
+        "spawned": 24,
+        "firstAttackSeconds": 3.283333333333333,
+        "members": [
+          "183@1",
+          "185@2",
+          "187@3",
+          "189@4",
+          "191@5",
+          "193@6",
+          "195@7",
+          "197@8",
+          "199@9",
+          "201@10",
+          "203@11",
+          "205@12",
+          "207@13",
+          "209@14",
+          "211@15",
+          "213@16",
+          "215@17",
+          "217@18",
+          "219@19",
+          "221@20",
+          "223@21",
+          "225@22",
+          "227@23",
+          "229@24"
+        ],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 3,
+        "spawnedWithinEighteenSeconds": 24
+      }
+    ]
+  },
+  "flags": [],
+  "passiveRun": {
+    "level": "L2",
+    "policy": "complete",
+    "seed": 1,
+    "completed": true,
+    "time": 188.33333333333334,
+    "deaths": 0,
+    "kills": 0,
+    "damageTaken": 0,
+    "failures": {},
+    "objectiveTimeline": [
+      {
+        "id": "axe",
+        "t": 23.1
+      },
+      {
+        "id": "calm",
+        "t": 23.15
+      },
+      {
+        "id": "board",
+        "t": 24.716666666666665
+      },
+      {
+        "id": "ride",
+        "t": 49.05
+      },
+      {
+        "id": "doors",
+        "t": 58.6
+      },
+      {
+        "id": "bridge",
+        "t": 183.33333333333334
+      }
+    ],
+    "furthestObjective": "bridge",
+    "activeObjectives": [],
+    "outcome": "complete",
+    "blocker": null,
+    "collision": {
+      "failures": 0,
+      "pending": 0,
+      "admitted": 209,
+      "deferred": 0,
+      "requests": [],
+      "offenders": []
+    }
+  },
+  "passiveObservation": {
+    "ticks": 11300,
+    "followerWait": {
+      "escortTicks": 9839,
+      "stationaryFarTicks": 0,
+      "upperBoundPercent": 0,
+      "followers": [
+        {
+          "id": 107,
+          "escortTicks": 9839,
+          "stationaryFarTicks": 0
+        }
+      ]
+    },
+    "phases": [
+      {
+        "key": "step/calm",
+        "label": "calm: Take the fire axe",
+        "threat": false,
+        "startSeconds": 0,
+        "seconds": 23.15,
+        "spawned": 0,
+        "initial": 0,
+        "observed": 0,
+        "reachableEver": 0,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 107,
+            "samples": 1,
+            "median": 0.5367359407733515
+          }
+        ],
+        "followerMin": null,
+        "followerMedian": null,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 1386,
+          "alive": 0,
+          "reachable": 0,
+          "playerX": -73.97700500488281,
+          "playerZ": 47.08124923706055,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "step/axe",
+        "label": "axe: Take the fire axe",
+        "threat": false,
+        "startSeconds": 0,
+        "seconds": 23.1,
+        "spawned": 0,
+        "initial": 0,
+        "observed": 0,
+        "reachableEver": 0,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 107,
+            "samples": 1,
+            "median": 0.5367359407733515
+          }
+        ],
+        "followerMin": null,
+        "followerMedian": null,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 1321,
+          "alive": 0,
+          "reachable": 0,
+          "playerX": -73.19989776611328,
+          "playerZ": 45.20000076293945,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "phase/calm",
+        "label": "controller: calm",
+        "threat": false,
+        "startSeconds": 0,
+        "seconds": 23.15,
+        "spawned": 0,
+        "initial": 0,
+        "observed": 0,
+        "reachableEver": 0,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 107,
+            "samples": 1,
+            "median": 0.5367359407733515
+          }
+        ],
+        "followerMin": null,
+        "followerMedian": null,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 1386,
+          "alive": 0,
+          "reachable": 0,
+          "playerX": -73.97700500488281,
+          "playerZ": 47.08124923706055,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "step/board",
+        "label": "board: Get on the fire truck",
+        "threat": false,
+        "startSeconds": 23.15,
+        "seconds": 1.5666666666666667,
+        "spawned": 0,
+        "initial": 0,
+        "observed": 0,
+        "reachableEver": 0,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 107,
+            "samples": 3,
+            "median": 3.24204033678396
+          }
+        ],
+        "followerMin": null,
+        "followerMedian": null,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 1389,
+          "alive": 0,
+          "reachable": 0,
+          "playerX": -73.97750091552734,
+          "playerZ": 47.08244323730469,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "phase/alarm",
+        "label": "controller: alarm",
+        "threat": false,
+        "startSeconds": 23.15,
+        "seconds": 1.5833333333333333,
+        "spawned": 0,
+        "initial": 0,
+        "observed": 0,
+        "reachableEver": 0,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 107,
+            "samples": 3,
+            "median": 3.24204033678396
+          }
+        ],
+        "followerMin": null,
+        "followerMedian": null,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 1483,
+          "alive": 0,
+          "reachable": 0,
+          "playerX": -70.82028198242188,
+          "playerZ": 41.50457763671875,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "step/ride",
+        "label": "ride: Ride with Engine 3 to Grove Market",
+        "threat": false,
+        "startSeconds": 24.716666666666665,
+        "seconds": 24.333333333333332,
+        "spawned": 0,
+        "initial": 0,
+        "observed": 0,
+        "reachableEver": 0,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [],
+        "followerMin": null,
+        "followerMedian": null,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 2924,
+          "alive": 0,
+          "reachable": 0,
+          "playerX": -42.84156799316406,
+          "playerZ": -32,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "phase/ride",
+        "label": "controller: ride",
+        "threat": false,
+        "startSeconds": 24.733333333333334,
+        "seconds": 24.316666666666666,
+        "spawned": 0,
+        "initial": 0,
+        "observed": 0,
+        "reachableEver": 0,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [],
+        "followerMin": null,
+        "followerMedian": null,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 2924,
+          "alive": 0,
+          "reachable": 0,
+          "playerX": -42.84156799316406,
+          "playerZ": -32,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "step/doors",
+        "label": "doors: Cover the firefighters while they force the doors",
+        "threat": false,
+        "startSeconds": 49.05,
+        "seconds": 9.55,
+        "spawned": 0,
+        "initial": 0,
+        "observed": 0,
+        "reachableEver": 0,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 107,
+            "samples": 2,
+            "median": 1.5264005791498478
+          }
+        ],
+        "followerMin": null,
+        "followerMedian": null,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 3396,
+          "alive": 0,
+          "reachable": 0,
+          "playerX": -45.97011184692383,
+          "playerZ": -36.76974105834961,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "phase/arrived",
+        "label": "controller: arrived",
+        "threat": false,
+        "startSeconds": 49.05,
+        "seconds": 5.55,
+        "spawned": 0,
+        "initial": 0,
+        "observed": 0,
+        "reachableEver": 0,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 107,
+            "samples": 2,
+            "median": 1.5264005791498478
+          }
+        ],
+        "followerMin": null,
+        "followerMedian": null,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 3183,
+          "alive": 0,
+          "reachable": 0,
+          "playerX": -45.97011184692383,
+          "playerZ": -36.76974105834961,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "phase/doors",
+        "label": "controller: doors",
+        "threat": false,
+        "startSeconds": 54.6,
+        "seconds": 4,
+        "spawned": 0,
+        "initial": 0,
+        "observed": 0,
+        "reachableEver": 0,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [],
+        "followerMin": null,
+        "followerMedian": null,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 3396,
+          "alive": 0,
+          "reachable": 0,
+          "playerX": -45.97011184692383,
+          "playerZ": -36.76974105834961,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "step/bridge",
+        "label": "bridge: Reach the police checkpoint at the bridge",
+        "threat": false,
+        "startSeconds": 58.6,
+        "seconds": 124.73333333333333,
+        "spawned": 61,
+        "initial": 0,
+        "observed": 61,
+        "reachableEver": 60,
+        "within2_5m": 25,
+        "attacks": 368,
+        "attacksPerMinute": 177.01763762693747,
+        "firstAttackSeconds": 3.283333333333333,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 107,
+            "samples": 138,
+            "median": 4.253078737786156
+          }
+        ],
+        "followerMin": 4.253078737786156,
+        "followerMedian": 4.253078737786156,
+        "boundedPaths": {
+          "samples": 62,
+          "minimumPercent": 0,
+          "worstTick": 10964,
+          "nearby": 1,
+          "reachable": 0,
+          "blockedIds": [
+            264
+          ]
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 10964,
+          "alive": 4,
+          "reachable": 0,
+          "playerX": 81.40201568603516,
+          "playerZ": 32.959983825683594,
+          "positions": [
+            {
+              "identity": "264@42",
+              "id": 264,
+              "x": 81.19940199896875,
+              "z": 38.91814222632333,
+              "playerX": 81.40201568603516,
+              "playerZ": 32.959983825683594
+            },
+            {
+              "identity": "266@43",
+              "id": 266,
+              "x": -12.72789068903861,
+              "z": 26.836226214831886,
+              "playerX": 81.40201568603516,
+              "playerZ": 32.959983825683594
+            },
+            {
+              "identity": "268@44",
+              "id": 268,
+              "x": 5.743119435690964,
+              "z": 26.153963942609597,
+              "playerX": 81.40201568603516,
+              "playerZ": 32.959983825683594
+            },
+            {
+              "identity": "270@45",
+              "id": 270,
+              "x": 23.544462801093054,
+              "z": 27.63208448803874,
+              "playerX": 81.40201568603516,
+              "playerZ": 32.959983825683594
+            }
+          ]
+        },
+        "flags": []
+      },
+      {
+        "key": "phase/collapse",
+        "label": "controller: collapse",
+        "threat": true,
+        "startSeconds": 58.6,
+        "seconds": 12.2,
+        "spawned": 47,
+        "initial": 0,
+        "observed": 47,
+        "reachableEver": 46,
+        "within2_5m": 14,
+        "attacks": 10,
+        "attacksPerMinute": 49.18032786885246,
+        "firstAttackSeconds": 3.283333333333333,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 107,
+            "samples": 13,
+            "median": 2.473333333333419
+          }
+        ],
+        "followerMin": 2.473333333333419,
+        "followerMedian": 2.473333333333419,
+        "boundedPaths": {
+          "samples": 6,
+          "minimumPercent": 100,
+          "worstTick": 4236,
+          "nearby": 9,
+          "reachable": 9,
+          "blockedIds": []
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 4236,
+          "alive": 30,
+          "reachable": 30,
+          "playerX": -65.50497436523438,
+          "playerZ": -22.94524574279785,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "phase/escape",
+        "label": "controller: escape",
+        "threat": true,
+        "startSeconds": 70.8,
+        "seconds": 109.93333333333334,
+        "spawned": 14,
+        "initial": 30,
+        "observed": 44,
+        "reachableEver": 44,
+        "within2_5m": 15,
+        "attacks": 358,
+        "attacksPerMinute": 195.3911461491813,
+        "firstAttackSeconds": 3.3666666666666667,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 107,
+            "samples": 125,
+            "median": 4.424434776310922
+          }
+        ],
+        "followerMin": 4.424434776310922,
+        "followerMedian": 4.424434776310922,
+        "boundedPaths": {
+          "samples": 55,
+          "minimumPercent": 95,
+          "worstTick": 8688,
+          "nearby": 20,
+          "reachable": 19,
+          "blockedIds": [
+            278
+          ]
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 10728,
+          "alive": 5,
+          "reachable": 5,
+          "playerX": 81.41952514648438,
+          "playerZ": 37.843021392822266,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "phase/checkpoint",
+        "label": "controller: checkpoint",
+        "threat": false,
+        "startSeconds": 180.73333333333332,
+        "seconds": 2.6,
+        "spawned": 0,
+        "initial": 3,
+        "observed": 6,
+        "reachableEver": 3,
+        "within2_5m": 1,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [],
+        "followerMin": null,
+        "followerMedian": null,
+        "boundedPaths": {
+          "samples": 1,
+          "minimumPercent": 0,
+          "worstTick": 10964,
+          "nearby": 1,
+          "reachable": 0,
+          "blockedIds": [
+            264
+          ]
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 10964,
+          "alive": 4,
+          "reachable": 0,
+          "playerX": 81.40201568603516,
+          "playerZ": 32.959983825683594,
+          "positions": [
+            {
+              "identity": "264@42",
+              "id": 264,
+              "x": 81.19940199896875,
+              "z": 38.91814222632333,
+              "playerX": 81.40201568603516,
+              "playerZ": 32.959983825683594
+            },
+            {
+              "identity": "266@43",
+              "id": 266,
+              "x": -12.72789068903861,
+              "z": 26.836226214831886,
+              "playerX": 81.40201568603516,
+              "playerZ": 32.959983825683594
+            },
+            {
+              "identity": "268@44",
+              "id": 268,
+              "x": 5.743119435690964,
+              "z": 26.153963942609597,
+              "playerX": 81.40201568603516,
+              "playerZ": 32.959983825683594
+            },
+            {
+              "identity": "270@45",
+              "id": 270,
+              "x": 23.544462801093054,
+              "z": 27.63208448803874,
+              "playerX": 81.40201568603516,
+              "playerZ": 32.959983825683594
+            }
+          ]
+        },
+        "flags": []
+      },
+      {
+        "key": "phase/run-out",
+        "label": "level-end run-out",
+        "threat": false,
+        "startSeconds": 183.33333333333334,
+        "seconds": 5,
+        "spawned": 0,
+        "initial": 4,
+        "observed": 7,
+        "reachableEver": 0,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 107,
+            "samples": 2,
+            "median": 0.38082910406143433
+          }
+        ],
+        "followerMin": null,
+        "followerMedian": null,
+        "boundedPaths": {
+          "samples": 2,
+          "minimumPercent": 0,
+          "worstTick": 11240,
+          "nearby": 2,
+          "reachable": 0,
+          "blockedIds": [
+            209,
+            217
+          ]
+        },
+        "maxBlockedSeconds": 4,
+        "blockedEvidence": {
+          "tick": 11240,
+          "alive": 5,
+          "reachable": 0,
+          "playerX": 81.9532470703125,
+          "playerZ": 32.295162200927734,
+          "positions": [
+            {
+              "identity": "209@14",
+              "id": 209,
+              "x": 81.23906717337503,
+              "z": 36.770823656899786,
+              "playerX": 81.9532470703125,
+              "playerZ": 32.295162200927734
+            },
+            {
+              "identity": "217@18",
+              "id": 217,
+              "x": 80.47100006615729,
+              "z": 37.32864581179446,
+              "playerX": 81.9532470703125,
+              "playerZ": 32.295162200927734
+            },
+            {
+              "identity": "266@43",
+              "id": 266,
+              "x": -10.66456432599968,
+              "z": 27.17835723977211,
+              "playerX": 81.9532470703125,
+              "playerZ": 32.295162200927734
+            },
+            {
+              "identity": "268@44",
+              "id": 268,
+              "x": 7.829514271369297,
+              "z": 26.23389161727864,
+              "playerX": 81.9532470703125,
+              "playerZ": 32.295162200927734
+            },
+            {
+              "identity": "270@45",
+              "id": 270,
+              "x": 24.724420473206596,
+              "z": 26.714339631950434,
+              "playerX": 81.9532470703125,
+              "playerZ": 32.295162200927734
+            }
+          ]
+        },
+        "last": {
+          "tick": 11240,
+          "alive": 5,
+          "reachable": 0,
+          "playerX": 81.9532470703125,
+          "playerZ": 32.295162200927734,
+          "positions": [
+            {
+              "identity": "209@14",
+              "id": 209,
+              "x": 81.23906717337503,
+              "z": 36.770823656899786,
+              "playerX": 81.9532470703125,
+              "playerZ": 32.295162200927734
+            },
+            {
+              "identity": "217@18",
+              "id": 217,
+              "x": 80.47100006615729,
+              "z": 37.32864581179446,
+              "playerX": 81.9532470703125,
+              "playerZ": 32.295162200927734
+            },
+            {
+              "identity": "266@43",
+              "id": 266,
+              "x": -10.66456432599968,
+              "z": 27.17835723977211,
+              "playerX": 81.9532470703125,
+              "playerZ": 32.295162200927734
+            },
+            {
+              "identity": "268@44",
+              "id": 268,
+              "x": 7.829514271369297,
+              "z": 26.23389161727864,
+              "playerX": 81.9532470703125,
+              "playerZ": 32.295162200927734
+            },
+            {
+              "identity": "270@45",
+              "id": 270,
+              "x": 24.724420473206596,
+              "z": 26.714339631950434,
+              "playerX": 81.9532470703125,
+              "playerZ": 32.295162200927734
+            }
+          ]
+        },
+        "flags": []
+      }
+    ],
+    "waves": [
+      {
+        "key": "market-ambush",
+        "source": "l2.doorsOpen",
+        "startSeconds": 58.6,
+        "observedSeconds": 129.73333333333332,
+        "expected": 24,
+        "spawned": 24,
+        "firstAttackSeconds": 3.283333333333333,
+        "members": [
+          "183@1",
+          "185@2",
+          "187@3",
+          "189@4",
+          "191@5",
+          "193@6",
+          "195@7",
+          "197@8",
+          "199@9",
+          "201@10",
+          "203@11",
+          "205@12",
+          "207@13",
+          "209@14",
+          "211@15",
+          "213@16",
+          "215@17",
+          "217@18",
+          "219@19",
+          "221@20",
+          "223@21",
+          "225@22",
+          "227@23",
+          "229@24"
+        ],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 3,
+        "spawnedWithinEighteenSeconds": 24
+      }
+    ]
+  },
+  "passiveFlags": [],
+  "wallSeconds": 19.9997575,
+  "nativeStateHash": "2c5c5390"
+}

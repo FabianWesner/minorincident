@@ -1,37 +1,151 @@
 {
   "row": "L8-08",
-  "status": "FAIL",
-  "reviewer": "Codex sweep-c3",
-  "date": "2026-11-05",
-  "commit": "3a44a56cd66e67a19080dff2220bf216c29b3a72",
+  "status": "PASS",
+  "reviewer": "Codex sweep-c5",
+  "date": "2026-11-06",
+  "commit": "8468ed548cec95789124d313c38ff0ae9a88b73e",
   "clauses": [
     {
       "clause": "Infected animals read as enemies (lion snarl, wounds visible from the iso camera); zebra legs clean at PO zooms; player readable at night (rim/accents).",
-      "verdict": "FAIL",
-      "note": "Current source8765679a low physical route atx34.0358,z78.8733, tick7819. Personally inspected all four low/high render and zoom0.5/1.5 frames: the courier is only a head/goggles inside a large green canopy shape; her body, backpack and weapon disappear. This fails player readability. The route later reaches its reservation cap and does not qualify L8 completion; that does not undo this actual rendered counterexample. Animal snarl/wounds and moving zebra legs remain unmeasured in this row. No small proven game fix is claimed."
+      "verdict": "PASS",
+      "note": "Current source43b485e8: personally reviewed all80 final animal panels, eight exact canopy panels,32 earlier four-biter panels and12 exploratory panels; raw SHA256 verified before deletion, full-size sheets retained ignored. Actual L8 world/render path and night lighting, low/high and POzooms0.5/1.5. Explicit zero-survivor presentation fixture prevents follower fire; all30locals and8original animals retained, courier protected only. Physical WASD approach, one ordinary60HP runner, normal bite/same-ID conversion, short physical movement. No targetHP/AI/faction/cap/timer changes. Lion shows open black snarl/large pale fangs and red eyes; gorilla chest and elephant shoulder show dark red wounds with pale slash marks. Fine lion wound pixels are uncertain in frontal mane views, not claimed. All species have distinguishable hostile silhouettes/red bars/attack cues; flamingo close crop clips selected bird, wide views show it separately from healthy pink neighbors. Zebra legs remain continuous and attached through walking/kick poses at both POzooms, no detached feet/tearing observed; overlaps/cropped heads explicit. Courier face, launcher and pale/red boots stand out in animal views; actual carried campaign1/4human canopy repro at34.0357933,78.8729248 tick7824 (0.000376m from old point) shows face/fullbody/launcher/boots amid natural infected crowd. Historical canopy failure not reproduced. Observer foot arrays may have2or4 points depending species/LOD; no assumption of4feet as pixel oracle. Corrected recorder follows whichever original zebra actually converts; first attempt selected healthy neighbor and is preserved as inconclusive, not failed game evidence. Fourteen bound evidence clauses pass; fifteen semantic faults reject with exact restoration. No game/criteria change."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-c3/L8-08/canopy-counterexamples.jpg",
-      "sha256": "7d7d45ed3883433a91773c7726823d5d82e46c8d2a820184c908751b293f8c9a",
-      "what": "Personally inspected original-size four-cell canopy counterexample sheet, exact partial input/producer source, or per-capture SHA/seen notes as named."
+      "file": "docs/reports/sweep-c5/L8-08/animals-high-elephant-review.json",
+      "sha256": "39dbe18b74130f430807a4565f56be884962dca3921a39d04a67b83c98c70d9f",
+      "what": "Personally reviewed animal/canopy paired panels with per-image SHA256 and observations; exact current input/identity/movement and fifteen rejection controls. Limitations explicit in notes."
     },
     {
-      "file": "docs/reports/sweep-c3/L8-route/low-review/review.json",
-      "sha256": "cd338f6b757ef12893f2ff41462e6f78fe9731f072098df44b85d66eea9bc7b2",
-      "what": "Personally inspected original-size four-cell canopy counterexample sheet, exact partial input/producer source, or per-capture SHA/seen notes as named."
+      "file": "docs/reports/sweep-c5/L8-08/animals-high-elephant.json.gz",
+      "sha256": "b3f2d868790a1f59d34da828d384f53a4937b4cbe4d2bd3c5a783c1b841bd1ba",
+      "what": "Personally reviewed animal/canopy paired panels with per-image SHA256 and observations; exact current input/identity/movement and fifteen rejection controls. Limitations explicit in notes."
     },
     {
-      "file": "docs/reports/sweep-c3/L8-route/L7-L8-carried-low-input.json",
-      "sha256": "18094f101c97ef77e8e24a73693e6183778ee93a2cc6167c1a39733bbfce8e3c",
-      "what": "Personally inspected original-size four-cell canopy counterexample sheet, exact partial input/producer source, or per-capture SHA/seen notes as named."
+      "file": "docs/reports/sweep-c5/L8-08/animals-high-flamingo-review.json",
+      "sha256": "67959b3b01a0cc73e59fab093eb9f06e2cec311db18ec28bcf47a3d5398628ea",
+      "what": "Personally reviewed animal/canopy paired panels with per-image SHA256 and observations; exact current input/identity/movement and fifteen rejection controls. Limitations explicit in notes."
     },
     {
-      "file": "docs/reports/sweep-c3/L8-route/worker.ts",
-      "sha256": "ae9a0a1fb331f0202fcb79c12dff0449015a603729054312a20e873dea68fd3c",
-      "what": "Personally inspected original-size four-cell canopy counterexample sheet, exact partial input/producer source, or per-capture SHA/seen notes as named."
+      "file": "docs/reports/sweep-c5/L8-08/animals-high-flamingo.json.gz",
+      "sha256": "67e5246dc064fa03742d69fca5bb1d3e0b1f4f3d90907b83f078b0da35017f7a",
+      "what": "Personally reviewed animal/canopy paired panels with per-image SHA256 and observations; exact current input/identity/movement and fifteen rejection controls. Limitations explicit in notes."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L8-08/animals-high-gorilla-review.json",
+      "sha256": "c2e3a90b4f374774575ff25a6128d54b1aaa61f165583638d3ef5dec750910ec",
+      "what": "Personally reviewed animal/canopy paired panels with per-image SHA256 and observations; exact current input/identity/movement and fifteen rejection controls. Limitations explicit in notes."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L8-08/animals-high-gorilla.json.gz",
+      "sha256": "a6b577080270566192395b2584a44149c947cb34c637ead0a71c32874408f1bb",
+      "what": "Personally reviewed animal/canopy paired panels with per-image SHA256 and observations; exact current input/identity/movement and fifteen rejection controls. Limitations explicit in notes."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L8-08/animals-high-lion-review.json",
+      "sha256": "037aa42c7f6f486d5eb581c563f7eddfcaba2ae64aeb44f2dd0a6c8e3ca928f5",
+      "what": "Personally reviewed animal/canopy paired panels with per-image SHA256 and observations; exact current input/identity/movement and fifteen rejection controls. Limitations explicit in notes."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L8-08/animals-high-lion.json.gz",
+      "sha256": "8795feb7f0be00f2c8d0c32872a7b2faf09e8d0c17861c1866e4477f92d79471",
+      "what": "Personally reviewed animal/canopy paired panels with per-image SHA256 and observations; exact current input/identity/movement and fifteen rejection controls. Limitations explicit in notes."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L8-08/animals-high-zebra-review.json",
+      "sha256": "d3631b5c4f9c683679152900c0fd455e6a537cb08aaf201062a77e27d2b091df",
+      "what": "Personally reviewed animal/canopy paired panels with per-image SHA256 and observations; exact current input/identity/movement and fifteen rejection controls. Limitations explicit in notes."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L8-08/animals-high-zebra.json.gz",
+      "sha256": "d9cc3a5210ca918315fc8871c15ee327a6ec9c8d233127e4202d7d67aad56d17",
+      "what": "Personally reviewed animal/canopy paired panels with per-image SHA256 and observations; exact current input/identity/movement and fifteen rejection controls. Limitations explicit in notes."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L8-08/animals-low-elephant-review.json",
+      "sha256": "fc43c5dc77b9aefcefb2ce3be7bb0808a7a2b6ee7f5ae91f0001bee984ea81f0",
+      "what": "Personally reviewed animal/canopy paired panels with per-image SHA256 and observations; exact current input/identity/movement and fifteen rejection controls. Limitations explicit in notes."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L8-08/animals-low-elephant.json.gz",
+      "sha256": "a61750ea3a5a9646565562d35eb7e45541b6a231c74e6f3b7c9fb4ed0fc31d10",
+      "what": "Personally reviewed animal/canopy paired panels with per-image SHA256 and observations; exact current input/identity/movement and fifteen rejection controls. Limitations explicit in notes."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L8-08/animals-low-flamingo-review.json",
+      "sha256": "f7ac0ad6532cd0d67f3e1a6dc3a1b26a98d2946b5b5cf5e14cc132f70dfe2aec",
+      "what": "Personally reviewed animal/canopy paired panels with per-image SHA256 and observations; exact current input/identity/movement and fifteen rejection controls. Limitations explicit in notes."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L8-08/animals-low-flamingo.json.gz",
+      "sha256": "4939bd69ec691ad6af2fc0777aa918de0779207e8be19ac62972901ec7db0dea",
+      "what": "Personally reviewed animal/canopy paired panels with per-image SHA256 and observations; exact current input/identity/movement and fifteen rejection controls. Limitations explicit in notes."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L8-08/animals-low-gorilla-review.json",
+      "sha256": "9b9cc5c7f7d667046d3612c773cb784488fc66089116d5a1361f7ee6c553c546",
+      "what": "Personally reviewed animal/canopy paired panels with per-image SHA256 and observations; exact current input/identity/movement and fifteen rejection controls. Limitations explicit in notes."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L8-08/animals-low-gorilla.json.gz",
+      "sha256": "86aa4e44331e6e4535821b700e42356bb1c71896b695f9aa379eaf14cacba2ba",
+      "what": "Personally reviewed animal/canopy paired panels with per-image SHA256 and observations; exact current input/identity/movement and fifteen rejection controls. Limitations explicit in notes."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L8-08/animals-low-lion-review.json",
+      "sha256": "5b1465fbdcf446a216884b27c6d5e6f2de48bd554332b7cd47eecabd248f1778",
+      "what": "Personally reviewed animal/canopy paired panels with per-image SHA256 and observations; exact current input/identity/movement and fifteen rejection controls. Limitations explicit in notes."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L8-08/animals-low-lion.json.gz",
+      "sha256": "d2576e19653abefc56049c2d9e306a2da113b5bd3224f946c53649290b818640",
+      "what": "Personally reviewed animal/canopy paired panels with per-image SHA256 and observations; exact current input/identity/movement and fifteen rejection controls. Limitations explicit in notes."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L8-08/animals-low-zebra-review.json",
+      "sha256": "f140a5c8634775f3f4446b9b3d460ff56e37c94b03a28691462015b20463a5de",
+      "what": "Personally reviewed animal/canopy paired panels with per-image SHA256 and observations; exact current input/identity/movement and fifteen rejection controls. Limitations explicit in notes."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L8-08/animals-low-zebra.json.gz",
+      "sha256": "a999a6cd97be8fa49d501c78560f078f3116ca851957ddaba24276d10cea0583",
+      "what": "Personally reviewed animal/canopy paired panels with per-image SHA256 and observations; exact current input/identity/movement and fifteen rejection controls. Limitations explicit in notes."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L8-08/canopy-review.json",
+      "sha256": "86e535e39956b53634439d83b099fbf8b0fc281aa62b7a132d5c7443ed337199",
+      "what": "Personally reviewed animal/canopy paired panels with per-image SHA256 and observations; exact current input/identity/movement and fifteen rejection controls. Limitations explicit in notes."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L8-08/coverage-proof.json",
+      "sha256": "e250ca4e646284b4c1ba1e1dce2a790b7d898f175a69503a258ad68ed2c629f6",
+      "what": "Personally reviewed animal/canopy paired panels with per-image SHA256 and observations; exact current input/identity/movement and fifteen rejection controls. Limitations explicit in notes."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L8-08/high-canopy.json.gz",
+      "sha256": "9e32aa03d2a811a5fefa23bc3d4e248838854715f5f45b75dddf42a500302ba5",
+      "what": "Personally reviewed animal/canopy paired panels with per-image SHA256 and observations; exact current input/identity/movement and fifteen rejection controls. Limitations explicit in notes."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L8-08/high-postbreach-canopy.json.gz",
+      "sha256": "a8b8c33b1a56fde629f74192cc344e1e614b3c4abecebad3ee423072cc71f696",
+      "what": "Personally reviewed animal/canopy paired panels with per-image SHA256 and observations; exact current input/identity/movement and fifteen rejection controls. Limitations explicit in notes."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L8-08/low-canopy.json.gz",
+      "sha256": "1c3b10aac6a429e99190cee248c4219c11ceab97b2387eb7418b490e88283a83",
+      "what": "Personally reviewed animal/canopy paired panels with per-image SHA256 and observations; exact current input/identity/movement and fifteen rejection controls. Limitations explicit in notes."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L8-08/low-postbreach-canopy.json.gz",
+      "sha256": "f5911f9bbfb741ed6028672c409835527514b76b8b66fee7705dcaac389642a5",
+      "what": "Personally reviewed animal/canopy paired panels with per-image SHA256 and observations; exact current input/identity/movement and fifteen rejection controls. Limitations explicit in notes."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L8-08/postbreach-canopy-review.json",
+      "sha256": "de24f6666d36a2192d86b88424606ead20cd716767323611eb4ea7dcfb8d1636",
+      "what": "Personally reviewed animal/canopy paired panels with per-image SHA256 and observations; exact current input/identity/movement and fifteen rejection controls. Limitations explicit in notes."
     }
-  ],
-  "notes": "Shared pooled headless Metal WebGL2; actual movement and ordinary actors, protected courier requested; camera/quality photos are presentation overrides only. Any failed clause fails the compound row; no PASS for unmeasured clauses."
+  ]
 }

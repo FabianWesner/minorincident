@@ -1,62 +1,101 @@
 {
   "row": "L7-02",
   "status": "PASS",
-  "reviewer": "Codex sweep-c3",
-  "date": "2026-11-05",
-  "commit": "54bd31f1ade72e4552c8aa0180c0e348ca434251",
+  "reviewer": "Codex sweep-c5",
+  "date": "2026-11-06",
+  "commit": "d015048dfab0993daf5d612b8939969885bfd3a3",
   "clauses": [
     {
       "clause": "All six weapons selectable; L6 roster arrives with same ids at full health in formation (no convergence through the courier).",
       "verdict": "PASS",
-      "note": "Current source8765679a: mortal native L5/L6 carries1/13 living humans into L7 at low/high. Exact IDs/full actor-specific HP; every first600tick relative-motion segment clears actual body radii (600/7800 samples; min0.2371463/0.0640249m). Independent native controls match. All six story weapons after approach pickup; both physical Continue runs acknowledge six Digit-key selections. All41 captures inspected:12 matching weapon labels/held states; teal living formations and Group1/1 or13/13 visible. Bounded120s yields, high20s stall at118m explicitly not full L7 completion."
+      "note": "Current-source progressed L6 saves contain one low/four high survivor. Exact identities arrive at full health; every relative body segment over the first600 ticks clears courier/follower radii (minimum clearance1.08269m low/.59989m high). Both native controls match. Six physical keyboard selections per tier observe the expected equipped weapon and HUD label; all41 captures personally inspected, including every selection. Runs are bounded120s arrival probes with no skips; high later navigation warning is outside the arrival/selection clause and does not establish full route completion. No actor or arsenal edits."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-c3/L7-02/arrival.json.gz",
-      "sha256": "0b2ac787c47c4585c26b3a6ef80b98f99c06700b0b96c611062db3c8bc15dc41",
-      "what": "Current-source arrival/physical evidence: native controls, carried provenance, actual key selections, or personally inspected capture notes and retained sheet hashes as named."
+      "file": "docs/reports/sweep-c5/L7-02/native-arrival.json",
+      "sha256": "ceb9c428f40144a7536165cfe235eb770cb402b0c817cac9956adc8f474d68c0",
+      "what": "Both-tier carried native formation for600 ticks, exact identities/full HP, positive body clearance and six story weapons; independent controls identical."
     },
     {
-      "file": "docs/reports/sweep-c3/L7-02/canonical-producer.json",
-      "sha256": "127d3f371b98f2bc3525806847be895e65eaed7cadc656878468e60c983ff603",
-      "what": "Current-source arrival/physical evidence: native controls, carried provenance, actual key selections, or personally inspected capture notes and retained sheet hashes as named."
+      "file": "docs/reports/sweep-c5/L7-02/low/review.json",
+      "sha256": "044dfec0fe642bed6011fc18f537a190ed1f8e85a83122b5d2b32beb0b6af4e2",
+      "what": "All20 current physical captures personally inspected, including every six-weapon selection frame; hashes retained, raw images deleted."
     },
     {
-      "file": "docs/reports/sweep-c3/L7-02/L7-low-carried-save.json.gz",
-      "sha256": "24a93dfb66ee83a416a92ef44657102e30c732a17885569468eb3fd61376ed2e",
-      "what": "Current-source arrival/physical evidence: native controls, carried provenance, actual key selections, or personally inspected capture notes and retained sheet hashes as named."
+      "file": "docs/reports/sweep-c5/L7-02/low/input.json.gz",
+      "sha256": "1dfc172c1eaf2983064b5667239ef78b52a038e543598f52e64bad36a2445c22",
+      "what": "Immutable physical keyboard selections, observed equipped IDs, exact producer/source hashes and bounded run result."
     },
     {
-      "file": "docs/reports/sweep-c3/L7-02/L7-high-carried-save.json.gz",
-      "sha256": "c83bab2d70c75b41bc2dabd092fc9f3971d65cf57687ed087ff790f31f0724ef",
-      "what": "Current-source arrival/physical evidence: native controls, carried provenance, actual key selections, or personally inspected capture notes and retained sheet hashes as named."
+      "file": "docs/reports/sweep-c5/L7-02/low/log-arrival-input.jsonl.gz",
+      "sha256": "b265077a0ff662faff36a395697301db4a34fc8568d18e0b1a5e54d25a5749b5",
+      "what": "Archived read-only physical arrival ledger, log or production campaign completion state."
     },
     {
-      "file": "docs/reports/sweep-c3/L7-02/input-worker.ts",
-      "sha256": "07a92873a6793b4dc4dfb4b4e860877cb0731090cfb2042f9bd8d026e688c763",
-      "what": "Current-source arrival/physical evidence: native controls, carried provenance, actual key selections, or personally inspected capture notes and retained sheet hashes as named."
+      "file": "docs/reports/sweep-c5/L7-02/low/arrival-input-completion.json.gz",
+      "sha256": "7585622f3779dce958a0eae7bf4778d6520317d786c62776549fc8821e953886",
+      "what": "Archived read-only physical arrival ledger, log or production campaign completion state."
     },
     {
-      "file": "docs/reports/sweep-c3/L7-02/L7-low-arrival-input.json",
-      "sha256": "513df560514318f0997cab31b87936b381eff707fb0bd21437e13e531c59fb34",
-      "what": "Current-source arrival/physical evidence: native controls, carried provenance, actual key selections, or personally inspected capture notes and retained sheet hashes as named."
+      "file": "docs/reports/sweep-c5/L7-02/low/arrival-input-acceptance-ledger.json.gz",
+      "sha256": "89533a097dde45643102786d3c38893d4378fddaa68afd0cc4ae8c02dbdc2ec7",
+      "what": "Archived read-only physical arrival ledger, log or production campaign completion state."
     },
     {
-      "file": "docs/reports/sweep-c3/L7-02/low-review/review.json",
-      "sha256": "eba9032e178e4c520deeb96a623682aab890ae721857286610066de896ffe223",
-      "what": "Current-source arrival/physical evidence: native controls, carried provenance, actual key selections, or personally inspected capture notes and retained sheet hashes as named."
+      "file": "docs/reports/sweep-c5/L7-02/low/arrival-input-audio.json.gz",
+      "sha256": "2b77b0b0ed0351eff6f773a077cc40250d04350aaacb7de154ef6529d19baaea",
+      "what": "Archived read-only physical arrival ledger, log or production campaign completion state."
     },
     {
-      "file": "docs/reports/sweep-c3/L7-02/L7-high-arrival-input.json",
-      "sha256": "9b6209d8d4f0958a9dc79bd0ef2fd9ac5057be10cf477955a7f5cdc66675a056",
-      "what": "Current-source arrival/physical evidence: native controls, carried provenance, actual key selections, or personally inspected capture notes and retained sheet hashes as named."
+      "file": "docs/reports/sweep-c5/L7-02/low/issues-arrival-input.json.gz",
+      "sha256": "64406e753d82e11c6bd63d1d04bb6aa083eefa0a46949bbfce994d556b989f0f",
+      "what": "Archived read-only physical arrival ledger, log or production campaign completion state."
     },
     {
-      "file": "docs/reports/sweep-c3/L7-02/high-review/review.json",
-      "sha256": "6c68577ee64f1636c6a18cd1f570dcf23b31518dc3581bca1e06e3b62589e322",
-      "what": "Current-source arrival/physical evidence: native controls, carried provenance, actual key selections, or personally inspected capture notes and retained sheet hashes as named."
+      "file": "docs/reports/sweep-c5/L7-02/low/runs-arrival-input.json.gz",
+      "sha256": "aa0f19f27d68be0d5c37084237b3570c9003f60e025b6b441bdf36ede9669d2d",
+      "what": "Archived read-only physical arrival ledger, log or production campaign completion state."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L7-02/high/review.json",
+      "sha256": "1802a769bb6a6442ed367dd3b3634501a142c6d68c12f5d107efc28ada7a6f36",
+      "what": "All21 current physical captures personally inspected, including every six-weapon selection frame; hashes retained, raw images deleted."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L7-02/high/input.json.gz",
+      "sha256": "3c1e8a2a133b26e522b1b07ed6478272cc5731db58f96245db10a0cbcb590660",
+      "what": "Immutable physical keyboard selections, observed equipped IDs, exact producer/source hashes and bounded run result."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L7-02/high/log-arrival-input.jsonl.gz",
+      "sha256": "5980a09ba86ca0780e3c89876387337c2bfd29533c4eb0afe8a71be3838d2370",
+      "what": "Archived read-only physical arrival ledger, log or production campaign completion state."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L7-02/high/arrival-input-completion.json.gz",
+      "sha256": "15f125a4dc792b6e0409b4be3ae323f2f63b2c3d81b167c2da2a09d28719c178",
+      "what": "Archived read-only physical arrival ledger, log or production campaign completion state."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L7-02/high/arrival-input-acceptance-ledger.json.gz",
+      "sha256": "1c58009e0437e5bc2fc4535ff41af0f1271c8a9024817285445e32d2a1b34c4b",
+      "what": "Archived read-only physical arrival ledger, log or production campaign completion state."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L7-02/high/arrival-input-audio.json.gz",
+      "sha256": "c06e100d86ba2a275a52cc1418458b5ecf340286eb4b2360db7e70850e61f772",
+      "what": "Archived read-only physical arrival ledger, log or production campaign completion state."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L7-02/high/issues-arrival-input.json.gz",
+      "sha256": "4cb1ffba7b66edfec456fa8e61122d980e50495863a7ea592b17334dd9e16950",
+      "what": "Archived read-only physical arrival ledger, log or production campaign completion state."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L7-02/high/runs-arrival-input.json.gz",
+      "sha256": "fa6ad928ce9b7eac629f68bda9a863cecb4d5a413fda05f19b89646fc078de2b",
+      "what": "Archived read-only physical arrival ledger, log or production campaign completion state."
     }
-  ],
-  "notes": "Shared headless Metal WebGL2; both tiers, sampled low/high zoom0.5/1.5 photos. Protected courier; ordinary follower damage. No game/criterion/checker change."
+  ]
 }

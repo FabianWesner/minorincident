@@ -57,7 +57,7 @@ export const l4 = {
     /** Civilians already in the city before the convoy arrives, and the evacuees who step off the buses. */
     residents: { high: 40, low: 20 }, evacuees: { high: 24, low: 12 },
     /** PO 2026-10-13: new infected at the alarm, preserving the previous pressure count without converting evacuees. */
-    alarmInfected: { high: 18, low: 9 },
+    alarmInfected: { high: 18, low: 18 },
     /** Where the evacuees beyond the eight queue slots wait: two rows between the armory table and the tents, facing the registration. */
     waiting: [5.8, 10].flatMap(z => [-31, -29.5, -28, -24.5, -23, -21.5, -18.5, -17, -15.5].map(x => [x, z] as P)) as readonly P[],
     soldiers: { high: 20, low: 10 },
@@ -76,8 +76,8 @@ export const l4 = {
     /** Radio line (loudspeaker) once the convoy has stopped, and the quartermaster's interact time. */
     welcomeAtS: 1.5, issueS: .6,
   },
-  /** The machine gun (E06 section 5.3 campaign values): 14 per round, 10 rounds/s, 4 degrees, 26 m, pierce 1, no ammunition. */
-  machineGun: { id: 'weapon.army-mg', damage: 14, fireRate: 10, spreadDeg: 4, rangeM: 26, pierce: 1 },
+  /** E06 section 5.3 campaign gun: 14 per round, 10 rounds/s, 2° spread, 26 m, pierce 1, no ammunition. */
+  machineGun: { id: 'weapon.army-mg', damage: 14, fireRate: 10, spreadDeg: 2, rangeM: 26, pierce: 1 },
   /** Beat 4: the outbreak follows the convoy. From turn + `fromS` infected come from the street edges, escalating. */
   war: {
     fromS: 0, waveEveryS: 11,
@@ -209,8 +209,8 @@ export const l4 = {
     path: [[-70, 47], [-26, 47], [-20, 41], [-20, 27.5]] as readonly P[],
   },
   heli: { asset: 'veh.helicopter-military', alt: 17, orbitR: 30, omega: .26, centre: [-14, 4] as P, burstEveryS: [2.2, 3.6] as P, burst: { shots: 5, shotS: .09, damage: 22, hit: .6, rangeM: 60 }, startR: 95, arriveS: 7, withdrawS: 7 },
-  /** Fuel truck at the plaza edge (Plaza Way, by the convoy gap): the tank shell sets it off at the line break (mega chain). */
-  fuelTruck: { x: 16.3, z: -9.5, yaw: Math.PI / 2, blast: 'explosion.fuel-truck' },
+  /** Fuel truck north of the plaza: the tank shell sets it off at the line break (mega chain). */
+  fuelTruck: { x: 16.3, z: -45, yaw: Math.PI / 2, blast: 'explosion.fuel-truck' },
   /** Beat 5-6: live damage and the collapse; the cellar marker appears at the line break. */
   collapse: {
     fires: 4, burningCars: 3, pendingPerTick: 3,

@@ -84,7 +84,7 @@ export class LevelFourWar {
     // Low's opening needs living pressure now. Keep the later street quotas
     // pending, reserving their capacity once the collapse actually starts.
     const streets = this.low && s.phase !== 'collapse' ? 0 : this.streetReserve();
-    const wanted = l4.alphas.count[this.low ? 'low' : 'high'] - s.alphaIds.length + streets + pockets;
+    const wanted = l4.alphas.count[this.low ? 'low' : 'high'] - s.alphaIds.length + streets + pockets + this.spearheadNeed();
     // A bitten human already owns a future slot; scripted emergence must count
     // it just as the ordinary spawn director does (otherwise streets deadlock).
     let turning = 0; for (const e of this.world.entities.iterate()) if (e.infection && !e.infected) turning++;
@@ -92,6 +92,33 @@ export class LevelFourWar {
     // Pending authored cohorts keep their quotas; only free living capacity can
     // be reserved. A recovering body never creates extra low-tier capacity.
     ai.director.reserved = this.low ? Math.min(wanted, Math.max(0, ai.director.cap - ai.director.count - turning)) : wanted;
+  }
+  /** fix69-r: slots still owed to the first three bodies of a freshly opened breach while its perimeter group is queued.
+   * Like L6's announced cohorts, this spearhead outranks other emergence for the next free slots (the cap is unchanged). */
+  private spearheadNeed(): number {
+    const s = this.s;
+    if (!s.perimeterPending || !(s.phase === 'war' || s.phase === 'collapse' && !this.low)) return 0;
+    let need = 0;
+    for (const side of ['west', 'north', 'south'] as const) { const b = s.breaches?.[side]; if (b?.openAt) need += Math.max(0, 3 - (b.arrivals ?? 0)); }
+    return need;
+  }
+  /** fix69-r: a breach still without its spearhead two seconds after opening at a full cap retires distant, off-screen,
+   * idle infected (never Alphas or scripted/authored arrivals) for it, as L6 does for its announced cohorts. */
+  private retireIdleForSpearhead(fresh: readonly ('west' | 'north' | 'south')[]): void {
+    const { world } = this.mission, s = this.s, ai = this.infected, player = world.entities.get(1)!.transform;
+    if (!fresh.some(side => world.tick - s.breaches![side]!.openAt >= ticks(2))) return;
+    const capacity = ai.director.cap - this.spearheadNeed();
+    if (ai.director.count + ai.director.pendingTurns <= capacity) return;
+    const authored = new Set<number>([...s.alphaIds, ...s.emergedIds, ...s.collapseIds]);
+    for (const e of [...ai.active]) {
+      if (ai.director.count + ai.director.pendingTurns <= capacity) break;
+      const b = e.infected;
+      if (!b || authored.has(e.id) || e.health.current <= 0 || e.corpse || e.hidden || e.emerging || e.infectionRise || b.recoverAt >= 0 || b.scripted || b.breachApproach ||
+        b.state !== 'idle' && b.state !== 'wander' || ['chase', 'bite'].includes(b.l1?.mode ?? '') || e.combat?.attacking || b.specialAttack ||
+        e.archetype === 'infected.alpha' || dist(e.transform, player) <= 25 || !ai.director.offscreen(e.transform, e.transform.y - .7)) continue;
+      ai.release(e);
+    }
+    this.reserveSlots();
   }
   private get low(): boolean { return this.infected.director.tier === 'low'; }
   /** Legacy convoy riders have an explicit owner in the existing seated/roster state. */
@@ -719,8 +746,8 @@ export class LevelFourWar {
     }
   }
   /** Room under the characters cap; `keep` slots stay free (the Alphas still to come, l4-po-round). */
-  private spawnRoom(keep = 0): boolean {
-    const limit = l4.war.caps.characters[this.low ? 'low' : 'high'] - keep - (this.low ? 1 : 0);
+  private spawnRoom(keep = 0, slots = 1): boolean {
+    const limit = l4.war.caps.characters[this.low ? 'low' : 'high'] - keep - (this.low ? 1 : 0) - slots + 1;
     if (!(limit > 0)) return false;
     let count = 0;
     for (const e of this.world.entities.iterate()) if ((!e.hidden || this.low) && e.health.current > 0 && (e.infected || e.civilian) && ++count >= limit) return false;
@@ -851,7 +878,7 @@ export class LevelFourWar {
       .sort((a, b) => dist(a.at, player) - dist(b.at, player));
     while (s.alarmPending > 0 && mouths.length) {
       // The alarm uses the same small exterior groups as the later streets.
-      // Nine/eighteen authored bodies leave in threes, never one bulk spawn.
+      // The authored alarm bodies leave in threes, never one bulk spawn.
       const mouth = mouths[Math.floor(s.alarmCursor / 3) % mouths.length];
       const lane = s.alarmCursor % 3, row = Math.floor(s.alarmCursor / (mouths.length * 3));
       const at = this.snap({ x: mouth.at.x + (lane - 1) * .9, z: mouth.at.z + row * .8 }, .45);
@@ -863,6 +890,13 @@ export class LevelFourWar {
     }
     return ids;
   }
+  private emergenceRoom(push = false, headroom: number = this.headroom(), reservedSlot = false): number {
+    const ai = this.infected;
+    const reserved = Math.max(0, ai.director.reserved - (reservedSlot ? 1 : 0));
+    const keep = reservedSlot ? 0 : Math.max(0, headroom - this.streetReserve());
+    const retreatReserve = push ? 0 : this.s.director.cutOffPending ?? 0;
+    return Math.max(0, Math.floor(ai.director.cap * (push ? 1 : this.director.aliveShare())) - reserved - keep - ai.director.pendingTurns - retreatReserve - ai.director.count);
+  }
   private emerge(at: Point, push = false, headroom: number = this.headroom(), reservedSlot = false, roster: readonly string[] = l4InfectedArchetypes): number {
     const { world } = this.mission, ai = this.infected;
     // Every authored pressure path shares this guard, including collapse-director flanks.
@@ -871,11 +905,7 @@ export class LevelFourWar {
     // Callers keep their pending count when no source is safe, so the group is
     // retried at a later eligible mouth instead of being dropped.
     if (!(ai.director.offscreen(at) || ai.director.occluded(at))) return 0;
-    const reserved = Math.max(0, ai.director.reserved - (reservedSlot ? 1 : 0));
-    const keep = reservedSlot ? 0 : Math.max(0, headroom - this.streetReserve());
-    const retreatReserve = push ? 0 : this.s.director.cutOffPending ?? 0;
-    const limit = Math.floor(ai.director.cap * (push ? 1 : this.director.aliveShare())) - reserved - keep - ai.director.pendingTurns - retreatReserve;
-    if (!this.spawnRoom(this.low ? 0 : ai.director.reserved) || ai.director.count >= limit || !ai.pool.length || this.inGap(at)) return 0;
+    if (!this.spawnRoom(this.low ? 0 : ai.director.reserved) || !this.emergenceRoom(push, headroom, reservedSlot) || !ai.pool.length || this.inGap(at)) return 0;
     // These arrivals were already infected before entering the district.
     // Use the existing infected pool/model batches; real camp civilians still
     // turn in place with their own identity, clothes and accessories.
@@ -979,7 +1009,13 @@ export class LevelFourWar {
           ? dist(a.at, p) - dist(b.at, p) || dist(a.at, { x: intended[0], z: intended[1] }) - dist(b.at, { x: intended[0], z: intended[1] }) || a.k - b.k
           : dist(a.at, { x: intended[0], z: intended[1] }) - dist(b.at, { x: intended[0], z: intended[1] }) || a.k - b.k);
       for (const { k, at } of eligible) {
-        const rng = new Rng(world.seed, `l4-group:${i}:${s.edgeCursor[i]}:${s.wave}`), size = Math.min(s.pend[i], w.group[0] + Math.floor(rng.next() * (w.group[1] - w.group[0] + 1)));
+        const rng = new Rng(world.seed, `l4-group:${i}:${s.edgeCursor[i]}:${s.wave}`);
+        const headroom = Math.max(this.headroom(), this.streetReserve() + groupReserve);
+        let size = Math.min(s.pend[i], w.group[0] + Math.floor(rng.next() * (w.group[1] - w.group[0] + 1)), this.emergenceRoom(false, headroom), ai.pool.length);
+        while (size >= w.group[0] && !this.spawnRoom(this.low ? 0 : ai.director.reserved, size)) size--;
+        // Keep the quota pending until a real small group fits. A single free
+        // slot or final one-body remainder must not consume the cohort cadence.
+        if (size < w.group[0]) continue;
         const defenders = this.liveSoldiers(), soldiers = defenders.filter(x => this.insideRing(x.transform));
         const soldier = soldiers.slice().sort((a, b) => dist(a.transform, at) - dist(b.transform, at))[0];
         // Keep half the cohorts on the courier; send the other half to an
@@ -991,7 +1027,7 @@ export class LevelFourWar {
             : { x: centre.x + (at.x - centre.x) * .25, z: centre.z + (at.z - centre.z) * .25 };
         let admitted = 0;
         for (let g = 0; g < size; g++) {
-          const id = this.emerge({ x: at.x + (g % 3 - 1) * .9, z: at.z + Math.floor(g / 3) * .9 }, false, Math.max(this.headroom(), this.streetReserve() + groupReserve)); if (!id) break;
+          const id = this.emerge({ x: at.x + (g % 3 - 1) * .9, z: at.z + Math.floor(g / 3) * .9 }, false, headroom); if (!id) break;
           admitted++;
           if (flank && target.id === flank.id) world.entities.get(id)!.infected!.l4FlankTarget = flank.id;
           s.pend[i]--; s.emergedIds.push(id); s.origin[id] = k;
@@ -1024,6 +1060,7 @@ export class LevelFourWar {
     // A new breach gets its first small cohort even when an older gap has
     // saturated the courier's corpse field. It uses the existing pending quota.
     const fresh = (['west', 'north', 'south'] as const).filter(side => s.breaches?.[side]?.openAt && (s.breaches[side]!.arrivals ?? 0) < 3);
+    if (fresh.length && s.perimeterPending) this.retireIdleForSpearhead(fresh);
     // Supplemental pressure waits once this part of the plaza is saturated
     // with permanent bodies. Authored street waves still arrive; moving to a
     // fresh flank resumes the queued cohorts instead of building a new carpet.
@@ -1088,11 +1125,13 @@ export class LevelFourWar {
       // that press the courier (`l4.war.spearhead`).
       const breach = source.side ? s.breaches?.[source.side] : undefined, spearhead = !!breach && (breach.arrivals ?? 0) < 3
         && Object.values(s.breaches ?? {}).some(other => other && other !== breach && other.openAt && other.openAt < breach.openAt);
-      const id = this.emerge({ x: source.at.x + (lane % 3 - 1) * .55, z: source.at.z + Math.floor(lane / 3) * .55 }, false, this.headroom(), false, spearhead ? l4.war.spearhead.archetypes : l4InfectedArchetypes);
+      // fix69-r: the first three bodies of an open breach use the slots reserveSlots() holds for them.
+      const owed = !!breach && (breach.arrivals ?? 0) < 3;
+      const id = this.emerge({ x: source.at.x + (lane % 3 - 1) * .55, z: source.at.z + Math.floor(lane / 3) * .55 }, false, this.headroom(), owed, spearhead ? l4.war.spearhead.archetypes : l4InfectedArchetypes);
       if (!id) continue;
       released.set(source.k, (released.get(source.k) ?? 0) + 1);
       admitted++; s.perimeterPending--; s.emergedIds.push(id); s.origin[id] = l4Emergence.length + source.k;
-      if (breach) breach.arrivals = (breach.arrivals ?? 0) + 1;
+      if (breach) { breach.arrivals = (breach.arrivals ?? 0) + 1; if (owed) this.reserveSlots(); }
       // Breach cohorts press the courier; the street waves and Alphas engage
       // the army. A recycled entity ID must not decide a cohort's assignment.
       const target = world.entities.get(1)!;

@@ -1,42 +1,41 @@
 {
   "row": "L10-03",
-  "status": "PASS",
-  "reviewer": "Codex fix65-c",
+  "status": "FAIL",
+  "reviewer": "Codex sweep-c5",
   "date": "2026-11-06",
-  "commit": "26b922875b73df57766a37f0d6cee7030dbf45f0",
+  "commit": "0388b3488dd2823b2662e9b7fe4e8bf747b18e00",
   "clauses": [
     {
       "clause": "Concurrent local infected per region (high / low): R2 12\u201324 / 8\u201316 (+1\u20132 dogs after pickup); R3 25\u201345 / 16\u201328 (2\u20134 dogs, 1 Alpha); R4 45\u201375 / 28\u201345 (groups 10\u201320, 2\u20134 dogs, 1\u20132 Alphas); R5 55\u201385 / 35\u201355 (2\u20134 dogs, 1\u20132 Alphas); R6 80\u2013130 / 50\u201375 (groups 20\u201335, 3\u20135 dogs, 2\u20133 Alphas); R7 peak 140\u2013190 / 75\u201395.",
-      "verdict": "PASS",
-      "note": "Final low/high competent and stationary native regional ledgers meet all unchanged regular/species/group bounds. Campus dog peak is4 in all four policies. Complete routes finish; stationary policies intentionally end at their tick budgets. Both tiers pick up the handgun at3497 before the first fringe dog at4950, with zero premature-dog ticks and exact independent native state hashes. Low corridor regular group peaks20/20/20, dogs4, Alphas3; high groups32/32/30, dogs3, Alphas2 on complete routes. Low/high corridor pressure5.60/5.32 windups per minute retains pressure. Counts, stats, timers and global caps unchanged."
+      "verdict": "FAIL",
+      "note": "Current-source full competent routes finish at both tiers with independent control hashes14a5235c/fe1371ba. Separate population/species/group peaks meet their bounds, and dogs follow handgun pickup3497 (first dog4950, zero premature ticks). Stronger every-tick admitted local census finds no same-tick count/species witness for low industrial, low campus, high industrial or high corridor. With required species present, industrial max count9<16 low and15<25 high; low campus33<35. High corridor never has required3\u20135 dogs and2\u20133 Alphas together. Exact count intervals retain every sampled tick; hidden/pending actors and separate Mega excluded. This contradicts full concurrent-composition qualification;90 legacy peak-boundary fault controls still reject and do not prove simultaneity. No counts, timers, caps, game code or criteria changed. Resolving four region/tier admission/combat overlaps needs a game change beyond a single clear local correction; recorded FAIL rather than claiming closure from independent peaks."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix65-c/L10-98ba7f93-low-complete.json.gz",
-      "sha256": "437071375ee6a621e653e0d0c2da26dfc690b249fff956a888fd8459cac8aea5",
-      "what": "Reviewed final-source low/complete regional concurrent census, individual regular group ranks, dogs and Alphas; no rendered pose claim."
+      "file": "docs/reports/sweep-c5/L10-03/fringe-dogs.json",
+      "sha256": "156275dd30348ae358ffa9e58d4144b627d6a77a9bc027fdae8e312733cae596",
+      "what": "Fresh handgun-before-dogs timing with unchanged native controls, or90 separate-peak/composition boundary fault rejections."
     },
     {
-      "file": "docs/reports/fix65-c/L10-98ba7f93-low-stationary.json.gz",
-      "sha256": "b4ad49599b6de82abf86c2154e93a126b4ff43862603994043d906b924ff73cb",
-      "what": "Reviewed final-source low/stationary regional concurrent census, individual regular group ranks, dogs and Alphas; no rendered pose claim."
+      "file": "docs/reports/sweep-c5/L10-03/peak-boundary-controls.json",
+      "sha256": "326b678d668a65d62a3e88bbdd8182b3abcc879369ccc09d876af997065a9fc4",
+      "what": "Fresh handgun-before-dogs timing with unchanged native controls, or90 separate-peak/composition boundary fault rejections."
     },
     {
-      "file": "docs/reports/fix65-c/L10-98ba7f93-high-complete.json.gz",
-      "sha256": "c508ad09d8bb57a5eb1ae1459ed1b976887533278a8a7fe33929397f9c08c462",
-      "what": "Reviewed final-source high/complete regional concurrent census, individual regular group ranks, dogs and Alphas; no rendered pose claim."
+      "file": "docs/reports/sweep-c5/L10-03/simultaneous-census.json",
+      "sha256": "d5f56a3a47a128dcacd9f7fdeec09a2289117fc2315e6475c6394de463da6340",
+      "what": "Every tick represented by contiguous count intervals; same-tick admitted local population/species witnesses, four failing region/tier combinations, all native controls identical."
     },
     {
-      "file": "docs/reports/fix65-c/L10-98ba7f93-high-stationary.json.gz",
-      "sha256": "41fda4cdc8e747de79d9a8be02ebcfab6bb80ccc9e47078092616fc5f21cd337",
-      "what": "Reviewed final-source high/stationary regional concurrent census, individual regular group ranks, dogs and Alphas; no rendered pose claim."
+      "file": "docs/reports/sweep-c5/L10-03/L10-low-complete.json.gz",
+      "sha256": "f00ad5e969b0f8e5830c8c15dd96c00f2861142bba22ba9ad3097becca61bed0",
+      "what": "Immutable current-source canonical competent-route population, species and group peak ledger; final state hash matches the simultaneous census."
     },
     {
-      "file": "docs/reports/fix65-c/L10-98ba7f93-fringe-dogs.json",
-      "sha256": "f451766b92f9c8f6cb6019351e6b6b7e3520da4549a8df8cb46e1757f51b32c9",
-      "what": "Read-only complete native both-tier handgun/dog timing; state hashes equal independent controls; no dog before actual pickup."
+      "file": "docs/reports/sweep-c5/L10-03/L10-high-complete.json.gz",
+      "sha256": "6d4f38d0d0bde45a4a54ffdb8b4a7bad5b6cd8fe599e5a12c8a80b191e803d70",
+      "what": "Immutable current-source canonical competent-route population, species and group peak ledger; final state hash matches the simultaneous census."
     }
-  ],
-  "notes": "Original five-dog FAIL remains under historical/L10-03-review.json. Moving only the high patrol station avoids the campus overlap; the low tier uses its existing admission budget with Alpha/regular/dog order. Rejected shared-placement and regular-first trials are retained; no criterion relaxation."
+  ]
 }

@@ -1,0 +1,72 @@
+{
+  "sourceHash": "43b485e825dc3b7e6afda4f35772460115ce094858019c8637fcd67fde85f32c",
+  "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
+  "revision": "d28e01013453088a4f784b51684e5ebd6c1490ca",
+  "method": "Actual production consumer, paired artifact SHA updated for semantic negative controls; exact original bytes restored.",
+  "cases": [
+    {
+      "fault": "missing-local",
+      "rejected": true
+    },
+    {
+      "fault": "missing-staff",
+      "rejected": true
+    },
+    {
+      "fault": "missing-species",
+      "rejected": true
+    },
+    {
+      "fault": "long-idle",
+      "rejected": true
+    },
+    {
+      "fault": "hostile-local",
+      "rejected": true
+    },
+    {
+      "fault": "different-control",
+      "rejected": true
+    },
+    {
+      "fault": "outside-crossed",
+      "rejected": true
+    },
+    {
+      "fault": "outside-dead",
+      "rejected": true
+    },
+    {
+      "fault": "outside-hit",
+      "rejected": true
+    },
+    {
+      "fault": "inside-sample",
+      "rejected": true
+    },
+    {
+      "fault": "stale-source",
+      "rejected": true
+    },
+    {
+      "fault": "missing-high",
+      "rejected": true
+    },
+    {
+      "fault": "no-input",
+      "rejected": true
+    },
+    {
+      "fault": "breached",
+      "rejected": true
+    },
+    {
+      "fault": "render-idle",
+      "rejected": true
+    },
+    {
+      "fault": "unseen-frame",
+      "rejected": true
+    }
+  ]
+}

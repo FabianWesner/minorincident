@@ -165,7 +165,7 @@ export class RenderProbes {
                 // who is plainly visible through its production see-through disc.
                 const reveal = source.userData.seeThrough;
                 if (reveal) mask.outputNode = Fn(() => {
-                  Discard((reveal === 'boss' ? seeThroughKeepBoss() : reveal === 'hull' ? seeThroughKeepHull() : seeThroughKeep(reveal === 'placement' ? attribute('_occluder', 'float') : undefined)).not());
+                  Discard((reveal === 'boss' ? seeThroughKeepBoss() : reveal === 'hull' ? seeThroughKeepHull() : seeThroughKeep(reveal === 'placement' || reveal === 'deck' ? attribute('_occluder', 'float') : undefined, reveal === 'deck')).not());
                   return selected ? vec4(1, 0, 1, 1) : vec4(0, 0, 0, 1);
                 })();
                 masks.set(source, mask);

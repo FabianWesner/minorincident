@@ -1,0 +1,134 @@
+{
+  "sourceHash": "df8ffdf25365a76fc19237460626a704a2f02ded98addef44508d1aae51d6b1c",
+  "ledger": "docs/reports/fix67-b/l6-cover-before.json.gz",
+  "ledgerSha256": "b7954e7b03375c7ded74388da21e6109b795a9480edbf990a110ce0f388aa61e",
+  "observation": "All group bites are beyond26m weapon range; first bite is59.5m from courier. No visible in-range shootable biter was ignored, so target-priority tuning is not justified. The column had advanced beyond the prior chokepoint while the courier covered the rear.",
+  "rows": [
+    {
+      "tier": "low",
+      "out": 1,
+      "in": 29,
+      "bites": 28,
+      "minimumBiterRange": 26.5900364651938,
+      "firstBite": {
+        "type": "outbreak.bite",
+        "tick": 8077,
+        "sourceId": 113,
+        "targetId": 23,
+        "position": {
+          "x": 115.52631144565534,
+          "z": 15.224122824663805
+        },
+        "turns": true,
+        "player": {
+          "x": 57.175472259521484,
+          "y": 1.2699999809265137,
+          "z": 14.826931953430176,
+          "yaw": -0.012415324206206384
+        },
+        "biter": {
+          "x": 116.6943128987439,
+          "z": 14.371870262078916,
+          "y": 1.2999999999999998,
+          "yaw": -2.511231916775378
+        },
+        "victim": {
+          "x": 115.52631144565534,
+          "z": 15.224122824663805,
+          "y": 1.250000001490116,
+          "yaw": 1.5154040506795436
+        },
+        "range": 59.52058024062004,
+        "visible": true,
+        "shotClear": true,
+        "aimError": null,
+        "input": {
+          "move": {
+            "x": 0.9999229308523897,
+            "z": 0.012415005258416332
+          },
+          "aim": null,
+          "aimSource": null,
+          "left": {
+            "down": false,
+            "held": false,
+            "up": false
+          },
+          "right": {
+            "down": false,
+            "held": false,
+            "up": false
+          },
+          "selector": 0,
+          "interact": false,
+          "pause": false
+        }
+      },
+      "nativeHash": "91b3ff42",
+      "canonicalHash": "91b3ff42"
+    },
+    {
+      "tier": "high",
+      "out": 1,
+      "in": 29,
+      "bites": 28,
+      "minimumBiterRange": 26.5900364651938,
+      "firstBite": {
+        "type": "outbreak.bite",
+        "tick": 8077,
+        "sourceId": 113,
+        "targetId": 23,
+        "position": {
+          "x": 115.52631144565534,
+          "z": 15.224122824663805
+        },
+        "turns": true,
+        "player": {
+          "x": 57.175472259521484,
+          "y": 1.2699999809265137,
+          "z": 14.826931953430176,
+          "yaw": -0.012415324206206384
+        },
+        "biter": {
+          "x": 116.6943128987439,
+          "z": 14.371870262078916,
+          "y": 1.2999999999999998,
+          "yaw": -2.511231916775378
+        },
+        "victim": {
+          "x": 115.52631144565534,
+          "z": 15.224122824663805,
+          "y": 1.250000001490116,
+          "yaw": 1.5154040506795436
+        },
+        "range": 59.52058024062004,
+        "visible": true,
+        "shotClear": true,
+        "aimError": null,
+        "input": {
+          "move": {
+            "x": 0.9999229308523897,
+            "z": 0.012415005258416332
+          },
+          "aim": null,
+          "aimSource": null,
+          "left": {
+            "down": false,
+            "held": false,
+            "up": false
+          },
+          "right": {
+            "down": false,
+            "held": false,
+            "up": false
+          },
+          "selector": 0,
+          "interact": false,
+          "pause": false
+        }
+      },
+      "nativeHash": "934235c4",
+      "canonicalHash": "934235c4"
+    }
+  ]
+}

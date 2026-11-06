@@ -207,8 +207,8 @@ export class Blasts extends Group {
         const plane = this.playerNode.y, lens = cameraPosition, above = positionWorld.y.greaterThan(plane);
         const reach = lens.y.sub(plane).div(lens.y.sub(positionWorld.y).max(.01));
         const landing = above.select(lens.add(positionWorld.sub(lens).mul(reach)), positionWorld);
-        const veil = mix(.65, 1, smoothstep(9, 14, vec2(landing.x.sub(this.playerNode.x), landing.z.sub(this.playerNode.z)).length()));
-        return vec4(color, edge.mul(grain).mul(fade).mul(st.z.lessThan(-1.5).select(mistOpacity, streetSmoke.select(.65, .97))).mul(playableMist.select(groundFeather, float(1))).mul(alive).mul(streetSmoke.select(veil, seeThroughHole(1.15, seeThrough.solidRadius, .85))));
+        const veil = mix(.8, 1, smoothstep(9, 14, vec2(landing.x.sub(this.playerNode.x), landing.z.sub(this.playerNode.z)).length()));
+        return vec4(color, edge.mul(grain).mul(fade).mul(st.z.lessThan(-1.5).select(mistOpacity, streetSmoke.select(.8, .97))).mul(playableMist.select(groundFeather, float(1))).mul(alive).mul(streetSmoke.select(veil, seeThroughHole(1.15, seeThrough.solidRadius, .85))));
       })();
       this.puffs.renderOrder = 3;
     }
@@ -497,7 +497,7 @@ export class Blasts extends Group {
       } else if (c.street) {
         // Street wreck smoke must clear cars and frontage props as a column;
         // the same bounded puff lifetime and pool keep its particle budget fixed.
-        this.puff(c.x + j() * .3, ground + .2, c.z + j() * .3, j() * .1, 1 + this.rng.next() * .3, j() * .1, 6, c.size * .45, c.size * 1.2, c.heat, c.shade, born);
+        this.puff(c.x + j() * .3, ground + .2, c.z + j() * .3, j() * .1, 1 + this.rng.next() * .3, j() * .1, 6, c.size * .65, c.size * 1.7, c.heat, c.shade, born);
       } else if (c.plume) {
         // Blast plume: hot buoyant soot that climbs fast, swells with height and bends downwind (wind drift grows with age in TSL).
         // Thickest in its first seconds: up to 2.5 puffs per emission, easing to one by 4 s (same birth time, so the cohort spacing holds).
@@ -588,7 +588,7 @@ export class Blasts extends Group {
         if (!c) {
           // Seed an already-burning skyline, rather than waiting ten seconds
           // for smoke to reach the roof. Reuse the existing bounded puff pool.
-          c = { born: now - 6, x: plume.x, z: plume.z, ground: plume.baseY, until: Infinity, rate: low ? 3 : 4, size: plume.size * (low ? 1.2 : 1), heat: 2, acc: low ? 18 : 24, shade: .08, cloud: 0, street: true };
+          c = { born: now - 6, x: plume.x, z: plume.z, ground: plume.baseY, until: Infinity, rate: low ? 3 : 4, size: plume.size * (low ? 1.2 : 1), heat: 2, acc: low ? 18 : 24, shade: .05, cloud: 0, street: true };
           this.cloudColumns.set(key, c);
         }
         c.rate = low ? 3 : 4;

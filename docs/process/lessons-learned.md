@@ -242,3 +242,4 @@ A living record, updated after every lane or experiment. Short entries with evid
 - Clearing an occluder's foreground did not bring back a courier who was hidden at that spot. Only the near-camera depth slice did. When she is tucked against tall geometry, use both.
 - Staged test-API blasts with `step()` do not age VFX like real play does. Verify bloom and smoke with real-input runs.
 - 2026-11-05 Git history squashed to 4 commits (single-commit push exceeded GitHub's 2 GB pack limit → split code/assets/docs + 3 docs/reports chunks); 76 remote + 314 local branches and stashes deleted; .git 8→3.7 GB. Lesson: GitHub rejects packs > 2 GB; push large snapshots in < 1.5 GB commits.
+- 2026-11-06: 11 merges in a row each passed qa:threat on their own branch, but main ended at 13 flags (L7 follower pace, L4 breach-south) — merge interaction. Rule: after every 2–3 merges the orchestrator runs qa:threat on main itself (~6–9 min, background) before merging more game changes.

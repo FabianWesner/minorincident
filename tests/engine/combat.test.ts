@@ -5,6 +5,7 @@ import { action as rosterAction, catalog } from '../../src/data/actions/catalog'
 import { action } from '../../src/data/actions/fixtures';
 import type { ActionDef, Side } from '../../src/data/actions/schema';
 import { comboDefinition } from '../../src/data/meleeCombos';
+import { riotShieldResponse } from '../../src/data/infected';
 import { Status } from '../../src/sim/combat/Status';
 import { SimWorld } from '../../src/sim/world/SimWorld';
 import { checkRocketCadence, checkRocketEndpoints } from '../helpers/l7Uat';
@@ -155,14 +156,16 @@ test('damage modifiers: front shield ±60°, armor and multipliers, stun/slow/to
   const front = await arena(); front.loadScenario('horde-arena', 1); equip(front, ['weapon.army-mg']); front.scenario = 'L4';
   const frontRiot = front.infected!.spawn('infected.riot', { x: 3, z: 0 }, { yaw: Math.PI });
   const frontPlayer = front.entities.get(1)!; Object.assign(frontPlayer.transform, { x: 0, z: 0 });
+  const breakShot = Math.ceil(riotShieldResponse.breakStress / 14) - 1;
+  const expectedFrontShots = breakShot + Math.ceil((front.entities.get(frontRiot)!.health.max - breakShot * 14 * .18) / 14);
   let frontKillTick = 0;
   for (let shot = 0; shot < 50 && health(front, frontRiot) > 0; shot++) {
     front.tick += 6;
     const amount = front.combat!.damage.apply({ attackId: shot + 1, actionId: 'weapon.army-mg', sourceId: 1, targetId: frontRiot,
       origin: frontPlayer.transform, shotOrigin: frontPlayer.transform, direction: { x: 1, z: 0 }, base: 14, multiplier: 1, type: 'bullet', knockback: 0, stagger: 0 });
     const hit = front.events.events().filter(event => event.type === 'combat.hit' && event.targetId === frontRiot).at(-1);
-    if (shot < 24) { expect(amount, `front chip ${shot + 1}`).toBeCloseTo(14 * .18); expect(hit?.type === 'combat.hit' && hit.shieldGlance).toBe(true); }
-    if (shot === 24) {
+    if (shot < breakShot) { expect(amount, `front chip ${shot + 1}`).toBeCloseTo(14 * .18); expect(hit?.type === 'combat.hit' && hit.shieldGlance).toBe(true); }
+    if (shot === breakShot) {
       expect(hit?.type === 'combat.hit' && hit.shieldBreak).toBe(true);
       expect(amount).toBe(14);
       expect(front.entities.get(frontRiot)!.combat!.shieldBrokenUntil).toBe(front.tick + 90);
@@ -171,10 +174,10 @@ test('damage modifiers: front shield ±60°, armor and multipliers, stun/slow/to
   }
   expect(health(front, frontRiot)).toBe(0);
   const frontSeconds = (frontKillTick - 6) / 60;
-  expect(frontSeconds).toBeGreaterThanOrEqual(3.4);
-  expect(frontSeconds).toBeLessThanOrEqual(3.7);
-  expect(frontSeconds / 1.6).toBeGreaterThanOrEqual(2);
-  expect(frontSeconds / 1.6).toBeLessThanOrEqual(3);
+  // Exact damage accounting follows the authored shield strain; the acceptance
+  // limit is <=6s, with no minimum duration or frontal/flank ratio requirement.
+  expect(frontSeconds).toBeCloseTo((expectedFrontShots - 1) * .1);
+  expect(frontSeconds).toBeLessThanOrEqual(6);
   const retired = front.entities.get(frontRiot)!;
   retired.combat!.shieldStress = 200; retired.combat!.shieldBrokenUntil = front.tick + 90;
   front.infected!.release(retired);

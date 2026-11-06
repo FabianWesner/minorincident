@@ -20,7 +20,9 @@ const checks = () => l8ArrivalReceipts(identity.sourceHash, hash).map(({ receipt
 const baseline = checks();
 assert.deepEqual(baseline, [{ tier: 'low', status: 'PASS' }, { tier: 'high', status: 'PASS' }]);
 const proof = JSON.parse(readFileSync(proofPath, 'utf8'));
-assert.equal(proof.rows.find((row: { tier: string }) => row.tier === 'low').expectedIds.length, 0);
+// Ordinary carried runs may retain any legal roster, including an empty one.
+// Only the high-tier actor fault below requires a surviving actor.
+assert(proof.rows.every((row: { expectedIds: number[] }) => Array.isArray(row.expectedIds) && row.expectedIds.length <= 35));
 assert(proof.rows.find((row: { tier: string }) => row.tier === 'high').expectedIds.length > 0);
 const cases: { fault: string; results: ReturnType<typeof checks> }[] = [];
 try {
@@ -65,5 +67,6 @@ assert(paths.every(path => readFileSync(path).equals(originals.get(path)!)), 'Al
 assert.deepEqual(checks(), baseline);
 atomicJson('docs/reports/sweep-c/L8-01-coverage-proof.json', { ...identity, browserHash: hash,
   toolSha256: sha(readFileSync(new URL(import.meta.url))), baseline,
-  method: 'Exercise actual production receipt consumer with11 temporary faults. Present empty low roster and nonempty high roster are genuine physical outcomes, both legal0–35 coverage. Missing arrays, invented identities, HP loss, rack/selection errors, missing coverage, stale source, bad producer hash and unfinished L7 must reject. Altered archives have matching temporary transport hashes so semantic faults, not checksum failures, are tested. Counterfactual mutations are never qualifying game evidence. Exact original bytes restored in finally.', cases, originalBytesRestored: true });
+  rosterCounts: proof.rows.map((row: { tier: string; expectedIds: number[] }) => ({ tier: row.tier, count: row.expectedIds.length })),
+  method: 'Exercise actual production receipt consumer with11 temporary faults against the retained physical roster counts (legal0–35). Missing arrays, invented identities, HP loss, rack/selection errors, missing coverage, stale source, bad producer hash and unfinished L7 must reject. Altered archives have matching temporary transport hashes so semantic faults, not checksum failures, are tested. Counterfactual mutations are never qualifying game evidence. Exact original bytes restored in finally.', cases, originalBytesRestored: true });
 console.log(cases);

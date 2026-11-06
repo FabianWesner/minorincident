@@ -1,0 +1,148 @@
+{
+  "sourceHash": "43b485e825dc3b7e6afda4f35772460115ce094858019c8637fcd67fde85f32c",
+  "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
+  "revision": "d015048dfab0993daf5d612b8939969885bfd3a3",
+  "browserHash": "9e227fa3b945360df3ced89d37da620661482cf42990f8f02eb07b7f9c843069",
+  "seedArchiveSha256": "d272c8e417a3998eacaa5e8a155e280d166072a38f98f85362e564614ca69390",
+  "selections": [
+    {
+      "weapon": "weapon.bat",
+      "key": 2,
+      "observed": "weapon.bat",
+      "tick": 135
+    },
+    {
+      "weapon": "weapon.fire-axe",
+      "key": 3,
+      "observed": "weapon.fire-axe",
+      "tick": 154
+    },
+    {
+      "weapon": "weapon.handgun",
+      "key": 4,
+      "observed": "weapon.handgun",
+      "tick": 182
+    },
+    {
+      "weapon": "weapon.shotgun",
+      "key": 6,
+      "observed": "weapon.shotgun",
+      "tick": 211
+    },
+    {
+      "weapon": "weapon.army-mg",
+      "key": 5,
+      "observed": "weapon.army-mg",
+      "tick": 239
+    },
+    {
+      "weapon": "weapon.rocket-launcher",
+      "key": 7,
+      "observed": "weapon.rocket-launcher",
+      "tick": 267
+    }
+  ],
+  "toolSha256": "8493eccc7d301bf36674826f1fdf6b28d6c0019253c8d428af259f87c56e6218",
+  "out": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-c5/test-results/fix51-r10c/L7-high-arrival-1793938595981",
+  "levels": [
+    "L7"
+  ],
+  "tier": "high",
+  "method": "Actual native L5/L6 completion save through production Continue, six physical keyboard weapon selections observed in normal game state; no actor/arsenal writes. Shared headless Metal WebGL2, physical WASD/mouse/mission UI, production campaign handovers. Protected courier, no objective skips or actor relocation. Read-only acceptance ledger; no frame timing. Each capture pauses simulation and restores quality/zoom.",
+  "result": {
+    "runs": [
+      {
+        "level": "L7",
+        "entry": "continue",
+        "heroine": "female",
+        "finished": false,
+        "skipped": [],
+        "wallSeconds": 120,
+        "simSeconds": 113,
+        "maxNoProgressSeconds": 22.682,
+        "deaths": 0,
+        "assists": 0,
+        "attacks": {
+          "weapon.rocket-launcher": 29
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick",
+          "weapon.shotgun"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick",
+          "weapon.shotgun",
+          "weapon.rocket-launcher"
+        ],
+        "steps": [
+          {
+            "id": "rocket",
+            "text": "Recover the rocket launcher beside the exit · 3 m",
+            "tick": 3,
+            "marker": {
+              "anchor": "l7-rocket",
+              "ring": {
+                "x": 276,
+                "y": 4.619999885559082,
+                "z": 15
+              },
+              "drawn": [
+                276,
+                3.9,
+                15
+              ],
+              "playerY": 4.619999885559082,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "corridor",
+            "text": "Bring the group to the evacuation corridor · Group 4/4 nearby · 308 m",
+            "tick": 84,
+            "marker": {
+              "anchor": "l7-corridor-east",
+              "ring": {
+                "x": -30,
+                "y": 4.619999885559082,
+                "z": 50
+              },
+              "drawn": [
+                -30,
+                0.13,
+                50
+              ],
+              "playerY": 4.619999885559082,
+              "pinVisible": true
+            }
+          }
+        ]
+      }
+    ],
+    "issues": [
+      {
+        "level": "L7",
+        "tick": 6253,
+        "x": 84.4,
+        "z": 17.6,
+        "severity": "P2",
+        "kind": "stuck-navigating",
+        "text": "20 s without objective progress (distance 119.0 m, no marker: false); HUD: \"Bring the group to the evacuation corridor · Group 4/4 nearby · 119 m\"",
+        "captures": [
+          "captures/arrival-input-L7-6253-stuck-navigating.jpg"
+        ],
+        "step": "corridor",
+        "objective": "Bring the group to the evacuation corridor · Group 4/4 nearby · 119 m"
+      }
+    ],
+    "yielded": true
+  },
+  "error": null
+}

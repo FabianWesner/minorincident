@@ -1,0 +1,245 @@
+{
+  "version": 1,
+  "level": "L8",
+  "tier": "high",
+  "sourceHash": "43b485e825dc3b7e6afda4f35772460115ce094858019c8637fcd67fde85f32c",
+  "fixtureHash": "8039a9f135f76dcff8ea713da4f19e027388c9e32d496036f50cdd34dd8a656a",
+  "errors": [],
+  "checks": [
+    {
+      "id": "L8-10",
+      "clause": "production L8 to L9 handover first frame within6s",
+      "tier": "high",
+      "policy": "production-handover",
+      "status": "PASS",
+      "value": {
+        "ms": 3709.6000003814697,
+        "valid": true
+      },
+      "target": "continueCampaign through first frame≤6000ms with outgoing scene resident; same method as existing handover probe, no frame profiler",
+      "receipt": "docs/reports/sweep-c5/L8-10/high-handover.json"
+    },
+    {
+      "id": "L8-10",
+      "clause": "actual physical departure APC identity durability and seats retained",
+      "tier": "high",
+      "policy": "production-handover",
+      "status": "PASS",
+      "value": {
+        "before": {
+          "kind": "vehicle",
+          "archetype": "vehicle.military-apc",
+          "transform": {
+            "x": 96.1742935180664,
+            "z": 74.57320404052734,
+            "y": 0.9954342842102051,
+            "yaw": 0.13136799986513736
+          },
+          "faction": "survivor",
+          "health": {
+            "current": 930,
+            "max": 1000
+          },
+          "vehicle": {
+            "speed": 2.0760917726716387e-8,
+            "forwardSpeed": -2.550032157121544e-9,
+            "steer": 0,
+            "braking": false,
+            "boosting": false,
+            "driver": 1,
+            "attached": [],
+            "damage": "normal",
+            "explodeAt": null,
+            "stuck": false,
+            "recoveringUntil": 0,
+            "apcContacts": {
+              "sequence": 8,
+              "infected": {}
+            },
+            "passengers": [
+              {
+                "id": 408,
+                "seat": 0,
+                "phase": "seated",
+                "started": 5537,
+                "from": {
+                  "x": 92.0403637739482,
+                  "z": 74.08276872076412,
+                  "y": 0.42,
+                  "yaw": 0.20413000142915286
+                },
+                "pauseUntil": 0
+              },
+              {
+                "id": 32,
+                "seat": 1,
+                "phase": "seated",
+                "started": 5642,
+                "from": {
+                  "x": 92.20401737252598,
+                  "z": 74.4787634929264,
+                  "y": 0.82,
+                  "yaw": 0.20605791304014454
+                },
+                "pauseUntil": 0,
+                "story": null
+              },
+              {
+                "id": 31,
+                "seat": 2,
+                "phase": "seated",
+                "started": 5742,
+                "from": {
+                  "x": 92.24161482059972,
+                  "z": 75.49042754613716,
+                  "y": 0.82,
+                  "yaw": -0.21084319775318203
+                },
+                "pauseUntil": 0,
+                "story": null
+              },
+              {
+                "id": 389,
+                "seat": 3,
+                "phase": "seated",
+                "started": 5830,
+                "from": {
+                  "x": 92.14777270267038,
+                  "z": 75.4106205989443,
+                  "y": 0.82,
+                  "yaw": 1.088734028499831
+                },
+                "pauseUntil": 0,
+                "story": null
+              },
+              {
+                "id": 30,
+                "seat": 4,
+                "phase": "seated",
+                "started": 5923,
+                "from": {
+                  "x": 92.32004199325091,
+                  "z": 75.42265206982051,
+                  "y": 0.82,
+                  "yaw": 0.4744355273565793
+                },
+                "pauseUntil": 0,
+                "story": null
+              }
+            ]
+          },
+          "id": 800
+        },
+        "after": {
+          "kind": "vehicle",
+          "archetype": "vehicle.military-apc",
+          "transform": {
+            "x": -550,
+            "z": 0,
+            "y": 0.9954342842102051,
+            "yaw": 0
+          },
+          "faction": "survivor",
+          "health": {
+            "current": 930,
+            "max": 1000
+          },
+          "vehicle": {
+            "speed": 2.0760917726716387e-8,
+            "forwardSpeed": -2.550032157121544e-9,
+            "steer": 0,
+            "braking": false,
+            "boosting": false,
+            "driver": 1,
+            "attached": [],
+            "damage": "normal",
+            "explodeAt": null,
+            "stuck": false,
+            "recoveringUntil": 0,
+            "apcContacts": {
+              "sequence": 8,
+              "infected": {}
+            },
+            "passengers": [
+              {
+                "id": 408,
+                "seat": 0,
+                "phase": "seated",
+                "started": -911,
+                "from": {
+                  "x": 92.0403637739482,
+                  "z": 74.08276872076412,
+                  "y": 0.42,
+                  "yaw": 0.20413000142915286
+                },
+                "pauseUntil": -6448
+              },
+              {
+                "id": 32,
+                "seat": 1,
+                "phase": "seated",
+                "started": -806,
+                "from": {
+                  "x": 92.20401737252598,
+                  "z": 74.4787634929264,
+                  "y": 0.82,
+                  "yaw": 0.20605791304014454
+                },
+                "pauseUntil": -6448,
+                "story": null
+              },
+              {
+                "id": 31,
+                "seat": 2,
+                "phase": "seated",
+                "started": -706,
+                "from": {
+                  "x": 92.24161482059972,
+                  "z": 75.49042754613716,
+                  "y": 0.82,
+                  "yaw": -0.21084319775318203
+                },
+                "pauseUntil": -6448,
+                "story": null
+              },
+              {
+                "id": 389,
+                "seat": 3,
+                "phase": "seated",
+                "started": -618,
+                "from": {
+                  "x": 92.14777270267038,
+                  "z": 75.4106205989443,
+                  "y": 0.82,
+                  "yaw": 1.088734028499831
+                },
+                "pauseUntil": -6448,
+                "story": null
+              },
+              {
+                "id": 30,
+                "seat": 4,
+                "phase": "seated",
+                "started": -525,
+                "from": {
+                  "x": 92.32004199325091,
+                  "z": 75.42265206982051,
+                  "y": 0.82,
+                  "yaw": 0.4744355273565793
+                },
+                "pauseUntil": -6448,
+                "story": null
+              }
+            ],
+            "floor": true,
+            "stage": 0
+          },
+          "id": 800
+        },
+        "active": 800
+      },
+      "target": "incoming live APC matches actual qualified physical departure ID/HP/seated identities; driver1 retained",
+      "receipt": "docs/reports/sweep-c5/L8-10/high-handover.json"
+    }
+  ]
+}

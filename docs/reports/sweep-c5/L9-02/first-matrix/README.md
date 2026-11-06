@@ -1,0 +1,1 @@
+All28 frames in these six first-matrix drives were personally inspected and raw captures deleted. A requested-quality output stamp was then added to fix an unused parameter lint error; no game or input policy changed. These exact original artifacts/producer remain separate; allsix qualifying drives are reexecuted under the final producer hash rather than rebinding this metadata.

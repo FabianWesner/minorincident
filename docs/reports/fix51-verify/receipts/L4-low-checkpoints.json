@@ -2,8 +2,8 @@
   "version": 1,
   "level": "L4",
   "tier": "low",
-  "sourceHash": "7a321255a8c84bef605e559daa152064dee4f1b4b1019eb4d7f35ccd86f9f967",
-  "fixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4",
+  "sourceHash": "faed0882a930e24356a8ece4b426a9944ec7dcf6f7aba4a705700f708f79cde7",
+  "fixtureHash": "40254462b9491901682da8e7fbc7d498c8f6bdeeaaef225b759833481bc833fd",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
   "checks": [
     {
@@ -15,7 +15,7 @@
       "value": {
         "checkpoint": "arrival",
         "contract": "checkpoint snapshot restored",
-        "snapshotSha256": "d5826fec37a3088e7e20cd358c49494743ba0c18228a8780a0b2c8da9ce4b766",
+        "snapshotSha256": "e52fe8f0ac03171d324f84c6b7a2212a972371cb519fde23238f13fd74531028",
         "damage": 100,
         "expected": {
           "id": "arrival",
@@ -99,7 +99,7 @@
       "value": {
         "checkpoint": "turn",
         "contract": "live world preserved (E19 PO 10-07 / E22-AC17)",
-        "snapshotSha256": "52ad449520ad4341523b5a19b60c4060fc7194704b069f15c7e88cc082007986",
+        "snapshotSha256": "444df4b472cc85078eba9db380f7160d23133f3d4377e3ff7ce17b8610887d08",
         "damage": 100,
         "expected": {
           "id": "turn",
@@ -178,7 +178,7 @@
       "value": {
         "checkpoint": "line-1",
         "contract": "live world preserved (E19 PO 10-07 / E22-AC17)",
-        "snapshotSha256": "fd8b93f46b5d32bb3fd074b0d4c43b0c2c7cd89a158d3f8c7fc8414e610a5126",
+        "snapshotSha256": "cf5259259ab9dcdfb2be1929d358279b65fce549901f2ffc8eeaee341f9c61f0",
         "damage": 100,
         "expected": {
           "id": "line-1",
@@ -186,7 +186,7 @@
             "x": -20,
             "y": 0.7099999785423279,
             "z": -2,
-            "yaw": 2.914476363746702
+            "yaw": -1.6347464801305447
           },
           "gates": {},
           "racks": {
@@ -257,7 +257,7 @@
       "value": {
         "checkpoint": "nests",
         "contract": "live world preserved (E19 PO 10-07 / E22-AC17)",
-        "snapshotSha256": "50ade69f66c51007d837b7cfe2b4b78705520a284bdc1b55db59944073765ead",
+        "snapshotSha256": "f75a4f6d7c5de8f50d583eed6365436165caf9ba91803589dc71fe665a6b707e",
         "damage": 100,
         "expected": {
           "id": "nests",
@@ -265,7 +265,7 @@
             "x": -11,
             "y": 0.7099999785423279,
             "z": 16,
-            "yaw": -1.6359728042472144
+            "yaw": -2.8204642566675706
           },
           "gates": {},
           "racks": {
@@ -278,6 +278,8 @@
           },
           "followers": [],
           "pickups": [
+            84,
+            85,
             86,
             87,
             88,
@@ -292,7 +294,7 @@
             97
           ],
           "removedPickups": [
-            84
+            83
           ],
           "cure": false
         },
@@ -334,15 +336,15 @@
       "value": {
         "checkpoint": "armor",
         "contract": "live world preserved (E19 PO 10-07 / E22-AC17)",
-        "snapshotSha256": "6f18a2c4312cefefc921df1f05d2ab851b217d3321d79726fd0e5d0262c95c61",
+        "snapshotSha256": "b59595055e564ebaa11ad508c7aa1bdc31ef3c0328e90051bfedccdf803cf9f8",
         "damage": 100,
         "expected": {
           "id": "armor",
           "anchor": {
             "x": -11,
-            "y": 0.7049999833106995,
+            "y": 0.7049990296363831,
             "z": 16,
-            "yaw": -1.6359728042472144
+            "yaw": -1.49486363813472
           },
           "gates": {},
           "racks": {
@@ -355,6 +357,8 @@
           },
           "followers": [],
           "pickups": [
+            84,
+            85,
             86,
             87,
             88,
@@ -369,7 +373,7 @@
             97
           ],
           "removedPickups": [
-            84
+            83
           ],
           "cure": false
         },
@@ -411,7 +415,7 @@
       "value": {
         "checkpoint": "line-break",
         "contract": "live world preserved (E19 PO 10-07 / E22-AC17)",
-        "snapshotSha256": "4324db758038e646a6ec9309a39de2f5f4c5a641908c0c08876bb5523ff71732",
+        "snapshotSha256": "ebad72575308d7383601457affc1fdaffccce03a40a8ba26dc0410f68901ddad",
         "damage": 100,
         "expected": {
           "id": "line-break",
@@ -419,7 +423,7 @@
             "x": -4,
             "y": 0.7099999785423279,
             "z": 16,
-            "yaw": -2.7639185057478777
+            "yaw": -1.1975038270032965
           },
           "gates": {},
           "racks": {
@@ -432,6 +436,8 @@
           },
           "followers": [],
           "pickups": [
+            84,
+            85,
             86,
             87,
             88,
@@ -446,7 +452,7 @@
             97
           ],
           "removedPickups": [
-            84
+            83
           ],
           "cure": false
         },
@@ -482,8 +488,8 @@
   ],
   "errors": [],
   "control": {
-    "observed": "a65e22be",
-    "control": "a65e22be",
+    "observed": "f218248e",
+    "control": "f218248e",
     "identical": true
   }
 }

@@ -1,0 +1,408 @@
+{
+  "generatedAt": "2026-11-06T07:15:53.629025+00:00",
+  "codeCommit": "f8fa4bbc5ab02cd6c0599613ff6c1669b492ca8b",
+  "sourceHash": "faed0882a930e24356a8ece4b426a9944ec7dcf6f7aba4a705700f708f79cde7",
+  "truck": {
+    "x": 16.3,
+    "z": -45
+  },
+  "northernAlpha": {
+    "low": {
+      "x": -42,
+      "z": -41.5
+    },
+    "high": {
+      "x": -40,
+      "z": -37.4
+    }
+  },
+  "tank": [
+    {
+      "tier": "low",
+      "shotCount": 14,
+      "minimumProtectedClearanceM": 15.003722195890505,
+      "forcedClearanceM": 26.029395780232367,
+      "warIntervalsSeconds": [
+        11.383333333333333,
+        10.666666666666666,
+        10.366666666666667,
+        9.883333333333333,
+        8.8,
+        9.766666666666667,
+        11.45,
+        11.483333333333333,
+        9.816666666666666,
+        8.116666666666667,
+        9.583333333333334,
+        8.016666666666667
+      ],
+      "canonicalHash": "f218248e"
+    },
+    {
+      "tier": "high",
+      "shotCount": 16,
+      "minimumProtectedClearanceM": 16.535094341637507,
+      "forcedClearanceM": 20.804516641940335,
+      "warIntervalsSeconds": [
+        11.383333333333333,
+        10.666666666666666,
+        10.366666666666667,
+        9.883333333333333,
+        8.8,
+        9.766666666666667,
+        11.45,
+        11.433333333333334,
+        9.65,
+        8.116666666666667,
+        9.533333333333333,
+        8.016666666666667,
+        10.916666666666666,
+        8.766666666666667
+      ],
+      "canonicalHash": "28229920"
+    }
+  ],
+  "L5InitialCensus": [
+    {
+      "tier": "low",
+      "initialInfected": 100,
+      "initialAlphas": 2,
+      "alphaPositions": [
+        {
+          "id": 90,
+          "x": 46,
+          "z": 36
+        },
+        {
+          "id": 97,
+          "x": -42,
+          "z": -41.5
+        }
+      ]
+    },
+    {
+      "tier": "high",
+      "initialInfected": 150,
+      "initialAlphas": 2,
+      "alphaPositions": [
+        {
+          "id": 90,
+          "x": 46,
+          "z": 36
+        },
+        {
+          "id": 97,
+          "x": -40,
+          "z": -37.4
+        }
+      ]
+    }
+  ],
+  "native": [
+    {
+      "level": "L4",
+      "tier": "low",
+      "policy": "complete",
+      "boundedPaths": {
+        "samples": 80,
+        "minimumPercent": 96.82539682539682,
+        "worstTick": 12409,
+        "nearby": 63,
+        "reachable": 61,
+        "blockedIds": [
+          463,
+          499
+        ]
+      },
+      "playerAttacksPerMinute": 224.97904442581728,
+      "groupAttacksPerMinute": 0,
+      "firstPlayerAttackSeconds": 8.666666666666666,
+      "nativeStateHash": "f218248e",
+      "outcome": "complete"
+    },
+    {
+      "level": "L4",
+      "tier": "low",
+      "policy": "stationary",
+      "boundedPaths": {
+        "samples": 85,
+        "minimumPercent": 100,
+        "worstTick": 13249,
+        "nearby": 76,
+        "reachable": 76,
+        "blockedIds": []
+      },
+      "playerAttacksPerMinute": 1006.1052631578947,
+      "groupAttacksPerMinute": 0,
+      "firstPlayerAttackSeconds": 8.416666666666666,
+      "nativeStateHash": "170883ed",
+      "outcome": "tick-budget"
+    },
+    {
+      "level": "L4",
+      "tier": "high",
+      "policy": "complete",
+      "boundedPaths": {
+        "samples": 85,
+        "minimumPercent": 93.87755102040816,
+        "worstTick": 13129,
+        "nearby": 49,
+        "reachable": 46,
+        "blockedIds": [
+          438,
+          540,
+          565
+        ]
+      },
+      "playerAttacksPerMinute": 127.57894736842105,
+      "groupAttacksPerMinute": 0,
+      "firstPlayerAttackSeconds": 18.05,
+      "nativeStateHash": "28229920",
+      "outcome": "complete"
+    },
+    {
+      "level": "L4",
+      "tier": "high",
+      "policy": "stationary",
+      "boundedPaths": {
+        "samples": 85,
+        "minimumPercent": 98.21428571428571,
+        "worstTick": 3529,
+        "nearby": 56,
+        "reachable": 55,
+        "blockedIds": [
+          245
+        ]
+      },
+      "playerAttacksPerMinute": 886.421052631579,
+      "groupAttacksPerMinute": 0,
+      "firstPlayerAttackSeconds": 7.366666666666666,
+      "nativeStateHash": "8645afe0",
+      "outcome": "tick-budget"
+    },
+    {
+      "level": "L5",
+      "tier": "low",
+      "policy": "complete",
+      "boundedPaths": {
+        "samples": 74,
+        "minimumPercent": 100,
+        "worstTick": 10037,
+        "nearby": 6,
+        "reachable": 6,
+        "blockedIds": []
+      },
+      "playerAttacksPerMinute": 6.526912181303116,
+      "groupAttacksPerMinute": 0,
+      "firstPlayerAttackSeconds": 12.15,
+      "nativeStateHash": "7817b621",
+      "outcome": "complete"
+    },
+    {
+      "level": "L5",
+      "tier": "low",
+      "policy": "stationary",
+      "boundedPaths": {
+        "samples": 115,
+        "minimumPercent": 100,
+        "worstTick": 14379,
+        "nearby": 4,
+        "reachable": 4,
+        "blockedIds": []
+      },
+      "playerAttacksPerMinute": 200.2189621195533,
+      "groupAttacksPerMinute": 0,
+      "firstPlayerAttackSeconds": 0.18333333333333332,
+      "nativeStateHash": "4debf775",
+      "outcome": "tick-budget"
+    },
+    {
+      "level": "L5",
+      "tier": "high",
+      "policy": "complete",
+      "boundedPaths": {
+        "samples": 83,
+        "minimumPercent": 100,
+        "worstTick": 11118,
+        "nearby": 15,
+        "reachable": 15,
+        "blockedIds": []
+      },
+      "playerAttacksPerMinute": 4.354838709677419,
+      "groupAttacksPerMinute": 0,
+      "firstPlayerAttackSeconds": 11.8,
+      "nativeStateHash": "f14b9e54",
+      "outcome": "complete"
+    },
+    {
+      "level": "L5",
+      "tier": "high",
+      "policy": "stationary",
+      "boundedPaths": {
+        "samples": 115,
+        "minimumPercent": 100,
+        "worstTick": 14379,
+        "nearby": 4,
+        "reachable": 4,
+        "blockedIds": []
+      },
+      "playerAttacksPerMinute": 255.92292533391722,
+      "groupAttacksPerMinute": 0,
+      "firstPlayerAttackSeconds": 0.2,
+      "nativeStateHash": "deba19ca",
+      "outcome": "tick-budget"
+    }
+  ],
+  "acceptance": {
+    "L4": {
+      "rowFailures": [],
+      "globalFailures": [
+        "G-22"
+      ],
+      "incompleteRows": [
+        "L4-02",
+        "L4-03",
+        "L4-05",
+        "L4-07",
+        "L4-08",
+        "L4-10",
+        "L4-11",
+        "L4-12",
+        "L4-13",
+        "L4-14",
+        "L4-15",
+        "L4-16",
+        "L4-17",
+        "L4-18"
+      ],
+      "L5-05": null
+    },
+    "L5": {
+      "rowFailures": [
+        "L5-08"
+      ],
+      "globalFailures": [],
+      "incompleteRows": [
+        "L5-02",
+        "L5-03",
+        "L5-06",
+        "L5-07",
+        "L5-09",
+        "L5-10",
+        "L5-11",
+        "L5-12",
+        "L5-14"
+      ],
+      "L5-05": "PASS"
+    }
+  },
+  "G13": {
+    "status": "NOT CHECKED",
+    "measuredChecks": [
+      {
+        "clause": "each observed follower median versus its phase group median",
+        "tier": "low",
+        "policy": "complete",
+        "status": "PASS"
+      },
+      {
+        "clause": "stationary far-follower time upper bound",
+        "tier": "low",
+        "policy": "complete",
+        "status": "PASS"
+      },
+      {
+        "clause": "each observed follower median versus its phase group median",
+        "tier": "high",
+        "policy": "complete",
+        "status": "PASS"
+      },
+      {
+        "clause": "stationary far-follower time upper bound",
+        "tier": "high",
+        "policy": "complete",
+        "status": "PASS"
+      }
+    ]
+  },
+  "threat": {
+    "exit": 0,
+    "levels": 10,
+    "flags": [],
+    "seconds": 360.14170958299997,
+    "loadBefore": {
+      "at": "2026-11-06T07:08:16.268598+00:00",
+      "load": [
+        4.00830078125,
+        5.3017578125,
+        5.6767578125
+      ],
+      "sourceClean": true,
+      "otherOwnedChecksRunning": false
+    }
+  },
+  "gates": {
+    "accept-L4": 1,
+    "accept-L5": 1,
+    "typecheck": 0,
+    "lint": 0,
+    "test": 0,
+    "threat": 0,
+    "final-tank": 0
+  },
+  "evidence": {
+    "docs/reports/fix67-b2/README.md": "0ef151fec858c4b45fb7579b624cfec0f05a50210c74f60c8858f5d849143236",
+    "docs/reports/fix67-b2/aborted-alpha42-threat.log.gz": "fc1dfe915dcd8e922748084b70c9beeff092b26c18851bf440e120f08c51ab12",
+    "docs/reports/fix67-b2/accept-L4-high.log.gz": "b8460947f3a6f84b19e326925a953ec57e3e621d08d6a89205be1e3c5e5ea202",
+    "docs/reports/fix67-b2/accept-L4-low.log.gz": "782f3a917c56e848bc91c9ee42af7d4ba275a767fbf5092871324f48e8d7a110",
+    "docs/reports/fix67-b2/accept-L4.log.gz": "b615355ec47b1a1b590523433ea1e5a4d2cd010a0a81a2b5d84385ef4546cec4",
+    "docs/reports/fix67-b2/accept-L5-high.log.gz": "58acb4c99ac16e604c1f5e4fd32a51501975afff28786f3e4c766760e72fd5e1",
+    "docs/reports/fix67-b2/accept-L5-low.log.gz": "f6213cf16ad820127d804c0cc865c08f88e3e2dc257e18ccaa50c7d143be4be0",
+    "docs/reports/fix67-b2/accept-L5.log.gz": "a5bcf3eddb7066f5a5e03cd9a7d56149fc09fc8d7959a291c7ace5833dfb81d0",
+    "docs/reports/fix67-b2/alpha-trace.json.gz": "9aaecc87a1bdf098c231c3278bdf84da0a24299901d3a49c09df942bcd1a1b96",
+    "docs/reports/fix67-b2/alpha-trace.log.gz": "a5a8cea5afa7858edf95dd15b23fc685a76eaae86de2bda439ddb2ac72583240",
+    "docs/reports/fix67-b2/alpha-trace.ts.gz": "9b0ecbadab5f1edb2639b8d8021c9d4f808c92cfee3be12488b182a90b56599a",
+    "docs/reports/fix67-b2/canonical-receipts.json.gz": "e0b5011dd40370ee7c5626a86f46e4abda23e6b3a2df18bdf9590d96797c335d",
+    "docs/reports/fix67-b2/final-tank.json.gz": "d8a42d9b93d1311502abfb6d563781af6710ad52e63d2bd58920fe10ddd3b20a",
+    "docs/reports/fix67-b2/final-tank.log.gz": "d000a6cf3ec146d25a3bd78458099b2a3f44f08b7b78037c35a80aa813db54e4",
+    "docs/reports/fix67-b2/lint.log.gz": "9b6bec7c1298241e52686d1dc57138f5c9a78d48cc0cbede418cfa45ec28ef62",
+    "docs/reports/fix67-b2/position-screening.json": "b6b8a294f6881df8caf214cd1dbf3229bf02395d9aaec10d32befa5dd90cb85d",
+    "docs/reports/fix67-b2/publish.py.gz": "1a22a0c73bee027ccd1dec9007ac130f98a928da29f5d396dd2712ba10e7b40b",
+    "docs/reports/fix67-b2/rejected-27-acceptance.json.gz": "d5c3827d8f1d5fd374bc264e778cf2de2ded36f82e2a4cba3c25901cb291e8c3",
+    "docs/reports/fix67-b2/rejected-27-cadence-tank.json.gz": "2e997dff30ca337a338419350a3c636495b7e67e92f2ddfc313d56e2a529c8aa",
+    "docs/reports/fix67-b2/rejected-alpha42-acceptance.json.gz": "e3d992a0e3fba39afc536b77560e3a5b2a48856f579ddb1885213a6c9c61c606",
+    "docs/reports/fix67-b2/screen.ts.gz": "16d22c69552075d318bc790a249b033273e5c467df0f470ab10238b074cf02fa",
+    "docs/reports/fix67-b2/selected-low-only-high.json.gz": "9a1668ede1d406883a85774b80e9c0261596b489bf112ddad8f4dc3c11660cf2",
+    "docs/reports/fix67-b2/selected-low-only-low.json.gz": "08cddf619ded27564f733994b31e7f4c07d8e6d16d00367e53d5883917f9a0c3",
+    "docs/reports/fix67-b2/tank-screen.ts.gz": "6cb239e0182960b7a1e40d4e1b2ee30fab982fa4af1f99841a6251cecb7e29ae",
+    "docs/reports/fix67-b2/tank-trial-22-7.json.gz": "fdfa9bae6255571b4a47b94f1dec0f7c93e72bdc33303ced40fba435f9be0c73",
+    "docs/reports/fix67-b2/tank-trial-27-9.json.gz": "176eea3f56a10d6c49584910b33fddf0d7fa0d270131c3653a5bc314899de0e3",
+    "docs/reports/fix67-b2/tank-trial-27-9p0.json.gz": "83413e5b38f4d42f66bc4b77368df4f65bc00e6122af88f04f90aea0b825d663",
+    "docs/reports/fix67-b2/tank-trial-27p5-9.json.gz": "f894941ed7208434ad5316a96454a7c4d3173d6a3ccc04ffdab4ca1007ea71c9",
+    "docs/reports/fix67-b2/tank-trial-locked-27.json.gz": "2be6d602767059f32529a7790d8de30a0c65332b2909c945c9d3d18ddad242d8",
+    "docs/reports/fix67-b2/test.log.gz": "e8c524763fa0483b67da9b593d4d2c69c115bf5b79beae49d3e026d5e55b96af",
+    "docs/reports/fix67-b2/threat-audit.json.gz": "bb20ebbade3816b4b6981d450514f7162f378b0ccabe8844afb509011e138107",
+    "docs/reports/fix67-b2/threat-budget.json.gz": "0246a3210572bb67d019725d7981a971f2cc45382c33a161ad2e9dec00dfebfc",
+    "docs/reports/fix67-b2/threat.log.gz": "77b82e27cb7113a9cde7e1edb10508a705f7eef0195d0fb7e38f534744ea78c5",
+    "docs/reports/fix67-b2/trial-16-40.json.gz": "6886da67b2f54fef71973e1b2bc1444713b23c49d4fb2d14f6ab36a4c7d642d3",
+    "docs/reports/fix67-b2/trial-24-7.json.gz": "c02a472d9929fa5f327930b98a5848b23cdc28a07b6792c776e866f5159ab56d",
+    "docs/reports/fix67-b2/trial-24-9.json.gz": "591fd4817863d4f2587256015f1676ee82ff467d69c107e8222cf4473c8363b8",
+    "docs/reports/fix67-b2/trial-27-9-high.json.gz": "10144d3456a6419aae44876af879be0d901e2f13e41a85911ab5575031d42d7e",
+    "docs/reports/fix67-b2/trial-27-9.json.gz": "6eea20c178aa3194284e182ea0501300dcc03497648753db48eadf88d1b60d3c",
+    "docs/reports/fix67-b2/trial-27-9p0.json.gz": "ba0db497526ad6ad441e1aa81471d328ac472bd8495faf48a5223f3c95149c19",
+    "docs/reports/fix67-b2/trial-27p5-9.json.gz": "5c1324c441ea71f814e5f9173e04f12cc05f4a5dfaa0cdbdc83f09914dc5d0b3",
+    "docs/reports/fix67-b2/trial-34-30.json.gz": "6cd075233213d6adcb81c45c71835aacf624ac14195122a1c6e25175e290a85a",
+    "docs/reports/fix67-b2/trial-alpha38z41-high.json.gz": "9dfd525901809616434431dd2ed6e4b2057ba5f0d0b2391e69c92cd220f04003",
+    "docs/reports/fix67-b2/trial-alpha38z41-low.json.gz": "bbe372a845e7efdfa800ec4c46ebecbc88781304c9a4933371165465ca72f4ee",
+    "docs/reports/fix67-b2/trial-alpha42z40-high.json.gz": "886b73edc3a4880c0c41b2c405f4b06c8719f0349d011e09509a102f59eef662",
+    "docs/reports/fix67-b2/trial-alpha42z40-low.json.gz": "8ff16f41cd2cb5ba4cabdd9117383dfab6d677c82ed6d45b9b3b9ae4fde4d4e0",
+    "docs/reports/fix67-b2/trial-alpha42z42-high.json.gz": "68659dcf942eeb64a55d6f135382e904ef358a8d58931e7db509b5f83c627d07",
+    "docs/reports/fix67-b2/trial-alpha42z42-low.json.gz": "19d8d90443e2c1806bb652e3515b6991962236277b4fb5aac33e6f72f6130736",
+    "docs/reports/fix67-b2/trial-north-alpha40.json.gz": "a2b3174c3562edfe42b09ca2f1e2515319cca35b528e7204070a84d8471d086a",
+    "docs/reports/fix67-b2/trial-north-alpha42-high.json.gz": "181e62d6c6463ed3387b9dc4032aeb1efdf350a314c1ece42f0f3b3cf1e49bb6",
+    "docs/reports/fix67-b2/trial-north-alpha42.json.gz": "25519989519cb3c81bc7fc2aaaafd4470d5109546d6245bdb43e2ca6add70e5b",
+    "docs/reports/fix67-b2/trial-north-alpha44.json.gz": "4f44bf7ad15b9feb78f58da27cc22278bfcab3f81b40dce0bd5fb34496ded932",
+    "docs/reports/fix67-b2/typecheck.log.gz": "9d9fd53b07c99009f4711965bd6e98eff0c9c03f0d657ab01c32329a26d39908",
+    "docs/reports/fix67-b2/write-readmes.py.gz": "ec9c3be05453ececc2c60522a64a921cf84c0ab4a534452e3460026347dc581a"
+  }
+}

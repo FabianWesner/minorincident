@@ -1,32 +1,37 @@
 {
   "row": "L10-11",
   "status": "FAIL",
-  "reviewer": "Codex sweep-c3",
-  "date": "2026-11-05",
-  "commit": "1abbb0e54627a41f5a8c984d2dd494f56725fdad",
+  "reviewer": "Codex sweep-c5",
+  "date": "2026-11-06",
+  "commit": "ef01b8b04de57f5ec27533d309dfb9b66de6751b",
   "clauses": [
     {
       "clause": "Assault: infected at the capped peak (140\u2013190 / 75\u201395), reachable \u2265 90 %, attacks on player \u2265 8/min (tune); Mega reaches the arena ~140 s after activation (orchestrator 2026-11-04: \"~140 s\" = 120\u2013160 s, by walking; no relocation).",
       "verdict": "FAIL",
-      "note": "Fresh original stationary-policy proof measures actual persistent Mega crossing of25m arena at57.7833333333s low /56.3166666667s high after charge activation, outside unchanged120\u2013160s target. Both full240s assaults reach capped95/190 peaks, other current native windup/reach checks pass; neither actual Mega relocates and canonical stationary final-state controls are identical. Current arrival counterexample conclusively fails row; no timer/count/cap/target/game/checker change. Timing is simulation time, not performance timing."
+      "note": "Current-source full 240-second native hold in both tiers: Mega crosses the 25 m arena at +57.7833 s low / +56.4500 s high, outside the unchanged 120\u2013160 s by-walking target. Both tiers reach capped peaks 95/190, exceed 8 attacks/min (mega phase 1238.11/1194.11), and have 100% bounded-path reachability. Each run retains one Mega ID, zero scheduled relocations and canonical final-state identity. This is a measured arrival-time FAIL; no timer, cap, criterion or game change."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-c3/L10-11/l10-hold-proof.json.gz",
-      "sha256": "104449cd07e694022c6224a7b790906a9a1726d0a8f6a21316307509c0d41709",
-      "what": "Fresh original stationary-policy proof measures actual persistent Mega crossing of25m arena at57.7833333333s low /56.3166666667s high after charge activation, outside unchanged120\u2013160s target. Both full240s assaults reach capped95/190 peaks, other current native windup/reach checks pass; neither actual Mega relocates and canonical stationary final-state controls are identical. Current arrival counterexample conclusively fails row; no timer/count/cap/target/game/checker change. Timing is simulation time, not performance timing."
+      "file": "docs/reports/fix51-verify/receipts/L10-hold.json",
+      "sha256": "30547f83b2c3957f2a17a43be6fd21b96c8c862a0d8f7b994aabd0445093b76e",
+      "what": "Exact-source four-minute hold, arena-arrival and persistent-identity evidence for both tiers."
     },
     {
-      "file": "docs/reports/sweep-c3/L10-03/evidence/L10-low-complete.json.gz",
-      "sha256": "9b88c9e3f0f6ab5a724f15d4bba5bb2d60dfc79f16cf499722423a345a4efb08",
-      "what": "Immutable current original native complete route; exact source/observer hashes."
+      "file": "docs/reports/fix51-verify/receipts/L10-low-stationary.json",
+      "sha256": "61f4c308e6f0270cbcc8651c37833bc53766e05cdf26ac6e5b3630c3b70948c2",
+      "what": "Current-source low stationary final-state control."
     },
     {
-      "file": "docs/reports/sweep-c3/L10-03/evidence/L10-high-complete.json.gz",
-      "sha256": "d984e11f3abe91a37056bf1c424b1b716cd24d468392333e81c9853f04711f90",
-      "what": "Immutable current original native complete route; exact source/observer hashes."
+      "file": "docs/reports/fix51-verify/receipts/L10-high-stationary.json",
+      "sha256": "62f369054b2812c6c5c8a87c8b69577b0e13e274336a2ef11bc2decc72f18158",
+      "what": "Current-source high stationary final-state control."
+    },
+    {
+      "file": "docs/reports/fix55-c/L10-11-boundaries.json",
+      "sha256": "79e8cabc4f9cfe8f808a8df9428886782801eb7baacc8fa1f34f7582b6341a00",
+      "what": "Ten exact-boundary and missing-evidence controls (119.99/120/160/160.01 seconds and absent proof)."
     }
   ],
-  "notes": "Original current-source producer, measured unchanged criterion."
+  "notes": "The current measured FAIL is retained for explicit review; no acceptance target or timing was changed."
 }

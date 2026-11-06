@@ -1,72 +1,201 @@
 {
   "row": "L10-06",
   "status": "PASS",
-  "reviewer": "Codex sweep-c4",
-  "date": "2026-11-05",
-  "commit": "847ca54190398df8e945b573256953598d1b36be",
+  "reviewer": "Codex sweep-c5",
+  "date": "2026-11-06",
+  "commit": "97fb56569838414db4f029cff73d05fea6a5b9bb",
   "clauses": [
     {
       "clause": "Dogs: 1.1\u00d7 run, \u2265 0.6 s telegraph, \u2264 2 m reach, \u2265 2 s cooldown, 10 HP/bite; low, distinct from the corgi.",
       "verdict": "PASS",
-      "note": "Both qualities: ordinary mechanics fixtures measure1.1x nominal run, actual10HP hits at1.08m,0.65s telegraph and2s hit-to-next-windup cooldown. Native naturally reached dog/corgi snapshots preserve canonical final control hashes. Four real-input Resume encounters use camera0.5/1.5 and physicalA sidestep; each has three living dog frames. Personally inspected all49 captures/final previews: lean cream/tan four-legged enemy with long-legged low body, red bar, distinct from round orange Corgi and green backpack. High crowd partly overlaps dog, but canine body remains identifiable at front/right while Corgi stays left. Source, runtime quality/zoom and seed hashes bound;zero runtime issues/skips/deaths. Raw hashes verified and images deleted."
+      "note": "Current native low/high dog mechanics: speed ratio1.1, real hit reach1.08m,10HP damage,0.65s telegraph,2s hit-to-next-windup cooldown. Four current-source physical encounters restore naturally reached dog/corgi saves with no actor writes; only cameraZoom changes. Personally inspected all42 final frames and46 initial rejected-matrix frames. The first high-wide named frames obscured the dog, so that matrix was not admitted. Capture policy now records wide approach at<=12m before the crowd converges, keeping close<=3m; all four cells were remeasured under the new producer hash. Named witnesses show cream/brown low canine torso/muzzle/legs/tail and red enemy bar, distinct from orange/white round-headed backpack corgi at both zooms/tiers. Close high has partial crowd occlusion; new wide views show a separate living silhouette. Actual runtime quality/zoom, no skips/deaths or console/page errors; native snapshot controls unchanged. These are short appearance encounters, not full physical finale completion."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix51-r10c/L10-low-dog-z0.5/review.json",
-      "sha256": "f17526491d24ae77f5a4ac37049a7baf18e1c6106f531be8014e7838052157b7",
-      "what": "Current numerical dog mechanics, canonical-state-preserving encounter snapshot, actual physical sidestep, or personally inspected capture/preview SHA256 ledger and compressed artifacts."
+      "file": "docs/reports/sweep-c5/L10-06/low-z0.5-review.json.gz",
+      "sha256": "d8ff15786e348839539310cf89f6cfdaaa1db37ab61eb4cac6b1ee235297d983",
+      "what": "Immutable current-source physical encounter or personally inspected original-size frame manifest, with exact hashes, quality/zoom and three living-dog witnesses."
     },
     {
-      "file": "docs/reports/fix51-r10c/L10-low-dog-z0.5-input.json",
-      "sha256": "6d0480023f3e6c1fb7c6f29e1afa849715f72a58913321940ca454fe7eb11470",
-      "what": "Current numerical dog mechanics, canonical-state-preserving encounter snapshot, actual physical sidestep, or personally inspected capture/preview SHA256 ledger and compressed artifacts."
+      "file": "docs/reports/sweep-c5/L10-06/low-z0.5-input.json.gz",
+      "sha256": "2540f9bddcfbaf17b503562082db73e1716f247345dcb6dcb3e348cdc57624af",
+      "what": "Immutable current-source physical encounter or personally inspected original-size frame manifest, with exact hashes, quality/zoom and three living-dog witnesses."
     },
     {
-      "file": "docs/reports/fix51-r10c/L10-low-dog-z1.5/review.json",
-      "sha256": "790c0303ebc77db8866e9dbf0f8b61c7a8313218a673a0ba0f9cad1b49a6d1df",
-      "what": "Current numerical dog mechanics, canonical-state-preserving encounter snapshot, actual physical sidestep, or personally inspected capture/preview SHA256 ledger and compressed artifacts."
+      "file": "docs/reports/sweep-c5/L10-06/artifacts/low-z0.5-log-dog-look.jsonl.gz",
+      "sha256": "83639d23e303561bd3f1d07a23a7df4126f045623e204735d11fbfde5bb45091",
+      "what": "Exact physical encounter ledger/log/completion or audio artifact, preserving original compressed bytes."
     },
     {
-      "file": "docs/reports/fix51-r10c/L10-low-dog-z1.5-input.json",
-      "sha256": "469f0034f0269169884ad5cc900a071c336ee05a7e2cb9407e9d38b1ef6360a4",
-      "what": "Current numerical dog mechanics, canonical-state-preserving encounter snapshot, actual physical sidestep, or personally inspected capture/preview SHA256 ledger and compressed artifacts."
+      "file": "docs/reports/sweep-c5/L10-06/artifacts/low-z0.5-dog-look-completion.json.gz",
+      "sha256": "186a9da25055f576c9ceb414aa245bbe012a8e2195825c74841804af14d6c0cd",
+      "what": "Exact physical encounter ledger/log/completion or audio artifact, preserving original compressed bytes."
     },
     {
-      "file": "docs/reports/fix51-r10c/L10-high-dog-z0.5/review.json",
-      "sha256": "d14ea8b7b609670fcf6f3126f0524b48a0bb50456c05e5e671f213fbab42021f",
-      "what": "Current numerical dog mechanics, canonical-state-preserving encounter snapshot, actual physical sidestep, or personally inspected capture/preview SHA256 ledger and compressed artifacts."
+      "file": "docs/reports/sweep-c5/L10-06/artifacts/low-z0.5-dog-look-acceptance-ledger.json.gz",
+      "sha256": "6601292012605aa20f4a1c6b232ed1be5485f13c3d6d3787a0402ab8825ea4fc",
+      "what": "Exact physical encounter ledger/log/completion or audio artifact, preserving original compressed bytes."
     },
     {
-      "file": "docs/reports/fix51-r10c/L10-high-dog-z0.5-input.json",
-      "sha256": "7b36e88631846e9c86928544f3443e3fbd084fe34c6f9e24fa745ba6a677b615",
-      "what": "Current numerical dog mechanics, canonical-state-preserving encounter snapshot, actual physical sidestep, or personally inspected capture/preview SHA256 ledger and compressed artifacts."
+      "file": "docs/reports/sweep-c5/L10-06/artifacts/low-z0.5-dog-look-audio.json.gz",
+      "sha256": "bbae76174d0b7210fc8069e23f8925bef4332523ef935d51de9cb53134ee5ce9",
+      "what": "Exact physical encounter ledger/log/completion or audio artifact, preserving original compressed bytes."
     },
     {
-      "file": "docs/reports/fix51-r10c/L10-high-dog-z1.5/review.json",
-      "sha256": "b992ea40e8fe0877a25d6d8c1d1aa877502f71f5b3571ba94c588081b6847712",
-      "what": "Current numerical dog mechanics, canonical-state-preserving encounter snapshot, actual physical sidestep, or personally inspected capture/preview SHA256 ledger and compressed artifacts."
+      "file": "docs/reports/sweep-c5/L10-06/artifacts/low-z0.5-issues-dog-look.json.gz",
+      "sha256": "64406e753d82e11c6bd63d1d04bb6aa083eefa0a46949bbfce994d556b989f0f",
+      "what": "Exact physical encounter ledger/log/completion or audio artifact, preserving original compressed bytes."
     },
     {
-      "file": "docs/reports/fix51-r10c/L10-high-dog-z1.5-input.json",
-      "sha256": "6ba335f3c2fbaebc39db8d4500145bf7ba8ac0426640575948683144df0a216e",
-      "what": "Current numerical dog mechanics, canonical-state-preserving encounter snapshot, actual physical sidestep, or personally inspected capture/preview SHA256 ledger and compressed artifacts."
+      "file": "docs/reports/sweep-c5/L10-06/artifacts/low-z0.5-runs-dog-look.json.gz",
+      "sha256": "2bd8b06b2b3b95690b1c39bd5de453fa623d3f147e9251a8b56a060191f98706",
+      "what": "Exact physical encounter ledger/log/completion or audio artifact, preserving original compressed bytes."
     },
     {
-      "file": "docs/reports/fix51-r10c/L10-dog-save-provenance.json",
-      "sha256": "314fefcf48af81fc9a3942f89e212d706db15e363d4597fd3b81a1d50ad140a6",
-      "what": "Current numerical dog mechanics, canonical-state-preserving encounter snapshot, actual physical sidestep, or personally inspected capture/preview SHA256 ledger and compressed artifacts."
+      "file": "docs/reports/sweep-c5/L10-06/low-z1.5-review.json.gz",
+      "sha256": "298f1838f6ff64fe17a37d4eb460878117c140ef06f7a1cdfdcc6ec975454194",
+      "what": "Immutable current-source physical encounter or personally inspected original-size frame manifest, with exact hashes, quality/zoom and three living-dog witnesses."
     },
     {
-      "file": "docs/reports/fix65-c/historical/L10-low-fixtures.json",
-      "sha256": "0fd067fc02c9e4c4c6decc4f7dc128636a02edf9b9e7cccb27c6f9a1a65f7e8d",
-      "what": "Current numerical dog mechanics, canonical-state-preserving encounter snapshot, actual physical sidestep, or personally inspected capture/preview SHA256 ledger and compressed artifacts."
+      "file": "docs/reports/sweep-c5/L10-06/low-z1.5-input.json.gz",
+      "sha256": "79a88cb71ddc54a2159e29b093da00a00da38b40328658671d3a278d70de7af2",
+      "what": "Immutable current-source physical encounter or personally inspected original-size frame manifest, with exact hashes, quality/zoom and three living-dog witnesses."
     },
     {
-      "file": "docs/reports/fix65-c/historical/L10-high-fixtures.json",
-      "sha256": "cafffb7f1d93cb7e90e9dcbd84b0da79dec46c45b6bd877671ee4ea47fa0933c",
-      "what": "Current numerical dog mechanics, canonical-state-preserving encounter snapshot, actual physical sidestep, or personally inspected capture/preview SHA256 ledger and compressed artifacts."
+      "file": "docs/reports/sweep-c5/L10-06/artifacts/low-z1.5-log-dog-look.jsonl.gz",
+      "sha256": "bbde7c069622b1200f23e48d144bf6a92a0e0e724b6a065a9d3cf06f9de90cb3",
+      "what": "Exact physical encounter ledger/log/completion or audio artifact, preserving original compressed bytes."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L10-06/artifacts/low-z1.5-dog-look-completion.json.gz",
+      "sha256": "0ef2b63398d4d37abc0c6b0bc0f5a2782df7cc39fdd59b2c307f9d363ba130ea",
+      "what": "Exact physical encounter ledger/log/completion or audio artifact, preserving original compressed bytes."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L10-06/artifacts/low-z1.5-dog-look-acceptance-ledger.json.gz",
+      "sha256": "a680a902953008b31111bcacb601e1f505f144db8f2cc9a1ecebef5bfcfa5647",
+      "what": "Exact physical encounter ledger/log/completion or audio artifact, preserving original compressed bytes."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L10-06/artifacts/low-z1.5-dog-look-audio.json.gz",
+      "sha256": "6841416f83cf59daae9d0b3539b2aaaefc7bb57a92ffff4b795cc27d8208c658",
+      "what": "Exact physical encounter ledger/log/completion or audio artifact, preserving original compressed bytes."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L10-06/artifacts/low-z1.5-issues-dog-look.json.gz",
+      "sha256": "64406e753d82e11c6bd63d1d04bb6aa083eefa0a46949bbfce994d556b989f0f",
+      "what": "Exact physical encounter ledger/log/completion or audio artifact, preserving original compressed bytes."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L10-06/artifacts/low-z1.5-runs-dog-look.json.gz",
+      "sha256": "6c95f85b91aeb2d48043295c1bcb9cf2a6046defa85537ba1dde4bbcfe7329ff",
+      "what": "Exact physical encounter ledger/log/completion or audio artifact, preserving original compressed bytes."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L10-06/low-seed.json.gz",
+      "sha256": "9e684bd76017f434e502aedbf3dd245afaffc5954be7db3e2f6ff5bcdf8a20d9",
+      "what": "Naturally reached dog/corgi production Resume or current native dog mechanics fixture."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L10-06/low-mechanics.json.gz",
+      "sha256": "8d870deddadeb2dd2a768d398f3f3e850648df9a04f0a56ccbdf7878f06ec9b7",
+      "what": "Naturally reached dog/corgi production Resume or current native dog mechanics fixture."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L10-06/high-z0.5-review.json.gz",
+      "sha256": "b33dd9c89835beed38bed02c40fd136de2e3fa94c5b320499eb5ead8dff3483f",
+      "what": "Immutable current-source physical encounter or personally inspected original-size frame manifest, with exact hashes, quality/zoom and three living-dog witnesses."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L10-06/high-z0.5-input.json.gz",
+      "sha256": "bf4e0a4275cc060b8e099a5603eebf3bf926d691b573cbc4ca44d3db503a5e02",
+      "what": "Immutable current-source physical encounter or personally inspected original-size frame manifest, with exact hashes, quality/zoom and three living-dog witnesses."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L10-06/artifacts/high-z0.5-log-dog-look.jsonl.gz",
+      "sha256": "1b3ecb71f9ddaccc5a0530140d13ce94cfbec2b11ddccd589dd79c72dfc25206",
+      "what": "Exact physical encounter ledger/log/completion or audio artifact, preserving original compressed bytes."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L10-06/artifacts/high-z0.5-dog-look-completion.json.gz",
+      "sha256": "94fc9e8aabb6afe4ca5b8f5f42c42e925c61290941893f36634a3ec1581be971",
+      "what": "Exact physical encounter ledger/log/completion or audio artifact, preserving original compressed bytes."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L10-06/artifacts/high-z0.5-dog-look-acceptance-ledger.json.gz",
+      "sha256": "e1bdd4b80da844427cdaa2b94ffda9e8a83a445d1caced7e7a9df970163a3f8d",
+      "what": "Exact physical encounter ledger/log/completion or audio artifact, preserving original compressed bytes."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L10-06/artifacts/high-z0.5-dog-look-audio.json.gz",
+      "sha256": "63fd2d2aa198715e42ba65762382672d2add1fb5c5f9534faa54b9beff210232",
+      "what": "Exact physical encounter ledger/log/completion or audio artifact, preserving original compressed bytes."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L10-06/artifacts/high-z0.5-issues-dog-look.json.gz",
+      "sha256": "64406e753d82e11c6bd63d1d04bb6aa083eefa0a46949bbfce994d556b989f0f",
+      "what": "Exact physical encounter ledger/log/completion or audio artifact, preserving original compressed bytes."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L10-06/artifacts/high-z0.5-runs-dog-look.json.gz",
+      "sha256": "59397fca2a4bb4ea646d6ae281942e4b165af3396225868ce99874841013dd55",
+      "what": "Exact physical encounter ledger/log/completion or audio artifact, preserving original compressed bytes."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L10-06/high-z1.5-review.json.gz",
+      "sha256": "63e1d146f8853b5b36825ec74cf62922a4f6df02fc0fbf99038e85a42627282b",
+      "what": "Immutable current-source physical encounter or personally inspected original-size frame manifest, with exact hashes, quality/zoom and three living-dog witnesses."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L10-06/high-z1.5-input.json.gz",
+      "sha256": "4a56a12bd7ca134382696b54449e8f81918d0cf5d9bb0e225f365c7832b3775f",
+      "what": "Immutable current-source physical encounter or personally inspected original-size frame manifest, with exact hashes, quality/zoom and three living-dog witnesses."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L10-06/artifacts/high-z1.5-log-dog-look.jsonl.gz",
+      "sha256": "1521fdadce72d177575c5c4e87cd74d3998df3e6c9bc29ce104b398802ecc7e5",
+      "what": "Exact physical encounter ledger/log/completion or audio artifact, preserving original compressed bytes."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L10-06/artifacts/high-z1.5-dog-look-completion.json.gz",
+      "sha256": "a98ab21822de82ae697a2df9ff4143445e60939759252ebae65565608b575ee7",
+      "what": "Exact physical encounter ledger/log/completion or audio artifact, preserving original compressed bytes."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L10-06/artifacts/high-z1.5-dog-look-acceptance-ledger.json.gz",
+      "sha256": "5f90c83c9850f80a7114bd9f45293e894829046a2d6e57cabda84745d0e3a08b",
+      "what": "Exact physical encounter ledger/log/completion or audio artifact, preserving original compressed bytes."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L10-06/artifacts/high-z1.5-dog-look-audio.json.gz",
+      "sha256": "554ac7924e9b9a542ac3ff685d4ae69e73733d5b6bb51953a433eee0bbfe3291",
+      "what": "Exact physical encounter ledger/log/completion or audio artifact, preserving original compressed bytes."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L10-06/artifacts/high-z1.5-issues-dog-look.json.gz",
+      "sha256": "64406e753d82e11c6bd63d1d04bb6aa083eefa0a46949bbfce994d556b989f0f",
+      "what": "Exact physical encounter ledger/log/completion or audio artifact, preserving original compressed bytes."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L10-06/artifacts/high-z1.5-runs-dog-look.json.gz",
+      "sha256": "127e7a30016b709e9d1da92be89fe05f61af8e5938daf7ae1c506d9aba1cde21",
+      "what": "Exact physical encounter ledger/log/completion or audio artifact, preserving original compressed bytes."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L10-06/high-seed.json.gz",
+      "sha256": "856e07979225c6b82272f6c606e0ab90d9b9518dac8002d5543720a237cb8732",
+      "what": "Naturally reached dog/corgi production Resume or current native dog mechanics fixture."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L10-06/high-mechanics.json.gz",
+      "sha256": "1bcd08c3b321bca3389b5b41f8c9e68b7906e4593ebae522a2a33c98fba71e6f",
+      "what": "Naturally reached dog/corgi production Resume or current native dog mechanics fixture."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L10-06/seed-provenance.json",
+      "sha256": "a8a3f39037a9b7945b81cf90fc8345922c59cf088f0dc91b1e434b835e934042",
+      "what": "Read-only naturally reached living-dog snapshot on both competent routes; canonical final control hashes identical."
     }
-  ],
-  "notes": "Appearance and mechanics only; short encounters yield at next checkpoint and do not qualify full regional route. Loading and later corpse/combat images are reviewed but excluded from the three living-dog frames. Producer now retains final preview until personal review."
+  ]
 }

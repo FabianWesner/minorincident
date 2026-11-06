@@ -33,10 +33,13 @@ for (const tier of ['low', 'high'] as const) {
     for (let i = 0; i < 3 && !s.gateAt; i++) { w.applyInput(emptyInput(), 'keyboard'); w.update(); }
     const gate = [...w.entities.iterate()].find(e => e.barricade?.slot.id === 'l6-night-exit');
     if (!gate) throw new Error('Actual controller did not close Northgate');
+    w.physics.world!.step();
     const closed = sweep();
+    if (open.crossed !== true) throw new Error(`${tier}: open Northgate unexpectedly blocked the player capsule`);
     const gateWalls = blockers.filter(e => (e as { id: number }).id === gate.id);
+    if (closed.crossed !== false) throw new Error(`${tier}: closed Northgate allowed the player capsule through: ${JSON.stringify({ gate, gateWalls, movement: closed.movement })}`);
     rows.push({ tier, gateAt: s.gateAt, gate: structuredClone(gate), gateWalls, open, closed, roster: s.survivors.map(r => ({ id: r.id, status: r.status })), result: m.state.result });
     console.log(tier, 'open', open.crossed, 'closed', closed.crossed, JSON.stringify(closed.movement));
   } finally { w.dispose(); }
 }
-writeFileSync('docs/reports/sweep-b/L6-northgate.json', JSON.stringify({ ...provenance(), producerSha256: createHash('sha256').update(readFileSync('tools/qa/sweep-b-northgate.ts')).digest('hex'), method: 'Explicit fixture with all29 existing roster identities staged beyond the stairs; actual production controller creates the closed Northgate. Independent production Rapier character-controller capsule sweeps before/after closure at the measured4.62m exit body-centre height. This bypasses only cinematic input locking, preserving actual colliders/masks. Actual blocker event slab retained; no game parameters changed.', rows }, null, 2) + '\n');
+writeFileSync('docs/reports/sweep-b/L6-northgate.json', JSON.stringify({ ...provenance(), producerSha256: createHash('sha256').update(readFileSync('tools/qa/sweep-b-northgate.ts')).digest('hex'), method: 'Explicit fixture with all29 existing roster identities staged beyond the stairs; actual production controller creates the closed Northgate. Production Rapier character-controller capsule sweeps before/after closure at the measured4.62m exit body-centre height. Both tiers assert the open route is crossable and the closed route blocks the capsule. This bypasses only cinematic input locking, preserving actual colliders/masks. Actual blocker event slab retained.', rows }, null, 2) + '\n');

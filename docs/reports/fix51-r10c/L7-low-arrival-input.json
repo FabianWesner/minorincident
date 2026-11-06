@@ -1,0 +1,133 @@
+{
+  "sourceHash": "43b485e825dc3b7e6afda4f35772460115ce094858019c8637fcd67fde85f32c",
+  "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
+  "revision": "d015048dfab0993daf5d612b8939969885bfd3a3",
+  "browserHash": "9e227fa3b945360df3ced89d37da620661482cf42990f8f02eb07b7f9c843069",
+  "seedArchiveSha256": "77bb676c7dd072d667c2aaf54477d09a6fa778f47bfb74e7ad1337d6d3bf19b9",
+  "selections": [
+    {
+      "weapon": "weapon.bat",
+      "key": 2,
+      "observed": "weapon.bat",
+      "tick": 128
+    },
+    {
+      "weapon": "weapon.fire-axe",
+      "key": 3,
+      "observed": "weapon.fire-axe",
+      "tick": 156
+    },
+    {
+      "weapon": "weapon.handgun",
+      "key": 4,
+      "observed": "weapon.handgun",
+      "tick": 182
+    },
+    {
+      "weapon": "weapon.shotgun",
+      "key": 6,
+      "observed": "weapon.shotgun",
+      "tick": 208
+    },
+    {
+      "weapon": "weapon.army-mg",
+      "key": 5,
+      "observed": "weapon.army-mg",
+      "tick": 233
+    },
+    {
+      "weapon": "weapon.rocket-launcher",
+      "key": 7,
+      "observed": "weapon.rocket-launcher",
+      "tick": 259
+    }
+  ],
+  "toolSha256": "8493eccc7d301bf36674826f1fdf6b28d6c0019253c8d428af259f87c56e6218",
+  "out": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-c5/test-results/fix51-r10c/L7-low-arrival-1793938594850",
+  "levels": [
+    "L7"
+  ],
+  "tier": "low",
+  "method": "Actual native L5/L6 completion save through production Continue, six physical keyboard weapon selections observed in normal game state; no actor/arsenal writes. Shared headless Metal WebGL2, physical WASD/mouse/mission UI, production campaign handovers. Protected courier, no objective skips or actor relocation. Read-only acceptance ledger; no frame timing. Each capture pauses simulation and restores quality/zoom.",
+  "result": {
+    "runs": [
+      {
+        "level": "L7",
+        "entry": "continue",
+        "heroine": "female",
+        "finished": false,
+        "skipped": [],
+        "wallSeconds": 120,
+        "simSeconds": 113,
+        "maxNoProgressSeconds": 14.497,
+        "deaths": 0,
+        "assists": 0,
+        "attacks": {
+          "weapon.rocket-launcher": 35
+        },
+        "weaponsStart": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick",
+          "weapon.shotgun"
+        ],
+        "weaponsEnd": [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.army-mg",
+          "weapon.handgun",
+          "weapon.kick",
+          "weapon.shotgun",
+          "weapon.rocket-launcher"
+        ],
+        "steps": [
+          {
+            "id": "rocket",
+            "text": "Recover the rocket launcher beside the exit · 3 m",
+            "tick": 4,
+            "marker": {
+              "anchor": "l7-rocket",
+              "ring": {
+                "x": 276,
+                "y": 4.619999885559082,
+                "z": 15
+              },
+              "drawn": [
+                276,
+                3.9,
+                15
+              ],
+              "playerY": 4.619999885559082,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "corridor",
+            "text": "Bring the group to the evacuation corridor · Group 1/1 nearby · 308 m",
+            "tick": 85,
+            "marker": {
+              "anchor": "l7-corridor-east",
+              "ring": {
+                "x": -30,
+                "y": 4.619999885559082,
+                "z": 50
+              },
+              "drawn": [
+                -30,
+                0.13,
+                50
+              ],
+              "playerY": 4.619999885559082,
+              "pinVisible": true
+            }
+          }
+        ]
+      }
+    ],
+    "issues": [],
+    "yielded": true
+  },
+  "error": null
+}

@@ -1,37 +1,61 @@
 {
   "row": "L7-03",
   "status": "PASS",
-  "reviewer": "Codex sweep-c4",
-  "date": "2026-11-05",
-  "commit": "30d8936fe5193c7633743905be1c29f5c940211c",
+  "reviewer": "Codex sweep-c5",
+  "date": "2026-11-06",
+  "commit": "a10f048a2db0e89ec2304b5a8007f9eb56d26bcc",
   "clauses": [
     {
-      "clause": "Rocket: cadence **2.4/s**, no wait for impact; detonates at the clicked ground point (or first hit / max range); visible in the dark; one rocket kills ≥ 20/24 regulars within 3 m and opens a ≥ 3 m gap; no white-out at point blank.",
+      "clause": "Rocket: cadence **2.4/s**, no wait for impact; detonates at the clicked ground point (or first hit / max range); visible in the dark; one rocket kills \u2265 20/24 regulars within 3 m and opens a \u2265 3 m gap; no white-out at point blank.",
       "verdict": "PASS",
-      "note": "Both qualities: held actual mouse shots every25ticks (2.4/s), second launch before first impact; clicked12m empty ground hits within0.1m; one actual shot kills24/24 normal60HP bodies within3m and clears the3m centre. All56 visual and18 final boundary captures personally inspected: yellow/orange rockets visible on dark grid, blast blood and bodies visible, pointblank courier face/clothing/boots/launcher remain readable at13/14/16/18ticks; near-white pixel fraction≤0.002812. First body at6m stops rocket at5.65m. Actual physical Space input with no aimPoint detonates at35m; a50m ground click detonates at50m as E29§5.2 requires. No game/target/cap changes; protected courier and frozen AI are explicit isolated ballistics setup."
+      "note": "Fresh current source bothqualities actual held Shift+LMB launches every25ticks=2.4/s, secondlaunchbeforefirstimpact; clicked12m emptyground impactswithin0.1m. One actualshot kills24/24 unmodified60HPregulars within3m, leavesno livingbody intersecting1.5mradius gap. First ordinarybody at6m stopsrocket at5.65m; actual Space withoutaimPoint detonates35m; actual50m groundclick honored perE29\u00a75.2. All56 main and18boundary fullsizepanels personallyinspected and rawhashesverified/deleted: yellow-white/orange rockets distinct on darkgrid; blastredblood/debris; atpointblankticks13/14/16/18courier face, clothing, boots andgreenlauncherremainreadable. Supplemental wholeframe allRGB>=230fraction peak0.000404731, not sole basisforvisualverdict. Six main andfourboundarysemanticfaultsreject, exactoriginalbytesrestored. Exactunchanged existingproducers; frozenAI/protectedcourier explicit isolatedcapabilityfixtures, no campaigndifficulty/routepressureclaim. No game/threshold change."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix55-c/L7-03-physical.json",
-      "sha256": "a81e52816f2de5ec816bfab35ca267004f0004cc20199ba5464ec3e6ac2193da",
-      "what": "Current-source actual mouse/keyboard fixture with event ledger, or personally inspected per-capture SHA256 and seen notes; image sheets stay under test-results."
+      "file": "docs/reports/sweep-c5/L7-03/boundary-fault-proof.json",
+      "sha256": "843adcf99e64bd32ffb070d6693c0aec40833c9436a49be046addbb84f317c1e",
+      "what": "Current source actual physical mouse/keyboard rocket capability fixtures, complete launch/hit/kill/detonation ledgers, personally inspected74capture SHA256/seen notes, exactproducer bytes and ten semanticnegativecontrols."
     },
     {
-      "file": "docs/reports/fix55-c/L7-03-review.json",
-      "sha256": "645b827ca4a2f8efc0c991c97be03d0d8f92d446d0632f32b635353d0216f9c1",
-      "what": "Current-source actual mouse/keyboard fixture with event ledger, or personally inspected per-capture SHA256 and seen notes; image sheets stay under test-results."
+      "file": "docs/reports/sweep-c5/L7-03/boundary-input.json.gz",
+      "sha256": "3d18b729e4aa237356d6c272c74b83bc82bee4c57310cad7f071ee9ad5a7cf62",
+      "what": "Current source actual physical mouse/keyboard rocket capability fixtures, complete launch/hit/kill/detonation ledgers, personally inspected74capture SHA256/seen notes, exactproducer bytes and ten semanticnegativecontrols."
     },
     {
-      "file": "docs/reports/sweep-c4/L7-03-ballistics.json",
-      "sha256": "faecac97daafaf57328254a6dd243a711fff124f150aa95b15ac4baa797b5b95",
-      "what": "Current-source actual mouse/keyboard fixture with event ledger, or personally inspected per-capture SHA256 and seen notes; image sheets stay under test-results."
+      "file": "docs/reports/sweep-c5/L7-03/boundary-producer.mjs",
+      "sha256": "811fae80514417153b7c582882cda69fa44a4a72f7765b372ebfff56f9ea3d2e",
+      "what": "Current source actual physical mouse/keyboard rocket capability fixtures, complete launch/hit/kill/detonation ledgers, personally inspected74capture SHA256/seen notes, exactproducer bytes and ten semanticnegativecontrols."
     },
     {
-      "file": "docs/reports/sweep-c4/L7-03-ballistics-review.json",
-      "sha256": "9870deb0e2feaee1b74a8cfb1c7c0f815c024b16338710d06f11e504c1645b84",
-      "what": "Current-source actual mouse/keyboard fixture with event ledger, or personally inspected per-capture SHA256 and seen notes; image sheets stay under test-results."
+      "file": "docs/reports/sweep-c5/L7-03/boundary-review.json",
+      "sha256": "c162fd5dd11f2d94215f886cde7499cc36d95545e7b7f192f2fe1c2babb4f4e7",
+      "what": "Current source actual physical mouse/keyboard rocket capability fixtures, complete launch/hit/kill/detonation ledgers, personally inspected74capture SHA256/seen notes, exactproducer bytes and ten semanticnegativecontrols."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L7-03/main-input.json.gz",
+      "sha256": "9714a5a56e76a8fa3e00a2051c26e8b8f859f05d8067efc848a45c223cf7dbc7",
+      "what": "Current source actual physical mouse/keyboard rocket capability fixtures, complete launch/hit/kill/detonation ledgers, personally inspected74capture SHA256/seen notes, exactproducer bytes and ten semanticnegativecontrols."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L7-03/main-producer.mjs",
+      "sha256": "cbc0fe9862d265d2376b8b874c40350da09c1e1d56ec841cb02255c90f46c4f5",
+      "what": "Current source actual physical mouse/keyboard rocket capability fixtures, complete launch/hit/kill/detonation ledgers, personally inspected74capture SHA256/seen notes, exactproducer bytes and ten semanticnegativecontrols."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L7-03/main-review.json",
+      "sha256": "7551d88162bd3a630ecd1da7717ffcd3da7eb9adc0ca31a2c5af02b14614419c",
+      "what": "Current source actual physical mouse/keyboard rocket capability fixtures, complete launch/hit/kill/detonation ledgers, personally inspected74capture SHA256/seen notes, exactproducer bytes and ten semanticnegativecontrols."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L7-03/pointblank-pixels.json",
+      "sha256": "d43fb7b682ed54504e14547d242f02e25cc86d2d8a16c52ed60128d84a9bf21c",
+      "what": "Current source actual physical mouse/keyboard rocket capability fixtures, complete launch/hit/kill/detonation ledgers, personally inspected74capture SHA256/seen notes, exactproducer bytes and ten semanticnegativecontrols."
+    },
+    {
+      "file": "docs/reports/sweep-c5/L7-03/rocket-fault-proof.json",
+      "sha256": "2d0cf58565966d8dca44f9bf47045a8d46e6561d51b6e37037521f434723ebb4",
+      "what": "Current source actual physical mouse/keyboard rocket capability fixtures, complete launch/hit/kill/detonation ledgers, personally inspected74capture SHA256/seen notes, exactproducer bytes and ten semanticnegativecontrols."
     }
-  ],
-  "notes": "Full unchanged criterion reviewed at both qualities. This is controlled capability coverage; it does not establish campaign difficulty or route pressure."
+  ]
 }

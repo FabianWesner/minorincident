@@ -1,0 +1,103 @@
+{
+  "sourceHash": "43b485e825dc3b7e6afda4f35772460115ce094858019c8637fcd67fde85f32c",
+  "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
+  "revision": "1bfc4fee82e0716dd117bb741e159cf6ae321b46",
+  "browserHash": "9e227fa3b945360df3ced89d37da620661482cf42990f8f02eb07b7f9c843069",
+  "method": "Actual unchanged consumer; mutate semantic data/asset digests, restore every original byte. No target changes.",
+  "inputs": [
+    {
+      "file": "docs/reports/sweep-c5/L9-09/high-road-physical.json.gz",
+      "sha256": "3dc934e382beaba1799f8e7f598cef705460327a3f453e7587322c5c2b48c80a"
+    },
+    {
+      "file": "docs/reports/sweep-c5/L9-09/seams.json",
+      "sha256": "13d8f4a8e8c73915a233b8021fa4b941aad9f97266003dfe37f6da7517e2994d"
+    }
+  ],
+  "cases": [
+    {
+      "fault": "stale-source",
+      "rejected": true
+    },
+    {
+      "fault": "wrong-browser",
+      "rejected": true
+    },
+    {
+      "fault": "wrong-producer",
+      "rejected": true
+    },
+    {
+      "fault": "missing-route",
+      "rejected": true
+    },
+    {
+      "fault": "unfinished",
+      "rejected": true
+    },
+    {
+      "fault": "lost-input-tick",
+      "rejected": true
+    },
+    {
+      "fault": "wrong-throttle",
+      "rejected": true
+    },
+    {
+      "fault": "wrong-steer",
+      "rejected": true
+    },
+    {
+      "fault": "missing-command",
+      "rejected": true
+    },
+    {
+      "fault": "renderer-over-budget",
+      "rejected": true
+    },
+    {
+      "fault": "pending-over-budget",
+      "rejected": true
+    },
+    {
+      "fault": "sim-over-budget",
+      "rejected": true
+    },
+    {
+      "fault": "no-streaming",
+      "rejected": true
+    },
+    {
+      "fault": "scripted-lock",
+      "rejected": true
+    },
+    {
+      "fault": "wrong-quality",
+      "rejected": true
+    },
+    {
+      "fault": "page-error",
+      "rejected": true
+    },
+    {
+      "fault": "seam-too-high",
+      "rejected": true
+    },
+    {
+      "fault": "missing-support",
+      "rejected": true
+    },
+    {
+      "fault": "missing-edge",
+      "rejected": true
+    },
+    {
+      "fault": "stale-assets",
+      "rejected": true
+    },
+    {
+      "fault": "wrong-seam-producer",
+      "rejected": true
+    }
+  ]
+}

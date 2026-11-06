@@ -1,0 +1,614 @@
+{
+  "sourceHash": "1bf35209e3871fea6acf6f754941fd41f22f544460fce6b031b7459776d93214",
+  "codeCommit": "dd26478ea061e8c0092e8e80939aeea6b76bb3b6",
+  "artifacts": [
+    {
+      "kind": "cohorts",
+      "file": "docs/reports/fix67-b/final-placement-cohorts.json.gz",
+      "sha256": "c8f3b04524fb05408dd6353a1a2ad461957ec3f45705091aaf459dbc5f4d3ba5"
+    },
+    {
+      "kind": "tank",
+      "file": "docs/reports/fix67-b/final-placement-tank.json.gz",
+      "sha256": "9d457521c1dd363fe61bb491205ca38e6786261a182eff64be49346e037dbaba"
+    },
+    {
+      "kind": "riot",
+      "file": "docs/reports/fix67-b/final-placement-riot.json.gz",
+      "sha256": "734c2f0e95d776977f13fe5ac09272687b8b2db5d88b2c9dc0f58a0bc6bd893f"
+    },
+    {
+      "kind": "gate",
+      "file": "docs/reports/fix67-b/final-placement-gate.json.gz",
+      "sha256": "c8fcd1067e710f87e547d2df1cefe5c9f7819de49ce39cc9e73571b2e7afe3a7"
+    },
+    {
+      "kind": "carry",
+      "file": "docs/reports/fix67-b/final-placement-carry.json.gz",
+      "sha256": "995bb648547370730f64b2c220817b6bdd70d5409f830421327da43a337038ea"
+    }
+  ],
+  "L4-05": {
+    "status": "SCOPED PASS",
+    "rows": [
+      {
+        "tier": "low",
+        "cohorts": 57,
+        "admitted": 141,
+        "minimum": 2,
+        "maximum": 5,
+        "nativeHash": "f218248e",
+        "canonicalHash": "f218248e"
+      },
+      {
+        "tier": "high",
+        "cohorts": 27,
+        "admitted": 83,
+        "minimum": 2,
+        "maximum": 5,
+        "nativeHash": "28229920",
+        "canonicalHash": "28229920"
+      }
+    ],
+    "remaining": "Wall crossing and forbidden-source clauses."
+  },
+  "L4-06": {
+    "status": "PASS",
+    "rows": [
+      {
+        "tier": "low",
+        "receipt": "docs/reports/fix51-verify/receipts/L4-low-stationary.json",
+        "sha256": "3f2e690d30511e6fc25586f57aef2be58e13124cfd1608836bf45de0ce87f80b",
+        "hold": {
+          "tier": "low",
+          "holdComplete": true,
+          "firstBreachLevelSeconds": 52.71666666666667,
+          "firstBreachAfterTurnSeconds": 19.9,
+          "aliveAtFirstBreach": 61,
+          "peakAlive": 80,
+          "peakPlazaAlive": 79,
+          "minPlazaAliveAfter45Seconds": 66,
+          "samplesAfter45Seconds": 8892,
+          "arrivalEdges": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "threeDirectionsAtLeast60Degrees": true,
+          "maxGroupAtOneSourcePerTick": 5,
+          "firstAttackSeconds": 8.766666666666667,
+          "lineBreakAfterTurnSeconds": 190
+        }
+      },
+      {
+        "tier": "high",
+        "receipt": "docs/reports/fix51-verify/receipts/L4-high-stationary.json",
+        "sha256": "1c60f892d63c3c352094899b3b626194f04ab09aa5ec4f08f52f7ea517473c06",
+        "hold": {
+          "tier": "high",
+          "holdComplete": true,
+          "firstBreachLevelSeconds": 52.71666666666667,
+          "firstBreachAfterTurnSeconds": 19.9,
+          "aliveAtFirstBreach": 66,
+          "peakAlive": 95,
+          "peakPlazaAlive": 90,
+          "minPlazaAliveAfter45Seconds": 66,
+          "samplesAfter45Seconds": 8892,
+          "arrivalEdges": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "threeDirectionsAtLeast60Degrees": true,
+          "maxGroupAtOneSourcePerTick": 5,
+          "firstAttackSeconds": 7.716666666666667,
+          "lineBreakAfterTurnSeconds": 190
+        }
+      }
+    ]
+  },
+  "L4-07": {
+    "status": "NOT CHECKED",
+    "note": "Previous bounded-reachability counterexample resolved. Every unchanged numeric check passes; high complete legal-route proof remains incomplete. No universal no-permanent-trap PASS.",
+    "checks": [
+      {
+        "id": "L4-07",
+        "clause": "combat hard rule on actual player windups",
+        "level": "L4",
+        "tier": "low",
+        "policy": "complete",
+        "status": "PASS",
+        "value": {
+          "seconds": 178.95,
+          "playerWindups": 671,
+          "groupWindups": 0,
+          "attacksPerMinute": 224.97904442581728
+        },
+        "target": "nonzero player windups in each combat policy",
+        "receipt": "docs/reports/fix51-verify/receipts/L4-low-complete.json"
+      },
+      {
+        "id": "L4-07",
+        "clause": "minimum bounded-path reachable share within30m (path\u22642.5\u00d7direct)",
+        "level": "L4",
+        "tier": "low",
+        "policy": "complete",
+        "status": "PASS",
+        "value": 96.82539682539682,
+        "target": "90 \u2264 value \u2264 100",
+        "receipt": "docs/reports/fix51-verify/receipts/L4-low-complete.json"
+      },
+      {
+        "id": "L4-07",
+        "clause": "post-opening legal ground or barrier path for every sampled infected",
+        "level": "L4",
+        "tier": "low",
+        "policy": "complete",
+        "status": "PASS",
+        "value": {
+          "firstTick": 3169,
+          "lastTick": 12649,
+          "samples": 80,
+          "minimumPercent": 100,
+          "worstTick": 12649,
+          "blockedIds": []
+        },
+        "target": "every sampled infected has a proven legal route after first physical breach/gate opening; any unproven route keeps the no-permanent-trap clause open",
+        "receipt": "docs/reports/fix51-verify/receipts/L4-low-complete.json"
+      },
+      {
+        "id": "L4-07",
+        "clause": "combat hard rule on actual player windups",
+        "level": "L4",
+        "tier": "low",
+        "policy": "stationary",
+        "status": "PASS",
+        "value": {
+          "seconds": 190,
+          "playerWindups": 3186,
+          "groupWindups": 0,
+          "attacksPerMinute": 1006.1052631578947
+        },
+        "target": "nonzero player windups in each combat policy",
+        "receipt": "docs/reports/fix51-verify/receipts/L4-low-stationary.json"
+      },
+      {
+        "id": "L4-07",
+        "clause": "stationary first real player attack (phase clock)",
+        "level": "L4",
+        "tier": "low",
+        "policy": "stationary",
+        "status": "PASS",
+        "value": {
+          "seconds": 8.416666666666666,
+          "windowSeconds": 190
+        },
+        "target": "\u226410 s",
+        "receipt": "docs/reports/fix51-verify/receipts/L4-low-stationary.json"
+      },
+      {
+        "id": "L4-07",
+        "clause": "real player/group windups per minute",
+        "level": "L4",
+        "tier": "low",
+        "policy": "stationary",
+        "status": "PASS",
+        "value": 1006.1052631578947,
+        "target": "6 \u2264 value \u2264 Infinity",
+        "receipt": "docs/reports/fix51-verify/receipts/L4-low-stationary.json"
+      },
+      {
+        "id": "L4-07",
+        "clause": "minimum bounded-path reachable share within30m (path\u22642.5\u00d7direct)",
+        "level": "L4",
+        "tier": "low",
+        "policy": "stationary",
+        "status": "PASS",
+        "value": 100,
+        "target": "90 \u2264 value \u2264 100",
+        "receipt": "docs/reports/fix51-verify/receipts/L4-low-stationary.json"
+      },
+      {
+        "id": "L4-07",
+        "clause": "post-opening legal ground or barrier path for every sampled infected",
+        "level": "L4",
+        "tier": "low",
+        "policy": "stationary",
+        "status": "PASS",
+        "value": {
+          "firstTick": 3169,
+          "lastTick": 13249,
+          "samples": 85,
+          "minimumPercent": 100,
+          "worstTick": 13249,
+          "blockedIds": []
+        },
+        "target": "every sampled infected has a proven legal route after first physical breach/gate opening; any unproven route keeps the no-permanent-trap clause open",
+        "receipt": "docs/reports/fix51-verify/receipts/L4-low-stationary.json"
+      },
+      {
+        "id": "L4-07",
+        "clause": "combat hard rule on actual player windups",
+        "level": "L4",
+        "tier": "high",
+        "policy": "complete",
+        "status": "PASS",
+        "value": {
+          "seconds": 190,
+          "playerWindups": 404,
+          "groupWindups": 0,
+          "attacksPerMinute": 127.57894736842105
+        },
+        "target": "nonzero player windups in each combat policy",
+        "receipt": "docs/reports/fix51-verify/receipts/L4-high-complete.json"
+      },
+      {
+        "id": "L4-07",
+        "clause": "minimum bounded-path reachable share within30m (path\u22642.5\u00d7direct)",
+        "level": "L4",
+        "tier": "high",
+        "policy": "complete",
+        "status": "PASS",
+        "value": 93.87755102040816,
+        "target": "90 \u2264 value \u2264 100",
+        "receipt": "docs/reports/fix51-verify/receipts/L4-high-complete.json"
+      },
+      {
+        "id": "L4-07",
+        "clause": "post-opening legal ground or barrier path for every sampled infected",
+        "level": "L4",
+        "tier": "high",
+        "policy": "complete",
+        "status": "NOT CHECKED",
+        "value": {
+          "firstTick": 3169,
+          "lastTick": 13249,
+          "samples": 85,
+          "minimumPercent": 82.43243243243244,
+          "worstTick": 13129,
+          "blockedIds": [
+            418,
+            438,
+            485,
+            493,
+            540,
+            565,
+            574,
+            575,
+            591,
+            592,
+            600,
+            601,
+            619
+          ]
+        },
+        "target": "every sampled infected has a proven legal route after first physical breach/gate opening; any unproven route keeps the no-permanent-trap clause open",
+        "receipt": "docs/reports/fix51-verify/receipts/L4-high-complete.json"
+      },
+      {
+        "id": "L4-07",
+        "clause": "combat hard rule on actual player windups",
+        "level": "L4",
+        "tier": "high",
+        "policy": "stationary",
+        "status": "PASS",
+        "value": {
+          "seconds": 190,
+          "playerWindups": 2807,
+          "groupWindups": 0,
+          "attacksPerMinute": 886.421052631579
+        },
+        "target": "nonzero player windups in each combat policy",
+        "receipt": "docs/reports/fix51-verify/receipts/L4-high-stationary.json"
+      },
+      {
+        "id": "L4-07",
+        "clause": "stationary first real player attack (phase clock)",
+        "level": "L4",
+        "tier": "high",
+        "policy": "stationary",
+        "status": "PASS",
+        "value": {
+          "seconds": 7.366666666666666,
+          "windowSeconds": 190
+        },
+        "target": "\u226410 s",
+        "receipt": "docs/reports/fix51-verify/receipts/L4-high-stationary.json"
+      },
+      {
+        "id": "L4-07",
+        "clause": "real player/group windups per minute",
+        "level": "L4",
+        "tier": "high",
+        "policy": "stationary",
+        "status": "PASS",
+        "value": 886.421052631579,
+        "target": "6 \u2264 value \u2264 Infinity",
+        "receipt": "docs/reports/fix51-verify/receipts/L4-high-stationary.json"
+      },
+      {
+        "id": "L4-07",
+        "clause": "minimum bounded-path reachable share within30m (path\u22642.5\u00d7direct)",
+        "level": "L4",
+        "tier": "high",
+        "policy": "stationary",
+        "status": "PASS",
+        "value": 98.21428571428571,
+        "target": "90 \u2264 value \u2264 100",
+        "receipt": "docs/reports/fix51-verify/receipts/L4-high-stationary.json"
+      },
+      {
+        "id": "L4-07",
+        "clause": "post-opening legal ground or barrier path for every sampled infected",
+        "level": "L4",
+        "tier": "high",
+        "policy": "stationary",
+        "status": "PASS",
+        "value": {
+          "firstTick": 3169,
+          "lastTick": 13249,
+          "samples": 85,
+          "minimumPercent": 100,
+          "worstTick": 13249,
+          "blockedIds": []
+        },
+        "target": "every sampled infected has a proven legal route after first physical breach/gate opening; any unproven route keeps the no-permanent-trap clause open",
+        "receipt": "docs/reports/fix51-verify/receipts/L4-high-stationary.json"
+      }
+    ]
+  },
+  "L4-10": {
+    "status": "SCOPED PASS",
+    "rows": [
+      {
+        "tier": "low",
+        "minimumClearanceM": 15.003722195890505,
+        "forcedClearanceM": 26.029395780232367,
+        "intervalsSeconds": [
+          11.383333333333333,
+          10.666666666666666,
+          10.366666666666667,
+          9.883333333333333,
+          8.8,
+          9.766666666666667,
+          11.45,
+          11.483333333333333,
+          9.816666666666666,
+          8.116666666666667,
+          9.583333333333334,
+          8.016666666666667
+        ],
+        "nativeHash": "f218248e",
+        "canonicalHash": "f218248e"
+      },
+      {
+        "tier": "high",
+        "minimumClearanceM": 16.535094341637507,
+        "forcedClearanceM": 20.804516641940335,
+        "intervalsSeconds": [
+          11.383333333333333,
+          10.666666666666666,
+          10.366666666666667,
+          9.883333333333333,
+          8.8,
+          9.766666666666667,
+          11.45,
+          11.433333333333334,
+          9.65,
+          8.116666666666667,
+          9.533333333333333,
+          8.016666666666667,
+          10.916666666666666,
+          8.766666666666667
+        ],
+        "nativeHash": "28229920",
+        "canonicalHash": "28229920"
+      }
+    ],
+    "remaining": "Current renderer/wall/HMG/helicopter compound clauses; PO north-road blast framing."
+  },
+  "L4-11": {
+    "status": "SCOPED PASS",
+    "maximumSeconds": 4.7,
+    "rows": 12,
+    "remaining": "Full flank/HP-bar/chip/recoil/PO feel review."
+  },
+  "L4-14": {
+    "status": "SCOPED PASS",
+    "note": "Fuel shockwave glass reach48\u219260m restores the\u226510 actual window-ledger count after the truck relocation. Other visual clauses remain unqualified.",
+    "rows": [
+      {
+        "tier": "low",
+        "glass": 10,
+        "fires": 4,
+        "receipt": "docs/reports/fix51-verify/receipts/L4-low-complete.json",
+        "sha256": "57971aac4b5e47722ff106bf1c2c38d43d1f5db66fb06558a31b6c108fc4508f"
+      },
+      {
+        "tier": "high",
+        "glass": 11,
+        "fires": 4,
+        "receipt": "docs/reports/fix51-verify/receipts/L4-high-complete.json",
+        "sha256": "4c326ee0e13ae1165042f77ea47cd96a3f14fd4311525048ee4a220c58150c30"
+      }
+    ]
+  },
+  "L6-06": {
+    "status": "FAIL",
+    "targetPerEntry": 2,
+    "rows": [
+      {
+        "tier": "low",
+        "receipt": "docs/reports/fix51-verify/receipts/L6-low-complete.json",
+        "sha256": "0556ea0951bb8de6edf3e7ed909d75ed95e15b24869f46f54f2240c531778321",
+        "waves": [
+          {
+            "key": "entry-2@5170",
+            "spawned": 3,
+            "members": [
+              "95@21",
+              "96@22",
+              "98@23"
+            ]
+          },
+          {
+            "key": "entry-5@6203",
+            "spawned": 3,
+            "members": [
+              "104@26",
+              "105@27",
+              "107@28"
+            ]
+          },
+          {
+            "key": "entry-3@8461",
+            "spawned": 3,
+            "members": [
+              "123@39",
+              "124@40",
+              "126@41"
+            ]
+          },
+          {
+            "key": "entry-6@9807",
+            "spawned": 3,
+            "members": [
+              "139@52",
+              "140@53",
+              "142@54"
+            ]
+          },
+          {
+            "key": "entry-4@12092",
+            "spawned": 3,
+            "members": [
+              "146@56",
+              "147@57",
+              "149@58"
+            ]
+          },
+          {
+            "key": "entry-7@13676",
+            "spawned": 3,
+            "members": [
+              "155@61",
+              "156@62",
+              "158@63"
+            ]
+          }
+        ]
+      },
+      {
+        "tier": "high",
+        "receipt": "docs/reports/fix51-verify/receipts/L6-high-complete.json",
+        "sha256": "cdc735ef445b73ab5ee7cea022a1affc1e9ac846a0e50bd11bd27aecee5344cd",
+        "waves": [
+          {
+            "key": "entry-2@5170",
+            "spawned": 3,
+            "members": [
+              "95@21",
+              "96@22",
+              "98@23"
+            ]
+          },
+          {
+            "key": "entry-5@6203",
+            "spawned": 3,
+            "members": [
+              "104@26",
+              "105@27",
+              "107@28"
+            ]
+          },
+          {
+            "key": "entry-3@8461",
+            "spawned": 3,
+            "members": [
+              "123@39",
+              "124@40",
+              "126@41"
+            ]
+          },
+          {
+            "key": "entry-6@9807",
+            "spawned": 3,
+            "members": [
+              "139@52",
+              "140@53",
+              "142@54"
+            ]
+          },
+          {
+            "key": "entry-4@12092",
+            "spawned": 3,
+            "members": [
+              "146@56",
+              "147@57",
+              "149@58"
+            ]
+          },
+          {
+            "key": "entry-7@13676",
+            "spawned": 3,
+            "members": [
+              "155@61",
+              "156@62",
+              "158@63"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "L6-11": {
+    "status": "FAIL",
+    "targetMinimumPercent": 60,
+    "rows": [
+      {
+        "tier": "low",
+        "out": 1,
+        "atStart": 29,
+        "lost": 28,
+        "percent": 3.4482758620689653,
+        "nativeHash": "91b3ff42",
+        "receipt": "docs/reports/fix51-verify/receipts/L6-low-complete.json",
+        "sha256": "0556ea0951bb8de6edf3e7ed909d75ed95e15b24869f46f54f2240c531778321"
+      },
+      {
+        "tier": "high",
+        "out": 1,
+        "atStart": 29,
+        "lost": 28,
+        "percent": 3.4482758620689653,
+        "nativeHash": "934235c4",
+        "receipt": "docs/reports/fix51-verify/receipts/L6-high-complete.json",
+        "sha256": "cdc735ef445b73ab5ee7cea022a1affc1e9ac846a0e50bd11bd27aecee5344cd"
+      }
+    ]
+  },
+  "L6-01": {
+    "status": "PASS at reviewed commit; final native replay PASS",
+    "native": {
+      "kind": "carry",
+      "file": "docs/reports/fix67-b/final-placement-carry.json.gz",
+      "sha256": "995bb648547370730f64b2c220817b6bdd70d5409f830421327da43a337038ea"
+    },
+    "qualification": "docs/reports/fix67-b/L6-01-qualification.json"
+  },
+  "L6-12": {
+    "status": "PASS in explicit reviewed exit fixture; final capsule replay PASS",
+    "native": {
+      "kind": "gate",
+      "file": "docs/reports/fix67-b/final-placement-gate.json.gz",
+      "sha256": "c8fcd1067e710f87e547d2df1cefe5c9f7819de49ce39cc9e73571b2e7afe3a7"
+    },
+    "qualification": "docs/reports/fix67-b/L6-12-qualification.json"
+  }
+}

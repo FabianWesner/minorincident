@@ -167,7 +167,8 @@ export class LevelFiveAftermath {
     for (const g of l5Wanderers) for (let k = 0; k < g.n && left > 0; k++) {
       if (ai.director.count >= ai.director.cap || !ai.pool.length) return;
       const alpha = !!g.alpha;
-      const source = { x: g.at[0] + k * 2.5, z: g.at[1] + k * 1.5 };
+      const point = this.low && g.lowAt ? g.lowAt : g.at;
+      const source = { x: point[0] + k * 2.5, z: point[1] + k * 1.5 };
       // A point inside a shell can snap onto its inaccessible rear frontage.
       // Keep its slot for another authored street point instead.
       if (!alpha && !ai.nav.clear(source.x, source.z, .45)) continue;

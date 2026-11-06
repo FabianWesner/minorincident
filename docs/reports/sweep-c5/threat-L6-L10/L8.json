@@ -1,0 +1,1472 @@
+{
+  "level": "L8",
+  "quality": "low",
+  "definitions": [
+    {
+      "id": "escape",
+      "text": "Bring the survivors to the armored vehicle and board",
+      "type": "custom"
+    },
+    {
+      "id": "depart",
+      "text": "Wait for everyone to board the armored vehicle",
+      "type": "custom"
+    }
+  ],
+  "run": {
+    "level": "L8",
+    "policy": "complete",
+    "seed": 1,
+    "completed": true,
+    "time": 100.38333333333334,
+    "deaths": 0,
+    "kills": 31,
+    "damageTaken": 0,
+    "failures": {},
+    "objectiveTimeline": [
+      {
+        "id": "escape",
+        "t": 94.38333333333334
+      },
+      {
+        "id": "depart",
+        "t": 95.38333333333334
+      }
+    ],
+    "furthestObjective": "depart",
+    "activeObjectives": [],
+    "outcome": "complete",
+    "blocker": null,
+    "collision": {
+      "failures": 0,
+      "pending": 0,
+      "admitted": 391,
+      "deferred": 81,
+      "requests": [],
+      "offenders": []
+    }
+  },
+  "observation": {
+    "ticks": 6023,
+    "followerWait": {
+      "escortTicks": 1940,
+      "stationaryFarTicks": 95,
+      "upperBoundPercent": 4.896907216494846,
+      "followers": [
+        {
+          "id": 354,
+          "escortTicks": 987,
+          "stationaryFarTicks": 0
+        },
+        {
+          "id": 355,
+          "escortTicks": 1094,
+          "stationaryFarTicks": 0
+        },
+        {
+          "id": 356,
+          "escortTicks": 1155,
+          "stationaryFarTicks": 43
+        },
+        {
+          "id": 357,
+          "escortTicks": 1216,
+          "stationaryFarTicks": 1
+        },
+        {
+          "id": 358,
+          "escortTicks": 1277,
+          "stationaryFarTicks": 0
+        },
+        {
+          "id": 359,
+          "escortTicks": 1346,
+          "stationaryFarTicks": 0
+        },
+        {
+          "id": 360,
+          "escortTicks": 1407,
+          "stationaryFarTicks": 0
+        },
+        {
+          "id": 361,
+          "escortTicks": 1468,
+          "stationaryFarTicks": 53
+        },
+        {
+          "id": 362,
+          "escortTicks": 1581,
+          "stationaryFarTicks": 0
+        },
+        {
+          "id": 363,
+          "escortTicks": 1671,
+          "stationaryFarTicks": 0
+        },
+        {
+          "id": 364,
+          "escortTicks": 1759,
+          "stationaryFarTicks": 11
+        },
+        {
+          "id": 365,
+          "escortTicks": 1848,
+          "stationaryFarTicks": 0
+        },
+        {
+          "id": 366,
+          "escortTicks": 1940,
+          "stationaryFarTicks": 1
+        }
+      ]
+    },
+    "phases": [
+      {
+        "key": "step/escape",
+        "label": "escape: Bring the survivors to the armored vehicle and board",
+        "threat": true,
+        "startSeconds": 0,
+        "seconds": 94.38333333333334,
+        "spawned": 107,
+        "initial": 0,
+        "observed": 107,
+        "reachableEver": 107,
+        "within2_5m": 3,
+        "attacks": 3,
+        "attacksPerMinute": 1.9071163694155042,
+        "firstAttackSeconds": 61.96666666666667,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 354,
+            "samples": 31,
+            "median": 4.49069035272161
+          },
+          {
+            "id": 355,
+            "samples": 32,
+            "median": 4.499500272431499
+          },
+          {
+            "id": 356,
+            "samples": 29,
+            "median": 4.699992022891085
+          },
+          {
+            "id": 357,
+            "samples": 29,
+            "median": 4.583754967693903
+          },
+          {
+            "id": 358,
+            "samples": 32,
+            "median": 4.491567557888505
+          },
+          {
+            "id": 359,
+            "samples": 32,
+            "median": 4.493263095132655
+          },
+          {
+            "id": 360,
+            "samples": 32,
+            "median": 4.4997342565471445
+          },
+          {
+            "id": 361,
+            "samples": 32,
+            "median": 4.487947561145377
+          },
+          {
+            "id": 362,
+            "samples": 32,
+            "median": 4.498999477774773
+          },
+          {
+            "id": 363,
+            "samples": 32,
+            "median": 4.524626102360804
+          },
+          {
+            "id": 364,
+            "samples": 32,
+            "median": 4.495314594274513
+          },
+          {
+            "id": 365,
+            "samples": 32,
+            "median": 4.497943289260096
+          },
+          {
+            "id": 366,
+            "samples": 32,
+            "median": 4.500156188197909
+          }
+        ],
+        "followerMin": 4.487947561145377,
+        "followerMedian": 4.498999477774773,
+        "boundedPaths": {
+          "samples": 14,
+          "minimumPercent": 100,
+          "worstTick": 5640,
+          "nearby": 14,
+          "reachable": 14,
+          "blockedIds": []
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 5640,
+          "alive": 80,
+          "reachable": 80,
+          "playerX": 94.9033432006836,
+          "playerZ": 76.83447265625,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "phase/sanctuary",
+        "label": "controller: sanctuary",
+        "threat": false,
+        "startSeconds": 0,
+        "seconds": 60,
+        "spawned": 12,
+        "initial": 0,
+        "observed": 12,
+        "reachableEver": 0,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [],
+        "followerMin": null,
+        "followerMedian": null,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 3481,
+          "alive": 0,
+          "reachable": 0,
+          "playerX": 23.140016555786133,
+          "playerZ": 64.14939880371094,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "phase/breached",
+        "label": "controller: breached",
+        "threat": false,
+        "startSeconds": 60,
+        "seconds": 34.38333333333333,
+        "spawned": 95,
+        "initial": 12,
+        "observed": 107,
+        "reachableEver": 107,
+        "within2_5m": 3,
+        "attacks": 3,
+        "attacksPerMinute": 5.23509452253999,
+        "firstAttackSeconds": 1.9666666666666666,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [
+          {
+            "id": 354,
+            "samples": 31,
+            "median": 4.49069035272161
+          },
+          {
+            "id": 355,
+            "samples": 32,
+            "median": 4.499500272431499
+          },
+          {
+            "id": 356,
+            "samples": 29,
+            "median": 4.699992022891085
+          },
+          {
+            "id": 357,
+            "samples": 29,
+            "median": 4.583754967693903
+          },
+          {
+            "id": 358,
+            "samples": 32,
+            "median": 4.491567557888505
+          },
+          {
+            "id": 359,
+            "samples": 32,
+            "median": 4.493263095132655
+          },
+          {
+            "id": 360,
+            "samples": 32,
+            "median": 4.4997342565471445
+          },
+          {
+            "id": 361,
+            "samples": 32,
+            "median": 4.487947561145377
+          },
+          {
+            "id": 362,
+            "samples": 32,
+            "median": 4.498999477774773
+          },
+          {
+            "id": 363,
+            "samples": 32,
+            "median": 4.524626102360804
+          },
+          {
+            "id": 364,
+            "samples": 32,
+            "median": 4.495314594274513
+          },
+          {
+            "id": 365,
+            "samples": 32,
+            "median": 4.497943289260096
+          },
+          {
+            "id": 366,
+            "samples": 32,
+            "median": 4.500156188197909
+          }
+        ],
+        "followerMin": 4.487947561145377,
+        "followerMedian": 4.498999477774773,
+        "boundedPaths": {
+          "samples": 14,
+          "minimumPercent": 100,
+          "worstTick": 5640,
+          "nearby": 14,
+          "reachable": 14,
+          "blockedIds": []
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 5640,
+          "alive": 80,
+          "reachable": 80,
+          "playerX": 94.9033432006836,
+          "playerZ": 76.83447265625,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "step/depart",
+        "label": "depart: Wait for everyone to board the armored vehicle",
+        "threat": false,
+        "startSeconds": 94.38333333333334,
+        "seconds": 1,
+        "spawned": 0,
+        "initial": 76,
+        "observed": 76,
+        "reachableEver": 76,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [],
+        "followerMin": null,
+        "followerMedian": null,
+        "boundedPaths": {
+          "samples": 1,
+          "minimumPercent": 100,
+          "worstTick": 5663,
+          "nearby": 12,
+          "reachable": 12,
+          "blockedIds": []
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 5663,
+          "alive": 76,
+          "reachable": 76,
+          "playerX": 96,
+          "playerZ": 74,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "phase/boarding",
+        "label": "controller: boarding",
+        "threat": false,
+        "startSeconds": 94.38333333333334,
+        "seconds": 1,
+        "spawned": 0,
+        "initial": 76,
+        "observed": 76,
+        "reachableEver": 76,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [],
+        "followerMin": null,
+        "followerMedian": null,
+        "boundedPaths": {
+          "samples": 1,
+          "minimumPercent": 100,
+          "worstTick": 5663,
+          "nearby": 12,
+          "reachable": 12,
+          "blockedIds": []
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 5663,
+          "alive": 76,
+          "reachable": 76,
+          "playerX": 96,
+          "playerZ": 74,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "phase/run-out",
+        "label": "level-end run-out",
+        "threat": false,
+        "startSeconds": 95.38333333333334,
+        "seconds": 5,
+        "spawned": 4,
+        "initial": 76,
+        "observed": 80,
+        "reachableEver": 80,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [],
+        "followerMin": null,
+        "followerMedian": null,
+        "boundedPaths": {
+          "samples": 3,
+          "minimumPercent": 100,
+          "worstTick": 5963,
+          "nearby": 20,
+          "reachable": 20,
+          "blockedIds": []
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 5963,
+          "alive": 78,
+          "reachable": 78,
+          "playerX": 96,
+          "playerZ": 74,
+          "positions": []
+        },
+        "flags": []
+      }
+    ],
+    "waves": [
+      {
+        "key": "tunnel-breach",
+        "source": "L8 breachedAt/story.say",
+        "startSeconds": 60,
+        "observedSeconds": 40.38333333333333,
+        "expected": 12,
+        "spawned": 12,
+        "firstAttackSeconds": 1.9666666666666666,
+        "members": [
+          "407@1",
+          "409@2",
+          "411@3",
+          "413@4",
+          "415@5",
+          "417@6",
+          "419@7",
+          "421@8",
+          "423@9",
+          "425@10",
+          "427@11",
+          "429@12"
+        ],
+        "flags": [],
+        "outletCohorts": [
+          {
+            "outlet": 0,
+            "spawned": 3
+          },
+          {
+            "outlet": 1,
+            "spawned": 3
+          },
+          {
+            "outlet": 2,
+            "spawned": 3
+          },
+          {
+            "outlet": 3,
+            "spawned": 3
+          }
+        ],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 3,
+        "spawnedWithinEighteenSeconds": 12
+      },
+      {
+        "key": "tunnel-reinforcement@4200",
+        "source": "L8 nextWave clock",
+        "startSeconds": 70,
+        "observedSeconds": 30.383333333333333,
+        "expected": 16,
+        "spawned": 16,
+        "firstAttackSeconds": 11.55,
+        "members": [
+          "435@13",
+          "436@17",
+          "438@18",
+          "440@19",
+          "442@14",
+          "443@20",
+          "445@21",
+          "447@22",
+          "449@15",
+          "450@23",
+          "452@24",
+          "454@25",
+          "456@16",
+          "457@26",
+          "459@27",
+          "461@28"
+        ],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 16
+      },
+      {
+        "key": "tunnel-reinforcement@4440",
+        "source": "L8 nextWave clock",
+        "startSeconds": 74,
+        "observedSeconds": 26.383333333333333,
+        "expected": 16,
+        "spawned": 16,
+        "firstAttackSeconds": 11.55,
+        "members": [
+          "463@30",
+          "465@31",
+          "467@32",
+          "469@33",
+          "471@29",
+          "472@34",
+          "474@35",
+          "476@36",
+          "478@37",
+          "480@38",
+          "482@39",
+          "484@40",
+          "486@41",
+          "488@42",
+          "490@43",
+          "492@44"
+        ],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 16
+      },
+      {
+        "key": "tunnel-reinforcement@4680",
+        "source": "L8 nextWave clock",
+        "startSeconds": 78,
+        "observedSeconds": 22.383333333333333,
+        "expected": 16,
+        "spawned": 16,
+        "firstAttackSeconds": null,
+        "members": [
+          "496@45",
+          "498@46",
+          "500@47",
+          "502@48",
+          "504@49",
+          "506@50",
+          "508@51",
+          "510@52",
+          "512@53",
+          "514@54",
+          "516@55",
+          "518@56",
+          "520@57",
+          "522@58",
+          "524@59",
+          "526@60"
+        ],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 16
+      },
+      {
+        "key": "tunnel-reinforcement@4920",
+        "source": "L8 nextWave clock",
+        "startSeconds": 82,
+        "observedSeconds": 18.383333333333333,
+        "expected": 16,
+        "spawned": 16,
+        "firstAttackSeconds": null,
+        "members": [
+          "528@61",
+          "530@62",
+          "532@63",
+          "534@64",
+          "536@65",
+          "538@66",
+          "540@67",
+          "542@68",
+          "544@69",
+          "546@70",
+          "548@71",
+          "550@72",
+          "552@73",
+          "554@74",
+          "556@75",
+          "558@76"
+        ],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 16
+      },
+      {
+        "key": "tunnel-reinforcement@5160",
+        "source": "L8 nextWave clock",
+        "startSeconds": 86,
+        "observedSeconds": 14.383333333333333,
+        "expected": 16,
+        "spawned": 14,
+        "firstAttackSeconds": null,
+        "members": [
+          "560@77",
+          "562@78",
+          "564@79",
+          "566@80",
+          "568@81",
+          "570@82",
+          "572@83",
+          "574@84",
+          "576@85",
+          "578@86",
+          "580@87",
+          "582@88",
+          "584@89",
+          "586@90"
+        ],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 14
+      },
+      {
+        "key": "tunnel-reinforcement@5400",
+        "source": "L8 nextWave clock",
+        "startSeconds": 90,
+        "observedSeconds": 10.383333333333333,
+        "expected": 16,
+        "spawned": 8,
+        "firstAttackSeconds": null,
+        "members": [
+          "588@91",
+          "590@92",
+          "592@93",
+          "594@94",
+          "596@95",
+          "598@96",
+          "600@97",
+          "602@98"
+        ],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 8
+      },
+      {
+        "key": "tunnel-reinforcement@5640",
+        "source": "L8 nextWave clock",
+        "startSeconds": 94,
+        "observedSeconds": 6.383333333333334,
+        "expected": 16,
+        "spawned": 9,
+        "firstAttackSeconds": null,
+        "members": [
+          "604@99",
+          "606@100",
+          "608@101",
+          "610@102",
+          "612@103",
+          "614@104",
+          "616@105",
+          "618@106",
+          "620@107"
+        ],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 9
+      },
+      {
+        "key": "tunnel-reinforcement@5880",
+        "source": "L8 nextWave clock",
+        "startSeconds": 98,
+        "observedSeconds": 2.3833333333333333,
+        "expected": 16,
+        "spawned": 4,
+        "firstAttackSeconds": null,
+        "members": [
+          "622@108",
+          "624@109",
+          "626@110",
+          "628@111"
+        ],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 4
+      }
+    ]
+  },
+  "flags": [],
+  "passiveRun": {
+    "level": "L8",
+    "policy": "complete",
+    "seed": 1,
+    "completed": false,
+    "time": 150,
+    "deaths": 0,
+    "kills": 0,
+    "damageTaken": 0,
+    "failures": {
+      "tick-budget": 1
+    },
+    "objectiveTimeline": [],
+    "furthestObjective": "escape",
+    "activeObjectives": [
+      "escape"
+    ],
+    "outcome": "tick-budget",
+    "blocker": {
+      "objective": "escape",
+      "detail": "tick-budget: Bring the survivors to the armored vehicle and board",
+      "player": {
+        "x": 51.37383270263672,
+        "z": 69.76400756835938
+      },
+      "distance": 45.80132189860237,
+      "actors": {
+        "apc": {
+          "x": 96,
+          "z": 74,
+          "hp": 960,
+          "state": "normal",
+          "driver": null,
+          "speed": 0,
+          "yaw": 0
+        }
+      }
+    },
+    "collision": {
+      "failures": 0,
+      "pending": 0,
+      "admitted": 311,
+      "deferred": 59,
+      "requests": [],
+      "offenders": []
+    }
+  },
+  "passiveObservation": {
+    "ticks": 9000,
+    "followerWait": {
+      "escortTicks": 5401,
+      "stationaryFarTicks": 2549,
+      "upperBoundPercent": 47.194963895574894,
+      "followers": [
+        {
+          "id": 354,
+          "escortTicks": 5401,
+          "stationaryFarTicks": 177
+        },
+        {
+          "id": 355,
+          "escortTicks": 1986,
+          "stationaryFarTicks": 435
+        },
+        {
+          "id": 356,
+          "escortTicks": 2386,
+          "stationaryFarTicks": 485
+        },
+        {
+          "id": 357,
+          "escortTicks": 2577,
+          "stationaryFarTicks": 638
+        },
+        {
+          "id": 358,
+          "escortTicks": 2182,
+          "stationaryFarTicks": 351
+        },
+        {
+          "id": 359,
+          "escortTicks": 2532,
+          "stationaryFarTicks": 494
+        },
+        {
+          "id": 360,
+          "escortTicks": 2504,
+          "stationaryFarTicks": 658
+        },
+        {
+          "id": 361,
+          "escortTicks": 2774,
+          "stationaryFarTicks": 630
+        },
+        {
+          "id": 362,
+          "escortTicks": 2552,
+          "stationaryFarTicks": 336
+        },
+        {
+          "id": 363,
+          "escortTicks": 2784,
+          "stationaryFarTicks": 530
+        },
+        {
+          "id": 364,
+          "escortTicks": 2707,
+          "stationaryFarTicks": 375
+        },
+        {
+          "id": 365,
+          "escortTicks": 2952,
+          "stationaryFarTicks": 290
+        },
+        {
+          "id": 366,
+          "escortTicks": 3264,
+          "stationaryFarTicks": 387
+        }
+      ]
+    },
+    "phases": [
+      {
+        "key": "step/escape",
+        "label": "escape: Bring the survivors to the armored vehicle and board",
+        "threat": true,
+        "startSeconds": 0,
+        "seconds": 150,
+        "spawned": 93,
+        "initial": 0,
+        "observed": 93,
+        "reachableEver": 93,
+        "within2_5m": 45,
+        "attacks": 697,
+        "attacksPerMinute": 278.8,
+        "firstAttackSeconds": 63.81666666666667,
+        "groupAttacks": 23,
+        "groupAttacksPerMinute": 9.2,
+        "firstGroupAttackSeconds": 80.81666666666666,
+        "followerSpeeds": [
+          {
+            "id": 354,
+            "samples": 14,
+            "median": 3.827618656546076
+          },
+          {
+            "id": 359,
+            "samples": 2,
+            "median": 1.7255045186836027
+          },
+          {
+            "id": 362,
+            "samples": 2,
+            "median": 4.037912186673785
+          },
+          {
+            "id": 366,
+            "samples": 1,
+            "median": 4.68008848523119
+          },
+          {
+            "id": 356,
+            "samples": 4,
+            "median": 1.5489797912578345
+          },
+          {
+            "id": 357,
+            "samples": 4,
+            "median": 2.6289893636597563
+          }
+        ],
+        "followerMin": 3.827618656546076,
+        "followerMedian": 3.827618656546076,
+        "boundedPaths": {
+          "samples": 44,
+          "minimumPercent": 100,
+          "worstTick": 9000,
+          "nearby": 51,
+          "reachable": 51,
+          "blockedIds": []
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 9000,
+          "alive": 88,
+          "reachable": 88,
+          "playerX": 51.37383270263672,
+          "playerZ": 69.76400756835938,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "phase/sanctuary",
+        "label": "controller: sanctuary",
+        "threat": false,
+        "startSeconds": 0,
+        "seconds": 60,
+        "spawned": 12,
+        "initial": 0,
+        "observed": 12,
+        "reachableEver": 0,
+        "within2_5m": 0,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "firstAttackSeconds": null,
+        "groupAttacks": 0,
+        "groupAttacksPerMinute": 0,
+        "firstGroupAttackSeconds": null,
+        "followerSpeeds": [],
+        "followerMin": null,
+        "followerMedian": null,
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 3481,
+          "alive": 0,
+          "reachable": 0,
+          "playerX": 23.140016555786133,
+          "playerZ": 64.14939880371094,
+          "positions": []
+        },
+        "flags": []
+      },
+      {
+        "key": "phase/breached",
+        "label": "controller: breached",
+        "threat": false,
+        "startSeconds": 60,
+        "seconds": 90,
+        "spawned": 81,
+        "initial": 12,
+        "observed": 93,
+        "reachableEver": 93,
+        "within2_5m": 45,
+        "attacks": 697,
+        "attacksPerMinute": 464.6666666666667,
+        "firstAttackSeconds": 3.816666666666667,
+        "groupAttacks": 23,
+        "groupAttacksPerMinute": 15.333333333333334,
+        "firstGroupAttackSeconds": 20.816666666666666,
+        "followerSpeeds": [
+          {
+            "id": 354,
+            "samples": 14,
+            "median": 3.827618656546076
+          },
+          {
+            "id": 359,
+            "samples": 2,
+            "median": 1.7255045186836027
+          },
+          {
+            "id": 362,
+            "samples": 2,
+            "median": 4.037912186673785
+          },
+          {
+            "id": 366,
+            "samples": 1,
+            "median": 4.68008848523119
+          },
+          {
+            "id": 356,
+            "samples": 4,
+            "median": 1.5489797912578345
+          },
+          {
+            "id": 357,
+            "samples": 4,
+            "median": 2.6289893636597563
+          }
+        ],
+        "followerMin": 3.827618656546076,
+        "followerMedian": 3.827618656546076,
+        "boundedPaths": {
+          "samples": 44,
+          "minimumPercent": 100,
+          "worstTick": 9000,
+          "nearby": 51,
+          "reachable": 51,
+          "blockedIds": []
+        },
+        "maxBlockedSeconds": 0,
+        "blockedEvidence": null,
+        "last": {
+          "tick": 9000,
+          "alive": 88,
+          "reachable": 88,
+          "playerX": 51.37383270263672,
+          "playerZ": 69.76400756835938,
+          "positions": []
+        },
+        "flags": []
+      }
+    ],
+    "waves": [
+      {
+        "key": "tunnel-breach",
+        "source": "L8 breachedAt/story.say",
+        "startSeconds": 60,
+        "observedSeconds": 90,
+        "expected": 12,
+        "spawned": 12,
+        "firstAttackSeconds": 3.816666666666667,
+        "members": [
+          "407@1",
+          "409@2",
+          "411@3",
+          "413@4",
+          "415@5",
+          "417@6",
+          "419@7",
+          "421@8",
+          "423@9",
+          "425@10",
+          "427@11",
+          "429@12"
+        ],
+        "flags": [],
+        "outletCohorts": [
+          {
+            "outlet": 0,
+            "spawned": 3
+          },
+          {
+            "outlet": 1,
+            "spawned": 3
+          },
+          {
+            "outlet": 2,
+            "spawned": 3
+          },
+          {
+            "outlet": 3,
+            "spawned": 3
+          }
+        ],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 12
+      },
+      {
+        "key": "tunnel-reinforcement@4200",
+        "source": "L8 nextWave clock",
+        "startSeconds": 70,
+        "observedSeconds": 80,
+        "expected": 16,
+        "spawned": 16,
+        "firstAttackSeconds": 3.15,
+        "members": [
+          "435@13",
+          "436@17",
+          "438@18",
+          "440@19",
+          "442@14",
+          "443@20",
+          "445@21",
+          "447@22",
+          "449@15",
+          "450@23",
+          "452@24",
+          "454@25",
+          "456@16",
+          "457@26",
+          "459@27",
+          "461@28"
+        ],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 16
+      },
+      {
+        "key": "tunnel-reinforcement@4440",
+        "source": "L8 nextWave clock",
+        "startSeconds": 74,
+        "observedSeconds": 76,
+        "expected": 16,
+        "spawned": 16,
+        "firstAttackSeconds": 4.083333333333333,
+        "members": [
+          "463@30",
+          "465@31",
+          "467@32",
+          "469@33",
+          "471@29",
+          "472@34",
+          "474@35",
+          "476@36",
+          "478@37",
+          "480@38",
+          "482@39",
+          "484@40",
+          "486@41",
+          "488@42",
+          "490@43",
+          "492@44"
+        ],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 16
+      },
+      {
+        "key": "tunnel-reinforcement@4680",
+        "source": "L8 nextWave clock",
+        "startSeconds": 78,
+        "observedSeconds": 72,
+        "expected": 16,
+        "spawned": 16,
+        "firstAttackSeconds": 2.9833333333333334,
+        "members": [
+          "496@45",
+          "498@46",
+          "500@47",
+          "502@48",
+          "504@49",
+          "506@50",
+          "508@51",
+          "510@52",
+          "512@53",
+          "514@54",
+          "516@55",
+          "518@56",
+          "520@57",
+          "522@58",
+          "524@59",
+          "526@60"
+        ],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 16
+      },
+      {
+        "key": "tunnel-reinforcement@4920",
+        "source": "L8 nextWave clock",
+        "startSeconds": 82,
+        "observedSeconds": 68,
+        "expected": 16,
+        "spawned": 16,
+        "firstAttackSeconds": 2.9,
+        "members": [
+          "528@61",
+          "530@62",
+          "532@63",
+          "534@64",
+          "536@65",
+          "538@66",
+          "540@67",
+          "542@68",
+          "544@69",
+          "546@70",
+          "548@71",
+          "550@72",
+          "552@73",
+          "554@74",
+          "556@75",
+          "558@76"
+        ],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 16
+      },
+      {
+        "key": "tunnel-reinforcement@5160",
+        "source": "L8 nextWave clock",
+        "startSeconds": 86,
+        "observedSeconds": 64,
+        "expected": 16,
+        "spawned": 4,
+        "firstAttackSeconds": 35.416666666666664,
+        "members": [
+          "560@77",
+          "562@78",
+          "564@79",
+          "566@80"
+        ],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 4
+      },
+      {
+        "key": "tunnel-reinforcement@5400",
+        "source": "L8 nextWave clock",
+        "startSeconds": 90,
+        "observedSeconds": 60,
+        "expected": 16,
+        "spawned": 0,
+        "firstAttackSeconds": null,
+        "members": [],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 0
+      },
+      {
+        "key": "tunnel-reinforcement@5640",
+        "source": "L8 nextWave clock",
+        "startSeconds": 94,
+        "observedSeconds": 56,
+        "expected": 16,
+        "spawned": 0,
+        "firstAttackSeconds": null,
+        "members": [],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 0
+      },
+      {
+        "key": "tunnel-reinforcement@5880",
+        "source": "L8 nextWave clock",
+        "startSeconds": 98,
+        "observedSeconds": 52,
+        "expected": 16,
+        "spawned": 0,
+        "firstAttackSeconds": null,
+        "members": [],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 0
+      },
+      {
+        "key": "tunnel-reinforcement@6120",
+        "source": "L8 nextWave clock",
+        "startSeconds": 102,
+        "observedSeconds": 48,
+        "expected": 16,
+        "spawned": 0,
+        "firstAttackSeconds": null,
+        "members": [],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 0
+      },
+      {
+        "key": "tunnel-reinforcement@6360",
+        "source": "L8 nextWave clock",
+        "startSeconds": 106,
+        "observedSeconds": 44,
+        "expected": 16,
+        "spawned": 0,
+        "firstAttackSeconds": null,
+        "members": [],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 0
+      },
+      {
+        "key": "tunnel-reinforcement@6600",
+        "source": "L8 nextWave clock",
+        "startSeconds": 110,
+        "observedSeconds": 40,
+        "expected": 16,
+        "spawned": 0,
+        "firstAttackSeconds": null,
+        "members": [],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 0
+      },
+      {
+        "key": "tunnel-reinforcement@6840",
+        "source": "L8 nextWave clock",
+        "startSeconds": 114,
+        "observedSeconds": 36,
+        "expected": 16,
+        "spawned": 0,
+        "firstAttackSeconds": null,
+        "members": [],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 0
+      },
+      {
+        "key": "tunnel-reinforcement@7080",
+        "source": "L8 nextWave clock",
+        "startSeconds": 118,
+        "observedSeconds": 32,
+        "expected": 16,
+        "spawned": 0,
+        "firstAttackSeconds": null,
+        "members": [],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 0
+      },
+      {
+        "key": "tunnel-reinforcement@7320",
+        "source": "L8 nextWave clock",
+        "startSeconds": 122,
+        "observedSeconds": 28,
+        "expected": 16,
+        "spawned": 0,
+        "firstAttackSeconds": null,
+        "members": [],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 0
+      },
+      {
+        "key": "tunnel-reinforcement@7560",
+        "source": "L8 nextWave clock",
+        "startSeconds": 126,
+        "observedSeconds": 24,
+        "expected": 16,
+        "spawned": 0,
+        "firstAttackSeconds": null,
+        "members": [],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 0
+      },
+      {
+        "key": "tunnel-reinforcement@7800",
+        "source": "L8 nextWave clock",
+        "startSeconds": 130,
+        "observedSeconds": 20,
+        "expected": 16,
+        "spawned": 0,
+        "firstAttackSeconds": null,
+        "members": [],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 0
+      },
+      {
+        "key": "tunnel-reinforcement@8040",
+        "source": "L8 nextWave clock",
+        "startSeconds": 134,
+        "observedSeconds": 16,
+        "expected": 16,
+        "spawned": 0,
+        "firstAttackSeconds": null,
+        "members": [],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 0
+      },
+      {
+        "key": "tunnel-reinforcement@8280",
+        "source": "L8 nextWave clock",
+        "startSeconds": 138,
+        "observedSeconds": 12,
+        "expected": 16,
+        "spawned": 0,
+        "firstAttackSeconds": null,
+        "members": [],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 0
+      },
+      {
+        "key": "tunnel-reinforcement@8520",
+        "source": "L8 nextWave clock",
+        "startSeconds": 142,
+        "observedSeconds": 8,
+        "expected": 16,
+        "spawned": 0,
+        "firstAttackSeconds": null,
+        "members": [],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 0
+      },
+      {
+        "key": "tunnel-reinforcement@8760",
+        "source": "L8 nextWave clock",
+        "startSeconds": 146,
+        "observedSeconds": 4,
+        "expected": 16,
+        "spawned": 0,
+        "firstAttackSeconds": null,
+        "members": [],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 0
+      },
+      {
+        "key": "tunnel-reinforcement@9000",
+        "source": "L8 nextWave clock",
+        "startSeconds": 150,
+        "observedSeconds": 0,
+        "expected": 16,
+        "spawned": 0,
+        "firstAttackSeconds": null,
+        "members": [],
+        "flags": [],
+        "scheduledStreamSeconds": 0,
+        "visibleWithinTwoSeconds": 0,
+        "spawnedWithinEighteenSeconds": 0
+      }
+    ]
+  },
+  "passiveFlags": [],
+  "wallSeconds": 19.377519416,
+  "nativeStateHash": "ecdc1e1c"
+}

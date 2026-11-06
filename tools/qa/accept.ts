@@ -1,3 +1,14 @@
+import { l7CorridorReceipts } from './accept/l7-corridor-receipts';
+import { l9WedgeReceipts } from './accept/l9-wedge-receipts';
+import { l9StreamReceipts } from './accept/l9-stream-receipts';
+import { l9ArrivalReceipts } from './accept/l9-arrival-receipts';
+import { l8AnimalReceipts } from './accept/l8-animal-receipts';
+import { l8BreachReceipts } from './accept/l8-breach-receipts';
+import { l8PopulationReceipts } from './accept/l8-population-receipts';
+import { l9DetourReceipts } from './accept/l9-detour-receipts';
+import { l8HandoverReceipts } from './accept/l8-handover-receipts';
+import { l8BoardingReceipts } from './accept/l8-boarding-receipts';
+import { l10PresentationReceipts } from './accept/l10-presentation-receipts';
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { parseArgs } from 'node:util';
@@ -73,10 +84,10 @@ for (const level of selected) {
     const receipt = JSON.parse(readFileSync(path, 'utf8')) as FixtureReceipt & { browserHash: string };
     if (receipt.sourceHash === identity.sourceHash && receipt.browserHash === browserHash()) fixtures.push({ path, receipt });
   }
-  if (level === 'L8') fixtures.push(...l8CalmReceipts(identity.sourceHash, browserHash()), ...l8ArrivalReceipts(identity.sourceHash, browserHash()));
-  if (level === 'L7') fixtures.push(...fix55RocketReceipts(identity.sourceHash, browserHash()));
-  if (level === 'L9') fixtures.push(...l9RouteReceipts(identity.sourceHash, browserHash()), ...fix55L9Receipts(identity.sourceHash), ...l9GroupCensusReceipts(identity.sourceHash), ...sweepC3L9Receipts(identity.sourceHash, browserHash()), ...sweepC4L9RouteReceipts(identity.sourceHash, browserHash()), ...sweepC4L9RouteReceipts(identity.sourceHash, browserHash(), 'docs/reports/fix65-c'));
-  if (level === 'L10') fixtures.push(...l10CureReceipts(identity.sourceHash, browserHash()), ...sweepC4L10CureReceipts(identity.sourceHash, browserHash()), ...l10DogReceipts(identity.sourceHash, browserHash()), ...fix55L10EndingReceipts(identity.sourceHash, browserHash(), 3), ...fix55L10EndingReceipts(identity.sourceHash, browserHash(), 4));
+  if (level === 'L8') fixtures.push(...l8AnimalReceipts(identity.sourceHash, browserHash()), ...l8BreachReceipts(identity.sourceHash, browserHash()), ...l8PopulationReceipts(identity.sourceHash, browserHash()), ...l8HandoverReceipts(identity.sourceHash, browserHash()), ...l8BoardingReceipts(identity.sourceHash, identity.observerHash, browserHash()), ...l8CalmReceipts(identity.sourceHash, browserHash()), ...l8ArrivalReceipts(identity.sourceHash, browserHash()));
+  if (level === 'L7') fixtures.push(...l7CorridorReceipts(identity.sourceHash, identity.observerHash, browserHash()), ...fix55RocketReceipts(identity.sourceHash, browserHash()));
+  if (level === 'L9') fixtures.push(...l9WedgeReceipts(identity.sourceHash, identity.observerHash, browserHash()), ...l9StreamReceipts(identity.sourceHash, identity.observerHash, browserHash()), ...l9ArrivalReceipts(identity.sourceHash, browserHash()), ...l9DetourReceipts(identity.sourceHash, browserHash()), ...l9RouteReceipts(identity.sourceHash, browserHash()), ...fix55L9Receipts(identity.sourceHash), ...l9GroupCensusReceipts(identity.sourceHash), ...sweepC3L9Receipts(identity.sourceHash, browserHash()), ...sweepC4L9RouteReceipts(identity.sourceHash, browserHash()), ...sweepC4L9RouteReceipts(identity.sourceHash, browserHash(), 'docs/reports/fix65-c'), ...sweepC4L9RouteReceipts(identity.sourceHash, browserHash(), 'docs/reports/sweep-c5/L9-04'));
+  if (level === 'L10') fixtures.push(...l10PresentationReceipts(identity.sourceHash, browserHash()), ...l10CureReceipts(identity.sourceHash, browserHash()), ...sweepC4L10CureReceipts(identity.sourceHash, browserHash()), ...l10DogReceipts(identity.sourceHash, browserHash()), ...fix55L10EndingReceipts(identity.sourceHash, browserHash(), 3), ...fix55L10EndingReceipts(identity.sourceHash, browserHash(), 4));
   const report = buildLevelReport(level, receipts, fixtures, checkpointHash());
   atomicJson(join(reportRoot, `${level}.json`), report);
   failed ||= report.policies.some(policy => !!policy.error) || [...report.globals, ...report.rows].some(row => row.status === 'FAIL');
