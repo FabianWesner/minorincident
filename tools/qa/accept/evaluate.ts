@@ -775,6 +775,10 @@ export const completeNativeRows = new Map<string, { clause: string; policy: stri
     ...['actual passenger door-entry spacing', 'living infected remaining when boarding has finished', 'offscreen stalled boarding recovery after20s'].map(clause => ({ clause, policy: 'controlled-fixture' })),
   ]],
   ['L8-05', ['actual admitted Alphas over observed route','concurrent cap','unprotected local-threat victim class coverage','all five same-ID species convert after actual bites'].map(clause=>({clause,policy:'complete'}))],
+  ['L8-09', [
+    { clause: 'every living native group identity seated', policy: 'complete' },
+    ...['actual complete passenger identity boarding and wait gate', 'every outside waiting healthy survivor has production radar guidance', 'actual departure APC is unarmed'].map(clause => ({ clause, policy: 'boarding-sweep' })),
+  ]],
   ['L8-07', ['native escape marker remains fixed at APC','two independent body-clear enclosure exits at2.5m width'].map(clause=>({clause,policy:'complete'}))],
   ['L8-06', [
     ...['complete', 'stationary'].flatMap(policy => ['combat hard rule on actual player windups', 'real player/group windups per minute', 'minimum bounded-path reachable share within30m (path≤2.5×direct)'].map(clause => ({ clause, policy }))),

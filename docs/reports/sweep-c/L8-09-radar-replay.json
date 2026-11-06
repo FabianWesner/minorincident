@@ -1,0 +1,120 @@
+{
+  "sourceHash": "43b485e825dc3b7e6afda4f35772460115ce094858019c8637fcd67fde85f32c",
+  "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
+  "revision": "5fd61b3df717036c627c87253d2f9512867dc39f",
+  "producerSha256": "270e3ed5c50b3c44ba82bd29033b313ed6300c9719534996414adde3c0014f37",
+  "nativeProofPath": "docs/reports/sweep-c/L8-09-boarding-native.json",
+  "nativeProofSha256": "ea736883adefa9e8d22a21a179112b223a0e9cba008d10a23b518e6debcabe82",
+  "method": "Headless shared-pool production SurvivorRadar and production CSS replay over every actual native boarding snapshot. Confirms DOM pin eligibility/visibility for humans; companion visibility requires separate live evidence. No 3D rendering, game mutations or performance measurements.",
+  "errors": [],
+  "rows": [
+    {
+      "tier": "low",
+      "ticks": 1221,
+      "humanSamples": 7658,
+      "internalPassengerSamples": 216,
+      "missingPins": 0,
+      "companionSamples": 145,
+      "farthestCompanion": 4.9601035481418645,
+      "failures": [],
+      "examples": [
+        {
+          "tick": 4502,
+          "ids": [
+            355,
+            356,
+            357,
+            358,
+            359,
+            360,
+            361,
+            362,
+            363,
+            364,
+            365,
+            366
+          ]
+        },
+        {
+          "tick": 4503,
+          "ids": [
+            355,
+            356,
+            357,
+            358,
+            359,
+            360,
+            361,
+            362,
+            363,
+            364,
+            365,
+            366
+          ]
+        }
+      ],
+      "negativeMissingPinRejected": true,
+      "capture": {
+        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-c5/test-results/sweep-c-l8-radar-1793941364629/low-actual-wait.png",
+        "sha256": "9d182be4d388056957dac129ccd6185a7002ff951f820dd8d69c31d30ccabc70",
+        "seen": "Personally inspected unscaled800x480 production radar replay: clustered blue follower pins visible in minimap at actual waiting snapshot; explicit DOM-only heading, no claim of3D visibility. Missing-pin census0 over every waiting tick; independent pin-removal control rejects.",
+        "sheet": "test-results/sweep-c5/L8-09/radar-review.png",
+        "sheetSha256": "af8b1188b04c760d7ff2159ff65ab6975840ab5ab055c78801290a924dde3419"
+      }
+    },
+    {
+      "tier": "high",
+      "ticks": 1426,
+      "humanSamples": 10084,
+      "internalPassengerSamples": 216,
+      "missingPins": 0,
+      "companionSamples": 146,
+      "farthestCompanion": 4.960231518013181,
+      "failures": [],
+      "examples": [
+        {
+          "tick": 4484,
+          "ids": [
+            355,
+            356,
+            357,
+            358,
+            359,
+            360,
+            361,
+            362,
+            363,
+            364,
+            365,
+            366
+          ]
+        },
+        {
+          "tick": 4485,
+          "ids": [
+            355,
+            356,
+            357,
+            358,
+            359,
+            360,
+            361,
+            362,
+            363,
+            364,
+            365,
+            366
+          ]
+        }
+      ],
+      "negativeMissingPinRejected": true,
+      "capture": {
+        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/sweep-c5/test-results/sweep-c-l8-radar-1793941364629/high-actual-wait.png",
+        "sha256": "74d164b7ddfb01ba5d8dc17554c55994e6cc1a61a9efcd856d82be34db37468f",
+        "seen": "Personally inspected unscaled800x480 production radar replay: clustered blue follower pins visible in minimap at actual waiting snapshot; explicit DOM-only heading, no claim of3D visibility. Missing-pin census0 over every waiting tick; independent pin-removal control rejects.",
+        "sheet": "test-results/sweep-c5/L8-09/radar-review.png",
+        "sheetSha256": "af8b1188b04c760d7ff2159ff65ab6975840ab5ab055c78801290a924dde3419"
+      }
+    }
+  ]
+}

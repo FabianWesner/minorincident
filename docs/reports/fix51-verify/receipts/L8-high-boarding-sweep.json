@@ -1,0 +1,107 @@
+{
+  "version": 1,
+  "level": "L8",
+  "tier": "high",
+  "sourceHash": "43b485e825dc3b7e6afda4f35772460115ce094858019c8637fcd67fde85f32c",
+  "fixtureHash": "7f0d870373ab3e80bc8a6d2a6e3fba87b6a47eebb832c3659b9e0e9d885cebde",
+  "errors": [],
+  "checks": [
+    {
+      "id": "L8-09",
+      "clause": "actual complete passenger identity boarding and wait gate",
+      "tier": "high",
+      "policy": "boarding-sweep",
+      "status": "PASS",
+      "value": {
+        "nativeSeated": true,
+        "continuous": true,
+        "completeSnapshots": true,
+        "nativeIds": [
+          354,
+          355,
+          356,
+          357,
+          358,
+          359,
+          360,
+          361,
+          362,
+          363,
+          364,
+          365,
+          366
+        ],
+        "physicalSeated": true,
+        "physicalIds": [
+          32,
+          31,
+          389,
+          30,
+          408
+        ],
+        "completed": true
+      },
+      "target": "every living human and corgi seated in actual departure APC; no native departure while any passenger waits",
+      "receipt": "docs/reports/fix51-verify/receipts/L8-high-boarding-sweep.json"
+    },
+    {
+      "id": "L8-09",
+      "clause": "every outside waiting healthy survivor has production radar guidance",
+      "tier": "high",
+      "policy": "boarding-sweep",
+      "status": "PASS",
+      "value": {
+        "ticks": 1426,
+        "humanSamples": 10084,
+        "internalPassengerSamples": 216,
+        "missingPins": 0,
+        "failures": []
+      },
+      "target": "production radar DOM and CSS mark every actual native external waiting human on every boarding tick; hidden passengers already inside their assigned APC accounted separately; pin-removal control rejects",
+      "receipt": "docs/reports/fix51-verify/receipts/L8-high-boarding-sweep.json"
+    },
+    {
+      "id": "L8-09",
+      "clause": "actual departure APC is unarmed",
+      "tier": "high",
+      "policy": "boarding-sweep",
+      "status": "PASS",
+      "value": {
+        "archetype": "vehicle.military-apc",
+        "bodyVariant": "unarmed",
+        "components": [
+          "kind",
+          "archetype",
+          "transform",
+          "faction",
+          "health",
+          "vehicle",
+          "id"
+        ],
+        "vehicleComponents": [
+          "speed",
+          "forwardSpeed",
+          "steer",
+          "braking",
+          "boosting",
+          "driver",
+          "attached",
+          "damage",
+          "explodeAt",
+          "stuck",
+          "recoveringUntil",
+          "apcContacts",
+          "passengers"
+        ]
+      },
+      "target": "actual carried military APC unarmed definition, no weapon/loadout/mount/turret components; current reviewed images independently show plain hatch",
+      "receipt": "docs/reports/fix51-verify/receipts/L8-high-boarding-sweep.json"
+    }
+  ],
+  "observations": {
+    "proofPath": "docs/reports/sweep-c/L8-09-boarding-native.json",
+    "radarPath": "docs/reports/sweep-c/L8-09-radar-replay.json",
+    "inputPath": "docs/reports/fix51-r10c/L7-L8-carried-high-input.json",
+    "reviewPath": "docs/reports/fix51-r10c/L7-L8-carried-high/review.json"
+  }
+}
