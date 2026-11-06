@@ -2,7 +2,7 @@
   "version": 1,
   "level": "L9",
   "tier": "high",
-  "sourceHash": "3e6e650651f853dcdd7960a9cc912de97f5c184153973c26983123cc64e3532d",
+  "sourceHash": "43b485e825dc3b7e6afda4f35772460115ce094858019c8637fcd67fde85f32c",
   "fixtureHash": "b77cbe5343281da6c9136ba170ee1edff61f26cfe196795cd2fe737809d3b601",
   "errors": [],
   "checks": [
@@ -17,12 +17,12 @@
         "healthyPeak": 17.744627516552672,
         "emptyPeak": 10.710992914190859,
         "ratio": 0.6036189209494172,
-        "metres": 1541.4836405368396,
-        "drivingSamples": 843,
+        "metres": 1527.4880658191037,
+        "drivingSamples": 841,
         "smoke": {
           "smokeObserved": true,
           "wholeHullAndAttachedWheels": true,
-          "what": "All96 current captures personally inspected. Wide0HP road photos show large grey multi-billow smoke cloud behind APC; healthy road photos lack that cloud. Tight road crops clip trail. All fall0–9 frames keep whole hull and visible side wheels attached, body and headlights descend together. Postimpact bright flash/fire retains wreck and courier outside; Get clear appears then. Fall camera overrides requestedzoom, yielding duplicate paired framing; not independentzoom proof."
+          "what": "All96 panels personally inspected at original size. Wide0HP road views show dense grey multi-billow smoke absent in healthy controls; close crops clip trail. Fall0–9 each preserves connected hull/visible wheels and headlights descending together. Scripted fall camera overrides requestedzoom; paired framing is not independentzoom proof. Afterimpact flash/fire retains wreck/courier outside and Get clear HUD appears. Raw hashes verified and captures deleted."
         }
       },
       "target": "actual 0HP, >1km physical drive to crash; matched straight-road speed58–62% of healthy; road cap0.6; all driving samples smoking; reviewed dense plume",
@@ -42,7 +42,7 @@
             "impacts": [
               {
                 "type": "mission.signal",
-                "tick": 7305,
+                "tick": 7347,
                 "name": "l9.crash-impact",
                 "actorId": 667
               }
@@ -51,7 +51,7 @@
               {
                 "type": "objective.started",
                 "id": "reach-outskirts",
-                "tick": 7305
+                "tick": 7347
               }
             ],
             "fallSamples": 10,
@@ -63,7 +63,7 @@
             "impacts": [
               {
                 "type": "mission.signal",
-                "tick": 10473,
+                "tick": 10442,
                 "name": "l9.crash-impact",
                 "actorId": 667
               }
@@ -72,7 +72,7 @@
               {
                 "type": "objective.started",
                 "id": "reach-outskirts",
-                "tick": 10473
+                "tick": 10442
               }
             ],
             "fallSamples": 10,
@@ -88,6 +88,6 @@
   ],
   "observations": {
     "manifestPath": "docs/reports/sweep-c3/L9-05/qualification.json",
-    "browserHash": "336baba6734d8c168df05ea1f105c6d9831e717b83d278b41fd272eecb4dba88"
+    "browserHash": "9e227fa3b945360df3ced89d37da620661482cf42990f8f02eb07b7f9c843069"
   }
 }

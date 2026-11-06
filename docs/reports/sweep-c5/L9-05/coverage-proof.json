@@ -1,0 +1,104 @@
+{
+  "method": "Actual production consumer; temporary source-bound evidence faults with updated artifact SHA must reject. Exact original manifest/artifact bytes restored in finally; no game changes.",
+  "cases": [
+    {
+      "fault": "positive-zero-hp",
+      "rejected": true,
+      "checks": [
+        {
+          "tier": "low",
+          "status": "FAIL"
+        },
+        {
+          "tier": "high",
+          "status": "PASS"
+        }
+      ]
+    },
+    {
+      "fault": "unfinished-drive",
+      "rejected": true,
+      "checks": [
+        {
+          "tier": "low",
+          "status": "FAIL"
+        },
+        {
+          "tier": "high",
+          "status": "PASS"
+        }
+      ]
+    },
+    {
+      "fault": "slow-speed",
+      "rejected": true,
+      "checks": [
+        {
+          "tier": "low",
+          "status": "FAIL"
+        },
+        {
+          "tier": "high",
+          "status": "FAIL"
+        }
+      ]
+    },
+    {
+      "fault": "fast-speed",
+      "rejected": true,
+      "checks": [
+        {
+          "tier": "low",
+          "status": "FAIL"
+        },
+        {
+          "tier": "high",
+          "status": "FAIL"
+        }
+      ]
+    },
+    {
+      "fault": "missing-smoke",
+      "rejected": true,
+      "checks": [
+        {
+          "tier": "low",
+          "status": "FAIL"
+        },
+        {
+          "tier": "high",
+          "status": "FAIL"
+        }
+      ]
+    },
+    {
+      "fault": "unseen-image",
+      "rejected": true,
+      "checks": [
+        {
+          "tier": "low",
+          "status": "FAIL"
+        },
+        {
+          "tier": "high",
+          "status": "PASS"
+        }
+      ]
+    },
+    {
+      "fault": "stale-source",
+      "rejected": true,
+      "checks": []
+    },
+    {
+      "fault": "missing-high",
+      "rejected": true,
+      "checks": [
+        {
+          "tier": "low",
+          "status": "PASS"
+        }
+      ]
+    }
+  ]
+}
