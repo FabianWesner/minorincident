@@ -6,7 +6,7 @@ import { Rng } from '../../core/Rng';
 import { seatAnchor } from '../npc/seats';
 import { leaveSeat } from '../npc/MorningRoutines';
 import { l6, l6Entries, l6BreachModels, l6Doors, l6InjuryLines } from '../../data/l6';
-import { l5, l5Survivors } from '../../data/l5';
+import { l5Survivors } from '../../data/l5';
 import type { EntitySnapshot } from '../world/types';
 import type { Point } from '../npc/types';
 import type { Mission } from './Mission';
@@ -88,9 +88,13 @@ export class LevelSixSubway {
       let e: EntitySnapshot;
       if (resident) {
         e=structuredClone(resident);
-        if(i<count){e.transform.x-=l5.metro.stationX; e.transform.z-=l5.metro.stationZ; e.transform.y+=.45;}
-        else {e.transform.x=at.x;e.transform.z=at.z;e.transform.y=1.3;}
+        // Carry identity, appearance and health into the newly furnished
+        // shelter; the L5 crowd's track positions and idle orders end here.
+        Object.assign(e.transform, at, { y: 1.3 });
         e.civilian!.floorY=.6; e.civilian!.pauseUntil=0; e.civilian!.knockedUntil=0; e.civilian!.until=0; e.civilian!.entered=start;
+        e.civilian!.state='calm';e.civilian!.goal=-1;e.civilian!.path.length=0;e.civilian!.pathIndex=0;
+        e.civilian!.schedule=[{activity:routine==='talk'?'chat':routine==='sit'?'sit':'look',anchor:`l6/${routine}`,target:at,facing:{x:at.x+(i%2?-3:3),z:at.z},ticks:60*60*10}];
+        e.civilian!.scheduleStep=0;e.civilian!.activityUntil=start+60*60*10;e.civilian!.activityStarted=start-60;
         if(e.combat){e.combat.staggerUntil=0;e.combat.attacking=false;delete e.combat.reaction;}
         w.entities.replace(e); w.spatial.set(e.id,e.transform.x,e.transform.z);
       } else {
@@ -99,8 +103,8 @@ export class LevelSixSubway {
       }
       const id=e.id;
       e.health={current:60,max:60};e.civilian!.survivor={key,mode:'follow',slot:i,leader:0,cover:false,waitAt:0,foundAt:start};
-      e.civilian!.story={clip:routine==='sit'?'npc-sit':routine==='rest'?'death-side':routine==='talk'?'npc-gesture':routine==='treat'?'npc-cower':routine==='share'?'npc-give':'idle',start:start-i*13, ...(i===0?{prop:'pistol' as const}:{})};
-      if(resident){e.health={current:resident.health.max,max:resident.health.max};e.appearance=structuredClone(resident.appearance);if(i<count)e.civilian!.story=structuredClone(resident.civilian!.story);}
+      e.civilian!.story={clip:routine==='sit'?'npc-sit':routine==='rest'?'death-side':routine==='talk'?'npc-gesture':routine==='treat'?'npc-cower':routine==='share'?'npc-give':'npc-look-around',start:start-i*13, ...(i===0?{prop:'pistol' as const}:{})};
+      if(resident){e.health={current:resident.health.max,max:resident.health.max};e.appearance=structuredClone(resident.appearance);}
       if(resident) readyCarriedAlly(e, start);
       if(e.civilian!.story?.clip==='npc-sit'){
         const district=w.districts!.districts[0], bench=district.layout.placements.filter(p=>p.assetId==='prop.bench')[Math.floor((i-1)/5)];
