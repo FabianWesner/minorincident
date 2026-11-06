@@ -214,9 +214,13 @@ export class LevelSixSubway {
       try {
         id=armored?ai.spawn(wave===1?'infected.armored':'infected.riot',at):o.spawnPedestrian(at,{model});
         const e=w.entities.get(id)!;
-        // Keep the hatch front's existing 600 HP. Its shield can now strain
-        // and break instead of secretly applying football frontal armor.
-        if(hatchFront)e.health.current=e.health.max=infectedDef('infected.armored').hp*INFECTED_TOUGHNESS;
+        // Keep the hatch front's existing HP, body and chase speed. Its shield
+        // can now strain and break instead of secretly applying football armor.
+        if(hatchFront){
+          const front=infectedDef('infected.armored');
+          e.health.current=e.health.max=front.hp*INFECTED_TOUGHNESS;
+          e.combat!.radius=front.radius; e.infected!.speed=front.speed;
+        }
         if(!armored)o.turnNow(e);
       }
       finally { ai.director.reserved = held; }

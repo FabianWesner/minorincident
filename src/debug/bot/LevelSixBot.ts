@@ -34,9 +34,9 @@ export class LevelSixBot {
     if(fights&&enemies[0]&&(this.profile!=='newbie'||w.tick%60<45)){
       const e=enemies[0],d=Math.hypot(e.transform.x-p.x,e.transform.z-p.z);
       const rack=w.entities.get(1)!.weapons?.RIGHT.rack??[],shotgun=rack.findIndex(slot=>slot.id==='weapon.shotgun');
-      // Counter an armored attack with the carried shotgun, keeping that weapon
+      // Counter armor or a riot shield with the carried shotgun, keeping that weapon
       // through the exchange so knockback cannot oscillate the selector.
-      if(e.archetype==='infected.armored'&&e.infected!.state==='attack')this.shotgunTarget=e.id;
+      if((e.archetype==='infected.armored'||e.combat?.shield)&&e.infected!.state==='attack')this.shotgunTarget=e.id;
       if((w.entities.get(this.shotgunTarget)?.health.current??0)<=0)this.shotgunTarget=0;
       const closeArmor=!!this.shotgunTarget&&d<=8&&shotgun>=0,side=closeArmor?'RIGHT':d<2.2?'LEFT':'RIGHT';
       const mg=rack.findIndex(slot=>slot.id==='weapon.army-mg'),index=closeArmor?shotgun:mg;

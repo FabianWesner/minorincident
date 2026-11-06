@@ -30,12 +30,12 @@ try {
     // counter fixture. No actors are removed, frozen or edited after resume.
     a.teleport(1, { x: 80, z: 15 });
     for (const [i, id] of ids.entries()) {
-      a.teleport(id, { x: 88 + i * 12, z: 15 });
+      a.teleport(id, { x: 88, z: 15 + i * 4 });
       w.entities.get(id)!.transform.yaw = Math.PI; w.infected!.pursueTarget(id, 1);
     }
-    return ids.map(id => { const e = w.entities.get(id)!; return { id, archetype: e.archetype, hp: e.health.max, shield: e.combat!.shield }; });
+    return ids.map(id => { const e = w.entities.get(id)!; return { id, archetype: e.archetype, hp: e.health.max, shield: e.combat!.shield, radius: e.combat!.radius, speed: e.infected!.speed }; });
   }, { tier, doors: l6Entries.slice(0, 2).map(entry => entry.door) });
-  assert(initial.every(e => e.archetype === 'infected.riot' && e.hp === 600 && e.shield));
+  assert(initial.every(e => e.archetype === 'infected.riot' && e.hp === 600 && e.shield && e.radius === .5 && e.speed === 4.5));
   rows.push({ initial });
   await session.page.evaluate(() => window.__SS__!.resume());
   await session.page.keyboard.press('Digit5');
