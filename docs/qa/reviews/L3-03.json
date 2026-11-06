@@ -3,7 +3,7 @@
   "status": "PASS",
   "reviewer": "Codex sweep-a3",
   "date": "2026-11-06",
-  "commit": "0320fcd82d27a29756605186955be371f4b2b07f",
+  "commit": "430f4bc493c6cac113093ed4d185734fb2dc592d",
   "clauses": [
     {
       "clause": "combat: reachable ≥ 90 %; passive first attack ≤ 10 s (measured 3.4 s); attacks on the player ≥ 4/min (tune).",
@@ -14,9 +14,9 @@
   "evidence": [
     {
       "file": "docs/reports/sweep-a3/L3-03-clauses.json",
-      "sha256": "a48fa7c4a5b8cd17d5172578f369a29a03235068bbffa7833608b5046b55da7d",
+      "sha256": "67f7d48ad2f8b207119a7543bc76f19b3e14f6e17cb1ebfbde53e713c5eb26a7",
       "what": "Reviewed all14 exact-source numeric clauses: bounded-path reachable minimum100% for low complete/stationary and high complete;95% high stationary (required≥90%). Passive first actual player windup2.95s low,2.4167s high (required≤10s). Player attacks/min are23.4834/149.5611 low complete/stationary and31.5789/298.9474 high complete/stationary, all≥4 with positive player-target windups. Passive defend windows28.4833/14.25s extend beyond10s. High attack rate has no upper bound in this criterion; no target adjustment is made."
     }
   ],
-  "notes": "Current low/high complete and stationary native InputFrame route observations use actual infected.attack events, player targets and independently bounded nav-path queries. No visual or performance claim. Fresh exact-criterion PASS closes the historical rate failure."
+  "notes": "Current low/high complete and stationary native InputFrame route observations use actual infected.attack events, player targets and independently bounded nav-path queries. No visual or performance claim. Fresh exact-criterion PASS closes the historical rate failure. All14 native clauses rerun and requalified on the final constant-width-ring game source."
 }
