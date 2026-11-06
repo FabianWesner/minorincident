@@ -9,7 +9,7 @@ import {emptyInput} from '../../../src/input/InputFrame.ts';
 import {stateHash} from '../../../src/sim/world/stateHash.ts';
 import {validateSave} from '../../../src/sim/progression/Save.ts';
 import {provenance} from './probe.ts';
-const root='docs/reports/fix72-c/L10-12',identity=provenance(),rows=[],sha=b=>createHash('sha256').update(b).digest('hex');mkdirSync(root,{recursive:true});
+const root=process.argv[2]??'docs/reports/fix72-c/L10-12',identity=provenance(),rows=[],sha=b=>createHash('sha256').update(b).digest('hex');mkdirSync(root,{recursive:true});
 const simulationHash=()=>{const h=createHash('sha256');for(const file of execFileSync('git',['ls-files','-z','--','src','layouts','public/assets/layouts'],{encoding:'utf8'}).split('\0').filter(p=>p&&!p.startsWith('src/render/')).sort()){h.update(file);h.update('\0');h.update(readFileSync(file));}return h.digest('hex');};
 for(const tier of ['low','high']){
  const control=JSON.parse(readFileSync(`docs/reports/fix51-verify/receipts/L10-${tier}-stationary.json`));assert.equal(control.sourceHash,identity.sourceHash);const campaign=preset('L10-default');campaign.settings.quality=tier;let snapshot,finalHash='';
