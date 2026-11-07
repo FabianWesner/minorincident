@@ -1,28 +1,28 @@
 {
   "row": "G-26",
-  "status": "FAIL",
-  "reviewer": "final-g/Codex",
+  "status": "PASS",
+  "reviewer": "Codex/blk-v",
   "date": "2026-11-07",
-  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "commit": "7e538b5fe16562431ed4adff532aff41828eee76",
   "clauses": [
     {
-      "clause": "Figures share the heroine's proportions and absolute height (no shrunken adults), accessories on heads, held props in hands, sitters on seats.",
-      "verdict": "FAIL",
-      "note": "Fresh low-quality authored zoo-staff fixture at60ticks has2 body-deformation counterexamples: bag holder and phone holder forearms form broad pointed/stretched skin triangles. Both original1280×720 close views personally inspected. Nearest prop/hand surface gaps are0.013555m (bag) and0.001133m (phone); those small grip gaps do not cure the visibly deformed bodies. The earlier coffee-cap finding is not freshly established and is not carried forward as a current FAIL."
+      "clause": "Scoped blocker: authored ped-zoo-staff fixture at60ticks, low/high, close bag/phone holders have no broad pointed/stretched forearm skin panels.",
+      "verdict": "PASS",
+      "note": "All eight final captures inspected. Relaxed waiting arms and a lowered idle phone remove the broad fans; props remain at the hands. Hand/prop nearest surface gaps: bag13.6/14.0mm low/high, phone1.13/1.10mm. This does not qualify every adult/accessory/routine in the full G-26 row."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/final-g/G-26-low-scenes.json",
-      "sha256": "1e7502cb64bc0f1b2fa939045dacdbb96490da0f8daf2cff699dde93329b7583",
-      "what": "Fresh low-quality authored zoo-staff fixture at60ticks has2 body-deformation counterexamples: bag holder and phone holder forearms form broad pointed/stretched skin triangles. Both original1280×720 close views personally inspected. Nearest prop/hand surface gaps are0.013555m (bag) and0.001133m (phone); those small grip gaps do not cure the visibly deformed bodies. The earlier coffee-cap finding is not freshly established and is not carried forward as a current FAIL."
+      "file": "docs/reports/blk-v/G26-proof.json",
+      "sha256": "4d3f18779cd889bf96b59f4791876e838827e0384b8177afebe4ff0d7ce0e990",
+      "what": "Scoped before/control/intermediate/final visual and actual drawn-skin/gap receipts. Both tiers, both zooms and close views personally inspected."
     },
     {
-      "file": "docs/reports/final-g/G-26-reviewed.json",
-      "sha256": "464688f844d04b7009e9c0e9f2ba4f0b70158158dedce74a7cd346414cfcab8f",
-      "what": "Fresh low-quality authored zoo-staff fixture at60ticks has2 body-deformation counterexamples: bag holder and phone holder forearms form broad pointed/stretched skin triangles. Both original1280×720 close views personally inspected. Nearest prop/hand surface gaps are0.013555m (bag) and0.001133m (phone); those small grip gaps do not cure the visibly deformed bodies. The earlier coffee-cap finding is not freshly established and is not carried forward as a current FAIL."
+      "file": "docs/reports/blk-v/final-visual-proof.json",
+      "sha256": "de8ca90e605c353c146fd2700276bc2005d4e44873693789954cb1dd40adb635",
+      "what": "Personally viewed all final-source captures. At tick60 relaxed bag/phone forearms lack broad fans, six actors and props retained; phone carried at lowered wrist. Scoped authored-fixture PASS only; other head/torso facets remain."
     }
   ],
-  "notes": "Repro: load authored ped-zoo-staff Scene Lab fixture, low quality, advance60ticks, then inspect bag and phone holders using the retained close-camera captures. No model, grip or pose edits.",
-  "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186"
+  "notes": "Whole G-26 remains unqualified: this clause deliberately names the requested blocker fixture rather than claiming the full adult/accessory catalog. P: PO inspect the relaxed idle phone carry at the side.",
+  "sourceDigest": "b33a0e3ce8ec0fb3d20960af5a6b07561149258fac0493611d3978e90250c577"
 }

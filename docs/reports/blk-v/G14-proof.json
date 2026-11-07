@@ -1,0 +1,1458 @@
+{
+  "scope": "G-14 circular-cut fragment repair; remaining folded limb geometry is still FAIL. Ten identical corpse IDs retained through ticks120/7320 in both tiers. No time/count/body deletion.",
+  "change": "Remove the corpse subject-disc cut. Existing living/corpse stencil preserves living silhouettes while normal corpse geometry remains intact.",
+  "probeCorrection": {
+    "before": "The ID replacement materials dropped production stencil fields, falsely measuring 222/25 covered courier pixels at zoom0.5/1.5.",
+    "after": "Preserving the eight production stencil fields gives zero missing courier pixels in all four low/high x zoom cells. No target/criterion change."
+  },
+  "captures": [
+    {
+      "file": "test-results/blk-v/before/G14-low/tick120-z0.5.png",
+      "sha256": "daae80b633fde810df54953b923bee96396c70d0d202c94627f52a31c836b6c7",
+      "seen": "The circular courier cut leaves isolated dark boots, limbs and pointed partial body panels. The no-cut diagnostic restores complete dark-clothed bodies. Bulky bodies retain folded forearm panels. Early 120-tick follow cameras do not establish the requested zoom; 7320-tick views show the close/wide failure."
+    },
+    {
+      "file": "test-results/blk-v/before/G14-low/tick120-z1.5.png",
+      "sha256": "e9bb60cc2408f091cc58313afcb214539125db20ff2871a8ff6372e379bbcfeb",
+      "seen": "The circular courier cut leaves isolated dark boots, limbs and pointed partial body panels. The no-cut diagnostic restores complete dark-clothed bodies. Bulky bodies retain folded forearm panels. Early 120-tick follow cameras do not establish the requested zoom; 7320-tick views show the close/wide failure."
+    },
+    {
+      "file": "test-results/blk-v/before/G14-low/tick120-no-cut-diagnostic.png",
+      "sha256": "8f7e8438caa4cee9a26daee7249042ca3a90f2c7ceb73fad3d81388b914c5dd8",
+      "seen": "The circular courier cut leaves isolated dark boots, limbs and pointed partial body panels. The no-cut diagnostic restores complete dark-clothed bodies. Bulky bodies retain folded forearm panels. Early 120-tick follow cameras do not establish the requested zoom; 7320-tick views show the close/wide failure."
+    },
+    {
+      "file": "test-results/blk-v/before/G14-low/tick7320-z0.5.png",
+      "sha256": "fad2b8c3e6b533117677070652c1918206f91f7931ee6de603c1c418429e316b",
+      "seen": "The circular courier cut leaves isolated dark boots, limbs and pointed partial body panels. The no-cut diagnostic restores complete dark-clothed bodies. Bulky bodies retain folded forearm panels. Early 120-tick follow cameras do not establish the requested zoom; 7320-tick views show the close/wide failure."
+    },
+    {
+      "file": "test-results/blk-v/before/G14-low/tick7320-z1.5.png",
+      "sha256": "fb6be3602f72959d01ab12389d5efcd5f6986664c6de1d0d84ba5d6a46aaa6c4",
+      "seen": "The circular courier cut leaves isolated dark boots, limbs and pointed partial body panels. The no-cut diagnostic restores complete dark-clothed bodies. Bulky bodies retain folded forearm panels. Early 120-tick follow cameras do not establish the requested zoom; 7320-tick views show the close/wide failure."
+    },
+    {
+      "file": "test-results/blk-v/before/G14-high/tick120-z0.5.png",
+      "sha256": "46dbbb4c7a5eaea3e8b73758ff239d2a54a8ea563626b1c54f4fb0a055e3a8b0",
+      "seen": "The circular courier cut leaves isolated dark boots, limbs and pointed partial body panels. The no-cut diagnostic restores complete dark-clothed bodies. Bulky bodies retain folded forearm panels. Early 120-tick follow cameras do not establish the requested zoom; 7320-tick views show the close/wide failure."
+    },
+    {
+      "file": "test-results/blk-v/before/G14-high/tick120-z1.5.png",
+      "sha256": "a211b97a00e82b35cbb4f7e60902014a667a685e21734d63b19de8667d8df2fa",
+      "seen": "The circular courier cut leaves isolated dark boots, limbs and pointed partial body panels. The no-cut diagnostic restores complete dark-clothed bodies. Bulky bodies retain folded forearm panels. Early 120-tick follow cameras do not establish the requested zoom; 7320-tick views show the close/wide failure."
+    },
+    {
+      "file": "test-results/blk-v/before/G14-high/tick120-no-cut-diagnostic.png",
+      "sha256": "a519a854d59742a5a6ba74333918098136c6e62a530957a842063104e4bb2d90",
+      "seen": "The circular courier cut leaves isolated dark boots, limbs and pointed partial body panels. The no-cut diagnostic restores complete dark-clothed bodies. Bulky bodies retain folded forearm panels. Early 120-tick follow cameras do not establish the requested zoom; 7320-tick views show the close/wide failure."
+    },
+    {
+      "file": "test-results/blk-v/before/G14-high/tick7320-z0.5.png",
+      "sha256": "aaca2e6e6ae3f3b85fa296bec5371e6eabbc31404f4843435618cee23c13a6ac",
+      "seen": "The circular courier cut leaves isolated dark boots, limbs and pointed partial body panels. The no-cut diagnostic restores complete dark-clothed bodies. Bulky bodies retain folded forearm panels. Early 120-tick follow cameras do not establish the requested zoom; 7320-tick views show the close/wide failure."
+    },
+    {
+      "file": "test-results/blk-v/before/G14-high/tick7320-z1.5.png",
+      "sha256": "e21b1290128188da2be9f4c981ec9d44800328005ef5fbae211d693c61ddb733",
+      "seen": "The circular courier cut leaves isolated dark boots, limbs and pointed partial body panels. The no-cut diagnostic restores complete dark-clothed bodies. Bulky bodies retain folded forearm panels. Early 120-tick follow cameras do not establish the requested zoom; 7320-tick views show the close/wide failure."
+    },
+    {
+      "file": "test-results/blk-v/after/G14-low/tick120-z0.5.png",
+      "sha256": "e4b55e62d86b1eb8223b5f98eff9fbb55f8863f6abf546c1435c9f117067cd5d",
+      "seen": "Complete dark-clothed bodies replace the isolated boot and limb patches. The heroine remains readable in the overlap fixture; bulky bodies still have sharply folded/pointed forearm panels. No whole-row no-spiky-limbs PASS."
+    },
+    {
+      "file": "test-results/blk-v/after/G14-low/tick120-z1.5.png",
+      "sha256": "2949499c9c6c42f0f64664f6acd416b28da313155643d2d31b0be2c75eb92813",
+      "seen": "Complete dark-clothed bodies replace the isolated boot and limb patches. The heroine remains readable in the overlap fixture; bulky bodies still have sharply folded/pointed forearm panels. No whole-row no-spiky-limbs PASS."
+    },
+    {
+      "file": "test-results/blk-v/after/G14-low/tick7320-z0.5.png",
+      "sha256": "10855f34af649cf0e15be493b540e6e23cbf8ad4298efe9081a49ede25268bac",
+      "seen": "Complete dark-clothed bodies replace the isolated boot and limb patches. The heroine remains readable in the overlap fixture; bulky bodies still have sharply folded/pointed forearm panels. No whole-row no-spiky-limbs PASS."
+    },
+    {
+      "file": "test-results/blk-v/after/G14-low/tick7320-z1.5.png",
+      "sha256": "d79e0863b95fa3750ed2cfccf1f9543d236e8f0d26d1a4d5f73a84e385039f4e",
+      "seen": "Complete dark-clothed bodies replace the isolated boot and limb patches. The heroine remains readable in the overlap fixture; bulky bodies still have sharply folded/pointed forearm panels. No whole-row no-spiky-limbs PASS."
+    },
+    {
+      "file": "test-results/blk-v/after/G14-low/overlap-z0.5.png",
+      "sha256": "a8911d1586d97589c05f382375f971f402eed2a4d9ca45a215c43cbc20e44c1e",
+      "seen": "Complete dark-clothed bodies replace the isolated boot and limb patches. The heroine remains readable in the overlap fixture; bulky bodies still have sharply folded/pointed forearm panels. No whole-row no-spiky-limbs PASS."
+    },
+    {
+      "file": "test-results/blk-v/after/G14-low/overlap-z1.5.png",
+      "sha256": "4913ae9a59db65ecef1703dc5b959185d94a9469d68125b00529498f36acd2a0",
+      "seen": "Complete dark-clothed bodies replace the isolated boot and limb patches. The heroine remains readable in the overlap fixture; bulky bodies still have sharply folded/pointed forearm panels. No whole-row no-spiky-limbs PASS."
+    },
+    {
+      "file": "test-results/blk-v/after/G14-high/tick120-z0.5.png",
+      "sha256": "8d8f2ace52ec0e194f6a6c95bcf1b6c22ca31e955455ffe7151e07e541229ef0",
+      "seen": "Complete dark-clothed bodies replace the isolated boot and limb patches. The heroine remains readable in the overlap fixture; bulky bodies still have sharply folded/pointed forearm panels. No whole-row no-spiky-limbs PASS."
+    },
+    {
+      "file": "test-results/blk-v/after/G14-high/tick120-z1.5.png",
+      "sha256": "d2d176686f6e0446499c64da804d07b4c384e7793b8a2a1b99c86b7b3ffa79e8",
+      "seen": "Complete dark-clothed bodies replace the isolated boot and limb patches. The heroine remains readable in the overlap fixture; bulky bodies still have sharply folded/pointed forearm panels. No whole-row no-spiky-limbs PASS."
+    },
+    {
+      "file": "test-results/blk-v/after/G14-high/tick7320-z0.5.png",
+      "sha256": "fd0bc94cd62464cc66e67aac4514e0e9c26fc86a9938661a8c0748ceddf7f9aa",
+      "seen": "Complete dark-clothed bodies replace the isolated boot and limb patches. The heroine remains readable in the overlap fixture; bulky bodies still have sharply folded/pointed forearm panels. No whole-row no-spiky-limbs PASS."
+    },
+    {
+      "file": "test-results/blk-v/after/G14-high/tick7320-z1.5.png",
+      "sha256": "9ebaefbba739246a31d6f06cc0fa85c51c52cadc7fe3ba07cf557c9bbf3fc2a1",
+      "seen": "Complete dark-clothed bodies replace the isolated boot and limb patches. The heroine remains readable in the overlap fixture; bulky bodies still have sharply folded/pointed forearm panels. No whole-row no-spiky-limbs PASS."
+    },
+    {
+      "file": "test-results/blk-v/after/G14-high/overlap-z0.5.png",
+      "sha256": "395c7050a9f18d64ffc695281e1de973b39fd9f88039f18d8f472a29f3798bde",
+      "seen": "Complete dark-clothed bodies replace the isolated boot and limb patches. The heroine remains readable in the overlap fixture; bulky bodies still have sharply folded/pointed forearm panels. No whole-row no-spiky-limbs PASS."
+    },
+    {
+      "file": "test-results/blk-v/after/G14-high/overlap-z1.5.png",
+      "sha256": "85dd265435e27c927f4d94d78d8022fdd57a3acc5f84cbdf96c31ca5fb8d9bc0",
+      "seen": "Complete dark-clothed bodies replace the isolated boot and limb patches. The heroine remains readable in the overlap fixture; bulky bodies still have sharply folded/pointed forearm panels. No whole-row no-spiky-limbs PASS."
+    },
+    {
+      "file": "test-results/blk-v/stencil-overlap/G14-low/overlap-z0.5.png",
+      "sha256": "a8911d1586d97589c05f382375f971f402eed2a4d9ca45a215c43cbc20e44c1e",
+      "seen": "Complete dark-clothed bodies replace the isolated boot and limb patches. The heroine remains readable in the overlap fixture; bulky bodies still have sharply folded/pointed forearm panels. No whole-row no-spiky-limbs PASS."
+    },
+    {
+      "file": "test-results/blk-v/stencil-overlap/G14-low/overlap-z1.5.png",
+      "sha256": "4913ae9a59db65ecef1703dc5b959185d94a9469d68125b00529498f36acd2a0",
+      "seen": "Complete dark-clothed bodies replace the isolated boot and limb patches. The heroine remains readable in the overlap fixture; bulky bodies still have sharply folded/pointed forearm panels. No whole-row no-spiky-limbs PASS."
+    },
+    {
+      "file": "test-results/blk-v/stencil-overlap/G14-high/overlap-z0.5.png",
+      "sha256": "395c7050a9f18d64ffc695281e1de973b39fd9f88039f18d8f472a29f3798bde",
+      "seen": "Complete dark-clothed bodies replace the isolated boot and limb patches. The heroine remains readable in the overlap fixture; bulky bodies still have sharply folded/pointed forearm panels. No whole-row no-spiky-limbs PASS."
+    },
+    {
+      "file": "test-results/blk-v/stencil-overlap/G14-high/overlap-z1.5.png",
+      "sha256": "85dd265435e27c927f4d94d78d8022fdd57a3acc5f84cbdf96c31ca5fb8d9bc0",
+      "seen": "Complete dark-clothed bodies replace the isolated boot and limb patches. The heroine remains readable in the overlap fixture; bulky bodies still have sharply folded/pointed forearm panels. No whole-row no-spiky-limbs PASS."
+    }
+  ],
+  "receipts": [
+    {
+      "file": "test-results/blk-v/before/G14-low/receipt.json",
+      "sha256": "be8339150ab999d72b5eda748e880678fb69e28dc3b26f8416d7e6890db3b31a",
+      "receipt": {
+        "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+        "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+        "revision": "2162727d4c889774f5c2306fb3a82dfc82caf2ec",
+        "row": "G14",
+        "stage": "before",
+        "tier": "low",
+        "captures": [
+          {
+            "file": "test-results/blk-v/before/G14-low/tick120-z0.5.png",
+            "sha256": "daae80b633fde810df54953b923bee96396c70d0d202c94627f52a31c836b6c7"
+          },
+          {
+            "file": "test-results/blk-v/before/G14-low/tick120-z1.5.png",
+            "sha256": "e9bb60cc2408f091cc58313afcb214539125db20ff2871a8ff6372e379bbcfeb"
+          },
+          {
+            "file": "test-results/blk-v/before/G14-low/tick120-no-cut-diagnostic.png",
+            "sha256": "8f7e8438caa4cee9a26daee7249042ca3a90f2c7ceb73fad3d81388b914c5dd8"
+          },
+          {
+            "file": "test-results/blk-v/before/G14-low/tick7320-z0.5.png",
+            "sha256": "fad2b8c3e6b533117677070652c1918206f91f7931ee6de603c1c418429e316b"
+          },
+          {
+            "file": "test-results/blk-v/before/G14-low/tick7320-z1.5.png",
+            "sha256": "fb6be3602f72959d01ab12389d5efcd5f6986664c6de1d0d84ba5d6a46aaa6c4"
+          }
+        ],
+        "samples": [
+          {
+            "tick": 120,
+            "corpses": [
+              {
+                "id": 12,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": 2.4,
+                  "y": 0.7,
+                  "z": 1.6,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 11,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": 1.2,
+                  "y": 0.7,
+                  "z": 1.6,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 10,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": 0,
+                  "y": 0.7,
+                  "z": 1.6,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 9,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": -1.2,
+                  "y": 0.7,
+                  "z": 1.6,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 8,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": -2.4,
+                  "y": 0.7,
+                  "z": 1.6,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 7,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": 2.4,
+                  "y": 0.7,
+                  "z": 0,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 6,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": 1.2,
+                  "y": 0.7,
+                  "z": 0,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 5,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": 0,
+                  "y": 0.7,
+                  "z": 0,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 4,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": -1.2,
+                  "y": 0.7,
+                  "z": 0,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 3,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": -2.4,
+                  "y": 0.7,
+                  "z": 0,
+                  "yaw": 0
+                }
+              }
+            ],
+            "layout": {
+              "count": 10,
+              "sunkPairs": 0,
+              "heapPairs": 5,
+              "repeatedPairs": 0,
+              "maxDisplacementM": 0.8000000000000002,
+              "maxLiftM": 0.22,
+              "courierClear": true
+            },
+            "render": "low"
+          },
+          {
+            "tick": 7320,
+            "corpses": [
+              {
+                "id": 12,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": 2.4,
+                  "y": 0.7,
+                  "z": 1.6,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 11,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": 1.2,
+                  "y": 0.7,
+                  "z": 1.6,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 10,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": 0,
+                  "y": 0.7,
+                  "z": 1.6,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 9,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": -1.2,
+                  "y": 0.7,
+                  "z": 1.6,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 8,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": -2.4,
+                  "y": 0.7,
+                  "z": 1.6,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 7,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": 2.4,
+                  "y": 0.7,
+                  "z": 0,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 6,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": 1.2,
+                  "y": 0.7,
+                  "z": 0,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 5,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": 0,
+                  "y": 0.7,
+                  "z": 0,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 4,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": -1.2,
+                  "y": 0.7,
+                  "z": 0,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 3,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": -2.4,
+                  "y": 0.7,
+                  "z": 0,
+                  "yaw": 0
+                }
+              }
+            ],
+            "layout": {
+              "count": 10,
+              "sunkPairs": 0,
+              "heapPairs": 5,
+              "repeatedPairs": 0,
+              "maxDisplacementM": 0.8000000000000002,
+              "maxLiftM": 0.22,
+              "courierClear": true
+            },
+            "render": "low"
+          }
+        ],
+        "errors": []
+      }
+    },
+    {
+      "file": "test-results/blk-v/before/G14-high/receipt.json",
+      "sha256": "63bc67c190e14d0cd04d04df10abdc103b745bfd0b562cf1216074f20500fcd0",
+      "receipt": {
+        "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+        "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+        "revision": "2162727d4c889774f5c2306fb3a82dfc82caf2ec",
+        "row": "G14",
+        "stage": "before",
+        "tier": "high",
+        "captures": [
+          {
+            "file": "test-results/blk-v/before/G14-high/tick120-z0.5.png",
+            "sha256": "46dbbb4c7a5eaea3e8b73758ff239d2a54a8ea563626b1c54f4fb0a055e3a8b0"
+          },
+          {
+            "file": "test-results/blk-v/before/G14-high/tick120-z1.5.png",
+            "sha256": "a211b97a00e82b35cbb4f7e60902014a667a685e21734d63b19de8667d8df2fa"
+          },
+          {
+            "file": "test-results/blk-v/before/G14-high/tick120-no-cut-diagnostic.png",
+            "sha256": "a519a854d59742a5a6ba74333918098136c6e62a530957a842063104e4bb2d90"
+          },
+          {
+            "file": "test-results/blk-v/before/G14-high/tick7320-z0.5.png",
+            "sha256": "aaca2e6e6ae3f3b85fa296bec5371e6eabbc31404f4843435618cee23c13a6ac"
+          },
+          {
+            "file": "test-results/blk-v/before/G14-high/tick7320-z1.5.png",
+            "sha256": "e21b1290128188da2be9f4c981ec9d44800328005ef5fbae211d693c61ddb733"
+          }
+        ],
+        "samples": [
+          {
+            "tick": 120,
+            "corpses": [
+              {
+                "id": 12,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": 2.4,
+                  "y": 0.7,
+                  "z": 1.6,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 11,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": 1.2,
+                  "y": 0.7,
+                  "z": 1.6,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 10,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": 0,
+                  "y": 0.7,
+                  "z": 1.6,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 9,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": -1.2,
+                  "y": 0.7,
+                  "z": 1.6,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 8,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": -2.4,
+                  "y": 0.7,
+                  "z": 1.6,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 7,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": 2.4,
+                  "y": 0.7,
+                  "z": 0,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 6,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": 1.2,
+                  "y": 0.7,
+                  "z": 0,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 5,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": 0,
+                  "y": 0.7,
+                  "z": 0,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 4,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": -1.2,
+                  "y": 0.7,
+                  "z": 0,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 3,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": -2.4,
+                  "y": 0.7,
+                  "z": 0,
+                  "yaw": 0
+                }
+              }
+            ],
+            "layout": {
+              "count": 10,
+              "sunkPairs": 0,
+              "heapPairs": 5,
+              "repeatedPairs": 0,
+              "maxDisplacementM": 0.8000000000000002,
+              "maxLiftM": 0.22,
+              "courierClear": true
+            },
+            "render": "high"
+          },
+          {
+            "tick": 7320,
+            "corpses": [
+              {
+                "id": 12,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": 2.4,
+                  "y": 0.7,
+                  "z": 1.6,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 11,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": 1.2,
+                  "y": 0.7,
+                  "z": 1.6,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 10,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": 0,
+                  "y": 0.7,
+                  "z": 1.6,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 9,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": -1.2,
+                  "y": 0.7,
+                  "z": 1.6,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 8,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": -2.4,
+                  "y": 0.7,
+                  "z": 1.6,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 7,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": 2.4,
+                  "y": 0.7,
+                  "z": 0,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 6,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": 1.2,
+                  "y": 0.7,
+                  "z": 0,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 5,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": 0,
+                  "y": 0.7,
+                  "z": 0,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 4,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": -1.2,
+                  "y": 0.7,
+                  "z": 0,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 3,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": -2.4,
+                  "y": 0.7,
+                  "z": 0,
+                  "yaw": 0
+                }
+              }
+            ],
+            "layout": {
+              "count": 10,
+              "sunkPairs": 0,
+              "heapPairs": 5,
+              "repeatedPairs": 0,
+              "maxDisplacementM": 0.8000000000000002,
+              "maxLiftM": 0.22,
+              "courierClear": true
+            },
+            "render": "high"
+          }
+        ],
+        "errors": []
+      }
+    },
+    {
+      "file": "test-results/blk-v/after/G14-low/receipt.json",
+      "sha256": "829d9c52753fb01e7cd18e28bbbf2553ab087b0db02d384f906a78b22014565c",
+      "receipt": {
+        "sourceHash": "cde57936b9c86da278eb64b93fd9b364347473e4c88db868f995ed5c94861ca4",
+        "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+        "revision": "48324c83ba80b75819ae8b4e1c554315cb321971",
+        "row": "G14",
+        "stage": "after",
+        "tier": "low",
+        "captures": [
+          {
+            "file": "test-results/blk-v/after/G14-low/tick120-z0.5.png",
+            "sha256": "e4b55e62d86b1eb8223b5f98eff9fbb55f8863f6abf546c1435c9f117067cd5d"
+          },
+          {
+            "file": "test-results/blk-v/after/G14-low/tick120-z1.5.png",
+            "sha256": "2949499c9c6c42f0f64664f6acd416b28da313155643d2d31b0be2c75eb92813"
+          },
+          {
+            "file": "test-results/blk-v/after/G14-low/tick7320-z0.5.png",
+            "sha256": "10855f34af649cf0e15be493b540e6e23cbf8ad4298efe9081a49ede25268bac"
+          },
+          {
+            "file": "test-results/blk-v/after/G14-low/tick7320-z1.5.png",
+            "sha256": "d79e0863b95fa3750ed2cfccf1f9543d236e8f0d26d1a4d5f73a84e385039f4e"
+          },
+          {
+            "file": "test-results/blk-v/after/G14-low/overlap-z0.5.png",
+            "sha256": "a8911d1586d97589c05f382375f971f402eed2a4d9ca45a215c43cbc20e44c1e"
+          },
+          {
+            "file": "test-results/blk-v/after/G14-low/overlap-z1.5.png",
+            "sha256": "4913ae9a59db65ecef1703dc5b959185d94a9469d68125b00529498f36acd2a0"
+          }
+        ],
+        "samples": [
+          {
+            "tick": 120,
+            "corpses": [
+              {
+                "id": 12,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": 2.4,
+                  "y": 0.7,
+                  "z": 1.6,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 11,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": 1.2,
+                  "y": 0.7,
+                  "z": 1.6,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 10,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": 0,
+                  "y": 0.7,
+                  "z": 1.6,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 9,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": -1.2,
+                  "y": 0.7,
+                  "z": 1.6,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 8,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": -2.4,
+                  "y": 0.7,
+                  "z": 1.6,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 7,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": 2.4,
+                  "y": 0.7,
+                  "z": 0,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 6,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": 1.2,
+                  "y": 0.7,
+                  "z": 0,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 5,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": 0,
+                  "y": 0.7,
+                  "z": 0,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 4,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": -1.2,
+                  "y": 0.7,
+                  "z": 0,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 3,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": -2.4,
+                  "y": 0.7,
+                  "z": 0,
+                  "yaw": 0
+                }
+              }
+            ],
+            "layout": {
+              "count": 10,
+              "sunkPairs": 0,
+              "heapPairs": 5,
+              "repeatedPairs": 0,
+              "maxDisplacementM": 0.8000000000000002,
+              "maxLiftM": 0.22,
+              "courierClear": true
+            },
+            "render": "low"
+          },
+          {
+            "tick": 7320,
+            "corpses": [
+              {
+                "id": 12,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": 2.4,
+                  "y": 0.7,
+                  "z": 1.6,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 11,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": 1.2,
+                  "y": 0.7,
+                  "z": 1.6,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 10,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": 0,
+                  "y": 0.7,
+                  "z": 1.6,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 9,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": -1.2,
+                  "y": 0.7,
+                  "z": 1.6,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 8,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": -2.4,
+                  "y": 0.7,
+                  "z": 1.6,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 7,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": 2.4,
+                  "y": 0.7,
+                  "z": 0,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 6,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": 1.2,
+                  "y": 0.7,
+                  "z": 0,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 5,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": 0,
+                  "y": 0.7,
+                  "z": 0,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 4,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": -1.2,
+                  "y": 0.7,
+                  "z": 0,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 3,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": -2.4,
+                  "y": 0.7,
+                  "z": 0,
+                  "yaw": 0
+                }
+              }
+            ],
+            "layout": {
+              "count": 10,
+              "sunkPairs": 0,
+              "heapPairs": 5,
+              "repeatedPairs": 0,
+              "maxDisplacementM": 0.8000000000000002,
+              "maxLiftM": 0.22,
+              "courierClear": true
+            },
+            "render": "low"
+          }
+        ],
+        "errors": [],
+        "overlap": [
+          {
+            "zoom": 0.5,
+            "alphaPixels": 0,
+            "alphaBodyPixels": 0,
+            "bossReveal": {
+              "center": [
+                0.5000000000000002,
+                0.3074990750206265
+              ],
+              "radius": 0.12,
+              "strength": 0
+            },
+            "megaAlphaRatio": 0,
+            "megaM": null,
+            "visible": 14166,
+            "reference": 14388,
+            "share": 0.9845704753961635,
+            "megaPixels": 192728,
+            "megaShare": 0.20912326388888888
+          },
+          {
+            "zoom": 1.5,
+            "alphaPixels": 0,
+            "alphaBodyPixels": 0,
+            "bossReveal": {
+              "center": [
+                0.4999999999999999,
+                0.4378814106893719
+              ],
+              "radius": 0.12,
+              "strength": 0
+            },
+            "megaAlphaRatio": 0,
+            "megaM": null,
+            "visible": 1410,
+            "reference": 1435,
+            "share": 0.9825783972125436,
+            "megaPixels": 18963,
+            "megaShare": 0.020576171875
+          }
+        ]
+      }
+    },
+    {
+      "file": "test-results/blk-v/after/G14-high/receipt.json",
+      "sha256": "92870a74d7d4835b110e42be297b243d9144a1d0fc8ce901c4cb52ac5f363769",
+      "receipt": {
+        "sourceHash": "cde57936b9c86da278eb64b93fd9b364347473e4c88db868f995ed5c94861ca4",
+        "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+        "revision": "48324c83ba80b75819ae8b4e1c554315cb321971",
+        "row": "G14",
+        "stage": "after",
+        "tier": "high",
+        "captures": [
+          {
+            "file": "test-results/blk-v/after/G14-high/tick120-z0.5.png",
+            "sha256": "8d8f2ace52ec0e194f6a6c95bcf1b6c22ca31e955455ffe7151e07e541229ef0"
+          },
+          {
+            "file": "test-results/blk-v/after/G14-high/tick120-z1.5.png",
+            "sha256": "d2d176686f6e0446499c64da804d07b4c384e7793b8a2a1b99c86b7b3ffa79e8"
+          },
+          {
+            "file": "test-results/blk-v/after/G14-high/tick7320-z0.5.png",
+            "sha256": "fd0bc94cd62464cc66e67aac4514e0e9c26fc86a9938661a8c0748ceddf7f9aa"
+          },
+          {
+            "file": "test-results/blk-v/after/G14-high/tick7320-z1.5.png",
+            "sha256": "9ebaefbba739246a31d6f06cc0fa85c51c52cadc7fe3ba07cf557c9bbf3fc2a1"
+          },
+          {
+            "file": "test-results/blk-v/after/G14-high/overlap-z0.5.png",
+            "sha256": "395c7050a9f18d64ffc695281e1de973b39fd9f88039f18d8f472a29f3798bde"
+          },
+          {
+            "file": "test-results/blk-v/after/G14-high/overlap-z1.5.png",
+            "sha256": "85dd265435e27c927f4d94d78d8022fdd57a3acc5f84cbdf96c31ca5fb8d9bc0"
+          }
+        ],
+        "samples": [
+          {
+            "tick": 120,
+            "corpses": [
+              {
+                "id": 12,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": 2.4,
+                  "y": 0.7,
+                  "z": 1.6,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 11,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": 1.2,
+                  "y": 0.7,
+                  "z": 1.6,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 10,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": 0,
+                  "y": 0.7,
+                  "z": 1.6,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 9,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": -1.2,
+                  "y": 0.7,
+                  "z": 1.6,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 8,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": -2.4,
+                  "y": 0.7,
+                  "z": 1.6,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 7,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": 2.4,
+                  "y": 0.7,
+                  "z": 0,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 6,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": 1.2,
+                  "y": 0.7,
+                  "z": 0,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 5,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": 0,
+                  "y": 0.7,
+                  "z": 0,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 4,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": -1.2,
+                  "y": 0.7,
+                  "z": 0,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 3,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": -2.4,
+                  "y": 0.7,
+                  "z": 0,
+                  "yaw": 0
+                }
+              }
+            ],
+            "layout": {
+              "count": 10,
+              "sunkPairs": 0,
+              "heapPairs": 5,
+              "repeatedPairs": 0,
+              "maxDisplacementM": 0.8000000000000002,
+              "maxLiftM": 0.22,
+              "courierClear": true
+            },
+            "render": "high"
+          },
+          {
+            "tick": 7320,
+            "corpses": [
+              {
+                "id": 12,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": 2.4,
+                  "y": 0.7,
+                  "z": 1.6,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 11,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": 1.2,
+                  "y": 0.7,
+                  "z": 1.6,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 10,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": 0,
+                  "y": 0.7,
+                  "z": 1.6,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 9,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": -1.2,
+                  "y": 0.7,
+                  "z": 1.6,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 8,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": -2.4,
+                  "y": 0.7,
+                  "z": 1.6,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 7,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": 2.4,
+                  "y": 0.7,
+                  "z": 0,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 6,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": 1.2,
+                  "y": 0.7,
+                  "z": 0,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 5,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": 0,
+                  "y": 0.7,
+                  "z": 0,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 4,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": -1.2,
+                  "y": 0.7,
+                  "z": 0,
+                  "yaw": 0
+                }
+              },
+              {
+                "id": 3,
+                "archetype": "infected.runner",
+                "at": {
+                  "x": -2.4,
+                  "y": 0.7,
+                  "z": 0,
+                  "yaw": 0
+                }
+              }
+            ],
+            "layout": {
+              "count": 10,
+              "sunkPairs": 0,
+              "heapPairs": 5,
+              "repeatedPairs": 0,
+              "maxDisplacementM": 0.8000000000000002,
+              "maxLiftM": 0.22,
+              "courierClear": true
+            },
+            "render": "high"
+          }
+        ],
+        "errors": [],
+        "overlap": [
+          {
+            "zoom": 0.5,
+            "alphaPixels": 0,
+            "alphaBodyPixels": 0,
+            "bossReveal": {
+              "center": [
+                0.5000000000000002,
+                0.3074990750206265
+              ],
+              "radius": 0.12,
+              "strength": 0
+            },
+            "megaAlphaRatio": 0,
+            "megaM": null,
+            "visible": 14166,
+            "reference": 14388,
+            "share": 0.9845704753961635,
+            "megaPixels": 194762,
+            "megaShare": 0.2113302951388889
+          },
+          {
+            "zoom": 1.5,
+            "alphaPixels": 0,
+            "alphaBodyPixels": 0,
+            "bossReveal": {
+              "center": [
+                0.4999999999999999,
+                0.4378814106893719
+              ],
+              "radius": 0.12,
+              "strength": 0
+            },
+            "megaAlphaRatio": 0,
+            "megaM": null,
+            "visible": 1410,
+            "reference": 1435,
+            "share": 0.9825783972125436,
+            "megaPixels": 19153,
+            "megaShare": 0.020782335069444446
+          }
+        ]
+      }
+    },
+    {
+      "file": "test-results/blk-v/stencil-overlap/G14-low/receipt.json",
+      "sha256": "e1e5c2f4c66300ab2ef6d42cf4bb441f47b14e12f900f8c0b2d9acd77b425d0c",
+      "receipt": {
+        "sourceHash": "69a72237a563cd17828a0c304d693e480e504fc8e88f87f3e69e2a4f873d972c",
+        "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+        "revision": "6b2459a72cb57ce0ae8ecd4161406d790ec2b781",
+        "row": "G14",
+        "stage": "stencil-overlap",
+        "tier": "low",
+        "captures": [
+          {
+            "file": "test-results/blk-v/stencil-overlap/G14-low/overlap-z0.5.png",
+            "sha256": "a8911d1586d97589c05f382375f971f402eed2a4d9ca45a215c43cbc20e44c1e"
+          },
+          {
+            "file": "test-results/blk-v/stencil-overlap/G14-low/overlap-z1.5.png",
+            "sha256": "4913ae9a59db65ecef1703dc5b959185d94a9469d68125b00529498f36acd2a0"
+          }
+        ],
+        "samples": [],
+        "errors": [],
+        "overlap": [
+          {
+            "zoom": 0.5,
+            "alphaPixels": 0,
+            "alphaBodyPixels": 0,
+            "bossReveal": {
+              "center": [
+                0.5000000000000002,
+                0.3074990750206265
+              ],
+              "radius": 0.12,
+              "strength": 0
+            },
+            "megaAlphaRatio": 0,
+            "megaM": null,
+            "visible": 14388,
+            "reference": 14388,
+            "share": 1,
+            "megaPixels": 192728,
+            "megaShare": 0.20912326388888888,
+            "corpseOnly": {
+              "bodyPixels": 14388,
+              "missedPixels": 0,
+              "share": 1,
+              "method": "Same-frame courier ID pixels with all authored corpse actors visible/hidden; terrain and other environment remain in both frames."
+            }
+          },
+          {
+            "zoom": 1.5,
+            "alphaPixels": 0,
+            "alphaBodyPixels": 0,
+            "bossReveal": {
+              "center": [
+                0.4999999999999999,
+                0.4378814106893719
+              ],
+              "radius": 0.12,
+              "strength": 0
+            },
+            "megaAlphaRatio": 0,
+            "megaM": null,
+            "visible": 1435,
+            "reference": 1435,
+            "share": 1,
+            "megaPixels": 18963,
+            "megaShare": 0.020576171875,
+            "corpseOnly": {
+              "bodyPixels": 1435,
+              "missedPixels": 0,
+              "share": 1,
+              "method": "Same-frame courier ID pixels with all authored corpse actors visible/hidden; terrain and other environment remain in both frames."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "file": "test-results/blk-v/stencil-overlap/G14-high/receipt.json",
+      "sha256": "8362def4b4c81612f640ede056a87a2323db97ee4a473a732f28012c9aea3969",
+      "receipt": {
+        "sourceHash": "69a72237a563cd17828a0c304d693e480e504fc8e88f87f3e69e2a4f873d972c",
+        "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+        "revision": "6b2459a72cb57ce0ae8ecd4161406d790ec2b781",
+        "row": "G14",
+        "stage": "stencil-overlap",
+        "tier": "high",
+        "captures": [
+          {
+            "file": "test-results/blk-v/stencil-overlap/G14-high/overlap-z0.5.png",
+            "sha256": "395c7050a9f18d64ffc695281e1de973b39fd9f88039f18d8f472a29f3798bde"
+          },
+          {
+            "file": "test-results/blk-v/stencil-overlap/G14-high/overlap-z1.5.png",
+            "sha256": "85dd265435e27c927f4d94d78d8022fdd57a3acc5f84cbdf96c31ca5fb8d9bc0"
+          }
+        ],
+        "samples": [],
+        "errors": [],
+        "overlap": [
+          {
+            "zoom": 0.5,
+            "alphaPixels": 0,
+            "alphaBodyPixels": 0,
+            "bossReveal": {
+              "center": [
+                0.5000000000000002,
+                0.3074990750206265
+              ],
+              "radius": 0.12,
+              "strength": 0
+            },
+            "megaAlphaRatio": 0,
+            "megaM": null,
+            "visible": 14388,
+            "reference": 14388,
+            "share": 1,
+            "megaPixels": 194762,
+            "megaShare": 0.2113302951388889,
+            "corpseOnly": {
+              "bodyPixels": 14388,
+              "missedPixels": 0,
+              "share": 1,
+              "method": "Same-frame courier ID pixels with all authored corpse actors visible/hidden; terrain and other environment remain in both frames."
+            }
+          },
+          {
+            "zoom": 1.5,
+            "alphaPixels": 0,
+            "alphaBodyPixels": 0,
+            "bossReveal": {
+              "center": [
+                0.4999999999999999,
+                0.4378814106893719
+              ],
+              "radius": 0.12,
+              "strength": 0
+            },
+            "megaAlphaRatio": 0,
+            "megaM": null,
+            "visible": 1435,
+            "reference": 1435,
+            "share": 1,
+            "megaPixels": 19153,
+            "megaShare": 0.020782335069444446,
+            "corpseOnly": {
+              "bodyPixels": 1435,
+              "missedPixels": 0,
+              "share": 1,
+              "method": "Same-frame courier ID pixels with all authored corpse actors visible/hidden; terrain and other environment remain in both frames."
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

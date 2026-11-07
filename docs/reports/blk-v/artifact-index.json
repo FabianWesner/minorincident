@@ -1,0 +1,1891 @@
+{
+  "gameCommit": "a921908b852e8f24171b81b826496845e20ddb88",
+  "gameSourceHash": "c19cffe31403b25dc81d307da8947c42c75496e6f5d21ae7a7e77d02a8ad86a1",
+  "scope": "Delivery artifact digests, including final reports, archived evidence, and changed source/tools. The artifact index does not hash itself.",
+  "files": [
+    {
+      "file": "docs/qa/acceptance-status.md",
+      "sha256": "e62a2ab9aa65e895b8ec362dd2cd317a91359331f40b0e2949f53976c74d7041"
+    },
+    {
+      "file": "docs/qa/reviews/G-14.json",
+      "sha256": "0a841549acd99072d6ac60a513817064c9b8d5d9dddf45dc9e3b79164eeee5f5"
+    },
+    {
+      "file": "docs/qa/reviews/G-25.json",
+      "sha256": "7ee5f31c7a5ee436b8b2c5e76af79ebf09558ac9498d7b4148f3f34c0eb13ef8"
+    },
+    {
+      "file": "docs/qa/reviews/G-26.json",
+      "sha256": "e100b30e8a1ca550b19a10dab42432d5ad914babcb304c9e0880a62080d217df"
+    },
+    {
+      "file": "docs/qa/reviews/L4-17.json",
+      "sha256": "9563ffa8bb9137b3ebfce6d710d3867cd29a71b0fb6c141fa229513347d23591"
+    },
+    {
+      "file": "docs/reports/blk-v/G14-id-pass-before.json",
+      "sha256": "8b4a1ef97f18aafdbb8260c6a7b8e66ee58742a62f22219af16dded611752b04"
+    },
+    {
+      "file": "docs/reports/blk-v/G14-proof.json",
+      "sha256": "36f711da0f0861bc46c1e4cc4c43675708a183f22f67f934df1a6004b33468a1"
+    },
+    {
+      "file": "docs/reports/blk-v/G26-proof.json",
+      "sha256": "4d3f18779cd889bf96b59f4791876e838827e0384b8177afebe4ff0d7ce0e990"
+    },
+    {
+      "file": "docs/reports/blk-v/L4-after-high.json.gz",
+      "sha256": "66a3e43eda09fe90a9822aa862d4e17b6ffcceed2700ecc8300440e2a6dbf111"
+    },
+    {
+      "file": "docs/reports/blk-v/L4-after-low.json.gz",
+      "sha256": "af6c8c834c3072289612c3c04666ddd5b921190584e6c6a91403e5c802d89576"
+    },
+    {
+      "file": "docs/reports/blk-v/L4-before-high.json.gz",
+      "sha256": "c5d6eed1473beecd4756379808afa8951d5dc0f67890542f10be8adc8ed55945"
+    },
+    {
+      "file": "docs/reports/blk-v/L4-before-low.json.gz",
+      "sha256": "bb0522a396f98f1169bae672ba2b4d2cd392037f896e07e3cb86052dc2796433"
+    },
+    {
+      "file": "docs/reports/blk-v/L4-proof.json",
+      "sha256": "eb7c310c183bbced2f93cb2b253bb877cf14cc678640af411ab3db3c2e9310d5"
+    },
+    {
+      "file": "docs/reports/blk-v/README.md",
+      "sha256": "73e49abd8f2ef49f4e072d74fc4cb90c7485e49a60d492a94c051b20fcfa80e4"
+    },
+    {
+      "file": "docs/reports/blk-v/acceptance-summary.json",
+      "sha256": "cac068d27fb610ed37c3e60ccae1569b66010960246b2fb04a1a407aa3d83a22"
+    },
+    {
+      "file": "docs/reports/blk-v/capture-cleanup.json",
+      "sha256": "828eafbb89e70670bad9f5e4db2d6651d8f0d5c295fe6bbceb2eba831934e870"
+    },
+    {
+      "file": "docs/reports/blk-v/capture-manifest.json",
+      "sha256": "8103fbf6061b9891c71efef3b5f76aa5905f2d2b8e6ca8b5f117c2b86f35c6b8"
+    },
+    {
+      "file": "docs/reports/blk-v/checks.json",
+      "sha256": "e07c18ce6e5b8bd16939849c808457d9434c1d78d391d6d07c02d5da17b5ada5"
+    },
+    {
+      "file": "docs/reports/blk-v/diagnostics/corpse-source-bounds-raw.json.gz",
+      "sha256": "238932f6af164f646759b8eb5524c0c0211004e8c63c9ee37255fee0ab99dd15"
+    },
+    {
+      "file": "docs/reports/blk-v/diagnostics/corpse-source-bounds.json.gz",
+      "sha256": "23008a91c72f70f129f9c9419b05f9be39052734239aa7a9e794fe4311c6e7f0"
+    },
+    {
+      "file": "docs/reports/blk-v/diagnostics/grip-morph-audit.json.gz",
+      "sha256": "6599c16496630928bdfdbb67255ca94ac0fee9ddbb08c1b82b3235a78cb1b20d"
+    },
+    {
+      "file": "docs/reports/blk-v/evidence-repair.json",
+      "sha256": "d02494d34f57adf495d9c57f8d6f6d692ae1451d018c465bc07416111b38ec4b"
+    },
+    {
+      "file": "docs/reports/blk-v/final-visual-proof.json",
+      "sha256": "de8ca90e605c353c146fd2700276bc2005d4e44873693789954cb1dd40adb635"
+    },
+    {
+      "file": "docs/reports/blk-v/hydrated-evidence.json",
+      "sha256": "c1593f2efe2d8664a7ba4e58a4f7ee9c14292eac84917975e86ff2cef9cf5ecf"
+    },
+    {
+      "file": "docs/reports/blk-v/logs/G14-accept-retry.log.gz",
+      "sha256": "3a47fa9cd80f7cf207e49ba367394c2d9f0ef7892b6122bb0ab9cfeaa5bc9763"
+    },
+    {
+      "file": "docs/reports/blk-v/logs/G14-accept.log.gz",
+      "sha256": "8c3a4b4641fd8e66d9eae0eee169270970e19a8a55cd1a41b54d65466fea4501"
+    },
+    {
+      "file": "docs/reports/blk-v/logs/final-accept-refresh.log.gz",
+      "sha256": "a2b964de1c9ae63b6350b0be9ed324f76f4d33144d117b3142bc5aab3c378be7"
+    },
+    {
+      "file": "docs/reports/blk-v/logs/final-accept.log.gz",
+      "sha256": "b2e8bf3ef3a64f36f258d239b2bf14ac95c941067b71d2b5c466eac699900759"
+    },
+    {
+      "file": "docs/reports/blk-v/logs/final-lint.log.gz",
+      "sha256": "c5b26b09786bbc5b8bc114c76a44f37326546a071280383cc8c16fb22f335692"
+    },
+    {
+      "file": "docs/reports/blk-v/logs/final-test-committed.log.gz",
+      "sha256": "db4eaa5d06382c8778b7663b1f03a8ba63dd1cba6353b2a2a84c4cb7db4ed334"
+    },
+    {
+      "file": "docs/reports/blk-v/logs/final-test-serial.log.gz",
+      "sha256": "e2a758cd4ce84ba209f4db123da4875b47af8705fa68e10d0deb2c71df265aec"
+    },
+    {
+      "file": "docs/reports/blk-v/logs/final-test.log.gz",
+      "sha256": "747faeb52dff2d56f79c80768509efb131f97ad1088726d3936e36bd0b0cde9a"
+    },
+    {
+      "file": "docs/reports/blk-v/logs/final-threat.log.gz",
+      "sha256": "3ab5f01cb11c544ebc8710e6cbb3d1e8304c0ad513938d70dfb3780da6908225"
+    },
+    {
+      "file": "docs/reports/blk-v/logs/final-tsc.log.gz",
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64"
+    },
+    {
+      "file": "docs/reports/blk-v/logs/scene-gate.log.gz",
+      "sha256": "6a6b263f2dfadd3e87b605df0264edb6cfafdafa463756e84c2afb4c00d17964"
+    },
+    {
+      "file": "docs/reports/blk-v/native-base-comparison.json",
+      "sha256": "e76aba1c0ad685fd8fb55d5ef75ac128c2f196eb6f99ba6b304c1e97cb1fb546"
+    },
+    {
+      "file": "docs/reports/blk-v/physical/high/capture-metadata.json.gz",
+      "sha256": "72a118901c3c874ca46b55c0e54bc706162188b2adf8ab04a3d680d41c96ef51"
+    },
+    {
+      "file": "docs/reports/blk-v/physical/high/corpse-high-acceptance-ledger.json.gz",
+      "sha256": "f5ad8471aab34e55f09432e30f1f07152be5654d0b3d71fea2e4598d353aeb2a"
+    },
+    {
+      "file": "docs/reports/blk-v/physical/high/corpse-high-audio.json.gz",
+      "sha256": "2c1a14102e6105a3564433de924b9b058655417c3362e7b3ccb9234dcde976d6"
+    },
+    {
+      "file": "docs/reports/blk-v/physical/high/corpse-high-completion.json.gz",
+      "sha256": "09680fdae9f6981e489c5303b457467ec0348ef429851a9d84cee4c28ef41580"
+    },
+    {
+      "file": "docs/reports/blk-v/physical/high/corpse-high-frames.json.gz",
+      "sha256": "64406e753d82e11c6bd63d1d04bb6aa083eefa0a46949bbfce994d556b989f0f"
+    },
+    {
+      "file": "docs/reports/blk-v/physical/high/issues-corpse-high.json.gz",
+      "sha256": "64406e753d82e11c6bd63d1d04bb6aa083eefa0a46949bbfce994d556b989f0f"
+    },
+    {
+      "file": "docs/reports/blk-v/physical/high/log-corpse-high.jsonl.gz",
+      "sha256": "f527202a37ebaec6437a1b7684cf57a03434a064c7e8c05707806d7bfcaf49eb"
+    },
+    {
+      "file": "docs/reports/blk-v/physical/high/result.json.gz",
+      "sha256": "b985588cbbaf352b5c456e853c5c748e4dc9a315bf62be10e5ad11163df90091"
+    },
+    {
+      "file": "docs/reports/blk-v/physical/high/runs-corpse-high.json.gz",
+      "sha256": "2d21b13e8c3c9b746443bfbc9398086e15b41cc7a82ce7960cb2c405ca272857"
+    },
+    {
+      "file": "docs/reports/blk-v/physical/low/capture-metadata.json.gz",
+      "sha256": "2fdb7534c8b2c25bf14878476a44e8868cc4c66231d4e4640ed0eeb90404d9bd"
+    },
+    {
+      "file": "docs/reports/blk-v/physical/low/corpse-low-acceptance-ledger.json.gz",
+      "sha256": "4e4c70f6f53dff23e853a01c793418514170d9b121b408a63e11b6daff5ac4a2"
+    },
+    {
+      "file": "docs/reports/blk-v/physical/low/corpse-low-audio.json.gz",
+      "sha256": "00e7fc7a09ca02a0ea59603b4b1c4d3974100f0900f9fc414930b422236a1b44"
+    },
+    {
+      "file": "docs/reports/blk-v/physical/low/corpse-low-completion.json.gz",
+      "sha256": "2c8757995eb081e3057f93e03b36354b2ea0ade9dcda5ae1490ae46bb3a6d474"
+    },
+    {
+      "file": "docs/reports/blk-v/physical/low/corpse-low-frames.json.gz",
+      "sha256": "64406e753d82e11c6bd63d1d04bb6aa083eefa0a46949bbfce994d556b989f0f"
+    },
+    {
+      "file": "docs/reports/blk-v/physical/low/issues-corpse-low.json.gz",
+      "sha256": "64406e753d82e11c6bd63d1d04bb6aa083eefa0a46949bbfce994d556b989f0f"
+    },
+    {
+      "file": "docs/reports/blk-v/physical/low/log-corpse-low.jsonl.gz",
+      "sha256": "cc008e06aa6098344b1a422d4f2edacd52bd319609258d3493a650d84c0db79c"
+    },
+    {
+      "file": "docs/reports/blk-v/physical/low/result.json.gz",
+      "sha256": "1b296c1194583de28782e6a0910b8e9137593c5e9a3d09ec5b5322f5f8be67bd"
+    },
+    {
+      "file": "docs/reports/blk-v/physical/low/runs-corpse-low.json.gz",
+      "sha256": "0d839d121b15e10434805349f188299e01f3f2dc50708705fa6e31793159e806"
+    },
+    {
+      "file": "docs/reports/blk-v/physical-proof.json",
+      "sha256": "2453c2e7e3dadf9d9dac7e34675c0ace8d3c2e35bc9229a14ebc89c1249a8e6f"
+    },
+    {
+      "file": "docs/reports/blk-v/prior-evidence/L4-high-webgl2-z1.5-browser.json",
+      "sha256": "1a526511f8eea39189704d0fa8372febeb74c9f536d576e28860119cedc92715"
+    },
+    {
+      "file": "docs/reports/blk-v/prior-evidence/L4-low-webgl2-z1.5-browser.json",
+      "sha256": "69a83c76615968b7897af68c01e6a982da3ffac33ab68598768d9ae981b66817"
+    },
+    {
+      "file": "docs/reports/blk-v/prior-evidence/L5-high-webgl2-z1.5-browser.json",
+      "sha256": "25fe9971a36d685390be57671f1b37b12b86a349bb466edf4cf8945a3f8df14c"
+    },
+    {
+      "file": "docs/reports/blk-v/prior-evidence/L5-low-webgl2-z1.5-browser.json",
+      "sha256": "d06729b6371e26722947959036c53354fb2474660746ec5444153d67bd8100f7"
+    },
+    {
+      "file": "docs/reports/blk-v/prior-evidence/L6-high-webgl2-z1.5-browser.json",
+      "sha256": "88040378b1d4d589755fccbc0b5dd818639f19a72827ad0d41fb81ce94b38ebb"
+    },
+    {
+      "file": "docs/reports/blk-v/prior-evidence/L6-low-webgl2-z1.5-browser.json",
+      "sha256": "db18b088c0e44dce7dbacc096c96dca27b9620c84632e9e8359440e671873f09"
+    },
+    {
+      "file": "docs/reports/blk-v/receipt-index.json",
+      "sha256": "0cc8c24df8536956516295cc4ba9304e5a9a7a95b921090820cbedfcb0d0d49c"
+    },
+    {
+      "file": "docs/reports/blk-v/receipts/after/G14-high/receipt.json.gz",
+      "sha256": "d9a46bceb06bef1edcd3542ab91dd248b97c138f3efa72a029cd7d2a4250d256"
+    },
+    {
+      "file": "docs/reports/blk-v/receipts/after/G14-low/receipt.json.gz",
+      "sha256": "4ced3f3ab88fbc94300645cad6a2b2667e2ab95d2a256b7409b455f8960c065c"
+    },
+    {
+      "file": "docs/reports/blk-v/receipts/after/G26-high/receipt.json.gz",
+      "sha256": "614bd5d998ca735ff1e95debda3dbb7e03b69ca4069f0d38d658774d3c73ab6c"
+    },
+    {
+      "file": "docs/reports/blk-v/receipts/after/G26-low/receipt.json.gz",
+      "sha256": "5edfeab815c829e959d6020b1a36574f53d90ef657a6133fe03d9850a44748f8"
+    },
+    {
+      "file": "docs/reports/blk-v/receipts/before/G14-high/receipt.json.gz",
+      "sha256": "c5986f997aeb64f1ba9be693442bede1e68f3973fd7837aea29b4e7e2c418e9f"
+    },
+    {
+      "file": "docs/reports/blk-v/receipts/before/G14-low/receipt.json.gz",
+      "sha256": "ca1f7df9a1bafff83918bca9e09fb3fe91c900745d22ac6d4631ba61e9033a63"
+    },
+    {
+      "file": "docs/reports/blk-v/receipts/before/G26-low/receipt.json.gz",
+      "sha256": "8cc683c029de33facec1859e6cafd34ef194ce1802be4bb588ab45feac00e517"
+    },
+    {
+      "file": "docs/reports/blk-v/receipts/final/G14-high.json.gz",
+      "sha256": "9671a99c2781f91d651302156c2f18473a642a73e5160ce72d9f43309a369a2c"
+    },
+    {
+      "file": "docs/reports/blk-v/receipts/final/G14-low.json.gz",
+      "sha256": "6cafc29a9c05ab843710c5591de8ac7c04138977397499a47d472968b2169d00"
+    },
+    {
+      "file": "docs/reports/blk-v/receipts/final/G26-high.json.gz",
+      "sha256": "82b57365dd452dffd5f7654a5354a9edd2f750fe392555b889e17b966d520bf6"
+    },
+    {
+      "file": "docs/reports/blk-v/receipts/final/G26-low.json.gz",
+      "sha256": "e03fc6a427b86be3c4e5c844a52e30463578320d5666679fca9c0690265be215"
+    },
+    {
+      "file": "docs/reports/blk-v/receipts/grips/G26-high/receipt.json.gz",
+      "sha256": "0b84bf4f07b87d2266d753cef2dd8b9034fa6396b9f12d7ce0df7f27f9742f20"
+    },
+    {
+      "file": "docs/reports/blk-v/receipts/grips/G26-low/receipt.json.gz",
+      "sha256": "23564822fd0a9dbdb620b0dcda2460b23e519a93cbf3f15f9cddd3c55b02443e"
+    },
+    {
+      "file": "docs/reports/blk-v/receipts/no-props/G26-low/receipt.json.gz",
+      "sha256": "bdd18f6b825840af3bd53bc4afdd90e26459264d2a5cb7a78edfb4878b47a0fa"
+    },
+    {
+      "file": "docs/reports/blk-v/receipts/overlap/G14-high/receipt.json.gz",
+      "sha256": "7cec14032d3411295192b30a876a71b199745ca53c0a3b80ca74b1d1f1c38ddf"
+    },
+    {
+      "file": "docs/reports/blk-v/receipts/overlap/G14-low/receipt.json.gz",
+      "sha256": "375396b8a2d12171945953d0470672a2cb5b1401b1a3b0a4ef7aa7abc0d831c4"
+    },
+    {
+      "file": "docs/reports/blk-v/receipts/rejected/G26-high-follow/receipt.json.gz",
+      "sha256": "76b05b36235d9d2d89a96b7a418cf5953ad82ed73631d7d1916d8396c219063f"
+    },
+    {
+      "file": "docs/reports/blk-v/receipts/rejected/G26-low-follow/receipt.json.gz",
+      "sha256": "8ce1fdf4a304226f1d57735ddf4b0236eed58a2581e5969c2c0aa7f8daa2fd20"
+    },
+    {
+      "file": "docs/reports/blk-v/receipts/relaxed/G26-low/receipt.json.gz",
+      "sha256": "5fbcd6c2f868f7f365e11d3ef0e9c76805843bb04ca5dfc828033e28f841e047"
+    },
+    {
+      "file": "docs/reports/blk-v/receipts/stencil-overlap/G14-high/receipt.json.gz",
+      "sha256": "6ca912b6abdff0298cf5c37df4d1ca9f98a74df5e58f9cd8ad88c6517febfcbe"
+    },
+    {
+      "file": "docs/reports/blk-v/receipts/stencil-overlap/G14-low/receipt.json.gz",
+      "sha256": "30197e7e046d96b80c75a7db1db74e135a106058159bd688d250bc3f8a5d4ee7"
+    },
+    {
+      "file": "docs/reports/blk-v/scene-gate.json.gz",
+      "sha256": "21a41366f79a10d279e410a99f396f0200c2a78b0170edad78257195128aadfa"
+    },
+    {
+      "file": "docs/reports/blk-v/scene-viewed.json",
+      "sha256": "6fe64d1e1dd924aa7895913093ced6239aaef7b6e28d58aefc9ec6be7a73ca51"
+    },
+    {
+      "file": "docs/reports/blk-v/threat-README.md",
+      "sha256": "027c0cdf47026df6a66631680aa70a8c2972fee2e7431e40ae2661d9009f5764"
+    },
+    {
+      "file": "docs/reports/blk-v/threat.json.gz",
+      "sha256": "54c0ba189a74029bf91fb450956d1ba4a7f5aa50ec0ffab270cea02b8453dcf8"
+    },
+    {
+      "file": "docs/reports/fix51-verify/L1.json",
+      "sha256": "271dd97cf5178de894090c98436c20418aa70e19907bb0a9eea0fce83e4a97e1"
+    },
+    {
+      "file": "docs/reports/fix51-verify/L10.json",
+      "sha256": "503ef55ce517e05f99eb393929df1e9e31c1cd8cdf0521bccdc81d2abc5c91f1"
+    },
+    {
+      "file": "docs/reports/fix51-verify/L2.json",
+      "sha256": "5013929c0970e1fdf59eb3d309f88748ccb9ee257f306ac1940716df6106aa5b"
+    },
+    {
+      "file": "docs/reports/fix51-verify/L3.json",
+      "sha256": "97a8467787629279c640d4ec2017f401bcff928f66a98cc4935ee81c74ef9d15"
+    },
+    {
+      "file": "docs/reports/fix51-verify/L4.json",
+      "sha256": "b61c4823d6b49141847cb6295370d378c8a9bc6e8da8692a52656252a8343d5d"
+    },
+    {
+      "file": "docs/reports/fix51-verify/L5.json",
+      "sha256": "ae331ac8a6698c2637ea3a5a1758c8933a987424439b2d52a9bf004b4cf26811"
+    },
+    {
+      "file": "docs/reports/fix51-verify/L6.json",
+      "sha256": "95c02b0756e62940067191cf35234d1e6c27caeb6f28e514c03e043909de9d02"
+    },
+    {
+      "file": "docs/reports/fix51-verify/L7.json",
+      "sha256": "a615c286a6ef32533cdcef0a68d6585dcc203b8022521a287543560f06b6bf77"
+    },
+    {
+      "file": "docs/reports/fix51-verify/L8.json",
+      "sha256": "e650b23a4e52f09d755d0240ddcf3a7dd5e423279cbf41a5bfe2ddf1ebd5eb97"
+    },
+    {
+      "file": "docs/reports/fix51-verify/L9.json",
+      "sha256": "50394c7b492143381e7f6d02127fedc86f0463ae22a1e154985c5b7ef3ae7cda"
+    },
+    {
+      "file": "docs/reports/fix51-verify/README.md",
+      "sha256": "16095cf23237ec00896473f0b10246ad4464ae59ef049565552a5c951d2f5e3c"
+    },
+    {
+      "file": "docs/reports/fix51-verify/audit.json",
+      "sha256": "0c1a4a43654bdc109f0ebcb91a92d5f216803c496e0f33f56b1d35db608e9674"
+    },
+    {
+      "file": "docs/reports/fix51-verify/control-proof.json",
+      "sha256": "b6648909d9779ac05305eb3e0480dc4d65f05391c797d07fd112377e159ab213"
+    },
+    {
+      "file": "docs/reports/fix51-verify/evaluator-proof.json",
+      "sha256": "bf2ac5c9c87b92459ae4d52a9abcf465865c314a7111c677b27f947c473d9f04"
+    },
+    {
+      "file": "docs/reports/fix51-verify/fault-proof.json",
+      "sha256": "3af02775ad88e5bf692f0fdbb96396163bd27aff0ad672d6a77468351445a00a"
+    },
+    {
+      "file": "docs/reports/fix51-verify/global.json",
+      "sha256": "b89ce7af6b8a258e63029261d4cdfaa755ac481a1ffc5b7c48ee7338f08ce26d"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/G13-L5-high-complete.json",
+      "sha256": "7b02ca49485c7fd65e952db51eda3cc8e6b110fec17bf39b9390557c2b5afc7a"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/G13-L5-low-complete.json",
+      "sha256": "8a555c644505822d3782529b12bc50ccb8eaa12c3e78129ac5ef3e1b6fdf35a3"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L1-high-browser-completion.json",
+      "sha256": "d295ae448374a49734d67f5fe0a4c5c88a3fd35ca477537d4debf97ece10ef8b"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L1-high-browser.json",
+      "sha256": "6f122e295e2073f3bfc82f763052d55528823e18de2c19903c0c2fa5a357e3a9"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L1-high-checkpoints.json",
+      "sha256": "48bb549aa9ec68856835426115ecfef14f21183c1cc2b378a86708c0c925f145"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L1-high-complete.json",
+      "sha256": "07051a9f52110e34c5539c3f3cefa788c1da7408be6fab522ec8ab3b0f7bbe8a"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L1-high-fixtures.json",
+      "sha256": "fe45199a9aad219f09ca9f3646f460cf2a30a004fe253561f4c8f64b3cb8589e"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L1-high-stationary.json",
+      "sha256": "7a6d856e224267db98322c04e98879316fb298a6b3acf5d7963ca337d2eba61b"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L1-high-webgl2-z0.5-browser.json",
+      "sha256": "e423df89df88cc927586aa65be9f14b937665d886baf459676038c2a8105a36b"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L1-high-webgl2-z1.5-browser.json",
+      "sha256": "aa74a4bc45f70f84681dc0e2fbfaa9b05a8ad2e20d5a79e6272589a88b27f75e"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L1-high-webgpu-z0.5-browser.json",
+      "sha256": "c01e661c6ea70592900bf31c2961ac873ef761f05b8cb7b534f87ee6470ff964"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L1-high-webgpu-z1.5-browser-completion.json",
+      "sha256": "c99dc5479ecaf9f1e3bc50422c4c7d194221d5b911aaeca734bcbcb1b8428791"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L1-high-webgpu-z1.5-browser.json",
+      "sha256": "b84f5a4a08ce298087ceedd4ee95b12ed6d908ee71931c6a8e9603b008ba8a80"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L1-low-browser-completion.json",
+      "sha256": "4b57bdf6fd81cf13c46fe6236b473738142b5471cc7814a861bef22da70f1250"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L1-low-browser.json",
+      "sha256": "46348a1b101d88e16a7fe410e782ce4e195d427b836e0b1fdddbfe59f1cb5487"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L1-low-checkpoints.json",
+      "sha256": "f09e061e7575e9d98b27b5b06a33b133beaaf6cc9621d768364da70fbdc3983e"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L1-low-complete.json",
+      "sha256": "bc3738314e597d415b4332913f415c0dfc2f9a3b968a1f9aacdcb00ec713ceea"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L1-low-fixtures.json",
+      "sha256": "da38953b6e6d4342ea061c9af0090b0fd71bd8076cab284b581506a524fccb4c"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L1-low-stationary.json",
+      "sha256": "5eee1387a47ebf2b16de097f3363f81acf874d603cb9564ee880e1ac04ea63bd"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L1-low-webgl2-z0.5-browser.json",
+      "sha256": "f2f845889e2397634b2bd2bad7c926442dd1b57b94a061d7dff9162e321566b9"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L1-low-webgl2-z1.5-browser.json",
+      "sha256": "b2741e2fac9cc6f3f04138f489e2bed9b5c65c0349ba526d7996e0c4c32fd1c7"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L1-low-webgpu-z0.5-browser.json",
+      "sha256": "f113334c0c88d55cb330141c2c36067dd5098a64dfccf5b043a4ceb225364800"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L1-low-webgpu-z1.5-browser-completion.json",
+      "sha256": "d2a338399448c6ac8ea12ac4178ab230a84e2a67cc2db55673134731e9509280"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L1-low-webgpu-z1.5-browser.json",
+      "sha256": "bab6e640b19de0ffbd596371228ab9d63e2214f3272826b2a63158f4992410b0"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-camera-matrix-proof.json",
+      "sha256": "1569d9ec67a8bf6c6dc742754a66c1ac8eaf14a89a4de3798dbd0e62b20914de"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-fringe-dogs.json",
+      "sha256": "c0bab7f0000c1de3106fc339fc67c848cd2ff494cbf286f957f97d74d6c6d54f"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-high-browser-batch1.json",
+      "sha256": "08c701a1080b2c75542b9457fea029480c2ed6134c9030b8694e5cae527b6c26"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-high-browser-batch2.json",
+      "sha256": "078613f4c7ddd31cfc3d53b531ee48bcc1ac377fa804efd5c8154a41f884ea25"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-high-browser-batch3.json",
+      "sha256": "80b3fd3b3d917285a817282806187cf69a0cfd7febf730db1f74768832e6be22"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-high-browser-completion.json",
+      "sha256": "174ddc98cd806109cf103fefcb198551d9e282c55278e27c2531d95107467ba8"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-high-browser.json",
+      "sha256": "eab4ead1b2ee64f424b37af6a1e9ce5ed81adcee38a0f73068bd825f1162cf22"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-high-checkpoints.json",
+      "sha256": "d3f2d0805b6ee74201eede15e0797a21425c626f53cab8f5b9c048b07e0bf361"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-high-complete.json",
+      "sha256": "adc3c5ccf6eac47260430b453f48099d3177ac6ca5a5596492d26d1821b40450"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-high-composition.json",
+      "sha256": "2e3498f4c84f6cf79025d876e0b5a8ae8eb1aa87d840369997656d970a65e4cb"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-high-cure-browser.json",
+      "sha256": "87b402607ca4288d50d3b155bf6d72475c9c467fdebef59752714d579cec7f67"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-high-dog-z0.5-browser.json",
+      "sha256": "de8d7edf4d6922dd4a4008eea05d58f4d2315a736b98a0666b64b769f7cd9acf"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-high-dog-z1.5-browser.json",
+      "sha256": "16759247c61f2e93d90ee9b7e044ab0c867cad45d25e919538e6cbe692db72e8"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-high-epilogue-browser.json",
+      "sha256": "cfe6c58c68270e244058e24c5d4dd5476073093744fe5e55c0dce2357bfee547"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-high-fixtures.json",
+      "sha256": "0b151882a7c28dc5964874698c999e6d7ef362a6e8fe71d672af609d55c3dd8e"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-high-framing-browser.json",
+      "sha256": "348a8c76badea549b41796b3f7c598a33a8185bffb45d569e3dc941d36c3d2f8"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-high-physical-batch-3.json",
+      "sha256": "abfb639d5337dbb1981be486ba5b5982608db5f9b5198f08c9c5fa3f05a494f9"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-high-physical-batch-4.json",
+      "sha256": "54edd890d57aed9cfa12d7d2d989a4295cf249b833062d340a55155e7d36e765"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-high-presentation.json",
+      "sha256": "405216ec75b222ca593f808aa13f98d2009d6e74c72be1432a33fbb78addd631"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-high-stationary.json",
+      "sha256": "e6310d0f622617fdc0a45e0668def25df3bb03f0bf3dc52659c04a05c89feba6"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-high-sweep-c4-cure.json",
+      "sha256": "7f1596a9c81d898ae0d9e20eaeea896908d3ab124d6c8f6b092c54c22ae2d9ba"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-high-webgl2-z1.5-browser.json",
+      "sha256": "b24fd232b13cab3bbece710d311c2c66dc46f912d289dbf21e0e66a5b0097e43"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-high-webgpu-z1.5-browser-batch1.json",
+      "sha256": "d0130434ad929b66e2ec16c7cc25feae35f9a12cd59ae4fe09f814e37786521c"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-high-webgpu-z1.5-browser-batch2.json",
+      "sha256": "d2dcd6a1b7b0a49e2a8d230ced0bc2fc3b8267869c157de9d6d77b7c1ff921bf"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-high-webgpu-z1.5-browser-completion.json",
+      "sha256": "ec3b25285c1ac8b573aa6fa8c0090cf28b724cbaa6a64d395cc1bebce6ceed93"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-high-webgpu-z1.5-browser.json",
+      "sha256": "9f52c70468ce580af24015b68d4779c04de50e1fda115d0c6c33c8f247181a68"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-hold.json",
+      "sha256": "7df70a0964509a8471fe3e37cc9cefd66193502065183b8050049ea3fec6c5f5"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-low-browser-batch1.json",
+      "sha256": "0638b1e5dd36b3df37bbf936303b20be6c86872a1989bcec817778fd7168caf1"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-low-browser-batch2.json",
+      "sha256": "f4d87296b9fc390c1dc3a0b1657467fb912372523fcde977d90f06be5212c44e"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-low-browser-batch3.json",
+      "sha256": "95a52f49f2e96b8cf92a414d3b5c5d645533e4c66d65ba0bcb8cacb7af1c735f"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-low-browser-batch4.json",
+      "sha256": "72d2036f7eb6d9b3c7acc8953ea687f67b352906468578a71cec4bac27fff32b"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-low-browser-completion.json",
+      "sha256": "9d812e06db73c30f77ebc370d23c6a2810004e517c9f7efc362ca2c33387c934"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-low-browser.json",
+      "sha256": "691582e85536442d45a241d63dc19acd36d1440084c69e9c95e38fa5ade261b2"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-low-checkpoints.json",
+      "sha256": "b17b00e0abf9c556413245c6032a60eb3a5c8b03b50fbf2310bbb323deda7c84"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-low-complete.json",
+      "sha256": "59b385d270b4c19d98ee7fca70ca83cd0957bb709d0429884dd7ea5479e774dc"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-low-composition.json",
+      "sha256": "538f31895c68b18822b7c70cc80b12a3f27c45a03790ab13c7ccaf6a2e5ea11e"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-low-cure-browser.json",
+      "sha256": "83c920b44dd747d0e3d02e5618ed7fa3dfa5c473933195c689d19aed4f0eb843"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-low-dog-z0.5-browser.json",
+      "sha256": "940e5b75b0bed39239db312d139c8217db2b207ba1506dd14966609ac96c81f2"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-low-dog-z1.5-browser.json",
+      "sha256": "2ec3b2e3d79a663d8849adfb8b78231c053b40c7297d0ba8810f8fc9ed7ec9a6"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-low-epilogue-browser.json",
+      "sha256": "80a67350e18aae1dcc1d23e10a98e8161049f7740245cd25e06a445686f412ca"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-low-fixtures.json",
+      "sha256": "252884fd79a1f39e5685d6c9ea3a833b38821e9d7bcca49ac3c2fa1bb4605246"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-low-framing-browser.json",
+      "sha256": "38d1a5906d649871406c3d75fe24fd9ffcc708cc25454dac7b5d54a4df1162d8"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-low-physical-batch-3.json",
+      "sha256": "6236cd35e68383452a7c1b7fb97d6bd77ddcb6632deecda57623f1be5138021f"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-low-physical-batch-4.json",
+      "sha256": "fe2583267ad8dec5dc8ebba16c93a442ebd24e7164ad6ab4e7bd0e40eaccd632"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-low-presentation.json",
+      "sha256": "72c51ac681a3d7a7393f0fa2461ca92d61de53b2ca89d8f0c7df37e86255dc67"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-low-stationary.json",
+      "sha256": "89b51dd8a5186ac9b3fd54ba78b98d6132ebf461792fc09168ac17604ac84ad4"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-low-sweep-c4-cure.json",
+      "sha256": "980bd633e36f7918bcc0b3ec59a67953b93e6624e644810b40a7ea46c9ffb449"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-low-webgl2-z1.5-browser.json",
+      "sha256": "813212f95c635eb0541ee812a747b2d581152a2b96be7cd98a7281002e87b4be"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-low-webgpu-z1.5-browser-batch1.json",
+      "sha256": "1c97e7aec056ca4bf99279f6e6ad7163a6c10d910a9612055fd59ccab5d28304"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-low-webgpu-z1.5-browser-batch2.json",
+      "sha256": "ff6f4f895a32c7fb63eb0169e0874a40bb4e20d102f355b1a62adf256cac29d3"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-low-webgpu-z1.5-browser-batch3.json",
+      "sha256": "6370498f7eed67c2a92549b6906a4b0d610b4cacbfad73f23f3761ed45c8b1bc"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-low-webgpu-z1.5-browser-completion.json",
+      "sha256": "128484c836ad2e5d2027720a1365e01232445500224d907ddc3033bc573fc4cb"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-low-webgpu-z1.5-browser.json",
+      "sha256": "c0482ebf2c5f8458559a0f8b1805d4e1432fc992bc3fc05ca7ec925c818d049b"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-region-reach-proof.json",
+      "sha256": "0f5b6511419e2c43ce59bbeefe0898e878d5d4dc400164857ada9dbbc7a5467e"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-regional-reach.json",
+      "sha256": "e0c07f3f77780ad5c7d683b6690eb387fa38f88ab74b2598f386ebd6b3b81827"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-high-browser-completion.json",
+      "sha256": "71497af875312f491517421a3ed7de1b0c9bf8aad33045a25c5f1ca142ac7dc9"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-high-browser.json",
+      "sha256": "a1146adb288aa1d3c28ab808c5225220415d84edc81819266b57eb99f052bc69"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-high-checkpoints.json",
+      "sha256": "d53c20cbe81059d56638feb1fc19df0843beb8b76535ef9145387030a32bb31f"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-high-complete.json",
+      "sha256": "48adb6e9d8b9d812a9c6fdb6e07543ed0d1d4f2299f1b9a613b929a2045b50fe"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
+      "sha256": "1e3ea57d0882a5020994d39d7c84c83bd9d838295ebbd31ba4eed75be74da4b5"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-high-stationary.json",
+      "sha256": "eb123fc940464e1aec059893dfb9e32bca85a7cd5d2cc9223480f76723f2a32d"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-high-webgl2-z0.5-browser.json",
+      "sha256": "2be61e7a1a36649f4f2893e27bc7a55efeab60dada2866a3f0f4844ba22ecdfc"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-high-webgl2-z1.5-browser.json",
+      "sha256": "7f51546fb324e51615200628f4ee02050d79591a1a1540db008c442ee9b6ae83"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-high-webgpu-z0.5-browser.json",
+      "sha256": "b800e777a6ec9ea72177f387b183c41d45d877c22909330cde957f6a130e6d4d"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-high-webgpu-z1.5-browser-completion.json",
+      "sha256": "ecbf2fa4d75c384c880bca055f9ffb7e92dc819938898768bf8308eaa7930ae2"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-high-webgpu-z1.5-browser.json",
+      "sha256": "3cf61991ab0321c8b0b1e25ebd1995cb66fdead3d2215a64533e14baf476b5e8"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-low-browser-completion.json",
+      "sha256": "6a167ecc1fcd27afd7b7b9b3b1758e9c7201a3b47b12d80b65669c0d029b6970"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-low-browser.json",
+      "sha256": "9099534f8983b01667e87b1ad89921e311c024199531a5cbca0d9e70067e4882"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-low-checkpoints.json",
+      "sha256": "4f2864080961248c408220c34103745e4d029442ddaefbd8979bde8a862455ae"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-low-complete.json",
+      "sha256": "f8e7542b4d9044e04d264c0069c169eb7405caf33b12a26095fb5256a91bb950"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
+      "sha256": "9e703af0f22f26215ab3160742c819ffc7723e26c3f42366b9942f6408160fef"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-low-stationary.json",
+      "sha256": "0ebfda8d5f11ba59de9a72b771c7bc7ed09c18aa638c48c0b03f86b604a02497"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-low-webgl2-z0.5-browser.json",
+      "sha256": "2fdc480d60c3d97ac4487d8c1c344e4846fdbcd0601300860b51745935b3726c"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-low-webgl2-z1.5-browser.json",
+      "sha256": "2048cfed27f233180bbb73c5553235bf4e49f95b15ade42f165094510234cbf0"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-low-webgpu-z0.5-browser.json",
+      "sha256": "843c5d12fca33c67088d8ed9410036fa1b9e9183f2af47d952ac2dc3dd5761f0"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-low-webgpu-z1.5-browser-completion.json",
+      "sha256": "6808c30cbd6173b32f8a53c30d122aa6cc7f7c333a4ea00f60e4a2b79b460a80"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-low-webgpu-z1.5-browser.json",
+      "sha256": "08d8c981d64f1833d4af6fc0ca264dd630129f266b0e4dfa27243786389a18a4"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L3-high-browser-completion.json",
+      "sha256": "003a7977d885216aa33271110bc334f38d8299f0cc338c79a70861d1fadddc4e"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L3-high-browser.json",
+      "sha256": "316de9ba8e5f432ad19d65658b5dba0a7103ed0f0950432f7a817fdef9942371"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L3-high-checkpoints.json",
+      "sha256": "c444605fe4160c655b5c4ec0d4873be98901ea60ac91c85ed5da24ed2d297a7a"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L3-high-complete.json",
+      "sha256": "a46fb42dae1d2b77cc8e9ac4751a0898fe45229602357b316813e89bf312caef"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
+      "sha256": "4f0232f37ab7a1d34121e2ac035c28732acafc3657e0a08e92763b753e4fff8e"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L3-high-stationary.json",
+      "sha256": "08eddef6ab8534d93d07807e82c215bd321dbf0c18e5cb375766b50ac44c7f7a"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L3-high-webgl2-z0.5-browser.json",
+      "sha256": "abfa3b3ed669273ac72fa78e8a55ef2ef93790f8fed0cef28e6253d591f23f72"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L3-high-webgl2-z1.5-browser.json",
+      "sha256": "1a414bb93cb7406afd1d844d2cf5ff2ae13a7046511a982019950a01ad6a8077"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L3-high-webgpu-z0.5-browser.json",
+      "sha256": "fcde743de346419da8603d1c303815054aef50522683da9508a059dad318746e"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L3-high-webgpu-z1.5-browser-completion.json",
+      "sha256": "07bb34d637dccb561ae81fce9393afeb14256984abca8d8e3b5e6f3b7daf57b4"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L3-high-webgpu-z1.5-browser.json",
+      "sha256": "d27bbf1a5218b27fee47c5c484abd815d5911204073635469377ea108e74fade"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L3-low-browser-completion.json",
+      "sha256": "c78cd3e382f7bc9041511f3855c5394d98e0f9377c61f96e13c3e2a9f6029091"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L3-low-browser.json",
+      "sha256": "bfe55792b78d9a559d9847bbde42cd679ba040de2b27823b20af2366e335632b"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L3-low-checkpoints.json",
+      "sha256": "eec6f10a027306f1a4cda76e1ace64f1d7c8ba9402a280283f4a9477b02718dc"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L3-low-complete.json",
+      "sha256": "da9f4833d94d0c47720bfeded48e843d769daa9cf2591d7b56341029e3d0bdfb"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
+      "sha256": "0d40b6f013ca9f1113d314e5cdb68bf73fab288b896875ab4aeddcadca6bbf46"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L3-low-stationary.json",
+      "sha256": "d960300e7ee1ab525668d1613f82123ce94166597b747ff32975b9e651b37e73"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L3-low-webgl2-z0.5-browser.json",
+      "sha256": "5f5cba44f3c4edb96069f0ed222594cb9460adaa6c602f4199e6faf201510ec4"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L3-low-webgl2-z1.5-browser.json",
+      "sha256": "d742d729db451e1aee3df13dfc9e4c9975f26d1c63c76f0fd56307295174b8e5"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L3-low-webgpu-z0.5-browser.json",
+      "sha256": "548f8fc88afa5cad3d12123ab46feb84a3453fe0f0de24fb07ce3cbaef9023e5"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L3-low-webgpu-z1.5-browser-completion.json",
+      "sha256": "771439b53708b296e10ea4ff28abf288efea6ba5c5d155d9829b0ae30a3dfbed"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L3-low-webgpu-z1.5-browser.json",
+      "sha256": "ddc9292dabf679b777c300568c71da6648b29c94505ebf610172f624a035de41"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L4-high-browser-completion.json",
+      "sha256": "12940c7139af8d49cc0cc5de09545df43cf6b67a23a7ba34c8c747b83aa4e22f"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L4-high-browser.json",
+      "sha256": "2b0b4c6299191493db93d1ed6797b65d35825cc0c85c78e42941574efa31688a"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L4-high-checkpoints.json",
+      "sha256": "27e7b1c702bcef8fadd8c216f4587b4324a0c22037584e7d07ae6c94771c4c7b"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L4-high-complete.json",
+      "sha256": "b17a91943dc31ca18630d8a19d3130c956dc0b5115eda8550195fb2b5a0061ee"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L4-high-fixtures.json",
+      "sha256": "3220b0de7101f8aa51bce71926628fa501b064314643c05aa93edd30c81b300a"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L4-high-stationary.json",
+      "sha256": "2a860c42c46150e5270dcff28ac0d2eacc1290bd245b54a3bdd02bf3442a4c46"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L4-high-webgl2-z0.5-browser.json",
+      "sha256": "e14ceb3c0573cfddca00c1b4de921b97da47921ddb112949355a3f8aba7f2603"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L4-high-webgl2-z1.5-browser.json",
+      "sha256": "f483f18f1afe1f2bbd2d19cf6a637a8db1a982e9d2b9be3d76f1c4f773f18092"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L4-high-webgpu-z1.5-browser-completion.json",
+      "sha256": "5575bb80c71761ff227ae6ebf885f11ab895588b972b6e03dc7d66b99580db0e"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L4-high-webgpu-z1.5-browser.json",
+      "sha256": "2820acfb874ee7c77288031d25ed470c40fc7a5fdda7d9dd139713a9574375f3"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L4-low-browser-completion.json",
+      "sha256": "ed3a901e600e8a31ab0bb0e37232c50f7eb9bef10c263a476c71cf1d5d71c46e"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L4-low-browser.json",
+      "sha256": "8ce7ad2afeb9c9625068bca0f640fb9a7db82b3f33906afc2f5cd2cd20546ef6"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L4-low-checkpoints.json",
+      "sha256": "e1f68b2dcaf238cae3d19f2d0d55128114ab24179b6b800e73131aed8ee04b7d"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L4-low-complete.json",
+      "sha256": "230b1f7c9aecc2562e4cd402b1acd31ee3135a23f8f9eac1ac6ad404eac6c3e1"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L4-low-final-webgl2-physical.json",
+      "sha256": "475d180d87793229fc73f6152d390980338a2f36db69022079a0525ccaed5aa1"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L4-low-fixtures.json",
+      "sha256": "41ef78801bbfb54ecca5f18ce4dff2fd560899824c2a3272440bc1af6977d61b"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L4-low-stationary.json",
+      "sha256": "fe638beedaaecc537c3556ed308b99e4fe29d757f9e937ac2d1a9478ac9948d3"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L4-low-webgl2-z0.5-browser.json",
+      "sha256": "b2d112b35255f5f22987039fab76d4277d56c07a498dd112d967a008b66ec886"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L4-low-webgl2-z1.5-browser.json",
+      "sha256": "5538831a358632eaa148a957d543fcc542055b54ee7696114341bea93dbf0ad3"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L4-low-webgpu-z1.5-browser-completion.json",
+      "sha256": "d5ee9d5f9b33694a5706121083bf4188d55b427184e9be768548cd07684fdcf4"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L4-low-webgpu-z1.5-browser.json",
+      "sha256": "130498c5798693ee46c99a689be2102c127e3074c9ba7b6e24ac028f387bb2cc"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L5-high-browser-completion.json",
+      "sha256": "174ddc98cd806109cf103fefcb198551d9e282c55278e27c2531d95107467ba8"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L5-high-browser.json",
+      "sha256": "91a24c498ff9f9d83797c6a69199d3c5a92215eb2087c99d14e2d644372d3608"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L5-high-checkpoints.json",
+      "sha256": "d9a5b63e1b5079873348655028b55e007d1fb59c23d340246644140ea293b363"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L5-high-complete.json",
+      "sha256": "d36fbc8257beb3cacdb4ab297d98920f1a1cdadec074c8431bfa86d58f63ccb2"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L5-high-fixtures.json",
+      "sha256": "b0f7d8fa5f3e881092f3c7a2636bed7439e7a0dadac32e4753207b1258740c5c"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L5-high-stationary.json",
+      "sha256": "fdced0785109a9c5ab429ea66554292af3d4d31106e7de59a91341910f96a660"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L5-high-webgl2-z1.5-browser.json",
+      "sha256": "1baf2222a56f1c5cdb4c9af78222dea5935244452324c6cf09b8310bc6e53433"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L5-high-webgpu-z1.5-browser-completion.json",
+      "sha256": "656fdb94a04f92b2b6eca9933e3b5daf282757413d5257c089e1e5e50aa2a699"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L5-high-webgpu-z1.5-browser.json",
+      "sha256": "ff6c5106ba5ea0dd09699e3b43a2408fa1249a92ff10018234926125b8071f73"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L5-low-browser-completion.json",
+      "sha256": "8edbdf74461153e068da5b2ae6e59eb78131b07dfcfb2621492c86a648e2494e"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L5-low-browser.json",
+      "sha256": "1cd4f4e94cff34e02604703e0c2ac40e69ab3099d91f4102a3f4355d5ee54856"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L5-low-checkpoints.json",
+      "sha256": "22d3c41ab0567edb4e8bba5e74ba5437732659e48a753d803e07ec637ab7f192"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L5-low-complete.json",
+      "sha256": "25cee25b8185ba63123bdcc9d3ecc2cb270dc93ee633aa0f6309d0bac837f72e"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L5-low-fixtures.json",
+      "sha256": "56ca0b9050e4b88d585dc596c2a54539c77ea93004d64b0a31329002bf161a40"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L5-low-stationary.json",
+      "sha256": "7ad17c87ac93c4595fdaddc0b3f0c83c3b88c0a314db5148c923dfa4249d19af"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L5-low-webgl2-z1.5-browser.json",
+      "sha256": "1f0bf8420b100dc3d0906a83b88aaffa071fbfa628402d60f937c7564f92e451"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L5-low-webgpu-z1.5-browser-completion.json",
+      "sha256": "86c47d233980d45477d0a41912d93f459a60b0267920ffbb3a15c82632dde58d"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L5-low-webgpu-z1.5-browser.json",
+      "sha256": "fd15cca5bb78ed2b36a317b6befb405ec977fcef8fc32c44066596b2ac2d6350"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-high-browser-completion.json",
+      "sha256": "33d7bf16e58374090961eb15f18e525bd85f6beaec6a35f96b45896350fc165f"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-high-browser.json",
+      "sha256": "37d9c426944b9753eeddd68be6b4802c9add13ebca1afb88ab8208259e74e8e9"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-high-checkpoints.json",
+      "sha256": "254d634d6461d2c83f683667e8ca46147219786f759269a0892eaaa4bfe63290"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-high-complete.json",
+      "sha256": "481d68587fea13d5ee1edddd603780a3f8d9d33608be787c0d0158f399607dfe"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-high-fixtures.json",
+      "sha256": "43c679635d077ab7219727394058605d1b2607f373ff0bf80fd12e25a8306ac4"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-high-stationary.json",
+      "sha256": "820fef52a63a863a9d85d9e7be95c3e563dae070a594ea5188e088b960368c9d"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-high-webgl2-z1.5-browser.json",
+      "sha256": "28bc1f67cbda293cc189d41499150d77c30553fc1547084c72fa5812b4a8a110"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-high-webgpu-z1.5-browser-completion.json",
+      "sha256": "74838df3164b3b378581248ab99a81771888b80f5cfb062690af8364d40c3970"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-high-webgpu-z1.5-browser.json",
+      "sha256": "bee0e729e3f7b8c9c97cf58147c96fa3fde23cec6174295712a6b5e2068eb310"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-low-browser-completion.json",
+      "sha256": "0cf0ac9377cf35e9380261f2ac1dd871064b8ace3e7e942b7f4fe4a9bc5c21ce"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-low-browser.json",
+      "sha256": "1df987e61ef478a4fb43bf8d0fe6ac1d1e002437be443ea19efed7582ba8f888"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-low-checkpoints.json",
+      "sha256": "fe95ae3a3c7b0795e8c094b43acf913fbb18fe08ba5f7e4e3fe2dd37d66623d9"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-low-complete.json",
+      "sha256": "527a9ea95d9d37aac6b3133e7e28272a5ddd1af53c914bb91eac0d804f7618e0"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-low-final-webgl2-physical.json",
+      "sha256": "3b47a2ef90eb5d496989b9d5eaa99b110c8e5020c66b479e17140990c73bab28"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-low-fixtures.json",
+      "sha256": "911409c6802aa317f71609a075a24ae57e8fc7fd0556a415d9e8983f156c621c"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-low-stationary.json",
+      "sha256": "9d01a7c8565f09c05e8c7b474652cb6c5fdac04ec98fb4c7ee72f9ad5206840e"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-low-webgl2-z1.5-browser.json",
+      "sha256": "50155f68abd1a4c5b22bbdcdcaa891145f5c9107dba46351aa8cb323dd343cca"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-low-webgpu-z1.5-browser-completion.json",
+      "sha256": "890472d090b25f57ee4df9111a89af8f5a96237820e4718ae2b187704fe1b9ad"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-low-webgpu-z1.5-browser.json",
+      "sha256": "13c5068554bb55e93bc075016b25973b547221081e2c6c2cb59a01f8c7df9fdf"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L7-arrival.json",
+      "sha256": "ceb9c428f40144a7536165cfe235eb770cb402b0c817cac9956adc8f474d68c0"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L7-counter.json",
+      "sha256": "1de782f22728383d7a5cfd960bc96d035235bf25f08535a6c29f939f12950078"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L7-high-browser-completion.json",
+      "sha256": "e53581d4222d8f7cc83881fc397838687ab12ab5d1e2e0373fbbf9ef3f9f1531"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L7-high-browser.json",
+      "sha256": "804d558ce280cd525a93e6a9f63674cf93dffa331a3c04a964bb8f696f25e5dd"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L7-high-checkpoints.json",
+      "sha256": "48502f96066b590e821df222532e17a962c7d73644ab159955a107f8eed7d811"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L7-high-complete.json",
+      "sha256": "24684ba851e308c20bf8e7d4555e75080fe5583c556d36ed7c80cc0de4774e92"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L7-high-corridor-browser.json",
+      "sha256": "b59d98d58dc3fa28637f4338f685112fb7ee8ad4d409d592fc4f5aee6f90bf05"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L7-high-departure-browser.json",
+      "sha256": "386e402f52825e1df96b007f10012120665b7afc0709acc7f6c47e4d95b6c887"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L7-high-fixtures.json",
+      "sha256": "d921ac7f594cfecd2ae46828d43b17675370b7b329099e7b57ef64c848f8ff73"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L7-high-pickup-browser.json",
+      "sha256": "1790434f114cf164896a03f8096b981b6f1e1178a457436eddfd64bfc55fd85f"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L7-high-readability-browser.json",
+      "sha256": "4c97499f8390eafd7e6935fea8b43f1e02080d1d3edd80f1c94c762abbf784fc"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L7-high-rocket-browser.json",
+      "sha256": "532459d974cfd337b460eec4f1bee012a1e19780583e3ed3172a9903c71e5bc5"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L7-high-routes-browser.json",
+      "sha256": "296eef3aabb3a9aa832dfb24bb514cb1febbea173e18f16be46cc1d3466a7835"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L7-high-stationary.json",
+      "sha256": "06c700d8d54f5cc0f6f35dabccfbabbbb391052d6f3ad9e9ac366ca47ba48f96"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L7-high-webgl2-z1.5-browser.json",
+      "sha256": "0e5ce3ea7a3a0733e99893b3ec4efbe0c5b0d48e7ce52054ee5ef8e80af803e5"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L7-high-webgpu-z1.5-browser-completion.json",
+      "sha256": "1a0d087b093e6cb76d9cf2c1faadb366f8855e7a4aedc6d9f51a9b706fc1c414"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L7-high-webgpu-z1.5-browser.json",
+      "sha256": "b2dbe7de922d33970821e00d6edcfad747452171140e7c8e96c16d2473b85115"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L7-low-browser-completion.json",
+      "sha256": "e5a99fa402c8fc817edd0b0f2ed33cb67f3d256589601d1c8def63fb5ded041b"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L7-low-browser.json",
+      "sha256": "c39c6e2ddf333221a59195c05f9d8ecf2c113fd40c371d2197680472e9dca3c8"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L7-low-checkpoints.json",
+      "sha256": "cce6869685e2d24637250bbc50b613d1313648c76384bc758d9f72a32730e103"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L7-low-complete.json",
+      "sha256": "7f9a4281d8ef192c423c922f58c2200debca523beb7be5082f1c520aded425f2"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L7-low-corridor-browser.json",
+      "sha256": "edb3e8e9f39542d81c8bf019a9721bc337a4b751602e879ac8679b8eafd3716f"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L7-low-departure-browser.json",
+      "sha256": "30992937eba42d4951230c9226c60433804f5530e8317d6cae97f002e44d6588"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L7-low-fixtures.json",
+      "sha256": "3c6593596ec0bc30aa46438383c462ad1f6ebba428a36adae8a801fd8cd94de1"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L7-low-pickup-browser.json",
+      "sha256": "980146c204c91b59ca62089331febf38db42669389184cd0954a8b0410d81c28"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L7-low-readability-browser.json",
+      "sha256": "46dba4addb1694b3d4bedab4aa67932b52f899ac4cf4c0f1041433ec6744fa19"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L7-low-rocket-browser.json",
+      "sha256": "e9009a05803d7e8e62c0e33c1341b20bc2569679faf5befea4c85203185372fa"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L7-low-routes-browser.json",
+      "sha256": "86748ab2e544dc1518f2a55194bb45426c3211f0e57966edb67f240c00fe0fd0"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L7-low-stationary.json",
+      "sha256": "1bda4cca4c59d7243a8322ff364b1b9f190ea75ffc3485af8a8090654c574995"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L7-low-webgl2-z1.5-browser.json",
+      "sha256": "9e3629bfc2fa301bbf34cffb01e6080587328b37a35a66f3bac290d121cb1522"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L7-low-webgpu-z1.5-browser-completion.json",
+      "sha256": "cc1e034110d640616d8d9e3da53fe997ec86b96560a287a40a9e9c49b69d11aa"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L7-low-webgpu-z1.5-browser.json",
+      "sha256": "c64ac3810cd2430721e7de9b5a4aa64dd7d02cb91a6985b4276513c161447762"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L8-high-animals-browser.json",
+      "sha256": "e9494b819638a327f30cb0447c6ae6125619b104b6400086ec206cf615da6aaf"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L8-high-arrival-browser.json",
+      "sha256": "2799c5ad9be2e7b3c9d54c6f7cc04825ce6a06190553de50f24e8a0b7d791f8e"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L8-high-boarding-sweep.json",
+      "sha256": "6cea07e01f14c9ec4c91de2e838cb4f1d088762587d81e09dbd205b27f1af8df"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L8-high-breach-browser.json",
+      "sha256": "7359ddcb0001aab07141b15c00f30b4b423dbb41cfaf0707fffe10e44cd8e48b"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L8-high-browser-completion.json",
+      "sha256": "186ed4bd1ba5ad3bda5d1e32a30ff25cbb9b5b3c4958f4d408977522d1a45f20"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L8-high-browser.json",
+      "sha256": "9621494d34546c3dabb7d0e86966508717eed3a6a1e5c07bac4ff2223c9285fb"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L8-high-calm-browser.json",
+      "sha256": "4cc9c4b0909108b03cb7036505c323a1e64ccf0f3050dd9f8bb6e686d885de77"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L8-high-checkpoints.json",
+      "sha256": "8da00a9e1e12f4c831f4ecd96f1aba72e6ea813d491920467533065e5ce7a453"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L8-high-complete.json",
+      "sha256": "41dc094b921b8cb73333eaaef180dea7b69c6ff0116469ad840c272ffdbe8ec2"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L8-high-fixtures.json",
+      "sha256": "3527b7128d5ce14d31ae8d03e24bfa7151483ed2e7ff0f0b1a9cdd511ece51ff"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L8-high-handover.json",
+      "sha256": "462ffff3ccb7359a41f06fe25cea347b83fde8fd7509a90a8dbceb9776c4ff52"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L8-high-population.json",
+      "sha256": "68bcdd427d799ea800bdc1370f87989aecdcb3421d219b64f161d3239e3b7da7"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L8-high-stationary.json",
+      "sha256": "c429938794b91867ed5a7e33529e496df318cddbd8cb9ffb640cc6658f084110"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L8-high-webgl2-z1.5-browser.json",
+      "sha256": "7e8b0003e1e3997e809ad51a3b9026d551721d8277938b4f4e32867e744f58d8"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L8-high-webgpu-z1.5-browser-completion.json",
+      "sha256": "899a11b7672ac3ac0fcff2eaee304f394ca61c85a1b8b89f4b3e548287e3fd08"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L8-high-webgpu-z1.5-browser.json",
+      "sha256": "277f180dcd70abcaf48c679f3f7efacdd1db675e31488c6eb5371c8b229a1244"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L8-low-animals-browser.json",
+      "sha256": "9da0d0edbfae40727074defb561c6e73bd5eb84594d73ad22f21f75c85f0bf2e"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L8-low-arrival-browser.json",
+      "sha256": "01b9c013b635913b2eb76c726ebaaae1d88c53467ccad59914e1a29371f8d735"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L8-low-boarding-sweep.json",
+      "sha256": "00f80c824f89f5dc3e7be9c7f404c22a588e12ea207f30331b4b685f8c34c7dd"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L8-low-breach-browser.json",
+      "sha256": "96a0c743964211e840c850245589e195f0551c1b3bbf4b9982092d9115451a06"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L8-low-browser-completion.json",
+      "sha256": "90e46351effabf9bd19d425104061dd5257c2e4f1e1e3944088784c2fe56db36"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L8-low-browser.json",
+      "sha256": "f967883ffd38cf14e874fbde99b94b214397984bc6fc116ca71a239722d89a67"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L8-low-calm-browser.json",
+      "sha256": "ad1797f51f68b46ca4d9d0f85d3ff20d4160a27eeb51a6e75850679aaf36efef"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L8-low-checkpoints.json",
+      "sha256": "c67f3a4b755baa7ac3a796dd76ed6002af350baf435dae54077b5a6be65ffb54"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L8-low-complete.json",
+      "sha256": "bc5f33337f9ce71b858eb8d8acb77f912658b32a3eab2ce162eed5eb36f0d02e"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L8-low-fixtures.json",
+      "sha256": "a2eb9b54027146a275cb04eedf30e260f20096d5e1e044a209d1123511b44a7c"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L8-low-handover.json",
+      "sha256": "335f9c8c8ca1f5396a831a8d44a3811b3f7cba417a0fd3092d1e18aa50d82bba"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L8-low-population.json",
+      "sha256": "c3e4f5b59432506be558ccfb4080a4087ec933b612ea21129d9803f9ee58dccb"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L8-low-stationary.json",
+      "sha256": "73bd2c9f8b71baa46e480bf07bf690e71c5c1a917dd0b8b281266d48a27305c6"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L8-low-webgl2-z1.5-browser.json",
+      "sha256": "a0833df871a874193fdb2b4fc48429b38eb5563942fa9fb8e5b0b5a6b389d13e"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L8-low-webgpu-z1.5-browser-completion.json",
+      "sha256": "b2c90f2a33058d695d09f3e77135ff3e1254b1648dd7bff7fe33f440d4d50ba3"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L8-low-webgpu-z1.5-browser.json",
+      "sha256": "c84cec32f2a3962cc125c3c74584b3ddf5bc8225b0e84941526afc400cafea7d"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L9-driving-presence-proof.json",
+      "sha256": "b00e7799c323d3443b6f87dd1d96661e47038dda4e30a47f8f5e9c4b4d2bec7d"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L9-high-L9-04-routes.json",
+      "sha256": "0ebfdc6a399545230e2387a3f6967414cfbdb74dfbad923ee8dba65bc2aef43c"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L9-high-arrival-browser.json",
+      "sha256": "ee429aff67e466bbd70d5e0024b395b068272e8fd5e2e4d1e2258987647957ef"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L9-high-browser-completion.json",
+      "sha256": "30e6ab528f7a827c14b8ac0b6090c40c1d1634c7b25f7f2f04dff0c7b72b6f0c"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L9-high-browser.json",
+      "sha256": "bf0bbb5fd71c7f2306a044e8c6fa4079af2258ea130df03b76b0508fd8e1f05b"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L9-high-checkpoints.json",
+      "sha256": "c3a1644b7b5fa2e077523c588ac18beb646034e6ab23ded04e800ade31a007bd"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L9-high-complete.json",
+      "sha256": "ce0ca789f67c97a2586eadbda43d62bfff8f5c923e2ae5171c3e0abd79732d92"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L9-high-countryside-browser.json",
+      "sha256": "5dbf8cd9cbe6532f4cda7eed9b4210cdd84ebc2744d54939722dc6b540572bd8"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L9-high-dry-shortcut-browser.json",
+      "sha256": "7f9bf96ced972eacc7c047423fa91f40a3bb52f8c6b4a418c0ac75f4f2e89f9a"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L9-high-fix55-native.json",
+      "sha256": "1bf1126672b931e52aaed4b56ca817f714c950749d8361fc5a9623745d07e935"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L9-high-fix65-c-routes.json",
+      "sha256": "883248e983720231f370bb11e07a4fe14cbaa941089de6a2a897b3dea46ad826"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L9-high-fixtures.json",
+      "sha256": "4592cec2846ecb87a8003a338f5a505dacad87263941714c25a742096178fcc1"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L9-high-group-census.json",
+      "sha256": "03cdff904986ba866c01761a49f101201ad6179afbee2e90029efa8b14be6ef2"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L9-high-physical-detours.json",
+      "sha256": "5b175e1569b5978dacab1c3fc53ba3eb016c682e05129ffdf12000eea1821487"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L9-high-road-browser.json",
+      "sha256": "1d28a787cd72d9c42b75b77cbc85d203f1e1677a2d65e2127620a7ac8e8663fb"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L9-high-stationary.json",
+      "sha256": "6d03ad4383728714b8a7c20747642f0ee973d99a736ea58cf0a6bd2919275f99"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L9-high-streaming-browser.json",
+      "sha256": "45f6efd4af517f7720de6c392d9856e50cc65922a36c5f98be6fbc8bca4ab623"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L9-high-sweep-c3-physical.json",
+      "sha256": "252cee3044c3eaab07a73032ae9a69cbbcbf916ae7d0a215917135439d4f34c0"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L9-high-sweep-c4-routes.json",
+      "sha256": "676e7f9e6aa6a939eae74692fa692d57dd2b9df465785419b262f750998d7dd3"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L9-high-webgl2-z1.5-browser.json",
+      "sha256": "a344f0e9bb4ed1a74a9d41fcb96dd83563f728fc4c8c1f02ee6aaf40002e5276"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L9-high-webgpu-z1.5-browser-completion.json",
+      "sha256": "ab1cedc7690a02d5d3de6c83f4819cf17db21b937da40ed71d672988ac023e30"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L9-high-webgpu-z1.5-browser.json",
+      "sha256": "753e05998757ca950a072e9823513777a72e34ac500a5c03e8c30caef17780cc"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L9-high-wedge-browser.json",
+      "sha256": "e1cc6bf295e8a6c498616fb1cec3d422ec0abe12933da33dafd154d2f76b619d"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L9-low-L9-04-routes.json",
+      "sha256": "2afbb1cb41f484b8dcb39beb5a1df4607e4eb8466b9b72c8c7d03b9f587551dd"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L9-low-arrival-browser.json",
+      "sha256": "8dfce2de9bba7bd845f23c204b3d0a2433ac64eec373f8e09c287e6caf102824"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L9-low-browser-completion.json",
+      "sha256": "a75abed407b622dd42f251bd519325d785db8e951d3f8412ef64985241b151f3"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L9-low-browser.json",
+      "sha256": "e38cb1724b868c6a4de4ec6c06c523f993af793dd0d21deec9d7f8ed941488b5"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L9-low-checkpoints.json",
+      "sha256": "663d96947f72b7f9cd4e8ff8d4d95ce3d00a5a999cd0c980488683895a684c3b"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L9-low-complete.json",
+      "sha256": "747dbb83602bde6f775c880c8f3d18c2cb4e479022e86b81606f71b7e627c6a8"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L9-low-countryside-browser.json",
+      "sha256": "35397fd3950e52150f098520a73d691fdcfa76a319170ecfba3329fe512516e2"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L9-low-dry-shortcut-browser.json",
+      "sha256": "ec0a533645bba111f79372957a974d0bef407179999335673c1adcdf71c7ddea"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L9-low-fix55-native.json",
+      "sha256": "c7b1628eadc59c8ad1351b178eec8850042b632f65c5057d1db7ca60bdbd597b"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L9-low-fix65-c-routes.json",
+      "sha256": "3486c417a925b00eaa99f69b2ff77355ada3be339b5cfd54da1c8ee5e3e31b52"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L9-low-fixtures.json",
+      "sha256": "84291313f8c091c0542a5b4576a2f3e743b00870edef51e7680e7d3cbb597e2e"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L9-low-group-census.json",
+      "sha256": "4fbe90d92b45ad21adae2c2981cddd2d7a4864d1827f714d0080eaa22860967a"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L9-low-physical-detours.json",
+      "sha256": "71ca2e056890e00993e74b3741996372302cb537e061bfbd8ecf900a48fb91ed"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L9-low-road-browser.json",
+      "sha256": "9100bb10d0ef8ce57908a51b17f33f527ea40346b0c270ef01d588cf9afbb097"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L9-low-stationary.json",
+      "sha256": "ba1b81552069bbedb962c525d654e64682647d7a07569b631974946b46a8a622"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L9-low-streaming-browser.json",
+      "sha256": "c1c446610ed10a35a0632cb7370aec34206c27be412c3a5d7f33d4d93e09bbca"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L9-low-sweep-c3-physical.json",
+      "sha256": "337bd028e39cc18225ce04f8fa87635c02df27f6ff76e9937b9061fed0b0dcfd"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L9-low-sweep-c4-routes.json",
+      "sha256": "081e2d3e3e667ca617b897f7aca39766c53231d9e0eb4d3b278d0e7787ce62f6"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L9-low-webgl2-z1.5-browser.json",
+      "sha256": "6e55b9920e921b3916aadbffb7053b159bca46a59c3f40b0b77c85b528caba42"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L9-low-webgpu-z1.5-browser-completion.json",
+      "sha256": "8820264533fcc7a87760b097f113a502058443efab7eb0421043a65b23c85c38"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L9-low-webgpu-z1.5-browser.json",
+      "sha256": "ed31fba8a19931b7f1524dcf69e659fff64816e4c0b398b9e08a766c0a1fdaba"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L9-low-wedge-browser.json",
+      "sha256": "512ceab69bc90bc9093e314eec67f9d67a47a23444d3270056e79ce47910db98"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/fix51-r2c-L10-low-opening-attempt.json",
+      "sha256": "09a7ee73312e8ecb3b72f431ff8ff349bb3f6e18de0988a06bc4c5fc276d00dd"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/fix51-r2c-L8-high-webgpu-matrix-attempt.json",
+      "sha256": "5fd89c88c44f0e171cfcf755f75a86ddc59ea96ce0ffc124e6521263bba89e9a"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/fix51-r2c-L8-low-browser.json",
+      "sha256": "025a36bec216e1f20d5ed8ee95500e955d583996c8c0834cbe62567d62380328"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/fix51-r2c-L9-road-high-browser.json",
+      "sha256": "9b9fc493b1ebc932bbdbc4f8029706dbf8297403bc9bd84e8b8bc2a2e3773224"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/fix51-r2c-L9-road-high-far-browser.json",
+      "sha256": "e2f35fafdd509e703fb65a728873149fdaf5f83494e46d402cdb753554c4e299"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/fix51-r2c-L9-road-low-browser.json",
+      "sha256": "b902b42bda070aa23ffae772f96d6adceb7e21fb1e62ff6cdcc34fa17cf46c42"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/fix51-r2c-current-L10-low-close-opening-browser.json",
+      "sha256": "e35967f858454f8c6e9c880d877a8ab569dfb79ff4d4a8f638f536c4112a39f3"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/fix51-r2c-current-L10-low-close-opening-segment2-browser.json",
+      "sha256": "0411cc1eb1da978dc78aa7a5687e4fe8b1c0b5a9fcbd4df09f94d755a283fb2b"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/fix51-r2c-current-L8-high-webgpu-close-browser.json",
+      "sha256": "aa0914241b012358a9462f7ff49115f3180bc5c2056283b55bdfe62f6ac9aa97"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/fix51-r2c-current-country-high-far-browser.json",
+      "sha256": "cd72b1598fa42b8d375b948a24616fb3078c15c8971ceb6cc51c6fa66b2236ff"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/fix51-r2c-current-road-low-close-browser.json",
+      "sha256": "0fa2cb193ce0d44f25bd3cec07eef96488c68a67ddb47c0b1a2c4a982b94dddc"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/fix51-r2c-final-scenes.json",
+      "sha256": "8fd24711156515abdf08105dff0c962ea1dfedc3f2783e7fff8bc4686e2c9b8e"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/fix51-r2c-observation-window.json",
+      "sha256": "b1165761e02940759e32048f60b2475c97ef0f729944981b261d07d218cd4a24"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/fix51-r2c-scenes.json",
+      "sha256": "99b558c95fd156adda60d7d64c1ccb0a51fd5a76631ceb7425eb72b2ec629742"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/fix51-r2c-windup-observer.json",
+      "sha256": "3334e870e270287979db8cf9a5ad0c06f032ea36944ec880bc184f3c79d51b54"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/fix51-r3a-L1-full-webgl2-matrix.json",
+      "sha256": "14f4489afdd3fbf15b2da4f43c8d4a3ef0978ca965a25a57df07718dc4bf5cb3"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/fix51-r3a-L1-full-webgpu-matrix.json",
+      "sha256": "a5220bec31347693e81c74cdc75072b9427007488092c0c17b97305bf330ecb4"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/fix51-r3a-L2-high-webgl2-final-matrix.json",
+      "sha256": "749570f6d4545bd6ccde541423cefbdda649043c76875eae829e26abe1b9318e"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/fix51-r3a-physical-coverage.json",
+      "sha256": "27c42f71ad06d8c9bfffd490582125daad088e57e891cdc5fe93542454baf6ca"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/fix51-r3a-webgl2-L3-final-matrix.json",
+      "sha256": "816443b51180a56a3f77ef6bd9046ebd5d076f5f4dc5689bee9a179ced74d847"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/fix51-r3a-webgpu-final-matrix.json",
+      "sha256": "f7f436c5a95509a80e3dcb970de1aa4589dfcda1f0f6b5bb4d4f9dc5987c313f"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/fix51-r3c-controls.json",
+      "sha256": "68f1634ccebc093b908c4588033a4afc74b1465816aea29e6046908692f95c3f"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/fix51-r3c-health-ui.json",
+      "sha256": "655112615594c96f1413ef9ed717071a58eba91d8b759c876169888f20696ba1"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/fix51-r3c-physical.json",
+      "sha256": "69edb86331a9f18dfb09ac7ec645331059035217da4b9220f8f7a6788b8545a8"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/fix51-r3c-reviewed-physical.json",
+      "sha256": "585587c6baa2e4cbf12ecd139dbbaccae4640936f19fd86555d3bbae21c849f0"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/fix51-r3c-scenes.json",
+      "sha256": "720863c862e66929ad73dd09e58b037f853e7e3727a62aa12715b03e10a60d84"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/fix51-r5a-G08-L8-high-checkpoints.json",
+      "sha256": "dbeaad389840b438756c4155b4d48df16d68b8ea80c376cd2ae9af3179cdafaf"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/fix51-r5a-G08-L8-high-complete.json",
+      "sha256": "5e2f2bd66233eee50c8d0f2a817d1cde88e182b5fa073abbdfa5ac936bbfd58a"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/fix51-r5a-G08-L8-high-stationary.json",
+      "sha256": "9df79814fa4b85ef48c9f4e01a7fc2dd9e09fe0d60a4817d356109d8caee06a1"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/fix51-r5a-G08-L8-low-checkpoints.json",
+      "sha256": "90eca2be0224b5932ebf34d692c2151086dcbaf617aaf90b03e8913d3cbbb5b2"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/fix51-r5a-G08-L8-low-complete.json",
+      "sha256": "5e08c18e41adcf950dd602803db9393b5f30891679cd2af9d6bbc3701316a31f"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/fix51-r5a-G08-L8-low-stationary.json",
+      "sha256": "85f9126574584cfd3d3526e763bc5dd35becf370e4bb868c8580fae7609f3502"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/fix51-r5a-health-ui-clear-retry1.json",
+      "sha256": "fde2ba32fe0f1fff6a2c5a14747635dc12a92c0468555b990f7bd4b6e1995294"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/fix51-r5a-health-ui-clear.json",
+      "sha256": "d4aaa6ee85e80af52ba49fd9e4e4373283bb77fd384b7d588881001042961f2d"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/fix51-r5a-health-ui.json",
+      "sha256": "0aba6e900a08fcc8176d2eba0a68f77aab83ea592679f91a8d390adc5e3fb905"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/fix51-r5a-smoke-webgl2-high.json",
+      "sha256": "74dce43d320b98d9fb709ef914cf577c589a816f2a4bc7809eb6805bc5008baf"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/fix51-r5a-smoke-webgl2-low.json",
+      "sha256": "4ddbfd0d895ab77ebf08162c1f2f45a7b4afbe2b3e538a53f8b92e0a4ff065ef"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/fix51-r5a-smoke-webgpu-low.json",
+      "sha256": "9a2bc62a699801f83d10764fd7681b14223c6aa6566c0e430f718c040c28588e"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/fix51-r5b-contact-closeout-proof.json",
+      "sha256": "962f3e664c0b03170b064f89c0975e2fbf8d2d7f020032de8bb70447aa9e283e"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/fix51-r5b-l5-density-proof.json",
+      "sha256": "5f2e529eb29fd1f6d50aca74c6e9537eecbfa47bb0688af297950b8c4b2aaa15"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/fix51-r5b-l7-corpse-recovery.json",
+      "sha256": "879c785d17fb5642f3d189afad7e6c5d8fcd7d103780347bf400e1b681d790e7"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/fix51-r5c-L10-webgl2-high-z0.5-road-sample.json",
+      "sha256": "2679a20f348137d96bf29ea3a86cffbc9ddd99de6717c9e28a650526f965a207"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/fix51-r5c-L10-webgl2-high-z1.5-road-sample.json",
+      "sha256": "e5d98e52f08028a3de02ea5af77d2bc55ab9da4568f6ddf0ab8b716ed1782f44"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/fix51-r5c-L10-webgl2-low-z0.5-road-sample.json",
+      "sha256": "96d2d95514e616b23573f719ae5184f952224a65028d4fb98afc9eea85ca8f84"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/fix51-r5c-L10-webgl2-low-z1.5-road-sample.json",
+      "sha256": "c7ca763d23c984ebdef9f2fe7ac33c043e52b5c9bd5d8ded3e7063a320226dea"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/fix51-r5c-L10-webgpu-high-z0.5-road-sample.json",
+      "sha256": "52bc24294ce6a3d9e4bf4fe6cb6736582f8b47318e46aafdd52f17f0d89f8983"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/fix51-r5c-L10-webgpu-high-z1.5-road-sample.json",
+      "sha256": "d0c250f24613af626d39907f1024196d4d7d53a78cf4abf619e27fab846855b7"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/fix51-r5c-L10-webgpu-low-z0.5-road-sample.json",
+      "sha256": "583a75d0a97ef3882f1f2bda9fe38f176cb762faf7bb75852c9f9eae55ca5eab"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/fix51-r5c-L10-webgpu-low-z1.5-road-sample.json",
+      "sha256": "9ba448a9c0e8aa67bee4e1550c47d097f0ce645987a6654064ceca950ab8de01"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/fix51-r5c-L8-webgl2-high-z0.5-final.json",
+      "sha256": "c45077dd65bc36b0cae7f75bac1265a603d03f90ca023085eb408d383f72be0b"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/fix51-r5c-L8-webgl2-low-z0.5-final.json",
+      "sha256": "06de5a616b7d8602ecf3ff47edbac551d96f593b9d7fe05080703b01b5b71e20"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/fix51-r5c-L8-webgpu-high-z0.5-default.json",
+      "sha256": "f876e854bf126d5cb56fb582b6e2df0b4523c8cf49a15107f7548c2fb55c8d13"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/fix51-r5c-L8-webgpu-high-z0.5-final.json",
+      "sha256": "129ba0acc3639e8ab1f4ce049fceacc637f151b45a92e55c8b6a172a28e53b89"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/fix51-r5c-L8-webgpu-high-z0.5-fixed.json",
+      "sha256": "86b8a4ba2259b0202bd6750b1ddfbbbf523f8cc65b2a38189f3bc5d1b6de9360"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/fix51-r5c-L8-webgpu-high-z0.5-mg.json",
+      "sha256": "da162d3e97f049528cf4dcc054dcbcce4872f32d634aff6d314a97458a14ab09"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/fix51-r5c-L8-webgpu-high-z0.5-protected.json",
+      "sha256": "a77447f5d7f78eed36ab50705a128f392c514dac31743e7f05262e19bdb3b68d"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/fix51-r5c-L8-webgpu-high-z1.5-default.json",
+      "sha256": "84bd1db8a6b8c8af6cdbbede69398b40febd786844f7e4e4de8a1ff083e4b290"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/fix51-r5c-L9-webgl2-high-z0.5-countryside.json",
+      "sha256": "98c7f86350949c1eb2632c7e4212e7a3f23137d79c3dfc936e10527a03f6b5c8"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/fix51-r5c-L9-webgl2-high-z1.5-road.json",
+      "sha256": "e2580bda5c40255a9c9c7911312e9703d6c2fb9d3d708a71f1ee31c8ed2b9ef6"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/fix51-r5c-L9-webgl2-low-z0.5-countryside.json",
+      "sha256": "fbfd03985bf8bccb5142131f0fcb41493f896a6a3d3bf847885fdadf8f7f1767"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/fix51-r5c-L9-webgl2-low-z1.5-road.json",
+      "sha256": "2bf33551470db097514736ce0c3e4bbded345a9109f86c5601b9e05352daefc6"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/fix51-r5c-L9-webgpu-high-z1.5-dry-shortcut.json",
+      "sha256": "42c4794f5f0169a512d136a57055e09f4e576a096b743b01c65c92ee28175de4"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/fix51-r5c-L9-webgpu-low-z1.5-dry-shortcut.json",
+      "sha256": "ec78e2cbdc3df375276529060da88418adfe0959e8a8188091559115537d4ed0"
+    },
+    {
+      "file": "docs/reports/fix51-verify/validation.json",
+      "sha256": "68c759a805416af6f671ddd5bba8b08c62b473f6f0b9266501eff6fa4db4c242"
+    },
+    {
+      "file": "src/render/GameView.ts",
+      "sha256": "1486c908cec191ca036407a232f866751755f2941f6578d3d51eb8e27b69ac78"
+    },
+    {
+      "file": "src/render/RenderProbes.ts",
+      "sha256": "e781b9a09879bb8c7444b36cfbb2fc5fab0945ba550fd60ce4b8c2db4920a524"
+    },
+    {
+      "file": "src/render/SeeThrough.ts",
+      "sha256": "bf0b08f0959f7bd968fae75d525011d1cc4136e83211b822609c183e2ba6fbdd"
+    },
+    {
+      "file": "src/render/characters/CorpseLayout.ts",
+      "sha256": "f8827757b95bda0e4c59f0707eabc274b41598975d3c013bdba1e8aa45c65219"
+    },
+    {
+      "file": "src/render/characters/StaticCorpses.ts",
+      "sha256": "d12102edd5556dff36ad3d9618620dc92b892680a881bd20a0da24d7bd4fbd52"
+    },
+    {
+      "file": "src/render/npc/CivilianCrowd.ts",
+      "sha256": "1282af5adf7bcc19d0b39d134197e183fdf53ca80c614f4ad2653b496663c109"
+    },
+    {
+      "file": "src/render/npc/waitingIdle.ts",
+      "sha256": "4b0ee6c056e63f820ff44f18171ea0163a4ceaafa1e2fdc22c409cbbf7970f3b"
+    },
+    {
+      "file": "tools/playtest/acceptance-ledger.ts",
+      "sha256": "c8fab73188880c98af395c7013470ef87832a614c60b57c75d0d64a1226124c4"
+    },
+    {
+      "file": "tools/playtest/session.ts",
+      "sha256": "7b69d0925499fb60e08e35080a021f3c82b8b16b0f77fef47aed64388793b902"
+    },
+    {
+      "file": "tools/qa/blk-v-captures.mjs",
+      "sha256": "46e779b58631ead6764dcfff89dbedc6627a032154ae7e9c42dbade28de390b9"
+    },
+    {
+      "file": "tools/qa/blk-v-corpse-bounds.mjs",
+      "sha256": "b876e27875cc1bac0bcac3c48b521cf8b6ba88936dc319e0a054955eebf57cfe"
+    },
+    {
+      "file": "tools/qa/blk-v-grip-audit.mjs",
+      "sha256": "2f0654637104250c2e989525bda7f0f67cabe1b4b09f0a32d34b2d17fb0330d6"
+    },
+    {
+      "file": "tools/qa/blk-v-l4-corpses.ts",
+      "sha256": "83516e6f458c411020a2a6027108c035bd500143951fb47270f1b7f457c6e4b2"
+    },
+    {
+      "file": "tools/qa/blk-v-physical.ts",
+      "sha256": "a2b023c5592d22694a7615a9925ea1fcb15ab7eee42f61fa535d3debf3219e4c"
+    }
+  ]
+}
