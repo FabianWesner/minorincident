@@ -17,6 +17,13 @@ import type { VehicleView } from './VehicleView';
 import type { EntityAssets } from './EntityAssets';
 import type { Occlusion } from './Occlusion';
 
+/** ID passes must use the same living/corpse stencil ordering as the production draw. */
+const stencilState = (source: Material) => ({
+  stencilWrite: source.stencilWrite, stencilWriteMask: source.stencilWriteMask,
+  stencilFunc: source.stencilFunc, stencilRef: source.stencilRef, stencilFuncMask: source.stencilFuncMask,
+  stencilFail: source.stencilFail, stencilZFail: source.stencilZFail, stencilZPass: source.stencilZPass,
+});
+
 /** Live presentation objects of the GameView that the probes read (getters: they change per level). */
 export interface ProbeTargets {
   readonly scene: Scene; readonly renderer: Renderer; readonly camera: PerspectiveCamera; readonly occlusion: Occlusion;
@@ -141,7 +148,7 @@ export class RenderProbes {
             let masks = this.infectedIdMasks.get(source);
             if (!masks) { masks = []; this.infectedIdMasks.set(source, masks); }
             const index = infected ? 1 : 0;
-            masks[index] ??= new MeshBasicNodeMaterial({ color: infected ? '#ff00ff' : '#000000', side: source.side, depthTest: source.depthTest, depthWrite: source.depthWrite, transparent: source.transparent, opacity: source.opacity, alphaTest: source.alphaTest, alphaToCoverage: source.alphaToCoverage, opacityNode: source.opacityNode, positionNode: source.positionNode, maskNode: source.maskNode, depthNode: source.depthNode });
+            masks[index] ??= new MeshBasicNodeMaterial({ ...stencilState(source), color: infected ? '#ff00ff' : '#000000', side: source.side, depthTest: source.depthTest, depthWrite: source.depthWrite, transparent: source.transparent, opacity: source.opacity, alphaTest: source.alphaTest, alphaToCoverage: source.alphaToCoverage, opacityNode: source.opacityNode, positionNode: source.positionNode, maskNode: source.maskNode, depthNode: source.depthNode });
             if (source instanceof PaletteMaterial && !masks[index].outputNode) masks[index].outputNode = source.probeMaskOutput(color(infected ? '#ff00ff' : '#000000').rgb);
             child.material = masks[index];
           } else {
@@ -157,9 +164,9 @@ export class RenderProbes {
             const maskMaterial = (material: Material) => {
               const source = material as PaletteMaterial;
               const selected = skyline && hero, masks = selected ? this.skylineIdMasks : this.occluderIdMasks;
-              if (!(source.positionNode || source.opacityNode || source.maskNode || source.depthNode || source.userData.seeThrough || source.name === 'pal_leaf-card-crown')) return selected ? this.idPlayer : this.idBackground;
+              if (!(source.positionNode || source.opacityNode || source.maskNode || source.depthNode || source.userData.seeThrough || source.name === 'pal_leaf-card-crown' || source.stencilWrite)) return selected ? this.idPlayer : this.idBackground;
               if (!masks.has(source)) {
-                const mask = new MeshBasicNodeMaterial({ color: selected ? '#ff00ff' : '#000000', side: source.side, alphaTest: source.alphaTest, alphaToCoverage: source.alphaToCoverage, opacityNode: source.opacityNode, positionNode: source.positionNode, maskNode: source.maskNode, depthNode: source.depthNode });
+                const mask = new MeshBasicNodeMaterial({ ...stencilState(source), color: selected ? '#ff00ff' : '#000000', side: source.side, alphaTest: source.alphaTest, alphaToCoverage: source.alphaToCoverage, opacityNode: source.opacityNode, positionNode: source.positionNode, maskNode: source.maskNode, depthNode: source.depthNode });
                 // ID probes must retain the visible scene's placement transforms
                 // and holes: an opaque replacement truck otherwise hides a courier
                 // who is plainly visible through its production see-through disc.

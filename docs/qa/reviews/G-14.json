@@ -1,33 +1,23 @@
 {
   "row": "G-14",
   "status": "FAIL",
-  "reviewer": "final-g/Codex",
+  "reviewer": "Codex/blk-v",
   "date": "2026-11-07",
-  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "commit": "6b2459a72cb57ce0ae8ecd4161406d790ec2b781",
   "clauses": [
     {
       "clause": "Corpses persist for the whole level (no removal for perf). Piles settle on each other: no floating bodies, no stretched/spiky limbs, pile height ≤ ~1 m (orch. default until F-293 \"climbable pile\" is scheduled).",
       "verdict": "FAIL",
-      "note": "Fresh permanent-corpse fixtures: all10 identities remain at ticks120 and7320 (122s), but full-size current low/high close views still show unsupported boot/leg fragments and pointed/folded skin panels. The separate30-body pile retains30 bodies at180/600ticks; solver maxLift0.44m (10-body fixture0.22m). Persistence and solver lift values pass their scoped checks; the visible body deformation fails the unchanged no-floating/no-spiky-limbs clause."
+      "note": "Scoped fragment repair: removing the subject-disc corpse cut restores complete dark-clothed bodies, with all10 IDs retained at120/7320ticks, low/high and close/wide. Bulky bodies still show sharply folded/pointed forearm panels, so the unchanged whole row remains FAIL. Corrected ID probe preserves production stencil: all four low/high x zoom cells lose zero courier pixels."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/final-g/G-14-scenes.json",
-      "sha256": "aff9d862c2da015b5a82ab9a41610b793ee25e26f665c21f9cae13e77367bca0",
-      "what": "Fresh permanent-corpse fixtures: all10 identities remain at ticks120 and7320 (122s), but full-size current low/high close views still show unsupported boot/leg fragments and pointed/folded skin panels. The separate30-body pile retains30 bodies at180/600ticks; solver maxLift0.44m (10-body fixture0.22m). Persistence and solver lift values pass their scoped checks; the visible body deformation fails the unchanged no-floating/no-spiky-limbs clause."
-    },
-    {
-      "file": "docs/reports/final-g/G-14-low-scenes.json",
-      "sha256": "f30b7d52329298d2dc871e408ac46fdbf856257443a922cdb8653621b8afdd25",
-      "what": "Fresh permanent-corpse fixtures: all10 identities remain at ticks120 and7320 (122s), but full-size current low/high close views still show unsupported boot/leg fragments and pointed/folded skin panels. The separate30-body pile retains30 bodies at180/600ticks; solver maxLift0.44m (10-body fixture0.22m). Persistence and solver lift values pass their scoped checks; the visible body deformation fails the unchanged no-floating/no-spiky-limbs clause."
-    },
-    {
-      "file": "docs/reports/final-g/G-14-reviewed.json",
-      "sha256": "946a7fde89a644645276d728b38f9114e358b5e862fa24cfe88dbf511deecf14",
-      "what": "Fresh permanent-corpse fixtures: all10 identities remain at ticks120 and7320 (122s), but full-size current low/high close views still show unsupported boot/leg fragments and pointed/folded skin panels. The separate30-body pile retains30 bodies at180/600ticks; solver maxLift0.44m (10-body fixture0.22m). Persistence and solver lift values pass their scoped checks; the visible body deformation fails the unchanged no-floating/no-spiky-limbs clause."
+      "file": "docs/reports/blk-v/G14-proof.json",
+      "sha256": "36f711da0f0861bc46c1e4cc4c43675708a183f22f67f934df1a6004b33468a1",
+      "what": "All before/after captures personally inspected. Partial mask repair verified; folded forearm geometry remains visibly failing. Exact identity and courier-pixel controls retained in the proof."
     }
   ],
-  "notes": "Repro: authored l4-corpses-persist fixture, advance7320ticks, game camera zoom0.5. Both low/high failure originals retained. The first shared-page low-quality attempt was explicitly rejected; a fresh low page supplies the valid low receipt.",
-  "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186"
+  "notes": "No whole-row closure; continue the remaining pose/skinning repair and L4 pile-height measurement. SourceDigest identifies this exact render source.",
+  "sourceDigest": "c538fd43e130d8a3c1a4c1342dbdb6f2d021e79374bd2ffca53d4d4a94425be5"
 }

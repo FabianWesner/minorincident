@@ -1,0 +1,74 @@
+{
+  "sourceHash": "cde57936b9c86da278eb64b93fd9b364347473e4c88db868f995ed5c94861ca4",
+  "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+  "revision": "48324c83ba80b75819ae8b4e1c554315cb321971",
+  "row": "G14",
+  "stage": "overlap",
+  "tier": "high",
+  "captures": [
+    {
+      "file": "test-results/blk-v/overlap/G14-high/overlap-z0.5.png",
+      "sha256": "395c7050a9f18d64ffc695281e1de973b39fd9f88039f18d8f472a29f3798bde"
+    },
+    {
+      "file": "test-results/blk-v/overlap/G14-high/overlap-z1.5.png",
+      "sha256": "85dd265435e27c927f4d94d78d8022fdd57a3acc5f84cbdf96c31ca5fb8d9bc0"
+    }
+  ],
+  "samples": [],
+  "errors": [],
+  "overlap": [
+    {
+      "zoom": 0.5,
+      "alphaPixels": 0,
+      "alphaBodyPixels": 0,
+      "bossReveal": {
+        "center": [
+          0.5000000000000002,
+          0.3074990750206265
+        ],
+        "radius": 0.12,
+        "strength": 0
+      },
+      "megaAlphaRatio": 0,
+      "megaM": null,
+      "visible": 14166,
+      "reference": 14388,
+      "share": 0.9845704753961635,
+      "megaPixels": 194762,
+      "megaShare": 0.2113302951388889,
+      "corpseOnly": {
+        "bodyPixels": 14388,
+        "missedPixels": 222,
+        "share": 0.9845704753961635,
+        "method": "Same-frame courier ID pixels with all authored corpse actors visible/hidden; terrain and other environment remain in both frames."
+      }
+    },
+    {
+      "zoom": 1.5,
+      "alphaPixels": 0,
+      "alphaBodyPixels": 0,
+      "bossReveal": {
+        "center": [
+          0.4999999999999999,
+          0.4378814106893719
+        ],
+        "radius": 0.12,
+        "strength": 0
+      },
+      "megaAlphaRatio": 0,
+      "megaM": null,
+      "visible": 1410,
+      "reference": 1435,
+      "share": 0.9825783972125436,
+      "megaPixels": 19153,
+      "megaShare": 0.020782335069444446,
+      "corpseOnly": {
+        "bodyPixels": 1435,
+        "missedPixels": 25,
+        "share": 0.9825783972125436,
+        "method": "Same-frame courier ID pixels with all authored corpse actors visible/hidden; terrain and other environment remain in both frames."
+      }
+    }
+  ]
+}
