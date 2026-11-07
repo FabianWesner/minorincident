@@ -1,0 +1,363 @@
+{
+  "sourceHash": "91dcc89e8e49f5b5ad5483b25edc6a90b7ee7fd8c2be07d0459f7fa657986c93",
+  "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+  "revision": "742f1e8ce8f43ec61aac47cdc89822b46bbde31e",
+  "base": "2162727d4c889774f5c2306fb3a82dfc82caf2ec",
+  "finalGameChange": "5edb190",
+  "build": {
+    "command": "MI_BUILD_CACHE=off npm run build:qa",
+    "exitCode": 0
+  },
+  "codeGates": {
+    "typecheck": 0,
+    "lint": 0,
+    "unit": 0
+  },
+  "unit": {
+    "files": 27,
+    "tests": 107,
+    "passed": 107
+  },
+  "acceptance": [
+    {
+      "level": "L4",
+      "command": "npm run qa:accept -- --level L4 --tier both --skip-browser",
+      "exitCode": 1,
+      "finalReuseExitCode": 1,
+      "report": "docs/reports/fix51-verify/L4.json",
+      "reportSha256": "b545f01c97bec8de6a42c701b30cf76654c392bb7f35cc1d27be7e3febf1bbba",
+      "rows": [
+        {
+          "id": "L4-07",
+          "status": "FAIL",
+          "currentStatus": "FAIL",
+          "automatedComplete": false,
+          "review": "FAIL",
+          "freshness": "FRESH"
+        },
+        {
+          "id": "L4-11",
+          "status": "NOT CHECKED",
+          "currentStatus": "NOT CHECKED",
+          "automatedComplete": false,
+          "review": "P",
+          "freshness": "FRESH"
+        },
+        {
+          "id": "L4-13",
+          "status": "FAIL",
+          "currentStatus": "FAIL",
+          "automatedComplete": false,
+          "review": "FAIL",
+          "freshness": "FRESH"
+        }
+      ],
+      "stages": [
+        {
+          "tier": "low",
+          "stage": "complete",
+          "outcome": "complete",
+          "file": "docs/reports/fix51-verify/receipts/L4-low-complete.json",
+          "sha256": "2ae500409d2132984c75757b2083031ced5a2f98beabcdc1947379f61ce29d3f"
+        },
+        {
+          "tier": "low",
+          "stage": "stationary",
+          "outcome": "tick-budget",
+          "file": "docs/reports/fix51-verify/receipts/L4-low-stationary.json",
+          "sha256": "acc31e6052eb8b2ca74e09e2348799c3a25260dcfe9e0ac0c4a0d0162151440e"
+        },
+        {
+          "tier": "low",
+          "stage": "fixtures",
+          "clauses": 10,
+          "errors": 0,
+          "file": "docs/reports/fix51-verify/receipts/L4-low-fixtures.json",
+          "sha256": "88274b149b78516c8ce48e5e83bb890e047d0187e34fbaaa0160ac5b520912bf"
+        },
+        {
+          "tier": "low",
+          "stage": "checkpoints",
+          "clauses": 6,
+          "errors": 0,
+          "controlIdentical": true,
+          "file": "docs/reports/fix51-verify/receipts/L4-low-checkpoints.json",
+          "sha256": "c2d0914ab8a2418ddf861150aca1dae7278e1f9a28ab9ffca793595f4cf6403d"
+        },
+        {
+          "tier": "high",
+          "stage": "complete",
+          "outcome": "complete",
+          "file": "docs/reports/fix51-verify/receipts/L4-high-complete.json",
+          "sha256": "09a80fbb804d6ed1b0d054b2335c0cf6ae244678138b917d0e33b4a89ff58011"
+        },
+        {
+          "tier": "high",
+          "stage": "stationary",
+          "outcome": "tick-budget",
+          "file": "docs/reports/fix51-verify/receipts/L4-high-stationary.json",
+          "sha256": "f64b5e631f53a47a375bfc4dd27e69ca4e34d565f49e651c0cd78b88344d26c6"
+        },
+        {
+          "tier": "high",
+          "stage": "fixtures",
+          "clauses": 10,
+          "errors": 0,
+          "file": "docs/reports/fix51-verify/receipts/L4-high-fixtures.json",
+          "sha256": "111c7f3bcea914344e2cca5f0abae649c0a7f8613e17e0dc97f8c51003d05b42"
+        },
+        {
+          "tier": "high",
+          "stage": "checkpoints",
+          "clauses": 6,
+          "errors": 0,
+          "controlIdentical": true,
+          "file": "docs/reports/fix51-verify/receipts/L4-high-checkpoints.json",
+          "sha256": "ad07994f554832e67fff7284f3c83bdce17e53d2ef6ca1d00e4e32f078fc2c74"
+        }
+      ]
+    },
+    {
+      "level": "L5",
+      "command": "npm run qa:accept -- --level L5 --tier both --skip-browser",
+      "exitCode": 1,
+      "finalReuseExitCode": 1,
+      "report": "docs/reports/fix51-verify/L5.json",
+      "reportSha256": "f5ccb41d894fa09530c894c2c0eb4706768876a673f0c9bf9cf9efb5c83f36ee",
+      "rows": [
+        {
+          "id": "L5-06",
+          "status": "NOT CHECKED",
+          "currentStatus": "NOT CHECKED",
+          "automatedComplete": false,
+          "review": "PASS",
+          "freshness": "FRESH"
+        }
+      ],
+      "stages": [
+        {
+          "tier": "low",
+          "stage": "complete",
+          "outcome": "complete",
+          "file": "docs/reports/fix51-verify/receipts/L5-low-complete.json",
+          "sha256": "a4d4f0f2db1a66aa6d7f86c03fd7b9d14398dadefdaf5889dd729c83a6e855e4"
+        },
+        {
+          "tier": "low",
+          "stage": "stationary",
+          "outcome": "tick-budget",
+          "file": "docs/reports/fix51-verify/receipts/L5-low-stationary.json",
+          "sha256": "56b744eccd40de00b626dafe5107ecc576eaf0a1b491ac12657ccfbf972e2388"
+        },
+        {
+          "tier": "low",
+          "stage": "fixtures",
+          "clauses": 10,
+          "errors": 0,
+          "file": "docs/reports/fix51-verify/receipts/L5-low-fixtures.json",
+          "sha256": "ed714000399473393b300a7700baa033fda7885d10de84e5f552289fd11ebe5a"
+        },
+        {
+          "tier": "low",
+          "stage": "checkpoints",
+          "clauses": 6,
+          "errors": 0,
+          "controlIdentical": true,
+          "file": "docs/reports/fix51-verify/receipts/L5-low-checkpoints.json",
+          "sha256": "c108ce6099dce93a4393a46ede848ec3a1688b556396364daa2230f45c88980b"
+        },
+        {
+          "tier": "high",
+          "stage": "complete",
+          "outcome": "complete",
+          "file": "docs/reports/fix51-verify/receipts/L5-high-complete.json",
+          "sha256": "5b9335d943667213f6f6fbc4c11a9905c14d9640d183ac84cdcc69b57bd98e5c"
+        },
+        {
+          "tier": "high",
+          "stage": "stationary",
+          "outcome": "tick-budget",
+          "file": "docs/reports/fix51-verify/receipts/L5-high-stationary.json",
+          "sha256": "75268433da881edd3c1992ebd77add87a5c7f7944ac309550c0b63ecb44da487"
+        },
+        {
+          "tier": "high",
+          "stage": "fixtures",
+          "clauses": 10,
+          "errors": 0,
+          "file": "docs/reports/fix51-verify/receipts/L5-high-fixtures.json",
+          "sha256": "de6aeaa1cf964701258cd8bcf703cabb4ef1c5d9e2265888aaf7cc576d9e74ec"
+        },
+        {
+          "tier": "high",
+          "stage": "checkpoints",
+          "clauses": 6,
+          "errors": 0,
+          "controlIdentical": true,
+          "file": "docs/reports/fix51-verify/receipts/L5-high-checkpoints.json",
+          "sha256": "ff6e18997a031d1cbca06ddc9e65e496ea1db10c4de0e62f5b0e6ea4c746d764"
+        }
+      ]
+    },
+    {
+      "level": "L6",
+      "command": "npm run qa:accept -- --level L6 --tier both --skip-browser",
+      "exitCode": 1,
+      "finalReuseExitCode": 1,
+      "report": "docs/reports/fix51-verify/L6.json",
+      "reportSha256": "669179050f911bfa84aadc3de8d900065c448db87ff6b08d632d040de9cdae5f",
+      "rows": [
+        {
+          "id": "L6-14",
+          "status": "NOT CHECKED",
+          "currentStatus": "NOT CHECKED",
+          "automatedComplete": false,
+          "review": "PASS",
+          "freshness": "FRESH"
+        }
+      ],
+      "stages": [
+        {
+          "tier": "low",
+          "stage": "complete",
+          "outcome": "complete",
+          "file": "docs/reports/fix51-verify/receipts/L6-low-complete.json",
+          "sha256": "2a294f858ccfd4ae1e4b1b7cd2fee559f1a3d00371510b52c19aea0397e3ba79"
+        },
+        {
+          "tier": "low",
+          "stage": "stationary",
+          "outcome": "tick-budget",
+          "file": "docs/reports/fix51-verify/receipts/L6-low-stationary.json",
+          "sha256": "f467710140ca00b229d06ceefffe28d5a8371d4d68596e24cc90e9a7a4c8689e"
+        },
+        {
+          "tier": "low",
+          "stage": "fixtures",
+          "clauses": 8,
+          "errors": 0,
+          "file": "docs/reports/fix51-verify/receipts/L6-low-fixtures.json",
+          "sha256": "27ed9064fcbda8061d84c9814537e043c61bd0e2ab98f40f6807dba6dbf709a4"
+        },
+        {
+          "tier": "low",
+          "stage": "checkpoints",
+          "clauses": 7,
+          "errors": 0,
+          "controlIdentical": true,
+          "file": "docs/reports/fix51-verify/receipts/L6-low-checkpoints.json",
+          "sha256": "9a82220f1da4f2a1270bde8f69671626506de89ccc6d4b817ebd57450fe3e334"
+        },
+        {
+          "tier": "high",
+          "stage": "complete",
+          "outcome": "complete",
+          "file": "docs/reports/fix51-verify/receipts/L6-high-complete.json",
+          "sha256": "ac2bfc25e2647e07ef524840463d1901fa9ae57d4c5ee808885c989cfeeaa352"
+        },
+        {
+          "tier": "high",
+          "stage": "stationary",
+          "outcome": "tick-budget",
+          "file": "docs/reports/fix51-verify/receipts/L6-high-stationary.json",
+          "sha256": "10444d19882a3f2b756bbc79ffd0361663fff59bea83643110b528fb4a28c626"
+        },
+        {
+          "tier": "high",
+          "stage": "fixtures",
+          "clauses": 8,
+          "errors": 0,
+          "file": "docs/reports/fix51-verify/receipts/L6-high-fixtures.json",
+          "sha256": "342fdd88c819da2d344fa37fb9e5c4479b5c711d389b2d2ffcef7a22e3080e75"
+        },
+        {
+          "tier": "high",
+          "stage": "checkpoints",
+          "clauses": 7,
+          "errors": 0,
+          "controlIdentical": true,
+          "file": "docs/reports/fix51-verify/receipts/L6-high-checkpoints.json",
+          "sha256": "d3688f474e408076451cdc2c4d0783a1f2c6a0de062ccfb0a1f8fc331e79d073"
+        }
+      ]
+    }
+  ],
+  "threat": {
+    "command": "npm run qa:threat",
+    "admission": {
+      "at": "2026-11-07T04:41:45.749Z",
+      "load": [
+        5.69775390625,
+        8.11572265625,
+        10.9208984375
+      ],
+      "waitSeconds": 0,
+      "command": "npm run qa:threat",
+      "method": "Standalone final gate: all owned browser, acceptance, build and code-gate processes have completed."
+    },
+    "result": {
+      "exitCode": 0,
+      "finishedAt": "2026-11-07T04:46:45.989Z",
+      "seconds": 300.24,
+      "load": [
+        5.4912109375,
+        6.7666015625,
+        9.49267578125
+      ]
+    },
+    "levels": 10,
+    "flags": [],
+    "audit": "docs/reports/blk-b/gates/threat-audit.json.gz",
+    "sha256": "f98f181b8cb0de7ad2fe196052903f1959150762225282d332e22294f1bbb7db",
+    "sourceMatchesMain": false,
+    "revision": "742f1e8ce8f43ec61aac47cdc89822b46bbde31e",
+    "interpretation": "Full default audit, standalone final run. Child PARTIAL_LEVEL_SELECTION markers are not carried into the full audit. Zero threat flags does not waive the stricter per-row path/admission findings."
+  },
+  "reviewEvidenceHashes": "PASS",
+  "logs": [
+    {
+      "file": "docs/reports/blk-b/gates/build-qa.log.gz",
+      "sha256": "0eb061f5a53dd3b3bb86948bb08ac397561ca066ab2a85fd72ed9099169b06d7"
+    },
+    {
+      "file": "docs/reports/blk-b/gates/typecheck.log.gz",
+      "sha256": "abfbb86f9f5ddfbd9fc1a72c43ab384702ce8bae86b60f3324748485e235e61e"
+    },
+    {
+      "file": "docs/reports/blk-b/gates/lint.log.gz",
+      "sha256": "cd3b5edf1f01658513faa5634896369a4b5ec27ca7da5961a361ce5fefdac9b4"
+    },
+    {
+      "file": "docs/reports/blk-b/gates/unit.log.gz",
+      "sha256": "c5fe8a9f1c7bb2ec740c76c20e8cffec762a6d674daff840eb70d5926593c13f"
+    },
+    {
+      "file": "docs/reports/blk-b/gates/accept-L4.log.gz",
+      "sha256": "c6cf120689fc642934007a340255be4f97b7ead7486adfb33f1a29ce61b4a9e2"
+    },
+    {
+      "file": "docs/reports/blk-b/gates/accept-L5.log.gz",
+      "sha256": "c6d01e5c7eeed89a52e6bed50d7ceace3d9fa932d3dce3d0cbc3b42536460bc0"
+    },
+    {
+      "file": "docs/reports/blk-b/gates/accept-L6.log.gz",
+      "sha256": "4455c67e9fd022579b1413d6e609ec725cb40665f18ed775df422dc2df112d9c"
+    },
+    {
+      "file": "docs/reports/blk-b/gates/accept-L4-final.log.gz",
+      "sha256": "6df2dd1ab426b918fdc68eefe712fadf10e487db508b8059cc3caa34d18239dd"
+    },
+    {
+      "file": "docs/reports/blk-b/gates/accept-L5-final.log.gz",
+      "sha256": "49a53d566f128947c2cae98dacecd38387734273ed1da90437ab455d3db20995"
+    },
+    {
+      "file": "docs/reports/blk-b/gates/accept-L6-final.log.gz",
+      "sha256": "f085708a85e4eed11c8a3a842c6def264f12cd988464494db7b25fa234f91cb0"
+    },
+    {
+      "file": "docs/reports/blk-b/gates/threat-final.log.gz",
+      "sha256": "f6245a4be66cdad87167a1423f007f271892592a39491f5c5a3b7dfe0efa693f"
+    }
+  ]
+}
