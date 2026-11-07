@@ -1,0 +1,4612 @@
+{
+  "passAudit": true,
+  "checks": 618,
+  "failures": [],
+  "details": [
+    {
+      "name": "15 matrix cells + 9 windows",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "60 unique cold/warm load rows",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "24 unique native captures",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "unmodified source",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "fix preserves deployed asset versions",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial source/build identity",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "live control precedes L7 follower bite change",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "bootstrap preserves both public bundle identities",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "source/build timestamps precede captures",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "fresh production build passed",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L1/low/webgl2/cold/correct tier and no errors",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L1/low/webgl2/cold/native backend",
+      "passCheck": true,
+      "detail": {
+        "contexts": [
+          "webgl2",
+          "2d",
+          "2d",
+          "2d"
+        ],
+        "adapter": null,
+        "glRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)"
+      }
+    },
+    {
+      "name": "load/prod/L1/low/webgl2/cold/native GPU driver",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L1/low/webgl2/cold/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L1/low/webgl2/cold/G-01 Begin mission",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L1/low/webgl2/warm/correct tier and no errors",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L1/low/webgl2/warm/native backend",
+      "passCheck": true,
+      "detail": {
+        "contexts": [
+          "webgl2",
+          "2d",
+          "2d",
+          "2d"
+        ],
+        "adapter": null,
+        "glRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)"
+      }
+    },
+    {
+      "name": "load/prod/L1/low/webgl2/warm/native GPU driver",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L1/low/webgl2/warm/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L1/low/webgl2/cold/correct tier and no errors",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L1/low/webgl2/cold/native backend",
+      "passCheck": true,
+      "detail": {
+        "contexts": [
+          "webgl2",
+          "2d",
+          "2d",
+          "2d"
+        ],
+        "adapter": null,
+        "glRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)"
+      }
+    },
+    {
+      "name": "load/candidate/L1/low/webgl2/cold/native GPU driver",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L1/low/webgl2/cold/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L1/low/webgl2/cold/G-01 Begin mission",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L1/low/webgl2/warm/correct tier and no errors",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L1/low/webgl2/warm/native backend",
+      "passCheck": true,
+      "detail": {
+        "contexts": [
+          "webgl2",
+          "2d",
+          "2d",
+          "2d"
+        ],
+        "adapter": null,
+        "glRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)"
+      }
+    },
+    {
+      "name": "load/candidate/L1/low/webgl2/warm/native GPU driver",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L1/low/webgl2/warm/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L4/low/webgl2/cold/correct tier and no errors",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L4/low/webgl2/cold/native backend",
+      "passCheck": true,
+      "detail": {
+        "contexts": [
+          "webgl2",
+          "2d",
+          "2d"
+        ],
+        "adapter": null,
+        "glRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)"
+      }
+    },
+    {
+      "name": "load/prod/L4/low/webgl2/cold/native GPU driver",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L4/low/webgl2/cold/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L4/low/webgl2/warm/correct tier and no errors",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L4/low/webgl2/warm/native backend",
+      "passCheck": true,
+      "detail": {
+        "contexts": [
+          "webgl2",
+          "2d",
+          "2d"
+        ],
+        "adapter": null,
+        "glRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)"
+      }
+    },
+    {
+      "name": "load/prod/L4/low/webgl2/warm/native GPU driver",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L4/low/webgl2/warm/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L4/low/webgl2/cold/correct tier and no errors",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L4/low/webgl2/cold/native backend",
+      "passCheck": true,
+      "detail": {
+        "contexts": [
+          "webgl2",
+          "2d",
+          "2d"
+        ],
+        "adapter": null,
+        "glRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)"
+      }
+    },
+    {
+      "name": "load/candidate/L4/low/webgl2/cold/native GPU driver",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L4/low/webgl2/cold/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L4/low/webgl2/warm/correct tier and no errors",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L4/low/webgl2/warm/native backend",
+      "passCheck": true,
+      "detail": {
+        "contexts": [
+          "webgl2",
+          "2d",
+          "2d"
+        ],
+        "adapter": null,
+        "glRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)"
+      }
+    },
+    {
+      "name": "load/candidate/L4/low/webgl2/warm/native GPU driver",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L4/low/webgl2/warm/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L7/low/webgl2/cold/correct tier and no errors",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L7/low/webgl2/cold/native backend",
+      "passCheck": true,
+      "detail": {
+        "contexts": [
+          "webgl2",
+          "2d"
+        ],
+        "adapter": null,
+        "glRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)"
+      }
+    },
+    {
+      "name": "load/prod/L7/low/webgl2/cold/native GPU driver",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L7/low/webgl2/cold/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L7/low/webgl2/warm/correct tier and no errors",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L7/low/webgl2/warm/native backend",
+      "passCheck": true,
+      "detail": {
+        "contexts": [
+          "webgl2",
+          "2d"
+        ],
+        "adapter": null,
+        "glRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)"
+      }
+    },
+    {
+      "name": "load/prod/L7/low/webgl2/warm/native GPU driver",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L7/low/webgl2/warm/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L7/low/webgl2/cold/correct tier and no errors",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L7/low/webgl2/cold/native backend",
+      "passCheck": true,
+      "detail": {
+        "contexts": [
+          "webgl2",
+          "2d"
+        ],
+        "adapter": null,
+        "glRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)"
+      }
+    },
+    {
+      "name": "load/candidate/L7/low/webgl2/cold/native GPU driver",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L7/low/webgl2/cold/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L7/low/webgl2/warm/correct tier and no errors",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L7/low/webgl2/warm/native backend",
+      "passCheck": true,
+      "detail": {
+        "contexts": [
+          "webgl2",
+          "2d"
+        ],
+        "adapter": null,
+        "glRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)"
+      }
+    },
+    {
+      "name": "load/candidate/L7/low/webgl2/warm/native GPU driver",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L7/low/webgl2/warm/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L1/high/webgpu/cold/correct tier and no errors",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L1/high/webgpu/cold/native backend",
+      "passCheck": true,
+      "detail": {
+        "contexts": [
+          "webgpu",
+          "webgpu",
+          "2d",
+          "webgpu",
+          "2d",
+          "2d",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu"
+        ],
+        "adapter": {
+          "vendor": "apple",
+          "architecture": "metal-3",
+          "description": "",
+          "fallback": false
+        },
+        "glRenderer": null
+      }
+    },
+    {
+      "name": "load/prod/L1/high/webgpu/cold/native GPU driver",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L1/high/webgpu/cold/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L1/high/webgpu/warm/correct tier and no errors",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L1/high/webgpu/warm/native backend",
+      "passCheck": true,
+      "detail": {
+        "contexts": [
+          "webgpu",
+          "webgpu",
+          "2d",
+          "webgpu",
+          "2d",
+          "2d",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu"
+        ],
+        "adapter": {
+          "vendor": "apple",
+          "architecture": "metal-3",
+          "description": "",
+          "fallback": false
+        },
+        "glRenderer": null
+      }
+    },
+    {
+      "name": "load/prod/L1/high/webgpu/warm/native GPU driver",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L1/high/webgpu/warm/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L1/high/webgpu/cold/correct tier and no errors",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L1/high/webgpu/cold/native backend",
+      "passCheck": true,
+      "detail": {
+        "contexts": [
+          "webgpu",
+          "webgpu",
+          "2d",
+          "webgpu",
+          "2d",
+          "2d",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu"
+        ],
+        "adapter": {
+          "vendor": "apple",
+          "architecture": "metal-3",
+          "description": "",
+          "fallback": false
+        },
+        "glRenderer": null
+      }
+    },
+    {
+      "name": "load/candidate/L1/high/webgpu/cold/native GPU driver",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L1/high/webgpu/cold/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L1/high/webgpu/warm/correct tier and no errors",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L1/high/webgpu/warm/native backend",
+      "passCheck": true,
+      "detail": {
+        "contexts": [
+          "webgpu",
+          "webgpu",
+          "2d",
+          "webgpu",
+          "2d",
+          "2d",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu"
+        ],
+        "adapter": {
+          "vendor": "apple",
+          "architecture": "metal-3",
+          "description": "",
+          "fallback": false
+        },
+        "glRenderer": null
+      }
+    },
+    {
+      "name": "load/candidate/L1/high/webgpu/warm/native GPU driver",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L1/high/webgpu/warm/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L3/high/webgpu/cold/correct tier and no errors",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L3/high/webgpu/cold/native backend",
+      "passCheck": true,
+      "detail": {
+        "contexts": [
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "2d",
+          "2d",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu"
+        ],
+        "adapter": {
+          "vendor": "apple",
+          "architecture": "metal-3",
+          "description": "",
+          "fallback": false
+        },
+        "glRenderer": null
+      }
+    },
+    {
+      "name": "load/prod/L3/high/webgpu/cold/native GPU driver",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L3/high/webgpu/cold/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L3/high/webgpu/warm/correct tier and no errors",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L3/high/webgpu/warm/native backend",
+      "passCheck": true,
+      "detail": {
+        "contexts": [
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "2d",
+          "2d",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu"
+        ],
+        "adapter": {
+          "vendor": "apple",
+          "architecture": "metal-3",
+          "description": "",
+          "fallback": false
+        },
+        "glRenderer": null
+      }
+    },
+    {
+      "name": "load/prod/L3/high/webgpu/warm/native GPU driver",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L3/high/webgpu/warm/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L3/high/webgpu/cold/correct tier and no errors",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L3/high/webgpu/cold/native backend",
+      "passCheck": true,
+      "detail": {
+        "contexts": [
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "2d",
+          "2d",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu"
+        ],
+        "adapter": {
+          "vendor": "apple",
+          "architecture": "metal-3",
+          "description": "",
+          "fallback": false
+        },
+        "glRenderer": null
+      }
+    },
+    {
+      "name": "load/candidate/L3/high/webgpu/cold/native GPU driver",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L3/high/webgpu/cold/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L3/high/webgpu/warm/correct tier and no errors",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L3/high/webgpu/warm/native backend",
+      "passCheck": true,
+      "detail": {
+        "contexts": [
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "2d",
+          "2d",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu"
+        ],
+        "adapter": {
+          "vendor": "apple",
+          "architecture": "metal-3",
+          "description": "",
+          "fallback": false
+        },
+        "glRenderer": null
+      }
+    },
+    {
+      "name": "load/candidate/L3/high/webgpu/warm/native GPU driver",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L3/high/webgpu/warm/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L4/high/webgpu/cold/correct tier and no errors",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L4/high/webgpu/cold/native backend",
+      "passCheck": true,
+      "detail": {
+        "contexts": [
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "2d",
+          "2d",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu"
+        ],
+        "adapter": {
+          "vendor": "apple",
+          "architecture": "metal-3",
+          "description": "",
+          "fallback": false
+        },
+        "glRenderer": null
+      }
+    },
+    {
+      "name": "load/prod/L4/high/webgpu/cold/native GPU driver",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L4/high/webgpu/cold/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L4/high/webgpu/warm/correct tier and no errors",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L4/high/webgpu/warm/native backend",
+      "passCheck": true,
+      "detail": {
+        "contexts": [
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "2d",
+          "2d",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu"
+        ],
+        "adapter": {
+          "vendor": "apple",
+          "architecture": "metal-3",
+          "description": "",
+          "fallback": false
+        },
+        "glRenderer": null
+      }
+    },
+    {
+      "name": "load/prod/L4/high/webgpu/warm/native GPU driver",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L4/high/webgpu/warm/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L4/high/webgpu/cold/correct tier and no errors",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L4/high/webgpu/cold/native backend",
+      "passCheck": true,
+      "detail": {
+        "contexts": [
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "2d",
+          "2d",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu"
+        ],
+        "adapter": {
+          "vendor": "apple",
+          "architecture": "metal-3",
+          "description": "",
+          "fallback": false
+        },
+        "glRenderer": null
+      }
+    },
+    {
+      "name": "load/candidate/L4/high/webgpu/cold/native GPU driver",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L4/high/webgpu/cold/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L4/high/webgpu/warm/correct tier and no errors",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L4/high/webgpu/warm/native backend",
+      "passCheck": true,
+      "detail": {
+        "contexts": [
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "2d",
+          "2d",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu"
+        ],
+        "adapter": {
+          "vendor": "apple",
+          "architecture": "metal-3",
+          "description": "",
+          "fallback": false
+        },
+        "glRenderer": null
+      }
+    },
+    {
+      "name": "load/candidate/L4/high/webgpu/warm/native GPU driver",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L4/high/webgpu/warm/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L5/high/webgpu/cold/correct tier and no errors",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L5/high/webgpu/cold/native backend",
+      "passCheck": true,
+      "detail": {
+        "contexts": [
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "2d",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu"
+        ],
+        "adapter": {
+          "vendor": "apple",
+          "architecture": "metal-3",
+          "description": "",
+          "fallback": false
+        },
+        "glRenderer": null
+      }
+    },
+    {
+      "name": "load/prod/L5/high/webgpu/cold/native GPU driver",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L5/high/webgpu/cold/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L5/high/webgpu/warm/correct tier and no errors",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L5/high/webgpu/warm/native backend",
+      "passCheck": true,
+      "detail": {
+        "contexts": [
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "2d",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu"
+        ],
+        "adapter": {
+          "vendor": "apple",
+          "architecture": "metal-3",
+          "description": "",
+          "fallback": false
+        },
+        "glRenderer": null
+      }
+    },
+    {
+      "name": "load/prod/L5/high/webgpu/warm/native GPU driver",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L5/high/webgpu/warm/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L5/high/webgpu/cold/correct tier and no errors",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L5/high/webgpu/cold/native backend",
+      "passCheck": true,
+      "detail": {
+        "contexts": [
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "2d",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu"
+        ],
+        "adapter": {
+          "vendor": "apple",
+          "architecture": "metal-3",
+          "description": "",
+          "fallback": false
+        },
+        "glRenderer": null
+      }
+    },
+    {
+      "name": "load/candidate/L5/high/webgpu/cold/native GPU driver",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L5/high/webgpu/cold/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L5/high/webgpu/warm/correct tier and no errors",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L5/high/webgpu/warm/native backend",
+      "passCheck": true,
+      "detail": {
+        "contexts": [
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "2d",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu"
+        ],
+        "adapter": {
+          "vendor": "apple",
+          "architecture": "metal-3",
+          "description": "",
+          "fallback": false
+        },
+        "glRenderer": null
+      }
+    },
+    {
+      "name": "load/candidate/L5/high/webgpu/warm/native GPU driver",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L5/high/webgpu/warm/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L7/high/webgpu/cold/correct tier and no errors",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L7/high/webgpu/cold/native backend",
+      "passCheck": true,
+      "detail": {
+        "contexts": [
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "2d",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu"
+        ],
+        "adapter": {
+          "vendor": "apple",
+          "architecture": "metal-3",
+          "description": "",
+          "fallback": false
+        },
+        "glRenderer": null
+      }
+    },
+    {
+      "name": "load/prod/L7/high/webgpu/cold/native GPU driver",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L7/high/webgpu/cold/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L7/high/webgpu/warm/correct tier and no errors",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L7/high/webgpu/warm/native backend",
+      "passCheck": true,
+      "detail": {
+        "contexts": [
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "2d",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu"
+        ],
+        "adapter": {
+          "vendor": "apple",
+          "architecture": "metal-3",
+          "description": "",
+          "fallback": false
+        },
+        "glRenderer": null
+      }
+    },
+    {
+      "name": "load/prod/L7/high/webgpu/warm/native GPU driver",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L7/high/webgpu/warm/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L7/high/webgpu/cold/correct tier and no errors",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L7/high/webgpu/cold/native backend",
+      "passCheck": true,
+      "detail": {
+        "contexts": [
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "2d",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu"
+        ],
+        "adapter": {
+          "vendor": "apple",
+          "architecture": "metal-3",
+          "description": "",
+          "fallback": false
+        },
+        "glRenderer": null
+      }
+    },
+    {
+      "name": "load/candidate/L7/high/webgpu/cold/native GPU driver",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L7/high/webgpu/cold/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L7/high/webgpu/warm/correct tier and no errors",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L7/high/webgpu/warm/native backend",
+      "passCheck": true,
+      "detail": {
+        "contexts": [
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "2d",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu"
+        ],
+        "adapter": {
+          "vendor": "apple",
+          "architecture": "metal-3",
+          "description": "",
+          "fallback": false
+        },
+        "glRenderer": null
+      }
+    },
+    {
+      "name": "load/candidate/L7/high/webgpu/warm/native GPU driver",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L7/high/webgpu/warm/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L10/high/webgpu/cold/correct tier and no errors",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L10/high/webgpu/cold/native backend",
+      "passCheck": true,
+      "detail": {
+        "contexts": [
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu"
+        ],
+        "adapter": {
+          "vendor": "apple",
+          "architecture": "metal-3",
+          "description": "",
+          "fallback": false
+        },
+        "glRenderer": null
+      }
+    },
+    {
+      "name": "load/prod/L10/high/webgpu/cold/native GPU driver",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L10/high/webgpu/cold/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L10/high/webgpu/warm/correct tier and no errors",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L10/high/webgpu/warm/native backend",
+      "passCheck": true,
+      "detail": {
+        "contexts": [
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu"
+        ],
+        "adapter": {
+          "vendor": "apple",
+          "architecture": "metal-3",
+          "description": "",
+          "fallback": false
+        },
+        "glRenderer": null
+      }
+    },
+    {
+      "name": "load/prod/L10/high/webgpu/warm/native GPU driver",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L10/high/webgpu/warm/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L10/high/webgpu/cold/correct tier and no errors",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L10/high/webgpu/cold/native backend",
+      "passCheck": true,
+      "detail": {
+        "contexts": [
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu"
+        ],
+        "adapter": {
+          "vendor": "apple",
+          "architecture": "metal-3",
+          "description": "",
+          "fallback": false
+        },
+        "glRenderer": null
+      }
+    },
+    {
+      "name": "load/candidate/L10/high/webgpu/cold/native GPU driver",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L10/high/webgpu/cold/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L10/high/webgpu/warm/correct tier and no errors",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L10/high/webgpu/warm/native backend",
+      "passCheck": true,
+      "detail": {
+        "contexts": [
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu"
+        ],
+        "adapter": {
+          "vendor": "apple",
+          "architecture": "metal-3",
+          "description": "",
+          "fallback": false
+        },
+        "glRenderer": null
+      }
+    },
+    {
+      "name": "load/candidate/L10/high/webgpu/warm/native GPU driver",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L10/high/webgpu/warm/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L1/low/webgpu/cold/correct tier and no errors",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L1/low/webgpu/cold/native backend",
+      "passCheck": true,
+      "detail": {
+        "contexts": [
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "2d",
+          "webgpu",
+          "2d",
+          "2d",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu"
+        ],
+        "adapter": {
+          "vendor": "apple",
+          "architecture": "metal-3",
+          "description": "",
+          "fallback": false
+        },
+        "glRenderer": null
+      }
+    },
+    {
+      "name": "load/prod/L1/low/webgpu/cold/native GPU driver",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L1/low/webgpu/cold/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L1/low/webgpu/warm/correct tier and no errors",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L1/low/webgpu/warm/native backend",
+      "passCheck": true,
+      "detail": {
+        "contexts": [
+          "webgpu",
+          "webgpu",
+          "2d",
+          "webgpu",
+          "2d",
+          "2d",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu"
+        ],
+        "adapter": {
+          "vendor": "apple",
+          "architecture": "metal-3",
+          "description": "",
+          "fallback": false
+        },
+        "glRenderer": null
+      }
+    },
+    {
+      "name": "load/prod/L1/low/webgpu/warm/native GPU driver",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L1/low/webgpu/warm/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L1/low/webgpu/cold/correct tier and no errors",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L1/low/webgpu/cold/native backend",
+      "passCheck": true,
+      "detail": {
+        "contexts": [
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "2d",
+          "webgpu",
+          "2d",
+          "2d",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu"
+        ],
+        "adapter": {
+          "vendor": "apple",
+          "architecture": "metal-3",
+          "description": "",
+          "fallback": false
+        },
+        "glRenderer": null
+      }
+    },
+    {
+      "name": "load/candidate/L1/low/webgpu/cold/native GPU driver",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L1/low/webgpu/cold/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L1/low/webgpu/warm/correct tier and no errors",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L1/low/webgpu/warm/native backend",
+      "passCheck": true,
+      "detail": {
+        "contexts": [
+          "webgpu",
+          "webgpu",
+          "2d",
+          "webgpu",
+          "2d",
+          "2d",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu"
+        ],
+        "adapter": {
+          "vendor": "apple",
+          "architecture": "metal-3",
+          "description": "",
+          "fallback": false
+        },
+        "glRenderer": null
+      }
+    },
+    {
+      "name": "load/candidate/L1/low/webgpu/warm/native GPU driver",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L1/low/webgpu/warm/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L3/low/webgpu/cold/correct tier and no errors",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L3/low/webgpu/cold/native backend",
+      "passCheck": true,
+      "detail": {
+        "contexts": [
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "2d",
+          "2d",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu"
+        ],
+        "adapter": {
+          "vendor": "apple",
+          "architecture": "metal-3",
+          "description": "",
+          "fallback": false
+        },
+        "glRenderer": null
+      }
+    },
+    {
+      "name": "load/prod/L3/low/webgpu/cold/native GPU driver",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L3/low/webgpu/cold/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L3/low/webgpu/warm/correct tier and no errors",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L3/low/webgpu/warm/native backend",
+      "passCheck": true,
+      "detail": {
+        "contexts": [
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "2d",
+          "2d",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu"
+        ],
+        "adapter": {
+          "vendor": "apple",
+          "architecture": "metal-3",
+          "description": "",
+          "fallback": false
+        },
+        "glRenderer": null
+      }
+    },
+    {
+      "name": "load/prod/L3/low/webgpu/warm/native GPU driver",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L3/low/webgpu/warm/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L3/low/webgpu/cold/correct tier and no errors",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L3/low/webgpu/cold/native backend",
+      "passCheck": true,
+      "detail": {
+        "contexts": [
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "2d",
+          "2d",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu"
+        ],
+        "adapter": {
+          "vendor": "apple",
+          "architecture": "metal-3",
+          "description": "",
+          "fallback": false
+        },
+        "glRenderer": null
+      }
+    },
+    {
+      "name": "load/candidate/L3/low/webgpu/cold/native GPU driver",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L3/low/webgpu/cold/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L3/low/webgpu/warm/correct tier and no errors",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L3/low/webgpu/warm/native backend",
+      "passCheck": true,
+      "detail": {
+        "contexts": [
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "2d",
+          "2d",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu"
+        ],
+        "adapter": {
+          "vendor": "apple",
+          "architecture": "metal-3",
+          "description": "",
+          "fallback": false
+        },
+        "glRenderer": null
+      }
+    },
+    {
+      "name": "load/candidate/L3/low/webgpu/warm/native GPU driver",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L3/low/webgpu/warm/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L4/low/webgpu/cold/correct tier and no errors",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L4/low/webgpu/cold/native backend",
+      "passCheck": true,
+      "detail": {
+        "contexts": [
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "2d",
+          "2d",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu"
+        ],
+        "adapter": {
+          "vendor": "apple",
+          "architecture": "metal-3",
+          "description": "",
+          "fallback": false
+        },
+        "glRenderer": null
+      }
+    },
+    {
+      "name": "load/prod/L4/low/webgpu/cold/native GPU driver",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L4/low/webgpu/cold/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L4/low/webgpu/warm/correct tier and no errors",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L4/low/webgpu/warm/native backend",
+      "passCheck": true,
+      "detail": {
+        "contexts": [
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "2d",
+          "2d",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu"
+        ],
+        "adapter": {
+          "vendor": "apple",
+          "architecture": "metal-3",
+          "description": "",
+          "fallback": false
+        },
+        "glRenderer": null
+      }
+    },
+    {
+      "name": "load/prod/L4/low/webgpu/warm/native GPU driver",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L4/low/webgpu/warm/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L4/low/webgpu/cold/correct tier and no errors",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L4/low/webgpu/cold/native backend",
+      "passCheck": true,
+      "detail": {
+        "contexts": [
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "2d",
+          "2d",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu"
+        ],
+        "adapter": {
+          "vendor": "apple",
+          "architecture": "metal-3",
+          "description": "",
+          "fallback": false
+        },
+        "glRenderer": null
+      }
+    },
+    {
+      "name": "load/candidate/L4/low/webgpu/cold/native GPU driver",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L4/low/webgpu/cold/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L4/low/webgpu/warm/correct tier and no errors",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L4/low/webgpu/warm/native backend",
+      "passCheck": true,
+      "detail": {
+        "contexts": [
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "2d",
+          "2d",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu"
+        ],
+        "adapter": {
+          "vendor": "apple",
+          "architecture": "metal-3",
+          "description": "",
+          "fallback": false
+        },
+        "glRenderer": null
+      }
+    },
+    {
+      "name": "load/candidate/L4/low/webgpu/warm/native GPU driver",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L4/low/webgpu/warm/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L5/low/webgpu/cold/correct tier and no errors",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L5/low/webgpu/cold/native backend",
+      "passCheck": true,
+      "detail": {
+        "contexts": [
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "2d",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu"
+        ],
+        "adapter": {
+          "vendor": "apple",
+          "architecture": "metal-3",
+          "description": "",
+          "fallback": false
+        },
+        "glRenderer": null
+      }
+    },
+    {
+      "name": "load/prod/L5/low/webgpu/cold/native GPU driver",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L5/low/webgpu/cold/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L5/low/webgpu/warm/correct tier and no errors",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L5/low/webgpu/warm/native backend",
+      "passCheck": true,
+      "detail": {
+        "contexts": [
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "2d",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu"
+        ],
+        "adapter": {
+          "vendor": "apple",
+          "architecture": "metal-3",
+          "description": "",
+          "fallback": false
+        },
+        "glRenderer": null
+      }
+    },
+    {
+      "name": "load/prod/L5/low/webgpu/warm/native GPU driver",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L5/low/webgpu/warm/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L5/low/webgpu/cold/correct tier and no errors",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L5/low/webgpu/cold/native backend",
+      "passCheck": true,
+      "detail": {
+        "contexts": [
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "2d",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu"
+        ],
+        "adapter": {
+          "vendor": "apple",
+          "architecture": "metal-3",
+          "description": "",
+          "fallback": false
+        },
+        "glRenderer": null
+      }
+    },
+    {
+      "name": "load/candidate/L5/low/webgpu/cold/native GPU driver",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L5/low/webgpu/cold/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L5/low/webgpu/warm/correct tier and no errors",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L5/low/webgpu/warm/native backend",
+      "passCheck": true,
+      "detail": {
+        "contexts": [
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "2d",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu"
+        ],
+        "adapter": {
+          "vendor": "apple",
+          "architecture": "metal-3",
+          "description": "",
+          "fallback": false
+        },
+        "glRenderer": null
+      }
+    },
+    {
+      "name": "load/candidate/L5/low/webgpu/warm/native GPU driver",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L5/low/webgpu/warm/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L7/low/webgpu/cold/correct tier and no errors",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L7/low/webgpu/cold/native backend",
+      "passCheck": true,
+      "detail": {
+        "contexts": [
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "2d",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu"
+        ],
+        "adapter": {
+          "vendor": "apple",
+          "architecture": "metal-3",
+          "description": "",
+          "fallback": false
+        },
+        "glRenderer": null
+      }
+    },
+    {
+      "name": "load/prod/L7/low/webgpu/cold/native GPU driver",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L7/low/webgpu/cold/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L7/low/webgpu/warm/correct tier and no errors",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L7/low/webgpu/warm/native backend",
+      "passCheck": true,
+      "detail": {
+        "contexts": [
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "2d",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu"
+        ],
+        "adapter": {
+          "vendor": "apple",
+          "architecture": "metal-3",
+          "description": "",
+          "fallback": false
+        },
+        "glRenderer": null
+      }
+    },
+    {
+      "name": "load/prod/L7/low/webgpu/warm/native GPU driver",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L7/low/webgpu/warm/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L7/low/webgpu/cold/correct tier and no errors",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L7/low/webgpu/cold/native backend",
+      "passCheck": true,
+      "detail": {
+        "contexts": [
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "2d",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu"
+        ],
+        "adapter": {
+          "vendor": "apple",
+          "architecture": "metal-3",
+          "description": "",
+          "fallback": false
+        },
+        "glRenderer": null
+      }
+    },
+    {
+      "name": "load/candidate/L7/low/webgpu/cold/native GPU driver",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L7/low/webgpu/cold/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L7/low/webgpu/warm/correct tier and no errors",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L7/low/webgpu/warm/native backend",
+      "passCheck": true,
+      "detail": {
+        "contexts": [
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "2d",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu"
+        ],
+        "adapter": {
+          "vendor": "apple",
+          "architecture": "metal-3",
+          "description": "",
+          "fallback": false
+        },
+        "glRenderer": null
+      }
+    },
+    {
+      "name": "load/candidate/L7/low/webgpu/warm/native GPU driver",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L7/low/webgpu/warm/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L10/low/webgpu/cold/correct tier and no errors",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L10/low/webgpu/cold/native backend",
+      "passCheck": true,
+      "detail": {
+        "contexts": [
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu"
+        ],
+        "adapter": {
+          "vendor": "apple",
+          "architecture": "metal-3",
+          "description": "",
+          "fallback": false
+        },
+        "glRenderer": null
+      }
+    },
+    {
+      "name": "load/prod/L10/low/webgpu/cold/native GPU driver",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L10/low/webgpu/cold/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L10/low/webgpu/warm/correct tier and no errors",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L10/low/webgpu/warm/native backend",
+      "passCheck": true,
+      "detail": {
+        "contexts": [
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu"
+        ],
+        "adapter": {
+          "vendor": "apple",
+          "architecture": "metal-3",
+          "description": "",
+          "fallback": false
+        },
+        "glRenderer": null
+      }
+    },
+    {
+      "name": "load/prod/L10/low/webgpu/warm/native GPU driver",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/prod/L10/low/webgpu/warm/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L10/low/webgpu/cold/correct tier and no errors",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L10/low/webgpu/cold/native backend",
+      "passCheck": true,
+      "detail": {
+        "contexts": [
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu"
+        ],
+        "adapter": {
+          "vendor": "apple",
+          "architecture": "metal-3",
+          "description": "",
+          "fallback": false
+        },
+        "glRenderer": null
+      }
+    },
+    {
+      "name": "load/candidate/L10/low/webgpu/cold/native GPU driver",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L10/low/webgpu/cold/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L10/low/webgpu/warm/correct tier and no errors",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L10/low/webgpu/warm/native backend",
+      "passCheck": true,
+      "detail": {
+        "contexts": [
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "2d",
+          "webgpu",
+          "webgpu",
+          "webgpu",
+          "webgpu"
+        ],
+        "adapter": {
+          "vendor": "apple",
+          "architecture": "metal-3",
+          "description": "",
+          "fallback": false
+        },
+        "glRenderer": null
+      }
+    },
+    {
+      "name": "load/candidate/L10/low/webgpu/warm/native GPU driver",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "load/candidate/L10/low/webgpu/warm/bundle",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L1/high/full gameplay duration",
+      "passCheck": true,
+      "detail": {
+        "duration": 90211.69999980927,
+        "frameSum": 90196.3,
+        "minimum": 90000,
+        "nonGameplay": 0
+      }
+    },
+    {
+      "name": "native/prod/L1/high/no errors or profiling",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L1/high/native Apple GPU",
+      "passCheck": true,
+      "detail": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "device": "",
+        "description": "",
+        "isFallbackAdapter": false
+      }
+    },
+    {
+      "name": "native/prod/L1/high/sampled actual backend/tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L1/high/stats",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L1/high/frame clocks",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L1/high/ordinary inputs captured",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L1/high/full gameplay duration",
+      "passCheck": true,
+      "detail": {
+        "duration": 90171.80000019073,
+        "frameSum": 90146.3,
+        "minimum": 90000,
+        "nonGameplay": 0
+      }
+    },
+    {
+      "name": "native/candidate/L1/high/no errors or profiling",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L1/high/native Apple GPU",
+      "passCheck": true,
+      "detail": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "device": "",
+        "description": "",
+        "isFallbackAdapter": false
+      }
+    },
+    {
+      "name": "native/candidate/L1/high/sampled actual backend/tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L1/high/stats",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L1/high/frame clocks",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L1/high/ordinary inputs captured",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L10/high/full gameplay duration",
+      "passCheck": true,
+      "detail": {
+        "duration": 90197.5,
+        "frameSum": 90179.7,
+        "minimum": 90000,
+        "nonGameplay": 0
+      }
+    },
+    {
+      "name": "native/prod/L10/high/no errors or profiling",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L10/high/native Apple GPU",
+      "passCheck": true,
+      "detail": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "device": "",
+        "description": "",
+        "isFallbackAdapter": false
+      }
+    },
+    {
+      "name": "native/prod/L10/high/sampled actual backend/tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L10/high/stats",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L10/high/frame clocks",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L10/high/ordinary inputs captured",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L10/high/full gameplay duration",
+      "passCheck": true,
+      "detail": {
+        "duration": 90162.4000005722,
+        "frameSum": 90146.4,
+        "minimum": 90000,
+        "nonGameplay": 0
+      }
+    },
+    {
+      "name": "native/candidate/L10/high/no errors or profiling",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L10/high/native Apple GPU",
+      "passCheck": true,
+      "detail": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "device": "",
+        "description": "",
+        "isFallbackAdapter": false
+      }
+    },
+    {
+      "name": "native/candidate/L10/high/sampled actual backend/tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L10/high/stats",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L10/high/frame clocks",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L10/high/ordinary inputs captured",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L3/high/full gameplay duration",
+      "passCheck": true,
+      "detail": {
+        "duration": 60187.599999427795,
+        "frameSum": 60164.40000000001,
+        "minimum": 60000,
+        "nonGameplay": 0
+      }
+    },
+    {
+      "name": "native/prod/L3/high/no errors or profiling",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L3/high/native Apple GPU",
+      "passCheck": true,
+      "detail": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "device": "",
+        "description": "",
+        "isFallbackAdapter": false
+      }
+    },
+    {
+      "name": "native/prod/L3/high/sampled actual backend/tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L3/high/stats",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L3/high/ordinary inputs captured",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L3/high/full gameplay duration",
+      "passCheck": true,
+      "detail": {
+        "duration": 60119.20000076294,
+        "frameSum": 60097.6,
+        "minimum": 60000,
+        "nonGameplay": 0
+      }
+    },
+    {
+      "name": "native/candidate/L3/high/no errors or profiling",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L3/high/native Apple GPU",
+      "passCheck": true,
+      "detail": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "device": "",
+        "description": "",
+        "isFallbackAdapter": false
+      }
+    },
+    {
+      "name": "native/candidate/L3/high/sampled actual backend/tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L3/high/stats",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L3/high/ordinary inputs captured",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L5/high/full gameplay duration",
+      "passCheck": true,
+      "detail": {
+        "duration": 60267,
+        "frameSum": 60247.6,
+        "minimum": 60000,
+        "nonGameplay": 0
+      }
+    },
+    {
+      "name": "native/prod/L5/high/no errors or profiling",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L5/high/native Apple GPU",
+      "passCheck": true,
+      "detail": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "device": "",
+        "description": "",
+        "isFallbackAdapter": false
+      }
+    },
+    {
+      "name": "native/prod/L5/high/sampled actual backend/tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L5/high/stats",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L5/high/ordinary inputs captured",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L5/high/full gameplay duration",
+      "passCheck": true,
+      "detail": {
+        "duration": 60123.29999923706,
+        "frameSum": 60097.700000000004,
+        "minimum": 60000,
+        "nonGameplay": 0
+      }
+    },
+    {
+      "name": "native/candidate/L5/high/no errors or profiling",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L5/high/native Apple GPU",
+      "passCheck": true,
+      "detail": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "device": "",
+        "description": "",
+        "isFallbackAdapter": false
+      }
+    },
+    {
+      "name": "native/candidate/L5/high/sampled actual backend/tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L5/high/stats",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L5/high/ordinary inputs captured",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L4/high/full gameplay duration",
+      "passCheck": true,
+      "detail": {
+        "duration": 60155.400000572205,
+        "frameSum": 60131.00000000001,
+        "minimum": 60000,
+        "nonGameplay": 0
+      }
+    },
+    {
+      "name": "native/prod/L4/high/no errors or profiling",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L4/high/native Apple GPU",
+      "passCheck": true,
+      "detail": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "device": "",
+        "description": "",
+        "isFallbackAdapter": false
+      }
+    },
+    {
+      "name": "native/prod/L4/high/sampled actual backend/tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L4/high/stats",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L4/high/frame clocks",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L4/high/ordinary inputs captured",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L4/high/full gameplay duration",
+      "passCheck": true,
+      "detail": {
+        "duration": 60119.60000038147,
+        "frameSum": 60097.50000000001,
+        "minimum": 60000,
+        "nonGameplay": 0
+      }
+    },
+    {
+      "name": "native/candidate/L4/high/no errors or profiling",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L4/high/native Apple GPU",
+      "passCheck": true,
+      "detail": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "device": "",
+        "description": "",
+        "isFallbackAdapter": false
+      }
+    },
+    {
+      "name": "native/candidate/L4/high/sampled actual backend/tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L4/high/stats",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L4/high/frame clocks",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L4/high/ordinary inputs captured",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L7/high/full gameplay duration",
+      "passCheck": true,
+      "detail": {
+        "duration": 60175.5,
+        "frameSum": 60147.59999999999,
+        "minimum": 60000,
+        "nonGameplay": 0
+      }
+    },
+    {
+      "name": "native/prod/L7/high/no errors or profiling",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L7/high/native Apple GPU",
+      "passCheck": true,
+      "detail": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "device": "",
+        "description": "",
+        "isFallbackAdapter": false
+      }
+    },
+    {
+      "name": "native/prod/L7/high/sampled actual backend/tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L7/high/stats",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L7/high/frame clocks",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L7/high/ordinary inputs captured",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L7/high/full gameplay duration",
+      "passCheck": true,
+      "detail": {
+        "duration": 60131.599999427795,
+        "frameSum": 60114.200000000004,
+        "minimum": 60000,
+        "nonGameplay": 0
+      }
+    },
+    {
+      "name": "native/candidate/L7/high/no errors or profiling",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L7/high/native Apple GPU",
+      "passCheck": true,
+      "detail": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "device": "",
+        "description": "",
+        "isFallbackAdapter": false
+      }
+    },
+    {
+      "name": "native/candidate/L7/high/sampled actual backend/tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L7/high/stats",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L7/high/frame clocks",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L7/high/ordinary inputs captured",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L1/low/full gameplay duration",
+      "passCheck": true,
+      "detail": {
+        "duration": 90183.60000038147,
+        "frameSum": 90163.0,
+        "minimum": 90000,
+        "nonGameplay": 0
+      }
+    },
+    {
+      "name": "native/prod/L1/low/no errors or profiling",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L1/low/native Apple GPU",
+      "passCheck": true,
+      "detail": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "device": "",
+        "description": "",
+        "isFallbackAdapter": false
+      }
+    },
+    {
+      "name": "native/prod/L1/low/sampled actual backend/tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L1/low/stats",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L1/low/frame clocks",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L1/low/ordinary inputs captured",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L1/low/full gameplay duration",
+      "passCheck": true,
+      "detail": {
+        "duration": 90150.69999980927,
+        "frameSum": 90129.7,
+        "minimum": 90000,
+        "nonGameplay": 0
+      }
+    },
+    {
+      "name": "native/candidate/L1/low/no errors or profiling",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L1/low/native Apple GPU",
+      "passCheck": true,
+      "detail": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "device": "",
+        "description": "",
+        "isFallbackAdapter": false
+      }
+    },
+    {
+      "name": "native/candidate/L1/low/sampled actual backend/tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L1/low/stats",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L1/low/frame clocks",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L1/low/ordinary inputs captured",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L3/low/full gameplay duration",
+      "passCheck": true,
+      "detail": {
+        "duration": 60157.79999923706,
+        "frameSum": 60130.9,
+        "minimum": 60000,
+        "nonGameplay": 0
+      }
+    },
+    {
+      "name": "native/prod/L3/low/no errors or profiling",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L3/low/native Apple GPU",
+      "passCheck": true,
+      "detail": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "device": "",
+        "description": "",
+        "isFallbackAdapter": false
+      }
+    },
+    {
+      "name": "native/prod/L3/low/sampled actual backend/tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L3/low/stats",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L3/low/ordinary inputs captured",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L3/low/full gameplay duration",
+      "passCheck": true,
+      "detail": {
+        "duration": 60168.300000190735,
+        "frameSum": 60147.59999999999,
+        "minimum": 60000,
+        "nonGameplay": 0
+      }
+    },
+    {
+      "name": "native/candidate/L3/low/no errors or profiling",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L3/low/native Apple GPU",
+      "passCheck": true,
+      "detail": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "device": "",
+        "description": "",
+        "isFallbackAdapter": false
+      }
+    },
+    {
+      "name": "native/candidate/L3/low/sampled actual backend/tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L3/low/stats",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L3/low/ordinary inputs captured",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L5/low/full gameplay duration",
+      "passCheck": true,
+      "detail": {
+        "duration": 60164.099999427795,
+        "frameSum": 60130.899999999994,
+        "minimum": 60000,
+        "nonGameplay": 0
+      }
+    },
+    {
+      "name": "native/prod/L5/low/no errors or profiling",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L5/low/native Apple GPU",
+      "passCheck": true,
+      "detail": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "device": "",
+        "description": "",
+        "isFallbackAdapter": false
+      }
+    },
+    {
+      "name": "native/prod/L5/low/sampled actual backend/tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L5/low/stats",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L5/low/ordinary inputs captured",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L5/low/full gameplay duration",
+      "passCheck": true,
+      "detail": {
+        "duration": 60150.400000572205,
+        "frameSum": 60130.899999999994,
+        "minimum": 60000,
+        "nonGameplay": 0
+      }
+    },
+    {
+      "name": "native/candidate/L5/low/no errors or profiling",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L5/low/native Apple GPU",
+      "passCheck": true,
+      "detail": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "device": "",
+        "description": "",
+        "isFallbackAdapter": false
+      }
+    },
+    {
+      "name": "native/candidate/L5/low/sampled actual backend/tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L5/low/stats",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L5/low/ordinary inputs captured",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L4/low/full gameplay duration",
+      "passCheck": true,
+      "detail": {
+        "duration": 60170,
+        "frameSum": 60147.6,
+        "minimum": 60000,
+        "nonGameplay": 0
+      }
+    },
+    {
+      "name": "native/prod/L4/low/no errors or profiling",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L4/low/native Apple GPU",
+      "passCheck": true,
+      "detail": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "device": "",
+        "description": "",
+        "isFallbackAdapter": false
+      }
+    },
+    {
+      "name": "native/prod/L4/low/sampled actual backend/tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L4/low/stats",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L4/low/frame clocks",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L4/low/ordinary inputs captured",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L4/low/full gameplay duration",
+      "passCheck": true,
+      "detail": {
+        "duration": 60150.300000190735,
+        "frameSum": 60130.9,
+        "minimum": 60000,
+        "nonGameplay": 0
+      }
+    },
+    {
+      "name": "native/candidate/L4/low/no errors or profiling",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L4/low/native Apple GPU",
+      "passCheck": true,
+      "detail": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "device": "",
+        "description": "",
+        "isFallbackAdapter": false
+      }
+    },
+    {
+      "name": "native/candidate/L4/low/sampled actual backend/tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L4/low/stats",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L4/low/frame clocks",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L4/low/ordinary inputs captured",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L7/low/full gameplay duration",
+      "passCheck": true,
+      "detail": {
+        "duration": 60134.89999961853,
+        "frameSum": 60114.30000000001,
+        "minimum": 60000,
+        "nonGameplay": 0
+      }
+    },
+    {
+      "name": "native/prod/L7/low/no errors or profiling",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L7/low/native Apple GPU",
+      "passCheck": true,
+      "detail": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "device": "",
+        "description": "",
+        "isFallbackAdapter": false
+      }
+    },
+    {
+      "name": "native/prod/L7/low/sampled actual backend/tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L7/low/stats",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L7/low/frame clocks",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L7/low/ordinary inputs captured",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L7/low/full gameplay duration",
+      "passCheck": true,
+      "detail": {
+        "duration": 60147.89999961853,
+        "frameSum": 60131.0,
+        "minimum": 60000,
+        "nonGameplay": 0
+      }
+    },
+    {
+      "name": "native/candidate/L7/low/no errors or profiling",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L7/low/native Apple GPU",
+      "passCheck": true,
+      "detail": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "device": "",
+        "description": "",
+        "isFallbackAdapter": false
+      }
+    },
+    {
+      "name": "native/candidate/L7/low/sampled actual backend/tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L7/low/stats",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L7/low/frame clocks",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L7/low/ordinary inputs captured",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L10/low/full gameplay duration",
+      "passCheck": true,
+      "detail": {
+        "duration": 60136.300000190735,
+        "frameSum": 60114.3,
+        "minimum": 60000,
+        "nonGameplay": 0
+      }
+    },
+    {
+      "name": "native/prod/L10/low/no errors or profiling",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L10/low/native Apple GPU",
+      "passCheck": true,
+      "detail": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "device": "",
+        "description": "",
+        "isFallbackAdapter": false
+      }
+    },
+    {
+      "name": "native/prod/L10/low/sampled actual backend/tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L10/low/stats",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L10/low/frame clocks",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/prod/L10/low/ordinary inputs captured",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L10/low/full gameplay duration",
+      "passCheck": true,
+      "detail": {
+        "duration": 60342.800000190735,
+        "frameSum": 60297.5,
+        "minimum": 60000,
+        "nonGameplay": 0
+      }
+    },
+    {
+      "name": "native/candidate/L10/low/no errors or profiling",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L10/low/native Apple GPU",
+      "passCheck": true,
+      "detail": {
+        "vendor": "apple",
+        "architecture": "metal-3",
+        "device": "",
+        "description": "",
+        "isFallbackAdapter": false
+      }
+    },
+    {
+      "name": "native/candidate/L10/low/sampled actual backend/tier",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L10/low/stats",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L10/low/frame clocks",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "native/candidate/L10/low/ordinary inputs captured",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/matrix/webgpu/L1/low/cold/loads match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/matrix/webgpu/L1/low/warm/loads match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/matrix/L1/low/frame stats match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/matrix/webgpu/L1/low/verdict",
+      "passCheck": true,
+      "detail": []
+    },
+    {
+      "name": "final/matrix/webgpu/L3/low/cold/loads match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/matrix/webgpu/L3/low/warm/loads match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/matrix/L3/low/frame stats match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/matrix/webgpu/L3/low/verdict",
+      "passCheck": true,
+      "detail": []
+    },
+    {
+      "name": "final/matrix/webgpu/L4/low/cold/loads match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/matrix/webgpu/L4/low/warm/loads match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/matrix/L4/low/frame stats match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/matrix/webgpu/L4/low/verdict",
+      "passCheck": true,
+      "detail": []
+    },
+    {
+      "name": "final/matrix/webgpu/L5/low/cold/loads match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/matrix/webgpu/L5/low/warm/loads match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/matrix/L5/low/frame stats match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/matrix/webgpu/L5/low/verdict",
+      "passCheck": true,
+      "detail": []
+    },
+    {
+      "name": "final/matrix/webgpu/L7/low/cold/loads match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/matrix/webgpu/L7/low/warm/loads match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/matrix/L7/low/frame stats match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/matrix/webgpu/L7/low/verdict",
+      "passCheck": true,
+      "detail": []
+    },
+    {
+      "name": "final/matrix/webgpu/L10/low/cold/loads match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/matrix/webgpu/L10/low/warm/loads match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/matrix/L10/low/frame stats match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/matrix/webgpu/L10/low/verdict",
+      "passCheck": true,
+      "detail": [
+        "max > PROD+1 frame",
+        "new >=66 ms spike"
+      ]
+    },
+    {
+      "name": "final/matrix/webgpu/L1/high/cold/loads match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/matrix/webgpu/L1/high/warm/loads match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/matrix/L1/high/frame stats match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/matrix/webgpu/L1/high/verdict",
+      "passCheck": true,
+      "detail": []
+    },
+    {
+      "name": "final/matrix/webgpu/L3/high/cold/loads match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/matrix/webgpu/L3/high/warm/loads match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/matrix/L3/high/frame stats match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/matrix/webgpu/L3/high/verdict",
+      "passCheck": true,
+      "detail": []
+    },
+    {
+      "name": "final/matrix/webgpu/L4/high/cold/loads match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/matrix/webgpu/L4/high/warm/loads match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/matrix/L4/high/frame stats match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/matrix/webgpu/L4/high/verdict",
+      "passCheck": true,
+      "detail": []
+    },
+    {
+      "name": "final/matrix/webgpu/L5/high/cold/loads match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/matrix/webgpu/L5/high/warm/loads match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/matrix/L5/high/frame stats match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/matrix/webgpu/L5/high/verdict",
+      "passCheck": true,
+      "detail": []
+    },
+    {
+      "name": "final/matrix/webgpu/L7/high/cold/loads match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/matrix/webgpu/L7/high/warm/loads match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/matrix/L7/high/frame stats match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/matrix/webgpu/L7/high/verdict",
+      "passCheck": true,
+      "detail": []
+    },
+    {
+      "name": "final/matrix/webgpu/L10/high/cold/loads match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/matrix/webgpu/L10/high/warm/loads match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/matrix/L10/high/frame stats match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/matrix/webgpu/L10/high/verdict",
+      "passCheck": true,
+      "detail": []
+    },
+    {
+      "name": "final/matrix/webgl2/L1/low/cold/loads match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/matrix/webgl2/L1/low/warm/loads match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/matrix/webgl2/L1/low/verdict",
+      "passCheck": true,
+      "detail": []
+    },
+    {
+      "name": "final/matrix/webgl2/L4/low/cold/loads match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/matrix/webgl2/L4/low/warm/loads match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/matrix/webgl2/L4/low/verdict",
+      "passCheck": true,
+      "detail": []
+    },
+    {
+      "name": "final/matrix/webgl2/L7/low/cold/loads match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/matrix/webgl2/L7/low/warm/loads match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/matrix/webgl2/L7/low/verdict",
+      "passCheck": true,
+      "detail": []
+    },
+    {
+      "name": "final/moment/L1/low/handover/outbreak/prod",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/moment/L1/low/handover/outbreak/candidate",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/moment/L1/low/handover/outbreak/verdict",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/moment/L1/high/handover/outbreak/prod",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/moment/L1/high/handover/outbreak/candidate",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/moment/L1/high/handover/outbreak/verdict",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/moment/L7/low/pickup/prod",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/moment/L7/low/pickup/candidate",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/moment/L7/low/pickup/verdict",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/moment/L7/low/first rocket/prod",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/moment/L7/low/first rocket/candidate",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/moment/L7/low/first rocket/verdict",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/moment/L7/low/pickup through first rocket/prod",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/moment/L7/low/pickup through first rocket/candidate",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/moment/L7/low/pickup through first rocket/verdict",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/moment/L7/high/pickup/prod",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/moment/L7/high/pickup/candidate",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/moment/L7/high/pickup/verdict",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/moment/L7/high/first rocket/prod",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/moment/L7/high/first rocket/candidate",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/moment/L7/high/first rocket/verdict",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/moment/L7/high/pickup through first rocket/prod",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/moment/L7/high/pickup through first rocket/candidate",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/moment/L7/high/pickup through first rocket/verdict",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/moment/L10/high/charge through completion (+2 s)/prod",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/moment/L10/high/charge through completion (+2 s)/candidate",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "final/moment/L10/high/charge through completion (+2 s)/verdict",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/matrix/webgpu/L1/low/cold/loads match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/matrix/webgpu/L1/low/warm/loads match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/matrix/L1/low/frame stats match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/matrix/webgpu/L1/low/verdict",
+      "passCheck": true,
+      "detail": []
+    },
+    {
+      "name": "initial/matrix/webgpu/L3/low/cold/loads match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/matrix/webgpu/L3/low/warm/loads match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/matrix/L3/low/frame stats match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/matrix/webgpu/L3/low/verdict",
+      "passCheck": true,
+      "detail": []
+    },
+    {
+      "name": "initial/matrix/webgpu/L4/low/cold/loads match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/matrix/webgpu/L4/low/warm/loads match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/matrix/L4/low/frame stats match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/matrix/webgpu/L4/low/verdict",
+      "passCheck": true,
+      "detail": []
+    },
+    {
+      "name": "initial/matrix/webgpu/L5/low/cold/loads match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/matrix/webgpu/L5/low/warm/loads match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/matrix/L5/low/frame stats match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/matrix/webgpu/L5/low/verdict",
+      "passCheck": true,
+      "detail": []
+    },
+    {
+      "name": "initial/matrix/webgpu/L7/low/cold/loads match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/matrix/webgpu/L7/low/warm/loads match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/matrix/L7/low/frame stats match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/matrix/webgpu/L7/low/verdict",
+      "passCheck": true,
+      "detail": []
+    },
+    {
+      "name": "initial/matrix/webgpu/L10/low/cold/loads match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/matrix/webgpu/L10/low/warm/loads match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/matrix/L10/low/frame stats match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/matrix/webgpu/L10/low/verdict",
+      "passCheck": true,
+      "detail": []
+    },
+    {
+      "name": "initial/matrix/webgpu/L1/high/cold/loads match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/matrix/webgpu/L1/high/warm/loads match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/matrix/L1/high/frame stats match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/matrix/webgpu/L1/high/verdict",
+      "passCheck": true,
+      "detail": [
+        "max > PROD+1 frame",
+        "new >=66 ms spike"
+      ]
+    },
+    {
+      "name": "initial/matrix/webgpu/L3/high/cold/loads match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/matrix/webgpu/L3/high/warm/loads match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/matrix/L3/high/frame stats match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/matrix/webgpu/L3/high/verdict",
+      "passCheck": true,
+      "detail": []
+    },
+    {
+      "name": "initial/matrix/webgpu/L4/high/cold/loads match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/matrix/webgpu/L4/high/warm/loads match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/matrix/L4/high/frame stats match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/matrix/webgpu/L4/high/verdict",
+      "passCheck": true,
+      "detail": []
+    },
+    {
+      "name": "initial/matrix/webgpu/L5/high/cold/loads match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/matrix/webgpu/L5/high/warm/loads match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/matrix/L5/high/frame stats match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/matrix/webgpu/L5/high/verdict",
+      "passCheck": true,
+      "detail": []
+    },
+    {
+      "name": "initial/matrix/webgpu/L7/high/cold/loads match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/matrix/webgpu/L7/high/warm/loads match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/matrix/L7/high/frame stats match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/matrix/webgpu/L7/high/verdict",
+      "passCheck": true,
+      "detail": []
+    },
+    {
+      "name": "initial/matrix/webgpu/L10/high/cold/loads match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/matrix/webgpu/L10/high/warm/loads match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/matrix/L10/high/frame stats match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/matrix/webgpu/L10/high/verdict",
+      "passCheck": true,
+      "detail": []
+    },
+    {
+      "name": "initial/matrix/webgl2/L1/low/cold/loads match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/matrix/webgl2/L1/low/warm/loads match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/matrix/webgl2/L1/low/verdict",
+      "passCheck": true,
+      "detail": []
+    },
+    {
+      "name": "initial/matrix/webgl2/L4/low/cold/loads match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/matrix/webgl2/L4/low/warm/loads match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/matrix/webgl2/L4/low/verdict",
+      "passCheck": true,
+      "detail": []
+    },
+    {
+      "name": "initial/matrix/webgl2/L7/low/cold/loads match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/matrix/webgl2/L7/low/warm/loads match",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/matrix/webgl2/L7/low/verdict",
+      "passCheck": true,
+      "detail": []
+    },
+    {
+      "name": "initial/moment/L1/low/handover/outbreak/prod",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/moment/L1/low/handover/outbreak/candidate",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/moment/L1/low/handover/outbreak/verdict",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/moment/L1/high/handover/outbreak/prod",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/moment/L1/high/handover/outbreak/candidate",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/moment/L1/high/handover/outbreak/verdict",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/moment/L7/low/pickup/prod",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/moment/L7/low/pickup/candidate",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/moment/L7/low/pickup/verdict",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/moment/L7/low/first rocket/prod",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/moment/L7/low/first rocket/candidate",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/moment/L7/low/first rocket/verdict",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/moment/L7/low/pickup through first rocket/prod",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/moment/L7/low/pickup through first rocket/candidate",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/moment/L7/low/pickup through first rocket/verdict",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/moment/L7/high/pickup/prod",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/moment/L7/high/pickup/candidate",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/moment/L7/high/pickup/verdict",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/moment/L7/high/first rocket/prod",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/moment/L7/high/first rocket/candidate",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/moment/L7/high/first rocket/verdict",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/moment/L7/high/pickup through first rocket/prod",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/moment/L7/high/pickup through first rocket/candidate",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/moment/L7/high/pickup through first rocket/verdict",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/moment/L10/high/charge through completion (+2 s)/prod",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/moment/L10/high/charge through completion (+2 s)/candidate",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "initial/moment/L10/high/charge through completion (+2 s)/verdict",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "fixed attribution source matches candidate",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "early cold swaps eliminated",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "clinic uploads removed without removing the full body",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "mirror rehash",
+      "passCheck": true,
+      "detail": {
+        "at": "2026-11-07T22:02:11.321968+00:00",
+        "files": 2758,
+        "bytes": 536971901,
+        "rehashFailures": [],
+        "assetVersionPaths": 2074,
+        "assetVersionMismatches": []
+      }
+    },
+    {
+      "name": "embedded asset versions",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "all runtime files mirrored and served",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "pinned control still available live",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "E18 gate receipt",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "all four required validation commands",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "only the identified nonmeasurement attempts were stopped",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "quiet admission recorded",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "embedded harness hash/test-results/perf11/tail-attribution.py",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "embedded harness hash/test-results/perf11/ending-native.mjs",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "embedded harness hash/test-results/perf11/finish.sh",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "embedded harness hash/test-results/perf11/attribution-evidence.py",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "embedded harness hash/test-results/perf11/initial-batch.mjs",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "embedded harness hash/test-results/perf11/attribute-native.mjs",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "embedded harness hash/test-results/perf11/fixed-attribute-native.mjs",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "embedded harness hash/test-results/perf11/warm-state.mjs",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "embedded harness hash/test-results/perf11/diagnostic-native.mjs",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "embedded harness hash/test-results/perf11/cpu-attribution.py",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "embedded harness hash/test-results/perf11/perf6-mirror.mjs",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "embedded harness hash/test-results/perf11/restore-batch58.mjs",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "embedded harness hash/test-results/perf11/build-public.mjs",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "embedded harness hash/test-results/perf11/serve.mjs",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "embedded harness hash/test-results/perf11/run-job.mjs",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "embedded harness hash/test-results/perf11/native.mjs",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "embedded harness hash/test-results/perf11/public-adapter.ts",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "embedded harness hash/test-results/perf11/final-batch.mjs",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "embedded harness hash/test-results/perf11/final-group.mjs",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "embedded harness hash/test-results/perf11/final-loads.mjs",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "embedded harness hash/test-results/perf11/summarize.py",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "embedded harness hash/test-results/perf11/validate.mjs",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "embedded harness hash/test-results/perf11/package-final.py",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "embedded harness hash/test-results/perf11/audit-final.py",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "embedded harness hash/test-results/perf11/cleanup-final.py",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "embedded harness hash/test-results/perf11/write-report.py",
+      "passCheck": true,
+      "detail": null
+    },
+    {
+      "name": "embedded harness hash/test-results/perf11/live-final.mjs",
+      "passCheck": true,
+      "detail": null
+    }
+  ]
+}

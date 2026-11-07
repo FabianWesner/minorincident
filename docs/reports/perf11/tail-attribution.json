@@ -1,0 +1,160 @@
+{
+  "captures": [
+    {
+      "side": "prod",
+      "tier": "high",
+      "maximum": {
+        "index": 3552,
+        "ms": 66.70000000001164,
+        "at": 59716.6999994278,
+        "tick": 63848,
+        "charge": 3600
+      },
+      "durationMs": 90197.5,
+      "firstChargeCompleteMs": 59649.99999942779,
+      "buildsNearMaximum": [],
+      "rawSource": "test-results/perf11/final/high-L10/strips/webgpu/L10.json",
+      "rawSha256": "6ae5d007a49907f89fbc3d0a8e068ddadf47b48e25fdbdd1e514669484a385af"
+    },
+    {
+      "side": "candidate",
+      "tier": "high",
+      "maximum": {
+        "index": 319,
+        "ms": 50,
+        "at": 5384.900000572205,
+        "tick": 60588,
+        "charge": 443
+      },
+      "durationMs": 90162.4000005722,
+      "firstChargeCompleteMs": 59649.400000572205,
+      "buildsNearMaximum": [
+        {
+          "at": 5246.900000572205,
+          "tick": 60579,
+          "material": "pal_picketWhite",
+          "loading": false
+        },
+        {
+          "at": 5316.400000572205,
+          "tick": 60582,
+          "material": "pal_picketWhite",
+          "loading": false
+        },
+        {
+          "at": 5352.10000038147,
+          "tick": 60583,
+          "material": "pal_picketWhite",
+          "loading": false
+        }
+      ],
+      "rawSource": "test-results/perf11/final/high-L10/strips/webgpu/L10.json",
+      "rawSha256": "6ae5d007a49907f89fbc3d0a8e068ddadf47b48e25fdbdd1e514669484a385af"
+    },
+    {
+      "side": "prod",
+      "tier": "low",
+      "maximum": {
+        "index": 311,
+        "ms": 50,
+        "at": 5257.000000572203,
+        "tick": 61228,
+        "charge": 435
+      },
+      "durationMs": 60136.300000190735,
+      "firstChargeCompleteMs": 59954.8000005722,
+      "buildsNearMaximum": [
+        {
+          "at": 5168,
+          "tick": 61222,
+          "material": "pal_picketWhite",
+          "loading": false
+        },
+        {
+          "at": 5212.400000572205,
+          "tick": 61223,
+          "material": "pal_picketWhite",
+          "loading": false
+        },
+        {
+          "at": 5258.60000038147,
+          "tick": 61225,
+          "material": "pal_picketWhite",
+          "loading": false
+        },
+        {
+          "at": 5297.800000190735,
+          "tick": 61228,
+          "material": "pal_picketWhite",
+          "loading": false
+        },
+        {
+          "at": 5369.300000190735,
+          "tick": 61234,
+          "material": "corpse_pal_picketWhite",
+          "loading": false
+        }
+      ],
+      "rawSource": "test-results/perf11/final/low-L4-L7-L10/strips/webgpu/L4-L7-L10.json",
+      "rawSha256": "e81217349821e0448be324f379524de02c46d9f22641064cf31d8e28a655f2fa"
+    },
+    {
+      "side": "candidate",
+      "tier": "low",
+      "maximum": {
+        "index": 3602,
+        "ms": 83.40000000000873,
+        "at": 60255.79999980927,
+        "tick": 64528,
+        "charge": 3600
+      },
+      "durationMs": 60342.800000190735,
+      "firstChargeCompleteMs": 59955.699999809265,
+      "buildsNearMaximum": [],
+      "rawSource": "test-results/perf11/final/low-L4-L7-L10/strips/webgpu/L4-L7-L10.json",
+      "rawSha256": "e81217349821e0448be324f379524de02c46d9f22641064cf31d8e28a655f2fa"
+    }
+  ],
+  "diagnostic": {
+    "diagnostic": true,
+    "seconds": 70,
+    "side": "candidate",
+    "tier": "low",
+    "maximum": {
+      "index": 313,
+      "ms": 50,
+      "at": 5325.200000190736,
+      "tick": 61232,
+      "charge": 439
+    },
+    "longTasks": [],
+    "cleanupCommands": [
+      {
+        "command": "held-keys",
+        "beforeWall": 1794088617537,
+        "afterWall": 1794088617537,
+        "startMs": 70139.40014648438,
+        "endMs": 70139.40014648438
+      },
+      {
+        "command": "mouse-up",
+        "beforeWall": 1794088617537,
+        "afterWall": 1794088617544,
+        "startMs": 70139.40014648438,
+        "endMs": 70146.40014648438
+      },
+      {
+        "command": "shift-up",
+        "beforeWall": 1794088617544,
+        "afterWall": 1794088617545,
+        "startMs": 70146.40014648438,
+        "endMs": 70147.40014648438
+      }
+    ],
+    "stopRequestMs": 70147.40014648438,
+    "maximumOverlapsCleanup": false,
+    "rawSource": "test-results/perf11/diagnostic/L10-tail/strips/webgpu/L10.json",
+    "rawSha256": "17c04eb1b830bd85ab96a5f362e447933a00dd7c1ba06fbf9d963bb5d77f418c"
+  },
+  "cause": "Unproven: the original unprofiled maximum has no CPU timeline. The original measured failure remains in the verdict table."
+}

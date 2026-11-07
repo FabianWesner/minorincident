@@ -1,0 +1,33 @@
+{
+  "at": "2026-11-07T22:02:30.461985+00:00",
+  "cleanupComplete": true,
+  "removedRawRoot": "test-results/perf11",
+  "rawFilesRemoved": 2905,
+  "rawBytesRemoved": 769176087,
+  "removedOwnedCandidateBuild": "dist",
+  "buildFilesRemoved": 2759,
+  "buildBytesRemoved": 536973946,
+  "restoredPredecessorHarnessFilesRemoved": 29,
+  "ownedPreviewPortsStopped": [
+    4901,
+    4902
+  ],
+  "browserReservationsReleased": true,
+  "browserPoolAudit": {
+    "protocol": 1,
+    "pid": 91433,
+    "ownedReservations": 0
+  },
+  "sharedBrowserPool": "left running; not owned by this job",
+  "deployOrPush": false,
+  "auxiliaryRawReceiptsRemoved": [
+    "test-results/timings/test.json",
+    "test-results/epics/E18/checks.json"
+  ],
+  "initialSourceScratch": {
+    "path": "/tmp/perf11-corpse-before.ts",
+    "removed": true,
+    "bytes": 25579,
+    "sha256": "f8827757b95bda0e4c59f0707eabc274b41598975d3c013bdba1e8aa45c65219"
+  }
+}

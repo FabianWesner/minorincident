@@ -1,0 +1,60 @@
+{
+  "test-results/timings/test.json": {
+    "sha256": "a364c5d9725204ad3f65539c0290bba0942f1e4e4e16e0da026a40c803d43d05",
+    "receipt": {
+      "name": "test",
+      "cases": 150,
+      "counts": {
+        "vitest": 129,
+        "e2e": 9,
+        "invariantsBrowser": 12
+      },
+      "files": 43,
+      "limits": {
+        "cases": 150,
+        "files": 45,
+        "seconds": 240
+      },
+      "command": [
+        "node",
+        "node_modules/vitest/vitest.mjs",
+        "run",
+        "--project",
+        "default",
+        "--configLoader",
+        "runner"
+      ],
+      "seconds": 27.12672625,
+      "exitCode": 0,
+      "signal": null,
+      "failures": [],
+      "at": "2026-11-07T22:01:37.735Z"
+    }
+  },
+  "test-results/epics/E18/checks.json": {
+    "sha256": "7326eaf11952b9a801c2693684a90e232b0087623ab5584127adcf5ab8c8cc60",
+    "receipt": {
+      "target": "E18",
+      "epics": [
+        "E18"
+      ],
+      "checks": [
+        {
+          "command": "npm run typecheck",
+          "status": 0,
+          "seconds": 13.099
+        },
+        {
+          "command": "npm run lint",
+          "status": 0,
+          "seconds": 9.173
+        },
+        {
+          "command": "npm test",
+          "status": 0,
+          "seconds": 27.286
+        }
+      ]
+    }
+  }
+}
