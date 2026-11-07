@@ -1,0 +1,33 @@
+{
+  "row": "L1-07",
+  "status": "PASS",
+  "reviewer": "Codex final-a",
+  "date": "2026-11-07",
+  "commit": "0cbd817165f89940d2810fe2091000538a263ba0",
+  "clauses": [
+    {
+      "clause": "Spread: infected 5 → **≥ 15 at +120 s** (floor 12) → **≥ 25 at +240 s** with an idle remote observer; every new one from a bite.",
+      "verdict": "PASS",
+      "note": "10 current native checks PASS across low/high. low/controlled-fixture remote idle initial five infected: 5; target exactly5 at release (PASS); low/controlled-fixture remote idle living infected at120s: 30; target ≥15 at+120s (PASS); low/controlled-fixture remote idle living infected at240s: 30; target ≥25 at+240s (PASS); low/controlled-fixture remote idle every additional turn follows a bite: {\"turns\":[{\"id\":131,\"tick\":4752,\"bitten\":true},{\"id\":130,\"tick\":4785,\"bitten\":true},{\"id\":133,\"tick\":5166,\"bitten\":true},{\"id\":132,\"tick\":5421,\"bitten\":true},{\"id\":113,\"tick\":5793,\"bitten\":true},{\"id\":114,\"tick\":5825,\"bitten\":true},{\"id\":106,\"tick\":6708,\"bitten\":true},{\"id\":107,\"tick\":6725,\"bitten\":true},{\"id\":136,\"tick\":6832,\"bitten\":true},{\"id\":105,\"tick\":6922,\"bitten\":true},{\"id\":109,\"tick\":6952,\"bitten\":true},{\"id\":137, [full value in proof]; low/controlled-fixture remote observer remains undisturbed: {\"deaths\":0,\"damage\":0,\"knockdowns\":0,\"kills\":0}; target zero deaths, damage and player knockdowns/kills (PASS); high/controlled-fixture remote idle initial five infected: 5; target exactly5 at release (PASS); high/controlled-fixture remote idle living infected at120s: 49; target ≥15 at+120s (PASS); high/controlled-fixture remote idle living infected at240s: 53; target ≥25 at+240s (PASS); high/controlled-fixture remote idle every additional turn follows a bite: {\"turns\":[{\"id\":133,\"tick\":4751,\"bitten\":true},{\"id\":132,\"tick\":4943,\"bitten\":true},{\"id\":135,\"tick\":6153,\"bitten\":true},{\"id\":134,\"tick\":6381,\"bitten\":true},{\"id\":109,\"tick\":6651,\"bitten\":true},{\"id\":143,\"tick\":6858,\"bitten\":true},{\"id\":110,\"tick\":7010,\"bitten\":true},{\"id\":114,\"tick\":7124,\"bitten\":true},{\"id\":113,\"tick\":7175,\"bitten\":true},{\"id\":153,\"tick\":7181,\"bitten\":true},{\"id\":108,\"tick\":7236,\"bitten\":true},{\"id\":144 [full value in proof]; high/controlled-fixture remote observer remains undisturbed: {\"deaths\":0,\"damage\":0,\"knockdowns\":0,\"kills\":0}; target zero deaths, damage and player knockdowns/kills (PASS)"
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/final-a/L1-07-native.json",
+      "sha256": "fdbe4ee5dc92a55d05e7702e1249c3171f45df92c5ebeef06f472a559eb92d2a",
+      "what": "10 current native checks PASS across low/high. low/controlled-fixture remote idle initial five infected: 5; target exactly5 at release (PASS); low/controlled-fixture remote idle living infected at120s: 30; target ≥15 at+120s (PASS); low/controlled-fixture remote idle living infected at240s: 30; target ≥25 at+240s (PASS); low/controlled-fixture remote idle every additional turn follows a bite: {\"turns\":[{\"id\":131,\"tick\":4752,\"bitten\":true},{\"id\":130,\"tick\":4785,\"bitten\":true},{\"id\":133,\"tick\":5166,\"bitten\":true},{\"id\":132,\"tick\":5421,\"bitten\":true},{\"id\":113,\"tick\":5793,\"bitten\":true},{\"id\":114,\"tick\":5825,\"bitten\":true},{\"id\":106,\"tick\":6708,\"bitten\":true},{\"id\":107,\"tick\":6725,\"bitten\":true},{\"id\":136,\"tick\":6832,\"bitten\":true},{\"id\":105,\"tick\":6922,\"bitten\":true},{\"id\":109,\"tick\":6952,\"bitten\":true},{\"id\":137, [full value in proof]; low/controlled-fixture remote observer remains undisturbed: {\"deaths\":0,\"damage\":0,\"knockdowns\":0,\"kills\":0}; target zero deaths, damage and player knockdowns/kills (PASS); high/controlled-fixture remote idle initial five infected: 5; target exactly5 at release (PASS); high/controlled-fixture remote idle living infected at120s: 49; target ≥15 at+120s (PASS); high/controlled-fixture remote idle living infected at240s: 53; target ≥25 at+240s (PASS); high/controlled-fixture remote idle every additional turn follows a bite: {\"turns\":[{\"id\":133,\"tick\":4751,\"bitten\":true},{\"id\":132,\"tick\":4943,\"bitten\":true},{\"id\":135,\"tick\":6153,\"bitten\":true},{\"id\":134,\"tick\":6381,\"bitten\":true},{\"id\":109,\"tick\":6651,\"bitten\":true},{\"id\":143,\"tick\":6858,\"bitten\":true},{\"id\":110,\"tick\":7010,\"bitten\":true},{\"id\":114,\"tick\":7124,\"bitten\":true},{\"id\":113,\"tick\":7175,\"bitten\":true},{\"id\":153,\"tick\":7181,\"bitten\":true},{\"id\":108,\"tick\":7236,\"bitten\":true},{\"id\":144 [full value in proof]; high/controlled-fixture remote observer remains undisturbed: {\"deaths\":0,\"damage\":0,\"knockdowns\":0,\"kills\":0}; target zero deaths, damage and player knockdowns/kills (PASS)"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L1-low-fixtures.json",
+      "sha256": "732c5f9ec817571bf782ffe583daf68650a18b5d5268d44b43d50e7350167ab2",
+      "what": "Frozen-head L1-07 native input receipt, evaluated by the exact clauses retained in the row proof."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L1-high-fixtures.json",
+      "sha256": "3054f70f6c66327395b15d588d753169b64a88e97203f415503c30605baa6fce",
+      "what": "Frozen-head L1-07 native input receipt, evaluated by the exact clauses retained in the row proof."
+    }
+  ],
+  "notes": "Numeric-only criterion; all evaluator clauses measured at both qualities on the frozen runtime source. No visual or route-readability inference.",
+  "sourceDigest": "00a81dbceddae37bdb1b6540d29f8e3658cdd7d6b7b51968d1fd068c9a6eb63c"
+}
