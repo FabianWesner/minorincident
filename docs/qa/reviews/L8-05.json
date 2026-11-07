@@ -1,31 +1,43 @@
 {
   "row": "L8-05",
   "status": "PASS",
-  "reviewer": "Codex sweep-c5",
-  "date": "2026-11-06",
-  "commit": "aba3d73f52d5e16d522b4c353e36cd5e57b7014e",
+  "reviewer": "Codex final-c",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
   "clauses": [
     {
-      "clause": "Attacks hit civilians, soldiers, staff and animals; animals turn in 2.5\u20133.5 s keeping id/species; 3\u20135 Alphas over the run; concurrent \u2264 200 / 100.",
+      "clause": "Attacks hit civilians, soldiers, staff and animals; animals turn in 2.5–3.5 s keeping id/species; 3–5 Alphas over the run; concurrent ≤ 200 / 100.",
       "verdict": "PASS",
-      "note": "Both canonical native policies/tiers remeasured with read-only observations; all four final state hashes equal controls. Five actual Alpha admissions on every route. Natural competent routes hit civilians/soldiers/animals; high stationary also hits staff, while low staff capability is established by explicitly declared local-threat fixtures (four ordinary60HP runners around existing healthy NPCs, no target HP/AI/faction changes). Every five-species fixture target is actually bitten and converts under the same ID to its corresponding infected archetype in2.5\u20133.5s; low species times2.7167/3.25/2.7333/3/3.1667s, high2.5333/2.9167/2.8667/3.2167/2.55s. Fixture peaks77/144; natural admitted peaks80/92 low and108/199 high remain within100/200. Six actual consumer faults reject staff absence, timing outside2.5\u20133.5, changed ID/species and missing actual bite. Qualifies the original native/capability contract, without claiming the competent route naturally turns every species or attacks staff."
+      "note": "Both unchanged canonical routes record positive infected impacts on civilians and16soldier impacts per tier. Explicit local-threat fixtures additionally record staff hits and all5original animal species bitten and converted with the same IDs to infected.lion/gorilla/elephant/zebra/flamingo; all10animal delays are2.5333–3.25s, within2.5–3.5s. Every target keeps ordinary HP/AI/faction; only ordinary attackers are fixture setup, courier protection disclosed. Natural native routes meet3–5Alpha admissions and200/100concurrent caps in both policies. Canonical event observation leaves both final state hashes unchanged."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-c5/L8-05/L8-05-native.json.gz",
-      "sha256": "8fb0b3176fba2bd2760e899441a2caa0012458e063a2cd19077ec4fc375eb2d5",
-      "what": "Immutable current-source canonical outbreak ledger, explicit ordinary-NPC local bite fixture, or six actual-evaluator fault controls."
+      "file": "docs/reports/final-c/L8-05/coverage.json",
+      "sha256": "5fa67179883da924e8dcdf3266d03c02c7971e725351e4c3d01afb9ba6684e11",
+      "what": "Both unchanged canonical routes record positive infected impacts on civilians and16soldier impacts per tier. Explicit local-threat fixtures additionally record staff hits and all5original animal species bitten and converted with the same IDs to infected.lion/gorilla/elephant/zebra/flamingo; all10animal delays are2.5333–3.25s, within2.5–3.5s. Every target keeps ordinary HP/AI/faction; only ordinary attackers are fixture setup, courier protection disclosed. Natural native routes meet3–5Alpha admissions and200/100concurrent caps in both policies. Canonical event observation leaves both final state hashes unchanged."
     },
     {
-      "file": "docs/reports/sweep-c5/L8-05/L8-bite-fixtures.json.gz",
-      "sha256": "54fd410a7ce0705e6f569280837fd977bef5967c69f68ac7f3b1e489e9c8f726",
-      "what": "Immutable current-source canonical outbreak ledger, explicit ordinary-NPC local bite fixture, or six actual-evaluator fault controls."
+      "file": "docs/reports/final-c/L8-05/L8-bite-fixtures.json",
+      "sha256": "ea14a9026c59863180f8d1ca04b2172d0087b83e69dd1d6c839746771a7298c4",
+      "what": "Both unchanged canonical routes record positive infected impacts on civilians and16soldier impacts per tier. Explicit local-threat fixtures additionally record staff hits and all5original animal species bitten and converted with the same IDs to infected.lion/gorilla/elephant/zebra/flamingo; all10animal delays are2.5333–3.25s, within2.5–3.5s. Every target keeps ordinary HP/AI/faction; only ordinary attackers are fixture setup, courier protection disclosed. Natural native routes meet3–5Alpha admissions and200/100concurrent caps in both policies. Canonical event observation leaves both final state hashes unchanged."
     },
     {
-      "file": "docs/reports/sweep-c5/L8-05/L8-05-bite-fault-proof.json.gz",
-      "sha256": "63db9526eb147829a020cea7ba473d3e1256edbfc8cb28f51508a4cd0e7b4ab9",
-      "what": "Immutable current-source canonical outbreak ledger, explicit ordinary-NPC local bite fixture, or six actual-evaluator fault controls."
+      "file": "docs/reports/final-c/L8-05/producer.ts",
+      "sha256": "2692e192685669514cf7f7c87e17171955b8c38ecdaad803a0c63a5501ad44b3",
+      "what": "Exact measurement producer snapshot; only output locations differ from the existing observer."
+    },
+    {
+      "file": "docs/reports/final-c/shared-l8/native.json.gz",
+      "sha256": "c103e65df509435bc174568c6e1fe086708e3a09833b830b225a959096b9de9b",
+      "what": "Both unchanged canonical routes record positive infected impacts on civilians and16soldier impacts per tier. Explicit local-threat fixtures additionally record staff hits and all5original animal species bitten and converted with the same IDs to infected.lion/gorilla/elephant/zebra/flamingo; all10animal delays are2.5333–3.25s, within2.5–3.5s. Every target keeps ordinary HP/AI/faction; only ordinary attackers are fixture setup, courier protection disclosed. Natural native routes meet3–5Alpha admissions and200/100concurrent caps in both policies. Canonical event observation leaves both final state hashes unchanged."
+    },
+    {
+      "file": "docs/reports/final-c/shared-l8/canonical-producer.mjs",
+      "sha256": "3fd60a42f5bed598c637ef21f9c776a766b2c15cb19170e47cdda23e32c7adf5",
+      "what": "Exact measurement producer snapshot; only output locations differ from the existing observer."
     }
-  ]
+  ],
+  "notes": "Frozen-head row review. Current immutable evidence, unchanged criterion and game source.",
+  "sourceDigest": "3f346fc1f0af18cb190b29844498febc36a720450de65904caad638582d717b9"
 }
