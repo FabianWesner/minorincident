@@ -1,0 +1,124 @@
+{
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "revision": "75b9c67d7e94308c40779186919a233bb93e7c82",
+  "runs": [
+    {
+      "tier": "low",
+      "acquisitionSeconds": 4.45,
+      "actualShots": 600,
+      "hudSamples": 798,
+      "npcReloadingCalloutSamples": 40,
+      "normalCadenceGaps": 594,
+      "captureBoundaryGaps": [
+        {
+          "afterShot": 100,
+          "ticks": 24
+        },
+        {
+          "afterShot": 200,
+          "ticks": 36
+        },
+        {
+          "afterShot": 300,
+          "ticks": 24
+        },
+        {
+          "afterShot": 400,
+          "ticks": 36
+        },
+        {
+          "afterShot": 500,
+          "ticks": 24
+        }
+      ],
+      "finalHorde": [
+        {
+          "file": "test-results/final-a/L3-01/captures/low-600-z0.5.png",
+          "sha256": "e9ea0377536a7112bfcd0946b6ecc0826a825f50c10ba633401f62bac66530ec",
+          "actualZoom": 1,
+          "living": 84,
+          "drawnInCamera": 82
+        },
+        {
+          "file": "test-results/final-a/L3-01/captures/low-600-z1.png",
+          "sha256": "f8309e7d346e5856fbf84fe94337d39ccb49a96f1d68829737b4654f5a03e1d7",
+          "actualZoom": 1,
+          "living": 84,
+          "drawnInCamera": 82
+        },
+        {
+          "file": "test-results/final-a/L3-01/captures/low-600-z1.5.png",
+          "sha256": "3139865a767784a3958a907cb372ec0599260872119df3865e2ccdc2a1ab1a08",
+          "actualZoom": 1,
+          "living": 84,
+          "drawnInCamera": 82
+        }
+      ]
+    },
+    {
+      "tier": "high",
+      "acquisitionSeconds": 4.45,
+      "actualShots": 600,
+      "hudSamples": 798,
+      "npcReloadingCalloutSamples": 35,
+      "normalCadenceGaps": 594,
+      "captureBoundaryGaps": [
+        {
+          "afterShot": 100,
+          "ticks": 24
+        },
+        {
+          "afterShot": 200,
+          "ticks": 36
+        },
+        {
+          "afterShot": 300,
+          "ticks": 24
+        },
+        {
+          "afterShot": 400,
+          "ticks": 36
+        },
+        {
+          "afterShot": 500,
+          "ticks": 24
+        }
+      ],
+      "finalHorde": [
+        {
+          "file": "test-results/final-a/L3-01/captures/high-600-z0.5.png",
+          "sha256": "ccb3ebe91c20a6a864003aeae6938c23e5ad2afb571a322e149c7812376fc3e1",
+          "actualZoom": 1,
+          "living": 187,
+          "drawnInCamera": 185
+        },
+        {
+          "file": "test-results/final-a/L3-01/captures/high-600-z1.png",
+          "sha256": "5a272fca3c680fe6b24f721ce9cf3be57a0f82b5a26f09bb773b6ca1eab254df",
+          "actualZoom": 1,
+          "living": 187,
+          "drawnInCamera": 185
+        },
+        {
+          "file": "test-results/final-a/L3-01/captures/high-600-z1.5.png",
+          "sha256": "da5d935d593deb2b6b92e3a7ddea236c2d2f66135a2b653a3137f654e0a8f20d",
+          "actualZoom": 1,
+          "living": 187,
+          "drawnInCamera": 185
+        }
+      ]
+    }
+  ],
+  "sourceInspection": [
+    {
+      "file": "src/sim/missions/LevelThreeCollapse.ts",
+      "sha256": "9d41ca2c0031c21fe63e06edff73f2b373b2460d97e092ee0cda01976cf798c2"
+    },
+    {
+      "file": "src/levels/L3/mission.ts",
+      "sha256": "c7708d4a2db14658d991950d787398e38b04ed20dfb9788e187228f351026e26"
+    }
+  ],
+  "grantObservation": "LevelThreeCollapse.withholdPickups atline123 withholds loose handgun; sole takeHandgun call line226 is armory completion. mission.ts armory interaction has actual l3-armory anchor radius1.2m and sole handgun grant at onComplete. Normal browser pickup267ticks=4.45s. Independent fresh native fixture40HP dies after2 actual20HP hits at each tier.",
+  "cadenceObservation": "The existing capture producer clears input and advances15ticks at each100-shot image boundary. All594 other firing gaps are20ticks. Five boundary gaps24/36ticks are retained; no false claim of uninterrupted all599gap cadence. HUD text ledger retains NPC Reloading callouts;18personally inspected fullHUD images show no courier reload/ammo widget."
+}

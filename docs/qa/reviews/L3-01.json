@@ -1,32 +1,38 @@
 {
   "row": "L3-01",
   "status": "PASS",
-  "reviewer": "Codex sweep-a3",
-  "date": "2026-11-06",
-  "commit": "d660b9f3f76c0b3265e88ee5289663980db2dd79",
+  "reviewer": "Codex final-a",
+  "date": "2026-11-07",
+  "commit": "e62fb27ef165d840baddf9fc40f57e5a31de47df",
   "clauses": [
     {
       "clause": "Handgun only at the armory, within 40 s of start; no reload/ammo UI over 600 shots; 40 HP infected = 2 hits.",
       "verdict": "PASS",
-      "note": "All18 fresh WebGPU low/high frames inspected at0/100/200/300/400/500/600 actual handgun attacks. Full HUD has no reload/ammunition widget; 798 text samples per tier retain40low/35high allied “Reloading!” callout samples (ticks870–3165low/870–2415high); these are NPC speech, not courier reload/ammo UI. Source Allies.ts emits that exact callout; all18 HUD images show the courier icon without ammo/reload widgets. Normal armory acquisition at tick267 =4.45s; sole L3 grant is armory.onComplete at l3-armory (source inspection). Exact-current controlled40HP specimen dies after two20HP production hits in both tiers. No weapon/ammunition injection."
+      "note": "All18 current WebGPU low/high full-HUD frames personally inspected on five original-resolution sheets at0/100/200/300/400/500/600 actual handgun attacks. No courier ammunition/reload UI;798 HUD samples/tier retain40low/35high NPC Reloading callouts, not misclassified as courier widgets. Normal armory pickup267ticks=4.45s; current source withholds loose handgun and sole grant occurs on actual l3-armory interaction. Fresh native40HP specimen dies after two20HP hits both tiers. Actual600shots/tier,594 regular20tick gaps; five capture-induced gaps24/36 at100shot boundaries explicitly retained. Courier damage protection only for600shot observation. Requested final zoom0.5/1/1.5 remains scripted yard1; no zoom-extreme claim."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-a3/L3-01-current-ledger.json.gz",
-      "sha256": "ece1164f144839b77c5453af1c71ccfb00384c38cfafd01a81970484203c5325",
-      "what": "All18 fresh WebGPU low/high frames inspected at0/100/200/300/400/500/600 actual handgun attacks. Full HUD has no reload/ammunition widget; 798 text samples per tier retain40low/35high allied “Reloading!” callout samples (ticks870–3165low/870–2415high); these are NPC speech, not courier reload/ammo UI. Source Allies.ts emits that exact callout; all18 HUD images show the courier icon without ammo/reload widgets. Normal armory acquisition at tick267 =4.45s; sole L3 grant is armory.onComplete at l3-armory (source inspection). Exact-current controlled40HP specimen dies after two20HP production hits in both tiers. No weapon/ammunition injection."
+      "file": "docs/reports/final-a/L3-01-shots-and-grant.json",
+      "sha256": "9b25d23dbee5cd8fe9eb3ec70482ba4087aa4614d9688d8c24edb2187a7588f9",
+      "what": "All18 current WebGPU low/high full-HUD frames personally inspected on five original-resolution sheets at0/100/200/300/400/500/600 actual handgun attacks. No courier ammunition/reload UI;798 HUD samples/tier retain40low/35high NPC Reloading callouts, not misclassified as courier widgets. Normal armory pickup267ticks=4.45s; current source withholds loose handgun and sole grant occurs on actual l3-armory interaction. Fresh native40HP specimen dies after two20HP hits both tiers. Actual600shots/tier,594 regular20tick gaps; five capture-induced gaps24/36 at100shot boundaries explicitly retained. Courier damage protection only for600shot observation. Requested final zoom0.5/1/1.5 remains scripted yard1; no zoom-extreme claim."
     },
     {
-      "file": "docs/reports/sweep-a3/L3-01-current-images.json",
-      "sha256": "f4b479c3041a7f4c01864cfcb10b69fb1926c7a2b1129bf8d7f8176c1db2f3ed",
-      "what": "All18 fresh WebGPU low/high frames inspected at0/100/200/300/400/500/600 actual handgun attacks. Full HUD has no reload/ammunition widget; 798 text samples per tier retain40low/35high allied “Reloading!” callout samples (ticks870–3165low/870–2415high); these are NPC speech, not courier reload/ammo UI. Source Allies.ts emits that exact callout; all18 HUD images show the courier icon without ammo/reload widgets. Normal armory acquisition at tick267 =4.45s; sole L3 grant is armory.onComplete at l3-armory (source inspection). Exact-current controlled40HP specimen dies after two20HP production hits in both tiers. No weapon/ammunition injection."
+      "file": "docs/reports/final-a/L3-01-browser-ledger.json.gz",
+      "sha256": "7d21ce96dbb0158816fa97c1cb94fafa4ab65976f57bef10073ec38825e492f3",
+      "what": "All18 current WebGPU low/high full-HUD frames personally inspected on five original-resolution sheets at0/100/200/300/400/500/600 actual handgun attacks. No courier ammunition/reload UI;798 HUD samples/tier retain40low/35high NPC Reloading callouts, not misclassified as courier widgets. Normal armory pickup267ticks=4.45s; current source withholds loose handgun and sole grant occurs on actual l3-armory interaction. Fresh native40HP specimen dies after two20HP hits both tiers. Actual600shots/tier,594 regular20tick gaps; five capture-induced gaps24/36 at100shot boundaries explicitly retained. Courier damage protection only for600shot observation. Requested final zoom0.5/1/1.5 remains scripted yard1; no zoom-extreme claim."
     },
     {
-      "file": "docs/reports/sweep-a3/L3-01-grant-source.json",
-      "sha256": "2073e26c627edebcda0715fdebb3677ca3682ef461a669f47698a64dfcbb4f27",
-      "what": "All18 fresh WebGPU low/high frames inspected at0/100/200/300/400/500/600 actual handgun attacks. Full HUD has no reload/ammunition widget; 798 text samples per tier retain40low/35high allied “Reloading!” callout samples (ticks870–3165low/870–2415high); these are NPC speech, not courier reload/ammo UI. Source Allies.ts emits that exact callout; all18 HUD images show the courier icon without ammo/reload widgets. Normal armory acquisition at tick267 =4.45s; sole L3 grant is armory.onComplete at l3-armory (source inspection). Exact-current controlled40HP specimen dies after two20HP production hits in both tiers. No weapon/ammunition injection."
+      "file": "docs/reports/final-a/L3-01-image-review.json",
+      "sha256": "70d83f7169924ab6282035034ce15d9c6b4254c3c78abe4aa72870bc1629ec29",
+      "what": "All18 current WebGPU low/high full-HUD frames personally inspected on five original-resolution sheets at0/100/200/300/400/500/600 actual handgun attacks. No courier ammunition/reload UI;798 HUD samples/tier retain40low/35high NPC Reloading callouts, not misclassified as courier widgets. Normal armory pickup267ticks=4.45s; current source withholds loose handgun and sole grant occurs on actual l3-armory interaction. Fresh native40HP specimen dies after two20HP hits both tiers. Actual600shots/tier,594 regular20tick gaps; five capture-induced gaps24/36 at100shot boundaries explicitly retained. Courier damage protection only for600shot observation. Requested final zoom0.5/1/1.5 remains scripted yard1; no zoom-extreme claim."
+    },
+    {
+      "file": "docs/reports/final-a/L3-01-current-proof.json",
+      "sha256": "60bb517f1b7beb3f3366163f301f8dbfe762faa95964884acae4313be6ef9045",
+      "what": "All18 current WebGPU low/high full-HUD frames personally inspected on five original-resolution sheets at0/100/200/300/400/500/600 actual handgun attacks. No courier ammunition/reload UI;798 HUD samples/tier retain40low/35high NPC Reloading callouts, not misclassified as courier widgets. Normal armory pickup267ticks=4.45s; current source withholds loose handgun and sole grant occurs on actual l3-armory interaction. Fresh native40HP specimen dies after two20HP hits both tiers. Actual600shots/tier,594 regular20tick gaps; five capture-induced gaps24/36 at100shot boundaries explicitly retained. Courier damage protection only for600shot observation. Requested final zoom0.5/1/1.5 remains scripted yard1; no zoom-extreme claim."
     }
   ],
-  "notes": "Courier damage suppressed solely to keep 600-shot count/UI observation running. Camera requested0.5/1/1.5 for final shots is actually yard-locked1; no zoom-extreme coverage claimed."
+  "notes": "Game source frozen at4e570db. Current pooled headless capture/input evidence and exact sourceDigest; image files retained only under test-results.",
+  "sourceDigest": "b54f676bf2eb09a12c8059dce4ebe53003816773db044d7acfc253fccbedccf9"
 }
