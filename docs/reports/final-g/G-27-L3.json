@@ -2,7 +2,8 @@
   "level": "L3",
   "reviewer": "final-g/Codex",
   "glitches": [
-    "Low run reaches checkpoint but corgi23 remains(-72.5633,23.4243) while courier is(224.2017,-1.5857),~298m apart. Crowd/corpse pile grows outside gate; no static penetration at dog pose. High run completes."
+    "Low run reaches checkpoint but corgi23 remains(-72.5633,23.4243) while courier is(224.2017,-1.5857),~298m apart. Crowd/corpse pile grows outside gate; no static penetration at dog pose. High run completes.",
+    "Low repeat1 successfully keeps the dog moving past the old stall location, brings it beside courier at checkpoint tick8826, and reaches actual L4 handover. This shows non-universality, not correction or erasure of the original failed trial."
   ],
   "stunning": {
     "verdict": "P",
@@ -24,6 +25,15 @@
     {
       "file": "docs/reports/final-g/G-27-L3-wait.json",
       "sha256": "0518001774a352b94f69e32c6f215f67a5b86365b2bfefd0519b8eadfc2d9833"
+    },
+    {
+      "file": "docs/reports/final-g/L3-low-repeat1-captures.json",
+      "sha256": "430f5cc7add5a1ef138cadcc00b741c53f2de5d58cfbd871db534e7c91607f4a"
+    },
+    {
+      "file": "docs/reports/final-g/G-25-L3-low-repeat1.json",
+      "sha256": "d742d729db451e1aee3df13dfc9e4c9975f26d1c63c76f0fd56307295174b8e5"
     }
-  ]
+  ],
+  "scope": "Original incomplete low trial, completed high trial, and completed ordinary low repeat1; no manual route/objective intervention in the successful repeat."
 }
