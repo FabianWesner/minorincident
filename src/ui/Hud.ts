@@ -493,7 +493,14 @@ export class Hud {
     // checkpoint"): no pin, place name or distance to a hiding place; the sign-of-life sounds lead the search.
     // Q-321 (PO 11-01 "L5 is not showing the accusting icons anymore on the radar"): the ♪ ping shows only while a call
     // is heard, at its source, and goes with the sound.
-    const heard = l5.cue && l5.cue.until > this.game.world.tick ? l5.cue : null;
+    const cue = l5.cue;
+    // The simulated ping window is a maximum duration, not proof that the
+    // positional one-shot is still audible. Audio voices can end earlier
+    // (for example Mia's recorded call), so keep the minimap note tied to the
+    // live source at that exact hiding-place position.
+    const voicePlaying = cue && [...this.game.audio.graph.active.values()].some(voice =>
+      !voice.stopped && voice.position && Math.hypot(voice.position.x - cue.x, voice.position.z - cue.z) < 0.01);
+    const heard = cue && cue.until > this.game.world.tick && voicePlaying ? cue : null;
     setHidden(this.cuePin, !heard);
     if (heard) { this.place(this.cuePin, heard.x, heard.z, px, pz, true); attribute(this.cuePin, 'aria-label', 'A sign of life'); attribute(this.cuePin, 'data-survivor', heard.key); }
     let cueLabel = '';
