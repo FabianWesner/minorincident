@@ -1,21 +1,22 @@
 {
   "row": "L5-03",
   "status": "PASS",
-  "reviewer": "Codex/sweep-b",
-  "date": "2026-11-06",
-  "commit": "7fd82bc971236a733750c5b7876679d3aa5ea6e0",
+  "reviewer": "Codex/final-b",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
   "clauses": [
     {
-      "clause": "**Infected: \u2265 5\u00d7 the 11-01 count, as singles/pairs (no group > 3, no horde), spread over all streets** \u2192 target \u2265 90 placed (high) / \u2265 60 (low) (tune; measured 18 on low). PO: \"Nr can be 5x higher than it is. Like in L3. No hordes, just singles ones here and there, but many of them.\"",
+      "clause": "**Infected: ≥ 5× the 11-01 count, as singles/pairs (no group > 3, no horde), spread over all streets** → target ≥ 90 placed (high) / ≥ 60 (low) (tune; measured 18 on low). PO: \"Nr can be 5x higher than it is. Like in L3. No hordes, just singles ones here and there, but many of them.\"",
       "verdict": "PASS",
-      "note": "Both tiers: actual initial living infected100low/150high exceed unchanged row minimum60/90. Deterministic placement replay reconciles every admitted ID to its accepted authored cohort; every requested/admitted centre matches exactly (maximum shift0m), no authored cohort exceeds2 bodies. Every one of8 authored row bands and11 column bands contains admitted living infected; full transforms/IDs/cohorts retained. Bands use nearest authored centreline, avoiding an invented road width. This initial-placement verdict does not interpret the later pursuing crowd as an initial spawn group."
+      "note": "Frozen-head actual initial living identities:100 low/150 high, above60/90 targets (and>=5x historical18 count). Actual accepted source cohorts max2; all8 horizontal street bands and11 vertical street columns populated at both tiers. Every admitted transform retained and reconciled with accepted source placement/home; no world/input/actor mutation. This is an initial placement census, not a claim that pursuing actors never accumulate later during play."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-b/L5-census.json",
-      "sha256": "f8385fefbe59b6d308212ce77ba2021495e6fb56cafd0fdf57729157bca3347c",
-      "what": "Both tiers: actual initial living infected100low/150high exceed unchanged row minimum60/90. Deterministic placement replay reconciles every admitted ID to its accepted authored cohort; every requested/admitted centre matches exactly (maximum shift0m), no authored cohort exceeds2 bodies. Every one of8 authored row bands and11 column bands contains admitted living infected; full transforms/IDs/cohorts retained. Bands use nearest authored centreline, avoiding an invented road width. This initial-placement verdict does not interpret the later pursuing crowd as an initial spawn group."
+      "file": "docs/reports/final-b/L5-census.json",
+      "sha256": "9fb879417a3b4534da7a31ad0b56029c212bd06373c52c096eae91729ad6f682",
+      "what": "Frozen-head actual initial living identities:100 low/150 high, above60/90 targets (and>=5x historical18 count). Actual accepted source cohorts max2; all8 horizontal street bands and11 vertical street columns populated at both tiers. Every admitted transform retained and reconciled with accepted source placement/home; no world/input/actor mutation. This is an initial placement census, not a claim that pursuing actors never accumulate later during play."
     }
-  ]
+  ],
+  "sourceDigest": "96b95aaf00218387ac838466ba4e849719809eef34f96b67f54241001dca8a39"
 }
