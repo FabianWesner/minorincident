@@ -175,9 +175,8 @@ test('the asset validator rejects every contract violation, and every production
   const reports = await validateAssets(sample, true);
   expect(reports.length).toBeGreaterThanOrEqual(sample.length);
   expect(reports.flatMap(r => r.errors.map(e => `${r.id}: ${e}`))).toEqual([]);
-}, 120_000);
 
-test('r6-truck: the seated crew roof cut removes only roof geometry above the cab interior, at every fire-engine LOD', async () => {
+  // r6-truck: the seated crew roof cut removes only roof geometry above the fire-engine cab interior, at every LOD.
   // PO 11-07 "L2 Some part is missing of the truck": the seat-footprint cut reached 0.3 m into the closed shutter housing behind the
   // cab, whose AO-black inside read as a hole. Inside the cut footprint (asset root frame) the band from head height (2.3) to just
   // under the ceiling (2.74) must be open cabin air: a wall or a neighbouring assembly there would be sliced open by the cut.
@@ -210,4 +209,4 @@ test('r6-truck: the seated crew roof cut removes only roof geometry above the ca
       expect(p.x > roof.x0 && p.x < roof.x1 && Math.abs(p.z) < roof.z, `${file} ${seat.getName()}`).toBe(true);
     }
   }
-});
+}, 120_000);
