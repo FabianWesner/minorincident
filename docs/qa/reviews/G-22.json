@@ -8,7 +8,7 @@
     {
       "clause": "Every phase announced as a threat (\"Stop the infected\", \"Hold\", \"Cover the retreat\", breach/alarm captions) starts with several infected that can reach the player; first attack ≤ 20 s after the announcement (tune).",
       "verdict": "FAIL",
-      "note": "Current frozen-source native counterexample: L4 high complete war-0 cohort (announced at tick1969, not1969seconds) spawns48; first actual player attack occurs20.933333s later, exceeding20s. L6 low/high entry-5 first attack79.8s with2 admitted members; entry-4 first attack87.833333s. No timing/count threshold is changed."
+      "note": "Current L4 high complete seed1 war-0@1969 is repaired: all48/48 members spawned and first player attack was19.55s after announcement (≤20s), with no flags; see the fresh native receipt. The separate L6 entry-5 / entry-4 delayed-contact counterexamples remain open, so the global row stays FAIL."
     }
   ],
   "evidence": [
@@ -16,6 +16,11 @@
       "file": "docs/reports/final-g/G-22-native.json",
       "sha256": "2bf2c4d56c5505b055e5d85b57c04007f017885d4ba610b7077f87e111057835",
       "what": "Current frozen-source native counterexample: L4 high complete war-0 cohort (announced at tick1969, not1969seconds) spawns48; first actual player attack occurs20.933333s later, exceeding20s. L6 low/high entry-5 first attack79.8s with2 admitted members; entry-4 first attack87.833333s. No timing/count threshold is changed."
+    },
+    {
+      "file": "docs/reports/blk-c/G-22-L4-high.json",
+      "sha256": "e32c80a576bfb4dfeb3d0fda5058d0b05a184496284ab4f626769fb238012aaa",
+      "what": "Fresh native L4 high complete seed1: war-0@1969 spawned48/48; first actual player attack at19.55s after announcement, under20s; no wave flags."
     }
   ],
   "notes": "Fresh review of frozen source and current receipt values. Source digest is computed from current relevant file bytes; archived prior evidence is not relabelled.",

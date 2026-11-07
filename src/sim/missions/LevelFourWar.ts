@@ -887,7 +887,11 @@ export class LevelFourWar {
       const mouth = mouths[Math.floor(s.alarmCursor / 3) % mouths.length];
       const lane = s.alarmCursor % 3, row = Math.floor(s.alarmCursor / (mouths.length * 3));
       const at = this.snap({ x: mouth.at.x + (lane - 1) * .9, z: mouth.at.z + row * .8 }, .45);
-      const id = this.emerge(at, true, 0);
+      // On the high-tier announced war-0 cohort, the first three bodies are
+      // runners so a courier who keeps moving still gets an early attacker.
+      // The cohort count, spawn mouths and cap remain unchanged.
+      const spearhead = !this.low && s.alarmCursor < 3;
+      const id = this.emerge(at, true, 0, false, spearhead ? l4.war.spearhead.archetypes : l4InfectedArchetypes);
       if (!id) { s.alarmCursor++; if (s.alarmCursor >= mouths.length * 6) break; continue; }
       ids.push(id); s.emergedIds.push(id); s.origin[id] = mouth.index;
       ai.press(id, 1, world.tick + ticks(30), 40);
