@@ -1642,7 +1642,10 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       await releaseAim(); await press(keys); await hold(e.route && Math.hypot(e.route.dx, e.route.dz) < 4 ? 250 : 700); await press([]);
       log({ visibleMarkerUnstick: e.tick, keys, guidance: e.marker?.guidance, arrow: e.marker && { x: e.marker.x, y: e.marker.y } }); continue;
     }
-    if ((e.level !== 'L10' || !visibleOnly) && stalled && !atRing && ring && e.player) {
+    // Being within the four-metre observation band is not arrival. The L1
+    // fire-bay lip can still need a detour three metres from the trigger;
+    // suppressing route recovery there repeated the same blocked key forever.
+    if ((e.level !== 'L10' || !visibleOnly) && stalled && !arrived && ring && e.player) {
       if (visibleOnly) {
         const points = await page.evaluate(({ p, goal }) => [window.__SS__!.input.project(p, 'player'), window.__SS__!.input.project(goal, 'player')], { p: e.player, goal: ring });
         if (Math.hypot(e.player.x - navPos.x, e.player.z - navPos.z) > .6) navPos = { x: e.player.x, z: e.player.z, wall: Date.now() };
