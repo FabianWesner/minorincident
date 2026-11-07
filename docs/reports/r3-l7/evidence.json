@@ -1,0 +1,1727 @@
+{
+  "identity": {
+    "sourceHash": "51a7f306fd1f8ea651b87d1216548009cca3a8ce03d88ffdf25e9dc8cee276aa",
+    "observerHash": "7f2ba02c82a52f461e55141d0d71fe09be4647b4b0cbb5914c85c8ce45fcecb8",
+    "revision": "4ec0166cfc4c340f73ddff48b12de97b95ce29d7"
+  },
+  "commits": {
+    "boarding": "d79c5c2d",
+    "firstUse": "4ec0166c"
+  },
+  "boarding": {
+    "sourceHash": "51a7f306fd1f8ea651b87d1216548009cca3a8ce03d88ffdf25e9dc8cee276aa",
+    "revision": "4ec0166cfc4c340f73ddff48b12de97b95ce29d7",
+    "finished": true,
+    "errors": [],
+    "allAboardFirstObservedTick": 5640,
+    "lastEntryTick": 5534,
+    "allAboardTick": 5570,
+    "departureStartedAt": 5630,
+    "boarded": [
+      56,
+      65,
+      62,
+      64,
+      68,
+      51,
+      52,
+      54,
+      55,
+      53,
+      57,
+      58,
+      59,
+      60,
+      61,
+      63,
+      66,
+      67,
+      69,
+      70,
+      71,
+      72,
+      73,
+      74
+    ],
+    "samples": [
+      {
+        "tick": 5160,
+        "aboard": 0,
+        "entering": 0
+      },
+      {
+        "tick": 5280,
+        "aboard": 4,
+        "entering": 3
+      },
+      {
+        "tick": 5400,
+        "aboard": 12,
+        "entering": 3
+      },
+      {
+        "tick": 5520,
+        "aboard": 20,
+        "entering": 3
+      }
+    ],
+    "captures": [
+      {
+        "file": "test-results/r3-l7/G27-boarding/L7/t0-rocket.png",
+        "sha256": "a37cce96a327cbe98910043091fea6de8a8bd5c27e76b2991b032b27d9aec36c",
+        "tick": 0
+      },
+      {
+        "file": "test-results/r3-l7/G27-boarding/L7/t120-corridor.png",
+        "sha256": "6d07426ad6ccc039236b7d874351b5d22648cb71e32a8cd221368c581ae34808",
+        "tick": 120
+      },
+      {
+        "file": "test-results/r3-l7/G27-boarding/L7/t4440-departure.png",
+        "sha256": "fac05f7d9a7523cd4ed50a8c57f62b36d9643876fab7cf4dfb211ac2c1429ec7",
+        "tick": 4440
+      },
+      {
+        "file": "test-results/r3-l7/G27-boarding/L7/t5160-departure.png",
+        "sha256": "8d6a3635f5de3209d917fa65e0324f599e5af5a31966aae5d8a1f4907d5e0256",
+        "tick": 5160
+      },
+      {
+        "file": "test-results/r3-l7/G27-boarding/L7/t6170-result.png",
+        "sha256": "e005313823026fa365a8b23960545b14821f5747b108e8235de49c59f3ec6562",
+        "tick": 6170
+      }
+    ],
+    "receipt": "test-results/r3-l7/G27-boarding/L7/receipt.json"
+  },
+  "quiet": {
+    "admission": {
+      "at": "2026-11-07T12:46:23.999Z",
+      "pool": true,
+      "quiet": true,
+      "load": [
+        2.9736328125,
+        6.005859375,
+        7.64501953125
+      ],
+      "busy": []
+    },
+    "thresholdMs": 50,
+    "tiers": [
+      {
+        "tier": "low",
+        "sourceHash": "51a7f306fd1f8ea651b87d1216548009cca3a8ce03d88ffdf25e9dc8cee276aa",
+        "recordedRevision": "d79c5c2ddb38253c8170c78ff8404a2482991a01",
+        "pickupDistance": 2.194915771484375,
+        "gate": {
+          "distance": 3,
+          "windows": [
+            {
+              "event": "pickup.collected",
+              "tick": 14,
+              "samples": 22,
+              "maxMs": 16.800000000000182
+            },
+            {
+              "event": "combat.attack",
+              "tick": 23,
+              "samples": 22,
+              "maxMs": 16.800000000000182
+            }
+          ],
+          "pass": true
+        },
+        "windows": [
+          {
+            "event": "pickup.collected",
+            "tick": 14,
+            "maxMs": 16.800000000000182,
+            "frames": [
+              {
+                "at": 4021.1,
+                "level": "L7",
+                "tick": 8,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 273.3550109863281,
+                "z": 15,
+                "ms": 16.699999999999818,
+                "playMs": 16.699999999999818
+              },
+              {
+                "at": 4037.8,
+                "level": "L7",
+                "tick": 9,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 273.4300231933594,
+                "z": 15,
+                "ms": 16.700000000000273,
+                "playMs": 16.700000000000273
+              },
+              {
+                "at": 4054.4,
+                "level": "L7",
+                "tick": 10,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 273.5050354003906,
+                "z": 15,
+                "ms": 16.59999999999991,
+                "playMs": 16.59999999999991
+              },
+              {
+                "at": 4071.1,
+                "level": "L7",
+                "tick": 11,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 273.5800476074219,
+                "z": 15,
+                "ms": 16.699999999999818,
+                "playMs": 16.699999999999818
+              },
+              {
+                "at": 4087.8,
+                "level": "L7",
+                "tick": 12,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 273.6550598144531,
+                "z": 15,
+                "ms": 16.700000000000273,
+                "playMs": 16.700000000000273
+              },
+              {
+                "at": 4104.4,
+                "level": "L7",
+                "tick": 13,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 273.7300720214844,
+                "z": 15,
+                "ms": 16.599999999999454,
+                "playMs": 16.599999999999454
+              },
+              {
+                "at": 4121.1,
+                "level": "L7",
+                "tick": 14,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 273.8050842285156,
+                "z": 15,
+                "ms": 16.700000000000728,
+                "playMs": 16.700000000000728
+              },
+              {
+                "at": 4137.8,
+                "level": "L7",
+                "tick": 15,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 273.8650817871094,
+                "z": 15,
+                "ms": 16.699999999999818,
+                "playMs": 16.699999999999818
+              },
+              {
+                "at": 4154.5,
+                "level": "L7",
+                "tick": 16,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 273.91009521484375,
+                "z": 15,
+                "ms": 16.699999999999818,
+                "playMs": 16.699999999999818
+              },
+              {
+                "at": 4171.1,
+                "level": "L7",
+                "tick": 18,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 273.9551086425781,
+                "z": 15,
+                "ms": 16.600000000000364,
+                "playMs": 16.600000000000364
+              },
+              {
+                "at": 4187.7,
+                "level": "L7",
+                "tick": 18,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 273.9551086425781,
+                "z": 15,
+                "ms": 16.599999999999454,
+                "playMs": 16.599999999999454
+              },
+              {
+                "at": 4204.5,
+                "level": "L7",
+                "tick": 19,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 273.9551086425781,
+                "z": 15,
+                "ms": 16.800000000000182,
+                "playMs": 16.800000000000182
+              },
+              {
+                "at": 4221.1,
+                "level": "L7",
+                "tick": 21,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 273.9551086425781,
+                "z": 15,
+                "ms": 16.600000000000364,
+                "playMs": 16.600000000000364
+              },
+              {
+                "at": 4237.8,
+                "level": "L7",
+                "tick": 21,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 273.9551086425781,
+                "z": 15,
+                "ms": 16.699999999999818,
+                "playMs": 16.699999999999818
+              },
+              {
+                "at": 4254.4,
+                "level": "L7",
+                "tick": 22,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 273.9551086425781,
+                "z": 15,
+                "ms": 16.599999999999454,
+                "playMs": 16.599999999999454
+              },
+              {
+                "at": 4271.1,
+                "level": "L7",
+                "tick": 23,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 273.9551086425781,
+                "z": 15,
+                "ms": 16.700000000000728,
+                "playMs": 16.700000000000728
+              },
+              {
+                "at": 4287.8,
+                "level": "L7",
+                "tick": 24,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 273.9551086425781,
+                "z": 15,
+                "ms": 16.699999999999818,
+                "playMs": 16.699999999999818
+              },
+              {
+                "at": 4304.5,
+                "level": "L7",
+                "tick": 25,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 273.9551086425781,
+                "z": 15,
+                "ms": 16.699999999999818,
+                "playMs": 16.699999999999818
+              },
+              {
+                "at": 4321.1,
+                "level": "L7",
+                "tick": 27,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 273.9551086425781,
+                "z": 15,
+                "ms": 16.600000000000364,
+                "playMs": 16.600000000000364
+              },
+              {
+                "at": 4337.8,
+                "level": "L7",
+                "tick": 27,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 273.9551086425781,
+                "z": 15,
+                "ms": 16.699999999999818,
+                "playMs": 16.699999999999818
+              },
+              {
+                "at": 4354.4,
+                "level": "L7",
+                "tick": 28,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 273.9551086425781,
+                "z": 15,
+                "ms": 16.599999999999454,
+                "playMs": 16.599999999999454
+              },
+              {
+                "at": 4371.1,
+                "level": "L7",
+                "tick": 29,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 273.9551086425781,
+                "z": 15,
+                "ms": 16.700000000000728,
+                "playMs": 16.700000000000728
+              }
+            ]
+          },
+          {
+            "event": "combat.attack",
+            "tick": 23,
+            "maxMs": 16.800000000000182,
+            "frames": [
+              {
+                "at": 4171.1,
+                "level": "L7",
+                "tick": 18,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 273.9551086425781,
+                "z": 15,
+                "ms": 16.600000000000364,
+                "playMs": 16.600000000000364
+              },
+              {
+                "at": 4187.7,
+                "level": "L7",
+                "tick": 18,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 273.9551086425781,
+                "z": 15,
+                "ms": 16.599999999999454,
+                "playMs": 16.599999999999454
+              },
+              {
+                "at": 4204.5,
+                "level": "L7",
+                "tick": 19,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 273.9551086425781,
+                "z": 15,
+                "ms": 16.800000000000182,
+                "playMs": 16.800000000000182
+              },
+              {
+                "at": 4221.1,
+                "level": "L7",
+                "tick": 21,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 273.9551086425781,
+                "z": 15,
+                "ms": 16.600000000000364,
+                "playMs": 16.600000000000364
+              },
+              {
+                "at": 4237.8,
+                "level": "L7",
+                "tick": 21,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 273.9551086425781,
+                "z": 15,
+                "ms": 16.699999999999818,
+                "playMs": 16.699999999999818
+              },
+              {
+                "at": 4254.4,
+                "level": "L7",
+                "tick": 22,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 273.9551086425781,
+                "z": 15,
+                "ms": 16.599999999999454,
+                "playMs": 16.599999999999454
+              },
+              {
+                "at": 4271.1,
+                "level": "L7",
+                "tick": 23,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 273.9551086425781,
+                "z": 15,
+                "ms": 16.700000000000728,
+                "playMs": 16.700000000000728
+              },
+              {
+                "at": 4287.8,
+                "level": "L7",
+                "tick": 24,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 273.9551086425781,
+                "z": 15,
+                "ms": 16.699999999999818,
+                "playMs": 16.699999999999818
+              },
+              {
+                "at": 4304.5,
+                "level": "L7",
+                "tick": 25,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 273.9551086425781,
+                "z": 15,
+                "ms": 16.699999999999818,
+                "playMs": 16.699999999999818
+              },
+              {
+                "at": 4321.1,
+                "level": "L7",
+                "tick": 27,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 273.9551086425781,
+                "z": 15,
+                "ms": 16.600000000000364,
+                "playMs": 16.600000000000364
+              },
+              {
+                "at": 4337.8,
+                "level": "L7",
+                "tick": 27,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 273.9551086425781,
+                "z": 15,
+                "ms": 16.699999999999818,
+                "playMs": 16.699999999999818
+              },
+              {
+                "at": 4354.4,
+                "level": "L7",
+                "tick": 28,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 273.9551086425781,
+                "z": 15,
+                "ms": 16.599999999999454,
+                "playMs": 16.599999999999454
+              },
+              {
+                "at": 4371.1,
+                "level": "L7",
+                "tick": 29,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 273.9551086425781,
+                "z": 15,
+                "ms": 16.700000000000728,
+                "playMs": 16.700000000000728
+              },
+              {
+                "at": 4387.7,
+                "level": "L7",
+                "tick": 30,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 273.9551086425781,
+                "z": 15,
+                "ms": 16.599999999999454,
+                "playMs": 16.599999999999454
+              },
+              {
+                "at": 4404.4,
+                "level": "L7",
+                "tick": 31,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 273.9551086425781,
+                "z": 15,
+                "ms": 16.699999999999818,
+                "playMs": 16.699999999999818
+              },
+              {
+                "at": 4421.1,
+                "level": "L7",
+                "tick": 32,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 273.9551086425781,
+                "z": 15,
+                "ms": 16.700000000000728,
+                "playMs": 16.700000000000728
+              },
+              {
+                "at": 4437.8,
+                "level": "L7",
+                "tick": 33,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 273.9551086425781,
+                "z": 15,
+                "ms": 16.699999999999818,
+                "playMs": 16.699999999999818
+              },
+              {
+                "at": 4454.4,
+                "level": "L7",
+                "tick": 34,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 273.9551086425781,
+                "z": 15,
+                "ms": 16.599999999999454,
+                "playMs": 16.599999999999454
+              },
+              {
+                "at": 4471.1,
+                "level": "L7",
+                "tick": 35,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 273.9551086425781,
+                "z": 15,
+                "ms": 16.700000000000728,
+                "playMs": 16.700000000000728
+              },
+              {
+                "at": 4487.7,
+                "level": "L7",
+                "tick": 36,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 273.9551086425781,
+                "z": 15,
+                "ms": 16.599999999999454,
+                "playMs": 16.599999999999454
+              },
+              {
+                "at": 4504.4,
+                "level": "L7",
+                "tick": 37,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 273.9551086425781,
+                "z": 15,
+                "ms": 16.699999999999818,
+                "playMs": 16.699999999999818
+              },
+              {
+                "at": 4521,
+                "level": "L7",
+                "tick": 38,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 273.9551086425781,
+                "z": 15,
+                "ms": 16.600000000000364,
+                "playMs": 16.600000000000364
+              }
+            ]
+          }
+        ],
+        "events": [
+          {
+            "type": "pickup.collected",
+            "tick": 14,
+            "sourceId": 1,
+            "pickupId": 309,
+            "side": "RIGHT",
+            "actionId": "weapon.rocket-launcher",
+            "replaced": null,
+            "at": 4106.900000572205,
+            "player": {
+              "x": 273.8050842285156,
+              "y": 4.619999885559082,
+              "z": 15,
+              "yaw": -7.850462293418876e-17
+            },
+            "moving": true
+          },
+          {
+            "type": "combat.attack",
+            "tick": 23,
+            "attackId": 1,
+            "actionId": "weapon.rocket-launcher",
+            "combo": 0,
+            "sourceId": 1,
+            "side": "RIGHT",
+            "position": {
+              "x": 273.9551086425781,
+              "y": 4.619999885559082,
+              "z": 15,
+              "yaw": 3.1413381736610475
+            },
+            "direction": {
+              "x": -0.9999999966414845,
+              "z": -0.00008195749438443353
+            },
+            "at": 4258.60000038147,
+            "player": {
+              "x": 273.9551086425781,
+              "y": 4.619999885559082,
+              "z": 15,
+              "yaw": 3.1413381736610475
+            },
+            "moving": false
+          }
+        ],
+        "seed": {
+          "file": "test-results/r3-l7/L7-low-carried-save.json.gz",
+          "sha256": "77bb676c7dd072d667c2aaf54477d09a6fa778f47bfb74e7ad1337d6d3bf19b9"
+        },
+        "receipt": "test-results/r3-l7/quiet/low.json"
+      },
+      {
+        "tier": "high",
+        "sourceHash": "51a7f306fd1f8ea651b87d1216548009cca3a8ce03d88ffdf25e9dc8cee276aa",
+        "recordedRevision": "d79c5c2ddb38253c8170c78ff8404a2482991a01",
+        "pickupDistance": 2.194915771484375,
+        "gate": {
+          "distance": 3,
+          "windows": [
+            {
+              "event": "pickup.collected",
+              "tick": 14,
+              "samples": 22,
+              "maxMs": 16.800000000000182
+            },
+            {
+              "event": "combat.attack",
+              "tick": 26,
+              "samples": 22,
+              "maxMs": 16.800000000000182
+            }
+          ],
+          "pass": true
+        },
+        "windows": [
+          {
+            "event": "pickup.collected",
+            "tick": 14,
+            "maxMs": 16.800000000000182,
+            "frames": [
+              {
+                "at": 5071.4,
+                "level": "L7",
+                "tick": 9,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 273.4300231933594,
+                "z": 15,
+                "ms": 16.699999999999818,
+                "playMs": 16.699999999999818
+              },
+              {
+                "at": 5088,
+                "level": "L7",
+                "tick": 10,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 273.5050354003906,
+                "z": 15,
+                "ms": 16.600000000000364,
+                "playMs": 16.600000000000364
+              },
+              {
+                "at": 5104.7,
+                "level": "L7",
+                "tick": 10,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 273.5050354003906,
+                "z": 15,
+                "ms": 16.699999999999818,
+                "playMs": 16.699999999999818
+              },
+              {
+                "at": 5121.4,
+                "level": "L7",
+                "tick": 12,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 273.6550598144531,
+                "z": 15,
+                "ms": 16.699999999999818,
+                "playMs": 16.699999999999818
+              },
+              {
+                "at": 5138,
+                "level": "L7",
+                "tick": 13,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 273.7300720214844,
+                "z": 15,
+                "ms": 16.600000000000364,
+                "playMs": 16.600000000000364
+              },
+              {
+                "at": 5154.7,
+                "level": "L7",
+                "tick": 13,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 273.7300720214844,
+                "z": 15,
+                "ms": 16.699999999999818,
+                "playMs": 16.699999999999818
+              },
+              {
+                "at": 5171.4,
+                "level": "L7",
+                "tick": 15,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 273.8800964355469,
+                "z": 15,
+                "ms": 16.699999999999818,
+                "playMs": 16.699999999999818
+              },
+              {
+                "at": 5188.1,
+                "level": "L7",
+                "tick": 16,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 273.9512634277344,
+                "z": 15.009239196777344,
+                "ms": 16.700000000000728,
+                "playMs": 16.700000000000728
+              },
+              {
+                "at": 5204.7,
+                "level": "L7",
+                "tick": 17,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 274.007568359375,
+                "z": 15.016547203063965,
+                "ms": 16.599999999999454,
+                "playMs": 16.599999999999454
+              },
+              {
+                "at": 5221.4,
+                "level": "L7",
+                "tick": 18,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 274.0489807128906,
+                "z": 15.021924018859863,
+                "ms": 16.699999999999818,
+                "playMs": 16.699999999999818
+              },
+              {
+                "at": 5238.1,
+                "level": "L7",
+                "tick": 19,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 274.0755310058594,
+                "z": 15.025369644165039,
+                "ms": 16.700000000000728,
+                "playMs": 16.700000000000728
+              },
+              {
+                "at": 5254.7,
+                "level": "L7",
+                "tick": 20,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 274.0871887207031,
+                "z": 15.026885032653809,
+                "ms": 16.599999999999454,
+                "playMs": 16.599999999999454
+              },
+              {
+                "at": 5271.4,
+                "level": "L7",
+                "tick": 21,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 274.0871887207031,
+                "z": 15.026885032653809,
+                "ms": 16.699999999999818,
+                "playMs": 16.699999999999818
+              },
+              {
+                "at": 5288,
+                "level": "L7",
+                "tick": 22,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 274.0871887207031,
+                "z": 15.026885032653809,
+                "ms": 16.600000000000364,
+                "playMs": 16.600000000000364
+              },
+              {
+                "at": 5304.8,
+                "level": "L7",
+                "tick": 22,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 274.0871887207031,
+                "z": 15.026885032653809,
+                "ms": 16.800000000000182,
+                "playMs": 16.800000000000182
+              },
+              {
+                "at": 5321.4,
+                "level": "L7",
+                "tick": 24,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 274.0871887207031,
+                "z": 15.026885032653809,
+                "ms": 16.599999999999454,
+                "playMs": 16.599999999999454
+              },
+              {
+                "at": 5338,
+                "level": "L7",
+                "tick": 25,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 274.0871887207031,
+                "z": 15.026885032653809,
+                "ms": 16.600000000000364,
+                "playMs": 16.600000000000364
+              },
+              {
+                "at": 5354.7,
+                "level": "L7",
+                "tick": 25,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 274.0871887207031,
+                "z": 15.026885032653809,
+                "ms": 16.699999999999818,
+                "playMs": 16.699999999999818
+              },
+              {
+                "at": 5371.4,
+                "level": "L7",
+                "tick": 27,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 274.0871887207031,
+                "z": 15.026885032653809,
+                "ms": 16.699999999999818,
+                "playMs": 16.699999999999818
+              },
+              {
+                "at": 5388,
+                "level": "L7",
+                "tick": 28,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 274.0871887207031,
+                "z": 15.026885032653809,
+                "ms": 16.600000000000364,
+                "playMs": 16.600000000000364
+              },
+              {
+                "at": 5404.7,
+                "level": "L7",
+                "tick": 28,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 274.0871887207031,
+                "z": 15.026885032653809,
+                "ms": 16.699999999999818,
+                "playMs": 16.699999999999818
+              },
+              {
+                "at": 5421.3,
+                "level": "L7",
+                "tick": 30,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 274.0871887207031,
+                "z": 15.026885032653809,
+                "ms": 16.600000000000364,
+                "playMs": 16.600000000000364
+              }
+            ]
+          },
+          {
+            "event": "combat.attack",
+            "tick": 26,
+            "maxMs": 16.800000000000182,
+            "frames": [
+              {
+                "at": 5271.4,
+                "level": "L7",
+                "tick": 21,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 274.0871887207031,
+                "z": 15.026885032653809,
+                "ms": 16.699999999999818,
+                "playMs": 16.699999999999818
+              },
+              {
+                "at": 5288,
+                "level": "L7",
+                "tick": 22,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 274.0871887207031,
+                "z": 15.026885032653809,
+                "ms": 16.600000000000364,
+                "playMs": 16.600000000000364
+              },
+              {
+                "at": 5304.8,
+                "level": "L7",
+                "tick": 22,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 274.0871887207031,
+                "z": 15.026885032653809,
+                "ms": 16.800000000000182,
+                "playMs": 16.800000000000182
+              },
+              {
+                "at": 5321.4,
+                "level": "L7",
+                "tick": 24,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 274.0871887207031,
+                "z": 15.026885032653809,
+                "ms": 16.599999999999454,
+                "playMs": 16.599999999999454
+              },
+              {
+                "at": 5338,
+                "level": "L7",
+                "tick": 25,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 274.0871887207031,
+                "z": 15.026885032653809,
+                "ms": 16.600000000000364,
+                "playMs": 16.600000000000364
+              },
+              {
+                "at": 5354.7,
+                "level": "L7",
+                "tick": 25,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 274.0871887207031,
+                "z": 15.026885032653809,
+                "ms": 16.699999999999818,
+                "playMs": 16.699999999999818
+              },
+              {
+                "at": 5371.4,
+                "level": "L7",
+                "tick": 27,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 274.0871887207031,
+                "z": 15.026885032653809,
+                "ms": 16.699999999999818,
+                "playMs": 16.699999999999818
+              },
+              {
+                "at": 5388,
+                "level": "L7",
+                "tick": 28,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 274.0871887207031,
+                "z": 15.026885032653809,
+                "ms": 16.600000000000364,
+                "playMs": 16.600000000000364
+              },
+              {
+                "at": 5404.7,
+                "level": "L7",
+                "tick": 28,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 274.0871887207031,
+                "z": 15.026885032653809,
+                "ms": 16.699999999999818,
+                "playMs": 16.699999999999818
+              },
+              {
+                "at": 5421.3,
+                "level": "L7",
+                "tick": 30,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 274.0871887207031,
+                "z": 15.026885032653809,
+                "ms": 16.600000000000364,
+                "playMs": 16.600000000000364
+              },
+              {
+                "at": 5438,
+                "level": "L7",
+                "tick": 30,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 274.0871887207031,
+                "z": 15.026885032653809,
+                "ms": 16.699999999999818,
+                "playMs": 16.699999999999818
+              },
+              {
+                "at": 5454.7,
+                "level": "L7",
+                "tick": 31,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 274.0871887207031,
+                "z": 15.026885032653809,
+                "ms": 16.699999999999818,
+                "playMs": 16.699999999999818
+              },
+              {
+                "at": 5471.4,
+                "level": "L7",
+                "tick": 33,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 274.0871887207031,
+                "z": 15.026885032653809,
+                "ms": 16.699999999999818,
+                "playMs": 16.699999999999818
+              },
+              {
+                "at": 5488.1,
+                "level": "L7",
+                "tick": 34,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 274.0871887207031,
+                "z": 15.026885032653809,
+                "ms": 16.700000000000728,
+                "playMs": 16.700000000000728
+              },
+              {
+                "at": 5504.7,
+                "level": "L7",
+                "tick": 35,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 274.0871887207031,
+                "z": 15.026885032653809,
+                "ms": 16.599999999999454,
+                "playMs": 16.599999999999454
+              },
+              {
+                "at": 5521.4,
+                "level": "L7",
+                "tick": 36,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 274.0871887207031,
+                "z": 15.026885032653809,
+                "ms": 16.699999999999818,
+                "playMs": 16.699999999999818
+              },
+              {
+                "at": 5538.1,
+                "level": "L7",
+                "tick": 37,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 274.0871887207031,
+                "z": 15.026885032653809,
+                "ms": 16.700000000000728,
+                "playMs": 16.700000000000728
+              },
+              {
+                "at": 5554.7,
+                "level": "L7",
+                "tick": 38,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 274.0871887207031,
+                "z": 15.026885032653809,
+                "ms": 16.599999999999454,
+                "playMs": 16.599999999999454
+              },
+              {
+                "at": 5571.4,
+                "level": "L7",
+                "tick": 39,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 274.0871887207031,
+                "z": 15.026885032653809,
+                "ms": 16.699999999999818,
+                "playMs": 16.699999999999818
+              },
+              {
+                "at": 5588.1,
+                "level": "L7",
+                "tick": 40,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 274.0871887207031,
+                "z": 15.026885032653809,
+                "ms": 16.700000000000728,
+                "playMs": 16.700000000000728
+              },
+              {
+                "at": 5604.7,
+                "level": "L7",
+                "tick": 41,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 274.0871887207031,
+                "z": 15.026885032653809,
+                "ms": 16.599999999999454,
+                "playMs": 16.599999999999454
+              },
+              {
+                "at": 5621.3,
+                "level": "L7",
+                "tick": 42,
+                "phase": "playing",
+                "loading": false,
+                "paused": false,
+                "x": 274.0871887207031,
+                "z": 15.026885032653809,
+                "ms": 16.600000000000364,
+                "playMs": 16.600000000000364
+              }
+            ]
+          }
+        ],
+        "events": [
+          {
+            "type": "pickup.collected",
+            "tick": 14,
+            "sourceId": 1,
+            "pickupId": 409,
+            "side": "RIGHT",
+            "actionId": "weapon.rocket-launcher",
+            "replaced": null,
+            "at": 5156.800000190735,
+            "player": {
+              "x": 273.8050842285156,
+              "y": 4.619999885559082,
+              "z": 15,
+              "yaw": -7.850462293418876e-17
+            },
+            "moving": true
+          },
+          {
+            "type": "combat.attack",
+            "tick": 26,
+            "attackId": 1,
+            "actionId": "weapon.rocket-launcher",
+            "combo": 0,
+            "sourceId": 1,
+            "side": "RIGHT",
+            "position": {
+              "x": 274.0871887207031,
+              "y": 4.619999885559082,
+              "z": 15.026885032653809,
+              "yaw": -3.140690964856895
+            },
+            "direction": {
+              "x": -0.9999998572646855,
+              "z": -0.0005342944961103164
+            },
+            "at": 5357.39999961853,
+            "player": {
+              "x": 274.0871887207031,
+              "y": 4.619999885559082,
+              "z": 15.026885032653809,
+              "yaw": -3.140690964856895
+            },
+            "moving": false
+          }
+        ],
+        "seed": {
+          "file": "test-results/r3-l7/L7-high-carried-save.json.gz",
+          "sha256": "d272c8e417a3998eacaa5e8a155e280d166072a38f98f85362e564614ca69390"
+        },
+        "receipt": "test-results/r3-l7/quiet/high.json"
+      }
+    ]
+  },
+  "diagnostics": [
+    {
+      "tag": "profile",
+      "tier": "low",
+      "sourceHash": "a651918fccff252d969ee8bde926cd2a7ea6a4e3fc4cb795084f5f05a291cfc7",
+      "gate": {
+        "distance": 3,
+        "windows": [
+          {
+            "event": "pickup.collected",
+            "tick": 14,
+            "samples": 16,
+            "maxMs": 66.69999999999982
+          },
+          {
+            "event": "combat.attack",
+            "tick": 34,
+            "samples": 22,
+            "maxMs": 16.700000000000728
+          }
+        ],
+        "pass": false
+      },
+      "builds": [
+        {
+          "at": 4401.60000038147,
+          "tick": 12,
+          "material": "pal_picketWhite",
+          "materialId": 2403,
+          "objectId": 11032,
+          "context": 13,
+          "path": [
+            "Mesh",
+            "civilian-crowd"
+          ]
+        },
+        {
+          "at": 4700.699999809265,
+          "tick": 30,
+          "material": "corpse_pal_picketWhite",
+          "materialId": 2418,
+          "objectId": 11105,
+          "context": 13,
+          "path": [
+            "corpses:npc.civilian-elderly:death-back",
+            "Group",
+            "civilian-crowd"
+          ]
+        },
+        {
+          "at": 4915.199999809265,
+          "tick": 43,
+          "material": "corpse_pal_picketWhite",
+          "materialId": 2433,
+          "objectId": 11224,
+          "context": 13,
+          "path": [
+            "corpses:npc.civilian-woman-a:death-back",
+            "Group",
+            "civilian-crowd"
+          ]
+        },
+        {
+          "at": 4997.699999809265,
+          "tick": 48,
+          "material": "corpse_pal_picketWhite",
+          "materialId": 2448,
+          "objectId": 11374,
+          "context": 13,
+          "path": [
+            "corpses:npc.civilian-man-a:death-back",
+            "Group",
+            "civilian-crowd"
+          ]
+        },
+        {
+          "at": 5030.89999961853,
+          "tick": 50,
+          "material": "corpse_pal_picketWhite",
+          "materialId": 2463,
+          "objectId": 11512,
+          "context": 13,
+          "path": [
+            "corpses:npc.civilian-man-b:death-back",
+            "Group",
+            "civilian-crowd"
+          ]
+        },
+        {
+          "at": 5065.60000038147,
+          "tick": 52,
+          "material": "corpse_pal_picketWhite",
+          "materialId": 2478,
+          "objectId": 11660,
+          "context": 13,
+          "path": [
+            "corpses:npc.civilian-woman-b:death-back",
+            "Group",
+            "civilian-crowd"
+          ]
+        },
+        {
+          "at": 5132,
+          "tick": 56,
+          "material": "pal_picketWhite",
+          "materialId": 2636,
+          "objectId": 13090,
+          "context": 13,
+          "path": [
+            "inf.alpha"
+          ]
+        },
+        {
+          "at": 5171.60000038147,
+          "tick": 57,
+          "material": "pal_picketWhite",
+          "materialId": 2637,
+          "objectId": 13113,
+          "context": 13,
+          "path": [
+            "inf.alpha"
+          ]
+        },
+        {
+          "at": 5235.800000190735,
+          "tick": 61,
+          "material": "pal_picketWhite",
+          "materialId": 2651,
+          "objectId": 13283,
+          "context": 13,
+          "path": [
+            "inf.alpha-fire"
+          ]
+        },
+        {
+          "at": 5279.5,
+          "tick": 63,
+          "material": "corpse_pal_picketWhite",
+          "materialId": 2654,
+          "objectId": 13304,
+          "context": 13,
+          "path": [
+            "corpses:npc.civilian-woman-b.aftermath:death-back",
+            "Group",
+            "civilian-crowd"
+          ]
+        }
+      ],
+      "receipt": "test-results/r3-l7/profile/low.json",
+      "cpu": "test-results/r3-l7/profile/low.cpuprofile"
+    },
+    {
+      "tag": "profile",
+      "tier": "high",
+      "sourceHash": "a651918fccff252d969ee8bde926cd2a7ea6a4e3fc4cb795084f5f05a291cfc7",
+      "gate": {
+        "distance": 3,
+        "windows": [
+          {
+            "event": "pickup.collected",
+            "tick": 14,
+            "samples": 15,
+            "maxMs": 100
+          },
+          {
+            "event": "combat.attack",
+            "tick": 34,
+            "samples": 20,
+            "maxMs": 33.30000000000018
+          }
+        ],
+        "pass": false
+      },
+      "builds": [],
+      "receipt": "test-results/r3-l7/profile/high.json",
+      "cpu": "test-results/r3-l7/profile/high.cpuprofile"
+    },
+    {
+      "tag": "complete-profile",
+      "tier": "low",
+      "sourceHash": "51a7f306fd1f8ea651b87d1216548009cca3a8ce03d88ffdf25e9dc8cee276aa",
+      "gate": {
+        "distance": 3,
+        "windows": [
+          {
+            "event": "pickup.collected",
+            "tick": 14,
+            "samples": 22,
+            "maxMs": 16.699999999999818
+          },
+          {
+            "event": "combat.attack",
+            "tick": 28,
+            "samples": 22,
+            "maxMs": 16.800000000000182
+          }
+        ],
+        "pass": true
+      },
+      "builds": [],
+      "receipt": "test-results/r3-l7/complete-profile/low.json",
+      "cpu": "test-results/r3-l7/complete-profile/low.cpuprofile"
+    },
+    {
+      "tag": "complete-profile",
+      "tier": "high",
+      "sourceHash": "51a7f306fd1f8ea651b87d1216548009cca3a8ce03d88ffdf25e9dc8cee276aa",
+      "gate": {
+        "distance": 3,
+        "windows": [
+          {
+            "event": "pickup.collected",
+            "tick": 14,
+            "samples": 19,
+            "maxMs": 33.400000000000546
+          },
+          {
+            "event": "combat.attack",
+            "tick": 32,
+            "samples": 21,
+            "maxMs": 33.30000000000018
+          }
+        ],
+        "pass": true
+      },
+      "builds": [],
+      "receipt": "test-results/r3-l7/complete-profile/high.json",
+      "cpu": "test-results/r3-l7/complete-profile/high.cpuprofile"
+    }
+  ],
+  "cpuComparison": [
+    {
+      "tag": "profile",
+      "tier": "low",
+      "sampledMs": 1458.744000000001,
+      "skinnedVertexMatrixSelfMs": 116.45400000000008,
+      "nodeBuildSelfMs": 84.85700000000004
+    },
+    {
+      "tag": "profile",
+      "tier": "high",
+      "sampledMs": 1381.5429999999967,
+      "skinnedVertexMatrixSelfMs": 118.38500000000002,
+      "nodeBuildSelfMs": 0
+    },
+    {
+      "tag": "complete-profile",
+      "tier": "low",
+      "sampledMs": 1403.2379999999944,
+      "skinnedVertexMatrixSelfMs": 0,
+      "nodeBuildSelfMs": 0
+    },
+    {
+      "tag": "complete-profile",
+      "tier": "high",
+      "sampledMs": 1454.0419999999992,
+      "skinnedVertexMatrixSelfMs": 0,
+      "nodeBuildSelfMs": 0
+    }
+  ],
+  "appearanceRegression": [
+    {
+      "injectedMissingPreparation": true,
+      "tick": 0,
+      "residents": 190,
+      "prepared": 0
+    },
+    {
+      "injectedMissingPreparation": false,
+      "tick": 0,
+      "residents": 190,
+      "prepared": 190
+    }
+  ],
+  "validation": {
+    "verify": {
+      "target": "E29",
+      "epics": [
+        "E29"
+      ],
+      "checks": [
+        {
+          "command": "npm run typecheck",
+          "status": 0,
+          "seconds": 13.619
+        },
+        {
+          "command": "npm run lint",
+          "status": 0,
+          "seconds": 9.494
+        },
+        {
+          "command": "npm test",
+          "status": 0,
+          "seconds": 27.429
+        }
+      ]
+    },
+    "tests": {
+      "files": 27,
+      "passed": 107
+    },
+    "threat": {
+      "receipt": "test-results/r3-l7/qa-threat-final/audit.json",
+      "revision": "4ec0166cfc4c340f73ddff48b12de97b95ce29d7",
+      "levelFlags": [],
+      "passiveFlags": [],
+      "followerPaceFlags": [],
+      "passiveFollowerPaceFlags": [],
+      "globalFlags": [
+        "PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate"
+      ]
+    }
+  },
+  "artifacts": [
+    {
+      "file": "test-results/r3-l7/quiet/low.json",
+      "sha256": "fbb5fcb4519c611d4c3c9d2f216006989b2ea4237b31978db60197609be3766a"
+    },
+    {
+      "file": "test-results/r3-l7/quiet/high.json",
+      "sha256": "9ceddbdb4e7756ce352a3f6019b7d636c35608144b213e34a66ab8be44a401f3"
+    },
+    {
+      "file": "test-results/r3-l7/profile/low.json",
+      "sha256": "312187cf92d5b794d20bd60e9aa5101bc8a3e435ef956d8f74f6f194ddcd19eb"
+    },
+    {
+      "file": "test-results/r3-l7/profile/low.cpuprofile",
+      "sha256": "9ce3dfc5d2074eb4458da96e391d46456d372d79cef98fe928ede8f6f48fe96b"
+    },
+    {
+      "file": "test-results/r3-l7/profile/high.json",
+      "sha256": "2b675690a1b6de9e77c303af4ceb17cd91991763ddb6d1e466490ed76bef2685"
+    },
+    {
+      "file": "test-results/r3-l7/profile/high.cpuprofile",
+      "sha256": "36ea963cfd7cd9a5b7d09c170abbdf078a7dde4eb2653c3c94a8481365a348fa"
+    },
+    {
+      "file": "test-results/r3-l7/complete-profile/low.json",
+      "sha256": "e77bdcd888485a87f2370fb965952441b6055338d9cee8cc7e471964f020192e"
+    },
+    {
+      "file": "test-results/r3-l7/complete-profile/low.cpuprofile",
+      "sha256": "1ac6fa9692d66b3fb28e582f61c302fd897c0ca243955026937b526694f6eb66"
+    },
+    {
+      "file": "test-results/r3-l7/complete-profile/high.json",
+      "sha256": "403a39b499fcd6b992addd22fd6967b6d829d3bb5f3e30b3c99af7eea09479e2"
+    },
+    {
+      "file": "test-results/r3-l7/complete-profile/high.cpuprofile",
+      "sha256": "dfb8910250b0ef9588c42fac7108bbc8da5c51fe882c7c70b2d7c5074bc74a1c"
+    },
+    {
+      "file": "test-results/r3-l7/G27-boarding/L7/receipt.json",
+      "sha256": "c6919caaf8a2d71dfc6700f0367df569ba8aae3b3fb7ad010c86ba0c4021c3d8"
+    },
+    {
+      "file": "test-results/r3-l7/qa-threat-final/audit.json",
+      "sha256": "139d26924c41b10bcd7612658d2638c54d2fdc122acd8355ac59726cb556373a"
+    },
+    {
+      "file": "test-results/epics/E29/checks.json",
+      "sha256": "38708522750348c58462089166b832cdd715682ce0bfba6513fdbdcb5e419c73"
+    },
+    {
+      "file": "test-results/r3-l7/cpu-comparison.json",
+      "sha256": "5e80a8a81ba0927ee9921339cacc59574447bc69f91e80fca2d854483c77ab21"
+    },
+    {
+      "file": "test-results/r3-l7/appearance-proof.json",
+      "sha256": "22f86254168fde0855eb30d4f37a291a03c1c1f86f1bcffbd06c987abd324fd1"
+    }
+  ]
+}
