@@ -49,11 +49,13 @@ export class Physics implements Lifecycle {
     const g = this.ground;
     return g && Math.abs(x - (g.center?.x ?? 0)) <= g.width / 2 && Math.abs(z - (g.center?.z ?? 0)) <= g.depth / 2 ? 0 : -Infinity;
   }
-  /** Static layout/blocker AABBs become fixed Rapier colliders at level load only. */
+  /** Static layout boxes retain their authored orientation in fixed Rapier colliders. */
   addStatic(aabb: Aabb, origin: [number,number]): number {
     if (aabb.navOnly) return -1;
-    const half = aabb.max.map((v,i)=>(v-aabb.min[i])/2);
-    return this.world!.createCollider(RAPIER.ColliderDesc.cuboid(half[0],half[1],half[2]).setTranslation((aabb.min[0]+aabb.max[0])/2+origin[0],(aabb.min[1]+aabb.max[1])/2,(aabb.min[2]+aabb.max[2])/2+origin[1])).handle;
+    const f = aabb.navFootprint, half = aabb.max.map((v,i)=>(v-aabb.min[i])/2);
+    const desc = RAPIER.ColliderDesc.cuboid(f?.halfX ?? half[0], half[1], f?.halfZ ?? half[2]);
+    if (f) desc.setRotation({ x: 0, y: Math.sin(f.yaw / 2), z: 0, w: Math.cos(f.yaw / 2) });
+    return this.world!.createCollider(desc.setTranslation((f?.x ?? (aabb.min[0]+aabb.max[0])/2)+origin[0],(aabb.min[1]+aabb.max[1])/2,(f?.z ?? (aabb.min[2]+aabb.max[2])/2)+origin[1])).handle;
   }
   update(): void { if (this.world) { this.world.timestep = FIXED_DT; this.world.step(); } }
   /** Exercise cold WASM solver/sweep paths during loading, without advancing the

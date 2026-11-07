@@ -167,12 +167,39 @@ test('corgi: warns of an offscreen threat within 18 m with a unit direction', as
       expect([...w.entities.iterate()].filter(e => e.pickup && 'actionId' in e.pickup && e.pickup.survivorOnly).length).toBe(8);
     } finally { w.dispose(); }
   }
-  // G-27 (final-g low real-input route): the corgi stood in the house-c gate gap beside the crashed Oak sedan at
-  // (-72.56, 23.42) for 171 s while the courier waited at the army checkpoint 298 m away. The wreck's baked box leaves the
-  // gate cells as a cut-off pocket on the crowd grid; the dog must still follow the courier who walked past it.
+  // Trail escape also works in L1: failed routing stands still for 2 s, then follows the courier's recorded path.
+  {
+    const w = await loadRunnerLevel('L1', 1, undefined, 0, { quality: 'low' });
+    try {
+      const dog = [...w.entities.iterate()].find(e => e.companion)!;
+      const player = w.entities.get(1)!, start = { x: player.transform.x, z: player.transform.z };
+      player.hidden = false; player.health.current = player.health.max;
+      for (let i = 0; i < 12; i++) {
+        player.transform.x = start.x + i * .6;
+        w.npcs!.companion.update();
+      }
+      dog.transform.x = start.x; dog.transform.z = start.z; w.spatial.set(dog.id, start.x, start.z);
+      const trail = w.npcs!.companion.trailPoint(dog), steer = vi.spyOn(w.infected!.nav, 'steer').mockReturnValue(false);
+      const move = vi.spyOn(w.npcs!, 'moveStep'), path = { path: [] as number[], goal: -1, pathIndex: 0 };
+      const failedAt = w.tick + 1;
+      for (let elapsed = 0; elapsed < 120; elapsed++) {
+        w.tick = failedAt + elapsed;
+        expect(w.npcs!.move(dog, { x: 1000, z: 1000 }, 3, path, .1)).toBe(false);
+      }
+      expect(move).not.toHaveBeenCalled(); expect(trail).not.toBeNull();
+      w.tick = failedAt + 120;
+      expect(w.npcs!.move(dog, { x: 1000, z: 1000 }, 3, path, .1)).toBe(true);
+      expect(move).toHaveBeenCalledOnce(); expect(dog.transform.x).toBeGreaterThan(start.x);
+      steer.mockRestore();
+    } finally { w.dispose(); }
+  }
+  // G-27: the Oak sedan's rotated nav footprint must leave a route through the gate beside the wreck.
   {
     const w = await loadRunnerLevel('L3', 1, preset('L3-default'), 0, { quality: 'low' });
     try {
+      const crowd = w.infected!.nav;
+      expect(crowd.blocked[crowd.cell(-70.75, 24.25)], 'the wreck leaves a full-clearance cell on the authored gate-side aisle').toBe(0);
+      expect(crowd.path(crowd.cell(-70.25, 24.25), crowd.nearestCell(-60, 28), [], Infinity), 'lamp leaves the full .5 m crowd a gate-side route').toBe(true);
       w.player!.damage = () => 0;
       const dog = [...w.entities.iterate()].find(e => e.companion)!, controls = missionControls(w);
       controls.teleport('player', { x: -82, z: 23.7 });
@@ -186,7 +213,7 @@ test('corgi: warns of an offscreen threat within 18 m with a unit direction', as
       walk({ x: -69, z: 23.7 }, 200);
       controls.teleport(dog.id, { x: -72.5633, z: 23.4243 });
       const nav = w.infected!.nav, start = nav.nearestCell(dog.transform.x, dog.transform.z, .44);
-      expect(nav.path(start, nav.nearestCell(-60, 23.7, .44), [], 1600)).toBe(false); // the pocket this guards
+      expect(nav.path(start, nav.nearestCell(-60, 23.7, .44), [], 1600)).toBe(true); // the rotated wreck no longer seals the gate
       walk({ x: -60, z: 23.7 }, 240); walk({ x: -55, z: 21 }, 120); walk({ x: -51, z: 9 }, 240);
       const p = w.entities.get(1)!.transform;
       expect(Math.hypot(dog.transform.x - p.x, dog.transform.z - p.z)).toBeLessThan(6);

@@ -23,7 +23,7 @@ export class Npcs {
   /** A failed route search is retried after a second, not every tick (l4-collapse-2: a soldier sent to a post behind a closed
    * barricade ran a 1600-expansion A* per tick, 3 ms of every L4 war tick). */
   private readonly unreachable = new Map<number, { x: number; z: number; until: number }>();
-  /** G-27: first tick of an L3 companion's current run of failed route searches. */
+  /** First tick of a companion's current run of failed route searches. */
   private readonly routeless = new Map<number, number>();
   constructor(readonly world: SimWorld) {
     this.civilians = new Civilians(world); this.companion = new Companion(world); this.escorts = new Escorts(world); this.traffic = new Traffic(world); }
@@ -90,7 +90,7 @@ export class Npcs {
         // Every route search from that pocket fails, so it stood there for the rest of the level and the army boom waited
         // for it forever. After 2 s without any route, body-swept movement toward the courier's own trail slides it back
         // out and the grid takes over again; brief transient failures keep the established stand-and-retry.
-        const pocket = !!e.companion && !!this.world.missions?.def.l3;
+        const pocket = !!e.companion;
         if (pocket && !(this.routeless.get(e.id)! <= tick)) this.routeless.set(e.id, tick); // first failure, or a restored earlier tick
         const trail = pocket && tick - this.routeless.get(e.id)! >= 120 ? this.companion.trailPoint(e) : null;
         if (!trail) { this.unreachable.set(e.id, { x: target.x, z: target.z, until: tick + 60 }); return false; }
