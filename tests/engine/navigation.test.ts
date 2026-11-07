@@ -1,6 +1,8 @@
 // Navigation core: one NavGrid (collider-baked, dynamic blockers, budgeted A*) moves every infected, ally and pet in all levels.
 import { afterEach, expect, test } from 'vitest';
 import { NavGrid } from '../../src/sim/ai/NavGrid';
+import { bakeNav } from '../../src/sim/world/NavGrid';
+import type { DistrictLayout } from '../../src/levels/districts/types';
 import { SimWorld } from '../../src/sim/world/SimWorld';
 import { loadL4 } from '../../tools/sim-runner/l4Bots';
 import { survivor } from '../../src/data/survivor';
@@ -26,6 +28,16 @@ test('capsule moves: a body inside the wall margin slides out and never moves de
   nav.move(p, .1, 0, .34); expect(nav.clear(p.x, p.z, .34)).toBe(true);
   for (let i = 0; i < 30; i++) nav.move(p, -.1, -.1, .34);
   expect(nav.clear(p.x, p.z, .34)).toBe(true);
+  const layout = { bounds: [[-8, -8], [8, -8], [8, 8], [-8, 8]], walkable: { excluded: [] } } as unknown as DistrictLayout;
+  const bounds = { min: [-4, 0, -4] as [number, number, number], max: [4, 2, 4] as [number, number, number], navFootprint: { x: 0, z: 0, halfX: 3.5, halfZ: .5, yaw: Math.PI / 4 } };
+  const districtNav = bakeNav([{ layout, origin: [0, 0], colliders: [bounds] }], 1, .5);
+  expect(districtNav.walkable([3.25, -3.25])).toBe(true);
+  expect(districtNav.walkable([2.25, -2.25])).toBe(false);
+  const aiNav = new NavGrid({ width: 20, depth: 20 }, [{ x: 0, z: 0, y: 1, halfX: 4, halfZ: 4, halfY: 1, navFootprint: { x: 0, z: 0, halfX: 3.5, halfZ: .5, yaw: Math.PI / 4 } }]);
+  expect(aiNav.clear(3, -3, .35)).toBe(true); expect(aiNav.clear(2, -2, .35)).toBe(false);
+  expect(aiNav.visible({ x: 3, z: -3 }, { x: 5, z: -1 }, .35)).toBe(true);
+  const maskedNav = new NavGrid(aiNav.ground, aiNav.walls, aiNav.clearance, aiNav.center, () => true);
+  expect(aiNav.blocked).toEqual(maskedNav.blocked);
   {
   // fix55-l3: a body shoved deeper than the margin cut is not wedged; it slides out along the face, never deeper.
   // The L3 corgi stood 0.12 m inside a kerb blocker (radius 0.44, cuts up to 0.1) and refused every step for 450 s.

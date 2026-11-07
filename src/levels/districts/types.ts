@@ -33,6 +33,8 @@ export interface PlacementTransform {
   yaw: number;
 }
 export interface Aabb {
+  /** Oriented planar footprint used by crowd navigation; bounds remain the collision broad phase. */
+  navFootprint?: { x: number; z: number; halfX: number; halfZ: number; yaw: number };
   /** Obstacle on an elevated route, retained by planar navigation despite its height. */
   navBlocker?: boolean;
   /** Streamed set dressing (L10): a physics static that blocks the player, but no AI nav/cover wall (keeps the crowd sim cost and routes unchanged). */

@@ -10,6 +10,12 @@ const marginSteps = [0.002, 0.005, 0.01, 0.02, 0.04, 0.06, 0.08, 0.1];
 const nearestMemoCapacity = 64;
 /** Exact capsule-margin segment test, shared by one-cell and multi-cell queries. */
 function segmentIntersectsWall(wall: Wall, from: { x: number; z: number }, to: { x: number; z: number }, dx: number, dz: number, radius: number): boolean {
+  if (wall.navFootprint) {
+    const f = wall.navFootprint, c = Math.cos(f.yaw), s = Math.sin(f.yaw);
+    const local = (p: { x: number; z: number }) => ({ x: (p.x - f.x) * c - (p.z - f.z) * s, z: (p.x - f.x) * s + (p.z - f.z) * c });
+    const a = local(from), b = local(to);
+    return segmentIntersectsWall({ ...wall, x: 0, z: 0, halfX: f.halfX, halfZ: f.halfZ, navFootprint: undefined }, a, b, b.x - a.x, b.z - a.z, radius);
+  }
   const minX = wall.x - wall.halfX - radius, maxX = wall.x + wall.halfX + radius;
   const minZ = wall.z - wall.halfZ - radius, maxZ = wall.z + wall.halfZ + radius;
   // Rapier's rounded capsule can rest inside a conservative expanded box
@@ -123,10 +129,15 @@ export class NavGrid {
     }
     const walls = this.walls.filter(w => w.navBlocker || w.y - w.halfY < 1.8 && w.y + w.halfY > .05);
     for (const wall of [...walls, ...this.blockers.values()]) {
-      const cx = (wall.x - this.center.x + this.ground.width / 2) / step - .5, cz = (wall.z - this.center.z + this.ground.depth / 2) / step - .5;
-      const x0 = Math.max(0, Math.floor(cx - (wall.halfX + r) / step)), x1 = Math.min(this.width - 1, Math.ceil(cx + (wall.halfX + r) / step));
-      const z0 = Math.max(0, Math.floor(cz - (wall.halfZ + r) / step)), z1 = Math.min(this.depth - 1, Math.ceil(cz + (wall.halfZ + r) / step));
-      for (let z = z0; z <= z1; z++) for (let x = x0; x <= x1; x++) if (Math.abs(this.x(x) - wall.x) < wall.halfX + r && Math.abs(this.z(z * this.width) - wall.z) < wall.halfZ + r) this.blocked[z * this.width + x] = 1;
+      const f = wall.navFootprint, c = Math.cos(f?.yaw ?? 0), s = Math.sin(f?.yaw ?? 0), hx = f?.halfX ?? wall.halfX, hz = f?.halfZ ?? wall.halfZ, ox = f?.x ?? wall.x, oz = f?.z ?? wall.z;
+      const extentX = Math.abs(c) * (hx + r) + Math.abs(s) * (hz + r), extentZ = Math.abs(s) * (hx + r) + Math.abs(c) * (hz + r);
+      const cx = (ox - this.center.x + this.ground.width / 2) / step - .5, cz = (oz - this.center.z + this.ground.depth / 2) / step - .5;
+      const x0 = Math.max(0, Math.floor(cx - extentX / step)), x1 = Math.min(this.width - 1, Math.ceil(cx + extentX / step));
+      const z0 = Math.max(0, Math.floor(cz - extentZ / step)), z1 = Math.min(this.depth - 1, Math.ceil(cz + extentZ / step));
+      for (let z = z0; z <= z1; z++) for (let x = x0; x <= x1; x++) {
+        const dx = this.x(x) - ox, dz = this.z(z * this.width) - oz;
+        if (Math.abs(dx * c - dz * s) < hx + r && Math.abs(dx * s + dz * c) < hz + r) this.blocked[z * this.width + x] = 1;
+      }
     }
   }
   cell(x: number, z: number): number {
@@ -170,14 +181,14 @@ export class NavGrid {
     if (!this.routeBuckets.size && !this.blockers.size) return true;
     const cellX = Math.floor(x / 4), cellZ = Math.floor(z / 4);
     const walls = this.routeBuckets.get(cellX)?.get(cellZ);
-    if (walls) for (const w of walls) if (rounded ? this.intersects(w, x, z, radius) : Math.abs(x - w.x) < w.halfX + radius && Math.abs(z - w.z) < w.halfZ + radius) return false;
+    if (walls) for (const w of walls) if (rounded || w.navFootprint ? this.intersects(w, x, z, radius, rounded) : Math.abs(x - w.x) < w.halfX + radius && Math.abs(z - w.z) < w.halfZ + radius) return false;
     const blockers = this.blockerBuckets.get(cellX)?.get(cellZ);
     if (blockers) {
       // Corpse sweeps and ordinary moves have no ignored blocker. Values avoid
       // allocating an entry pair for every obstacle in every sampled substep.
       if (ignoreBlocker === undefined) {
-        for (const w of blockers.values()) if (rounded ? this.intersects(w, x, z, radius) : Math.abs(x - w.x) < w.halfX + radius && Math.abs(z - w.z) < w.halfZ + radius) return false;
-      } else for (const [id, w] of blockers) if (id !== ignoreBlocker && (rounded ? this.intersects(w, x, z, radius) : Math.abs(x - w.x) < w.halfX + radius && Math.abs(z - w.z) < w.halfZ + radius)) return false;
+        for (const w of blockers.values()) if (rounded || w.navFootprint ? this.intersects(w, x, z, radius, rounded) : Math.abs(x - w.x) < w.halfX + radius && Math.abs(z - w.z) < w.halfZ + radius) return false;
+      } else for (const [id, w] of blockers) if (id !== ignoreBlocker && (rounded || w.navFootprint ? this.intersects(w, x, z, radius, rounded) : Math.abs(x - w.x) < w.halfX + radius && Math.abs(z - w.z) < w.halfZ + radius)) return false;
     }
     return true;
   }
@@ -186,17 +197,23 @@ export class NavGrid {
     if (!this.contains(x, z, radius)) return Infinity;
     const cellX = Math.floor(x / 4), cellZ = Math.floor(z / 4);
     let deepest = 0;
-    const visit = (w: Wall) => { const ox = w.halfX + radius - Math.abs(x - w.x), oz = w.halfZ + radius - Math.abs(z - w.z); if (ox > 0 && oz > 0) deepest = Math.max(deepest, Math.min(ox, oz)); };
+    const visit = (w: Wall) => {
+      const f = w.navFootprint, c = Math.cos(f?.yaw ?? 0), s = Math.sin(f?.yaw ?? 0), dx = x - (f?.x ?? w.x), dz = z - (f?.z ?? w.z);
+      const ox = (f?.halfX ?? w.halfX) + radius - Math.abs(dx * c - dz * s), oz = (f?.halfZ ?? w.halfZ) + radius - Math.abs(dx * s + dz * c);
+      if (ox > 0 && oz > 0) deepest = Math.max(deepest, Math.min(ox, oz));
+    };
     for (const w of this.routeBuckets.get(cellX)?.get(cellZ) ?? []) visit(w);
     for (const w of this.blockerBuckets.get(cellX)?.get(cellZ)?.values() ?? []) visit(w);
     return deepest;
   }
-  private intersects(w: Wall, x: number, z: number, radius: number): boolean {
-    const dx = Math.abs(x - w.x), dz = Math.abs(z - w.z);
-    if (dx >= w.halfX + radius || dz >= w.halfZ + radius) return false;
+  private intersects(w: Wall, x: number, z: number, radius: number, rounded = true): boolean {
+    const f = w.navFootprint, c = Math.cos(f?.yaw ?? 0), s = Math.sin(f?.yaw ?? 0), px = x - (f?.x ?? w.x), pz = z - (f?.z ?? w.z);
+    const dx = Math.abs(px * c - pz * s), dz = Math.abs(px * s + pz * c), hx = f?.halfX ?? w.halfX, hz = f?.halfZ ?? w.halfZ;
+    if (dx >= hx + radius || dz >= hz + radius) return false;
+    if (!rounded) return true;
     // Match the circular capsule footprint at box corners, rather than a square
     // dilation that can declare a valid Rapier position trapped inside a wall.
-    const outsideX = Math.max(0, dx - w.halfX), outsideZ = Math.max(0, dz - w.halfZ);
+    const outsideX = Math.max(0, dx - hx), outsideZ = Math.max(0, dz - hz);
     return radius === 0 || outsideX * outsideX + outsideZ * outsideZ < radius * radius;
   }
   /** Exact solid query over the existing bake buckets; no second static collision world.

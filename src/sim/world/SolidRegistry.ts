@@ -241,7 +241,7 @@ export class SolidRegistry {
       const hullOwner = this.blockerOwners.get(id);
       if (hullOwner !== undefined && this.hulls.has(hullOwner)) return;
       if (at === e?.transform && (owner !== undefined && this.blockerOwners.get(id) === owner || seatOwner !== undefined && id === `blocker:${seatOwner}`)) return;
-      visit(box, id);
+      visit(box.navFootprint ? { ...box, ...box.navFootprint } : box, id);
     });
     if (!this.hulls.size) return;
     const passenger = owner ?? (e?.hidden ? this.world.missions?.l4?.passengerHull(e) : undefined);

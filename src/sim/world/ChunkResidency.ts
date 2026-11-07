@@ -32,7 +32,7 @@ export class ChunkResidency {
   constructor(readonly world: SimWorld, readonly chunks: readonly TerrainChunk[], readonly size: number) {
     this.min = [Math.min(...chunks.map(c => c.origin[0])), Math.min(...chunks.map(c => c.origin[1]))];
     for (const c of chunks) { this.lookup.set(c.id, c); this.cells.set(this.cellKey(c.origin[0], c.origin[1]), c); }
-    for (const d of world.districts!.districts) for (const c of [...d.decay.colliders, ...d.blockers.map(aabb => ({ aabb, walkable: false }))]) { const a = c.aabb; this.own({ ...a, min: [a.min[0] + d.origin[0], a.min[1], a.min[2] + d.origin[1]], max: [a.max[0] + d.origin[0], a.max[1], a.max[2] + d.origin[1]] }, c.walkable ?? false); }
+    for (const d of world.districts!.districts) for (const c of [...d.decay.colliders, ...d.blockers.map(aabb => ({ aabb, walkable: false }))]) { const a = c.aabb; this.own({ ...a, ...(a.navFootprint ? { navFootprint: { ...a.navFootprint, x: a.navFootprint.x + d.origin[0], z: a.navFootprint.z + d.origin[1] } } : {}), min: [a.min[0] + d.origin[0], a.min[1], a.min[2] + d.origin[1]], max: [a.max[0] + d.origin[0], a.max[1], a.max[2] + d.origin[1]] }, c.walkable ?? false); }
   }
   private own(aabb: Aabb, walkable = false): void {
     const chunks = this.chunks.filter(c => aabb.min[0] <= c.max[0] && aabb.max[0] >= c.origin[0] && aabb.min[2] <= c.max[1] && aabb.max[2] >= c.origin[1]).map(c => c.id);
@@ -78,7 +78,7 @@ export class ChunkResidency {
       if (live && c.handle === undefined) c.handle = this.world.physics.addStatic(c.aabb, [0, 0]);
       if (!live && c.handle !== undefined) { this.world.physics.removeBlocker(c.handle); delete c.handle; }
       if (live && !c.walkable && !c.aabb.physicsOnly && (c.aabb.navBlocker || c.aabb.min[1] < 1.8 && c.aabb.max[1] > .05)) {
-        const a = c.aabb; this.walls.push({ x: (a.min[0] + a.max[0]) / 2, z: (a.min[2] + a.max[2]) / 2, y: (a.min[1] + a.max[1]) / 2, halfX: (a.max[0] - a.min[0]) / 2, halfZ: (a.max[2] - a.min[2]) / 2, halfY: (a.max[1] - a.min[1]) / 2, ...(a.navBlocker ? { navBlocker: true } : {}) });
+        const a = c.aabb; this.walls.push({ x: (a.min[0] + a.max[0]) / 2, z: (a.min[2] + a.max[2]) / 2, y: (a.min[1] + a.max[1]) / 2, halfX: (a.max[0] - a.min[0]) / 2, halfZ: (a.max[2] - a.min[2]) / 2, halfY: (a.max[1] - a.min[1]) / 2, ...(a.navBlocker ? { navBlocker: true } : {}), ...(a.navFootprint ? { navFootprint: a.navFootprint } : {}) });
       }
     }
     this.refreshNavigation();

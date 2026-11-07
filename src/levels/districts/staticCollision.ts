@@ -51,6 +51,13 @@ export function placementColliders(placements: Placement[], fallback: StaticColl
         const point = [sx * Math.cos(p.yaw) + sz * Math.sin(p.yaw) + p.position[0], y * p.scale[1] + p.position[1], -sx * Math.sin(p.yaw) + sz * Math.cos(p.yaw) + p.position[2]];
         for (let axis = 0; axis < 3; axis++) { aabb.min[axis] = Math.min(aabb.min[axis], point[axis]); aabb.max[axis] = Math.max(aabb.max[axis], point[axis]); }
       }
+      if (Math.abs(Math.sin(2 * p.yaw)) > 1e-6) aabb.navFootprint = {
+        x: p.position[0] + (box.min[0] + box.max[0]) * p.scale[0] / 2 * Math.cos(p.yaw) + (box.min[2] + box.max[2]) * p.scale[2] / 2 * Math.sin(p.yaw),
+        z: p.position[2] - (box.min[0] + box.max[0]) * p.scale[0] / 2 * Math.sin(p.yaw) + (box.min[2] + box.max[2]) * p.scale[2] / 2 * Math.cos(p.yaw),
+        halfX: Math.abs(box.max[0] - box.min[0]) * Math.abs(p.scale[0]) / 2,
+        halfZ: Math.abs(box.max[2] - box.min[2]) * Math.abs(p.scale[2]) / 2,
+        yaw: p.yaw,
+      };
       if(p.navBlocker) aabb.navBlocker = true;
       return [{ id: `${p.id}/geometry-${index}`, aabb, walkable: platform ? dispersalPlatform.walkable.has(box) : box.max[1] < .45 || extraSupports[p.assetId]?.includes(box), minTier: p.minTier, maxTier: p.maxTier }];
     });

@@ -5,6 +5,12 @@ export interface NavDistrict {
   origin: Point;
   colliders: Aabb[];
 }
+function blocksCell(a: Aabb, x: number, z: number): boolean {
+  const f = a.navFootprint;
+  if (!f) return x >= a.min[0] - .4 && x <= a.max[0] + .4 && z >= a.min[2] - .4 && z <= a.max[2] + .4;
+  const dx = x - f.x, dz = z - f.z, c = Math.cos(f.yaw), s = Math.sin(f.yaw);
+  return Math.abs(dx * c - dz * s) <= f.halfX + .4 && Math.abs(dx * s + dz * c) <= f.halfZ + .4;
+}
 /** Dense 1m grid, baked once at load. The occupancy/hash contains no wall time or render data. */
 export class NavGrid {
   readonly width: number;
@@ -115,7 +121,7 @@ export function bakeNav(districts: NavDistrict[], seed: number, cellSize = 1): N
       minZ: Math.min(...area.map(p => p[1])), maxZ: Math.max(...area.map(p => p[1])),
     }));
     const buckets = new Map<string, Aabb[]>();
-    for (const a of d.colliders.filter(a => a.navBlocker || (a.min[1] < 1.8 && a.max[1] > .05))) for (let z = Math.floor((a.min[2] - .4) / 4); z <= Math.floor((a.max[2] + .4) / 4); z++) for (let x = Math.floor((a.min[0] - .4) / 4); x <= Math.floor((a.max[0] + .4) / 4); x++) {
+    for (const a of d.colliders.filter(a => a.navBlocker || (a.min[1] < 1.8 && a.max[1] > .05))) for (let z = Math.floor((a.min[2] - .4 * Math.SQRT2) / 4); z <= Math.floor((a.max[2] + .4 * Math.SQRT2) / 4); z++) for (let x = Math.floor((a.min[0] - .4 * Math.SQRT2) / 4); x <= Math.floor((a.max[0] + .4 * Math.SQRT2) / 4); x++) {
       const key = `${x},${z}`, bucket = buckets.get(key) ?? []; bucket.push(a); buckets.set(key, bucket);
     }
     const bounds = d.layout.bounds, xs = bounds.map(p => p[0]), zs = bounds.map(p => p[1]);
@@ -133,7 +139,9 @@ export function bakeNav(districts: NavDistrict[], seed: number, cellSize = 1): N
       for (const a of d.colliders) {
         if (!(a.navBlocker || a.min[1] < 1.8 && a.max[1] > .05)) continue;
         const ranges = [0, 1].map(axis => {
-          const low = a.min[axis === 0 ? 0 : 2] - .4, high = a.max[axis === 0 ? 0 : 2] + .4;
+          // Oriented footprints are rasterized through the general point test below.
+          const margin = a.navFootprint ? .4 * (Math.abs(Math.cos(a.navFootprint.yaw)) + Math.abs(Math.sin(a.navFootprint.yaw))) : .4;
+          const low = a.min[axis === 0 ? 0 : 2] - margin, high = a.max[axis === 0 ? 0 : 2] + margin;
           const limit = axis === 0 ? nav.width : nav.height;
           let first = Math.max(0, Math.ceil((low + d.origin[axis] - min[axis]) / cellSize - .5));
           let last = Math.min(limit - 1, Math.floor((high + d.origin[axis] - min[axis]) / cellSize - .5));
@@ -146,7 +154,12 @@ export function bakeNav(districts: NavDistrict[], seed: number, cellSize = 1): N
           return [first, last];
         });
         if (ranges[0][0] > ranges[0][1]) continue;
-        for (let z = ranges[1][0]; z <= ranges[1][1]; z++) nav.cells.fill(0, z * nav.width + ranges[0][0], z * nav.width + ranges[0][1] + 1);
+        if (a.navFootprint) {
+          for (let z = ranges[1][0]; z <= ranges[1][1]; z++) for (let x = ranges[0][0]; x <= ranges[0][1]; x++) {
+            const px = min[0] + (x + .5) * cellSize - d.origin[0], pz = min[1] + (z + .5) * cellSize - d.origin[1];
+            if (blocksCell(a, px, pz)) nav.cells[z * nav.width + x] = 0;
+          }
+        } else for (let z = ranges[1][0]; z <= ranges[1][1]; z++) nav.cells.fill(0, z * nav.width + ranges[0][0], z * nav.width + ranges[0][1] + 1);
       }
       continue;
     }
@@ -163,10 +176,7 @@ export function bakeNav(districts: NavDistrict[], seed: number, cellSize = 1): N
           !excluded.some(box => p[0] >= box.minX && p[0] <= box.maxX && p[1] >= box.minZ && p[1] <= box.maxZ && inside(p, box.area)) &&
           ! blockers.some(
             (a) =>
-              p[0] >= a.min[0] - 0.4 &&
-              p[0] <= a.max[0] + 0.4 &&
-              p[1] >= a.min[2] - 0.4 &&
-              p[1] <= a.max[2] + 0.4,
+              blocksCell(a, p[0], p[1]),
           )
         )
           nav.cells[z * nav.width + x] = 1;
