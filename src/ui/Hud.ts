@@ -81,6 +81,9 @@ export class Hud {
   private cueObstacles: PromptRect[] = [];
   private storyX = 0;
   private storyZ = 0;
+  private storyLayoutSignature = '';
+  private storySize = { width: 0, height: 0 };
+  private storyObstacles: PromptRect[] = [];
   private readonly interaction = node('div', 'interaction-ring');
   private readonly finaleAction = button('dispersal-action', 'Activate dispersal console', () => this.game.input.interactOnce());
   private readonly stops: (() => void)[] = [];
@@ -92,7 +95,7 @@ export class Hud {
     this.onboarding = new Onboarding(game.world, game.input.bindings);
     this.civilianBark.className = 'hud-panel'; this.civilianBark.style.cssText = 'position:absolute;pointer-events:none'; this.civilianBark.hidden = true; this.root.append(this.civilianBark);
     // PO: story bubbles read comfortably: larger outlined text, fade in/out, kept inside the frame above the speaker.
-    this.storyBubble.className = 'hud-panel story-bubble'; this.storyBubble.style.cssText = 'position:absolute;pointer-events:none;transform:translate(-50%,-100%);max-width:min(340px,80vw);padding:8px 14px;border-radius:12px;font:700 19px/1.3 system-ui,sans-serif;color:#fff;text-shadow:0 0 3px #0b0f18,0 0 3px #0b0f18,1px 1px 0 #0b0f18,-1px -1px 0 #0b0f18,1px -1px 0 #0b0f18,-1px 1px 0 #0b0f18;white-space:normal;text-align:center;opacity:0'; this.storyBubble.hidden = true; this.root.append(this.storyBubble);
+    this.storyBubble.className = 'hud-panel story-bubble'; this.storyBubble.style.cssText = 'position:absolute;pointer-events:none;transform:translate(-50%,-100%);width:max-content;max-width:min(340px,80vw);padding:8px 14px;border-radius:12px;font:700 19px/1.3 system-ui,sans-serif;color:#fff;text-shadow:0 0 3px #0b0f18,0 0 3px #0b0f18,1px 1px 0 #0b0f18,-1px -1px 0 #0b0f18,1px -1px 0 #0b0f18,-1px 1px 0 #0b0f18;white-space:normal;text-align:center;opacity:0'; this.storyBubble.hidden = true; this.root.append(this.storyBubble);
     this.survivorCue.className = 'hud-panel survivor-world-cue';
     this.survivorCue.style.cssText = this.storyBubble.style.cssText;
     this.survivorCue.style.width = 'min(340px,80vw)'; this.survivorCue.style.boxSizing = 'border-box'; this.survivorCue.style.transform = 'none';
@@ -592,7 +595,23 @@ export class Hud {
     if (say.id === 0) { style(this.storyBubble, 'left', '50%'); style(this.storyBubble, 'top', '78%'); return; }
     const speaker = world.entities.get(say.id); if (speaker && !speaker.hidden) { this.storyX = speaker.transform.x; this.storyZ = speaker.transform.z; }
     const p = this.game.view.project(this.storyX, (speaker?.transform.y ?? .7) + 1.6, this.storyZ);
-    style(this.storyBubble, 'left', `${Math.max(14, Math.min(86, (p[0] + 1) * 50))}%`); style(this.storyBubble, 'top', `${Math.max(16, Math.min(88, (1 - p[1]) * 50))}%`);
+    // Clamp the whole bubble and keep it clear of the fixed HUD. Clamping only
+    // its speaker anchor left offscreen dialogue behind the portrait and bars.
+    const signature = `${say.text}:${innerWidth}:${innerHeight}:${this.tracker.textContent}:${document.body.className}`;
+    if (signature !== this.storyLayoutSignature) {
+      this.storyLayoutSignature = signature;
+      const rect = this.storyBubble.getBoundingClientRect(); this.storySize = { width: rect.width, height: rect.height };
+      this.storyObstacles = [...this.cuePanels, ...document.querySelectorAll<HTMLElement>('.mission-subtitle,[data-testid="pause-button"],[data-testid="home-button"]')].flatMap(panel => {
+        const box = panel.getBoundingClientRect();
+        return panel.hidden || !box.width || !box.height ? [] : [box];
+      });
+      const debugRow = parseFloat(getComputedStyle(document.body).getPropertyValue('--debug-row')) || 0;
+      if (debugRow) this.storyObstacles.push({ left: 0, top: 0, right: innerWidth, bottom: debugRow });
+    }
+    const { width, height } = this.storySize;
+    const position = interactionPromptPosition({ x: (p[0] + 1) * innerWidth / 2 - width / 2, y: (1 - p[1]) * innerHeight / 2 - height },
+      this.storySize, { left: 0, top: 0, right: innerWidth, bottom: innerHeight }, this.storyObstacles);
+    style(this.storyBubble, 'left', `${position.x + width / 2}px`); style(this.storyBubble, 'top', `${position.y + height}px`);
   }
   dispose(): void { this.clear(); this.onboarding.dispose(); this.root.remove(); }
 }
