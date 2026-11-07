@@ -1,27 +1,33 @@
 {
   "row": "L2-06",
   "status": "PASS",
-  "reviewer": "Codex sweep-a3",
-  "date": "2026-11-06",
-  "commit": "8b7ba25c4bccd6f5e6c348e4d7c8f25ad88bc494",
+  "reviewer": "Codex final-a",
+  "date": "2026-11-07",
+  "commit": "ba8d259f08c00ea38d0a46311870142980172327",
   "clauses": [
     {
       "clause": "Ambush **24** (3 doors × 8, ≥ 3 directions ≥ 60° apart), first visible ≤ 0.5 s after doorsOpen; spread over directions, not one pack.",
       "verdict": "PASS",
-      "note": "Personally inspected all24 fresh WebGPU/WebGL2 low/high opening, +0.5s and inspection-control frames. Actual game camera shows yellow-green ambush infected entering lower-left sidewalk by +0.5s; controlled close pose confirms the actor. Native source counts3x8, 24 admitted in all tier/policy runs; pairwise opening directions83.1375°,94.3845°,177.5219°. All eight actual follow-camera half-second strips contain projected body bounds; screenshot evidence supplies pixels, not bounds alone."
+      "note": "All12 current low/high WebGL2 opening/+0.5s/inspection-control images personally inspected at full resolution. At the actual30th tick after doorsOpen, a distinct infected with health bar is visible at the lower-left pavement in all four actual production zoom0.5/1.5 frames; first visibility therefore <=0.5s, not inferred merely from body-box overlap. Native current counts24=3 doors×8; pairwise source separations83.1375/94.3845/177.5219 degrees, all>=60, source positions widely separated rather than one pack. Every tick0–30 body-box ledger retained; controls move only camera after the measured sample. Ordinary no-axe InputFrames, no protection/teleport/spawn/skip. Inspection view does not qualify production visibility."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-a3/L2-06-current-ledger.json.gz",
-      "sha256": "db99cf0bd526a5d6405c89c1b8fdab8c965a87b1d56b4e858b3a5885d631543a",
-      "what": "Personally inspected all24 fresh WebGPU/WebGL2 low/high opening, +0.5s and inspection-control frames. Actual game camera shows yellow-green ambush infected entering lower-left sidewalk by +0.5s; controlled close pose confirms the actor. Native source counts3x8, 24 admitted in all tier/policy runs; pairwise opening directions83.1375°,94.3845°,177.5219°. All eight actual follow-camera half-second strips contain projected body bounds; screenshot evidence supplies pixels, not bounds alone."
+      "file": "docs/reports/final-a/L2-06-browser-ledger.json.gz",
+      "sha256": "f94e1a53a921107052996e29a332580c89b839b59cf49647c3c77f4440519d1a",
+      "what": "All12 current low/high WebGL2 opening/+0.5s/inspection-control images personally inspected at full resolution. At the actual30th tick after doorsOpen, a distinct infected with health bar is visible at the lower-left pavement in all four actual production zoom0.5/1.5 frames; first visibility therefore <=0.5s, not inferred merely from body-box overlap. Native current counts24=3 doors×8; pairwise source separations83.1375/94.3845/177.5219 degrees, all>=60, source positions widely separated rather than one pack. Every tick0–30 body-box ledger retained; controls move only camera after the measured sample. Ordinary no-axe InputFrames, no protection/teleport/spawn/skip. Inspection view does not qualify production visibility."
     },
     {
-      "file": "docs/reports/sweep-a3/L2-06-current-images.json",
-      "sha256": "29b9d1383c9e7db8cc4895341b7abc416f81bff3e8eb87bceb39bcae1ad9f0b4",
-      "what": "Personally inspected all24 fresh WebGPU/WebGL2 low/high opening, +0.5s and inspection-control frames. Actual game camera shows yellow-green ambush infected entering lower-left sidewalk by +0.5s; controlled close pose confirms the actor. Native source counts3x8, 24 admitted in all tier/policy runs; pairwise opening directions83.1375°,94.3845°,177.5219°. All eight actual follow-camera half-second strips contain projected body bounds; screenshot evidence supplies pixels, not bounds alone."
+      "file": "docs/reports/final-a/L2-06-image-review.json",
+      "sha256": "a18b19348b76092e6c92140e9a83914daa35c96654c8557ecca17e20aec0a01e",
+      "what": "All12 current low/high WebGL2 opening/+0.5s/inspection-control images personally inspected at full resolution. At the actual30th tick after doorsOpen, a distinct infected with health bar is visible at the lower-left pavement in all four actual production zoom0.5/1.5 frames; first visibility therefore <=0.5s, not inferred merely from body-box overlap. Native current counts24=3 doors×8; pairwise source separations83.1375/94.3845/177.5219 degrees, all>=60, source positions widely separated rather than one pack. Every tick0–30 body-box ledger retained; controls move only camera after the measured sample. Ordinary no-axe InputFrames, no protection/teleport/spawn/skip. Inspection view does not qualify production visibility."
+    },
+    {
+      "file": "docs/reports/final-a/L2-06-current-proof.json",
+      "sha256": "634076a71233a1af33c1c612fce9985e202f87964682fe5c522b68060cf7eac0",
+      "what": "All12 current low/high WebGL2 opening/+0.5s/inspection-control images personally inspected at full resolution. At the actual30th tick after doorsOpen, a distinct infected with health bar is visible at the lower-left pavement in all four actual production zoom0.5/1.5 frames; first visibility therefore <=0.5s, not inferred merely from body-box overlap. Native current counts24=3 doors×8; pairwise source separations83.1375/94.3845/177.5219 degrees, all>=60, source positions widely separated rather than one pack. Every tick0–30 body-box ledger retained; controls move only camera after the measured sample. Ordinary no-axe InputFrames, no protection/teleport/spawn/skip. Inspection view does not qualify production visibility."
     }
   ],
-  "notes": "Ordinary no-axe InputFrame route to doorsOpen; no relocation for opening/half-second shots. Separate control-normal image is an inspection pose and does not qualify route visibility."
+  "notes": "Game source frozen at4e570db. Current pooled headless capture/input evidence and exact sourceDigest; image files retained only under test-results.",
+  "sourceDigest": "9f88ba48ca13900ca4f429225cbac3045a96d48adee791c50179dde9c8cd025f"
 }
