@@ -1,27 +1,43 @@
 {
   "row": "L1-14",
   "status": "PASS",
-  "reviewer": "Codex sweep-a3",
-  "date": "2026-11-06",
-  "commit": "10e01ad8c1073f575580ef08ad216e6b736557dc",
+  "reviewer": "Codex final-a",
+  "date": "2026-11-07",
+  "commit": "b5a108ea26e39f87b07f5f3884cee56314c077c7",
   "clauses": [
     {
       "clause": "≥ 6 infected near the garage after the pickup, all from refuge doors (visible ≤ 3 m from the door); at most 3 pursue within 20 m, the rest wait 16 m back.",
       "verdict": "PASS",
-      "note": "Current-source90s every-tick native garage hold at both tiers after ordinary bat pickup:10 actual refuge residents each, first admitted/nonhidden within0.9m of their actual refuge door. Maximum3 actual courier-target chase/bite pursuers within20m in either tier. Settled waiting residents are at least16.8994m low/17.0868m high from courier;10/8 distinct residents are observed waiting (high remaining residents may pursue within the3-person cap). Initial emergence and walking-to-wait transitions retained rather than counted as already waiting. Player incoming damage suppressed only after pickup; no actor, position, objective or AI manipulation."
+      "note": "All20 fresh WebGPU low/high house-door inspection frames personally inspected. Residents emerge one-by-one through the actual open refuge front door; doorway/porch emergence is visible, rather than a street pop-in. Independent every-tick90s native traces retain10 admitted resident identities each tier, all first nonhidden0.9m from the same actual door (<=3m); this is the logical first-visible distance, not a frame-by-frame pixel onset measurement. Across all actual courier pursuers, maximum within20m is3 each tier. After residents walk to the holding ring, all waiting samples in final60–90s remain>=17.3128m low /17.4932m high from both courier and garage. Earlier approach distances6.55/6.82m are retained and not mislabeled as settled waiting. Player remains on ordinary pickup location, then empty input and damage protection solely for observation. Camera-only close inspection qualifies door presentation, not normal unlocked gameplay zoom."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-a3/L1-14-measurements.json",
-      "sha256": "df799849c279e428df8cedfecd147055e7db877a39dc0e4a567858816701f434",
-      "what": "Current-source90s every-tick native garage hold at both tiers after ordinary bat pickup:10 actual refuge residents each, first admitted/nonhidden within0.9m of their actual refuge door. Maximum3 actual courier-target chase/bite pursuers within20m in either tier. Settled waiting residents are at least16.8994m low/17.0868m high from courier;10/8 distinct residents are observed waiting (high remaining residents may pursue within the3-person cap). Initial emergence and walking-to-wait transitions retained rather than counted as already waiting. Player incoming damage suppressed only after pickup; no actor, position, objective or AI manipulation."
+      "file": "docs/reports/final-a/L1-14-current-ledger.json.gz",
+      "sha256": "e3e90ad5f03f2f5240611b3fe49a589b396519ee612346f224689b7ba011b480",
+      "what": "All20 fresh WebGPU low/high house-door inspection frames personally inspected. Residents emerge one-by-one through the actual open refuge front door; doorway/porch emergence is visible, rather than a street pop-in. Independent every-tick90s native traces retain10 admitted resident identities each tier, all first nonhidden0.9m from the same actual door (<=3m); this is the logical first-visible distance, not a frame-by-frame pixel onset measurement. Across all actual courier pursuers, maximum within20m is3 each tier. After residents walk to the holding ring, all waiting samples in final60–90s remain>=17.3128m low /17.4932m high from both courier and garage. Earlier approach distances6.55/6.82m are retained and not mislabeled as settled waiting. Player remains on ordinary pickup location, then empty input and damage protection solely for observation. Camera-only close inspection qualifies door presentation, not normal unlocked gameplay zoom."
     },
     {
-      "file": "docs/reports/sweep-a3/L1-14-current-ledger.json.gz",
-      "sha256": "559c289f68168d7c0877deab3be8118a9d7307c50da4810730c539775bfaf8f9",
-      "what": "Current-source90s every-tick native garage hold at both tiers after ordinary bat pickup:10 actual refuge residents each, first admitted/nonhidden within0.9m of their actual refuge door. Maximum3 actual courier-target chase/bite pursuers within20m in either tier. Settled waiting residents are at least16.8994m low/17.0868m high from courier;10/8 distinct residents are observed waiting (high remaining residents may pursue within the3-person cap). Initial emergence and walking-to-wait transitions retained rather than counted as already waiting. Player incoming damage suppressed only after pickup; no actor, position, objective or AI manipulation."
+      "file": "docs/reports/final-a/L1-14-native-summary.json",
+      "sha256": "9e35b17ee37f223f795bf108aa5c2532879a2a9db29a69693cb05198ff7033c8",
+      "what": "All20 fresh WebGPU low/high house-door inspection frames personally inspected. Residents emerge one-by-one through the actual open refuge front door; doorway/porch emergence is visible, rather than a street pop-in. Independent every-tick90s native traces retain10 admitted resident identities each tier, all first nonhidden0.9m from the same actual door (<=3m); this is the logical first-visible distance, not a frame-by-frame pixel onset measurement. Across all actual courier pursuers, maximum within20m is3 each tier. After residents walk to the holding ring, all waiting samples in final60–90s remain>=17.3128m low /17.4932m high from both courier and garage. Earlier approach distances6.55/6.82m are retained and not mislabeled as settled waiting. Player remains on ordinary pickup location, then empty input and damage protection solely for observation. Camera-only close inspection qualifies door presentation, not normal unlocked gameplay zoom."
+    },
+    {
+      "file": "docs/reports/final-a/L1-14-browser-ledger.json.gz",
+      "sha256": "45c8c8849282f748ca479051c45a6888e70acd1f68df42843c962a54fdf1967a",
+      "what": "All20 fresh WebGPU low/high house-door inspection frames personally inspected. Residents emerge one-by-one through the actual open refuge front door; doorway/porch emergence is visible, rather than a street pop-in. Independent every-tick90s native traces retain10 admitted resident identities each tier, all first nonhidden0.9m from the same actual door (<=3m); this is the logical first-visible distance, not a frame-by-frame pixel onset measurement. Across all actual courier pursuers, maximum within20m is3 each tier. After residents walk to the holding ring, all waiting samples in final60–90s remain>=17.3128m low /17.4932m high from both courier and garage. Earlier approach distances6.55/6.82m are retained and not mislabeled as settled waiting. Player remains on ordinary pickup location, then empty input and damage protection solely for observation. Camera-only close inspection qualifies door presentation, not normal unlocked gameplay zoom."
+    },
+    {
+      "file": "docs/reports/final-a/L1-14-image-review.json",
+      "sha256": "f4e2c0970d7caea00a74fea853e2b12b51665eb4f51aa429d8cab8ffcbe0e399",
+      "what": "All20 fresh WebGPU low/high house-door inspection frames personally inspected. Residents emerge one-by-one through the actual open refuge front door; doorway/porch emergence is visible, rather than a street pop-in. Independent every-tick90s native traces retain10 admitted resident identities each tier, all first nonhidden0.9m from the same actual door (<=3m); this is the logical first-visible distance, not a frame-by-frame pixel onset measurement. Across all actual courier pursuers, maximum within20m is3 each tier. After residents walk to the holding ring, all waiting samples in final60–90s remain>=17.3128m low /17.4932m high from both courier and garage. Earlier approach distances6.55/6.82m are retained and not mislabeled as settled waiting. Player remains on ordinary pickup location, then empty input and damage protection solely for observation. Camera-only close inspection qualifies door presentation, not normal unlocked gameplay zoom."
+    },
+    {
+      "file": "docs/reports/final-a/L1-14-current-proof.json",
+      "sha256": "38e2d546e3f9b724183dfe69f6db4d30437a2ab30ea4852391069ffb8c1282b6",
+      "what": "All20 fresh WebGPU low/high house-door inspection frames personally inspected. Residents emerge one-by-one through the actual open refuge front door; doorway/porch emergence is visible, rather than a street pop-in. Independent every-tick90s native traces retain10 admitted resident identities each tier, all first nonhidden0.9m from the same actual door (<=3m); this is the logical first-visible distance, not a frame-by-frame pixel onset measurement. Across all actual courier pursuers, maximum within20m is3 each tier. After residents walk to the holding ring, all waiting samples in final60–90s remain>=17.3128m low /17.4932m high from both courier and garage. Earlier approach distances6.55/6.82m are retained and not mislabeled as settled waiting. Player remains on ordinary pickup location, then empty input and damage protection solely for observation. Camera-only close inspection qualifies door presentation, not normal unlocked gameplay zoom."
     }
   ],
-  "notes": "Scripted sim criterion: actual admission and nonhidden flags qualify emergence location; no screenshot appearance claim. Courier-target pursuit is distinguished from valid attacks on civilians. Native scripted observation rerun after the final constant-width ring change."
+  "notes": "Game source frozen at4e570db. Current pooled headless capture/input evidence and exact sourceDigest; image files retained only under test-results.",
+  "sourceDigest": "00a81dbceddae37bdb1b6540d29f8e3658cdd7d6b7b51968d1fd068c9a6eb63c"
 }

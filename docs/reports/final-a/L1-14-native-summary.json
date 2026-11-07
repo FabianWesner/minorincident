@@ -1,0 +1,36 @@
+{
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "runs": [
+    {
+      "tier": "low",
+      "admissions": 10,
+      "maxFirstVisibleDoorDistanceM": 0.8999999999999986,
+      "maxAllCourierPursuersWithin20m": 3,
+      "waitStabilityWindowSeconds": [
+        60,
+        90
+      ],
+      "minimumStableWaitingDistanceM": 17.312819272402773,
+      "stableWaitingSamples": 18000,
+      "observedTicks": 5400,
+      "pickup": 5132,
+      "initialEmergenceAndWalkToRingMinimumM": 6.5525151897606015
+    },
+    {
+      "tier": "high",
+      "admissions": 10,
+      "maxFirstVisibleDoorDistanceM": 0.8999999999999986,
+      "maxAllCourierPursuersWithin20m": 3,
+      "waitStabilityWindowSeconds": [
+        60,
+        90
+      ],
+      "minimumStableWaitingDistanceM": 17.493199702860306,
+      "stableWaitingSamples": 14400,
+      "observedTicks": 5400,
+      "pickup": 5132,
+      "initialEmergenceAndWalkToRingMinimumM": 6.8182197963948035
+    }
+  ],
+  "method": "Every recorded tick for all courier pursuers; final30s for residents settled at holding ring. Admission/approach is separately retained, not mislabeled as waiting. No raw values removed."
+}

@@ -1,0 +1,52 @@
+{
+  "row": "L1-14",
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "criterion": "≥ 6 infected near the garage after the pickup, all from refuge doors (visible ≤ 3 m from the door); at most 3 pursue within 20 m, the rest wait 16 m back.",
+  "nativeChecks": [
+    {
+      "id": "L1-14",
+      "clause": "admitted garage refuge residents",
+      "level": "L1",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 10,
+      "target": "6 ≤ value ≤ Infinity",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-low-complete.json"
+    },
+    {
+      "id": "L1-14",
+      "clause": "admitted garage refuge residents",
+      "level": "L1",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "NOT CHECKED",
+      "value": null,
+      "target": "6 ≤ value ≤ Infinity",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-low-stationary.json"
+    },
+    {
+      "id": "L1-14",
+      "clause": "admitted garage refuge residents",
+      "level": "L1",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 10,
+      "target": "6 ≤ value ≤ Infinity",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-high-complete.json"
+    },
+    {
+      "id": "L1-14",
+      "clause": "admitted garage refuge residents",
+      "level": "L1",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "NOT CHECKED",
+      "value": null,
+      "target": "6 ≤ value ≤ Infinity",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-high-stationary.json"
+    }
+  ],
+  "observation": "All20 fresh WebGPU low/high house-door inspection frames personally inspected. Residents emerge one-by-one through the actual open refuge front door; doorway/porch emergence is visible, rather than a street pop-in. Independent every-tick90s native traces retain10 admitted resident identities each tier, all first nonhidden0.9m from the same actual door (<=3m); this is the logical first-visible distance, not a frame-by-frame pixel onset measurement. Across all actual courier pursuers, maximum within20m is3 each tier. After residents walk to the holding ring, all waiting samples in final60–90s remain>=17.3128m low /17.4932m high from both courier and garage. Earlier approach distances6.55/6.82m are retained and not mislabeled as settled waiting. Player remains on ordinary pickup location, then empty input and damage protection solely for observation. Camera-only close inspection qualifies door presentation, not normal unlocked gameplay zoom."
+}
