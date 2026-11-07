@@ -2,6 +2,7 @@ import type { L8PathProof } from './fix55-l8-paths';
 import { createHash } from 'node:crypto';
 import { existsSync, readFileSync } from 'node:fs';
 import type { NativeReceipt } from './probe';
+import { l3SeedVerdict } from '../threat/l3SeedVote';
 import type { PhaseReceipt } from '../threat/observer';
 import { median } from '../threat/observer';
 import { followerPaceVerdict } from '../threat/followerPace';
@@ -181,7 +182,8 @@ export function evaluate(receipt: NativeReceipt, path: string): Clause[] {
         number('L3-06', 'initial squad count', squad?.initial, 3, 4); const army = receipt.l3Army;
         add('L3-06', 'squad remaining at army arrival (seeds 1–3)', army ?? { seed1: squad?.army ?? null }, '≤2 at the army line: ≥2 valid seeds, ≥2 of them ≤2', army?.pass);
         add('L3-06', 'logged squad-loss causes', squad?.losses ?? null, 'each loss bite, kill, or separation', squad ? squad.losses.every(loss => ['bite', 'kill', 'separated'].includes(loss.cause)) : undefined);
-        number('L3-11', 'competent player attack rate on checkpoint route', phase('step/checkpoint')?.attacksPerMinute, 3, 25);
+        const attackVote = l3SeedVerdict((receipt.l3Army?.seeds ?? []).map(seed => ({ seed: seed.seed, valid: seed.valid && seed.attacksPerMinute != null, pass: seed.attacksPerMinute == null ? null : seed.attacksPerMinute >= 3 && seed.attacksPerMinute <= 25 })));
+        add('L3-11', 'competent player attack rate on checkpoint route', { seeds: receipt.l3Army?.seeds.map(seed => ({ seed: seed.seed, attacksPerMinute: seed.attacksPerMinute ?? null })), vote: `${attackVote.within}/${attackVote.measured}` }, '3–25 player attacks/min; 2 of 3 valid seeds pass', attackVote.pass);
       }
       number('L3-11', 'all-street medkit census (per-street split still open)', initial.mission.l3?.medkitIds.length, 7, Infinity);
       number('L3-14', 'actual army soldier identities', s3?.soldierIds.length, 8, Infinity);

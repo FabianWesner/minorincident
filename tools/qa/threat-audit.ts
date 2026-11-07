@@ -16,6 +16,7 @@ import { armyLineVerdict, type ArmyLineVerdict } from './threat/l3ArmyLine';
 import { l3ArmySeeds } from './threat/l3ArmySeeds';
 import { followerPaceVerdict, type FollowerPaceSeed, type FollowerPaceVerdict } from './threat/followerPace';
 import { extraFollowerPaceSeeds } from './threat/followerPaceSeeds';
+import { l3SurvivalSeeds, type L3SurvivalSeed } from './threat/l3SurvivalSeeds';
 
 export interface LevelReceipt {
   level: RunnerLevel; quality: string; definitions: ThreatObserver['definitions']; run: LevelReport | null;
@@ -24,6 +25,7 @@ export interface LevelReceipt {
   highHold?: ReturnType<L4HoldCensus['finish']>;
   /** L3-06 army line over seeds 1–3 (tools/qa/threat/l3ArmyLine.ts). */
   l3Army?: ArmyLineVerdict;
+  l3SurvivalSeeds?: L3SurvivalSeed[];
   followerPace?: FollowerPaceVerdict;
   passiveFollowerPace?: FollowerPaceVerdict;
   followerPaceSeeds?: FollowerPaceSeed[];
@@ -178,7 +180,9 @@ for (const level of parallelLevels ? [] : selected) {
   }
   if (level === 'L3') {
     const army = observation?.l3Squad?.army ?? null;
-    receipt.l3Army = armyLineVerdict([{ seed: 1, valid: !!run?.completed && army !== null, army }, ...await l3ArmySeeds('low')]);
+    const checkpoint = observation?.phases.find(phase => phase.key === 'step/checkpoint');
+    receipt.l3Army = armyLineVerdict([{ seed: 1, valid: !!run?.completed && army !== null, army, attacksPerMinute: checkpoint?.attacksPerMinute ?? null }, ...await l3ArmySeeds('low')]);
+    receipt.l3SurvivalSeeds = await l3SurvivalSeeds('low');
     console.log(`[qa:threat] L3 army line over seeds 1–3: ${JSON.stringify(receipt.l3Army)}`);
   }
   if (multiSeedPace) {

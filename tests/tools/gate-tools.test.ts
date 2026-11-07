@@ -10,6 +10,7 @@ import { afterEach, expect, test } from 'vitest';
 import { backoffAdmission, classifyQuietProcesses } from '../../tools/browser-pool/host';
 import { evidenceIsArchivedOrMatches, loadReviews, reviewFreshness, reviewSourceDigest, validateReview, type ReviewDecision } from '../../tools/qa/accept/reviews';
 import { armyLineVerdict } from '../../tools/qa/threat/l3ArmyLine';
+import { l3SeedVerdict } from '../../tools/qa/threat/l3SeedVote';
 import { followerPaceVerdict } from '../../tools/qa/threat/followerPace';
 import { focusedCriteria } from '../../tools/qa/threat/criteria';
 import type { LevelReceipt } from '../../tools/qa/threat-audit';
@@ -87,6 +88,11 @@ test('browser pool admission backs off under WindowServer pressure, keeps a one-
   const seeds = (...army: (number | null)[]) => army.map((n, i) => ({ seed: i + 1, valid: n !== null, army: n }));
   for (const [label, army, pass] of [['lane 3/0/0', [3, 0, 0], true], ['two over', [3, 3, 0], false], ['one valid', [1, null, null], undefined], ['two valid, one over', [3, null, 2], false], ['all within', [2, 2, 1], true]] as const)
     expect(armyLineVerdict(seeds(...army)).pass, label).toBe(pass);
+  for (const [votes, expected] of [
+    [[true, false, true], true], [[true, false, false], false], [[true, null, null], undefined],
+    [[true, false, null], false],
+  ] as const) expect(l3SeedVerdict(votes.map((pass, i) => ({ seed: i + 1, valid: true, pass }))).pass).toBe(expected);
+  expect(l3SeedVerdict([{ seed: 1, valid: true, pass: true }, { seed: 1, valid: true, pass: false }, { seed: 2, valid: true, pass: true }]).measured).toBe(2);
   // G-13/L7-09: vote per follower and phase over seeds 1–3.
   const seed = (n: number, slow: number[] = [], valid = true) => ({ seed: n, valid, companions: [], phases: [{ key: 'step/corridor', followerMedian: 4, followerSpeeds: [60, 63, 64].map(id => ({ id, samples: 12, median: slow.includes(id) ? 3.76 : 4 })) }] });
   const one = seed(1, [60]), two = seed(2), three = seed(3);
