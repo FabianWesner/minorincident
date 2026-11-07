@@ -33,7 +33,7 @@ export const deathWeight = (frame: number, first: number) => smooth(Math.max(0, 
 /** Rotation that lays a standing rest figure (up +y, face +x) on the floor with its head toward -x. */
 function lying(death: Death, prone: boolean): Matrix4 {
   const toBack = new Matrix4().makeRotationZ(Math.PI / 2); // face up
-  const roll = prone && death === 'death-back' || death === 'death-crumple' ? Math.PI : 0;
+  const roll = prone || death === 'death-crumple' ? Math.PI : 0;
   return new Matrix4().makeRotationFromEuler(new Euler(roll, 0, 0)).multiply(toBack);
 }
 /** Angle (degrees) from the feet direction at which a limb lies; side = +1 (z+) or -1. */
@@ -86,7 +86,7 @@ export function repairDeathPoses(clip: CrowdClip, geometry?: BufferGeometry, opt
   for (const death of deaths) {
     const first = names.indexOf(death) * framesPerClip, last = first + framesPerClip - 1, lie = lying(death, prone);
     // Lay the rest pose on the floor, then find how far its lowest real vertex is from y = 0.
-  const lay = (tilts: number[]) => {
+  const lay = (tilts: number[], pitch = 0) => {
     const lifted = rest.map(w => w ? lie.clone().multiply(w) : null);
     const reach: number[] = [], heights: number[] = [];
     // Turn each limb as one rigid unit about its root joint so its mesh axis (root joint to the centre of its vertices) lies flat.
@@ -98,8 +98,10 @@ export function repairDeathPoses(clip: CrowdClip, geometry?: BufferGeometry, opt
     if (spine.lengthSq() > 1e-8) {
       const turnUp = new Matrix4().makeRotationFromQuaternion(new Quaternion().setFromUnitVectors(spine.normalize(), new Vector3(-1, 0, 0)));
       straighten = new Matrix4().makeTranslation(hipAt.x, hipAt.y, hipAt.z).multiply(turnUp).multiply(new Matrix4().makeTranslation(-hipAt.x, -hipAt.y, -hipAt.z));
-      for (const p of upper) lifted[p]!.premultiply(straighten);
     }
+    // `pitch` lowers the head end about the hip (about +z, head toward -x): searched below for the flattest body.
+    if (pitch) straighten = new Matrix4().makeTranslation(hipAt.x, hipAt.y, hipAt.z).multiply(new Matrix4().makeRotationZ(pitch)).multiply(new Matrix4().makeTranslation(-hipAt.x, -hipAt.y, -hipAt.z)).multiply(straighten);
+    for (const p of upper) lifted[p]!.premultiply(straighten);
     const straightenRotation = new Matrix4().extractRotation(straighten);
     limbs.forEach(([root, mid, end, kind, nominal], limbIndex) => {
       const unit = [index[root], index[mid], index[end]], joint = new Vector3().setFromMatrixPosition(lifted[index[root]]!);
@@ -114,7 +116,7 @@ export function repairDeathPoses(clip: CrowdClip, geometry?: BufferGeometry, opt
       const about = new Matrix4().makeTranslation(joint.x, joint.y, joint.z).multiply(turn).multiply(new Matrix4().makeTranslation(-joint.x, -joint.y, -joint.z));
       for (const p of unit) lifted[p]!.premultiply(about);
     });
-    let drop = 0;
+    let drop = 0, extent = 0;
     if (geometry && geometry.getAttribute('_skin')) {
       const position = geometry.getAttribute('position'), skin = geometry.getAttribute('_skin');
       const parts = geometry.getAttribute('_parts') ?? geometry.getAttribute('_part_index'), packed = !!geometry.getAttribute('_parts');
@@ -123,21 +125,32 @@ export function repairDeathPoses(clip: CrowdClip, geometry?: BufferGeometry, opt
       const scratch = { matrices: new Float32Array(P * 16), binds: clip.binds, parts: clip.parts, frames: 1, duration: 0 } as unknown as CrowdClip;
       lifted.forEach((w, p) => (w ?? new Matrix4().fromArray(m, last * P * 16 + p * 16)).toArray(scratch.matrices as unknown as number[], p * 16));
       premultiplyRow(scratch.matrices, poseRows, clip.binds!, 0, P, 0);
-      let low = Infinity; const step = Math.max(1, Math.floor(position.count / 8000));
+      let low = Infinity, high = -Infinity; const step = Math.max(1, Math.floor(position.count / 8000));
       for (let i = 0; i < position.count; i += step) {
         const z = packed ? parts!.getZ(i) : emissive?.getX(i) ?? 0, w = packed ? parts!.getW(i) : vein?.getX(i) ?? 0;
         if (z > 1.5 || w >= 1024) continue;
         const f = skinnedVertexMatrix(scratch, 0, parts as never, skin as never, i, row, poseRows);
-        low = Math.min(low, f[1] * position.getX(i) + f[5] * position.getY(i) + f[9] * position.getZ(i) + f[13]);
+        const y = f[1] * position.getX(i) + f[5] * position.getY(i) + f[9] * position.getZ(i) + f[13];
+        if (y < low) low = y; if (y > high) high = y;
       }
-      if (Number.isFinite(low)) drop = -low;
+      if (Number.isFinite(low)) { drop = -low; extent = high - low; }
     }
-    return { lifted, drop, reach, heights };
+    return { lifted, drop, reach, heights, extent };
   };
-  // First pass flat; second pass lets each limb slope down until its end meets the floor.
-  const flat = lay([]);
-  const tilts = flat.reach.map((length, k) => length > 0 ? Math.asin(Math.max(0, Math.min(.85, (flat.heights[k] + flat.drop - .15 * length) / length))) : 0);
-  const { lifted, drop } = geometry ? lay(tilts) : flat;
+  // First pass flat; second pass lets each limb slope down until its end meets the floor. A body still thicker than 0.9 m
+  // (the hunched Alpha) also tries lowering the head end, and keeps the flattest result.
+  const settle = (pitch: number) => {
+    const flat = lay([], pitch);
+    const tilts = flat.reach.map((length, k) => length > 0 ? Math.asin(Math.max(0, Math.min(.85, (flat.heights[k] + flat.drop - .15 * length) / length))) : 0);
+    return geometry ? lay(tilts, pitch) : flat;
+  };
+  let best = settle(0);
+  if (geometry) for (const degrees of [8, 16, 24, 32, 40, 48, 56]) {
+    if (best.extent < .9) break;
+    const tried = settle(degrees * Math.PI / 180);
+    if (tried.extent < best.extent - .01) best = tried;
+  }
+  const { lifted, drop } = best;
     for (let frame = first; frame <= last; frame++) {
       const s = deathWeight(frame, first);
       if (s < 1e-3) continue;
