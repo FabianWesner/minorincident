@@ -165,6 +165,11 @@ export function levelThreeLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
       if (p.assetId === 'prop.street-lamp' && l3Roadblocks.some(b=>Math.abs(p.position[0]-b.x)<4 && Math.abs(p.position[2]-b.z)<b.halfWidth+1)) {
         p.position[0]+=7;p.visualAabb.min[0]+=7;p.visualAabb.max[0]+=7;
       }
+      // The Oak gate fits a .35 m body, but this lamp closed four .5 m crowd cells
+      // beside the reviewed wreck footprint. Keep that passage open at full clearance.
+      if (p.assetId === 'prop.street-lamp' && p.position[0] === -68 && p.position[2] === 25) {
+        p.position[2] += .5; p.visualAabb.min[2] += .5; p.visualAabb.max[2] += .5;
+      }
       // Mount the span's lamp on the elevated deck, so its night pool lights the walking surface.
       if(p.assetId === 'prop.street-lamp' && p.position[0]===174) {
         p.navBlocker=true;p.allowRoad=true;
