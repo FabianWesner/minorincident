@@ -130,13 +130,13 @@ export class NavGrid {
     const walls = this.walls.filter(w => w.navBlocker || w.y - w.halfY < 1.8 && w.y + w.halfY > .05);
     for (const wall of [...walls, ...this.blockers.values()]) {
       const f = wall.navFootprint, c = Math.cos(f?.yaw ?? 0), s = Math.sin(f?.yaw ?? 0), hx = f?.halfX ?? wall.halfX, hz = f?.halfZ ?? wall.halfZ, ox = f?.x ?? wall.x, oz = f?.z ?? wall.z;
-      const extentX = Math.abs(c) * (hx + r) + Math.abs(s) * (hz + r), extentZ = Math.abs(s) * (hx + r) + Math.abs(c) * (hz + r);
+      const extentX = Math.abs(c) * hx + Math.abs(s) * hz + r, extentZ = Math.abs(s) * hx + Math.abs(c) * hz + r;
       const cx = (ox - this.center.x + this.ground.width / 2) / step - .5, cz = (oz - this.center.z + this.ground.depth / 2) / step - .5;
       const x0 = Math.max(0, Math.floor(cx - extentX / step)), x1 = Math.min(this.width - 1, Math.ceil(cx + extentX / step));
       const z0 = Math.max(0, Math.floor(cz - extentZ / step)), z1 = Math.min(this.depth - 1, Math.ceil(cz + extentZ / step));
       for (let z = z0; z <= z1; z++) for (let x = x0; x <= x1; x++) {
         const dx = this.x(x) - ox, dz = this.z(z * this.width) - oz;
-        if (Math.abs(dx * c - dz * s) < hx + r && Math.abs(dx * s + dz * c) < hz + r) this.blocked[z * this.width + x] = 1;
+        if (f ? this.intersects(wall, this.x(x), this.z(z * this.width), r) : Math.abs(dx) < hx + r && Math.abs(dz) < hz + r) this.blocked[z * this.width + x] = 1;
       }
     }
   }
@@ -210,7 +210,8 @@ export class NavGrid {
     const f = w.navFootprint, c = Math.cos(f?.yaw ?? 0), s = Math.sin(f?.yaw ?? 0), px = x - (f?.x ?? w.x), pz = z - (f?.z ?? w.z);
     const dx = Math.abs(px * c - pz * s), dz = Math.abs(px * s + pz * c), hx = f?.halfX ?? w.halfX, hz = f?.halfZ ?? w.halfZ;
     if (dx >= hx + radius || dz >= hz + radius) return false;
-    if (!rounded) return true;
+    // A rotated padding square adds false corners; use the unchanged capsule radius.
+    if (!rounded && !f) return true;
     // Match the circular capsule footprint at box corners, rather than a square
     // dilation that can declare a valid Rapier position trapped inside a wall.
     const outsideX = Math.max(0, dx - hx), outsideZ = Math.max(0, dz - hz);

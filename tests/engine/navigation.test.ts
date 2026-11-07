@@ -38,6 +38,17 @@ test('capsule moves: a body inside the wall margin slides out and never moves de
   expect(aiNav.visible({ x: 3, z: -3 }, { x: 5, z: -1 }, .35)).toBe(true);
   const maskedNav = new NavGrid(aiNav.ground, aiNav.walls, aiNav.clearance, aiNav.center, () => true);
   expect(aiNav.blocked).toEqual(maskedNav.blocked);
+  // Rotating a square clearance margin over-blocked the wreck's end corners.
+  // The .5 m crowd radius remains unchanged; its footprint is circular.
+  const cornerWall = { x: 0, z: 0, y: 1, halfX: 2.5 / Math.SQRT2, halfZ: 2.5 / Math.SQRT2, halfY: 1,
+    navFootprint: { x: 0, z: 0, halfX: 2, halfZ: .5, yaw: Math.PI / 4 } };
+  const corners = new NavGrid({ width: 10, depth: 10 }, [cornerWall], .5);
+  expect(corners.clear(2.25, -1.25, .5)).toBe(true);
+  expect(corners.blocked[corners.cell(2.25, -1.25)]).toBe(0);
+  expect(corners.clear(1.75, -1.25, .5)).toBe(false);
+  const maskedCorners = new NavGrid(corners.ground, corners.walls, .5, corners.center, () => true);
+  expect(corners.blocked).toEqual(maskedCorners.blocked);
+
   {
   // fix55-l3: a body shoved deeper than the margin cut is not wedged; it slides out along the face, never deeper.
   // The L3 corgi stood 0.12 m inside a kerb blocker (radius 0.44, cuts up to 0.1) and refused every step for 450 s.
