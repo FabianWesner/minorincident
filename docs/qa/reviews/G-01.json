@@ -1,0 +1,48 @@
+{
+  "row": "G-01",
+  "status": "FAIL",
+  "reviewer": "Codex rr-b",
+  "date": "2026-11-07",
+  "commit": "50be7c824705fc3cdbb3a7ab7dd78f72c7bf2001",
+  "clauses": [
+    {
+      "clause": "Cold load, real level click → playable (loading card closed / Begin ready): **≤ 6.0 s worst of N**, every level, WebGPU + WebGL2, low + high.",
+      "verdict": "FAIL",
+      "note": "Fresh QA production real L1 menu click to Begin-ready: low Metal WebGL2 cold7773.9000ms (>6000ms), loading card shown0.5ms after click, no browser errors. Quiet exclusive admission11:56:51.714Z at load2.4692,busy[]; first receipt11:57:02.699Z precedes observed foreign Vitest start~11:57:21Z. Later matrix timings are excluded after host contention. Separate sampled confirmation cold2222.6000ms/warm2095ms passes; worst-of-N retains the first miss. Repro: npm run build:qa; serve QA preview4836; RELEASE_QUALITY=low RELEASE_SIDES=candidate RELEASE_CANDIDATE_ORIGIN=http://127.0.0.1:4836 RELEASE_OUT=test-results/rr-b/G01-repro BROWSER_POOL_JOB_ID=rr-b sh tools/perf/quiet-run.sh node --import tsx/esm tools/qa/release-ab-load.mjs L1 webgl2. Scope: one rejecting cell, not a full backend/tier matrix."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "test-results/rr-b/G01-first-cold.json",
+      "sha256": "300d2ab208e91638785f40058efde22c04de78e2f7ba08b53c63870be3e6bb06",
+      "what": "Fresh QA production real L1 menu click to Begin-ready: low Metal WebGL2 cold7773.9000ms (>6000ms), loading card shown0.5ms after click, no browser errors. Quiet exclusive admission11:56:51.714Z at load2.4692,busy[]; first receipt11:57:02.699Z precedes observed foreign Vitest start~11:57:21Z. Later matrix timings are excluded after host contention. Separate sampled confirmation cold2222.6000ms/warm2095ms passes; worst-of-N retains the first miss. Repro: npm run build:qa; serve QA preview4836; RELEASE_QUALITY=low RELEASE_SIDES=candidate RELEASE_CANDIDATE_ORIGIN=http://127.0.0.1:4836 RELEASE_OUT=test-results/rr-b/G01-repro BROWSER_POOL_JOB_ID=rr-b sh tools/perf/quiet-run.sh node --import tsx/esm tools/qa/release-ab-load.mjs L1 webgl2. Scope: one rejecting cell, not a full backend/tier matrix."
+    },
+    {
+      "file": "test-results/rr-b/G01-quiet-admission.jsonl",
+      "sha256": "774e2a86a2cbeb217c1138de3651da6e0e3c3bd2b8fcf2237e109e4a64b8133d",
+      "what": "Fresh QA production real L1 menu click to Begin-ready: low Metal WebGL2 cold7773.9000ms (>6000ms), loading card shown0.5ms after click, no browser errors. Quiet exclusive admission11:56:51.714Z at load2.4692,busy[]; first receipt11:57:02.699Z precedes observed foreign Vitest start~11:57:21Z. Later matrix timings are excluded after host contention. Separate sampled confirmation cold2222.6000ms/warm2095ms passes; worst-of-N retains the first miss. Repro: npm run build:qa; serve QA preview4836; RELEASE_QUALITY=low RELEASE_SIDES=candidate RELEASE_CANDIDATE_ORIGIN=http://127.0.0.1:4836 RELEASE_OUT=test-results/rr-b/G01-repro BROWSER_POOL_JOB_ID=rr-b sh tools/perf/quiet-run.sh node --import tsx/esm tools/qa/release-ab-load.mjs L1 webgl2. Scope: one rejecting cell, not a full backend/tier matrix."
+    },
+    {
+      "file": "test-results/rr-b/G01-midrun-conditions.json",
+      "sha256": "f462c6cb95b63ac110c28300456e1a32263250839a5daa2cfb1c3a3af3926519",
+      "what": "Fresh QA production real L1 menu click to Begin-ready: low Metal WebGL2 cold7773.9000ms (>6000ms), loading card shown0.5ms after click, no browser errors. Quiet exclusive admission11:56:51.714Z at load2.4692,busy[]; first receipt11:57:02.699Z precedes observed foreign Vitest start~11:57:21Z. Later matrix timings are excluded after host contention. Separate sampled confirmation cold2222.6000ms/warm2095ms passes; worst-of-N retains the first miss. Repro: npm run build:qa; serve QA preview4836; RELEASE_QUALITY=low RELEASE_SIDES=candidate RELEASE_CANDIDATE_ORIGIN=http://127.0.0.1:4836 RELEASE_OUT=test-results/rr-b/G01-repro BROWSER_POOL_JOB_ID=rr-b sh tools/perf/quiet-run.sh node --import tsx/esm tools/qa/release-ab-load.mjs L1 webgl2. Scope: one rejecting cell, not a full backend/tier matrix."
+    },
+    {
+      "file": "test-results/rr-b/G01-confirm/loads/L1.json",
+      "sha256": "2f4c69dce235b531b1b46ef7e0ccd9a0660ee722ddea3b258e9ebeccd5abbbe0",
+      "what": "Fresh QA production real L1 menu click to Begin-ready: low Metal WebGL2 cold7773.9000ms (>6000ms), loading card shown0.5ms after click, no browser errors. Quiet exclusive admission11:56:51.714Z at load2.4692,busy[]; first receipt11:57:02.699Z precedes observed foreign Vitest start~11:57:21Z. Later matrix timings are excluded after host contention. Separate sampled confirmation cold2222.6000ms/warm2095ms passes; worst-of-N retains the first miss. Repro: npm run build:qa; serve QA preview4836; RELEASE_QUALITY=low RELEASE_SIDES=candidate RELEASE_CANDIDATE_ORIGIN=http://127.0.0.1:4836 RELEASE_OUT=test-results/rr-b/G01-repro BROWSER_POOL_JOB_ID=rr-b sh tools/perf/quiet-run.sh node --import tsx/esm tools/qa/release-ab-load.mjs L1 webgl2. Scope: one rejecting cell, not a full backend/tier matrix."
+    },
+    {
+      "file": "test-results/rr-b/G01-confirm-host.json",
+      "sha256": "e4c2a6a212a410e26932f3d71e3ed92f28a6cad72a1161a2f31f033a23e8051b",
+      "what": "Fresh QA production real L1 menu click to Begin-ready: low Metal WebGL2 cold7773.9000ms (>6000ms), loading card shown0.5ms after click, no browser errors. Quiet exclusive admission11:56:51.714Z at load2.4692,busy[]; first receipt11:57:02.699Z precedes observed foreign Vitest start~11:57:21Z. Later matrix timings are excluded after host contention. Separate sampled confirmation cold2222.6000ms/warm2095ms passes; worst-of-N retains the first miss. Repro: npm run build:qa; serve QA preview4836; RELEASE_QUALITY=low RELEASE_SIDES=candidate RELEASE_CANDIDATE_ORIGIN=http://127.0.0.1:4836 RELEASE_OUT=test-results/rr-b/G01-repro BROWSER_POOL_JOB_ID=rr-b sh tools/perf/quiet-run.sh node --import tsx/esm tools/qa/release-ab-load.mjs L1 webgl2. Scope: one rejecting cell, not a full backend/tier matrix."
+    },
+    {
+      "file": "test-results/rr-b/G01-confirm-admission.jsonl",
+      "sha256": "7291d7c7f01ccaeefc706f5bdadfe086258ccdb180f311186c50fbe31a824eb1",
+      "what": "Fresh QA production real L1 menu click to Begin-ready: low Metal WebGL2 cold7773.9000ms (>6000ms), loading card shown0.5ms after click, no browser errors. Quiet exclusive admission11:56:51.714Z at load2.4692,busy[]; first receipt11:57:02.699Z precedes observed foreign Vitest start~11:57:21Z. Later matrix timings are excluded after host contention. Separate sampled confirmation cold2222.6000ms/warm2095ms passes; worst-of-N retains the first miss. Repro: npm run build:qa; serve QA preview4836; RELEASE_QUALITY=low RELEASE_SIDES=candidate RELEASE_CANDIDATE_ORIGIN=http://127.0.0.1:4836 RELEASE_OUT=test-results/rr-b/G01-repro BROWSER_POOL_JOB_ID=rr-b sh tools/perf/quiet-run.sh node --import tsx/esm tools/qa/release-ab-load.mjs L1 webgl2. Scope: one rejecting cell, not a full backend/tier matrix."
+    }
+  ],
+  "notes": "One valid counterexample rejects the universal six-second gate. No claim that later shared-load slow timings qualify. Confirmation PASS and lack of continuous sampling for initial cell are explicitly disclosed.",
+  "sourceDigest": "826eaf34ba69c9272cce1759bdd1699e67d8e35ebbd3c7d1739661bfaa751923"
+}
