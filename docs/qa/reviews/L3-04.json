@@ -14,28 +14,28 @@
   "evidence": [
     {
       "file": "docs/reports/final-a/L3-04-native.json",
-      "sha256": "81aea5c4a940db415af8370b0ae678e4f077f3cb4b0731f04bba45240f868640",
+      "sha256": "2cea3f7786720bcf47bda6b5a4dea850830cdeb9c9b2b3014d918a8367e6b6e4",
       "what": "10 current native checks PASS across low/high. low/stationary fallback within sixty seconds without player fire: 28.483333333333334; target 0 ≤ value ≤ 60 (PASS); low/stationary same-id turned officer ledger: 5; target 1 ≤ value ≤ Infinity (PASS); high/stationary fallback within sixty seconds without player fire: 14.25; target 0 ≤ value ≤ 60 (PASS); high/stationary same-id turned officer ledger: 10; target 1 ≤ value ≤ Infinity (PASS); low/controlled-fixture exact first-of fallback boundary and cause: {\"fallbackBoundary\":[{\"tick\":3960,\"firstEligibleTick\":3960,\"expectedCause\":\"inside\",\"actualCause\":\"inside\",\"inside\":8,\"turned\":1,\"elapsed\":775}],\"delayedFallback\":false}; target first eligible tick; priority: 3 turned, 8 inside, 60 seconds; no delayed fallback (PASS); low/controlled-fixture idle fallback deadline and officer identity/uniform: {\"officers\":10,\"directions\":[\"station\",\"commerce\",\"river\",\"blvd\",\"oak\"],\"turnedDuring\":1,\"sameLook\":true,\"fallbackCause\":\"inside\",\"fallbackAfterS\":12.916666666666666}; target fallback≤60s afterattack;≥1 officer turns;uniform retained (PASS); low/controlled-fixture controlled first-of fallback boundaries: [{\"name\":\"seven inside\",\"inside\":7,\"turned\":0,\"elapsed\":1,\"station\":false,\"expected\":null,\"actual\":null,\"calls\":0,\"pass\":true},{\"name\":\"eight inside\",\"inside\":8,\"turned\":0,\"elapsed\":1,\"station\":false,\"expected\":\"inside\",\"actual\":\"inside\",\"calls\":1,\"pass\":true},{\"name\":\"two turned\",\"inside\":0,\"turned\":2,\"elapsed\":1,\"station\":false,\"expected\":null,\"actual\":null,\"calls\":0,\"pass\":true},{\"name\":\"three turned\",\"inside\":0,\"turned\":3,\"elaps [full value in proof]; high/controlled-fixture exact first-of fallback boundary and cause: {\"fallbackBoundary\":[{\"tick\":2892,\"firstEligibleTick\":2892,\"expectedCause\":\"turned\",\"actualCause\":\"turned\",\"inside\":6,\"turned\":3,\"elapsed\":492}],\"delayedFallback\":false}; target first eligible tick; priority: 3 turned, 8 inside, 60 seconds; no delayed fallback (PASS); high/controlled-fixture idle fallback deadline and officer identity/uniform: {\"officers\":10,\"directions\":[\"station\",\"commerce\",\"river\",\"blvd\",\"oak\"],\"turnedDuring\":3,\"sameLook\":true,\"fallbackCause\":\"turned\",\"fallbackAfterS\":8.2}; target fallback≤60s afterattack;≥1 officer turns;uniform retained (PASS); high/controlled-fixture controlled first-of fallback boundaries: [{\"name\":\"seven inside\",\"inside\":7,\"turned\":0,\"elapsed\":1,\"station\":false,\"expected\":null,\"actual\":null,\"calls\":0,\"pass\":true},{\"name\":\"eight inside\",\"inside\":8,\"turned\":0,\"elapsed\":1,\"station\":false,\"expected\":\"inside\",\"actual\":\"inside\",\"calls\":1,\"pass\":true},{\"name\":\"two turned\",\"inside\":0,\"turned\":2,\"elapsed\":1,\"station\":false,\"expected\":null,\"actual\":null,\"calls\":0,\"pass\":true},{\"name\":\"three turned\",\"inside\":0,\"turned\":3,\"elap [full value in proof]"
     },
     {
-      "file": "docs/reports/fix51-verify/receipts/L3-low-stationary.json",
-      "sha256": "397baa017658a0b23da1cece00753b1b6e9363ed1272bff5125d3de615c52def",
-      "what": "Frozen-head L3-04 native input receipt, evaluated by the exact clauses retained in the row proof."
+      "file": "docs/reports/final-a/native-receipts/L3-low-stationary.json.gz",
+      "sha256": "024f22953d5c2e3f1bbefbba6fe6943dddd8ecc05664082f2a2fe6cc32d7c146",
+      "what": "Frozen-head L3-04 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
     },
     {
-      "file": "docs/reports/fix51-verify/receipts/L3-high-stationary.json",
-      "sha256": "260dd369e09316f288a0de9e176ff1abc26bbc5547a1f7be1e20cadeecc29b80",
-      "what": "Frozen-head L3-04 native input receipt, evaluated by the exact clauses retained in the row proof."
+      "file": "docs/reports/final-a/native-receipts/L3-high-stationary.json.gz",
+      "sha256": "2046af461e64e70381568acc5905423f47b44bf18d205557d43b0ad61770b9b1",
+      "what": "Frozen-head L3-04 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
     },
     {
-      "file": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
-      "sha256": "1dbb6554d364c1372e298abab060319623af1f8871fbd2e7e24dad1a1382d0cc",
-      "what": "Frozen-head L3-04 native input receipt, evaluated by the exact clauses retained in the row proof."
+      "file": "docs/reports/final-a/native-receipts/L3-low-fixtures.json.gz",
+      "sha256": "5bb7a9d05574c189a8bec9fe20a06b1a7988f48a3175a8841aef1fa147209724",
+      "what": "Frozen-head L3-04 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
     },
     {
-      "file": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
-      "sha256": "e4dd4c36be5c14615ed61548e5c0cb95e00a5363f1741e70547ed354a08a8086",
-      "what": "Frozen-head L3-04 native input receipt, evaluated by the exact clauses retained in the row proof."
+      "file": "docs/reports/final-a/native-receipts/L3-high-fixtures.json.gz",
+      "sha256": "87d97237be8ee7ecb0019d923692b5c60332643dfee8640b4274c1c5727fe14c",
+      "what": "Frozen-head L3-04 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
     }
   ],
   "notes": "Numeric-only criterion; all evaluator clauses measured at both qualities on the frozen runtime source. No visual or route-readability inference.",
