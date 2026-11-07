@@ -494,6 +494,40 @@
       ]
     },
     {
+      "row": "L5-02",
+      "status": "PASS",
+      "sourceDigest": "96b95aaf00218387ac838466ba4e849719809eef34f96b67f54241001dca8a39",
+      "expected": "96b95aaf00218387ac838466ba4e849719809eef34f96b67f54241001dca8a39",
+      "fresh": true,
+      "evidence": [
+        {
+          "file": "docs/reports/final-b/L5-02-proof.json",
+          "present": true,
+          "matches": true
+        },
+        {
+          "file": "docs/reports/final-b/L5-audio-opening-current.json.gz",
+          "present": true,
+          "matches": true
+        },
+        {
+          "file": "docs/reports/final-b/L5-audio-opening-executed.ts.gz",
+          "present": true,
+          "matches": true
+        },
+        {
+          "file": "docs/reports/final-b/L5-opening-native.json.gz",
+          "present": true,
+          "matches": true
+        },
+        {
+          "file": "docs/reports/final-b/L5-metro-resume-native.json.gz",
+          "present": true,
+          "matches": true
+        }
+      ]
+    },
+    {
       "row": "L5-03",
       "status": "PASS",
       "sourceDigest": "96b95aaf00218387ac838466ba4e849719809eef34f96b67f54241001dca8a39",

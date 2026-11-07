@@ -30,5 +30,21 @@
     "exitCode": 1,
     "seconds": 342.8457570075989,
     "log": "test-results/final-b/final-accept-L5.log"
+  },
+  {
+    "command": [
+      "npm",
+      "run",
+      "qa:accept",
+      "--",
+      "--level",
+      "L6",
+      "--tier",
+      "both",
+      "--skip-browser"
+    ],
+    "exitCode": 1,
+    "seconds": 244.25679302215576,
+    "log": "test-results/final-b/final-accept-L6.log"
   }
 ]
