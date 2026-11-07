@@ -7,6 +7,7 @@ import type { ActionDef, Side } from '../../src/data/actions/schema';
 import { comboDefinition } from '../../src/data/meleeCombos';
 import { riotShieldResponse } from '../../src/data/infected';
 import { Status } from '../../src/sim/combat/Status';
+import type { CoverWall } from '../../src/sim/combat/HitQuery';
 import { SimWorld } from '../../src/sim/world/SimWorld';
 import { checkRocketCadence, checkRocketEndpoints } from '../helpers/l7Uat';
 
@@ -22,7 +23,7 @@ function fire(w: SimWorld, side: Side = 'LEFT', aim = { x: 1, z: 0 }, aimPoint?:
 }
 const dummy = (w: SimWorld, x: number, z = 0, hp = 100) => w.spawnDummy('infected.dummy', { x, z }, { hp });
 const health = (w: SimWorld, id: number) => w.entities.get(id)!.health.current;
-const walls = (w: SimWorld) => w.combat!.query.walls as { x: number; y: number; z: number; halfX: number; halfY: number; halfZ: number }[];
+const walls = (w: SimWorld) => w.combat!.query.walls as CoverWall[];
 const attacks = (w: SimWorld) => w.events.events().filter(e => e.type === 'combat.attack');
 const forehand = () => comboDefinition(rosterAction('weapon.bat'), 0);
 
@@ -128,6 +129,15 @@ test('explosives: landing clamps to range, fuse, distance falloff, cover line of
   const f = await arena(); equip(f); const escort = f.spawnDummy('escort.dummy', { x: 0, z: 0 }, { faction: 'escort' });
   fire(f, 'RIGHT', { x: 1, z: 0 }, { x: 0, z: 0 }); step(f, 90);
   expect(health(f, escort)).toBe(0); expect(health(f, 1)).toBeCloseTo(70, 1);
+  // An angled wreck's broad-phase corners are empty for movement and blasts alike.
+  const rotated = await arena(); equip(rotated); rotated.combat!.damage.god = true;
+  walls(rotated).push({ x: 0, y: 1, z: 0, halfX: 2.5, halfY: 1, halfZ: 2.5,
+    navFootprint: { x: 0, z: 0, halfX: 3, halfZ: .4, yaw: Math.PI / 4 } });
+  const clearCorner = dummy(rotated, 1, 2), solid = dummy(rotated, 0, 0);
+  fire(rotated, 'RIGHT', { x: 3 / Math.sqrt(13), z: 2 / Math.sqrt(13) }, { x: 3, z: 2 }); step(rotated, 90);
+  expect(health(rotated, clearCorner), 'no phantom blast cover in a free corner').toBeLessThan(100);
+  expect(health(rotated, solid), 'the actual rotated hull still blocks the blast').toBe(100);
+
 });
 
 test('damage modifiers: front shield ±60°, armor and multipliers, stun/slow/toxic, capped burning stacks and water', async () => {
@@ -271,6 +281,20 @@ test('damage modifiers: front shield ±60°, armor and multipliers, stun/slow/to
 
 test('every weapon category fires and hits; swept projectiles never tunnel; full cover stops melee, hitscan and projectiles', async () => {
   await checkRocketEndpoints();
+  {
+    const w = await arena(), query = w.combat!.query;
+    const wall: CoverWall = { x: 0, y: 1, z: 0, halfX: 2.5, halfY: 1, halfZ: 2.5,
+      navFootprint: { x: 0, z: 0, halfX: 3, halfZ: .4, yaw: Math.PI / 4 } };
+    for (const indexed of [false, true]) {
+      walls(w).splice(0, walls(w).length, wall);
+      if (indexed) for (let i = 0; i < 65; i++) walls(w).push({ x: 50 + i, y: 1, z: 50, halfX: .1, halfY: 1, halfZ: .1 });
+      query.invalidate();
+      expect(query.visible({ x: 3, z: 2 }, { x: 1, z: 2 }), `rotated free corner, indexed=${indexed}`).toBe(true);
+      expect(query.visible({ x: -3, z: 0 }, { x: 3, z: 0 }), `rotated solid, indexed=${indexed}`).toBe(false);
+      expect(query.wallDistance(wall, { x: 3, z: 2 }, { x: -1, z: 0 }, 2)).toBe(2);
+    }
+  }
+
   for (const weapon of ['weapon.bat', 'weapon.pistol', 'weapon.grenade', 'ability.ground-slam', 'weapon.test-projectile']) {
     const w = await arena(); equip(w, [weapon]); w.combat!.damage.god = true; const id = dummy(w, 1);
     fire(w, 'LEFT', { x: 1, z: 0 }, { x: 1, z: 0 }); step(w, 91);

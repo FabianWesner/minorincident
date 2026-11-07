@@ -84,6 +84,15 @@ export class HitQuery {
   }
   wallDistance(wall: CoverWall, origin: RayPoint, direction: RayPoint, range: number, padding = 0): number { return this.cover(wall, origin, direction, range, range, undefined, padding); }
   private cover(wall: CoverWall, origin: RayPoint, direction: RayPoint, range: number, closest: number, ignoreId?: number, padding = 0): number {
+    // Navigation and contact expose the actual rotated box, so sight and shots
+    // must not retain invisible cover in its broad-phase AABB corners.
+    const f = wall.navFootprint;
+    if (f) {
+      const c = Math.cos(f.yaw), s = Math.sin(f.yaw), x = origin.x - f.x, z = origin.z - f.z;
+      return this.cover({ ...wall, x: 0, z: 0, halfX: f.halfX, halfZ: f.halfZ, navFootprint: undefined },
+        { ...origin, x: x * c - z * s, z: x * s + z * c },
+        { ...direction, x: direction.x * c - direction.z * s, z: direction.x * s + direction.z * c }, range, closest, ignoreId, padding);
+    }
     {
       if (wall.entityId !== undefined && wall.entityId === ignoreId) return closest;
       let near = 0, far = range;

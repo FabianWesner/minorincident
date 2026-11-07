@@ -121,6 +121,12 @@ export class Explosions {
   }
   /** One wall's slab test of the blast-to-target segment (the original per-wall rule, scalar). */
   private blocks(w: import('./HitQuery').CoverWall, at: { x: number; z: number }, dx: number, dz: number, distance: number, targetId: number): boolean {
+    const f = w.navFootprint;
+    if (f) {
+      const c = Math.cos(f.yaw), s = Math.sin(f.yaw), x = at.x - f.x, z = at.z - f.z;
+      return this.blocks({ ...w, x: 0, z: 0, halfX: f.halfX, halfZ: f.halfZ, navFootprint: undefined },
+        { x: x * c - z * s, z: x * s + z * c }, dx * c - dz * s, dx * s + dz * c, distance, targetId);
+    }
     if (w.entityId === targetId || (w.entityId !== undefined && !this.world.entities.get(w.entityId)?.barricade) || w.y - w.halfY > .7 || w.y + w.halfY < .7 || (Math.abs(at.x - w.x) <= w.halfX && Math.abs(at.z - w.z) <= w.halfZ)) return false;
     let near = 0, far = distance;
     const ux = dx / distance, uz = dz / distance;
