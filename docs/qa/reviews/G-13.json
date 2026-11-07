@@ -1,28 +1,23 @@
 {
   "row": "G-13",
   "status": "FAIL",
-  "reviewer": "final-g/Codex",
+  "reviewer": "Codex rr-b",
   "date": "2026-11-07",
-  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "commit": "50be7c824705fc3cdbb3a7ab7dd78f72c7bf2001",
   "clauses": [
     {
-      "clause": "**No single follower is slower than the group.** While the group moves, every follower's median speed ≥ 0.95× the group median (tune); time the player stands waiting for one follower > 10 m behind ≤ 10 % of escort time (tune). PO: \"let me stay with the crowd for suvivor.\"",
+      "clause": "**No single follower is slower than the group.** While the group moves, every follower's median speed \u2265 0.95\u00d7 the group median (tune); time the player stands waiting for one follower > 10 m behind \u2264 10 % of escort time (tune). PO: \"let me stay with the crowd for suvivor.\"",
       "verdict": "FAIL",
-      "note": "Fresh ordinary L7 high seed1 completion: departure followers62/65/74 median/group ratios0.9137348293/0.8780749680/0.8707108993, each with>=10 walking samples and a valid completed route; all are below0.95. The existing majority-of-three vote passes these IDs, but does not erase these concrete violations of the unchanged every-follower criterion. L5 high seed3 follower28 also reaches0.8945363771. L6 exact empty-input waiting is39/16082 ticks=0.242507% at both tiers (canonical final hashes identical), so its48.3% stationary upper bound is not classified as an actual wait failure."
+      "note": "Fresh all-level native acceptance on current main finds a binding L1 low/high counterexample: escort time6095/6090 ticks; player waits with a follower>10m behind for1003 ticks in each tier, 16.4561%/16.4696% (>10%). One violation is sufficient for the global row to FAIL. Other completed levels were also run; unavailable rows are not treated as passes."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/final-g/G-13-native.json",
-      "sha256": "455a1d189ace19902b881289b13bcaa26cfb1b963b40caa96247dfbbb429c4cd",
-      "what": "Fresh ordinary L7 high seed1 completion: departure followers62/65/74 median/group ratios0.9137348293/0.8780749680/0.8707108993, each with>=10 walking samples and a valid completed route; all are below0.95. The existing majority-of-three vote passes these IDs, but does not erase these concrete violations of the unchanged every-follower criterion. L5 high seed3 follower28 also reaches0.8945363771. L6 exact empty-input waiting is39/16082 ticks=0.242507% at both tiers (canonical final hashes identical), so its48.3% stationary upper bound is not classified as an actual wait failure."
-    },
-    {
-      "file": "docs/reports/final-g/G-13-L6-wait.json",
-      "sha256": "b05dcc36301049094788f05f8057fddd19b86d0ffa3f05613afc03d025486a1a",
-      "what": "Fresh ordinary L7 high seed1 completion: departure followers62/65/74 median/group ratios0.9137348293/0.8780749680/0.8707108993, each with>=10 walking samples and a valid completed route; all are below0.95. The existing majority-of-three vote passes these IDs, but does not erase these concrete violations of the unchanged every-follower criterion. L5 high seed3 follower28 also reaches0.8945363771. L6 exact empty-input waiting is39/16082 ticks=0.242507% at both tiers (canonical final hashes identical), so its48.3% stationary upper bound is not classified as an actual wait failure."
+      "file": "test-results/rr-b/G-13-native-L1.json",
+      "sha256": "a4d94b22a86ac1821d26eb6374133596d1b167d12dfc7370ea635c03e11ffdbf",
+      "what": "Fresh current-main native L1 low/high G-13 check values and source identity; both waiting fractions exceed the 10% ceiling."
     }
   ],
-  "notes": "Repro: ordinary L7 complete policy at high quality, seed1; inspect step/departure follower medians for IDs62,65,74. No game or seed-vote checker change.",
-  "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186"
+  "notes": "Fresh measured FAIL. No P status; this is a numeric criterion failure.",
+  "sourceDigest": "826eaf34ba69c9272cce1759bdd1699e67d8e35ebbd3c7d1739661bfaa751923"
 }
