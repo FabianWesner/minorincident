@@ -1,26 +1,38 @@
 {
   "row": "L6-05",
   "status": "PASS",
-  "reviewer": "Codex/fix71-b2",
-  "date": "2026-11-06",
-  "commit": "cca991dfebf7ff2a8deadb2b3aff616f967661d3",
+  "reviewer": "Codex/final-b",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "sourceDigest": "7fd8f0ebc3d3fcb362d200567b5da5e2e4f5bea018074dcf4fbbfccc06fdf698",
   "clauses": [
     {
-      "clause": "combat: **reachable \u2265 95 %** (every infected spawns inside the walkable station/tunnel, none behind the tunnel wall); passive first attack \u2264 15 s after each breach caption; attacks on player \u2265 4/min (tune).",
+      "clause": "combat: **reachable ≥ 95 %** (every infected spawns inside the walkable station/tunnel, none behind the tunnel wall); passive first attack ≤ 15 s after each breach caption; attacks on player ≥ 4/min (tune).",
       "verdict": "PASS",
-      "note": "Final merged source: both complete openings have4 real player-targeted windups in21.017s (11.420/min), first5.983s. Stationary has49 (139.889/min), first2.083s, and first attacks after breach1/2 at2.083/9.083s. All four bounded-path minimum shares100%. No group windups substitute for the player requirement."
+      "note": "low/complete: combat hard rule on actual player windups={\"seconds\":21.016666666666666,\"playerWindups\":4,\"groupWindups\":10,\"attacksPerMinute\":11.419508326724822}; target nonzero player windups in each combat policy; PASS\nlow/complete: real player/group windups per minute=11.419508326724822; target 4 ≤ value ≤ Infinity; PASS\nlow/complete: minimum bounded-path reachable share within30m (path≤2.5×direct)=100; target 95 ≤ value ≤ 100; PASS\nlow/stationary: combat hard rule on actual player windups={\"seconds\":21.016666666666666,\"playerWindups\":49,\"groupWindups\":59,\"attacksPerMinute\":139.88897700237905}; target nonzero player windups in each combat policy; PASS\nlow/stationary: stationary first real player attack (phase clock)={\"seconds\":2.0833333333333335,\"windowSeconds\":21.016666666666666}; target ≤15 s; PASS\nlow/stationary: real player/group windups per minute=139.88897700237905; target 4 ≤ value ≤ Infinity; PASS\nlow/stationary: minimum bounded-path reachable share within30m (path≤2.5×direct)=100; target 95 ≤ value ≤ 100; PASS\nlow/stationary: stationary first attack after l6.breach1=2.0833333333333335; target player windup≤15s after this breach caption; PASS\nlow/stationary: stationary first attack after l6.breach2=9.083333333333334; target player windup≤15s after this breach caption; PASS\nhigh/complete: combat hard rule on actual player windups={\"seconds\":21.016666666666666,\"playerWindups\":4,\"groupWindups\":10,\"attacksPerMinute\":11.419508326724822}; target nonzero player windups in each combat policy; PASS\nhigh/complete: real player/group windups per minute=11.419508326724822; target 4 ≤ value ≤ Infinity; PASS\nhigh/complete: minimum bounded-path reachable share within30m (path≤2.5×direct)=100; target 95 ≤ value ≤ 100; PASS\nhigh/stationary: combat hard rule on actual player windups={\"seconds\":21.016666666666666,\"playerWindups\":49,\"groupWindups\":59,\"attacksPerMinute\":139.88897700237905}; target nonzero player windups in each combat policy; PASS\nhigh/stationary: stationary first real player attack (phase clock)={\"seconds\":2.0833333333333335,\"windowSeconds\":21.016666666666666}; target ≤15 s; PASS\nhigh/stationary: real player/group windups per minute=139.88897700237905; target 4 ≤ value ≤ Infinity; PASS\nhigh/stationary: minimum bounded-path reachable share within30m (path≤2.5×direct)=100; target 95 ≤ value ≤ 100; PASS\nhigh/stationary: stationary first attack after l6.breach1=2.0833333333333335; target player windup≤15s after this breach caption; PASS\nhigh/stationary: stationary first attack after l6.breach2=9.083333333333334; target player windup≤15s after this breach caption; PASS"
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix71-b2/merged-summary.json",
-      "sha256": "331cec0349d5d00846f610ebed7ca82206268aff4fabb8de75d1d8417187890e",
-      "what": "Final merged source: both complete openings have4 real player-targeted windups in21.017s (11.420/min), first5.983s. Stationary has49 (139.889/min), first2.083s, and first attacks after breach1/2 at2.083/9.083s. All four bounded-path minimum shares100%. No group windups substitute for the player requirement."
+      "file": "docs/reports/fix51-verify/receipts/L6-low-complete.json",
+      "sha256": "1738e4367ff91c85628def0a295f43af332f06b92eeae51bd7976852a4a9216d",
+      "what": "Frozen-head native measurement: L6-05. combat hard rule on actual player windups; real player/group windups per minute; minimum bounded-path reachable share within30m (path≤2.5×direct)."
     },
     {
-      "file": "docs/reports/fix71-b2/merged-protection.json.gz",
-      "sha256": "3a6b79f3013815000373e669da989d69eaa5fc8b2073f682ac76e724f57ff46b",
-      "what": "Read-only full mortal per-identity roster, bite and position ledger for complete/evade-only, both tiers."
+      "file": "docs/reports/fix51-verify/receipts/L6-low-stationary.json",
+      "sha256": "302ad0317538d444475bbfdba7b7426dca2fcc84d8fb57c78e23765810d7bee3",
+      "what": "Frozen-head native measurement: L6-05. combat hard rule on actual player windups; stationary first real player attack (phase clock); real player/group windups per minute; minimum bounded-path reachable share within30m (path≤2.5×direct); stationary first attack after l6.breach1; stationary first attack after l6.breach2."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-high-complete.json",
+      "sha256": "b032f059424a54ead73b9e68c1d63d0ce659e63a7cb2968fd2034658f38acc10",
+      "what": "Frozen-head native measurement: L6-05. combat hard rule on actual player windups; real player/group windups per minute; minimum bounded-path reachable share within30m (path≤2.5×direct)."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-high-stationary.json",
+      "sha256": "ae8d4b959e39beded411ac4dff38efff607574b772cdf4621cd98c6ad9aa1be6",
+      "what": "Frozen-head native measurement: L6-05. combat hard rule on actual player windups; stationary first real player attack (phase clock); real player/group windups per minute; minimum bounded-path reachable share within30m (path≤2.5×direct); stationary first attack after l6.breach1; stationary first attack after l6.breach2."
     }
-  ]
+  ],
+  "notes": "Fresh native measurements on the frozen source. No claim of new browser observations. L5-01 legacy diagnostic NOT CHECKED entries are redundant with the explicit pickup/regular/Alpha timing fixtures, whose full clauses pass."
 }
