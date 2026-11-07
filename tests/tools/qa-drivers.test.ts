@@ -40,6 +40,12 @@ test('playtest stuck detection: following a moving ring is progress; a parked co
   const fight = new PlaytestProgress(); fight.update(sample(0,{enemies:[{id:1,hp:100}]}));
   expect(fight.update(sample(20,{enemies:[{id:1,hp:75}]})).reason).toBe('damage');
   expect(fight.update(sample(41,{enemies:[{id:1,hp:75}]})).seconds).toBe(21);
+  const pursuit = new PlaytestProgress(), pursue = (t: number, megaBand: ProgressSample['megaBand']) => sample(t, { context: 'L10|mega', text: 'Kill the Mega Alpha', distance: null, marker: null, megaBand });
+  pursuit.update(pursue(0, 'distant'));
+  expect(pursuit.update(pursue(80, 'approaching')).reason).toBe('nearer-band');
+  expect(pursuit.update(pursue(171, 'approaching')).seconds).toBe(91);
+  expect(pursuit.update(pursue(172, 'distant')).reason).toBe(null);
+  expect(pursuit.update(pursue(173, 'near')).reason).toBe('nearer-band');
   expect(fight.update(sample(42,{enemies:[{id:1,hp:100}]})).reason).toBeNull();
   expect(fight.update(sample(43,{enemies:[{id:1,hp:75}]})).reason).toBeNull();
   expect(fight.update(sample(44,{enemies:[{id:1,hp:50}]})).reason).toBe('damage');

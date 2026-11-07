@@ -2,12 +2,14 @@ interface Point { x: number; z: number }
 export interface ProgressSample {
   context: string; text: string; distance: number | null; player: Point | null; marker: Point | null; tick: number; nowMs: number;
   enemies?: { id: number; hp: number }[];
+  megaBand?: 'distant' | 'approaching' | 'near' | null;
 }
 /** Progress comes only from the visible HUD, courier and marker. */
 export class PlaytestProgress {
   private context = '';
   private text = '';
   private best = Infinity;
+  private nearestBand = -1;
   private tick = 0;
   private wall = 0;
   private playerOrigin: Point | null = null;
@@ -21,6 +23,7 @@ export class PlaytestProgress {
   private detourFar = 0;
   private enemyHealth = new Map<number, number>();
   update(s: ProgressSample): { seconds: number; reason: string | null } {
+    const band = ['distant', 'approaching', 'near'].indexOf(s.megaBand ?? '');
     const text=s.text.replace(/ · [\d.]+\s?m\b/g,'');
     let reason: string | null=null;
     // Ring reads are cached between frames. A respawn can leave the old gate's
@@ -33,7 +36,12 @@ export class PlaytestProgress {
       this.playerOrigin=s.player?{...s.player}:null;this.markerOrigin=marker?{...marker}:null;
       this.playerFar=this.markerFar=0;
       this.enemyHealth.clear();
+      this.nearestBand = band;
     } else if(s.distance!==null&&s.distance<this.best-2) {this.best=s.distance;reason='nearer';}
+    // The Mega deliberately has no directional waypoint. Its visible band
+    // closing is progress; repeated labels or retreating across a band are not.
+    if (!reason && band > this.nearestBand) reason = 'nearer-band';
+    this.nearestBand = Math.max(this.nearestBand, band);
     if(reason) {
       this.detourOrigin=s.player?{...s.player}:null;this.detourTarget=marker?{...marker}:null;this.detourFar=0;
     }
