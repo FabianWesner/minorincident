@@ -61,7 +61,10 @@ await mkdir(values.out!, { recursive: true });
 // Waiting for exit keeps the whole audit within the existing two-worker cap.
 const parallelLevels = maxWorkers === 2 && selected.length > 1;
 if (parallelLevels) {
-  const pending = [...selected];
+  // Start the measured long routes first so L5's extra follower seeds do not
+  // become a late tail after the other worker has exhausted its queue.
+  const longestFirst: readonly RunnerLevel[] = ['L5', 'L4', 'L3', 'L10', 'L7', 'L8', 'L2', 'L1', 'L9', 'L6'];
+  const pending = [...selected].sort((a, b) => longestFirst.indexOf(a) - longestFirst.indexOf(b));
   const completed = new Map<RunnerLevel, LevelReceipt>();
   const worker = async () => {
     for (let level = pending.shift(); level; level = pending.shift()) {
