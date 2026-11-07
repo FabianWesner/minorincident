@@ -1,0 +1,344 @@
+{
+ "name": "corpse-z05",
+ "note": "r2-corpse: all variants, game camera zoom 0.5.",
+ "seed": 22,
+ "ground": "asphalt",
+ "time": "L4",
+ "size": 60,
+ "dof": false,
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    -9,
+    12
+   ],
+   "state": "idle"
+  },
+  {
+   "id": "alpha",
+   "kind": "infected",
+   "archetype": "infected.alpha",
+   "at": [
+    -7.0,
+    -4.0
+   ],
+   "state": "idle",
+   "look": {
+    "model": "inf.alpha"
+   }
+  },
+  {
+   "id": "alpha-suit",
+   "kind": "infected",
+   "archetype": "infected.alpha",
+   "at": [
+    -4.6,
+    -4.0
+   ],
+   "state": "idle",
+   "look": {
+    "model": "inf.alpha-suit"
+   }
+  },
+  {
+   "id": "alpha-hoodie",
+   "kind": "infected",
+   "archetype": "infected.alpha",
+   "at": [
+    -2.2,
+    -4.0
+   ],
+   "state": "idle",
+   "look": {
+    "model": "inf.alpha-hoodie"
+   }
+  },
+  {
+   "id": "alpha-worker",
+   "kind": "infected",
+   "archetype": "infected.alpha",
+   "at": [
+    0.1999999999999993,
+    -4.0
+   ],
+   "state": "idle",
+   "look": {
+    "model": "inf.alpha-worker"
+   }
+  },
+  {
+   "id": "alpha-fire",
+   "kind": "infected",
+   "archetype": "infected.alpha",
+   "at": [
+    -7.0,
+    0.0
+   ],
+   "state": "idle",
+   "look": {
+    "model": "inf.alpha-fire"
+   }
+  },
+  {
+   "id": "runner",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -4.6,
+    0.0
+   ],
+   "state": "idle"
+  },
+  {
+   "id": "worker",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -2.2,
+    0.0
+   ],
+   "state": "idle",
+   "look": {
+    "model": "inf.common-worker"
+   }
+  },
+  {
+   "id": "mom",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    0.1999999999999993,
+    0.0
+   ],
+   "state": "idle",
+   "look": {
+    "model": "inf.suburban-mom"
+   }
+  },
+  {
+   "id": "firefighter",
+   "kind": "infected",
+   "archetype": "infected.firefighter",
+   "at": [
+    -7.0,
+    4.0
+   ],
+   "state": "idle"
+  },
+  {
+   "id": "riot",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -4.6,
+    4.0
+   ],
+   "state": "idle",
+   "look": {
+    "model": "inf.riot-cop"
+   }
+  },
+  {
+   "id": "hazmat",
+   "kind": "infected",
+   "archetype": "infected.hazmat",
+   "at": [
+    -2.2,
+    4.0
+   ],
+   "state": "idle"
+  },
+  {
+   "id": "crawler",
+   "kind": "infected",
+   "archetype": "infected.crawler",
+   "at": [
+    0.1999999999999993,
+    4.0
+   ],
+   "state": "idle"
+  },
+  {
+   "id": "dog",
+   "kind": "infected",
+   "archetype": "infected.dog",
+   "at": [
+    -7.0,
+    8.0
+   ],
+   "state": "idle"
+  },
+  {
+   "id": "nurse",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -4.6,
+    8.0
+   ],
+   "state": "idle",
+   "look": {
+    "model": "inf.nurse"
+   }
+  },
+  {
+   "id": "elderly",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -2.2,
+    8.0
+   ],
+   "state": "idle",
+   "look": {
+    "model": "npc.civilian-elderly"
+   }
+  },
+  {
+   "id": "mega",
+   "kind": "infected",
+   "archetype": "infected.alpha",
+   "at": [
+    0.1999999999999993,
+    8.0
+   ],
+   "state": "idle",
+   "look": {
+    "model": "inf.mega-alpha"
+   }
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": [
+   0,
+   0.2,
+   2.0
+  ],
+  "zoom": 0.5
+ },
+ "frames": 82,
+ "shots": [
+  80
+ ],
+ "sheet": 80,
+ "script": [
+  {
+   "frame": 5,
+   "actor": "alpha",
+   "do": {
+    "corpse": true
+   }
+  },
+  {
+   "frame": 5,
+   "actor": "alpha-suit",
+   "do": {
+    "corpse": true
+   }
+  },
+  {
+   "frame": 5,
+   "actor": "alpha-hoodie",
+   "do": {
+    "corpse": true
+   }
+  },
+  {
+   "frame": 5,
+   "actor": "alpha-worker",
+   "do": {
+    "corpse": true
+   }
+  },
+  {
+   "frame": 5,
+   "actor": "alpha-fire",
+   "do": {
+    "corpse": true
+   }
+  },
+  {
+   "frame": 5,
+   "actor": "runner",
+   "do": {
+    "corpse": true
+   }
+  },
+  {
+   "frame": 5,
+   "actor": "worker",
+   "do": {
+    "corpse": true
+   }
+  },
+  {
+   "frame": 5,
+   "actor": "mom",
+   "do": {
+    "corpse": true
+   }
+  },
+  {
+   "frame": 5,
+   "actor": "firefighter",
+   "do": {
+    "corpse": true
+   }
+  },
+  {
+   "frame": 5,
+   "actor": "riot",
+   "do": {
+    "corpse": true
+   }
+  },
+  {
+   "frame": 5,
+   "actor": "hazmat",
+   "do": {
+    "corpse": true
+   }
+  },
+  {
+   "frame": 5,
+   "actor": "crawler",
+   "do": {
+    "corpse": true
+   }
+  },
+  {
+   "frame": 5,
+   "actor": "dog",
+   "do": {
+    "corpse": true
+   }
+  },
+  {
+   "frame": 5,
+   "actor": "nurse",
+   "do": {
+    "corpse": true
+   }
+  },
+  {
+   "frame": 5,
+   "actor": "elderly",
+   "do": {
+    "corpse": true
+   }
+  },
+  {
+   "frame": 5,
+   "actor": "mega",
+   "do": {
+    "corpse": true
+   }
+  }
+ ],
+ "expect": {
+  "consoleErrors": 0
+ }
+}

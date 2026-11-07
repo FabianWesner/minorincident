@@ -4,6 +4,10 @@ import { BufferAttribute, BufferGeometry, BoxGeometry, Group, Mesh, MeshBasicMat
 import { Box3, MeshLambertNodeMaterial, NodeFrame, PerspectiveCamera, Scene, TextureNode, type InstancedMesh } from 'three/webgpu';
 import { float, vec3 } from 'three/tsl';
 import { expect, test, vi } from 'vitest';
+import { readFileSync } from 'node:fs';
+import { gunzipSync } from 'node:zlib';
+import { decodeCivilianBake } from '../../src/assets/civilianBakeData';
+import { repairDeathPoses } from '../../src/render/characters/deathPose';
 import { packCrowdParts } from '../../src/assets/crowd';
 import { bakeInfected, framesPerClip, infectedClips } from '../../src/render/characters/bakeInfected';
 import { crowdVertexLayout, resolveCrowdAppearance, markCrowdAppearance } from '../../src/render/characters/CrowdAppearance';
@@ -401,6 +405,34 @@ test('corpse pages: bodies persist past the old cap, bounds stay conservative, c
     expect(normal.itemSize).toBe(3);
     expect(Float32Array.from({ length: normal.count * 3 }, (_, i) => normal.getComponent(Math.floor(i / 3), i % 3))).toEqual(expected);
   } finally { frozen.dispose(); baked.geometry.dispose(); paddedGeometry.dispose(); material.dispose(); }
+  // r2-corpse (G-14, L4-17): delivered humanoid death clips end lying on the floor; animals and crawlers keep their fall; repair is idempotent.
+  const deliveries = JSON.parse(readFileSync('src/assets/civilianBakes.json', 'utf8')) as Record<string, string>;
+  const delivered = (model: string) => {
+    const bytes = gunzipSync(readFileSync(`public${deliveries[`${model}:lod0:infected`]}`));
+    const bake = decodeCivilianBake(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength) as ArrayBuffer); packCrowdParts(bake.geometry); return bake;
+  };
+  const lying = (bake: ReturnType<typeof delivered>, death: (typeof infectedClips)[number]) => {
+    const g = bake.geometry, p = g.getAttribute('position'), parts = g.getAttribute('_parts'), skin = g.getAttribute('_skin'), P = bake.clip.parts.length;
+    const offset = (infectedClips.indexOf(death) * framesPerClip + framesPerClip - 1) * P * 16, pose = new Float32Array(P * 16), m = new Float32Array(16);
+    premultiplyRow(bake.clip.matrices, pose, bake.clip.binds!, offset, P, 0);
+    let min = Infinity, max = -Infinity;
+    for (let i = 0; i < p.count; i++) {
+      if (parts.getZ(i) > 1.5 || parts.getW(i) >= 1024) continue;
+      skinnedVertexMatrix(bake.clip, offset, parts, skin, i, m, pose);
+      const y = m[1] * p.getX(i) + m[5] * p.getY(i) + m[9] * p.getZ(i) + m[13]; min = Math.min(min, y); max = Math.max(max, y);
+    }
+    return { min, max };
+  };
+  const worker = delivered('inf.common-worker'), tallBefore = lying(worker, 'death-back').max;
+  expect(repairDeathPoses(worker.clip, worker.geometry)).toBe(true);
+  for (const death of ['death-back', 'death-side', 'death-crumple'] as const) { const { min, max } = lying(worker, death); expect(Math.abs(min)).toBeLessThan(.02); expect(max).toBeLessThan(.7); }
+  expect(lying(worker, 'death-back').max).toBeLessThan(tallBefore);
+  const alpha = delivered('inf.alpha');
+  expect(repairDeathPoses(alpha.clip, alpha.geometry, { prone: true })).toBe(true);
+  const settled = Array.from(alpha.clip.matrices); repairDeathPoses(alpha.clip, alpha.geometry, { prone: true });
+  expect(Array.from(alpha.clip.matrices)).toEqual(settled);
+  for (const death of ['death-back', 'death-side', 'death-crumple'] as const) expect(lying(alpha, death).max).toBeLessThan(1.5);
+  for (const model of ['inf.dog', 'inf.crawler']) { const bake = delivered(model), before = Array.from(bake.clip.matrices); expect(repairDeathPoses(bake.clip, bake.geometry)).toBe(false); expect(Array.from(bake.clip.matrices)).toEqual(before); }
 });
 
 test('LOD selection: authored distance bands with hysteresis; game-camera-size crowd figures never take the far silhouette', () => {

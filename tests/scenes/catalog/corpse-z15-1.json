@@ -1,0 +1,116 @@
+{
+ "name": "corpse-z15-1",
+ "note": "r2-corpse: four variants, game camera zoom 1.5.",
+ "seed": 22,
+ "ground": "asphalt",
+ "time": "L4",
+ "size": 60,
+ "dof": false,
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    -9,
+    12
+   ],
+   "state": "idle"
+  },
+  {
+   "id": "alpha-fire",
+   "kind": "infected",
+   "archetype": "infected.alpha",
+   "at": [
+    -4.2,
+    0
+   ],
+   "state": "idle",
+   "look": {
+    "model": "inf.alpha-fire"
+   }
+  },
+  {
+   "id": "runner",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    -1.4000000000000004,
+    0
+   ],
+   "state": "idle"
+  },
+  {
+   "id": "worker",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    1.3999999999999995,
+    0
+   ],
+   "state": "idle",
+   "look": {
+    "model": "inf.common-worker"
+   }
+  },
+  {
+   "id": "mom",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    4.199999999999998,
+    0
+   ],
+   "state": "idle",
+   "look": {
+    "model": "inf.suburban-mom"
+   }
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": [
+   0,
+   0.2,
+   0
+  ],
+  "zoom": 1.5
+ },
+ "frames": 82,
+ "shots": [
+  80
+ ],
+ "sheet": 80,
+ "script": [
+  {
+   "frame": 5,
+   "actor": "alpha-fire",
+   "do": {
+    "corpse": true
+   }
+  },
+  {
+   "frame": 5,
+   "actor": "runner",
+   "do": {
+    "corpse": true
+   }
+  },
+  {
+   "frame": 5,
+   "actor": "worker",
+   "do": {
+    "corpse": true
+   }
+  },
+  {
+   "frame": 5,
+   "actor": "mom",
+   "do": {
+    "corpse": true
+   }
+  }
+ ],
+ "expect": {
+  "consoleErrors": 0
+ }
+}

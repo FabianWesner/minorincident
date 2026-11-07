@@ -608,7 +608,11 @@ export class SceneLab {
       return;
     }
     if ('corpse' in a && e.infected) {
-      e.health.current = 0; e.infected.state = 'dead'; e.infected.deadAt = world.tick - 120; e.infected.recoverAt = -1; return;
+      e.health.current = 0; e.infected.state = 'dead'; e.infected.deadAt = world.tick - (a.ageTicks ?? 120); e.infected.recoverAt = -1; return;
+    }
+    // r2-corpse: a killed civilian (Damage.ts: finished + health 0) settles into the permanent-corpse layer after 120 ticks.
+    if ('corpse' in a && e.civilian) {
+      e.health.current = 0; e.civilian.state = 'finished'; e.civilian.entered = world.tick - 120; e.civilian.story = null; return;
     }
     if (actor.kind === 'courier') {
       if ('god' in a) world.combat!.damage.god = a.god;

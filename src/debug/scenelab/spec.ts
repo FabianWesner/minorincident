@@ -178,7 +178,7 @@ export type Action =
   | { grab: string }
   /** Deterministic shared scheduler command and retained corpse fixture. */
   | { special: import('../../data/infected').InfectedSpecialMove; target: string }
-  | { corpse: true }
+  | { corpse: true; /** Ticks since death (default 120: settled); 0 plays the live death clip. */ ageTicks?: number }
   | { flee: Point }
   /** E21 allied fighter v2 (pedestrians only): an officer or soldier with a handgun/rifle who holds its post and shoots
    * visible infected, or (with `follow`) joins the courier's squad at the given slot (0-3), exactly as the L3 squad. */
