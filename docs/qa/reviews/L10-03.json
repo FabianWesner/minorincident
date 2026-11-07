@@ -1,22 +1,28 @@
 {
   "row": "L10-03",
   "status": "PASS",
-  "reviewer": "Codex blk-c",
+  "reviewer": "Codex rr-b",
   "date": "2026-11-07",
-  "commit": "564b16a89b67136949938d58fa72a522cd4fee7f",
+  "commit": "50be7c824705fc3cdbb3a7ab7dd78f72c7bf2001",
   "clauses": [
     {
-      "clause": "Concurrent local infected per region (high / low): R2 12–24 / 8–16 (+1–2 dogs after pickup); R3 25–45 / 16–28 (2–4 dogs, 1 Alpha); R4 45–75 / 28–45 (groups 10–20, 2–4 dogs, 1–2 Alphas); R5 55–85 / 35–55 (2–4 dogs, 1–2 Alphas); R6 80–130 / 50–75 (groups 20–35, 3–5 dogs, 2–3 Alphas); R7 peak 140–190 / 75–95.",
+      "clause": "Concurrent local infected per region (high / low): R2 12\u201324 / 8\u201316 (+1\u20132 dogs after pickup); R3 25\u201345 / 16\u201328 (2\u20134 dogs, 1 Alpha); R4 45\u201375 / 28\u201345 (groups 10\u201320, 2\u20134 dogs, 1\u20132 Alphas); R5 55\u201385 / 35\u201355 (2\u20134 dogs, 1\u20132 Alphas); R6 80\u2013130 / 50\u201375 (groups 20\u201335, 3\u20135 dogs, 2\u20133 Alphas); R7 peak 140\u2013190 / 75\u201395.",
       "verdict": "PASS",
-      "note": "Fresh same-source low/high complete-route census: all 12 region/tier windows have joint count/species witnesses and zero upper-bound violations; all contiguous intervals are covered and canonical final states match. R6 low witness tick 41670: 68 infected/4 dogs/3 Alphas. R6 high witness tick 41790: 97/5/2. Actual handgun pickup precedes first R2 dog with zero premature ticks."
+      "note": "Fresh current-main low/high complete-route census: all12 region/tier windows have joint same-tick count/species witnesses; all contiguous intervals are covered and upperViolations=0. R6 low witness: tick41670, 68 infected/4 dogs/3 Alphas. R6 high: tick41790, 97/5/2. R7 peaks: low94 and high189; same-tick lower-bound witnesses75low/140high. Handgun pickup at tick3497; first residential dogs at4950, zero premature dog ticks. Both native final-state controls match."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix72-c/L10-03/simultaneous-census.json",
-      "sha256": "ec1c4686b1a13eae4b14f6f7d2e1ae90b40700fc9a453e24f244014668c3ffeb",
-      "what": "Current-source every-tick census reviewed for both tiers. All 12 regions have same-tick population/species witnesses, contiguous intervals and zero upper-bound violations. High R6 is 97 infected with 5 dogs and 2 Alphas at tick 41790; low R6 is 68/4/3."
+      "file": "test-results/rr-b/L10-03-simultaneous-census.json",
+      "sha256": "d20a856623798de41564c7bb3084056ef68e0342704ae60a45370b4dff5c49f4",
+      "what": "Fresh same-tick per-tick current-main L10 regional census for both tiers, including interval coverage, counts, species composition, pickup order, and canonical control hashes."
+    },
+    {
+      "file": "test-results/rr-b/L10-03-native.json",
+      "sha256": "1e5ac4d2cf701193659a82237236251f55bf9e64c716de6786478ea81e878eb7",
+      "what": "Fresh current-main L10 native acceptance report with complete-route group-size checks and source identity."
     }
   ],
-  "sourceDigest": "75720d4df4ad59ad1814e1cda498bc4620d28edfa0298106dd53315c5f2fba05"
+  "notes": "Fresh native review; same-tick census and native complete-route group-size checks pass.",
+  "sourceDigest": "89835f1411d3d5c94780d7691b5f1da661c8a3d075a660de04ee885d616475af"
 }

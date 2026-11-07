@@ -1,28 +1,43 @@
 {
   "row": "G-13",
   "status": "FAIL",
-  "reviewer": "final-g/Codex",
+  "reviewer": "Codex rr-b",
   "date": "2026-11-07",
-  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "commit": "50be7c824705fc3cdbb3a7ab7dd78f72c7bf2001",
   "clauses": [
     {
       "clause": "**No single follower is slower than the group.** While the group moves, every follower's median speed ≥ 0.95× the group median (tune); time the player stands waiting for one follower > 10 m behind ≤ 10 % of escort time (tune). PO: \"let me stay with the crowd for suvivor.\"",
       "verdict": "FAIL",
-      "note": "Fresh ordinary L7 high seed1 completion: departure followers62/65/74 median/group ratios0.9137348293/0.8780749680/0.8707108993, each with>=10 walking samples and a valid completed route; all are below0.95. The existing majority-of-three vote passes these IDs, but does not erase these concrete violations of the unchanged every-follower criterion. L5 high seed3 follower28 also reaches0.8945363771. L6 exact empty-input waiting is39/16082 ticks=0.242507% at both tiers (canonical final hashes identical), so its48.3% stationary upper bound is not classified as an actual wait failure."
+      "note": "Fresh current-main native L5 high complete seed3: follower28 in step/look has46 qualified walking samples, median3.9477449638m/s versus group4.4131743157m/s, ratio0.8945363771 (<0.95). L7 high complete seed2 departure follower66 additionally has27 samples and ratio0.9492090922. Majority-of-three diagnostics pass these followers, but a vote does not erase valid violations of the unchanged every-follower criterion. L1 stationary-far16.4561%/16.4696% values are upper bounds and are rejected as causal waiting FAIL evidence. Repro: npm run qa:accept -- --level L5 --skip-browser; inspect G-13 high/complete seed3 follower28 step/look; or node --import tsx/esm test-results/rr-b/g13-l5.mjs."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/final-g/G-13-native.json",
-      "sha256": "455a1d189ace19902b881289b13bcaa26cfb1b963b40caa96247dfbbb429c4cd",
-      "what": "Fresh ordinary L7 high seed1 completion: departure followers62/65/74 median/group ratios0.9137348293/0.8780749680/0.8707108993, each with>=10 walking samples and a valid completed route; all are below0.95. The existing majority-of-three vote passes these IDs, but does not erase these concrete violations of the unchanged every-follower criterion. L5 high seed3 follower28 also reaches0.8945363771. L6 exact empty-input waiting is39/16082 ticks=0.242507% at both tiers (canonical final hashes identical), so its48.3% stationary upper bound is not classified as an actual wait failure."
+      "file": "test-results/rr-b/G-13-L5-high-native.json",
+      "sha256": "3cbdd7df9de8644d9fa8fb301ff2737bc28848d460a3e8781e04a2ff0f3ef010",
+      "what": "Fresh current-main native L5 high complete seed3: follower28 in step/look has46 qualified walking samples, median3.9477449638m/s versus group4.4131743157m/s, ratio0.8945363771 (<0.95). L7 high complete seed2 departure follower66 additionally has27 samples and ratio0.9492090922. Majority-of-three diagnostics pass these followers, but a vote does not erase valid violations of the unchanged every-follower criterion. L1 stationary-far16.4561%/16.4696% values are upper bounds and are rejected as causal waiting FAIL evidence. Repro: npm run qa:accept -- --level L5 --skip-browser; inspect G-13 high/complete seed3 follower28 step/look; or node --import tsx/esm test-results/rr-b/g13-l5.mjs."
     },
     {
-      "file": "docs/reports/final-g/G-13-L6-wait.json",
-      "sha256": "b05dcc36301049094788f05f8057fddd19b86d0ffa3f05613afc03d025486a1a",
-      "what": "Fresh ordinary L7 high seed1 completion: departure followers62/65/74 median/group ratios0.9137348293/0.8780749680/0.8707108993, each with>=10 walking samples and a valid completed route; all are below0.95. The existing majority-of-three vote passes these IDs, but does not erase these concrete violations of the unchanged every-follower criterion. L5 high seed3 follower28 also reaches0.8945363771. L6 exact empty-input waiting is39/16082 ticks=0.242507% at both tiers (canonical final hashes identical), so its48.3% stationary upper bound is not classified as an actual wait failure."
+      "file": "test-results/rr-b/G-13-L5-high-pace.json",
+      "sha256": "36832fdc4149c17d4b6cbfc1a712105264c2da316045a8e25e70263764e32f22",
+      "what": "Fresh current-main native L5 high complete seed3: follower28 in step/look has46 qualified walking samples, median3.9477449638m/s versus group4.4131743157m/s, ratio0.8945363771 (<0.95). L7 high complete seed2 departure follower66 additionally has27 samples and ratio0.9492090922. Majority-of-three diagnostics pass these followers, but a vote does not erase valid violations of the unchanged every-follower criterion. L1 stationary-far16.4561%/16.4696% values are upper bounds and are rejected as causal waiting FAIL evidence. Repro: npm run qa:accept -- --level L5 --skip-browser; inspect G-13 high/complete seed3 follower28 step/look; or node --import tsx/esm test-results/rr-b/g13-l5.mjs."
+    },
+    {
+      "file": "test-results/rr-b/G-13-L5-low-native.json",
+      "sha256": "7e325c4dbb7e2e7a5396b6095985d7785b633d347effb26d29d8f95cd7725861",
+      "what": "Fresh current-main native L5 high complete seed3: follower28 in step/look has46 qualified walking samples, median3.9477449638m/s versus group4.4131743157m/s, ratio0.8945363771 (<0.95). L7 high complete seed2 departure follower66 additionally has27 samples and ratio0.9492090922. Majority-of-three diagnostics pass these followers, but a vote does not erase valid violations of the unchanged every-follower criterion. L1 stationary-far16.4561%/16.4696% values are upper bounds and are rejected as causal waiting FAIL evidence. Repro: npm run qa:accept -- --level L5 --skip-browser; inspect G-13 high/complete seed3 follower28 step/look; or node --import tsx/esm test-results/rr-b/g13-l5.mjs."
+    },
+    {
+      "file": "test-results/rr-b/G-13-L5-low-pace.json",
+      "sha256": "32c97a8a11a751be783cae4ea7dc0b666e5f995d32774c3095f3e6a62b3160f7",
+      "what": "Fresh current-main native L5 high complete seed3: follower28 in step/look has46 qualified walking samples, median3.9477449638m/s versus group4.4131743157m/s, ratio0.8945363771 (<0.95). L7 high complete seed2 departure follower66 additionally has27 samples and ratio0.9492090922. Majority-of-three diagnostics pass these followers, but a vote does not erase valid violations of the unchanged every-follower criterion. L1 stationary-far16.4561%/16.4696% values are upper bounds and are rejected as causal waiting FAIL evidence. Repro: npm run qa:accept -- --level L5 --skip-browser; inspect G-13 high/complete seed3 follower28 step/look; or node --import tsx/esm test-results/rr-b/g13-l5.mjs."
+    },
+    {
+      "file": "test-results/rr-b/G-13-individual-pace.json",
+      "sha256": "f91a069d1f0b5b44dbe13a215c2c4f39ddc1db8f01e4fd23dda30dee9ce36294",
+      "what": "Fresh current-main native L5 high complete seed3: follower28 in step/look has46 qualified walking samples, median3.9477449638m/s versus group4.4131743157m/s, ratio0.8945363771 (<0.95). L7 high complete seed2 departure follower66 additionally has27 samples and ratio0.9492090922. Majority-of-three diagnostics pass these followers, but a vote does not erase valid violations of the unchanged every-follower criterion. L1 stationary-far16.4561%/16.4696% values are upper bounds and are rejected as causal waiting FAIL evidence. Repro: npm run qa:accept -- --level L5 --skip-browser; inspect G-13 high/complete seed3 follower28 step/look; or node --import tsx/esm test-results/rr-b/g13-l5.mjs."
     }
   ],
-  "notes": "Repro: ordinary L7 complete policy at high quality, seed1; inspect step/departure follower medians for IDs62,65,74. No game or seed-vote checker change.",
-  "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186"
+  "notes": "Fresh complete native low/high, seeds1–3. Strict measured individual speed failures establish the global FAIL; no large visible babysitting or causal waiting failure is inferred from pace or stationary upper bounds.",
+  "sourceDigest": "826eaf34ba69c9272cce1759bdd1699e67d8e35ebbd3c7d1739661bfaa751923"
 }

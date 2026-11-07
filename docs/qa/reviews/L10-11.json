@@ -1,22 +1,28 @@
 {
   "row": "L10-11",
   "status": "PASS",
-  "reviewer": "Codex blk-c",
+  "reviewer": "Codex rr-b",
   "date": "2026-11-07",
-  "commit": "564b16a89b67136949938d58fa72a522cd4fee7f",
+  "commit": "50be7c824705fc3cdbb3a7ab7dd78f72c7bf2001",
   "clauses": [
     {
       "clause": "Assault: infected at the capped peak (140–190 / 75–95), reachable ≥ 90 %, attacks on player ≥ 8/min (tune); Mega reaches the arena ~140 s after activation (orchestrator 2026-11-04: \"~140 s\" = 120–160 s, by walking; no relocation).",
       "verdict": "PASS",
-      "note": "Fresh 240s native stationary holds from charge activation. Low arrives at 144.33333333333334s (peak 95); high at 134.6s (peak 190). Both meet 120–160s, reach their capped peaks, retain one persistent Mega ID, have zero scheduled relocations and match canonical controls. Only hidden far final-approach speed was tuned; no relocation, timer, cap or criterion changed."
+      "note": "Fresh native both-tier complete routes and240s stationary holds. Complete hold:83/240 actual player windups over62.3667s/63.9667s =79.8503/225.1172 per minute,100% bounded-path reachability. Full240s stationary windows: peak95/190, player attacks/min789.7398/479.7111, reachability100%; charge-step-only rates977.2666/1240.3846 are separate62.3167s/62.4s intervals. Mega walks into the25m arena144.3333s/134.6s after activation (120–160s); persistent IDs119/122, zero scheduled relocations or movement discontinuities. Final-state controls match. Repro: node --import tsx/esm tools/qa/accept/l10-hold-r10.ts and npm run qa:accept -- --level L10 --skip-browser --reuse."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix51-r10c/l10-hold-proof.json",
-      "sha256": "e93708d4a12de1a1471ec00cd6c9d0ca192a8d9ff2eff50da3d0b9eba12dfc1a",
-      "what": "Inspected source-bound low/high four-minute hold measurements and tick trajectories. Arena arrivals are 144.33333333333334s low and 134.6s high; peak alive counts are 95/190; both controls match, each tier keeps one Mega ID, and no scheduled relocation occurred."
+      "file": "test-results/rr-b/L10-11-hold-proof.json",
+      "sha256": "8d62755602ef90a839a4f98630d5a5937dc8276252e4edea11e3e4efb2b5f209",
+      "what": "Fresh native both-tier complete routes and240s stationary holds. Complete hold:83/240 actual player windups over62.3667s/63.9667s =79.8503/225.1172 per minute,100% bounded-path reachability. Full240s stationary windows: peak95/190, player attacks/min789.7398/479.7111, reachability100%; charge-step-only rates977.2666/1240.3846 are separate62.3167s/62.4s intervals. Mega walks into the25m arena144.3333s/134.6s after activation (120–160s); persistent IDs119/122, zero scheduled relocations or movement discontinuities. Final-state controls match. Repro: node --import tsx/esm tools/qa/accept/l10-hold-r10.ts and npm run qa:accept -- --level L10 --skip-browser --reuse."
+    },
+    {
+      "file": "test-results/rr-b/L10-11-native.json",
+      "sha256": "1e5ac4d2cf701193659a82237236251f55bf9e64c716de6786478ea81e878eb7",
+      "what": "Fresh native both-tier complete routes and240s stationary holds. Complete hold:83/240 actual player windups over62.3667s/63.9667s =79.8503/225.1172 per minute,100% bounded-path reachability. Full240s stationary windows: peak95/190, player attacks/min789.7398/479.7111, reachability100%; charge-step-only rates977.2666/1240.3846 are separate62.3167s/62.4s intervals. Mega walks into the25m arena144.3333s/134.6s after activation (120–160s); persistent IDs119/122, zero scheduled relocations or movement discontinuities. Final-state controls match. Repro: node --import tsx/esm tools/qa/accept/l10-hold-r10.ts and npm run qa:accept -- --level L10 --skip-browser --reuse."
     }
   ],
-  "sourceDigest": "75720d4df4ad59ad1814e1cda498bc4620d28edfa0298106dd53315c5f2fba05"
+  "notes": "All native numeric clauses covered at both tiers; full-window attack rates are distinguished from the charge-step interval. No separate visual or quiet frame-timing claim.",
+  "sourceDigest": "89835f1411d3d5c94780d7691b5f1da661c8a3d075a660de04ee885d616475af"
 }

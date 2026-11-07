@@ -1,28 +1,88 @@
 {
   "row": "G-14",
   "status": "FAIL",
-  "reviewer": "Codex/blk-v",
+  "reviewer": "Codex rr-b",
   "date": "2026-11-07",
-  "commit": "7e538b5fe16562431ed4adff532aff41828eee76",
+  "commit": "50be7c824705fc3cdbb3a7ab7dd78f72c7bf2001",
   "clauses": [
     {
       "clause": "Corpses persist for the whole level (no removal for perf). Piles settle on each other: no floating bodies, no stretched/spiky limbs, pile height ≤ ~1 m (orch. default until F-293 \"climbable pile\" is scheduled).",
       "verdict": "FAIL",
-      "note": "Scoped fragment repair: removing the subject-disc corpse cut restores complete dark-clothed bodies, with all10 IDs retained at120/7320ticks, low/high and close/wide. Bulky bodies still show sharply folded/pointed forearm panels, so the unchanged whole row remains FAIL. Corrected ID probe preserves production stencil: all four low/high x zoom cells lose zero courier pixels."
+      "note": "Fresh pooled WebGL2 low/high authored ten-corpse fixture: all10 IDs persist at ticks120 and7320 (122s), layout maxLift0.22m and5 heap pairs. Personally opened all12 original1280x720 captures. FAIL: overlap-z0.5 at both tiers shows the center-left dark-clothed corpse with broad pointed stretched skin panels around torso/upper arms; the front dark-clothed corpse also has sharp elongated forearm/hand folds. These remain in tick7320 close views. Persistence passes; the explicit no stretched/spiky limbs clause fails. Repro: SCENE_PORT=4834 BROWSER_POOL_JOB_ID=rr-b node --import tsx/esm tools/qa/blk-v-captures.mjs G14 rr-b low (repeat high)."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/blk-v/G14-proof.json",
-      "sha256": "36f711da0f0861bc46c1e4cc4c43675708a183f22f67f934df1a6004b33468a1",
-      "what": "All before/after captures personally inspected. Partial mask repair verified; folded forearm geometry remains visibly failing. Exact identity and courier-pixel controls retained in the proof."
+      "file": "test-results/blk-v/rr-b/G14-low/receipt.json",
+      "sha256": "c398b9df4ea7b121d949ed14d942a0421cb4258fa088afb6bf142139a8a16d91",
+      "what": "Fresh pooled WebGL2 low/high authored ten-corpse fixture: all10 IDs persist at ticks120 and7320 (122s), layout maxLift0.22m and5 heap pairs. Personally opened all12 original1280x720 captures. FAIL: overlap-z0.5 at both tiers shows the center-left dark-clothed corpse with broad pointed stretched skin panels around torso/upper arms; the front dark-clothed corpse also has sharp elongated forearm/hand folds. These remain in tick7320 close views. Persistence passes; the explicit no stretched/spiky limbs clause fails. Repro: SCENE_PORT=4834 BROWSER_POOL_JOB_ID=rr-b node --import tsx/esm tools/qa/blk-v-captures.mjs G14 rr-b low (repeat high)."
     },
     {
-      "file": "docs/reports/blk-v/final-visual-proof.json",
-      "sha256": "de8ca90e605c353c146fd2700276bc2005d4e44873693789954cb1dd40adb635",
-      "what": "Personally viewed all final-source captures. Dark-clothed corpses complete, courier ID pixels fully retained in four overlap cells, ten corpse IDs retained to7320ticks. Folded pointed bulky limbs remain FAIL."
+      "file": "test-results/blk-v/rr-b/G14-low/tick120-z0.5.png",
+      "sha256": "f623108ebb4c746fa9cc954da4135003bd6f2cf6feae2459e08322c4cb6049e3",
+      "what": "Fresh pooled WebGL2 low/high authored ten-corpse fixture: all10 IDs persist at ticks120 and7320 (122s), layout maxLift0.22m and5 heap pairs. Personally opened all12 original1280x720 captures. FAIL: overlap-z0.5 at both tiers shows the center-left dark-clothed corpse with broad pointed stretched skin panels around torso/upper arms; the front dark-clothed corpse also has sharp elongated forearm/hand folds. These remain in tick7320 close views. Persistence passes; the explicit no stretched/spiky limbs clause fails. Repro: SCENE_PORT=4834 BROWSER_POOL_JOB_ID=rr-b node --import tsx/esm tools/qa/blk-v-captures.mjs G14 rr-b low (repeat high)."
+    },
+    {
+      "file": "test-results/blk-v/rr-b/G14-low/tick120-z1.5.png",
+      "sha256": "4cd353faa4e3c397e770b7a0a9f0d88749aac62ca6f2923197769fbd7185a0c2",
+      "what": "Fresh pooled WebGL2 low/high authored ten-corpse fixture: all10 IDs persist at ticks120 and7320 (122s), layout maxLift0.22m and5 heap pairs. Personally opened all12 original1280x720 captures. FAIL: overlap-z0.5 at both tiers shows the center-left dark-clothed corpse with broad pointed stretched skin panels around torso/upper arms; the front dark-clothed corpse also has sharp elongated forearm/hand folds. These remain in tick7320 close views. Persistence passes; the explicit no stretched/spiky limbs clause fails. Repro: SCENE_PORT=4834 BROWSER_POOL_JOB_ID=rr-b node --import tsx/esm tools/qa/blk-v-captures.mjs G14 rr-b low (repeat high)."
+    },
+    {
+      "file": "test-results/blk-v/rr-b/G14-low/tick7320-z0.5.png",
+      "sha256": "fa8d033ced8134eedd19a1696f94874c8b36aededc2c479cac4960f87d4dce78",
+      "what": "Fresh pooled WebGL2 low/high authored ten-corpse fixture: all10 IDs persist at ticks120 and7320 (122s), layout maxLift0.22m and5 heap pairs. Personally opened all12 original1280x720 captures. FAIL: overlap-z0.5 at both tiers shows the center-left dark-clothed corpse with broad pointed stretched skin panels around torso/upper arms; the front dark-clothed corpse also has sharp elongated forearm/hand folds. These remain in tick7320 close views. Persistence passes; the explicit no stretched/spiky limbs clause fails. Repro: SCENE_PORT=4834 BROWSER_POOL_JOB_ID=rr-b node --import tsx/esm tools/qa/blk-v-captures.mjs G14 rr-b low (repeat high)."
+    },
+    {
+      "file": "test-results/blk-v/rr-b/G14-low/tick7320-z1.5.png",
+      "sha256": "fa91ef7851e4de4ce1c28de6b322c0d03021f8be4ea14134818fba7e53ed074b",
+      "what": "Fresh pooled WebGL2 low/high authored ten-corpse fixture: all10 IDs persist at ticks120 and7320 (122s), layout maxLift0.22m and5 heap pairs. Personally opened all12 original1280x720 captures. FAIL: overlap-z0.5 at both tiers shows the center-left dark-clothed corpse with broad pointed stretched skin panels around torso/upper arms; the front dark-clothed corpse also has sharp elongated forearm/hand folds. These remain in tick7320 close views. Persistence passes; the explicit no stretched/spiky limbs clause fails. Repro: SCENE_PORT=4834 BROWSER_POOL_JOB_ID=rr-b node --import tsx/esm tools/qa/blk-v-captures.mjs G14 rr-b low (repeat high)."
+    },
+    {
+      "file": "test-results/blk-v/rr-b/G14-low/overlap-z0.5.png",
+      "sha256": "8057ce17b3dabb6a46d8d4ff815718e160fd8771de08182646b071c7481d4ab8",
+      "what": "Fresh pooled WebGL2 low/high authored ten-corpse fixture: all10 IDs persist at ticks120 and7320 (122s), layout maxLift0.22m and5 heap pairs. Personally opened all12 original1280x720 captures. FAIL: overlap-z0.5 at both tiers shows the center-left dark-clothed corpse with broad pointed stretched skin panels around torso/upper arms; the front dark-clothed corpse also has sharp elongated forearm/hand folds. These remain in tick7320 close views. Persistence passes; the explicit no stretched/spiky limbs clause fails. Repro: SCENE_PORT=4834 BROWSER_POOL_JOB_ID=rr-b node --import tsx/esm tools/qa/blk-v-captures.mjs G14 rr-b low (repeat high)."
+    },
+    {
+      "file": "test-results/blk-v/rr-b/G14-low/overlap-z1.5.png",
+      "sha256": "0628ed00139df0d8431c13384f96ac09ec10323d6738416d4f1872ab3844d704",
+      "what": "Fresh pooled WebGL2 low/high authored ten-corpse fixture: all10 IDs persist at ticks120 and7320 (122s), layout maxLift0.22m and5 heap pairs. Personally opened all12 original1280x720 captures. FAIL: overlap-z0.5 at both tiers shows the center-left dark-clothed corpse with broad pointed stretched skin panels around torso/upper arms; the front dark-clothed corpse also has sharp elongated forearm/hand folds. These remain in tick7320 close views. Persistence passes; the explicit no stretched/spiky limbs clause fails. Repro: SCENE_PORT=4834 BROWSER_POOL_JOB_ID=rr-b node --import tsx/esm tools/qa/blk-v-captures.mjs G14 rr-b low (repeat high)."
+    },
+    {
+      "file": "test-results/blk-v/rr-b/G14-high/receipt.json",
+      "sha256": "73c3255d30c3c019beeb0c2db6cd7cbff5b7d81c3dae2f5558c9039ed97e88b7",
+      "what": "Fresh pooled WebGL2 low/high authored ten-corpse fixture: all10 IDs persist at ticks120 and7320 (122s), layout maxLift0.22m and5 heap pairs. Personally opened all12 original1280x720 captures. FAIL: overlap-z0.5 at both tiers shows the center-left dark-clothed corpse with broad pointed stretched skin panels around torso/upper arms; the front dark-clothed corpse also has sharp elongated forearm/hand folds. These remain in tick7320 close views. Persistence passes; the explicit no stretched/spiky limbs clause fails. Repro: SCENE_PORT=4834 BROWSER_POOL_JOB_ID=rr-b node --import tsx/esm tools/qa/blk-v-captures.mjs G14 rr-b low (repeat high)."
+    },
+    {
+      "file": "test-results/blk-v/rr-b/G14-high/tick120-z0.5.png",
+      "sha256": "98d7e11e36cc635cf55b0122784c2c38941b6e92ea0786862a16b5a6b8d34983",
+      "what": "Fresh pooled WebGL2 low/high authored ten-corpse fixture: all10 IDs persist at ticks120 and7320 (122s), layout maxLift0.22m and5 heap pairs. Personally opened all12 original1280x720 captures. FAIL: overlap-z0.5 at both tiers shows the center-left dark-clothed corpse with broad pointed stretched skin panels around torso/upper arms; the front dark-clothed corpse also has sharp elongated forearm/hand folds. These remain in tick7320 close views. Persistence passes; the explicit no stretched/spiky limbs clause fails. Repro: SCENE_PORT=4834 BROWSER_POOL_JOB_ID=rr-b node --import tsx/esm tools/qa/blk-v-captures.mjs G14 rr-b low (repeat high)."
+    },
+    {
+      "file": "test-results/blk-v/rr-b/G14-high/tick120-z1.5.png",
+      "sha256": "4af14c0e4331124d50e2d65a3299e50c3ab19a37ff44aeb39aa80b0d7e584d79",
+      "what": "Fresh pooled WebGL2 low/high authored ten-corpse fixture: all10 IDs persist at ticks120 and7320 (122s), layout maxLift0.22m and5 heap pairs. Personally opened all12 original1280x720 captures. FAIL: overlap-z0.5 at both tiers shows the center-left dark-clothed corpse with broad pointed stretched skin panels around torso/upper arms; the front dark-clothed corpse also has sharp elongated forearm/hand folds. These remain in tick7320 close views. Persistence passes; the explicit no stretched/spiky limbs clause fails. Repro: SCENE_PORT=4834 BROWSER_POOL_JOB_ID=rr-b node --import tsx/esm tools/qa/blk-v-captures.mjs G14 rr-b low (repeat high)."
+    },
+    {
+      "file": "test-results/blk-v/rr-b/G14-high/tick7320-z0.5.png",
+      "sha256": "4694231b9d688ae9ee571f54018866fb8d63dcff49da1cb22a4fbcd11dff9f78",
+      "what": "Fresh pooled WebGL2 low/high authored ten-corpse fixture: all10 IDs persist at ticks120 and7320 (122s), layout maxLift0.22m and5 heap pairs. Personally opened all12 original1280x720 captures. FAIL: overlap-z0.5 at both tiers shows the center-left dark-clothed corpse with broad pointed stretched skin panels around torso/upper arms; the front dark-clothed corpse also has sharp elongated forearm/hand folds. These remain in tick7320 close views. Persistence passes; the explicit no stretched/spiky limbs clause fails. Repro: SCENE_PORT=4834 BROWSER_POOL_JOB_ID=rr-b node --import tsx/esm tools/qa/blk-v-captures.mjs G14 rr-b low (repeat high)."
+    },
+    {
+      "file": "test-results/blk-v/rr-b/G14-high/tick7320-z1.5.png",
+      "sha256": "a627d1d885446929b60243668987053e46cad11d8f6dea65dca5f846191d8814",
+      "what": "Fresh pooled WebGL2 low/high authored ten-corpse fixture: all10 IDs persist at ticks120 and7320 (122s), layout maxLift0.22m and5 heap pairs. Personally opened all12 original1280x720 captures. FAIL: overlap-z0.5 at both tiers shows the center-left dark-clothed corpse with broad pointed stretched skin panels around torso/upper arms; the front dark-clothed corpse also has sharp elongated forearm/hand folds. These remain in tick7320 close views. Persistence passes; the explicit no stretched/spiky limbs clause fails. Repro: SCENE_PORT=4834 BROWSER_POOL_JOB_ID=rr-b node --import tsx/esm tools/qa/blk-v-captures.mjs G14 rr-b low (repeat high)."
+    },
+    {
+      "file": "test-results/blk-v/rr-b/G14-high/overlap-z0.5.png",
+      "sha256": "69397195f625a3db94a3925958b1fe7fb4ce9193ce3899d013f6ed0d238479cd",
+      "what": "Fresh pooled WebGL2 low/high authored ten-corpse fixture: all10 IDs persist at ticks120 and7320 (122s), layout maxLift0.22m and5 heap pairs. Personally opened all12 original1280x720 captures. FAIL: overlap-z0.5 at both tiers shows the center-left dark-clothed corpse with broad pointed stretched skin panels around torso/upper arms; the front dark-clothed corpse also has sharp elongated forearm/hand folds. These remain in tick7320 close views. Persistence passes; the explicit no stretched/spiky limbs clause fails. Repro: SCENE_PORT=4834 BROWSER_POOL_JOB_ID=rr-b node --import tsx/esm tools/qa/blk-v-captures.mjs G14 rr-b low (repeat high)."
+    },
+    {
+      "file": "test-results/blk-v/rr-b/G14-high/overlap-z1.5.png",
+      "sha256": "80ddaa8c918d3b0d7eb875744dc26f32c98be921183ea8861f15597b745f8124",
+      "what": "Fresh pooled WebGL2 low/high authored ten-corpse fixture: all10 IDs persist at ticks120 and7320 (122s), layout maxLift0.22m and5 heap pairs. Personally opened all12 original1280x720 captures. FAIL: overlap-z0.5 at both tiers shows the center-left dark-clothed corpse with broad pointed stretched skin panels around torso/upper arms; the front dark-clothed corpse also has sharp elongated forearm/hand folds. These remain in tick7320 close views. Persistence passes; the explicit no stretched/spiky limbs clause fails. Repro: SCENE_PORT=4834 BROWSER_POOL_JOB_ID=rr-b node --import tsx/esm tools/qa/blk-v-captures.mjs G14 rr-b low (repeat high)."
     }
   ],
-  "notes": "No whole-row closure; continue the remaining pose/skinning repair and L4 pile-height measurement. SourceDigest identifies this exact render source.",
-  "sourceDigest": "b33a0e3ce8ec0fb3d20960af5a6b07561149258fac0493611d3978e90250c577"
+  "notes": "Fresh visual counterexample, not a PO taste deferral. No pile-height PASS is inferred from placement lift alone.",
+  "sourceDigest": "826eaf34ba69c9272cce1759bdd1699e67d8e35ebbd3c7d1739661bfaa751923"
 }

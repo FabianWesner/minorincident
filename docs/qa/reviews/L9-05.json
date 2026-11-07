@@ -1,58 +1,43 @@
 {
   "row": "L9-05",
-  "status": "FAIL",
-  "reviewer": "Codex final-c",
+  "status": "PASS",
+  "reviewer": "Codex rr-b",
   "date": "2026-11-07",
-  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "commit": "50be7c824705fc3cdbb3a7ab7dd78f72c7bf2001",
   "clauses": [
     {
       "clause": "**0 HP never breaks down:** speed 60 % ± 2 %, heavy smoke, still drivable.",
-      "verdict": "FAIL",
-      "note": "ZeroHP speed/drivability pass: measured10.71099/17.74463m/s=0.6036189, both tiers, with normal physical zeroHP drives reaching the scripted crash. Visible-heavy-smoke clause FAIL in current low paired1280x720 frames at zoom0.5/1.5 after4wallseconds/241ticks: no visible heavy plume. Post-load VFXenabledtrue, damage smoking/stage4, effecttime4.0331s,1vehicleSmokeColumn/35puffs recorded; not confused with disabled VFX or paused particle time."
+      "verdict": "PASS",
+      "note": "Fresh pooled physical L9 low/high controls: ordinary default start, one disclosed production damage(maxHP) zero-HP setup, actual WASD thereafter. Plateau medians (samples within1% of observed peak): zero10.715887m/s versus intact17.742259low/17.741516high =60.3975%/60.4001%, within58–62%; plateau samples145zero and135/96intact, speed caps0.6/1. Both zero-HP drives remain controllable through the authored road and reach actual crash/crawl at tick9192, with no browser errors. Opened all4 original1280x720 smoke views after4wallseconds of physical W: both wide views have a thick continuous grey billowing plume trailing several vehicle lengths; close views show its base behind the APC. VFX explicitly enabled, production clock unpaused during emission. Repro: BROWSER_POOL_JOB_ID=rr-b node --import tsx/esm test-results/rr-b/speed-producer.mjs low speed; repeat high; smoke-producer.mjs low/high for the visual fixture."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/final-c/L9-05/low-speed-physical.json.gz",
-      "sha256": "c23bd407eac776639d4c1506bafb3164f68000024d0d0d1e77bbeb23ea031d90",
-      "what": "ZeroHP speed/drivability pass: measured10.71099/17.74463m/s=0.6036189, both tiers, with normal physical zeroHP drives reaching the scripted crash. Visible-heavy-smoke clause FAIL in current low paired1280x720 frames at zoom0.5/1.5 after4wallseconds/241ticks: no visible heavy plume. Post-load VFXenabledtrue, damage smoking/stage4, effecttime4.0331s,1vehicleSmokeColumn/35puffs recorded; not confused with disabled VFX or paused particle time."
+      "file": "test-results/rr-b/L9-05-speed-analysis.json",
+      "sha256": "7e7dea1349f5f1eb7c87de5dd008e54ec1c90faad7028aae20997662788d3553",
+      "what": "Fresh pooled physical L9 low/high controls: ordinary default start, one disclosed production damage(maxHP) zero-HP setup, actual WASD thereafter. Plateau medians (samples within1% of observed peak): zero10.715887m/s versus intact17.742259low/17.741516high =60.3975%/60.4001%, within58–62%; plateau samples145zero and135/96intact, speed caps0.6/1. Both zero-HP drives remain controllable through the authored road and reach actual crash/crawl at tick9192, with no browser errors. Opened all4 original1280x720 smoke views after4wallseconds of physical W: both wide views have a thick continuous grey billowing plume trailing several vehicle lengths; close views show its base behind the APC. VFX explicitly enabled, production clock unpaused during emission. Repro: BROWSER_POOL_JOB_ID=rr-b node --import tsx/esm test-results/rr-b/speed-producer.mjs low speed; repeat high; smoke-producer.mjs low/high for the visual fixture."
     },
     {
-      "file": "docs/reports/final-c/L9-05/high-speed-physical.json.gz",
-      "sha256": "9a70109bec1afa95587ba2718c67795b233191985ce972abbe15c52c1c378628",
-      "what": "ZeroHP speed/drivability pass: measured10.71099/17.74463m/s=0.6036189, both tiers, with normal physical zeroHP drives reaching the scripted crash. Visible-heavy-smoke clause FAIL in current low paired1280x720 frames at zoom0.5/1.5 after4wallseconds/241ticks: no visible heavy plume. Post-load VFXenabledtrue, damage smoking/stage4, effecttime4.0331s,1vehicleSmokeColumn/35puffs recorded; not confused with disabled VFX or paused particle time."
+      "file": "test-results/rr-b/L9-05-low-speed-physical.json",
+      "sha256": "dabe3c5febbd4625a5fd37704f6b211a5fc26de0c29463c5b556fec622d85874",
+      "what": "Fresh pooled physical L9 low/high controls: ordinary default start, one disclosed production damage(maxHP) zero-HP setup, actual WASD thereafter. Plateau medians (samples within1% of observed peak): zero10.715887m/s versus intact17.742259low/17.741516high =60.3975%/60.4001%, within58–62%; plateau samples145zero and135/96intact, speed caps0.6/1. Both zero-HP drives remain controllable through the authored road and reach actual crash/crawl at tick9192, with no browser errors. Opened all4 original1280x720 smoke views after4wallseconds of physical W: both wide views have a thick continuous grey billowing plume trailing several vehicle lengths; close views show its base behind the APC. VFX explicitly enabled, production clock unpaused during emission. Repro: BROWSER_POOL_JOB_ID=rr-b node --import tsx/esm test-results/rr-b/speed-producer.mjs low speed; repeat high; smoke-producer.mjs low/high for the visual fixture."
     },
     {
-      "file": "docs/reports/final-c/L9-05/low-confirmed-smoke.json",
-      "sha256": "f1ecb27ad14c5a3bf1fafc97bedf07b2c46e418caafcba13b0a06a53a28dbefd",
-      "what": "ZeroHP speed/drivability pass: measured10.71099/17.74463m/s=0.6036189, both tiers, with normal physical zeroHP drives reaching the scripted crash. Visible-heavy-smoke clause FAIL in current low paired1280x720 frames at zoom0.5/1.5 after4wallseconds/241ticks: no visible heavy plume. Post-load VFXenabledtrue, damage smoking/stage4, effecttime4.0331s,1vehicleSmokeColumn/35puffs recorded; not confused with disabled VFX or paused particle time."
+      "file": "test-results/rr-b/L9-05-low-smoke.json",
+      "sha256": "63f6ac4c1f8c9c1ccaf27bc2ef208e97f28cba787bc01def0157788bfe945d50",
+      "what": "Fresh pooled physical L9 low/high controls: ordinary default start, one disclosed production damage(maxHP) zero-HP setup, actual WASD thereafter. Plateau medians (samples within1% of observed peak): zero10.715887m/s versus intact17.742259low/17.741516high =60.3975%/60.4001%, within58–62%; plateau samples145zero and135/96intact, speed caps0.6/1. Both zero-HP drives remain controllable through the authored road and reach actual crash/crawl at tick9192, with no browser errors. Opened all4 original1280x720 smoke views after4wallseconds of physical W: both wide views have a thick continuous grey billowing plume trailing several vehicle lengths; close views show its base behind the APC. VFX explicitly enabled, production clock unpaused during emission. Repro: BROWSER_POOL_JOB_ID=rr-b node --import tsx/esm test-results/rr-b/speed-producer.mjs low speed; repeat high; smoke-producer.mjs low/high for the visual fixture."
     },
     {
-      "file": "docs/reports/final-c/L9-05/confirmed-smoke-producer.ts",
-      "sha256": "4f8f0200749f8a53bf8af18408e3aa4cc5e081f5af3a79376158b024d51a12d2",
-      "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
+      "file": "test-results/rr-b/L9-05-high-speed-physical.json",
+      "sha256": "4454c4f48412af815f4b339291aa94b50002394b1ebb5256e2ade8b8f8b81cb5",
+      "what": "Fresh pooled physical L9 low/high controls: ordinary default start, one disclosed production damage(maxHP) zero-HP setup, actual WASD thereafter. Plateau medians (samples within1% of observed peak): zero10.715887m/s versus intact17.742259low/17.741516high =60.3975%/60.4001%, within58–62%; plateau samples145zero and135/96intact, speed caps0.6/1. Both zero-HP drives remain controllable through the authored road and reach actual crash/crawl at tick9192, with no browser errors. Opened all4 original1280x720 smoke views after4wallseconds of physical W: both wide views have a thick continuous grey billowing plume trailing several vehicle lengths; close views show its base behind the APC. VFX explicitly enabled, production clock unpaused during emission. Repro: BROWSER_POOL_JOB_ID=rr-b node --import tsx/esm test-results/rr-b/speed-producer.mjs low speed; repeat high; smoke-producer.mjs low/high for the visual fixture."
     },
     {
-      "file": "docs/reports/final-c/L9-05/smoke-review.json",
-      "sha256": "dbfce740fba20f25e3f18f37e3a331e81d6dcc0b483cecad2a0effdefbb8c679",
-      "what": "ZeroHP speed/drivability pass: measured10.71099/17.74463m/s=0.6036189, both tiers, with normal physical zeroHP drives reaching the scripted crash. Visible-heavy-smoke clause FAIL in current low paired1280x720 frames at zoom0.5/1.5 after4wallseconds/241ticks: no visible heavy plume. Post-load VFXenabledtrue, damage smoking/stage4, effecttime4.0331s,1vehicleSmokeColumn/35puffs recorded; not confused with disabled VFX or paused particle time."
-    },
-    {
-      "file": "docs/reports/final-c/L9-07/low-physical.json.gz",
-      "sha256": "02e8bf8baf222cfba25d6729da89244bd7580770c1e5a13247bd3de8624c66e1",
-      "what": "ZeroHP speed/drivability pass: measured10.71099/17.74463m/s=0.6036189, both tiers, with normal physical zeroHP drives reaching the scripted crash. Visible-heavy-smoke clause FAIL in current low paired1280x720 frames at zoom0.5/1.5 after4wallseconds/241ticks: no visible heavy plume. Post-load VFXenabledtrue, damage smoking/stage4, effecttime4.0331s,1vehicleSmokeColumn/35puffs recorded; not confused with disabled VFX or paused particle time."
-    },
-    {
-      "file": "docs/reports/final-c/L9-07/high-physical.json.gz",
-      "sha256": "8cd71140b7b5e83bbc6aa5e5f9fd5729d0ed9fc62cbc4b7dbdef99045939fe1c",
-      "what": "ZeroHP speed/drivability pass: measured10.71099/17.74463m/s=0.6036189, both tiers, with normal physical zeroHP drives reaching the scripted crash. Visible-heavy-smoke clause FAIL in current low paired1280x720 frames at zoom0.5/1.5 after4wallseconds/241ticks: no visible heavy plume. Post-load VFXenabledtrue, damage smoking/stage4, effecttime4.0331s,1vehicleSmokeColumn/35puffs recorded; not confused with disabled VFX or paused particle time."
-    },
-    {
-      "file": "docs/reports/final-c/L9-05/speed-producer.mjs",
-      "sha256": "3c6cd1881752014e5da10a193ac2f83eac2b05a2aed4d0e36f6d6ef4da8a70b8",
-      "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
+      "file": "test-results/rr-b/L9-05-high-smoke.json",
+      "sha256": "2403f9714dcc226856ea01f3e19f0b6d1e11165fab96fbb633fdefbd592ccf99",
+      "what": "Fresh pooled physical L9 low/high controls: ordinary default start, one disclosed production damage(maxHP) zero-HP setup, actual WASD thereafter. Plateau medians (samples within1% of observed peak): zero10.715887m/s versus intact17.742259low/17.741516high =60.3975%/60.4001%, within58–62%; plateau samples145zero and135/96intact, speed caps0.6/1. Both zero-HP drives remain controllable through the authored road and reach actual crash/crawl at tick9192, with no browser errors. Opened all4 original1280x720 smoke views after4wallseconds of physical W: both wide views have a thick continuous grey billowing plume trailing several vehicle lengths; close views show its base behind the APC. VFX explicitly enabled, production clock unpaused during emission. Repro: BROWSER_POOL_JOB_ID=rr-b node --import tsx/esm test-results/rr-b/speed-producer.mjs low speed; repeat high; smoke-producer.mjs low/high for the visual fixture."
     }
   ],
-  "notes": "Frozen-head row review. Current immutable evidence, unchanged criterion and game source.",
-  "sourceDigest": "fbad89802bfe8d610b736d8f5a3111d1a13e8d0ae47b606a45c5760634f3ed51"
+  "notes": "Speed compares physically measured cruising plateaus, not medians mixed with acceleration/cornering. Native low/high acceptance was run earlier in this lane. Fresh smoke views opened at original resolution.",
+  "sourceDigest": "2174198c4b163adf8baf91afc0acf4cc1a38391b95130403d586e92ae57abe4c"
 }
