@@ -1,0 +1,33 @@
+{
+  "row": "L3-09",
+  "status": "PASS",
+  "reviewer": "Codex final-a",
+  "date": "2026-11-07",
+  "commit": "0cbd817165f89940d2810fe2091000538a263ba0",
+  "clauses": [
+    {
+      "clause": "Regular infected ≤ 4.0 m/s, sprinters ≤ 5 % (fleeing with survivors possible).",
+      "verdict": "PASS",
+      "note": "2 current native checks PASS across low/high. low/controlled-fixture native L3 human speed and admitted sprinter fraction: {\"count\":1616,\"sprinters\":80,\"fraction\":0.04950495049504951,\"regularMax\":4,\"outcome\":\"complete\",\"counting\":\"spawn transactions; checkpoint-reused IDs are separate admissions\"}; target regular≤4m/s; sprinters≤5% of actual admissions (PASS); high/controlled-fixture native L3 human speed and admitted sprinter fraction: {\"count\":2093,\"sprinters\":104,\"fraction\":0.049689440993788817,\"regularMax\":4,\"outcome\":\"complete\",\"counting\":\"spawn transactions; checkpoint-reused IDs are separate admissions\"}; target regular≤4m/s; sprinters≤5% of actual admissions (PASS)"
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/final-a/L3-09-native.json",
+      "sha256": "50007e0531172c4679025dc1d38338e817fddcb4ea3062f5d1a522755e02087a",
+      "what": "2 current native checks PASS across low/high. low/controlled-fixture native L3 human speed and admitted sprinter fraction: {\"count\":1616,\"sprinters\":80,\"fraction\":0.04950495049504951,\"regularMax\":4,\"outcome\":\"complete\",\"counting\":\"spawn transactions; checkpoint-reused IDs are separate admissions\"}; target regular≤4m/s; sprinters≤5% of actual admissions (PASS); high/controlled-fixture native L3 human speed and admitted sprinter fraction: {\"count\":2093,\"sprinters\":104,\"fraction\":0.049689440993788817,\"regularMax\":4,\"outcome\":\"complete\",\"counting\":\"spawn transactions; checkpoint-reused IDs are separate admissions\"}; target regular≤4m/s; sprinters≤5% of actual admissions (PASS)"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
+      "sha256": "1dbb6554d364c1372e298abab060319623af1f8871fbd2e7e24dad1a1382d0cc",
+      "what": "Frozen-head L3-09 native input receipt, evaluated by the exact clauses retained in the row proof."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
+      "sha256": "e4dd4c36be5c14615ed61548e5c0cb95e00a5363f1741e70547ed354a08a8086",
+      "what": "Frozen-head L3-09 native input receipt, evaluated by the exact clauses retained in the row proof."
+    }
+  ],
+  "notes": "Numeric-only criterion; all evaluator clauses measured at both qualities on the frozen runtime source. No visual or route-readability inference.",
+  "sourceDigest": "b54f676bf2eb09a12c8059dce4ebe53003816773db044d7acfc253fccbedccf9"
+}
