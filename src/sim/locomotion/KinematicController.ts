@@ -1,3 +1,4 @@
+import * as RAPIER from '@dimforge/rapier3d-compat';
 import { faceMotion, motionResponse, resetResponse, respond, playerMotionLimits } from './MotionResponse';
 import { FIXED_DT } from '../../core/Clock';
 import { survivor } from '../../data/survivor';
@@ -25,6 +26,17 @@ export class KinematicController {
   /** Solid props without a static collider (the parked bicycle): always pushed out of, at up to 4 m/s. */
   props: readonly CrowdObstacle[] = [];
   groundHeight: ((x: number, z: number) => number) | null = null;
+  /**
+   * Keyboard/joystick corner slip (r2-bike): a head-on push into the edge of a static box or post that ends within
+   * `cornerSlipReach` sidesteps along the face at walking pace until the way ahead is clear, so the courier rounds lot
+   * corners and lamp posts instead of stopping dead. Off while riding (the bicycle steers its own heading).
+   */
+  cornerSlip = true;
+  private readonly slipShape = new RAPIER.Capsule(survivor.height / 2 - survivor.radius, survivor.radius);
+  private readonly slipRotation = { x: 0, y: 0, z: 0, w: 1 };
+  private readonly slipDisplacement = { x: 0, y: 0, z: 0 };
+  /** Pose and intent of the last search that found no clear side: pushing into a long wall searches once, not every tick. */
+  private readonly slipMiss = { x: NaN, z: NaN, dx: 0, dz: 0 };
   constructor(private readonly physics: Physics) {}
   move(input: InputFrame, transform: Transform, enabled: boolean): void {
     transform.y = this.physics.playerBody!.translation().y;
@@ -118,8 +130,10 @@ export class KinematicController {
       }
     }
     const controller = this.physics.characterController!, collider = this.physics.playerCollider!;
+    const wantX = this.displacement.x, wantY = this.displacement.y, wantZ = this.displacement.z;
     controller.computeColliderMovement(collider, this.displacement, undefined, collider.collisionGroups());
     controller.computedMovement(this.displacement);
+    if (enabled && this.cornerSlip && !navigation && magnitude > 0) this.slip(x, z, wantX, wantY, wantZ, transform);
     if (controller.computedGrounded()) this.fallSpeed = 0;
     // Snap-to-ground pulls a capsule hovering above its resting height straight back down, and the next tick lifts it again:
     // a 1.5 cm bob every tick (Scene Lab qa-courier-attack-bat). Hold the hover instead of snapping out of it.
@@ -144,5 +158,47 @@ export class KinematicController {
       transform.yaw += Math.sign(delta) * Math.min(Math.abs(delta), survivor.turnSpeed * FIXED_DT);
     }
   }
-  reset(): void { this.clearance = .005; this.fallSpeed = 0; this.velocity.x = this.velocity.z = 0; resetResponse(this.response); this.navigating = false; }
+  /**
+   * Head-on block by a static solid: sidestep (perpendicular to the intent) toward the nearer clear side, if a capsule
+   * offset by at most `cornerSlipReach` both reaches that offset and has a free way ahead. Long walls never clear, so
+   * pushing straight into them still stops; the second controller pass keeps every solid between her and the slip.
+   */
+  private slip(x: number, z: number, wantX: number, wantY: number, wantZ: number, transform: Transform): void {
+    const want = x * wantX + z * wantZ;
+    if (want <= 1e-4 || x * this.displacement.x + z * this.displacement.z > want * .35) return;
+    const controller = this.physics.characterController!, collider = this.physics.playerCollider!, world = this.physics.world!;
+    // Only static geometry: crates, vehicles and bodies keep their pushes and contacts.
+    let hit: RAPIER.CharacterCollision | null = null;
+    for (let i = 0; i < controller.numComputedCollisions(); i++) {
+      const c = controller.computedCollision(i);
+      if (!c?.collider) continue;
+      const parent = c.collider.parent();
+      if (parent && !parent.isFixed()) continue;
+      const nx = c.normal1.x, nz = c.normal1.z, nl = Math.hypot(nx, nz);
+      // A mostly horizontal contact normal along her intent: the solid is straight ahead, not beside her.
+      if (nl > .5 && Math.abs(nx * x + nz * z) / nl > .6) { hit = c; break; }
+    }
+    if (!hit) return;
+    const at = collider.translation(), tx = -z, tz = x, flags = RAPIER.QueryFilterFlags.EXCLUDE_SENSORS, miss = this.slipMiss;
+    if (Math.abs(miss.x - at.x) + Math.abs(miss.z - at.z) < 1e-4 && miss.dx === x && miss.dz === z) return;
+    const origin = { x: at.x - x * .03, y: at.y + .2, z: at.z - z * .03 }, groups = collider.collisionGroups();
+    const lateral = (hit.witness1.x - at.x) * tx + (hit.witness1.z - at.z) * tz;
+    const sides = lateral > 0 ? [-1, 1] : [1, -1];
+    const free = (px: number, pz: number, dx: number, dz: number, distance: number) => !world.castShape({ x: px, y: origin.y, z: pz }, this.slipRotation, { x: dx, y: 0, z: dz }, this.slipShape, 0, distance, true, flags, groups, collider);
+    for (let offset = .08; offset <= KinematicController.cornerSlipReach + 1e-6; offset += .08) for (const side of sides) {
+      const ox = origin.x + tx * side * offset, oz = origin.z + tz * side * offset;
+      if (!free(origin.x, origin.z, tx * side, tz * side, offset) || !free(ox, oz, x, z, .5)) continue;
+      if (this.movementMask && !this.movementMask(transform.x + tx * side * Math.min(offset, want), transform.z + tz * side * Math.min(offset, want))) continue;
+      const step = Math.min(offset + .02, want);
+      this.slipDisplacement.x = tx * side * step; this.slipDisplacement.y = wantY; this.slipDisplacement.z = tz * side * step;
+      controller.computeColliderMovement(collider, this.slipDisplacement, undefined, groups);
+      const moved = controller.computedMovement();
+      this.displacement.x = moved.x; this.displacement.y = moved.y; this.displacement.z = moved.z;
+      return;
+    }
+    miss.x = at.x; miss.z = at.z; miss.dx = x; miss.dz = z;
+  }
+  /** Widest sidestep in metres (about two body widths): posts, bins and lot or building corners, never along a whole wall. */
+  static readonly cornerSlipReach = 1.44;
+  reset(): void { this.slipMiss.x = NaN; this.clearance = .005; this.fallSpeed = 0; this.velocity.x = this.velocity.z = 0; resetResponse(this.response); this.navigating = false; }
 }

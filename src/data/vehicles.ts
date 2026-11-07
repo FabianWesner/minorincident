@@ -32,7 +32,8 @@ const sedan: VehicleDef = { doorX: .35, stepHeight: .12, id: 'vehicle.sedan', as
   handling: { highSpeedSteering: .18, steeringResponse: 10, engineTaperStart: .35, reverseSpeed: 6, brake: .16, idleBrake: .004, handbrake: .08, grip: 3, driftGrip: .65, compression: 4.4, relaxation: 2.3, suspensionTravel: .25, suspensionResponse: 25, centerOfMass: -.3, flipDelay: 3, flipLift: 3, flipTorque: 4 },
 };
 /** The cargo bicycle retains capsule collision and click navigation; these tune its direct steering and frame lean. */
-export const bicycleHandling = { slowTurnRadius: 1.6, fastTurnRadius: 6, steeringResponse: 8, maxSteering: .5, leanResponse: 8, maxLean: .32 } as const;
+/** reverseMs: a rider backs a bicycle up at walking pace; full-speed reverse with A/D held drew 10 m loops (r2-bike). */
+export const bicycleHandling = { slowTurnRadius: 1.6, fastTurnRadius: 6, steeringResponse: 8, maxSteering: .5, leanResponse: 8, maxLean: .32, reverseMs: 1.8 } as const;
 export const vehicles: readonly VehicleDef[] = [
   sedan,
   { ...sedan, id: 'vehicle.military-apc', asset: 'veh.military-apc', bodyVariant: 'unarmed', doorX: .71, stepHeight: .62,

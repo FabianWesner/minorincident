@@ -60,7 +60,7 @@ test('handling: deterministic scripted drives, speed-dependent steering for ever
   } finally { f.physics.dispose(); }
 });
 
-test('enter, drive and exit: door dwell, input ownership (no attacks while driving), capsule-safe exit on the free side', async () => {
+test('enter, drive and exit: door dwell, input ownership (no attacks while driving), capsule-safe exit on the free side; bike stand-to-mount needs an approach', async () => {
   const world = new SimWorld(); await world.init(); world.loadScenario('drive-course');
   try {
     for (let i = 0; i < 35; i++) world.update();
@@ -81,4 +81,28 @@ test('enter, drive and exit: door dwell, input ownership (no attacks while drivi
     expect(world.physics.world!.intersectionWithShape(exit.transform, { x: 0, y: 0, z: 0, w: 1 }, new RAPIER.Capsule(.35, .35), undefined, undefined, world.physics.playerCollider!)).toBeNull();
     world.loadScenario('empty'); expect(world.physics.bodyCount).toBe(2);
   } finally { world.dispose(); }
+  await bikeMountIntent();
 });
+
+// r2-bike (L1 depot): standing still where a story beat left her beside the parked cargo bike never mounts it; walking up
+// to the bike and stopping (stand-to-mount 0.4 s, spec E19 5.10) and E still do.
+async function bikeMountIntent(): Promise<void> {
+  const world = new SimWorld(); await world.init(); world.loadScenario('survivor', 1);
+  try {
+    const bike = world.vehicles!.bicycle, player = world.entities.get(1)!;
+    bike.spawn({ x: player.transform.x + 1, z: player.transform.z }, Math.PI / 2);
+    const still = () => { world.setInput({ move: { x: 0, z: 0 }, interact: false }); world.update(); };
+    const near = () => Math.hypot(player.transform.x - bike.entity!.transform.x, player.transform.z - bike.entity!.transform.z);
+    expect(near()).toBeLessThan(1.5);
+    for (let i = 0; i < 120; i++) still();
+    expect(bike.riding, 'idle beside the bike').toBe(false);
+    world.setInput({ move: { x: -1, z: 0 } }); for (let i = 0; i < 50 && near() < 2.5; i++) world.update();
+    for (let i = 0; i < 30; i++) still();
+    expect(near()).toBeGreaterThan(2);
+    for (let i = 0; i < 90 && near() > 1.2; i++) { world.setInput({ move: { x: 1, z: 0 } }); world.update(); }
+    for (let i = 0; i < 40 && !bike.riding; i++) still();
+    expect(bike.riding, 'walked up and stopped').toBe(true);
+    world.setInput({ interact: true }); world.update(); world.setInput({ interact: false }); world.update();
+    expect(bike.riding, 'E dismounts').toBe(false);
+  } finally { world.dispose(); }
+}
