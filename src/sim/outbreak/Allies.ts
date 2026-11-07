@@ -339,7 +339,10 @@ function regroup(world: SimWorld, e: EntitySnapshot, a: AllyState, p: Point): bo
     const velocity = leader.survivor?.velocity;
     const forward = moving && world.missions?.def.l3 && velocity
       ? -Math.atan2(velocity.z, velocity.x) : leader.transform.yaw;
-    const behind = 4 + Math.floor((f.slot % 6) / 2), side = (f.slot % 2 ? 1 : -1) * (1.8 + Math.floor(f.slot / 6) * 1.8);
+    // r2-l3 (L3-06): rows were 4 m and 5 m behind (4.4 m / 5.3 m from the courier with the 1.8 m side offset). A rear
+    // officer resting at 5.3-5.6 m had under 0.7 m to the 6 m band edge, and the start-up lag when she sets off from a
+    // stop (~0.8 m) carried him to 6.2-6.4 m. Rows 3.8 m / 4.4 m behind (4.2 m / 4.8 m) centre the squad in the 3-6 m band.
+    const behind = 3.8 + Math.floor((f.slot % 6) / 2) * .6, side = (f.slot % 2 ? 1 : -1) * (1.8 + Math.floor(f.slot / 6) * 1.8);
     const at = (b: number, s: number): Point => ({ x: p.x - Math.cos(forward) * b + Math.sin(forward) * s, z: p.z + Math.sin(forward) * b + Math.cos(forward) * s });
     const nav = world.infected!.nav;
     const usable = (q: Point) => d <= 10 && nav.clear(q.x, q.z, .4) && nav.visible(e.transform, q, .4) && nav.visible(q, p, .4);
