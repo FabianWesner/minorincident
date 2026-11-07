@@ -14,7 +14,7 @@ This report is in progress. Each OPEN row still needs current evidence for at le
 | L4-06 | PASS | First breach 52.717 s; 67/65 living; sustained plaza minima 52/54 (low/high). | [review](../../qa/reviews/L4-06.json) · [native report](../fix51-verify/L4.json) | — |
 | L4-07 | OPEN | Current whole-row measurement pending; historical observations are not a frozen-head verdict. | [review](../../qa/reviews/L4-07.json) · [native report](../fix51-verify/L4.json) | — |
 | L4-08 | OPEN | Current whole-row measurement pending; historical observations are not a frozen-head verdict. | [review](../../qa/reviews/L4-08.json) · [native report](../fix51-verify/L4.json) | — |
-| L4-09 | PASS | Line 1 52.317 s; nests 124 s; armour 176 s; camera skip/timing fixtures pass. | [review](../../qa/reviews/L4-09.json) · [native report](../fix51-verify/L4.json) | — |
+| L4-09 | PASS | Line 1 52.317/60.333 s; nests 124 s; armour 170/170.6 s; camera skip/timing fixtures pass. | [review](../../qa/reviews/L4-09.json) · [native report](../fix51-verify/L4.json) | — |
 | L4-10 | OPEN | Current whole-row measurement pending; historical observations are not a frozen-head verdict. | [review](../../qa/reviews/L4-10.json) · [native report](../fix51-verify/L4.json) | — |
 | L4-11 | OPEN | Current whole-row measurement pending; historical observations are not a frozen-head verdict. | [review](../../qa/reviews/L4-11.json) · [native report](../fix51-verify/L4.json) | — |
 | L4-12 | OPEN | Current whole-row measurement pending; historical observations are not a frozen-head verdict. | [review](../../qa/reviews/L4-12.json) · [native report](../fix51-verify/L4.json) | — |
@@ -48,7 +48,7 @@ This report is in progress. Each OPEN row still needs current evidence for at le
 | L6-08 | OPEN | Current whole-row measurement pending; historical observations are not a frozen-head verdict. | [review](../../qa/reviews/L6-08.json) · [native report](../fix51-verify/L6.json) | — |
 | L6-09 | OPEN | Current whole-row measurement pending; historical observations are not a frozen-head verdict. | [review](../../qa/reviews/L6-09.json) · [native report](../fix51-verify/L6.json) | — |
 | L6-10 | PASS | Every active retreat/exit marker tick matches fixed gate/platform; all 3 gates ×4 courier poses pass. | [review](../../qa/reviews/L6-10.json) · [native report](../fix51-verify/L6.json) | — |
-| L6-11 | OPEN | Current whole-row measurement pending; historical observations are not a frozen-head verdict. | [review](../../qa/reviews/L6-11.json) · [native report](../fix51-verify/L6.json) | — |
+| L6-11 | PASS | Both tiers: complete20/29=68.97%; evade1/29=3.45%. Complete hashes match current controls; all rosters balance. | [review](../../qa/reviews/L6-11.json) · [native report](../fix51-verify/L6.json) | — |
 | L6-12 | OPEN | Current whole-row measurement pending; historical observations are not a frozen-head verdict. | [review](../../qa/reviews/L6-12.json) · [native report](../fix51-verify/L6.json) | — |
 | L6-13 | OPEN | Current whole-row measurement pending; historical observations are not a frozen-head verdict. | [native report](../fix51-verify/L6.json) | — |
 | L6-14 | OPEN | Current whole-row measurement pending; historical observations are not a frozen-head verdict. | [review](../../qa/reviews/L6-14.json) · [native report](../fix51-verify/L6.json) | — |
