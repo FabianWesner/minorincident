@@ -1,0 +1,754 @@
+{
+  "row": "L7-10",
+  "frozenHead": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "verdict": "PASS",
+  "criterion": "Every living follower physically boards (one per 15 ticks, recovery after 20 s stall); boarding can finish with ≥ 10 infected alive elsewhere.",
+  "observation": "All 24 living identities board at both tiers. Actual per-entry start spacing is at least 15 ticks; fixture completion retains 10 living admitted infected elsewhere. Offscreen stalled survivor recovery occurs at exactly 1200 ticks (20 s), followed by ordinary 36-tick door entry. Native departure/controller receipts measure boarding semantics; no cinematic visual claim is included in this S-only row.",
+  "method": "Current native qa:accept both-tier complete/stationary + production fixtures/checkpoint controls; immutable source receipt snapshots.",
+  "sources": [
+    {
+      "original": "docs/reports/fix51-verify/receipts/L7-low-complete.json",
+      "originalSha256": "974620f3fc05459b6129f57f092c16307d42402030d50a269159a2240187644f",
+      "archive": "docs/reports/final-c/native/L7-low-complete.json.gz",
+      "sha256": "5c77a3f0f9af2f77b2781db5e6b8ba6b239e187be04196d87c18871a5b676277",
+      "revision": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+      "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+      "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+      "generatedAt": "2026-11-06T23:42:06.907Z"
+    },
+    {
+      "original": "docs/reports/fix51-verify/receipts/L7-high-complete.json",
+      "originalSha256": "96113d9bd13a732d0993ab6b85cd072636f1f4fe10579ed1675418f37d442ea1",
+      "archive": "docs/reports/final-c/native/L7-high-complete.json.gz",
+      "sha256": "ac2f6292c8013a44c79a58023527a8965ebfe546fdf2a237ebf6930ca2028cb2",
+      "revision": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+      "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+      "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+      "generatedAt": "2026-11-06T23:42:42.612Z"
+    },
+    {
+      "original": "docs/reports/fix51-verify/receipts/L7-low-fixtures.json",
+      "originalSha256": "54e4a8d1fbdc34e2093de885f6546bfbc8e0b8f48b99ce9be9026ed5b9d687d7",
+      "archive": "docs/reports/final-c/native/L7-low-fixtures.json.gz",
+      "sha256": "61bc551b9dfdabd8e9f5478534708c7fe80a536b8f0667638d40e20c0510eab9",
+      "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+      "fixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4"
+    },
+    {
+      "original": "docs/reports/fix51-verify/receipts/L7-high-fixtures.json",
+      "originalSha256": "2ca2210480e7835193bd4f948f91c84ccdf1ca5321a57e5bf3b96e03d4bf52f2",
+      "archive": "docs/reports/final-c/native/L7-high-fixtures.json.gz",
+      "sha256": "84e549c9ba463b82210c944abde4838c8ca34e70c1c987a8a07a0b8b723060c4",
+      "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+      "fixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4"
+    }
+  ],
+  "checks": [
+    {
+      "id": "L7-10",
+      "clause": "every living roster identity boarded",
+      "level": "L7",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": {
+        "alive": [
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          62,
+          63,
+          64,
+          65,
+          66,
+          67,
+          68,
+          69,
+          70,
+          71,
+          72,
+          73,
+          74
+        ],
+        "boarded": [
+          56,
+          65,
+          64,
+          73,
+          51,
+          52,
+          53,
+          54,
+          57,
+          58,
+          59,
+          60,
+          55,
+          61,
+          63,
+          66,
+          67,
+          69,
+          70,
+          72,
+          74,
+          68,
+          62,
+          71
+        ]
+      },
+      "target": "all living followers are in boarded ledger",
+      "receipt": "docs/reports/fix51-verify/receipts/L7-low-complete.json"
+    },
+    {
+      "id": "L7-10",
+      "clause": "every living roster identity boarded",
+      "level": "L7",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": {
+        "alive": [
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          62,
+          63,
+          64,
+          65,
+          66,
+          67,
+          68,
+          69,
+          70,
+          71,
+          72,
+          73,
+          74
+        ],
+        "boarded": [
+          56,
+          52,
+          53,
+          66,
+          58,
+          55,
+          69,
+          59,
+          54,
+          57,
+          63,
+          60,
+          51,
+          62,
+          64,
+          61,
+          67,
+          68,
+          70,
+          71,
+          72,
+          73,
+          74,
+          65
+        ]
+      },
+      "target": "all living followers are in boarded ledger",
+      "receipt": "docs/reports/fix51-verify/receipts/L7-high-complete.json"
+    },
+    {
+      "id": "L7-10",
+      "clause": "actual passenger door-entry spacing",
+      "value": {
+        "entries": [
+          {
+            "id": 56,
+            "tick": 5205
+          },
+          {
+            "id": 65,
+            "tick": 5220
+          },
+          {
+            "id": 64,
+            "tick": 5235
+          },
+          {
+            "id": 73,
+            "tick": 5250
+          },
+          {
+            "id": 51,
+            "tick": 5265
+          },
+          {
+            "id": 52,
+            "tick": 5280
+          },
+          {
+            "id": 53,
+            "tick": 5295
+          },
+          {
+            "id": 54,
+            "tick": 5310
+          },
+          {
+            "id": 57,
+            "tick": 5325
+          },
+          {
+            "id": 58,
+            "tick": 5340
+          },
+          {
+            "id": 59,
+            "tick": 5355
+          },
+          {
+            "id": 60,
+            "tick": 5370
+          },
+          {
+            "id": 55,
+            "tick": 5385
+          },
+          {
+            "id": 61,
+            "tick": 5400
+          },
+          {
+            "id": 63,
+            "tick": 5415
+          },
+          {
+            "id": 66,
+            "tick": 5430
+          },
+          {
+            "id": 67,
+            "tick": 5445
+          },
+          {
+            "id": 69,
+            "tick": 5460
+          },
+          {
+            "id": 70,
+            "tick": 5475
+          },
+          {
+            "id": 72,
+            "tick": 5490
+          },
+          {
+            "id": 74,
+            "tick": 5505
+          },
+          {
+            "id": 68,
+            "tick": 7664
+          },
+          {
+            "id": 62,
+            "tick": 7679
+          },
+          {
+            "id": 71,
+            "tick": 7694
+          }
+        ],
+        "boarded": [
+          {
+            "id": 56,
+            "tick": 5241
+          },
+          {
+            "id": 65,
+            "tick": 5256
+          },
+          {
+            "id": 64,
+            "tick": 5271
+          },
+          {
+            "id": 73,
+            "tick": 5286
+          },
+          {
+            "id": 51,
+            "tick": 5301
+          },
+          {
+            "id": 52,
+            "tick": 5316
+          },
+          {
+            "id": 53,
+            "tick": 5331
+          },
+          {
+            "id": 54,
+            "tick": 5346
+          },
+          {
+            "id": 57,
+            "tick": 5361
+          },
+          {
+            "id": 58,
+            "tick": 5376
+          },
+          {
+            "id": 59,
+            "tick": 5391
+          },
+          {
+            "id": 60,
+            "tick": 5406
+          },
+          {
+            "id": 55,
+            "tick": 5421
+          },
+          {
+            "id": 61,
+            "tick": 5436
+          },
+          {
+            "id": 63,
+            "tick": 5451
+          },
+          {
+            "id": 66,
+            "tick": 5466
+          },
+          {
+            "id": 67,
+            "tick": 5481
+          },
+          {
+            "id": 69,
+            "tick": 5496
+          },
+          {
+            "id": 70,
+            "tick": 5511
+          },
+          {
+            "id": 72,
+            "tick": 5526
+          },
+          {
+            "id": 74,
+            "tick": 5541
+          },
+          {
+            "id": 68,
+            "tick": 7700
+          },
+          {
+            "id": 62,
+            "tick": 7715
+          },
+          {
+            "id": 71,
+            "tick": 7730
+          }
+        ],
+        "spacing": [
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          2159,
+          15,
+          15
+        ]
+      },
+      "target": "one new passenger at most every15ticks; every entry finishes",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L7-low-fixtures.json",
+      "level": "L7"
+    },
+    {
+      "id": "L7-10",
+      "clause": "living infected remaining when boarding has finished",
+      "value": {
+        "tick": 7790,
+        "alive": 10,
+        "ids": [
+          280,
+          281,
+          282,
+          283,
+          284,
+          285,
+          286,
+          287,
+          288,
+          289
+        ]
+      },
+      "target": "at least10 admitted living infected may remain elsewhere at departure start",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L7-low-fixtures.json",
+      "level": "L7"
+    },
+    {
+      "id": "L7-10",
+      "clause": "offscreen stalled boarding recovery after20s",
+      "value": {
+        "setup": "isolated departure controller; one stationary offscreen living follower; remaining roster starts dead as fixture setup; controller ticks only, no follower movement or combat simulation",
+        "firstSampleTick": 2,
+        "id": 51,
+        "events": [
+          {
+            "name": "l7.survivor-recovered",
+            "tick": 1202,
+            "actorId": 51
+          },
+          {
+            "name": "l7.survivor-boarded",
+            "tick": 1238,
+            "actorId": 51
+          }
+        ],
+        "recoveryTicks": 1200,
+        "alive": true,
+        "aboard": true
+      },
+      "target": "no early recovery; actual recovery at1200ticks without progress; same living actor finishes ordinary36tick door entry",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L7-low-fixtures.json",
+      "level": "L7"
+    },
+    {
+      "id": "L7-10",
+      "clause": "actual passenger door-entry spacing",
+      "value": {
+        "entries": [
+          {
+            "id": 56,
+            "tick": 5164
+          },
+          {
+            "id": 52,
+            "tick": 5179
+          },
+          {
+            "id": 53,
+            "tick": 5200
+          },
+          {
+            "id": 66,
+            "tick": 5327
+          },
+          {
+            "id": 58,
+            "tick": 5348
+          },
+          {
+            "id": 55,
+            "tick": 5363
+          },
+          {
+            "id": 69,
+            "tick": 5378
+          },
+          {
+            "id": 59,
+            "tick": 5393
+          },
+          {
+            "id": 54,
+            "tick": 5408
+          },
+          {
+            "id": 57,
+            "tick": 5423
+          },
+          {
+            "id": 63,
+            "tick": 5438
+          },
+          {
+            "id": 60,
+            "tick": 5453
+          },
+          {
+            "id": 51,
+            "tick": 5468
+          },
+          {
+            "id": 62,
+            "tick": 5483
+          },
+          {
+            "id": 64,
+            "tick": 5498
+          },
+          {
+            "id": 61,
+            "tick": 5513
+          },
+          {
+            "id": 67,
+            "tick": 5528
+          },
+          {
+            "id": 68,
+            "tick": 5543
+          },
+          {
+            "id": 70,
+            "tick": 5558
+          },
+          {
+            "id": 71,
+            "tick": 5573
+          },
+          {
+            "id": 72,
+            "tick": 5588
+          },
+          {
+            "id": 73,
+            "tick": 5603
+          },
+          {
+            "id": 74,
+            "tick": 5618
+          },
+          {
+            "id": 65,
+            "tick": 5633
+          }
+        ],
+        "boarded": [
+          {
+            "id": 56,
+            "tick": 5200
+          },
+          {
+            "id": 52,
+            "tick": 5215
+          },
+          {
+            "id": 53,
+            "tick": 5236
+          },
+          {
+            "id": 66,
+            "tick": 5363
+          },
+          {
+            "id": 58,
+            "tick": 5384
+          },
+          {
+            "id": 55,
+            "tick": 5399
+          },
+          {
+            "id": 69,
+            "tick": 5414
+          },
+          {
+            "id": 59,
+            "tick": 5429
+          },
+          {
+            "id": 54,
+            "tick": 5444
+          },
+          {
+            "id": 57,
+            "tick": 5459
+          },
+          {
+            "id": 63,
+            "tick": 5474
+          },
+          {
+            "id": 60,
+            "tick": 5489
+          },
+          {
+            "id": 51,
+            "tick": 5504
+          },
+          {
+            "id": 62,
+            "tick": 5519
+          },
+          {
+            "id": 64,
+            "tick": 5534
+          },
+          {
+            "id": 61,
+            "tick": 5549
+          },
+          {
+            "id": 67,
+            "tick": 5564
+          },
+          {
+            "id": 68,
+            "tick": 5579
+          },
+          {
+            "id": 70,
+            "tick": 5594
+          },
+          {
+            "id": 71,
+            "tick": 5609
+          },
+          {
+            "id": 72,
+            "tick": 5624
+          },
+          {
+            "id": 73,
+            "tick": 5639
+          },
+          {
+            "id": 74,
+            "tick": 5654
+          },
+          {
+            "id": 65,
+            "tick": 5669
+          }
+        ],
+        "spacing": [
+          15,
+          21,
+          127,
+          21,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15
+        ]
+      },
+      "target": "one new passenger at most every15ticks; every entry finishes",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L7-high-fixtures.json",
+      "level": "L7"
+    },
+    {
+      "id": "L7-10",
+      "clause": "living infected remaining when boarding has finished",
+      "value": {
+        "tick": 5729,
+        "alive": 10,
+        "ids": [
+          480,
+          481,
+          482,
+          483,
+          484,
+          485,
+          486,
+          487,
+          488,
+          489
+        ]
+      },
+      "target": "at least10 admitted living infected may remain elsewhere at departure start",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L7-high-fixtures.json",
+      "level": "L7"
+    },
+    {
+      "id": "L7-10",
+      "clause": "offscreen stalled boarding recovery after20s",
+      "value": {
+        "setup": "isolated departure controller; one stationary offscreen living follower; remaining roster starts dead as fixture setup; controller ticks only, no follower movement or combat simulation",
+        "firstSampleTick": 2,
+        "id": 51,
+        "events": [
+          {
+            "name": "l7.survivor-recovered",
+            "tick": 1202,
+            "actorId": 51
+          },
+          {
+            "name": "l7.survivor-boarded",
+            "tick": 1238,
+            "actorId": 51
+          }
+        ],
+        "recoveryTicks": 1200,
+        "alive": true,
+        "aboard": true
+      },
+      "target": "no early recovery; actual recovery at1200ticks without progress; same living actor finishes ordinary36tick door entry",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L7-high-fixtures.json",
+      "level": "L7"
+    }
+  ]
+}

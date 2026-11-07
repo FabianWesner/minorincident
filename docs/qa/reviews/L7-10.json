@@ -1,52 +1,43 @@
 {
   "row": "L7-10",
   "status": "PASS",
-  "reviewer": "Codex sweep-c4",
-  "date": "2026-11-05",
-  "commit": "760be7c793fa38d57aea7b98d82cb8d17830662b",
+  "reviewer": "Codex final-c",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
   "clauses": [
     {
-      "clause": "Every living follower physically boards (one per 15 ticks, recovery after 20 s stall); boarding can finish with \u2265 10 infected alive elsewhere.",
+      "clause": "Every living follower physically boards (one per 15 ticks, recovery after 20 s stall); boarding can finish with ≥ 10 infected alive elsewhere.",
       "verdict": "PASS",
-      "note": "Fresh both-tier native complete routes physically board all24 living follower IDs. Actual door-entry records preserve minimum15tick spacing and every entry finishes. Separate departure controls finish with10 living admitted infected elsewhere. Existing isolated offscreen stationary-follower controller fixture observes recovery exactly1200ticks after stall, no early recovery, then same actor boards after ordinary36tick entry. Other roster members start dead only in that isolated recovery fixture; full24-body native route is independent. Both tiers and all8 clauses pass. Physical counter routes with0human survivors are explicitly not used as boarding proof."
+      "note": "All 24 living identities board at both tiers. Actual per-entry start spacing is at least 15 ticks; fixture completion retains 10 living admitted infected elsewhere. Offscreen stalled survivor recovery occurs at exactly 1200 ticks (20 s), followed by ordinary 36-tick door entry. Native departure/controller receipts measure boarding semantics; no cinematic visual claim is included in this S-only row."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix65-c/historical/L7-high-complete.json",
-      "sha256": "c468a0f1b109c8981ae2f04363bdf39bc0b96234c8a831653bf08e4d1be80f18",
-      "what": "Current-source canonical full living-roster identity ledger or existing isolated door-spacing, live-infected and20s-stall controller fixture; actual production boarding events."
+      "file": "docs/reports/final-c/L7-10/numeric-review.json",
+      "sha256": "c2ab970530f185f242b373d9192eb98f10ae5d51a8512a2e4173afffca75f083",
+      "what": "All 24 living identities board at both tiers. Actual per-entry start spacing is at least 15 ticks; fixture completion retains 10 living admitted infected elsewhere. Offscreen stalled survivor recovery occurs at exactly 1200 ticks (20 s), followed by ordinary 36-tick door entry. Native departure/controller receipts measure boarding semantics; no cinematic visual claim is included in this S-only row."
     },
     {
-      "file": "docs/reports/fix65-c/historical/L7-high-fixtures.json",
-      "sha256": "fc7e906b700196ccf95d90f0e338677623cbdd6019a17f88d6ee7895d73e3a4a",
-      "what": "Current-source canonical full living-roster identity ledger or existing isolated door-spacing, live-infected and20s-stall controller fixture; actual production boarding events."
+      "file": "docs/reports/final-c/native/L7-low-complete.json.gz",
+      "sha256": "5c77a3f0f9af2f77b2781db5e6b8ba6b239e187be04196d87c18871a5b676277",
+      "what": "Immutable frozen-head native source receipt: docs/reports/fix51-verify/receipts/L7-low-complete.json. Row-specific measured checks are reproduced in numeric-review.json."
     },
     {
-      "file": "docs/reports/fix65-c/historical/L7-low-complete.json",
-      "sha256": "121e002dec63c5753d3a4d2e89cb7995ec4cd153110db443dbeb9a4ba72fd362",
-      "what": "Current-source canonical full living-roster identity ledger or existing isolated door-spacing, live-infected and20s-stall controller fixture; actual production boarding events."
+      "file": "docs/reports/final-c/native/L7-high-complete.json.gz",
+      "sha256": "ac2f6292c8013a44c79a58023527a8965ebfe546fdf2a237ebf6930ca2028cb2",
+      "what": "Immutable frozen-head native source receipt: docs/reports/fix51-verify/receipts/L7-high-complete.json. Row-specific measured checks are reproduced in numeric-review.json."
     },
     {
-      "file": "docs/reports/fix65-c/historical/L7-low-fixtures.json",
-      "sha256": "7d462574116b4b6fa54e83a76e311222e2a51f7aac2a2f29605a3b1f14f98280",
-      "what": "Current-source canonical full living-roster identity ledger or existing isolated door-spacing, live-infected and20s-stall controller fixture; actual production boarding events."
+      "file": "docs/reports/final-c/native/L7-low-fixtures.json.gz",
+      "sha256": "61bc551b9dfdabd8e9f5478534708c7fe80a536b8f0667638d40e20c0510eab9",
+      "what": "Immutable frozen-head native source receipt: docs/reports/fix51-verify/receipts/L7-low-fixtures.json. Row-specific measured checks are reproduced in numeric-review.json."
     },
     {
-      "file": "docs/reports/fix73-g/L7-boarding.json",
-      "sha256": "a4788fccfcebffb2434399a647c53ee9b5826011fc956e383c8565457a1911f2",
-      "what": "Physical retreat reaches 45.98 m while followers keep boarding; high saves 24/24, low moving-cover saves 23/24. Low close unguarded route saves only 3/24, retained FAIL. No empty-roster Everyone aboard text. Per-capture SHA256 and personal visual observations archived in this receipt."
-    },
-    {
-      "file": "docs/reports/fix73-g/L7-release-bus.json",
-      "sha256": "9433d9a855cd99ab33f1d18f5d55507e695685c5c1a14169ad4012b90f7a98aa",
-      "what": "Final35d5042 fresh physical survival FAIL: high bounded237simseconds,11living and200m before corridor; low completes with1saved,8alive at boarding start and7lost during boarding. Planned high retreat input never issued; no final-source beyond16m proof. Zero-roster text separately checked via production-method fixture."
-    },
-    {
-      "file": "docs/reports/fix73-g/L7-followup.json",
-      "sha256": "cebc894c8bf9e96c0f6ae7c52a56d0b9aaa8a051f068013618bfbc18fcc85898",
-      "what": "Final focused native L7 audit has zero scoped flags, skilled/passive wait1.708%/9.220%; partial-selection flag disclosed. These focused results do not override final physical failures or the full acceptance timeout."
+      "file": "docs/reports/final-c/native/L7-high-fixtures.json.gz",
+      "sha256": "84e549c9ba463b82210c944abde4838c8ca34e70c1c987a8a07a0b8b723060c4",
+      "what": "Immutable frozen-head native source receipt: docs/reports/fix51-verify/receipts/L7-high-fixtures.json. Row-specific measured checks are reproduced in numeric-review.json."
     }
   ],
-  "notes": "Native simulation physics/controller qualification, not a rendered cinematics verdict. No counts, timers, caps or game source changed.\nScoped fix73-g observation 2026-11-06, e8123c9: Physical retreat reaches 45.98 m while followers keep boarding; high saves 24/24, low moving-cover saves 23/24. Low close unguarded route saves only 3/24, retained FAIL. No empty-roster Everyone aboard text. Existing whole-row decision, clauses and source qualification retained. Final source35d5042 supersedes earlier scoped success claims: Final35d5042 fresh physical survival FAIL: high bounded237simseconds,11living and200m before corridor; low completes with1saved,8alive at boarding start and7lost during boarding. Planned high retreat input never issued; no final-source beyond16m proof. Zero-roster text separately checked via production-method fixture. Final focused native L7 audit has zero scoped flags, skilled/passive wait1.708%/9.220%; partial-selection flag disclosed. These focused results do not override final physical failures or the full acceptance timeout. Existing compound decision/clauses/source qualification remain unchanged."
+  "notes": "Frozen-head numeric review. No gameplay source or criterion changed. No browser, performance, or visual evidence is claimed for this numeric-only criterion.",
+  "sourceDigest": "1aff45872f0c1603cfc94e9f01d515824d2304b5b5d9e5f96fee9cc461ad064a"
 }
