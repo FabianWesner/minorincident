@@ -14,7 +14,7 @@
   "evidence": [
     {
       "file": "docs/reports/blk-b/L4-13-evidence.json",
-      "sha256": "ebd1d3c3a3598c444b9ab727110f3999929c6b27121e2e1fb2ecfd10d9ac5a92",
+      "sha256": "7096082b09225a0254c3170c0d49c72bdda70e49718478f5ac9a301152b856e8",
       "what": "I inspected the actual all-edge admission ledger. Low complete 9-second windows admit5,4,2,3,7,7,8 bodies; high admits9,9,4,3,8,5,5 over the same seven windows. Low tick14689–15229 admits only2, below3. High has no under-three window in this measured prefix; its later complete-route scope is unqualified. Both tiers open the authored40-second escape gap. The former summary counted only each wave’s requested edges; these totals correctly include every admitted edge."
     }
   ],

@@ -2010,5 +2010,10 @@
       "sha256": "0252a8a8ea9172e73336e497cc1391ab112a37eae06baf3d78e256cc3bd7b886",
       "what": "Nearest-neighbour face crop personally reviewed: broad tan forehead, two small distinct red eye islands; the numeric peak comparison uses native pixels."
     }
-  ]
+  ],
+  "actorMaskHelper": {
+    "file": "tools/qa/sweep-b-actor-mask.ts",
+    "sha256": "9160f0fdfd658bbe43750a627b3334aa36c99a76df13fe0314352a65563f49f7",
+    "note": "Actual executed masks use this helper. The raw producer ledger retains a legacy eyeMaskHelperSha256 metadata field for an unused helper; no measurements use that legacy field."
+  }
 }
