@@ -1,0 +1,142 @@
+{
+  "row": "L2-13",
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "criterion": "Panic spreads: a calm ped seeing running peds panics; no ped stays unaffected next to the chaos.",
+  "nativeChecks": [
+    {
+      "id": "L2-13",
+      "clause": "native visible runner-to-calm pedestrian propagation",
+      "value": {
+        "cases": [
+          {
+            "runner": 127,
+            "index": 0,
+            "neighbors": []
+          },
+          {
+            "runner": 128,
+            "index": 1,
+            "neighbors": [
+              {
+                "id": 127,
+                "firstSeen": 54,
+                "reacted": 59
+              },
+              {
+                "id": 129,
+                "firstSeen": 54,
+                "reacted": 57
+              },
+              {
+                "id": 130,
+                "firstSeen": 67,
+                "reacted": 68
+              }
+            ]
+          },
+          {
+            "runner": 129,
+            "index": 2,
+            "neighbors": []
+          },
+          {
+            "runner": 130,
+            "index": 3,
+            "neighbors": [
+              {
+                "id": 127,
+                "firstSeen": 56,
+                "reacted": 59
+              },
+              {
+                "id": 128,
+                "firstSeen": 56,
+                "reacted": 58
+              },
+              {
+                "id": 129,
+                "firstSeen": 62,
+                "reacted": 63
+              }
+            ]
+          }
+        ],
+        "observedNeighbors": 6
+      },
+      "target": "Existing calm neighbors with actual clear sight of a runner moving>=2m/s react by the next production perception poll (6 ticks); no injected actors or other panic stimulus",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
+      "level": "L2"
+    },
+    {
+      "id": "L2-13",
+      "clause": "native visible runner-to-calm pedestrian propagation",
+      "value": {
+        "cases": [
+          {
+            "runner": 127,
+            "index": 0,
+            "neighbors": []
+          },
+          {
+            "runner": 128,
+            "index": 1,
+            "neighbors": [
+              {
+                "id": 127,
+                "firstSeen": 54,
+                "reacted": 59
+              },
+              {
+                "id": 129,
+                "firstSeen": 54,
+                "reacted": 57
+              },
+              {
+                "id": 130,
+                "firstSeen": 67,
+                "reacted": 68
+              }
+            ]
+          },
+          {
+            "runner": 129,
+            "index": 2,
+            "neighbors": []
+          },
+          {
+            "runner": 130,
+            "index": 3,
+            "neighbors": [
+              {
+                "id": 127,
+                "firstSeen": 56,
+                "reacted": 59
+              },
+              {
+                "id": 128,
+                "firstSeen": 56,
+                "reacted": 58
+              },
+              {
+                "id": 129,
+                "firstSeen": 62,
+                "reacted": 63
+              }
+            ]
+          }
+        ],
+        "observedNeighbors": 6
+      },
+      "target": "Existing calm neighbors with actual clear sight of a runner moving>=2m/s react by the next production perception poll (6 ticks); no injected actors or other panic stimulus",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
+      "level": "L2"
+    }
+  ],
+  "observation": "All16 current low/high WebGL2 frames personally inspected at actual zoom0.5/1.5 and ticks30/60/120/600. A controlled production panic stimulus affects one existing bench civilian only; other civilians are untouched. Bench neighbors visibly rise and move away, leaving benches empty by10s; no permanently unaffected seated neighbor in the reviewed clear-sight cases. Independent fresh native production sight-cone+LOS+speed fixture observes6 qualifying neighbors per tier across four runner cases; all react in1–5ticks, within the6tick perception poll. No invented actors, infected, gunfire or alarm stimulus. This isolates propagation; it is not an unassisted player-route claim."
+}
