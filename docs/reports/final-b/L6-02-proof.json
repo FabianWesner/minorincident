@@ -1,0 +1,772 @@
+{
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "method": "Headlamp: physical W then declared tunnel setup and physical opposed aim/movement. Exit: actual mortal canonical reached save restored through production loadResume, physical D+S crossing and actual normal cinematic progression. No objective, actor, health or collision edits in exit probe.",
+  "rows": [
+    {
+      "kind": "headlamp",
+      "tier": "low",
+      "before": {
+        "tick": 0,
+        "quality": "low",
+        "flashlight": false,
+        "lamp": {
+          "kind": "device",
+          "archetype": "pickup.headlamp",
+          "faction": "environment",
+          "transform": {
+            "x": 1.5,
+            "z": -2,
+            "y": 0.9,
+            "yaw": 0
+          },
+          "health": {
+            "current": 100,
+            "max": 100
+          },
+          "interactable": {
+            "kind": "switch",
+            "radius": 2,
+            "holdTime": 0.3,
+            "instant": true,
+            "interruptOnDamage": true,
+            "progress": 0,
+            "completed": false,
+            "enabled": false,
+            "hint": "",
+            "label": "Pick up headlamp",
+            "key": null,
+            "requires": [],
+            "open": false,
+            "barricaded": false,
+            "fuel": 0,
+            "powered": false,
+            "interruptedAt": -1,
+            "cycle": 0
+          },
+          "id": 56,
+          "pickup": {
+            "kind": "item",
+            "item": "headlamp",
+            "radius": 1.5,
+            "collected": false
+          }
+        },
+        "newWeaponIds": [],
+        "player": {
+          "x": 3,
+          "y": 1.3049999999999997,
+          "z": 0,
+          "yaw": 0.3205919885488634
+        },
+        "headYaw": 0.32059198854886345,
+        "headlampOn": 0,
+        "beam": [
+          0.9490490319615965,
+          -0.3151284419609829
+        ],
+        "input": {
+          "move": {
+            "x": 0,
+            "z": 0
+          },
+          "aim": null,
+          "aimSource": null,
+          "left": {
+            "down": false,
+            "held": false,
+            "up": false
+          },
+          "right": {
+            "down": false,
+            "held": false,
+            "up": false
+          },
+          "selector": 0,
+          "interact": false,
+          "pause": false
+        }
+      },
+      "idle": {
+        "tick": 120,
+        "quality": "low",
+        "flashlight": false,
+        "lamp": {
+          "kind": "device",
+          "archetype": "pickup.headlamp",
+          "faction": "environment",
+          "transform": {
+            "x": 1.5,
+            "z": -2,
+            "y": 0.9,
+            "yaw": 0
+          },
+          "health": {
+            "current": 100,
+            "max": 100
+          },
+          "interactable": {
+            "kind": "switch",
+            "radius": 2,
+            "holdTime": 0.3,
+            "instant": true,
+            "interruptOnDamage": true,
+            "progress": 0,
+            "completed": false,
+            "enabled": false,
+            "hint": "",
+            "label": "Pick up headlamp",
+            "key": null,
+            "requires": [],
+            "open": false,
+            "barricaded": false,
+            "fuel": 0,
+            "powered": false,
+            "interruptedAt": -1,
+            "cycle": 0
+          },
+          "id": 56,
+          "pickup": {
+            "kind": "item",
+            "item": "headlamp",
+            "radius": 1.5,
+            "collected": false
+          }
+        },
+        "newWeaponIds": [],
+        "player": {
+          "x": 3,
+          "y": 1.3200000524520874,
+          "z": 0,
+          "yaw": 0.3205919885488634
+        },
+        "headYaw": 0.3205919885488633,
+        "headlampOn": 0,
+        "beam": [
+          0.9490490319615966,
+          -0.3151284419609827
+        ],
+        "input": {
+          "move": {
+            "x": 0,
+            "z": 0
+          },
+          "aim": null,
+          "aimSource": null,
+          "left": {
+            "down": false,
+            "held": false,
+            "up": false
+          },
+          "right": {
+            "down": false,
+            "held": false,
+            "up": false
+          },
+          "selector": 0,
+          "interact": false,
+          "pause": false,
+          "cancelMove": false,
+          "brake": false
+        }
+      },
+      "approach": {
+        "tick": 139,
+        "quality": "low",
+        "flashlight": true,
+        "lamp": {
+          "kind": "device",
+          "archetype": "pickup.headlamp",
+          "faction": "environment",
+          "transform": {
+            "x": 1.5,
+            "z": -2,
+            "y": 0.9,
+            "yaw": 0
+          },
+          "health": {
+            "current": 100,
+            "max": 100
+          },
+          "interactable": {
+            "kind": "switch",
+            "radius": 2,
+            "holdTime": 0.3,
+            "instant": true,
+            "interruptOnDamage": true,
+            "progress": 0,
+            "completed": true,
+            "enabled": false,
+            "hint": "",
+            "label": "Pick up headlamp",
+            "key": null,
+            "requires": [],
+            "open": false,
+            "barricaded": false,
+            "fuel": 0,
+            "powered": false,
+            "interruptedAt": -1,
+            "cycle": 0
+          },
+          "id": 56,
+          "pickup": {
+            "kind": "item",
+            "item": "headlamp",
+            "radius": 1.5,
+            "collected": true
+          }
+        },
+        "newWeaponIds": [],
+        "player": {
+          "x": 2.1656129360198975,
+          "y": 1.3200000524520874,
+          "z": -0.834385871887207,
+          "yaw": 2.356194490192345
+        },
+        "headYaw": 2.1770797880621964,
+        "headlampOn": 1,
+        "beam": [
+          -0.5698172571005685,
+          -0.8217714362950227
+        ],
+        "input": {
+          "move": {
+            "x": -0.7071067811865475,
+            "z": -0.7071067811865476
+          },
+          "aim": {
+            "x": -0.7071067811865475,
+            "z": -0.7071067811865476
+          },
+          "aimSource": "assist",
+          "left": {
+            "down": false,
+            "held": false,
+            "up": false
+          },
+          "right": {
+            "down": false,
+            "held": false,
+            "up": false
+          },
+          "selector": 0,
+          "interact": false,
+          "pause": false,
+          "cancelMove": false,
+          "brake": false,
+          "drive": {
+            "throttle": 1,
+            "steer": 0
+          },
+          "aimPoint": null
+        }
+      },
+      "opposed": {
+        "tick": 178,
+        "quality": "low",
+        "flashlight": true,
+        "lamp": {
+          "kind": "device",
+          "archetype": "pickup.headlamp",
+          "faction": "environment",
+          "transform": {
+            "x": 1.5,
+            "z": -2,
+            "y": 0.9,
+            "yaw": 0
+          },
+          "health": {
+            "current": 100,
+            "max": 100
+          },
+          "interactable": {
+            "kind": "switch",
+            "radius": 2,
+            "holdTime": 0.3,
+            "instant": true,
+            "interruptOnDamage": true,
+            "progress": 0,
+            "completed": true,
+            "enabled": false,
+            "hint": "",
+            "label": "Pick up headlamp",
+            "key": null,
+            "requires": [],
+            "open": false,
+            "barricaded": false,
+            "fuel": 0,
+            "powered": false,
+            "interruptedAt": -1,
+            "cycle": 0
+          },
+          "id": 56,
+          "pickup": {
+            "kind": "item",
+            "item": "headlamp",
+            "radius": 1.5,
+            "collected": true
+          }
+        },
+        "newWeaponIds": [],
+        "player": {
+          "x": 41.2849006652832,
+          "y": 1.590000033378601,
+          "z": 13.216381072998047,
+          "yaw": -2.362371399452924
+        },
+        "headYaw": -2.1160375919671015,
+        "headlampOn": 1,
+        "beam": [
+          -0.5186243878473137,
+          0.8550021896638623
+        ],
+        "input": {
+          "move": {
+            "x": 0.7071067811865476,
+            "z": -0.7071067811865475
+          },
+          "aim": {
+            "x": -0.7114609983302369,
+            "z": 0.7027255850294214
+          },
+          "aimSource": "pointer",
+          "left": {
+            "down": false,
+            "held": false,
+            "up": false
+          },
+          "right": {
+            "down": false,
+            "held": true,
+            "up": false
+          },
+          "selector": 0,
+          "interact": false,
+          "pause": false,
+          "cancelMove": false,
+          "brake": false,
+          "drive": {
+            "throttle": 0,
+            "steer": 1
+          },
+          "strafe": true,
+          "aimPoint": {
+            "x": 32.971309603831735,
+            "z": 21.48094846575156
+          },
+          "mouseAttack": true
+        }
+      },
+      "dot": -0.9713006677762213,
+      "errors": []
+    },
+    {
+      "kind": "headlamp",
+      "tier": "high",
+      "before": {
+        "tick": 0,
+        "quality": "high",
+        "flashlight": false,
+        "lamp": {
+          "kind": "device",
+          "archetype": "pickup.headlamp",
+          "faction": "environment",
+          "transform": {
+            "x": 1.5,
+            "z": -2,
+            "y": 0.9,
+            "yaw": 0
+          },
+          "health": {
+            "current": 100,
+            "max": 100
+          },
+          "interactable": {
+            "kind": "switch",
+            "radius": 2,
+            "holdTime": 0.3,
+            "instant": true,
+            "interruptOnDamage": true,
+            "progress": 0,
+            "completed": false,
+            "enabled": false,
+            "hint": "",
+            "label": "Pick up headlamp",
+            "key": null,
+            "requires": [],
+            "open": false,
+            "barricaded": false,
+            "fuel": 0,
+            "powered": false,
+            "interruptedAt": -1,
+            "cycle": 0
+          },
+          "id": 56,
+          "pickup": {
+            "kind": "item",
+            "item": "headlamp",
+            "radius": 1.5,
+            "collected": false
+          }
+        },
+        "newWeaponIds": [],
+        "player": {
+          "x": 3,
+          "y": 1.3049999999999997,
+          "z": 0,
+          "yaw": 0.3205919885488634
+        },
+        "headYaw": 0.32059198854886345,
+        "headlampOn": 0,
+        "beam": [
+          0.9490490319615965,
+          -0.3151284419609829
+        ],
+        "input": {
+          "move": {
+            "x": 0,
+            "z": 0
+          },
+          "aim": null,
+          "aimSource": null,
+          "left": {
+            "down": false,
+            "held": false,
+            "up": false
+          },
+          "right": {
+            "down": false,
+            "held": false,
+            "up": false
+          },
+          "selector": 0,
+          "interact": false,
+          "pause": false
+        }
+      },
+      "idle": {
+        "tick": 120,
+        "quality": "high",
+        "flashlight": false,
+        "lamp": {
+          "kind": "device",
+          "archetype": "pickup.headlamp",
+          "faction": "environment",
+          "transform": {
+            "x": 1.5,
+            "z": -2,
+            "y": 0.9,
+            "yaw": 0
+          },
+          "health": {
+            "current": 100,
+            "max": 100
+          },
+          "interactable": {
+            "kind": "switch",
+            "radius": 2,
+            "holdTime": 0.3,
+            "instant": true,
+            "interruptOnDamage": true,
+            "progress": 0,
+            "completed": false,
+            "enabled": false,
+            "hint": "",
+            "label": "Pick up headlamp",
+            "key": null,
+            "requires": [],
+            "open": false,
+            "barricaded": false,
+            "fuel": 0,
+            "powered": false,
+            "interruptedAt": -1,
+            "cycle": 0
+          },
+          "id": 56,
+          "pickup": {
+            "kind": "item",
+            "item": "headlamp",
+            "radius": 1.5,
+            "collected": false
+          }
+        },
+        "newWeaponIds": [],
+        "player": {
+          "x": 3,
+          "y": 1.3200000524520874,
+          "z": 0,
+          "yaw": 0.3205919885488634
+        },
+        "headYaw": 0.3205919885488633,
+        "headlampOn": 0,
+        "beam": [
+          0.9490490319615966,
+          -0.3151284419609827
+        ],
+        "input": {
+          "move": {
+            "x": 0,
+            "z": 0
+          },
+          "aim": null,
+          "aimSource": null,
+          "left": {
+            "down": false,
+            "held": false,
+            "up": false
+          },
+          "right": {
+            "down": false,
+            "held": false,
+            "up": false
+          },
+          "selector": 0,
+          "interact": false,
+          "pause": false,
+          "cancelMove": false,
+          "brake": false
+        }
+      },
+      "approach": {
+        "tick": 157,
+        "quality": "high",
+        "flashlight": true,
+        "lamp": {
+          "kind": "device",
+          "archetype": "pickup.headlamp",
+          "faction": "environment",
+          "transform": {
+            "x": 1.5,
+            "z": -2,
+            "y": 0.9,
+            "yaw": 0
+          },
+          "health": {
+            "current": 100,
+            "max": 100
+          },
+          "interactable": {
+            "kind": "switch",
+            "radius": 2,
+            "holdTime": 0.3,
+            "instant": true,
+            "interruptOnDamage": true,
+            "progress": 0,
+            "completed": true,
+            "enabled": false,
+            "hint": "",
+            "label": "Pick up headlamp",
+            "key": null,
+            "requires": [],
+            "open": false,
+            "barricaded": false,
+            "fuel": 0,
+            "powered": false,
+            "interruptedAt": -1,
+            "cycle": 0
+          },
+          "id": 56,
+          "pickup": {
+            "kind": "item",
+            "item": "headlamp",
+            "radius": 1.5,
+            "collected": true
+          }
+        },
+        "newWeaponIds": [],
+        "player": {
+          "x": 1.4867902994155884,
+          "y": 1.3200000524520874,
+          "z": -1.513208270072937,
+          "yaw": 2.356194490192345
+        },
+        "headYaw": 2.350463237278853,
+        "headlampOn": 1,
+        "beam": [
+          -0.7030425823445213,
+          -0.7111477535718909
+        ],
+        "input": {
+          "move": {
+            "x": 0,
+            "z": 0
+          },
+          "aim": {
+            "x": -0.7071067811865475,
+            "z": -0.7071067811865476
+          },
+          "aimSource": "assist",
+          "left": {
+            "down": false,
+            "held": false,
+            "up": false
+          },
+          "right": {
+            "down": false,
+            "held": false,
+            "up": false
+          },
+          "selector": 0,
+          "interact": false,
+          "pause": false,
+          "cancelMove": false,
+          "brake": false,
+          "drive": {
+            "throttle": 0,
+            "steer": 0
+          },
+          "aimPoint": null
+        }
+      },
+      "opposed": {
+        "tick": 187,
+        "quality": "high",
+        "flashlight": true,
+        "lamp": {
+          "kind": "device",
+          "archetype": "pickup.headlamp",
+          "faction": "environment",
+          "transform": {
+            "x": 1.5,
+            "z": -2,
+            "y": 0.9,
+            "yaw": 0
+          },
+          "health": {
+            "current": 100,
+            "max": 100
+          },
+          "interactable": {
+            "kind": "switch",
+            "radius": 2,
+            "holdTime": 0.3,
+            "instant": true,
+            "interruptOnDamage": true,
+            "progress": 0,
+            "completed": true,
+            "enabled": false,
+            "hint": "",
+            "label": "Pick up headlamp",
+            "key": null,
+            "requires": [],
+            "open": false,
+            "barricaded": false,
+            "fuel": 0,
+            "powered": false,
+            "interruptedAt": -1,
+            "cycle": 0
+          },
+          "id": 56,
+          "pickup": {
+            "kind": "item",
+            "item": "headlamp",
+            "radius": 1.5,
+            "collected": true
+          }
+        },
+        "newWeaponIds": [],
+        "player": {
+          "x": 41.28488540649414,
+          "y": 1.2878787517547607,
+          "z": 13.56013011932373,
+          "yaw": -2.356088171006587
+        },
+        "headYaw": -2.448722674216017,
+        "headlampOn": 1,
+        "beam": [
+          -0.7694159926310642,
+          0.6387480178314092
+        ],
+        "input": {
+          "move": {
+            "x": 0.7071067811865476,
+            "z": -0.7071067811865475
+          },
+          "aim": {
+            "x": -0.7070315981729833,
+            "z": 0.7071819562071398
+          },
+          "aimSource": "pointer",
+          "left": {
+            "down": false,
+            "held": false,
+            "up": false
+          },
+          "right": {
+            "down": false,
+            "held": true,
+            "up": false
+          },
+          "selector": 0,
+          "interact": false,
+          "pause": false,
+          "cancelMove": false,
+          "brake": false,
+          "drive": {
+            "throttle": 0,
+            "steer": 1
+          },
+          "strafe": true,
+          "aimPoint": {
+            "x": 32.987850783894636,
+            "z": 21.863565737399384
+          },
+          "mouseAttack": true
+        }
+      },
+      "dot": -0.9957223208208594,
+      "errors": []
+    }
+  ],
+  "row": "L6-02",
+  "status": "PASS",
+  "observation": "Both tiers: no new weapon IDs; uncollected headlamp unchanged after120 ticks; actual physical W approach collects without E at tick139. Held physical LMB aim opposes KeyD movement: beam/movement dot -0.97130 low/-0.99572 high, beam matches actual drawn head yaw. Six actual frames personally reviewed: pickup ring disappears after approach, opposing beam lights the left tunnel while movement is right. Clear-tunnel reposition is declared setup; no actor stats changed.",
+  "frozenCommit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "frames": [
+    {
+      "file": "test-results/final-b/last-scenes/lamp-low-before.png",
+      "sha256": "b7a7aec2856b8e1877f73542a391b8a6ca2c487964c1cae348e8081ec2e1e345",
+      "personallyReviewed": true,
+      "observation": "Both tiers: no new weapon IDs; uncollected headlamp unchanged after120 ticks; actual physical W approach collects without E at tick139. Held physical LMB aim opposes KeyD movement: beam/movement dot -0.97130 low/-0.99572 high, beam matches actual drawn head yaw. Six actual frames personally reviewed: pickup ring disappears after approach, opposing beam lights the left tunnel while movement is right. Clear-tunnel reposition is declared setup; no actor stats changed."
+    },
+    {
+      "file": "test-results/final-b/last-scenes/lamp-low-approach.png",
+      "sha256": "e0779e880a2f4b144c93ef29e979c3e84bd7279c845d07ef0735501fe49932ca",
+      "personallyReviewed": true,
+      "observation": "Both tiers: no new weapon IDs; uncollected headlamp unchanged after120 ticks; actual physical W approach collects without E at tick139. Held physical LMB aim opposes KeyD movement: beam/movement dot -0.97130 low/-0.99572 high, beam matches actual drawn head yaw. Six actual frames personally reviewed: pickup ring disappears after approach, opposing beam lights the left tunnel while movement is right. Clear-tunnel reposition is declared setup; no actor stats changed."
+    },
+    {
+      "file": "test-results/final-b/last-scenes/lamp-low-opposed.png",
+      "sha256": "b412015ab5b989b71fc4bc7d59efa0983f912481eb46139adb661b5bc588cb9a",
+      "personallyReviewed": true,
+      "observation": "Both tiers: no new weapon IDs; uncollected headlamp unchanged after120 ticks; actual physical W approach collects without E at tick139. Held physical LMB aim opposes KeyD movement: beam/movement dot -0.97130 low/-0.99572 high, beam matches actual drawn head yaw. Six actual frames personally reviewed: pickup ring disappears after approach, opposing beam lights the left tunnel while movement is right. Clear-tunnel reposition is declared setup; no actor stats changed."
+    },
+    {
+      "file": "test-results/final-b/last-scenes/lamp-high-before.png",
+      "sha256": "ed2600494813743c19e9f3919059fecd9d3d991977c0e051e1cdc4fe1448de87",
+      "personallyReviewed": true,
+      "observation": "Both tiers: no new weapon IDs; uncollected headlamp unchanged after120 ticks; actual physical W approach collects without E at tick139. Held physical LMB aim opposes KeyD movement: beam/movement dot -0.97130 low/-0.99572 high, beam matches actual drawn head yaw. Six actual frames personally reviewed: pickup ring disappears after approach, opposing beam lights the left tunnel while movement is right. Clear-tunnel reposition is declared setup; no actor stats changed."
+    },
+    {
+      "file": "test-results/final-b/last-scenes/lamp-high-approach.png",
+      "sha256": "e6a50982bbf13b5d06f716cd0466cbe6d66a4248419a5d117de28be1d4eac721",
+      "personallyReviewed": true,
+      "observation": "Both tiers: no new weapon IDs; uncollected headlamp unchanged after120 ticks; actual physical W approach collects without E at tick139. Held physical LMB aim opposes KeyD movement: beam/movement dot -0.97130 low/-0.99572 high, beam matches actual drawn head yaw. Six actual frames personally reviewed: pickup ring disappears after approach, opposing beam lights the left tunnel while movement is right. Clear-tunnel reposition is declared setup; no actor stats changed."
+    },
+    {
+      "file": "test-results/final-b/last-scenes/lamp-high-opposed.png",
+      "sha256": "77c4a953e957ee721d9245542079af7e606aa9381172638404f4c8db59191920",
+      "personallyReviewed": true,
+      "observation": "Both tiers: no new weapon IDs; uncollected headlamp unchanged after120 ticks; actual physical W approach collects without E at tick139. Held physical LMB aim opposes KeyD movement: beam/movement dot -0.97130 low/-0.99572 high, beam matches actual drawn head yaw. Six actual frames personally reviewed: pickup ring disappears after approach, opposing beam lights the left tunnel while movement is right. Clear-tunnel reposition is declared setup; no actor stats changed."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/final-b/L6-last-scenes.json.gz",
+      "sha256": "d1d32c260bee861625faf971316acda8b2f4a170a5867ed64c351ba82eeb1ce5"
+    },
+    {
+      "file": "docs/reports/final-b/last-scenes-executed.ts.gz",
+      "sha256": "b80e831826120b78f7f18c3d127b9eebc18378563f095f2a432e15994246f261"
+    }
+  ]
+}
