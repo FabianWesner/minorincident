@@ -1,46 +1,78 @@
 {
   "row": "L9-01",
   "status": "PASS",
-  "reviewer": "Codex sweep-c5",
-  "date": "2026-11-06",
-  "commit": "50080fc8ac54013f74633b12b95d3536e11119ae",
+  "reviewer": "Codex final-c",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
   "clauses": [
     {
-      "clause": "Driving control \u2264 0.5 s after load; roster + durability carried; corgi never inside the hull; rider's legs inside the cab.",
+      "clause": "Driving control ≤ 0.5 s after load; roster + durability carried; corgi never inside the hull; rider's legs inside the cab.",
       "verdict": "PASS",
-      "note": "Current qualified physical L8 campaign payload restored through ordinary continueCampaign9; IDs700/800, HP980/930 unchanged, human roster1/4 plus same corgi. Actual physical W acceptedtick0, vehicle motiontick1 (0.016667s) bothtiers; no loading overlay/story lock. First30ticks individually sampled, then6tick samples through930 with physical right/left turns, no cheats/actor writes. All28pairedPOzoom panels personally reviewed, rawSHAverified/deleted. Courier seated in cab, rear/side420/600 frames show pale/red boots within cab floor; no visible lower limbs through exterior hull. Corgi is legitimately seated/hidden aboard in closed troop bay, HUD hiding, no corgi render copy or visible dog standing through the hull (Q137). This is a no-visible-penetration verdict, not a claim the seated corgi is physically outside transport. All181samples/tier maintain hidden seated lifecycle; production VehicleView explicitly omits companion occupant copy. No game change. Sixteen semantic faults reject with exact restoration."
+      "note": "Correct production transport saves preserve APC IDs721low/466high, durability990/1000 and every24/25non-driver occupant ID. Actual physicalW acceptedtick0; meaningful traction>0.5m/s bytick4/0.0667s, below0.5s. Across181snapshots per tier corgi is deliberately hidden and absent from drawn vehicle meshes; eight reviewed arrival/steering panels show seated courier legs within the open cab. Earlier omitted-transport/default runs are excluded explicitly. Shared load clocks9.174s/5.171s are not used as quiet L8-10 timing qualification."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-c5/L9-01/coverage-proof.json",
-      "sha256": "cf13feeb61860278e9767142358d8077382a439bc617b88f25c05797b999c7b8",
-      "what": "Exact carried-save identity/durability, dense actual physical control clock, normal occupant lifecycle and28 personally reviewed cab/turn panels with per-image digests;16 consumer fault controls."
+      "file": "docs/reports/final-c/L9-01/excluded-default.json",
+      "sha256": "552fc9a09affa8f9d9b586c37966fac8692bfd4eec60b9c6836b141bbc42ba8b",
+      "what": "Correct production transport saves preserve APC IDs721low/466high, durability990/1000 and every24/25non-driver occupant ID. Actual physicalW acceptedtick0; meaningful traction>0.5m/s bytick4/0.0667s, below0.5s. Across181snapshots per tier corgi is deliberately hidden and absent from drawn vehicle meshes; eight reviewed arrival/steering panels show seated courier legs within the open cab. Earlier omitted-transport/default runs are excluded explicitly. Shared load clocks9.174s/5.171s are not used as quiet L8-10 timing qualification."
     },
     {
-      "file": "docs/reports/sweep-c5/L9-01/high-arrival.json.gz",
-      "sha256": "12e0b32bfa5f30da5ea79840a2c6328c28d722af3f057a6e4e1a952b1111e1bf",
-      "what": "Exact carried-save identity/durability, dense actual physical control clock, normal occupant lifecycle and28 personally reviewed cab/turn panels with per-image digests;16 consumer fault controls."
+      "file": "docs/reports/final-c/L9-01/sweep-c5-l9-arrival-producer.ts",
+      "sha256": "cfa8f487d29c95676a2cb884151b47a2658a80f61e95b26bd259861387eeb6ff",
+      "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
     },
     {
-      "file": "docs/reports/sweep-c5/L9-01/high-review.json",
-      "sha256": "1bc23bc7a4fe7f22668d339d178c7941fe0d0b3cd7e20e2151e9489f7d6b70fe",
-      "what": "Exact carried-save identity/durability, dense actual physical control clock, normal occupant lifecycle and28 personally reviewed cab/turn panels with per-image digests;16 consumer fault controls."
+      "file": "docs/reports/final-c/L9-01/high-handover.json.gz",
+      "sha256": "3a1cefea69f8de0cf8601fe46e3d99a693bc563567a6959c43c4d267f3d7c889",
+      "what": "Correct production transport saves preserve APC IDs721low/466high, durability990/1000 and every24/25non-driver occupant ID. Actual physicalW acceptedtick0; meaningful traction>0.5m/s bytick4/0.0667s, below0.5s. Across181snapshots per tier corgi is deliberately hidden and absent from drawn vehicle meshes; eight reviewed arrival/steering panels show seated courier legs within the open cab. Earlier omitted-transport/default runs are excluded explicitly. Shared load clocks9.174s/5.171s are not used as quiet L8-10 timing qualification."
     },
     {
-      "file": "docs/reports/sweep-c5/L9-01/low-arrival.json.gz",
-      "sha256": "2e4594d96d7b67c05be403180c6dc3565ff9d096aca2da9638db1d1c5bef65fe",
-      "what": "Exact carried-save identity/durability, dense actual physical control clock, normal occupant lifecycle and28 personally reviewed cab/turn panels with per-image digests;16 consumer fault controls."
+      "file": "docs/reports/final-c/L9-01/low-handover.json.gz",
+      "sha256": "f1ae4463c52a6da99fa16fbc8cfb6063adb411d2fac9b6b78427271c9989faf8",
+      "what": "Correct production transport saves preserve APC IDs721low/466high, durability990/1000 and every24/25non-driver occupant ID. Actual physicalW acceptedtick0; meaningful traction>0.5m/s bytick4/0.0667s, below0.5s. Across181snapshots per tier corgi is deliberately hidden and absent from drawn vehicle meshes; eight reviewed arrival/steering panels show seated courier legs within the open cab. Earlier omitted-transport/default runs are excluded explicitly. Shared load clocks9.174s/5.171s are not used as quiet L8-10 timing qualification."
     },
     {
-      "file": "docs/reports/sweep-c5/L9-01/low-review.json",
-      "sha256": "4c7bbf5d244202d5a0b16eb738891b9c8bbf5799e9b2a9e937db43d4a2d817c8",
-      "what": "Exact carried-save identity/durability, dense actual physical control clock, normal occupant lifecycle and28 personally reviewed cab/turn panels with per-image digests;16 consumer fault controls."
+      "file": "docs/reports/final-c/L9-01/coverage.json",
+      "sha256": "0ec58c1505f68689e39e02b43468c5c688da5e709784eb61a6890074c3ef81fd",
+      "what": "Correct production transport saves preserve APC IDs721low/466high, durability990/1000 and every24/25non-driver occupant ID. Actual physicalW acceptedtick0; meaningful traction>0.5m/s bytick4/0.0667s, below0.5s. Across181snapshots per tier corgi is deliberately hidden and absent from drawn vehicle meshes; eight reviewed arrival/steering panels show seated courier legs within the open cab. Earlier omitted-transport/default runs are excluded explicitly. Shared load clocks9.174s/5.171s are not used as quiet L8-10 timing qualification."
     },
     {
-      "file": "docs/reports/sweep-c5/L9-01/producer.mjs",
-      "sha256": "d91032fb81e281b57416143984593ebe5b493acf37a7df1f48cdf84a4c95d1b4",
-      "what": "Exact carried-save identity/durability, dense actual physical control clock, normal occupant lifecycle and28 personally reviewed cab/turn panels with per-image digests;16 consumer fault controls."
+      "file": "docs/reports/final-c/L9-01/excluded-default-producer.ts",
+      "sha256": "0633e088e8ac0082cfcf43e0a7fd5064c55e27ce1adec4369911858c3aa380dc",
+      "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
+    },
+    {
+      "file": "docs/reports/final-c/L9-01/excluded-default-low.json.gz",
+      "sha256": "75ce76e85685866f50de0b3e968ba35ff90ff63b987f4a26890b14898327d609",
+      "what": "Correct production transport saves preserve APC IDs721low/466high, durability990/1000 and every24/25non-driver occupant ID. Actual physicalW acceptedtick0; meaningful traction>0.5m/s bytick4/0.0667s, below0.5s. Across181snapshots per tier corgi is deliberately hidden and absent from drawn vehicle meshes; eight reviewed arrival/steering panels show seated courier legs within the open cab. Earlier omitted-transport/default runs are excluded explicitly. Shared load clocks9.174s/5.171s are not used as quiet L8-10 timing qualification."
+    },
+    {
+      "file": "docs/reports/final-c/L9-01/excluded-default-high.json.gz",
+      "sha256": "c080517a737ad5d42b10b9d924d1eb64832e0e89662d03ffd70a19fc652fd210",
+      "what": "Correct production transport saves preserve APC IDs721low/466high, durability990/1000 and every24/25non-driver occupant ID. Actual physicalW acceptedtick0; meaningful traction>0.5m/s bytick4/0.0667s, below0.5s. Across181snapshots per tier corgi is deliberately hidden and absent from drawn vehicle meshes; eight reviewed arrival/steering panels show seated courier legs within the open cab. Earlier omitted-transport/default runs are excluded explicitly. Shared load clocks9.174s/5.171s are not used as quiet L8-10 timing qualification."
+    },
+    {
+      "file": "docs/reports/final-c/campaign/transport-boundaries.json",
+      "sha256": "3581d1cde566ca104afb55f95e21c312e5f52bebd35368ba97773a7e509449cf",
+      "what": "Correct production transport saves preserve APC IDs721low/466high, durability990/1000 and every24/25non-driver occupant ID. Actual physicalW acceptedtick0; meaningful traction>0.5m/s bytick4/0.0667s, below0.5s. Across181snapshots per tier corgi is deliberately hidden and absent from drawn vehicle meshes; eight reviewed arrival/steering panels show seated courier legs within the open cab. Earlier omitted-transport/default runs are excluded explicitly. Shared load clocks9.174s/5.171s are not used as quiet L8-10 timing qualification."
+    },
+    {
+      "file": "docs/reports/final-c/campaign/transport-producer.ts",
+      "sha256": "e1c6f8afb9b5371c7c3d0f5afd900136a32bfd70a252925c995a5f85b0265715",
+      "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
+    },
+    {
+      "file": "docs/reports/final-c/campaign/L9-low-transport-campaign.json.gz",
+      "sha256": "e6fdcb495e05d0f84cc4df11ac18a02633e4679ee367da41d4486ee4fd1c2e58",
+      "what": "Correct production transport saves preserve APC IDs721low/466high, durability990/1000 and every24/25non-driver occupant ID. Actual physicalW acceptedtick0; meaningful traction>0.5m/s bytick4/0.0667s, below0.5s. Across181snapshots per tier corgi is deliberately hidden and absent from drawn vehicle meshes; eight reviewed arrival/steering panels show seated courier legs within the open cab. Earlier omitted-transport/default runs are excluded explicitly. Shared load clocks9.174s/5.171s are not used as quiet L8-10 timing qualification."
+    },
+    {
+      "file": "docs/reports/final-c/campaign/L9-high-transport-campaign.json.gz",
+      "sha256": "af824d96c409f254222c0933dc5dbb60e8fa8a32095a672fbf784126e9cc90da",
+      "what": "Correct production transport saves preserve APC IDs721low/466high, durability990/1000 and every24/25non-driver occupant ID. Actual physicalW acceptedtick0; meaningful traction>0.5m/s bytick4/0.0667s, below0.5s. Across181snapshots per tier corgi is deliberately hidden and absent from drawn vehicle meshes; eight reviewed arrival/steering panels show seated courier legs within the open cab. Earlier omitted-transport/default runs are excluded explicitly. Shared load clocks9.174s/5.171s are not used as quiet L8-10 timing qualification."
     }
-  ]
+  ],
+  "notes": "Frozen-head row review. Current immutable evidence, unchanged criterion and game source.",
+  "sourceDigest": "fbad89802bfe8d610b736d8f5a3111d1a13e8d0ae47b606a45c5760634f3ed51"
 }
