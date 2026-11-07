@@ -1,7 +1,7 @@
 /** Static crowd-grid pockets versus courier capsule clearance, over each complete campaign level.
- * node --expose-gc --import tsx/esm tools/qa/nav-pocket-audit.ts [output.json]
+ * node --expose-gc --import tsx/esm tools/qa/nav-pocket-audit.ts [output.json] [baseline.json]
  */
-import { writeFileSync } from 'node:fs';
+import { readFileSync, writeFileSync } from 'node:fs';
 import { loadLevel, runnerLevels } from '../sim-runner/levels';
 import { NavGrid, type Wall } from '../../src/sim/ai/NavGrid';
 import { survivor } from '../../src/data/survivor';
@@ -50,15 +50,23 @@ function audit(world: SimWorld, oriented: boolean) {
   return { width: crowd.width, depth: crowd.depth, mainCells: groups[0].cells,
     components: groups.length, pockets: pockets.length, pocketCells: pockets.reduce((sum, group) => sum + group.cells, 0), locations: pockets };
 }
+// A saved main receipt preserves the before geometry when a placement also moves.
+const baseline = process.argv[3] ? JSON.parse(readFileSync(process.argv[3], 'utf8')) as {
+  revision: string; gridStep: number; crowdRadius: number; capsuleRadius: number;
+  results: { level: string; before: ReturnType<typeof audit> }[];
+} : null;
+if (baseline && (baseline.gridStep !== .5 || baseline.crowdRadius !== .5 || baseline.capsuleRadius !== survivor.radius)) throw new Error('Baseline clearance contract differs');
 const results = [];
 for (const level of runnerLevels) {
   const world = await loadLevel(level, 1, undefined, 0, { quality: 'low' });
   try {
-    const before = audit(world, false); global.gc?.();
+    const currentLayoutAabb = audit(world, false); global.gc?.();
+    const before = baseline ? baseline.results.find(row => row.level === level)?.before : currentLayoutAabb;
+    if (!before) throw new Error(`Baseline missing ${level}`);
     const after = audit(world, true); global.gc?.();
-    results.push({ level, before, after });
+    results.push({ level, before, after, ...(baseline ? { currentLayoutAabb } : {}) });
     console.log(JSON.stringify({ level, before: { pockets: before.pockets, cells: before.pocketCells }, after: { pockets: after.pockets, cells: after.pocketCells } }));
   } finally { world.dispose(); }
   global.gc?.();
 }
-writeFileSync(process.argv[2] ?? 'test-results/nav-pockets.json', JSON.stringify({ seed: 1, gridStep: .5, crowdRadius: .5, capsuleRadius: survivor.radius, scope: 'complete static level, including nonresident streamed terrain; excludes the largest component', results }, null, 2) + '\n');
+writeFileSync(process.argv[2] ?? 'test-results/nav-pockets.json', JSON.stringify({ ...(baseline ? { beforeRevision: baseline.revision } : {}), seed: 1, gridStep: .5, crowdRadius: .5, capsuleRadius: survivor.radius, scope: 'complete static level, including nonresident streamed terrain; excludes the largest component', results }, null, 2) + '\n');
