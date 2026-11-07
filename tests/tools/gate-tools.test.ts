@@ -114,6 +114,19 @@ test('browser pool admission backs off under WindowServer pressure, keeps a one-
   const l3 = (army: (number | null)[]) => ({ level: 'L3', observation: { phases: [], waves: [], l3Squad: { initial: 4, army: army[0], losses: [{ id: 30, cause: 'bite', tick: 1 }] } }, passiveObservation: { phases: [], waves: [] }, l3Army: armyLineVerdict(seeds(...army)) }) as unknown as LevelReceipt;
   expect(focusedCriteria([l3([3, 0, 0])]).find(r => r.id === 'L3-06 squad counts/losses')?.verdict).toBe('PASS');
   expect(focusedCriteria([l3([3, 3, 0])]).find(r => r.id === 'L3-06 squad counts/losses')?.verdict).toBe('FAIL');
+  const seeded = l3([3, 0, 0]);
+  seeded.l3Army!.seeds.forEach((row, i) => { row.attacksPerMinute = [30, 5, 6][i]; });
+  seeded.l3SurvivalSeeds = [1, 2, 3].map(seed => ({ seed, valid: true,
+    s1: { completed: true, officerHits: 1, damage: seed === 1 ? 100 : 11 },
+    density: { near30: seed === 1 ? [2, 1, 3] : [1, 2, 3], maxConcurrent: 100, cap: 100 } }));
+  const seededRows = focusedCriteria([seeded]);
+  for (const id of ['L3-07 squad hits and player damage', 'L3-08 segment density and concurrent cap', 'L3-11 native competent rate']) {
+    const row = seededRows.find(row => row.id === id)!;
+    expect(row.verdict, id).toBe('PASS');
+    expect(row.passive, `${id} is measured by mortal complete routes`).toBe('—');
+    expect(row.skilled, id).toContain('2/3');
+  }
+  expect(seededRows.find(row => row.id === 'L3-11 native competent rate')!.skilled).toContain('s2:5.00/min');
 });
 
 
