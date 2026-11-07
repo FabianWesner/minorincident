@@ -1,0 +1,33 @@
+{
+  "row": "L3-08",
+  "status": "FAIL",
+  "reviewer": "Codex final-a",
+  "date": "2026-11-07",
+  "commit": "0cbd817165f89940d2810fe2091000538a263ba0",
+  "clauses": [
+    {
+      "clause": "Pre-populated infected per segment **250 / 625 / 1000 ±20 %**; median live within 30 m rises from S1 to S3; caps 200 / 100 never exceeded.",
+      "verdict": "FAIL",
+      "note": "low/controlled-fixture median live within30m by traversed segment and concurrent cap: {\"prepopulated\":[250,600,1030],\"near30\":[20,21,20],\"maxConcurrent\":100,\"cap\":100}; target medianS1<S2<S3;max≤200high/100low (FAIL); high/controlled-fixture median live within30m by traversed segment and concurrent cap: {\"prepopulated\":[250,600,1030],\"near30\":[72,89,79],\"maxConcurrent\":200,\"cap\":200}; target medianS1<S2<S3;max≤200high/100low (FAIL)"
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/final-a/L3-08-native.json",
+      "sha256": "d714d950db5dc784f14371ca48313fdf34d4834cf7ac531e95810ed85e1a7d86",
+      "what": "low/controlled-fixture median live within30m by traversed segment and concurrent cap: {\"prepopulated\":[250,600,1030],\"near30\":[20,21,20],\"maxConcurrent\":100,\"cap\":100}; target medianS1<S2<S3;max≤200high/100low (FAIL); high/controlled-fixture median live within30m by traversed segment and concurrent cap: {\"prepopulated\":[250,600,1030],\"near30\":[72,89,79],\"maxConcurrent\":200,\"cap\":200}; target medianS1<S2<S3;max≤200high/100low (FAIL)"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
+      "sha256": "1dbb6554d364c1372e298abab060319623af1f8871fbd2e7e24dad1a1382d0cc",
+      "what": "Frozen-head L3-08 native input receipt, evaluated by the exact clauses retained in the row proof."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
+      "sha256": "e4dd4c36be5c14615ed61548e5c0cb95e00a5363f1741e70547ed354a08a8086",
+      "what": "Frozen-head L3-08 native input receipt, evaluated by the exact clauses retained in the row proof."
+    }
+  ],
+  "notes": "A measured failing clause establishes whole-row FAIL; remaining manual clauses are not asserted to pass. Game source unchanged from frozen head.",
+  "sourceDigest": "b54f676bf2eb09a12c8059dce4ebe53003816773db044d7acfc253fccbedccf9"
+}
