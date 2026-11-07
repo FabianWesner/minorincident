@@ -1213,9 +1213,9 @@ export class InfectedSystem {
         if (this.infectedNav.clear(this.ringPoint.x, this.ringPoint.z, e.combat!.radius)) { this.steerL1(e, brain, this.ringPoint, brain.runSpeed, true, true); return; }
       }
       this.steerL1(e, brain, target.position, brain.runSpeed, true, true);
-      // L3 high has a short retreat lunge. Resolve reaching it during this
+      // L3 has a short retreat lunge. Resolve reaching it during this
       // move before crowd separation can push the runner outside it again.
-      if (this.world.scenario === 'L3' && this.director.tier === 'high' && this.world.tick >= b.cooldown &&
+      if (this.world.scenario === 'L3' && (this.director.tier === 'high' || this.world.missions?.state.l3?.fallbackAt) && this.world.tick >= b.cooldown &&
           Math.hypot(target.position.x - e.transform.x, target.position.z - e.transform.z) <= lunge &&
           (this.l1!.lineOfSight(e.transform, target.position) || Math.hypot(target.position.x - e.transform.x, target.position.z - e.transform.z) <= 1.6)) {
         b.combo = 0; this.windup(e);

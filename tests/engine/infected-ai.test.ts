@@ -8,6 +8,7 @@ import type { EntitySnapshot, GameEvent } from '../../src/sim/world/types';
 import { clickable } from '../../src/input/ClickPick';
 import { l1v2 } from '../../src/data/l1v2';
 import { SimWorld } from '../../src/sim/world/SimWorld';
+import { missionSandbox } from '../fixtures/scenarios/mission-sandbox';
 
 const worlds: SimWorld[] = [];
 afterEach(() => { for (const w of worlds) w.dispose(); worlds.length = 0; });
@@ -20,6 +21,24 @@ function hit(w: SimWorld, e: EntitySnapshot, type: DamageEvent['type'] = 'melee'
 const [lowS, highS] = infectedRecovery.downS;
 
 test('every human and animal role validates and spawns with its catalog health and speed; every attack is telegraphed', async () => {
+  for (const tier of ['low', 'high'] as const) {
+    const w = await arena(); w.scenario = 'L3'; w.infected!.configureL1v2(); w.infected!.director.setTier(tier);
+    // Isolate the retreat AI from the level's population and objective graph.
+    const definition = missionSandbox(); definition.onStart = [];
+    const mission = w.loadMission(definition); mission.begin(); Object.assign(mission.state, { l3: { fallbackAt: 1 } });
+    const e = spawn(w, 'runner', 2), brain = e.infected!.l1!;
+    brain.mode = 'chase'; brain.targetId = 1; brain.pauseUntil = 0;
+    const warnings: number[] = [];
+    w.events.on('telegraph', event => {
+      if (event.type === 'telegraph' && event.sourceId === e.id) warnings.push(Math.hypot(e.transform.x, e.transform.z));
+    });
+    step(w, 1);
+    expect(warnings, `${tier}: pursuing at two metres must not repeatedly wind up out of contact`).toEqual([]);
+    e.transform.x = .9001; e.transform.z = 0;
+    step(w, 1);
+    expect(warnings, `${tier}: contact reached during steering must commit before separation`).toHaveLength(1);
+    expect(warnings[0]).toBeLessThanOrEqual(.9);
+  }
   {
     const w = await arena(); w.scenario = 'L3'; w.infected!.configureL1v2();
     const e = spawn(w, 'runner', 1.8), b = e.infected!, brain = b.l1!;
