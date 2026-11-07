@@ -1,0 +1,77 @@
+{
+  "row": "L1-01",
+  "verdict": "PASS",
+  "frozenHead": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+  "fixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4",
+  "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
+  "generatedAt": "2026-11-06T23:43:23.520Z",
+  "criterion": "Mission graph completable, no fail timer; start loadout empty.",
+  "automatedComplete": true,
+  "checks": [
+    {
+      "id": "L1-01",
+      "clause": "native mission graph completion",
+      "level": "L1",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": "complete",
+      "target": "complete",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-low-complete.json"
+    },
+    {
+      "id": "L1-01",
+      "clause": "mission deadline and initial weapons",
+      "level": "L1",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": {
+        "deadline": null,
+        "weapons": []
+      },
+      "target": "no global fail timer; no starting weapons",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-low-complete.json"
+    },
+    {
+      "id": "L1-01",
+      "clause": "native mission graph completion",
+      "level": "L1",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": "complete",
+      "target": "complete",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-high-complete.json"
+    },
+    {
+      "id": "L1-01",
+      "clause": "mission deadline and initial weapons",
+      "level": "L1",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": {
+        "deadline": null,
+        "weapons": []
+      },
+      "target": "no global fail timer; no starting weapons",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-high-complete.json"
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/fix51-verify/receipts/L1-low-complete.json",
+      "sha256": "b17ad0a322041bc33a27ceb888518e9d66b99970139062a95c3ffd08639c3702",
+      "what": "Frozen-head L1-01 native input receipt, evaluated by the exact clauses retained in the row proof."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L1-high-complete.json",
+      "sha256": "f8893b632d09ccfd173c44792f24c1e9f67a8cf57b5be2c4d8a04ca16000cbc8",
+      "what": "Frozen-head L1-01 native input receipt, evaluated by the exact clauses retained in the row proof."
+    }
+  ],
+  "observation": "4 current native checks PASS across low/high. low/complete native mission graph completion: \"complete\"; target complete (PASS); low/complete mission deadline and initial weapons: {\"deadline\":null,\"weapons\":[]}; target no global fail timer; no starting weapons (PASS); high/complete native mission graph completion: \"complete\"; target complete (PASS); high/complete mission deadline and initial weapons: {\"deadline\":null,\"weapons\":[]}; target no global fail timer; no starting weapons (PASS)"
+}

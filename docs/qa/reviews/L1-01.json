@@ -1,0 +1,33 @@
+{
+  "row": "L1-01",
+  "status": "PASS",
+  "reviewer": "Codex final-a",
+  "date": "2026-11-07",
+  "commit": "0cbd817165f89940d2810fe2091000538a263ba0",
+  "clauses": [
+    {
+      "clause": "Mission graph completable, no fail timer; start loadout empty.",
+      "verdict": "PASS",
+      "note": "4 current native checks PASS across low/high. low/complete native mission graph completion: \"complete\"; target complete (PASS); low/complete mission deadline and initial weapons: {\"deadline\":null,\"weapons\":[]}; target no global fail timer; no starting weapons (PASS); high/complete native mission graph completion: \"complete\"; target complete (PASS); high/complete mission deadline and initial weapons: {\"deadline\":null,\"weapons\":[]}; target no global fail timer; no starting weapons (PASS)"
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/final-a/L1-01-native.json",
+      "sha256": "d51afda4f81c19faa7e9c49cb294d3db8c443206c0310d52c4a01283b6be2db1",
+      "what": "4 current native checks PASS across low/high. low/complete native mission graph completion: \"complete\"; target complete (PASS); low/complete mission deadline and initial weapons: {\"deadline\":null,\"weapons\":[]}; target no global fail timer; no starting weapons (PASS); high/complete native mission graph completion: \"complete\"; target complete (PASS); high/complete mission deadline and initial weapons: {\"deadline\":null,\"weapons\":[]}; target no global fail timer; no starting weapons (PASS)"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L1-low-complete.json",
+      "sha256": "b17ad0a322041bc33a27ceb888518e9d66b99970139062a95c3ffd08639c3702",
+      "what": "Frozen-head L1-01 native input receipt, evaluated by the exact clauses retained in the row proof."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L1-high-complete.json",
+      "sha256": "f8893b632d09ccfd173c44792f24c1e9f67a8cf57b5be2c4d8a04ca16000cbc8",
+      "what": "Frozen-head L1-01 native input receipt, evaluated by the exact clauses retained in the row proof."
+    }
+  ],
+  "notes": "Numeric-only criterion; all evaluator clauses measured at both qualities on the frozen runtime source. No visual or route-readability inference.",
+  "sourceDigest": "00a81dbceddae37bdb1b6540d29f8e3658cdd7d6b7b51968d1fd068c9a6eb63c"
+}
