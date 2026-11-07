@@ -1,31 +1,28 @@
 {
   "row": "L7-07",
   "status": "PASS",
-  "reviewer": "Codex sweep-c5",
-  "date": "2026-11-06",
-  "commit": "3f2fe3c076a5949545c2c8dde3b02475aa566480",
+  "reviewer": "Codex final-c",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
   "clauses": [
     {
       "clause": "Corridor ring fixed (not the nearest of several moving entrances); group counter \"Group n/n\" correct.",
       "verdict": "PASS",
-      "note": "Current-source canonical native routes sampled4508 low and4418 high corridor ticks. Zero HUD-count mismatches against independent living/18m roster census; zero marker identity or destination-coordinate changes. Both final hashes equal independent controls. Current physical carried-party captures personally reviewed show matching Group1/1 andGroup4/4 displays; complete equality is established by the native every-tick ledger."
+      "note": "Both current native routes hold the corridor destination exactly at (-30,50), identity l7-corridor-east: 4378 low/4377 high active corridor ticks, zero marker changes and zero independent live-roster/18m-distance versus production Group n/n text mismatches. The observer leaves both canonical final state hashes identical. This S-only clause is measured per tick, not inferred from screenshots."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-c5/L7-07/counter-proof.json",
-      "sha256": "1de782f22728383d7a5cfd960bc96d035235bf25f08535a6c29f939f12950078",
-      "what": "Every corridor tick: production HUD string independently compared with living/near follower census, destination identity and coordinates fixed, native control hashes identical."
+      "file": "docs/reports/final-c/L7-07/counter.json",
+      "sha256": "8ab234144fc1b79eecf0a059c1a0b26b3e4c96517846585bf566b8e9b5e358c7",
+      "what": "Both current native routes hold the corridor destination exactly at (-30,50), identity l7-corridor-east: 4378 low/4377 high active corridor ticks, zero marker changes and zero independent live-roster/18m-distance versus production Group n/n text mismatches. The observer leaves both canonical final state hashes identical. This S-only clause is measured per tick, not inferred from screenshots."
     },
     {
-      "file": "docs/reports/sweep-c5/L8-02/evidence/low-review.json.gz",
-      "sha256": "78dc29321be256c8f910e89114edfea5ddf39edc13f4ec44d4afe277eb36c13f",
-      "what": "Personally reviewed physical corridor frames show Group1/1 on low and Group4/4 on high beside the corresponding visible party."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L8-02/evidence/high-review.json.gz",
-      "sha256": "f9dd859901ceddafbde6c2dfb2cf1f16e39c0343ec5174bc96972f2c71e35928",
-      "what": "Personally reviewed physical corridor frames show Group1/1 on low and Group4/4 on high beside the corresponding visible party."
+      "file": "docs/reports/final-c/L7-07/producer.ts",
+      "sha256": "0e89673200f9d672fb90d8cb64207417cf99a5d1c438fc9b0b9a928755993152",
+      "what": "Exact measurement producer snapshot; only output locations differ from the existing observer."
     }
-  ]
+  ],
+  "notes": "Frozen-head row review. Current immutable evidence, unchanged criterion and game source.",
+  "sourceDigest": "1aff45872f0c1603cfc94e9f01d515824d2304b5b5d9e5f96fee9cc461ad064a"
 }
