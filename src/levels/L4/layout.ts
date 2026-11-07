@@ -132,6 +132,19 @@ export function levelFourLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     // The convoy parks along x = -11: the planter (and its flowers) that D-FAIR puts at (-10, -19) sat in the APC's lane.
     layout.colliders = layout.colliders.filter(c => c.id !== 'dressing:planter:22');
     layout.decorations = layout.decorations?.filter(f => Math.hypot(f.position[0] + 10, f.position[2] + 19) > 1);
+    // The low complete-route sample put sprinter 376 behind this bin at
+    // (-24, -19.2); its hull pinched the continuous route to the plaza even
+    // though the coarse nav grid remained connected. Keep the same dressing
+    // on the sidewalk edge, outside that approach lane.
+    const binId = 'prop.trash-bin:19', bin = layout.placements.find(p => p.id === binId);
+    if (bin) {
+      const dx = -3.4;
+      bin.position = [bin.position[0] + dx, bin.position[1], bin.position[2]];
+      bin.visualAabb = { min: [bin.visualAabb.min[0] + dx, bin.visualAabb.min[1], bin.visualAabb.min[2]], max: [bin.visualAabb.max[0] + dx, bin.visualAabb.max[1], bin.visualAabb.max[2]] };
+      for (const c of layout.colliders) if (c.id === binId || c.id.startsWith(`${binId}/`)) {
+        c.aabb.min[0] += dx; c.aabb.max[0] += dx;
+      }
+    }
     layout.lightGroups.push({ id: 'l4', offAt: 5 });
     moveOffSolids(layout, freestanding);
     return layout;

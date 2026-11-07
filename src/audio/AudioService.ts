@@ -177,6 +177,11 @@ export class AudioService implements Lifecycle {
         this.registry.reset(this.world.seed);
         const generation = this.generation;
         await this.registry.prepare(this.level, false);
+        // L7's first objective is to collect the rocket immediately after the
+        // level opens. Its fanfare and launch both use lazy banks; allowing
+        // either event to start decodeAudioData on demand can hitch the first
+        // physical action while the background bank queue is still running.
+        if (this.level === 'L7') await Promise.all(['pickups', 'weapons'].map(bank => this.registry.load(bank)));
         if (this.level === 'L10' || this.world.megaPursuit) await Promise.all(['telegraph', 'music-L6'].map(bank => this.registry.load(bank)));
         // reset() or dispose() ran while the banks were loading: this world is gone, bind nothing.
         if (generation !== this.generation || this.disposed || !this.world.entities.get(1))
