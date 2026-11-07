@@ -1,5 +1,6 @@
 import type { PreparedCivilian } from '../render/npc/prepareCivilianGeometry';
 import { decodeCivilianBake } from './civilianBakeData';
+import { repairDeathPoses } from '../render/characters/deathPose';
 import deliveries from './civilianBakes.json' with { type: 'json' };
 export const civilianBakeStats = { workers: 0, submitted: 0, completed: 0, prebuilt: 0, failed: 0 };
 type Job = { id: number; model: string; lod: string; source: boolean; infected?: boolean; resolve: (value: PreparedCivilian | undefined) => void };
@@ -20,6 +21,7 @@ function drain(): void {
         try {
           if (!event.data.bytes) throw new Error('Worker preparation failed');
           const baked = decodeCivilianBake(event.data.bytes); civilianBakeStats.completed++;
+          repairDeathPoses(baked.clip, baked.geometry, { prone: /^inf\.(mega-)?alpha/.test(job.model) });
           if (event.data.prebuilt) civilianBakeStats.prebuilt++;
           job.resolve(baked);
         } catch { civilianBakeStats.failed++; job.resolve(undefined); }

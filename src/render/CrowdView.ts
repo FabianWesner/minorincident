@@ -19,7 +19,7 @@ import { compactCrowdGeometry } from './characters/compactCrowdGeometry';
 import { cloneCrowdGeometry } from './characters/cloneCrowdGeometry';
 import { crowdLod, canHoldCrowdPose, crowdStandingLodHeight } from './lodPolicy';
 import { StaticCorpses } from './characters/StaticCorpses';
-import { proneDeath, proneReach } from './characters/proneDeath';
+import { repairDeathPoses, deathReach } from './characters/deathPose';
 import { CrowdFootwork, CrowdLocomotion } from './characters/CrowdLocomotion';
 import { InfectedMoves, getUpSpan } from './characters/InfectedMoves';
 import { GaitPhase } from './characters/GaitPhase';
@@ -326,7 +326,7 @@ export class CrowdView extends Group {
         loadMeasure(`bake:${asset}:${lod}`, bakeStarted);
         if (this.disposed) { baked.geometry.dispose(); return; }
         // P1-117: Alphas fall onto their faces (live and frozen share the clip).
-        if (alpha) proneDeath(baked.clip);
+        repairDeathPoses(baked.clip, baked.geometry, { prone: alpha });
         if (this.world.scenario === 'L8') { await loadGate.wait(); if (this.disposed) { baked.geometry.dispose(); return; } }
       // Weld identical vertices before instanced attributes are attached, retaining
       // the authored indices through the bake: same triangles and vertex values.
@@ -353,7 +353,7 @@ export class CrowdView extends Group {
           if (existing) { createdCorpse = existing; corpseClip = this.corpseClips.get(key); }
           else {
             const body = cachedBody ?? bakeInfected(bodyModel!, this.registry.definition(asset).animatedNodes, false, undefined, undefined, true, textured);
-            if (alpha) proneDeath(body.clip);
+            repairDeathPoses(body.clip, body.geometry, { prone: alpha });
             if (!cachedBody) deinterleaveGeometry(body.geometry);
             const corpse = cachedBody ? body.geometry : mergeCrowdVertices(body.geometry); if (!cachedBody) body.geometry.dispose();
             if (this.disposed) { corpse.dispose(); baked.geometry.dispose(); return; }
@@ -719,7 +719,7 @@ export class CrowdView extends Group {
       let frame = infectedClips.indexOf(clip) * framesPerClip + phase * (framesPerClip - 1);
       const tint = batch.animal ? batch.role === 'inf.dog' && batch.lod === 'lod1' ? this.dogCoatTints[Number(key === 'inf.dog.cream')] : batch.shirt : crowdShirt(e.id);
       const presented = this.presentation.sample(e.id, e.transform, this.world.tick, alpha);
-      const resting = b.state === 'dead' && !e.knockbackSlide ? this.corpsePosition(e, b.deadAt, proneReach.get(batch.poses.clip)) : { ...e.transform, y: e.transform.y - .7 };
+      const resting = b.state === 'dead' && !e.knockbackSlide ? this.corpsePosition(e, b.deadAt, alphaLookAssets.includes(def.asset) ? deathReach.get(batch.poses.clip) : undefined) : { ...e.transform, y: e.transform.y - .7 };
       const settle = b.state === 'dead' && !e.knockbackSlide ? reaction?.groundDeath ? 1 : Math.max(0, Math.min(1, (this.world.tick - b.deadAt - 8) / 52)) : 0;
       const x = presented.x + (resting.x - e.transform.x) * settle, z = presented.z + (resting.z - e.transform.z) * settle;
       const blend = batch.poses.sample(e.id, clip, frame, renderTick / 60);
