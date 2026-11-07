@@ -174,7 +174,10 @@ export class CorpseLayout {
     for (const id of this.spatial.query(this.supportQuery, this.supportIds, false)) {
       const above = this.bodies.get(id)!;
       if (id === pose.body.id || Math.abs(above.y - pose.y - pose.height) > .002) continue;
-      if (segmentDistanceSquared(pose.ax, pose.az, pose.bx, pose.bz, above) < (pose.radius + above.radius) ** 2) this.deferred.set(id, above);
+      if (segmentDistanceSquared(pose.ax, pose.az, pose.bx, pose.bz, above) < (pose.radius + above.radius) ** 2) {
+        this.deferred.set(id, above);
+        if (this.search?.body === above.body) this.search = undefined;
+      }
     }
   }
   private removePose(id: number): void {

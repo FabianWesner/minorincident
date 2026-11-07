@@ -422,6 +422,12 @@ test('corpse pages: bodies persist past the old cap, bounds stay conservative, c
   supportLayout.place(lower);
   expect(supportLayout.place(upper).y).toBeCloseTo(.22);
   expect(supportLayout.place(top).y).toBeCloseTo(.44);
+  // Suspend a search on the old support before it gets thrown away.
+  upper.transform.x = .1;
+  let searchClock = 0;
+  const searchNow = vi.spyOn(performance, 'now').mockImplementation(() => searchClock++);
+  try { supportLayout.beginFrame(.5); supportLayout.place(upper); }
+  finally { searchNow.mockRestore(); }
   lower.corpseThrown = true; lower.corpseBlast = { delay: 0, x: 0, y: 2, z: 0 };
   supportLayout.beginFrame(Infinity);
   supportLayout.place(lower);
