@@ -1,0 +1,443 @@
+{
+  "sourceHash": "91dcc89e8e49f5b5ad5483b25edc6a90b7ee7fd8c2be07d0459f7fa657986c93",
+  "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+  "revision": "a4284601f1384bf55e437a3c3b54ea3070d498f2",
+  "method": "Physical tools/playtest session with authored-tour navigation assist, progressed L5-default save, courier-only God mode, mortal NPCs; headless shared-pool WebGL2, low/high x zoom0.5/1.5. Host output muted, game WebAudio running/unlocked/unmuted. Read-only actual source ended listeners, voice graph membership and DOM sampling. Current QA production preview build; no game edits during the final four runs.",
+  "scope": "Only the requested Mia call-end minimap lifetime counterexample. This short physical prefix does not qualify every hiding-place/range/census clause of the full L5-06 row.",
+  "what": "All12 final captures personally inspected (4 full-size after-ended frames plus8 initial/yield frames). In each tier/zoom the note is absent from the minimap after Mia ends while her world caption/edge direction can remain. Positive-gain running/unlocked/unmuted calls start at24.93–25.00m. No later-tick sample retains the note after the actual source ended. First observed hidden samples are32–112ms later with100ms sampling; high zoom1.5 has one same-ending-tick visible sample at+10.7ms before the next presentation update. The old0.821s tail is gone.",
+  "buildIndex": {
+    "file": "dist/index.html",
+    "sha256": "004345b6ba31bbc4255a0b3c7d71ba5f0ac259eb3893d82854415f8f3aee3110"
+  },
+  "rows": [
+    {
+      "tier": "low",
+      "zoom": 0.5,
+      "call": {
+        "key": "mia",
+        "tick": 1206,
+        "distance": 24.963781867555493,
+        "position": {
+          "x": -30.3699,
+          "z": -44.4
+        },
+        "contextState": "running",
+        "audioTime": 22.245333333333335,
+        "muted": false,
+        "unlocked": true,
+        "voices": [
+          {
+            "id": 125,
+            "cue": "dialogue.radio",
+            "gain": 0.3149999976158142,
+            "baseGain": 0.3149999976158142,
+            "rate": 1,
+            "bufferDuration": 9.24,
+            "ended": {
+              "tick": 1386,
+              "audioTime": 25.24266666666667,
+              "contextState": "running",
+              "pin": {
+                "visible": true,
+                "key": "mia",
+                "text": "♪"
+              }
+            }
+          }
+        ]
+      },
+      "afterEnd": {
+        "tick": 1399,
+        "audioTime": 25.472,
+        "contextState": "running",
+        "pin": {
+          "visible": false,
+          "key": "mia",
+          "text": "♪"
+        },
+        "until": 1446,
+        "callTick": 1206,
+        "voices": [
+          {
+            "id": 125,
+            "stillInGraph": false,
+            "ended": {
+              "tick": 1386,
+              "audioTime": 25.24266666666667,
+              "contextState": "running",
+              "pin": {
+                "visible": true,
+                "key": "mia",
+                "text": "♪"
+              }
+            }
+          }
+        ]
+      },
+      "firstHiddenAfterEndMs": 32.00000000000003,
+      "activeVisibleSamples": 29,
+      "visibleAfterEndInLaterTick": false,
+      "sameEndingTickVisibleSamples": [],
+      "captures": [
+        {
+          "file": "test-results/blk-b/cue-low-z0.5-qa/captures/cue-low-z0.5-qa-L5-checkpoint-yield.jpg",
+          "sha256": "25c6e5fcb364b6b658ef486a80120e0807aa28db53f180512e5826933a1dc2b2",
+          "what": "Personally inspected: physical reached Harbor Street scene, caption/edge direction retained, minimap ♪ absent after the actual call ends."
+        },
+        {
+          "file": "test-results/blk-b/cue-low-z0.5-qa/captures/cue-low-z0.5-qa-L5-note-after-call-ended.jpg",
+          "sha256": "f60de6ce8aac96f70f4c13463029858eca8b19b8dd79a3e53a26489f8be90d98",
+          "what": "Personally inspected: physical reached Harbor Street scene, caption/edge direction retained, minimap ♪ absent after the actual call ends."
+        },
+        {
+          "file": "test-results/blk-b/cue-low-z0.5-qa/captures/cue-low-z0.5-qa-L5-t12.jpg",
+          "sha256": "3a32724eaa8335d47b9bdfd25fda013bfe7d7b800cf3899586b29a80a2b65d72",
+          "what": "Personally inspected: actual starting cellar, courier/corgi, Hours later caption, no sign-of-life minimap note."
+        }
+      ],
+      "archives": [
+        {
+          "file": "docs/reports/blk-b/cue-low-z0.5-qa-audit.json.gz",
+          "sha256": "4e20fc5653a8284ae6cf616eab057d08e5104ac270e488ede781d816dcdc39d5"
+        },
+        {
+          "file": "docs/reports/blk-b/cue-low-z0.5-qa-input.jsonl.gz",
+          "sha256": "de52e5db43f7211d4d70db81b2689177578b9b6498480bb9d1e7f6aab752b262"
+        },
+        {
+          "file": "docs/reports/blk-b/cue-low-z0.5-qa-runs.json.gz",
+          "sha256": "fe3a97985fb4e865a2b3f480125ce7c4a7fab35df2053b4673007a795a8f67f8"
+        }
+      ]
+    },
+    {
+      "tier": "low",
+      "zoom": 1.5,
+      "call": {
+        "key": "mia",
+        "tick": 1141,
+        "distance": 24.985745361501678,
+        "position": {
+          "x": -30.3699,
+          "z": -44.4
+        },
+        "contextState": "running",
+        "audioTime": 22.981333333333332,
+        "muted": false,
+        "unlocked": true,
+        "voices": [
+          {
+            "id": 121,
+            "cue": "dialogue.radio",
+            "gain": 0.3149999976158142,
+            "baseGain": 0.3149999976158142,
+            "rate": 1,
+            "bufferDuration": 9.24,
+            "ended": {
+              "tick": 1321,
+              "audioTime": 25.978666666666665,
+              "contextState": "running",
+              "pin": {
+                "visible": true,
+                "key": "mia",
+                "text": "♪"
+              }
+            }
+          }
+        ]
+      },
+      "afterEnd": {
+        "tick": 1330,
+        "audioTime": 26.138666666666666,
+        "contextState": "running",
+        "pin": {
+          "visible": false,
+          "key": "mia",
+          "text": "♪"
+        },
+        "until": 1381,
+        "callTick": 1141,
+        "voices": [
+          {
+            "id": 121,
+            "stillInGraph": false,
+            "ended": {
+              "tick": 1321,
+              "audioTime": 25.978666666666665,
+              "contextState": "running",
+              "pin": {
+                "visible": true,
+                "key": "mia",
+                "text": "♪"
+              }
+            }
+          }
+        ]
+      },
+      "firstHiddenAfterEndMs": 64.00000000000006,
+      "activeVisibleSamples": 29,
+      "visibleAfterEndInLaterTick": false,
+      "sameEndingTickVisibleSamples": [],
+      "captures": [
+        {
+          "file": "test-results/blk-b/cue-low-z1.5-qa/captures/cue-low-z1.5-qa-L5-checkpoint-yield.jpg",
+          "sha256": "4cba7049fbb807f5108a9d604a2018d1f91584561d1c07ab7cb6e7905518a62f",
+          "what": "Personally inspected: physical reached Harbor Street scene, caption/edge direction retained, minimap ♪ absent after the actual call ends."
+        },
+        {
+          "file": "test-results/blk-b/cue-low-z1.5-qa/captures/cue-low-z1.5-qa-L5-note-after-call-ended.jpg",
+          "sha256": "4fabcc18f14759d1f67f5a3ed99c5d6278ad60e739b7893f7ba35e938037c490",
+          "what": "Personally inspected: physical reached Harbor Street scene, caption/edge direction retained, minimap ♪ absent after the actual call ends."
+        },
+        {
+          "file": "test-results/blk-b/cue-low-z1.5-qa/captures/cue-low-z1.5-qa-L5-t11.jpg",
+          "sha256": "50a2a6c2d61135ea8fd54aeaaf93a1176ca6db460577fda8932656453e911cf8",
+          "what": "Personally inspected: actual starting cellar, courier/corgi, Hours later caption, no sign-of-life minimap note."
+        }
+      ],
+      "archives": [
+        {
+          "file": "docs/reports/blk-b/cue-low-z1.5-qa-audit.json.gz",
+          "sha256": "2f49408d75b2c1d5ea31cbd1d7ae7ba6800a28bfe58f4f81fbe3fb65486f69b0"
+        },
+        {
+          "file": "docs/reports/blk-b/cue-low-z1.5-qa-input.jsonl.gz",
+          "sha256": "074597c6b65b1bbe09578386e216ec9f8519eef105aa00d9890178d1cb8a2444"
+        },
+        {
+          "file": "docs/reports/blk-b/cue-low-z1.5-qa-runs.json.gz",
+          "sha256": "bf960fe69bcffc08fc7d97da5b559e295fc3e3260e96a9e9ce4e95e612576629"
+        }
+      ]
+    },
+    {
+      "tier": "high",
+      "zoom": 0.5,
+      "call": {
+        "key": "mia",
+        "tick": 1232,
+        "distance": 24.999608151881137,
+        "position": {
+          "x": -30.3699,
+          "z": -44.4
+        },
+        "contextState": "running",
+        "audioTime": 24.346666666666668,
+        "muted": false,
+        "unlocked": true,
+        "voices": [
+          {
+            "id": 163,
+            "cue": "dialogue.radio",
+            "gain": 0.3149999976158142,
+            "baseGain": 0.3149999976158142,
+            "rate": 1,
+            "bufferDuration": 9.24,
+            "ended": {
+              "tick": 1412,
+              "audioTime": 27.344,
+              "contextState": "running",
+              "pin": {
+                "visible": true,
+                "key": "mia",
+                "text": "♪"
+              }
+            }
+          }
+        ]
+      },
+      "afterEnd": {
+        "tick": 1423,
+        "audioTime": 27.541333333333334,
+        "contextState": "running",
+        "pin": {
+          "visible": false,
+          "key": "mia",
+          "text": "♪"
+        },
+        "until": 1472,
+        "callTick": 1232,
+        "voices": [
+          {
+            "id": 163,
+            "stillInGraph": false,
+            "ended": {
+              "tick": 1412,
+              "audioTime": 27.344,
+              "contextState": "running",
+              "pin": {
+                "visible": true,
+                "key": "mia",
+                "text": "♪"
+              }
+            }
+          }
+        ]
+      },
+      "firstHiddenAfterEndMs": 96.00000000000009,
+      "activeVisibleSamples": 29,
+      "visibleAfterEndInLaterTick": false,
+      "sameEndingTickVisibleSamples": [],
+      "captures": [
+        {
+          "file": "test-results/blk-b/cue-high-z0.5-qa/captures/cue-high-z0.5-qa-L5-checkpoint-yield.jpg",
+          "sha256": "4c94b73e1b130719a79c234be3dae438ee4f9119d0e5d9a9b5c309649643cfce",
+          "what": "Personally inspected: physical reached Harbor Street scene, caption/edge direction retained, minimap ♪ absent after the actual call ends."
+        },
+        {
+          "file": "test-results/blk-b/cue-high-z0.5-qa/captures/cue-high-z0.5-qa-L5-note-after-call-ended.jpg",
+          "sha256": "f6a9cb9c083b09ff328c9292c21029d75aa8ea43ac5bcaac0c73aeaaaa16eb7d",
+          "what": "Personally inspected: physical reached Harbor Street scene, caption/edge direction retained, minimap ♪ absent after the actual call ends."
+        },
+        {
+          "file": "test-results/blk-b/cue-high-z0.5-qa/captures/cue-high-z0.5-qa-L5-t12.jpg",
+          "sha256": "7d1c314b3bc2e034d815efed5c70e976c6c29c75819038c62f39507d303168cb",
+          "what": "Personally inspected: actual starting cellar, courier/corgi, Hours later caption, no sign-of-life minimap note."
+        }
+      ],
+      "archives": [
+        {
+          "file": "docs/reports/blk-b/cue-high-z0.5-qa-audit.json.gz",
+          "sha256": "4a57c804f0350562885cc58088ac138f6e9b175863dfd6870e9dbb08ce15efa6"
+        },
+        {
+          "file": "docs/reports/blk-b/cue-high-z0.5-qa-input.jsonl.gz",
+          "sha256": "902517e68aa51876c4fb9dbb3111e6a9e33e513a3323c1e66b969f83c38bf97d"
+        },
+        {
+          "file": "docs/reports/blk-b/cue-high-z0.5-qa-runs.json.gz",
+          "sha256": "3e5ef8eb8635a94acdbfe18a16d1f6e1fe558ccf0a9511b1030d89a99eb4aed4"
+        }
+      ]
+    },
+    {
+      "tier": "high",
+      "zoom": 1.5,
+      "call": {
+        "key": "mia",
+        "tick": 1133,
+        "distance": 24.93265566854253,
+        "position": {
+          "x": -30.3699,
+          "z": -44.4
+        },
+        "contextState": "running",
+        "audioTime": 23.130666666666666,
+        "muted": false,
+        "unlocked": true,
+        "voices": [
+          {
+            "id": 161,
+            "cue": "dialogue.radio",
+            "gain": 0.3149999976158142,
+            "baseGain": 0.3149999976158142,
+            "rate": 1,
+            "bufferDuration": 9.24,
+            "ended": {
+              "tick": 1313,
+              "audioTime": 26.128,
+              "contextState": "running",
+              "pin": {
+                "visible": true,
+                "key": "mia",
+                "text": "♪"
+              }
+            }
+          }
+        ]
+      },
+      "afterEnd": {
+        "tick": 1325,
+        "audioTime": 26.341333333333335,
+        "contextState": "running",
+        "pin": {
+          "visible": false,
+          "key": "mia",
+          "text": "♪"
+        },
+        "until": 1373,
+        "callTick": 1133,
+        "voices": [
+          {
+            "id": 161,
+            "stillInGraph": false,
+            "ended": {
+              "tick": 1313,
+              "audioTime": 26.128,
+              "contextState": "running",
+              "pin": {
+                "visible": true,
+                "key": "mia",
+                "text": "♪"
+              }
+            }
+          }
+        ]
+      },
+      "firstHiddenAfterEndMs": 111.99999999999832,
+      "activeVisibleSamples": 28,
+      "visibleAfterEndInLaterTick": false,
+      "sameEndingTickVisibleSamples": [
+        {
+          "tick": 1313,
+          "audioTime": 26.138666666666666,
+          "contextState": "running",
+          "pin": {
+            "visible": true,
+            "key": "mia",
+            "text": "♪"
+          },
+          "until": 1373,
+          "callTick": 1133,
+          "voices": [
+            {
+              "id": 161,
+              "stillInGraph": false,
+              "ended": {
+                "tick": 1313,
+                "audioTime": 26.128,
+                "contextState": "running",
+                "pin": {
+                  "visible": true,
+                  "key": "mia",
+                  "text": "♪"
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "captures": [
+        {
+          "file": "test-results/blk-b/cue-high-z1.5-qa/captures/cue-high-z1.5-qa-L5-checkpoint-yield.jpg",
+          "sha256": "93fac2c29a2b4a13039f5413379543e1a3d783e66661ac464abfc2bc22738ff3",
+          "what": "Personally inspected: physical reached Harbor Street scene, caption/edge direction retained, minimap ♪ absent after the actual call ends."
+        },
+        {
+          "file": "test-results/blk-b/cue-high-z1.5-qa/captures/cue-high-z1.5-qa-L5-note-after-call-ended.jpg",
+          "sha256": "4c21eff95cad660b809d69a5765f7fb2fbb9a65f67fd8e50f70b0dc4d3667cc6",
+          "what": "Personally inspected: physical reached Harbor Street scene, caption/edge direction retained, minimap ♪ absent after the actual call ends."
+        },
+        {
+          "file": "test-results/blk-b/cue-high-z1.5-qa/captures/cue-high-z1.5-qa-L5-t12.jpg",
+          "sha256": "a1c19a17e5b1a5d66809232ac3a0bfb5f561e60607be75e5182c7d35884d1f37",
+          "what": "Personally inspected: actual starting cellar, courier/corgi, Hours later caption, no sign-of-life minimap note."
+        }
+      ],
+      "archives": [
+        {
+          "file": "docs/reports/blk-b/cue-high-z1.5-qa-audit.json.gz",
+          "sha256": "28efbeed5f0454bb4f83ba1eec72098e81835597b5665742d8360a4e50bb809b"
+        },
+        {
+          "file": "docs/reports/blk-b/cue-high-z1.5-qa-input.jsonl.gz",
+          "sha256": "a2c615df4ce8baaa632cdc05d9c0825c1ffeb02d4c2c30b30c86267090e664fc"
+        },
+        {
+          "file": "docs/reports/blk-b/cue-high-z1.5-qa-runs.json.gz",
+          "sha256": "ea4241626e7a0bd9233a3d7e4b7097532393669c2559b3cb2c2697b2a2ab33b3"
+        }
+      ]
+    }
+  ]
+}
