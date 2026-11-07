@@ -198,6 +198,7 @@ test('corgi: warns of an offscreen threat within 18 m with a unit direction', as
     const w = await loadRunnerLevel('L3', 1, preset('L3-default'), 0, { quality: 'low' });
     try {
       const crowd = w.infected!.nav;
+      expect(crowd.blocked[crowd.cell(-70.75, 24.25)], 'the wreck leaves a full-clearance cell on the authored gate-side aisle').toBe(0);
       expect(crowd.path(crowd.cell(-70.25, 24.25), crowd.nearestCell(-60, 28), [], Infinity), 'lamp leaves the full .5 m crowd a gate-side route').toBe(true);
       w.player!.damage = () => 0;
       const dog = [...w.entities.iterate()].find(e => e.companion)!, controls = missionControls(w);

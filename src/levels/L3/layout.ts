@@ -64,7 +64,8 @@ export const l3Dressing: readonly L3Dressing[] = [
   d('blood', 'commerce', 'decal.blood-trail', -43, 2.6, { yaw: .4 }),
   fire('commerce', 110, -1.3, 1.1), fire('commerce', 70.4, -3.7, .9),
   // ---------------------------------------------------------------- Oak Avenue: crashed cars, barricades, trampled gardens
-  d('crashed', 'oak', 'veh.sedan-red', -72, 26.8, { yaw: .6, decay: 'wrecked', orientedFootprint: true }),
+  // Keep a full crowd-grid cell between the rotated hull and the southern gate aisle.
+  d('crashed', 'oak', 'veh.sedan-red', -72, 27.3, { yaw: .6, decay: 'wrecked', orientedFootprint: true }),
   d('crashed', 'oak', 'veh.suv-dark', 20, 28.2, { yaw: -.5, decay: 'wrecked' }),
   d('crashed', 'oak', 'veh.pickup-red', 98, 27.2, { yaw: 2.6, decay: 'wrecked' }),
   d('abandoned', 'oak', 'veh.sedan-green', -36, 29.6, { yaw: PI }), d('abandoned', 'oak', 'veh.suv-green', 58, 26.2, { yaw: .1 }),
@@ -76,7 +77,7 @@ export const l3Dressing: readonly L3Dressing[] = [
   corpse('oak', -66, 24.6, 'npc.civilian-man-b', 1.9), corpse('oak', -20, 31.6, 'npc.civilian-woman-a', .3), corpse('oak', 18.4, 31.4, 'npc.civilian-elderly', 4.4),
   corpse('oak', 60, 24.2, 'npc.civilian-man-a', 2.8), corpse('oak', 102, 31.6, 'npc.civilian-woman-b', 5.6),
   ...([[-67.6, 26.2, 'decal.blood-trail'], [22.4, 31.0, 'decal.blood-pool'], [100, 24.4, 'decal.blood-trail']] as const).map(([x, z, assetId], i) => d('blood', 'oak', assetId, x, z, { yaw: i * 1.4 })),
-  fire('oak', 14, 29.4, 1.1), fire('oak', -72, 26.8, .9),
+  fire('oak', 14, 29.4, 1.1), fire('oak', -72, 27.3, .9),
   // Fires deep inside the blocks (unreachable service strips): their smoke columns stand over every street.
   d('smoke', 'commerce', 'fx.fire', -18, -13.5, { scale: 1.6, entity: true }), d('smoke', 'oak', 'fx.fire', -44, 13.4, { scale: 1.6, entity: true }), d('smoke', 'oak', 'fx.fire', 30, 13.4, { scale: 1.6, entity: true }), d('smoke', 'blvd', 'fx.fire', 88, -13.5, { scale: 1.6, entity: true }),
   d('abandoned', 'commerce', 'veh.sedan-white', 130, 2.2, {decay:'wrecked'}),
