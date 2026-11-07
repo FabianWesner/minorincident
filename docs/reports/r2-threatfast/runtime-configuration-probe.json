@@ -1,0 +1,49 @@
+{
+  "node": "v26.0.0",
+  "platform": "linux",
+  "architecture": "x64",
+  "workers": 4,
+  "identical": true,
+  "results": [
+    {
+      "mode": "default",
+      "flags": [],
+      "seconds": 266.320249553,
+      "cpuSeconds": 259.579216
+    },
+    {
+      "mode": "noMaglev",
+      "flags": [
+        "--no-maglev"
+      ],
+      "seconds": 265.99532800800006,
+      "cpuSeconds": 272.839951
+    },
+    {
+      "mode": "inline",
+      "flags": [
+        "--max-inlined-bytecode-size=1000",
+        "--max-inlined-bytecode-size-cumulative=4000",
+        "--max-inlined-bytecode-size-small=100"
+      ],
+      "seconds": 267.24800465000004,
+      "cpuSeconds": 270.971599
+    },
+    {
+      "mode": "turbolev",
+      "flags": [
+        "--turbolev"
+      ],
+      "seconds": 298.796450468,
+      "cpuSeconds": 286.287367
+    }
+  ],
+  "revision": "c72a78b7",
+  "isolation": "Both cx33 runner slots held; local fallback disabled.",
+  "receiptSHA256": {
+    "default": "a33c546c303e4e4d88a6e286b33c53f4255bf187870d7c1fa62a14fc779f388a",
+    "noMaglev": "a33c546c303e4e4d88a6e286b33c53f4255bf187870d7c1fa62a14fc779f388a",
+    "inline": "a33c546c303e4e4d88a6e286b33c53f4255bf187870d7c1fa62a14fc779f388a",
+    "turbolev": "a33c546c303e4e4d88a6e286b33c53f4255bf187870d7c1fa62a14fc779f388a"
+  }
+}

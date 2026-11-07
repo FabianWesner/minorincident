@@ -16,6 +16,11 @@ export function compare(before, after) {
       else if (delta) floatsWithinNoise++;
       return;
     }
+    if (Array.isArray(a) !== Array.isArray(b)) {
+      leaves++;
+      differences.push({ path, beforeType: Array.isArray(a) ? 'array' : typeof a, afterType: Array.isArray(b) ? 'array' : typeof b });
+      return;
+    }
     if (Array.isArray(a) && Array.isArray(b)) {
       if (a.length !== b.length) differences.push({ path, beforeLength: a.length, afterLength: b.length });
       for (let i = 0; i < Math.min(a.length, b.length); i++) walk(a[i], b[i], `${path}[${i}]`);

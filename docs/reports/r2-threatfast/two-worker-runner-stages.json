@@ -1,0 +1,36 @@
+{
+  "revision": "56cb8500",
+  "workers": 2,
+  "completedAudit": false,
+  "completedStages": 6,
+  "expectedStages": 31,
+  "stages": [
+    {
+      "id": "L4/skilled/1",
+      "seconds": 216.109
+    },
+    {
+      "id": "L5/passive/1",
+      "seconds": 216.528
+    },
+    {
+      "id": "L5/passive/3",
+      "seconds": 198.478
+    },
+    {
+      "id": "L5/passive/2",
+      "seconds": 231.046
+    },
+    {
+      "id": "L4/high-hold",
+      "seconds": 150.395
+    },
+    {
+      "id": "L4/passive/1",
+      "seconds": 126.386
+    }
+  ],
+  "budgetSeconds": 601.0802736280001,
+  "exitCode": 124,
+  "isolation": "Both cx33 runner slots held; local fallback disabled."
+}
