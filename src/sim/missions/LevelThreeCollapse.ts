@@ -581,10 +581,12 @@ export class LevelThreeCollapse {
       const e = world.entities.get(id)!; q.id = id; q.at = world.tick; q.x = e.transform.x; q.z = e.transform.z; q.seen = !ai.director.offscreen(e.transform); spawned++;
       if (q.horde) this.rushPursuer(id, q.home);
       else if (q.kind === 'spill') {
-        // The officer keeps moving between the shot and admission. Follow the
-        // authored victim, rather than searching the now-empty firing spot.
+        // A living officer still owns the police-line spill. Once that target
+        // is gone (or the courier fired alone), search the recorded noise
+        // position instead of acquiring the courier's later live position.
         const victim = q.targetId && world.entities.get(q.targetId);
-        ai.press(id, victim && victim.health.current > 0 && !victim.infection && !victim.infected ? victim.id : 1, world.tick + ticks(90));
+        if (victim && victim.id !== 1 && victim.health.current > 0 && !victim.infection && !victim.infected) ai.press(id, victim.id, world.tick + ticks(90));
+        else ai.rush(id, q.home, world.tick + ticks(90));
       } else if (q.kind) ai.rush(id, q.home, world.tick + ticks(90));
       if (q.kind === 'spill') s.spillIds.push(id);
       else if (q.kind === 'pressure') s.pressureIds.push(id);
