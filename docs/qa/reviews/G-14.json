@@ -3,7 +3,7 @@
   "status": "FAIL",
   "reviewer": "Codex/blk-v",
   "date": "2026-11-07",
-  "commit": "6b2459a72cb57ce0ae8ecd4161406d790ec2b781",
+  "commit": "7e538b5fe16562431ed4adff532aff41828eee76",
   "clauses": [
     {
       "clause": "Corpses persist for the whole level (no removal for perf). Piles settle on each other: no floating bodies, no stretched/spiky limbs, pile height ≤ ~1 m (orch. default until F-293 \"climbable pile\" is scheduled).",
@@ -16,8 +16,13 @@
       "file": "docs/reports/blk-v/G14-proof.json",
       "sha256": "36f711da0f0861bc46c1e4cc4c43675708a183f22f67f934df1a6004b33468a1",
       "what": "All before/after captures personally inspected. Partial mask repair verified; folded forearm geometry remains visibly failing. Exact identity and courier-pixel controls retained in the proof."
+    },
+    {
+      "file": "docs/reports/blk-v/final-visual-proof.json",
+      "sha256": "de8ca90e605c353c146fd2700276bc2005d4e44873693789954cb1dd40adb635",
+      "what": "Personally viewed all final-source captures. Dark-clothed corpses complete, courier ID pixels fully retained in four overlap cells, ten corpse IDs retained to7320ticks. Folded pointed bulky limbs remain FAIL."
     }
   ],
   "notes": "No whole-row closure; continue the remaining pose/skinning repair and L4 pile-height measurement. SourceDigest identifies this exact render source.",
-  "sourceDigest": "c538fd43e130d8a3c1a4c1342dbdb6f2d021e79374bd2ffca53d4d4a94425be5"
+  "sourceDigest": "5cc472a436b46b4b7d839d83411b913e0c2dc23edd62d65b5b5d69601cb89ac7"
 }
