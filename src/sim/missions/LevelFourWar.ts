@@ -136,7 +136,7 @@ export class LevelFourWar {
     if (ai.director.count <= capacity) return;
     const protectedIds = new Set(s.alphaIds);
     for (const e of [...ai.active]) {
-      if (ai.director.count + ai.director.pendingTurns <= capacity) break;
+      if (ai.director.count <= capacity) break;
       const b = e.infected;
       if (!b || protectedIds.has(e.id) || e.health.current <= 0 || e.corpse || e.hidden || e.emerging || e.infectionRise || b.recoverAt >= 0 || b.scripted || b.breachApproach ||
         b.state !== 'idle' && b.state !== 'wander' || ['chase', 'bite'].includes(b.l1?.mode ?? '') || e.combat?.attacking || b.specialAttack ||
