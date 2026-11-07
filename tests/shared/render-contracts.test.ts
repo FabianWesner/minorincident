@@ -50,6 +50,7 @@ import { GroundContacts } from '../../src/render/characters/GroundContacts';
 import { resolveRig, disposeCharacter } from '../../src/render/characters/rig';
 import { heroineStandingHeight } from '../../src/render/npc/figureHeight';
 import { CorpseLayout } from '../../src/render/characters/CorpseLayout';
+import { Vfx } from '../../src/render/vfx/Vfx';
 
 function checkChangingSupport(): void {
   const model = createSurvivorPlaceholder('female'), rig = resolveRig(model);
@@ -499,6 +500,19 @@ test('LOD selection: authored distance bands with hysteresis; game-camera-size c
 });
 
 test('materials: palette program keys match Three through weather and node changes; uniforms share a render group per material only', () => {
+  // A paused redraw must retire a dead source's warning without advancing FX
+  // time, while retaining live attacks and a bloater's real death countdown.
+  const source = { health: { current: 0 }, transform: { x: 0, z: 0 }, infected: { state: 'dead', attackId: 7, special: 'charge', until: 30, specialAttack: { stage: 'telegraph' } } } as EntitySnapshot;
+  const world = { tick: 20, entities: { get: (id: number) => id === 2 ? source : undefined } } as unknown as SimWorld;
+  const tells = new Map<number, { sourceId: number; slot: number; kind: string }>();
+  const fx = Object.assign(Object.create(Vfx.prototype) as object, { world, tells, time: 0, enabled: true, featherVeil: null,
+    obstruction: { remainingTicks: 0, opacity: 0 }, telegraphs: { remove: vi.fn() }, effect: vi.fn() }) as unknown as Vfx;
+  tells.set(7, { sourceId: 2, slot: 0, kind: 'charge' }); fx.updateSpecialState(); expect(tells.size).toBe(0); expect(fx.time).toBe(0);
+  source.health.current = 1; source.infected!.state = 'attack';
+  tells.set(7, { sourceId: 2, slot: 0, kind: 'charge' }); fx.updateSpecialState(); expect(tells.size).toBe(1);
+  source.health.current = 0; source.infected!.state = 'dead'; source.infected!.special = 'explode';
+  tells.set(7, { sourceId: 2, slot: 0, kind: 'bloated' }); fx.updateSpecialState(); expect(tells.size).toBe(1);
+  world.tick = 31; fx.updateSpecialState(); expect(tells.size).toBe(0);
   const lighting = new Lighting(new Scene()), materials = new Materials(lighting);
   try {
     const material = materials.get('sidewalk'), reference = MeshLambertNodeMaterial.prototype.customProgramCacheKey;
