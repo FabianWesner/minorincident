@@ -4,9 +4,9 @@ import { createHash } from 'node:crypto';
 import { join } from 'node:path';
 
 export interface ReviewDecision {
-  row: string; status: 'PASS' | 'FAIL'; reviewer: string; date: string; commit: string;
+  row: string; status: 'PASS' | 'FAIL' | 'P'; reviewer: string; date: string; commit: string;
   sourceDigest?: string;
-  clauses: { clause: string; verdict: 'PASS' | 'FAIL'; note?: string }[];
+  clauses: { clause: string; verdict: 'PASS' | 'FAIL' | 'P'; note?: string }[];
   evidence: { file: string; sha256: string; what: string }[]; notes?: string;
 }
 const root = 'docs/qa/reviews';
@@ -15,9 +15,9 @@ export function validateReview(value: unknown, expectedRow?: string): ReviewDeci
   const r = value as ReviewDecision;
   const fail = (message: string): never => { throw new Error(`Invalid acceptance review: ${message}`); };
   if (!r || typeof r !== 'object' || !rows.has(r.row) || (expectedRow && r.row !== expectedRow)) fail('unknown or mismatched row');
-  if (!['PASS','FAIL'].includes(r.status) || typeof r.reviewer !== 'string' || !r.reviewer.trim() || !/^\d{4}-\d{2}-\d{2}$/.test(r.date) || Number.isNaN(Date.parse(`${r.date}T00:00:00Z`)) || !/^[0-9a-f]{40}$/.test(r.commit)) fail('invalid decision metadata');
+  if (!['PASS','FAIL','P'].includes(r.status) || typeof r.reviewer !== 'string' || !r.reviewer.trim() || !/^\d{4}-\d{2}-\d{2}$/.test(r.date) || Number.isNaN(Date.parse(`${r.date}T00:00:00Z`)) || !/^[0-9a-f]{40}$/.test(r.commit)) fail('invalid decision metadata');
   if (r.sourceDigest !== undefined && !/^[0-9a-f]{64}$/.test(r.sourceDigest)) fail('invalid source digest (SHA-256 required)');
-  if (!Array.isArray(r.clauses) || !r.clauses.length || r.clauses.some(c => !c || typeof c.clause !== 'string' || !c.clause.trim() || !['PASS','FAIL'].includes(c.verdict))) fail('invalid clauses');
+  if (!Array.isArray(r.clauses) || !r.clauses.length || r.clauses.some(c => !c || typeof c.clause !== 'string' || !c.clause.trim() || !['PASS','FAIL','P'].includes(c.verdict))) fail('invalid clauses');
   if (!Array.isArray(r.evidence) || !r.evidence.length || r.evidence.some(e => !e || typeof e.file !== 'string' || !e.file || typeof e.what !== 'string' || !e.what || !/^[0-9a-f]{64}$/.test(e.sha256))) fail('invalid evidence (SHA-256 required)');
   if (r.status === 'PASS' && r.clauses.some(c => c.verdict !== 'PASS')) fail('PASS decision contains a failing clause');
   return r;
