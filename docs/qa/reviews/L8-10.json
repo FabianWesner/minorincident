@@ -1,56 +1,63 @@
 {
   "row": "L8-10",
   "status": "PASS",
-  "reviewer": "Codex sweep-c5",
-  "date": "2026-11-06",
-  "commit": "8c10e2cc6487151a24969dcea563c60d08e73f56",
+  "reviewer": "Codex final-c",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
   "clauses": [
     {
-      "clause": "L8 \u2192 L9 handover \u2264 6 s inside the same APC (durability kept).",
+      "clause": "L8 → L9 handover ≤ 6 s inside the same APC (durability kept).",
       "verdict": "PASS",
-      "note": "Fresh shared-pool headless Metal WebGL2 diagnostics, one tier at a time, use exact unmodified qualified physical L7/L8 campaign saves and the same continueCampaign path/method as tools/perf/campaign-handover-time.ts. Outgoing L8 is constructed normally and kept fully resident for6s; timer includes campaign cloning/settings, outgoing teardown, incoming L9 load through first frame. Low3833.7ms, high3709.6ms; no errors or remaining loading card. Incoming live APC ID700/800 exactly matches the actual physical departure save at980/930 out of1000HP, driver1 active, same seated humans/corgi. The reconstructed initial outgoing hull is not used as the damage witness. Personally inspected allfour final original-size frames: outgoing L8 sanctuary/briefing context, incoming L9 same unarmed APC with courier in cab, lit headlights and correct Armor display. No frame profiler, actor/HP/objective writes or performance-budget changes. Earlier native predeparture Resume attempts are explicitly rejected: low produced repeated null-navigation errors, high prototype8.9871s; these are archived, not admitted as this physical-save diagnostic. Exact6000ms synthetic boundary accepts and26 negative controls reject; no fabricated control data used as game evidence. Raw captures deleted after hashes."
+      "note": "Current production continueCampaign completes in3.7427s low/3.6644s high, both<=6s. Actual native production transport preserves sameAPC721/466 and durability990/1000. Outgoing L8 fullyresident6s; timer includes teardown/clone/load/settings/first L9 frame. Exclusive pool/quiet preflight passed; foreign one-CPU L4 native runner explicitly disclosed, so no pristine-idle claim. Earlier shared-load diagnostics excluded; no best-of replacement."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-c5/L8-10/low-handover.json",
-      "sha256": "59a9493aa2a615a0f9e16c7af9cdf3ea59b9d49c3f889ce35f4030910d1b41f2",
-      "what": "Current-source established handover diagnostic using qualified physical campaign; actual clock, incoming live APC ID/HP/driver/passengers and personally inspected frame hashes; or26 checker fault controls."
+      "file": "docs/reports/final-c/L8-10/quiet-arrival-producer.ts",
+      "sha256": "a30ff8dc6d94277f3a3cde744515e7410dcea2da46edfda1045800d5c7a18d71",
+      "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
     },
     {
-      "file": "docs/reports/sweep-c5/L8-10/high-handover.json",
-      "sha256": "2cb373a9f3de3d3a59384842686d9ca920ddd56e902e8b152f5eef7769e7e7c6",
-      "what": "Current-source established handover diagnostic using qualified physical campaign; actual clock, incoming live APC ID/HP/driver/passengers and personally inspected frame hashes; or26 checker fault controls."
+      "file": "docs/reports/final-c/L8-10/high-handover.json.gz",
+      "sha256": "d19bfa5a800ba767cc1591ebca5b08dcf5f1bcb3b9295fffa44ff091f7ef3f80",
+      "what": "Current production continueCampaign completes in3.7427s low/3.6644s high, both<=6s. Actual native production transport preserves sameAPC721/466 and durability990/1000. Outgoing L8 fullyresident6s; timer includes teardown/clone/load/settings/first L9 frame. Exclusive pool/quiet preflight passed; foreign one-CPU L4 native runner explicitly disclosed, so no pristine-idle claim. Earlier shared-load diagnostics excluded; no best-of replacement."
     },
     {
-      "file": "docs/reports/sweep-c5/L8-10/checker-controls.json",
-      "sha256": "d1355c8265fed8d3be6fc7aeb7b3b6cd1c520df49f93a99b3f57b3de60406f01",
-      "what": "Current-source established handover diagnostic using qualified physical campaign; actual clock, incoming live APC ID/HP/driver/passengers and personally inspected frame hashes; or26 checker fault controls."
+      "file": "docs/reports/final-c/L8-10/low-handover.json.gz",
+      "sha256": "8afd1a43b56c4899a263a70d7beb84fbfb1313c6a15e97dfe40061a80d88ca15",
+      "what": "Current production continueCampaign completes in3.7427s low/3.6644s high, both<=6s. Actual native production transport preserves sameAPC721/466 and durability990/1000. Outgoing L8 fullyresident6s; timer includes teardown/clone/load/settings/first L9 frame. Exclusive pool/quiet preflight passed; foreign one-CPU L4 native runner explicitly disclosed, so no pristine-idle claim. Earlier shared-load diagnostics excluded; no best-of replacement."
     },
     {
-      "file": "docs/reports/sweep-c5/L8-10/exploration/README.md",
-      "sha256": "b50f2ded25aaa0d1b44da977f9978011d590613e4720b29dab62ecf9bc38aa6f",
-      "what": "Explicitly rejected native Resume setup: low navigation errors, high8.9871s prototype result, archived unchanged without qualifying this row."
+      "file": "docs/reports/final-c/L8-10/coverage.json",
+      "sha256": "e1cc96524c0a34b91cab2ed3488535d250f113ab9302be0b0843b14bf3ba8192",
+      "what": "Current production continueCampaign completes in3.7427s low/3.6644s high, both<=6s. Actual native production transport preserves sameAPC721/466 and durability990/1000. Outgoing L8 fullyresident6s; timer includes teardown/clone/load/settings/first L9 frame. Exclusive pool/quiet preflight passed; foreign one-CPU L4 native runner explicitly disclosed, so no pristine-idle claim. Earlier shared-load diagnostics excluded; no best-of replacement."
     },
     {
-      "file": "docs/reports/fix51-r10c/L7-L8-carried-low/late-input-completion.json.gz",
-      "sha256": "8b518d64f9bec26c20550cab963261ad8ecd540a33b196bedf0bfa5a08239ca0",
-      "what": "Already-qualified current physical L7/L8 playthrough departure save and personal frame-review manifest. Actual APC IDs700/800 and980/930HP originate here."
+      "file": "docs/reports/final-c/L8-10/exclusive-admission.log",
+      "sha256": "cef90c450ab1ffde414176defb91f3b4cbae53147c314a80a5649b668d781eb6",
+      "what": "Current production continueCampaign completes in3.7427s low/3.6644s high, both<=6s. Actual native production transport preserves sameAPC721/466 and durability990/1000. Outgoing L8 fullyresident6s; timer includes teardown/clone/load/settings/first L9 frame. Exclusive pool/quiet preflight passed; foreign one-CPU L4 native runner explicitly disclosed, so no pristine-idle claim. Earlier shared-load diagnostics excluded; no best-of replacement."
     },
     {
-      "file": "docs/reports/fix51-r10c/L7-L8-carried-low/review.json",
-      "sha256": "ddc2ec3ebbe183a8491b4c1c86d16b26b6c52563fa09fb026762cf4ef3a18217",
-      "what": "Already-qualified current physical L7/L8 playthrough departure save and personal frame-review manifest. Actual APC IDs700/800 and980/930HP originate here."
+      "file": "docs/reports/final-c/L8-10/capture-review.json",
+      "sha256": "4539174594fddb0f4d46c34989e5816a93026fe6ad0a13c687f4d9fb3e48b4d1",
+      "what": "Current production continueCampaign completes in3.7427s low/3.6644s high, both<=6s. Actual native production transport preserves sameAPC721/466 and durability990/1000. Outgoing L8 fullyresident6s; timer includes teardown/clone/load/settings/first L9 frame. Exclusive pool/quiet preflight passed; foreign one-CPU L4 native runner explicitly disclosed, so no pristine-idle claim. Earlier shared-load diagnostics excluded; no best-of replacement."
     },
     {
-      "file": "docs/reports/fix51-r10c/L7-L8-carried-high/late-input-completion.json.gz",
-      "sha256": "cb0524a5db684087cdeffb195b376d92ee89b992ae0e1f1e6b15ed09766a30b1",
-      "what": "Already-qualified current physical L7/L8 playthrough departure save and personal frame-review manifest. Actual APC IDs700/800 and980/930HP originate here."
+      "file": "docs/reports/final-c/campaign/L9-low-transport-campaign.json.gz",
+      "sha256": "e6fdcb495e05d0f84cc4df11ac18a02633e4679ee367da41d4486ee4fd1c2e58",
+      "what": "Current production continueCampaign completes in3.7427s low/3.6644s high, both<=6s. Actual native production transport preserves sameAPC721/466 and durability990/1000. Outgoing L8 fullyresident6s; timer includes teardown/clone/load/settings/first L9 frame. Exclusive pool/quiet preflight passed; foreign one-CPU L4 native runner explicitly disclosed, so no pristine-idle claim. Earlier shared-load diagnostics excluded; no best-of replacement."
     },
     {
-      "file": "docs/reports/fix51-r10c/L7-L8-carried-high/review.json",
-      "sha256": "8d2364bb307e03bfad09541b4d95d63aa64a7693b30a371bb12e8170b3048558",
-      "what": "Already-qualified current physical L7/L8 playthrough departure save and personal frame-review manifest. Actual APC IDs700/800 and980/930HP originate here."
+      "file": "docs/reports/final-c/campaign/L9-high-transport-campaign.json.gz",
+      "sha256": "af824d96c409f254222c0933dc5dbb60e8fa8a32095a672fbf784126e9cc90da",
+      "what": "Current production continueCampaign completes in3.7427s low/3.6644s high, both<=6s. Actual native production transport preserves sameAPC721/466 and durability990/1000. Outgoing L8 fullyresident6s; timer includes teardown/clone/load/settings/first L9 frame. Exclusive pool/quiet preflight passed; foreign one-CPU L4 native runner explicitly disclosed, so no pristine-idle claim. Earlier shared-load diagnostics excluded; no best-of replacement."
+    },
+    {
+      "file": "docs/reports/final-c/campaign/transport-boundaries.json",
+      "sha256": "3581d1cde566ca104afb55f95e21c312e5f52bebd35368ba97773a7e509449cf",
+      "what": "Current production continueCampaign completes in3.7427s low/3.6644s high, both<=6s. Actual native production transport preserves sameAPC721/466 and durability990/1000. Outgoing L8 fullyresident6s; timer includes teardown/clone/load/settings/first L9 frame. Exclusive pool/quiet preflight passed; foreign one-CPU L4 native runner explicitly disclosed, so no pristine-idle claim. Earlier shared-load diagnostics excluded; no best-of replacement."
     }
-  ]
+  ],
+  "notes": "Frozen-head row review. Current immutable evidence, unchanged criterion and game source.",
+  "sourceDigest": "3f346fc1f0af18cb190b29844498febc36a720450de65904caad638582d717b9"
 }

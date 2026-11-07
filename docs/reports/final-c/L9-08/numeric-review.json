@@ -1,0 +1,272 @@
+{
+  "row": "L9-08",
+  "frozenHead": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "verdict": "PASS",
+  "criterion": "L10 starts on foot with exactly [axe], ordinary health, corgi safe.",
+  "observation": "Both actual native L9 completion-to-L10 campaign transactions restore a visible on-foot courier, activeVehicle null, exactly [weapon.fire-axe], ordinary 100/100 HP, and a visible living corgi at 100/100 HP. The source handover is the actual completeCampaignLevel transaction, not a manually constructed L10 start.",
+  "method": "Current native qa:accept both-tier complete/stationary + production fixtures/checkpoint controls; immutable source receipt snapshots.",
+  "sources": [
+    {
+      "original": "docs/reports/fix51-verify/receipts/L9-low-fixtures.json",
+      "originalSha256": "00ff0ea666e75dc3353c9053bb86eb6c4427c845cd5c666481c3945e74cd8b38",
+      "archive": "docs/reports/final-c/native/L9-low-fixtures.json.gz",
+      "sha256": "1b539d559de3e08673b313a7319ec02e293982749b9e4b003bf5cac7a9377cfa",
+      "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+      "fixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4"
+    },
+    {
+      "original": "docs/reports/fix51-verify/receipts/L9-high-fixtures.json",
+      "originalSha256": "4871214a98b786ffe4b98fcdfa072f919fe249a63ab28db9864cdb21eb32fc8d",
+      "archive": "docs/reports/final-c/native/L9-high-fixtures.json.gz",
+      "sha256": "48b3ef41505bd064922b29f613dbb2afc056468411b5edb883cb295f709936a1",
+      "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+      "fixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4"
+    }
+  ],
+  "checks": [
+    {
+      "id": "L9-08",
+      "clause": "actual crossing transaction into L10",
+      "value": {
+        "setup": "normal L9 completion → completeCampaignLevel → fresh L10 with same save",
+        "run": {
+          "level": "L9",
+          "policy": "complete",
+          "seed": 1,
+          "completed": true,
+          "time": 128.13333333333333,
+          "deaths": 0,
+          "kills": 0,
+          "damageTaken": 0,
+          "failures": {},
+          "objectiveTimeline": [
+            {
+              "id": "approach",
+              "t": 114.13333333333334
+            },
+            {
+              "id": "reach-outskirts",
+              "t": 128.13333333333333
+            }
+          ],
+          "furthestObjective": "reach-outskirts",
+          "activeObjectives": [],
+          "outcome": "complete",
+          "blocker": null,
+          "collision": {
+            "failures": 0,
+            "pending": 0,
+            "admitted": 533,
+            "deferred": 0,
+            "requests": [],
+            "offenders": []
+          }
+        },
+        "handover": {
+          "applied": true,
+          "corgi": {
+            "kind": "companion",
+            "archetype": "char.corgi",
+            "faction": "survivor",
+            "transform": {
+              "x": 467.6454788779233,
+              "z": 3.9373885261225046,
+              "y": 0.3,
+              "yaw": -0.05724150811981929
+            },
+            "health": {
+              "current": 100,
+              "max": 100
+            },
+            "companion": {
+              "state": "follow",
+              "courage": 100,
+              "until": 0,
+              "barkAt": 0,
+              "hurtAt": 0,
+              "pickup": null,
+              "path": [],
+              "goal": -1,
+              "pathIndex": 0
+            },
+            "id": 668,
+            "passengerOf": 667,
+            "hidden": true,
+            "motion": {
+              "velocity": {
+                "x": 0,
+                "z": 0
+              },
+              "speed": 0,
+              "moving": false,
+              "distance": 1528.387426202513
+            }
+          },
+          "checkpoint": "cure-crash",
+          "anchor": {
+            "x": 547,
+            "y": 0.7200000286102295,
+            "z": 0,
+            "yaw": 0
+          },
+          "preCrashDurability": 830,
+          "lostWeapons": [
+            "weapon.fists",
+            "weapon.kick",
+            "weapon.bat",
+            "weapon.molotov",
+            "weapon.handgun",
+            "weapon.army-mg",
+            "weapon.rocket-launcher",
+            "weapon.pipe-bomb",
+            "weapon.shotgun"
+          ],
+          "shelteredPassengers": []
+        },
+        "weapons": [
+          "weapon.fire-axe"
+        ],
+        "hp": 100,
+        "maxHp": 100,
+        "hidden": false,
+        "activeVehicle": null,
+        "companions": [
+          {
+            "id": 668,
+            "hp": 100,
+            "maxHp": 100,
+            "hidden": false
+          }
+        ]
+      },
+      "target": "onfoot;exactlyaxe;full ordinary health;corgi safe",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L9-low-fixtures.json",
+      "level": "L9"
+    },
+    {
+      "id": "L9-08",
+      "clause": "actual crossing transaction into L10",
+      "value": {
+        "setup": "normal L9 completion → completeCampaignLevel → fresh L10 with same save",
+        "run": {
+          "level": "L9",
+          "policy": "complete",
+          "seed": 1,
+          "completed": true,
+          "time": 128.13333333333333,
+          "deaths": 0,
+          "kills": 0,
+          "damageTaken": 0,
+          "failures": {},
+          "objectiveTimeline": [
+            {
+              "id": "approach",
+              "t": 114.13333333333334
+            },
+            {
+              "id": "reach-outskirts",
+              "t": 128.13333333333333
+            }
+          ],
+          "furthestObjective": "reach-outskirts",
+          "activeObjectives": [],
+          "outcome": "complete",
+          "blocker": null,
+          "collision": {
+            "failures": 0,
+            "pending": 0,
+            "admitted": 655,
+            "deferred": 0,
+            "requests": [],
+            "offenders": []
+          }
+        },
+        "handover": {
+          "applied": true,
+          "corgi": {
+            "kind": "companion",
+            "archetype": "char.corgi",
+            "faction": "survivor",
+            "transform": {
+              "x": 467.6454788779233,
+              "z": 3.9373885261225046,
+              "y": 0.3,
+              "yaw": -0.05724150811981929
+            },
+            "health": {
+              "current": 100,
+              "max": 100
+            },
+            "companion": {
+              "state": "follow",
+              "courage": 100,
+              "until": 0,
+              "barkAt": 0,
+              "hurtAt": 0,
+              "pickup": null,
+              "path": [],
+              "goal": -1,
+              "pathIndex": 0
+            },
+            "id": 668,
+            "passengerOf": 667,
+            "hidden": true,
+            "motion": {
+              "velocity": {
+                "x": 0,
+                "z": 0
+              },
+              "speed": 0,
+              "moving": false,
+              "distance": 1528.387426202513
+            }
+          },
+          "checkpoint": "cure-crash",
+          "anchor": {
+            "x": 547,
+            "y": 0.7200000286102295,
+            "z": 0,
+            "yaw": 0
+          },
+          "preCrashDurability": 820,
+          "lostWeapons": [
+            "weapon.fists",
+            "weapon.kick",
+            "weapon.bat",
+            "weapon.molotov",
+            "weapon.handgun",
+            "weapon.army-mg",
+            "weapon.rocket-launcher",
+            "weapon.pipe-bomb",
+            "weapon.shotgun"
+          ],
+          "shelteredPassengers": []
+        },
+        "weapons": [
+          "weapon.fire-axe"
+        ],
+        "hp": 100,
+        "maxHp": 100,
+        "hidden": false,
+        "activeVehicle": null,
+        "companions": [
+          {
+            "id": 668,
+            "hp": 100,
+            "maxHp": 100,
+            "hidden": false
+          }
+        ]
+      },
+      "target": "onfoot;exactlyaxe;full ordinary health;corgi safe",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L9-high-fixtures.json",
+      "level": "L9"
+    }
+  ]
+}

@@ -1,51 +1,33 @@
 {
   "row": "L9-07",
   "status": "PASS",
-  "reviewer": "Codex sweep-c5",
-  "date": "2026-11-06",
-  "commit": "d1411ce2664d04300633be5fca34add7319b5d6e",
+  "reviewer": "Codex final-c",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
   "clauses": [
     {
       "clause": "Crash exactly once (full or 0 HP); APC falls whole (no floating wheels/vanishing hull); \"Get clear of the wreck\" appears only after the crash.",
       "verdict": "PASS",
-      "note": "Current-source ordinary healthy and production damage(maxHP)0HP actual WASD drives bothtiers all reach crawl without skips/teleports. Exactly one crash-impact signal and one reach-outskirts objective percell, same tick: healthy7347bothtiers, zero11979low/10442high. Each cell has10fall snapshots over120ticks: vehicleentity present and4physicswheels throughout; dense pairedfall0\u20139 images personally inspected show attached visible wheels/whole hull/headlights descending together with no vanishing body. All96 smoke/fall panels reviewed in L9-05; firstpostimpact bright flash limits surface detail but wreck/courier persist. HUDsamplesbeforeimpact never say Get clear; samplesat/afterimpact and finalframes show it. Fall camera overrides playerzoom, so pairs are not independentzoom views. Fresh native canonicalcontrols/zero drive independently measure exactlyone impact and objectiveat/afterimpact. Eight actualconsumer faults duplicateimpact/earlyobjective/earlyHUD/missinghull/missingwheel/unfinished/unseen/stalesource allreject; exactbytesrestored. No game/criterion change."
+      "note": "Four actual WASD approaches (both tiers×healthy/0HP) trigger exactly1scripted impact each; Get clear/reach-outskirts starts on impact tick7305healthy,15086lowzero/10603highzero, never before. Twenty-four current beginning/middle/end fall panels at both zooms show whole APC hull and attached wheels. Exact0HP remains driveable to its crash. Healthy starts1000HP, naturally arrives820low/650high; not mislabelled1000at trigger."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-c5/L9-07/coverage-proof.json",
-      "sha256": "0d7b76ff498dc0fa2e3ef5002bf8743b51f28b580bcc68349d68ee55aec63f78",
-      "what": "Four actual healthy/zeroHP physical crash sequences, per12tick intact hull/wheel and objective samples, exact impact events, personally inspected fall0\u20139 capture hashes/notes, independent native controls and8 semantic consumer faults."
+      "file": "docs/reports/final-c/L9-07/low-physical.json.gz",
+      "sha256": "02e8bf8baf222cfba25d6729da89244bd7580770c1e5a13247bd3de8624c66e1",
+      "what": "Four actual WASD approaches (both tiers×healthy/0HP) trigger exactly1scripted impact each; Get clear/reach-outskirts starts on impact tick7305healthy,15086lowzero/10603highzero, never before. Twenty-four current beginning/middle/end fall panels at both zooms show whole APC hull and attached wheels. Exact0HP remains driveable to its crash. Healthy starts1000HP, naturally arrives820low/650high; not mislabelled1000at trigger."
     },
     {
-      "file": "docs/reports/sweep-c5/L9-05/qualification.json",
-      "sha256": "df96f2267ac627fe12f7d103f99f37145b23ae4c13b22e0b850342f26da144ea",
-      "what": "Four actual healthy/zeroHP physical crash sequences, per12tick intact hull/wheel and objective samples, exact impact events, personally inspected fall0\u20139 capture hashes/notes, independent native controls and8 semantic consumer faults."
+      "file": "docs/reports/final-c/L9-07/high-physical.json.gz",
+      "sha256": "8cd71140b7b5e83bbc6aa5e5f9fd5729d0ed9fc62cbc4b7dbdef99045939fe1c",
+      "what": "Four actual WASD approaches (both tiers×healthy/0HP) trigger exactly1scripted impact each; Get clear/reach-outskirts starts on impact tick7305healthy,15086lowzero/10603highzero, never before. Twenty-four current beginning/middle/end fall panels at both zooms show whole APC hull and attached wheels. Exact0HP remains driveable to its crash. Healthy starts1000HP, naturally arrives820low/650high; not mislabelled1000at trigger."
     },
     {
-      "file": "docs/reports/sweep-c5/L9-05/native.json",
-      "sha256": "965c454123cc7af418bc7da6f33b702efa0823ea66e19ca4c8bba520e9b46917",
-      "what": "Four actual healthy/zeroHP physical crash sequences, per12tick intact hull/wheel and objective samples, exact impact events, personally inspected fall0\u20139 capture hashes/notes, independent native controls and8 semantic consumer faults."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L9-05/full-review.json",
-      "sha256": "07c86e4058931f9c8c8b4257325ee3e3a41f4f1b8ee1fd5c5f60c09e34ca2cf4",
-      "what": "Four actual healthy/zeroHP physical crash sequences, per12tick intact hull/wheel and objective samples, exact impact events, personally inspected fall0\u20139 capture hashes/notes, independent native controls and8 semantic consumer faults."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L9-05/zero-review.json",
-      "sha256": "8efd9707223daee0e018e0831d283a55ca6cacc4f9b457ca368595f643352fee",
-      "what": "Four actual healthy/zeroHP physical crash sequences, per12tick intact hull/wheel and objective samples, exact impact events, personally inspected fall0\u20139 capture hashes/notes, independent native controls and8 semantic consumer faults."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L9-05/full-assembled.json.gz",
-      "sha256": "dc649c80a88c99302e36adfc0c9d7ddc25a4d6e797c99e969eb563bb5371c99f",
-      "what": "Four actual healthy/zeroHP physical crash sequences, per12tick intact hull/wheel and objective samples, exact impact events, personally inspected fall0\u20139 capture hashes/notes, independent native controls and8 semantic consumer faults."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L9-05/zero-assembled.json.gz",
-      "sha256": "ad3e09311deb8c07b74853721b6fc2e1466d7d607d2db9425fba0e6bc5ef2556",
-      "what": "Four actual healthy/zeroHP physical crash sequences, per12tick intact hull/wheel and objective samples, exact impact events, personally inspected fall0\u20139 capture hashes/notes, independent native controls and8 semantic consumer faults."
+      "file": "docs/reports/final-c/L9-07/capture-review.json",
+      "sha256": "23709318fbf588444eb7844888c5d38c77d3d716e69af17c4d2db0205966e3e5",
+      "what": "Four actual WASD approaches (both tiers×healthy/0HP) trigger exactly1scripted impact each; Get clear/reach-outskirts starts on impact tick7305healthy,15086lowzero/10603highzero, never before. Twenty-four current beginning/middle/end fall panels at both zooms show whole APC hull and attached wheels. Exact0HP remains driveable to its crash. Healthy starts1000HP, naturally arrives820low/650high; not mislabelled1000at trigger."
     }
-  ]
+  ],
+  "notes": "Frozen-head row review. Current immutable evidence, unchanged criterion and game source.",
+  "sourceDigest": "fbad89802bfe8d610b736d8f5a3111d1a13e8d0ae47b606a45c5760634f3ed51"
 }

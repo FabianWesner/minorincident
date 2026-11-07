@@ -1,61 +1,68 @@
 {
   "row": "L7-03",
   "status": "PASS",
-  "reviewer": "Codex sweep-c5",
-  "date": "2026-11-06",
-  "commit": "a10f048a2db0e89ec2304b5a8007f9eb56d26bcc",
+  "reviewer": "Codex final-c",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
   "clauses": [
     {
-      "clause": "Rocket: cadence **2.4/s**, no wait for impact; detonates at the clicked ground point (or first hit / max range); visible in the dark; one rocket kills \u2265 20/24 regulars within 3 m and opens a \u2265 3 m gap; no white-out at point blank.",
+      "clause": "Rocket: cadence **2.4/s**, no wait for impact; detonates at the clicked ground point (or first hit / max range); visible in the dark; one rocket kills ≥ 20/24 regulars within 3 m and opens a ≥ 3 m gap; no white-out at point blank.",
       "verdict": "PASS",
-      "note": "Fresh current source bothqualities actual held Shift+LMB launches every25ticks=2.4/s, secondlaunchbeforefirstimpact; clicked12m emptyground impactswithin0.1m. One actualshot kills24/24 unmodified60HPregulars within3m, leavesno livingbody intersecting1.5mradius gap. First ordinarybody at6m stopsrocket at5.65m; actual Space withoutaimPoint detonates35m; actual50m groundclick honored perE29\u00a75.2. All56 main and18boundary fullsizepanels personallyinspected and rawhashesverified/deleted: yellow-white/orange rockets distinct on darkgrid; blastredblood/debris; atpointblankticks13/14/16/18courier face, clothing, boots andgreenlauncherremainreadable. Supplemental wholeframe allRGB>=230fraction peak0.000404731, not sole basisforvisualverdict. Six main andfourboundarysemanticfaultsreject, exactoriginalbytesrestored. Exactunchanged existingproducers; frozenAI/protectedcourier explicit isolatedcapabilityfixtures, no campaigndifficulty/routepressureclaim. No game/threshold change."
+      "note": "Both tiers:25tick shot intervals=2.4/s; second shot32 precedes firstimpact48. One real physical rocket kills24/24 ordinary60HP regulars initially within2.4m, leaving0live blockers across6m cohort diameter. Clicked12/50m ground endpoints, earlier first-body hitx5.65 and35m directional range measured independently. Personally viewed22 corrected60Hz-VFX panels: visible rocket/orange blast/blood, courier and ground retain shape at pointblank, no sampled white-out. Step-only old visual clock excluded; explicit capability fixture."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-c5/L7-03/boundary-fault-proof.json",
-      "sha256": "843adcf99e64bd32ffb070d6693c0aec40833c9436a49be046addbb84f317c1e",
-      "what": "Current source actual physical mouse/keyboard rocket capability fixtures, complete launch/hit/kill/detonation ledgers, personally inspected74capture SHA256/seen notes, exactproducer bytes and ten semanticnegativecontrols."
+      "file": "docs/reports/final-c/L7-03/render-clock.json",
+      "sha256": "a170105dcffca7076f1876d813886e1a978edd3fd051c67534a13b227373c484",
+      "what": "Both tiers:25tick shot intervals=2.4/s; second shot32 precedes firstimpact48. One real physical rocket kills24/24 ordinary60HP regulars initially within2.4m, leaving0live blockers across6m cohort diameter. Clicked12/50m ground endpoints, earlier first-body hitx5.65 and35m directional range measured independently. Personally viewed22 corrected60Hz-VFX panels: visible rocket/orange blast/blood, courier and ground retain shape at pointblank, no sampled white-out. Step-only old visual clock excluded; explicit capability fixture."
     },
     {
-      "file": "docs/reports/sweep-c5/L7-03/boundary-input.json.gz",
-      "sha256": "3d18b729e4aa237356d6c272c74b83bc82bee4c57310cad7f071ee9ad5a7cf62",
-      "what": "Current source actual physical mouse/keyboard rocket capability fixtures, complete launch/hit/kill/detonation ledgers, personally inspected74capture SHA256/seen notes, exactproducer bytes and ten semanticnegativecontrols."
+      "file": "docs/reports/final-c/L7-03/ballistics.json",
+      "sha256": "a86af7a8563e3a7e59bf569d410ccfa3bb3738bb71166ac62228d472a9f83084",
+      "what": "Both tiers:25tick shot intervals=2.4/s; second shot32 precedes firstimpact48. One real physical rocket kills24/24 ordinary60HP regulars initially within2.4m, leaving0live blockers across6m cohort diameter. Clicked12/50m ground endpoints, earlier first-body hitx5.65 and35m directional range measured independently. Personally viewed22 corrected60Hz-VFX panels: visible rocket/orange blast/blood, courier and ground retain shape at pointblank, no sampled white-out. Step-only old visual clock excluded; explicit capability fixture."
     },
     {
-      "file": "docs/reports/sweep-c5/L7-03/boundary-producer.mjs",
-      "sha256": "811fae80514417153b7c582882cda69fa44a4a72f7765b372ebfff56f9ea3d2e",
-      "what": "Current source actual physical mouse/keyboard rocket capability fixtures, complete launch/hit/kill/detonation ledgers, personally inspected74capture SHA256/seen notes, exactproducer bytes and ten semanticnegativecontrols."
+      "file": "docs/reports/final-c/L7-03/sweep-c4-l7-ballistics-producer.ts",
+      "sha256": "04c0c88be0f5802fcbda9453b892e69fa93e8571f8ee260f44e21d4e7a06f968",
+      "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
     },
     {
-      "file": "docs/reports/sweep-c5/L7-03/boundary-review.json",
-      "sha256": "c162fd5dd11f2d94215f886cde7499cc36d95545e7b7f192f2fe1c2babb4f4e7",
-      "what": "Current source actual physical mouse/keyboard rocket capability fixtures, complete launch/hit/kill/detonation ledgers, personally inspected74capture SHA256/seen notes, exactproducer bytes and ten semanticnegativecontrols."
+      "file": "docs/reports/final-c/L7-03/fix55-l7-rockets-producer.ts",
+      "sha256": "1e9abf46651037aa4ee897e5b38b15f90207b992d445034dfcf779d86b3baeb3",
+      "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
     },
     {
-      "file": "docs/reports/sweep-c5/L7-03/main-input.json.gz",
-      "sha256": "9714a5a56e76a8fa3e00a2051c26e8b8f859f05d8067efc848a45c223cf7dbc7",
-      "what": "Current source actual physical mouse/keyboard rocket capability fixtures, complete launch/hit/kill/detonation ledgers, personally inspected74capture SHA256/seen notes, exactproducer bytes and ten semanticnegativecontrols."
+      "file": "docs/reports/final-c/L7-03/rockets.json",
+      "sha256": "83781fd46805d54d35d25d63c492f697c6519b3f6c2f1a80f0cddd43cc738b31",
+      "what": "Both tiers:25tick shot intervals=2.4/s; second shot32 precedes firstimpact48. One real physical rocket kills24/24 ordinary60HP regulars initially within2.4m, leaving0live blockers across6m cohort diameter. Clicked12/50m ground endpoints, earlier first-body hitx5.65 and35m directional range measured independently. Personally viewed22 corrected60Hz-VFX panels: visible rocket/orange blast/blood, courier and ground retain shape at pointblank, no sampled white-out. Step-only old visual clock excluded; explicit capability fixture."
     },
     {
-      "file": "docs/reports/sweep-c5/L7-03/main-producer.mjs",
-      "sha256": "cbc0fe9862d265d2376b8b874c40350da09c1e1d56ec841cb02255c90f46c4f5",
-      "what": "Current source actual physical mouse/keyboard rocket capability fixtures, complete launch/hit/kill/detonation ledgers, personally inspected74capture SHA256/seen notes, exactproducer bytes and ten semanticnegativecontrols."
+      "file": "docs/reports/final-c/L7-03/render-clock-producer.ts",
+      "sha256": "2fcb9722e4101b7b246734999f3afe6760e4d9779e2e40cd2a7ce0e8b20c01e6",
+      "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
     },
     {
-      "file": "docs/reports/sweep-c5/L7-03/main-review.json",
-      "sha256": "7551d88162bd3a630ecd1da7717ffcd3da7eb9adc0ca31a2c5af02b14614419c",
-      "what": "Current source actual physical mouse/keyboard rocket capability fixtures, complete launch/hit/kill/detonation ledgers, personally inspected74capture SHA256/seen notes, exactproducer bytes and ten semanticnegativecontrols."
+      "file": "docs/reports/final-c/L7-03/coverage.json",
+      "sha256": "f9e50e0cf70854fcabf71fdcd1a69f421779fff2341973f242b73777e6827145",
+      "what": "Both tiers:25tick shot intervals=2.4/s; second shot32 precedes firstimpact48. One real physical rocket kills24/24 ordinary60HP regulars initially within2.4m, leaving0live blockers across6m cohort diameter. Clicked12/50m ground endpoints, earlier first-body hitx5.65 and35m directional range measured independently. Personally viewed22 corrected60Hz-VFX panels: visible rocket/orange blast/blood, courier and ground retain shape at pointblank, no sampled white-out. Step-only old visual clock excluded; explicit capability fixture."
     },
     {
-      "file": "docs/reports/sweep-c5/L7-03/pointblank-pixels.json",
-      "sha256": "d43fb7b682ed54504e14547d242f02e25cc86d2d8a16c52ed60128d84a9bf21c",
-      "what": "Current source actual physical mouse/keyboard rocket capability fixtures, complete launch/hit/kill/detonation ledgers, personally inspected74capture SHA256/seen notes, exactproducer bytes and ten semanticnegativecontrols."
+      "file": "docs/reports/final-c/L7-03/capture-review.json",
+      "sha256": "7daf3de27f7c0cc6e20ba25984b34d00c839109f84e1e3e009761c123cd0e154",
+      "what": "Both tiers:25tick shot intervals=2.4/s; second shot32 precedes firstimpact48. One real physical rocket kills24/24 ordinary60HP regulars initially within2.4m, leaving0live blockers across6m cohort diameter. Clicked12/50m ground endpoints, earlier first-body hitx5.65 and35m directional range measured independently. Personally viewed22 corrected60Hz-VFX panels: visible rocket/orange blast/blood, courier and ground retain shape at pointblank, no sampled white-out. Step-only old visual clock excluded; explicit capability fixture."
     },
     {
-      "file": "docs/reports/sweep-c5/L7-03/rocket-fault-proof.json",
-      "sha256": "2d0cf58565966d8dca44f9bf47045a8d46e6561d51b6e37037521f434723ebb4",
-      "what": "Current source actual physical mouse/keyboard rocket capability fixtures, complete launch/hit/kill/detonation ledgers, personally inspected74capture SHA256/seen notes, exactproducer bytes and ten semanticnegativecontrols."
+      "file": "docs/reports/final-c/L7-11/low-physical.json.gz",
+      "sha256": "72c11f659c6f521d4baa05aeeb3225cb38946efb7f5355f7c246cb7cfbe50ccc",
+      "what": "Both tiers:25tick shot intervals=2.4/s; second shot32 precedes firstimpact48. One real physical rocket kills24/24 ordinary60HP regulars initially within2.4m, leaving0live blockers across6m cohort diameter. Clicked12/50m ground endpoints, earlier first-body hitx5.65 and35m directional range measured independently. Personally viewed22 corrected60Hz-VFX panels: visible rocket/orange blast/blood, courier and ground retain shape at pointblank, no sampled white-out. Step-only old visual clock excluded; explicit capability fixture."
+    },
+    {
+      "file": "docs/reports/final-c/L7-11/high-physical.json.gz",
+      "sha256": "02803ff3b99a2ad3aae6b969efc8a5216508843f946714131c6ba255040d4f99",
+      "what": "Both tiers:25tick shot intervals=2.4/s; second shot32 precedes firstimpact48. One real physical rocket kills24/24 ordinary60HP regulars initially within2.4m, leaving0live blockers across6m cohort diameter. Clicked12/50m ground endpoints, earlier first-body hitx5.65 and35m directional range measured independently. Personally viewed22 corrected60Hz-VFX panels: visible rocket/orange blast/blood, courier and ground retain shape at pointblank, no sampled white-out. Step-only old visual clock excluded; explicit capability fixture."
     }
-  ]
+  ],
+  "notes": "Frozen-head row review. Current immutable evidence, unchanged criterion and game source.",
+  "sourceDigest": "1aff45872f0c1603cfc94e9f01d515824d2304b5b5d9e5f96fee9cc461ad064a"
 }

@@ -1,71 +1,43 @@
 {
   "row": "L8-07",
   "status": "PASS",
-  "reviewer": "Codex sweep-c5",
-  "date": "2026-11-06",
-  "commit": "a84a47a37cfa51f4561273586d43742466eb857d",
+  "reviewer": "Codex final-c",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
   "clauses": [
     {
-      "clause": "\u2265 2 escape paths \u2265 2.5 m wide from each enclosure; marker points at the APC (fixed).",
+      "clause": "≥ 2 escape paths ≥ 2.5 m wide from each enclosure; marker points at the APC (fixed).",
       "verdict": "PASS",
-      "note": "Current low/high1.25m-radius navigation finds separate north/south interior paths, explicit6m gate crossings and external paths to unchanged APC for allfive enclosures. Inserted gate slab blocks each crossing; sixteen semantic checker faults reject. Fresh shared-pool headless Metal physical WASD walks from actual carried L7 campaigns with low1/high4 humans reach all46 goals per tier within0.65m, no actor/position/objective writes; only courier protected, normal actors/colliders/outbreak continue. Nonempty physical markers are always exit at fixed APC(96.71,76.275). Personally inspected all44 original-size frames at both PO zooms: continuous pavement and open/fallen fence crossings in wide views, courier beyond each gate; final gold ring/yellow arrow at lit APC, objective1m. Close views supplement courier visibility, while wide views establish gate geometry. This qualifies paths/marker only, not boarding or escort success. Raw images deleted after hashing."
+      "note": "All five enclosures at both tiers have distinct north/south interior-to-gate and onward APC paths with production NavGrid clearance radius1.25m (diameter2.5m). All20 explicit gate crossings and both endpoint/path checks pass; inserted gate-width slabs reject each crossing. Current ordinary native marker observations hold exit at(96.71,76.275), zero displacement across2063low/2346high marked escape ticks. No route steering or nearest-entrance substitution is inferred."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-c5/L8-07/low-physical.json.gz",
-      "sha256": "46cbf37326a43ffd6cf2f2879e6158d84ca14e7689d6496625c11065310a3eeb",
-      "what": "Current independent1.25m-clearance gate geometry/marker proof, sixteen checker fault controls, actual unmodified physical L7 campaign seed chain, exact actual WASD46-point route or personally inspected44-frame SHA256 manifests."
+      "file": "docs/reports/final-c/L8-07/paths.json",
+      "sha256": "88952aa84715b0e66ca48caccb7266685a3e4e3c67bf5059728698223c6ef4ab",
+      "what": "All five enclosures at both tiers have distinct north/south interior-to-gate and onward APC paths with production NavGrid clearance radius1.25m (diameter2.5m). All20 explicit gate crossings and both endpoint/path checks pass; inserted gate-width slabs reject each crossing. Current ordinary native marker observations hold exit at(96.71,76.275), zero displacement across2063low/2346high marked escape ticks. No route steering or nearest-entrance substitution is inferred."
     },
     {
-      "file": "docs/reports/sweep-c5/L8-07/high-review.json",
-      "sha256": "938f2e867356b0ec12f1455f59ce9040383aa5d7aabc33b09c6156736dbf535b",
-      "what": "Current independent1.25m-clearance gate geometry/marker proof, sixteen checker fault controls, actual unmodified physical L7 campaign seed chain, exact actual WASD46-point route or personally inspected44-frame SHA256 manifests."
+      "file": "docs/reports/final-c/L8-07/producer.ts",
+      "sha256": "d4ffa162622a847fe1501aee6476efdc0f3a3721159bccdac7be392631ccedf4",
+      "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
     },
     {
-      "file": "docs/reports/sweep-c5/L8-07/high-physical.json.gz",
-      "sha256": "12bd17915f57cc7cb23aa10052d0ffd3263c4b8cca09474f0cb4738861c8de34",
-      "what": "Current independent1.25m-clearance gate geometry/marker proof, sixteen checker fault controls, actual unmodified physical L7 campaign seed chain, exact actual WASD46-point route or personally inspected44-frame SHA256 manifests."
+      "file": "docs/reports/final-c/L8-07/markers.json",
+      "sha256": "1851b9274856354e5e476f4b9715c5d8cf3ff60042037e68ab60c727e7f41e59",
+      "what": "All five enclosures at both tiers have distinct north/south interior-to-gate and onward APC paths with production NavGrid clearance radius1.25m (diameter2.5m). All20 explicit gate crossings and both endpoint/path checks pass; inserted gate-width slabs reject each crossing. Current ordinary native marker observations hold exit at(96.71,76.275), zero displacement across2063low/2346high marked escape ticks. No route steering or nearest-entrance substitution is inferred."
     },
     {
-      "file": "docs/reports/sweep-c5/L8-07/low-review.json",
-      "sha256": "3b33301eb29592aaf9225f6bb1ed2ec7df8b8fd24061956a2e6cc778a718cca6",
-      "what": "Current independent1.25m-clearance gate geometry/marker proof, sixteen checker fault controls, actual unmodified physical L7 campaign seed chain, exact actual WASD46-point route or personally inspected44-frame SHA256 manifests."
+      "file": "docs/reports/final-c/native/L8-low-complete.json.gz",
+      "sha256": "96688fdb8d814fe11ac0659a042df65e0712b4d29036c71660281328d7bf593f",
+      "what": "All five enclosures at both tiers have distinct north/south interior-to-gate and onward APC paths with production NavGrid clearance radius1.25m (diameter2.5m). All20 explicit gate crossings and both endpoint/path checks pass; inserted gate-width slabs reject each crossing. Current ordinary native marker observations hold exit at(96.71,76.275), zero displacement across2063low/2346high marked escape ticks. No route steering or nearest-entrance substitution is inferred."
     },
     {
-      "file": "docs/reports/sweep-c5/L8-07/native-marker.json.gz",
-      "sha256": "8fb0b3176fba2bd2760e899441a2caa0012458e063a2cd19077ec4fc375eb2d5",
-      "what": "Current independent1.25m-clearance gate geometry/marker proof, sixteen checker fault controls, actual unmodified physical L7 campaign seed chain, exact actual WASD46-point route or personally inspected44-frame SHA256 manifests."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L8-07/seed-provenance.json",
-      "sha256": "62486db5009dd3b8f4400fef1bc7f78fe913165e2e1cd01cbeb032c8ecb63dbe",
-      "what": "Current independent1.25m-clearance gate geometry/marker proof, sixteen checker fault controls, actual unmodified physical L7 campaign seed chain, exact actual WASD46-point route or personally inspected44-frame SHA256 manifests."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L8-07/low-campaign.json.gz",
-      "sha256": "7d18800b3477b35fc377b3209b4e906913ff9e783fcfa8d027ec9ab0ba7198c7",
-      "what": "Current independent1.25m-clearance gate geometry/marker proof, sixteen checker fault controls, actual unmodified physical L7 campaign seed chain, exact actual WASD46-point route or personally inspected44-frame SHA256 manifests."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L8-07/physical-audit.json",
-      "sha256": "8b8a3d0e562641785179b49c7f57812080f9265daffff23196e52fbf2f3a148f",
-      "what": "Current independent1.25m-clearance gate geometry/marker proof, sixteen checker fault controls, actual unmodified physical L7 campaign seed chain, exact actual WASD46-point route or personally inspected44-frame SHA256 manifests."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L8-07/high-campaign.json.gz",
-      "sha256": "5c876daa169912a68450a7c99a0544116be98477e1e59a15c60353c502de1a67",
-      "what": "Current independent1.25m-clearance gate geometry/marker proof, sixteen checker fault controls, actual unmodified physical L7 campaign seed chain, exact actual WASD46-point route or personally inspected44-frame SHA256 manifests."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L8-07/native-paths.json",
-      "sha256": "00da053fb7572276339a383e5b6411b6b7f6fa82a838afea91692897dbbdd7d0",
-      "what": "Current independent1.25m-clearance gate geometry/marker proof, sixteen checker fault controls, actual unmodified physical L7 campaign seed chain, exact actual WASD46-point route or personally inspected44-frame SHA256 manifests."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L8-07/checker-controls.json",
-      "sha256": "1f4550e1fab5535892c2b4da33db9329d0a3c8cc1ccd100b974dbe64138fce6d",
-      "what": "Current independent1.25m-clearance gate geometry/marker proof, sixteen checker fault controls, actual unmodified physical L7 campaign seed chain, exact actual WASD46-point route or personally inspected44-frame SHA256 manifests."
+      "file": "docs/reports/final-c/native/L8-high-complete.json.gz",
+      "sha256": "f8a12416068c3832b60c87e347766e4ce6c6f8491a4eb313c097d64976a8519a",
+      "what": "All five enclosures at both tiers have distinct north/south interior-to-gate and onward APC paths with production NavGrid clearance radius1.25m (diameter2.5m). All20 explicit gate crossings and both endpoint/path checks pass; inserted gate-width slabs reject each crossing. Current ordinary native marker observations hold exit at(96.71,76.275), zero displacement across2063low/2346high marked escape ticks. No route steering or nearest-entrance substitution is inferred."
     }
-  ]
+  ],
+  "notes": "Frozen-head row review. Current immutable evidence, unchanged criterion and game source.",
+  "sourceDigest": "3f346fc1f0af18cb190b29844498febc36a720450de65904caad638582d717b9"
 }

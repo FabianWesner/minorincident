@@ -1,86 +1,93 @@
 {
   "row": "L10-05",
   "status": "PASS",
-  "reviewer": "Codex sweep-c5",
-  "date": "2026-11-06",
-  "commit": "ad4a41f860c93cb63fef6b06b5eab3acc2725b49",
+  "reviewer": "Codex final-c",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
   "clauses": [
     {
       "clause": "Weapons only at their named checkpoints, taken on approach, snapshot with the pickup; picking one up spawns nothing.",
       "verdict": "PASS",
-      "note": "Both current full native routes preserve canonical control hashes and collect the four expected weapons at named anchors; checkpoint snapshots include each new weapon on the exact collection tick.24 four-second inventory-only comparisons(named/all weapons versus unchanged baseline at each approach and tier) have zero births and identical every-tick infected censuses. Eight physical WASD approach slices from those production Resume snapshots collect the intended weapon without E input; snapshot ticks51/52 equal the actual collection tick, with zero spawn calls. All16 before/after captures personally inspected: named ring3m ahead before, equipped weapon and next objective after, with Security booth/medkits/corgi and corridor canister visible. No page errors. Focused regional capability, not a continuous physical finale; no actor/objective/arsenal writes in physical slices."
+      "note": "Both ordinary native routes acquire exactly pistol/shotgun/MG/rocket at their four named anchors, inside2m, with the new item in the exact same-tick checkpoint snapshot. Eight current physical WASD approaches (protected courier only) collect withoutE at ticks51–52 and snapshot on that exact tick;0births per approach. All24four-second inventory-only baseline/named/all-arsenal comparisons have identical birth/census hashes; independent complete-route final hashes match. Immutable seed relocation is recorded explicitly."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-c5/L10-05/native-pickups.json.gz",
-      "sha256": "a53d531cced335c873255cfad091e4d77aee76289d652c164fb0f929e58892dd",
-      "what": "Full competent native routes and24 inventory-only controlled comparisons from actual pre-pickup snapshots; unchanged final states and every-tick infected censuses."
+      "file": "docs/reports/final-c/L10-05/L10-pickups-proof.json",
+      "sha256": "639595f776e341ac9b938c6a2a7691a82987b84c69a18f2a204754de232d8eca",
+      "what": "Both ordinary native routes acquire exactly pistol/shotgun/MG/rocket at their four named anchors, inside2m, with the new item in the exact same-tick checkpoint snapshot. Eight current physical WASD approaches (protected courier only) collect withoutE at ticks51–52 and snapshot on that exact tick;0births per approach. All24four-second inventory-only baseline/named/all-arsenal comparisons have identical birth/census hashes; independent complete-route final hashes match. Immutable seed relocation is recorded explicitly."
     },
     {
-      "file": "docs/reports/sweep-c5/L10-05/seeds/L10-05-low-cure-residential-save.json.gz",
-      "sha256": "e744f58cf05e460bd8e5d50c5e136e4734cdd21ed7622c80e207d51a8686255d",
-      "what": "Exact naturally reached native pre-pickup production Resume used by the physical keyboard approach."
+      "file": "docs/reports/final-c/L10-05/physical-low-physical.json.gz",
+      "sha256": "f79f79a29d6ac6fc833543f71ac89f53482c25fd4aeda3b497c519fa0df92bcd",
+      "what": "Both ordinary native routes acquire exactly pistol/shotgun/MG/rocket at their four named anchors, inside2m, with the new item in the exact same-tick checkpoint snapshot. Eight current physical WASD approaches (protected courier only) collect withoutE at ticks51–52 and snapshot on that exact tick;0births per approach. All24four-second inventory-only baseline/named/all-arsenal comparisons have identical birth/census hashes; independent complete-route final hashes match. Immutable seed relocation is recorded explicitly."
     },
     {
-      "file": "docs/reports/sweep-c5/L10-05/seeds/L10-05-low-cure-industrial-save.json.gz",
+      "file": "docs/reports/final-c/L10-05/seed-relocation.json",
+      "sha256": "ce561d58b2253d036fa13ce979a5006b86a32cdc539bb5bc1f15ba3854c570a0",
+      "what": "Both ordinary native routes acquire exactly pistol/shotgun/MG/rocket at their four named anchors, inside2m, with the new item in the exact same-tick checkpoint snapshot. Eight current physical WASD approaches (protected courier only) collect withoutE at ticks51–52 and snapshot on that exact tick;0births per approach. All24four-second inventory-only baseline/named/all-arsenal comparisons have identical birth/census hashes; independent complete-route final hashes match. Immutable seed relocation is recorded explicitly."
+    },
+    {
+      "file": "docs/reports/final-c/L10-05/producer.ts",
+      "sha256": "1a402fdbde73a48ba8859e06ef7c9bc120376d6a2675746257a1dab87a769249",
+      "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
+    },
+    {
+      "file": "docs/reports/final-c/L10-05/physical-high-physical.json.gz",
+      "sha256": "87982f4f909752225406e6ab39bff1a89649014986e642f6b86c1653792a0d86",
+      "what": "Both ordinary native routes acquire exactly pistol/shotgun/MG/rocket at their four named anchors, inside2m, with the new item in the exact same-tick checkpoint snapshot. Eight current physical WASD approaches (protected courier only) collect withoutE at ticks51–52 and snapshot on that exact tick;0births per approach. All24four-second inventory-only baseline/named/all-arsenal comparisons have identical birth/census hashes; independent complete-route final hashes match. Immutable seed relocation is recorded explicitly."
+    },
+    {
+      "file": "docs/reports/final-c/L10-05/coverage.json",
+      "sha256": "7b1e66223fbd6bc3472a9979d7bc74a7b9ce2faccc88863b60a49bd95de0a5b8",
+      "what": "Both ordinary native routes acquire exactly pistol/shotgun/MG/rocket at their four named anchors, inside2m, with the new item in the exact same-tick checkpoint snapshot. Eight current physical WASD approaches (protected courier only) collect withoutE at ticks51–52 and snapshot on that exact tick;0births per approach. All24four-second inventory-only baseline/named/all-arsenal comparisons have identical birth/census hashes; independent complete-route final hashes match. Immutable seed relocation is recorded explicitly."
+    },
+    {
+      "file": "docs/reports/final-c/L10-05/sweep-c4-l10-pickups-producer.ts",
+      "sha256": "83f85aa88a5bf8376d92168282fc7d126bfacd9be758fbbc9adda27c3250ca53",
+      "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
+    },
+    {
+      "file": "docs/reports/final-c/L10-05/seeds/L10-05-low-cure-industrial-save.json.gz",
       "sha256": "46c251ae24cc7b06c02a4caaf1c5282a83cb84f0364f5e8405e4529df27e228a",
-      "what": "Exact naturally reached native pre-pickup production Resume used by the physical keyboard approach."
+      "what": "Both ordinary native routes acquire exactly pistol/shotgun/MG/rocket at their four named anchors, inside2m, with the new item in the exact same-tick checkpoint snapshot. Eight current physical WASD approaches (protected courier only) collect withoutE at ticks51–52 and snapshot on that exact tick;0births per approach. All24four-second inventory-only baseline/named/all-arsenal comparisons have identical birth/census hashes; independent complete-route final hashes match. Immutable seed relocation is recorded explicitly."
     },
     {
-      "file": "docs/reports/sweep-c5/L10-05/seeds/L10-05-low-cure-military-save.json.gz",
-      "sha256": "3ac0d532f3c5c3cf87fcab263a5bdec7e6e60bc034362e4a21827f8234e0699e",
-      "what": "Exact naturally reached native pre-pickup production Resume used by the physical keyboard approach."
+      "file": "docs/reports/final-c/L10-05/seeds/L10-05-low-cure-corridor-save.json.gz",
+      "sha256": "34478dff62e0b954ee2eef6074d6566b4227bfe7c55f33f7dde77e2f72306248",
+      "what": "Both ordinary native routes acquire exactly pistol/shotgun/MG/rocket at their four named anchors, inside2m, with the new item in the exact same-tick checkpoint snapshot. Eight current physical WASD approaches (protected courier only) collect withoutE at ticks51–52 and snapshot on that exact tick;0births per approach. All24four-second inventory-only baseline/named/all-arsenal comparisons have identical birth/census hashes; independent complete-route final hashes match. Immutable seed relocation is recorded explicitly."
     },
     {
-      "file": "docs/reports/sweep-c5/L10-05/seeds/L10-05-low-cure-corridor-save.json.gz",
-      "sha256": "a203c6b62a8f8bb2bd3962e76450eec8b17a636bc912ea7bc0d5afff9c978d64",
-      "what": "Exact naturally reached native pre-pickup production Resume used by the physical keyboard approach."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L10-05/low-review.json",
-      "sha256": "f613d8d5811187a9855f43bf2a28626a3dc7403620478c8f02aaac052b7f66eb",
-      "what": "Every before/after capture personally inspected at original size; frame hashes and observations retained, raws deleted."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L10-05/low-physical.json.gz",
-      "sha256": "d4b6635185bd3babf5094d104b7071acef332fd12a6f858e6f395bf4c5fce9e1",
-      "what": "Immutable current-source physical WASD input, collection, checkpoint and spawn-call receipt with exact seed and producer hashes."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L10-05/seeds/L10-05-high-cure-residential-save.json.gz",
-      "sha256": "aa89db86b55e353fe5291c2204518c2126ea7bc9153b1cd78a9d9583d72c4d44",
-      "what": "Exact naturally reached native pre-pickup production Resume used by the physical keyboard approach."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L10-05/seeds/L10-05-high-cure-industrial-save.json.gz",
+      "file": "docs/reports/final-c/L10-05/seeds/L10-05-high-cure-industrial-save.json.gz",
       "sha256": "b9d8e13ce40095bdc7ca7e2751f830ed16f1edde06d17e9d9d865d6b876888bd",
-      "what": "Exact naturally reached native pre-pickup production Resume used by the physical keyboard approach."
+      "what": "Both ordinary native routes acquire exactly pistol/shotgun/MG/rocket at their four named anchors, inside2m, with the new item in the exact same-tick checkpoint snapshot. Eight current physical WASD approaches (protected courier only) collect withoutE at ticks51–52 and snapshot on that exact tick;0births per approach. All24four-second inventory-only baseline/named/all-arsenal comparisons have identical birth/census hashes; independent complete-route final hashes match. Immutable seed relocation is recorded explicitly."
     },
     {
-      "file": "docs/reports/sweep-c5/L10-05/seeds/L10-05-high-cure-military-save.json.gz",
-      "sha256": "03d7ec195dcce8b8f1c862025317ae113d8824175ff7f2579c73f22c42ec0f2f",
-      "what": "Exact naturally reached native pre-pickup production Resume used by the physical keyboard approach."
+      "file": "docs/reports/final-c/L10-05/seeds/L10-05-high-cure-corridor-save.json.gz",
+      "sha256": "b876194ffcc876a1d0fef62f65343be9d7e46c340aa0785d7143644bea7dbc65",
+      "what": "Both ordinary native routes acquire exactly pistol/shotgun/MG/rocket at their four named anchors, inside2m, with the new item in the exact same-tick checkpoint snapshot. Eight current physical WASD approaches (protected courier only) collect withoutE at ticks51–52 and snapshot on that exact tick;0births per approach. All24four-second inventory-only baseline/named/all-arsenal comparisons have identical birth/census hashes; independent complete-route final hashes match. Immutable seed relocation is recorded explicitly."
     },
     {
-      "file": "docs/reports/sweep-c5/L10-05/seeds/L10-05-high-cure-corridor-save.json.gz",
-      "sha256": "eca0abb02bf33e3d422d25a60eda4e4fa7f7d7a427545b6545b0048114a1363b",
-      "what": "Exact naturally reached native pre-pickup production Resume used by the physical keyboard approach."
+      "file": "docs/reports/final-c/L10-05/seeds/L10-05-low-cure-residential-save.json.gz",
+      "sha256": "e744f58cf05e460bd8e5d50c5e136e4734cdd21ed7622c80e207d51a8686255d",
+      "what": "Both ordinary native routes acquire exactly pistol/shotgun/MG/rocket at their four named anchors, inside2m, with the new item in the exact same-tick checkpoint snapshot. Eight current physical WASD approaches (protected courier only) collect withoutE at ticks51–52 and snapshot on that exact tick;0births per approach. All24four-second inventory-only baseline/named/all-arsenal comparisons have identical birth/census hashes; independent complete-route final hashes match. Immutable seed relocation is recorded explicitly."
     },
     {
-      "file": "docs/reports/sweep-c5/L10-05/high-review.json",
-      "sha256": "c684256c7bbcf136bca036f61a5daec5251a92c77797ce4e0ac9386496c19c1e",
-      "what": "Every before/after capture personally inspected at original size; frame hashes and observations retained, raws deleted."
+      "file": "docs/reports/final-c/L10-05/seeds/L10-05-low-cure-military-save.json.gz",
+      "sha256": "d5eba561ca3e9c594778005457c84eb7f80817ab533e32985a8f06e2a3dad1a3",
+      "what": "Both ordinary native routes acquire exactly pistol/shotgun/MG/rocket at their four named anchors, inside2m, with the new item in the exact same-tick checkpoint snapshot. Eight current physical WASD approaches (protected courier only) collect withoutE at ticks51–52 and snapshot on that exact tick;0births per approach. All24four-second inventory-only baseline/named/all-arsenal comparisons have identical birth/census hashes; independent complete-route final hashes match. Immutable seed relocation is recorded explicitly."
     },
     {
-      "file": "docs/reports/sweep-c5/L10-05/high-physical.json.gz",
-      "sha256": "93b1d4c18702fdc336d282c85f4d6471ef9b37df0e8af20b4a082256a380ef8c",
-      "what": "Immutable current-source physical WASD input, collection, checkpoint and spawn-call receipt with exact seed and producer hashes."
+      "file": "docs/reports/final-c/L10-05/seeds/L10-05-high-cure-military-save.json.gz",
+      "sha256": "2f764853f9714f6e9a0b35e4d7b921a9b0c68b25fdf3dd069bb1f725fdb589d8",
+      "what": "Both ordinary native routes acquire exactly pistol/shotgun/MG/rocket at their four named anchors, inside2m, with the new item in the exact same-tick checkpoint snapshot. Eight current physical WASD approaches (protected courier only) collect withoutE at ticks51–52 and snapshot on that exact tick;0births per approach. All24four-second inventory-only baseline/named/all-arsenal comparisons have identical birth/census hashes; independent complete-route final hashes match. Immutable seed relocation is recorded explicitly."
     },
     {
-      "file": "docs/reports/sweep-c5/L10-05/summary.json",
-      "sha256": "19dc059db87962afdbf61f3984c9578cd9f67903e0bf98500f0d6f6b013dfe4a",
-      "what": "Eight collected weapons at named checkpoints, same-tick snapshots, no interaction input, zero spawn calls and actual runtime metadata."
+      "file": "docs/reports/final-c/L10-05/seeds/L10-05-high-cure-residential-save.json.gz",
+      "sha256": "aa89db86b55e353fe5291c2204518c2126ea7bc9153b1cd78a9d9583d72c4d44",
+      "what": "Both ordinary native routes acquire exactly pistol/shotgun/MG/rocket at their four named anchors, inside2m, with the new item in the exact same-tick checkpoint snapshot. Eight current physical WASD approaches (protected courier only) collect withoutE at ticks51–52 and snapshot on that exact tick;0births per approach. All24four-second inventory-only baseline/named/all-arsenal comparisons have identical birth/census hashes; independent complete-route final hashes match. Immutable seed relocation is recorded explicitly."
     }
-  ]
+  ],
+  "notes": "Frozen-head row review. Current immutable evidence, unchanged criterion and game source.",
+  "sourceDigest": "75720d4df4ad59ad1814e1cda498bc4620d28edfa0298106dd53315c5f2fba05"
 }

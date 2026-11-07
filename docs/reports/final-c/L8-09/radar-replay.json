@@ -1,0 +1,114 @@
+{
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+  "revision": "5102471285e75a9aaf711abe3f6fa3268e7b3450",
+  "producerSha256": "b6a1d9bfac7194912238963eda50ab94aee58679a63ce6e32dc7d37874c28df3",
+  "nativeProofPath": "docs/reports/final-c/L8-09/boarding-native.json",
+  "nativeProofSha256": "fa03f333f614388fb0bc6a83c748f05f711fdd2e1dbabdf22712246b4f6f4899",
+  "method": "Headless shared-pool production SurvivorRadar and production CSS replay over every actual native boarding snapshot. Confirms DOM pin eligibility/visibility for humans; companion visibility requires separate live evidence. No 3D rendering, game mutations or performance measurements.",
+  "errors": [],
+  "rows": [
+    {
+      "tier": "low",
+      "ticks": 1221,
+      "humanSamples": 7658,
+      "internalPassengerSamples": 216,
+      "missingPins": 0,
+      "companionSamples": 145,
+      "farthestCompanion": 4.9601035481418645,
+      "failures": [],
+      "examples": [
+        {
+          "tick": 4502,
+          "ids": [
+            355,
+            356,
+            357,
+            358,
+            359,
+            360,
+            361,
+            362,
+            363,
+            364,
+            365,
+            366
+          ]
+        },
+        {
+          "tick": 4503,
+          "ids": [
+            355,
+            356,
+            357,
+            358,
+            359,
+            360,
+            361,
+            362,
+            363,
+            364,
+            365,
+            366
+          ]
+        }
+      ],
+      "negativeMissingPinRejected": true,
+      "capture": {
+        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/final-c/test-results/final-c-l8-radar-1794016989552/low-actual-wait.png",
+        "sha256": "9d182be4d388056957dac129ccd6185a7002ff951f820dd8d69c31d30ccabc70"
+      }
+    },
+    {
+      "tier": "high",
+      "ticks": 1522,
+      "humanSamples": 10277,
+      "internalPassengerSamples": 216,
+      "missingPins": 0,
+      "companionSamples": 146,
+      "farthestCompanion": 4.960231518013181,
+      "failures": [],
+      "examples": [
+        {
+          "tick": 4484,
+          "ids": [
+            355,
+            356,
+            357,
+            358,
+            359,
+            360,
+            361,
+            362,
+            363,
+            364,
+            365,
+            366
+          ]
+        },
+        {
+          "tick": 4485,
+          "ids": [
+            355,
+            356,
+            357,
+            358,
+            359,
+            360,
+            361,
+            362,
+            363,
+            364,
+            365,
+            366
+          ]
+        }
+      ],
+      "negativeMissingPinRejected": true,
+      "capture": {
+        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/final-c/test-results/final-c-l8-radar-1794016989552/high-actual-wait.png",
+        "sha256": "74d164b7ddfb01ba5d8dc17554c55994e6cc1a61a9efcd856d82be34db37468f"
+      }
+    }
+  ]
+}

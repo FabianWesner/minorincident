@@ -1,0 +1,67 @@
+{
+  "method": "Read every actual durability transaction and input tick in the current matched physical safe/shortcut drives. Match every completed stopped-fixture attack ID to its own production windup event and actual damage event; retain raw source receipts.",
+  "rows": [
+    {
+      "tier": "low",
+      "cases": [
+        {
+          "route": "safe",
+          "preCrashDurability": 820,
+          "inputTicks": 7620,
+          "contactHits": 18,
+          "allHitDeltas": 10,
+          "uniqueContactIds": true,
+          "pageErrors": 0
+        },
+        {
+          "route": "shortcut",
+          "preCrashDurability": 770,
+          "inputTicks": 5352,
+          "contactHits": 23,
+          "allHitDeltas": 10,
+          "uniqueContactIds": true,
+          "pageErrors": 0
+        }
+      ],
+      "stoppedFixture": {
+        "ordinaryAttackers": 4,
+        "observedTicks": 600,
+        "completedAttacks": 18,
+        "minimumWindupTicks": 36,
+        "minimumActualAttackDelayTicks": 36,
+        "damagePerAttack": 10
+      }
+    },
+    {
+      "tier": "high",
+      "cases": [
+        {
+          "route": "safe",
+          "preCrashDurability": 890,
+          "inputTicks": 7620,
+          "contactHits": 11,
+          "allHitDeltas": 10,
+          "uniqueContactIds": true,
+          "pageErrors": 0
+        },
+        {
+          "route": "shortcut",
+          "preCrashDurability": 730,
+          "inputTicks": 5352,
+          "contactHits": 27,
+          "allHitDeltas": 10,
+          "uniqueContactIds": true,
+          "pageErrors": 0
+        }
+      ],
+      "stoppedFixture": {
+        "ordinaryAttackers": 4,
+        "observedTicks": 600,
+        "completedAttacks": 18,
+        "minimumWindupTicks": 36,
+        "minimumActualAttackDelayTicks": 36,
+        "damagePerAttack": 10
+      }
+    }
+  ]
+}

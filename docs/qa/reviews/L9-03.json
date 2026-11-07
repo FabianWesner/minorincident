@@ -1,87 +1,133 @@
 {
   "row": "L9-03",
   "status": "PASS",
-  "reviewer": "Codex sweep-c5",
-  "date": "2026-11-06",
-  "commit": "3f5f294daf8264b98c0d70e3746cfc5497e9b48b",
+  "reviewer": "Codex final-c",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
   "clauses": [
     {
-      "clause": "Threat present: on every route \u2265 1 group or wanderer in the camera frame per 60 s of driving (tune; 11-01 strip showed 0 in frame for 30 s).",
+      "clause": "Threat present: on every route ≥ 1 group or wanderer in the camera frame per 60 s of driving (tune; 11-01 strip showed 0 in frame for 30 s).",
       "verdict": "PASS",
-      "note": "Fresh current-source six-route physical WASD matrix completes at both tiers with no skips or console/page errors. All37 original-size panels personally inspected, raw hashes verified and raw captures deleted. Wide first-threat frames show living blue humanoid infected/red bars beside or ahead of APC; close frames often crop contacts. Stills do not establish continuous coverage. Full archived observations recomputed by unchanged >=0.5m/s driving evaluator: low road10.7333/countryside14.75/shortcut14.3667s, high road15.4667/countryside18.8333/shortcut14.0667s conservative gaps, all <=60s. Dead bodies cannot reset interval; unknown intervals count fully and maximum sample interval is added. Five synthetic controls plus long-unknown and backwards-clock controls pass. Proof previously asserted a historical high-road failure; this non-invariant result assertion was removed, retaining actual occupied/driving clocks and all independent controls, with added current-source assertion. No producer, evaluator, threshold or game change; normal APC damage, protected courier."
+      "note": "Twelve complete real-WASD routes (3routes ×2tiers ×2zooms) have actual submitted living infected witnesses. Largest measured moving empty interval44.4s; adding0.2s sampling slack and an entire10s unknown scripted crash tail bounds every route by54.6s<60. Four actual crash runs independently measure5s to ejection; no inactive-seat observation invented. Personally viewed all12 living-body witness frames."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-c5/L9-03/motion-clock-proof.json",
-      "sha256": "2bd0cacda9d25f7c3536e6a3acc7a423a33c8bbda1af65afc7b1aefbe428a82a",
-      "what": "Six source-bound complete physical drives, actual camera-body motion intervals and personally inspected per-frame SHA256/seen notes; immutable raw logs referenced by archived reviews. Motion proof independently checks stationary/dead/unknown/speed boundary/backwards clock handling."
+      "file": "docs/reports/final-c/L9-03/qualification-producer.py",
+      "sha256": "577684b7f7fd47e3b78c2905cd33b7dd2d541b998bec9e9e7b004dc8e2ad9cbb",
+      "what": "Twelve complete real-WASD routes (3routes ×2tiers ×2zooms) have actual submitted living infected witnesses. Largest measured moving empty interval44.4s; adding0.2s sampling slack and an entire10s unknown scripted crash tail bounds every route by54.6s<60. Four actual crash runs independently measure5s to ejection; no inactive-seat observation invented. Personally viewed all12 living-body witness frames."
     },
     {
-      "file": "docs/reports/sweep-c5/L9-03/L9-high-webgl2-z1.5-countryside-1793944229924/review.json",
-      "sha256": "63096a220db259b9ec6b010148b4b7fb6c6a4cad906fdb57c08c979a577e33dd",
-      "what": "Six source-bound complete physical drives, actual camera-body motion intervals and personally inspected per-frame SHA256/seen notes; immutable raw logs referenced by archived reviews. Motion proof independently checks stationary/dead/unknown/speed boundary/backwards clock handling."
+      "file": "docs/reports/final-c/L9-03/coverage.json",
+      "sha256": "ca9d5d3820d009b795242047d6e6811083edaa84f92f432eba379007e0dfe4b1",
+      "what": "Twelve complete real-WASD routes (3routes ×2tiers ×2zooms) have actual submitted living infected witnesses. Largest measured moving empty interval44.4s; adding0.2s sampling slack and an entire10s unknown scripted crash tail bounds every route by54.6s<60. Four actual crash runs independently measure5s to ejection; no inactive-seat observation invented. Personally viewed all12 living-body witness frames."
     },
     {
-      "file": "docs/reports/sweep-c5/L9-03/L9-high-webgl2-z1.5-dry-shortcut-1793944389727/review.json",
-      "sha256": "84f15dc6e8890fd775b81aa107d2fcf8a5efd79418e300e425ff2460b2ba1154",
-      "what": "Six source-bound complete physical drives, actual camera-body motion intervals and personally inspected per-frame SHA256/seen notes; immutable raw logs referenced by archived reviews. Motion proof independently checks stationary/dead/unknown/speed boundary/backwards clock handling."
+      "file": "docs/reports/final-c/L9-03/capture-review.json",
+      "sha256": "238d0e8b319bfa73349f5fcebd4aad28174b13821ce0a34e86dbb27e111646f0",
+      "what": "Twelve complete real-WASD routes (3routes ×2tiers ×2zooms) have actual submitted living infected witnesses. Largest measured moving empty interval44.4s; adding0.2s sampling slack and an entire10s unknown scripted crash tail bounds every route by54.6s<60. Four actual crash runs independently measure5s to ejection; no inactive-seat observation invented. Personally viewed all12 living-body witness frames."
     },
     {
-      "file": "docs/reports/sweep-c5/L9-03/L9-high-webgl2-z1.5-road-1793944016596/review.json",
-      "sha256": "017234901390fa21cb0d3ee5946c15858da85e521e43a759be7355454b775c0b",
-      "what": "Six source-bound complete physical drives, actual camera-body motion intervals and personally inspected per-frame SHA256/seen notes; immutable raw logs referenced by archived reviews. Motion proof independently checks stationary/dead/unknown/speed boundary/backwards clock handling."
+      "file": "docs/reports/final-c/L9-09/low-road-z1.5-physical.json.gz",
+      "sha256": "8888f73a5cfbff740f416e5e51b82f68541768f4cb218041d15fe25289cec790",
+      "what": "Twelve complete real-WASD routes (3routes ×2tiers ×2zooms) have actual submitted living infected witnesses. Largest measured moving empty interval44.4s; adding0.2s sampling slack and an entire10s unknown scripted crash tail bounds every route by54.6s<60. Four actual crash runs independently measure5s to ejection; no inactive-seat observation invented. Personally viewed all12 living-body witness frames."
     },
     {
-      "file": "docs/reports/sweep-c5/L9-03/L9-low-webgl2-z1.5-countryside-1793944381271/review.json",
-      "sha256": "c4fcf723a7110e1f66a3b8fedc1b2bc6ac2d5371f22c6f35d14647b7ba75f507",
-      "what": "Six source-bound complete physical drives, actual camera-body motion intervals and personally inspected per-frame SHA256/seen notes; immutable raw logs referenced by archived reviews. Motion proof independently checks stationary/dead/unknown/speed boundary/backwards clock handling."
+      "file": "docs/reports/final-c/L9-09/photo-only-low-road-z1.5-physical.json.gz",
+      "sha256": "7132803d4c1ffc73946ab3ba0bc55f6c9056ae95b3b966d5a8df801f2a702c42",
+      "what": "Twelve complete real-WASD routes (3routes ×2tiers ×2zooms) have actual submitted living infected witnesses. Largest measured moving empty interval44.4s; adding0.2s sampling slack and an entire10s unknown scripted crash tail bounds every route by54.6s<60. Four actual crash runs independently measure5s to ejection; no inactive-seat observation invented. Personally viewed all12 living-body witness frames."
     },
     {
-      "file": "docs/reports/sweep-c5/L9-03/L9-low-webgl2-z1.5-dry-shortcut-1793944868517/review.json",
-      "sha256": "2b3cf8d41c82caf8b6a17c75209d4bda254c32c13fa8304b3340710aad4355a3",
-      "what": "Six source-bound complete physical drives, actual camera-body motion intervals and personally inspected per-frame SHA256/seen notes; immutable raw logs referenced by archived reviews. Motion proof independently checks stationary/dead/unknown/speed boundary/backwards clock handling."
+      "file": "docs/reports/final-c/L9-09/low-countryside-z1.5-physical.json.gz",
+      "sha256": "eab81d7af6757774f267b588dcda3923eb0813d10e2318d28622e802b0fe36de",
+      "what": "Twelve complete real-WASD routes (3routes ×2tiers ×2zooms) have actual submitted living infected witnesses. Largest measured moving empty interval44.4s; adding0.2s sampling slack and an entire10s unknown scripted crash tail bounds every route by54.6s<60. Four actual crash runs independently measure5s to ejection; no inactive-seat observation invented. Personally viewed all12 living-body witness frames."
     },
     {
-      "file": "docs/reports/sweep-c5/L9-03/L9-low-webgl2-z1.5-road-1793944015651/review.json",
-      "sha256": "ea0339d1499333d277a4382ebddef8646e16569bac61187e23ddbefbac930524",
-      "what": "Six source-bound complete physical drives, actual camera-body motion intervals and personally inspected per-frame SHA256/seen notes; immutable raw logs referenced by archived reviews. Motion proof independently checks stationary/dead/unknown/speed boundary/backwards clock handling."
+      "file": "docs/reports/final-c/L9-09/high-road-z1.5-physical.json.gz",
+      "sha256": "41e09336df33854833a32d172b748724d9cfd2da60d200f8990bde4b18c78e14",
+      "what": "Twelve complete real-WASD routes (3routes ×2tiers ×2zooms) have actual submitted living infected witnesses. Largest measured moving empty interval44.4s; adding0.2s sampling slack and an entire10s unknown scripted crash tail bounds every route by54.6s<60. Four actual crash runs independently measure5s to ejection; no inactive-seat observation invented. Personally viewed all12 living-body witness frames."
     },
     {
-      "file": "docs/reports/sweep-c5/L9-03/L9-high-webgl2-z1.5-countryside-1793944229924/input.json.gz",
-      "sha256": "57bc6009993c780646a64fcaa7ba9e0085c3a3eb73f36d09f7c466c338856b05",
-      "what": "Six source-bound complete physical drives, actual camera-body motion intervals and personally inspected per-frame SHA256/seen notes; immutable raw logs referenced by archived reviews. Motion proof independently checks stationary/dead/unknown/speed boundary/backwards clock handling."
+      "file": "docs/reports/final-c/L9-09/high-dry-shortcut-z1.5-physical.json.gz",
+      "sha256": "09a5371c50dcacf75b0dd7ad5c739dba080a2f1317f7d35397a6ae25760c81bd",
+      "what": "Twelve complete real-WASD routes (3routes ×2tiers ×2zooms) have actual submitted living infected witnesses. Largest measured moving empty interval44.4s; adding0.2s sampling slack and an entire10s unknown scripted crash tail bounds every route by54.6s<60. Four actual crash runs independently measure5s to ejection; no inactive-seat observation invented. Personally viewed all12 living-body witness frames."
     },
     {
-      "file": "docs/reports/sweep-c5/L9-03/L9-high-webgl2-z1.5-dry-shortcut-1793944389727/input.json.gz",
-      "sha256": "32e1c63d9bb7eeae6cadbfebf7d742b7d3a1326fb45523fb9b28c79024289f1e",
-      "what": "Six source-bound complete physical drives, actual camera-body motion intervals and personally inspected per-frame SHA256/seen notes; immutable raw logs referenced by archived reviews. Motion proof independently checks stationary/dead/unknown/speed boundary/backwards clock handling."
+      "file": "docs/reports/final-c/L9-09/low-dry-shortcut-z1.5-physical.json.gz",
+      "sha256": "3091f807efb0c775ea340156a5bd43f7d5ab82ed088f2b9a2c30de61613d1162",
+      "what": "Twelve complete real-WASD routes (3routes ×2tiers ×2zooms) have actual submitted living infected witnesses. Largest measured moving empty interval44.4s; adding0.2s sampling slack and an entire10s unknown scripted crash tail bounds every route by54.6s<60. Four actual crash runs independently measure5s to ejection; no inactive-seat observation invented. Personally viewed all12 living-body witness frames."
     },
     {
-      "file": "docs/reports/sweep-c5/L9-03/L9-high-webgl2-z1.5-road-1793944016596/input.json.gz",
-      "sha256": "7fa0e649f87a5edff618ea812998663386c6a168c071fed07a1121e818ed0a7f",
-      "what": "Six source-bound complete physical drives, actual camera-body motion intervals and personally inspected per-frame SHA256/seen notes; immutable raw logs referenced by archived reviews. Motion proof independently checks stationary/dead/unknown/speed boundary/backwards clock handling."
+      "file": "docs/reports/final-c/L9-09/photo-only-low-countryside-z0.5-physical.json.gz",
+      "sha256": "b3146d1d1c526e76e240fbe43956abc8689bc68ae1d50996fd3006b651d359f3",
+      "what": "Twelve complete real-WASD routes (3routes ×2tiers ×2zooms) have actual submitted living infected witnesses. Largest measured moving empty interval44.4s; adding0.2s sampling slack and an entire10s unknown scripted crash tail bounds every route by54.6s<60. Four actual crash runs independently measure5s to ejection; no inactive-seat observation invented. Personally viewed all12 living-body witness frames."
     },
     {
-      "file": "docs/reports/sweep-c5/L9-03/L9-low-webgl2-z1.5-countryside-1793944381271/input.json.gz",
-      "sha256": "c0dcfe6f662a827210a12298272c0365e58d3c351b029d7f15873a4c690b6af2",
-      "what": "Six source-bound complete physical drives, actual camera-body motion intervals and personally inspected per-frame SHA256/seen notes; immutable raw logs referenced by archived reviews. Motion proof independently checks stationary/dead/unknown/speed boundary/backwards clock handling."
+      "file": "docs/reports/final-c/L9-09/high-countryside-z1.5-physical.json.gz",
+      "sha256": "ec2240acc196af29e5fcc7b7a8d50a85ab02e8ae144db3f7caaab83fd7aa6abb",
+      "what": "Twelve complete real-WASD routes (3routes ×2tiers ×2zooms) have actual submitted living infected witnesses. Largest measured moving empty interval44.4s; adding0.2s sampling slack and an entire10s unknown scripted crash tail bounds every route by54.6s<60. Four actual crash runs independently measure5s to ejection; no inactive-seat observation invented. Personally viewed all12 living-body witness frames."
     },
     {
-      "file": "docs/reports/sweep-c5/L9-03/L9-low-webgl2-z1.5-dry-shortcut-1793944868517/input.json.gz",
-      "sha256": "0044c7cc96eef2ee13f75a5bbba631e6ecd13c7760d13f1611622317e8763ccc",
-      "what": "Six source-bound complete physical drives, actual camera-body motion intervals and personally inspected per-frame SHA256/seen notes; immutable raw logs referenced by archived reviews. Motion proof independently checks stationary/dead/unknown/speed boundary/backwards clock handling."
+      "file": "docs/reports/final-c/L9-09/photo-only-low-countryside-z1.5-physical.json.gz",
+      "sha256": "ba02bd07ee072d7b76e99df3a29b9fa2aa12f8823fad35cf2b6a511f95256cda",
+      "what": "Twelve complete real-WASD routes (3routes ×2tiers ×2zooms) have actual submitted living infected witnesses. Largest measured moving empty interval44.4s; adding0.2s sampling slack and an entire10s unknown scripted crash tail bounds every route by54.6s<60. Four actual crash runs independently measure5s to ejection; no inactive-seat observation invented. Personally viewed all12 living-body witness frames."
     },
     {
-      "file": "docs/reports/sweep-c5/L9-03/L9-low-webgl2-z1.5-road-1793944015651/input.json.gz",
-      "sha256": "e137b07d93599a5a6954d00028b71f7143a7f97a3e79548f621b4f938d237db2",
-      "what": "Six source-bound complete physical drives, actual camera-body motion intervals and personally inspected per-frame SHA256/seen notes; immutable raw logs referenced by archived reviews. Motion proof independently checks stationary/dead/unknown/speed boundary/backwards clock handling."
+      "file": "docs/reports/final-c/L9-09/high-countryside-z0.5-physical.json.gz",
+      "sha256": "4675433da9f9378b7b09c543bc769c20edd31e5b18a783f1cae851a0d073c995",
+      "what": "Twelve complete real-WASD routes (3routes ×2tiers ×2zooms) have actual submitted living infected witnesses. Largest measured moving empty interval44.4s; adding0.2s sampling slack and an entire10s unknown scripted crash tail bounds every route by54.6s<60. Four actual crash runs independently measure5s to ejection; no inactive-seat observation invented. Personally viewed all12 living-body witness frames."
     },
     {
-      "file": "docs/reports/fix73-g/L9-patrol.json",
-      "sha256": "815dc783ac6d552596d34e28897668f9dbde16c9f40b3157be4031c9d5a6be74",
-      "what": "Scoped fix73-g observation, 723e4a0: quiet patrols are trios within unchanged caps/cadence. Ordinary unpaused wide-camera default drives record 10 low / 12 high patrol contacts with real APC armor falling to 890 / 880. All 32 captures personally inspected, SHA256 and observations archived. These bounded drives do not requalify every route in the compound row."
+      "file": "docs/reports/final-c/L9-09/high-road-z0.5-physical.json.gz",
+      "sha256": "cd3ca7cf426ccb4711f24924acba8a78d04833adadb53462e68b7e16e387257e",
+      "what": "Twelve complete real-WASD routes (3routes ×2tiers ×2zooms) have actual submitted living infected witnesses. Largest measured moving empty interval44.4s; adding0.2s sampling slack and an entire10s unknown scripted crash tail bounds every route by54.6s<60. Four actual crash runs independently measure5s to ejection; no inactive-seat observation invented. Personally viewed all12 living-body witness frames."
+    },
+    {
+      "file": "docs/reports/final-c/L9-09/low-countryside-z0.5-physical.json.gz",
+      "sha256": "2449b30a3f8dd3200570f6f84b55f1be476d1ec9c168ce9715168eb63089457b",
+      "what": "Twelve complete real-WASD routes (3routes ×2tiers ×2zooms) have actual submitted living infected witnesses. Largest measured moving empty interval44.4s; adding0.2s sampling slack and an entire10s unknown scripted crash tail bounds every route by54.6s<60. Four actual crash runs independently measure5s to ejection; no inactive-seat observation invented. Personally viewed all12 living-body witness frames."
+    },
+    {
+      "file": "docs/reports/final-c/L9-09/low-dry-shortcut-z0.5-physical.json.gz",
+      "sha256": "8534196bcb25d662832a0772ef0ad01be4b4b01da2d057d44058b0d0ff10645f",
+      "what": "Twelve complete real-WASD routes (3routes ×2tiers ×2zooms) have actual submitted living infected witnesses. Largest measured moving empty interval44.4s; adding0.2s sampling slack and an entire10s unknown scripted crash tail bounds every route by54.6s<60. Four actual crash runs independently measure5s to ejection; no inactive-seat observation invented. Personally viewed all12 living-body witness frames."
+    },
+    {
+      "file": "docs/reports/final-c/L9-09/high-dry-shortcut-z0.5-physical.json.gz",
+      "sha256": "91fae96b5b5754ef33a3c3c3fdc8db39d7e52484003293b666fe69ac9abeb55d",
+      "what": "Twelve complete real-WASD routes (3routes ×2tiers ×2zooms) have actual submitted living infected witnesses. Largest measured moving empty interval44.4s; adding0.2s sampling slack and an entire10s unknown scripted crash tail bounds every route by54.6s<60. Four actual crash runs independently measure5s to ejection; no inactive-seat observation invented. Personally viewed all12 living-body witness frames."
+    },
+    {
+      "file": "docs/reports/final-c/L9-09/low-road-z0.5-physical.json.gz",
+      "sha256": "679a80993f489a636a1c8cbeba1d678252ff86527c00874069e2ff926d30e3b3",
+      "what": "Twelve complete real-WASD routes (3routes ×2tiers ×2zooms) have actual submitted living infected witnesses. Largest measured moving empty interval44.4s; adding0.2s sampling slack and an entire10s unknown scripted crash tail bounds every route by54.6s<60. Four actual crash runs independently measure5s to ejection; no inactive-seat observation invented. Personally viewed all12 living-body witness frames."
+    },
+    {
+      "file": "docs/reports/final-c/L9-09/photo-only-low-road-z0.5-physical.json.gz",
+      "sha256": "438153e54ea71c1c3534e9553d3f4c0a6292a1a59119d2566a989d1ce3ee58af",
+      "what": "Twelve complete real-WASD routes (3routes ×2tiers ×2zooms) have actual submitted living infected witnesses. Largest measured moving empty interval44.4s; adding0.2s sampling slack and an entire10s unknown scripted crash tail bounds every route by54.6s<60. Four actual crash runs independently measure5s to ejection; no inactive-seat observation invented. Personally viewed all12 living-body witness frames."
+    },
+    {
+      "file": "docs/reports/final-c/L9-09/initial-stream-producer.ts",
+      "sha256": "d33389e1555069a6ae7f37750e4d15ecc85193e00030ce3988bbe628509b1255",
+      "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
+    },
+    {
+      "file": "docs/reports/final-c/L9-09/sweep-c5-l9-stream-photos-producer.ts",
+      "sha256": "4ff980dc16dfbbaac20adb242ee2436a732a818b8963b6bb933644bb4a91eb90",
+      "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
+    },
+    {
+      "file": "docs/reports/final-c/L9-07/low-physical.json.gz",
+      "sha256": "02e8bf8baf222cfba25d6729da89244bd7580770c1e5a13247bd3de8624c66e1",
+      "what": "Twelve complete real-WASD routes (3routes ×2tiers ×2zooms) have actual submitted living infected witnesses. Largest measured moving empty interval44.4s; adding0.2s sampling slack and an entire10s unknown scripted crash tail bounds every route by54.6s<60. Four actual crash runs independently measure5s to ejection; no inactive-seat observation invented. Personally viewed all12 living-body witness frames."
+    },
+    {
+      "file": "docs/reports/final-c/L9-07/high-physical.json.gz",
+      "sha256": "8cd71140b7b5e83bbc6aa5e5f9fd5729d0ed9fc62cbc4b7dbdef99045939fe1c",
+      "what": "Twelve complete real-WASD routes (3routes ×2tiers ×2zooms) have actual submitted living infected witnesses. Largest measured moving empty interval44.4s; adding0.2s sampling slack and an entire10s unknown scripted crash tail bounds every route by54.6s<60. Four actual crash runs independently measure5s to ejection; no inactive-seat observation invented. Personally viewed all12 living-body witness frames."
     }
   ],
-  "notes": "Scoped fix73-g observation, 723e4a0: quiet patrols are trios within unchanged caps/cadence. Ordinary unpaused wide-camera default drives record 10 low / 12 high patrol contacts with real APC armor falling to 890 / 880. All 32 captures personally inspected, SHA256 and observations archived. These bounded drives do not requalify every route in the compound row."
+  "notes": "Frozen-head row review. Current immutable evidence, unchanged criterion and game source.",
+  "sourceDigest": "fbad89802bfe8d610b736d8f5a3111d1a13e8d0ae47b606a45c5760634f3ed51"
 }

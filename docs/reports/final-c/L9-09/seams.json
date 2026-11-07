@@ -1,0 +1,3242 @@
+{
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+  "revision": "bce6eee09be1fbaf4ea9789b479f552ab9c66451",
+  "toolSha256": "507af4ad9629ee481b4825d96b4cd6928dbfc854fd100a30ce92b2fb27538255",
+  "method": "Read actual96runtimeGLBs with exact cell/node transforms and production GroundField height evaluator. Each sharedboundary partitioned at every triangle-edge intersection, including both vertices/midpoints/epsilon-side samples and every affine segment intersection (upper-envelope switch), including nonflat bevel triangles. These partitions cover piecewise-affine height steps. Compare each neighboring detail pair. Auxiliary horizon heights include always-present structural/curb triangles and missing road paint, and are not treated as neighboring-cell seam defects; no generated replacement geometry. Bothqualities use samegeometry.",
+  "layout": {
+    "file": "public/assets/layouts/D-CROSSING.layout.json",
+    "sha256": "b393b8ef7203f4647ed7dd2c3525756d2deb25d25c83bd0e6790835a3d065f07"
+  },
+  "assets": [
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-0-0.glb",
+      "sha256": "923642a13c15eeb51049280a79b2ed718f3f8b2d8e67df8095fa72c966aaaf10"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-1-0.glb",
+      "sha256": "9fac2060dd9fdd251a271098fa405cecd5c16b020e453b111c32ec2670618f4c"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-2-0.glb",
+      "sha256": "436e10e1edf933d147a9b71df3dec283508cc0c8ad5f2f04d7c5d5f50969f534"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-3-0.glb",
+      "sha256": "a9bb1a9c623784d7a2cd04af38a834d859bc0eabc0dd593865173b13a0ae12d8"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-4-0.glb",
+      "sha256": "85c051c507c6759833ced04688547637daf06d600836525ad22bb089fed25fbb"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-5-0.glb",
+      "sha256": "1f2482a7cafd07fd0e27ceb02cc3b9c42c338fd6b5ee697aae7cf2ee2a97874b"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-6-0.glb",
+      "sha256": "54aefd8768cdaf81839369e7130f5fedb7c0c289b9867de88c8733fd792ebe51"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-7-0.glb",
+      "sha256": "3089ae33ed4ae3fdb9c2978e4e137a9d7936a3948d09458e740c4cedabda64fb"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-8-0.glb",
+      "sha256": "dcf5c11fa56d3eb23cb6e280ab3af0acb880dd2e7ac82c547b745f4ec5cd592b"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-9-0.glb",
+      "sha256": "11fd290519224f4c5f65f4c7cf4430dc5a7ab3e4650927afc87352ab643bede2"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-10-0.glb",
+      "sha256": "751d99e7b61b89731e06902a66e34a72f7fe9e4bc8d90baed3a941b3ae8560de"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-11-0.glb",
+      "sha256": "eec06bbc15d91b41f98b23a9014486f69cf32423193984904af55f2285d8664f"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-0-1.glb",
+      "sha256": "9b9d875c6af62d8e169c3063c97961f623d0849498f4a1925e1dc765924d65a9"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-1-1.glb",
+      "sha256": "fb0daa8d4b59703bfb882d953fd0a967aaeda75cce90591f6eb145571cabeb4d"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-2-1.glb",
+      "sha256": "c0117d5d750ef4cdc264e63b1a26d0d874a1db6a704bf9a283698ea6502df210"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-3-1.glb",
+      "sha256": "a90541999d183b3081a529680be99152ec43f6eaad65b06727dc09152cad6bd7"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-4-1.glb",
+      "sha256": "b318bada447b78f849fdf52901bf7b6c2342e52e2f36a32288efb1dd30336dc0"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-5-1.glb",
+      "sha256": "a5cd6e2e6f481319678b2dac30d5564515472397115b17bd39f4b5bb6421c051"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-6-1.glb",
+      "sha256": "ecfc2db16bb1b9d0fb1ba6abc316cf3c9cea386576e9c93e30e6b356d3ece7dc"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-7-1.glb",
+      "sha256": "0b36d792196df7a5b07ff48dd6c17de4bf89ac737719802c118e05003a596ae8"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-8-1.glb",
+      "sha256": "68fb8f2554ad0092fdabb8d2e247fc639fae26e2ceb12c7e0cec5ddf7d1a9a7d"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-9-1.glb",
+      "sha256": "82ea0699516d97acd8708af2b4f6b3c075e8adf2de137c2b45fd329156959575"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-10-1.glb",
+      "sha256": "83de91d314f3bdc628bece7ef5420a4628a6d7323f0fa973af71fe8e65f2bf4d"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-11-1.glb",
+      "sha256": "3019401232b64729f9bc95f60405c791da483f0ee6ae869ae9d0d8c0ba50a715"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-0-2.glb",
+      "sha256": "2292a96a7b345b54348f88788f1b9d1118b56fe90c36a076f33b357afa156661"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-1-2.glb",
+      "sha256": "063723d9040a008cf9c08e7a2a91c0891fc7e0efc2d0d6e9bc47745fb908788e"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-2-2.glb",
+      "sha256": "1840352fcbc7df6a374ccd507c3458b241b5504e448b981fcb062af3a0ce4710"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-3-2.glb",
+      "sha256": "34341b738be1d7d938278355dbdf1ae6ef360dd053cd92e21213615ca3960036"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-4-2.glb",
+      "sha256": "fac7a75c089465773d1178e9e04d701ab45488d077a17b0a393ead31153995a3"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-5-2.glb",
+      "sha256": "40b96ea27774ed6b86bdc391ead42dceb0406373e4d53e6c4c6d964a4711de6b"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-6-2.glb",
+      "sha256": "674a08ff47989fb54f4c1bc190a48fd0ea20baf3568868d31df1f23c543886fe"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-7-2.glb",
+      "sha256": "075bdfb36a1087f0194227ba128bc8da5153810d55a45ec5499c3341affe047f"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-8-2.glb",
+      "sha256": "128996bfa2ce1d871cc5a8997f4838a61ff9158006cc6a03c3bb689536045150"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-9-2.glb",
+      "sha256": "c3d1af9a3b4520ccecba0179d2c2f5c01e45c594b47ce6d380260e7731e8f4ae"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-10-2.glb",
+      "sha256": "65061cdcd638e0e1e0c2ed6baee1a11998726f92b23c4eaaf3dfb9ecc0455731"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-11-2.glb",
+      "sha256": "510420688d56bcaabc8b59c813e137020fcc4f89517f55f9c99d4bc4183d0856"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-0-3.glb",
+      "sha256": "6957c59851c8039cdd8b0dc5bd5f58c754080ffeb2ffc0b98a5427b47c362598"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-1-3.glb",
+      "sha256": "0a371560a391f2ddaf3e6193c01d5336af1e100bb55fe59e1461389b37d15efa"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-2-3.glb",
+      "sha256": "52fd1db2b3d0a9005a7b9479eb3e496ff9ecb9de0b3bec36b8b6ae2113b6165f"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-3-3.glb",
+      "sha256": "c9e300a26cb5036dcda75643ef1d2a6eb44278caf6754ec3e5129e9ea07a6348"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-4-3.glb",
+      "sha256": "72a20b8381e4eb1a5c4b1d68df739cd5c0865b0e6428593359b851a62d7ed8eb"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-5-3.glb",
+      "sha256": "83c1e6687085a6dfe1518fad483e0c7158ee9649444d589e16f5057c8094be86"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-6-3.glb",
+      "sha256": "00e9a80cbe325cc8bae0f6e0661d63981d8091fd816f3a32803d3c5f4264ca70"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-7-3.glb",
+      "sha256": "55fe2797aab7e91b26ca8434b0dd40139faffe144a3406e37afcffc263b8c7dd"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-8-3.glb",
+      "sha256": "abb684bf183cb5cb27f0699fc76dc73bcd07e7b1ae17472cde3890107112910b"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-9-3.glb",
+      "sha256": "bb52f9f21484a95e0c73368d0119e886d34ba2f789649b772bf954f773ee6e3b"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-10-3.glb",
+      "sha256": "1754c96f3d2831ed77b07eb4fe08e8bf28993852f654f15213cbc7fea0de49ea"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-11-3.glb",
+      "sha256": "476db9c37f78e68c91b4dc3374f873ad647ba75a6650816c7acbd543c4c6e874"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-0-4.glb",
+      "sha256": "f1de8ac653b698f77ff751873d8740319ee106a16f87251875bf49f8a85c3417"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-1-4.glb",
+      "sha256": "9b0ebc02c27ff334fa104e0231495148748fafce50724e9f8b956f2ff8ad91f4"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-2-4.glb",
+      "sha256": "6e929fdc213fe393fc19dcb1fea7b96d21880e8fa23fc06fb8c0e42198067f52"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-3-4.glb",
+      "sha256": "723d386694730ab9d0f4eef59a0978c47f70b4bf67467afdb55b826122fd4d9b"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-4-4.glb",
+      "sha256": "0ecc8be42ffefe5643c0da885145d1ade358990d7d5dc5b6bb565a91ec445a78"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-5-4.glb",
+      "sha256": "8b850e43055d10eb93980a826bc0635b892df2218db2091e817580b88edb6bb2"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-6-4.glb",
+      "sha256": "0c567db933bda3dd4d1f3870da2eee686c6d8e2e80dc10c6ef9528eb832036f0"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-7-4.glb",
+      "sha256": "5bc37b7e8e0f44f5fc12e9ea5fef384cf1b8e77f96514f86adb755e839852aa0"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-8-4.glb",
+      "sha256": "30c276e60f096d5784a60d32961608ede8365c789e022b2b3fe3db944573bd7d"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-9-4.glb",
+      "sha256": "ed9427eb8a56f0fc528c58fd3e9f1460d4caef7579480050864bad3616285e02"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-10-4.glb",
+      "sha256": "9b8ac9866d1a56e5aba3954bf7378969e4a848a2df3132bf62e94c63ab774ca3"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-11-4.glb",
+      "sha256": "e1e63a36778564f3b9cc57718e29e845099aefb981a61d0ad5b51e3ab9ae79b1"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-0-5.glb",
+      "sha256": "9bd1eceecedd2d0356ca6fe032e9ae5a6c2316e9f160b487191b5776c828efde"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-1-5.glb",
+      "sha256": "ba792aa7076ad305429f3da4cfd3684b54a1c32fd85085de7dc6187c42d2609d"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-2-5.glb",
+      "sha256": "5f0c4ae58bf1c2c14db146b62eea551ae41a9ec960ec308b0c6ada34e38b1a7b"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-3-5.glb",
+      "sha256": "f66d497d42656cbfae57c9e4187a5b9eb15dc5e34032090748a823289468dc92"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-4-5.glb",
+      "sha256": "897db42c25ca1a191d2c9861240bddd8e892d68d12c2344b5c2779ef97de23bc"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-5-5.glb",
+      "sha256": "b04b12ff955e91c8e000f95b4a4b1a5bed5196f0fbff3e813b78cb840ede10e6"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-6-5.glb",
+      "sha256": "b7333086f3c3c422c76ffd929b03fc5e280c41fde442258191ac17a41f268ae9"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-7-5.glb",
+      "sha256": "a165c665342c932a55e5765aff316c91a26dedb915435ca30656fb5a1375c133"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-8-5.glb",
+      "sha256": "e350bcbba3c4b3cc89a29ca9f5132847d6db57880d967c2ba48a62ca191a1e75"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-9-5.glb",
+      "sha256": "105ed3b8c88d79192279952671249c1e51e8072c8f69833160151db9ee46cf9f"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-10-5.glb",
+      "sha256": "2eabfc3c1596b19a2f5cee01205d5da506b0e05e99036a4894e6eaf3d65b56f6"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-11-5.glb",
+      "sha256": "d5c44e442933a6aa394ddfa832931d81dac0b54327c6b0df7cff87a60fcc40b9"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-0-6.glb",
+      "sha256": "08897fd52a1337591d9e7ba45ffb383ccd22790adf14b7d1bcb1f2e081bb5345"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-1-6.glb",
+      "sha256": "a90b3fde336ad1565af344baf459435df71494bed5253faf7fbf1587ae380b5f"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-2-6.glb",
+      "sha256": "c70003427e1fcbbf97a1fcf976ac8435b4298febfedb277091eba9b470f8c274"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-3-6.glb",
+      "sha256": "def2d13ebf30c281c99960cab362ccce8894cbb5eedceefb8cbab55c121be626"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-4-6.glb",
+      "sha256": "f79d350953ee40d190470122ed5562a1179cb75ca32d88303721a9de95755ed6"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-5-6.glb",
+      "sha256": "306b4fee637b320eaff879e117437979567a8b6b63c0199343d494e615dfcc8b"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-6-6.glb",
+      "sha256": "97a020ca7031fa834c2eb0bff3f1a944d78b413fea5839e709625619e6d9d4ae"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-7-6.glb",
+      "sha256": "f8f8739007588d1170f4a4a782d90c3a60ea946c528069751882d8b874277977"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-8-6.glb",
+      "sha256": "f7d350cca7debc8d9fc9dfddf91a40e84cc755cfbf94dce4a3e66b71e77b4e9c"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-9-6.glb",
+      "sha256": "07f2912716fa9faa71d3b530a4211030d84fc3ef0e20c1fc01fdce8219919e49"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-10-6.glb",
+      "sha256": "4647d91ed3e1e61639178b024129161b67a9de197631be55b0ef065a6c988317"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-11-6.glb",
+      "sha256": "18752b6de961065eb2ce3e36e628d8840ca857d7a1e545a3196d108b1bf574f8"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-0-7.glb",
+      "sha256": "e119ae21ae35246546f415a23bdaf2e0fbb7ca14e645c5afadd9f87abd9da84b"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-1-7.glb",
+      "sha256": "88eb9853937b40ddafe79aca7a6750b74e657f23134f48e7b041ccb36413c41c"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-2-7.glb",
+      "sha256": "98686a65f027f56bdebad7b0e69d12e4a88f99090934022e8916e94dfde3a3ac"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-3-7.glb",
+      "sha256": "31254f63563b61260e86ee8c2dfdef81a294e1d392eb261a3d0b533e33555c9e"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-4-7.glb",
+      "sha256": "a42689f7d26359d50931bcf7fef0967cf3d364eb24577f96ccd5991bdffc464c"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-5-7.glb",
+      "sha256": "22259caba10b81edbf2e2feb87687672940bb91f6fe56265da0f075e3e5a43f3"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-6-7.glb",
+      "sha256": "038a9931b283e407d5f0482bd65d205b8f1e959dd634d1461618daa799fe5d5a"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-7-7.glb",
+      "sha256": "e802e439437cf52e2cc0fbbd872933da79cc39ce19217ea518d2158e2473269a"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-8-7.glb",
+      "sha256": "a8bc2711e6fe67476a9de37f4f8c9d7716d8f9e7d665d7cac5f0d6cab44500c3"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-9-7.glb",
+      "sha256": "0c61a45d94013c92fb242c40d5dc8b7518f604e2f613de21f8a655e96ebca527"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-10-7.glb",
+      "sha256": "a6337d7202a1f6bfa34b218b7481ecac18d8a2ce7f495b32c7217118448e56f1"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.chunks/crossing-11-7.glb",
+      "sha256": "109533cf7a7d86f4a6732e41f6a44319be5fbac69ea9732d98d357dde34af2d8"
+    },
+    {
+      "file": "public/assets/layouts/D-CROSSING.horizon.glb",
+      "sha256": "7f508113f5f83a2b7f14bb102376f49d954bf8f76e3fcc30986a485570c2a6d6"
+    }
+  ],
+  "piecewiseAffine": true,
+  "rows": [
+    {
+      "a": "crossing-0-0",
+      "b": "crossing-1-0",
+      "axis": 0,
+      "fixed": -500,
+      "lo": -400,
+      "hi": -300,
+      "samples": 457,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.012899999934015796,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-0-0",
+      "b": "crossing-0-1",
+      "axis": 2,
+      "fixed": -300,
+      "lo": -600,
+      "hi": -500,
+      "samples": 289,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.012899999934015796,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-1-0",
+      "b": "crossing-2-0",
+      "axis": 0,
+      "fixed": -400,
+      "lo": -400,
+      "hi": -300,
+      "samples": 433,
+      "maxMismatch": 0.007200000109151006,
+      "maxHorizonMismatch": 0.017200000109151008,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-1-0",
+      "b": "crossing-1-1",
+      "axis": 2,
+      "fixed": -300,
+      "lo": -500,
+      "hi": -400,
+      "samples": 353,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.012899999934015796,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-2-0",
+      "b": "crossing-3-0",
+      "axis": 0,
+      "fixed": -300,
+      "lo": -400,
+      "hi": -300,
+      "samples": 165,
+      "maxMismatch": 0.006000000284984708,
+      "maxHorizonMismatch": 0.017000000099651517,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-2-0",
+      "b": "crossing-2-1",
+      "axis": 2,
+      "fixed": -300,
+      "lo": -400,
+      "hi": -300,
+      "samples": 365,
+      "maxMismatch": 0.006500000366941094,
+      "maxHorizonMismatch": 0.017200000109151008,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-3-0",
+      "b": "crossing-4-0",
+      "axis": 0,
+      "fixed": -200,
+      "lo": -400,
+      "hi": -300,
+      "samples": 489,
+      "maxMismatch": 0.006000000284984708,
+      "maxHorizonMismatch": 0.017200000109151008,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-3-0",
+      "b": "crossing-3-1",
+      "axis": 2,
+      "fixed": -300,
+      "lo": -300,
+      "hi": -200,
+      "samples": 21,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.010000000000000002,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-4-0",
+      "b": "crossing-5-0",
+      "axis": 0,
+      "fixed": -100,
+      "lo": -400,
+      "hi": -300,
+      "samples": 417,
+      "maxMismatch": 0.006000000284984708,
+      "maxHorizonMismatch": 0.017000000099651517,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-4-0",
+      "b": "crossing-4-1",
+      "axis": 2,
+      "fixed": -300,
+      "lo": -200,
+      "hi": -100,
+      "samples": 33,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.010000000000000002,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-5-0",
+      "b": "crossing-6-0",
+      "axis": 0,
+      "fixed": 0,
+      "lo": -400,
+      "hi": -300,
+      "samples": 217,
+      "maxMismatch": 0.006000000284984708,
+      "maxHorizonMismatch": 0.017200000109151008,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-5-0",
+      "b": "crossing-5-1",
+      "axis": 2,
+      "fixed": -300,
+      "lo": -100,
+      "hi": 0,
+      "samples": 53,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.017200000109151008,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-6-0",
+      "b": "crossing-7-0",
+      "axis": 0,
+      "fixed": 100,
+      "lo": -400,
+      "hi": -300,
+      "samples": 185,
+      "maxMismatch": 0.006000000284984708,
+      "maxHorizonMismatch": 0.017200000109151008,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-6-0",
+      "b": "crossing-6-1",
+      "axis": 2,
+      "fixed": -300,
+      "lo": 0,
+      "hi": 100,
+      "samples": 37,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.010000000000000002,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-7-0",
+      "b": "crossing-8-0",
+      "axis": 0,
+      "fixed": 200,
+      "lo": -400,
+      "hi": -300,
+      "samples": 217,
+      "maxMismatch": 0.006000000284984708,
+      "maxHorizonMismatch": 0.017200000109151008,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-7-0",
+      "b": "crossing-7-1",
+      "axis": 2,
+      "fixed": -300,
+      "lo": 100,
+      "hi": 200,
+      "samples": 45,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.017200000109151008,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-8-0",
+      "b": "crossing-9-0",
+      "axis": 0,
+      "fixed": 300,
+      "lo": -400,
+      "hi": -300,
+      "samples": 417,
+      "maxMismatch": 0.006000000284984708,
+      "maxHorizonMismatch": 0.017200000109151008,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-8-0",
+      "b": "crossing-8-1",
+      "axis": 2,
+      "fixed": -300,
+      "lo": 200,
+      "hi": 300,
+      "samples": 49,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.017200000109151008,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-9-0",
+      "b": "crossing-10-0",
+      "axis": 0,
+      "fixed": 400,
+      "lo": -400,
+      "hi": -300,
+      "samples": 133,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.016400000042049216,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-9-0",
+      "b": "crossing-9-1",
+      "axis": 2,
+      "fixed": -300,
+      "lo": 300,
+      "hi": 400,
+      "samples": 453,
+      "maxMismatch": 0.007200000109151006,
+      "maxHorizonMismatch": 0.017200000109151008,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-10-0",
+      "b": "crossing-11-0",
+      "axis": 0,
+      "fixed": 500,
+      "lo": -400,
+      "hi": -300,
+      "samples": 133,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.010000000000000002,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-10-0",
+      "b": "crossing-10-1",
+      "axis": 2,
+      "fixed": -300,
+      "lo": 400,
+      "hi": 500,
+      "samples": 365,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.01350000010803342,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-11-0",
+      "b": "crossing-11-1",
+      "axis": 2,
+      "fixed": -300,
+      "lo": 500,
+      "hi": 600,
+      "samples": 89,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.01350000010803342,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-0-1",
+      "b": "crossing-1-1",
+      "axis": 0,
+      "fixed": -500,
+      "lo": -300,
+      "hi": -200,
+      "samples": 421,
+      "maxMismatch": 0.0028999999340157956,
+      "maxHorizonMismatch": 0.012899999934015796,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-0-1",
+      "b": "crossing-0-2",
+      "axis": 2,
+      "fixed": -200,
+      "lo": -600,
+      "hi": -500,
+      "samples": 401,
+      "maxMismatch": 0.0028999999340157956,
+      "maxHorizonMismatch": 0.016400000042049216,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-1-1",
+      "b": "crossing-2-1",
+      "axis": 0,
+      "fixed": -400,
+      "lo": -300,
+      "hi": -200,
+      "samples": 273,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.010000000000000002,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-1-1",
+      "b": "crossing-1-2",
+      "axis": 2,
+      "fixed": -200,
+      "lo": -500,
+      "hi": -400,
+      "samples": 77,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.010000000000000002,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-2-1",
+      "b": "crossing-3-1",
+      "axis": 0,
+      "fixed": -300,
+      "lo": -300,
+      "hi": -200,
+      "samples": 425,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.012899999934015796,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-2-1",
+      "b": "crossing-2-2",
+      "axis": 2,
+      "fixed": -200,
+      "lo": -400,
+      "hi": -300,
+      "samples": 661,
+      "maxMismatch": 0.006500000366941094,
+      "maxHorizonMismatch": 0.017200000109151008,
+      "missing": 0,
+      "horizonMissing": 3,
+      "worst": []
+    },
+    {
+      "a": "crossing-3-1",
+      "b": "crossing-4-1",
+      "axis": 0,
+      "fixed": -200,
+      "lo": -300,
+      "hi": -200,
+      "samples": 249,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.012899999934015796,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-3-1",
+      "b": "crossing-3-2",
+      "axis": 2,
+      "fixed": -200,
+      "lo": -300,
+      "hi": -200,
+      "samples": 437,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.016400000042049216,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-4-1",
+      "b": "crossing-5-1",
+      "axis": 0,
+      "fixed": -100,
+      "lo": -300,
+      "hi": -200,
+      "samples": 105,
+      "maxMismatch": 0.0028999999340157956,
+      "maxHorizonMismatch": 0.012899999934015796,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-4-1",
+      "b": "crossing-4-2",
+      "axis": 2,
+      "fixed": -200,
+      "lo": -200,
+      "hi": -100,
+      "samples": 233,
+      "maxMismatch": 0.0035000001080334187,
+      "maxHorizonMismatch": 0.01350000010803342,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-5-1",
+      "b": "crossing-6-1",
+      "axis": 0,
+      "fixed": 0,
+      "lo": -300,
+      "hi": -200,
+      "samples": 61,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.010000000000000002,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-5-1",
+      "b": "crossing-5-2",
+      "axis": 2,
+      "fixed": -200,
+      "lo": -100,
+      "hi": 0,
+      "samples": 525,
+      "maxMismatch": 0.0028999999340157956,
+      "maxHorizonMismatch": 0.012899999934015796,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-6-1",
+      "b": "crossing-7-1",
+      "axis": 0,
+      "fixed": 100,
+      "lo": -300,
+      "hi": -200,
+      "samples": 25,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.010000000000000002,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-6-1",
+      "b": "crossing-6-2",
+      "axis": 2,
+      "fixed": -200,
+      "lo": 0,
+      "hi": 100,
+      "samples": 325,
+      "maxMismatch": 0.0028999999340157956,
+      "maxHorizonMismatch": 0.012899999934015796,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-7-1",
+      "b": "crossing-8-1",
+      "axis": 0,
+      "fixed": 200,
+      "lo": -300,
+      "hi": -200,
+      "samples": 617,
+      "maxMismatch": 0.0028999999340157956,
+      "maxHorizonMismatch": 0.016400000042049216,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-7-1",
+      "b": "crossing-7-2",
+      "axis": 2,
+      "fixed": -200,
+      "lo": 100,
+      "hi": 200,
+      "samples": 137,
+      "maxMismatch": 0.0028999999340157956,
+      "maxHorizonMismatch": 0.016400000042049216,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-8-1",
+      "b": "crossing-9-1",
+      "axis": 0,
+      "fixed": 300,
+      "lo": -300,
+      "hi": -200,
+      "samples": 341,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.010000000000000002,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-8-1",
+      "b": "crossing-8-2",
+      "axis": 2,
+      "fixed": -200,
+      "lo": 200,
+      "hi": 300,
+      "samples": 145,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.01350000010803342,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-9-1",
+      "b": "crossing-10-1",
+      "axis": 0,
+      "fixed": 400,
+      "lo": -300,
+      "hi": -200,
+      "samples": 253,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.010000000000000002,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-9-1",
+      "b": "crossing-9-2",
+      "axis": 2,
+      "fixed": -200,
+      "lo": 300,
+      "hi": 400,
+      "samples": 697,
+      "maxMismatch": 0.007200000109151006,
+      "maxHorizonMismatch": 0.01800000014714897,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-10-1",
+      "b": "crossing-11-1",
+      "axis": 0,
+      "fixed": 500,
+      "lo": -300,
+      "hi": -200,
+      "samples": 273,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.010000000000000002,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-10-1",
+      "b": "crossing-10-2",
+      "axis": 2,
+      "fixed": -200,
+      "lo": 400,
+      "hi": 500,
+      "samples": 745,
+      "maxMismatch": 0.0028999999340157956,
+      "maxHorizonMismatch": 0.012899999934015796,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-11-1",
+      "b": "crossing-11-2",
+      "axis": 2,
+      "fixed": -200,
+      "lo": 500,
+      "hi": 600,
+      "samples": 153,
+      "maxMismatch": 0.0028999999340157956,
+      "maxHorizonMismatch": 0.016400000042049216,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-0-2",
+      "b": "crossing-1-2",
+      "axis": 0,
+      "fixed": -500,
+      "lo": -200,
+      "hi": -100,
+      "samples": 61,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.010000000000000002,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-0-2",
+      "b": "crossing-0-3",
+      "axis": 2,
+      "fixed": -100,
+      "lo": -600,
+      "hi": -500,
+      "samples": 237,
+      "maxMismatch": 0.0028999999340157956,
+      "maxHorizonMismatch": 0.012899999934015796,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-1-2",
+      "b": "crossing-2-2",
+      "axis": 0,
+      "fixed": -400,
+      "lo": -200,
+      "hi": -100,
+      "samples": 621,
+      "maxMismatch": 0.006500000366941094,
+      "maxHorizonMismatch": 0.017000000099651517,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-1-2",
+      "b": "crossing-1-3",
+      "axis": 2,
+      "fixed": -100,
+      "lo": -500,
+      "hi": -400,
+      "samples": 421,
+      "maxMismatch": 0.006500000366941094,
+      "maxHorizonMismatch": 0.016500000366941096,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-2-2",
+      "b": "crossing-3-2",
+      "axis": 0,
+      "fixed": -300,
+      "lo": -200,
+      "hi": -100,
+      "samples": 517,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.012899999934015796,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-2-2",
+      "b": "crossing-2-3",
+      "axis": 2,
+      "fixed": -100,
+      "lo": -400,
+      "hi": -300,
+      "samples": 157,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.01,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-3-2",
+      "b": "crossing-4-2",
+      "axis": 0,
+      "fixed": -200,
+      "lo": -200,
+      "hi": -100,
+      "samples": 169,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.012899999934015796,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-3-2",
+      "b": "crossing-3-3",
+      "axis": 2,
+      "fixed": -100,
+      "lo": -300,
+      "hi": -200,
+      "samples": 69,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.01,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-4-2",
+      "b": "crossing-5-2",
+      "axis": 0,
+      "fixed": -100,
+      "lo": -200,
+      "hi": -100,
+      "samples": 209,
+      "maxMismatch": 0.0028999999340157956,
+      "maxHorizonMismatch": 0.37309024026401827,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": [
+        {
+          "x": -100,
+          "z": -119.23534962961993,
+          "ha": -0.004000000189989805,
+          "hb": -0.004000000189989805,
+          "hh": 0.3555019795894655
+        },
+        {
+          "x": -100,
+          "z": -119.09779959119754,
+          "ha": -0.004000000189989805,
+          "hb": -0.004000000189989805,
+          "hh": 0.2347834168684868
+        },
+        {
+          "x": -100,
+          "z": -119.07606277921302,
+          "ha": -0.004000000189989805,
+          "hb": -0.004000000189989805,
+          "hh": 0.23425511633536975
+        },
+        {
+          "x": -100,
+          "z": -119.05367403941185,
+          "ha": -0.004000000189989805,
+          "hb": -0.004000000189989805,
+          "hh": 0.23582532651674798
+        },
+        {
+          "x": -100,
+          "z": -118.93435528165881,
+          "ha": -0.004000000189989805,
+          "hb": -0.004000000189989805,
+          "hh": 0.2827052188278287
+        },
+        {
+          "x": -100,
+          "z": -118.89912231851544,
+          "ha": -0.004000000189989805,
+          "hb": -0.004000000189989805,
+          "hh": 0.36909024007402846
+        },
+        {
+          "x": -100,
+          "z": -118.8973658249695,
+          "ha": -0.004000000189989805,
+          "hb": -0.004000000189989805,
+          "hh": 0.34800198437334806
+        },
+        {
+          "x": -100,
+          "z": -118.89723016950819,
+          "ha": -0.004000000189989805,
+          "hb": -0.004000000189989805,
+          "hh": 0.34149853492316296
+        },
+        {
+          "x": -100,
+          "z": -119.16657461040873,
+          "ha": -0.004000000189989805,
+          "hb": -0.004000000189989805,
+          "hh": 0.2951426982289699
+        },
+        {
+          "x": -100,
+          "z": -119.23533962961993,
+          "ha": -0.004000000189989805,
+          "hb": -0.004000000189989805,
+          "hh": 0.35549320325147643
+        },
+        {
+          "x": -100,
+          "z": -119.09780959119755,
+          "ha": -0.004000000189989805,
+          "hb": -0.004000000189989805,
+          "hh": 0.23479219320647576
+        },
+        {
+          "x": -100,
+          "z": -119.08693118520529,
+          "ha": -0.004000000189989805,
+          "hb": -0.004000000189989805,
+          "hh": 0.2345192666019273
+        },
+        {
+          "x": -100,
+          "z": -119.09778959119754,
+          "ha": -0.004000000189989805,
+          "hb": -0.004000000189989805,
+          "hh": 0.23478317382431887
+        },
+        {
+          "x": -100,
+          "z": -119.07607277921302,
+          "ha": -0.004000000189989805,
+          "hb": -0.004000000189989805,
+          "hh": 0.23425535937953537
+        },
+        {
+          "x": -100,
+          "z": -119.06486840931242,
+          "ha": -0.004000000189989805,
+          "hb": -0.004000000189989805,
+          "hh": 0.23504022142605804
+        },
+        {
+          "x": -100,
+          "z": -119.07605277921301,
+          "ha": -0.004000000189989805,
+          "hb": -0.004000000189989805,
+          "hh": 0.23425581767461184
+        },
+        {
+          "x": -100,
+          "z": -119.05368403941185,
+          "ha": -0.004000000189989805,
+          "hb": -0.004000000189989805,
+          "hh": 0.23582462517750333
+        },
+        {
+          "x": -100,
+          "z": -118.99401466053533,
+          "ha": -0.004000000189989805,
+          "hb": -0.004000000189989805,
+          "hh": 0.2592652726722864
+        },
+        {
+          "x": -100,
+          "z": -119.05366403941184,
+          "ha": -0.004000000189989805,
+          "hb": -0.004000000189989805,
+          "hh": 0.2358292554792354
+        },
+        {
+          "x": -100,
+          "z": -118.93436528165881,
+          "ha": -0.004000000189989805,
+          "hb": -0.004000000189989805,
+          "hh": 0.2827012898653373
+        },
+        {
+          "x": -100,
+          "z": -118.91673880008713,
+          "ha": -0.004000000189989805,
+          "hb": -0.004000000189989805,
+          "hh": 0.3106036226179455
+        },
+        {
+          "x": -100,
+          "z": -118.9343452816588,
+          "ha": -0.004000000189989805,
+          "hb": -0.004000000189989805,
+          "hh": 0.2827210553634534
+        },
+        {
+          "x": -100,
+          "z": -118.89913231851544,
+          "ha": -0.004000000189989805,
+          "hb": -0.004000000189989805,
+          "hh": 0.33848618987246026
+        },
+        {
+          "x": -100,
+          "z": -118.89824407174247,
+          "ha": -0.004000000189989805,
+          "hb": -0.004000000189989805,
+          "hh": 0.35854611222368293
+        },
+        {
+          "x": -100,
+          "z": -118.89911231851544,
+          "ha": -0.004000000189989805,
+          "hb": -0.004000000189989805,
+          "hh": 0.36897018124571007
+        },
+        {
+          "x": -100,
+          "z": -118.8973758249695,
+          "ha": -0.004000000189989805,
+          "hb": -0.004000000189989805,
+          "hh": 0.34812204320165563
+        },
+        {
+          "x": -100,
+          "z": -118.89729799723884,
+          "ha": -0.004000000189989805,
+          "hb": -0.004000000189989805,
+          "hh": 0.34475025964788375
+        },
+        {
+          "x": -100,
+          "z": -118.8973558249695,
+          "ha": -0.004000000189989805,
+          "hb": -0.004000000189989805,
+          "hh": 0.3475225750381344
+        },
+        {
+          "x": -100,
+          "z": -118.8972401695082,
+          "ha": -0.004000000189989805,
+          "hb": -0.004000000189989805,
+          "hh": 0.34197794425831346
+        }
+      ]
+    },
+    {
+      "a": "crossing-4-2",
+      "b": "crossing-4-3",
+      "axis": 2,
+      "fixed": -100,
+      "lo": -200,
+      "hi": -100,
+      "samples": 37,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.01,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-5-2",
+      "b": "crossing-6-2",
+      "axis": 0,
+      "fixed": 0,
+      "lo": -200,
+      "hi": -100,
+      "samples": 65,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.010000000000000002,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-5-2",
+      "b": "crossing-5-3",
+      "axis": 2,
+      "fixed": -100,
+      "lo": -100,
+      "hi": 0,
+      "samples": 45,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.01,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-6-2",
+      "b": "crossing-7-2",
+      "axis": 0,
+      "fixed": 100,
+      "lo": -200,
+      "hi": -100,
+      "samples": 145,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.3730902373429079,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": [
+        {
+          "x": 100,
+          "z": -119.23536149706952,
+          "ha": -0.004000000189989805,
+          "hb": -0.004000000189989805,
+          "hh": 0.35550197958946667
+        },
+        {
+          "x": 100,
+          "z": -119.0978172180537,
+          "ha": -0.004000000189989805,
+          "hb": -0.004000000189989805,
+          "hh": 0.2347628480215392
+        },
+        {
+          "x": 100,
+          "z": -119.0760737244785,
+          "ha": -0.004000000189989805,
+          "hb": -0.004000000189989805,
+          "hh": 0.2342448454602497
+        },
+        {
+          "x": 100,
+          "z": -119.0536661834168,
+          "ha": -0.004000000189989805,
+          "hb": -0.004000000189989805,
+          "hh": 0.23583436333875843
+        },
+        {
+          "x": 100,
+          "z": -118.93435528165881,
+          "ha": -0.004000000189989805,
+          "hb": -0.004000000189989805,
+          "hh": 0.28270521882782873
+        },
+        {
+          "x": 100,
+          "z": -118.8991317779562,
+          "ha": -0.004000000189989805,
+          "hb": -0.004000000189989805,
+          "hh": 0.3690902371529181
+        },
+        {
+          "x": 100,
+          "z": -118.8973658249695,
+          "ha": -0.004000000189989805,
+          "hb": -0.004000000189989805,
+          "hh": 0.34800198437334734
+        },
+        {
+          "x": 100,
+          "z": -118.89722733277323,
+          "ha": -0.004000000189989805,
+          "hb": -0.004000000189989805,
+          "hh": 0.3414985419047849
+        },
+        {
+          "x": 100,
+          "z": -119.1665893575616,
+          "ha": -0.004000000189989805,
+          "hb": -0.004000000189989805,
+          "hh": 0.29513241380549426
+        },
+        {
+          "x": 100,
+          "z": -119.23535149706952,
+          "ha": -0.004000000189989805,
+          "hb": -0.004000000189989805,
+          "hh": 0.35549320138855056
+        },
+        {
+          "x": 100,
+          "z": -119.09782721805371,
+          "ha": -0.004000000189989805,
+          "hb": -0.004000000189989805,
+          "hh": 0.2347716262224504
+        },
+        {
+          "x": 100,
+          "z": -119.0869454712661,
+          "ha": -0.004000000189989805,
+          "hb": -0.004000000189989805,
+          "hh": 0.23450384674089408
+        },
+        {
+          "x": 100,
+          "z": -119.0978072180537,
+          "ha": -0.004000000189989805,
+          "hb": -0.004000000189989805,
+          "hh": 0.23476260978817542
+        },
+        {
+          "x": 100,
+          "z": -119.07608372447851,
+          "ha": -0.004000000189989805,
+          "hb": -0.004000000189989805,
+          "hh": 0.23424508369361283
+        },
+        {
+          "x": 100,
+          "z": -119.06486995394765,
+          "ha": -0.004000000189989805,
+          "hb": -0.004000000189989805,
+          "hh": 0.23503960439950408
+        },
+        {
+          "x": 100,
+          "z": -119.0760637244785,
+          "ha": -0.004000000189989805,
+          "hb": -0.004000000189989805,
+          "hh": 0.23424555482763396
+        },
+        {
+          "x": 100,
+          "z": -119.0536761834168,
+          "ha": -0.004000000189989805,
+          "hb": -0.004000000189989805,
+          "hh": 0.23583365397137418
+        },
+        {
+          "x": 100,
+          "z": -118.9940107325378,
+          "ha": -0.004000000189989805,
+          "hb": -0.004000000189989805,
+          "hh": 0.25926979108329123
+        },
+        {
+          "x": 100,
+          "z": -119.05365618341679,
+          "ha": -0.004000000189989805,
+          "hb": -0.004000000189989805,
+          "hh": 0.23583829180252863
+        },
+        {
+          "x": 100,
+          "z": -118.93436528165881,
+          "ha": -0.004000000189989805,
+          "hb": -0.004000000189989805,
+          "hh": 0.2827012903640539
+        },
+        {
+          "x": 100,
+          "z": -118.9167435298075,
+          "ha": -0.004000000189989805,
+          "hb": -0.004000000189989805,
+          "hh": 0.3105940047053511
+        },
+        {
+          "x": 100,
+          "z": -118.9343452816588,
+          "ha": -0.004000000189989805,
+          "hb": -0.004000000189989805,
+          "hh": 0.28272105415535426
+        },
+        {
+          "x": 100,
+          "z": -118.8991417779562,
+          "ha": -0.004000000189989805,
+          "hb": -0.004000000189989805,
+          "hh": 0.3384669552553481
+        },
+        {
+          "x": 100,
+          "z": -118.89824880146284,
+          "ha": -0.004000000189989805,
+          "hb": -0.004000000189989805,
+          "hh": 0.35854611076304294
+        },
+        {
+          "x": 100,
+          "z": -118.8991217779562,
+          "ha": -0.004000000189989805,
+          "hb": -0.004000000189989805,
+          "hh": 0.3689708214439776
+        },
+        {
+          "x": 100,
+          "z": -118.8973758249695,
+          "ha": -0.004000000189989805,
+          "hb": -0.004000000189989805,
+          "hh": 0.34812140008227815
+        },
+        {
+          "x": 100,
+          "z": -118.89729657887136,
+          "ha": -0.004000000189989805,
+          "hb": -0.004000000189989805,
+          "hh": 0.3447502631390671
+        },
+        {
+          "x": 100,
+          "z": -118.8973558249695,
+          "ha": -0.004000000189989805,
+          "hb": -0.004000000189989805,
+          "hh": 0.3475323952812741
+        },
+        {
+          "x": 100,
+          "z": -118.89723733277323,
+          "ha": -0.004000000189989805,
+          "hb": -0.004000000189989805,
+          "hh": 0.34196813099686
+        }
+      ]
+    },
+    {
+      "a": "crossing-6-2",
+      "b": "crossing-6-3",
+      "axis": 2,
+      "fixed": -100,
+      "lo": 0,
+      "hi": 100,
+      "samples": 29,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.01,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-7-2",
+      "b": "crossing-8-2",
+      "axis": 0,
+      "fixed": 200,
+      "lo": -200,
+      "hi": -100,
+      "samples": 437,
+      "maxMismatch": 0.0028999999340157956,
+      "maxHorizonMismatch": 0.016400000042049216,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-7-2",
+      "b": "crossing-7-3",
+      "axis": 2,
+      "fixed": -100,
+      "lo": 100,
+      "hi": 200,
+      "samples": 121,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.01,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-8-2",
+      "b": "crossing-9-2",
+      "axis": 0,
+      "fixed": 300,
+      "lo": -200,
+      "hi": -100,
+      "samples": 381,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.010000000000000002,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-8-2",
+      "b": "crossing-8-3",
+      "axis": 2,
+      "fixed": -100,
+      "lo": 200,
+      "hi": 300,
+      "samples": 113,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.01,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-9-2",
+      "b": "crossing-10-2",
+      "axis": 0,
+      "fixed": 400,
+      "lo": -200,
+      "hi": -100,
+      "samples": 629,
+      "maxMismatch": 0.006500000366941094,
+      "maxHorizonMismatch": 0.017000000099651517,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-9-2",
+      "b": "crossing-9-3",
+      "axis": 2,
+      "fixed": -100,
+      "lo": 300,
+      "hi": 400,
+      "samples": 217,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.01,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-10-2",
+      "b": "crossing-11-2",
+      "axis": 0,
+      "fixed": 500,
+      "lo": -200,
+      "hi": -100,
+      "samples": 141,
+      "maxMismatch": 0.0028999999340157956,
+      "maxHorizonMismatch": 0.012899999934015796,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-10-2",
+      "b": "crossing-10-3",
+      "axis": 2,
+      "fixed": -100,
+      "lo": 400,
+      "hi": 500,
+      "samples": 505,
+      "maxMismatch": 0.006500000366941094,
+      "maxHorizonMismatch": 0.016500000366941096,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-11-2",
+      "b": "crossing-11-3",
+      "axis": 2,
+      "fixed": -100,
+      "lo": 500,
+      "hi": 600,
+      "samples": 645,
+      "maxMismatch": 0.0028999999340157956,
+      "maxHorizonMismatch": 0.012899999934015796,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-0-3",
+      "b": "crossing-1-3",
+      "axis": 0,
+      "fixed": -500,
+      "lo": -100,
+      "hi": 0,
+      "samples": 157,
+      "maxMismatch": 0.006000000284984708,
+      "maxHorizonMismatch": 0.017200000109151008,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-0-3",
+      "b": "crossing-0-4",
+      "axis": 2,
+      "fixed": 0,
+      "lo": -600,
+      "hi": -500,
+      "samples": 241,
+      "maxMismatch": 0.005899999523535371,
+      "maxHorizonMismatch": 0.01600000028498471,
+      "missing": 0,
+      "horizonMissing": 57,
+      "worst": []
+    },
+    {
+      "a": "crossing-1-3",
+      "b": "crossing-2-3",
+      "axis": 0,
+      "fixed": -400,
+      "lo": -100,
+      "hi": 0,
+      "samples": 633,
+      "maxMismatch": 0.01000000024214387,
+      "maxHorizonMismatch": 0.01,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-1-3",
+      "b": "crossing-1-4",
+      "axis": 2,
+      "fixed": 0,
+      "lo": -500,
+      "hi": -400,
+      "samples": 449,
+      "maxMismatch": 0.01000000024214387,
+      "maxHorizonMismatch": 0.01600000028498471,
+      "missing": 0,
+      "horizonMissing": 100,
+      "worst": []
+    },
+    {
+      "a": "crossing-2-3",
+      "b": "crossing-3-3",
+      "axis": 0,
+      "fixed": -300,
+      "lo": -100,
+      "hi": 0,
+      "samples": 377,
+      "maxMismatch": 0.0034999996423721313,
+      "maxHorizonMismatch": 0.013499999642372132,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-2-3",
+      "b": "crossing-2-4",
+      "axis": 2,
+      "fixed": 0,
+      "lo": -400,
+      "hi": -300,
+      "samples": 149,
+      "maxMismatch": 0.005200000246986747,
+      "maxHorizonMismatch": 0.015200000246986747,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-3-3",
+      "b": "crossing-4-3",
+      "axis": 0,
+      "fixed": -200,
+      "lo": -100,
+      "hi": 0,
+      "samples": 221,
+      "maxMismatch": 0.0018999995663762093,
+      "maxHorizonMismatch": 0.015200000246986747,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-3-3",
+      "b": "crossing-3-4",
+      "axis": 2,
+      "fixed": 0,
+      "lo": -300,
+      "hi": -200,
+      "samples": 69,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.01,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-4-3",
+      "b": "crossing-5-3",
+      "axis": 0,
+      "fixed": -100,
+      "lo": -100,
+      "hi": 0,
+      "samples": 169,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.013499999642372132,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-4-3",
+      "b": "crossing-4-4",
+      "axis": 2,
+      "fixed": 0,
+      "lo": -200,
+      "hi": -100,
+      "samples": 29,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.01,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-5-3",
+      "b": "crossing-6-3",
+      "axis": 0,
+      "fixed": 0,
+      "lo": -100,
+      "hi": 0,
+      "samples": 161,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.013499999642372132,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-5-3",
+      "b": "crossing-5-4",
+      "axis": 2,
+      "fixed": 0,
+      "lo": -100,
+      "hi": 0,
+      "samples": 25,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.01,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-6-3",
+      "b": "crossing-7-3",
+      "axis": 0,
+      "fixed": 100,
+      "lo": -100,
+      "hi": 0,
+      "samples": 157,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.015200000246986747,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-6-3",
+      "b": "crossing-6-4",
+      "axis": 2,
+      "fixed": 0,
+      "lo": 0,
+      "hi": 100,
+      "samples": 41,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.01,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-7-3",
+      "b": "crossing-8-3",
+      "axis": 0,
+      "fixed": 200,
+      "lo": -100,
+      "hi": 0,
+      "samples": 441,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.015200000246986747,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-7-3",
+      "b": "crossing-7-4",
+      "axis": 2,
+      "fixed": 0,
+      "lo": 100,
+      "hi": 200,
+      "samples": 85,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.01,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-8-3",
+      "b": "crossing-9-3",
+      "axis": 0,
+      "fixed": 300,
+      "lo": -100,
+      "hi": 0,
+      "samples": 549,
+      "maxMismatch": 0.005200000246986747,
+      "maxHorizonMismatch": 0.015200000246986747,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-8-3",
+      "b": "crossing-8-4",
+      "axis": 2,
+      "fixed": 0,
+      "lo": 200,
+      "hi": 300,
+      "samples": 73,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.01,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-9-3",
+      "b": "crossing-10-3",
+      "axis": 0,
+      "fixed": 400,
+      "lo": -100,
+      "hi": 0,
+      "samples": 649,
+      "maxMismatch": 0.01000000024214387,
+      "maxHorizonMismatch": 0.013499999642372132,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-9-3",
+      "b": "crossing-9-4",
+      "axis": 2,
+      "fixed": 0,
+      "lo": 300,
+      "hi": 400,
+      "samples": 33,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.01,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-10-3",
+      "b": "crossing-11-3",
+      "axis": 0,
+      "fixed": 500,
+      "lo": -100,
+      "hi": 0,
+      "samples": 333,
+      "maxMismatch": 0.006000000284984708,
+      "maxHorizonMismatch": 0.017200000109151008,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-10-3",
+      "b": "crossing-10-4",
+      "axis": 2,
+      "fixed": 0,
+      "lo": 400,
+      "hi": 500,
+      "samples": 637,
+      "maxMismatch": 0.01000000024214387,
+      "maxHorizonMismatch": 0.01799999968148768,
+      "missing": 0,
+      "horizonMissing": 86,
+      "worst": []
+    },
+    {
+      "a": "crossing-11-3",
+      "b": "crossing-11-4",
+      "axis": 2,
+      "fixed": 0,
+      "lo": 500,
+      "hi": 600,
+      "samples": 313,
+      "maxMismatch": 0.003900000127032399,
+      "maxHorizonMismatch": 0.01600000028498471,
+      "missing": 0,
+      "horizonMissing": 61,
+      "worst": []
+    },
+    {
+      "a": "crossing-0-4",
+      "b": "crossing-1-4",
+      "axis": 0,
+      "fixed": -500,
+      "lo": 0,
+      "hi": 100,
+      "samples": 165,
+      "maxMismatch": 0.006000000284984708,
+      "maxHorizonMismatch": 0.017200000109151008,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-0-4",
+      "b": "crossing-0-5",
+      "axis": 2,
+      "fixed": 100,
+      "lo": -600,
+      "hi": -500,
+      "samples": 465,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.017200000109151008,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-1-4",
+      "b": "crossing-2-4",
+      "axis": 0,
+      "fixed": -400,
+      "lo": 0,
+      "hi": 100,
+      "samples": 301,
+      "maxMismatch": 0.005200000246986747,
+      "maxHorizonMismatch": 0.015200000246986747,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-1-4",
+      "b": "crossing-1-5",
+      "axis": 2,
+      "fixed": 100,
+      "lo": -500,
+      "hi": -400,
+      "samples": 205,
+      "maxMismatch": 0.005200000246986747,
+      "maxHorizonMismatch": 0.015200000246986747,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-2-4",
+      "b": "crossing-3-4",
+      "axis": 0,
+      "fixed": -300,
+      "lo": 0,
+      "hi": 100,
+      "samples": 233,
+      "maxMismatch": 0.0028999999340157956,
+      "maxHorizonMismatch": 0.014400000179884955,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-2-4",
+      "b": "crossing-2-5",
+      "axis": 2,
+      "fixed": 100,
+      "lo": -400,
+      "hi": -300,
+      "samples": 565,
+      "maxMismatch": 0.0028999999340157956,
+      "maxHorizonMismatch": 0.015200000246986747,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-3-4",
+      "b": "crossing-4-4",
+      "axis": 0,
+      "fixed": -200,
+      "lo": 0,
+      "hi": 100,
+      "samples": 45,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.01,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-3-4",
+      "b": "crossing-3-5",
+      "axis": 2,
+      "fixed": 100,
+      "lo": -300,
+      "hi": -200,
+      "samples": 357,
+      "maxMismatch": 0.0028999999340157956,
+      "maxHorizonMismatch": 0.014400000179884955,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-4-4",
+      "b": "crossing-5-4",
+      "axis": 0,
+      "fixed": -100,
+      "lo": 0,
+      "hi": 100,
+      "samples": 29,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.01,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-4-4",
+      "b": "crossing-4-5",
+      "axis": 2,
+      "fixed": 100,
+      "lo": -200,
+      "hi": -100,
+      "samples": 21,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.01,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-5-4",
+      "b": "crossing-6-4",
+      "axis": 0,
+      "fixed": 0,
+      "lo": 0,
+      "hi": 100,
+      "samples": 37,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.01,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-5-4",
+      "b": "crossing-5-5",
+      "axis": 2,
+      "fixed": 100,
+      "lo": -100,
+      "hi": 0,
+      "samples": 125,
+      "maxMismatch": 0.0028999999340157956,
+      "maxHorizonMismatch": 0.012899999934015796,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-6-4",
+      "b": "crossing-7-4",
+      "axis": 0,
+      "fixed": 100,
+      "lo": 0,
+      "hi": 100,
+      "samples": 53,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.01,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-6-4",
+      "b": "crossing-6-5",
+      "axis": 2,
+      "fixed": 100,
+      "lo": 0,
+      "hi": 100,
+      "samples": 241,
+      "maxMismatch": 0.0028999999340157956,
+      "maxHorizonMismatch": 0.012899999934015796,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-7-4",
+      "b": "crossing-8-4",
+      "axis": 0,
+      "fixed": 200,
+      "lo": 0,
+      "hi": 100,
+      "samples": 81,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.01,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-7-4",
+      "b": "crossing-7-5",
+      "axis": 2,
+      "fixed": 100,
+      "lo": 100,
+      "hi": 200,
+      "samples": 389,
+      "maxMismatch": 0.0028999999340157956,
+      "maxHorizonMismatch": 0.012899999934015796,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-8-4",
+      "b": "crossing-9-4",
+      "axis": 0,
+      "fixed": 300,
+      "lo": 0,
+      "hi": 100,
+      "samples": 37,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.01,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-8-4",
+      "b": "crossing-8-5",
+      "axis": 2,
+      "fixed": 100,
+      "lo": 200,
+      "hi": 300,
+      "samples": 129,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.01,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-9-4",
+      "b": "crossing-10-4",
+      "axis": 0,
+      "fixed": 400,
+      "lo": 0,
+      "hi": 100,
+      "samples": 269,
+      "maxMismatch": 0.00800000037997961,
+      "maxHorizonMismatch": 0.015200000246986747,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-9-4",
+      "b": "crossing-9-5",
+      "axis": 2,
+      "fixed": 100,
+      "lo": 300,
+      "hi": 400,
+      "samples": 225,
+      "maxMismatch": 0.00800000037997961,
+      "maxHorizonMismatch": 0.013499999642372132,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-10-4",
+      "b": "crossing-11-4",
+      "axis": 0,
+      "fixed": 500,
+      "lo": 0,
+      "hi": 100,
+      "samples": 229,
+      "maxMismatch": 0.006000000284984708,
+      "maxHorizonMismatch": 0.017200000109151008,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-10-4",
+      "b": "crossing-10-5",
+      "axis": 2,
+      "fixed": 100,
+      "lo": 400,
+      "hi": 500,
+      "samples": 465,
+      "maxMismatch": 0.0028999999340157956,
+      "maxHorizonMismatch": 0.012899999934015796,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-11-4",
+      "b": "crossing-11-5",
+      "axis": 2,
+      "fixed": 100,
+      "lo": 500,
+      "hi": 600,
+      "samples": 297,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.016400000042049216,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-0-5",
+      "b": "crossing-1-5",
+      "axis": 0,
+      "fixed": -500,
+      "lo": 100,
+      "hi": 200,
+      "samples": 77,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.010000000000000002,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-0-5",
+      "b": "crossing-0-6",
+      "axis": 2,
+      "fixed": 200,
+      "lo": -600,
+      "hi": -500,
+      "samples": 21,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.010000000000000002,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-1-5",
+      "b": "crossing-2-5",
+      "axis": 0,
+      "fixed": -400,
+      "lo": 100,
+      "hi": 200,
+      "samples": 97,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.017200000109151008,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-1-5",
+      "b": "crossing-1-6",
+      "axis": 2,
+      "fixed": 200,
+      "lo": -500,
+      "hi": -400,
+      "samples": 565,
+      "maxMismatch": 0.0028999999340157956,
+      "maxHorizonMismatch": 0.012899999934015796,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-2-5",
+      "b": "crossing-3-5",
+      "axis": 0,
+      "fixed": -300,
+      "lo": 100,
+      "hi": 200,
+      "samples": 205,
+      "maxMismatch": 0.0028999999340157956,
+      "maxHorizonMismatch": 0.016400000042049216,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-2-5",
+      "b": "crossing-2-6",
+      "axis": 2,
+      "fixed": 200,
+      "lo": -400,
+      "hi": -300,
+      "samples": 181,
+      "maxMismatch": 0.01000000024214387,
+      "maxHorizonMismatch": 0.02000000024214387,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": [
+        {
+          "x": -330.30780327392523,
+          "z": 200,
+          "ha": -0.006000000052154064,
+          "hb": 0.004000000189989805,
+          "hh": -0.016000000052154066
+        },
+        {
+          "x": -319.6921963827481,
+          "z": 200,
+          "ha": 0.004000000189989805,
+          "hb": -0.006000000052154064,
+          "hh": -0.016000000052154066
+        }
+      ]
+    },
+    {
+      "a": "crossing-3-5",
+      "b": "crossing-4-5",
+      "axis": 0,
+      "fixed": -200,
+      "lo": 100,
+      "hi": 200,
+      "samples": 97,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.01,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-3-5",
+      "b": "crossing-3-6",
+      "axis": 2,
+      "fixed": 200,
+      "lo": -300,
+      "hi": -200,
+      "samples": 333,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.012899999934015796,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-4-5",
+      "b": "crossing-5-5",
+      "axis": 0,
+      "fixed": -100,
+      "lo": 100,
+      "hi": 200,
+      "samples": 457,
+      "maxMismatch": 0.0028999999340157956,
+      "maxHorizonMismatch": 0.012899999934015796,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-4-5",
+      "b": "crossing-4-6",
+      "axis": 2,
+      "fixed": 200,
+      "lo": -200,
+      "hi": -100,
+      "samples": 181,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.01350000010803342,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-5-5",
+      "b": "crossing-6-5",
+      "axis": 0,
+      "fixed": 0,
+      "lo": 100,
+      "hi": 200,
+      "samples": 577,
+      "maxMismatch": 0.0028999999340157956,
+      "maxHorizonMismatch": 0.012899999934015796,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-5-5",
+      "b": "crossing-5-6",
+      "axis": 2,
+      "fixed": 200,
+      "lo": -100,
+      "hi": 0,
+      "samples": 65,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.017200000109151008,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-6-5",
+      "b": "crossing-7-5",
+      "axis": 0,
+      "fixed": 100,
+      "lo": 100,
+      "hi": 200,
+      "samples": 141,
+      "maxMismatch": 0.0028999999340157956,
+      "maxHorizonMismatch": 0.012899999934015796,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-6-5",
+      "b": "crossing-6-6",
+      "axis": 2,
+      "fixed": 200,
+      "lo": 0,
+      "hi": 100,
+      "samples": 37,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.010000000000000002,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-7-5",
+      "b": "crossing-8-5",
+      "axis": 0,
+      "fixed": 200,
+      "lo": 100,
+      "hi": 200,
+      "samples": 49,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.010000000000000002,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-7-5",
+      "b": "crossing-7-6",
+      "axis": 2,
+      "fixed": 200,
+      "lo": 100,
+      "hi": 200,
+      "samples": 229,
+      "maxMismatch": 0.0035000001080334187,
+      "maxHorizonMismatch": 0.012899999934015796,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-8-5",
+      "b": "crossing-9-5",
+      "axis": 0,
+      "fixed": 300,
+      "lo": 100,
+      "hi": 200,
+      "samples": 93,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.01350000010803342,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-8-5",
+      "b": "crossing-8-6",
+      "axis": 2,
+      "fixed": 200,
+      "lo": 200,
+      "hi": 300,
+      "samples": 65,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.010000000000000002,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-9-5",
+      "b": "crossing-10-5",
+      "axis": 0,
+      "fixed": 400,
+      "lo": 100,
+      "hi": 200,
+      "samples": 61,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.010000000000000002,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-9-5",
+      "b": "crossing-9-6",
+      "axis": 2,
+      "fixed": 200,
+      "lo": 300,
+      "hi": 400,
+      "samples": 261,
+      "maxMismatch": 0.0035000001080334187,
+      "maxHorizonMismatch": 0.017200000109151008,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-10-5",
+      "b": "crossing-11-5",
+      "axis": 0,
+      "fixed": 500,
+      "lo": 100,
+      "hi": 200,
+      "samples": 173,
+      "maxMismatch": 0.0028999999340157956,
+      "maxHorizonMismatch": 0.012899999934015796,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-10-5",
+      "b": "crossing-10-6",
+      "axis": 2,
+      "fixed": 200,
+      "lo": 400,
+      "hi": 500,
+      "samples": 89,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.010000000000000002,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-11-5",
+      "b": "crossing-11-6",
+      "axis": 2,
+      "fixed": 200,
+      "lo": 500,
+      "hi": 600,
+      "samples": 345,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.012899999934015796,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-0-6",
+      "b": "crossing-1-6",
+      "axis": 0,
+      "fixed": -500,
+      "lo": 200,
+      "hi": 300,
+      "samples": 77,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.012899999934015796,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-0-6",
+      "b": "crossing-0-7",
+      "axis": 2,
+      "fixed": 300,
+      "lo": -600,
+      "hi": -500,
+      "samples": 357,
+      "maxMismatch": 0.0035000001080334187,
+      "maxHorizonMismatch": 0.012899999934015796,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-1-6",
+      "b": "crossing-2-6",
+      "axis": 0,
+      "fixed": -400,
+      "lo": 200,
+      "hi": 300,
+      "samples": 477,
+      "maxMismatch": 0.0028999999340157956,
+      "maxHorizonMismatch": 0.012899999934015796,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-1-6",
+      "b": "crossing-1-7",
+      "axis": 2,
+      "fixed": 300,
+      "lo": -500,
+      "hi": -400,
+      "samples": 153,
+      "maxMismatch": 0.0028999999340157956,
+      "maxHorizonMismatch": 0.012899999934015796,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-2-6",
+      "b": "crossing-3-6",
+      "axis": 0,
+      "fixed": -300,
+      "lo": 200,
+      "hi": 300,
+      "samples": 173,
+      "maxMismatch": 0.01000000024214387,
+      "maxHorizonMismatch": 0.017200000109151008,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-2-6",
+      "b": "crossing-2-7",
+      "axis": 2,
+      "fixed": 300,
+      "lo": -400,
+      "hi": -300,
+      "samples": 153,
+      "maxMismatch": 0.0035000001080334187,
+      "maxHorizonMismatch": 0.012899999934015796,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-3-6",
+      "b": "crossing-4-6",
+      "axis": 0,
+      "fixed": -200,
+      "lo": 200,
+      "hi": 300,
+      "samples": 221,
+      "maxMismatch": 0.01000000024214387,
+      "maxHorizonMismatch": 0.016400000042049216,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-3-6",
+      "b": "crossing-3-7",
+      "axis": 2,
+      "fixed": 300,
+      "lo": -300,
+      "hi": -200,
+      "samples": 93,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.017200000109151008,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-4-6",
+      "b": "crossing-5-6",
+      "axis": 0,
+      "fixed": -100,
+      "lo": 200,
+      "hi": 300,
+      "samples": 125,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.017200000109151008,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-4-6",
+      "b": "crossing-4-7",
+      "axis": 2,
+      "fixed": 300,
+      "lo": -200,
+      "hi": -100,
+      "samples": 41,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.01350000010803342,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-5-6",
+      "b": "crossing-6-6",
+      "axis": 0,
+      "fixed": 0,
+      "lo": 200,
+      "hi": 300,
+      "samples": 165,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.017200000109151008,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-5-6",
+      "b": "crossing-5-7",
+      "axis": 2,
+      "fixed": 300,
+      "lo": -100,
+      "hi": 0,
+      "samples": 717,
+      "maxMismatch": 0.0028999999340157956,
+      "maxHorizonMismatch": 0.012899999934015796,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-6-6",
+      "b": "crossing-7-6",
+      "axis": 0,
+      "fixed": 100,
+      "lo": 200,
+      "hi": 300,
+      "samples": 133,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.017200000109151008,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-6-6",
+      "b": "crossing-6-7",
+      "axis": 2,
+      "fixed": 300,
+      "lo": 0,
+      "hi": 100,
+      "samples": 45,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.010000000000000002,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-7-6",
+      "b": "crossing-8-6",
+      "axis": 0,
+      "fixed": 200,
+      "lo": 200,
+      "hi": 300,
+      "samples": 205,
+      "maxMismatch": 0.01000000024214387,
+      "maxHorizonMismatch": 0.017200000109151008,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-7-6",
+      "b": "crossing-7-7",
+      "axis": 2,
+      "fixed": 300,
+      "lo": 100,
+      "hi": 200,
+      "samples": 121,
+      "maxMismatch": 0.0028999999340157956,
+      "maxHorizonMismatch": 0.017200000109151008,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-8-6",
+      "b": "crossing-9-6",
+      "axis": 0,
+      "fixed": 300,
+      "lo": 200,
+      "hi": 300,
+      "samples": 145,
+      "maxMismatch": 0.01000000024214387,
+      "maxHorizonMismatch": 0.010000000000000002,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-8-6",
+      "b": "crossing-8-7",
+      "axis": 2,
+      "fixed": 300,
+      "lo": 200,
+      "hi": 300,
+      "samples": 549,
+      "maxMismatch": 0.0035000001080334187,
+      "maxHorizonMismatch": 0.01350000010803342,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-9-6",
+      "b": "crossing-10-6",
+      "axis": 0,
+      "fixed": 400,
+      "lo": 200,
+      "hi": 300,
+      "samples": 681,
+      "maxMismatch": 0.0028999999340157956,
+      "maxHorizonMismatch": 0.012899999934015796,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-9-6",
+      "b": "crossing-9-7",
+      "axis": 2,
+      "fixed": 300,
+      "lo": 300,
+      "hi": 400,
+      "samples": 73,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.010000000000000002,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-10-6",
+      "b": "crossing-11-6",
+      "axis": 0,
+      "fixed": 500,
+      "lo": 200,
+      "hi": 300,
+      "samples": 265,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.012899999934015796,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-10-6",
+      "b": "crossing-10-7",
+      "axis": 2,
+      "fixed": 300,
+      "lo": 400,
+      "hi": 500,
+      "samples": 53,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.010000000000000002,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-11-6",
+      "b": "crossing-11-7",
+      "axis": 2,
+      "fixed": 300,
+      "lo": 500,
+      "hi": 600,
+      "samples": 621,
+      "maxMismatch": 0.0035000001080334187,
+      "maxHorizonMismatch": 0.012899999934015796,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-0-7",
+      "b": "crossing-1-7",
+      "axis": 0,
+      "fixed": -500,
+      "lo": 300,
+      "hi": 400,
+      "samples": 525,
+      "maxMismatch": 0.0028999999340157956,
+      "maxHorizonMismatch": 0.012899999934015796,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-1-7",
+      "b": "crossing-2-7",
+      "axis": 0,
+      "fixed": -400,
+      "lo": 300,
+      "hi": 400,
+      "samples": 121,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.01350000010803342,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-2-7",
+      "b": "crossing-3-7",
+      "axis": 0,
+      "fixed": -300,
+      "lo": 300,
+      "hi": 400,
+      "samples": 357,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.012899999934015796,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-3-7",
+      "b": "crossing-4-7",
+      "axis": 0,
+      "fixed": -200,
+      "lo": 300,
+      "hi": 400,
+      "samples": 205,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.016400000042049216,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-4-7",
+      "b": "crossing-5-7",
+      "axis": 0,
+      "fixed": -100,
+      "lo": 300,
+      "hi": 400,
+      "samples": 25,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.010000000000000002,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-5-7",
+      "b": "crossing-6-7",
+      "axis": 0,
+      "fixed": 0,
+      "lo": 300,
+      "hi": 400,
+      "samples": 49,
+      "maxMismatch": 0.0035000001080334187,
+      "maxHorizonMismatch": 0.010000000000000002,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-6-7",
+      "b": "crossing-7-7",
+      "axis": 0,
+      "fixed": 100,
+      "lo": 300,
+      "hi": 400,
+      "samples": 445,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.012899999934015796,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-7-7",
+      "b": "crossing-8-7",
+      "axis": 0,
+      "fixed": 200,
+      "lo": 300,
+      "hi": 400,
+      "samples": 333,
+      "maxMismatch": 0.0028999999340157956,
+      "maxHorizonMismatch": 0.012899999934015796,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-8-7",
+      "b": "crossing-9-7",
+      "axis": 0,
+      "fixed": 300,
+      "lo": 300,
+      "hi": 400,
+      "samples": 257,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.016400000042049216,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-9-7",
+      "b": "crossing-10-7",
+      "axis": 0,
+      "fixed": 400,
+      "lo": 300,
+      "hi": 400,
+      "samples": 429,
+      "maxMismatch": 0,
+      "maxHorizonMismatch": 0.012899999934015796,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    },
+    {
+      "a": "crossing-10-7",
+      "b": "crossing-11-7",
+      "axis": 0,
+      "fixed": 500,
+      "lo": 300,
+      "hi": 400,
+      "samples": 433,
+      "maxMismatch": 0.0035000001080334187,
+      "maxHorizonMismatch": 0.012899999934015796,
+      "missing": 0,
+      "horizonMissing": 0,
+      "worst": []
+    }
+  ],
+  "summary": {
+    "pairs": 172,
+    "samples": 43140,
+    "maxMismatch": 0.01000000024214387,
+    "maxHorizonMismatch": 0.37309024026401827,
+    "missing": 0
+  }
+}

@@ -1,0 +1,183 @@
+{
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "method": "Combine actual positive infected impacts on unchanged canonical routes with explicit ordinary-NPC bite capability fixtures. Staff/all-five animal fixtures keep target identity/HP/AI/faction unchanged; separate natural route receipts supply Alpha admissions/concurrent caps.",
+  "canonicalArchive": {
+    "file": "docs/reports/final-c/shared-l8/native.json.gz",
+    "sha256": "c103e65df509435bc174568c6e1fe086708e3a09833b830b225a959096b9de9b",
+    "uncompressedSha256": "f4d21b83e6f6f9ff0eac44d1046eb1c96dd612cc505974b18153debf083bd4e7"
+  },
+  "rows": [
+    {
+      "tier": "low",
+      "naturalHitCounts": {
+        "civilian": 5,
+        "soldier": 16,
+        "elephant": 1
+      },
+      "fixtureHitCounts": {
+        "elephant": 1,
+        "civilian": 1,
+        "gorilla": 1,
+        "lion": 1,
+        "staff": 4,
+        "zebra": 1,
+        "flamingo": 1
+      },
+      "animals": [
+        {
+          "kind": "lion",
+          "id": 397,
+          "seconds": 2.716666666666667,
+          "archetype": "infected.lion"
+        },
+        {
+          "kind": "gorilla",
+          "id": 398,
+          "seconds": 3.25,
+          "archetype": "infected.gorilla"
+        },
+        {
+          "kind": "elephant",
+          "id": 399,
+          "seconds": 2.7333333333333334,
+          "archetype": "infected.elephant"
+        },
+        {
+          "kind": "zebra",
+          "id": 400,
+          "seconds": 3,
+          "archetype": "infected.zebra"
+        },
+        {
+          "kind": "flamingo",
+          "id": 402,
+          "seconds": 3.1666666666666665,
+          "archetype": "infected.flamingo"
+        }
+      ],
+      "checks": [
+        {
+          "id": "L8-05",
+          "clause": "actual admitted Alphas over observed route",
+          "level": "L8",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 5,
+          "target": "3 ≤ value ≤ 5",
+          "receipt": "docs/reports/fix51-verify/receipts/L8-low-complete.json"
+        },
+        {
+          "id": "L8-05",
+          "clause": "concurrent cap",
+          "level": "L8",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 79,
+          "target": "0 ≤ value ≤ 100",
+          "receipt": "docs/reports/fix51-verify/receipts/L8-low-complete.json"
+        },
+        {
+          "id": "L8-05",
+          "clause": "concurrent cap",
+          "level": "L8",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": 85,
+          "target": "0 ≤ value ≤ 100",
+          "receipt": "docs/reports/fix51-verify/receipts/L8-low-stationary.json"
+        }
+      ],
+      "controlIdentical": true
+    },
+    {
+      "tier": "high",
+      "naturalHitCounts": {
+        "civilian": 5,
+        "soldier": 16,
+        "elephant": 1,
+        "flamingo": 3,
+        "lion": 1
+      },
+      "fixtureHitCounts": {
+        "elephant": 1,
+        "lion": 1,
+        "zebra": 1,
+        "civilian": 1,
+        "gorilla": 1,
+        "flamingo": 1,
+        "staff": 4
+      },
+      "animals": [
+        {
+          "kind": "lion",
+          "id": 397,
+          "seconds": 2.533333333333333,
+          "archetype": "infected.lion"
+        },
+        {
+          "kind": "gorilla",
+          "id": 398,
+          "seconds": 2.9166666666666665,
+          "archetype": "infected.gorilla"
+        },
+        {
+          "kind": "elephant",
+          "id": 399,
+          "seconds": 2.8666666666666667,
+          "archetype": "infected.elephant"
+        },
+        {
+          "kind": "zebra",
+          "id": 400,
+          "seconds": 3.216666666666667,
+          "archetype": "infected.zebra"
+        },
+        {
+          "kind": "flamingo",
+          "id": 402,
+          "seconds": 2.55,
+          "archetype": "infected.flamingo"
+        }
+      ],
+      "checks": [
+        {
+          "id": "L8-05",
+          "clause": "actual admitted Alphas over observed route",
+          "level": "L8",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 5,
+          "target": "3 ≤ value ≤ 5",
+          "receipt": "docs/reports/fix51-verify/receipts/L8-high-complete.json"
+        },
+        {
+          "id": "L8-05",
+          "clause": "concurrent cap",
+          "level": "L8",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 108,
+          "target": "0 ≤ value ≤ 200",
+          "receipt": "docs/reports/fix51-verify/receipts/L8-high-complete.json"
+        },
+        {
+          "id": "L8-05",
+          "clause": "concurrent cap",
+          "level": "L8",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": 186,
+          "target": "0 ≤ value ≤ 200",
+          "receipt": "docs/reports/fix51-verify/receipts/L8-high-stationary.json"
+        }
+      ],
+      "controlIdentical": true
+    }
+  ]
+}

@@ -1,51 +1,68 @@
 {
   "row": "L7-06",
   "status": "PASS",
-  "reviewer": "Codex sweep-c6",
-  "date": "2026-11-06",
-  "commit": "02abad35a6d5e9e0a5c9c53356b6515bb0d2dbd7",
+  "reviewer": "Codex final-c",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
   "clauses": [
     {
-      "clause": "\u2265 2 connected routes reach the corridor; no dead-end street that looks like the route; no meaningless walk-through wall/slab. PO: \"This street feels like a trap\".",
+      "clause": "≥ 2 connected routes reach the corridor; no dead-end street that looks like the route; no meaningless walk-through wall/slab. PO: \"This street feels like a trap\".",
       "verdict": "PASS",
-      "note": "Current low/high actual carried-save WASD/mouse runs reach corridor by Harbor plus west rear-yard alley and by Lakeshore. All106qualification frames personally inspected;54excluded harness frames also inspected. Distinct continuously logged routes, normal collision/AI, courier protection only. A separate low screenshot-only controller after actual-input east-junction prefix makes16manual commands to corridor at(-35.419,47.813),t5136; recovers from blocked paved-plaza shortcut onto visually continuous marked roads. Visible retained facades/fences/wall and vehicle detours; no misleading dead-end street or wall/slab crossing seen. Close zoom mostly shows immediate lane; wide zoom gives usable continuity. Reviewer previously read map, so no blinded first-exposure claim. Separate production Rapier43-run perimeter sweep passes129walking and95clear driving probes per tier with zero escapes. Route A ends in native departure camera, so those last paired requestedzoom frames do not assert independentzoom. Earlier harness failures archived and excluded. Dedicated consumer rejects23semantic faults. No game or criterion changes."
+      "note": "Two distinct current physical WASD paths reach corridor at both tiers: Harbor/rear-yard A and Lakeshore B, with contiguous6tick input/collision traces. Fresh full perimeter43runs/129walk/95drive probes per tier find0escapes. High A endpoint corrected from inside the bus hull to first visible walking core entry(-75.9711,43.0758), tick6990; failed old endpoint is a harness error, disclosed in capture-review. Sixteen branch/end panels inspected."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-c6/L7-06/review.json",
-      "sha256": "971a933b21b95f0796043fa3bdc998e8dc146fe95c9f882cd18821764d9fd847",
-      "what": "Exact current-source physical ledgers, personally reviewed frame digests and observations, producer provenance, production bounds/control qualification or verified capture cleanup."
+      "file": "docs/reports/final-c/L7-06/high-A-physical.json.gz",
+      "sha256": "e2a76573a742d6ada2a76920d0094e57c08c20caf0bf84b29b89970dd2780d77",
+      "what": "Two distinct current physical WASD paths reach corridor at both tiers: Harbor/rear-yard A and Lakeshore B, with contiguous6tick input/collision traces. Fresh full perimeter43runs/129walk/95drive probes per tier find0escapes. High A endpoint corrected from inside the bus hull to first visible walking core entry(-75.9711,43.0758), tick6990; failed old endpoint is a harness error, disclosed in capture-review. Sixteen branch/end panels inspected."
     },
     {
-      "file": "docs/reports/sweep-c6/L7-06/routes-A-producer.mjs",
-      "sha256": "cbeb740426bc587f0fc4cd2ea86e3420d6ac3ff0687bb524a76957d4f2ba2524",
-      "what": "Exact current-source physical ledgers, personally reviewed frame digests and observations, producer provenance, production bounds/control qualification or verified capture cleanup."
+      "file": "docs/reports/final-c/L7-06/A-producer.ts",
+      "sha256": "334845a5c5643f76b3799fca35d05351221d116aa36bd8caa77a484f321eb272",
+      "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
     },
     {
-      "file": "docs/reports/sweep-c6/L7-06/routes-B-producer.mjs",
-      "sha256": "e0351c8983248e3433ec8d59ecd900298b77d66712675eb2266ca5c8352b3b3b",
-      "what": "Exact current-source physical ledgers, personally reviewed frame digests and observations, producer provenance, production bounds/control qualification or verified capture cleanup."
+      "file": "docs/reports/final-c/L7-06/low-A-physical.json.gz",
+      "sha256": "469d907eb02fd42acc885e423e1a1efde0547d1eab33048da72739b17148bfd6",
+      "what": "Two distinct current physical WASD paths reach corridor at both tiers: Harbor/rear-yard A and Lakeshore B, with contiguous6tick input/collision traces. Fresh full perimeter43runs/129walk/95drive probes per tier find0escapes. High A endpoint corrected from inside the bus hull to first visible walking core entry(-75.9711,43.0758), tick6990; failed old endpoint is a harness error, disclosed in capture-review. Sixteen branch/end panels inspected."
     },
     {
-      "file": "docs/reports/sweep-c6/L7-06/screen-producer.mjs",
-      "sha256": "1a65b813b624ddfb3f817def171bdb6fef35183b834a09e8c4badd95fa570292",
-      "what": "Exact current-source physical ledgers, personally reviewed frame digests and observations, producer provenance, production bounds/control qualification or verified capture cleanup."
+      "file": "docs/reports/final-c/L7-06/B-producer.ts",
+      "sha256": "334845a5c5643f76b3799fca35d05351221d116aa36bd8caa77a484f321eb272",
+      "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
     },
     {
-      "file": "docs/reports/sweep-c6/L7-06/bounds-provenance.json",
-      "sha256": "180189a6cdb1388a04f939dd79669e040a5f556407fb6d2c47d4b0fee72ec35f",
-      "what": "Exact current-source physical ledgers, personally reviewed frame digests and observations, producer provenance, production bounds/control qualification or verified capture cleanup."
+      "file": "docs/reports/final-c/L7-06/low-B-physical.json.gz",
+      "sha256": "0110eac499b3970e5acb3f17f376bcd8f55dd3e6c909940b0f5982b9b9c91b8a",
+      "what": "Two distinct current physical WASD paths reach corridor at both tiers: Harbor/rear-yard A and Lakeshore B, with contiguous6tick input/collision traces. Fresh full perimeter43runs/129walk/95drive probes per tier find0escapes. High A endpoint corrected from inside the bus hull to first visible walking core entry(-75.9711,43.0758), tick6990; failed old endpoint is a harness error, disclosed in capture-review. Sixteen branch/end panels inspected."
     },
     {
-      "file": "docs/reports/sweep-c6/L7-06/coverage-proof.json",
-      "sha256": "8608ec81e226a78241befd6936aba160daa73e8e85710efa4b4c53ad8e5d0cb9",
-      "what": "Exact current-source physical ledgers, personally reviewed frame digests and observations, producer provenance, production bounds/control qualification or verified capture cleanup."
+      "file": "docs/reports/final-c/L7-06/high-B-physical.json.gz",
+      "sha256": "d3d0ab696019de0027d847f7e2ec6186df645a0bf5566b7d5be2543bd003261c",
+      "what": "Two distinct current physical WASD paths reach corridor at both tiers: Harbor/rear-yard A and Lakeshore B, with contiguous6tick input/collision traces. Fresh full perimeter43runs/129walk/95drive probes per tier find0escapes. High A endpoint corrected from inside the bus hull to first visible walking core entry(-75.9711,43.0758), tick6990; failed old endpoint is a harness error, disclosed in capture-review. Sixteen branch/end panels inspected."
     },
     {
-      "file": "docs/reports/sweep-c6/L7-06/raw-cleanup.json",
-      "sha256": "130f647e29297d9419416a9f42effb7efe20c3ab70d534f45479677c65d022b1",
-      "what": "Exact current-source physical ledgers, personally reviewed frame digests and observations, producer provenance, production bounds/control qualification or verified capture cleanup."
+      "file": "docs/reports/final-c/L7-06/capture-review.json",
+      "sha256": "0be3c7f71998fcc2eeef14726ac9a5d4b9a471bda20a2ee7b05847ecdbb7f6c7",
+      "what": "Two distinct current physical WASD paths reach corridor at both tiers: Harbor/rear-yard A and Lakeshore B, with contiguous6tick input/collision traces. Fresh full perimeter43runs/129walk/95drive probes per tier find0escapes. High A endpoint corrected from inside the bus hull to first visible walking core entry(-75.9711,43.0758), tick6990; failed old endpoint is a harness error, disclosed in capture-review. Sixteen branch/end panels inspected."
+    },
+    {
+      "file": "docs/reports/final-c/L7-06/sweep-c6-l7-routes-producer.ts",
+      "sha256": "0585022134d3d42f3576816e9843f94ce144cd35d663beb468586c0851b1f8d2",
+      "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
+    },
+    {
+      "file": "docs/reports/final-c/L7-06/bounds-low/bounds-sweep.json",
+      "sha256": "28b3d01d22731020b0350cec07b21282eca1c83bda82ddd3b14d475e1fe339b4",
+      "what": "Two distinct current physical WASD paths reach corridor at both tiers: Harbor/rear-yard A and Lakeshore B, with contiguous6tick input/collision traces. Fresh full perimeter43runs/129walk/95drive probes per tier find0escapes. High A endpoint corrected from inside the bus hull to first visible walking core entry(-75.9711,43.0758), tick6990; failed old endpoint is a harness error, disclosed in capture-review. Sixteen branch/end panels inspected."
+    },
+    {
+      "file": "docs/reports/final-c/L7-06/bounds-high/bounds-sweep.json",
+      "sha256": "2474e37e13056abcf76a35b4ae9bea0a3d198ac75d90c210900979bc566b2153",
+      "what": "Two distinct current physical WASD paths reach corridor at both tiers: Harbor/rear-yard A and Lakeshore B, with contiguous6tick input/collision traces. Fresh full perimeter43runs/129walk/95drive probes per tier find0escapes. High A endpoint corrected from inside the bus hull to first visible walking core entry(-75.9711,43.0758), tick6990; failed old endpoint is a harness error, disclosed in capture-review. Sixteen branch/end panels inspected."
     }
-  ]
+  ],
+  "notes": "Frozen-head row review. Current immutable evidence, unchanged criterion and game source.",
+  "sourceDigest": "1aff45872f0c1603cfc94e9f01d515824d2304b5b5d9e5f96fee9cc461ad064a"
 }

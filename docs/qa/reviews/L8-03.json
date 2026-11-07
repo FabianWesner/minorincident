@@ -1,41 +1,48 @@
 {
   "row": "L8-03",
   "status": "PASS",
-  "reviewer": "Codex sweep-c5",
-  "date": "2026-11-06",
-  "commit": "d28e01013453088a4f784b51684e5ebd6c1490ca",
+  "reviewer": "Codex final-c",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
   "clauses": [
     {
       "clause": "\u2265 20 civilians, \u2265 6 soldiers, \u2265 4 staff, \u2265 8 animals (all 5 species, \u2265 2 zebras, \u2265 3 flamingos); outside-wall infected cannot cross; nobody idle > 3 s.",
       "verdict": "PASS",
-      "note": "Current bothtiers native calm census excludes12carried:20localcivilians,6soldiers,4staff,8normalanimals(all5species;2zebras/3flamingos). Everytick3599prebreachticks records all50healthyNPCs; no hostilebrain, max0.6s idle-facing-nowhere. This follows E30\u00a75.1/AC06 purposeful routine definition: a scheduled look/facingtarget, active routine or guard/follow duty is not idle-facing-nowhere; historical51s translationstops are not misclassified as inactive. Natural observedfinalstate b6715dca equals independent unobservedemptyinputcontrol bothtiers. Separate explicit4ordinaryrunners outside4walls with production scriptedtargetsinside remainalive/admitted/exterior throughout3599ticks, zeroinsidecrossings orhits; noHP/AI/faction/physicschangesaftersetup. Current actual physicalL7campaign low1/high4 restoredunchanged intoordinaryL8; realWASD600samples(ticks0..3594 at6tickintervals), zeroerrors/nobreach. Actualdrawnclipledger covers21/24distinctNPCs including civilians/soldiers/staff/lion/elephant, look-around/walk/carry/follow and animal idle max0.8s; remaining species counts native, not inferredfromstills. All20paired0.5/1.5framespersonallyinspected/rawhashverified/deleted: cleanlitpaths, intactfences, ordinarycrowdandpartialhealthy elephant, nooutbreak. Sixteen rehashed actualconsumersemanticfaultsreject/restoreexactbytes. No game/criteria change."
+      "note": "Initial production census at both tiers has20local civilians plus12carried humans,4staff,6soldiers and8animals in all5species (2zebras,3flamingos). Every calm tick tracks purposeful activity, facing and movement: maximum idle-facing-nowhere0.6s (<3s); current physical calm paths show posted guards, pedestrians and varied production clips under actual lighting. Four outside-wall ordinary-runner capability probes per tier cross0walls; no NPC disappears or dies during calm. Unmodified natural native final hashes equal independent controls. Outside-threat fixtures are disclosed, not natural spawns."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-c5/L8-03/native.json.gz",
-      "sha256": "3bf50f44a9516676875d3a1d823bc03bf41e549676e6fe2561875f1fde1ba87e",
-      "what": "Current native count/activity/perimeter fixtures with independent control; real WASD calm renderedclip ledger,20personallyinspected capture hashes/notes and16consumer faults. No translation-only idle verdict."
+      "file": "docs/reports/final-c/L8-03/native.json.gz",
+      "sha256": "11ee697d55c2854d6a0e7b68cfb235ea71e9b2cedb50988d1ddd4d0486b87f1a",
+      "what": "Initial production census at both tiers has20local civilians plus12carried humans,4staff,6soldiers and8animals in all5species (2zebras,3flamingos). Every calm tick tracks purposeful activity, facing and movement: maximum idle-facing-nowhere0.6s (<3s); current physical calm paths show posted guards, pedestrians and varied production clips under actual lighting. Four outside-wall ordinary-runner capability probes per tier cross0walls; no NPC disappears or dies during calm. Unmodified natural native final hashes equal independent controls. Outside-threat fixtures are disclosed, not natural spawns."
     },
     {
-      "file": "docs/reports/sweep-c5/L8-03/low-physical.json.gz",
-      "sha256": "7bbd402e8f64bfb9601139aca232f3f179d6a11c5c9e5108396a6b8ed8c3753b",
-      "what": "Current native count/activity/perimeter fixtures with independent control; real WASD calm renderedclip ledger,20personallyinspected capture hashes/notes and16consumer faults. No translation-only idle verdict."
+      "file": "docs/reports/final-c/L8-03/sweep-c5-l8-population.ts",
+      "sha256": "fa881df0fb25b7a29c24851ad07231a15d1c03216b8ddb1272a8f5ae7d9f2af9",
+      "what": "Initial production census at both tiers has20local civilians plus12carried humans,4staff,6soldiers and8animals in all5species (2zebras,3flamingos). Every calm tick tracks purposeful activity, facing and movement: maximum idle-facing-nowhere0.6s (<3s); current physical calm paths show posted guards, pedestrians and varied production clips under actual lighting. Four outside-wall ordinary-runner capability probes per tier cross0walls; no NPC disappears or dies during calm. Unmodified natural native final hashes equal independent controls. Outside-threat fixtures are disclosed, not natural spawns."
     },
     {
-      "file": "docs/reports/sweep-c5/L8-03/high-physical.json.gz",
-      "sha256": "fbe9d2c112d6d0f0e5a9068eb868d3a8f1d6742a177e3ed20f8c0bb0a967ad78",
-      "what": "Current native count/activity/perimeter fixtures with independent control; real WASD calm renderedclip ledger,20personallyinspected capture hashes/notes and16consumer faults. No translation-only idle verdict."
+      "file": "docs/reports/final-c/shared-l8/native.json.gz",
+      "sha256": "c103e65df509435bc174568c6e1fe086708e3a09833b830b225a959096b9de9b",
+      "what": "Initial production census at both tiers has20local civilians plus12carried humans,4staff,6soldiers and8animals in all5species (2zebras,3flamingos). Every calm tick tracks purposeful activity, facing and movement: maximum idle-facing-nowhere0.6s (<3s); current physical calm paths show posted guards, pedestrians and varied production clips under actual lighting. Four outside-wall ordinary-runner capability probes per tier cross0walls; no NPC disappears or dies during calm. Unmodified natural native final hashes equal independent controls. Outside-threat fixtures are disclosed, not natural spawns."
     },
     {
-      "file": "docs/reports/sweep-c5/L8-03/review.json",
-      "sha256": "232c928e3feb21709e3bd9d824f650ad11232455c6c5baecd609603eff5cdd1c",
-      "what": "Current native count/activity/perimeter fixtures with independent control; real WASD calm renderedclip ledger,20personallyinspected capture hashes/notes and16consumer faults. No translation-only idle verdict."
+      "file": "docs/reports/final-c/L8-02/low-physical.json.gz",
+      "sha256": "ec37d148839a71c36a5006114c5883f85c5d8c5858384f9e3a1707ae8f970213",
+      "what": "Initial production census at both tiers has20local civilians plus12carried humans,4staff,6soldiers and8animals in all5species (2zebras,3flamingos). Every calm tick tracks purposeful activity, facing and movement: maximum idle-facing-nowhere0.6s (<3s); current physical calm paths show posted guards, pedestrians and varied production clips under actual lighting. Four outside-wall ordinary-runner capability probes per tier cross0walls; no NPC disappears or dies during calm. Unmodified natural native final hashes equal independent controls. Outside-threat fixtures are disclosed, not natural spawns."
     },
     {
-      "file": "docs/reports/sweep-c5/L8-03/coverage-proof.json",
-      "sha256": "7310d85b2fce5664bce85adc5fce26d1e05328be95cc3923e4b2cc887ce672b2",
-      "what": "Current native count/activity/perimeter fixtures with independent control; real WASD calm renderedclip ledger,20personallyinspected capture hashes/notes and16consumer faults. No translation-only idle verdict."
+      "file": "docs/reports/final-c/L8-02/high-physical.json.gz",
+      "sha256": "921fc17221965fda55a2d057f581a892f9dfc886ca4f57076256a71d092e0181",
+      "what": "Initial production census at both tiers has20local civilians plus12carried humans,4staff,6soldiers and8animals in all5species (2zebras,3flamingos). Every calm tick tracks purposeful activity, facing and movement: maximum idle-facing-nowhere0.6s (<3s); current physical calm paths show posted guards, pedestrians and varied production clips under actual lighting. Four outside-wall ordinary-runner capability probes per tier cross0walls; no NPC disappears or dies during calm. Unmodified natural native final hashes equal independent controls. Outside-threat fixtures are disclosed, not natural spawns."
+    },
+    {
+      "file": "docs/reports/final-c/L8-02/capture-review.json",
+      "sha256": "625ffae82bcb8d41d8fd9ffc9575ea5a451466b8913cec52c28eb77708b4fac0",
+      "what": "Initial production census at both tiers has20local civilians plus12carried humans,4staff,6soldiers and8animals in all5species (2zebras,3flamingos). Every calm tick tracks purposeful activity, facing and movement: maximum idle-facing-nowhere0.6s (<3s); current physical calm paths show posted guards, pedestrians and varied production clips under actual lighting. Four outside-wall ordinary-runner capability probes per tier cross0walls; no NPC disappears or dies during calm. Unmodified natural native final hashes equal independent controls. Outside-threat fixtures are disclosed, not natural spawns."
     }
-  ]
+  ],
+  "notes": "Frozen-head row review. Current immutable evidence, unchanged criterion and game source.",
+  "sourceDigest": "3f346fc1f0af18cb190b29844498febc36a720450de65904caad638582d717b9"
 }

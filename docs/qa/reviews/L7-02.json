@@ -1,101 +1,68 @@
 {
   "row": "L7-02",
   "status": "PASS",
-  "reviewer": "Codex sweep-c5",
-  "date": "2026-11-06",
-  "commit": "d015048dfab0993daf5d612b8939969885bfd3a3",
+  "reviewer": "Codex final-c",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
   "clauses": [
     {
       "clause": "All six weapons selectable; L6 roster arrives with same ids at full health in formation (no convergence through the courier).",
       "verdict": "PASS",
-      "note": "Current-source progressed L6 saves contain one low/four high survivor. Exact identities arrive at full health; every relative body segment over the first600 ticks clears courier/follower radii (minimum clearance1.08269m low/.59989m high). Both native controls match. Six physical keyboard selections per tier observe the expected equipped weapon and HUD label; all41 captures personally inspected, including every selection. Runs are bounded120s arrival probes with no skips; high later navigation warning is outside the arrival/selection clause and does not establish full route completion. No actor or arsenal edits."
+      "note": "Both actual current native L5/L6 carried saves arrive in L7 with the same23 human IDs at full health. Across600 initial ticks per tier (13800 relative-motion capsule samples), minimum courier/follower surface clearance is+0.063778m, with independent controls identical. Both shared-pool headless Metal WebGL2 physical runs collect the launcher by moving approach, then actually select bat/axe/handgun/shotgun/MG/rocket with Digit2/3/4/6/5/7 and read back all6 correct selections. Eight listed before/after frames personally reviewed at both qualities and zoom0.5/1.5 show the staggered formation behind the courier. Courier protection is explicit only in the physical selection capability run; no actor/arsenal/position edits or route completion claim."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-c5/L7-02/native-arrival.json",
-      "sha256": "ceb9c428f40144a7536165cfe235eb770cb402b0c817cac9956adc8f474d68c0",
-      "what": "Both-tier carried native formation for600 ticks, exact identities/full HP, positive body clearance and six story weapons; independent controls identical."
+      "file": "docs/reports/final-c/L7-02/arrival.json",
+      "sha256": "8e9a8673e285c893a1b0320b763a5cc1667e6f2226f2d6396382b7b972f068ab",
+      "what": "Both actual current native L5/L6 carried saves arrive in L7 with the same23 human IDs at full health. Across600 initial ticks per tier (13800 relative-motion capsule samples), minimum courier/follower surface clearance is+0.063778m, with independent controls identical. Both shared-pool headless Metal WebGL2 physical runs collect the launcher by moving approach, then actually select bat/axe/handgun/shotgun/MG/rocket with Digit2/3/4/6/5/7 and read back all6 correct selections. Eight listed before/after frames personally reviewed at both qualities and zoom0.5/1.5 show the staggered formation behind the courier. Courier protection is explicit only in the physical selection capability run; no actor/arsenal/position edits or route completion claim."
     },
     {
-      "file": "docs/reports/sweep-c5/L7-02/low/review.json",
-      "sha256": "044dfec0fe642bed6011fc18f537a190ed1f8e85a83122b5d2b32beb0b6af4e2",
-      "what": "All20 current physical captures personally inspected, including every six-weapon selection frame; hashes retained, raw images deleted."
+      "file": "docs/reports/final-c/L7-02/producer.ts",
+      "sha256": "4196c911239f42f42817ecccde235ae2f740ae00bb258485f63f7801d1b6d7b1",
+      "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
     },
     {
-      "file": "docs/reports/sweep-c5/L7-02/low/input.json.gz",
-      "sha256": "1dfc172c1eaf2983064b5667239ef78b52a038e543598f52e64bad36a2445c22",
-      "what": "Immutable physical keyboard selections, observed equipped IDs, exact producer/source hashes and bounded run result."
+      "file": "docs/reports/final-c/L7-02/selection-producer.ts",
+      "sha256": "7f386c4d3196c6edcb1427496f4aa2e88311a3501526b0b1920580181f39b4ce",
+      "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
     },
     {
-      "file": "docs/reports/sweep-c5/L7-02/low/log-arrival-input.jsonl.gz",
-      "sha256": "b265077a0ff662faff36a395697301db4a34fc8568d18e0b1a5e54d25a5749b5",
-      "what": "Archived read-only physical arrival ledger, log or production campaign completion state."
+      "file": "docs/reports/final-c/L7-02/low-physical.json.gz",
+      "sha256": "f2380e571d82a7171fd000a3e0d249a4b84f0f7a0315be7abdf553b748d34f5e",
+      "what": "Both actual current native L5/L6 carried saves arrive in L7 with the same23 human IDs at full health. Across600 initial ticks per tier (13800 relative-motion capsule samples), minimum courier/follower surface clearance is+0.063778m, with independent controls identical. Both shared-pool headless Metal WebGL2 physical runs collect the launcher by moving approach, then actually select bat/axe/handgun/shotgun/MG/rocket with Digit2/3/4/6/5/7 and read back all6 correct selections. Eight listed before/after frames personally reviewed at both qualities and zoom0.5/1.5 show the staggered formation behind the courier. Courier protection is explicit only in the physical selection capability run; no actor/arsenal/position edits or route completion claim."
     },
     {
-      "file": "docs/reports/sweep-c5/L7-02/low/arrival-input-completion.json.gz",
-      "sha256": "7585622f3779dce958a0eae7bf4778d6520317d786c62776549fc8821e953886",
-      "what": "Archived read-only physical arrival ledger, log or production campaign completion state."
+      "file": "docs/reports/final-c/L7-02/high-physical.json.gz",
+      "sha256": "a5a6032c4e85ac77cda88f563db4df68ba551d805d6ce74d8a43cd203b65ed7d",
+      "what": "Both actual current native L5/L6 carried saves arrive in L7 with the same23 human IDs at full health. Across600 initial ticks per tier (13800 relative-motion capsule samples), minimum courier/follower surface clearance is+0.063778m, with independent controls identical. Both shared-pool headless Metal WebGL2 physical runs collect the launcher by moving approach, then actually select bat/axe/handgun/shotgun/MG/rocket with Digit2/3/4/6/5/7 and read back all6 correct selections. Eight listed before/after frames personally reviewed at both qualities and zoom0.5/1.5 show the staggered formation behind the courier. Courier protection is explicit only in the physical selection capability run; no actor/arsenal/position edits or route completion claim."
     },
     {
-      "file": "docs/reports/sweep-c5/L7-02/low/arrival-input-acceptance-ledger.json.gz",
-      "sha256": "89533a097dde45643102786d3c38893d4378fddaa68afd0cc4ae8c02dbdc2ec7",
-      "what": "Archived read-only physical arrival ledger, log or production campaign completion state."
+      "file": "docs/reports/final-c/L7-02/capture-review.json",
+      "sha256": "fb1bcf73476a76a1242f901999693755385ff2c02631e5408d58193c7267f1a0",
+      "what": "Both actual current native L5/L6 carried saves arrive in L7 with the same23 human IDs at full health. Across600 initial ticks per tier (13800 relative-motion capsule samples), minimum courier/follower surface clearance is+0.063778m, with independent controls identical. Both shared-pool headless Metal WebGL2 physical runs collect the launcher by moving approach, then actually select bat/axe/handgun/shotgun/MG/rocket with Digit2/3/4/6/5/7 and read back all6 correct selections. Eight listed before/after frames personally reviewed at both qualities and zoom0.5/1.5 show the staggered formation behind the courier. Courier protection is explicit only in the physical selection capability run; no actor/arsenal/position edits or route completion claim."
     },
     {
-      "file": "docs/reports/sweep-c5/L7-02/low/arrival-input-audio.json.gz",
-      "sha256": "2b77b0b0ed0351eff6f773a077cc40250d04350aaacb7de154ef6529d19baaea",
-      "what": "Archived read-only physical arrival ledger, log or production campaign completion state."
+      "file": "docs/reports/final-c/campaign/L7-carried-save-provenance.json",
+      "sha256": "58c5c3ab4c818f8fae64a68f489757cd876c90bc09058f74d00bfac18839a556",
+      "what": "Both actual current native L5/L6 carried saves arrive in L7 with the same23 human IDs at full health. Across600 initial ticks per tier (13800 relative-motion capsule samples), minimum courier/follower surface clearance is+0.063778m, with independent controls identical. Both shared-pool headless Metal WebGL2 physical runs collect the launcher by moving approach, then actually select bat/axe/handgun/shotgun/MG/rocket with Digit2/3/4/6/5/7 and read back all6 correct selections. Eight listed before/after frames personally reviewed at both qualities and zoom0.5/1.5 show the staggered formation behind the courier. Courier protection is explicit only in the physical selection capability run; no actor/arsenal/position edits or route completion claim."
     },
     {
-      "file": "docs/reports/sweep-c5/L7-02/low/issues-arrival-input.json.gz",
-      "sha256": "64406e753d82e11c6bd63d1d04bb6aa083eefa0a46949bbfce994d556b989f0f",
-      "what": "Archived read-only physical arrival ledger, log or production campaign completion state."
+      "file": "docs/reports/final-c/campaign/L7-low-carried-save.json.gz",
+      "sha256": "a4e9f1014f764c4eca7965496b05d35bdf1df562d3db7711bd4407a532fb684e",
+      "what": "Both actual current native L5/L6 carried saves arrive in L7 with the same23 human IDs at full health. Across600 initial ticks per tier (13800 relative-motion capsule samples), minimum courier/follower surface clearance is+0.063778m, with independent controls identical. Both shared-pool headless Metal WebGL2 physical runs collect the launcher by moving approach, then actually select bat/axe/handgun/shotgun/MG/rocket with Digit2/3/4/6/5/7 and read back all6 correct selections. Eight listed before/after frames personally reviewed at both qualities and zoom0.5/1.5 show the staggered formation behind the courier. Courier protection is explicit only in the physical selection capability run; no actor/arsenal/position edits or route completion claim."
     },
     {
-      "file": "docs/reports/sweep-c5/L7-02/low/runs-arrival-input.json.gz",
-      "sha256": "aa0f19f27d68be0d5c37084237b3570c9003f60e025b6b441bdf36ede9669d2d",
-      "what": "Archived read-only physical arrival ledger, log or production campaign completion state."
+      "file": "docs/reports/final-c/campaign/L7-high-carried-save.json.gz",
+      "sha256": "8c0a2e53e5dd6a0a9574f728b4e229d9d6694ddadc8261b02b79d56d564d7a0e",
+      "what": "Both actual current native L5/L6 carried saves arrive in L7 with the same23 human IDs at full health. Across600 initial ticks per tier (13800 relative-motion capsule samples), minimum courier/follower surface clearance is+0.063778m, with independent controls identical. Both shared-pool headless Metal WebGL2 physical runs collect the launcher by moving approach, then actually select bat/axe/handgun/shotgun/MG/rocket with Digit2/3/4/6/5/7 and read back all6 correct selections. Eight listed before/after frames personally reviewed at both qualities and zoom0.5/1.5 show the staggered formation behind the courier. Courier protection is explicit only in the physical selection capability run; no actor/arsenal/position edits or route completion claim."
     },
     {
-      "file": "docs/reports/sweep-c5/L7-02/high/review.json",
-      "sha256": "1802a769bb6a6442ed367dd3b3634501a142c6d68c12f5d107efc28ada7a6f36",
-      "what": "All21 current physical captures personally inspected, including every six-weapon selection frame; hashes retained, raw images deleted."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L7-02/high/input.json.gz",
-      "sha256": "3c1e8a2a133b26e522b1b07ed6478272cc5731db58f96245db10a0cbcb590660",
-      "what": "Immutable physical keyboard selections, observed equipped IDs, exact producer/source hashes and bounded run result."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L7-02/high/log-arrival-input.jsonl.gz",
-      "sha256": "5980a09ba86ca0780e3c89876387337c2bfd29533c4eb0afe8a71be3838d2370",
-      "what": "Archived read-only physical arrival ledger, log or production campaign completion state."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L7-02/high/arrival-input-completion.json.gz",
-      "sha256": "15f125a4dc792b6e0409b4be3ae323f2f63b2c3d81b167c2da2a09d28719c178",
-      "what": "Archived read-only physical arrival ledger, log or production campaign completion state."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L7-02/high/arrival-input-acceptance-ledger.json.gz",
-      "sha256": "1c58009e0437e5bc2fc4535ff41af0f1271c8a9024817285445e32d2a1b34c4b",
-      "what": "Archived read-only physical arrival ledger, log or production campaign completion state."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L7-02/high/arrival-input-audio.json.gz",
-      "sha256": "c06e100d86ba2a275a52cc1418458b5ecf340286eb4b2360db7e70850e61f772",
-      "what": "Archived read-only physical arrival ledger, log or production campaign completion state."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L7-02/high/issues-arrival-input.json.gz",
-      "sha256": "4cb1ffba7b66edfec456fa8e61122d980e50495863a7ea592b17334dd9e16950",
-      "what": "Archived read-only physical arrival ledger, log or production campaign completion state."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L7-02/high/runs-arrival-input.json.gz",
-      "sha256": "fa6ad928ce9b7eac629f68bda9a863cecb4d5a413fda05f19b89646fc078de2b",
-      "what": "Archived read-only physical arrival ledger, log or production campaign completion state."
+      "file": "docs/reports/final-c/campaign/producer.ts",
+      "sha256": "eb99815df1c7bc78194d7049574d18212da8dd68a85e9b8cfc1604d47a99a360",
+      "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
     }
-  ]
+  ],
+  "notes": "Frozen-head row review. Current immutable evidence, unchanged criterion and game source.",
+  "sourceDigest": "1aff45872f0c1603cfc94e9f01d515824d2304b5b5d9e5f96fee9cc461ad064a"
 }

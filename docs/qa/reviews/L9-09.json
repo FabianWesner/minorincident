@@ -1,0 +1,108 @@
+{
+  "row": "L9-09",
+  "status": "PASS",
+  "reviewer": "Codex final-c",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "clauses": [
+    {
+      "clause": "Terrain seams ≤ 2 cm, ≤ 25 / 9 detailed chunks, no input freeze on streaming.",
+      "verdict": "PASS",
+      "note": "All172paired terrain boundaries/43140exhaustive affine-partition samples have0missing support and maxgap0.01000000024m (<0.02m); all97runtime-asset hashes match. Twelve current physical detour runs (3routes×2tiers×2zooms) satisfy the established per-tick input predicates: every simulation input tick matches held WASD, no scripted driving lock, >=5streaming sets and genuine unloads. Detailed+loading and simulation slots never exceed9low/25high. This qualifies continuous input acceptance; no FPS/frame-budget claim. Unpaired permanent structural/horizon faces are not paired terrain seams."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/final-c/L9-09/seams.json",
+      "sha256": "51c75120630888e98cad0418dd190ee1828f0feaf0582e8cae8acf96126feb40",
+      "what": "All172paired terrain boundaries/43140exhaustive affine-partition samples have0missing support and maxgap0.01000000024m (<0.02m); all97runtime-asset hashes match. Twelve current physical detour runs (3routes×2tiers×2zooms) satisfy the established per-tick input predicates: every simulation input tick matches held WASD, no scripted driving lock, >=5streaming sets and genuine unloads. Detailed+loading and simulation slots never exceed9low/25high. This qualifies continuous input acceptance; no FPS/frame-budget claim. Unpaired permanent structural/horizon faces are not paired terrain seams."
+    },
+    {
+      "file": "docs/reports/final-c/L9-09/sweep-c5-l9-seams.ts",
+      "sha256": "507af4ad9629ee481b4825d96b4cd6928dbfc854fd100a30ce92b2fb27538255",
+      "what": "All172paired terrain boundaries/43140exhaustive affine-partition samples have0missing support and maxgap0.01000000024m (<0.02m); all97runtime-asset hashes match. Twelve current physical detour runs (3routes×2tiers×2zooms) satisfy the established per-tick input predicates: every simulation input tick matches held WASD, no scripted driving lock, >=5streaming sets and genuine unloads. Detailed+loading and simulation slots never exceed9low/25high. This qualifies continuous input acceptance; no FPS/frame-budget claim. Unpaired permanent structural/horizon faces are not paired terrain seams."
+    },
+    {
+      "file": "docs/reports/final-c/L9-09/stream-qualification.json",
+      "sha256": "2a1ad92214894e9bdb516f08c29326baa1939c31849375500db604d72ce333aa",
+      "what": "All172paired terrain boundaries/43140exhaustive affine-partition samples have0missing support and maxgap0.01000000024m (<0.02m); all97runtime-asset hashes match. Twelve current physical detour runs (3routes×2tiers×2zooms) satisfy the established per-tick input predicates: every simulation input tick matches held WASD, no scripted driving lock, >=5streaming sets and genuine unloads. Detailed+loading and simulation slots never exceed9low/25high. This qualifies continuous input acceptance; no FPS/frame-budget claim. Unpaired permanent structural/horizon faces are not paired terrain seams."
+    },
+    {
+      "file": "docs/reports/final-c/L9-09/qualification-producer.py",
+      "sha256": "5e725976bf6e60778caa6da8b24c98ef73ed3f7679e65865914c115793009bff",
+      "what": "All172paired terrain boundaries/43140exhaustive affine-partition samples have0missing support and maxgap0.01000000024m (<0.02m); all97runtime-asset hashes match. Twelve current physical detour runs (3routes×2tiers×2zooms) satisfy the established per-tick input predicates: every simulation input tick matches held WASD, no scripted driving lock, >=5streaming sets and genuine unloads. Detailed+loading and simulation slots never exceed9low/25high. This qualifies continuous input acceptance; no FPS/frame-budget claim. Unpaired permanent structural/horizon faces are not paired terrain seams."
+    },
+    {
+      "file": "docs/reports/final-c/L9-09/initial-stream-producer.ts",
+      "sha256": "d33389e1555069a6ae7f37750e4d15ecc85193e00030ce3988bbe628509b1255",
+      "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
+    },
+    {
+      "file": "docs/reports/final-c/L9-09/sweep-c5-l9-stream-photos-producer.ts",
+      "sha256": "4ff980dc16dfbbaac20adb242ee2436a732a818b8963b6bb933644bb4a91eb90",
+      "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
+    },
+    {
+      "file": "docs/reports/final-c/L9-09/low-road-z0.5-physical.json.gz",
+      "sha256": "679a80993f489a636a1c8cbeba1d678252ff86527c00874069e2ff926d30e3b3",
+      "what": "All172paired terrain boundaries/43140exhaustive affine-partition samples have0missing support and maxgap0.01000000024m (<0.02m); all97runtime-asset hashes match. Twelve current physical detour runs (3routes×2tiers×2zooms) satisfy the established per-tick input predicates: every simulation input tick matches held WASD, no scripted driving lock, >=5streaming sets and genuine unloads. Detailed+loading and simulation slots never exceed9low/25high. This qualifies continuous input acceptance; no FPS/frame-budget claim. Unpaired permanent structural/horizon faces are not paired terrain seams."
+    },
+    {
+      "file": "docs/reports/final-c/L9-09/low-road-z1.5-physical.json.gz",
+      "sha256": "8888f73a5cfbff740f416e5e51b82f68541768f4cb218041d15fe25289cec790",
+      "what": "All172paired terrain boundaries/43140exhaustive affine-partition samples have0missing support and maxgap0.01000000024m (<0.02m); all97runtime-asset hashes match. Twelve current physical detour runs (3routes×2tiers×2zooms) satisfy the established per-tick input predicates: every simulation input tick matches held WASD, no scripted driving lock, >=5streaming sets and genuine unloads. Detailed+loading and simulation slots never exceed9low/25high. This qualifies continuous input acceptance; no FPS/frame-budget claim. Unpaired permanent structural/horizon faces are not paired terrain seams."
+    },
+    {
+      "file": "docs/reports/final-c/L9-09/low-countryside-z0.5-physical.json.gz",
+      "sha256": "2449b30a3f8dd3200570f6f84b55f1be476d1ec9c168ce9715168eb63089457b",
+      "what": "All172paired terrain boundaries/43140exhaustive affine-partition samples have0missing support and maxgap0.01000000024m (<0.02m); all97runtime-asset hashes match. Twelve current physical detour runs (3routes×2tiers×2zooms) satisfy the established per-tick input predicates: every simulation input tick matches held WASD, no scripted driving lock, >=5streaming sets and genuine unloads. Detailed+loading and simulation slots never exceed9low/25high. This qualifies continuous input acceptance; no FPS/frame-budget claim. Unpaired permanent structural/horizon faces are not paired terrain seams."
+    },
+    {
+      "file": "docs/reports/final-c/L9-09/low-countryside-z1.5-physical.json.gz",
+      "sha256": "eab81d7af6757774f267b588dcda3923eb0813d10e2318d28622e802b0fe36de",
+      "what": "All172paired terrain boundaries/43140exhaustive affine-partition samples have0missing support and maxgap0.01000000024m (<0.02m); all97runtime-asset hashes match. Twelve current physical detour runs (3routes×2tiers×2zooms) satisfy the established per-tick input predicates: every simulation input tick matches held WASD, no scripted driving lock, >=5streaming sets and genuine unloads. Detailed+loading and simulation slots never exceed9low/25high. This qualifies continuous input acceptance; no FPS/frame-budget claim. Unpaired permanent structural/horizon faces are not paired terrain seams."
+    },
+    {
+      "file": "docs/reports/final-c/L9-09/low-dry-shortcut-z0.5-physical.json.gz",
+      "sha256": "8534196bcb25d662832a0772ef0ad01be4b4b01da2d057d44058b0d0ff10645f",
+      "what": "All172paired terrain boundaries/43140exhaustive affine-partition samples have0missing support and maxgap0.01000000024m (<0.02m); all97runtime-asset hashes match. Twelve current physical detour runs (3routes×2tiers×2zooms) satisfy the established per-tick input predicates: every simulation input tick matches held WASD, no scripted driving lock, >=5streaming sets and genuine unloads. Detailed+loading and simulation slots never exceed9low/25high. This qualifies continuous input acceptance; no FPS/frame-budget claim. Unpaired permanent structural/horizon faces are not paired terrain seams."
+    },
+    {
+      "file": "docs/reports/final-c/L9-09/low-dry-shortcut-z1.5-physical.json.gz",
+      "sha256": "3091f807efb0c775ea340156a5bd43f7d5ab82ed088f2b9a2c30de61613d1162",
+      "what": "All172paired terrain boundaries/43140exhaustive affine-partition samples have0missing support and maxgap0.01000000024m (<0.02m); all97runtime-asset hashes match. Twelve current physical detour runs (3routes×2tiers×2zooms) satisfy the established per-tick input predicates: every simulation input tick matches held WASD, no scripted driving lock, >=5streaming sets and genuine unloads. Detailed+loading and simulation slots never exceed9low/25high. This qualifies continuous input acceptance; no FPS/frame-budget claim. Unpaired permanent structural/horizon faces are not paired terrain seams."
+    },
+    {
+      "file": "docs/reports/final-c/L9-09/high-road-z0.5-physical.json.gz",
+      "sha256": "cd3ca7cf426ccb4711f24924acba8a78d04833adadb53462e68b7e16e387257e",
+      "what": "All172paired terrain boundaries/43140exhaustive affine-partition samples have0missing support and maxgap0.01000000024m (<0.02m); all97runtime-asset hashes match. Twelve current physical detour runs (3routes×2tiers×2zooms) satisfy the established per-tick input predicates: every simulation input tick matches held WASD, no scripted driving lock, >=5streaming sets and genuine unloads. Detailed+loading and simulation slots never exceed9low/25high. This qualifies continuous input acceptance; no FPS/frame-budget claim. Unpaired permanent structural/horizon faces are not paired terrain seams."
+    },
+    {
+      "file": "docs/reports/final-c/L9-09/high-road-z1.5-physical.json.gz",
+      "sha256": "41e09336df33854833a32d172b748724d9cfd2da60d200f8990bde4b18c78e14",
+      "what": "All172paired terrain boundaries/43140exhaustive affine-partition samples have0missing support and maxgap0.01000000024m (<0.02m); all97runtime-asset hashes match. Twelve current physical detour runs (3routes×2tiers×2zooms) satisfy the established per-tick input predicates: every simulation input tick matches held WASD, no scripted driving lock, >=5streaming sets and genuine unloads. Detailed+loading and simulation slots never exceed9low/25high. This qualifies continuous input acceptance; no FPS/frame-budget claim. Unpaired permanent structural/horizon faces are not paired terrain seams."
+    },
+    {
+      "file": "docs/reports/final-c/L9-09/high-countryside-z0.5-physical.json.gz",
+      "sha256": "4675433da9f9378b7b09c543bc769c20edd31e5b18a783f1cae851a0d073c995",
+      "what": "All172paired terrain boundaries/43140exhaustive affine-partition samples have0missing support and maxgap0.01000000024m (<0.02m); all97runtime-asset hashes match. Twelve current physical detour runs (3routes×2tiers×2zooms) satisfy the established per-tick input predicates: every simulation input tick matches held WASD, no scripted driving lock, >=5streaming sets and genuine unloads. Detailed+loading and simulation slots never exceed9low/25high. This qualifies continuous input acceptance; no FPS/frame-budget claim. Unpaired permanent structural/horizon faces are not paired terrain seams."
+    },
+    {
+      "file": "docs/reports/final-c/L9-09/high-countryside-z1.5-physical.json.gz",
+      "sha256": "ec2240acc196af29e5fcc7b7a8d50a85ab02e8ae144db3f7caaab83fd7aa6abb",
+      "what": "All172paired terrain boundaries/43140exhaustive affine-partition samples have0missing support and maxgap0.01000000024m (<0.02m); all97runtime-asset hashes match. Twelve current physical detour runs (3routes×2tiers×2zooms) satisfy the established per-tick input predicates: every simulation input tick matches held WASD, no scripted driving lock, >=5streaming sets and genuine unloads. Detailed+loading and simulation slots never exceed9low/25high. This qualifies continuous input acceptance; no FPS/frame-budget claim. Unpaired permanent structural/horizon faces are not paired terrain seams."
+    },
+    {
+      "file": "docs/reports/final-c/L9-09/high-dry-shortcut-z0.5-physical.json.gz",
+      "sha256": "91fae96b5b5754ef33a3c3c3fdc8db39d7e52484003293b666fe69ac9abeb55d",
+      "what": "All172paired terrain boundaries/43140exhaustive affine-partition samples have0missing support and maxgap0.01000000024m (<0.02m); all97runtime-asset hashes match. Twelve current physical detour runs (3routes×2tiers×2zooms) satisfy the established per-tick input predicates: every simulation input tick matches held WASD, no scripted driving lock, >=5streaming sets and genuine unloads. Detailed+loading and simulation slots never exceed9low/25high. This qualifies continuous input acceptance; no FPS/frame-budget claim. Unpaired permanent structural/horizon faces are not paired terrain seams."
+    },
+    {
+      "file": "docs/reports/final-c/L9-09/high-dry-shortcut-z1.5-physical.json.gz",
+      "sha256": "09a5371c50dcacf75b0dd7ad5c739dba080a2f1317f7d35397a6ae25760c81bd",
+      "what": "All172paired terrain boundaries/43140exhaustive affine-partition samples have0missing support and maxgap0.01000000024m (<0.02m); all97runtime-asset hashes match. Twelve current physical detour runs (3routes×2tiers×2zooms) satisfy the established per-tick input predicates: every simulation input tick matches held WASD, no scripted driving lock, >=5streaming sets and genuine unloads. Detailed+loading and simulation slots never exceed9low/25high. This qualifies continuous input acceptance; no FPS/frame-budget claim. Unpaired permanent structural/horizon faces are not paired terrain seams."
+    }
+  ],
+  "notes": "Frozen-head row review. Current immutable evidence, unchanged criterion and game source.",
+  "sourceDigest": "fbad89802bfe8d610b736d8f5a3111d1a13e8d0ae47b606a45c5760634f3ed51"
+}

@@ -1,0 +1,392 @@
+{
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+  "revision": "098778e94bc9abc43b39d92235b7b00cc11c591d",
+  "producerSha256": "625a9899a435a9a49567244b32db9efc52c09ebbcba50e8744634ffdc06a2e85",
+  "method": "Dense actual physicalWASD authored detour trajectories, both tiers, no actor/HP/AI changes. Segment-to-each-authored-group-anchor minimum>=20m; full drive to scripted approach, every12ticks. Independent actual first-admission native census supplies exact group counts/species; no static authored count substituted for admissions. Zoom does not change this path-distance clause.",
+  "rows": [
+    {
+      "tier": "low",
+      "route": "road",
+      "file": "docs/reports/final-c/L9-09/low-road-z0.5-physical.json.gz",
+      "sha256": "679a80993f489a636a1c8cbeba1d678252ff86527c00874069e2ff926d30e3b3",
+      "samples": 636,
+      "groups": [
+        {
+          "id": "road-1",
+          "anchor": [
+            -300,
+            -330
+          ],
+          "minimumMetres": 24.518480298226525
+        },
+        {
+          "id": "road-2",
+          "anchor": [
+            240,
+            -330
+          ],
+          "minimumMetres": 24.64635628110666
+        }
+      ],
+      "nativeGroups": [
+        {
+          "id": "road-1",
+          "count": 6,
+          "alphas": 0
+        },
+        {
+          "id": "road-2",
+          "count": 6,
+          "alphas": 0
+        }
+      ],
+      "control": {
+        "identical": true,
+        "expected": "c8ed6838",
+        "observed": "c8ed6838"
+      }
+    },
+    {
+      "tier": "low",
+      "route": "countryside",
+      "file": "docs/reports/final-c/L9-09/low-countryside-z0.5-physical.json.gz",
+      "sha256": "2449b30a3f8dd3200570f6f84b55f1be476d1ec9c168ce9715168eb63089457b",
+      "samples": 612,
+      "groups": [
+        {
+          "id": "countryside-1",
+          "anchor": [
+            -250,
+            240
+          ],
+          "minimumMetres": 24.514519977635704
+        },
+        {
+          "id": "countryside-2",
+          "anchor": [
+            0,
+            240
+          ],
+          "minimumMetres": 24.42329684635316
+        },
+        {
+          "id": "countryside-3",
+          "anchor": [
+            200,
+            240
+          ],
+          "minimumMetres": 24.86443470216801
+        }
+      ],
+      "nativeGroups": [
+        {
+          "id": "countryside-1",
+          "count": 6,
+          "alphas": 0
+        },
+        {
+          "id": "countryside-2",
+          "count": 6,
+          "alphas": 0
+        },
+        {
+          "id": "countryside-3",
+          "count": 6,
+          "alphas": 0
+        }
+      ],
+      "control": {
+        "identical": true,
+        "expected": "8d39854e",
+        "observed": "8d39854e"
+      }
+    },
+    {
+      "tier": "low",
+      "route": "dry-shortcut",
+      "file": "docs/reports/final-c/L9-09/low-dry-shortcut-z0.5-physical.json.gz",
+      "sha256": "8534196bcb25d662832a0772ef0ad01be4b4b01da2d057d44058b0d0ff10645f",
+      "samples": 445,
+      "groups": [
+        {
+          "id": "dry-shortcut-1",
+          "anchor": [
+            -300,
+            -22.5
+          ],
+          "minimumMetres": 30.073794372427713
+        },
+        {
+          "id": "dry-shortcut-2",
+          "anchor": [
+            -150,
+            -30
+          ],
+          "minimumMetres": 39.84111700844682
+        },
+        {
+          "id": "dry-shortcut-3",
+          "anchor": [
+            -60,
+            -30
+          ],
+          "minimumMetres": 39.75254565703345
+        },
+        {
+          "id": "dry-shortcut-4",
+          "anchor": [
+            60,
+            -30
+          ],
+          "minimumMetres": 39.720325991807925
+        },
+        {
+          "id": "dry-shortcut-5",
+          "anchor": [
+            150,
+            -30
+          ],
+          "minimumMetres": 39.85220506851073
+        },
+        {
+          "id": "dry-shortcut-6",
+          "anchor": [
+            240,
+            -30
+          ],
+          "minimumMetres": 39.8501010433264
+        }
+      ],
+      "nativeGroups": [
+        {
+          "id": "dry-shortcut-1",
+          "count": 8,
+          "alphas": 0
+        },
+        {
+          "id": "dry-shortcut-2",
+          "count": 8,
+          "alphas": 0
+        },
+        {
+          "id": "dry-shortcut-3",
+          "count": 8,
+          "alphas": 1
+        },
+        {
+          "id": "dry-shortcut-4",
+          "count": 8,
+          "alphas": 0
+        },
+        {
+          "id": "dry-shortcut-5",
+          "count": 8,
+          "alphas": 0
+        },
+        {
+          "id": "dry-shortcut-6",
+          "count": 8,
+          "alphas": 1
+        }
+      ],
+      "control": {
+        "identical": true,
+        "expected": "b62308f7",
+        "observed": "b62308f7"
+      }
+    },
+    {
+      "tier": "high",
+      "route": "road",
+      "file": "docs/reports/final-c/L9-09/high-road-z0.5-physical.json.gz",
+      "sha256": "cd3ca7cf426ccb4711f24924acba8a78d04833adadb53462e68b7e16e387257e",
+      "samples": 636,
+      "groups": [
+        {
+          "id": "road-1",
+          "anchor": [
+            -300,
+            -330
+          ],
+          "minimumMetres": 24.518480298226525
+        },
+        {
+          "id": "road-2",
+          "anchor": [
+            240,
+            -330
+          ],
+          "minimumMetres": 24.64635628110666
+        }
+      ],
+      "nativeGroups": [
+        {
+          "id": "road-1",
+          "count": 6,
+          "alphas": 0
+        },
+        {
+          "id": "road-2",
+          "count": 6,
+          "alphas": 0
+        }
+      ],
+      "control": {
+        "identical": true,
+        "expected": "ca7d104f",
+        "observed": "ca7d104f"
+      }
+    },
+    {
+      "tier": "high",
+      "route": "countryside",
+      "file": "docs/reports/final-c/L9-09/high-countryside-z0.5-physical.json.gz",
+      "sha256": "4675433da9f9378b7b09c543bc769c20edd31e5b18a783f1cae851a0d073c995",
+      "samples": 612,
+      "groups": [
+        {
+          "id": "countryside-1",
+          "anchor": [
+            -250,
+            240
+          ],
+          "minimumMetres": 24.514519977635704
+        },
+        {
+          "id": "countryside-2",
+          "anchor": [
+            0,
+            240
+          ],
+          "minimumMetres": 24.42329684635316
+        },
+        {
+          "id": "countryside-3",
+          "anchor": [
+            200,
+            240
+          ],
+          "minimumMetres": 24.86443470216801
+        }
+      ],
+      "nativeGroups": [
+        {
+          "id": "countryside-1",
+          "count": 6,
+          "alphas": 0
+        },
+        {
+          "id": "countryside-2",
+          "count": 6,
+          "alphas": 0
+        },
+        {
+          "id": "countryside-3",
+          "count": 6,
+          "alphas": 0
+        }
+      ],
+      "control": {
+        "identical": true,
+        "expected": "6cfbfd16",
+        "observed": "6cfbfd16"
+      }
+    },
+    {
+      "tier": "high",
+      "route": "dry-shortcut",
+      "file": "docs/reports/final-c/L9-09/high-dry-shortcut-z0.5-physical.json.gz",
+      "sha256": "91fae96b5b5754ef33a3c3c3fdc8db39d7e52484003293b666fe69ac9abeb55d",
+      "samples": 445,
+      "groups": [
+        {
+          "id": "dry-shortcut-1",
+          "anchor": [
+            -300,
+            -22.5
+          ],
+          "minimumMetres": 30.073794372427713
+        },
+        {
+          "id": "dry-shortcut-2",
+          "anchor": [
+            -150,
+            -30
+          ],
+          "minimumMetres": 39.84111700844682
+        },
+        {
+          "id": "dry-shortcut-3",
+          "anchor": [
+            -60,
+            -30
+          ],
+          "minimumMetres": 39.75254565703345
+        },
+        {
+          "id": "dry-shortcut-4",
+          "anchor": [
+            60,
+            -30
+          ],
+          "minimumMetres": 39.720325991807925
+        },
+        {
+          "id": "dry-shortcut-5",
+          "anchor": [
+            150,
+            -30
+          ],
+          "minimumMetres": 39.85220506851073
+        },
+        {
+          "id": "dry-shortcut-6",
+          "anchor": [
+            240,
+            -30
+          ],
+          "minimumMetres": 39.8501010433264
+        }
+      ],
+      "nativeGroups": [
+        {
+          "id": "dry-shortcut-1",
+          "count": 8,
+          "alphas": 0
+        },
+        {
+          "id": "dry-shortcut-2",
+          "count": 8,
+          "alphas": 0
+        },
+        {
+          "id": "dry-shortcut-3",
+          "count": 8,
+          "alphas": 1
+        },
+        {
+          "id": "dry-shortcut-4",
+          "count": 8,
+          "alphas": 0
+        },
+        {
+          "id": "dry-shortcut-5",
+          "count": 8,
+          "alphas": 0
+        },
+        {
+          "id": "dry-shortcut-6",
+          "count": 8,
+          "alphas": 1
+        }
+      ],
+      "control": {
+        "identical": true,
+        "expected": "f27385c5",
+        "observed": "f27385c5"
+      }
+    }
+  ],
+  "pass": true
+}

@@ -1,0 +1,268 @@
+{
+  "row": "L10-10",
+  "frozenHead": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "verdict": "PASS",
+  "criterion": "Charge = exactly 3,600 ticks while alive within 25 m; pauses outside with an instruction; minigun 20 rounds/s, heat +12.5 %/s, lock at 100 %, unlock < 40 %.",
+  "observation": "All four tier/policy runs count exactly 3600 eligible increments with zero invalid increments; high complete additionally records 112 outside-radius ticks without charge. Both-tier fixtures preserve charge while outside/dead, show the pause instruction, resume inside, produce 20 rounds and 0.125 heat per second, lock at 1.0, remain locked at 0.4, and unlock below 0.4 (0.3966667).",
+  "method": "Current native qa:accept both-tier complete/stationary + production fixtures/checkpoint controls; immutable source receipt snapshots.",
+  "sources": [
+    {
+      "original": "docs/reports/fix51-verify/receipts/L10-low-complete.json",
+      "originalSha256": "832562d7747a6d96451e185e249605a87fb77ff9cf312ec0ef941ad52c90aa95",
+      "archive": "docs/reports/final-c/native/L10-low-complete.json.gz",
+      "sha256": "8f2e11bb7ea3604d0c1f7db62cca453818f18a6706a9676b876f34b46e24da1f",
+      "revision": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+      "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+      "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+      "generatedAt": "2026-11-06T23:58:07.856Z"
+    },
+    {
+      "original": "docs/reports/fix51-verify/receipts/L10-low-stationary.json",
+      "originalSha256": "5433709ca0508f334e49cfdc6078cd4af6aa005f72b0c042b1d7b8db1dee679c",
+      "archive": "docs/reports/final-c/native/L10-low-stationary.json.gz",
+      "sha256": "dfdb72e5fcd79f5db665c40e096ced326d0a148a06e29450824d48bee6612882",
+      "revision": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+      "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+      "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+      "generatedAt": "2026-11-06T23:58:41.340Z"
+    },
+    {
+      "original": "docs/reports/fix51-verify/receipts/L10-high-complete.json",
+      "originalSha256": "355d39e51e9ed49cb87f6603cb9b3a8981877ebd7a58ddc446a07af050bd2435",
+      "archive": "docs/reports/final-c/native/L10-high-complete.json.gz",
+      "sha256": "0af4d7200e9b341063d2fa1a65bb0070b7531f3eb390259ed15d7c31e7ab50cb",
+      "revision": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+      "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+      "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+      "generatedAt": "2026-11-06T23:59:10.706Z"
+    },
+    {
+      "original": "docs/reports/fix51-verify/receipts/L10-high-stationary.json",
+      "originalSha256": "3ad9d850deeceed26f960bda66c6cfa0ef18911e2fe5c3daea9c7924f8b7e3cd",
+      "archive": "docs/reports/final-c/native/L10-high-stationary.json.gz",
+      "sha256": "cb525c30e1a0766f5c58135f55129ebe4b91c76b920dd0bd955472a14acd58a9",
+      "revision": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+      "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+      "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+      "generatedAt": "2026-11-06T23:59:53.159Z"
+    },
+    {
+      "original": "docs/reports/fix51-verify/receipts/L10-low-fixtures.json",
+      "originalSha256": "61d19dd997f30c59aebcea25de2b9f28846e8ec5c6ad7dd85e0448ad69190498",
+      "archive": "docs/reports/final-c/native/L10-low-fixtures.json.gz",
+      "sha256": "11fcbea0af38305871180125c31ad74e19f74034a087b486d849b291fde9c581",
+      "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+      "fixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4"
+    },
+    {
+      "original": "docs/reports/fix51-verify/receipts/L10-high-fixtures.json",
+      "originalSha256": "1bedac7eb5383df66d9c323ff9ac5fb477f391e732c5409c6cbc6d64fe249c76",
+      "archive": "docs/reports/final-c/native/L10-high-fixtures.json.gz",
+      "sha256": "514522e7edc040f73110c272d60efe194211f8689c77e687b9917836a2e81144",
+      "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+      "fixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4"
+    }
+  ],
+  "checks": [
+    {
+      "id": "L10-10",
+      "clause": "actual eligible charge ticks and increments",
+      "level": "L10",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": {
+        "eligibleTicks": 3600,
+        "incrementTicks": 3600,
+        "invalidIncrements": 0,
+        "outsideTicks": 0,
+        "deadTicks": 0,
+        "maximum": 3600,
+        "activeTicks": 3600
+      },
+      "target": "3600 eligible ticks; 3600 increments; no invalid increment",
+      "receipt": "docs/reports/fix51-verify/receipts/L10-low-complete.json"
+    },
+    {
+      "id": "L10-10",
+      "clause": "actual eligible charge ticks and increments",
+      "level": "L10",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": {
+        "eligibleTicks": 3600,
+        "incrementTicks": 3600,
+        "invalidIncrements": 0,
+        "outsideTicks": 0,
+        "deadTicks": 0,
+        "maximum": 3600,
+        "activeTicks": 3600
+      },
+      "target": "3600 eligible ticks; 3600 increments; no invalid increment",
+      "receipt": "docs/reports/fix51-verify/receipts/L10-low-stationary.json"
+    },
+    {
+      "id": "L10-10",
+      "clause": "actual eligible charge ticks and increments",
+      "level": "L10",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": {
+        "eligibleTicks": 3600,
+        "incrementTicks": 3600,
+        "invalidIncrements": 0,
+        "outsideTicks": 112,
+        "deadTicks": 0,
+        "maximum": 3600,
+        "activeTicks": 3712
+      },
+      "target": "3600 eligible ticks; 3600 increments; no invalid increment",
+      "receipt": "docs/reports/fix51-verify/receipts/L10-high-complete.json"
+    },
+    {
+      "id": "L10-10",
+      "clause": "actual eligible charge ticks and increments",
+      "level": "L10",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": {
+        "eligibleTicks": 3600,
+        "incrementTicks": 3600,
+        "invalidIncrements": 0,
+        "outsideTicks": 0,
+        "deadTicks": 0,
+        "maximum": 3600,
+        "activeTicks": 3600
+      },
+      "target": "3600 eligible ticks; 3600 increments; no invalid increment",
+      "receipt": "docs/reports/fix51-verify/receipts/L10-high-stationary.json"
+    },
+    {
+      "id": "L10-10",
+      "clause": "charge inside/outside/dead/resume boundary and pause instruction",
+      "value": {
+        "inside": 1,
+        "outside": 1,
+        "dead": 1,
+        "resumed": 2,
+        "instruction": "Back to the dispersal console · Charge paused · 0/60 s"
+      },
+      "target": "1/1/1/2 ticks; outside instruction says Charge paused",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L10-low-fixtures.json",
+      "level": "L10"
+    },
+    {
+      "id": "L10-10",
+      "clause": "minigun rounds and heat per full-speed second",
+      "value": {
+        "rounds": 20,
+        "heat": 0.12500000000000017
+      },
+      "target": "20 rounds; heat+0.125",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L10-low-fixtures.json",
+      "level": "L10"
+    },
+    {
+      "id": "L10-10",
+      "clause": "minigun overheat lock",
+      "value": {
+        "heat": 1,
+        "locked": true
+      },
+      "target": "locked at100%",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L10-low-fixtures.json",
+      "level": "L10"
+    },
+    {
+      "id": "L10-10",
+      "clause": "minigun unlock threshold",
+      "value": {
+        "lockedAt40": true,
+        "afterCooling": {
+          "heat": 0.39666666666666667,
+          "locked": false
+        }
+      },
+      "target": "still locked at40%, unlock below40%",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L10-low-fixtures.json",
+      "level": "L10"
+    },
+    {
+      "id": "L10-10",
+      "clause": "charge inside/outside/dead/resume boundary and pause instruction",
+      "value": {
+        "inside": 1,
+        "outside": 1,
+        "dead": 1,
+        "resumed": 2,
+        "instruction": "Back to the dispersal console · Charge paused · 0/60 s"
+      },
+      "target": "1/1/1/2 ticks; outside instruction says Charge paused",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L10-high-fixtures.json",
+      "level": "L10"
+    },
+    {
+      "id": "L10-10",
+      "clause": "minigun rounds and heat per full-speed second",
+      "value": {
+        "rounds": 20,
+        "heat": 0.12500000000000017
+      },
+      "target": "20 rounds; heat+0.125",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L10-high-fixtures.json",
+      "level": "L10"
+    },
+    {
+      "id": "L10-10",
+      "clause": "minigun overheat lock",
+      "value": {
+        "heat": 1,
+        "locked": true
+      },
+      "target": "locked at100%",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L10-high-fixtures.json",
+      "level": "L10"
+    },
+    {
+      "id": "L10-10",
+      "clause": "minigun unlock threshold",
+      "value": {
+        "lockedAt40": true,
+        "afterCooling": {
+          "heat": 0.39666666666666667,
+          "locked": false
+        }
+      },
+      "target": "still locked at40%, unlock below40%",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L10-high-fixtures.json",
+      "level": "L10"
+    }
+  ]
+}

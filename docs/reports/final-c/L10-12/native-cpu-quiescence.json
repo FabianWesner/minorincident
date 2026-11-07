@@ -1,0 +1,6 @@
+{
+  "pid": 40739,
+  "state": "T",
+  "at": "2026-11-07T02:44:56.021025+00:00",
+  "meaning": "The existing native-all-done.flag is a legacy-named CPU permission latch. L7/L8/L9 are finished; L10 deterministic native CLI is SIGSTOP while browser timing runs, then automatically resumed. It does not assert L10 command completion. No own native CPU work runs during the browser gate; no native world/game state is modified by the OS pause. Four exact final command receipts are written only after real command completion."
+}

@@ -1,0 +1,7 @@
+{
+  "stage": "No high measurement started",
+  "log": "docs/reports/final-c/L10-12/high-admission-expired.log",
+  "sha256": "3587a62436dd12060b85269bc21abbecf4180314ba81072ba5f47551ab3f2bcd",
+  "terminal": "600s admission deadline expired at load3.7236; never quiet. Earlier46row measurements/reviews remain unchanged. Requeued same corrected high-only observer with900s admission budget; per-reservation600s cap unchanged.",
+  "coordination": "L7 finalnative complete before L8; own launcher temporarily paused while L8 child completed. Coordinator resumed launcher after expired browser wrapper; L9 then ran. Final high-only observer waits for all3native commands to finish."
+}

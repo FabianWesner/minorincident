@@ -183,7 +183,9 @@ export function rowResult(source: SourceRow, checks: Clause[]): AcceptanceRow {
   // A fresh measured counterexample must also close a plain S row. Previously
   // these valid FAIL reviews were silently ignored unless the row had a named
   // review gate or an older failure. PASS still needs its existing full scope.
-  const reviewCheck = review || source.baseline.status === 'FAIL' || decision?.status === 'FAIL' ? decision : undefined;
+  // Keep freshness visible for every saved decision, including plain numeric
+  // PASS rows. Required measurement/review gates below still decide acceptance.
+  const reviewCheck = decision;
   const freshness = reviewCheck ? reviewFreshness(reviewCheck, source.level) : undefined;
   const matchingReview = reviewClause ? reviewCheck?.clauses.find(clause => clause.clause === reviewClause) : undefined;
   const allReviewPass = !reviewClause || (!!reviewCheck && !!matchingReview && freshness === 'FRESH' && reviewCheck.status === 'PASS' && matchingReview.verdict === 'PASS');

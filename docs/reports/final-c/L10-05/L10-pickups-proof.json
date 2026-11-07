@@ -1,0 +1,547 @@
+{
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+  "revision": "bbb2b72363eb476869e4a5869ec32eb9146a3b5d",
+  "toolSha256": "1a402fdbde73a48ba8859e06ef7c9bc120376d6a2675746257a1dab87a769249",
+  "method": "Observe every ordinary native weapon collection: exact named anchor, approach interaction and same-tick checkpoint entity arsenal. Final state equals canonical control. Separately compare four-second controlled inventory-only interventions at each naturally reached pre-pickup production Resume snapshot (the named weapon and all four) with an unchanged baseline; compare every infected census and spawn call. This inventory-only fixture does not complete objectives or move actors.",
+  "rows": [
+    {
+      "tier": "low",
+      "acquisitions": [
+        {
+          "weapon": "weapon.pistol",
+          "tick": 3497,
+          "x": 765.1019897460938,
+          "z": 24.9973201751709,
+          "interact": true,
+          "checkpoint": "cure-residential",
+          "snapshotTick": 3497,
+          "snapshotWeapons": [
+            "weapon.fire-axe",
+            "weapon.pistol"
+          ],
+          "expectedDistance": 1.8980121457446952,
+          "expectedRadius": 2
+        },
+        {
+          "weapon": "weapon.shotgun",
+          "tick": 11461,
+          "x": 1256.1455078125,
+          "z": 25.00066375732422,
+          "interact": true,
+          "checkpoint": "cure-industrial",
+          "snapshotTick": 11461,
+          "snapshotWeapons": [
+            "weapon.fire-axe",
+            "weapon.pistol",
+            "weapon.shotgun"
+          ],
+          "expectedDistance": 0.8544924452985647,
+          "expectedRadius": 2
+        },
+        {
+          "weapon": "weapon.army-mg",
+          "tick": 21369,
+          "x": 1855.1417236328125,
+          "z": 25.002906799316406,
+          "interact": true,
+          "checkpoint": "cure-military",
+          "snapshotTick": 21369,
+          "snapshotWeapons": [
+            "weapon.fire-axe",
+            "weapon.pistol",
+            "weapon.shotgun",
+            "weapon.army-mg"
+          ],
+          "expectedDistance": 1.8582786406591019,
+          "expectedRadius": 2
+        },
+        {
+          "weapon": "weapon.rocket-launcher",
+          "tick": 39247,
+          "x": 2935.140625,
+          "z": -4.997618198394775,
+          "interact": true,
+          "checkpoint": "cure-corridor",
+          "snapshotTick": 39247,
+          "snapshotWeapons": [
+            "weapon.fire-axe",
+            "weapon.pistol",
+            "weapon.shotgun",
+            "weapon.army-mg",
+            "weapon.rocket-launcher"
+          ],
+          "expectedDistance": 1.8593765255063015,
+          "expectedRadius": 2
+        }
+      ],
+      "expected": [
+        {
+          "weapon": "weapon.pistol",
+          "checkpoint": "cure-residential"
+        },
+        {
+          "weapon": "weapon.shotgun",
+          "checkpoint": "cure-industrial"
+        },
+        {
+          "weapon": "weapon.army-mg",
+          "checkpoint": "cure-military"
+        },
+        {
+          "weapon": "weapon.rocket-launcher",
+          "checkpoint": "cure-corridor"
+        }
+      ],
+      "physicalSeeds": [
+        {
+          "weapon": "weapon.pistol",
+          "checkpoint": "cure-residential",
+          "path": "docs/reports/sweep-c4/L10-05-low-cure-residential-save.json.gz",
+          "sha256": "e744f58cf05e460bd8e5d50c5e136e4734cdd21ed7622c80e207d51a8686255d",
+          "tick": 3483
+        },
+        {
+          "weapon": "weapon.shotgun",
+          "checkpoint": "cure-industrial",
+          "path": "docs/reports/sweep-c4/L10-05-low-cure-industrial-save.json.gz",
+          "sha256": "46c251ae24cc7b06c02a4caaf1c5282a83cb84f0364f5e8405e4529df27e228a",
+          "tick": 11432
+        },
+        {
+          "weapon": "weapon.army-mg",
+          "checkpoint": "cure-military",
+          "path": "docs/reports/sweep-c4/L10-05-low-cure-military-save.json.gz",
+          "sha256": "d5eba561ca3e9c594778005457c84eb7f80817ab533e32985a8f06e2a3dad1a3",
+          "tick": 21354
+        },
+        {
+          "weapon": "weapon.rocket-launcher",
+          "checkpoint": "cure-corridor",
+          "path": "docs/reports/sweep-c4/L10-05-low-cure-corridor-save.json.gz",
+          "sha256": "34478dff62e0b954ee2eef6074d6566b4227bfe7c55f33f7dde77e2f72306248",
+          "tick": 39232
+        }
+      ],
+      "nativeStateHash": "56e575ab",
+      "controlIdentical": true,
+      "inventorySeconds": 4,
+      "inventoryCases": [
+        {
+          "weapon": "weapon.pistol",
+          "snapshotTick": 3483,
+          "snapshotSha256": "3d4ff0bd112359908d194a544e630a8e9e6dbd00c5826b2832655e8636785959",
+          "cases": [
+            {
+              "add": [],
+              "before": 6,
+              "births": [],
+              "censusSha256": "bd63472d5b8b2603d00f455dc8ad056f28f8ba748e75ae9111343d662dcf476d",
+              "checkpoint": "cure-crash"
+            },
+            {
+              "add": [
+                "weapon.pistol"
+              ],
+              "before": 6,
+              "births": [],
+              "censusSha256": "bd63472d5b8b2603d00f455dc8ad056f28f8ba748e75ae9111343d662dcf476d",
+              "checkpoint": "cure-crash"
+            },
+            {
+              "add": [
+                "weapon.pistol",
+                "weapon.shotgun",
+                "weapon.army-mg",
+                "weapon.rocket-launcher"
+              ],
+              "before": 6,
+              "births": [],
+              "censusSha256": "bd63472d5b8b2603d00f455dc8ad056f28f8ba748e75ae9111343d662dcf476d",
+              "checkpoint": "cure-crash"
+            }
+          ],
+          "identical": true
+        },
+        {
+          "weapon": "weapon.shotgun",
+          "snapshotTick": 11432,
+          "snapshotSha256": "293e71ecb9a61538f5d8ed678785b77c3a53c6fea7fb29b65a77b007110403fd",
+          "cases": [
+            {
+              "add": [],
+              "before": 9,
+              "births": [],
+              "censusSha256": "9ea576627397dde0c057532c33ce19f52016a5ef69f239152e68889fc544342e",
+              "checkpoint": "cure-residential"
+            },
+            {
+              "add": [
+                "weapon.shotgun"
+              ],
+              "before": 9,
+              "births": [],
+              "censusSha256": "9ea576627397dde0c057532c33ce19f52016a5ef69f239152e68889fc544342e",
+              "checkpoint": "cure-residential"
+            },
+            {
+              "add": [
+                "weapon.pistol",
+                "weapon.shotgun",
+                "weapon.army-mg",
+                "weapon.rocket-launcher"
+              ],
+              "before": 9,
+              "births": [],
+              "censusSha256": "9ea576627397dde0c057532c33ce19f52016a5ef69f239152e68889fc544342e",
+              "checkpoint": "cure-residential"
+            }
+          ],
+          "identical": true
+        },
+        {
+          "weapon": "weapon.army-mg",
+          "snapshotTick": 21354,
+          "snapshotSha256": "da36a6cff03b79c265f5483ee3e05968bc1efcc320a2596e8357eca692791436",
+          "cases": [
+            {
+              "add": [],
+              "before": 6,
+              "births": [],
+              "censusSha256": "ee60b0a9ba3e412b55c2ecb1bd9299ba59857829c52e923652ce3b0f0d084b2a",
+              "checkpoint": "cure-industrial"
+            },
+            {
+              "add": [
+                "weapon.army-mg"
+              ],
+              "before": 6,
+              "births": [],
+              "censusSha256": "ee60b0a9ba3e412b55c2ecb1bd9299ba59857829c52e923652ce3b0f0d084b2a",
+              "checkpoint": "cure-industrial"
+            },
+            {
+              "add": [
+                "weapon.pistol",
+                "weapon.shotgun",
+                "weapon.army-mg",
+                "weapon.rocket-launcher"
+              ],
+              "before": 6,
+              "births": [],
+              "censusSha256": "ee60b0a9ba3e412b55c2ecb1bd9299ba59857829c52e923652ce3b0f0d084b2a",
+              "checkpoint": "cure-industrial"
+            }
+          ],
+          "identical": true
+        },
+        {
+          "weapon": "weapon.rocket-launcher",
+          "snapshotTick": 39232,
+          "snapshotSha256": "b037c465803c485c27e7a48b951c9ff82c29a13959ee1fc471ae261955f5da9c",
+          "cases": [
+            {
+              "add": [],
+              "before": 22,
+              "births": [],
+              "censusSha256": "da56c2f05f758b3565b096029337d97ea38669c761a8c89066cd1bc822591691",
+              "checkpoint": "cure-research"
+            },
+            {
+              "add": [
+                "weapon.rocket-launcher"
+              ],
+              "before": 22,
+              "births": [],
+              "censusSha256": "da56c2f05f758b3565b096029337d97ea38669c761a8c89066cd1bc822591691",
+              "checkpoint": "cure-research"
+            },
+            {
+              "add": [
+                "weapon.pistol",
+                "weapon.shotgun",
+                "weapon.army-mg",
+                "weapon.rocket-launcher"
+              ],
+              "before": 22,
+              "births": [],
+              "censusSha256": "da56c2f05f758b3565b096029337d97ea38669c761a8c89066cd1bc822591691",
+              "checkpoint": "cure-research"
+            }
+          ],
+          "identical": true
+        }
+      ],
+      "inventoryOnlyIdentical": true
+    },
+    {
+      "tier": "high",
+      "acquisitions": [
+        {
+          "weapon": "weapon.pistol",
+          "tick": 3497,
+          "x": 765.1019897460938,
+          "z": 24.9973201751709,
+          "interact": true,
+          "checkpoint": "cure-residential",
+          "snapshotTick": 3497,
+          "snapshotWeapons": [
+            "weapon.fire-axe",
+            "weapon.pistol"
+          ],
+          "expectedDistance": 1.8980121457446952,
+          "expectedRadius": 2
+        },
+        {
+          "weapon": "weapon.shotgun",
+          "tick": 11461,
+          "x": 1255.7462158203125,
+          "z": 25.001005172729492,
+          "interact": true,
+          "checkpoint": "cure-industrial",
+          "snapshotTick": 11461,
+          "snapshotWeapons": [
+            "weapon.fire-axe",
+            "weapon.pistol",
+            "weapon.shotgun"
+          ],
+          "expectedDistance": 1.2537845826165168,
+          "expectedRadius": 2
+        },
+        {
+          "weapon": "weapon.army-mg",
+          "tick": 21450,
+          "x": 1855.1417236328125,
+          "z": 25.002906799316406,
+          "interact": true,
+          "checkpoint": "cure-military",
+          "snapshotTick": 21450,
+          "snapshotWeapons": [
+            "weapon.fire-axe",
+            "weapon.pistol",
+            "weapon.shotgun",
+            "weapon.army-mg"
+          ],
+          "expectedDistance": 1.8582786406591019,
+          "expectedRadius": 2
+        },
+        {
+          "weapon": "weapon.rocket-launcher",
+          "tick": 39366,
+          "x": 2935.12109375,
+          "z": -4.9975690841674805,
+          "interact": true,
+          "checkpoint": "cure-corridor",
+          "snapshotTick": 39366,
+          "snapshotWeapons": [
+            "weapon.fire-axe",
+            "weapon.pistol",
+            "weapon.shotgun",
+            "weapon.army-mg",
+            "weapon.rocket-launcher"
+          ],
+          "expectedDistance": 1.8789078225503368,
+          "expectedRadius": 2
+        }
+      ],
+      "expected": [
+        {
+          "weapon": "weapon.pistol",
+          "checkpoint": "cure-residential"
+        },
+        {
+          "weapon": "weapon.shotgun",
+          "checkpoint": "cure-industrial"
+        },
+        {
+          "weapon": "weapon.army-mg",
+          "checkpoint": "cure-military"
+        },
+        {
+          "weapon": "weapon.rocket-launcher",
+          "checkpoint": "cure-corridor"
+        }
+      ],
+      "physicalSeeds": [
+        {
+          "weapon": "weapon.pistol",
+          "checkpoint": "cure-residential",
+          "path": "docs/reports/sweep-c4/L10-05-high-cure-residential-save.json.gz",
+          "sha256": "aa89db86b55e353fe5291c2204518c2126ea7bc9153b1cd78a9d9583d72c4d44",
+          "tick": 3483
+        },
+        {
+          "weapon": "weapon.shotgun",
+          "checkpoint": "cure-industrial",
+          "path": "docs/reports/sweep-c4/L10-05-high-cure-industrial-save.json.gz",
+          "sha256": "b9d8e13ce40095bdc7ca7e2751f830ed16f1edde06d17e9d9d865d6b876888bd",
+          "tick": 11438
+        },
+        {
+          "weapon": "weapon.army-mg",
+          "checkpoint": "cure-military",
+          "path": "docs/reports/sweep-c4/L10-05-high-cure-military-save.json.gz",
+          "sha256": "2f764853f9714f6e9a0b35e4d7b921a9b0c68b25fdf3dd069bb1f725fdb589d8",
+          "tick": 21435
+        },
+        {
+          "weapon": "weapon.rocket-launcher",
+          "checkpoint": "cure-corridor",
+          "path": "docs/reports/sweep-c4/L10-05-high-cure-corridor-save.json.gz",
+          "sha256": "b876194ffcc876a1d0fef62f65343be9d7e46c340aa0785d7143644bea7dbc65",
+          "tick": 39352
+        }
+      ],
+      "nativeStateHash": "abd987b8",
+      "controlIdentical": true,
+      "inventorySeconds": 4,
+      "inventoryCases": [
+        {
+          "weapon": "weapon.pistol",
+          "snapshotTick": 3483,
+          "snapshotSha256": "6de815b356dd857cfc8029981d9e7b272cf0217e517a40e4ae40242a57c5c8e1",
+          "cases": [
+            {
+              "add": [],
+              "before": 7,
+              "births": [],
+              "censusSha256": "66f080b55bc842c4020b7e54eedb7bf9550eec448a4caa0235c86985abc4d9a2",
+              "checkpoint": "cure-crash"
+            },
+            {
+              "add": [
+                "weapon.pistol"
+              ],
+              "before": 7,
+              "births": [],
+              "censusSha256": "66f080b55bc842c4020b7e54eedb7bf9550eec448a4caa0235c86985abc4d9a2",
+              "checkpoint": "cure-crash"
+            },
+            {
+              "add": [
+                "weapon.pistol",
+                "weapon.shotgun",
+                "weapon.army-mg",
+                "weapon.rocket-launcher"
+              ],
+              "before": 7,
+              "births": [],
+              "censusSha256": "66f080b55bc842c4020b7e54eedb7bf9550eec448a4caa0235c86985abc4d9a2",
+              "checkpoint": "cure-crash"
+            }
+          ],
+          "identical": true
+        },
+        {
+          "weapon": "weapon.shotgun",
+          "snapshotTick": 11438,
+          "snapshotSha256": "3e0de086cf4ae22bdf9d4cd4263edf6f7f0193f88f31ab699758161898cdebfe",
+          "cases": [
+            {
+              "add": [],
+              "before": 17,
+              "births": [],
+              "censusSha256": "e6446b4f61587e43f0b7c041959e85a9d473502c0771a5ffee1e824102b24de9",
+              "checkpoint": "cure-residential"
+            },
+            {
+              "add": [
+                "weapon.shotgun"
+              ],
+              "before": 17,
+              "births": [],
+              "censusSha256": "e6446b4f61587e43f0b7c041959e85a9d473502c0771a5ffee1e824102b24de9",
+              "checkpoint": "cure-residential"
+            },
+            {
+              "add": [
+                "weapon.pistol",
+                "weapon.shotgun",
+                "weapon.army-mg",
+                "weapon.rocket-launcher"
+              ],
+              "before": 17,
+              "births": [],
+              "censusSha256": "e6446b4f61587e43f0b7c041959e85a9d473502c0771a5ffee1e824102b24de9",
+              "checkpoint": "cure-residential"
+            }
+          ],
+          "identical": true
+        },
+        {
+          "weapon": "weapon.army-mg",
+          "snapshotTick": 21435,
+          "snapshotSha256": "8adf7bd8a8768734b921354383af88585cc20b71e52c2cdf697c59f625cd52eb",
+          "cases": [
+            {
+              "add": [],
+              "before": 6,
+              "births": [],
+              "censusSha256": "1fba3eb498c14a1861f26949f9aa50eafebcb802d0067dfa68dbf6f88abdf46d",
+              "checkpoint": "cure-industrial"
+            },
+            {
+              "add": [
+                "weapon.army-mg"
+              ],
+              "before": 6,
+              "births": [],
+              "censusSha256": "1fba3eb498c14a1861f26949f9aa50eafebcb802d0067dfa68dbf6f88abdf46d",
+              "checkpoint": "cure-industrial"
+            },
+            {
+              "add": [
+                "weapon.pistol",
+                "weapon.shotgun",
+                "weapon.army-mg",
+                "weapon.rocket-launcher"
+              ],
+              "before": 6,
+              "births": [],
+              "censusSha256": "1fba3eb498c14a1861f26949f9aa50eafebcb802d0067dfa68dbf6f88abdf46d",
+              "checkpoint": "cure-industrial"
+            }
+          ],
+          "identical": true
+        },
+        {
+          "weapon": "weapon.rocket-launcher",
+          "snapshotTick": 39352,
+          "snapshotSha256": "98d67e7347adce2c9c0559a743c2c90723b7706b1bd26003fb52e50ad4707530",
+          "cases": [
+            {
+              "add": [],
+              "before": 37,
+              "births": [],
+              "censusSha256": "a27160ead2d840f268c41db5eff4232a7ce6335848979364471b855e5b796c32",
+              "checkpoint": "cure-research"
+            },
+            {
+              "add": [
+                "weapon.rocket-launcher"
+              ],
+              "before": 37,
+              "births": [],
+              "censusSha256": "a27160ead2d840f268c41db5eff4232a7ce6335848979364471b855e5b796c32",
+              "checkpoint": "cure-research"
+            },
+            {
+              "add": [
+                "weapon.pistol",
+                "weapon.shotgun",
+                "weapon.army-mg",
+                "weapon.rocket-launcher"
+              ],
+              "before": 37,
+              "births": [],
+              "censusSha256": "a27160ead2d840f268c41db5eff4232a7ce6335848979364471b855e5b796c32",
+              "checkpoint": "cure-research"
+            }
+          ],
+          "identical": true
+        }
+      ],
+      "inventoryOnlyIdentical": true
+    }
+  ]
+}

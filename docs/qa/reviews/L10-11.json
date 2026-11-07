@@ -1,37 +1,28 @@
 {
   "row": "L10-11",
-  "status": "PASS",
-  "reviewer": "Codex sweep-c6",
-  "date": "2026-11-06",
-  "commit": "8ebb570e57811d994276b020a1d0fd0f18840c89",
+  "status": "FAIL",
+  "reviewer": "Codex final-c",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
   "clauses": [
     {
-      "clause": "Assault: infected at the capped peak (140\u2013190 / 75\u201395), reachable \u2265 90 %, attacks on player \u2265 8/min (tune); Mega reaches the arena ~140 s after activation (orchestrator 2026-11-04: \"~140 s\" = 120\u2013160 s, by walking; no relocation).",
-      "verdict": "PASS",
-      "note": "Fresh native four-minute holds at both tiers, following the final-approach speed correction. The Mega crosses the 25 m arena at +150.45 s low / +132.45 s high. Both holds reach their capped peaks (95/190), remain 100% bounded-path reachable, exceed 8 player attacks/min, retain one persistent Mega ID and record zero scheduled relocations. Full competent controls pass at both tiers; the code change adjusts only hidden far final-route movement speed. No teleport, timer, cap, or criterion change."
+      "clause": "Assault: infected at the capped peak (140–190 / 75–95), reachable ≥ 90 %, attacks on player ≥ 8/min (tune); Mega reaches the arena ~140 s after activation (orchestrator 2026-11-04: \"~140 s\" = 120–160 s, by walking; no relocation).",
+      "verdict": "FAIL",
+      "note": "Current 240s native stationary holds FAIL the clarified120–160s walking arena-arrival window at both tiers: low162.4833s (+2.4833s beyond upper bound), high95.4833s (24.5167s before lower bound). Peaks reach95low/190high. Each tier retains one persistent Mega ID (119/122) and zero scheduled relocations; both final control hashes match current canonical stationary receipts. The timing counterexamples suffice for rowFAIL; no game, cap, input-policy or criterion adjustment was made."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix51-r10c/l10-hold-proof.json",
-      "sha256": "7df70a0964509a8471fe3e37cc9cefd66193502065183b8050049ea3fec6c5f5",
-      "what": "Current native 240-second low/high holds; arrival times 150.45/132.45 s, capped peaks, reachability, persistent identity and zero scheduled relocations."
+      "file": "docs/reports/final-c/L10-11/hold.json",
+      "sha256": "ad3430242332096db46eefcb7c68b810a99f1d6d47fbad59bf06eaf693859243",
+      "what": "Current 240s native stationary holds FAIL the clarified120–160s walking arena-arrival window at both tiers: low162.4833s (+2.4833s beyond upper bound), high95.4833s (24.5167s before lower bound). Peaks reach95low/190high. Each tier retains one persistent Mega ID (119/122) and zero scheduled relocations; both final control hashes match current canonical stationary receipts. The timing counterexamples suffice for rowFAIL; no game, cap, input-policy or criterion adjustment was made."
     },
     {
-      "file": "docs/reports/sweep-c6/L10-11/acceptance-before-refresh.json",
-      "sha256": "f0d61315a6932d6868732a72e2dd210e46fd13a9c03d54a014e8425a163f4e13",
-      "what": "Fresh full L10 acceptance rerun at both tiers and policies; L10-11 automated clauses PASS."
-    },
-    {
-      "file": "docs/reports/fix72-c/prior-receipts/L10-low-complete.json",
-      "sha256": "58139034ceaabce15c2b3c27dfffe222afd6792d995e04a59365527f8987694c",
-      "what": "Low-tier competent native control, completed route and matching final state."
-    },
-    {
-      "file": "docs/reports/fix72-c/prior-receipts/L10-high-complete.json",
-      "sha256": "e52449cea4498bef15a3be26fe8e93808c2b0c823bc24d8771f3a7e7204cf7ee",
-      "what": "High-tier competent native control, completed route and matching final state."
+      "file": "docs/reports/final-c/L10-11/producer.ts",
+      "sha256": "75613e2daa33f41133db554a92a001eb96e4a21aceb581d0bced2b557b153cb3",
+      "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
     }
   ],
-  "notes": "Fresh exact-criterion review supersedes the earlier arrival-time FAIL. Values are measured against the unchanged 120\u2013160 s target."
+  "notes": "Frozen-head row review. Current immutable evidence, unchanged criterion and game source.",
+  "sourceDigest": "75720d4df4ad59ad1814e1cda498bc4620d28edfa0298106dd53315c5f2fba05"
 }

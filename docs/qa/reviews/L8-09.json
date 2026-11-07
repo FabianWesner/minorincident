@@ -1,91 +1,93 @@
 {
   "row": "L8-09",
   "status": "PASS",
-  "reviewer": "Codex sweep-c5",
-  "date": "2026-11-06",
-  "commit": "5fd61b3df717036c627c87253d2f9512867dc39f",
+  "reviewer": "Codex final-c",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
   "clauses": [
     {
       "clause": "Every living group member boards; missing survivors visible or marked during the wait; APC has no gun.",
       "verdict": "PASS",
-      "note": "Fresh read-only canonical low/high boarding observers cover1221/1426 consecutive ticks with unchanged final native state, all13 native passenger identities seated and no departure with a waiter. Exact current physical WASD L7\u2192L8 runs separately carry human289 plus corgi308 low and humans32/31/389/30 plus corgi408 high; every identity is seated in the actual departure transport. Actual physical artifacts and all75 original playthrough frames were personally reviewed for prior L8-02; current fixed-APC close/wide frames show plain hatch/grilles without a gun. New production SurvivorRadar+production CSS replay of every native waiting snapshot measures7658/10084 human samples,216 internal doorway samples per tier and zero missing external pins; corgi stays within4.961m during native wait and is actually seated in both physical runs. Personally inspected both DOM replay captures: clustered blue pins visible, explicitly DOM-only, not3D renders. Actual transport has unarmed body variant and no weapon/loadout/mount/turret components. Twelve semantic faults reject; all original native/physical/review bytes restored exactly. Raw replay captures deleted after hashes; original physical captures already deleted."
+      "note": "Complete native boarding at both tiers seats every living13-member canonical cohort; exact production radar/CSS replay over1221/1522consecutive wait ticks has0missing human pins (7658/10277human samples), negative missing-pin control rejected. Current real-input low L7-carried cohort reaches all24seated, with external companion visible until doorway entry, then deliberately hidden aboard. Current high animal/transport views show same companion and gunless APC. Low post-transition observer-null error and high timed-out attempt excluded from full physical completion claims; no handover timing inferred."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-c5/L8-09/L8-09-radar-replay.json",
-      "sha256": "1a0cccd4029f966bc8a41a3c574d6080749d76d15e30e26ad76590040b38d0b6",
-      "what": "Current-source every-tick boarding observer/control, production radar DOM/CSS replay and personally inspected two-frame hashes, twelve semantic fault controls, or exact already-reviewed physical WASD L7/L8 departure artifacts."
+      "file": "docs/reports/final-c/L8-09/low-physical.json.gz",
+      "sha256": "927eb36d76cdf604d9e113267b66f1118d3907c6ed7f7037f1ad8a1adef50d08",
+      "what": "Complete native boarding at both tiers seats every living13-member canonical cohort; exact production radar/CSS replay over1221/1522consecutive wait ticks has0missing human pins (7658/10277human samples), negative missing-pin control rejected. Current real-input low L7-carried cohort reaches all24seated, with external companion visible until doorway entry, then deliberately hidden aboard. Current high animal/transport views show same companion and gunless APC. Low post-transition observer-null error and high timed-out attempt excluded from full physical completion claims; no handover timing inferred."
     },
     {
-      "file": "docs/reports/sweep-c5/L8-09/low-boarding-samples.json.gz",
-      "sha256": "9c9dd8dba9fee1799dd1bb384d6784151384913ee13a3c7c1760727e651718bc",
-      "what": "Current-source every-tick boarding observer/control, production radar DOM/CSS replay and personally inspected two-frame hashes, twelve semantic fault controls, or exact already-reviewed physical WASD L7/L8 departure artifacts."
+      "file": "docs/reports/final-c/L8-09/low-boarding-samples.json.gz",
+      "sha256": "00bff7bf78900732e0396d943daf17ab3a2814d7816753c6b9cd279cad66c07e",
+      "what": "Complete native boarding at both tiers seats every living13-member canonical cohort; exact production radar/CSS replay over1221/1522consecutive wait ticks has0missing human pins (7658/10277human samples), negative missing-pin control rejected. Current real-input low L7-carried cohort reaches all24seated, with external companion visible until doorway entry, then deliberately hidden aboard. Current high animal/transport views show same companion and gunless APC. Low post-transition observer-null error and high timed-out attempt excluded from full physical completion claims; no handover timing inferred."
     },
     {
-      "file": "docs/reports/sweep-c5/L8-09/low-physical-input.json.gz",
-      "sha256": "4ac9ea3a249d680a70c51bb9bad3308a37a3136714e0b8e589562f26af388a72",
-      "what": "Current-source every-tick boarding observer/control, production radar DOM/CSS replay and personally inspected two-frame hashes, twelve semantic fault controls, or exact already-reviewed physical WASD L7/L8 departure artifacts."
+      "file": "docs/reports/final-c/L8-09/radar-v2-producer.ts",
+      "sha256": "b6a1d9bfac7194912238963eda50ab94aee58679a63ce6e32dc7d37874c28df3",
+      "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
     },
     {
-      "file": "docs/reports/sweep-c5/L8-09/high-physical-review.json.gz",
-      "sha256": "f9dd859901ceddafbde6c2dfb2cf1f16e39c0343ec5174bc96972f2c71e35928",
-      "what": "Current-source every-tick boarding observer/control, production radar DOM/CSS replay and personally inspected two-frame hashes, twelve semantic fault controls, or exact already-reviewed physical WASD L7/L8 departure artifacts."
+      "file": "docs/reports/final-c/L8-09/l8-boarding-sweep.ts",
+      "sha256": "f404a9b87f5d958140d191806a705ca88b3507337de8c7a3e5c75818914edb74",
+      "what": "Complete native boarding at both tiers seats every living13-member canonical cohort; exact production radar/CSS replay over1221/1522consecutive wait ticks has0missing human pins (7658/10277human samples), negative missing-pin control rejected. Current real-input low L7-carried cohort reaches all24seated, with external companion visible until doorway entry, then deliberately hidden aboard. Current high animal/transport views show same companion and gunless APC. Low post-transition observer-null error and high timed-out attempt excluded from full physical completion claims; no handover timing inferred."
     },
     {
-      "file": "docs/reports/sweep-c5/L8-09/low-late-input-completion.json.gz",
-      "sha256": "8b518d64f9bec26c20550cab963261ad8ecd540a33b196bedf0bfa5a08239ca0",
-      "what": "Current-source every-tick boarding observer/control, production radar DOM/CSS replay and personally inspected two-frame hashes, twelve semantic fault controls, or exact already-reviewed physical WASD L7/L8 departure artifacts."
+      "file": "docs/reports/final-c/L8-09/radar-producer.ts",
+      "sha256": "bfc221f7dce600b9e160859041dfcad6c1a75c380e35141dec1d3ae6e755bedc",
+      "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
     },
     {
-      "file": "docs/reports/sweep-c5/L8-09/high-physical-input.json.gz",
-      "sha256": "21986630379983a8fdac10c6fd1cda846cb93732f4c05242b75d9be062ae6223",
-      "what": "Current-source every-tick boarding observer/control, production radar DOM/CSS replay and personally inspected two-frame hashes, twelve semantic fault controls, or exact already-reviewed physical WASD L7/L8 departure artifacts."
+      "file": "docs/reports/final-c/L8-09/high-boarding-samples.json.gz",
+      "sha256": "90c6efedf96945034ef6bd5384a3e52acb5587900e42e347d6204b917a81bb5b",
+      "what": "Complete native boarding at both tiers seats every living13-member canonical cohort; exact production radar/CSS replay over1221/1522consecutive wait ticks has0missing human pins (7658/10277human samples), negative missing-pin control rejected. Current real-input low L7-carried cohort reaches all24seated, with external companion visible until doorway entry, then deliberately hidden aboard. Current high animal/transport views show same companion and gunless APC. Low post-transition observer-null error and high timed-out attempt excluded from full physical completion claims; no handover timing inferred."
     },
     {
-      "file": "docs/reports/sweep-c5/L8-09/high-boarding-samples.json.gz",
-      "sha256": "d66ef0dfe7b31c47add145f1990803cd82a8cc7614492bc4180b4464fde119bb",
-      "what": "Current-source every-tick boarding observer/control, production radar DOM/CSS replay and personally inspected two-frame hashes, twelve semantic fault controls, or exact already-reviewed physical WASD L7/L8 departure artifacts."
+      "file": "docs/reports/final-c/L8-09/radar-replay.json",
+      "sha256": "2b98173d256814b93df7c3ab11a53ef05599e8c443cd09192bba39f8f3ce11c5",
+      "what": "Complete native boarding at both tiers seats every living13-member canonical cohort; exact production radar/CSS replay over1221/1522consecutive wait ticks has0missing human pins (7658/10277human samples), negative missing-pin control rejected. Current real-input low L7-carried cohort reaches all24seated, with external companion visible until doorway entry, then deliberately hidden aboard. Current high animal/transport views show same companion and gunless APC. Low post-transition observer-null error and high timed-out attempt excluded from full physical completion claims; no handover timing inferred."
     },
     {
-      "file": "docs/reports/sweep-c5/L8-09/high-late-input-completion.json.gz",
-      "sha256": "cb0524a5db684087cdeffb195b376d92ee89b992ae0e1f1e6b15ed09766a30b1",
-      "what": "Current-source every-tick boarding observer/control, production radar DOM/CSS replay and personally inspected two-frame hashes, twelve semantic fault controls, or exact already-reviewed physical WASD L7/L8 departure artifacts."
+      "file": "docs/reports/final-c/L8-09/l8-boarding-radar-producer.ts",
+      "sha256": "a797c9bc812ff02e3f7b5d9a86f196abee088b09853d9f93e15e3176e1213f85",
+      "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
     },
     {
-      "file": "docs/reports/sweep-c5/L8-09/L8-09-coverage-proof.json",
-      "sha256": "b17d1d82a3ccca755c11ed14110f3db09068f4823c161396f1d68da113446fe0",
-      "what": "Current-source every-tick boarding observer/control, production radar DOM/CSS replay and personally inspected two-frame hashes, twelve semantic fault controls, or exact already-reviewed physical WASD L7/L8 departure artifacts."
+      "file": "docs/reports/final-c/L8-09/coverage.json",
+      "sha256": "c56bf8444561761f59e2646466620eeb04690379d11cabce1a97ccbe86aa8b89",
+      "what": "Complete native boarding at both tiers seats every living13-member canonical cohort; exact production radar/CSS replay over1221/1522consecutive wait ticks has0missing human pins (7658/10277human samples), negative missing-pin control rejected. Current real-input low L7-carried cohort reaches all24seated, with external companion visible until doorway entry, then deliberately hidden aboard. Current high animal/transport views show same companion and gunless APC. Low post-transition observer-null error and high timed-out attempt excluded from full physical completion claims; no handover timing inferred."
     },
     {
-      "file": "docs/reports/sweep-c5/L8-09/high-late-input-acceptance-ledger.json.gz",
-      "sha256": "e5d86326c2632e9c30e83db36366e10d02f323d395aac123f4c437162e0bb2ae",
-      "what": "Current-source every-tick boarding observer/control, production radar DOM/CSS replay and personally inspected two-frame hashes, twelve semantic fault controls, or exact already-reviewed physical WASD L7/L8 departure artifacts."
+      "file": "docs/reports/final-c/L8-09/physical-producer.ts",
+      "sha256": "236a70460e9f207e2711120b6a94a795f10d76056a050bfa8af914b84b7d854d",
+      "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
     },
     {
-      "file": "docs/reports/sweep-c5/L8-09/L8-09-boarding-native.json",
-      "sha256": "ea736883adefa9e8d22a21a179112b223a0e9cba008d10a23b518e6debcabe82",
-      "what": "Current-source every-tick boarding observer/control, production radar DOM/CSS replay and personally inspected two-frame hashes, twelve semantic fault controls, or exact already-reviewed physical WASD L7/L8 departure artifacts."
+      "file": "docs/reports/final-c/L8-09/capture-review.json",
+      "sha256": "a3e1329aff650f291812175c127b94194f2ad590bfad2101e58af84cea0f7274",
+      "what": "Complete native boarding at both tiers seats every living13-member canonical cohort; exact production radar/CSS replay over1221/1522consecutive wait ticks has0missing human pins (7658/10277human samples), negative missing-pin control rejected. Current real-input low L7-carried cohort reaches all24seated, with external companion visible until doorway entry, then deliberately hidden aboard. Current high animal/transport views show same companion and gunless APC. Low post-transition observer-null error and high timed-out attempt excluded from full physical completion claims; no handover timing inferred."
     },
     {
-      "file": "docs/reports/sweep-c5/L8-09/low-late-input-acceptance-ledger.json.gz",
-      "sha256": "f461a5c1457b0ee8b0fbba6dd523b457c84d14626558fd726cc67645faaf1985",
-      "what": "Current-source every-tick boarding observer/control, production radar DOM/CSS replay and personally inspected two-frame hashes, twelve semantic fault controls, or exact already-reviewed physical WASD L7/L8 departure artifacts."
+      "file": "docs/reports/final-c/L8-09/boarding-native.json",
+      "sha256": "fa03f333f614388fb0bc6a83c748f05f711fdd2e1dbabdf22712246b4f6f4899",
+      "what": "Complete native boarding at both tiers seats every living13-member canonical cohort; exact production radar/CSS replay over1221/1522consecutive wait ticks has0missing human pins (7658/10277human samples), negative missing-pin control rejected. Current real-input low L7-carried cohort reaches all24seated, with external companion visible until doorway entry, then deliberately hidden aboard. Current high animal/transport views show same companion and gunless APC. Low post-transition observer-null error and high timed-out attempt excluded from full physical completion claims; no handover timing inferred."
     },
     {
-      "file": "docs/reports/sweep-c5/L8-09/low-physical-review.json.gz",
-      "sha256": "78dc29321be256c8f910e89114edfea5ddf39edc13f4ec44d4afe277eb36c13f",
-      "what": "Current-source every-tick boarding observer/control, production radar DOM/CSS replay and personally inspected two-frame hashes, twelve semantic fault controls, or exact already-reviewed physical WASD L7/L8 departure artifacts."
+      "file": "docs/reports/final-c/L9-01/coverage.json",
+      "sha256": "0ec58c1505f68689e39e02b43468c5c688da5e709784eb61a6890074c3ef81fd",
+      "what": "Complete native boarding at both tiers seats every living13-member canonical cohort; exact production radar/CSS replay over1221/1522consecutive wait ticks has0missing human pins (7658/10277human samples), negative missing-pin control rejected. Current real-input low L7-carried cohort reaches all24seated, with external companion visible until doorway entry, then deliberately hidden aboard. Current high animal/transport views show same companion and gunless APC. Low post-transition observer-null error and high timed-out attempt excluded from full physical completion claims; no handover timing inferred."
     },
     {
-      "file": "docs/reports/sweep-c5/L8-07/low-review.json",
-      "sha256": "3b33301eb29592aaf9225f6bb1ed2ec7df8b8fd24061956a2e6cc778a718cca6",
-      "what": "Personally inspected current wide/close fixed-APC frames show plain hatch/grilles with no gun; other enclosure frames are path evidence, not boarding witnesses."
+      "file": "docs/reports/final-c/L9-01/high-handover.json.gz",
+      "sha256": "3a1cefea69f8de0cf8601fe46e3d99a693bc563567a6959c43c4d267f3d7c889",
+      "what": "Complete native boarding at both tiers seats every living13-member canonical cohort; exact production radar/CSS replay over1221/1522consecutive wait ticks has0missing human pins (7658/10277human samples), negative missing-pin control rejected. Current real-input low L7-carried cohort reaches all24seated, with external companion visible until doorway entry, then deliberately hidden aboard. Current high animal/transport views show same companion and gunless APC. Low post-transition observer-null error and high timed-out attempt excluded from full physical completion claims; no handover timing inferred."
     },
     {
-      "file": "docs/reports/sweep-c5/L8-07/high-review.json",
-      "sha256": "938f2e867356b0ec12f1455f59ce9040383aa5d7aabc33b09c6156736dbf535b",
-      "what": "Personally inspected current wide/close fixed-APC frames show plain hatch/grilles with no gun; other enclosure frames are path evidence, not boarding witnesses."
+      "file": "docs/reports/final-c/L8-08/capture-review.json",
+      "sha256": "b61fca70c6b33d26c90bc5271469b27a664c8c594a75db4baaa5e55a56162dbc",
+      "what": "Complete native boarding at both tiers seats every living13-member canonical cohort; exact production radar/CSS replay over1221/1522consecutive wait ticks has0missing human pins (7658/10277human samples), negative missing-pin control rejected. Current real-input low L7-carried cohort reaches all24seated, with external companion visible until doorway entry, then deliberately hidden aboard. Current high animal/transport views show same companion and gunless APC. Low post-transition observer-null error and high timed-out attempt excluded from full physical completion claims; no handover timing inferred."
     }
-  ]
+  ],
+  "notes": "Frozen-head row review. Current immutable evidence, unchanged criterion and game source.",
+  "sourceDigest": "3f346fc1f0af18cb190b29844498febc36a720450de65904caad638582d717b9"
 }

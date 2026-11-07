@@ -1,0 +1,564 @@
+{
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+  "revision": "f5aeee23854d21ccb76265b0715a0b783fbec5c6",
+  "toolSha256": "4196c911239f42f42817ecccde235ae2f740ae00bb258485f63f7801d1b6d7b1",
+  "producer": "docs/reports/final-c/campaign/L7-carried-save-provenance.json",
+  "method": "Actual mortal native L5/L6 completion saves enter L7. Check exact carried identities, full HP, all six story weapons after launcher collection, and every required first-ten-seconds tick. Both observed and independent control are scoped to ten seconds; later campaign completion is not claimed. Relative motion segments must clear the actual courier/follower capsule radii. Independent native controls end with identical state hashes.",
+  "rows": [
+    {
+      "tier": "low",
+      "run": {
+        "level": "L7",
+        "policy": "complete",
+        "seed": 1,
+        "completed": false,
+        "time": 10,
+        "deaths": 0,
+        "kills": 0,
+        "damageTaken": 0,
+        "failures": {
+          "tick-budget": 1
+        },
+        "objectiveTimeline": [],
+        "furthestObjective": "bus-departure",
+        "activeObjectives": [],
+        "outcome": "tick-budget",
+        "blocker": {
+          "objective": "bus-departure",
+          "detail": "{\"phase\":\"waiting\",\"hp\":100,\"roster\":[{\"id\":289,\"key\":\"shelter-0\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":239.53132301502976,\"z\":16.559321466534648,\"y\":4.6,\"yaw\":-3.2070219091074654}},{\"id\":291,\"key\":\"shelter-2\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":241.15837341797803,\"z\":15.508270442786605,\"y\":4.6,\"yaw\":-3.2052868948995252}},{\"id\":292,\"key\":\"shelter-3\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":234.32763645557304,\"z\":13.80000000006167,\"y\":4.6,\"yaw\":3.1415926783232386}},{\"id\":293,\"key\":\"shelter-4\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":236.20849941627174,\"z\":16.20000021001098,\"y\":4.6,\"yaw\":3.141592409931666}},{\"id\":294,\"key\":\"shelter-5\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":235.52817914712855,\"z\":14.999999999708109,\"y\":4.6,\"yaw\":3.141592654727018}},{\"id\":296,\"key\":\"shelter-7\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":238.4430230638614,\"z\":14.141314124551963,\"y\":4.6,\"yaw\":3.057906179268957}},{\"id\":297,\"key\":\"shelter-8\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":236.9225502412905,\"z\":16.199996228696655,\"y\":4.6,\"yaw\":3.141607258321412}},{\"id\":299,\"key\":\"shelter-10\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":237.46873773215813,\"z\":14.99604717437089,\"y\":4.6,\"yaw\":3.145848662521342}},{\"id\":300,\"key\":\"shelter-11\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":239.65918237197818,\"z\":14.119296456083582,\"y\":4.6,\"yaw\":-3.220047940649639}},{\"id\":301,\"key\":\"shelter-12\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":237.92669689802955,\"z\":16.200001643851405,\"y\":4.6,\"yaw\":3.1415909433464417}},{\"id\":302,\"key\":\"shelter-13\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":240.25811196692936,\"z\":15.5310179112084,\"y\":4.6,\"yaw\":-3.2882987788479507}},{\"id\":303,\"key\":\"shelter-14\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":237.84744489559475,\"z\":13.746862907347028,\"y\":4.6,\"yaw\":-3.0906358036392527}},{\"id\":304,\"key\":\"shelter-15\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":242.0742395764889,\"z\":16.48779798210165,\"y\":4.6,\"yaw\":-3.2138335667713664}},{\"id\":305,\"key\":\"shelter-16\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":239.12817092399936,\"z\":15.000004473680209,\"y\":4.6,\"yaw\":3.141590697005037}},{\"id\":306,\"key\":\"shelter-17\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":239.04691872631793,\"z\":13.751254322764105,\"y\":4.6,\"yaw\":3.1881412284522197}},{\"id\":307,\"key\":\"shelter-18\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":240.32706393469797,\"z\":16.24210529809339,\"y\":4.6,\"yaw\":-3.1748990249861797}},{\"id\":308,\"key\":\"shelter-19\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":240.31376699262682,\"z\":14.819432803518165,\"y\":4.6,\"yaw\":-2.9770739814284823}},{\"id\":309,\"key\":\"shelter-20\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":240.32816770984599,\"z\":13.800000022834434,\"y\":4.6,\"yaw\":-3.14159267303414}},{\"id\":310,\"key\":\"shelter-21\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":241.42822556166007,\"z\":16.183718088941152,\"y\":4.6,\"yaw\":3.1248813306653274}},{\"id\":29,\"key\":\"rosa\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":241.55181834402393,\"z\":14.91233504613171,\"y\":4.6,\"yaw\":3.2727573133739267}},{\"id\":30,\"key\":\"okafor\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":241.5281677246094,\"z\":13.800000000000011,\"y\":4.6,\"yaw\":-3.141592653589794}},{\"id\":31,\"key\":\"mia\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":242.7281422014531,\"z\":16.200028288595394,\"y\":4.6,\"yaw\":-3.141722135671657}},{\"id\":32,\"key\":\"sam\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":242.7281677246094,\"z\":14.999999999999998,\"y\":4.6,\"yaw\":-3.141592653589794}}]}",
+          "player": {
+            "x": 230.90321350097656,
+            "y": 4.619999885559082,
+            "z": 15,
+            "yaw": -3.141592653589793
+          }
+        },
+        "collision": {
+          "failures": 0,
+          "pending": 0,
+          "admitted": 160,
+          "deferred": 0,
+          "requests": [],
+          "offenders": []
+        }
+      },
+      "controlRun": {
+        "level": "L7",
+        "policy": "complete",
+        "seed": 1,
+        "completed": false,
+        "time": 10,
+        "deaths": 0,
+        "kills": 0,
+        "damageTaken": 0,
+        "failures": {
+          "tick-budget": 1
+        },
+        "objectiveTimeline": [],
+        "furthestObjective": "bus-departure",
+        "activeObjectives": [],
+        "outcome": "tick-budget",
+        "blocker": {
+          "objective": "bus-departure",
+          "detail": "{\"phase\":\"waiting\",\"hp\":100,\"roster\":[{\"id\":289,\"key\":\"shelter-0\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":239.53132301502976,\"z\":16.559321466534648,\"y\":4.6,\"yaw\":-3.2070219091074654}},{\"id\":291,\"key\":\"shelter-2\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":241.15837341797803,\"z\":15.508270442786605,\"y\":4.6,\"yaw\":-3.2052868948995252}},{\"id\":292,\"key\":\"shelter-3\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":234.32763645557304,\"z\":13.80000000006167,\"y\":4.6,\"yaw\":3.1415926783232386}},{\"id\":293,\"key\":\"shelter-4\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":236.20849941627174,\"z\":16.20000021001098,\"y\":4.6,\"yaw\":3.141592409931666}},{\"id\":294,\"key\":\"shelter-5\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":235.52817914712855,\"z\":14.999999999708109,\"y\":4.6,\"yaw\":3.141592654727018}},{\"id\":296,\"key\":\"shelter-7\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":238.4430230638614,\"z\":14.141314124551963,\"y\":4.6,\"yaw\":3.057906179268957}},{\"id\":297,\"key\":\"shelter-8\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":236.9225502412905,\"z\":16.199996228696655,\"y\":4.6,\"yaw\":3.141607258321412}},{\"id\":299,\"key\":\"shelter-10\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":237.46873773215813,\"z\":14.99604717437089,\"y\":4.6,\"yaw\":3.145848662521342}},{\"id\":300,\"key\":\"shelter-11\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":239.65918237197818,\"z\":14.119296456083582,\"y\":4.6,\"yaw\":-3.220047940649639}},{\"id\":301,\"key\":\"shelter-12\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":237.92669689802955,\"z\":16.200001643851405,\"y\":4.6,\"yaw\":3.1415909433464417}},{\"id\":302,\"key\":\"shelter-13\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":240.25811196692936,\"z\":15.5310179112084,\"y\":4.6,\"yaw\":-3.2882987788479507}},{\"id\":303,\"key\":\"shelter-14\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":237.84744489559475,\"z\":13.746862907347028,\"y\":4.6,\"yaw\":-3.0906358036392527}},{\"id\":304,\"key\":\"shelter-15\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":242.0742395764889,\"z\":16.48779798210165,\"y\":4.6,\"yaw\":-3.2138335667713664}},{\"id\":305,\"key\":\"shelter-16\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":239.12817092399936,\"z\":15.000004473680209,\"y\":4.6,\"yaw\":3.141590697005037}},{\"id\":306,\"key\":\"shelter-17\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":239.04691872631793,\"z\":13.751254322764105,\"y\":4.6,\"yaw\":3.1881412284522197}},{\"id\":307,\"key\":\"shelter-18\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":240.32706393469797,\"z\":16.24210529809339,\"y\":4.6,\"yaw\":-3.1748990249861797}},{\"id\":308,\"key\":\"shelter-19\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":240.31376699262682,\"z\":14.819432803518165,\"y\":4.6,\"yaw\":-2.9770739814284823}},{\"id\":309,\"key\":\"shelter-20\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":240.32816770984599,\"z\":13.800000022834434,\"y\":4.6,\"yaw\":-3.14159267303414}},{\"id\":310,\"key\":\"shelter-21\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":241.42822556166007,\"z\":16.183718088941152,\"y\":4.6,\"yaw\":3.1248813306653274}},{\"id\":29,\"key\":\"rosa\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":241.55181834402393,\"z\":14.91233504613171,\"y\":4.6,\"yaw\":3.2727573133739267}},{\"id\":30,\"key\":\"okafor\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":241.5281677246094,\"z\":13.800000000000011,\"y\":4.6,\"yaw\":-3.141592653589794}},{\"id\":31,\"key\":\"mia\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":242.7281422014531,\"z\":16.200028288595394,\"y\":4.6,\"yaw\":-3.141722135671657}},{\"id\":32,\"key\":\"sam\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":242.7281677246094,\"z\":14.999999999999998,\"y\":4.6,\"yaw\":-3.141592653589794}}]}",
+          "player": {
+            "x": 230.90321350097656,
+            "y": 4.619999885559082,
+            "z": 15,
+            "yaw": -3.141592653589793
+          }
+        },
+        "collision": {
+          "failures": 0,
+          "pending": 0,
+          "admitted": 160,
+          "deferred": 0,
+          "requests": [],
+          "offenders": []
+        }
+      },
+      "expectedIds": [
+        29,
+        30,
+        31,
+        32,
+        289,
+        291,
+        292,
+        293,
+        294,
+        296,
+        297,
+        299,
+        300,
+        301,
+        302,
+        303,
+        304,
+        305,
+        306,
+        307,
+        308,
+        309,
+        310
+      ],
+      "initial": [
+        {
+          "id": 289,
+          "hp": 100,
+          "max": 100,
+          "x": 275.3,
+          "z": 16.2
+        },
+        {
+          "id": 291,
+          "hp": 100,
+          "max": 100,
+          "x": 275.3,
+          "z": 15
+        },
+        {
+          "id": 292,
+          "hp": 100,
+          "max": 100,
+          "x": 275.76193976625564,
+          "z": 13.991341716182546
+        },
+        {
+          "id": 293,
+          "hp": 100,
+          "max": 100,
+          "x": 276.5,
+          "z": 16.2
+        },
+        {
+          "id": 294,
+          "hp": 100,
+          "max": 100,
+          "x": 276.5,
+          "z": 15
+        },
+        {
+          "id": 296,
+          "hp": 100,
+          "max": 100,
+          "x": 276.9619397662556,
+          "z": 13.991341716182546
+        },
+        {
+          "id": 297,
+          "hp": 100,
+          "max": 100,
+          "x": 277.7,
+          "z": 16.2
+        },
+        {
+          "id": 299,
+          "hp": 100,
+          "max": 100,
+          "x": 277.7,
+          "z": 15
+        },
+        {
+          "id": 300,
+          "hp": 100,
+          "max": 100,
+          "x": 278.1619397662556,
+          "z": 13.991341716182546
+        },
+        {
+          "id": 301,
+          "hp": 100,
+          "max": 100,
+          "x": 278.9,
+          "z": 16.2
+        },
+        {
+          "id": 302,
+          "hp": 100,
+          "max": 100,
+          "x": 278.9,
+          "z": 15
+        },
+        {
+          "id": 303,
+          "hp": 100,
+          "max": 100,
+          "x": 279.3619397662556,
+          "z": 13.991341716182546
+        },
+        {
+          "id": 304,
+          "hp": 100,
+          "max": 100,
+          "x": 280.1,
+          "z": 16.2
+        },
+        {
+          "id": 305,
+          "hp": 100,
+          "max": 100,
+          "x": 280.1,
+          "z": 15
+        },
+        {
+          "id": 306,
+          "hp": 100,
+          "max": 100,
+          "x": 280.1,
+          "z": 13.8
+        },
+        {
+          "id": 307,
+          "hp": 100,
+          "max": 100,
+          "x": 281.3,
+          "z": 16.2
+        },
+        {
+          "id": 308,
+          "hp": 100,
+          "max": 100,
+          "x": 281.3,
+          "z": 14.999999999999998
+        },
+        {
+          "id": 309,
+          "hp": 100,
+          "max": 100,
+          "x": 281.3,
+          "z": 13.799999999999999
+        },
+        {
+          "id": 310,
+          "hp": 100,
+          "max": 100,
+          "x": 282.5,
+          "z": 16.2
+        },
+        {
+          "id": 29,
+          "hp": 60,
+          "max": 60,
+          "x": 282.5,
+          "z": 14.999999999999998
+        },
+        {
+          "id": 30,
+          "hp": 60,
+          "max": 60,
+          "x": 282.5,
+          "z": 13.799999999999999
+        },
+        {
+          "id": 31,
+          "hp": 60,
+          "max": 60,
+          "x": 283.7,
+          "z": 16.2
+        },
+        {
+          "id": 32,
+          "hp": 60,
+          "max": 60,
+          "x": 283.7,
+          "z": 14.999999999999998
+        }
+      ],
+      "idsMatch": true,
+      "allFullHealth": true,
+      "formationTicks": 600,
+      "samples": 13800,
+      "minimumClearance": 0.0637783751941508,
+      "storyWeapons": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "weapon.shotgun",
+        "weapon.rocket-launcher"
+      ],
+      "nativeStateHash": "0d2ad6fe",
+      "controlHash": "0d2ad6fe",
+      "controlIdentical": true
+    },
+    {
+      "tier": "high",
+      "run": {
+        "level": "L7",
+        "policy": "complete",
+        "seed": 1,
+        "completed": false,
+        "time": 10,
+        "deaths": 0,
+        "kills": 0,
+        "damageTaken": 0,
+        "failures": {
+          "tick-budget": 1
+        },
+        "objectiveTimeline": [],
+        "furthestObjective": "bus-departure",
+        "activeObjectives": [],
+        "outcome": "tick-budget",
+        "blocker": {
+          "objective": "bus-departure",
+          "detail": "{\"phase\":\"waiting\",\"hp\":100,\"roster\":[{\"id\":389,\"key\":\"shelter-0\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":236.13102618810026,\"z\":16.179514538193175,\"y\":4.6,\"yaw\":3.1516064610512267}},{\"id\":394,\"key\":\"shelter-5\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":236.0651632029988,\"z\":15.14897309067186,\"y\":4.6,\"yaw\":3.09335425954488}},{\"id\":395,\"key\":\"shelter-6\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":242.03145206717318,\"z\":13.416799325760506,\"y\":4.6,\"yaw\":-3.102206380820966}},{\"id\":397,\"key\":\"shelter-8\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":238.38712824940367,\"z\":15.792610100519026,\"y\":4.6,\"yaw\":-3.0414987366230424}},{\"id\":398,\"key\":\"shelter-9\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":235.37632216564333,\"z\":14.961399487568805,\"y\":4.6,\"yaw\":3.1790910309487272}},{\"id\":399,\"key\":\"shelter-10\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":235.52816772557915,\"z\":13.800000000000184,\"y\":4.6,\"yaw\":-3.1415926535901284}},{\"id\":400,\"key\":\"shelter-11\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":239.49146912483548,\"z\":15.712248894758064,\"y\":4.6,\"yaw\":3.2621904571661657}},{\"id\":401,\"key\":\"shelter-12\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":236.76238843755527,\"z\":14.992859387574793,\"y\":4.6,\"yaw\":3.1475188834026833}},{\"id\":402,\"key\":\"shelter-13\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":239.680165237371,\"z\":14.122771140496788,\"y\":4.6,\"yaw\":3.058152654803392}},{\"id\":403,\"key\":\"shelter-14\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":237.8519529160584,\"z\":16.26573731093113,\"y\":4.6,\"yaw\":-3.202948983172873}},{\"id\":404,\"key\":\"shelter-15\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":237.92816773081915,\"z\":15.000000072212908,\"y\":4.6,\"yaw\":3.141592901764241}},{\"id\":405,\"key\":\"shelter-16\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":237.9281677246094,\"z\":13.80000000000001,\"y\":4.6,\"yaw\":-3.141592653589794}},{\"id\":406,\"key\":\"shelter-17\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":239.0615771640145,\"z\":16.282685511152906,\"y\":4.6,\"yaw\":-3.2168204255422803}},{\"id\":407,\"key\":\"shelter-18\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":239.12816772453397,\"z\":14.999999999565366,\"y\":4.6,\"yaw\":3.141592650170185}},{\"id\":408,\"key\":\"shelter-19\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":239.06365868530466,\"z\":13.761751794087388,\"y\":4.6,\"yaw\":3.1654101504104775}},{\"id\":409,\"key\":\"shelter-20\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":240.32816772466757,\"z\":16.20000000008383,\"y\":4.6,\"yaw\":-3.1415926537117325}},{\"id\":410,\"key\":\"shelter-21\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":240.3281613543878,\"z\":14.999846485255404,\"y\":4.6,\"yaw\":3.14181067861617}},{\"id\":411,\"key\":\"shelter-22\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":240.3281441273474,\"z\":13.800905784229888,\"y\":4.6,\"yaw\":3.1445782097553066}},{\"id\":412,\"key\":\"shelter-23\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":241.52816772460943,\"z\":16.200000000000017,\"y\":4.6,\"yaw\":-3.1415926535897922}},{\"id\":29,\"key\":\"rosa\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":241.52816772460938,\"z\":14.999999999999952,\"y\":4.6,\"yaw\":-3.1415926535894054}},{\"id\":30,\"key\":\"okafor\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":241.45999171708434,\"z\":13.845610843131766,\"y\":4.6,\"yaw\":3.102118705880889}},{\"id\":31,\"key\":\"mia\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":242.72816772460942,\"z\":16.199999999999992,\"y\":4.6,\"yaw\":-3.141592653589794}},{\"id\":32,\"key\":\"sam\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":242.7281677246094,\"z\":14.999999999999998,\"y\":4.6,\"yaw\":-3.141592653589794}}]}",
+          "player": {
+            "x": 230.90321350097656,
+            "y": 4.619999885559082,
+            "z": 15,
+            "yaw": 3.141592653589794
+          }
+        },
+        "collision": {
+          "failures": 0,
+          "pending": 0,
+          "admitted": 295,
+          "deferred": 0,
+          "requests": [],
+          "offenders": []
+        }
+      },
+      "controlRun": {
+        "level": "L7",
+        "policy": "complete",
+        "seed": 1,
+        "completed": false,
+        "time": 10,
+        "deaths": 0,
+        "kills": 0,
+        "damageTaken": 0,
+        "failures": {
+          "tick-budget": 1
+        },
+        "objectiveTimeline": [],
+        "furthestObjective": "bus-departure",
+        "activeObjectives": [],
+        "outcome": "tick-budget",
+        "blocker": {
+          "objective": "bus-departure",
+          "detail": "{\"phase\":\"waiting\",\"hp\":100,\"roster\":[{\"id\":389,\"key\":\"shelter-0\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":236.13102618810026,\"z\":16.179514538193175,\"y\":4.6,\"yaw\":3.1516064610512267}},{\"id\":394,\"key\":\"shelter-5\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":236.0651632029988,\"z\":15.14897309067186,\"y\":4.6,\"yaw\":3.09335425954488}},{\"id\":395,\"key\":\"shelter-6\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":242.03145206717318,\"z\":13.416799325760506,\"y\":4.6,\"yaw\":-3.102206380820966}},{\"id\":397,\"key\":\"shelter-8\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":238.38712824940367,\"z\":15.792610100519026,\"y\":4.6,\"yaw\":-3.0414987366230424}},{\"id\":398,\"key\":\"shelter-9\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":235.37632216564333,\"z\":14.961399487568805,\"y\":4.6,\"yaw\":3.1790910309487272}},{\"id\":399,\"key\":\"shelter-10\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":235.52816772557915,\"z\":13.800000000000184,\"y\":4.6,\"yaw\":-3.1415926535901284}},{\"id\":400,\"key\":\"shelter-11\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":239.49146912483548,\"z\":15.712248894758064,\"y\":4.6,\"yaw\":3.2621904571661657}},{\"id\":401,\"key\":\"shelter-12\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":236.76238843755527,\"z\":14.992859387574793,\"y\":4.6,\"yaw\":3.1475188834026833}},{\"id\":402,\"key\":\"shelter-13\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":239.680165237371,\"z\":14.122771140496788,\"y\":4.6,\"yaw\":3.058152654803392}},{\"id\":403,\"key\":\"shelter-14\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":237.8519529160584,\"z\":16.26573731093113,\"y\":4.6,\"yaw\":-3.202948983172873}},{\"id\":404,\"key\":\"shelter-15\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":237.92816773081915,\"z\":15.000000072212908,\"y\":4.6,\"yaw\":3.141592901764241}},{\"id\":405,\"key\":\"shelter-16\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":237.9281677246094,\"z\":13.80000000000001,\"y\":4.6,\"yaw\":-3.141592653589794}},{\"id\":406,\"key\":\"shelter-17\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":239.0615771640145,\"z\":16.282685511152906,\"y\":4.6,\"yaw\":-3.2168204255422803}},{\"id\":407,\"key\":\"shelter-18\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":239.12816772453397,\"z\":14.999999999565366,\"y\":4.6,\"yaw\":3.141592650170185}},{\"id\":408,\"key\":\"shelter-19\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":239.06365868530466,\"z\":13.761751794087388,\"y\":4.6,\"yaw\":3.1654101504104775}},{\"id\":409,\"key\":\"shelter-20\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":240.32816772466757,\"z\":16.20000000008383,\"y\":4.6,\"yaw\":-3.1415926537117325}},{\"id\":410,\"key\":\"shelter-21\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":240.3281613543878,\"z\":14.999846485255404,\"y\":4.6,\"yaw\":3.14181067861617}},{\"id\":411,\"key\":\"shelter-22\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":240.3281441273474,\"z\":13.800905784229888,\"y\":4.6,\"yaw\":3.1445782097553066}},{\"id\":412,\"key\":\"shelter-23\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":241.52816772460943,\"z\":16.200000000000017,\"y\":4.6,\"yaw\":-3.1415926535897922}},{\"id\":29,\"key\":\"rosa\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":241.52816772460938,\"z\":14.999999999999952,\"y\":4.6,\"yaw\":-3.1415926535894054}},{\"id\":30,\"key\":\"okafor\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":241.45999171708434,\"z\":13.845610843131766,\"y\":4.6,\"yaw\":3.102118705880889}},{\"id\":31,\"key\":\"mia\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":242.72816772460942,\"z\":16.199999999999992,\"y\":4.6,\"yaw\":-3.141592653589794}},{\"id\":32,\"key\":\"sam\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":242.7281677246094,\"z\":14.999999999999998,\"y\":4.6,\"yaw\":-3.141592653589794}}]}",
+          "player": {
+            "x": 230.90321350097656,
+            "y": 4.619999885559082,
+            "z": 15,
+            "yaw": 3.141592653589794
+          }
+        },
+        "collision": {
+          "failures": 0,
+          "pending": 0,
+          "admitted": 295,
+          "deferred": 0,
+          "requests": [],
+          "offenders": []
+        }
+      },
+      "expectedIds": [
+        29,
+        30,
+        31,
+        32,
+        389,
+        394,
+        395,
+        397,
+        398,
+        399,
+        400,
+        401,
+        402,
+        403,
+        404,
+        405,
+        406,
+        407,
+        408,
+        409,
+        410,
+        411,
+        412
+      ],
+      "initial": [
+        {
+          "id": 389,
+          "hp": 100,
+          "max": 100,
+          "x": 275.3,
+          "z": 16.2
+        },
+        {
+          "id": 394,
+          "hp": 100,
+          "max": 100,
+          "x": 275.3,
+          "z": 15
+        },
+        {
+          "id": 395,
+          "hp": 100,
+          "max": 100,
+          "x": 275.76193976625564,
+          "z": 13.991341716182546
+        },
+        {
+          "id": 397,
+          "hp": 100,
+          "max": 100,
+          "x": 276.5,
+          "z": 16.2
+        },
+        {
+          "id": 398,
+          "hp": 100,
+          "max": 100,
+          "x": 276.5,
+          "z": 15
+        },
+        {
+          "id": 399,
+          "hp": 100,
+          "max": 100,
+          "x": 276.9619397662556,
+          "z": 13.991341716182546
+        },
+        {
+          "id": 400,
+          "hp": 100,
+          "max": 100,
+          "x": 277.7,
+          "z": 16.2
+        },
+        {
+          "id": 401,
+          "hp": 100,
+          "max": 100,
+          "x": 277.7,
+          "z": 15
+        },
+        {
+          "id": 402,
+          "hp": 100,
+          "max": 100,
+          "x": 278.1619397662556,
+          "z": 13.991341716182546
+        },
+        {
+          "id": 403,
+          "hp": 100,
+          "max": 100,
+          "x": 278.9,
+          "z": 16.2
+        },
+        {
+          "id": 404,
+          "hp": 100,
+          "max": 100,
+          "x": 278.9,
+          "z": 15
+        },
+        {
+          "id": 405,
+          "hp": 100,
+          "max": 100,
+          "x": 279.3619397662556,
+          "z": 13.991341716182546
+        },
+        {
+          "id": 406,
+          "hp": 100,
+          "max": 100,
+          "x": 280.1,
+          "z": 16.2
+        },
+        {
+          "id": 407,
+          "hp": 100,
+          "max": 100,
+          "x": 280.1,
+          "z": 15
+        },
+        {
+          "id": 408,
+          "hp": 100,
+          "max": 100,
+          "x": 280.1,
+          "z": 13.8
+        },
+        {
+          "id": 409,
+          "hp": 100,
+          "max": 100,
+          "x": 281.3,
+          "z": 16.2
+        },
+        {
+          "id": 410,
+          "hp": 100,
+          "max": 100,
+          "x": 281.3,
+          "z": 14.999999999999998
+        },
+        {
+          "id": 411,
+          "hp": 100,
+          "max": 100,
+          "x": 281.3,
+          "z": 13.799999999999999
+        },
+        {
+          "id": 412,
+          "hp": 100,
+          "max": 100,
+          "x": 282.5,
+          "z": 16.2
+        },
+        {
+          "id": 29,
+          "hp": 60,
+          "max": 60,
+          "x": 282.5,
+          "z": 14.999999999999998
+        },
+        {
+          "id": 30,
+          "hp": 60,
+          "max": 60,
+          "x": 282.5,
+          "z": 13.799999999999999
+        },
+        {
+          "id": 31,
+          "hp": 60,
+          "max": 60,
+          "x": 283.7,
+          "z": 16.2
+        },
+        {
+          "id": 32,
+          "hp": 60,
+          "max": 60,
+          "x": 283.7,
+          "z": 14.999999999999998
+        }
+      ],
+      "idsMatch": true,
+      "allFullHealth": true,
+      "formationTicks": 600,
+      "samples": 13800,
+      "minimumClearance": 0.0637783751941508,
+      "storyWeapons": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "weapon.shotgun",
+        "weapon.rocket-launcher"
+      ],
+      "nativeStateHash": "95f33a62",
+      "controlHash": "95f33a62",
+      "controlIdentical": true
+    }
+  ]
+}

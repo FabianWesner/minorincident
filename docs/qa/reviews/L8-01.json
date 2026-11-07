@@ -1,86 +1,63 @@
 {
   "row": "L8-01",
   "status": "PASS",
-  "reviewer": "Codex sweep-c5",
-  "date": "2026-11-06",
-  "commit": "84057cb3b98e6fc1f714db181be307bb7ff469ca",
+  "reviewer": "Codex final-c",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
   "clauses": [
     {
       "clause": "L7 roster and arsenal arrive exactly; companions at full health; no weapon pickup in L8; start weapon = last weapon (not the bat).",
       "verdict": "PASS",
-      "note": "Current-source physical L7\u2192L8 routes complete at both tiers with no skips or console/page errors. Personally inspected all75 frames: low one follower and high four followers arrive by the bus with green bars and courier/corgi. Native production reconstruction from actual physical L7 results confirms exact IDs at maxHP (high health60 is max60), corgi100/100, exact LEFT/RIGHT racks and selected rocket launcher; independent read-only controls match. Archived live ledgers/logs compare the actual human IDs/HP, racks and selection across entry, while native complete receipts census zero weapon pickups. All11 semantic fault controls reject. The proof harness had assumed an old empty-low-roster run; current evidence has one legal low survivor, so that seed-specific assertion now accepts the unchanged0\u201335 criterion. No game or receipt-consumer target changed."
+      "note": "Actual current native L7-to-L8 carryovers preserve all23 low/24 high human IDs, exact rack order and selected rocket launcher (not bat). Every human and companion arrives at its own full HP (including four low-tier60/60 companions in the human roster); corgi100/100. L8 starts with zero pickup entities, both full actual L8 routes leave the arsenal unchanged, and independent current canonical receipts record zero weapon pickups. Low uses successful current L5/L6/L7 progression; high uses the current canonical L7-default completion after the separately retained23-follower carried-high prefix failed. This qualifies the production handover contract for those actual completed cohorts, not the rejected prefix or a physical whole-game journey."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-c5/L8-01/arrival-proof.json",
-      "sha256": "3ec6146e8d49b29083596250c13da1e4c7625abdd37fa2421835dde6d62e4586",
-      "what": "Current-source production arrival construction and control, or eleven semantic fault controls with original bytes restored."
+      "file": "docs/reports/final-c/campaign/boundaries.json",
+      "sha256": "44e2523b834aa158a4c1174e54a64d90b221c4205e35fe2ad7c3789fdcf23f3b",
+      "what": "Actual current native L7-to-L8 carryovers preserve all23 low/24 high human IDs, exact rack order and selected rocket launcher (not bat). Every human and companion arrives at its own full HP (including four low-tier60/60 companions in the human roster); corgi100/100. L8 starts with zero pickup entities, both full actual L8 routes leave the arsenal unchanged, and independent current canonical receipts record zero weapon pickups. Low uses successful current L5/L6/L7 progression; high uses the current canonical L7-default completion after the separately retained23-follower carried-high prefix failed. This qualifies the production handover contract for those actual completed cohorts, not the rejected prefix or a physical whole-game journey."
     },
     {
-      "file": "docs/reports/sweep-c5/L8-01/coverage-proof.json",
-      "sha256": "95e7289d01e60d163af365c6fa60e6ae26d682c964d05cdf34084d0dfbadec97",
-      "what": "Current-source production arrival construction and control, or eleven semantic fault controls with original bytes restored."
+      "file": "docs/reports/final-c/shared-l8/producer.mjs",
+      "sha256": "01ecdecca26916ced23342186f511f543da7324ae0033d8f73db338234b86f92",
+      "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
     },
     {
-      "file": "docs/reports/sweep-c5/L8-02/evidence/low-L7-L8-carried-low-input.json.gz",
-      "sha256": "4ac9ea3a249d680a70c51bb9bad3308a37a3136714e0b8e589562f26af388a72",
-      "what": "Immutable physical carried-campaign handover, reviewed frame observations or native pickup census from the L8-02 run."
+      "file": "docs/reports/final-c/campaign/initial-boundary-producer.mjs",
+      "sha256": "6691095eefa1d4e099f1e7bc7673d106d9e9bb6da8a50f7662cbe859b99b0f05",
+      "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
     },
     {
-      "file": "docs/reports/sweep-c5/L8-02/evidence/low-late-input-completion.json.gz",
-      "sha256": "8b518d64f9bec26c20550cab963261ad8ecd540a33b196bedf0bfa5a08239ca0",
-      "what": "Immutable physical carried-campaign handover, reviewed frame observations or native pickup census from the L8-02 run."
+      "file": "docs/reports/final-c/campaign/L8-low-campaign.json.gz",
+      "sha256": "28cf2c1361d2ceab2b770df34c9ebff276e12330ffeffa787ae3fdef18af7e76",
+      "what": "Actual current native L7-to-L8 carryovers preserve all23 low/24 high human IDs, exact rack order and selected rocket launcher (not bat). Every human and companion arrives at its own full HP (including four low-tier60/60 companions in the human roster); corgi100/100. L8 starts with zero pickup entities, both full actual L8 routes leave the arsenal unchanged, and independent current canonical receipts record zero weapon pickups. Low uses successful current L5/L6/L7 progression; high uses the current canonical L7-default completion after the separately retained23-follower carried-high prefix failed. This qualifies the production handover contract for those actual completed cohorts, not the rejected prefix or a physical whole-game journey."
     },
     {
-      "file": "docs/reports/sweep-c5/L8-02/evidence/low-late-input-acceptance-ledger.json.gz",
-      "sha256": "f461a5c1457b0ee8b0fbba6dd523b457c84d14626558fd726cc67645faaf1985",
-      "what": "Immutable physical carried-campaign handover, reviewed frame observations or native pickup census from the L8-02 run."
+      "file": "docs/reports/final-c/campaign/L9-low-campaign.json.gz",
+      "sha256": "42f47f10628ef81aae63fd84500ae251e86539218614c7ab114384f443ab493d",
+      "what": "Actual current native L7-to-L8 carryovers preserve all23 low/24 high human IDs, exact rack order and selected rocket launcher (not bat). Every human and companion arrives at its own full HP (including four low-tier60/60 companions in the human roster); corgi100/100. L8 starts with zero pickup entities, both full actual L8 routes leave the arsenal unchanged, and independent current canonical receipts record zero weapon pickups. Low uses successful current L5/L6/L7 progression; high uses the current canonical L7-default completion after the separately retained23-follower carried-high prefix failed. This qualifies the production handover contract for those actual completed cohorts, not the rejected prefix or a physical whole-game journey."
     },
     {
-      "file": "docs/reports/sweep-c5/L8-02/evidence/low-log-late-input.jsonl.gz",
-      "sha256": "84246444c8a32c88797c7abb52abbe4d478ce2526b54fa147d7e3419fd844ee5",
-      "what": "Immutable physical carried-campaign handover, reviewed frame observations or native pickup census from the L8-02 run."
+      "file": "docs/reports/final-c/campaign/L8-high-campaign.json.gz",
+      "sha256": "3bd30674f602a43346d1121cb0116b020656695c9de45b0801c8e8e0902a79d7",
+      "what": "Actual current native L7-to-L8 carryovers preserve all23 low/24 high human IDs, exact rack order and selected rocket launcher (not bat). Every human and companion arrives at its own full HP (including four low-tier60/60 companions in the human roster); corgi100/100. L8 starts with zero pickup entities, both full actual L8 routes leave the arsenal unchanged, and independent current canonical receipts record zero weapon pickups. Low uses successful current L5/L6/L7 progression; high uses the current canonical L7-default completion after the separately retained23-follower carried-high prefix failed. This qualifies the production handover contract for those actual completed cohorts, not the rejected prefix or a physical whole-game journey."
     },
     {
-      "file": "docs/reports/sweep-c5/L8-02/evidence/low-review.json.gz",
-      "sha256": "78dc29321be256c8f910e89114edfea5ddf39edc13f4ec44d4afe277eb36c13f",
-      "what": "Immutable physical carried-campaign handover, reviewed frame observations or native pickup census from the L8-02 run."
+      "file": "docs/reports/final-c/campaign/L9-high-campaign.json.gz",
+      "sha256": "0eb64bd023ad97a293a81c3a3deb93931a4a810d68169a632947679ba224d685",
+      "what": "Actual current native L7-to-L8 carryovers preserve all23 low/24 high human IDs, exact rack order and selected rocket launcher (not bat). Every human and companion arrives at its own full HP (including four low-tier60/60 companions in the human roster); corgi100/100. L8 starts with zero pickup entities, both full actual L8 routes leave the arsenal unchanged, and independent current canonical receipts record zero weapon pickups. Low uses successful current L5/L6/L7 progression; high uses the current canonical L7-default completion after the separately retained23-follower carried-high prefix failed. This qualifies the production handover contract for those actual completed cohorts, not the rejected prefix or a physical whole-game journey."
     },
     {
-      "file": "docs/reports/sweep-c5/L8-02/evidence/low-L8-low-complete.json.gz",
-      "sha256": "52edf0db369ec4a08321a08764de6120643a3c570d42541bff8b51f301b70ce9",
-      "what": "Immutable physical carried-campaign handover, reviewed frame observations or native pickup census from the L8-02 run."
+      "file": "docs/reports/final-c/native/L8-low-complete.json.gz",
+      "sha256": "96688fdb8d814fe11ac0659a042df65e0712b4d29036c71660281328d7bf593f",
+      "what": "Actual current native L7-to-L8 carryovers preserve all23 low/24 high human IDs, exact rack order and selected rocket launcher (not bat). Every human and companion arrives at its own full HP (including four low-tier60/60 companions in the human roster); corgi100/100. L8 starts with zero pickup entities, both full actual L8 routes leave the arsenal unchanged, and independent current canonical receipts record zero weapon pickups. Low uses successful current L5/L6/L7 progression; high uses the current canonical L7-default completion after the separately retained23-follower carried-high prefix failed. This qualifies the production handover contract for those actual completed cohorts, not the rejected prefix or a physical whole-game journey."
     },
     {
-      "file": "docs/reports/sweep-c5/L8-02/evidence/high-L7-L8-carried-high-input.json.gz",
-      "sha256": "21986630379983a8fdac10c6fd1cda846cb93732f4c05242b75d9be062ae6223",
-      "what": "Immutable physical carried-campaign handover, reviewed frame observations or native pickup census from the L8-02 run."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L8-02/evidence/high-late-input-completion.json.gz",
-      "sha256": "cb0524a5db684087cdeffb195b376d92ee89b992ae0e1f1e6b15ed09766a30b1",
-      "what": "Immutable physical carried-campaign handover, reviewed frame observations or native pickup census from the L8-02 run."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L8-02/evidence/high-late-input-acceptance-ledger.json.gz",
-      "sha256": "e5d86326c2632e9c30e83db36366e10d02f323d395aac123f4c437162e0bb2ae",
-      "what": "Immutable physical carried-campaign handover, reviewed frame observations or native pickup census from the L8-02 run."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L8-02/evidence/high-log-late-input.jsonl.gz",
-      "sha256": "7f3289c4c28c98d3b994f5a0cf04327405ffeba872fc5117c28dbc3a27688286",
-      "what": "Immutable physical carried-campaign handover, reviewed frame observations or native pickup census from the L8-02 run."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L8-02/evidence/high-review.json.gz",
-      "sha256": "f9dd859901ceddafbde6c2dfb2cf1f16e39c0343ec5174bc96972f2c71e35928",
-      "what": "Immutable physical carried-campaign handover, reviewed frame observations or native pickup census from the L8-02 run."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L8-02/evidence/high-L8-high-complete.json.gz",
-      "sha256": "2f6533e79c22f324ea7fdcfbbccc138f69fd4979a33cb4ea870f5ed31eae7c40",
-      "what": "Immutable physical carried-campaign handover, reviewed frame observations or native pickup census from the L8-02 run."
+      "file": "docs/reports/final-c/native/L8-high-complete.json.gz",
+      "sha256": "f8a12416068c3832b60c87e347766e4ce6c6f8491a4eb313c097d64976a8519a",
+      "what": "Actual current native L7-to-L8 carryovers preserve all23 low/24 high human IDs, exact rack order and selected rocket launcher (not bat). Every human and companion arrives at its own full HP (including four low-tier60/60 companions in the human roster); corgi100/100. L8 starts with zero pickup entities, both full actual L8 routes leave the arsenal unchanged, and independent current canonical receipts record zero weapon pickups. Low uses successful current L5/L6/L7 progression; high uses the current canonical L7-default completion after the separately retained23-follower carried-high prefix failed. This qualifies the production handover contract for those actual completed cohorts, not the rejected prefix or a physical whole-game journey."
     }
-  ]
+  ],
+  "notes": "Frozen-head row review. Current immutable evidence, unchanged criterion and game source.",
+  "sourceDigest": "3f346fc1f0af18cb190b29844498febc36a720450de65904caad638582d717b9"
 }

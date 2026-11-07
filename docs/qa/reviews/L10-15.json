@@ -1,0 +1,33 @@
+{
+  "row": "L10-15",
+  "status": "PASS",
+  "reviewer": "Codex final-c",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "clauses": [
+    {
+      "clause": "Death in any region respawns at that region's checkpoint (never level start), with the loadout, cure and boss state of that checkpoint.",
+      "verdict": "PASS",
+      "note": "Actual ordinary mortal death probes cover all nine regional/progress checkpoint states per tier, including research/cure and dispersal ready. All positions, loadouts, cure flags, boss HP and death states match the captured checkpoints. Separate cure/boss checks close the older parenthetical partial-coverage label in the location checks; those labels are not treated as evidence. Both native control state hashes match the original complete route."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/final-c/L10-15/numeric-review.json",
+      "sha256": "63313ae68dee2318bc78be266f6bc332e6a5fb0fba0730020280ce0cf911a7c9",
+      "what": "Actual ordinary mortal death probes cover all nine regional/progress checkpoint states per tier, including research/cure and dispersal ready. All positions, loadouts, cure flags, boss HP and death states match the captured checkpoints. Separate cure/boss checks close the older parenthetical partial-coverage label in the location checks; those labels are not treated as evidence. Both native control state hashes match the original complete route."
+    },
+    {
+      "file": "docs/reports/final-c/native/L10-low-checkpoints.json.gz",
+      "sha256": "fc1c38997a5bba50ac041889352adaf23bcf750faa248875a73819a6246db3e9",
+      "what": "Immutable frozen-head native source receipt: docs/reports/fix51-verify/receipts/L10-low-checkpoints.json. Row-specific measured checks are reproduced in numeric-review.json."
+    },
+    {
+      "file": "docs/reports/final-c/native/L10-high-checkpoints.json.gz",
+      "sha256": "404af5824dcbe2111bd918e2fcd3118681f32265ff95ef5b6e04bcbc9a7d5bed",
+      "what": "Immutable frozen-head native source receipt: docs/reports/fix51-verify/receipts/L10-high-checkpoints.json. Row-specific measured checks are reproduced in numeric-review.json."
+    }
+  ],
+  "notes": "Frozen-head numeric review. No gameplay source or criterion changed. No browser, performance, or visual evidence is claimed for this numeric-only criterion.",
+  "sourceDigest": "75720d4df4ad59ad1814e1cda498bc4620d28edfa0298106dd53315c5f2fba05"
+}

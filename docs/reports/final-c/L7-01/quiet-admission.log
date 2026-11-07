@@ -1,0 +1,55 @@
+Quiet-run waiting: {"at":"2026-11-07T01:01:43.446Z","event":"quiet-admission-wait","granted":false,"quiet":false,"load":[5.36279296875,11.408203125,15.2177734375],"busy":[]}
+Quiet-run waiting: {"at":"2026-11-07T01:02:14.235Z","event":"quiet-admission-wait","granted":false,"quiet":false,"load":[6.65283203125,11.14453125,14.98974609375],"busy":[]}
+Quiet-run waiting: {"at":"2026-11-07T01:02:44.905Z","event":"quiet-admission-wait","granted":false,"quiet":false,"load":[7.833984375,11.001953125,14.8037109375],"busy":[]}
+Quiet-run waiting: {"at":"2026-11-07T01:03:15.746Z","event":"quiet-admission-wait","granted":false,"quiet":false,"load":[6.32958984375,10.2734375,14.3837890625],"busy":[]}
+Quiet-run waiting: {"at":"2026-11-07T01:03:45.753Z","event":"quiet-admission-wait","granted":false,"quiet":false,"load":[5.96826171875,9.7880859375,14.0634765625],"busy":[]}
+Quiet-run waiting: {"at":"2026-11-07T01:04:16.551Z","event":"quiet-admission-wait","granted":false,"quiet":false,"load":[4.71533203125,9.10888671875,13.66796875],"busy":[]}
+Quiet-run waiting: {"at":"2026-11-07T01:04:46.687Z","event":"quiet-admission-wait","granted":false,"quiet":false,"load":[3.3876953125,8.3642578125,13.23876953125],"busy":[]}
+Quiet-run waiting: {"at":"2026-11-07T01:05:17.652Z","event":"quiet-admission-wait","granted":false,"quiet":false,"load":[2.6728515625,7.70751953125,12.83056640625],"busy":[{"pid":37625,"command":"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-background"}]}
+Quiet-run waiting: {"at":"2026-11-07T01:05:48.209Z","event":"quiet-admission-wait","granted":false,"quiet":false,"load":[3.9375,7.541015625,12.59228515625],"busy":[{"pid":38322,"command":"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-background"}]}
+Quiet-run waiting: {"at":"2026-11-07T01:06:19.113Z","event":"quiet-admission-wait","granted":true,"quiet":false,"load":[4.794921875,7.45751953125,12.38916015625],"busy":[]}
+Quiet-run waiting: {"at":"2026-11-07T01:06:49.719Z","event":"quiet-admission-wait","granted":true,"quiet":false,"load":[4.068359375,7.029296875,12.0625],"busy":[]}
+Quiet-run waiting: {"at":"2026-11-07T01:07:20.308Z","event":"quiet-admission-wait","granted":true,"quiet":false,"load":[4.1630859375,6.79541015625,11.80419921875],"busy":[]}
+Quiet-run waiting: {"at":"2026-11-07T01:07:50.854Z","event":"quiet-admission-wait","granted":true,"quiet":false,"load":[3.388671875,6.31005859375,11.42431640625],"busy":[]}
+Quiet-run waiting: {"at":"2026-11-07T01:08:21.474Z","event":"quiet-admission-wait","granted":true,"quiet":false,"load":[3.34130859375,6.02294921875,11.14208984375],"busy":[]}
+Quiet-run pool preflight: exclusive context admission; load < 3; no foreign headless Chrome, Blender, build or local Vitest.
+low {
+  distance: 3,
+  windows: [
+    {
+      event: 'pickup.collected',
+      tick: 14,
+      samples: 18,
+      maxMs: 50.100000000000364
+    },
+    {
+      event: 'combat.attack',
+      tick: 30,
+      samples: 20,
+      maxMs: 66.60000000000036
+    }
+  ],
+  pass: false
+} [
+  'AssertionError [ERR_ASSERTION]: L7-01 frame gate {"distance":3,"windows":[{"event":"pickup.collected","tick":14,"samples":18,"maxMs":50.100000000000364},{"event":"combat.attack","tick":30,"samples":20,"maxMs":66.60000000000036}],"pass":false}'
+]
+high {
+  distance: 3,
+  windows: [
+    {
+      event: 'pickup.collected',
+      tick: 14,
+      samples: 15,
+      maxMs: 133.20000000000073
+    },
+    {
+      event: 'combat.attack',
+      tick: 27,
+      samples: 19,
+      maxMs: 66.59999999999854
+    }
+  ],
+  pass: false
+} [
+  'AssertionError [ERR_ASSERTION]: L7-01 frame gate {"distance":3,"windows":[{"event":"pickup.collected","tick":14,"samples":15,"maxMs":133.20000000000073},{"event":"combat.attack","tick":27,"samples":19,"maxMs":66.59999999999854}],"pass":false}'
+]

@@ -1,201 +1,123 @@
 {
   "row": "L10-06",
   "status": "PASS",
-  "reviewer": "Codex sweep-c5",
-  "date": "2026-11-06",
-  "commit": "97fb56569838414db4f029cff73d05fea6a5b9bb",
+  "reviewer": "Codex final-c",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
   "clauses": [
     {
-      "clause": "Dogs: 1.1\u00d7 run, \u2265 0.6 s telegraph, \u2264 2 m reach, \u2265 2 s cooldown, 10 HP/bite; low, distinct from the corgi.",
+      "clause": "Dogs: 1.1× run, ≥ 0.6 s telegraph, ≤ 2 m reach, ≥ 2 s cooldown, 10 HP/bite; low, distinct from the corgi.",
       "verdict": "PASS",
-      "note": "Current native low/high dog mechanics: speed ratio1.1, real hit reach1.08m,10HP damage,0.65s telegraph,2s hit-to-next-windup cooldown. Four current-source physical encounters restore naturally reached dog/corgi saves with no actor writes; only cameraZoom changes. Personally inspected all42 final frames and46 initial rejected-matrix frames. The first high-wide named frames obscured the dog, so that matrix was not admitted. Capture policy now records wide approach at<=12m before the crowd converges, keeping close<=3m; all four cells were remeasured under the new producer hash. Named witnesses show cream/brown low canine torso/muzzle/legs/tail and red enemy bar, distinct from orange/white round-headed backpack corgi at both zooms/tiers. Close high has partial crowd occlusion; new wide views show a separate living silhouette. Actual runtime quality/zoom, no skips/deaths or console/page errors; native snapshot controls unchanged. These are short appearance encounters, not full physical finale completion."
+      "note": "Both native tiers:1.1× run speed,36tick/0.6s telegraph,1.08m actual reach,10HP bites and159tick/2.65s hit spacing. Twelve actual physical-input living-dog panels personally inspected across both tiers/zooms show low pale/high wounded quadrupeds clearly distinct from orange backpack corgi; actual windup ground rings. Fifteen-second dog-look yield is an appearance sample, not level completion."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-c5/L10-06/low-z0.5-review.json.gz",
-      "sha256": "d8ff15786e348839539310cf89f6cfdaaa1db37ab61eb4cac6b1ee235297d983",
-      "what": "Immutable current-source physical encounter or personally inspected original-size frame manifest, with exact hashes, quality/zoom and three living-dog witnesses."
+      "file": "docs/reports/final-c/L10-06/L10-high-dog-z1.5-input-dog-look-acceptance-ledger.json.gz",
+      "sha256": "4de1ac590068f58716bc6b97487a96f724d0d00c0f19ba159363734e995a7240",
+      "what": "Both native tiers:1.1× run speed,36tick/0.6s telegraph,1.08m actual reach,10HP bites and159tick/2.65s hit spacing. Twelve actual physical-input living-dog panels personally inspected across both tiers/zooms show low pale/high wounded quadrupeds clearly distinct from orange backpack corgi; actual windup ground rings. Fifteen-second dog-look yield is an appearance sample, not level completion."
     },
     {
-      "file": "docs/reports/sweep-c5/L10-06/low-z0.5-input.json.gz",
-      "sha256": "2540f9bddcfbaf17b503562082db73e1716f247345dcb6dcb3e348cdc57624af",
-      "what": "Immutable current-source physical encounter or personally inspected original-size frame manifest, with exact hashes, quality/zoom and three living-dog witnesses."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L10-06/artifacts/low-z0.5-log-dog-look.jsonl.gz",
-      "sha256": "83639d23e303561bd3f1d07a23a7df4126f045623e204735d11fbfde5bb45091",
-      "what": "Exact physical encounter ledger/log/completion or audio artifact, preserving original compressed bytes."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L10-06/artifacts/low-z0.5-dog-look-completion.json.gz",
-      "sha256": "186a9da25055f576c9ceb414aa245bbe012a8e2195825c74841804af14d6c0cd",
-      "what": "Exact physical encounter ledger/log/completion or audio artifact, preserving original compressed bytes."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L10-06/artifacts/low-z0.5-dog-look-acceptance-ledger.json.gz",
-      "sha256": "6601292012605aa20f4a1c6b232ed1be5485f13c3d6d3787a0402ab8825ea4fc",
-      "what": "Exact physical encounter ledger/log/completion or audio artifact, preserving original compressed bytes."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L10-06/artifacts/low-z0.5-dog-look-audio.json.gz",
-      "sha256": "bbae76174d0b7210fc8069e23f8925bef4332523ef935d51de9cb53134ee5ce9",
-      "what": "Exact physical encounter ledger/log/completion or audio artifact, preserving original compressed bytes."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L10-06/artifacts/low-z0.5-issues-dog-look.json.gz",
-      "sha256": "64406e753d82e11c6bd63d1d04bb6aa083eefa0a46949bbfce994d556b989f0f",
-      "what": "Exact physical encounter ledger/log/completion or audio artifact, preserving original compressed bytes."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L10-06/artifacts/low-z0.5-runs-dog-look.json.gz",
-      "sha256": "2bd8b06b2b3b95690b1c39bd5de453fa623d3f147e9251a8b56a060191f98706",
-      "what": "Exact physical encounter ledger/log/completion or audio artifact, preserving original compressed bytes."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L10-06/low-z1.5-review.json.gz",
-      "sha256": "298f1838f6ff64fe17a37d4eb460878117c140ef06f7a1cdfdcc6ec975454194",
-      "what": "Immutable current-source physical encounter or personally inspected original-size frame manifest, with exact hashes, quality/zoom and three living-dog witnesses."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L10-06/low-z1.5-input.json.gz",
-      "sha256": "79a88cb71ddc54a2159e29b093da00a00da38b40328658671d3a278d70de7af2",
-      "what": "Immutable current-source physical encounter or personally inspected original-size frame manifest, with exact hashes, quality/zoom and three living-dog witnesses."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L10-06/artifacts/low-z1.5-log-dog-look.jsonl.gz",
-      "sha256": "bbde7c069622b1200f23e48d144bf6a92a0e0e724b6a065a9d3cf06f9de90cb3",
-      "what": "Exact physical encounter ledger/log/completion or audio artifact, preserving original compressed bytes."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L10-06/artifacts/low-z1.5-dog-look-completion.json.gz",
-      "sha256": "0ef2b63398d4d37abc0c6b0bc0f5a2782df7cc39fdd59b2c307f9d363ba130ea",
-      "what": "Exact physical encounter ledger/log/completion or audio artifact, preserving original compressed bytes."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L10-06/artifacts/low-z1.5-dog-look-acceptance-ledger.json.gz",
-      "sha256": "a680a902953008b31111bcacb601e1f505f144db8f2cc9a1ecebef5bfcfa5647",
-      "what": "Exact physical encounter ledger/log/completion or audio artifact, preserving original compressed bytes."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L10-06/artifacts/low-z1.5-dog-look-audio.json.gz",
-      "sha256": "6841416f83cf59daae9d0b3539b2aaaefc7bb57a92ffff4b795cc27d8208c658",
-      "what": "Exact physical encounter ledger/log/completion or audio artifact, preserving original compressed bytes."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L10-06/artifacts/low-z1.5-issues-dog-look.json.gz",
-      "sha256": "64406e753d82e11c6bd63d1d04bb6aa083eefa0a46949bbfce994d556b989f0f",
-      "what": "Exact physical encounter ledger/log/completion or audio artifact, preserving original compressed bytes."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L10-06/artifacts/low-z1.5-runs-dog-look.json.gz",
-      "sha256": "6c95f85b91aeb2d48043295c1bcb9cf2a6046defa85537ba1dde4bbcfe7329ff",
-      "what": "Exact physical encounter ledger/log/completion or audio artifact, preserving original compressed bytes."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L10-06/low-seed.json.gz",
-      "sha256": "9e684bd76017f434e502aedbf3dd245afaffc5954be7db3e2f6ff5bcdf8a20d9",
-      "what": "Naturally reached dog/corgi production Resume or current native dog mechanics fixture."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L10-06/low-mechanics.json.gz",
-      "sha256": "8d870deddadeb2dd2a768d398f3f3e850648df9a04f0a56ccbdf7878f06ec9b7",
-      "what": "Naturally reached dog/corgi production Resume or current native dog mechanics fixture."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L10-06/high-z0.5-review.json.gz",
-      "sha256": "b33dd9c89835beed38bed02c40fd136de2e3fa94c5b320499eb5ead8dff3483f",
-      "what": "Immutable current-source physical encounter or personally inspected original-size frame manifest, with exact hashes, quality/zoom and three living-dog witnesses."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L10-06/high-z0.5-input.json.gz",
-      "sha256": "bf4e0a4275cc060b8e099a5603eebf3bf926d691b573cbc4ca44d3db503a5e02",
-      "what": "Immutable current-source physical encounter or personally inspected original-size frame manifest, with exact hashes, quality/zoom and three living-dog witnesses."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L10-06/artifacts/high-z0.5-log-dog-look.jsonl.gz",
-      "sha256": "1b3ecb71f9ddaccc5a0530140d13ce94cfbec2b11ddccd589dd79c72dfc25206",
-      "what": "Exact physical encounter ledger/log/completion or audio artifact, preserving original compressed bytes."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L10-06/artifacts/high-z0.5-dog-look-completion.json.gz",
-      "sha256": "94fc9e8aabb6afe4ca5b8f5f42c42e925c61290941893f36634a3ec1581be971",
-      "what": "Exact physical encounter ledger/log/completion or audio artifact, preserving original compressed bytes."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L10-06/artifacts/high-z0.5-dog-look-acceptance-ledger.json.gz",
-      "sha256": "e1bdd4b80da844427cdaa2b94ffda9e8a83a445d1caced7e7a9df970163a3f8d",
-      "what": "Exact physical encounter ledger/log/completion or audio artifact, preserving original compressed bytes."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L10-06/artifacts/high-z0.5-dog-look-audio.json.gz",
-      "sha256": "63fd2d2aa198715e42ba65762382672d2add1fb5c5f9534faa54b9beff210232",
-      "what": "Exact physical encounter ledger/log/completion or audio artifact, preserving original compressed bytes."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L10-06/artifacts/high-z0.5-issues-dog-look.json.gz",
-      "sha256": "64406e753d82e11c6bd63d1d04bb6aa083eefa0a46949bbfce994d556b989f0f",
-      "what": "Exact physical encounter ledger/log/completion or audio artifact, preserving original compressed bytes."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L10-06/artifacts/high-z0.5-runs-dog-look.json.gz",
-      "sha256": "59397fca2a4bb4ea646d6ae281942e4b165af3396225868ce99874841013dd55",
-      "what": "Exact physical encounter ledger/log/completion or audio artifact, preserving original compressed bytes."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L10-06/high-z1.5-review.json.gz",
-      "sha256": "63e1d146f8853b5b36825ec74cf62922a4f6df02fc0fbf99038e85a42627282b",
-      "what": "Immutable current-source physical encounter or personally inspected original-size frame manifest, with exact hashes, quality/zoom and three living-dog witnesses."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L10-06/high-z1.5-input.json.gz",
-      "sha256": "4a56a12bd7ca134382696b54449e8f81918d0cf5d9bb0e225f365c7832b3775f",
-      "what": "Immutable current-source physical encounter or personally inspected original-size frame manifest, with exact hashes, quality/zoom and three living-dog witnesses."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L10-06/artifacts/high-z1.5-log-dog-look.jsonl.gz",
-      "sha256": "1521fdadce72d177575c5c4e87cd74d3998df3e6c9bc29ce104b398802ecc7e5",
-      "what": "Exact physical encounter ledger/log/completion or audio artifact, preserving original compressed bytes."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L10-06/artifacts/high-z1.5-dog-look-completion.json.gz",
-      "sha256": "a98ab21822de82ae697a2df9ff4143445e60939759252ebae65565608b575ee7",
-      "what": "Exact physical encounter ledger/log/completion or audio artifact, preserving original compressed bytes."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L10-06/artifacts/high-z1.5-dog-look-acceptance-ledger.json.gz",
-      "sha256": "5f90c83c9850f80a7114bd9f45293e894829046a2d6e57cabda84745d0e3a08b",
-      "what": "Exact physical encounter ledger/log/completion or audio artifact, preserving original compressed bytes."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L10-06/artifacts/high-z1.5-dog-look-audio.json.gz",
-      "sha256": "554ac7924e9b9a542ac3ff685d4ae69e73733d5b6bb51953a433eee0bbfe3291",
-      "what": "Exact physical encounter ledger/log/completion or audio artifact, preserving original compressed bytes."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L10-06/artifacts/high-z1.5-issues-dog-look.json.gz",
-      "sha256": "64406e753d82e11c6bd63d1d04bb6aa083eefa0a46949bbfce994d556b989f0f",
-      "what": "Exact physical encounter ledger/log/completion or audio artifact, preserving original compressed bytes."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L10-06/artifacts/high-z1.5-runs-dog-look.json.gz",
-      "sha256": "127e7a30016b709e9d1da92be89fe05f61af8e5938daf7ae1c506d9aba1cde21",
-      "what": "Exact physical encounter ledger/log/completion or audio artifact, preserving original compressed bytes."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L10-06/high-seed.json.gz",
+      "file": "docs/reports/final-c/L10-06/L10-high-dog-save.json.gz",
       "sha256": "856e07979225c6b82272f6c606e0ab90d9b9518dac8002d5543720a237cb8732",
-      "what": "Naturally reached dog/corgi production Resume or current native dog mechanics fixture."
+      "what": "Both native tiers:1.1× run speed,36tick/0.6s telegraph,1.08m actual reach,10HP bites and159tick/2.65s hit spacing. Twelve actual physical-input living-dog panels personally inspected across both tiers/zooms show low pale/high wounded quadrupeds clearly distinct from orange backpack corgi; actual windup ground rings. Fifteen-second dog-look yield is an appearance sample, not level completion."
     },
     {
-      "file": "docs/reports/sweep-c5/L10-06/high-mechanics.json.gz",
-      "sha256": "1bcd08c3b321bca3389b5b41f8c9e68b7906e4593ebae522a2a33c98fba71e6f",
-      "what": "Naturally reached dog/corgi production Resume or current native dog mechanics fixture."
+      "file": "docs/reports/final-c/L10-06/L10-high-dog-z1.5-input-log-dog-look.jsonl.gz",
+      "sha256": "d0e3dddb482c9bc6e8573cbe9a9e55da5eacb3baaed8d0bbb5c6e0ccc9ca20af",
+      "what": "Both native tiers:1.1× run speed,36tick/0.6s telegraph,1.08m actual reach,10HP bites and159tick/2.65s hit spacing. Twelve actual physical-input living-dog panels personally inspected across both tiers/zooms show low pale/high wounded quadrupeds clearly distinct from orange backpack corgi; actual windup ground rings. Fifteen-second dog-look yield is an appearance sample, not level completion."
     },
     {
-      "file": "docs/reports/sweep-c5/L10-06/seed-provenance.json",
-      "sha256": "a8a3f39037a9b7945b81cf90fc8345922c59cf088f0dc91b1e434b835e934042",
-      "what": "Read-only naturally reached living-dog snapshot on both competent routes; canonical final control hashes identical."
+      "file": "docs/reports/final-c/L10-06/L10-low-dog-z0.5-input-dog-look-acceptance-ledger.json.gz",
+      "sha256": "2e6cab001881c3cbf36a32131b977cf2563f56df1bd45f8de75786aaeb5f9dcd",
+      "what": "Both native tiers:1.1× run speed,36tick/0.6s telegraph,1.08m actual reach,10HP bites and159tick/2.65s hit spacing. Twelve actual physical-input living-dog panels personally inspected across both tiers/zooms show low pale/high wounded quadrupeds clearly distinct from orange backpack corgi; actual windup ground rings. Fifteen-second dog-look yield is an appearance sample, not level completion."
+    },
+    {
+      "file": "docs/reports/final-c/L10-06/L10-high-dog-z0.5-input-log-dog-look.jsonl.gz",
+      "sha256": "aaa4bafcb25034e70497ce38ced0a55252f6f3d61da89d9ebe0f2b00019bfc1d",
+      "what": "Both native tiers:1.1× run speed,36tick/0.6s telegraph,1.08m actual reach,10HP bites and159tick/2.65s hit spacing. Twelve actual physical-input living-dog panels personally inspected across both tiers/zooms show low pale/high wounded quadrupeds clearly distinct from orange backpack corgi; actual windup ground rings. Fifteen-second dog-look yield is an appearance sample, not level completion."
+    },
+    {
+      "file": "docs/reports/final-c/L10-06/L10-low-dog-z0.5-input.json",
+      "sha256": "3f679bac08fd03d79fbbfd5903b9076af9dd0f7329f05c5fa6110f04c4a0055e",
+      "what": "Both native tiers:1.1× run speed,36tick/0.6s telegraph,1.08m actual reach,10HP bites and159tick/2.65s hit spacing. Twelve actual physical-input living-dog panels personally inspected across both tiers/zooms show low pale/high wounded quadrupeds clearly distinct from orange backpack corgi; actual windup ground rings. Fifteen-second dog-look yield is an appearance sample, not level completion."
+    },
+    {
+      "file": "docs/reports/final-c/L10-06/L10-high-dog-z0.5-input-dog-look-acceptance-ledger.json.gz",
+      "sha256": "348bb0904f9ff6f05bb63189eddf8a9fe59d22dca2a8e212535e79b86a0255ca",
+      "what": "Both native tiers:1.1× run speed,36tick/0.6s telegraph,1.08m actual reach,10HP bites and159tick/2.65s hit spacing. Twelve actual physical-input living-dog panels personally inspected across both tiers/zooms show low pale/high wounded quadrupeds clearly distinct from orange backpack corgi; actual windup ground rings. Fifteen-second dog-look yield is an appearance sample, not level completion."
+    },
+    {
+      "file": "docs/reports/final-c/L10-06/L10-low-dog-z1.5-input.json",
+      "sha256": "ef5ae9dea35fe5a0ac0e37ccace42f985d7b6639f519655602ca70d55ef8eddd",
+      "what": "Both native tiers:1.1× run speed,36tick/0.6s telegraph,1.08m actual reach,10HP bites and159tick/2.65s hit spacing. Twelve actual physical-input living-dog panels personally inspected across both tiers/zooms show low pale/high wounded quadrupeds clearly distinct from orange backpack corgi; actual windup ground rings. Fifteen-second dog-look yield is an appearance sample, not level completion."
+    },
+    {
+      "file": "docs/reports/final-c/L10-06/L10-low-dog-z1.5-input-dog-look-acceptance-ledger.json.gz",
+      "sha256": "adc12dc5abed8ffad46b98e2d1ee9a9d5c501b32ceefb42fdc23c8a7e2fe6338",
+      "what": "Both native tiers:1.1× run speed,36tick/0.6s telegraph,1.08m actual reach,10HP bites and159tick/2.65s hit spacing. Twelve actual physical-input living-dog panels personally inspected across both tiers/zooms show low pale/high wounded quadrupeds clearly distinct from orange backpack corgi; actual windup ground rings. Fifteen-second dog-look yield is an appearance sample, not level completion."
+    },
+    {
+      "file": "docs/reports/final-c/L10-06/producer.ts",
+      "sha256": "bf78fbace2c12fc7cb0cacb602fb1a5fcc319e1e7ee3ed4f162f9c97546f254c",
+      "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
+    },
+    {
+      "file": "docs/reports/final-c/L10-06/L10-low-dog-z1.5-input-log-dog-look.jsonl.gz",
+      "sha256": "a3c9b420ad0f8344761dad90066815b1fe8188fb7abc93983dc273427130f6cc",
+      "what": "Both native tiers:1.1× run speed,36tick/0.6s telegraph,1.08m actual reach,10HP bites and159tick/2.65s hit spacing. Twelve actual physical-input living-dog panels personally inspected across both tiers/zooms show low pale/high wounded quadrupeds clearly distinct from orange backpack corgi; actual windup ground rings. Fifteen-second dog-look yield is an appearance sample, not level completion."
+    },
+    {
+      "file": "docs/reports/final-c/L10-06/L10-high-dog-z0.5-input.json",
+      "sha256": "0610ea71db59d0fa0e2dd6291665b6429eb7514cffe69253a944966f82c9e117",
+      "what": "Both native tiers:1.1× run speed,36tick/0.6s telegraph,1.08m actual reach,10HP bites and159tick/2.65s hit spacing. Twelve actual physical-input living-dog panels personally inspected across both tiers/zooms show low pale/high wounded quadrupeds clearly distinct from orange backpack corgi; actual windup ground rings. Fifteen-second dog-look yield is an appearance sample, not level completion."
+    },
+    {
+      "file": "docs/reports/final-c/L10-06/L10-dog-save-provenance.json",
+      "sha256": "c27f5142f1d29cc6a1238b40711361de8129152f569f9defac249c552dad9b0c",
+      "what": "Both native tiers:1.1× run speed,36tick/0.6s telegraph,1.08m actual reach,10HP bites and159tick/2.65s hit spacing. Twelve actual physical-input living-dog panels personally inspected across both tiers/zooms show low pale/high wounded quadrupeds clearly distinct from orange backpack corgi; actual windup ground rings. Fifteen-second dog-look yield is an appearance sample, not level completion."
+    },
+    {
+      "file": "docs/reports/final-c/L10-06/capture-review.json",
+      "sha256": "f11e74672b2088be9cda633de8d88aa64978c2e30850b978c8fb0c260747ba69",
+      "what": "Both native tiers:1.1× run speed,36tick/0.6s telegraph,1.08m actual reach,10HP bites and159tick/2.65s hit spacing. Twelve actual physical-input living-dog panels personally inspected across both tiers/zooms show low pale/high wounded quadrupeds clearly distinct from orange backpack corgi; actual windup ground rings. Fifteen-second dog-look yield is an appearance sample, not level completion."
+    },
+    {
+      "file": "docs/reports/final-c/L10-06/L10-low-dog-save.json.gz",
+      "sha256": "9e684bd76017f434e502aedbf3dd245afaffc5954be7db3e2f6ff5bcdf8a20d9",
+      "what": "Both native tiers:1.1× run speed,36tick/0.6s telegraph,1.08m actual reach,10HP bites and159tick/2.65s hit spacing. Twelve actual physical-input living-dog panels personally inspected across both tiers/zooms show low pale/high wounded quadrupeds clearly distinct from orange backpack corgi; actual windup ground rings. Fifteen-second dog-look yield is an appearance sample, not level completion."
+    },
+    {
+      "file": "docs/reports/final-c/L10-06/appearance.json",
+      "sha256": "a0d9554592f28be4be589ca4b90658544beab258855ed6d4b12d4cad67af7729",
+      "what": "Both native tiers:1.1× run speed,36tick/0.6s telegraph,1.08m actual reach,10HP bites and159tick/2.65s hit spacing. Twelve actual physical-input living-dog panels personally inspected across both tiers/zooms show low pale/high wounded quadrupeds clearly distinct from orange backpack corgi; actual windup ground rings. Fifteen-second dog-look yield is an appearance sample, not level completion."
+    },
+    {
+      "file": "docs/reports/final-c/L10-06/L10-low-dog-z0.5-input-log-dog-look.jsonl.gz",
+      "sha256": "9168c1a98f05c040959d1beffbf19123e2ca3e514f397db714680f5a26526ffb",
+      "what": "Both native tiers:1.1× run speed,36tick/0.6s telegraph,1.08m actual reach,10HP bites and159tick/2.65s hit spacing. Twelve actual physical-input living-dog panels personally inspected across both tiers/zooms show low pale/high wounded quadrupeds clearly distinct from orange backpack corgi; actual windup ground rings. Fifteen-second dog-look yield is an appearance sample, not level completion."
+    },
+    {
+      "file": "docs/reports/final-c/L10-06/l10-dog-look-r10-producer.ts",
+      "sha256": "fe32fee59bc0ab19e76aea023141c9aefa5cc7278b7e5dad08ad3b0d187da469",
+      "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
+    },
+    {
+      "file": "docs/reports/final-c/L10-06/L10-high-dog-z1.5-input.json",
+      "sha256": "12316811abffa93593a8667a29c8790a1e85eaca001bf382d14a6923062f2355",
+      "what": "Both native tiers:1.1× run speed,36tick/0.6s telegraph,1.08m actual reach,10HP bites and159tick/2.65s hit spacing. Twelve actual physical-input living-dog panels personally inspected across both tiers/zooms show low pale/high wounded quadrupeds clearly distinct from orange backpack corgi; actual windup ground rings. Fifteen-second dog-look yield is an appearance sample, not level completion."
+    },
+    {
+      "file": "docs/reports/final-c/native/L10-low-fixtures.json.gz",
+      "sha256": "11fcbea0af38305871180125c31ad74e19f74034a087b486d849b291fde9c581",
+      "what": "Both native tiers:1.1× run speed,36tick/0.6s telegraph,1.08m actual reach,10HP bites and159tick/2.65s hit spacing. Twelve actual physical-input living-dog panels personally inspected across both tiers/zooms show low pale/high wounded quadrupeds clearly distinct from orange backpack corgi; actual windup ground rings. Fifteen-second dog-look yield is an appearance sample, not level completion."
+    },
+    {
+      "file": "docs/reports/final-c/native/L10-high-fixtures.json.gz",
+      "sha256": "514522e7edc040f73110c272d60efe194211f8689c77e687b9917836a2e81144",
+      "what": "Both native tiers:1.1× run speed,36tick/0.6s telegraph,1.08m actual reach,10HP bites and159tick/2.65s hit spacing. Twelve actual physical-input living-dog panels personally inspected across both tiers/zooms show low pale/high wounded quadrupeds clearly distinct from orange backpack corgi; actual windup ground rings. Fifteen-second dog-look yield is an appearance sample, not level completion."
     }
-  ]
+  ],
+  "notes": "Frozen-head row review. Current immutable evidence, unchanged criterion and game source.",
+  "sourceDigest": "75720d4df4ad59ad1814e1cda498bc4620d28edfa0298106dd53315c5f2fba05"
 }

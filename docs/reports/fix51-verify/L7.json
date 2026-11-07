@@ -5,7 +5,7 @@
   "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
   "fixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
-  "generatedAt": "2026-11-06T23:27:10.818Z",
+  "generatedAt": "2026-11-07T02:31:02.848Z",
   "policies": [
     {
       "tier": "low",
@@ -556,9 +556,12 @@
       "id": "G-09",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "Not measured by this batch run.",
+      "value": "Manual review PASS (STALE, fix68-g/Codex): L4 hold: all 28 observations across low/high and zoom 1/1.5 show the actual objective HUD, with no world ring. All 12 captures reviewed including intermediate UI configurations. The former hold counterexample is closed. Not measured by this batch run.",
       "automatedComplete": false,
-      "receipt": [],
+      "receipt": [
+        "docs/reports/fix68-g/G-09-visible.json",
+        "docs/reports/fix68-g/G-09-closure.json"
+      ],
       "expected": "The objective marker is visible within 2 s of every step start, at zoom 1.5 and 1, not hidden inside a prop (Q-283). Orchestrator 2026-11-06: steps without a spatial destination (hold/defend in place, e.g. the L4 hold) show no world ring by design; the HUD objective text is the marker there.",
       "checks": [],
       "historical": {
@@ -569,7 +572,39 @@
         "evidence": [],
         "method": "NEXT: Use tools/playtest/session.ts plus a read-only step-start observer: record marker visibility within two seconds at zoom 1 and 1.5 for every objective, including pickups behind props."
       },
-      "remaining": "NEXT: Use tools/playtest/session.ts plus a read-only step-start observer: record marker visibility within two seconds at zoom 1 and 1.5 for every objective, including pickups behind props."
+      "remaining": "NEXT: Use tools/playtest/session.ts plus a read-only step-start observer: record marker visibility within two seconds at zoom 1 and 1.5 for every objective, including pickups behind props.",
+      "reviewDecision": {
+        "row": "G-09",
+        "status": "PASS",
+        "reviewer": "fix68-g/Codex",
+        "date": "2026-11-06",
+        "commit": "d6167897fdd39772a96a7a2dbfb69ea4c5cee5db",
+        "clauses": [
+          {
+            "clause": "Steps without a spatial destination show no world ring by design; the HUD objective text is the marker there (2026-11-06 clarification).",
+            "verdict": "PASS",
+            "note": "L4 hold: all 28 observations across low/high and zoom 1/1.5 show the actual objective HUD, with no world ring. All 12 captures reviewed including intermediate UI configurations. The former hold counterexample is closed."
+          }
+        ],
+        "evidence": [
+          {
+            "file": "docs/reports/fix68-g/G-09-visible.json",
+            "sha256": "fd358185e537ea17e87c68fac7f0c2ce6a54ff4676e8544d8729ba32214a0ffa",
+            "what": "Real HUD visibility, objective text, ring state and capture hashes/observations."
+          },
+          {
+            "file": "docs/reports/fix68-g/G-09-closure.json",
+            "sha256": "c3cedc87fb3d453d407875524105d7f2f8afe51b7f7e9138f7e86eaed0247fff",
+            "what": "Real HUD visibility, objective text, ring state and capture hashes/observations."
+          }
+        ],
+        "notes": [
+          "Scoped clarification review; this does not certify every spatial step start or prop-hidden pickup. Historical literal-ring receipts remain in sweep-g. Reviewed final gameplay commit d485990; evidence retains original provenance and stated scope. Continuation review: d616789 changes only announced L3 admission retirement after d10848b L6 quota priority. Historical proofs retain their original identities and immutable archived receipts. Scoped clauses only; full release acceptance is pending.",
+          "Final load-qualified standalone threat: exit1,12 L7 pace flags; L3/L6 threat flags cleared. Full global-row qualification remains open. See docs/reports/fix68-g/README.md."
+        ],
+        "freshness": "STALE",
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
+      }
     },
     {
       "id": "G-10",
@@ -4761,9 +4796,13 @@
       "id": "G-15",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "Not measured by this batch run.",
+      "value": "Manual review PASS (STALE, fix68-g/Codex): Six physical keyboard/mouse cells: both tiers, bat/handgun/rocket. Zero click drift or moveTargets; all 24 attacks align with pointer aim. Facing returns to walking at tick 27 (0.45 s), with <0.001 degree error thereafter; baseline late error was 71.1 degrees. All 60 before/after captures viewed. Not measured by this batch run.",
       "automatedComplete": false,
-      "receipt": [],
+      "receipt": [
+        "docs/reports/fix68-g/G-15-before.json.gz",
+        "docs/reports/fix68-g/G-15-after.json.gz",
+        "docs/reports/fix68-g/G-15-summary.json"
+      ],
       "expected": "Desktop controls are **WASD + mouse** only (click-to-move removed). The heroine faces her walk direction and turns to the cursor only during click/hold + 0.45 s; melee/shot/rocket go toward the click point.",
       "checks": [],
       "historical": {
@@ -4774,7 +4813,44 @@
         "evidence": [],
         "method": "NEXT: Use tools/playtest/session.ts physical WASD/mouse traces and moving/aiming frame bursts; exercise independent move/aim, melee, firearm and rocket direction, plus a ground click without movement keys."
       },
-      "remaining": "NEXT: Use tools/playtest/session.ts physical WASD/mouse traces and moving/aiming frame bursts; exercise independent move/aim, melee, firearm and rocket direction, plus a ground click without movement keys."
+      "remaining": "NEXT: Use tools/playtest/session.ts physical WASD/mouse traces and moving/aiming frame bursts; exercise independent move/aim, melee, firearm and rocket direction, plus a ground click without movement keys.",
+      "reviewDecision": {
+        "row": "G-15",
+        "status": "PASS",
+        "reviewer": "fix68-g/Codex",
+        "date": "2026-11-06",
+        "commit": "d6167897fdd39772a96a7a2dbfb69ea4c5cee5db",
+        "clauses": [
+          {
+            "clause": "Desktop controls are **WASD + mouse** only (click-to-move removed). The heroine faces her walk direction and turns to the cursor only during click/hold + 0.45 s; melee/shot/rocket go toward the click point.",
+            "verdict": "PASS",
+            "note": "Six physical keyboard/mouse cells: both tiers, bat/handgun/rocket. Zero click drift or moveTargets; all 24 attacks align with pointer aim. Facing returns to walking at tick 27 (0.45 s), with <0.001 degree error thereafter; baseline late error was 71.1 degrees. All 60 before/after captures viewed."
+          }
+        ],
+        "evidence": [
+          {
+            "file": "docs/reports/fix68-g/G-15-before.json.gz",
+            "sha256": "306f8a17ef42675a5723788867fd18961fb8571b4e6b671050d316abaed33584",
+            "what": "Physical input trace, exact attack directions, per-tick sim/render headings and hashed reviewed captures."
+          },
+          {
+            "file": "docs/reports/fix68-g/G-15-after.json.gz",
+            "sha256": "36fe7e4b00e7a4a55a6ca1746e67b7b1237ffc9ae9d183107954498bcdb8c101",
+            "what": "Physical input trace, exact attack directions, per-tick sim/render headings and hashed reviewed captures."
+          },
+          {
+            "file": "docs/reports/fix68-g/G-15-summary.json",
+            "sha256": "32a5511ae0d40bc15dddf5e445bed32d192f8a84fe733aad62f00854786f34ef",
+            "what": "Physical input trace, exact attack directions, per-tick sim/render headings and hashed reviewed captures."
+          }
+        ],
+        "notes": [
+          "Reviewed against final gameplay commit 49d44dc: later changes outside the stated fixture scope do not expand its coverage. Reviewed final gameplay commit d485990; evidence retains original provenance and stated scope. Continuation review: d616789 changes only announced L3 admission retirement after d10848b L6 quota priority. Historical proofs retain their original identities and immutable archived receipts. Scoped clauses only; full release acceptance is pending.",
+          "Final load-qualified standalone threat: exit1,12 L7 pace flags; L3/L6 threat flags cleared. Full global-row qualification remains open. See docs/reports/fix68-g/README.md."
+        ],
+        "freshness": "STALE",
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
+      }
     },
     {
       "id": "G-16",
@@ -4933,9 +5009,15 @@
       "id": "G-18",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "Not measured by this batch run.",
+      "value": "Manual review PASS (STALE, fix68-g/Codex): All eight former counterexamples now select the escort and begin real attacks within 120 ticks. Ordinary rush and companion controls retained. Not measured by this batch run.",
       "automatedComplete": false,
-      "receipt": [],
+      "receipt": [
+        "docs/reports/fix68-g/G-18-before.json.gz",
+        "docs/reports/fix68-g/G-18-after.json.gz",
+        "docs/reports/fix68-g/G-18-all-focus.json.gz",
+        "docs/reports/fix68-g/G-18-contact.json.gz",
+        "docs/reports/fix68-g/G-18-expanded-summary.json"
+      ],
       "expected": "Scripted infected keep normal perception: within aggro range they engage the player, companions and survivors, in every level. PO: \"even when they walk somewhere, they should still act like Zombies\".",
       "checks": [],
       "historical": {
@@ -4946,7 +5028,54 @@
         "evidence": [],
         "method": "NEXT: Extend the existing contact probes in tests/engine/l4-contact.test.ts and native threat routes across all scripted archetypes/levels; assert real attack windups on player, followers and companion perception targets."
       },
-      "remaining": "NEXT: Extend the existing contact probes in tests/engine/l4-contact.test.ts and native threat routes across all scripted archetypes/levels; assert real attack windups on player, followers and companion perception targets."
+      "remaining": "NEXT: Extend the existing contact probes in tests/engine/l4-contact.test.ts and native threat routes across all scripted archetypes/levels; assert real attack windups on player, followers and companion perception targets.",
+      "reviewDecision": {
+        "row": "G-18",
+        "status": "PASS",
+        "reviewer": "fix68-g/Codex",
+        "date": "2026-11-06",
+        "commit": "d6167897fdd39772a96a7a2dbfb69ea4c5cee5db",
+        "clauses": [
+          {
+            "clause": "Finite courier focus must permit nearby escort attacks in L3/L4/L6/L8 at both tiers",
+            "verdict": "PASS",
+            "note": "All eight former counterexamples now select the escort and begin real attacks within 120 ticks. Ordinary rush and companion controls retained."
+          }
+        ],
+        "evidence": [
+          {
+            "file": "docs/reports/fix68-g/G-18-before.json.gz",
+            "sha256": "3ea2fc31e6d1942ebb27a74ec939ba4e42901a5f75732e1571f531f9cfe83838",
+            "what": "300 controlled production-world perception cells; before reproduces eight named failures, after repairs all eight. No raster captures in this simulation probe."
+          },
+          {
+            "file": "docs/reports/fix68-g/G-18-after.json.gz",
+            "sha256": "b5d280ae7ced88d62a1569e08d952ce4df6fc1d3732110d5e2770b7b0472e287",
+            "what": "300 controlled production-world perception cells; before reproduces eight named failures, after repairs all eight. No raster captures in this simulation probe."
+          },
+          {
+            "file": "docs/reports/fix68-g/G-18-all-focus.json.gz",
+            "sha256": "c47d61a1d21244e813da3d75e2d01e8f70190b7469e539e3763a60f856aa9d39",
+            "what": "Expanded focus-complete and direct-contact probes retain synthetic no-contact and utility-role exclusions; all eight named failures repaired. Existing all-six-L4-archetype regression passes."
+          },
+          {
+            "file": "docs/reports/fix68-g/G-18-contact.json.gz",
+            "sha256": "04af51585e3d10d03c6e32dd99809ccd6c22e611cb2c189fec2d2b14746d85bb",
+            "what": "Expanded focus-complete and direct-contact probes retain synthetic no-contact and utility-role exclusions; all eight named failures repaired. Existing all-six-L4-archetype regression passes."
+          },
+          {
+            "file": "docs/reports/fix68-g/G-18-expanded-summary.json",
+            "sha256": "f9e5699de72cbfd4e8975562aa844919d02568bab8ba8d7256c823ef61fed334",
+            "what": "Expanded focus-complete and direct-contact probes retain synthetic no-contact and utility-role exclusions; all eight named failures repaired. Existing all-six-L4-archetype regression passes."
+          }
+        ],
+        "notes": [
+          "Requested defect fixed; complete scripted-role and naturally played route qualification remains separate. L9/L10 generic finite-focus fixtures still do not contact in 120 ticks and are not presented as passing. Reviewed final gameplay commit d485990; evidence retains original provenance and stated scope. Continuation review: d616789 changes only announced L3 admission retirement after d10848b L6 quota priority. Historical proofs retain their original identities and immutable archived receipts. Scoped clauses only; full release acceptance is pending.",
+          "Final load-qualified standalone threat: exit1,12 L7 pace flags; L3/L6 threat flags cleared. Full global-row qualification remains open. See docs/reports/fix68-g/README.md."
+        ],
+        "freshness": "STALE",
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
+      }
     },
     {
       "id": "G-19",
@@ -5053,13 +5182,15 @@
       "id": "G-20",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/complete engaged run-out duration and invulnerability: null (target 300 ticks ±1; invulnerability through deadline; NOT CHECKED); low/stationary engaged run-out duration and invulnerability: null (target 300 ticks ±1; invulnerability through deadline; NOT CHECKED); high/complete engaged run-out duration and invulnerability: null (target 300 ticks ±1; invulnerability through deadline; NOT CHECKED); high/stationary engaged run-out duration and invulnerability: null (target 300 ticks ±1; invulnerability through deadline; NOT CHECKED)",
+      "value": "low/complete engaged run-out duration and invulnerability: null (target 300 ticks ±1; invulnerability through deadline; NOT CHECKED); low/stationary engaged run-out duration and invulnerability: null (target 300 ticks ±1; invulnerability through deadline; NOT CHECKED); high/complete engaged run-out duration and invulnerability: null (target 300 ticks ±1; invulnerability through deadline; NOT CHECKED); high/stationary engaged run-out duration and invulnerability: null (target 300 ticks ±1; invulnerability through deadline; NOT CHECKED) Manual review PASS (STALE, fix68-g/Codex): All four former L7/L9 failures pass. All 18 valid real-world final-predicate fixtures pass at both tiers. L5 remains a concurrency-cap setup rejection at both tiers.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L7-low-complete.json",
         "docs/reports/fix51-verify/receipts/L7-low-stationary.json",
         "docs/reports/fix51-verify/receipts/L7-high-complete.json",
-        "docs/reports/fix51-verify/receipts/L7-high-stationary.json"
+        "docs/reports/fix51-verify/receipts/L7-high-stationary.json",
+        "docs/reports/fix68-g/G-20-before.json",
+        "docs/reports/fix68-g/G-20-after.json"
       ],
       "expected": "Level-end run-out: if action is ongoing at the final objective, the world runs 5 s more (player invulnerable) before the transition.",
       "checks": [
@@ -5116,17 +5247,51 @@
         "evidence": [],
         "method": "NEXT: Use tools/playtest/session.ts and a read-only final-objective/transition tick ledger on every level; verify five live invulnerable seconds when action continues."
       },
-      "remaining": "Trigger final-objective completion during ongoing action in every level; qualify five-second invulnerable run-out on each edge."
+      "remaining": "Trigger final-objective completion during ongoing action in every level; qualify five-second invulnerable run-out on each edge.",
+      "reviewDecision": {
+        "row": "G-20",
+        "status": "PASS",
+        "reviewer": "fix68-g/Codex",
+        "date": "2026-11-06",
+        "commit": "d6167897fdd39772a96a7a2dbfb69ea4c5cee5db",
+        "clauses": [
+          {
+            "clause": "L7/L9 give 300 ticks of invulnerable run-out during nearby action",
+            "verdict": "PASS",
+            "note": "All four former L7/L9 failures pass. All 18 valid real-world final-predicate fixtures pass at both tiers. L5 remains a concurrency-cap setup rejection at both tiers."
+          }
+        ],
+        "evidence": [
+          {
+            "file": "docs/reports/fix68-g/G-20-before.json",
+            "sha256": "16dd2d514556bca6383ae42c8bbf351bca36827628921d05179e4cfd1c635eb4",
+            "what": "Actual Mission.finish with live chase within 2m; exact 300-tick delay and invulnerability measured. Before isolates L7/L9 exceptions, after passes 18 valid fixtures; two L5 setup errors retained."
+          },
+          {
+            "file": "docs/reports/fix68-g/G-20-after.json",
+            "sha256": "0cf1c79344ece4abe0100ffc2ddcb088a8eda69f9f6ce3fe838796dd66178287",
+            "what": "Actual Mission.finish with live chase within 2m; exact 300-tick delay and invulnerability measured. Before isolates L7/L9 exceptions, after passes 18 valid fixtures; two L5 setup errors retained."
+          }
+        ],
+        "notes": [
+          "Natural terminal route confirmation still pending; predicate fixtures do not prove every cinematic/vehicle sequence. Reviewed final gameplay commit d485990; evidence retains original provenance and stated scope. Continuation review: d616789 changes only announced L3 admission retirement after d10848b L6 quota priority. Historical proofs retain their original identities and immutable archived receipts. Scoped clauses only; full release acceptance is pending.",
+          "Final load-qualified standalone threat: exit1,12 L7 pace flags; L3/L6 threat flags cleared. Full global-row qualification remains open. See docs/reports/fix68-g/README.md."
+        ],
+        "freshness": "STALE",
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
+      }
     },
     {
       "id": "G-21",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/checkpoint-death-fixture mortal checkpoint restore at L7/night-exit: {\"checkpoint\":\"night-exit\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"d428f49214c3b53e510327fcd262167c20227fa5bed134c40c4aec1ad2dd4013\",\"damage\":100,\"expected\":{\"id\":\"night-exit\",\"anchor\":{\"x\":273,\"y\":4.6049999999999995,\"z\":15,\"yaw\":0.3205919885488634},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.bat\",\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.handgun\",\"weapon.army-mg\",\"weapon.shotgun\"]},\"followe… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L7/rocket: {\"checkpoint\":\"rocket\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"496dbfe6b41e09f51b349fe189c33be18460159266546c060d5677df72208f53\",\"damage\":100,\"expected\":{\"id\":\"rocket\",\"anchor\":{\"x\":273.8050842285156,\"y\":4.619999885559082,\"z\":15,\"yaw\":-1.93955913418426},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.bat\",\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.handgun\",\"weapon.army-mg\",\"weapon.shotgun\",\"weapo… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L7/corridor: {\"checkpoint\":\"corridor\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"67052a9be365c4b77166049e48d00b1a929c967307586d1a78009bd6eaee072a\",\"damage\":100,\"expected\":{\"id\":\"corridor\",\"anchor\":{\"x\":-24.59774398803711,\"y\":0.7099999785423279,\"z\":47.50360107421875,\"yaw\":-3.0625632641309886},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.bat\",\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.handgun\",\"weapon.army-mg\",… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L7/night-exit: {\"checkpoint\":\"night-exit\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"e63f91c1fce7b11b1920787a0b592e510a350890de6c1cce4c1e9eb8a7c2458f\",\"damage\":100,\"expected\":{\"id\":\"night-exit\",\"anchor\":{\"x\":273,\"y\":4.6049999999999995,\"z\":15,\"yaw\":0.3205919885488634},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.bat\",\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.handgun\",\"weapon.army-mg\",\"weapon.shotgun\"]},\"followe… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L7/rocket: {\"checkpoint\":\"rocket\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"452287b096fd279c425a419a1d68e1e6704890566b83877e3053d2cbef655fc5\",\"damage\":100,\"expected\":{\"id\":\"rocket\",\"anchor\":{\"x\":273.8050842285156,\"y\":4.619999885559082,\"z\":15,\"yaw\":-1.9394476598533013},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.bat\",\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.handgun\",\"weapon.army-mg\",\"weapon.shotgun\",\"wea… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L7/corridor: {\"checkpoint\":\"corridor\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"851f2bad5596a0eacb9f450a7ad7c8195dd493dd61836e8e37f978b67c90beda\",\"damage\":100,\"expected\":{\"id\":\"corridor\",\"anchor\":{\"x\":-24.596355438232422,\"y\":0.7099999785423279,\"z\":47.503623962402344,\"yaw\":-3.2345253317707976},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.bat\",\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.handgun\",\"weapon.army-mg… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS)",
+      "value": "low/checkpoint-death-fixture mortal checkpoint restore at L7/night-exit: {\"checkpoint\":\"night-exit\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"d428f49214c3b53e510327fcd262167c20227fa5bed134c40c4aec1ad2dd4013\",\"damage\":100,\"expected\":{\"id\":\"night-exit\",\"anchor\":{\"x\":273,\"y\":4.6049999999999995,\"z\":15,\"yaw\":0.3205919885488634},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.bat\",\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.handgun\",\"weapon.army-mg\",\"weapon.shotgun\"]},\"followe… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L7/rocket: {\"checkpoint\":\"rocket\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"496dbfe6b41e09f51b349fe189c33be18460159266546c060d5677df72208f53\",\"damage\":100,\"expected\":{\"id\":\"rocket\",\"anchor\":{\"x\":273.8050842285156,\"y\":4.619999885559082,\"z\":15,\"yaw\":-1.93955913418426},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.bat\",\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.handgun\",\"weapon.army-mg\",\"weapon.shotgun\",\"weapo… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L7/corridor: {\"checkpoint\":\"corridor\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"67052a9be365c4b77166049e48d00b1a929c967307586d1a78009bd6eaee072a\",\"damage\":100,\"expected\":{\"id\":\"corridor\",\"anchor\":{\"x\":-24.59774398803711,\"y\":0.7099999785423279,\"z\":47.50360107421875,\"yaw\":-3.0625632641309886},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.bat\",\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.handgun\",\"weapon.army-mg\",… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L7/night-exit: {\"checkpoint\":\"night-exit\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"e63f91c1fce7b11b1920787a0b592e510a350890de6c1cce4c1e9eb8a7c2458f\",\"damage\":100,\"expected\":{\"id\":\"night-exit\",\"anchor\":{\"x\":273,\"y\":4.6049999999999995,\"z\":15,\"yaw\":0.3205919885488634},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.bat\",\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.handgun\",\"weapon.army-mg\",\"weapon.shotgun\"]},\"followe… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L7/rocket: {\"checkpoint\":\"rocket\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"452287b096fd279c425a419a1d68e1e6704890566b83877e3053d2cbef655fc5\",\"damage\":100,\"expected\":{\"id\":\"rocket\",\"anchor\":{\"x\":273.8050842285156,\"y\":4.619999885559082,\"z\":15,\"yaw\":-1.9394476598533013},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.bat\",\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.handgun\",\"weapon.army-mg\",\"weapon.shotgun\",\"wea… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L7/corridor: {\"checkpoint\":\"corridor\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"851f2bad5596a0eacb9f450a7ad7c8195dd493dd61836e8e37f978b67c90beda\",\"damage\":100,\"expected\":{\"id\":\"corridor\",\"anchor\":{\"x\":-24.596355438232422,\"y\":0.7099999785423279,\"z\":47.503623962402344,\"yaw\":-3.2345253317707976},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.bat\",\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.handgun\",\"weapon.army-mg… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS) Manual review PASS (STALE, fix68-g/Codex): Four fresh mortal L1 respawns: accident/bat at low/high. Checkpoint ID and position restore exactly; changed live gates and removed pickup persist. Prior literal-snapshot conflict is closed.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L7-low-checkpoints.json",
-        "docs/reports/fix51-verify/receipts/L7-high-checkpoints.json"
+        "docs/reports/fix51-verify/receipts/L7-high-checkpoints.json",
+        "docs/reports/fix68-g/G-21-live-world.json.gz",
+        "docs/reports/fix68-g/G-21-closure.json"
       ],
       "expected": "Death respawns at the last checkpoint with its snapshot (followers, pickups, gates); never at level start when a later checkpoint exists. Orchestrator 2026-11-06: per the E19 PO decision 10-07 (live world preserved), the courier position, followers and checkpoint objective restore from the snapshot, while world changes made after the checkpoint (opened gates, taken pickups) persist.",
       "checks": [
@@ -5715,15 +5880,63 @@
         "evidence": [],
         "method": "NEXT: Run mortal checkpoint death/retry exercises for every later checkpoint using tools/playtest/session.ts; compare follower/pickup/gate snapshots, inventory and restored location before/after death."
       },
-      "remaining": "Finish the unmeasured clauses of the source criterion; current measured clauses have no fresh FAIL. Required: Death respawns at the last checkpoint with its snapshot (followers, pickups, gates); never at level start when a later checkpoint exists. Orchestrator 2026-11-06: per the E19 PO decision 10-07 (live world preserved), the courier position, followers and checkpoint objective restore from the snapshot, while world changes made after the checkpoint (opened gates, taken pickups) persist."
+      "remaining": "Finish the unmeasured clauses of the source criterion; current measured clauses have no fresh FAIL. Required: Death respawns at the last checkpoint with its snapshot (followers, pickups, gates); never at level start when a later checkpoint exists. Orchestrator 2026-11-06: per the E19 PO decision 10-07 (live world preserved), the courier position, followers and checkpoint objective restore from the snapshot, while world changes made after the checkpoint (opened gates, taken pickups) persist.",
+      "reviewDecision": {
+        "row": "G-21",
+        "status": "PASS",
+        "reviewer": "fix68-g/Codex",
+        "date": "2026-11-06",
+        "commit": "d6167897fdd39772a96a7a2dbfb69ea4c5cee5db",
+        "clauses": [
+          {
+            "clause": "Per the E19 PO live-world decision, changes made after the checkpoint (opened gates, taken pickups) persist after death.",
+            "verdict": "PASS",
+            "note": "Four fresh mortal L1 respawns: accident/bat at low/high. Checkpoint ID and position restore exactly; changed live gates and removed pickup persist. Prior literal-snapshot conflict is closed."
+          }
+        ],
+        "evidence": [
+          {
+            "file": "docs/reports/fix68-g/G-21-live-world.json.gz",
+            "sha256": "6698c62c04dd1644bd8adfb20d37e2bc9cb3a766ca7c029cab4a0c5c5a1fecdd",
+            "what": "Naturally captured checkpoint, dirty live gates/pickup, actual death damage and respawn pose/state; no rewind expectation substituted for observed state."
+          },
+          {
+            "file": "docs/reports/fix68-g/G-21-closure.json",
+            "sha256": "9c78d2ee1aef36e1683ca5b59013f9050bbad48d603d6310662cca335d0bd552",
+            "what": "Naturally captured checkpoint, dirty live gates/pickup, actual death damage and respawn pose/state; no rewind expectation substituted for observed state."
+          }
+        ],
+        "notes": [
+          "Scoped contract review. This fixture has no human follower roster and cannot certify follower restoration across all levels. Reviewed final gameplay commit d485990; evidence retains original provenance and stated scope. Continuation review: d616789 changes only announced L3 admission retirement after d10848b L6 quota priority. Historical proofs retain their original identities and immutable archived receipts. Scoped clauses only; full release acceptance is pending.",
+          "Final load-qualified standalone threat: exit1,12 L7 pace flags; L3/L6 threat flags cleared. Full global-row qualification remains open. See docs/reports/fix68-g/README.md."
+        ],
+        "freshness": "STALE",
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
+      }
     },
     {
       "id": "G-22",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "Not measured by this batch run.",
+      "value": "Manual review PASS (STALE, fix68-g/Codex): All12 final-source checks pass. Low complete2.950/3.633/7.433s; low stationary2.950/2.967/4.467s; high complete2.417/0.167/14.467s; high stationary2.417/15.133/7.333s.; At ages1s and2s each cohort has at least4 bounded2.5x paths. Four canonical-policy prefixes match unobserved controls; stationary prefixes also match canonical acceptance state hashes. Two alternate passive diagnostics retained separately.; 43 shortened assignments before, zero after; both audit traces equal their unobserved controls. No duration/count/cap reduction. Not measured by this batch run.",
       "automatedComplete": false,
-      "receipt": [],
+      "receipt": [
+        "docs/reports/fix68-g/G-22-fix.json",
+        "docs/reports/fix68-g/G-22-final-tiered/G-22-L3-native.json",
+        "docs/reports/fix68-g/G-22-clean-preview.json",
+        "docs/reports/fix68-g/G-22-captures.json",
+        "docs/reports/fix68-g/G-22-trials.json",
+        "docs/reports/fix68-g/G-22-final-source.json",
+        "docs/reports/fix68-g/G-22-final-paths.json",
+        "docs/reports/fix68-g/G-22-closeout-captures.json",
+        "docs/reports/fix68-g/G-22-closeout-bundle.json",
+        "docs/reports/fix68-g/G-22-deadline-fix.json",
+        "docs/reports/fix68-g/L3-02-admission-discrepancy.json",
+        "docs/reports/fix68-g/threat-final/manifest.json",
+        "docs/reports/fix68-g/L3-02-retirement-finding.json",
+        "docs/reports/fix68-g/L3-retirement-fix.json",
+        "docs/reports/fix68-g/L6-breach-priority-fix.json"
+      ],
       "expected": "Every phase announced as a threat (\"Stop the infected\", \"Hold\", \"Cover the retreat\", breach/alarm captions) starts with several infected that can reach the player; first attack ≤ 20 s after the announcement (tune).",
       "checks": [],
       "historical": {
@@ -5734,7 +5947,114 @@
         "evidence": [],
         "method": "NEXT: Run npm run qa:threat at low and high; retain each actual announced-cohort ledger, first player attack and reachable count, including a deliberately broken fixture proof."
       },
-      "remaining": "Finish the unmeasured clauses of the source criterion; current measured clauses have no fresh FAIL. Required: Every phase announced as a threat (\"Stop the infected\", \"Hold\", \"Cover the retreat\", breach/alarm captions) starts with several infected that can reach the player; first attack ≤ 20 s after the announcement (tune)."
+      "remaining": "Finish the unmeasured clauses of the source criterion; current measured clauses have no fresh FAIL. Required: Every phase announced as a threat (\"Stop the infected\", \"Hold\", \"Cover the retreat\", breach/alarm captions) starts with several infected that can reach the player; first attack ≤ 20 s after the announcement (tune).",
+      "reviewDecision": {
+        "row": "G-22",
+        "status": "PASS",
+        "reviewer": "fix68-g/Codex",
+        "date": "2026-11-06",
+        "commit": "d6167897fdd39772a96a7a2dbfb69ea4c5cee5db",
+        "clauses": [
+          {
+            "clause": "L3 station-0/1/2 announced cohorts: >=3 admitted members and actual player attack within20s, both qualities and complete/stationary policies.",
+            "verdict": "PASS",
+            "note": "All12 final-source checks pass. Low complete2.950/3.633/7.433s; low stationary2.950/2.967/4.467s; high complete2.417/0.167/14.467s; high stationary2.417/15.133/7.333s."
+          },
+          {
+            "clause": "Every L3 cohort has several independently reachable living members at its start, both canonical native policies and qualities.",
+            "verdict": "PASS",
+            "note": "At ages1s and2s each cohort has at least4 bounded2.5x paths. Four canonical-policy prefixes match unobserved controls; stationary prefixes also match canonical acceptance state hashes. Two alternate passive diagnostics retained separately."
+          },
+          {
+            "clause": "Finite L3 cohort goal refresh preserves already-active arrival deadlines.",
+            "verdict": "PASS",
+            "note": "43 shortened assignments before, zero after; both audit traces equal their unobserved controls. No duration/count/cap reduction."
+          }
+        ],
+        "evidence": [
+          {
+            "file": "docs/reports/fix68-g/G-22-fix.json",
+            "sha256": "e60d86ee7951ceb5c03d8e86589e817e3064f2ac19a46e47cab88ed7804d6216",
+            "what": "L3 cohort clocks, actual player windups, original provenance, control equality or personally reviewed capture observations; rejected variants explicitly labelled."
+          },
+          {
+            "file": "docs/reports/fix68-g/G-22-final-tiered/G-22-L3-native.json",
+            "sha256": "4192647622326d167a88f6c7c02671a64f118a05615ddb9d5940325fdcd6c441",
+            "what": "L3 cohort clocks, actual player windups, original provenance, control equality or personally reviewed capture observations; rejected variants explicitly labelled."
+          },
+          {
+            "file": "docs/reports/fix68-g/G-22-clean-preview.json",
+            "sha256": "b906c1cd6553451b50d113666d29993d54dfbcb70359a06315aefe20e333827a",
+            "what": "L3 cohort clocks, actual player windups, original provenance, control equality or personally reviewed capture observations; rejected variants explicitly labelled."
+          },
+          {
+            "file": "docs/reports/fix68-g/G-22-captures.json",
+            "sha256": "2e72341e454c6fc95c5c53a4ae645d8987cd5bc045681ff88661a6701d05069d",
+            "what": "L3 cohort clocks, actual player windups, original provenance, control equality or personally reviewed capture observations; rejected variants explicitly labelled."
+          },
+          {
+            "file": "docs/reports/fix68-g/G-22-trials.json",
+            "sha256": "8de2efdd2752d212f115e5e6e7e39dd94fd4a5ee1874ec88a14746c055c55288",
+            "what": "L3 cohort clocks, actual player windups, original provenance, control equality or personally reviewed capture observations; rejected variants explicitly labelled."
+          },
+          {
+            "file": "docs/reports/fix68-g/G-22-final-source.json",
+            "sha256": "acae0dc2fe41309ae856897e6d22073535c4b6134569a1a60cd876f3eabdccd8",
+            "what": "Final-source timing, bounded paths/control equality, inspected survival-protected visual captures, deadline preservation or retained admission discrepancy."
+          },
+          {
+            "file": "docs/reports/fix68-g/G-22-final-paths.json",
+            "sha256": "b24c0db358e4ae252a6bb348152ccd7064a8a31bbf75e6a4ae50f8903722f411",
+            "what": "Final-source timing, bounded paths/control equality, inspected survival-protected visual captures, deadline preservation or retained admission discrepancy."
+          },
+          {
+            "file": "docs/reports/fix68-g/G-22-closeout-captures.json",
+            "sha256": "e8d820bb7596eb93a3e27986e83a07cbbde11a38c1f61c42c629311fa9459f3f",
+            "what": "Final-source timing, bounded paths/control equality, inspected survival-protected visual captures, deadline preservation or retained admission discrepancy."
+          },
+          {
+            "file": "docs/reports/fix68-g/G-22-closeout-bundle.json",
+            "sha256": "52690ec67c4cb9b92a0a7be7c41e7a504946fd117a331f8a1c461dbff634ed96",
+            "what": "Final-source timing, bounded paths/control equality, inspected survival-protected visual captures, deadline preservation or retained admission discrepancy."
+          },
+          {
+            "file": "docs/reports/fix68-g/G-22-deadline-fix.json",
+            "sha256": "8fbc0f82f63327a64a14092870b79a37f247248507f0923bb5fb61566a94e237",
+            "what": "Final-source timing, bounded paths/control equality, inspected survival-protected visual captures, deadline preservation or retained admission discrepancy."
+          },
+          {
+            "file": "docs/reports/fix68-g/L3-02-admission-discrepancy.json",
+            "sha256": "a07fef26a4adc545a28b549b68a666e334064a3e1198b031af6ec26b0edfa0a0",
+            "what": "Final-source timing, bounded paths/control equality, inspected survival-protected visual captures, deadline preservation or retained admission discrepancy."
+          },
+          {
+            "file": "docs/reports/fix68-g/threat-final/manifest.json",
+            "sha256": "ea41ae0f54ab603666cc879342e4759ea57478f73a621206f51b41733f237a1f",
+            "what": "Final standalone gate FAIL with14 flags; scoped counterexample PASS does not close the all-level criterion or waive the gate."
+          },
+          {
+            "file": "docs/reports/fix68-g/L3-02-retirement-finding.json",
+            "sha256": "75aa82b46ccec9e0018eedbb954b90134c1cf05e3ced328976edf7464df65029",
+            "what": "Read-only trace proves same-tick retirement of two living announced actors; proposed repair remains unapplied."
+          },
+          {
+            "file": "docs/reports/fix68-g/L3-retirement-fix.json",
+            "sha256": "9b0fccf318f18387be5826d76cc0a9091d421a62e50684ea3ae0cfcec64ec20f",
+            "what": "Frozen main-source L3 both-tier acceptance, unchanged complete-route final world states, army-line and attack-clock checks; low admission lifecycle fixed while high stationary pending quota remains FAIL."
+          },
+          {
+            "file": "docs/reports/fix68-g/L6-breach-priority-fix.json",
+            "sha256": "4d5e5dd53dd170441a826945395a7f7d36526f2211726d8d31e00a8a551d8c83",
+            "what": "Real passive breach quota before/after, exact unobserved control matches; all10 members admitted with unchanged cap and9.733s first attack. Full both-tier targeted receipts archived separately."
+          }
+        ],
+        "notes": [
+          "Scoped L3 counterexample correction. Every-level announcement inventory remains unqualified. Historical proofs retain original source identities; current supplements describe final game source. Reviewed final gameplay commit d485990; evidence retains original provenance and stated scope. Final standalone threat gate FAIL:14 flags (L3 cohort count, L6 breach-2 membership, L7 passive follower pace). No release or whole-row approval. Continuation review: d616789 changes only announced L3 admission retirement after d10848b L6 quota priority. Historical proofs retain their original identities and immutable archived receipts. Scoped clauses only; full release acceptance is pending.",
+          "Final load-qualified standalone threat: exit1,12 L7 pace flags; L3/L6 threat flags cleared. Full global-row qualification remains open. See docs/reports/fix68-g/README.md."
+        ],
+        "freshness": "STALE",
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
+      }
     },
     {
       "id": "G-23",
@@ -6170,7 +6490,7 @@
       "id": "L7-01",
       "status": "FAIL",
       "currentStatus": "FAIL",
-      "value": "low/physical-pickup physical launcher approach pickup and first rocket frame gate: {\"valid\":false,\"mechanics\":true,\"distance\":3,\"windows\":[{\"event\":\"pickup.collected\",\"tick\":14,\"samples\":20,\"valid\":true,\"maxMs\":49.899999999999636},{\"event\":\"combat.attack\",\"tick\":26,\"samples\":22,\"valid\":true,\"maxMs\":16.800000000000182}],\"frameGate\":true} (target Exit≤5m, moving auto-pickup without E, first physical rocket; each event frame≤50ms in an unpaused quiet context.; FAIL); high/physical-pickup physical launcher approach pickup and first rocket frame gate: {\"valid\":false,\"mechanics\":true,\"distance\":3,\"windows\":[{\"event\":\"pickup.collected\",\"tick\":14,\"samples\":19,\"valid\":true,\"maxMs\":50},{\"event\":\"combat.attack\",\"tick\":26,\"samples\":22,\"valid\":true,\"maxMs\":16.800000000000182}],\"frameGate\":true} (target Exit≤5m, moving auto-pickup without E, first physical rocket; each event frame≤50ms in an unpaused quiet context.; FAIL) Manual review PASS (STALE, Codex fix72-c): Fresh unchanged quiet gate PASS after restoring carried quality before asset/pipeline warm-up. Low pickup49.9ms/first-shot16.8ms; high50.0/16.8ms, each≤50ms without quantization tolerance. Exit distance3m, moving auto-pickup without E, first physical Digit7/ShiftLMB rocket, no driver/god/actor edits/manual stepping/forced rendering before measurement. Four current two-tier/two-zoom captures personally reviewed and raw JPEGs deleted. All22 timing/mechanical/provenance faults reject;50ms passes and50.01ms fails. Original and intermediate failures remain archived; no best-of repeat on unchanged source. Broad performance matrix not remeasured.",
+      "value": "low/physical-pickup physical launcher approach pickup and first rocket frame gate: {\"valid\":false,\"mechanics\":true,\"distance\":3,\"windows\":[{\"event\":\"pickup.collected\",\"tick\":14,\"samples\":20,\"valid\":true,\"maxMs\":49.899999999999636},{\"event\":\"combat.attack\",\"tick\":26,\"samples\":22,\"valid\":true,\"maxMs\":16.800000000000182}],\"frameGate\":true} (target Exit≤5m, moving auto-pickup without E, first physical rocket; each event frame≤50ms in an unpaused quiet context.; FAIL); high/physical-pickup physical launcher approach pickup and first rocket frame gate: {\"valid\":false,\"mechanics\":true,\"distance\":3,\"windows\":[{\"event\":\"pickup.collected\",\"tick\":14,\"samples\":19,\"valid\":true,\"maxMs\":50},{\"event\":\"combat.attack\",\"tick\":26,\"samples\":22,\"valid\":true,\"maxMs\":16.800000000000182}],\"frameGate\":true} (target Exit≤5m, moving auto-pickup without E, first physical rocket; each event frame≤50ms in an unpaused quiet context.; FAIL) Manual review FAIL (FRESH, Codex final-c): Fresh exclusive Metal WebGL2 frame gates FAIL at both tiers. Launcher distance3m and actual moving auto-pickup/noE pass. Low pickup50.1ms/firstrocket66.6ms; high pickup133.2ms/firstrocket66.6ms versus strict50ms. Quiet preflight load<3/no foreign busy process passed; one context, unpaused production clock, no prior manual step/forced render/photo.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L7-low-complete.json",
@@ -6180,11 +6500,11 @@
         "docs/reports/fix72-c/L7-01/low.json",
         "docs/reports/fix72-c/L7-01/review.json",
         "docs/reports/fix72-c/L7-01/high.json",
-        "docs/reports/fix72-c/L7-01/quiet-conditions.jsonl",
-        "docs/reports/fix72-c/L7-01/fault-proof.json",
-        "docs/reports/fix72-c/L7-01/quality-order-cause.json",
-        "docs/reports/fix73-g/L7-opening.json",
-        "docs/reports/fix73-g/L7-release-opening.json"
+        "docs/reports/final-c/L7-01/quiet-admission.log",
+        "docs/reports/final-c/L7-01/timing-review.json",
+        "docs/reports/final-c/L7-01/high.json",
+        "docs/reports/final-c/L7-01/producer.ts",
+        "docs/reports/final-c/L7-01/low.json"
       ],
       "expected": "Launcher ≤ 5 m from the exit, taken on approach, no hitch (max frame ≤ 50 ms at pickup and first shot).",
       "checks": [
@@ -6339,61 +6659,47 @@
       },
       "reviewDecision": {
         "row": "L7-01",
-        "status": "PASS",
-        "reviewer": "Codex fix72-c",
-        "date": "2026-11-06",
-        "commit": "66f29ff356f3a3c3aada91a304408a9cff66b887",
+        "status": "FAIL",
+        "reviewer": "Codex final-c",
+        "date": "2026-11-07",
+        "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
         "clauses": [
           {
             "clause": "Launcher ≤ 5 m from the exit, taken on approach, no hitch (max frame ≤ 50 ms at pickup and first shot).",
-            "verdict": "PASS",
-            "note": "Fresh unchanged quiet gate PASS after restoring carried quality before asset/pipeline warm-up. Low pickup49.9ms/first-shot16.8ms; high50.0/16.8ms, each≤50ms without quantization tolerance. Exit distance3m, moving auto-pickup without E, first physical Digit7/ShiftLMB rocket, no driver/god/actor edits/manual stepping/forced rendering before measurement. Four current two-tier/two-zoom captures personally reviewed and raw JPEGs deleted. All22 timing/mechanical/provenance faults reject;50ms passes and50.01ms fails. Original and intermediate failures remain archived; no best-of repeat on unchanged source. Broad performance matrix not remeasured."
+            "verdict": "FAIL",
+            "note": "Fresh exclusive Metal WebGL2 frame gates FAIL at both tiers. Launcher distance3m and actual moving auto-pickup/noE pass. Low pickup50.1ms/firstrocket66.6ms; high pickup133.2ms/firstrocket66.6ms versus strict50ms. Quiet preflight load<3/no foreign busy process passed; one context, unpaused production clock, no prior manual step/forced render/photo."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/fix72-c/L7-01/low.json",
-            "sha256": "ed4450519d2e7b02d55b3982e912eac15f030924791e58a01aee2cf9c7eff505",
-            "what": "Low uninstrumented quiet physical pickup/first-shot raw intervals, both event maxima pass."
+            "file": "docs/reports/final-c/L7-01/quiet-admission.log",
+            "sha256": "70be7657afdfddcd2856c6ca64247fff2807f38e8201042671efb8cd13257569",
+            "what": "Fresh exclusive Metal WebGL2 frame gates FAIL at both tiers. Launcher distance3m and actual moving auto-pickup/noE pass. Low pickup50.1ms/firstrocket66.6ms; high pickup133.2ms/firstrocket66.6ms versus strict50ms. Quiet preflight load<3/no foreign busy process passed; one context, unpaused production clock, no prior manual step/forced render/photo."
           },
           {
-            "file": "docs/reports/fix72-c/L7-01/high.json",
-            "sha256": "8671220577b628066ea07f29ed21c6826a2f4c40e97389e1cc42a0d583a88401",
-            "what": "High uninstrumented quiet physical pickup/first-shot raw intervals, both event maxima pass."
+            "file": "docs/reports/final-c/L7-01/timing-review.json",
+            "sha256": "66564212afd33e9423c6e445e97f0170bb66f5daeee0b1e67f9b5e137819a581",
+            "what": "Fresh exclusive Metal WebGL2 frame gates FAIL at both tiers. Launcher distance3m and actual moving auto-pickup/noE pass. Low pickup50.1ms/firstrocket66.6ms; high pickup133.2ms/firstrocket66.6ms versus strict50ms. Quiet preflight load<3/no foreign busy process passed; one context, unpaused production clock, no prior manual step/forced render/photo."
           },
           {
-            "file": "docs/reports/fix72-c/L7-01/review.json",
-            "sha256": "eda2cecc1b42077e41a0bf8c49e1e01b4c34316f57a5dd1ba50febb046c3e5ad",
-            "what": "All4 current image SHA-256 and personal observations; raw captures deleted."
+            "file": "docs/reports/final-c/L7-01/high.json",
+            "sha256": "0ada0e11cea10c306d5b0e36500f0b439cd7793c880016db238d07d37662ba26",
+            "what": "Fresh exclusive Metal WebGL2 frame gates FAIL at both tiers. Launcher distance3m and actual moving auto-pickup/noE pass. Low pickup50.1ms/firstrocket66.6ms; high pickup133.2ms/firstrocket66.6ms versus strict50ms. Quiet preflight load<3/no foreign busy process passed; one context, unpaused production clock, no prior manual step/forced render/photo."
           },
           {
-            "file": "docs/reports/fix72-c/L7-01/quiet-conditions.jsonl",
-            "sha256": "f526790288bd8ff4d4fa0ddf44fe23801a5a545a25ef28f68abef3b26ae9c5be",
-            "what": "Exclusive shared-pool admission; host load<3 and no foreign build/browser/test processes."
+            "file": "docs/reports/final-c/L7-01/producer.ts",
+            "sha256": "ec79763d27e35bde9f7203b92c6b16dc0d79141930da115d32f020862bcad458",
+            "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
           },
           {
-            "file": "docs/reports/fix72-c/L7-01/fault-proof.json",
-            "sha256": "5b0478842f4db1d981f5f0fd84fe7e28c3a2743c53e5fe1160b9853b448112f8",
-            "what": "22 mechanical/timing/provenance faults rejected, unchanged strict50ms boundary."
-          },
-          {
-            "file": "docs/reports/fix72-c/L7-01/quality-order-cause.json",
-            "sha256": "c2f5c9c313ab73c717bec275547752e70b18f0e81c800e1ac24d0d0c628b1fb6",
-            "what": "Same material/geometry/context warmed with sun visible then rebuilt without it; carried quality applied too late. Rejected render experiments retained, final game change only restores quality before loading."
-          },
-          {
-            "file": "docs/reports/fix73-g/L7-opening.json",
-            "sha256": "8e36c8ec37ad1ea4b72686f1d25b1255e3faf6e52c7763b4b5ee8c73fc4273d8",
-            "what": "Mortal physical continue: pickup at tick 133 high and 85 low, 100 HP and 24 followers. This checks opening access only; no performance measurement or full compound-row requalification. Per-capture SHA256 and personal visual observations archived in this receipt."
-          },
-          {
-            "file": "docs/reports/fix73-g/L7-release-opening.json",
-            "sha256": "263dc36b35bc432abee748324b155f73028775b2827d5141aa18eba658705de0",
-            "what": "Final35d5042 mortal continue FAIL high: armedtick1125 at20HP with21living; low tick67at100HP/24followers. Eight-second opening grace does not resolve high pickup reliably. No performance qualification."
+            "file": "docs/reports/final-c/L7-01/low.json",
+            "sha256": "b1e71f04e15005912ace83e21bf349132d5681d75880e5677fdbb37a28b41034",
+            "what": "Fresh exclusive Metal WebGL2 frame gates FAIL at both tiers. Launcher distance3m and actual moving auto-pickup/noE pass. Low pickup50.1ms/firstrocket66.6ms; high pickup133.2ms/firstrocket66.6ms versus strict50ms. Quiet preflight load<3/no foreign busy process passed; one context, unpaused production clock, no prior manual step/forced render/photo."
           }
         ],
-        "notes": "Scoped fix73-g observation 2026-11-06, 11555ca: Mortal physical continue: pickup at tick 133 high and 85 low, 100 HP and 24 followers. This checks opening access only; no performance measurement or full compound-row requalification. Existing whole-row decision, clauses and source qualification retained. Final source35d5042 supersedes earlier scoped success claims: Final35d5042 mortal continue FAIL high: armedtick1125 at20HP with21living; low tick67at100HP/24followers. Eight-second opening grace does not resolve high pickup reliably. No performance qualification. Existing compound decision/clauses/source qualification remain unchanged.",
-        "freshness": "STALE",
+        "notes": "Frozen-head row review. Current immutable evidence, unchanged criterion and game source.",
+        "sourceDigest": "1aff45872f0c1603cfc94e9f01d515824d2304b5b5d9e5f96fee9cc461ad064a",
+        "freshness": "FRESH",
         "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     },
@@ -6401,13 +6707,23 @@
       "id": "L7-02",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/complete selectable story weapons after native launcher pickup: 6 (target 6 ≤ value ≤ 6; PASS); low/stationary selectable story weapons after native launcher pickup: 6 (target 6 ≤ value ≤ 6; PASS); high/complete selectable story weapons after native launcher pickup: 6 (target 6 ≤ value ≤ 6; PASS); high/stationary selectable story weapons after native launcher pickup: 6 (target 6 ≤ value ≤ 6; PASS)",
+      "value": "low/complete selectable story weapons after native launcher pickup: 6 (target 6 ≤ value ≤ 6; PASS); low/stationary selectable story weapons after native launcher pickup: 6 (target 6 ≤ value ≤ 6; PASS); high/complete selectable story weapons after native launcher pickup: 6 (target 6 ≤ value ≤ 6; PASS); high/stationary selectable story weapons after native launcher pickup: 6 (target 6 ≤ value ≤ 6; PASS) Manual review PASS (FRESH, Codex final-c): Both actual current native L5/L6 carried saves arrive in L7 with the same23 human IDs at full health. Across600 initial ticks per tier (13800 relative-motion capsule samples), minimum courier/follower surface clearance is+0.063778m, with independent controls identical. Both shared-pool headless Metal WebGL2 physical runs collect the launcher by moving approach, then actually select bat/axe/handgun/shotgun/MG/rocket with Digit2/3/4/6/5/7 and read back all6 correct selections. Eight listed before/after frames personally reviewed at both qualities and zoom0.5/1.5 show the staggered formation behind the courier. Courier protection is explicit only in the physical selection capability run; no actor/arsenal/position edits or route completion claim.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L7-low-complete.json",
         "docs/reports/fix51-verify/receipts/L7-low-stationary.json",
         "docs/reports/fix51-verify/receipts/L7-high-complete.json",
-        "docs/reports/fix51-verify/receipts/L7-high-stationary.json"
+        "docs/reports/fix51-verify/receipts/L7-high-stationary.json",
+        "docs/reports/final-c/L7-02/arrival.json",
+        "docs/reports/final-c/L7-02/producer.ts",
+        "docs/reports/final-c/L7-02/selection-producer.ts",
+        "docs/reports/final-c/L7-02/low-physical.json.gz",
+        "docs/reports/final-c/L7-02/high-physical.json.gz",
+        "docs/reports/final-c/L7-02/capture-review.json",
+        "docs/reports/final-c/campaign/L7-carried-save-provenance.json",
+        "docs/reports/final-c/campaign/L7-low-carried-save.json.gz",
+        "docs/reports/final-c/campaign/L7-high-carried-save.json.gz",
+        "docs/reports/final-c/campaign/producer.ts"
       ],
       "expected": "All six weapons selectable; L6 roster arrives with same ids at full health in formation (no convergence through the courier).",
       "checks": [
@@ -6464,15 +6780,96 @@
         "evidence": [],
         "method": "NEXT: Extend the existing L7 observer/fixture in tools/qa/threat-audit.ts or tools/playtest/session.ts to assert every timing/count/state clause below, at low/high; execute the native probe and real-input route and retain the event ledger. Required: All six weapons selectable; L6 roster arrives with same ids at full health in formation (no convergence through the courier)."
       },
-      "remaining": "NEXT: Extend the existing L7 observer/fixture in tools/qa/threat-audit.ts or tools/playtest/session.ts to assert every timing/count/state clause below, at low/high; execute the native probe and real-input route and retain the event ledger. Required: All six weapons selectable; L6 roster arrives with same ids at full health in formation (no convergence through the courier)."
+      "remaining": "NEXT: Extend the existing L7 observer/fixture in tools/qa/threat-audit.ts or tools/playtest/session.ts to assert every timing/count/state clause below, at low/high; execute the native probe and real-input route and retain the event ledger. Required: All six weapons selectable; L6 roster arrives with same ids at full health in formation (no convergence through the courier).",
+      "reviewDecision": {
+        "row": "L7-02",
+        "status": "PASS",
+        "reviewer": "Codex final-c",
+        "date": "2026-11-07",
+        "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+        "clauses": [
+          {
+            "clause": "All six weapons selectable; L6 roster arrives with same ids at full health in formation (no convergence through the courier).",
+            "verdict": "PASS",
+            "note": "Both actual current native L5/L6 carried saves arrive in L7 with the same23 human IDs at full health. Across600 initial ticks per tier (13800 relative-motion capsule samples), minimum courier/follower surface clearance is+0.063778m, with independent controls identical. Both shared-pool headless Metal WebGL2 physical runs collect the launcher by moving approach, then actually select bat/axe/handgun/shotgun/MG/rocket with Digit2/3/4/6/5/7 and read back all6 correct selections. Eight listed before/after frames personally reviewed at both qualities and zoom0.5/1.5 show the staggered formation behind the courier. Courier protection is explicit only in the physical selection capability run; no actor/arsenal/position edits or route completion claim."
+          }
+        ],
+        "evidence": [
+          {
+            "file": "docs/reports/final-c/L7-02/arrival.json",
+            "sha256": "8e9a8673e285c893a1b0320b763a5cc1667e6f2226f2d6396382b7b972f068ab",
+            "what": "Both actual current native L5/L6 carried saves arrive in L7 with the same23 human IDs at full health. Across600 initial ticks per tier (13800 relative-motion capsule samples), minimum courier/follower surface clearance is+0.063778m, with independent controls identical. Both shared-pool headless Metal WebGL2 physical runs collect the launcher by moving approach, then actually select bat/axe/handgun/shotgun/MG/rocket with Digit2/3/4/6/5/7 and read back all6 correct selections. Eight listed before/after frames personally reviewed at both qualities and zoom0.5/1.5 show the staggered formation behind the courier. Courier protection is explicit only in the physical selection capability run; no actor/arsenal/position edits or route completion claim."
+          },
+          {
+            "file": "docs/reports/final-c/L7-02/producer.ts",
+            "sha256": "4196c911239f42f42817ecccde235ae2f740ae00bb258485f63f7801d1b6d7b1",
+            "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
+          },
+          {
+            "file": "docs/reports/final-c/L7-02/selection-producer.ts",
+            "sha256": "7f386c4d3196c6edcb1427496f4aa2e88311a3501526b0b1920580181f39b4ce",
+            "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
+          },
+          {
+            "file": "docs/reports/final-c/L7-02/low-physical.json.gz",
+            "sha256": "f2380e571d82a7171fd000a3e0d249a4b84f0f7a0315be7abdf553b748d34f5e",
+            "what": "Both actual current native L5/L6 carried saves arrive in L7 with the same23 human IDs at full health. Across600 initial ticks per tier (13800 relative-motion capsule samples), minimum courier/follower surface clearance is+0.063778m, with independent controls identical. Both shared-pool headless Metal WebGL2 physical runs collect the launcher by moving approach, then actually select bat/axe/handgun/shotgun/MG/rocket with Digit2/3/4/6/5/7 and read back all6 correct selections. Eight listed before/after frames personally reviewed at both qualities and zoom0.5/1.5 show the staggered formation behind the courier. Courier protection is explicit only in the physical selection capability run; no actor/arsenal/position edits or route completion claim."
+          },
+          {
+            "file": "docs/reports/final-c/L7-02/high-physical.json.gz",
+            "sha256": "a5a6032c4e85ac77cda88f563db4df68ba551d805d6ce74d8a43cd203b65ed7d",
+            "what": "Both actual current native L5/L6 carried saves arrive in L7 with the same23 human IDs at full health. Across600 initial ticks per tier (13800 relative-motion capsule samples), minimum courier/follower surface clearance is+0.063778m, with independent controls identical. Both shared-pool headless Metal WebGL2 physical runs collect the launcher by moving approach, then actually select bat/axe/handgun/shotgun/MG/rocket with Digit2/3/4/6/5/7 and read back all6 correct selections. Eight listed before/after frames personally reviewed at both qualities and zoom0.5/1.5 show the staggered formation behind the courier. Courier protection is explicit only in the physical selection capability run; no actor/arsenal/position edits or route completion claim."
+          },
+          {
+            "file": "docs/reports/final-c/L7-02/capture-review.json",
+            "sha256": "fb1bcf73476a76a1242f901999693755385ff2c02631e5408d58193c7267f1a0",
+            "what": "Both actual current native L5/L6 carried saves arrive in L7 with the same23 human IDs at full health. Across600 initial ticks per tier (13800 relative-motion capsule samples), minimum courier/follower surface clearance is+0.063778m, with independent controls identical. Both shared-pool headless Metal WebGL2 physical runs collect the launcher by moving approach, then actually select bat/axe/handgun/shotgun/MG/rocket with Digit2/3/4/6/5/7 and read back all6 correct selections. Eight listed before/after frames personally reviewed at both qualities and zoom0.5/1.5 show the staggered formation behind the courier. Courier protection is explicit only in the physical selection capability run; no actor/arsenal/position edits or route completion claim."
+          },
+          {
+            "file": "docs/reports/final-c/campaign/L7-carried-save-provenance.json",
+            "sha256": "58c5c3ab4c818f8fae64a68f489757cd876c90bc09058f74d00bfac18839a556",
+            "what": "Both actual current native L5/L6 carried saves arrive in L7 with the same23 human IDs at full health. Across600 initial ticks per tier (13800 relative-motion capsule samples), minimum courier/follower surface clearance is+0.063778m, with independent controls identical. Both shared-pool headless Metal WebGL2 physical runs collect the launcher by moving approach, then actually select bat/axe/handgun/shotgun/MG/rocket with Digit2/3/4/6/5/7 and read back all6 correct selections. Eight listed before/after frames personally reviewed at both qualities and zoom0.5/1.5 show the staggered formation behind the courier. Courier protection is explicit only in the physical selection capability run; no actor/arsenal/position edits or route completion claim."
+          },
+          {
+            "file": "docs/reports/final-c/campaign/L7-low-carried-save.json.gz",
+            "sha256": "a4e9f1014f764c4eca7965496b05d35bdf1df562d3db7711bd4407a532fb684e",
+            "what": "Both actual current native L5/L6 carried saves arrive in L7 with the same23 human IDs at full health. Across600 initial ticks per tier (13800 relative-motion capsule samples), minimum courier/follower surface clearance is+0.063778m, with independent controls identical. Both shared-pool headless Metal WebGL2 physical runs collect the launcher by moving approach, then actually select bat/axe/handgun/shotgun/MG/rocket with Digit2/3/4/6/5/7 and read back all6 correct selections. Eight listed before/after frames personally reviewed at both qualities and zoom0.5/1.5 show the staggered formation behind the courier. Courier protection is explicit only in the physical selection capability run; no actor/arsenal/position edits or route completion claim."
+          },
+          {
+            "file": "docs/reports/final-c/campaign/L7-high-carried-save.json.gz",
+            "sha256": "8c0a2e53e5dd6a0a9574f728b4e229d9d6694ddadc8261b02b79d56d564d7a0e",
+            "what": "Both actual current native L5/L6 carried saves arrive in L7 with the same23 human IDs at full health. Across600 initial ticks per tier (13800 relative-motion capsule samples), minimum courier/follower surface clearance is+0.063778m, with independent controls identical. Both shared-pool headless Metal WebGL2 physical runs collect the launcher by moving approach, then actually select bat/axe/handgun/shotgun/MG/rocket with Digit2/3/4/6/5/7 and read back all6 correct selections. Eight listed before/after frames personally reviewed at both qualities and zoom0.5/1.5 show the staggered formation behind the courier. Courier protection is explicit only in the physical selection capability run; no actor/arsenal/position edits or route completion claim."
+          },
+          {
+            "file": "docs/reports/final-c/campaign/producer.ts",
+            "sha256": "eb99815df1c7bc78194d7049574d18212da8dd68a85e9b8cfc1604d47a99a360",
+            "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
+          }
+        ],
+        "notes": "Frozen-head row review. Current immutable evidence, unchanged criterion and game source.",
+        "sourceDigest": "1aff45872f0c1603cfc94e9f01d515824d2304b5b5d9e5f96fee9cc461ad064a",
+        "freshness": "FRESH",
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
+      }
     },
     {
       "id": "L7-03",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "Visible rockets/blast effects, blood and opened movement space; no sampled white-out.2.4/s maximum cadence, clicked-impact and20/24 within3 m require the dedicated fixtures.",
+      "value": "Manual review PASS (FRESH, Codex final-c): Both tiers:25tick shot intervals=2.4/s; second shot32 precedes firstimpact48. One real physical rocket kills24/24 ordinary60HP regulars initially within2.4m, leaving0live blockers across6m cohort diameter. Clicked12/50m ground endpoints, earlier first-body hitx5.65 and35m directional range measured independently. Personally viewed22 corrected60Hz-VFX panels: visible rocket/orange blast/blood, courier and ground retain shape at pointblank, no sampled white-out. Step-only old visual clock excluded; explicit capability fixture. Visible rockets/blast effects, blood and opened movement space; no sampled white-out.2.4/s maximum cadence, clicked-impact and20/24 within3 m require the dedicated fixtures.",
       "automatedComplete": false,
-      "receipt": [],
+      "receipt": [
+        "docs/reports/final-c/L7-03/render-clock.json",
+        "docs/reports/final-c/L7-03/ballistics.json",
+        "docs/reports/final-c/L7-03/sweep-c4-l7-ballistics-producer.ts",
+        "docs/reports/final-c/L7-03/fix55-l7-rockets-producer.ts",
+        "docs/reports/final-c/L7-03/rockets.json",
+        "docs/reports/final-c/L7-03/render-clock-producer.ts",
+        "docs/reports/final-c/L7-03/coverage.json",
+        "docs/reports/final-c/L7-03/capture-review.json",
+        "docs/reports/final-c/L7-11/low-physical.json.gz",
+        "docs/reports/final-c/L7-11/high-physical.json.gz"
+      ],
       "expected": "Rocket: cadence **2.4/s**, no wait for impact; detonates at the clicked ground point (or first hit / max range); visible in the dark; one rocket kills ≥ 20/24 regulars within 3 m and opens a ≥ 3 m gap; no white-out at point blank.",
       "checks": [],
       "historical": {
@@ -6485,19 +6882,94 @@
         ],
         "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Use actual clicked-ground rocket fixtures in tools/qa/release-ab-mouse.mjs and tools/qa/release-ab-effects.mjs; measure cadence, 20/24 kills, three-metre gap and point-blank luminance."
       },
-      "remaining": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Use actual clicked-ground rocket fixtures in tools/qa/release-ab-mouse.mjs and tools/qa/release-ab-effects.mjs; measure cadence, 20/24 kills, three-metre gap and point-blank luminance."
+      "remaining": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Use actual clicked-ground rocket fixtures in tools/qa/release-ab-mouse.mjs and tools/qa/release-ab-effects.mjs; measure cadence, 20/24 kills, three-metre gap and point-blank luminance.",
+      "reviewDecision": {
+        "row": "L7-03",
+        "status": "PASS",
+        "reviewer": "Codex final-c",
+        "date": "2026-11-07",
+        "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+        "clauses": [
+          {
+            "clause": "Rocket: cadence **2.4/s**, no wait for impact; detonates at the clicked ground point (or first hit / max range); visible in the dark; one rocket kills ≥ 20/24 regulars within 3 m and opens a ≥ 3 m gap; no white-out at point blank.",
+            "verdict": "PASS",
+            "note": "Both tiers:25tick shot intervals=2.4/s; second shot32 precedes firstimpact48. One real physical rocket kills24/24 ordinary60HP regulars initially within2.4m, leaving0live blockers across6m cohort diameter. Clicked12/50m ground endpoints, earlier first-body hitx5.65 and35m directional range measured independently. Personally viewed22 corrected60Hz-VFX panels: visible rocket/orange blast/blood, courier and ground retain shape at pointblank, no sampled white-out. Step-only old visual clock excluded; explicit capability fixture."
+          }
+        ],
+        "evidence": [
+          {
+            "file": "docs/reports/final-c/L7-03/render-clock.json",
+            "sha256": "a170105dcffca7076f1876d813886e1a978edd3fd051c67534a13b227373c484",
+            "what": "Both tiers:25tick shot intervals=2.4/s; second shot32 precedes firstimpact48. One real physical rocket kills24/24 ordinary60HP regulars initially within2.4m, leaving0live blockers across6m cohort diameter. Clicked12/50m ground endpoints, earlier first-body hitx5.65 and35m directional range measured independently. Personally viewed22 corrected60Hz-VFX panels: visible rocket/orange blast/blood, courier and ground retain shape at pointblank, no sampled white-out. Step-only old visual clock excluded; explicit capability fixture."
+          },
+          {
+            "file": "docs/reports/final-c/L7-03/ballistics.json",
+            "sha256": "a86af7a8563e3a7e59bf569d410ccfa3bb3738bb71166ac62228d472a9f83084",
+            "what": "Both tiers:25tick shot intervals=2.4/s; second shot32 precedes firstimpact48. One real physical rocket kills24/24 ordinary60HP regulars initially within2.4m, leaving0live blockers across6m cohort diameter. Clicked12/50m ground endpoints, earlier first-body hitx5.65 and35m directional range measured independently. Personally viewed22 corrected60Hz-VFX panels: visible rocket/orange blast/blood, courier and ground retain shape at pointblank, no sampled white-out. Step-only old visual clock excluded; explicit capability fixture."
+          },
+          {
+            "file": "docs/reports/final-c/L7-03/sweep-c4-l7-ballistics-producer.ts",
+            "sha256": "04c0c88be0f5802fcbda9453b892e69fa93e8571f8ee260f44e21d4e7a06f968",
+            "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
+          },
+          {
+            "file": "docs/reports/final-c/L7-03/fix55-l7-rockets-producer.ts",
+            "sha256": "1e9abf46651037aa4ee897e5b38b15f90207b992d445034dfcf779d86b3baeb3",
+            "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
+          },
+          {
+            "file": "docs/reports/final-c/L7-03/rockets.json",
+            "sha256": "83781fd46805d54d35d25d63c492f697c6519b3f6c2f1a80f0cddd43cc738b31",
+            "what": "Both tiers:25tick shot intervals=2.4/s; second shot32 precedes firstimpact48. One real physical rocket kills24/24 ordinary60HP regulars initially within2.4m, leaving0live blockers across6m cohort diameter. Clicked12/50m ground endpoints, earlier first-body hitx5.65 and35m directional range measured independently. Personally viewed22 corrected60Hz-VFX panels: visible rocket/orange blast/blood, courier and ground retain shape at pointblank, no sampled white-out. Step-only old visual clock excluded; explicit capability fixture."
+          },
+          {
+            "file": "docs/reports/final-c/L7-03/render-clock-producer.ts",
+            "sha256": "2fcb9722e4101b7b246734999f3afe6760e4d9779e2e40cd2a7ce0e8b20c01e6",
+            "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
+          },
+          {
+            "file": "docs/reports/final-c/L7-03/coverage.json",
+            "sha256": "f9e50e0cf70854fcabf71fdcd1a69f421779fff2341973f242b73777e6827145",
+            "what": "Both tiers:25tick shot intervals=2.4/s; second shot32 precedes firstimpact48. One real physical rocket kills24/24 ordinary60HP regulars initially within2.4m, leaving0live blockers across6m cohort diameter. Clicked12/50m ground endpoints, earlier first-body hitx5.65 and35m directional range measured independently. Personally viewed22 corrected60Hz-VFX panels: visible rocket/orange blast/blood, courier and ground retain shape at pointblank, no sampled white-out. Step-only old visual clock excluded; explicit capability fixture."
+          },
+          {
+            "file": "docs/reports/final-c/L7-03/capture-review.json",
+            "sha256": "7daf3de27f7c0cc6e20ba25984b34d00c839109f84e1e3e009761c123cd0e154",
+            "what": "Both tiers:25tick shot intervals=2.4/s; second shot32 precedes firstimpact48. One real physical rocket kills24/24 ordinary60HP regulars initially within2.4m, leaving0live blockers across6m cohort diameter. Clicked12/50m ground endpoints, earlier first-body hitx5.65 and35m directional range measured independently. Personally viewed22 corrected60Hz-VFX panels: visible rocket/orange blast/blood, courier and ground retain shape at pointblank, no sampled white-out. Step-only old visual clock excluded; explicit capability fixture."
+          },
+          {
+            "file": "docs/reports/final-c/L7-11/low-physical.json.gz",
+            "sha256": "72c11f659c6f521d4baa05aeeb3225cb38946efb7f5355f7c246cb7cfbe50ccc",
+            "what": "Both tiers:25tick shot intervals=2.4/s; second shot32 precedes firstimpact48. One real physical rocket kills24/24 ordinary60HP regulars initially within2.4m, leaving0live blockers across6m cohort diameter. Clicked12/50m ground endpoints, earlier first-body hitx5.65 and35m directional range measured independently. Personally viewed22 corrected60Hz-VFX panels: visible rocket/orange blast/blood, courier and ground retain shape at pointblank, no sampled white-out. Step-only old visual clock excluded; explicit capability fixture."
+          },
+          {
+            "file": "docs/reports/final-c/L7-11/high-physical.json.gz",
+            "sha256": "02803ff3b99a2ad3aae6b969efc8a5216508843f946714131c6ba255040d4f99",
+            "what": "Both tiers:25tick shot intervals=2.4/s; second shot32 precedes firstimpact48. One real physical rocket kills24/24 ordinary60HP regulars initially within2.4m, leaving0live blockers across6m cohort diameter. Clicked12/50m ground endpoints, earlier first-body hitx5.65 and35m directional range measured independently. Personally viewed22 corrected60Hz-VFX panels: visible rocket/orange blast/blood, courier and ground retain shape at pointblank, no sampled white-out. Step-only old visual clock excluded; explicit capability fixture."
+          }
+        ],
+        "notes": "Frozen-head row review. Current immutable evidence, unchanged criterion and game source.",
+        "sourceDigest": "1aff45872f0c1603cfc94e9f01d515824d2304b5b5d9e5f96fee9cc461ad064a",
+        "freshness": "FRESH",
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
+      }
     },
     {
       "id": "L7-04",
       "status": "PASS",
       "currentStatus": "PASS",
-      "value": "low/complete actual resident and later regular admissions: 200 (target 200 ≤ value ≤ Infinity; PASS); low/complete actual resident and later Alpha admissions: 5 (target 4 ≤ value ≤ 6; PASS); low/complete concurrent cap: 100 (target 0 ≤ value ≤ 100; PASS); low/stationary concurrent cap: 100 (target 0 ≤ value ≤ 100; PASS); high/complete actual resident and later regular admissions: 400 (target 400 ≤ value ≤ Infinity; PASS); high/complete actual resident and later Alpha admissions: 5 (target 4 ≤ value ≤ 6; PASS); high/complete concurrent cap: 200 (target 0 ≤ value ≤ 200; PASS); high/stationary concurrent cap: 200 (target 0 ≤ value ≤ 200; PASS)",
+      "value": "low/complete actual resident and later regular admissions: 200 (target 200 ≤ value ≤ Infinity; PASS); low/complete actual resident and later Alpha admissions: 5 (target 4 ≤ value ≤ 6; PASS); low/complete concurrent cap: 100 (target 0 ≤ value ≤ 100; PASS); low/stationary concurrent cap: 100 (target 0 ≤ value ≤ 100; PASS); high/complete actual resident and later regular admissions: 400 (target 400 ≤ value ≤ Infinity; PASS); high/complete actual resident and later Alpha admissions: 5 (target 4 ≤ value ≤ 6; PASS); high/complete concurrent cap: 200 (target 0 ≤ value ≤ 200; PASS); high/stationary concurrent cap: 200 (target 0 ≤ value ≤ 200; PASS) Manual review PASS (FRESH, Codex final-c): Low/high native complete routes admit 200/400 regulars and 5/5 Alphas. Complete and stationary concurrent peaks are 100/200; each tier meets its full count and cap criterion.",
       "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L7-low-complete.json",
         "docs/reports/fix51-verify/receipts/L7-low-stationary.json",
         "docs/reports/fix51-verify/receipts/L7-high-complete.json",
-        "docs/reports/fix51-verify/receipts/L7-high-stationary.json"
+        "docs/reports/fix51-verify/receipts/L7-high-stationary.json",
+        "docs/reports/final-c/L7-04/numeric-review.json",
+        "docs/reports/final-c/native/L7-low-complete.json.gz",
+        "docs/reports/final-c/native/L7-low-stationary.json.gz",
+        "docs/reports/final-c/native/L7-high-complete.json.gz",
+        "docs/reports/final-c/native/L7-high-stationary.json.gz"
       ],
       "expected": "Over the run ≥ 400 / 200 regulars and **4–6 Alphas** arrive; concurrent ≤ 200 / 100.",
       "checks": [
@@ -6598,24 +7070,69 @@
         "evidence": [],
         "method": "NEXT: Extend the existing L7 observer/fixture in tools/qa/threat-audit.ts or tools/playtest/session.ts to assert every timing/count/state clause below, at low/high; execute the native probe and real-input route and retain the event ledger. Required: Over the run ≥ 400 / 200 regulars and 4–6 Alphas arrive; concurrent ≤ 200 / 100."
       },
-      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure."
+      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure.",
+      "reviewDecision": {
+        "row": "L7-04",
+        "status": "PASS",
+        "reviewer": "Codex final-c",
+        "date": "2026-11-07",
+        "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+        "clauses": [
+          {
+            "clause": "Over the run ≥ 400 / 200 regulars and **4–6 Alphas** arrive; concurrent ≤ 200 / 100.",
+            "verdict": "PASS",
+            "note": "Low/high native complete routes admit 200/400 regulars and 5/5 Alphas. Complete and stationary concurrent peaks are 100/200; each tier meets its full count and cap criterion."
+          }
+        ],
+        "evidence": [
+          {
+            "file": "docs/reports/final-c/L7-04/numeric-review.json",
+            "sha256": "d0e0279c01db39e0a3ed6387a64e13972cb7390fd018adca919991aed981b368",
+            "what": "Low/high native complete routes admit 200/400 regulars and 5/5 Alphas. Complete and stationary concurrent peaks are 100/200; each tier meets its full count and cap criterion."
+          },
+          {
+            "file": "docs/reports/final-c/native/L7-low-complete.json.gz",
+            "sha256": "5c77a3f0f9af2f77b2781db5e6b8ba6b239e187be04196d87c18871a5b676277",
+            "what": "Immutable frozen-head native source receipt: docs/reports/fix51-verify/receipts/L7-low-complete.json. Row-specific measured checks are reproduced in numeric-review.json."
+          },
+          {
+            "file": "docs/reports/final-c/native/L7-low-stationary.json.gz",
+            "sha256": "8ed83bc3c080c66347df0e672078d22d862d885917acb7d643b4ad75ce305be2",
+            "what": "Immutable frozen-head native source receipt: docs/reports/fix51-verify/receipts/L7-low-stationary.json. Row-specific measured checks are reproduced in numeric-review.json."
+          },
+          {
+            "file": "docs/reports/final-c/native/L7-high-complete.json.gz",
+            "sha256": "ac2f6292c8013a44c79a58023527a8965ebfe546fdf2a237ebf6930ca2028cb2",
+            "what": "Immutable frozen-head native source receipt: docs/reports/fix51-verify/receipts/L7-high-complete.json. Row-specific measured checks are reproduced in numeric-review.json."
+          },
+          {
+            "file": "docs/reports/final-c/native/L7-high-stationary.json.gz",
+            "sha256": "1671dc8e5675b5a67b3f52c0ae336c130f47eb22d93aad40dc222eb1694181e5",
+            "what": "Immutable frozen-head native source receipt: docs/reports/fix51-verify/receipts/L7-high-stationary.json. Row-specific measured checks are reproduced in numeric-review.json."
+          }
+        ],
+        "notes": "Frozen-head numeric review. No gameplay source or criterion changed. No browser, performance, or visual evidence is claimed for this numeric-only criterion.",
+        "sourceDigest": "1aff45872f0c1603cfc94e9f01d515824d2304b5b5d9e5f96fee9cc461ad064a",
+        "freshness": "FRESH",
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
+      }
     },
     {
       "id": "L7-05",
       "status": "FAIL",
       "currentStatus": "FAIL",
-      "value": "high/stationary stationary first real player attack (phase clock): {\"seconds\":10.366666666666667,\"windowSeconds\":239.76666666666668} (target ≤10 s; FAIL) Manual review PASS (STALE, Codex sweep-c5): Fresh exact-criterion review of all14 current-source native checks. Competent low/high rates11.1801/6.5188 player windups per minute; both passive policies first player windup0.0667s and positive group/player rates. Minimum bounded-path reachability100% in every policy. The prior zero-contact failure is contradicted by these unchanged-criterion current-source measurements. Native receipts are immutable SHA256 archives; no subjective or visual clause exists in this row. Open prior FAIL: Native low complete step/corridor: 75.62 s,0 player/0 group windups. The acceptance document hard rule forbids zero in a combat phase; the audit treats skilled zero contact as diagnostic. Tested tier meets the measured clauses; full requested-tier coverage is incomplete. Low native passive: first attack 6.90 s; 43.43 player attacks/min; last reach 99/99 = 100%.",
+      "value": "high/stationary stationary first real player attack (phase clock): {\"seconds\":10.366666666666667,\"windowSeconds\":239.76666666666668} (target ≤10 s; FAIL) Manual review FAIL (FRESH, Codex final-c): FAIL: high stationary first actual player attack is 10.3666666667 s after phase activation, exceeding 10 s by 0.3666666667 s. Low stationary is 1.3 s. Complete player/group rates are 7.4006/min low and 19.7395/min high; minimum reachability is 100% low and 98.5714% high across both policies. This one timing counterexample suffices for row FAIL. Open prior FAIL: Native low complete step/corridor: 75.62 s,0 player/0 group windups. The acceptance document hard rule forbids zero in a combat phase; the audit treats skilled zero contact as diagnostic. Tested tier meets the measured clauses; full requested-tier coverage is incomplete. Low native passive: first attack 6.90 s; 43.43 player attacks/min; last reach 99/99 = 100%.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L7-low-complete.json",
         "docs/reports/fix51-verify/receipts/L7-low-stationary.json",
         "docs/reports/fix51-verify/receipts/L7-high-complete.json",
         "docs/reports/fix51-verify/receipts/L7-high-stationary.json",
-        "docs/reports/sweep-c5/L7-05/L7-low-complete.json.gz",
-        "docs/reports/sweep-c5/L7-05/L7-low-stationary.json.gz",
-        "docs/reports/sweep-c5/L7-05/L7-high-complete.json.gz",
-        "docs/reports/sweep-c5/L7-05/L7-high-stationary.json.gz",
-        "docs/reports/sweep-c5/L7-05/clauses.json",
+        "docs/reports/final-c/L7-05/numeric-review.json",
+        "docs/reports/final-c/native/L7-low-complete.json.gz",
+        "docs/reports/final-c/native/L7-low-stationary.json.gz",
+        "docs/reports/final-c/native/L7-high-complete.json.gz",
+        "docs/reports/final-c/native/L7-high-stationary.json.gz",
         "docs/reports/batch51-qa/native-threat.json"
       ],
       "expected": "combat: reachable ≥ 90 %; passive first attack ≤ 10 s (measured 4.6 s); attacks on player + group ≥ 6/min (tune).",
@@ -6814,45 +7331,47 @@
       "remaining": "Current-head passive corridor route, actual attack windups and independent path snapshot. NEXT: repeat the same complete clause ledger in the other quality tier before closing this row for the full requested scope. Apply the acceptance document literally rather than equating zero audit flags with all criteria passing. Positive passive contact remains evidence of potential threat, not proof of competent-route compliance. NEXT: qualify both policies/tiers; if zero skilled contact is intentionally allowed, obtain a PO criterion clarification before closing the row.",
       "reviewDecision": {
         "row": "L7-05",
-        "status": "PASS",
-        "reviewer": "Codex sweep-c5",
-        "date": "2026-11-06",
-        "commit": "bedb6bdcaf661a957f7c36bc6eded4381a548f99",
+        "status": "FAIL",
+        "reviewer": "Codex final-c",
+        "date": "2026-11-07",
+        "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
         "clauses": [
           {
             "clause": "combat: reachable ≥ 90 %; passive first attack ≤ 10 s (measured 4.6 s); attacks on player + group ≥ 6/min (tune).",
-            "verdict": "PASS",
-            "note": "Fresh exact-criterion review of all14 current-source native checks. Competent low/high rates11.1801/6.5188 player windups per minute; both passive policies first player windup0.0667s and positive group/player rates. Minimum bounded-path reachability100% in every policy. The prior zero-contact failure is contradicted by these unchanged-criterion current-source measurements. Native receipts are immutable SHA256 archives; no subjective or visual clause exists in this row."
+            "verdict": "FAIL",
+            "note": "FAIL: high stationary first actual player attack is 10.3666666667 s after phase activation, exceeding 10 s by 0.3666666667 s. Low stationary is 1.3 s. Complete player/group rates are 7.4006/min low and 19.7395/min high; minimum reachability is 100% low and 98.5714% high across both policies. This one timing counterexample suffices for row FAIL."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/sweep-c5/L7-05/L7-low-complete.json.gz",
-            "sha256": "2773dfb029e5eb31814ce6544a68718229d4ec30256a6a58dc601681f1d020a5",
-            "what": "Current-source low/complete native route, read-only attack and independent bounded-path reachability observation."
+            "file": "docs/reports/final-c/L7-05/numeric-review.json",
+            "sha256": "9c6f31a85c1870c7c78fcdd2ec9674ca8ddada839048444c17fab30442ed3a26",
+            "what": "FAIL: high stationary first actual player attack is 10.3666666667 s after phase activation, exceeding 10 s by 0.3666666667 s. Low stationary is 1.3 s. Complete player/group rates are 7.4006/min low and 19.7395/min high; minimum reachability is 100% low and 98.5714% high across both policies. This one timing counterexample suffices for row FAIL."
           },
           {
-            "file": "docs/reports/sweep-c5/L7-05/L7-low-stationary.json.gz",
-            "sha256": "efa6dfa4425e931f16480d340ca6e1b02855f1678c834d7d3af85ceb4964cbe0",
-            "what": "Current-source low/stationary native route, read-only attack and independent bounded-path reachability observation."
+            "file": "docs/reports/final-c/native/L7-low-complete.json.gz",
+            "sha256": "5c77a3f0f9af2f77b2781db5e6b8ba6b239e187be04196d87c18871a5b676277",
+            "what": "Immutable frozen-head native source receipt: docs/reports/fix51-verify/receipts/L7-low-complete.json. Row-specific measured checks are reproduced in numeric-review.json."
           },
           {
-            "file": "docs/reports/sweep-c5/L7-05/L7-high-complete.json.gz",
-            "sha256": "3bf3923c135592dbaeb813f10fed22114096f558e98ee87f3152f24264a99e3d",
-            "what": "Current-source high/complete native route, read-only attack and independent bounded-path reachability observation."
+            "file": "docs/reports/final-c/native/L7-low-stationary.json.gz",
+            "sha256": "8ed83bc3c080c66347df0e672078d22d862d885917acb7d643b4ad75ce305be2",
+            "what": "Immutable frozen-head native source receipt: docs/reports/fix51-verify/receipts/L7-low-stationary.json. Row-specific measured checks are reproduced in numeric-review.json."
           },
           {
-            "file": "docs/reports/sweep-c5/L7-05/L7-high-stationary.json.gz",
-            "sha256": "e76fbb056abd5c866a310cea5e84361a424fccd71ecad98be562b107398b7aa3",
-            "what": "Current-source high/stationary native route, read-only attack and independent bounded-path reachability observation."
+            "file": "docs/reports/final-c/native/L7-high-complete.json.gz",
+            "sha256": "ac2f6292c8013a44c79a58023527a8965ebfe546fdf2a237ebf6930ca2028cb2",
+            "what": "Immutable frozen-head native source receipt: docs/reports/fix51-verify/receipts/L7-high-complete.json. Row-specific measured checks are reproduced in numeric-review.json."
           },
           {
-            "file": "docs/reports/sweep-c5/L7-05/clauses.json",
-            "sha256": "7d6f9abce70ea0b1d394b98254031678c616b3c9d4a305b841510a66621667cd",
-            "what": "All14 required native checks pass on both complete/stationary policies and tiers."
+            "file": "docs/reports/final-c/native/L7-high-stationary.json.gz",
+            "sha256": "1671dc8e5675b5a67b3f52c0ae336c130f47eb22d93aad40dc222eb1694181e5",
+            "what": "Immutable frozen-head native source receipt: docs/reports/fix51-verify/receipts/L7-high-stationary.json. Row-specific measured checks are reproduced in numeric-review.json."
           }
         ],
-        "freshness": "STALE",
+        "notes": "Frozen-head numeric review. No gameplay source or criterion changed. No browser, performance, or visual evidence is claimed for this numeric-only criterion.",
+        "sourceDigest": "1aff45872f0c1603cfc94e9f01d515824d2304b5b5d9e5f96fee9cc461ad064a",
+        "freshness": "FRESH",
         "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     },
@@ -6860,16 +7379,19 @@
       "id": "L7-06",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "Manual review PASS (STALE, Codex sweep-c6): Current low/high actual carried-save WASD/mouse runs reach corridor by Harbor plus west rear-yard alley and by Lakeshore. All106qualification frames personally inspected;54excluded harness frames also inspected. Distinct continuously logged routes, normal collision/AI, courier protection only. A separate low screenshot-only controller after actual-input east-junction prefix makes16manual commands to corridor at(-35.419,47.813),t5136; recovers from blocked paved-plaza shortcut onto visually continuous marked roads. Visible retained facades/fences/wall and vehicle detours; no misleading dead-end street or wall/slab crossing seen. Close zoom mostly shows immediate lane; wide zoom gives usable continuity. Reviewer previously read map, so no blinded first-exposure claim. Separate production Rapier43-run perimeter sweep passes129walking and95clear driving probes per tier with zero escapes. Route A ends in native departure camera, so those last paired requestedzoom frames do not assert independentzoom. Earlier harness failures archived and excluded. Dedicated consumer rejects23semantic faults. No game or criterion changes. The actual route reaches the corridor; fresh boundary-wall poses are enclosed. The second connected path and unscripted wrong-turn clarity were not explored.",
+      "value": "Manual review PASS (FRESH, Codex final-c): Two distinct current physical WASD paths reach corridor at both tiers: Harbor/rear-yard A and Lakeshore B, with contiguous6tick input/collision traces. Fresh full perimeter43runs/129walk/95drive probes per tier find0escapes. High A endpoint corrected from inside the bus hull to first visible walking core entry(-75.9711,43.0758), tick6990; failed old endpoint is a harness error, disclosed in capture-review. Sixteen branch/end panels inspected. The actual route reaches the corridor; fresh boundary-wall poses are enclosed. The second connected path and unscripted wrong-turn clarity were not explored.",
       "automatedComplete": false,
       "receipt": [
-        "docs/reports/sweep-c6/L7-06/review.json",
-        "docs/reports/sweep-c6/L7-06/routes-A-producer.mjs",
-        "docs/reports/sweep-c6/L7-06/routes-B-producer.mjs",
-        "docs/reports/sweep-c6/L7-06/screen-producer.mjs",
-        "docs/reports/sweep-c6/L7-06/bounds-provenance.json",
-        "docs/reports/sweep-c6/L7-06/coverage-proof.json",
-        "docs/reports/sweep-c6/L7-06/raw-cleanup.json"
+        "docs/reports/final-c/L7-06/high-A-physical.json.gz",
+        "docs/reports/final-c/L7-06/A-producer.ts",
+        "docs/reports/final-c/L7-06/low-A-physical.json.gz",
+        "docs/reports/final-c/L7-06/B-producer.ts",
+        "docs/reports/final-c/L7-06/low-B-physical.json.gz",
+        "docs/reports/final-c/L7-06/high-B-physical.json.gz",
+        "docs/reports/final-c/L7-06/capture-review.json",
+        "docs/reports/final-c/L7-06/sweep-c6-l7-routes-producer.ts",
+        "docs/reports/final-c/L7-06/bounds-low/bounds-sweep.json",
+        "docs/reports/final-c/L7-06/bounds-high/bounds-sweep.json"
       ],
       "expected": "≥ 2 connected routes reach the corridor; no dead-end street that looks like the route; no meaningless walk-through wall/slab. PO: \"This street feels like a trap\".",
       "checks": [],
@@ -6892,54 +7414,71 @@
       "reviewDecision": {
         "row": "L7-06",
         "status": "PASS",
-        "reviewer": "Codex sweep-c6",
-        "date": "2026-11-06",
-        "commit": "02abad35a6d5e9e0a5c9c53356b6515bb0d2dbd7",
+        "reviewer": "Codex final-c",
+        "date": "2026-11-07",
+        "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
         "clauses": [
           {
             "clause": "≥ 2 connected routes reach the corridor; no dead-end street that looks like the route; no meaningless walk-through wall/slab. PO: \"This street feels like a trap\".",
             "verdict": "PASS",
-            "note": "Current low/high actual carried-save WASD/mouse runs reach corridor by Harbor plus west rear-yard alley and by Lakeshore. All106qualification frames personally inspected;54excluded harness frames also inspected. Distinct continuously logged routes, normal collision/AI, courier protection only. A separate low screenshot-only controller after actual-input east-junction prefix makes16manual commands to corridor at(-35.419,47.813),t5136; recovers from blocked paved-plaza shortcut onto visually continuous marked roads. Visible retained facades/fences/wall and vehicle detours; no misleading dead-end street or wall/slab crossing seen. Close zoom mostly shows immediate lane; wide zoom gives usable continuity. Reviewer previously read map, so no blinded first-exposure claim. Separate production Rapier43-run perimeter sweep passes129walking and95clear driving probes per tier with zero escapes. Route A ends in native departure camera, so those last paired requestedzoom frames do not assert independentzoom. Earlier harness failures archived and excluded. Dedicated consumer rejects23semantic faults. No game or criterion changes."
+            "note": "Two distinct current physical WASD paths reach corridor at both tiers: Harbor/rear-yard A and Lakeshore B, with contiguous6tick input/collision traces. Fresh full perimeter43runs/129walk/95drive probes per tier find0escapes. High A endpoint corrected from inside the bus hull to first visible walking core entry(-75.9711,43.0758), tick6990; failed old endpoint is a harness error, disclosed in capture-review. Sixteen branch/end panels inspected."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/sweep-c6/L7-06/review.json",
-            "sha256": "971a933b21b95f0796043fa3bdc998e8dc146fe95c9f882cd18821764d9fd847",
-            "what": "Exact current-source physical ledgers, personally reviewed frame digests and observations, producer provenance, production bounds/control qualification or verified capture cleanup."
+            "file": "docs/reports/final-c/L7-06/high-A-physical.json.gz",
+            "sha256": "e2a76573a742d6ada2a76920d0094e57c08c20caf0bf84b29b89970dd2780d77",
+            "what": "Two distinct current physical WASD paths reach corridor at both tiers: Harbor/rear-yard A and Lakeshore B, with contiguous6tick input/collision traces. Fresh full perimeter43runs/129walk/95drive probes per tier find0escapes. High A endpoint corrected from inside the bus hull to first visible walking core entry(-75.9711,43.0758), tick6990; failed old endpoint is a harness error, disclosed in capture-review. Sixteen branch/end panels inspected."
           },
           {
-            "file": "docs/reports/sweep-c6/L7-06/routes-A-producer.mjs",
-            "sha256": "cbeb740426bc587f0fc4cd2ea86e3420d6ac3ff0687bb524a76957d4f2ba2524",
-            "what": "Exact current-source physical ledgers, personally reviewed frame digests and observations, producer provenance, production bounds/control qualification or verified capture cleanup."
+            "file": "docs/reports/final-c/L7-06/A-producer.ts",
+            "sha256": "334845a5c5643f76b3799fca35d05351221d116aa36bd8caa77a484f321eb272",
+            "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
           },
           {
-            "file": "docs/reports/sweep-c6/L7-06/routes-B-producer.mjs",
-            "sha256": "e0351c8983248e3433ec8d59ecd900298b77d66712675eb2266ca5c8352b3b3b",
-            "what": "Exact current-source physical ledgers, personally reviewed frame digests and observations, producer provenance, production bounds/control qualification or verified capture cleanup."
+            "file": "docs/reports/final-c/L7-06/low-A-physical.json.gz",
+            "sha256": "469d907eb02fd42acc885e423e1a1efde0547d1eab33048da72739b17148bfd6",
+            "what": "Two distinct current physical WASD paths reach corridor at both tiers: Harbor/rear-yard A and Lakeshore B, with contiguous6tick input/collision traces. Fresh full perimeter43runs/129walk/95drive probes per tier find0escapes. High A endpoint corrected from inside the bus hull to first visible walking core entry(-75.9711,43.0758), tick6990; failed old endpoint is a harness error, disclosed in capture-review. Sixteen branch/end panels inspected."
           },
           {
-            "file": "docs/reports/sweep-c6/L7-06/screen-producer.mjs",
-            "sha256": "1a65b813b624ddfb3f817def171bdb6fef35183b834a09e8c4badd95fa570292",
-            "what": "Exact current-source physical ledgers, personally reviewed frame digests and observations, producer provenance, production bounds/control qualification or verified capture cleanup."
+            "file": "docs/reports/final-c/L7-06/B-producer.ts",
+            "sha256": "334845a5c5643f76b3799fca35d05351221d116aa36bd8caa77a484f321eb272",
+            "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
           },
           {
-            "file": "docs/reports/sweep-c6/L7-06/bounds-provenance.json",
-            "sha256": "180189a6cdb1388a04f939dd79669e040a5f556407fb6d2c47d4b0fee72ec35f",
-            "what": "Exact current-source physical ledgers, personally reviewed frame digests and observations, producer provenance, production bounds/control qualification or verified capture cleanup."
+            "file": "docs/reports/final-c/L7-06/low-B-physical.json.gz",
+            "sha256": "0110eac499b3970e5acb3f17f376bcd8f55dd3e6c909940b0f5982b9b9c91b8a",
+            "what": "Two distinct current physical WASD paths reach corridor at both tiers: Harbor/rear-yard A and Lakeshore B, with contiguous6tick input/collision traces. Fresh full perimeter43runs/129walk/95drive probes per tier find0escapes. High A endpoint corrected from inside the bus hull to first visible walking core entry(-75.9711,43.0758), tick6990; failed old endpoint is a harness error, disclosed in capture-review. Sixteen branch/end panels inspected."
           },
           {
-            "file": "docs/reports/sweep-c6/L7-06/coverage-proof.json",
-            "sha256": "8608ec81e226a78241befd6936aba160daa73e8e85710efa4b4c53ad8e5d0cb9",
-            "what": "Exact current-source physical ledgers, personally reviewed frame digests and observations, producer provenance, production bounds/control qualification or verified capture cleanup."
+            "file": "docs/reports/final-c/L7-06/high-B-physical.json.gz",
+            "sha256": "d3d0ab696019de0027d847f7e2ec6186df645a0bf5566b7d5be2543bd003261c",
+            "what": "Two distinct current physical WASD paths reach corridor at both tiers: Harbor/rear-yard A and Lakeshore B, with contiguous6tick input/collision traces. Fresh full perimeter43runs/129walk/95drive probes per tier find0escapes. High A endpoint corrected from inside the bus hull to first visible walking core entry(-75.9711,43.0758), tick6990; failed old endpoint is a harness error, disclosed in capture-review. Sixteen branch/end panels inspected."
           },
           {
-            "file": "docs/reports/sweep-c6/L7-06/raw-cleanup.json",
-            "sha256": "130f647e29297d9419416a9f42effb7efe20c3ab70d534f45479677c65d022b1",
-            "what": "Exact current-source physical ledgers, personally reviewed frame digests and observations, producer provenance, production bounds/control qualification or verified capture cleanup."
+            "file": "docs/reports/final-c/L7-06/capture-review.json",
+            "sha256": "0be3c7f71998fcc2eeef14726ac9a5d4b9a471bda20a2ee7b05847ecdbb7f6c7",
+            "what": "Two distinct current physical WASD paths reach corridor at both tiers: Harbor/rear-yard A and Lakeshore B, with contiguous6tick input/collision traces. Fresh full perimeter43runs/129walk/95drive probes per tier find0escapes. High A endpoint corrected from inside the bus hull to first visible walking core entry(-75.9711,43.0758), tick6990; failed old endpoint is a harness error, disclosed in capture-review. Sixteen branch/end panels inspected."
+          },
+          {
+            "file": "docs/reports/final-c/L7-06/sweep-c6-l7-routes-producer.ts",
+            "sha256": "0585022134d3d42f3576816e9843f94ce144cd35d663beb468586c0851b1f8d2",
+            "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
+          },
+          {
+            "file": "docs/reports/final-c/L7-06/bounds-low/bounds-sweep.json",
+            "sha256": "28b3d01d22731020b0350cec07b21282eca1c83bda82ddd3b14d475e1fe339b4",
+            "what": "Two distinct current physical WASD paths reach corridor at both tiers: Harbor/rear-yard A and Lakeshore B, with contiguous6tick input/collision traces. Fresh full perimeter43runs/129walk/95drive probes per tier find0escapes. High A endpoint corrected from inside the bus hull to first visible walking core entry(-75.9711,43.0758), tick6990; failed old endpoint is a harness error, disclosed in capture-review. Sixteen branch/end panels inspected."
+          },
+          {
+            "file": "docs/reports/final-c/L7-06/bounds-high/bounds-sweep.json",
+            "sha256": "2474e37e13056abcf76a35b4ae9bea0a3d198ac75d90c210900979bc566b2153",
+            "what": "Two distinct current physical WASD paths reach corridor at both tiers: Harbor/rear-yard A and Lakeshore B, with contiguous6tick input/collision traces. Fresh full perimeter43runs/129walk/95drive probes per tier find0escapes. High A endpoint corrected from inside the bus hull to first visible walking core entry(-75.9711,43.0758), tick6990; failed old endpoint is a harness error, disclosed in capture-review. Sixteen branch/end panels inspected."
           }
         ],
-        "freshness": "STALE",
+        "notes": "Frozen-head row review. Current immutable evidence, unchanged criterion and game source.",
+        "sourceDigest": "1aff45872f0c1603cfc94e9f01d515824d2304b5b5d9e5f96fee9cc461ad064a",
+        "freshness": "FRESH",
         "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     },
@@ -6947,11 +7486,13 @@
       "id": "L7-07",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/complete corridor marker identity changes: [\"l7-corridor-east\"] (target one fixed corridor destination; PASS); high/complete corridor marker identity changes: [\"l7-corridor-east\"] (target one fixed corridor destination; PASS)",
+      "value": "low/complete corridor marker identity changes: [\"l7-corridor-east\"] (target one fixed corridor destination; PASS); high/complete corridor marker identity changes: [\"l7-corridor-east\"] (target one fixed corridor destination; PASS) Manual review PASS (FRESH, Codex final-c): Both current native routes hold the corridor destination exactly at (-30,50), identity l7-corridor-east: 4378 low/4377 high active corridor ticks, zero marker changes and zero independent live-roster/18m-distance versus production Group n/n text mismatches. The observer leaves both canonical final state hashes identical. This S-only clause is measured per tick, not inferred from screenshots.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L7-low-complete.json",
-        "docs/reports/fix51-verify/receipts/L7-high-complete.json"
+        "docs/reports/fix51-verify/receipts/L7-high-complete.json",
+        "docs/reports/final-c/L7-07/counter.json",
+        "docs/reports/final-c/L7-07/producer.ts"
       ],
       "expected": "Corridor ring fixed (not the nearest of several moving entrances); group counter \"Group n/n\" correct.",
       "checks": [
@@ -6990,23 +7531,50 @@
         "evidence": [],
         "method": "NEXT: Extend the existing L7 observer/fixture in tools/qa/threat-audit.ts or tools/playtest/session.ts to assert every timing/count/state clause below, at low/high; execute the native probe and real-input route and retain the event ledger. Required: Corridor ring fixed (not the nearest of several moving entrances); group counter \"Group n/n\" correct."
       },
-      "remaining": "NEXT: Extend the existing L7 observer/fixture in tools/qa/threat-audit.ts or tools/playtest/session.ts to assert every timing/count/state clause below, at low/high; execute the native probe and real-input route and retain the event ledger. Required: Corridor ring fixed (not the nearest of several moving entrances); group counter \"Group n/n\" correct."
+      "remaining": "NEXT: Extend the existing L7 observer/fixture in tools/qa/threat-audit.ts or tools/playtest/session.ts to assert every timing/count/state clause below, at low/high; execute the native probe and real-input route and retain the event ledger. Required: Corridor ring fixed (not the nearest of several moving entrances); group counter \"Group n/n\" correct.",
+      "reviewDecision": {
+        "row": "L7-07",
+        "status": "PASS",
+        "reviewer": "Codex final-c",
+        "date": "2026-11-07",
+        "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+        "clauses": [
+          {
+            "clause": "Corridor ring fixed (not the nearest of several moving entrances); group counter \"Group n/n\" correct.",
+            "verdict": "PASS",
+            "note": "Both current native routes hold the corridor destination exactly at (-30,50), identity l7-corridor-east: 4378 low/4377 high active corridor ticks, zero marker changes and zero independent live-roster/18m-distance versus production Group n/n text mismatches. The observer leaves both canonical final state hashes identical. This S-only clause is measured per tick, not inferred from screenshots."
+          }
+        ],
+        "evidence": [
+          {
+            "file": "docs/reports/final-c/L7-07/counter.json",
+            "sha256": "8ab234144fc1b79eecf0a059c1a0b26b3e4c96517846585bf566b8e9b5e358c7",
+            "what": "Both current native routes hold the corridor destination exactly at (-30,50), identity l7-corridor-east: 4378 low/4377 high active corridor ticks, zero marker changes and zero independent live-roster/18m-distance versus production Group n/n text mismatches. The observer leaves both canonical final state hashes identical. This S-only clause is measured per tick, not inferred from screenshots."
+          },
+          {
+            "file": "docs/reports/final-c/L7-07/producer.ts",
+            "sha256": "0e89673200f9d672fb90d8cb64207417cf99a5d1c438fc9b0b9a928755993152",
+            "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
+          }
+        ],
+        "notes": "Frozen-head row review. Current immutable evidence, unchanged criterion and game source.",
+        "sourceDigest": "1aff45872f0c1603cfc94e9f01d515824d2304b5b5d9e5f96fee9cc461ad064a",
+        "freshness": "FRESH",
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
+      }
     },
     {
       "id": "L7-08",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "Manual review PASS (STALE, Codex sweep-c5): Current source43b485e8: seeded finalhorde totals60low/120high regulars at60HP plus2Alphas at300HP, alladmitted/not hidden/pending. Exact independent unchanged canonical native controls match final state. Counts refer to the final horde per E29§5.3, including immediate approach: the source narrow core x[-84,-30],z[43,56] initially contains39/78regulars+1Alpha; remaining members stand immediately south/east, not all inside that rectangle. Remote tick0 photos show broad dense enemy rows across evacuation road/approach near bus/wrecks. Actual physical L7 runs use qualified progressed L5/L6 campaigns1/4humans, normal enemy/follower HP/AI/caps, courier protected only. Ordinary completion planner is detached before any tick and translated to physical WASD/E/Digit7/ShiftLMB; all6957/6198input ticks contiguous and nativeDriverfalse. Low uses3logged90tick physical sidestep recoveries around obstruction, no actor relocation. Both runs complete and actual original1/4humans enter a body-clear interior of an actual rocket blast disc INSIDE authored core, then cross westx-68 alive/not hidden/not infected. Low289: blast4711,inside6012,west6286; high32/389/30/31: blast4693,inside5064–5106,west5377–5503; nearest living finalbody clearance≥5.618m high, none remain low. Same-tick actual rocket kill events identify original cohort victims inside blast; old/missing corpses are never inferred to be newly killed. All50final panels and52additional exploratory panels personally viewed, rawdigestsverified/deleted. Approach label is30m before entrance; close rocket photos crop much of gap; event/body ledger supplies actual use geometry. Remote and cinematic poses override requestedzoom, no independent zoom coverage claim there. Earlier probe counted already-dead bodies on a later blast and lost its final ledger at handover; preserved as exploratory. Remote initial camera delayed early aiming and killed sole low survivor in separate exploratory run; excluded from passage qualification, only its tick0 census image used. Final low retains normal opening camera. Canonical high native run has0crossings and is used only for census/control; physical high supplies4. Twenty-one semantic faults reject, exact original bytes restored. No game/criteria change. Not measured by this batch run.",
+      "value": "Manual review PASS (FRESH, Codex final-c): Both current native final-group censuses begin with exactly60low/120high admitted60HP regulars and2Alphas300HP (including immediate corridor approach). Independent final hashes match canonical controls. Actual physical rocket/input ledgers and personally inspected paired gap/crossing frames show23low/13high human survivor IDs physically cross the previously blocked corridor and board; no survivor relocation, target HP edit or objective skip. Courier protection only. Not measured by this batch run.",
       "automatedComplete": false,
       "receipt": [
-        "docs/reports/sweep-c5/L7-08/low-physical.json.gz",
-        "docs/reports/sweep-c5/L7-08/high-physical.json.gz",
-        "docs/reports/sweep-c5/L7-08/low-review.json",
-        "docs/reports/sweep-c5/L7-08/high-review.json",
-        "docs/reports/sweep-c5/L7-08/native-current.json.gz",
-        "docs/reports/sweep-c5/L7-08/coverage-proof.json",
-        "docs/reports/sweep-c5/L7-08/exploration/remote-camera-low.json.gz",
-        "docs/reports/sweep-c5/L7-08/exploration/remote-camera-low-review.json"
+        "docs/reports/final-c/L7-08/census.json",
+        "docs/reports/final-c/L7-08/fix55-l7-corridor.ts",
+        "docs/reports/final-c/L7-11/low-physical.json.gz",
+        "docs/reports/final-c/L7-11/high-physical.json.gz",
+        "docs/reports/final-c/L7-11/capture-review.json"
       ],
       "expected": "Final corridor starts blocked by ≥ 120 / 60 regulars + ≥ 2 Alphas; the player opens a gap ≥ 1 survivor uses.",
       "checks": [],
@@ -7027,59 +7595,46 @@
       "reviewDecision": {
         "row": "L7-08",
         "status": "PASS",
-        "reviewer": "Codex sweep-c5",
-        "date": "2026-11-06",
-        "commit": "b0adebf70f139e87b17a4b4bb1069c91a4c31e0a",
+        "reviewer": "Codex final-c",
+        "date": "2026-11-07",
+        "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
         "clauses": [
           {
             "clause": "Final corridor starts blocked by ≥ 120 / 60 regulars + ≥ 2 Alphas; the player opens a gap ≥ 1 survivor uses.",
             "verdict": "PASS",
-            "note": "Current source43b485e8: seeded finalhorde totals60low/120high regulars at60HP plus2Alphas at300HP, alladmitted/not hidden/pending. Exact independent unchanged canonical native controls match final state. Counts refer to the final horde per E29§5.3, including immediate approach: the source narrow core x[-84,-30],z[43,56] initially contains39/78regulars+1Alpha; remaining members stand immediately south/east, not all inside that rectangle. Remote tick0 photos show broad dense enemy rows across evacuation road/approach near bus/wrecks. Actual physical L7 runs use qualified progressed L5/L6 campaigns1/4humans, normal enemy/follower HP/AI/caps, courier protected only. Ordinary completion planner is detached before any tick and translated to physical WASD/E/Digit7/ShiftLMB; all6957/6198input ticks contiguous and nativeDriverfalse. Low uses3logged90tick physical sidestep recoveries around obstruction, no actor relocation. Both runs complete and actual original1/4humans enter a body-clear interior of an actual rocket blast disc INSIDE authored core, then cross westx-68 alive/not hidden/not infected. Low289: blast4711,inside6012,west6286; high32/389/30/31: blast4693,inside5064–5106,west5377–5503; nearest living finalbody clearance≥5.618m high, none remain low. Same-tick actual rocket kill events identify original cohort victims inside blast; old/missing corpses are never inferred to be newly killed. All50final panels and52additional exploratory panels personally viewed, rawdigestsverified/deleted. Approach label is30m before entrance; close rocket photos crop much of gap; event/body ledger supplies actual use geometry. Remote and cinematic poses override requestedzoom, no independent zoom coverage claim there. Earlier probe counted already-dead bodies on a later blast and lost its final ledger at handover; preserved as exploratory. Remote initial camera delayed early aiming and killed sole low survivor in separate exploratory run; excluded from passage qualification, only its tick0 census image used. Final low retains normal opening camera. Canonical high native run has0crossings and is used only for census/control; physical high supplies4. Twenty-one semantic faults reject, exact original bytes restored. No game/criteria change."
+            "note": "Both current native final-group censuses begin with exactly60low/120high admitted60HP regulars and2Alphas300HP (including immediate corridor approach). Independent final hashes match canonical controls. Actual physical rocket/input ledgers and personally inspected paired gap/crossing frames show23low/13high human survivor IDs physically cross the previously blocked corridor and board; no survivor relocation, target HP edit or objective skip. Courier protection only."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/sweep-c5/L7-08/low-physical.json.gz",
-            "sha256": "58df4e87b8f3caa930b4048c0204839eb12d69d188cedf21210583764eaa72da",
-            "what": "Current admitted finalhorde census, exact canonical control, actual physical rockets and carried-human body-clear passage inside named corridor; every capture SHA256/seen note retained,21fault controls. Placement and exploratory-camera limitations explicit."
+            "file": "docs/reports/final-c/L7-08/census.json",
+            "sha256": "670bc4c754861fd24c31ccdba50ca156afff70687c3ab51d0826f7b2cfcc895e",
+            "what": "Both current native final-group censuses begin with exactly60low/120high admitted60HP regulars and2Alphas300HP (including immediate corridor approach). Independent final hashes match canonical controls. Actual physical rocket/input ledgers and personally inspected paired gap/crossing frames show23low/13high human survivor IDs physically cross the previously blocked corridor and board; no survivor relocation, target HP edit or objective skip. Courier protection only."
           },
           {
-            "file": "docs/reports/sweep-c5/L7-08/high-physical.json.gz",
-            "sha256": "72797fcf49ca91d850da23b02509f90bafa5360485e476d79cf77cd30348aa2e",
-            "what": "Current admitted finalhorde census, exact canonical control, actual physical rockets and carried-human body-clear passage inside named corridor; every capture SHA256/seen note retained,21fault controls. Placement and exploratory-camera limitations explicit."
+            "file": "docs/reports/final-c/L7-08/fix55-l7-corridor.ts",
+            "sha256": "7d37c03cec47e61f3f76af5ad480971f0c5ecadfd99f5b4030d099b69499a095",
+            "what": "Both current native final-group censuses begin with exactly60low/120high admitted60HP regulars and2Alphas300HP (including immediate corridor approach). Independent final hashes match canonical controls. Actual physical rocket/input ledgers and personally inspected paired gap/crossing frames show23low/13high human survivor IDs physically cross the previously blocked corridor and board; no survivor relocation, target HP edit or objective skip. Courier protection only."
           },
           {
-            "file": "docs/reports/sweep-c5/L7-08/low-review.json",
-            "sha256": "74073c3f18666751561283b40277e17db506d9916f74fc5d5f43e1b920b1ab94",
-            "what": "Current admitted finalhorde census, exact canonical control, actual physical rockets and carried-human body-clear passage inside named corridor; every capture SHA256/seen note retained,21fault controls. Placement and exploratory-camera limitations explicit."
+            "file": "docs/reports/final-c/L7-11/low-physical.json.gz",
+            "sha256": "72c11f659c6f521d4baa05aeeb3225cb38946efb7f5355f7c246cb7cfbe50ccc",
+            "what": "Both current native final-group censuses begin with exactly60low/120high admitted60HP regulars and2Alphas300HP (including immediate corridor approach). Independent final hashes match canonical controls. Actual physical rocket/input ledgers and personally inspected paired gap/crossing frames show23low/13high human survivor IDs physically cross the previously blocked corridor and board; no survivor relocation, target HP edit or objective skip. Courier protection only."
           },
           {
-            "file": "docs/reports/sweep-c5/L7-08/high-review.json",
-            "sha256": "0c98a8c7ae4c18974e75567560fa9d5da4edceae143f6d480f64d8666a3ca14d",
-            "what": "Current admitted finalhorde census, exact canonical control, actual physical rockets and carried-human body-clear passage inside named corridor; every capture SHA256/seen note retained,21fault controls. Placement and exploratory-camera limitations explicit."
+            "file": "docs/reports/final-c/L7-11/high-physical.json.gz",
+            "sha256": "02803ff3b99a2ad3aae6b969efc8a5216508843f946714131c6ba255040d4f99",
+            "what": "Both current native final-group censuses begin with exactly60low/120high admitted60HP regulars and2Alphas300HP (including immediate corridor approach). Independent final hashes match canonical controls. Actual physical rocket/input ledgers and personally inspected paired gap/crossing frames show23low/13high human survivor IDs physically cross the previously blocked corridor and board; no survivor relocation, target HP edit or objective skip. Courier protection only."
           },
           {
-            "file": "docs/reports/sweep-c5/L7-08/native-current.json.gz",
-            "sha256": "6c7ba9f865b2680c92a0617045c66f9a77717ff8d773ebbbb0ef1caa54d12a27",
-            "what": "Current admitted finalhorde census, exact canonical control, actual physical rockets and carried-human body-clear passage inside named corridor; every capture SHA256/seen note retained,21fault controls. Placement and exploratory-camera limitations explicit."
-          },
-          {
-            "file": "docs/reports/sweep-c5/L7-08/coverage-proof.json",
-            "sha256": "f0b016aa1f0573fcf65bcd2ded89feeecc52e9c8fa2d951be1ce568077891aa5",
-            "what": "Current admitted finalhorde census, exact canonical control, actual physical rockets and carried-human body-clear passage inside named corridor; every capture SHA256/seen note retained,21fault controls. Placement and exploratory-camera limitations explicit."
-          },
-          {
-            "file": "docs/reports/sweep-c5/L7-08/exploration/remote-camera-low.json.gz",
-            "sha256": "51d06926ccd7999a42e234d79d5448eeaa6cbbe1d79a1c21ceb341877ad8bc19",
-            "what": "Current admitted finalhorde census, exact canonical control, actual physical rockets and carried-human body-clear passage inside named corridor; every capture SHA256/seen note retained,21fault controls. Placement and exploratory-camera limitations explicit."
-          },
-          {
-            "file": "docs/reports/sweep-c5/L7-08/exploration/remote-camera-low-review.json",
-            "sha256": "dbc46dccd2fb4fc7d3cb50afafa332b1e21d870ad47d014e99ee18025e94cbf7",
-            "what": "Current admitted finalhorde census, exact canonical control, actual physical rockets and carried-human body-clear passage inside named corridor; every capture SHA256/seen note retained,21fault controls. Placement and exploratory-camera limitations explicit."
+            "file": "docs/reports/final-c/L7-11/capture-review.json",
+            "sha256": "ab66c26f041764887c9baa58ce8ae22f910bf16627fb8fc57732d30993497781",
+            "what": "Both current native final-group censuses begin with exactly60low/120high admitted60HP regulars and2Alphas300HP (including immediate corridor approach). Independent final hashes match canonical controls. Actual physical rocket/input ledgers and personally inspected paired gap/crossing frames show23low/13high human survivor IDs physically cross the previously blocked corridor and board; no survivor relocation, target HP edit or objective skip. Courier protection only."
           }
         ],
-        "freshness": "STALE",
+        "notes": "Frozen-head row review. Current immutable evidence, unchanged criterion and game source.",
+        "sourceDigest": "1aff45872f0c1603cfc94e9f01d515824d2304b5b5d9e5f96fee9cc461ad064a",
+        "freshness": "FRESH",
         "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     },
@@ -7087,11 +7642,17 @@
       "id": "L7-09",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/complete observed human follower pace versus phase group median: {\"rows\":[{\"phase\":\"step/corridor\",\"id\":51,\"seeds\":[{\"seed\":1,\"valid\":true,\"samples\":140,\"median\":4.500033748120395,\"groupMedian\":4.499827350201276,\"ratio\":1.0000458679640476},{\"seed\":2,\"valid\":true,\"samples\":143,\"median\":4.499949673820696,\"groupMedian\":4.49994966647885,\"ratio\":1.0000000016315396},{\"seed\":3,\"valid\":true,\"samples\":143,\"median\":4.499817739711602,\"groupMedian\":4.499817317334589,\"ratio… (full values in JSON) (target every ratio≥0.95; bar pixels and absolute formation remain open; PASS); high/complete observed human follower pace versus phase group median: {\"rows\":[{\"phase\":\"step/corridor\",\"id\":51,\"seeds\":[{\"seed\":1,\"valid\":true,\"samples\":143,\"median\":4.4998583694427134,\"groupMedian\":4.4999131418871015,\"ratio\":0.9999878281107522},{\"seed\":2,\"valid\":true,\"samples\":143,\"median\":4.499841934324422,\"groupMedian\":4.499948009748842,\"ratio\":0.999976427411119},{\"seed\":3,\"valid\":false,\"samples\":143,\"median\":4.499816896403672,\"groupMedian\":4.49981689453125,\"rat… (full values in JSON) (target every ratio≥0.95; bar pixels and absolute formation remain open; PASS)",
+      "value": "low/complete observed human follower pace versus phase group median: {\"rows\":[{\"phase\":\"step/corridor\",\"id\":51,\"seeds\":[{\"seed\":1,\"valid\":true,\"samples\":140,\"median\":4.500033748120395,\"groupMedian\":4.499827350201276,\"ratio\":1.0000458679640476},{\"seed\":2,\"valid\":true,\"samples\":143,\"median\":4.499949673820696,\"groupMedian\":4.49994966647885,\"ratio\":1.0000000016315396},{\"seed\":3,\"valid\":true,\"samples\":143,\"median\":4.499817739711602,\"groupMedian\":4.499817317334589,\"ratio… (full values in JSON) (target every ratio≥0.95; bar pixels and absolute formation remain open; PASS); high/complete observed human follower pace versus phase group median: {\"rows\":[{\"phase\":\"step/corridor\",\"id\":51,\"seeds\":[{\"seed\":1,\"valid\":true,\"samples\":143,\"median\":4.4998583694427134,\"groupMedian\":4.4999131418871015,\"ratio\":0.9999878281107522},{\"seed\":2,\"valid\":true,\"samples\":143,\"median\":4.499841934324422,\"groupMedian\":4.499948009748842,\"ratio\":0.999976427411119},{\"seed\":3,\"valid\":false,\"samples\":143,\"median\":4.499816896403672,\"groupMedian\":4.49981689453125,\"rat… (full values in JSON) (target every ratio≥0.95; bar pixels and absolute formation remain open; PASS) Manual review PASS (FRESH, Codex final-c): Current native individual follower pace checks pass the>=0.95phase group-median ratio at both tiers across three seeds. Personally reviewed physical corridor-mouth/rocket-gap/crossing views at both zooms show discrete teal follower bars, staggered trailing positions and upright pressing bodies. Dense low/high physical movement ledgers continue through passage and boarding; no tipped live crowd bodies seen in these current sequences.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L7-low-complete.json",
-        "docs/reports/fix51-verify/receipts/L7-high-complete.json"
+        "docs/reports/fix51-verify/receipts/L7-high-complete.json",
+        "docs/reports/final-c/L7-09/pace.json",
+        "docs/reports/final-c/native/L7-low-complete.json.gz",
+        "docs/reports/final-c/native/L7-high-complete.json.gz",
+        "docs/reports/final-c/L7-11/capture-review.json",
+        "docs/reports/final-c/L7-11/low-physical.json.gz",
+        "docs/reports/final-c/L7-11/high-physical.json.gz"
       ],
       "expected": "Followers keep pace and show bars (G-12/13); pressing crowd never drawn tipped sideways.",
       "checks": [
@@ -10306,19 +10867,74 @@
         ],
         "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L7 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Followers keep pace and show bars (G-12/13); pressing crowd never drawn tipped sideways."
       },
-      "remaining": "Inspect all bars and pressing-crowd body orientation; retain the measured individual human pace checks."
+      "remaining": "Inspect all bars and pressing-crowd body orientation; retain the measured individual human pace checks.",
+      "reviewDecision": {
+        "row": "L7-09",
+        "status": "PASS",
+        "reviewer": "Codex final-c",
+        "date": "2026-11-07",
+        "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+        "clauses": [
+          {
+            "clause": "Followers keep pace and show bars (G-12/13); pressing crowd never drawn tipped sideways.",
+            "verdict": "PASS",
+            "note": "Current native individual follower pace checks pass the>=0.95phase group-median ratio at both tiers across three seeds. Personally reviewed physical corridor-mouth/rocket-gap/crossing views at both zooms show discrete teal follower bars, staggered trailing positions and upright pressing bodies. Dense low/high physical movement ledgers continue through passage and boarding; no tipped live crowd bodies seen in these current sequences."
+          }
+        ],
+        "evidence": [
+          {
+            "file": "docs/reports/final-c/L7-09/pace.json",
+            "sha256": "3d6be20689a7ad2874a3cf550012f856d6db6d75dda19228e531e1af62d71cf5",
+            "what": "Current native individual follower pace checks pass the>=0.95phase group-median ratio at both tiers across three seeds. Personally reviewed physical corridor-mouth/rocket-gap/crossing views at both zooms show discrete teal follower bars, staggered trailing positions and upright pressing bodies. Dense low/high physical movement ledgers continue through passage and boarding; no tipped live crowd bodies seen in these current sequences."
+          },
+          {
+            "file": "docs/reports/final-c/native/L7-low-complete.json.gz",
+            "sha256": "5c77a3f0f9af2f77b2781db5e6b8ba6b239e187be04196d87c18871a5b676277",
+            "what": "Current native individual follower pace checks pass the>=0.95phase group-median ratio at both tiers across three seeds. Personally reviewed physical corridor-mouth/rocket-gap/crossing views at both zooms show discrete teal follower bars, staggered trailing positions and upright pressing bodies. Dense low/high physical movement ledgers continue through passage and boarding; no tipped live crowd bodies seen in these current sequences."
+          },
+          {
+            "file": "docs/reports/final-c/native/L7-high-complete.json.gz",
+            "sha256": "ac2f6292c8013a44c79a58023527a8965ebfe546fdf2a237ebf6930ca2028cb2",
+            "what": "Current native individual follower pace checks pass the>=0.95phase group-median ratio at both tiers across three seeds. Personally reviewed physical corridor-mouth/rocket-gap/crossing views at both zooms show discrete teal follower bars, staggered trailing positions and upright pressing bodies. Dense low/high physical movement ledgers continue through passage and boarding; no tipped live crowd bodies seen in these current sequences."
+          },
+          {
+            "file": "docs/reports/final-c/L7-11/capture-review.json",
+            "sha256": "ab66c26f041764887c9baa58ce8ae22f910bf16627fb8fc57732d30993497781",
+            "what": "Current native individual follower pace checks pass the>=0.95phase group-median ratio at both tiers across three seeds. Personally reviewed physical corridor-mouth/rocket-gap/crossing views at both zooms show discrete teal follower bars, staggered trailing positions and upright pressing bodies. Dense low/high physical movement ledgers continue through passage and boarding; no tipped live crowd bodies seen in these current sequences."
+          },
+          {
+            "file": "docs/reports/final-c/L7-11/low-physical.json.gz",
+            "sha256": "72c11f659c6f521d4baa05aeeb3225cb38946efb7f5355f7c246cb7cfbe50ccc",
+            "what": "Current native individual follower pace checks pass the>=0.95phase group-median ratio at both tiers across three seeds. Personally reviewed physical corridor-mouth/rocket-gap/crossing views at both zooms show discrete teal follower bars, staggered trailing positions and upright pressing bodies. Dense low/high physical movement ledgers continue through passage and boarding; no tipped live crowd bodies seen in these current sequences."
+          },
+          {
+            "file": "docs/reports/final-c/L7-11/high-physical.json.gz",
+            "sha256": "02803ff3b99a2ad3aae6b969efc8a5216508843f946714131c6ba255040d4f99",
+            "what": "Current native individual follower pace checks pass the>=0.95phase group-median ratio at both tiers across three seeds. Personally reviewed physical corridor-mouth/rocket-gap/crossing views at both zooms show discrete teal follower bars, staggered trailing positions and upright pressing bodies. Dense low/high physical movement ledgers continue through passage and boarding; no tipped live crowd bodies seen in these current sequences."
+          }
+        ],
+        "notes": "Frozen-head row review. Current immutable evidence, unchanged criterion and game source.",
+        "sourceDigest": "1aff45872f0c1603cfc94e9f01d515824d2304b5b5d9e5f96fee9cc461ad064a",
+        "freshness": "FRESH",
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
+      }
     },
     {
       "id": "L7-10",
       "status": "PASS",
       "currentStatus": "PASS",
-      "value": "low/complete every living roster identity boarded: {\"alive\":[51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74],\"boarded\":[56,65,64,73,51,52,53,54,57,58,59,60,55,61,63,66,67,69,70,72,74,68,62,71]} (target all living followers are in boarded ledger; PASS); high/complete every living roster identity boarded: {\"alive\":[51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74],\"boarded\":[56,52,53,66,58,55,69,59,54,57,63,60,51,62,64,61,67,68,70,71,72,73,74,65]} (target all living followers are in boarded ledger; PASS); low/controlled-fixture actual passenger door-entry spacing: {\"entries\":[{\"id\":56,\"tick\":5205},{\"id\":65,\"tick\":5220},{\"id\":64,\"tick\":5235},{\"id\":73,\"tick\":5250},{\"id\":51,\"tick\":5265},{\"id\":52,\"tick\":5280},{\"id\":53,\"tick\":5295},{\"id\":54,\"tick\":5310},{\"id\":57,\"tick\":5325},{\"id\":58,\"tick\":5340},{\"id\":59,\"tick\":5355},{\"id\":60,\"tick\":5370},{\"id\":55,\"tick\":5385},{\"id\":61,\"tick\":5400},{\"id\":63,\"tick\":5415},{\"id\":66,\"tick\":5430},{\"id\":67,\"tick\":5445},{\"id\":69,\"tick… (full values in JSON) (target one new passenger at most every15ticks; every entry finishes; PASS); low/controlled-fixture living infected remaining when boarding has finished: {\"tick\":7790,\"alive\":10,\"ids\":[280,281,282,283,284,285,286,287,288,289]} (target at least10 admitted living infected may remain elsewhere at departure start; PASS); low/controlled-fixture offscreen stalled boarding recovery after20s: {\"setup\":\"isolated departure controller; one stationary offscreen living follower; remaining roster starts dead as fixture setup; controller ticks only, no follower movement or combat simulation\",\"firstSampleTick\":2,\"id\":51,\"events\":[{\"name\":\"l7.survivor-recovered\",\"tick\":1202,\"actorId\":51},{\"name\":\"l7.survivor-boarded\",\"tick\":1238,\"actorId\":51}],\"recoveryTicks\":1200,\"alive\":true,\"aboard\":true} (target no early recovery; actual recovery at1200ticks without progress; same living actor finishes ordinary36tick door entry; PASS); high/controlled-fixture actual passenger door-entry spacing: {\"entries\":[{\"id\":56,\"tick\":5164},{\"id\":52,\"tick\":5179},{\"id\":53,\"tick\":5200},{\"id\":66,\"tick\":5327},{\"id\":58,\"tick\":5348},{\"id\":55,\"tick\":5363},{\"id\":69,\"tick\":5378},{\"id\":59,\"tick\":5393},{\"id\":54,\"tick\":5408},{\"id\":57,\"tick\":5423},{\"id\":63,\"tick\":5438},{\"id\":60,\"tick\":5453},{\"id\":51,\"tick\":5468},{\"id\":62,\"tick\":5483},{\"id\":64,\"tick\":5498},{\"id\":61,\"tick\":5513},{\"id\":67,\"tick\":5528},{\"id\":68,\"tick… (full values in JSON) (target one new passenger at most every15ticks; every entry finishes; PASS); high/controlled-fixture living infected remaining when boarding has finished: {\"tick\":5729,\"alive\":10,\"ids\":[480,481,482,483,484,485,486,487,488,489]} (target at least10 admitted living infected may remain elsewhere at departure start; PASS); high/controlled-fixture offscreen stalled boarding recovery after20s: {\"setup\":\"isolated departure controller; one stationary offscreen living follower; remaining roster starts dead as fixture setup; controller ticks only, no follower movement or combat simulation\",\"firstSampleTick\":2,\"id\":51,\"events\":[{\"name\":\"l7.survivor-recovered\",\"tick\":1202,\"actorId\":51},{\"name\":\"l7.survivor-boarded\",\"tick\":1238,\"actorId\":51}],\"recoveryTicks\":1200,\"alive\":true,\"aboard\":true} (target no early recovery; actual recovery at1200ticks without progress; same living actor finishes ordinary36tick door entry; PASS)",
+      "value": "low/complete every living roster identity boarded: {\"alive\":[51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74],\"boarded\":[56,65,64,73,51,52,53,54,57,58,59,60,55,61,63,66,67,69,70,72,74,68,62,71]} (target all living followers are in boarded ledger; PASS); high/complete every living roster identity boarded: {\"alive\":[51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74],\"boarded\":[56,52,53,66,58,55,69,59,54,57,63,60,51,62,64,61,67,68,70,71,72,73,74,65]} (target all living followers are in boarded ledger; PASS); low/controlled-fixture actual passenger door-entry spacing: {\"entries\":[{\"id\":56,\"tick\":5205},{\"id\":65,\"tick\":5220},{\"id\":64,\"tick\":5235},{\"id\":73,\"tick\":5250},{\"id\":51,\"tick\":5265},{\"id\":52,\"tick\":5280},{\"id\":53,\"tick\":5295},{\"id\":54,\"tick\":5310},{\"id\":57,\"tick\":5325},{\"id\":58,\"tick\":5340},{\"id\":59,\"tick\":5355},{\"id\":60,\"tick\":5370},{\"id\":55,\"tick\":5385},{\"id\":61,\"tick\":5400},{\"id\":63,\"tick\":5415},{\"id\":66,\"tick\":5430},{\"id\":67,\"tick\":5445},{\"id\":69,\"tick… (full values in JSON) (target one new passenger at most every15ticks; every entry finishes; PASS); low/controlled-fixture living infected remaining when boarding has finished: {\"tick\":7790,\"alive\":10,\"ids\":[280,281,282,283,284,285,286,287,288,289]} (target at least10 admitted living infected may remain elsewhere at departure start; PASS); low/controlled-fixture offscreen stalled boarding recovery after20s: {\"setup\":\"isolated departure controller; one stationary offscreen living follower; remaining roster starts dead as fixture setup; controller ticks only, no follower movement or combat simulation\",\"firstSampleTick\":2,\"id\":51,\"events\":[{\"name\":\"l7.survivor-recovered\",\"tick\":1202,\"actorId\":51},{\"name\":\"l7.survivor-boarded\",\"tick\":1238,\"actorId\":51}],\"recoveryTicks\":1200,\"alive\":true,\"aboard\":true} (target no early recovery; actual recovery at1200ticks without progress; same living actor finishes ordinary36tick door entry; PASS); high/controlled-fixture actual passenger door-entry spacing: {\"entries\":[{\"id\":56,\"tick\":5164},{\"id\":52,\"tick\":5179},{\"id\":53,\"tick\":5200},{\"id\":66,\"tick\":5327},{\"id\":58,\"tick\":5348},{\"id\":55,\"tick\":5363},{\"id\":69,\"tick\":5378},{\"id\":59,\"tick\":5393},{\"id\":54,\"tick\":5408},{\"id\":57,\"tick\":5423},{\"id\":63,\"tick\":5438},{\"id\":60,\"tick\":5453},{\"id\":51,\"tick\":5468},{\"id\":62,\"tick\":5483},{\"id\":64,\"tick\":5498},{\"id\":61,\"tick\":5513},{\"id\":67,\"tick\":5528},{\"id\":68,\"tick… (full values in JSON) (target one new passenger at most every15ticks; every entry finishes; PASS); high/controlled-fixture living infected remaining when boarding has finished: {\"tick\":5729,\"alive\":10,\"ids\":[480,481,482,483,484,485,486,487,488,489]} (target at least10 admitted living infected may remain elsewhere at departure start; PASS); high/controlled-fixture offscreen stalled boarding recovery after20s: {\"setup\":\"isolated departure controller; one stationary offscreen living follower; remaining roster starts dead as fixture setup; controller ticks only, no follower movement or combat simulation\",\"firstSampleTick\":2,\"id\":51,\"events\":[{\"name\":\"l7.survivor-recovered\",\"tick\":1202,\"actorId\":51},{\"name\":\"l7.survivor-boarded\",\"tick\":1238,\"actorId\":51}],\"recoveryTicks\":1200,\"alive\":true,\"aboard\":true} (target no early recovery; actual recovery at1200ticks without progress; same living actor finishes ordinary36tick door entry; PASS) Manual review PASS (FRESH, Codex final-c): All 24 living identities board at both tiers. Actual per-entry start spacing is at least 15 ticks; fixture completion retains 10 living admitted infected elsewhere. Offscreen stalled survivor recovery occurs at exactly 1200 ticks (20 s), followed by ordinary 36-tick door entry. Native departure/controller receipts measure boarding semantics; no cinematic visual claim is included in this S-only row.",
       "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L7-low-complete.json",
         "docs/reports/fix51-verify/receipts/L7-high-complete.json",
         "docs/reports/fix51-verify/receipts/L7-low-fixtures.json",
-        "docs/reports/fix51-verify/receipts/L7-high-fixtures.json"
+        "docs/reports/fix51-verify/receipts/L7-high-fixtures.json",
+        "docs/reports/final-c/L7-10/numeric-review.json",
+        "docs/reports/final-c/native/L7-low-complete.json.gz",
+        "docs/reports/final-c/native/L7-high-complete.json.gz",
+        "docs/reports/final-c/native/L7-low-fixtures.json.gz",
+        "docs/reports/final-c/native/L7-high-fixtures.json.gz"
       ],
       "expected": "Every living follower physically boards (one per 15 ticks, recovery after 20 s stall); boarding can finish with ≥ 10 infected alive elsewhere.",
       "checks": [
@@ -11037,24 +11653,69 @@
         "evidence": [],
         "method": "NEXT: Record every passenger entry tick and living follower ID through actual departure; separately hold a boarding obstruction for 20 seconds and retain the recovery."
       },
-      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure."
+      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure.",
+      "reviewDecision": {
+        "row": "L7-10",
+        "status": "PASS",
+        "reviewer": "Codex final-c",
+        "date": "2026-11-07",
+        "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+        "clauses": [
+          {
+            "clause": "Every living follower physically boards (one per 15 ticks, recovery after 20 s stall); boarding can finish with ≥ 10 infected alive elsewhere.",
+            "verdict": "PASS",
+            "note": "All 24 living identities board at both tiers. Actual per-entry start spacing is at least 15 ticks; fixture completion retains 10 living admitted infected elsewhere. Offscreen stalled survivor recovery occurs at exactly 1200 ticks (20 s), followed by ordinary 36-tick door entry. Native departure/controller receipts measure boarding semantics; no cinematic visual claim is included in this S-only row."
+          }
+        ],
+        "evidence": [
+          {
+            "file": "docs/reports/final-c/L7-10/numeric-review.json",
+            "sha256": "c2ab970530f185f242b373d9192eb98f10ae5d51a8512a2e4173afffca75f083",
+            "what": "All 24 living identities board at both tiers. Actual per-entry start spacing is at least 15 ticks; fixture completion retains 10 living admitted infected elsewhere. Offscreen stalled survivor recovery occurs at exactly 1200 ticks (20 s), followed by ordinary 36-tick door entry. Native departure/controller receipts measure boarding semantics; no cinematic visual claim is included in this S-only row."
+          },
+          {
+            "file": "docs/reports/final-c/native/L7-low-complete.json.gz",
+            "sha256": "5c77a3f0f9af2f77b2781db5e6b8ba6b239e187be04196d87c18871a5b676277",
+            "what": "Immutable frozen-head native source receipt: docs/reports/fix51-verify/receipts/L7-low-complete.json. Row-specific measured checks are reproduced in numeric-review.json."
+          },
+          {
+            "file": "docs/reports/final-c/native/L7-high-complete.json.gz",
+            "sha256": "ac2f6292c8013a44c79a58023527a8965ebfe546fdf2a237ebf6930ca2028cb2",
+            "what": "Immutable frozen-head native source receipt: docs/reports/fix51-verify/receipts/L7-high-complete.json. Row-specific measured checks are reproduced in numeric-review.json."
+          },
+          {
+            "file": "docs/reports/final-c/native/L7-low-fixtures.json.gz",
+            "sha256": "61bc551b9dfdabd8e9f5478534708c7fe80a536b8f0667638d40e20c0510eab9",
+            "what": "Immutable frozen-head native source receipt: docs/reports/fix51-verify/receipts/L7-low-fixtures.json. Row-specific measured checks are reproduced in numeric-review.json."
+          },
+          {
+            "file": "docs/reports/final-c/native/L7-high-fixtures.json.gz",
+            "sha256": "84e549c9ba463b82210c944abde4838c8ca34e70c1c987a8a07a0b8b723060c4",
+            "what": "Immutable frozen-head native source receipt: docs/reports/fix51-verify/receipts/L7-high-fixtures.json. Row-specific measured checks are reproduced in numeric-review.json."
+          }
+        ],
+        "notes": "Frozen-head numeric review. No gameplay source or criterion changed. No browser, performance, or visual evidence is claimed for this numeric-only criterion.",
+        "sourceDigest": "1aff45872f0c1603cfc94e9f01d515824d2304b5b5d9e5f96fee9cc461ad064a",
+        "freshness": "FRESH",
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
+      }
     },
     {
       "id": "L7-11",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/controlled-fixture actual uninterrupted departure duration and bus displacement: {\"setup\":\"ordinary mortal native L7 input; capability fixture admits ten extra ordinary enemies elsewhere at boarding; read-only bus and passenger observations on every tick\",\"run\":{\"level\":\"L7\",\"policy\":\"complete\",\"seed\":1,\"completed\":true,\"time\":138.83333333333334,\"deaths\":0,\"kills\":0,\"damageTaken\":0,\"failures\":{},\"objectiveTimeline\":[],\"furthestObjective\":\"bus-departure\",\"activeObjectives\":[],\"… (full values in JSON) (target 6–10 seconds; bus moves at least30m; PASS); high/controlled-fixture actual uninterrupted departure duration and bus displacement: {\"setup\":\"ordinary mortal native L7 input; capability fixture admits ten extra ordinary enemies elsewhere at boarding; read-only bus and passenger observations on every tick\",\"run\":{\"level\":\"L7\",\"policy\":\"complete\",\"seed\":1,\"completed\":true,\"time\":104.48333333333333,\"deaths\":0,\"kills\":0,\"damageTaken\":0,\"failures\":{},\"objectiveTimeline\":[],\"furthestObjective\":\"bus-departure\",\"activeObjectives\":[],\"… (full values in JSON) (target 6–10 seconds; bus moves at least30m; PASS) Manual review PASS (STALE, Codex sweep-c6): Fresh actual physical WASD/mouse runs from native L5/L6 progressed saves, low/high, carry1/4original humans aboard. Both native bus shots run540consecutive ticks/9s and move118.5m with one live1000HP bus throughout. All48frames personally inspected: whole ruined city/fire zone recedes into pink smoke/ash, tower lamps and military truck cab/grille/body visibly lit, red blood distinct among corpses, and no bare map edge in the8/8.5s end views. Bus lower hull is partly cropped in several mid/late frames; the criterion does not require full hull everyframe. Cinematic camera overrides userzoom; no independent zoom-matrix claim. Normal AI/HP/caps; courier protection only. Existing markerWalkKeys fixes sign-only physical steering; high additionally follows a logged authored-map detour along south corridor edge. Every gameplay input through completion is physical, native driver detached. Three failed harness attempts are archived, excluded from qualification. Dedicated consumer rejects all20semantic faults and restores exact evidence. No game/criterion change.",
+      "value": "low/controlled-fixture actual uninterrupted departure duration and bus displacement: {\"setup\":\"ordinary mortal native L7 input; capability fixture admits ten extra ordinary enemies elsewhere at boarding; read-only bus and passenger observations on every tick\",\"run\":{\"level\":\"L7\",\"policy\":\"complete\",\"seed\":1,\"completed\":true,\"time\":138.83333333333334,\"deaths\":0,\"kills\":0,\"damageTaken\":0,\"failures\":{},\"objectiveTimeline\":[],\"furthestObjective\":\"bus-departure\",\"activeObjectives\":[],\"… (full values in JSON) (target 6–10 seconds; bus moves at least30m; PASS); high/controlled-fixture actual uninterrupted departure duration and bus displacement: {\"setup\":\"ordinary mortal native L7 input; capability fixture admits ten extra ordinary enemies elsewhere at boarding; read-only bus and passenger observations on every tick\",\"run\":{\"level\":\"L7\",\"policy\":\"complete\",\"seed\":1,\"completed\":true,\"time\":104.48333333333333,\"deaths\":0,\"kills\":0,\"damageTaken\":0,\"failures\":{},\"objectiveTimeline\":[],\"furthestObjective\":\"bus-departure\",\"activeObjectives\":[],\"… (full values in JSON) (target 6–10 seconds; bus moves at least30m; PASS) Manual review PASS (FRESH, Codex final-c): Actual moving-input departure at both tiers lasts540ticks/9s and moves the bus118.5m; hull stays1000HP. Forty-eight current panels inspected: burning skyline recedes, truck/bus have visible lit faces, red ground blood remains readable and final8.5s shot has no map edge. Normal AI/damage and physical boarding; protected courier disclosed. Final complete departure ledger continuous at every tick.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L7-low-fixtures.json",
         "docs/reports/fix51-verify/receipts/L7-high-fixtures.json",
-        "docs/reports/sweep-c6/L7-11/low-physical.json.gz",
-        "docs/reports/sweep-c6/L7-11/high-physical.json.gz",
-        "docs/reports/sweep-c6/L7-11/low-review.json",
-        "docs/reports/sweep-c6/L7-11/high-review.json",
-        "docs/reports/sweep-c6/L7-11/low-producer.mjs",
-        "docs/reports/sweep-c6/L7-11/high-producer.mjs",
-        "docs/reports/sweep-c6/L7-11/coverage-proof.json"
+        "docs/reports/final-c/L7-11/sweep-c6-l7-departure-producer.ts",
+        "docs/reports/final-c/L7-11/low-physical.json.gz",
+        "docs/reports/final-c/L7-11/low-producer.mjs",
+        "docs/reports/final-c/L7-11/high-physical.json.gz",
+        "docs/reports/final-c/L7-11/high-producer.mjs",
+        "docs/reports/final-c/L7-11/physical-producer.ts",
+        "docs/reports/final-c/L7-11/capture-review.json"
       ],
       "expected": "Bus cinematic 6–10 s, bus moves ≥ 30 m, burning skyline shrinks; truck lit (not a black silhouette); gore reads as blood; no map edge in the end shot.",
       "checks": [
@@ -12094,54 +12755,56 @@
       "reviewDecision": {
         "row": "L7-11",
         "status": "PASS",
-        "reviewer": "Codex sweep-c6",
-        "date": "2026-11-06",
-        "commit": "0d5ea37a7668562739d002172109f6041164625a",
+        "reviewer": "Codex final-c",
+        "date": "2026-11-07",
+        "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
         "clauses": [
           {
             "clause": "Bus cinematic 6–10 s, bus moves ≥ 30 m, burning skyline shrinks; truck lit (not a black silhouette); gore reads as blood; no map edge in the end shot.",
             "verdict": "PASS",
-            "note": "Fresh actual physical WASD/mouse runs from native L5/L6 progressed saves, low/high, carry1/4original humans aboard. Both native bus shots run540consecutive ticks/9s and move118.5m with one live1000HP bus throughout. All48frames personally inspected: whole ruined city/fire zone recedes into pink smoke/ash, tower lamps and military truck cab/grille/body visibly lit, red blood distinct among corpses, and no bare map edge in the8/8.5s end views. Bus lower hull is partly cropped in several mid/late frames; the criterion does not require full hull everyframe. Cinematic camera overrides userzoom; no independent zoom-matrix claim. Normal AI/HP/caps; courier protection only. Existing markerWalkKeys fixes sign-only physical steering; high additionally follows a logged authored-map detour along south corridor edge. Every gameplay input through completion is physical, native driver detached. Three failed harness attempts are archived, excluded from qualification. Dedicated consumer rejects all20semantic faults and restores exact evidence. No game/criterion change."
+            "note": "Actual moving-input departure at both tiers lasts540ticks/9s and moves the bus118.5m; hull stays1000HP. Forty-eight current panels inspected: burning skyline recedes, truck/bus have visible lit faces, red ground blood remains readable and final8.5s shot has no map edge. Normal AI/damage and physical boarding; protected courier disclosed. Final complete departure ledger continuous at every tick."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/sweep-c6/L7-11/low-physical.json.gz",
-            "sha256": "4fd4a160af03f5abac934bd704143f15bc8461507cacaa1055fc9eaa4860dccc",
-            "what": "Current-source actual physical input, every departure tick, stable bus HP/ID/position and half-second frame records."
+            "file": "docs/reports/final-c/L7-11/sweep-c6-l7-departure-producer.ts",
+            "sha256": "61607b5fc250309301ff1a3a8a0ce31154b62f15c352cd799c76e3ff8d0f2803",
+            "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
           },
           {
-            "file": "docs/reports/sweep-c6/L7-11/high-physical.json.gz",
-            "sha256": "cb0029d27b9454bcd52dc9a9fbbcae456791ab32ddbefc55949b6de7a8c7e37c",
-            "what": "Current-source actual physical input, every departure tick, stable bus HP/ID/position and half-second frame records."
+            "file": "docs/reports/final-c/L7-11/low-physical.json.gz",
+            "sha256": "72c11f659c6f521d4baa05aeeb3225cb38946efb7f5355f7c246cb7cfbe50ccc",
+            "what": "Actual moving-input departure at both tiers lasts540ticks/9s and moves the bus118.5m; hull stays1000HP. Forty-eight current panels inspected: burning skyline recedes, truck/bus have visible lit faces, red ground blood remains readable and final8.5s shot has no map edge. Normal AI/damage and physical boarding; protected courier disclosed. Final complete departure ledger continuous at every tick."
           },
           {
-            "file": "docs/reports/sweep-c6/L7-11/low-review.json",
-            "sha256": "e3b71dc3d2011e96ffcaf25353e972a16093d4f49edecb76bdca5c84f484fd5c",
-            "what": "Personally inspected all24frames at full-size sheets; exact scene observations/digests retained and raw images deleted."
+            "file": "docs/reports/final-c/L7-11/low-producer.mjs",
+            "sha256": "61607b5fc250309301ff1a3a8a0ce31154b62f15c352cd799c76e3ff8d0f2803",
+            "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
           },
           {
-            "file": "docs/reports/sweep-c6/L7-11/high-review.json",
-            "sha256": "47ce0231bcfb03c96545a5a47131d0bdf0f0dcaf07489eda61c787c0653f3e03",
-            "what": "Personally inspected all24frames at full-size sheets; exact scene observations/digests retained and raw images deleted."
+            "file": "docs/reports/final-c/L7-11/high-physical.json.gz",
+            "sha256": "02803ff3b99a2ad3aae6b969efc8a5216508843f946714131c6ba255040d4f99",
+            "what": "Actual moving-input departure at both tiers lasts540ticks/9s and moves the bus118.5m; hull stays1000HP. Forty-eight current panels inspected: burning skyline recedes, truck/bus have visible lit faces, red ground blood remains readable and final8.5s shot has no map edge. Normal AI/damage and physical boarding; protected courier disclosed. Final complete departure ledger continuous at every tick."
           },
           {
-            "file": "docs/reports/sweep-c6/L7-11/low-producer.mjs",
-            "sha256": "b626d667e966513b612827db889727c44912f0bb1bdad4d263772b368528c6bd",
-            "what": "Exact immutable producer used for this tier."
+            "file": "docs/reports/final-c/L7-11/high-producer.mjs",
+            "sha256": "5fe4eb248820b37b1dc3a422bc51fa66d9b641f93974a3d76ca9c6a6ad201114",
+            "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
           },
           {
-            "file": "docs/reports/sweep-c6/L7-11/high-producer.mjs",
-            "sha256": "cb3ce0609f9375561476daf9d680a41b8e3370abdff97d4fb3a436d83c130aa1",
-            "what": "Exact immutable producer used for this tier."
+            "file": "docs/reports/final-c/L7-11/physical-producer.ts",
+            "sha256": "5fe4eb248820b37b1dc3a422bc51fa66d9b641f93974a3d76ca9c6a6ad201114",
+            "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
           },
           {
-            "file": "docs/reports/sweep-c6/L7-11/coverage-proof.json",
-            "sha256": "dcd712a633def7a0cb71529eda9de89acfcc6ec8538a7e07de6495ad8dff1a80",
-            "what": "Twenty semantic mutations exercise unchanged dedicated consumer; all reject, original bytes restored."
+            "file": "docs/reports/final-c/L7-11/capture-review.json",
+            "sha256": "ab66c26f041764887c9baa58ce8ae22f910bf16627fb8fc57732d30993497781",
+            "what": "Actual moving-input departure at both tiers lasts540ticks/9s and moves the bus118.5m; hull stays1000HP. Forty-eight current panels inspected: burning skyline recedes, truck/bus have visible lit faces, red ground blood remains readable and final8.5s shot has no map edge. Normal AI/damage and physical boarding; protected courier disclosed. Final complete departure ledger continuous at every tick."
           }
         ],
-        "freshness": "STALE",
+        "notes": "Frozen-head row review. Current immutable evidence, unchanged criterion and game source.",
+        "sourceDigest": "1aff45872f0c1603cfc94e9f01d515824d2304b5b5d9e5f96fee9cc461ad064a",
+        "freshness": "FRESH",
         "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     },
@@ -12149,21 +12812,16 @@
       "id": "L7-12",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "Manual review PASS (STALE, Codex sweep-c6): Fresh real-input progressed-save low/high, actual userzoom0.5/1.5. Twenty-eight same-tick lossless native/hidden-courier/production-depth-ID samples cover actual rocket pickup, original live Alpha at horde0/6/12 physical ticks, and active city-fire/destruction0/6/12 poses. Courier-maskP90 against its projected2m native ring passes all cells: minimum 4.768627 with .02 offset and 3.879115 with stricter .05 offset. ID geometry excludes corgi/crowd/fire/shadows; actual body counts and64ring-point patches retained. All84raw frames personally inspected in14full-size sheets; paired game zooms are visibly distinct. Enlarged brown Alpha has human head/torso/twoarms/twolegs and continuous run stance, with head partly cropped at closest zoom; wide frames establish silhouette. Actual wrecked military convoy, broken road barriers/fence, smoke/ash and orange fire scenes are retained. Several city poses show only bright upper courier/gear fragments through foreground fence; contrast is explicitly a visible-geometry measurement. Courier protection only, normal threats/followers, no actor pose/HP/objective/cap changes.27semantic faults reject, inclusive3.0passes, and differing offset verdicts remain NOT CHECKED rather than false FAIL. P: PO must judge whether the current destruction reads as worst so far relative to earlier levels and whether the enlarged Alpha designs read human; derived low/high PO sheets remain in test-results. This is agent frame/quantitative qualification, not PO taste approval. Charred streets, ash and destruction read beyond the earlier city levels; large infected retain human shapes in sampled frames. Numeric3:1 contrast is not measured.",
+      "value": "Manual review PASS (FRESH, Codex final-c): Sixteen same-tick courier/hidden-courier/production-depth-ID samples at both tiers and zoom0.5/1.5 give minimum linear-luminance contrast5.196:1 with.05offset (6.695with.02), above3:1. Personally inspected rocket/horde views show human-shaped Alphas. Current burning-city departure gives exact comparison frames; worst destruction so far remains PO comparative taste. Charred streets, ash and destruction read beyond the earlier city levels; large infected retain human shapes in sampled frames. Numeric3:1 contrast is not measured.",
       "automatedComplete": false,
       "receipt": [
-        "docs/reports/sweep-c6/L7-12/contrast-proof.json",
-        "docs/reports/sweep-c6/L7-12/coverage-proof.json",
-        "docs/reports/sweep-c6/L7-12/low-physical.json.gz",
-        "docs/reports/sweep-c6/L7-12/high-physical.json.gz",
-        "docs/reports/sweep-c6/L7-12/low-city-physical.json.gz",
-        "docs/reports/sweep-c6/L7-12/high-city-physical.json.gz",
-        "docs/reports/sweep-c6/L7-12/low-review.json",
-        "docs/reports/sweep-c6/L7-12/high-review.json",
-        "docs/reports/sweep-c6/L7-12/readability-producer.mjs",
-        "docs/reports/sweep-c6/L7-12/contrast-analyzer.py",
-        "docs/reports/sweep-c6/L7-12/low-city-producer.mjs",
-        "docs/reports/sweep-c6/L7-12/high-city-producer.mjs"
+        "docs/reports/final-c/L7-12/low-physical.json.gz",
+        "docs/reports/final-c/L7-12/contrast-proof.json",
+        "docs/reports/final-c/L7-12/high-physical.json.gz",
+        "docs/reports/final-c/L7-12/contrast-producer.py",
+        "docs/reports/final-c/L7-12/physical-producer.ts",
+        "docs/reports/final-c/L7-12/capture-review.json",
+        "docs/reports/final-c/L7-11/capture-review.json"
       ],
       "expected": "Frames: worst destruction so far, Alpha silhouettes human, player contrast ≥ 3:1.",
       "checks": [],
@@ -12185,80 +12843,56 @@
       "reviewDecision": {
         "row": "L7-12",
         "status": "PASS",
-        "reviewer": "Codex sweep-c6",
-        "date": "2026-11-06",
-        "commit": "eb38285882d726e24d61656f8d3466957264802c",
+        "reviewer": "Codex final-c",
+        "date": "2026-11-07",
+        "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
         "clauses": [
           {
             "clause": "Frames: worst destruction so far, Alpha silhouettes human, player contrast ≥ 3:1.",
             "verdict": "PASS",
-            "note": "Fresh real-input progressed-save low/high, actual userzoom0.5/1.5. Twenty-eight same-tick lossless native/hidden-courier/production-depth-ID samples cover actual rocket pickup, original live Alpha at horde0/6/12 physical ticks, and active city-fire/destruction0/6/12 poses. Courier-maskP90 against its projected2m native ring passes all cells: minimum 4.768627 with .02 offset and 3.879115 with stricter .05 offset. ID geometry excludes corgi/crowd/fire/shadows; actual body counts and64ring-point patches retained. All84raw frames personally inspected in14full-size sheets; paired game zooms are visibly distinct. Enlarged brown Alpha has human head/torso/twoarms/twolegs and continuous run stance, with head partly cropped at closest zoom; wide frames establish silhouette. Actual wrecked military convoy, broken road barriers/fence, smoke/ash and orange fire scenes are retained. Several city poses show only bright upper courier/gear fragments through foreground fence; contrast is explicitly a visible-geometry measurement. Courier protection only, normal threats/followers, no actor pose/HP/objective/cap changes.27semantic faults reject, inclusive3.0passes, and differing offset verdicts remain NOT CHECKED rather than false FAIL. P: PO must judge whether the current destruction reads as worst so far relative to earlier levels and whether the enlarged Alpha designs read human; derived low/high PO sheets remain in test-results. This is agent frame/quantitative qualification, not PO taste approval."
+            "note": "Sixteen same-tick courier/hidden-courier/production-depth-ID samples at both tiers and zoom0.5/1.5 give minimum linear-luminance contrast5.196:1 with.05offset (6.695with.02), above3:1. Personally inspected rocket/horde views show human-shaped Alphas. Current burning-city departure gives exact comparison frames; worst destruction so far remains PO comparative taste."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/sweep-c6/L7-12/contrast-proof.json",
-            "sha256": "f1e02d813d1f32d816bca21f5f48f5cca23f4fc69ed46e6bcf2efe5e5cb24c95",
-            "what": "Current-source mask/ring measurements or actual-consumer semantic boundary controls."
+            "file": "docs/reports/final-c/L7-12/low-physical.json.gz",
+            "sha256": "91864164a2d032534801dbd98890f0636b080af0cdf95193b110c209047684d5",
+            "what": "Sixteen same-tick courier/hidden-courier/production-depth-ID samples at both tiers and zoom0.5/1.5 give minimum linear-luminance contrast5.196:1 with.05offset (6.695with.02), above3:1. Personally inspected rocket/horde views show human-shaped Alphas. Current burning-city departure gives exact comparison frames; worst destruction so far remains PO comparative taste."
           },
           {
-            "file": "docs/reports/sweep-c6/L7-12/coverage-proof.json",
-            "sha256": "ecdace20c4f31321d7238474ad0427dd01ace158f9f6d1e64cc7309d243cdfaa",
-            "what": "Current-source mask/ring measurements or actual-consumer semantic boundary controls."
+            "file": "docs/reports/final-c/L7-12/contrast-proof.json",
+            "sha256": "2a8950ccb448a94e6483215fd0ed6e4849ef982dc5e7f29cf148095c948e4af0",
+            "what": "Sixteen same-tick courier/hidden-courier/production-depth-ID samples at both tiers and zoom0.5/1.5 give minimum linear-luminance contrast5.196:1 with.05offset (6.695with.02), above3:1. Personally inspected rocket/horde views show human-shaped Alphas. Current burning-city departure gives exact comparison frames; worst destruction so far remains PO comparative taste."
           },
           {
-            "file": "docs/reports/sweep-c6/L7-12/low-physical.json.gz",
-            "sha256": "2b1919a457eef7286745a2e3ae3eff5e8c73eaf787fae5ef3de016bd8f1c3cbb",
-            "what": "Exact source-bound physical ledger or immutable producer/analyzer recipe."
+            "file": "docs/reports/final-c/L7-12/high-physical.json.gz",
+            "sha256": "7629ca9f6581d1c8888b104f05f91812ee5614f75e32ce9663d5deba5523321f",
+            "what": "Sixteen same-tick courier/hidden-courier/production-depth-ID samples at both tiers and zoom0.5/1.5 give minimum linear-luminance contrast5.196:1 with.05offset (6.695with.02), above3:1. Personally inspected rocket/horde views show human-shaped Alphas. Current burning-city departure gives exact comparison frames; worst destruction so far remains PO comparative taste."
           },
           {
-            "file": "docs/reports/sweep-c6/L7-12/high-physical.json.gz",
-            "sha256": "c4ec77975989becf676edf68aea9fe7ac0af11c3c7692cf349bfdcdedc0ead02",
-            "what": "Exact source-bound physical ledger or immutable producer/analyzer recipe."
+            "file": "docs/reports/final-c/L7-12/contrast-producer.py",
+            "sha256": "8af03ac032f3ef8f624cdf5ce82997ff51fb8ac0fa0ae91f636d698b5166d1ac",
+            "what": "Sixteen same-tick courier/hidden-courier/production-depth-ID samples at both tiers and zoom0.5/1.5 give minimum linear-luminance contrast5.196:1 with.05offset (6.695with.02), above3:1. Personally inspected rocket/horde views show human-shaped Alphas. Current burning-city departure gives exact comparison frames; worst destruction so far remains PO comparative taste."
           },
           {
-            "file": "docs/reports/sweep-c6/L7-12/low-city-physical.json.gz",
-            "sha256": "6296f3b54b3f32916c4c6b0b8c8d447759bfc7fe712469ea261ca4918dec3acb",
-            "what": "Exact source-bound physical ledger or immutable producer/analyzer recipe."
+            "file": "docs/reports/final-c/L7-12/physical-producer.ts",
+            "sha256": "e376635d5c6d2b43ffda7f39722a2924e608c335d6514ba885a53a776f5f6d9d",
+            "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
           },
           {
-            "file": "docs/reports/sweep-c6/L7-12/high-city-physical.json.gz",
-            "sha256": "2d1374cbdd3ea8fd0bce4013341d2b2c15ba9467bb1883217f343217f46c2bad",
-            "what": "Exact source-bound physical ledger or immutable producer/analyzer recipe."
+            "file": "docs/reports/final-c/L7-12/capture-review.json",
+            "sha256": "3ea0bdaeeb6e3a678ff60c1a5618720b8860d22ccc5a3d51cc0ba6bca6f210c5",
+            "what": "Sixteen same-tick courier/hidden-courier/production-depth-ID samples at both tiers and zoom0.5/1.5 give minimum linear-luminance contrast5.196:1 with.05offset (6.695with.02), above3:1. Personally inspected rocket/horde views show human-shaped Alphas. Current burning-city departure gives exact comparison frames; worst destruction so far remains PO comparative taste."
           },
           {
-            "file": "docs/reports/sweep-c6/L7-12/low-review.json",
-            "sha256": "5648dff0095ce3d212e4824e9374e48982ba8b863229f1766e18e62e2c2b2f04",
-            "what": "All42 tier frames personally reviewed; raw digests verified/deleted, derived PO sheets retained."
-          },
-          {
-            "file": "docs/reports/sweep-c6/L7-12/high-review.json",
-            "sha256": "30e9a27bc3ebcb35e68cf1ebf70edbe0ef3141e712efa37bda314ab881812648",
-            "what": "All42 tier frames personally reviewed; raw digests verified/deleted, derived PO sheets retained."
-          },
-          {
-            "file": "docs/reports/sweep-c6/L7-12/readability-producer.mjs",
-            "sha256": "0140171f8d728c8f8f946499ed75b534a65526494a58fbb19844a28dfa43544b",
-            "what": "Exact source-bound physical ledger or immutable producer/analyzer recipe."
-          },
-          {
-            "file": "docs/reports/sweep-c6/L7-12/contrast-analyzer.py",
-            "sha256": "f11474687f556d95cd502510df4a3fc52cf0e60708be0ee364aa44d0627bdad2",
-            "what": "Exact source-bound physical ledger or immutable producer/analyzer recipe."
-          },
-          {
-            "file": "docs/reports/sweep-c6/L7-12/low-city-producer.mjs",
-            "sha256": "b0c01b2ce52ec9710051cbb9b14d8ed24baefdaff3d6668f40f1f6d05b17a1cc",
-            "what": "Exact source-bound physical ledger or immutable producer/analyzer recipe."
-          },
-          {
-            "file": "docs/reports/sweep-c6/L7-12/high-city-producer.mjs",
-            "sha256": "b0c01b2ce52ec9710051cbb9b14d8ed24baefdaff3d6668f40f1f6d05b17a1cc",
-            "what": "Exact source-bound physical ledger or immutable producer/analyzer recipe."
+            "file": "docs/reports/final-c/L7-11/capture-review.json",
+            "sha256": "ab66c26f041764887c9baa58ce8ae22f910bf16627fb8fc57732d30993497781",
+            "what": "Sixteen same-tick courier/hidden-courier/production-depth-ID samples at both tiers and zoom0.5/1.5 give minimum linear-luminance contrast5.196:1 with.05offset (6.695with.02), above3:1. Personally inspected rocket/horde views show human-shaped Alphas. Current burning-city departure gives exact comparison frames; worst destruction so far remains PO comparative taste."
           }
         ],
-        "notes": "P remains explicit: worst-destruction taste and sampled Alpha human reading need PO judgment. No new game code or performance measurement.",
-        "freshness": "STALE",
+        "notes": "Frozen-head row review. Current immutable evidence, unchanged criterion and game source.",
+        "sourceDigest": "1aff45872f0c1603cfc94e9f01d515824d2304b5b5d9e5f96fee9cc461ad064a",
+        "freshness": "FRESH",
         "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     }

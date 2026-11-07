@@ -1,0 +1,482 @@
+{
+  "problem": "Existing current PASS review records for plain numeric rows were hidden, so the tracker omitted their freshness.",
+  "change": {
+    "oldLine": "const reviewCheck = review || source.baseline.status === 'FAIL' || decision?.status === 'FAIL' ? decision : undefined;",
+    "newLine": "const reviewCheck = decision;",
+    "beforeCodeSha256": "2f2dac9f4a0b46dd3f2d4d5922d29d656513699c01aecd1c79dbc3cc527d7cbf",
+    "afterCodeSha256": "f9e3e51ecf1cc124b59dc68b4234faa9abd8822e90c251f7faaca3db3479a007"
+  },
+  "method": "Both report implementations run consecutively in one process with identical native/fixture/checkpoint inputs and an unchanged review-file digest set. All47 public and current verdicts must remain identical; only saved review metadata/evidence visibility changes. No acceptance gate or threshold is changed.",
+  "reviewFileDigests": {
+    "L10-01.json": "be1842f90ce91b1985dea5b822b7e19669dd70098d2a15fadd57ad3f0b2ad82f",
+    "L10-02.json": "242687c8effd63689d440741c72730357180c163a2709dc6cc8fc211b2cb28b0",
+    "L10-03.json": "88ee6e6d2e3e030cf1ced83530345514582c83682cf5d95aee8582d38b8971a8",
+    "L10-04.json": "ff63aa13f2edfc0177ba3bbb7897fd2d831199216cfcf03d100a08223fbd8c1e",
+    "L10-05.json": "a716ed57ec8cc4f08dbe4303a6787c023d28ee2e465a1374ba35ee58b1632a47",
+    "L10-06.json": "6fda37e77e6ba2009d6e64c4cfbbb035edbd95b5b981e179bfef1eb0fe1953ed",
+    "L10-07.json": "46546a7bf160f3f28f518eed3d215caea8384b1110e1db96f79790510ed2be69",
+    "L10-08.json": "aa10fdf2f71f34216d504eb7a21fc1fad3d412db965daa9d6cd0b4cdd8768d2b",
+    "L10-09.json": "aafc5dbc36355943b51ce0f50cfb145b75a13a59ac2d617278bd5993611599fc",
+    "L10-10.json": "253750f2bf4b985bc3c652333cbbca30de4994978a0ff4857e43dff6f2ae58f1",
+    "L10-11.json": "ebfe0247fb92e67248da22391a69ab36b7829559136d671549873ae8f8df38ce",
+    "L10-12.json": "359c7ed1209d14c6aad6535f919d2fc099a6e013fb0a1ff6d42aa6444c938afb",
+    "L10-13.json": "04193a4b4d711e199ef4e46b2e079d4711785993b30e8dc1f8d641aadd9a3a9f",
+    "L10-14.json": "d3c90feb79ac48871d57ad6fb072138cb653ad91d1bdaa18fb82a42ef5826812",
+    "L10-15.json": "3bba81c2bd2c887aa7d926faae52ac42654fc0018392a79ec5a83d2d8b9aa2bc",
+    "L7-01.json": "27cb09c90814bfaf022b2b5b59e9ce48152a39fc5cf06f5d0ce2c3b206b30266",
+    "L7-02.json": "51bcb5311fbd6a6d2a4796229a5e2198f7f3720bde85814aabe568f7366f4542",
+    "L7-03.json": "7f0feb0ea3a02c61601155cebad312916fcf059ac59961d758e65164eebacd53",
+    "L7-04.json": "c82d429cfc1c7fa48361c66e1e21fd2ca9a407ced344b187c7234b4fd3e12996",
+    "L7-05.json": "782216c3f97b5a0081015464cfcf63b22c6e12c963d890118cb4d9e395520b65",
+    "L7-06.json": "4b8cd1d75c0944ceefabdf3fce729b01a96f3189281caebf666d033906315a49",
+    "L7-07.json": "73d57cbddd5c42bb9a34f91bfc8132c96a0b9a9c67f9a23f6e1c46d8a773b606",
+    "L7-08.json": "5fbbdb0e51da32c29777f232f314b3f9d84dce93ad88b1c4edc81f34fd45a561",
+    "L7-10.json": "e380e6b03c8cd8d5c9b815f73ebf2f1aa90cf80b3dc16da326a3903068357d1b",
+    "L7-11.json": "ece55956fe070d156b1c8b67203ec03738bd6a62e3b499da67ce2167b37de9cd",
+    "L7-12.json": "61a3314d0762895159113440cc6180dda5c1bb31f3c9211c8d40d1720cc96405",
+    "L8-01.json": "e51a64c3f61e4472333e10b85a3e0801f9b774813db484c2b67e9123c0f9b72c",
+    "L8-02.json": "0524fdbebfd8667f58cbe108229db8995bb20468a3a97670ad9e23af3b56a21a",
+    "L8-03.json": "d5d1be86651e8e0c0670ddd01305e29b43aadd9b2b5a5bd6fa1d6d9a7d63a723",
+    "L8-04.json": "39b02dee9faa2652448aedff192d9085b19bd4ad4171c6cbcc4df107170b3cb7",
+    "L8-05.json": "59d6bef1d6db6997d7deeafed858846b7dbb5393cc8d0b9d24d4279f6257ab9b",
+    "L8-06.json": "d528c70623856de26750732e2bdb000b8c123c9336b1aacbce1a2d0e6414fd45",
+    "L8-07.json": "0b0a416e58ba8683e9fdb85e3e83d285927d81dc9c308e67ba11efce7de48470",
+    "L8-08.json": "19438211b2c73a3ee59777ab890dbb5b119350234fb98b65c59763e3e46848a9",
+    "L8-09.json": "f15d3907ee5764733945c6f1400e4f93156e12d038a01e1a5b9124228bd63b9a",
+    "L8-10.json": "df2f572dd2244d095e96d3577cf8cf52cd0ad3ec81861f784b9f2eff820fb501",
+    "L9-01.json": "3bb300e9bcb7818795d0de1a534a88b19a86750ab4c970703fbc790e3ae34273",
+    "L9-02.json": "297a09ac303d32aeac99917784d4cd07d9208a985c801cdc21b01220f9a317b6",
+    "L9-03.json": "0aedc2798b8641696e939bad3094b6906aa8eb9a5b0644ab82978408175e5631",
+    "L9-04.json": "002657c9cfa3eb8bc0b70866dd82807cf5a5196d13701894229590b4568e1de5",
+    "L9-05.json": "44fceff49d6c38c830379ee04e6f66d60778df2ec26a43934d47cab85c253a49",
+    "L9-06.json": "975b81d2c31ec3e8c201a6777df64c379c678f9c4d3a04328522ed433d4ccec2",
+    "L9-07.json": "61c18b4f97671a3b37dd2e50908c71ff24b2caa36fa7b968bc875be846210eb1",
+    "L9-08.json": "8446229a913ad702548377bced22ebe2fd754039fec3a63b128f79512f31ae79"
+  },
+  "rows": [
+    {
+      "id": "L7-01",
+      "statusBefore": "NOT CHECKED",
+      "statusAfter": "NOT CHECKED",
+      "currentBefore": "NOT CHECKED",
+      "currentAfter": "NOT CHECKED",
+      "freshnessBefore": "STALE",
+      "freshnessAfter": "STALE"
+    },
+    {
+      "id": "L7-02",
+      "statusBefore": "NOT CHECKED",
+      "statusAfter": "NOT CHECKED",
+      "currentBefore": "NOT CHECKED",
+      "currentAfter": "NOT CHECKED",
+      "freshnessBefore": null,
+      "freshnessAfter": "STALE"
+    },
+    {
+      "id": "L7-03",
+      "statusBefore": "NOT CHECKED",
+      "statusAfter": "NOT CHECKED",
+      "currentBefore": "NOT CHECKED",
+      "currentAfter": "NOT CHECKED",
+      "freshnessBefore": null,
+      "freshnessAfter": "STALE"
+    },
+    {
+      "id": "L7-04",
+      "statusBefore": "PASS",
+      "statusAfter": "PASS",
+      "currentBefore": "PASS",
+      "currentAfter": "PASS",
+      "freshnessBefore": null,
+      "freshnessAfter": "FRESH"
+    },
+    {
+      "id": "L7-05",
+      "statusBefore": "FAIL",
+      "statusAfter": "FAIL",
+      "currentBefore": "FAIL",
+      "currentAfter": "FAIL",
+      "freshnessBefore": "FRESH",
+      "freshnessAfter": "FRESH"
+    },
+    {
+      "id": "L7-06",
+      "statusBefore": "NOT CHECKED",
+      "statusAfter": "NOT CHECKED",
+      "currentBefore": "NOT CHECKED",
+      "currentAfter": "NOT CHECKED",
+      "freshnessBefore": "STALE",
+      "freshnessAfter": "STALE"
+    },
+    {
+      "id": "L7-07",
+      "statusBefore": "NOT CHECKED",
+      "statusAfter": "NOT CHECKED",
+      "currentBefore": "NOT CHECKED",
+      "currentAfter": "NOT CHECKED",
+      "freshnessBefore": null,
+      "freshnessAfter": "FRESH"
+    },
+    {
+      "id": "L7-08",
+      "statusBefore": "NOT CHECKED",
+      "statusAfter": "NOT CHECKED",
+      "currentBefore": "NOT CHECKED",
+      "currentAfter": "NOT CHECKED",
+      "freshnessBefore": "STALE",
+      "freshnessAfter": "STALE"
+    },
+    {
+      "id": "L7-09",
+      "statusBefore": "NOT CHECKED",
+      "statusAfter": "NOT CHECKED",
+      "currentBefore": "NOT CHECKED",
+      "currentAfter": "NOT CHECKED",
+      "freshnessBefore": null,
+      "freshnessAfter": null
+    },
+    {
+      "id": "L7-10",
+      "statusBefore": "PASS",
+      "statusAfter": "PASS",
+      "currentBefore": "PASS",
+      "currentAfter": "PASS",
+      "freshnessBefore": null,
+      "freshnessAfter": "FRESH"
+    },
+    {
+      "id": "L7-11",
+      "statusBefore": "NOT CHECKED",
+      "statusAfter": "NOT CHECKED",
+      "currentBefore": "NOT CHECKED",
+      "currentAfter": "NOT CHECKED",
+      "freshnessBefore": "STALE",
+      "freshnessAfter": "STALE"
+    },
+    {
+      "id": "L7-12",
+      "statusBefore": "NOT CHECKED",
+      "statusAfter": "NOT CHECKED",
+      "currentBefore": "NOT CHECKED",
+      "currentAfter": "NOT CHECKED",
+      "freshnessBefore": "STALE",
+      "freshnessAfter": "STALE"
+    },
+    {
+      "id": "L8-01",
+      "statusBefore": "NOT CHECKED",
+      "statusAfter": "NOT CHECKED",
+      "currentBefore": "NOT CHECKED",
+      "currentAfter": "NOT CHECKED",
+      "freshnessBefore": null,
+      "freshnessAfter": "STALE"
+    },
+    {
+      "id": "L8-02",
+      "statusBefore": "NOT CHECKED",
+      "statusAfter": "NOT CHECKED",
+      "currentBefore": "NOT CHECKED",
+      "currentAfter": "NOT CHECKED",
+      "freshnessBefore": null,
+      "freshnessAfter": "STALE"
+    },
+    {
+      "id": "L8-03",
+      "statusBefore": "NOT CHECKED",
+      "statusAfter": "NOT CHECKED",
+      "currentBefore": "NOT CHECKED",
+      "currentAfter": "NOT CHECKED",
+      "freshnessBefore": "STALE",
+      "freshnessAfter": "STALE"
+    },
+    {
+      "id": "L8-04",
+      "statusBefore": "NOT CHECKED",
+      "statusAfter": "NOT CHECKED",
+      "currentBefore": "NOT CHECKED",
+      "currentAfter": "NOT CHECKED",
+      "freshnessBefore": "STALE",
+      "freshnessAfter": "STALE"
+    },
+    {
+      "id": "L8-05",
+      "statusBefore": "NOT CHECKED",
+      "statusAfter": "NOT CHECKED",
+      "currentBefore": "NOT CHECKED",
+      "currentAfter": "NOT CHECKED",
+      "freshnessBefore": null,
+      "freshnessAfter": "STALE"
+    },
+    {
+      "id": "L8-06",
+      "statusBefore": "PASS",
+      "statusAfter": "PASS",
+      "currentBefore": "PASS",
+      "currentAfter": "PASS",
+      "freshnessBefore": "FRESH",
+      "freshnessAfter": "FRESH"
+    },
+    {
+      "id": "L8-07",
+      "statusBefore": "NOT CHECKED",
+      "statusAfter": "NOT CHECKED",
+      "currentBefore": "NOT CHECKED",
+      "currentAfter": "NOT CHECKED",
+      "freshnessBefore": "STALE",
+      "freshnessAfter": "STALE"
+    },
+    {
+      "id": "L8-08",
+      "statusBefore": "NOT CHECKED",
+      "statusAfter": "NOT CHECKED",
+      "currentBefore": "NOT CHECKED",
+      "currentAfter": "NOT CHECKED",
+      "freshnessBefore": "STALE",
+      "freshnessAfter": "STALE"
+    },
+    {
+      "id": "L8-09",
+      "statusBefore": "NOT CHECKED",
+      "statusAfter": "NOT CHECKED",
+      "currentBefore": "NOT CHECKED",
+      "currentAfter": "NOT CHECKED",
+      "freshnessBefore": "STALE",
+      "freshnessAfter": "STALE"
+    },
+    {
+      "id": "L8-10",
+      "statusBefore": "NOT CHECKED",
+      "statusAfter": "NOT CHECKED",
+      "currentBefore": "NOT CHECKED",
+      "currentAfter": "NOT CHECKED",
+      "freshnessBefore": "STALE",
+      "freshnessAfter": "STALE"
+    },
+    {
+      "id": "L8-11",
+      "statusBefore": "NOT CHECKED",
+      "statusAfter": "NOT CHECKED",
+      "currentBefore": "NOT CHECKED",
+      "currentAfter": "NOT CHECKED",
+      "freshnessBefore": null,
+      "freshnessAfter": null
+    },
+    {
+      "id": "L9-01",
+      "statusBefore": "NOT CHECKED",
+      "statusAfter": "NOT CHECKED",
+      "currentBefore": "NOT CHECKED",
+      "currentAfter": "NOT CHECKED",
+      "freshnessBefore": "STALE",
+      "freshnessAfter": "STALE"
+    },
+    {
+      "id": "L9-02",
+      "statusBefore": "NOT CHECKED",
+      "statusAfter": "NOT CHECKED",
+      "currentBefore": "NOT CHECKED",
+      "currentAfter": "NOT CHECKED",
+      "freshnessBefore": "STALE",
+      "freshnessAfter": "STALE"
+    },
+    {
+      "id": "L9-03",
+      "statusBefore": "FAIL",
+      "statusAfter": "FAIL",
+      "currentBefore": "NOT CHECKED",
+      "currentAfter": "NOT CHECKED",
+      "freshnessBefore": "STALE",
+      "freshnessAfter": "STALE"
+    },
+    {
+      "id": "L9-04",
+      "statusBefore": "NOT CHECKED",
+      "statusAfter": "NOT CHECKED",
+      "currentBefore": "NOT CHECKED",
+      "currentAfter": "NOT CHECKED",
+      "freshnessBefore": null,
+      "freshnessAfter": "STALE"
+    },
+    {
+      "id": "L9-05",
+      "statusBefore": "NOT CHECKED",
+      "statusAfter": "NOT CHECKED",
+      "currentBefore": "NOT CHECKED",
+      "currentAfter": "NOT CHECKED",
+      "freshnessBefore": "STALE",
+      "freshnessAfter": "STALE"
+    },
+    {
+      "id": "L9-06",
+      "statusBefore": "NOT CHECKED",
+      "statusAfter": "NOT CHECKED",
+      "currentBefore": "NOT CHECKED",
+      "currentAfter": "NOT CHECKED",
+      "freshnessBefore": "STALE",
+      "freshnessAfter": "STALE"
+    },
+    {
+      "id": "L9-07",
+      "statusBefore": "NOT CHECKED",
+      "statusAfter": "NOT CHECKED",
+      "currentBefore": "NOT CHECKED",
+      "currentAfter": "NOT CHECKED",
+      "freshnessBefore": "STALE",
+      "freshnessAfter": "STALE"
+    },
+    {
+      "id": "L9-08",
+      "statusBefore": "PASS",
+      "statusAfter": "PASS",
+      "currentBefore": "PASS",
+      "currentAfter": "PASS",
+      "freshnessBefore": null,
+      "freshnessAfter": "FRESH"
+    },
+    {
+      "id": "L9-09",
+      "statusBefore": "NOT CHECKED",
+      "statusAfter": "NOT CHECKED",
+      "currentBefore": "NOT CHECKED",
+      "currentAfter": "NOT CHECKED",
+      "freshnessBefore": null,
+      "freshnessAfter": null
+    },
+    {
+      "id": "L10-01",
+      "statusBefore": "PASS",
+      "statusAfter": "PASS",
+      "currentBefore": "PASS",
+      "currentAfter": "PASS",
+      "freshnessBefore": null,
+      "freshnessAfter": "FRESH"
+    },
+    {
+      "id": "L10-02",
+      "statusBefore": "NOT CHECKED",
+      "statusAfter": "NOT CHECKED",
+      "currentBefore": "NOT CHECKED",
+      "currentAfter": "NOT CHECKED",
+      "freshnessBefore": null,
+      "freshnessAfter": "FRESH"
+    },
+    {
+      "id": "L10-03",
+      "statusBefore": "FAIL",
+      "statusAfter": "FAIL",
+      "currentBefore": "FAIL",
+      "currentAfter": "FAIL",
+      "freshnessBefore": "FRESH",
+      "freshnessAfter": "FRESH"
+    },
+    {
+      "id": "L10-04",
+      "statusBefore": "FAIL",
+      "statusAfter": "FAIL",
+      "currentBefore": "NOT CHECKED",
+      "currentAfter": "NOT CHECKED",
+      "freshnessBefore": "STALE",
+      "freshnessAfter": "STALE"
+    },
+    {
+      "id": "L10-05",
+      "statusBefore": "NOT CHECKED",
+      "statusAfter": "NOT CHECKED",
+      "currentBefore": "NOT CHECKED",
+      "currentAfter": "NOT CHECKED",
+      "freshnessBefore": "STALE",
+      "freshnessAfter": "STALE"
+    },
+    {
+      "id": "L10-06",
+      "statusBefore": "NOT CHECKED",
+      "statusAfter": "NOT CHECKED",
+      "currentBefore": "NOT CHECKED",
+      "currentAfter": "NOT CHECKED",
+      "freshnessBefore": null,
+      "freshnessAfter": "STALE"
+    },
+    {
+      "id": "L10-07",
+      "statusBefore": "NOT CHECKED",
+      "statusAfter": "NOT CHECKED",
+      "currentBefore": "NOT CHECKED",
+      "currentAfter": "NOT CHECKED",
+      "freshnessBefore": "STALE",
+      "freshnessAfter": "STALE"
+    },
+    {
+      "id": "L10-08",
+      "statusBefore": "NOT CHECKED",
+      "statusAfter": "NOT CHECKED",
+      "currentBefore": "NOT CHECKED",
+      "currentAfter": "NOT CHECKED",
+      "freshnessBefore": "STALE",
+      "freshnessAfter": "STALE"
+    },
+    {
+      "id": "L10-09",
+      "statusBefore": "NOT CHECKED",
+      "statusAfter": "NOT CHECKED",
+      "currentBefore": "NOT CHECKED",
+      "currentAfter": "NOT CHECKED",
+      "freshnessBefore": null,
+      "freshnessAfter": "STALE"
+    },
+    {
+      "id": "L10-10",
+      "statusBefore": "PASS",
+      "statusAfter": "PASS",
+      "currentBefore": "PASS",
+      "currentAfter": "PASS",
+      "freshnessBefore": null,
+      "freshnessAfter": "FRESH"
+    },
+    {
+      "id": "L10-11",
+      "statusBefore": "FAIL",
+      "statusAfter": "FAIL",
+      "currentBefore": "FAIL",
+      "currentAfter": "FAIL",
+      "freshnessBefore": "FRESH",
+      "freshnessAfter": "FRESH"
+    },
+    {
+      "id": "L10-12",
+      "statusBefore": "NOT CHECKED",
+      "statusAfter": "NOT CHECKED",
+      "currentBefore": "NOT CHECKED",
+      "currentAfter": "NOT CHECKED",
+      "freshnessBefore": "STALE",
+      "freshnessAfter": "STALE"
+    },
+    {
+      "id": "L10-13",
+      "statusBefore": "PASS",
+      "statusAfter": "PASS",
+      "currentBefore": "PASS",
+      "currentAfter": "PASS",
+      "freshnessBefore": null,
+      "freshnessAfter": "FRESH"
+    },
+    {
+      "id": "L10-14",
+      "statusBefore": "NOT CHECKED",
+      "statusAfter": "NOT CHECKED",
+      "currentBefore": "NOT CHECKED",
+      "currentAfter": "NOT CHECKED",
+      "freshnessBefore": "STALE",
+      "freshnessAfter": "STALE"
+    },
+    {
+      "id": "L10-15",
+      "statusBefore": "PASS",
+      "statusAfter": "PASS",
+      "currentBefore": "PASS",
+      "currentAfter": "PASS",
+      "freshnessBefore": null,
+      "freshnessAfter": "FRESH"
+    }
+  ],
+  "all47VerdictsUnchanged": true
+}

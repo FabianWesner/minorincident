@@ -1,42 +1,28 @@
 {
   "row": "L10-02",
   "status": "PASS",
-  "reviewer": "Codex sweep-c5",
-  "date": "2026-11-06",
-  "commit": "7b49bef3dc815fc55d18c8a4618442ae220fe86c",
+  "reviewer": "Codex final-c",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
   "clauses": [
     {
       "clause": "Mega Alpha introduced by roar/impact by 2:00 (authored 1:30), ≥ 80 m behind on a reachable route.",
       "verdict": "PASS",
-      "note": "Fresh exact-source low/high competent native routes: persistent Mega introduced at tick5400 (90 s), at direct separation119.3733 m low and118.9586 m high; actual same-ID roar and impact cues at tick5401 in both tiers; body-clear route through all authored colliders is154.7138 m low and155.0419 m high. A full-width inserted blocker disconnects the independent route, and canonical final states match controls. This verifies event scheduling and route geometry, not audible/rendered spectacle. No game, clocks, ranges or criterion changed."
+      "note": "Both native routes introduce one persistent Mega at tick5400 (90.0s); actual roar and impact events occur tick5401 (90.0167s), before120s. Boss appears west/behind the eastbound courier at distances119.3733m low/118.9586m high (both>=80m). Independent full-source collider queries find body-clear routes154.7138/155.0419m with0.55m clearance; a severing-wall negative control disconnects them. Both observer final state hashes equal canonical current controls. Native event timing/path evidence; no personal audio-listening claim."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix51-r10c/L10-introduction-proof.json",
-      "sha256": "17b745d0705ff944a7f97e5142a860832f110f88a267a39b3a187010889f6237",
-      "what": "Both-tier introduction, actual cue, full authored-collider route and canonical state controls."
+      "file": "docs/reports/final-c/L10-02/introduction.json",
+      "sha256": "7cfce632f366cc997b57ea882137534def51dd1b6002f205b4dcb92b4d15bf73",
+      "what": "Both native routes introduce one persistent Mega at tick5400 (90.0s); actual roar and impact events occur tick5401 (90.0167s), before120s. Boss appears west/behind the eastbound courier at distances119.3733m low/118.9586m high (both>=80m). Independent full-source collider queries find body-clear routes154.7138/155.0419m with0.55m clearance; a severing-wall negative control disconnects them. Both observer final state hashes equal canonical current controls. Native event timing/path evidence; no personal audio-listening claim."
     },
     {
-      "file": "docs/reports/sweep-c6/L10-11/prior-receipts/L10-low-complete.json",
-      "sha256": "ba12b2682ccd3073e9c46f3e11d451e66fe91f13b1300f7df4cb1c850bedc180",
-      "what": "Current-source low competent route and exact introduction measurements."
-    },
-    {
-      "file": "docs/reports/sweep-c6/L10-11/prior-receipts/L10-low-stationary.json",
-      "sha256": "61f4c308e6f0270cbcc8651c37833bc53766e05cdf26ac6e5b3630c3b70948c2",
-      "what": "Current-source low stationary control and exact introduction measurements."
-    },
-    {
-      "file": "docs/reports/sweep-c6/L10-11/prior-receipts/L10-high-complete.json",
-      "sha256": "e8598f59d5bf0319a1c9f510e65ca7746849fc2c72a190c689d0e00e3305454d",
-      "what": "Current-source high competent route and exact introduction measurements."
-    },
-    {
-      "file": "docs/reports/sweep-c6/L10-11/prior-receipts/L10-high-stationary.json",
-      "sha256": "62f369054b2812c6c5c8a87c8b69577b0e13e274336a2ef11bc2decc72f18158",
-      "what": "Current-source high stationary control and exact introduction measurements."
+      "file": "docs/reports/final-c/L10-02/producer.ts",
+      "sha256": "b338924ce03ade80cc941c5f71898000da9ddd061b335bd096559dcfe94a475d",
+      "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
     }
   ],
-  "notes": "All 12 missing/broken-clause negative controls reject PASS; full criteria were rerun against unchanged thresholds. No audio loudness or rendered impact appearance claim."
+  "notes": "Frozen-head row review. Current immutable evidence, unchanged criterion and game source.",
+  "sourceDigest": "75720d4df4ad59ad1814e1cda498bc4620d28edfa0298106dd53315c5f2fba05"
 }

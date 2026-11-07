@@ -1,36 +1,58 @@
 {
   "row": "L10-07",
   "status": "PASS",
-  "reviewer": "Codex sweep-c5",
-  "date": "2026-11-06",
-  "commit": "7c8b754d41c063c453a0e02bc09809e04ba23704",
+  "reviewer": "Codex final-c",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
   "clauses": [
     {
-      "clause": "Mega: cruise 0.7\u00d7 run \u00b1 2 % whenever it is on camera or within 200 m of the courier (orchestrator 2026-11-04: hidden far pursuit beyond 200 m may run faster than cruise (up to 1.15\u00d7 in the regions, up to 6\u00d7 catch-up on the final delivery approach, vqa-fix-2) so the walking arrival of L10-11 holds; it follows connected nav links, never relocates, and the player never sees that speed), always pursuing (no LOS), never trapped, never teleports; minimap shows only a pulsing distance ring; roar/impacts every 20\u201335 s, louder when closer.",
+      "clause": "Mega: cruise 0.7× run ± 2 % whenever it is on camera or within 200 m of the courier (orchestrator 2026-11-04: hidden far pursuit beyond 200 m may run faster than cruise (up to 1.15× in the regions, up to 1.35× catch-up on the final delivery approach, sweep-c6 (was 6×)) so the walking arrival of L10-11 holds; it follows connected nav links, never relocates, and the player never sees that speed), always pursuing (no LOS), never trapped, never teleports; minimap shows only a pulsing distance ring; roar/impacts every 20–35 s, louder when closer.",
       "verdict": "PASS",
-      "note": "Current full native low/high pursuit controls measure0.7 cruise ratio, same-ID connected movement without LOS, no far stall>20s or >1m jump; small physical contact corrections explicitly separated from scheduled relocations. Fresh shared-pool headless Metal WebGL2 restores naturally progressed native dog saves, protects only courier and stands on the normal production clock. Both tiers schedule six paired roar/impact graph voices at20\u201328.07s tick intervals. Approaching gain0.168 at98.52/102.46m, near gain0.378 at29.51/33.00m, both2.25x louder by graph amplitude. AudioContext running/unlocked, graph unmuted and master/output positive; host speakers muted, so this is measured gain rather than a claim of personal listening. All visible sampled rings centered with running opacity pulse,68% approaching/44% near; no Mega entity pin or bearing. Personally inspected all six final and six accelerated exploratory frames; introductory no-ring and both band states readable. Exploratory accelerated graph scheduling is not used for audio cadence. Fourteen negative controls reject altered evidence. No game/objective/actor position writes or performance timing."
+      "note": "Current canonical native pursuit: sameIDs119/122,0relocations,0far stalls,requested cruise0.7×run in on-camera/<=200m predicate;211/203qualified samples, collision/corner reductions disclosed, max one-tick motion0.52m includes specials.98/202moving-withoutLOS samples. Both actual101sample presentation runs show centered pulsing distance-only ring,0boss pins; roar/impact intervals20–28.0667s, actual running unlocked graph gains louder nearby (.168→.378 low). Personally viewed four approaching/near frames. Host muted; no claimed personal listening."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-c5/L10-07/low-presentation.json.gz",
-      "sha256": "aa13b34411ba6987f568fcb47652f781c22033b176c798f7eab9df7a39b0702c",
-      "what": "Current low-tier normal-clock actual audio graph and per-second minimap DOM measurements; three personally inspected frame hashes/observations, raw frames deleted."
+      "file": "docs/reports/final-c/L10-07/high-presentation.json",
+      "sha256": "38843fd694e0fb96f015c8715ed7aea9dafdcfea06581bb16e925fa5f214e4cf",
+      "what": "Current canonical native pursuit: sameIDs119/122,0relocations,0far stalls,requested cruise0.7×run in on-camera/<=200m predicate;211/203qualified samples, collision/corner reductions disclosed, max one-tick motion0.52m includes specials.98/202moving-withoutLOS samples. Both actual101sample presentation runs show centered pulsing distance-only ring,0boss pins; roar/impact intervals20–28.0667s, actual running unlocked graph gains louder nearby (.168→.378 low). Personally viewed four approaching/near frames. Host muted; no claimed personal listening."
     },
     {
-      "file": "docs/reports/sweep-c5/L10-07/high-presentation.json.gz",
-      "sha256": "eb3d6df427621fa8f3a55583cf29458643edafb0f904c293cfc9e7e4cf201bab",
-      "what": "Current high-tier normal-clock actual audio graph and per-second minimap DOM measurements; three personally inspected frame hashes/observations, raw frames deleted."
+      "file": "docs/reports/final-c/L10-07/native-pursuit.json.gz",
+      "sha256": "4c36925ba55dfd57747bffd18d856fe69c18f1f8f5c7ef851f6d39181ca27e15",
+      "what": "Current canonical native pursuit: sameIDs119/122,0relocations,0far stalls,requested cruise0.7×run in on-camera/<=200m predicate;211/203qualified samples, collision/corner reductions disclosed, max one-tick motion0.52m includes specials.98/202moving-withoutLOS samples. Both actual101sample presentation runs show centered pulsing distance-only ring,0boss pins; roar/impact intervals20–28.0667s, actual running unlocked graph gains louder nearby (.168→.378 low). Personally viewed four approaching/near frames. Host muted; no claimed personal listening."
     },
     {
-      "file": "docs/reports/sweep-c5/L10-07/native-pursuit.json.gz",
-      "sha256": "9ca1095f71b7634b648b18096290088a16c48a793633770a0bb61d0bc770b6d8",
-      "what": "Full canonical low/high route pursuit controls; cruise0.7, sameID connected movement without LOS, no scheduled relocation, paired20\u201335s event ledger."
+      "file": "docs/reports/final-c/L10-07/sweep-c5-l10-presentation-producer.ts",
+      "sha256": "f1d26dd388eaf47f559e8a1dcfe4744ee2d3efa997be904e7c0c7d9d669152cd",
+      "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
     },
     {
-      "file": "docs/reports/sweep-c5/L10-07/checker-controls.json",
-      "sha256": "559b12114eae2f4bba4aaa329871bd28eaa739e0ac0a2a22be57463872bb15f3",
-      "what": "Fourteen semantic negative controls reject ring, pin, pulse, gain, cue, mute and insufficient-duration faults; both originals pass."
+      "file": "docs/reports/final-c/L10-07/high-presentation-producer.ts",
+      "sha256": "0c2b0630b2bdaadf1bad4f0dabcfe67da678f5f9379d54e3ac1cb2be2d10485e",
+      "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
+    },
+    {
+      "file": "docs/reports/final-c/L10-07/low-presentation.json",
+      "sha256": "506929b61ac1dc892249a7f127a5142732c6d4237c20e4892f4a43acd704220b",
+      "what": "Current canonical native pursuit: sameIDs119/122,0relocations,0far stalls,requested cruise0.7×run in on-camera/<=200m predicate;211/203qualified samples, collision/corner reductions disclosed, max one-tick motion0.52m includes specials.98/202moving-withoutLOS samples. Both actual101sample presentation runs show centered pulsing distance-only ring,0boss pins; roar/impact intervals20–28.0667s, actual running unlocked graph gains louder nearby (.168→.378 low). Personally viewed four approaching/near frames. Host muted; no claimed personal listening."
+    },
+    {
+      "file": "docs/reports/final-c/L10-07/coverage.json",
+      "sha256": "82fd2f0f94b941f3214a0999eacb6b8130b044b5ad3348dbf55d17d8cfb51ad1",
+      "what": "Current canonical native pursuit: sameIDs119/122,0relocations,0far stalls,requested cruise0.7×run in on-camera/<=200m predicate;211/203qualified samples, collision/corner reductions disclosed, max one-tick motion0.52m includes specials.98/202moving-withoutLOS samples. Both actual101sample presentation runs show centered pulsing distance-only ring,0boss pins; roar/impact intervals20–28.0667s, actual running unlocked graph gains louder nearby (.168→.378 low). Personally viewed four approaching/near frames. Host muted; no claimed personal listening."
+    },
+    {
+      "file": "docs/reports/final-c/L10-07/fix55-l10-pursuit.ts",
+      "sha256": "616f1d5054017f6df7553aeca93e88d8cc4181fb1dbdbfcac21fe20d7da9a313",
+      "what": "Current canonical native pursuit: sameIDs119/122,0relocations,0far stalls,requested cruise0.7×run in on-camera/<=200m predicate;211/203qualified samples, collision/corner reductions disclosed, max one-tick motion0.52m includes specials.98/202moving-withoutLOS samples. Both actual101sample presentation runs show centered pulsing distance-only ring,0boss pins; roar/impact intervals20–28.0667s, actual running unlocked graph gains louder nearby (.168→.378 low). Personally viewed four approaching/near frames. Host muted; no claimed personal listening."
+    },
+    {
+      "file": "docs/reports/final-c/L10-07/capture-review.json",
+      "sha256": "4455a34ce956a6a292dfea5266245522f4f9908549a5f95653a46cdceba5ac90",
+      "what": "Current canonical native pursuit: sameIDs119/122,0relocations,0far stalls,requested cruise0.7×run in on-camera/<=200m predicate;211/203qualified samples, collision/corner reductions disclosed, max one-tick motion0.52m includes specials.98/202moving-withoutLOS samples. Both actual101sample presentation runs show centered pulsing distance-only ring,0boss pins; roar/impact intervals20–28.0667s, actual running unlocked graph gains louder nearby (.168→.378 low). Personally viewed four approaching/near frames. Host muted; no claimed personal listening."
     }
-  ]
+  ],
+  "notes": "Frozen-head row review. Current immutable evidence, unchanged criterion and game source.",
+  "sourceDigest": "75720d4df4ad59ad1814e1cda498bc4620d28edfa0298106dd53315c5f2fba05"
 }

@@ -1,0 +1,220 @@
+{
+  "row": "L10-13",
+  "frozenHead": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "verdict": "PASS",
+  "criterion": "Release only with charge 60 + Mega dead + cure installed, player at the console.",
+  "observation": "Both complete native routes release only at charge3600, cure installed, Mega dead, and console distances 1.5926/1.2197m (<2m). At both tiers the complete missing-prerequisite matrix refuses release when charge, cure, boss death, console proximity, or fresh E is absent; the full eligible control releases. No release is inferred from source inspection alone.",
+  "method": "Current native qa:accept both-tier complete/stationary + production fixtures/checkpoint controls; immutable source receipt snapshots.",
+  "sources": [
+    {
+      "original": "docs/reports/fix51-verify/receipts/L10-low-complete.json",
+      "originalSha256": "832562d7747a6d96451e185e249605a87fb77ff9cf312ec0ef941ad52c90aa95",
+      "archive": "docs/reports/final-c/native/L10-low-complete.json.gz",
+      "sha256": "8f2e11bb7ea3604d0c1f7db62cca453818f18a6706a9676b876f34b46e24da1f",
+      "revision": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+      "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+      "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+      "generatedAt": "2026-11-06T23:58:07.856Z"
+    },
+    {
+      "original": "docs/reports/fix51-verify/receipts/L10-low-stationary.json",
+      "originalSha256": "5433709ca0508f334e49cfdc6078cd4af6aa005f72b0c042b1d7b8db1dee679c",
+      "archive": "docs/reports/final-c/native/L10-low-stationary.json.gz",
+      "sha256": "dfdb72e5fcd79f5db665c40e096ced326d0a148a06e29450824d48bee6612882",
+      "revision": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+      "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+      "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+      "generatedAt": "2026-11-06T23:58:41.340Z"
+    },
+    {
+      "original": "docs/reports/fix51-verify/receipts/L10-high-complete.json",
+      "originalSha256": "355d39e51e9ed49cb87f6603cb9b3a8981877ebd7a58ddc446a07af050bd2435",
+      "archive": "docs/reports/final-c/native/L10-high-complete.json.gz",
+      "sha256": "0af4d7200e9b341063d2fa1a65bb0070b7531f3eb390259ed15d7c31e7ab50cb",
+      "revision": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+      "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+      "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+      "generatedAt": "2026-11-06T23:59:10.706Z"
+    },
+    {
+      "original": "docs/reports/fix51-verify/receipts/L10-high-stationary.json",
+      "originalSha256": "3ad9d850deeceed26f960bda66c6cfa0ef18911e2fe5c3daea9c7924f8b7e3cd",
+      "archive": "docs/reports/final-c/native/L10-high-stationary.json.gz",
+      "sha256": "cb525c30e1a0766f5c58135f55129ebe4b91c76b920dd0bd955472a14acd58a9",
+      "revision": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+      "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+      "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+      "generatedAt": "2026-11-06T23:59:53.159Z"
+    },
+    {
+      "original": "docs/reports/fix51-verify/receipts/L10-low-fixtures.json",
+      "originalSha256": "61d19dd997f30c59aebcea25de2b9f28846e8ec5c6ad7dd85e0448ad69190498",
+      "archive": "docs/reports/final-c/native/L10-low-fixtures.json.gz",
+      "sha256": "11fcbea0af38305871180125c31ad74e19f74034a087b486d849b291fde9c581",
+      "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+      "fixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4"
+    },
+    {
+      "original": "docs/reports/fix51-verify/receipts/L10-high-fixtures.json",
+      "originalSha256": "1bedac7eb5383df66d9c323ff9ac5fb477f391e732c5409c6cbc6d64fe249c76",
+      "archive": "docs/reports/final-c/native/L10-high-fixtures.json.gz",
+      "sha256": "514522e7edc040f73110c272d60efe194211f8689c77e687b9917836a2e81144",
+      "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+      "fixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4"
+    }
+  ],
+  "checks": [
+    {
+      "id": "L10-13",
+      "clause": "release transaction observed prerequisites",
+      "level": "L10",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": {
+        "tick": 69721,
+        "charge": 3600,
+        "installed": true,
+        "dead": true,
+        "distance": 1.5925876075897638
+      },
+      "target": "charge3600 + installed + Mega dead + player at console",
+      "receipt": "docs/reports/fix51-verify/receipts/L10-low-complete.json"
+    },
+    {
+      "id": "L10-13",
+      "clause": "release transaction observed prerequisites",
+      "level": "L10",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "NOT CHECKED",
+      "value": null,
+      "target": "charge3600 + installed + Mega dead + player at console",
+      "receipt": "docs/reports/fix51-verify/receipts/L10-low-stationary.json"
+    },
+    {
+      "id": "L10-13",
+      "clause": "release transaction observed prerequisites",
+      "level": "L10",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": {
+        "tick": 66721,
+        "charge": 3600,
+        "installed": true,
+        "dead": true,
+        "distance": 1.2197087207537651
+      },
+      "target": "charge3600 + installed + Mega dead + player at console",
+      "receipt": "docs/reports/fix51-verify/receipts/L10-high-complete.json"
+    },
+    {
+      "id": "L10-13",
+      "clause": "release transaction observed prerequisites",
+      "level": "L10",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "NOT CHECKED",
+      "value": null,
+      "target": "charge3600 + installed + Mega dead + player at console",
+      "receipt": "docs/reports/fix51-verify/receipts/L10-high-stationary.json"
+    },
+    {
+      "id": "L10-13",
+      "clause": "release predicate missing-prerequisite matrix",
+      "value": [
+        {
+          "missing": "none",
+          "released": true,
+          "expected": true,
+          "consoleRadius": 2
+        },
+        {
+          "missing": "charge",
+          "released": false,
+          "expected": false,
+          "consoleRadius": 2
+        },
+        {
+          "missing": "installed",
+          "released": false,
+          "expected": false,
+          "consoleRadius": 2
+        },
+        {
+          "missing": "boss",
+          "released": false,
+          "expected": false,
+          "consoleRadius": 2
+        },
+        {
+          "missing": "console",
+          "released": false,
+          "expected": false,
+          "consoleRadius": 2
+        },
+        {
+          "missing": "input",
+          "released": false,
+          "expected": false,
+          "consoleRadius": 2
+        }
+      ],
+      "target": "release only with charge3600, installed cure, dead Mega, console range and fresh E",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L10-low-fixtures.json",
+      "level": "L10"
+    },
+    {
+      "id": "L10-13",
+      "clause": "release predicate missing-prerequisite matrix",
+      "value": [
+        {
+          "missing": "none",
+          "released": true,
+          "expected": true,
+          "consoleRadius": 2
+        },
+        {
+          "missing": "charge",
+          "released": false,
+          "expected": false,
+          "consoleRadius": 2
+        },
+        {
+          "missing": "installed",
+          "released": false,
+          "expected": false,
+          "consoleRadius": 2
+        },
+        {
+          "missing": "boss",
+          "released": false,
+          "expected": false,
+          "consoleRadius": 2
+        },
+        {
+          "missing": "console",
+          "released": false,
+          "expected": false,
+          "consoleRadius": 2
+        },
+        {
+          "missing": "input",
+          "released": false,
+          "expected": false,
+          "consoleRadius": 2
+        }
+      ],
+      "target": "release only with charge3600, installed cure, dead Mega, console range and fresh E",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L10-high-fixtures.json",
+      "level": "L10"
+    }
+  ]
+}
