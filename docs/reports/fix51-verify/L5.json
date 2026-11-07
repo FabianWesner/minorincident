@@ -1,11 +1,11 @@
 {
   "version": 2,
   "level": "L5",
-  "sourceHash": "2b976f139b4d722f660c9a1be1d33b042929606fa8354b412b7186b85b996740",
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
   "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
   "fixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
-  "generatedAt": "2026-11-06T20:44:29.071Z",
+  "generatedAt": "2026-11-07T00:01:50.752Z",
   "policies": [
     {
       "tier": "low",
@@ -539,7 +539,7 @@
         ],
         "notes": "No criterion/checker change. Before-fix counterexample; subsequent game fix must remove the route cue while retaining authored destinations.",
         "freshness": "STALE",
-        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     },
     {
@@ -924,7 +924,7 @@
         ],
         "notes": "Eight raw PNGs hashed and deleted after inspection. Images generated only under test-results. No timing claim. Final-source both-quality fixture refresh inspected. Whole native matrix was explicitly stopped by orchestrator; no complete final-source acceptance consolidation is claimed.",
         "freshness": "STALE",
-        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     },
     {
@@ -1065,18 +1065,19 @@
         ],
         "notes": "Final-source both-quality fixture refresh inspected. Whole native matrix was explicitly stopped by orchestrator; no complete final-source acceptance consolidation is claimed.",
         "freshness": "STALE",
-        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     },
     {
       "id": "G-13",
       "status": "FAIL",
       "currentStatus": "NOT CHECKED",
-      "value": "low/complete each observed follower median versus its phase group median: {\"rows\":[{\"phase\":\"step/look\",\"id\":31,\"seeds\":[{\"seed\":1,\"valid\":true,\"samples\":129,\"median\":4.3046312954604415,\"groupMedian\":4.450635197740783,\"ratio\":0.9671948169657996},{\"seed\":2,\"valid\":true,\"samples\":135,\"median\":4.342453576274158,\"groupMedian\":4.3699278154119625,\"ratio\":0.9937128849037489},{\"seed\":3,\"valid\":true,\"samples\":126,\"median\":4.437383052847879,\"groupMedian\":4.428498327332077,\"ratio\"… (full values in JSON) (target every ratio ≥0.95; ≥10 walking samples/follower; PASS); low/complete stationary far-follower time upper bound: {\"escortTicks\":11601,\"stationaryFarTicks\":0,\"upperBoundPercent\":0,\"followers\":[{\"id\":18,\"escortTicks\":11601,\"stationaryFarTicks\":0},{\"id\":31,\"escortTicks\":8919,\"stationaryFarTicks\":0},{\"id\":30,\"escortTicks\":7073,\"stationaryFarTicks\":0},{\"id\":32,\"escortTicks\":5166,\"stationaryFarTicks\":0},{\"id\":28,\"escortTicks\":3903,\"stationaryFarTicks\":0},{\"id\":29,\"escortTicks\":2079,\"stationaryFarTicks\":0}]} (target actual waiting ≤10%; a bound above 10% is inconclusive; PASS); high/complete each observed follower median versus its phase group median: {\"rows\":[{\"phase\":\"step/look\",\"id\":31,\"seeds\":[{\"seed\":1,\"valid\":true,\"samples\":137,\"median\":4.366413559282058,\"groupMedian\":4.299462525080636,\"ratio\":1.015571954357287},{\"seed\":2,\"valid\":true,\"samples\":137,\"median\":4.26728611684063,\"groupMedian\":4.133922737569598,\"ratio\":1.0322607333850264},{\"seed\":3,\"valid\":true,\"samples\":128,\"median\":4.447189613994879,\"groupMedian\":4.4131743157392656,\"ratio\":1.… (full values in JSON) (target every ratio ≥0.95; ≥10 walking samples/follower; PASS); high/complete stationary far-follower time upper bound: {\"escortTicks\":13338,\"stationaryFarTicks\":0,\"upperBoundPercent\":0,\"followers\":[{\"id\":18,\"escortTicks\":13283,\"stationaryFarTicks\":0},{\"id\":31,\"escortTicks\":10568,\"stationaryFarTicks\":0},{\"id\":30,\"escortTicks\":8768,\"stationaryFarTicks\":0},{\"id\":32,\"escortTicks\":6897,\"stationaryFarTicks\":0},{\"id\":28,\"escortTicks\":4789,\"stationaryFarTicks\":0},{\"id\":29,\"escortTicks\":2743,\"stationaryFarTicks\":0}]} (target actual waiting ≤10%; a bound above 10% is inconclusive; PASS) Manual review PASS (STALE, fix68-g/Codex): Both complete native routes pass, all five rescued. L5-only movement response changed; all speed/acceleration/jerk caps and thresholds retained. Geometry trials rejected.; Final-source low four officers min99.54%; high one officer reaches10 qualified samples, ratio100%; other high officers overwhelmed before qualification.; Conservative sum-individual-far/max-individual-escort bound1.229%/2.091%. Same corgi exclusion as existing pace evaluator. Aggregate including corgi12.951% at high remains inconclusive; no checker threshold changed. Open prior FAIL: Native competent L5 survivor28 median pace is94.8% of its phase group median over55 qualified samples, below95%. This survivor alone fails the full row although named gate cohorts pass. L3 actor23 is a companion and is not used as survivor-failure evidence.",
+      "value": "low/complete each observed follower median versus its phase group median: {\"rows\":[{\"phase\":\"step/look\",\"id\":31,\"seeds\":[{\"seed\":1,\"valid\":true,\"samples\":129,\"median\":4.3046312954604415,\"groupMedian\":4.450635197740783,\"ratio\":0.9671948169657996},{\"seed\":2,\"valid\":true,\"samples\":135,\"median\":4.342453576274158,\"groupMedian\":4.3699278154119625,\"ratio\":0.9937128849037489},{\"seed\":3,\"valid\":true,\"samples\":126,\"median\":4.437383052847879,\"groupMedian\":4.428498327332077,\"ratio\"… (full values in JSON) (target every ratio ≥0.95; ≥10 walking samples/follower; PASS); low/complete stationary far-follower time upper bound: {\"escortTicks\":11601,\"stationaryFarTicks\":0,\"upperBoundPercent\":0,\"followers\":[{\"id\":18,\"escortTicks\":11601,\"stationaryFarTicks\":0},{\"id\":31,\"escortTicks\":8919,\"stationaryFarTicks\":0},{\"id\":30,\"escortTicks\":7073,\"stationaryFarTicks\":0},{\"id\":32,\"escortTicks\":5166,\"stationaryFarTicks\":0},{\"id\":28,\"escortTicks\":3903,\"stationaryFarTicks\":0},{\"id\":29,\"escortTicks\":2079,\"stationaryFarTicks\":0}]} (target actual waiting ≤10%; a bound above 10% is inconclusive; PASS); high/complete each observed follower median versus its phase group median: {\"rows\":[{\"phase\":\"step/look\",\"id\":31,\"seeds\":[{\"seed\":1,\"valid\":true,\"samples\":137,\"median\":4.366413559282058,\"groupMedian\":4.299462525080636,\"ratio\":1.015571954357287},{\"seed\":2,\"valid\":true,\"samples\":137,\"median\":4.26728611684063,\"groupMedian\":4.133922737569598,\"ratio\":1.0322607333850264},{\"seed\":3,\"valid\":true,\"samples\":128,\"median\":4.447189613994879,\"groupMedian\":4.4131743157392656,\"ratio\":1.… (full values in JSON) (target every ratio ≥0.95; ≥10 walking samples/follower; PASS); high/complete stationary far-follower time upper bound: {\"escortTicks\":13338,\"stationaryFarTicks\":0,\"upperBoundPercent\":0,\"followers\":[{\"id\":18,\"escortTicks\":13283,\"stationaryFarTicks\":0},{\"id\":31,\"escortTicks\":10568,\"stationaryFarTicks\":0},{\"id\":30,\"escortTicks\":8768,\"stationaryFarTicks\":0},{\"id\":32,\"escortTicks\":6897,\"stationaryFarTicks\":0},{\"id\":28,\"escortTicks\":4789,\"stationaryFarTicks\":0},{\"id\":29,\"escortTicks\":2743,\"stationaryFarTicks\":0}]} (target actual waiting ≤10%; a bound above 10% is inconclusive; PASS) Manual review PASS (STALE, Codex/fix73-b): Current L5 high canonical source d97192f688d1e72561fb49f26eb4afff8d84d9f6cc4dabfe56bd373cd1bfb0b5: every human follower/step passes production seed voting; at least two qualified valid seeds each. Follower28 search ratios1.0119/0.9873/0.8945 with47/46/46 samples: one failure, below the two required to flag. Waiting upper bound0%. Scoped high-tier PASS; whole L5-08 formation/bars and all-level G-13 remain separately open. Historical L3 clauses and global freshness metadata are retained, not newly approved.; Final-source low four officers min99.54%; high one officer reaches10 qualified samples, ratio100%; other high officers overwhelmed before qualification.; Conservative sum-individual-far/max-individual-escort bound1.229%/2.091%. Same corgi exclusion as existing pace evaluator. Aggregate including corgi12.951% at high remains inconclusive; no checker threshold changed. Open prior FAIL: Native competent L5 survivor28 median pace is94.8% of its phase group median over55 qualified samples, below95%. This survivor alone fails the full row although named gate cohorts pass. L3 actor23 is a companion and is not used as survivor-failure evidence.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L5-low-complete.json",
         "docs/reports/fix51-verify/receipts/L5-high-complete.json",
+        "docs/reports/fix73-b/G13-high-summary.json",
         "docs/reports/fix68-g/G-13-final/G-13-L5-low-complete.json.gz",
         "docs/reports/fix68-g/G-13-final/G-13-L5-high-complete.json.gz",
         "docs/reports/fix68-g/G-13-fix.json",
@@ -1827,14 +1828,14 @@
       "reviewDecision": {
         "row": "G-13",
         "status": "PASS",
-        "reviewer": "fix68-g/Codex",
+        "reviewer": "Codex/fix73-b",
         "date": "2026-11-06",
         "commit": "d6167897fdd39772a96a7a2dbfb69ea4c5cee5db",
         "clauses": [
           {
             "clause": "L5 followers: every observed follower phase median >=0.95 of the group median and waiting for a follower >10m behind <=10% of escort time.",
             "verdict": "PASS",
-            "note": "Both complete native routes pass, all five rescued. L5-only movement response changed; all speed/acceleration/jerk caps and thresholds retained. Geometry trials rejected."
+            "note": "Current L5 high canonical source d97192f688d1e72561fb49f26eb4afff8d84d9f6cc4dabfe56bd373cd1bfb0b5: every human follower/step passes production seed voting; at least two qualified valid seeds each. Follower28 search ratios1.0119/0.9873/0.8945 with47/46/46 samples: one failure, below the two required to flag. Waiting upper bound0%. Scoped high-tier PASS; whole L5-08 formation/bars and all-level G-13 remain separately open. Historical L3 clauses and global freshness metadata are retained, not newly approved."
           },
           {
             "clause": "L3 observed human follower medians >=0.95 of the phase human group median, both tiers.",
@@ -1848,6 +1849,11 @@
           }
         ],
         "evidence": [
+          {
+            "file": "docs/reports/fix73-b/G13-high-summary.json",
+            "sha256": "7395dbf7e0c740ba4c19aad36b920a7ba74b592ae11cba0c7ada6c7eb5b3af26",
+            "what": "Current L5 high canonical source d97192f688d1e72561fb49f26eb4afff8d84d9f6cc4dabfe56bd373cd1bfb0b5: every human follower/step passes production seed voting; at least two qualified valid seeds each. Follower28 search ratios1.0119/0.9873/0.8945 with47/46/46 samples: one failure, below the two required to flag. Waiting upper bound0%. Scoped high-tier PASS; whole L5-08 formation/bars and all-level G-13 remain separately open. Historical L3 clauses and global freshness metadata are retained, not newly approved."
+          },
           {
             "file": "docs/reports/fix68-g/G-13-final/G-13-L5-low-complete.json.gz",
             "sha256": "82d6cbfd2190132afbad8171028d0446d12cb3522ab56025d8ddb70cf7ff7744",
@@ -1909,7 +1915,7 @@
           "Final load-qualified standalone threat: exit1,12 L7 pace flags; L3/L6 threat flags cleared. Full global-row qualification remains open. See docs/reports/fix68-g/README.md."
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     },
     {
@@ -1984,7 +1990,7 @@
         ],
         "notes": "Arranged authored fixture poses are explicit setup, not a claim that every corpse was produced by a physical kill. Full route ledgers separately record persistence including sleeping chunks. Pile top surface height remains unmeasured; FAIL is floating geometry.",
         "freshness": "STALE",
-        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     },
     {
@@ -2152,7 +2158,7 @@
         ],
         "notes": "No speculative animation fix. P: review authored crawler posture against literal42deg cap. Fixture exclusions retained.",
         "freshness": "STALE",
-        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     },
     {
@@ -3756,7 +3762,7 @@
         ],
         "notes": "Final-source both-quality fixture refresh inspected. Whole native matrix was explicitly stopped by orchestrator; no complete final-source acceptance consolidation is claimed.",
         "freshness": "STALE",
-        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     },
     {
@@ -3844,7 +3850,7 @@
         ],
         "notes": "Game-camera scene and close grip camera differ; defect is visible in the close view. Full every-body/routine visual coverage remains incomplete. No criteria or assets changed.",
         "freshness": "STALE",
-        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     },
     {
@@ -3932,7 +3938,7 @@
         ],
         "notes": "Real-input playtest driver (WebGPU, god mode, per-step captures low/high x zoom 1.5/0.5) plus test-API sim-bot camera probes. Every listed capture was inspected; raw captures deleted, compact sheets retained.",
         "freshness": "STALE",
-        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     }
   ],
@@ -4561,9 +4567,9 @@
     },
     {
       "id": "L5-05",
-      "status": "FAIL",
+      "status": "PASS",
       "currentStatus": "PASS",
-      "value": "low/complete combat hard rule on actual player windups: {\"seconds\":137.06666666666666,\"playerWindups\":10,\"groupWindups\":0,\"attacksPerMinute\":4.377431906614786} (target nonzero player windups in each combat policy; PASS); low/complete real player/group windups per minute: 4.377431906614786 (target 3 ≤ value ≤ Infinity; PASS); low/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); low/complete competent route visible infected encounters per40m: 4.411796371224061 (target 1 ≤ value ≤ Infinity; PASS); low/stationary combat hard rule on actual player windups: {\"seconds\":228.35,\"playerWindups\":762,\"groupWindups\":0,\"attacksPerMinute\":200.2189621195533} (target nonzero player windups in each combat policy; PASS); low/stationary stationary first real player attack (phase clock): {\"seconds\":0.18333333333333332,\"windowSeconds\":228.35} (target ≤20 s; PASS); low/stationary real player/group windups per minute: 200.2189621195533 (target 3 ≤ value ≤ Infinity; PASS); low/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); high/complete combat hard rule on actual player windups: {\"seconds\":154.73333333333332,\"playerWindups\":24,\"groupWindups\":1,\"attacksPerMinute\":9.306333476949591} (target nonzero player windups in each combat policy; PASS); high/complete real player/group windups per minute: 9.69409737182249 (target 3 ≤ value ≤ Infinity; PASS); high/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); high/complete competent route visible infected encounters per40m: 9.957612390107307 (target 1 ≤ value ≤ Infinity; PASS); high/stationary combat hard rule on actual player windups: {\"seconds\":228.35,\"playerWindups\":974,\"groupWindups\":0,\"attacksPerMinute\":255.92292533391722} (target nonzero player windups in each combat policy; PASS); high/stationary stationary first real player attack (phase clock): {\"seconds\":0.2,\"windowSeconds\":228.35} (target ≤20 s; PASS); high/stationary real player/group windups per minute: 255.92292533391722 (target 3 ≤ value ≤ Infinity; PASS); high/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS) Manual review PASS (STALE, Codex/sweep-b): All objective clauses pass low/high on ordinary competent complete and passive policies: bounded-path minimum100%; unique visible living bodies within10m yield4.588/7.758 encounters per40m with continuous route-distance ledger; complete actual player windups3.166/4.188 per minute; passive first attacks0.05/0.717s. P: PO: can a competent player still just walk, pick up the survivors and walk away? Review perceived rescue pressure only. This native verdict does not settle that feel question. Open prior FAIL: Native low competent look/search phase145.6 s:0 player and0 group attack windups/min, below >=3/min. Passive first7.55 s,182.57/min and90/90 reach demonstrate potential contact; they do not satisfy the competent-route clause. Per-40 m route density/high counterpart remain unmeasured.",
+      "value": "low/complete combat hard rule on actual player windups: {\"seconds\":137.06666666666666,\"playerWindups\":10,\"groupWindups\":0,\"attacksPerMinute\":4.377431906614786} (target nonzero player windups in each combat policy; PASS); low/complete real player/group windups per minute: 4.377431906614786 (target 3 ≤ value ≤ Infinity; PASS); low/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); low/complete competent route visible infected encounters per40m: 4.411796371224061 (target 1 ≤ value ≤ Infinity; PASS); low/stationary combat hard rule on actual player windups: {\"seconds\":228.35,\"playerWindups\":762,\"groupWindups\":0,\"attacksPerMinute\":200.2189621195533} (target nonzero player windups in each combat policy; PASS); low/stationary stationary first real player attack (phase clock): {\"seconds\":0.18333333333333332,\"windowSeconds\":228.35} (target ≤20 s; PASS); low/stationary real player/group windups per minute: 200.2189621195533 (target 3 ≤ value ≤ Infinity; PASS); low/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); high/complete combat hard rule on actual player windups: {\"seconds\":154.73333333333332,\"playerWindups\":24,\"groupWindups\":1,\"attacksPerMinute\":9.306333476949591} (target nonzero player windups in each combat policy; PASS); high/complete real player/group windups per minute: 9.69409737182249 (target 3 ≤ value ≤ Infinity; PASS); high/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); high/complete competent route visible infected encounters per40m: 9.957612390107307 (target 1 ≤ value ≤ Infinity; PASS); high/stationary combat hard rule on actual player windups: {\"seconds\":228.35,\"playerWindups\":974,\"groupWindups\":0,\"attacksPerMinute\":255.92292533391722} (target nonzero player windups in each combat policy; PASS); high/stationary stationary first real player attack (phase clock): {\"seconds\":0.2,\"windowSeconds\":228.35} (target ≤20 s; PASS); high/stationary real player/group windups per minute: 255.92292533391722 (target 3 ≤ value ≤ Infinity; PASS); high/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS) Manual review PASS (FRESH, Codex/sweep-b): All objective clauses pass low/high on ordinary competent complete and passive policies: bounded-path minimum100%; unique visible living bodies within10m yield4.588/7.758 encounters per40m with continuous route-distance ledger; complete actual player windups3.166/4.188 per minute; passive first attacks0.05/0.717s. P: PO: can a competent player still just walk, pick up the survivors and walk away? Review perceived rescue pressure only. This native verdict does not settle that feel question. Requalified prior FAIL: Native low competent look/search phase145.6 s:0 player and0 group attack windups/min, below >=3/min. Passive first7.55 s,182.57/min and90/90 reach demonstrate potential contact; they do not satisfy the competent-route clause. Per-40 m route density/high counterpart remain unmeasured.",
       "automatedComplete": true,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L5-low-complete.json",
@@ -4788,7 +4794,7 @@
         ],
         "method": "Compare the complete-policy step/look ledger with its passive counterpart; actual windups, not damage or kills. The competent bot fires, so zero windups alone is not called proof that an unarmed walk is safe. NEXT: matched competent real-input and no-fire routes with distance/contact ledgers at both tiers."
       },
-      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure.",
+      "remaining": "All required current clauses pass; fresh exact-criterion review closes the prior finding. Historical evidence is retained.",
       "review": {
         "tag": "P",
         "instruction": "PO: can a competent player still just walk, pick up the survivors and walk away? Review perceived rescue pressure only; reachability, route density, attack rate and first-attack clock retain numeric checks."
@@ -4814,8 +4820,9 @@
           }
         ],
         "notes": "Current-source native measurements at both tiers. A FAIL closes the verdict through the cited counterexample; unmeasured clauses are not promoted to PASS.",
-        "freshness": "STALE",
-        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
+        "sourceDigest": "96b95aaf00218387ac838466ba4e849719809eef34f96b67f54241001dca8a39",
+        "freshness": "FRESH",
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     },
     {
@@ -4865,7 +4872,7 @@
       "id": "L5-08",
       "status": "FAIL",
       "currentStatus": "FAIL",
-      "value": "low/complete calm straight-walk follower distance tolerance: [{\"id\":31,\"followAt\":2657,\"calmTicks\":7697,\"within8Ticks\":7697,\"movingCalmTicks\":5107,\"behind2To5Ticks\":4698,\"maxMotionSpeed\":312.0000000000003,\"straightTicks\":1771,\"inBandStraightTicks\":1730,\"badStraightTicks\":41,\"badRun\":0,\"maxBadRun\":27,\"counterexample\":{\"tick\":8156,\"behind\":5.002522702434311,\"distance\":5.009168382640548,\"player\":{\"x\":12.442595481872559,\"z\":11.92718505859375},\"follower\":{\"x\":12… (full values in JSON) (target at least95% of calm straight-walk ticks 2–5m behind; no out-of-band run longer than2s; FAIL) Manual review FAIL (STALE, Codex/sweep-b): Current source fails calm straight-walk formation tolerance at both tiers and an individual low-tier pace ratio. Full per-ID95%/2s counters and counterexample ticks/positions are retained. Within8m calm share passes. Combat3.8m/s and every visible bar are still unqualified; neither is inferred from route medians. Whole-row FAIL is established by formation counterexamples. Open prior FAIL: Native L5 civilian follower28:94.8% of phase group median over55 qualified movement samples, below the global95% floor. Distance2-5 m/80%-within8 m and absolute3.8 m/s clauses are not fully measured.",
+      "value": "low/complete calm straight-walk follower distance tolerance: [{\"id\":31,\"followAt\":2657,\"calmTicks\":7697,\"within8Ticks\":7697,\"movingCalmTicks\":5107,\"behind2To5Ticks\":4698,\"maxMotionSpeed\":312.0000000000003,\"straightTicks\":1771,\"inBandStraightTicks\":1730,\"badStraightTicks\":41,\"badRun\":0,\"maxBadRun\":27,\"counterexample\":{\"tick\":8156,\"behind\":5.002522702434311,\"distance\":5.009168382640548,\"player\":{\"x\":12.442595481872559,\"z\":11.92718505859375},\"follower\":{\"x\":12… (full values in JSON) (target at least95% of calm straight-walk ticks 2–5m behind; no out-of-band run longer than2s; FAIL) Manual review FAIL (FRESH, Codex/sweep-b): Current source fails calm straight-walk formation tolerance at both tiers and an individual low-tier pace ratio. Full per-ID95%/2s counters and counterexample ticks/positions are retained. Within8m calm share passes. Combat3.8m/s and every visible bar are still unqualified; neither is inferred from route medians. Whole-row FAIL is established by formation counterexamples. Open prior FAIL: Native L5 civilian follower28:94.8% of phase group median over55 qualified movement samples, below the global95% floor. Distance2-5 m/80%-within8 m and absolute3.8 m/s clauses are not fully measured.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L5-low-complete.json",
@@ -6150,8 +6157,9 @@
           }
         ],
         "notes": "Current-source native measurements at both tiers. A FAIL closes the verdict through the cited counterexample; unmeasured clauses are not promoted to PASS.",
-        "freshness": "STALE",
-        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
+        "sourceDigest": "96b95aaf00218387ac838466ba4e849719809eef34f96b67f54241001dca8a39",
+        "freshness": "FRESH",
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     },
     {
@@ -6226,7 +6234,7 @@
       "id": "L5-11",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "Manual review PASS (STALE, Codex/sweep-b): All126 current physical captures inspected on24 numbered sheets. At both tiers the female courier retains opaque green clothing, teal backpack and orange shoes in fog, at both photo zooms. At zoom1.5 the roofless long rectangular bus shell, lake-side trees and nearby crushed vehicles remain distinct; the actual flashlight-in-wrecked-bus caption is visible in both primary routes. Dense living-body occlusion is disclosed; this row checks shading and bus readability, not continuous visibility or caption-only discovery. Two low-z0.5 opening photo images are black and that route does not complete; later fog images render normally. Low-z1.5 reaches shutter closure but the observer throws on stale L5 state at L6 handover. Only high-z1.5 supplies an intact completed physical receipt. Courier colour stays solid and distinct in low/high opening and high fog/Metro frames. The bus hiding place at zoom1.5 is not specifically qualified.",
+      "value": "Manual review PASS (FRESH, Codex/sweep-b): All126 current physical captures inspected on24 numbered sheets. At both tiers the female courier retains opaque green clothing, teal backpack and orange shoes in fog, at both photo zooms. At zoom1.5 the roofless long rectangular bus shell, lake-side trees and nearby crushed vehicles remain distinct; the actual flashlight-in-wrecked-bus caption is visible in both primary routes. Dense living-body occlusion is disclosed; this row checks shading and bus readability, not continuous visibility or caption-only discovery. Two low-z0.5 opening photo images are black and that route does not complete; later fog images render normally. Low-z1.5 reaches shutter closure but the observer throws on stale L5 state at L6 handover. Only high-z1.5 supplies an intact completed physical receipt. Courier colour stays solid and distinct in low/high opening and high fog/Metro frames. The bus hiding place at zoom1.5 is not specifically qualified.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/sweep-b/L5-11-proof.json",
@@ -6275,15 +6283,16 @@
             "what": "All126 current physical captures inspected on24 numbered sheets. At both tiers the female courier retains opaque green clothing, teal backpack and orange shoes in fog, at both photo zooms. At zoom1.5 the roofless long rectangular bus shell, lake-side trees and nearby crushed vehicles remain distinct; the actual flashlight-in-wrecked-bus caption is visible in both primary routes. Dense living-body occlusion is disclosed; this row checks shading and bus readability, not continuous visibility or caption-only discovery. Two low-z0.5 opening photo images are black and that route does not complete; later fog images render normally. Low-z1.5 reaches shutter closure but the observer throws on stale L5 state at L6 handover. Only high-z1.5 supplies an intact completed physical receipt."
           }
         ],
-        "freshness": "STALE",
-        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
+        "sourceDigest": "96b95aaf00218387ac838466ba4e849719809eef34f96b67f54241001dca8a39",
+        "freshness": "FRESH",
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     },
     {
       "id": "L5-12",
-      "status": "NOT CHECKED",
-      "currentStatus": "NOT CHECKED",
-      "value": "low/complete station occupant identities: 24 (target 20 ≤ value ≤ 30; PASS); low/stationary station occupant identities: 24 (target 20 ≤ value ≤ 30; PASS); high/complete station occupant identities: 24 (target 20 ≤ value ≤ 30; PASS); high/stationary station occupant identities: 24 (target 20 ≤ value ≤ 30; PASS) Manual review FAIL (STALE, Codex/fix67-b): Ordinary mortal completed routes, actual low/high renderer, existing three-second arrival period, fixed game-camera angle and player zoom. 24 submitted and 21 fully projected identities is not proof of 21 unoccluded pixels; HUD/edge occlusion remains. Personally inspected all eight captures. Closed views show overlapping followers at the shutter, so the compound row remains FAIL. No counts or timers changed.",
+      "status": "FAIL",
+      "currentStatus": "FAIL",
+      "value": "low/complete station occupant identities: 24 (target 20 ≤ value ≤ 30; PASS); low/stationary station occupant identities: 24 (target 20 ≤ value ≤ 30; PASS); high/complete station occupant identities: 24 (target 20 ≤ value ≤ 30; PASS); high/stationary station occupant identities: 24 (target 20 ≤ value ≤ 30; PASS) Manual review FAIL (FRESH, Codex/fix67-b): Ordinary mortal completed routes, actual low/high renderer, existing three-second arrival period, fixed game-camera angle and player zoom. 24 submitted and 21 fully projected identities is not proof of 21 unoccluded pixels; HUD/edge occlusion remains. Personally inspected all eight captures. Closed views show overlapping followers at the shutter, so the compound row remains FAIL. No counts or timers changed.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L5-low-complete.json",
@@ -6376,8 +6385,9 @@
             "what": "Every sample, camera, projected resident endpoints, screenshot hashes and personal inspection notes. Raw captures removed after review."
           }
         ],
-        "freshness": "STALE",
-        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
+        "sourceDigest": "96b95aaf00218387ac838466ba4e849719809eef34f96b67f54241001dca8a39",
+        "freshness": "FRESH",
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     },
     {
@@ -11731,7 +11741,7 @@
       "id": "L5-14",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/complete sun intensity state multiplier at metro/end: 0.5 (target 0 ≤ value ≤ 0.7; PASS); low/stationary sun intensity state multiplier at metro/end: 0.5034375 (target 0 ≤ value ≤ 0.7; PASS); high/complete sun intensity state multiplier at metro/end: 0.5 (target 0 ≤ value ≤ 0.7; PASS); high/stationary sun intensity state multiplier at metro/end: 0.5034375 (target 0 ≤ value ≤ 0.7; PASS) Manual review PASS (STALE, Codex/sweep-b): All16 current matched-camera captures inspected: four authored L4/L5 camera pairs at both tiers have exactly equal positions/targets and1280x720 framing. Same plaza/convoy arrangement, Harbor cafe, Metro sign/frontage and Kessler fence/tree/block remain identifiable; L5 adds shattered facades, wrecks, bodies and fog. Heavy plaza fog is disclosed. Actual L5 renderer sun drops from0.816 to0.44965 (44.90%) by metro/end, exceeding30%; sim end multiplier0.5. P: PO: do matched L4/L5 views read as the same place, fallen? Sun intensity reduction remains a numeric clause. No taste verdict is claimed. Native named photo-preset lookup was unavailable, so the existing authored offsets were applied as explicit identical cinematic poses.",
+      "value": "low/complete sun intensity state multiplier at metro/end: 0.5 (target 0 ≤ value ≤ 0.7; PASS); low/stationary sun intensity state multiplier at metro/end: 0.5034375 (target 0 ≤ value ≤ 0.7; PASS); high/complete sun intensity state multiplier at metro/end: 0.5 (target 0 ≤ value ≤ 0.7; PASS); high/stationary sun intensity state multiplier at metro/end: 0.5034375 (target 0 ≤ value ≤ 0.7; PASS) Manual review PASS (FRESH, Codex/sweep-b): All16 current matched-camera captures inspected: four authored L4/L5 camera pairs at both tiers have exactly equal positions/targets and1280x720 framing. Same plaza/convoy arrangement, Harbor cafe, Metro sign/frontage and Kessler fence/tree/block remain identifiable; L5 adds shattered facades, wrecks, bodies and fog. Heavy plaza fog is disclosed. Actual L5 renderer sun drops from0.816 to0.44965 (44.90%) by metro/end, exceeding30%; sim end multiplier0.5. P: PO: do matched L4/L5 views read as the same place, fallen? Sun intensity reduction remains a numeric clause. No taste verdict is claimed. Native named photo-preset lookup was unavailable, so the existing authored offsets were applied as explicit identical cinematic poses.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L5-low-complete.json",
@@ -11840,8 +11850,9 @@
             "what": "All16 current matched-camera captures inspected: four authored L4/L5 camera pairs at both tiers have exactly equal positions/targets and1280x720 framing. Same plaza/convoy arrangement, Harbor cafe, Metro sign/frontage and Kessler fence/tree/block remain identifiable; L5 adds shattered facades, wrecks, bodies and fog. Heavy plaza fog is disclosed. Actual L5 renderer sun drops from0.816 to0.44965 (44.90%) by metro/end, exceeding30%; sim end multiplier0.5. P: PO: do matched L4/L5 views read as the same place, fallen? Sun intensity reduction remains a numeric clause. No taste verdict is claimed. Native named photo-preset lookup was unavailable, so the existing authored offsets were applied as explicit identical cinematic poses."
           }
         ],
-        "freshness": "STALE",
-        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
+        "sourceDigest": "96b95aaf00218387ac838466ba4e849719809eef34f96b67f54241001dca8a39",
+        "freshness": "FRESH",
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     }
   ]

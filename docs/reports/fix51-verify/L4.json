@@ -1,11 +1,11 @@
 {
   "version": 2,
   "level": "L4",
-  "sourceHash": "2b976f139b4d722f660c9a1be1d33b042929606fa8354b412b7186b85b996740",
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
   "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
   "fixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
-  "generatedAt": "2026-11-06T20:42:04.490Z",
+  "generatedAt": "2026-11-07T00:07:03.259Z",
   "policies": [
     {
       "tier": "low",
@@ -775,7 +775,7 @@
         ],
         "notes": "No criterion/checker change. Before-fix counterexample; subsequent game fix must remove the route cue while retaining authored destinations.",
         "freshness": "STALE",
-        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     },
     {
@@ -1218,7 +1218,7 @@
         ],
         "notes": "Eight raw PNGs hashed and deleted after inspection. Images generated only under test-results. No timing claim. Final-source both-quality fixture refresh inspected. Whole native matrix was explicitly stopped by orchestrator; no complete final-source acceptance consolidation is claimed.",
         "freshness": "STALE",
-        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     },
     {
@@ -1359,18 +1359,19 @@
         ],
         "notes": "Final-source both-quality fixture refresh inspected. Whole native matrix was explicitly stopped by orchestrator; no complete final-source acceptance consolidation is claimed.",
         "freshness": "STALE",
-        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     },
     {
       "id": "G-13",
       "status": "FAIL",
       "currentStatus": "NOT CHECKED",
-      "value": "low/complete each observed follower median versus its phase group median: [] (target every ratio ≥0.95; ≥10 walking samples/follower; NOT CHECKED); low/complete stationary far-follower time upper bound: {\"escortTicks\":33134,\"stationaryFarTicks\":1382,\"upperBoundPercent\":4.170942234562685,\"followers\":[{\"id\":29,\"escortTicks\":33134,\"stationaryFarTicks\":1382}]} (target actual waiting ≤10%; a bound above 10% is inconclusive; PASS); high/complete each observed follower median versus its phase group median: [] (target every ratio ≥0.95; ≥10 walking samples/follower; NOT CHECKED); high/complete stationary far-follower time upper bound: {\"escortTicks\":14366,\"stationaryFarTicks\":0,\"upperBoundPercent\":0,\"followers\":[{\"id\":29,\"escortTicks\":14366,\"stationaryFarTicks\":0}]} (target actual waiting ≤10%; a bound above 10% is inconclusive; PASS) Manual review PASS (STALE, fix68-g/Codex): Both complete native routes pass, all five rescued. L5-only movement response changed; all speed/acceleration/jerk caps and thresholds retained. Geometry trials rejected.; Final-source low four officers min99.54%; high one officer reaches10 qualified samples, ratio100%; other high officers overwhelmed before qualification.; Conservative sum-individual-far/max-individual-escort bound1.229%/2.091%. Same corgi exclusion as existing pace evaluator. Aggregate including corgi12.951% at high remains inconclusive; no checker threshold changed. Open prior FAIL: Native competent L5 survivor28 median pace is94.8% of its phase group median over55 qualified samples, below95%. This survivor alone fails the full row although named gate cohorts pass. L3 actor23 is a companion and is not used as survivor-failure evidence.",
+      "value": "low/complete each observed follower median versus its phase group median: [] (target every ratio ≥0.95; ≥10 walking samples/follower; NOT CHECKED); low/complete stationary far-follower time upper bound: {\"escortTicks\":33134,\"stationaryFarTicks\":1382,\"upperBoundPercent\":4.170942234562685,\"followers\":[{\"id\":29,\"escortTicks\":33134,\"stationaryFarTicks\":1382}]} (target actual waiting ≤10%; a bound above 10% is inconclusive; PASS); high/complete each observed follower median versus its phase group median: [] (target every ratio ≥0.95; ≥10 walking samples/follower; NOT CHECKED); high/complete stationary far-follower time upper bound: {\"escortTicks\":14366,\"stationaryFarTicks\":0,\"upperBoundPercent\":0,\"followers\":[{\"id\":29,\"escortTicks\":14366,\"stationaryFarTicks\":0}]} (target actual waiting ≤10%; a bound above 10% is inconclusive; PASS) Manual review PASS (STALE, Codex/fix73-b): Current L5 high canonical source d97192f688d1e72561fb49f26eb4afff8d84d9f6cc4dabfe56bd373cd1bfb0b5: every human follower/step passes production seed voting; at least two qualified valid seeds each. Follower28 search ratios1.0119/0.9873/0.8945 with47/46/46 samples: one failure, below the two required to flag. Waiting upper bound0%. Scoped high-tier PASS; whole L5-08 formation/bars and all-level G-13 remain separately open. Historical L3 clauses and global freshness metadata are retained, not newly approved.; Final-source low four officers min99.54%; high one officer reaches10 qualified samples, ratio100%; other high officers overwhelmed before qualification.; Conservative sum-individual-far/max-individual-escort bound1.229%/2.091%. Same corgi exclusion as existing pace evaluator. Aggregate including corgi12.951% at high remains inconclusive; no checker threshold changed. Open prior FAIL: Native competent L5 survivor28 median pace is94.8% of its phase group median over55 qualified samples, below95%. This survivor alone fails the full row although named gate cohorts pass. L3 actor23 is a companion and is not used as survivor-failure evidence.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L4-low-complete.json",
         "docs/reports/fix51-verify/receipts/L4-high-complete.json",
+        "docs/reports/fix73-b/G13-high-summary.json",
         "docs/reports/fix68-g/G-13-final/G-13-L5-low-complete.json.gz",
         "docs/reports/fix68-g/G-13-final/G-13-L5-high-complete.json.gz",
         "docs/reports/fix68-g/G-13-fix.json",
@@ -1467,14 +1468,14 @@
       "reviewDecision": {
         "row": "G-13",
         "status": "PASS",
-        "reviewer": "fix68-g/Codex",
+        "reviewer": "Codex/fix73-b",
         "date": "2026-11-06",
         "commit": "d6167897fdd39772a96a7a2dbfb69ea4c5cee5db",
         "clauses": [
           {
             "clause": "L5 followers: every observed follower phase median >=0.95 of the group median and waiting for a follower >10m behind <=10% of escort time.",
             "verdict": "PASS",
-            "note": "Both complete native routes pass, all five rescued. L5-only movement response changed; all speed/acceleration/jerk caps and thresholds retained. Geometry trials rejected."
+            "note": "Current L5 high canonical source d97192f688d1e72561fb49f26eb4afff8d84d9f6cc4dabfe56bd373cd1bfb0b5: every human follower/step passes production seed voting; at least two qualified valid seeds each. Follower28 search ratios1.0119/0.9873/0.8945 with47/46/46 samples: one failure, below the two required to flag. Waiting upper bound0%. Scoped high-tier PASS; whole L5-08 formation/bars and all-level G-13 remain separately open. Historical L3 clauses and global freshness metadata are retained, not newly approved."
           },
           {
             "clause": "L3 observed human follower medians >=0.95 of the phase human group median, both tiers.",
@@ -1488,6 +1489,11 @@
           }
         ],
         "evidence": [
+          {
+            "file": "docs/reports/fix73-b/G13-high-summary.json",
+            "sha256": "7395dbf7e0c740ba4c19aad36b920a7ba74b592ae11cba0c7ada6c7eb5b3af26",
+            "what": "Current L5 high canonical source d97192f688d1e72561fb49f26eb4afff8d84d9f6cc4dabfe56bd373cd1bfb0b5: every human follower/step passes production seed voting; at least two qualified valid seeds each. Follower28 search ratios1.0119/0.9873/0.8945 with47/46/46 samples: one failure, below the two required to flag. Waiting upper bound0%. Scoped high-tier PASS; whole L5-08 formation/bars and all-level G-13 remain separately open. Historical L3 clauses and global freshness metadata are retained, not newly approved."
+          },
           {
             "file": "docs/reports/fix68-g/G-13-final/G-13-L5-low-complete.json.gz",
             "sha256": "82d6cbfd2190132afbad8171028d0446d12cb3522ab56025d8ddb70cf7ff7744",
@@ -1549,7 +1555,7 @@
           "Final load-qualified standalone threat: exit1,12 L7 pace flags; L3/L6 threat flags cleared. Full global-row qualification remains open. See docs/reports/fix68-g/README.md."
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     },
     {
@@ -1624,7 +1630,7 @@
         ],
         "notes": "Arranged authored fixture poses are explicit setup, not a claim that every corpse was produced by a physical kill. Full route ledgers separately record persistence including sleeping chunks. Pile top surface height remains unmeasured; FAIL is floating geometry.",
         "freshness": "STALE",
-        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     },
     {
@@ -1788,7 +1794,7 @@
         ],
         "notes": "No speculative animation fix. P: review authored crawler posture against literal42deg cap. Fixture exclusions retained.",
         "freshness": "STALE",
-        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     },
     {
@@ -1984,7 +1990,7 @@
       "id": "G-21",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/checkpoint-death-fixture mortal checkpoint restore at L4/arrival: {\"checkpoint\":\"arrival\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"e52fe8f0ac03171d324f84c6b7a2212a972371cb519fde23238f13fd74531028\",\"damage\":100,\"expected\":{\"id\":\"arrival\",\"anchor\":{\"x\":-13.84193969809295,\"y\":0.7049999833106995,\"z\":4.276839896197247,\"yaw\":0.3205919885488634},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\",\"weapon.bat\",\"weapon.kick\"],\"RIGHT\":[\"weapon.handgun\",\"abili… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L4/turn: {\"checkpoint\":\"turn\",\"contract\":\"live world preserved (E19 PO 10-07 / E22-AC17)\",\"snapshotSha256\":\"7ecbb89730dc569f2bf93cd1112f8bc9a1f961fc4b1074855e3e84f0e46eea7c\",\"damage\":100,\"expected\":{\"id\":\"turn\",\"anchor\":{\"x\":-25,\"y\":0.7089999914169312,\"z\":4,\"yaw\":2.7672195177156906},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fists\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],\"pickups\":[84,85,86,87,88,89,90,91,92,93,… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; live racks/gates/follower HP/pickups preserved; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L4/line-1: {\"checkpoint\":\"line-1\",\"contract\":\"live world preserved (E19 PO 10-07 / E22-AC17)\",\"snapshotSha256\":\"9be1763e05c0dbf97c808aa732015f5fea10138dd03c408933081b75fb7484dc\",\"damage\":100,\"expected\":{\"id\":\"line-1\",\"anchor\":{\"x\":-20,\"y\":0.7049991488456726,\"z\":-2,\"yaw\":2.281265579112562},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fists\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],\"pickups\":[84,85,86,87,88,89,90,91,92… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; live racks/gates/follower HP/pickups preserved; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L4/nests: {\"checkpoint\":\"nests\",\"contract\":\"live world preserved (E19 PO 10-07 / E22-AC17)\",\"snapshotSha256\":\"3f1e4184fc4f838805a5e79b63de4569434e923cd717c8078105863fc2d6bf44\",\"damage\":100,\"expected\":{\"id\":\"nests\",\"anchor\":{\"x\":-11,\"y\":0.7099999785423279,\"z\":16,\"yaw\":1.4416783803082165},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fists\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],\"pickups\":[84,86,87,88,89,90,91,92,93,… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; live racks/gates/follower HP/pickups preserved; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L4/armor: {\"checkpoint\":\"armor\",\"contract\":\"live world preserved (E19 PO 10-07 / E22-AC17)\",\"snapshotSha256\":\"df849cbe9f7d50fae5a2e1c3873456461075a3708172327202eae5b91f655cc0\",\"damage\":100,\"expected\":{\"id\":\"armor\",\"anchor\":{\"x\":-11,\"y\":0.7099999785423279,\"z\":16,\"yaw\":-2.4897255180426514},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fists\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],\"pickups\":[84,86,87,88,89,90,91,92,93… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; live racks/gates/follower HP/pickups preserved; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L4/line-break: {\"checkpoint\":\"line-break\",\"contract\":\"live world preserved (E19 PO 10-07 / E22-AC17)\",\"snapshotSha256\":\"f07a8044d95a968e6a19fa0f12a180788c9e88ae0643c6696ac6e1315ebe828e\",\"damage\":100,\"expected\":{\"id\":\"line-break\",\"anchor\":{\"x\":-4,\"y\":0.7099999785423279,\"z\":16,\"yaw\":-2.5116604616527862},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fists\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],\"pickups\":[84,86,87,88,89,90… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; live racks/gates/follower HP/pickups preserved; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L4/arrival: {\"checkpoint\":\"arrival\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"276c9089e955f9f3052e6d0acdae4d0ca4a12e70d9ddd8b3a6ffc43a5d8c2796\",\"damage\":100,\"expected\":{\"id\":\"arrival\",\"anchor\":{\"x\":-13.84193969809295,\"y\":0.7049999833106995,\"z\":4.276839896197247,\"yaw\":0.3205919885488634},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\",\"weapon.bat\",\"weapon.kick\"],\"RIGHT\":[\"weapon.handgun\",\"abili… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L4/turn: {\"checkpoint\":\"turn\",\"contract\":\"live world preserved (E19 PO 10-07 / E22-AC17)\",\"snapshotSha256\":\"61e5f21c286ff30852d5883426c6f64e567c743d40d98f58bbf9de294cf0de5a\",\"damage\":100,\"expected\":{\"id\":\"turn\",\"anchor\":{\"x\":-25,\"y\":0.7089999914169312,\"z\":4,\"yaw\":2.7672195177156906},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fists\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],\"pickups\":[127,128,129,130,131,132,133,13… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; live racks/gates/follower HP/pickups preserved; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L4/line-1: {\"checkpoint\":\"line-1\",\"contract\":\"live world preserved (E19 PO 10-07 / E22-AC17)\",\"snapshotSha256\":\"2f37ef001e0f25defde41b42f69579067a4705323d91ffb70e718d2e6caa5b82\",\"damage\":100,\"expected\":{\"id\":\"line-1\",\"anchor\":{\"x\":-20,\"y\":0.705094575881958,\"z\":-2,\"yaw\":-1.6393254678847529},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fists\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],\"pickups\":[129,130,131,132,133,134,1… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; live racks/gates/follower HP/pickups preserved; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L4/nests: {\"checkpoint\":\"nests\",\"contract\":\"live world preserved (E19 PO 10-07 / E22-AC17)\",\"snapshotSha256\":\"8ea704246e47246ea7cf9555d31d48bac5d534a75b750ca3cdd3e2c4deb3f1d0\",\"damage\":100,\"expected\":{\"id\":\"nests\",\"anchor\":{\"x\":-11,\"y\":0.705094575881958,\"z\":16,\"yaw\":0.9828527572970132},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fists\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],\"pickups\":[129,130,131,132,133,134,135,… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; live racks/gates/follower HP/pickups preserved; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L4/armor: {\"checkpoint\":\"armor\",\"contract\":\"live world preserved (E19 PO 10-07 / E22-AC17)\",\"snapshotSha256\":\"d65b3709af154b6d08eba007bfe7241ee1a84361f21c9ebbbf68c808152ca203\",\"damage\":100,\"expected\":{\"id\":\"armor\",\"anchor\":{\"x\":-11,\"y\":0.705094575881958,\"z\":16,\"yaw\":0.9828527572970132},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fists\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],\"pickups\":[129,130,131,132,133,134,135,… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; live racks/gates/follower HP/pickups preserved; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L4/line-break: {\"checkpoint\":\"line-break\",\"contract\":\"live world preserved (E19 PO 10-07 / E22-AC17)\",\"snapshotSha256\":\"445cdfd13c580493020da72342188919203c82a818db8d26ed583cc33a1f6957\",\"damage\":100,\"expected\":{\"id\":\"line-break\",\"anchor\":{\"x\":-4,\"y\":0.7099999785423279,\"z\":16,\"yaw\":3.057065039835859},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fists\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],\"pickups\":[129,130,131,132,133… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; live racks/gates/follower HP/pickups preserved; PASS)",
+      "value": "low/checkpoint-death-fixture mortal checkpoint restore at L4/arrival: {\"checkpoint\":\"arrival\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"e52fe8f0ac03171d324f84c6b7a2212a972371cb519fde23238f13fd74531028\",\"damage\":100,\"expected\":{\"id\":\"arrival\",\"anchor\":{\"x\":-13.84193969809295,\"y\":0.7049999833106995,\"z\":4.276839896197247,\"yaw\":0.3205919885488634},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\",\"weapon.bat\",\"weapon.kick\"],\"RIGHT\":[\"weapon.handgun\",\"abili… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L4/turn: {\"checkpoint\":\"turn\",\"contract\":\"live world preserved (E19 PO 10-07 / E22-AC17)\",\"snapshotSha256\":\"cb30d55f790068ad2b1dbe26c568f123646d9939f068ff4a96b4c02f17ef2029\",\"damage\":100,\"expected\":{\"id\":\"turn\",\"anchor\":{\"x\":-25,\"y\":0.7089999914169312,\"z\":4,\"yaw\":2.7672195177156906},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fists\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],\"pickups\":[84,85,86,87,88,89,90,91,92,93,… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; live racks/gates/follower HP/pickups preserved; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L4/line-1: {\"checkpoint\":\"line-1\",\"contract\":\"live world preserved (E19 PO 10-07 / E22-AC17)\",\"snapshotSha256\":\"0b6106e8443d87ecfdebbb3f5bce76b9cb001c70bc8b26d8541aff701502d766\",\"damage\":100,\"expected\":{\"id\":\"line-1\",\"anchor\":{\"x\":-20,\"y\":0.7049991488456726,\"z\":-2,\"yaw\":2.281265579112562},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fists\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],\"pickups\":[84,85,86,87,88,89,90,91,92… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; live racks/gates/follower HP/pickups preserved; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L4/nests: {\"checkpoint\":\"nests\",\"contract\":\"live world preserved (E19 PO 10-07 / E22-AC17)\",\"snapshotSha256\":\"18744a89a4ab626ff9a59e828fc65e09e47959fc6c67dbe90b1401749482e4c3\",\"damage\":100,\"expected\":{\"id\":\"nests\",\"anchor\":{\"x\":-11,\"y\":0.7099999785423279,\"z\":16,\"yaw\":1.4416783803082165},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fists\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],\"pickups\":[84,86,87,88,89,90,91,92,93,… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; live racks/gates/follower HP/pickups preserved; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L4/armor: {\"checkpoint\":\"armor\",\"contract\":\"live world preserved (E19 PO 10-07 / E22-AC17)\",\"snapshotSha256\":\"e9210ff698120898f4f96394c8d994d18a8f4e1c0696439aeb12593fd150e157\",\"damage\":100,\"expected\":{\"id\":\"armor\",\"anchor\":{\"x\":-11,\"y\":0.7099999785423279,\"z\":16,\"yaw\":-2.4897255180426514},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fists\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],\"pickups\":[84,86,87,88,89,90,91,92,93… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; live racks/gates/follower HP/pickups preserved; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L4/line-break: {\"checkpoint\":\"line-break\",\"contract\":\"live world preserved (E19 PO 10-07 / E22-AC17)\",\"snapshotSha256\":\"78f8158db89af2b488173215a374d862cbaae2f82f6bd0cf8868b95f1be1d1f0\",\"damage\":100,\"expected\":{\"id\":\"line-break\",\"anchor\":{\"x\":-4,\"y\":0.7099999785423279,\"z\":16,\"yaw\":-2.5116604616527862},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fists\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],\"pickups\":[84,86,87,88,89,90… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; live racks/gates/follower HP/pickups preserved; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L4/arrival: {\"checkpoint\":\"arrival\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"276c9089e955f9f3052e6d0acdae4d0ca4a12e70d9ddd8b3a6ffc43a5d8c2796\",\"damage\":100,\"expected\":{\"id\":\"arrival\",\"anchor\":{\"x\":-13.84193969809295,\"y\":0.7049999833106995,\"z\":4.276839896197247,\"yaw\":0.3205919885488634},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fire-axe\",\"weapon.bat\",\"weapon.kick\"],\"RIGHT\":[\"weapon.handgun\",\"abili… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L4/turn: {\"checkpoint\":\"turn\",\"contract\":\"live world preserved (E19 PO 10-07 / E22-AC17)\",\"snapshotSha256\":\"435fca42bcd72bc8bc7a2db7028d24aa91bf2794b2958282ba980ae0ce5d5eeb\",\"damage\":100,\"expected\":{\"id\":\"turn\",\"anchor\":{\"x\":-25,\"y\":0.7089999914169312,\"z\":4,\"yaw\":2.7672195177156906},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fists\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],\"pickups\":[127,128,129,130,131,132,133,13… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; live racks/gates/follower HP/pickups preserved; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L4/line-1: {\"checkpoint\":\"line-1\",\"contract\":\"live world preserved (E19 PO 10-07 / E22-AC17)\",\"snapshotSha256\":\"6397e7c8312ff2af3bd56527246b254c5f6521598cf9522124aa25e832197254\",\"damage\":100,\"expected\":{\"id\":\"line-1\",\"anchor\":{\"x\":-20,\"y\":0.705094575881958,\"z\":-2,\"yaw\":-1.6393254678847529},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fists\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],\"pickups\":[129,130,131,132,133,134,1… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; live racks/gates/follower HP/pickups preserved; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L4/nests: {\"checkpoint\":\"nests\",\"contract\":\"live world preserved (E19 PO 10-07 / E22-AC17)\",\"snapshotSha256\":\"ca542575a9bff06f65f7bccea0752b8024e43022c79ce3cfdb7f21708160ba26\",\"damage\":100,\"expected\":{\"id\":\"nests\",\"anchor\":{\"x\":-11,\"y\":0.705094575881958,\"z\":16,\"yaw\":0.9828527572970132},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fists\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],\"pickups\":[129,130,131,132,133,134,135,… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; live racks/gates/follower HP/pickups preserved; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L4/armor: {\"checkpoint\":\"armor\",\"contract\":\"live world preserved (E19 PO 10-07 / E22-AC17)\",\"snapshotSha256\":\"08911941117a664335180ccdb3ab1b0d3924321afb35a9566fa91026e2d8f0f8\",\"damage\":100,\"expected\":{\"id\":\"armor\",\"anchor\":{\"x\":-11,\"y\":0.705094575881958,\"z\":16,\"yaw\":0.9828527572970132},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fists\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],\"pickups\":[129,130,131,132,133,134,135,… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; live racks/gates/follower HP/pickups preserved; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L4/line-break: {\"checkpoint\":\"line-break\",\"contract\":\"live world preserved (E19 PO 10-07 / E22-AC17)\",\"snapshotSha256\":\"f55b7a57b6a96b4b07d6477561778cd1df12b86814e8dbc44fa40fdcdd9d2172\",\"damage\":100,\"expected\":{\"id\":\"line-break\",\"anchor\":{\"x\":-4,\"y\":0.7099999785423279,\"z\":16,\"yaw\":3.057065039835859},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.fists\"],\"RIGHT\":[\"weapon.kick\"]},\"followers\":[],\"pickups\":[129,130,131,132,133… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; live racks/gates/follower HP/pickups preserved; PASS)",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L4-low-checkpoints.json",
@@ -2086,7 +2092,7 @@
           "value": {
             "checkpoint": "turn",
             "contract": "live world preserved (E19 PO 10-07 / E22-AC17)",
-            "snapshotSha256": "7ecbb89730dc569f2bf93cd1112f8bc9a1f961fc4b1074855e3e84f0e46eea7c",
+            "snapshotSha256": "cb30d55f790068ad2b1dbe26c568f123646d9939f068ff4a96b4c02f17ef2029",
             "damage": 100,
             "expected": {
               "id": "turn",
@@ -2166,7 +2172,7 @@
           "value": {
             "checkpoint": "line-1",
             "contract": "live world preserved (E19 PO 10-07 / E22-AC17)",
-            "snapshotSha256": "9be1763e05c0dbf97c808aa732015f5fea10138dd03c408933081b75fb7484dc",
+            "snapshotSha256": "0b6106e8443d87ecfdebbb3f5bce76b9cb001c70bc8b26d8541aff701502d766",
             "damage": 100,
             "expected": {
               "id": "line-1",
@@ -2246,7 +2252,7 @@
           "value": {
             "checkpoint": "nests",
             "contract": "live world preserved (E19 PO 10-07 / E22-AC17)",
-            "snapshotSha256": "3f1e4184fc4f838805a5e79b63de4569434e923cd717c8078105863fc2d6bf44",
+            "snapshotSha256": "18744a89a4ab626ff9a59e828fc65e09e47959fc6c67dbe90b1401749482e4c3",
             "damage": 100,
             "expected": {
               "id": "nests",
@@ -2325,7 +2331,7 @@
           "value": {
             "checkpoint": "armor",
             "contract": "live world preserved (E19 PO 10-07 / E22-AC17)",
-            "snapshotSha256": "df849cbe9f7d50fae5a2e1c3873456461075a3708172327202eae5b91f655cc0",
+            "snapshotSha256": "e9210ff698120898f4f96394c8d994d18a8f4e1c0696439aeb12593fd150e157",
             "damage": 100,
             "expected": {
               "id": "armor",
@@ -2404,7 +2410,7 @@
           "value": {
             "checkpoint": "line-break",
             "contract": "live world preserved (E19 PO 10-07 / E22-AC17)",
-            "snapshotSha256": "f07a8044d95a968e6a19fa0f12a180788c9e88ae0643c6696ac6e1315ebe828e",
+            "snapshotSha256": "78f8158db89af2b488173215a374d862cbaae2f82f6bd0cf8868b95f1be1d1f0",
             "damage": 100,
             "expected": {
               "id": "line-break",
@@ -2568,7 +2574,7 @@
           "value": {
             "checkpoint": "turn",
             "contract": "live world preserved (E19 PO 10-07 / E22-AC17)",
-            "snapshotSha256": "61e5f21c286ff30852d5883426c6f64e567c743d40d98f58bbf9de294cf0de5a",
+            "snapshotSha256": "435fca42bcd72bc8bc7a2db7028d24aa91bf2794b2958282ba980ae0ce5d5eeb",
             "damage": 100,
             "expected": {
               "id": "turn",
@@ -2648,7 +2654,7 @@
           "value": {
             "checkpoint": "line-1",
             "contract": "live world preserved (E19 PO 10-07 / E22-AC17)",
-            "snapshotSha256": "2f37ef001e0f25defde41b42f69579067a4705323d91ffb70e718d2e6caa5b82",
+            "snapshotSha256": "6397e7c8312ff2af3bd56527246b254c5f6521598cf9522124aa25e832197254",
             "damage": 100,
             "expected": {
               "id": "line-1",
@@ -2726,7 +2732,7 @@
           "value": {
             "checkpoint": "nests",
             "contract": "live world preserved (E19 PO 10-07 / E22-AC17)",
-            "snapshotSha256": "8ea704246e47246ea7cf9555d31d48bac5d534a75b750ca3cdd3e2c4deb3f1d0",
+            "snapshotSha256": "ca542575a9bff06f65f7bccea0752b8024e43022c79ce3cfdb7f21708160ba26",
             "damage": 100,
             "expected": {
               "id": "nests",
@@ -2804,7 +2810,7 @@
           "value": {
             "checkpoint": "armor",
             "contract": "live world preserved (E19 PO 10-07 / E22-AC17)",
-            "snapshotSha256": "d65b3709af154b6d08eba007bfe7241ee1a84361f21c9ebbbf68c808152ca203",
+            "snapshotSha256": "08911941117a664335180ccdb3ab1b0d3924321afb35a9566fa91026e2d8f0f8",
             "damage": 100,
             "expected": {
               "id": "armor",
@@ -2882,7 +2888,7 @@
           "value": {
             "checkpoint": "line-break",
             "contract": "live world preserved (E19 PO 10-07 / E22-AC17)",
-            "snapshotSha256": "445cdfd13c580493020da72342188919203c82a818db8d26ed583cc33a1f6957",
+            "snapshotSha256": "f55b7a57b6a96b4b07d6477561778cd1df12b86814e8dbc44fa40fdcdd9d2172",
             "damage": 100,
             "expected": {
               "id": "line-break",
@@ -3478,7 +3484,7 @@
         ],
         "notes": "Final-source both-quality fixture refresh inspected. Whole native matrix was explicitly stopped by orchestrator; no complete final-source acceptance consolidation is claimed.",
         "freshness": "STALE",
-        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     },
     {
@@ -3566,7 +3572,7 @@
         ],
         "notes": "Game-camera scene and close grip camera differ; defect is visible in the close view. Full every-body/routine visual coverage remains incomplete. No criteria or assets changed.",
         "freshness": "STALE",
-        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     },
     {
@@ -3654,7 +3660,7 @@
         ],
         "notes": "Real-input playtest driver (WebGPU, god mode, per-step captures low/high x zoom 1.5/0.5) plus test-API sim-bot camera probes. Every listed capture was inspected; raw captures deleted, compact sheets retained.",
         "freshness": "STALE",
-        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     }
   ],
@@ -3874,7 +3880,7 @@
       "id": "L4-02",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/complete pre-pickup combat and living infected: {\"ticks\":1968,\"maxAlive\":0,\"combatEvents\":0,\"markerTicks\":1968} (target zero infected; zero combat events; PASS); low/stationary pre-pickup combat and living infected: {\"ticks\":1968,\"maxAlive\":0,\"combatEvents\":0,\"markerTicks\":1968} (target zero infected; zero combat events; PASS); high/complete pre-pickup combat and living infected: {\"ticks\":1968,\"maxAlive\":0,\"combatEvents\":0,\"markerTicks\":1968} (target zero infected; zero combat events; PASS); high/stationary pre-pickup combat and living infected: {\"ticks\":1968,\"maxAlive\":0,\"combatEvents\":0,\"markerTicks\":1968} (target zero infected; zero combat events; PASS) Manual review PASS (STALE, Codex/sweep-b): Four current physical cells: throughout actual quartermaster/plaza phase low32/high64 civilians, zero infected, zero combat windups and zero damage decals. Minimum observed default-human centre separation0.7115/0.7030m exceeds summed0.7m radii. Civilian calm routine activities and nonengaged soldiers observed; clean shops/reception captures show separated people, lowered rifles and no outside-camp body clump. The convoy ride is outside this quartermaster criterion. Current written targets30low/40high are retained; old40low helper contradicted the already-corrected criterion and was not used. All24 injected wrong-fact controls reject PASS.",
+      "value": "low/complete pre-pickup combat and living infected: {\"ticks\":1968,\"maxAlive\":0,\"combatEvents\":0,\"markerTicks\":1968} (target zero infected; zero combat events; PASS); low/stationary pre-pickup combat and living infected: {\"ticks\":1968,\"maxAlive\":0,\"combatEvents\":0,\"markerTicks\":1968} (target zero infected; zero combat events; PASS); high/complete pre-pickup combat and living infected: {\"ticks\":1968,\"maxAlive\":0,\"combatEvents\":0,\"markerTicks\":1968} (target zero infected; zero combat events; PASS); high/stationary pre-pickup combat and living infected: {\"ticks\":1968,\"maxAlive\":0,\"combatEvents\":0,\"markerTicks\":1968} (target zero infected; zero combat events; PASS) Manual review PASS (FRESH, Codex/sweep-b): Four current physical cells: throughout actual quartermaster/plaza phase low32/high64 civilians, zero infected, zero combat windups and zero damage decals. Minimum observed default-human centre separation0.7115/0.7030m exceeds summed0.7m radii. Civilian calm routine activities and nonengaged soldiers observed; clean shops/reception captures show separated people, lowered rifles and no outside-camp body clump. The convoy ride is outside this quartermaster criterion. Current written targets30low/40high are retained; old40low helper contradicted the already-corrected criterion and was not used. All24 injected wrong-fact controls reject PASS.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L4-low-complete.json",
@@ -3992,8 +3998,9 @@
             "what": "Four current physical cells: throughout actual quartermaster/plaza phase low32/high64 civilians, zero infected, zero combat windups and zero damage decals. Minimum observed default-human centre separation0.7115/0.7030m exceeds summed0.7m radii. Civilian calm routine activities and nonengaged soldiers observed; clean shops/reception captures show separated people, lowered rifles and no outside-camp body clump. The convoy ride is outside this quartermaster criterion. Current written targets30low/40high are retained; old40low helper contradicted the already-corrected criterion and was not used. All24 injected wrong-fact controls reject PASS."
           }
         ],
-        "freshness": "STALE",
-        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
+        "sourceDigest": "e3dafe0694468ae05c6e72a1f303adf938a6c33391416d38d67a60534e2fe51b",
+        "freshness": "FRESH",
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     },
     {
@@ -4468,9 +4475,9 @@
     },
     {
       "id": "L4-05",
-      "status": "NOT CHECKED",
-      "currentStatus": "NOT CHECKED",
-      "value": "low/stationary distinct arrival street edges: 6 (target 3 ≤ value ≤ Infinity; PASS); low/stationary separated directions and group limit: {\"tier\":\"low\",\"holdComplete\":true,\"firstBreachLevelSeconds\":52.71666666666667,\"firstBreachAfterTurnSeconds\":19.9,\"aliveAtFirstBreach\":67,\"peakAlive\":80,\"peakPlazaAlive\":77,\"minPlazaAliveAfter45Seconds\":52,\"samplesAfter45Seconds\":8892,\"arrivalEdges\":[0,1,2,3,4,5],\"threeDirectionsAtLeast60Degrees\":true,\"maxGroupAtOneSourcePerTick\":5,\"firstAttackSeconds\":9.183333333333334,\"lineBreakAfterTurnSeconds\":… (full values in JSON) (target ≥3 directions ≥60° apart; ≤5 at one source/tick; PASS); high/stationary distinct arrival street edges: 6 (target 3 ≤ value ≤ Infinity; PASS); high/stationary separated directions and group limit: {\"tier\":\"high\",\"holdComplete\":true,\"firstBreachLevelSeconds\":52.71666666666667,\"firstBreachAfterTurnSeconds\":19.9,\"aliveAtFirstBreach\":65,\"peakAlive\":93,\"peakPlazaAlive\":90,\"minPlazaAliveAfter45Seconds\":54,\"samplesAfter45Seconds\":8892,\"arrivalEdges\":[0,1,2,3,4,5],\"threeDirectionsAtLeast60Degrees\":true,\"maxGroupAtOneSourcePerTick\":5,\"firstAttackSeconds\":8.766666666666667,\"lineBreakAfterTurnSeconds\"… (full values in JSON) (target ≥3 directions ≥60° apart; ≤5 at one source/tick; PASS) Manual review FAIL (STALE, Codex/sweep-b): Both tiers contain actual one-body street cohorts, below unchanged2–5 target. Low actor229 at tick2840/origin23/edge0; high actor279 at tick2340/origin17/edge4. Every-tick newly appended emergedIds are grouped by the production same-tick/source transaction, not geometric clustering. Full admitted ID/position ledger retained; maximum5, minimum1. Both ordinary mortal complete final hashes equal current canonical receipts. The singleton counterexample closes FAIL; street-edge angular diversity, wall crossing and forbidden-interior clauses are not promoted to PASS.",
+      "status": "FAIL",
+      "currentStatus": "FAIL",
+      "value": "low/stationary distinct arrival street edges: 6 (target 3 ≤ value ≤ Infinity; PASS); low/stationary separated directions and group limit: {\"tier\":\"low\",\"holdComplete\":true,\"firstBreachLevelSeconds\":52.71666666666667,\"firstBreachAfterTurnSeconds\":19.9,\"aliveAtFirstBreach\":67,\"peakAlive\":80,\"peakPlazaAlive\":77,\"minPlazaAliveAfter45Seconds\":52,\"samplesAfter45Seconds\":8892,\"arrivalEdges\":[0,1,2,3,4,5],\"threeDirectionsAtLeast60Degrees\":true,\"maxGroupAtOneSourcePerTick\":5,\"firstAttackSeconds\":9.183333333333334,\"lineBreakAfterTurnSeconds\":… (full values in JSON) (target ≥3 directions ≥60° apart; ≤5 at one source/tick; PASS); high/stationary distinct arrival street edges: 6 (target 3 ≤ value ≤ Infinity; PASS); high/stationary separated directions and group limit: {\"tier\":\"high\",\"holdComplete\":true,\"firstBreachLevelSeconds\":52.71666666666667,\"firstBreachAfterTurnSeconds\":19.9,\"aliveAtFirstBreach\":65,\"peakAlive\":93,\"peakPlazaAlive\":90,\"minPlazaAliveAfter45Seconds\":54,\"samplesAfter45Seconds\":8892,\"arrivalEdges\":[0,1,2,3,4,5],\"threeDirectionsAtLeast60Degrees\":true,\"maxGroupAtOneSourcePerTick\":5,\"firstAttackSeconds\":8.766666666666667,\"lineBreakAfterTurnSeconds\"… (full values in JSON) (target ≥3 directions ≥60° apart; ≤5 at one source/tick; PASS) Manual review FAIL (FRESH, Codex/sweep-b): Both tiers contain actual one-body street cohorts, below unchanged2–5 target. Low actor229 at tick2840/origin23/edge0; high actor279 at tick2340/origin17/edge4. Every-tick newly appended emergedIds are grouped by the production same-tick/source transaction, not geometric clustering. Full admitted ID/position ledger retained; maximum5, minimum1. Both ordinary mortal complete final hashes equal current canonical receipts. The singleton counterexample closes FAIL; street-edge angular diversity, wall crossing and forbidden-interior clauses are not promoted to PASS.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L4-low-stationary.json",
@@ -4603,8 +4610,9 @@
             "what": "Both tiers contain actual one-body street cohorts, below unchanged2–5 target. Low actor229 at tick2840/origin23/edge0; high actor279 at tick2340/origin17/edge4. Every-tick newly appended emergedIds are grouped by the production same-tick/source transaction, not geometric clustering. Full admitted ID/position ledger retained; maximum5, minimum1. Both ordinary mortal complete final hashes equal current canonical receipts. The singleton counterexample closes FAIL; street-edge angular diversity, wall crossing and forbidden-interior clauses are not promoted to PASS."
           }
         ],
-        "freshness": "STALE",
-        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
+        "sourceDigest": "e3dafe0694468ae05c6e72a1f303adf938a6c33391416d38d67a60534e2fe51b",
+        "freshness": "FRESH",
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     },
     {
@@ -4701,9 +4709,9 @@
     },
     {
       "id": "L4-07",
-      "status": "NOT CHECKED",
-      "currentStatus": "NOT CHECKED",
-      "value": "low/complete combat hard rule on actual player windups: {\"seconds\":178,\"playerWindups\":532,\"groupWindups\":0,\"attacksPerMinute\":179.32584269662922} (target nonzero player windups in each combat policy; PASS); low/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 98.59154929577466 (target 90 ≤ value ≤ 100; PASS); low/complete post-opening legal ground or barrier path for every sampled infected: {\"firstTick\":3169,\"lastTick\":12529,\"samples\":79,\"minimumPercent\":100,\"worstTick\":12529,\"blockedIds\":[]} (target every sampled infected has a proven legal route after first physical breach/gate opening; any unproven route keeps the no-permanent-trap clause open; PASS); low/stationary combat hard rule on actual player windups: {\"seconds\":190,\"playerWindups\":2845,\"groupWindups\":0,\"attacksPerMinute\":898.421052631579} (target nonzero player windups in each combat policy; PASS); low/stationary stationary first real player attack (phase clock): {\"seconds\":8.833333333333334,\"windowSeconds\":190} (target ≤10 s; PASS); low/stationary real player/group windups per minute: 898.421052631579 (target 6 ≤ value ≤ Infinity; PASS); low/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); low/stationary post-opening legal ground or barrier path for every sampled infected: {\"firstTick\":3169,\"lastTick\":13249,\"samples\":85,\"minimumPercent\":100,\"worstTick\":13249,\"blockedIds\":[]} (target every sampled infected has a proven legal route after first physical breach/gate opening; any unproven route keeps the no-permanent-trap clause open; PASS); high/complete combat hard rule on actual player windups: {\"seconds\":178.6,\"playerWindups\":381,\"groupWindups\":0,\"attacksPerMinute\":127.99552071668533} (target nonzero player windups in each combat policy; PASS); high/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 98 (target 90 ≤ value ≤ 100; PASS); high/complete post-opening legal ground or barrier path for every sampled infected: {\"firstTick\":3169,\"lastTick\":12649,\"samples\":80,\"minimumPercent\":96.42857142857143,\"worstTick\":10129,\"blockedIds\":[515,516]} (target every sampled infected has a proven legal route after first physical breach/gate opening; any unproven route keeps the no-permanent-trap clause open; NOT CHECKED); high/stationary combat hard rule on actual player windups: {\"seconds\":190,\"playerWindups\":2288,\"groupWindups\":0,\"attacksPerMinute\":722.5263157894736} (target nonzero player windups in each combat policy; PASS); high/stationary stationary first real player attack (phase clock): {\"seconds\":8.416666666666666,\"windowSeconds\":190} (target ≤10 s; PASS); high/stationary real player/group windups per minute: 722.5263157894736 (target 6 ≤ value ≤ Infinity; PASS); high/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 98.30508474576271 (target 90 ≤ value ≤ 100; PASS); high/stationary post-opening legal ground or barrier path for every sampled infected: {\"firstTick\":3169,\"lastTick\":13249,\"samples\":85,\"minimumPercent\":97.01492537313433,\"worstTick\":10729,\"blockedIds\":[421,422]} (target every sampled infected has a proven legal route after first physical breach/gate opening; any unproven route keeps the no-permanent-trap clause open; NOT CHECKED) Manual review FAIL (STALE, Codex/fix67-b): Final-source high complete bounded-path minimum80.645161% fails90%; low complete95.833333%, low stationary100%, high stationary98.214286%. Passive first actual player windups8.416667/7.366667s pass10s. Full phase/legal-route samples and canonical receipts retained. No universal no-permanent-trap PASS or new checker tolerance is inferred.",
+      "status": "FAIL",
+      "currentStatus": "FAIL",
+      "value": "low/complete combat hard rule on actual player windups: {\"seconds\":178,\"playerWindups\":532,\"groupWindups\":0,\"attacksPerMinute\":179.32584269662922} (target nonzero player windups in each combat policy; PASS); low/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 98.59154929577466 (target 90 ≤ value ≤ 100; PASS); low/complete post-opening legal ground or barrier path for every sampled infected: {\"firstTick\":3169,\"lastTick\":12529,\"samples\":79,\"minimumPercent\":100,\"worstTick\":12529,\"blockedIds\":[]} (target every sampled infected has a proven legal route after first physical breach/gate opening; any unproven route keeps the no-permanent-trap clause open; PASS); low/stationary combat hard rule on actual player windups: {\"seconds\":190,\"playerWindups\":2845,\"groupWindups\":0,\"attacksPerMinute\":898.421052631579} (target nonzero player windups in each combat policy; PASS); low/stationary stationary first real player attack (phase clock): {\"seconds\":8.833333333333334,\"windowSeconds\":190} (target ≤10 s; PASS); low/stationary real player/group windups per minute: 898.421052631579 (target 6 ≤ value ≤ Infinity; PASS); low/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); low/stationary post-opening legal ground or barrier path for every sampled infected: {\"firstTick\":3169,\"lastTick\":13249,\"samples\":85,\"minimumPercent\":100,\"worstTick\":13249,\"blockedIds\":[]} (target every sampled infected has a proven legal route after first physical breach/gate opening; any unproven route keeps the no-permanent-trap clause open; PASS); high/complete combat hard rule on actual player windups: {\"seconds\":178.6,\"playerWindups\":381,\"groupWindups\":0,\"attacksPerMinute\":127.99552071668533} (target nonzero player windups in each combat policy; PASS); high/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 98 (target 90 ≤ value ≤ 100; PASS); high/complete post-opening legal ground or barrier path for every sampled infected: {\"firstTick\":3169,\"lastTick\":12649,\"samples\":80,\"minimumPercent\":96.42857142857143,\"worstTick\":10129,\"blockedIds\":[515,516]} (target every sampled infected has a proven legal route after first physical breach/gate opening; any unproven route keeps the no-permanent-trap clause open; NOT CHECKED); high/stationary combat hard rule on actual player windups: {\"seconds\":190,\"playerWindups\":2288,\"groupWindups\":0,\"attacksPerMinute\":722.5263157894736} (target nonzero player windups in each combat policy; PASS); high/stationary stationary first real player attack (phase clock): {\"seconds\":8.416666666666666,\"windowSeconds\":190} (target ≤10 s; PASS); high/stationary real player/group windups per minute: 722.5263157894736 (target 6 ≤ value ≤ Infinity; PASS); high/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 98.30508474576271 (target 90 ≤ value ≤ 100; PASS); high/stationary post-opening legal ground or barrier path for every sampled infected: {\"firstTick\":3169,\"lastTick\":13249,\"samples\":85,\"minimumPercent\":97.01492537313433,\"worstTick\":10729,\"blockedIds\":[421,422]} (target every sampled infected has a proven legal route after first physical breach/gate opening; any unproven route keeps the no-permanent-trap clause open; NOT CHECKED) Manual review FAIL (FRESH, Codex/fix67-b): Final-source high complete bounded-path minimum80.645161% fails90%; low complete95.833333%, low stationary100%, high stationary98.214286%. Passive first actual player windups8.416667/7.366667s pass10s. Full phase/legal-route samples and canonical receipts retained. No universal no-permanent-trap PASS or new checker tolerance is inferred.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L4-low-complete.json",
@@ -4983,15 +4991,16 @@
           }
         ],
         "notes": "Current-source native measurements at both tiers. A FAIL closes the verdict through the cited counterexample; unmeasured clauses are not promoted to PASS.",
-        "freshness": "STALE",
-        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
+        "sourceDigest": "e3dafe0694468ae05c6e72a1f303adf938a6c33391416d38d67a60534e2fe51b",
+        "freshness": "FRESH",
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     },
     {
       "id": "L4-08",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/complete actual Alpha identity count: 6 (target 6 ≤ value ≤ 6; PASS); low/stationary actual Alpha identity count: 6 (target 6 ≤ value ≤ 6; PASS); high/complete actual Alpha identity count: 8 (target 8 ≤ value ≤ 8; PASS); high/stationary actual Alpha identity count: 8 (target 8 ≤ value ≤ 8; PASS) Manual review PASS (STALE, Codex/sweep-b): Low6/high8 actual Alphas enter at distinct ticks from6/8 source directions; all actual bodies offscreen and at least24m from courier. Low3/high6 unique Alpha IDs actually damage the defensive line. Physical frames show large Alphas advancing among the war crowd; no onscreen admission is claimed from sparse stills, the live frustum ledger supplies that check. Canonical state hashes match.",
+      "value": "low/complete actual Alpha identity count: 6 (target 6 ≤ value ≤ 6; PASS); low/stationary actual Alpha identity count: 6 (target 6 ≤ value ≤ 6; PASS); high/complete actual Alpha identity count: 8 (target 8 ≤ value ≤ 8; PASS); high/stationary actual Alpha identity count: 8 (target 8 ≤ value ≤ 8; PASS) Manual review PASS (FRESH, Codex/sweep-b): Low6/high8 actual Alphas enter at distinct ticks from6/8 source directions; all actual bodies offscreen and at least24m from courier. Low3/high6 unique Alpha IDs actually damage the defensive line. Physical frames show large Alphas advancing among the war crowd; no onscreen admission is claimed from sparse stills, the live frustum ledger supplies that check. Canonical state hashes match.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L4-low-complete.json",
@@ -5089,8 +5098,9 @@
             "what": "Low6/high8 actual Alphas enter at distinct ticks from6/8 source directions; all actual bodies offscreen and at least24m from courier. Low3/high6 unique Alpha IDs actually damage the defensive line. Physical frames show large Alphas advancing among the war crowd; no onscreen admission is claimed from sparse stills, the live frustum ledger supplies that check. Canonical state hashes match."
           }
         ],
-        "freshness": "STALE",
-        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
+        "sourceDigest": "e3dafe0694468ae05c6e72a1f303adf938a6c33391416d38d67a60534e2fe51b",
+        "freshness": "FRESH",
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     },
     {
@@ -5352,9 +5362,9 @@
     },
     {
       "id": "L4-10",
-      "status": "NOT CHECKED",
-      "currentStatus": "NOT CHECKED",
-      "value": "low/complete HMG firing sources: 2 (target 2 ≤ value ≤ Infinity; PASS); low/stationary HMG firing sources: 2 (target 2 ≤ value ≤ Infinity; PASS); high/complete HMG firing sources: 2 (target 2 ≤ value ≤ Infinity; PASS); high/stationary HMG firing sources: 2 (target 2 ≤ value ≤ Infinity; PASS) Manual review FAIL (STALE, Codex/fix67-b): Final-source every ordinary/forced tank impact clears living registered protected actors≥15m at both tiers. Low minimum15.003722m, high15.407197m; forced21.330389/20.680260m. Exact canonical route hashes match. High actual interval721ticks=12.016667s violates unchanged≤12s; low cadence passes. This fresh measured cadence counterexample retains whole-row FAIL; renderer/wall/HMG/helicopter clauses remain unqualified. The original forced-truck clearance failure is fixed.",
+      "status": "FAIL",
+      "currentStatus": "FAIL",
+      "value": "low/complete HMG firing sources: 2 (target 2 ≤ value ≤ Infinity; PASS); low/stationary HMG firing sources: 2 (target 2 ≤ value ≤ Infinity; PASS); high/complete HMG firing sources: 2 (target 2 ≤ value ≤ Infinity; PASS); high/stationary HMG firing sources: 2 (target 2 ≤ value ≤ Infinity; PASS) Manual review FAIL (FRESH, Codex/fix67-b): Final-source every ordinary/forced tank impact clears living registered protected actors≥15m at both tiers. Low minimum15.003722m, high15.407197m; forced21.330389/20.680260m. Exact canonical route hashes match. High actual interval721ticks=12.016667s violates unchanged≤12s; low cadence passes. This fresh measured cadence counterexample retains whole-row FAIL; renderer/wall/HMG/helicopter clauses remain unqualified. The original forced-truck clearance failure is fixed.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L4-low-complete.json",
@@ -5441,15 +5451,16 @@
             "what": "Final-source every ordinary/forced tank impact clears living registered protected actors≥15m at both tiers. Low minimum15.003722m, high15.407197m; forced21.330389/20.680260m. Exact canonical route hashes match. High actual interval721ticks=12.016667s violates unchanged≤12s; low cadence passes. This fresh measured cadence counterexample retains whole-row FAIL; renderer/wall/HMG/helicopter clauses remain unqualified. The original forced-truck clearance failure is fixed."
           }
         ],
-        "freshness": "STALE",
-        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
+        "sourceDigest": "e3dafe0694468ae05c6e72a1f303adf938a6c33391416d38d67a60534e2fe51b",
+        "freshness": "FRESH",
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     },
     {
       "id": "L4-11",
-      "status": "NOT CHECKED",
-      "currentStatus": "NOT CHECKED",
-      "value": "low/controlled-fixture front MG isolated riot incapacitation: {\"weapon\":\"weapon.army-mg\",\"flank\":false,\"initialHp\":225,\"endHp\":0,\"hitCount\":21,\"seconds\":2.183333333333333,\"hpAmounts\":[2.52,2.52,2.52,2.52,2.52,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,2.399999999999949],\"isolatedAI\":true} (target ≤6 s and positive frontal damage; PASS); low/controlled-fixture flank MG isolated riot incapacitation: {\"weapon\":\"weapon.army-mg\",\"flank\":true,\"initialHp\":225,\"endHp\":0,\"hitCount\":17,\"seconds\":1.7833333333333334,\"hpAmounts\":[14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,1],\"isolatedAI\":true} (target ≤2 s; PASS); high/controlled-fixture front MG isolated riot incapacitation: {\"weapon\":\"weapon.army-mg\",\"flank\":false,\"initialHp\":225,\"endHp\":0,\"hitCount\":21,\"seconds\":2.183333333333333,\"hpAmounts\":[2.52,2.52,2.52,2.52,2.52,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,2.399999999999949],\"isolatedAI\":true} (target ≤6 s and positive frontal damage; PASS); high/controlled-fixture flank MG isolated riot incapacitation: {\"weapon\":\"weapon.army-mg\",\"flank\":true,\"initialHp\":225,\"endHp\":0,\"hitCount\":17,\"seconds\":1.7833333333333334,\"hpAmounts\":[14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,1],\"isolatedAI\":true} (target ≤2 s; PASS) Manual review FAIL (STALE, Codex/fix67-b): Current-source native duels pass the frontal kill-time and survival clauses: 1.6–26 m finishes within4.70s in both tiers, and the courier survives each duel. Full row remains open because flank TTK, current-source rendered HP chip/recoil/bar presentation, and the exact PO feel question have not been qualified. Current browser capture attempt was blocked by sandbox Vite-bind EPERM. PO: does sustained fire now feel effective against the riot?",
+      "status": "FAIL",
+      "currentStatus": "FAIL",
+      "value": "low/controlled-fixture front MG isolated riot incapacitation: {\"weapon\":\"weapon.army-mg\",\"flank\":false,\"initialHp\":225,\"endHp\":0,\"hitCount\":21,\"seconds\":2.183333333333333,\"hpAmounts\":[2.52,2.52,2.52,2.52,2.52,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,2.399999999999949],\"isolatedAI\":true} (target ≤6 s and positive frontal damage; PASS); low/controlled-fixture flank MG isolated riot incapacitation: {\"weapon\":\"weapon.army-mg\",\"flank\":true,\"initialHp\":225,\"endHp\":0,\"hitCount\":17,\"seconds\":1.7833333333333334,\"hpAmounts\":[14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,1],\"isolatedAI\":true} (target ≤2 s; PASS); high/controlled-fixture front MG isolated riot incapacitation: {\"weapon\":\"weapon.army-mg\",\"flank\":false,\"initialHp\":225,\"endHp\":0,\"hitCount\":21,\"seconds\":2.183333333333333,\"hpAmounts\":[2.52,2.52,2.52,2.52,2.52,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,2.399999999999949],\"isolatedAI\":true} (target ≤6 s and positive frontal damage; PASS); high/controlled-fixture flank MG isolated riot incapacitation: {\"weapon\":\"weapon.army-mg\",\"flank\":true,\"initialHp\":225,\"endHp\":0,\"hitCount\":17,\"seconds\":1.7833333333333334,\"hpAmounts\":[14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,1],\"isolatedAI\":true} (target ≤2 s; PASS) Manual review FAIL (FRESH, Codex/fix67-b): Current-source native duels pass the frontal kill-time and survival clauses: 1.6–26 m finishes within4.70s in both tiers, and the courier survives each duel. Full row remains open because flank TTK, current-source rendered HP chip/recoil/bar presentation, and the exact PO feel question have not been qualified. Current browser capture attempt was blocked by sandbox Vite-bind EPERM. PO: does sustained fire now feel effective against the riot?",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L4-low-fixtures.json",
@@ -5658,21 +5669,18 @@
             "what": "Underlying production combat ledger with hit ticks, actual damage, player health, riot health, and measured completion time."
           }
         ],
-        "freshness": "STALE",
-        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
+        "sourceDigest": "e3dafe0694468ae05c6e72a1f303adf938a6c33391416d38d67a60534e2fe51b",
+        "freshness": "FRESH",
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     },
     {
       "id": "L4-12",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "Manual review FAIL (STALE, Codex/fix71-b): Final original-six-role native routes: every war tick checks nearest20 living, nonhidden, admitted infected. Low10,679checks and high10,715checks; both reach only3 distinct looks. Low counterexample tick4328, high7580; exact20 identities/models and count distributions retained. Both final state hashes equal independent qa:accept controls. Local appearance balancing does not establish the four-look requirement. Added brute/armored trials were rejected because contact or mortal-route regressions outweighed their census gains. Whole row FAIL; no counts or stats reduced. Mixed clothing and silhouettes are visible in the plaza battle. Every20-infected window was not enumerated for the>=4-look requirement.",
+      "value": "Mixed clothing and silhouettes are visible in the plaza battle. Every20-infected window was not enumerated for the>=4-look requirement.",
       "automatedComplete": false,
-      "receipt": [
-        "docs/reports/fix71-b/L4-release-native.json",
-        "docs/reports/fix71-b/L4-release-native.json.gz",
-        "docs/reports/fix71-b/L4-release-capture-review.json"
-      ],
+      "receipt": [],
       "expected": "Horde mix: ≥ 4 distinct infected looks in every 20-infected sample (not only suits).",
       "checks": [],
       "historical": {
@@ -5685,50 +5693,17 @@
         ],
         "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L4 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Horde mix: ≥ 4 distinct infected looks in every 20-infected sample (not only suits)."
       },
-      "remaining": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L4 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Horde mix: ≥ 4 distinct infected looks in every 20-infected sample (not only suits).",
-      "reviewDecision": {
-        "row": "L4-12",
-        "status": "FAIL",
-        "reviewer": "Codex/fix71-b",
-        "date": "2026-11-06",
-        "commit": "b7553885e283ad16af8a5d727f37d1cd272f38e1",
-        "clauses": [
-          {
-            "clause": "Horde mix: ≥ 4 distinct infected looks in every 20-infected sample (not only suits).",
-            "verdict": "FAIL",
-            "note": "Final original-six-role native routes: every war tick checks nearest20 living, nonhidden, admitted infected. Low10,679checks and high10,715checks; both reach only3 distinct looks. Low counterexample tick4328, high7580; exact20 identities/models and count distributions retained. Both final state hashes equal independent qa:accept controls. Local appearance balancing does not establish the four-look requirement. Added brute/armored trials were rejected because contact or mortal-route regressions outweighed their census gains. Whole row FAIL; no counts or stats reduced."
-          }
-        ],
-        "evidence": [
-          {
-            "file": "docs/reports/fix71-b/L4-release-native.json",
-            "sha256": "1ceff5eb440f704146b6154987337caf7a1140ee41766942aab397b10109613e",
-            "what": "Final original-six-role native routes: every war tick checks nearest20 living, nonhidden, admitted infected. Low10,679checks and high10,715checks; both reach only3 distinct looks. Low counterexample tick4328, high7580; exact20 identities/models and count distributions retained. Both final state hashes equal independent qa:accept controls. Local appearance balancing does not establish the four-look requirement. Added brute/armored trials were rejected because contact or mortal-route regressions outweighed their census gains. Whole row FAIL; no counts or stats reduced."
-          },
-          {
-            "file": "docs/reports/fix71-b/L4-release-native.json.gz",
-            "sha256": "0e87b569a3585b973ba8278539cc4efdc2e10428381b71615d69a9cd8b202eb8",
-            "what": "Final original-six-role native routes: every war tick checks nearest20 living, nonhidden, admitted infected. Low10,679checks and high10,715checks; both reach only3 distinct looks. Low counterexample tick4328, high7580; exact20 identities/models and count distributions retained. Both final state hashes equal independent qa:accept controls. Local appearance balancing does not establish the four-look requirement. Added brute/armored trials were rejected because contact or mortal-route regressions outweighed their census gains. Whole row FAIL; no counts or stats reduced."
-          },
-          {
-            "file": "docs/reports/fix71-b/L4-release-capture-review.json",
-            "sha256": "86757acf1f1404b6067a5fddb58a00063d564bf990e066d8b8adba65a43b0c6d",
-            "what": "Personally reviewed final-source rendered frames, hashes and observations; images deleted after review."
-          }
-        ],
-        "freshness": "STALE",
-        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
-      }
+      "remaining": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L4 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Horde mix: ≥ 4 distinct infected looks in every 20-infected sample (not only suits)."
     },
     {
       "id": "L4-13",
-      "status": "NOT CHECKED",
-      "currentStatus": "NOT CHECKED",
-      "value": "Manual review FAIL (STALE, Codex/fix71-b): Final six-role source first9s window meets actual quotas on distinct authored edges: low2/2/2 at tick12889; high3/3/3 at12925. Both independent canonical complete hashes match the read-only admission observer. Later saturation remains: low23/56 windows miss quota, first at28009 with1/1/1 instead2each; high5/9 miss, first at15085 edge6 admits0/3. Caps remain80/120, escape windows40s, clocks9s, pending demand retained. Whole row FAIL. Mortal routes finish but are difficult: low24deaths/719s, high6deaths/302s. Not measured by this batch run.",
+      "status": "FAIL",
+      "currentStatus": "FAIL",
+      "value": "Manual review FAIL (FRESH, Codex/fix73-b): Current source d97192f688d1e72561fb49f26eb4afff8d84d9f6cc4dabfe56bd373cd1bfb0b5: native complete hashes18e71cbb/86ab19e8. First collapse quota windows meet low2/2/2 at12889 and high3/3/3 at12925. Later misses remain low23/56 (first28009,1/1/1 vs2each) and high5/9 (first15085, edge6 gets0/3). Samples before first miss show79/80 living low and120/120 high. Cosmetic body changes preserve every admission/count/population sample and gameplay state versus baseline. Sustained quota remains FAIL within unchanged caps and clocks. Not measured by this batch run.",
       "automatedComplete": false,
       "receipt": [
-        "docs/reports/fix71-b/L4-release-native.json",
-        "docs/reports/fix71-b/L4-release-native.json.gz"
+        "docs/reports/fix73-b/L4-look-after-native.json.gz",
+        "docs/reports/fix73-b/L4-look-equivalence.json"
       ],
       "expected": "Escape gap on the route for 40 s, pursuers still chase; collapse waves 3 every 9 s; competent run meets ≥ 10 infected on the route (tune), never an empty street. PO: \"The entire level is without zombies\".",
       "checks": [],
@@ -5744,30 +5719,31 @@
       "reviewDecision": {
         "row": "L4-13",
         "status": "FAIL",
-        "reviewer": "Codex/fix71-b",
+        "reviewer": "Codex/fix73-b",
         "date": "2026-11-06",
-        "commit": "454ef66f7c7ae8513749ac490cbab2ab420182af",
+        "commit": "166205b9600ebef710ec16709af5e36648170bc0",
         "clauses": [
           {
             "clause": "Escape gap on the route for 40 s, pursuers still chase; collapse waves 3 every 9 s; competent run meets ≥ 10 infected on the route (tune), never an empty street. PO: \"The entire level is without zombies\".",
             "verdict": "FAIL",
-            "note": "Final six-role source first9s window meets actual quotas on distinct authored edges: low2/2/2 at tick12889; high3/3/3 at12925. Both independent canonical complete hashes match the read-only admission observer. Later saturation remains: low23/56 windows miss quota, first at28009 with1/1/1 instead2each; high5/9 miss, first at15085 edge6 admits0/3. Caps remain80/120, escape windows40s, clocks9s, pending demand retained. Whole row FAIL. Mortal routes finish but are difficult: low24deaths/719s, high6deaths/302s."
+            "note": "Current source d97192f688d1e72561fb49f26eb4afff8d84d9f6cc4dabfe56bd373cd1bfb0b5: native complete hashes18e71cbb/86ab19e8. First collapse quota windows meet low2/2/2 at12889 and high3/3/3 at12925. Later misses remain low23/56 (first28009,1/1/1 vs2each) and high5/9 (first15085, edge6 gets0/3). Samples before first miss show79/80 living low and120/120 high. Cosmetic body changes preserve every admission/count/population sample and gameplay state versus baseline. Sustained quota remains FAIL within unchanged caps and clocks."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/fix71-b/L4-release-native.json",
-            "sha256": "1ceff5eb440f704146b6154987337caf7a1140ee41766942aab397b10109613e",
-            "what": "Final six-role source first9s window meets actual quotas on distinct authored edges: low2/2/2 at tick12889; high3/3/3 at12925. Both independent canonical complete hashes match the read-only admission observer. Later saturation remains: low23/56 windows miss quota, first at28009 with1/1/1 instead2each; high5/9 miss, first at15085 edge6 admits0/3. Caps remain80/120, escape windows40s, clocks9s, pending demand retained. Whole row FAIL. Mortal routes finish but are difficult: low24deaths/719s, high6deaths/302s."
+            "file": "docs/reports/fix73-b/L4-look-after-native.json.gz",
+            "sha256": "a17791c400093f43111697a254c5af58ebe0f2ff26d9390b505713a45c0d5a7c",
+            "what": "Current source d97192f688d1e72561fb49f26eb4afff8d84d9f6cc4dabfe56bd373cd1bfb0b5: native complete hashes18e71cbb/86ab19e8. First collapse quota windows meet low2/2/2 at12889 and high3/3/3 at12925. Later misses remain low23/56 (first28009,1/1/1 vs2each) and high5/9 (first15085, edge6 gets0/3). Samples before first miss show79/80 living low and120/120 high. Cosmetic body changes preserve every admission/count/population sample and gameplay state versus baseline. Sustained quota remains FAIL within unchanged caps and clocks."
           },
           {
-            "file": "docs/reports/fix71-b/L4-release-native.json.gz",
-            "sha256": "0e87b569a3585b973ba8278539cc4efdc2e10428381b71615d69a9cd8b202eb8",
-            "what": "Full per-edge actual actor admission ledger, scheduled quotas, source coordinates, every-tick look membership, population snapshots and independent canonical hash controls."
+            "file": "docs/reports/fix73-b/L4-look-equivalence.json",
+            "sha256": "0f599a33e10f7638c9d51b1a24e9411ad6a4072748d107a653b2a3af0559527a",
+            "what": "Deep equality proves all collapse quota/admission/population data unchanged by appearance-only fix."
           }
         ],
-        "freshness": "STALE",
-        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
+        "sourceDigest": "e3dafe0694468ae05c6e72a1f303adf938a6c33391416d38d67a60534e2fe51b",
+        "freshness": "FRESH",
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     },
     {
@@ -5863,7 +5839,7 @@
       "id": "L4-15",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "Manual review PASS (STALE, Codex/sweep-b): Both tiers: all60 actual intact military-wall segments block the production courier capsule normal sweep (3m requested from1.5m away). Actual authored L4 cinematic offsets are all[15,19,15], with the same diagonal azimuth as the36° follow rig; positive-offset blends therefore stay between36° and41.85°, including user zoom0.5/1.5. Current full-route rendered-second timelines remain within those bounds; no top-down endpoint or cancellation exists. All151 physical-route images and the two renderer-entry supplements were inspected: sandbag/pallet/wall surfaces are shaded/textured, their openings/readable shape persist, and surrounding streets/terrain continue beyond them without a void. Pixel review is in the linked capture manifest; continuous angle exclusion is source geometry plus actual runtime timeline, not a claim inferred from sparse stills alone. Low escape frames retain the isometric camera and readable camp geometry. Both mortal low attempts fail to finish hide, so complete escape/high camera and blocker coverage is open.",
+      "value": "Manual review PASS (FRESH, Codex/sweep-b): Both tiers: all60 actual intact military-wall segments block the production courier capsule normal sweep (3m requested from1.5m away). Actual authored L4 cinematic offsets are all[15,19,15], with the same diagonal azimuth as the36° follow rig; positive-offset blends therefore stay between36° and41.85°, including user zoom0.5/1.5. Current full-route rendered-second timelines remain within those bounds; no top-down endpoint or cancellation exists. All151 physical-route images and the two renderer-entry supplements were inspected: sandbag/pallet/wall surfaces are shaded/textured, their openings/readable shape persist, and surrounding streets/terrain continue beyond them without a void. Pixel review is in the linked capture manifest; continuous angle exclusion is source geometry plus actual runtime timeline, not a claim inferred from sparse stills alone. Low escape frames retain the isometric camera and readable camp geometry. Both mortal low attempts fail to finish hide, so complete escape/high camera and blocker coverage is open.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/sweep-b/L4-15-proof.json",
@@ -5924,8 +5900,9 @@
             "what": "Both tiers: all60 actual intact military-wall segments block the production courier capsule normal sweep (3m requested from1.5m away). Actual authored L4 cinematic offsets are all[15,19,15], with the same diagonal azimuth as the36° follow rig; positive-offset blends therefore stay between36° and41.85°, including user zoom0.5/1.5. Current full-route rendered-second timelines remain within those bounds; no top-down endpoint or cancellation exists. All151 physical-route images and the two renderer-entry supplements were inspected: sandbag/pallet/wall surfaces are shaded/textured, their openings/readable shape persist, and surrounding streets/terrain continue beyond them without a void. Pixel review is in the linked capture manifest; continuous angle exclusion is source geometry plus actual runtime timeline, not a claim inferred from sparse stills alone."
           }
         ],
-        "freshness": "STALE",
-        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
+        "sourceDigest": "e3dafe0694468ae05c6e72a1f303adf938a6c33391416d38d67a60534e2fe51b",
+        "freshness": "FRESH",
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     },
     {
@@ -5983,15 +5960,15 @@
     },
     {
       "id": "L4-17",
-      "status": "NOT CHECKED",
-      "currentStatus": "NOT CHECKED",
-      "value": "Manual review FAIL (STALE, Codex/fix71-b): Final six-role source: actual settled frozen geometry reaches1.746m low (alpha-worker death-back) and1.920m high (alpha death-back) in the first150s of war. Root lift peaks0.66m, so the thinner layout envelope cannot establish visible <=~1m height. Airborne blast flights excluded. All16frames personally reviewed with SHA256; raw images deleted. No whole-route maximum, universal limb-stretch or continuous player-depth PASS is claimed. No stretched limb or courier-under-corpse defect is identified in the reviewed plaza poses. Pile height and persistence were not quantitatively tracked.",
+      "status": "FAIL",
+      "currentStatus": "FAIL",
+      "value": "Manual review FAIL (FRESH, Codex/fix73-b): Current source d97192f688d1e72561fb49f26eb4afff8d84d9f6cc4dabfe56bd373cd1bfb0b5: L4-only spreading still FAILS L4-17. First150s war, frozen-vertex tops reach1.699m low and1.505m high; root lift peaks0.49m/0.44m. 184 renderer samples and8 personally inspected frames per tier, no browser errors. A ground-level Alpha pose itself reaches about1.48m. Courier visible in reviewed follow frames; continuous pixel depth and universal limb correctness remain unqualified. No stretched limb or courier-under-corpse defect is identified in the reviewed plaza poses. Pile height and persistence were not quantitatively tracked.",
       "automatedComplete": false,
       "receipt": [
-        "docs/reports/fix71-b/L4-17-release-measurement.json",
-        "docs/reports/fix71-b/L4-17-release-low.json.gz",
-        "docs/reports/fix71-b/L4-17-release-high.json.gz",
-        "docs/reports/fix71-b/L4-release-capture-review.json"
+        "docs/reports/fix73-b/L4-17-render-review.json",
+        "docs/reports/fix73-b/L4-17-low-render.json.gz",
+        "docs/reports/fix73-b/L4-17-high-render.json.gz",
+        "docs/reports/fix73-b/L4-17-pose-diagnosis.json"
       ],
       "expected": "Corpse piles ≤ ~1 m, no stretched limbs; player never drawn under a corpse.",
       "checks": [],
@@ -6009,47 +5986,48 @@
       "reviewDecision": {
         "row": "L4-17",
         "status": "FAIL",
-        "reviewer": "Codex/fix71-b",
+        "reviewer": "Codex/fix73-b",
         "date": "2026-11-06",
-        "commit": "b12a49ccc56335e7c0c6c3b67cf2cc9b4cc3bfc5",
+        "commit": "166205b9600ebef710ec16709af5e36648170bc0",
         "clauses": [
           {
             "clause": "Corpse piles ≤ ~1 m, no stretched limbs; player never drawn under a corpse.",
             "verdict": "FAIL",
-            "note": "Final six-role source: actual settled frozen geometry reaches1.746m low (alpha-worker death-back) and1.920m high (alpha death-back) in the first150s of war. Root lift peaks0.66m, so the thinner layout envelope cannot establish visible <=~1m height. Airborne blast flights excluded. All16frames personally reviewed with SHA256; raw images deleted. No whole-route maximum, universal limb-stretch or continuous player-depth PASS is claimed."
+            "note": "Current source d97192f688d1e72561fb49f26eb4afff8d84d9f6cc4dabfe56bd373cd1bfb0b5: L4-only spreading still FAILS L4-17. First150s war, frozen-vertex tops reach1.699m low and1.505m high; root lift peaks0.49m/0.44m. 184 renderer samples and8 personally inspected frames per tier, no browser errors. A ground-level Alpha pose itself reaches about1.48m. Courier visible in reviewed follow frames; continuous pixel depth and universal limb correctness remain unqualified."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/fix71-b/L4-17-release-measurement.json",
-            "sha256": "b4153958a69e778231c5a8532097ff152a05b1eb264ae3f40a7b27e28d74a31e",
-            "what": "Final six-role source: actual settled frozen geometry reaches1.746m low (alpha-worker death-back) and1.920m high (alpha death-back) in the first150s of war. Root lift peaks0.66m, so the thinner layout envelope cannot establish visible <=~1m height. Airborne blast flights excluded. All16frames personally reviewed with SHA256; raw images deleted. No whole-route maximum, universal limb-stretch or continuous player-depth PASS is claimed."
+            "file": "docs/reports/fix73-b/L4-17-render-review.json",
+            "sha256": "6f79ea4950bf57cff56d452b35274477abc0ea33dc7e6b8058a9e955de9ed0af",
+            "what": "Current source d97192f688d1e72561fb49f26eb4afff8d84d9f6cc4dabfe56bd373cd1bfb0b5: L4-only spreading still FAILS L4-17. First150s war, frozen-vertex tops reach1.699m low and1.505m high; root lift peaks0.49m/0.44m. 184 renderer samples and8 personally inspected frames per tier, no browser errors. A ground-level Alpha pose itself reaches about1.48m. Courier visible in reviewed follow frames; continuous pixel depth and universal limb correctness remain unqualified."
           },
           {
-            "file": "docs/reports/fix71-b/L4-17-release-low.json.gz",
-            "sha256": "608b2abc9e6838444da8f802fb4ed0bc38fb2c1e85b3ba0226b47f1eaea781a2",
-            "what": "Final source vertex/audit timeline or personally reviewed capture hashes and observations."
+            "file": "docs/reports/fix73-b/L4-17-low-render.json.gz",
+            "sha256": "1293679be0fa11953a24195c1fa0f672a125be611d5596cb1506de85cc8e9dd8",
+            "what": "Current-source production renderer samples, actual batch identities and frozen vertex measurements through first150s war."
           },
           {
-            "file": "docs/reports/fix71-b/L4-17-release-high.json.gz",
-            "sha256": "f2c40783a810fdec9801e8e45c3564546a19f432abcef54b2f564d6f9b59a624",
-            "what": "Final source vertex/audit timeline or personally reviewed capture hashes and observations."
+            "file": "docs/reports/fix73-b/L4-17-high-render.json.gz",
+            "sha256": "895cfac7492e6737ef5320f2d3ec108780eefffe7c22cec41e1165cc22e9296e",
+            "what": "Current-source production renderer samples, actual batch identities and frozen vertex measurements through first150s war."
           },
           {
-            "file": "docs/reports/fix71-b/L4-release-capture-review.json",
-            "sha256": "86757acf1f1404b6067a5fddb58a00063d564bf990e066d8b8adba65a43b0c6d",
-            "what": "Final source vertex/audit timeline or personally reviewed capture hashes and observations."
+            "file": "docs/reports/fix73-b/L4-17-pose-diagnosis.json",
+            "sha256": "9b2f6323413507ba7ac5bafde4038ee96c987cfd178e15b64498d33ff49fe812",
+            "what": "Indexed and attribute maxima agree: Alpha-suit death-back is1.480m at root, riot side-fall1.264m, firefighter side-fall1.206m. Their highest samples have hand/foot dominant tags; heights are not unreferenced-vertex artifacts. Root-only spreading cannot close this pose issue."
           }
         ],
-        "freshness": "STALE",
-        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
+        "sourceDigest": "e3dafe0694468ae05c6e72a1f303adf938a6c33391416d38d67a60534e2fe51b",
+        "freshness": "FRESH",
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     },
     {
       "id": "L4-18",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "Manual review PASS (STALE, Codex/sweep-b): All151 current L4 physical captures inspected across low/high and both photo zooms. Pre-alarm reception is clean and populated, with separated civilians, lowered soldier rifles and no blood/fire damage. Battle frames contain a large horde, soldiers, armoured vehicles, helicopter, fire and corpse fields. Courier clothing/outline remains distinguishable when surrounded; living bodies can overlap the courier, but the inspected battle frames retain an identifiable player. P: PO: do the war frames read as a huge mixed war? Use the reviewed battle captures; player readability remains an objective inspection. This verdict closes objective inspected clauses only and does not answer that feel question. Clean, occupied safe plaza transitions to mixed gunfire, bodies and breaches. The battle is readable; full cellar escape and late high collapse remain unreviewed.",
+      "value": "Manual review PASS (FRESH, Codex/sweep-b): All151 current L4 physical captures inspected across low/high and both photo zooms. Pre-alarm reception is clean and populated, with separated civilians, lowered soldier rifles and no blood/fire damage. Battle frames contain a large horde, soldiers, armoured vehicles, helicopter, fire and corpse fields. Courier clothing/outline remains distinguishable when surrounded; living bodies can overlap the courier, but the inspected battle frames retain an identifiable player. P: PO: do the war frames read as a huge mixed war? Use the reviewed battle captures; player readability remains an objective inspection. This verdict closes objective inspected clauses only and does not answer that feel question. Clean, occupied safe plaza transitions to mixed gunfire, bodies and breaches. The battle is readable; full cellar escape and late high collapse remain unreviewed.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/sweep-b/L4-18-proof.json",
@@ -6097,8 +6075,9 @@
             "what": "All151 current L4 physical captures inspected across low/high and both photo zooms. Pre-alarm reception is clean and populated, with separated civilians, lowered soldier rifles and no blood/fire damage. Battle frames contain a large horde, soldiers, armoured vehicles, helicopter, fire and corpse fields. Courier clothing/outline remains distinguishable when surrounded; living bodies can overlap the courier, but the inspected battle frames retain an identifiable player. P: PO: do the war frames read as a huge mixed war? Use the reviewed battle captures; player readability remains an objective inspection. This verdict closes objective inspected clauses only and does not answer that feel question."
           }
         ],
-        "freshness": "STALE",
-        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
+        "sourceDigest": "e3dafe0694468ae05c6e72a1f303adf938a6c33391416d38d67a60534e2fe51b",
+        "freshness": "FRESH",
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     }
   ]
