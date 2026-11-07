@@ -1,78 +1,38 @@
 {
   "row": "G-27",
   "status": "FAIL",
-  "reviewer": "final-g/Codex",
+  "reviewer": "Codex rr-b",
   "date": "2026-11-07",
-  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "commit": "50be7c824705fc3cdbb3a7ab7dd78f72c7bf2001",
   "clauses": [
     {
       "clause": "Opus answers three questions per level: glitches (list), stunning (verdict + missing), **boring / harmless / babysitting** (list). Any \"harmless\" or \"babysitting\" finding blocks GO.",
       "verdict": "FAIL",
-      "note": "Blocking babysitting counterexample: low L3 records144 matching waiting-for-squad HUD samples from tick9708 to19976,171.133333seconds; final corgi separation297.816993m. Route cannot finish, no objective skips. High L3 completion does not erase this trial. Ten level files answer glitches, scene quality/missing detail, and boring/harmless/babysitting within their stated observed scope. Low L10 also strands the following corgi1200.4576m behind; static geometry is clear, nav blocked. No mortal harmlessness conclusion is inferred from protected player damage."
+      "note": "Fresh low-tier review answers all3 questions for every level in README and the92-image original-resolution manifest. Blocking L7 babysitting: Aboard21/24 remains unchanged from tick5640 through7560 (32s); empty controls, no story lock, no entering passenger. Target62 remains~2m from the bus. Last28s have0 live infected; assisted recovery appears at7680 and all24 board at7800. Reviewed current bus frames at ticks6000/7200 show the stalled nearby figures. Repro: SCENE_PORT=4834 BROWSER_POOL_JOB_ID=rr-b node --import tsx/esm test-results/rr-b/g27-boarding.mjs 7 7; seed1 low default complete bot; inspect boardingStatus and boarded count. L1 upper-bound waiting and protected zero damage are explicitly excluded as failure evidence. L10 partial-route timeouts and late Resume scope are disclosed."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/final-g/G-27-L1.json",
-      "sha256": "2e8387af6536aedf14b90f031c876e911f4b3c14b4d7213c60ddb9e5dc92b16e",
-      "what": "Blocking babysitting counterexample: low L3 records144 matching waiting-for-squad HUD samples from tick9708 to19976,171.133333seconds; final corgi separation297.816993m. Route cannot finish, no objective skips. High L3 completion does not erase this trial. Ten level files answer glitches, scene quality/missing detail, and boring/harmless/babysitting within their stated observed scope. Low L10 also strands the following corgi1200.4576m behind; static geometry is clear, nav blocked. No mortal harmlessness conclusion is inferred from protected player damage."
+      "file": "test-results/rr-b/G27-review.json",
+      "sha256": "33aa8460d528c21995945d1570a2629e540797264f8edf621a663814a6596421",
+      "what": "Fresh low-tier review answers all3 questions for every level in README and the92-image original-resolution manifest. Blocking L7 babysitting: Aboard21/24 remains unchanged from tick5640 through7560 (32s); empty controls, no story lock, no entering passenger. Target62 remains~2m from the bus. Last28s have0 live infected; assisted recovery appears at7680 and all24 board at7800. Reviewed current bus frames at ticks6000/7200 show the stalled nearby figures. Repro: SCENE_PORT=4834 BROWSER_POOL_JOB_ID=rr-b node --import tsx/esm test-results/rr-b/g27-boarding.mjs 7 7; seed1 low default complete bot; inspect boardingStatus and boarded count. L1 upper-bound waiting and protected zero damage are explicitly excluded as failure evidence. L10 partial-route timeouts and late Resume scope are disclosed."
     },
     {
-      "file": "docs/reports/final-g/G-27-L2.json",
-      "sha256": "bdef8bbc61ce822f19574c3baa5de3e497e398dca7d74c51264b91e51576a852",
-      "what": "Blocking babysitting counterexample: low L3 records144 matching waiting-for-squad HUD samples from tick9708 to19976,171.133333seconds; final corgi separation297.816993m. Route cannot finish, no objective skips. High L3 completion does not erase this trial. Ten level files answer glitches, scene quality/missing detail, and boring/harmless/babysitting within their stated observed scope. Low L10 also strands the following corgi1200.4576m behind; static geometry is clear, nav blocked. No mortal harmlessness conclusion is inferred from protected player damage."
+      "file": "test-results/rr-b/G27-boarding-proof.json",
+      "sha256": "b18729359a483ccf2a303524694d8b615393f03cb28ec04f05ac399d998c8c90",
+      "what": "Fresh low-tier review answers all3 questions for every level in README and the92-image original-resolution manifest. Blocking L7 babysitting: Aboard21/24 remains unchanged from tick5640 through7560 (32s); empty controls, no story lock, no entering passenger. Target62 remains~2m from the bus. Last28s have0 live infected; assisted recovery appears at7680 and all24 board at7800. Reviewed current bus frames at ticks6000/7200 show the stalled nearby figures. Repro: SCENE_PORT=4834 BROWSER_POOL_JOB_ID=rr-b node --import tsx/esm test-results/rr-b/g27-boarding.mjs 7 7; seed1 low default complete bot; inspect boardingStatus and boarded count. L1 upper-bound waiting and protected zero damage are explicitly excluded as failure evidence. L10 partial-route timeouts and late Resume scope are disclosed."
     },
     {
-      "file": "docs/reports/final-g/G-27-L3.json",
-      "sha256": "ad28d8cbc2d604fcfd14036f2cd515dfb04688da1788120f8c151679c3ed24d0",
-      "what": "Blocking babysitting counterexample: low L3 records144 matching waiting-for-squad HUD samples from tick9708 to19976,171.133333seconds; final corgi separation297.816993m. Route cannot finish, no objective skips. High L3 completion does not erase this trial. Ten level files answer glitches, scene quality/missing detail, and boring/harmless/babysitting within their stated observed scope. Low L10 also strands the following corgi1200.4576m behind; static geometry is clear, nav blocked. No mortal harmlessness conclusion is inferred from protected player damage."
+      "file": "test-results/rr-b/G27-boarding/L7/receipt.json",
+      "sha256": "10eb0c8d9edd4d4b42dfe8a6657d9282245b26ca53e48d753f2d79b7d699ded9",
+      "what": "Fresh low-tier review answers all3 questions for every level in README and the92-image original-resolution manifest. Blocking L7 babysitting: Aboard21/24 remains unchanged from tick5640 through7560 (32s); empty controls, no story lock, no entering passenger. Target62 remains~2m from the bus. Last28s have0 live infected; assisted recovery appears at7680 and all24 board at7800. Reviewed current bus frames at ticks6000/7200 show the stalled nearby figures. Repro: SCENE_PORT=4834 BROWSER_POOL_JOB_ID=rr-b node --import tsx/esm test-results/rr-b/g27-boarding.mjs 7 7; seed1 low default complete bot; inspect boardingStatus and boarded count. L1 upper-bound waiting and protected zero damage are explicitly excluded as failure evidence. L10 partial-route timeouts and late Resume scope are disclosed."
     },
     {
-      "file": "docs/reports/final-g/G-27-L4.json",
-      "sha256": "742ed8811f5b3151f3355fcdeaa030db19a351659d37dbab61a4f5cc22996bfc",
-      "what": "Blocking babysitting counterexample: low L3 records144 matching waiting-for-squad HUD samples from tick9708 to19976,171.133333seconds; final corgi separation297.816993m. Route cannot finish, no objective skips. High L3 completion does not erase this trial. Ten level files answer glitches, scene quality/missing detail, and boring/harmless/babysitting within their stated observed scope. Low L10 also strands the following corgi1200.4576m behind; static geometry is clear, nav blocked. No mortal harmlessness conclusion is inferred from protected player damage."
-    },
-    {
-      "file": "docs/reports/final-g/G-27-L5.json",
-      "sha256": "f88eb08cfe667f1a002b21927ef1b8f20d8b32010ecc8996e86f8cdec6c147f6",
-      "what": "Blocking babysitting counterexample: low L3 records144 matching waiting-for-squad HUD samples from tick9708 to19976,171.133333seconds; final corgi separation297.816993m. Route cannot finish, no objective skips. High L3 completion does not erase this trial. Ten level files answer glitches, scene quality/missing detail, and boring/harmless/babysitting within their stated observed scope. Low L10 also strands the following corgi1200.4576m behind; static geometry is clear, nav blocked. No mortal harmlessness conclusion is inferred from protected player damage."
-    },
-    {
-      "file": "docs/reports/final-g/G-27-L6.json",
-      "sha256": "785267f1713346d6ba2833d78bd5a804c74b03cb857a7fbe2b3fe0a99ca392b9",
-      "what": "Blocking babysitting counterexample: low L3 records144 matching waiting-for-squad HUD samples from tick9708 to19976,171.133333seconds; final corgi separation297.816993m. Route cannot finish, no objective skips. High L3 completion does not erase this trial. Ten level files answer glitches, scene quality/missing detail, and boring/harmless/babysitting within their stated observed scope. Low L10 also strands the following corgi1200.4576m behind; static geometry is clear, nav blocked. No mortal harmlessness conclusion is inferred from protected player damage."
-    },
-    {
-      "file": "docs/reports/final-g/G-27-L7.json",
-      "sha256": "2c0a5e336ee2873912a8b3d8f6149fad00e73d4e8d0dee917f102edaf7a92ac6",
-      "what": "Blocking babysitting counterexample: low L3 records144 matching waiting-for-squad HUD samples from tick9708 to19976,171.133333seconds; final corgi separation297.816993m. Route cannot finish, no objective skips. High L3 completion does not erase this trial. Ten level files answer glitches, scene quality/missing detail, and boring/harmless/babysitting within their stated observed scope. Low L10 also strands the following corgi1200.4576m behind; static geometry is clear, nav blocked. No mortal harmlessness conclusion is inferred from protected player damage."
-    },
-    {
-      "file": "docs/reports/final-g/G-27-L8.json",
-      "sha256": "6b17d6e7b0c500ec605cb80d4f0c3e972d5ffa2e2a0bc45c23477ef285b34a24",
-      "what": "Blocking babysitting counterexample: low L3 records144 matching waiting-for-squad HUD samples from tick9708 to19976,171.133333seconds; final corgi separation297.816993m. Route cannot finish, no objective skips. High L3 completion does not erase this trial. Ten level files answer glitches, scene quality/missing detail, and boring/harmless/babysitting within their stated observed scope. Low L10 also strands the following corgi1200.4576m behind; static geometry is clear, nav blocked. No mortal harmlessness conclusion is inferred from protected player damage."
-    },
-    {
-      "file": "docs/reports/final-g/G-27-L9.json",
-      "sha256": "d07270223adbe1faadec1a4a362e6c9d302dfabd67863ff817603ea2abdabbfe",
-      "what": "Blocking babysitting counterexample: low L3 records144 matching waiting-for-squad HUD samples from tick9708 to19976,171.133333seconds; final corgi separation297.816993m. Route cannot finish, no objective skips. High L3 completion does not erase this trial. Ten level files answer glitches, scene quality/missing detail, and boring/harmless/babysitting within their stated observed scope. Low L10 also strands the following corgi1200.4576m behind; static geometry is clear, nav blocked. No mortal harmlessness conclusion is inferred from protected player damage."
-    },
-    {
-      "file": "docs/reports/final-g/G-27-L10.json",
-      "sha256": "a47691f3e9c81e7848575ec95b3a4d446b377d23b2d629634558c2ad760b1c1e",
-      "what": "Blocking babysitting counterexample: low L3 records144 matching waiting-for-squad HUD samples from tick9708 to19976,171.133333seconds; final corgi separation297.816993m. Route cannot finish, no objective skips. High L3 completion does not erase this trial. Ten level files answer glitches, scene quality/missing detail, and boring/harmless/babysitting within their stated observed scope. Low L10 also strands the following corgi1200.4576m behind; static geometry is clear, nav blocked. No mortal harmlessness conclusion is inferred from protected player damage."
-    },
-    {
-      "file": "docs/reports/final-g/G-27-L3-wait.json",
-      "sha256": "0518001774a352b94f69e32c6f215f67a5b86365b2bfefd0519b8eadfc2d9833",
-      "what": "Blocking babysitting counterexample: low L3 records144 matching waiting-for-squad HUD samples from tick9708 to19976,171.133333seconds; final corgi separation297.816993m. Route cannot finish, no objective skips. High L3 completion does not erase this trial. Ten level files answer glitches, scene quality/missing detail, and boring/harmless/babysitting within their stated observed scope. Low L10 also strands the following corgi1200.4576m behind; static geometry is clear, nav blocked. No mortal harmlessness conclusion is inferred from protected player damage."
-    },
-    {
-      "file": "docs/reports/final-g/G-25-L3-low.json",
-      "sha256": "b10fb91027693a0b790a61a0c90b0f9bc0cea054202b310b89d848bc8c69f7d0",
-      "what": "Blocking babysitting counterexample: low L3 records144 matching waiting-for-squad HUD samples from tick9708 to19976,171.133333seconds; final corgi separation297.816993m. Route cannot finish, no objective skips. High L3 completion does not erase this trial. Ten level files answer glitches, scene quality/missing detail, and boring/harmless/babysitting within their stated observed scope. Low L10 also strands the following corgi1200.4576m behind; static geometry is clear, nav blocked. No mortal harmlessness conclusion is inferred from protected player damage."
+      "file": "test-results/rr-b/G27-late/receipt.json",
+      "sha256": "0c5095c263231dfd122e988b345e5422a8c2565e10ad0016f2aa78e4edccf139",
+      "what": "Fresh low-tier review answers all3 questions for every level in README and the92-image original-resolution manifest. Blocking L7 babysitting: Aboard21/24 remains unchanged from tick5640 through7560 (32s); empty controls, no story lock, no entering passenger. Target62 remains~2m from the bus. Last28s have0 live infected; assisted recovery appears at7680 and all24 board at7800. Reviewed current bus frames at ticks6000/7200 show the stalled nearby figures. Repro: SCENE_PORT=4834 BROWSER_POOL_JOB_ID=rr-b node --import tsx/esm test-results/rr-b/g27-boarding.mjs 7 7; seed1 low default complete bot; inspect boardingStatus and boarded count. L1 upper-bound waiting and protected zero damage are explicitly excluded as failure evidence. L10 partial-route timeouts and late Resume scope are disclosed."
     }
   ],
-  "notes": "Any babysitting finding blocks GO. These are independent Codex observations and a measured blocking failure; Opus taste/signoff was requested through the scheduler and is not falsely claimed. Each level states its actual run/review scope; G25 separately qualifies completed console coverage. PO presentation questions and exact retained frames are listed in the level files.",
-  "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186"
+  "notes": "Measured Codex blocking babysitting finding; required Opus/PO taste signoff is separate and is not claimed. This is a failure of one ordinary tested boarding position, not a claim that every human route stalls.",
+  "sourceDigest": "826eaf34ba69c9272cce1759bdd1699e67d8e35ebbd3c7d1739661bfaa751923"
 }
