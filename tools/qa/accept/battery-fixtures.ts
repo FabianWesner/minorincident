@@ -213,9 +213,9 @@ export async function batteryFixtures(level: RunnerLevel, tier: Tier, add: Add, 
           add('L3-08', 'authored segment populations before admission/death relief', density.prepopulated, '250/625/1000 each±20%; these are pending population slots, not simultaneous live entities', density.prepopulated.every(n => n > 0) ? density.prepopulated.every((n, i) => Math.abs(n - [250, 625, 1000][i]) <= [250, 625, 1000][i] * .2) : undefined);
           // fix66-a: one pushable bag shifts the squad's losses between seeds, so the "<= 2 at the army line" clause is measured on
           // three seeds (1 = the run above, 2 and 3 = extra complete runs) and passes when at least two of the three agree (median).
-          const seedRuns: { seed: number; outcome: string; deaths: number; atFallback: number | null; atCheckpoint: number | null; segmentEnds: number[]; losses: { cause: string }[] }[] = [];
+          const seedRuns: { seed: number; outcome: string; deaths: number; atFallback: number | null; atCheckpoint: number | null; segmentEnds: number[]; losses: { cause: string }[]; followRange: NonNullable<typeof report.squad>['followRange'] }[] = [];
           const measurementRuns = [{ seed: 1, report }];
-          const squadRow = (seed: number, r: typeof report) => ({ seed, outcome: r.outcome, deaths: r.deaths, atFallback: r.squad?.atFallback ?? null, atCheckpoint: r.squad?.atCheckpoint ?? null, segmentEnds: r.squad?.segmentEnds ?? [], losses: r.squad?.losses ?? [] });
+          const squadRow = (seed: number, r: typeof report) => ({ seed, outcome: r.outcome, deaths: r.deaths, atFallback: r.squad?.atFallback ?? null, atCheckpoint: r.squad?.atCheckpoint ?? null, segmentEnds: r.squad?.segmentEnds ?? [], losses: r.squad?.losses ?? [], followRange: r.squad?.followRange ?? [] });
           seedRuns.push(squadRow(1, report));
           for (const seed of [2, 3]) {
             const extra = await loadL3(seed, tier);
