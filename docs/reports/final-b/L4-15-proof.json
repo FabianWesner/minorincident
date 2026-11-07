@@ -1,0 +1,2212 @@
+{
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "frozenCommit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "native": {
+    "file": "docs/reports/final-b/L4-solids.json.gz",
+    "sha256": "c6e02ac02caf1eac54604ccea2c472959e07d0ce5cd182f97f5f15700db84025",
+    "observation": "All60 actual military barricade capsules blocked the normal production Rapier courier capsule at each quality. No colliders removed. Fixture is explicit opening-war setup; not a playthrough."
+  },
+  "camera": {
+    "sourceFile": "src/render/View.ts",
+    "sha256": "af60b7937d0168881a293e9059762005e292b538dd69988d3a4cc641541fe89c",
+    "observation": "Follow uses fixed polar54deg (36deg above ground). All5 authored mission cinematic offsets are[15,19,15], pitch41.85015deg. Same azimuth; production quaternion slerp between these poses bounds the orientation pitch by36..41.85015, with small presentation shake/roll. No top-down endpoint. The captured position-to-target angles are samples, not a substitute for quaternion orientation.",
+    "physicalSamples": [
+      {
+        "file": "test-results/vqa-1b/final-b-L4-high-z1.5/captures/final-b-L4-high-z1.5-L4-t10265.json",
+        "sha256": "b79ddade3d3ae35ed336e3eb77ab3b2b75663929d1a523610ab9608b08fcc47c",
+        "tick": 10305,
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -21.579674156693446,
+            2.5e-323,
+            -6.5350990298182845
+          ],
+          "target": [
+            -21.579674156693446,
+            2.5e-323,
+            -6.5350990298182845
+          ],
+          "position": [
+            -5.275920093851615,
+            16.751887692258638,
+            9.768650950485721
+          ],
+          "spot": null
+        },
+        "positionTargetPitchDeg": 36.0000096033312
+      },
+      {
+        "file": "test-results/vqa-1b/final-b-L4-high-z1.5/captures/final-b-L4-high-z1.5-L4-t968.json",
+        "sha256": "6ed6475407ac7c41865700512066a680a3fe0b871efb3110a1ca2fa3dcef96b7",
+        "tick": 973,
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 32.775,
+          "regionScale": 1,
+          "focus": [
+            -11.593504530212313,
+            0,
+            -38.24999999999998
+          ],
+          "target": [
+            -11.593504530212313,
+            0,
+            -38.24999999999998
+          ],
+          "position": [
+            7.154387964081296,
+            19.264661643885805,
+            -19.500687522650374
+          ],
+          "spot": null
+        },
+        "positionTargetPitchDeg": 36.00103173775249
+      },
+      {
+        "file": "test-results/vqa-1b/final-b-L4-high-z1.5/captures/final-b-L4-high-z1.5-L4-hold-t5943-high-z0-5.json",
+        "sha256": "8b7c0a7e767dcfca69fe7d88648f1bd80e6591197cfded15bb7d8952a152e90a",
+        "tick": 5947,
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -20.90390156615673,
+            7.660339634406264e-197,
+            -4.379679825900224
+          ],
+          "target": [
+            -21.879406463560457,
+            6.737339637530999e-197,
+            -4.333931922433191
+          ],
+          "position": [
+            -5.73274628412401,
+            17.022757371721266,
+            11.81272825700326
+          ],
+          "spot": null
+        },
+        "positionTargetPitchDeg": 36.703552870645304
+      },
+      {
+        "file": "test-results/vqa-1b/final-b-L4-high-z1.5/captures/final-b-L4-high-z1.5-L4-quartermaster-t1846-high-z0-5.json",
+        "sha256": "6932432544e4bc02f66212f0825d8b624a8d2d5d8e538c07871957b44a0af836",
+        "tick": 1848,
+        "camera": {
+          "zoom": 0.5,
+          "targetZoom": 0.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 9.769147734043527,
+          "regionScale": 1,
+          "focus": [
+            -13.740556546001589,
+            4.318829012344541e-14,
+            4.112153441550971
+          ],
+          "target": [
+            -13.740556546001589,
+            4.318829012344541e-14,
+            4.112153441550971
+          ],
+          "position": [
+            -8.152004188931446,
+            5.74216096553726,
+            9.700705798621113
+          ],
+          "spot": null
+        },
+        "positionTargetPitchDeg": 36.0
+      },
+      {
+        "file": "test-results/vqa-1b/final-b-L4-high-z1.5/captures/final-b-L4-high-z1.5-L4-t4743.json",
+        "sha256": "d333b5acd9c2dae5241ea6d4c03ec518f7e4061a51a0ed254bd38c40a0918109",
+        "tick": 4764,
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -19.676436118862988,
+            6.696811286869184e-145,
+            -7.525332629039314
+          ],
+          "target": [
+            -19.676436118862988,
+            6.696811286869184e-145,
+            -7.525332629039314
+          ],
+          "position": [
+            -3.3727354970579113,
+            16.751879690335485,
+            8.783770076107324
+          ],
+          "spot": null
+        },
+        "positionTargetPitchDeg": 35.99556877817072
+      },
+      {
+        "file": "test-results/vqa-1b/final-b-L4-high-z1.5/captures/final-b-L4-high-z1.5-L4-ride-t684-high-z1-5.json",
+        "sha256": "a8837288fc2fffbf1314d8f78cd2e8119f5545d5aa018594647c239d01702e89",
+        "tick": 701,
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 32.775,
+          "regionScale": 1,
+          "focus": [
+            -46.76976470996307,
+            0,
+            -38.24999407551607
+          ],
+          "target": [
+            -46.76976470996307,
+            0,
+            -38.24999407551607
+          ],
+          "position": [
+            -28.02045223261347,
+            19.264661643885805,
+            -19.500681598166466
+          ],
+          "spot": null
+        },
+        "positionTargetPitchDeg": 36.0
+      },
+      {
+        "file": "test-results/vqa-1b/final-b-L4-high-z1.5/captures/final-b-L4-high-z1.5-L4-t3819.json",
+        "sha256": "f330529cb7e87e61e2229db5cb7beecf1149b1eb6b6fd776e1fcc68c17e79c0d",
+        "tick": 3846,
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -21.313747924045796,
+            4.944262265675185e-105,
+            -1.3270910318350666
+          ],
+          "target": [
+            -21.313747924045796,
+            4.944262265675185e-105,
+            -1.3270910318350666
+          ],
+          "position": [
+            -5.00833560543955,
+            16.751879690335485,
+            14.974996629681966
+          ],
+          "spot": null
+        },
+        "positionTargetPitchDeg": 35.999999842072675
+      },
+      {
+        "file": "test-results/vqa-1b/final-b-L4-high-z1.5/captures/final-b-L4-high-z1.5-L4-hold-t2227-high-z0-5.json",
+        "sha256": "42ed1dcc1948a4bcc9345f87628960ffd45b0c5e0a17578ced17a2d6ec554db8",
+        "tick": 2232,
+        "camera": {
+          "zoom": 0.5,
+          "targetZoom": 0.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 9.5,
+          "regionScale": 1,
+          "focus": [
+            -22.218077158204377,
+            9.087782094863055e-31,
+            1.060527510860818
+          ],
+          "target": [
+            -22.218077158204377,
+            9.087782094863055e-31,
+            1.060527510860818
+          ],
+          "position": [
+            -16.783493831436374,
+            5.583959896778495,
+            6.49511083762882
+          ],
+          "spot": null
+        },
+        "positionTargetPitchDeg": 35.99999999999999
+      },
+      {
+        "file": "test-results/vqa-1b/final-b-L4-high-z1.5/captures/final-b-L4-high-z1.5-L4-t11166.json",
+        "sha256": "55ff2882641c6e473b83b42e6541e5945a4f9cadb7eaa92090f562ef3825149c",
+        "tick": 11192,
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -18.321943949627013,
+            2.5e-323,
+            -8.674664724459237
+          ],
+          "target": [
+            -18.321943949627013,
+            2.5e-323,
+            -8.674664724459237
+          ],
+          "position": [
+            -2.0181939693230113,
+            16.751879690335485,
+            7.6290852558447675
+          ],
+          "spot": null
+        },
+        "positionTargetPitchDeg": 36.0
+      },
+      {
+        "file": "test-results/vqa-1b/final-b-L4-high-z1.5/captures/final-b-L4-high-z1.5-L4-hold-t9577-high-z1-5.json",
+        "sha256": "736daa54a54da5c36b996cdff3479fcb748a076e5c2e6bdea7c0023da9d248de",
+        "tick": 9586,
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -21.062215179823173,
+            2.5e-323,
+            -7.095988288888534
+          ],
+          "target": [
+            -21.062215179823173,
+            2.5e-323,
+            -7.095988288888534
+          ],
+          "position": [
+            -4.75710771821015,
+            16.753162420278198,
+            9.20776169141547
+          ],
+          "spot": null
+        },
+        "positionTargetPitchDeg": 36.00095192886858
+      },
+      {
+        "file": "test-results/vqa-1b/final-b-L4-high-z1.5/captures/final-b-L4-high-z1.5-L4-hold-t5943-high-z1-5.json",
+        "sha256": "8b7c0a7e767dcfca69fe7d88648f1bd80e6591197cfded15bb7d8952a152e90a",
+        "tick": 5947,
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -20.90390156615673,
+            7.660339634406264e-197,
+            -4.379679825900224
+          ],
+          "target": [
+            -21.879406463560457,
+            6.737339637530999e-197,
+            -4.333931922433191
+          ],
+          "position": [
+            -5.73274628412401,
+            17.022757371721266,
+            11.81272825700326
+          ],
+          "spot": null
+        },
+        "positionTargetPitchDeg": 36.703552870645304
+      },
+      {
+        "file": "test-results/vqa-1b/final-b-L4-high-z1.5/captures/final-b-L4-high-z1.5-L4-t7507.json",
+        "sha256": "64cd5011536c5fc9ef3e11803da37bcfb1a0e2936ee157c522d7e56207396207",
+        "tick": 7534,
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -18.15240269597254,
+            2.2754617914025577e-269,
+            2.7665287958870475
+          ],
+          "target": [
+            -18.15240269597254,
+            2.2754617914025577e-269,
+            2.7665287958870475
+          ],
+          "position": [
+            -1.848964713320591,
+            16.751879690335482,
+            19.071040504605136
+          ],
+          "spot": null
+        },
+        "positionTargetPitchDeg": 35.99962420828164
+      },
+      {
+        "file": "test-results/vqa-1b/final-b-L4-high-z1.5/captures/final-b-L4-high-z1.5-L4-t12067.json",
+        "sha256": "9054cbad00831c21c18777b6720923c82651f60ead625456da543dc572e633c8",
+        "tick": 12096,
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -17.915020981243917,
+            2.5e-323,
+            -9.362192887801434
+          ],
+          "target": [
+            -17.915020981243917,
+            2.5e-323,
+            -9.362192887801434
+          ],
+          "position": [
+            -1.6097673269543664,
+            16.75054246925224,
+            6.941636619023742
+          ],
+          "spot": null
+        },
+        "positionTargetPitchDeg": 35.996502221374165
+      },
+      {
+        "file": "test-results/vqa-1b/final-b-L4-high-z1.5/captures/final-b-L4-high-z1.5-L4-t8410.json",
+        "sha256": "5edefa98b92b99249473df5397e6d2657cce494e7db0b612331e8cdd6962342b",
+        "tick": 8444,
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -19.4946972098193,
+            6.85917201408409e-309,
+            -10.53204610861794
+          ],
+          "target": [
+            -19.4946972098193,
+            6.85917201408409e-309,
+            -10.53204610861794
+          ],
+          "position": [
+            -3.1886708059630164,
+            16.74967116702216,
+            5.771703871686064
+          ],
+          "spot": null
+        },
+        "positionTargetPitchDeg": 35.99450582033192
+      },
+      {
+        "file": "test-results/vqa-1b/final-b-L4-high-z1.5/captures/final-b-L4-high-z1.5-L4-t9312.json",
+        "sha256": "826e339ab3ac28ea267e9b6b42c7bcb663ccd24caa5988a601611f5a483baf02",
+        "tick": 9344,
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -23.746804407474144,
+            2.5e-323,
+            -8.1137637423973
+          ],
+          "target": [
+            -23.746804407474144,
+            2.5e-323,
+            -8.1137637423973
+          ],
+          "position": [
+            -7.443054427170143,
+            16.751879690335485,
+            8.189986237906705
+          ],
+          "spot": null
+        },
+        "positionTargetPitchDeg": 36.0
+      },
+      {
+        "file": "test-results/vqa-1b/final-b-L4-high-z1.5/captures/final-b-L4-high-z1.5-L4-quartermaster-t1846-high-z1-5.json",
+        "sha256": "5dd47c1198e312577773c1c6df04d81cf4c456c852b7721940665751424745fc",
+        "tick": 1848,
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 29.30744320213058,
+          "regionScale": 1,
+          "focus": [
+            -13.740556546001589,
+            4.318829012344541e-14,
+            4.112153441550971
+          ],
+          "target": [
+            -13.740556546001589,
+            4.318829012344541e-14,
+            4.112153441550971
+          ],
+          "position": [
+            3.0251005252088383,
+            17.226482896611692,
+            20.8778105127614
+          ],
+          "spot": null
+        },
+        "positionTargetPitchDeg": 36.0
+      },
+      {
+        "file": "test-results/vqa-1b/final-b-L4-high-z1.5/captures/final-b-L4-high-z1.5-L4-t5690.json",
+        "sha256": "3284105448f1f473dc04cf61238e04ddaa1443ff55d1066ec099c8e2b892eefa",
+        "tick": 5892,
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -20.906797316879114,
+            6.877815193874042e-194,
+            -4.3839578841964535
+          ],
+          "target": [
+            -20.906797316879114,
+            6.877815193874042e-194,
+            -4.3839578841964535
+          ],
+          "position": [
+            -4.603044349822806,
+            16.751879690335485,
+            11.919794605889006
+          ],
+          "spot": null
+        },
+        "positionTargetPitchDeg": 35.99999540727637
+      },
+      {
+        "file": "test-results/vqa-1b/final-b-L4-high-z1.5/captures/final-b-L4-high-z1.5-L4-t1981.json",
+        "sha256": "aaeb018b20544c6a2ce98fa442c8739792d9de5c39d8cb76e1239aae2e9472f6",
+        "tick": 1992,
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -19.584200046563748,
+            2.4072736980023595e-20,
+            4.200160041237529
+          ],
+          "target": [
+            -19.584200046563748,
+            2.4072736980023595e-20,
+            4.200160041237529
+          ],
+          "position": [
+            -3.280442977820017,
+            16.751879690335485,
+            20.50391138066219
+          ],
+          "spot": null
+        },
+        "positionTargetPitchDeg": 35.999992941495165
+      },
+      {
+        "file": "test-results/vqa-1b/final-b-L4-high-z1.5/captures/final-b-L4-high-z1.5-L4-hold-t2227-high-z1-5.json",
+        "sha256": "d741df4791ccd1412e7ad0613a94f1ba207565b2b1c774b5c645200b5e238aa6",
+        "tick": 2232,
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -22.218077158204377,
+            9.087782094863055e-31,
+            1.060527510860818
+          ],
+          "target": [
+            -22.218077158204377,
+            9.087782094863055e-31,
+            1.060527510860818
+          ],
+          "position": [
+            -5.914327177900375,
+            16.751879690335485,
+            17.364277491164824
+          ],
+          "spot": null
+        },
+        "positionTargetPitchDeg": 36.0
+      },
+      {
+        "file": "test-results/vqa-1b/final-b-L4-high-z1.5/captures/final-b-L4-high-z1.5-L4-ride-t684-high-z0-5.json",
+        "sha256": "861396e2680dd47dec4dc212f2afa7b166cfaf059a40a6f6f6399e9498c047d3",
+        "tick": 701,
+        "camera": {
+          "zoom": 0.5,
+          "targetZoom": 0.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 10.924999999999999,
+          "regionScale": 1,
+          "focus": [
+            -46.76976470996307,
+            0,
+            -38.24999407551607
+          ],
+          "target": [
+            -46.76976470996307,
+            0,
+            -38.24999407551607
+          ],
+          "position": [
+            -40.51999388417987,
+            6.421553881295268,
+            -32.00022324973287
+          ],
+          "spot": null
+        },
+        "positionTargetPitchDeg": 35.99999999999999
+      },
+      {
+        "file": "test-results/vqa-1b/final-b-L4-high-z1.5/captures/final-b-L4-high-z1.5-L4-t6605.json",
+        "sha256": "a96ebcef87a2b365467927188af13e52641dffe1664842e998589d5a3b83ca9c",
+        "tick": 6630,
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -20.71484742337402,
+            4.1427689396216575e-230,
+            2.0345802532778205
+          ],
+          "target": [
+            -20.71484742337402,
+            4.1427689396216575e-230,
+            2.0345802532778205
+          ],
+          "position": [
+            -4.41109744307002,
+            16.751879690335485,
+            18.338330233581825
+          ],
+          "spot": null
+        },
+        "positionTargetPitchDeg": 36.0
+      },
+      {
+        "file": "test-results/vqa-1b/final-b-L4-high-z1.5/captures/final-b-L4-high-z1.5-L4-t2885.json",
+        "sha256": "bf2cb55601ce567c8997a9ecc5a59385f684c47910bd93db11be863fbdfac160",
+        "tick": 2907,
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -22.218698501586903,
+            4.401293967799207e-60,
+            1.0597275495529181
+          ],
+          "target": [
+            -22.218698501586903,
+            4.401293967799207e-60,
+            1.0597275495529181
+          ],
+          "position": [
+            -5.914948521282902,
+            16.751879690335485,
+            17.363477529856922
+          ],
+          "spot": null
+        },
+        "positionTargetPitchDeg": 36.0
+      },
+      {
+        "file": "test-results/vqa-1b/final-b-L4-high-z1.5/captures/final-b-L4-high-z1.5-L4-hold-t9577-high-z0-5.json",
+        "sha256": "9050ffb2b1c82b7b9ab643426f41d2343c16aaf8129f300ba070e3f8a38aa94c",
+        "tick": 9586,
+        "camera": {
+          "zoom": 0.5,
+          "targetZoom": 0.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 9.5,
+          "regionScale": 1,
+          "focus": [
+            -21.062215179823173,
+            2.5e-323,
+            -7.095988288888534
+          ],
+          "target": [
+            -21.062215179823173,
+            2.5e-323,
+            -7.095988288888534
+          ],
+          "position": [
+            -15.62627437174615,
+            5.585242626721208,
+            -1.6614049621205318
+          ],
+          "spot": null
+        },
+        "positionTargetPitchDeg": 36.002855338296634
+      },
+      {
+        "file": "test-results/vqa-1b/final-b-L4-high-z1.5/captures/final-b-L4-high-z1.5-L4-t49.json",
+        "sha256": "0c9cc48f05a820ee0b5f6689ce895335693397efb8ad9ea6638dbf6eba04efc0",
+        "tick": 83,
+        "camera": {
+          "zoom": 1,
+          "targetZoom": 1,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 21.849999999999998,
+          "regionScale": 1,
+          "focus": [
+            -56.77135566640931,
+            0,
+            40.957852409568815
+          ],
+          "target": [
+            -56.77135566640931,
+            0,
+            40.957852409568815
+          ],
+          "position": [
+            -44.27568708731992,
+            12.843107762590536,
+            53.53467637088021
+          ],
+          "spot": null
+        },
+        "positionTargetPitchDeg": 35.92000436951646
+      },
+      {
+        "file": "test-results/vqa-1b/final-b-L4-low-z1.5/captures/final-b-L4-low-z1.5-L4-t3797.json",
+        "sha256": "e7733b4289cf867a68bd66a2f46c0f4ee7d86f34214c5ff502fe579cfe874fd8",
+        "tick": 3824,
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -18.052972406892756,
+            3.280144230152169e-101,
+            7.4742030170512965
+          ],
+          "target": [
+            -18.052972406892756,
+            3.280144230152169e-101,
+            7.4742030170512965
+          ],
+          "position": [
+            -1.745408581085976,
+            16.751879690335485,
+            23.781766774333253
+          ],
+          "spot": null
+        },
+        "positionTargetPitchDeg": 35.99362758339038
+      },
+      {
+        "file": "test-results/vqa-1b/final-b-L4-low-z1.5/captures/final-b-L4-low-z1.5-L4-hold-t5814-low-z0-5.json",
+        "sha256": "44f5c5b367bd977176bf8b57fc17e8c3aadb5b7aa5c2dd3426cb484fdbbe258d",
+        "tick": 5819,
+        "camera": {
+          "zoom": 0.5,
+          "targetZoom": 0.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 9.5,
+          "regionScale": 1,
+          "focus": [
+            -18.328277062974006,
+            2.6348026568691253e-35,
+            -11.92510034577451
+          ],
+          "target": [
+            -18.328277062974006,
+            2.6348026568691253e-35,
+            -11.92510034577451
+          ],
+          "position": [
+            -12.893693736206005,
+            5.583959896778495,
+            -6.490517019006508
+          ],
+          "spot": null
+        },
+        "positionTargetPitchDeg": 36.0
+      },
+      {
+        "file": "test-results/vqa-1b/final-b-L4-low-z1.5/captures/final-b-L4-low-z1.5-L4-hold-t2197-low-z1-5.json",
+        "sha256": "c0286b895bb270cebcdc75c5909c655445eb34c356379873836df56a08315220",
+        "tick": 2202,
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -22.303351084454725,
+            1.8253298281625603e-29,
+            1.1157318021824554
+          ],
+          "target": [
+            -22.303351084454725,
+            1.8253298281625603e-29,
+            1.1157318021824554
+          ],
+          "position": [
+            -5.999601104150724,
+            16.751879690335485,
+            17.41948178248646
+          ],
+          "spot": null
+        },
+        "positionTargetPitchDeg": 36.0
+      },
+      {
+        "file": "test-results/vqa-1b/final-b-L4-low-z1.5/captures/final-b-L4-low-z1.5-L4-quartermaster-t1829-low-z0-5.json",
+        "sha256": "5a70db61d5375288709ba2354393b94ddb2bdda2ff7a35fe5d5af8df0c3658da",
+        "tick": 1834,
+        "camera": {
+          "zoom": 0.5,
+          "targetZoom": 0.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 10.364306190090504,
+          "regionScale": 1,
+          "focus": [
+            -12.796448302345059,
+            1.7513715267667414e-13,
+            2.578552122800276
+          ],
+          "target": [
+            -12.796448302345059,
+            1.7513715267667414e-13,
+            2.578552122800276
+          ],
+          "position": [
+            -6.867428764009877,
+            6.091986328778963,
+            8.507571661135458
+          ],
+          "spot": null
+        },
+        "positionTargetPitchDeg": 36.0
+      },
+      {
+        "file": "test-results/vqa-1b/final-b-L4-low-z1.5/captures/final-b-L4-low-z1.5-L4-t13995.json",
+        "sha256": "2067fa89727bff7d9995a335abf84f3889c02a758e036a7af2171266721a220d",
+        "tick": 14038,
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -20.961528563050017,
+            2.5e-323,
+            -6.535097629159484
+          ],
+          "target": [
+            -20.961528563050017,
+            2.5e-323,
+            -6.535097629159484
+          ],
+          "position": [
+            -4.65777855314984,
+            16.751879677915262,
+            9.768651990643054
+          ],
+          "spot": null
+        },
+        "positionTargetPitchDeg": 36.000000256293035
+      },
+      {
+        "file": "test-results/vqa-1b/final-b-L4-low-z1.5/captures/final-b-L4-low-z1.5-L4-t4834.json",
+        "sha256": "2bfe0cb4f350acd2f7e12d2a6bf612dbcb58423344b81246c2f0f3bf0a88ebb8",
+        "tick": 4875,
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -27.794026344467753,
+            7.439485340309157e-147,
+            -4.275047015711183
+          ],
+          "target": [
+            -27.794026344467753,
+            7.439485340309157e-147,
+            -4.275047015711183
+          ],
+          "position": [
+            -11.489872772375634,
+            16.751879690685737,
+            12.033375407385524
+          ],
+          "spot": null
+        },
+        "positionTargetPitchDeg": 35.995758830530335
+      },
+      {
+        "file": "test-results/vqa-1b/final-b-L4-low-z1.5/captures/final-b-L4-low-z1.5-L4-ride-t681-low-z1-5.json",
+        "sha256": "48580990988aa6d2d5eeb2097fcd13e9af95be78925d863c26c8c7e6c8905151",
+        "tick": 698,
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 32.775,
+          "regionScale": 1,
+          "focus": [
+            -47.11517033145476,
+            0,
+            -38.249990232177325
+          ],
+          "target": [
+            -47.11517033145476,
+            0,
+            -38.249990232177325
+          ],
+          "position": [
+            -28.365857854105162,
+            19.264661643885805,
+            -19.50067775482772
+          ],
+          "spot": null
+        },
+        "positionTargetPitchDeg": 36.0
+      },
+      {
+        "file": "test-results/vqa-1b/final-b-L4-low-z1.5/captures/final-b-L4-low-z1.5-L4-hold-t13083-low-z0-5.json",
+        "sha256": "9cac264d6a5ade628da1873e5268ee43f740e39d089cf37b36c95c7a63a76edf",
+        "tick": 13093,
+        "camera": {
+          "zoom": 0.5,
+          "targetZoom": 0.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 9.5,
+          "regionScale": 1,
+          "focus": [
+            -23.352119514807494,
+            2.5e-323,
+            -6.560984064398781
+          ],
+          "target": [
+            -23.352119514807494,
+            2.5e-323,
+            -6.560984064398781
+          ],
+          "position": [
+            -17.916841865171147,
+            5.584610033888781,
+            -1.126400737630779
+          ],
+          "spot": null
+        },
+        "positionTargetPitchDeg": 36.001431574217555
+      },
+      {
+        "file": "test-results/vqa-1b/final-b-L4-low-z1.5/captures/final-b-L4-low-z1.5-L4-bar-t16215-low-z0-5.json",
+        "sha256": "958c52ba49fd65a53bede9416ead92e8dfdf58d28408194a50d23d767c422a9e",
+        "tick": 16215,
+        "camera": {
+          "zoom": 0.5,
+          "targetZoom": 0.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 9.5,
+          "regionScale": 1,
+          "focus": [
+            75.30000305175781,
+            0.08582327909561449,
+            -6.400000095367432
+          ],
+          "target": [
+            75.30000305175781,
+            0.08582327909561449,
+            -6.400000095367432
+          ],
+          "position": [
+            80.73458637852582,
+            5.66978317587411,
+            -0.9654167685994297
+          ],
+          "spot": null
+        },
+        "positionTargetPitchDeg": 35.999999999999986
+      },
+      {
+        "file": "test-results/vqa-1b/final-b-L4-low-z1.5/captures/final-b-L4-low-z1.5-L4-t2876.json",
+        "sha256": "9a15e6477fbb5436db8c551ede6865901280b44acb15d619f177affde85c79d2",
+        "tick": 2910,
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -24.444900512695302,
+            3.260558765922186e-60,
+            1.2816706895828254
+          ],
+          "target": [
+            -24.444900512695302,
+            3.260558765922186e-60,
+            1.2816706895828254
+          ],
+          "position": [
+            -8.1411505323913,
+            16.751879690335485,
+            17.58542066988683
+          ],
+          "spot": null
+        },
+        "positionTargetPitchDeg": 36.0
+      },
+      {
+        "file": "test-results/vqa-1b/final-b-L4-low-z1.5/captures/final-b-L4-low-z1.5-L4-t10307.json",
+        "sha256": "7e55b8a71bc0058c35f1adb3334353bd241cd87e3ddda901b551e7cf668dd0d8",
+        "tick": 10327,
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -21.216617447446936,
+            2.17726958095931e-232,
+            -10.072235725433057
+          ],
+          "target": [
+            -21.216617447446936,
+            2.17726958095931e-232,
+            -10.072235725433057
+          ],
+          "position": [
+            -4.913000559396485,
+            16.751879690335485,
+            6.231791226311851
+          ],
+          "spot": null
+        },
+        "positionTargetPitchDeg": 35.999879777441926
+      },
+      {
+        "file": "test-results/vqa-1b/final-b-L4-low-z1.5/captures/final-b-L4-low-z1.5-L4-t16752.json",
+        "sha256": "0eb8ca8a92637bda1347ad224735191b2b01102d27bcf4dc4ab0eefb14119dfc",
+        "tick": 16766,
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            75.50665283203121,
+            1.0092044363608308e-25,
+            -1.7814495563507087
+          ],
+          "target": [
+            75.50665283203121,
+            1.0092044363608308e-25,
+            -1.7814495563507087
+          ],
+          "position": [
+            91.81040281233521,
+            16.751879690335485,
+            14.522300423953297
+          ],
+          "spot": null
+        },
+        "positionTargetPitchDeg": 35.99999999999999
+      },
+      {
+        "file": "test-results/vqa-1b/final-b-L4-low-z1.5/captures/final-b-L4-low-z1.5-L4-hold-t9459-low-z0-5.json",
+        "sha256": "56a947243ef64ddfbdf27d2695ccdae9dee3802487c3a34954fd4b0049087d7e",
+        "tick": 9464,
+        "camera": {
+          "zoom": 0.5,
+          "targetZoom": 0.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 9.5,
+          "regionScale": 1,
+          "focus": [
+            -27.364297894506745,
+            6.569404342911512e-195,
+            -5.872310808406419
+          ],
+          "target": [
+            -27.364297894506745,
+            6.569404342911512e-195,
+            -5.872310808406419
+          ],
+          "position": [
+            -21.929714567738742,
+            5.583959896778495,
+            -0.4377274816384169
+          ],
+          "spot": null
+        },
+        "positionTargetPitchDeg": 35.99999999999999
+      },
+      {
+        "file": "test-results/vqa-1b/final-b-L4-low-z1.5/captures/final-b-L4-low-z1.5-L4-t8489.json",
+        "sha256": "89a6ea1a40da04499ea41169eb2dc0f64265819773323d348e8914bd0893d222",
+        "tick": 8515,
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -18.14654305009954,
+            1.0766444992871643e-153,
+            7.120823929668052
+          ],
+          "target": [
+            -18.14654305009954,
+            1.0766444992871643e-153,
+            7.120823929668052
+          ],
+          "position": [
+            -1.8427922656867008,
+            16.751879689974405,
+            23.42097854988009
+          ],
+          "spot": null
+        },
+        "positionTargetPitchDeg": 36.00300354399855
+      },
+      {
+        "file": "test-results/vqa-1b/final-b-L4-low-z1.5/captures/final-b-L4-low-z1.5-L4-hide-t13597-low-z1-5.json",
+        "sha256": "47d4a2365c242816dedcde02606c1833a9469b930aab6f85edfee58f69fa09a6",
+        "tick": 13613,
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -20.700095459868415,
+            2.5e-323,
+            -6.666932696932922
+          ],
+          "target": [
+            -20.700095459868415,
+            2.5e-323,
+            -6.666932696932922
+          ],
+          "position": [
+            -4.470599796659652,
+            16.67561626285067,
+            9.636817283371084
+          ],
+          "spot": null
+        },
+        "positionTargetPitchDeg": 35.937745965730294
+      },
+      {
+        "file": "test-results/vqa-1b/final-b-L4-low-z1.5/captures/final-b-L4-low-z1.5-L4-t6639.json",
+        "sha256": "2956a705608f56fadba263392fb247fb460e1b7d0d7f963b5ded978b45723fca",
+        "tick": 6668,
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -23.333290257948857,
+            1.7630439283682507e-73,
+            -8.031950492894994
+          ],
+          "target": [
+            -23.333290257948857,
+            1.7630439283682507e-73,
+            -8.031950492894994
+          ],
+          "position": [
+            -7.0295402776448555,
+            16.751879690335485,
+            8.27179948740901
+          ],
+          "spot": null
+        },
+        "positionTargetPitchDeg": 36.0
+      },
+      {
+        "file": "test-results/vqa-1b/final-b-L4-low-z1.5/captures/final-b-L4-low-z1.5-L4-wait-t16452-low-z0-5.json",
+        "sha256": "b695fdc2b7426875099602814a4854ab24949a5efb95c4eedcf93f37255ae4ab",
+        "tick": 16453,
+        "camera": {
+          "zoom": 0.5,
+          "targetZoom": 0.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 9.5,
+          "regionScale": 1,
+          "focus": [
+            75.50665283203088,
+            3.9572768507731425e-12,
+            -1.7814578586441305
+          ],
+          "target": [
+            75.50665283203088,
+            3.9572768507731425e-12,
+            -1.7814578586441305
+          ],
+          "position": [
+            80.94123615879889,
+            5.583959896782452,
+            3.6531254681238714
+          ],
+          "spot": null
+        },
+        "positionTargetPitchDeg": 35.999999999999986
+      },
+      {
+        "file": "test-results/vqa-1b/final-b-L4-low-z1.5/captures/final-b-L4-low-z1.5-L4-t11242.json",
+        "sha256": "98d7614c4f38eee1668197a69d4374ba56b0b829a92afec60c8a68b2afa2e2f3",
+        "tick": 11257,
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -24.69524836299037,
+            8.88229898978411e-273,
+            -8.250449937833245
+          ],
+          "target": [
+            -24.69524836299037,
+            8.88229898978411e-273,
+            -8.250449937833245
+          ],
+          "position": [
+            -8.391498382686368,
+            16.751879690335485,
+            8.05330004247076
+          ],
+          "spot": null
+        },
+        "positionTargetPitchDeg": 36.0
+      },
+      {
+        "file": "test-results/vqa-1b/final-b-L4-low-z1.5/captures/final-b-L4-low-z1.5-L4-t48.json",
+        "sha256": "400cb561130245ea1f7a2fc8d941c698bafa8ebc8493e538095e5751235694ed",
+        "tick": 84,
+        "camera": {
+          "zoom": 1,
+          "targetZoom": 1,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 21.849999999999998,
+          "regionScale": 1,
+          "focus": [
+            -56.76807718133834,
+            0,
+            40.87953886782322
+          ],
+          "target": [
+            -56.76807718133834,
+            0,
+            40.87953886782322
+          ],
+          "position": [
+            -44.27181401484292,
+            12.843107762590536,
+            53.45739406113522
+          ],
+          "spot": null
+        },
+        "positionTargetPitchDeg": 35.91823779005925
+      },
+      {
+        "file": "test-results/vqa-1b/final-b-L4-low-z1.5/captures/final-b-L4-low-z1.5-L4-t14914.json",
+        "sha256": "35a3d38f3f7ed57a66f33d1fe70cc071ad10eb8ea31156f42aff2fcc0bb8ab17",
+        "tick": 14930,
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -49.4345648664668,
+            0.0001238713895825843,
+            -22.1409980022817
+          ],
+          "target": [
+            -49.4345648664668,
+            0.0001238713895825843,
+            -22.1409980022817
+          ],
+          "position": [
+            -33.130814886162796,
+            16.75200356172507,
+            -5.837248021977697
+          ],
+          "spot": null
+        },
+        "positionTargetPitchDeg": 35.99999999999999
+      },
+      {
+        "file": "test-results/vqa-1b/final-b-L4-low-z1.5/captures/final-b-L4-low-z1.5-L4-quartermaster-t1829-low-z1-5.json",
+        "sha256": "8a7ec6549fc67e5f4f488911fb80c6f73d425d1588a818d08c28d96ac082ffa6",
+        "tick": 1834,
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 31.09291857027151,
+          "regionScale": 1,
+          "focus": [
+            -12.796448302345059,
+            1.7513715267667414e-13,
+            2.578552122800276
+          ],
+          "target": [
+            -12.796448302345059,
+            1.7513715267667414e-13,
+            2.578552122800276
+          ],
+          "position": [
+            4.990610312660486,
+            18.275958986336537,
+            20.365610737805824
+          ],
+          "spot": null
+        },
+        "positionTargetPitchDeg": 36.00000000000001
+      },
+      {
+        "file": "test-results/vqa-1b/final-b-L4-low-z1.5/captures/final-b-L4-low-z1.5-L4-t9404.json",
+        "sha256": "2481e67a1b0f0452c26ce283e1fdaf67960c8f9a729cfc0484ade7dba14c269d",
+        "tick": 9426,
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -26.10474384831317,
+            2.936601555435799e-193,
+            -6.545087204542296
+          ],
+          "target": [
+            -26.10474384831317,
+            2.936601555435799e-193,
+            -6.545087204542296
+          ],
+          "position": [
+            -9.791869993497672,
+            16.751879690335485,
+            9.758351249343846
+          ],
+          "spot": null
+        },
+        "positionTargetPitchDeg": 35.99263685200365
+      },
+      {
+        "file": "test-results/vqa-1b/final-b-L4-low-z1.5/captures/final-b-L4-low-z1.5-L4-hold-t2197-low-z0-5.json",
+        "sha256": "92dbb92257cd6b93ca4c2e05e471db911c2dd132c58b458c1cb9464f8ccbf8a7",
+        "tick": 2202,
+        "camera": {
+          "zoom": 0.5,
+          "targetZoom": 0.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 9.5,
+          "regionScale": 1,
+          "focus": [
+            -22.303351084454725,
+            1.8253298281625603e-29,
+            1.1157318021824554
+          ],
+          "target": [
+            -22.303351084454725,
+            1.8253298281625603e-29,
+            1.1157318021824554
+          ],
+          "position": [
+            -16.868767757686726,
+            5.583959896778495,
+            6.550315128950457
+          ],
+          "spot": null
+        },
+        "positionTargetPitchDeg": 36.00000000000001
+      },
+      {
+        "file": "test-results/vqa-1b/final-b-L4-low-z1.5/captures/final-b-L4-low-z1.5-L4-t12158.json",
+        "sha256": "ef55ddba414eaac29f94fcc4122f6d476e5193979d9452af1adf90ed4b568371",
+        "tick": 12179,
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -21.902373101262675,
+            8.06443891265e-313,
+            -9.472242998004756
+          ],
+          "target": [
+            -21.902373101262675,
+            8.06443891265e-313,
+            -9.472242998004756
+          ],
+          "position": [
+            -5.598940284136568,
+            16.751879690335485,
+            6.831824648509171
+          ],
+          "spot": null
+        },
+        "positionTargetPitchDeg": 35.99999957451933
+      },
+      {
+        "file": "test-results/vqa-1b/final-b-L4-low-z1.5/captures/final-b-L4-low-z1.5-L4-hold-t5814-low-z1-5.json",
+        "sha256": "bf3a268fce64fdacfa2bb913327a243a077a3cddacf07b2a67f19b5bf6aa2d7a",
+        "tick": 5819,
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -18.328277062974006,
+            2.6348026568691253e-35,
+            -11.92510034577451
+          ],
+          "target": [
+            -18.328277062974006,
+            2.6348026568691253e-35,
+            -11.92510034577451
+          ],
+          "position": [
+            -2.024527082670005,
+            16.751879690335485,
+            4.378649634529495
+          ],
+          "spot": null
+        },
+        "positionTargetPitchDeg": 36.0
+      },
+      {
+        "file": "test-results/vqa-1b/final-b-L4-low-z1.5/captures/final-b-L4-low-z1.5-L4-t1961.json",
+        "sha256": "39a2c4809056ea7b8ccb669097cbb4446f9737fd859a673e370eb6dd6515645e",
+        "tick": 1977,
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -19.58858301012907,
+            1.0788652221649478e-19,
+            4.273690328503741
+          ],
+          "target": [
+            -19.58858301012907,
+            1.0788652221649478e-19,
+            4.273690328503741
+          ],
+          "position": [
+            -3.2848305765970327,
+            16.751879690335485,
+            20.57744058755837
+          ],
+          "spot": null
+        },
+        "positionTargetPitchDeg": 35.9999977172479
+      },
+      {
+        "file": "test-results/vqa-1b/final-b-L4-low-z1.5/captures/final-b-L4-low-z1.5-L4-ride-t681-low-z0-5.json",
+        "sha256": "3f7ccbbe2a3d28e35588c2948807a55e07276475ce49274db1f06e73e6dc2535",
+        "tick": 698,
+        "camera": {
+          "zoom": 0.5,
+          "targetZoom": 0.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 10.924999999999999,
+          "regionScale": 1,
+          "focus": [
+            -47.11517033145476,
+            0,
+            -38.249990232177325
+          ],
+          "target": [
+            -47.11517033145476,
+            0,
+            -38.249990232177325
+          ],
+          "position": [
+            -40.86539950567156,
+            6.421553881295268,
+            -32.00021940639412
+          ],
+          "spot": null
+        },
+        "positionTargetPitchDeg": 35.99999999999999
+      },
+      {
+        "file": "test-results/vqa-1b/final-b-L4-low-z1.5/captures/final-b-L4-low-z1.5-L4-t5735.json",
+        "sha256": "eda69220029e52be03675ea74395205dc6d169a8d216827e3846f554ebeb9e71",
+        "tick": 5771,
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -17.532952454072607,
+            3.201559709156404e-33,
+            -11.925098201011734
+          ],
+          "target": [
+            -17.532952454072607,
+            3.201559709156404e-33,
+            -11.925098201011734
+          ],
+          "position": [
+            -1.2292076245726902,
+            16.751879690335485,
+            4.378651816272068
+          ],
+          "spot": null
+        },
+        "positionTargetPitchDeg": 36.00000427294469
+      },
+      {
+        "file": "test-results/vqa-1b/final-b-L4-low-z1.5/captures/final-b-L4-low-z1.5-L4-result.json",
+        "sha256": "22f774f5e3b650c6c93df282275b0bb7121b581cd1cfa40dc82e26831f3f9d42",
+        "tick": 0,
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            75.3,
+            0,
+            -5.4
+          ],
+          "target": [
+            75.3,
+            0,
+            -5.4
+          ],
+          "position": [
+            91.603749980304,
+            16.751879690335485,
+            10.903749980304005
+          ],
+          "spot": null
+        },
+        "positionTargetPitchDeg": 35.99999999999999
+      },
+      {
+        "file": "test-results/vqa-1b/final-b-L4-low-z1.5/captures/final-b-L4-low-z1.5-L4-hold-t13083-low-z1-5.json",
+        "sha256": "a6b68244d09917b13222a0b2e803159cb9b4fc2d7b7db9dd35149cbddd86cbfe",
+        "tick": 13093,
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -23.352119514807494,
+            2.5e-323,
+            -6.560984064398781
+          ],
+          "target": [
+            -23.352119514807494,
+            2.5e-323,
+            -6.560984064398781
+          ],
+          "position": [
+            -7.047675211635149,
+            16.752529827445773,
+            9.742765915905224
+          ],
+          "spot": null
+        },
+        "positionTargetPitchDeg": 36.00047722985555
+      },
+      {
+        "file": "test-results/vqa-1b/final-b-L4-low-z1.5/captures/final-b-L4-low-z1.5-L4-t15834.json",
+        "sha256": "c17fd777582a19b320281d2c5fa452c6b66c9b5103d72fa4fa8cfce258e4e7d7",
+        "tick": 15866,
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -70.27383340456778,
+            3.98808594839337e-15,
+            -41.75714409376595
+          ],
+          "target": [
+            -70.27383340456778,
+            3.98808594839337e-15,
+            -41.75714409376595
+          ],
+          "position": [
+            -53.97008289054354,
+            16.75187969033549,
+            -25.45339357971192
+          ],
+          "spot": null
+        },
+        "positionTargetPitchDeg": 35.99999910805672
+      },
+      {
+        "file": "test-results/vqa-1b/final-b-L4-low-z1.5/captures/final-b-L4-low-z1.5-L4-hold-t9459-low-z1-5.json",
+        "sha256": "0f79b6c30c82b2534fc5332686ddb5ec338951e8c4793ecb69d0dcb2c4c5a47b",
+        "tick": 9464,
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -27.364297894506745,
+            6.569404342911512e-195,
+            -5.872310808406419
+          ],
+          "target": [
+            -27.364297894506745,
+            6.569404342911512e-195,
+            -5.872310808406419
+          ],
+          "position": [
+            -11.060547914202743,
+            16.751879690335485,
+            10.431439171897587
+          ],
+          "spot": null
+        },
+        "positionTargetPitchDeg": 36.0
+      },
+      {
+        "file": "test-results/vqa-1b/final-b-L4-low-z1.5/captures/final-b-L4-low-z1.5-L4-hide-t13597-low-z0-5.json",
+        "sha256": "67f52cce73b727dbe1a713e85f3cf29bf98894198ce58dcf7b18741fbd4a93c2",
+        "tick": 13613,
+        "camera": {
+          "zoom": 0.5,
+          "targetZoom": 0.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 9.5,
+          "regionScale": 1,
+          "focus": [
+            -20.700095459868415,
+            2.5e-323,
+            -6.666932696932922
+          ],
+          "target": [
+            -20.700095459868415,
+            2.5e-323,
+            -6.666932696932922
+          ],
+          "position": [
+            -15.339766450195652,
+            5.50769646929368,
+            -1.2323493701649202
+          ],
+          "spot": null
+        },
+        "positionTargetPitchDeg": 35.81165455234703
+      },
+      {
+        "file": "test-results/vqa-1b/final-b-L4-low-z1.5/captures/final-b-L4-low-z1.5-L4-t13094.json",
+        "sha256": "d07ef144e83ef257fa5b1930cb783a36580eea8f56d9525c914440cfc2e18e7b",
+        "tick": 13108,
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -23.517645566673064,
+            2.5e-323,
+            -6.585309958426456
+          ],
+          "target": [
+            -23.517645566673064,
+            2.5e-323,
+            -6.585309958426456
+          ],
+          "position": [
+            -7.213941166382011,
+            16.75180348508421,
+            9.718441599970664
+          ],
+          "spot": null
+        },
+        "positionTargetPitchDeg": 35.9999128238065
+      },
+      {
+        "file": "test-results/vqa-1b/final-b-L4-low-z1.5/captures/final-b-L4-low-z1.5-L4-bar-t16215-low-z1-5.json",
+        "sha256": "93c9728da2ce88d2bd2ff02f00fd41135335e47d84811e56251d6a2cf02e524c",
+        "tick": 16215,
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            75.30000305175781,
+            0.08582327909561449,
+            -6.400000095367432
+          ],
+          "target": [
+            75.30000305175781,
+            0.08582327909561449,
+            -6.400000095367432
+          ],
+          "position": [
+            91.60375303206182,
+            16.8377029694311,
+            9.903749884936573
+          ],
+          "spot": null
+        },
+        "positionTargetPitchDeg": 35.99999999999999
+      },
+      {
+        "file": "test-results/vqa-1b/final-b-L4-low-z1.5/captures/final-b-L4-low-z1.5-L4-t7559.json",
+        "sha256": "c1ad1fe4d23b34e25f9675830295c729f3619a92fab6d62df02094e7a8ad2601",
+        "tick": 7576,
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -19.02335796702372,
+            6.491187836965174e-113,
+            6.760734286918379
+          ],
+          "target": [
+            -19.02335796702372,
+            6.491187836965174e-113,
+            6.760734286918379
+          ],
+          "position": [
+            -2.721218998968054,
+            16.751879690335485,
+            23.066102563834146
+          ],
+          "spot": null
+        },
+        "positionTargetPitchDeg": 35.99999377981038
+      },
+      {
+        "file": "test-results/vqa-1b/final-b-L4-low-z1.5/captures/final-b-L4-low-z1.5-L4-wait-t16452-low-z1-5.json",
+        "sha256": "c09818d9da35fdc58d10cf762d98292e1046e1a3638aea0a7c543c7c177429e8",
+        "tick": 16453,
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            75.50665283203088,
+            3.9572768507731425e-12,
+            -1.7814578586441305
+          ],
+          "target": [
+            75.50665283203088,
+            3.9572768507731425e-12,
+            -1.7814578586441305
+          ],
+          "position": [
+            91.81040281233489,
+            16.751879690339443,
+            14.522292121659873
+          ],
+          "spot": null
+        },
+        "positionTargetPitchDeg": 35.99999999999999
+      },
+      {
+        "file": "test-results/vqa-1b/final-b-L4-low-z1.5/captures/final-b-L4-low-z1.5-L4-t954.json",
+        "sha256": "b00108a0d9166ebdd5568e9a0e7ff32e10ae18411929789bd7b56607e11442bb",
+        "tick": 975,
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 32.775,
+          "regionScale": 1,
+          "focus": [
+            -11.35857245894907,
+            0,
+            -38.24999999999998
+          ],
+          "target": [
+            -11.35857245894907,
+            0,
+            -38.24999999999998
+          ],
+          "position": [
+            7.38980191844439,
+            19.264661643885805,
+            -19.500687522650374
+          ],
+          "spot": null
+        },
+        "positionTargetPitchDeg": 36.000681607583395
+      }
+    ]
+  },
+  "frames": [
+    {
+      "file": "test-results/vqa-1b/final-b-L4-low-z1.5/captures/final-b-L4-low-z1.5-L4-hide-t13597-low-z1-5.jpg",
+      "sha256": "37d7e13b5652a15860f29f06217879da76779398ea84db2afa3396dab7cc2a16",
+      "personallyReviewed": true,
+      "observation": "low hide tick13597 zoom1-5: oblique view with visible vertical sides, paving continuing under and beyond the camp. Wide view shows textured tan sandbags, dark-green tent walls, timber tables/pallet dressing and streets, with no black/unbuilt ground void. Close view preserves paving and props but much of scene is occupied by living crowd and corpses. High run is incomplete after a later bar/evaluate stall; this frame is only the actual hide phase."
+    },
+    {
+      "file": "test-results/vqa-1b/final-b-L4-low-z1.5/captures/final-b-L4-low-z1.5-L4-hide-t13597-low-z0-5.jpg",
+      "sha256": "a88f1b16667cc54821409d168c047265b455692002f21b7b4652ef4f28ebdd0f",
+      "personallyReviewed": true,
+      "observation": "low hide tick13597 zoom0-5: oblique view with visible vertical sides, paving continuing under and beyond the camp. Wide view shows textured tan sandbags, dark-green tent walls, timber tables/pallet dressing and streets, with no black/unbuilt ground void. Close view preserves paving and props but much of scene is occupied by living crowd and corpses. High run is incomplete after a later bar/evaluate stall; this frame is only the actual hide phase."
+    },
+    {
+      "file": "test-results/vqa-1b/final-b-L4-high-retry-z1.5/captures/final-b-L4-high-retry-z1.5-L4-hide-t14219-high-z1-5.jpg",
+      "sha256": "5f71ddc711609f85427b7f80a51ab249e691c53a1ee7cccf4c64f06a7e6f8191",
+      "personallyReviewed": true,
+      "observation": "high hide tick14219 zoom1-5: oblique view with visible vertical sides, paving continuing under and beyond the camp. Wide view shows textured tan sandbags, dark-green tent walls, timber tables/pallet dressing and streets, with no black/unbuilt ground void. Close view preserves paving and props but much of scene is occupied by living crowd and corpses. High run is incomplete after a later bar/evaluate stall; this frame is only the actual hide phase."
+    },
+    {
+      "file": "test-results/vqa-1b/final-b-L4-high-retry-z1.5/captures/final-b-L4-high-retry-z1.5-L4-hide-t14219-high-z0-5.jpg",
+      "sha256": "0f99806f7ac00bd3346589cc8a9b3a9cf931ee40327df98302359479db41f3d5",
+      "personallyReviewed": true,
+      "observation": "high hide tick14219 zoom0-5: oblique view with visible vertical sides, paving continuing under and beyond the camp. Wide view shows textured tan sandbags, dark-green tent walls, timber tables/pallet dressing and streets, with no black/unbuilt ground void. Close view preserves paving and props but much of scene is occupied by living crowd and corpses. High run is incomplete after a later bar/evaluate stall; this frame is only the actual hide phase."
+    }
+  ]
+}

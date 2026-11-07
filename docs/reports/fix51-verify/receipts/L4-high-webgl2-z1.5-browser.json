@@ -7,7 +7,7 @@
   "browserHash": "9388d0056ef51321f7a42b0d246655834460a88af205dee82674435822fa31c9",
   "errors": [],
   "observations": {
-    "scope": "L4-02/L4-03 opening qualification only; high route intentionally bounded. Other visual/route rows require their own evidence.",
+    "scope": "Scoped qualified final-b opening/war/hide evidence. Controlled collider fixture is identified by policy; no full-route G-25 claim.",
     "frozenCommit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096"
   },
   "checks": [
@@ -84,6 +84,45 @@
       },
       "target": "high>=40/low>=30; calm routines; zero infected/combat/damage; separated people and reviewed orderly reception",
       "receipt": "docs/reports/final-b/L4-02-proof.json"
+    },
+    {
+      "id": "L4-15",
+      "clause": "actual military-wall capsule solidity and bounded isometric camera family",
+      "level": "L4",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "status": "PASS",
+      "value": {
+        "native": {
+          "file": "docs/reports/final-b/L4-solids.json.gz",
+          "sha256": "c6e02ac02caf1eac54604ccea2c472959e07d0ce5cd182f97f5f15700db84025",
+          "observation": "All60 actual military barricade capsules blocked the normal production Rapier courier capsule at each quality. No colliders removed. Fixture is explicit opening-war setup; not a playthrough."
+        },
+        "cameraPitchEndpoints": [
+          36,
+          41.85015
+        ],
+        "blocked": 60,
+        "tested": 60,
+        "tier": "high"
+      },
+      "target": "Existing exact checker clause measured on frozen source; see scoped proof and limits.",
+      "receipt": "docs/reports/final-b/L4-15-proof.json"
+    },
+    {
+      "id": "L4-18",
+      "clause": "reviewed clean living plaza and readable battle courier",
+      "level": "L4",
+      "tier": "high",
+      "policy": "real-input-webgl2",
+      "status": "PASS",
+      "value": {
+        "proof": "docs/reports/final-b/L4-war-review.json",
+        "sha256": "59c79b8b78a5dc022785b6e42423ff9e6c0cbfd0f8122a08e486dbb8833050c0",
+        "taste": "huge mixed war is P; objective clean scene and courier readability personally reviewed"
+      },
+      "target": "Existing exact checker clause measured on frozen source; see scoped proof and limits.",
+      "receipt": "docs/reports/final-b/L4-war-review.json"
     }
   ]
 }
