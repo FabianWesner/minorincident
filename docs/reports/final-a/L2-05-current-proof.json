@@ -1,0 +1,118 @@
+{
+  "row": "L2-05",
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "criterion": "30 (high) / 20 (low) trapped people visibly panic behind the glass (bang/press/plead loops); first one out ≤ 1.0 s after doorsOpen.",
+  "nativeChecks": [
+    {
+      "id": "L2-05",
+      "clause": "prepared trapped civilian identities",
+      "level": "L2",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 20,
+      "target": "20 ≤ value ≤ 20",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-complete.json"
+    },
+    {
+      "id": "L2-05",
+      "clause": "first release after doors open",
+      "level": "L2",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 0,
+      "target": "0 ≤ value ≤ 1",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-complete.json"
+    },
+    {
+      "id": "L2-05",
+      "clause": "prepared trapped civilian identities",
+      "level": "L2",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 20,
+      "target": "20 ≤ value ≤ 20",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-stationary.json"
+    },
+    {
+      "id": "L2-05",
+      "clause": "first release after doors open",
+      "level": "L2",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 0,
+      "target": "0 ≤ value ≤ 1",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-stationary.json"
+    },
+    {
+      "id": "L2-05",
+      "clause": "prepared trapped civilian identities",
+      "level": "L2",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 30,
+      "target": "30 ≤ value ≤ 30",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-complete.json"
+    },
+    {
+      "id": "L2-05",
+      "clause": "first release after doors open",
+      "level": "L2",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 0,
+      "target": "0 ≤ value ≤ 1",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-complete.json"
+    },
+    {
+      "id": "L2-05",
+      "clause": "prepared trapped civilian identities",
+      "level": "L2",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 30,
+      "target": "30 ≤ value ≤ 30",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-stationary.json"
+    },
+    {
+      "id": "L2-05",
+      "clause": "first release after doors open",
+      "level": "L2",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 0,
+      "target": "0 ≤ value ≤ 1",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-stationary.json"
+    },
+    {
+      "id": "L2-05",
+      "clause": "first trapped civilian outside footprint",
+      "value": 0,
+      "target": "≤1s after doorsOpen; panic pixels remain open",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
+      "level": "L2"
+    },
+    {
+      "id": "L2-05",
+      "clause": "first trapped civilian outside footprint",
+      "value": 0,
+      "target": "≤1s after doorsOpen; panic pixels remain open",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
+      "level": "L2"
+    }
+  ],
+  "observation": "All36 current frames personally inspected at original resolution: WebGPU/WebGL2×low/high×three closed-door ticks, each production plus explicit camera-only close/wide inspection. Trapped crowd visibly presses/bangs/pleads, cowers and hugs behind actual glass; different arm/head poses recur across60tick samples.20low/30high identities are nonhidden, inside and exposed throughout all240 native forcing ticks; all20/30 figures drawn in each current browser cell. First whole-body exit occurs at doorsOpen itself,0.000s both qualities (<=1.0s). Seven existing broken-data controls reject incomplete/mixed/late evidence. Ordinary no-axe InputFrames, no cheats, relocation, injected actors or progression skips. Inspection scales are camera-only, not unlocked gameplay zoom claims."
+}
