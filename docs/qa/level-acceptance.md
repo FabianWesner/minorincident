@@ -139,18 +139,17 @@ Feel: "unusually safe squad → dangerous journey → increasingly alone; street
 | L3-03 | defend | combat: reachable ≥ 90 %; passive first attack ≤ 10 s (measured 3.4 s); attacks on the player ≥ 4/min (tune). | orch. | S |
 | L3-04 | defend | The police lose without the player: fallback fires by its first-of rule (60 s / 3 turned / 8 inside) also with the idle bot; ≥ 1 officer turns (same id, uniform). PO: "Ideally the Zombies will win against police when the player isn't doing anything". | E21-AC07, PO 10-12 | S |
 | L3-05 | defend | Camera pulls back ×1.5 while the attack runs and the player is in the yard (east-gate fights in frame). | l3.attack.viewScale | O |
-| L3-06 | checkpoint | Squad of 3–4 forms, follows 3–6 m (officers fire while moving, PO 2026-11-05), never teleports; size non-increasing per segment; **≥ 2 officers at the army line for the competent run, ≥ 2 of 3 seeds per tier** (PO 2026-11-07: "The police crew that should follow me has zero chance to survive"; was ≤ 2). A bite on a following officer costs 40 HP first (third bite turns him, PO 2026-11-07). Careless play still loses them: the kiting run (L3-17) arrives with ≤ 1 officer on ≥ 1 seed per tier. Every loss a bite/kill/separation. | E21-AC08/10, PO 2026-11-07 | S |
+| L3-06 | checkpoint | Squad of 3–4 forms, follows 3–6 m (officers fire while moving, PO 2026-11-05), never teleports; size non-increasing per segment; **≥ 2 officers at the army line for the competent run, ≥ 2 of 3 seeds per tier** (PO 2026-11-07: "The police crew that should follow me has zero chance to survive"; was ≤ 2). A bite on a following officer costs 40 HP first (third bite turns him, PO 2026-11-07). Careless play still loses them: the kiting run (L3-11) arrives with ≤ 1 officer on ≥ 1 seed per tier. Every loss a bite/kill/separation. | E21-AC08/10, PO 2026-11-07 | S |
 | L3-07 | checkpoint | Segment 1: the squad visibly fights (officers fire at infected and land hits; kills not required); player damage < 100 HP (never a whole life). PO 2026-11-05 dropped the ≥ 60 % officer-kill share; PO 2026-11-07 supersedes "overwhelmed is the point": the squad must have a real chance (L3-06). | E21-AC09 | S |
 | L3-08 | checkpoint | Pre-populated infected per segment **125 / 240 / 710 ±20 %** (PO 2026-11-07 "Far too many Zombies", was 250 / 625 / 1000; horde packs 2 × 60, spills 30 / 45); median live within 30 m rises from S1 to S3; live caps **140 high / 100 low** never exceeded (PO 2026-11-07, high was 200). | E21-AC12, PO 2026-11-07 | S |
 | L3-09 | checkpoint | Regular infected ≤ 4.0 m/s, sprinters ≤ 5 % (fleeing with survivors possible). | PO-orch. 10-13, l3.infected | S |
 | L3-10 | checkpoint | Forward pressure: idle 20 s behind the progress line → 25–75 infected per 10 s from 15–35 m behind, off-screen; stops when the player advances. | E21-AC13 | S |
-| L3-11 | checkpoint | combat: attacks on the player ≥ 3/min, ≤ 25/min for the competent run (tune); medkits ≥ 2 per street (≥ 7 total), newbie below 20 % HP ≤ 10 % of the time. | E21-AC14, orch. | S |
+| L3-11 | checkpoint | combat: attacks on the player ≥ 3/min, ≤ 25/min for the competent run (tune); medkits ≥ 2 per street (≥ 7 total), newbie below 20 % HP ≤ 10 % of the time. **Kiting is not a safe line** (PO 2026-11-07: "I walk and shoot backwards, so no Zombie can attack me"): a courier who runs the army route at full input while aiming and firing the handgun at the nearest infected (`tools/qa/r6-l3-kite.ts`, from the fallback to the army line) draws **≥ 5 infected windups/min** against her and **> 0 in segments 2–3**, ≥ 2 of 3 seeds per tier. The handgun never staggers or pushes back what it hits (PO 2026-11-07: "just modify the effect of the hand gun"); the retreat commit range (1.4 m) lies outside the 1.08 m melee separation ring. | E21-AC14, orch., PO 2026-11-07 | S |
 | L3-12 | checkpoint | **Marker:** ring stays at `l3-zone` (army checkpoint), no corridor steer; HUD distance is the real ~360 m distance. Route to the checkpoint readable without steering (Q-270). | Q-294, Q-277, Q-270 | S, L |
 | L3-13 | checkpoint | Raised corridor: no deck gaps or dark seams at the ramps; no infected clumps stuck between barrier rows; no body hanging on walls. | P1-113, Q-129, PO #16, Q-317 | S, O |
 | L3-14 | checkpoint | Army compound: ≥ 8 soldiers, ≥ 2 military vehicles, ≥ 2 buses with civilians; no active infected in the 5 s rest; ring visible during the camera pull-back; evacuation wait **15 s**. | E21-AC17, P1-114, PO #17 | S, O |
 | L3-15 | all | Player visible inside the 80-infected horde (silhouette/outline). | Q-318 | O |
 | L3-16 | all | Late-afternoon light, ≥ 2 smoke columns in every street frame; streets read their damage type. | E21-AC16/20 | O |
-| L3-17 | checkpoint | **Kiting is not a safe line** (PO 2026-11-07: "I walk and shoot backwards, so no Zombie can attack me"): a courier who runs the army route at full input while aiming and firing the handgun at the nearest infected (`tools/qa/r6-l3-kite.ts`, from the fallback to the army line) draws **≥ 5 infected windups/min** against her and **> 0 in segments 2–3**, ≥ 2 of 3 seeds per tier. The handgun never staggers or pushes back what it hits (PO 2026-11-07: "just modify the effect of the hand gun"); the retreat commit range (1.4 m) lies outside the 1.08 m melee separation ring. | PO 2026-11-07 | S |
 
 L3-05 uses the actual scripted attack shot: its camera radius is 1.5× the pre-attack framing while the player is in the yard.
 
@@ -369,7 +368,7 @@ Feel: "vulnerable again → rebuild the arsenal → hunted by the Mega Alpha →
 | Global | 27 |
 | L1 | 17 |
 | L2 | 16 |
-| L3 | 17 |
+| L3 | 16 |
 | L4 | 18 |
 | L5 | 14 |
 | L6 | 14 |
