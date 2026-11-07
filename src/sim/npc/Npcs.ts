@@ -23,6 +23,8 @@ export class Npcs {
   /** A failed route search is retried after a second, not every tick (l4-collapse-2: a soldier sent to a post behind a closed
    * barricade ran a 1600-expansion A* per tick, 3 ms of every L4 war tick). */
   private readonly unreachable = new Map<number, { x: number; z: number; until: number }>();
+  /** G-27: first tick of an L3 companion's current run of failed route searches. */
+  private readonly routeless = new Map<number, number>();
   constructor(readonly world: SimWorld) {
     this.civilians = new Civilians(world); this.companion = new Companion(world); this.escorts = new Escorts(world); this.traffic = new Traffic(world); }
   /** False only when the target is unreachable (no route within the steering budget). */
@@ -83,11 +85,14 @@ export class Npcs {
         // G-27 (blk-l3): an L3 corgi squeezed into a fence gate beside the Oak wreck stands on a grid cell that is
         // cut off from the street (the wreck's baked box closes the lane the courier and dog physically fit through).
         // Every route search from that pocket fails, so it stood there for the rest of the level and the army boom waited
-        // for it forever. Body-swept movement toward the courier's own trail slides it back out; the grid takes over again.
-        const trail = e.companion && this.world.missions?.def.l3 ? this.companion.trailPoint(e) : null;
+        // for it forever. After 2 s without any route, body-swept movement toward the courier's own trail slides it back
+        // out and the grid takes over again; brief transient failures keep the established stand-and-retry.
+        const pocket = !!e.companion && !!this.world.missions?.def.l3;
+        if (pocket && !(this.routeless.get(e.id)! <= tick)) this.routeless.set(e.id, tick); // first failure, or a restored earlier tick
+        const trail = pocket && tick - this.routeless.get(e.id)! >= 120 ? this.companion.trailPoint(e) : null;
         if (!trail) { this.unreachable.set(e.id, { x: target.x, z: target.z, until: tick + 60 }); return false; }
         this.waypoint.x = trail.x; this.waypoint.z = trail.z;
-      }
+      } else this.routeless.delete(e.id);
       if (failed) this.unreachable.delete(e.id);
     }
     dx = this.waypoint.x - e.transform.x; dz = this.waypoint.z - e.transform.z;
