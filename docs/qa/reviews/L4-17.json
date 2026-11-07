@@ -1,36 +1,37 @@
 {
   "row": "L4-17",
   "status": "FAIL",
-  "reviewer": "Codex/fix73-b",
-  "date": "2026-11-06",
-  "commit": "166205b9600ebef710ec16709af5e36648170bc0",
+  "reviewer": "Codex/final-b",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "sourceDigest": "e3dafe0694468ae05c6e72a1f303adf938a6c33391416d38d67a60534e2fe51b",
   "clauses": [
     {
-      "clause": "Corpse piles ≤ ~1 m, no stretched limbs; player never drawn under a corpse.",
+      "clause": "Corpse piles \u2264 ~1 m, no stretched limbs; player never drawn under a corpse.",
       "verdict": "FAIL",
-      "note": "Current source d97192f688d1e72561fb49f26eb4afff8d84d9f6cc4dabfe56bd373cd1bfb0b5: L4-only spreading still FAILS L4-17. First150s war, frozen-vertex tops reach1.699m low and1.505m high; root lift peaks0.49m/0.44m. 184 renderer samples and8 personally inspected frames per tier, no browser errors. A ground-level Alpha pose itself reaches about1.48m. Courier visible in reviewed follow frames; continuous pixel depth and universal limb correctness remain unqualified."
+      "note": "FAIL height clause: transformed retained frozen corpse vertices (airborne thrown/blast bodies excluded) top2.140822m low protected full route and1.919446m high protected full route, against approximate1m pile target. Independent mortal low war-only route reaches1.703713m. Measurement subtracts local ground(body centreY-.7), not just world Y. Actual full-route heap close/wide frames personally reviewed. Alpha natural death pose can itself be about1.48m; no source change or waiver. All-pose limb stretching and universal courier occlusion are not promoted PASS. Repro: run current renderer complete L4 and inspect frozen vertex maximum at cellar entry."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix73-b/L4-17-render-review.json",
-      "sha256": "6f79ea4950bf57cff56d452b35274477abc0ea33dc7e6b8058a9e955de9ed0af",
-      "what": "Current source d97192f688d1e72561fb49f26eb4afff8d84d9f6cc4dabfe56bd373cd1bfb0b5: L4-only spreading still FAILS L4-17. First150s war, frozen-vertex tops reach1.699m low and1.505m high; root lift peaks0.49m/0.44m. 184 renderer samples and8 personally inspected frames per tier, no browser errors. A ground-level Alpha pose itself reaches about1.48m. Courier visible in reviewed follow frames; continuous pixel depth and universal limb correctness remain unqualified."
+      "file": "docs/reports/final-b/L4-17-proof.json",
+      "sha256": "41e87a7c971522c8e492f39a0ae30340f3d6ddced3dfd77143bddd6ff26c0fdc",
+      "what": "FAIL height clause: transformed retained frozen corpse vertices (airborne thrown/blast bodies excluded) top2.140822m low protected full route and1.919446m high protected full route, against approximate1m pile target. Independent mortal low war-only route reaches1.703713m. Measurement subtracts local ground(body centreY-.7), not just world Y. Actual full-route heap close/wide frames personally reviewed. Alpha natural death pose can itself be about1.48m; no source change or waiver. All-pose limb stretching and universal courier occlusion are not promoted PASS. Repro: run current renderer complete L4 and inspect frozen vertex maximum at cellar entry."
     },
     {
-      "file": "docs/reports/fix73-b/L4-17-low-render.json.gz",
-      "sha256": "1293679be0fa11953a24195c1fa0f672a125be611d5596cb1506de85cc8e9dd8",
-      "what": "Current-source production renderer samples, actual batch identities and frozen vertex measurements through first150s war."
+      "file": "docs/reports/final-b/corpses-final-low-receipt.json.gz",
+      "sha256": "b1f3835b453826c7353664432fd87b5bdabc456c5b3f67537b5ba78c00da44a0",
+      "what": "FAIL height clause: transformed retained frozen corpse vertices (airborne thrown/blast bodies excluded) top2.140822m low protected full route and1.919446m high protected full route, against approximate1m pile target. Independent mortal low war-only route reaches1.703713m. Measurement subtracts local ground(body centreY-.7), not just world Y. Actual full-route heap close/wide frames personally reviewed. Alpha natural death pose can itself be about1.48m; no source change or waiver. All-pose limb stretching and universal courier occlusion are not promoted PASS. Repro: run current renderer complete L4 and inspect frozen vertex maximum at cellar entry."
     },
     {
-      "file": "docs/reports/fix73-b/L4-17-high-render.json.gz",
-      "sha256": "895cfac7492e6737ef5320f2d3ec108780eefffe7c22cec41e1165cc22e9296e",
-      "what": "Current-source production renderer samples, actual batch identities and frozen vertex measurements through first150s war."
+      "file": "docs/reports/final-b/corpses-final-low-full-receipt.json.gz",
+      "sha256": "60e598c1ca27cc94ba7dfd15427d4d2d1c7896c7dd31df5f5ddafa14083a196c",
+      "what": "FAIL height clause: transformed retained frozen corpse vertices (airborne thrown/blast bodies excluded) top2.140822m low protected full route and1.919446m high protected full route, against approximate1m pile target. Independent mortal low war-only route reaches1.703713m. Measurement subtracts local ground(body centreY-.7), not just world Y. Actual full-route heap close/wide frames personally reviewed. Alpha natural death pose can itself be about1.48m; no source change or waiver. All-pose limb stretching and universal courier occlusion are not promoted PASS. Repro: run current renderer complete L4 and inspect frozen vertex maximum at cellar entry."
     },
     {
-      "file": "docs/reports/fix73-b/L4-17-pose-diagnosis.json",
-      "sha256": "9b2f6323413507ba7ac5bafde4038ee96c987cfd178e15b64498d33ff49fe812",
-      "what": "Indexed and attribute maxima agree: Alpha-suit death-back is1.480m at root, riot side-fall1.264m, firefighter side-fall1.206m. Their highest samples have hand/foot dominant tags; heights are not unreferenced-vertex artifacts. Root-only spreading cannot close this pose issue."
+      "file": "docs/reports/final-b/corpses-final-high-receipt.json.gz",
+      "sha256": "a4a522ff959e8c2519a06488463d358fd232ecea57721b992ce502d9722ea37c",
+      "what": "FAIL height clause: transformed retained frozen corpse vertices (airborne thrown/blast bodies excluded) top2.140822m low protected full route and1.919446m high protected full route, against approximate1m pile target. Independent mortal low war-only route reaches1.703713m. Measurement subtracts local ground(body centreY-.7), not just world Y. Actual full-route heap close/wide frames personally reviewed. Alpha natural death pose can itself be about1.48m; no source change or waiver. All-pose limb stretching and universal courier occlusion are not promoted PASS. Repro: run current renderer complete L4 and inspect frozen vertex maximum at cellar entry."
     }
   ]
 }

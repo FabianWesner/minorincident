@@ -1,0 +1,378 @@
+{
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "method": "Actual instance/world transformed frozen geometry vertices; includes body scale/pose and stacking, excludes airborne corpses; ground-relative maximum.",
+  "rows": [
+    {
+      "run": "corpses-final-low",
+      "method": "Actual production complete-bot InputFrames and mortal courier from progressed L4 start, no objective advance or actor repositioning. Production renderer/corpseLayout audit after every rendered sim second. Airborne corpseBlast flights are excluded. Frozen instance geometry vertices are projected through actual instance/world matrices and compared to source feet; the layout envelope height is reported separately. Heap details move only the paused camera; the follow blend is completed before the next sim tick. courierClear is footprint telemetry, not a pixel-ordering assertion.",
+      "warOnly": true,
+      "samples": 184,
+      "maximum": {
+        "tick": 9240,
+        "phase": "war",
+        "warSeconds": 121.18333333333334,
+        "actualTier": "low",
+        "renderTier": "low",
+        "backend": "webgl",
+        "audit": {
+          "count": 175,
+          "sunkPairs": 0,
+          "heapPairs": 234,
+          "repeatedPairs": 0,
+          "maxDisplacementM": 5.500000000000002,
+          "maxLiftM": 0.43999999999999995,
+          "courierClear": false
+        },
+        "layoutEnvelopeTopM": 0.6599999999999999,
+        "maxRenderedTopM": 1.7037132501602172,
+        "frozenBodies": 172,
+        "worst": {
+          "id": 304,
+          "x": -19.60649299621582,
+          "y": 0.49000000953674316,
+          "z": -5.301366329193115,
+          "top": 1.7037132501602172,
+          "mesh": "corpses:infected.riot:death-side:0:near",
+          "vertices": 3465
+        },
+        "nearest20Looks": {
+          "count": 20,
+          "models": {
+            "infected.firefighter": 2,
+            "infected.riot": 2,
+            "infected.hazmat": 3,
+            "npc.firefighter-alive": 3,
+            "npc.civilian-man-b": 2,
+            "npc.civilian-woman-b": 1,
+            "inf.common-worker": 1,
+            "npc.civilian-woman-a": 3,
+            "npc.national-guard": 1,
+            "infected.crawler": 2
+          }
+        },
+        "renderedLookBatches": [
+          {
+            "id": "npc.civilian-woman-a",
+            "lod": "lod1",
+            "instances": 1
+          },
+          {
+            "id": "infected.runner",
+            "lod": "lod1",
+            "instances": 1
+          },
+          {
+            "id": "npc.civilian-man-b",
+            "lod": "lod2",
+            "instances": 2
+          },
+          {
+            "id": "npc.civilian-woman-b",
+            "lod": "lod1",
+            "instances": 2
+          },
+          {
+            "id": "npc.civilian-woman-b",
+            "lod": "lod2",
+            "instances": 1
+          },
+          {
+            "id": "npc.civilian-elderly",
+            "lod": "lod2",
+            "instances": 1
+          },
+          {
+            "id": "npc.firefighter-alive",
+            "lod": "lod1",
+            "instances": 4
+          },
+          {
+            "id": "inf.crawler",
+            "lod": "lod1",
+            "instances": 2
+          },
+          {
+            "id": "infected.riot",
+            "lod": "lod1",
+            "instances": 3
+          },
+          {
+            "id": "inf.firefighter",
+            "lod": "lod1",
+            "instances": 4
+          },
+          {
+            "id": "inf.hazmat",
+            "lod": "lod1",
+            "instances": 5
+          }
+        ],
+        "player": {
+          "x": -19.806884765625,
+          "y": 0.7099999785423279,
+          "z": 2.5523476600646973,
+          "yaw": 1.6272456886889768
+        },
+        "deaths": 5,
+        "descendAt": 0
+      },
+      "errors": []
+    },
+    {
+      "run": "corpses-final-low-full",
+      "method": "Actual production complete-bot InputFrames and protected courier (god=true, no mortal benchmark) from progressed L4 start, no objective advance or actor repositioning. Production renderer/corpseLayout audit after every rendered sim second. Airborne corpseBlast flights are excluded. Frozen instance geometry vertices are projected through actual instance/world matrices and compared to source feet; the layout envelope height is reported separately. Heap details move only the paused camera; the follow blend is completed before the next sim tick. courierClear is footprint telemetry, not a pixel-ordering assertion.",
+      "warOnly": false,
+      "samples": 387,
+      "maximum": {
+        "tick": 17130,
+        "phase": "collapse",
+        "warSeconds": 252.68333333333334,
+        "actualTier": "low",
+        "renderTier": "low",
+        "backend": "webgl",
+        "audit": {
+          "count": 250,
+          "sunkPairs": 0,
+          "heapPairs": 569,
+          "repeatedPairs": 0,
+          "maxDisplacementM": 5.500000000000001,
+          "maxLiftM": 0.8799999999999999,
+          "courierClear": true
+        },
+        "layoutEnvelopeTopM": 1.0999999999999999,
+        "maxRenderedTopM": 2.1408223032951357,
+        "frozenBodies": 278,
+        "worst": {
+          "id": 460,
+          "x": -19.84934425354004,
+          "y": 0.7099999785423279,
+          "z": -2.640190601348877,
+          "top": 2.1408223032951357,
+          "mesh": "corpses:inf.alpha:death-back:0",
+          "vertices": 1041
+        },
+        "nearest20Looks": {
+          "count": 20,
+          "models": {
+            "npc.firefighter-alive": 1,
+            "infected.riot": 4,
+            "infected.firefighter": 1,
+            "infected.hazmat": 1,
+            "npc.national-guard": 2,
+            "npc.civilian-man-a": 1,
+            "npc.civilian-woman-a": 2,
+            "npc.civilian-man-b": 3,
+            "npc.civilian-woman-b": 2,
+            "infected.alpha": 1,
+            "npc.civilian-elderly": 1,
+            "inf.common-worker": 1
+          }
+        },
+        "renderedLookBatches": [
+          {
+            "id": "npc.civilian-woman-b",
+            "lod": "lod1",
+            "instances": 1
+          },
+          {
+            "id": "npc.firefighter-alive",
+            "lod": "lod1",
+            "instances": 5
+          },
+          {
+            "id": "inf.crawler",
+            "lod": "lod1",
+            "instances": 5
+          },
+          {
+            "id": "infected.riot",
+            "lod": "lod1",
+            "instances": 3
+          },
+          {
+            "id": "inf.firefighter",
+            "lod": "lod1",
+            "instances": 5
+          },
+          {
+            "id": "inf.hazmat",
+            "lod": "lod2",
+            "instances": 1
+          },
+          {
+            "id": "inf.hazmat",
+            "lod": "lod1",
+            "instances": 5
+          }
+        ],
+        "player": {
+          "x": 23.61600112915039,
+          "y": 0.7049999833106995,
+          "z": -37.28388595581055,
+          "yaw": -2.889410325303132
+        },
+        "deaths": 0,
+        "descendAt": 0
+      },
+      "errors": []
+    },
+    {
+      "run": "corpses-final-high",
+      "method": "Actual production complete-bot InputFrames and protected courier (god=true, no mortal benchmark) from progressed L4 start, no objective advance or actor repositioning. Production renderer/corpseLayout audit after every rendered sim second. Airborne corpseBlast flights are excluded. Frozen instance geometry vertices are projected through actual instance/world matrices and compared to source feet; the layout envelope height is reported separately. Heap details move only the paused camera; the follow blend is completed before the next sim tick. courierClear is footprint telemetry, not a pixel-ordering assertion.",
+      "warOnly": false,
+      "samples": 306,
+      "maximum": {
+        "tick": 11760,
+        "phase": "war",
+        "warSeconds": 163.18333333333334,
+        "actualTier": "high",
+        "renderTier": "high",
+        "backend": "webgl",
+        "audit": {
+          "count": 216,
+          "sunkPairs": 0,
+          "heapPairs": 437,
+          "repeatedPairs": 0,
+          "maxDisplacementM": 5.500000000000001,
+          "maxLiftM": 0.6599999999999999,
+          "courierClear": true
+        },
+        "layoutEnvelopeTopM": 0.8799999999999999,
+        "maxRenderedTopM": 1.9194463610649108,
+        "frozenBodies": 284,
+        "worst": {
+          "id": 479,
+          "x": -18.892786026000977,
+          "y": 0.7099999785423279,
+          "z": 3.2276360988616943,
+          "top": 1.9194463610649108,
+          "mesh": "corpses:infected.riot:death-side:0/-1/0",
+          "vertices": 1643
+        },
+        "nearest20Looks": {
+          "count": 20,
+          "models": {
+            "infected.firefighter": 4,
+            "infected.hazmat": 4,
+            "infected.riot": 6,
+            "npc.national-guard": 1,
+            "inf.common-worker": 1,
+            "npc.firefighter-alive": 2,
+            "infected.crawler": 1,
+            "npc.civilian-man-a": 1
+          }
+        },
+        "renderedLookBatches": [
+          {
+            "id": "infected.runner",
+            "lod": "lod1",
+            "instances": 2
+          },
+          {
+            "id": "npc.civilian-woman-a",
+            "lod": "lod1",
+            "instances": 1
+          },
+          {
+            "id": "npc.civilian-man-b",
+            "lod": "lod1",
+            "instances": 1
+          },
+          {
+            "id": "npc.civilian-man-a",
+            "lod": "lod1",
+            "instances": 2
+          },
+          {
+            "id": "npc.civilian-elderly",
+            "lod": "lod1",
+            "instances": 2
+          },
+          {
+            "id": "npc.national-guard",
+            "lod": "lod1",
+            "instances": 2
+          },
+          {
+            "id": "infected.riot",
+            "lod": "lod1",
+            "instances": 6
+          },
+          {
+            "id": "npc.firefighter-alive",
+            "lod": "lod1",
+            "instances": 4
+          },
+          {
+            "id": "inf.hazmat",
+            "lod": "lod1",
+            "instances": 8
+          },
+          {
+            "id": "inf.crawler",
+            "lod": "lod2",
+            "instances": 2
+          },
+          {
+            "id": "inf.firefighter",
+            "lod": "lod1",
+            "instances": 5
+          }
+        ],
+        "player": {
+          "x": -10.882967948913574,
+          "y": 0.7099999785423279,
+          "z": 17.197223663330078,
+          "yaw": -0.7942526504159896
+        },
+        "deaths": 0,
+        "descendAt": 0
+      },
+      "errors": []
+    }
+  ],
+  "row": "L4-17",
+  "status": "FAIL",
+  "observation": "FAIL height clause: transformed retained frozen corpse vertices (airborne thrown/blast bodies excluded) top2.140822m low protected full route and1.919446m high protected full route, against approximate1m pile target. Independent mortal low war-only route reaches1.703713m. Measurement subtracts local ground(body centreY-.7), not just world Y. Actual full-route heap close/wide frames personally reviewed. Alpha natural death pose can itself be about1.48m; no source change or waiver. All-pose limb stretching and universal courier occlusion are not promoted PASS. Repro: run current renderer complete L4 and inspect frozen vertex maximum at cellar entry.",
+  "frozenCommit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "frames": [
+    {
+      "file": "test-results/final-b/corpses-final-low-full/captures/cellar-entry-z0.5-pile.jpg",
+      "sha256": "ded923a7086c720481a97b024a4096b6d52d3f440e68fa8ad5e2949eb9daaf4e",
+      "personallyReviewed": true,
+      "observation": "Camera-only heap detail at actual cellar-entry state: layered corpse carpet and raised limbs, several large bodies and some separate living figures. Height comes from actual frozen geometry vertices, not image estimation."
+    },
+    {
+      "file": "test-results/final-b/corpses-final-low-full/captures/cellar-entry-z1.5-pile.jpg",
+      "sha256": "24cdcafd86bd0f97f09bfcdff33af3531466cacb3901aadacd45e681afbb8903",
+      "personallyReviewed": true,
+      "observation": "Camera-only heap detail at actual cellar-entry state: layered corpse carpet and raised limbs, several large bodies and some separate living figures. Height comes from actual frozen geometry vertices, not image estimation."
+    },
+    {
+      "file": "test-results/final-b/corpses-final-high/captures/cellar-entry-z0.5-pile.jpg",
+      "sha256": "2671fde2195b0d97bdd3db78a1ac2260e00e426988c32f1d3dc68611a9b6ed55",
+      "personallyReviewed": true,
+      "observation": "Camera-only heap detail at actual cellar-entry state: layered corpse carpet and raised limbs, several large bodies and some separate living figures. Height comes from actual frozen geometry vertices, not image estimation."
+    },
+    {
+      "file": "test-results/final-b/corpses-final-high/captures/cellar-entry-z1.5-pile.jpg",
+      "sha256": "b9d5ff88cbc683c96562151611d375da9f15d8ce13affcdb8fdfbbbd7fc2f1a1",
+      "personallyReviewed": true,
+      "observation": "Camera-only heap detail at actual cellar-entry state: layered corpse carpet and raised limbs, several large bodies and some separate living figures. Height comes from actual frozen geometry vertices, not image estimation."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/final-b/corpses-final-low-receipt.json.gz",
+      "sha256": "b1f3835b453826c7353664432fd87b5bdabc456c5b3f67537b5ba78c00da44a0"
+    },
+    {
+      "file": "docs/reports/final-b/corpses-final-low-full-receipt.json.gz",
+      "sha256": "60e598c1ca27cc94ba7dfd15427d4d2d1c7896c7dd31df5f5ddafa14083a196c"
+    },
+    {
+      "file": "docs/reports/final-b/corpses-final-high-receipt.json.gz",
+      "sha256": "a4a522ff959e8c2519a06488463d358fd232ecea57721b992ce502d9722ea37c"
+    }
+  ]
+}
