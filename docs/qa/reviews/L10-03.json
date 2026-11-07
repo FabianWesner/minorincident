@@ -8,7 +8,7 @@
     {
       "clause": "Concurrent local infected per region (high / low): R2 12\u201324 / 8\u201316 (+1\u20132 dogs after pickup); R3 25\u201345 / 16\u201328 (2\u20134 dogs, 1 Alpha); R4 45\u201375 / 28\u201345 (groups 10\u201320, 2\u20134 dogs, 1\u20132 Alphas); R5 55\u201385 / 35\u201355 (2\u20134 dogs, 1\u20132 Alphas); R6 80\u2013130 / 50\u201375 (groups 20\u201335, 3\u20135 dogs, 2\u20133 Alphas); R7 peak 140\u2013190 / 75\u201395.",
       "verdict": "PASS",
-      "note": "Fresh current-main low/high complete-route census: all12 region/tier windows have joint same-tick count/species witnesses; all contiguous intervals are covered and upperViolations=0. R6 low witness: tick41670, 68 infected/4 dogs/3 Alphas. R6 high: tick41790, 97/5/2. R7 witnesses: low140 and high189. Handgun pickup at tick3497; first residential dogs at4950, zero premature dog ticks. Both native final-state controls match."
+      "note": "Fresh current-main low/high complete-route census: all12 region/tier windows have joint same-tick count/species witnesses; all contiguous intervals are covered and upperViolations=0. R6 low witness: tick41670, 68 infected/4 dogs/3 Alphas. R6 high: tick41790, 97/5/2. R7 peaks: low94 and high189; same-tick lower-bound witnesses75low/140high. Handgun pickup at tick3497; first residential dogs at4950, zero premature dog ticks. Both native final-state controls match."
     }
   ],
   "evidence": [
