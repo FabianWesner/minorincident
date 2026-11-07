@@ -7,20 +7,20 @@
   "sourceDigest": "e3dafe0694468ae05c6e72a1f303adf938a6c33391416d38d67a60534e2fe51b",
   "clauses": [
     {
-      "clause": "**Horde present:** first breach into the plaza at ~45 s (level clock, ±15 s) with ≥ 60 alive at once (~74 at the PO-accepted 10-27 level) (PO 10-27 accepted level); alive in the plaza ≥ 40 from +45 s to the line break (tune). PO: \"Almost no fight action. Just two alphas, instead of the Zombie horede\".",
+      "clause": "**Horde present:** first breach into the plaza at ~45 s (level clock, \u00b115 s) with \u2265 60 alive at once (~74 at the PO-accepted 10-27 level) (PO 10-27 accepted level); alive in the plaza \u2265 40 from +45 s to the line break (tune). PO: \"Almost no fight action. Just two alphas, instead of the Zombie horede\".",
       "verdict": "PASS",
-      "note": "low/stationary: first physical breach level clock=52.71666666666667; target 30 ≤ value ≤ 60; PASS\nlow/stationary: living infected at first breach=67; target 60 ≤ value ≤ Infinity; PASS\nlow/stationary: sustained plaza living minimum after +45 s=52; target 40 ≤ value ≤ Infinity; PASS\nhigh/stationary: first physical breach level clock=52.71666666666667; target 30 ≤ value ≤ 60; PASS\nhigh/stationary: living infected at first breach=65; target 60 ≤ value ≤ Infinity; PASS\nhigh/stationary: sustained plaza living minimum after +45 s=54; target 40 ≤ value ≤ Infinity; PASS"
+      "note": "low/stationary: first physical breach level clock=52.71666666666667; target 30 \u2264 value \u2264 60; PASS\nlow/stationary: living infected at first breach=67; target 60 \u2264 value \u2264 Infinity; PASS\nlow/stationary: sustained plaza living minimum after +45 s=52; target 40 \u2264 value \u2264 Infinity; PASS\nhigh/stationary: first physical breach level clock=52.71666666666667; target 30 \u2264 value \u2264 60; PASS\nhigh/stationary: living infected at first breach=65; target 60 \u2264 value \u2264 Infinity; PASS\nhigh/stationary: sustained plaza living minimum after +45 s=54; target 40 \u2264 value \u2264 Infinity; PASS"
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix51-verify/receipts/L4-low-stationary.json",
-      "sha256": "48ed85795986fb72f3bbfcbe230ec61f4dcca5409e0407bebe0a88f97fad5917",
+      "file": "docs/reports/final-b/frozen-native/L4-low-stationary.json.gz",
+      "sha256": "e2d4bdce84e54d6f3be85edfaf70c43c13f951918092849b9fc384cc31b01f6d",
       "what": "Frozen-head native measurement: L4-06. first physical breach level clock; living infected at first breach; sustained plaza living minimum after +45 s."
     },
     {
-      "file": "docs/reports/fix51-verify/receipts/L4-high-stationary.json",
-      "sha256": "6241fac80ec6397550cb3859f6f5c506ab541a1125a65a81cf4e768a996d403e",
+      "file": "docs/reports/final-b/frozen-native/L4-high-stationary.json.gz",
+      "sha256": "a5dd8f66a6349e5193ea414161720de1687c4b8effa589e0bf54d90e884971cc",
       "what": "Frozen-head native measurement: L4-06. first physical breach level clock; living infected at first breach; sustained plaza living minimum after +45 s."
     }
   ],

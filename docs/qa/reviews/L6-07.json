@@ -7,20 +7,20 @@
   "sourceDigest": "7fd8f0ebc3d3fcb362d200567b5da5e2e4f5bea018074dcf4fbbfccc06fdf698",
   "clauses": [
     {
-      "clause": "combat: attacks on player + group ≥ 4/min across the retreat (tune); competent damage taken ≥ 30 HP (tune); concurrent infected ≤ 60 / 30.",
+      "clause": "combat: attacks on player + group \u2265 4/min across the retreat (tune); competent damage taken \u2265 30 HP (tune); concurrent infected \u2264 60 / 30.",
       "verdict": "PASS",
-      "note": "low/complete: ordinary retreat route completion=\"complete\"; target complete; PASS\nlow/complete: retreat player/group windups per minute=19.67466083713753; target 4 ≤ value ≤ Infinity; PASS\nlow/complete: actual HP lost during retreat=170; target 30 ≤ value ≤ Infinity; PASS\nlow/complete: retreat concurrent infected cap=17; target 0 ≤ value ≤ 30; PASS\nhigh/complete: ordinary retreat route completion=\"complete\"; target complete; PASS\nhigh/complete: retreat player/group windups per minute=19.67466083713753; target 4 ≤ value ≤ Infinity; PASS\nhigh/complete: actual HP lost during retreat=170; target 30 ≤ value ≤ Infinity; PASS\nhigh/complete: retreat concurrent infected cap=17; target 0 ≤ value ≤ 60; PASS"
+      "note": "low/complete: ordinary retreat route completion=\"complete\"; target complete; PASS\nlow/complete: retreat player/group windups per minute=19.67466083713753; target 4 \u2264 value \u2264 Infinity; PASS\nlow/complete: actual HP lost during retreat=170; target 30 \u2264 value \u2264 Infinity; PASS\nlow/complete: retreat concurrent infected cap=17; target 0 \u2264 value \u2264 30; PASS\nhigh/complete: ordinary retreat route completion=\"complete\"; target complete; PASS\nhigh/complete: retreat player/group windups per minute=19.67466083713753; target 4 \u2264 value \u2264 Infinity; PASS\nhigh/complete: actual HP lost during retreat=170; target 30 \u2264 value \u2264 Infinity; PASS\nhigh/complete: retreat concurrent infected cap=17; target 0 \u2264 value \u2264 60; PASS"
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix51-verify/receipts/L6-low-complete.json",
-      "sha256": "1738e4367ff91c85628def0a295f43af332f06b92eeae51bd7976852a4a9216d",
+      "file": "docs/reports/final-b/frozen-native/L6-low-complete.json.gz",
+      "sha256": "c89ff203c3573506a8fcf6d8c32509e3b6bb7abc163af2853e912f77ac3d3d70",
       "what": "Frozen-head native measurement: L6-07. ordinary retreat route completion; retreat player/group windups per minute; actual HP lost during retreat; retreat concurrent infected cap."
     },
     {
-      "file": "docs/reports/fix51-verify/receipts/L6-high-complete.json",
-      "sha256": "b032f059424a54ead73b9e68c1d63d0ce659e63a7cb2968fd2034658f38acc10",
+      "file": "docs/reports/final-b/frozen-native/L6-high-complete.json.gz",
+      "sha256": "7e64ae00d4c1c0a788c932a232a05eb870297346ed6de4d1e63d134c22452e81",
       "what": "Frozen-head native measurement: L6-07. ordinary retreat route completion; retreat player/group windups per minute; actual HP lost during retreat; retreat concurrent infected cap."
     }
   ],

@@ -6,16 +6,16 @@
   "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
   "clauses": [
     {
-      "clause": "Only the player (+ corgi) enters; door barred in 1.0 s; battle audible above ≥ 6 s (low-pass); L5 loads in the same basement.",
+      "clause": "Only the player (+ corgi) enters; door barred in 1.0 s; battle audible above \u2265 6 s (low-pass); L5 loads in the same basement.",
       "verdict": "PASS",
-      "note": "Both tiers only courier/corgi in cellar; native full uninterrupted bar60ticks. Actual decoded RMS≥.001 filtered battle spans6.8667s low,6.8833/6.7s high at zoom1.5/0.5, maximum750Hz; onset≤.067s and gaps≤.984s. L5 loads same basement within1m. Low full physical completion; high source-matched actual reached-brace Resume plus physical E continuation. Six frames personally reviewed, both tiers/zooms; saved1tick retained and not misrepresented as a full physical60tick bar."
+      "note": "Both tiers only courier/corgi in cellar; native full uninterrupted bar60ticks. Actual decoded RMS\u2265.001 filtered battle spans6.8667s low,6.8833/6.7s high at zoom1.5/0.5, maximum750Hz; onset\u2264.067s and gaps\u2264.984s. L5 loads same basement within1m. Low full physical completion; high source-matched actual reached-brace Resume plus physical E continuation. Six frames personally reviewed, both tiers/zooms; saved1tick retained and not misrepresented as a full physical60tick bar."
     }
   ],
   "evidence": [
     {
       "file": "docs/reports/final-b/L4-16-proof.json",
-      "sha256": "7d637f94cb13e7f19305dae14f864874fc602cd6f6818ff5cfd2db402104d718",
-      "what": "Both tiers only courier/corgi in cellar; native full uninterrupted bar60ticks. Actual decoded RMS≥.001 filtered battle spans6.8667s low,6.8833/6.7s high at zoom1.5/0.5, maximum750Hz; onset≤.067s and gaps≤.984s. L5 loads same basement within1m. Low full physical completion; high source-matched actual reached-brace Resume plus physical E continuation. Six frames personally reviewed, both tiers/zooms; saved1tick retained and not misrepresented as a full physical60tick bar."
+      "sha256": "9def0d0e69115651418be4e138b96bfcf22e21712f12512e88defdc6c31e4fa7",
+      "what": "Both tiers only courier/corgi in cellar; native full uninterrupted bar60ticks. Actual decoded RMS\u2265.001 filtered battle spans6.8667s low,6.8833/6.7s high at zoom1.5/0.5, maximum750Hz; onset\u2264.067s and gaps\u2264.984s. L5 loads same basement within1m. Low full physical completion; high source-matched actual reached-brace Resume plus physical E continuation. Six frames personally reviewed, both tiers/zooms; saved1tick retained and not misrepresented as a full physical60tick bar."
     },
     {
       "file": "docs/reports/final-b/L4-low-physical.json.gz",

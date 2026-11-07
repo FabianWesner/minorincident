@@ -6,31 +6,31 @@
   "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
   "clauses": [
     {
-      "clause": "Escape gap on the route for 40 s, pursuers still chase; collapse waves 3 every 9 s; competent run meets ≥ 10 infected on the route (tune), never an empty street. PO: \"The entire level is without zombies\".",
+      "clause": "Escape gap on the route for 40 s, pursuers still chase; collapse waves 3 every 9 s; competent run meets \u2265 10 infected on the route (tune), never an empty street. PO: \"The entire level is without zombies\".",
       "verdict": "FAIL",
-      "note": "Fresh frozen-head native collapse: low tick36109–36649 has0 total admissions in9s; high17245–17785 has1 total. Both miss even3 total every9s. Neither interval contains a death, respawn or checkpoint event; both end before actual route completion. Canonical hashes18e71cbb/86ab19e8 match. Routes have24/6 deaths, so no competent-route claim. The universal collapse-wave counterexample closes FAIL; the40s gap and>=10 competent contacts are not promoted to PASS."
+      "note": "Fresh frozen-head native collapse: low tick36109\u201336649 has0 total admissions in9s; high17245\u201317785 has1 total. Both miss even3 total every9s. Neither interval contains a death, respawn or checkpoint event; both end before actual route completion. Canonical hashes18e71cbb/86ab19e8 match. Routes have24/6 deaths, so no competent-route claim. The universal collapse-wave counterexample closes FAIL; the40s gap and>=10 competent contacts are not promoted to PASS."
     }
   ],
   "evidence": [
     {
       "file": "docs/reports/final-b/L4-native.json.gz",
       "sha256": "ccc8b1981bd291bf8099489e26cb27a2ccb26664b349a2a33cc5709039832757",
-      "what": "Fresh frozen-head native collapse: low tick36109–36649 has0 total admissions in9s; high17245–17785 has1 total. Both miss even3 total every9s. Neither interval contains a death, respawn or checkpoint event; both end before actual route completion. Canonical hashes18e71cbb/86ab19e8 match. Routes have24/6 deaths, so no competent-route claim. The universal collapse-wave counterexample closes FAIL; the40s gap and>=10 competent contacts are not promoted to PASS."
+      "what": "Fresh frozen-head native collapse: low tick36109\u201336649 has0 total admissions in9s; high17245\u201317785 has1 total. Both miss even3 total every9s. Neither interval contains a death, respawn or checkpoint event; both end before actual route completion. Canonical hashes18e71cbb/86ab19e8 match. Routes have24/6 deaths, so no competent-route claim. The universal collapse-wave counterexample closes FAIL; the40s gap and>=10 competent contacts are not promoted to PASS."
     },
     {
       "file": "docs/reports/final-b/L4-13-summary.json",
       "sha256": "0844f3110cf0bc2b12a5f365b196499e1ae6e9a31bc314cdc28d334ba97d5534",
-      "what": "Fresh frozen-head native collapse: low tick36109–36649 has0 total admissions in9s; high17245–17785 has1 total. Both miss even3 total every9s. Neither interval contains a death, respawn or checkpoint event; both end before actual route completion. Canonical hashes18e71cbb/86ab19e8 match. Routes have24/6 deaths, so no competent-route claim. The universal collapse-wave counterexample closes FAIL; the40s gap and>=10 competent contacts are not promoted to PASS."
+      "what": "Fresh frozen-head native collapse: low tick36109\u201336649 has0 total admissions in9s; high17245\u201317785 has1 total. Both miss even3 total every9s. Neither interval contains a death, respawn or checkpoint event; both end before actual route completion. Canonical hashes18e71cbb/86ab19e8 match. Routes have24/6 deaths, so no competent-route claim. The universal collapse-wave counterexample closes FAIL; the40s gap and>=10 competent contacts are not promoted to PASS."
     },
     {
-      "file": "docs/reports/fix51-verify/receipts/L4-low-complete.json",
-      "sha256": "926dc23d5d84b06429fd944df09e7c1f37665084591c3621e4f404411c9fa12e",
-      "what": "Fresh frozen-head native collapse: low tick36109–36649 has0 total admissions in9s; high17245–17785 has1 total. Both miss even3 total every9s. Neither interval contains a death, respawn or checkpoint event; both end before actual route completion. Canonical hashes18e71cbb/86ab19e8 match. Routes have24/6 deaths, so no competent-route claim. The universal collapse-wave counterexample closes FAIL; the40s gap and>=10 competent contacts are not promoted to PASS."
+      "file": "docs/reports/final-b/frozen-native/L4-low-complete.json.gz",
+      "sha256": "6642d7eade70ff99a19f9595b8eae175b316feb99bc9ec8764233a43599528c7",
+      "what": "Fresh frozen-head native collapse: low tick36109\u201336649 has0 total admissions in9s; high17245\u201317785 has1 total. Both miss even3 total every9s. Neither interval contains a death, respawn or checkpoint event; both end before actual route completion. Canonical hashes18e71cbb/86ab19e8 match. Routes have24/6 deaths, so no competent-route claim. The universal collapse-wave counterexample closes FAIL; the40s gap and>=10 competent contacts are not promoted to PASS."
     },
     {
-      "file": "docs/reports/fix51-verify/receipts/L4-high-complete.json",
-      "sha256": "2165e1d8528b8e40fc594234a6f6c33fb950c4aa00ba825e7b38893c475692a2",
-      "what": "Fresh frozen-head native collapse: low tick36109–36649 has0 total admissions in9s; high17245–17785 has1 total. Both miss even3 total every9s. Neither interval contains a death, respawn or checkpoint event; both end before actual route completion. Canonical hashes18e71cbb/86ab19e8 match. Routes have24/6 deaths, so no competent-route claim. The universal collapse-wave counterexample closes FAIL; the40s gap and>=10 competent contacts are not promoted to PASS."
+      "file": "docs/reports/final-b/frozen-native/L4-high-complete.json.gz",
+      "sha256": "677631ad29ee5d560f110ab3b9a5e3537ddbe88135a2ad96162eabfdcaca25a6",
+      "what": "Fresh frozen-head native collapse: low tick36109\u201336649 has0 total admissions in9s; high17245\u201317785 has1 total. Both miss even3 total every9s. Neither interval contains a death, respawn or checkpoint event; both end before actual route completion. Canonical hashes18e71cbb/86ab19e8 match. Routes have24/6 deaths, so no competent-route claim. The universal collapse-wave counterexample closes FAIL; the40s gap and>=10 competent contacts are not promoted to PASS."
     }
   ],
   "sourceDigest": "e3dafe0694468ae05c6e72a1f303adf938a6c33391416d38d67a60534e2fe51b"
