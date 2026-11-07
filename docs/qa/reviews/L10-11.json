@@ -6,18 +6,23 @@
   "commit": "50be7c824705fc3cdbb3a7ab7dd78f72c7bf2001",
   "clauses": [
     {
-      "clause": "Assault: infected at the capped peak (140\u2013190 / 75\u201395), reachable \u2265 90 %, attacks on player \u2265 8/min (tune); Mega reaches the arena ~140 s after activation (orchestrator 2026-11-04: \"~140 s\" = 120\u2013160 s, by walking; no relocation).",
+      "clause": "Assault: infected at the capped peak (140–190 / 75–95), reachable ≥ 90 %, attacks on player ≥ 8/min (tune); Mega reaches the arena ~140 s after activation (orchestrator 2026-11-04: \"~140 s\" = 120–160 s, by walking; no relocation).",
       "verdict": "PASS",
-      "note": "Fresh 240s native stationary holds at current main. Low/high peak alive counts are95/190; arena arrivals are144.3333s/134.6s after activation, within120\u2013160s. Hold reachability minimum100% for both tiers; actual player attacks/min 977.2666 low and1240.3846 high. Each held one persistent Mega ID with zero scheduled relocations; both final hashes match canonical controls."
+      "note": "Fresh native both-tier complete routes and240s stationary holds. Complete hold:83/240 actual player windups over62.3667s/63.9667s =79.8503/225.1172 per minute,100% bounded-path reachability. Full240s stationary windows: peak95/190, player attacks/min789.7398/479.7111, reachability100%; charge-step-only rates977.2666/1240.3846 are separate62.3167s/62.4s intervals. Mega walks into the25m arena144.3333s/134.6s after activation (120–160s); persistent IDs119/122, zero scheduled relocations or movement discontinuities. Final-state controls match. Repro: node --import tsx/esm tools/qa/accept/l10-hold-r10.ts and npm run qa:accept -- --level L10 --skip-browser --reuse."
     }
   ],
   "evidence": [
     {
       "file": "test-results/rr-b/L10-11-hold-proof.json",
       "sha256": "8d62755602ef90a839a4f98630d5a5937dc8276252e4edea11e3e4efb2b5f209",
-      "what": "Fresh current-main 240-second native stationary L10 hold measurements, both tiers, including arena arrival, peak count, minimum bounded-path reachability, attack rates, Mega identity/relocation, and control comparison."
+      "what": "Fresh native both-tier complete routes and240s stationary holds. Complete hold:83/240 actual player windups over62.3667s/63.9667s =79.8503/225.1172 per minute,100% bounded-path reachability. Full240s stationary windows: peak95/190, player attacks/min789.7398/479.7111, reachability100%; charge-step-only rates977.2666/1240.3846 are separate62.3167s/62.4s intervals. Mega walks into the25m arena144.3333s/134.6s after activation (120–160s); persistent IDs119/122, zero scheduled relocations or movement discontinuities. Final-state controls match. Repro: node --import tsx/esm tools/qa/accept/l10-hold-r10.ts and npm run qa:accept -- --level L10 --skip-browser --reuse."
+    },
+    {
+      "file": "test-results/rr-b/L10-11-native.json",
+      "sha256": "1e5ac4d2cf701193659a82237236251f55bf9e64c716de6786478ea81e878eb7",
+      "what": "Fresh native both-tier complete routes and240s stationary holds. Complete hold:83/240 actual player windups over62.3667s/63.9667s =79.8503/225.1172 per minute,100% bounded-path reachability. Full240s stationary windows: peak95/190, player attacks/min789.7398/479.7111, reachability100%; charge-step-only rates977.2666/1240.3846 are separate62.3167s/62.4s intervals. Mega walks into the25m arena144.3333s/134.6s after activation (120–160s); persistent IDs119/122, zero scheduled relocations or movement discontinuities. Final-state controls match. Repro: node --import tsx/esm tools/qa/accept/l10-hold-r10.ts and npm run qa:accept -- --level L10 --skip-browser --reuse."
     }
   ],
-  "notes": "Fresh native hold review; no visual or separate quiet-timing claim.",
+  "notes": "All native numeric clauses covered at both tiers; full-window attack rates are distinguished from the charge-step interval. No separate visual or quiet frame-timing claim.",
   "sourceDigest": "89835f1411d3d5c94780d7691b5f1da661c8a3d075a660de04ee885d616475af"
 }
