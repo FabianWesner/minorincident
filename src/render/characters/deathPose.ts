@@ -86,7 +86,7 @@ export function repairDeathPoses(clip: CrowdClip, geometry?: BufferGeometry, opt
   for (const death of deaths) {
     const first = names.indexOf(death) * framesPerClip, last = first + framesPerClip - 1, lie = lying(death, prone);
     // Lay the rest pose on the floor, then find how far its lowest real vertex is from y = 0.
-  const lay = (tilts: number[], pitch = 0) => {
+  const lay = (tilts: number[], pitch = 0, exact = false) => {
     const lifted = rest.map(w => w ? lie.clone().multiply(w) : null);
     const reach: number[] = [], heights: number[] = [];
     // Turn each limb as one rigid unit about its root joint so its mesh axis (root joint to the centre of its vertices) lies flat.
@@ -125,7 +125,7 @@ export function repairDeathPoses(clip: CrowdClip, geometry?: BufferGeometry, opt
       const scratch = { matrices: new Float32Array(P * 16), binds: clip.binds, parts: clip.parts, frames: 1, duration: 0 } as unknown as CrowdClip;
       lifted.forEach((w, p) => (w ?? new Matrix4().fromArray(m, last * P * 16 + p * 16)).toArray(scratch.matrices as unknown as number[], p * 16));
       premultiplyRow(scratch.matrices, poseRows, clip.binds!, 0, P, 0);
-      let low = Infinity, high = -Infinity; const step = Math.max(1, Math.floor(position.count / 8000));
+      let low = Infinity, high = -Infinity; const step = exact ? 1 : Math.max(1, Math.floor(position.count / 2500));
       for (let i = 0; i < position.count; i += step) {
         const z = packed ? parts!.getZ(i) : emissive?.getX(i) ?? 0, w = packed ? parts!.getW(i) : vein?.getX(i) ?? 0;
         if (z > 1.5 || w >= 1024) continue;
@@ -142,15 +142,16 @@ export function repairDeathPoses(clip: CrowdClip, geometry?: BufferGeometry, opt
   const settle = (pitch: number) => {
     const flat = lay([], pitch);
     const tilts = flat.reach.map((length, k) => length > 0 ? Math.asin(Math.max(0, Math.min(.85, (flat.heights[k] + flat.drop - .15 * length) / length))) : 0);
-    return geometry ? lay(tilts, pitch) : flat;
+    return { ...(geometry ? lay(tilts, pitch) : flat), tilts, pitch };
   };
   let best = settle(0);
-  if (geometry) for (const degrees of [8, 16, 24, 32, 40, 48, 56]) {
+  if (geometry) for (const degrees of [10, 20, 30, 40, 50]) {
     if (best.extent < .9) break;
     const tried = settle(degrees * Math.PI / 180);
     if (tried.extent < best.extent - .01) best = tried;
   }
-  const { lifted, drop } = best;
+  // The search samples ~2500 vertices; the floor itself is fitted on every vertex of the chosen pose.
+  const { lifted, drop } = geometry ? lay(best.tilts, best.pitch, true) : best;
     for (let frame = first; frame <= last; frame++) {
       const s = deathWeight(frame, first);
       if (s < 1e-3) continue;
