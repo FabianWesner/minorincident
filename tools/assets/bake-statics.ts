@@ -29,8 +29,8 @@ for (const district of ['D-GROVE', 'D-CORRIDOR']) {
 }
 for (const id of [...ids].sort()) {
   if (selected.size && !selected.has(id)) continue;
-  // Animated gun sockets and the diner's generated canvas sign stay on the source path.
-  if (id === 'prop.hmg-nest' || id === 'bld.joes-diner') continue;
+  // Gun sockets, canvas artwork and the coach's transparent glazing stay on the source path.
+  if (id === 'prop.hmg-nest' || id === 'bld.joes-diner' || id === 'veh.evac-bus') continue;
   const lighting = new Lighting(new Scene()), materials = new Materials(lighting), registry = new DistrictAssets(materials, undefined, staticSource);
   try {
     const manifest = JSON.parse(readFileSync('src/assets/manifest.json', 'utf8'));

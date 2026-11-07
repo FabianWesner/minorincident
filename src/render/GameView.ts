@@ -304,7 +304,7 @@ export class GameView implements Lifecycle {
     if (this.vehicles) this.scene.add(this.vehicles);
     if (this.bicycle) this.scene.add(this.bicycle);
     if (this.world.scenario === 'L2' && this.materials) { this.l2Props = new L2Props(this.world, this.materials); this.scene.add(this.l2Props); }
-    if (this.world.scenario === 'L3' && this.materials) { this.l3Props = new L3Props(this.world, this.materials); this.scene.add(this.l3Props); }
+    if (this.world.scenario === 'L3' && this.materials) { this.l3Props = new L3Props(this.world, this.materials); await this.l3Props.load(); this.scene.add(this.l3Props); }
     t = loadMeasure('view:actors', t);
     if (this.world.combat && this.materials) this.createVfx(this.materials);
     if (this.world.scenario === 'drive-course') this.postFx = new PostFx(this.renderer, this.scene, this.camera, this.quality, this.look);

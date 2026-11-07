@@ -3,6 +3,8 @@ import { l3Dressing } from '../levels/L3/layout';
 import { L3_GATES } from '../sim/missions/LevelThreeCollapse';
 import type { SimWorld } from '../sim/world/SimWorld';
 import type { Materials } from './Materials';
+import { AssetRegistry } from '../assets/registry';
+import { VehicleOccupant } from './characters/VehicleOccupant';
 
 type Box = { x: number; y: number; z: number; sx: number; sy: number; sz: number };
 /**
@@ -21,8 +23,11 @@ export class L3Props extends Group {
   private readonly turn = new Quaternion();
   private readonly bars: InstancedMesh[] = [];
   private readonly gates: InstancedMesh[] = [];
-  constructor(private readonly world: SimWorld, materials: Materials) {
+  private readonly registry: AssetRegistry;
+  private readonly passengers: VehicleOccupant[] = [];
+  constructor(private readonly world: SimWorld, private readonly materials: Materials) {
     super(); this.name = 'l3-props';
+    this.registry = new AssetRegistry(() => {}, { materials });
     const instanced = (material: MeshBasicNodeMaterial | ReturnType<Materials['get']>, boxes: Box[]) => {
       const mesh = new InstancedMesh(this.box, material, Math.max(1, boxes.length)); mesh.count = boxes.length; mesh.frustumCulled = false;
       boxes.forEach((b, i) => { this.m4.compose(this.at.set(b.x, b.y, b.z), this.turn.identity(), this.scaleV.set(b.sx, b.sy, b.sz)); mesh.setMatrixAt(i, this.m4); });
@@ -69,6 +74,19 @@ export class L3Props extends Group {
     this.gates.push(instanced(materials.get('picketWhite'), white), instanced(this.red, stripes));
     this.update();
   }
+  /** Static checkpoint passengers reuse the transport's seated civilian rigs. */
+  async load(): Promise<void> {
+    const models = ['npc.civilian-man-a', 'npc.civilian-woman-b', 'npc.civilian-elderly'];
+    await Promise.all(l3Dressing.filter(d => d.assetId === 'veh.evac-bus').map(async (d, busIndex) => {
+      const bus = new Group(); bus.name = `l3-bus-passengers-${busIndex}`;
+      bus.position.set(d.x, 0, d.z); bus.rotation.y = d.yaw ?? 0; this.add(bus);
+      await Promise.all([-2.4, -.6, 1.25].flatMap((x, row) => [-.94, .94].map(async (z, side) => {
+        const seat = new Group(); seat.position.set(x, 1.65, z); bus.add(seat);
+        const passenger = await VehicleOccupant.load(this.registry, -1 - busIndex * 6 - row * 2 - side, models[(row + side + busIndex) % models.length], this.materials);
+        bus.add(passenger); passenger.pose(seat, undefined, .85); this.passengers.push(passenger);
+      })));
+    }));
+  }
   update(): void {
     const s = this.world.missions?.state.l3, tick = this.world.tick;
     // Light bars alternate red and blue every quarter second.
@@ -76,5 +94,5 @@ export class L3Props extends Group {
     this.bars[0].visible = phase === 0; this.bars[1].visible = phase === 1;
     for (const g of this.gates) g.visible = !!s?.gatesClosedAt;
   }
-  dispose(): void { this.box.dispose(); this.red.dispose(); this.blue.dispose(); this.detourGeometry.dispose(); }
+  dispose(): void { for (const passenger of this.passengers) passenger.dispose(); this.registry.dispose(); this.box.dispose(); this.red.dispose(); this.blue.dispose(); this.detourGeometry.dispose(); }
 }
