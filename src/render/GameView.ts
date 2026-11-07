@@ -366,6 +366,9 @@ export class GameView implements Lifecycle {
     const finish = (): void => {
       loadMeasure('view:warm-up', t);
       this.scenePrepared = true;
+      // Camera/paused-step LOD requests can precede the deferred five-second
+      // stream. Prepare their GPU buffers before any replacement becomes visible.
+      for (const view of this.preparedDistrictViews.values()) view.warmHero = batch => this.warmHidden(batch);
       if (this.probes) this.probes.idPass = this.params.get('idpass') === '1';
       this.update(1);
       this.missionUI?.prepare();
@@ -607,7 +610,7 @@ export class GameView implements Lifecycle {
       this.npcs?.startStreaming();
       this.crowd?.startStreaming();
       if (!pending) return;
-      for (const view of this.preparedDistrictViews.values()) { view.warmHero = batch => this.warmHidden(batch); view.swapSlot = () => this.swapSlot(); }
+      for (const view of this.preparedDistrictViews.values()) view.swapSlot = () => this.swapSlot();
       const start = performance.now();
       // The decay variants follow: their swap at an objective transition then finds LOD0 batches ready.
       for (const view of [current, ...[...this.preparedDistrictViews.values()].filter(view => view !== current)]) { await view.prepare(this.view.cameraTarget, stale, this.world.scenario === 'L7' ? lodPolicy.lod2From : Infinity); if (stale()) break; }
