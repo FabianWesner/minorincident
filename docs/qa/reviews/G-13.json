@@ -6,16 +6,16 @@
   "commit": "50be7c824705fc3cdbb3a7ab7dd78f72c7bf2001",
   "clauses": [
     {
-      "clause": "**No single follower is slower than the group.** While the group moves, every follower's median speed \u2265 0.95\u00d7 the group median (tune); time the player stands waiting for one follower > 10 m behind \u2264 10 % of escort time (tune). PO: \"let me stay with the crowd for suvivor.\"",
+      "clause": "**No single follower is slower than the group.** While the group moves, every follower's median speed ≥ 0.95× the group median (tune); time the player stands waiting for one follower > 10 m behind ≤ 10 % of escort time (tune). PO: \"let me stay with the crowd for suvivor.\"",
       "verdict": "FAIL",
-      "note": "Fresh all-level native acceptance on current main finds a binding L1 low/high counterexample: escort time6095/6090 ticks; player waits with a follower>10m behind for1003 ticks in each tier, 16.4561%/16.4696% (>10%). One violation is sufficient for the global row to FAIL. Other completed levels were also run; unavailable rows are not treated as passes."
+      "note": "Fresh all-level native acceptance on current main finds a binding L1 low/high counterexample: escort time6095/6090 ticks; player waits with a follower>10m behind for1003 ticks in each tier, 16.4561%/16.4696% (>10%). One violation is sufficient for the global row to FAIL. Other completed levels were also run; unavailable rows are not treated as passes. Repro: npm run qa:accept -- --level L1 --skip-browser; seed1, complete policy, both tiers; inspect G-13 stationary far-follower waiting fractions."
     }
   ],
   "evidence": [
     {
       "file": "test-results/rr-b/G-13-native-L1.json",
       "sha256": "a4d94b22a86ac1821d26eb6374133596d1b167d12dfc7370ea635c03e11ffdbf",
-      "what": "Fresh current-main native L1 low/high G-13 check values and source identity; both waiting fractions exceed the 10% ceiling."
+      "what": "Fresh all-level native acceptance on current main finds a binding L1 low/high counterexample: escort time6095/6090 ticks; player waits with a follower>10m behind for1003 ticks in each tier, 16.4561%/16.4696% (>10%). One violation is sufficient for the global row to FAIL. Other completed levels were also run; unavailable rows are not treated as passes. Repro: npm run qa:accept -- --level L1 --skip-browser; seed1, complete policy, both tiers; inspect G-13 stationary far-follower waiting fractions."
     }
   ],
   "notes": "Fresh measured FAIL. No P status; this is a numeric criterion failure.",
