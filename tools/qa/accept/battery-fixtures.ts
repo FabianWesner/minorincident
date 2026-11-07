@@ -2,7 +2,7 @@ import { armyLineVerdict } from '../threat/l3ArmyLine';
 import { l3SeedVerdict } from '../threat/l3SeedVote';
 import { loadL2, runL2 } from '../../sim-runner/l2Bots';
 import { loadL3, runL3 } from '../../sim-runner/l3Bots';
-import { l3, l3Street } from '../../../src/data/l3';
+import { l3, l3Street, l3WaveCount } from '../../../src/data/l3';
 import { l3CourierFight } from '../../../src/sim/missions/LevelThreeCollapse';
 import type { RunnerLevel } from '../../sim-runner/levels';
 import type { Tier } from './probe';
@@ -193,7 +193,7 @@ export async function batteryFixtures(level: RunnerLevel, tier: Tier, add: Add, 
         const report = runL3(world, mission, profile, { maxSeconds: profile === 'idle' ? 110 : 600, god: false });
         observations[`L3/${profile}`] = { protected: false, medkits, report };
         if (profile === 'complete') {
-          const expected = tier === 'low' ? [15, 30, 50] : [30, 60, 100];
+          const expected = [0, 1, 2].map(wave => l3WaveCount(wave, tier === 'low'));
           const waveCensus = expected.map((total, wave) => {
             const admitted = waveAdmissions.filter(entry => entry.wave === wave);
             const byDirection = Object.fromEntries(['river', 'blvd', 'oak', 'commerce', 'station'].map(dir => [dir, admitted.filter(entry => entry.dir === dir).length]));
