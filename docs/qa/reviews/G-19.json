@@ -46,8 +46,13 @@
       "file": "docs/reports/final-g/L9-low-captures.json",
       "sha256": "001878974f036ce58adadc854bb5f4485ab1870e78138a674f4e76fae273cbbc",
       "what": "Native all40 low/high complete/stationary cells: 778367 samples,0 targeted windups,0 hits,min health fraction1. Rendered physical 425 dog samples across17 archives:0dogHPbars,minhealth1;34 intentionally hidden passenger samples. Both-tier closure/fence/wreck fixtures reviewed; actual L8 boarding→L9 transport and low L9 crash→L10 safe-dog handover reviewed. No visible geometry/hull penetration established. Low L3distantdog remains a G27babysitting FAIL; closure correctly waits. Rejected scripted APC fixture is excluded."
+    },
+    {
+      "file": "docs/reports/final-g/G-19-L10-static-query.json",
+      "sha256": "27deb09b6a6b9fe27f93d6877ec495c913daf7ffc277b04d0315d093f580a607",
+      "what": "Later physical low L10 dog is1200m behind, but full three-probe frozen static footprint remains clear with zero contacts>5mm; nav query blocked. This is a G27pathing failure, not a measured G19inside-geometry violation."
     }
   ],
-  "notes": "PASS applies to measured health/target/bar/clearance/closure clauses. Hidden seated passengers are intentional and do not render embedded in the hull. No new game code or geometry fixes. Earlier APC setup rejection does not qualify boarding; actual production route provides that evidence.",
+  "notes": "PASS applies to measured health/target/bar/clearance/closure clauses. Hidden seated passengers are intentional and do not render embedded in the hull. No new game code or geometry fixes. Earlier APC setup rejection does not qualify boarding; actual production route provides that evidence. Later low L10 follow lag is separately recorded under G27; exact full-footprint static query remains clear despite nav blockage.",
   "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186"
 }
