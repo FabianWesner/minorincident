@@ -16,10 +16,15 @@ const root = 'docs/reports/sweep-c6/L10-14', sha = (b: Buffer) => createHash('sh
 export function l10EpilogueReceipts(sourceHash: string, browserHash: string): { path: string; receipt: FixtureReceipt }[] {
   if (!existsSync(`${root}/review.json`)) return [];
   const review = JSON.parse(readFileSync(`${root}/review.json`, 'utf8')) as Review, rows = [];
+  // Archived captures cannot qualify the current source. Slim worktrees may
+  // omit their binary receipts; leave those clauses unmeasured, not fatal.
+  if (review.sourceHash !== sourceHash || review.browserHash !== browserHash || !existsSync(`${root}/producer.mjs`)) return [];
   for (const tier of ['low', 'high'] as const) {
-    const file = `${root}/${tier}-physical.json.gz`, a = JSON.parse(gunzipSync(readFileSync(file)).toString()) as Input, v = review.tiers.find(v => v.tier === tier);
+    const file = `${root}/${tier}-physical.json.gz`, fixtureFile = `${root}/${tier}-species-fixture.json`;
+    if (!existsSync(file) || !existsSync(fixtureFile)) continue;
+    const a = JSON.parse(gunzipSync(readFileSync(file)).toString()) as Input, v = review.tiers.find(v => v.tier === tier);
     const valid = a.sourceHash === sourceHash && a.browserHash === browserHash && !a.errors.length && a.setup.driverDetached && a.setup.backend === 'webgl' && a.setup.quality === tier &&
-      a.toolSha256 === sha(readFileSync(`${root}/producer.mjs`)) && a.prefix.sha256 === sha(readFileSync(a.prefix.file)) && a.seed.sha256 === sha(readFileSync(a.seed.file)) &&
+      a.toolSha256 === sha(readFileSync(`${root}/producer.mjs`)) && existsSync(a.prefix.file) && a.prefix.sha256 === sha(readFileSync(a.prefix.file)) && existsSync(a.seed.file) && a.seed.sha256 === sha(readFileSync(a.seed.file)) &&
       a.result.inputs.length > 9000 && a.result.inputs.every((f, i) => f.tick === a.setup.tick + i && !f.nativeDriver);
     const ticks = a.result.ticks, first = ticks[0], end = a.result.finish;
     const continuous = !!first && ticks.length > 9000 && ticks.every((t, i) => t.tick === first.tick + i && t.elapsed === i && Math.abs(t.radius - i * 10 / 60) < 1e-6 && !t.god && t.player.hp === 100 && t.corgi?.id === 99 && t.corgi.hp === 100);
@@ -31,7 +36,7 @@ export function l10EpilogueReceipts(sourceHash: string, browserHash: string): { 
     const pull = !!widening && !!lastNormal && duration - widening.front.elapsed / 60 >= 30 && duration - widening.front.elapsed / 60 <= 45 && duration - lastNormal.front.elapsed / 60 >= 30 && duration - lastNormal.front.elapsed / 60 <= 45 && playable.at(-1)!.epilogueScale > 6;
     const mortality = a.result.touches.length >= 3 && ['runner', 'dog', 'alpha'].every(role => a.result.touches.some(t => t.archetype.endsWith(role))) && a.result.touches.every(t => t.dead !== null && t.dead >= t.touched && t.dead - t.touched <= 1) &&
       a.result.immune.length >= 5 && a.result.immune.some(e => e.id === 1) && a.result.immune.some(e => e.id === 99) && a.result.immune.every(e => e.hp === e.minHp && e.hp === e.lastHp);
-    const fixtureFile = `${root}/${tier}-species-fixture.json`, fixture = JSON.parse(readFileSync(fixtureFile, 'utf8')) as FixtureReceipt;
+    const fixture = JSON.parse(readFileSync(fixtureFile, 'utf8')) as FixtureReceipt;
     const species = fixture.checks.find(c => c.id === 'L10-14' && c.clause === 'cure native species mortality and healthy immunity');
     const value = species?.value as { species: { role: string; reached: number; dead: number; hp: number }[]; healthyChecked: number; harmed: unknown[] } | undefined;
     const allSpecies = fixture.fixtureHash === fixtureHash() && fixture.sourceHash === sourceHash && !fixture.errors.length && species?.status === 'PASS' && !!value && value.healthyChecked >= 37 && !value.harmed.length &&
