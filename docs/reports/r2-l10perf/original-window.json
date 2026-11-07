@@ -1,0 +1,339 @@
+{
+  "source": "docs/reports/perf8/native.json",
+  "sha256": "3be97ed0f07b72ccd5959ec6b5529195c27933f3ae9690e3bdd5a2f84a8b8708",
+  "rows": [
+    {
+      "side": "prod",
+      "nativeStartTick": 60097,
+      "hitches": [
+        {
+          "dtMs": 133.4,
+          "at": 142.09999923705982,
+          "tick": 60102,
+          "charge": 125
+        },
+        {
+          "dtMs": 216.6,
+          "at": 2541.9999992370613,
+          "tick": 60237,
+          "charge": 260
+        },
+        {
+          "dtMs": 166.7,
+          "at": 8591.79999923706,
+          "tick": 60595,
+          "charge": 618
+        }
+      ],
+      "earlyBuilds": [
+        {
+          "at": 1833.2999992370605,
+          "tick": 60202,
+          "material": "pal_picketWhite",
+          "loading": false,
+          "charge": 225
+        },
+        {
+          "at": 1899.6999998092651,
+          "tick": 60207,
+          "material": "pal_picketWhite",
+          "loading": false,
+          "charge": 230
+        },
+        {
+          "at": 2272,
+          "tick": 60228,
+          "material": "corpse_pal_picketWhite",
+          "loading": false,
+          "charge": 251
+        },
+        {
+          "at": 2280.2999992370605,
+          "tick": 60228,
+          "material": "corpse_pal_picketWhite",
+          "loading": false,
+          "charge": 251
+        },
+        {
+          "at": 2288,
+          "tick": 60228,
+          "material": "corpse_pal_picketWhite",
+          "loading": false,
+          "charge": 251
+        },
+        {
+          "at": 5306.799999237061,
+          "tick": 60402,
+          "material": "pal_picketWhite",
+          "loading": false,
+          "charge": 425
+        },
+        {
+          "at": 5341.89999961853,
+          "tick": 60403,
+          "material": "pal_picketWhite",
+          "loading": false,
+          "charge": 426
+        },
+        {
+          "at": 5380.799999237061,
+          "tick": 60404,
+          "material": "pal_picketWhite",
+          "loading": false,
+          "charge": 427
+        },
+        {
+          "at": 5461.099999427795,
+          "tick": 60411,
+          "material": "pal_picketWhite",
+          "loading": false,
+          "charge": 434
+        },
+        {
+          "at": 5520.099999427795,
+          "tick": 60415,
+          "material": "pal_picketWhite",
+          "loading": false,
+          "charge": 438
+        },
+        {
+          "at": 5587.299999237061,
+          "tick": 60419,
+          "material": "pal_picketWhite",
+          "loading": false,
+          "charge": 442
+        },
+        {
+          "at": 5624,
+          "tick": 60420,
+          "material": "pal_picketWhite",
+          "loading": false,
+          "charge": 443
+        },
+        {
+          "at": 5673.099999427795,
+          "tick": 60424,
+          "material": "pal_picketWhite",
+          "loading": false,
+          "charge": 447
+        },
+        {
+          "at": 5835.599999427795,
+          "tick": 60434,
+          "material": "pal_picketWhite",
+          "loading": false,
+          "charge": 457
+        },
+        {
+          "at": 5882.699999809265,
+          "tick": 60436,
+          "material": "pal_picketWhite",
+          "loading": false,
+          "charge": 459
+        },
+        {
+          "at": 6053.89999961853,
+          "tick": 60447,
+          "material": "pal_picketWhite",
+          "loading": false,
+          "charge": 470
+        },
+        {
+          "at": 6104.599999427795,
+          "tick": 60450,
+          "material": "pal_picketWhite",
+          "loading": false,
+          "charge": 473
+        },
+        {
+          "at": 6269.199999809265,
+          "tick": 60460,
+          "material": "pal_picketWhite",
+          "loading": false,
+          "charge": 483
+        },
+        {
+          "at": 6318.599999427795,
+          "tick": 60462,
+          "material": "pal_picketWhite",
+          "loading": false,
+          "charge": 485
+        },
+        {
+          "at": 8385.89999961853,
+          "tick": 60587,
+          "material": "corpse_pal_picketWhite",
+          "loading": false,
+          "charge": 610
+        },
+        {
+          "at": 9218.29999923706,
+          "tick": 60632,
+          "material": "corpse_pal_picketWhite",
+          "loading": false,
+          "charge": 655
+        }
+      ]
+    },
+    {
+      "side": "candidate",
+      "nativeStartTick": 60265,
+      "hitches": [
+        {
+          "dtMs": 250,
+          "at": 2501.6000005722053,
+          "tick": 60405,
+          "charge": 260
+        },
+        {
+          "dtMs": 166.6,
+          "at": 8534.700000572204,
+          "tick": 60762,
+          "charge": 617
+        }
+      ],
+      "earlyBuilds": [
+        {
+          "at": 1245,
+          "tick": 60339,
+          "material": "pal_picketWhite",
+          "loading": false,
+          "charge": 194
+        },
+        {
+          "at": 1309.9000005722046,
+          "tick": 60343,
+          "material": "pal_picketWhite",
+          "loading": false,
+          "charge": 198
+        },
+        {
+          "at": 2198.300000190735,
+          "tick": 60396,
+          "material": "corpse_pal_picketWhite",
+          "loading": false,
+          "charge": 251
+        },
+        {
+          "at": 2206.800000190735,
+          "tick": 60396,
+          "material": "corpse_pal_picketWhite",
+          "loading": false,
+          "charge": 251
+        },
+        {
+          "at": 2214.4000005722046,
+          "tick": 60396,
+          "material": "corpse_pal_picketWhite",
+          "loading": false,
+          "charge": 251
+        },
+        {
+          "at": 5295.800000190735,
+          "tick": 60572,
+          "material": "pal_picketWhite",
+          "loading": false,
+          "charge": 427
+        },
+        {
+          "at": 5331.800000190735,
+          "tick": 60573,
+          "material": "pal_picketWhite",
+          "loading": false,
+          "charge": 428
+        },
+        {
+          "at": 5372.5,
+          "tick": 60574,
+          "material": "pal_picketWhite",
+          "loading": false,
+          "charge": 429
+        },
+        {
+          "at": 5459.10000038147,
+          "tick": 60581,
+          "material": "pal_picketWhite",
+          "loading": false,
+          "charge": 436
+        },
+        {
+          "at": 5494.5,
+          "tick": 60582,
+          "material": "pal_picketWhite",
+          "loading": false,
+          "charge": 437
+        },
+        {
+          "at": 5534.900000572205,
+          "tick": 60584,
+          "material": "pal_picketWhite",
+          "loading": false,
+          "charge": 439
+        },
+        {
+          "at": 5593.10000038147,
+          "tick": 60589,
+          "material": "pal_picketWhite",
+          "loading": false,
+          "charge": 444
+        },
+        {
+          "at": 5695.10000038147,
+          "tick": 60596,
+          "material": "pal_picketWhite",
+          "loading": false,
+          "charge": 451
+        },
+        {
+          "at": 5862.300000190735,
+          "tick": 60606,
+          "material": "pal_picketWhite",
+          "loading": false,
+          "charge": 461
+        },
+        {
+          "at": 5915,
+          "tick": 60608,
+          "material": "pal_picketWhite",
+          "loading": false,
+          "charge": 463
+        },
+        {
+          "at": 6079.10000038147,
+          "tick": 60619,
+          "material": "pal_picketWhite",
+          "loading": false,
+          "charge": 474
+        },
+        {
+          "at": 6130.60000038147,
+          "tick": 60622,
+          "material": "pal_picketWhite",
+          "loading": false,
+          "charge": 477
+        },
+        {
+          "at": 6297.200000762939,
+          "tick": 60632,
+          "material": "pal_picketWhite",
+          "loading": false,
+          "charge": 487
+        },
+        {
+          "at": 6349.400000572205,
+          "tick": 60635,
+          "material": "pal_picketWhite",
+          "loading": false,
+          "charge": 490
+        },
+        {
+          "at": 8328.70000076294,
+          "tick": 60754,
+          "material": "corpse_pal_picketWhite",
+          "loading": false,
+          "charge": 609
+        }
+      ]
+    }
+  ]
+}
