@@ -1,22 +1,38 @@
 {
   "row": "L5-05",
   "status": "PASS",
-  "reviewer": "Codex/sweep-b",
-  "date": "2026-11-06",
-  "commit": "25165a0dcdb2133715aabc5ae112f9880f343777",
+  "reviewer": "Codex/final-b",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "sourceDigest": "96b95aaf00218387ac838466ba4e849719809eef34f96b67f54241001dca8a39",
   "clauses": [
     {
-      "clause": "combat: reachable \u2265 90 %; competent run meets \u2265 1 infected per 40 m of route (tune); attacks on player + group \u2265 3/min (tune); passive first attack \u2264 20 s (measured 10.8 s). PO: \"I can just walk, pick up the survivors and walk away\".",
+      "clause": "combat: reachable ≥ 90 %; competent run meets ≥ 1 infected per 40 m of route (tune); attacks on player + group ≥ 3/min (tune); passive first attack ≤ 20 s (measured 10.8 s). PO: \"I can just walk, pick up the survivors and walk away\".",
       "verdict": "PASS",
-      "note": "All objective clauses pass low/high on ordinary competent complete and passive policies: bounded-path minimum100%; unique visible living bodies within10m yield4.588/7.758 encounters per40m with continuous route-distance ledger; complete actual player windups3.166/4.188 per minute; passive first attacks0.05/0.717s. P: PO: can a competent player still just walk, pick up the survivors and walk away? Review perceived rescue pressure only. This native verdict does not settle that feel question."
+      "note": "low/complete: combat hard rule on actual player windups={\"seconds\":137.06666666666666,\"playerWindups\":10,\"groupWindups\":0,\"attacksPerMinute\":4.377431906614786}; target nonzero player windups in each combat policy; PASS\nlow/complete: real player/group windups per minute=4.377431906614786; target 3 ≤ value ≤ Infinity; PASS\nlow/complete: minimum bounded-path reachable share within30m (path≤2.5×direct)=100; target 90 ≤ value ≤ 100; PASS\nlow/complete: competent route visible infected encounters per40m=4.411796371224061; target 1 ≤ value ≤ Infinity; PASS\nlow/stationary: combat hard rule on actual player windups={\"seconds\":228.35,\"playerWindups\":762,\"groupWindups\":0,\"attacksPerMinute\":200.2189621195533}; target nonzero player windups in each combat policy; PASS\nlow/stationary: stationary first real player attack (phase clock)={\"seconds\":0.18333333333333332,\"windowSeconds\":228.35}; target ≤20 s; PASS\nlow/stationary: real player/group windups per minute=200.2189621195533; target 3 ≤ value ≤ Infinity; PASS\nlow/stationary: minimum bounded-path reachable share within30m (path≤2.5×direct)=100; target 90 ≤ value ≤ 100; PASS\nhigh/complete: combat hard rule on actual player windups={\"seconds\":154.73333333333332,\"playerWindups\":24,\"groupWindups\":1,\"attacksPerMinute\":9.306333476949591}; target nonzero player windups in each combat policy; PASS\nhigh/complete: real player/group windups per minute=9.69409737182249; target 3 ≤ value ≤ Infinity; PASS\nhigh/complete: minimum bounded-path reachable share within30m (path≤2.5×direct)=100; target 90 ≤ value ≤ 100; PASS\nhigh/complete: competent route visible infected encounters per40m=9.957612390107307; target 1 ≤ value ≤ Infinity; PASS\nhigh/stationary: combat hard rule on actual player windups={\"seconds\":228.35,\"playerWindups\":974,\"groupWindups\":0,\"attacksPerMinute\":255.92292533391722}; target nonzero player windups in each combat policy; PASS\nhigh/stationary: stationary first real player attack (phase clock)={\"seconds\":0.2,\"windowSeconds\":228.35}; target ≤20 s; PASS\nhigh/stationary: real player/group windups per minute=255.92292533391722; target 3 ≤ value ≤ Infinity; PASS\nhigh/stationary: minimum bounded-path reachable share within30m (path≤2.5×direct)=100; target 90 ≤ value ≤ 100; PASS"
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-b/rows/L5-05.json",
-      "sha256": "5af1ade260bd053787738b4c2197051af365d409205601789d35a922681fc50d",
-      "what": "All objective clauses pass low/high on ordinary competent complete and passive policies: bounded-path minimum100%; unique visible living bodies within10m yield4.588/7.758 encounters per40m with continuous route-distance ledger; complete actual player windups3.166/4.188 per minute; passive first attacks0.05/0.717s. P: PO: can a competent player still just walk, pick up the survivors and walk away? Review perceived rescue pressure only. This native verdict does not settle that feel question."
+      "file": "docs/reports/fix51-verify/receipts/L5-low-complete.json",
+      "sha256": "6c42a554721b684ec908c3e123c6e4f100ce34a71f4c7fc53b36f2c4cf1c23e9",
+      "what": "Frozen-head native measurement: L5-05. combat hard rule on actual player windups; real player/group windups per minute; minimum bounded-path reachable share within30m (path≤2.5×direct); competent route visible infected encounters per40m."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L5-low-stationary.json",
+      "sha256": "54b5206a5d28c82fedc11886ffb5426f8b51b74440b22b2ecdaf13c0e50caec2",
+      "what": "Frozen-head native measurement: L5-05. combat hard rule on actual player windups; stationary first real player attack (phase clock); real player/group windups per minute; minimum bounded-path reachable share within30m (path≤2.5×direct)."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L5-high-complete.json",
+      "sha256": "1389ebf50a192bb6914100e2446eb5719521b25b246566de76278834fc0ecab1",
+      "what": "Frozen-head native measurement: L5-05. combat hard rule on actual player windups; real player/group windups per minute; minimum bounded-path reachable share within30m (path≤2.5×direct); competent route visible infected encounters per40m."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L5-high-stationary.json",
+      "sha256": "8e6ca086967b3f9b0685fa27e7947c60d0fbe209654472c261ec2a91c23c991d",
+      "what": "Frozen-head native measurement: L5-05. combat hard rule on actual player windups; stationary first real player attack (phase clock); real player/group windups per minute; minimum bounded-path reachable share within30m (path≤2.5×direct)."
     }
   ],
-  "notes": "Current-source native measurements at both tiers. A FAIL closes the verdict through the cited counterexample; unmeasured clauses are not promoted to PASS."
+  "notes": "Fresh native measurements on the frozen source. No claim of new browser observations. L5-01 legacy diagnostic NOT CHECKED entries are redundant with the explicit pickup/regular/Alpha timing fixtures, whose full clauses pass."
 }
