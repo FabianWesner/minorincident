@@ -14,6 +14,7 @@ import { atLeast, variantPath } from "./types";
 import type { AssetQuality } from './types';
 import { dinerSign } from '../render/DinerSign';
 import { attribute } from 'three/tsl';
+import { surfaceDetail } from '../render/SurfaceDetail';
 import { anchorsFor } from '../data/placedLights';
 import { staticBatch, staticBatchAsync } from './staticBatch';
 import { buildingDoors } from '../data/buildingDoors';
@@ -249,6 +250,7 @@ export class DistrictAssets {
   /** One uncut twin per shared batch material, so every low prop of a role still shares one node build. */
   private readonly uncutMaterials = new Map<Material, PaletteMaterial>();
   private readonly deckMaterials = new Map<Material, PaletteMaterial>();
+  private highwayRoad?: PaletteMaterial;
   private deckCut(material: PaletteMaterial): PaletteMaterial {
     let twin = this.deckMaterials.get(material);
     if (!twin) { twin = material.frozenCopy().seeThrough(); twin.userData.seeThroughDeck = true; twin.name = `${material.name}:deck`; this.deckMaterials.set(material, twin); this.batchMaterials.add(twin); }
@@ -261,6 +263,19 @@ export class DistrictAssets {
   }
   private finishBatch(id: string, root: Group): Group {
     this.share(root);
+    if (id === 'kit.highway-onramp') {
+      // The joining layout slab uses Materials.world's asphalt detail. The
+      // merged ramp previously sampled only the swatch, leaving a dark wedge
+      // exactly along its tilted boundary even with all shadows disabled.
+      if (!this.highwayRoad) {
+        const index = attribute('_palette', 'float'), base = this.materials.sample(index);
+        const road = index.sub(paletteTokens.indexOf('asphalt')).abs().lessThan(.5);
+        this.highwayRoad = this.materials.shaded(road.select(surfaceDetail('asphalt', base, this.materials.look.nodes), base), undefined, undefined, undefined, road.select(1, 0));
+        this.highwayRoad.userData.worldPaletteOnly = true;
+        this.batchMaterials.add(this.highwayRoad);
+      }
+      root.traverse(node => { if (node instanceof Mesh && node.name === 'static-body') node.material = this.highwayRoad!; });
+    }
     if (id === 'bld.joes-diner') {
       // The artwork is identical at every LOD. New maps/materials per streamed
       // prototype rebuilt the same neon shader during the L3 station fight.
