@@ -1,0 +1,248 @@
+{
+  "row": "G-15",
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "cells": [
+    {
+      "tier": "low",
+      "weapon": "weapon.bat",
+      "clickDriftM": 0.0,
+      "walkFacingMaxDegrees": 176.04384061459965,
+      "postGraceFacingMaxDegrees": 0.0,
+      "attackAimMaxVectorError": 0.0,
+      "attacks": 4,
+      "moveTargets": 0
+    },
+    {
+      "tier": "low",
+      "weapon": "weapon.handgun",
+      "clickDriftM": 0.0,
+      "walkFacingMaxDegrees": 176.071346926677,
+      "postGraceFacingMaxDegrees": 0.0,
+      "attackAimMaxVectorError": 1.336885555457667e-15,
+      "attacks": 4,
+      "moveTargets": 0
+    },
+    {
+      "tier": "low",
+      "weapon": "weapon.rocket-launcher",
+      "clickDriftM": 0.0,
+      "walkFacingMaxDegrees": 176.071346926677,
+      "postGraceFacingMaxDegrees": 0.0,
+      "attackAimMaxVectorError": 1.336885555457667e-15,
+      "attacks": 4,
+      "moveTargets": 0
+    },
+    {
+      "tier": "high",
+      "weapon": "weapon.bat",
+      "clickDriftM": 0.0,
+      "walkFacingMaxDegrees": 176.04384061459965,
+      "postGraceFacingMaxDegrees": 0.0,
+      "attackAimMaxVectorError": 0.0,
+      "attacks": 4,
+      "moveTargets": 0
+    },
+    {
+      "tier": "high",
+      "weapon": "weapon.handgun",
+      "clickDriftM": 0.0,
+      "walkFacingMaxDegrees": 176.071346926677,
+      "postGraceFacingMaxDegrees": 0.0,
+      "attackAimMaxVectorError": 1.336885555457667e-15,
+      "attacks": 4,
+      "moveTargets": 0
+    },
+    {
+      "tier": "high",
+      "weapon": "weapon.rocket-launcher",
+      "clickDriftM": 0.0,
+      "walkFacingMaxDegrees": 176.071346926677,
+      "postGraceFacingMaxDegrees": 0.0,
+      "attackAimMaxVectorError": 1.336885555457667e-15,
+      "attacks": 4,
+      "moveTargets": 0
+    }
+  ],
+  "captures": [
+    {
+      "stage": "click",
+      "file": "test-results/final-g/G-15/low-weapon.bat-click.png",
+      "sha256": "f592e84f5a801ba2a562e6b2e9781877d1612606019f940ce1aa48b334153a33",
+      "seen": "Click-only leaves courier at original spot; attack effect follows the cursor."
+    },
+    {
+      "stage": "move",
+      "file": "test-results/final-g/G-15/low-weapon.bat-move.png",
+      "sha256": "e1cf813e947c3ea1638bd40a5ae68f8c9a194ad3a75114826a2f280519a21031",
+      "seen": "Courier travels along WASD bearing, with carried weapon distinct from firing pose."
+    },
+    {
+      "stage": "held",
+      "file": "test-results/final-g/G-15/low-weapon.bat-held.png",
+      "sha256": "e2cb6c5a8570e9405d0909eb524fe01bd347146f44161afe68349fb59224f1fb",
+      "seen": "Courier aims toward cursor while walking; attack effect appears on that bearing."
+    },
+    {
+      "stage": "release26",
+      "file": "test-results/final-g/G-15/low-weapon.bat-release26.png",
+      "sha256": "d108525efb4f72aa757c247a5797640fa6c7e7745c182a770ce4547c37e29608",
+      "seen": "Cursor-facing grace period still active shortly before 0.45s."
+    },
+    {
+      "stage": "release46",
+      "file": "test-results/final-g/G-15/low-weapon.bat-release46.png",
+      "sha256": "9f1fced3ea05c6d15b411b59d5772e8b9a58f5c3849180e8b80e91456f154513",
+      "seen": "Courier faces the walk direction after release grace; visual matches the walk-only pose."
+    },
+    {
+      "stage": "click",
+      "file": "test-results/final-g/G-15/low-weapon.handgun-click.png",
+      "sha256": "457cf687a986ba37eb6b6de20364ea58f55b3670190f6cd27c4d1ce51d698f73",
+      "seen": "Click-only leaves courier at original spot; attack effect follows the cursor."
+    },
+    {
+      "stage": "move",
+      "file": "test-results/final-g/G-15/low-weapon.handgun-move.png",
+      "sha256": "c6002083ad58f8f48587c3c122ccc1538a6bd240024d8d272b5604f498e514ea",
+      "seen": "Courier travels along WASD bearing, with carried weapon distinct from firing pose."
+    },
+    {
+      "stage": "held",
+      "file": "test-results/final-g/G-15/low-weapon.handgun-held.png",
+      "sha256": "df9cae18ef929c010399473f607cc59859d22c3ed315c76ab8b489ec81cc58c0",
+      "seen": "Courier aims toward cursor while walking; attack effect appears on that bearing."
+    },
+    {
+      "stage": "release26",
+      "file": "test-results/final-g/G-15/low-weapon.handgun-release26.png",
+      "sha256": "5a40b65f44663d92fadd8dd1e17929f78c164c4c251f787b21cd8f1c2a458c49",
+      "seen": "Cursor-facing grace period still active shortly before 0.45s."
+    },
+    {
+      "stage": "release46",
+      "file": "test-results/final-g/G-15/low-weapon.handgun-release46.png",
+      "sha256": "1246b9b407d245458594b8a542bdab2e537ab37d03ed28861eb5997722e7dca0",
+      "seen": "Courier faces the walk direction after release grace; visual matches the walk-only pose."
+    },
+    {
+      "stage": "click",
+      "file": "test-results/final-g/G-15/low-weapon.rocket-launcher-click.png",
+      "sha256": "914c1864e1b4dcca09f180240bc57cdd2844a9ecb7a2e26ed28075ed84ca4854",
+      "seen": "Click-only leaves courier at original spot; attack effect follows the cursor."
+    },
+    {
+      "stage": "move",
+      "file": "test-results/final-g/G-15/low-weapon.rocket-launcher-move.png",
+      "sha256": "d6d74f59451554e15fb7334dd2b91976efe05e04679996cb945b99c014163fc7",
+      "seen": "Courier travels along WASD bearing, with carried weapon distinct from firing pose."
+    },
+    {
+      "stage": "held",
+      "file": "test-results/final-g/G-15/low-weapon.rocket-launcher-held.png",
+      "sha256": "5aeb261f140c037853ce37d7ca425a49edb9de4ee46f0d914b047c8c387d64a3",
+      "seen": "Courier aims toward cursor while walking; attack effect appears on that bearing."
+    },
+    {
+      "stage": "release26",
+      "file": "test-results/final-g/G-15/low-weapon.rocket-launcher-release26.png",
+      "sha256": "794f7a109a2b6efda17fe141317dae6d0317b6f1398c608a7695a3235085b620",
+      "seen": "Cursor-facing grace period still active shortly before 0.45s."
+    },
+    {
+      "stage": "release46",
+      "file": "test-results/final-g/G-15/low-weapon.rocket-launcher-release46.png",
+      "sha256": "695f86f4e2dab78b614e5a5202c79b97075de23d27af951455f9fe51fdd1d288",
+      "seen": "Courier faces the walk direction after release grace; visual matches the walk-only pose."
+    },
+    {
+      "stage": "click",
+      "file": "test-results/final-g/G-15/high-weapon.bat-click.png",
+      "sha256": "40ba26f5ab511702c4306953e7c8896ac8bbc9f7b200243303cfe831266b328b",
+      "seen": "Click-only leaves courier at original spot; attack effect follows the cursor."
+    },
+    {
+      "stage": "move",
+      "file": "test-results/final-g/G-15/high-weapon.bat-move.png",
+      "sha256": "99acbfdd4eda65c71c47e9bbd251dea4bc169027d1143da5f3bd5b907741beb1",
+      "seen": "Courier travels along WASD bearing, with carried weapon distinct from firing pose."
+    },
+    {
+      "stage": "held",
+      "file": "test-results/final-g/G-15/high-weapon.bat-held.png",
+      "sha256": "80336c0385260db8a5b6b0c34151bc626e16dee7d6f93c50b7cfb13679125bce",
+      "seen": "Courier aims toward cursor while walking; attack effect appears on that bearing."
+    },
+    {
+      "stage": "release26",
+      "file": "test-results/final-g/G-15/high-weapon.bat-release26.png",
+      "sha256": "d068c62ddb52dc6f813fad3848f5471c3801f1dd7e829af90196f163c9fe6eed",
+      "seen": "Cursor-facing grace period still active shortly before 0.45s."
+    },
+    {
+      "stage": "release46",
+      "file": "test-results/final-g/G-15/high-weapon.bat-release46.png",
+      "sha256": "a135f728248ac03934b529272bddd5ac64b2213337b9cae53eb0e5f8d5311811",
+      "seen": "Courier faces the walk direction after release grace; visual matches the walk-only pose."
+    },
+    {
+      "stage": "click",
+      "file": "test-results/final-g/G-15/high-weapon.handgun-click.png",
+      "sha256": "3f7fe76cee333f17ec1925665d61691ecfc852d13f893584a77d0736dcfe42d2",
+      "seen": "Click-only leaves courier at original spot; attack effect follows the cursor."
+    },
+    {
+      "stage": "move",
+      "file": "test-results/final-g/G-15/high-weapon.handgun-move.png",
+      "sha256": "4d1c338b0f4473c361614faad30f99d2bf5ed281a90b2fe1e82bba44ebdf186c",
+      "seen": "Courier travels along WASD bearing, with carried weapon distinct from firing pose."
+    },
+    {
+      "stage": "held",
+      "file": "test-results/final-g/G-15/high-weapon.handgun-held.png",
+      "sha256": "6baa55f6186b6fd58210f245cfee17d355e042e52f0721c9e6036433b87fa083",
+      "seen": "Courier aims toward cursor while walking; attack effect appears on that bearing."
+    },
+    {
+      "stage": "release26",
+      "file": "test-results/final-g/G-15/high-weapon.handgun-release26.png",
+      "sha256": "77d3daef2f9cf533febe035adf94484d1cf895d9fd80886d4f0a98d107b4a1e4",
+      "seen": "Cursor-facing grace period still active shortly before 0.45s."
+    },
+    {
+      "stage": "release46",
+      "file": "test-results/final-g/G-15/high-weapon.handgun-release46.png",
+      "sha256": "1465c54bbcc7bd5744453365e9ff6d1ed34539f60be392da1b2ce796d8e67960",
+      "seen": "Courier faces the walk direction after release grace; visual matches the walk-only pose."
+    },
+    {
+      "stage": "click",
+      "file": "test-results/final-g/G-15/high-weapon.rocket-launcher-click.png",
+      "sha256": "2fc5256d16c69db46723a8eefe136b798f603af45a228f6bc84c79b40596392e",
+      "seen": "Click-only leaves courier at original spot; attack effect follows the cursor."
+    },
+    {
+      "stage": "move",
+      "file": "test-results/final-g/G-15/high-weapon.rocket-launcher-move.png",
+      "sha256": "01621e0d992bdf85e3ee94392567dce8bfb96f173164deb979f9b2d99b8d7e83",
+      "seen": "Courier travels along WASD bearing, with carried weapon distinct from firing pose."
+    },
+    {
+      "stage": "held",
+      "file": "test-results/final-g/G-15/high-weapon.rocket-launcher-held.png",
+      "sha256": "ff192d489924461c64ad657b2fed41cbefc09bbe9a89289ef2ff5d211a68b21e",
+      "seen": "Courier aims toward cursor while walking; attack effect appears on that bearing."
+    },
+    {
+      "stage": "release26",
+      "file": "test-results/final-g/G-15/high-weapon.rocket-launcher-release26.png",
+      "sha256": "a8437db28d0a784b3897e763d298e160f3bab0cb4c309851b36fe17d0d642b8b",
+      "seen": "Cursor-facing grace period still active shortly before 0.45s."
+    },
+    {
+      "stage": "release46",
+      "file": "test-results/final-g/G-15/high-weapon.rocket-launcher-release46.png",
+      "sha256": "63d278c2b23f58ae7963e358bb706a2e6dd91d3f16d811010c8a49ad497f91a9",
+      "seen": "Courier faces the walk direction after release grace; visual matches the walk-only pose."
+    }
+  ]
+}
