@@ -2,7 +2,7 @@
   "version": 1,
   "level": "L6",
   "tier": "high",
-  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "sourceHash": "a54292eee8e0fe395f77eaebb44e49ee883d9ff51ddebc12c95123729fbd0019",
   "fixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4",
   "checks": [
     {
@@ -683,9 +683,9 @@
           ]
         },
         "maneuver": {
-          "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+          "sourceHash": "a54292eee8e0fe395f77eaebb44e49ee883d9ff51ddebc12c95123729fbd0019",
           "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
-          "revision": "ab509165939155d1b2c8855038d3a415126bc4d2",
+          "revision": "935c0138985c2a8ed3a70b088ac4698ed8d91120",
           "tier": "high",
           "setup": "Only unarmed campaign racks at load; mortal courier; ordinary move/aim/fist inputs; no actor/health/clock changes or objective skips.",
           "completed": false,
@@ -8387,7 +8387,7 @@
         {
           "archetype": "infected.alpha",
           "near": true,
-          "farHealthy": false,
+          "farHealthy": true,
           "farDamaged": true,
           "dead": false,
           "healthyAnimal": false
@@ -8434,7 +8434,7 @@
         }
       ],
       "target": "near/full and far/damaged true; far/full, dead and healthy animals false",
-      "status": "PASS",
+      "status": "FAIL",
       "tier": "high",
       "policy": "controlled-fixture",
       "receipt": "docs/reports/fix51-verify/receipts/L6-high-fixtures.json"
@@ -10387,9 +10387,9 @@
         ]
       },
       "maneuver": {
-        "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+        "sourceHash": "a54292eee8e0fe395f77eaebb44e49ee883d9ff51ddebc12c95123729fbd0019",
         "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
-        "revision": "ab509165939155d1b2c8855038d3a415126bc4d2",
+        "revision": "935c0138985c2a8ed3a70b088ac4698ed8d91120",
         "tier": "high",
         "setup": "Only unarmed campaign racks at load; mortal courier; ordinary move/aim/fist inputs; no actor/health/clock changes or objective skips.",
         "completed": false,
