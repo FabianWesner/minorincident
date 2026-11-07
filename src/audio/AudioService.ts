@@ -595,6 +595,10 @@ export class AudioService implements Lifecycle {
         if (!player)
             return;
         const t = this.context.currentTime;
+        // Hearing boundaries apply on every sim tick, including the five ticks
+        // between spatial-audio polls. Retire the voice so its radar note ends too.
+        for (const voice of this.graph.active.values()) if (voice.position && voice.distanceCutoffM !== undefined &&
+            Math.hypot(voice.position.x - player.transform.x, voice.position.z - player.transform.z) > voice.distanceCutoffM) voice.stop(t);
         const front = this.world.missions?.state.cureFront;
         if (front) this.loop('cure:ventilation', 'generator.idle', { position: { ...front.fronts[0], y: 2 }, gain: .55, lowpass: 1800 });
         else this.stopLoop('cure:ventilation');

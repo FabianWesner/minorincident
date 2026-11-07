@@ -14,6 +14,8 @@ export interface PlayOptions {
     lowpass?: number;
     zone?: ReverbPreset;
     dry?: boolean;
+    /** Stop a positional one-shot once its listener leaves the authored hearing radius. */
+    distanceCutoffM?: number;
 }
 export interface GraphVoice {
     id: number;
@@ -32,6 +34,7 @@ export interface GraphVoice {
     wet: number;
     stopped: boolean;
     end: number;
+    distanceCutoffM?: number;
     stop(time?: number): void;
 }
 /** The same graph is used for live playback and OfflineAudioContext acceptance renders. */
@@ -221,16 +224,16 @@ export class AudioGraph {
         source.connect(filter).connect(gain);
         if (panner) {
             panner.panningModel = this.tier === 'high' ? 'HRTF' : 'equalpower';
-            panner.distanceModel = 'inverse';
+            panner.distanceModel = options.distanceCutoffM === undefined ? 'inverse' : 'linear';
             panner.refDistance = 4;
-            panner.maxDistance = 120;
+            panner.maxDistance = options.distanceCutoffM ?? 120;
             panner.rolloffFactor = 1;
             gain.connect(panner).connect(this.buses[cue.bus]);
         }
         else
             gain.connect(this.buses[cue.bus]);
         const position = options.position ? { ...options.position } : null, velocity = options.velocity ? { ...options.velocity } : null;
-        const voice: GraphVoice = { id: ++this.sequence, cue: cue.id, priority: options.priority ?? cue.priority, source, gain, filter, panner, position, velocity, send, rate: options.rate ?? 1, baseGain: gain.gain.value, cutoff: options.lowpass ?? 20000, wet: 0, stopped: false, end: source.loop ? Infinity : t + cue.duration / (options.rate ?? 1), stop: (when = this.context.currentTime) => {
+        const voice: GraphVoice = { id: ++this.sequence, cue: cue.id, priority: options.priority ?? cue.priority, source, gain, filter, panner, position, velocity, send, rate: options.rate ?? 1, baseGain: gain.gain.value, cutoff: options.lowpass ?? 20000, wet: 0, stopped: false, end: source.loop ? Infinity : t + cue.duration / (options.rate ?? 1), distanceCutoffM: options.distanceCutoffM, stop: (when = this.context.currentTime) => {
                 if (voice.stopped)
                     return;
                 voice.stopped = true;
@@ -287,6 +290,7 @@ export class AudioGraph {
         pan.positionY.setValueAtTime(p.y ?? 0.7, time);
         pan.positionZ.setValueAtTime(p.z, time);
         const distance = Math.hypot(p.x - this.listener.x, p.z - this.listener.z), walls = occlusions(this.map, p, this.listener), air = distance <= 20 ? 20000 : Math.max(1800, 20000 * 20 / distance);
+        if (voice.distanceCutoffM !== undefined && distance > voice.distanceCutoffM) { voice.stop(time); return; }
         voice.filter.frequency.setValueAtTime(Math.min(lowpass ?? voice.cutoff, walls ? 1200 : air), time);
         // A shelf-shaped source has most energy below 1.2kHz, keeping wall loss close to authored -6dB.
         voice.gain.gain.setValueAtTime(voice.baseGain * dbGain(-6 * walls), time);

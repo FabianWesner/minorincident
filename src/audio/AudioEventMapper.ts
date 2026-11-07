@@ -109,7 +109,8 @@ export class AudioEventMapper {
         if (event.type === 'l5.cue') {
             // A sign of life: the knock, the clang, the radio, the voice or the flashlight click of that survivor, positional, with its caption.
             const sound = l5CueSounds[event.key] ?? { cue: 'door.wood', gain: 0.8, rate: 1 };
-            this.host.play(sound.cue, { position: event.position, gain: sound.gain, rate: sound.rate });
+            // A bounded cue must not leave a tail in the shared reverb after cutoff.
+            this.host.play(sound.cue, { position: event.position, gain: sound.gain, rate: sound.rate, distanceCutoffM: l5.survivors.cueMaxM, dry: true });
             this.host.caption(event.text, event.position, 4);
             return;
         }
