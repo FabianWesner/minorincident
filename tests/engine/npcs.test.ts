@@ -167,6 +167,32 @@ test('corgi: warns of an offscreen threat within 18 m with a unit direction', as
       expect([...w.entities.iterate()].filter(e => e.pickup && 'actionId' in e.pickup && e.pickup.survivorOnly).length).toBe(8);
     } finally { w.dispose(); }
   }
+  // Trail escape also works in L1: failed routing stands still for 2 s, then follows the courier's recorded path.
+  {
+    const w = await loadRunnerLevel('L1', 1, undefined, 0, { quality: 'low' });
+    try {
+      const dog = [...w.entities.iterate()].find(e => e.companion)!;
+      const player = w.entities.get(1)!, start = { x: player.transform.x, z: player.transform.z };
+      player.hidden = false; player.health.current = player.health.max;
+      for (let i = 0; i < 12; i++) {
+        player.transform.x = start.x + i * .6;
+        w.npcs!.companion.update();
+      }
+      dog.transform.x = start.x; dog.transform.z = start.z; w.spatial.set(dog.id, start.x, start.z);
+      const trail = w.npcs!.companion.trailPoint(dog), steer = vi.spyOn(w.infected!.nav, 'steer').mockReturnValue(false);
+      const move = vi.spyOn(w.npcs!, 'moveStep'), path = { path: [] as number[], goal: -1, pathIndex: 0 };
+      const failedAt = w.tick + 1;
+      for (let elapsed = 0; elapsed < 120; elapsed++) {
+        w.tick = failedAt + elapsed;
+        expect(w.npcs!.move(dog, { x: 1000, z: 1000 }, 3, path, .1)).toBe(false);
+      }
+      expect(move).not.toHaveBeenCalled(); expect(trail).not.toBeNull();
+      w.tick = failedAt + 120;
+      expect(w.npcs!.move(dog, { x: 1000, z: 1000 }, 3, path, .1)).toBe(true);
+      expect(move).toHaveBeenCalledOnce(); expect(dog.transform.x).toBeGreaterThan(start.x);
+      steer.mockRestore();
+    } finally { w.dispose(); }
+  }
   // G-27: the Oak sedan's rotated nav footprint must leave a route through the gate beside the wreck.
   {
     const w = await loadRunnerLevel('L3', 1, preset('L3-default'), 0, { quality: 'low' });

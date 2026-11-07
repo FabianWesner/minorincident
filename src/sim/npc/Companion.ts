@@ -133,7 +133,7 @@ export class Companion {
   }
   update(): void {
     const player = this.world.entities.get(1)!, ai = this.world.infected!, progress = this.courierProgress;
-    if (this.world.missions?.def.l3 && player.health.current > 0 && !player.hidden) this.recordTrail(player.transform);
+    if (player.health.current > 0 && !player.hidden) this.recordTrail(player.transform);
     const speed = Math.hypot(player.survivor?.velocity.x ?? 0, player.survivor?.velocity.z ?? 0);
     if (this.world.tick < progress.tick) this.yieldUntil = 0;
     if (speed <= .5 || this.world.tick < progress.tick || !Number.isFinite(progress.x) || Math.hypot(player.transform.x - progress.x, player.transform.z - progress.z) > .05) {
