@@ -1,0 +1,200 @@
+{
+  "implementationCommit": "56cb85004619b4489acb349aec85c65293d7a99b",
+  "sourceTrees": {
+    "baseline": {
+      "src": "85291930a715c6ca91895e92edf81abd74a33f4c",
+      "public": "778388a9daba18991026242832f5b9de648933a3"
+    },
+    "candidate": {
+      "src": "85291930a715c6ca91895e92edf81abd74a33f4c",
+      "public": "778388a9daba18991026242832f5b9de648933a3"
+    }
+  },
+  "gameSourceUnchanged": true,
+  "checks": {
+    "typecheck": 0,
+    "lint": 0,
+    "unit": {
+      "tests": 107,
+      "files": 27,
+      "seconds": 24.98,
+      "budgetSeconds": 28.1,
+      "exitCode": 0
+    },
+    "focusedToolTests": {
+      "tests": 11,
+      "files": 2,
+      "exitCode": 0
+    }
+  },
+  "localBudgetReceipt": {
+    "name": "qa-threat",
+    "cases": 150,
+    "counts": {
+      "vitest": 129,
+      "e2e": 9,
+      "invariantsBrowser": 12
+    },
+    "files": 43,
+    "limits": {
+      "cases": 150,
+      "files": 45,
+      "seconds": 600
+    },
+    "command": [
+      "node",
+      "--import",
+      "tsx/esm",
+      "tools/qa/threat-audit.ts",
+      "--out",
+      "test-results/r2-threatfast-census2-local"
+    ],
+    "seconds": 407.64581529199995,
+    "exitCode": 0,
+    "signal": null,
+    "failures": [],
+    "at": "2026-11-07T13:33:06.769Z"
+  },
+  "comparatorNegativeControl": {
+    "field": "levels[0].passiveObservation.phases[0].seconds",
+    "delta": 1,
+    "detected": true
+  },
+  "focusedL4": {
+    "comparedLeaves": 5314,
+    "identical": true,
+    "diagnosticFlag": "PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate"
+  },
+  "runnerAttempts": [
+    {
+      "revision": "03951830",
+      "budgetSeconds": 600.4,
+      "exitCode": 1,
+      "completedAudit": false
+    },
+    {
+      "revision": "6ab7378a",
+      "budgetSeconds": 600.3,
+      "exitCode": 1,
+      "completedAudit": false
+    },
+    {
+      "revision": "c72a78b7",
+      "budgetSeconds": 593.429651442,
+      "exitCode": 0,
+      "completedAudit": true,
+      "equivalence": "selective-runner-equivalence.json"
+    }
+  ],
+  "runner": {
+    "name": "mi-runner-1",
+    "id": 169766868,
+    "type": "cx33",
+    "vcpus": 4,
+    "architecture": "x86_64",
+    "node": "v26.0.0",
+    "isolation": "both runner slots held; local fallback disabled"
+  },
+  "runnerBudgetReceipt": {
+    "name": "qa-threat",
+    "cases": 150,
+    "counts": {
+      "vitest": 129,
+      "e2e": 9,
+      "invariantsBrowser": 12
+    },
+    "files": 43,
+    "limits": {
+      "cases": 150,
+      "files": 45,
+      "seconds": 600
+    },
+    "command": [
+      "node",
+      "--import",
+      "tsx/esm",
+      "tools/qa/threat-audit.ts",
+      "--out",
+      "test-results/r2-threatfast-census2-runner"
+    ],
+    "seconds": 589.587950451,
+    "exitCode": 0,
+    "signal": null,
+    "failures": [],
+    "at": "2026-11-07T13:36:20.954Z"
+  },
+  "stages": {
+    "count": 31,
+    "uniqueIds": 31,
+    "maximumConcurrent": 4,
+    "sumWorkerSeconds": 2332.1459895099997,
+    "fourWorkerLowerBoundSeconds": 583.0364973774999
+  },
+  "objective": {
+    "maxRunnerSeconds": 480,
+    "observedRunnerSeconds": 597.19814153,
+    "achieved": false,
+    "remainingSeconds": 117.19814153000004
+  },
+  "baselineRunnerAuditSeconds": 1144.080219429,
+  "candidateRunnerAuditSeconds": 589.542009514,
+  "auditSpeedup": 1.9406254362978201,
+  "timeBoxStop": true,
+  "goalStatus": "not-achieved",
+  "extraSeedObserverControls": {
+    "L3": "l3-selective-equivalence.json",
+    "L5/L7": "follower-selective-equivalence.json",
+    "identical": true
+  },
+  "censusControls": "census2-focused-equivalence.json",
+  "runtimeExperiment": "runtime-configuration-probe.json",
+  "stagePool": {
+    "jobs": 31,
+    "uniqueJobs": 31,
+    "maximumConcurrency": 4,
+    "workerSeconds": 2303.2956444570004,
+    "idealFourWorkerLowerBoundSeconds": 575.8239111142501
+  },
+  "comparatorTypeNegativeControl": {
+    "field": "levels[0].measurements",
+    "before": "[]",
+    "after": "{}",
+    "detected": true
+  },
+  "twoWorkerRunnerExperiment": {
+    "revision": "56cb8500",
+    "workers": 2,
+    "completedAudit": false,
+    "completedStages": 6,
+    "expectedStages": 31,
+    "stages": [
+      {
+        "id": "L4/skilled/1",
+        "seconds": 216.109
+      },
+      {
+        "id": "L5/passive/1",
+        "seconds": 216.528
+      },
+      {
+        "id": "L5/passive/3",
+        "seconds": 198.478
+      },
+      {
+        "id": "L5/passive/2",
+        "seconds": 231.046
+      },
+      {
+        "id": "L4/high-hold",
+        "seconds": 150.395
+      },
+      {
+        "id": "L4/passive/1",
+        "seconds": 126.386
+      }
+    ],
+    "budgetSeconds": 601.0802736280001,
+    "exitCode": 124,
+    "isolation": "Both cx33 runner slots held; local fallback disabled."
+  }
+}

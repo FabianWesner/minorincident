@@ -7,14 +7,14 @@ import { stateHash } from '../../../src/sim/world/stateHash';
 import { followerPaceSeeds, type FollowerPaceSeed } from './followerPace';
 
 interface SeedJob { level: RunnerLevel; tier: 'low' | 'high'; passive: boolean; seed: number }
-async function runSeed({ level, tier, passive, seed }: SeedJob): Promise<FollowerPaceSeed> {
+export async function runSeed({ level, tier, passive, seed }: SeedJob): Promise<FollowerPaceSeed> {
   console.log(`[qa:follower-pace] ${level} ${tier}/${passive ? 'passive' : 'complete'} seed ${seed}`);
   const campaign = preset(`${level}-default` as ProgressionPreset); campaign.seed = seed; campaign.settings.quality = tier;
   let observer: ThreatObserver | undefined;
   const row: FollowerPaceSeed = { seed, valid: false, companions: [], phases: [] };
   try {
     const run = await runLevel(level, 'complete', seed, undefined, 'auto', campaign, undefined, 0, {
-      quality: tier, passive, beforeBegin: world => { observer = new ThreatObserver(world, level, { paths: false }); },
+      quality: tier, passive, beforeBegin: world => { observer = new ThreatObserver(world, level, { paths: false, followersOnly: true }); },
       beforeDispose: world => {
         row.phases = observer!.finish().phases.map(({ key, followerSpeeds, followerMedian }) => ({ key, followerSpeeds, followerMedian }));
         row.nativeStateHash = stateHash(world.getState());

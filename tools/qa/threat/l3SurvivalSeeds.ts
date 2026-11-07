@@ -3,7 +3,7 @@ import { loadL3, runL3 } from '../../sim-runner/l3Bots';
 export interface L3SurvivalSeed {
   seed: number;
   valid: boolean;
-  s1: { completed: boolean; officerHits: number; damage: number } | null;
+  s1: { completed: boolean; officerHits: number; officerKills?: number; playerKills?: number; damage: number } | null;
   density: { near30: number[]; maxConcurrent: number; cap: number };
 }
 

@@ -34,7 +34,8 @@ export class WaveObserver {
   private l4Cursor = 0;
   private l8Cursor = 0;
   private readonly edgeQueues = new Map<number, { wave: Wave; remaining: number }[]>();
-  constructor(private readonly world: SimWorld, private readonly level: RunnerLevel, private readonly identity: (e: EntitySnapshot) => string) {
+  constructor(private readonly world: SimWorld, private readonly level: RunnerLevel, private readonly identity: (e: EntitySnapshot) => string, private readonly enabled = true) {
+    if (!enabled) return;
     observeAttackStarts(world, (sourceId, targetId, tick) => {
       if (targetId !== 1) return;
       const e = world.entities.get(sourceId);
@@ -72,11 +73,13 @@ export class WaveObserver {
     wave.members.set(token, id); wave.births.set(token, this.world.tick); this.assigned.add(key); return true;
   }
   beforeTick(): void {
+    if (!this.enabled) return;
     if (this.world.missions!.state.phase !== 'playing') return;
     const zoo = this.world.missions!.l8?.state;
     if (zoo?.breachedAt && this.world.tick + 1 >= zoo.nextWave) this.wave(`tunnel-reinforcement@${zoo.nextWave}`, zoo.nextWave, 'L8 nextWave clock', zoo.outlets.length * 4);
   }
   afterTick(): void {
+    if (!this.enabled) return;
     const w = this.world, state = w.missions!.state, t = w.tick;
     const rescue = state.l2;
     if (rescue?.doorsOpenAt) {

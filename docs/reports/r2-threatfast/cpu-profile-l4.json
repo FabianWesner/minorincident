@@ -1,0 +1,372 @@
+{
+  "stage": "L4/skilled/seed1",
+  "observedWallSeconds": 67.943237708,
+  "simSeconds": 421.81666666666666,
+  "outcome": "complete",
+  "rawPath": "test-results/r2-threatfast-profile/l4-skilled.cpuprofile",
+  "rawSHA256": "655dfd19e3629b7600663f7124791e6f677251454746981497c6801ad4a08331",
+  "self": [
+    {
+      "function": "emit",
+      "file": "src/core/EventBus.ts",
+      "seconds": 2.695732,
+      "percent": 3.941392912688561
+    },
+    {
+      "function": "clear",
+      "file": "src/sim/ai/NavGrid.ts",
+      "seconds": 2.347959,
+      "percent": 3.4329187626527125
+    },
+    {
+      "function": "",
+      "file": "src/sim/ai/CharacterSeparation.ts",
+      "seconds": 1.721681,
+      "percent": 2.5172462586453532
+    },
+    {
+      "function": "pop",
+      "file": "src/sim/ai/NavGrid.ts",
+      "seconds": 1.714279,
+      "percent": 2.50642389561382
+    },
+    {
+      "function": "path",
+      "file": "src/sim/ai/NavGrid.ts",
+      "seconds": 1.674501,
+      "percent": 2.448265025488405
+    },
+    {
+      "function": "updateAlly",
+      "file": "src/sim/outbreak/Allies.ts",
+      "seconds": 1.509638,
+      "percent": 2.2072210864898048
+    },
+    {
+      "function": "update",
+      "file": "src/sim/outbreak/Outbreak.ts",
+      "seconds": 1.23397,
+      "percent": 1.8041706714429713
+    },
+    {
+      "function": "commit",
+      "file": "src/sim/world/SolidRegistry.ts",
+      "seconds": 1.22753,
+      "percent": 1.7947548354630911
+    },
+    {
+      "function": "(garbage collector)",
+      "file": "",
+      "seconds": 1.142089,
+      "percent": 1.669832717146796
+    },
+    {
+      "function": "bake",
+      "file": "src/sim/ai/NavGrid.ts",
+      "seconds": 1.131917,
+      "percent": 1.6549603749748485
+    },
+    {
+      "function": "solids",
+      "file": "src/sim/world/SolidRegistry.ts",
+      "seconds": 0.888933,
+      "percent": 1.2996967896122391
+    },
+    {
+      "function": "update",
+      "file": "src/sim/ai/InfectedSystem.ts",
+      "seconds": 0.855688,
+      "percent": 1.2510897294956063
+    },
+    {
+      "function": "infected",
+      "file": "src/sim/vehicles/Vehicles.ts",
+      "seconds": 0.853803,
+      "percent": 1.2483336967592593
+    },
+    {
+      "function": "query",
+      "file": "src/sim/spatial/SpatialHash.ts",
+      "seconds": 0.83689,
+      "percent": 1.2236054306214157
+    },
+    {
+      "function": "get count",
+      "file": "src/sim/ai/SpawnDirector.ts",
+      "seconds": 0.666696,
+      "percent": 0.9747671093854333
+    },
+    {
+      "function": "",
+      "file": "src/sim/ai/NavGrid.ts",
+      "seconds": 0.631867,
+      "percent": 0.9238441045184697
+    },
+    {
+      "function": "path",
+      "file": "src/sim/ai/NavGrid.ts",
+      "seconds": 0.630917,
+      "percent": 0.922455122502804
+    },
+    {
+      "function": "spacingRadius",
+      "file": "src/sim/ai/CharacterSeparation.ts",
+      "seconds": 0.608197,
+      "percent": 0.8892365210334131
+    },
+    {
+      "function": "pop",
+      "file": "src/sim/ai/NavGrid.ts",
+      "seconds": 0.594492,
+      "percent": 0.8691986278495222
+    },
+    {
+      "function": "query",
+      "file": "src/sim/spatial/SpatialHash.ts",
+      "seconds": 0.592147,
+      "percent": 0.8657700354003267
+    },
+    {
+      "function": "(program)",
+      "file": "",
+      "seconds": 0.581505,
+      "percent": 0.8502105126522079
+    },
+    {
+      "function": "observe",
+      "file": "tools/qa/threat/observer.ts",
+      "seconds": 0.578883,
+      "percent": 0.846376922288971
+    },
+    {
+      "function": "",
+      "file": "src/sim/world/SolidRegistry.ts",
+      "seconds": 0.573555,
+      "percent": 0.8385869263105856
+    },
+    {
+      "function": "",
+      "file": "src/sim/world/SimWorld.ts",
+      "seconds": 0.557095,
+      "percent": 0.8145209852812646
+    },
+    {
+      "function": "ThreatObserver.world.update",
+      "file": "tools/qa/threat/observer.ts",
+      "seconds": 0.546437,
+      "percent": 0.7989380691518294
+    },
+    {
+      "function": "",
+      "file": "src/sim/outbreak/Allies.ts",
+      "seconds": 0.523677,
+      "percent": 0.7656609842291473
+    },
+    {
+      "function": "clear",
+      "file": "src/sim/ai/NavGrid.ts",
+      "seconds": 0.475312,
+      "percent": 0.6949471787684478
+    },
+    {
+      "function": "query",
+      "file": "src/sim/spatial/SpatialHash.ts",
+      "seconds": 0.457138,
+      "percent": 0.6683752217655997
+    },
+    {
+      "function": "push",
+      "file": "src/sim/ai/NavGrid.ts",
+      "seconds": 0.455642,
+      "percent": 0.6661879406125095
+    },
+    {
+      "function": "",
+      "file": "src/sim/ai/NavGrid.ts",
+      "seconds": 0.455545,
+      "percent": 0.6660461182382784
+    }
+  ],
+  "inclusive": [
+    {
+      "function": "(root)",
+      "file": "",
+      "seconds": 68.395414,
+      "percent": 100
+    },
+    {
+      "function": "runLevel",
+      "file": "tools/sim-runner/levels.ts",
+      "seconds": 65.66958,
+      "percent": 96.01459536453716
+    },
+    {
+      "function": "ThreatObserver.world.update",
+      "file": "tools/qa/threat/observer.ts",
+      "seconds": 63.627006,
+      "percent": 93.02817583646764
+    },
+    {
+      "function": "update",
+      "file": "src/sim/world/SimWorld.ts",
+      "seconds": 49.810948,
+      "percent": 72.82790626868638
+    },
+    {
+      "function": "emit",
+      "file": "src/core/EventBus.ts",
+      "seconds": 49.758605,
+      "percent": 72.75137628379586
+    },
+    {
+      "function": "",
+      "file": "src/sim/npc/install.ts",
+      "seconds": 12.591038,
+      "percent": 18.409184569012186
+    },
+    {
+      "function": "update",
+      "file": "src/sim/ai/InfectedSystem.ts",
+      "seconds": 12.204982,
+      "percent": 17.84473736791768
+    },
+    {
+      "function": "observePaths",
+      "file": "tools/qa/threat/observer.ts",
+      "seconds": 12.168513,
+      "percent": 17.79141654146578
+    },
+    {
+      "function": "",
+      "file": "src/sim/npc/install.ts",
+      "seconds": 9.094654,
+      "percent": 13.297169310211354
+    },
+    {
+      "function": "update",
+      "file": "src/sim/npc/Npcs.ts",
+      "seconds": 9.093254,
+      "percent": 13.295122389346163
+    },
+    {
+      "function": "",
+      "file": "src/sim/world/SimWorld.ts",
+      "seconds": 8.266243,
+      "percent": 12.085960909601337
+    },
+    {
+      "function": "update",
+      "file": "src/sim/npc/Civilians.ts",
+      "seconds": 7.74986,
+      "percent": 11.330964383079836
+    },
+    {
+      "function": "commit",
+      "file": "src/sim/world/SolidRegistry.ts",
+      "seconds": 7.689762,
+      "percent": 11.243095918682501
+    },
+    {
+      "function": "update",
+      "file": "src/sim/outbreak/Outbreak.ts",
+      "seconds": 7.345446,
+      "percent": 10.739676201097343
+    },
+    {
+      "function": "",
+      "file": "tools/qa/threat/observer.ts",
+      "seconds": 6.673893,
+      "percent": 9.757807738396027
+    },
+    {
+      "function": "barrierDistance",
+      "file": "tools/qa/threat/observer.ts",
+      "seconds": 6.666791,
+      "percent": 9.747424001264179
+    },
+    {
+      "function": "withClearance",
+      "file": "src/sim/ai/NavGrid.ts",
+      "seconds": 6.23058,
+      "percent": 9.109645860174192
+    },
+    {
+      "function": "query",
+      "file": "tools/qa/threat/observer.ts",
+      "seconds": 5.46837,
+      "percent": 7.995229036847412
+    },
+    {
+      "function": "NavGrid",
+      "file": "src/sim/ai/NavGrid.ts",
+      "seconds": 5.218106,
+      "percent": 7.629321462985808
+    },
+    {
+      "function": "clear",
+      "file": "src/sim/world/SolidRegistry.ts",
+      "seconds": 4.835038,
+      "percent": 7.069242975852153
+    },
+    {
+      "function": "updateAlly",
+      "file": "src/sim/outbreak/Allies.ts",
+      "seconds": 4.824754,
+      "percent": 7.05420688001099
+    },
+    {
+      "function": "followScript",
+      "file": "src/sim/ai/InfectedSystem.ts",
+      "seconds": 4.726594,
+      "percent": 6.910688485634432
+    },
+    {
+      "function": "seek",
+      "file": "src/sim/ai/InfectedSystem.ts",
+      "seconds": 4.527707,
+      "percent": 6.619898521266353
+    },
+    {
+      "function": "bake",
+      "file": "src/sim/ai/NavGrid.ts",
+      "seconds": 4.2445,
+      "percent": 6.205825437360464
+    },
+    {
+      "function": "",
+      "file": "src/sim/ai/CharacterSeparation.ts",
+      "seconds": 4.119792,
+      "percent": 6.023491575034549
+    },
+    {
+      "function": "path",
+      "file": "src/sim/ai/NavGrid.ts",
+      "seconds": 3.844422,
+      "percent": 5.620876861714734
+    },
+    {
+      "function": "clearStatics",
+      "file": "src/sim/world/SolidRegistry.ts",
+      "seconds": 3.504579,
+      "percent": 5.123997056293862
+    },
+    {
+      "function": "",
+      "file": "src/sim/world/SolidRegistry.ts",
+      "seconds": 3.125669,
+      "percent": 4.569997924129826
+    },
+    {
+      "function": "clear",
+      "file": "src/sim/ai/NavGrid.ts",
+      "seconds": 2.911282,
+      "percent": 4.256545621611414
+    },
+    {
+      "function": "solids",
+      "file": "src/sim/world/SolidRegistry.ts",
+      "seconds": 2.903309,
+      "percent": 4.244888407284149
+    }
+  ]
+}

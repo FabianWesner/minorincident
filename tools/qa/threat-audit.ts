@@ -1,22 +1,18 @@
-import { execFileSync, fork } from 'node:child_process';
-import { mkdir, readFile, rm, writeFile } from 'node:fs/promises';
-import { fileURLToPath } from 'node:url';
+import { execFileSync } from 'node:child_process';
+import { mkdir, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { parseArgs } from 'node:util';
-import { runnerLevels, runLevel, type RunnerLevel, type LevelReport } from '../sim-runner/levels';
-import { newCampaign, preset, type ProgressionPreset } from '../../src/sim/progression/Campaign';
+import { runnerLevels, type RunnerLevel, type LevelReport } from '../sim-runner/levels';
 import { ThreatObserver, followerCoverageFlags, followerPaceChecks, followerWaitFlags } from './threat/observer';
 import { threatSteps } from './threat/phases';
 import { proveThreatAudit, provePassiveFrom } from './threat/proof';
 import { renderReport } from './threat/report';
-import { stateHash } from '../../src/sim/world/stateHash';
 import { L4HoldCensus } from './threat/l4-hold';
 import { focusedCriteria } from './threat/criteria';
 import { armyLineVerdict, type ArmyLineVerdict } from './threat/l3ArmyLine';
-import { l3ArmySeeds } from './threat/l3ArmySeeds';
 import { followerPaceVerdict, type FollowerPaceSeed, type FollowerPaceVerdict } from './threat/followerPace';
-import { extraFollowerPaceSeeds } from './threat/followerPaceSeeds';
-import { l3SurvivalSeeds, type L3SurvivalSeed } from './threat/l3SurvivalSeeds';
+import { runStages, stageId } from './threat/stageJobs';
+import type { L3SurvivalSeed } from './threat/l3SurvivalSeeds';
 
 export interface LevelReceipt {
   level: RunnerLevel; quality: string; definitions: ThreatObserver['definitions']; run: LevelReport | null;
@@ -37,12 +33,12 @@ export interface AuditReceipt {
   passivity?: { seconds: number; levels: number; matches: boolean };
 }
 const { values } = parseArgs({ options: {
-  maxWorkers: { type: 'string', default: '2' }, levels: { type: 'string' },
+  maxWorkers: { type: 'string', default: process.platform === 'linux' ? '4' : '2' }, levels: { type: 'string' },
   out: { type: 'string', default: 'test-results/qa-threat' }, report: { type: 'string' }, proof: { type: 'boolean' },
   'passive-from': { type: 'string' },
 } });
 const maxWorkers = Number(values.maxWorkers);
-if (!Number.isInteger(maxWorkers) || maxWorkers < 1 || maxWorkers > 2) throw new Error('--maxWorkers must be 1 or 2');
+if (!Number.isInteger(maxWorkers) || maxWorkers < 1 || maxWorkers > 4) throw new Error('--maxWorkers must be 1–4');
 if (values.proof) { await proveThreatAudit(); process.exit(0); }
 if (values['passive-from']) { await provePassiveFrom(values['passive-from'], values.out!, values.report); process.exit(0); }
 const selected = values.levels ? values.levels.split(',') as RunnerLevel[] : [...runnerLevels];
@@ -57,88 +53,35 @@ const sourceMatchesMain = process.env.QA_THREAT_SOURCE_MATCHES_MAIN !== undefine
   : mainRevision === 'not-supplied' ? null : git('diff', mainRevision, '--', 'src', 'public') === '' && git('ls-files', '--others', '--exclude-standard', '--', 'src', 'public') === '';
 const started = performance.now(), levels: LevelReceipt[] = [];
 await mkdir(values.out!, { recursive: true });
-// Each leaf uses one simulation process, including serial extra follower seeds.
-// Waiting for exit keeps the whole audit within the existing two-worker cap.
-const parallelLevels = maxWorkers === 2 && selected.length > 1;
-if (parallelLevels) {
-  // Start the measured long routes first so L5's extra follower seeds do not
-  // become a late tail after the other worker has exhausted its queue.
-  const longestFirst: readonly RunnerLevel[] = ['L5', 'L4', 'L3', 'L10', 'L7', 'L8', 'L2', 'L1', 'L9', 'L6'];
-  const pending = [...selected].sort((a, b) => longestFirst.indexOf(a) - longestFirst.indexOf(b));
-  const completed = new Map<RunnerLevel, LevelReceipt>();
-  const worker = async () => {
-    for (let level = pending.shift(); level; level = pending.shift()) {
-      const out = join(values.out!, level);
-      await rm(join(out, 'audit.json'), { force: true });
-      const code = await new Promise<number | null>((resolve, reject) => {
-        const child = fork(fileURLToPath(import.meta.url), ['--levels', level, '--maxWorkers', '1', '--out', out], {
-          execArgv: ['--import', 'tsx/esm'], stdio: 'inherit',
-          env: { ...process.env, QA_THREAT_REVISION: revision, QA_THREAT_MAIN_REVISION: mainRevision,
-            ...(sourceMatchesMain === null ? {} : { QA_THREAT_SOURCE_MATCHES_MAIN: String(sourceMatchesMain) }) },
-        });
-        child.once('error', reject);
-        child.once('exit', resolve);
-      });
-      const audit = JSON.parse(await readFile(join(out, 'audit.json'), 'utf8')) as AuditReceipt;
-      const partial = 'PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate';
-      const row = audit.levels[0];
-      if (audit.revision !== revision || audit.mainRevision !== mainRevision || audit.sourceMatchesMain !== sourceMatchesMain
-        || audit.seed !== 1 || audit.tier !== 'low' || audit.policy !== 'complete + passive' || audit.workers !== 1
-        || audit.levels.length !== 1 || row?.level !== level
-        || audit.flags.filter(flag => flag === partial).length !== 1
-        || JSON.stringify(audit.flags.filter(flag => flag !== partial)) !== JSON.stringify(row.passiveFlags.map(flag => `${level}/${flag}`))
-        || code !== 1) throw new Error(`Invalid isolated threat receipt for ${level} (exit ${code})`);
-      completed.set(level, row);
-      await writeFile(join(values.out!, `${level}.json`), JSON.stringify(row, null, 2) + '\n');
-    }
-  };
-  // allSettled waits for both owned workers even if a leaf fails unexpectedly.
-  const results = await Promise.allSettled([worker(), worker()]);
-  for (const result of results) if (result.status === 'rejected') throw result.reason;
-  for (const level of selected) {
-    const row = completed.get(level);
-    if (!row) throw new Error(`Missing isolated threat receipt for ${level}`);
-    levels.push(row);
-  }
-}
-for (const level of parallelLevels ? [] : selected) {
-  console.log(`[qa:threat] ${level}: skilled and passive native routes, seed=1, low population`);
+const stages = await runStages(selected, maxWorkers);
+await writeFile(join(values.out!, 'stages.json'), JSON.stringify([...stages.values()].map(({ job, seconds, startedAt, endedAt, error }) => ({ ...job, seconds, startedAt, endedAt, ...(error ? { error } : {}) })), null, 2) + '\n');
+const stage = (id: string) => {
+  const result = stages.get(id);
+  if (!result) throw new Error(`Missing threat stage ${id}`);
+  return result;
+};
+for (const level of selected) {
   const multiSeedPace = level === 'L5' || level === 'L7';
-  const start = performance.now(), holder: { audit?: ThreatObserver; observation?: ReturnType<ThreatObserver['finish']>; hash?: string } = {};
-  const campaign = level === 'L1' ? newCampaign('female', 1) : preset(`${level}-default` as ProgressionPreset);
-  campaign.seed = 1; campaign.settings.quality = 'low';
-  let run: LevelReport | null = null;
+  const levelStages = [...stages.values()].filter(row => row.job.level === level);
+  const wallSeconds = (Math.max(...levelStages.map(row => row.endedAt)) - Math.min(...levelStages.map(row => row.startedAt))) / 1000;
+  const skilledStage = stage(stageId(level, false));
+  const skilled = skilledStage.l3 ?? skilledStage.native;
+  const run = skilled?.run ?? null, observation = skilled?.observation ?? null;
+  const definitions = skilled?.definitions ?? [], quality = skilled?.quality ?? 'missing';
   const flags: string[] = [];
-  try {
-    run = await runLevel(level, 'complete', 1, undefined, 'auto', campaign, undefined, 0, {
-      quality: 'low', beforeBegin: world => { holder.audit = new ThreatObserver(world, level); },
-      beforeDispose: world => { holder.observation = holder.audit?.finish(); holder.hash = stateHash(world.getState()); },
-    });
-  } catch (error) { flags.push(`AUDIT_ERROR:${String(error)}`); }
-  const observation = holder.observation ?? null, definitions = holder.audit?.definitions ?? [];
+  if (skilledStage.error) flags.push(`AUDIT_ERROR:${skilledStage.error}`);
   if (!run?.completed) flags.push(`INCOMPLETE_NATIVE_POLICY:${run?.outcome ?? 'error'}`);
   if (!observation?.phases.length) flags.push('MISSING_PHASE_OBSERVATIONS');
-  if (holder.audit?.quality !== 'low') flags.push(`WRONG_POPULATION_TIER:${holder.audit?.quality ?? 'missing'}`);
+  if (quality !== 'low') flags.push(`WRONG_POPULATION_TIER:${quality}`);
   for (const id of Object.keys(threatSteps[level])) {
     if (!definitions.some(step => step.id === id)) flags.push(`THREAT_INVENTORY_DRIFT:${id}`);
     if (!observation?.phases.some(row => row.key === `step/${id}`)) flags.push(`UNOBSERVED_THREAT_STEP:${id}`);
   }
   for (const row of observation?.phases ?? []) flags.push(...row.flags.filter(flag => !multiSeedPace || !flag.startsWith('SLOW_FOLLOWER:')).map(flag => `${row.key}:${flag}`));
   for (const wave of observation?.waves ?? []) flags.push(...wave.flags.map(flag => `wave/${wave.key}:${flag}`));
-  const passiveHolder: { audit?: ThreatObserver; observation?: ReturnType<ThreatObserver['finish']> } = {};
-  let passiveRun: LevelReport | null = null; const passiveFlags: string[] = [];
-  try {
-    const campaign = level === 'L1' ? newCampaign('female', 1) : preset(`${level}-default` as ProgressionPreset);
-    campaign.seed = 1; campaign.settings.quality = 'low';
-    // L8 measures the full calm minute plus 90 s of passive breach combat.
-    // An undefended APC can be destroyed; do not spend 1,200 s trying to board
-    // its wreck. The combat window exceeds the original 85.5 s baseline.
-    const passiveWindowSeconds: Partial<Record<RunnerLevel, number>> = { L3: 70, L4: 250, L6: 110, L8: 150 };
-    passiveRun = await runLevel(level, 'complete', 1, passiveWindowSeconds[level], 'auto', campaign, undefined, 0, {
-      quality: 'low', passive: true, beforeBegin: world => { passiveHolder.audit = new ThreatObserver(world, level); },
-      beforeDispose: () => { passiveHolder.observation = passiveHolder.audit?.finish(); },
-    });
-  } catch (error) { passiveFlags.push(`AUDIT_ERROR:${String(error)}`); }
+  const passiveStage = stage(stageId(level, true));
+  const passiveRun = passiveStage.native?.run ?? null, passiveObservation = passiveStage.native?.observation ?? null;
+  const passiveFlags: string[] = passiveStage.error ? [`AUDIT_ERROR:${passiveStage.error}`] : [];
   // The acceptance hard rule applies to competent combat as well as passive
   // threat potential. Interrupted windups and group grabs are real attempts.
   for (const row of observation?.phases ?? []) if (row.threat && row.attacks + row.groupAttacks === 0)
@@ -150,7 +93,6 @@ for (const level of parallelLevels ? [] : selected) {
       passiveFlags.push(`step/${skilledFloors.step}:SKILLED_BELOW_ATTACKS_PER_MINUTE_${skilledFloors.rate}`);
   }
   if (level === 'L6' && (run?.damageTaken ?? 0) < 30) passiveFlags.push('SKILLED_DAMAGE_BELOW_30_HP');
-  const passiveObservation = passiveHolder.observation ?? null;
   if (!passiveRun && !passiveObservation) passiveFlags.push('INCOMPLETE_PASSIVE_POLICY:error');
   if (!passiveObservation?.phases.length) passiveFlags.push('MISSING_PASSIVE_OBSERVATIONS');
   for (const id of Object.keys(threatSteps[level])) if (!passiveObservation?.phases.some(row => row.key === `step/${id}`)) passiveFlags.push(`UNOBSERVED_PASSIVE_CRITERION_STEP:${id}`);
@@ -173,31 +115,33 @@ for (const level of parallelLevels ? [] : selected) {
   for (const wave of passiveObservation?.waves ?? []) passiveFlags.push(...wave.flags.map(flag => `wave/${wave.key}:${flag}`));
   if (!multiSeedPace) passiveFlags.push(...followerCoverageFlags(level, observation?.phases ?? []));
   if (followerPaceChecks[level]) passiveFlags.push(...followerWaitFlags(observation?.followerWait));
-  const receipt: LevelReceipt = { level, quality: holder.audit?.quality ?? 'missing', definitions, run, observation, flags, passiveRun, passiveObservation, passiveFlags, wallSeconds: (performance.now() - start) / 1000, nativeStateHash: holder.hash ?? null };
+  const receipt: LevelReceipt = { level, quality, definitions, run, observation, flags, passiveRun, passiveObservation, passiveFlags, wallSeconds, nativeStateHash: skilled?.nativeStateHash ?? null };
   if (level === 'L4') {
-    console.log('[qa:threat] L4: high-tier native hold census through the line break');
-    let census: L4HoldCensus | undefined;
-    await runLevel('L4', 'complete', 1, 250, 'auto', undefined, undefined, 0, { quality: 'high', passive: true,
-      beforeBegin: world => { census = new L4HoldCensus(world); }, beforeDispose: () => { receipt.highHold = census!.finish(); } });
+    const hold = stage('L4/high-hold');
+    if (hold.error || !hold.highHold) throw new Error(`Missing L4 high hold: ${hold.error ?? 'no census'}`);
+    receipt.highHold = hold.highHold;
     console.log(`[qa:threat] L4 high hold: ${JSON.stringify(receipt.highHold)}`);
   }
   if (level === 'L3') {
-    const army = observation?.l3Squad?.army ?? null;
-    const checkpoint = observation?.phases.find(phase => phase.key === 'step/checkpoint');
-    receipt.l3Army = armyLineVerdict([{ seed: 1, valid: !!run?.completed && army !== null, army, attacksPerMinute: checkpoint?.attacksPerMinute ?? null }, ...await l3ArmySeeds('low')]);
-    receipt.l3SurvivalSeeds = await l3SurvivalSeeds('low');
+    receipt.l3Army = armyLineVerdict([1, 2, 3].map(seed => stage(stageId(level, false, seed)).l3?.army
+      ?? { seed, valid: false, army: null, attacksPerMinute: null }));
+    receipt.l3SurvivalSeeds = [1, 2, 3].map(seed => stage(stageId(level, false, seed)).l3?.survival
+      ?? { seed, valid: false, s1: null, density: { near30: [], maxConcurrent: 0, cap: 0 } });
     console.log(`[qa:threat] L3 army line over seeds 1–3: ${JSON.stringify(receipt.l3Army)}`);
   }
   if (multiSeedPace) {
-    receipt.followerPaceSeeds = [{ seed: 1, outcome: run?.outcome, nativeStateHash: holder.hash, valid: !!run?.completed, companions: [], phases: observation?.phases ?? [] }, ...await extraFollowerPaceSeeds(level, 'low', false, maxWorkers)];
-    receipt.passiveFollowerPaceSeeds = [{ seed: 1, outcome: passiveRun?.outcome, valid: !!passiveRun && (passiveRun.completed || passiveRun.outcome === 'tick-budget'), companions: [], phases: passiveObservation?.phases ?? [] }, ...await extraFollowerPaceSeeds(level, 'low', true, maxWorkers)];
+    const extraSeeds = (passive: boolean): FollowerPaceSeed[] => [2, 3].map(seed => {
+      const result = stage(stageId(level, passive, seed));
+      return result.follower ?? { seed, valid: false, companions: [], phases: [], error: result.error ?? 'Missing seed result' };
+    });
+    receipt.followerPaceSeeds = [{ seed: 1, outcome: run?.outcome, nativeStateHash: skilled?.nativeStateHash ?? undefined, valid: !!run?.completed, companions: [], phases: observation?.phases ?? [] }, ...extraSeeds(false)];
+    receipt.passiveFollowerPaceSeeds = [{ seed: 1, outcome: passiveRun?.outcome, valid: !!passiveRun && (passiveRun.completed || passiveRun.outcome === 'tick-budget'), companions: [], phases: passiveObservation?.phases ?? [] }, ...extraSeeds(true)];
     receipt.followerPace = followerPaceVerdict(receipt.followerPaceSeeds, { required: followerPaceChecks[level] });
     receipt.passiveFollowerPace = followerPaceVerdict(receipt.passiveFollowerPaceSeeds);
     flags.push(...receipt.followerPace.flags);
     passiveFlags.push(...receipt.followerPace.flags, ...receipt.passiveFollowerPace.flags);
     console.log(`[qa:threat] ${level} follower pace over seeds 1–3: skilled ${receipt.followerPace.flags.length}, passive ${receipt.passiveFollowerPace.flags.length} flags`);
   }
-  receipt.wallSeconds = (performance.now() - start) / 1000;
   for (const row of focusedCriteria([receipt])) if (row.verdict === 'FAIL') passiveFlags.push(`criterion/${row.id}:FAIL`);
   levels.push(receipt);
   console.log(`[qa:threat] ${level}: skilled ${run?.outcome ?? 'error'}, passive ${passiveRun?.outcome ?? 'error'}, ${passiveFlags.length} passive flags (${receipt.wallSeconds.toFixed(1)}s)`);
@@ -207,7 +151,7 @@ const seconds = (performance.now() - started) / 1000;
 const flags = levels.flatMap(level => level.passiveFlags.map(flag => `${level.level}/${flag}`));
 if (selected.length !== runnerLevels.length) flags.push('PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate');
 if (values.report && sourceMatchesMain !== true) flags.push('BASELINE_MAIN_SOURCE_NOT_VERIFIED');
-const receipt: AuditReceipt = { revision, mainRevision, sourceMatchesMain, seed: 1, policy: 'complete + passive', tier: 'low', workers: selected.some(level => level === 'L5' || level === 'L7') ? maxWorkers : 1, seconds, flags, levels };
+const receipt: AuditReceipt = { revision, mainRevision, sourceMatchesMain, seed: 1, policy: 'complete + passive', tier: 'low', workers: maxWorkers, seconds, flags, levels };
 await writeFile(join(values.out!, 'audit.json'), JSON.stringify(receipt, null, 2) + '\n');
 const reportPath = values.report ?? join(values.out!, 'README.md');
 await mkdir(dirname(reportPath), { recursive: true }); await writeFile(reportPath, renderReport(receipt, !!values.report));

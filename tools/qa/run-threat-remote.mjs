@@ -8,7 +8,7 @@ const same = git('diff', main, '--', 'src', 'public') === '' && git('ls-files', 
 const result = spawnSync('sh', [
   'tools/remote/run.sh', process.cwd(), '--pull', 'test-results/qa-threat',
   '--env', `QA_THREAT_REVISION=${revision}`, '--env', `QA_THREAT_MAIN_REVISION=${main}`, '--env', `QA_THREAT_SOURCE_MATCHES_MAIN=${same}`,
-  '--', 'npm', 'run', 'qa:threat', '--', '--maxWorkers=2', ...process.argv.slice(2),
+  '--', 'npm', 'run', 'qa:threat', '--', '--maxWorkers=4', ...process.argv.slice(2),
 ], { stdio: 'inherit' });
 if (result.error) throw result.error;
 process.exitCode = result.status ?? 1;
