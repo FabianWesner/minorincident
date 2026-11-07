@@ -1,33 +1,33 @@
 {
   "row": "L6-14",
   "status": "PASS",
-  "reviewer": "Codex/blk-b",
+  "reviewer": "Codex rr-b",
   "date": "2026-11-07",
-  "commit": "5edb190d10d29beafcf664827ab10bc0fefe8f9b",
-  "sourceDigest": "eb7cb3b93838b9b714cddcf54265aaacf615e5f73a22e00c0a69d5a55e4beb1b",
+  "commit": "50be7c824705fc3cdbb3a7ab7dd78f72c7bf2001",
   "clauses": [
     {
       "clause": "Underground readability: player contrast ≥ 3:1; infected eyes brightest pixels.",
       "verdict": "PASS",
-      "note": "Personally inspected all14 native/background/ID-mask/repeat frames and both enlarged face crops. The tan forehead remains a broad warm patch and the red eyes remain tiny separate islands. Exact linear-sRGB peaks now put both eyes above every non-eye body pixel: low eye0.24487004, high0.23464440, body0.23217151. Native repeat body pixels are unchanged after mask restoration; courier/background contrasts21.78/21.52 exceed3:1. Scope: the specified elderly emergency-tunnel fixture, both tiers."
+      "note": "Fresh pooled L6 emergency/headlamp tunnel fixture at x110/z15, actual infected62, both render tiers. Opened all14 original1280x720 native/background/ID/body/eye/repeat frames: heroine has a clear bright gold silhouette; infected has separate red eye islands under a warm forehead. Courier/background contrast is21.7842/21.5157 with .02 offset (11.3803/11.2545 with .05), all≥3:1. Linear-sRGB eye maxima low0.24487004/high0.23464440 exceed non-eye body maximum0.23217151. Exact native-repeat body pixels match after mask restoration. Repro: SCENE_PORT=4834 BROWSER_POOL_JOB_ID=rr-b node --import tsx/esm tools/qa/sweep-b-l6-readability.ts low tunnel 62 (repeat high); python3 test-results/rr-b/l6-analyze.py."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/blk-b/L6-14-proof.json",
-      "sha256": "3b78e7e1d88a2cb380b979b183780c8fe2342e8dc3c5a58f7cf65f914c87b343",
-      "what": "Personally inspected all14 native/background/ID-mask/repeat frames and both enlarged face crops. The tan forehead remains a broad warm patch and the red eyes remain tiny separate islands. Exact linear-sRGB peaks now put both eyes above every non-eye body pixel: low eye0.24487004, high0.23464440, body0.23217151. Native repeat body pixels are unchanged after mask restoration; courier/background contrasts21.78/21.52 exceed3:1."
+      "file": "test-results/rr-b/L6-14-analysis.json",
+      "sha256": "47f9e8bd5e07e021c6db65d255cbd8661a46b0c6c095020cef7f2f25e86861e5",
+      "what": "Fresh pooled L6 emergency/headlamp tunnel fixture at x110/z15, actual infected62, both render tiers. Opened all14 original1280x720 native/background/ID/body/eye/repeat frames: heroine has a clear bright gold silhouette; infected has separate red eye islands under a warm forehead. Courier/background contrast is21.7842/21.5157 with .02 offset (11.3803/11.2545 with .05), all≥3:1. Linear-sRGB eye maxima low0.24487004/high0.23464440 exceed non-eye body maximum0.23217151. Exact native-repeat body pixels match after mask restoration. Repro: SCENE_PORT=4834 BROWSER_POOL_JOB_ID=rr-b node --import tsx/esm tools/qa/sweep-b-l6-readability.ts low tunnel 62 (repeat high); python3 test-results/rr-b/l6-analyze.py."
     },
     {
-      "file": "docs/reports/blk-b/L6-readability-low-tunnel-62-repeat-ledger.json.gz",
-      "sha256": "5e9cf1426be88eefcd38f0395e52c44137e8434ee5bfa4ce31f22d58412ebe8d",
-      "what": "Source-bound capture ledger; all seven frames personally inspected, masks resolve actual actor62, restoration bitwise identical."
+      "file": "test-results/rr-b/L6-readability-low-tunnel-62-repeat-ledger.json.gz",
+      "sha256": "c5cb86199ce6552e4ebaf33f380b9f5ec0925a876ff5207ef4f22baacde412fd",
+      "what": "Fresh pooled L6 emergency/headlamp tunnel fixture at x110/z15, actual infected62, both render tiers. Opened all14 original1280x720 native/background/ID/body/eye/repeat frames: heroine has a clear bright gold silhouette; infected has separate red eye islands under a warm forehead. Courier/background contrast is21.7842/21.5157 with .02 offset (11.3803/11.2545 with .05), all≥3:1. Linear-sRGB eye maxima low0.24487004/high0.23464440 exceed non-eye body maximum0.23217151. Exact native-repeat body pixels match after mask restoration. Repro: SCENE_PORT=4834 BROWSER_POOL_JOB_ID=rr-b node --import tsx/esm tools/qa/sweep-b-l6-readability.ts low tunnel 62 (repeat high); python3 test-results/rr-b/l6-analyze.py."
     },
     {
-      "file": "docs/reports/blk-b/L6-readability-high-tunnel-62-repeat-ledger.json.gz",
-      "sha256": "7e3dd403f52ded9214cdf269a77badfc078c34ae50a6933aef2d76b9757f3e0c",
-      "what": "Source-bound capture ledger; all seven frames personally inspected, masks resolve actual actor62, restoration bitwise identical."
+      "file": "test-results/rr-b/L6-readability-high-tunnel-62-repeat-ledger.json.gz",
+      "sha256": "9d17288813f491d52df1fd28abd5f42771a6c8b1908f7796a1967aa1127bfe23",
+      "what": "Fresh pooled L6 emergency/headlamp tunnel fixture at x110/z15, actual infected62, both render tiers. Opened all14 original1280x720 native/background/ID/body/eye/repeat frames: heroine has a clear bright gold silhouette; infected has separate red eye islands under a warm forehead. Courier/background contrast is21.7842/21.5157 with .02 offset (11.3803/11.2545 with .05), all≥3:1. Linear-sRGB eye maxima low0.24487004/high0.23464440 exceed non-eye body maximum0.23217151. Exact native-repeat body pixels match after mask restoration. Repro: SCENE_PORT=4834 BROWSER_POOL_JOB_ID=rr-b node --import tsx/esm tools/qa/sweep-b-l6-readability.ts low tunnel 62 (repeat high); python3 test-results/rr-b/l6-analyze.py."
     }
   ],
-  "notes": "Named elderly infected62 counterexample, actual L6 second-breach emergency/headlamp tunnel x110/z15, both tiers at normal zoom1.5. Controlled existing-actor pose, no actor HP/stat/AI edits. This is a measured fixture, not an exhaustive census of all tunnel poses."
+  "notes": "Fresh both-tier measurement of the specified elderly emergency-tunnel readability fixture; not an exhaustive census of every underground pose.",
+  "sourceDigest": "b4451833597c98a85fb013c5efb22325aa654466e8ecccb6e355dc405a1fcfbb"
 }
