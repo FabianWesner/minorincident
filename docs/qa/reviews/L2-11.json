@@ -1,27 +1,33 @@
 {
   "row": "L2-11",
-  "status": "PASS",
-  "reviewer": "Codex fix62-a",
-  "date": "2026-11-05",
-  "commit": "ba261cb1a0076bb617f99ea85488ff713b79635a",
+  "status": "FAIL",
+  "reviewer": "Codex final-a",
+  "date": "2026-11-07",
+  "commit": "0cbd817165f89940d2810fe2091000538a263ba0",
   "clauses": [
     {
-      "clause": "Escape area holds \u2265 25 infected in \u2265 3 groups of \u2265 4, \u2264 20 % chasing at step start; plus **6 scattered singles** along the walk (high; low \u2265 4). PO: \"Put a few ones here and there, no group.\"",
-      "verdict": "PASS",
-      "note": "All four current-source native ordinary/axe-route radio-event clauses PASS after the L2 runner-panic repair. Exact measurements: [{\"tier\":\"low\",\"clause\":\"native ordinary-route bridge-start population and route singles\",\"radio\":{\"infected\":30,\"escapeArea\":27,\"groupsOf4\":4,\"chasingPlayer\":1,\"chasingFraction\":0.03333333333333333,\"scatteredSingles\":6}},{\"tier\":\"low\",\"clause\":\"native axe-route bridge-start escape-area census, groups, chase share and scattered singles\",\"radio\":{\"infected\":30,\"escapeArea\":29,\"groupsOf4\":4,\"chasingPlayer\":0,\"chasingFraction\":0,\"scatteredSingles\":6}},{\"tier\":\"high\",\"clause\":\"native ordinary-route bridge-start population and route singles\",\"radio\":{\"infected\":42,\"escapeArea\":34,\"groupsOf4\":4,\"chasingPlayer\":1,\"chasingFraction\":0.023809523809523808,\"scatteredSingles\":6}},{\"tier\":\"high\",\"clause\":\"native axe-route bridge-start escape-area census, groups, chase share and scattered singles\",\"radio\":{\"infected\":45,\"escapeArea\":40,\"groupsOf4\":4,\"chasingPlayer\":3,\"chasingFraction\":0.06666666666666667,\"scatteredSingles\":6}}]. No population, cap, timer or criterion changed. The independent no-axe event ledger retains actual actor positions/identities/membership. Courier protection establishes census only, not mortal difficulty."
+      "clause": "Escape area holds ≥ 25 infected in ≥ 3 groups of ≥ 4, ≤ 20 % chasing at step start; plus **6 scattered singles** along the walk (high; low ≥ 4). PO: \"Put a few ones here and there, no group.\"",
+      "verdict": "FAIL",
+      "note": "low/controlled-fixture native ordinary-route bridge-start population and route singles: {\"radio\":{\"infected\":30,\"escapeArea\":21,\"groupsOf4\":3,\"chasingPlayer\":5,\"chasingFraction\":0.16666666666666666,\"scatteredSingles\":6},\"scatteredSingleAdmissions\":[{\"id\":262,\"tick\":4040,\"x\":-33.5,\"z\":-14},{\"id\":264,\"tick\":4040,\"x\":-34,\"z\":2},{\"id\":266,\"tick\":4050,\"x\":-27.2,\"z\":19},{\"id\":268,\"tick\":4060,\"x\":-13,\"z\":26.5},{\"id\":270,\"tick\":4080,\"x\":6,\"z\":26.5},{\"id\":272,\"tick\":4080,\"x\":25,\"z\":26.5}]}; target ≥25 living escape-area infected;≥3 admitted groups of≥4;≤20% chasing; low≥4 / high≥6 distinct scattered singles along the walk (FAIL)"
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix62-a/L2-11-native-proof.json",
-      "sha256": "a4e8ead520a7a2721386f8f7420c2bda354029df393db829e5896cdea4055c4d",
-      "what": "All four existing native ordinary/axe route radio-event clauses pass after the L2-only panic repair. Counts/timers/caps and checker are unchanged. Separate ordinary no-axe event ledger retains actor identities, positions and membership. Final-source native fixture rerun confirms all four clauses unchanged."
+      "file": "docs/reports/final-a/L2-11-native.json",
+      "sha256": "e00ac8f3c658bc5898656e3b990f677b3bf5c65ca5c85c84dc61b25be321e803",
+      "what": "low/controlled-fixture native ordinary-route bridge-start population and route singles: {\"radio\":{\"infected\":30,\"escapeArea\":21,\"groupsOf4\":3,\"chasingPlayer\":5,\"chasingFraction\":0.16666666666666666,\"scatteredSingles\":6},\"scatteredSingleAdmissions\":[{\"id\":262,\"tick\":4040,\"x\":-33.5,\"z\":-14},{\"id\":264,\"tick\":4040,\"x\":-34,\"z\":2},{\"id\":266,\"tick\":4050,\"x\":-27.2,\"z\":19},{\"id\":268,\"tick\":4060,\"x\":-13,\"z\":26.5},{\"id\":270,\"tick\":4080,\"x\":6,\"z\":26.5},{\"id\":272,\"tick\":4080,\"x\":25,\"z\":26.5}]}; target ≥25 living escape-area infected;≥3 admitted groups of≥4;≤20% chasing; low≥4 / high≥6 distinct scattered singles along the walk (FAIL)"
     },
     {
-      "file": "docs/reports/fix62-a/L2-11-ledger.json.gz",
-      "sha256": "add039f1597ae9148d96071cc08f7663ac2496e3b13b23e23f1c73c9718275f7",
-      "what": "All four existing native ordinary/axe route radio-event clauses pass after the L2-only panic repair. Counts/timers/caps and checker are unchanged. Separate ordinary no-axe event ledger retains actor identities, positions and membership."
+      "file": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
+      "sha256": "260e6b2630be1e593395f867cffd45f125d4b45e8fc973a9e4376eb931683aff",
+      "what": "Frozen-head L2-11 native input receipt, evaluated by the exact clauses retained in the row proof."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
+      "sha256": "ebcffc44ba056bc652015d345e957523462d8adbb8a977c1edaa333550202650",
+      "what": "Frozen-head L2-11 native input receipt, evaluated by the exact clauses retained in the row proof."
     }
   ],
-  "notes": "The systemic L2 panic repair closes both this population finding and L2-13. No second game tuning was required. Existing native clauses independently cover no-axe and axe policies at both qualities."
+  "notes": "A measured failing clause establishes whole-row FAIL; remaining manual clauses are not asserted to pass. Game source unchanged from frozen head.",
+  "sourceDigest": "9f88ba48ca13900ca4f429225cbac3045a96d48adee791c50179dde9c8cd025f"
 }

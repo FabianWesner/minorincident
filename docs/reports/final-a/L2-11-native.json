@@ -1,0 +1,259 @@
+{
+  "row": "L2-11",
+  "verdict": "FAIL",
+  "frozenHead": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+  "fixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4",
+  "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
+  "generatedAt": "2026-11-06T23:49:03.138Z",
+  "criterion": "Escape area holds ≥ 25 infected in ≥ 3 groups of ≥ 4, ≤ 20 % chasing at step start; plus **6 scattered singles** along the walk (high; low ≥ 4). PO: \"Put a few ones here and there, no group.\"",
+  "automatedComplete": false,
+  "checks": [
+    {
+      "id": "L2-11",
+      "clause": "native ordinary-route bridge-start population and route singles",
+      "value": {
+        "radio": {
+          "infected": 30,
+          "escapeArea": 21,
+          "groupsOf4": 3,
+          "chasingPlayer": 5,
+          "chasingFraction": 0.16666666666666666,
+          "scatteredSingles": 6
+        },
+        "scatteredSingleAdmissions": [
+          {
+            "id": 262,
+            "tick": 4040,
+            "x": -33.5,
+            "z": -14
+          },
+          {
+            "id": 264,
+            "tick": 4040,
+            "x": -34,
+            "z": 2
+          },
+          {
+            "id": 266,
+            "tick": 4050,
+            "x": -27.2,
+            "z": 19
+          },
+          {
+            "id": 268,
+            "tick": 4060,
+            "x": -13,
+            "z": 26.5
+          },
+          {
+            "id": 270,
+            "tick": 4080,
+            "x": 6,
+            "z": 26.5
+          },
+          {
+            "id": 272,
+            "tick": 4080,
+            "x": 25,
+            "z": 26.5
+          }
+        ]
+      },
+      "target": "≥25 living escape-area infected;≥3 admitted groups of≥4;≤20% chasing; low≥4 / high≥6 distinct scattered singles along the walk",
+      "status": "FAIL",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
+      "level": "L2"
+    },
+    {
+      "id": "L2-11",
+      "clause": "native axe-route bridge-start escape-area census, groups, chase share and scattered singles",
+      "value": {
+        "radio": {
+          "infected": 30,
+          "escapeArea": 29,
+          "groupsOf4": 4,
+          "chasingPlayer": 0,
+          "chasingFraction": 0,
+          "scatteredSingles": 6
+        },
+        "scatteredSingleAdmissions": [
+          {
+            "id": 262,
+            "tick": 4040,
+            "x": -33.5,
+            "z": -14
+          },
+          {
+            "id": 264,
+            "tick": 4040,
+            "x": -34,
+            "z": 2
+          },
+          {
+            "id": 266,
+            "tick": 4050,
+            "x": -27.2,
+            "z": 19
+          },
+          {
+            "id": 268,
+            "tick": 4060,
+            "x": -13,
+            "z": 26.5
+          },
+          {
+            "id": 270,
+            "tick": 4080,
+            "x": 6,
+            "z": 26.5
+          },
+          {
+            "id": 272,
+            "tick": 4080,
+            "x": 25,
+            "z": 26.5
+          }
+        ]
+      },
+      "target": "≥25 living escape-area infected;≥3 admitted groups of≥4;≤20% chasing; low≥4 / high≥6 distinct scattered singles along the walk",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
+      "level": "L2"
+    },
+    {
+      "id": "L2-11",
+      "clause": "native ordinary-route bridge-start population and route singles",
+      "value": {
+        "radio": {
+          "infected": 42,
+          "escapeArea": 34,
+          "groupsOf4": 4,
+          "chasingPlayer": 1,
+          "chasingFraction": 0.023809523809523808,
+          "scatteredSingles": 6
+        },
+        "scatteredSingleAdmissions": [
+          {
+            "id": 274,
+            "tick": 4033,
+            "x": -33.5,
+            "z": -14
+          },
+          {
+            "id": 276,
+            "tick": 4033,
+            "x": -34,
+            "z": 2
+          },
+          {
+            "id": 278,
+            "tick": 4033,
+            "x": -27.2,
+            "z": 19
+          },
+          {
+            "id": 280,
+            "tick": 4033,
+            "x": -13,
+            "z": 26.5
+          },
+          {
+            "id": 282,
+            "tick": 4033,
+            "x": 6,
+            "z": 26.5
+          },
+          {
+            "id": 284,
+            "tick": 4033,
+            "x": 25,
+            "z": 26.5
+          }
+        ]
+      },
+      "target": "≥25 living escape-area infected;≥3 admitted groups of≥4;≤20% chasing; low≥4 / high≥6 distinct scattered singles along the walk",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
+      "level": "L2"
+    },
+    {
+      "id": "L2-11",
+      "clause": "native axe-route bridge-start escape-area census, groups, chase share and scattered singles",
+      "value": {
+        "radio": {
+          "infected": 39,
+          "escapeArea": 37,
+          "groupsOf4": 4,
+          "chasingPlayer": 0,
+          "chasingFraction": 0,
+          "scatteredSingles": 6
+        },
+        "scatteredSingleAdmissions": [
+          {
+            "id": 274,
+            "tick": 4033,
+            "x": -33.5,
+            "z": -14
+          },
+          {
+            "id": 276,
+            "tick": 4033,
+            "x": -34,
+            "z": 2
+          },
+          {
+            "id": 278,
+            "tick": 4033,
+            "x": -27.2,
+            "z": 19
+          },
+          {
+            "id": 280,
+            "tick": 4033,
+            "x": -13,
+            "z": 26.5
+          },
+          {
+            "id": 282,
+            "tick": 4033,
+            "x": 6,
+            "z": 26.5
+          },
+          {
+            "id": 284,
+            "tick": 4033,
+            "x": 25,
+            "z": 26.5
+          }
+        ]
+      },
+      "target": "≥25 living escape-area infected;≥3 admitted groups of≥4;≤20% chasing; low≥4 / high≥6 distinct scattered singles along the walk",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
+      "level": "L2"
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
+      "sha256": "260e6b2630be1e593395f867cffd45f125d4b45e8fc973a9e4376eb931683aff",
+      "what": "Frozen-head L2-11 native input receipt, evaluated by the exact clauses retained in the row proof."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
+      "sha256": "ebcffc44ba056bc652015d345e957523462d8adbb8a977c1edaa333550202650",
+      "what": "Frozen-head L2-11 native input receipt, evaluated by the exact clauses retained in the row proof."
+    }
+  ],
+  "observation": "low/controlled-fixture native ordinary-route bridge-start population and route singles: {\"radio\":{\"infected\":30,\"escapeArea\":21,\"groupsOf4\":3,\"chasingPlayer\":5,\"chasingFraction\":0.16666666666666666,\"scatteredSingles\":6},\"scatteredSingleAdmissions\":[{\"id\":262,\"tick\":4040,\"x\":-33.5,\"z\":-14},{\"id\":264,\"tick\":4040,\"x\":-34,\"z\":2},{\"id\":266,\"tick\":4050,\"x\":-27.2,\"z\":19},{\"id\":268,\"tick\":4060,\"x\":-13,\"z\":26.5},{\"id\":270,\"tick\":4080,\"x\":6,\"z\":26.5},{\"id\":272,\"tick\":4080,\"x\":25,\"z\":26.5}]}; target ≥25 living escape-area infected;≥3 admitted groups of≥4;≤20% chasing; low≥4 / high≥6 distinct scattered singles along the walk (FAIL)"
+}
