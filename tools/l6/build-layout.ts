@@ -63,6 +63,10 @@ layout.colliders.push({id:'northgate-platform',aabb:{min:[246,.4,exitZ-3.8],max:
 // The exported helper boxes rotate their dimensions twice; use the actual tread tops.
 for(const [z,width]of [[exitZ+1.4,1.5],[exitZ-.9,1.35]])for(let i=0;i<24;i++)layout.colliders.push({id:`northgate-tread-${z}-${i}`,aabb:{min:[249.4+i*.25,.4,z-width/2],max:[249.4+(i+1)*.25,.6+3.3*(i+1)/24,z+width/2]},walkable:true,minTier:0,maxTier:5});
 layout.colliders.push({id:'northgate-landing',aabb:{min:[255.4,.4,exitZ-2.8],max:[258,3.9,exitZ+2.8]},walkable:true,minTier:0,maxTier:5});
+// Only the two stair flights have climbable floor between platform and landing.
+// Keep click/WASD routes out of the open space beside and between the flights.
+for (const [lo,hi] of [[11.2,exitZ-.9-1.35/2],[exitZ-.9+1.35/2,exitZ+1.4-1.5/2],[exitZ+1.4+1.5/2,19.7]])
+  layout.walkable.excluded.push(rect(249.4,lo,255.4,hi));
 
 for(const [x,z] of [[-8,-2+SZ],[0,-2+SZ],[-24,15+SZ],[-12,15+SZ],[0,15+SZ],[20,15+SZ]]) place('kit.shelter-camp',x,z,.6,0,'shelter-camp');
 for(const [x,z] of [[269,3],[282,26],[283,6]]) place('prop.jersey-barrier',x,z,3.9);
@@ -94,7 +98,8 @@ for(const [n,p]of l6PhotoSpots)anchor(`photo-${n}`,p[0],p[1],n==='l6-exit-night'
 const rooms=[[-30,-20+SZ,30,18.8],[30,11.2,258,18.8],[258,0,288,30],...[54,126,198].map(x=>[x-2.3,1.2,x+2.3,11.2]),...[78,174].map(x=>[x-2.3,18.8,x+2.3,28.8])];
 const edges=[...new Set([-32,288,...rooms.flatMap(r=>[r[0],r[2]])])].sort((a,b)=>a-b);
 for(let i=1;i<edges.length;i++){const x0=edges[i-1],x1=edges[i],mid=(x0+x1)/2,spans=rooms.filter(r=>mid>=r[0]&&mid<r[2]).map(r=>[r[1],r[3]]).sort((a,b)=>a[0]-b[0]);let z=-30;for(const [lo,hi]of spans){if(lo>z)layout.walkable.excluded.push(rect(x0,z,x1,lo));z=Math.max(z,hi);}if(z<32)layout.walkable.excluded.push(rect(x0,z,x1,32));}
-layout.colliders.push({id:'night-street-floor',aabb:{min:[258,3.75,0],max:[288,3.9,30]},walkable:true,minTier:0,maxTier:5});
+// The street is solid ground: a thin elevated slab let the courier walk beneath it by skirting the stairs.
+layout.colliders.push({id:'night-street-floor',aabb:{min:[258,0,0],max:[288,3.9,30]},walkable:true,minTier:0,maxTier:5});
 // There are no drivable road lanes underground; the track is a pedestrian route.
 layout.roads={nodes:[{id:'shelter',point:[3,8+SZ]}],edges:[]};
 layout.geometryHash=createHash('sha256').update(JSON.stringify(layout)).digest('hex');

@@ -1,0 +1,75 @@
+{
+  "tier": "low",
+  "setup": "Only unarmed campaign racks at load; mortal courier; ordinary move/aim/fist inputs; no actor/health/clock changes or objective skips.",
+  "completed": true,
+  "phase": "result",
+  "stats": {
+    "time": 253.45,
+    "kills": 0,
+    "knockdowns": 8,
+    "damage": 453.56666666666536,
+    "deaths": 3,
+    "rescued": 1,
+    "optionalObjectives": []
+  },
+  "offered": [
+    "weapon.fists",
+    "weapon.kick"
+  ],
+  "attacks": [
+    "weapon.fists"
+  ],
+  "nativeStateHash": "22968459",
+  "lastSamples": [
+    {
+      "tick": 14880,
+      "phase": "exit",
+      "hp": 26.633333333332544,
+      "at": {
+        "x": 261.0952453613281,
+        "y": 4.619999885559082,
+        "z": 20.310047149658203,
+        "yaw": -0.3926990816987242
+      },
+      "leader": [
+        267.3233333333162,
+        15
+      ],
+      "alive": 0
+    },
+    {
+      "tick": 15000,
+      "phase": "done",
+      "hp": 27.966666666665944,
+      "at": {
+        "x": 269.13897705078125,
+        "y": 4.619999885559082,
+        "z": 23.516368865966797,
+        "yaw": 0
+      },
+      "leader": [
+        268.31333333331685,
+        15
+      ],
+      "alive": 0
+    },
+    {
+      "tick": 15120,
+      "phase": "done",
+      "hp": 31.966666666666143,
+      "at": {
+        "x": 275.6528625488281,
+        "y": 4.619999885559082,
+        "z": 18.343748092651367,
+        "yaw": 1.1780972450961722
+      },
+      "leader": [
+        268.31333333331685,
+        15
+      ],
+      "alive": 0
+    }
+  ],
+  "method": "Native production fists-only diagnostic; not a physical-input campaign route.",
+  "fullReceiptSha256": "a53340c709264477bfb3f866891f28a42fefd0dc45ba00eb3d60ebe8812b501b"
+}
