@@ -1,0 +1,53 @@
+{
+  "row": "L3-11",
+  "status": "PASS",
+  "reviewer": "Codex final-a",
+  "date": "2026-11-07",
+  "commit": "0cbd817165f89940d2810fe2091000538a263ba0",
+  "clauses": [
+    {
+      "clause": "combat: attacks on the player ≥ 3/min, ≤ 25/min for the competent run (tune); medkits ≥ 2 per street (≥ 7 total), newbie below 20 % HP ≤ 10 % of the time.",
+      "verdict": "PASS",
+      "note": "10 current native checks PASS across low/high. low/complete competent player attack rate on checkpoint route: 5.3857661893567; target 3 ≤ value ≤ 25 (PASS); low/complete all-street medkit census (per-street split still open): 33; target 7 ≤ value ≤ Infinity (PASS); low/stationary all-street medkit census (per-street split still open): 33; target 7 ≤ value ≤ Infinity (PASS); high/complete competent player attack rate on checkpoint route: 12.020606754436177; target 3 ≤ value ≤ 25 (PASS); high/complete all-street medkit census (per-street split still open): 33; target 7 ≤ value ≤ Infinity (PASS); high/stationary all-street medkit census (per-street split still open): 33; target 7 ≤ value ≤ Infinity (PASS); low/controlled-fixture initial authored medkit entities by street: {\"blvd\":9,\"commerce\":15,\"oak\":9}; target ≥2 perstreet;≥7total (PASS); low/controlled-fixture mortal newbie time below20percent HP: {\"share\":0.02549827413428349,\"outcome\":\"complete\",\"deaths\":3,\"simulatedSeconds\":305.35}; target ≤10% of alive samples; fullroute completed (PASS); high/controlled-fixture initial authored medkit entities by street: {\"blvd\":9,\"commerce\":15,\"oak\":9}; target ≥2 perstreet;≥7total (PASS); high/controlled-fixture mortal newbie time below20percent HP: {\"share\":0,\"outcome\":\"complete\",\"deaths\":0,\"simulatedSeconds\":219.51666666666668}; target ≤10% of alive samples; fullroute completed (PASS)"
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/final-a/L3-11-native.json",
+      "sha256": "ad7d886814dd71d8b1404003ed4c15b4a6ff06ebb800e28082ce2964faa7d3d8",
+      "what": "10 current native checks PASS across low/high. low/complete competent player attack rate on checkpoint route: 5.3857661893567; target 3 ≤ value ≤ 25 (PASS); low/complete all-street medkit census (per-street split still open): 33; target 7 ≤ value ≤ Infinity (PASS); low/stationary all-street medkit census (per-street split still open): 33; target 7 ≤ value ≤ Infinity (PASS); high/complete competent player attack rate on checkpoint route: 12.020606754436177; target 3 ≤ value ≤ 25 (PASS); high/complete all-street medkit census (per-street split still open): 33; target 7 ≤ value ≤ Infinity (PASS); high/stationary all-street medkit census (per-street split still open): 33; target 7 ≤ value ≤ Infinity (PASS); low/controlled-fixture initial authored medkit entities by street: {\"blvd\":9,\"commerce\":15,\"oak\":9}; target ≥2 perstreet;≥7total (PASS); low/controlled-fixture mortal newbie time below20percent HP: {\"share\":0.02549827413428349,\"outcome\":\"complete\",\"deaths\":3,\"simulatedSeconds\":305.35}; target ≤10% of alive samples; fullroute completed (PASS); high/controlled-fixture initial authored medkit entities by street: {\"blvd\":9,\"commerce\":15,\"oak\":9}; target ≥2 perstreet;≥7total (PASS); high/controlled-fixture mortal newbie time below20percent HP: {\"share\":0,\"outcome\":\"complete\",\"deaths\":0,\"simulatedSeconds\":219.51666666666668}; target ≤10% of alive samples; fullroute completed (PASS)"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L3-low-complete.json",
+      "sha256": "26aa4ed49dfbfcdf86a690bc83d902a5c8b9b4c93933f99d67484a55c70a971a",
+      "what": "Frozen-head L3-11 native input receipt, evaluated by the exact clauses retained in the row proof."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L3-low-stationary.json",
+      "sha256": "397baa017658a0b23da1cece00753b1b6e9363ed1272bff5125d3de615c52def",
+      "what": "Frozen-head L3-11 native input receipt, evaluated by the exact clauses retained in the row proof."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L3-high-complete.json",
+      "sha256": "f62f48629e8a32b71b162b49eb6d4f0a9cfb7cc46cbbd97a141e6e39bf3d89b1",
+      "what": "Frozen-head L3-11 native input receipt, evaluated by the exact clauses retained in the row proof."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L3-high-stationary.json",
+      "sha256": "260dd369e09316f288a0de9e176ff1abc26bbc5547a1f7be1e20cadeecc29b80",
+      "what": "Frozen-head L3-11 native input receipt, evaluated by the exact clauses retained in the row proof."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
+      "sha256": "1dbb6554d364c1372e298abab060319623af1f8871fbd2e7e24dad1a1382d0cc",
+      "what": "Frozen-head L3-11 native input receipt, evaluated by the exact clauses retained in the row proof."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
+      "sha256": "e4dd4c36be5c14615ed61548e5c0cb95e00a5363f1741e70547ed354a08a8086",
+      "what": "Frozen-head L3-11 native input receipt, evaluated by the exact clauses retained in the row proof."
+    }
+  ],
+  "notes": "Numeric-only criterion; all evaluator clauses measured at both qualities on the frozen runtime source. No visual or route-readability inference.",
+  "sourceDigest": "b54f676bf2eb09a12c8059dce4ebe53003816773db044d7acfc253fccbedccf9"
+}
