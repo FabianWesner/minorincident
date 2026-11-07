@@ -1,0 +1,2 @@
+// launchBrowser is used by both child tools: inherit shared-pool exclusive admission.
+import{spawnSync}from'node:child_process';for(const tier of ['low','high']){const r=spawnSync(process.execPath,['--import','tsx/esm','tools/qa/accept/.final-c-final-arrival.ts',tier],{stdio:'inherit'});console.log('ARRIVAL',tier,r.status)}const r=spawnSync(process.execPath,['--import','tsx/esm','tools/qa/accept/.final-c-final-fight.ts'],{stdio:'inherit'});console.log('FIGHT',r.status);

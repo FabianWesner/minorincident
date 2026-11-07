@@ -1,0 +1,16 @@
+{
+  "cause": "Pool wrapper infers migration from launchBrowser/SceneSession references in supervisor source. Initial spawn-only supervisor lacked the marker despite child tools using pooled launchBrowser, so it was classified external.",
+  "originalSupervisor": {
+    "file": "docs/reports/final-c/L10-12/quiet-batch-producer.ts",
+    "sha256": "b899c4761b48addde3a2cf02608c02bffa75ed4179e4106ca4207dbc0ef99707"
+  },
+  "fixedSupervisor": {
+    "file": "docs/reports/final-c/L10-12/quiet-batch-v2-producer.ts",
+    "sha256": "a60ba100fe3760fc4ba193ff220d786d60582625bb70ec3104a7be535ddd2a1e"
+  },
+  "action": "Cancelled original queued reservation while every recorded granted value was false, before any child or qualified measurement started. Added accurate launchBrowser child-use marker and queued corrected supervisor. Identical arrival/fight producer logic; no frame gate, host quiet condition or criterion changed.",
+  "originalAdmission": {
+    "file": "docs/reports/final-c/L10-12/admission-observer-correction.log",
+    "sha256": "10294c17e5add36a6923566cf12e88d4c6c533ac684c1892fc5bc394bdee16d4"
+  }
+}

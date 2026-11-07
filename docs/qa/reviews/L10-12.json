@@ -1,36 +1,123 @@
 {
   "row": "L10-12",
   "status": "PASS",
-  "reviewer": "Codex fix72-c",
-  "date": "2026-11-06",
-  "commit": "66f29ff356f3a3c3aada91a304408a9cff66b887",
+  "reviewer": "Codex final-c",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
   "clauses": [
     {
-      "clause": "corpse reads as the creature",
+      "clause": "Mega survives 9 direct rockets, dies on the 10th; conventional/minigun never below 90 % HP; charge/slam/grab only inside 12 m; no frame > 200 ms at fight and death; corpse reads as the creature.",
       "verdict": "PASS",
-      "note": "Scoped visual repair: both tiers retain the full recognizable Mega body in the wide approached gameplay view after actual physical rockets. Same authentic campaign seeds, identical physical command prefix and Mega death position, all non-render source bytes identical. Raw blast mask remains31; frozen indices increase16119\u219246338 after retaining head and all limbs. All62captures reviewed/hash verified/deleted; zoom0.5 can crop the large body. This does not qualify the separate fight/death frame gate or full grab/12m boundary matrix, and does not claim whole-row PASS. Final source cd41f284 confirmed in20 additional personally reviewed frames after fresh native stationary controls; all20 raw images deleted. Reconfirmed on final source6bd47c715412 after the carried-quality loading fix:20 additional personally reviewed/deleted frames, both settled bodies intact with18375vertices/46338indices, both physical probes error-free. Total raw captures reviewed/hash verified/deleted for L10-12:102."
+      "note": "Both native tiers:3000HP Mega survives9direct rockets and dies10th;20huge conventional/minigun hits floor2700HP.24production special-start cells accept6/12m and reject12.0001/18m. Complete real-input fight/death RAF gates PASS:664intervals/max66.7ms low,614/max83.3ms high, all<=200ms; same actual bosses die, no HP/actor edits, protected courier. High VFXexplicittrue. Both corpse IDs remain drawn but5limbs/head detached; personally inspected four exact corpse views, readability reserved for PO."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix72-c/L10-12/comparison-proof.json",
-      "sha256": "7bbffc7594ecb742a98b5d6f3d67ae6f8a54acbf85e1559a7e918a96b082ef48",
-      "what": "Personally reviewed both-tier before/after wide frames: torso-only stump before, connected head/arms/legs and pale dorsal growths after. Tight camera crops are explicitly retained in the observations. Exact source, input, geometry and raw image digests retained."
+      "file": "docs/reports/final-c/L10-12/final-high-admission.log",
+      "sha256": "97753d5e74df81404bbc87360682a02e3b747fdd0ca71c0fe22622673a19d93e",
+      "what": "Both native tiers:3000HP Mega survives9direct rockets and dies10th;20huge conventional/minigun hits floor2700HP.24production special-start cells accept6/12m and reject12.0001/18m. Complete real-input fight/death RAF gates PASS:664intervals/max66.7ms low,614/max83.3ms high, all<=200ms; same actual bosses die, no HP/actor edits, protected courier. High VFXexplicittrue. Both corpse IDs remain drawn but5limbs/head detached; personally inspected four exact corpse views, readability reserved for PO."
     },
     {
-      "file": "docs/reports/fix72-c/L10-12/capture-review.json",
-      "sha256": "1e129170d5c130432b3fe95c5fd5cc0cd874833472ff1c19a219de148ddc0c14",
-      "what": "Personally reviewed both-tier before/after wide frames: torso-only stump before, connected head/arms/legs and pale dorsal growths after. Tight camera crops are explicitly retained in the observations. Exact source, input, geometry and raw image digests retained."
+      "file": "docs/reports/final-c/L10-12/quiet-batch-producer.ts",
+      "sha256": "b899c4761b48addde3a2cf02608c02bffa75ed4179e4106ca4207dbc0ef99707",
+      "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
     },
     {
-      "file": "docs/reports/fix72-c/L10-12/confirmation-review.json",
-      "sha256": "268828b7bf903ca4aa1bc2e5200f3294e2c9c6a8b09340c6e7dca9fefc4939fc",
-      "what": "Personally inspected all20 final-source confirmation frames, both tiers/two zooms; approached wide silhouettes remain connected, tight camera cropping retained explicitly. All raw captures deleted."
+      "file": "docs/reports/final-c/L10-12/high-quiet.json",
+      "sha256": "4d79503cbdfb7fa678c96cf2bc039cbe36bd407a06eaa0f7f49014b12818cec1",
+      "what": "Both native tiers:3000HP Mega survives9direct rockets and dies10th;20huge conventional/minigun hits floor2700HP.24production special-start cells accept6/12m and reject12.0001/18m. Complete real-input fight/death RAF gates PASS:664intervals/max66.7ms low,614/max83.3ms high, all<=200ms; same actual bosses die, no HP/actor edits, protected courier. High VFXexplicittrue. Both corpse IDs remain drawn but5limbs/head detached; personally inspected four exact corpse views, readability reserved for PO."
     },
     {
-      "file": "docs/reports/fix72-c/L10-12/order-confirmation-review.json",
-      "sha256": "2d174b6c86beccc1bed1ebae227e7d6aef5c73d09a9d64660e5e05dfd7beb6e7",
-      "what": "All20 final-source frames personally inspected and raw JPEGs deleted; approached wide views retain connected Mega silhouette. Both actual settled corpses have18375vertices/46338indices despite all5 raw severance bits; tight crops/dark scorch retained explicitly. Fresh native prefix controls and actual physical rockets."
+      "file": "docs/reports/final-c/L10-12/range.json",
+      "sha256": "f7bf8ea2665d70fa40faa5977cf2a660be095484cad4be1128b44648ba93f9c7",
+      "what": "Both native tiers:3000HP Mega survives9direct rockets and dies10th;20huge conventional/minigun hits floor2700HP.24production special-start cells accept6/12m and reject12.0001/18m. Complete real-input fight/death RAF gates PASS:664intervals/max66.7ms low,614/max83.3ms high, all<=200ms; same actual bosses die, no HP/actor edits, protected courier. High VFXexplicittrue. Both corpse IDs remain drawn but5limbs/head detached; personally inspected four exact corpse views, readability reserved for PO."
+    },
+    {
+      "file": "docs/reports/final-c/L10-12/range-producer.ts",
+      "sha256": "49f40fc4c06234d48c938c998b0a622b20f381e286a8a5c3435c6d47f29bdd11",
+      "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
+    },
+    {
+      "file": "docs/reports/final-c/L10-12/quiet-batch-v2-producer.ts",
+      "sha256": "a60ba100fe3760fc4ba193ff220d786d60582625bb70ec3104a7be535ddd2a1e",
+      "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
+    },
+    {
+      "file": "docs/reports/final-c/L10-12/high-ground-aim-producer.ts",
+      "sha256": "0cc6edb6ff99dca759d23c29d2de6b518b5cef175d543fd3e300de9ccc0f14c3",
+      "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
+    },
+    {
+      "file": "docs/reports/final-c/L10-12/coverage.json",
+      "sha256": "4fdb8874b76550e363a6c8f4d65bef9a3ca83c794665dbd999a6aba7c96d329d",
+      "what": "Both native tiers:3000HP Mega survives9direct rockets and dies10th;20huge conventional/minigun hits floor2700HP.24production special-start cells accept6/12m and reject12.0001/18m. Complete real-input fight/death RAF gates PASS:664intervals/max66.7ms low,614/max83.3ms high, all<=200ms; same actual bosses die, no HP/actor edits, protected courier. High VFXexplicittrue. Both corpse IDs remain drawn but5limbs/head detached; personally inspected four exact corpse views, readability reserved for PO."
+    },
+    {
+      "file": "docs/reports/final-c/L10-12/high-admission-expired.json",
+      "sha256": "d935d9e9f4d6e55168fbc3a9334ffc8eba0b1e13d121cdd3af2748db3bb2e48a",
+      "what": "Both native tiers:3000HP Mega survives9direct rockets and dies10th;20huge conventional/minigun hits floor2700HP.24production special-start cells accept6/12m and reject12.0001/18m. Complete real-input fight/death RAF gates PASS:664intervals/max66.7ms low,614/max83.3ms high, all<=200ms; same actual bosses die, no HP/actor edits, protected courier. High VFXexplicittrue. Both corpse IDs remain drawn but5limbs/head detached; personally inspected four exact corpse views, readability reserved for PO."
+    },
+    {
+      "file": "docs/reports/final-c/L10-12/admission-observer-correction.log",
+      "sha256": "10294c17e5add36a6923566cf12e88d4c6c533ac684c1892fc5bc394bdee16d4",
+      "what": "Both native tiers:3000HP Mega survives9direct rockets and dies10th;20huge conventional/minigun hits floor2700HP.24production special-start cells accept6/12m and reject12.0001/18m. Complete real-input fight/death RAF gates PASS:664intervals/max66.7ms low,614/max83.3ms high, all<=200ms; same actual bosses die, no HP/actor edits, protected courier. High VFXexplicittrue. Both corpse IDs remain drawn but5limbs/head detached; personally inspected four exact corpse views, readability reserved for PO."
+    },
+    {
+      "file": "docs/reports/final-c/L10-12/capture-review.json",
+      "sha256": "ae4416bbf6b4475c41080e3d67908234bd0d7aa04f62a37de99ac229c355c243",
+      "what": "Both native tiers:3000HP Mega survives9direct rockets and dies10th;20huge conventional/minigun hits floor2700HP.24production special-start cells accept6/12m and reject12.0001/18m. Complete real-input fight/death RAF gates PASS:664intervals/max66.7ms low,614/max83.3ms high, all<=200ms; same actual bosses die, no HP/actor edits, protected courier. High VFXexplicittrue. Both corpse IDs remain drawn but5limbs/head detached; personally inspected four exact corpse views, readability reserved for PO."
+    },
+    {
+      "file": "docs/reports/final-c/L10-12/native-cpu-quiescence.json",
+      "sha256": "d3bfc9c4feabf15dc54ba7432688df9db3a4b411ceda17981fb32fb0c91eeb3e",
+      "what": "Both native tiers:3000HP Mega survives9direct rockets and dies10th;20huge conventional/minigun hits floor2700HP.24production special-start cells accept6/12m and reject12.0001/18m. Complete real-input fight/death RAF gates PASS:664intervals/max66.7ms low,614/max83.3ms high, all<=200ms; same actual bosses die, no HP/actor edits, protected courier. High VFXexplicittrue. Both corpse IDs remain drawn but5limbs/head detached; personally inspected four exact corpse views, readability reserved for PO."
+    },
+    {
+      "file": "docs/reports/final-c/L10-12/admission-observer-correction.json",
+      "sha256": "c51be799a2b93af83a8bc1a7116ca784e4912a10f9997fddef01107f4ab34dc5",
+      "what": "Both native tiers:3000HP Mega survives9direct rockets and dies10th;20huge conventional/minigun hits floor2700HP.24production special-start cells accept6/12m and reject12.0001/18m. Complete real-input fight/death RAF gates PASS:664intervals/max66.7ms low,614/max83.3ms high, all<=200ms; same actual bosses die, no HP/actor edits, protected courier. High VFXexplicittrue. Both corpse IDs remain drawn but5limbs/head detached; personally inspected four exact corpse views, readability reserved for PO."
+    },
+    {
+      "file": "docs/reports/final-c/L10-12/quiet-producer.ts",
+      "sha256": "5c8962c5ac86ebd8698c1ed5389aef2b2db21ea5c73bf4a68d1a30aed5afc114",
+      "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
+    },
+    {
+      "file": "docs/reports/final-c/L10-12/quiet-v2-producer.ts",
+      "sha256": "d67e840347645d6b2ab2a1be7d069f4430b6b603fe14602a485271ab0eb3fb0d",
+      "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
+    },
+    {
+      "file": "docs/reports/final-c/L10-12/high-admission-expired.log",
+      "sha256": "3587a62436dd12060b85269bc21abbecf4180314ba81072ba5f47551ab3f2bcd",
+      "what": "Both native tiers:3000HP Mega survives9direct rockets and dies10th;20huge conventional/minigun hits floor2700HP.24production special-start cells accept6/12m and reject12.0001/18m. Complete real-input fight/death RAF gates PASS:664intervals/max66.7ms low,614/max83.3ms high, all<=200ms; same actual bosses die, no HP/actor edits, protected courier. High VFXexplicittrue. Both corpse IDs remain drawn but5limbs/head detached; personally inspected four exact corpse views, readability reserved for PO."
+    },
+    {
+      "file": "docs/reports/final-c/L10-12/low-quiet.json",
+      "sha256": "619b1469c1ab002b051ebd75807f0e67495d4232f8a580f9b72441c6b68e18b5",
+      "what": "Both native tiers:3000HP Mega survives9direct rockets and dies10th;20huge conventional/minigun hits floor2700HP.24production special-start cells accept6/12m and reject12.0001/18m. Complete real-input fight/death RAF gates PASS:664intervals/max66.7ms low,614/max83.3ms high, all<=200ms; same actual bosses die, no HP/actor edits, protected courier. High VFXexplicittrue. Both corpse IDs remain drawn but5limbs/head detached; personally inspected four exact corpse views, readability reserved for PO."
+    },
+    {
+      "file": "docs/reports/final-c/L10-12/high-observer-failure.json",
+      "sha256": "b843044544e57bdcafb877debfc85d4277df42b7e16a409d54256fc3356fdd6c",
+      "what": "Both native tiers:3000HP Mega survives9direct rockets and dies10th;20huge conventional/minigun hits floor2700HP.24production special-start cells accept6/12m and reject12.0001/18m. Complete real-input fight/death RAF gates PASS:664intervals/max66.7ms low,614/max83.3ms high, all<=200ms; same actual bosses die, no HP/actor edits, protected courier. High VFXexplicittrue. Both corpse IDs remain drawn but5limbs/head detached; personally inspected four exact corpse views, readability reserved for PO."
+    },
+    {
+      "file": "docs/reports/final-c/native/L10-low-fixtures.json.gz",
+      "sha256": "11fcbea0af38305871180125c31ad74e19f74034a087b486d849b291fde9c581",
+      "what": "Both native tiers:3000HP Mega survives9direct rockets and dies10th;20huge conventional/minigun hits floor2700HP.24production special-start cells accept6/12m and reject12.0001/18m. Complete real-input fight/death RAF gates PASS:664intervals/max66.7ms low,614/max83.3ms high, all<=200ms; same actual bosses die, no HP/actor edits, protected courier. High VFXexplicittrue. Both corpse IDs remain drawn but5limbs/head detached; personally inspected four exact corpse views, readability reserved for PO."
+    },
+    {
+      "file": "docs/reports/final-c/native/L10-high-fixtures.json.gz",
+      "sha256": "514522e7edc040f73110c272d60efe194211f8689c77e687b9917836a2e81144",
+      "what": "Both native tiers:3000HP Mega survives9direct rockets and dies10th;20huge conventional/minigun hits floor2700HP.24production special-start cells accept6/12m and reject12.0001/18m. Complete real-input fight/death RAF gates PASS:664intervals/max66.7ms low,614/max83.3ms high, all<=200ms; same actual bosses die, no HP/actor edits, protected courier. High VFXexplicittrue. Both corpse IDs remain drawn but5limbs/head detached; personally inspected four exact corpse views, readability reserved for PO."
+    },
+    {
+      "file": "docs/reports/final-c/L8-10/exclusive-admission.log",
+      "sha256": "cef90c450ab1ffde414176defb91f3b4cbae53147c314a80a5649b668d781eb6",
+      "what": "Both native tiers:3000HP Mega survives9direct rockets and dies10th;20huge conventional/minigun hits floor2700HP.24production special-start cells accept6/12m and reject12.0001/18m. Complete real-input fight/death RAF gates PASS:664intervals/max66.7ms low,614/max83.3ms high, all<=200ms; same actual bosses die, no HP/actor edits, protected courier. High VFXexplicittrue. Both corpse IDs remain drawn but5limbs/head detached; personally inspected four exact corpse views, readability reserved for PO."
     }
-  ]
+  ],
+  "notes": "Frozen-head row review. Current immutable evidence, unchanged criterion and game source.",
+  "sourceDigest": "75720d4df4ad59ad1814e1cda498bc4620d28edfa0298106dd53315c5f2fba05"
 }
