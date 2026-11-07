@@ -411,6 +411,26 @@ test('corpse pages: bodies persist past the old cap, bounds stay conservative, c
   airborne.transform.y = .7;
   flightLayout.beginFrame(Infinity);
   expect('ax' in flightLayout.place(airborne)).toBe(true);
+  // A body resting on another must fall when a blast removes that support.
+  const lower = { ...pinnedBody, id: 910, transform: { x: 0, y: .7, z: 0, yaw: 0 } };
+  const upper = { ...pinnedBody, id: 911, transform: { ...lower.transform } };
+  const top = { ...pinnedBody, id: 912, transform: { ...lower.transform } };
+  const supportBodies = new Map([[lower.id, lower], [upper.id, upper], [top.id, top]]);
+  const supportWorld = { ...pinnedWorld, districts: { districts: [], supportBelow: () => 0 },
+    entities: { revision: 0, get: (id: number) => supportBodies.get(id), *iterate() {} } } as unknown as SimWorld;
+  const supportLayout = new CorpseLayout(supportWorld); supportLayout.beginFrame(Infinity);
+  supportLayout.place(lower);
+  expect(supportLayout.place(upper).y).toBeCloseTo(.22);
+  expect(supportLayout.place(top).y).toBeCloseTo(.44);
+  lower.corpseThrown = true; lower.corpseBlast = { delay: 0, x: 0, y: 2, z: 0 };
+  supportLayout.beginFrame(Infinity);
+  supportLayout.place(lower);
+  expect(supportLayout.place(upper).y).toBe(0);
+  expect(supportLayout.place(top).y).toBeCloseTo(.22);
+  upper.transform.x = 10;
+  supportLayout.place(upper);
+  expect(supportLayout.place(top).y).toBe(0);
+  expect(supportLayout.audit().count).toBe(2);
   const baked = bakeInfected(createSkinnedCrowdFixture()); packCrowdParts(baked.geometry);
   const pool = new StaticCorpses(), material = new MeshLambertNodeMaterial(), records = new Map<number, EntitySnapshot>();
   try {

@@ -133,6 +133,8 @@ export class CorpseLayout {
   private readonly spatial = new SpatialHash();
   private readonly neighbors: number[] = [];
   private readonly query = { x: 0, z: 0, r: 5 };
+  private readonly supportIds: number[] = [];
+  private readonly supportQuery = { x: 0, z: 0, r: 5 };
   // place() can run for hundreds of newly settled bodies in one view update.
   // Keep its broad-phase scratch storage on the layout instead of allocating
   // several arrays (and one hull wrapper per vehicle) for every corpse.
@@ -159,9 +161,26 @@ export class CorpseLayout {
    * yields between candidate roots; deferred bodies retain their last pose. */
   beginFrame(budgetMs = 2): void {
     this.remainingMs = budgetMs;
+    // A flying corpse is no longer a resting surface, including when culled.
+    for (const [id, pose] of this.bodies) if (pose.body.corpseThrown && pose.body.corpseBlast) this.removePose(id);
     const active = this.search, body = active?.body;
     if (active && body && (this.world.entities.get(body.id) !== body || body.health.current > 0 || body.hidden
       || body.transform.x !== active.x || body.transform.z !== active.z || body.corpseThrown && body.corpseBlast)) this.search = undefined;
+  }
+  /** Only the layer resting on this footprint needs a new pose; its movement
+   * invalidates the next layer through the ordinary budgeted settling path. */
+  private invalidateSupport(pose: RestingPose): void {
+    this.supportQuery.x = pose.x; this.supportQuery.z = pose.z;
+    for (const id of this.spatial.query(this.supportQuery, this.supportIds, false)) {
+      const above = this.bodies.get(id)!;
+      if (id === pose.body.id || Math.abs(above.y - pose.y - pose.height) > .002) continue;
+      if (segmentDistanceSquared(pose.ax, pose.az, pose.bx, pose.bz, above) < (pose.radius + above.radius) ** 2) this.deferred.set(id, above);
+    }
+  }
+  private removePose(id: number): void {
+    const pose = this.bodies.get(id);
+    if (!pose) return;
+    this.invalidateSupport(pose); this.bodies.delete(id); this.spatial.delete(id);
   }
   /** Explicit asset/screenshot readiness also waits for presentation settling. */
   settleAll(): void {
@@ -199,7 +218,7 @@ export class CorpseLayout {
       this.neighborPoses.fill(undefined); this.layerPoses.fill(undefined);
     }
     if (this.revision !== this.world.entities.revision) {
-      for (const [id, pose] of this.bodies) if (this.world.entities.get(id) !== pose.body || pose.body.health.current > 0 || pose.body.hidden) { this.bodies.delete(id); this.spatial.delete(id); }
+      for (const [id, pose] of this.bodies) if (this.world.entities.get(id) !== pose.body || pose.body.health.current > 0 || pose.body.hidden) this.removePose(id);
       for (const [id, pose] of this.deferred) if (this.world.entities.get(id) !== pose.body || pose.body.health.current > 0 || pose.body.hidden) this.deferred.delete(id);
       this.revision = this.world.entities.revision;
       this.scriptedVehicles.length = 0;
@@ -211,12 +230,13 @@ export class CorpseLayout {
     // The simulation clears corpseBlast on landing; settle exactly once then.
     if (e.corpseThrown && e.corpseBlast) {
       if (this.search?.body === e) this.search = undefined;
+      this.removePose(e.id);
       this.deferred.delete(e.id);
       return { ...e.transform, y: e.transform.y - .7 };
     }
     const player = this.world.entities.get(1)?.transform, previous = this.bodies.get(e.id);
     if (this.search?.body === e && (this.search.deadAt !== deadAt || this.search.x !== e.transform.x || this.search.z !== e.transform.z)) this.search = undefined;
-    if (previous?.deadAt === deadAt && previous.sourceX === e.transform.x && previous.sourceZ === e.transform.z
+    if (previous?.deadAt === deadAt && previous.sourceX === e.transform.x && previous.sourceZ === e.transform.z && !this.deferred.has(e.id)
       && (!player || pointDistanceSquared(player.x, player.z, previous.ax, previous.az, previous.bx, previous.bz) >= .95 ** 2)) { if (this.search?.body === e) this.search = undefined; this.deferred.delete(e.id); return previous; }
     if (this.remainingMs <= 0 || this.search && this.search.body !== e) return this.defer(e, deadAt, prone, previous);
     const start = performance.now();
@@ -224,7 +244,7 @@ export class CorpseLayout {
     this.search ??= { body: e, deadAt, prone, x: e.transform.x, z: e.transform.z, iterator: this.settle(e, deadAt, prone, epilogue) };
     try {
       const result = this.search.iterator.next();
-      if (result.done) { this.search = undefined; this.deferred.delete(e.id); return result.value; }
+      if (result.done) { this.search = undefined; this.deferred.delete(e.id); if (!('ax' in result.value)) this.removePose(e.id); return result.value; }
       return this.defer(e, deadAt, prone, previous);
     } finally { this.remainingMs -= performance.now() - start; }
   }
@@ -391,6 +411,8 @@ export class CorpseLayout {
     // Retain one stable result for this body; candidate exploration above
     // reuses bestScratch instead of allocating on every improving root.
     const placed = { ...best };
+    const previous = this.bodies.get(e.id);
+    if (previous && (previous.x !== placed.x || previous.y !== placed.y || previous.z !== placed.z || previous.yaw !== placed.yaw)) this.invalidateSupport(previous);
     this.deferred.delete(e.id);
     this.bodies.set(e.id, placed); this.spatial.set(e.id, placed.x, placed.z); return placed;
   }
