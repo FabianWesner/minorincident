@@ -1,45 +1,33 @@
 {
   "row": "G-18",
   "status": "PASS",
-  "reviewer": "fix68-g/Codex",
-  "date": "2026-11-06",
-  "commit": "d6167897fdd39772a96a7a2dbfb69ea4c5cee5db",
+  "reviewer": "final-g/Codex",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
   "clauses": [
     {
-      "clause": "Finite courier focus must permit nearby escort attacks in L3/L4/L6/L8 at both tiers",
+      "clause": "Scripted infected keep normal perception: within aggro range they engage the player, companions and survivors, in every level. PO: \"even when they walk somewhere, they should still act like Zombies\".",
       "verdict": "PASS",
-      "note": "All eight former counterexamples now select the escort and begin real attacks within 120 ticks. Ordinary rush and companion controls retained."
+      "note": "Fresh controlled production-world matrix:520 human scripted player/escort contacts across every level/quality plus64 animal contacts in L8/L10;584/584 scripts interrupt for nearby human targets, no setup errors. The separate540-case finite-focus/companion matrix rechecks every human role:278 supported escort cases acquire the nearby escort, including prior L3/L4/L6/L8 focus failures. Two L9 rush calls have no L1 brain and do not establish a supported rush setup; direct scripted and focus contacts cover L9 separately. Support-role approach/attention is distinguished from a damaging strike (screamers/nurses need not emit a normal attack). All260 companion samples retain100 HP; the corgi is immune/non-prey under G-19. No AI, perception, director count or timers are changed after disclosed fixture setup."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix68-g/G-18-before.json.gz",
-      "sha256": "3ea2fc31e6d1942ebb27a74ec939ba4e42901a5f75732e1571f531f9cfe83838",
-      "what": "300 controlled production-world perception cells; before reproduces eight named failures, after repairs all eight. No raster captures in this simulation probe."
+      "file": "docs/reports/final-g/G-18-contact.json",
+      "sha256": "aacbad98060d06b7174828dfb98bccdb71f996d5c64df922866ee649164e05cd",
+      "what": "Fresh controlled production-world matrix:520 human scripted player/escort contacts across every level/quality plus64 animal contacts in L8/L10;584/584 scripts interrupt for nearby human targets, no setup errors. The separate540-case finite-focus/companion matrix rechecks every human role:278 supported escort cases acquire the nearby escort, including prior L3/L4/L6/L8 focus failures. Two L9 rush calls have no L1 brain and do not establish a supported rush setup; direct scripted and focus contacts cover L9 separately. Support-role approach/attention is distinguished from a damaging strike (screamers/nurses need not emit a normal attack). All260 companion samples retain100 HP; the corgi is immune/non-prey under G-19. No AI, perception, director count or timers are changed after disclosed fixture setup."
     },
     {
-      "file": "docs/reports/fix68-g/G-18-after.json.gz",
-      "sha256": "b5d280ae7ced88d62a1569e08d952ce4df6fc1d3732110d5e2770b7b0472e287",
-      "what": "300 controlled production-world perception cells; before reproduces eight named failures, after repairs all eight. No raster captures in this simulation probe."
+      "file": "docs/reports/final-g/G-18-animal-contact.json",
+      "sha256": "14c71940aa2af2e92894389a55a8c00b412c39c03b19418d3e39fc3760b9c105",
+      "what": "Fresh controlled production-world matrix:520 human scripted player/escort contacts across every level/quality plus64 animal contacts in L8/L10;584/584 scripts interrupt for nearby human targets, no setup errors. The separate540-case finite-focus/companion matrix rechecks every human role:278 supported escort cases acquire the nearby escort, including prior L3/L4/L6/L8 focus failures. Two L9 rush calls have no L1 brain and do not establish a supported rush setup; direct scripted and focus contacts cover L9 separately. Support-role approach/attention is distinguished from a damaging strike (screamers/nurses need not emit a normal attack). All260 companion samples retain100 HP; the corgi is immune/non-prey under G-19. No AI, perception, director count or timers are changed after disclosed fixture setup."
     },
     {
-      "file": "docs/reports/fix68-g/G-18-all-focus.json.gz",
-      "sha256": "c47d61a1d21244e813da3d75e2d01e8f70190b7469e539e3763a60f856aa9d39",
-      "what": "Expanded focus-complete and direct-contact probes retain synthetic no-contact and utility-role exclusions; all eight named failures repaired. Existing all-six-L4-archetype regression passes."
-    },
-    {
-      "file": "docs/reports/fix68-g/G-18-contact.json.gz",
-      "sha256": "04af51585e3d10d03c6e32dd99809ccd6c22e611cb2c189fec2d2b14746d85bb",
-      "what": "Expanded focus-complete and direct-contact probes retain synthetic no-contact and utility-role exclusions; all eight named failures repaired. Existing all-six-L4-archetype regression passes."
-    },
-    {
-      "file": "docs/reports/fix68-g/G-18-expanded-summary.json",
-      "sha256": "f9e5699de72cbfd4e8975562aa844919d02568bab8ba8d7256c823ef61fed334",
-      "what": "Expanded focus-complete and direct-contact probes retain synthetic no-contact and utility-role exclusions; all eight named failures repaired. Existing all-six-L4-archetype regression passes."
+      "file": "docs/reports/final-g/G-18-party-perception.json.gz",
+      "sha256": "98a94391ee58ca66a4a08919200bca10ef8ac51308b18f3c2b6f2115c2d65dde",
+      "what": "Fresh controlled production-world matrix:520 human scripted player/escort contacts across every level/quality plus64 animal contacts in L8/L10;584/584 scripts interrupt for nearby human targets, no setup errors. The separate540-case finite-focus/companion matrix rechecks every human role:278 supported escort cases acquire the nearby escort, including prior L3/L4/L6/L8 focus failures. Two L9 rush calls have no L1 brain and do not establish a supported rush setup; direct scripted and focus contacts cover L9 separately. Support-role approach/attention is distinguished from a damaging strike (screamers/nurses need not emit a normal attack). All260 companion samples retain100 HP; the corgi is immune/non-prey under G-19. No AI, perception, director count or timers are changed after disclosed fixture setup."
     }
   ],
-  "notes": [
-    "Requested defect fixed; complete scripted-role and naturally played route qualification remains separate. L9/L10 generic finite-focus fixtures still do not contact in 120 ticks and are not presented as passing. Reviewed final gameplay commit d485990; evidence retains original provenance and stated scope. Continuation review: d616789 changes only announced L3 admission retirement after d10848b L6 quota priority. Historical proofs retain their original identities and immutable archived receipts. Scoped clauses only; full release acceptance is pending.",
-    "Final load-qualified standalone threat: exit1,12 L7 pace flags; L3/L6 threat flags cleared. Full global-row qualification remains open. See docs/reports/fix68-g/README.md."
-  ]
+  "notes": "Explicit isolated perception fixtures, with courier/escort placement and paused director disclosed. Not a damage/difficulty or full-campaign console qualification. Prior finite-focus counterexample is freshly retested.",
+  "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186"
 }
