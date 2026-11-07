@@ -835,7 +835,6 @@
         }
       },
       "windowWorstMs": 5.600000000002183,
-      "firstResumeGapMs": -3593.199999809265,
       "deliveredAt": 3326,
       "events": [
         {
@@ -862,6 +861,25 @@
           "type": "l1.screams",
           "tick": 3820,
           "at": 23305.39999961853
+        }
+      ],
+      "initialRafIntervals": [
+        {
+          "at": 11801.5,
+          "tick": 3326,
+          "rafMs": -3593.199999809265
+        },
+        {
+          "at": 15402.9,
+          "tick": 3346,
+          "rafMs": 3601.3999999999996
+        }
+      ],
+      "otherFramesOver50msOutsideBlastWindow": [
+        {
+          "at": 15402.9,
+          "tick": 3346,
+          "rafMs": 3601.3999999999996
         }
       ]
     },
@@ -1707,7 +1725,6 @@
         }
       },
       "windowWorstMs": 29.799999999999272,
-      "firstResumeGapMs": -4481.500000572205,
       "deliveredAt": 3326,
       "events": [
         {
@@ -1735,7 +1752,37 @@
           "tick": 3820,
           "at": 17508.800000190735
         }
+      ],
+      "initialRafIntervals": [
+        {
+          "at": 3626.9,
+          "tick": 3326,
+          "rafMs": -4481.500000572205
+        },
+        {
+          "at": 8123.5,
+          "tick": 3346,
+          "rafMs": 4496.6
+        }
+      ],
+      "otherFramesOver50msOutsideBlastWindow": [
+        {
+          "at": 8123.5,
+          "tick": 3346,
+          "rafMs": 4496.6
+        },
+        {
+          "at": 10300.3,
+          "tick": 3388,
+          "rafMs": 1809.199999999999
+        },
+        {
+          "at": 13488.8,
+          "tick": 3579,
+          "rafMs": 56
+        }
       ]
     }
-  ]
+  ],
+  "limitations": "First RAF timestamp predates callback registration because the paused step prefix blocked that frame: negative initial interval and its positive counterpart are retained. High also has1809.2ms at tick3388 and56ms at3579, both before flicker3610 and outside the blast window. This row makes a blast-frame budget claim only; it does not certify all startup/transition performance. Quiet-window durations are simulation ticks, with independent every-tick objective/infected census."
 }
