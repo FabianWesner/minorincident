@@ -89,11 +89,10 @@ export function updateSurvivor(world: SimWorld, e: EntitySnapshot): boolean {
     // perceived pace rides through a courier's momentary stops, and beside a
     // wall the side slot falls back to single file on the courier's line.
     const heading = { x: pace.x / paceSpeed, z: pace.z / paceSpeed }, nav = world.infected!.nav;
-    // Keep both moving rows inside the 2-5 m band with room on each side for
-    // the resolved body's turning and braking error. The 2.4 m and 2.9 m
-    // target depths absorb the extra lag across a moving five-person formation;
-    // the rear row staggers into the front row's gaps so the rows can sit close.
-    const row = Math.floor(slot / 3), back = 2.4 + row * .5, side = row ? [-.6, .6, 0][slot % 3] : (slot % 3 - 1) * 1.2;
+    // Narrow the columns to clear street cover, with more space between rows
+    // so a turning front body does not push the rear body outside the band.
+    // Staggered rear slots keep body clearance at the 2.5 m / 3.2 m depths.
+    const row = Math.floor(slot / 3), back = 2.5 + row * .7, side = row ? [-.45, .45, 0][slot % 3] : (slot % 3 - 1) * .9;
     const target = [{ x: p.x - heading.x * back - heading.z * side, z: p.z - heading.z * back + heading.x * side }, { x: p.x - heading.x * back, z: p.z - heading.z * back }]
       .find(t => nav.clear(t.x, t.z, .35) && nav.visible(t, p, .35));
     if (target) {
