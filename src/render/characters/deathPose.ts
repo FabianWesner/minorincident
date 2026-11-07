@@ -132,7 +132,7 @@ export function repairDeathPoses(clip: CrowdClip, geometry?: BufferGeometry, opt
       for (let i = 0; i < position.count; i += step) {
         const z = packed ? parts!.getZ(i) : emissive?.getX(i) ?? 0, w = packed ? parts!.getW(i) : vein?.getX(i) ?? 0;
         if (z > 1.5 || w >= 1024) continue;
-        const f = skinnedVertexMatrix(scratch, 0, parts as never, skin as never, i, row, poseRows);
+        const f = skinnedVertexMatrix(scratch, 0, parts as never, skin as never, i, row, poseRows, 1);
         const y = f[1] * position.getX(i) + f[5] * position.getY(i) + f[9] * position.getZ(i) + f[13];
         if (y < low) low = y; if (y > high) high = y;
       }
