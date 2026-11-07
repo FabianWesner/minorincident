@@ -1,0 +1,33 @@
+{
+  "row": "L9-08",
+  "status": "PASS",
+  "reviewer": "Codex final-c",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "clauses": [
+    {
+      "clause": "L10 starts on foot with exactly [axe], ordinary health, corgi safe.",
+      "verdict": "PASS",
+      "note": "Both actual native L9 completion-to-L10 campaign transactions restore a visible on-foot courier, activeVehicle null, exactly [weapon.fire-axe], ordinary 100/100 HP, and a visible living corgi at 100/100 HP. The source handover is the actual completeCampaignLevel transaction, not a manually constructed L10 start."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/final-c/L9-08/numeric-review.json",
+      "sha256": "ea49aeb51cd0ccaf3f03c5447ff409cd27c4d73dac075a5e496ecc5cfe429afc",
+      "what": "Both actual native L9 completion-to-L10 campaign transactions restore a visible on-foot courier, activeVehicle null, exactly [weapon.fire-axe], ordinary 100/100 HP, and a visible living corgi at 100/100 HP. The source handover is the actual completeCampaignLevel transaction, not a manually constructed L10 start."
+    },
+    {
+      "file": "docs/reports/final-c/native/L9-low-fixtures.json.gz",
+      "sha256": "1b539d559de3e08673b313a7319ec02e293982749b9e4b003bf5cac7a9377cfa",
+      "what": "Immutable frozen-head native source receipt: docs/reports/fix51-verify/receipts/L9-low-fixtures.json. Row-specific measured checks are reproduced in numeric-review.json."
+    },
+    {
+      "file": "docs/reports/final-c/native/L9-high-fixtures.json.gz",
+      "sha256": "48b3ef41505bd064922b29f613dbb2afc056468411b5edb883cb295f709936a1",
+      "what": "Immutable frozen-head native source receipt: docs/reports/fix51-verify/receipts/L9-high-fixtures.json. Row-specific measured checks are reproduced in numeric-review.json."
+    }
+  ],
+  "notes": "Frozen-head numeric review. No gameplay source or criterion changed. No browser, performance, or visual evidence is claimed for this numeric-only criterion.",
+  "sourceDigest": "fbad89802bfe8d610b736d8f5a3111d1a13e8d0ae47b606a45c5760634f3ed51"
+}
