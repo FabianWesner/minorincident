@@ -1,14 +1,15 @@
 {
   "level": "L10",
   "reviewer": "final-g/Codex",
-  "scope": "First447.5167s physical low run reviewed; remaining production Resume segments and high route still running.",
+  "scope": "Physical low and high opening plus both second production Resume segments reviewed; low incomplete first defense attempt reviewed through Charge27/60s. Final defense/boss/ending continuations are still running.",
   "glitches": [
     "Following corgi stops at(933.1482,-9.3378); courier reaches(2133.5679,-18.8824):1200.4576m separation by26851. Exact frozen static query is clear, nav query blocked, no contact >5mm. This establishes follow/pathing failure, not geometry penetration.",
-    "Independent high opening keeps corgi beside player across all reviewed opening/industrial/military/campus frames; do not generalize the low stuck-dog trial to every route."
+    "Independent high opening keeps corgi beside player across all reviewed opening/industrial/military/campus frames; do not generalize the low stuck-dog trial to every route.",
+    "The first low third batch stopped responding after the last observation Charge54/60s. Cause is unclassified; this aborted browser attempt is NOT CHECKED for console completion, not a fabricated game-error verdict. Retry uses unchanged console observer with optional capture/ledger probes disabled."
   ],
   "stunning": {
     "verdict": "P",
-    "observation": "Checkpoint road, lit house, fenced parking and some combat are readable. Much of first447s is broad flat green transit with little distinct industrial/military scenery.",
+    "observation": "Checkpoint road, lit house, fenced parking and some combat are readable. Much of first447s is broad flat green transit with little distinct industrial/military scenery. High second segment adds trucks, a watchtower, research console, medical shop, ambulance and rocket/cure equipment; most dispersal approach remains a sparse dark field. Low defense has dense active combat and explosions.",
     "missing": "PO: judge environment identity and visual density in retained industrial7668/military16198 wide frames; finale/ending review pending. Second low segment also has long nearly featureless blue-ground transit toward dispersal; exact17765wide retained."
   },
   "boringHarmlessBabysitting": [
@@ -35,6 +36,18 @@
     {
       "file": "docs/reports/final-g/L10-low-batch2-captures.json",
       "sha256": "01602e6ef34505da494c5f4d2b523dee24012217266d05934538e7476a967652"
+    },
+    {
+      "file": "docs/reports/final-g/L10-high-batch2-captures.json",
+      "sha256": "ff6235f5a7d20ac377b79e99af20a13b385a99bb7b3e245a6bb9b045d878539a"
+    },
+    {
+      "file": "docs/reports/final-g/L10-low-batch3-captures.json",
+      "sha256": "db388d4108e758e6e8175bf74113cabb377a48830d15d97a6d782918787c8c5d"
+    },
+    {
+      "file": "docs/reports/final-g/G-25-L10-low-batch3-unresponsive.json",
+      "sha256": "e4116d5cf7a4000a4272243221e3c15ba7620df6e7c2966b131cc86309ce6e19"
     }
   ]
 }
