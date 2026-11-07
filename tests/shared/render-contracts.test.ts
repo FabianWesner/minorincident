@@ -427,6 +427,24 @@ test('corpse pages: bodies persist past the old cap, bounds stay conservative, c
   expect(repairDeathPoses(worker.clip, worker.geometry)).toBe(true);
   for (const death of ['death-back', 'death-side', 'death-crumple'] as const) { const { min, max } = lying(worker, death); expect(Math.abs(min)).toBeLessThan(.02); expect(max).toBeLessThan(.7); }
   expect(lying(worker, 'death-back').max).toBeLessThan(tallBefore);
+  // r3-corpse: no skin triangle edge of a visible part stretches past 2x its bind length (limbs keep close to their rest relation to the body).
+  const stretch = (bake: ReturnType<typeof delivered>, death: (typeof infectedClips)[number]) => {
+    const g = bake.geometry, p = g.getAttribute('position'), parts = g.getAttribute('_parts'), skin = g.getAttribute('_skin'), index = g.index!, P = bake.clip.parts.length;
+    const offset = (infectedClips.indexOf(death) * framesPerClip + framesPerClip - 1) * P * 16, pose = new Float32Array(P * 16), m = new Float32Array(16), at: number[][] = [];
+    premultiplyRow(bake.clip.matrices, pose, bake.clip.binds!, offset, P, 0);
+    for (let i = 0; i < p.count; i++) { skinnedVertexMatrix(bake.clip, offset, parts, skin, i, m, pose); at.push([m[0] * p.getX(i) + m[4] * p.getY(i) + m[8] * p.getZ(i) + m[12], m[1] * p.getX(i) + m[5] * p.getY(i) + m[9] * p.getZ(i) + m[13], m[2] * p.getX(i) + m[6] * p.getY(i) + m[10] * p.getZ(i) + m[14]]); }
+    let worst = 0;
+    for (let t = 0; t < index.count; t += 3) for (const [a, b] of [[0, 1], [1, 2], [2, 0]]) {
+      const i = index.getX(t + a), j = index.getX(t + b); if ([i, j].some(v => parts.getZ(v) > 1.5 || parts.getW(v) >= 1024)) continue;
+      const rest = Math.hypot(p.getX(i) - p.getX(j), p.getY(i) - p.getY(j), p.getZ(i) - p.getZ(j)); if (rest < .04) continue;
+      worst = Math.max(worst, Math.hypot(at[i][0] - at[j][0], at[i][1] - at[j][1], at[i][2] - at[j][2]) / rest);
+    }
+    return worst;
+  };
+  for (const model of ['inf.common-worker', 'inf.cashier', 'inf.delivery-driver']) {
+    const bake = model === 'inf.common-worker' ? worker : delivered(model); repairDeathPoses(bake.clip, bake.geometry);
+    for (const death of ['death-back', 'death-side', 'death-crumple'] as const) expect(stretch(bake, death)).toBeLessThan(2);
+  }
   const alpha = delivered('inf.alpha');
   expect(repairDeathPoses(alpha.clip, alpha.geometry, { prone: true })).toBe(true);
   const settled = Array.from(alpha.clip.matrices); repairDeathPoses(alpha.clip, alpha.geometry, { prone: true });

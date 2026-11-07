@@ -10,7 +10,7 @@ const [row = 'G14', stage = 'before', tier = 'low'] = process.argv.slice(2);
 const out = `test-results/blk-v/${stage}/${row}-${tier}`;
 mkdirSync(out, { recursive: true });
 const result = { ...provenance(), row, stage, tier, captures: [], samples: [], errors: [] };
-const session = new SceneSession({ tier, backend: 'webgl2' });
+const session = new SceneSession({ tier, backend: process.env.BACKEND ?? 'webgl2' });
 async function capture(label) {
   if (stage === 'grips') return;
   const file = `${out}/${label}.png`;
