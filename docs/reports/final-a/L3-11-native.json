@@ -141,34 +141,46 @@
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix51-verify/receipts/L3-low-complete.json",
-      "sha256": "26aa4ed49dfbfcdf86a690bc83d902a5c8b9b4c93933f99d67484a55c70a971a",
-      "what": "Frozen-head L3-11 native input receipt, evaluated by the exact clauses retained in the row proof."
+      "file": "docs/reports/final-a/native-receipts/L3-low-complete.json.gz",
+      "sha256": "81ae6486e8fab6d955d04751cb09cce2159e3b986d19198ff720988e54c8b0b7",
+      "what": "Frozen-head L3-11 native input receipt, evaluated by the exact clauses retained in the row proof.",
+      "canonicalFile": "docs/reports/fix51-verify/receipts/L3-low-complete.json",
+      "decodedSha256": "26aa4ed49dfbfcdf86a690bc83d902a5c8b9b4c93933f99d67484a55c70a971a"
     },
     {
-      "file": "docs/reports/fix51-verify/receipts/L3-low-stationary.json",
-      "sha256": "397baa017658a0b23da1cece00753b1b6e9363ed1272bff5125d3de615c52def",
-      "what": "Frozen-head L3-11 native input receipt, evaluated by the exact clauses retained in the row proof."
+      "file": "docs/reports/final-a/native-receipts/L3-low-stationary.json.gz",
+      "sha256": "024f22953d5c2e3f1bbefbba6fe6943dddd8ecc05664082f2a2fe6cc32d7c146",
+      "what": "Frozen-head L3-11 native input receipt, evaluated by the exact clauses retained in the row proof.",
+      "canonicalFile": "docs/reports/fix51-verify/receipts/L3-low-stationary.json",
+      "decodedSha256": "397baa017658a0b23da1cece00753b1b6e9363ed1272bff5125d3de615c52def"
     },
     {
-      "file": "docs/reports/fix51-verify/receipts/L3-high-complete.json",
-      "sha256": "f62f48629e8a32b71b162b49eb6d4f0a9cfb7cc46cbbd97a141e6e39bf3d89b1",
-      "what": "Frozen-head L3-11 native input receipt, evaluated by the exact clauses retained in the row proof."
+      "file": "docs/reports/final-a/native-receipts/L3-high-complete.json.gz",
+      "sha256": "d976b4c6b69eda34c20121ae9cb96e8a3cdd6a07fac104fba0b26e56fd8755c0",
+      "what": "Frozen-head L3-11 native input receipt, evaluated by the exact clauses retained in the row proof.",
+      "canonicalFile": "docs/reports/fix51-verify/receipts/L3-high-complete.json",
+      "decodedSha256": "f62f48629e8a32b71b162b49eb6d4f0a9cfb7cc46cbbd97a141e6e39bf3d89b1"
     },
     {
-      "file": "docs/reports/fix51-verify/receipts/L3-high-stationary.json",
-      "sha256": "260dd369e09316f288a0de9e176ff1abc26bbc5547a1f7be1e20cadeecc29b80",
-      "what": "Frozen-head L3-11 native input receipt, evaluated by the exact clauses retained in the row proof."
+      "file": "docs/reports/final-a/native-receipts/L3-high-stationary.json.gz",
+      "sha256": "2046af461e64e70381568acc5905423f47b44bf18d205557d43b0ad61770b9b1",
+      "what": "Frozen-head L3-11 native input receipt, evaluated by the exact clauses retained in the row proof.",
+      "canonicalFile": "docs/reports/fix51-verify/receipts/L3-high-stationary.json",
+      "decodedSha256": "260dd369e09316f288a0de9e176ff1abc26bbc5547a1f7be1e20cadeecc29b80"
     },
     {
-      "file": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
-      "sha256": "1dbb6554d364c1372e298abab060319623af1f8871fbd2e7e24dad1a1382d0cc",
-      "what": "Frozen-head L3-11 native input receipt, evaluated by the exact clauses retained in the row proof."
+      "file": "docs/reports/final-a/native-receipts/L3-low-fixtures.json.gz",
+      "sha256": "5bb7a9d05574c189a8bec9fe20a06b1a7988f48a3175a8841aef1fa147209724",
+      "what": "Frozen-head L3-11 native input receipt, evaluated by the exact clauses retained in the row proof.",
+      "canonicalFile": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
+      "decodedSha256": "1dbb6554d364c1372e298abab060319623af1f8871fbd2e7e24dad1a1382d0cc"
     },
     {
-      "file": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
-      "sha256": "e4dd4c36be5c14615ed61548e5c0cb95e00a5363f1741e70547ed354a08a8086",
-      "what": "Frozen-head L3-11 native input receipt, evaluated by the exact clauses retained in the row proof."
+      "file": "docs/reports/final-a/native-receipts/L3-high-fixtures.json.gz",
+      "sha256": "87d97237be8ee7ecb0019d923692b5c60332643dfee8640b4274c1c5727fe14c",
+      "what": "Frozen-head L3-11 native input receipt, evaluated by the exact clauses retained in the row proof.",
+      "canonicalFile": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
+      "decodedSha256": "e4dd4c36be5c14615ed61548e5c0cb95e00a5363f1741e70547ed354a08a8086"
     }
   ],
   "observation": "10 current native checks PASS across low/high. low/complete competent player attack rate on checkpoint route: 5.3857661893567; target 3 ≤ value ≤ 25 (PASS); low/complete all-street medkit census (per-street split still open): 33; target 7 ≤ value ≤ Infinity (PASS); low/stationary all-street medkit census (per-street split still open): 33; target 7 ≤ value ≤ Infinity (PASS); high/complete competent player attack rate on checkpoint route: 12.020606754436177; target 3 ≤ value ≤ 25 (PASS); high/complete all-street medkit census (per-street split still open): 33; target 7 ≤ value ≤ Infinity (PASS); high/stationary all-street medkit census (per-street split still open): 33; target 7 ≤ value ≤ Infinity (PASS); low/controlled-fixture initial authored medkit entities by street: {\"blvd\":9,\"commerce\":15,\"oak\":9}; target ≥2 perstreet;≥7total (PASS); low/controlled-fixture mortal newbie time below20percent HP: {\"share\":0.02549827413428349,\"outcome\":\"complete\",\"deaths\":3,\"simulatedSeconds\":305.35}; target ≤10% of alive samples; fullroute completed (PASS); high/controlled-fixture initial authored medkit entities by street: {\"blvd\":9,\"commerce\":15,\"oak\":9}; target ≥2 perstreet;≥7total (PASS); high/controlled-fixture mortal newbie time below20percent HP: {\"share\":0,\"outcome\":\"complete\",\"deaths\":0,\"simulatedSeconds\":219.51666666666668}; target ≤10% of alive samples; fullroute completed (PASS)"
