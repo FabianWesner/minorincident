@@ -165,6 +165,12 @@ test('save decoding: presets round-trip, v0 migrates, corrupt/unknown data and s
   const compact = entries.get('minor-incident.campaign')!;
   expect(compact.startsWith('minor-incident.checkpoint1:')).toBe(true);
   expect(store.load()).toEqual({ status: 'ok', save: cure });
+  // A checkpoint event can export one detached snapshot as both records.
+  // Storage must preserve the same bytes and decode independent retry data.
+  cure.cureResume.checkpoint = cure.cureResume.current;
+  expect(store.write(cure)).toBe(true);
+  expect(entries.get('minor-incident.campaign')).toBe(compact);
+  cure.cureResume.checkpoint = structuredClone(cure.cureResume.current);
   const restored = store.load();
   if (restored.status !== 'ok') throw new Error('Checkpoint did not load');
   restored.save.cureResume!.current.entities[0].health.current--;

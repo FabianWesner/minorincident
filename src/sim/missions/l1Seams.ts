@@ -1,4 +1,5 @@
 import type { SimWorld } from '../world/SimWorld';
+import { cloneData } from '../../core/clone';
 
 /**
  * Optional interfaces of the L1 v2 systems that other lanes own (F: bicycle and toys, D: outbreak overlay).
@@ -38,7 +39,7 @@ function resolve(world: SimWorld, name: typeof names[number]): SnapshotSeam | un
 export function l1Seams(world: SimWorld): L1Seams { return world as unknown as L1Seams; }
 export function captureSeams(world: SimWorld): Record<string, unknown> {
   const out: Record<string, unknown> = {};
-  for (const name of names) { const seam = resolve(world, name); if (seam) out[name] = structuredClone(seam.snapshot()); }
+  for (const name of names) { const seam = resolve(world, name); if (seam) out[name] = cloneData(seam.snapshot()); }
   return out;
 }
 /** Live save resume retains the Mega position; checkpoint retries apply its respawn fairness gap. */
