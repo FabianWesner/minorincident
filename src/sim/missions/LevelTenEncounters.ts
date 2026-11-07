@@ -40,6 +40,7 @@ export class LevelTenEncounters {
     let assaultAdmissions = 0;
     for (const group of cureEncounters) {
       const assault = group.assault === true, corridorPatrol = group.id.startsWith('corridor-pack-');
+      const directPatrol = group.id.includes('-direct-');
       if (!assault && !directorTick) continue;
       const corridorHorde = ['corridor-line', 'corridor-breach', 'corridor-exit'].includes(group.id);
       if (assault && !w.missions.state.states['charge-active']) continue;
@@ -56,14 +57,26 @@ export class LevelTenEncounters {
       const released = this.state.released ??= [];
       const at = low ? group.atLow ?? group.at : group.at;
       if (!assault && !released.includes(group.id)) {
-        const approach = corridorPatrol || corridorHorde ? Math.abs(player.transform.x - at[0]) : Math.hypot(player.transform.x - at[0], player.transform.z - at[1]);
+        // The authored road already has its own formations. Only intercept a
+        // field crossing; do not move the shortcut patrols onto that road.
+        const directCrossing = directPatrol && !region.route.some((b, i, route) => {
+          if (!i) return false;
+          const a = route[i - 1], dx = b[0] - a[0], dz = b[1] - a[1];
+          const length = dx * dx + dz * dz;
+          const t = length ? Math.max(0, Math.min(1, ((player.transform.x - a[0]) * dx + (player.transform.z - a[1]) * dz) / length)) : 0;
+          return Math.hypot(player.transform.x - a[0] - t * dx, player.transform.z - a[1] - t * dz) <= 25;
+        });
+        const approach = corridorPatrol || corridorHorde || directCrossing ? Math.abs(player.transform.x - at[0]) : Math.hypot(player.transform.x - at[0], player.transform.z - at[1]);
         // The wide approach camera already sees a station at 40 m. Release
         // these fixed R7 groups while they are still ahead and offscreen;
         // otherwise they are only admitted after the courier passes them.
-        const releaseM = group.id.startsWith('complex-approach-') ? 120 : 40;
+        // A legal field crossing can miss the patrol's old circular trigger.
+        // Release its once-only station ahead of that crossing, while safe()
+        // still prevents visible arrivals. Retain the lane across retries.
+        const releaseM = group.id.startsWith('complex-approach-') ? 120 : directCrossing ? 80 : 40;
         if (group.releaseWith ? !released.includes(group.releaseWith) : approach > releaseM) continue;
         released.push(group.id);
-        if (corridorPatrol || corridorHorde) (this.state.laneOffsets ??= {})[group.id] = player.transform.z - (corridorHorde ? 95 : at[1]);
+        if (corridorPatrol || corridorHorde || directCrossing) (this.state.laneOffsets ??= {})[group.id] = player.transform.z - (corridorHorde ? 95 : at[1]);
       }
       // At each fixed depth, intercept the road or parallel forecourt that
       // the courier actually enters. Save the lane once, retaining the three
