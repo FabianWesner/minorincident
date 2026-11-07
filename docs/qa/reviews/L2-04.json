@@ -1,0 +1,53 @@
+{
+  "row": "L2-04",
+  "status": "PASS",
+  "reviewer": "Codex final-a",
+  "date": "2026-11-07",
+  "commit": "0cbd817165f89940d2810fe2091000538a263ba0",
+  "clauses": [
+    {
+      "clause": "Order truckArrived → crewExit → atDoors → doorsOpen; no infected within 40 m before doors open; doors forced in 4 s.",
+      "verdict": "PASS",
+      "note": "14 current native checks PASS across low/high. low/complete arrival/exit/doors event order: [2943,2991,3276,3516]; target arrival ≤crewExit ≤atDoors ≤doorsOpen; all observed (PASS); low/complete door forcing duration: 4; target 4 ≤ value ≤ 4 (PASS); low/complete nearest living infected before doors open: {\"samples\":3515,\"nearest\":null}; target none within40 m (PASS); low/stationary arrival/exit/doors event order: [2943,2991,3276,3516]; target arrival ≤crewExit ≤atDoors ≤doorsOpen; all observed (PASS); low/stationary door forcing duration: 4; target 4 ≤ value ≤ 4 (PASS); low/stationary nearest living infected before doors open: {\"samples\":3515,\"nearest\":null}; target none within40 m (PASS); high/complete arrival/exit/doors event order: [2943,2991,3276,3516]; target arrival ≤crewExit ≤atDoors ≤doorsOpen; all observed (PASS); high/complete door forcing duration: 4; target 4 ≤ value ≤ 4 (PASS); high/complete nearest living infected before doors open: {\"samples\":3515,\"nearest\":null}; target none within40 m (PASS); high/stationary arrival/exit/doors event order: [2943,2991,3276,3516]; target arrival ≤crewExit ≤atDoors ≤doorsOpen; all observed (PASS); high/stationary door forcing duration: 4; target 4 ≤ value ≤ 4 (PASS); high/stationary nearest living infected before doors open: {\"samples\":3515,\"nearest\":null}; target none within40 m (PASS); low/controlled-fixture door order and four-second forcing clock: {\"order\":[48.6,49.4,54.15,58.15],\"nearBefore\":0}; target ordered arrival→exit→atDoors→open;4s force;0 infected within40m (PASS); high/controlled-fixture door order and four-second forcing clock: {\"order\":[48.6,49.4,54.15,58.15],\"nearBefore\":0}; target ordered arrival→exit→atDoors→open;4s force;0 infected within40m (PASS)"
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/final-a/L2-04-native.json",
+      "sha256": "620258f78eaba27ac784f6b02b6dd97e6061f9e7eabffd68ebdc27b14afe064b",
+      "what": "14 current native checks PASS across low/high. low/complete arrival/exit/doors event order: [2943,2991,3276,3516]; target arrival ≤crewExit ≤atDoors ≤doorsOpen; all observed (PASS); low/complete door forcing duration: 4; target 4 ≤ value ≤ 4 (PASS); low/complete nearest living infected before doors open: {\"samples\":3515,\"nearest\":null}; target none within40 m (PASS); low/stationary arrival/exit/doors event order: [2943,2991,3276,3516]; target arrival ≤crewExit ≤atDoors ≤doorsOpen; all observed (PASS); low/stationary door forcing duration: 4; target 4 ≤ value ≤ 4 (PASS); low/stationary nearest living infected before doors open: {\"samples\":3515,\"nearest\":null}; target none within40 m (PASS); high/complete arrival/exit/doors event order: [2943,2991,3276,3516]; target arrival ≤crewExit ≤atDoors ≤doorsOpen; all observed (PASS); high/complete door forcing duration: 4; target 4 ≤ value ≤ 4 (PASS); high/complete nearest living infected before doors open: {\"samples\":3515,\"nearest\":null}; target none within40 m (PASS); high/stationary arrival/exit/doors event order: [2943,2991,3276,3516]; target arrival ≤crewExit ≤atDoors ≤doorsOpen; all observed (PASS); high/stationary door forcing duration: 4; target 4 ≤ value ≤ 4 (PASS); high/stationary nearest living infected before doors open: {\"samples\":3515,\"nearest\":null}; target none within40 m (PASS); low/controlled-fixture door order and four-second forcing clock: {\"order\":[48.6,49.4,54.15,58.15],\"nearBefore\":0}; target ordered arrival→exit→atDoors→open;4s force;0 infected within40m (PASS); high/controlled-fixture door order and four-second forcing clock: {\"order\":[48.6,49.4,54.15,58.15],\"nearBefore\":0}; target ordered arrival→exit→atDoors→open;4s force;0 infected within40m (PASS)"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-low-complete.json",
+      "sha256": "65a3334f373fd381cd4cb412459ffe65c837cbeeb04599a477f404bb7428db05",
+      "what": "Frozen-head L2-04 native input receipt, evaluated by the exact clauses retained in the row proof."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-low-stationary.json",
+      "sha256": "806226e790065da9eff8e67d235cff3810b4510242ecc8a8518ef01067a57278",
+      "what": "Frozen-head L2-04 native input receipt, evaluated by the exact clauses retained in the row proof."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-high-complete.json",
+      "sha256": "17691eef6a8fc71fe9e26e3ccc91ca7cb2038d19bca0856309ed4afafa423932",
+      "what": "Frozen-head L2-04 native input receipt, evaluated by the exact clauses retained in the row proof."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-high-stationary.json",
+      "sha256": "9c8480be3077aee3ba22c0f173ca74cd1989fb0c4328cbe4459eaca812844586",
+      "what": "Frozen-head L2-04 native input receipt, evaluated by the exact clauses retained in the row proof."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
+      "sha256": "260e6b2630be1e593395f867cffd45f125d4b45e8fc973a9e4376eb931683aff",
+      "what": "Frozen-head L2-04 native input receipt, evaluated by the exact clauses retained in the row proof."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
+      "sha256": "ebcffc44ba056bc652015d345e957523462d8adbb8a977c1edaa333550202650",
+      "what": "Frozen-head L2-04 native input receipt, evaluated by the exact clauses retained in the row proof."
+    }
+  ],
+  "notes": "Numeric-only criterion; all evaluator clauses measured at both qualities on the frozen runtime source. No visual or route-readability inference.",
+  "sourceDigest": "9f88ba48ca13900ca4f429225cbac3045a96d48adee791c50179dde9c8cd025f"
+}
