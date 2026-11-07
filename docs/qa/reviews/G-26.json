@@ -1,37 +1,28 @@
 {
   "row": "G-26",
   "status": "FAIL",
-  "reviewer": "sweep-g/Codex",
-  "date": "2026-11-06",
-  "commit": "a232cb1a0f52a9249e6037820eb2cb7a38cfdd9b",
+  "reviewer": "final-g/Codex",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
   "clauses": [
     {
       "clause": "Figures share the heroine's proportions and absolute height (no shrunken adults), accessories on heads, held props in hands, sitters on seats.",
       "verdict": "FAIL",
-      "note": "Current-source coffee-holder close camera visibly separates cap above head in low/high; full-size high-ped-grip-coffee-standing-grip0-coffee.png inspected. Height catalog141LOD rows matches adult heroine1.454m but does not cure accessory placement. Zoo bag-holder also shows long pointed body/arm triangles; no speculative skinning fix."
+      "note": "Fresh low-quality authored zoo-staff fixture at60ticks has2 body-deformation counterexamples: bag holder and phone holder forearms form broad pointed/stretched skin triangles. Both original1280×720 close views personally inspected. Nearest prop/hand surface gaps are0.013555m (bag) and0.001133m (phone); those small grip gaps do not cure the visibly deformed bodies. The earlier coffee-cap finding is not freshly established and is not carried forward as a current FAIL."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-g/G-26-scenes-captures.json",
-      "sha256": "af161ebc05011b076ae573cc338c528ba6b36e45bb0202e49b829cec99e57e76",
-      "what": "All28 frames inspected, including original-size coffee cap and zoo bag-holder deformities; hashes retained and raw removed."
+      "file": "docs/reports/final-g/G-26-low-scenes.json",
+      "sha256": "1e7502cb64bc0f1b2fa939045dacdbb96490da0f8daf2cff699dde93329b7583",
+      "what": "Fresh low-quality authored zoo-staff fixture at60ticks has2 body-deformation counterexamples: bag holder and phone holder forearms form broad pointed/stretched skin triangles. Both original1280×720 close views personally inspected. Nearest prop/hand surface gaps are0.013555m (bag) and0.001133m (phone); those small grip gaps do not cure the visibly deformed bodies. The earlier coffee-cap finding is not freshly established and is not carried forward as a current FAIL."
     },
     {
-      "file": "docs/reports/sweep-g/G-26-heights.json",
-      "sha256": "786887c20d80b83483ac798df01da8713685104e581bab15436d3df21a0b4fdd",
-      "what": "Current baked figure heights,141LOD rows; adult heroine1.454m."
-    },
-    {
-      "file": "docs/reports/sweep-g/G-26-scenes.json",
-      "sha256": "675a707266656fc036f961bd89545e2faad36bb1fbdcd16b5ee4b384bc2d3f2e",
-      "what": "Five authored routines both qualities, grip contact gaps and actual rendered accessories."
-    },
-    {
-      "file": "docs/reports/sweep-g/G-26-final-closeout.json",
-      "sha256": "f876d67f1f90038d429031ef72307d69d99aee4c7991aad65ecb1881557643ae",
-      "what": "28 frames viewed, including full original high coffee closeup. Coffee cap floats visibly above head; zoo bag holder and phone arm show triangular stretching. Large pale foreground weather triangle is not counted as a body defect."
+      "file": "docs/reports/final-g/G-26-reviewed.json",
+      "sha256": "464688f844d04b7009e9c0e9f2ba4f0b70158158dedce74a7cd346414cfcab8f",
+      "what": "Fresh low-quality authored zoo-staff fixture at60ticks has2 body-deformation counterexamples: bag holder and phone holder forearms form broad pointed/stretched skin triangles. Both original1280×720 close views personally inspected. Nearest prop/hand surface gaps are0.013555m (bag) and0.001133m (phone); those small grip gaps do not cure the visibly deformed bodies. The earlier coffee-cap finding is not freshly established and is not carried forward as a current FAIL."
     }
   ],
-  "notes": "Game-camera scene and close grip camera differ; defect is visible in the close view. Full every-body/routine visual coverage remains incomplete. No criteria or assets changed."
+  "notes": "Repro: load authored ped-zoo-staff Scene Lab fixture, low quality, advance60ticks, then inspect bag and phone holders using the retained close-camera captures. No model, grip or pose edits.",
+  "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186"
 }
