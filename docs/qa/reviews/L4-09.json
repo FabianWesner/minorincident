@@ -1,21 +1,38 @@
 {
   "row": "L4-09",
   "status": "PASS",
-  "reviewer": "Codex",
-  "date": "2026-11-03",
-  "commit": "f5f4adbcfaf103947e2d716e6cc57e108f07b08a",
+  "reviewer": "Codex/final-b",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "sourceDigest": "e3dafe0694468ae05c6e72a1f303adf938a6c33391416d38d67a60534e2fe51b",
   "clauses": [
     {
       "clause": "Lines fall on beats: line 1 at 50–62 s, nests 110–124 s, armour 170–182 s after the turn; \"Fall back!\" 8 s after the third; camera beats ≤ 2 s, skippable after 0.5 s.",
       "verdict": "PASS",
-      "note": "Actual line breaks low62/124/182s, high50.1833/124/182s; fallback8s after armor. Production camera fixture naturally ends at1.6s, cannot skip before0.5s, skips at0.5s."
+      "note": "low/complete: line1 actual beat after first turn=52.31666666666667; target 50 ≤ value ≤ 62; PASS\nlow/complete: nests actual beat after first turn=124; target 110 ≤ value ≤ 124; PASS\nlow/complete: armor actual beat after first turn=170; target 170 ≤ value ≤ 182; PASS\nlow/complete: fallback after third line break=8; target 8 ≤ value ≤ 8; PASS\nhigh/complete: line1 actual beat after first turn=60.333333333333336; target 50 ≤ value ≤ 62; PASS\nhigh/complete: nests actual beat after first turn=124; target 110 ≤ value ≤ 124; PASS\nhigh/complete: armor actual beat after first turn=170.6; target 170 ≤ value ≤ 182; PASS\nhigh/complete: fallback after third line break=8; target 8 ≤ value ≤ 8; PASS\nlow/controlled-fixture: native camera beat duration and half-second input gate=[{\"id\":\"l4-line-1\",\"inputHeld\":false,\"ticks\":96,\"blockedBeforeHalfSecond\":true},{\"id\":\"l4-line-1\",\"inputHeld\":true,\"ticks\":30,\"blockedBeforeHalfSecond\":true},{\"id\":\"l4-armor\",\"inputHeld\":false,\"ticks\":96,\"blockedBeforeHalfSecond\":true},{\"id\":\"l4-armor\",\"inputHeld\":true,\"ticks\":30,\"blockedBeforeHalfSecond\":true},{\"id\":\"l4-breach-north\",\"inputHeld\":false,\"ticks\":96,\"blockedBeforeHalfSecond\":true},{\"id\":\"l4-breach-north\",\"inputHeld\":true,\"ticks\":30,\"blockedBeforeHalfSecond\":true},{\"id\":\"l4-breach-west\",\"inputHeld\":false,\"ticks\":96,\"blockedBeforeHalfSecond\":true},{\"id\":\"l4-breach-west\",\"inputHeld\":true,\"ticks\":30,\"blockedBeforeHalfSecond\":true},{\"id\":\"l4-breach-south\",\"inputHeld\":false,\"ticks\":96,\"blockedBeforeHalfSecond\":true},{\"id\":\"l4-breach-south\",\"inputHeld\":true,\"ticks\":30,\"blockedBeforeHalfSecond\":true}]; target every beat≤120ticks; held input blocked for29ticks and skips at30; PASS\nhigh/controlled-fixture: native camera beat duration and half-second input gate=[{\"id\":\"l4-line-1\",\"inputHeld\":false,\"ticks\":96,\"blockedBeforeHalfSecond\":true},{\"id\":\"l4-line-1\",\"inputHeld\":true,\"ticks\":30,\"blockedBeforeHalfSecond\":true},{\"id\":\"l4-armor\",\"inputHeld\":false,\"ticks\":96,\"blockedBeforeHalfSecond\":true},{\"id\":\"l4-armor\",\"inputHeld\":true,\"ticks\":30,\"blockedBeforeHalfSecond\":true},{\"id\":\"l4-breach-north\",\"inputHeld\":false,\"ticks\":96,\"blockedBeforeHalfSecond\":true},{\"id\":\"l4-breach-north\",\"inputHeld\":true,\"ticks\":30,\"blockedBeforeHalfSecond\":true},{\"id\":\"l4-breach-west\",\"inputHeld\":false,\"ticks\":96,\"blockedBeforeHalfSecond\":true},{\"id\":\"l4-breach-west\",\"inputHeld\":true,\"ticks\":30,\"blockedBeforeHalfSecond\":true},{\"id\":\"l4-breach-south\",\"inputHeld\":false,\"ticks\":96,\"blockedBeforeHalfSecond\":true},{\"id\":\"l4-breach-south\",\"inputHeld\":true,\"ticks\":30,\"blockedBeforeHalfSecond\":true}]; target every beat≤120ticks; held input blocked for29ticks and skips at30; PASS"
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix51-r10b/L4-09-proof.json",
-      "sha256": "f1038f02133a6ac5c3a47ae7531397901aa58870025b66ca41aaee86d5c54729",
-      "what": "Actual event and final-state clocks, both quality tiers, unchanged production camera fixture and six negative timeline/threshold controls. No visual inference used."
+      "file": "docs/reports/fix51-verify/receipts/L4-low-complete.json",
+      "sha256": "926dc23d5d84b06429fd944df09e7c1f37665084591c3621e4f404411c9fa12e",
+      "what": "Frozen-head native measurement: L4-09. line1 actual beat after first turn; nests actual beat after first turn; armor actual beat after first turn; fallback after third line break."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L4-high-complete.json",
+      "sha256": "2165e1d8528b8e40fc594234a6f6c33fb950c4aa00ba825e7b38893c475692a2",
+      "what": "Frozen-head native measurement: L4-09. line1 actual beat after first turn; nests actual beat after first turn; armor actual beat after first turn; fallback after third line break."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L4-low-fixtures.json",
+      "sha256": "acd49bd687820e0421216d7b8d6f471caf2cc0ecd8a7f3bae7538c91c48856f3",
+      "what": "Frozen-head native measurement: L4-09. native camera beat duration and half-second input gate."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L4-high-fixtures.json",
+      "sha256": "e165612405da31f0eef50e04a35104ed02015f355c52926b79bf6804488871bf",
+      "what": "Frozen-head native measurement: L4-09. native camera beat duration and half-second input gate."
     }
-  ]
+  ],
+  "notes": "Fresh native measurements on the frozen source. No claim of new browser observations. L5-01 legacy diagnostic NOT CHECKED entries are redundant with the explicit pickup/regular/Alpha timing fixtures, whose full clauses pass."
 }
