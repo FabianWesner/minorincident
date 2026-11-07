@@ -17,6 +17,7 @@ import { loadLevel as loadMissionLevel } from '../qa/invariants/world';
 import { loadLevel, runnerLevels } from '../../tools/sim-runner/levels';
 import { missionSandbox } from '../fixtures/scenarios/mission-sandbox';
 import { objectiveText } from '../../src/sim/missions/objectiveText';
+import { markerAnchor } from '../../src/sim/missions/markerAnchor';
 import { emergeResident, emergeSpeedMs, walkResidents } from '../../src/sim/outbreak/HouseEmergence';
 
 let world: SimWorld | undefined;
@@ -208,6 +209,15 @@ test('interactions: ring, input and view predicates agree for every interact ste
         checked++;
       }
       if (['L2', 'L3', 'L4', 'L5'].includes(level)) expect(checked, level).toBeGreaterThan(0);
+      if (level === 'L10') {
+        expect(mission.def.steps.find(s => s.id === 'mega')!.waypoint).toBe(false);
+        // A legacy resume's serialized marker must not reveal a distant boss.
+        mission.def.anchors['cure-mega'] = { x: -150, z: 80, radius: 2 };
+        mission.state.marker = 'cure-mega';
+        expect(markerAnchor(mission)).toBeNull();
+        mission.state.marker = 'cure-console';
+        expect(markerAnchor(mission)).toBe(mission.def.anchors['cure-console']);
+      }
     } finally { levelWorld.dispose(); }
   }
 }, 240_000);

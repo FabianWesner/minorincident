@@ -12,5 +12,8 @@ export const objectiveRingRadius = .65;
 export function markerAnchor(mission: Pick<Mission, 'state' | 'def'> | null | undefined): Anchored | null {
   const marker = mission?.state.marker;
   if (!mission || !marker) return null;
+  // Older L10 resumes retain this marker. Never expose the private pursuit
+  // anchor through a world ring, HUD arrow or minimap destination pin.
+  if (mission.def.id === 'L10' && marker === 'cure-mega') return null;
   return (mission.def.anchors[marker] as Anchored | undefined) ?? null;
 }
