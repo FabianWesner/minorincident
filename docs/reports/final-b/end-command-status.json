@@ -1,0 +1,50 @@
+[
+  {
+    "command": [
+      "npm",
+      "run",
+      "qa:accept",
+      "--",
+      "--level",
+      "L4",
+      "--tier",
+      "both",
+      "--skip-browser"
+    ],
+    "exitCode": 1,
+    "seconds": 542.866180833,
+    "log": "test-results/final-b/end-accept-L4.log"
+  },
+  {
+    "command": [
+      "npm",
+      "run",
+      "qa:accept",
+      "--",
+      "--level",
+      "L5",
+      "--tier",
+      "both",
+      "--skip-browser"
+    ],
+    "exitCode": 1,
+    "seconds": 199.763329667,
+    "log": "test-results/final-b/end-accept-L5.log"
+  },
+  {
+    "command": [
+      "npm",
+      "run",
+      "qa:accept",
+      "--",
+      "--level",
+      "L6",
+      "--tier",
+      "both",
+      "--skip-browser"
+    ],
+    "exitCode": 1,
+    "seconds": 214.50793316700003,
+    "log": "test-results/final-b/end-accept-L6.log"
+  }
+]

@@ -5,7 +5,7 @@
   "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
   "fixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
-  "generatedAt": "2026-11-07T02:45:00.725Z",
+  "generatedAt": "2026-11-07T03:26:19.366Z",
   "policies": [
     {
       "tier": "low",
@@ -6121,9 +6121,33 @@
       "id": "L5-07",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "Fresh muted high route uses the logged authored-map search assist and rescues2. Caption-only discovery of >=4/5 remains unqualified.",
+      "value": "Manual review PASS (FRESH, Codex/final-b): Muted=true actual caption-guided physical route found4/5 distinct survivors: Mia(radio above Harbor Street), Rosa(knocking inside pharmacy), Sam(flashlight inside wrecked bus on Lakeshore Avenue), Mr.Okafor(soft prayer from church). HUD steps1→2→3→4; final post-run counter4 and four nonzero foundAt identities agree. Normal follow camera, low tier, actual L5-default female courier. Courier-only God protection disclosed; NPCs mortal (Mia/Rosa/Sam lost), no actor/anchor/goal coordinate reads for decisions, no authored tour/bot. This measures caption-only discovery, not mortal combat balance or evacuation. Fresh muted high route uses the logged authored-map search assist and rescues2. Caption-only discovery of >=4/5 remains unqualified.",
       "automatedComplete": false,
-      "receipt": [],
+      "receipt": [
+        "docs/reports/final-b/L5-07-proof.json",
+        "docs/reports/final-b/muted-found-audit-proof.json",
+        "docs/reports/final-b/muted-screen-qualified-executed.ts.gz",
+        "docs/reports/final-b/muted-screen-qualified-v2-executed.ts.gz",
+        "docs/reports/final-b/muted-low-qualified-receipt.json.gz",
+        "docs/reports/final-b/muted-low-qualified-last-progress.json.gz",
+        "docs/reports/final-b/muted-low-qualified2-receipt.json.gz",
+        "docs/reports/final-b/muted-low-qualified2-origin-resume.json.gz",
+        "docs/reports/final-b/muted-low-qualified2-last-progress.json.gz",
+        "docs/reports/final-b/muted-low-qualified3-receipt.json.gz",
+        "docs/reports/final-b/muted-low-qualified3-origin-resume.json.gz",
+        "docs/reports/final-b/muted-low-qualified3-last-progress.json.gz",
+        "docs/reports/final-b/muted-low-qualified4-receipt.json.gz",
+        "docs/reports/final-b/muted-low-qualified4-origin-resume.json.gz",
+        "docs/reports/final-b/muted-low-qualified4-last-progress.json.gz",
+        "docs/reports/final-b/muted-low-qualified5-receipt.json.gz",
+        "docs/reports/final-b/muted-low-qualified5-origin-resume.json.gz",
+        "docs/reports/final-b/muted-low-qualified5-last-progress.json.gz",
+        "docs/reports/final-b/muted-low-qualified5-post-run.json.gz",
+        "docs/reports/final-b/muted-low-qualified6-receipt.json.gz",
+        "docs/reports/final-b/muted-low-qualified6-origin-resume.json.gz",
+        "docs/reports/final-b/muted-low-qualified6-last-progress.json.gz",
+        "docs/reports/final-b/muted-low-qualified6-post-run.json.gz"
+      ],
       "expected": "A muted player still finds ≥ 4 / 5 (captions only).",
       "checks": [],
       "historical": {
@@ -6137,7 +6161,141 @@
         ],
         "method": "PLAYTEST_L5_TOUR=1 uses static authored destinations, so successful graph traversal is not a caption-only pass. NEXT: screenshot-only muted play without map/position assistance, recording every discovery and the cues actually read."
       },
-      "remaining": "PLAYTEST_L5_TOUR=1 uses static authored destinations, so successful graph traversal is not a caption-only pass. NEXT: screenshot-only muted play without map/position assistance, recording every discovery and the cues actually read."
+      "remaining": "PLAYTEST_L5_TOUR=1 uses static authored destinations, so successful graph traversal is not a caption-only pass. NEXT: screenshot-only muted play without map/position assistance, recording every discovery and the cues actually read.",
+      "reviewDecision": {
+        "row": "L5-07",
+        "status": "PASS",
+        "reviewer": "Codex/final-b",
+        "date": "2026-11-07",
+        "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+        "sourceDigest": "96b95aaf00218387ac838466ba4e849719809eef34f96b67f54241001dca8a39",
+        "clauses": [
+          {
+            "clause": "A muted player still finds ≥ 4 / 5 (captions only).",
+            "verdict": "PASS",
+            "note": "Muted=true actual caption-guided physical route found4/5 distinct survivors: Mia(radio above Harbor Street), Rosa(knocking inside pharmacy), Sam(flashlight inside wrecked bus on Lakeshore Avenue), Mr.Okafor(soft prayer from church). HUD steps1→2→3→4; final post-run counter4 and four nonzero foundAt identities agree. Normal follow camera, low tier, actual L5-default female courier. Courier-only God protection disclosed; NPCs mortal (Mia/Rosa/Sam lost), no actor/anchor/goal coordinate reads for decisions, no authored tour/bot. This measures caption-only discovery, not mortal combat balance or evacuation."
+          }
+        ],
+        "evidence": [
+          {
+            "file": "docs/reports/final-b/L5-07-proof.json",
+            "sha256": "c1cfefcf565f2751b7a8618e1043dadff24c161bf54e17509c560a48bda12274",
+            "what": "Muted=true actual caption-guided physical route found4/5 distinct survivors: Mia(radio above Harbor Street), Rosa(knocking inside pharmacy), Sam(flashlight inside wrecked bus on Lakeshore Avenue), Mr.Okafor(soft prayer from church). HUD steps1→2→3→4; final post-run counter4 and four nonzero foundAt identities agree. Normal follow camera, low tier, actual L5-default female courier. Courier-only God protection disclosed; NPCs mortal (Mia/Rosa/Sam lost), no actor/anchor/goal coordinate reads for decisions, no authored tour/bot. This measures caption-only discovery, not mortal combat balance or evacuation."
+          },
+          {
+            "file": "docs/reports/final-b/muted-found-audit-proof.json",
+            "sha256": "774dc5d522d912251cffcb86f13836e06af40a978fa012d6c6e0ff9589ce7ff2",
+            "what": "Muted=true actual caption-guided physical route found4/5 distinct survivors: Mia(radio above Harbor Street), Rosa(knocking inside pharmacy), Sam(flashlight inside wrecked bus on Lakeshore Avenue), Mr.Okafor(soft prayer from church). HUD steps1→2→3→4; final post-run counter4 and four nonzero foundAt identities agree. Normal follow camera, low tier, actual L5-default female courier. Courier-only God protection disclosed; NPCs mortal (Mia/Rosa/Sam lost), no actor/anchor/goal coordinate reads for decisions, no authored tour/bot. This measures caption-only discovery, not mortal combat balance or evacuation."
+          },
+          {
+            "file": "docs/reports/final-b/muted-screen-qualified-executed.ts.gz",
+            "sha256": "88acf4eb0df5b44a1a1c1a9b30dcb3229f88260b5b06405f9848561e0272fa1f",
+            "what": "Muted=true actual caption-guided physical route found4/5 distinct survivors: Mia(radio above Harbor Street), Rosa(knocking inside pharmacy), Sam(flashlight inside wrecked bus on Lakeshore Avenue), Mr.Okafor(soft prayer from church). HUD steps1→2→3→4; final post-run counter4 and four nonzero foundAt identities agree. Normal follow camera, low tier, actual L5-default female courier. Courier-only God protection disclosed; NPCs mortal (Mia/Rosa/Sam lost), no actor/anchor/goal coordinate reads for decisions, no authored tour/bot. This measures caption-only discovery, not mortal combat balance or evacuation."
+          },
+          {
+            "file": "docs/reports/final-b/muted-screen-qualified-v2-executed.ts.gz",
+            "sha256": "6606b9771ad43d57843ebc3c955dc91ff0da0d125acfbdfff2f74944aad0d85f",
+            "what": "Muted=true actual caption-guided physical route found4/5 distinct survivors: Mia(radio above Harbor Street), Rosa(knocking inside pharmacy), Sam(flashlight inside wrecked bus on Lakeshore Avenue), Mr.Okafor(soft prayer from church). HUD steps1→2→3→4; final post-run counter4 and four nonzero foundAt identities agree. Normal follow camera, low tier, actual L5-default female courier. Courier-only God protection disclosed; NPCs mortal (Mia/Rosa/Sam lost), no actor/anchor/goal coordinate reads for decisions, no authored tour/bot. This measures caption-only discovery, not mortal combat balance or evacuation."
+          },
+          {
+            "file": "docs/reports/final-b/muted-low-qualified-receipt.json.gz",
+            "sha256": "2537bcfa1ef277311ee11d4b02da3c017e1a1b15809e44e6e117072231d9e338",
+            "what": "Muted=true actual caption-guided physical route found4/5 distinct survivors: Mia(radio above Harbor Street), Rosa(knocking inside pharmacy), Sam(flashlight inside wrecked bus on Lakeshore Avenue), Mr.Okafor(soft prayer from church). HUD steps1→2→3→4; final post-run counter4 and four nonzero foundAt identities agree. Normal follow camera, low tier, actual L5-default female courier. Courier-only God protection disclosed; NPCs mortal (Mia/Rosa/Sam lost), no actor/anchor/goal coordinate reads for decisions, no authored tour/bot. This measures caption-only discovery, not mortal combat balance or evacuation."
+          },
+          {
+            "file": "docs/reports/final-b/muted-low-qualified-last-progress.json.gz",
+            "sha256": "31718d971aab9656df17389fc6f3172be006cba3864129663e86b20d529b429e",
+            "what": "Muted=true actual caption-guided physical route found4/5 distinct survivors: Mia(radio above Harbor Street), Rosa(knocking inside pharmacy), Sam(flashlight inside wrecked bus on Lakeshore Avenue), Mr.Okafor(soft prayer from church). HUD steps1→2→3→4; final post-run counter4 and four nonzero foundAt identities agree. Normal follow camera, low tier, actual L5-default female courier. Courier-only God protection disclosed; NPCs mortal (Mia/Rosa/Sam lost), no actor/anchor/goal coordinate reads for decisions, no authored tour/bot. This measures caption-only discovery, not mortal combat balance or evacuation."
+          },
+          {
+            "file": "docs/reports/final-b/muted-low-qualified2-receipt.json.gz",
+            "sha256": "a73bd81749b1489f9958758b6715dfba9704456017dc37f9037869a33aa55234",
+            "what": "Muted=true actual caption-guided physical route found4/5 distinct survivors: Mia(radio above Harbor Street), Rosa(knocking inside pharmacy), Sam(flashlight inside wrecked bus on Lakeshore Avenue), Mr.Okafor(soft prayer from church). HUD steps1→2→3→4; final post-run counter4 and four nonzero foundAt identities agree. Normal follow camera, low tier, actual L5-default female courier. Courier-only God protection disclosed; NPCs mortal (Mia/Rosa/Sam lost), no actor/anchor/goal coordinate reads for decisions, no authored tour/bot. This measures caption-only discovery, not mortal combat balance or evacuation."
+          },
+          {
+            "file": "docs/reports/final-b/muted-low-qualified2-origin-resume.json.gz",
+            "sha256": "31718d971aab9656df17389fc6f3172be006cba3864129663e86b20d529b429e",
+            "what": "Muted=true actual caption-guided physical route found4/5 distinct survivors: Mia(radio above Harbor Street), Rosa(knocking inside pharmacy), Sam(flashlight inside wrecked bus on Lakeshore Avenue), Mr.Okafor(soft prayer from church). HUD steps1→2→3→4; final post-run counter4 and four nonzero foundAt identities agree. Normal follow camera, low tier, actual L5-default female courier. Courier-only God protection disclosed; NPCs mortal (Mia/Rosa/Sam lost), no actor/anchor/goal coordinate reads for decisions, no authored tour/bot. This measures caption-only discovery, not mortal combat balance or evacuation."
+          },
+          {
+            "file": "docs/reports/final-b/muted-low-qualified2-last-progress.json.gz",
+            "sha256": "af52210d49375fa9e64a7e67205e55bc9d2a0e0af927e29fab123abd24a58c8d",
+            "what": "Muted=true actual caption-guided physical route found4/5 distinct survivors: Mia(radio above Harbor Street), Rosa(knocking inside pharmacy), Sam(flashlight inside wrecked bus on Lakeshore Avenue), Mr.Okafor(soft prayer from church). HUD steps1→2→3→4; final post-run counter4 and four nonzero foundAt identities agree. Normal follow camera, low tier, actual L5-default female courier. Courier-only God protection disclosed; NPCs mortal (Mia/Rosa/Sam lost), no actor/anchor/goal coordinate reads for decisions, no authored tour/bot. This measures caption-only discovery, not mortal combat balance or evacuation."
+          },
+          {
+            "file": "docs/reports/final-b/muted-low-qualified3-receipt.json.gz",
+            "sha256": "16a62f6cadd8d1d9b77f95da7eab1a04c00156d4ad937b9c394f57263cf658fb",
+            "what": "Muted=true actual caption-guided physical route found4/5 distinct survivors: Mia(radio above Harbor Street), Rosa(knocking inside pharmacy), Sam(flashlight inside wrecked bus on Lakeshore Avenue), Mr.Okafor(soft prayer from church). HUD steps1→2→3→4; final post-run counter4 and four nonzero foundAt identities agree. Normal follow camera, low tier, actual L5-default female courier. Courier-only God protection disclosed; NPCs mortal (Mia/Rosa/Sam lost), no actor/anchor/goal coordinate reads for decisions, no authored tour/bot. This measures caption-only discovery, not mortal combat balance or evacuation."
+          },
+          {
+            "file": "docs/reports/final-b/muted-low-qualified3-origin-resume.json.gz",
+            "sha256": "af52210d49375fa9e64a7e67205e55bc9d2a0e0af927e29fab123abd24a58c8d",
+            "what": "Muted=true actual caption-guided physical route found4/5 distinct survivors: Mia(radio above Harbor Street), Rosa(knocking inside pharmacy), Sam(flashlight inside wrecked bus on Lakeshore Avenue), Mr.Okafor(soft prayer from church). HUD steps1→2→3→4; final post-run counter4 and four nonzero foundAt identities agree. Normal follow camera, low tier, actual L5-default female courier. Courier-only God protection disclosed; NPCs mortal (Mia/Rosa/Sam lost), no actor/anchor/goal coordinate reads for decisions, no authored tour/bot. This measures caption-only discovery, not mortal combat balance or evacuation."
+          },
+          {
+            "file": "docs/reports/final-b/muted-low-qualified3-last-progress.json.gz",
+            "sha256": "783d53f9d300fc0a8689a2595fbf37a3cdfce2885a94215fe5f44215fe36c5af",
+            "what": "Muted=true actual caption-guided physical route found4/5 distinct survivors: Mia(radio above Harbor Street), Rosa(knocking inside pharmacy), Sam(flashlight inside wrecked bus on Lakeshore Avenue), Mr.Okafor(soft prayer from church). HUD steps1→2→3→4; final post-run counter4 and four nonzero foundAt identities agree. Normal follow camera, low tier, actual L5-default female courier. Courier-only God protection disclosed; NPCs mortal (Mia/Rosa/Sam lost), no actor/anchor/goal coordinate reads for decisions, no authored tour/bot. This measures caption-only discovery, not mortal combat balance or evacuation."
+          },
+          {
+            "file": "docs/reports/final-b/muted-low-qualified4-receipt.json.gz",
+            "sha256": "0eed5de67d079ef7c918c6cdd1a0378fbc00266afb2c2a11d2c8aa1015adae14",
+            "what": "Muted=true actual caption-guided physical route found4/5 distinct survivors: Mia(radio above Harbor Street), Rosa(knocking inside pharmacy), Sam(flashlight inside wrecked bus on Lakeshore Avenue), Mr.Okafor(soft prayer from church). HUD steps1→2→3→4; final post-run counter4 and four nonzero foundAt identities agree. Normal follow camera, low tier, actual L5-default female courier. Courier-only God protection disclosed; NPCs mortal (Mia/Rosa/Sam lost), no actor/anchor/goal coordinate reads for decisions, no authored tour/bot. This measures caption-only discovery, not mortal combat balance or evacuation."
+          },
+          {
+            "file": "docs/reports/final-b/muted-low-qualified4-origin-resume.json.gz",
+            "sha256": "783d53f9d300fc0a8689a2595fbf37a3cdfce2885a94215fe5f44215fe36c5af",
+            "what": "Muted=true actual caption-guided physical route found4/5 distinct survivors: Mia(radio above Harbor Street), Rosa(knocking inside pharmacy), Sam(flashlight inside wrecked bus on Lakeshore Avenue), Mr.Okafor(soft prayer from church). HUD steps1→2→3→4; final post-run counter4 and four nonzero foundAt identities agree. Normal follow camera, low tier, actual L5-default female courier. Courier-only God protection disclosed; NPCs mortal (Mia/Rosa/Sam lost), no actor/anchor/goal coordinate reads for decisions, no authored tour/bot. This measures caption-only discovery, not mortal combat balance or evacuation."
+          },
+          {
+            "file": "docs/reports/final-b/muted-low-qualified4-last-progress.json.gz",
+            "sha256": "79cbda80df1ad70f121e5a3c333becd2599877771c6cf0198221c179113ecd2e",
+            "what": "Muted=true actual caption-guided physical route found4/5 distinct survivors: Mia(radio above Harbor Street), Rosa(knocking inside pharmacy), Sam(flashlight inside wrecked bus on Lakeshore Avenue), Mr.Okafor(soft prayer from church). HUD steps1→2→3→4; final post-run counter4 and four nonzero foundAt identities agree. Normal follow camera, low tier, actual L5-default female courier. Courier-only God protection disclosed; NPCs mortal (Mia/Rosa/Sam lost), no actor/anchor/goal coordinate reads for decisions, no authored tour/bot. This measures caption-only discovery, not mortal combat balance or evacuation."
+          },
+          {
+            "file": "docs/reports/final-b/muted-low-qualified5-receipt.json.gz",
+            "sha256": "a1f309e432586910a55aefd37e2c14fd65bdae4efddf5dff708df4103f166227",
+            "what": "Muted=true actual caption-guided physical route found4/5 distinct survivors: Mia(radio above Harbor Street), Rosa(knocking inside pharmacy), Sam(flashlight inside wrecked bus on Lakeshore Avenue), Mr.Okafor(soft prayer from church). HUD steps1→2→3→4; final post-run counter4 and four nonzero foundAt identities agree. Normal follow camera, low tier, actual L5-default female courier. Courier-only God protection disclosed; NPCs mortal (Mia/Rosa/Sam lost), no actor/anchor/goal coordinate reads for decisions, no authored tour/bot. This measures caption-only discovery, not mortal combat balance or evacuation."
+          },
+          {
+            "file": "docs/reports/final-b/muted-low-qualified5-origin-resume.json.gz",
+            "sha256": "79cbda80df1ad70f121e5a3c333becd2599877771c6cf0198221c179113ecd2e",
+            "what": "Muted=true actual caption-guided physical route found4/5 distinct survivors: Mia(radio above Harbor Street), Rosa(knocking inside pharmacy), Sam(flashlight inside wrecked bus on Lakeshore Avenue), Mr.Okafor(soft prayer from church). HUD steps1→2→3→4; final post-run counter4 and four nonzero foundAt identities agree. Normal follow camera, low tier, actual L5-default female courier. Courier-only God protection disclosed; NPCs mortal (Mia/Rosa/Sam lost), no actor/anchor/goal coordinate reads for decisions, no authored tour/bot. This measures caption-only discovery, not mortal combat balance or evacuation."
+          },
+          {
+            "file": "docs/reports/final-b/muted-low-qualified5-last-progress.json.gz",
+            "sha256": "33054603954997c9d6a6795308793d0d72d263d8360b2c3f7877887eca3ee7b9",
+            "what": "Muted=true actual caption-guided physical route found4/5 distinct survivors: Mia(radio above Harbor Street), Rosa(knocking inside pharmacy), Sam(flashlight inside wrecked bus on Lakeshore Avenue), Mr.Okafor(soft prayer from church). HUD steps1→2→3→4; final post-run counter4 and four nonzero foundAt identities agree. Normal follow camera, low tier, actual L5-default female courier. Courier-only God protection disclosed; NPCs mortal (Mia/Rosa/Sam lost), no actor/anchor/goal coordinate reads for decisions, no authored tour/bot. This measures caption-only discovery, not mortal combat balance or evacuation."
+          },
+          {
+            "file": "docs/reports/final-b/muted-low-qualified5-post-run.json.gz",
+            "sha256": "1ac6ef020a36ad28ca57962dbfe3fc8dfd7df3f22a96f9e1d50b53bf0a119b93",
+            "what": "Muted=true actual caption-guided physical route found4/5 distinct survivors: Mia(radio above Harbor Street), Rosa(knocking inside pharmacy), Sam(flashlight inside wrecked bus on Lakeshore Avenue), Mr.Okafor(soft prayer from church). HUD steps1→2→3→4; final post-run counter4 and four nonzero foundAt identities agree. Normal follow camera, low tier, actual L5-default female courier. Courier-only God protection disclosed; NPCs mortal (Mia/Rosa/Sam lost), no actor/anchor/goal coordinate reads for decisions, no authored tour/bot. This measures caption-only discovery, not mortal combat balance or evacuation."
+          },
+          {
+            "file": "docs/reports/final-b/muted-low-qualified6-receipt.json.gz",
+            "sha256": "35a300209b9cd6227fcd7c03760b5103c4c06d4b6fc3535887adf68089332bed",
+            "what": "Muted=true actual caption-guided physical route found4/5 distinct survivors: Mia(radio above Harbor Street), Rosa(knocking inside pharmacy), Sam(flashlight inside wrecked bus on Lakeshore Avenue), Mr.Okafor(soft prayer from church). HUD steps1→2→3→4; final post-run counter4 and four nonzero foundAt identities agree. Normal follow camera, low tier, actual L5-default female courier. Courier-only God protection disclosed; NPCs mortal (Mia/Rosa/Sam lost), no actor/anchor/goal coordinate reads for decisions, no authored tour/bot. This measures caption-only discovery, not mortal combat balance or evacuation."
+          },
+          {
+            "file": "docs/reports/final-b/muted-low-qualified6-origin-resume.json.gz",
+            "sha256": "33054603954997c9d6a6795308793d0d72d263d8360b2c3f7877887eca3ee7b9",
+            "what": "Muted=true actual caption-guided physical route found4/5 distinct survivors: Mia(radio above Harbor Street), Rosa(knocking inside pharmacy), Sam(flashlight inside wrecked bus on Lakeshore Avenue), Mr.Okafor(soft prayer from church). HUD steps1→2→3→4; final post-run counter4 and four nonzero foundAt identities agree. Normal follow camera, low tier, actual L5-default female courier. Courier-only God protection disclosed; NPCs mortal (Mia/Rosa/Sam lost), no actor/anchor/goal coordinate reads for decisions, no authored tour/bot. This measures caption-only discovery, not mortal combat balance or evacuation."
+          },
+          {
+            "file": "docs/reports/final-b/muted-low-qualified6-last-progress.json.gz",
+            "sha256": "b46689adb7e140552495e58861660d6a59546573aed5bada697ac21dcba60b5b",
+            "what": "Muted=true actual caption-guided physical route found4/5 distinct survivors: Mia(radio above Harbor Street), Rosa(knocking inside pharmacy), Sam(flashlight inside wrecked bus on Lakeshore Avenue), Mr.Okafor(soft prayer from church). HUD steps1→2→3→4; final post-run counter4 and four nonzero foundAt identities agree. Normal follow camera, low tier, actual L5-default female courier. Courier-only God protection disclosed; NPCs mortal (Mia/Rosa/Sam lost), no actor/anchor/goal coordinate reads for decisions, no authored tour/bot. This measures caption-only discovery, not mortal combat balance or evacuation."
+          },
+          {
+            "file": "docs/reports/final-b/muted-low-qualified6-post-run.json.gz",
+            "sha256": "0e73b991160ee2907aae88ffcc22ef886b1d3334243146f0fa82682bd0dab99e",
+            "what": "Muted=true actual caption-guided physical route found4/5 distinct survivors: Mia(radio above Harbor Street), Rosa(knocking inside pharmacy), Sam(flashlight inside wrecked bus on Lakeshore Avenue), Mr.Okafor(soft prayer from church). HUD steps1→2→3→4; final post-run counter4 and four nonzero foundAt identities agree. Normal follow camera, low tier, actual L5-default female courier. Courier-only God protection disclosed; NPCs mortal (Mia/Rosa/Sam lost), no actor/anchor/goal coordinate reads for decisions, no authored tour/bot. This measures caption-only discovery, not mortal combat balance or evacuation."
+          }
+        ],
+        "freshness": "FRESH",
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
+      }
     },
     {
       "id": "L5-08",
@@ -7437,11 +7595,15 @@
       "id": "L5-09",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/complete native complete rescued result: 5 (target 4 ≤ value ≤ 5; PASS); high/complete native complete rescued result: 5 (target 4 ≤ value ≤ 5; PASS)",
+      "value": "low/complete native complete rescued result: 5 (target 4 ≤ value ≤ 5; PASS); high/complete native complete rescued result: 5 (target 4 ≤ value ≤ 5; PASS) Manual review PASS (FRESH, Codex/final-b): PASS for the specified native single-seed benchmark: complete evacuates5/5 and completes in193.3667s low/222.3167s high; evade-only evacuates0 actual identities during each native default1200s trial, emits0 courier attacks, ends tick-budget with result=null (not a completed zero-rescued result). Unprotected eligible contact resolves within79/68ticks (1.3167/1.1333s), under1.5s. Complete final hashes0a23911a/147553b8 match the frozen canonical controls.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L5-low-complete.json",
-        "docs/reports/fix51-verify/receipts/L5-high-complete.json"
+        "docs/reports/fix51-verify/receipts/L5-high-complete.json",
+        "docs/reports/final-b/L5-09-proof.json",
+        "docs/reports/final-b/L5-protection-benchmark.json.gz",
+        "docs/reports/final-b/L5-protection-benchmark-executed.ts.gz",
+        "docs/reports/final-b/L5-contact.json.gz"
       ],
       "expected": "Protection matters: an infected reaching an unprotected survivor bites ≤ 1.5 s; `evade-only` rescues ≤ 2, `complete` ≥ 4.",
       "checks": [
@@ -7478,7 +7640,46 @@
         ],
         "method": "Read actual level.completed result from the ordinary scripted input route; do not treat an invulnerable driver as the defined protection benchmark. NEXT: matched native evade-only/complete policies with first-contact bite timestamps, followed by a mortal human-like route."
       },
-      "remaining": "Read actual level.completed result from the ordinary scripted input route; do not treat an invulnerable driver as the defined protection benchmark. NEXT: matched native evade-only/complete policies with first-contact bite timestamps, followed by a mortal human-like route."
+      "remaining": "Read actual level.completed result from the ordinary scripted input route; do not treat an invulnerable driver as the defined protection benchmark. NEXT: matched native evade-only/complete policies with first-contact bite timestamps, followed by a mortal human-like route.",
+      "reviewDecision": {
+        "row": "L5-09",
+        "status": "PASS",
+        "reviewer": "Codex/final-b",
+        "date": "2026-11-07",
+        "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+        "sourceDigest": "96b95aaf00218387ac838466ba4e849719809eef34f96b67f54241001dca8a39",
+        "clauses": [
+          {
+            "clause": "Protection matters: an infected reaching an unprotected survivor bites ≤ 1.5 s; `evade-only` rescues ≤ 2, `complete` ≥ 4.",
+            "verdict": "PASS",
+            "note": "PASS for the specified native single-seed benchmark: complete evacuates5/5 and completes in193.3667s low/222.3167s high; evade-only evacuates0 actual identities during each native default1200s trial, emits0 courier attacks, ends tick-budget with result=null (not a completed zero-rescued result). Unprotected eligible contact resolves within79/68ticks (1.3167/1.1333s), under1.5s. Complete final hashes0a23911a/147553b8 match the frozen canonical controls."
+          }
+        ],
+        "evidence": [
+          {
+            "file": "docs/reports/final-b/L5-09-proof.json",
+            "sha256": "96413b7f093b1b5fb4dcb675e6b212178ac151e0d3a7418e4cec6e5d59848ead",
+            "what": "PASS for the specified native single-seed benchmark: complete evacuates5/5 and completes in193.3667s low/222.3167s high; evade-only evacuates0 actual identities during each native default1200s trial, emits0 courier attacks, ends tick-budget with result=null (not a completed zero-rescued result). Unprotected eligible contact resolves within79/68ticks (1.3167/1.1333s), under1.5s. Complete final hashes0a23911a/147553b8 match the frozen canonical controls."
+          },
+          {
+            "file": "docs/reports/final-b/L5-protection-benchmark.json.gz",
+            "sha256": "cddfc602c05c705151e3c3b2821b46d2340711189699f317f98cc8decd5520f3",
+            "what": "PASS for the specified native single-seed benchmark: complete evacuates5/5 and completes in193.3667s low/222.3167s high; evade-only evacuates0 actual identities during each native default1200s trial, emits0 courier attacks, ends tick-budget with result=null (not a completed zero-rescued result). Unprotected eligible contact resolves within79/68ticks (1.3167/1.1333s), under1.5s. Complete final hashes0a23911a/147553b8 match the frozen canonical controls."
+          },
+          {
+            "file": "docs/reports/final-b/L5-protection-benchmark-executed.ts.gz",
+            "sha256": "4ce658e0351f46033bafe2a25f8fa11c7ce3255f59caaab0c51c5bb179d32c90",
+            "what": "PASS for the specified native single-seed benchmark: complete evacuates5/5 and completes in193.3667s low/222.3167s high; evade-only evacuates0 actual identities during each native default1200s trial, emits0 courier attacks, ends tick-budget with result=null (not a completed zero-rescued result). Unprotected eligible contact resolves within79/68ticks (1.3167/1.1333s), under1.5s. Complete final hashes0a23911a/147553b8 match the frozen canonical controls."
+          },
+          {
+            "file": "docs/reports/final-b/L5-contact.json.gz",
+            "sha256": "f65de864431fe15a9ec0aab163ff897d3a0386b969547bd7317a74526cc07f88",
+            "what": "PASS for the specified native single-seed benchmark: complete evacuates5/5 and completes in193.3667s low/222.3167s high; evade-only evacuates0 actual identities during each native default1200s trial, emits0 courier attacks, ends tick-budget with result=null (not a completed zero-rescued result). Unprotected eligible contact resolves within79/68ticks (1.3167/1.1333s), under1.5s. Complete final hashes0a23911a/147553b8 match the frozen canonical controls."
+          }
+        ],
+        "freshness": "FRESH",
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
+      }
     },
     {
       "id": "L5-10",
@@ -7555,11 +7756,15 @@
       "id": "L5-11",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "Manual review PASS (STALE, Codex/sweep-b): All126 current physical captures inspected on24 numbered sheets. At both tiers the female courier retains opaque green clothing, teal backpack and orange shoes in fog, at both photo zooms. At zoom1.5 the roofless long rectangular bus shell, lake-side trees and nearby crushed vehicles remain distinct; the actual flashlight-in-wrecked-bus caption is visible in both primary routes. Dense living-body occlusion is disclosed; this row checks shading and bus readability, not continuous visibility or caption-only discovery. Two low-z0.5 opening photo images are black and that route does not complete; later fog images render normally. Low-z1.5 reaches shutter closure but the observer throws on stale L5 state at L6 handover. Only high-z1.5 supplies an intact completed physical receipt. Courier colour stays solid and distinct in low/high opening and high fog/Metro frames. The bus hiding place at zoom1.5 is not specifically qualified.",
+      "value": "Manual review PASS (FRESH, Codex/final-b): Both tiers: fresh actual Sam-bus photo fixture with production female campaign model, no appearance/HP edits; physical KeyS12ticks after declared anchor selection. Standard camera reset removes the rejected stale cinematic blend: zoom1.5 and target within1m of actual courier. Personally reviewed full1280x720 frames: heroine retains opaque green clothing, teal pack, brown hair and orange/red shoes in the ash/fog; large brown wrecked bus, hood/door, wheels and stop-arm read clearly beside crushed cars, red tree and fence. Current physical idle/walk weapon frames and reached-metro frames independently show the same retained heroine colours later in the level. Controlled photo setup, not caption-only discovery or full physical route claim. Courier colour stays solid and distinct in low/high opening and high fog/Metro frames. The bus hiding place at zoom1.5 is not specifically qualified.",
       "automatedComplete": false,
       "receipt": [
-        "docs/reports/sweep-b/L5-11-proof.json",
-        "docs/reports/sweep-b/L5-capture-review.json"
+        "docs/reports/final-b/L5-11-proof.json",
+        "docs/reports/final-b/L5-bus-current.json.gz",
+        "docs/reports/final-b/L5-bus-executed.ts.gz",
+        "docs/reports/final-b/L5-metro-physical.json.gz",
+        "docs/reports/final-b/L5-weapons-low-render-ledger.json.gz",
+        "docs/reports/final-b/L5-weapons-high-render-ledger.json.gz"
       ],
       "expected": "Heroine keeps her colour in fog (no pale/transparent hero); bus hiding place readable at zoom 1.5.",
       "checks": [],
@@ -7582,29 +7787,50 @@
       "reviewDecision": {
         "row": "L5-11",
         "status": "PASS",
-        "reviewer": "Codex/sweep-b",
-        "date": "2026-11-06",
-        "commit": "bfbf482bdcdd1d5e2e79a37e7aa0b2c8b325993a",
+        "reviewer": "Codex/final-b",
+        "date": "2026-11-07",
+        "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+        "sourceDigest": "96b95aaf00218387ac838466ba4e849719809eef34f96b67f54241001dca8a39",
         "clauses": [
           {
             "clause": "Heroine keeps her colour in fog (no pale/transparent hero); bus hiding place readable at zoom 1.5.",
             "verdict": "PASS",
-            "note": "All126 current physical captures inspected on24 numbered sheets. At both tiers the female courier retains opaque green clothing, teal backpack and orange shoes in fog, at both photo zooms. At zoom1.5 the roofless long rectangular bus shell, lake-side trees and nearby crushed vehicles remain distinct; the actual flashlight-in-wrecked-bus caption is visible in both primary routes. Dense living-body occlusion is disclosed; this row checks shading and bus readability, not continuous visibility or caption-only discovery. Two low-z0.5 opening photo images are black and that route does not complete; later fog images render normally. Low-z1.5 reaches shutter closure but the observer throws on stale L5 state at L6 handover. Only high-z1.5 supplies an intact completed physical receipt."
+            "note": "Both tiers: fresh actual Sam-bus photo fixture with production female campaign model, no appearance/HP edits; physical KeyS12ticks after declared anchor selection. Standard camera reset removes the rejected stale cinematic blend: zoom1.5 and target within1m of actual courier. Personally reviewed full1280x720 frames: heroine retains opaque green clothing, teal pack, brown hair and orange/red shoes in the ash/fog; large brown wrecked bus, hood/door, wheels and stop-arm read clearly beside crushed cars, red tree and fence. Current physical idle/walk weapon frames and reached-metro frames independently show the same retained heroine colours later in the level. Controlled photo setup, not caption-only discovery or full physical route claim."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/sweep-b/L5-11-proof.json",
-            "sha256": "f4a642ff39958759b30067011cf72323756189b362b8b04f5163d0bd554e2dc9",
-            "what": "All126 current physical captures inspected on24 numbered sheets. At both tiers the female courier retains opaque green clothing, teal backpack and orange shoes in fog, at both photo zooms. At zoom1.5 the roofless long rectangular bus shell, lake-side trees and nearby crushed vehicles remain distinct; the actual flashlight-in-wrecked-bus caption is visible in both primary routes. Dense living-body occlusion is disclosed; this row checks shading and bus readability, not continuous visibility or caption-only discovery. Two low-z0.5 opening photo images are black and that route does not complete; later fog images render normally. Low-z1.5 reaches shutter closure but the observer throws on stale L5 state at L6 handover. Only high-z1.5 supplies an intact completed physical receipt."
+            "file": "docs/reports/final-b/L5-11-proof.json",
+            "sha256": "0a2821ae22d6da9152d8b7ba65c7704be43bca881e93650bd3a4c50a4921e896",
+            "what": "Both tiers: fresh actual Sam-bus photo fixture with production female campaign model, no appearance/HP edits; physical KeyS12ticks after declared anchor selection. Standard camera reset removes the rejected stale cinematic blend: zoom1.5 and target within1m of actual courier. Personally reviewed full1280x720 frames: heroine retains opaque green clothing, teal pack, brown hair and orange/red shoes in the ash/fog; large brown wrecked bus, hood/door, wheels and stop-arm read clearly beside crushed cars, red tree and fence. Current physical idle/walk weapon frames and reached-metro frames independently show the same retained heroine colours later in the level. Controlled photo setup, not caption-only discovery or full physical route claim."
           },
           {
-            "file": "docs/reports/sweep-b/L5-capture-review.json",
-            "sha256": "0b6832f91759ce472ef35b246a382ed0c813112c35aa2283757f1e04b9e90813",
-            "what": "All126 current physical captures inspected on24 numbered sheets. At both tiers the female courier retains opaque green clothing, teal backpack and orange shoes in fog, at both photo zooms. At zoom1.5 the roofless long rectangular bus shell, lake-side trees and nearby crushed vehicles remain distinct; the actual flashlight-in-wrecked-bus caption is visible in both primary routes. Dense living-body occlusion is disclosed; this row checks shading and bus readability, not continuous visibility or caption-only discovery. Two low-z0.5 opening photo images are black and that route does not complete; later fog images render normally. Low-z1.5 reaches shutter closure but the observer throws on stale L5 state at L6 handover. Only high-z1.5 supplies an intact completed physical receipt."
+            "file": "docs/reports/final-b/L5-bus-current.json.gz",
+            "sha256": "3c0b7ff3f97c9fca482d80ff1a259a9c2f5a5ca15be142472aa92e434c3d74ae",
+            "what": "Both tiers: fresh actual Sam-bus photo fixture with production female campaign model, no appearance/HP edits; physical KeyS12ticks after declared anchor selection. Standard camera reset removes the rejected stale cinematic blend: zoom1.5 and target within1m of actual courier. Personally reviewed full1280x720 frames: heroine retains opaque green clothing, teal pack, brown hair and orange/red shoes in the ash/fog; large brown wrecked bus, hood/door, wheels and stop-arm read clearly beside crushed cars, red tree and fence. Current physical idle/walk weapon frames and reached-metro frames independently show the same retained heroine colours later in the level. Controlled photo setup, not caption-only discovery or full physical route claim."
+          },
+          {
+            "file": "docs/reports/final-b/L5-bus-executed.ts.gz",
+            "sha256": "d06c005782e22a05f1a71ffa333d8f0dcb040a8e0cd0c7cf738dbb93e425713c",
+            "what": "Both tiers: fresh actual Sam-bus photo fixture with production female campaign model, no appearance/HP edits; physical KeyS12ticks after declared anchor selection. Standard camera reset removes the rejected stale cinematic blend: zoom1.5 and target within1m of actual courier. Personally reviewed full1280x720 frames: heroine retains opaque green clothing, teal pack, brown hair and orange/red shoes in the ash/fog; large brown wrecked bus, hood/door, wheels and stop-arm read clearly beside crushed cars, red tree and fence. Current physical idle/walk weapon frames and reached-metro frames independently show the same retained heroine colours later in the level. Controlled photo setup, not caption-only discovery or full physical route claim."
+          },
+          {
+            "file": "docs/reports/final-b/L5-metro-physical.json.gz",
+            "sha256": "51185af704fc0573d4a5b475e2ecadfbe8278840d741ce804e4a90202b4b5311",
+            "what": "Both tiers: fresh actual Sam-bus photo fixture with production female campaign model, no appearance/HP edits; physical KeyS12ticks after declared anchor selection. Standard camera reset removes the rejected stale cinematic blend: zoom1.5 and target within1m of actual courier. Personally reviewed full1280x720 frames: heroine retains opaque green clothing, teal pack, brown hair and orange/red shoes in the ash/fog; large brown wrecked bus, hood/door, wheels and stop-arm read clearly beside crushed cars, red tree and fence. Current physical idle/walk weapon frames and reached-metro frames independently show the same retained heroine colours later in the level. Controlled photo setup, not caption-only discovery or full physical route claim."
+          },
+          {
+            "file": "docs/reports/final-b/L5-weapons-low-render-ledger.json.gz",
+            "sha256": "52b100f74b5e426664d0f8e8ef63d4f7c5dcf9c4a61fd51d861c14f24281acd1",
+            "what": "Both tiers: fresh actual Sam-bus photo fixture with production female campaign model, no appearance/HP edits; physical KeyS12ticks after declared anchor selection. Standard camera reset removes the rejected stale cinematic blend: zoom1.5 and target within1m of actual courier. Personally reviewed full1280x720 frames: heroine retains opaque green clothing, teal pack, brown hair and orange/red shoes in the ash/fog; large brown wrecked bus, hood/door, wheels and stop-arm read clearly beside crushed cars, red tree and fence. Current physical idle/walk weapon frames and reached-metro frames independently show the same retained heroine colours later in the level. Controlled photo setup, not caption-only discovery or full physical route claim."
+          },
+          {
+            "file": "docs/reports/final-b/L5-weapons-high-render-ledger.json.gz",
+            "sha256": "122ce502f52ca85a808a42d7f27fd7553bcd659d92849c7d16e53624c1772350",
+            "what": "Both tiers: fresh actual Sam-bus photo fixture with production female campaign model, no appearance/HP edits; physical KeyS12ticks after declared anchor selection. Standard camera reset removes the rejected stale cinematic blend: zoom1.5 and target within1m of actual courier. Personally reviewed full1280x720 frames: heroine retains opaque green clothing, teal pack, brown hair and orange/red shoes in the ash/fog; large brown wrecked bus, hood/door, wheels and stop-arm read clearly beside crushed cars, red tree and fence. Current physical idle/walk weapon frames and reached-metro frames independently show the same retained heroine colours later in the level. Controlled photo setup, not caption-only discovery or full physical route claim."
           }
         ],
-        "freshness": "STALE",
+        "freshness": "FRESH",
         "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     },
