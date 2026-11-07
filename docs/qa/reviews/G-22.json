@@ -6,16 +6,16 @@
   "commit": "50be7c824705fc3cdbb3a7ab7dd78f72c7bf2001",
   "clauses": [
     {
-      "clause": "Every phase announced as a threat (\"Stop the infected\", \"Hold\", \"Cover the retreat\", breach/alarm captions) starts with several infected that can reach the player; first attack \u2264 20 s after the announcement (tune).",
+      "clause": "Every phase announced as a threat (\"Stop the infected\", \"Hold\", \"Cover the retreat\", breach/alarm captions) starts with several infected that can reach the player; first attack ≤ 20 s after the announcement (tune).",
       "verdict": "FAIL",
-      "note": "Fresh current-main all-level native run. L4 high stationary breach-north announced at phase time167.1s, spawned43, and the first real player attack occurred22.3667s after announcement (>20s). The cohort is large enough to satisfy \u201cseveral\u201d; the timing threshold alone fails. L6 also has undersized two-member entry cohorts, separately recorded."
+      "note": "Fresh current-main all-level native run. L4 high stationary breach-north announced at phase time167.1s, spawned43, and the first real player attack occurred22.3667s after announcement (>20s). The cohort is large enough to satisfy “several”; the timing threshold alone fails. L6 also has undersized two-member entry cohorts, separately recorded. Repro: npm run qa:accept -- --level L4 --skip-browser; seed1, high tier stationary policy; inspect announcement cohort breach-north at phase time167.1s."
     }
   ],
   "evidence": [
     {
       "file": "test-results/rr-b/G-22-native-L4.json",
       "sha256": "41791df6506d2f8613a3bd1784b9d7da6bb1d2c1145170ce311d7519f0153293",
-      "what": "Fresh current-main L4 high stationary G-22 native announcement-cohort check; breach-north spawned43 with first actual player attack at22.3667s."
+      "what": "Fresh current-main all-level native run. L4 high stationary breach-north announced at phase time167.1s, spawned43, and the first real player attack occurred22.3667s after announcement (>20s). The cohort is large enough to satisfy “several”; the timing threshold alone fails. L6 also has undersized two-member entry cohorts, separately recorded. Repro: npm run qa:accept -- --level L4 --skip-browser; seed1, high tier stationary policy; inspect announcement cohort breach-north at phase time167.1s."
     }
   ],
   "notes": "Fresh measured FAIL; exact current native counterexample.",
