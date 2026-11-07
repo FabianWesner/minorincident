@@ -10,6 +10,7 @@ Check each item at low quality, zoom 1.5, WebGPU, with a progressed save, A/B ag
 - L3 army checkpoint: the ring and route marker are visible during the camera pull-back (P1-114).
 - L4 tank: it never drives or parks through the barrier wall (P1-116).
 - L4 hold: the alarm wave arrives at its full count; civilians don't clump at the wall (P1-118, P1-119).
+- Every evacuation bus shows seated passengers when people are aboard (L3 checkpoint, L4 convoy, L7 boarding/departure).
 - Corpses (Alpha, infected, dogs) look like bodies up close (P1-117, #85).
 - L6 fists: finishable without a soft-lock (the rescue rate is free, PO 10-22).
 - Alpha and Mega Alpha corpses: no boot slabs sticking up; the Mega corpse reads as the creature, not a lump (Q-124).

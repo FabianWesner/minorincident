@@ -5,6 +5,7 @@ import { modelLod } from './lodPolicy';
 import { Box3, Group, Mesh, Vector3, type Object3D, type BufferGeometry, type Material } from 'three/webgpu';
 import { AssetRegistry } from '../assets/registry';
 import { staticBatch } from '../assets/staticBatch';
+import { VehicleOccupant } from './characters/VehicleOccupant';
 import manifest from '../assets/manifest.json' with { type: 'json' };
 import type { Materials } from './Materials';
 import type { View } from './View';
@@ -41,6 +42,9 @@ export class EntityAssets extends Group {
   private readonly geometries = new Set<BufferGeometry>();
   private readonly materials = new Set<Material>();
   private readonly pending = new Map<number, Promise<void>>();
+  private readonly passengers = new Map<number, VehicleOccupant>();
+  private readonly passengerLoads = new Map<number, Promise<void>>();
+  private readonly passengerSeats = new Map<number, Group>();
   private companion?: Object3D;
   private disposed = false;
   constructor(private readonly world: SimWorld, private readonly low = false, private readonly shading?: Materials) { super(); this.registry = new AssetRegistry(event => this.logs.push(event), { materials: shading }); }
@@ -149,6 +153,59 @@ export class EntityAssets extends Group {
       this.pending.set(entity.id, load);
     }
     await Promise.all(this.pending.values());
+    await this.readyPassengers();
+  }
+  /** Scripted coaches carry story rosters rather than Vehicles passenger records. */
+  private busRoster(id: number, prewarm = false): number[] {
+    const departure = this.world.l7Departure?.state;
+    if (departure?.busId === id) return prewarm
+      ? this.world.l7Encounters?.state.roster.filter(r => r.status === 'following').map(r => r.id) ?? []
+      : departure.boarded;
+    const convoy = this.world.missions?.state.l4;
+    const buses = convoy?.convoyIds.filter((_, index) => l4.convoy.vehicles[index].asset === 'veh.evac-bus') ?? [];
+    return convoy && buses.includes(id) ? convoy.evacueeIds.filter((_, index) => index % buses.length === buses.indexOf(id)) : [];
+  }
+  private async readyPassengers(): Promise<void> {
+    if (!this.shading) return;
+    for (const [id, record] of this.records) {
+      if (record.model.userData.assetId !== 'veh.evac-bus') continue;
+      for (const actorId of this.busRoster(id, true)) {
+        const entity = this.world.entities.get(actorId);
+        if (!entity || this.passengers.has(actorId) || this.passengerLoads.has(actorId)) continue;
+        const asset = entity.escort?.child ? 'npc.brother' : entity.appearance?.asset ?? entity.civilian?.model ?? 'npc.civilian-man-a';
+        this.passengerLoads.set(actorId, VehicleOccupant.load(this.registry, actorId, asset, this.shading).then(copy => {
+          if (this.disposed) { copy.dispose(); return; }
+          copy.name = `evac-passenger-${actorId}`; copy.visible = false; this.passengers.set(actorId, copy);
+        }).finally(() => this.passengerLoads.delete(actorId)));
+      }
+    }
+    await Promise.all(this.passengerLoads.values());
+  }
+  private updatePassengers(): void {
+    for (const copy of this.passengers.values()) copy.visible = false;
+    for (const [id, record] of this.records) {
+      if (record.model.userData.assetId !== 'veh.evac-bus') continue;
+      const rows = Math.max(6, Math.ceil(this.busRoster(id, true).length / 4));
+      for (const [index, actorId] of this.busRoster(id).entries()) {
+        const entity = this.world.entities.get(actorId), copy = this.passengers.get(actorId);
+        if (!copy || !entity?.hidden || entity.health.current <= 0) continue;
+        let seat = this.passengerSeats.get(actorId);
+        if (!seat) { seat = new Group(); this.passengerSeats.set(actorId, seat); }
+        // The authored coach has six rows of four cushions at FLOOR + .5.
+        // Larger carried campaign groups keep every copy inside the cabin.
+        // Fill the near window first: one person aboard must already read as
+        // occupied from the game's fixed south-east camera, including close zoom.
+        const row = Math.floor(index / 4), centre = Math.floor((rows - 1) / 2);
+        const seatRow = centre + (row % 2 ? Math.ceil(row / 2) : -Math.ceil(row / 2));
+        const x = -4.25 + (seatRow + .5) * (7.37 / rows), z = [.94, -.94, .48, -.48][index % 4];
+        const changed = copy.parent !== record.model || seat.position.x !== x || seat.position.z !== z;
+        seat.position.set(x, 1.64, z);
+        if (seat.parent !== record.model) record.model.add(seat);
+        if (copy.parent !== record.model) record.model.add(copy);
+        if (changed) copy.pose(seat, undefined, .85);
+        copy.visible = true;
+      }
+    }
   }
   /** Capture scripted actors after each fixed tick, alongside the camera history. */
   advance(): void {
@@ -233,6 +290,7 @@ export class EntityAssets extends Group {
       model.rotation.z = entity.health.current > 0 ? 0 : Math.PI / 2;
     }
     const player = this.world.entities.get(1);
+    this.updatePassengers();
     if (this.companion && player) {
       const yaw = player.transform.yaw;
       this.companion.position.set(player.transform.x - Math.cos(yaw) * 1.1 + Math.sin(yaw) * .7, Math.max(0, player.transform.y - .7), player.transform.z + Math.sin(yaw) * 1.1 + Math.cos(yaw) * .7);
@@ -255,8 +313,9 @@ export class EntityAssets extends Group {
     if (!record) return false;
     out.setFromObject(record.model); return !out.isEmpty();
   }
-  getState() { return { companion: this.companion?.userData.placeholder ? 'placeholder' : 'glb', actors: [...this.records].map(([id, { model, lod, wheels }]) => ({ id, lod, position: model.position.toArray(), yaw: model.rotation.y, wheels: wheels.map(w => ({ name: w.node.name, spin: w.node.rotation.z, steer: w.node.rotation.y })), source: model.userData.placeholder ? 'placeholder' : 'glb' })), placeholders: this.logs }; }
+  getState() { return { companion: this.companion?.userData.placeholder ? 'placeholder' : 'glb', actors: [...this.records].map(([id, { model, lod, wheels }]) => ({ id, lod, position: model.position.toArray(), yaw: model.rotation.y, passengers: [...this.passengers.values()].filter(copy => copy.parent === model && copy.visible).map(copy => copy.actorId), wheels: wheels.map(w => ({ name: w.node.name, spin: w.node.rotation.z, steer: w.node.rotation.y })), source: model.userData.placeholder ? 'placeholder' : 'glb' })), placeholders: this.logs }; }
   dispose(): void { this.disposed = true; this.clear(); this.records.clear(); this.vehicleVariants.clear(); this.futureVehicles.length = 0; this.preparedVehicleCopies.clear();
+    for (const copy of this.passengers.values()) copy.dispose(); this.passengers.clear(); this.passengerSeats.clear();
     for (const geometry of this.geometries) geometry.dispose(); for (const material of this.materials) material.dispose();
     this.geometries.clear(); this.materials.clear(); this.materialGraphs.clear(); this.prototypes.clear(); void this.registry.dispose(); }
 }
