@@ -20,5 +20,5 @@ for (let k = 0; k < 60 * 60 && !s.doneAt; k++) {
   followFrustum(world); world.applyInput(emptyInput(), 'keyboard'); world.update();
   if ((world.tick - s.crossedAt) % 60 === 0) console.log(world.tick - s.crossedAt, 'barrier', s.barrierClosedAt ? s.barrierClosedAt - s.crossedAt : 0, who());
 }
-console.log('done', s.doneAt ? s.doneAt - s.crossedAt : null, 'barrier', s.barrierClosedAt - s.crossedAt, zoneX);
+console.log('done', s.doneAt ? s.doneAt - s.crossedAt : null, 'barrier', (s.barrierClosedAt ?? 0) - s.crossedAt, zoneX);
 world.dispose();

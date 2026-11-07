@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any -- debug probe reads private nav/npcs state */
 /** blk-l3: put the corgi at the recorded G-27 stall pose and walk the courier past it. */
 import { emptyInput } from '../../src/input/InputFrame';
 import { preset } from '../../src/sim/progression/Campaign';
@@ -11,7 +12,7 @@ const world = await loadLevel('L3', 1, preset('L3-default'), 0, { quality: tier 
 world.player!.damage = () => 0;
 const grid = (label: string, d: { x: number; z: number }) => { const nav = world.infected!.nav as any; console.log(label, 'clearance', nav.clearance, 'rev', nav.revision); for (let dz = 6; dz >= -4; dz--) { let row = ''; for (let dx = -10; dx <= 10; dx++) { const c = nav.cell(d.x + dx * .5, d.z + dz * .5); row += nav.blocked[c] ? '#' : '.'; } console.log(row); } };
 for (const w of (world.infected!.nav as any).walls) if (Math.abs(w.x + 72) < 8 + w.halfX && Math.abs(w.z - 25) < 4 + w.halfZ) console.log('wall', JSON.stringify(w));
-for (const d of world.districts!.districts) for (const pl of d.layout.placements) { const x = pl.position[0] + d.origin[0], z = pl.position[2] + d.origin[1]; if (Math.abs(x + 72) < 4 && Math.abs(z - 26.8) < 3) console.log('placement', d.layout.id ?? '', pl.assetId, pl.id, x, z, pl.yaw); }
+for (const d of world.districts!.districts) for (const pl of d.layout.placements) { const x = pl.position[0] + d.origin[0], z = pl.position[2] + d.origin[1]; if (Math.abs(x + 72) < 4 && Math.abs(z - 26.8) < 3) console.log('placement', d.id, pl.assetId, pl.id, x, z, pl.yaw); }
 for (const e of world.entities.iterate()) if (Math.abs(e.transform.x + 72) < 4 && Math.abs(e.transform.z - 26.8) < 3) console.log('entity', e.id, e.kind, e.archetype);
 grid('load', { x: -72.56, z: 23.42 });
 const mission = world.missions!, bot = new LevelThreeBot(world, 'complete', 'auto');
