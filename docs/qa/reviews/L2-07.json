@@ -1,0 +1,43 @@
+{
+  "row": "L2-07",
+  "status": "PASS",
+  "reviewer": "Codex final-a",
+  "date": "2026-11-07",
+  "commit": "0cbd817165f89940d2810fe2091000538a263ba0",
+  "clauses": [
+    {
+      "clause": "combat: reachable ≥ 90 %; passive first attack ≤ 15 s (measured 3.3 s); passive attacks ≥ 4/min (tune).",
+      "verdict": "PASS",
+      "note": "18 current native checks PASS across low/high. low/complete combat hard rule on actual player windups: {\"seconds\":12.933333333333334,\"playerWindups\":7,\"groupWindups\":0,\"attacksPerMinute\":32.47422680412371}; target nonzero player windups in each combat policy (PASS); low/complete real player/group windups per minute: 32.47422680412371; target 4 ≤ value ≤ Infinity (PASS); low/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100; target 90 ≤ value ≤ 100 (PASS); low/stationary combat hard rule on actual player windups: {\"seconds\":45,\"playerWindups\":416,\"groupWindups\":0,\"attacksPerMinute\":554.6666666666666}; target nonzero player windups in each combat policy (PASS); low/stationary stationary first real player attack (phase clock): {\"seconds\":3.283333333333333,\"windowSeconds\":45}; target ≤15 s (PASS); low/stationary real player/group windups per minute: 554.6666666666666; target 4 ≤ value ≤ Infinity (PASS); low/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 90.47619047619048; target 90 ≤ value ≤ 100 (PASS); low/stationary stationary first player attack from actual doors-open clock: {\"ticks\":7201,\"playerAttacks\":907,\"groupAttacks\":0,\"firstAttackSeconds\":3.6333333333333333}; target first attack ≤15 s (PASS); low/stationary stationary player windups/min after doors open: 453.43702263574505; target 4 ≤ value ≤ Infinity (PASS); high/complete combat hard rule on actual player windups: {\"seconds\":12.616666666666667,\"playerWindups\":3,\"groupWindups\":0,\"attacksPerMinute\":14.266842800528401}; target nonzero player windups in each combat policy (PASS); high/complete real player/group windups per minute: 14.266842800528401; target 4 ≤ value ≤ Infinity (PASS); high/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100; target 90 ≤ value ≤ 100 (PASS); high/stationary combat hard rule on actual player windups: {\"seconds\":45,\"playerWindups\":513,\"groupWindups\":0,\"attacksPerMinute\":684}; target nonzero player windups in each combat policy (PASS); high/stationary stationary first real player attack (phase clock): {\"seconds\":2.8,\"windowSeconds\":45}; target ≤15 s (PASS); high/stationary real player/group windups per minute: 684; target 4 ≤ value ≤ Infinity (PASS); high/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 93.18181818181817; target 90 ≤ value ≤ 100 (PASS); high/stationary stationary first player attack from actual doors-open clock: {\"ticks\":7201,\"playerAttacks\":912,\"groupAttacks\":0,\"firstAttackSeconds\":3.15}; target first attack ≤15 s (PASS); high/stationary stationary player windups/min after doors open: 455.9366754617414; target 4 ≤ value ≤ Infinity (PASS)"
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/final-a/L2-07-native.json",
+      "sha256": "7a75e195024d23297c00940116583328301bbcc8a8e6455c7af0f6da98fe324d",
+      "what": "18 current native checks PASS across low/high. low/complete combat hard rule on actual player windups: {\"seconds\":12.933333333333334,\"playerWindups\":7,\"groupWindups\":0,\"attacksPerMinute\":32.47422680412371}; target nonzero player windups in each combat policy (PASS); low/complete real player/group windups per minute: 32.47422680412371; target 4 ≤ value ≤ Infinity (PASS); low/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100; target 90 ≤ value ≤ 100 (PASS); low/stationary combat hard rule on actual player windups: {\"seconds\":45,\"playerWindups\":416,\"groupWindups\":0,\"attacksPerMinute\":554.6666666666666}; target nonzero player windups in each combat policy (PASS); low/stationary stationary first real player attack (phase clock): {\"seconds\":3.283333333333333,\"windowSeconds\":45}; target ≤15 s (PASS); low/stationary real player/group windups per minute: 554.6666666666666; target 4 ≤ value ≤ Infinity (PASS); low/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 90.47619047619048; target 90 ≤ value ≤ 100 (PASS); low/stationary stationary first player attack from actual doors-open clock: {\"ticks\":7201,\"playerAttacks\":907,\"groupAttacks\":0,\"firstAttackSeconds\":3.6333333333333333}; target first attack ≤15 s (PASS); low/stationary stationary player windups/min after doors open: 453.43702263574505; target 4 ≤ value ≤ Infinity (PASS); high/complete combat hard rule on actual player windups: {\"seconds\":12.616666666666667,\"playerWindups\":3,\"groupWindups\":0,\"attacksPerMinute\":14.266842800528401}; target nonzero player windups in each combat policy (PASS); high/complete real player/group windups per minute: 14.266842800528401; target 4 ≤ value ≤ Infinity (PASS); high/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100; target 90 ≤ value ≤ 100 (PASS); high/stationary combat hard rule on actual player windups: {\"seconds\":45,\"playerWindups\":513,\"groupWindups\":0,\"attacksPerMinute\":684}; target nonzero player windups in each combat policy (PASS); high/stationary stationary first real player attack (phase clock): {\"seconds\":2.8,\"windowSeconds\":45}; target ≤15 s (PASS); high/stationary real player/group windups per minute: 684; target 4 ≤ value ≤ Infinity (PASS); high/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 93.18181818181817; target 90 ≤ value ≤ 100 (PASS); high/stationary stationary first player attack from actual doors-open clock: {\"ticks\":7201,\"playerAttacks\":912,\"groupAttacks\":0,\"firstAttackSeconds\":3.15}; target first attack ≤15 s (PASS); high/stationary stationary player windups/min after doors open: 455.9366754617414; target 4 ≤ value ≤ Infinity (PASS)"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-low-complete.json",
+      "sha256": "65a3334f373fd381cd4cb412459ffe65c837cbeeb04599a477f404bb7428db05",
+      "what": "Frozen-head L2-07 native input receipt, evaluated by the exact clauses retained in the row proof."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-low-stationary.json",
+      "sha256": "806226e790065da9eff8e67d235cff3810b4510242ecc8a8518ef01067a57278",
+      "what": "Frozen-head L2-07 native input receipt, evaluated by the exact clauses retained in the row proof."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-high-complete.json",
+      "sha256": "17691eef6a8fc71fe9e26e3ccc91ca7cb2038d19bca0856309ed4afafa423932",
+      "what": "Frozen-head L2-07 native input receipt, evaluated by the exact clauses retained in the row proof."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-high-stationary.json",
+      "sha256": "9c8480be3077aee3ba22c0f173ca74cd1989fb0c4328cbe4459eaca812844586",
+      "what": "Frozen-head L2-07 native input receipt, evaluated by the exact clauses retained in the row proof."
+    }
+  ],
+  "notes": "Numeric-only criterion; all evaluator clauses measured at both qualities on the frozen runtime source. No visual or route-readability inference.",
+  "sourceDigest": "9f88ba48ca13900ca4f429225cbac3045a96d48adee791c50179dde9c8cd025f"
+}
