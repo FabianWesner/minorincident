@@ -67,8 +67,10 @@ export class RoutineProps extends Group {
   }
   /** Shared registry and one owned vertex-colour batch per authored weapon. */
   async init(registry: Pick<AssetRegistry, 'loadAsset'>): Promise<void> {
-    for (const [prop, id] of Object.entries(crowdWeaponAssets)) {
-      const root = await registry.loadAsset(id, 'lod1');
+    const entries = Object.entries(crowdWeaponAssets);
+    const roots = await Promise.all(entries.map(([, id]) => registry.loadAsset(id, 'lod1')));
+    for (const [index, [prop, id]] of entries.entries()) {
+      const root = roots[index];
       const { geometry, muzzle } = crowdWeaponGeometry(root, longGunHolds[id]?.scale ?? .8);
       const material = this.shading?.shaded(attribute('color', 'vec3')) ?? new MeshLambertNodeMaterial({ vertexColors: true });
       const mesh = new InstancedMesh(geometry, material, 128); mesh.name = id; mesh.count = 0; mesh.frustumCulled = false; mesh.castShadow = true;

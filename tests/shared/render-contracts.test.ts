@@ -602,15 +602,19 @@ function checkCivilianShaderBindings(): void {
 test('crowd long guns use asset grip/muzzle sockets and the courier support-hand offsets', async () => {
   checkCivilianShaderBindings();
   const props = new RoutineProps();
+  let release!: () => void;
+  const downloaded = new Promise<void>(resolve => { release = resolve; });
   const loadAsset = vi.fn(async (id: string) => {
+    await downloaded;
     const model = new Group(); model.name = id; const material = new MeshLambertNodeMaterial({ color: '#789abc' });
     model.add(new Mesh(new BoxGeometry(.8, .1, .05), material));
     const grip = new Object3D(); grip.name = 'grip'; grip.position.set(-.2, -.1, 0); model.add(grip);
     const muzzle = new Object3D(); muzzle.name = 'muzzle'; muzzle.position.set(.4, 0, 0); model.add(muzzle);
     return model;
   });
-  await props.init({ loadAsset });
+  const loading = props.init({ loadAsset });
   expect(loadAsset.mock.calls).toHaveLength(5);
+  release(); await loading;
   for (const [prop, asset] of [['rifle', 'wpn.assault-rifle'], ['hmg', 'wpn.machine-gun'], ['hunting-rifle', 'wpn.hunting-rifle'], ['shotgun', 'wpn.shotgun']]) {
     const hold = longGunHolds[asset], crowd = crowdGunHolds[prop];
     expect(crowd.support).toEqual([-hold.support[2], hold.support[1], hold.support[0]]);
