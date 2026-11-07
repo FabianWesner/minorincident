@@ -33,7 +33,9 @@ export function levelSevenLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     if (layout.district !== 'D-FAIR') return layout;
     // Explicit W5 retention: keep city shells, road furniture, rubble, wrecks and
     // their colliders. The underground concourse and signs of rescue expire.
-    const remove = new Set(layout.placements.filter(p => p.id === 'l5-station' || p.id.startsWith('l5-cue-') || p.assetId === 'prop.hmg-nest' || p.assetId === 'int.basement-cellar' || (p.assetId === 'prop.privacy-fence' && (p.position[0] > 80 || westYardFence(p)))).map(p => p.id));
+    // The inherited Lakeshore wreck occupied the evacuation lane (z 45.5..48.5).
+    // It expires with the other L5 set pieces; the working bus needs this lane.
+    const remove = new Set(layout.placements.filter(p => p.id === 'l5-station' || p.id === 'l5-bus-68' || p.id.startsWith('l5-cue-') || p.assetId === 'prop.hmg-nest' || p.assetId === 'int.basement-cellar' || (p.assetId === 'prop.privacy-fence' && (p.position[0] > 80 || westYardFence(p)))).map(p => p.id));
     // Q-291: the lake-side strip remains playable in W6. Remove its inherited
     // continuous wall from both the baked scene and collision, opening it onto
     // the corridor instead of sending the objective arrow across a long detour.

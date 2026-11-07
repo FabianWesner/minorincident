@@ -10,8 +10,8 @@ const distance = (a: { x: number; z: number }, b: { x: number; z: number }) => M
 /** Shared L7 completion policy: pickup, road route, visible threats, group and bus. */
 export class LevelSevenBot {
   private readonly walker = new Walker();
-  // Walk around the inherited parked school bus south of the crater, with room for the full party.
-  private readonly route = [{ x: 88, z: 15 }, { x: 88, z: 46 }, { x: -30, z: 47 }, { x: -36, z: 47 }, { x: -36, z: 41.7 }, { x: -50, z: 41.7 }, { x: -50, z: 47 }, { x: l7CorridorAnchors['l7-bus-boarding'].position[0], z: l7CorridorAnchors['l7-bus-boarding'].position[2] }];
+  // Follow the authored, clear evacuation lane; the south kerb detour cannot fit the whole party.
+  private readonly route = [{ x: 88, z: 15 }, { x: 88, z: 46 }, { x: -30, z: 47 }, { x: l7CorridorAnchors['l7-bus-boarding'].position[0], z: l7CorridorAnchors['l7-bus-boarding'].position[2] }];
   private waypoint = 0;
   finished = false;
   constructor(private readonly w: SimWorld, readonly profile = 'complete') {}
