@@ -1,7 +1,7 @@
 {
   "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
   "row": "L5-09",
-  "status": "NOT QUALIFIED",
+  "status": "SUPERSEDED diagnostic",
   "observation": "Fresh actual unprotected contact episodes resolve within79/68ticks, under1.5s. Current mortal complete routes rescue5 both tiers. Default seed1 and independent seed2 mortal evade-only each run1200simseconds but produce no result;47/60 and41/70 deaths respectively. A timeout or null result is not a completed zero-rescued result and is not a measured game failure. This row stays OPEN until an actual qualified evade-only endpoint is observed or the benchmark endpoint is clarified by the owner. No game/AI/stat changes. Additional unchanged seed3 run2400s: neither tier reaches a result. These are still timeouts, not zero-rescued results.",
   "rows": [
     {
@@ -78,5 +78,7 @@
       "file": "docs/reports/final-b/L5-evade-seed3.json.gz",
       "sha256": "75ae81fdefa035bc8d40c2f4e51db70de5d2c6ee3da15f17a549043502001814"
     }
-  ]
+  ],
+  "supersededBy": "docs/reports/final-b/L5-09-proof.json",
+  "interpretationCorrection": "The prior OPEN added an evade-completion requirement not stated by E23-AC10. The current review measures the actual evacuated identity union during the existing native default trial and preserves the missing result. These old extra-seed diagnostics remain unqualified as completed outcomes."
 }

@@ -292,6 +292,55 @@
       ]
     },
     {
+      "row": "L4-11",
+      "status": "FAIL",
+      "sourceDigest": "e3dafe0694468ae05c6e72a1f303adf938a6c33391416d38d67a60534e2fe51b",
+      "expected": "e3dafe0694468ae05c6e72a1f303adf938a6c33391416d38d67a60534e2fe51b",
+      "fresh": true,
+      "evidence": [
+        {
+          "file": "docs/reports/final-b/L4-11-proof.json",
+          "present": true,
+          "matches": true
+        },
+        {
+          "file": "docs/reports/final-b/L4-riot-bar-normal.json.gz",
+          "present": true,
+          "matches": true
+        },
+        {
+          "file": "docs/reports/final-b/L4-riot-bar-executed.ts.gz",
+          "present": true,
+          "matches": true
+        },
+        {
+          "file": "docs/reports/final-b/L4-riot-MG-verified.json.gz",
+          "present": true,
+          "matches": true
+        },
+        {
+          "file": "docs/reports/final-b/L4-riot-MG-executed.ts.gz",
+          "present": true,
+          "matches": true
+        },
+        {
+          "file": "docs/reports/final-b/L4-healthbars-frozen-source.ts.gz",
+          "present": true,
+          "matches": true
+        },
+        {
+          "file": "docs/reports/final-b/frozen-native/L4-low-fixtures.json.gz",
+          "present": true,
+          "matches": true
+        },
+        {
+          "file": "docs/reports/final-b/frozen-native/L4-high-fixtures.json.gz",
+          "present": true,
+          "matches": true
+        }
+      ]
+    },
+    {
       "row": "L4-12",
       "status": "PASS",
       "sourceDigest": "e3dafe0694468ae05c6e72a1f303adf938a6c33391416d38d67a60534e2fe51b",
@@ -624,6 +673,130 @@
       ]
     },
     {
+      "row": "L5-07",
+      "status": "PASS",
+      "sourceDigest": "96b95aaf00218387ac838466ba4e849719809eef34f96b67f54241001dca8a39",
+      "expected": "96b95aaf00218387ac838466ba4e849719809eef34f96b67f54241001dca8a39",
+      "fresh": true,
+      "evidence": [
+        {
+          "file": "docs/reports/final-b/L5-07-proof.json",
+          "present": true,
+          "matches": true
+        },
+        {
+          "file": "docs/reports/final-b/muted-found-audit-proof.json",
+          "present": true,
+          "matches": true
+        },
+        {
+          "file": "docs/reports/final-b/muted-screen-qualified-executed.ts.gz",
+          "present": true,
+          "matches": true
+        },
+        {
+          "file": "docs/reports/final-b/muted-screen-qualified-v2-executed.ts.gz",
+          "present": true,
+          "matches": true
+        },
+        {
+          "file": "docs/reports/final-b/muted-low-qualified-receipt.json.gz",
+          "present": true,
+          "matches": true
+        },
+        {
+          "file": "docs/reports/final-b/muted-low-qualified-last-progress.json.gz",
+          "present": true,
+          "matches": true
+        },
+        {
+          "file": "docs/reports/final-b/muted-low-qualified2-receipt.json.gz",
+          "present": true,
+          "matches": true
+        },
+        {
+          "file": "docs/reports/final-b/muted-low-qualified2-origin-resume.json.gz",
+          "present": true,
+          "matches": true
+        },
+        {
+          "file": "docs/reports/final-b/muted-low-qualified2-last-progress.json.gz",
+          "present": true,
+          "matches": true
+        },
+        {
+          "file": "docs/reports/final-b/muted-low-qualified3-receipt.json.gz",
+          "present": true,
+          "matches": true
+        },
+        {
+          "file": "docs/reports/final-b/muted-low-qualified3-origin-resume.json.gz",
+          "present": true,
+          "matches": true
+        },
+        {
+          "file": "docs/reports/final-b/muted-low-qualified3-last-progress.json.gz",
+          "present": true,
+          "matches": true
+        },
+        {
+          "file": "docs/reports/final-b/muted-low-qualified4-receipt.json.gz",
+          "present": true,
+          "matches": true
+        },
+        {
+          "file": "docs/reports/final-b/muted-low-qualified4-origin-resume.json.gz",
+          "present": true,
+          "matches": true
+        },
+        {
+          "file": "docs/reports/final-b/muted-low-qualified4-last-progress.json.gz",
+          "present": true,
+          "matches": true
+        },
+        {
+          "file": "docs/reports/final-b/muted-low-qualified5-receipt.json.gz",
+          "present": true,
+          "matches": true
+        },
+        {
+          "file": "docs/reports/final-b/muted-low-qualified5-origin-resume.json.gz",
+          "present": true,
+          "matches": true
+        },
+        {
+          "file": "docs/reports/final-b/muted-low-qualified5-last-progress.json.gz",
+          "present": true,
+          "matches": true
+        },
+        {
+          "file": "docs/reports/final-b/muted-low-qualified5-post-run.json.gz",
+          "present": true,
+          "matches": true
+        },
+        {
+          "file": "docs/reports/final-b/muted-low-qualified6-receipt.json.gz",
+          "present": true,
+          "matches": true
+        },
+        {
+          "file": "docs/reports/final-b/muted-low-qualified6-origin-resume.json.gz",
+          "present": true,
+          "matches": true
+        },
+        {
+          "file": "docs/reports/final-b/muted-low-qualified6-last-progress.json.gz",
+          "present": true,
+          "matches": true
+        },
+        {
+          "file": "docs/reports/final-b/muted-low-qualified6-post-run.json.gz",
+          "present": true,
+          "matches": true
+        }
+      ]
+    },
+    {
       "row": "L5-08",
       "status": "FAIL",
       "sourceDigest": "96b95aaf00218387ac838466ba4e849719809eef34f96b67f54241001dca8a39",
@@ -632,6 +805,35 @@
       "evidence": [
         {
           "file": "docs/reports/final-b/frozen-native/L5-low-complete.json.gz",
+          "present": true,
+          "matches": true
+        }
+      ]
+    },
+    {
+      "row": "L5-09",
+      "status": "PASS",
+      "sourceDigest": "96b95aaf00218387ac838466ba4e849719809eef34f96b67f54241001dca8a39",
+      "expected": "96b95aaf00218387ac838466ba4e849719809eef34f96b67f54241001dca8a39",
+      "fresh": true,
+      "evidence": [
+        {
+          "file": "docs/reports/final-b/L5-09-proof.json",
+          "present": true,
+          "matches": true
+        },
+        {
+          "file": "docs/reports/final-b/L5-protection-benchmark.json.gz",
+          "present": true,
+          "matches": true
+        },
+        {
+          "file": "docs/reports/final-b/L5-protection-benchmark-executed.ts.gz",
+          "present": true,
+          "matches": true
+        },
+        {
+          "file": "docs/reports/final-b/L5-contact.json.gz",
           "present": true,
           "matches": true
         }
@@ -656,6 +858,45 @@
         },
         {
           "file": "docs/reports/final-b/L5-weapons-render-executed.ts.gz",
+          "present": true,
+          "matches": true
+        },
+        {
+          "file": "docs/reports/final-b/L5-weapons-low-render-ledger.json.gz",
+          "present": true,
+          "matches": true
+        },
+        {
+          "file": "docs/reports/final-b/L5-weapons-high-render-ledger.json.gz",
+          "present": true,
+          "matches": true
+        }
+      ]
+    },
+    {
+      "row": "L5-11",
+      "status": "PASS",
+      "sourceDigest": "96b95aaf00218387ac838466ba4e849719809eef34f96b67f54241001dca8a39",
+      "expected": "96b95aaf00218387ac838466ba4e849719809eef34f96b67f54241001dca8a39",
+      "fresh": true,
+      "evidence": [
+        {
+          "file": "docs/reports/final-b/L5-11-proof.json",
+          "present": true,
+          "matches": true
+        },
+        {
+          "file": "docs/reports/final-b/L5-bus-current.json.gz",
+          "present": true,
+          "matches": true
+        },
+        {
+          "file": "docs/reports/final-b/L5-bus-executed.ts.gz",
+          "present": true,
+          "matches": true
+        },
+        {
+          "file": "docs/reports/final-b/L5-metro-physical.json.gz",
           "present": true,
           "matches": true
         },
