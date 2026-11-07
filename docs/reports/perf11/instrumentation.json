@@ -1,0 +1,19 @@
+{
+  "adapterSha256": "2e4c6032b3af3e8bbde0b4b7a46ff64f88fc96f9efd44255b967d35e0c753cc5",
+  "patchRows": [
+    {
+      "side": "candidate",
+      "main": "/build/index-DgMj9Bal.js",
+      "originalSha256": "18c0c4e692fa898fdf92f4ad18bcbc2379cb8e065d2cc6269db05aac2556defb",
+      "patchedSha256": "8564441e5bfefb90acdcae2aaa7d8c8223220e5f4d59c936937eed25c5fd58cf",
+      "patch": "Expose the existing Game instance to the shared test adapter only for ?testApi=1; original public code otherwise intact."
+    },
+    {
+      "side": "prod",
+      "main": "/build/index-CdXy3RC5.js",
+      "originalSha256": "7d885c228ca34b0ad77a95db36111b4c36786262b58dbbd2339a530f8383e3da",
+      "patchedSha256": "63207e377d02ef4508cbae29f72aeeef5b0afeace954d538b3d9b08d1b01aada",
+      "patch": "Expose the existing Game instance to the shared test adapter only for ?testApi=1; original public code otherwise intact."
+    }
+  ]
+}

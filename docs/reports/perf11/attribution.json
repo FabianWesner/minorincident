@@ -1,0 +1,3435 @@
+{
+  "initialRevision": "0f85e3c8b3312a676fecfbba9011800e16d470e5",
+  "fixedRevision": "ff25c4564cedab37d22a024cf325ff0d589dd8e0",
+  "initialPeaks": {
+    "prod": {
+      "index": 5274,
+      "ms": 33.30000000000291,
+      "at": 87967.09999961853,
+      "tick": 7751,
+      "phase": "spread",
+      "handoverAt": 5237,
+      "deliveredAt": 5610,
+      "flickerAt": 5894,
+      "exitAt": 6450
+    },
+    "candidate": {
+      "index": 2495,
+      "ms": 83.30000000000291,
+      "at": 41669.69999961853,
+      "tick": 4973,
+      "phase": "handover",
+      "handoverAt": 4963,
+      "deliveredAt": 0,
+      "flickerAt": 0,
+      "exitAt": 0
+    }
+  },
+  "initialRaw": {
+    "path": "test-results/perf11/initial/high-L1/strips/webgpu/L1.json",
+    "sha256": "052e6b73431ead3850ed2f3733c9db4aa6290549d2a352dcd755562da42d13c8"
+  },
+  "bufferTracesBefore": [
+    {
+      "side": "prod",
+      "maximum": {
+        "index": 2492,
+        "ms": 100,
+        "at": 41695.00000019073,
+        "tick": 4973,
+        "phase": "handover",
+        "handoverAt": 4963,
+        "deliveredAt": 0,
+        "flickerAt": 0,
+        "exitAt": 0
+      },
+      "clinicHandoverUploads": 29,
+      "clinicHandoverBytes": 86248144,
+      "clinicHandoverUploadMs": 88.9000015258789,
+      "staticBodyUploads": [
+        {
+          "at": 41602.5,
+          "tick": 4968,
+          "phase": "handover",
+          "ms": 36.5,
+          "bytes": 34730448,
+          "kind": "Float32Array",
+          "itemSize": 3,
+          "count": 2894204,
+          "normalized": false,
+          "usage": 44,
+          "attributeName": "",
+          "geometry": "7dcef7b8-b0a7-45a1-8ba4-5ea70e18993e",
+          "mesh": "static-body",
+          "parents": [
+            {
+              "name": "static-body",
+              "type": "Mesh"
+            },
+            {
+              "name": "inst:bld.clinic-annex",
+              "type": "Group"
+            },
+            {
+              "name": "D-GROVE",
+              "type": "Group"
+            },
+            {
+              "name": "sunset-grove",
+              "type": "Group"
+            },
+            {
+              "name": "Shadow Map [ ID: 9402 ]",
+              "type": "Scene"
+            }
+          ],
+          "worldPosition": [
+            0,
+            0,
+            0
+          ],
+          "material": "pal_static-colors",
+          "attributes": {
+            "position": {
+              "count": 2894204,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "normal": {
+              "count": 2894204,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_palette": {
+              "count": 2894204,
+              "itemSize": 1,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement0": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement1": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement2": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement3": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placementColor": {
+              "count": 1025,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_occluder": {
+              "count": 1025,
+              "itemSize": 1,
+              "kind": "Float32Array",
+              "normalized": false
+            }
+          }
+        },
+        {
+          "at": 41639.10000038147,
+          "tick": 4968,
+          "phase": "handover",
+          "ms": 0,
+          "bytes": 65600,
+          "kind": "Float32Array",
+          "itemSize": 4,
+          "count": 1025,
+          "normalized": false,
+          "usage": 44,
+          "attributeName": "",
+          "geometry": "7dcef7b8-b0a7-45a1-8ba4-5ea70e18993e",
+          "mesh": "static-body",
+          "parents": [
+            {
+              "name": "static-body",
+              "type": "Mesh"
+            },
+            {
+              "name": "inst:bld.clinic-annex",
+              "type": "Group"
+            },
+            {
+              "name": "D-GROVE",
+              "type": "Group"
+            },
+            {
+              "name": "sunset-grove",
+              "type": "Group"
+            },
+            {
+              "name": "Shadow Map [ ID: 9402 ]",
+              "type": "Scene"
+            }
+          ],
+          "worldPosition": [
+            0,
+            0,
+            0
+          ],
+          "material": "pal_static-colors",
+          "attributes": {
+            "position": {
+              "count": 2894204,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "normal": {
+              "count": 2894204,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_palette": {
+              "count": 2894204,
+              "itemSize": 1,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement0": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement1": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement2": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement3": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placementColor": {
+              "count": 1025,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_occluder": {
+              "count": 1025,
+              "itemSize": 1,
+              "kind": "Float32Array",
+              "normalized": false
+            }
+          }
+        },
+        {
+          "at": 41639.10000038147,
+          "tick": 4968,
+          "phase": "handover",
+          "ms": 0,
+          "bytes": 65600,
+          "kind": "Float32Array",
+          "itemSize": 4,
+          "count": 1025,
+          "normalized": false,
+          "usage": 44,
+          "attributeName": "",
+          "geometry": "7dcef7b8-b0a7-45a1-8ba4-5ea70e18993e",
+          "mesh": "static-body",
+          "parents": [
+            {
+              "name": "static-body",
+              "type": "Mesh"
+            },
+            {
+              "name": "inst:bld.clinic-annex",
+              "type": "Group"
+            },
+            {
+              "name": "D-GROVE",
+              "type": "Group"
+            },
+            {
+              "name": "sunset-grove",
+              "type": "Group"
+            },
+            {
+              "name": "Shadow Map [ ID: 9402 ]",
+              "type": "Scene"
+            }
+          ],
+          "worldPosition": [
+            0,
+            0,
+            0
+          ],
+          "material": "pal_static-colors",
+          "attributes": {
+            "position": {
+              "count": 2894204,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "normal": {
+              "count": 2894204,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_palette": {
+              "count": 2894204,
+              "itemSize": 1,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement0": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement1": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement2": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement3": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placementColor": {
+              "count": 1025,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_occluder": {
+              "count": 1025,
+              "itemSize": 1,
+              "kind": "Float32Array",
+              "normalized": false
+            }
+          }
+        },
+        {
+          "at": 41639.10000038147,
+          "tick": 4968,
+          "phase": "handover",
+          "ms": 0,
+          "bytes": 65600,
+          "kind": "Float32Array",
+          "itemSize": 4,
+          "count": 1025,
+          "normalized": false,
+          "usage": 44,
+          "attributeName": "",
+          "geometry": "7dcef7b8-b0a7-45a1-8ba4-5ea70e18993e",
+          "mesh": "static-body",
+          "parents": [
+            {
+              "name": "static-body",
+              "type": "Mesh"
+            },
+            {
+              "name": "inst:bld.clinic-annex",
+              "type": "Group"
+            },
+            {
+              "name": "D-GROVE",
+              "type": "Group"
+            },
+            {
+              "name": "sunset-grove",
+              "type": "Group"
+            },
+            {
+              "name": "Shadow Map [ ID: 9402 ]",
+              "type": "Scene"
+            }
+          ],
+          "worldPosition": [
+            0,
+            0,
+            0
+          ],
+          "material": "pal_static-colors",
+          "attributes": {
+            "position": {
+              "count": 2894204,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "normal": {
+              "count": 2894204,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_palette": {
+              "count": 2894204,
+              "itemSize": 1,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement0": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement1": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement2": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement3": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placementColor": {
+              "count": 1025,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_occluder": {
+              "count": 1025,
+              "itemSize": 1,
+              "kind": "Float32Array",
+              "normalized": false
+            }
+          }
+        },
+        {
+          "at": 41639.10000038147,
+          "tick": 4968,
+          "phase": "handover",
+          "ms": 0,
+          "bytes": 65600,
+          "kind": "Float32Array",
+          "itemSize": 4,
+          "count": 1025,
+          "normalized": false,
+          "usage": 44,
+          "attributeName": "",
+          "geometry": "7dcef7b8-b0a7-45a1-8ba4-5ea70e18993e",
+          "mesh": "static-body",
+          "parents": [
+            {
+              "name": "static-body",
+              "type": "Mesh"
+            },
+            {
+              "name": "inst:bld.clinic-annex",
+              "type": "Group"
+            },
+            {
+              "name": "D-GROVE",
+              "type": "Group"
+            },
+            {
+              "name": "sunset-grove",
+              "type": "Group"
+            },
+            {
+              "name": "Shadow Map [ ID: 9402 ]",
+              "type": "Scene"
+            }
+          ],
+          "worldPosition": [
+            0,
+            0,
+            0
+          ],
+          "material": "pal_static-colors",
+          "attributes": {
+            "position": {
+              "count": 2894204,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "normal": {
+              "count": 2894204,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_palette": {
+              "count": 2894204,
+              "itemSize": 1,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement0": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement1": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement2": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement3": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placementColor": {
+              "count": 1025,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_occluder": {
+              "count": 1025,
+              "itemSize": 1,
+              "kind": "Float32Array",
+              "normalized": false
+            }
+          }
+        },
+        {
+          "at": 41639.199999809265,
+          "tick": 4968,
+          "phase": "handover",
+          "ms": 24.5,
+          "bytes": 34730448,
+          "kind": "Float32Array",
+          "itemSize": 3,
+          "count": 2894204,
+          "normalized": false,
+          "usage": 44,
+          "attributeName": "",
+          "geometry": "7dcef7b8-b0a7-45a1-8ba4-5ea70e18993e",
+          "mesh": "static-body",
+          "parents": [
+            {
+              "name": "static-body",
+              "type": "Mesh"
+            },
+            {
+              "name": "inst:bld.clinic-annex",
+              "type": "Group"
+            },
+            {
+              "name": "D-GROVE",
+              "type": "Group"
+            },
+            {
+              "name": "sunset-grove",
+              "type": "Group"
+            },
+            {
+              "name": "Shadow Map [ ID: 9402 ]",
+              "type": "Scene"
+            }
+          ],
+          "worldPosition": [
+            0,
+            0,
+            0
+          ],
+          "material": "pal_static-colors",
+          "attributes": {
+            "position": {
+              "count": 2894204,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "normal": {
+              "count": 2894204,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_palette": {
+              "count": 2894204,
+              "itemSize": 1,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement0": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement1": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement2": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement3": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placementColor": {
+              "count": 1025,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_occluder": {
+              "count": 1025,
+              "itemSize": 1,
+              "kind": "Float32Array",
+              "normalized": false
+            }
+          }
+        },
+        {
+          "at": 41663.699999809265,
+          "tick": 4968,
+          "phase": "handover",
+          "ms": 0.3000001907348633,
+          "bytes": 978636,
+          "kind": "Uint32Array",
+          "itemSize": 1,
+          "count": 244659,
+          "normalized": false,
+          "usage": 28,
+          "attributeName": "",
+          "geometry": "7dcef7b8-b0a7-45a1-8ba4-5ea70e18993e",
+          "mesh": "static-body",
+          "parents": [
+            {
+              "name": "static-body",
+              "type": "Mesh"
+            },
+            {
+              "name": "inst:bld.clinic-annex",
+              "type": "Group"
+            },
+            {
+              "name": "D-GROVE",
+              "type": "Group"
+            },
+            {
+              "name": "sunset-grove",
+              "type": "Group"
+            },
+            {
+              "name": "Shadow Map [ ID: 9402 ]",
+              "type": "Scene"
+            }
+          ],
+          "worldPosition": [
+            0,
+            0,
+            0
+          ],
+          "material": "pal_static-colors",
+          "attributes": {
+            "position": {
+              "count": 2894204,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "normal": {
+              "count": 2894204,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_palette": {
+              "count": 2894204,
+              "itemSize": 1,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement0": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement1": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement2": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement3": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placementColor": {
+              "count": 1025,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_occluder": {
+              "count": 1025,
+              "itemSize": 1,
+              "kind": "Float32Array",
+              "normalized": false
+            }
+          }
+        },
+        {
+          "at": 41664.300000190735,
+          "tick": 4968,
+          "phase": "handover",
+          "ms": 0,
+          "bytes": 65600,
+          "kind": "Float32Array",
+          "itemSize": 4,
+          "count": 1025,
+          "normalized": false,
+          "usage": 44,
+          "attributeName": "",
+          "geometry": "acb1d51e-c3b6-412d-a2e6-f3b4a4799ded",
+          "mesh": "static-body",
+          "parents": [
+            {
+              "name": "static-body",
+              "type": "Mesh"
+            },
+            {
+              "name": "inst:bld.clinic-annex",
+              "type": "Group"
+            },
+            {
+              "name": "D-GROVE",
+              "type": "Group"
+            },
+            {
+              "name": "sunset-grove",
+              "type": "Group"
+            },
+            {
+              "name": "Shadow Map [ ID: 9402 ]",
+              "type": "Scene"
+            }
+          ],
+          "worldPosition": [
+            0,
+            0,
+            0
+          ],
+          "material": "pal_static-colors",
+          "attributes": {
+            "position": {
+              "count": 3696,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "normal": {
+              "count": 3696,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_palette": {
+              "count": 3696,
+              "itemSize": 1,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement0": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement1": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement2": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement3": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placementColor": {
+              "count": 1025,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_occluder": {
+              "count": 1025,
+              "itemSize": 1,
+              "kind": "Float32Array",
+              "normalized": false
+            }
+          }
+        },
+        {
+          "at": 41664.300000190735,
+          "tick": 4968,
+          "phase": "handover",
+          "ms": 0,
+          "bytes": 65600,
+          "kind": "Float32Array",
+          "itemSize": 4,
+          "count": 1025,
+          "normalized": false,
+          "usage": 44,
+          "attributeName": "",
+          "geometry": "acb1d51e-c3b6-412d-a2e6-f3b4a4799ded",
+          "mesh": "static-body",
+          "parents": [
+            {
+              "name": "static-body",
+              "type": "Mesh"
+            },
+            {
+              "name": "inst:bld.clinic-annex",
+              "type": "Group"
+            },
+            {
+              "name": "D-GROVE",
+              "type": "Group"
+            },
+            {
+              "name": "sunset-grove",
+              "type": "Group"
+            },
+            {
+              "name": "Shadow Map [ ID: 9402 ]",
+              "type": "Scene"
+            }
+          ],
+          "worldPosition": [
+            0,
+            0,
+            0
+          ],
+          "material": "pal_static-colors",
+          "attributes": {
+            "position": {
+              "count": 3696,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "normal": {
+              "count": 3696,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_palette": {
+              "count": 3696,
+              "itemSize": 1,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement0": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement1": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement2": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement3": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placementColor": {
+              "count": 1025,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_occluder": {
+              "count": 1025,
+              "itemSize": 1,
+              "kind": "Float32Array",
+              "normalized": false
+            }
+          }
+        },
+        {
+          "at": 41664.300000190735,
+          "tick": 4968,
+          "phase": "handover",
+          "ms": 0,
+          "bytes": 65600,
+          "kind": "Float32Array",
+          "itemSize": 4,
+          "count": 1025,
+          "normalized": false,
+          "usage": 44,
+          "attributeName": "",
+          "geometry": "acb1d51e-c3b6-412d-a2e6-f3b4a4799ded",
+          "mesh": "static-body",
+          "parents": [
+            {
+              "name": "static-body",
+              "type": "Mesh"
+            },
+            {
+              "name": "inst:bld.clinic-annex",
+              "type": "Group"
+            },
+            {
+              "name": "D-GROVE",
+              "type": "Group"
+            },
+            {
+              "name": "sunset-grove",
+              "type": "Group"
+            },
+            {
+              "name": "Shadow Map [ ID: 9402 ]",
+              "type": "Scene"
+            }
+          ],
+          "worldPosition": [
+            0,
+            0,
+            0
+          ],
+          "material": "pal_static-colors",
+          "attributes": {
+            "position": {
+              "count": 3696,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "normal": {
+              "count": 3696,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_palette": {
+              "count": 3696,
+              "itemSize": 1,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement0": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement1": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement2": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement3": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placementColor": {
+              "count": 1025,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_occluder": {
+              "count": 1025,
+              "itemSize": 1,
+              "kind": "Float32Array",
+              "normalized": false
+            }
+          }
+        },
+        {
+          "at": 41664.300000190735,
+          "tick": 4968,
+          "phase": "handover",
+          "ms": 0,
+          "bytes": 65600,
+          "kind": "Float32Array",
+          "itemSize": 4,
+          "count": 1025,
+          "normalized": false,
+          "usage": 44,
+          "attributeName": "",
+          "geometry": "acb1d51e-c3b6-412d-a2e6-f3b4a4799ded",
+          "mesh": "static-body",
+          "parents": [
+            {
+              "name": "static-body",
+              "type": "Mesh"
+            },
+            {
+              "name": "inst:bld.clinic-annex",
+              "type": "Group"
+            },
+            {
+              "name": "D-GROVE",
+              "type": "Group"
+            },
+            {
+              "name": "sunset-grove",
+              "type": "Group"
+            },
+            {
+              "name": "Shadow Map [ ID: 9402 ]",
+              "type": "Scene"
+            }
+          ],
+          "worldPosition": [
+            0,
+            0,
+            0
+          ],
+          "material": "pal_static-colors",
+          "attributes": {
+            "position": {
+              "count": 3696,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "normal": {
+              "count": 3696,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_palette": {
+              "count": 3696,
+              "itemSize": 1,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement0": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement1": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement2": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement3": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placementColor": {
+              "count": 1025,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_occluder": {
+              "count": 1025,
+              "itemSize": 1,
+              "kind": "Float32Array",
+              "normalized": false
+            }
+          }
+        },
+        {
+          "at": 41664.5,
+          "tick": 4968,
+          "phase": "handover",
+          "ms": 0,
+          "bytes": 65600,
+          "kind": "Float32Array",
+          "itemSize": 4,
+          "count": 1025,
+          "normalized": false,
+          "usage": 44,
+          "attributeName": "",
+          "geometry": "672b4767-1f90-4368-b74b-d1cdd5c21ab5",
+          "mesh": "static-body",
+          "parents": [
+            {
+              "name": "static-body",
+              "type": "Mesh"
+            },
+            {
+              "name": "inst:bld.clinic-annex",
+              "type": "Group"
+            },
+            {
+              "name": "D-GROVE",
+              "type": "Group"
+            },
+            {
+              "name": "sunset-grove",
+              "type": "Group"
+            },
+            {
+              "name": "Shadow Map [ ID: 9402 ]",
+              "type": "Scene"
+            }
+          ],
+          "worldPosition": [
+            0,
+            0,
+            0
+          ],
+          "material": "pal_static-colors",
+          "attributes": {
+            "position": {
+              "count": 3696,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "normal": {
+              "count": 3696,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_palette": {
+              "count": 3696,
+              "itemSize": 1,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement0": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement1": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement2": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement3": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placementColor": {
+              "count": 1025,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_occluder": {
+              "count": 1025,
+              "itemSize": 1,
+              "kind": "Float32Array",
+              "normalized": false
+            }
+          }
+        },
+        {
+          "at": 41664.5,
+          "tick": 4968,
+          "phase": "handover",
+          "ms": 0,
+          "bytes": 65600,
+          "kind": "Float32Array",
+          "itemSize": 4,
+          "count": 1025,
+          "normalized": false,
+          "usage": 44,
+          "attributeName": "",
+          "geometry": "672b4767-1f90-4368-b74b-d1cdd5c21ab5",
+          "mesh": "static-body",
+          "parents": [
+            {
+              "name": "static-body",
+              "type": "Mesh"
+            },
+            {
+              "name": "inst:bld.clinic-annex",
+              "type": "Group"
+            },
+            {
+              "name": "D-GROVE",
+              "type": "Group"
+            },
+            {
+              "name": "sunset-grove",
+              "type": "Group"
+            },
+            {
+              "name": "Shadow Map [ ID: 9402 ]",
+              "type": "Scene"
+            }
+          ],
+          "worldPosition": [
+            0,
+            0,
+            0
+          ],
+          "material": "pal_static-colors",
+          "attributes": {
+            "position": {
+              "count": 3696,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "normal": {
+              "count": 3696,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_palette": {
+              "count": 3696,
+              "itemSize": 1,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement0": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement1": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement2": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement3": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placementColor": {
+              "count": 1025,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_occluder": {
+              "count": 1025,
+              "itemSize": 1,
+              "kind": "Float32Array",
+              "normalized": false
+            }
+          }
+        },
+        {
+          "at": 41664.5,
+          "tick": 4968,
+          "phase": "handover",
+          "ms": 0,
+          "bytes": 65600,
+          "kind": "Float32Array",
+          "itemSize": 4,
+          "count": 1025,
+          "normalized": false,
+          "usage": 44,
+          "attributeName": "",
+          "geometry": "672b4767-1f90-4368-b74b-d1cdd5c21ab5",
+          "mesh": "static-body",
+          "parents": [
+            {
+              "name": "static-body",
+              "type": "Mesh"
+            },
+            {
+              "name": "inst:bld.clinic-annex",
+              "type": "Group"
+            },
+            {
+              "name": "D-GROVE",
+              "type": "Group"
+            },
+            {
+              "name": "sunset-grove",
+              "type": "Group"
+            },
+            {
+              "name": "Shadow Map [ ID: 9402 ]",
+              "type": "Scene"
+            }
+          ],
+          "worldPosition": [
+            0,
+            0,
+            0
+          ],
+          "material": "pal_static-colors",
+          "attributes": {
+            "position": {
+              "count": 3696,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "normal": {
+              "count": 3696,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_palette": {
+              "count": 3696,
+              "itemSize": 1,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement0": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement1": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement2": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement3": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placementColor": {
+              "count": 1025,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_occluder": {
+              "count": 1025,
+              "itemSize": 1,
+              "kind": "Float32Array",
+              "normalized": false
+            }
+          }
+        },
+        {
+          "at": 41664.5,
+          "tick": 4968,
+          "phase": "handover",
+          "ms": 0,
+          "bytes": 65600,
+          "kind": "Float32Array",
+          "itemSize": 4,
+          "count": 1025,
+          "normalized": false,
+          "usage": 44,
+          "attributeName": "",
+          "geometry": "672b4767-1f90-4368-b74b-d1cdd5c21ab5",
+          "mesh": "static-body",
+          "parents": [
+            {
+              "name": "static-body",
+              "type": "Mesh"
+            },
+            {
+              "name": "inst:bld.clinic-annex",
+              "type": "Group"
+            },
+            {
+              "name": "D-GROVE",
+              "type": "Group"
+            },
+            {
+              "name": "sunset-grove",
+              "type": "Group"
+            },
+            {
+              "name": "Shadow Map [ ID: 9402 ]",
+              "type": "Scene"
+            }
+          ],
+          "worldPosition": [
+            0,
+            0,
+            0
+          ],
+          "material": "pal_static-colors",
+          "attributes": {
+            "position": {
+              "count": 3696,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "normal": {
+              "count": 3696,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_palette": {
+              "count": 3696,
+              "itemSize": 1,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement0": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement1": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement2": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement3": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placementColor": {
+              "count": 1025,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_occluder": {
+              "count": 1025,
+              "itemSize": 1,
+              "kind": "Float32Array",
+              "normalized": false
+            }
+          }
+        },
+        {
+          "at": 41668.39999961853,
+          "tick": 4968,
+          "phase": "handover",
+          "ms": 24.700000762939453,
+          "bytes": 11576816,
+          "kind": "Float32Array",
+          "itemSize": 1,
+          "count": 2894204,
+          "normalized": false,
+          "usage": 44,
+          "attributeName": "",
+          "geometry": "7dcef7b8-b0a7-45a1-8ba4-5ea70e18993e",
+          "mesh": "static-body",
+          "parents": [
+            {
+              "name": "static-body",
+              "type": "Mesh"
+            },
+            {
+              "name": "inst:bld.clinic-annex",
+              "type": "Group"
+            },
+            {
+              "name": "D-GROVE",
+              "type": "Group"
+            },
+            {
+              "name": "sunset-grove",
+              "type": "Group"
+            },
+            {
+              "name": "",
+              "type": "Scene"
+            }
+          ],
+          "worldPosition": [
+            0,
+            0,
+            0
+          ],
+          "material": "pal_static-colors",
+          "attributes": {
+            "position": {
+              "count": 2894204,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "normal": {
+              "count": 2894204,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_palette": {
+              "count": 2894204,
+              "itemSize": 1,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement0": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement1": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement2": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement3": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placementColor": {
+              "count": 1025,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_occluder": {
+              "count": 1025,
+              "itemSize": 1,
+              "kind": "Float32Array",
+              "normalized": false
+            }
+          }
+        }
+      ],
+      "longTasks": [
+        {
+          "at": 41597.10000038147,
+          "ms": 100,
+          "name": "self"
+        }
+      ]
+    },
+    {
+      "side": "candidate",
+      "maximum": {
+        "index": 457,
+        "ms": 33.399999999999636,
+        "at": 7653.900000190735,
+        "tick": 2932,
+        "phase": "morning",
+        "handoverAt": 0,
+        "deliveredAt": 0,
+        "flickerAt": 0,
+        "exitAt": 0
+      },
+      "clinicHandoverUploads": 28,
+      "clinicHandoverBytes": 86232016,
+      "clinicHandoverUploadMs": 17.80000114440918,
+      "staticBodyUploads": [
+        {
+          "at": 41589.89999961853,
+          "tick": 4968,
+          "phase": "handover",
+          "ms": 7.5,
+          "bytes": 34730448,
+          "kind": "Float32Array",
+          "itemSize": 3,
+          "count": 2894204,
+          "normalized": false,
+          "usage": 44,
+          "attributeName": "",
+          "geometry": "7b62f01e-145d-4ba9-9418-afcd3b5439ae",
+          "mesh": "static-body",
+          "parents": [
+            {
+              "name": "static-body",
+              "type": "Mesh"
+            },
+            {
+              "name": "inst:bld.clinic-annex",
+              "type": "Group"
+            },
+            {
+              "name": "D-GROVE",
+              "type": "Group"
+            },
+            {
+              "name": "sunset-grove",
+              "type": "Group"
+            },
+            {
+              "name": "Shadow Map [ ID: 9402 ]",
+              "type": "Scene"
+            }
+          ],
+          "worldPosition": [
+            0,
+            0,
+            0
+          ],
+          "material": "pal_static-colors",
+          "attributes": {
+            "position": {
+              "count": 2894204,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "normal": {
+              "count": 2894204,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_palette": {
+              "count": 2894204,
+              "itemSize": 1,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement0": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement1": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement2": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement3": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placementColor": {
+              "count": 1025,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_occluder": {
+              "count": 1025,
+              "itemSize": 1,
+              "kind": "Float32Array",
+              "normalized": false
+            }
+          }
+        },
+        {
+          "at": 41597.39999961853,
+          "tick": 4968,
+          "phase": "handover",
+          "ms": 0,
+          "bytes": 65600,
+          "kind": "Float32Array",
+          "itemSize": 4,
+          "count": 1025,
+          "normalized": false,
+          "usage": 44,
+          "attributeName": "",
+          "geometry": "7b62f01e-145d-4ba9-9418-afcd3b5439ae",
+          "mesh": "static-body",
+          "parents": [
+            {
+              "name": "static-body",
+              "type": "Mesh"
+            },
+            {
+              "name": "inst:bld.clinic-annex",
+              "type": "Group"
+            },
+            {
+              "name": "D-GROVE",
+              "type": "Group"
+            },
+            {
+              "name": "sunset-grove",
+              "type": "Group"
+            },
+            {
+              "name": "Shadow Map [ ID: 9402 ]",
+              "type": "Scene"
+            }
+          ],
+          "worldPosition": [
+            0,
+            0,
+            0
+          ],
+          "material": "pal_static-colors",
+          "attributes": {
+            "position": {
+              "count": 2894204,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "normal": {
+              "count": 2894204,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_palette": {
+              "count": 2894204,
+              "itemSize": 1,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement0": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement1": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement2": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement3": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placementColor": {
+              "count": 1025,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_occluder": {
+              "count": 1025,
+              "itemSize": 1,
+              "kind": "Float32Array",
+              "normalized": false
+            }
+          }
+        },
+        {
+          "at": 41597.39999961853,
+          "tick": 4968,
+          "phase": "handover",
+          "ms": 0,
+          "bytes": 65600,
+          "kind": "Float32Array",
+          "itemSize": 4,
+          "count": 1025,
+          "normalized": false,
+          "usage": 44,
+          "attributeName": "",
+          "geometry": "7b62f01e-145d-4ba9-9418-afcd3b5439ae",
+          "mesh": "static-body",
+          "parents": [
+            {
+              "name": "static-body",
+              "type": "Mesh"
+            },
+            {
+              "name": "inst:bld.clinic-annex",
+              "type": "Group"
+            },
+            {
+              "name": "D-GROVE",
+              "type": "Group"
+            },
+            {
+              "name": "sunset-grove",
+              "type": "Group"
+            },
+            {
+              "name": "Shadow Map [ ID: 9402 ]",
+              "type": "Scene"
+            }
+          ],
+          "worldPosition": [
+            0,
+            0,
+            0
+          ],
+          "material": "pal_static-colors",
+          "attributes": {
+            "position": {
+              "count": 2894204,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "normal": {
+              "count": 2894204,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_palette": {
+              "count": 2894204,
+              "itemSize": 1,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement0": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement1": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement2": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement3": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placementColor": {
+              "count": 1025,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_occluder": {
+              "count": 1025,
+              "itemSize": 1,
+              "kind": "Float32Array",
+              "normalized": false
+            }
+          }
+        },
+        {
+          "at": 41597.39999961853,
+          "tick": 4968,
+          "phase": "handover",
+          "ms": 0,
+          "bytes": 65600,
+          "kind": "Float32Array",
+          "itemSize": 4,
+          "count": 1025,
+          "normalized": false,
+          "usage": 44,
+          "attributeName": "",
+          "geometry": "7b62f01e-145d-4ba9-9418-afcd3b5439ae",
+          "mesh": "static-body",
+          "parents": [
+            {
+              "name": "static-body",
+              "type": "Mesh"
+            },
+            {
+              "name": "inst:bld.clinic-annex",
+              "type": "Group"
+            },
+            {
+              "name": "D-GROVE",
+              "type": "Group"
+            },
+            {
+              "name": "sunset-grove",
+              "type": "Group"
+            },
+            {
+              "name": "Shadow Map [ ID: 9402 ]",
+              "type": "Scene"
+            }
+          ],
+          "worldPosition": [
+            0,
+            0,
+            0
+          ],
+          "material": "pal_static-colors",
+          "attributes": {
+            "position": {
+              "count": 2894204,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "normal": {
+              "count": 2894204,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_palette": {
+              "count": 2894204,
+              "itemSize": 1,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement0": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement1": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement2": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement3": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placementColor": {
+              "count": 1025,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_occluder": {
+              "count": 1025,
+              "itemSize": 1,
+              "kind": "Float32Array",
+              "normalized": false
+            }
+          }
+        },
+        {
+          "at": 41597.39999961853,
+          "tick": 4968,
+          "phase": "handover",
+          "ms": 0,
+          "bytes": 65600,
+          "kind": "Float32Array",
+          "itemSize": 4,
+          "count": 1025,
+          "normalized": false,
+          "usage": 44,
+          "attributeName": "",
+          "geometry": "7b62f01e-145d-4ba9-9418-afcd3b5439ae",
+          "mesh": "static-body",
+          "parents": [
+            {
+              "name": "static-body",
+              "type": "Mesh"
+            },
+            {
+              "name": "inst:bld.clinic-annex",
+              "type": "Group"
+            },
+            {
+              "name": "D-GROVE",
+              "type": "Group"
+            },
+            {
+              "name": "sunset-grove",
+              "type": "Group"
+            },
+            {
+              "name": "Shadow Map [ ID: 9402 ]",
+              "type": "Scene"
+            }
+          ],
+          "worldPosition": [
+            0,
+            0,
+            0
+          ],
+          "material": "pal_static-colors",
+          "attributes": {
+            "position": {
+              "count": 2894204,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "normal": {
+              "count": 2894204,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_palette": {
+              "count": 2894204,
+              "itemSize": 1,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement0": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement1": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement2": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement3": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placementColor": {
+              "count": 1025,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_occluder": {
+              "count": 1025,
+              "itemSize": 1,
+              "kind": "Float32Array",
+              "normalized": false
+            }
+          }
+        },
+        {
+          "at": 41597.39999961853,
+          "tick": 4968,
+          "phase": "handover",
+          "ms": 6.90000057220459,
+          "bytes": 34730448,
+          "kind": "Float32Array",
+          "itemSize": 3,
+          "count": 2894204,
+          "normalized": false,
+          "usage": 44,
+          "attributeName": "",
+          "geometry": "7b62f01e-145d-4ba9-9418-afcd3b5439ae",
+          "mesh": "static-body",
+          "parents": [
+            {
+              "name": "static-body",
+              "type": "Mesh"
+            },
+            {
+              "name": "inst:bld.clinic-annex",
+              "type": "Group"
+            },
+            {
+              "name": "D-GROVE",
+              "type": "Group"
+            },
+            {
+              "name": "sunset-grove",
+              "type": "Group"
+            },
+            {
+              "name": "Shadow Map [ ID: 9402 ]",
+              "type": "Scene"
+            }
+          ],
+          "worldPosition": [
+            0,
+            0,
+            0
+          ],
+          "material": "pal_static-colors",
+          "attributes": {
+            "position": {
+              "count": 2894204,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "normal": {
+              "count": 2894204,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_palette": {
+              "count": 2894204,
+              "itemSize": 1,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement0": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement1": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement2": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement3": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placementColor": {
+              "count": 1025,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_occluder": {
+              "count": 1025,
+              "itemSize": 1,
+              "kind": "Float32Array",
+              "normalized": false
+            }
+          }
+        },
+        {
+          "at": 41604.39999961853,
+          "tick": 4968,
+          "phase": "handover",
+          "ms": 0.3000001907348633,
+          "bytes": 978636,
+          "kind": "Uint32Array",
+          "itemSize": 1,
+          "count": 244659,
+          "normalized": false,
+          "usage": 28,
+          "attributeName": "",
+          "geometry": "7b62f01e-145d-4ba9-9418-afcd3b5439ae",
+          "mesh": "static-body",
+          "parents": [
+            {
+              "name": "static-body",
+              "type": "Mesh"
+            },
+            {
+              "name": "inst:bld.clinic-annex",
+              "type": "Group"
+            },
+            {
+              "name": "D-GROVE",
+              "type": "Group"
+            },
+            {
+              "name": "sunset-grove",
+              "type": "Group"
+            },
+            {
+              "name": "Shadow Map [ ID: 9402 ]",
+              "type": "Scene"
+            }
+          ],
+          "worldPosition": [
+            0,
+            0,
+            0
+          ],
+          "material": "pal_static-colors",
+          "attributes": {
+            "position": {
+              "count": 2894204,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "normal": {
+              "count": 2894204,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_palette": {
+              "count": 2894204,
+              "itemSize": 1,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement0": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement1": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement2": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement3": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placementColor": {
+              "count": 1025,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_occluder": {
+              "count": 1025,
+              "itemSize": 1,
+              "kind": "Float32Array",
+              "normalized": false
+            }
+          }
+        },
+        {
+          "at": 41604.800000190735,
+          "tick": 4968,
+          "phase": "handover",
+          "ms": 0,
+          "bytes": 65600,
+          "kind": "Float32Array",
+          "itemSize": 4,
+          "count": 1025,
+          "normalized": false,
+          "usage": 44,
+          "attributeName": "",
+          "geometry": "9b02ac9e-4efe-47d9-a492-82e9ce8606e8",
+          "mesh": "static-body",
+          "parents": [
+            {
+              "name": "static-body",
+              "type": "Mesh"
+            },
+            {
+              "name": "inst:bld.clinic-annex",
+              "type": "Group"
+            },
+            {
+              "name": "D-GROVE",
+              "type": "Group"
+            },
+            {
+              "name": "sunset-grove",
+              "type": "Group"
+            },
+            {
+              "name": "Shadow Map [ ID: 9402 ]",
+              "type": "Scene"
+            }
+          ],
+          "worldPosition": [
+            0,
+            0,
+            0
+          ],
+          "material": "pal_static-colors",
+          "attributes": {
+            "position": {
+              "count": 3696,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "normal": {
+              "count": 3696,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_palette": {
+              "count": 3696,
+              "itemSize": 1,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement0": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement1": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement2": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement3": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placementColor": {
+              "count": 1025,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_occluder": {
+              "count": 1025,
+              "itemSize": 1,
+              "kind": "Float32Array",
+              "normalized": false
+            }
+          }
+        },
+        {
+          "at": 41604.800000190735,
+          "tick": 4968,
+          "phase": "handover",
+          "ms": 0,
+          "bytes": 65600,
+          "kind": "Float32Array",
+          "itemSize": 4,
+          "count": 1025,
+          "normalized": false,
+          "usage": 44,
+          "attributeName": "",
+          "geometry": "9b02ac9e-4efe-47d9-a492-82e9ce8606e8",
+          "mesh": "static-body",
+          "parents": [
+            {
+              "name": "static-body",
+              "type": "Mesh"
+            },
+            {
+              "name": "inst:bld.clinic-annex",
+              "type": "Group"
+            },
+            {
+              "name": "D-GROVE",
+              "type": "Group"
+            },
+            {
+              "name": "sunset-grove",
+              "type": "Group"
+            },
+            {
+              "name": "Shadow Map [ ID: 9402 ]",
+              "type": "Scene"
+            }
+          ],
+          "worldPosition": [
+            0,
+            0,
+            0
+          ],
+          "material": "pal_static-colors",
+          "attributes": {
+            "position": {
+              "count": 3696,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "normal": {
+              "count": 3696,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_palette": {
+              "count": 3696,
+              "itemSize": 1,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement0": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement1": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement2": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement3": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placementColor": {
+              "count": 1025,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_occluder": {
+              "count": 1025,
+              "itemSize": 1,
+              "kind": "Float32Array",
+              "normalized": false
+            }
+          }
+        },
+        {
+          "at": 41604.800000190735,
+          "tick": 4968,
+          "phase": "handover",
+          "ms": 0,
+          "bytes": 65600,
+          "kind": "Float32Array",
+          "itemSize": 4,
+          "count": 1025,
+          "normalized": false,
+          "usage": 44,
+          "attributeName": "",
+          "geometry": "9b02ac9e-4efe-47d9-a492-82e9ce8606e8",
+          "mesh": "static-body",
+          "parents": [
+            {
+              "name": "static-body",
+              "type": "Mesh"
+            },
+            {
+              "name": "inst:bld.clinic-annex",
+              "type": "Group"
+            },
+            {
+              "name": "D-GROVE",
+              "type": "Group"
+            },
+            {
+              "name": "sunset-grove",
+              "type": "Group"
+            },
+            {
+              "name": "Shadow Map [ ID: 9402 ]",
+              "type": "Scene"
+            }
+          ],
+          "worldPosition": [
+            0,
+            0,
+            0
+          ],
+          "material": "pal_static-colors",
+          "attributes": {
+            "position": {
+              "count": 3696,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "normal": {
+              "count": 3696,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_palette": {
+              "count": 3696,
+              "itemSize": 1,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement0": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement1": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement2": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement3": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placementColor": {
+              "count": 1025,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_occluder": {
+              "count": 1025,
+              "itemSize": 1,
+              "kind": "Float32Array",
+              "normalized": false
+            }
+          }
+        },
+        {
+          "at": 41604.800000190735,
+          "tick": 4968,
+          "phase": "handover",
+          "ms": 0,
+          "bytes": 65600,
+          "kind": "Float32Array",
+          "itemSize": 4,
+          "count": 1025,
+          "normalized": false,
+          "usage": 44,
+          "attributeName": "",
+          "geometry": "9b02ac9e-4efe-47d9-a492-82e9ce8606e8",
+          "mesh": "static-body",
+          "parents": [
+            {
+              "name": "static-body",
+              "type": "Mesh"
+            },
+            {
+              "name": "inst:bld.clinic-annex",
+              "type": "Group"
+            },
+            {
+              "name": "D-GROVE",
+              "type": "Group"
+            },
+            {
+              "name": "sunset-grove",
+              "type": "Group"
+            },
+            {
+              "name": "Shadow Map [ ID: 9402 ]",
+              "type": "Scene"
+            }
+          ],
+          "worldPosition": [
+            0,
+            0,
+            0
+          ],
+          "material": "pal_static-colors",
+          "attributes": {
+            "position": {
+              "count": 3696,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "normal": {
+              "count": 3696,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_palette": {
+              "count": 3696,
+              "itemSize": 1,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement0": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement1": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement2": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement3": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placementColor": {
+              "count": 1025,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_occluder": {
+              "count": 1025,
+              "itemSize": 1,
+              "kind": "Float32Array",
+              "normalized": false
+            }
+          }
+        },
+        {
+          "at": 41605,
+          "tick": 4968,
+          "phase": "handover",
+          "ms": 0,
+          "bytes": 65600,
+          "kind": "Float32Array",
+          "itemSize": 4,
+          "count": 1025,
+          "normalized": false,
+          "usage": 44,
+          "attributeName": "",
+          "geometry": "9b69ca25-7aa3-4e6a-9504-841aabd094f6",
+          "mesh": "static-body",
+          "parents": [
+            {
+              "name": "static-body",
+              "type": "Mesh"
+            },
+            {
+              "name": "inst:bld.clinic-annex",
+              "type": "Group"
+            },
+            {
+              "name": "D-GROVE",
+              "type": "Group"
+            },
+            {
+              "name": "sunset-grove",
+              "type": "Group"
+            },
+            {
+              "name": "Shadow Map [ ID: 9402 ]",
+              "type": "Scene"
+            }
+          ],
+          "worldPosition": [
+            0,
+            0,
+            0
+          ],
+          "material": "pal_static-colors",
+          "attributes": {
+            "position": {
+              "count": 3696,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "normal": {
+              "count": 3696,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_palette": {
+              "count": 3696,
+              "itemSize": 1,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement0": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement1": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement2": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement3": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placementColor": {
+              "count": 1025,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_occluder": {
+              "count": 1025,
+              "itemSize": 1,
+              "kind": "Float32Array",
+              "normalized": false
+            }
+          }
+        },
+        {
+          "at": 41605,
+          "tick": 4968,
+          "phase": "handover",
+          "ms": 0,
+          "bytes": 65600,
+          "kind": "Float32Array",
+          "itemSize": 4,
+          "count": 1025,
+          "normalized": false,
+          "usage": 44,
+          "attributeName": "",
+          "geometry": "9b69ca25-7aa3-4e6a-9504-841aabd094f6",
+          "mesh": "static-body",
+          "parents": [
+            {
+              "name": "static-body",
+              "type": "Mesh"
+            },
+            {
+              "name": "inst:bld.clinic-annex",
+              "type": "Group"
+            },
+            {
+              "name": "D-GROVE",
+              "type": "Group"
+            },
+            {
+              "name": "sunset-grove",
+              "type": "Group"
+            },
+            {
+              "name": "Shadow Map [ ID: 9402 ]",
+              "type": "Scene"
+            }
+          ],
+          "worldPosition": [
+            0,
+            0,
+            0
+          ],
+          "material": "pal_static-colors",
+          "attributes": {
+            "position": {
+              "count": 3696,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "normal": {
+              "count": 3696,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_palette": {
+              "count": 3696,
+              "itemSize": 1,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement0": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement1": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement2": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement3": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placementColor": {
+              "count": 1025,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_occluder": {
+              "count": 1025,
+              "itemSize": 1,
+              "kind": "Float32Array",
+              "normalized": false
+            }
+          }
+        },
+        {
+          "at": 41605,
+          "tick": 4968,
+          "phase": "handover",
+          "ms": 0,
+          "bytes": 65600,
+          "kind": "Float32Array",
+          "itemSize": 4,
+          "count": 1025,
+          "normalized": false,
+          "usage": 44,
+          "attributeName": "",
+          "geometry": "9b69ca25-7aa3-4e6a-9504-841aabd094f6",
+          "mesh": "static-body",
+          "parents": [
+            {
+              "name": "static-body",
+              "type": "Mesh"
+            },
+            {
+              "name": "inst:bld.clinic-annex",
+              "type": "Group"
+            },
+            {
+              "name": "D-GROVE",
+              "type": "Group"
+            },
+            {
+              "name": "sunset-grove",
+              "type": "Group"
+            },
+            {
+              "name": "Shadow Map [ ID: 9402 ]",
+              "type": "Scene"
+            }
+          ],
+          "worldPosition": [
+            0,
+            0,
+            0
+          ],
+          "material": "pal_static-colors",
+          "attributes": {
+            "position": {
+              "count": 3696,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "normal": {
+              "count": 3696,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_palette": {
+              "count": 3696,
+              "itemSize": 1,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement0": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement1": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement2": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement3": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placementColor": {
+              "count": 1025,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_occluder": {
+              "count": 1025,
+              "itemSize": 1,
+              "kind": "Float32Array",
+              "normalized": false
+            }
+          }
+        },
+        {
+          "at": 41605,
+          "tick": 4968,
+          "phase": "handover",
+          "ms": 0,
+          "bytes": 65600,
+          "kind": "Float32Array",
+          "itemSize": 4,
+          "count": 1025,
+          "normalized": false,
+          "usage": 44,
+          "attributeName": "",
+          "geometry": "9b69ca25-7aa3-4e6a-9504-841aabd094f6",
+          "mesh": "static-body",
+          "parents": [
+            {
+              "name": "static-body",
+              "type": "Mesh"
+            },
+            {
+              "name": "inst:bld.clinic-annex",
+              "type": "Group"
+            },
+            {
+              "name": "D-GROVE",
+              "type": "Group"
+            },
+            {
+              "name": "sunset-grove",
+              "type": "Group"
+            },
+            {
+              "name": "Shadow Map [ ID: 9402 ]",
+              "type": "Scene"
+            }
+          ],
+          "worldPosition": [
+            0,
+            0,
+            0
+          ],
+          "material": "pal_static-colors",
+          "attributes": {
+            "position": {
+              "count": 3696,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "normal": {
+              "count": 3696,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_palette": {
+              "count": 3696,
+              "itemSize": 1,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement0": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement1": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement2": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement3": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placementColor": {
+              "count": 1025,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_occluder": {
+              "count": 1025,
+              "itemSize": 1,
+              "kind": "Float32Array",
+              "normalized": false
+            }
+          }
+        },
+        {
+          "at": 41606.699999809265,
+          "tick": 4968,
+          "phase": "handover",
+          "ms": 2.5,
+          "bytes": 11576816,
+          "kind": "Float32Array",
+          "itemSize": 1,
+          "count": 2894204,
+          "normalized": false,
+          "usage": 44,
+          "attributeName": "",
+          "geometry": "7b62f01e-145d-4ba9-9418-afcd3b5439ae",
+          "mesh": "static-body",
+          "parents": [
+            {
+              "name": "static-body",
+              "type": "Mesh"
+            },
+            {
+              "name": "inst:bld.clinic-annex",
+              "type": "Group"
+            },
+            {
+              "name": "D-GROVE",
+              "type": "Group"
+            },
+            {
+              "name": "sunset-grove",
+              "type": "Group"
+            },
+            {
+              "name": "",
+              "type": "Scene"
+            }
+          ],
+          "worldPosition": [
+            0,
+            0,
+            0
+          ],
+          "material": "pal_static-colors",
+          "attributes": {
+            "position": {
+              "count": 2894204,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "normal": {
+              "count": 2894204,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_palette": {
+              "count": 2894204,
+              "itemSize": 1,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement0": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement1": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement2": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placement3": {
+              "count": 1025,
+              "itemSize": 4,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_placementColor": {
+              "count": 1025,
+              "itemSize": 3,
+              "kind": "Float32Array",
+              "normalized": false
+            },
+            "_occluder": {
+              "count": 1025,
+              "itemSize": 1,
+              "kind": "Float32Array",
+              "normalized": false
+            }
+          }
+        }
+      ],
+      "longTasks": []
+    }
+  ],
+  "bufferRawBefore": {
+    "path": "test-results/perf11/diagnostic/L1-attributes/strips/webgpu/L1.json",
+    "sha256": "7d2a1bee09beb893bc76c0584ff392369a242db4cda001a08788239bcbc16ffd"
+  },
+  "warmBefore": {
+    "swaps": 62,
+    "unwarmedAfterScenePrepared": 62,
+    "clinicSwaps": [
+      {
+        "assetId": "bld.clinic-annex",
+        "slot": "lod1",
+        "lod": "lod1",
+        "hasWarmCallback": false,
+        "tick": 2473,
+        "scenePrepared": true,
+        "playSeconds": 0
+      },
+      {
+        "assetId": "bld.clinic-annex",
+        "slot": "lod0",
+        "lod": "lod1",
+        "hasWarmCallback": false,
+        "tick": 2473,
+        "scenePrepared": true,
+        "playSeconds": 0
+      },
+      {
+        "assetId": "bld.clinic-annex",
+        "slot": "lod0",
+        "lod": "lod0",
+        "hasWarmCallback": false,
+        "tick": 2473,
+        "scenePrepared": true,
+        "playSeconds": 0
+      }
+    ]
+  },
+  "warmAfter": {
+    "swaps": 62,
+    "unwarmedAfterScenePrepared": 0,
+    "clinicSwaps": [
+      {
+        "assetId": "bld.clinic-annex",
+        "slot": "lod1",
+        "lod": "lod1",
+        "hasWarmCallback": true,
+        "tick": 2473,
+        "scenePrepared": true,
+        "playSeconds": 0
+      },
+      {
+        "assetId": "bld.clinic-annex",
+        "slot": "lod0",
+        "lod": "lod1",
+        "hasWarmCallback": true,
+        "tick": 2473,
+        "scenePrepared": true,
+        "playSeconds": 0
+      },
+      {
+        "assetId": "bld.clinic-annex",
+        "slot": "lod0",
+        "lod": "lod0",
+        "hasWarmCallback": true,
+        "tick": 2473,
+        "scenePrepared": true,
+        "playSeconds": 0
+      }
+    ]
+  },
+  "fixedTrace": {
+    "maximum": {
+      "index": 456,
+      "ms": 33.29999999999927,
+      "at": 7646.499999809264,
+      "tick": 2931,
+      "phase": "morning",
+      "handoverAt": 0,
+      "deliveredAt": 0,
+      "flickerAt": 0,
+      "exitAt": 0
+    },
+    "clinicHandoverUploads": 0,
+    "longTasks": [],
+    "fullStaticBodyDraws": [
+      {
+        "vertices": 2894204,
+        "count": 1,
+        "material": "pal_static-colors",
+        "handoverDraws": 1028,
+        "attributes": {
+          "position": {
+            "count": 2894204,
+            "itemSize": 3,
+            "kind": "Float32Array",
+            "normalized": false
+          },
+          "normal": {
+            "count": 2894204,
+            "itemSize": 3,
+            "kind": "Float32Array",
+            "normalized": false
+          },
+          "_palette": {
+            "count": 2894204,
+            "itemSize": 1,
+            "kind": "Float32Array",
+            "normalized": false
+          },
+          "_placement0": {
+            "count": 1025,
+            "itemSize": 4,
+            "kind": "Float32Array",
+            "normalized": false
+          },
+          "_placement1": {
+            "count": 1025,
+            "itemSize": 4,
+            "kind": "Float32Array",
+            "normalized": false
+          },
+          "_placement2": {
+            "count": 1025,
+            "itemSize": 4,
+            "kind": "Float32Array",
+            "normalized": false
+          },
+          "_placement3": {
+            "count": 1025,
+            "itemSize": 4,
+            "kind": "Float32Array",
+            "normalized": false
+          },
+          "_placementColor": {
+            "count": 1025,
+            "itemSize": 3,
+            "kind": "Float32Array",
+            "normalized": false
+          },
+          "_occluder": {
+            "count": 1025,
+            "itemSize": 1,
+            "kind": "Float32Array",
+            "normalized": false
+          }
+        }
+      }
+    ],
+    "attributeLayoutMatchesBefore": true
+  },
+  "bufferRawAfter": {
+    "path": "test-results/perf11/diagnostic/L1-attributes-fixed/strips/webgpu/L1.json",
+    "sha256": "d023faa8ce3422ff6cca858c10d3ad09d3e8f03c9fa8cb029bce124b88b43605"
+  },
+  "unprofiledRecheck": [
+    {
+      "side": "prod",
+      "maximum": {
+        "index": 2494,
+        "ms": 50,
+        "at": 41638.70000038147,
+        "tick": 4971,
+        "phase": "handover",
+        "handoverAt": 4963,
+        "deliveredAt": 0,
+        "flickerAt": 0,
+        "exitAt": 0
+      },
+      "diagnostic": false
+    },
+    {
+      "side": "candidate",
+      "maximum": {
+        "index": 456,
+        "ms": 33.399999999999636,
+        "at": 7636.499999618531,
+        "tick": 2931,
+        "phase": "morning",
+        "handoverAt": 0,
+        "deliveredAt": 0,
+        "flickerAt": 0,
+        "exitAt": 0
+      },
+      "diagnostic": false
+    }
+  ],
+  "source": "Initial unprofiled hitch has no CPU timeline. Separate CPU/attribute captures reproduce handover buffer work on both bundles. Before/after callback and buffer probes identify and remove the early-preparation gap; only the new full unprofiled matrix supplies the final verdict."
+}
