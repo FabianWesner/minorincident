@@ -75,3 +75,7 @@ Commands run on this frozen head:
 - `npm run qa:accept -- --level L10 --tier both --skip-browser` (exit 1; retained failures/incomplete rows).
 
 This is not a completed review sweep: browser visual/route clauses and row-by-row fresh review JSON decisions remain to be completed. L8-11 specifically needs the required Opus taste score. No push, deploy, merge, or game-code change was made.
+
+## QA reporting correction
+
+The tracker discarded saved PASS review metadata for plain numeric rows. The current L7-04 review independently reported FRESH while its tracker row omitted reviewDecision. The three-line change in tools/qa/accept/report.ts retains every saved review so freshness appears. Required measurements, exact-clause matching, thresholds and verdict rules are unchanged. The [before/after receipt](review-metadata/receipt.json) runs both implementations against identical inputs and an unchanged review-file digest set: all 47 displayed/current verdict pairs are identical; previously hidden review freshness is now visible. This is the only checker/reporting change made by this lane.
