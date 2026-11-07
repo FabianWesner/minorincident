@@ -175,6 +175,8 @@ export const l3PhotoSpots: readonly (readonly [string, readonly [number, number,
 export function l3AttackView(world: { scenario?: string | null; missions?: { state: { l3?: { phase: string } | null } } | null; entities: { get(id: number): { transform: { x: number } } | undefined } }): boolean {
   return world.scenario === 'L3' && ['attack', 'fallback', 'corridor'].includes(world.missions?.state.l3?.phase ?? '') && (world.entities.get(1)?.transform.x ?? 0) < l3.map.yard.x1 + 12;
 }
+/** Members of station wave `wave` (0..2) on a quality tier, as LevelThreeCollapse.startAttack admits them (acceptance tooling). */
+export function l3WaveCount(wave: number, low: boolean): number { return Math.ceil(l3.attack.waves[wave].count * (low ? l3.attack.lowScale : 1)); }
 /** Street of a world point (nearest street line), for population, forced-street bots and dressing tests. */
 export function l3Street(z: number): 'blvd' | 'commerce' | 'oak' { return z < -14 ? 'blvd' : z > 14 ? 'oak' : 'commerce'; }
 /** Segment index (0..2) of an X coordinate inside the corridor, -1 before it, 3 past it. */
