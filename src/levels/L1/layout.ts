@@ -26,6 +26,16 @@ export const l1FrontageSeals: readonly { id: string; x0: number; x1: number; z0:
   { id: 'l1-depot-hedge-seal-west', x0: -51.5, x1: -50.75, z0: -39.45, z1: -38.4 },
 ];
 
+/**
+ * r2-way (L1-16): the back lane behind Main Row and the depot (z -50.3..-45.9, open lawns down to the depot's rear wall) was entered
+ * from the north side street right beside the depot. Screenshot players who left the counter on foot or on the auto-mounted cargo
+ * bike drifted up that street, turned into the lane and looped between the bins, the courier van's tail, the shop backs and the
+ * excavator at the street's end, with the Annex arrow pointing through the depot. Three privacy-fence panels on the street's
+ * west kerb (the same panels that already line both of its other kerbs) close the lane's east mouth up to the depot's rear
+ * corner, so the only way on from the depot is the public street. Panels run along z (yaw 0) at x -34.6.
+ */
+export const l1BackLaneFence = { x: -34.6, z0: -50.3, z1: -43.05, panels: 3 } as const;
+
 export function levelOneLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
   return layouts.map(source => {
     if (source.district !== 'D-GROVE') return source;
@@ -43,6 +53,12 @@ export function levelOneLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     if (van) {
       const { x, z: vz, yaw } = l1DepotVan, h = van.visualAabb.max[1];
       van.position = [x, 0, vz]; van.yaw = yaw; van.visualAabb = { min: [x - 1.355, 0, vz - 2.7225], max: [x + 1.355, h, vz + 2.7225] };
+    }
+    const { x: fx, z0, z1, panels } = l1BackLaneFence, length = (z1 - z0) / panels;
+    for (let i = 0; i < panels; i++) {
+      const fz = z0 + (i + .5) * length;
+      layout.placements.push({ id: `l1-back-lane-fence-${i}`, assetId: 'prop.privacy-fence', position: [fx, 0, fz], yaw: 0, scale: [1, 1, length / 2.6], minTier: 0, maxTier: 5,
+        allowRoad: false, lightGroup: 'block-1', visualAabb: { min: [fx - .135, 0, fz - length / 2], max: [fx + .135, 1.795, fz + length / 2] } });
     }
     for (const seal of l1FrontageSeals) layout.colliders.push({ id: seal.id, minTier: 0, maxTier: 5, aabb: { min: [seal.x0, 0, seal.z0], max: [seal.x1, 2.4, seal.z1], navBlocker: true } });
     return layout;
