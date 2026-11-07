@@ -5,7 +5,7 @@
   "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
   "fixtureHash": "92c8c4dbd27db2b7dd03df5289fc530a85fd20da6035f4f296a61ec08d88a9e3",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
-  "generatedAt": "2026-11-06T23:31:40.892Z",
+  "generatedAt": "2026-11-07T01:03:47.940Z",
   "policies": [
     {
       "tier": "low",
@@ -85,11 +85,25 @@
       "receipt": "docs/reports/fix51-verify/receipts/L10-low-epilogue-browser.json"
     },
     {
+      "tier": "low",
+      "policy": "real-input-browser",
+      "outcome": "incomplete",
+      "error": null,
+      "receipt": "docs/reports/fix51-verify/receipts/L10-low-framing-browser.json"
+    },
+    {
       "tier": "high",
       "policy": "real-input-browser",
       "outcome": "incomplete",
       "error": null,
       "receipt": "docs/reports/fix51-verify/receipts/L10-high-epilogue-browser.json"
+    },
+    {
+      "tier": "high",
+      "policy": "real-input-browser",
+      "outcome": "incomplete",
+      "error": null,
+      "receipt": "docs/reports/fix51-verify/receipts/L10-high-framing-browser.json"
     }
   ],
   "globals": [
@@ -8008,21 +8022,114 @@
       "id": "L10-08",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "Manual review PASS (STALE, Codex sweep-c6): Fresh physical input from current native progressed saves across all5roadregions, both tiers and actualzoom0.5/1.5 plusmaxuserrequest. Roadbase1.3 in all50roadframes; finale base1.0. Actual productionView28cells (five roads/corridor/finale,gun/rocket,bothtierlabels) capcombinedat2.0, inclusiveboundarypasses. All82frames personally inspected: wide frames include both verges/grass/fields and roadside lights/vehicles/structures; closezoom crops context as expected. Night jackets/suits, pale collars/faces and limbs visible against lit gray road, including live formal-clothed crowds at finale. Sparse rectangular verge seams and passive body pile-up explicitly retained, no taste claim. First240s passive attempts show charges only, excluded fromslamqualification. Current canonical stationary18m snapshots preservefullnativecontrolhash; three actual physical rockets clear local bodies, actualspacing then schedulesMega groundslam naturally. SameattackID six/twelve-tick strips at bothzooms show flat red/orange floor circle beneathMega; productionVfx tellshape1radius3 matches authoredmegaAlpha radius, distinctfrombodyaura. Mega remainsalive, noactor/HP/schedulerwrites, no objective skip, couriergodonly. Nativeprefix is not claimed as full physical journey; post-loadcommands allphysical.27semantic faults rejected, source evidence restored. No game/criterion edits and no performance timing. Wide road/field framing and dark suit crowds are sampled. Exact1.3 region scale,max2.0 and finale slam-ground-effect clauses are not fully instrumented.",
+      "value": "low/physical-framing physical five-region road framing matrix: {\"valid\":false,\"roadMatrix\":true} (target Five current native progressed saves; actual WASD and camera0.5/1.5 plus max request; road base1.3, combined≤2.; NOT CHECKED); low/physical-framing production road and finale maximal zoom clamp: {\"cap\":false,\"cells\":14,\"maximum\":2} (target Actual View, both gun and rocket, all five roads/corridor/finale; base1.3 roads,1 elsewhere, base×maxzoom≤2.; NOT CHECKED); low/physical-framing reviewed night road verges clothing and natural ground-slam telegraph: {\"slam\":true,\"seen\":false,\"firstSlamTick\":453,\"startDistance\":3.4142223699859016} (target Every actual frame personally reviewed; verges/fields, night clothing, native ground-slam six/twelve-tick strip, exact same attack ID/ground-ring shape and normal finale base.; NOT CHECKED); high/physical-framing physical five-region road framing matrix: {\"valid\":false,\"roadMatrix\":true} (target Five current native progressed saves; actual WASD and camera0.5/1.5 plus max request; road base1.3, combined≤2.; NOT CHECKED); high/physical-framing production road and finale maximal zoom clamp: {\"cap\":false,\"cells\":14,\"maximum\":2} (target Actual View, both gun and rocket, all five roads/corridor/finale; base1.3 roads,1 elsewhere, base×maxzoom≤2.; NOT CHECKED); high/physical-framing reviewed night road verges clothing and natural ground-slam telegraph: {\"slam\":true,\"seen\":false,\"firstSlamTick\":327,\"startDistance\":3.1659447726581975} (target Every actual frame personally reviewed; verges/fields, night clothing, native ground-slam six/twelve-tick strip, exact same attack ID/ground-ring shape and normal finale base.; NOT CHECKED) Manual review PASS (STALE, Codex sweep-c6): Fresh physical input from current native progressed saves across all5roadregions, both tiers and actualzoom0.5/1.5 plusmaxuserrequest. Roadbase1.3 in all50roadframes; finale base1.0. Actual productionView28cells (five roads/corridor/finale,gun/rocket,bothtierlabels) capcombinedat2.0, inclusiveboundarypasses. All82frames personally inspected: wide frames include both verges/grass/fields and roadside lights/vehicles/structures; closezoom crops context as expected. Night jackets/suits, pale collars/faces and limbs visible against lit gray road, including live formal-clothed crowds at finale. Sparse rectangular verge seams and passive body pile-up explicitly retained, no taste claim. First240s passive attempts show charges only, excluded fromslamqualification. Current canonical stationary18m snapshots preservefullnativecontrolhash; three actual physical rockets clear local bodies, actualspacing then schedulesMega groundslam naturally. SameattackID six/twelve-tick strips at bothzooms show flat red/orange floor circle beneathMega; productionVfx tellshape1radius3 matches authoredmegaAlpha radius, distinctfrombodyaura. Mega remainsalive, noactor/HP/schedulerwrites, no objective skip, couriergodonly. Nativeprefix is not claimed as full physical journey; post-loadcommands allphysical.27semantic faults rejected, source evidence restored. No game/criterion edits and no performance timing.",
       "automatedComplete": false,
       "receipt": [
+        "docs/reports/sweep-c6/L10-08/low-physical.json.gz",
+        "docs/reports/sweep-c6/L10-08/camera-capability.json",
         "docs/reports/sweep-c6/L10-08/review.json",
+        "docs/reports/sweep-c6/L10-08/high-physical.json.gz",
         "docs/reports/sweep-c6/L10-08/framing-review.json",
         "docs/reports/sweep-c6/L10-08/framing-producer.mjs",
         "docs/reports/sweep-c6/L10-08/slam-producer.mjs",
-        "docs/reports/sweep-c6/L10-08/camera-capability.json",
         "docs/reports/sweep-c6/L10-08/prefix-proof.json",
         "docs/reports/sweep-c6/L10-08/close-prefix-proof.json",
         "docs/reports/sweep-c6/L10-08/coverage-proof.json",
         "docs/reports/sweep-c6/L10-08/raw-cleanup.json"
       ],
       "expected": "Road regions framed ×1.3 (verges/fields in frame), base × max zoom ≤ 2.0; not in the finale. Suit crowds readable at night, slam telegraph is a ground effect.",
-      "checks": [],
+      "checks": [
+        {
+          "id": "L10-08",
+          "clause": "physical five-region road framing matrix",
+          "tier": "low",
+          "policy": "physical-framing",
+          "status": "NOT CHECKED",
+          "value": {
+            "valid": false,
+            "roadMatrix": true
+          },
+          "target": "Five current native progressed saves; actual WASD and camera0.5/1.5 plus max request; road base1.3, combined≤2.",
+          "receipt": "docs/reports/sweep-c6/L10-08/low-physical.json.gz",
+          "level": "L10"
+        },
+        {
+          "id": "L10-08",
+          "clause": "production road and finale maximal zoom clamp",
+          "tier": "low",
+          "policy": "physical-framing",
+          "status": "NOT CHECKED",
+          "value": {
+            "cap": false,
+            "cells": 14,
+            "maximum": 2
+          },
+          "target": "Actual View, both gun and rocket, all five roads/corridor/finale; base1.3 roads,1 elsewhere, base×maxzoom≤2.",
+          "receipt": "docs/reports/sweep-c6/L10-08/camera-capability.json",
+          "level": "L10"
+        },
+        {
+          "id": "L10-08",
+          "clause": "reviewed night road verges clothing and natural ground-slam telegraph",
+          "tier": "low",
+          "policy": "physical-framing",
+          "status": "NOT CHECKED",
+          "value": {
+            "slam": true,
+            "seen": false,
+            "firstSlamTick": 453,
+            "startDistance": 3.4142223699859016
+          },
+          "target": "Every actual frame personally reviewed; verges/fields, night clothing, native ground-slam six/twelve-tick strip, exact same attack ID/ground-ring shape and normal finale base.",
+          "receipt": "docs/reports/sweep-c6/L10-08/review.json",
+          "level": "L10"
+        },
+        {
+          "id": "L10-08",
+          "clause": "physical five-region road framing matrix",
+          "tier": "high",
+          "policy": "physical-framing",
+          "status": "NOT CHECKED",
+          "value": {
+            "valid": false,
+            "roadMatrix": true
+          },
+          "target": "Five current native progressed saves; actual WASD and camera0.5/1.5 plus max request; road base1.3, combined≤2.",
+          "receipt": "docs/reports/sweep-c6/L10-08/high-physical.json.gz",
+          "level": "L10"
+        },
+        {
+          "id": "L10-08",
+          "clause": "production road and finale maximal zoom clamp",
+          "tier": "high",
+          "policy": "physical-framing",
+          "status": "NOT CHECKED",
+          "value": {
+            "cap": false,
+            "cells": 14,
+            "maximum": 2
+          },
+          "target": "Actual View, both gun and rocket, all five roads/corridor/finale; base1.3 roads,1 elsewhere, base×maxzoom≤2.",
+          "receipt": "docs/reports/sweep-c6/L10-08/camera-capability.json",
+          "level": "L10"
+        },
+        {
+          "id": "L10-08",
+          "clause": "reviewed night road verges clothing and natural ground-slam telegraph",
+          "tier": "high",
+          "policy": "physical-framing",
+          "status": "NOT CHECKED",
+          "value": {
+            "slam": true,
+            "seen": false,
+            "firstSlamTick": 327,
+            "startDistance": 3.1659447726581975
+          },
+          "target": "Every actual frame personally reviewed; verges/fields, night clothing, native ground-slam six/twelve-tick strip, exact same attack ID/ground-ring shape and normal finale base.",
+          "receipt": "docs/reports/sweep-c6/L10-08/review.json",
+          "level": "L10"
+        }
+      ],
       "historical": {
         "id": "L10-08",
         "level": "L10",

@@ -2,7 +2,7 @@
   "version": 1,
   "level": "L6",
   "tier": "high",
-  "sourceHash": "2b976f139b4d722f660c9a1be1d33b042929606fa8354b412b7186b85b996740",
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
   "fixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4",
   "checks": [
     {
@@ -14,10 +14,10 @@
           "policy": "complete",
           "seed": 1,
           "completed": true,
-          "time": 288.35,
+          "time": 323.06666666666666,
           "deaths": 0,
-          "kills": 28,
-          "damageTaken": 100,
+          "kills": 25,
+          "damageTaken": 190,
           "failures": {},
           "objectiveTimeline": [
             {
@@ -30,11 +30,11 @@
             },
             {
               "id": "retreat",
-              "t": 278.46666666666664
+              "t": 313.43333333333334
             },
             {
               "id": "exit",
-              "t": 288.35
+              "t": 323.06666666666666
             }
           ],
           "furthestObjective": "exit",
@@ -44,13 +44,13 @@
           "collision": {
             "failures": 0,
             "pending": 0,
-            "admitted": 122,
+            "admitted": 126,
             "deferred": 0,
             "requests": [],
             "offenders": []
           }
         },
-        "samples": 14048,
+        "samples": 16131,
         "gateCount": 3,
         "seenGates": [
           90,
@@ -75,49 +75,49 @@
             "z": 15
           },
           {
-            "tick": 8722,
+            "tick": 8834,
             "phase": "retreat",
             "marker": "l6-next",
             "x": 92.4,
             "z": 17.3
           },
           {
-            "tick": 8783,
+            "tick": 8895,
             "phase": "retreat",
             "marker": "l6-next",
             "x": 242,
             "z": 15
           },
           {
-            "tick": 12333,
+            "tick": 12197,
             "phase": "retreat",
             "marker": "l6-next",
             "x": 152.4,
             "z": 17.3
           },
           {
-            "tick": 12395,
+            "tick": 12258,
             "phase": "retreat",
             "marker": "l6-next",
             "x": 242,
             "z": 15
           },
           {
-            "tick": 15791,
+            "tick": 17939,
             "phase": "retreat",
             "marker": "l6-next",
             "x": 212.4,
             "z": 17.3
           },
           {
-            "tick": 15853,
+            "tick": 18000,
             "phase": "retreat",
             "marker": "l6-next",
             "x": 242,
             "z": 15
           },
           {
-            "tick": 16708,
+            "tick": 18806,
             "phase": "exit",
             "marker": "night-exit",
             "x": 273,
@@ -125,7 +125,7 @@
           }
         ],
         "offenders": [],
-        "nativeStateHash": "51053774",
+        "nativeStateHash": "7d2bd834",
         "branchChecks": [
           {
             "gateX": 90,
@@ -683,9 +683,9 @@
           ]
         },
         "maneuver": {
-          "sourceHash": "2b976f139b4d722f660c9a1be1d33b042929606fa8354b412b7186b85b996740",
+          "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
           "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
-          "revision": "5a7f84ba13e2a42d4cf5073a94ccb2e3b35f2195",
+          "revision": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
           "tier": "high",
           "setup": "Only unarmed campaign racks at load; mortal courier; ordinary move/aim/fist inputs; no actor/health/clock changes or objective skips.",
           "completed": false,
@@ -8683,10 +8683,10 @@
           "policy": "complete",
           "seed": 1,
           "completed": true,
-          "time": 288.35,
+          "time": 323.06666666666666,
           "deaths": 0,
-          "kills": 28,
-          "damageTaken": 100,
+          "kills": 25,
+          "damageTaken": 190,
           "failures": {},
           "objectiveTimeline": [
             {
@@ -8699,11 +8699,11 @@
             },
             {
               "id": "retreat",
-              "t": 278.46666666666664
+              "t": 313.43333333333334
             },
             {
               "id": "exit",
-              "t": 288.35
+              "t": 323.06666666666666
             }
           ],
           "furthestObjective": "exit",
@@ -8713,15 +8713,15 @@
           "collision": {
             "failures": 0,
             "pending": 0,
-            "admitted": 122,
+            "admitted": 126,
             "deferred": 0,
             "requests": [],
             "offenders": []
           }
         },
-        "samples": 17301,
-        "observedHash": "51053774",
-        "canonicalHash": "51053774",
+        "samples": 19384,
+        "observedHash": "7d2bd834",
+        "canonicalHash": "7d2bd834",
         "events": [
           {
             "type": "l6.bang",
@@ -8755,7 +8755,7 @@
           },
           {
             "type": "l6.bang",
-            "tick": 4991,
+            "tick": 4888,
             "breach": 3,
             "position": {
               "x": 54,
@@ -8764,7 +8764,7 @@
           },
           {
             "type": "l6.bang",
-            "tick": 6313,
+            "tick": 5891,
             "breach": 6,
             "position": {
               "x": 78,
@@ -8773,7 +8773,7 @@
           },
           {
             "type": "l6.bang",
-            "tick": 8249,
+            "tick": 8293,
             "breach": 4,
             "position": {
               "x": 126,
@@ -8782,7 +8782,7 @@
           },
           {
             "type": "l6.bang",
-            "tick": 10002,
+            "tick": 9857,
             "breach": 7,
             "position": {
               "x": 162,
@@ -8791,7 +8791,7 @@
           },
           {
             "type": "l6.bang",
-            "tick": 12406,
+            "tick": 12269,
             "breach": 5,
             "position": {
               "x": 198,
@@ -8800,7 +8800,7 @@
           },
           {
             "type": "l6.bang",
-            "tick": 13838,
+            "tick": 13854,
             "breach": 8,
             "position": {
               "x": 228,
@@ -8843,7 +8843,7 @@
             "firstTrack": null,
             "end": "downed",
             "pathAtBirth": true,
-            "pathSamples": 65,
+            "pathSamples": 62,
             "pathFailures": 0
           },
           {
@@ -8969,7 +8969,7 @@
             "firstTrack": null,
             "end": "downed",
             "pathAtBirth": true,
-            "pathSamples": 34,
+            "pathSamples": 29,
             "pathFailures": 0
           },
           {
@@ -9023,7 +9023,7 @@
             "firstTrack": null,
             "end": "downed",
             "pathAtBirth": true,
-            "pathSamples": 14,
+            "pathSamples": 11,
             "pathFailures": 0
           },
           {
@@ -9041,7 +9041,7 @@
             "firstTrack": null,
             "end": "downed",
             "pathAtBirth": true,
-            "pathSamples": 28,
+            "pathSamples": 24,
             "pathFailures": 0
           },
           {
@@ -9095,7 +9095,7 @@
             "firstTrack": null,
             "end": "downed",
             "pathAtBirth": true,
-            "pathSamples": 18,
+            "pathSamples": 19,
             "pathFailures": 0
           },
           {
@@ -9113,7 +9113,7 @@
             "firstTrack": null,
             "end": "downed",
             "pathAtBirth": true,
-            "pathSamples": 21,
+            "pathSamples": 17,
             "pathFailures": 0
           },
           {
@@ -9131,7 +9131,7 @@
             "firstTrack": null,
             "end": "downed",
             "pathAtBirth": true,
-            "pathSamples": 19,
+            "pathSamples": 32,
             "pathFailures": 0
           },
           {
@@ -9149,7 +9149,7 @@
             "firstTrack": null,
             "end": "downed",
             "pathAtBirth": true,
-            "pathSamples": 20,
+            "pathSamples": 18,
             "pathFailures": 0
           },
           {
@@ -9182,47 +9182,47 @@
               "yaw": 1.1613951649760663
             },
             "firstShelterFloor": 4542,
-            "firstTrack": 8618,
+            "firstTrack": 10727,
             "end": "downed",
             "pathAtBirth": true,
-            "pathSamples": 28,
+            "pathSamples": 68,
             "pathFailures": 0
           },
           {
             "id": 100,
             "wave": 4,
             "door": 2,
-            "bornAt": 5111,
+            "bornAt": 5008,
             "birth": {
               "x": 54,
               "z": 12.6,
               "y": 1.5700000143051147,
               "yaw": 0
             },
-            "firstShelterFloor": 5531,
-            "firstTrack": null,
+            "firstShelterFloor": null,
+            "firstTrack": 7450,
             "end": "downed",
             "pathAtBirth": true,
-            "pathSamples": 29,
+            "pathSamples": 55,
             "pathFailures": 0
           },
           {
             "id": 101,
             "wave": 4,
             "door": 2,
-            "bornAt": 5111,
+            "bornAt": 5008,
             "birth": {
               "x": 55.05,
               "z": 12.6,
               "y": 1.5700000143051147,
               "yaw": 4.941702615235167
             },
-            "firstShelterFloor": null,
-            "firstTrack": 5437,
+            "firstShelterFloor": 5444,
+            "firstTrack": null,
             "end": "downed",
             "pathAtBirth": true,
-            "pathSamples": 130,
-            "pathFailures": 25
+            "pathSamples": 15,
+            "pathFailures": 0
           },
           {
             "id": 103,
@@ -9236,10 +9236,10 @@
               "yaw": 3.780599235121683
             },
             "firstShelterFloor": 5142,
-            "firstTrack": null,
+            "firstTrack": 7710,
             "end": "downed",
             "pathAtBirth": true,
-            "pathSamples": 11,
+            "pathSamples": 42,
             "pathFailures": 0
           },
           {
@@ -9254,35 +9254,17 @@
               "yaw": 2.8103199981597116
             },
             "firstShelterFloor": 5742,
-            "firstTrack": null,
+            "firstTrack": 7773,
             "end": "downed",
             "pathAtBirth": true,
-            "pathSamples": 16,
+            "pathSamples": 63,
             "pathFailures": 0
           },
           {
             "id": 107,
-            "wave": 3,
-            "door": 0,
-            "bornAt": 6342,
-            "birth": {
-              "x": -10,
-              "z": -19.4,
-              "y": 1.2999999999999998,
-              "yaw": 3.306158205731305
-            },
-            "firstShelterFloor": 6342,
-            "firstTrack": 9232,
-            "end": "downed",
-            "pathAtBirth": true,
-            "pathSamples": 44,
-            "pathFailures": 0
-          },
-          {
-            "id": 109,
             "wave": 4,
             "door": 5,
-            "bornAt": 6433,
+            "bornAt": 6011,
             "birth": {
               "x": 78,
               "z": 17.400000000000002,
@@ -9290,28 +9272,46 @@
               "yaw": 0
             },
             "firstShelterFloor": null,
-            "firstTrack": 6516,
+            "firstTrack": 6095,
             "end": "downed",
             "pathAtBirth": true,
-            "pathSamples": 25,
-            "pathFailures": 0
+            "pathSamples": 111,
+            "pathFailures": 3
           },
           {
-            "id": 110,
+            "id": 108,
             "wave": 4,
             "door": 5,
-            "bornAt": 6433,
+            "bornAt": 6011,
             "birth": {
               "x": 79.05,
               "z": 17.400000000000002,
               "y": 1.5700000143051147,
-              "yaw": 4.405952193022488
+              "yaw": 6.036216326993109
             },
             "firstShelterFloor": null,
-            "firstTrack": 6532,
+            "firstTrack": 6115,
             "end": "downed",
             "pathAtBirth": true,
-            "pathSamples": 61,
+            "pathSamples": 84,
+            "pathFailures": 0
+          },
+          {
+            "id": 110,
+            "wave": 3,
+            "door": 0,
+            "bornAt": 6342,
+            "birth": {
+              "x": -10,
+              "z": -19.4,
+              "y": 1.2999999999999998,
+              "yaw": 4.405952193022488
+            },
+            "firstShelterFloor": 6342,
+            "firstTrack": null,
+            "end": null,
+            "pathAtBirth": true,
+            "pathSamples": 0,
             "pathFailures": 0
           },
           {
@@ -9372,7 +9372,7 @@
             "id": 118,
             "wave": 4,
             "door": 3,
-            "bornAt": 8369,
+            "bornAt": 8413,
             "birth": {
               "x": 126,
               "z": 12.6,
@@ -9380,17 +9380,17 @@
               "yaw": 0
             },
             "firstShelterFloor": null,
-            "firstTrack": 8513,
+            "firstTrack": 8565,
             "end": "downed",
             "pathAtBirth": true,
-            "pathSamples": 71,
+            "pathSamples": 50,
             "pathFailures": 0
           },
           {
             "id": 119,
             "wave": 4,
             "door": 3,
-            "bornAt": 8369,
+            "bornAt": 8413,
             "birth": {
               "x": 127.05,
               "z": 12.6,
@@ -9398,10 +9398,10 @@
               "yaw": 3.290251047500029
             },
             "firstShelterFloor": null,
-            "firstTrack": 8597,
+            "firstTrack": 8595,
             "end": "downed",
             "pathAtBirth": true,
-            "pathSamples": 45,
+            "pathSamples": 22,
             "pathFailures": 0
           },
           {
@@ -9416,14 +9416,14 @@
               "yaw": 5.001378734630789
             },
             "firstShelterFloor": null,
-            "firstTrack": 8858,
+            "firstTrack": 8861,
             "end": "downed",
             "pathAtBirth": true,
-            "pathSamples": 35,
+            "pathSamples": 23,
             "pathFailures": 0
           },
           {
-            "id": 124,
+            "id": 123,
             "wave": 3,
             "door": 3,
             "bornAt": 9342,
@@ -9431,38 +9431,20 @@
               "x": 126,
               "z": 12.6,
               "y": 1.5700000143051147,
-              "yaw": 2.7134918160315524
+              "yaw": 3.895594247022651
             },
             "firstShelterFloor": null,
-            "firstTrack": 9465,
+            "firstTrack": 10441,
             "end": "downed",
             "pathAtBirth": true,
-            "pathSamples": 65,
+            "pathSamples": 5,
             "pathFailures": 0
           },
           {
-            "id": 128,
-            "wave": 3,
-            "door": 3,
-            "bornAt": 9942,
-            "birth": {
-              "x": 126,
-              "z": 12.6,
-              "y": 1.5700000143051147,
-              "yaw": 2.5739986433867137
-            },
-            "firstShelterFloor": null,
-            "firstTrack": 11140,
-            "end": "downed",
-            "pathAtBirth": true,
-            "pathSamples": 6,
-            "pathFailures": 0
-          },
-          {
-            "id": 130,
+            "id": 125,
             "wave": 4,
             "door": 6,
-            "bornAt": 10122,
+            "bornAt": 9977,
             "birth": {
               "x": 161,
               "y": 1.5700000143051147,
@@ -9470,32 +9452,32 @@
               "yaw": 0
             },
             "firstShelterFloor": null,
-            "firstTrack": 10211,
+            "firstTrack": 10066,
             "end": "downed",
             "pathAtBirth": true,
-            "pathSamples": 41,
+            "pathSamples": 128,
             "pathFailures": 0
           },
           {
-            "id": 131,
+            "id": 126,
             "wave": 4,
             "door": 6,
-            "bornAt": 10122,
+            "bornAt": 9977,
             "birth": {
               "x": 162.8,
               "z": 17.400000000000002,
               "y": 1.5700000143051147,
-              "yaw": 4.0345666925142565
+              "yaw": 3.495608997962953
             },
             "firstShelterFloor": null,
-            "firstTrack": 10153,
+            "firstTrack": 10008,
             "end": "downed",
             "pathAtBirth": true,
-            "pathSamples": 62,
+            "pathSamples": 50,
             "pathFailures": 0
           },
           {
-            "id": 133,
+            "id": 128,
             "wave": 3,
             "door": 3,
             "bornAt": 12342,
@@ -9503,53 +9485,53 @@
               "x": 126,
               "z": 12.6,
               "y": 1.5700000143051147,
-              "yaw": 0.6420349082681398
+              "yaw": 1.13938442139739
             },
             "firstShelterFloor": null,
-            "firstTrack": 12454,
+            "firstTrack": 12425,
             "end": "downed",
             "pathAtBirth": true,
-            "pathSamples": 22,
+            "pathSamples": 32,
             "pathFailures": 0
           },
           {
-            "id": 135,
+            "id": 130,
             "wave": 4,
             "door": 4,
-            "bornAt": 12526,
+            "bornAt": 12389,
             "birth": {
               "x": 198,
-              "y": 1.5700000143051147,
               "z": 12.6,
+              "y": 1.5700000143051147,
               "yaw": 0
             },
             "firstShelterFloor": null,
-            "firstTrack": 12611,
+            "firstTrack": 12474,
             "end": "downed",
             "pathAtBirth": true,
-            "pathSamples": 64,
+            "pathSamples": 86,
             "pathFailures": 0
           },
           {
-            "id": 136,
+            "id": 131,
             "wave": 4,
             "door": 4,
-            "bornAt": 12526,
+            "bornAt": 12389,
             "birth": {
               "x": 199.05,
               "z": 12.6,
               "y": 1.5700000143051147,
-              "yaw": 3.7266879009496487
+              "yaw": 2.084042952296972
             },
             "firstShelterFloor": null,
-            "firstTrack": 12635,
+            "firstTrack": 12498,
             "end": "downed",
             "pathAtBirth": true,
-            "pathSamples": 14,
+            "pathSamples": 15,
             "pathFailures": 0
           },
           {
-            "id": 138,
+            "id": 133,
             "wave": 3,
             "door": 4,
             "bornAt": 12942,
@@ -9557,17 +9539,17 @@
               "x": 198,
               "z": 12.6,
               "y": 1.5700000143051147,
-              "yaw": 4.0283882086870335
+              "yaw": 6.157754433108785
             },
             "firstShelterFloor": null,
-            "firstTrack": 13030,
+            "firstTrack": 13024,
             "end": "downed",
             "pathAtBirth": true,
-            "pathSamples": 37,
+            "pathSamples": 14,
             "pathFailures": 0
           },
           {
-            "id": 140,
+            "id": 135,
             "wave": 3,
             "door": 4,
             "bornAt": 13542,
@@ -9575,20 +9557,20 @@
               "x": 198,
               "z": 12.6,
               "y": 1.5700000143051147,
-              "yaw": 3.121426671652844
+              "yaw": 2.6634907521665427
             },
             "firstShelterFloor": null,
-            "firstTrack": null,
+            "firstTrack": 13611,
             "end": "downed",
             "pathAtBirth": true,
-            "pathSamples": 5,
+            "pathSamples": 4,
             "pathFailures": 0
           },
           {
-            "id": 142,
+            "id": 137,
             "wave": 4,
             "door": 7,
-            "bornAt": 13958,
+            "bornAt": 13974,
             "birth": {
               "x": 228,
               "z": 17.400000000000002,
@@ -9596,32 +9578,86 @@
               "yaw": 0
             },
             "firstShelterFloor": null,
-            "firstTrack": 14074,
+            "firstTrack": 14093,
             "end": "downed",
             "pathAtBirth": true,
-            "pathSamples": 30,
+            "pathSamples": 60,
             "pathFailures": 0
           },
           {
-            "id": 143,
+            "id": 138,
             "wave": 4,
             "door": 7,
-            "bornAt": 13958,
+            "bornAt": 13974,
             "birth": {
               "x": 229.05,
               "z": 17.400000000000002,
               "y": 1.5700000143051147,
-              "yaw": 5.543579987740754
+              "yaw": 0.17372567952615647
             },
             "firstShelterFloor": null,
-            "firstTrack": 14100,
+            "firstTrack": 14185,
             "end": "downed",
             "pathAtBirth": true,
-            "pathSamples": 11,
+            "pathSamples": 38,
             "pathFailures": 0
           },
           {
-            "id": 145,
+            "id": 140,
+            "wave": 3,
+            "door": 4,
+            "bornAt": 14142,
+            "birth": {
+              "x": 198,
+              "z": 12.6,
+              "y": 1.5700000143051147,
+              "yaw": 6.113556188874505
+            },
+            "firstShelterFloor": null,
+            "firstTrack": 14173,
+            "end": "downed",
+            "pathAtBirth": true,
+            "pathSamples": 21,
+            "pathFailures": 0
+          },
+          {
+            "id": 142,
+            "wave": 3,
+            "door": 4,
+            "bornAt": 14742,
+            "birth": {
+              "x": 198,
+              "z": 12.6,
+              "y": 1.5700000143051147,
+              "yaw": 2.411446376660906
+            },
+            "firstShelterFloor": null,
+            "firstTrack": 17638,
+            "end": "downed",
+            "pathAtBirth": true,
+            "pathSamples": 8,
+            "pathFailures": 0
+          },
+          {
+            "id": 144,
+            "wave": 3,
+            "door": 4,
+            "bornAt": 15342,
+            "birth": {
+              "x": 198,
+              "z": 12.6,
+              "y": 1.5700000143051147,
+              "yaw": 6.066317921873932
+            },
+            "firstShelterFloor": null,
+            "firstTrack": 15374,
+            "end": "downed",
+            "pathAtBirth": true,
+            "pathSamples": 25,
+            "pathFailures": 0
+          },
+          {
+            "id": 147,
             "wave": 3,
             "door": 4,
             "bornAt": 15942,
@@ -9629,31 +9665,49 @@
               "x": 198,
               "z": 12.6,
               "y": 1.5700000143051147,
-              "yaw": 2.1299125775109786
+              "yaw": 6.0405397663274245
             },
             "firstShelterFloor": null,
-            "firstTrack": null,
+            "firstTrack": 17531,
             "end": "downed",
             "pathAtBirth": true,
-            "pathSamples": 14,
+            "pathSamples": 8,
             "pathFailures": 0
           },
           {
-            "id": 147,
+            "id": 149,
+            "wave": 3,
+            "door": 4,
+            "bornAt": 18342,
+            "birth": {
+              "x": 198,
+              "z": 12.6,
+              "y": 1.5700000143051147,
+              "yaw": 6.1135140275754605
+            },
+            "firstShelterFloor": null,
+            "firstTrack": 18743,
+            "end": null,
+            "pathAtBirth": true,
+            "pathSamples": 1,
+            "pathFailures": 0
+          },
+          {
+            "id": 151,
             "wave": 3,
             "door": 7,
-            "bornAt": 17142,
+            "bornAt": 18942,
             "birth": {
               "x": 228,
               "z": 17.400000000000002,
               "y": 1.5700000143051147,
-              "yaw": 5.4439482313696175
+              "yaw": 3.791330532134707
             },
             "firstShelterFloor": null,
-            "firstTrack": 17275,
-            "end": null,
+            "firstTrack": 19009,
+            "end": "downed",
             "pathAtBirth": true,
-            "pathSamples": 0,
+            "pathSamples": 6,
             "pathFailures": 0
           }
         ]
@@ -9673,10 +9727,10 @@
         "policy": "complete",
         "seed": 1,
         "completed": true,
-        "time": 288.35,
+        "time": 323.06666666666666,
         "deaths": 0,
-        "kills": 28,
-        "damageTaken": 100,
+        "kills": 25,
+        "damageTaken": 190,
         "failures": {},
         "objectiveTimeline": [
           {
@@ -9689,11 +9743,11 @@
           },
           {
             "id": "retreat",
-            "t": 278.46666666666664
+            "t": 313.43333333333334
           },
           {
             "id": "exit",
-            "t": 288.35
+            "t": 323.06666666666666
           }
         ],
         "furthestObjective": "exit",
@@ -9703,13 +9757,13 @@
         "collision": {
           "failures": 0,
           "pending": 0,
-          "admitted": 122,
+          "admitted": 126,
           "deferred": 0,
           "requests": [],
           "offenders": []
         }
       },
-      "samples": 14048,
+      "samples": 16131,
       "gateCount": 3,
       "seenGates": [
         90,
@@ -9734,49 +9788,49 @@
           "z": 15
         },
         {
-          "tick": 8722,
+          "tick": 8834,
           "phase": "retreat",
           "marker": "l6-next",
           "x": 92.4,
           "z": 17.3
         },
         {
-          "tick": 8783,
+          "tick": 8895,
           "phase": "retreat",
           "marker": "l6-next",
           "x": 242,
           "z": 15
         },
         {
-          "tick": 12333,
+          "tick": 12197,
           "phase": "retreat",
           "marker": "l6-next",
           "x": 152.4,
           "z": 17.3
         },
         {
-          "tick": 12395,
+          "tick": 12258,
           "phase": "retreat",
           "marker": "l6-next",
           "x": 242,
           "z": 15
         },
         {
-          "tick": 15791,
+          "tick": 17939,
           "phase": "retreat",
           "marker": "l6-next",
           "x": 212.4,
           "z": 17.3
         },
         {
-          "tick": 15853,
+          "tick": 18000,
           "phase": "retreat",
           "marker": "l6-next",
           "x": 242,
           "z": 15
         },
         {
-          "tick": 16708,
+          "tick": 18806,
           "phase": "exit",
           "marker": "night-exit",
           "x": 273,
@@ -9784,7 +9838,7 @@
         }
       ],
       "offenders": [],
-      "nativeStateHash": "51053774",
+      "nativeStateHash": "7d2bd834",
       "branchChecks": [
         {
           "gateX": 90,
@@ -10333,9 +10387,9 @@
         ]
       },
       "maneuver": {
-        "sourceHash": "2b976f139b4d722f660c9a1be1d33b042929606fa8354b412b7186b85b996740",
+        "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
         "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
-        "revision": "5a7f84ba13e2a42d4cf5073a94ccb2e3b35f2195",
+        "revision": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
         "tier": "high",
         "setup": "Only unarmed campaign racks at load; mortal courier; ordinary move/aim/fist inputs; no actor/health/clock changes or objective skips.",
         "completed": false,

@@ -1,11 +1,11 @@
 {
   "version": 2,
   "level": "L9",
-  "sourceHash": "2b976f139b4d722f660c9a1be1d33b042929606fa8354b412b7186b85b996740",
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
   "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
   "fixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
-  "generatedAt": "2026-11-06T20:53:16.465Z",
+  "generatedAt": "2026-11-07T01:03:38.672Z",
   "policies": [
     {
       "tier": "low",
@@ -163,7 +163,7 @@
       "id": "G-05",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/complete native concurrent infected peak (no frame/performance measurement): 14 (target 0 ≤ value ≤ 100; PASS); low/stationary native concurrent infected peak (no frame/performance measurement): 14 (target 0 ≤ value ≤ 100; PASS); high/complete native concurrent infected peak (no frame/performance measurement): 31 (target 0 ≤ value ≤ 200; PASS); high/stationary native concurrent infected peak (no frame/performance measurement): 31 (target 0 ≤ value ≤ 200; PASS)",
+      "value": "low/complete native concurrent infected peak (no frame/performance measurement): 16 (target 0 ≤ value ≤ 100; PASS); low/stationary native concurrent infected peak (no frame/performance measurement): 16 (target 0 ≤ value ≤ 100; PASS); high/complete native concurrent infected peak (no frame/performance measurement): 35 (target 0 ≤ value ≤ 200; PASS); high/stationary native concurrent infected peak (no frame/performance measurement): 35 (target 0 ≤ value ≤ 200; PASS)",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L9-low-complete.json",
@@ -180,7 +180,7 @@
           "tier": "low",
           "policy": "complete",
           "status": "PASS",
-          "value": 14,
+          "value": 16,
           "target": "0 ≤ value ≤ 100",
           "receipt": "docs/reports/fix51-verify/receipts/L9-low-complete.json"
         },
@@ -191,7 +191,7 @@
           "tier": "low",
           "policy": "stationary",
           "status": "PASS",
-          "value": 14,
+          "value": 16,
           "target": "0 ≤ value ≤ 100",
           "receipt": "docs/reports/fix51-verify/receipts/L9-low-stationary.json"
         },
@@ -202,7 +202,7 @@
           "tier": "high",
           "policy": "complete",
           "status": "PASS",
-          "value": 31,
+          "value": 35,
           "target": "0 ≤ value ≤ 200",
           "receipt": "docs/reports/fix51-verify/receipts/L9-high-complete.json"
         },
@@ -213,7 +213,7 @@
           "tier": "high",
           "policy": "stationary",
           "status": "PASS",
-          "value": 31,
+          "value": 35,
           "target": "0 ≤ value ≤ 200",
           "receipt": "docs/reports/fix51-verify/receipts/L9-high-stationary.json"
         }
@@ -537,7 +537,7 @@
         ],
         "notes": "No criterion/checker change. Before-fix counterexample; subsequent game fix must remove the route cue while retaining authored destinations.",
         "freshness": "STALE",
-        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     },
     {
@@ -868,7 +868,7 @@
         ],
         "notes": "Eight raw PNGs hashed and deleted after inspection. Images generated only under test-results. No timing claim. Final-source both-quality fixture refresh inspected. Whole native matrix was explicitly stopped by orchestrator; no complete final-source acceptance consolidation is claimed.",
         "freshness": "STALE",
-        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     },
     {
@@ -1009,18 +1009,19 @@
         ],
         "notes": "Final-source both-quality fixture refresh inspected. Whole native matrix was explicitly stopped by orchestrator; no complete final-source acceptance consolidation is claimed.",
         "freshness": "STALE",
-        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     },
     {
       "id": "G-13",
       "status": "FAIL",
       "currentStatus": "NOT CHECKED",
-      "value": "low/complete each observed follower median versus its phase group median: [] (target every ratio ≥0.95; ≥10 walking samples/follower; NOT CHECKED); low/complete stationary far-follower time upper bound: {\"escortTicks\":0,\"stationaryFarTicks\":0,\"upperBoundPercent\":null,\"followers\":[]} (target actual waiting ≤10%; a bound above 10% is inconclusive; NOT CHECKED); high/complete each observed follower median versus its phase group median: [] (target every ratio ≥0.95; ≥10 walking samples/follower; NOT CHECKED); high/complete stationary far-follower time upper bound: {\"escortTicks\":0,\"stationaryFarTicks\":0,\"upperBoundPercent\":null,\"followers\":[]} (target actual waiting ≤10%; a bound above 10% is inconclusive; NOT CHECKED) Manual review PASS (STALE, fix68-g/Codex): Both complete native routes pass, all five rescued. L5-only movement response changed; all speed/acceleration/jerk caps and thresholds retained. Geometry trials rejected.; Final-source low four officers min99.54%; high one officer reaches10 qualified samples, ratio100%; other high officers overwhelmed before qualification.; Conservative sum-individual-far/max-individual-escort bound1.229%/2.091%. Same corgi exclusion as existing pace evaluator. Aggregate including corgi12.951% at high remains inconclusive; no checker threshold changed. Open prior FAIL: Native competent L5 survivor28 median pace is94.8% of its phase group median over55 qualified samples, below95%. This survivor alone fails the full row although named gate cohorts pass. L3 actor23 is a companion and is not used as survivor-failure evidence.",
+      "value": "low/complete each observed follower median versus its phase group median: [] (target every ratio ≥0.95; ≥10 walking samples/follower; NOT CHECKED); low/complete stationary far-follower time upper bound: {\"escortTicks\":0,\"stationaryFarTicks\":0,\"upperBoundPercent\":null,\"followers\":[]} (target actual waiting ≤10%; a bound above 10% is inconclusive; NOT CHECKED); high/complete each observed follower median versus its phase group median: [] (target every ratio ≥0.95; ≥10 walking samples/follower; NOT CHECKED); high/complete stationary far-follower time upper bound: {\"escortTicks\":0,\"stationaryFarTicks\":0,\"upperBoundPercent\":null,\"followers\":[]} (target actual waiting ≤10%; a bound above 10% is inconclusive; NOT CHECKED) Manual review PASS (STALE, Codex/fix73-b): Current L5 high canonical source d97192f688d1e72561fb49f26eb4afff8d84d9f6cc4dabfe56bd373cd1bfb0b5: every human follower/step passes production seed voting; at least two qualified valid seeds each. Follower28 search ratios1.0119/0.9873/0.8945 with47/46/46 samples: one failure, below the two required to flag. Waiting upper bound0%. Scoped high-tier PASS; whole L5-08 formation/bars and all-level G-13 remain separately open. Historical L3 clauses and global freshness metadata are retained, not newly approved.; Final-source low four officers min99.54%; high one officer reaches10 qualified samples, ratio100%; other high officers overwhelmed before qualification.; Conservative sum-individual-far/max-individual-escort bound1.229%/2.091%. Same corgi exclusion as existing pace evaluator. Aggregate including corgi12.951% at high remains inconclusive; no checker threshold changed. Open prior FAIL: Native competent L5 survivor28 median pace is94.8% of its phase group median over55 qualified samples, below95%. This survivor alone fails the full row although named gate cohorts pass. L3 actor23 is a companion and is not used as survivor-failure evidence.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L9-low-complete.json",
         "docs/reports/fix51-verify/receipts/L9-high-complete.json",
+        "docs/reports/fix73-b/G13-high-summary.json",
         "docs/reports/fix68-g/G-13-final/G-13-L5-low-complete.json.gz",
         "docs/reports/fix68-g/G-13-final/G-13-L5-high-complete.json.gz",
         "docs/reports/fix68-g/G-13-fix.json",
@@ -1105,14 +1106,14 @@
       "reviewDecision": {
         "row": "G-13",
         "status": "PASS",
-        "reviewer": "fix68-g/Codex",
+        "reviewer": "Codex/fix73-b",
         "date": "2026-11-06",
         "commit": "d6167897fdd39772a96a7a2dbfb69ea4c5cee5db",
         "clauses": [
           {
             "clause": "L5 followers: every observed follower phase median >=0.95 of the group median and waiting for a follower >10m behind <=10% of escort time.",
             "verdict": "PASS",
-            "note": "Both complete native routes pass, all five rescued. L5-only movement response changed; all speed/acceleration/jerk caps and thresholds retained. Geometry trials rejected."
+            "note": "Current L5 high canonical source d97192f688d1e72561fb49f26eb4afff8d84d9f6cc4dabfe56bd373cd1bfb0b5: every human follower/step passes production seed voting; at least two qualified valid seeds each. Follower28 search ratios1.0119/0.9873/0.8945 with47/46/46 samples: one failure, below the two required to flag. Waiting upper bound0%. Scoped high-tier PASS; whole L5-08 formation/bars and all-level G-13 remain separately open. Historical L3 clauses and global freshness metadata are retained, not newly approved."
           },
           {
             "clause": "L3 observed human follower medians >=0.95 of the phase human group median, both tiers.",
@@ -1126,6 +1127,11 @@
           }
         ],
         "evidence": [
+          {
+            "file": "docs/reports/fix73-b/G13-high-summary.json",
+            "sha256": "7395dbf7e0c740ba4c19aad36b920a7ba74b592ae11cba0c7ada6c7eb5b3af26",
+            "what": "Current L5 high canonical source d97192f688d1e72561fb49f26eb4afff8d84d9f6cc4dabfe56bd373cd1bfb0b5: every human follower/step passes production seed voting; at least two qualified valid seeds each. Follower28 search ratios1.0119/0.9873/0.8945 with47/46/46 samples: one failure, below the two required to flag. Waiting upper bound0%. Scoped high-tier PASS; whole L5-08 formation/bars and all-level G-13 remain separately open. Historical L3 clauses and global freshness metadata are retained, not newly approved."
+          },
           {
             "file": "docs/reports/fix68-g/G-13-final/G-13-L5-low-complete.json.gz",
             "sha256": "82d6cbfd2190132afbad8171028d0446d12cb3522ab56025d8ddb70cf7ff7744",
@@ -1187,7 +1193,7 @@
           "Final load-qualified standalone threat: exit1,12 L7 pace flags; L3/L6 threat flags cleared. Full global-row qualification remains open. See docs/reports/fix68-g/README.md."
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     },
     {
@@ -1262,7 +1268,7 @@
         ],
         "notes": "Arranged authored fixture poses are explicit setup, not a claim that every corpse was produced by a physical kill. Full route ledgers separately record persistence including sleeping chunks. Pile top surface height remains unmeasured; FAIL is floating geometry.",
         "freshness": "STALE",
-        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     },
     {
@@ -1438,7 +1444,7 @@
         ],
         "notes": "No speculative animation fix. P: review authored crawler posture against literal42deg cap. Fixture exclusions retained.",
         "freshness": "STALE",
-        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     },
     {
@@ -1634,7 +1640,7 @@
       "id": "G-21",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/checkpoint-death-fixture mortal checkpoint restore at L9/crossing-start: {\"checkpoint\":\"crossing-start\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"d050b95aea1017868c626a224036683c708ccb8dddb11188fcde1fcec80c4139\",\"damage\":100,\"expected\":{\"id\":\"crossing-start\",\"anchor\":{\"x\":-550,\"y\":0.705,\"z\":0,\"yaw\":0.3205919885488634},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.bat\",\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.rocket-launcher\",\"weapon.army-mg\",\"weapon.shotgun\",\"weapon… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L9/outskirts-approach: {\"checkpoint\":\"outskirts-approach\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"5f32d0e78f06e139f5510059de23d171bd1ccc184d2ad869f292923e08548eb2\",\"damage\":100,\"expected\":{\"id\":\"outskirts-approach\",\"anchor\":{\"x\":468.2260437011719,\"y\":0.9954323768615723,\"z\":3.419754981994629,\"yaw\":-0.05724150811981929},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.bat\",\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.rocket… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L9/crossing-start: {\"checkpoint\":\"crossing-start\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"5660e5fee790a4ea30ab950b8aa03e86767d62ad7c041444e11c748dbfd59ddc\",\"damage\":100,\"expected\":{\"id\":\"crossing-start\",\"anchor\":{\"x\":-550,\"y\":0.705,\"z\":0,\"yaw\":0.3205919885488634},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.bat\",\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.rocket-launcher\",\"weapon.army-mg\",\"weapon.shotgun\",\"weapon… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L9/outskirts-approach: {\"checkpoint\":\"outskirts-approach\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"a4436b01d9c2fad86c9a63e4c3e5b782529c8a560f442f660a2ee7a4ad9be4d1\",\"damage\":100,\"expected\":{\"id\":\"outskirts-approach\",\"anchor\":{\"x\":468.2260437011719,\"y\":0.9954323768615723,\"z\":3.419754981994629,\"yaw\":-0.05724150811981929},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.bat\",\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.rocket… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS)",
+      "value": "low/checkpoint-death-fixture mortal checkpoint restore at L9/crossing-start: {\"checkpoint\":\"crossing-start\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"d050b95aea1017868c626a224036683c708ccb8dddb11188fcde1fcec80c4139\",\"damage\":100,\"expected\":{\"id\":\"crossing-start\",\"anchor\":{\"x\":-550,\"y\":0.705,\"z\":0,\"yaw\":0.3205919885488634},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.bat\",\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.rocket-launcher\",\"weapon.army-mg\",\"weapon.shotgun\",\"weapon… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L9/outskirts-approach: {\"checkpoint\":\"outskirts-approach\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"b74e047c653417ee4d7a7167aae7e94f9e067626d189bad3320413d91750ad95\",\"damage\":100,\"expected\":{\"id\":\"outskirts-approach\",\"anchor\":{\"x\":468.2260437011719,\"y\":0.9954323768615723,\"z\":3.419754981994629,\"yaw\":-0.05724150811981929},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.bat\",\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.rocket… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L9/crossing-start: {\"checkpoint\":\"crossing-start\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"5660e5fee790a4ea30ab950b8aa03e86767d62ad7c041444e11c748dbfd59ddc\",\"damage\":100,\"expected\":{\"id\":\"crossing-start\",\"anchor\":{\"x\":-550,\"y\":0.705,\"z\":0,\"yaw\":0.3205919885488634},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.bat\",\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.rocket-launcher\",\"weapon.army-mg\",\"weapon.shotgun\",\"weapon… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L9/outskirts-approach: {\"checkpoint\":\"outskirts-approach\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"31afe3b5edf771bae64473cbb4b7357a901edd1113ea0b0f8f959cd842919038\",\"damage\":100,\"expected\":{\"id\":\"outskirts-approach\",\"anchor\":{\"x\":468.2260437011719,\"y\":0.9954323768615723,\"z\":3.419754981994629,\"yaw\":-0.05724150811981929},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.bat\",\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.rocket… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS)",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L9-low-checkpoints.json",
@@ -1722,7 +1728,7 @@
           "value": {
             "checkpoint": "outskirts-approach",
             "contract": "checkpoint snapshot restored",
-            "snapshotSha256": "5f32d0e78f06e139f5510059de23d171bd1ccc184d2ad869f292923e08548eb2",
+            "snapshotSha256": "b74e047c653417ee4d7a7167aae7e94f9e067626d189bad3320413d91750ad95",
             "damage": 100,
             "expected": {
               "id": "outskirts-approach",
@@ -1864,7 +1870,7 @@
           "value": {
             "checkpoint": "outskirts-approach",
             "contract": "checkpoint snapshot restored",
-            "snapshotSha256": "a4436b01d9c2fad86c9a63e4c3e5b782529c8a560f442f660a2ee7a4ad9be4d1",
+            "snapshotSha256": "31afe3b5edf771bae64473cbb4b7357a901edd1113ea0b0f8f959cd842919038",
             "damage": 100,
             "expected": {
               "id": "outskirts-approach",
@@ -2205,7 +2211,7 @@
         ],
         "notes": "Final-source both-quality fixture refresh inspected. Whole native matrix was explicitly stopped by orchestrator; no complete final-source acceptance consolidation is claimed.",
         "freshness": "STALE",
-        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     },
     {
@@ -2293,7 +2299,7 @@
         ],
         "notes": "Game-camera scene and close grip camera differ; defect is visible in the close view. Full every-body/routine visual coverage remains incomplete. No criteria or assets changed.",
         "freshness": "STALE",
-        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     },
     {
@@ -2381,7 +2387,7 @@
         ],
         "notes": "Real-input playtest driver (WebGPU, god mode, per-step captures low/high x zoom 1.5/0.5) plus test-API sim-bot camera probes. Every listed capture was inspected; raw captures deleted, compact sheets retained.",
         "freshness": "STALE",
-        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     }
   ],
@@ -2464,7 +2470,7 @@
           }
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     },
     {
@@ -2573,7 +2579,7 @@
           }
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     },
     {
@@ -2596,6 +2602,7 @@
         "docs/reports/sweep-c5/L9-03/L9-low-webgl2-z1.5-countryside-1793944381271/input.json.gz",
         "docs/reports/sweep-c5/L9-03/L9-low-webgl2-z1.5-dry-shortcut-1793944868517/input.json.gz",
         "docs/reports/sweep-c5/L9-03/L9-low-webgl2-z1.5-road-1793944015651/input.json.gz",
+        "docs/reports/fix73-g/L9-patrol.json",
         "docs/reports/batch51-qa/L9.jpg",
         "docs/reports/batch51-qa/l9-road-low-gap.json",
         "docs/reports/batch51-qa/visual-runs.json"
@@ -2693,17 +2700,23 @@
             "file": "docs/reports/sweep-c5/L9-03/L9-low-webgl2-z1.5-road-1793944015651/input.json.gz",
             "sha256": "e137b07d93599a5a6954d00028b71f7143a7f97a3e79548f621b4f938d237db2",
             "what": "Six source-bound complete physical drives, actual camera-body motion intervals and personally inspected per-frame SHA256/seen notes; immutable raw logs referenced by archived reviews. Motion proof independently checks stationary/dead/unknown/speed boundary/backwards clock handling."
+          },
+          {
+            "file": "docs/reports/fix73-g/L9-patrol.json",
+            "sha256": "815dc783ac6d552596d34e28897668f9dbde16c9f40b3157be4031c9d5a6be74",
+            "what": "Scoped fix73-g observation, 723e4a0: quiet patrols are trios within unchanged caps/cadence. Ordinary unpaused wide-camera default drives record 10 low / 12 high patrol contacts with real APC armor falling to 890 / 880. All 32 captures personally inspected, SHA256 and observations archived. These bounded drives do not requalify every route in the compound row."
           }
         ],
+        "notes": "Scoped fix73-g observation, 723e4a0: quiet patrols are trios within unchanged caps/cadence. Ordinary unpaused wide-camera default drives record 10 low / 12 high patrol contacts with real APC armor falling to 890 / 880. All 32 captures personally inspected, SHA256 and observations archived. These bounded drives do not requalify every route in the compound row.",
         "freshness": "STALE",
-        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     },
     {
       "id": "L9-04",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/complete actual contact/attack durability transactions: [] (target after = max(0, before−10) for contact and attack; NOT CHECKED); low/stationary actual contact/attack durability transactions: [] (target after = max(0, before−10) for contact and attack; NOT CHECKED); high/complete actual contact/attack durability transactions: [] (target after = max(0, before−10) for contact and attack; NOT CHECKED); high/stationary actual contact/attack durability transactions: [] (target after = max(0, before−10) for contact and attack; NOT CHECKED)",
+      "value": "low/complete actual contact/attack durability transactions: [{\"type\":\"vehicle.durability-hit\",\"tick\":441,\"sourceId\":667,\"targetId\":712,\"source\":\"contact\",\"contactId\":1,\"attackId\":null,\"before\":1000,\"after\":990},{\"type\":\"vehicle.durability-hit\",\"tick\":1217,\"sourceId\":667,\"targetId\":752,\"source\":\"contact\",\"contactId\":2,\"attackId\":null,\"before\":990,\"after\":980},{\"type\":\"vehicle.durability-hit\",\"tick\":1217,\"sourceId\":667,\"targetId\":753,\"source\":\"contact\",\"cont… (full values in JSON) (target after = max(0, before−10) for contact and attack; PASS); low/stationary actual contact/attack durability transactions: [{\"type\":\"vehicle.durability-hit\",\"tick\":441,\"sourceId\":667,\"targetId\":712,\"source\":\"contact\",\"contactId\":1,\"attackId\":null,\"before\":1000,\"after\":990},{\"type\":\"vehicle.durability-hit\",\"tick\":1217,\"sourceId\":667,\"targetId\":752,\"source\":\"contact\",\"contactId\":2,\"attackId\":null,\"before\":990,\"after\":980},{\"type\":\"vehicle.durability-hit\",\"tick\":1217,\"sourceId\":667,\"targetId\":753,\"source\":\"contact\",\"cont… (full values in JSON) (target after = max(0, before−10) for contact and attack; PASS); high/complete actual contact/attack durability transactions: [{\"type\":\"vehicle.durability-hit\",\"tick\":441,\"sourceId\":667,\"targetId\":756,\"source\":\"contact\",\"contactId\":1,\"attackId\":null,\"before\":1000,\"after\":990},{\"type\":\"vehicle.durability-hit\",\"tick\":1217,\"sourceId\":667,\"targetId\":776,\"source\":\"contact\",\"contactId\":2,\"attackId\":null,\"before\":990,\"after\":980},{\"type\":\"vehicle.durability-hit\",\"tick\":1217,\"sourceId\":667,\"targetId\":777,\"source\":\"contact\",\"cont… (full values in JSON) (target after = max(0, before−10) for contact and attack; PASS); high/stationary actual contact/attack durability transactions: [{\"type\":\"vehicle.durability-hit\",\"tick\":441,\"sourceId\":667,\"targetId\":756,\"source\":\"contact\",\"contactId\":1,\"attackId\":null,\"before\":1000,\"after\":990},{\"type\":\"vehicle.durability-hit\",\"tick\":1217,\"sourceId\":667,\"targetId\":776,\"source\":\"contact\",\"contactId\":2,\"attackId\":null,\"before\":990,\"after\":980},{\"type\":\"vehicle.durability-hit\",\"tick\":1217,\"sourceId\":667,\"targetId\":777,\"source\":\"contact\",\"cont… (full values in JSON) (target after = max(0, before−10) for contact and attack; PASS)",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L9-low-complete.json",
@@ -2719,8 +2732,196 @@
           "level": "L9",
           "tier": "low",
           "policy": "complete",
-          "status": "NOT CHECKED",
-          "value": [],
+          "status": "PASS",
+          "value": [
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 441,
+              "sourceId": 667,
+              "targetId": 712,
+              "source": "contact",
+              "contactId": 1,
+              "attackId": null,
+              "before": 1000,
+              "after": 990
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 1217,
+              "sourceId": 667,
+              "targetId": 752,
+              "source": "contact",
+              "contactId": 2,
+              "attackId": null,
+              "before": 990,
+              "after": 980
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 1217,
+              "sourceId": 667,
+              "targetId": 753,
+              "source": "contact",
+              "contactId": 3,
+              "attackId": null,
+              "before": 980,
+              "after": 970
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 1217,
+              "sourceId": 667,
+              "targetId": 754,
+              "source": "contact",
+              "contactId": 4,
+              "attackId": null,
+              "before": 970,
+              "after": 960
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 1937,
+              "sourceId": 667,
+              "targetId": 776,
+              "source": "contact",
+              "contactId": 5,
+              "attackId": null,
+              "before": 960,
+              "after": 950
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 1937,
+              "sourceId": 667,
+              "targetId": 777,
+              "source": "contact",
+              "contactId": 6,
+              "attackId": null,
+              "before": 950,
+              "after": 940
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 1937,
+              "sourceId": 667,
+              "targetId": 778,
+              "source": "contact",
+              "contactId": 7,
+              "attackId": null,
+              "before": 940,
+              "after": 930
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 2676,
+              "sourceId": 667,
+              "targetId": 815,
+              "source": "contact",
+              "contactId": 8,
+              "attackId": null,
+              "before": 930,
+              "after": 920
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 2678,
+              "sourceId": 667,
+              "targetId": 814,
+              "source": "contact",
+              "contactId": 9,
+              "attackId": null,
+              "before": 920,
+              "after": 910
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 3381,
+              "sourceId": 667,
+              "targetId": 881,
+              "source": "contact",
+              "contactId": 10,
+              "attackId": null,
+              "before": 910,
+              "after": 900
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 3385,
+              "sourceId": 667,
+              "targetId": 880,
+              "source": "contact",
+              "contactId": 11,
+              "attackId": null,
+              "before": 900,
+              "after": 890
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 4090,
+              "sourceId": 667,
+              "targetId": 909,
+              "source": "contact",
+              "contactId": 12,
+              "attackId": null,
+              "before": 890,
+              "after": 880
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 4094,
+              "sourceId": 667,
+              "targetId": 908,
+              "source": "contact",
+              "contactId": 13,
+              "attackId": null,
+              "before": 880,
+              "after": 870
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 4817,
+              "sourceId": 667,
+              "targetId": 977,
+              "source": "contact",
+              "contactId": 14,
+              "attackId": null,
+              "before": 870,
+              "after": 860
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 4817,
+              "sourceId": 667,
+              "targetId": 978,
+              "source": "contact",
+              "contactId": 15,
+              "attackId": null,
+              "before": 860,
+              "after": 850
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 4817,
+              "sourceId": 667,
+              "targetId": 979,
+              "source": "contact",
+              "contactId": 16,
+              "attackId": null,
+              "before": 850,
+              "after": 840
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 6211,
+              "sourceId": 667,
+              "targetId": 1073,
+              "source": "contact",
+              "contactId": 17,
+              "attackId": null,
+              "before": 840,
+              "after": 830
+            }
+          ],
           "target": "after = max(0, before−10) for contact and attack",
           "receipt": "docs/reports/fix51-verify/receipts/L9-low-complete.json"
         },
@@ -2730,8 +2931,196 @@
           "level": "L9",
           "tier": "low",
           "policy": "stationary",
-          "status": "NOT CHECKED",
-          "value": [],
+          "status": "PASS",
+          "value": [
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 441,
+              "sourceId": 667,
+              "targetId": 712,
+              "source": "contact",
+              "contactId": 1,
+              "attackId": null,
+              "before": 1000,
+              "after": 990
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 1217,
+              "sourceId": 667,
+              "targetId": 752,
+              "source": "contact",
+              "contactId": 2,
+              "attackId": null,
+              "before": 990,
+              "after": 980
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 1217,
+              "sourceId": 667,
+              "targetId": 753,
+              "source": "contact",
+              "contactId": 3,
+              "attackId": null,
+              "before": 980,
+              "after": 970
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 1217,
+              "sourceId": 667,
+              "targetId": 754,
+              "source": "contact",
+              "contactId": 4,
+              "attackId": null,
+              "before": 970,
+              "after": 960
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 1937,
+              "sourceId": 667,
+              "targetId": 776,
+              "source": "contact",
+              "contactId": 5,
+              "attackId": null,
+              "before": 960,
+              "after": 950
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 1937,
+              "sourceId": 667,
+              "targetId": 777,
+              "source": "contact",
+              "contactId": 6,
+              "attackId": null,
+              "before": 950,
+              "after": 940
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 1937,
+              "sourceId": 667,
+              "targetId": 778,
+              "source": "contact",
+              "contactId": 7,
+              "attackId": null,
+              "before": 940,
+              "after": 930
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 2676,
+              "sourceId": 667,
+              "targetId": 815,
+              "source": "contact",
+              "contactId": 8,
+              "attackId": null,
+              "before": 930,
+              "after": 920
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 2678,
+              "sourceId": 667,
+              "targetId": 814,
+              "source": "contact",
+              "contactId": 9,
+              "attackId": null,
+              "before": 920,
+              "after": 910
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 3381,
+              "sourceId": 667,
+              "targetId": 881,
+              "source": "contact",
+              "contactId": 10,
+              "attackId": null,
+              "before": 910,
+              "after": 900
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 3385,
+              "sourceId": 667,
+              "targetId": 880,
+              "source": "contact",
+              "contactId": 11,
+              "attackId": null,
+              "before": 900,
+              "after": 890
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 4090,
+              "sourceId": 667,
+              "targetId": 909,
+              "source": "contact",
+              "contactId": 12,
+              "attackId": null,
+              "before": 890,
+              "after": 880
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 4094,
+              "sourceId": 667,
+              "targetId": 908,
+              "source": "contact",
+              "contactId": 13,
+              "attackId": null,
+              "before": 880,
+              "after": 870
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 4817,
+              "sourceId": 667,
+              "targetId": 977,
+              "source": "contact",
+              "contactId": 14,
+              "attackId": null,
+              "before": 870,
+              "after": 860
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 4817,
+              "sourceId": 667,
+              "targetId": 978,
+              "source": "contact",
+              "contactId": 15,
+              "attackId": null,
+              "before": 860,
+              "after": 850
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 4817,
+              "sourceId": 667,
+              "targetId": 979,
+              "source": "contact",
+              "contactId": 16,
+              "attackId": null,
+              "before": 850,
+              "after": 840
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 6211,
+              "sourceId": 667,
+              "targetId": 1073,
+              "source": "contact",
+              "contactId": 17,
+              "attackId": null,
+              "before": 840,
+              "after": 830
+            }
+          ],
           "target": "after = max(0, before−10) for contact and attack",
           "receipt": "docs/reports/fix51-verify/receipts/L9-low-stationary.json"
         },
@@ -2741,8 +3130,207 @@
           "level": "L9",
           "tier": "high",
           "policy": "complete",
-          "status": "NOT CHECKED",
-          "value": [],
+          "status": "PASS",
+          "value": [
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 441,
+              "sourceId": 667,
+              "targetId": 756,
+              "source": "contact",
+              "contactId": 1,
+              "attackId": null,
+              "before": 1000,
+              "after": 990
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 1217,
+              "sourceId": 667,
+              "targetId": 776,
+              "source": "contact",
+              "contactId": 2,
+              "attackId": null,
+              "before": 990,
+              "after": 980
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 1217,
+              "sourceId": 667,
+              "targetId": 777,
+              "source": "contact",
+              "contactId": 3,
+              "attackId": null,
+              "before": 980,
+              "after": 970
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 1217,
+              "sourceId": 667,
+              "targetId": 778,
+              "source": "contact",
+              "contactId": 4,
+              "attackId": null,
+              "before": 970,
+              "after": 960
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 1937,
+              "sourceId": 667,
+              "targetId": 780,
+              "source": "contact",
+              "contactId": 5,
+              "attackId": null,
+              "before": 960,
+              "after": 950
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 1937,
+              "sourceId": 667,
+              "targetId": 781,
+              "source": "contact",
+              "contactId": 6,
+              "attackId": null,
+              "before": 950,
+              "after": 940
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 1938,
+              "sourceId": 667,
+              "targetId": 779,
+              "source": "contact",
+              "contactId": 7,
+              "attackId": null,
+              "before": 940,
+              "after": 930
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 2672,
+              "sourceId": 667,
+              "targetId": 819,
+              "source": "contact",
+              "contactId": 8,
+              "attackId": null,
+              "before": 930,
+              "after": 920
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 3378,
+              "sourceId": 667,
+              "targetId": 913,
+              "source": "contact",
+              "contactId": 9,
+              "attackId": null,
+              "before": 920,
+              "after": 910
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 3383,
+              "sourceId": 667,
+              "targetId": 915,
+              "source": "contact",
+              "contactId": 10,
+              "attackId": null,
+              "before": 910,
+              "after": 900
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 3385,
+              "sourceId": 667,
+              "targetId": 914,
+              "source": "contact",
+              "contactId": 11,
+              "attackId": null,
+              "before": 900,
+              "after": 890
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 4096,
+              "sourceId": 667,
+              "targetId": 962,
+              "source": "contact",
+              "contactId": 12,
+              "attackId": null,
+              "before": 890,
+              "after": 880
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 4096,
+              "sourceId": 667,
+              "targetId": 963,
+              "source": "contact",
+              "contactId": 13,
+              "attackId": null,
+              "before": 880,
+              "after": 870
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 4097,
+              "sourceId": 667,
+              "targetId": 961,
+              "source": "contact",
+              "contactId": 14,
+              "attackId": null,
+              "before": 870,
+              "after": 860
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 4838,
+              "sourceId": 667,
+              "targetId": 1052,
+              "source": "contact",
+              "contactId": 15,
+              "attackId": null,
+              "before": 860,
+              "after": 850
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 6215,
+              "sourceId": 667,
+              "targetId": 1112,
+              "source": "contact",
+              "contactId": 16,
+              "attackId": null,
+              "before": 850,
+              "after": 840
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 6220,
+              "sourceId": 667,
+              "targetId": 1113,
+              "source": "contact",
+              "contactId": 17,
+              "attackId": null,
+              "before": 840,
+              "after": 830
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 6322,
+              "sourceId": 667,
+              "targetId": 997,
+              "source": "contact",
+              "contactId": 18,
+              "attackId": null,
+              "before": 830,
+              "after": 820
+            }
+          ],
           "target": "after = max(0, before−10) for contact and attack",
           "receipt": "docs/reports/fix51-verify/receipts/L9-high-complete.json"
         },
@@ -2752,8 +3340,207 @@
           "level": "L9",
           "tier": "high",
           "policy": "stationary",
-          "status": "NOT CHECKED",
-          "value": [],
+          "status": "PASS",
+          "value": [
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 441,
+              "sourceId": 667,
+              "targetId": 756,
+              "source": "contact",
+              "contactId": 1,
+              "attackId": null,
+              "before": 1000,
+              "after": 990
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 1217,
+              "sourceId": 667,
+              "targetId": 776,
+              "source": "contact",
+              "contactId": 2,
+              "attackId": null,
+              "before": 990,
+              "after": 980
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 1217,
+              "sourceId": 667,
+              "targetId": 777,
+              "source": "contact",
+              "contactId": 3,
+              "attackId": null,
+              "before": 980,
+              "after": 970
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 1217,
+              "sourceId": 667,
+              "targetId": 778,
+              "source": "contact",
+              "contactId": 4,
+              "attackId": null,
+              "before": 970,
+              "after": 960
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 1937,
+              "sourceId": 667,
+              "targetId": 780,
+              "source": "contact",
+              "contactId": 5,
+              "attackId": null,
+              "before": 960,
+              "after": 950
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 1937,
+              "sourceId": 667,
+              "targetId": 781,
+              "source": "contact",
+              "contactId": 6,
+              "attackId": null,
+              "before": 950,
+              "after": 940
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 1938,
+              "sourceId": 667,
+              "targetId": 779,
+              "source": "contact",
+              "contactId": 7,
+              "attackId": null,
+              "before": 940,
+              "after": 930
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 2672,
+              "sourceId": 667,
+              "targetId": 819,
+              "source": "contact",
+              "contactId": 8,
+              "attackId": null,
+              "before": 930,
+              "after": 920
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 3378,
+              "sourceId": 667,
+              "targetId": 913,
+              "source": "contact",
+              "contactId": 9,
+              "attackId": null,
+              "before": 920,
+              "after": 910
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 3383,
+              "sourceId": 667,
+              "targetId": 915,
+              "source": "contact",
+              "contactId": 10,
+              "attackId": null,
+              "before": 910,
+              "after": 900
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 3385,
+              "sourceId": 667,
+              "targetId": 914,
+              "source": "contact",
+              "contactId": 11,
+              "attackId": null,
+              "before": 900,
+              "after": 890
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 4096,
+              "sourceId": 667,
+              "targetId": 962,
+              "source": "contact",
+              "contactId": 12,
+              "attackId": null,
+              "before": 890,
+              "after": 880
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 4096,
+              "sourceId": 667,
+              "targetId": 963,
+              "source": "contact",
+              "contactId": 13,
+              "attackId": null,
+              "before": 880,
+              "after": 870
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 4097,
+              "sourceId": 667,
+              "targetId": 961,
+              "source": "contact",
+              "contactId": 14,
+              "attackId": null,
+              "before": 870,
+              "after": 860
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 4838,
+              "sourceId": 667,
+              "targetId": 1052,
+              "source": "contact",
+              "contactId": 15,
+              "attackId": null,
+              "before": 860,
+              "after": 850
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 6215,
+              "sourceId": 667,
+              "targetId": 1112,
+              "source": "contact",
+              "contactId": 16,
+              "attackId": null,
+              "before": 850,
+              "after": 840
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 6220,
+              "sourceId": 667,
+              "targetId": 1113,
+              "source": "contact",
+              "contactId": 17,
+              "attackId": null,
+              "before": 840,
+              "after": 830
+            },
+            {
+              "type": "vehicle.durability-hit",
+              "tick": 6322,
+              "sourceId": 667,
+              "targetId": 997,
+              "source": "contact",
+              "contactId": 18,
+              "attackId": null,
+              "before": 830,
+              "after": 820
+            }
+          ],
           "target": "after = max(0, before−10) for contact and attack",
           "receipt": "docs/reports/fix51-verify/receipts/L9-high-stationary.json"
         }
@@ -2856,7 +3643,7 @@
           }
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     },
     {
@@ -2937,7 +3724,7 @@
           }
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     },
     {
@@ -3129,7 +3916,7 @@
           }
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     },
     {
@@ -3176,7 +3963,7 @@
               "collision": {
                 "failures": 0,
                 "pending": 0,
-                "admitted": 513,
+                "admitted": 533,
                 "deferred": 0,
                 "requests": [],
                 "offenders": []
@@ -3229,7 +4016,7 @@
                 "z": 0,
                 "yaw": 0
               },
-              "preCrashDurability": 1000,
+              "preCrashDurability": 830,
               "lostWeapons": [
                 "weapon.fists",
                 "weapon.kick",
@@ -3298,7 +4085,7 @@
               "collision": {
                 "failures": 0,
                 "pending": 0,
-                "admitted": 635,
+                "admitted": 655,
                 "deferred": 0,
                 "requests": [],
                 "offenders": []
@@ -3351,7 +4138,7 @@
                 "z": 0,
                 "yaw": 0
               },
-              "preCrashDurability": 1000,
+              "preCrashDurability": 820,
               "lostWeapons": [
                 "weapon.fists",
                 "weapon.kick",

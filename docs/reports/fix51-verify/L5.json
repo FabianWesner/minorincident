@@ -1,11 +1,11 @@
 {
   "version": 2,
   "level": "L5",
-  "sourceHash": "2b976f139b4d722f660c9a1be1d33b042929606fa8354b412b7186b85b996740",
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
   "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
   "fixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
-  "generatedAt": "2026-11-06T20:44:29.071Z",
+  "generatedAt": "2026-11-07T01:03:06.997Z",
   "policies": [
     {
       "tier": "low",
@@ -539,7 +539,7 @@
         ],
         "notes": "No criterion/checker change. Before-fix counterexample; subsequent game fix must remove the route cue while retaining authored destinations.",
         "freshness": "STALE",
-        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     },
     {
@@ -924,7 +924,7 @@
         ],
         "notes": "Eight raw PNGs hashed and deleted after inspection. Images generated only under test-results. No timing claim. Final-source both-quality fixture refresh inspected. Whole native matrix was explicitly stopped by orchestrator; no complete final-source acceptance consolidation is claimed.",
         "freshness": "STALE",
-        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     },
     {
@@ -1065,18 +1065,19 @@
         ],
         "notes": "Final-source both-quality fixture refresh inspected. Whole native matrix was explicitly stopped by orchestrator; no complete final-source acceptance consolidation is claimed.",
         "freshness": "STALE",
-        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     },
     {
       "id": "G-13",
       "status": "FAIL",
       "currentStatus": "NOT CHECKED",
-      "value": "low/complete each observed follower median versus its phase group median: {\"rows\":[{\"phase\":\"step/look\",\"id\":31,\"seeds\":[{\"seed\":1,\"valid\":true,\"samples\":129,\"median\":4.3046312954604415,\"groupMedian\":4.450635197740783,\"ratio\":0.9671948169657996},{\"seed\":2,\"valid\":true,\"samples\":135,\"median\":4.342453576274158,\"groupMedian\":4.3699278154119625,\"ratio\":0.9937128849037489},{\"seed\":3,\"valid\":true,\"samples\":126,\"median\":4.437383052847879,\"groupMedian\":4.428498327332077,\"ratio\"… (full values in JSON) (target every ratio ≥0.95; ≥10 walking samples/follower; PASS); low/complete stationary far-follower time upper bound: {\"escortTicks\":11601,\"stationaryFarTicks\":0,\"upperBoundPercent\":0,\"followers\":[{\"id\":18,\"escortTicks\":11601,\"stationaryFarTicks\":0},{\"id\":31,\"escortTicks\":8919,\"stationaryFarTicks\":0},{\"id\":30,\"escortTicks\":7073,\"stationaryFarTicks\":0},{\"id\":32,\"escortTicks\":5166,\"stationaryFarTicks\":0},{\"id\":28,\"escortTicks\":3903,\"stationaryFarTicks\":0},{\"id\":29,\"escortTicks\":2079,\"stationaryFarTicks\":0}]} (target actual waiting ≤10%; a bound above 10% is inconclusive; PASS); high/complete each observed follower median versus its phase group median: {\"rows\":[{\"phase\":\"step/look\",\"id\":31,\"seeds\":[{\"seed\":1,\"valid\":true,\"samples\":137,\"median\":4.366413559282058,\"groupMedian\":4.299462525080636,\"ratio\":1.015571954357287},{\"seed\":2,\"valid\":true,\"samples\":137,\"median\":4.26728611684063,\"groupMedian\":4.133922737569598,\"ratio\":1.0322607333850264},{\"seed\":3,\"valid\":true,\"samples\":128,\"median\":4.447189613994879,\"groupMedian\":4.4131743157392656,\"ratio\":1.… (full values in JSON) (target every ratio ≥0.95; ≥10 walking samples/follower; PASS); high/complete stationary far-follower time upper bound: {\"escortTicks\":13338,\"stationaryFarTicks\":0,\"upperBoundPercent\":0,\"followers\":[{\"id\":18,\"escortTicks\":13283,\"stationaryFarTicks\":0},{\"id\":31,\"escortTicks\":10568,\"stationaryFarTicks\":0},{\"id\":30,\"escortTicks\":8768,\"stationaryFarTicks\":0},{\"id\":32,\"escortTicks\":6897,\"stationaryFarTicks\":0},{\"id\":28,\"escortTicks\":4789,\"stationaryFarTicks\":0},{\"id\":29,\"escortTicks\":2743,\"stationaryFarTicks\":0}]} (target actual waiting ≤10%; a bound above 10% is inconclusive; PASS) Manual review PASS (STALE, fix68-g/Codex): Both complete native routes pass, all five rescued. L5-only movement response changed; all speed/acceleration/jerk caps and thresholds retained. Geometry trials rejected.; Final-source low four officers min99.54%; high one officer reaches10 qualified samples, ratio100%; other high officers overwhelmed before qualification.; Conservative sum-individual-far/max-individual-escort bound1.229%/2.091%. Same corgi exclusion as existing pace evaluator. Aggregate including corgi12.951% at high remains inconclusive; no checker threshold changed. Open prior FAIL: Native competent L5 survivor28 median pace is94.8% of its phase group median over55 qualified samples, below95%. This survivor alone fails the full row although named gate cohorts pass. L3 actor23 is a companion and is not used as survivor-failure evidence.",
+      "value": "low/complete each observed follower median versus its phase group median: {\"rows\":[{\"phase\":\"step/look\",\"id\":31,\"seeds\":[{\"seed\":1,\"valid\":true,\"samples\":129,\"median\":4.3046312954604415,\"groupMedian\":4.450635197740783,\"ratio\":0.9671948169657996},{\"seed\":2,\"valid\":true,\"samples\":135,\"median\":4.342453576274158,\"groupMedian\":4.3699278154119625,\"ratio\":0.9937128849037489},{\"seed\":3,\"valid\":true,\"samples\":126,\"median\":4.437383052847879,\"groupMedian\":4.428498327332077,\"ratio\"… (full values in JSON) (target every ratio ≥0.95; ≥10 walking samples/follower; PASS); low/complete stationary far-follower time upper bound: {\"escortTicks\":11601,\"stationaryFarTicks\":0,\"upperBoundPercent\":0,\"followers\":[{\"id\":18,\"escortTicks\":11601,\"stationaryFarTicks\":0},{\"id\":31,\"escortTicks\":8919,\"stationaryFarTicks\":0},{\"id\":30,\"escortTicks\":7073,\"stationaryFarTicks\":0},{\"id\":32,\"escortTicks\":5166,\"stationaryFarTicks\":0},{\"id\":28,\"escortTicks\":3903,\"stationaryFarTicks\":0},{\"id\":29,\"escortTicks\":2079,\"stationaryFarTicks\":0}]} (target actual waiting ≤10%; a bound above 10% is inconclusive; PASS); high/complete each observed follower median versus its phase group median: {\"rows\":[{\"phase\":\"step/look\",\"id\":31,\"seeds\":[{\"seed\":1,\"valid\":true,\"samples\":137,\"median\":4.366413559282058,\"groupMedian\":4.299462525080636,\"ratio\":1.015571954357287},{\"seed\":2,\"valid\":true,\"samples\":137,\"median\":4.26728611684063,\"groupMedian\":4.133922737569598,\"ratio\":1.0322607333850264},{\"seed\":3,\"valid\":true,\"samples\":128,\"median\":4.447189613994879,\"groupMedian\":4.4131743157392656,\"ratio\":1.… (full values in JSON) (target every ratio ≥0.95; ≥10 walking samples/follower; PASS); high/complete stationary far-follower time upper bound: {\"escortTicks\":13338,\"stationaryFarTicks\":0,\"upperBoundPercent\":0,\"followers\":[{\"id\":18,\"escortTicks\":13283,\"stationaryFarTicks\":0},{\"id\":31,\"escortTicks\":10568,\"stationaryFarTicks\":0},{\"id\":30,\"escortTicks\":8768,\"stationaryFarTicks\":0},{\"id\":32,\"escortTicks\":6897,\"stationaryFarTicks\":0},{\"id\":28,\"escortTicks\":4789,\"stationaryFarTicks\":0},{\"id\":29,\"escortTicks\":2743,\"stationaryFarTicks\":0}]} (target actual waiting ≤10%; a bound above 10% is inconclusive; PASS) Manual review PASS (STALE, Codex/fix73-b): Current L5 high canonical source d97192f688d1e72561fb49f26eb4afff8d84d9f6cc4dabfe56bd373cd1bfb0b5: every human follower/step passes production seed voting; at least two qualified valid seeds each. Follower28 search ratios1.0119/0.9873/0.8945 with47/46/46 samples: one failure, below the two required to flag. Waiting upper bound0%. Scoped high-tier PASS; whole L5-08 formation/bars and all-level G-13 remain separately open. Historical L3 clauses and global freshness metadata are retained, not newly approved.; Final-source low four officers min99.54%; high one officer reaches10 qualified samples, ratio100%; other high officers overwhelmed before qualification.; Conservative sum-individual-far/max-individual-escort bound1.229%/2.091%. Same corgi exclusion as existing pace evaluator. Aggregate including corgi12.951% at high remains inconclusive; no checker threshold changed. Open prior FAIL: Native competent L5 survivor28 median pace is94.8% of its phase group median over55 qualified samples, below95%. This survivor alone fails the full row although named gate cohorts pass. L3 actor23 is a companion and is not used as survivor-failure evidence.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L5-low-complete.json",
         "docs/reports/fix51-verify/receipts/L5-high-complete.json",
+        "docs/reports/fix73-b/G13-high-summary.json",
         "docs/reports/fix68-g/G-13-final/G-13-L5-low-complete.json.gz",
         "docs/reports/fix68-g/G-13-final/G-13-L5-high-complete.json.gz",
         "docs/reports/fix68-g/G-13-fix.json",
@@ -1827,14 +1828,14 @@
       "reviewDecision": {
         "row": "G-13",
         "status": "PASS",
-        "reviewer": "fix68-g/Codex",
+        "reviewer": "Codex/fix73-b",
         "date": "2026-11-06",
         "commit": "d6167897fdd39772a96a7a2dbfb69ea4c5cee5db",
         "clauses": [
           {
             "clause": "L5 followers: every observed follower phase median >=0.95 of the group median and waiting for a follower >10m behind <=10% of escort time.",
             "verdict": "PASS",
-            "note": "Both complete native routes pass, all five rescued. L5-only movement response changed; all speed/acceleration/jerk caps and thresholds retained. Geometry trials rejected."
+            "note": "Current L5 high canonical source d97192f688d1e72561fb49f26eb4afff8d84d9f6cc4dabfe56bd373cd1bfb0b5: every human follower/step passes production seed voting; at least two qualified valid seeds each. Follower28 search ratios1.0119/0.9873/0.8945 with47/46/46 samples: one failure, below the two required to flag. Waiting upper bound0%. Scoped high-tier PASS; whole L5-08 formation/bars and all-level G-13 remain separately open. Historical L3 clauses and global freshness metadata are retained, not newly approved."
           },
           {
             "clause": "L3 observed human follower medians >=0.95 of the phase human group median, both tiers.",
@@ -1848,6 +1849,11 @@
           }
         ],
         "evidence": [
+          {
+            "file": "docs/reports/fix73-b/G13-high-summary.json",
+            "sha256": "7395dbf7e0c740ba4c19aad36b920a7ba74b592ae11cba0c7ada6c7eb5b3af26",
+            "what": "Current L5 high canonical source d97192f688d1e72561fb49f26eb4afff8d84d9f6cc4dabfe56bd373cd1bfb0b5: every human follower/step passes production seed voting; at least two qualified valid seeds each. Follower28 search ratios1.0119/0.9873/0.8945 with47/46/46 samples: one failure, below the two required to flag. Waiting upper bound0%. Scoped high-tier PASS; whole L5-08 formation/bars and all-level G-13 remain separately open. Historical L3 clauses and global freshness metadata are retained, not newly approved."
+          },
           {
             "file": "docs/reports/fix68-g/G-13-final/G-13-L5-low-complete.json.gz",
             "sha256": "82d6cbfd2190132afbad8171028d0446d12cb3522ab56025d8ddb70cf7ff7744",
@@ -1909,7 +1915,7 @@
           "Final load-qualified standalone threat: exit1,12 L7 pace flags; L3/L6 threat flags cleared. Full global-row qualification remains open. See docs/reports/fix68-g/README.md."
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     },
     {
@@ -1984,7 +1990,7 @@
         ],
         "notes": "Arranged authored fixture poses are explicit setup, not a claim that every corpse was produced by a physical kill. Full route ledgers separately record persistence including sleeping chunks. Pile top surface height remains unmeasured; FAIL is floating geometry.",
         "freshness": "STALE",
-        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     },
     {
@@ -2152,7 +2158,7 @@
         ],
         "notes": "No speculative animation fix. P: review authored crawler posture against literal42deg cap. Fixture exclusions retained.",
         "freshness": "STALE",
-        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     },
     {
@@ -3756,7 +3762,7 @@
         ],
         "notes": "Final-source both-quality fixture refresh inspected. Whole native matrix was explicitly stopped by orchestrator; no complete final-source acceptance consolidation is claimed.",
         "freshness": "STALE",
-        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     },
     {
@@ -3844,7 +3850,7 @@
         ],
         "notes": "Game-camera scene and close grip camera differ; defect is visible in the close view. Full every-body/routine visual coverage remains incomplete. No criteria or assets changed.",
         "freshness": "STALE",
-        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     },
     {
@@ -3932,7 +3938,7 @@
         ],
         "notes": "Real-input playtest driver (WebGPU, god mode, per-step captures low/high x zoom 1.5/0.5) plus test-API sim-bot camera probes. Every listed capture was inspected; raw captures deleted, compact sheets retained.",
         "freshness": "STALE",
-        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     }
   ],
@@ -4815,7 +4821,7 @@
         ],
         "notes": "Current-source native measurements at both tiers. A FAIL closes the verdict through the cited counterexample; unmeasured clauses are not promoted to PASS.",
         "freshness": "STALE",
-        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     },
     {
@@ -6151,7 +6157,7 @@
         ],
         "notes": "Current-source native measurements at both tiers. A FAIL closes the verdict through the cited counterexample; unmeasured clauses are not promoted to PASS.",
         "freshness": "STALE",
-        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     },
     {
@@ -6276,7 +6282,7 @@
           }
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     },
     {
@@ -6377,7 +6383,7 @@
           }
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     },
     {
@@ -11841,7 +11847,7 @@
           }
         ],
         "freshness": "STALE",
-        "latestRelevantCommit": "ae2cd078bcd9d5086f4b56eb9787bfcdd595713f"
+        "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     }
   ]

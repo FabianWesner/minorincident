@@ -1,6 +1,6 @@
 # fix51-verify acceptance automation
 
-**NO-GO; incomplete acceptance coverage.** 96/169 rows have current measured clauses; 10 have fresh FAILs. Status totals: FAIL: 26, NOT CHECKED: 116, PASS: 27. Passing a subset never closes a compound row. The brief's three-hour time box leaves the explicit open items below.
+**NO-GO; incomplete acceptance coverage.** 97/169 rows have current measured clauses; 10 have fresh FAILs. Status totals: FAIL: 26, NOT CHECKED: 116, PASS: 27. Passing a subset never closes a compound row. The brief's three-hour time box leaves the explicit open items below.
 
 ## Run
 
@@ -60,7 +60,7 @@ Every remaining row and next check is listed here. P preserves the exact PO-revi
 | G-19 | NOT CHECKED | 36 | Inspect no corgi HP bar, geometry/hull clearance and inside-door/shutter placement; native target/damage/health samples are measured. |
 | G-20 | NOT CHECKED | 36 | Trigger final-objective completion during ongoing action in every level; qualify five-second invulnerable run-out on each edge. |
 | G-21 | NOT CHECKED | 77 | Finish the unmeasured clauses of the source criterion; current measured clauses have no fresh FAIL. Required: Death respawns at the last checkpoint with its snapshot (followers, pickups, gates); never at level start when a later checkpoint exists. Orchestrator 2026-11-06: per the E19 PO decision 10-07 (live world preserved), the courier position, followers and checkpoint objective restore from the snapshot, while world changes made after the checkpoint (opened gates, taken pickups) persist. |
-| G-22 | FAIL | 55 | Fix cited no-contact/late attack cohorts; add bounded paths and validate every announced threat against its actual announcement clock. |
+| G-22 | FAIL | 51 | Fix cited no-contact/late attack cohorts; add bounded paths and validate every announced threat against its actual announcement clock. |
 | G-23 | NOT CHECKED | 0 | NEXT: Run tools/qa/visual-p1-bounds.ts and wrong-way real-input traversals; review visible barriers, dead ends and map edges at both qualities/zooms, with a screenshot-only route-clarity run. |
 | G-24 | NOT CHECKED | 18 | All implemented row clauses measured at both qualities; prior PO findings still need PO closure. O: Health bars: Alphas and infected zoo animals show the world-space bar (damaged or ≤ 15 m); dead ones show none; normal animals none. |
 | G-25 | FAIL | 0 | Complete physical WASD/mouse playthroughs at both qualities for all10 levels; native completion is not browser console qualification. |
