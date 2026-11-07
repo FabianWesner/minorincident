@@ -1,0 +1,194 @@
+{
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "frozenCommit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "method": "Current full-route actual admission count and bounded paths, supplemented by current passive production entry controls. One complete-route front is killed before track arrival; this is not treated as a harmless geometry failure. Independent passive fixture demonstrates both actual bodies from each of six entry geometries reaching tracks at each tier, without killing them first. Targets/path tests unchanged; no source/AI/geometry changes.",
+  "rows": [
+    {
+      "tier": "low",
+      "canonicalHash": "8e0aeea0",
+      "observedHash": "8e0aeea0",
+      "actualSideCounts": {
+        "2": 2,
+        "3": 2,
+        "4": 2,
+        "5": 2,
+        "6": 2,
+        "7": 2
+      },
+      "actualTrackArrivals": 11,
+      "actualDownedBeforeTrack": [
+        101
+      ],
+      "boundedPathSamples": 714,
+      "boundedPathFailures": 3,
+      "boundedReachablePercent": 99.5798319327731,
+      "passiveControls": [
+        {
+          "door": 2,
+          "actualIDs": [
+            72,
+            73
+          ],
+          "trackTicks": [
+            143,
+            95
+          ]
+        },
+        {
+          "door": 5,
+          "actualIDs": [
+            72,
+            73
+          ],
+          "trackTicks": [
+            126,
+            107
+          ]
+        },
+        {
+          "door": 3,
+          "actualIDs": [
+            72,
+            73
+          ],
+          "trackTicks": [
+            113,
+            113
+          ]
+        },
+        {
+          "door": 6,
+          "actualIDs": [
+            72,
+            73
+          ],
+          "trackTicks": [
+            132,
+            135
+          ]
+        },
+        {
+          "door": 4,
+          "actualIDs": [
+            72,
+            73
+          ],
+          "trackTicks": [
+            126,
+            104
+          ]
+        },
+        {
+          "door": 7,
+          "actualIDs": [
+            72,
+            73
+          ],
+          "trackTicks": [
+            143,
+            119
+          ]
+        }
+      ]
+    },
+    {
+      "tier": "high",
+      "canonicalHash": "7d2bd834",
+      "observedHash": "7d2bd834",
+      "actualSideCounts": {
+        "2": 2,
+        "3": 2,
+        "4": 2,
+        "5": 2,
+        "6": 2,
+        "7": 2
+      },
+      "actualTrackArrivals": 11,
+      "actualDownedBeforeTrack": [
+        101
+      ],
+      "boundedPathSamples": 714,
+      "boundedPathFailures": 3,
+      "boundedReachablePercent": 99.5798319327731,
+      "passiveControls": [
+        {
+          "door": 2,
+          "actualIDs": [
+            72,
+            73
+          ],
+          "trackTicks": [
+            143,
+            95
+          ]
+        },
+        {
+          "door": 5,
+          "actualIDs": [
+            72,
+            73
+          ],
+          "trackTicks": [
+            126,
+            107
+          ]
+        },
+        {
+          "door": 3,
+          "actualIDs": [
+            72,
+            73
+          ],
+          "trackTicks": [
+            113,
+            113
+          ]
+        },
+        {
+          "door": 6,
+          "actualIDs": [
+            72,
+            73
+          ],
+          "trackTicks": [
+            132,
+            135
+          ]
+        },
+        {
+          "door": 4,
+          "actualIDs": [
+            72,
+            73
+          ],
+          "trackTicks": [
+            126,
+            104
+          ]
+        },
+        {
+          "door": 7,
+          "actualIDs": [
+            72,
+            73
+          ],
+          "trackTicks": [
+            143,
+            119
+          ]
+        }
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/final-b/L6-side-entry-control.json.gz",
+      "sha256": "7c0e510ad64f240472a67ea2ff1eb6cc6e36a4bd8d63378ce1fda61ec7ebf809"
+    },
+    {
+      "file": "docs/reports/final-b/L6-trajectories.json.gz",
+      "sha256": "cb4738a0a36f6e1a5a182d91b81b1ef15ad91afaf521700aa596d8ea5f13892f"
+    }
+  ],
+  "controllerOrder": "Actual l6Entries order2,5,3,6,4,7 alternates north/south doors."
+}
