@@ -112,8 +112,8 @@ test('escort: shared combat pace, follows through a maze, a 2 s stand revives to
     // In its slot: walk with the courier's velocity, no braking and no surge.
     for (let slot = 0; slot < 5; slot++) {
       c.survivor.slot = slot; delete c.survivor.pace;
-      // Calm slots clear street cover at 2.5/3.2 m back, with staggered rear columns.
-      Object.assign(follower.transform, { x: p.transform.x - (slot < 3 ? 2.5 : 3.2), z: p.transform.z + (slot < 3 ? (slot % 3 - 1) * .9 : [-.45, .45][slot - 3]) });
+      // Calm slots sit 2.7/3.4 m back; the rear row staggers into the front row's gaps.
+      Object.assign(follower.transform, { x: p.transform.x - (slot < 3 ? 2.7 : 3.4), z: p.transform.z + (slot < 3 ? (slot % 3 - 1) * 1.2 : [-.6, .6][slot - 3]) });
       updateSurvivor(w, follower);
       const [, aim, pace] = movement.mock.lastCall!;
       expect(aim.x - follower.transform.x).toBeCloseTo(4.5 * .5); expect(aim.z - follower.transform.z).toBeCloseTo(0); expect(pace).toBeCloseTo(4.5);
