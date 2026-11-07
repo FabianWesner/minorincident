@@ -30,6 +30,13 @@ export function levelOneLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
   return layouts.map(source => {
     if (source.district !== 'D-GROVE') return source;
     const layout = structuredClone(source), z = l1DepotFront - .44 - .02;
+    // The garage-approach sign post blocked the first nav corner for an
+    // infected at (17.103, 34.093). Keep it on the kerb, clear of that approach.
+    const sign = layout.placements.find(p => p.assetId === 'prop.street-sign' && p.position[0] === 17.5 && p.position[2] === 33.5);
+    if (sign) {
+      sign.position[0] -= .1;
+      sign.visualAabb.min[0] -= .1; sign.visualAabb.max[0] -= .1;
+    }
     for (const [run, [x0, x1, pieces]] of l1DepotHedges.entries()) {
       const step = (x1 - x0) / pieces;
       for (let i = 0; i < pieces; i++) {
