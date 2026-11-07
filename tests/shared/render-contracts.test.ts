@@ -151,6 +151,15 @@ test('static placement batches reuse their graph and narrow barriers keep the fo
   expect(vehiclePolicy.courierOccluded).toBe(false);
   expect(fence.userData.occluder).toBe(true); // rider/driver retains the placement cut
 
+  // An open raised gun platform keeps the bounded cut, never the enclosing-prop
+  // lens cut that erases its entire supporting deck beside the courier.
+  const platform = { ...hull, id: 'kit.dispersal-platform', height: 4.165, foot: { cx: 0, cz: 0, hx: 5, hz: 4 } };
+  const platformPolicy = new DistrictOcclusion({ ...parts, lodBatches: [platform] } as unknown as PolicyArgs[0], {} as PolicyArgs[1], () => {}, () => {});
+  platformPolicy.update(vehicleView, true, { x: 0, y: .7, z: 0 }, subject);
+  expect(fence.userData.occluder).toBe(true);
+  expect(platformPolicy.courierTucked).toBe(false);
+  expect(platformPolicy.seeThroughAudit().lensPlacements).toEqual([]);
+
   const lighting = new Lighting(new Scene()), shading = new Materials(lighting), material = shading.fromColor('joint', new Color('#999996'), 0, true);
   const root = new Group(), geometries = addHighwayRailJoints(root, material);
   const a = new InstancedGroup(root, [new Object3D()]), b = new InstancedGroup(root, [new Object3D()]);

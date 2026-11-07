@@ -263,7 +263,9 @@ export class DistrictOcclusion {
           // vqa-fix-3 P1 (L10 console charge): pressed against the far side of a tall plant prop (the 7 m bullet tank), the
           // courier-sized disc only opened a porthole into the vessel and she was lost in it. Such a prop clears its whole
           // foreground (the lens cut keeps everything behind her and her floor), like an enclosing building.
-          tucked = entry.height * ref.scale.y >= 4 && ux < entry.foot.hx + tuckMargin && uz < entry.foot.hz + tuckMargin;
+          // The open L10 gun platform is a deck, not an enclosing vessel.
+          // Clearing its whole foreground leaves the mounted gun floating.
+          tucked = entry.id !== 'kit.dispersal-platform' && entry.height * ref.scale.y >= 4 && ux < entry.foot.hx + tuckMargin && uz < entry.foot.hz + tuckMargin;
           // vqa-3 #2 (L3 ramp, zoom 1.5): the raised deck she walks on is not a prop she is tucked against; standing on the
           // placement (inside its footprint, feet above its base) kept her a gold foreground ghost for the whole climb.
           if (tucked && !contact && courier.y !== undefined && courier.y - .7 > ref.position.y + standOnLift) tucked = false;
