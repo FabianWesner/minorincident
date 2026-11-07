@@ -216,7 +216,7 @@ export class Companion {
           // Change the normal following route only after actual courier progress stalls.
           if (ahead && this.world.tick - progress.tick >= 6) this.yieldUntil = this.world.tick + 30;
           const yielding = ahead && this.world.tick < this.yieldUntil;
-          const lead = yielding ? (distance + 1.5) / playerSpeed : this.world.scenario === 'L3' && playerSpeed > 2 && ai.active.some(en => en.health.current > 0 && !en.hidden && Math.hypot(en.transform.x - e.transform.x, en.transform.z - e.transform.z) < 4) ? .6 : .25;
+          const lead = yielding ? (distance + 1.5) / playerSpeed : this.world.scenario === 'L3' && playerSpeed > 2 && ai.active.some(en => en.health.current > 0 && !en.hidden && Math.hypot(en.transform.x - e.transform.x, en.transform.z - e.transform.z) < 4) ? .6 : this.world.scenario === 'L6' && this.world.missions?.state.l6?.phase === 'exit' ? .65 : .25;
           if (beside) {
             this.target.x = beside.x; this.target.z = beside.z;
           } else {
