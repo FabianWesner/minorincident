@@ -1,46 +1,43 @@
 {
   "row": "L9-06",
   "status": "PASS",
-  "reviewer": "Codex sweep-c5",
-  "date": "2026-11-06",
-  "commit": "57b750c4d03febd3392cc28d533a06e2e1357108",
+  "reviewer": "Codex final-c",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
   "clauses": [
     {
       "clause": "APC cannot wedge off-road before the bridge; no giant flat arrow over it; HUD bar matches durability.",
       "verdict": "PASS",
-      "note": "Current six ordinary physical authored detours all reach bridge. Fresh separate adversarial offroad drives physically approach existing tent2455, parked schoolbus2427 and checkpoint2454 corners. Each case records20successive6tick approach samples below0.5m/s within12m of solid target, then240ticks forward press. Ordinary S reverse moves8.05\u20138.52m backwards along actual chassis heading, clearing\u22658m in90/114/108ticks (1.5/1.9/1.8s), same bothqualities; no position writes/teleports/replacement/AI freeze/cheats. This is route coverage plus three deliberate obstruction challenges, not an exhaustive proof over every physically possible orientation. All24pairedPOzoom panels personally reviewed/digests verified/rawdeleted. Wide frames show near tent, bus/props/hazardlights and concrete checkpoint/ladder/razorwire, followed by clear separation; closeframes show intact APC/cab. Contact photos are AFTER forward press, by which time some slipping/automatic recovery already separates hull; stills alone do not establish sustained impact. Dense low-speed approach supplies the challenge validity. No giant flat world arrow over APC; only small gold screen-edge HUD pointer. Live Armor text/bar matches native HP at every photo (low1000\u2192990\u2192970, high1000\u2192990\u2192940); losses are real infected contacts/attacks. No claim ordinary layout-obstacle contact billed HP: those hits were not logged by this fixture. All15 semantic faults reject, exact originals restored. No game/criteria change."
+      "note": "Both physical normal-damage WASD routes contact and escape all three tent/bus/checkpoint obstacles using ordinary reverse/steering. Escape speeds5.8784–5.9231m/s, durability980/970/930low and980/970/910high. Twelve personally reviewed escaped-view frames at both tiers and zoom0.5/1.5 show matching HUD text and bar fill, and no giant flat world arrow. Dense input/event ledgers cover each recovery; no relocation, cheats or route skip."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-c5/L9-06/coverage-proof.json",
-      "sha256": "39c4b15592864fc57958cbabbfaff29c32be958275083b6d66a2027bc50a44a5",
-      "what": "Current physical offroad stall/press/reverse records,24 personally reviewed photo digests/observations and15 actual consumer rejection controls; exact six full physical routes are bound by streaming consumer."
+      "file": "docs/reports/final-c/L9-06/low-physical.json.gz",
+      "sha256": "6177f5822fa3cc2962017981444ce8db60b0f0e94618273443b0da846da43384",
+      "what": "Both physical normal-damage WASD routes contact and escape all three tent/bus/checkpoint obstacles using ordinary reverse/steering. Escape speeds5.8784–5.9231m/s, durability980/970/930low and980/970/910high. Twelve personally reviewed escaped-view frames at both tiers and zoom0.5/1.5 show matching HUD text and bar fill, and no giant flat world arrow. Dense input/event ledgers cover each recovery; no relocation, cheats or route skip."
     },
     {
-      "file": "docs/reports/sweep-c5/L9-06/high-physical.json.gz",
-      "sha256": "58553c6730b54d59f2fe07f953328749f0ac7be41dfd2ae782ece0becc4c827a",
-      "what": "Current physical offroad stall/press/reverse records,24 personally reviewed photo digests/observations and15 actual consumer rejection controls; exact six full physical routes are bound by streaming consumer."
+      "file": "docs/reports/final-c/L9-06/high-physical.json.gz",
+      "sha256": "0537a8209bee1ab7f9414e84e855a6dd1c0619d5931919de797aa2d8e6092ff6",
+      "what": "Both physical normal-damage WASD routes contact and escape all three tent/bus/checkpoint obstacles using ordinary reverse/steering. Escape speeds5.8784–5.9231m/s, durability980/970/930low and980/970/910high. Twelve personally reviewed escaped-view frames at both tiers and zoom0.5/1.5 show matching HUD text and bar fill, and no giant flat world arrow. Dense input/event ledgers cover each recovery; no relocation, cheats or route skip."
     },
     {
-      "file": "docs/reports/sweep-c5/L9-06/high-review.json",
-      "sha256": "8ce4d04e1ed8af91fb0df02316a6b03d399280f3ea237ae9555691492f02dc87",
-      "what": "Current physical offroad stall/press/reverse records,24 personally reviewed photo digests/observations and15 actual consumer rejection controls; exact six full physical routes are bound by streaming consumer."
+      "file": "docs/reports/final-c/L9-06/wedge-producer.mjs",
+      "sha256": "0d638319b9321cee8713f94ad3e6b5f60ad422d3068330b08fb64f0e766d6d76",
+      "what": "Exact measurement producer snapshot; only output locations differ from the existing observer."
     },
     {
-      "file": "docs/reports/sweep-c5/L9-06/low-physical.json.gz",
-      "sha256": "66293c775f2eb64cad7830aa1a6724600e17d76dc9ace6c1bd3c77164db4f7d3",
-      "what": "Current physical offroad stall/press/reverse records,24 personally reviewed photo digests/observations and15 actual consumer rejection controls; exact six full physical routes are bound by streaming consumer."
+      "file": "docs/reports/final-c/L9-06/sweep-c5-l9-wedge-producer.ts",
+      "sha256": "7ccf806698e1dffc920a9a6457767af12e2853a152067f607f3a159796889c2f",
+      "what": "Exact measurement producer snapshot; only output locations differ from the existing observer."
     },
     {
-      "file": "docs/reports/sweep-c5/L9-06/low-review.json",
-      "sha256": "e134a20912a6c0f82202269040ada5a45d24ccf82a215f09790edf55cd7431b8",
-      "what": "Current physical offroad stall/press/reverse records,24 personally reviewed photo digests/observations and15 actual consumer rejection controls; exact six full physical routes are bound by streaming consumer."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L9-06/producer.mjs",
-      "sha256": "45adfcc8f1b05601a7440258156fccbba0dc1b8c85a7fe8b75b6742768231157",
-      "what": "Current physical offroad stall/press/reverse records,24 personally reviewed photo digests/observations and15 actual consumer rejection controls; exact six full physical routes are bound by streaming consumer."
+      "file": "docs/reports/final-c/L9-06/capture-review.json",
+      "sha256": "f21398a8e02641bb6e42185050f791bbbdba78bab0d5c32ea15fba016b38ae04",
+      "what": "Both physical normal-damage WASD routes contact and escape all three tent/bus/checkpoint obstacles using ordinary reverse/steering. Escape speeds5.8784–5.9231m/s, durability980/970/930low and980/970/910high. Twelve personally reviewed escaped-view frames at both tiers and zoom0.5/1.5 show matching HUD text and bar fill, and no giant flat world arrow. Dense input/event ledgers cover each recovery; no relocation, cheats or route skip."
     }
-  ]
+  ],
+  "notes": "Frozen-head row review. Current immutable evidence, unchanged criterion and game source.",
+  "sourceDigest": "fbad89802bfe8d610b736d8f5a3111d1a13e8d0ae47b606a45c5760634f3ed51"
 }

@@ -1,0 +1,1464 @@
+{
+  "observation": "Both physical normal-damage WASD routes contact and escape all three tent/bus/checkpoint obstacles using ordinary reverse/steering. Escape speeds5.8784\u20135.9231m/s, durability980/970/930low and980/970/910high. Twelve personally reviewed escaped-view frames at both tiers and zoom0.5/1.5 show matching HUD text and bar fill, and no giant flat world arrow. Dense input/event ledgers cover each recovery; no relocation, cheats or route skip.",
+  "personallyReviewedSheets": [
+    {
+      "file": "test-results/final-c/L9-06-sheet-1.jpg",
+      "sha256": "56c4b1dc9e137cebd74ccbacaeb82b51f1b0d4692bfae62d89570ca898519e65"
+    },
+    {
+      "file": "test-results/final-c/L9-06-sheet-0.jpg",
+      "sha256": "9ddf89387654a33e371b1968308f324e461243d9dae1463b60aa86c69353a4e0"
+    }
+  ],
+  "retainedFrames": [
+    {
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/final-c/test-results/final-c-l9-wedge-1794012093728/low-prop.tent:2455-escaped-z0.5.jpg",
+      "sha256": "5e2263d1e02b54324899053d432ef86792e5b60dcab7f6e710c3d6727630ed41",
+      "label": "prop.tent:2455-escaped",
+      "zoom": 0.5,
+      "state": {
+        "tick": 984,
+        "phase": "driving",
+        "position": {
+          "x": -519.7366943359375,
+          "y": 0.9954344630241394,
+          "z": -56.99333953857422,
+          "yaw": 1.1722490274208244
+        },
+        "speed": 5.910674504509699,
+        "hp": 980,
+        "hud": "Armor 980 / 1000",
+        "events": [
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 447,
+            "sourceId": 667,
+            "targetId": 713,
+            "source": "contact",
+            "contactId": 1,
+            "attackId": null,
+            "before": 1000,
+            "after": 990,
+            "target": {
+              "archetype": "infected.runner",
+              "hp": 60,
+              "position": {
+                "x": -520.7853224485838,
+                "y": 0.7,
+                "z": -59.738952731782774,
+                "yaw": 0
+              },
+              "state": "idle",
+              "group": "crossing-patrol-0"
+            }
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 448,
+            "sourceId": 667,
+            "targetId": 712,
+            "source": "contact",
+            "contactId": 2,
+            "attackId": null,
+            "before": 990,
+            "after": 980,
+            "target": {
+              "archetype": "infected.runner",
+              "hp": 60,
+              "position": {
+                "x": -522.0739879956226,
+                "y": 0.7,
+                "z": -60.286073475197824,
+                "yaw": 0
+              },
+              "state": "idle",
+              "group": "crossing-patrol-0"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/final-c/test-results/final-c-l9-wedge-1794012093728/low-prop.tent:2455-escaped-z1.5.jpg",
+      "sha256": "0ad72ebfc4e85a8c5cf2d0d89647bd396c1df88fdc6562dab11095b50639e231",
+      "label": "prop.tent:2455-escaped",
+      "zoom": 1.5,
+      "state": {
+        "tick": 984,
+        "phase": "driving",
+        "position": {
+          "x": -519.7366943359375,
+          "y": 0.9954344630241394,
+          "z": -56.99333953857422,
+          "yaw": 1.1722490274208244
+        },
+        "speed": 5.910674504509699,
+        "hp": 980,
+        "hud": "Armor 980 / 1000",
+        "events": [
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 447,
+            "sourceId": 667,
+            "targetId": 713,
+            "source": "contact",
+            "contactId": 1,
+            "attackId": null,
+            "before": 1000,
+            "after": 990,
+            "target": {
+              "archetype": "infected.runner",
+              "hp": 60,
+              "position": {
+                "x": -520.7853224485838,
+                "y": 0.7,
+                "z": -59.738952731782774,
+                "yaw": 0
+              },
+              "state": "idle",
+              "group": "crossing-patrol-0"
+            }
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 448,
+            "sourceId": 667,
+            "targetId": 712,
+            "source": "contact",
+            "contactId": 2,
+            "attackId": null,
+            "before": 990,
+            "after": 980,
+            "target": {
+              "archetype": "infected.runner",
+              "hp": 60,
+              "position": {
+                "x": -522.0739879956226,
+                "y": 0.7,
+                "z": -60.286073475197824,
+                "yaw": 0
+              },
+              "state": "idle",
+              "group": "crossing-patrol-0"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/final-c/test-results/final-c-l9-wedge-1794012093728/low-veh.school-bus:2427-escaped-z0.5.jpg",
+      "sha256": "c3b2dabe59a39c4532b44d49b111ced108dd92af3c598fe52368c67d8ee1b60f",
+      "label": "veh.school-bus:2427-escaped",
+      "zoom": 0.5,
+      "state": {
+        "tick": 3138,
+        "phase": "driving",
+        "position": {
+          "x": -443.3424987792969,
+          "y": 0.9954345226287842,
+          "z": -118.5722427368164,
+          "yaw": -0.2844172268724493
+        },
+        "speed": 5.894785532555819,
+        "hp": 970,
+        "hud": "Armor 970 / 1000",
+        "events": [
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 447,
+            "sourceId": 667,
+            "targetId": 713,
+            "source": "contact",
+            "contactId": 1,
+            "attackId": null,
+            "before": 1000,
+            "after": 990,
+            "target": {
+              "archetype": "infected.runner",
+              "hp": 60,
+              "position": {
+                "x": -520.7853224485838,
+                "y": 0.7,
+                "z": -59.738952731782774,
+                "yaw": 0
+              },
+              "state": "idle",
+              "group": "crossing-patrol-0"
+            }
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 448,
+            "sourceId": 667,
+            "targetId": 712,
+            "source": "contact",
+            "contactId": 2,
+            "attackId": null,
+            "before": 990,
+            "after": 980,
+            "target": {
+              "archetype": "infected.runner",
+              "hp": 60,
+              "position": {
+                "x": -522.0739879956226,
+                "y": 0.7,
+                "z": -60.286073475197824,
+                "yaw": 0
+              },
+              "state": "idle",
+              "group": "crossing-patrol-0"
+            }
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 1045,
+            "sourceId": 667,
+            "targetId": 714,
+            "source": "contact",
+            "contactId": 3,
+            "attackId": null,
+            "before": 980,
+            "after": 970,
+            "target": {
+              "archetype": "infected.runner",
+              "hp": 60,
+              "position": {
+                "x": -520.3971909224829,
+                "y": 0.7,
+                "z": -53.0729606925446,
+                "yaw": 2.123084491058809
+              },
+              "state": "attack",
+              "group": "crossing-patrol-0"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/final-c/test-results/final-c-l9-wedge-1794012093728/low-veh.school-bus:2427-escaped-z1.5.jpg",
+      "sha256": "d6ac07b88c33ef1e1d971e193ae04719abcbc149d99fdd0053d807f986213f53",
+      "label": "veh.school-bus:2427-escaped",
+      "zoom": 1.5,
+      "state": {
+        "tick": 3138,
+        "phase": "driving",
+        "position": {
+          "x": -443.3424987792969,
+          "y": 0.9954345226287842,
+          "z": -118.5722427368164,
+          "yaw": -0.2844172268724493
+        },
+        "speed": 5.894785532555819,
+        "hp": 970,
+        "hud": "Armor 970 / 1000",
+        "events": [
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 447,
+            "sourceId": 667,
+            "targetId": 713,
+            "source": "contact",
+            "contactId": 1,
+            "attackId": null,
+            "before": 1000,
+            "after": 990,
+            "target": {
+              "archetype": "infected.runner",
+              "hp": 60,
+              "position": {
+                "x": -520.7853224485838,
+                "y": 0.7,
+                "z": -59.738952731782774,
+                "yaw": 0
+              },
+              "state": "idle",
+              "group": "crossing-patrol-0"
+            }
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 448,
+            "sourceId": 667,
+            "targetId": 712,
+            "source": "contact",
+            "contactId": 2,
+            "attackId": null,
+            "before": 990,
+            "after": 980,
+            "target": {
+              "archetype": "infected.runner",
+              "hp": 60,
+              "position": {
+                "x": -522.0739879956226,
+                "y": 0.7,
+                "z": -60.286073475197824,
+                "yaw": 0
+              },
+              "state": "idle",
+              "group": "crossing-patrol-0"
+            }
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 1045,
+            "sourceId": 667,
+            "targetId": 714,
+            "source": "contact",
+            "contactId": 3,
+            "attackId": null,
+            "before": 980,
+            "after": 970,
+            "target": {
+              "archetype": "infected.runner",
+              "hp": 60,
+              "position": {
+                "x": -520.3971909224829,
+                "y": 0.7,
+                "z": -53.0729606925446,
+                "yaw": 2.123084491058809
+              },
+              "state": "attack",
+              "group": "crossing-patrol-0"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/final-c/test-results/final-c-l9-wedge-1794012093728/low-kit.army-checkpoint:2454-escaped-z0.5.jpg",
+      "sha256": "3df3a2ae444c62ac59f2b52cd72a90c521435a4e346967c3757a8b619b5c37c0",
+      "label": "kit.army-checkpoint:2454-escaped",
+      "zoom": 0.5,
+      "state": {
+        "tick": 6480,
+        "phase": "driving",
+        "position": {
+          "x": -343.5461120605469,
+          "y": 0.9954344034194946,
+          "z": 39.46651077270508,
+          "yaw": -0.08326369792936338
+        },
+        "speed": 5.923132889526702,
+        "hp": 930,
+        "hud": "Armor 930 / 1000",
+        "events": [
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 447,
+            "sourceId": 667,
+            "targetId": 713,
+            "source": "contact",
+            "contactId": 1,
+            "attackId": null,
+            "before": 1000,
+            "after": 990,
+            "target": {
+              "archetype": "infected.runner",
+              "hp": 60,
+              "position": {
+                "x": -520.7853224485838,
+                "y": 0.7,
+                "z": -59.738952731782774,
+                "yaw": 0
+              },
+              "state": "idle",
+              "group": "crossing-patrol-0"
+            }
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 448,
+            "sourceId": 667,
+            "targetId": 712,
+            "source": "contact",
+            "contactId": 2,
+            "attackId": null,
+            "before": 990,
+            "after": 980,
+            "target": {
+              "archetype": "infected.runner",
+              "hp": 60,
+              "position": {
+                "x": -522.0739879956226,
+                "y": 0.7,
+                "z": -60.286073475197824,
+                "yaw": 0
+              },
+              "state": "idle",
+              "group": "crossing-patrol-0"
+            }
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 1045,
+            "sourceId": 667,
+            "targetId": 714,
+            "source": "contact",
+            "contactId": 3,
+            "attackId": null,
+            "before": 980,
+            "after": 970,
+            "target": {
+              "archetype": "infected.runner",
+              "hp": 60,
+              "position": {
+                "x": -520.3971909224829,
+                "y": 0.7,
+                "z": -53.0729606925446,
+                "yaw": 2.123084491058809
+              },
+              "state": "attack",
+              "group": "crossing-patrol-0"
+            }
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 4199,
+            "sourceId": 667,
+            "targetId": 767,
+            "source": "contact",
+            "contactId": 4,
+            "attackId": null,
+            "before": 970,
+            "after": 960,
+            "target": {
+              "archetype": "infected.runner",
+              "hp": 60,
+              "position": {
+                "x": -406.6343012957129,
+                "y": 0.7,
+                "z": -50.134797844615704,
+                "yaw": 2.648333333333332
+              },
+              "state": "chase",
+              "group": "crossing-patrol-5"
+            }
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 4220,
+            "sourceId": 667,
+            "targetId": 765,
+            "source": "contact",
+            "contactId": 5,
+            "attackId": null,
+            "before": 960,
+            "after": 950,
+            "target": {
+              "archetype": "infected.runner",
+              "hp": 60,
+              "position": {
+                "x": -405.19607655030177,
+                "y": 0.7,
+                "z": -48.907615615890116,
+                "yaw": -2.431331964528595
+              },
+              "state": "wander",
+              "group": "crossing-patrol-5"
+            }
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 4264,
+            "sourceId": 667,
+            "targetId": 766,
+            "source": "contact",
+            "contactId": 6,
+            "attackId": null,
+            "before": 950,
+            "after": 940,
+            "target": {
+              "archetype": "infected.runner",
+              "hp": 60,
+              "position": {
+                "x": -401.5780153139861,
+                "y": 0.7,
+                "z": -46.6478939851863,
+                "yaw": -0.8532578234944267
+              },
+              "state": "idle",
+              "group": "crossing-patrol-5"
+            }
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 4970,
+            "sourceId": 667,
+            "targetId": 810,
+            "source": "contact",
+            "contactId": 7,
+            "attackId": null,
+            "before": 940,
+            "after": 930,
+            "target": {
+              "archetype": "infected.runner",
+              "hp": 60,
+              "position": {
+                "x": -359.61090090224445,
+                "y": 0.7,
+                "z": -3.252347540537119,
+                "yaw": -2.698345612781066
+              },
+              "state": "attack",
+              "group": "crossing-patrol-6"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/final-c/test-results/final-c-l9-wedge-1794012093728/low-kit.army-checkpoint:2454-escaped-z1.5.jpg",
+      "sha256": "a24360af365750730c28f749f103e49ed12a0a5a33ccadcfb0f45fdd20c1db92",
+      "label": "kit.army-checkpoint:2454-escaped",
+      "zoom": 1.5,
+      "state": {
+        "tick": 6480,
+        "phase": "driving",
+        "position": {
+          "x": -343.5461120605469,
+          "y": 0.9954344034194946,
+          "z": 39.46651077270508,
+          "yaw": -0.08326369792936338
+        },
+        "speed": 5.923132889526702,
+        "hp": 930,
+        "hud": "Armor 930 / 1000",
+        "events": [
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 447,
+            "sourceId": 667,
+            "targetId": 713,
+            "source": "contact",
+            "contactId": 1,
+            "attackId": null,
+            "before": 1000,
+            "after": 990,
+            "target": {
+              "archetype": "infected.runner",
+              "hp": 60,
+              "position": {
+                "x": -520.7853224485838,
+                "y": 0.7,
+                "z": -59.738952731782774,
+                "yaw": 0
+              },
+              "state": "idle",
+              "group": "crossing-patrol-0"
+            }
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 448,
+            "sourceId": 667,
+            "targetId": 712,
+            "source": "contact",
+            "contactId": 2,
+            "attackId": null,
+            "before": 990,
+            "after": 980,
+            "target": {
+              "archetype": "infected.runner",
+              "hp": 60,
+              "position": {
+                "x": -522.0739879956226,
+                "y": 0.7,
+                "z": -60.286073475197824,
+                "yaw": 0
+              },
+              "state": "idle",
+              "group": "crossing-patrol-0"
+            }
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 1045,
+            "sourceId": 667,
+            "targetId": 714,
+            "source": "contact",
+            "contactId": 3,
+            "attackId": null,
+            "before": 980,
+            "after": 970,
+            "target": {
+              "archetype": "infected.runner",
+              "hp": 60,
+              "position": {
+                "x": -520.3971909224829,
+                "y": 0.7,
+                "z": -53.0729606925446,
+                "yaw": 2.123084491058809
+              },
+              "state": "attack",
+              "group": "crossing-patrol-0"
+            }
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 4199,
+            "sourceId": 667,
+            "targetId": 767,
+            "source": "contact",
+            "contactId": 4,
+            "attackId": null,
+            "before": 970,
+            "after": 960,
+            "target": {
+              "archetype": "infected.runner",
+              "hp": 60,
+              "position": {
+                "x": -406.6343012957129,
+                "y": 0.7,
+                "z": -50.134797844615704,
+                "yaw": 2.648333333333332
+              },
+              "state": "chase",
+              "group": "crossing-patrol-5"
+            }
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 4220,
+            "sourceId": 667,
+            "targetId": 765,
+            "source": "contact",
+            "contactId": 5,
+            "attackId": null,
+            "before": 960,
+            "after": 950,
+            "target": {
+              "archetype": "infected.runner",
+              "hp": 60,
+              "position": {
+                "x": -405.19607655030177,
+                "y": 0.7,
+                "z": -48.907615615890116,
+                "yaw": -2.431331964528595
+              },
+              "state": "wander",
+              "group": "crossing-patrol-5"
+            }
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 4264,
+            "sourceId": 667,
+            "targetId": 766,
+            "source": "contact",
+            "contactId": 6,
+            "attackId": null,
+            "before": 950,
+            "after": 940,
+            "target": {
+              "archetype": "infected.runner",
+              "hp": 60,
+              "position": {
+                "x": -401.5780153139861,
+                "y": 0.7,
+                "z": -46.6478939851863,
+                "yaw": -0.8532578234944267
+              },
+              "state": "idle",
+              "group": "crossing-patrol-5"
+            }
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 4970,
+            "sourceId": 667,
+            "targetId": 810,
+            "source": "contact",
+            "contactId": 7,
+            "attackId": null,
+            "before": 940,
+            "after": 930,
+            "target": {
+              "archetype": "infected.runner",
+              "hp": 60,
+              "position": {
+                "x": -359.61090090224445,
+                "y": 0.7,
+                "z": -3.252347540537119,
+                "yaw": -2.698345612781066
+              },
+              "state": "attack",
+              "group": "crossing-patrol-6"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/final-c/test-results/final-c-l9-wedge-1794012166568/high-prop.tent:2455-escaped-z0.5.jpg",
+      "sha256": "fc0214cb668295042429e08c81a5bb0acd58648b130d7bae7e8f10aa0b4b5acc",
+      "label": "prop.tent:2455-escaped",
+      "zoom": 0.5,
+      "state": {
+        "tick": 984,
+        "phase": "driving",
+        "position": {
+          "x": -519.7366943359375,
+          "y": 0.9954344630241394,
+          "z": -56.99333953857422,
+          "yaw": 1.1722490274208244
+        },
+        "speed": 5.910674504509699,
+        "hp": 980,
+        "hud": "Armor 980 / 1000",
+        "events": [
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 447,
+            "sourceId": 667,
+            "targetId": 744,
+            "source": "contact",
+            "contactId": 1,
+            "attackId": null,
+            "before": 1000,
+            "after": 990,
+            "target": {
+              "archetype": "infected.runner",
+              "hp": 60,
+              "position": {
+                "x": -520.7853224485838,
+                "y": 0.7,
+                "z": -59.738952731782774,
+                "yaw": 0
+              },
+              "state": "idle",
+              "group": "crossing-patrol-0"
+            }
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 448,
+            "sourceId": 667,
+            "targetId": 743,
+            "source": "contact",
+            "contactId": 2,
+            "attackId": null,
+            "before": 990,
+            "after": 980,
+            "target": {
+              "archetype": "infected.runner",
+              "hp": 60,
+              "position": {
+                "x": -522.0739879956226,
+                "y": 0.7,
+                "z": -60.286073475197824,
+                "yaw": 0
+              },
+              "state": "idle",
+              "group": "crossing-patrol-0"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/final-c/test-results/final-c-l9-wedge-1794012166568/high-prop.tent:2455-escaped-z1.5.jpg",
+      "sha256": "2ec616cf2fb9fa6efb1868e45a765b3d0ba2e071119836873ebec8c9d367b269",
+      "label": "prop.tent:2455-escaped",
+      "zoom": 1.5,
+      "state": {
+        "tick": 984,
+        "phase": "driving",
+        "position": {
+          "x": -519.7366943359375,
+          "y": 0.9954344630241394,
+          "z": -56.99333953857422,
+          "yaw": 1.1722490274208244
+        },
+        "speed": 5.910674504509699,
+        "hp": 980,
+        "hud": "Armor 980 / 1000",
+        "events": [
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 447,
+            "sourceId": 667,
+            "targetId": 744,
+            "source": "contact",
+            "contactId": 1,
+            "attackId": null,
+            "before": 1000,
+            "after": 990,
+            "target": {
+              "archetype": "infected.runner",
+              "hp": 60,
+              "position": {
+                "x": -520.7853224485838,
+                "y": 0.7,
+                "z": -59.738952731782774,
+                "yaw": 0
+              },
+              "state": "idle",
+              "group": "crossing-patrol-0"
+            }
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 448,
+            "sourceId": 667,
+            "targetId": 743,
+            "source": "contact",
+            "contactId": 2,
+            "attackId": null,
+            "before": 990,
+            "after": 980,
+            "target": {
+              "archetype": "infected.runner",
+              "hp": 60,
+              "position": {
+                "x": -522.0739879956226,
+                "y": 0.7,
+                "z": -60.286073475197824,
+                "yaw": 0
+              },
+              "state": "idle",
+              "group": "crossing-patrol-0"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/final-c/test-results/final-c-l9-wedge-1794012166568/high-veh.school-bus:2427-escaped-z0.5.jpg",
+      "sha256": "4d2d2e020a50a152f54b2fd3c9c2cb2f95b7f2df9b8d6235fd47581ddab9a76c",
+      "label": "veh.school-bus:2427-escaped",
+      "zoom": 0.5,
+      "state": {
+        "tick": 3138,
+        "phase": "driving",
+        "position": {
+          "x": -443.3424987792969,
+          "y": 0.9954345226287842,
+          "z": -118.5722427368164,
+          "yaw": -0.2844172268724493
+        },
+        "speed": 5.894785532555819,
+        "hp": 970,
+        "hud": "Armor 970 / 1000",
+        "events": [
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 447,
+            "sourceId": 667,
+            "targetId": 744,
+            "source": "contact",
+            "contactId": 1,
+            "attackId": null,
+            "before": 1000,
+            "after": 990,
+            "target": {
+              "archetype": "infected.runner",
+              "hp": 60,
+              "position": {
+                "x": -520.7853224485838,
+                "y": 0.7,
+                "z": -59.738952731782774,
+                "yaw": 0
+              },
+              "state": "idle",
+              "group": "crossing-patrol-0"
+            }
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 448,
+            "sourceId": 667,
+            "targetId": 743,
+            "source": "contact",
+            "contactId": 2,
+            "attackId": null,
+            "before": 990,
+            "after": 980,
+            "target": {
+              "archetype": "infected.runner",
+              "hp": 60,
+              "position": {
+                "x": -522.0739879956226,
+                "y": 0.7,
+                "z": -60.286073475197824,
+                "yaw": 0
+              },
+              "state": "idle",
+              "group": "crossing-patrol-0"
+            }
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 2003,
+            "sourceId": 667,
+            "targetId": 745,
+            "source": "contact",
+            "contactId": 3,
+            "attackId": null,
+            "before": 980,
+            "after": 970,
+            "target": {
+              "archetype": "infected.runner",
+              "hp": 60,
+              "position": {
+                "x": -488.3220442734419,
+                "y": 0.7,
+                "z": -74.53181649997737,
+                "yaw": 2.3029891492555983
+              },
+              "state": "chase",
+              "group": "crossing-patrol-0"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/final-c/test-results/final-c-l9-wedge-1794012166568/high-veh.school-bus:2427-escaped-z1.5.jpg",
+      "sha256": "ebca701e9420d58bce33b72b81013e5302d62f3b1f4f63c723db2381072ade82",
+      "label": "veh.school-bus:2427-escaped",
+      "zoom": 1.5,
+      "state": {
+        "tick": 3138,
+        "phase": "driving",
+        "position": {
+          "x": -443.3424987792969,
+          "y": 0.9954345226287842,
+          "z": -118.5722427368164,
+          "yaw": -0.2844172268724493
+        },
+        "speed": 5.894785532555819,
+        "hp": 970,
+        "hud": "Armor 970 / 1000",
+        "events": [
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 447,
+            "sourceId": 667,
+            "targetId": 744,
+            "source": "contact",
+            "contactId": 1,
+            "attackId": null,
+            "before": 1000,
+            "after": 990,
+            "target": {
+              "archetype": "infected.runner",
+              "hp": 60,
+              "position": {
+                "x": -520.7853224485838,
+                "y": 0.7,
+                "z": -59.738952731782774,
+                "yaw": 0
+              },
+              "state": "idle",
+              "group": "crossing-patrol-0"
+            }
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 448,
+            "sourceId": 667,
+            "targetId": 743,
+            "source": "contact",
+            "contactId": 2,
+            "attackId": null,
+            "before": 990,
+            "after": 980,
+            "target": {
+              "archetype": "infected.runner",
+              "hp": 60,
+              "position": {
+                "x": -522.0739879956226,
+                "y": 0.7,
+                "z": -60.286073475197824,
+                "yaw": 0
+              },
+              "state": "idle",
+              "group": "crossing-patrol-0"
+            }
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 2003,
+            "sourceId": 667,
+            "targetId": 745,
+            "source": "contact",
+            "contactId": 3,
+            "attackId": null,
+            "before": 980,
+            "after": 970,
+            "target": {
+              "archetype": "infected.runner",
+              "hp": 60,
+              "position": {
+                "x": -488.3220442734419,
+                "y": 0.7,
+                "z": -74.53181649997737,
+                "yaw": 2.3029891492555983
+              },
+              "state": "chase",
+              "group": "crossing-patrol-0"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/final-c/test-results/final-c-l9-wedge-1794012166568/high-kit.army-checkpoint:2454-escaped-z0.5.jpg",
+      "sha256": "6a533bb42d88e614897209ff08ebe543915ac5ac1d4f08f3ffe03ca5d1d11f8d",
+      "label": "kit.army-checkpoint:2454-escaped",
+      "zoom": 0.5,
+      "state": {
+        "tick": 6426,
+        "phase": "driving",
+        "position": {
+          "x": -315.9181213378906,
+          "y": 0.9954344034194946,
+          "z": 19.420063018798828,
+          "yaw": -2.4909143612818174
+        },
+        "speed": 5.8784116332472145,
+        "hp": 910,
+        "hud": "Armor 910 / 1000",
+        "events": [
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 447,
+            "sourceId": 667,
+            "targetId": 744,
+            "source": "contact",
+            "contactId": 1,
+            "attackId": null,
+            "before": 1000,
+            "after": 990,
+            "target": {
+              "archetype": "infected.runner",
+              "hp": 60,
+              "position": {
+                "x": -520.7853224485838,
+                "y": 0.7,
+                "z": -59.738952731782774,
+                "yaw": 0
+              },
+              "state": "idle",
+              "group": "crossing-patrol-0"
+            }
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 448,
+            "sourceId": 667,
+            "targetId": 743,
+            "source": "contact",
+            "contactId": 2,
+            "attackId": null,
+            "before": 990,
+            "after": 980,
+            "target": {
+              "archetype": "infected.runner",
+              "hp": 60,
+              "position": {
+                "x": -522.0739879956226,
+                "y": 0.7,
+                "z": -60.286073475197824,
+                "yaw": 0
+              },
+              "state": "idle",
+              "group": "crossing-patrol-0"
+            }
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 2003,
+            "sourceId": 667,
+            "targetId": 745,
+            "source": "contact",
+            "contactId": 3,
+            "attackId": null,
+            "before": 980,
+            "after": 970,
+            "target": {
+              "archetype": "infected.runner",
+              "hp": 60,
+              "position": {
+                "x": -488.3220442734419,
+                "y": 0.7,
+                "z": -74.53181649997737,
+                "yaw": 2.3029891492555983
+              },
+              "state": "chase",
+              "group": "crossing-patrol-0"
+            }
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 4211,
+            "sourceId": 667,
+            "targetId": 779,
+            "source": "contact",
+            "contactId": 4,
+            "attackId": null,
+            "before": 970,
+            "after": 960,
+            "target": {
+              "archetype": "infected.runner",
+              "hp": 60,
+              "position": {
+                "x": -405.78089935481705,
+                "y": 0.7,
+                "z": -49.546011886578526,
+                "yaw": 2.218071507074111
+              },
+              "state": "chase",
+              "group": "crossing-patrol-4"
+            }
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 4233,
+            "sourceId": 667,
+            "targetId": 780,
+            "source": "contact",
+            "contactId": 5,
+            "attackId": null,
+            "before": 960,
+            "after": 950,
+            "target": {
+              "archetype": "infected.runner",
+              "hp": 60,
+              "position": {
+                "x": -407.5364900076026,
+                "y": 0.7,
+                "z": -49.240226732035026,
+                "yaw": 1.2344583188305882
+              },
+              "state": "attack",
+              "group": "crossing-patrol-4"
+            }
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 4978,
+            "sourceId": 667,
+            "targetId": 858,
+            "source": "contact",
+            "contactId": 6,
+            "attackId": null,
+            "before": 950,
+            "after": 940,
+            "target": {
+              "archetype": "infected.runner",
+              "hp": 60,
+              "position": {
+                "x": -359.3567950417502,
+                "y": 0.7,
+                "z": -3.4944408414568535,
+                "yaw": 3.347321403207233
+              },
+              "state": "wander",
+              "group": "crossing-patrol-5"
+            }
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 5035,
+            "sourceId": 667,
+            "targetId": 857,
+            "source": "contact",
+            "contactId": 7,
+            "attackId": null,
+            "before": 940,
+            "after": 930,
+            "target": {
+              "archetype": "infected.runner",
+              "hp": 60,
+              "position": {
+                "x": -356.40908063556026,
+                "y": 0.7,
+                "z": 0.38252265843559297,
+                "yaw": -2.253172778868736
+              },
+              "state": "attack",
+              "group": "crossing-patrol-5"
+            }
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 5438,
+            "sourceId": 667,
+            "targetId": 859,
+            "source": "contact",
+            "contactId": 8,
+            "attackId": null,
+            "before": 930,
+            "after": 920,
+            "target": {
+              "archetype": "infected.runner",
+              "hp": 60,
+              "position": {
+                "x": -339.09687756961796,
+                "y": 0.7,
+                "z": 19.582968987072096,
+                "yaw": 0.16818534223392462
+              },
+              "state": "attack",
+              "group": "crossing-patrol-5"
+            }
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 5472,
+            "sourceId": 667,
+            "targetId": 672,
+            "source": "contact",
+            "contactId": 9,
+            "attackId": null,
+            "before": 920,
+            "after": 910,
+            "target": {
+              "archetype": "infected.runner",
+              "hp": 60,
+              "position": {
+                "x": -339.04841891364435,
+                "y": 0.7,
+                "z": 17.887479031797504,
+                "yaw": -6.0955482971429555
+              },
+              "state": "chase",
+              "group": "shortcut-wanderer-0"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/final-c/test-results/final-c-l9-wedge-1794012166568/high-kit.army-checkpoint:2454-escaped-z1.5.jpg",
+      "sha256": "5b9c2a2952d35ef55b937dc301eaea3ecd0c38f34abaf87dca180e8175b434b2",
+      "label": "kit.army-checkpoint:2454-escaped",
+      "zoom": 1.5,
+      "state": {
+        "tick": 6426,
+        "phase": "driving",
+        "position": {
+          "x": -315.9181213378906,
+          "y": 0.9954344034194946,
+          "z": 19.420063018798828,
+          "yaw": -2.4909143612818174
+        },
+        "speed": 5.8784116332472145,
+        "hp": 910,
+        "hud": "Armor 910 / 1000",
+        "events": [
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 447,
+            "sourceId": 667,
+            "targetId": 744,
+            "source": "contact",
+            "contactId": 1,
+            "attackId": null,
+            "before": 1000,
+            "after": 990,
+            "target": {
+              "archetype": "infected.runner",
+              "hp": 60,
+              "position": {
+                "x": -520.7853224485838,
+                "y": 0.7,
+                "z": -59.738952731782774,
+                "yaw": 0
+              },
+              "state": "idle",
+              "group": "crossing-patrol-0"
+            }
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 448,
+            "sourceId": 667,
+            "targetId": 743,
+            "source": "contact",
+            "contactId": 2,
+            "attackId": null,
+            "before": 990,
+            "after": 980,
+            "target": {
+              "archetype": "infected.runner",
+              "hp": 60,
+              "position": {
+                "x": -522.0739879956226,
+                "y": 0.7,
+                "z": -60.286073475197824,
+                "yaw": 0
+              },
+              "state": "idle",
+              "group": "crossing-patrol-0"
+            }
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 2003,
+            "sourceId": 667,
+            "targetId": 745,
+            "source": "contact",
+            "contactId": 3,
+            "attackId": null,
+            "before": 980,
+            "after": 970,
+            "target": {
+              "archetype": "infected.runner",
+              "hp": 60,
+              "position": {
+                "x": -488.3220442734419,
+                "y": 0.7,
+                "z": -74.53181649997737,
+                "yaw": 2.3029891492555983
+              },
+              "state": "chase",
+              "group": "crossing-patrol-0"
+            }
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 4211,
+            "sourceId": 667,
+            "targetId": 779,
+            "source": "contact",
+            "contactId": 4,
+            "attackId": null,
+            "before": 970,
+            "after": 960,
+            "target": {
+              "archetype": "infected.runner",
+              "hp": 60,
+              "position": {
+                "x": -405.78089935481705,
+                "y": 0.7,
+                "z": -49.546011886578526,
+                "yaw": 2.218071507074111
+              },
+              "state": "chase",
+              "group": "crossing-patrol-4"
+            }
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 4233,
+            "sourceId": 667,
+            "targetId": 780,
+            "source": "contact",
+            "contactId": 5,
+            "attackId": null,
+            "before": 960,
+            "after": 950,
+            "target": {
+              "archetype": "infected.runner",
+              "hp": 60,
+              "position": {
+                "x": -407.5364900076026,
+                "y": 0.7,
+                "z": -49.240226732035026,
+                "yaw": 1.2344583188305882
+              },
+              "state": "attack",
+              "group": "crossing-patrol-4"
+            }
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 4978,
+            "sourceId": 667,
+            "targetId": 858,
+            "source": "contact",
+            "contactId": 6,
+            "attackId": null,
+            "before": 950,
+            "after": 940,
+            "target": {
+              "archetype": "infected.runner",
+              "hp": 60,
+              "position": {
+                "x": -359.3567950417502,
+                "y": 0.7,
+                "z": -3.4944408414568535,
+                "yaw": 3.347321403207233
+              },
+              "state": "wander",
+              "group": "crossing-patrol-5"
+            }
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 5035,
+            "sourceId": 667,
+            "targetId": 857,
+            "source": "contact",
+            "contactId": 7,
+            "attackId": null,
+            "before": 940,
+            "after": 930,
+            "target": {
+              "archetype": "infected.runner",
+              "hp": 60,
+              "position": {
+                "x": -356.40908063556026,
+                "y": 0.7,
+                "z": 0.38252265843559297,
+                "yaw": -2.253172778868736
+              },
+              "state": "attack",
+              "group": "crossing-patrol-5"
+            }
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 5438,
+            "sourceId": 667,
+            "targetId": 859,
+            "source": "contact",
+            "contactId": 8,
+            "attackId": null,
+            "before": 930,
+            "after": 920,
+            "target": {
+              "archetype": "infected.runner",
+              "hp": 60,
+              "position": {
+                "x": -339.09687756961796,
+                "y": 0.7,
+                "z": 19.582968987072096,
+                "yaw": 0.16818534223392462
+              },
+              "state": "attack",
+              "group": "crossing-patrol-5"
+            }
+          },
+          {
+            "type": "vehicle.durability-hit",
+            "tick": 5472,
+            "sourceId": 667,
+            "targetId": 672,
+            "source": "contact",
+            "contactId": 9,
+            "attackId": null,
+            "before": 920,
+            "after": 910,
+            "target": {
+              "archetype": "infected.runner",
+              "hp": 60,
+              "position": {
+                "x": -339.04841891364435,
+                "y": 0.7,
+                "z": 17.887479031797504,
+                "yaw": -6.0955482971429555
+              },
+              "state": "chase",
+              "group": "shortcut-wanderer-0"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "capturePolicy": "After review, unused raw captures deleted at orchestrator request; original receipts retain SHA256. Selected frames retained in ignored test-results only."
+}
