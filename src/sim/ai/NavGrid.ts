@@ -204,7 +204,7 @@ export class NavGrid {
     }
     return true;
   }
-  /** Deepest square-footprint overlap (the smaller axis overlap per wall) at a point; Infinity outside the navigation domain. */
+  /** Deepest wall-margin overlap; reviewed hulls use circular capsule corners. Infinity outside the navigation domain. */
   private penetration(x: number, z: number, radius: number): number {
     if (!this.contains(x, z, radius)) return Infinity;
     const cellX = Math.floor(x / 4), cellZ = Math.floor(z / 4);
