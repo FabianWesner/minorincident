@@ -1,106 +1,53 @@
 {
   "row": "L8-02",
   "status": "PASS",
-  "reviewer": "Codex sweep-c5",
-  "date": "2026-11-06",
-  "commit": "4a87ab2105e73e3839c16d96d923a21ab4e66b68",
+  "reviewer": "Codex final-c",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
   "clauses": [
     {
       "clause": "Exactly 60 active sim seconds without objective/waypoint/scripted attack.",
       "verdict": "PASS",
-      "note": "Fresh current-source low/high production L7\u2192L8 handovers, no skips and no console/page errors. Personally inspected all75 frames: calm views lack objective text and world/minimap objective markers; breach views show them. Low/high HUD samples [{'tier': 'low', 'samples': 120, 'firstTick': 0, 'lastCalmTick': 3573, 'maxGapTicks': 34, 'emptyHud': True, 'breach': {'elapsedMs': 65130.69999999998, 'tick': 3600, 'text': 'Bring the survivors to the armored vehicle and board \u00b7 97\\xa0m', 'pin': True, 'marker': True, 'breached': True}}, {'tier': 'high', 'samples': 121, 'firstTick': 0, 'lastCalmTick': 3589, 'maxGapTicks': 33, 'emptyHud': True, 'breach': {'elapsedMs': 64397.5, 'tick': 3600, 'text': 'Bring the survivors to the armored vehicle and board \u00b7 97\\xa0m', 'pin': True, 'marker': True, 'breached': True}}]; native every-tick complete/stationary receipts independently prove3600 calm ticks, zero objective markers and zero scripted combat events. Read-only controls remain identical. Eight malformed or missing-coverage controls rejected; unchanged timers and targets."
+      "note": "Both native policies at both tiers give3599 calm ticks (60active seconds within1tick), zero infected combat and zero markers. Current physical WASD sanctuary photographs at both zooms show no objective text or waypoint during calm, with actual production HUD/clip snapshots and no hostile fixture. Combat begins only after breach3600. Native full-route controls unchanged."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-c5/L8-02/evidence/low-L7-L8-carried-low-input.json.gz",
-      "sha256": "4ac9ea3a249d680a70c51bb9bad3308a37a3136714e0b8e589562f26af388a72",
-      "what": "Immutable current-source docs/reports/fix51-r10c/L7-L8-carried-low-input.json; physical calm HUD audit, reviewed frames, production handover or native every-tick attack/marker ledger."
+      "file": "docs/reports/final-c/L8-02/low-physical.json.gz",
+      "sha256": "ec37d148839a71c36a5006114c5883f85c5d8c5858384f9e3a1707ae8f970213",
+      "what": "Both native policies at both tiers give3599 calm ticks (60active seconds within1tick), zero infected combat and zero markers. Current physical WASD sanctuary photographs at both zooms show no objective text or waypoint during calm, with actual production HUD/clip snapshots and no hostile fixture. Combat begins only after breach3600. Native full-route controls unchanged."
     },
     {
-      "file": "docs/reports/sweep-c5/L8-02/evidence/low-review.json.gz",
-      "sha256": "78dc29321be256c8f910e89114edfea5ddf39edc13f4ec44d4afe277eb36c13f",
-      "what": "Immutable current-source docs/reports/fix51-r10c/L7-L8-carried-low/review.json; physical calm HUD audit, reviewed frames, production handover or native every-tick attack/marker ledger."
+      "file": "docs/reports/final-c/L8-02/high-physical.json.gz",
+      "sha256": "921fc17221965fda55a2d057f581a892f9dfc886ca4f57076256a71d092e0181",
+      "what": "Both native policies at both tiers give3599 calm ticks (60active seconds within1tick), zero infected combat and zero markers. Current physical WASD sanctuary photographs at both zooms show no objective text or waypoint during calm, with actual production HUD/clip snapshots and no hostile fixture. Combat begins only after breach3600. Native full-route controls unchanged."
     },
     {
-      "file": "docs/reports/sweep-c5/L8-02/evidence/low-handover-audit-late-input.json.gz",
-      "sha256": "9148b3f7d79f1511e8727617eb035f9f50fb07fb331d1cf28debae327f917d69",
-      "what": "Immutable current-source docs/reports/fix51-r10c/L7-L8-carried-low/handover-audit-late-input.json.gz; physical calm HUD audit, reviewed frames, production handover or native every-tick attack/marker ledger."
+      "file": "docs/reports/final-c/L8-02/capture-review.json",
+      "sha256": "625ffae82bcb8d41d8fd9ffc9575ea5a451466b8913cec52c28eb77708b4fac0",
+      "what": "Both native policies at both tiers give3599 calm ticks (60active seconds within1tick), zero infected combat and zero markers. Current physical WASD sanctuary photographs at both zooms show no objective text or waypoint during calm, with actual production HUD/clip snapshots and no hostile fixture. Combat begins only after breach3600. Native full-route controls unchanged."
     },
     {
-      "file": "docs/reports/sweep-c5/L8-02/evidence/low-late-input-completion.json.gz",
-      "sha256": "8b518d64f9bec26c20550cab963261ad8ecd540a33b196bedf0bfa5a08239ca0",
-      "what": "Immutable current-source docs/reports/fix51-r10c/L7-L8-carried-low/late-input-completion.json.gz; physical calm HUD audit, reviewed frames, production handover or native every-tick attack/marker ledger."
+      "file": "docs/reports/final-c/L8-02/sweep-c5-l8-calm-producer.ts",
+      "sha256": "b108b0d60823f5892f42ab5c4f0bc13e86797e2d9695dd45a6e119c1a4787d02",
+      "what": "Exact measurement producer snapshot; only output locations differ from the existing observer."
     },
     {
-      "file": "docs/reports/sweep-c5/L8-02/evidence/low-late-input-acceptance-ledger.json.gz",
-      "sha256": "f461a5c1457b0ee8b0fbba6dd523b457c84d14626558fd726cc67645faaf1985",
-      "what": "Immutable current-source docs/reports/fix51-r10c/L7-L8-carried-low/late-input-acceptance-ledger.json.gz; physical calm HUD audit, reviewed frames, production handover or native every-tick attack/marker ledger."
+      "file": "docs/reports/final-c/shared-l8/native.json.gz",
+      "sha256": "c103e65df509435bc174568c6e1fe086708e3a09833b830b225a959096b9de9b",
+      "what": "Both native policies at both tiers give3599 calm ticks (60active seconds within1tick), zero infected combat and zero markers. Current physical WASD sanctuary photographs at both zooms show no objective text or waypoint during calm, with actual production HUD/clip snapshots and no hostile fixture. Combat begins only after breach3600. Native full-route controls unchanged."
     },
     {
-      "file": "docs/reports/sweep-c5/L8-02/evidence/low-log-late-input.jsonl.gz",
-      "sha256": "84246444c8a32c88797c7abb52abbe4d478ce2526b54fa147d7e3419fd844ee5",
-      "what": "Immutable current-source docs/reports/fix51-r10c/L7-L8-carried-low/log-late-input.jsonl.gz; physical calm HUD audit, reviewed frames, production handover or native every-tick attack/marker ledger."
+      "file": "docs/reports/final-c/native/L8-low-complete.json.gz",
+      "sha256": "96688fdb8d814fe11ac0659a042df65e0712b4d29036c71660281328d7bf593f",
+      "what": "Both native policies at both tiers give3599 calm ticks (60active seconds within1tick), zero infected combat and zero markers. Current physical WASD sanctuary photographs at both zooms show no objective text or waypoint during calm, with actual production HUD/clip snapshots and no hostile fixture. Combat begins only after breach3600. Native full-route controls unchanged."
     },
     {
-      "file": "docs/reports/sweep-c5/L8-02/evidence/low-L8-low-complete.json.gz",
-      "sha256": "52edf0db369ec4a08321a08764de6120643a3c570d42541bff8b51f301b70ce9",
-      "what": "Immutable current-source docs/reports/fix51-verify/receipts/L8-low-complete.json; physical calm HUD audit, reviewed frames, production handover or native every-tick attack/marker ledger."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L8-02/evidence/low-L8-low-stationary.json.gz",
-      "sha256": "d21cab8a8cf7b2cb62d4690db90f57523dc46557740d265a4eb1821b561d10eb",
-      "what": "Immutable current-source docs/reports/fix51-verify/receipts/L8-low-stationary.json; physical calm HUD audit, reviewed frames, production handover or native every-tick attack/marker ledger."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L8-02/evidence/high-L7-L8-carried-high-input.json.gz",
-      "sha256": "21986630379983a8fdac10c6fd1cda846cb93732f4c05242b75d9be062ae6223",
-      "what": "Immutable current-source docs/reports/fix51-r10c/L7-L8-carried-high-input.json; physical calm HUD audit, reviewed frames, production handover or native every-tick attack/marker ledger."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L8-02/evidence/high-review.json.gz",
-      "sha256": "f9dd859901ceddafbde6c2dfb2cf1f16e39c0343ec5174bc96972f2c71e35928",
-      "what": "Immutable current-source docs/reports/fix51-r10c/L7-L8-carried-high/review.json; physical calm HUD audit, reviewed frames, production handover or native every-tick attack/marker ledger."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L8-02/evidence/high-handover-audit-late-input.json.gz",
-      "sha256": "a516d3bcfe04aff19f5f980e8f0cb33d7bc7d040fbb5f9427088add6c9896938",
-      "what": "Immutable current-source docs/reports/fix51-r10c/L7-L8-carried-high/handover-audit-late-input.json.gz; physical calm HUD audit, reviewed frames, production handover or native every-tick attack/marker ledger."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L8-02/evidence/high-late-input-completion.json.gz",
-      "sha256": "cb0524a5db684087cdeffb195b376d92ee89b992ae0e1f1e6b15ed09766a30b1",
-      "what": "Immutable current-source docs/reports/fix51-r10c/L7-L8-carried-high/late-input-completion.json.gz; physical calm HUD audit, reviewed frames, production handover or native every-tick attack/marker ledger."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L8-02/evidence/high-late-input-acceptance-ledger.json.gz",
-      "sha256": "e5d86326c2632e9c30e83db36366e10d02f323d395aac123f4c437162e0bb2ae",
-      "what": "Immutable current-source docs/reports/fix51-r10c/L7-L8-carried-high/late-input-acceptance-ledger.json.gz; physical calm HUD audit, reviewed frames, production handover or native every-tick attack/marker ledger."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L8-02/evidence/high-log-late-input.jsonl.gz",
-      "sha256": "7f3289c4c28c98d3b994f5a0cf04327405ffeba872fc5117c28dbc3a27688286",
-      "what": "Immutable current-source docs/reports/fix51-r10c/L7-L8-carried-high/log-late-input.jsonl.gz; physical calm HUD audit, reviewed frames, production handover or native every-tick attack/marker ledger."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L8-02/evidence/high-L8-high-complete.json.gz",
-      "sha256": "2f6533e79c22f324ea7fdcfbbccc138f69fd4979a33cb4ea870f5ed31eae7c40",
-      "what": "Immutable current-source docs/reports/fix51-verify/receipts/L8-high-complete.json; physical calm HUD audit, reviewed frames, production handover or native every-tick attack/marker ledger."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L8-02/evidence/high-L8-high-stationary.json.gz",
-      "sha256": "fc89ccd43188d1d738289acb841ff0a318e2a8c79a09aae5c51a17e1c049b621",
-      "what": "Immutable current-source docs/reports/fix51-verify/receipts/L8-high-stationary.json; physical calm HUD audit, reviewed frames, production handover or native every-tick attack/marker ledger."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L8-02/coverage-proof.json",
-      "sha256": "a1dd7c9198f21c5abfc0bbfc549177bd645faa45f7453aa7155b8a5bd0ad08fb",
-      "what": "Eight counterexamples rejected by the actual calm consumer; exact original physical artifacts restored."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L8-02/summary.json",
-      "sha256": "757fef45b87122b5557dfb0a87387e55e3b4ddabea1f5b882ab53d803cca871c",
-      "what": "Both calm arrivals show lit bus-side road, courier/corgi and carried green-bar humans without objective text, world waypoint or minimap pin. Post-breach views show APC boarding guidance. All75 captures personally inspected on original-size four-frame sheets. L7 blast occlusion and L8 roof-adjacent boarding views are outside this calm criterion. Raws deleted after hashing and inspection; sheets remain in ignored test-results."
+      "file": "docs/reports/final-c/native/L8-high-complete.json.gz",
+      "sha256": "f8a12416068c3832b60c87e347766e4ce6c6f8491a4eb313c097d64976a8519a",
+      "what": "Both native policies at both tiers give3599 calm ticks (60active seconds within1tick), zero infected combat and zero markers. Current physical WASD sanctuary photographs at both zooms show no objective text or waypoint during calm, with actual production HUD/clip snapshots and no hostile fixture. Combat begins only after breach3600. Native full-route controls unchanged."
     }
-  ]
+  ],
+  "notes": "Frozen-head row review. Current immutable evidence, unchanged criterion and game source.",
+  "sourceDigest": "3f346fc1f0af18cb190b29844498febc36a720450de65904caad638582d717b9"
 }
