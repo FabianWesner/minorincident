@@ -259,10 +259,16 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     }
     if (process.env.PLAYTEST_ACCEPTANCE_CAPTURES === '1' && eyes.level && eyes.phase === 'playing' && !eyes.loading && !eyes.menu && eyes.player) {
       const key = `${eyes.level}-${eyes.step}`;
-      if (!acceptanceStarts.has(eyes.level)) acceptanceStarts.set(eyes.level, eyes.tick);
-      // Timing runs preserve their cold interval. Functional runs also measure
-      // the first step's two-second marker deadline instead of waiting ten seconds.
-      if ((noFrameTiming || eyes.tick - acceptanceStarts.get(eyes.level)! >= 600) && (!acceptanceCaptured.has(key) || eyes.tick - acceptanceTick >= 60 * 60)) {
+      if (!acceptanceStarts.has(eyes.level)) {
+        acceptanceStarts.set(eyes.level, eyes.tick);
+        // Record the opening HUD without waiting for a tier swap. Production
+        // terrain swaps need four seconds of running play; pausing at the first
+        // tick and awaiting their readiness deadlocks the high-quality photo.
+        if (noFrameTiming) await capture(`${key}-opening-t${eyes.tick}`);
+      }
+      // Let production streaming admission open before pausing for the matrix.
+      // Timing runs retain their longer cold interval.
+      if (eyes.tick - acceptanceStarts.get(eyes.level)! >= (noFrameTiming ? 300 : 600) && (!acceptanceCaptured.has(key) || eyes.tick - acceptanceTick >= 60 * 60)) {
         acceptanceCaptured.add(key); acceptanceTick = eyes.tick;
         await press([]); await releaseAim();
         await page.evaluate(() => window.__SS__!.pause());
@@ -1644,7 +1650,10 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       await releaseAim(); await press(keys); await hold(e.route && Math.hypot(e.route.dx, e.route.dz) < 4 ? 250 : 700); await press([]);
       log({ visibleMarkerUnstick: e.tick, keys, guidance: e.marker?.guidance, arrow: e.marker && { x: e.marker.x, y: e.marker.y } }); continue;
     }
-    if ((e.level !== 'L10' || !visibleOnly) && stalled && !atRing && ring && e.player) {
+    // Being within the four-metre observation band is not arrival. The L1
+    // fire-bay lip can still need a detour three metres from the trigger;
+    // suppressing route recovery there leaves the blocked bearing unrecovered.
+    if ((e.level !== 'L10' || !visibleOnly) && stalled && !arrived && ring && e.player) {
       if (visibleOnly) {
         const points = await page.evaluate(({ p, goal }) => [window.__SS__!.input.project(p, 'player'), window.__SS__!.input.project(goal, 'player')], { p: e.player, goal: ring });
         if (Math.hypot(e.player.x - navPos.x, e.player.z - navPos.z) > .6) navPos = { x: e.player.x, z: e.player.z, wall: Date.now() };

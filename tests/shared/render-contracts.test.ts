@@ -49,6 +49,9 @@ import type { AssetRegistry } from '../../src/assets/registry';
 import { GroundContacts } from '../../src/render/characters/GroundContacts';
 import { resolveRig, disposeCharacter } from '../../src/render/characters/rig';
 import { heroineStandingHeight } from '../../src/render/npc/figureHeight';
+import { CorpseLayout } from '../../src/render/characters/CorpseLayout';
+import { Vfx } from '../../src/render/vfx/Vfx';
+import { ObjectiveMarker } from '../../src/render/ObjectiveMarker';
 
 function checkChangingSupport(): void {
   const model = createSurvivorPlaceholder('female'), rig = resolveRig(model);
@@ -354,6 +357,28 @@ test('skinned crowd: four-influence packing, joint·bind⁻¹ atlas rows, and co
 });
 
 test('corpse pages: bodies persist past the old cap, bounds stay conservative, culling restores identity/pose/tint, normals survive vec4 padding', () => {
+  // Raised kerbs, planters and steps must support the whole flat body. A root
+  // on one side of an edge must not leave the torso buried on the other side.
+  for (const stepHeight of [.13, .35, .6]) for (const doorway of [false, true]) {
+    const floor = (_x: number, z: number) => z > 0 ? stepHeight : 0;
+    const world = { scenario: 'L1', entities: { revision: 0, get: () => undefined, *iterate() {} },
+      districts: { districts: [], supportBelow: floor }, infected: { nav: { clear: () => !doorway, move: (p: { x: number; z: number }, dx: number, dz: number) => { p.x += dx; p.z += dz; } } } } as unknown as SimWorld;
+    const body = { id: 900, health: { current: 0 }, transform: { x: 0, y: .7 + stepHeight, z: .05, yaw: 0 }, combat: { radius: .35 } } as EntitySnapshot;
+    const pose = new CorpseLayout(world).place(body);
+    expect('ax' in pose).toBe(true);
+    if ('ax' in pose) {
+      const low = Math.min(pose.az, pose.bz) - pose.radius, high = Math.max(pose.az, pose.bz) + pose.radius;
+      expect(floor(0, low), `step ${stepHeight}: body straddles the edge`).toBe(floor(0, high));
+      expect(pose.y).toBe(floor(pose.x, pose.z));
+    }
+  }
+  // If surrounding solids admit no slide at all, the last-resort flat pose
+  // still needs to clear the raised part of its footprint.
+  const pinnedWorld = { scenario: 'L1', entities: { revision: 0, get: () => undefined, *iterate() {} },
+    districts: { districts: [], supportBelow: (_x: number, z: number) => z > 0 ? .35 : 0 },
+    infected: { nav: { clear: () => true, move: () => {} } } } as unknown as SimWorld;
+  const pinnedBody = { id: 901, health: { current: 0 }, transform: { x: 0, y: .7, z: -.05, yaw: 0 }, combat: { radius: .35 } } as EntitySnapshot;
+  expect(new CorpseLayout(pinnedWorld).place(pinnedBody).y).toBe(.35);
   const baked = bakeInfected(createSkinnedCrowdFixture()); packCrowdParts(baked.geometry);
   const pool = new StaticCorpses(), material = new MeshLambertNodeMaterial(), records = new Map<number, EntitySnapshot>();
   try {
@@ -483,6 +508,22 @@ test('LOD selection: authored distance bands with hysteresis; game-camera-size c
 });
 
 test('materials: palette program keys match Three through weather and node changes; uniforms share a render group per material only', () => {
+  const marker = new ObjectiveMarker({} as SimWorld);
+  expect(((marker.children[1] as Mesh).material as MeshBasicMaterial).depthTest).toBe(true);
+  marker.dispose();
+  // A paused redraw must retire a dead source's warning without advancing FX
+  // time, while retaining live attacks and a bloater's real death countdown.
+  const source = { health: { current: 0 }, transform: { x: 0, z: 0 }, infected: { state: 'dead', attackId: 7, special: 'charge', until: 30, specialAttack: { stage: 'telegraph' } } } as EntitySnapshot;
+  const world = { tick: 20, entities: { get: (id: number) => id === 2 ? source : undefined } } as unknown as SimWorld;
+  const tells = new Map<number, { sourceId: number; slot: number; kind: string }>();
+  const fx = Object.assign(Object.create(Vfx.prototype) as object, { world, tells, time: 0, enabled: true, featherVeil: null,
+    obstruction: { remainingTicks: 0, opacity: 0 }, telegraphs: { remove: vi.fn() }, effect: vi.fn() }) as unknown as Vfx;
+  tells.set(7, { sourceId: 2, slot: 0, kind: 'charge' }); fx.updateSpecialState(); expect(tells.size).toBe(0); expect(fx.time).toBe(0);
+  source.health.current = 1; source.infected!.state = 'attack';
+  tells.set(7, { sourceId: 2, slot: 0, kind: 'charge' }); fx.updateSpecialState(); expect(tells.size).toBe(1);
+  source.health.current = 0; source.infected!.state = 'dead'; source.infected!.special = 'explode';
+  tells.set(7, { sourceId: 2, slot: 0, kind: 'bloated' }); fx.updateSpecialState(); expect(tells.size).toBe(1);
+  world.tick = 31; fx.updateSpecialState(); expect(tells.size).toBe(0);
   const lighting = new Lighting(new Scene()), materials = new Materials(lighting);
   try {
     const material = materials.get('sidewalk'), reference = MeshLambertNodeMaterial.prototype.customProgramCacheKey;

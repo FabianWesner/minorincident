@@ -543,6 +543,7 @@ export class Vfx extends Group {
   updateSpecialState(): void {
     let remaining = 0;
     for (const e of this.world.infected?.active ?? []) {
+      if (e.health.current <= 0 || e.corpse) continue;
       const a = e.infected?.specialAttack;
       // Checkpoint/resume restores windups without replaying their consumed
       // events. Read the locked attack and preserve its remaining sim ticks.
@@ -552,6 +553,15 @@ export class Vfx extends Group {
           startTick: a.startTick, activeTick: a.activeTick, cooldownExpiry: a.cooldownExpiry, target: a.target, area: a.area });
       }
       if (a?.move === 'flamingo.dive' && a.hitIds.includes(1)) remaining = Math.max(remaining, (a.obstructionUntil ?? 0) - this.world.tick);
+    }
+    // Warning lifetime follows the sim snapshot, including paused step()/redraws.
+    // Waiting for advance() left staged deaths ringed until real time resumed.
+    for (const [attackId, tell] of this.tells) if (tell.sourceId !== undefined) {
+      const source = this.world.entities.get(tell.sourceId), brain = source?.infected;
+      const pending = brain && brain.attackId === attackId && (source.health.current > 0 && !source.corpse && (brain.specialAttack?.stage === 'telegraph' || brain.state === 'attack') || brain.state === 'dead' && brain.special === 'explode' && this.world.tick < brain.until);
+      if (!pending) { if (brain?.attackId === attackId && tell.kind === 'bloated' && this.world.tick >= brain.until) this.effect('explosion', source!.transform.x, source!.transform.z, 3);
+        else if (source && source.health.current > 0 && brain?.attackId === attackId && brain.special === 'scream') this.effect('screamer', source.transform.x, source.transform.z, 20);
+        this.telegraphs.remove(tell.slot); this.tells.delete(attackId); }
     }
     this.prioritizeTelegraphs();
     this.obstruction.remainingTicks = Math.max(0, Math.min(48, remaining));
@@ -593,13 +603,6 @@ export class Vfx extends Group {
     for (const landing of this.landings) if (landing.at <= this.time) {
       if (this.enabled && this.gore !== 'Off') this.decals.spawn(this.time, 12, landing.x, landing.y + .019, landing.z, 0, 0, 0, landing.size, this.colorblind ? 0 : 5, landing.color);
       landing.at = Infinity;
-    }
-    for (const [attackId, tell] of this.tells) if (tell.sourceId !== undefined) {
-      const source = this.world.entities.get(tell.sourceId), brain = source?.infected;
-      const pending = brain && brain.attackId === attackId && (brain.specialAttack?.stage === 'telegraph' || brain.state === 'attack' || brain.state === 'dead' && brain.special === 'explode' && this.world.tick < brain.until);
-      if (!pending) { if (brain?.attackId === attackId && tell.kind === 'bloated' && this.world.tick >= brain.until) this.effect('explosion', source!.transform.x, source!.transform.z, 3);
-        else if (brain?.attackId === attackId && brain.special === 'scream') this.effect('screamer', source!.transform.x, source!.transform.z, 20);
-        this.telegraphs.remove(tell.slot); this.tells.delete(attackId); }
     }
     this.prioritizeTelegraphs();
     this.visible = this.enabled || this.tells.size > 0;
