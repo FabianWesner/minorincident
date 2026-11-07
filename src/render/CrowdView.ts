@@ -536,7 +536,9 @@ export class CrowdView extends Group {
       mesh.userData.staticInstancePosition = material.positionNode;
       mesh.onAfterRender = () => probe.draw();
       this.batches.set(`${key}:${lod}`, { animal: !!model.getObjectByName('legFL'), locomotion, probe, poses, lod, role: key, mesh, state, tint, shirt: baked.shirtColor ?? new Color(1, 1, 1), strideScale: baked.strideScale, windup: def.windup, asset, texture, count: 0 });
-      if (this.streaming) await this.warmBatch?.(mesh);
+      // L10 can demand encounter models before its background stream starts.
+      // The owner skips these calls until the initial scene is prepared.
+      if (this.streaming || this.world.scenario === 'L10') await this.warmBatch?.(mesh);
       if (this.disposed) return;
       this.add(mesh);
       const corpsePages = new Set<InstancedMesh>();
@@ -561,8 +563,11 @@ export class CrowdView extends Group {
       // A streamed actor's static corpse pages are siblings of its living batch.
       // Warm them after preparation; warming only `mesh` leaves the first settled
       // body to compile its corpse_* palette graph during gameplay.
-      if (this.streaming && this.world.scenario === 'L10') {
-        for (const page of corpsePages) await this.warmBatch?.(page);
+      if (this.world.scenario === 'L10') {
+        for (const page of corpsePages) {
+          if (this.disposed) return;
+          await this.warmBatch?.(page);
+        }
       }
   }
   private modelKey(id: string): string | undefined {
