@@ -596,7 +596,9 @@ export class SolidRegistry {
         const other = this.live[id];
         if (!other || id === e.id || this.rejected[id] || stable && !this.movedIds[id] || pairExempt(e, other) || !layers(old, other.transform)) continue;
         const dx = old.x - other.transform.x, dz = old.z - other.transform.z;
-        if (e.companion || other.companion ? this.companionContact(old, radius, e, other, tolerance) : dx * dx + dz * dz < (radius + this.bodyRadii[other.id] - tolerance) ** 2) reject(other);
+        if (e.companion || other.companion ? this.companionContact(old, radius, e, other, tolerance) : dx * dx + dz * dz < (radius + this.bodyRadii[other.id] - tolerance) ** 2) {
+          this.bodyRejections[other.id] = e.id; reject(other);
+        }
       }
     }
     for (const e of this.moved) if (!this.rejected[e.id] && e.id === 1) this.publish(e);

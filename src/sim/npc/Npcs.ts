@@ -29,6 +29,25 @@ export class Npcs {
     this.civilians = new Civilians(world); this.companion = new Companion(world); this.escorts = new Escorts(world); this.traffic = new Traffic(world); }
   /** False only when the target is unreachable (no route within the steering budget). */
   move(e: EntitySnapshot, target: Point, speed: number, path: { path: number[]; goal: number; pathIndex: number }, stop = .1, budget = 1600, nav = this.world.missions?.l6?.navigationFor(e) ?? this.world.infected!.nav): boolean {
+    const c = e.companion;
+    if (this.world.scenario === 'L5' && c && c.state !== 'hide') {
+      if (c.contactYield && (this.world.tick >= c.contactYield.until || Math.hypot(c.contactYield.x - e.transform.x, c.contactYield.z - e.transform.z) < .2)) delete c.contactYield;
+      if (!c.contactYield && (c.contactRejected ?? 0) >= 30) {
+        const blocker = this.world.entities.get(c.contactFrom?.blocker ?? -1);
+        if (blocker?.civilian?.survivor?.mode === 'follow') {
+          const dx = e.transform.x - blocker.transform.x, dz = e.transform.z - blocker.transform.z, length = Math.hypot(dx, dz) || 1;
+          for (const sign of [-1, 1]) {
+            const direction = { x: -dz / length * sign, z: dx / length * sign };
+            const side = { x: e.transform.x + direction.x * 1.5, z: e.transform.z + direction.z * 1.5 };
+            if (!nav.visible(e.transform, side, actorRadius(e)) || !this.world.solids.clear({ ...side, y: e.transform.y }, actorRadius(e), e.id) || this.world.solids.sweep(e, direction, 1.5) < 1.49) continue;
+            c.contactYield = { ...side, until: this.world.tick + 90 }; break;
+          }
+        }
+      }
+      // Keep the leg through its first successful step. The ordinary 2 m
+      // follow stop would otherwise swallow this local 1.5 m yielding goal.
+      if (c.contactYield) { target = c.contactYield; stop = .1; }
+    }
     const follow = e.civilian?.ally?.follow;
     const leader = follow && this.world.missions?.def.l3 ? this.world.entities.get(follow.targetId) : null;
     if (follow && leader) {

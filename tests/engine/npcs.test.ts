@@ -163,6 +163,39 @@ test('escort: shared combat pace, follows through a maze, a 2 s stand revives to
     expect(follower.transform.x).toBeGreaterThan(body.transform.x + 3);
     expect(w.solids.offenders).toEqual([]);
   }
+  // The reported crossing: opposing routes through the same corgi/follower contact.
+  // Keep real navigation, response and final contact commits; only prescribe the route goals.
+  {
+    const w = await world();
+    for (const enemy of [...w.infected!.active]) w.infected!.release(enemy);
+    w.scenario = 'L5'; teleport(w, 28, 41);
+    const dog = w.entities.get(w.npcs!.companion.spawn())!;
+    expect(w.solids.relocate(dog, { x: 20, y: .3, z: 41.2 }, 'test.crossing-dog', 0, false)).toBe(true);
+    dog.transform.yaw = Math.PI / 2;
+    w.solids.setBarrier('test-crossing-post', { x: 20, z: 39.25, y: .7, halfX: .3, halfZ: .1, halfY: 1 });
+    const group = [0, -.8, .8].map((side, slot) => {
+      const e = w.entities.get(w.npcs!.civilians.spawn('cashier', { x: 20 + side, z: slot ? 39 : 40 }))!;
+      e.civilian!.survivor = { key: `crossing-${slot}`, mode: 'follow', leader: 1, slot, cover: false, foundAt: 0, waitAt: 9999 };
+      return e;
+    });
+    vi.spyOn(w.npcs!.civilians, 'update').mockImplementation(() => {
+      for (const [slot, e] of group.entries()) w.npcs!.move(e, { x: 20 + [0, -.8, .8][slot], z: 46 }, 3.8, e.civilian!, .1);
+    });
+    const companionUpdate = w.npcs!.companion.update.bind(w.npcs!.companion);
+    vi.spyOn(w.npcs!.companion, 'update').mockImplementation(() => {
+      if ((dog.companion!.contactRejected ?? 0) >= 30 || dog.companion!.contactYield) companionUpdate();
+      else w.npcs!.move(dog, { x: 20, z: 36 }, 4.5, dog.companion!, 2);
+    });
+    let rejected = 0, yielded = false;
+    for (let i = 0; i < 360; i++) {
+      w.update(); rejected = Math.max(rejected, dog.companion!.contactRejected ?? 0); yielded ||= !!dog.companion!.contactYield;
+      expect(w.solids.offenders).toEqual([]);
+    }
+    for (const e of group) expect(e.transform.z, `follower ${e.id} clears the crossing`).toBeGreaterThan(43);
+    expect(dog.transform.z).toBeLessThan(39);
+    expect(rejected).toBeGreaterThanOrEqual(30);
+    expect(yielded).toBe(true);
+  }
 });
 
 test('corgi: warns of an offscreen threat within 18 m with a unit direction', async () => {
