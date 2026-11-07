@@ -4,7 +4,7 @@ import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
 import type { Point } from '../npc/types';
 import { l7Encounters } from '../../data/l7';
-import { corpseDetour, formationBack, formationSlot, leaderHeading, requireClearPoint } from './missionHelpers';
+import { corpseDetour, formationBack, formationSlot, leaderHeading, requireClearPoint, snapToClear } from './missionHelpers';
 import { NavGrid } from '../ai/NavGrid';
 import { actorRadius, solidLargeCorpse } from '../world/SolidRegistry';
 
@@ -26,6 +26,7 @@ export class LevelSevenEncounters {
   private readonly waypoint = { x: 0, z: 0 };
   private readonly approaches = new Map<number, { x: number; z: number; at: number; around?: Point[] }>();
   private readonly pocketRoutes = new Map<number, { revision: number; points: Point[] }>();
+  private readonly trail: Point[] = [];
   constructor(private readonly world: SimWorld, private readonly carried?: readonly EntitySnapshot[]) {
     world.events.on('infected.attack', event => {
       if (event.type !== 'infected.attack') return;
@@ -145,7 +146,16 @@ export class LevelSevenEncounters {
     // fix69-r (L7-05): arming (the launcher pickup) sets the opening verge ranks on the courier, so they close in within
     // seconds instead of waiting for their idle leash. The close cluster east of the anchor keeps its own native notice;
     // pressing it too drove it through the following party.
-    for (const e of this.world.infected!.active) if (e.infected!.pack === l7Encounters.firstStreetGroup && e.transform.x <= l7Encounters.streets[0].x + 2) this.world.infected!.press(e.id, 1, this.world.tick + 20 * 60);
+    const firstStreet = this.world.infected!.active.filter(e => e.infected!.pack === l7Encounters.firstStreetGroup && e.health.current > 0);
+    for (const e of firstStreet) if (e.transform.x <= l7Encounters.streets[0].x + 2) this.world.infected!.press(e.id, 1, this.world.tick + 20 * 60);
+    if (this.world.infected!.director.tier === 'high') {
+    // One high-tier kerb runner needs the same focus as the opening verge ranks;
+    // otherwise nearby survivor targets delay first courier contact.
+      const player = this.world.entities.get(1)!;
+      const close = firstStreet.filter(e => e.archetype === 'infected.runner' && e.transform.x > l7Encounters.streets[0].x + 2)
+        .sort((a, b) => distance(a.transform, player.transform) - distance(b.transform, player.transform))[0];
+      if (close) this.world.infected!.press(close.id, 1, this.world.tick + 20 * 60);
+    }
     const low = this.world.infected!.director.tier === 'low';
     // Final horde is present before approach. Its Alphas get slots before ordinary queued arrivals.
     const streetCount = low ? 140 : 280;
@@ -215,15 +225,15 @@ export class LevelSevenEncounters {
     c.state = 'calm'; c.story = null; s.cover = false;
     if (this.walkPocketRoute(e)) return true;
     const d = distance(e.transform, p.transform), slot = s.slot, v = p.survivor!.velocity;
-    // Three columns keep a 35-person group inside the street. Nav collapses it through the actual opening.
-    const goal = formationSlot(p.transform, leaderHeading(p.transform.yaw, v), slot);
-    // Reuse the L5 formation rule around cover: a clear slot across a wreck
-    // can still send one follower around its far side at every corner.
+    // Departure slots follow the walked corridor around the parked bus.
+    const goal = this.formationGoal(p.transform, v, slot);
     const nav = w.infected!.nav;
-    // In the final approach the large formation must not double back into the
-    // narrow opening as the courier turns toward the bus.
+    // Keep followers on their individual slots when the leader turns. Falling
+    // back to the leader position sends the whole formation to one crowded point.
     const ahead = w.missions!.state.steps.departure?.status !== 'active' || Math.hypot(v.x, v.z) <= .8 || (goal.x - e.transform.x) * v.x + (goal.z - e.transform.z) * v.z >= 0;
-    const target = ahead && nav.clear(goal.x, goal.z, .35) && nav.visible(e.transform, goal, .35) && nav.visible(goal, p.transform, .35) ? goal : p.transform;
+    const target = w.infected!.director.tier === 'high'
+      ? nav.clear(goal.x, goal.z, .35) ? goal : snapToClear(w, goal, .35)
+      : ahead && nav.clear(goal.x, goal.z, .35) && nav.visible(e.transform, goal, .35) && nav.visible(goal, p.transform, .35) ? goal : p.transform;
     if (d > formationBack(slot) + 10 && w.tick >= this.state.waitAt) {
       this.state.waitAt = w.tick + 300;
       this.warn(e, 'wait');
@@ -273,6 +283,29 @@ export class LevelSevenEncounters {
     }
     w.spatial.set(e.id, e.transform.x, e.transform.z);
     return true;
+  }
+  /** Follow the courier's walked corner two abreast instead of swinging the tail across it. */
+  private formationGoal(player: EntitySnapshot['transform'], velocity: Point, slot: number): Point {
+    if (this.world.infected!.director.tier !== 'high') return formationSlot(player, leaderHeading(player.yaw, velocity), slot);
+    const last = this.trail.at(-1);
+    if (last && distance(last, player) > 6) this.trail.length = 0;
+    if (!last || distance(last, player) >= .4) {
+      this.trail.push({ x: player.x, z: player.z });
+      if (this.trail.length > 128) this.trail.shift();
+    }
+    if (this.world.missions!.state.steps.departure?.status === 'active') {
+      let remaining = 2.3 + Math.floor(slot / 2), newer: Point = player;
+      for (let i = this.trail.length - 1; i >= 0; i--) {
+        const older = this.trail[i], length = distance(older, newer);
+        if (length >= remaining && length > 0) {
+          const hx = (newer.x - older.x) / length, hz = (newer.z - older.z) / length;
+          const side = slot % 2 - .5;
+          return { x: newer.x - hx * remaining - hz * side, z: newer.z - hz * remaining + hx * side };
+        }
+        remaining -= length; newer = older;
+      }
+    }
+    return formationSlot(player, leaderHeading(player.yaw, velocity), slot);
   }
   /** Rounded physical bodies can be separated into a gap the conservative
    * crowd bake closes. Find a short real walk back to the connected flow,
@@ -337,13 +370,14 @@ export class LevelSevenEncounters {
     return true;
   }
   snapshot() {
-    return { state: structuredClone(this.state), prepared: this.prepared, queue: structuredClone(this.world.infected!.director.queue), seen: [...this.seen], tick: this.world.tick };
+    return { state: structuredClone(this.state), prepared: this.prepared, queue: structuredClone(this.world.infected!.director.queue), seen: [...this.seen], trail: structuredClone(this.trail), tick: this.world.tick };
   }
   restore(saved: unknown): void {
     const record = saved as ReturnType<LevelSevenEncounters['snapshot']>;
     this.state = structuredClone(record.state); this.prepared = record.prepared;
     this.approaches.clear();
     this.pocketRoutes.clear();
+    this.trail.splice(0, this.trail.length, ...(record.trail ?? []));
     this.state.waitAt += this.world.tick - record.tick;
     if (this.state.alarm) this.state.alarm.until += this.world.tick - record.tick;
     this.seen.clear(); for (const id of record.seen) this.seen.add(id);

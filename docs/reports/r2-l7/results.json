@@ -1,0 +1,1280 @@
+{
+  "sourceCommit": "2287dbd",
+  "sourceHash": "fb98e29a272e3d7f041dbf7ddfca798582e8396c0760927ae0fd085ddc35e2a6",
+  "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+  "generatedAt": "2026-11-07T07:19:13.365Z",
+  "commands": {
+    "accept": {
+      "command": "npm run qa:accept -- --level L7 --tier both --skip-browser",
+      "exitCode": 1,
+      "freshFailingRows": 1,
+      "incompleteRows": 8
+    },
+    "verify": {
+      "command": "npm run verify -- E29",
+      "exitCode": 0,
+      "checks": [
+        {
+          "command": "npm run typecheck",
+          "status": 0,
+          "seconds": 12.581
+        },
+        {
+          "command": "npm run lint",
+          "status": 0,
+          "seconds": 9.147
+        },
+        {
+          "command": "npm test",
+          "status": 0,
+          "seconds": 35.691
+        }
+      ],
+      "unitTestsPassed": 107
+    },
+    "threat": {
+      "command": "npm run qa:threat",
+      "exitCode": 0,
+      "revision": "2287dbd276daa63e11f825708ff6eb9c2f603c76",
+      "seconds": 303.833640541,
+      "flags": [],
+      "levels": [
+        {
+          "level": "L1",
+          "skilledOutcome": "complete",
+          "passiveOutcome": "complete",
+          "flags": [],
+          "passiveFlags": []
+        },
+        {
+          "level": "L2",
+          "skilledOutcome": "complete",
+          "passiveOutcome": "complete",
+          "flags": [],
+          "passiveFlags": []
+        },
+        {
+          "level": "L3",
+          "skilledOutcome": "complete",
+          "passiveOutcome": "tick-budget",
+          "flags": [],
+          "passiveFlags": []
+        },
+        {
+          "level": "L4",
+          "skilledOutcome": "complete",
+          "passiveOutcome": "tick-budget",
+          "flags": [],
+          "passiveFlags": []
+        },
+        {
+          "level": "L5",
+          "skilledOutcome": "complete",
+          "passiveOutcome": "tick-budget",
+          "flags": [],
+          "passiveFlags": []
+        },
+        {
+          "level": "L6",
+          "skilledOutcome": "complete",
+          "passiveOutcome": "tick-budget",
+          "flags": [],
+          "passiveFlags": []
+        },
+        {
+          "level": "L7",
+          "skilledOutcome": "complete",
+          "passiveOutcome": "complete",
+          "flags": [],
+          "passiveFlags": []
+        },
+        {
+          "level": "L8",
+          "skilledOutcome": "complete",
+          "passiveOutcome": "complete",
+          "flags": [],
+          "passiveFlags": []
+        },
+        {
+          "level": "L9",
+          "skilledOutcome": "complete",
+          "passiveOutcome": "complete",
+          "flags": [],
+          "passiveFlags": []
+        },
+        {
+          "level": "L10",
+          "skilledOutcome": "complete",
+          "passiveOutcome": "tick-budget",
+          "flags": [],
+          "passiveFlags": []
+        }
+      ],
+      "l7FollowerPace": {
+        "skilled": [],
+        "passive": []
+      }
+    }
+  },
+  "tiers": {
+    "low": {
+      "completeOutcome": "complete",
+      "stationaryOutcome": "tick-budget",
+      "firstPlayerAttackSeconds": 1.3,
+      "firstGroupAttackSeconds": 2.75,
+      "seeds": [
+        {
+          "seed": 1,
+          "valid": true,
+          "outcome": "complete",
+          "groupMedian": 4.599999999999874,
+          "minimumQualifiedRatio": 0.978290176029271,
+          "followers": [
+            {
+              "id": 20,
+              "samples": 25,
+              "median": 4.518144108853181,
+              "ratio": 0.9822052410550661
+            },
+            {
+              "id": 51,
+              "samples": 26,
+              "median": 4.551006574767801,
+              "ratio": 0.9893492553843315
+            },
+            {
+              "id": 52,
+              "samples": 23,
+              "median": 4.500134809734524,
+              "ratio": 0.978290176029271
+            },
+            {
+              "id": 53,
+              "samples": 23,
+              "median": 4.599999999999808,
+              "ratio": 0.9999999999999856
+            },
+            {
+              "id": 54,
+              "samples": 23,
+              "median": 4.599999999999874,
+              "ratio": 1
+            },
+            {
+              "id": 55,
+              "samples": 24,
+              "median": 4.500198510985932,
+              "ratio": 0.9783040241274032
+            },
+            {
+              "id": 56,
+              "samples": 23,
+              "median": 4.6000000000000565,
+              "ratio": 1.0000000000000395
+            },
+            {
+              "id": 57,
+              "samples": 24,
+              "median": 4.531803899342132,
+              "ratio": 0.9851747607265774
+            },
+            {
+              "id": 58,
+              "samples": 24,
+              "median": 4.5723060760324765,
+              "ratio": 0.9939795817462177
+            },
+            {
+              "id": 59,
+              "samples": 27,
+              "median": 4.600000000000034,
+              "ratio": 1.0000000000000349
+            },
+            {
+              "id": 60,
+              "samples": 23,
+              "median": 4.599999999999937,
+              "ratio": 1.0000000000000135
+            },
+            {
+              "id": 61,
+              "samples": 24,
+              "median": 4.581727159191696,
+              "ratio": 0.9960276433025699
+            },
+            {
+              "id": 62,
+              "samples": 26,
+              "median": 4.515459753437014,
+              "ratio": 0.9816216855298124
+            },
+            {
+              "id": 63,
+              "samples": 27,
+              "median": 4.596182966231027,
+              "ratio": 0.9991702100502506
+            },
+            {
+              "id": 64,
+              "samples": 26,
+              "median": 4.60000000000017,
+              "ratio": 1.0000000000000644
+            },
+            {
+              "id": 65,
+              "samples": 26,
+              "median": 4.638319183868539,
+              "ratio": 1.0083302573627535
+            },
+            {
+              "id": 66,
+              "samples": 27,
+              "median": 4.502443247331457,
+              "ratio": 0.9787920102894739
+            },
+            {
+              "id": 67,
+              "samples": 24,
+              "median": 4.600000000000092,
+              "ratio": 1.0000000000000473
+            },
+            {
+              "id": 68,
+              "samples": 27,
+              "median": 4.6900694752305085,
+              "ratio": 1.0195803207023122
+            },
+            {
+              "id": 69,
+              "samples": 27,
+              "median": 4.597879416109878,
+              "ratio": 0.9995390035021746
+            },
+            {
+              "id": 70,
+              "samples": 26,
+              "median": 4.638308318528544,
+              "ratio": 1.0083278953323198
+            },
+            {
+              "id": 71,
+              "samples": 26,
+              "median": 4.599999999999904,
+              "ratio": 1.0000000000000064
+            },
+            {
+              "id": 72,
+              "samples": 26,
+              "median": 4.6000000000000085,
+              "ratio": 1.000000000000029
+            },
+            {
+              "id": 73,
+              "samples": 26,
+              "median": 4.600000000000273,
+              "ratio": 1.0000000000000866
+            },
+            {
+              "id": 74,
+              "samples": 26,
+              "median": 4.6418846515966745,
+              "ratio": 1.009105359042783
+            }
+          ]
+        },
+        {
+          "seed": 2,
+          "valid": true,
+          "outcome": "complete",
+          "groupMedian": 4.599999999999873,
+          "minimumQualifiedRatio": 0.9733177552681906,
+          "followers": [
+            {
+              "id": 20,
+              "samples": 15,
+              "median": 4.477261674233553,
+              "ratio": 0.9733177552681906
+            },
+            {
+              "id": 51,
+              "samples": 30,
+              "median": 4.550920722934659,
+              "ratio": 0.9893305919423446
+            },
+            {
+              "id": 52,
+              "samples": 28,
+              "median": 4.500102035478818,
+              "ratio": 0.9782830511910745
+            },
+            {
+              "id": 53,
+              "samples": 27,
+              "median": 4.599999999999901,
+              "ratio": 1.0000000000000062
+            },
+            {
+              "id": 54,
+              "samples": 29,
+              "median": 4.5454426477852765,
+              "ratio": 0.9881397060403049
+            },
+            {
+              "id": 55,
+              "samples": 26,
+              "median": 4.5032886462123045,
+              "ratio": 0.9789757926548759
+            },
+            {
+              "id": 56,
+              "samples": 25,
+              "median": 4.600000000000081,
+              "ratio": 1.0000000000000453
+            },
+            {
+              "id": 57,
+              "samples": 27,
+              "median": 4.599999999999994,
+              "ratio": 1.0000000000000264
+            },
+            {
+              "id": 58,
+              "samples": 26,
+              "median": 4.530856628088641,
+              "ratio": 0.9849688321932101
+            },
+            {
+              "id": 59,
+              "samples": 25,
+              "median": 4.61249900912829,
+              "ratio": 1.002717175897482
+            },
+            {
+              "id": 60,
+              "samples": 31,
+              "median": 4.501831458843843,
+              "ratio": 0.9786590127921669
+            },
+            {
+              "id": 61,
+              "samples": 29,
+              "median": 4.5999999999998264,
+              "ratio": 0.99999999999999
+            },
+            {
+              "id": 62,
+              "samples": 27,
+              "median": 4.5999999993406195,
+              "ratio": 0.9999999998566841
+            },
+            {
+              "id": 63,
+              "samples": 32,
+              "median": 4.499410138381899,
+              "ratio": 0.9781326387787008
+            },
+            {
+              "id": 64,
+              "samples": 29,
+              "median": 4.599999999999996,
+              "ratio": 1.0000000000000269
+            },
+            {
+              "id": 65,
+              "samples": 28,
+              "median": 4.53122328215761,
+              "ratio": 0.9850485395995077
+            },
+            {
+              "id": 66,
+              "samples": 27,
+              "median": 4.599999999999873,
+              "ratio": 1
+            },
+            {
+              "id": 67,
+              "samples": 27,
+              "median": 4.5999999999999,
+              "ratio": 1.000000000000006
+            },
+            {
+              "id": 68,
+              "samples": 26,
+              "median": 4.600000000000152,
+              "ratio": 1.0000000000000608
+            },
+            {
+              "id": 69,
+              "samples": 31,
+              "median": 4.599736732867249,
+              "ratio": 0.999942768014647
+            },
+            {
+              "id": 70,
+              "samples": 30,
+              "median": 4.600000000000062,
+              "ratio": 1.000000000000041
+            },
+            {
+              "id": 71,
+              "samples": 30,
+              "median": 4.6000000000001435,
+              "ratio": 1.0000000000000588
+            },
+            {
+              "id": 72,
+              "samples": 29,
+              "median": 4.599999999999983,
+              "ratio": 1.000000000000024
+            },
+            {
+              "id": 73,
+              "samples": 32,
+              "median": 4.599999999999974,
+              "ratio": 1.000000000000022
+            },
+            {
+              "id": 74,
+              "samples": 31,
+              "median": 4.60000000000002,
+              "ratio": 1.000000000000032
+            }
+          ]
+        },
+        {
+          "seed": 3,
+          "valid": true,
+          "outcome": "complete",
+          "groupMedian": 4.599999999999926,
+          "minimumQualifiedRatio": 0.9782234498764448,
+          "followers": [
+            {
+              "id": 20,
+              "samples": 8,
+              "median": 4.366318642591228,
+              "ratio": 0.9491997049111518
+            },
+            {
+              "id": 51,
+              "samples": 27,
+              "median": 4.599999999999871,
+              "ratio": 0.999999999999988
+            },
+            {
+              "id": 52,
+              "samples": 27,
+              "median": 4.50011222037407,
+              "ratio": 0.9782852652987266
+            },
+            {
+              "id": 53,
+              "samples": 28,
+              "median": 4.599987128659495,
+              "ratio": 0.9999972018825151
+            },
+            {
+              "id": 54,
+              "samples": 26,
+              "median": 4.600000000000007,
+              "ratio": 1.0000000000000175
+            },
+            {
+              "id": 55,
+              "samples": 23,
+              "median": 4.59999999999997,
+              "ratio": 1.0000000000000095
+            },
+            {
+              "id": 56,
+              "samples": 26,
+              "median": 4.599999999999902,
+              "ratio": 0.9999999999999948
+            },
+            {
+              "id": 57,
+              "samples": 25,
+              "median": 4.541639419998702,
+              "ratio": 0.987312917391038
+            },
+            {
+              "id": 58,
+              "samples": 24,
+              "median": 4.561133113176011,
+              "ratio": 0.9915506767774096
+            },
+            {
+              "id": 59,
+              "samples": 24,
+              "median": 4.600000000000026,
+              "ratio": 1.0000000000000218
+            },
+            {
+              "id": 60,
+              "samples": 25,
+              "median": 4.599999999999952,
+              "ratio": 1.0000000000000056
+            },
+            {
+              "id": 61,
+              "samples": 25,
+              "median": 4.600000000000175,
+              "ratio": 1.000000000000054
+            },
+            {
+              "id": 62,
+              "samples": 26,
+              "median": 4.599999999999863,
+              "ratio": 0.9999999999999863
+            },
+            {
+              "id": 63,
+              "samples": 29,
+              "median": 4.499827869431574,
+              "ratio": 0.9782234498764448
+            },
+            {
+              "id": 64,
+              "samples": 30,
+              "median": 4.59999999999995,
+              "ratio": 1.000000000000005
+            },
+            {
+              "id": 65,
+              "samples": 26,
+              "median": 4.6000000000001044,
+              "ratio": 1.0000000000000389
+            },
+            {
+              "id": 66,
+              "samples": 26,
+              "median": 4.599999999999987,
+              "ratio": 1.0000000000000133
+            },
+            {
+              "id": 67,
+              "samples": 25,
+              "median": 4.600000000000102,
+              "ratio": 1.0000000000000382
+            },
+            {
+              "id": 68,
+              "samples": 30,
+              "median": 4.582024979949043,
+              "ratio": 0.9960923869454602
+            },
+            {
+              "id": 69,
+              "samples": 29,
+              "median": 4.599999999999828,
+              "ratio": 0.9999999999999788
+            },
+            {
+              "id": 70,
+              "samples": 30,
+              "median": 4.599999999999968,
+              "ratio": 1.000000000000009
+            },
+            {
+              "id": 71,
+              "samples": 30,
+              "median": 4.600000000000033,
+              "ratio": 1.0000000000000233
+            },
+            {
+              "id": 72,
+              "samples": 29,
+              "median": 4.59999998921706,
+              "ratio": 0.9999999976558986
+            },
+            {
+              "id": 73,
+              "samples": 31,
+              "median": 4.507612245508809,
+              "ratio": 0.979915705545409
+            },
+            {
+              "id": 74,
+              "samples": 29,
+              "median": 4.599999999999973,
+              "ratio": 1.0000000000000102
+            }
+          ]
+        }
+      ]
+    },
+    "high": {
+      "completeOutcome": "complete",
+      "stationaryOutcome": "tick-budget",
+      "firstPlayerAttackSeconds": 9.3,
+      "firstGroupAttackSeconds": 1.55,
+      "seeds": [
+        {
+          "seed": 1,
+          "valid": true,
+          "outcome": "complete",
+          "groupMedian": 4.599980402940172,
+          "minimumQualifiedRatio": 0.9598516104419779,
+          "followers": [
+            {
+              "id": 20,
+              "samples": 13,
+              "median": 4.502354473957298,
+              "ratio": 0.9787768815448703
+            },
+            {
+              "id": 51,
+              "samples": 23,
+              "median": 4.599999999999791,
+              "ratio": 1.0000042602485015
+            },
+            {
+              "id": 52,
+              "samples": 24,
+              "median": 4.564341701533416,
+              "ratio": 0.9922524232094604
+            },
+            {
+              "id": 53,
+              "samples": 27,
+              "median": 4.599999999999668,
+              "ratio": 1.0000042602484749
+            },
+            {
+              "id": 54,
+              "samples": 24,
+              "median": 4.599999999999989,
+              "ratio": 1.0000042602485446
+            },
+            {
+              "id": 55,
+              "samples": 27,
+              "median": 4.599999999999973,
+              "ratio": 1.000004260248541
+            },
+            {
+              "id": 56,
+              "samples": 26,
+              "median": 4.599999999999971,
+              "ratio": 1.0000042602485406
+            },
+            {
+              "id": 57,
+              "samples": 28,
+              "median": 4.4152985977636625,
+              "ratio": 0.9598516104419779
+            },
+            {
+              "id": 58,
+              "samples": 28,
+              "median": 4.525285037182762,
+              "ratio": 0.9837618078308188
+            },
+            {
+              "id": 59,
+              "samples": 28,
+              "median": 4.5999999999998495,
+              "ratio": 1.0000042602485142
+            },
+            {
+              "id": 60,
+              "samples": 26,
+              "median": 4.511344126304758,
+              "ratio": 0.9807311621200037
+            },
+            {
+              "id": 61,
+              "samples": 27,
+              "median": 4.504524387650258,
+              "ratio": 0.9792486039225511
+            },
+            {
+              "id": 62,
+              "samples": 27,
+              "median": 4.574003341579993,
+              "ratio": 0.9943527886893658
+            },
+            {
+              "id": 63,
+              "samples": 28,
+              "median": 4.495720095548243,
+              "ratio": 0.977334619224619
+            },
+            {
+              "id": 64,
+              "samples": 29,
+              "median": 4.599999999999928,
+              "ratio": 1.0000042602485313
+            },
+            {
+              "id": 65,
+              "samples": 30,
+              "median": 4.599999999999946,
+              "ratio": 1.0000042602485353
+            },
+            {
+              "id": 66,
+              "samples": 28,
+              "median": 4.544845285594889,
+              "ratio": 0.9880140538620462
+            },
+            {
+              "id": 67,
+              "samples": 30,
+              "median": 4.59999999999985,
+              "ratio": 1.0000042602485144
+            },
+            {
+              "id": 68,
+              "samples": 30,
+              "median": 4.596367606759575,
+              "ratio": 0.9992146061799985
+            },
+            {
+              "id": 69,
+              "samples": 16,
+              "median": 4.424848583099125,
+              "ratio": 0.9619277030551896
+            },
+            {
+              "id": 70,
+              "samples": 30,
+              "median": 4.599999999999876,
+              "ratio": 1.00000426024852
+            },
+            {
+              "id": 71,
+              "samples": 30,
+              "median": 4.599999999999934,
+              "ratio": 1.0000042602485326
+            },
+            {
+              "id": 72,
+              "samples": 30,
+              "median": 4.599999999999879,
+              "ratio": 1.0000042602485206
+            },
+            {
+              "id": 73,
+              "samples": 30,
+              "median": 4.599980402940172,
+              "ratio": 1
+            },
+            {
+              "id": 74,
+              "samples": 30,
+              "median": 4.558993693796939,
+              "ratio": 0.9910898078789563
+            }
+          ]
+        },
+        {
+          "seed": 2,
+          "valid": true,
+          "outcome": "complete",
+          "groupMedian": 4.577008726972396,
+          "minimumQualifiedRatio": 0.9500816269631609,
+          "followers": [
+            {
+              "id": 20,
+              "samples": 28,
+              "median": 4.498596654932074,
+              "ratio": 0.9828682712405072
+            },
+            {
+              "id": 51,
+              "samples": 26,
+              "median": 4.5994269942644435,
+              "ratio": 1.0048980171612818
+            },
+            {
+              "id": 52,
+              "samples": 26,
+              "median": 4.599969109909294,
+              "ratio": 1.005016460379809
+            },
+            {
+              "id": 53,
+              "samples": 27,
+              "median": 4.599999999999849,
+              "ratio": 1.005023209348928
+            },
+            {
+              "id": 54,
+              "samples": 27,
+              "median": 4.59999999999989,
+              "ratio": 1.005023209348937
+            },
+            {
+              "id": 55,
+              "samples": 27,
+              "median": 4.534782927215477,
+              "ratio": 0.9907743676545596
+            },
+            {
+              "id": 56,
+              "samples": 28,
+              "median": 4.599999999999925,
+              "ratio": 1.0050232093489446
+            },
+            {
+              "id": 57,
+              "samples": 27,
+              "median": 4.424208898769093,
+              "ratio": 0.9666157883198144
+            },
+            {
+              "id": 58,
+              "samples": 27,
+              "median": 4.462973050675949,
+              "ratio": 0.9750851083974489
+            },
+            {
+              "id": 59,
+              "samples": 28,
+              "median": 4.553239644259224,
+              "ratio": 0.9948068522192015
+            },
+            {
+              "id": 60,
+              "samples": 28,
+              "median": 4.511586326122061,
+              "ratio": 0.9857062975508875
+            },
+            {
+              "id": 61,
+              "samples": 27,
+              "median": 4.503981781069802,
+              "ratio": 0.9840448314043526
+            },
+            {
+              "id": 62,
+              "samples": 27,
+              "median": 4.499194676345681,
+              "ratio": 0.9829989289362383
+            },
+            {
+              "id": 63,
+              "samples": 27,
+              "median": 4.594876800457917,
+              "ratio": 1.003903875773761
+            },
+            {
+              "id": 64,
+              "samples": 27,
+              "median": 4.599993556099067,
+              "ratio": 1.0050218014641792
+            },
+            {
+              "id": 65,
+              "samples": 27,
+              "median": 4.600000000000016,
+              "ratio": 1.0050232093489644
+            },
+            {
+              "id": 66,
+              "samples": 27,
+              "median": 4.34853189794652,
+              "ratio": 0.9500816269631609
+            },
+            {
+              "id": 67,
+              "samples": 27,
+              "median": 4.465243597083342,
+              "ratio": 0.975581184883826
+            },
+            {
+              "id": 68,
+              "samples": 28,
+              "median": 4.585423309768929,
+              "ratio": 1.0018384458711966
+            },
+            {
+              "id": 69,
+              "samples": 28,
+              "median": 4.577008726972396,
+              "ratio": 1
+            },
+            {
+              "id": 70,
+              "samples": 28,
+              "median": 4.599999999999835,
+              "ratio": 1.005023209348925
+            },
+            {
+              "id": 71,
+              "samples": 28,
+              "median": 4.434328636011859,
+              "ratio": 0.9688267819723129
+            },
+            {
+              "id": 72,
+              "samples": 28,
+              "median": 4.599999999999852,
+              "ratio": 1.0050232093489286
+            },
+            {
+              "id": 73,
+              "samples": 28,
+              "median": 4.499429381046147,
+              "ratio": 0.983050207995219
+            },
+            {
+              "id": 74,
+              "samples": 28,
+              "median": 4.599032854040464,
+              "ratio": 1.0048119041019694
+            }
+          ]
+        },
+        {
+          "seed": 3,
+          "valid": true,
+          "outcome": "complete",
+          "groupMedian": 4.534953462443276,
+          "minimumQualifiedRatio": 0.9600952700810611,
+          "followers": [
+            {
+              "id": 20,
+              "samples": 19,
+              "median": 4.482534134986956,
+              "ratio": 0.9884410440172238
+            },
+            {
+              "id": 51,
+              "samples": 24,
+              "median": 4.5363176486384855,
+              "ratio": 1.000300815919393
+            },
+            {
+              "id": 52,
+              "samples": 24,
+              "median": 4.520621469033722,
+              "ratio": 0.996839660312229
+            },
+            {
+              "id": 53,
+              "samples": 19,
+              "median": 4.353987369329521,
+              "ratio": 0.9600952700810611
+            },
+            {
+              "id": 54,
+              "samples": 25,
+              "median": 4.599999999999874,
+              "ratio": 1.014343374875903
+            },
+            {
+              "id": 55,
+              "samples": 25,
+              "median": 4.499397895441375,
+              "ratio": 0.9921596622112314
+            },
+            {
+              "id": 56,
+              "samples": 26,
+              "median": 4.599999999999877,
+              "ratio": 1.0143433748759036
+            },
+            {
+              "id": 57,
+              "samples": 26,
+              "median": 4.422883462065448,
+              "ratio": 0.975287508172697
+            },
+            {
+              "id": 58,
+              "samples": 27,
+              "median": 4.5999999999998105,
+              "ratio": 1.0143433748758888
+            },
+            {
+              "id": 59,
+              "samples": 25,
+              "median": 4.527042031274805,
+              "ratio": 0.9982554548279291
+            },
+            {
+              "id": 60,
+              "samples": 26,
+              "median": 4.580220148588083,
+              "ratio": 1.0099817311290376
+            },
+            {
+              "id": 61,
+              "samples": 27,
+              "median": 4.399001522141841,
+              "ratio": 0.9700213152290676
+            },
+            {
+              "id": 62,
+              "samples": 27,
+              "median": 4.499163982873995,
+              "ratio": 0.9921080822844873
+            },
+            {
+              "id": 63,
+              "samples": 26,
+              "median": 4.489731587800897,
+              "ratio": 0.9900281502297896
+            },
+            {
+              "id": 64,
+              "samples": 27,
+              "median": 4.439764108393993,
+              "ratio": 0.9790098498611717
+            },
+            {
+              "id": 65,
+              "samples": 30,
+              "median": 4.534953462443276,
+              "ratio": 1
+            },
+            {
+              "id": 66,
+              "samples": 27,
+              "median": 4.59999985437032,
+              "ratio": 1.014343342763213
+            },
+            {
+              "id": 67,
+              "samples": 30,
+              "median": 4.5795234803256095,
+              "ratio": 1.0098281092080537
+            },
+            {
+              "id": 68,
+              "samples": 26,
+              "median": 4.599999999999698,
+              "ratio": 1.014343374875864
+            },
+            {
+              "id": 69,
+              "samples": 29,
+              "median": 4.499417133777264,
+              "ratio": 0.9921639044456994
+            },
+            {
+              "id": 70,
+              "samples": 30,
+              "median": 4.555840765914849,
+              "ratio": 1.004605847368568
+            },
+            {
+              "id": 71,
+              "samples": 31,
+              "median": 4.458246202124898,
+              "ratio": 0.9830853258024281
+            },
+            {
+              "id": 72,
+              "samples": 30,
+              "median": 4.599996281195826,
+              "ratio": 1.0143425548445444
+            },
+            {
+              "id": 73,
+              "samples": 30,
+              "median": 4.556682813094621,
+              "ratio": 1.0047915267116407
+            },
+            {
+              "id": 74,
+              "samples": 28,
+              "median": 4.599999999981582,
+              "ratio": 1.0143433748718693
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "remainingAcceptanceFailures": [
+    {
+      "id": "G-24",
+      "currentStatus": "FAIL",
+      "checks": [
+        {
+          "clause": "production enemy-bar eligibility at distance/health boundaries",
+          "tier": "low",
+          "policy": "controlled-fixture",
+          "receipt": "docs/reports/fix51-verify/receipts/L7-low-fixtures.json"
+        },
+        {
+          "clause": "production enemy-bar eligibility at distance/health boundaries",
+          "tier": "high",
+          "policy": "controlled-fixture",
+          "receipt": "docs/reports/fix51-verify/receipts/L7-high-fixtures.json"
+        }
+      ]
+    },
+    {
+      "id": "L7-01",
+      "currentStatus": "FAIL",
+      "checks": [
+        {
+          "clause": "physical launcher approach pickup and first rocket frame gate",
+          "tier": "low",
+          "policy": "physical-pickup",
+          "receipt": "docs/reports/fix72-c/L7-01/low.json"
+        },
+        {
+          "clause": "physical launcher approach pickup and first rocket frame gate",
+          "tier": "high",
+          "policy": "physical-pickup",
+          "receipt": "docs/reports/fix72-c/L7-01/high.json"
+        }
+      ]
+    }
+  ],
+  "requirements": {
+    "firstAttack": {
+      "maximumSeconds": 10,
+      "low": 1.3,
+      "high": 9.3,
+      "pass": true
+    },
+    "departurePace": {
+      "minimumRatio": 0.95,
+      "highSeeds": [
+        {
+          "seed": 1,
+          "valid": true,
+          "minimumRatio": 0.9598516104419779
+        },
+        {
+          "seed": 2,
+          "valid": true,
+          "minimumRatio": 0.9500816269631609
+        },
+        {
+          "seed": 3,
+          "valid": true,
+          "minimumRatio": 0.9600952700810611
+        }
+      ],
+      "pass": true
+    }
+  },
+  "acceptanceClauses": [
+    {
+      "id": "G-13",
+      "currentStatus": "NOT CHECKED",
+      "checks": [
+        {
+          "clause": "each observed follower median versus its phase group median",
+          "tier": "low",
+          "status": "PASS",
+          "target": "every ratio ≥0.95; ≥10 walking samples/follower"
+        },
+        {
+          "clause": "stationary far-follower time upper bound",
+          "tier": "low",
+          "status": "PASS",
+          "target": "actual waiting ≤10%; a bound above 10% is inconclusive"
+        },
+        {
+          "clause": "each observed follower median versus its phase group median",
+          "tier": "high",
+          "status": "PASS",
+          "target": "every ratio ≥0.95; ≥10 walking samples/follower"
+        },
+        {
+          "clause": "stationary far-follower time upper bound",
+          "tier": "high",
+          "status": "PASS",
+          "target": "actual waiting ≤10%; a bound above 10% is inconclusive"
+        }
+      ]
+    },
+    {
+      "id": "L7-05",
+      "currentStatus": "PASS",
+      "checks": [
+        {
+          "clause": "combat hard rule on actual player windups",
+          "tier": "low",
+          "status": "PASS",
+          "target": "nonzero player windups in each combat policy"
+        },
+        {
+          "clause": "real player/group windups per minute",
+          "tier": "low",
+          "status": "PASS",
+          "target": "6 ≤ value ≤ Infinity"
+        },
+        {
+          "clause": "minimum bounded-path reachable share within30m (path≤2.5×direct)",
+          "tier": "low",
+          "status": "PASS",
+          "target": "90 ≤ value ≤ 100"
+        },
+        {
+          "clause": "combat hard rule on actual player windups",
+          "tier": "low",
+          "status": "PASS",
+          "target": "nonzero player windups in each combat policy"
+        },
+        {
+          "clause": "stationary first real player attack (phase clock)",
+          "tier": "low",
+          "status": "PASS",
+          "target": "≤10 s"
+        },
+        {
+          "clause": "real player/group windups per minute",
+          "tier": "low",
+          "status": "PASS",
+          "target": "6 ≤ value ≤ Infinity"
+        },
+        {
+          "clause": "minimum bounded-path reachable share within30m (path≤2.5×direct)",
+          "tier": "low",
+          "status": "PASS",
+          "target": "90 ≤ value ≤ 100"
+        },
+        {
+          "clause": "combat hard rule on actual player windups",
+          "tier": "high",
+          "status": "PASS",
+          "target": "nonzero player windups in each combat policy"
+        },
+        {
+          "clause": "real player/group windups per minute",
+          "tier": "high",
+          "status": "PASS",
+          "target": "6 ≤ value ≤ Infinity"
+        },
+        {
+          "clause": "minimum bounded-path reachable share within30m (path≤2.5×direct)",
+          "tier": "high",
+          "status": "PASS",
+          "target": "90 ≤ value ≤ 100"
+        },
+        {
+          "clause": "combat hard rule on actual player windups",
+          "tier": "high",
+          "status": "PASS",
+          "target": "nonzero player windups in each combat policy"
+        },
+        {
+          "clause": "stationary first real player attack (phase clock)",
+          "tier": "high",
+          "status": "PASS",
+          "target": "≤10 s"
+        },
+        {
+          "clause": "real player/group windups per minute",
+          "tier": "high",
+          "status": "PASS",
+          "target": "6 ≤ value ≤ Infinity"
+        },
+        {
+          "clause": "minimum bounded-path reachable share within30m (path≤2.5×direct)",
+          "tier": "high",
+          "status": "PASS",
+          "target": "90 ≤ value ≤ 100"
+        }
+      ]
+    }
+  ]
+}
