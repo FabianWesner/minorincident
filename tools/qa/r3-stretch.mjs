@@ -1,6 +1,5 @@
 /** r3-corpse: per-model skin stretch of the frozen death poses. Worst triangle edge ratio (death pose / rest pose), no browser. */
 import { readFileSync } from 'node:fs';
-globalThis.R3 = process.argv.includes('--turns') ? 1 : 0;
 import { gunzipSync } from 'node:zlib';
 import { decodeCivilianBake } from '../../src/assets/civilianBakeData.ts';
 import { premultiplyRow, skinnedVertexMatrix } from '../../src/render/characters/skinnedCrowd.ts';
