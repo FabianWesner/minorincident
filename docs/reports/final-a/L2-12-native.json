@@ -161,14 +161,18 @@
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix51-verify/receipts/L2-low-complete.json",
-      "sha256": "65a3334f373fd381cd4cb412459ffe65c837cbeeb04599a477f404bb7428db05",
-      "what": "Frozen-head L2-12 native input receipt, evaluated by the exact clauses retained in the row proof."
+      "file": "docs/reports/final-a/native-receipts/L2-low-complete.json.gz",
+      "sha256": "d0b884e0602ceef5ef9631ae082a1ab9352582a0c6a95c4cb79c8cf8f873b64b",
+      "what": "Frozen-head L2-12 native input receipt, evaluated by the exact clauses retained in the row proof.",
+      "canonicalFile": "docs/reports/fix51-verify/receipts/L2-low-complete.json",
+      "decodedSha256": "65a3334f373fd381cd4cb412459ffe65c837cbeeb04599a477f404bb7428db05"
     },
     {
-      "file": "docs/reports/fix51-verify/receipts/L2-high-complete.json",
-      "sha256": "17691eef6a8fc71fe9e26e3ccc91ca7cb2038d19bca0856309ed4afafa423932",
-      "what": "Frozen-head L2-12 native input receipt, evaluated by the exact clauses retained in the row proof."
+      "file": "docs/reports/final-a/native-receipts/L2-high-complete.json.gz",
+      "sha256": "7853a2405a6a51a9207f11122053806542b1a655c78ef73f3a15fa7a31524afb",
+      "what": "Frozen-head L2-12 native input receipt, evaluated by the exact clauses retained in the row proof.",
+      "canonicalFile": "docs/reports/fix51-verify/receipts/L2-high-complete.json",
+      "decodedSha256": "17691eef6a8fc71fe9e26e3ccc91ca7cb2038d19bca0856309ed4afafa423932"
     }
   ],
   "observation": "4 current native checks PASS across low/high. low/complete competent bridge player attack rate: 10.376508737164475; target 2 ≤ value ≤ 20 (PASS); low/complete visible infected encountered per30m of actual bridge route: {\"metres\":257.93660948553963,\"ticks\":5551,\"discontinuities\":0,\"maxEncounterGapM\":40.886333493601065,\"encounterIds\":[185,193,195,203,211,213,221,229,183,191,187,197,189,207,201,215,209,199,217,227,126,219,233,235,237,239,247,243,245,241,265,257,259,287,283,277,297,293,289,275,279,295,273,285,291],\"infectedPer30m\":5.23384409329333}; target ≥1 distinct living admitted infected within15m with clear sight per30m walked; complete [full value in proof]; high/complete competent bridge player attack rate: 15.742397137745975; target 2 ≤ value ≤ 20 (PASS); high/complete visible infected encountered per30m of actual bridge route: {\"metres\":279.9633285130393,\"ticks\":5031,\"discontinuities\":0,\"maxEncounterGapM\":10.874970625774736,\"encounterIds\":[195,203,205,213,221,223,231,239,193,201,219,197,199,207,211,217,209,227,237,229,161,154,241,243,247,245,249,251,255,253,171,167,277,265,267,283,269,271,285,289,295,309,301],\"infectedPer30m\":4.607746331819734}; target ≥1 distinct living admitted infected within15m with clear sight per30m walked; completed route [full value in proof]"
