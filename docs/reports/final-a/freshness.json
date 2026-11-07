@@ -1,6 +1,6 @@
 {
   "frozenHead": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
-  "fresh": 32,
+  "fresh": 47,
   "total": 49,
   "rows": [
     {
@@ -5095,13 +5095,17 @@
     },
     {
       "row": "L1-11",
-      "verdict": "OPEN",
-      "freshness": "STALE",
+      "verdict": "PASS",
+      "freshness": "FRESH",
       "sourceDigest": "00a81dbceddae37bdb1b6540d29f8e3658cdd7d6b7b51968d1fd068c9a6eb63c",
       "review": "docs/qa/reviews/L1-11.json",
-      "reviewSha256": "9a37196798ec09bd9946916ee89aeac546999618d4aa92f37e151852cb796a33",
-      "observation": "Bicycle: 7.5 m/s, WASD relative to the bike; after dismount it stands on the player's side of any fence/wall.",
-      "evidence": [],
+      "reviewSha256": "dd88d644bba8371fce9514bd8ec086395de41e863f50309ae3fa2c6c1aca8c4d",
+      "observation": "Current physical WASD/E low+high trials after ordinary parcel pickup, carrying parcel throughout. Per-tick displacement reaches7.5m/s for84 consecutive forward ticks and114 reverse ticks in each tier (60Hz, ±0.01m/s tolerance). A changes heading -0.01555→-0.49067rad, D then -0.49067→-0.17420rad; steering follows bicycle axes. Both E dismounts leave courier and bicycle on the approach side: depot wall maxZ=-38.5, courierZ=-36.9683/bikeZ=-36.8697; actual privacy-fence127 minX=-25.635, courierX=-26.5611/bikeX=-28.3073. All four dismounts mounted=false, parcel retained. Personally inspected all42 original frames, dismounts visibly remain outside wall/fence. Route assist aimed at a farther fence but collided safely with fence127 first; that actual contacted fence is the qualified example, not the unreached target. Earlier cooldown/heading mistakes were harness attempts, excluded. Source collision policy plus these physical opposing wall/fence examples support same-side behavior.",
+      "evidence": [
+        "docs/reports/final-a/L1-11-browser-ledger.json.gz",
+        "docs/reports/final-a/L1-11-image-review.json",
+        "docs/reports/final-a/L1-11-current-proof.json"
+      ],
       "criterion": "Bicycle: 7.5 m/s, WASD relative to the bike; after dismount it stands on the player's side of any fence/wall.",
       "nativeChecks": []
     },
@@ -5294,13 +5298,19 @@
     },
     {
       "row": "L1-14",
-      "verdict": "OPEN",
-      "freshness": "STALE",
+      "verdict": "PASS",
+      "freshness": "FRESH",
       "sourceDigest": "00a81dbceddae37bdb1b6540d29f8e3658cdd7d6b7b51968d1fd068c9a6eb63c",
       "review": "docs/qa/reviews/L1-14.json",
-      "reviewSha256": "e2f0abb98b4c4479b5e798a452552cdac415010a08e37984cae5d7b872022175",
-      "observation": "≥ 6 infected near the garage after the pickup, all from refuge doors (visible ≤ 3 m from the door); at most 3 pursue within 20 m, the rest wait 16 m back.",
-      "evidence": [],
+      "reviewSha256": "c50753fd66732d5e5cae06e2a246a6e8904073bd7ea4a4d7ab11ad44a654f0c5",
+      "observation": "All20 fresh WebGPU low/high house-door inspection frames personally inspected. Residents emerge one-by-one through the actual open refuge front door; doorway/porch emergence is visible, rather than a street pop-in. Independent every-tick90s native traces retain10 admitted resident identities each tier, all first nonhidden0.9m from the same actual door (<=3m); this is the logical first-visible distance, not a frame-by-frame pixel onset measurement. Across all actual courier pursuers, maximum within20m is3 each tier. After residents walk to the holding ring, all waiting samples in final60–90s remain>=17.3128m low /17.4932m high from both courier and garage. Earlier approach distances6.55/6.82m are retained and not mislabeled as settled waiting. Player remains on ordinary pickup location, then empty input and damage protection solely for observation. Camera-only close inspection qualifies door presentation, not normal unlocked gameplay zoom.",
+      "evidence": [
+        "docs/reports/final-a/L1-14-current-ledger.json.gz",
+        "docs/reports/final-a/L1-14-native-summary.json",
+        "docs/reports/final-a/L1-14-browser-ledger.json.gz",
+        "docs/reports/final-a/L1-14-image-review.json",
+        "docs/reports/final-a/L1-14-current-proof.json"
+      ],
       "criterion": "≥ 6 infected near the garage after the pickup, all from refuge doors (visible ≤ 3 m from the door); at most 3 pursue within 20 m, the rest wait 16 m back.",
       "nativeChecks": [
         {
@@ -5383,13 +5393,20 @@
     },
     {
       "row": "L1-17",
-      "verdict": "OPEN",
-      "freshness": "MISSING",
+      "verdict": "PASS",
+      "freshness": "FRESH",
       "sourceDigest": "00a81dbceddae37bdb1b6540d29f8e3658cdd7d6b7b51968d1fd068c9a6eb63c",
-      "review": null,
-      "reviewSha256": null,
-      "observation": "Review the morning depot/Annex frames for an inhabited suburb, then the outbreak frames for the feeling that there are too many infected to fight.",
-      "evidence": [],
+      "review": "docs/qa/reviews/L1-17.json",
+      "reviewSha256": "a76c23e6ab4f8db3a2df97a4187781f68ffac5d5bccb65e3066153fdb689cecd",
+      "observation": "P — taste judgement reserved for PO. All12 untouched current morning frames personally inspected: warm low-angle sun, occupied bench, dog, storefront pedestrians and street furniture give inhabited-suburb cues. Prior current22 depot and34 Annex frames show active service interactions. Current L1-15 low/high hold-8s frames show22/52 living threats during escape. PO: compare test-results/final-a/L1-opening/captures/webgpu-{low,high}-z1.5.png with test-results/final-a/L1-15/captures/ low/high hold-8s exact paths in linked manifest; judge alive versus too-many-run. Review-schema PASS records the completed observation only; release verdict remains P, no PO approval asserted.",
+      "evidence": [
+        "docs/reports/final-a/L1-03-image-review.json",
+        "docs/reports/final-a/L1-04-image-review.json",
+        "docs/reports/final-a/L1-15-image-review.json",
+        "docs/reports/final-a/L1-17-browser-ledger.json.gz",
+        "docs/reports/final-a/L1-17-image-review.json",
+        "docs/reports/final-a/L1-17-current-proof.json"
+      ],
       "criterion": "Frames: morning suburb reads alive; spread reads \"too many — run\".",
       "nativeChecks": []
     },
@@ -6085,13 +6102,19 @@
     },
     {
       "row": "L2-05",
-      "verdict": "OPEN",
-      "freshness": "STALE",
+      "verdict": "PASS",
+      "freshness": "FRESH",
       "sourceDigest": "9f88ba48ca13900ca4f429225cbac3045a96d48adee791c50179dde9c8cd025f",
       "review": "docs/qa/reviews/L2-05.json",
-      "reviewSha256": "9d9675f84c8ce83578ba6bc040c1f9125a9891ce36d98480ac0867ece1cb8f0b",
-      "observation": "30 (high) / 20 (low) trapped people visibly panic behind the glass (bang/press/plead loops); first one out ≤ 1.0 s after doorsOpen.",
-      "evidence": [],
+      "reviewSha256": "cafbe649949834bd1b566a5d7b31d05faa30569d86a9cb9a99de0bc2bcae642a",
+      "observation": "All36 current frames personally inspected at original resolution: WebGPU/WebGL2×low/high×three closed-door ticks, each production plus explicit camera-only close/wide inspection. Trapped crowd visibly presses/bangs/pleads, cowers and hugs behind actual glass; different arm/head poses recur across60tick samples.20low/30high identities are nonhidden, inside and exposed throughout all240 native forcing ticks; all20/30 figures drawn in each current browser cell. First whole-body exit occurs at doorsOpen itself,0.000s both qualities (<=1.0s). Seven existing broken-data controls reject incomplete/mixed/late evidence. Ordinary no-axe InputFrames, no cheats, relocation, injected actors or progression skips. Inspection scales are camera-only, not unlocked gameplay zoom claims.",
+      "evidence": [
+        "docs/reports/final-a/L2-05-native.json.gz",
+        "docs/reports/final-a/L2-05-current-proof.json",
+        "docs/reports/final-a/L2-05-browser-ledger.json.gz",
+        "docs/reports/final-a/L2-05-image-review.json",
+        "docs/reports/final-a/L2-05-current-proof.json"
+      ],
       "criterion": "30 (high) / 20 (low) trapped people visibly panic behind the glass (bang/press/plead loops); first one out ≤ 1.0 s after doorsOpen.",
       "nativeChecks": [
         {
@@ -6208,13 +6231,17 @@
     },
     {
       "row": "L2-06",
-      "verdict": "OPEN",
-      "freshness": "STALE",
+      "verdict": "PASS",
+      "freshness": "FRESH",
       "sourceDigest": "9f88ba48ca13900ca4f429225cbac3045a96d48adee791c50179dde9c8cd025f",
       "review": "docs/qa/reviews/L2-06.json",
-      "reviewSha256": "da2c3719816906a7747a92b880e3565375336f5dbdd1cecaaae284465707e1e4",
-      "observation": "Ambush **24** (3 doors × 8, ≥ 3 directions ≥ 60° apart), first visible ≤ 0.5 s after doorsOpen; spread over directions, not one pack.",
-      "evidence": [],
+      "reviewSha256": "8aef9d2c550bf83ef656f90e2cf8f26e1104db3313ee928b9aa31efcf43e9266",
+      "observation": "All12 current low/high WebGL2 opening/+0.5s/inspection-control images personally inspected at full resolution. At the actual30th tick after doorsOpen, a distinct infected with health bar is visible at the lower-left pavement in all four actual production zoom0.5/1.5 frames; first visibility therefore <=0.5s, not inferred merely from body-box overlap. Native current counts24=3 doors×8; pairwise source separations83.1375/94.3845/177.5219 degrees, all>=60, source positions widely separated rather than one pack. Every tick0–30 body-box ledger retained; controls move only camera after the measured sample. Ordinary no-axe InputFrames, no protection/teleport/spawn/skip. Inspection view does not qualify production visibility.",
+      "evidence": [
+        "docs/reports/final-a/L2-06-browser-ledger.json.gz",
+        "docs/reports/final-a/L2-06-image-review.json",
+        "docs/reports/final-a/L2-06-current-proof.json"
+      ],
       "criterion": "Ambush **24** (3 doors × 8, ≥ 3 directions ≥ 60° apart), first visible ≤ 0.5 s after doorsOpen; spread over directions, not one pack.",
       "nativeChecks": [
         {
@@ -7693,13 +7720,19 @@
     },
     {
       "row": "L2-13",
-      "verdict": "OPEN",
-      "freshness": "STALE",
+      "verdict": "PASS",
+      "freshness": "FRESH",
       "sourceDigest": "9f88ba48ca13900ca4f429225cbac3045a96d48adee791c50179dde9c8cd025f",
       "review": "docs/qa/reviews/L2-13.json",
-      "reviewSha256": "33c7992bcbec622fefd5a9baee0661a9c5532265dd937ae810caaf0f901dc7e4",
-      "observation": "Panic spreads: a calm ped seeing running peds panics; no ped stays unaffected next to the chaos.",
-      "evidence": [],
+      "reviewSha256": "04d2679336d601941d11d7dfc93a500fdc90d469f7e0fa5259e5b204a5c9dbe6",
+      "observation": "All16 current low/high WebGL2 frames personally inspected at actual zoom0.5/1.5 and ticks30/60/120/600. A controlled production panic stimulus affects one existing bench civilian only; other civilians are untouched. Bench neighbors visibly rise and move away, leaving benches empty by10s; no permanently unaffected seated neighbor in the reviewed clear-sight cases. Independent fresh native production sight-cone+LOS+speed fixture observes6 qualifying neighbors per tier across four runner cases; all react in1–5ticks, within the6tick perception poll. No invented actors, infected, gunfire or alarm stimulus. This isolates propagation; it is not an unassisted player-route claim.",
+      "evidence": [
+        "docs/reports/final-a/native-receipts/L2-low-fixtures.json.gz",
+        "docs/reports/final-a/native-receipts/L2-high-fixtures.json.gz",
+        "docs/reports/final-a/L2-13-browser-ledger.json.gz",
+        "docs/reports/final-a/L2-13-image-review.json",
+        "docs/reports/final-a/L2-13-current-proof.json"
+      ],
       "criterion": "Panic spreads: a calm ped seeing running peds panics; no ped stays unaffected next to the chaos.",
       "nativeChecks": [
         {
@@ -7840,13 +7873,17 @@
     },
     {
       "row": "L2-14",
-      "verdict": "OPEN",
-      "freshness": "STALE",
+      "verdict": "PASS",
+      "freshness": "FRESH",
       "sourceDigest": "9f88ba48ca13900ca4f429225cbac3045a96d48adee791c50179dde9c8cd025f",
       "review": "docs/qa/reviews/L2-14.json",
-      "reviewSha256": "ad1ebef5d452041465a41798167702480196d6232b75b4c842feccf3d065efa5",
-      "observation": "Cluster **12–16** (authored 13) on the Elm approach; passable killing ≤ 50 % of it; side path and car alarm each work.",
-      "evidence": [],
+      "reviewSha256": "54459199c5ec026b6fc4ee3c971066a70a9e1ad4e151ff388c8607b53962bf2e",
+      "observation": "Four current mortal physical-keyboard routes after ordinary complete-prefix input; read-only coordinate/nav assistance declared, no God/spawns/skips. All four reached actual checkpoint crossedAt: low side7992, low alarm7844, high side8027, high alarm7835.13 identified cluster infected each. Unique courier cluster kills0/6/0/3, maximum6/13=46.154% ≤50%; final HP100/93.4333/100/86.1667. Alarm cases contain actual car-alarm events (low5842+6261, high5832+6260); side cases use the continuous open backyard side route. The optional attack stop at6 kills is a physical tactic bound, not a game mutation. Personally inspected all40 original close/wide route photos: continuous readable passages around fences and arrival inside checkpoint, with enemies remaining outside. Fresh native pack/path checks additionally retain the designed cluster grouping.",
+      "evidence": [
+        "docs/reports/final-a/L2-14-browser-ledger.json.gz",
+        "docs/reports/final-a/L2-14-image-review.json",
+        "docs/reports/final-a/L2-14-current-proof.json"
+      ],
       "criterion": "Cluster **12–16** (authored 13) on the Elm approach; passable killing ≤ 50 % of it; side path and car alarm each work.",
       "nativeChecks": [
         {
@@ -7975,13 +8012,20 @@
     },
     {
       "row": "L2-15",
-      "verdict": "OPEN",
-      "freshness": "STALE",
+      "verdict": "PASS",
+      "freshness": "FRESH",
       "sourceDigest": "9f88ba48ca13900ca4f429225cbac3045a96d48adee791c50179dde9c8cd025f",
       "review": "docs/qa/reviews/L2-15.json",
-      "reviewSha256": "7c646e7acd97d5d7ddce74277e6af80280f3cde8f242bc8a85a1e9a35cbe3780",
-      "observation": "Checkpoint: ≥ 3 police vehicles with light bars, ≥ 4 officers firing visibly, ≥ 8 civilians; gate closes ≤ 1.5 s after the player crosses; no infected crosses after.",
-      "evidence": [],
+      "reviewSha256": "d5c26532d3e505228c197c1360c0d145d125de538e343d6e926ed914f89bd13a",
+      "observation": "All22 current low/high WebGPU route/checkpoint frames personally inspected at full resolution, including actual checkpoint zoom0.5/1.5. Four distinct officers visibly fire amid muzzle/tracer flashes; actual rendered shot history confirms all four IDs131–134 at each tier. Three police vehicles show lit bars, matching three current authored lit checkpoint placements. Eight actual prepared civilian IDs each tier. Fresh native gate-close delay0.6s each (<=1.5); every-tick crossing fixture records zero infected crossing after closure. Four low/five high were already inside at closure; these are explicitly retained, not falsely described as zero infected inside. Ordinary complete side-route InputFrames; damage protection supports presentation only. Browser transitions to L3 before a5s follow-up image; post-close crossing qualification comes from current immutable native fixture.",
+      "evidence": [
+        "docs/reports/final-a/L2-15-checkpoint-proof.json",
+        "docs/reports/final-a/native-receipts/L2-low-fixtures.json.gz",
+        "docs/reports/final-a/native-receipts/L2-high-fixtures.json.gz",
+        "docs/reports/final-a/L2-15-browser-ledger.json.gz",
+        "docs/reports/final-a/L2-15-image-review.json",
+        "docs/reports/final-a/L2-15-current-proof.json"
+      ],
       "criterion": "Checkpoint: ≥ 3 police vehicles with light bars, ≥ 4 officers firing visibly, ≥ 8 civilians; gate closes ≤ 1.5 s after the player crosses; no infected crosses after.",
       "nativeChecks": [
         {
@@ -8163,13 +8207,18 @@
     },
     {
       "row": "L2-16",
-      "verdict": "OPEN",
-      "freshness": "MISSING",
+      "verdict": "PASS",
+      "freshness": "FRESH",
       "sourceDigest": "9f88ba48ca13900ca4f429225cbac3045a96d48adee791c50179dde9c8cd025f",
-      "review": null,
-      "reviewSha256": null,
-      "observation": "Compare L1 and L2 at matching zoom and quality: does L2 sunlight read higher/harder, and do the streets look wounded while buildings still stand?",
-      "evidence": [],
+      "review": "docs/qa/reviews/L2-16.json",
+      "reviewSha256": "0f1f7164eec69f9c6d8424e1ec84257187b834a174d8c17bee17113b92ba84c0",
+      "observation": "P — taste judgement reserved for PO. All12 current L2 opening frames and12 matching current L1 morning frames personally inspected, both render backends/qualities and actual zoom0.5/1/1.5. L2 pavement is pale neutral grey with a higher/harder sun than L1 warm orange pavement and long purple shadows; storefronts remain upright and street edges show rubble/damage. PO: compare matching webgpu low/high z1.5 opening frames in the linked L1/L2 manifests; judge clearly harder/higher lighting and wounded-but-standing street mood. Schema PASS means observation completed; release verdict P, no PO taste approval asserted.",
+      "evidence": [
+        "docs/reports/final-a/L1-17-image-review.json",
+        "docs/reports/final-a/L2-16-browser-ledger.json.gz",
+        "docs/reports/final-a/L2-16-image-review.json",
+        "docs/reports/final-a/L2-16-current-proof.json"
+      ],
       "criterion": "Light reads clearly harder/higher than L1; streets \"wounded, but still standing\".",
       "nativeChecks": []
     },
@@ -9463,13 +9512,17 @@
     },
     {
       "row": "L3-05",
-      "verdict": "OPEN",
-      "freshness": "STALE",
+      "verdict": "PASS",
+      "freshness": "FRESH",
       "sourceDigest": "b54f676bf2eb09a12c8059dce4ebe53003816773db044d7acfc253fccbedccf9",
       "review": "docs/qa/reviews/L3-05.json",
-      "reviewSha256": "f93066827460da97b6d76d418cbf191b0f4875958d08332a38a600f9541dadf1",
-      "observation": "Camera pulls back ×1.5 while the attack runs and the player is in the yard (east-gate fights in frame).",
-      "evidence": [],
+      "reviewSha256": "fd51b66f531502f162ad5ac4bef1c73d1211745ff7fb25df11ca3bfb4438eefd",
+      "observation": "Current ordinary mortal complete-input route, WebGPU low/high: camera distance before attack 19.000m, steady attack 28.500m, ratio 1.500. At attack+63 ticks the eased distance is 28.36673m; by the 10s sample it is 28.5m in both tiers. Personally inspected all41 original frames: yard east-gate infected, firing officers and courier remain in the attack framing; no debug framing replaces production follow. The camera ease-in is reported explicitly rather than treated as instantaneous.",
+      "evidence": [
+        "docs/reports/final-a/L3-05-browser-ledger.json.gz",
+        "docs/reports/final-a/L3-05-image-review.json",
+        "docs/reports/final-a/L3-05-current-proof.json"
+      ],
       "criterion": "Camera pulls back ×1.5 while the attack runs and the player is in the yard (east-gate fights in frame).",
       "nativeChecks": []
     },
@@ -9811,13 +9864,19 @@
     },
     {
       "row": "L3-07",
-      "verdict": "OPEN",
-      "freshness": "STALE",
+      "verdict": "PASS",
+      "freshness": "FRESH",
       "sourceDigest": "b54f676bf2eb09a12c8059dce4ebe53003816773db044d7acfc253fccbedccf9",
       "review": "docs/qa/reviews/L3-07.json",
-      "reviewSha256": "e365e10c80ed313869e0fa88ed52dbb3245ef9e929e15b5fdf7121cc221251cc",
-      "observation": "Segment 1: the squad visibly fights (officers fire at infected and land hits; kills not required — at high quality they may be overwhelmed before scoring one); player damage < 100 HP (never a whole life). PO 2026-11-05: \"Overwhelmed is the point\" — the ≥ 60 % officer-kill share is dropped; the squad may be overwhelmed in the yard.",
-      "evidence": [],
+      "reviewSha256": "89a272eab57d40513b3539e7cc1ee48a2a3542e7f478170a6d69397444180a1c",
+      "observation": "Personally inspected all41 current ordinary mortal route frames, including attack+1s/+10s and fallback in both qualities: multiple uniformed officers visibly aim/fire, muzzle flashes and tracers reach the infected; raw render.vfx.shots retains actual allied source IDs. Independent fresh mortal segment1 fixture records low122/high31 officer hits,27/3 officer kills,22/0 player damage and0/0 deaths. Both damage totals <100HP. Browser high courier reaches39HP at fallback, corroborating survival with61HP net loss on this different ordinary route. No kill-share requirement is applied (PO removed it).",
+      "evidence": [
+        "docs/reports/final-a/native-receipts/L3-low-fixtures.json.gz",
+        "docs/reports/final-a/native-receipts/L3-high-fixtures.json.gz",
+        "docs/reports/final-a/L3-07-browser-ledger.json.gz",
+        "docs/reports/final-a/L3-07-image-review.json",
+        "docs/reports/final-a/L3-07-current-proof.json"
+      ],
       "criterion": "Segment 1: the squad visibly fights (officers fire at infected and land hits; kills not required — at high quality they may be overwhelmed before scoring one); player damage < 100 HP (never a whole life). PO 2026-11-05: \"Overwhelmed is the point\" — the ≥ 60 % officer-kill share is dropped; the squad may be overwhelmed in the yard.",
       "nativeChecks": [
         {
@@ -11704,13 +11763,17 @@
     },
     {
       "row": "L3-12",
-      "verdict": "OPEN",
-      "freshness": "STALE",
+      "verdict": "FAIL",
+      "freshness": "FRESH",
       "sourceDigest": "b54f676bf2eb09a12c8059dce4ebe53003816773db044d7acfc253fccbedccf9",
       "review": "docs/qa/reviews/L3-12.json",
-      "reviewSha256": "99c53b9cf78575317e29233e9164ade584744957cfac4254ea027af11db79e50",
-      "observation": "**Marker:** ring stays at `l3-zone` (army checkpoint), no corridor steer; HUD distance is the real ~360 m distance. Route to the checkpoint readable without steering (Q-270).",
-      "evidence": [],
+      "reviewSha256": "0ad76c2457ec926657a69107e0bcbd88d5eeffc890dd76532150a32bc9a4c801",
+      "observation": "Fresh named Luna low-tier screenshot-only trial after ordinary fallback prefix. All22 action images3–24 personally inspected at original resolution. Story panel is clear at3. Over ticks2589–6299 (61.8333 active seconds), Luna leaves the yard but finds no onward street route: HUD360m→minimum343m→343m final, repeatedly moving along the fenced lawn behind HARDWARE and explicitly reporting stuck at turns13–24. This is the observed unscripted route-readability FAIL, not a claim of a mechanically blocked level. The ~360m fixed checkpoint HUD and marker remain correct in fresh native checks; no corridor-steering ring is present. The criterion specifies no numeric lost-time limit;61.83s is the measured observation, not an invented acceptance threshold. Model receives only current attached pixels and recent decisions/actions, with zero tool calls, DOM, coordinates, maps or route hints. Aim assist/protection isolate navigation. All completed inputs and later6m recovery at24 are retained. Trial was deliberately bounded before10min; fetch error from stopping the controller is not game failure. No high-tier route PASS is asserted.",
+      "evidence": [
+        "docs/reports/final-a/L3-12-input-ledger.json.gz",
+        "docs/reports/final-a/L3-12-image-review.json",
+        "docs/reports/final-a/L3-12-current-proof.json"
+      ],
       "criterion": "**Marker:** ring stays at `l3-zone` (army checkpoint), no corridor steer; HUD distance is the real ~360 m distance. Route to the checkpoint readable without steering (Q-270).",
       "nativeChecks": [
         {
@@ -11785,25 +11848,32 @@
     },
     {
       "row": "L3-13",
-      "verdict": "OPEN",
-      "freshness": "STALE",
+      "verdict": "FAIL",
+      "freshness": "FRESH",
       "sourceDigest": "b54f676bf2eb09a12c8059dce4ebe53003816773db044d7acfc253fccbedccf9",
       "review": "docs/qa/reviews/L3-13.json",
-      "reviewSha256": "23bab16b05736bf81c0894cc8ac9244a1eb6520cafacf760fb655d29ea2d24ae",
-      "observation": "Raised corridor: no deck gaps or dark seams at the ramps; no infected clumps stuck between barrier rows; no body hanging on walls.",
-      "evidence": [],
+      "reviewSha256": "2cd17857a725e9a4d5f9d1b27f6993778e7ee81769805f9082ac8d8a27e208a4",
+      "observation": "Fresh low WebGL2 ordinary physical route from x135 to177.14; all22 photographs personally inspected at original resolution. Counterexample: at x177.14 the close0.5 view shows a dark triangular seam across the deck, extending from approximately image(945,576) to right edge(1279,592), over300px long. It remains in after, settled-5s and settled-10s frames. Thus no-dark-seams clause FAIL. Repro: seed1 low, take the raised corridor to x177 beside parked van, look back/down at the ramp joint at zoom0.5. The assisted controller stalled at this van; that is not itself a route/collision failure. No full-route, high-tier, hanging-body or physical support conclusion is claimed; one current visible seam suffices for FAIL.",
+      "evidence": [
+        "docs/reports/final-a/L3-13-browser-ledger.json.gz",
+        "docs/reports/final-a/L3-13-image-review.json",
+        "docs/reports/final-a/L3-13-current-proof.json"
+      ],
       "criterion": "Raised corridor: no deck gaps or dark seams at the ramps; no infected clumps stuck between barrier rows; no body hanging on walls.",
       "nativeChecks": []
     },
     {
       "row": "L3-14",
-      "verdict": "OPEN",
-      "freshness": "STALE",
+      "verdict": "FAIL",
+      "freshness": "FRESH",
       "sourceDigest": "b54f676bf2eb09a12c8059dce4ebe53003816773db044d7acfc253fccbedccf9",
       "review": "docs/qa/reviews/L3-14.json",
-      "reviewSha256": "5ff2a8b796f96396ae6e2d12036ca0d997fb16a0ef171e2956457798234cbab1",
-      "observation": "Army compound: ≥ 8 soldiers, ≥ 2 military vehicles, ≥ 2 buses with civilians; no active infected in the 5 s rest; ring visible during the camera pull-back; evacuation wait **15 s**.",
-      "evidence": [],
+      "reviewSha256": "924fd6ace0a66b7e0fabc11ca415c194dde69b5ef99cb5d554317dfaaa3db6e1",
+      "observation": "Measured high-tier seed1 FAIL: ordinary mortal complete InputFrames reach army zone at tick11440; empty input holds the courier at x224.2303,z-0.0362. Completion occurs tick12812,1372ticks=22.8667s after entry, versus required900ticks=15s (+472ticks=7.8667s). Barrier closes on that same late tick12812; delay is not a render/frame-time measurement. This repeats the prior independent run that stopped on the900tick assertion. Full1373-sample evacuation trace is now saved. Nine actual soldiers present;301 first-five-second samples have zero living infected inside compound or within20m. The timer counterexample alone establishes FAIL; vehicles/bus presentation are not being claimed PASS from native data. Repro: L3 seed1 high, ordinary complete policy to first crossedAt, release movement immediately and wait inside the ring. No God mode, teleport, actor edits, skips or frozen AI.",
+      "evidence": [
+        "docs/reports/final-a/L3-14-high-evacuation-ledger.json.gz",
+        "docs/reports/final-a/L3-14-current-proof.json"
+      ],
       "criterion": "Army compound: ≥ 8 soldiers, ≥ 2 military vehicles, ≥ 2 buses with civilians; no active infected in the 5 s rest; ring visible during the camera pull-back; evacuation wait **15 s**.",
       "nativeChecks": [
         {
@@ -11871,13 +11941,17 @@
     },
     {
       "row": "L3-16",
-      "verdict": "OPEN",
-      "freshness": "STALE",
+      "verdict": "FAIL",
+      "freshness": "FRESH",
       "sourceDigest": "b54f676bf2eb09a12c8059dce4ebe53003816773db044d7acfc253fccbedccf9",
       "review": "docs/qa/reviews/L3-16.json",
-      "reviewSha256": "8ab5f12c853f71a3c387ab993b1fe749cd243d525eb8001a2352782909042575",
-      "observation": "Review Boulevard, Commerce and Oak frames at both zooms/qualities: does the light read late afternoon, and does each street communicate its distinct damage? The required two smoke columns per frame remain an objective check.",
-      "evidence": [],
+      "reviewSha256": "3aebdfe96c5db5fbe4bc57f38d3b11d36ae88a643b4920a6ed7cb32b9a5a9422",
+      "observation": "Current ordinary moving street route, both qualities, personally inspected all41 original frames. Counterexample: low street-x-40-close at tick5400, player x=-39.4842, actual player zoom0.5,1280x720:0 visible smoke columns (<2 required in every street frame). High corresponding close frame tick4020 x=-38.1486 also has0 visible smoke columns. The production zoom1 counterpart contains smoke near its top edge, which disappears at supported closer framing. Late-afternoon warm light and route damage are visible, but this universal smoke clause fails. Repro: L3 seed1 ordinary complete route to x≈-40, set supported zoom0.5 and inspect street frame.",
+      "evidence": [
+        "docs/reports/final-a/L3-16-browser-ledger.json.gz",
+        "docs/reports/final-a/L3-16-image-review.json",
+        "docs/reports/final-a/L3-16-current-proof.json"
+      ],
       "criterion": "Late-afternoon light, ≥ 2 smoke columns in every street frame; streets read their damage type.",
       "nativeChecks": []
     }
