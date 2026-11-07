@@ -929,9 +929,15 @@ export class InfectedSystem {
     return this.world.scenario === 'L3' && e.archetype === 'infected.runner' ? Math.min(speed, l3.infected.maxRegularMs) : speed;
   }
   /** Escape crowds commit only once their lunge can reach the moving courier. */
-  private lungeRangeM(): number {
+  private lungeRangeM(courier = true): number {
     if (this.world.scenario === 'L2' && this.world.missions?.state.l2?.escapeSpawned) return l2.escape.lungeM;
-    if (this.world.scenario === 'L3' && this.world.missions?.state.l3?.fallbackAt) return l3.infected.retreatLungeM[this.director.tier];
+    const retreat = this.world.missions?.state.l3;
+    if (this.world.scenario === 'L3' && retreat?.fallbackAt) {
+      // Preserve the first squad segment and civilian grab approach. The
+      // later courier pursuit must close before committing to a lunge.
+      if (this.director.tier === 'low' && (!courier || retreat.segment < 1)) return l1v2.infected.lungeRangeM;
+      return l3.infected.retreatLungeM[this.director.tier];
+    }
     return armedCampaigns.has(this.world.scenario ?? '') ? 4.4 : l1v2.infected.lungeRangeM;
   }
   /** Infected currently holding `civilianId` in a bite grab, or 0. Lane D freezes the victim while this is set. */
@@ -1192,7 +1198,7 @@ export class InfectedSystem {
     if (!target) { this.startSearch(b, brain, { x: brain.seenX, z: brain.seenZ }, { x: brain.headingX, z: brain.headingZ }); return; }
     if (this.world.tick < brain.pauseUntil) { this.look(e, brain); return; }
     brain.looking = false;
-    const distance = Math.hypot(target.position.x - e.transform.x, target.position.z - e.transform.z), lunge = this.lungeRangeM();
+    const distance = Math.hypot(target.position.x - e.transform.x, target.position.z - e.transform.z), lunge = this.lungeRangeM(target.kind === 'player');
     if (target.kind === 'player') {
       // Strike with clear sight, or at arm's reach even past a thin post/lamp (PO-QA #13: no frozen stand-off).
       const strikable = this.l1!.lineOfSight(e.transform, target.position) || distance <= 1.6;
@@ -1215,7 +1221,7 @@ export class InfectedSystem {
       this.steerL1(e, brain, target.position, brain.runSpeed, true, true);
       // L3 has a short retreat lunge. Resolve reaching it during this
       // move before crowd separation can push the runner outside it again.
-      if (this.world.scenario === 'L3' && (this.director.tier === 'high' || this.world.missions?.state.l3?.fallbackAt) && this.world.tick >= b.cooldown &&
+      if (this.world.scenario === 'L3' && (this.director.tier === 'high' || (this.world.missions?.state.l3?.segment ?? -1) >= 1) && this.world.tick >= b.cooldown &&
           Math.hypot(target.position.x - e.transform.x, target.position.z - e.transform.z) <= lunge &&
           (this.l1!.lineOfSight(e.transform, target.position) || Math.hypot(target.position.x - e.transform.x, target.position.z - e.transform.z) <= 1.6)) {
         b.combo = 0; this.windup(e);

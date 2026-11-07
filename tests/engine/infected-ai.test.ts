@@ -26,7 +26,7 @@ test('every human and animal role validates and spawns with its catalog health a
     const w = await arena(); w.scenario = 'L3'; w.infected!.configureL1v2(); w.infected!.director.setTier(tier);
     // Isolate the retreat AI from the level's population and objective graph.
     const definition = missionSandbox(); definition.onStart = [];
-    const mission = w.loadMission(definition); mission.begin(); Object.assign(mission.state, { l3: { fallbackAt: 1 } });
+    const mission = w.loadMission(definition); mission.begin(); Object.assign(mission.state, { l3: { fallbackAt: 1, segment: 1 } });
     const e = spawn(w, 'runner', 2), brain = e.infected!.l1!;
     brain.mode = 'chase'; brain.targetId = 1; brain.pauseUntil = 0;
     const warnings: number[] = [];
@@ -39,6 +39,13 @@ test('every human and animal role validates and spawns with its catalog health a
     step(w, 1);
     expect(warnings, `${tier}: contact reached during steering must commit before separation`).toHaveLength(1);
     expect(warnings[0]).toBeLessThanOrEqual(.9);
+    if (tier === 'low') {
+      mission.state.l3!.segment = 0;
+      const early = spawn(w, 'runner', 2), approach = early.infected!.l1!;
+      approach.mode = 'chase'; approach.targetId = 1; approach.pauseUntil = 0;
+      step(w, 1);
+      expect(w.events.events().some(event => event.type === 'telegraph' && event.sourceId === early.id), 'the first squad segment retains its original lunge').toBe(true);
+    }
   }
   {
     const w = await arena(); w.scenario = 'L3'; w.infected!.configureL1v2();
