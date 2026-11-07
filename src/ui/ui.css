@@ -5,6 +5,8 @@
 .full-ui:not(.debug-ui) [data-input-hint],.full-ui [data-audio-pause]{display:none!important}
 body.full-ui:not([data-ui-screen=game]) [data-touch-controls],body.full-ui:not([data-ui-screen=game]) [data-testid=stick-zone]{display:none!important}
 .full-ui{color:var(--ui-ink);font-family:system-ui,sans-serif}
+/* Dragging an attack across the HUD must not select its labels or the next result card. */
+.hud,.mission-ui{-webkit-user-select:none;user-select:none}
 .menus{position:fixed;inset:0;z-index:40;display:grid;place-items:center;padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-right)) max(16px,env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left));background:linear-gradient(160deg,#293447e8,#162032ee)}
 .menu-panel{width:min(560px,100%);max-height:100%;overflow:auto;background:#182333f5;border:2px solid #bc9c70;border-radius:24px;padding:28px;box-shadow:0 12px 0 #10182488;display:grid;gap:12px;font-size:calc(16px * var(--text-scale))}
 .menu-panel h1{font-size:calc(28px * var(--text-scale));margin:0;color:var(--ui-warm)}
