@@ -23,18 +23,18 @@ export const l3 = {
   armory: { interactS: .6, attackAfterS: 5, attackLatestS: 40, briefingAtS: 2 },
   /** Section 5.5: waves from three directions (river path, Boulevard, Oak Avenue); first-of fallback rule. */
   attack: {
-    /** PO 2026-11-07 ("Far too many Zombies"): 16 / 24 / 32 (were 30 / 60 / 100); low quality x0.75 = 12 / 18 / 24. */
-    waves: [{ atS: 0, count: 16 }, { atS: 20, count: 24 }, { atS: 40, count: 32 }] as readonly { atS: number; count: number }[],
+    /** PO 2026-11-07 ("Far too many Zombies"): 15 / 25 / 35 (were 30 / 60 / 100; low quality 15 / 30 / 50); low quality now uses the same waves. */
+    waves: [{ atS: 0, count: 15 }, { atS: 20, count: 25 }, { atS: 40, count: 35 }] as readonly { atS: number; count: number }[],
     fallback: { defenseS: 60, turned: 3, inside: 8 },
     /** Seconds between two emergences of one wave at one direction (they string out instead of a single blob). */
     staggerS: .1,
     /** PO 2026-10-12 ("don't cluster Zombies, let they come from all directions"): each wave streams in over this many seconds
      * from five directions. Exactly one fifth of the attackers comes from the station door; low-tier floors scale with the smaller
      * low-quality waves. Total counts stay fixed. */
-    streamS: 18, stationShare: .2, stationMinimum: [2, 3, 4] as readonly number[],
+    streamS: 18, stationShare: .2, stationMinimum: [3, 5, 7] as readonly number[],
     /** Stream front-loading (time ~ (i/n)^streamFront): about a quarter of a wave is out within 2 s, so the alarm shows a fight at once. */
     streamFront: 3,
-    lowScale: .75,
+    lowScale: 1,
     /** Brief l3-polish (alarm: first infected on screen at 5.8 s; the street fights at the east gate sat just outside the close
      * frame): while the station attack runs and the courier is in the yard, the camera pulls back by this factor (eased). */
     viewScale: 1.5,
