@@ -6,15 +6,15 @@
   "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
   "clauses": [
     {
-      "clause": "≥ 20 civilians, ≥ 6 soldiers, ≥ 4 staff, ≥ 8 animals (all 5 species, ≥ 2 zebras, ≥ 3 flamingos); outside-wall infected cannot cross; nobody idle > 3 s.",
+      "clause": "\u2265 20 civilians, \u2265 6 soldiers, \u2265 4 staff, \u2265 8 animals (all 5 species, \u2265 2 zebras, \u2265 3 flamingos); outside-wall infected cannot cross; nobody idle > 3 s.",
       "verdict": "PASS",
       "note": "Initial production census at both tiers has36non-soldier humans including4staff,6soldiers and8animals in all5species (2zebras,3flamingos). Every calm tick tracks purposeful activity, facing and movement: maximum idle-facing-nowhere0.6s (<3s); current physical calm paths show posted guards, pedestrians and varied production clips under actual lighting. Four outside-wall ordinary-runner capability probes per tier cross0walls; no NPC disappears or dies during calm. Unmodified natural native final hashes equal independent controls. Outside-threat fixtures are disclosed, not natural spawns."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/final-c/L8-03/native.json",
-      "sha256": "d691fdc3493b92cb6143c34d8306fdd91fa8812c0e8017604218e8a85c5cc3c2",
+      "file": "docs/reports/final-c/L8-03/native.json.gz",
+      "sha256": "11ee697d55c2854d6a0e7b68cfb235ea71e9b2cedb50988d1ddd4d0486b87f1a",
       "what": "Initial production census at both tiers has36non-soldier humans including4staff,6soldiers and8animals in all5species (2zebras,3flamingos). Every calm tick tracks purposeful activity, facing and movement: maximum idle-facing-nowhere0.6s (<3s); current physical calm paths show posted guards, pedestrians and varied production clips under actual lighting. Four outside-wall ordinary-runner capability probes per tier cross0walls; no NPC disappears or dies during calm. Unmodified natural native final hashes equal independent controls. Outside-threat fixtures are disclosed, not natural spawns."
     },
     {
