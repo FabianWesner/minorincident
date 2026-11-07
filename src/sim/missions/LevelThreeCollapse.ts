@@ -315,7 +315,7 @@ export class LevelThreeCollapse {
     const ai = this.world.infected!, s = this.s;
     const x = this.world.entities.get(1)!.transform.x;
     const opening = (s.phase === 'fallback' || s.phase === 'corridor') && x >= l3.map.corridor[0] && (s1 || x < l3.map.segments[0][1]);
-    return opening && !pressure && !announced ? Math.min(ai.director.cap, l3.density.s1LiveBudget / (ai.director.tier === 'low' ? 2 : 1)) : ai.director.cap;
+    return opening && !pressure && !announced ? Math.min(ai.director.cap, l3.density.s1LiveBudget[ai.director.tier === 'low' ? 'low' : 'high']) : ai.director.cap;
   }
   /** An infected comes out of a door: a pedestrian turned in place (same pipeline as L1/L2). Returns the id or 0 at the cap. */
   private emerge(at: Point, home?: Point, running = false, police = false, s1 = false, pressure = false, cover = false, announced = false): number {

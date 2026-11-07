@@ -1,5 +1,6 @@
 import { megaAlpha } from '../../data/megaAlpha';
 import { l4 } from '../../data/l4';
+import { l3 } from '../../data/l3';
 import { cureAlphaPopulation, cureAlphaCap, cureRegularAlphaCount } from '../../levels/L10/alphaContracts';
 import { moveAgent } from '../locomotion/AgentMotion';
 import { infectedDef } from '../../data/infected';
@@ -44,7 +45,7 @@ export class SpawnDirector {
     // appearance; the new cap takes effect as the living population falls.
     this.tier = tier;
   }
-  get cap(): number { return this.tier === 'low' ? this.ai.world.scenario === 'L4' ? l4.war.caps.infected.low : Math.floor(this.levelCap / 2) : this.levelCap; }
+  get cap(): number { return this.tier === 'low' ? this.ai.world.scenario === 'L4' ? l4.war.caps.infected.low : this.ai.world.scenario === 'L3' ? l3.density.caps.low : Math.floor(this.levelCap / 2) : this.levelCap; }
   /** Living infected only: a knocked-down infected (PO "Infected recover") frees its slot while down, so authored
    * populations still emerge; the cap bounds new spawns, recoveries may briefly exceed it. */
   get count(): number {
