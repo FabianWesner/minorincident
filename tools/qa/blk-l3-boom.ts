@@ -19,5 +19,5 @@ await runLevel('L3', 'complete', seed, undefined, 'auto', campaign, undefined, 0
     console.log('   dog', dog.companion!.state, dog.companion!.following, 'v', JSON.stringify(dog.companion!.velocity), 'nearInf', near, 'routeless', npcs.routeless.get(dog.id), 'unreach', !!npcs.unreachable.get(dog.id), 'cell', cell, 'player', world.entities.get(1)!.transform.x.toFixed(1));
     console.log(world.tick - s.crossedAt, 'groupOutside', out.join(' ') || '-', 'underArm', under.join(' ') || '-', 'finale', world.tick - (s.finaleAt ?? 0));
   }),
-  beforeDispose: world => { const s = world.missions!.state.l3!; console.log('crossed', s.crossedAt, 'barrier', s.barrierClosedAt - s.crossedAt, 'done', s.doneAt - s.crossedAt); },
+  beforeDispose: world => { const s = world.missions!.state.l3!; console.log('crossed', s.crossedAt, 'barrier', (s.barrierClosedAt ?? NaN) - s.crossedAt, 'done', s.doneAt - s.crossedAt); },
 });
