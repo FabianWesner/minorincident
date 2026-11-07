@@ -1,0 +1,17 @@
+
+> qa:accept
+> node --import tsx/esm tools/qa/accept.ts --level L4 --tier low --skip-browser
+
+[qa:accept] L4 low/complete: native global and level observation
+[qa:accept] L4 low/complete: complete
+[qa:accept] L4 low/stationary: native global and level observation
+[qa:accept] L4 low/stationary: tick-budget
+[qa:accept] L4 low/fixtures: 10 clauses, 0 errors
+[qa:accept:checkpoint] L4 low/arrival: PASS
+[qa:accept:checkpoint] L4 low/turn: PASS
+[qa:accept:checkpoint] L4 low/line-1: PASS
+[qa:accept:checkpoint] L4 low/nests: PASS
+[qa:accept:checkpoint] L4 low/armor: PASS
+[qa:accept:checkpoint] L4 low/line-break: PASS
+[qa:accept] L4 low/checkpoints: 6 clauses; control identical; 0 errors
+[qa:accept] L4: 0 fresh failing rows; 18 incomplete rows; docs/reports/fix51-verify/L4.json

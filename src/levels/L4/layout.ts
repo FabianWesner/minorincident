@@ -138,7 +138,7 @@ export function levelFourLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     // on the sidewalk edge, outside that approach lane.
     const binId = 'prop.trash-bin:19', bin = layout.placements.find(p => p.id === binId);
     if (bin) {
-      const dx = -3.4;
+      const dx = -1.0;
       bin.position = [bin.position[0] + dx, bin.position[1], bin.position[2]];
       bin.visualAabb = { min: [bin.visualAabb.min[0] + dx, bin.visualAabb.min[1], bin.visualAabb.min[2]], max: [bin.visualAabb.max[0] + dx, bin.visualAabb.max[1], bin.visualAabb.max[2]] };
       for (const c of layout.colliders) if (c.id === binId || c.id.startsWith(`${binId}/`)) {

@@ -1,0 +1,48 @@
+
+> verify
+> tsx tools/verify.ts E22
+
+[verify] E22 (E22): per-epic AC tests were retired; running the per-change gate.
+
+> typecheck
+> tsc --noEmit && tsc --noEmit -p tsconfig.sim.json
+
+
+> lint
+> eslint src tests tools functions *.config.ts eslint.config.js
+
+
+> test
+> node tools/qa/test-budget.mjs --name test --max-seconds 240 -- node node_modules/vitest/vitest.mjs run --project default --configLoader runner
+
+[test-budget] 150/150 test cases ({"vitest":129,"e2e":9,"invariantsBrowser":12}), 43/45 files
+
+ RUN  v5.0.3 /Users/wesner/Workspace/minorincident/.claude/worktrees/r2-l4path
+
+ ❯ |default| tests/engine/l4-contact.test.ts (1 test | 1 failed) 35906ms
+   × L4: every contact archetype interrupts approach/lure and attacks within 3 s; soldiers remain biteable and corgi protected 35904ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |default| tests/engine/l4-contact.test.ts > L4: every contact archetype interrupts approach/lure and attacks within 3 s; soldiers remain biteable and corgi protected
+Error: Test timed out in 30000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ tests/engine/l4-contact.test.ts:216:1
+    214| }
+    215|
+    216| test('L4: every contact archetype interrupts approach/lure and attacks…
+       | ^
+    217|   expect(followerBarsAlwaysMax, 'five-person groups retain full bars')…
+    218|   expect(followerPipSize, 'larger groups use thin, short pips').toEqua…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 26 passed (27)
+      Tests  1 failed | 106 passed (107)
+   Start at  12:27:02
+   Duration  84.36s (tests 79%, transform 15%, import 5%, setup 1%)
+
+[test-budget] test: 95.7 s (budget 240 s)
+[test-budget] FAIL: test failed (exit 1)
+[test-budget] See docs/qa/test-strategy.md: merge into an existing test or delete one before adding another.
