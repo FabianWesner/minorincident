@@ -1,0 +1,482 @@
+{
+  "method": "Physical WASD/mouse/E, production debug-menu progressed L4 entry, survival-protected courier, no objective skips, no assists, no performance timing. Read-only actual frozen vertex and permanent identity census. Two headless shared-pool sessions, ports4834/4835, completed and closed.",
+  "sourceHash": "c19cffe31403b25dc81d307da8947c42c75496e6f5d21ae7a7e77d02a8ad86a1",
+  "sourceIdentity": "Final game bytes; game source unchanged since matched after receipts. Runtime source digest recorded here after completion, not emitted by original wrapper.",
+  "results": [
+    {
+      "tier": "low",
+      "runs": [
+        {
+          "level": "L4",
+          "entry": "debug",
+          "heroine": "female",
+          "finished": true,
+          "skipped": [],
+          "wallSeconds": 281,
+          "simSeconds": 0,
+          "maxNoProgressSeconds": 11.572,
+          "deaths": 0,
+          "assists": 0,
+          "attacks": {
+            "weapon.army-mg": 1318
+          },
+          "weaponsStart": [
+            "weapon.fire-axe",
+            "weapon.bat",
+            "weapon.kick",
+            "weapon.handgun",
+            "ability.corgi-lure"
+          ],
+          "weaponsEnd": [
+            "weapon.fire-axe",
+            "weapon.bat",
+            "weapon.kick",
+            "weapon.army-mg",
+            "weapon.handgun",
+            "ability.corgi-lure"
+          ],
+          "steps": [
+            {
+              "id": "ride",
+              "text": "Ride into Fairhaven with the convoy \u00b7 58\u00a0m",
+              "tick": 3,
+              "marker": {
+                "anchor": "l4-plaza",
+                "ring": {
+                  "x": -17,
+                  "y": 0,
+                  "z": 3
+                },
+                "drawn": null,
+                "playerY": 0.7049999833106995,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "quartermaster",
+              "text": "Report to the quartermaster \u00b7 10\u00a0m",
+              "tick": 1850,
+              "marker": {
+                "anchor": "l4-quartermaster",
+                "ring": {
+                  "x": -23.2,
+                  "y": 0,
+                  "z": 0.6
+                },
+                "drawn": [
+                  -23.2,
+                  0.05,
+                  0.6
+                ],
+                "playerY": 0.7049999833106995,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "hold",
+              "text": "Hold the plaza with the army \u00b7 3:10 remaining",
+              "tick": 2130,
+              "marker": {
+                "anchor": "l4-quartermaster",
+                "ring": null,
+                "drawn": null,
+                "playerY": 0.7049999833106995,
+                "pinVisible": false
+              }
+            },
+            {
+              "id": "hide",
+              "text": "Run to the cellar via Lakeshore, Metro Road and Harbor Street \u00b7 74\u00a0m",
+              "tick": 13550,
+              "marker": {
+                "anchor": "l4-cellar-door",
+                "ring": {
+                  "x": -79.29999999999998,
+                  "y": 0,
+                  "z": -45.2801
+                },
+                "drawn": [
+                  -79.3,
+                  0.13,
+                  -45.28
+                ],
+                "playerY": 0.7099999785423279,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "bar",
+              "text": "Bar the cellar door \u00b7 5\u00a0m",
+              "tick": 15174,
+              "marker": {
+                "anchor": "l4-brace",
+                "ring": {
+                  "x": 74.6,
+                  "y": 0,
+                  "z": -1.7999999999999998
+                },
+                "drawn": [
+                  74.6,
+                  0.05,
+                  -1.8
+                ],
+                "playerY": 0.7049999833106995,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "wait",
+              "text": "Stay down \u00b7 0:07 remaining",
+              "tick": 15330,
+              "marker": {
+                "anchor": "l4-brace",
+                "ring": null,
+                "drawn": null,
+                "playerY": 0.7049999833106995,
+                "pinVisible": false
+              }
+            }
+          ]
+        }
+      ],
+      "issues": [],
+      "vertexSamples": 261,
+      "maxVertexTopM": 1.7008223354816436,
+      "trackedCorpses": 229,
+      "missingCorpseSamples": 0,
+      "evidence": [
+        {
+          "file": "docs/reports/blk-v/physical/low/corpse-low-acceptance-ledger.json.gz",
+          "sha256": "4e4c70f6f53dff23e853a01c793418514170d9b121b408a63e11b6daff5ac4a2"
+        },
+        {
+          "file": "docs/reports/blk-v/physical/low/corpse-low-audio.json.gz",
+          "sha256": "00e7fc7a09ca02a0ea59603b4b1c4d3974100f0900f9fc414930b422236a1b44"
+        },
+        {
+          "file": "docs/reports/blk-v/physical/low/corpse-low-completion.json.gz",
+          "sha256": "2c8757995eb081e3057f93e03b36354b2ea0ade9dcda5ae1490ae46bb3a6d474"
+        },
+        {
+          "file": "docs/reports/blk-v/physical/low/corpse-low-frames.json.gz",
+          "sha256": "64406e753d82e11c6bd63d1d04bb6aa083eefa0a46949bbfce994d556b989f0f"
+        },
+        {
+          "file": "docs/reports/blk-v/physical/low/issues-corpse-low.json.gz",
+          "sha256": "64406e753d82e11c6bd63d1d04bb6aa083eefa0a46949bbfce994d556b989f0f"
+        },
+        {
+          "file": "docs/reports/blk-v/physical/low/log-corpse-low.jsonl.gz",
+          "sha256": "cc008e06aa6098344b1a422d4f2edacd52bd319609258d3493a650d84c0db79c"
+        },
+        {
+          "file": "docs/reports/blk-v/physical/low/result.json.gz",
+          "sha256": "1b296c1194583de28782e6a0910b8e9137593c5e9a3d09ec5b5322f5f8be67bd"
+        },
+        {
+          "file": "docs/reports/blk-v/physical/low/runs-corpse-low.json.gz",
+          "sha256": "0d839d121b15e10434805349f188299e01f3f2dc50708705fa6e31793159e806"
+        }
+      ]
+    },
+    {
+      "tier": "high",
+      "runs": [
+        {
+          "level": "L4",
+          "entry": "debug",
+          "heroine": "female",
+          "finished": true,
+          "skipped": [],
+          "wallSeconds": 302,
+          "simSeconds": 0,
+          "maxNoProgressSeconds": 11.692,
+          "deaths": 0,
+          "assists": 0,
+          "attacks": {
+            "weapon.army-mg": 1319
+          },
+          "weaponsStart": [
+            "weapon.fire-axe",
+            "weapon.bat",
+            "weapon.kick",
+            "weapon.handgun",
+            "ability.corgi-lure"
+          ],
+          "weaponsEnd": [
+            "weapon.fire-axe",
+            "weapon.bat",
+            "weapon.kick",
+            "weapon.army-mg",
+            "weapon.handgun",
+            "ability.corgi-lure"
+          ],
+          "steps": [
+            {
+              "id": "ride",
+              "text": "Ride into Fairhaven with the convoy \u00b7 57\u00a0m",
+              "tick": 23,
+              "marker": {
+                "anchor": "l4-plaza",
+                "ring": {
+                  "x": -17,
+                  "y": 0,
+                  "z": 3
+                },
+                "drawn": null,
+                "playerY": 0.7049999833106995,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "quartermaster",
+              "text": "Report to the quartermaster \u00b7 10\u00a0m",
+              "tick": 1829,
+              "marker": {
+                "anchor": "l4-quartermaster",
+                "ring": {
+                  "x": -23.2,
+                  "y": 0,
+                  "z": 0.6
+                },
+                "drawn": [
+                  -23.2,
+                  0.05,
+                  0.6
+                ],
+                "playerY": 0.7049999833106995,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "hold",
+              "text": "Hold the plaza with the army \u00b7 3:10 remaining",
+              "tick": 2213,
+              "marker": {
+                "anchor": "l4-quartermaster",
+                "ring": null,
+                "drawn": null,
+                "playerY": 0.7049999833106995,
+                "pinVisible": false
+              }
+            },
+            {
+              "id": "hide",
+              "text": "Run to the cellar via Lakeshore, Metro Road and Harbor Street \u00b7 81\u00a0m",
+              "tick": 13646,
+              "marker": {
+                "anchor": "l4-cellar-door",
+                "ring": {
+                  "x": -79.29999999999998,
+                  "y": 0,
+                  "z": -45.2801
+                },
+                "drawn": [
+                  -79.3,
+                  0.13,
+                  -45.28
+                ],
+                "playerY": 0.7099999785423279,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "bar",
+              "text": "Bar the cellar door \u00b7 5\u00a0m",
+              "tick": 15616,
+              "marker": {
+                "anchor": "l4-brace",
+                "ring": {
+                  "x": 74.6,
+                  "y": 0,
+                  "z": -1.7999999999999998
+                },
+                "drawn": [
+                  74.6,
+                  0.05,
+                  -1.8
+                ],
+                "playerY": 0.7049999833106995,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "wait",
+              "text": "Stay down \u00b7 0:07 remaining",
+              "tick": 15844,
+              "marker": {
+                "anchor": "l4-brace",
+                "ring": null,
+                "drawn": null,
+                "playerY": 0.7049999833106995,
+                "pinVisible": false
+              }
+            }
+          ]
+        }
+      ],
+      "issues": [],
+      "vertexSamples": 269,
+      "maxVertexTopM": 1.923713219165802,
+      "trackedCorpses": 288,
+      "missingCorpseSamples": 0,
+      "evidence": [
+        {
+          "file": "docs/reports/blk-v/physical/high/corpse-high-acceptance-ledger.json.gz",
+          "sha256": "f5ad8471aab34e55f09432e30f1f07152be5654d0b3d71fea2e4598d353aeb2a"
+        },
+        {
+          "file": "docs/reports/blk-v/physical/high/corpse-high-audio.json.gz",
+          "sha256": "2c1a14102e6105a3564433de924b9b058655417c3362e7b3ccb9234dcde976d6"
+        },
+        {
+          "file": "docs/reports/blk-v/physical/high/corpse-high-completion.json.gz",
+          "sha256": "09680fdae9f6981e489c5303b457467ec0348ef429851a9d84cee4c28ef41580"
+        },
+        {
+          "file": "docs/reports/blk-v/physical/high/corpse-high-frames.json.gz",
+          "sha256": "64406e753d82e11c6bd63d1d04bb6aa083eefa0a46949bbfce994d556b989f0f"
+        },
+        {
+          "file": "docs/reports/blk-v/physical/high/issues-corpse-high.json.gz",
+          "sha256": "64406e753d82e11c6bd63d1d04bb6aa083eefa0a46949bbfce994d556b989f0f"
+        },
+        {
+          "file": "docs/reports/blk-v/physical/high/log-corpse-high.jsonl.gz",
+          "sha256": "f527202a37ebaec6437a1b7684cf57a03434a064c7e8c05707806d7bfcaf49eb"
+        },
+        {
+          "file": "docs/reports/blk-v/physical/high/result.json.gz",
+          "sha256": "b985588cbbaf352b5c456e853c5c748e4dc9a315bf62be10e5ad11163df90091"
+        },
+        {
+          "file": "docs/reports/blk-v/physical/high/runs-corpse-high.json.gz",
+          "sha256": "2d21b13e8c3c9b746443bfbc9398086e15b41cc7a82ce7960cb2c405ca272857"
+        }
+      ]
+    }
+  ],
+  "captures": [
+    {
+      "file": "test-results/blk-v/physical/low/captures/corpse-low-L4-corpse-cellar-z0-5-heap.jpg",
+      "sha256": "e3519d9239eb2b7726b3b2b457c42ece12c54c242a26f0b5d9327636744b736b",
+      "seen": "Personally viewed: ground spread/body carpet with raised folded Alpha bodies and angular/pointed panels; height FAIL remains."
+    },
+    {
+      "file": "test-results/blk-v/physical/low/captures/corpse-low-L4-corpse-cellar-z0-5-route.jpg",
+      "sha256": "7643fb4ca81d312addc7f14970d2d0ec74a5870e4463a0df9173b3b700ce8acc",
+      "seen": "Personally viewed: courier and corgi clearly visible inside the cellar; no corpse overlaps this follow view."
+    },
+    {
+      "file": "test-results/blk-v/physical/low/captures/corpse-low-L4-corpse-cellar-z1-5-heap.jpg",
+      "sha256": "e0f8a972aa71b17543ed53710998ff662595964169cad054ef0857c1d06566ef",
+      "seen": "Personally viewed: ground spread/body carpet with raised folded Alpha bodies and angular/pointed panels; height FAIL remains."
+    },
+    {
+      "file": "test-results/blk-v/physical/low/captures/corpse-low-L4-corpse-cellar-z1-5-route.jpg",
+      "sha256": "d0ccc2229c77834604ff5cbd286c9876a5f6271854ade48cf8e108a84b0c5ede",
+      "seen": "Personally viewed: courier and corgi clearly visible inside the cellar; no corpse overlaps this follow view."
+    },
+    {
+      "file": "test-results/blk-v/physical/low/captures/corpse-low-L4-corpse-war120-z0-5-heap.jpg",
+      "sha256": "fc635cef702a1e17305f693ada68d32441fea9e47b1e2e75711d119cf658fa19",
+      "seen": "Personally viewed: ground spread/body carpet with raised folded Alpha bodies and angular/pointed panels; height FAIL remains."
+    },
+    {
+      "file": "test-results/blk-v/physical/low/captures/corpse-low-L4-corpse-war120-z0-5-route.jpg",
+      "sha256": "a68c2b670ba5e8990b5c96c457b7b7229f5183442f4c08a6ff46ad58966f2092",
+      "seen": "Personally viewed: courier visible amid dense plaza combat and retained bodies. Angular folded dead limbs and some dark fragments remain; no universal body-integrity PASS."
+    },
+    {
+      "file": "test-results/blk-v/physical/low/captures/corpse-low-L4-corpse-war120-z1-5-heap.jpg",
+      "sha256": "c0b2644b496b5bc8a5f2395efc5e436792961795b827e15c8c0f9ac2c206ea39",
+      "seen": "Personally viewed: ground spread/body carpet with raised folded Alpha bodies and angular/pointed panels; height FAIL remains."
+    },
+    {
+      "file": "test-results/blk-v/physical/low/captures/corpse-low-L4-corpse-war120-z1-5-route.jpg",
+      "sha256": "c87a7028bfaf0bc72835dc28beeb20cc0cfaedabf88c3f978fcff2a708cbebf5",
+      "seen": "Personally viewed: courier visible amid dense plaza combat and retained bodies. Angular folded dead limbs and some dark fragments remain; no universal body-integrity PASS."
+    },
+    {
+      "file": "test-results/blk-v/physical/low/captures/corpse-low-L4-result.jpg",
+      "sha256": "995b0edeadc576c5b7e1e290ea19689017270b4ed82b23595b7b8c5648bf1fe1",
+      "seen": "Personally viewed: native transition loading screen to Level5 Aftermath."
+    },
+    {
+      "file": "test-results/blk-v/physical/low/captures/corpse-low-L4-t10812.jpg",
+      "sha256": "161dfb6a1e680a69b47a5db682a31b80c6cb0c86273bef639c9e8593301b4b71",
+      "seen": "Personally viewed: courier visible amid dense plaza combat and retained bodies. Angular folded dead limbs and some dark fragments remain; no universal body-integrity PASS."
+    },
+    {
+      "file": "test-results/blk-v/physical/low/captures/corpse-low-L4-t3.jpg",
+      "sha256": "dd3a63b43f20ed367fc461d675311653c0c9d78062a251ee9091a6f881251f59",
+      "seen": "Personally viewed: convoy EVAC bus with opening story and ride objective."
+    },
+    {
+      "file": "test-results/blk-v/physical/low/captures/corpse-low-L4-t5407.jpg",
+      "sha256": "8d2dd1629a89e6d521df1c9dff36b1de47d8c6690139655d5cb2d463b561e043",
+      "seen": "Personally viewed: courier visible amid dense plaza combat and retained bodies. Angular folded dead limbs and some dark fragments remain; no universal body-integrity PASS."
+    },
+    {
+      "file": "test-results/blk-v/physical/high/captures/corpse-high-L4-corpse-cellar-z0-5-heap.jpg",
+      "sha256": "8f233f33030375c2926da311f80999180fa20e7737f02bd2da5d3286d6616d0a",
+      "seen": "Personally viewed: ground spread/body carpet with raised folded Alpha bodies and angular/pointed panels; height FAIL remains."
+    },
+    {
+      "file": "test-results/blk-v/physical/high/captures/corpse-high-L4-corpse-cellar-z0-5-route.jpg",
+      "sha256": "5833b1fbc2297607307dcb328447d3d80538c05ca5770d8d7421fe18138b82fe",
+      "seen": "Personally viewed: courier and corgi clearly visible inside the cellar; no corpse overlaps this follow view."
+    },
+    {
+      "file": "test-results/blk-v/physical/high/captures/corpse-high-L4-corpse-cellar-z1-5-heap.jpg",
+      "sha256": "ad8c0a3fc123c8b9f320f23fbc3624445e842518b5051293cd21236d6f084273",
+      "seen": "Personally viewed: ground spread/body carpet with raised folded Alpha bodies and angular/pointed panels; height FAIL remains."
+    },
+    {
+      "file": "test-results/blk-v/physical/high/captures/corpse-high-L4-corpse-cellar-z1-5-route.jpg",
+      "sha256": "a8ada9033947243afbee8b4d8fdc7d5179b7a38c92812a7cfc8c020d51ba4802",
+      "seen": "Personally viewed: courier and corgi clearly visible inside the cellar; no corpse overlaps this follow view."
+    },
+    {
+      "file": "test-results/blk-v/physical/high/captures/corpse-high-L4-corpse-war120-z0-5-heap.jpg",
+      "sha256": "3ad0f10807e363237231bb273372f232978c28f43d9a6381eaf51259bd46dbf2",
+      "seen": "Personally viewed: ground spread/body carpet with raised folded Alpha bodies and angular/pointed panels; height FAIL remains."
+    },
+    {
+      "file": "test-results/blk-v/physical/high/captures/corpse-high-L4-corpse-war120-z0-5-route.jpg",
+      "sha256": "f9b3b64d6261597891466923addec80c7cbc9fb7e1a967092b53e1a97e431d47",
+      "seen": "Personally viewed: courier visible amid dense plaza combat and retained bodies. Angular folded dead limbs and some dark fragments remain; no universal body-integrity PASS."
+    },
+    {
+      "file": "test-results/blk-v/physical/high/captures/corpse-high-L4-corpse-war120-z1-5-heap.jpg",
+      "sha256": "273072677eeaaa9d123bc5287586c622f416e70fe6e935f0d01b9d447e3dfcb0",
+      "seen": "Personally viewed: ground spread/body carpet with raised folded Alpha bodies and angular/pointed panels; height FAIL remains."
+    },
+    {
+      "file": "test-results/blk-v/physical/high/captures/corpse-high-L4-corpse-war120-z1-5-route.jpg",
+      "sha256": "b5cd271d22609ad94162717c3db338348c54c38fa69407d2a7f084c2a83dc962",
+      "seen": "Personally viewed: courier visible amid dense plaza combat and retained bodies. Angular folded dead limbs and some dark fragments remain; no universal body-integrity PASS."
+    },
+    {
+      "file": "test-results/blk-v/physical/high/captures/corpse-high-L4-result.jpg",
+      "sha256": "7599724278501c521ab28025fa067194c29d4d0ac34d7c893aa794915a3885a3",
+      "seen": "Personally viewed: native transition loading screen to Level5 Aftermath."
+    },
+    {
+      "file": "test-results/blk-v/physical/high/captures/corpse-high-L4-t10855.jpg",
+      "sha256": "722275cef1d1e12597a84457d5eea78224dd148fedb016bb353daaa47790e0f9",
+      "seen": "Personally viewed: courier visible amid dense plaza combat and retained bodies. Angular folded dead limbs and some dark fragments remain; no universal body-integrity PASS."
+    },
+    {
+      "file": "test-results/blk-v/physical/high/captures/corpse-high-L4-t23.jpg",
+      "sha256": "5d9605e7d92bee8362199f692bb4b2a7944a0b2f24c93887ddaaf825336d75ac",
+      "seen": "Personally viewed: convoy EVAC bus with opening story and ride objective."
+    },
+    {
+      "file": "test-results/blk-v/physical/high/captures/corpse-high-L4-t5434.jpg",
+      "sha256": "0f43bca5036f5133b4457037a4bd6caff2da11a265cbfcce0c9680e5d8da719a",
+      "seen": "Personally viewed: courier visible amid dense plaza combat and retained bodies. Angular folded dead limbs and some dark fragments remain; no universal body-integrity PASS."
+    }
+  ],
+  "verdict": "L4 height FAIL; no mortal/threat qualification"
+}

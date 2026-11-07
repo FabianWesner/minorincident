@@ -74,7 +74,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   const noFrameTiming = process.env.PLAYTEST_NO_FRAME_TIMING === '1';
   if (noFrameTiming && (process.env.PLAYTEST_FRAME_GATE === '1' || process.env.PLAYTEST_CPU_PROFILE === '1')) throw new Error('PLAYTEST_NO_FRAME_TIMING conflicts with frame/CPU profiling');
   await page.addInitScript(noFrameTiming ? 'window.__name = f => f; window.__playtestFrames = [];' : `window.__name = f => f; (${installFrameProbe.toString()})(${frameInterval.toString()});`);
-  if (process.env.PLAYTEST_ACCEPTANCE_LEDGER === '1') await page.addInitScript(`window.__name = f => f; (${installAcceptanceLedger.toString()})(${observeAttackStarts.toString()});`);
+  if (process.env.PLAYTEST_ACCEPTANCE_LEDGER === '1') await page.addInitScript(`window.__name = f => f; (${installAcceptanceLedger.toString()})(${observeAttackStarts.toString()}, ${process.env.PLAYTEST_L4_CORPSE_CAPTURES === '1'});`);
   if (process.env.PLAYTEST_L6_HOLD_AUDIT === '1') await page.addInitScript(`(${installL6HoldObserver.toString()})();`);
   if (process.env.PLAYTEST_THREAT_AUDIT === '1') {
     await page.addInitScript(`(${installThreatObserver.toString()})(${!noFrameTiming});`);
@@ -155,6 +155,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
 
   const threatCaptured = new Set<string>();
   const acceptanceCaptured = new Set<string>();
+  const corpseCaptured = new Set<string>();
   const acceptanceStarts = new Map<string, number>();
   const handoversCaptured = new Set<string>();
   let acceptanceTick = -Infinity;
@@ -231,6 +232,29 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
           await hold(300);
         }
         eyes = await observeWithin(page.evaluate(look));
+      }
+    }
+    if (process.env.PLAYTEST_L4_CORPSE_CAPTURES === '1' && eyes.level === 'L4' && eyes.phase === 'playing' && !eyes.loading && !eyes.menu) {
+      const sample = await page.evaluate(() => {
+        const g = (window.__SCENE__ as unknown as {game:Game}).game, state=g.world.missions!.state.l4!;
+        const records=(window as unknown as {__acceptanceInputLedger:{level:string;l4CorpseVertices?:{worst:{x:number;y:number;z:number;topM:number}|null}[]}[]}).__acceptanceInputLedger;
+        return {tick:g.world.tick,phase:state.phase,warSeconds:state.warAt?(g.world.tick-state.warAt)/60:0,latest:[...records].reverse().find(r=>r.level==='L4')?.l4CorpseVertices?.at(-1)};
+      });
+      const key = sample.phase === 'cellar' ? 'cellar' : sample.warSeconds >= 120 ? 'war120' : null;
+      if (key && !corpseCaptured.has(key)) {
+        corpseCaptured.add(key);await press([]);await releaseAim();await page.evaluate(()=>window.__SS__!.pause());
+        try {
+          for (const zoom of [.5,1.5]) {
+            await page.evaluate(async zoom=>{const a=window.__SS__!,g=(window.__SCENE__ as unknown as {game:Game}).game;a.camera.follow();a.camera.zoom(zoom);g.view.view.update(g.world.entities.get(1)!.transform,1);await a.screenshotReady();},zoom);
+            const file=await capture(`L4-corpse-${key}-z${zoom}-route`);log({l4CorpsePhoto:{file,...sample,...await photoPresentation()}});
+            if(sample.latest?.worst){
+              await page.evaluate(async ({p,zoom})=>{window.__SS__!.camera.cinematic({position:[p.x+15*zoom,p.y+19*zoom,p.z+15*zoom],target:[p.x,p.y,p.z]},true);await window.__SS__!.screenshotReady();},{p:sample.latest.worst,zoom});
+              const file=await capture(`L4-corpse-${key}-z${zoom}-heap`);log({l4CorpsePhoto:{file,detailOnly:true,...sample,...await photoPresentation()}});
+            }
+          }
+        } finally {
+          await page.evaluate(async zoom=>{const a=window.__SS__!,g=(window.__SCENE__ as unknown as {game:Game}).game;a.camera.follow();a.camera.zoom(zoom);g.view.view.update(g.world.entities.get(1)!.transform,1);await a.screenshotReady();a.resume();},o.zoom);
+        }
       }
     }
     if (process.env.PLAYTEST_ACCEPTANCE_CAPTURES === '1' && eyes.level && eyes.phase === 'playing' && !eyes.loading && !eyes.menu && eyes.player) {

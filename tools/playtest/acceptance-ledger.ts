@@ -3,10 +3,10 @@ import type { observeAttackStarts } from '../qa/threat/attackStarts';
 
 /** Read-only fixed-tick evidence for physical-input routes. No frame timings,
  * path queries, gameplay writes or synthetic combat events. Runs in the page. */
-export function installAcceptanceLedger(observeStarts: typeof observeAttackStarts): void {
+export function installAcceptanceLedger(observeStarts: typeof observeAttackStarts, corpseVertices = false): void {
   type Step = { ticks: number; playerWindups: number; groupWindups: number; playerDamage: number; peakAlive: number };
   type MarkerStart = { id: string; started: number; spatial: boolean; views: { zoom: number; firstObservedTick: number; firstVisibleTick: number | null; hud: string; hudVisible: boolean; pinVisible: boolean; worldMarkerVisible: boolean; pickupMarkerIds: number[] }[] };
-  type Record = { level: string; steps: { [id: string]: Step }; samples: unknown[]; events: unknown[]; audioCues: unknown[]; markerStarts?: MarkerStart[]; corpseLife?: unknown[]; corpseSamples?: unknown[]; l4Calm?: unknown[]; cellarAudio?: { voices: unknown[]; samples: unknown[] } };
+  type Record = { level: string; steps: { [id: string]: Step }; samples: unknown[]; events: unknown[]; audioCues: unknown[]; markerStarts?: MarkerStart[]; corpseLife?: unknown[]; corpseSamples?: unknown[]; l4CorpseVertices?: unknown[]; l4Calm?: unknown[]; cellarAudio?: { voices: unknown[]; samples: unknown[] } };
   const root = window as unknown as { __SCENE__?: { game: Game }; __acceptanceInputLedger?: Record[] };
   const records: Record[] = root.__acceptanceInputLedger = [];
   let bound: Game['world']['missions'];
@@ -54,6 +54,38 @@ export function installAcceptanceLedger(observeStarts: typeof observeAttackStart
     const corpseLife: { id: number; archetype: string; deadAt: number; firstTick: number; lastTick: number; samples: number; sleepingSamples: number; missingFirstTick?: number; missingSamples: number; returnedAfterMissing?: number; end?: string }[] = [];
     const trackedCorpses = new Map<number, typeof corpseLife[number]>();
     record.corpseLife = corpseLife; record.corpseSamples = [];
+    if (corpseVertices && mission.def.id === 'L4') {
+      const samples = record.l4CorpseVertices = [] as unknown[];
+      const cache = new WeakMap<import('three/webgpu').BufferGeometry, Map<string, number>>();
+      let lastTick = -Infinity;
+      const rendered = () => {
+        if (world.missions !== mission) return;
+        requestAnimationFrame(rendered);
+        if (world.tick - lastTick < 60) return;
+        lastTick = world.tick;
+        const game = root.__SCENE__!.game, owners = new Set<import('three/webgpu').Object3D>();
+        game.view.scene.traverse(node => { if (node.name.startsWith('corpses:') && node.parent) owners.add(node.parent); });
+        const frozen = new Set<number>();
+        let worst: {id:number;model:string;topM:number;x:number;y:number;z:number} | null = null;
+        for (const owner of owners) {
+          const pool = owner as unknown as {slots:Map<string,{page:{mesh:import('three/webgpu').InstancedMesh};index:number}>;bodies:Map<string,import('../../src/sim/world/types').EntitySnapshot>};
+          for (const [key,slot] of pool.slots) {
+            const body = pool.bodies.get(key); if (!body || body.corpseThrown && body.corpseBlast) continue;
+            const mesh=slot.page.mesh,im=mesh.instanceMatrix.array,mw=mesh.matrixWorld.elements,o=slot.index*16;
+            const x=mw[1]*im[o]+mw[5]*im[o+1]+mw[9]*im[o+2],y=mw[1]*im[o+4]+mw[5]*im[o+5]+mw[9]*im[o+6],z=mw[1]*im[o+8]+mw[5]*im[o+9]+mw[9]*im[o+10];
+            const ty=mw[1]*im[o+12]+mw[5]*im[o+13]+mw[9]*im[o+14]+mw[13],signature=`${x},${y},${z}`;
+            let projections=cache.get(mesh.geometry);if(!projections){projections=new Map();cache.set(mesh.geometry,projections);}
+            let max=projections.get(signature);
+            if(max===undefined){const positions=mesh.geometry.getAttribute('position');max=-Infinity;for(let i=0;i<positions.count;i++)max=Math.max(max,x*positions.getX(i)+y*positions.getY(i)+z*positions.getZ(i));projections.set(signature,max);}
+            frozen.add(body.id);const topM=ty+max-(body.transform.y-.7);
+            if(!worst||topM>worst.topM)worst={id:body.id,model:mesh.name,topM,x:mw[0]*im[o+12]+mw[4]*im[o+13]+mw[8]*im[o+14]+mw[12],y:ty,z:mw[2]*im[o+12]+mw[6]*im[o+13]+mw[10]*im[o+14]+mw[14]};
+          }
+        }
+        samples.push({tick:world.tick,phase:mission.state.l4?.phase,frozenCount:frozen.size,worst,permanentIds:[...world.entities.iterate()].filter(e=>e.corpse).map(e=>e.id).sort((a,b)=>a-b)});
+      };
+      requestAnimationFrame(rendered);
+    }
+
     world.events.on('checkpoint.restored', () => {
       for (const row of trackedCorpses.values()) row.end = 'checkpoint rewind';
       trackedCorpses.clear();
