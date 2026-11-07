@@ -22,6 +22,7 @@
     "qa:invariants": "node tools/qa/run-invariants.mjs",
     "qa:threat": "node tools/qa/test-budget.mjs --name qa-threat --max-seconds 600 -- node --import tsx/esm tools/qa/threat-audit.ts",
     "qa:accept": "node --import tsx/esm tools/qa/accept.ts",
+    "qa:evac-buses": "npm run build:qa && SCENE_PORT=${SCENE_PORT:-3367} SCENE_SERVER=preview sh tools/e2e-lock.sh node --import tsx tools/scenelab/evac-bus.ts",
     "qa:threat:remote": "node tools/qa/run-threat-remote.mjs",
     "qa:invariants:sim": "vitest run tests/qa/invariants --maxWorkers=4 --configLoader runner --reporter=default --reporter=json --outputFile=test-results/qa-invariants/sim.json",
     "qa:invariants:sim:remote": "sh tools/remote/run.sh \"$PWD\" --pull test-results/qa-invariants/sim.json --env E2E_PORT=${E2E_PORT:-4191} --env SCENE_PORT=${SCENE_PORT:-4192} -- bash tools/remote/timing-isolated.sh --all timeout 840 npm run qa:invariants:sim",
