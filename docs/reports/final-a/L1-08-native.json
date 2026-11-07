@@ -1,0 +1,217 @@
+{
+  "row": "L1-08",
+  "verdict": "FAIL",
+  "frozenHead": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+  "fixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4",
+  "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
+  "generatedAt": "2026-11-06T23:43:23.520Z",
+  "criterion": "combat: reachable ≥ 90 %; passive first attack ≤ 20 s (measured 8.25 s); passive attacks ≥ 3/min (tune).",
+  "automatedComplete": false,
+  "checks": [
+    {
+      "id": "L1-08",
+      "clause": "combat hard rule on actual player windups",
+      "level": "L1",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": {
+        "seconds": 40.65,
+        "playerWindups": 17,
+        "groupWindups": 0,
+        "attacksPerMinute": 25.092250922509226
+      },
+      "target": "nonzero player windups in each combat policy",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-low-complete.json"
+    },
+    {
+      "id": "L1-08",
+      "clause": "real player/group windups per minute",
+      "level": "L1",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 25.092250922509226,
+      "target": "3 ≤ value ≤ Infinity",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-low-complete.json"
+    },
+    {
+      "id": "L1-08",
+      "clause": "minimum bounded-path reachable share within30m (path≤2.5×direct)",
+      "level": "L1",
+      "tier": "low",
+      "policy": "complete",
+      "status": "FAIL",
+      "value": 88.88888888888889,
+      "target": "90 ≤ value ≤ 100",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-low-complete.json"
+    },
+    {
+      "id": "L1-08",
+      "clause": "combat hard rule on actual player windups",
+      "level": "L1",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": {
+        "seconds": 290.56666666666666,
+        "playerWindups": 1596,
+        "groupWindups": 0,
+        "attacksPerMinute": 329.5629230239761
+      },
+      "target": "nonzero player windups in each combat policy",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-low-stationary.json"
+    },
+    {
+      "id": "L1-08",
+      "clause": "stationary first real player attack (phase clock)",
+      "level": "L1",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": {
+        "seconds": 2.316666666666667,
+        "windowSeconds": 290.56666666666666
+      },
+      "target": "≤20 s",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-low-stationary.json"
+    },
+    {
+      "id": "L1-08",
+      "clause": "real player/group windups per minute",
+      "level": "L1",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 329.5629230239761,
+      "target": "3 ≤ value ≤ Infinity",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-low-stationary.json"
+    },
+    {
+      "id": "L1-08",
+      "clause": "minimum bounded-path reachable share within30m (path≤2.5×direct)",
+      "level": "L1",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 100,
+      "target": "90 ≤ value ≤ 100",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-low-stationary.json"
+    },
+    {
+      "id": "L1-08",
+      "clause": "combat hard rule on actual player windups",
+      "level": "L1",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": {
+        "seconds": 40.65,
+        "playerWindups": 15,
+        "groupWindups": 0,
+        "attacksPerMinute": 22.14022140221402
+      },
+      "target": "nonzero player windups in each combat policy",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-high-complete.json"
+    },
+    {
+      "id": "L1-08",
+      "clause": "real player/group windups per minute",
+      "level": "L1",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 22.14022140221402,
+      "target": "3 ≤ value ≤ Infinity",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-high-complete.json"
+    },
+    {
+      "id": "L1-08",
+      "clause": "minimum bounded-path reachable share within30m (path≤2.5×direct)",
+      "level": "L1",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 100,
+      "target": "90 ≤ value ≤ 100",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-high-complete.json"
+    },
+    {
+      "id": "L1-08",
+      "clause": "combat hard rule on actual player windups",
+      "level": "L1",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": {
+        "seconds": 290.56666666666666,
+        "playerWindups": 1595,
+        "groupWindups": 0,
+        "attacksPerMinute": 329.3564299644373
+      },
+      "target": "nonzero player windups in each combat policy",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-high-stationary.json"
+    },
+    {
+      "id": "L1-08",
+      "clause": "stationary first real player attack (phase clock)",
+      "level": "L1",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": {
+        "seconds": 2.316666666666667,
+        "windowSeconds": 290.56666666666666
+      },
+      "target": "≤20 s",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-high-stationary.json"
+    },
+    {
+      "id": "L1-08",
+      "clause": "real player/group windups per minute",
+      "level": "L1",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 329.3564299644373,
+      "target": "3 ≤ value ≤ Infinity",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-high-stationary.json"
+    },
+    {
+      "id": "L1-08",
+      "clause": "minimum bounded-path reachable share within30m (path≤2.5×direct)",
+      "level": "L1",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 100,
+      "target": "90 ≤ value ≤ 100",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-high-stationary.json"
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/fix51-verify/receipts/L1-low-complete.json",
+      "sha256": "b17ad0a322041bc33a27ceb888518e9d66b99970139062a95c3ffd08639c3702",
+      "what": "Frozen-head L1-08 native input receipt, evaluated by the exact clauses retained in the row proof."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L1-low-stationary.json",
+      "sha256": "f170e46f66ba44d9ccde3f16c5d818c88e9633c199028df44819fa455f03cf79",
+      "what": "Frozen-head L1-08 native input receipt, evaluated by the exact clauses retained in the row proof."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L1-high-complete.json",
+      "sha256": "f8893b632d09ccfd173c44792f24c1e9f67a8cf57b5be2c4d8a04ca16000cbc8",
+      "what": "Frozen-head L1-08 native input receipt, evaluated by the exact clauses retained in the row proof."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L1-high-stationary.json",
+      "sha256": "b6cb85fd48d255f6c357c59f5808c838181977085baf7282d9e24d650daaf200",
+      "what": "Frozen-head L1-08 native input receipt, evaluated by the exact clauses retained in the row proof."
+    }
+  ],
+  "observation": "low/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 88.88888888888889; target 90 ≤ value ≤ 100 (FAIL)"
+}

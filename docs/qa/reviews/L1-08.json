@@ -1,0 +1,43 @@
+{
+  "row": "L1-08",
+  "status": "FAIL",
+  "reviewer": "Codex final-a",
+  "date": "2026-11-07",
+  "commit": "0cbd817165f89940d2810fe2091000538a263ba0",
+  "clauses": [
+    {
+      "clause": "combat: reachable ≥ 90 %; passive first attack ≤ 20 s (measured 8.25 s); passive attacks ≥ 3/min (tune).",
+      "verdict": "FAIL",
+      "note": "low/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 88.88888888888889; target 90 ≤ value ≤ 100 (FAIL)"
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/final-a/L1-08-native.json",
+      "sha256": "4fb3e872e2456deec7be783aa5dfb0a8506dd3cb4a758cf0ba8893cfd6e4709b",
+      "what": "low/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 88.88888888888889; target 90 ≤ value ≤ 100 (FAIL)"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L1-low-complete.json",
+      "sha256": "b17ad0a322041bc33a27ceb888518e9d66b99970139062a95c3ffd08639c3702",
+      "what": "Frozen-head L1-08 native input receipt, evaluated by the exact clauses retained in the row proof."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L1-low-stationary.json",
+      "sha256": "f170e46f66ba44d9ccde3f16c5d818c88e9633c199028df44819fa455f03cf79",
+      "what": "Frozen-head L1-08 native input receipt, evaluated by the exact clauses retained in the row proof."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L1-high-complete.json",
+      "sha256": "f8893b632d09ccfd173c44792f24c1e9f67a8cf57b5be2c4d8a04ca16000cbc8",
+      "what": "Frozen-head L1-08 native input receipt, evaluated by the exact clauses retained in the row proof."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L1-high-stationary.json",
+      "sha256": "b6cb85fd48d255f6c357c59f5808c838181977085baf7282d9e24d650daaf200",
+      "what": "Frozen-head L1-08 native input receipt, evaluated by the exact clauses retained in the row proof."
+    }
+  ],
+  "notes": "A measured failing clause establishes whole-row FAIL; remaining manual clauses are not asserted to pass. Game source unchanged from frozen head.",
+  "sourceDigest": "00a81dbceddae37bdb1b6540d29f8e3658cdd7d6b7b51968d1fd068c9a6eb63c"
+}
