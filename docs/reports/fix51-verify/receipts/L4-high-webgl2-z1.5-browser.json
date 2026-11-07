@@ -7,7 +7,7 @@
   "browserHash": "9388d0056ef51321f7a42b0d246655834460a88af205dee82674435822fa31c9",
   "errors": [],
   "observations": {
-    "scope": "L4-03 physical pickup only; high route intentionally bounded; other rows require their own evidence.",
+    "scope": "L4-02/L4-03 opening qualification only; high route intentionally bounded. Other visual/route rows require their own evidence.",
     "frozenCommit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096"
   },
   "checks": [
@@ -38,6 +38,52 @@
       },
       "target": "pickup=gun=turn=actual klaxon=actual first admissions; positive-gain voices and running/unmuted/unlocked graph",
       "receipt": "docs/reports/final-b/L4-03-proof.json"
+    },
+    {
+      "id": "L4-02",
+      "clause": "pre-pickup reception census routines separation and reviewed calm visuals",
+      "level": "L4",
+      "tier": "high",
+      "policy": "real-input-webgl2",
+      "status": "PASS",
+      "value": {
+        "tier": "high",
+        "sampleCadenceTicks": 30,
+        "samples": 14,
+        "firstTick": 1830,
+        "lastTick": 2220,
+        "minimumCivilians": 64,
+        "target": 40,
+        "minimumHumanCentreSeparationM": 0.7029606600245242,
+        "closestPair": {
+          "tick": 1980,
+          "ids": [
+            38,
+            42
+          ]
+        },
+        "maximumInfected": 0,
+        "maximumDamageDecals": 0,
+        "combatWindups": 0,
+        "anyEngagedSoldier": false,
+        "civilianRoutines": [
+          "bus-stop",
+          "carry-belongings",
+          "chat",
+          "jog",
+          "shop",
+          "walk-dog"
+        ],
+        "civilianActivities": [
+          "chat",
+          "look",
+          "walk",
+          "water"
+        ],
+        "allCalmPurposeful": true
+      },
+      "target": "high>=40/low>=30; calm routines; zero infected/combat/damage; separated people and reviewed orderly reception",
+      "receipt": "docs/reports/final-b/L4-02-proof.json"
     }
   ]
 }

@@ -1,0 +1,1213 @@
+{
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+  "revision": "6b034b2eef7a24091924d95c822c998f3d530a20",
+  "method": "Actual physical quartermaster/plaza samples at2Hz, both tiers, plus personally reviewed frames at zoom0.5/1.5. Civilians counted separately from soldiers; normal human radius0.35m gives0.7m centre separation. Frame-only camera replay at1830 uses ordinary native convoy inputs, no objective skip/actor relocation; positions of the outside bus queue match the physical ledger exactly. An exploratory<=1.5m connected-component test gives6/12 outside people, but rendered evidence shows a purposeful orderly queue, so that arbitrary proximity metric is explicitly rejected as a no-clump failure test. Convoy ride is outside the reception census phase.",
+  "rows": [
+    {
+      "tier": "low",
+      "sampleCadenceTicks": 30,
+      "samples": 13,
+      "firstTick": 1830,
+      "lastTick": 2190,
+      "minimumCivilians": 32,
+      "target": 30,
+      "minimumHumanCentreSeparationM": 0.7137709951300143,
+      "closestPair": {
+        "tick": 1980,
+        "ids": [
+          38,
+          44
+        ]
+      },
+      "maximumInfected": 0,
+      "maximumDamageDecals": 0,
+      "combatWindups": 0,
+      "anyEngagedSoldier": false,
+      "civilianRoutines": [
+        "bus-stop",
+        "carry-belongings",
+        "chat",
+        "jog",
+        "shop",
+        "walk-dog"
+      ],
+      "civilianActivities": [
+        "chat",
+        "look",
+        "walk",
+        "water"
+      ],
+      "allCalmPurposeful": true
+    },
+    {
+      "tier": "high",
+      "sampleCadenceTicks": 30,
+      "samples": 14,
+      "firstTick": 1830,
+      "lastTick": 2220,
+      "minimumCivilians": 64,
+      "target": 40,
+      "minimumHumanCentreSeparationM": 0.7029606600245242,
+      "closestPair": {
+        "tick": 1980,
+        "ids": [
+          38,
+          42
+        ]
+      },
+      "maximumInfected": 0,
+      "maximumDamageDecals": 0,
+      "combatWindups": 0,
+      "anyEngagedSoldier": false,
+      "civilianRoutines": [
+        "bus-stop",
+        "carry-belongings",
+        "chat",
+        "jog",
+        "shop",
+        "walk-dog"
+      ],
+      "civilianActivities": [
+        "chat",
+        "look",
+        "walk",
+        "water"
+      ],
+      "allCalmPurposeful": true
+    }
+  ],
+  "frames": [
+    {
+      "tier": "low",
+      "file": "test-results/vqa-1b/final-b-L4-low-z1.5/captures/final-b-L4-low-z1.5-L4-quartermaster-t1829-low-z1-5.jpg",
+      "sha256": "1b45a6faa5c653941fbea4e4e0086ebac8991e1426c82a04bf55588e59a4f0dc",
+      "observation": "Wide calm reception: clean paving, occupied plaza, bus and camp kit intact; civilians separated, no visible blood/fire.",
+      "personallyReviewed": true
+    },
+    {
+      "tier": "low",
+      "file": "test-results/vqa-1b/final-b-L4-low-z1.5/captures/final-b-L4-low-z1.5-L4-quartermaster-t1829-low-z0-5.jpg",
+      "sha256": "0629833d0adbbdd7c80f3f7c2879dce422a5b6169a6de894fb979579d19f4bf5",
+      "observation": "Close reception: courier and two civilians beside parked bus; intact ground and bus, no damage decals or panic.",
+      "personallyReviewed": true
+    },
+    {
+      "tier": "high",
+      "file": "test-results/vqa-1b/final-b-L4-high-opening/captures/final-b-L4-high-opening-L4-quartermaster-t1849-high-z1-5.jpg",
+      "sha256": "4a0524278b7ad7471f3805ad69bd14d9ebc0392df460ac1712a4404be4b95a36",
+      "observation": "Wide reception: guards hold rifles low and do not fight; civilians queue or chat on clean paving, camp/vehicles intact.",
+      "personallyReviewed": true
+    },
+    {
+      "tier": "high",
+      "file": "test-results/vqa-1b/final-b-L4-high-opening/captures/final-b-L4-high-opening-L4-quartermaster-t1849-high-z0-5.jpg",
+      "sha256": "26531273ecb70b51f75b9645b6d449abb421f2b2baa15c40d3789d259c9d191c",
+      "observation": "Close reception: relaxed guard holds rifle low; civilians stand in separated queue beside the bus, no panic/damage.",
+      "personallyReviewed": true
+    },
+    {
+      "tier": "low",
+      "file": "test-results/final-b/l4-outside-low.png",
+      "sha256": "8e6acaafd5c41a796f49573386aa55baa5a6f65a7175103c7f58b650ceabe409",
+      "observation": "Camera-only replay of actual tick1830 civilian positions outside perimeter: orderly single queue along second bus, rather than an overlapping body heap.",
+      "personallyReviewed": true
+    },
+    {
+      "tier": "high",
+      "file": "test-results/final-b/l4-outside-high.png",
+      "sha256": "4f321bb5b889b61935b7e902ad9147015b6a36785b477a69bb41e95996f204c1",
+      "observation": "Same current high opening: longer orderly bus queue along pavement. Close proximity component includes a queue and is not by itself a clump defect.",
+      "personallyReviewed": true
+    }
+  ],
+  "replay": {
+    "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+    "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+    "revision": "c5cb426e24fa37db526894e3a31dab91477676d2",
+    "method": "Read-only visual replay of the actual physical opening ledger at tick1830. Ordinary native convoy input reaches plaza; no objectives skipped and no actor or courier relocated. Only camera changes to show the outside civilian group. The actual physical ledgers remain the authority for its positions and duration.",
+    "rows": [
+      {
+        "tier": "low",
+        "file": "test-results/final-b/l4-outside-low.png",
+        "data": {
+          "tick": 1830,
+          "phase": "plaza",
+          "quality": "low",
+          "camera": {
+            "zoom": 1,
+            "targetZoom": 1,
+            "zoomLimits": [
+              0.5,
+              1.5
+            ],
+            "fov": 25,
+            "azimuth": 0.7853981633974483,
+            "polar": 0.9424777960769379,
+            "radius": 21.412472915938253,
+            "regionScale": 1,
+            "focus": [
+              -11.80702908123961,
+              2.6127392983763243e-13,
+              0.9684657475161804
+            ],
+            "target": [
+              8.000000000000002,
+              0,
+              2.5
+            ],
+            "position": [
+              22,
+              16,
+              16.5
+            ],
+            "spot": null
+          },
+          "civilians": [
+            {
+              "id": 35,
+              "archetype": "npc.jogger",
+              "at": {
+                "x": -13.791551773055698,
+                "z": 2.867365555372519,
+                "y": 0.7,
+                "yaw": 0.9459663284603144
+              }
+            },
+            {
+              "id": 36,
+              "archetype": "npc.bbq-dad",
+              "at": {
+                "x": 8.144667715151861,
+                "z": 2.4999999723644897,
+                "y": 0.7,
+                "yaw": 3.918706414308617
+              }
+            },
+            {
+              "id": 37,
+              "archetype": "npc.bbq-dad",
+              "at": {
+                "x": -13.791558580201178,
+                "z": 0.06738944483979607,
+                "y": 0.7,
+                "yaw": 6.2057094319526875
+              }
+            },
+            {
+              "id": 38,
+              "archetype": "npc.cashier",
+              "at": {
+                "x": 5.3446677151518625,
+                "z": 2.500000027635512,
+                "y": 0.7,
+                "yaw": 1.442762482585655
+              }
+            },
+            {
+              "id": 39,
+              "archetype": "npc.cashier",
+              "at": {
+                "x": -13.791563801072277,
+                "z": -2.732570991208242,
+                "y": 0.7,
+                "yaw": 5.51267641824304
+              }
+            },
+            {
+              "id": 40,
+              "archetype": "npc.jogger",
+              "at": {
+                "x": 9.544667715151862,
+                "z": 2.4999999447289785,
+                "y": 0.83,
+                "yaw": 3.1882499592481377
+              }
+            },
+            {
+              "id": 41,
+              "archetype": "npc.delivery-driver",
+              "at": {
+                "x": -13.791537051125394,
+                "z": 1.4673320314695002,
+                "y": 0.7,
+                "yaw": 6.138024016012002
+              }
+            },
+            {
+              "id": 42,
+              "archetype": "npc.jogger",
+              "at": {
+                "x": 6.744667715151862,
+                "z": 2.500000000000001,
+                "y": 0.7,
+                "yaw": 3.9903055384138137
+              }
+            },
+            {
+              "id": 43,
+              "archetype": "npc.suburban-mom",
+              "at": {
+                "x": -13.791546572158339,
+                "z": -1.332475879203984,
+                "y": 0.7,
+                "yaw": 3.722735747298014
+              }
+            },
+            {
+              "id": 44,
+              "archetype": "npc.jogger",
+              "at": {
+                "x": 3.9448791413506425,
+                "z": 2.500005735512888,
+                "y": 0.7,
+                "yaw": 4.954290429899603
+              }
+            },
+            {
+              "id": 45,
+              "archetype": "npc.suburban-mom",
+              "at": {
+                "x": -14.166560424471566,
+                "z": 3.5169178774784315,
+                "y": 0.7,
+                "yaw": 4.6491596012101075
+              }
+            },
+            {
+              "id": 46,
+              "archetype": "npc.suburban-mom",
+              "at": {
+                "x": 8.794403073621572,
+                "z": 2.8749939042919435,
+                "y": 0.7,
+                "yaw": 0.8156869781453018
+              }
+            },
+            {
+              "id": 47,
+              "archetype": "npc.suburban-mom",
+              "at": {
+                "x": -76.35405894713263,
+                "z": -40.63422682097149,
+                "y": 0.7,
+                "yaw": -1.2398569551231302
+              }
+            },
+            {
+              "id": 48,
+              "archetype": "npc.delivery-driver",
+              "at": {
+                "x": -77.82093370361531,
+                "z": -42.86039901743421,
+                "y": 0.7,
+                "yaw": -7.2653277655539314
+              }
+            },
+            {
+              "id": 49,
+              "archetype": "npc.bbq-dad",
+              "at": {
+                "x": 18.12560562662927,
+                "z": -23.539708531077565,
+                "y": 0.83,
+                "yaw": -8.116454684431135
+              }
+            },
+            {
+              "id": 50,
+              "archetype": "npc.jogger",
+              "at": {
+                "x": 17.671678856338,
+                "z": -21.81834319856932,
+                "y": 0.83,
+                "yaw": 1.3173949045913875
+              }
+            },
+            {
+              "id": 51,
+              "archetype": "npc.bathrobe-neighbor",
+              "at": {
+                "x": 64.41740235739633,
+                "z": -42.7290529413736,
+                "y": 0.7,
+                "yaw": -12.985760727109545
+              }
+            },
+            {
+              "id": 52,
+              "archetype": "npc.delivery-driver",
+              "at": {
+                "x": 66.79304889834305,
+                "z": -39.694103932726485,
+                "y": 0.7,
+                "yaw": 5.330936009457725
+              }
+            },
+            {
+              "id": 53,
+              "archetype": "npc.bathrobe-neighbor",
+              "at": {
+                "x": -33.62665334777324,
+                "z": -19.78,
+                "y": 0.7,
+                "yaw": -1.285491434134274
+              }
+            },
+            {
+              "id": 54,
+              "archetype": "npc.bathrobe-neighbor",
+              "at": {
+                "x": -33.59326474210468,
+                "z": 30.22,
+                "y": 0.7,
+                "yaw": -1.3480265770739381
+              }
+            },
+            {
+              "id": 55,
+              "archetype": "npc.suburban-mom",
+              "at": {
+                "x": -62.35022478473413,
+                "z": 39.90302884758931,
+                "y": 0.83,
+                "yaw": 1.5706782073384273
+              }
+            },
+            {
+              "id": 56,
+              "archetype": "npc.suburban-mom",
+              "at": {
+                "x": -54.57019065666426,
+                "z": 31.607102251708888,
+                "y": 0.83,
+                "yaw": 17.291055385870656
+              }
+            },
+            {
+              "id": 57,
+              "archetype": "npc.jogger",
+              "at": {
+                "x": 9.139668379665181,
+                "z": 50.040841863235315,
+                "y": 0.83,
+                "yaw": 9.626687511152264
+              }
+            },
+            {
+              "id": 58,
+              "archetype": "npc.jogger",
+              "at": {
+                "x": -61.419714864939095,
+                "z": 37.1297623029492,
+                "y": 0.83,
+                "yaw": 14.125736756420613
+              }
+            },
+            {
+              "id": 59,
+              "archetype": "npc.delivery-driver",
+              "at": {
+                "x": -53.87548891338417,
+                "z": 36.72473950125749,
+                "y": 0.83,
+                "yaw": 20.648732303591295
+              }
+            },
+            {
+              "id": 60,
+              "archetype": "npc.delivery-driver",
+              "at": {
+                "x": -55.02433169022191,
+                "z": 50.67832353494114,
+                "y": 0.83,
+                "yaw": 9.92064362216626
+              }
+            },
+            {
+              "id": 61,
+              "archetype": "npc.delivery-driver",
+              "at": {
+                "x": -27.55,
+                "z": 8,
+                "y": 0.7,
+                "yaw": 0
+              }
+            },
+            {
+              "id": 62,
+              "archetype": "npc.bathrobe-neighbor",
+              "at": {
+                "x": -26.45,
+                "z": 8,
+                "y": 0.7,
+                "yaw": 3.141592653589794
+              }
+            },
+            {
+              "id": 63,
+              "archetype": "npc.cashier",
+              "at": {
+                "x": -20.55,
+                "z": 8,
+                "y": 0.7,
+                "yaw": 0
+              }
+            },
+            {
+              "id": 64,
+              "archetype": "npc.jogger",
+              "at": {
+                "x": -19.45,
+                "z": 8,
+                "y": 0.7,
+                "yaw": 3.141592653589794
+              }
+            },
+            {
+              "id": 65,
+              "archetype": "npc.jogger",
+              "at": {
+                "x": -30.55,
+                "z": 24,
+                "y": 0.7,
+                "yaw": 0
+              }
+            },
+            {
+              "id": 66,
+              "archetype": "npc.jogger",
+              "at": {
+                "x": -29.45,
+                "z": 24,
+                "y": 0.7,
+                "yaw": 3.1415926535897936
+              }
+            }
+          ]
+        },
+        "errors": []
+      },
+      {
+        "tier": "high",
+        "file": "test-results/final-b/l4-outside-high.png",
+        "data": {
+          "tick": 1830,
+          "phase": "plaza",
+          "quality": "high",
+          "camera": {
+            "zoom": 1,
+            "targetZoom": 1,
+            "zoomLimits": [
+              0.5,
+              1.5
+            ],
+            "fov": 25,
+            "azimuth": 0.7853981633974483,
+            "polar": 0.9424777960769379,
+            "radius": 21.412472915938253,
+            "regionScale": 1,
+            "focus": [
+              -11.80702908123961,
+              2.6127392983763243e-13,
+              0.9684657475161804
+            ],
+            "target": [
+              8.000000000000002,
+              0,
+              2.5
+            ],
+            "position": [
+              22,
+              16,
+              16.5
+            ],
+            "spot": null
+          },
+          "civilians": [
+            {
+              "id": 35,
+              "archetype": "npc.jogger",
+              "at": {
+                "x": -13.791551773055698,
+                "z": 2.867365555372519,
+                "y": 0.7,
+                "yaw": 0.9459663284603144
+              }
+            },
+            {
+              "id": 36,
+              "archetype": "npc.bbq-dad",
+              "at": {
+                "x": 8.144667715151861,
+                "z": 2.4999999723644897,
+                "y": 0.7,
+                "yaw": 3.918706414308617
+              }
+            },
+            {
+              "id": 37,
+              "archetype": "npc.bbq-dad",
+              "at": {
+                "x": -13.791558580201178,
+                "z": 0.06738944483979607,
+                "y": 0.7,
+                "yaw": 6.2057094319526875
+              }
+            },
+            {
+              "id": 38,
+              "archetype": "npc.cashier",
+              "at": {
+                "x": 5.3446677151518625,
+                "z": 2.500000027635512,
+                "y": 0.7,
+                "yaw": 1.442762482585655
+              }
+            },
+            {
+              "id": 39,
+              "archetype": "npc.cashier",
+              "at": {
+                "x": -13.791563801072277,
+                "z": -2.732570991208242,
+                "y": 0.7,
+                "yaw": 5.51267641824304
+              }
+            },
+            {
+              "id": 40,
+              "archetype": "npc.jogger",
+              "at": {
+                "x": 9.544667715151862,
+                "z": 2.4999999447289785,
+                "y": 0.83,
+                "yaw": 3.1882499592481377
+              }
+            },
+            {
+              "id": 41,
+              "archetype": "npc.delivery-driver",
+              "at": {
+                "x": -13.791537051125394,
+                "z": 1.4673320314695002,
+                "y": 0.7,
+                "yaw": 6.138024016012002
+              }
+            },
+            {
+              "id": 42,
+              "archetype": "npc.jogger",
+              "at": {
+                "x": 6.744667715151862,
+                "z": 2.500000000000001,
+                "y": 0.7,
+                "yaw": 3.9903055384138137
+              }
+            },
+            {
+              "id": 43,
+              "archetype": "npc.suburban-mom",
+              "at": {
+                "x": -13.791546572158339,
+                "z": -1.332475879203984,
+                "y": 0.7,
+                "yaw": 3.722735747298014
+              }
+            },
+            {
+              "id": 44,
+              "archetype": "npc.jogger",
+              "at": {
+                "x": 3.9448791413506425,
+                "z": 2.500005735512888,
+                "y": 0.7,
+                "yaw": 4.954290429899603
+              }
+            },
+            {
+              "id": 45,
+              "archetype": "npc.suburban-mom",
+              "at": {
+                "x": -14.166560424471566,
+                "z": 3.5169178774784315,
+                "y": 0.7,
+                "yaw": 4.6491596012101075
+              }
+            },
+            {
+              "id": 46,
+              "archetype": "npc.suburban-mom",
+              "at": {
+                "x": 8.794403073621572,
+                "z": 2.8749939042919435,
+                "y": 0.7,
+                "yaw": 0.8156869781453018
+              }
+            },
+            {
+              "id": 47,
+              "archetype": "npc.jogger",
+              "at": {
+                "x": -14.166559100872409,
+                "z": 0.7170031176666991,
+                "y": 0.7,
+                "yaw": 1.7858700180031353
+              }
+            },
+            {
+              "id": 48,
+              "archetype": "npc.bbq-dad",
+              "at": {
+                "x": 5.9941867679901915,
+                "z": 2.875000027635512,
+                "y": 0.7,
+                "yaw": 1.7687727203234884
+              }
+            },
+            {
+              "id": 49,
+              "archetype": "npc.jogger",
+              "at": {
+                "x": -14.166442611552831,
+                "z": -2.0828595435965807,
+                "y": 0.7,
+                "yaw": 1.1212594047491231
+              }
+            },
+            {
+              "id": 50,
+              "archetype": "npc.jogger",
+              "at": {
+                "x": 10.294889146510043,
+                "z": 2.5000186762442356,
+                "y": 0.83,
+                "yaw": 0.9690343390269759
+              }
+            },
+            {
+              "id": 51,
+              "archetype": "npc.jogger",
+              "at": {
+                "x": -14.166417355614987,
+                "z": 2.1171659478303635,
+                "y": 0.7,
+                "yaw": 4.063711161538374
+              }
+            },
+            {
+              "id": 52,
+              "archetype": "npc.jogger",
+              "at": {
+                "x": 7.3944089396002735,
+                "z": 2.8749952574561117,
+                "y": 0.7,
+                "yaw": 5.780560429533086
+              }
+            },
+            {
+              "id": 53,
+              "archetype": "npc.suburban-mom",
+              "at": {
+                "x": -14.16654066506781,
+                "z": -0.6829903557948452,
+                "y": 0.7,
+                "yaw": 0.6844836692522773
+              }
+            },
+            {
+              "id": 54,
+              "archetype": "npc.cashier",
+              "at": {
+                "x": 4.59440896704411,
+                "z": 2.8749968464570994,
+                "y": 0.7,
+                "yaw": 5.075821323829149
+              }
+            },
+            {
+              "id": 55,
+              "archetype": "npc.bbq-dad",
+              "at": {
+                "x": -14.541515644944775,
+                "z": 2.867570239203462,
+                "y": 0.7,
+                "yaw": 0.009695856762780997
+              }
+            },
+            {
+              "id": 56,
+              "archetype": "npc.jogger",
+              "at": {
+                "x": 11.144870454994063,
+                "z": 2.5000240469329165,
+                "y": 0.83,
+                "yaw": 2.296683276774291
+              }
+            },
+            {
+              "id": 57,
+              "archetype": "npc.bathrobe-neighbor",
+              "at": {
+                "x": -14.541466652211028,
+                "z": 0.06761627923299034,
+                "y": 0.7,
+                "yaw": 5.6443566969466294
+              }
+            },
+            {
+              "id": 58,
+              "archetype": "npc.delivery-driver",
+              "at": {
+                "x": 3.12907247162449,
+                "z": 2.890705338258986,
+                "y": 0.7,
+                "yaw": 5.350028027558999
+              }
+            },
+            {
+              "id": 59,
+              "archetype": "npc.suburban-mom",
+              "at": {
+                "x": -77.39863697980954,
+                "z": -41.33465118779011,
+                "y": 0.7,
+                "yaw": -4.843943683663337
+              }
+            },
+            {
+              "id": 60,
+              "archetype": "npc.bbq-dad",
+              "at": {
+                "x": -77.21627040193451,
+                "z": -42.821927229561645,
+                "y": 0.7,
+                "yaw": 10.88318055190501
+              }
+            },
+            {
+              "id": 61,
+              "archetype": "npc.bathrobe-neighbor",
+              "at": {
+                "x": 18.059617142160512,
+                "z": -22.087704952030474,
+                "y": 0.83,
+                "yaw": 1.8258074451846245
+              }
+            },
+            {
+              "id": 62,
+              "archetype": "npc.jogger",
+              "at": {
+                "x": 13.15671546452569,
+                "z": -27.061407960275073,
+                "y": 0.7,
+                "yaw": -14.008378035040867
+              }
+            },
+            {
+              "id": 63,
+              "archetype": "npc.jogger",
+              "at": {
+                "x": 66.19191234905342,
+                "z": -41.32310306895,
+                "y": 0.7,
+                "yaw": 2.6237125305810656
+              }
+            },
+            {
+              "id": 64,
+              "archetype": "npc.delivery-driver",
+              "at": {
+                "x": 64.86020274937118,
+                "z": -42.081845157269676,
+                "y": 0.7,
+                "yaw": -0.5178801230087314
+              }
+            },
+            {
+              "id": 65,
+              "archetype": "npc.bathrobe-neighbor",
+              "at": {
+                "x": -32.39575639466023,
+                "z": -19.78,
+                "y": 0.7,
+                "yaw": -1.7377158196925044
+              }
+            },
+            {
+              "id": 66,
+              "archetype": "npc.bathrobe-neighbor",
+              "at": {
+                "x": -33.57963894603308,
+                "z": 30.22,
+                "y": 0.7,
+                "yaw": -1.3740951978186273
+              }
+            },
+            {
+              "id": 67,
+              "archetype": "npc.cashier",
+              "at": {
+                "x": -61.88278133683548,
+                "z": 39.89196089474248,
+                "y": 0.83,
+                "yaw": -1.7018921514207745
+              }
+            },
+            {
+              "id": 68,
+              "archetype": "npc.bbq-dad",
+              "at": {
+                "x": -54.56709601951106,
+                "z": 32.665090772273786,
+                "y": 0.83,
+                "yaw": 17.288798012004932
+              }
+            },
+            {
+              "id": 69,
+              "archetype": "npc.delivery-driver",
+              "at": {
+                "x": -52.708124228763914,
+                "z": 51.36764399764914,
+                "y": 0.83,
+                "yaw": 0.024860087535253275
+              }
+            },
+            {
+              "id": 70,
+              "archetype": "npc.bbq-dad",
+              "at": {
+                "x": -62.54702621648294,
+                "z": 39.41881259759047,
+                "y": 0.7,
+                "yaw": 14.050192022306613
+              }
+            },
+            {
+              "id": 71,
+              "archetype": "npc.dog",
+              "at": {
+                "x": -61.57620457331412,
+                "z": 41.44168920196614,
+                "y": 0.83,
+                "yaw": 1.5608392426309532
+              }
+            },
+            {
+              "id": 72,
+              "archetype": "npc.suburban-mom",
+              "at": {
+                "x": -53.62951766312459,
+                "z": 37.1212796061208,
+                "y": 0.83,
+                "yaw": 7.848123633807692
+              }
+            },
+            {
+              "id": 73,
+              "archetype": "npc.jogger",
+              "at": {
+                "x": -55.327530996083446,
+                "z": 51.43942443328481,
+                "y": 0.83,
+                "yaw": 12.832202097871127
+              }
+            },
+            {
+              "id": 74,
+              "archetype": "npc.jogger",
+              "at": {
+                "x": 74.56540351859125,
+                "z": -44.449999999999996,
+                "y": 0.83,
+                "yaw": 47.13226486031823
+              }
+            },
+            {
+              "id": 75,
+              "archetype": "npc.bbq-dad",
+              "at": {
+                "x": 72.33152798092927,
+                "z": -35.10000430207983,
+                "y": 0.83,
+                "yaw": 9.424790932429682
+              }
+            },
+            {
+              "id": 76,
+              "archetype": "npc.jogger",
+              "at": {
+                "x": -54.54875901761475,
+                "z": 31.950897655366532,
+                "y": 0.83,
+                "yaw": 4.712369411983329
+              }
+            },
+            {
+              "id": 77,
+              "archetype": "npc.suburban-mom",
+              "at": {
+                "x": -61.44238961619209,
+                "z": 24.04836712851003,
+                "y": 0.83,
+                "yaw": 1.574401757635235
+              }
+            },
+            {
+              "id": 78,
+              "archetype": "npc.bbq-dad",
+              "at": {
+                "x": 17.443649798905287,
+                "z": 12.467083837417626,
+                "y": 0.83,
+                "yaw": 10.999683935715018
+              }
+            },
+            {
+              "id": 79,
+              "archetype": "npc.jogger",
+              "at": {
+                "x": 10.542507773283093,
+                "z": 33.377004878170915,
+                "y": 0.83,
+                "yaw": 1.5857302510667877
+              }
+            },
+            {
+              "id": 80,
+              "archetype": "npc.bbq-dad",
+              "at": {
+                "x": 53.44279997098029,
+                "z": 17.127190858404663,
+                "y": 0.83,
+                "yaw": 17.28699361297075
+              }
+            },
+            {
+              "id": 81,
+              "archetype": "npc.bathrobe-neighbor",
+              "at": {
+                "x": 45.65,
+                "z": 24.9104694087315,
+                "y": 0.83,
+                "yaw": 33.203463542038655
+              }
+            },
+            {
+              "id": 82,
+              "archetype": "npc.suburban-mom",
+              "at": {
+                "x": 54.34936755294931,
+                "z": 37.308380370617336,
+                "y": 0.83,
+                "yaw": 7.85344214677769
+              }
+            },
+            {
+              "id": 83,
+              "archetype": "npc.delivery-driver",
+              "at": {
+                "x": 45.920167646902584,
+                "z": 37.50741351579553,
+                "y": 0.83,
+                "yaw": 1.3574629379815186
+              }
+            },
+            {
+              "id": 84,
+              "archetype": "npc.jogger",
+              "at": {
+                "x": -17.212176991063675,
+                "z": 41.23636991149466,
+                "y": 0.83,
+                "yaw": -40.51040541325157
+              }
+            },
+            {
+              "id": 85,
+              "archetype": "npc.delivery-driver",
+              "at": {
+                "x": -39.352760202978814,
+                "z": 51.34927885503106,
+                "y": 0.83,
+                "yaw": 6.283956355313659
+              }
+            },
+            {
+              "id": 86,
+              "archetype": "npc.bbq-dad",
+              "at": {
+                "x": 22.275276032673343,
+                "z": 41.550000000000004,
+                "y": 0.83,
+                "yaw": 34.63259320298383
+              }
+            },
+            {
+              "id": 87,
+              "archetype": "npc.delivery-driver",
+              "at": {
+                "x": 46.718416560037355,
+                "z": 51.35,
+                "y": 0.83,
+                "yaw": 34.91425986965049
+              }
+            },
+            {
+              "id": 88,
+              "archetype": "npc.cashier",
+              "at": {
+                "x": -27.55,
+                "z": 8,
+                "y": 0.7,
+                "yaw": 0
+              }
+            },
+            {
+              "id": 89,
+              "archetype": "npc.jogger",
+              "at": {
+                "x": -26.45,
+                "z": 8,
+                "y": 0.7,
+                "yaw": 3.141592653589794
+              }
+            },
+            {
+              "id": 90,
+              "archetype": "npc.cashier",
+              "at": {
+                "x": -20.55,
+                "z": 8,
+                "y": 0.7,
+                "yaw": 0
+              }
+            },
+            {
+              "id": 91,
+              "archetype": "npc.bathrobe-neighbor",
+              "at": {
+                "x": -19.45,
+                "z": 8,
+                "y": 0.7,
+                "yaw": 3.1415926535897936
+              }
+            },
+            {
+              "id": 92,
+              "archetype": "npc.suburban-mom",
+              "at": {
+                "x": -30.55,
+                "z": 24,
+                "y": 0.7,
+                "yaw": 0
+              }
+            },
+            {
+              "id": 93,
+              "archetype": "npc.bathrobe-neighbor",
+              "at": {
+                "x": -29.45,
+                "z": 24,
+                "y": 0.7,
+                "yaw": 3.141592653589794
+              }
+            },
+            {
+              "id": 94,
+              "archetype": "npc.suburban-mom",
+              "at": {
+                "x": -4.55,
+                "z": 24,
+                "y": 0.7,
+                "yaw": 0
+              }
+            },
+            {
+              "id": 95,
+              "archetype": "npc.delivery-driver",
+              "at": {
+                "x": -3.45,
+                "z": 24,
+                "y": 0.7,
+                "yaw": 3.141592653589794
+              }
+            },
+            {
+              "id": 96,
+              "archetype": "npc.bbq-dad",
+              "at": {
+                "x": -28.55,
+                "z": -17.5,
+                "y": 0.7,
+                "yaw": 0
+              }
+            },
+            {
+              "id": 97,
+              "archetype": "npc.bathrobe-neighbor",
+              "at": {
+                "x": -27.45,
+                "z": -17.5,
+                "y": 0.7,
+                "yaw": 3.1415926535897936
+              }
+            },
+            {
+              "id": 98,
+              "archetype": "npc.suburban-mom",
+              "at": {
+                "x": -16.55,
+                "z": 28,
+                "y": 0.7,
+                "yaw": 0
+              }
+            },
+            {
+              "id": 99,
+              "archetype": "npc.bathrobe-neighbor",
+              "at": {
+                "x": -15.45,
+                "z": 28,
+                "y": 0.7,
+                "yaw": 3.141592653589794
+              }
+            }
+          ]
+        },
+        "errors": []
+      }
+    ],
+    "observedPositionMatch": [
+      {
+        "tier": "low",
+        "queueIds": [
+          36,
+          38,
+          40,
+          42,
+          44,
+          46
+        ],
+        "maximumPositionErrorM": 0
+      },
+      {
+        "tier": "high",
+        "queueCount": 12,
+        "maximumPositionErrorM": 0
+      }
+    ]
+  },
+  "inputs": [
+    {
+      "file": "docs/reports/final-b/L4-low-physical.json.gz",
+      "sha256": "24bb97cf30e4e9d3ba13a82e00b7da9a1f45e13a1626ecaa27d82c9bab0a5c61"
+    },
+    {
+      "file": "docs/reports/final-b/L4-high-opening-physical.json.gz",
+      "sha256": "81502974ece4ec840999900852f723f20627c704221f842ba9ef68cca1caa843"
+    }
+  ]
+}
