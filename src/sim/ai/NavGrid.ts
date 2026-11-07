@@ -14,7 +14,19 @@ function segmentIntersectsWall(wall: Wall, from: { x: number; z: number }, to: {
     const f = wall.navFootprint, c = Math.cos(f.yaw), s = Math.sin(f.yaw);
     const local = (p: { x: number; z: number }) => ({ x: (p.x - f.x) * c - (p.z - f.z) * s, z: (p.x - f.x) * s + (p.z - f.z) * c });
     const a = local(from), b = local(to);
-    return segmentIntersectsWall({ ...wall, x: 0, z: 0, halfX: f.halfX, halfZ: f.halfZ, navFootprint: undefined }, a, b, b.x - a.x, b.z - a.z, radius);
+    const box = { ...wall, x: 0, z: 0, halfX: f.halfX, halfZ: f.halfZ, navFootprint: undefined };
+    const vx = b.x - a.x, vz = b.z - a.z;
+    if (!segmentIntersectsWall(box, a, b, vx, vz, radius)) return false;
+    // The same rounded rectangle used by the cell bake: two face strips and
+    // four corner circles. A square-expanded slab rejects valid corner routes.
+    if (segmentIntersectsWall({ ...box, halfX: box.halfX + radius }, a, b, vx, vz, 0) ||
+      segmentIntersectsWall({ ...box, halfZ: box.halfZ + radius }, a, b, vx, vz, 0)) return true;
+    const length2 = vx * vx + vz * vz;
+    for (const x of [-box.halfX, box.halfX]) for (const z of [-box.halfZ, box.halfZ]) {
+      const t = length2 ? Math.max(0, Math.min(1, ((x - a.x) * vx + (z - a.z) * vz) / length2)) : 0;
+      if ((a.x + t * vx - x) ** 2 + (a.z + t * vz - z) ** 2 < radius * radius) return true;
+    }
+    return false;
   }
   const minX = wall.x - wall.halfX - radius, maxX = wall.x + wall.halfX + radius;
   const minZ = wall.z - wall.halfZ - radius, maxZ = wall.z + wall.halfZ + radius;
@@ -200,7 +212,11 @@ export class NavGrid {
     const visit = (w: Wall) => {
       const f = w.navFootprint, c = Math.cos(f?.yaw ?? 0), s = Math.sin(f?.yaw ?? 0), dx = x - (f?.x ?? w.x), dz = z - (f?.z ?? w.z);
       const ox = (f?.halfX ?? w.halfX) + radius - Math.abs(dx * c - dz * s), oz = (f?.halfZ ?? w.halfZ) + radius - Math.abs(dx * s + dz * c);
-      if (ox > 0 && oz > 0) deepest = Math.max(deepest, Math.min(ox, oz));
+      if (ox > 0 && oz > 0) {
+        const outsideX = Math.max(0, radius - ox), outsideZ = Math.max(0, radius - oz);
+        const depth = f && (outsideX || outsideZ) ? radius - Math.hypot(outsideX, outsideZ) : Math.min(ox, oz);
+        deepest = Math.max(deepest, depth);
+      }
     };
     for (const w of this.routeBuckets.get(cellX)?.get(cellZ) ?? []) visit(w);
     for (const w of this.blockerBuckets.get(cellX)?.get(cellZ)?.values() ?? []) visit(w);

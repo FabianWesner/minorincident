@@ -60,6 +60,11 @@ test('capsule moves: a body inside the wall margin slides out and never moves de
   expect(corners.clear(2.4, -1.1, .5)).toBe(true);
   expect(corners.clear(2.25, -1.25, .5)).toBe(true);
   expect(corners.clear(2.25, -1.25, .5, true)).toBe(true);
+  const cornerStart = { x: 3.25 / Math.SQRT2, z: -1.55 / Math.SQRT2 };
+  const cornerEnd = { x: 3.25 / Math.SQRT2, z: -1.45 / Math.SQRT2 };
+  expect(corners.clear(cornerStart.x, cornerStart.z, .5)).toBe(true);
+  expect(corners.clear(cornerEnd.x, cornerEnd.z, .5)).toBe(true);
+  expect(corners.visible(cornerStart, cornerEnd, .5), 'segment clearance agrees with rounded cell clearance').toBe(true);
   const broad = new NavGrid(corners.ground, [{ ...cornerWall, navFootprint: undefined }], .5);
   for (let cell = 0; cell < corners.blocked.length; cell++) if (!broad.blocked[cell]) expect(corners.blocked[cell], `no newly closed cell ${cell}`).toBe(0);
   expect(corners.clear(1.75, -1.25, .5)).toBe(false);
