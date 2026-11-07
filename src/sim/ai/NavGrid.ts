@@ -136,7 +136,7 @@ export class NavGrid {
       const z0 = Math.max(0, Math.floor(cz - extentZ / step)), z1 = Math.min(this.depth - 1, Math.ceil(cz + extentZ / step));
       for (let z = z0; z <= z1; z++) for (let x = x0; x <= x1; x++) {
         const dx = this.x(x) - ox, dz = this.z(z * this.width) - oz;
-        if (f ? this.intersects(wall, this.x(x), this.z(z * this.width), r) : Math.abs(dx) < hx + r && Math.abs(dz) < hz + r) this.blocked[z * this.width + x] = 1;
+        if (f ? this.intersects(wall, this.x(x), this.z(z * this.width), r, false) : Math.abs(dx) < hx + r && Math.abs(dz) < hz + r) this.blocked[z * this.width + x] = 1;
       }
     }
   }
@@ -209,9 +209,13 @@ export class NavGrid {
   private intersects(w: Wall, x: number, z: number, radius: number, rounded = true): boolean {
     const f = w.navFootprint, c = Math.cos(f?.yaw ?? 0), s = Math.sin(f?.yaw ?? 0), px = x - (f?.x ?? w.x), pz = z - (f?.z ?? w.z);
     const dx = Math.abs(px * c - pz * s), dz = Math.abs(px * s + pz * c), hx = f?.halfX ?? w.halfX, hz = f?.halfZ ?? w.halfZ;
+    if (!rounded) {
+      // SAT for the rotated box plus the existing world-axis crowd padding.
+      // The padding belongs to the actor, so it never rotates with the prop.
+      const margin = radius * (Math.abs(c) + Math.abs(s));
+      return Math.abs(x - w.x) < w.halfX + radius && Math.abs(z - w.z) < w.halfZ + radius && dx < hx + margin && dz < hz + margin;
+    }
     if (dx >= hx + radius || dz >= hz + radius) return false;
-    // A rotated padding square adds false corners; use the unchanged capsule radius.
-    if (!rounded && !f) return true;
     // Match the circular capsule footprint at box corners, rather than a square
     // dilation that can declare a valid Rapier position trapped inside a wall.
     const outsideX = Math.max(0, dx - hx), outsideZ = Math.max(0, dz - hz);
