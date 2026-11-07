@@ -27,9 +27,6 @@ import { RoutineProps, cupSocket } from './RoutineProps';
 import { sitHipHeight } from '../../sim/npc/seats';
 import { uprightHand } from './civilianGrip';
 import type { CivilianProp } from '../../sim/npc/types';
-/** E22 weapons carried by soldiers and armed civilians: drawn at the hand whatever the routine or fight clip is. */
-/** Prop offsets from the hand (RoutineProps shapes): mug body centre, phone. */
-const phoneSocket: [number, number, number] = [.08, -.03, 0];
 // Measured native finger/handle clearances after q249's hand reduction. The
 // maximum hand X is on the palm for these two silhouettes; bring only coffee
 // handles back to the fingertip band, retaining about a 1 mm skin margin.
@@ -323,10 +320,11 @@ class CivilianBatch extends Group {
         pose.holdDistanceM = undefined;
         frame = this.locomotion.present(e.id, this.poses, pose); }
       if (holding && !weaponProps.has(handProp!)) {
-        // Mug and phone: elbow bent, hand at chest height; a standing or seated drinker raises the mug to the mouth every ~8 s.
-        const bent = handProp === 'coffee' || handProp === 'phone', still = speed < .06 && !down && !rising;
+        // A drinker raises the mug to the mouth every ~8 s. An idle phone stays
+        // at the natural wrist pose; a chest hold pulled the forearm/torso seam into a skin fan.
+        const bent = handProp === 'coffee', still = speed < .06 && !down && !rising;
         const cycle = (renderTick / 60 + e.id * 1.7) % 8, sip = handProp === 'coffee' && still && cycle > 5.8 ? Math.sin(Math.PI * Math.min(1, (cycle - 5.8) / 2.2)) ** 2 : 0;
-        frame = this.poses.correct(e.id, frame, ...blend, pose => { if (bent) this.gunAim.hold(pose, sip, handProp === 'coffee' ? cupSocket : phoneSocket); uprightHand(pose, this.bakedClip.parts.indexOf('handR'), this.hand); }); blend[0] = frame; blend[1] = 1;
+        frame = this.poses.correct(e.id, frame, ...blend, pose => { if (bent) this.gunAim.hold(pose, sip, cupSocket); uprightHand(pose, this.bakedClip.parts.indexOf('handR'), this.hand); }); blend[0] = frame; blend[1] = 1;
       }
       const firing = this.props?.aiming.get(e.id);
       let pistolAtSide = false;

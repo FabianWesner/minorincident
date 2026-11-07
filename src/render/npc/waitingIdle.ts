@@ -9,6 +9,9 @@ const weapons = new Set(['pistol', 'hunting-rifle', 'rifle', 'shotgun', 'pipe', 
 export function waitingIdle(id: number, handProp?: string | null, threatened = false): typeof waitingClips[number] {
   const hash = Math.imul(id, 2654435761) >>> 16;
   if (handProp && weapons.has(handProp)) return armedClips[hash % armedClips.length];
+  // A routine prop occupies the hand; keep the free arm relaxed rather than
+  // combining a chest-level glance/hug gesture with the separate grip layer.
+  if (handProp) return 'npc-look-around';
   const clip = waitingClips[hash % waitingClips.length];
   return clip === 'npc-cower' && !threatened ? 'npc-glance' : clip;
 }
