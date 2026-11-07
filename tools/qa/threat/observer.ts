@@ -173,18 +173,41 @@ export class ThreatObserver {
   private active: Row[] = [];
   private readonly births = new SpawnIdentities(() => { for (const row of this.active) row.spawned++; });
   private readonly paths = new PathProbe();
-  private readonly barrierGrids = new WeakMap<NavGrid, { revision: number; x: number; z: number; grids: Map<number, NavGrid> }>();
+  private readonly barrierGrids = new WeakMap<NavGrid, {
+    revision: number; x: number; z: number; grids: Map<number, NavGrid>;
+    changes: Map<number, { wall: Parameters<NavGrid['setBlocker']>[1]; blocked: boolean }>;
+  }>();
+  private readonly watchedBarrierGrids = new WeakSet<NavGrid>();
+  private watchBarrierGrid(source: NavGrid): void {
+    if (this.watchedBarrierGrids.has(source)) return;
+    this.watchedBarrierGrids.add(source);
+    const setBlocker = source.setBlocker.bind(source);
+    source.setBlocker = (id, wall, blocked) => {
+      const before = source.revision;
+      setBlocker(id, wall, blocked);
+      const cache = this.barrierGrids.get(source);
+      if (cache?.revision === before && cache.x === source.center.x && cache.z === source.center.z) {
+        cache.changes.set(id, { wall, blocked }); cache.revision = source.revision;
+      }
+    };
+  }
   /** Prove approach + destructible-rail crossing + remaining ground walk.
    * Only the crossed, damageable rail is removed from an independent grid;
    * sheds, other rails, baked masks and all body-clearance tests remain. */
   private barrierDistance(source: NavGrid, entity: EntitySnapshot, goal: { x: number; z: number }, limit: number): number {
     const radius = entity.combat?.radius ?? .35, pad = Math.max(source.clearance, radius) + .1;
     if (pad > 1.5 || infectedDef(entity.archetype).damage <= 0) return Infinity;
+    this.watchBarrierGrid(source);
     let cache = this.barrierGrids.get(source);
     if (!cache || cache.revision !== source.revision || cache.x !== source.center.x || cache.z !== source.center.z) {
-      cache = { revision: source.revision, x: source.center.x, z: source.center.z, grids: new Map() };
+      cache = { revision: source.revision, x: source.center.x, z: source.center.z, grids: new Map(), changes: new Map() };
       this.barrierGrids.set(source, cache);
     }
+    // Coalesce live blocker changes until the next census. Updating each
+    // independent grid retains its removed rail without rebaking the district.
+    for (const [id, change] of cache.changes) for (const [removed, grid] of cache.grids)
+      if (id !== removed) grid.setBlocker(id, change.wall, change.blocked);
+    cache.changes.clear();
     const barriers = [...this.world.entities.iterate()].filter(e => e.barricade?.intact && e.health.current > 0
       && e.barricade.slot.groupId === 'l4-wall' && (entity.archetype === 'infected.alpha' || (e.barricade.slot.hordeShare ?? 1) > 0));
     barriers.sort((a, b) => Math.hypot(a.transform.x - entity.transform.x, a.transform.z - entity.transform.z)

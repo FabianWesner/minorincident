@@ -64,7 +64,12 @@ export async function runStages(levels: readonly RunnerLevel[], maxWorkers: numb
     if (level === 'L5' || level === 'L7') for (const passive of [false, true]) for (const seed of [2, 3])
       jobs.push({ id: stageId(level, passive, seed), level, kind: 'follower', seed, passive });
   }
-  const cost = (job: StageJob) => job.level === 'L5' && job.passive ? 100 : job.level === 'L4' ? (job.kind === 'high-hold' ? 70 : job.passive ? 80 : 90) : job.kind === 'l3' ? 60 : job.level === 'L10' ? 50 : 0;
+  // Runner stage profiles: start long routes first to avoid a late passive tail.
+  const nativeCosts: Record<RunnerLevel, readonly [number, number]> = {
+    L1: [30, 30], L2: [45, 45], L3: [80, 20], L4: [270, 150], L5: [50, 250],
+    L6: [35, 10], L7: [40, 30], L8: [35, 70], L9: [20, 20], L10: [120, 90],
+  };
+  const cost = (job: StageJob) => job.kind === 'high-hold' ? 180 : nativeCosts[job.level][job.passive ? 1 : 0];
   jobs.sort((a, b) => cost(b) - cost(a));
   const results = new Map<string, StageResult>();
   if (maxWorkers === 1) {
