@@ -376,6 +376,12 @@ export class CorpseLayout {
         // The legacy fallback uses the final rejected candidate's footprint.
         pose.x = numeric[0]; pose.z = numeric[1]; pose.yaw = numeric[2];
         pose.ax = numeric[3]; pose.az = numeric[4]; pose.bx = numeric[5]; pose.bz = numeric[6]; pose.y = numeric[7]; best = pose;
+        // If solids prevent every slide, keep the flat body above the highest
+        // support under it instead of burying its torso in a raised edge.
+        if (support) for (let sample = 0; sample < 3; sample++) {
+          const t = sample * .5, px = pose.ax + (pose.bx - pose.ax) * t, pz = pose.az + (pose.bz - pose.az) * t;
+          for (let i = 0; i < supportOffsets.length; i += 2) pose.y = Math.max(pose.y, support.supportBelow(px + radius * supportOffsets[i], pz + radius * supportOffsets[i + 1], feet));
+        }
       }
     }
     // Retain one stable result for this body; candidate exploration above

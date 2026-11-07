@@ -372,6 +372,13 @@ test('corpse pages: bodies persist past the old cap, bounds stay conservative, c
       expect(pose.y).toBe(floor(pose.x, pose.z));
     }
   }
+  // If surrounding solids admit no slide at all, the last-resort flat pose
+  // still needs to clear the raised part of its footprint.
+  const pinnedWorld = { scenario: 'L1', entities: { revision: 0, get: () => undefined, *iterate() {} },
+    districts: { districts: [], supportBelow: (_x: number, z: number) => z > 0 ? .35 : 0 },
+    infected: { nav: { clear: () => true, move: () => {} } } } as unknown as SimWorld;
+  const pinnedBody = { id: 901, health: { current: 0 }, transform: { x: 0, y: .7, z: -.05, yaw: 0 }, combat: { radius: .35 } } as EntitySnapshot;
+  expect(new CorpseLayout(pinnedWorld).place(pinnedBody).y).toBe(.35);
   const baked = bakeInfected(createSkinnedCrowdFixture()); packCrowdParts(baked.geometry);
   const pool = new StaticCorpses(), material = new MeshLambertNodeMaterial(), records = new Map<number, EntitySnapshot>();
   try {
