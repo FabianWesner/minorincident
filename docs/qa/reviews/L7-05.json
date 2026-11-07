@@ -1,41 +1,43 @@
 {
   "row": "L7-05",
-  "status": "PASS",
-  "reviewer": "Codex sweep-c5",
-  "date": "2026-11-06",
-  "commit": "bedb6bdcaf661a957f7c36bc6eded4381a548f99",
+  "status": "FAIL",
+  "reviewer": "Codex final-c",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
   "clauses": [
     {
-      "clause": "combat: reachable \u2265 90 %; passive first attack \u2264 10 s (measured 4.6 s); attacks on player + group \u2265 6/min (tune).",
-      "verdict": "PASS",
-      "note": "Fresh exact-criterion review of all14 current-source native checks. Competent low/high rates11.1801/6.5188 player windups per minute; both passive policies first player windup0.0667s and positive group/player rates. Minimum bounded-path reachability100% in every policy. The prior zero-contact failure is contradicted by these unchanged-criterion current-source measurements. Native receipts are immutable SHA256 archives; no subjective or visual clause exists in this row."
+      "clause": "combat: reachable ≥ 90 %; passive first attack ≤ 10 s (measured 4.6 s); attacks on player + group ≥ 6/min (tune).",
+      "verdict": "FAIL",
+      "note": "FAIL: high stationary first actual player attack is 10.3666666667 s after phase activation, exceeding 10 s by 0.3666666667 s. Low stationary is 1.3 s. Complete player/group rates are 7.4006/min low and 19.7395/min high; minimum reachability is 100% low and 98.5714% high across both policies. This one timing counterexample suffices for row FAIL."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-c5/L7-05/L7-low-complete.json.gz",
-      "sha256": "2773dfb029e5eb31814ce6544a68718229d4ec30256a6a58dc601681f1d020a5",
-      "what": "Current-source low/complete native route, read-only attack and independent bounded-path reachability observation."
+      "file": "docs/reports/final-c/L7-05/numeric-review.json",
+      "sha256": "9c6f31a85c1870c7c78fcdd2ec9674ca8ddada839048444c17fab30442ed3a26",
+      "what": "FAIL: high stationary first actual player attack is 10.3666666667 s after phase activation, exceeding 10 s by 0.3666666667 s. Low stationary is 1.3 s. Complete player/group rates are 7.4006/min low and 19.7395/min high; minimum reachability is 100% low and 98.5714% high across both policies. This one timing counterexample suffices for row FAIL."
     },
     {
-      "file": "docs/reports/sweep-c5/L7-05/L7-low-stationary.json.gz",
-      "sha256": "efa6dfa4425e931f16480d340ca6e1b02855f1678c834d7d3af85ceb4964cbe0",
-      "what": "Current-source low/stationary native route, read-only attack and independent bounded-path reachability observation."
+      "file": "docs/reports/final-c/native/L7-low-complete.json.gz",
+      "sha256": "5c77a3f0f9af2f77b2781db5e6b8ba6b239e187be04196d87c18871a5b676277",
+      "what": "Immutable frozen-head native source receipt: docs/reports/fix51-verify/receipts/L7-low-complete.json. Row-specific measured checks are reproduced in numeric-review.json."
     },
     {
-      "file": "docs/reports/sweep-c5/L7-05/L7-high-complete.json.gz",
-      "sha256": "3bf3923c135592dbaeb813f10fed22114096f558e98ee87f3152f24264a99e3d",
-      "what": "Current-source high/complete native route, read-only attack and independent bounded-path reachability observation."
+      "file": "docs/reports/final-c/native/L7-low-stationary.json.gz",
+      "sha256": "8ed83bc3c080c66347df0e672078d22d862d885917acb7d643b4ad75ce305be2",
+      "what": "Immutable frozen-head native source receipt: docs/reports/fix51-verify/receipts/L7-low-stationary.json. Row-specific measured checks are reproduced in numeric-review.json."
     },
     {
-      "file": "docs/reports/sweep-c5/L7-05/L7-high-stationary.json.gz",
-      "sha256": "e76fbb056abd5c866a310cea5e84361a424fccd71ecad98be562b107398b7aa3",
-      "what": "Current-source high/stationary native route, read-only attack and independent bounded-path reachability observation."
+      "file": "docs/reports/final-c/native/L7-high-complete.json.gz",
+      "sha256": "ac2f6292c8013a44c79a58023527a8965ebfe546fdf2a237ebf6930ca2028cb2",
+      "what": "Immutable frozen-head native source receipt: docs/reports/fix51-verify/receipts/L7-high-complete.json. Row-specific measured checks are reproduced in numeric-review.json."
     },
     {
-      "file": "docs/reports/sweep-c5/L7-05/clauses.json",
-      "sha256": "7d6f9abce70ea0b1d394b98254031678c616b3c9d4a305b841510a66621667cd",
-      "what": "All14 required native checks pass on both complete/stationary policies and tiers."
+      "file": "docs/reports/final-c/native/L7-high-stationary.json.gz",
+      "sha256": "1671dc8e5675b5a67b3f52c0ae336c130f47eb22d93aad40dc222eb1694181e5",
+      "what": "Immutable frozen-head native source receipt: docs/reports/fix51-verify/receipts/L7-high-stationary.json. Row-specific measured checks are reproduced in numeric-review.json."
     }
-  ]
+  ],
+  "notes": "Frozen-head numeric review. No gameplay source or criterion changed. No browser, performance, or visual evidence is claimed for this numeric-only criterion.",
+  "sourceDigest": "1aff45872f0c1603cfc94e9f01d515824d2304b5b5d9e5f96fee9cc461ad064a"
 }
