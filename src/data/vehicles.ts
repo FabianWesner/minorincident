@@ -31,6 +31,17 @@ export interface VehicleDef {
 const sedan: VehicleDef = { doorX: .35, stepHeight: .12, id: 'vehicle.sedan', asset: 'veh.sedan-red', mass: 1200, length: 4.2, width: 1.8, wheelbase: 2.7, wheelRadius: .34, suspension: .3, stiffness: 40, engineForce: 3000, topSpeed: 16, steering: .42, hp: 300, ramStrength: 1, emergency: false,
   handling: { highSpeedSteering: .18, steeringResponse: 10, engineTaperStart: .35, reverseSpeed: 6, brake: .16, idleBrake: .004, handbrake: .08, grip: 3, driftGrip: .65, compression: 4.4, relaxation: 2.3, suspensionTravel: .25, suspensionResponse: 25, centerOfMass: -.3, flipDelay: 3, flipLift: 3, flipTorque: 4 },
 };
+/** r6-truck (PO 11-07 "L2 Some part is missing of the truck"): the seat-footprint cut ran 0.3 m behind the crew cab into the closed
+ * shutter housing (AO-black inside = a hard black rectangle), cut the ladder over the cab and left ragged wall edges. Vehicles listed
+ * here open the crew cab as an open-top crew cab instead: everything inside the cab's own span (x0..x1, |z| < z) between the window
+ * sill (`cut`) and just under the roof ladder (`top`) is removed, the neighbouring body and the ladder stay whole, and a dark trim
+ * (sill rails, rear rail, windscreen header and posts) finishes every cut edge. Authored frame of the asset's `root` node (parent of
+ * `crew_cab`, glTF Y-up, front +X), from assets/veh.fire-engine/build.py: cab shell x 1.883..4.05 (shutter housing ends 1.872),
+ * side windows from y 1.96, ladder from y 2.96 except its nose support (x 3.55, from 2.86), windscreen top at x 3.83. `rest` is the x of
+ * a ladder-rest hoop carrying that support once the roof under it is gone. `hide` names nodes drawn only with a roof (light-bar beacons). */
+export const crewRoofs: { readonly [asset: string]: { x0: number; x1: number; z: number; cut: number; top: number; rest: number; hide: readonly string[] } } = {
+  'veh.fire-engine': { x0: 1.876, x1: 3.78, z: 1.45, cut: 1.93, top: 2.955, rest: 3.55, hide: ['sirenL', 'sirenR'] },
+};
 /** The cargo bicycle retains capsule collision and click navigation; these tune its direct steering and frame lean. */
 /** reverseMs: a rider backs a bicycle up at walking pace; full-speed reverse with A/D held drew 10 m loops (r2-bike). */
 export const bicycleHandling = { slowTurnRadius: 1.6, fastTurnRadius: 6, steeringResponse: 8, maxSteering: .5, leanResponse: 8, maxLean: .32, reverseMs: 1.8 } as const;
