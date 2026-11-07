@@ -1,22 +1,23 @@
 {
   "row": "L5-08",
   "status": "FAIL",
-  "reviewer": "Codex/sweep-b",
-  "date": "2026-11-06",
-  "commit": "e68096dc4a993f83d9c3e100efc58c7a49505c2f",
+  "reviewer": "Codex/final-b",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "sourceDigest": "96b95aaf00218387ac838466ba4e849719809eef34f96b67f54241001dca8a39",
   "clauses": [
     {
-      "clause": "Followers: 2\u20135 m behind (PO 2026-11-05 tolerance: \u2265 95 % of calm straight-walk ticks in 2\u20135 m and no out-of-band run longer than 2 s), within 8 m \u2265 80 % of non-combat time, run 3.8 m/s (0.84\u00d7 player) in combat; outside combat a follower more than 5 m behind catches up at up to 1.05\u00d7 the courier's current speed until back in the band (orchestrator 2026-11-04: a fixed 3.8 m/s could never hold 2\u20135 m behind a 4.5 m/s courier, fix53-b); none slower than the group (G-13); every follower's bar visible.",
+      "clause": "Followers: 2–5 m behind (PO 2026-11-05 tolerance: ≥ 95 % of calm straight-walk ticks in 2–5 m and no out-of-band run longer than 2 s), within 8 m ≥ 80 % of non-combat time, run 3.8 m/s (0.84× player) in combat; outside combat a follower more than 5 m behind catches up at up to 1.05× the courier's current speed until back in the band (orchestrator 2026-11-04: a fixed 3.8 m/s could never hold 2–5 m behind a 4.5 m/s courier, fix53-b); none slower than the group (G-13); every follower's bar visible.",
       "verdict": "FAIL",
-      "note": "Current source fails calm straight-walk formation tolerance at both tiers and an individual low-tier pace ratio. Full per-ID95%/2s counters and counterexample ticks/positions are retained. Within8m calm share passes. Combat3.8m/s and every visible bar are still unqualified; neither is inferred from route medians. Whole-row FAIL is established by formation counterexamples."
+      "note": "low/complete: calm straight-walk follower distance tolerance=[{\"id\":31,\"followAt\":2657,\"calmTicks\":7697,\"within8Ticks\":7697,\"movingCalmTicks\":5107,\"behind2To5Ticks\":4698,\"maxMotionSpeed\":312.0000000000003,\"straightTicks\":1771,\"inBandStraightTicks\":1730,\"badStraightTicks\":41,\"badRun\":0,\"maxBadRun\":27,\"counterexample\":{\"tick\":8156,\"behind\":5.002522702434311,\"distance\":5.009168382640548,\"player\":{\"x\":12.442595481872559,\"z\":11.92718505859375},\"follower\":{\"x\":12.010975941398554,\"z\":6.936646765190249},\"playerSpeed\":4.500010441627347},\"lastStraightTick\":11188,\"within8Share\":1,\"inBandStraightShare\":0.9768492377188029},{\"id\":30,\"followAt\":4515,\"calmTicks\":5987,\"within8Ticks\":5987,\"movingCalmTicks\":4442,\"behind2To5Ticks\":3820,\"maxMotionSpeed\":270,\"straightTicks\":1606,\"inBandStraightTicks\":1543,\"badStraightTicks\":63,\"badRun\":0,\"maxBadRun\":50,\"counterexample\":{\"tick\":6552,\"behind\":1.9650027913454873,\"distance\":1.9945908208626735,\"player\":{\"x\":-36.5091552734375,\"z\":47.81837844848633},\"follower\":{\"x\":-38.497334015908635,\"z\":47.97818405119015},\"playerSpeed\":4.500102079712613},\"lastStraightTick\":11188,\"within8Share\":1,\"inBandStraightShare\":0.960772104607721},{\"id\":32,\"followAt\":6436,\"calmTicks\":4191,\"within8Ticks\":4191,\"movingCalmTicks\":3419,\"behind2To5Ticks\":3019,\"maxMotionSpeed\":252.00000000000017,\"straightTicks\":1235,\"inBandStraightTicks\":1229,\"badStraightTicks\":6,\"badRun\":0,\"maxBadRun\":6,\"counterexample\":{\"tick\":9825,\"behind\":5.238643698500366,\"distance\":5.276391439535428,\"player\":{\"x\":53.00948715209961,\"z\":27.686155319213867},\"follower\":{\"x\":53.13221894841712,\"z\":32.9611191607369},\"playerSpeed\":4.500055905840935},\"lastStraightTick\":11188,\"within8Share\":1,\"inBandStraightShare\":0.9951417004048583},{\"id\":28,\"followAt\":7593,\"calmTicks\":3125,\"within8Ticks\":3125,\"movingCalmTicks\":2540,\"behind2To5Ticks\":1930,\"maxMotionSpeed\":188.403821617291,\"straightTicks\":878,\"inBandStraightTicks\":654,\"badStraightTicks\":224,\"badRun\":0,\"maxBadRun\":75,\"counterexample\":{\"tick\":8368,\"behind\":5.281617628489404,\"distance\":5.282364763051771,\"player\":{\"x\":17.449899673461914,\"z\":26.525598526000977},\"follower\":{\"x\":15.346452029014413,\"z\":21.68009695268586},\"playerSpeed\":3.1364360394904556},\"lastStraightTick\":11188,\"within8Share\":1,\"inBandStraightShare\":0.744874715261959},{\"id\":29,\"followAt\":9523,\"calmTicks\":1601,\"within8Ticks\":1601,\"movingCalmTicks\":1266,\"behind2To5Ticks\":1199,\"maxMotionSpeed\":271.66155414412253,\"straightTicks\":511,\"inBandStraightTicks\":511,\"badStraightTicks\":0,\"badRun\":0,\"maxBadRun\":0,\"counterexample\":null,\"lastStraightTick\":11188,\"within8Share\":1,\"inBandStraightShare\":1}]; target at least95% of calm straight-walk ticks 2–5m behind; no out-of-band run longer than2s; FAIL"
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-b/rows/L5-08.json",
-      "sha256": "d742e843e1264ae52ef2c516504788f2559f9385e399b247ff16daec4e8ffb0c",
-      "what": "Current source fails calm straight-walk formation tolerance at both tiers and an individual low-tier pace ratio. Full per-ID95%/2s counters and counterexample ticks/positions are retained. Within8m calm share passes. Combat3.8m/s and every visible bar are still unqualified; neither is inferred from route medians. Whole-row FAIL is established by formation counterexamples."
+      "file": "docs/reports/fix51-verify/receipts/L5-low-complete.json",
+      "sha256": "6c42a554721b684ec908c3e123c6e4f100ce34a71f4c7fc53b36f2c4cf1c23e9",
+      "what": "Frozen-head native measurement: L5-08. calm straight-walk follower distance tolerance."
     }
   ],
-  "notes": "Current-source native measurements at both tiers. A FAIL closes the verdict through the cited counterexample; unmeasured clauses are not promoted to PASS."
+  "notes": "Fresh native measurements on the frozen source. No claim of new browser observations. L5-01 legacy diagnostic NOT CHECKED entries are redundant with the explicit pickup/regular/Alpha timing fixtures, whose full clauses pass."
 }
