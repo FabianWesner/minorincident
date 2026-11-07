@@ -100,6 +100,9 @@ export class LevelSevenEncounters {
     const low = director.tier === 'low';
     this.group(l7Encounters.finalGroup, l7Encounters.horde, low ? 60 : 120, 2, true);
     this.group(l7Encounters.firstStreetGroup, l7Encounters.streets[0], low ? 35 : 70, 1, true);
+    // Asset loading must see the residents' final pedestrian models. Waiting
+    // for the first AI tick discovers new living/corpse graphs during pickup.
+    outbreak.dressInfected();
   }
   private clearPoint(at: Point, radius: number): Point {
     return requireClearPoint(this.world, at, radius, 4, 'L7 encounter');

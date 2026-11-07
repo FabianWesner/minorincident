@@ -32,7 +32,10 @@ export const l7Departure = {
   /** Departure approach includes crowd separation in this movement bound. */
   followMs: 4.6,
   /** Where survivors queue (in front of the bus nose) and the door they step through; one new passenger at most every `gapTicks`. */
-  queue: { x: -72.6, z: 47 }, door: { x: -74.4, z: 47 }, enterTicks: 36, gapTicks: 15,
+  // Keep the staging lane south of the courier's boarding anchor. A queue on
+  // the bus road funnels the last followers through the stationary courier
+  // and each other, where local navigation can deadlock before the door.
+  queue: { x: -72.6, z: 45.1 }, door: { x: -74.4, z: 47 }, enterTicks: 36, gapTicks: 15,
   /** Recover a living follower after 20 s without 0.5 m net approach progress; never leave anyone behind. */
   stallTicks: 20 * 60,
   /** Bus lane: straight east along Lakeshore Drive. */

@@ -670,6 +670,11 @@ export class CivilianCrowd extends Group {
       // authored cast before the loading draw so streamed actors cannot first
       // create their frozen corpse material after play begins.
       if (this.world.scenario === 'L3') for (const model of l3CivilianModels) this.loadTier(model, 'lod2');
+      // L7 opens in combat, with the launcher only a few steps away. Its
+      // nearby escort/infected tiers (including frozen corpse pages) cannot
+      // use the peaceful after-Begin queue: their graph builds overlap the
+      // first pickup and rocket. Stage the same nearby set discover() streams.
+      if (this.world.scenario === 'L7') for (const model of this.nearbyModels(64)) { this.loadModel(model); this.loadHero(model); }
       await this.ready();
     }
     if (!this.staged && /^L[1-6]$/.test(this.world.scenario ?? '')) for (const model of this.known) this.loadHero(model);

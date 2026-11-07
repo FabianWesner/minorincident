@@ -27,6 +27,12 @@ export async function checkL7Navigation() {
   await checkPharmacyCatchup();
   const w = await loadLevel('L7', 29);
   try {
+    // The loading renderer must see the actual resident models at tick zero;
+    // discovering their pedestrian looks on the first AI tick builds new
+    // living/corpse shaders during the launcher pickup (L7-01).
+    const residents = w.infected!.active.filter(e => e.archetype === 'infected.runner');
+    expect(residents.length).toBeGreaterThan(0);
+    expect(residents.every(e => e.appearance?.entityId === e.id && e.appearance.asset.startsWith('npc.'))).toBe(true);
     const district = w.districts!;
     const destinations = Object.entries(w.missions!.def.anchors);
     const heightReach = new Map(destinations.map(([name, at]) => {
