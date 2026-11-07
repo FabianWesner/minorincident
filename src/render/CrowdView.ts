@@ -306,6 +306,9 @@ export class CrowdView extends Group {
       const atlas = model.userData.assetTextureMode === 'baseColor' ? crowdTexture(model) : undefined;
       const healthy = def.id.startsWith('healthy.'), human = !dogCoat(def.id) && !/^(infected|healthy)\.(dog|cat|crow|lion|gorilla|elephant|zebra|flamingo)$/.test(def.id);
       const alpha = alphaLookAssets.includes(asset), regularAlpha = alphaLooks['inf.alpha'].includes(asset), capacity = role === 'crow' ? 800 : 350;
+      // The retained Alpha corpse is LOD0. Establish its own atlas binding before
+      // a far batch prepares pages from that source, regardless of arrival order.
+      if (this.world.scenario === 'L10' && alpha && lod === 'lod2') { await this.requestBatch(def, 'lod0'); if (this.disposed) return; }
       // Level handover (10-20): the finished batch geometry (baked, merged, simplified, packed, appearance-marked) is
       // immutable CPU data that depends only on the model, LOD and tier. Reusing it across levels skips ~1 s of main-thread
       // work per level at 1x (bake + mergeVertices + marking), four times that on a throttled CPU; the scene gets clones.
@@ -421,13 +424,13 @@ export class CrowdView extends Group {
       // Ordinary human LODs/looks share L4's existing graph path on every level.
       // Bind each draw's pose and atlas below; graph identity must include every
       // branch that changes the surface, including healthy animals and dog coats.
-      // Alpha hero/frozen surfaces retain their original snapshots; only the
-      // intermediate living band joins the shared shader path. L10's large
-      // alpha cast otherwise builds the same graph per look during loading.
+      // L10 Alpha looks/LODs use the same shader layout and bind their own atlas
+      // per draw. A new hero look must not build this graph during the charge.
+      // L8 keeps its existing intermediate-band sharing policy.
       const zooSurface = this.world.scenario === 'L8' && /^(infected|healthy)\.(lion|gorilla|elephant|zebra|flamingo)$/.test(def.id);
       const ordinarySurface = regularInfectedModels.some(model => model === asset);
       const sharedAlpha = (this.world.scenario === 'L8' || this.world.scenario === 'L10') && alpha;
-      const sharedSurface = (this.world.scenario === 'L4' || ordinarySurface) && infectedAtlas || zooSurface || sharedAlpha && lod === 'lod1';
+      const sharedSurface = (this.world.scenario === 'L4' || ordinarySurface) && infectedAtlas || zooSurface || sharedAlpha && (this.world.scenario === 'L10' || lod === 'lod1');
       const materialKey = sharedSurface && baked.texture ? `${baked.clip.parts.join('|')}:${poses.bindRow}:${baked.doubleSided}:${inlineAccessories}:${asset.startsWith('npc.')}:${baked.geometry.hasAttribute('_skin')}:${human}:${healthy}:${infectedAtlas}:${dogPalette}:${regularAlpha}` : undefined;
       let sharedSkin = materialKey ? this.sharedSkinMaterials.get(materialKey) : undefined;
       let material = sharedSkin?.material, surfaceAtlas = sharedSkin?.atlas;
@@ -535,7 +538,7 @@ export class CrowdView extends Group {
         const surface = { bind: bindSurface, textures: [atlas] };
         crowdSurfaceBindings.set(mesh.geometry, surface);
         const body = this.corpseGeometry.get(key);
-        if (body && !sharedAlpha) crowdSurfaceBindings.set(body, surface);
+        if (body && (!sharedAlpha || this.world.scenario === 'L10' && lod === 'lod0')) crowdSurfaceBindings.set(body, surface);
       }
       Object.defineProperty(mesh, 'isInstancedMesh', { value: false, writable: true });
       mesh.userData.staticInstanceAttributes = true;

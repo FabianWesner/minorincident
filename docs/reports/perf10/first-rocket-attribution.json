@@ -1,0 +1,4112 @@
+{
+  "at": "2026-11-07T17:17:34.366Z",
+  "diagnostic": true,
+  "traceCategories": "toplevel,devtools.timeline,v8,blink.user_timing,gpu,cc,disabled-by-default-v8.gc,disabled-by-default-gpu.service",
+  "baselineRevision": "213b8480470998ec5e33dcf40d123537710c9b1c",
+  "rows": [
+    {
+      "source": "base",
+      "attempt": 1,
+      "measuredAt": "2026-11-07T17:14:50.544Z",
+      "rawSource": "test-results/perf10/diagnostic/rocket-base-1/strips/webgpu/L7.json",
+      "traceSource": "test-results/perf10/diagnostic/rocket-base-1/strips/webgpu/L7-candidate.trace.json.gz",
+      "rocketTick": 22,
+      "impactTick": 40,
+      "windowStartMs": 242.89999961853027,
+      "windowEndMs": 908,
+      "frameIndices": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54
+      ],
+      "rawSha256": "7438dcac35fb89b29b455ee06543ef36da6649c7b77b0ee3f17c3923c40ac09a",
+      "traceSha256": "a7b9a5ff84c4d9ed27ebd3052af9ef8f1df19755900721cab239a04a3e4d845c",
+      "maximum": {
+        "index": 27,
+        "ms": 16.800000000000182,
+        "at": 470.19999980926514,
+        "tick": 29,
+        "started": true
+      },
+      "gc": [],
+      "longTasks": [
+        {
+          "name": "ThreadControllerImpl::RunTask",
+          "at": 472.267,
+          "ms": 7.552,
+          "args": {
+            "src_file": "cc/trees/proxy_impl.cc",
+            "src_func": "ScheduledActionSendBeginMainFrame",
+            "src_line": 844
+          }
+        },
+        {
+          "name": "ProxyMain::BeginMainFrame",
+          "at": 472.268,
+          "ms": 7.55,
+          "args": {
+            "begin_frame_id": 377,
+            "main_frame_pipeline": {
+              "main_frame_id": 14134462585771225000,
+              "step": "BEGIN_MAIN_FRAME"
+            }
+          }
+        },
+        {
+          "name": "ThreadControllerImpl::RunTask",
+          "at": 455.649,
+          "ms": 7.218,
+          "args": {
+            "src_file": "cc/trees/proxy_impl.cc",
+            "src_func": "ScheduledActionSendBeginMainFrame",
+            "src_line": 844
+          }
+        },
+        {
+          "name": "ProxyMain::BeginMainFrame",
+          "at": 455.65,
+          "ms": 7.216,
+          "args": {
+            "begin_frame_id": 376,
+            "main_frame_pipeline": {
+              "main_frame_id": 14134462585771225000,
+              "step": "BEGIN_MAIN_FRAME"
+            }
+          }
+        },
+        {
+          "name": "FireAnimationFrame",
+          "at": 472.327,
+          "ms": 6.922,
+          "args": {
+            "data": {
+              "frame": "0B90CC5C0CD529DB507EAFE8FCF95260",
+              "id": 576
+            }
+          }
+        },
+        {
+          "name": "v8.callFunction",
+          "at": 472.328,
+          "ms": 6.918,
+          "args": {}
+        },
+        {
+          "name": "FunctionCall",
+          "at": 472.328,
+          "ms": 6.915,
+          "args": {
+            "data": {
+              "columnNumber": 69866,
+              "frame": "0B90CC5C0CD529DB507EAFE8FCF95260",
+              "functionName": "frame",
+              "isolate": "8694063867443656842",
+              "lineNumber": 13,
+              "sampleTraceId": 2166955082608329,
+              "scriptId": "5",
+              "url": "http://127.0.0.1:4904/build/index-DkTUBysS.js"
+            }
+          }
+        },
+        {
+          "name": "FireAnimationFrame",
+          "at": 455.681,
+          "ms": 6.637,
+          "args": {
+            "data": {
+              "frame": "0B90CC5C0CD529DB507EAFE8FCF95260",
+              "id": 572
+            }
+          }
+        },
+        {
+          "name": "v8.callFunction",
+          "at": 455.682,
+          "ms": 6.634,
+          "args": {}
+        },
+        {
+          "name": "FunctionCall",
+          "at": 455.682,
+          "ms": 6.63,
+          "args": {
+            "data": {
+              "columnNumber": 69866,
+              "frame": "0B90CC5C0CD529DB507EAFE8FCF95260",
+              "functionName": "frame",
+              "isolate": "8694063867443656842",
+              "lineNumber": 13,
+              "sampleTraceId": 2166955082608355,
+              "scriptId": "5",
+              "url": "http://127.0.0.1:4904/build/index-DkTUBysS.js"
+            }
+          }
+        }
+      ],
+      "gpuTasks": [],
+      "frozenBakes": [],
+      "lateMeasures": [],
+      "lateBuilds": []
+    },
+    {
+      "source": "base",
+      "attempt": 2,
+      "measuredAt": "2026-11-07T17:14:59.894Z",
+      "rawSource": "test-results/perf10/diagnostic/rocket-base-2/strips/webgpu/L7.json",
+      "traceSource": "test-results/perf10/diagnostic/rocket-base-2/strips/webgpu/L7-candidate.trace.json.gz",
+      "rocketTick": 22,
+      "impactTick": 40,
+      "windowStartMs": 242.69999980926514,
+      "windowEndMs": 892.6000003814697,
+      "frameIndices": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53
+      ],
+      "rawSha256": "108a6e34f86cd8c6bc8531f34c0b1df450176245d53930277b3d780788960863",
+      "traceSha256": "bbb96b9496f053dcdf2dac6f5396d06d97b1e211df0ccc4de93364c2e20c694c",
+      "maximum": {
+        "index": 33,
+        "ms": 16.799999999999272,
+        "at": 570.2000001907345,
+        "tick": 36,
+        "started": true
+      },
+      "gc": [],
+      "longTasks": [
+        {
+          "name": "ThreadControllerImpl::RunTask",
+          "at": 572.261,
+          "ms": 9.026,
+          "args": {
+            "src_file": "cc/trees/proxy_impl.cc",
+            "src_func": "ScheduledActionSendBeginMainFrame",
+            "src_line": 844
+          }
+        },
+        {
+          "name": "ProxyMain::BeginMainFrame",
+          "at": 572.267,
+          "ms": 9.019,
+          "args": {
+            "begin_frame_id": 380,
+            "main_frame_pipeline": {
+              "main_frame_id": 5584129213203425000,
+              "step": "BEGIN_MAIN_FRAME"
+            }
+          }
+        },
+        {
+          "name": "FireAnimationFrame",
+          "at": 572.404,
+          "ms": 8.302,
+          "args": {
+            "data": {
+              "frame": "CEEAA0109A5A190BBA5C4FC5E5BD237E",
+              "id": 595
+            }
+          }
+        },
+        {
+          "name": "v8.callFunction",
+          "at": 572.405,
+          "ms": 8.299,
+          "args": {}
+        },
+        {
+          "name": "FunctionCall",
+          "at": 572.405,
+          "ms": 8.296,
+          "args": {
+            "data": {
+              "columnNumber": 69866,
+              "frame": "CEEAA0109A5A190BBA5C4FC5E5BD237E",
+              "functionName": "frame",
+              "isolate": "12093375442405637794",
+              "lineNumber": 13,
+              "sampleTraceId": 8672874518751168,
+              "scriptId": "5",
+              "url": "http://127.0.0.1:4904/build/index-DkTUBysS.js"
+            }
+          }
+        },
+        {
+          "name": "ThreadControllerImpl::RunTask",
+          "at": 555.291,
+          "ms": 5.369,
+          "args": {
+            "src_file": "cc/trees/proxy_impl.cc",
+            "src_func": "ScheduledActionSendBeginMainFrame",
+            "src_line": 844
+          }
+        },
+        {
+          "name": "ProxyMain::BeginMainFrame",
+          "at": 555.293,
+          "ms": 5.367,
+          "args": {
+            "begin_frame_id": 379,
+            "main_frame_pipeline": {
+              "main_frame_id": 5584129213203425000,
+              "step": "BEGIN_MAIN_FRAME"
+            }
+          }
+        },
+        {
+          "name": "FireAnimationFrame",
+          "at": 555.332,
+          "ms": 5.027,
+          "args": {
+            "data": {
+              "frame": "CEEAA0109A5A190BBA5C4FC5E5BD237E",
+              "id": 591
+            }
+          }
+        },
+        {
+          "name": "v8.callFunction",
+          "at": 555.334,
+          "ms": 5.023,
+          "args": {}
+        },
+        {
+          "name": "FunctionCall",
+          "at": 555.334,
+          "ms": 5.02,
+          "args": {
+            "data": {
+              "columnNumber": 69866,
+              "frame": "CEEAA0109A5A190BBA5C4FC5E5BD237E",
+              "functionName": "frame",
+              "isolate": "12093375442405637794",
+              "lineNumber": 13,
+              "sampleTraceId": 8672874518751143,
+              "scriptId": "5",
+              "url": "http://127.0.0.1:4904/build/index-DkTUBysS.js"
+            }
+          }
+        }
+      ],
+      "gpuTasks": [],
+      "frozenBakes": [],
+      "lateMeasures": [],
+      "lateBuilds": []
+    },
+    {
+      "source": "base",
+      "attempt": 3,
+      "measuredAt": "2026-11-07T17:15:09.190Z",
+      "rawSource": "test-results/perf10/diagnostic/rocket-base-3/strips/webgpu/L7.json",
+      "traceSource": "test-results/perf10/diagnostic/rocket-base-3/strips/webgpu/L7-candidate.trace.json.gz",
+      "rocketTick": 22,
+      "impactTick": 40,
+      "windowStartMs": 248.5999994277954,
+      "windowEndMs": 897,
+      "frameIndices": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53
+      ],
+      "rawSha256": "aad8227e0bcdb911feb3ffe4fa885cd4faa52bd80ad83fb7899c462e0d1257d3",
+      "traceSha256": "6d2af0a6813bf78acbe86d95b50307258f2a81ed0ef460d203503034c58e13b4",
+      "maximum": {
+        "index": 31,
+        "ms": 16.800000000000182,
+        "at": 542.8999994277956,
+        "tick": 34,
+        "started": true
+      },
+      "gc": [],
+      "longTasks": [
+        {
+          "name": "ThreadControllerImpl::RunTask",
+          "at": 544.168,
+          "ms": 8.828,
+          "args": {
+            "src_file": "cc/trees/proxy_impl.cc",
+            "src_func": "ScheduledActionSendBeginMainFrame",
+            "src_line": 844
+          }
+        },
+        {
+          "name": "ProxyMain::BeginMainFrame",
+          "at": 544.169,
+          "ms": 8.826,
+          "args": {
+            "begin_frame_id": 377,
+            "main_frame_pipeline": {
+              "main_frame_id": 2904648724416833500,
+              "step": "BEGIN_MAIN_FRAME"
+            }
+          }
+        },
+        {
+          "name": "FireAnimationFrame",
+          "at": 544.24,
+          "ms": 7.935,
+          "args": {
+            "data": {
+              "frame": "4CA1A48A070581E71ED8AFD4306A195A",
+              "id": 589
+            }
+          }
+        },
+        {
+          "name": "v8.callFunction",
+          "at": 544.241,
+          "ms": 7.931,
+          "args": {}
+        },
+        {
+          "name": "FunctionCall",
+          "at": 544.241,
+          "ms": 7.928,
+          "args": {
+            "data": {
+              "columnNumber": 69866,
+              "frame": "4CA1A48A070581E71ED8AFD4306A195A",
+              "functionName": "frame",
+              "isolate": "11078650701160731969",
+              "lineNumber": 13,
+              "sampleTraceId": 4330564390233884,
+              "scriptId": "5",
+              "url": "http://127.0.0.1:4904/build/index-DkTUBysS.js"
+            }
+          }
+        },
+        {
+          "name": "ThreadControllerImpl::RunTask",
+          "at": 528.292,
+          "ms": 5.322,
+          "args": {
+            "src_file": "cc/trees/proxy_impl.cc",
+            "src_func": "ScheduledActionSendBeginMainFrame",
+            "src_line": 844
+          }
+        },
+        {
+          "name": "ProxyMain::BeginMainFrame",
+          "at": 528.293,
+          "ms": 5.32,
+          "args": {
+            "begin_frame_id": 376,
+            "main_frame_pipeline": {
+              "main_frame_id": 2904648724416833000,
+              "step": "BEGIN_MAIN_FRAME"
+            }
+          }
+        }
+      ],
+      "gpuTasks": [],
+      "frozenBakes": [],
+      "lateMeasures": [],
+      "lateBuilds": []
+    },
+    {
+      "source": "base",
+      "attempt": 4,
+      "measuredAt": "2026-11-07T17:15:18.428Z",
+      "rawSource": "test-results/perf10/diagnostic/rocket-base-4/strips/webgpu/L7.json",
+      "traceSource": "test-results/perf10/diagnostic/rocket-base-4/strips/webgpu/L7-candidate.trace.json.gz",
+      "rocketTick": 22,
+      "impactTick": 40,
+      "windowStartMs": 250.4000005722046,
+      "windowEndMs": 915.5,
+      "frameIndices": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54
+      ],
+      "rawSha256": "ebfe3de622ad107b75400ef263582bceb9ed6210cbfd690f7c938f817ae074aa",
+      "traceSha256": "1a7132eee73bc02f229ebefa83baf3a3182e026c7b2214a079077fb6308701a6",
+      "maximum": {
+        "index": 38,
+        "ms": 16.800000000000182,
+        "at": 662.5,
+        "tick": 41,
+        "started": true
+      },
+      "gc": [],
+      "longTasks": [
+        {
+          "name": "ThreadControllerImpl::RunTask",
+          "at": 663.145,
+          "ms": 12.019,
+          "args": {
+            "src_file": "cc/trees/proxy_impl.cc",
+            "src_func": "ScheduledActionSendBeginMainFrame",
+            "src_line": 844
+          }
+        },
+        {
+          "name": "ProxyMain::BeginMainFrame",
+          "at": 663.146,
+          "ms": 12.017,
+          "args": {
+            "begin_frame_id": 385,
+            "main_frame_pipeline": {
+              "main_frame_id": 10576785921308406000,
+              "step": "BEGIN_MAIN_FRAME"
+            }
+          }
+        },
+        {
+          "name": "FireAnimationFrame",
+          "at": 663.183,
+          "ms": 11.087,
+          "args": {
+            "data": {
+              "frame": "43D5F825AE43037C50ABCF2B783239B8",
+              "id": 607
+            }
+          }
+        },
+        {
+          "name": "v8.callFunction",
+          "at": 663.185,
+          "ms": 11.082,
+          "args": {}
+        },
+        {
+          "name": "FunctionCall",
+          "at": 663.185,
+          "ms": 11.078,
+          "args": {
+            "data": {
+              "columnNumber": 69866,
+              "frame": "43D5F825AE43037C50ABCF2B783239B8",
+              "functionName": "frame",
+              "isolate": "15678711356854398465",
+              "lineNumber": 13,
+              "sampleTraceId": 2333996242481712,
+              "scriptId": "5",
+              "url": "http://127.0.0.1:4904/build/index-DkTUBysS.js"
+            }
+          }
+        },
+        {
+          "name": "ThreadControllerImpl::RunTask",
+          "at": 646.493,
+          "ms": 8.257,
+          "args": {
+            "src_file": "cc/trees/proxy_impl.cc",
+            "src_func": "ScheduledActionSendBeginMainFrame",
+            "src_line": 844
+          }
+        },
+        {
+          "name": "ProxyMain::BeginMainFrame",
+          "at": 646.494,
+          "ms": 8.255,
+          "args": {
+            "begin_frame_id": 384,
+            "main_frame_pipeline": {
+              "main_frame_id": 10576785921308406000,
+              "step": "BEGIN_MAIN_FRAME"
+            }
+          }
+        },
+        {
+          "name": "FireAnimationFrame",
+          "at": 646.53,
+          "ms": 7.596,
+          "args": {
+            "data": {
+              "frame": "43D5F825AE43037C50ABCF2B783239B8",
+              "id": 603
+            }
+          }
+        },
+        {
+          "name": "v8.callFunction",
+          "at": 646.531,
+          "ms": 7.593,
+          "args": {}
+        },
+        {
+          "name": "FunctionCall",
+          "at": 646.531,
+          "ms": 7.589,
+          "args": {
+            "data": {
+              "columnNumber": 69866,
+              "frame": "43D5F825AE43037C50ABCF2B783239B8",
+              "functionName": "frame",
+              "isolate": "15678711356854398465",
+              "lineNumber": 13,
+              "sampleTraceId": 2333996242481690,
+              "scriptId": "5",
+              "url": "http://127.0.0.1:4904/build/index-DkTUBysS.js"
+            }
+          }
+        }
+      ],
+      "gpuTasks": [],
+      "frozenBakes": [],
+      "lateMeasures": [],
+      "lateBuilds": []
+    },
+    {
+      "source": "base",
+      "attempt": 5,
+      "measuredAt": "2026-11-07T17:15:27.799Z",
+      "rawSource": "test-results/perf10/diagnostic/rocket-base-5/strips/webgpu/L7.json",
+      "traceSource": "test-results/perf10/diagnostic/rocket-base-5/strips/webgpu/L7-candidate.trace.json.gz",
+      "rocketTick": 22,
+      "impactTick": 40,
+      "windowStartMs": 250.69999980926514,
+      "windowEndMs": 901.1000003814697,
+      "frameIndices": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53
+      ],
+      "rawSha256": "0cfe97b51880e9f081425a235515266401c9056a686e400116c1aa037d049a36",
+      "traceSha256": "2fe775c58ff3e4f6ca24bc893afd8a2f42c1910806966e329540711035cae323",
+      "maximum": {
+        "index": 19,
+        "ms": 16.800000000000182,
+        "at": 345.1999999999998,
+        "tick": 22,
+        "started": true
+      },
+      "gc": [],
+      "longTasks": [
+        {
+          "name": "ThreadControllerImpl::RunTask",
+          "at": 347.18,
+          "ms": 9.396,
+          "args": {
+            "src_file": "cc/trees/proxy_impl.cc",
+            "src_func": "ScheduledActionSendBeginMainFrame",
+            "src_line": 844
+          }
+        },
+        {
+          "name": "ProxyMain::BeginMainFrame",
+          "at": 347.181,
+          "ms": 9.395,
+          "args": {
+            "begin_frame_id": 371,
+            "main_frame_pipeline": {
+              "main_frame_id": 9526630222592804,
+              "step": "BEGIN_MAIN_FRAME"
+            }
+          }
+        },
+        {
+          "name": "FireAnimationFrame",
+          "at": 347.229,
+          "ms": 8.747,
+          "args": {
+            "data": {
+              "frame": "69060DA073B0828FFF33EA7113C02FF3",
+              "id": 536
+            }
+          }
+        },
+        {
+          "name": "v8.callFunction",
+          "at": 347.231,
+          "ms": 8.743,
+          "args": {}
+        },
+        {
+          "name": "FunctionCall",
+          "at": 347.231,
+          "ms": 8.74,
+          "args": {
+            "data": {
+              "columnNumber": 69866,
+              "frame": "69060DA073B0828FFF33EA7113C02FF3",
+              "functionName": "frame",
+              "isolate": "4339964304182276647",
+              "lineNumber": 13,
+              "sampleTraceId": 519430967851808,
+              "scriptId": "5",
+              "url": "http://127.0.0.1:4904/build/index-DkTUBysS.js"
+            }
+          }
+        },
+        {
+          "name": "ThreadControllerImpl::RunTask",
+          "at": 330.601,
+          "ms": 5.477,
+          "args": {
+            "src_file": "cc/trees/proxy_impl.cc",
+            "src_func": "ScheduledActionSendBeginMainFrame",
+            "src_line": 844
+          }
+        },
+        {
+          "name": "ProxyMain::BeginMainFrame",
+          "at": 330.602,
+          "ms": 5.476,
+          "args": {
+            "begin_frame_id": 370,
+            "main_frame_pipeline": {
+              "main_frame_id": 9526630222592796,
+              "step": "BEGIN_MAIN_FRAME"
+            }
+          }
+        },
+        {
+          "name": "FireAnimationFrame",
+          "at": 330.644,
+          "ms": 5.107,
+          "args": {
+            "data": {
+              "frame": "69060DA073B0828FFF33EA7113C02FF3",
+              "id": 532
+            }
+          }
+        },
+        {
+          "name": "v8.callFunction",
+          "at": 330.646,
+          "ms": 5.103,
+          "args": {}
+        },
+        {
+          "name": "FunctionCall",
+          "at": 330.646,
+          "ms": 5.1,
+          "args": {
+            "data": {
+              "columnNumber": 69866,
+              "frame": "69060DA073B0828FFF33EA7113C02FF3",
+              "functionName": "frame",
+              "isolate": "4339964304182276647",
+              "lineNumber": 13,
+              "sampleTraceId": 519430967851807,
+              "scriptId": "5",
+              "url": "http://127.0.0.1:4904/build/index-DkTUBysS.js"
+            }
+          }
+        }
+      ],
+      "gpuTasks": [],
+      "frozenBakes": [],
+      "lateMeasures": [],
+      "lateBuilds": []
+    },
+    {
+      "source": "base",
+      "attempt": 6,
+      "measuredAt": "2026-11-07T17:15:37.310Z",
+      "rawSource": "test-results/perf10/diagnostic/rocket-base-6/strips/webgpu/L7.json",
+      "traceSource": "test-results/perf10/diagnostic/rocket-base-6/strips/webgpu/L7-candidate.trace.json.gz",
+      "rocketTick": 22,
+      "impactTick": 40,
+      "windowStartMs": 263.5999994277954,
+      "windowEndMs": 914,
+      "frameIndices": [
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54
+      ],
+      "rawSha256": "9779d73eafd0a76be4a73703226bfc10a58f1f25620628f4d08953a7e1acdf1f",
+      "traceSha256": "fdc138806f71763c9ff45c1a7a5843f56e0bb5c8ffe2363e7347a47ad8d33ba1",
+      "maximum": {
+        "index": 15,
+        "ms": 16.800000000000182,
+        "at": 276.49999961853064,
+        "tick": 17,
+        "started": true
+      },
+      "gc": [],
+      "longTasks": [
+        {
+          "name": "ThreadControllerImpl::RunTask",
+          "at": 245.27,
+          "ms": 12.555,
+          "args": {
+            "src_file": "cc/trees/proxy_impl.cc",
+            "src_func": "ScheduledActionSendBeginMainFrame",
+            "src_line": 844
+          }
+        },
+        {
+          "name": "ProxyMain::BeginMainFrame",
+          "at": 245.271,
+          "ms": 12.553,
+          "args": {
+            "begin_frame_id": 364,
+            "main_frame_pipeline": {
+              "main_frame_id": 12228901409892915000,
+              "step": "BEGIN_MAIN_FRAME"
+            }
+          }
+        },
+        {
+          "name": "FireAnimationFrame",
+          "at": 245.419,
+          "ms": 11.013,
+          "args": {
+            "data": {
+              "frame": "BA892F70E6FD72E53EBAEEB1A232A9F4",
+              "id": 510
+            }
+          }
+        },
+        {
+          "name": "v8.callFunction",
+          "at": 245.421,
+          "ms": 11.008,
+          "args": {}
+        },
+        {
+          "name": "ThreadControllerImpl::RunTask",
+          "at": 260.558,
+          "ms": 10.574,
+          "args": {
+            "src_file": "cc/trees/proxy_impl.cc",
+            "src_func": "ScheduledActionSendBeginMainFrame",
+            "src_line": 844
+          }
+        },
+        {
+          "name": "ProxyMain::BeginMainFrame",
+          "at": 260.559,
+          "ms": 10.572,
+          "args": {
+            "begin_frame_id": 365,
+            "main_frame_pipeline": {
+              "main_frame_id": 12228901409892915000,
+              "step": "BEGIN_MAIN_FRAME"
+            }
+          }
+        },
+        {
+          "name": "FunctionCall",
+          "at": 245.421,
+          "ms": 10.409,
+          "args": {
+            "data": {
+              "columnNumber": 69866,
+              "frame": "BA892F70E6FD72E53EBAEEB1A232A9F4",
+              "functionName": "frame",
+              "isolate": "15678053669700808537",
+              "lineNumber": 13,
+              "sampleTraceId": 6132021209389842,
+              "scriptId": "5",
+              "url": "http://127.0.0.1:4904/build/index-DkTUBysS.js"
+            }
+          }
+        },
+        {
+          "name": "FireAnimationFrame",
+          "at": 260.604,
+          "ms": 9.867,
+          "args": {
+            "data": {
+              "frame": "BA892F70E6FD72E53EBAEEB1A232A9F4",
+              "id": 514
+            }
+          }
+        },
+        {
+          "name": "v8.callFunction",
+          "at": 260.606,
+          "ms": 9.863,
+          "args": {}
+        },
+        {
+          "name": "FunctionCall",
+          "at": 260.606,
+          "ms": 9.858,
+          "args": {
+            "data": {
+              "columnNumber": 69866,
+              "frame": "BA892F70E6FD72E53EBAEEB1A232A9F4",
+              "functionName": "frame",
+              "isolate": "15678053669700808537",
+              "lineNumber": 13,
+              "sampleTraceId": 6132021209389871,
+              "scriptId": "5",
+              "url": "http://127.0.0.1:4904/build/index-DkTUBysS.js"
+            }
+          }
+        },
+        {
+          "name": "ThreadControllerImpl::RunTask",
+          "at": 278.553,
+          "ms": 8.332,
+          "args": {
+            "src_file": "cc/trees/proxy_impl.cc",
+            "src_func": "ScheduledActionSendBeginMainFrame",
+            "src_line": 844
+          }
+        },
+        {
+          "name": "ProxyMain::BeginMainFrame",
+          "at": 278.555,
+          "ms": 8.329,
+          "args": {
+            "begin_frame_id": 366,
+            "main_frame_pipeline": {
+              "main_frame_id": 12228901409892915000,
+              "step": "BEGIN_MAIN_FRAME"
+            }
+          }
+        },
+        {
+          "name": "FireAnimationFrame",
+          "at": 278.6,
+          "ms": 7.663,
+          "args": {
+            "data": {
+              "frame": "BA892F70E6FD72E53EBAEEB1A232A9F4",
+              "id": 518
+            }
+          }
+        },
+        {
+          "name": "v8.callFunction",
+          "at": 278.602,
+          "ms": 7.658,
+          "args": {}
+        },
+        {
+          "name": "FunctionCall",
+          "at": 278.602,
+          "ms": 7.654,
+          "args": {
+            "data": {
+              "columnNumber": 69866,
+              "frame": "BA892F70E6FD72E53EBAEEB1A232A9F4",
+              "functionName": "frame",
+              "isolate": "15678053669700808537",
+              "lineNumber": 13,
+              "sampleTraceId": 6132021209389940,
+              "scriptId": "5",
+              "url": "http://127.0.0.1:4904/build/index-DkTUBysS.js"
+            }
+          }
+        }
+      ],
+      "gpuTasks": [],
+      "frozenBakes": [],
+      "lateMeasures": [],
+      "lateBuilds": []
+    },
+    {
+      "source": "base",
+      "attempt": 7,
+      "measuredAt": "2026-11-07T17:15:46.638Z",
+      "rawSource": "test-results/perf10/diagnostic/rocket-base-7/strips/webgpu/L7.json",
+      "traceSource": "test-results/perf10/diagnostic/rocket-base-7/strips/webgpu/L7-candidate.trace.json.gz",
+      "rocketTick": 22,
+      "impactTick": 40,
+      "windowStartMs": 249,
+      "windowEndMs": 900.0999994277954,
+      "frameIndices": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53
+      ],
+      "rawSha256": "d535d63b010f77efcb45bc8bc4214cf256938faa11e4844b0dac01eb2102dde2",
+      "traceSha256": "34b48d143c29ec88eef2b3c9e4f034a56143f2b7872c106bc218a234a5e53974",
+      "maximum": {
+        "index": 22,
+        "ms": 16.800000000000182,
+        "at": 394.29999923706055,
+        "tick": 25,
+        "started": true
+      },
+      "gc": [],
+      "longTasks": [
+        {
+          "name": "ThreadControllerImpl::RunTask",
+          "at": 396.365,
+          "ms": 9.306,
+          "args": {
+            "src_file": "cc/trees/proxy_impl.cc",
+            "src_func": "ScheduledActionSendBeginMainFrame",
+            "src_line": 844
+          }
+        },
+        {
+          "name": "ProxyMain::BeginMainFrame",
+          "at": 396.375,
+          "ms": 9.295,
+          "args": {
+            "begin_frame_id": 370,
+            "main_frame_pipeline": {
+              "main_frame_id": 355342438445134600,
+              "step": "BEGIN_MAIN_FRAME"
+            }
+          }
+        },
+        {
+          "name": "FireAnimationFrame",
+          "at": 396.414,
+          "ms": 8.706,
+          "args": {
+            "data": {
+              "frame": "880E0DEFDBDDDEFF59E4843D6B1A41F8",
+              "id": 549
+            }
+          }
+        },
+        {
+          "name": "v8.callFunction",
+          "at": 396.416,
+          "ms": 8.702,
+          "args": {}
+        },
+        {
+          "name": "FunctionCall",
+          "at": 396.416,
+          "ms": 8.699,
+          "args": {
+            "data": {
+              "columnNumber": 69866,
+              "frame": "880E0DEFDBDDDEFF59E4843D6B1A41F8",
+              "functionName": "frame",
+              "isolate": "4718323628457083622",
+              "lineNumber": 13,
+              "sampleTraceId": 4061667510235910,
+              "scriptId": "5",
+              "url": "http://127.0.0.1:4904/build/index-DkTUBysS.js"
+            }
+          }
+        },
+        {
+          "name": "ThreadControllerImpl::RunTask",
+          "at": 379.715,
+          "ms": 5.402,
+          "args": {
+            "src_file": "cc/trees/proxy_impl.cc",
+            "src_func": "ScheduledActionSendBeginMainFrame",
+            "src_line": 844
+          }
+        },
+        {
+          "name": "ProxyMain::BeginMainFrame",
+          "at": 379.716,
+          "ms": 5.4,
+          "args": {
+            "begin_frame_id": 369,
+            "main_frame_pipeline": {
+              "main_frame_id": 355342438445134700,
+              "step": "BEGIN_MAIN_FRAME"
+            }
+          }
+        },
+        {
+          "name": "FireAnimationFrame",
+          "at": 379.753,
+          "ms": 5.089,
+          "args": {
+            "data": {
+              "frame": "880E0DEFDBDDDEFF59E4843D6B1A41F8",
+              "id": 545
+            }
+          }
+        },
+        {
+          "name": "v8.callFunction",
+          "at": 379.754,
+          "ms": 5.087,
+          "args": {}
+        },
+        {
+          "name": "FunctionCall",
+          "at": 379.755,
+          "ms": 5.083,
+          "args": {
+            "data": {
+              "columnNumber": 69866,
+              "frame": "880E0DEFDBDDDEFF59E4843D6B1A41F8",
+              "functionName": "frame",
+              "isolate": "4718323628457083622",
+              "lineNumber": 13,
+              "sampleTraceId": 4061667510235935,
+              "scriptId": "5",
+              "url": "http://127.0.0.1:4904/build/index-DkTUBysS.js"
+            }
+          }
+        }
+      ],
+      "gpuTasks": [],
+      "frozenBakes": [],
+      "lateMeasures": [],
+      "lateBuilds": []
+    },
+    {
+      "source": "base",
+      "attempt": 8,
+      "measuredAt": "2026-11-07T17:15:55.980Z",
+      "rawSource": "test-results/perf10/diagnostic/rocket-base-8/strips/webgpu/L7.json",
+      "traceSource": "test-results/perf10/diagnostic/rocket-base-8/strips/webgpu/L7-candidate.trace.json.gz",
+      "rocketTick": 22,
+      "impactTick": 40,
+      "windowStartMs": 243.89999961853027,
+      "windowEndMs": 894.3000001907349,
+      "frameIndices": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53
+      ],
+      "rawSha256": "35fb10c616e3922f6a8b14b317f9c829f96e95d8a7f9a718995d3053f2c8e4d7",
+      "traceSha256": "6add0fc2f57fed61d082495d432bd684ae9b517c4bf9d915a9c7f05bfccd439e",
+      "maximum": {
+        "index": 14,
+        "ms": 16.700000000000728,
+        "at": 256.60000000000036,
+        "tick": 17,
+        "started": true
+      },
+      "gc": [
+        {
+          "name": "V8.GC_HEAP_EXTERNAL_PROLOGUE",
+          "at": 237.924,
+          "ms": 0.001,
+          "args": {}
+        },
+        {
+          "name": "MinorGC",
+          "at": 237.926,
+          "ms": 0.734,
+          "args": {
+            "type": "allocation failure",
+            "usedHeapSizeAfter": 174335176,
+            "usedHeapSizeBefore": 201067944
+          }
+        },
+        {
+          "name": "V8.GC_HEAP_PROLOGUE",
+          "at": 237.927,
+          "ms": 0.001,
+          "args": {}
+        },
+        {
+          "name": "V8.GCScavenger",
+          "at": 237.928,
+          "ms": 0.685,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_TIME_TO_SAFEPOINT",
+          "at": 237.929,
+          "ms": 0.001,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER",
+          "at": 237.933,
+          "ms": 0.678,
+          "args": {
+            "epoch": 153
+          }
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE",
+          "at": 237.939,
+          "ms": 0.665,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE_WEAK_GLOBAL_HANDLES_IDENTIFY",
+          "at": 237.981,
+          "ms": 0.022,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER_TRACED_HANDLES_COMPUTE_WEAKNESS_PARALLEL",
+          "at": 237.987,
+          "ms": 0.015,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE_COLLECT_OLD_TO_NEW_PAGES",
+          "at": 238.004,
+          "ms": 0.125,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE_PARALLEL_PHASE",
+          "at": 238.129,
+          "ms": 0.36,
+          "args": {
+            "UseBackgroundThreads": true
+          }
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE_ROOTS",
+          "at": 238.133,
+          "ms": 0.02,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE_PARALLEL",
+          "at": 238.155,
+          "ms": 0.301,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE_PARALLEL",
+          "at": 238.473,
+          "ms": 0.008,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE_WEAK_GLOBAL_HANDLES_PROCESS",
+          "at": 238.489,
+          "ms": 0.019,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER_TRACED_HANDLES_RESET_PARALLEL",
+          "at": 238.493,
+          "ms": 0.015,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE_FINALIZE",
+          "at": 238.509,
+          "ms": 0.024,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE_RESTORE_AND_QUARANTINE_PINNED",
+          "at": 238.537,
+          "ms": 0.002,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER_FREE_REMEMBERED_SET",
+          "at": 238.542,
+          "ms": 0.055,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SWEEP_ARRAY_BUFFERS",
+          "at": 238.598,
+          "ms": 0.001,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER_RESIZE_NEW_SPACE",
+          "at": 238.603,
+          "ms": 0.001,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_HEAP_EPILOGUE_SAFEPOINT",
+          "at": 238.609,
+          "ms": 0.001,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_HEAP_EPILOGUE",
+          "at": 238.613,
+          "ms": 0.002,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_HEAP_DUMP_STATISTICS",
+          "at": 238.635,
+          "ms": 0.001,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_HEAP_EXTERNAL_EPILOGUE",
+          "at": 238.66,
+          "ms": 0.001,
+          "args": {}
+        }
+      ],
+      "longTasks": [
+        {
+          "name": "ThreadControllerImpl::RunTask",
+          "at": 225.482,
+          "ms": 12.256,
+          "args": {
+            "src_file": "cc/trees/proxy_impl.cc",
+            "src_func": "ScheduledActionSendBeginMainFrame",
+            "src_line": 844
+          }
+        },
+        {
+          "name": "ProxyMain::BeginMainFrame",
+          "at": 225.483,
+          "ms": 12.254,
+          "args": {
+            "begin_frame_id": 366,
+            "main_frame_pipeline": {
+              "main_frame_id": 12728870450151924000,
+              "step": "BEGIN_MAIN_FRAME"
+            }
+          }
+        },
+        {
+          "name": "FireAnimationFrame",
+          "at": 225.526,
+          "ms": 10.943,
+          "args": {
+            "data": {
+              "frame": "644DCAD7DA3C5662DA93A3C50D6D8F5F",
+              "id": 522
+            }
+          }
+        },
+        {
+          "name": "v8.callFunction",
+          "at": 225.528,
+          "ms": 10.94,
+          "args": {}
+        },
+        {
+          "name": "FunctionCall",
+          "at": 225.528,
+          "ms": 10.377,
+          "args": {
+            "data": {
+              "columnNumber": 69866,
+              "frame": "644DCAD7DA3C5662DA93A3C50D6D8F5F",
+              "functionName": "frame",
+              "isolate": "13025793006414933747",
+              "lineNumber": 13,
+              "sampleTraceId": 1697903202902958,
+              "scriptId": "5",
+              "url": "http://127.0.0.1:4904/build/index-DkTUBysS.js"
+            }
+          }
+        },
+        {
+          "name": "ThreadControllerImpl::RunTask",
+          "at": 240.46,
+          "ms": 10.116,
+          "args": {
+            "src_file": "cc/trees/proxy_impl.cc",
+            "src_func": "ScheduledActionSendBeginMainFrame",
+            "src_line": 844
+          }
+        },
+        {
+          "name": "ProxyMain::BeginMainFrame",
+          "at": 240.461,
+          "ms": 10.114,
+          "args": {
+            "begin_frame_id": 367,
+            "main_frame_pipeline": {
+              "main_frame_id": 12728870450151924000,
+              "step": "BEGIN_MAIN_FRAME"
+            }
+          }
+        },
+        {
+          "name": "FireAnimationFrame",
+          "at": 240.505,
+          "ms": 9.383,
+          "args": {
+            "data": {
+              "frame": "644DCAD7DA3C5662DA93A3C50D6D8F5F",
+              "id": 526
+            }
+          }
+        },
+        {
+          "name": "v8.callFunction",
+          "at": 240.506,
+          "ms": 9.378,
+          "args": {}
+        },
+        {
+          "name": "FunctionCall",
+          "at": 240.507,
+          "ms": 9.373,
+          "args": {
+            "data": {
+              "columnNumber": 69866,
+              "frame": "644DCAD7DA3C5662DA93A3C50D6D8F5F",
+              "functionName": "frame",
+              "isolate": "13025793006414933747",
+              "lineNumber": 13,
+              "sampleTraceId": 1697903202903025,
+              "scriptId": "5",
+              "url": "http://127.0.0.1:4904/build/index-DkTUBysS.js"
+            }
+          }
+        },
+        {
+          "name": "ThreadControllerImpl::RunTask",
+          "at": 257.532,
+          "ms": 9.136,
+          "args": {
+            "src_file": "cc/trees/proxy_impl.cc",
+            "src_func": "ScheduledActionSendBeginMainFrame",
+            "src_line": 844
+          }
+        },
+        {
+          "name": "ProxyMain::BeginMainFrame",
+          "at": 257.534,
+          "ms": 9.133,
+          "args": {
+            "begin_frame_id": 368,
+            "main_frame_pipeline": {
+              "main_frame_id": 12728870450151924000,
+              "step": "BEGIN_MAIN_FRAME"
+            }
+          }
+        },
+        {
+          "name": "FireAnimationFrame",
+          "at": 257.83,
+          "ms": 8.226,
+          "args": {
+            "data": {
+              "frame": "644DCAD7DA3C5662DA93A3C50D6D8F5F",
+              "id": 530
+            }
+          }
+        },
+        {
+          "name": "v8.callFunction",
+          "at": 257.832,
+          "ms": 8.22,
+          "args": {}
+        },
+        {
+          "name": "FunctionCall",
+          "at": 257.832,
+          "ms": 8.216,
+          "args": {
+            "data": {
+              "columnNumber": 69866,
+              "frame": "644DCAD7DA3C5662DA93A3C50D6D8F5F",
+              "functionName": "frame",
+              "isolate": "13025793006414933747",
+              "lineNumber": 13,
+              "sampleTraceId": 1697903202903002,
+              "scriptId": "5",
+              "url": "http://127.0.0.1:4904/build/index-DkTUBysS.js"
+            }
+          }
+        }
+      ],
+      "gpuTasks": [],
+      "frozenBakes": [],
+      "lateMeasures": [],
+      "lateBuilds": []
+    },
+    {
+      "source": "base",
+      "attempt": 9,
+      "measuredAt": "2026-11-07T17:16:05.393Z",
+      "rawSource": "test-results/perf10/diagnostic/rocket-base-9/strips/webgpu/L7.json",
+      "traceSource": "test-results/perf10/diagnostic/rocket-base-9/strips/webgpu/L7-candidate.trace.json.gz",
+      "rocketTick": 22,
+      "impactTick": 40,
+      "windowStartMs": 249.69999980926514,
+      "windowEndMs": 901.4000005722046,
+      "frameIndices": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53
+      ],
+      "rawSha256": "ba7c0d9d5e8bb843d337ef05fc3efaf3e2ebbfc79ebf4cdbfee835131dd391c6",
+      "traceSha256": "5630288e38f0a0bf1d2973343277fe7ef586e1409f5c60dcb7a7177d0c3daac6",
+      "maximum": {
+        "index": 41,
+        "ms": 16.800000000000182,
+        "at": 712.1999998092651,
+        "tick": 44,
+        "started": true
+      },
+      "gc": [],
+      "longTasks": [
+        {
+          "name": "ThreadControllerImpl::RunTask",
+          "at": 714.056,
+          "ms": 10.802,
+          "args": {
+            "src_file": "cc/trees/proxy_impl.cc",
+            "src_func": "ScheduledActionSendBeginMainFrame",
+            "src_line": 844
+          }
+        },
+        {
+          "name": "ProxyMain::BeginMainFrame",
+          "at": 714.057,
+          "ms": 10.801,
+          "args": {
+            "begin_frame_id": 392,
+            "main_frame_pipeline": {
+              "main_frame_id": 7433854356541325000,
+              "step": "BEGIN_MAIN_FRAME"
+            }
+          }
+        },
+        {
+          "name": "FireAnimationFrame",
+          "at": 714.095,
+          "ms": 10.141,
+          "args": {
+            "data": {
+              "frame": "CD5EFACC7F85E3DA254D8D32F3682F33",
+              "id": 630
+            }
+          }
+        },
+        {
+          "name": "v8.callFunction",
+          "at": 714.097,
+          "ms": 10.136,
+          "args": {}
+        },
+        {
+          "name": "FunctionCall",
+          "at": 714.097,
+          "ms": 10.132,
+          "args": {
+            "data": {
+              "columnNumber": 69866,
+              "frame": "CD5EFACC7F85E3DA254D8D32F3682F33",
+              "functionName": "frame",
+              "isolate": "9992571531733831443",
+              "lineNumber": 13,
+              "sampleTraceId": 2914971380006402,
+              "scriptId": "5",
+              "url": "http://127.0.0.1:4904/build/index-DkTUBysS.js"
+            }
+          }
+        },
+        {
+          "name": "ThreadControllerImpl::RunTask",
+          "at": 697.532,
+          "ms": 8.547,
+          "args": {
+            "src_file": "cc/trees/proxy_impl.cc",
+            "src_func": "ScheduledActionSendBeginMainFrame",
+            "src_line": 844
+          }
+        },
+        {
+          "name": "ProxyMain::BeginMainFrame",
+          "at": 697.533,
+          "ms": 8.545,
+          "args": {
+            "begin_frame_id": 391,
+            "main_frame_pipeline": {
+              "main_frame_id": 7433854356541324000,
+              "step": "BEGIN_MAIN_FRAME"
+            }
+          }
+        },
+        {
+          "name": "FireAnimationFrame",
+          "at": 697.655,
+          "ms": 7.842,
+          "args": {
+            "data": {
+              "frame": "CD5EFACC7F85E3DA254D8D32F3682F33",
+              "id": 626
+            }
+          }
+        },
+        {
+          "name": "v8.callFunction",
+          "at": 697.657,
+          "ms": 7.838,
+          "args": {}
+        },
+        {
+          "name": "FunctionCall",
+          "at": 697.657,
+          "ms": 7.835,
+          "args": {
+            "data": {
+              "columnNumber": 69866,
+              "frame": "CD5EFACC7F85E3DA254D8D32F3682F33",
+              "functionName": "frame",
+              "isolate": "9992571531733831443",
+              "lineNumber": 13,
+              "sampleTraceId": 2914971380006371,
+              "scriptId": "5",
+              "url": "http://127.0.0.1:4904/build/index-DkTUBysS.js"
+            }
+          }
+        }
+      ],
+      "gpuTasks": [],
+      "frozenBakes": [],
+      "lateMeasures": [],
+      "lateBuilds": []
+    },
+    {
+      "source": "base",
+      "attempt": 10,
+      "measuredAt": "2026-11-07T17:16:14.672Z",
+      "rawSource": "test-results/perf10/diagnostic/rocket-base-10/strips/webgpu/L7.json",
+      "traceSource": "test-results/perf10/diagnostic/rocket-base-10/strips/webgpu/L7-candidate.trace.json.gz",
+      "rocketTick": 22,
+      "impactTick": 40,
+      "windowStartMs": 241.20000076293945,
+      "windowEndMs": 893.7000007629395,
+      "frameIndices": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53
+      ],
+      "rawSha256": "cf860e27acc88c28e5d26ff9716b9d6f2b00fa08d4af6858dea20069f82c79d6",
+      "traceSha256": "65c02d88e35a8cb66938290da6fe283df0ca28ca8a4d7d771d98f2f34e16b046",
+      "maximum": {
+        "index": 27,
+        "ms": 16.800000000000182,
+        "at": 470.90000076293927,
+        "tick": 30,
+        "started": true
+      },
+      "gc": [],
+      "longTasks": [
+        {
+          "name": "ThreadControllerImpl::RunTask",
+          "at": 472.987,
+          "ms": 8.969,
+          "args": {
+            "src_file": "cc/trees/proxy_impl.cc",
+            "src_func": "ScheduledActionSendBeginMainFrame",
+            "src_line": 844
+          }
+        },
+        {
+          "name": "ProxyMain::BeginMainFrame",
+          "at": 472.988,
+          "ms": 8.967,
+          "args": {
+            "begin_frame_id": 378,
+            "main_frame_pipeline": {
+              "main_frame_id": 794681336340352300,
+              "step": "BEGIN_MAIN_FRAME"
+            }
+          }
+        },
+        {
+          "name": "FireAnimationFrame",
+          "at": 473.022,
+          "ms": 8.366,
+          "args": {
+            "data": {
+              "frame": "79110F1115EEE1BF4F3A6B5801159BE7",
+              "id": 575
+            }
+          }
+        },
+        {
+          "name": "v8.callFunction",
+          "at": 473.023,
+          "ms": 8.363,
+          "args": {}
+        },
+        {
+          "name": "FunctionCall",
+          "at": 473.024,
+          "ms": 8.359,
+          "args": {
+            "data": {
+              "columnNumber": 69866,
+              "frame": "79110F1115EEE1BF4F3A6B5801159BE7",
+              "functionName": "frame",
+              "isolate": "2877887607266338469",
+              "lineNumber": 13,
+              "sampleTraceId": 2047801923145019,
+              "scriptId": "5",
+              "url": "http://127.0.0.1:4904/build/index-DkTUBysS.js"
+            }
+          }
+        },
+        {
+          "name": "ThreadControllerImpl::RunTask",
+          "at": 456.339,
+          "ms": 5.252,
+          "args": {
+            "src_file": "cc/trees/proxy_impl.cc",
+            "src_func": "ScheduledActionSendBeginMainFrame",
+            "src_line": 844
+          }
+        },
+        {
+          "name": "ProxyMain::BeginMainFrame",
+          "at": 456.34,
+          "ms": 5.251,
+          "args": {
+            "begin_frame_id": 377,
+            "main_frame_pipeline": {
+              "main_frame_id": 794681336340352300,
+              "step": "BEGIN_MAIN_FRAME"
+            }
+          }
+        }
+      ],
+      "gpuTasks": [],
+      "frozenBakes": [],
+      "lateMeasures": [],
+      "lateBuilds": []
+    },
+    {
+      "source": "base",
+      "attempt": 11,
+      "measuredAt": "2026-11-07T17:16:23.978Z",
+      "rawSource": "test-results/perf10/diagnostic/rocket-base-11/strips/webgpu/L7.json",
+      "traceSource": "test-results/perf10/diagnostic/rocket-base-11/strips/webgpu/L7-candidate.trace.json.gz",
+      "rocketTick": 22,
+      "impactTick": 40,
+      "windowStartMs": 248.30000019073486,
+      "windowEndMs": 898.6999998092651,
+      "frameIndices": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53
+      ],
+      "rawSha256": "24461e3f89b774a9207f05a0cd51937c09a62d51f351c4d7093a88c8f381c908",
+      "traceSha256": "7e7faa636bb341dc4246faaa4d5ea5ae365d584944003b9e3f19eaf9f50dd3ae",
+      "maximum": {
+        "index": 21,
+        "ms": 16.800000000000182,
+        "at": 378.1000005722044,
+        "tick": 24,
+        "started": true
+      },
+      "gc": [
+        {
+          "name": "MinorGC",
+          "at": 368.568,
+          "ms": 0.747,
+          "args": {
+            "type": "allocation failure",
+            "usedHeapSizeAfter": 105682648,
+            "usedHeapSizeBefore": 131840952
+          }
+        },
+        {
+          "name": "V8.GC_HEAP_PROLOGUE",
+          "at": 368.568,
+          "ms": 0.001,
+          "args": {}
+        },
+        {
+          "name": "V8.GCScavenger",
+          "at": 368.569,
+          "ms": 0.709,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_TIME_TO_SAFEPOINT",
+          "at": 368.57,
+          "ms": 0.001,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER",
+          "at": 368.574,
+          "ms": 0.703,
+          "args": {
+            "epoch": 154
+          }
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE",
+          "at": 368.579,
+          "ms": 0.695,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE_WEAK_GLOBAL_HANDLES_IDENTIFY",
+          "at": 368.618,
+          "ms": 0.028,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER_TRACED_HANDLES_COMPUTE_WEAKNESS_PARALLEL",
+          "at": 368.629,
+          "ms": 0.015,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE_COLLECT_OLD_TO_NEW_PAGES",
+          "at": 368.646,
+          "ms": 0.1,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE_PARALLEL_PHASE",
+          "at": 368.746,
+          "ms": 0.385,
+          "args": {
+            "UseBackgroundThreads": true
+          }
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE_ROOTS",
+          "at": 368.751,
+          "ms": 0.018,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE_PARALLEL",
+          "at": 368.77,
+          "ms": 0.244,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE_WEAK_GLOBAL_HANDLES_PROCESS",
+          "at": 369.131,
+          "ms": 0.02,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER_TRACED_HANDLES_RESET_PARALLEL",
+          "at": 369.136,
+          "ms": 0.014,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE_FINALIZE",
+          "at": 369.151,
+          "ms": 0.036,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE_RESTORE_AND_QUARANTINE_PINNED",
+          "at": 369.192,
+          "ms": 0.003,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER_FREE_REMEMBERED_SET",
+          "at": 369.198,
+          "ms": 0.069,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SWEEP_ARRAY_BUFFERS",
+          "at": 369.268,
+          "ms": 0.001,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER_RESIZE_NEW_SPACE",
+          "at": 369.273,
+          "ms": 0.001,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_HEAP_EPILOGUE_SAFEPOINT",
+          "at": 369.275,
+          "ms": 0.001,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_HEAP_EPILOGUE",
+          "at": 369.278,
+          "ms": 0.002,
+          "args": {}
+        }
+      ],
+      "longTasks": [
+        {
+          "name": "ThreadControllerImpl::RunTask",
+          "at": 379.979,
+          "ms": 9.455,
+          "args": {
+            "src_file": "cc/trees/proxy_impl.cc",
+            "src_func": "ScheduledActionSendBeginMainFrame",
+            "src_line": 844
+          }
+        },
+        {
+          "name": "ProxyMain::BeginMainFrame",
+          "at": 379.997,
+          "ms": 9.436,
+          "args": {
+            "begin_frame_id": 369,
+            "main_frame_pipeline": {
+              "main_frame_id": 12488047932071338000,
+              "step": "BEGIN_MAIN_FRAME"
+            }
+          }
+        },
+        {
+          "name": "FireAnimationFrame",
+          "at": 380.045,
+          "ms": 8.806,
+          "args": {
+            "data": {
+              "frame": "C0DB1AB973C87C12BB9C27254D5D8D6C",
+              "id": 543
+            }
+          }
+        },
+        {
+          "name": "v8.callFunction",
+          "at": 380.046,
+          "ms": 8.802,
+          "args": {}
+        },
+        {
+          "name": "FunctionCall",
+          "at": 380.047,
+          "ms": 8.798,
+          "args": {
+            "data": {
+              "columnNumber": 69866,
+              "frame": "C0DB1AB973C87C12BB9C27254D5D8D6C",
+              "functionName": "frame",
+              "isolate": "756366115975037029",
+              "lineNumber": 13,
+              "sampleTraceId": 4069765000324011,
+              "scriptId": "5",
+              "url": "http://127.0.0.1:4904/build/index-DkTUBysS.js"
+            }
+          }
+        },
+        {
+          "name": "ThreadControllerImpl::RunTask",
+          "at": 363.272,
+          "ms": 5.274,
+          "args": {
+            "src_file": "cc/trees/proxy_impl.cc",
+            "src_func": "ScheduledActionSendBeginMainFrame",
+            "src_line": 844
+          }
+        },
+        {
+          "name": "ProxyMain::BeginMainFrame",
+          "at": 363.273,
+          "ms": 5.272,
+          "args": {
+            "begin_frame_id": 368,
+            "main_frame_pipeline": {
+              "main_frame_id": 12488047932071338000,
+              "step": "BEGIN_MAIN_FRAME"
+            }
+          }
+        }
+      ],
+      "gpuTasks": [],
+      "frozenBakes": [],
+      "lateMeasures": [],
+      "lateBuilds": []
+    },
+    {
+      "source": "base",
+      "attempt": 12,
+      "measuredAt": "2026-11-07T17:16:33.213Z",
+      "rawSource": "test-results/perf10/diagnostic/rocket-base-12/strips/webgpu/L7.json",
+      "traceSource": "test-results/perf10/diagnostic/rocket-base-12/strips/webgpu/L7-candidate.trace.json.gz",
+      "rocketTick": 22,
+      "impactTick": 40,
+      "windowStartMs": 249.10000038146973,
+      "windowEndMs": 900,
+      "frameIndices": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53
+      ],
+      "rawSha256": "ebba2a5d8357a93e9ffc3ae80e5254e2f1f89fc837320d57cc4b9f9153f138ca",
+      "traceSha256": "b3ca2b64efe744bb874c15e74c91aff34dbe8c76a0721802713357d110be6381",
+      "maximum": {
+        "index": 40,
+        "ms": 16.800000000000182,
+        "at": 693.9999998092653,
+        "tick": 43,
+        "started": true
+      },
+      "gc": [],
+      "longTasks": [
+        {
+          "name": "ThreadControllerImpl::RunTask",
+          "at": 695.033,
+          "ms": 10.701,
+          "args": {
+            "src_file": "cc/trees/proxy_impl.cc",
+            "src_func": "ScheduledActionSendBeginMainFrame",
+            "src_line": 844
+          }
+        },
+        {
+          "name": "ProxyMain::BeginMainFrame",
+          "at": 695.034,
+          "ms": 10.699,
+          "args": {
+            "begin_frame_id": 387,
+            "main_frame_pipeline": {
+              "main_frame_id": 16867271543453618000,
+              "step": "BEGIN_MAIN_FRAME"
+            }
+          }
+        },
+        {
+          "name": "FireAnimationFrame",
+          "at": 695.072,
+          "ms": 10.053,
+          "args": {
+            "data": {
+              "frame": "92E23BE4B60BFB0A902A7496ACC2B12C",
+              "id": 607
+            }
+          }
+        },
+        {
+          "name": "v8.callFunction",
+          "at": 695.073,
+          "ms": 10.05,
+          "args": {}
+        },
+        {
+          "name": "FunctionCall",
+          "at": 695.073,
+          "ms": 10.046,
+          "args": {
+            "data": {
+              "columnNumber": 69866,
+              "frame": "92E23BE4B60BFB0A902A7496ACC2B12C",
+              "functionName": "frame",
+              "isolate": "1258499323319326706",
+              "lineNumber": 13,
+              "sampleTraceId": 5794538578480346,
+              "scriptId": "5",
+              "url": "http://127.0.0.1:4904/build/index-DkTUBysS.js"
+            }
+          }
+        },
+        {
+          "name": "ThreadControllerImpl::RunTask",
+          "at": 679.442,
+          "ms": 5.631,
+          "args": {
+            "src_file": "cc/trees/proxy_impl.cc",
+            "src_func": "ScheduledActionSendBeginMainFrame",
+            "src_line": 844
+          }
+        },
+        {
+          "name": "ProxyMain::BeginMainFrame",
+          "at": 679.444,
+          "ms": 5.628,
+          "args": {
+            "begin_frame_id": 386,
+            "main_frame_pipeline": {
+              "main_frame_id": 16867271543453618000,
+              "step": "BEGIN_MAIN_FRAME"
+            }
+          }
+        },
+        {
+          "name": "FireAnimationFrame",
+          "at": 679.595,
+          "ms": 5.13,
+          "args": {
+            "data": {
+              "frame": "92E23BE4B60BFB0A902A7496ACC2B12C",
+              "id": 603
+            }
+          }
+        },
+        {
+          "name": "v8.callFunction",
+          "at": 679.596,
+          "ms": 5.126,
+          "args": {}
+        },
+        {
+          "name": "FunctionCall",
+          "at": 679.597,
+          "ms": 5.122,
+          "args": {
+            "data": {
+              "columnNumber": 69866,
+              "frame": "92E23BE4B60BFB0A902A7496ACC2B12C",
+              "functionName": "frame",
+              "isolate": "1258499323319326706",
+              "lineNumber": 13,
+              "sampleTraceId": 5794538578480957,
+              "scriptId": "5",
+              "url": "http://127.0.0.1:4904/build/index-DkTUBysS.js"
+            }
+          }
+        }
+      ],
+      "gpuTasks": [],
+      "frozenBakes": [],
+      "lateMeasures": [],
+      "lateBuilds": []
+    },
+    {
+      "source": "fixed",
+      "attempt": 1,
+      "measuredAt": "2026-11-07T17:16:42.591Z",
+      "rawSource": "test-results/perf10/diagnostic/rocket-fixed-1/strips/webgpu/L7.json",
+      "traceSource": "test-results/perf10/diagnostic/rocket-fixed-1/strips/webgpu/L7-candidate.trace.json.gz",
+      "rocketTick": 22,
+      "impactTick": 40,
+      "windowStartMs": 249.80000019073486,
+      "windowEndMs": 914.8000001907349,
+      "frameIndices": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54
+      ],
+      "rawSha256": "279912274263bebf003aa17db830181439fc96b644a71b6f219d3f5dde53180f",
+      "traceSha256": "40ab6dec22767825b4ee75821db841c0c5af6f90549a81e19905fd48631fdc32",
+      "maximum": {
+        "index": 32,
+        "ms": 16.800000000000182,
+        "at": 560.3999996185303,
+        "tick": 35,
+        "started": true
+      },
+      "gc": [],
+      "longTasks": [
+        {
+          "name": "ThreadControllerImpl::RunTask",
+          "at": 562.46,
+          "ms": 8.855,
+          "args": {
+            "src_file": "cc/trees/proxy_impl.cc",
+            "src_func": "ScheduledActionSendBeginMainFrame",
+            "src_line": 844
+          }
+        },
+        {
+          "name": "ProxyMain::BeginMainFrame",
+          "at": 562.461,
+          "ms": 8.846,
+          "args": {
+            "begin_frame_id": 376,
+            "main_frame_pipeline": {
+              "main_frame_id": 13077071402451765000,
+              "step": "BEGIN_MAIN_FRAME"
+            }
+          }
+        },
+        {
+          "name": "FireAnimationFrame",
+          "at": 562.572,
+          "ms": 7.926,
+          "args": {
+            "data": {
+              "frame": "8C2F5D250C1A71147E8BE0C4B2D77164",
+              "id": 572
+            }
+          }
+        },
+        {
+          "name": "v8.callFunction",
+          "at": 562.573,
+          "ms": 7.923,
+          "args": {}
+        },
+        {
+          "name": "FunctionCall",
+          "at": 562.573,
+          "ms": 7.92,
+          "args": {
+            "data": {
+              "columnNumber": 69866,
+              "frame": "8C2F5D250C1A71147E8BE0C4B2D77164",
+              "functionName": "frame",
+              "isolate": "4750593780427663016",
+              "lineNumber": 13,
+              "sampleTraceId": 7625283822585867,
+              "scriptId": "5",
+              "url": "http://127.0.0.1:4901/build/index-XVRWzTu7.js"
+            }
+          }
+        },
+        {
+          "name": "ThreadControllerImpl::RunTask",
+          "at": 545.781,
+          "ms": 7.638,
+          "args": {
+            "src_file": "cc/trees/proxy_impl.cc",
+            "src_func": "ScheduledActionSendBeginMainFrame",
+            "src_line": 844
+          }
+        },
+        {
+          "name": "ProxyMain::BeginMainFrame",
+          "at": 545.782,
+          "ms": 7.636,
+          "args": {
+            "begin_frame_id": 375,
+            "main_frame_pipeline": {
+              "main_frame_id": 13077071402451770000,
+              "step": "BEGIN_MAIN_FRAME"
+            }
+          }
+        },
+        {
+          "name": "FireAnimationFrame",
+          "at": 545.817,
+          "ms": 6.997,
+          "args": {
+            "data": {
+              "frame": "8C2F5D250C1A71147E8BE0C4B2D77164",
+              "id": 568
+            }
+          }
+        },
+        {
+          "name": "v8.callFunction",
+          "at": 545.819,
+          "ms": 6.992,
+          "args": {}
+        },
+        {
+          "name": "FunctionCall",
+          "at": 545.819,
+          "ms": 6.988,
+          "args": {
+            "data": {
+              "columnNumber": 69866,
+              "frame": "8C2F5D250C1A71147E8BE0C4B2D77164",
+              "functionName": "frame",
+              "isolate": "4750593780427663016",
+              "lineNumber": 13,
+              "sampleTraceId": 7625283822589942,
+              "scriptId": "5",
+              "url": "http://127.0.0.1:4901/build/index-XVRWzTu7.js"
+            }
+          }
+        }
+      ],
+      "gpuTasks": [],
+      "frozenBakes": [],
+      "lateMeasures": [],
+      "lateBuilds": []
+    },
+    {
+      "source": "fixed",
+      "attempt": 2,
+      "measuredAt": "2026-11-07T17:16:51.785Z",
+      "rawSource": "test-results/perf10/diagnostic/rocket-fixed-2/strips/webgpu/L7.json",
+      "traceSource": "test-results/perf10/diagnostic/rocket-fixed-2/strips/webgpu/L7-candidate.trace.json.gz",
+      "rocketTick": 22,
+      "impactTick": 40,
+      "windowStartMs": 264.19999980926514,
+      "windowEndMs": 916.1999998092651,
+      "frameIndices": [
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54
+      ],
+      "rawSha256": "223607528df3b3816f768a14961ac275d08d2041ef3415ccd957ad3f7c981ccd",
+      "traceSha256": "d33983c89d64dc306a600b23e5b196d2365e8c2712a8e47c84101762385d3516",
+      "maximum": {
+        "index": 45,
+        "ms": 16.800000000000182,
+        "at": 778.5000001907347,
+        "tick": 47,
+        "started": true
+      },
+      "gc": [
+        {
+          "name": "V8.GC_HEAP_EXTERNAL_PROLOGUE",
+          "at": 771.731,
+          "ms": 0.001,
+          "args": {}
+        },
+        {
+          "name": "MinorGC",
+          "at": 771.734,
+          "ms": 0.618,
+          "args": {
+            "type": "allocation failure",
+            "usedHeapSizeAfter": 108763264,
+            "usedHeapSizeBefore": 136547328
+          }
+        },
+        {
+          "name": "V8.GC_HEAP_PROLOGUE",
+          "at": 771.737,
+          "ms": 0.001,
+          "args": {}
+        },
+        {
+          "name": "V8.GCScavenger",
+          "at": 771.738,
+          "ms": 0.568,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_TIME_TO_SAFEPOINT",
+          "at": 771.739,
+          "ms": 0.013,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER",
+          "at": 771.76,
+          "ms": 0.543,
+          "args": {
+            "epoch": 441
+          }
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE",
+          "at": 771.771,
+          "ms": 0.529,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE_WEAK_GLOBAL_HANDLES_IDENTIFY",
+          "at": 771.811,
+          "ms": 0.026,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER_TRACED_HANDLES_COMPUTE_WEAKNESS_PARALLEL",
+          "at": 771.82,
+          "ms": 0.015,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE_COLLECT_OLD_TO_NEW_PAGES",
+          "at": 771.837,
+          "ms": 0.089,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE_PARALLEL_PHASE",
+          "at": 771.926,
+          "ms": 0.27,
+          "args": {
+            "UseBackgroundThreads": true
+          }
+        },
+        {
+          "name": "Parallel scavenge started",
+          "at": 771.927,
+          "ms": 0.001,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE_ROOTS",
+          "at": 771.931,
+          "ms": 0.039,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE_WEAK_GLOBAL_HANDLES_PROCESS",
+          "at": 772.196,
+          "ms": 0.02,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER_TRACED_HANDLES_RESET_PARALLEL",
+          "at": 772.201,
+          "ms": 0.011,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE_FINALIZE",
+          "at": 772.216,
+          "ms": 0.026,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE_RESTORE_AND_QUARANTINE_PINNED",
+          "at": 772.243,
+          "ms": 0.002,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER_FREE_REMEMBERED_SET",
+          "at": 772.247,
+          "ms": 0.043,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SWEEP_ARRAY_BUFFERS",
+          "at": 772.29,
+          "ms": 0.004,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER_RESIZE_NEW_SPACE",
+          "at": 772.299,
+          "ms": 0.001,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_HEAP_EPILOGUE_SAFEPOINT",
+          "at": 772.301,
+          "ms": 0.002,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_HEAP_EPILOGUE",
+          "at": 772.306,
+          "ms": 0.002,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_HEAP_EXTERNAL_EPILOGUE",
+          "at": 772.352,
+          "ms": 0.001,
+          "args": {}
+        }
+      ],
+      "longTasks": [
+        {
+          "name": "ThreadControllerImpl::RunTask",
+          "at": 780.547,
+          "ms": 8.6,
+          "args": {
+            "src_file": "cc/trees/proxy_impl.cc",
+            "src_func": "ScheduledActionSendBeginMainFrame",
+            "src_line": 844
+          }
+        },
+        {
+          "name": "ProxyMain::BeginMainFrame",
+          "at": 780.549,
+          "ms": 8.591,
+          "args": {
+            "begin_frame_id": 386,
+            "main_frame_pipeline": {
+              "main_frame_id": 11205075159604824000,
+              "step": "BEGIN_MAIN_FRAME"
+            }
+          }
+        },
+        {
+          "name": "ThreadControllerImpl::RunTask",
+          "at": 763.872,
+          "ms": 7.823,
+          "args": {
+            "src_file": "cc/trees/proxy_impl.cc",
+            "src_func": "ScheduledActionSendBeginMainFrame",
+            "src_line": 844
+          }
+        },
+        {
+          "name": "ProxyMain::BeginMainFrame",
+          "at": 763.873,
+          "ms": 7.821,
+          "args": {
+            "begin_frame_id": 385,
+            "main_frame_pipeline": {
+              "main_frame_id": 11205075159604824000,
+              "step": "BEGIN_MAIN_FRAME"
+            }
+          }
+        },
+        {
+          "name": "FireAnimationFrame",
+          "at": 780.595,
+          "ms": 7.741,
+          "args": {
+            "data": {
+              "frame": "4053AD58897014915EEE359A5241F3D3",
+              "id": 629
+            }
+          }
+        },
+        {
+          "name": "v8.callFunction",
+          "at": 780.597,
+          "ms": 7.736,
+          "args": {}
+        },
+        {
+          "name": "FunctionCall",
+          "at": 780.597,
+          "ms": 7.732,
+          "args": {
+            "data": {
+              "columnNumber": 69866,
+              "frame": "4053AD58897014915EEE359A5241F3D3",
+              "functionName": "frame",
+              "isolate": "14055983253885090025",
+              "lineNumber": 13,
+              "sampleTraceId": 119286707030728,
+              "scriptId": "5",
+              "url": "http://127.0.0.1:4901/build/index-XVRWzTu7.js"
+            }
+          }
+        },
+        {
+          "name": "FireAnimationFrame",
+          "at": 763.905,
+          "ms": 7.19,
+          "args": {
+            "data": {
+              "frame": "4053AD58897014915EEE359A5241F3D3",
+              "id": 625
+            }
+          }
+        },
+        {
+          "name": "v8.callFunction",
+          "at": 763.906,
+          "ms": 7.186,
+          "args": {}
+        },
+        {
+          "name": "FunctionCall",
+          "at": 763.907,
+          "ms": 7.182,
+          "args": {
+            "data": {
+              "columnNumber": 69866,
+              "frame": "4053AD58897014915EEE359A5241F3D3",
+              "functionName": "frame",
+              "isolate": "14055983253885090025",
+              "lineNumber": 13,
+              "sampleTraceId": 119286707030806,
+              "scriptId": "5",
+              "url": "http://127.0.0.1:4901/build/index-XVRWzTu7.js"
+            }
+          }
+        }
+      ],
+      "gpuTasks": [],
+      "frozenBakes": [],
+      "lateMeasures": [],
+      "lateBuilds": []
+    },
+    {
+      "source": "fixed",
+      "attempt": 3,
+      "measuredAt": "2026-11-07T17:17:00.924Z",
+      "rawSource": "test-results/perf10/diagnostic/rocket-fixed-3/strips/webgpu/L7.json",
+      "traceSource": "test-results/perf10/diagnostic/rocket-fixed-3/strips/webgpu/L7-candidate.trace.json.gz",
+      "rocketTick": 22,
+      "impactTick": 40,
+      "windowStartMs": 258.19999980926514,
+      "windowEndMs": 909.3999996185303,
+      "frameIndices": [
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54
+      ],
+      "rawSha256": "3d790dc77298aacf94c78850a0d2778d1858a60a6736b00241d6583ee05bdde0",
+      "traceSha256": "c8c34f221f1a6f6205f5ef29698cfca10e30c7acaf39967fc8e254848aff6165",
+      "maximum": {
+        "index": 20,
+        "ms": 16.800000000000182,
+        "at": 354.9999998092653,
+        "tick": 23,
+        "started": true
+      },
+      "gc": [],
+      "longTasks": [
+        {
+          "name": "ThreadControllerImpl::RunTask",
+          "at": 356.436,
+          "ms": 9.217,
+          "args": {
+            "src_file": "cc/trees/proxy_impl.cc",
+            "src_func": "ScheduledActionSendBeginMainFrame",
+            "src_line": 844
+          }
+        },
+        {
+          "name": "ProxyMain::BeginMainFrame",
+          "at": 356.438,
+          "ms": 9.214,
+          "args": {
+            "begin_frame_id": 363,
+            "main_frame_pipeline": {
+              "main_frame_id": 3477126496135373000,
+              "step": "BEGIN_MAIN_FRAME"
+            }
+          }
+        },
+        {
+          "name": "FireAnimationFrame",
+          "at": 356.49,
+          "ms": 8.601,
+          "args": {
+            "data": {
+              "frame": "37F76F5364DF2262FD0BBFE171E7DF46",
+              "id": 529
+            }
+          }
+        },
+        {
+          "name": "v8.callFunction",
+          "at": 356.491,
+          "ms": 8.597,
+          "args": {}
+        },
+        {
+          "name": "FunctionCall",
+          "at": 356.491,
+          "ms": 8.594,
+          "args": {
+            "data": {
+              "columnNumber": 69866,
+              "frame": "37F76F5364DF2262FD0BBFE171E7DF46",
+              "functionName": "frame",
+              "isolate": "6055707669639871619",
+              "lineNumber": 13,
+              "sampleTraceId": 347583805349753,
+              "scriptId": "5",
+              "url": "http://127.0.0.1:4901/build/index-XVRWzTu7.js"
+            }
+          }
+        },
+        {
+          "name": "ThreadControllerImpl::RunTask",
+          "at": 338.576,
+          "ms": 8.245,
+          "args": {
+            "src_file": "cc/trees/proxy_impl.cc",
+            "src_func": "ScheduledActionSendBeginMainFrame",
+            "src_line": 844
+          }
+        },
+        {
+          "name": "ProxyMain::BeginMainFrame",
+          "at": 338.578,
+          "ms": 8.242,
+          "args": {
+            "begin_frame_id": 362,
+            "main_frame_pipeline": {
+              "main_frame_id": 3477126496135373000,
+              "step": "BEGIN_MAIN_FRAME"
+            }
+          }
+        },
+        {
+          "name": "FireAnimationFrame",
+          "at": 338.619,
+          "ms": 7.613,
+          "args": {
+            "data": {
+              "frame": "37F76F5364DF2262FD0BBFE171E7DF46",
+              "id": 525
+            }
+          }
+        },
+        {
+          "name": "v8.callFunction",
+          "at": 338.62,
+          "ms": 7.609,
+          "args": {}
+        },
+        {
+          "name": "FunctionCall",
+          "at": 338.62,
+          "ms": 7.606,
+          "args": {
+            "data": {
+              "columnNumber": 69866,
+              "frame": "37F76F5364DF2262FD0BBFE171E7DF46",
+              "functionName": "frame",
+              "isolate": "6055707669639871619",
+              "lineNumber": 13,
+              "sampleTraceId": 347583805349663,
+              "scriptId": "5",
+              "url": "http://127.0.0.1:4901/build/index-XVRWzTu7.js"
+            }
+          }
+        }
+      ],
+      "gpuTasks": [],
+      "frozenBakes": [],
+      "lateMeasures": [],
+      "lateBuilds": []
+    },
+    {
+      "source": "fixed",
+      "attempt": 4,
+      "measuredAt": "2026-11-07T17:17:10.141Z",
+      "rawSource": "test-results/perf10/diagnostic/rocket-fixed-4/strips/webgpu/L7.json",
+      "traceSource": "test-results/perf10/diagnostic/rocket-fixed-4/strips/webgpu/L7-candidate.trace.json.gz",
+      "rocketTick": 22,
+      "impactTick": 40,
+      "windowStartMs": 248.39999961853027,
+      "windowEndMs": 900.6000003814697,
+      "frameIndices": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53
+      ],
+      "rawSha256": "95b9df3929579de09d4fd1e1a1647ed2d77b7541585ade6c40814552d592784e",
+      "traceSha256": "67dce33ca7020a65a2e5b943d5ba7d2465bc9486e2dbdf54fd491f9db7f985d3",
+      "maximum": {
+        "index": 18,
+        "ms": 16.800000000000182,
+        "at": 328.0000001907347,
+        "tick": 21,
+        "started": true
+      },
+      "gc": [
+        {
+          "name": "V8.GC_HEAP_EXTERNAL_PROLOGUE",
+          "at": 306.942,
+          "ms": 0.001,
+          "args": {}
+        },
+        {
+          "name": "MinorGC",
+          "at": 306.945,
+          "ms": 1.031,
+          "args": {
+            "type": "allocation failure",
+            "usedHeapSizeAfter": 106060500,
+            "usedHeapSizeBefore": 134824772
+          }
+        },
+        {
+          "name": "V8.GCScavenger",
+          "at": 306.947,
+          "ms": 0.99,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER",
+          "at": 306.952,
+          "ms": 0.984,
+          "args": {
+            "epoch": 403
+          }
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE",
+          "at": 306.956,
+          "ms": 0.974,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE_WEAK_GLOBAL_HANDLES_IDENTIFY",
+          "at": 307.001,
+          "ms": 0.04,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER_TRACED_HANDLES_COMPUTE_WEAKNESS_PARALLEL",
+          "at": 307.007,
+          "ms": 0.013,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE_COLLECT_OLD_TO_NEW_PAGES",
+          "at": 307.042,
+          "ms": 0.099,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE_PARALLEL_PHASE",
+          "at": 307.142,
+          "ms": 0.451,
+          "args": {
+            "UseBackgroundThreads": true
+          }
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE_ROOTS",
+          "at": 307.146,
+          "ms": 0.02,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE_PARALLEL",
+          "at": 307.168,
+          "ms": 0.205,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE_PARALLEL",
+          "at": 307.416,
+          "ms": 0.014,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE_PARALLEL",
+          "at": 307.44,
+          "ms": 0.031,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE_PARALLEL",
+          "at": 307.503,
+          "ms": 0.034,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE_WEAK_GLOBAL_HANDLES_PROCESS",
+          "at": 307.594,
+          "ms": 0.021,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER_TRACED_HANDLES_RESET_PARALLEL",
+          "at": 307.599,
+          "ms": 0.016,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE_FINALIZE",
+          "at": 307.616,
+          "ms": 0.029,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE_RESTORE_AND_QUARANTINE_PINNED",
+          "at": 307.65,
+          "ms": 0.004,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER_FREE_REMEMBERED_SET",
+          "at": 307.656,
+          "ms": 0.266,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SWEEP_ARRAY_BUFFERS",
+          "at": 307.923,
+          "ms": 0.002,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER_RESIZE_NEW_SPACE",
+          "at": 307.929,
+          "ms": 0.001,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_HEAP_EPILOGUE_SAFEPOINT",
+          "at": 307.934,
+          "ms": 0.002,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_HEAP_EPILOGUE",
+          "at": 307.938,
+          "ms": 0.001,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_HEAP_EXTERNAL_EPILOGUE",
+          "at": 307.976,
+          "ms": 0.001,
+          "args": {}
+        }
+      ],
+      "longTasks": [
+        {
+          "name": "ThreadControllerImpl::RunTask",
+          "at": 296.663,
+          "ms": 10.224,
+          "args": {
+            "src_file": "cc/trees/proxy_impl.cc",
+            "src_func": "ScheduledActionSendBeginMainFrame",
+            "src_line": 844
+          }
+        },
+        {
+          "name": "ProxyMain::BeginMainFrame",
+          "at": 296.665,
+          "ms": 10.221,
+          "args": {
+            "begin_frame_id": 359,
+            "main_frame_pipeline": {
+              "main_frame_id": 4413352892713527300,
+              "step": "BEGIN_MAIN_FRAME"
+            }
+          }
+        },
+        {
+          "name": "FireAnimationFrame",
+          "at": 296.742,
+          "ms": 9.516,
+          "args": {
+            "data": {
+              "frame": "B1EEA5E35EB4D0D7492460CE5DEE2BE0",
+              "id": 510
+            }
+          }
+        },
+        {
+          "name": "v8.callFunction",
+          "at": 296.744,
+          "ms": 9.511,
+          "args": {}
+        },
+        {
+          "name": "FunctionCall",
+          "at": 296.744,
+          "ms": 9.507,
+          "args": {
+            "data": {
+              "columnNumber": 69866,
+              "frame": "B1EEA5E35EB4D0D7492460CE5DEE2BE0",
+              "functionName": "frame",
+              "isolate": "16104857515245588480",
+              "lineNumber": 13,
+              "sampleTraceId": 8832457145182129,
+              "scriptId": "5",
+              "url": "http://127.0.0.1:4901/build/index-XVRWzTu7.js"
+            }
+          }
+        },
+        {
+          "name": "ThreadControllerImpl::RunTask",
+          "at": 330.03,
+          "ms": 9.047,
+          "args": {
+            "src_file": "cc/trees/proxy_impl.cc",
+            "src_func": "ScheduledActionSendBeginMainFrame",
+            "src_line": 844
+          }
+        },
+        {
+          "name": "ProxyMain::BeginMainFrame",
+          "at": 330.032,
+          "ms": 9.044,
+          "args": {
+            "begin_frame_id": 361,
+            "main_frame_pipeline": {
+              "main_frame_id": 4413352892713527300,
+              "step": "BEGIN_MAIN_FRAME"
+            }
+          }
+        },
+        {
+          "name": "FireAnimationFrame",
+          "at": 330.077,
+          "ms": 8.415,
+          "args": {
+            "data": {
+              "frame": "B1EEA5E35EB4D0D7492460CE5DEE2BE0",
+              "id": 518
+            }
+          }
+        },
+        {
+          "name": "v8.callFunction",
+          "at": 330.079,
+          "ms": 8.41,
+          "args": {}
+        },
+        {
+          "name": "FunctionCall",
+          "at": 330.079,
+          "ms": 8.407,
+          "args": {
+            "data": {
+              "columnNumber": 69866,
+              "frame": "B1EEA5E35EB4D0D7492460CE5DEE2BE0",
+              "functionName": "frame",
+              "isolate": "16104857515245588480",
+              "lineNumber": 13,
+              "sampleTraceId": 8832457145182085,
+              "scriptId": "5",
+              "url": "http://127.0.0.1:4901/build/index-XVRWzTu7.js"
+            }
+          }
+        },
+        {
+          "name": "ThreadControllerImpl::RunTask",
+          "at": 312.026,
+          "ms": 6.033,
+          "args": {
+            "src_file": "cc/trees/proxy_impl.cc",
+            "src_func": "ScheduledActionSendBeginMainFrame",
+            "src_line": 844
+          }
+        },
+        {
+          "name": "ProxyMain::BeginMainFrame",
+          "at": 312.027,
+          "ms": 6.031,
+          "args": {
+            "begin_frame_id": 360,
+            "main_frame_pipeline": {
+              "main_frame_id": 4413352892713527300,
+              "step": "BEGIN_MAIN_FRAME"
+            }
+          }
+        },
+        {
+          "name": "FireAnimationFrame",
+          "at": 312.087,
+          "ms": 5.627,
+          "args": {
+            "data": {
+              "frame": "B1EEA5E35EB4D0D7492460CE5DEE2BE0",
+              "id": 514
+            }
+          }
+        },
+        {
+          "name": "v8.callFunction",
+          "at": 312.088,
+          "ms": 5.623,
+          "args": {}
+        },
+        {
+          "name": "FunctionCall",
+          "at": 312.088,
+          "ms": 5.619,
+          "args": {
+            "data": {
+              "columnNumber": 69866,
+              "frame": "B1EEA5E35EB4D0D7492460CE5DEE2BE0",
+              "functionName": "frame",
+              "isolate": "16104857515245588480",
+              "lineNumber": 13,
+              "sampleTraceId": 8832457145182126,
+              "scriptId": "5",
+              "url": "http://127.0.0.1:4901/build/index-XVRWzTu7.js"
+            }
+          }
+        }
+      ],
+      "gpuTasks": [],
+      "frozenBakes": [],
+      "lateMeasures": [],
+      "lateBuilds": []
+    },
+    {
+      "source": "fixed",
+      "attempt": 5,
+      "measuredAt": "2026-11-07T17:17:19.302Z",
+      "rawSource": "test-results/perf10/diagnostic/rocket-fixed-5/strips/webgpu/L7.json",
+      "traceSource": "test-results/perf10/diagnostic/rocket-fixed-5/strips/webgpu/L7-candidate.trace.json.gz",
+      "rocketTick": 22,
+      "impactTick": 40,
+      "windowStartMs": 248.30000019073486,
+      "windowEndMs": 900.3000001907349,
+      "frameIndices": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53
+      ],
+      "rawSha256": "423229405559b5d450af89fe4f02fc08005d3b6ea8067e53f9fe1ac9aef1d28d",
+      "traceSha256": "a7119d773551d42d3eaf452482c6e549efd7f3b819853b515b2076fad2d1c7b4",
+      "maximum": {
+        "index": 16,
+        "ms": 16.800000000000182,
+        "at": 294.4000003814699,
+        "tick": 19,
+        "started": true
+      },
+      "gc": [
+        {
+          "name": "V8.GC_HEAP_EXTERNAL_PROLOGUE",
+          "at": 277.402,
+          "ms": 0.001,
+          "args": {}
+        },
+        {
+          "name": "MinorGC",
+          "at": 277.404,
+          "ms": 0.932,
+          "args": {
+            "type": "allocation failure",
+            "usedHeapSizeAfter": 104516480,
+            "usedHeapSizeBefore": 134164824
+          }
+        },
+        {
+          "name": "V8.GCScavenger",
+          "at": 277.406,
+          "ms": 0.89,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_HEAP_ENSURE_SWEEPING_COMPLETED",
+          "at": 277.408,
+          "ms": 0.317,
+          "args": {
+            "epoch": 407,
+            "value": {
+              "epoch": 407,
+              "mode": "v8 only",
+              "sweeping_reason": "minor gc"
+            }
+          }
+        },
+        {
+          "name": "V8.GC_MC_COMPLETE_SWEEPING",
+          "at": 277.41,
+          "ms": 0.004,
+          "args": {
+            "epoch": 407
+          }
+        },
+        {
+          "name": "V8.GC_MC_SWEEP",
+          "at": 277.411,
+          "ms": 0.001,
+          "args": {
+            "epoch": 407
+          }
+        },
+        {
+          "name": "V8.GC_SCAVENGER",
+          "at": 277.738,
+          "ms": 0.556,
+          "args": {
+            "epoch": 408
+          }
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE",
+          "at": 277.743,
+          "ms": 0.545,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE_WEAK_GLOBAL_HANDLES_IDENTIFY",
+          "at": 277.774,
+          "ms": 0.018,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER_TRACED_HANDLES_COMPUTE_WEAKNESS_PARALLEL",
+          "at": 277.778,
+          "ms": 0.013,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE_COLLECT_OLD_TO_NEW_PAGES",
+          "at": 277.792,
+          "ms": 0.02,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE_PARALLEL_PHASE",
+          "at": 277.812,
+          "ms": 0.407,
+          "args": {
+            "UseBackgroundThreads": true
+          }
+        },
+        {
+          "name": "Parallel scavenge started",
+          "at": 277.813,
+          "ms": 0.001,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE_ROOTS",
+          "at": 277.818,
+          "ms": 0.01,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE_PARALLEL",
+          "at": 277.829,
+          "ms": 0.233,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE_PARALLEL",
+          "at": 278.07,
+          "ms": 0.023,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE_PARALLEL",
+          "at": 278.127,
+          "ms": 0.026,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE_WEAK_GLOBAL_HANDLES_PROCESS",
+          "at": 278.219,
+          "ms": 0.014,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER_TRACED_HANDLES_RESET_PARALLEL",
+          "at": 278.223,
+          "ms": 0.009,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE_FINALIZE",
+          "at": 278.233,
+          "ms": 0.017,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SCAVENGE_RESTORE_AND_QUARANTINE_PINNED",
+          "at": 278.254,
+          "ms": 0.002,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER_FREE_REMEMBERED_SET",
+          "at": 278.259,
+          "ms": 0.023,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_SCAVENGER_SWEEP_ARRAY_BUFFERS",
+          "at": 278.282,
+          "ms": 0.002,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_HEAP_EPILOGUE_SAFEPOINT",
+          "at": 278.292,
+          "ms": 0.002,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_HEAP_EPILOGUE",
+          "at": 278.296,
+          "ms": 0.002,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_HEAP_DUMP_STATISTICS",
+          "at": 278.316,
+          "ms": 0.001,
+          "args": {}
+        },
+        {
+          "name": "V8.GC_HEAP_EXTERNAL_EPILOGUE",
+          "at": 278.336,
+          "ms": 0.001,
+          "args": {}
+        }
+      ],
+      "longTasks": [
+        {
+          "name": "ThreadControllerImpl::RunTask",
+          "at": 294.414,
+          "ms": 9.676,
+          "args": {
+            "src_file": "cc/trees/proxy_impl.cc",
+            "src_func": "ScheduledActionSendBeginMainFrame",
+            "src_line": 844
+          }
+        },
+        {
+          "name": "ProxyMain::BeginMainFrame",
+          "at": 294.415,
+          "ms": 9.674,
+          "args": {
+            "begin_frame_id": 356,
+            "main_frame_pipeline": {
+              "main_frame_id": 11505709287192494000,
+              "step": "BEGIN_MAIN_FRAME"
+            }
+          }
+        },
+        {
+          "name": "FireAnimationFrame",
+          "at": 294.445,
+          "ms": 9.094,
+          "args": {
+            "data": {
+              "frame": "F8738ADE53C189285415BC0E8BC1B233",
+              "id": 515
+            }
+          }
+        },
+        {
+          "name": "v8.callFunction",
+          "at": 294.446,
+          "ms": 9.09,
+          "args": {}
+        },
+        {
+          "name": "FunctionCall",
+          "at": 294.447,
+          "ms": 9.086,
+          "args": {
+            "data": {
+              "columnNumber": 69866,
+              "frame": "F8738ADE53C189285415BC0E8BC1B233",
+              "functionName": "frame",
+              "isolate": "8520425769976226091",
+              "lineNumber": 13,
+              "sampleTraceId": 3515838888247886,
+              "scriptId": "5",
+              "url": "http://127.0.0.1:4901/build/index-XVRWzTu7.js"
+            }
+          }
+        },
+        {
+          "name": "ThreadControllerImpl::RunTask",
+          "at": 278.345,
+          "ms": 6.26,
+          "args": {
+            "src_file": "cc/trees/proxy_impl.cc",
+            "src_func": "ScheduledActionSendBeginMainFrame",
+            "src_line": 844
+          }
+        },
+        {
+          "name": "ProxyMain::BeginMainFrame",
+          "at": 278.346,
+          "ms": 6.258,
+          "args": {
+            "begin_frame_id": 355,
+            "main_frame_pipeline": {
+              "main_frame_id": 11505709287192494000,
+              "step": "BEGIN_MAIN_FRAME"
+            }
+          }
+        },
+        {
+          "name": "FireAnimationFrame",
+          "at": 278.387,
+          "ms": 5.848,
+          "args": {
+            "data": {
+              "frame": "F8738ADE53C189285415BC0E8BC1B233",
+              "id": 511
+            }
+          }
+        },
+        {
+          "name": "v8.callFunction",
+          "at": 278.388,
+          "ms": 5.844,
+          "args": {}
+        },
+        {
+          "name": "FunctionCall",
+          "at": 278.388,
+          "ms": 5.84,
+          "args": {
+            "data": {
+              "columnNumber": 69866,
+              "frame": "F8738ADE53C189285415BC0E8BC1B233",
+              "functionName": "frame",
+              "isolate": "8520425769976226091",
+              "lineNumber": 13,
+              "sampleTraceId": 3515838888247865,
+              "scriptId": "5",
+              "url": "http://127.0.0.1:4901/build/index-XVRWzTu7.js"
+            }
+          }
+        }
+      ],
+      "gpuTasks": [],
+      "frozenBakes": [],
+      "lateMeasures": [],
+      "lateBuilds": []
+    },
+    {
+      "source": "fixed",
+      "attempt": 6,
+      "measuredAt": "2026-11-07T17:17:28.463Z",
+      "rawSource": "test-results/perf10/diagnostic/rocket-fixed-6/strips/webgpu/L7.json",
+      "traceSource": "test-results/perf10/diagnostic/rocket-fixed-6/strips/webgpu/L7-candidate.trace.json.gz",
+      "rocketTick": 22,
+      "impactTick": 40,
+      "windowStartMs": 241.89999961853027,
+      "windowEndMs": 907.0999994277954,
+      "frameIndices": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54
+      ],
+      "rawSha256": "3a0b53e99824c00a3c435398f31eed704bbfdb81a44c5dd87d54580284a63bd6",
+      "traceSha256": "4d6568a348ef1a5f3e9afe08969c22fb7d28f5b098a3ac7bbd3fac4d4de9e7fc",
+      "maximum": {
+        "index": 30,
+        "ms": 16.800000000000182,
+        "at": 521.3000000000002,
+        "tick": 32,
+        "started": true
+      },
+      "gc": [],
+      "longTasks": [
+        {
+          "name": "ThreadControllerImpl::RunTask",
+          "at": 504.916,
+          "ms": 7.552,
+          "args": {
+            "src_file": "cc/trees/proxy_impl.cc",
+            "src_func": "ScheduledActionSendBeginMainFrame",
+            "src_line": 844
+          }
+        },
+        {
+          "name": "ProxyMain::BeginMainFrame",
+          "at": 504.917,
+          "ms": 7.55,
+          "args": {
+            "begin_frame_id": 371,
+            "main_frame_pipeline": {
+              "main_frame_id": 7386946976273906000,
+              "step": "BEGIN_MAIN_FRAME"
+            }
+          }
+        },
+        {
+          "name": "ThreadControllerImpl::RunTask",
+          "at": 521.584,
+          "ms": 7.057,
+          "args": {
+            "src_file": "cc/trees/proxy_impl.cc",
+            "src_func": "ScheduledActionSendBeginMainFrame",
+            "src_line": 844
+          }
+        },
+        {
+          "name": "ProxyMain::BeginMainFrame",
+          "at": 521.585,
+          "ms": 7.055,
+          "args": {
+            "begin_frame_id": 372,
+            "main_frame_pipeline": {
+              "main_frame_id": 7386946976273906000,
+              "step": "BEGIN_MAIN_FRAME"
+            }
+          }
+        },
+        {
+          "name": "FireAnimationFrame",
+          "at": 504.955,
+          "ms": 6.95,
+          "args": {
+            "data": {
+              "frame": "9FA3C061051E6D8F4A12FA5C06F32166",
+              "id": 565
+            }
+          }
+        },
+        {
+          "name": "v8.callFunction",
+          "at": 504.957,
+          "ms": 6.946,
+          "args": {}
+        },
+        {
+          "name": "FunctionCall",
+          "at": 504.957,
+          "ms": 6.943,
+          "args": {
+            "data": {
+              "columnNumber": 69866,
+              "frame": "9FA3C061051E6D8F4A12FA5C06F32166",
+              "functionName": "frame",
+              "isolate": "5197843441204862393",
+              "lineNumber": 13,
+              "sampleTraceId": 1043587386291801,
+              "scriptId": "5",
+              "url": "http://127.0.0.1:4901/build/index-XVRWzTu7.js"
+            }
+          }
+        },
+        {
+          "name": "FireAnimationFrame",
+          "at": 521.621,
+          "ms": 6.508,
+          "args": {
+            "data": {
+              "frame": "9FA3C061051E6D8F4A12FA5C06F32166",
+              "id": 569
+            }
+          }
+        },
+        {
+          "name": "v8.callFunction",
+          "at": 521.623,
+          "ms": 6.504,
+          "args": {}
+        },
+        {
+          "name": "FunctionCall",
+          "at": 521.623,
+          "ms": 6.502,
+          "args": {
+            "data": {
+              "columnNumber": 69866,
+              "frame": "9FA3C061051E6D8F4A12FA5C06F32166",
+              "functionName": "frame",
+              "isolate": "5197843441204862393",
+              "lineNumber": 13,
+              "sampleTraceId": 1043587386291838,
+              "scriptId": "5",
+              "url": "http://127.0.0.1:4901/build/index-XVRWzTu7.js"
+            }
+          }
+        }
+      ],
+      "gpuTasks": [],
+      "frozenBakes": [],
+      "lateMeasures": [],
+      "lateBuilds": []
+    }
+  ]
+}

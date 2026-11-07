@@ -1,0 +1,2190 @@
+{
+  "at": "2026-11-07T17:17:49.841032+00:00",
+  "passAudit": false,
+  "checks": 545,
+  "failures": [
+    "fresh live batch 56 control remains unchanged"
+  ],
+  "requirements": [
+    {
+      "name": "all 15 matrix cells and nine named event windows",
+      "passCheck": true
+    },
+    {
+      "name": "complete paired 60 menu loads and 24 native gameplay captures",
+      "passCheck": true
+    },
+    {
+      "name": "every measurement has a unique cell and side",
+      "passCheck": true
+    },
+    {
+      "name": "clean unprofiled gameplay prod L1 high",
+      "passCheck": true
+    },
+    {
+      "name": "full native minute prod L1 high",
+      "passCheck": true
+    },
+    {
+      "name": "recomputed raw frame statistics prod L1 high",
+      "passCheck": true
+    },
+    {
+      "name": "native Metal WebGPU prod L1 high",
+      "passCheck": true
+    },
+    {
+      "name": "continuous requested level and settings prod L1 high",
+      "passCheck": true
+    },
+    {
+      "name": "ordinary native input control prod L1 high",
+      "passCheck": true
+    },
+    {
+      "name": "one mission timestamp per full frame interval prod L1 high",
+      "passCheck": true
+    },
+    {
+      "name": "complete L1 extended coverage prod L1 high",
+      "passCheck": true
+    },
+    {
+      "name": "clean unprofiled gameplay candidate L1 high",
+      "passCheck": true
+    },
+    {
+      "name": "full native minute candidate L1 high",
+      "passCheck": true
+    },
+    {
+      "name": "recomputed raw frame statistics candidate L1 high",
+      "passCheck": true
+    },
+    {
+      "name": "native Metal WebGPU candidate L1 high",
+      "passCheck": true
+    },
+    {
+      "name": "continuous requested level and settings candidate L1 high",
+      "passCheck": true
+    },
+    {
+      "name": "ordinary native input control candidate L1 high",
+      "passCheck": true
+    },
+    {
+      "name": "one mission timestamp per full frame interval candidate L1 high",
+      "passCheck": true
+    },
+    {
+      "name": "complete L1 extended coverage candidate L1 high",
+      "passCheck": true
+    },
+    {
+      "name": "clean unprofiled gameplay prod L10 high",
+      "passCheck": true
+    },
+    {
+      "name": "full native minute prod L10 high",
+      "passCheck": true
+    },
+    {
+      "name": "recomputed raw frame statistics prod L10 high",
+      "passCheck": true
+    },
+    {
+      "name": "native Metal WebGPU prod L10 high",
+      "passCheck": true
+    },
+    {
+      "name": "continuous requested level and settings prod L10 high",
+      "passCheck": true
+    },
+    {
+      "name": "ordinary native input control prod L10 high",
+      "passCheck": true
+    },
+    {
+      "name": "one mission timestamp per full frame interval prod L10 high",
+      "passCheck": true
+    },
+    {
+      "name": "complete L10 high 90-second charge capture prod L10 high",
+      "passCheck": true
+    },
+    {
+      "name": "clean unprofiled gameplay candidate L10 high",
+      "passCheck": true
+    },
+    {
+      "name": "full native minute candidate L10 high",
+      "passCheck": true
+    },
+    {
+      "name": "recomputed raw frame statistics candidate L10 high",
+      "passCheck": true
+    },
+    {
+      "name": "native Metal WebGPU candidate L10 high",
+      "passCheck": true
+    },
+    {
+      "name": "continuous requested level and settings candidate L10 high",
+      "passCheck": true
+    },
+    {
+      "name": "ordinary native input control candidate L10 high",
+      "passCheck": true
+    },
+    {
+      "name": "one mission timestamp per full frame interval candidate L10 high",
+      "passCheck": true
+    },
+    {
+      "name": "complete L10 high 90-second charge capture candidate L10 high",
+      "passCheck": true
+    },
+    {
+      "name": "clean unprofiled gameplay prod L3 high",
+      "passCheck": true
+    },
+    {
+      "name": "full native minute prod L3 high",
+      "passCheck": true
+    },
+    {
+      "name": "recomputed raw frame statistics prod L3 high",
+      "passCheck": true
+    },
+    {
+      "name": "native Metal WebGPU prod L3 high",
+      "passCheck": true
+    },
+    {
+      "name": "continuous requested level and settings prod L3 high",
+      "passCheck": true
+    },
+    {
+      "name": "ordinary native input control prod L3 high",
+      "passCheck": true
+    },
+    {
+      "name": "clean unprofiled gameplay candidate L3 high",
+      "passCheck": true
+    },
+    {
+      "name": "full native minute candidate L3 high",
+      "passCheck": true
+    },
+    {
+      "name": "recomputed raw frame statistics candidate L3 high",
+      "passCheck": true
+    },
+    {
+      "name": "native Metal WebGPU candidate L3 high",
+      "passCheck": true
+    },
+    {
+      "name": "continuous requested level and settings candidate L3 high",
+      "passCheck": true
+    },
+    {
+      "name": "ordinary native input control candidate L3 high",
+      "passCheck": true
+    },
+    {
+      "name": "clean unprofiled gameplay prod L5 high",
+      "passCheck": true
+    },
+    {
+      "name": "full native minute prod L5 high",
+      "passCheck": true
+    },
+    {
+      "name": "recomputed raw frame statistics prod L5 high",
+      "passCheck": true
+    },
+    {
+      "name": "native Metal WebGPU prod L5 high",
+      "passCheck": true
+    },
+    {
+      "name": "continuous requested level and settings prod L5 high",
+      "passCheck": true
+    },
+    {
+      "name": "ordinary native input control prod L5 high",
+      "passCheck": true
+    },
+    {
+      "name": "clean unprofiled gameplay candidate L5 high",
+      "passCheck": true
+    },
+    {
+      "name": "full native minute candidate L5 high",
+      "passCheck": true
+    },
+    {
+      "name": "recomputed raw frame statistics candidate L5 high",
+      "passCheck": true
+    },
+    {
+      "name": "native Metal WebGPU candidate L5 high",
+      "passCheck": true
+    },
+    {
+      "name": "continuous requested level and settings candidate L5 high",
+      "passCheck": true
+    },
+    {
+      "name": "ordinary native input control candidate L5 high",
+      "passCheck": true
+    },
+    {
+      "name": "clean unprofiled gameplay prod L4 high",
+      "passCheck": true
+    },
+    {
+      "name": "full native minute prod L4 high",
+      "passCheck": true
+    },
+    {
+      "name": "recomputed raw frame statistics prod L4 high",
+      "passCheck": true
+    },
+    {
+      "name": "native Metal WebGPU prod L4 high",
+      "passCheck": true
+    },
+    {
+      "name": "continuous requested level and settings prod L4 high",
+      "passCheck": true
+    },
+    {
+      "name": "ordinary native input control prod L4 high",
+      "passCheck": true
+    },
+    {
+      "name": "one mission timestamp per full frame interval prod L4 high",
+      "passCheck": true
+    },
+    {
+      "name": "clean unprofiled gameplay candidate L4 high",
+      "passCheck": true
+    },
+    {
+      "name": "full native minute candidate L4 high",
+      "passCheck": true
+    },
+    {
+      "name": "recomputed raw frame statistics candidate L4 high",
+      "passCheck": true
+    },
+    {
+      "name": "native Metal WebGPU candidate L4 high",
+      "passCheck": true
+    },
+    {
+      "name": "continuous requested level and settings candidate L4 high",
+      "passCheck": true
+    },
+    {
+      "name": "ordinary native input control candidate L4 high",
+      "passCheck": true
+    },
+    {
+      "name": "one mission timestamp per full frame interval candidate L4 high",
+      "passCheck": true
+    },
+    {
+      "name": "clean unprofiled gameplay prod L7 high",
+      "passCheck": true
+    },
+    {
+      "name": "full native minute prod L7 high",
+      "passCheck": true
+    },
+    {
+      "name": "recomputed raw frame statistics prod L7 high",
+      "passCheck": true
+    },
+    {
+      "name": "native Metal WebGPU prod L7 high",
+      "passCheck": true
+    },
+    {
+      "name": "continuous requested level and settings prod L7 high",
+      "passCheck": true
+    },
+    {
+      "name": "ordinary native input control prod L7 high",
+      "passCheck": true
+    },
+    {
+      "name": "one mission timestamp per full frame interval prod L7 high",
+      "passCheck": true
+    },
+    {
+      "name": "clean unprofiled gameplay candidate L7 high",
+      "passCheck": true
+    },
+    {
+      "name": "full native minute candidate L7 high",
+      "passCheck": true
+    },
+    {
+      "name": "recomputed raw frame statistics candidate L7 high",
+      "passCheck": true
+    },
+    {
+      "name": "native Metal WebGPU candidate L7 high",
+      "passCheck": true
+    },
+    {
+      "name": "continuous requested level and settings candidate L7 high",
+      "passCheck": true
+    },
+    {
+      "name": "ordinary native input control candidate L7 high",
+      "passCheck": true
+    },
+    {
+      "name": "one mission timestamp per full frame interval candidate L7 high",
+      "passCheck": true
+    },
+    {
+      "name": "clean unprofiled gameplay prod L1 low",
+      "passCheck": true
+    },
+    {
+      "name": "full native minute prod L1 low",
+      "passCheck": true
+    },
+    {
+      "name": "recomputed raw frame statistics prod L1 low",
+      "passCheck": true
+    },
+    {
+      "name": "native Metal WebGPU prod L1 low",
+      "passCheck": true
+    },
+    {
+      "name": "continuous requested level and settings prod L1 low",
+      "passCheck": true
+    },
+    {
+      "name": "ordinary native input control prod L1 low",
+      "passCheck": true
+    },
+    {
+      "name": "one mission timestamp per full frame interval prod L1 low",
+      "passCheck": true
+    },
+    {
+      "name": "complete L1 extended coverage prod L1 low",
+      "passCheck": true
+    },
+    {
+      "name": "clean unprofiled gameplay candidate L1 low",
+      "passCheck": true
+    },
+    {
+      "name": "full native minute candidate L1 low",
+      "passCheck": true
+    },
+    {
+      "name": "recomputed raw frame statistics candidate L1 low",
+      "passCheck": true
+    },
+    {
+      "name": "native Metal WebGPU candidate L1 low",
+      "passCheck": true
+    },
+    {
+      "name": "continuous requested level and settings candidate L1 low",
+      "passCheck": true
+    },
+    {
+      "name": "ordinary native input control candidate L1 low",
+      "passCheck": true
+    },
+    {
+      "name": "one mission timestamp per full frame interval candidate L1 low",
+      "passCheck": true
+    },
+    {
+      "name": "complete L1 extended coverage candidate L1 low",
+      "passCheck": true
+    },
+    {
+      "name": "clean unprofiled gameplay prod L3 low",
+      "passCheck": true
+    },
+    {
+      "name": "full native minute prod L3 low",
+      "passCheck": true
+    },
+    {
+      "name": "recomputed raw frame statistics prod L3 low",
+      "passCheck": true
+    },
+    {
+      "name": "native Metal WebGPU prod L3 low",
+      "passCheck": true
+    },
+    {
+      "name": "continuous requested level and settings prod L3 low",
+      "passCheck": true
+    },
+    {
+      "name": "ordinary native input control prod L3 low",
+      "passCheck": true
+    },
+    {
+      "name": "clean unprofiled gameplay candidate L3 low",
+      "passCheck": true
+    },
+    {
+      "name": "full native minute candidate L3 low",
+      "passCheck": true
+    },
+    {
+      "name": "recomputed raw frame statistics candidate L3 low",
+      "passCheck": true
+    },
+    {
+      "name": "native Metal WebGPU candidate L3 low",
+      "passCheck": true
+    },
+    {
+      "name": "continuous requested level and settings candidate L3 low",
+      "passCheck": true
+    },
+    {
+      "name": "ordinary native input control candidate L3 low",
+      "passCheck": true
+    },
+    {
+      "name": "clean unprofiled gameplay prod L5 low",
+      "passCheck": true
+    },
+    {
+      "name": "full native minute prod L5 low",
+      "passCheck": true
+    },
+    {
+      "name": "recomputed raw frame statistics prod L5 low",
+      "passCheck": true
+    },
+    {
+      "name": "native Metal WebGPU prod L5 low",
+      "passCheck": true
+    },
+    {
+      "name": "continuous requested level and settings prod L5 low",
+      "passCheck": true
+    },
+    {
+      "name": "ordinary native input control prod L5 low",
+      "passCheck": true
+    },
+    {
+      "name": "clean unprofiled gameplay candidate L5 low",
+      "passCheck": true
+    },
+    {
+      "name": "full native minute candidate L5 low",
+      "passCheck": true
+    },
+    {
+      "name": "recomputed raw frame statistics candidate L5 low",
+      "passCheck": true
+    },
+    {
+      "name": "native Metal WebGPU candidate L5 low",
+      "passCheck": true
+    },
+    {
+      "name": "continuous requested level and settings candidate L5 low",
+      "passCheck": true
+    },
+    {
+      "name": "ordinary native input control candidate L5 low",
+      "passCheck": true
+    },
+    {
+      "name": "clean unprofiled gameplay prod L4 low",
+      "passCheck": true
+    },
+    {
+      "name": "full native minute prod L4 low",
+      "passCheck": true
+    },
+    {
+      "name": "recomputed raw frame statistics prod L4 low",
+      "passCheck": true
+    },
+    {
+      "name": "native Metal WebGPU prod L4 low",
+      "passCheck": true
+    },
+    {
+      "name": "continuous requested level and settings prod L4 low",
+      "passCheck": true
+    },
+    {
+      "name": "ordinary native input control prod L4 low",
+      "passCheck": true
+    },
+    {
+      "name": "one mission timestamp per full frame interval prod L4 low",
+      "passCheck": true
+    },
+    {
+      "name": "clean unprofiled gameplay candidate L4 low",
+      "passCheck": true
+    },
+    {
+      "name": "full native minute candidate L4 low",
+      "passCheck": true
+    },
+    {
+      "name": "recomputed raw frame statistics candidate L4 low",
+      "passCheck": true
+    },
+    {
+      "name": "native Metal WebGPU candidate L4 low",
+      "passCheck": true
+    },
+    {
+      "name": "continuous requested level and settings candidate L4 low",
+      "passCheck": true
+    },
+    {
+      "name": "ordinary native input control candidate L4 low",
+      "passCheck": true
+    },
+    {
+      "name": "one mission timestamp per full frame interval candidate L4 low",
+      "passCheck": true
+    },
+    {
+      "name": "clean unprofiled gameplay prod L7 low",
+      "passCheck": true
+    },
+    {
+      "name": "full native minute prod L7 low",
+      "passCheck": true
+    },
+    {
+      "name": "recomputed raw frame statistics prod L7 low",
+      "passCheck": true
+    },
+    {
+      "name": "native Metal WebGPU prod L7 low",
+      "passCheck": true
+    },
+    {
+      "name": "continuous requested level and settings prod L7 low",
+      "passCheck": true
+    },
+    {
+      "name": "ordinary native input control prod L7 low",
+      "passCheck": true
+    },
+    {
+      "name": "one mission timestamp per full frame interval prod L7 low",
+      "passCheck": true
+    },
+    {
+      "name": "clean unprofiled gameplay candidate L7 low",
+      "passCheck": true
+    },
+    {
+      "name": "full native minute candidate L7 low",
+      "passCheck": true
+    },
+    {
+      "name": "recomputed raw frame statistics candidate L7 low",
+      "passCheck": true
+    },
+    {
+      "name": "native Metal WebGPU candidate L7 low",
+      "passCheck": true
+    },
+    {
+      "name": "continuous requested level and settings candidate L7 low",
+      "passCheck": true
+    },
+    {
+      "name": "ordinary native input control candidate L7 low",
+      "passCheck": true
+    },
+    {
+      "name": "one mission timestamp per full frame interval candidate L7 low",
+      "passCheck": true
+    },
+    {
+      "name": "clean unprofiled gameplay prod L10 low",
+      "passCheck": true
+    },
+    {
+      "name": "full native minute prod L10 low",
+      "passCheck": true
+    },
+    {
+      "name": "recomputed raw frame statistics prod L10 low",
+      "passCheck": true
+    },
+    {
+      "name": "native Metal WebGPU prod L10 low",
+      "passCheck": true
+    },
+    {
+      "name": "continuous requested level and settings prod L10 low",
+      "passCheck": true
+    },
+    {
+      "name": "ordinary native input control prod L10 low",
+      "passCheck": true
+    },
+    {
+      "name": "one mission timestamp per full frame interval prod L10 low",
+      "passCheck": true
+    },
+    {
+      "name": "clean unprofiled gameplay candidate L10 low",
+      "passCheck": true
+    },
+    {
+      "name": "full native minute candidate L10 low",
+      "passCheck": true
+    },
+    {
+      "name": "recomputed raw frame statistics candidate L10 low",
+      "passCheck": true
+    },
+    {
+      "name": "native Metal WebGPU candidate L10 low",
+      "passCheck": true
+    },
+    {
+      "name": "continuous requested level and settings candidate L10 low",
+      "passCheck": true
+    },
+    {
+      "name": "ordinary native input control candidate L10 low",
+      "passCheck": true
+    },
+    {
+      "name": "one mission timestamp per full frame interval candidate L10 low",
+      "passCheck": true
+    },
+    {
+      "name": "exact public menu duration prod webgl2 L1 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "unprofiled successful public requests prod webgl2 L1 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "public bundle identity prod webgl2 L1 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "native Metal WebGL2 menu prod webgl2 L1 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "exact public menu duration prod webgl2 L1 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "unprofiled successful public requests prod webgl2 L1 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "public bundle identity prod webgl2 L1 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "native Metal WebGL2 menu prod webgl2 L1 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "exact public menu duration candidate webgl2 L1 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "unprofiled successful public requests candidate webgl2 L1 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "public bundle identity candidate webgl2 L1 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "native Metal WebGL2 menu candidate webgl2 L1 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "exact public menu duration candidate webgl2 L1 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "unprofiled successful public requests candidate webgl2 L1 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "public bundle identity candidate webgl2 L1 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "native Metal WebGL2 menu candidate webgl2 L1 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "exact public menu duration prod webgl2 L4 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "unprofiled successful public requests prod webgl2 L4 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "public bundle identity prod webgl2 L4 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "native Metal WebGL2 menu prod webgl2 L4 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "exact public menu duration prod webgl2 L4 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "unprofiled successful public requests prod webgl2 L4 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "public bundle identity prod webgl2 L4 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "native Metal WebGL2 menu prod webgl2 L4 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "exact public menu duration candidate webgl2 L4 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "unprofiled successful public requests candidate webgl2 L4 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "public bundle identity candidate webgl2 L4 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "native Metal WebGL2 menu candidate webgl2 L4 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "exact public menu duration candidate webgl2 L4 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "unprofiled successful public requests candidate webgl2 L4 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "public bundle identity candidate webgl2 L4 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "native Metal WebGL2 menu candidate webgl2 L4 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "exact public menu duration prod webgl2 L7 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "unprofiled successful public requests prod webgl2 L7 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "public bundle identity prod webgl2 L7 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "native Metal WebGL2 menu prod webgl2 L7 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "exact public menu duration prod webgl2 L7 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "unprofiled successful public requests prod webgl2 L7 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "public bundle identity prod webgl2 L7 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "native Metal WebGL2 menu prod webgl2 L7 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "exact public menu duration candidate webgl2 L7 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "unprofiled successful public requests candidate webgl2 L7 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "public bundle identity candidate webgl2 L7 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "native Metal WebGL2 menu candidate webgl2 L7 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "exact public menu duration candidate webgl2 L7 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "unprofiled successful public requests candidate webgl2 L7 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "public bundle identity candidate webgl2 L7 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "native Metal WebGL2 menu candidate webgl2 L7 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "exact public menu duration prod webgpu L1 high cold",
+      "passCheck": true
+    },
+    {
+      "name": "unprofiled successful public requests prod webgpu L1 high cold",
+      "passCheck": true
+    },
+    {
+      "name": "public bundle identity prod webgpu L1 high cold",
+      "passCheck": true
+    },
+    {
+      "name": "native WebGPU menu prod webgpu L1 high cold",
+      "passCheck": true
+    },
+    {
+      "name": "exact public menu duration prod webgpu L1 high warm",
+      "passCheck": true
+    },
+    {
+      "name": "unprofiled successful public requests prod webgpu L1 high warm",
+      "passCheck": true
+    },
+    {
+      "name": "public bundle identity prod webgpu L1 high warm",
+      "passCheck": true
+    },
+    {
+      "name": "native WebGPU menu prod webgpu L1 high warm",
+      "passCheck": true
+    },
+    {
+      "name": "exact public menu duration candidate webgpu L1 high cold",
+      "passCheck": true
+    },
+    {
+      "name": "unprofiled successful public requests candidate webgpu L1 high cold",
+      "passCheck": true
+    },
+    {
+      "name": "public bundle identity candidate webgpu L1 high cold",
+      "passCheck": true
+    },
+    {
+      "name": "native WebGPU menu candidate webgpu L1 high cold",
+      "passCheck": true
+    },
+    {
+      "name": "exact public menu duration candidate webgpu L1 high warm",
+      "passCheck": true
+    },
+    {
+      "name": "unprofiled successful public requests candidate webgpu L1 high warm",
+      "passCheck": true
+    },
+    {
+      "name": "public bundle identity candidate webgpu L1 high warm",
+      "passCheck": true
+    },
+    {
+      "name": "native WebGPU menu candidate webgpu L1 high warm",
+      "passCheck": true
+    },
+    {
+      "name": "exact public menu duration prod webgpu L3 high cold",
+      "passCheck": true
+    },
+    {
+      "name": "unprofiled successful public requests prod webgpu L3 high cold",
+      "passCheck": true
+    },
+    {
+      "name": "public bundle identity prod webgpu L3 high cold",
+      "passCheck": true
+    },
+    {
+      "name": "native WebGPU menu prod webgpu L3 high cold",
+      "passCheck": true
+    },
+    {
+      "name": "exact public menu duration prod webgpu L3 high warm",
+      "passCheck": true
+    },
+    {
+      "name": "unprofiled successful public requests prod webgpu L3 high warm",
+      "passCheck": true
+    },
+    {
+      "name": "public bundle identity prod webgpu L3 high warm",
+      "passCheck": true
+    },
+    {
+      "name": "native WebGPU menu prod webgpu L3 high warm",
+      "passCheck": true
+    },
+    {
+      "name": "exact public menu duration candidate webgpu L3 high cold",
+      "passCheck": true
+    },
+    {
+      "name": "unprofiled successful public requests candidate webgpu L3 high cold",
+      "passCheck": true
+    },
+    {
+      "name": "public bundle identity candidate webgpu L3 high cold",
+      "passCheck": true
+    },
+    {
+      "name": "native WebGPU menu candidate webgpu L3 high cold",
+      "passCheck": true
+    },
+    {
+      "name": "exact public menu duration candidate webgpu L3 high warm",
+      "passCheck": true
+    },
+    {
+      "name": "unprofiled successful public requests candidate webgpu L3 high warm",
+      "passCheck": true
+    },
+    {
+      "name": "public bundle identity candidate webgpu L3 high warm",
+      "passCheck": true
+    },
+    {
+      "name": "native WebGPU menu candidate webgpu L3 high warm",
+      "passCheck": true
+    },
+    {
+      "name": "exact public menu duration prod webgpu L4 high cold",
+      "passCheck": true
+    },
+    {
+      "name": "unprofiled successful public requests prod webgpu L4 high cold",
+      "passCheck": true
+    },
+    {
+      "name": "public bundle identity prod webgpu L4 high cold",
+      "passCheck": true
+    },
+    {
+      "name": "native WebGPU menu prod webgpu L4 high cold",
+      "passCheck": true
+    },
+    {
+      "name": "exact public menu duration prod webgpu L4 high warm",
+      "passCheck": true
+    },
+    {
+      "name": "unprofiled successful public requests prod webgpu L4 high warm",
+      "passCheck": true
+    },
+    {
+      "name": "public bundle identity prod webgpu L4 high warm",
+      "passCheck": true
+    },
+    {
+      "name": "native WebGPU menu prod webgpu L4 high warm",
+      "passCheck": true
+    },
+    {
+      "name": "exact public menu duration candidate webgpu L4 high cold",
+      "passCheck": true
+    },
+    {
+      "name": "unprofiled successful public requests candidate webgpu L4 high cold",
+      "passCheck": true
+    },
+    {
+      "name": "public bundle identity candidate webgpu L4 high cold",
+      "passCheck": true
+    },
+    {
+      "name": "native WebGPU menu candidate webgpu L4 high cold",
+      "passCheck": true
+    },
+    {
+      "name": "exact public menu duration candidate webgpu L4 high warm",
+      "passCheck": true
+    },
+    {
+      "name": "unprofiled successful public requests candidate webgpu L4 high warm",
+      "passCheck": true
+    },
+    {
+      "name": "public bundle identity candidate webgpu L4 high warm",
+      "passCheck": true
+    },
+    {
+      "name": "native WebGPU menu candidate webgpu L4 high warm",
+      "passCheck": true
+    },
+    {
+      "name": "exact public menu duration prod webgpu L5 high cold",
+      "passCheck": true
+    },
+    {
+      "name": "unprofiled successful public requests prod webgpu L5 high cold",
+      "passCheck": true
+    },
+    {
+      "name": "public bundle identity prod webgpu L5 high cold",
+      "passCheck": true
+    },
+    {
+      "name": "native WebGPU menu prod webgpu L5 high cold",
+      "passCheck": true
+    },
+    {
+      "name": "exact public menu duration prod webgpu L5 high warm",
+      "passCheck": true
+    },
+    {
+      "name": "unprofiled successful public requests prod webgpu L5 high warm",
+      "passCheck": true
+    },
+    {
+      "name": "public bundle identity prod webgpu L5 high warm",
+      "passCheck": true
+    },
+    {
+      "name": "native WebGPU menu prod webgpu L5 high warm",
+      "passCheck": true
+    },
+    {
+      "name": "exact public menu duration candidate webgpu L5 high cold",
+      "passCheck": true
+    },
+    {
+      "name": "unprofiled successful public requests candidate webgpu L5 high cold",
+      "passCheck": true
+    },
+    {
+      "name": "public bundle identity candidate webgpu L5 high cold",
+      "passCheck": true
+    },
+    {
+      "name": "native WebGPU menu candidate webgpu L5 high cold",
+      "passCheck": true
+    },
+    {
+      "name": "exact public menu duration candidate webgpu L5 high warm",
+      "passCheck": true
+    },
+    {
+      "name": "unprofiled successful public requests candidate webgpu L5 high warm",
+      "passCheck": true
+    },
+    {
+      "name": "public bundle identity candidate webgpu L5 high warm",
+      "passCheck": true
+    },
+    {
+      "name": "native WebGPU menu candidate webgpu L5 high warm",
+      "passCheck": true
+    },
+    {
+      "name": "exact public menu duration prod webgpu L7 high cold",
+      "passCheck": true
+    },
+    {
+      "name": "unprofiled successful public requests prod webgpu L7 high cold",
+      "passCheck": true
+    },
+    {
+      "name": "public bundle identity prod webgpu L7 high cold",
+      "passCheck": true
+    },
+    {
+      "name": "native WebGPU menu prod webgpu L7 high cold",
+      "passCheck": true
+    },
+    {
+      "name": "exact public menu duration prod webgpu L7 high warm",
+      "passCheck": true
+    },
+    {
+      "name": "unprofiled successful public requests prod webgpu L7 high warm",
+      "passCheck": true
+    },
+    {
+      "name": "public bundle identity prod webgpu L7 high warm",
+      "passCheck": true
+    },
+    {
+      "name": "native WebGPU menu prod webgpu L7 high warm",
+      "passCheck": true
+    },
+    {
+      "name": "exact public menu duration candidate webgpu L7 high cold",
+      "passCheck": true
+    },
+    {
+      "name": "unprofiled successful public requests candidate webgpu L7 high cold",
+      "passCheck": true
+    },
+    {
+      "name": "public bundle identity candidate webgpu L7 high cold",
+      "passCheck": true
+    },
+    {
+      "name": "native WebGPU menu candidate webgpu L7 high cold",
+      "passCheck": true
+    },
+    {
+      "name": "exact public menu duration candidate webgpu L7 high warm",
+      "passCheck": true
+    },
+    {
+      "name": "unprofiled successful public requests candidate webgpu L7 high warm",
+      "passCheck": true
+    },
+    {
+      "name": "public bundle identity candidate webgpu L7 high warm",
+      "passCheck": true
+    },
+    {
+      "name": "native WebGPU menu candidate webgpu L7 high warm",
+      "passCheck": true
+    },
+    {
+      "name": "exact public menu duration prod webgpu L10 high cold",
+      "passCheck": true
+    },
+    {
+      "name": "unprofiled successful public requests prod webgpu L10 high cold",
+      "passCheck": true
+    },
+    {
+      "name": "public bundle identity prod webgpu L10 high cold",
+      "passCheck": true
+    },
+    {
+      "name": "native WebGPU menu prod webgpu L10 high cold",
+      "passCheck": true
+    },
+    {
+      "name": "exact public menu duration prod webgpu L10 high warm",
+      "passCheck": true
+    },
+    {
+      "name": "unprofiled successful public requests prod webgpu L10 high warm",
+      "passCheck": true
+    },
+    {
+      "name": "public bundle identity prod webgpu L10 high warm",
+      "passCheck": true
+    },
+    {
+      "name": "native WebGPU menu prod webgpu L10 high warm",
+      "passCheck": true
+    },
+    {
+      "name": "exact public menu duration candidate webgpu L10 high cold",
+      "passCheck": true
+    },
+    {
+      "name": "unprofiled successful public requests candidate webgpu L10 high cold",
+      "passCheck": true
+    },
+    {
+      "name": "public bundle identity candidate webgpu L10 high cold",
+      "passCheck": true
+    },
+    {
+      "name": "native WebGPU menu candidate webgpu L10 high cold",
+      "passCheck": true
+    },
+    {
+      "name": "exact public menu duration candidate webgpu L10 high warm",
+      "passCheck": true
+    },
+    {
+      "name": "unprofiled successful public requests candidate webgpu L10 high warm",
+      "passCheck": true
+    },
+    {
+      "name": "public bundle identity candidate webgpu L10 high warm",
+      "passCheck": true
+    },
+    {
+      "name": "native WebGPU menu candidate webgpu L10 high warm",
+      "passCheck": true
+    },
+    {
+      "name": "exact public menu duration prod webgpu L1 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "unprofiled successful public requests prod webgpu L1 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "public bundle identity prod webgpu L1 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "native WebGPU menu prod webgpu L1 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "exact public menu duration prod webgpu L1 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "unprofiled successful public requests prod webgpu L1 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "public bundle identity prod webgpu L1 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "native WebGPU menu prod webgpu L1 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "exact public menu duration candidate webgpu L1 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "unprofiled successful public requests candidate webgpu L1 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "public bundle identity candidate webgpu L1 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "native WebGPU menu candidate webgpu L1 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "exact public menu duration candidate webgpu L1 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "unprofiled successful public requests candidate webgpu L1 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "public bundle identity candidate webgpu L1 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "native WebGPU menu candidate webgpu L1 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "exact public menu duration prod webgpu L3 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "unprofiled successful public requests prod webgpu L3 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "public bundle identity prod webgpu L3 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "native WebGPU menu prod webgpu L3 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "exact public menu duration prod webgpu L3 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "unprofiled successful public requests prod webgpu L3 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "public bundle identity prod webgpu L3 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "native WebGPU menu prod webgpu L3 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "exact public menu duration candidate webgpu L3 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "unprofiled successful public requests candidate webgpu L3 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "public bundle identity candidate webgpu L3 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "native WebGPU menu candidate webgpu L3 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "exact public menu duration candidate webgpu L3 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "unprofiled successful public requests candidate webgpu L3 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "public bundle identity candidate webgpu L3 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "native WebGPU menu candidate webgpu L3 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "exact public menu duration prod webgpu L4 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "unprofiled successful public requests prod webgpu L4 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "public bundle identity prod webgpu L4 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "native WebGPU menu prod webgpu L4 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "exact public menu duration prod webgpu L4 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "unprofiled successful public requests prod webgpu L4 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "public bundle identity prod webgpu L4 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "native WebGPU menu prod webgpu L4 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "exact public menu duration candidate webgpu L4 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "unprofiled successful public requests candidate webgpu L4 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "public bundle identity candidate webgpu L4 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "native WebGPU menu candidate webgpu L4 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "exact public menu duration candidate webgpu L4 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "unprofiled successful public requests candidate webgpu L4 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "public bundle identity candidate webgpu L4 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "native WebGPU menu candidate webgpu L4 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "exact public menu duration prod webgpu L5 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "unprofiled successful public requests prod webgpu L5 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "public bundle identity prod webgpu L5 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "native WebGPU menu prod webgpu L5 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "exact public menu duration prod webgpu L5 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "unprofiled successful public requests prod webgpu L5 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "public bundle identity prod webgpu L5 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "native WebGPU menu prod webgpu L5 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "exact public menu duration candidate webgpu L5 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "unprofiled successful public requests candidate webgpu L5 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "public bundle identity candidate webgpu L5 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "native WebGPU menu candidate webgpu L5 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "exact public menu duration candidate webgpu L5 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "unprofiled successful public requests candidate webgpu L5 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "public bundle identity candidate webgpu L5 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "native WebGPU menu candidate webgpu L5 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "exact public menu duration prod webgpu L7 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "unprofiled successful public requests prod webgpu L7 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "public bundle identity prod webgpu L7 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "native WebGPU menu prod webgpu L7 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "exact public menu duration prod webgpu L7 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "unprofiled successful public requests prod webgpu L7 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "public bundle identity prod webgpu L7 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "native WebGPU menu prod webgpu L7 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "exact public menu duration candidate webgpu L7 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "unprofiled successful public requests candidate webgpu L7 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "public bundle identity candidate webgpu L7 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "native WebGPU menu candidate webgpu L7 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "exact public menu duration candidate webgpu L7 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "unprofiled successful public requests candidate webgpu L7 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "public bundle identity candidate webgpu L7 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "native WebGPU menu candidate webgpu L7 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "exact public menu duration prod webgpu L10 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "unprofiled successful public requests prod webgpu L10 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "public bundle identity prod webgpu L10 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "native WebGPU menu prod webgpu L10 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "exact public menu duration prod webgpu L10 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "unprofiled successful public requests prod webgpu L10 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "public bundle identity prod webgpu L10 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "native WebGPU menu prod webgpu L10 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "exact public menu duration candidate webgpu L10 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "unprofiled successful public requests candidate webgpu L10 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "public bundle identity candidate webgpu L10 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "native WebGPU menu candidate webgpu L10 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "exact public menu duration candidate webgpu L10 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "unprofiled successful public requests candidate webgpu L10 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "public bundle identity candidate webgpu L10 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "native WebGPU menu candidate webgpu L10 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "reported load values webgpu L1 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "reported load values webgpu L1 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "reported full-trace stats webgpu L1 low",
+      "passCheck": true
+    },
+    {
+      "name": "independent strict cell PASS webgpu L1 low",
+      "passCheck": true
+    },
+    {
+      "name": "reported load values webgpu L3 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "reported load values webgpu L3 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "reported full-trace stats webgpu L3 low",
+      "passCheck": true
+    },
+    {
+      "name": "independent strict cell PASS webgpu L3 low",
+      "passCheck": true
+    },
+    {
+      "name": "reported load values webgpu L4 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "reported load values webgpu L4 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "reported full-trace stats webgpu L4 low",
+      "passCheck": true
+    },
+    {
+      "name": "independent strict cell PASS webgpu L4 low",
+      "passCheck": true
+    },
+    {
+      "name": "reported load values webgpu L5 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "reported load values webgpu L5 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "reported full-trace stats webgpu L5 low",
+      "passCheck": true
+    },
+    {
+      "name": "independent strict cell PASS webgpu L5 low",
+      "passCheck": true
+    },
+    {
+      "name": "reported load values webgpu L7 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "reported load values webgpu L7 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "reported full-trace stats webgpu L7 low",
+      "passCheck": true
+    },
+    {
+      "name": "independent strict cell PASS webgpu L7 low",
+      "passCheck": true
+    },
+    {
+      "name": "reported load values webgpu L10 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "reported load values webgpu L10 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "reported full-trace stats webgpu L10 low",
+      "passCheck": true
+    },
+    {
+      "name": "independent strict cell PASS webgpu L10 low",
+      "passCheck": true
+    },
+    {
+      "name": "reported load values webgpu L1 high cold",
+      "passCheck": true
+    },
+    {
+      "name": "reported load values webgpu L1 high warm",
+      "passCheck": true
+    },
+    {
+      "name": "reported full-trace stats webgpu L1 high",
+      "passCheck": true
+    },
+    {
+      "name": "independent strict cell PASS webgpu L1 high",
+      "passCheck": true
+    },
+    {
+      "name": "reported load values webgpu L3 high cold",
+      "passCheck": true
+    },
+    {
+      "name": "reported load values webgpu L3 high warm",
+      "passCheck": true
+    },
+    {
+      "name": "reported full-trace stats webgpu L3 high",
+      "passCheck": true
+    },
+    {
+      "name": "independent strict cell PASS webgpu L3 high",
+      "passCheck": true
+    },
+    {
+      "name": "reported load values webgpu L4 high cold",
+      "passCheck": true
+    },
+    {
+      "name": "reported load values webgpu L4 high warm",
+      "passCheck": true
+    },
+    {
+      "name": "reported full-trace stats webgpu L4 high",
+      "passCheck": true
+    },
+    {
+      "name": "independent strict cell PASS webgpu L4 high",
+      "passCheck": true
+    },
+    {
+      "name": "reported load values webgpu L5 high cold",
+      "passCheck": true
+    },
+    {
+      "name": "reported load values webgpu L5 high warm",
+      "passCheck": true
+    },
+    {
+      "name": "reported full-trace stats webgpu L5 high",
+      "passCheck": true
+    },
+    {
+      "name": "independent strict cell PASS webgpu L5 high",
+      "passCheck": true
+    },
+    {
+      "name": "reported load values webgpu L7 high cold",
+      "passCheck": true
+    },
+    {
+      "name": "reported load values webgpu L7 high warm",
+      "passCheck": true
+    },
+    {
+      "name": "reported full-trace stats webgpu L7 high",
+      "passCheck": true
+    },
+    {
+      "name": "independent strict cell PASS webgpu L7 high",
+      "passCheck": true
+    },
+    {
+      "name": "reported load values webgpu L10 high cold",
+      "passCheck": true
+    },
+    {
+      "name": "reported load values webgpu L10 high warm",
+      "passCheck": true
+    },
+    {
+      "name": "reported full-trace stats webgpu L10 high",
+      "passCheck": true
+    },
+    {
+      "name": "independent strict cell PASS webgpu L10 high",
+      "passCheck": true
+    },
+    {
+      "name": "reported load values webgl2 L1 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "reported load values webgl2 L1 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "independent strict cell PASS webgl2 L1 low",
+      "passCheck": true
+    },
+    {
+      "name": "reported load values webgl2 L4 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "reported load values webgl2 L4 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "independent strict cell PASS webgl2 L4 low",
+      "passCheck": true
+    },
+    {
+      "name": "reported load values webgl2 L7 low cold",
+      "passCheck": true
+    },
+    {
+      "name": "reported load values webgl2 L7 low warm",
+      "passCheck": true
+    },
+    {
+      "name": "independent strict cell PASS webgl2 L7 low",
+      "passCheck": true
+    },
+    {
+      "name": "complete event window L1 low handover/outbreak prod",
+      "passCheck": true
+    },
+    {
+      "name": "complete event window L1 low handover/outbreak candidate",
+      "passCheck": true
+    },
+    {
+      "name": "independent event PASS L1 low handover/outbreak",
+      "passCheck": true
+    },
+    {
+      "name": "complete event window L1 high handover/outbreak prod",
+      "passCheck": true
+    },
+    {
+      "name": "complete event window L1 high handover/outbreak candidate",
+      "passCheck": true
+    },
+    {
+      "name": "independent event PASS L1 high handover/outbreak",
+      "passCheck": true
+    },
+    {
+      "name": "complete event window L7 low pickup prod",
+      "passCheck": true
+    },
+    {
+      "name": "complete event window L7 low pickup candidate",
+      "passCheck": true
+    },
+    {
+      "name": "independent event PASS L7 low pickup",
+      "passCheck": true
+    },
+    {
+      "name": "complete event window L7 low first rocket prod",
+      "passCheck": true
+    },
+    {
+      "name": "complete event window L7 low first rocket candidate",
+      "passCheck": true
+    },
+    {
+      "name": "independent event PASS L7 low first rocket",
+      "passCheck": true
+    },
+    {
+      "name": "complete event window L7 low pickup through first rocket prod",
+      "passCheck": true
+    },
+    {
+      "name": "complete event window L7 low pickup through first rocket candidate",
+      "passCheck": true
+    },
+    {
+      "name": "independent event PASS L7 low pickup through first rocket",
+      "passCheck": true
+    },
+    {
+      "name": "complete event window L7 high pickup prod",
+      "passCheck": true
+    },
+    {
+      "name": "complete event window L7 high pickup candidate",
+      "passCheck": true
+    },
+    {
+      "name": "independent event PASS L7 high pickup",
+      "passCheck": true
+    },
+    {
+      "name": "complete event window L7 high first rocket prod",
+      "passCheck": true
+    },
+    {
+      "name": "complete event window L7 high first rocket candidate",
+      "passCheck": true
+    },
+    {
+      "name": "independent event PASS L7 high first rocket",
+      "passCheck": true
+    },
+    {
+      "name": "complete event window L7 high pickup through first rocket prod",
+      "passCheck": true
+    },
+    {
+      "name": "complete event window L7 high pickup through first rocket candidate",
+      "passCheck": true
+    },
+    {
+      "name": "independent event PASS L7 high pickup through first rocket",
+      "passCheck": true
+    },
+    {
+      "name": "complete event window L10 high charge through completion (+2 s) prod",
+      "passCheck": true
+    },
+    {
+      "name": "complete event window L10 high charge through completion (+2 s) candidate",
+      "passCheck": true
+    },
+    {
+      "name": "independent event PASS L10 high charge through completion (+2 s)",
+      "passCheck": true
+    },
+    {
+      "name": "G-01 Begin mission present on both L1 low WebGL2 cold loads",
+      "passCheck": true
+    },
+    {
+      "name": "fresh live batch 56 control remains unchanged",
+      "passCheck": false
+    },
+    {
+      "name": "clean source and fresh final production build",
+      "passCheck": true
+    },
+    {
+      "name": "published evidence matches current source tree",
+      "passCheck": true
+    },
+    {
+      "name": "production excludes QA hooks",
+      "passCheck": true
+    },
+    {
+      "name": "all required repository checks pass on final source",
+      "passCheck": true
+    },
+    {
+      "name": "source identity src/assets/civilianBake.ts",
+      "passCheck": true
+    },
+    {
+      "name": "source identity src/render/CrowdView.ts",
+      "passCheck": true
+    },
+    {
+      "name": "source identity src/render/PaletteMaterial.ts",
+      "passCheck": true
+    },
+    {
+      "name": "source identity src/render/characters/StaticCorpses.ts",
+      "passCheck": true
+    },
+    {
+      "name": "source identity src/render/characters/bakeInfected.ts",
+      "passCheck": true
+    },
+    {
+      "name": "source identity src/render/characters/crowdClipNames.ts",
+      "passCheck": true
+    },
+    {
+      "name": "source identity src/render/characters/deathPose.ts",
+      "passCheck": true
+    },
+    {
+      "name": "source identity src/render/characters/skinnedCrowd.ts",
+      "passCheck": true
+    },
+    {
+      "name": "source identity src/render/npc/RoutineProps.ts",
+      "passCheck": true
+    },
+    {
+      "name": "source identity src/render/npc/civilianBake.worker.ts",
+      "passCheck": true
+    },
+    {
+      "name": "source identity tests/shared/render-contracts.test.ts",
+      "passCheck": true
+    },
+    {
+      "name": "source identity tools/qa/release-ab-load.mjs",
+      "passCheck": true
+    },
+    {
+      "name": "source identity tools/qa/ab-tour.ts",
+      "passCheck": true
+    },
+    {
+      "name": "source identity tools/perf/quiet-run.sh",
+      "passCheck": true
+    },
+    {
+      "name": "source identity src/debug/testApi.ts",
+      "passCheck": true
+    },
+    {
+      "name": "every mirror byte and asset version rehashed",
+      "passCheck": true
+    },
+    {
+      "name": "all requested runtime resources are valid and mirrored",
+      "passCheck": true
+    },
+    {
+      "name": "30 actual worker transfers are bit-identical to the synchronous reference",
+      "passCheck": true
+    },
+    {
+      "name": "all geometry/clip/matrix CPU equivalence cases pass",
+      "passCheck": true
+    },
+    {
+      "name": "equivalent corpse graphs deduplicated with materials retained",
+      "passCheck": true
+    },
+    {
+      "name": "both backends retain each Alpha LOD atlas and every LOD0 corpse atlas",
+      "passCheck": true
+    },
+    {
+      "name": "complete independent 12-baseline / six-final rocket trace series",
+      "passCheck": true
+    },
+    {
+      "name": "retained rocket trace maximum base 1",
+      "passCheck": true
+    },
+    {
+      "name": "retained rocket trace maximum base 2",
+      "passCheck": true
+    },
+    {
+      "name": "retained rocket trace maximum base 3",
+      "passCheck": true
+    },
+    {
+      "name": "retained rocket trace maximum base 4",
+      "passCheck": true
+    },
+    {
+      "name": "retained rocket trace maximum base 5",
+      "passCheck": true
+    },
+    {
+      "name": "retained rocket trace maximum base 6",
+      "passCheck": true
+    },
+    {
+      "name": "retained rocket trace maximum base 7",
+      "passCheck": true
+    },
+    {
+      "name": "retained rocket trace maximum base 8",
+      "passCheck": true
+    },
+    {
+      "name": "retained rocket trace maximum base 9",
+      "passCheck": true
+    },
+    {
+      "name": "retained rocket trace maximum base 10",
+      "passCheck": true
+    },
+    {
+      "name": "retained rocket trace maximum base 11",
+      "passCheck": true
+    },
+    {
+      "name": "retained rocket trace maximum base 12",
+      "passCheck": true
+    },
+    {
+      "name": "retained rocket trace maximum fixed 1",
+      "passCheck": true
+    },
+    {
+      "name": "retained rocket trace maximum fixed 2",
+      "passCheck": true
+    },
+    {
+      "name": "retained rocket trace maximum fixed 3",
+      "passCheck": true
+    },
+    {
+      "name": "retained rocket trace maximum fixed 4",
+      "passCheck": true
+    },
+    {
+      "name": "retained rocket trace maximum fixed 5",
+      "passCheck": true
+    },
+    {
+      "name": "retained rocket trace maximum fixed 6",
+      "passCheck": true
+    },
+    {
+      "name": "exclusive quiet final job fixed-loads",
+      "passCheck": true
+    },
+    {
+      "name": "exclusive quiet final job fixed-low-near",
+      "passCheck": true
+    },
+    {
+      "name": "exclusive quiet final job fixed-high-near",
+      "passCheck": true
+    },
+    {
+      "name": "exclusive quiet final job fixed-low-heavy",
+      "passCheck": true
+    },
+    {
+      "name": "exclusive quiet final job fixed-high-heavy",
+      "passCheck": true
+    },
+    {
+      "name": "protected sources/settings/dependencies unchanged",
+      "passCheck": true
+    }
+  ]
+}

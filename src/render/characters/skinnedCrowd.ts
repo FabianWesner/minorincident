@@ -64,8 +64,20 @@ export function skinnedCrowdMatrix(texture: DataTexture | TextureNode, dominant:
 /** CPU blended, premultiplied matrix of vertex `i` at atlas frame offset.
  * `onlyRow` computes one coordinate for bounds and leaves the other rows zero. */
 export function skinnedVertexMatrix(clip: CrowdClip, frameOffset: number, parts: BufferAttribute | import('three').InterleavedBufferAttribute, skin: BufferAttribute | import('three').InterleavedBufferAttribute, i: number, out: Float32Array, pose?: Float32Array, onlyRow?: 0 | 1 | 2 | 3): Float32Array {
-  const binds = clip.binds!, matrices = clip.matrices, packed = skin.getX(i);
+  const binds = clip.binds!, matrices = clip.matrices;
   const w1 = skin.getY(i), w2 = skin.getZ(i), w3 = skin.getW(i) % 1, w0 = 1 - w1 - w2 - w3;
+  // Rigid vertices already have their complete joint matrix in the pose row.
+  // Keep the original +0 arithmetic (including signed zero) without blending it again.
+  if (pose && w1 === 0 && w2 === 0 && w3 === 0) {
+    const base = parts.getX(i) * 16;
+    if (onlyRow === undefined) for (let j = 0; j < 16; j++) out[j] = (pose[base + j] ?? 0) + 0;
+    else {
+      out.fill(0);
+      for (let col = 0; col < 4; col++) out[col * 4 + onlyRow] = (pose[base + col * 4 + onlyRow] ?? 0) + 0;
+    }
+    return out;
+  }
+  const packed = skin.getX(i);
   out.fill(0);
   // Bounds searches need only one coordinate. Keep its joint accumulation and
   // Float32 rounding identical to the full matrix; other rows remain zero.

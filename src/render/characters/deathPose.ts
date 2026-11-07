@@ -1,6 +1,6 @@
 import { Euler, Matrix4, Quaternion, Vector3, type BufferGeometry } from 'three';
 import type { CrowdClip } from '../../assets/crowd';
-import { civilianClips, framesPerClip, infectedClips } from './bakeInfected';
+import { civilianClips, framesPerClip, infectedClips } from './crowdClipNames';
 import { premultiplyRow, skinnedVertexMatrix } from './skinnedCrowd';
 
 /**
@@ -25,6 +25,12 @@ const humanoid = ['hip', 'torso', 'head', 'armL', 'armR', 'foreArmL', 'foreArmR'
 const repaired = new WeakMap<CrowdClip, { prone: boolean }>();
 /** Distance (m) a repaired Alpha reaches from its feet along the floor; corpse placement keeps that strip clear. */
 export const deathReach = new WeakMap<CrowdClip, number>();
+export interface DeathPoseRepair { prone: boolean; reach: number }
+/** Restore the worker's completed repair after its pose buffers are transferred. */
+export function registerDeathPoseRepair(clip: CrowdClip, repair: DeathPoseRepair): void {
+  repaired.set(clip, { prone: repair.prone });
+  deathReach.set(clip, repair.reach);
+}
 
 const smooth = (t: number) => t * t * (3 - 2 * t);
 /** Share of the lying pose at `frame` of a death clip that starts at `first`: the fall plays, then settles. */

@@ -1,0 +1,85 @@
+{
+  "at": "2026-11-07T17:18:20.773Z",
+  "controlPolicy": "Keep the explicitly requested batch-56 control bytes. Live deployment changed after the mirror was downloaded; do not replace paired measurements with batch-57 bytes.",
+  "originalMirrorIndex": {
+    "path": "/",
+    "bytes": 1543,
+    "sha256": "7d52c63c54ad5db80d0cf45335728cf4ab9e62ec3ecdd712c59e67e5108710ad",
+    "contentType": "text/html; charset=utf-8"
+  },
+  "checks": [
+    {
+      "path": "/",
+      "status": 200,
+      "headers": {
+        "access-control-allow-origin": "*",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cache-control": "public, max-age=0, must-revalidate",
+        "cf-cache-status": "DYNAMIC",
+        "cf-ray": "a56dff221decfab1-TXL",
+        "content-encoding": "br",
+        "content-type": "text/html; charset=utf-8",
+        "date": "Sat, 07 Nov 2026 17:18:20 GMT",
+        "nel": "{\"report_to\":\"cf-nel\",\"success_fraction\":0.0,\"max_age\":604800}",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "report-to": "{\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https://a.nel.cloudflare.com/report/v4?s=WmzfRDLT7JMlDzDkwCVmfDiz8GCJcFqo6XnxFuDu8qXfBXwsIDQYDf73iv8FXeO5EdboipqkMU2mi%2B0lUvekDo%2FC3Nq3%2BUEy5olREx1TDu3w17PpvI%2FrUYh5z8Fl5%2B%2FPkdL7uFwFDbTtToepGfo3RwI%3D\"}]}",
+        "server": "cloudflare",
+        "vary": "accept-encoding",
+        "x-content-type-options": "nosniff"
+      },
+      "bytes": 1543,
+      "sha256": "3c5ff5452a6cc39c1fc74f971295f9b5a6fc5a556e9ee96f1731ee7b5ac3fa24",
+      "index": "<!doctype html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, viewport-fit=cover\">\n    <title>Minor Incident</title>\n    <meta name=\"description\" content=\"One parcel, one bad morning, one corgi. Ride, fight and rescue your way through a zombie outbreak in this isometric browser game.\">\n    <link rel=\"icon\" href=\"/favicon.ico\" sizes=\"16x16 32x32 48x48\">\n    <link rel=\"icon\" href=\"/favicon.svg\" type=\"image/svg+xml\" sizes=\"any\">\n    <link rel=\"apple-touch-icon\" href=\"/apple-touch-icon.png\" sizes=\"180x180\">\n    <link rel=\"manifest\" href=\"/site.webmanifest\">\n    <meta name=\"theme-color\" content=\"#293447\">\n    <script type=\"module\" crossorigin src=\"/build/index-DkTUBysS.js\"></script>\n    <link rel=\"modulepreload\" crossorigin href=\"/build/three-core-DQooTupI.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/build/three-webgpu-Cy_8JUkS.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/build/light-anchors-DQGCSUUw.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/build/character-clips-CGKWtM3S.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/build/rapier-ykuY6d4E.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/build/wreck-roofs-GAckelu8.js\">\n    <link rel=\"stylesheet\" crossorigin href=\"/build/index-ri5EUQ-C.css\">\n    <link rel=\"preload\" href=\"/build/rapier-C6GCbKVJ.wasm\" as=\"fetch\" type=\"application/wasm\" crossorigin=\"\">\n  </head>\n  <body style=\"margin:0;overflow:hidden;background:#293447\"><div id=\"game\"></div></body>\n</html>\n",
+      "bundle": "index-DkTUBysS.js"
+    },
+    {
+      "path": "/build/index-DbFAIX8_.js",
+      "status": 200,
+      "headers": {
+        "access-control-allow-origin": "*",
+        "age": "12397",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cache-control": "public, max-age=31536000, immutable",
+        "cf-cache-status": "HIT",
+        "cf-ray": "a56dff227e6bfab1-TXL",
+        "content-encoding": "br",
+        "content-type": "application/javascript",
+        "date": "Sat, 07 Nov 2026 17:18:20 GMT",
+        "etag": "W/\"55a715055c8e5e699329d611e1fff409\"",
+        "nel": "{\"report_to\":\"cf-nel\",\"success_fraction\":0.0,\"max_age\":604800}",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "report-to": "{\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https://a.nel.cloudflare.com/report/v4?s=bJ53s71dt6cqwTn927iizDFgpwto%2F%2FVhYqZE%2F22lcm22uokjJM4UnQwM7zyLcfOfaInXdq0zbHLKirp4CfrutD9a2cTzPRpKoD2xCvW4fgw0e%2F34Trg0wuJ%2FYxmEL%2BYfriHhbwItAr3cyTA7bFcZAnY%3D\"}]}",
+        "server": "cloudflare",
+        "vary": "accept-encoding",
+        "x-content-type-options": "nosniff"
+      },
+      "bytes": 3647667,
+      "sha256": "71dabceb1895250205ad7cdca0592f729930caf60867843113a29fc90b32eded"
+    },
+    {
+      "path": "/build/index-DkTUBysS.js",
+      "status": 200,
+      "headers": {
+        "access-control-allow-origin": "*",
+        "age": "964",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cache-control": "public, max-age=31536000, immutable",
+        "cf-cache-status": "HIT",
+        "cf-ray": "a56dff235fdafab1-TXL",
+        "content-encoding": "br",
+        "content-type": "application/javascript",
+        "date": "Sat, 07 Nov 2026 17:18:20 GMT",
+        "etag": "W/\"cf8057d9b21cd8f17ca5e959c856dc19\"",
+        "nel": "{\"report_to\":\"cf-nel\",\"success_fraction\":0.0,\"max_age\":604800}",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "report-to": "{\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https://a.nel.cloudflare.com/report/v4?s=2%2Fm4hnlAKOq5RX6QEjqW3JqL%2FSqJhwkvHkiEX6Fmgj%2FPyK0b143ECry6AEdpJDXmwiSxyz5LLG2ezK9mfAlxfC2WoqR5VhjnoTqp0AM%2B9QhU%2FI%2Fp0VquGudIkghxriTYMA30FHMLZyECgtdCaPP6118%3D\"}]}",
+        "server": "cloudflare",
+        "vary": "accept-encoding",
+        "x-content-type-options": "nosniff"
+      },
+      "bytes": 3663364,
+      "sha256": "d35026c1e6532c59dd0dc605f44036fa13e50fa6af06134419afd53e80d0d79b"
+    }
+  ],
+  "originalIndexHtml": "<!doctype html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, viewport-fit=cover\">\n    <title>Minor Incident</title>\n    <meta name=\"description\" content=\"One parcel, one bad morning, one corgi. Ride, fight and rescue your way through a zombie outbreak in this isometric browser game.\">\n    <link rel=\"icon\" href=\"/favicon.ico\" sizes=\"16x16 32x32 48x48\">\n    <link rel=\"icon\" href=\"/favicon.svg\" type=\"image/svg+xml\" sizes=\"any\">\n    <link rel=\"apple-touch-icon\" href=\"/apple-touch-icon.png\" sizes=\"180x180\">\n    <link rel=\"manifest\" href=\"/site.webmanifest\">\n    <meta name=\"theme-color\" content=\"#293447\">\n    <script type=\"module\" crossorigin src=\"/build/index-DbFAIX8_.js\"></script>\n    <link rel=\"modulepreload\" crossorigin href=\"/build/three-core-DQooTupI.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/build/three-webgpu-Cy_8JUkS.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/build/light-anchors-DQGCSUUw.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/build/character-clips-CGKWtM3S.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/build/rapier-ykuY6d4E.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/build/wreck-roofs-GAckelu8.js\">\n    <link rel=\"stylesheet\" crossorigin href=\"/build/index-ri5EUQ-C.css\">\n    <link rel=\"preload\" href=\"/build/rapier-C6GCbKVJ.wasm\" as=\"fetch\" type=\"application/wasm\" crossorigin=\"\">\n  </head>\n  <body style=\"margin:0;overflow:hidden;background:#293447\"><div id=\"game\"></div></body>\n</html>\n"
+}

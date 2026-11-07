@@ -1,0 +1,507 @@
+{
+  "at": "2026-11-07T17:14:21.830Z",
+  "cases": 30,
+  "fullBufferBitIdentical": 30,
+  "workerBundle": "civilianBake.worker-CD5ztKeP.js",
+  "workerBundleSha256": "2187bb06824035420f6860f807a21c97cbf651ef7da8e9bea3d1da9af9e176a4",
+  "sourceHashes": {
+    "src/assets/civilianBake.ts": "f747404d961fac551b2a83e528dd57ce326c18c0b315ef6dfc40ddc152b3208f",
+    "src/render/npc/civilianBake.worker.ts": "8ff02d3108b82296a9af89b747e664c12cb8b908fbdd97f5c5e368610985ae88",
+    "src/render/characters/deathPose.ts": "7c2e7dd3cd0d867946a376dbf74c7f7121ff42ebeaede4f4ac417d40af5a22fd",
+    "src/render/characters/crowdClipNames.ts": "764444e4555e1db5f72a21deac5c51338edd48a661cc7117a01eb30041359d37"
+  },
+  "measurements": [
+    {
+      "model": "npc.civilian-man-a",
+      "lod": "lod0",
+      "infected": false,
+      "path": "/assets/civilians/npc.civilian-man-a.lod0.5f2d005e221a5d2e.bin.gz",
+      "bytes": 2090792,
+      "expectedSha256": "a146d9fcfa3a9e550e21b66298fbd23bf85308a9d4189116c1b49346f85108d9",
+      "expectedRepair": {
+        "prone": false,
+        "reach": 0.9736771732568741
+      },
+      "prebuilt": true,
+      "sha256": "a146d9fcfa3a9e550e21b66298fbd23bf85308a9d4189116c1b49346f85108d9",
+      "deathPose": {
+        "prone": false,
+        "reach": 0.9736771732568741
+      }
+    },
+    {
+      "model": "npc.civilian-man-a",
+      "lod": "lod1",
+      "infected": false,
+      "path": "/assets/civilians/npc.civilian-man-a.lod1.53ac4d82ed60f961.bin.gz",
+      "bytes": 1803328,
+      "expectedSha256": "fed0e2e8d0eef541056c1057128cdd826e772cceed1ee0ac9898c3fe57890433",
+      "expectedRepair": {
+        "prone": false,
+        "reach": 0.9750568717718124
+      },
+      "prebuilt": true,
+      "sha256": "fed0e2e8d0eef541056c1057128cdd826e772cceed1ee0ac9898c3fe57890433",
+      "deathPose": {
+        "prone": false,
+        "reach": 0.9750568717718124
+      }
+    },
+    {
+      "model": "npc.civilian-man-a",
+      "lod": "lod2",
+      "infected": false,
+      "path": "/assets/civilians/npc.civilian-man-a.lod2.49c85894692753f9.bin.gz",
+      "bytes": 1639144,
+      "expectedSha256": "285afd0a22e7035499aba9c9b154335058c0b1da849be6fe30053a5e83b9f038",
+      "expectedRepair": {
+        "prone": false,
+        "reach": 0.9781437665224075
+      },
+      "prebuilt": true,
+      "sha256": "285afd0a22e7035499aba9c9b154335058c0b1da849be6fe30053a5e83b9f038",
+      "deathPose": {
+        "prone": false,
+        "reach": 0.9781437665224075
+      }
+    },
+    {
+      "model": "npc.civilian-woman-b",
+      "lod": "lod0",
+      "infected": false,
+      "path": "/assets/civilians/npc.civilian-woman-b.lod0.d710be70d765053c.bin.gz",
+      "bytes": 2167588,
+      "expectedSha256": "0b62224f70ae552dd68f7d1745f29fba81db9968e6e44cef677800b765741b49",
+      "expectedRepair": {
+        "prone": false,
+        "reach": 0.9458911865949631
+      },
+      "prebuilt": true,
+      "sha256": "0b62224f70ae552dd68f7d1745f29fba81db9968e6e44cef677800b765741b49",
+      "deathPose": {
+        "prone": false,
+        "reach": 0.9458911865949631
+      }
+    },
+    {
+      "model": "npc.civilian-woman-b",
+      "lod": "lod1",
+      "infected": false,
+      "path": "/assets/civilians/npc.civilian-woman-b.lod1.7b76829a74c21b6c.bin.gz",
+      "bytes": 1833396,
+      "expectedSha256": "d0ed2c78d1309d46cdb308f980928e302b6017e919e6188d9e31371b099ecaad",
+      "expectedRepair": {
+        "prone": false,
+        "reach": 0.9637131094932556
+      },
+      "prebuilt": true,
+      "sha256": "d0ed2c78d1309d46cdb308f980928e302b6017e919e6188d9e31371b099ecaad",
+      "deathPose": {
+        "prone": false,
+        "reach": 0.9637131094932556
+      }
+    },
+    {
+      "model": "npc.civilian-woman-b",
+      "lod": "lod2",
+      "infected": false,
+      "path": "/assets/civilians/npc.civilian-woman-b.lod2.3492ada7075347f7.bin.gz",
+      "bytes": 1658228,
+      "expectedSha256": "60ab488d11cb0939c318d357e6cb495035dd3f617e61e8b8e219011f6ef7bb0b",
+      "expectedRepair": {
+        "prone": false,
+        "reach": 0.9864722043275833
+      },
+      "prebuilt": true,
+      "sha256": "60ab488d11cb0939c318d357e6cb495035dd3f617e61e8b8e219011f6ef7bb0b",
+      "deathPose": {
+        "prone": false,
+        "reach": 0.9864722043275833
+      }
+    },
+    {
+      "model": "npc.civilian-elderly",
+      "lod": "lod0",
+      "infected": false,
+      "path": "/assets/civilians/npc.civilian-elderly.lod0.35f396363150e6e1.bin.gz",
+      "bytes": 2310448,
+      "expectedSha256": "6ac8d84fe05df6d7766bf1393c64a0b9ef9a08c808505725efe66943e13d3bb4",
+      "expectedRepair": {
+        "prone": false,
+        "reach": 0.9560747891664505
+      },
+      "prebuilt": true,
+      "sha256": "6ac8d84fe05df6d7766bf1393c64a0b9ef9a08c808505725efe66943e13d3bb4",
+      "deathPose": {
+        "prone": false,
+        "reach": 0.9560747891664505
+      }
+    },
+    {
+      "model": "npc.civilian-elderly",
+      "lod": "lod1",
+      "infected": false,
+      "path": "/assets/civilians/npc.civilian-elderly.lod1.c2876cf78753f9c7.bin.gz",
+      "bytes": 1895256,
+      "expectedSha256": "f9b57bc23403c757ef61c80807de8a9b0e24bdc5b41e2a6d4bce73fdc8c4b63f",
+      "expectedRepair": {
+        "prone": false,
+        "reach": 0.955614447593689
+      },
+      "prebuilt": true,
+      "sha256": "f9b57bc23403c757ef61c80807de8a9b0e24bdc5b41e2a6d4bce73fdc8c4b63f",
+      "deathPose": {
+        "prone": false,
+        "reach": 0.955614447593689
+      }
+    },
+    {
+      "model": "npc.civilian-elderly",
+      "lod": "lod2",
+      "infected": false,
+      "path": "/assets/civilians/npc.civilian-elderly.lod2.c2876cf78753f9c7.bin.gz",
+      "bytes": 1895256,
+      "expectedSha256": "f9b57bc23403c757ef61c80807de8a9b0e24bdc5b41e2a6d4bce73fdc8c4b63f",
+      "expectedRepair": {
+        "prone": false,
+        "reach": 0.955614447593689
+      },
+      "prebuilt": true,
+      "sha256": "f9b57bc23403c757ef61c80807de8a9b0e24bdc5b41e2a6d4bce73fdc8c4b63f",
+      "deathPose": {
+        "prone": false,
+        "reach": 0.955614447593689
+      }
+    },
+    {
+      "model": "npc.national-guard",
+      "lod": "lod0",
+      "infected": false,
+      "path": "/assets/civilians/npc.national-guard.lod0.430c62c91eaa59af.bin.gz",
+      "bytes": 2155424,
+      "expectedSha256": "ff3c2cf302d580cd00ff36c8d1aab7fadd94a5e88d8cbbe7febc8d430f925c61",
+      "expectedRepair": {
+        "prone": false,
+        "reach": 0.9402922093868256
+      },
+      "prebuilt": true,
+      "sha256": "ff3c2cf302d580cd00ff36c8d1aab7fadd94a5e88d8cbbe7febc8d430f925c61",
+      "deathPose": {
+        "prone": false,
+        "reach": 0.9402922093868256
+      }
+    },
+    {
+      "model": "npc.national-guard",
+      "lod": "lod1",
+      "infected": false,
+      "path": "/assets/civilians/npc.national-guard.lod1.e747212a849ff6c0.bin.gz",
+      "bytes": 1840164,
+      "expectedSha256": "b3783a5d0160a0db6074650746e2e22c8b47d3dba4a50c51920188bbf8b9bc45",
+      "expectedRepair": {
+        "prone": false,
+        "reach": 0.9428282529115677
+      },
+      "prebuilt": true,
+      "sha256": "b3783a5d0160a0db6074650746e2e22c8b47d3dba4a50c51920188bbf8b9bc45",
+      "deathPose": {
+        "prone": false,
+        "reach": 0.9428282529115677
+      }
+    },
+    {
+      "model": "npc.national-guard",
+      "lod": "lod2",
+      "infected": false,
+      "path": "/assets/civilians/npc.national-guard.lod2.e747212a849ff6c0.bin.gz",
+      "bytes": 1840164,
+      "expectedSha256": "b3783a5d0160a0db6074650746e2e22c8b47d3dba4a50c51920188bbf8b9bc45",
+      "expectedRepair": {
+        "prone": false,
+        "reach": 0.9428282529115677
+      },
+      "prebuilt": true,
+      "sha256": "b3783a5d0160a0db6074650746e2e22c8b47d3dba4a50c51920188bbf8b9bc45",
+      "deathPose": {
+        "prone": false,
+        "reach": 0.9428282529115677
+      }
+    },
+    {
+      "model": "inf.common-worker",
+      "lod": "lod0",
+      "infected": true,
+      "path": "/assets/civilians/inf.common-worker.lod0.infected.0da56f6a53651d50.bin.gz",
+      "bytes": 1694628,
+      "expectedSha256": "83388a51d45bb06bcbddd43f0b47df96d29a15927e62f0138b0db07b9aae68ae",
+      "expectedRepair": {
+        "prone": false,
+        "reach": 1.117287688665769
+      },
+      "prebuilt": true,
+      "sha256": "83388a51d45bb06bcbddd43f0b47df96d29a15927e62f0138b0db07b9aae68ae",
+      "deathPose": {
+        "prone": false,
+        "reach": 1.117287688665769
+      }
+    },
+    {
+      "model": "inf.common-worker",
+      "lod": "lod1",
+      "infected": true,
+      "path": "/assets/civilians/inf.common-worker.lod1.infected.7d23ebfa1ccb766d.bin.gz",
+      "bytes": 1299068,
+      "expectedSha256": "72dd63e66c74aee81d2a2904f2e06499d8f619a54f982d4f0b783786c358bc3e",
+      "expectedRepair": {
+        "prone": false,
+        "reach": 1.1364859943382728
+      },
+      "prebuilt": true,
+      "sha256": "72dd63e66c74aee81d2a2904f2e06499d8f619a54f982d4f0b783786c358bc3e",
+      "deathPose": {
+        "prone": false,
+        "reach": 1.1364859943382728
+      }
+    },
+    {
+      "model": "inf.common-worker",
+      "lod": "lod2",
+      "infected": true,
+      "path": "/assets/civilians/inf.common-worker.lod2.infected.73b7ebfb22f498d8.bin.gz",
+      "bytes": 1158776,
+      "expectedSha256": "9a5421ab322a5596a6620988d8a5b5ff6d4bc9aa46756d626a8a6528942a7bef",
+      "expectedRepair": {
+        "prone": false,
+        "reach": 1.13695188554216
+      },
+      "prebuilt": true,
+      "sha256": "9a5421ab322a5596a6620988d8a5b5ff6d4bc9aa46756d626a8a6528942a7bef",
+      "deathPose": {
+        "prone": false,
+        "reach": 1.13695188554216
+      }
+    },
+    {
+      "model": "inf.cashier",
+      "lod": "lod0",
+      "infected": true,
+      "path": "/assets/civilians/inf.cashier.lod0.infected.c19f5c8ef9af7288.bin.gz",
+      "bytes": 2013308,
+      "expectedSha256": "d7b6af4e1a9a2036a3dcec469a9473b075579f76f4c238219168718f0ee5c5af",
+      "expectedRepair": {
+        "prone": false,
+        "reach": 0.7916387695460907
+      },
+      "prebuilt": true,
+      "sha256": "d7b6af4e1a9a2036a3dcec469a9473b075579f76f4c238219168718f0ee5c5af",
+      "deathPose": {
+        "prone": false,
+        "reach": 0.7916387695460907
+      }
+    },
+    {
+      "model": "inf.cashier",
+      "lod": "lod1",
+      "infected": true,
+      "path": "/assets/civilians/inf.cashier.lod1.infected.c98e3c26f9801b40.bin.gz",
+      "bytes": 1421416,
+      "expectedSha256": "e9875dcf0ee40ab22c8b7af04a8ee4174147810990ff03e4e3cc40cd0b07baad",
+      "expectedRepair": {
+        "prone": false,
+        "reach": 0.7746208351536101
+      },
+      "prebuilt": true,
+      "sha256": "e9875dcf0ee40ab22c8b7af04a8ee4174147810990ff03e4e3cc40cd0b07baad",
+      "deathPose": {
+        "prone": false,
+        "reach": 0.7746208351536101
+      }
+    },
+    {
+      "model": "inf.cashier",
+      "lod": "lod2",
+      "infected": true,
+      "path": "/assets/civilians/inf.cashier.lod2.infected.19ebf77550161ec1.bin.gz",
+      "bytes": 1421416,
+      "expectedSha256": "e69081bf5b832494d92b01c3bd17158e9c84a42a8894d88346a0d45cfdeff59d",
+      "expectedRepair": {
+        "prone": false,
+        "reach": 0.7747616271078549
+      },
+      "prebuilt": true,
+      "sha256": "e69081bf5b832494d92b01c3bd17158e9c84a42a8894d88346a0d45cfdeff59d",
+      "deathPose": {
+        "prone": false,
+        "reach": 0.7747616271078549
+      }
+    },
+    {
+      "model": "inf.alpha",
+      "lod": "lod0",
+      "infected": true,
+      "path": "/assets/civilians/inf.alpha.lod0.infected.8b8be45f471f5227.bin.gz",
+      "bytes": 1782640,
+      "expectedSha256": "4cd8d17f5707bfcc61fa470fcdd53810c4c9c0cbe55e5d3e9094e6d0be1a5f00",
+      "expectedRepair": {
+        "prone": true,
+        "reach": 1.3380467162487606
+      },
+      "prebuilt": true,
+      "sha256": "4cd8d17f5707bfcc61fa470fcdd53810c4c9c0cbe55e5d3e9094e6d0be1a5f00",
+      "deathPose": {
+        "prone": true,
+        "reach": 1.3380467162487606
+      }
+    },
+    {
+      "model": "inf.alpha",
+      "lod": "lod1",
+      "infected": true,
+      "path": "/assets/civilians/inf.alpha.lod1.infected.5e502087f4b05832.bin.gz",
+      "bytes": 1345400,
+      "expectedSha256": "6dc56f0a06b91281e7f3d9b348e32cd134a23328c492eadbe6606ad8fa3bf14d",
+      "expectedRepair": {
+        "prone": true,
+        "reach": 1.3031551782825397
+      },
+      "prebuilt": true,
+      "sha256": "6dc56f0a06b91281e7f3d9b348e32cd134a23328c492eadbe6606ad8fa3bf14d",
+      "deathPose": {
+        "prone": true,
+        "reach": 1.3031551782825397
+      }
+    },
+    {
+      "model": "inf.alpha",
+      "lod": "lod2",
+      "infected": true,
+      "path": "/assets/civilians/inf.alpha.lod2.infected.0e1c9fc1c6bdb04d.bin.gz",
+      "bytes": 1132956,
+      "expectedSha256": "f4afa5b025008a43d4470fad9e7a85fac620b971b98a85b7dfc4b5ccbf58a26a",
+      "expectedRepair": {
+        "prone": true,
+        "reach": 1.3098409704913836
+      },
+      "prebuilt": true,
+      "sha256": "f4afa5b025008a43d4470fad9e7a85fac620b971b98a85b7dfc4b5ccbf58a26a",
+      "deathPose": {
+        "prone": true,
+        "reach": 1.3098409704913836
+      }
+    },
+    {
+      "model": "inf.delivery-driver",
+      "lod": "lod0",
+      "infected": true,
+      "path": "/assets/civilians/inf.delivery-driver.lod0.infected.73f1de0ddf6e496a.bin.gz",
+      "bytes": 2006048,
+      "expectedSha256": "09555d5d86e81e1f0373fb85c0f82ce9617c40e1e81079943ed71c2395963f88",
+      "expectedRepair": {
+        "prone": false,
+        "reach": 0.9496713655444021
+      },
+      "prebuilt": true,
+      "sha256": "09555d5d86e81e1f0373fb85c0f82ce9617c40e1e81079943ed71c2395963f88",
+      "deathPose": {
+        "prone": false,
+        "reach": 0.9496713655444021
+      }
+    },
+    {
+      "model": "inf.delivery-driver",
+      "lod": "lod1",
+      "infected": true,
+      "path": "/assets/civilians/inf.delivery-driver.lod1.infected.8abe04cfa6a2a6f1.bin.gz",
+      "bytes": 1442188,
+      "expectedSha256": "8b4c311349c2a189fe20fae7bda1c3e9f21d57d7101145d1fcc0de374aaee99e",
+      "expectedRepair": {
+        "prone": false,
+        "reach": 0.9282175438217778
+      },
+      "prebuilt": true,
+      "sha256": "8b4c311349c2a189fe20fae7bda1c3e9f21d57d7101145d1fcc0de374aaee99e",
+      "deathPose": {
+        "prone": false,
+        "reach": 0.9282175438217778
+      }
+    },
+    {
+      "model": "inf.delivery-driver",
+      "lod": "lod2",
+      "infected": true,
+      "path": "/assets/civilians/inf.delivery-driver.lod2.infected.6e465b3518a227cd.bin.gz",
+      "bytes": 1442184,
+      "expectedSha256": "961b1afd473762356d02e94b006c926ff51d7d2a881f826ff29a56f22d50095c",
+      "expectedRepair": {
+        "prone": false,
+        "reach": 0.9282276716658129
+      },
+      "prebuilt": true,
+      "sha256": "961b1afd473762356d02e94b006c926ff51d7d2a881f826ff29a56f22d50095c",
+      "deathPose": {
+        "prone": false,
+        "reach": 0.9282276716658129
+      }
+    },
+    {
+      "model": "inf.dog",
+      "lod": "lod0",
+      "infected": true,
+      "path": "/assets/civilians/inf.dog.lod0.infected.3e9250a51e4191aa.bin.gz",
+      "bytes": 1868704,
+      "expectedSha256": "d3e4b8a9b5661cd7f7eb43ad5c8259f3fd01d5d1da950a51e48aa5040b6048c5",
+      "prebuilt": true,
+      "sha256": "d3e4b8a9b5661cd7f7eb43ad5c8259f3fd01d5d1da950a51e48aa5040b6048c5"
+    },
+    {
+      "model": "inf.dog",
+      "lod": "lod1",
+      "infected": true,
+      "path": "/assets/civilians/inf.dog.lod1.infected.0621f5c0ec42cc52.bin.gz",
+      "bytes": 1667676,
+      "expectedSha256": "2e869bec8e9b08e4db8d4b75e0d1d8f6f03c5fea06c0e5bc50ee662f346d33ba",
+      "prebuilt": true,
+      "sha256": "2e869bec8e9b08e4db8d4b75e0d1d8f6f03c5fea06c0e5bc50ee662f346d33ba"
+    },
+    {
+      "model": "inf.dog",
+      "lod": "lod2",
+      "infected": true,
+      "path": "/assets/civilians/inf.dog.lod2.infected.88cbc0b5e5f3b2d9.bin.gz",
+      "bytes": 1599488,
+      "expectedSha256": "35bea3a2228eb22b270829759a0241f30aee00df4245242e56b7a9e9065f01b2",
+      "prebuilt": true,
+      "sha256": "35bea3a2228eb22b270829759a0241f30aee00df4245242e56b7a9e9065f01b2"
+    },
+    {
+      "model": "inf.crawler",
+      "lod": "lod0",
+      "infected": true,
+      "path": "/assets/civilians/inf.crawler.lod0.infected.61d528af0cd6bb17.bin.gz",
+      "bytes": 1606132,
+      "expectedSha256": "326c87821879d27f7a426e792a13d364304f5229480a4cfa6cf449946eae5307",
+      "prebuilt": true,
+      "sha256": "326c87821879d27f7a426e792a13d364304f5229480a4cfa6cf449946eae5307"
+    },
+    {
+      "model": "inf.crawler",
+      "lod": "lod1",
+      "infected": true,
+      "path": "/assets/civilians/inf.crawler.lod1.infected.69ff39a97fb0d852.bin.gz",
+      "bytes": 1319524,
+      "expectedSha256": "daf920e546aa9b95848b5988dc2d5f3d60fa07d8582d92d8378e3dd8304fef5a",
+      "prebuilt": true,
+      "sha256": "daf920e546aa9b95848b5988dc2d5f3d60fa07d8582d92d8378e3dd8304fef5a"
+    },
+    {
+      "model": "inf.crawler",
+      "lod": "lod2",
+      "infected": true,
+      "path": "/assets/civilians/inf.crawler.lod2.infected.cea0b0287e71721c.bin.gz",
+      "bytes": 1158196,
+      "expectedSha256": "9b58ee5645cf391d94354fcba07e6fe92f242fde635a00394676b525a4b58a84",
+      "prebuilt": true,
+      "sha256": "9b58ee5645cf391d94354fcba07e6fe92f242fde635a00394676b525a4b58a84"
+    }
+  ]
+}

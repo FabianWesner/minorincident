@@ -7,7 +7,7 @@ import { expect, test, vi } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { gunzipSync } from 'node:zlib';
 import { decodeCivilianBake } from '../../src/assets/civilianBakeData';
-import { repairDeathPoses } from '../../src/render/characters/deathPose';
+import { deathReach, registerDeathPoseRepair, repairDeathPoses } from '../../src/render/characters/deathPose';
 import { packCrowdParts } from '../../src/assets/crowd';
 import { bakeInfected, framesPerClip, infectedClips } from '../../src/render/characters/bakeInfected';
 import { crowdVertexLayout, resolveCrowdAppearance, markCrowdAppearance } from '../../src/render/characters/CrowdAppearance';
@@ -19,6 +19,7 @@ import type { SimWorld } from '../../src/sim/world/SimWorld';
 import { Lighting } from '../../src/render/Lighting';
 import { corpseLod, crowdLod, pickLod, propLod } from '../../src/render/lodPolicy';
 import { Materials } from '../../src/render/Materials';
+import type { PaletteMaterial } from '../../src/render/PaletteMaterial';
 import { installTextureRanges } from '../../src/render/TextureRanges';
 import { uploadFloatTexture, type FloatUploadDevice } from '../../src/render/TextureUpload';
 import { weatherMaterialFlags } from '../../src/render/WeatherView';
@@ -451,6 +452,23 @@ test('corpse pages: bodies persist past the old cap, bounds stay conservative, c
   expect(Array.from(alpha.clip.matrices)).toEqual(settled);
   for (const death of ['death-back', 'death-side', 'death-crumple'] as const) expect(lying(alpha, death).max).toBeLessThan(1.5);
   for (const model of ['inf.dog', 'inf.crawler']) { const bake = delivered(model), before = Array.from(bake.clip.matrices); expect(repairDeathPoses(bake.clip, bake.geometry)).toBe(false); expect(Array.from(bake.clip.matrices)).toEqual(before); }
+  // A transferred worker repair retains its exact pose rows and reach. The renderer
+  // must recognize the completed work instead of blending the fall a second time.
+  for (const model of ['inf.common-worker', 'inf.alpha']) {
+    const raw = gunzipSync(readFileSync(`public${deliveries[`${model}:lod0:infected`]}`));
+    const bytes = raw.buffer.slice(raw.byteOffset, raw.byteOffset + raw.byteLength) as ArrayBuffer;
+    const prepared = decodeCivilianBake(bytes), prone = model === 'inf.alpha';
+    expect(repairDeathPoses(prepared.clip, prepared.geometry, { prone })).toBe(true);
+    const matrices = Array.from(prepared.clip.matrices), reach = deathReach.get(prepared.clip)!;
+    const received = decodeCivilianBake(structuredClone(bytes, { transfer: [bytes] }));
+    registerDeathPoseRepair(received.clip, { prone, reach });
+    expect(repairDeathPoses(received.clip, received.geometry, { prone })).toBe(true);
+    expect(Array.from(received.clip.matrices)).toEqual(matrices);
+    expect(deathReach.get(received.clip)).toBe(reach);
+    expect(repairDeathPoses(received.clip, received.geometry, { prone: !prone })).toBe(false);
+    prepared.geometry.dispose(); received.geometry.dispose();
+  }
+
 });
 
 test('LOD selection: authored distance bands with hysteresis; game-camera-size crowd figures never take the far silhouette', () => {
@@ -548,12 +566,30 @@ function checkCivilianShaderBindings(): void {
   const otherPose = new DataTexture();
   crowdSurfaceBindings.set(first.geometry, { bind() {}, textures: [a], pose });
   crowdSurfaceBindings.set(second.geometry, { bind() {}, textures: [b], pose: otherPose });
-  const frame = new NodeFrame();
-  for (const object of [first, second, first]) {
-    frame.object = object; atlas.update(frame); poses.update(frame);
-    expect(atlas.value).toBe(object === first ? a : b);
-    expect(poses.value).toBe(object === first ? pose : otherPose);
+  const baked = bakeInfected(createSkinnedCrowdFixture()); packCrowdParts(baked.geometry);
+  const bodyA = baked.geometry, bodyB = baked.geometry.clone(), pools = [new StaticCorpses(), new StaticCorpses()];
+  crowdSurfaceBindings.set(bodyA, { bind() {}, textures: [a], pose });
+  crowdSurfaceBindings.set(bodyB, { bind() {}, textures: [b], pose: otherPose });
+  const corpseA = pools[0].prepare('a', bodyA, one.material, baked.clip, deathFrame());
+  const corpseB = pools[1].prepare('b', bodyB, other.material, baked.clip, deathFrame());
+  const frozenA = corpseA.material as PaletteMaterial, frozenB = corpseB.material as PaletteMaterial;
+  expect(frozenA).not.toBe(frozenB);
+  expect(frozenA.outputNode).not.toBe(one.material.outputNode);
+  for (const mode of [0, 1, 0]) {
+    frozenA.setWeatherMode(mode); frozenB.setWeatherMode(mode);
+    expect(frozenA.outputNode).toBe(frozenB.outputNode);
+    expect(frozenA.customProgramCacheKey()).toBe(frozenB.customProgramCacheKey());
   }
+  const otherFrozen = (differentLayout.material as PaletteMaterial).frozenCopy(true);
+  expect(otherFrozen.outputNode).not.toBe(frozenA.outputNode); otherFrozen.dispose();
+  const frame = new NodeFrame();
+  for (const object of [first, second, corpseA, corpseB, corpseA]) {
+    frame.object = object; atlas.update(frame); poses.update(frame);
+    const usesA = object === first || object === corpseA;
+    expect(atlas.value).toBe(usesA ? a : b);
+    expect(poses.value).toBe(usesA ? pose : otherPose);
+  }
+  pools.forEach(pool => pool.dispose()); bodyA.dispose(); bodyB.dispose();
   first.geometry.dispose(); second.geometry.dispose();
   const disposed = vi.fn(); one.material.addEventListener('dispose', disposed);
   one.release(); expect(disposed).not.toHaveBeenCalled();
@@ -566,15 +602,19 @@ function checkCivilianShaderBindings(): void {
 test('crowd long guns use asset grip/muzzle sockets and the courier support-hand offsets', async () => {
   checkCivilianShaderBindings();
   const props = new RoutineProps();
+  let release!: () => void;
+  const downloaded = new Promise<void>(resolve => { release = resolve; });
   const loadAsset = vi.fn(async (id: string) => {
+    await downloaded;
     const model = new Group(); model.name = id; const material = new MeshLambertNodeMaterial({ color: '#789abc' });
     model.add(new Mesh(new BoxGeometry(.8, .1, .05), material));
     const grip = new Object3D(); grip.name = 'grip'; grip.position.set(-.2, -.1, 0); model.add(grip);
     const muzzle = new Object3D(); muzzle.name = 'muzzle'; muzzle.position.set(.4, 0, 0); model.add(muzzle);
     return model;
   });
-  await props.init({ loadAsset });
+  const loading = props.init({ loadAsset });
   expect(loadAsset.mock.calls).toHaveLength(5);
+  release(); await loading;
   for (const [prop, asset] of [['rifle', 'wpn.assault-rifle'], ['hmg', 'wpn.machine-gun'], ['hunting-rifle', 'wpn.hunting-rifle'], ['shotgun', 'wpn.shotgun']]) {
     const hold = longGunHolds[asset], crowd = crowdGunHolds[prop];
     expect(crowd.support).toEqual([-hold.support[2], hold.support[1], hold.support[0]]);
