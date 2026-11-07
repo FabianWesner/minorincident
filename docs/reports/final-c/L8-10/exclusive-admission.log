@@ -1,0 +1,32 @@
+Quiet-run waiting: {"at":"2026-11-07T02:11:51.950Z","event":"quiet-admission-wait","granted":false,"quiet":false,"load":[12.24462890625,18.53173828125,19.26025390625],"busy":[]}
+Quiet-run waiting: {"at":"2026-11-07T02:12:22.433Z","event":"quiet-admission-wait","granted":false,"quiet":false,"load":[11.95849609375,17.7490234375,18.94287109375],"busy":[]}
+Quiet-run waiting: {"at":"2026-11-07T02:12:52.452Z","event":"quiet-admission-wait","granted":false,"quiet":false,"load":[11.6669921875,17.10693359375,18.6669921875],"busy":[]}
+Quiet-run waiting: {"at":"2026-11-07T02:13:23.161Z","event":"quiet-admission-wait","granted":false,"quiet":false,"load":[12.32080078125,16.6552734375,18.4423828125],"busy":[]}
+Quiet-run waiting: {"at":"2026-11-07T02:13:53.319Z","event":"quiet-admission-wait","granted":false,"quiet":false,"load":[9.8212890625,15.6220703125,18.00439453125],"busy":[]}
+Quiet-run waiting: {"at":"2026-11-07T02:14:24.114Z","event":"quiet-admission-wait","granted":false,"quiet":false,"load":[7.48095703125,14.49462890625,17.51171875],"busy":[]}
+Quiet-run waiting: {"at":"2026-11-07T02:14:55.007Z","event":"quiet-admission-wait","granted":false,"quiet":false,"load":[5.99169921875,13.45947265625,17.02978515625],"busy":[]}
+Quiet-run waiting: {"at":"2026-11-07T02:15:25.925Z","event":"quiet-admission-wait","granted":false,"quiet":false,"load":[6.78076171875,12.96142578125,16.7255859375],"busy":[]}
+Quiet-run waiting: {"at":"2026-11-07T02:15:56.558Z","event":"quiet-admission-wait","granted":false,"quiet":false,"load":[5.37060546875,12.0244140625,16.2548828125],"busy":[]}
+Quiet-run waiting: {"at":"2026-11-07T02:16:27.232Z","event":"quiet-admission-wait","granted":false,"quiet":false,"load":[4.89111328125,11.27197265625,15.83447265625],"busy":[]}
+Quiet-run waiting: {"at":"2026-11-07T02:16:57.877Z","event":"quiet-admission-wait","granted":true,"quiet":false,"load":[4.91455078125,10.56298828125,15.39013671875],"busy":[]}
+Quiet-run waiting: {"at":"2026-11-07T02:17:28.421Z","event":"quiet-admission-wait","granted":true,"quiet":false,"load":[4.216796875,9.8544921875,14.96484375],"busy":[]}
+Quiet-run waiting: {"at":"2026-11-07T02:17:59.143Z","event":"quiet-admission-wait","granted":true,"quiet":false,"load":[4.60986328125,9.39306640625,14.61865234375],"busy":[{"pid":53360,"command":"node /Users/wesner/Workspace/minorincident/.claude/worktrees/final-g/node_modules/.bin/eslint src tests tools functions playwright.config.ts vite.config.ts vitest.config.ts eslint."},{"pid":53361,"command":"node /Users/wesner/Workspace/minorincident/.claude/worktrees/final-g/node_modules/.bin/tsc --noEmit"}]}
+Quiet-run waiting: {"at":"2026-11-07T02:18:30.054Z","event":"quiet-admission-wait","granted":true,"quiet":false,"load":[5.39501953125,9.11767578125,14.33642578125],"busy":[]}
+Quiet-run waiting: {"at":"2026-11-07T02:19:01.020Z","event":"quiet-admission-wait","granted":true,"quiet":false,"load":[5.91748046875,8.8955078125,14.07421875],"busy":[]}
+Quiet-run waiting: {"at":"2026-11-07T02:19:31.570Z","event":"quiet-admission-wait","granted":true,"quiet":false,"load":[4.42822265625,8.2509765625,13.66064453125],"busy":[]}
+Quiet-run waiting: {"at":"2026-11-07T02:20:02.137Z","event":"quiet-admission-wait","granted":true,"quiet":false,"load":[3.408203125,7.63671875,13.24951171875],"busy":[]}
+Quiet-run pool preflight: exclusive context admission; load < 3; no foreign headless Chrome, Blender, build or local Vitest.
+low { car: 721, hp: 990, first: 0, last: 930, captures: 14, errors: [] }
+ARRIVAL low 0
+high { car: 466, hp: 1000, first: 0, last: 930, captures: 14, errors: [] }
+ARRIVAL high 0
+node:internal/process/promises:332
+    triggerUncaughtException(err, true /* fromPromise */);
+    ^
+
+[TargetClosedError2: Target page, context or browser has been closed] {
+  log: []
+}
+
+Node.js v26.0.0
+FIGHT 1
