@@ -1,0 +1,1994 @@
+{
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+  "revision": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "row": "G-10",
+  "generatedAt": "2026-11-07T01:03:21.280Z",
+  "inputs": [
+    {
+      "file": "docs/reports/fix51-verify/receipts/L1-high-complete.json",
+      "sha256": "1c7f830ebdd39781268db20dd2ab1fa445e032f4284799c226fcc676c89aef7d",
+      "level": "L1",
+      "tier": "high",
+      "policy": "complete",
+      "generatedAt": "2026-11-06T23:42:51.147Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L1-high-fixtures.json",
+      "sha256": "3054f70f6c66327395b15d588d753169b64a88e97203f415503c30605baa6fce",
+      "level": "L1",
+      "tier": "high",
+      "policy": "fixture"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L1-high-stationary.json",
+      "sha256": "0322e1ee830fbc1f7c147e6ded974dd6cc292a2e0e7f040782c62cf834cedf81",
+      "level": "L1",
+      "tier": "high",
+      "policy": "stationary",
+      "generatedAt": "2026-11-06T23:43:00.073Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L1-low-complete.json",
+      "sha256": "28ec1a7ecf109a82bdc17598f79a2b9637bb7e7e0038f2938cdff9c89341ae80",
+      "level": "L1",
+      "tier": "low",
+      "policy": "complete",
+      "generatedAt": "2026-11-06T23:42:26.241Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L1-low-fixtures.json",
+      "sha256": "732c5f9ec817571bf782ffe583daf68650a18b5d5268d44b43d50e7350167ab2",
+      "level": "L1",
+      "tier": "low",
+      "policy": "fixture"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L1-low-stationary.json",
+      "sha256": "d9b24dbb921fd3e4fe7587b08b70f36e4bba309e3e12515665604c1d7eb6c9b1",
+      "level": "L1",
+      "tier": "low",
+      "policy": "stationary",
+      "generatedAt": "2026-11-06T23:42:32.488Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-high-complete.json",
+      "sha256": "43b67a54a2e7760fbe7344459235f6ac1043c0e06419d45509fbb83e83324d71",
+      "level": "L10",
+      "tier": "high",
+      "policy": "complete",
+      "generatedAt": "2026-11-07T00:48:25.568Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-high-fixtures.json",
+      "sha256": "1bedac7eb5383df66d9c323ff9ac5fb477f391e732c5409c6cbc6d64fe249c76",
+      "level": "L10",
+      "tier": "high",
+      "policy": "fixture"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-high-stationary.json",
+      "sha256": "3ae546b86e08ab08a7ddf65a8d84b5a68c5a6b5f87bc590a89af0086e085c6b5",
+      "level": "L10",
+      "tier": "high",
+      "policy": "stationary",
+      "generatedAt": "2026-11-07T00:53:49.948Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-low-complete.json",
+      "sha256": "5047aee569fc18acc063f8e1562617110b5be116f6ada86216bbf49d7288954e",
+      "level": "L10",
+      "tier": "low",
+      "policy": "complete",
+      "generatedAt": "2026-11-07T00:39:31.259Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-low-fixtures.json",
+      "sha256": "61d19dd997f30c59aebcea25de2b9f28846e8ec5c6ad7dd85e0448ad69190498",
+      "level": "L10",
+      "tier": "low",
+      "policy": "fixture"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-low-stationary.json",
+      "sha256": "28b05461529520d185453a897450fdcb2c131724f2335d0931399804f85928f3",
+      "level": "L10",
+      "tier": "low",
+      "policy": "stationary",
+      "generatedAt": "2026-11-07T00:44:43.303Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-high-complete.json",
+      "sha256": "b1b95bd4a8a6c5aad61c862ea49271e3614348b840e4274e12557ce24a5c2ba2",
+      "level": "L2",
+      "tier": "high",
+      "policy": "complete",
+      "generatedAt": "2026-11-06T23:47:04.154Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
+      "sha256": "ebcffc44ba056bc652015d345e957523462d8adbb8a977c1edaa333550202650",
+      "level": "L2",
+      "tier": "high",
+      "policy": "fixture"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-high-stationary.json",
+      "sha256": "712c3a07bd89507a562b20ad5ebdd557c8bebe3f342c059325a9b191b9bd9f09",
+      "level": "L2",
+      "tier": "high",
+      "policy": "stationary",
+      "generatedAt": "2026-11-06T23:47:17.470Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-low-complete.json",
+      "sha256": "61f5b4055bfc326a89d7457bac497480b56627f61e9b80dd3b24af7952528f15",
+      "level": "L2",
+      "tier": "low",
+      "policy": "complete",
+      "generatedAt": "2026-11-06T23:46:34.932Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
+      "sha256": "260e6b2630be1e593395f867cffd45f125d4b45e8fc973a9e4376eb931683aff",
+      "level": "L2",
+      "tier": "low",
+      "policy": "fixture"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-low-stationary.json",
+      "sha256": "23f055cf98010a9fe734a9ef1b9e1e975af9bfa35fd4b22a9b401b215a445235",
+      "level": "L2",
+      "tier": "low",
+      "policy": "stationary",
+      "generatedAt": "2026-11-06T23:46:45.943Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L3-high-complete.json",
+      "sha256": "60150c0b2c6756dbf5c54991d1f4cc23c674de5e76f318085ce49e33b3ee05ee",
+      "level": "L3",
+      "tier": "high",
+      "policy": "complete",
+      "generatedAt": "2026-11-06T23:51:28.310Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
+      "sha256": "e4dd4c36be5c14615ed61548e5c0cb95e00a5363f1741e70547ed354a08a8086",
+      "level": "L3",
+      "tier": "high",
+      "policy": "fixture"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L3-high-stationary.json",
+      "sha256": "e2e86df90b779a99c404decc93954648991c1478d15489f989abd3c8dd4c0c35",
+      "level": "L3",
+      "tier": "high",
+      "policy": "stationary",
+      "generatedAt": "2026-11-06T23:52:52.984Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L3-low-complete.json",
+      "sha256": "d0bead0779e4ec9eb738109cd31d136ad1cca05a9742d7e13d7cdde55bdb4b5a",
+      "level": "L3",
+      "tier": "low",
+      "policy": "complete",
+      "generatedAt": "2026-11-06T23:50:16.888Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
+      "sha256": "1dbb6554d364c1372e298abab060319623af1f8871fbd2e7e24dad1a1382d0cc",
+      "level": "L3",
+      "tier": "low",
+      "policy": "fixture"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L3-low-stationary.json",
+      "sha256": "4b108dd9f2bc0e90b9de7db828b49845c8d4821c9b86b4083555207b463a2f55",
+      "level": "L3",
+      "tier": "low",
+      "policy": "stationary",
+      "generatedAt": "2026-11-06T23:51:21.752Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L4-high-complete.json",
+      "sha256": "905bee51d2cb00b569832da6a4c37f5901ba6d20f720740d02815cef2426975f",
+      "level": "L4",
+      "tier": "high",
+      "policy": "complete",
+      "generatedAt": "2026-11-06T23:59:36.550Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L4-high-fixtures.json",
+      "sha256": "e165612405da31f0eef50e04a35104ed02015f355c52926b79bf6804488871bf",
+      "level": "L4",
+      "tier": "high",
+      "policy": "fixture"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L4-high-stationary.json",
+      "sha256": "adff86f9191046d67104a60263bf0fc8622bc0553cfd4ca96d28740b710e2b03",
+      "level": "L4",
+      "tier": "high",
+      "policy": "stationary",
+      "generatedAt": "2026-11-07T00:00:33.401Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L4-low-complete.json",
+      "sha256": "d418b74afcd11d3a0649a14654e4220f07a99a342025b597d82aaec4815c7c40",
+      "level": "L4",
+      "tier": "low",
+      "policy": "complete",
+      "generatedAt": "2026-11-06T23:57:03.732Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L4-low-fixtures.json",
+      "sha256": "acd49bd687820e0421216d7b8d6f471caf2cc0ecd8a7f3bae7538c91c48856f3",
+      "level": "L4",
+      "tier": "low",
+      "policy": "fixture"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L4-low-stationary.json",
+      "sha256": "2c215a7e067fa9d3061f3b35a3ba67972f4df60ec211757df1eae416b3d5764f",
+      "level": "L4",
+      "tier": "low",
+      "policy": "stationary",
+      "generatedAt": "2026-11-06T23:59:02.861Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L5-high-complete.json",
+      "sha256": "4adbe19053dd808abb92458b9b2c711dbc39b0c000cd5a3efa56435ffe5e76c9",
+      "level": "L5",
+      "tier": "high",
+      "policy": "complete",
+      "generatedAt": "2026-11-07T00:05:55.327Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L5-high-fixtures.json",
+      "sha256": "bfe47e019bcb0a3f267bfba6d45d0bbf6555f1789dc47ad77eb2f97995c2306b",
+      "level": "L5",
+      "tier": "high",
+      "policy": "fixture"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L5-high-stationary.json",
+      "sha256": "f30307df7b87c2eefa309057fd069b3bc9d07a8cc547c0fd398523f2f636f48a",
+      "level": "L5",
+      "tier": "high",
+      "policy": "stationary",
+      "generatedAt": "2026-11-07T00:06:27.049Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L5-low-complete.json",
+      "sha256": "adbfe0e3f800089d623f743036ee8ebe6ae683a6c5877055561a64f9b6a0aa5e",
+      "level": "L5",
+      "tier": "low",
+      "policy": "complete",
+      "generatedAt": "2026-11-07T00:05:20.349Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L5-low-fixtures.json",
+      "sha256": "f3dc44baaf6a17cd98e30751d0bd9b334de83cc5d5f0e72271cc5b870eaf83bf",
+      "level": "L5",
+      "tier": "low",
+      "policy": "fixture"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L5-low-stationary.json",
+      "sha256": "fc8b434b0c09b635651b37aa8c00622fe31f73110cd3bb76e5c563d35bd80117",
+      "level": "L5",
+      "tier": "low",
+      "policy": "stationary",
+      "generatedAt": "2026-11-07T00:05:41.672Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-high-complete.json",
+      "sha256": "427c24bae08e22c0f76e434842a7f9d83548463323290288455f6ac95dd80ce9",
+      "level": "L6",
+      "tier": "high",
+      "policy": "complete",
+      "generatedAt": "2026-11-07T00:08:55.427Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-high-fixtures.json",
+      "sha256": "48d49e28bf7ef2908b8c4730e3f66b93dc32bd2e98202f58cd044eeedd61998e",
+      "level": "L6",
+      "tier": "high",
+      "policy": "fixture"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-high-stationary.json",
+      "sha256": "974464b795656fa31224610cb1c6a22ea7cce2bdf1e45a91327784666c525f98",
+      "level": "L6",
+      "tier": "high",
+      "policy": "stationary",
+      "generatedAt": "2026-11-07T00:09:01.514Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-low-complete.json",
+      "sha256": "13b9f59b010d4aa8d8daee4a40ae469f0d41924a73e1544fcdc91704f7584c5c",
+      "level": "L6",
+      "tier": "low",
+      "policy": "complete",
+      "generatedAt": "2026-11-07T00:08:38.008Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-low-fixtures.json",
+      "sha256": "b34cf78b8e5b282762bfc8cd4de6419c4ef215ada5f1bc0ae4cf3f3d00b11951",
+      "level": "L6",
+      "tier": "low",
+      "policy": "fixture"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-low-stationary.json",
+      "sha256": "cee96e76dbb95d54fc882db643e46c86ae17121f9ce17c5173126c093f8c5651",
+      "level": "L6",
+      "tier": "low",
+      "policy": "stationary",
+      "generatedAt": "2026-11-07T00:08:47.487Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L7-high-complete.json",
+      "sha256": "f60d6be2d21000b01e4124143247b25dc444497dd2042f4ff6141c2c710c615a",
+      "level": "L7",
+      "tier": "high",
+      "policy": "complete",
+      "generatedAt": "2026-11-07T00:15:42.421Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L7-high-fixtures.json",
+      "sha256": "2ca2210480e7835193bd4f948f91c84ccdf1ca5321a57e5bf3b96e03d4bf52f2",
+      "level": "L7",
+      "tier": "high",
+      "policy": "fixture"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L7-high-stationary.json",
+      "sha256": "a20e9947893d6dbaf67e2011103e99625071da546fc524f41601a171ab66fb85",
+      "level": "L7",
+      "tier": "high",
+      "policy": "stationary",
+      "generatedAt": "2026-11-07T00:21:26.852Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L7-low-complete.json",
+      "sha256": "2de716153c2ee47da57dff155a33fa827355b0c6e12d857a9f8b6f6d342af9a4",
+      "level": "L7",
+      "tier": "low",
+      "policy": "complete",
+      "generatedAt": "2026-11-07T00:13:13.300Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L7-low-fixtures.json",
+      "sha256": "54e4a8d1fbdc34e2093de885f6546bfbc8e0b8f48b99ce9be9026ed5b9d687d7",
+      "level": "L7",
+      "tier": "low",
+      "policy": "fixture"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L7-low-stationary.json",
+      "sha256": "119eb9392f6236143e3f02043b8b72578b9ef71c93eae8fb8f2ea27c1c5d9bb0",
+      "level": "L7",
+      "tier": "low",
+      "policy": "stationary",
+      "generatedAt": "2026-11-07T00:14:54.749Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L8-high-complete.json",
+      "sha256": "2cb65cbbf27554bae7892ba2f125379be970c49adce16802090ea1a82bbf126c",
+      "level": "L8",
+      "tier": "high",
+      "policy": "complete",
+      "generatedAt": "2026-11-07T00:30:45.710Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L8-high-fixtures.json",
+      "sha256": "f0ced5ff0daeefe451dce750fd68bd34db34a7e55ba5c848b2c51e2b11638fe8",
+      "level": "L8",
+      "tier": "high",
+      "policy": "fixture"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L8-high-stationary.json",
+      "sha256": "0e5012769f15e636d59c5bc699858a459c2d83b02db02acfef9f4dac365052c7",
+      "level": "L8",
+      "tier": "high",
+      "policy": "stationary",
+      "generatedAt": "2026-11-07T00:31:23.356Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L8-low-complete.json",
+      "sha256": "8ac2d7c6a232c636af0da76165ee1cf7b2a2b65ab00490433f3fe1123aa0028d",
+      "level": "L8",
+      "tier": "low",
+      "policy": "complete",
+      "generatedAt": "2026-11-07T00:28:14.583Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L8-low-fixtures.json",
+      "sha256": "a3d0964290d599d279f7c09225ef2b3e2e92d96fa971624ed1a5cbd0bded23fd",
+      "level": "L8",
+      "tier": "low",
+      "policy": "fixture"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L8-low-stationary.json",
+      "sha256": "9cb09a189818b06e0915cbc8b2427345a6de6aaa4568def7e0adccfd02903fff",
+      "level": "L8",
+      "tier": "low",
+      "policy": "stationary",
+      "generatedAt": "2026-11-07T00:29:03.636Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L9-high-complete.json",
+      "sha256": "91522f3ef3dcc5166ab67b26569288c69b1e1707dce30e52e237c2be6feee75b",
+      "level": "L9",
+      "tier": "high",
+      "policy": "complete",
+      "generatedAt": "2026-11-07T00:35:31.239Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L9-high-fixtures.json",
+      "sha256": "4871214a98b786ffe4b98fcdfa072f919fe249a63ab28db9864cdb21eb32fc8d",
+      "level": "L9",
+      "tier": "high",
+      "policy": "fixture"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L9-high-stationary.json",
+      "sha256": "29d56c10c80f942cd021adc9a0d9a39c927430fb378ba18ac57e1e9217a93d78",
+      "level": "L9",
+      "tier": "high",
+      "policy": "stationary",
+      "generatedAt": "2026-11-07T00:36:07.602Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L9-low-complete.json",
+      "sha256": "99228a4df2bec1cf08b09d0dedb27472f8cb4abfc235b804c98992710a0e8603",
+      "level": "L9",
+      "tier": "low",
+      "policy": "complete",
+      "generatedAt": "2026-11-07T00:34:38.663Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L9-low-fixtures.json",
+      "sha256": "00ff0ea666e75dc3353c9053bb86eb6c4427c845cd5c666481c3945e74cd8b38",
+      "level": "L9",
+      "tier": "low",
+      "policy": "fixture"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L9-low-stationary.json",
+      "sha256": "5b77768248b2c32969cf7280096ddca57b4de02d2e8d270f3c8bf63230912e2b",
+      "level": "L9",
+      "tier": "low",
+      "policy": "stationary",
+      "generatedAt": "2026-11-07T00:35:02.935Z"
+    }
+  ],
+  "checks": [
+    {
+      "id": "G-10",
+      "clause": "observed approach collection distances; E-free causality needs an input fixture",
+      "level": "L1",
+      "tier": "high",
+      "policy": "complete",
+      "status": "NOT CHECKED",
+      "value": [],
+      "target": "ground ≤1.5 m; shelf ≤2.2 m",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-high-complete.json"
+    },
+    {
+      "id": "G-10",
+      "clause": "isolated ground/shelf weapon approach with E continuously false",
+      "value": [
+        {
+          "shelf": false,
+          "distance": 1.4949994087219238,
+          "ePressed": false,
+          "collected": 1,
+          "originalEntityRemaining": false
+        },
+        {
+          "shelf": true,
+          "distance": 2.169999837875366,
+          "ePressed": false,
+          "collected": 1,
+          "originalEntityRemaining": false
+        }
+      ],
+      "target": "one collection per specimen; ground≤1.5 m; shelf≤2.2 m",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-high-fixtures.json"
+    },
+    {
+      "id": "G-10",
+      "clause": "observed approach collection distances; E-free causality needs an input fixture",
+      "level": "L1",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "NOT CHECKED",
+      "value": [],
+      "target": "ground ≤1.5 m; shelf ≤2.2 m",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-high-stationary.json"
+    },
+    {
+      "id": "G-10",
+      "clause": "observed approach collection distances; E-free causality needs an input fixture",
+      "level": "L1",
+      "tier": "low",
+      "policy": "complete",
+      "status": "NOT CHECKED",
+      "value": [],
+      "target": "ground ≤1.5 m; shelf ≤2.2 m",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-low-complete.json"
+    },
+    {
+      "id": "G-10",
+      "clause": "isolated ground/shelf weapon approach with E continuously false",
+      "value": [
+        {
+          "shelf": false,
+          "distance": 1.4949994087219238,
+          "ePressed": false,
+          "collected": 1,
+          "originalEntityRemaining": false
+        },
+        {
+          "shelf": true,
+          "distance": 2.169999837875366,
+          "ePressed": false,
+          "collected": 1,
+          "originalEntityRemaining": false
+        }
+      ],
+      "target": "one collection per specimen; ground≤1.5 m; shelf≤2.2 m",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-low-fixtures.json"
+    },
+    {
+      "id": "G-10",
+      "clause": "observed approach collection distances; E-free causality needs an input fixture",
+      "level": "L1",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "NOT CHECKED",
+      "value": [],
+      "target": "ground ≤1.5 m; shelf ≤2.2 m",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-low-stationary.json"
+    },
+    {
+      "id": "G-10",
+      "clause": "observed approach collection distances; E-free causality needs an input fixture",
+      "level": "L10",
+      "tier": "high",
+      "policy": "complete",
+      "status": "NOT CHECKED",
+      "value": [],
+      "target": "ground ≤1.5 m; shelf ≤2.2 m",
+      "receipt": "docs/reports/fix51-verify/receipts/L10-high-complete.json"
+    },
+    {
+      "id": "G-10",
+      "clause": "isolated ground/shelf weapon approach with E continuously false",
+      "value": [
+        {
+          "shelf": false,
+          "distance": 1.4949994087219238,
+          "ePressed": false,
+          "collected": 1,
+          "originalEntityRemaining": false
+        },
+        {
+          "shelf": true,
+          "distance": 2.169999837875366,
+          "ePressed": false,
+          "collected": 1,
+          "originalEntityRemaining": false
+        }
+      ],
+      "target": "one collection per specimen; ground≤1.5 m; shelf≤2.2 m",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L10-high-fixtures.json"
+    },
+    {
+      "id": "G-10",
+      "clause": "observed approach collection distances; E-free causality needs an input fixture",
+      "level": "L10",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "NOT CHECKED",
+      "value": [],
+      "target": "ground ≤1.5 m; shelf ≤2.2 m",
+      "receipt": "docs/reports/fix51-verify/receipts/L10-high-stationary.json"
+    },
+    {
+      "id": "G-10",
+      "clause": "observed approach collection distances; E-free causality needs an input fixture",
+      "level": "L10",
+      "tier": "low",
+      "policy": "complete",
+      "status": "NOT CHECKED",
+      "value": [],
+      "target": "ground ≤1.5 m; shelf ≤2.2 m",
+      "receipt": "docs/reports/fix51-verify/receipts/L10-low-complete.json"
+    },
+    {
+      "id": "G-10",
+      "clause": "isolated ground/shelf weapon approach with E continuously false",
+      "value": [
+        {
+          "shelf": false,
+          "distance": 1.4949994087219238,
+          "ePressed": false,
+          "collected": 1,
+          "originalEntityRemaining": false
+        },
+        {
+          "shelf": true,
+          "distance": 2.169999837875366,
+          "ePressed": false,
+          "collected": 1,
+          "originalEntityRemaining": false
+        }
+      ],
+      "target": "one collection per specimen; ground≤1.5 m; shelf≤2.2 m",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L10-low-fixtures.json"
+    },
+    {
+      "id": "G-10",
+      "clause": "observed approach collection distances; E-free causality needs an input fixture",
+      "level": "L10",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "NOT CHECKED",
+      "value": [],
+      "target": "ground ≤1.5 m; shelf ≤2.2 m",
+      "receipt": "docs/reports/fix51-verify/receipts/L10-low-stationary.json"
+    },
+    {
+      "id": "G-10",
+      "clause": "observed approach collection distances; E-free causality needs an input fixture",
+      "level": "L2",
+      "tier": "high",
+      "policy": "complete",
+      "status": "NOT CHECKED",
+      "value": [],
+      "target": "ground ≤1.5 m; shelf ≤2.2 m",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-complete.json"
+    },
+    {
+      "id": "G-10",
+      "clause": "isolated ground/shelf weapon approach with E continuously false",
+      "value": [
+        {
+          "shelf": false,
+          "distance": 1.4949994087219238,
+          "ePressed": false,
+          "collected": 1,
+          "originalEntityRemaining": false
+        },
+        {
+          "shelf": true,
+          "distance": 2.169999837875366,
+          "ePressed": false,
+          "collected": 1,
+          "originalEntityRemaining": false
+        }
+      ],
+      "target": "one collection per specimen; ground≤1.5 m; shelf≤2.2 m",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-fixtures.json"
+    },
+    {
+      "id": "G-10",
+      "clause": "observed approach collection distances; E-free causality needs an input fixture",
+      "level": "L2",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "NOT CHECKED",
+      "value": [],
+      "target": "ground ≤1.5 m; shelf ≤2.2 m",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-stationary.json"
+    },
+    {
+      "id": "G-10",
+      "clause": "observed approach collection distances; E-free causality needs an input fixture",
+      "level": "L2",
+      "tier": "low",
+      "policy": "complete",
+      "status": "NOT CHECKED",
+      "value": [],
+      "target": "ground ≤1.5 m; shelf ≤2.2 m",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-complete.json"
+    },
+    {
+      "id": "G-10",
+      "clause": "isolated ground/shelf weapon approach with E continuously false",
+      "value": [
+        {
+          "shelf": false,
+          "distance": 1.4949994087219238,
+          "ePressed": false,
+          "collected": 1,
+          "originalEntityRemaining": false
+        },
+        {
+          "shelf": true,
+          "distance": 2.169999837875366,
+          "ePressed": false,
+          "collected": 1,
+          "originalEntityRemaining": false
+        }
+      ],
+      "target": "one collection per specimen; ground≤1.5 m; shelf≤2.2 m",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json"
+    },
+    {
+      "id": "G-10",
+      "clause": "observed approach collection distances; E-free causality needs an input fixture",
+      "level": "L2",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "NOT CHECKED",
+      "value": [],
+      "target": "ground ≤1.5 m; shelf ≤2.2 m",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-stationary.json"
+    },
+    {
+      "id": "G-10",
+      "clause": "observed approach collection distances; E-free causality needs an input fixture",
+      "level": "L3",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": [
+        {
+          "tick": 4768,
+          "id": 82,
+          "item": null,
+          "collector": null,
+          "distance": 0.882381839279311,
+          "shelf": false,
+          "interact": false,
+          "speed": 0
+        },
+        {
+          "tick": 7002,
+          "id": 85,
+          "item": null,
+          "collector": null,
+          "distance": 0.8668559918607279,
+          "shelf": false,
+          "interact": false,
+          "speed": 0
+        },
+        {
+          "tick": 10559,
+          "id": 103,
+          "item": null,
+          "collector": null,
+          "distance": 0.8998852224477204,
+          "shelf": false,
+          "interact": false,
+          "speed": 0
+        }
+      ],
+      "target": "ground ≤1.5 m; shelf ≤2.2 m",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-high-complete.json"
+    },
+    {
+      "id": "G-10",
+      "clause": "isolated ground/shelf weapon approach with E continuously false",
+      "value": [
+        {
+          "shelf": false,
+          "distance": 1.4949994087219238,
+          "ePressed": false,
+          "collected": 1,
+          "originalEntityRemaining": false
+        },
+        {
+          "shelf": true,
+          "distance": 2.169999837875366,
+          "ePressed": false,
+          "collected": 1,
+          "originalEntityRemaining": false
+        }
+      ],
+      "target": "one collection per specimen; ground≤1.5 m; shelf≤2.2 m",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json"
+    },
+    {
+      "id": "G-10",
+      "clause": "observed approach collection distances; E-free causality needs an input fixture",
+      "level": "L3",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "NOT CHECKED",
+      "value": [],
+      "target": "ground ≤1.5 m; shelf ≤2.2 m",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-high-stationary.json"
+    },
+    {
+      "id": "G-10",
+      "clause": "observed approach collection distances; E-free causality needs an input fixture",
+      "level": "L3",
+      "tier": "low",
+      "policy": "complete",
+      "status": "NOT CHECKED",
+      "value": [],
+      "target": "ground ≤1.5 m; shelf ≤2.2 m",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-complete.json"
+    },
+    {
+      "id": "G-10",
+      "clause": "isolated ground/shelf weapon approach with E continuously false",
+      "value": [
+        {
+          "shelf": false,
+          "distance": 1.4949994087219238,
+          "ePressed": false,
+          "collected": 1,
+          "originalEntityRemaining": false
+        },
+        {
+          "shelf": true,
+          "distance": 2.169999837875366,
+          "ePressed": false,
+          "collected": 1,
+          "originalEntityRemaining": false
+        }
+      ],
+      "target": "one collection per specimen; ground≤1.5 m; shelf≤2.2 m",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json"
+    },
+    {
+      "id": "G-10",
+      "clause": "observed approach collection distances; E-free causality needs an input fixture",
+      "level": "L3",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "NOT CHECKED",
+      "value": [],
+      "target": "ground ≤1.5 m; shelf ≤2.2 m",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-stationary.json"
+    },
+    {
+      "id": "G-10",
+      "clause": "observed approach collection distances; E-free causality needs an input fixture",
+      "level": "L4",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": [
+        {
+          "tick": 4340,
+          "id": 127,
+          "item": null,
+          "collector": null,
+          "distance": 0.8561909407905756,
+          "shelf": false,
+          "interact": false,
+          "speed": 0
+        },
+        {
+          "tick": 5115,
+          "id": 126,
+          "item": null,
+          "collector": null,
+          "distance": 0.8972251550150971,
+          "shelf": false,
+          "interact": false,
+          "speed": 0
+        },
+        {
+          "tick": 15646,
+          "id": 134,
+          "item": null,
+          "collector": null,
+          "distance": 0.8517350716508435,
+          "shelf": false,
+          "interact": false,
+          "speed": 0
+        }
+      ],
+      "target": "ground ≤1.5 m; shelf ≤2.2 m",
+      "receipt": "docs/reports/fix51-verify/receipts/L4-high-complete.json"
+    },
+    {
+      "id": "G-10",
+      "clause": "isolated ground/shelf weapon approach with E continuously false",
+      "value": [
+        {
+          "shelf": false,
+          "distance": 1.4949994087219238,
+          "ePressed": false,
+          "collected": 1,
+          "originalEntityRemaining": false
+        },
+        {
+          "shelf": true,
+          "distance": 2.169999837875366,
+          "ePressed": false,
+          "collected": 1,
+          "originalEntityRemaining": false
+        }
+      ],
+      "target": "one collection per specimen; ground≤1.5 m; shelf≤2.2 m",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L4-high-fixtures.json"
+    },
+    {
+      "id": "G-10",
+      "clause": "observed approach collection distances; E-free causality needs an input fixture",
+      "level": "L4",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "NOT CHECKED",
+      "value": [],
+      "target": "ground ≤1.5 m; shelf ≤2.2 m",
+      "receipt": "docs/reports/fix51-verify/receipts/L4-high-stationary.json"
+    },
+    {
+      "id": "G-10",
+      "clause": "observed approach collection distances; E-free causality needs an input fixture",
+      "level": "L4",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": [
+        {
+          "tick": 5659,
+          "id": 85,
+          "item": null,
+          "collector": null,
+          "distance": 0.8517631573907672,
+          "shelf": false,
+          "interact": false,
+          "speed": 0
+        },
+        {
+          "tick": 18621,
+          "id": 97,
+          "item": null,
+          "collector": null,
+          "distance": 0.8553785475050695,
+          "shelf": false,
+          "interact": false,
+          "speed": 0
+        },
+        {
+          "tick": 19113,
+          "id": 96,
+          "item": null,
+          "collector": null,
+          "distance": 0,
+          "shelf": false,
+          "interact": false,
+          "speed": 0
+        },
+        {
+          "tick": 19664,
+          "id": 95,
+          "item": null,
+          "collector": null,
+          "distance": 0.07500026119284176,
+          "shelf": false,
+          "interact": false,
+          "speed": 0
+        },
+        {
+          "tick": 21974,
+          "id": 91,
+          "item": null,
+          "collector": null,
+          "distance": 0.8413151252178803,
+          "shelf": false,
+          "interact": false,
+          "speed": 0
+        },
+        {
+          "tick": 39933,
+          "id": 87,
+          "item": null,
+          "collector": null,
+          "distance": 0.8756468020646209,
+          "shelf": false,
+          "interact": false,
+          "speed": 0
+        },
+        {
+          "tick": 40118,
+          "id": 83,
+          "item": null,
+          "collector": null,
+          "distance": 0.8854672471850831,
+          "shelf": false,
+          "interact": false,
+          "speed": 0
+        },
+        {
+          "tick": 41820,
+          "id": 89,
+          "item": null,
+          "collector": null,
+          "distance": 0.8996041221632126,
+          "shelf": false,
+          "interact": false,
+          "speed": 0
+        }
+      ],
+      "target": "ground ≤1.5 m; shelf ≤2.2 m",
+      "receipt": "docs/reports/fix51-verify/receipts/L4-low-complete.json"
+    },
+    {
+      "id": "G-10",
+      "clause": "isolated ground/shelf weapon approach with E continuously false",
+      "value": [
+        {
+          "shelf": false,
+          "distance": 1.4949994087219238,
+          "ePressed": false,
+          "collected": 1,
+          "originalEntityRemaining": false
+        },
+        {
+          "shelf": true,
+          "distance": 2.169999837875366,
+          "ePressed": false,
+          "collected": 1,
+          "originalEntityRemaining": false
+        }
+      ],
+      "target": "one collection per specimen; ground≤1.5 m; shelf≤2.2 m",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L4-low-fixtures.json"
+    },
+    {
+      "id": "G-10",
+      "clause": "observed approach collection distances; E-free causality needs an input fixture",
+      "level": "L4",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "NOT CHECKED",
+      "value": [],
+      "target": "ground ≤1.5 m; shelf ≤2.2 m",
+      "receipt": "docs/reports/fix51-verify/receipts/L4-low-stationary.json"
+    },
+    {
+      "id": "G-10",
+      "clause": "observed approach collection distances; E-free causality needs an input fixture",
+      "level": "L5",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": [
+        {
+          "tick": 19,
+          "id": 19,
+          "item": "weapon.shotgun",
+          "collector": 1,
+          "distance": 2.1742610347065967,
+          "shelf": true,
+          "interact": false,
+          "speed": 0
+        },
+        {
+          "tick": 10561,
+          "id": 388,
+          "item": null,
+          "collector": null,
+          "distance": 0.07499869025410505,
+          "shelf": false,
+          "interact": false,
+          "speed": 0
+        }
+      ],
+      "target": "ground ≤1.5 m; shelf ≤2.2 m",
+      "receipt": "docs/reports/fix51-verify/receipts/L5-high-complete.json"
+    },
+    {
+      "id": "G-10",
+      "clause": "isolated ground/shelf weapon approach with E continuously false",
+      "value": [
+        {
+          "shelf": false,
+          "distance": 1.4949994087219238,
+          "ePressed": false,
+          "collected": 1,
+          "originalEntityRemaining": false
+        },
+        {
+          "shelf": true,
+          "distance": 2.169999837875366,
+          "ePressed": false,
+          "collected": 1,
+          "originalEntityRemaining": false
+        }
+      ],
+      "target": "one collection per specimen; ground≤1.5 m; shelf≤2.2 m",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L5-high-fixtures.json"
+    },
+    {
+      "id": "G-10",
+      "clause": "observed approach collection distances; E-free causality needs an input fixture",
+      "level": "L5",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": [
+        {
+          "tick": 19,
+          "id": 19,
+          "item": "weapon.shotgun",
+          "collector": 1,
+          "distance": 2.1742610347065967,
+          "shelf": true,
+          "interact": false,
+          "speed": 0
+        }
+      ],
+      "target": "ground ≤1.5 m; shelf ≤2.2 m",
+      "receipt": "docs/reports/fix51-verify/receipts/L5-high-stationary.json"
+    },
+    {
+      "id": "G-10",
+      "clause": "observed approach collection distances; E-free causality needs an input fixture",
+      "level": "L5",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": [
+        {
+          "tick": 19,
+          "id": 19,
+          "item": "weapon.shotgun",
+          "collector": 1,
+          "distance": 2.1742610347065967,
+          "shelf": true,
+          "interact": false,
+          "speed": 0
+        }
+      ],
+      "target": "ground ≤1.5 m; shelf ≤2.2 m",
+      "receipt": "docs/reports/fix51-verify/receipts/L5-low-complete.json"
+    },
+    {
+      "id": "G-10",
+      "clause": "isolated ground/shelf weapon approach with E continuously false",
+      "value": [
+        {
+          "shelf": false,
+          "distance": 1.4949994087219238,
+          "ePressed": false,
+          "collected": 1,
+          "originalEntityRemaining": false
+        },
+        {
+          "shelf": true,
+          "distance": 2.169999837875366,
+          "ePressed": false,
+          "collected": 1,
+          "originalEntityRemaining": false
+        }
+      ],
+      "target": "one collection per specimen; ground≤1.5 m; shelf≤2.2 m",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L5-low-fixtures.json"
+    },
+    {
+      "id": "G-10",
+      "clause": "observed approach collection distances; E-free causality needs an input fixture",
+      "level": "L5",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": [
+        {
+          "tick": 19,
+          "id": 19,
+          "item": "weapon.shotgun",
+          "collector": 1,
+          "distance": 2.1742610347065967,
+          "shelf": true,
+          "interact": false,
+          "speed": 0
+        }
+      ],
+      "target": "ground ≤1.5 m; shelf ≤2.2 m",
+      "receipt": "docs/reports/fix51-verify/receipts/L5-low-stationary.json"
+    },
+    {
+      "id": "G-10",
+      "clause": "observed approach collection distances; E-free causality needs an input fixture",
+      "level": "L6",
+      "tier": "high",
+      "policy": "complete",
+      "status": "NOT CHECKED",
+      "value": [],
+      "target": "ground ≤1.5 m; shelf ≤2.2 m",
+      "receipt": "docs/reports/fix51-verify/receipts/L6-high-complete.json"
+    },
+    {
+      "id": "G-10",
+      "clause": "isolated ground/shelf weapon approach with E continuously false",
+      "value": [
+        {
+          "shelf": false,
+          "distance": 1.4949994087219238,
+          "ePressed": false,
+          "collected": 1,
+          "originalEntityRemaining": false
+        },
+        {
+          "shelf": true,
+          "distance": 2.169999837875366,
+          "ePressed": false,
+          "collected": 1,
+          "originalEntityRemaining": false
+        }
+      ],
+      "target": "one collection per specimen; ground≤1.5 m; shelf≤2.2 m",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L6-high-fixtures.json"
+    },
+    {
+      "id": "G-10",
+      "clause": "moving approach collection for every pickup class",
+      "value": [
+        {
+          "kind": "weapon.bat",
+          "shelf": false,
+          "distance": 1.4949994087219238,
+          "collected": 1,
+          "movingMetres": 0.07500004768371582,
+          "interact": false,
+          "mouseButtons": false,
+          "effect": true
+        },
+        {
+          "kind": "weapon.bat",
+          "shelf": true,
+          "distance": 2.169999837875366,
+          "collected": 1,
+          "movingMetres": 0.07500004768371582,
+          "interact": false,
+          "mouseButtons": false,
+          "effect": true
+        },
+        {
+          "kind": "weapon.fire-axe",
+          "shelf": false,
+          "distance": 1.4949994087219238,
+          "collected": 1,
+          "movingMetres": 0.07500004768371582,
+          "interact": false,
+          "mouseButtons": false,
+          "effect": true
+        },
+        {
+          "kind": "weapon.fire-axe",
+          "shelf": true,
+          "distance": 2.169999837875366,
+          "collected": 1,
+          "movingMetres": 0.07500004768371582,
+          "interact": false,
+          "mouseButtons": false,
+          "effect": true
+        },
+        {
+          "kind": "weapon.handgun",
+          "shelf": false,
+          "distance": 1.4949994087219238,
+          "collected": 1,
+          "movingMetres": 0.07500004768371582,
+          "interact": false,
+          "mouseButtons": false,
+          "effect": true
+        },
+        {
+          "kind": "weapon.handgun",
+          "shelf": true,
+          "distance": 2.169999837875366,
+          "collected": 1,
+          "movingMetres": 0.07500004768371582,
+          "interact": false,
+          "mouseButtons": false,
+          "effect": true
+        },
+        {
+          "kind": "weapon.army-mg",
+          "shelf": false,
+          "distance": 1.4949994087219238,
+          "collected": 1,
+          "movingMetres": 0.07500004768371582,
+          "interact": false,
+          "mouseButtons": false,
+          "effect": true
+        },
+        {
+          "kind": "weapon.army-mg",
+          "shelf": true,
+          "distance": 2.169999837875366,
+          "collected": 1,
+          "movingMetres": 0.07500004768371582,
+          "interact": false,
+          "mouseButtons": false,
+          "effect": true
+        },
+        {
+          "kind": "weapon.shotgun",
+          "shelf": false,
+          "distance": 1.4949994087219238,
+          "collected": 1,
+          "movingMetres": 0.07500004768371582,
+          "interact": false,
+          "mouseButtons": false,
+          "effect": true
+        },
+        {
+          "kind": "weapon.shotgun",
+          "shelf": true,
+          "distance": 2.169999837875366,
+          "collected": 1,
+          "movingMetres": 0.07500004768371582,
+          "interact": false,
+          "mouseButtons": false,
+          "effect": true
+        },
+        {
+          "kind": "weapon.rocket-launcher",
+          "shelf": false,
+          "distance": 1.4949994087219238,
+          "collected": 1,
+          "movingMetres": 0.07500004768371582,
+          "interact": false,
+          "mouseButtons": false,
+          "effect": true
+        },
+        {
+          "kind": "weapon.rocket-launcher",
+          "shelf": true,
+          "distance": 2.169999837875366,
+          "collected": 1,
+          "movingMetres": 0.07500004768371582,
+          "interact": false,
+          "mouseButtons": false,
+          "effect": true
+        },
+        {
+          "kind": "weapon.rotary-minigun",
+          "shelf": false,
+          "distance": 1.4949994087219238,
+          "collected": 1,
+          "movingMetres": 0.07500004768371582,
+          "interact": false,
+          "mouseButtons": false,
+          "effect": true
+        },
+        {
+          "kind": "weapon.rotary-minigun",
+          "shelf": true,
+          "distance": 2.169999837875366,
+          "collected": 1,
+          "movingMetres": 0.07500004768371582,
+          "interact": false,
+          "mouseButtons": false,
+          "effect": true
+        },
+        {
+          "kind": "medkit",
+          "shelf": false,
+          "distance": 0.8949990272521973,
+          "collected": 1,
+          "movingMetres": 0.07500004768371582,
+          "interact": false,
+          "mouseButtons": false,
+          "effect": true
+        },
+        {
+          "kind": "headlamp",
+          "shelf": false,
+          "distance": 1.469999551773192,
+          "collected": 1,
+          "movingMetres": 0.0750000476837395,
+          "interact": false,
+          "mouseButtons": false,
+          "effect": true
+        }
+      ],
+      "target": "16/16 cells: seven weapons ground/shelf, medkit, authored L6 headlamp; moving; E/clicks false; one transaction and actual item effect; ground≤1.5m, shelf≤2.2m",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L6-high-fixtures.json"
+    },
+    {
+      "id": "G-10",
+      "clause": "observed approach collection distances; E-free causality needs an input fixture",
+      "level": "L6",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "NOT CHECKED",
+      "value": [],
+      "target": "ground ≤1.5 m; shelf ≤2.2 m",
+      "receipt": "docs/reports/fix51-verify/receipts/L6-high-stationary.json"
+    },
+    {
+      "id": "G-10",
+      "clause": "observed approach collection distances; E-free causality needs an input fixture",
+      "level": "L6",
+      "tier": "low",
+      "policy": "complete",
+      "status": "NOT CHECKED",
+      "value": [],
+      "target": "ground ≤1.5 m; shelf ≤2.2 m",
+      "receipt": "docs/reports/fix51-verify/receipts/L6-low-complete.json"
+    },
+    {
+      "id": "G-10",
+      "clause": "isolated ground/shelf weapon approach with E continuously false",
+      "value": [
+        {
+          "shelf": false,
+          "distance": 1.4949994087219238,
+          "ePressed": false,
+          "collected": 1,
+          "originalEntityRemaining": false
+        },
+        {
+          "shelf": true,
+          "distance": 2.169999837875366,
+          "ePressed": false,
+          "collected": 1,
+          "originalEntityRemaining": false
+        }
+      ],
+      "target": "one collection per specimen; ground≤1.5 m; shelf≤2.2 m",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L6-low-fixtures.json"
+    },
+    {
+      "id": "G-10",
+      "clause": "moving approach collection for every pickup class",
+      "value": [
+        {
+          "kind": "weapon.bat",
+          "shelf": false,
+          "distance": 1.4949994087219238,
+          "collected": 1,
+          "movingMetres": 0.07500004768371582,
+          "interact": false,
+          "mouseButtons": false,
+          "effect": true
+        },
+        {
+          "kind": "weapon.bat",
+          "shelf": true,
+          "distance": 2.169999837875366,
+          "collected": 1,
+          "movingMetres": 0.07500004768371582,
+          "interact": false,
+          "mouseButtons": false,
+          "effect": true
+        },
+        {
+          "kind": "weapon.fire-axe",
+          "shelf": false,
+          "distance": 1.4949994087219238,
+          "collected": 1,
+          "movingMetres": 0.07500004768371582,
+          "interact": false,
+          "mouseButtons": false,
+          "effect": true
+        },
+        {
+          "kind": "weapon.fire-axe",
+          "shelf": true,
+          "distance": 2.169999837875366,
+          "collected": 1,
+          "movingMetres": 0.07500004768371582,
+          "interact": false,
+          "mouseButtons": false,
+          "effect": true
+        },
+        {
+          "kind": "weapon.handgun",
+          "shelf": false,
+          "distance": 1.4949994087219238,
+          "collected": 1,
+          "movingMetres": 0.07500004768371582,
+          "interact": false,
+          "mouseButtons": false,
+          "effect": true
+        },
+        {
+          "kind": "weapon.handgun",
+          "shelf": true,
+          "distance": 2.169999837875366,
+          "collected": 1,
+          "movingMetres": 0.07500004768371582,
+          "interact": false,
+          "mouseButtons": false,
+          "effect": true
+        },
+        {
+          "kind": "weapon.army-mg",
+          "shelf": false,
+          "distance": 1.4949994087219238,
+          "collected": 1,
+          "movingMetres": 0.07500004768371582,
+          "interact": false,
+          "mouseButtons": false,
+          "effect": true
+        },
+        {
+          "kind": "weapon.army-mg",
+          "shelf": true,
+          "distance": 2.169999837875366,
+          "collected": 1,
+          "movingMetres": 0.07500004768371582,
+          "interact": false,
+          "mouseButtons": false,
+          "effect": true
+        },
+        {
+          "kind": "weapon.shotgun",
+          "shelf": false,
+          "distance": 1.4949994087219238,
+          "collected": 1,
+          "movingMetres": 0.07500004768371582,
+          "interact": false,
+          "mouseButtons": false,
+          "effect": true
+        },
+        {
+          "kind": "weapon.shotgun",
+          "shelf": true,
+          "distance": 2.169999837875366,
+          "collected": 1,
+          "movingMetres": 0.07500004768371582,
+          "interact": false,
+          "mouseButtons": false,
+          "effect": true
+        },
+        {
+          "kind": "weapon.rocket-launcher",
+          "shelf": false,
+          "distance": 1.4949994087219238,
+          "collected": 1,
+          "movingMetres": 0.07500004768371582,
+          "interact": false,
+          "mouseButtons": false,
+          "effect": true
+        },
+        {
+          "kind": "weapon.rocket-launcher",
+          "shelf": true,
+          "distance": 2.169999837875366,
+          "collected": 1,
+          "movingMetres": 0.07500004768371582,
+          "interact": false,
+          "mouseButtons": false,
+          "effect": true
+        },
+        {
+          "kind": "weapon.rotary-minigun",
+          "shelf": false,
+          "distance": 1.4949994087219238,
+          "collected": 1,
+          "movingMetres": 0.07500004768371582,
+          "interact": false,
+          "mouseButtons": false,
+          "effect": true
+        },
+        {
+          "kind": "weapon.rotary-minigun",
+          "shelf": true,
+          "distance": 2.169999837875366,
+          "collected": 1,
+          "movingMetres": 0.07500004768371582,
+          "interact": false,
+          "mouseButtons": false,
+          "effect": true
+        },
+        {
+          "kind": "medkit",
+          "shelf": false,
+          "distance": 0.8949990272521973,
+          "collected": 1,
+          "movingMetres": 0.07500004768371582,
+          "interact": false,
+          "mouseButtons": false,
+          "effect": true
+        },
+        {
+          "kind": "headlamp",
+          "shelf": false,
+          "distance": 1.469999551773192,
+          "collected": 1,
+          "movingMetres": 0.0750000476837395,
+          "interact": false,
+          "mouseButtons": false,
+          "effect": true
+        }
+      ],
+      "target": "16/16 cells: seven weapons ground/shelf, medkit, authored L6 headlamp; moving; E/clicks false; one transaction and actual item effect; ground≤1.5m, shelf≤2.2m",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L6-low-fixtures.json"
+    },
+    {
+      "id": "G-10",
+      "clause": "observed approach collection distances; E-free causality needs an input fixture",
+      "level": "L6",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "NOT CHECKED",
+      "value": [],
+      "target": "ground ≤1.5 m; shelf ≤2.2 m",
+      "receipt": "docs/reports/fix51-verify/receipts/L6-low-stationary.json"
+    },
+    {
+      "id": "G-10",
+      "clause": "observed approach collection distances; E-free causality needs an input fixture",
+      "level": "L7",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": [
+        {
+          "tick": 14,
+          "id": 21,
+          "item": "weapon.rocket-launcher",
+          "collector": 1,
+          "distance": 2.194915771484375,
+          "shelf": true,
+          "interact": false,
+          "speed": 0
+        }
+      ],
+      "target": "ground ≤1.5 m; shelf ≤2.2 m",
+      "receipt": "docs/reports/fix51-verify/receipts/L7-high-complete.json"
+    },
+    {
+      "id": "G-10",
+      "clause": "isolated ground/shelf weapon approach with E continuously false",
+      "value": [
+        {
+          "shelf": false,
+          "distance": 1.4949994087219238,
+          "ePressed": false,
+          "collected": 1,
+          "originalEntityRemaining": false
+        },
+        {
+          "shelf": true,
+          "distance": 2.169999837875366,
+          "ePressed": false,
+          "collected": 1,
+          "originalEntityRemaining": false
+        }
+      ],
+      "target": "one collection per specimen; ground≤1.5 m; shelf≤2.2 m",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L7-high-fixtures.json"
+    },
+    {
+      "id": "G-10",
+      "clause": "observed approach collection distances; E-free causality needs an input fixture",
+      "level": "L7",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": [
+        {
+          "tick": 14,
+          "id": 21,
+          "item": "weapon.rocket-launcher",
+          "collector": 1,
+          "distance": 2.194915771484375,
+          "shelf": true,
+          "interact": false,
+          "speed": 0
+        }
+      ],
+      "target": "ground ≤1.5 m; shelf ≤2.2 m",
+      "receipt": "docs/reports/fix51-verify/receipts/L7-high-stationary.json"
+    },
+    {
+      "id": "G-10",
+      "clause": "observed approach collection distances; E-free causality needs an input fixture",
+      "level": "L7",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": [
+        {
+          "tick": 14,
+          "id": 21,
+          "item": "weapon.rocket-launcher",
+          "collector": 1,
+          "distance": 2.194915771484375,
+          "shelf": true,
+          "interact": false,
+          "speed": 0
+        }
+      ],
+      "target": "ground ≤1.5 m; shelf ≤2.2 m",
+      "receipt": "docs/reports/fix51-verify/receipts/L7-low-complete.json"
+    },
+    {
+      "id": "G-10",
+      "clause": "isolated ground/shelf weapon approach with E continuously false",
+      "value": [
+        {
+          "shelf": false,
+          "distance": 1.4949994087219238,
+          "ePressed": false,
+          "collected": 1,
+          "originalEntityRemaining": false
+        },
+        {
+          "shelf": true,
+          "distance": 2.169999837875366,
+          "ePressed": false,
+          "collected": 1,
+          "originalEntityRemaining": false
+        }
+      ],
+      "target": "one collection per specimen; ground≤1.5 m; shelf≤2.2 m",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L7-low-fixtures.json"
+    },
+    {
+      "id": "G-10",
+      "clause": "observed approach collection distances; E-free causality needs an input fixture",
+      "level": "L7",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": [
+        {
+          "tick": 14,
+          "id": 21,
+          "item": "weapon.rocket-launcher",
+          "collector": 1,
+          "distance": 2.194915771484375,
+          "shelf": true,
+          "interact": false,
+          "speed": 0
+        }
+      ],
+      "target": "ground ≤1.5 m; shelf ≤2.2 m",
+      "receipt": "docs/reports/fix51-verify/receipts/L7-low-stationary.json"
+    },
+    {
+      "id": "G-10",
+      "clause": "observed approach collection distances; E-free causality needs an input fixture",
+      "level": "L8",
+      "tier": "high",
+      "policy": "complete",
+      "status": "NOT CHECKED",
+      "value": [],
+      "target": "ground ≤1.5 m; shelf ≤2.2 m",
+      "receipt": "docs/reports/fix51-verify/receipts/L8-high-complete.json"
+    },
+    {
+      "id": "G-10",
+      "clause": "isolated ground/shelf weapon approach with E continuously false",
+      "value": [
+        {
+          "shelf": false,
+          "distance": 1.4949994087219238,
+          "ePressed": false,
+          "collected": 1,
+          "originalEntityRemaining": false
+        },
+        {
+          "shelf": true,
+          "distance": 2.169999837875366,
+          "ePressed": false,
+          "collected": 1,
+          "originalEntityRemaining": false
+        }
+      ],
+      "target": "one collection per specimen; ground≤1.5 m; shelf≤2.2 m",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L8-high-fixtures.json"
+    },
+    {
+      "id": "G-10",
+      "clause": "observed approach collection distances; E-free causality needs an input fixture",
+      "level": "L8",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "NOT CHECKED",
+      "value": [],
+      "target": "ground ≤1.5 m; shelf ≤2.2 m",
+      "receipt": "docs/reports/fix51-verify/receipts/L8-high-stationary.json"
+    },
+    {
+      "id": "G-10",
+      "clause": "observed approach collection distances; E-free causality needs an input fixture",
+      "level": "L8",
+      "tier": "low",
+      "policy": "complete",
+      "status": "NOT CHECKED",
+      "value": [],
+      "target": "ground ≤1.5 m; shelf ≤2.2 m",
+      "receipt": "docs/reports/fix51-verify/receipts/L8-low-complete.json"
+    },
+    {
+      "id": "G-10",
+      "clause": "isolated ground/shelf weapon approach with E continuously false",
+      "value": [
+        {
+          "shelf": false,
+          "distance": 1.4949994087219238,
+          "ePressed": false,
+          "collected": 1,
+          "originalEntityRemaining": false
+        },
+        {
+          "shelf": true,
+          "distance": 2.169999837875366,
+          "ePressed": false,
+          "collected": 1,
+          "originalEntityRemaining": false
+        }
+      ],
+      "target": "one collection per specimen; ground≤1.5 m; shelf≤2.2 m",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L8-low-fixtures.json"
+    },
+    {
+      "id": "G-10",
+      "clause": "observed approach collection distances; E-free causality needs an input fixture",
+      "level": "L8",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "NOT CHECKED",
+      "value": [],
+      "target": "ground ≤1.5 m; shelf ≤2.2 m",
+      "receipt": "docs/reports/fix51-verify/receipts/L8-low-stationary.json"
+    },
+    {
+      "id": "G-10",
+      "clause": "observed approach collection distances; E-free causality needs an input fixture",
+      "level": "L9",
+      "tier": "high",
+      "policy": "complete",
+      "status": "NOT CHECKED",
+      "value": [],
+      "target": "ground ≤1.5 m; shelf ≤2.2 m",
+      "receipt": "docs/reports/fix51-verify/receipts/L9-high-complete.json"
+    },
+    {
+      "id": "G-10",
+      "clause": "isolated ground/shelf weapon approach with E continuously false",
+      "value": [
+        {
+          "shelf": false,
+          "distance": 1.4949994087219238,
+          "ePressed": false,
+          "collected": 1,
+          "originalEntityRemaining": false
+        },
+        {
+          "shelf": true,
+          "distance": 2.169999837875366,
+          "ePressed": false,
+          "collected": 1,
+          "originalEntityRemaining": false
+        }
+      ],
+      "target": "one collection per specimen; ground≤1.5 m; shelf≤2.2 m",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L9-high-fixtures.json"
+    },
+    {
+      "id": "G-10",
+      "clause": "observed approach collection distances; E-free causality needs an input fixture",
+      "level": "L9",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "NOT CHECKED",
+      "value": [],
+      "target": "ground ≤1.5 m; shelf ≤2.2 m",
+      "receipt": "docs/reports/fix51-verify/receipts/L9-high-stationary.json"
+    },
+    {
+      "id": "G-10",
+      "clause": "observed approach collection distances; E-free causality needs an input fixture",
+      "level": "L9",
+      "tier": "low",
+      "policy": "complete",
+      "status": "NOT CHECKED",
+      "value": [],
+      "target": "ground ≤1.5 m; shelf ≤2.2 m",
+      "receipt": "docs/reports/fix51-verify/receipts/L9-low-complete.json"
+    },
+    {
+      "id": "G-10",
+      "clause": "isolated ground/shelf weapon approach with E continuously false",
+      "value": [
+        {
+          "shelf": false,
+          "distance": 1.4949994087219238,
+          "ePressed": false,
+          "collected": 1,
+          "originalEntityRemaining": false
+        },
+        {
+          "shelf": true,
+          "distance": 2.169999837875366,
+          "ePressed": false,
+          "collected": 1,
+          "originalEntityRemaining": false
+        }
+      ],
+      "target": "one collection per specimen; ground≤1.5 m; shelf≤2.2 m",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L9-low-fixtures.json"
+    },
+    {
+      "id": "G-10",
+      "clause": "observed approach collection distances; E-free causality needs an input fixture",
+      "level": "L9",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "NOT CHECKED",
+      "value": [],
+      "target": "ground ≤1.5 m; shelf ≤2.2 m",
+      "receipt": "docs/reports/fix51-verify/receipts/L9-low-stationary.json"
+    }
+  ]
+}
