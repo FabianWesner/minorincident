@@ -1,0 +1,57 @@
+[
+  {
+    "log": "docs/reports/blk-v/logs/final-tsc.log.gz",
+    "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+    "result": "PASS"
+  },
+  {
+    "log": "docs/reports/blk-v/logs/final-lint.log.gz",
+    "sha256": "c5b26b09786bbc5b8bc114c76a44f37326546a071280383cc8c16fb22f335692",
+    "result": "PASS"
+  },
+  {
+    "log": "docs/reports/blk-v/logs/final-test.log.gz",
+    "sha256": "747faeb52dff2d56f79c80768509efb131f97ad1088726d3936e36bd0b0cde9a",
+    "result": "FAIL: dirty source freshness"
+  },
+  {
+    "log": "docs/reports/blk-v/logs/final-test-committed.log.gz",
+    "sha256": "db4eaa5d06382c8778b7663b1f03a8ba63dd1cba6353b2a2a84c4cb7db4ed334",
+    "result": "FAIL: two timeouts"
+  },
+  {
+    "log": "docs/reports/blk-v/logs/final-test-serial.log.gz",
+    "sha256": "e2a758cd4ce84ba209f4db123da4875b47af8705fa68e10d0deb2c71df265aec",
+    "result": "PASS:107tests"
+  },
+  {
+    "log": "docs/reports/blk-v/logs/scene-gate.log.gz",
+    "sha256": "6a6b263f2dfadd3e87b605df0264edb6cfafdafa463756e84c2afb4c00d17964",
+    "result": "PASS:50/50"
+  },
+  {
+    "log": "docs/reports/blk-v/logs/G14-accept.log.gz",
+    "sha256": "8c3a4b4641fd8e66d9eae0eee169270970e19a8a55cd1a41b54d65466fea4501",
+    "result": "Superseded: initial G25 evidence hash mismatch"
+  },
+  {
+    "log": "docs/reports/blk-v/logs/G14-accept-retry.log.gz",
+    "sha256": "3a47fa9cd80f7cf207e49ba367394c2d9f0ef7892b6122bb0ab9cfeaa5bc9763",
+    "result": "Superseded: deliberately interrupted; earlier source"
+  },
+  {
+    "log": "docs/reports/blk-v/logs/final-accept.log.gz",
+    "sha256": "b2e8bf3ef3a64f36f258d239b2bf14ac95c941067b71d2b5c466eac699900759",
+    "result": "Superseded: all native measurements complete; report assembly stopped on missing trimmed tracked L10 receipt"
+  },
+  {
+    "log": "docs/reports/blk-v/logs/final-accept-refresh.log.gz",
+    "sha256": "a2b964de1c9ae63b6350b0be9ed324f76f4d33144d117b3142bc5aab3c378be7",
+    "result": "COMPLETE: exit1 due open FAIL criteria; all ten reports, zero runner/fixture/checkpoint errors"
+  },
+  {
+    "log": "docs/reports/blk-v/logs/final-threat.log.gz",
+    "sha256": "3ab5f01cb11c544ebc8710e6cbb3d1e8304c0ad513938d70dfb3780da6908225",
+    "result": "PASS: ten levels, 0 fail flags; run alone; 285.1s /600s budget"
+  }
+]

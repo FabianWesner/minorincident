@@ -1,0 +1,263 @@
+{
+  "command": "npm run qa:accept -- --level all --reuse --skip-browser",
+  "exitCode": 1,
+  "reason": "Fresh/historical FAIL criteria remain; not a runner error. All ten level reports generated, zero policy/fixture/checkpoint errors. Browser campaign not requalified; targeted current-source browser evidence is in final-visual-proof and physical-proof.",
+  "levels": [
+    {
+      "level": "L1",
+      "report": "docs/reports/fix51-verify/L1.json",
+      "sha256": "271dd97cf5178de894090c98436c20418aa70e19907bb0a9eea0fce83e4a97e1",
+      "policyErrors": [],
+      "levelRows": {
+        "PASS": 4,
+        "FAIL": 1,
+        "NOT CHECKED": 12
+      },
+      "targetRows": [
+        {
+          "id": "G-14",
+          "status": "FAIL",
+          "currentStatus": "FAIL",
+          "freshness": "FRESH"
+        },
+        {
+          "id": "G-26",
+          "status": "NOT CHECKED",
+          "currentStatus": "NOT CHECKED",
+          "freshness": "FRESH"
+        }
+      ]
+    },
+    {
+      "level": "L2",
+      "report": "docs/reports/fix51-verify/L2.json",
+      "sha256": "5013929c0970e1fdf59eb3d309f88748ccb9ee257f306ac1940716df6106aa5b",
+      "policyErrors": [],
+      "levelRows": {
+        "PASS": 6,
+        "FAIL": 1,
+        "NOT CHECKED": 9
+      },
+      "targetRows": [
+        {
+          "id": "G-14",
+          "status": "FAIL",
+          "currentStatus": "FAIL",
+          "freshness": "FRESH"
+        },
+        {
+          "id": "G-26",
+          "status": "NOT CHECKED",
+          "currentStatus": "NOT CHECKED",
+          "freshness": "FRESH"
+        }
+      ]
+    },
+    {
+      "level": "L3",
+      "report": "docs/reports/fix51-verify/L3.json",
+      "sha256": "97a8467787629279c640d4ec2017f401bcff928f66a98cc4935ee81c74ef9d15",
+      "policyErrors": [],
+      "levelRows": {
+        "PASS": 4,
+        "FAIL": 4,
+        "NOT CHECKED": 8
+      },
+      "targetRows": [
+        {
+          "id": "G-14",
+          "status": "FAIL",
+          "currentStatus": "FAIL",
+          "freshness": "FRESH"
+        },
+        {
+          "id": "G-26",
+          "status": "NOT CHECKED",
+          "currentStatus": "NOT CHECKED",
+          "freshness": "FRESH"
+        }
+      ]
+    },
+    {
+      "level": "L4",
+      "report": "docs/reports/fix51-verify/L4.json",
+      "sha256": "b61c4823d6b49141847cb6295370d378c8a9bc6e8da8692a52656252a8343d5d",
+      "policyErrors": [],
+      "levelRows": {
+        "PASS": 4,
+        "FAIL": 1,
+        "NOT CHECKED": 13
+      },
+      "targetRows": [
+        {
+          "id": "G-14",
+          "status": "FAIL",
+          "currentStatus": "FAIL",
+          "freshness": "FRESH"
+        },
+        {
+          "id": "G-26",
+          "status": "NOT CHECKED",
+          "currentStatus": "NOT CHECKED",
+          "freshness": "FRESH"
+        },
+        {
+          "id": "L4-17",
+          "status": "FAIL",
+          "currentStatus": "FAIL",
+          "freshness": "FRESH"
+        }
+      ]
+    },
+    {
+      "level": "L5",
+      "report": "docs/reports/fix51-verify/L5.json",
+      "sha256": "ae331ac8a6698c2637ea3a5a1758c8933a987424439b2d52a9bf004b4cf26811",
+      "policyErrors": [],
+      "levelRows": {
+        "PASS": 4,
+        "FAIL": 1,
+        "NOT CHECKED": 9
+      },
+      "targetRows": [
+        {
+          "id": "G-14",
+          "status": "FAIL",
+          "currentStatus": "FAIL",
+          "freshness": "FRESH"
+        },
+        {
+          "id": "G-26",
+          "status": "NOT CHECKED",
+          "currentStatus": "NOT CHECKED",
+          "freshness": "FRESH"
+        }
+      ]
+    },
+    {
+      "level": "L6",
+      "report": "docs/reports/fix51-verify/L6.json",
+      "sha256": "95c02b0756e62940067191cf35234d1e6c27caeb6f28e514c03e043909de9d02",
+      "policyErrors": [],
+      "levelRows": {
+        "PASS": 4,
+        "FAIL": 0,
+        "NOT CHECKED": 10
+      },
+      "targetRows": [
+        {
+          "id": "G-14",
+          "status": "FAIL",
+          "currentStatus": "FAIL",
+          "freshness": "FRESH"
+        },
+        {
+          "id": "G-26",
+          "status": "NOT CHECKED",
+          "currentStatus": "NOT CHECKED",
+          "freshness": "FRESH"
+        }
+      ]
+    },
+    {
+      "level": "L7",
+      "report": "docs/reports/fix51-verify/L7.json",
+      "sha256": "a615c286a6ef32533cdcef0a68d6585dcc203b8022521a287543560f06b6bf77",
+      "policyErrors": [],
+      "levelRows": {
+        "PASS": 2,
+        "FAIL": 2,
+        "NOT CHECKED": 8
+      },
+      "targetRows": [
+        {
+          "id": "G-14",
+          "status": "FAIL",
+          "currentStatus": "FAIL",
+          "freshness": "FRESH"
+        },
+        {
+          "id": "G-26",
+          "status": "NOT CHECKED",
+          "currentStatus": "NOT CHECKED",
+          "freshness": "FRESH"
+        }
+      ]
+    },
+    {
+      "level": "L8",
+      "report": "docs/reports/fix51-verify/L8.json",
+      "sha256": "e650b23a4e52f09d755d0240ddcf3a7dd5e423279cbf41a5bfe2ddf1ebd5eb97",
+      "policyErrors": [],
+      "levelRows": {
+        "PASS": 1,
+        "FAIL": 0,
+        "NOT CHECKED": 10
+      },
+      "targetRows": [
+        {
+          "id": "G-14",
+          "status": "FAIL",
+          "currentStatus": "FAIL",
+          "freshness": "FRESH"
+        },
+        {
+          "id": "G-26",
+          "status": "NOT CHECKED",
+          "currentStatus": "NOT CHECKED",
+          "freshness": "FRESH"
+        }
+      ]
+    },
+    {
+      "level": "L9",
+      "report": "docs/reports/fix51-verify/L9.json",
+      "sha256": "50394c7b492143381e7f6d02127fedc86f0463ae22a1e154985c5b7ef3ae7cda",
+      "policyErrors": [],
+      "levelRows": {
+        "PASS": 1,
+        "FAIL": 0,
+        "NOT CHECKED": 8
+      },
+      "targetRows": [
+        {
+          "id": "G-14",
+          "status": "FAIL",
+          "currentStatus": "FAIL",
+          "freshness": "FRESH"
+        },
+        {
+          "id": "G-26",
+          "status": "NOT CHECKED",
+          "currentStatus": "NOT CHECKED",
+          "freshness": "FRESH"
+        }
+      ]
+    },
+    {
+      "level": "L10",
+      "report": "docs/reports/fix51-verify/L10.json",
+      "sha256": "503ef55ce517e05f99eb393929df1e9e31c1cd8cdf0521bccdc81d2abc5c91f1",
+      "policyErrors": [],
+      "levelRows": {
+        "PASS": 4,
+        "FAIL": 1,
+        "NOT CHECKED": 10
+      },
+      "targetRows": [
+        {
+          "id": "G-14",
+          "status": "FAIL",
+          "currentStatus": "FAIL",
+          "freshness": "FRESH"
+        },
+        {
+          "id": "G-26",
+          "status": "NOT CHECKED",
+          "currentStatus": "NOT CHECKED",
+          "freshness": "FRESH"
+        }
+      ]
+    }
+  ]
+}
