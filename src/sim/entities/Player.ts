@@ -41,6 +41,7 @@ export class Player {
     const walking = (input as InputFrame & { walk?: boolean }).walk && (this.entity as { riding?: number }).riding === undefined;
     const length = walking ? Math.hypot(input.move.x, input.move.z) : 0, cap = survivor.walkSpeed / survivor.speed;
     this.locomotion.move(length > cap ? { ...input, move: { x: input.move.x / length * cap, z: input.move.z / length * cap } } : input, this.entity.transform, state.diedAt === null && enabled);
+    this.locomotion.response.updatedAt = tick;
   }
   postPhysics(tick: number): void {
     const p = this.physics.playerBody!.translation(), state = this.entity.survivor!;

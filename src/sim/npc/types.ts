@@ -65,7 +65,7 @@ export interface AllyState {
   /** v2 firearm (officers and soldiers from L3); without it officers keep the L2 v1 values. */
   gun?: AllyGun;
   /** v2 squad: follow this entity (the player) at 2-6 m, engage within `engageM`, never more than `leashM` away when engaged. */
-  follow?: { targetId: number; slot: number; minM: number; maxM: number; engageM: number; leashM: number; moveMs: number; breakoutUntil?: number };
+  follow?: { targetId: number; slot: number; minM: number; maxM: number; engageM: number; leashM: number; moveMs: number; breakoutUntil?: number; spacingAt?: number };
   /** v2 cover zone: only infected within `range` of this point are engaged (the soldiers' last 20 m before the zone line). */
   cover?: Point;
   /** Engaged allies fight what they see; disengaged ones follow their routine or `run` order. */

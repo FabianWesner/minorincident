@@ -1,0 +1,657 @@
+{
+  "sourceRevision": "d027afa4",
+  "baseline": "aab0aa35",
+  "audio": {
+    "low": {
+      "inside": {
+        "tick": 662,
+        "time": 4.426666666666667,
+        "end": 7.149333333333334,
+        "distance": 24.899999868774458,
+        "listenerDistance": 24.9,
+        "rms": 0.006204611976174555,
+        "stopped": false,
+        "active": true,
+        "distanceModel": "linear",
+        "maxDistance": 30,
+        "state": "running",
+        "unlocked": true,
+        "muted": false,
+        "output": 0,
+        "voiceId": 30
+      },
+      "outside": {
+        "tick": 668,
+        "time": 4.618666666666667,
+        "end": 7.149333333333334,
+        "explicitStop": {
+          "tick": 663,
+          "time": 4.448,
+          "end": 7.149333333333334,
+          "distance": 31.0000000118256
+        },
+        "distance": 31.0000000118256,
+        "listenerDistance": 31.0000000118256,
+        "rms": 0,
+        "stopped": true,
+        "active": false,
+        "distanceModel": "linear",
+        "maxDistance": 30,
+        "state": "running",
+        "unlocked": true,
+        "muted": false,
+        "output": 0,
+        "voiceId": 30
+      },
+      "errors": []
+    },
+    "high": {
+      "inside": {
+        "tick": 662,
+        "time": 3.9146666666666667,
+        "end": 6.701333333333333,
+        "distance": 24.899999868774458,
+        "listenerDistance": 24.9,
+        "rms": 0.008114061151887005,
+        "stopped": false,
+        "active": true,
+        "distanceModel": "linear",
+        "maxDistance": 30,
+        "state": "running",
+        "unlocked": true,
+        "muted": false,
+        "output": 0,
+        "wet": 0,
+        "voiceId": 48
+      },
+      "outside": {
+        "tick": 668,
+        "time": 4.1066666666666665,
+        "end": 6.701333333333333,
+        "explicitStop": {
+          "tick": 663,
+          "time": 3.925333333333333,
+          "end": 6.701333333333333,
+          "distance": 31.0000000118256
+        },
+        "distance": 31.0000000118256,
+        "listenerDistance": 31.0000000118256,
+        "rms": 0,
+        "stopped": true,
+        "active": false,
+        "distanceModel": "linear",
+        "maxDistance": 30,
+        "state": "running",
+        "unlocked": true,
+        "muted": false,
+        "output": 0,
+        "wet": 0,
+        "voiceId": 48
+      },
+      "errors": []
+    }
+  },
+  "calm": {
+    "low": {
+      "ranges": [
+        {
+          "id": 30,
+          "n": 479,
+          "min": 3.760311402016333,
+          "max": 4.812408860830242,
+          "bad": 0
+        },
+        {
+          "id": 31,
+          "n": 479,
+          "min": 3.6819838380250327,
+          "max": 4.399531003467691,
+          "bad": 0
+        },
+        {
+          "id": 32,
+          "n": 479,
+          "min": 3.226273977206062,
+          "max": 4.139916098486619,
+          "bad": 0
+        },
+        {
+          "id": 33,
+          "n": 479,
+          "min": 3.316984028562978,
+          "max": 5.995843025793141,
+          "bad": 0
+        }
+      ],
+      "at24": {
+        "tick": 264,
+        "p": {
+          "x": -133.84898376464844,
+          "y": 0.7099999785423279,
+          "z": -0.48548775911331177,
+          "yaw": 0.7853981633974483
+        },
+        "v": {
+          "x": 3.1819805153394642,
+          "z": -3.181980515339464
+        },
+        "squad": [
+          {
+            "id": 30,
+            "hp": 100,
+            "p": {
+              "x": -135.4740080845627,
+              "z": -3.9049975373545793,
+              "y": 0.83,
+              "yaw": 2.1294839149974525
+            },
+            "d": 3.7859940786800617
+          },
+          {
+            "id": 31,
+            "hp": 100,
+            "p": {
+              "x": -130.67015158425625,
+              "z": -2.833709238410599,
+              "y": 0.83,
+              "yaw": 0.1834704075062107
+            },
+            "d": 3.9521030030769837
+          },
+          {
+            "id": 32,
+            "hp": 100,
+            "p": {
+              "x": -131.49935102958196,
+              "z": -2.873807148150599,
+              "y": 0.83,
+              "yaw": 1.4249324974260729
+            },
+            "d": 3.350349756927987
+          },
+          {
+            "id": 33,
+            "hp": 100,
+            "p": {
+              "x": -136.02984906033493,
+              "z": 4.787144361465771,
+              "y": 0.7,
+              "yaw": 1.670232275493932
+            },
+            "d": 5.705858648520131
+          }
+        ]
+      },
+      "maxStepM": 0.123719210548028,
+      "minHp": 100,
+      "errors": []
+    },
+    "high": {
+      "ranges": [
+        {
+          "id": 30,
+          "n": 479,
+          "min": 3.7218955390230977,
+          "max": 4.995893442107051,
+          "bad": 0
+        },
+        {
+          "id": 31,
+          "n": 479,
+          "min": 3.2515755414526875,
+          "max": 4.1105946099928135,
+          "bad": 0
+        },
+        {
+          "id": 32,
+          "n": 479,
+          "min": 3.3254149198383653,
+          "max": 4.245472554597724,
+          "bad": 0
+        },
+        {
+          "id": 33,
+          "n": 479,
+          "min": 3.7838168900632474,
+          "max": 5.995843025793141,
+          "bad": 0
+        }
+      ],
+      "at24": {
+        "tick": 264,
+        "p": {
+          "x": -133.84898376464844,
+          "y": 0.7099999785423279,
+          "z": -0.48548775911331177,
+          "yaw": -5.497787143782138
+        },
+        "v": {
+          "x": 3.1819805153394642,
+          "z": -3.181980515339464
+        },
+        "squad": [
+          {
+            "id": 30,
+            "hp": 100,
+            "p": {
+              "x": -135.1476019429096,
+              "z": -3.976037603976024,
+              "y": 0.83,
+              "yaw": 2.159735128524101
+            },
+            "d": 3.724291528919488
+          },
+          {
+            "id": 31,
+            "hp": 100,
+            "p": {
+              "x": -131.66242568879517,
+              "z": 2.249503709153903,
+              "y": 0.7,
+              "yaw": 1.86811743174453
+            },
+            "d": 3.501601712155969
+          },
+          {
+            "id": 32,
+            "hp": 100,
+            "p": {
+              "x": -130.88971610925782,
+              "z": 1.4316790569175435,
+              "y": 0.7,
+              "yaw": -0.2996064448409666
+            },
+            "d": 3.526016684125442
+          },
+          {
+            "id": 33,
+            "hp": 100,
+            "p": {
+              "x": -136.02984906033493,
+              "z": 4.787144361465771,
+              "y": 0.7,
+              "yaw": 1.670232275493932
+            },
+            "d": 5.705858648520131
+          }
+        ]
+      },
+      "maxStepM": 0.10331942000193572,
+      "minHp": 100,
+      "errors": []
+    }
+  },
+  "openedVisuals": [
+    {
+      "path": "test-results/r3-fix/calm-ramp-proof-low/ramp-z0.5.png",
+      "sha256": "851ebd185cba1bc2a1ecf3995a3a5d6280742660a574b24364a1db3811d3ed51"
+    },
+    {
+      "path": "test-results/r3-fix/calm-final-proof-low/bus-north-z0.5.png",
+      "sha256": "f186f4934492b7709013132747f999a0526b6b69cf269eb18a565760a840ef43"
+    },
+    {
+      "path": "test-results/r3-fix/calm-final-proof-low/bus-south-z0.5.png",
+      "sha256": "b8b72b05536598d6bc128533de798ab28fb7c1c738ad9eaf50cc628ee8961771"
+    },
+    {
+      "path": "test-results/r3-fix/calm-ramp-proof-low/ramp-z1.5.png",
+      "sha256": "db6de76028839b1150b8ae3c08c07b2a6c0298684bac9d2b72cddc8a61da059a"
+    },
+    {
+      "path": "test-results/r3-fix/calm-final-proof-low/bus-north-z1.5.png",
+      "sha256": "531aff7925de0f73e2f1a7a4bc86077a601cc77ac028211d971e705527e30c5c"
+    },
+    {
+      "path": "test-results/r3-fix/calm-final-proof-low/bus-south-z1.5.png",
+      "sha256": "faf1790fb2ecdb0ca9aa1778031ccf25c175a4f54126589a7047f86ea660c418"
+    },
+    {
+      "path": "test-results/r3-fix/calm-ramp-proof-high/ramp-z0.5.png",
+      "sha256": "3dde7eb4755889a216ae218e1e3599b06e04b902bc3896fb8ca37a5feeed920e"
+    },
+    {
+      "path": "test-results/r3-fix/calm-final-proof-high/bus-north-z0.5.png",
+      "sha256": "1b8836571207dd1f13a660833ed62e8ad777b8ad7489f64db361cf5a5a6499e2"
+    },
+    {
+      "path": "test-results/r3-fix/calm-final-proof-high/bus-south-z0.5.png",
+      "sha256": "cbc769e9853f6774c6328c611952ede440fa736b076ab917849ec96a61668c4c"
+    },
+    {
+      "path": "test-results/r3-fix/calm-ramp-proof-high/ramp-z1.5.png",
+      "sha256": "d987150181380b07eaf5ef4fd6ecd8ad11415c81fa8bb45610829fb0f79e11ab"
+    },
+    {
+      "path": "test-results/r3-fix/calm-final-proof-high/bus-north-z1.5.png",
+      "sha256": "87c340d74feb649bd13188585e9e7ce3034879c4c6355c5a3885db14e0c846d1"
+    },
+    {
+      "path": "test-results/r3-fix/calm-final-proof-high/bus-south-z1.5.png",
+      "sha256": "b011997badbcb81d1ec7b1d6f959fcfff686132761362915ff5278093634a691"
+    }
+  ],
+  "verification": {
+    "target": "E21",
+    "epics": [
+      "E21"
+    ],
+    "checks": [
+      {
+        "command": "npm run typecheck",
+        "status": 0,
+        "seconds": 16.979
+      },
+      {
+        "command": "npm run lint",
+        "status": 0,
+        "seconds": 11.031
+      },
+      {
+        "command": "npm test",
+        "status": 0,
+        "seconds": 51.02
+      }
+    ]
+  },
+  "acceptance": {
+    "L3": {
+      "exitCode": 1,
+      "sourceHash": "feebcbbebb1804d30146f9a88a7638ae71c5e2abc2aa6acd4d4a987c000cba84",
+      "observerHash": "7f2ba02c82a52f461e55141d0d71fe09be4647b4b0cbb5914c85c8ce45fcecb8",
+      "freshFailures": [
+        "L3-08"
+      ],
+      "incomplete": [
+        "L3-01",
+        "L3-02",
+        "L3-05",
+        "L3-06",
+        "L3-07",
+        "L3-10",
+        "L3-12",
+        "L3-13",
+        "L3-14",
+        "L3-15",
+        "L3-16"
+      ],
+      "baselineComparison": [
+        {
+          "id": "L3-08",
+          "baselineStatus": "FAIL",
+          "failedMeasurementsEqual": false
+        }
+      ],
+      "policies": [
+        {
+          "tier": "low",
+          "policy": "complete",
+          "outcome": "complete",
+          "error": null,
+          "receipt": "docs/reports/fix51-verify/receipts/L3-low-complete.json"
+        },
+        {
+          "tier": "low",
+          "policy": "stationary",
+          "outcome": "tick-budget",
+          "error": null,
+          "receipt": "docs/reports/fix51-verify/receipts/L3-low-stationary.json"
+        },
+        {
+          "tier": "high",
+          "policy": "complete",
+          "outcome": "complete",
+          "error": null,
+          "receipt": "docs/reports/fix51-verify/receipts/L3-high-complete.json"
+        },
+        {
+          "tier": "high",
+          "policy": "stationary",
+          "outcome": "tick-budget",
+          "error": null,
+          "receipt": "docs/reports/fix51-verify/receipts/L3-high-stationary.json"
+        },
+        {
+          "tier": "low",
+          "policy": "controlled-fixtures",
+          "outcome": "complete",
+          "error": null,
+          "receipt": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json"
+        },
+        {
+          "tier": "high",
+          "policy": "controlled-fixtures",
+          "outcome": "complete",
+          "error": null,
+          "receipt": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json"
+        },
+        {
+          "tier": "low",
+          "policy": "checkpoint-death-control",
+          "outcome": "complete",
+          "error": null,
+          "receipt": "docs/reports/fix51-verify/receipts/L3-low-checkpoints.json"
+        },
+        {
+          "tier": "high",
+          "policy": "checkpoint-death-control",
+          "outcome": "complete",
+          "error": null,
+          "receipt": "docs/reports/fix51-verify/receipts/L3-high-checkpoints.json"
+        }
+      ]
+    },
+    "L5": {
+      "exitCode": 1,
+      "sourceHash": "feebcbbebb1804d30146f9a88a7638ae71c5e2abc2aa6acd4d4a987c000cba84",
+      "observerHash": "7f2ba02c82a52f461e55141d0d71fe09be4647b4b0cbb5914c85c8ce45fcecb8",
+      "freshFailures": [
+        "L5-08"
+      ],
+      "incomplete": [
+        "L5-02",
+        "L5-03",
+        "L5-06",
+        "L5-07",
+        "L5-09",
+        "L5-10",
+        "L5-11",
+        "L5-12",
+        "L5-14"
+      ],
+      "baselineComparison": [
+        {
+          "id": "L5-08",
+          "baselineStatus": "FAIL",
+          "failedMeasurementsEqual": true
+        }
+      ],
+      "policies": [
+        {
+          "tier": "low",
+          "policy": "complete",
+          "outcome": "complete",
+          "error": null,
+          "receipt": "docs/reports/fix51-verify/receipts/L5-low-complete.json"
+        },
+        {
+          "tier": "low",
+          "policy": "stationary",
+          "outcome": "tick-budget",
+          "error": null,
+          "receipt": "docs/reports/fix51-verify/receipts/L5-low-stationary.json"
+        },
+        {
+          "tier": "high",
+          "policy": "complete",
+          "outcome": "complete",
+          "error": null,
+          "receipt": "docs/reports/fix51-verify/receipts/L5-high-complete.json"
+        },
+        {
+          "tier": "high",
+          "policy": "stationary",
+          "outcome": "tick-budget",
+          "error": null,
+          "receipt": "docs/reports/fix51-verify/receipts/L5-high-stationary.json"
+        },
+        {
+          "tier": "low",
+          "policy": "controlled-fixtures",
+          "outcome": "complete",
+          "error": null,
+          "receipt": "docs/reports/fix51-verify/receipts/L5-low-fixtures.json"
+        },
+        {
+          "tier": "high",
+          "policy": "controlled-fixtures",
+          "outcome": "complete",
+          "error": null,
+          "receipt": "docs/reports/fix51-verify/receipts/L5-high-fixtures.json"
+        },
+        {
+          "tier": "low",
+          "policy": "checkpoint-death-control",
+          "outcome": "complete",
+          "error": null,
+          "receipt": "docs/reports/fix51-verify/receipts/L5-low-checkpoints.json"
+        },
+        {
+          "tier": "high",
+          "policy": "checkpoint-death-control",
+          "outcome": "complete",
+          "error": null,
+          "receipt": "docs/reports/fix51-verify/receipts/L5-high-checkpoints.json"
+        }
+      ]
+    }
+  },
+  "threat": {
+    "L3": {
+      "receipt": "test-results/r3-fix/threat/L3.json",
+      "sha256": "b0ecff8c3c2dbd3220f2e9fbe831693880585fd525973560f08870999742f8d7",
+      "flags": [],
+      "passiveFlags": [],
+      "wallSeconds": 369.466284846,
+      "run": {
+        "level": "L3",
+        "policy": "complete",
+        "seed": 1,
+        "completed": true,
+        "time": 210.26666666666668,
+        "deaths": 0,
+        "kills": 0,
+        "damageTaken": 66,
+        "failures": {},
+        "objectiveTimeline": [
+          {
+            "id": "armory",
+            "t": 4.45
+          },
+          {
+            "id": "defend",
+            "t": 35
+          },
+          {
+            "id": "checkpoint",
+            "t": 210.26666666666668
+          }
+        ],
+        "furthestObjective": "checkpoint",
+        "activeObjectives": [],
+        "outcome": "complete",
+        "blocker": null,
+        "collision": {
+          "failures": 0,
+          "pending": 0,
+          "admitted": 2897,
+          "deferred": 0,
+          "requests": [],
+          "offenders": []
+        }
+      },
+      "passiveOutcome": "tick-budget",
+      "nativeStateHash": "5604a575",
+      "armyLine": {
+        "seeds": [
+          {
+            "seed": 1,
+            "valid": true,
+            "army": 0,
+            "attacksPerMinute": 9.9277291745911
+          },
+          {
+            "seed": 2,
+            "valid": true,
+            "army": 0,
+            "attacksPerMinute": 17.58798516239935
+          },
+          {
+            "seed": 3,
+            "valid": true,
+            "army": 0,
+            "attacksPerMinute": 26.765799256505577
+          }
+        ],
+        "measured": 3,
+        "within": 3,
+        "pass": true
+      }
+    },
+    "L5": {
+      "receipt": "test-results/r3-fix/threat-L5/L5.json",
+      "sha256": "3d6ad03d6a65fb02e56b8a0a6eef1c4df8d3ed783c584466b584b65a04005691",
+      "flags": [],
+      "passiveFlags": [],
+      "wallSeconds": 219.108086834,
+      "run": {
+        "level": "L5",
+        "policy": "complete",
+        "seed": 1,
+        "completed": true,
+        "time": 193.36666666666667,
+        "deaths": 1,
+        "kills": 61,
+        "damageTaken": 137.5,
+        "failures": {
+          "player-died": 1
+        },
+        "objectiveTimeline": [
+          {
+            "id": "emerge",
+            "t": 1
+          },
+          {
+            "id": "look",
+            "t": 158.71666666666667
+          },
+          {
+            "id": "metro",
+            "t": 193.36666666666667
+          }
+        ],
+        "furthestObjective": "metro",
+        "activeObjectives": [],
+        "outcome": "complete",
+        "blocker": null,
+        "collision": {
+          "failures": 0,
+          "pending": 0,
+          "admitted": 275,
+          "deferred": 0,
+          "requests": [],
+          "offenders": []
+        }
+      },
+      "passiveOutcome": "tick-budget",
+      "nativeStateHash": "2f121f50",
+      "followerPaceFlags": [],
+      "passiveFollowerPaceFlags": [],
+      "auditFlags": [
+        "PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate"
+      ],
+      "revision": "d027afa4b9fd1c9accfd35f0d09cd23f4210f371",
+      "exitCode": 1
+    }
+  }
+}

@@ -111,7 +111,9 @@ export class Npcs {
     const x = e.transform.x, z = e.transform.z;
     // At its catch-up pace the ordinary crowd response carries the dog several
     // metres beyond a corner before it can turn back toward the courier.
-    moveAgent(e, dx * 60, dz * 60, nav, this.world.tick, actorRadius(e), false,
+    // Calm L3 personal-space corrections already track her swept step; motor
+    // lag must not let the accelerating courier overtake that correction.
+    moveAgent(e, dx * 60, dz * 60, nav, this.world.tick, actorRadius(e), e.civilian?.ally?.follow?.spacingAt === this.world.tick,
       this.world.scenario === 'L5' && (e.companion || e.civilian?.survivor?.briskAt === this.world.tick) ? l5FollowerTracking : undefined);
     if ((e.civilian || e.escort) && this.traffic.overlaps(e.transform)) { e.transform.x = x; e.transform.z = z; }
   }

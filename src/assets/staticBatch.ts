@@ -4,6 +4,7 @@ import { attribute, float, luminance, varying, cameraPosition, normalWorld, posi
 import { paletteTokens, type PaletteToken } from '../data/palette';
 import { anchorsFor } from '../data/placedLights';
 import type { Materials } from '../render/Materials';
+import { PaletteMaterial } from '../render/PaletteMaterial';
 
 /** Elements processed between cooperative yield points of the batching steps. */
 // Frequent checkpoints keep the existing time budget meaningful for quantized/interleaved
@@ -149,6 +150,7 @@ function* steps(source: Object3D, lit: boolean, materials?: Materials, foliage =
   const world = source.userData.paletteWorld !== false;
   const footprint = /^bld\./.test(source.userData.assetId ?? '') ? new Box3().setFromObject(source) : null;
   const buckets = new Map<number, Part[]>(), meshes: Mesh[] = [], split = source.userData.splitRoof === true;
+  const result = new Group();
   // Animated door leaves (src/data/buildingDoors.ts) stay separate meshes in their hinge frame, so the view can swing them.
   const doorNames: string[] = Array.isArray(source.userData.splitDoors) ? source.userData.splitDoors : [];
   const doorNodes = doorNames.map(name => source.getObjectByName(name) ?? null), hinge = new Matrix4(), leafFrame = new Matrix4();
@@ -166,6 +168,15 @@ function* steps(source: Object3D, lit: boolean, materials?: Materials, foliage =
     // Decode quantized attributes before applying transforms (integer arrays clamp).
     const position = yield* decode(node.geometry.getAttribute('position')), normal = yield* decode(node.geometry.getAttribute('normal'));
     yield* transform(position, normal, door >= 0 ? leafFrame.multiplyMatrices(hinge.copy(doorNodes[door]!.matrixWorld).invert(), node.matrixWorld) : node.matrixWorld);
+    // The evacuation coach has an open cabin behind authored clear panes.
+    // Merging those panes into the opaque body concealed its seats/passengers.
+    if (source.userData.assetId === 'veh.evac-bus' && material.transparent) {
+      const geometry = node.geometry.clone();
+      geometry.setAttribute('position', new BufferAttribute(position, 3));
+      geometry.setAttribute('normal', new BufferAttribute(normal, 3));
+      const glazing = new Mesh(geometry, material instanceof PaletteMaterial ? material.frozenCopy() : material.clone()); glazing.name = 'coach-glazing';
+      glazing.receiveShadow = true; result.add(glazing); continue;
+    }
     const count = position.length / 3, colors = new Float32Array(count * 3), indices = new Float32Array(count), vertexColor = node.geometry.getAttribute('color');
     // Per-mesh constants are hoisted: this loop runs for every vertex of every district prototype.
     const base = material.color.toArray(), dim = emissive && !lit ? .08 : 1;
@@ -223,7 +234,6 @@ function* steps(source: Object3D, lit: boolean, materials?: Materials, foliage =
       buckets.get(key)!.push(geometry);
     }
   }
-  const result = new Group();
   for (const [bucket, parts] of buckets) {
     const emissive = (bucket & 1) === 1, isRoof = (bucket & 2) === 2, door = ((bucket & 65535) >> 2) - 1;
     // Keep shared vertices: expanding detailed meshes to triangle soup triples
