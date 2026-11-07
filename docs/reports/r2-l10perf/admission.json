@@ -1058,5 +1058,199 @@
       ],
       "busy": []
     }
+  ],
+  "currentStatus": "resolved: candidate, cold loads and confirmation measured",
+  "resumeConditions": {
+    "conditions-resume.jsonl": [
+      {
+        "at": "2026-11-07T07:06:11.986Z",
+        "event": "quiet-admission-wait",
+        "granted": true,
+        "quiet": false,
+        "load": [
+          3.1787109375,
+          4.8232421875,
+          6.4453125
+        ],
+        "busy": []
+      },
+      {
+        "at": "2026-11-07T07:06:21.139Z",
+        "pool": true,
+        "quiet": true,
+        "load": [
+          2.99072265625,
+          4.72998046875,
+          6.392578125
+        ],
+        "busy": []
+      }
+    ],
+    "conditions-loads.jsonl": [
+      {
+        "at": "2026-11-07T07:09:31.106Z",
+        "event": "quiet-admission-wait",
+        "cooldownSeconds": 13
+      },
+      {
+        "at": "2026-11-07T07:10:01.743Z",
+        "event": "quiet-admission-wait",
+        "granted": true,
+        "quiet": false,
+        "load": [
+          3.69970703125,
+          4.708984375,
+          6.03564453125
+        ],
+        "busy": []
+      },
+      {
+        "at": "2026-11-07T07:10:32.452Z",
+        "event": "quiet-admission-wait",
+        "granted": true,
+        "quiet": false,
+        "load": [
+          3.94482421875,
+          4.6708984375,
+          5.974609375
+        ],
+        "busy": []
+      },
+      {
+        "at": "2026-11-07T07:11:03.015Z",
+        "event": "quiet-admission-wait",
+        "granted": true,
+        "quiet": false,
+        "load": [
+          4.02880859375,
+          4.62158203125,
+          5.91064453125
+        ],
+        "busy": []
+      },
+      {
+        "at": "2026-11-07T07:11:33.545Z",
+        "event": "quiet-admission-wait",
+        "granted": true,
+        "quiet": false,
+        "load": [
+          3.7158203125,
+          4.4951171875,
+          5.81982421875
+        ],
+        "busy": []
+      },
+      {
+        "at": "2026-11-07T07:11:57.091Z",
+        "pool": true,
+        "quiet": true,
+        "load": [
+          2.845703125,
+          4.22900390625,
+          5.68505859375
+        ],
+        "busy": []
+      }
+    ],
+    "conditions-confirmation.jsonl": [
+      {
+        "at": "2026-11-07T07:13:14.245Z",
+        "event": "quiet-admission-wait",
+        "cooldownSeconds": 3
+      },
+      {
+        "at": "2026-11-07T07:13:44.848Z",
+        "event": "quiet-admission-wait",
+        "granted": true,
+        "quiet": false,
+        "load": [
+          4.330078125,
+          4.30029296875,
+          5.53857421875
+        ],
+        "busy": []
+      },
+      {
+        "at": "2026-11-07T07:14:15.401Z",
+        "event": "quiet-admission-wait",
+        "granted": true,
+        "quiet": false,
+        "load": [
+          4.40673828125,
+          4.3310546875,
+          5.50634765625
+        ],
+        "busy": []
+      },
+      {
+        "at": "2026-11-07T07:14:46.034Z",
+        "event": "quiet-admission-wait",
+        "granted": true,
+        "quiet": false,
+        "load": [
+          3.59326171875,
+          4.1396484375,
+          5.39501953125
+        ],
+        "busy": [
+          {
+            "pid": 2300,
+            "command": "node /Users/wesner/Workspace/minorincident/.claude/worktrees/r2-l7/node_modules/.bin/tsc --noEmit"
+          }
+        ]
+      },
+      {
+        "at": "2026-11-07T07:15:16.801Z",
+        "event": "quiet-admission-wait",
+        "granted": true,
+        "quiet": false,
+        "load": [
+          3.1396484375,
+          3.96484375,
+          5.27978515625
+        ],
+        "busy": []
+      },
+      {
+        "at": "2026-11-07T07:15:47.481Z",
+        "event": "quiet-admission-wait",
+        "granted": true,
+        "quiet": false,
+        "load": [
+          3.259765625,
+          3.943359375,
+          5.22705078125
+        ],
+        "busy": []
+      },
+      {
+        "at": "2026-11-07T07:16:02.034Z",
+        "pool": true,
+        "quiet": true,
+        "load": [
+          2.9736328125,
+          3.84716796875,
+          5.169921875
+        ],
+        "busy": []
+      }
+    ]
+  },
+  "resumeRuns": [
+    {
+      "log": "accepted.log",
+      "result": "complete capture; stricter whole-90-second 66 ms assertion failed",
+      "exitCode": 1
+    },
+    {
+      "log": "loads.log",
+      "result": "both fresh-process public cold loads completed",
+      "exitCode": 0
+    },
+    {
+      "log": "confirmation.log",
+      "result": "predeclared single full-capture confirmation passed",
+      "exitCode": 0
+    }
   ]
 }

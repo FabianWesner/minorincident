@@ -1,0 +1,67 @@
+{
+  "status": "brief targets passed",
+  "sourceRevision": "a3f867dfd1c8973beb0057eca3fbca6b91e64b41",
+  "requirements": [
+    {
+      "item": "Find first-use material creation",
+      "pass": true,
+      "evidence": "baseline.json: three prepared dog-coat corpse pages build at charge tick 251; original-window.json aligns with historical tick-260 hitch"
+    },
+    {
+      "item": "Prewarm during L10 load/corridor",
+      "pass": true,
+      "evidence": "L10 owner-ready warm queue covers demand loads and streamed living/corpse pages; candidate and confirmation have zero late dog corpse graphs and 14 visible dog-corpse instances"
+    },
+    {
+      "item": "Frame <=66 ms around charge tick 260",
+      "pass": true,
+      "declaredWindow": [
+        180,
+        350
+      ],
+      "candidateMaxMs": 50,
+      "confirmationMaxMs": 33.29999999999927,
+      "cacheControls": [
+        "--disable-gpu-shader-disk-cache",
+        "--enable-dawn-features=disable_blob_cache"
+      ]
+    },
+    {
+      "item": "Cold load <=6 s",
+      "pass": true,
+      "baselineMs": 3192.0999994277954,
+      "candidateMs": 3273.300000190735,
+      "freshProcesses": true
+    },
+    {
+      "item": "Repository validation",
+      "pass": true,
+      "evidence": "checks.json: npm run verify -- E32; typecheck, lint and 107 tests pass"
+    },
+    {
+      "item": "Minimal L10 source changes and separate commits",
+      "pass": true,
+      "evidence": "fd0c66b, 8a23a20, a3f867d; runtime diff only CrowdView.ts and StaticCorpses.ts"
+    },
+    {
+      "item": "README and numeric evidence",
+      "pass": true,
+      "evidence": "README.md and linked JSON; no committed captures, deploy or push"
+    }
+  ],
+  "broaderDiagnostic": {
+    "scope": "entire 90-second capture, stricter than brief first-use moment",
+    "initialPass": false,
+    "initialMaxMs": 66.69999999999709,
+    "initialHitch": {
+      "dtMs": 66.69999999999709,
+      "at": 59717.39999961853,
+      "tick": 63848,
+      "charge": 3600
+    },
+    "confirmationPass": true,
+    "confirmationMaxMs": 50.099999999998545,
+    "initialFailureRetained": true,
+    "sourceAttributionForLaterFrame": "unproven"
+  }
+}
