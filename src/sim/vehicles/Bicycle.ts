@@ -19,6 +19,12 @@ export interface BicycleState {
   lean?: number;
   /** Stand-to-mount timer in ticks; mounting re-arms only after the player has left the bicycle. */
   standTicks: number; armed: boolean; lockUntil: number;
+  /**
+   * The courier walked into mount range (moved while within it) since she was last out of range or in a story beat. Stand-to-mount
+   * counts only a stop after such an approach: standing still where a scene left her (the depot counter beside the parked bike)
+   * must not mount it (r2-bike). Optional for older checkpoints.
+   */
+  approached?: boolean;
   /** Knocked over by an infected: the tick it fell and the side it lies on (+1/-1, the frame's local +Z/-Z). Cleared on mount. */
   fallen?: { at: number; side: number };
 }
@@ -87,7 +93,7 @@ export class Bicycle {
     if (!bike || !b || !player) return frame;
     // Story beats supply an idle input while the courier receives/signs. That
     // pause must not become a stand-to-mount request or let a mounted bike coast.
-    if (this.world.storyLock) { b.standTicks = 0; b.speed = 0; return frame; }
+    if (this.world.storyLock) { b.standTicks = 0; b.approached = false; b.speed = 0; return frame; }
     const alive = player.health.current > 0 && player.survivor?.diedAt === null;
     if (!b.mounted) {
       b.speed = 0;
@@ -99,9 +105,11 @@ export class Bicycle {
         const spot = this.clearSpot(player.transform.x, player.transform.z, -bike.transform.yaw) ?? this.clearSpot(player.transform.x, player.transform.z, -bike.transform.yaw, CRASH_RADII, false, false); if (spot) { Object.assign(bike.transform, spot, { y: this.world.districts?.pavingHeight(spot.x, spot.z) ?? 0 }); }
       }
       const still = Math.hypot(frame.move.x, frame.move.z) < .05;
+      // Stand-to-mount is "walk up to the bike and stop", never "stay where you already were".
+      b.approached = d <= MOUNT_RANGE && (b.approached === true || !still);
       // At the depot the courier waits for the parcel, rather than immediately auto-mounting the parked bike.
       const waitingAtDepot = !player.survivor?.carrying && this.parkPoints.some(p => Math.hypot(p.x - player.transform.x, p.z - player.transform.z) <= p.radius);
-      b.standTicks = d <= MOUNT_RANGE && still && b.armed && !waitingAtDepot ? b.standTicks + 1 : 0;
+      b.standTicks = d <= MOUNT_RANGE && still && b.armed && b.approached && !waitingAtDepot ? b.standTicks + 1 : 0;
       const free = alive && this.canInteract() && !this.world.vehicles?.active;
       if (free && !this.world.missions?.interactionAvailable() && (frame.interact || b.standTicks >= mountInteractS * 60)) {
         // Mount the entire frame on level pavement, including its forward saddle offset.
@@ -117,7 +125,7 @@ export class Bicycle {
         const mountedInPark = this.parkPoints.some(p => Math.hypot(p.x - player.transform.x, p.z - player.transform.z) <= p.radius);
         Object.assign(player.transform, spot, { y: (this.world.districts?.pavingHeight(spot.x, spot.z) ?? 0) + survivor.height / 2 + .02, yaw: -b.heading });
         this.world.physics.playerBody?.setTranslation(player.transform, true); this.world.player?.locomotion.reset(); this.world.controls.reset(); this.world.spatial.set(1, spot.x, spot.z);
-        b.mounted = true; b.standTicks = 0; delete b.fallen; player.riding = bike.id;
+        b.mounted = true; b.standTicks = 0; b.approached = false; delete b.fallen; player.riding = bike.id;
         this.lastOutside = { x: player.transform.x, z: player.transform.z };
         this.mountedInPark = mountedInPark;
         return { ...frame, interact: false };
@@ -161,7 +169,8 @@ export class Bicycle {
     if (frame.drive) {
       steerTarget = Math.max(-1, Math.min(1, frame.drive.steer));
       // S brakes forward motion before reversing; A/D steer relative to the bicycle.
-      target = speedMs * Math.max(-1, Math.min(1, frame.drive.throttle));
+      const throttle = Math.max(-1, Math.min(1, frame.drive.throttle));
+      target = throttle < 0 ? bicycleHandling.reverseMs * throttle : speedMs * throttle;
     } else if (want > 0) {
       const desired = Math.atan2(frame.move.z, frame.move.x), err = Math.atan2(Math.sin(desired - b.heading), Math.cos(desired - b.heading));
       steerTarget = Math.max(-1, Math.min(1, err / .7));
