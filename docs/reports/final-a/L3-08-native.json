@@ -91,14 +91,18 @@
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
-      "sha256": "1dbb6554d364c1372e298abab060319623af1f8871fbd2e7e24dad1a1382d0cc",
-      "what": "Frozen-head L3-08 native input receipt, evaluated by the exact clauses retained in the row proof."
+      "file": "docs/reports/final-a/native-receipts/L3-low-fixtures.json.gz",
+      "sha256": "5bb7a9d05574c189a8bec9fe20a06b1a7988f48a3175a8841aef1fa147209724",
+      "what": "Frozen-head L3-08 native input receipt, evaluated by the exact clauses retained in the row proof.",
+      "canonicalFile": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
+      "decodedSha256": "1dbb6554d364c1372e298abab060319623af1f8871fbd2e7e24dad1a1382d0cc"
     },
     {
-      "file": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
-      "sha256": "e4dd4c36be5c14615ed61548e5c0cb95e00a5363f1741e70547ed354a08a8086",
-      "what": "Frozen-head L3-08 native input receipt, evaluated by the exact clauses retained in the row proof."
+      "file": "docs/reports/final-a/native-receipts/L3-high-fixtures.json.gz",
+      "sha256": "87d97237be8ee7ecb0019d923692b5c60332643dfee8640b4274c1c5727fe14c",
+      "what": "Frozen-head L3-08 native input receipt, evaluated by the exact clauses retained in the row proof.",
+      "canonicalFile": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
+      "decodedSha256": "e4dd4c36be5c14615ed61548e5c0cb95e00a5363f1741e70547ed354a08a8086"
     }
   ],
   "observation": "low/controlled-fixture median live within30m by traversed segment and concurrent cap: {\"prepopulated\":[250,600,1030],\"near30\":[20,21,20],\"maxConcurrent\":100,\"cap\":100}; target medianS1<S2<S3;max≤200high/100low (FAIL); high/controlled-fixture median live within30m by traversed segment and concurrent cap: {\"prepopulated\":[250,600,1030],\"near30\":[72,89,79],\"maxConcurrent\":200,\"cap\":200}; target medianS1<S2<S3;max≤200high/100low (FAIL)"
