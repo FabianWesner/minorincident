@@ -1,0 +1,140 @@
+{
+  "nativeRadar": [
+    {
+      "tier": "low",
+      "ticks": 1221,
+      "humanSamples": 7658,
+      "internalPassengerSamples": 216,
+      "missingPins": 0,
+      "companionSamples": 145,
+      "farthestCompanion": 4.9601035481418645,
+      "failures": [],
+      "negativeMissingPinRejected": true
+    },
+    {
+      "tier": "high",
+      "ticks": 1522,
+      "humanSamples": 10277,
+      "internalPassengerSamples": 216,
+      "missingPins": 0,
+      "companionSamples": 146,
+      "farthestCompanion": 4.960231518013181,
+      "failures": [],
+      "negativeMissingPinRejected": true
+    }
+  ],
+  "liveLow": {
+    "samples": 240,
+    "finalTick": 7453,
+    "all24LivingPassengersSeated": [
+      329,
+      308,
+      303,
+      294,
+      291,
+      296,
+      297,
+      299,
+      292,
+      293,
+      300,
+      289,
+      301,
+      302,
+      304,
+      305,
+      306,
+      307,
+      309,
+      310,
+      29,
+      30,
+      31,
+      32
+    ],
+    "externalCompanionWait": [
+      {
+        "tick": 4596,
+        "lineVisible": true,
+        "screen": {
+          "x": 590.8672995973576,
+          "y": 310.2427024521385
+        }
+      },
+      {
+        "tick": 4608,
+        "lineVisible": true,
+        "screen": {
+          "x": 596.2381385072363,
+          "y": 305.37015973696714
+        }
+      },
+      {
+        "tick": 4620,
+        "lineVisible": true,
+        "screen": {
+          "x": 624.5511155497004,
+          "y": 301.28064452456795
+        }
+      },
+      {
+        "tick": 4632,
+        "lineVisible": true,
+        "screen": {
+          "x": 661.4930758265347,
+          "y": 302.9740526767965
+        }
+      },
+      {
+        "tick": 4644,
+        "lineVisible": true,
+        "screen": {
+          "x": 704.525113506286,
+          "y": 310.28329436882206
+        }
+      },
+      {
+        "tick": 4656,
+        "lineVisible": true,
+        "screen": {
+          "x": 751.437876350538,
+          "y": 321.1074815883799
+        }
+      },
+      {
+        "tick": 4668,
+        "lineVisible": true,
+        "screen": {
+          "x": 800.679980203402,
+          "y": 333.80819859254143
+        }
+      },
+      {
+        "tick": 4680,
+        "lineVisible": true,
+        "screen": {
+          "x": 849.909724640807,
+          "y": 346.3640194213532
+        }
+      }
+    ],
+    "terminalObserverError": [
+      "Error: page.evaluate: TypeError: Cannot read properties of null (reading 'state')\n    at eval (eval at evaluate (:311:30), <anonymous>:1:119)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)"
+    ],
+    "explanation": "Read-only snap accessed null L8 mission after actual automatic transition; prior sample already all24 seated. Not a game missing-survivor failure and no result/clock fabricated."
+  },
+  "highLiveAttempt": "Target closed at timeout, no complete receipt. Excluded from boarding completion claims. Both native tiers and exact production DOM replay qualify complete every-tick human wait; actual low companion wait plus high current L8 animal and L9 transport photos qualify visible body/hidden aboard and gunless production APC.",
+  "observerFailures": [
+    {
+      "file": "test-results/final-c/end-radar.log",
+      "sha256": "8ac438fa26ed24fe9a776b6626257df2043844e0c41835f6b578f24d953558e1",
+      "error": "node:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n\npage.evaluate: ReferenceError: __QA_HOOKS__ is not defined\n    at SurvivorRadar.update (http://127.0.0.1:5173/src/ui/SurvivorRadar.ts:30:7)\n    at eval (eval at evaluate (:311:30), <anonymous>:1:192)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)\n    at <anonymous> (/Users/wesner/Workspace/minorincident/.claude/worktrees/final-c/tools/qa/accept/.final-c-end-radar.ts:35:33) {\n  log: []\n}\n\nNode.js v26.0.0\n"
+    },
+    {
+      "file": "test-results/final-c/end-boarding-high.log",
+      "sha256": "e44da30460fb9bb9029eda849fd08c205cef1f41fced8f245634212a81f9fcca",
+      "error": "node:internal/process/promises:332\n    triggerUncaughtException(err, true /* fromPromise */);\n    ^\n\n[TargetClosedError2: Target page, context or browser has been closed] {\n  log: []\n}\n\nNode.js v26.0.0\n"
+    }
+  ],
+  "radarFix": "Standalone Vite DOM harness needed esbuild __name and compile-time __QA_HOOKS__ globals; explicit page init shims only, no production edits. Both fixed replay tiers return0missing and reject missing-pin negative control."
+}
