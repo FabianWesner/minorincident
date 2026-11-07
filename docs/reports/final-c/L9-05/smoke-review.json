@@ -1,0 +1,130 @@
+{
+  "observation": "Personally inspected both original1280x720 confirmed-low captures, zoom0.5/1.5. At exactly0HP, stage4 smoking, after4wallseconds/241productionticks, APC has readable dark shell/cracked windshield but no visible heavy smoke plume. Settings applied AFTER load, VFXenabledtrue, effecttime4.0331s, actual one vehicleSmokeColumn and35puffs. This is not an assertion of zero allocated smoke particles: the failing clause is visible heavy smoke. Earlier photos also lacked smoke but are not the sole qualification.",
+  "retainedFrames": [
+    {
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/final-c/test-results/final-c/confirmed-smoke-low-1794013428181/zero-hp-live-z0.5.jpg",
+      "sha256": "c7f0a6b34aa0e641f55d174ec297cd6ab74c3ffaac1aa15da440a3f4b8298830",
+      "zoom": 0.5,
+      "tick": 241
+    },
+    {
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/final-c/test-results/final-c/confirmed-smoke-low-1794013428181/zero-hp-live-z1.5.jpg",
+      "sha256": "1b7003b29df535ef127a794163b6047f6389d89e288530d59ee55cde65c07669",
+      "zoom": 1.5,
+      "tick": 241
+    }
+  ],
+  "vfx": {
+    "obstruction": {
+      "remainingTicks": 0,
+      "opacity": 0
+    },
+    "shots": [],
+    "enabled": true,
+    "colorblind": false,
+    "gore": "Full",
+    "quality": "low",
+    "flashReduction": false,
+    "time": 4.033099999999998,
+    "lastSpray": {
+      "actionId": "",
+      "direction": {
+        "x": 1,
+        "z": 0
+      },
+      "droplets": 0,
+      "chunks": 0,
+      "gravity": 9.81
+    },
+    "surfaceSplats": 0,
+    "pendingSplats": 0,
+    "particles": 0,
+    "particleCap": 512,
+    "decals": 0,
+    "decalCap": 600,
+    "gibs": 0,
+    "gibCap": 30,
+    "telegraphs": [],
+    "hitStop": {
+      "active": false,
+      "until": 0,
+      "started": 0,
+      "suppressed": 0
+    },
+    "flash": 0,
+    "blasts": {
+      "wind": {
+        "x": 0.9926457935177753,
+        "z": 0.1210550643776054
+      },
+      "blasts": 0,
+      "puffs": 35,
+      "puffCap": 120,
+      "fireballs": 0,
+      "fireballCap": 96,
+      "chunks": 0,
+      "chunkCap": 256,
+      "poolOverwrites": {
+        "fireballs": 0,
+        "chunks": 0
+      },
+      "flames": 3,
+      "glows": 1,
+      "vehicleSmokeColumns": 1,
+      "columns": 251,
+      "transientColumns": 0,
+      "fireColumns": 250,
+      "columnShadows": 1,
+      "clouds": 0,
+      "scorch": 0,
+      "parts": 0,
+      "flash": 0,
+      "bulletTime": {
+        "scale": 1,
+        "remaining": 0,
+        "progress": 0
+      },
+      "slowMotion": true
+    },
+    "coverage": 0,
+    "detached": 0,
+    "dismemberedKills": 0,
+    "kills": 0,
+    "explosionRadius": 0
+  },
+  "vehicle": {
+    "speed": 10.651662826538086,
+    "forwardSpeed": 10.651662826538086,
+    "steer": 0,
+    "braking": false,
+    "boosting": false,
+    "driver": 1,
+    "attached": [],
+    "damage": "smoking",
+    "explodeAt": null,
+    "stuck": false,
+    "recoveringUntil": 0,
+    "passengers": [
+      {
+        "id": 668,
+        "seat": 0,
+        "phase": "seated",
+        "started": 0,
+        "from": {
+          "x": -553.35,
+          "z": 0,
+          "y": 0.3,
+          "yaw": 0
+        },
+        "pauseUntil": 0
+      }
+    ],
+    "floor": true,
+    "stage": 4,
+    "apcContacts": {
+      "sequence": 0,
+      "infected": {},
+      "obstacles": {}
+    }
+  }
+}

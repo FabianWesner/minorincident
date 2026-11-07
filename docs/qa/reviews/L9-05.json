@@ -1,56 +1,58 @@
 {
   "row": "L9-05",
-  "status": "PASS",
-  "reviewer": "Codex sweep-c5",
-  "date": "2026-11-06",
-  "commit": "31aadbc2b64d18866469d5bc402956cbf2eb11f5",
+  "status": "FAIL",
+  "reviewer": "Codex final-c",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
   "clauses": [
     {
-      "clause": "**0 HP never breaks down:** speed 60 % \u00b1 2 %, heavy smoke, still drivable.",
-      "verdict": "PASS",
-      "note": "Current bothtiers healthy/one production damage(maxHP)0HP setups physically drive with WASD to postimpact crawl. Zero runs stayHP0/smoking/vehiclepresent through driving and cover1579.01m low/1527.49m high. Separate uninterrupted straight-road speed runs have114/105 healthy and137zero road samples; peaks17.74463 vs10.71099m/s,60.3618921% bothtiers within58\u201362%; allzero road caps0.6. Wide0HP captures show dense grey multi-billow trail absent in healthycontrols; tightcrop clips plume. All96 original-size smoke/fall panels personally inspected, hashes verified and raws deleted. Eight actual-consumer semantic faults reject and restoreexactoriginalbytes. Fresh sixnative controls agreecanonicalfinalstate and confirm>1km0HPdrive/smoking. No game/criteria/cap changes. Producer adds ui1 and8min contextlease to established c4method; archived exact producer bytes bind allruns."
+      "clause": "**0 HP never breaks down:** speed 60 % ± 2 %, heavy smoke, still drivable.",
+      "verdict": "FAIL",
+      "note": "ZeroHP speed/drivability pass: measured10.71099/17.74463m/s=0.6036189, both tiers, with normal physical zeroHP drives reaching the scripted crash. Visible-heavy-smoke clause FAIL in current low paired1280x720 frames at zoom0.5/1.5 after4wallseconds/241ticks: no visible heavy plume. Post-load VFXenabledtrue, damage smoking/stage4, effecttime4.0331s,1vehicleSmokeColumn/35puffs recorded; not confused with disabled VFX or paused particle time."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-c5/L9-05/qualification.json",
-      "sha256": "df96f2267ac627fe12f7d103f99f37145b23ae4c13b22e0b850342f26da144ea",
-      "what": "Current source real keyboard healthy/zero trajectories, independently uninterrupted speed ratios, native controls, actual consumer fault controls and personally inspected SHA256 smoke/fall captures with raw cleanup."
+      "file": "docs/reports/final-c/L9-05/low-speed-physical.json.gz",
+      "sha256": "c23bd407eac776639d4c1506bafb3164f68000024d0d0d1e77bbeb23ea031d90",
+      "what": "ZeroHP speed/drivability pass: measured10.71099/17.74463m/s=0.6036189, both tiers, with normal physical zeroHP drives reaching the scripted crash. Visible-heavy-smoke clause FAIL in current low paired1280x720 frames at zoom0.5/1.5 after4wallseconds/241ticks: no visible heavy plume. Post-load VFXenabledtrue, damage smoking/stage4, effecttime4.0331s,1vehicleSmokeColumn/35puffs recorded; not confused with disabled VFX or paused particle time."
     },
     {
-      "file": "docs/reports/sweep-c5/L9-05/coverage-proof.json",
-      "sha256": "bd9a691989c3fbeed3e6b1b9e41f52ab17d02b75f427ecf8876636a40912f0cb",
-      "what": "Current source real keyboard healthy/zero trajectories, independently uninterrupted speed ratios, native controls, actual consumer fault controls and personally inspected SHA256 smoke/fall captures with raw cleanup."
+      "file": "docs/reports/final-c/L9-05/high-speed-physical.json.gz",
+      "sha256": "9a70109bec1afa95587ba2718c67795b233191985ce972abbe15c52c1c378628",
+      "what": "ZeroHP speed/drivability pass: measured10.71099/17.74463m/s=0.6036189, both tiers, with normal physical zeroHP drives reaching the scripted crash. Visible-heavy-smoke clause FAIL in current low paired1280x720 frames at zoom0.5/1.5 after4wallseconds/241ticks: no visible heavy plume. Post-load VFXenabledtrue, damage smoking/stage4, effecttime4.0331s,1vehicleSmokeColumn/35puffs recorded; not confused with disabled VFX or paused particle time."
     },
     {
-      "file": "docs/reports/sweep-c5/L9-05/native.json",
-      "sha256": "965c454123cc7af418bc7da6f33b702efa0823ea66e19ca4c8bba520e9b46917",
-      "what": "Current source real keyboard healthy/zero trajectories, independently uninterrupted speed ratios, native controls, actual consumer fault controls and personally inspected SHA256 smoke/fall captures with raw cleanup."
+      "file": "docs/reports/final-c/L9-05/low-confirmed-smoke.json",
+      "sha256": "f1ecb27ad14c5a3bf1fafc97bedf07b2c46e418caafcba13b0a06a53a28dbefd",
+      "what": "ZeroHP speed/drivability pass: measured10.71099/17.74463m/s=0.6036189, both tiers, with normal physical zeroHP drives reaching the scripted crash. Visible-heavy-smoke clause FAIL in current low paired1280x720 frames at zoom0.5/1.5 after4wallseconds/241ticks: no visible heavy plume. Post-load VFXenabledtrue, damage smoking/stage4, effecttime4.0331s,1vehicleSmokeColumn/35puffs recorded; not confused with disabled VFX or paused particle time."
     },
     {
-      "file": "docs/reports/sweep-c5/L9-05/full-review.json",
-      "sha256": "07c86e4058931f9c8c8b4257325ee3e3a41f4f1b8ee1fd5c5f60c09e34ca2cf4",
-      "what": "Current source real keyboard healthy/zero trajectories, independently uninterrupted speed ratios, native controls, actual consumer fault controls and personally inspected SHA256 smoke/fall captures with raw cleanup."
+      "file": "docs/reports/final-c/L9-05/confirmed-smoke-producer.ts",
+      "sha256": "4f8f0200749f8a53bf8af18408e3aa4cc5e081f5af3a79376158b024d51a12d2",
+      "what": "Exact measurement producer snapshot; only output locations differ from the existing observer."
     },
     {
-      "file": "docs/reports/sweep-c5/L9-05/zero-review.json",
-      "sha256": "8efd9707223daee0e018e0831d283a55ca6cacc4f9b457ca368595f643352fee",
-      "what": "Current source real keyboard healthy/zero trajectories, independently uninterrupted speed ratios, native controls, actual consumer fault controls and personally inspected SHA256 smoke/fall captures with raw cleanup."
+      "file": "docs/reports/final-c/L9-05/smoke-review.json",
+      "sha256": "dbfce740fba20f25e3f18f37e3a331e81d6dcc0b483cecad2a0effdefbb8c679",
+      "what": "ZeroHP speed/drivability pass: measured10.71099/17.74463m/s=0.6036189, both tiers, with normal physical zeroHP drives reaching the scripted crash. Visible-heavy-smoke clause FAIL in current low paired1280x720 frames at zoom0.5/1.5 after4wallseconds/241ticks: no visible heavy plume. Post-load VFXenabledtrue, damage smoking/stage4, effecttime4.0331s,1vehicleSmokeColumn/35puffs recorded; not confused with disabled VFX or paused particle time."
     },
     {
-      "file": "docs/reports/sweep-c5/L9-05/full-assembled.json.gz",
-      "sha256": "dc649c80a88c99302e36adfc0c9d7ddc25a4d6e797c99e969eb563bb5371c99f",
-      "what": "Current source real keyboard healthy/zero trajectories, independently uninterrupted speed ratios, native controls, actual consumer fault controls and personally inspected SHA256 smoke/fall captures with raw cleanup."
+      "file": "docs/reports/final-c/L9-07/low-physical.json.gz",
+      "sha256": "02e8bf8baf222cfba25d6729da89244bd7580770c1e5a13247bd3de8624c66e1",
+      "what": "ZeroHP speed/drivability pass: measured10.71099/17.74463m/s=0.6036189, both tiers, with normal physical zeroHP drives reaching the scripted crash. Visible-heavy-smoke clause FAIL in current low paired1280x720 frames at zoom0.5/1.5 after4wallseconds/241ticks: no visible heavy plume. Post-load VFXenabledtrue, damage smoking/stage4, effecttime4.0331s,1vehicleSmokeColumn/35puffs recorded; not confused with disabled VFX or paused particle time."
     },
     {
-      "file": "docs/reports/sweep-c5/L9-05/zero-assembled.json.gz",
-      "sha256": "ad3e09311deb8c07b74853721b6fc2e1466d7d607d2db9425fba0e6bc5ef2556",
-      "what": "Current source real keyboard healthy/zero trajectories, independently uninterrupted speed ratios, native controls, actual consumer fault controls and personally inspected SHA256 smoke/fall captures with raw cleanup."
+      "file": "docs/reports/final-c/L9-07/high-physical.json.gz",
+      "sha256": "8cd71140b7b5e83bbc6aa5e5f9fd5729d0ed9fc62cbc4b7dbdef99045939fe1c",
+      "what": "ZeroHP speed/drivability pass: measured10.71099/17.74463m/s=0.6036189, both tiers, with normal physical zeroHP drives reaching the scripted crash. Visible-heavy-smoke clause FAIL in current low paired1280x720 frames at zoom0.5/1.5 after4wallseconds/241ticks: no visible heavy plume. Post-load VFXenabledtrue, damage smoking/stage4, effecttime4.0331s,1vehicleSmokeColumn/35puffs recorded; not confused with disabled VFX or paused particle time."
     },
     {
-      "file": "docs/reports/sweep-c5/L9-05/speed-assembled.json.gz",
-      "sha256": "9b67345e0b8233b5cf05791c965d0789905fe953c301a64d65d2afc19601f192",
-      "what": "Current source real keyboard healthy/zero trajectories, independently uninterrupted speed ratios, native controls, actual consumer fault controls and personally inspected SHA256 smoke/fall captures with raw cleanup."
+      "file": "docs/reports/final-c/L9-05/speed-producer.mjs",
+      "sha256": "3c6cd1881752014e5da10a193ac2f83eac2b05a2aed4d0e36f6d6ef4da8a70b8",
+      "what": "Exact measurement producer snapshot; only output locations differ from the existing observer."
     }
-  ]
+  ],
+  "notes": "Frozen-head row review. Current immutable evidence, unchanged criterion and game source.",
+  "sourceDigest": "fbad89802bfe8d610b736d8f5a3111d1a13e8d0ae47b606a45c5760634f3ed51"
 }
