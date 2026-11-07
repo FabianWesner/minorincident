@@ -176,18 +176,19 @@ test('the asset validator rejects every contract violation, and every production
   expect(reports.length).toBeGreaterThanOrEqual(sample.length);
   expect(reports.flatMap(r => r.errors.map(e => `${r.id}: ${e}`))).toEqual([]);
 
-  // r6-truck: the seated crew roof cut removes only roof geometry above the fire-engine cab interior, at every LOD.
+  // r6-truck: the seated open-cab cut stays inside the fire-engine crew cab and below the ladder, at every LOD.
   // PO 11-07 "L2 Some part is missing of the truck": the seat-footprint cut reached 0.3 m into the closed shutter housing behind the
-  // cab, whose AO-black inside read as a hole. Inside the cut footprint (asset root frame) the band from head height (2.3) to just
-  // under the ceiling (2.74) must be open cabin air: a wall or a neighbouring assembly there would be sliced open by the cut.
-  // The rear crew seats sit inside the footprint with their heads below the cut, so the glazed opening shows them.
+  // cab (AO-black inside = a hard black rectangle) and cut the ladder over the cab. Every triangle the cut box touches (asset root
+  // frame) must reach into the cab shell (x >= 1.88), the ladder must clear the box (but its nose support, which stands on the
+  // ladder-rest hoop), and every seat sits inside it below the sill.
   const roof = crewRoofs['veh.fire-engine'], io = await assetIO(), p = new Vector3();
-  const air = new Box3(new Vector3(roof.x0, 2.3, -roof.z), new Vector3(roof.x1, 2.72, roof.z)), above = new Box3(new Vector3(roof.x0, roof.cut, -roof.z), new Vector3(roof.x1, 1e4, roof.z));
+  const box = new Box3(new Vector3(roof.x0, roof.cut, -roof.z), new Vector3(roof.x1, roof.top, roof.z));
   for (const file of ['veh.fire-engine.glb', 'veh.fire-engine.lod1.glb', 'veh.fire-engine.lod2.glb']) {
     const doc = await io.read(`public/assets/models/${file}`), nodes = doc.getRoot().listNodes();
     const frame = nodes.find(n => n.getName() === 'crew_cab')!.getParentNode()!;
     const toFrame = new Matrix4().fromArray(frame.getWorldMatrix()).invert();
-    let sliced = 0, cut = 0;
+    const ladder = new Set(nodes.find(n => n.getName() === 'ladder')!.listChildren().concat(nodes.find(n => n.getName() === 'ladder')!));
+    let outside = 0, ladderCut = 0, cut = 0;
     for (const node of nodes) {
       const mesh = node.getMesh(); if (!mesh) continue;
       const matrix = new Matrix4().multiplyMatrices(toFrame, new Matrix4().fromArray(node.getWorldMatrix()));
@@ -196,17 +197,20 @@ test('the asset validator rejects every contract violation, and every production
         const corner = (i: number) => new Vector3().fromArray(position.getElement(index ? index[i] : i, v)).applyMatrix4(matrix);
         for (let i = 0; i + 2 < (index ? index.length : position.getCount()); i += 3) {
           const triangle = new Triangle(corner(i), corner(i + 1), corner(i + 2));
-          if (air.intersectsTriangle(triangle)) sliced++;
-          if (above.intersectsTriangle(triangle)) cut++;
+          if (!box.intersectsTriangle(triangle)) continue;
+          cut++;
+          // Only the ladder's nose support may reach in: it now stands on the ladder-rest hoop at `rest`.
+          if (ladder.has(node)) { if (Math.max(...[triangle.a, triangle.b, triangle.c].map(c => Math.abs(c.x - roof.rest))) > .1) ladderCut++; }
+          else if (Math.max(triangle.a.x, triangle.b.x, triangle.c.x) < 1.88) outside++;
         }
       }
     }
     expect(cut, file).toBeGreaterThan(0);
-    expect(sliced, `${file}: triangles between head height and the ceiling inside the crew cut`).toBe(0);
-    for (const seat of nodes.filter(n => /^crewSeat[0-5]$/.test(n.getName()) && n.getName() !== 'crewSeat1')) {
+    expect(outside, `${file}: triangles behind the crew cab inside the cut`).toBe(0);
+    expect(ladderCut, `${file}: ladder triangles inside the cut`).toBe(0);
+    for (const seat of nodes.filter(n => /^(crewSeat\d|driverSeat)$/.test(n.getName()))) {
       p.setFromMatrixPosition(new Matrix4().fromArray(seat.getWorldMatrix()).premultiply(toFrame));
-      expect(p.y + .9, `${file} ${seat.getName()} head`).toBeLessThan(roof.cut);
-      expect(p.x > roof.x0 && p.x < roof.x1 && Math.abs(p.z) < roof.z, `${file} ${seat.getName()}`).toBe(true);
+      expect(p.y < roof.cut && p.x > roof.x0 && p.x < roof.x1 && Math.abs(p.z) < roof.z, `${file} ${seat.getName()}`).toBe(true);
     }
   }
 }, 120_000);

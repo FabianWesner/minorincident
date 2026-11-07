@@ -9,7 +9,7 @@ import type { Node, UniformNode } from 'three/webgpu';
 import { paletteTokens } from '../data/palette';
 import { crewRoofs } from '../data/vehicles';
 // Adapted from Bruno Simon folio-2025 VisualVehicle.js (MIT, 41046b5): wheel pivots/suspension and lamps.
-import { Box3, BoxGeometry, Color, DoubleSide, Group, Matrix4, Mesh, MeshBasicNodeMaterial, MeshLambertNodeMaterial, Quaternion, SphereGeometry, TorusGeometry, Vector3, type Object3D } from 'three/webgpu';
+import { Box3, BoxGeometry, Color, Group, Matrix4, Mesh, MeshBasicNodeMaterial, MeshLambertNodeMaterial, Quaternion, SphereGeometry, TorusGeometry, Vector3, type Object3D } from 'three/webgpu';
 import { productionObstacleAssets } from './EntityAssets';
 import { AssetRegistry } from '../assets/registry';
 import { atLeast } from '../assets/types';
@@ -28,7 +28,7 @@ import { anchorsFor } from './WorldLights';
 import { footprint, type LightField } from './LightField';
 import { lightPalette } from '../data/lights';
 const lampPosition = new Vector3(), lampDirection = new Vector3(), beamColor = new Color();
-interface Record { bounds: Box3; crewRoof?: { frame: Object3D; glass: Group }; apc?: ApcDamage; doorHeldAt: number; decay?: string; lod: AssetQuality; parent: Group; model: Object3D; wheels: { node: Object3D; y: number; steer: number; spin: number; contacts: Vector3[]; contactPose: Matrix4; contactOffset: number; contactGround: VehicleView['ground'] }[]; brake: MeshBasicNodeMaterial; sirens: MeshBasicNodeMaterial[]; smoke: Group; fire: Mesh; door: Mesh; paint: (import('three').Material & { bloodCoverage: { value: number } })[]; blood: number; charred: boolean; feel: { tick: number; speed: number; accel: number; roll: number; pitch: number; restRoll: number; restPitch: number } }
+interface Record { bounds: Box3; crewRoof?: { frame: Object3D; trim: Group; hide: Object3D[] }; apc?: ApcDamage; doorHeldAt: number; decay?: string; lod: AssetQuality; parent: Group; model: Object3D; wheels: { node: Object3D; y: number; steer: number; spin: number; contacts: Vector3[]; contactPose: Matrix4; contactOffset: number; contactGround: VehicleView['ground'] }[]; brake: MeshBasicNodeMaterial; sirens: MeshBasicNodeMaterial[]; smoke: Group; fire: Mesh; door: Mesh; paint: (import('three').Material & { bloodCoverage: { value: number } })[]; blood: number; charred: boolean; feel: { tick: number; speed: number; accel: number; roll: number; pitch: number; restRoll: number; restPitch: number } }
 /** Seated cutaway: footprint pad around the seat roots and cut height above them (metres, chassis frame). */
 const cutawayPad = .55, cutawayWaist = .15;
 /** Registry models follow authoritative chassis/wheel snapshots; no render state feeds physics. */
@@ -119,10 +119,10 @@ export class VehicleView extends Group {
   prewarmReveal(enabled: boolean): () => void {
     const saved = [...this.reveal.values()].map(({ on }) => [on, on.value] as const);
     for (const [on] of saved) on.value = +enabled;
-    // The crew glass roof's two palette programs compile with the reveal graph, not on the first ride frame.
-    const roofs = [...this.variants.values()].flatMap(variants => [...variants.values()]).flatMap(r => r.crewRoof ? [[r.crewRoof.glass, r.crewRoof.glass.visible] as const] : []);
-    for (const [glass] of roofs) glass.visible = enabled;
-    return () => { for (const [on, value] of saved) on.value = value; for (const [glass, visible] of roofs) glass.visible = visible; };
+    // The open-cab trim compiles with the reveal graph, not on the first ride frame.
+    const trims = [...this.variants.values()].flatMap(variants => [...variants.values()]).flatMap(r => r.crewRoof ? [[r.crewRoof.trim, r.crewRoof.trim.visible] as const] : []);
+    for (const [trim] of trims) trim.visible = enabled;
+    return () => { for (const [on, value] of saved) on.value = value; for (const [trim, visible] of trims) trim.visible = visible; };
   }
   private paintModel(model: Object3D, id: number, mask: Node): Record['paint'] {
     const paint: Record['paint'] = [];
@@ -501,7 +501,7 @@ export class VehicleView extends Group {
       // On foot only her own chest or head behind a vehicle counts (not a padded subject corner beside the cab).
       if (carryingL2Crew && !full && this.crewCutaway(record, reveal)) reveal.on.value = 2;
       else reveal.on.value = +(enabled && !onFoot && !full);
-      if (record.crewRoof) record.crewRoof.glass.visible = reveal.on.value === 2;
+      if (record.crewRoof) { const open = reveal.on.value === 2; record.crewRoof.trim.visible = open; for (const node of record.crewRoof.hide) node.visible = !open; }
       if (hidesHer && vehicle) this.courierOccluded = true;
       if (this.silhouette?.id === id) record.parent.visible = this.silhouette.mode !== 'hidden';
     }
@@ -511,7 +511,7 @@ export class VehicleView extends Group {
   private crewCutaway(record: Record, reveal: { cutInverse: UniformNode<'mat4', Matrix4>; cutMin: UniformNode<'vec3', Vector3>; cutMax: UniformNode<'vec3', Vector3> }): boolean {
     if (record.crewRoof) {
       const roof = crewRoofs[record.model.userData.assetId], frame = record.crewRoof.frame;
-      reveal.cutMin.value.set(roof.x0, roof.cut, -roof.z); reveal.cutMax.value.set(roof.x1, 1e4, roof.z);
+      reveal.cutMin.value.set(roof.x0, roof.cut, -roof.z); reveal.cutMax.value.set(roof.x1, roof.top, roof.z);
       frame.updateWorldMatrix(true, false);
       reveal.cutInverse.value.copy(frame.matrixWorld).invert();
       return true;
@@ -525,21 +525,29 @@ export class VehicleView extends Group {
     reveal.cutInverse.value.copy(record.model.matrixWorld).invert();
     return true;
   }
-  /** Framed glass roof closing the crew cut: a tinted pane at roof height and a dark frame whose bars stand across the cut roof
-   * edges (ceiling to roof top), so no slab cross-section shows. Hidden unless the crew cutaway is on. */
+  /** Dark trim finishing the open-top crew cab: sill rails over both cut side walls and doors, a rear rail over the cut rear wall,
+   * a windscreen header with two posts closing the cut roof nose, and a ladder-rest hoop under the ladder's nose support. Hidden unless the crew cutaway is on. */
+  private trimMaterial?: PaletteMaterial;
   private crewRoof(model: Object3D): Record['crewRoof'] {
     const roof = crewRoofs[model.userData.assetId], frame = roof && model.getObjectByName('crew_cab')?.parent;
     if (!roof || !frame) return undefined;
-    const { x0, x1, z, top } = roof, bar = .05, low = 2.7, w = x1 - x0, mid = (x0 + x1) / 2;
-    // Side, rear and front bars (sx, sz, centre x, centre z). No centre rib: the courier sits on the centre line.
-    const h = top + .015 - low, edge = ([sx, sz, x, cz]: number[]) => new BoxGeometry(sx, h, sz).translate(x, low + h / 2, cz);
-    const bars = [[w + bar, bar, mid, z], [w + bar, bar, mid, -z], [bar, 2 * z, x0, 0], [bar, 2 * z, x1, 0]].map(edge);
-    const glass = new Group(); glass.name = 'crewGlassRoof'; glass.visible = false;
-    const pane = new Mesh(new BoxGeometry(w, .015, 2 * z).translate(mid, top - .01, 0), this.materials.world('backpackTeal', 0, false, DoubleSide, 0, true, .18, false));
-    const rim = new Mesh(mergeGeometries(bars)!, this.materials.world('uiDark')); for (const g of bars) g.dispose();
-    pane.castShadow = false; rim.castShadow = rim.receiveShadow = pane.receiveShadow = true;
-    glass.add(rim, pane); frame.add(glass);
-    return { frame, glass };
+    const { x0, x1, cut } = roof, wall = 1.29, rail = .16, header = 2.66, length = x1 - x0;
+    const part = (sx: number, sy: number, sz: number, x: number, y: number, z: number) => new BoxGeometry(sx, sy, sz).translate(x, y, z);
+    const parts = [
+      ...[1, -1].map(side => part(length + .06, .05, rail, x0 + length / 2, cut + .015, side * (wall - rail / 2))),
+      part(.12, .05, 2 * wall, x0 + .05, cut + .015, 0),
+      ...[1, -1].map(side => part(.07, header - cut, .1, x1 + .01, (header + cut) / 2, side * (wall - .07))),
+      part(.08, .2, 2 * wall, x1 + .02, header + .06, 0),
+      // Ladder rest: a hoop at the ladder's nose support, which otherwise hung free over the open cab.
+      ...[1, -1].map(side => part(.07, roof.top - cut, .07, roof.rest, (roof.top + cut) / 2, side * (wall - .05))),
+      part(.1, .06, 2 * wall, roof.rest, roof.top - .03, 0),
+    ];
+    const trim = new Group(); trim.name = 'crewCabTrim'; trim.visible = false;
+    // Own material: the shared world swatch carries the district see-through dither, which stippled the trim around the courier.
+    this.trimMaterial ??= this.materials.uniqueWorld('uiDark');
+    const mesh = new Mesh(mergeGeometries(parts)!, this.trimMaterial); for (const g of parts) g.dispose();
+    mesh.castShadow = mesh.receiveShadow = true; trim.add(mesh); frame.add(trim);
+    return { frame, trim, hide: roof.hide.flatMap(name => model.getObjectByName(name) ?? []) };
   }
   /** Complete drawn chassis, including wheels, for the player's bounded reveal. */
   playerBounds(out: Box3): boolean {
@@ -562,7 +570,7 @@ export class VehicleView extends Group {
   snapshot() { return [...this.records].map(([id, r]) => ({ id, apcDamage: r.apc?.snapshot() ?? null, transitionCouriers: [...this.occupants.values()].filter(o => o.parent === r.parent && o.visible).map(o => ({ actorId: o.actorId, asset: o.asset, phase: 'exit', position: o.position.toArray() })), doors: ['doorL','doorR','door_near_0','door_near_1','door_far_0','door_far_1'].flatMap(name => { const node = r.model.getObjectByName(name); let meshes = 0; node?.traverse(child => { if (child instanceof Mesh) meshes++; }); return node ? [{ name, yaw: node.rotation.y, meshes }] : []; }), decay: r.decay ?? null, bloodCoverage: this.bloodEnabled ? r.blood : 0, windshieldBloodCoverage: this.bloodEnabled ? r.blood : 0, wheels: r.wheels.map(w => ({ spin: w.node.rotation.z, steer: w.node.rotation.y })), brake: r.brake.color.r, sirens: r.sirens.map(s => s.color.toArray()), placeholder: !!r.model.userData.placeholder, occupants: [...this.occupants.values()].filter(o => o.parent === r.model && o.visible).map(o => ({ actorId: o.actorId, asset: o.asset, seated: true, position: o.position.toArray(), handGapM: [...o.handGapM] })) })); }
   private releaseRecord(record: Record): void {
     record.apc?.dispose(); disposeTransportCab(record.model);
-    record.crewRoof?.glass.traverse(node => { if (node instanceof Mesh) node.geometry.dispose(); });
+    record.crewRoof?.trim.traverse(node => { if (node instanceof Mesh) node.geometry.dispose(); });
     record.door.geometry.dispose(); record.brake.dispose(); for (const material of record.sirens) material.dispose();
   }
   dispose(): void {
