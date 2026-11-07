@@ -1,28 +1,22 @@
 {
   "row": "L10-03",
-  "status": "FAIL",
-  "reviewer": "Codex final-c",
+  "status": "PASS",
+  "reviewer": "Codex blk-c",
   "date": "2026-11-07",
-  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "commit": "564b16a89b67136949938d58fa72a522cd4fee7f",
   "clauses": [
     {
       "clause": "Concurrent local infected per region (high / low): R2 12–24 / 8–16 (+1–2 dogs after pickup); R3 25–45 / 16–28 (2–4 dogs, 1 Alpha); R4 45–75 / 28–45 (groups 10–20, 2–4 dogs, 1–2 Alphas); R5 55–85 / 35–55 (2–4 dogs, 1–2 Alphas); R6 80–130 / 50–75 (groups 20–35, 3–5 dogs, 2–3 Alphas); R7 peak 140–190 / 75–95.",
-      "verdict": "FAIL",
-      "note": "Measured FAIL on current high R6: across12865 ticks/214.4167s, no same-tick witness meets80–130 concurrent infected plus3–5 dogs plus2–3 Alphas. Peak97 at tick41790 has only1dog and2Alphas; across every interval with>=3dogs the maximum concurrent count is7 and Alphas=0. Low all six regions and high five other regions have joint witnesses and no upper-bound violations. Both full ordinary native final states match independent canonical controls. The single high R6 composition failure suffices; this does not claim every authored group-size clause was independently requalified."
+      "verdict": "PASS",
+      "note": "Fresh same-source low/high complete-route census: all 12 region/tier windows have joint count/species witnesses and zero upper-bound violations; all contiguous intervals are covered and canonical final states match. R6 low witness tick 41670: 68 infected/4 dogs/3 Alphas. R6 high witness tick 41790: 97/5/2. Actual handgun pickup precedes first R2 dog with zero premature ticks."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/final-c/L10-03/composition.json",
-      "sha256": "8bc8661da76a2f66b65e489af9bc9083fe4c4d6afc63e36c6bd7a296da918e77",
-      "what": "Measured FAIL on current high R6: across12865 ticks/214.4167s, no same-tick witness meets80–130 concurrent infected plus3–5 dogs plus2–3 Alphas. Peak97 at tick41790 has only1dog and2Alphas; across every interval with>=3dogs the maximum concurrent count is7 and Alphas=0. Low all six regions and high five other regions have joint witnesses and no upper-bound violations. Both full ordinary native final states match independent canonical controls. The single high R6 composition failure suffices; this does not claim every authored group-size clause was independently requalified."
-    },
-    {
-      "file": "docs/reports/final-c/L10-03/producer.ts",
-      "sha256": "6d71836c1d74a78c48630937112ed9696154df4c053c0702063cd99fc0b01f8a",
-      "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
+      "file": "docs/reports/fix72-c/L10-03/simultaneous-census.json",
+      "sha256": "ec1c4686b1a13eae4b14f6f7d2e1ae90b40700fc9a453e24f244014668c3ffeb",
+      "what": "Current-source every-tick census reviewed for both tiers. All 12 regions have same-tick population/species witnesses, contiguous intervals and zero upper-bound violations. High R6 is 97 infected with 5 dogs and 2 Alphas at tick 41790; low R6 is 68/4/3."
     }
   ],
-  "notes": "Frozen-head row review. Current immutable evidence, unchanged criterion and game source.",
   "sourceDigest": "75720d4df4ad59ad1814e1cda498bc4620d28edfa0298106dd53315c5f2fba05"
 }
