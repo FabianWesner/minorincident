@@ -1,27 +1,33 @@
 {
   "row": "L3-12",
   "status": "FAIL",
-  "reviewer": "Codex sweep-a3",
-  "date": "2026-11-06",
-  "commit": "12fb8c1dcf7affe19440b5896a1a5559f73fb7ad",
+  "reviewer": "Codex final-a",
+  "date": "2026-11-07",
+  "commit": "a4e1f1713787866ea765ec30151a08a2ad491dc0",
   "clauses": [
     {
       "clause": "**Marker:** ring stays at `l3-zone` (army checkpoint), no corridor steer; HUD distance is the real ~360 m distance. Route to the checkpoint readable without steering (Q-270).",
       "verdict": "FAIL",
-      "note": "Named Luna fresh pixel-only trial:42 physical actions,167.5500s active; starts360m, nearest312m, final320m. Personally inspected all43 unique game states. After turn6, 143.5167s revisit same bakery/car/ruined-shop block with no checkpoint route found. Marker remains l3-zone225,0 and real distance native checks pass both tiers; independent readability clause FAIL. No fabricated pass from coordinates or bot route."
+      "note": "Fresh named Luna low-tier screenshot-only trial after ordinary fallback prefix. All22 action images3–24 personally inspected at original resolution. Story panel is clear at3. Over ticks2589–6299 (61.8333 active seconds), Luna leaves the yard but finds no onward street route: HUD360m→minimum343m→343m final, repeatedly moving along the fenced lawn behind HARDWARE and explicitly reporting stuck at turns13–24. This is the observed unscripted route-readability FAIL, not a claim of a mechanically blocked level. The ~360m fixed checkpoint HUD and marker remain correct in fresh native checks; no corridor-steering ring is present. The criterion specifies no numeric lost-time limit;61.83s is the measured observation, not an invented acceptance threshold. Model receives only current attached pixels and recent decisions/actions, with zero tool calls, DOM, coordinates, maps or route hints. Aim assist/protection isolate navigation. All completed inputs and later6m recovery at24 are retained. Trial was deliberately bounded before10min; fetch error from stopping the controller is not game failure. No high-tier route PASS is asserted."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-a3/L3-12-pixels-ledger.json.gz",
-      "sha256": "350c9e027f12adea0cb3100659d7150754b283fdea7f2ce29a856c9d83863207",
-      "what": "Named Luna fresh pixel-only trial:42 physical actions,167.5500s active; starts360m, nearest312m, final320m. Personally inspected all43 unique game states. After turn6, 143.5167s revisit same bakery/car/ruined-shop block with no checkpoint route found. Marker remains l3-zone225,0 and real distance native checks pass both tiers; independent readability clause FAIL. No fabricated pass from coordinates or bot route."
+      "file": "docs/reports/final-a/L3-12-input-ledger.json.gz",
+      "sha256": "333882e1efa80abd94ef47f93dd7de3f37c0ceef0fe6dd9830e87ea3ac18c3a6",
+      "what": "Fresh named Luna low-tier screenshot-only trial after ordinary fallback prefix. All22 action images3–24 personally inspected at original resolution. Story panel is clear at3. Over ticks2589–6299 (61.8333 active seconds), Luna leaves the yard but finds no onward street route: HUD360m→minimum343m→343m final, repeatedly moving along the fenced lawn behind HARDWARE and explicitly reporting stuck at turns13–24. This is the observed unscripted route-readability FAIL, not a claim of a mechanically blocked level. The ~360m fixed checkpoint HUD and marker remain correct in fresh native checks; no corridor-steering ring is present. The criterion specifies no numeric lost-time limit;61.83s is the measured observation, not an invented acceptance threshold. Model receives only current attached pixels and recent decisions/actions, with zero tool calls, DOM, coordinates, maps or route hints. Aim assist/protection isolate navigation. All completed inputs and later6m recovery at24 are retained. Trial was deliberately bounded before10min; fetch error from stopping the controller is not game failure. No high-tier route PASS is asserted."
     },
     {
-      "file": "docs/reports/sweep-a3/L3-12-pixels-result.json",
-      "sha256": "68e457937e565a5bb5e98ce2e966c8036ce7ab4eb7fc0eea8205f6a1ba1fa869",
-      "what": "Named Luna fresh pixel-only trial:42 physical actions,167.5500s active; starts360m, nearest312m, final320m. Personally inspected all43 unique game states. After turn6, 143.5167s revisit same bakery/car/ruined-shop block with no checkpoint route found. Marker remains l3-zone225,0 and real distance native checks pass both tiers; independent readability clause FAIL. No fabricated pass from coordinates or bot route."
+      "file": "docs/reports/final-a/L3-12-image-review.json",
+      "sha256": "6b6ddf2781dd641d30c7769dbcbb72d0040e259d2945320ae79f32e7366cba37",
+      "what": "Fresh named Luna low-tier screenshot-only trial after ordinary fallback prefix. All22 action images3–24 personally inspected at original resolution. Story panel is clear at3. Over ticks2589–6299 (61.8333 active seconds), Luna leaves the yard but finds no onward street route: HUD360m→minimum343m→343m final, repeatedly moving along the fenced lawn behind HARDWARE and explicitly reporting stuck at turns13–24. This is the observed unscripted route-readability FAIL, not a claim of a mechanically blocked level. The ~360m fixed checkpoint HUD and marker remain correct in fresh native checks; no corridor-steering ring is present. The criterion specifies no numeric lost-time limit;61.83s is the measured observation, not an invented acceptance threshold. Model receives only current attached pixels and recent decisions/actions, with zero tool calls, DOM, coordinates, maps or route hints. Aim assist/protection isolate navigation. All completed inputs and later6m recovery at24 are retained. Trial was deliberately bounded before10min; fetch error from stopping the controller is not game failure. No high-tier route PASS is asserted."
+    },
+    {
+      "file": "docs/reports/final-a/L3-12-current-proof.json",
+      "sha256": "9d3764a8fa5dfef89c8d1467696e01ef7620fbf50d0411c483e5b9452508a48c",
+      "what": "Fresh named Luna low-tier screenshot-only trial after ordinary fallback prefix. All22 action images3–24 personally inspected at original resolution. Story panel is clear at3. Over ticks2589–6299 (61.8333 active seconds), Luna leaves the yard but finds no onward street route: HUD360m→minimum343m→343m final, repeatedly moving along the fenced lawn behind HARDWARE and explicitly reporting stuck at turns13–24. This is the observed unscripted route-readability FAIL, not a claim of a mechanically blocked level. The ~360m fixed checkpoint HUD and marker remain correct in fresh native checks; no corridor-steering ring is present. The criterion specifies no numeric lost-time limit;61.83s is the measured observation, not an invented acceptance threshold. Model receives only current attached pixels and recent decisions/actions, with zero tool calls, DOM, coordinates, maps or route hints. Aim assist/protection isolate navigation. All completed inputs and later6m recovery at24 are retained. Trial was deliberately bounded before10min; fetch error from stopping the controller is not game failure. No high-tier route PASS is asserted."
     }
   ],
-  "notes": "Only fresh strict-pixel trial qualifies. Earlier metadata-assisted trials explicitly rejected in readability-rejected.json. Low-tier counterexample; high-tier manual route not run."
+  "notes": "One current named Luna readability observation, with full progress retained. Fresh native marker/distance checks pass; readability clause is independently FAIL. No inference from bounded harness exit status.",
+  "sourceDigest": "b54f676bf2eb09a12c8059dce4ebe53003816773db044d7acfc253fccbedccf9"
 }

@@ -1,0 +1,122 @@
+{
+  "row": "L1-05",
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "criterion": "After \"Delivered\" a 4–6 s window with no objective and no infected; flicker → blast → ringing → smoke → screams within 8 s; blast frame ≤ 50 ms.",
+  "nativeChecks": [
+    {
+      "id": "L1-05",
+      "clause": "objective-free calm controller interval",
+      "level": "L1",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 4.733333333333333,
+      "target": "4 ≤ value ≤ 6",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-low-complete.json"
+    },
+    {
+      "id": "L1-05",
+      "clause": "objective-free calm controller interval",
+      "level": "L1",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 4.733333333333333,
+      "target": "4 ≤ value ≤ 6",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-low-stationary.json"
+    },
+    {
+      "id": "L1-05",
+      "clause": "objective-free calm controller interval",
+      "level": "L1",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 4.733333333333333,
+      "target": "4 ≤ value ≤ 6",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-high-complete.json"
+    },
+    {
+      "id": "L1-05",
+      "clause": "objective-free calm controller interval",
+      "level": "L1",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 4.733333333333333,
+      "target": "4 ≤ value ≤ 6",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-high-stationary.json"
+    },
+    {
+      "id": "L1-05",
+      "clause": "native accident event order and sequence clock",
+      "value": {
+        "events": [
+          {
+            "type": "l1.flicker",
+            "tick": 3578
+          },
+          {
+            "type": "l1.blast",
+            "tick": 3668
+          },
+          {
+            "type": "l1.ringing",
+            "tick": 3680
+          },
+          {
+            "type": "l1.smoke",
+            "tick": 3752
+          },
+          {
+            "type": "l1.screams",
+            "tick": 3788
+          }
+        ],
+        "sequenceS": 3.5
+      },
+      "target": "flicker→blast→ringing→smoke→screams within8s",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-low-fixtures.json",
+      "level": "L1"
+    },
+    {
+      "id": "L1-05",
+      "clause": "native accident event order and sequence clock",
+      "value": {
+        "events": [
+          {
+            "type": "l1.flicker",
+            "tick": 3578
+          },
+          {
+            "type": "l1.blast",
+            "tick": 3668
+          },
+          {
+            "type": "l1.ringing",
+            "tick": 3680
+          },
+          {
+            "type": "l1.smoke",
+            "tick": 3752
+          },
+          {
+            "type": "l1.screams",
+            "tick": 3788
+          }
+        ],
+        "sequenceS": 3.5
+      },
+      "target": "flicker→blast→ringing→smoke→screams within8s",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-high-fixtures.json",
+      "level": "L1"
+    }
+  ],
+  "observation": "Current low/high ordinary-delivery event ledgers: delivered3326; flicker3610, blast3700, ringing3712, smoke3784, screams3820. Quiet window284ticks=4.7333s with no active objective/infected, ordered flicker→screams210ticks=3.5s <8s. Personally inspected all14 current WebGPU event frames: quiet completed objective, light flicker, flash/debris then smoke, no premature infected. Exclusive quiet native Chrome Metal WebGL2 timing admitted at1m load2.8579: enclosing blast RAF5.6ms low/6.2ms high, following4.5/8.9ms; worst100ms before/500ms after5.6/29.8ms, both≤50. Full RAF/perf ledger retained, no screenshot/CDP work during interval. Initial resume gap from paused prefix is explicitly excluded, not mislabelled blast timing."
+}

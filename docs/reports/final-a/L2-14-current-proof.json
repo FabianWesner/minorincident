@@ -1,0 +1,130 @@
+{
+  "row": "L2-14",
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "criterion": "Cluster **12–16** (authored 13) on the Elm approach; passable killing ≤ 50 % of it; side path and car alarm each work.",
+  "nativeChecks": [
+    {
+      "id": "L2-14",
+      "clause": "maximum admitted Elm cluster identities before retry thinning",
+      "level": "L2",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 13,
+      "target": "12 ≤ value ≤ 16",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-complete.json"
+    },
+    {
+      "id": "L2-14",
+      "clause": "maximum admitted Elm cluster identities before retry thinning",
+      "level": "L2",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 13,
+      "target": "12 ≤ value ≤ 16",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-complete.json"
+    },
+    {
+      "id": "L2-14",
+      "clause": "native side approach completion and cluster kill share",
+      "value": {
+        "protected": false,
+        "qualified": true,
+        "outcome": "complete",
+        "deaths": 0,
+        "cluster": {
+          "atApproach": 13,
+          "size": 13
+        },
+        "size": 13,
+        "killed": 3,
+        "ratio": 0.23076923076923078,
+        "visitedSide": true,
+        "alarms": []
+      },
+      "target": "complete without deaths;cluster12–16;kill≤50%;side path visited / actual Elm car alarm emitted",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
+      "level": "L2"
+    },
+    {
+      "id": "L2-14",
+      "clause": "native alarm approach completion and cluster kill share",
+      "value": {
+        "protected": false,
+        "qualified": false,
+        "outcome": "complete",
+        "deaths": 0,
+        "cluster": {
+          "atApproach": 13,
+          "size": 13
+        },
+        "size": 13,
+        "killed": 18,
+        "ratio": 1.3846153846153846,
+        "visitedSide": false,
+        "alarms": []
+      },
+      "target": "complete without deaths;cluster12–16;kill≤50%;side path visited / actual Elm car alarm emitted",
+      "status": "NOT CHECKED",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
+      "level": "L2"
+    },
+    {
+      "id": "L2-14",
+      "clause": "native side approach completion and cluster kill share",
+      "value": {
+        "protected": false,
+        "qualified": true,
+        "outcome": "complete",
+        "deaths": 0,
+        "cluster": {
+          "atApproach": 13,
+          "size": 13
+        },
+        "size": 13,
+        "killed": 1,
+        "ratio": 0.07692307692307693,
+        "visitedSide": true,
+        "alarms": []
+      },
+      "target": "complete without deaths;cluster12–16;kill≤50%;side path visited / actual Elm car alarm emitted",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
+      "level": "L2"
+    },
+    {
+      "id": "L2-14",
+      "clause": "native alarm approach completion and cluster kill share",
+      "value": {
+        "protected": false,
+        "qualified": false,
+        "outcome": "complete",
+        "deaths": 0,
+        "cluster": {
+          "atApproach": 13,
+          "size": 13
+        },
+        "size": 13,
+        "killed": 14,
+        "ratio": 1.0769230769230769,
+        "visitedSide": false,
+        "alarms": []
+      },
+      "target": "complete without deaths;cluster12–16;kill≤50%;side path visited / actual Elm car alarm emitted",
+      "status": "NOT CHECKED",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
+      "level": "L2"
+    }
+  ],
+  "observation": "Four current mortal physical-keyboard routes after ordinary complete-prefix input; read-only coordinate/nav assistance declared, no God/spawns/skips. All four reached actual checkpoint crossedAt: low side7992, low alarm7844, high side8027, high alarm7835.13 identified cluster infected each. Unique courier cluster kills0/6/0/3, maximum6/13=46.154% ≤50%; final HP100/93.4333/100/86.1667. Alarm cases contain actual car-alarm events (low5842+6261, high5832+6260); side cases use the continuous open backyard side route. The optional attack stop at6 kills is a physical tactic bound, not a game mutation. Personally inspected all40 original close/wide route photos: continuous readable passages around fences and arrival inside checkpoint, with enemies remaining outside. Fresh native pack/path checks additionally retain the designed cluster grouping."
+}

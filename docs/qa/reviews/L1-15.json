@@ -1,57 +1,33 @@
 {
   "row": "L1-15",
   "status": "PASS",
-  "reviewer": "Codex sweep-a2",
-  "date": "2026-11-05",
-  "commit": "f09590d96cb73694aa1c7faaad55086f0373e6eb",
+  "reviewer": "Codex final-a",
+  "date": "2026-11-07",
+  "commit": "e9978f555d3cd18b89e1a038fbebfc20d7538187",
   "clauses": [
     {
       "clause": "The bay stays open; firefighter repeats \"Get in!\"; infected stay live until entry; shutter closes with the corgi inside.",
       "verdict": "PASS",
-      "note": "Both qualities: actual Get-in text repeated three-plus times at240tick intervals; shutter remains open, living infected move and pursue throughout8s hold and physical199-key-command entry. Shutter closes only after objective entry; at every closed sample corgi is at least1.05m inward of door plane and is visible again in settled final frame. All16 fresh frames personally inspected; open bay/firefighter, chase, physical threshold crossing and interior corgi confirmed. Seven rejection controls pass. Production door transition briefly hides/places corgi; no harness relocation. Gate state proves closure while production wall cutaway reveals interior."
+      "note": "All16 fresh low/high production-follow frames personally inspected. Physical keyboard entry199commands/tier after8s idle, no teleport or injected movement. Three actual Get-in calls at6408/6648/6888ticks; gate remains open before entry,22/52 minimum living infected move up to32.10/38.59m. Entry and first closed gate both7119; corgi signed inside depth1.05m on closure, visible again in settled frame. Seven broken-data controls pass. Damage protection is solely for mechanics/presentation. Gate state establishes closure; inside-follow camera makes building transparent, so no unoccluded exterior shutter-animation claim. Separate presentation observation: large dark triangular building surfaces at entry in both qualities, exact physical-inside/entry-end frames retained for PO."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-a2/L1-15-measurement.json",
-      "sha256": "8da8a6eab86482445f96d5f22bf24dc0b1514df2d368b606c1e4d509bf4cbf5b",
-      "what": "Fresh physical keyboard final-entry trace, actual open/close/invitation/live-infected/corgi geometry, all16 seen notes and images; protection and cutaway limitations declared."
+      "file": "docs/reports/final-a/L1-15-measurement.json",
+      "sha256": "50cd215f2303ee9fe4a052e6968b91b77d02b3605a3263dc8586d46b38f98065",
+      "what": "All16 fresh low/high production-follow frames personally inspected. Physical keyboard entry199commands/tier after8s idle, no teleport or injected movement. Three actual Get-in calls at6408/6648/6888ticks; gate remains open before entry,22/52 minimum living infected move up to32.10/38.59m. Entry and first closed gate both7119; corgi signed inside depth1.05m on closure, visible again in settled frame. Seven broken-data controls pass. Damage protection is solely for mechanics/presentation. Gate state establishes closure; inside-follow camera makes building transparent, so no unoccluded exterior shutter-animation claim. Separate presentation observation: large dark triangular building surfaces at entry in both qualities, exact physical-inside/entry-end frames retained for PO."
     },
     {
-      "file": "docs/reports/sweep-a2/L1-15-image-review.json",
-      "sha256": "b37dbb80fc83b51b64f766cd5339de9d53365b9db58b620aca78926db7e13a24",
-      "what": "Fresh physical keyboard final-entry trace, actual open/close/invitation/live-infected/corgi geometry, all16 seen notes and images; protection and cutaway limitations declared."
+      "file": "docs/reports/final-a/L1-15-browser-ledger.json.gz",
+      "sha256": "33a6ef9d22914638c2adadc31cdb709e9eae77c64bc4af048b6fd49cc634db56",
+      "what": "All16 fresh low/high production-follow frames personally inspected. Physical keyboard entry199commands/tier after8s idle, no teleport or injected movement. Three actual Get-in calls at6408/6648/6888ticks; gate remains open before entry,22/52 minimum living infected move up to32.10/38.59m. Entry and first closed gate both7119; corgi signed inside depth1.05m on closure, visible again in settled frame. Seven broken-data controls pass. Damage protection is solely for mechanics/presentation. Gate state establishes closure; inside-follow camera makes building transparent, so no unoccluded exterior shutter-animation claim. Separate presentation observation: large dark triangular building surfaces at entry in both qualities, exact physical-inside/entry-end frames retained for PO."
     },
     {
-      "file": "docs/reports/sweep-a2/L1-15-browser-ledger.json.gz",
-      "sha256": "76e1312f1bb37969bed26e0326b4801f063d6a068790917d4d41b240ba5a77f4",
-      "what": "Fresh physical keyboard final-entry trace, actual open/close/invitation/live-infected/corgi geometry, all16 seen notes and images; protection and cutaway limitations declared."
-    },
-    {
-      "file": "docs/reports/sweep-a2/bay-photos.json",
-      "sha256": "5ef064e0c7b71776fc25476e416a434522c103fd8f74bac41190f0677a918eb7",
-      "what": "Fresh physical keyboard final-entry trace, actual open/close/invitation/live-infected/corgi geometry, all16 seen notes and images; protection and cutaway limitations declared."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/bay-01.jpg",
-      "sha256": "c82126cca8291a0af33c4e14d1dac5b3001e9dc29811fe5dd8dd285070e5ca51",
-      "what": "Fresh physical keyboard final-entry trace, actual open/close/invitation/live-infected/corgi geometry, all16 seen notes and images; protection and cutaway limitations declared."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/bay-02.jpg",
-      "sha256": "be9f1b510ebbba6a8283b8ebb390c4617167788ae510ff725e5358cd00c8374f",
-      "what": "Fresh physical keyboard final-entry trace, actual open/close/invitation/live-infected/corgi geometry, all16 seen notes and images; protection and cutaway limitations declared."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/bay-03.jpg",
-      "sha256": "184d7c4e33e2d8e4fdeb4961fb2a2ffe9f40b24cab76be9081e0c5f343856b00",
-      "what": "Fresh physical keyboard final-entry trace, actual open/close/invitation/live-infected/corgi geometry, all16 seen notes and images; protection and cutaway limitations declared."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/bay-04.jpg",
-      "sha256": "e87edf3dccc0acfc87224e0667508a4f2c1267f2d19573af38ea5ca310cfd3b9",
-      "what": "Fresh physical keyboard final-entry trace, actual open/close/invitation/live-infected/corgi geometry, all16 seen notes and images; protection and cutaway limitations declared."
+      "file": "docs/reports/final-a/L1-15-image-review.json",
+      "sha256": "b51c8a49c65e805c39ab3eb2ae1c42455fc0a80f024d08e976987961b7052bbf",
+      "what": "All16 fresh low/high production-follow frames personally inspected. Physical keyboard entry199commands/tier after8s idle, no teleport or injected movement. Three actual Get-in calls at6408/6648/6888ticks; gate remains open before entry,22/52 minimum living infected move up to32.10/38.59m. Entry and first closed gate both7119; corgi signed inside depth1.05m on closure, visible again in settled frame. Seven broken-data controls pass. Damage protection is solely for mechanics/presentation. Gate state establishes closure; inside-follow camera makes building transparent, so no unoccluded exterior shutter-animation claim. Separate presentation observation: large dark triangular building surfaces at entry in both qualities, exact physical-inside/entry-end frames retained for PO."
     }
   ],
-  "notes": "Incoming courier damage suppressed for mechanical presentation only, infected AI untouched. Visible Get-in text is qualified; no recorded Get-in voice or mortal difficulty claim. No game/criterion change."
+  "notes": "Frozen runtime source4e570db; no game code edits. Explicit limits retained in the observation.",
+  "sourceDigest": "00a81dbceddae37bdb1b6540d29f8e3658cdd7d6b7b51968d1fd068c9a6eb63c"
 }

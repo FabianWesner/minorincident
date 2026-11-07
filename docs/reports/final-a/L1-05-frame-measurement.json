@@ -1,0 +1,1788 @@
+{
+  "method": "Native headless Chrome Metal WebGL2, uncapped RAF, exclusive pool admission quiet=true/load1m2.8579; no screenshots/CDP during timing. Ordinary complete InputFrames until actual delivery, then real-time empty input. Timestamp actual blast event against enclosing and following RAF, additionally worst100ms before/500ms after. Initial resume RAF gap includes paused prefix and is retained but excluded from blast window; no claim about unrelated transition performance.",
+  "measured": [
+    {
+      "tier": "low",
+      "blast": {
+        "type": "l1.blast",
+        "tick": 3700,
+        "at": 21308.699999809265
+      },
+      "enclosingFrame": {
+        "at": 21312.4,
+        "rafMs": 5.600000000002183,
+        "tick": 3700,
+        "frameMs": 5.600000000002183,
+        "perf": {
+          "l4": null,
+          "chunkResidency": null,
+          "terrain": null,
+          "infected": {
+            "count": 0,
+            "liveCount": 0,
+            "firstLiveId": null,
+            "available": 350
+          },
+          "effects": {
+            "obstruction": {
+              "remainingTicks": 0,
+              "opacity": 0
+            },
+            "shots": [],
+            "enabled": true,
+            "colorblind": false,
+            "gore": "Full",
+            "quality": "low",
+            "flashReduction": false,
+            "time": 6.909499999999993,
+            "lastSpray": {
+              "actionId": "",
+              "direction": {
+                "x": 1,
+                "z": 0
+              },
+              "droplets": 0,
+              "chunks": 0,
+              "gravity": 9.81
+            },
+            "surfaceSplats": 0,
+            "pendingSplats": 0,
+            "particles": 98,
+            "particleCap": 512,
+            "decals": 0,
+            "decalCap": 600,
+            "gibs": 0,
+            "gibCap": 30,
+            "telegraphs": [],
+            "hitStop": {
+              "active": false,
+              "until": 0,
+              "started": 0,
+              "suppressed": 0
+            },
+            "flash": 0,
+            "blasts": {
+              "wind": {
+                "x": 0.55,
+                "z": 0.25
+              },
+              "blasts": 0,
+              "puffs": 0,
+              "puffCap": 120,
+              "fireballs": 0,
+              "fireballCap": 96,
+              "chunks": 0,
+              "chunkCap": 256,
+              "poolOverwrites": {
+                "fireballs": 0,
+                "chunks": 0
+              },
+              "flames": 0,
+              "glows": 0,
+              "vehicleSmokeColumns": 0,
+              "columns": 0,
+              "transientColumns": 0,
+              "fireColumns": 0,
+              "columnShadows": 0,
+              "clouds": 0,
+              "scorch": 0,
+              "parts": 0,
+              "flash": 0,
+              "bulletTime": {
+                "scale": 1,
+                "remaining": 0,
+                "progress": 0
+              },
+              "slowMotion": true
+            },
+            "coverage": 0,
+            "detached": 0,
+            "dismemberedKills": 0,
+            "kills": 0,
+            "explosionRadius": 0
+          },
+          "nodeBuildMaterials": {},
+          "crowdPreparation": {
+            "workers": 24,
+            "submitted": 31,
+            "completed": 31,
+            "prebuilt": 31,
+            "failed": 0
+          },
+          "nodeBuilds": 264,
+          "profile": {
+            "other": {
+              "drawCalls": 66,
+              "triangles": 95648
+            },
+            "shadows": {
+              "drawCalls": 28,
+              "triangles": 90096
+            },
+            "buildings": {
+              "drawCalls": 5,
+              "triangles": 12696
+            },
+            "crowd": {
+              "drawCalls": 1,
+              "triangles": 2310
+            },
+            "props": {
+              "drawCalls": 2,
+              "triangles": 26916
+            }
+          },
+          "profileAssets": {
+            "view:other/Background.mesh/Background.mesh": {
+              "drawCalls": 1,
+              "triangles": 1984
+            },
+            "shadow:bld.clinic-annex": {
+              "drawCalls": 4,
+              "triangles": 12336
+            },
+            "shadow:other/sunset-grove/pal_picketWhite": {
+              "drawCalls": 1,
+              "triangles": 12188
+            },
+            "shadow:other/npcs/wpn.hunting-rifle": {
+              "drawCalls": 0,
+              "triangles": 0
+            },
+            "shadow:other/npcs/wpn.machine-gun": {
+              "drawCalls": 0,
+              "triangles": 0
+            },
+            "shadow:other/npcs/wpn.shotgun": {
+              "drawCalls": 0,
+              "triangles": 0
+            },
+            "shadow:other/npcs/wpn.assault-rifle": {
+              "drawCalls": 0,
+              "triangles": 0
+            },
+            "shadow:other/npcs/wpn.pistol": {
+              "drawCalls": 0,
+              "triangles": 0
+            },
+            "shadow:other/sunset-grove/pal_denim": {
+              "drawCalls": 1,
+              "triangles": 23124
+            },
+            "shadow:other/sunset-grove/pal_sidewalk": {
+              "drawCalls": 1,
+              "triangles": 5500
+            },
+            "shadow:other/Group/Mesh": {
+              "drawCalls": 0,
+              "triangles": 0
+            },
+            "shadow:other/sunset-grove/pal_asphalt": {
+              "drawCalls": 1,
+              "triangles": 308
+            },
+            "shadow:other/npcs/Mesh": {
+              "drawCalls": 0,
+              "triangles": 0
+            },
+            "shadow:other/sunset-grove/pal_grass": {
+              "drawCalls": 1,
+              "triangles": 44
+            },
+            "shadow:other/sunset-grove/pal_woodWarm": {
+              "drawCalls": 1,
+              "triangles": 352
+            },
+            "shadow:other/sunset-grove/pal_uiDark": {
+              "drawCalls": 1,
+              "triangles": 8652
+            },
+            "shadow:other/sunset-grove/pal_hairChestnut": {
+              "drawCalls": 1,
+              "triangles": 308
+            },
+            "shadow:other/sunset-grove/daisy_1": {
+              "drawCalls": 1,
+              "triangles": 1710
+            },
+            "shadow:other/sunset-grove/daisy_2": {
+              "drawCalls": 1,
+              "triangles": 3252
+            },
+            "shadow:other/sunset-grove/daisy": {
+              "drawCalls": 1,
+              "triangles": 3252
+            },
+            "shadow:other/sunset-grove/daisy_3": {
+              "drawCalls": 1,
+              "triangles": 1000
+            },
+            "shadow:other/Group/geometry_0_1": {
+              "drawCalls": 1,
+              "triangles": 51
+            },
+            "shadow:other/Group/geometry_0": {
+              "drawCalls": 1,
+              "triangles": 5951
+            },
+            "shadow:other/npcs/skin_body": {
+              "drawCalls": 1,
+              "triangles": 1368
+            },
+            "shadow:other/sunset-grove/pal_silver": {
+              "drawCalls": 1,
+              "triangles": 10692
+            },
+            "view:other/Group/geometry_0_1": {
+              "drawCalls": 1,
+              "triangles": 51
+            },
+            "view:other/Group/geometry_0": {
+              "drawCalls": 1,
+              "triangles": 5951
+            },
+            "view:other/lab-accident-fx/Mesh": {
+              "drawCalls": 29,
+              "triangles": 348
+            },
+            "view:other/sunset-grove/pal_silver": {
+              "drawCalls": 1,
+              "triangles": 10692
+            },
+            "view:other/sunset-grove/grass-gpu-wind": {
+              "drawCalls": 1,
+              "triangles": 5470
+            },
+            "view:bld.clinic-annex": {
+              "drawCalls": 5,
+              "triangles": 12696
+            },
+            "view:other/sunset-grove/Mesh": {
+              "drawCalls": 6,
+              "triangles": 3196
+            },
+            "view:prop.lab-signs": {
+              "drawCalls": 1,
+              "triangles": 26676
+            },
+            "view:prop.bike-rack": {
+              "drawCalls": 1,
+              "triangles": 240
+            },
+            "view:other/sunset-grove/pal_uiDark": {
+              "drawCalls": 1,
+              "triangles": 8652
+            },
+            "view:other/npcs/wpn.hunting-rifle": {
+              "drawCalls": 0,
+              "triangles": 0
+            },
+            "view:other/sunset-grove/pal_picketWhite": {
+              "drawCalls": 1,
+              "triangles": 12188
+            },
+            "view:other/npcs/wpn.machine-gun": {
+              "drawCalls": 0,
+              "triangles": 0
+            },
+            "view:other/npcs/wpn.shotgun": {
+              "drawCalls": 0,
+              "triangles": 0
+            },
+            "view:other/npcs/wpn.assault-rifle": {
+              "drawCalls": 0,
+              "triangles": 0
+            },
+            "view:other/npcs/wpn.pistol": {
+              "drawCalls": 0,
+              "triangles": 0
+            },
+            "view:other/sunset-grove/pal_denim": {
+              "drawCalls": 1,
+              "triangles": 23124
+            },
+            "view:other/npcs/Mesh": {
+              "drawCalls": 0,
+              "triangles": 0
+            },
+            "view:other/sunset-grove/pal_sidewalk": {
+              "drawCalls": 1,
+              "triangles": 5500
+            },
+            "view:other/Group/Mesh": {
+              "drawCalls": 7,
+              "triangles": 5048
+            },
+            "view:other/sunset-grove/pal_asphalt": {
+              "drawCalls": 1,
+              "triangles": 308
+            },
+            "view:other/sunset-grove/perimeter-posts": {
+              "drawCalls": 6,
+              "triangles": 3108
+            },
+            "view:other/sunset-grove/pal_grass": {
+              "drawCalls": 1,
+              "triangles": 44
+            },
+            "view:other/sunset-grove/pal_woodWarm": {
+              "drawCalls": 1,
+              "triangles": 352
+            },
+            "view:other/sunset-grove/daisy_3": {
+              "drawCalls": 1,
+              "triangles": 1000
+            },
+            "view:other/sunset-grove/daisy_2": {
+              "drawCalls": 1,
+              "triangles": 3252
+            },
+            "view:other/sunset-grove/daisy_1": {
+              "drawCalls": 1,
+              "triangles": 1710
+            },
+            "view:other/sunset-grove/daisy": {
+              "drawCalls": 1,
+              "triangles": 3252
+            },
+            "view:other/sunset-grove/pal_hairChestnut": {
+              "drawCalls": 1,
+              "triangles": 308
+            },
+            "view:other/figure-contact-shadows/figure-contact-shadows": {
+              "drawCalls": 1,
+              "triangles": 110
+            },
+            "shadow:other/RTT/RTT": {
+              "drawCalls": 1,
+              "triangles": 1
+            },
+            "shadow:other/Bloom [ High Pass ]/Bloom [ High Pass ]": {
+              "drawCalls": 6,
+              "triangles": 6
+            },
+            "shadow:other/Render Pipeline/Render Pipeline": {
+              "drawCalls": 1,
+              "triangles": 1
+            }
+          },
+          "updateCpuMs": 1.6000003814697266,
+          "renderCpuMs": 2.59999942779541,
+          "propUploads": 0,
+          "awakeProps": 0,
+          "fps": 178.57142857135898,
+          "frameMs": 5.600000000002183,
+          "simMs": 0,
+          "simTicks": 0,
+          "simWorldMs": 0,
+          "simTickMs": 0,
+          "uiMs": 0.10000038146972656,
+          "drawCalls": 102,
+          "triangles": 227666,
+          "geometries": 635,
+          "textures": 98,
+          "entities": 678,
+          "backend": "webgl",
+          "loadTiming": {
+            "dataMs": 13.800000190734863,
+            "simMs": 459.5,
+            "viewMs": 9895.5
+          },
+          "quality": {
+            "setting": "low",
+            "tier": "low",
+            "p90Ms": 4.1,
+            "slowSeconds": 0,
+            "budgets": {
+              "frameMs": 33.333333333333336,
+              "infected": 100,
+              "drawCalls": 300,
+              "triangles": 500000,
+              "simMs": 6,
+              "heapMB": 250,
+              "pixelRatio": 1.5,
+              "shadowSize": 1024,
+              "bloomMips": 2,
+              "cullDistance": 45
+            }
+          },
+          "renderedFrames": 4923,
+          "contextLost": false,
+          "paused": false,
+          "heapBytes": 625810769,
+          "lighting": {
+            "lightFieldMs": 0,
+            "lightPools": 0,
+            "lightCandidates": 0,
+            "shadowMaps": 1,
+            "heroLights": 0,
+            "heroShadow": 0,
+            "preset": "L1"
+          }
+        }
+      },
+      "nextFrame": {
+        "at": 21316.9,
+        "rafMs": 4.5,
+        "tick": 3700,
+        "frameMs": 4.5,
+        "perf": {
+          "l4": null,
+          "chunkResidency": null,
+          "terrain": null,
+          "infected": {
+            "count": 0,
+            "liveCount": 0,
+            "firstLiveId": null,
+            "available": 350
+          },
+          "effects": {
+            "obstruction": {
+              "remainingTicks": 0,
+              "opacity": 0
+            },
+            "shots": [],
+            "enabled": true,
+            "colorblind": false,
+            "gore": "Full",
+            "quality": "low",
+            "flashReduction": false,
+            "time": 6.9139999999999935,
+            "lastSpray": {
+              "actionId": "",
+              "direction": {
+                "x": 1,
+                "z": 0
+              },
+              "droplets": 0,
+              "chunks": 0,
+              "gravity": 9.81
+            },
+            "surfaceSplats": 0,
+            "pendingSplats": 0,
+            "particles": 92,
+            "particleCap": 512,
+            "decals": 0,
+            "decalCap": 600,
+            "gibs": 0,
+            "gibCap": 30,
+            "telegraphs": [],
+            "hitStop": {
+              "active": false,
+              "until": 0,
+              "started": 0,
+              "suppressed": 0
+            },
+            "flash": 0,
+            "blasts": {
+              "wind": {
+                "x": 0.55,
+                "z": 0.25
+              },
+              "blasts": 0,
+              "puffs": 0,
+              "puffCap": 120,
+              "fireballs": 0,
+              "fireballCap": 96,
+              "chunks": 0,
+              "chunkCap": 256,
+              "poolOverwrites": {
+                "fireballs": 0,
+                "chunks": 0
+              },
+              "flames": 0,
+              "glows": 0,
+              "vehicleSmokeColumns": 0,
+              "columns": 0,
+              "transientColumns": 0,
+              "fireColumns": 0,
+              "columnShadows": 0,
+              "clouds": 0,
+              "scorch": 0,
+              "parts": 0,
+              "flash": 0,
+              "bulletTime": {
+                "scale": 1,
+                "remaining": 0,
+                "progress": 0
+              },
+              "slowMotion": true
+            },
+            "coverage": 0,
+            "detached": 0,
+            "dismemberedKills": 0,
+            "kills": 0,
+            "explosionRadius": 0
+          },
+          "nodeBuildMaterials": {},
+          "crowdPreparation": {
+            "workers": 24,
+            "submitted": 31,
+            "completed": 31,
+            "prebuilt": 31,
+            "failed": 0
+          },
+          "nodeBuilds": 264,
+          "profile": {
+            "other": {
+              "drawCalls": 66,
+              "triangles": 95648
+            },
+            "shadows": {
+              "drawCalls": 28,
+              "triangles": 90096
+            },
+            "buildings": {
+              "drawCalls": 5,
+              "triangles": 12696
+            },
+            "crowd": {
+              "drawCalls": 1,
+              "triangles": 2310
+            },
+            "props": {
+              "drawCalls": 2,
+              "triangles": 26916
+            }
+          },
+          "profileAssets": {
+            "view:other/Background.mesh/Background.mesh": {
+              "drawCalls": 1,
+              "triangles": 1984
+            },
+            "shadow:bld.clinic-annex": {
+              "drawCalls": 4,
+              "triangles": 12336
+            },
+            "shadow:other/sunset-grove/pal_picketWhite": {
+              "drawCalls": 1,
+              "triangles": 12188
+            },
+            "shadow:other/npcs/wpn.hunting-rifle": {
+              "drawCalls": 0,
+              "triangles": 0
+            },
+            "shadow:other/npcs/wpn.machine-gun": {
+              "drawCalls": 0,
+              "triangles": 0
+            },
+            "shadow:other/npcs/wpn.shotgun": {
+              "drawCalls": 0,
+              "triangles": 0
+            },
+            "shadow:other/npcs/wpn.assault-rifle": {
+              "drawCalls": 0,
+              "triangles": 0
+            },
+            "shadow:other/npcs/wpn.pistol": {
+              "drawCalls": 0,
+              "triangles": 0
+            },
+            "shadow:other/sunset-grove/pal_denim": {
+              "drawCalls": 1,
+              "triangles": 23124
+            },
+            "shadow:other/sunset-grove/pal_sidewalk": {
+              "drawCalls": 1,
+              "triangles": 5500
+            },
+            "shadow:other/Group/Mesh": {
+              "drawCalls": 0,
+              "triangles": 0
+            },
+            "shadow:other/sunset-grove/pal_asphalt": {
+              "drawCalls": 1,
+              "triangles": 308
+            },
+            "shadow:other/npcs/Mesh": {
+              "drawCalls": 0,
+              "triangles": 0
+            },
+            "shadow:other/sunset-grove/pal_grass": {
+              "drawCalls": 1,
+              "triangles": 44
+            },
+            "shadow:other/sunset-grove/pal_woodWarm": {
+              "drawCalls": 1,
+              "triangles": 352
+            },
+            "shadow:other/sunset-grove/pal_uiDark": {
+              "drawCalls": 1,
+              "triangles": 8652
+            },
+            "shadow:other/sunset-grove/pal_hairChestnut": {
+              "drawCalls": 1,
+              "triangles": 308
+            },
+            "shadow:other/sunset-grove/daisy_1": {
+              "drawCalls": 1,
+              "triangles": 1710
+            },
+            "shadow:other/sunset-grove/daisy_2": {
+              "drawCalls": 1,
+              "triangles": 3252
+            },
+            "shadow:other/sunset-grove/daisy": {
+              "drawCalls": 1,
+              "triangles": 3252
+            },
+            "shadow:other/sunset-grove/daisy_3": {
+              "drawCalls": 1,
+              "triangles": 1000
+            },
+            "shadow:other/Group/geometry_0_1": {
+              "drawCalls": 1,
+              "triangles": 51
+            },
+            "shadow:other/Group/geometry_0": {
+              "drawCalls": 1,
+              "triangles": 5951
+            },
+            "shadow:other/npcs/skin_body": {
+              "drawCalls": 1,
+              "triangles": 1368
+            },
+            "shadow:other/sunset-grove/pal_silver": {
+              "drawCalls": 1,
+              "triangles": 10692
+            },
+            "view:other/Group/geometry_0_1": {
+              "drawCalls": 1,
+              "triangles": 51
+            },
+            "view:other/Group/geometry_0": {
+              "drawCalls": 1,
+              "triangles": 5951
+            },
+            "view:other/lab-accident-fx/Mesh": {
+              "drawCalls": 29,
+              "triangles": 348
+            },
+            "view:other/sunset-grove/pal_silver": {
+              "drawCalls": 1,
+              "triangles": 10692
+            },
+            "view:other/sunset-grove/grass-gpu-wind": {
+              "drawCalls": 1,
+              "triangles": 5470
+            },
+            "view:bld.clinic-annex": {
+              "drawCalls": 5,
+              "triangles": 12696
+            },
+            "view:other/sunset-grove/Mesh": {
+              "drawCalls": 6,
+              "triangles": 3196
+            },
+            "view:prop.lab-signs": {
+              "drawCalls": 1,
+              "triangles": 26676
+            },
+            "view:prop.bike-rack": {
+              "drawCalls": 1,
+              "triangles": 240
+            },
+            "view:other/sunset-grove/pal_uiDark": {
+              "drawCalls": 1,
+              "triangles": 8652
+            },
+            "view:other/npcs/wpn.hunting-rifle": {
+              "drawCalls": 0,
+              "triangles": 0
+            },
+            "view:other/sunset-grove/pal_picketWhite": {
+              "drawCalls": 1,
+              "triangles": 12188
+            },
+            "view:other/npcs/wpn.machine-gun": {
+              "drawCalls": 0,
+              "triangles": 0
+            },
+            "view:other/npcs/wpn.shotgun": {
+              "drawCalls": 0,
+              "triangles": 0
+            },
+            "view:other/npcs/wpn.assault-rifle": {
+              "drawCalls": 0,
+              "triangles": 0
+            },
+            "view:other/npcs/wpn.pistol": {
+              "drawCalls": 0,
+              "triangles": 0
+            },
+            "view:other/sunset-grove/pal_denim": {
+              "drawCalls": 1,
+              "triangles": 23124
+            },
+            "view:other/npcs/Mesh": {
+              "drawCalls": 0,
+              "triangles": 0
+            },
+            "view:other/sunset-grove/pal_sidewalk": {
+              "drawCalls": 1,
+              "triangles": 5500
+            },
+            "view:other/Group/Mesh": {
+              "drawCalls": 7,
+              "triangles": 5048
+            },
+            "view:other/sunset-grove/pal_asphalt": {
+              "drawCalls": 1,
+              "triangles": 308
+            },
+            "view:other/sunset-grove/perimeter-posts": {
+              "drawCalls": 6,
+              "triangles": 3108
+            },
+            "view:other/sunset-grove/pal_grass": {
+              "drawCalls": 1,
+              "triangles": 44
+            },
+            "view:other/sunset-grove/pal_woodWarm": {
+              "drawCalls": 1,
+              "triangles": 352
+            },
+            "view:other/sunset-grove/daisy_3": {
+              "drawCalls": 1,
+              "triangles": 1000
+            },
+            "view:other/sunset-grove/daisy_2": {
+              "drawCalls": 1,
+              "triangles": 3252
+            },
+            "view:other/sunset-grove/daisy_1": {
+              "drawCalls": 1,
+              "triangles": 1710
+            },
+            "view:other/sunset-grove/daisy": {
+              "drawCalls": 1,
+              "triangles": 3252
+            },
+            "view:other/sunset-grove/pal_hairChestnut": {
+              "drawCalls": 1,
+              "triangles": 308
+            },
+            "view:other/figure-contact-shadows/figure-contact-shadows": {
+              "drawCalls": 1,
+              "triangles": 110
+            },
+            "shadow:other/RTT/RTT": {
+              "drawCalls": 1,
+              "triangles": 1
+            },
+            "shadow:other/Bloom [ High Pass ]/Bloom [ High Pass ]": {
+              "drawCalls": 6,
+              "triangles": 6
+            },
+            "shadow:other/Render Pipeline/Render Pipeline": {
+              "drawCalls": 1,
+              "triangles": 1
+            }
+          },
+          "updateCpuMs": 2.59999942779541,
+          "renderCpuMs": 1.8000001907348633,
+          "propUploads": 0,
+          "awakeProps": 0,
+          "fps": 222.22222222222223,
+          "frameMs": 4.5,
+          "simMs": 0,
+          "simTicks": 0,
+          "simWorldMs": 0,
+          "simTickMs": 0,
+          "uiMs": 0.10000038146972656,
+          "drawCalls": 102,
+          "triangles": 227666,
+          "geometries": 635,
+          "textures": 98,
+          "entities": 678,
+          "backend": "webgl",
+          "loadTiming": {
+            "dataMs": 13.800000190734863,
+            "simMs": 459.5,
+            "viewMs": 9895.5
+          },
+          "quality": {
+            "setting": "low",
+            "tier": "low",
+            "p90Ms": 4.1,
+            "slowSeconds": 0,
+            "budgets": {
+              "frameMs": 33.333333333333336,
+              "infected": 100,
+              "drawCalls": 300,
+              "triangles": 500000,
+              "simMs": 6,
+              "heapMB": 250,
+              "pixelRatio": 1.5,
+              "shadowSize": 1024,
+              "bloomMips": 2,
+              "cullDistance": 45
+            }
+          },
+          "renderedFrames": 4924,
+          "contextLost": false,
+          "paused": false,
+          "heapBytes": 625810769,
+          "lighting": {
+            "lightFieldMs": 0,
+            "lightPools": 0,
+            "lightCandidates": 0,
+            "shadowMaps": 1,
+            "heroLights": 0,
+            "heroShadow": 0,
+            "preset": "L1"
+          }
+        }
+      },
+      "windowWorstMs": 5.600000000002183,
+      "deliveredAt": 3326,
+      "events": [
+        {
+          "type": "l1.flicker",
+          "tick": 3610,
+          "at": 19809.300000190735
+        },
+        {
+          "type": "l1.blast",
+          "tick": 3700,
+          "at": 21308.699999809265
+        },
+        {
+          "type": "l1.ringing",
+          "tick": 3712,
+          "at": 21508.300000190735
+        },
+        {
+          "type": "l1.smoke",
+          "tick": 3784,
+          "at": 22706.199999809265
+        },
+        {
+          "type": "l1.screams",
+          "tick": 3820,
+          "at": 23305.39999961853
+        }
+      ],
+      "initialRafIntervals": [
+        {
+          "at": 11801.5,
+          "tick": 3326,
+          "rafMs": -3593.199999809265
+        },
+        {
+          "at": 15402.9,
+          "tick": 3346,
+          "rafMs": 3601.3999999999996
+        }
+      ],
+      "otherFramesOver50msOutsideBlastWindow": [
+        {
+          "at": 15402.9,
+          "tick": 3346,
+          "rafMs": 3601.3999999999996
+        }
+      ]
+    },
+    {
+      "tier": "high",
+      "blast": {
+        "type": "l1.blast",
+        "tick": 3700,
+        "at": 15510.10000038147
+      },
+      "enclosingFrame": {
+        "at": 15514.3,
+        "rafMs": 6.199999999998909,
+        "tick": 3701,
+        "frameMs": 6.199999999998909,
+        "perf": {
+          "l4": null,
+          "chunkResidency": null,
+          "terrain": null,
+          "infected": {
+            "count": 0,
+            "liveCount": 0,
+            "firstLiveId": null,
+            "available": 350
+          },
+          "effects": {
+            "obstruction": {
+              "remainingTicks": 0,
+              "opacity": 0
+            },
+            "shots": [],
+            "enabled": true,
+            "colorblind": false,
+            "gore": "Full",
+            "quality": "high",
+            "flashReduction": false,
+            "time": 7.581599999999983,
+            "lastSpray": {
+              "actionId": "",
+              "direction": {
+                "x": 1,
+                "z": 0
+              },
+              "droplets": 0,
+              "chunks": 0,
+              "gravity": 9.81
+            },
+            "surfaceSplats": 0,
+            "pendingSplats": 0,
+            "particles": 152,
+            "particleCap": 2048,
+            "decals": 0,
+            "decalCap": 600,
+            "gibs": 0,
+            "gibCap": 80,
+            "telegraphs": [],
+            "hitStop": {
+              "active": false,
+              "until": 0,
+              "started": 0,
+              "suppressed": 0
+            },
+            "flash": 0,
+            "blasts": {
+              "wind": {
+                "x": 0.55,
+                "z": 0.25
+              },
+              "blasts": 0,
+              "puffs": 0,
+              "puffCap": 400,
+              "fireballs": 0,
+              "fireballCap": 192,
+              "chunks": 0,
+              "chunkCap": 256,
+              "poolOverwrites": {
+                "fireballs": 0,
+                "chunks": 0
+              },
+              "flames": 0,
+              "glows": 0,
+              "vehicleSmokeColumns": 0,
+              "columns": 0,
+              "transientColumns": 0,
+              "fireColumns": 0,
+              "columnShadows": 0,
+              "clouds": 0,
+              "scorch": 0,
+              "parts": 0,
+              "flash": 0,
+              "bulletTime": {
+                "scale": 1,
+                "remaining": 0,
+                "progress": 0
+              },
+              "slowMotion": true
+            },
+            "coverage": 0,
+            "detached": 0,
+            "dismemberedKills": 0,
+            "kills": 0,
+            "explosionRadius": 0
+          },
+          "nodeBuildMaterials": {},
+          "crowdPreparation": {
+            "workers": 40,
+            "submitted": 45,
+            "completed": 45,
+            "prebuilt": 45,
+            "failed": 0
+          },
+          "nodeBuilds": 282,
+          "profile": {
+            "other": {
+              "drawCalls": 66,
+              "triangles": 131976
+            },
+            "shadows": {
+              "drawCalls": 37,
+              "triangles": 119351
+            },
+            "buildings": {
+              "drawCalls": 5,
+              "triangles": 12696
+            },
+            "crowd": {
+              "drawCalls": 1,
+              "triangles": 2310
+            },
+            "props": {
+              "drawCalls": 2,
+              "triangles": 26916
+            }
+          },
+          "profileAssets": {
+            "view:other/Background.mesh/Background.mesh": {
+              "drawCalls": 1,
+              "triangles": 1984
+            },
+            "shadow:bld.clinic-annex": {
+              "drawCalls": 4,
+              "triangles": 12336
+            },
+            "shadow:prop.lab-signs": {
+              "drawCalls": 1,
+              "triangles": 26676
+            },
+            "shadow:prop.bike-rack": {
+              "drawCalls": 1,
+              "triangles": 240
+            },
+            "shadow:other/sunset-grove/pal_picketWhite": {
+              "drawCalls": 1,
+              "triangles": 12188
+            },
+            "shadow:other/npcs/wpn.hunting-rifle": {
+              "drawCalls": 0,
+              "triangles": 0
+            },
+            "shadow:other/npcs/wpn.machine-gun": {
+              "drawCalls": 0,
+              "triangles": 0
+            },
+            "shadow:other/npcs/wpn.shotgun": {
+              "drawCalls": 0,
+              "triangles": 0
+            },
+            "shadow:other/npcs/wpn.assault-rifle": {
+              "drawCalls": 0,
+              "triangles": 0
+            },
+            "shadow:other/npcs/wpn.pistol": {
+              "drawCalls": 0,
+              "triangles": 0
+            },
+            "shadow:other/sunset-grove/pal_denim": {
+              "drawCalls": 1,
+              "triangles": 23124
+            },
+            "shadow:other/sunset-grove/pal_sidewalk": {
+              "drawCalls": 1,
+              "triangles": 5500
+            },
+            "shadow:other/Group/Mesh": {
+              "drawCalls": 0,
+              "triangles": 0
+            },
+            "shadow:other/sunset-grove/pal_asphalt": {
+              "drawCalls": 1,
+              "triangles": 308
+            },
+            "shadow:other/npcs/Mesh": {
+              "drawCalls": 1,
+              "triangles": 24
+            },
+            "shadow:other/sunset-grove/pal_grass": {
+              "drawCalls": 1,
+              "triangles": 44
+            },
+            "shadow:other/sunset-grove/pal_woodWarm": {
+              "drawCalls": 1,
+              "triangles": 352
+            },
+            "shadow:other/sunset-grove/pal_uiDark": {
+              "drawCalls": 1,
+              "triangles": 8652
+            },
+            "shadow:other/sunset-grove/pal_hairChestnut": {
+              "drawCalls": 1,
+              "triangles": 308
+            },
+            "shadow:other/sunset-grove/daisy_1": {
+              "drawCalls": 1,
+              "triangles": 1710
+            },
+            "shadow:other/sunset-grove/daisy_2": {
+              "drawCalls": 1,
+              "triangles": 3252
+            },
+            "shadow:other/sunset-grove/daisy": {
+              "drawCalls": 1,
+              "triangles": 3252
+            },
+            "shadow:other/sunset-grove/daisy_3": {
+              "drawCalls": 1,
+              "triangles": 1000
+            },
+            "shadow:other/Group/geometry_0_1": {
+              "drawCalls": 1,
+              "triangles": 51
+            },
+            "shadow:other/Group/geometry_0": {
+              "drawCalls": 1,
+              "triangles": 5951
+            },
+            "shadow:other/npcs/skin_body": {
+              "drawCalls": 1,
+              "triangles": 1368
+            },
+            "shadow:other/sunset-grove/pal_silver": {
+              "drawCalls": 1,
+              "triangles": 10692
+            },
+            "view:other/Group/geometry_0_1": {
+              "drawCalls": 1,
+              "triangles": 51
+            },
+            "view:other/Group/geometry_0": {
+              "drawCalls": 1,
+              "triangles": 5951
+            },
+            "view:other/lab-accident-fx/Mesh": {
+              "drawCalls": 28,
+              "triangles": 336
+            },
+            "view:other/sunset-grove/pal_silver": {
+              "drawCalls": 1,
+              "triangles": 10692
+            },
+            "view:other/sunset-grove/grass-gpu-wind": {
+              "drawCalls": 1,
+              "triangles": 30488
+            },
+            "view:bld.clinic-annex": {
+              "drawCalls": 5,
+              "triangles": 12696
+            },
+            "view:other/sunset-grove/Mesh": {
+              "drawCalls": 6,
+              "triangles": 3336
+            },
+            "view:prop.lab-signs": {
+              "drawCalls": 1,
+              "triangles": 26676
+            },
+            "view:prop.bike-rack": {
+              "drawCalls": 1,
+              "triangles": 240
+            },
+            "view:other/sunset-grove/pal_uiDark": {
+              "drawCalls": 1,
+              "triangles": 8652
+            },
+            "view:other/npcs/wpn.hunting-rifle": {
+              "drawCalls": 0,
+              "triangles": 0
+            },
+            "view:other/sunset-grove/pal_picketWhite": {
+              "drawCalls": 1,
+              "triangles": 12188
+            },
+            "view:other/npcs/wpn.machine-gun": {
+              "drawCalls": 0,
+              "triangles": 0
+            },
+            "view:other/npcs/wpn.shotgun": {
+              "drawCalls": 0,
+              "triangles": 0
+            },
+            "view:other/npcs/wpn.assault-rifle": {
+              "drawCalls": 0,
+              "triangles": 0
+            },
+            "view:other/npcs/wpn.pistol": {
+              "drawCalls": 0,
+              "triangles": 0
+            },
+            "view:other/sunset-grove/pal_denim": {
+              "drawCalls": 1,
+              "triangles": 23124
+            },
+            "view:other/npcs/Mesh": {
+              "drawCalls": 1,
+              "triangles": 24
+            },
+            "view:other/sunset-grove/pal_sidewalk": {
+              "drawCalls": 1,
+              "triangles": 5500
+            },
+            "view:other/Group/Mesh": {
+              "drawCalls": 7,
+              "triangles": 16192
+            },
+            "view:other/sunset-grove/pal_asphalt": {
+              "drawCalls": 1,
+              "triangles": 308
+            },
+            "view:other/sunset-grove/perimeter-posts": {
+              "drawCalls": 6,
+              "triangles": 3108
+            },
+            "view:other/sunset-grove/pal_grass": {
+              "drawCalls": 1,
+              "triangles": 44
+            },
+            "view:other/sunset-grove/pal_woodWarm": {
+              "drawCalls": 1,
+              "triangles": 352
+            },
+            "view:other/sunset-grove/daisy_3": {
+              "drawCalls": 1,
+              "triangles": 1000
+            },
+            "view:other/sunset-grove/daisy_2": {
+              "drawCalls": 1,
+              "triangles": 3252
+            },
+            "view:other/sunset-grove/daisy_1": {
+              "drawCalls": 1,
+              "triangles": 1710
+            },
+            "view:other/sunset-grove/daisy": {
+              "drawCalls": 1,
+              "triangles": 3252
+            },
+            "view:other/sunset-grove/pal_hairChestnut": {
+              "drawCalls": 1,
+              "triangles": 308
+            },
+            "view:other/figure-contact-shadows/figure-contact-shadows": {
+              "drawCalls": 1,
+              "triangles": 124
+            },
+            "shadow:other/Bloom [ High Pass ]/Bloom [ High Pass ]": {
+              "drawCalls": 12,
+              "triangles": 12
+            },
+            "shadow:other/Render Pipeline/Render Pipeline": {
+              "drawCalls": 1,
+              "triangles": 1
+            }
+          },
+          "updateCpuMs": 1.8000001907348633,
+          "renderCpuMs": 2.3000001907348633,
+          "propUploads": 0,
+          "awakeProps": 0,
+          "fps": 161.29032258067355,
+          "frameMs": 6.199999999998909,
+          "simMs": 1.5999994277954102,
+          "simTicks": 1,
+          "simWorldMs": 1.5,
+          "simTickMs": 1.5,
+          "uiMs": 0.19999980926513672,
+          "drawCalls": 111,
+          "triangles": 293249,
+          "geometries": 648,
+          "textures": 127,
+          "entities": 686,
+          "backend": "webgl",
+          "loadTiming": {
+            "dataMs": 14.100000381469727,
+            "simMs": 162.39999961853027,
+            "viewMs": 2539.1000003814697
+          },
+          "quality": {
+            "setting": "high",
+            "tier": "high",
+            "p90Ms": 8.3,
+            "slowSeconds": 0,
+            "budgets": {
+              "frameMs": 16.7,
+              "infected": 200,
+              "drawCalls": 600,
+              "triangles": 1500000,
+              "simMs": 4,
+              "heapMB": 400,
+              "pixelRatio": 2,
+              "shadowSize": 2048,
+              "bloomMips": 5,
+              "cullDistance": 60
+            }
+          },
+          "renderedFrames": 4088,
+          "contextLost": false,
+          "paused": false,
+          "heapBytes": 1393718825,
+          "lighting": {
+            "lightFieldMs": 0,
+            "lightPools": 0,
+            "lightCandidates": 0,
+            "shadowMaps": 1,
+            "heroLights": 0,
+            "heroShadow": 0,
+            "preset": "L1"
+          }
+        }
+      },
+      "nextFrame": {
+        "at": 15523.2,
+        "rafMs": 8.900000000001455,
+        "tick": 3701,
+        "frameMs": 8.900000000001455,
+        "perf": {
+          "l4": null,
+          "chunkResidency": null,
+          "terrain": null,
+          "infected": {
+            "count": 0,
+            "liveCount": 0,
+            "firstLiveId": null,
+            "available": 350
+          },
+          "effects": {
+            "obstruction": {
+              "remainingTicks": 0,
+              "opacity": 0
+            },
+            "shots": [],
+            "enabled": true,
+            "colorblind": false,
+            "gore": "Full",
+            "quality": "high",
+            "flashReduction": false,
+            "time": 7.5904999999999845,
+            "lastSpray": {
+              "actionId": "",
+              "direction": {
+                "x": 1,
+                "z": 0
+              },
+              "droplets": 0,
+              "chunks": 0,
+              "gravity": 9.81
+            },
+            "surfaceSplats": 0,
+            "pendingSplats": 0,
+            "particles": 152,
+            "particleCap": 2048,
+            "decals": 0,
+            "decalCap": 600,
+            "gibs": 0,
+            "gibCap": 80,
+            "telegraphs": [],
+            "hitStop": {
+              "active": false,
+              "until": 0,
+              "started": 0,
+              "suppressed": 0
+            },
+            "flash": 0,
+            "blasts": {
+              "wind": {
+                "x": 0.55,
+                "z": 0.25
+              },
+              "blasts": 0,
+              "puffs": 0,
+              "puffCap": 400,
+              "fireballs": 0,
+              "fireballCap": 192,
+              "chunks": 0,
+              "chunkCap": 256,
+              "poolOverwrites": {
+                "fireballs": 0,
+                "chunks": 0
+              },
+              "flames": 0,
+              "glows": 0,
+              "vehicleSmokeColumns": 0,
+              "columns": 0,
+              "transientColumns": 0,
+              "fireColumns": 0,
+              "columnShadows": 0,
+              "clouds": 0,
+              "scorch": 0,
+              "parts": 0,
+              "flash": 0,
+              "bulletTime": {
+                "scale": 1,
+                "remaining": 0,
+                "progress": 0
+              },
+              "slowMotion": true
+            },
+            "coverage": 0,
+            "detached": 0,
+            "dismemberedKills": 0,
+            "kills": 0,
+            "explosionRadius": 0
+          },
+          "nodeBuildMaterials": {},
+          "crowdPreparation": {
+            "workers": 40,
+            "submitted": 45,
+            "completed": 45,
+            "prebuilt": 45,
+            "failed": 0
+          },
+          "nodeBuilds": 282,
+          "profile": {
+            "other": {
+              "drawCalls": 64,
+              "triangles": 131952
+            },
+            "shadows": {
+              "drawCalls": 37,
+              "triangles": 119351
+            },
+            "buildings": {
+              "drawCalls": 5,
+              "triangles": 12696
+            },
+            "crowd": {
+              "drawCalls": 1,
+              "triangles": 2310
+            },
+            "props": {
+              "drawCalls": 2,
+              "triangles": 26916
+            }
+          },
+          "profileAssets": {
+            "view:other/Background.mesh/Background.mesh": {
+              "drawCalls": 1,
+              "triangles": 1984
+            },
+            "shadow:bld.clinic-annex": {
+              "drawCalls": 4,
+              "triangles": 12336
+            },
+            "shadow:prop.lab-signs": {
+              "drawCalls": 1,
+              "triangles": 26676
+            },
+            "shadow:prop.bike-rack": {
+              "drawCalls": 1,
+              "triangles": 240
+            },
+            "shadow:other/sunset-grove/pal_picketWhite": {
+              "drawCalls": 1,
+              "triangles": 12188
+            },
+            "shadow:other/npcs/wpn.hunting-rifle": {
+              "drawCalls": 0,
+              "triangles": 0
+            },
+            "shadow:other/npcs/wpn.machine-gun": {
+              "drawCalls": 0,
+              "triangles": 0
+            },
+            "shadow:other/npcs/wpn.shotgun": {
+              "drawCalls": 0,
+              "triangles": 0
+            },
+            "shadow:other/npcs/wpn.assault-rifle": {
+              "drawCalls": 0,
+              "triangles": 0
+            },
+            "shadow:other/npcs/wpn.pistol": {
+              "drawCalls": 0,
+              "triangles": 0
+            },
+            "shadow:other/sunset-grove/pal_denim": {
+              "drawCalls": 1,
+              "triangles": 23124
+            },
+            "shadow:other/sunset-grove/pal_sidewalk": {
+              "drawCalls": 1,
+              "triangles": 5500
+            },
+            "shadow:other/Group/Mesh": {
+              "drawCalls": 0,
+              "triangles": 0
+            },
+            "shadow:other/sunset-grove/pal_asphalt": {
+              "drawCalls": 1,
+              "triangles": 308
+            },
+            "shadow:other/npcs/Mesh": {
+              "drawCalls": 1,
+              "triangles": 24
+            },
+            "shadow:other/sunset-grove/pal_grass": {
+              "drawCalls": 1,
+              "triangles": 44
+            },
+            "shadow:other/sunset-grove/pal_woodWarm": {
+              "drawCalls": 1,
+              "triangles": 352
+            },
+            "shadow:other/sunset-grove/pal_uiDark": {
+              "drawCalls": 1,
+              "triangles": 8652
+            },
+            "shadow:other/sunset-grove/pal_hairChestnut": {
+              "drawCalls": 1,
+              "triangles": 308
+            },
+            "shadow:other/sunset-grove/daisy_1": {
+              "drawCalls": 1,
+              "triangles": 1710
+            },
+            "shadow:other/sunset-grove/daisy_2": {
+              "drawCalls": 1,
+              "triangles": 3252
+            },
+            "shadow:other/sunset-grove/daisy": {
+              "drawCalls": 1,
+              "triangles": 3252
+            },
+            "shadow:other/sunset-grove/daisy_3": {
+              "drawCalls": 1,
+              "triangles": 1000
+            },
+            "shadow:other/Group/geometry_0_1": {
+              "drawCalls": 1,
+              "triangles": 51
+            },
+            "shadow:other/Group/geometry_0": {
+              "drawCalls": 1,
+              "triangles": 5951
+            },
+            "shadow:other/npcs/skin_body": {
+              "drawCalls": 1,
+              "triangles": 1368
+            },
+            "shadow:other/sunset-grove/pal_silver": {
+              "drawCalls": 1,
+              "triangles": 10692
+            },
+            "view:other/Group/geometry_0_1": {
+              "drawCalls": 1,
+              "triangles": 51
+            },
+            "view:other/Group/geometry_0": {
+              "drawCalls": 1,
+              "triangles": 5951
+            },
+            "view:other/lab-accident-fx/Mesh": {
+              "drawCalls": 26,
+              "triangles": 312
+            },
+            "view:other/sunset-grove/pal_silver": {
+              "drawCalls": 1,
+              "triangles": 10692
+            },
+            "view:other/sunset-grove/grass-gpu-wind": {
+              "drawCalls": 1,
+              "triangles": 30488
+            },
+            "view:bld.clinic-annex": {
+              "drawCalls": 5,
+              "triangles": 12696
+            },
+            "view:other/sunset-grove/Mesh": {
+              "drawCalls": 6,
+              "triangles": 3336
+            },
+            "view:prop.lab-signs": {
+              "drawCalls": 1,
+              "triangles": 26676
+            },
+            "view:prop.bike-rack": {
+              "drawCalls": 1,
+              "triangles": 240
+            },
+            "view:other/sunset-grove/pal_uiDark": {
+              "drawCalls": 1,
+              "triangles": 8652
+            },
+            "view:other/npcs/wpn.hunting-rifle": {
+              "drawCalls": 0,
+              "triangles": 0
+            },
+            "view:other/sunset-grove/pal_picketWhite": {
+              "drawCalls": 1,
+              "triangles": 12188
+            },
+            "view:other/npcs/wpn.machine-gun": {
+              "drawCalls": 0,
+              "triangles": 0
+            },
+            "view:other/npcs/wpn.shotgun": {
+              "drawCalls": 0,
+              "triangles": 0
+            },
+            "view:other/npcs/wpn.assault-rifle": {
+              "drawCalls": 0,
+              "triangles": 0
+            },
+            "view:other/npcs/wpn.pistol": {
+              "drawCalls": 0,
+              "triangles": 0
+            },
+            "view:other/sunset-grove/pal_denim": {
+              "drawCalls": 1,
+              "triangles": 23124
+            },
+            "view:other/npcs/Mesh": {
+              "drawCalls": 1,
+              "triangles": 24
+            },
+            "view:other/sunset-grove/pal_sidewalk": {
+              "drawCalls": 1,
+              "triangles": 5500
+            },
+            "view:other/Group/Mesh": {
+              "drawCalls": 7,
+              "triangles": 16192
+            },
+            "view:other/sunset-grove/pal_asphalt": {
+              "drawCalls": 1,
+              "triangles": 308
+            },
+            "view:other/sunset-grove/perimeter-posts": {
+              "drawCalls": 6,
+              "triangles": 3108
+            },
+            "view:other/sunset-grove/pal_grass": {
+              "drawCalls": 1,
+              "triangles": 44
+            },
+            "view:other/sunset-grove/pal_woodWarm": {
+              "drawCalls": 1,
+              "triangles": 352
+            },
+            "view:other/sunset-grove/daisy_3": {
+              "drawCalls": 1,
+              "triangles": 1000
+            },
+            "view:other/sunset-grove/daisy_2": {
+              "drawCalls": 1,
+              "triangles": 3252
+            },
+            "view:other/sunset-grove/daisy_1": {
+              "drawCalls": 1,
+              "triangles": 1710
+            },
+            "view:other/sunset-grove/daisy": {
+              "drawCalls": 1,
+              "triangles": 3252
+            },
+            "view:other/sunset-grove/pal_hairChestnut": {
+              "drawCalls": 1,
+              "triangles": 308
+            },
+            "view:other/figure-contact-shadows/figure-contact-shadows": {
+              "drawCalls": 1,
+              "triangles": 124
+            },
+            "shadow:other/Bloom [ High Pass ]/Bloom [ High Pass ]": {
+              "drawCalls": 12,
+              "triangles": 12
+            },
+            "shadow:other/Render Pipeline/Render Pipeline": {
+              "drawCalls": 1,
+              "triangles": 1
+            }
+          },
+          "updateCpuMs": 1.1999998092651367,
+          "renderCpuMs": 1.8999996185302734,
+          "propUploads": 0,
+          "awakeProps": 0,
+          "fps": 112.35955056177939,
+          "frameMs": 8.900000000001455,
+          "simMs": 0,
+          "simTicks": 0,
+          "simWorldMs": 0,
+          "simTickMs": 0,
+          "uiMs": 0,
+          "drawCalls": 109,
+          "triangles": 293225,
+          "geometries": 648,
+          "textures": 127,
+          "entities": 686,
+          "backend": "webgl",
+          "loadTiming": {
+            "dataMs": 14.100000381469727,
+            "simMs": 162.39999961853027,
+            "viewMs": 2539.1000003814697
+          },
+          "quality": {
+            "setting": "high",
+            "tier": "high",
+            "p90Ms": 8.3,
+            "slowSeconds": 0,
+            "budgets": {
+              "frameMs": 16.7,
+              "infected": 200,
+              "drawCalls": 600,
+              "triangles": 1500000,
+              "simMs": 4,
+              "heapMB": 400,
+              "pixelRatio": 2,
+              "shadowSize": 2048,
+              "bloomMips": 5,
+              "cullDistance": 60
+            }
+          },
+          "renderedFrames": 4089,
+          "contextLost": false,
+          "paused": false,
+          "heapBytes": 1393718825,
+          "lighting": {
+            "lightFieldMs": 0,
+            "lightPools": 0,
+            "lightCandidates": 0,
+            "shadowMaps": 1,
+            "heroLights": 0,
+            "heroShadow": 0,
+            "preset": "L1"
+          }
+        }
+      },
+      "windowWorstMs": 29.799999999999272,
+      "deliveredAt": 3326,
+      "events": [
+        {
+          "type": "l1.flicker",
+          "tick": 3610,
+          "at": 14006.300000190735
+        },
+        {
+          "type": "l1.blast",
+          "tick": 3700,
+          "at": 15510.10000038147
+        },
+        {
+          "type": "l1.ringing",
+          "tick": 3712,
+          "at": 15707.10000038147
+        },
+        {
+          "type": "l1.smoke",
+          "tick": 3784,
+          "at": 16908.10000038147
+        },
+        {
+          "type": "l1.screams",
+          "tick": 3820,
+          "at": 17508.800000190735
+        }
+      ],
+      "initialRafIntervals": [
+        {
+          "at": 3626.9,
+          "tick": 3326,
+          "rafMs": -4481.500000572205
+        },
+        {
+          "at": 8123.5,
+          "tick": 3346,
+          "rafMs": 4496.6
+        }
+      ],
+      "otherFramesOver50msOutsideBlastWindow": [
+        {
+          "at": 8123.5,
+          "tick": 3346,
+          "rafMs": 4496.6
+        },
+        {
+          "at": 10300.3,
+          "tick": 3388,
+          "rafMs": 1809.199999999999
+        },
+        {
+          "at": 13488.8,
+          "tick": 3579,
+          "rafMs": 56
+        }
+      ]
+    }
+  ],
+  "limitations": "First RAF timestamp predates callback registration because the paused step prefix blocked that frame: negative initial interval and its positive counterpart are retained. High also has1809.2ms at tick3388 and56ms at3579, both before flicker3610 and outside the blast window. This row makes a blast-frame budget claim only; it does not certify all startup/transition performance. Quiet-window durations are simulation ticks, with independent every-tick objective/infected census."
+}

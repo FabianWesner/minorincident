@@ -1,0 +1,43 @@
+{
+  "row": "L1-08",
+  "status": "FAIL",
+  "reviewer": "Codex final-a",
+  "date": "2026-11-07",
+  "commit": "0cbd817165f89940d2810fe2091000538a263ba0",
+  "clauses": [
+    {
+      "clause": "combat: reachable ≥ 90 %; passive first attack ≤ 20 s (measured 8.25 s); passive attacks ≥ 3/min (tune).",
+      "verdict": "FAIL",
+      "note": "low/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 88.88888888888889; target 90 ≤ value ≤ 100 (FAIL)"
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/final-a/L1-08-native.json",
+      "sha256": "eb82b216a115afdeca2f0e6d53d7b31674e42a150c471e5752a9e8410dbe8fe9",
+      "what": "low/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 88.88888888888889; target 90 ≤ value ≤ 100 (FAIL)"
+    },
+    {
+      "file": "docs/reports/final-a/native-receipts/L1-low-complete.json.gz",
+      "sha256": "24d4c1141afa43b565ea6df3de3d35d94375a810a044c963ec2fdca683816f81",
+      "what": "Frozen-head L1-08 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
+    },
+    {
+      "file": "docs/reports/final-a/native-receipts/L1-low-stationary.json.gz",
+      "sha256": "143201691dbe313ff86c5dd98e62b3ca786fe7c63ce2bb50ca41b9a50cef28d4",
+      "what": "Frozen-head L1-08 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
+    },
+    {
+      "file": "docs/reports/final-a/native-receipts/L1-high-complete.json.gz",
+      "sha256": "49121e9b52fb11525c024b7861014a4c85a9b4dd6e6c76ceab6d7327e157e0f4",
+      "what": "Frozen-head L1-08 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
+    },
+    {
+      "file": "docs/reports/final-a/native-receipts/L1-high-stationary.json.gz",
+      "sha256": "9480dc39df6b3cc953f056efe50c2e9bfae5901402ea20cdfbeaa91c7fd366e1",
+      "what": "Frozen-head L1-08 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
+    }
+  ],
+  "notes": "A measured failing clause establishes whole-row FAIL; remaining manual clauses are not asserted to pass. Game source unchanged from frozen head.",
+  "sourceDigest": "00a81dbceddae37bdb1b6540d29f8e3658cdd7d6b7b51968d1fd068c9a6eb63c"
+}

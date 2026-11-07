@@ -1,0 +1,33 @@
+{
+  "row": "L1-01",
+  "status": "PASS",
+  "reviewer": "Codex final-a",
+  "date": "2026-11-07",
+  "commit": "0cbd817165f89940d2810fe2091000538a263ba0",
+  "clauses": [
+    {
+      "clause": "Mission graph completable, no fail timer; start loadout empty.",
+      "verdict": "PASS",
+      "note": "4 current native checks PASS across low/high. low/complete native mission graph completion: \"complete\"; target complete (PASS); low/complete mission deadline and initial weapons: {\"deadline\":null,\"weapons\":[]}; target no global fail timer; no starting weapons (PASS); high/complete native mission graph completion: \"complete\"; target complete (PASS); high/complete mission deadline and initial weapons: {\"deadline\":null,\"weapons\":[]}; target no global fail timer; no starting weapons (PASS)"
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/final-a/L1-01-native.json",
+      "sha256": "51a80cc78e189e2fdb5cdf125e75095825085969eecb6f7c4d71266d030457a1",
+      "what": "4 current native checks PASS across low/high. low/complete native mission graph completion: \"complete\"; target complete (PASS); low/complete mission deadline and initial weapons: {\"deadline\":null,\"weapons\":[]}; target no global fail timer; no starting weapons (PASS); high/complete native mission graph completion: \"complete\"; target complete (PASS); high/complete mission deadline and initial weapons: {\"deadline\":null,\"weapons\":[]}; target no global fail timer; no starting weapons (PASS)"
+    },
+    {
+      "file": "docs/reports/final-a/native-receipts/L1-low-complete.json.gz",
+      "sha256": "24d4c1141afa43b565ea6df3de3d35d94375a810a044c963ec2fdca683816f81",
+      "what": "Frozen-head L1-01 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
+    },
+    {
+      "file": "docs/reports/final-a/native-receipts/L1-high-complete.json.gz",
+      "sha256": "49121e9b52fb11525c024b7861014a4c85a9b4dd6e6c76ceab6d7327e157e0f4",
+      "what": "Frozen-head L1-01 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
+    }
+  ],
+  "notes": "Numeric-only criterion; all evaluator clauses measured at both qualities on the frozen runtime source. No visual or route-readability inference.",
+  "sourceDigest": "00a81dbceddae37bdb1b6540d29f8e3658cdd7d6b7b51968d1fd068c9a6eb63c"
+}

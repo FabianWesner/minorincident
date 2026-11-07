@@ -1,32 +1,33 @@
 {
   "row": "L2-03",
   "status": "PASS",
-  "reviewer": "Codex sweep-a3",
-  "date": "2026-11-06",
-  "commit": "10e01ad8c1073f575580ef08ad216e6b736557dc",
+  "reviewer": "Codex final-a",
+  "date": "2026-11-07",
+  "commit": "75b9c67d7e94308c40779186919a233bb93e7c82",
   "clauses": [
     {
       "clause": "Truck route 15–25 s with player + 6 firefighters seated; all 7 out ≤ 4 s after arrival; control ≤ 0.5 s. Fire-engine crew visible, never hiding the courier.",
       "verdict": "PASS",
-      "note": "Personally inspected all40 current-source departure/3s/12s/22s/26s WebGL2/WebGPU low/high route frames. Open cab reveals helmeted crew and courier hair/red-blue top/teal pack through turns and both ride zoom limits; courier remains visible outside at arrival. Native both-tier24.3167s ride,7-person roster1/121–126 seated for1459ticks with0 unseated ticks; all7 out0.8167s after arrival and courier control0.0167s after. Actual arrival camera overrides requestedwide zoom to0.5; those frames are not claimed as wide-camera coverage."
+      "note": "All40 fresh WebGL2/WebGPU low/high boarding/ride/arrival frames personally inspected on ten original-resolution four-cell sheets (seconds0/3/12/22/26, requested zoom0.5/1.5). Open cab visibly retains six firefighters around identifiable courier head/backpack; truck shell never fully obscures courier in reviewed poses. Both native full-ride ledgers measure24.3167s and all seven seated identities throughout, all seven out0.8167s after arrival, control restored in one tick (0.0167s). Scripted playerZoom reports0.5 while requested presentation framings differ; no independent freely unlocked ride-camera zoom claim. Ordinary native no-axe InputFrames, no relocation/spawns/skips, no performance inference."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-a3/L2-03-clauses.json",
-      "sha256": "5d7f0a0de335f033a8c3a7ea6b93f602a1a148b83a90191bb902572fdd612638",
-      "what": "Personally inspected all40 current-source departure/3s/12s/22s/26s WebGL2/WebGPU low/high route frames. Open cab reveals helmeted crew and courier hair/red-blue top/teal pack through turns and both ride zoom limits; courier remains visible outside at arrival. Native both-tier24.3167s ride,7-person roster1/121–126 seated for1459ticks with0 unseated ticks; all7 out0.8167s after arrival and courier control0.0167s after. Actual arrival camera overrides requestedwide zoom to0.5; those frames are not claimed as wide-camera coverage."
+      "file": "docs/reports/final-a/L2-03-browser-ledger.json.gz",
+      "sha256": "7603203452346b75c279151478665deafc7a8f75ede2bc2129078ac46e092570",
+      "what": "All40 fresh WebGL2/WebGPU low/high boarding/ride/arrival frames personally inspected on ten original-resolution four-cell sheets (seconds0/3/12/22/26, requested zoom0.5/1.5). Open cab visibly retains six firefighters around identifiable courier head/backpack; truck shell never fully obscures courier in reviewed poses. Both native full-ride ledgers measure24.3167s and all seven seated identities throughout, all seven out0.8167s after arrival, control restored in one tick (0.0167s). Scripted playerZoom reports0.5 while requested presentation framings differ; no independent freely unlocked ride-camera zoom claim. Ordinary native no-axe InputFrames, no relocation/spawns/skips, no performance inference."
     },
     {
-      "file": "docs/reports/sweep-a3/L2-03-images.json",
-      "sha256": "633e666de434ac6a9d2c20436221b8631f6ebd0e49ff3275598af35a4c49f973",
-      "what": "Personally inspected all40 current-source departure/3s/12s/22s/26s WebGL2/WebGPU low/high route frames. Open cab reveals helmeted crew and courier hair/red-blue top/teal pack through turns and both ride zoom limits; courier remains visible outside at arrival. Native both-tier24.3167s ride,7-person roster1/121–126 seated for1459ticks with0 unseated ticks; all7 out0.8167s after arrival and courier control0.0167s after. Actual arrival camera overrides requestedwide zoom to0.5; those frames are not claimed as wide-camera coverage."
+      "file": "docs/reports/final-a/L2-03-image-review.json",
+      "sha256": "669b82dd311b91d69efd8fa8cc4e91e916a43840c677af0a0ed52614eb68de7b",
+      "what": "All40 fresh WebGL2/WebGPU low/high boarding/ride/arrival frames personally inspected on ten original-resolution four-cell sheets (seconds0/3/12/22/26, requested zoom0.5/1.5). Open cab visibly retains six firefighters around identifiable courier head/backpack; truck shell never fully obscures courier in reviewed poses. Both native full-ride ledgers measure24.3167s and all seven seated identities throughout, all seven out0.8167s after arrival, control restored in one tick (0.0167s). Scripted playerZoom reports0.5 while requested presentation framings differ; no independent freely unlocked ride-camera zoom claim. Ordinary native no-axe InputFrames, no relocation/spawns/skips, no performance inference."
     },
     {
-      "file": "docs/reports/sweep-a3/L2-03-ledger.json.gz",
-      "sha256": "861611e43a246d2dea4a34c65750d399edcb8bc95936ed8aa8a7745dfbbe0b8a",
-      "what": "Personally inspected all40 current-source departure/3s/12s/22s/26s WebGL2/WebGPU low/high route frames. Open cab reveals helmeted crew and courier hair/red-blue top/teal pack through turns and both ride zoom limits; courier remains visible outside at arrival. Native both-tier24.3167s ride,7-person roster1/121–126 seated for1459ticks with0 unseated ticks; all7 out0.8167s after arrival and courier control0.0167s after. Actual arrival camera overrides requestedwide zoom to0.5; those frames are not claimed as wide-camera coverage."
+      "file": "docs/reports/final-a/L2-03-current-proof.json",
+      "sha256": "136bcf58324b0185ea503132a06bcfcab1404d6d309cb737dc42397191c84c76",
+      "what": "All40 fresh WebGL2/WebGPU low/high boarding/ride/arrival frames personally inspected on ten original-resolution four-cell sheets (seconds0/3/12/22/26, requested zoom0.5/1.5). Open cab visibly retains six firefighters around identifiable courier head/backpack; truck shell never fully obscures courier in reviewed poses. Both native full-ride ledgers measure24.3167s and all seven seated identities throughout, all seven out0.8167s after arrival, control restored in one tick (0.0167s). Scripted playerZoom reports0.5 while requested presentation framings differ; no independent freely unlocked ride-camera zoom claim. Ordinary native no-axe InputFrames, no relocation/spawns/skips, no performance inference."
     }
   ],
-  "notes": "Pooled headless real level and ordinary no-axe InputFrame route; full HUD/production follow camera. No relocation, actor injection, protection or objective skips. Controlled on-foot hull-occlusion poses belong to G-07 and are not inferred from the seated ride frames. Final-source refresh after constant-width ring change; native receipts rerun, browser frames recaptured and compared by SHA-256; changed pixels freshly viewed."
+  "notes": "Game source frozen at4e570db. Current pooled headless capture/input evidence and exact sourceDigest; image files retained only under test-results.",
+  "sourceDigest": "9f88ba48ca13900ca4f429225cbac3045a96d48adee791c50179dde9c8cd025f"
 }

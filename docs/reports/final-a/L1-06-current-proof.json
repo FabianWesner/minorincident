@@ -1,0 +1,332 @@
+{
+  "row": "L1-06",
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "criterion": "Exactly 5 infected exit the Annex front door (technician first), ≥ 3 headings ≥ 60° apart.",
+  "nativeChecks": [
+    {
+      "id": "L1-06",
+      "clause": "native Annex exit identities",
+      "level": "L1",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 5,
+      "target": "5 ≤ value ≤ 5",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-low-complete.json"
+    },
+    {
+      "id": "L1-06",
+      "clause": "technician is first exit identity",
+      "level": "L1",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": {
+        "technician": 147,
+        "exits": [
+          147,
+          151,
+          153,
+          155,
+          157
+        ],
+        "headings": [
+          125,
+          95,
+          170,
+          215,
+          250
+        ]
+      },
+      "target": "exitIds[0] equals technician id",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-low-complete.json"
+    },
+    {
+      "id": "L1-06",
+      "clause": "native Annex exit identities",
+      "level": "L1",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 5,
+      "target": "5 ≤ value ≤ 5",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-low-stationary.json"
+    },
+    {
+      "id": "L1-06",
+      "clause": "technician is first exit identity",
+      "level": "L1",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": {
+        "technician": 147,
+        "exits": [
+          147,
+          151,
+          153,
+          155,
+          157
+        ],
+        "headings": [
+          125,
+          95,
+          170,
+          215,
+          250
+        ]
+      },
+      "target": "exitIds[0] equals technician id",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-low-stationary.json"
+    },
+    {
+      "id": "L1-06",
+      "clause": "native Annex exit identities",
+      "level": "L1",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 5,
+      "target": "5 ≤ value ≤ 5",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-high-complete.json"
+    },
+    {
+      "id": "L1-06",
+      "clause": "technician is first exit identity",
+      "level": "L1",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": {
+        "technician": 154,
+        "exits": [
+          154,
+          158,
+          160,
+          162,
+          164
+        ],
+        "headings": [
+          125,
+          95,
+          170,
+          215,
+          250
+        ]
+      },
+      "target": "exitIds[0] equals technician id",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-high-complete.json"
+    },
+    {
+      "id": "L1-06",
+      "clause": "native Annex exit identities",
+      "level": "L1",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 5,
+      "target": "5 ≤ value ≤ 5",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-high-stationary.json"
+    },
+    {
+      "id": "L1-06",
+      "clause": "technician is first exit identity",
+      "level": "L1",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": {
+        "technician": 154,
+        "exits": [
+          154,
+          158,
+          160,
+          162,
+          164
+        ],
+        "headings": [
+          125,
+          95,
+          170,
+          215,
+          250
+        ]
+      },
+      "target": "exitIds[0] equals technician id",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-high-stationary.json"
+    },
+    {
+      "id": "L1-06",
+      "clause": "observed front-door crossing order and departure headings",
+      "value": {
+        "technicianId": 147,
+        "crossings": [
+          {
+            "id": 147,
+            "start": {
+              "x": 66,
+              "z": -13.708692072821643,
+              "tick": 4197
+            },
+            "end": {
+              "x": 64.92236611982854,
+              "z": -9.832209535652703,
+              "tick": 4344,
+              "headingDeg": 105.53554285280504
+            }
+          },
+          {
+            "id": 151,
+            "start": {
+              "x": 66.31839493238229,
+              "z": -13.884267791552897,
+              "tick": 4300
+            },
+            "end": {
+              "x": 62.36468974138424,
+              "z": -13.22132756465394,
+              "tick": 4349,
+              "headingDeg": 170.48143701023287
+            }
+          },
+          {
+            "id": 155,
+            "start": {
+              "x": 66.57883056584657,
+              "z": -13.76363357779895,
+              "tick": 4310
+            },
+            "end": {
+              "x": 65.42736815310384,
+              "z": -9.875619519271098,
+              "tick": 4389,
+              "headingDeg": 106.49702187710552
+            }
+          },
+          {
+            "id": 157,
+            "start": {
+              "x": 66.06872110072653,
+              "z": -13.912727851338145,
+              "tick": 4332
+            },
+            "end": {
+              "x": 64.7971572135341,
+              "z": -10.116798850899336,
+              "tick": 4453,
+              "headingDeg": 108.51986790905683
+            }
+          },
+          {
+            "id": 153,
+            "start": {
+              "x": 66.79161097251048,
+              "z": -13.670172596715892,
+              "tick": 4337
+            },
+            "end": {
+              "x": 70.4316114558228,
+              "z": -11.856129514725735,
+              "tick": 4385,
+              "headingDeg": 26.489986682197628
+            }
+          }
+        ],
+        "separated": true
+      },
+      "target": "5 front-door crossings; technician physically first;≥3 actual departure headings separated by≥60 degrees",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-low-fixtures.json",
+      "level": "L1"
+    },
+    {
+      "id": "L1-06",
+      "clause": "observed front-door crossing order and departure headings",
+      "value": {
+        "technicianId": 154,
+        "crossings": [
+          {
+            "id": 154,
+            "start": {
+              "x": 66,
+              "z": -13.708692072821643,
+              "tick": 4197
+            },
+            "end": {
+              "x": 64.66859175307984,
+              "z": -9.896696096937214,
+              "tick": 4342,
+              "headingDeg": 109.25267469866886
+            }
+          },
+          {
+            "id": 158,
+            "start": {
+              "x": 66.25356403252354,
+              "z": -13.841708000562436,
+              "tick": 4301
+            },
+            "end": {
+              "x": 62.27899382053807,
+              "z": -13.242751544865483,
+              "tick": 4350,
+              "headingDeg": 171.4301728592477
+            }
+          },
+          {
+            "id": 162,
+            "start": {
+              "x": 66.33965430310339,
+              "z": -13.768723214720653,
+              "tick": 4309
+            },
+            "end": {
+              "x": 64.96703540007412,
+              "z": -9.982904813962229,
+              "tick": 4429,
+              "headingDeg": 109.92905491129727
+            }
+          },
+          {
+            "id": 160,
+            "start": {
+              "x": 66.23624922951983,
+              "z": -13.876204201150905,
+              "tick": 4339
+            },
+            "end": {
+              "x": 69.84500894986157,
+              "z": -12.051663683379484,
+              "tick": 4386,
+              "headingDeg": 26.820548915742712
+            }
+          },
+          {
+            "id": 164,
+            "start": {
+              "x": 66.128884641545,
+              "z": -13.885892784267533,
+              "tick": 4346
+            },
+            "end": {
+              "x": 65.14971784643436,
+              "z": -9.985119343079225,
+              "tick": 4464,
+              "headingDeg": 104.09116022054894
+            }
+          }
+        ],
+        "separated": true
+      },
+      "target": "5 front-door crossings; technician physically first;≥3 actual departure headings separated by≥60 degrees",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-high-fixtures.json",
+      "level": "L1"
+    }
+  ],
+  "observation": "All14 current WebGPU low/high six-second emergence frames personally inspected at original resolution on four sheets. Five distinct infected emerge through actual front doorway; white-coated technician visibly first, then the others diverge left/forward/right. Both361-sample every-tick browser ledgers retain same five exit identities. Current native physical crossings identify technician147low/154high first; actual4m departure headings low26.49/105.54/170.48 and high26.82/109.25/171.43 provide three pairwise separations≥60degrees (minimum64.95low/62.18high). Ordinary complete keyboard InputFrames, no actor relocation/protection/skips. Camera-only doorway inspection is explicitly labelled; no freely controlled production zoom or performance claim."
+}

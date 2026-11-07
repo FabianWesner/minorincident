@@ -1,32 +1,33 @@
 {
   "row": "L1-03",
   "status": "PASS",
-  "reviewer": "Codex sweep-a3",
-  "date": "2026-11-06",
-  "commit": "7248826255c34ab9f2adedc37cf6fa46d59663d4",
+  "reviewer": "Codex final-a",
+  "date": "2026-11-07",
+  "commit": "1cd2b6dc16497c5ace5a59ae81cc717535627f7b",
   "clauses": [
     {
       "clause": "Depot clerk scene plays: clerk hands over, walks back into the shop, closes the door; nobody vanishes.",
       "verdict": "PASS",
-      "note": "All22 low/high frames personally inspected. Same clerk148/155 emerges through the shop door carrying parcel, gives it, waves and walks inside before the door closes. Both321-tick native strips include94 transfer ticks with zero simulation-hidden ticks; ownership actually transfers and final closed-door latch occurs. Seven negative controls pass. No outdoor disappearance observed; between-render drawn flags are diagnostic, not visibility proof."
+      "note": "All22 fresh WebGPU low/high frames personally inspected at full size: same clerk emerges carrying the parcel, gives it to courier, waves and walks back through the open depot door before closure. Both321-tick ledgers retain94 transfer ticks, zero hidden transfer ticks, actual ownership handoff and closed final door. Clerk remains nonhidden through the internal walk at z-39.34; no outdoor disappearance observed. Seven broken-data controls pass. Normal native input prefix then idle cutscene, no relocation/protection/skips. Default production camera; zoom extremes not claimed."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-a3/L1-03-current-ledger.json.gz",
-      "sha256": "ada8126d16cae482cffde053251ba5eab18c5ece492bab79d1c7cbfa85ff73f6",
-      "what": "All22 low/high frames personally inspected. Same clerk148/155 emerges through the shop door carrying parcel, gives it, waves and walks inside before the door closes. Both321-tick native strips include94 transfer ticks with zero simulation-hidden ticks; ownership actually transfers and final closed-door latch occurs. Seven negative controls pass. No outdoor disappearance observed; between-render drawn flags are diagnostic, not visibility proof."
+      "file": "docs/reports/final-a/L1-03-input-ledger.json.gz",
+      "sha256": "43ecd80d8a3722f2dce5b3f8a82e84efd65e1e9ff2ed88271c1e36bfa9937717",
+      "what": "All22 fresh WebGPU low/high frames personally inspected at full size: same clerk emerges carrying the parcel, gives it to courier, waves and walks back through the open depot door before closure. Both321-tick ledgers retain94 transfer ticks, zero hidden transfer ticks, actual ownership handoff and closed final door. Clerk remains nonhidden through the internal walk at z-39.34; no outdoor disappearance observed. Seven broken-data controls pass. Normal native input prefix then idle cutscene, no relocation/protection/skips. Default production camera; zoom extremes not claimed."
     },
     {
-      "file": "docs/reports/sweep-a3/L1-03-current-images.json",
-      "sha256": "26ef01b46d7ed4d0074f7126e300d5e86a9db28f874c94620240c95462f5ad13",
-      "what": "All22 low/high frames personally inspected. Same clerk148/155 emerges through the shop door carrying parcel, gives it, waves and walks inside before the door closes. Both321-tick native strips include94 transfer ticks with zero simulation-hidden ticks; ownership actually transfers and final closed-door latch occurs. Seven negative controls pass. No outdoor disappearance observed; between-render drawn flags are diagnostic, not visibility proof."
+      "file": "docs/reports/final-a/L1-03-image-review.json",
+      "sha256": "255de74d638389fc8e09b9794b4e1e35db0d8e53b45a63d621bc1ad13ad300d7",
+      "what": "All22 fresh WebGPU low/high frames personally inspected at full size: same clerk emerges carrying the parcel, gives it to courier, waves and walks back through the open depot door before closure. Both321-tick ledgers retain94 transfer ticks, zero hidden transfer ticks, actual ownership handoff and closed final door. Clerk remains nonhidden through the internal walk at z-39.34; no outdoor disappearance observed. Seven broken-data controls pass. Normal native input prefix then idle cutscene, no relocation/protection/skips. Default production camera; zoom extremes not claimed."
     },
     {
-      "file": "docs/reports/sweep-a3/L1-03-story-proof.json",
-      "sha256": "0616c2f869c23cf64ec0e5173fa031452d60f35188e62df97269e75f64a8a58a",
-      "what": "All22 low/high frames personally inspected. Same clerk148/155 emerges through the shop door carrying parcel, gives it, waves and walks inside before the door closes. Both321-tick native strips include94 transfer ticks with zero simulation-hidden ticks; ownership actually transfers and final closed-door latch occurs. Seven negative controls pass. No outdoor disappearance observed; between-render drawn flags are diagnostic, not visibility proof."
+      "file": "docs/reports/final-a/L1-03-story-proof.json",
+      "sha256": "75fdadc6a4af349de8bb42f92d616761039027504ac45df6ff6eccc1ac49fa53",
+      "what": "All22 fresh WebGPU low/high frames personally inspected at full size: same clerk emerges carrying the parcel, gives it to courier, waves and walks back through the open depot door before closure. Both321-tick ledgers retain94 transfer ticks, zero hidden transfer ticks, actual ownership handoff and closed final door. Clerk remains nonhidden through the internal walk at z-39.34; no outdoor disappearance observed. Seven broken-data controls pass. Normal native input prefix then idle cutscene, no relocation/protection/skips. Default production camera; zoom extremes not claimed."
     }
   ],
-  "notes": "Ordinary native InputFrames from fresh game; no relocation, protection, skips or actor substitution."
+  "notes": "Fresh observation on frozen runtime source4e570db; current sourceDigest recorded by writeReview.",
+  "sourceDigest": "00a81dbceddae37bdb1b6540d29f8e3658cdd7d6b7b51968d1fd068c9a6eb63c"
 }

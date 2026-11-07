@@ -1,0 +1,225 @@
+{
+  "row": "L3-03",
+  "verdict": "PASS",
+  "frozenHead": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+  "fixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4",
+  "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
+  "generatedAt": "2026-11-06T23:57:28.205Z",
+  "criterion": "combat: reachable ≥ 90 %; passive first attack ≤ 10 s (measured 3.4 s); attacks on the player ≥ 4/min (tune).",
+  "automatedComplete": true,
+  "checks": [
+    {
+      "id": "L3-03",
+      "clause": "combat hard rule on actual player windups",
+      "level": "L3",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": {
+        "seconds": 25.55,
+        "playerWindups": 10,
+        "groupWindups": 0,
+        "attacksPerMinute": 23.483365949119374
+      },
+      "target": "nonzero player windups in each combat policy",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-complete.json"
+    },
+    {
+      "id": "L3-03",
+      "clause": "real player/group windups per minute",
+      "level": "L3",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 23.483365949119374,
+      "target": "4 ≤ value ≤ Infinity",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-complete.json"
+    },
+    {
+      "id": "L3-03",
+      "clause": "minimum bounded-path reachable share within30m (path≤2.5×direct)",
+      "level": "L3",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 100,
+      "target": "90 ≤ value ≤ 100",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-complete.json"
+    },
+    {
+      "id": "L3-03",
+      "clause": "combat hard rule on actual player windups",
+      "level": "L3",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": {
+        "seconds": 28.483333333333334,
+        "playerWindups": 71,
+        "groupWindups": 0,
+        "attacksPerMinute": 149.56114686951435
+      },
+      "target": "nonzero player windups in each combat policy",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-stationary.json"
+    },
+    {
+      "id": "L3-03",
+      "clause": "stationary first real player attack (phase clock)",
+      "level": "L3",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": {
+        "seconds": 2.95,
+        "windowSeconds": 28.483333333333334
+      },
+      "target": "≤10 s",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-stationary.json"
+    },
+    {
+      "id": "L3-03",
+      "clause": "real player/group windups per minute",
+      "level": "L3",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 149.56114686951435,
+      "target": "4 ≤ value ≤ Infinity",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-stationary.json"
+    },
+    {
+      "id": "L3-03",
+      "clause": "minimum bounded-path reachable share within30m (path≤2.5×direct)",
+      "level": "L3",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 100,
+      "target": "90 ≤ value ≤ 100",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-stationary.json"
+    },
+    {
+      "id": "L3-03",
+      "clause": "combat hard rule on actual player windups",
+      "level": "L3",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": {
+        "seconds": 22.8,
+        "playerWindups": 12,
+        "groupWindups": 0,
+        "attacksPerMinute": 31.57894736842105
+      },
+      "target": "nonzero player windups in each combat policy",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-high-complete.json"
+    },
+    {
+      "id": "L3-03",
+      "clause": "real player/group windups per minute",
+      "level": "L3",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 31.57894736842105,
+      "target": "4 ≤ value ≤ Infinity",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-high-complete.json"
+    },
+    {
+      "id": "L3-03",
+      "clause": "minimum bounded-path reachable share within30m (path≤2.5×direct)",
+      "level": "L3",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 100,
+      "target": "90 ≤ value ≤ 100",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-high-complete.json"
+    },
+    {
+      "id": "L3-03",
+      "clause": "combat hard rule on actual player windups",
+      "level": "L3",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": {
+        "seconds": 14.25,
+        "playerWindups": 71,
+        "groupWindups": 0,
+        "attacksPerMinute": 298.94736842105266
+      },
+      "target": "nonzero player windups in each combat policy",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-high-stationary.json"
+    },
+    {
+      "id": "L3-03",
+      "clause": "stationary first real player attack (phase clock)",
+      "level": "L3",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": {
+        "seconds": 2.4166666666666665,
+        "windowSeconds": 14.25
+      },
+      "target": "≤10 s",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-high-stationary.json"
+    },
+    {
+      "id": "L3-03",
+      "clause": "real player/group windups per minute",
+      "level": "L3",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 298.94736842105266,
+      "target": "4 ≤ value ≤ Infinity",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-high-stationary.json"
+    },
+    {
+      "id": "L3-03",
+      "clause": "minimum bounded-path reachable share within30m (path≤2.5×direct)",
+      "level": "L3",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 95,
+      "target": "90 ≤ value ≤ 100",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-high-stationary.json"
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/final-a/native-receipts/L3-low-complete.json.gz",
+      "sha256": "81ae6486e8fab6d955d04751cb09cce2159e3b986d19198ff720988e54c8b0b7",
+      "what": "Frozen-head L3-03 native input receipt, evaluated by the exact clauses retained in the row proof.",
+      "canonicalFile": "docs/reports/fix51-verify/receipts/L3-low-complete.json",
+      "decodedSha256": "26aa4ed49dfbfcdf86a690bc83d902a5c8b9b4c93933f99d67484a55c70a971a"
+    },
+    {
+      "file": "docs/reports/final-a/native-receipts/L3-low-stationary.json.gz",
+      "sha256": "024f22953d5c2e3f1bbefbba6fe6943dddd8ecc05664082f2a2fe6cc32d7c146",
+      "what": "Frozen-head L3-03 native input receipt, evaluated by the exact clauses retained in the row proof.",
+      "canonicalFile": "docs/reports/fix51-verify/receipts/L3-low-stationary.json",
+      "decodedSha256": "397baa017658a0b23da1cece00753b1b6e9363ed1272bff5125d3de615c52def"
+    },
+    {
+      "file": "docs/reports/final-a/native-receipts/L3-high-complete.json.gz",
+      "sha256": "d976b4c6b69eda34c20121ae9cb96e8a3cdd6a07fac104fba0b26e56fd8755c0",
+      "what": "Frozen-head L3-03 native input receipt, evaluated by the exact clauses retained in the row proof.",
+      "canonicalFile": "docs/reports/fix51-verify/receipts/L3-high-complete.json",
+      "decodedSha256": "f62f48629e8a32b71b162b49eb6d4f0a9cfb7cc46cbbd97a141e6e39bf3d89b1"
+    },
+    {
+      "file": "docs/reports/final-a/native-receipts/L3-high-stationary.json.gz",
+      "sha256": "2046af461e64e70381568acc5905423f47b44bf18d205557d43b0ad61770b9b1",
+      "what": "Frozen-head L3-03 native input receipt, evaluated by the exact clauses retained in the row proof.",
+      "canonicalFile": "docs/reports/fix51-verify/receipts/L3-high-stationary.json",
+      "decodedSha256": "260dd369e09316f288a0de9e176ff1abc26bbc5547a1f7be1e20cadeecc29b80"
+    }
+  ],
+  "observation": "14 current native checks PASS across low/high. low/complete combat hard rule on actual player windups: {\"seconds\":25.55,\"playerWindups\":10,\"groupWindups\":0,\"attacksPerMinute\":23.483365949119374}; target nonzero player windups in each combat policy (PASS); low/complete real player/group windups per minute: 23.483365949119374; target 4 ≤ value ≤ Infinity (PASS); low/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100; target 90 ≤ value ≤ 100 (PASS); low/stationary combat hard rule on actual player windups: {\"seconds\":28.483333333333334,\"playerWindups\":71,\"groupWindups\":0,\"attacksPerMinute\":149.56114686951435}; target nonzero player windups in each combat policy (PASS); low/stationary stationary first real player attack (phase clock): {\"seconds\":2.95,\"windowSeconds\":28.483333333333334}; target ≤10 s (PASS); low/stationary real player/group windups per minute: 149.56114686951435; target 4 ≤ value ≤ Infinity (PASS); low/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 100; target 90 ≤ value ≤ 100 (PASS); high/complete combat hard rule on actual player windups: {\"seconds\":22.8,\"playerWindups\":12,\"groupWindups\":0,\"attacksPerMinute\":31.57894736842105}; target nonzero player windups in each combat policy (PASS); high/complete real player/group windups per minute: 31.57894736842105; target 4 ≤ value ≤ Infinity (PASS); high/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100; target 90 ≤ value ≤ 100 (PASS); high/stationary combat hard rule on actual player windups: {\"seconds\":14.25,\"playerWindups\":71,\"groupWindups\":0,\"attacksPerMinute\":298.94736842105266}; target nonzero player windups in each combat policy (PASS); high/stationary stationary first real player attack (phase clock): {\"seconds\":2.4166666666666665,\"windowSeconds\":14.25}; target ≤10 s (PASS); high/stationary real player/group windups per minute: 298.94736842105266; target 4 ≤ value ≤ Infinity (PASS); high/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 95; target 90 ≤ value ≤ 100 (PASS)"
+}

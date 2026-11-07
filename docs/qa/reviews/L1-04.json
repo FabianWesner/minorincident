@@ -1,37 +1,43 @@
 {
   "row": "L1-04",
   "status": "PASS",
-  "reviewer": "Codex sweep-a3",
-  "date": "2026-11-06",
-  "commit": "dc8a67dc31e4a99979f5a95f746eec2d4097f810",
+  "reviewer": "Codex final-a",
+  "date": "2026-11-07",
+  "commit": "00e40b5009d68c9627fe3ec5330961d9d7e379fb",
   "clauses": [
     {
       "clause": "Lab handover plays (technician takes the box and walks back in) at PROD quality or better.",
       "verdict": "PASS",
-      "note": "All34 low/high current frames inspected: technician147/154 walks through actual open door, glances, takes parcel, signs, carries it inside and closes door. Both707-tick strips retain364 transfer ticks with zero simulation-hidden ticks and actual Delivered latch. Six negative controls pass. Compared against archived labelled PROD panels from visual-qa-13j: current coat/goggles/gloves/clipboard, hands/parcel and full scene framing are at least as legible. This is an archived PROD reference, not a newly built live deployment."
+      "note": "All34 fresh low/high WebGPU frames personally inspected. Technician walks out through actual open door, glances, takes parcel, signs, then carries box back inside; door closes and Delivered latch follows. Both707-tick traces retain364 transfer ticks with zero hidden transfer ticks. Six broken-data controls pass. Compared with personally viewed archived labelled PROD/candidate panels: current coat/goggles/gloves/clipboard, hand/box poses and complete Annex scene retain at least the same recognizable cues. Historical PROD reference is archived; no live deployed-PROD rebuild claim. P: judge hand/clipboard pose polish in offsets240–540."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-a3/L1-04-current-ledger.json.gz",
-      "sha256": "ac9058571b787c69e5ca9dff03d1e3ee6d6719f419cf4640e1a2a090a8ebbf78",
-      "what": "All34 low/high current frames inspected: technician147/154 walks through actual open door, glances, takes parcel, signs, carries it inside and closes door. Both707-tick strips retain364 transfer ticks with zero simulation-hidden ticks and actual Delivered latch. Six negative controls pass. Compared against archived labelled PROD panels from visual-qa-13j: current coat/goggles/gloves/clipboard, hands/parcel and full scene framing are at least as legible. This is an archived PROD reference, not a newly built live deployment."
+      "file": "docs/reports/final-a/L1-04-browser-ledger.json.gz",
+      "sha256": "f2d078fdc8e4692053d222d609d0794bdb77a00df22079f4398d87807e7e298d",
+      "what": "All34 fresh low/high WebGPU frames personally inspected. Technician walks out through actual open door, glances, takes parcel, signs, then carries box back inside; door closes and Delivered latch follows. Both707-tick traces retain364 transfer ticks with zero hidden transfer ticks. Six broken-data controls pass. Compared with personally viewed archived labelled PROD/candidate panels: current coat/goggles/gloves/clipboard, hand/box poses and complete Annex scene retain at least the same recognizable cues. Historical PROD reference is archived; no live deployed-PROD rebuild claim. P: judge hand/clipboard pose polish in offsets240–540."
     },
     {
-      "file": "docs/reports/sweep-a3/L1-04-current-images.json",
-      "sha256": "634246cfda1c19bafece96a66ba36602fa2d385f631bd7b00c8659dd6dfc8d23",
-      "what": "All34 low/high current frames inspected: technician147/154 walks through actual open door, glances, takes parcel, signs, carries it inside and closes door. Both707-tick strips retain364 transfer ticks with zero simulation-hidden ticks and actual Delivered latch. Six negative controls pass. Compared against archived labelled PROD panels from visual-qa-13j: current coat/goggles/gloves/clipboard, hands/parcel and full scene framing are at least as legible. This is an archived PROD reference, not a newly built live deployment."
+      "file": "docs/reports/final-a/L1-04-image-review.json",
+      "sha256": "aabca903d1ad3f4b6ea4127a171be9001fe27ab26971284329308e4929f9bae2",
+      "what": "All34 fresh low/high WebGPU frames personally inspected. Technician walks out through actual open door, glances, takes parcel, signs, then carries box back inside; door closes and Delivered latch follows. Both707-tick traces retain364 transfer ticks with zero hidden transfer ticks. Six broken-data controls pass. Compared with personally viewed archived labelled PROD/candidate panels: current coat/goggles/gloves/clipboard, hand/box poses and complete Annex scene retain at least the same recognizable cues. Historical PROD reference is archived; no live deployed-PROD rebuild claim. P: judge hand/clipboard pose polish in offsets240–540."
     },
     {
-      "file": "docs/reports/sweep-a3/L1-04-story-proof.json",
-      "sha256": "28dd82c3c021afa24311417711fbc6c0a9ad6b6c8bfe012088524576730f91b2",
-      "what": "All34 low/high current frames inspected: technician147/154 walks through actual open door, glances, takes parcel, signs, carries it inside and closes door. Both707-tick strips retain364 transfer ticks with zero simulation-hidden ticks and actual Delivered latch. Six negative controls pass. Compared against archived labelled PROD panels from visual-qa-13j: current coat/goggles/gloves/clipboard, hands/parcel and full scene framing are at least as legible. This is an archived PROD reference, not a newly built live deployment."
+      "file": "docs/reports/final-a/L1-04-current-proof.json",
+      "sha256": "abbe3872dbd4ca6cd6007aa70b482a46ebfa7d81f6f3bec807f78438a037fa41",
+      "what": "All34 fresh low/high WebGPU frames personally inspected. Technician walks out through actual open door, glances, takes parcel, signs, then carries box back inside; door closes and Delivered latch follows. Both707-tick traces retain364 transfer ticks with zero hidden transfer ticks. Six broken-data controls pass. Compared with personally viewed archived labelled PROD/candidate panels: current coat/goggles/gloves/clipboard, hand/box poses and complete Annex scene retain at least the same recognizable cues. Historical PROD reference is archived; no live deployed-PROD rebuild claim. P: judge hand/clipboard pose polish in offsets240–540."
     },
     {
-      "file": "docs/reports/sweep-a3/L1-04-PROD-reference.json",
-      "sha256": "275fb42306cb408a5648a1a6655ab58932f8f8cf8ec48fdc255daf0b7a21ec9f",
-      "what": "All34 low/high current frames inspected: technician147/154 walks through actual open door, glances, takes parcel, signs, carries it inside and closes door. Both707-tick strips retain364 transfer ticks with zero simulation-hidden ticks and actual Delivered latch. Six negative controls pass. Compared against archived labelled PROD panels from visual-qa-13j: current coat/goggles/gloves/clipboard, hands/parcel and full scene framing are at least as legible. This is an archived PROD reference, not a newly built live deployment."
+      "file": "docs/reports/final-a/L1-04-story-proof.json",
+      "sha256": "cbfd8e63198784d2b2f8fc5e6c155146c5f19250cb0181df836002fc0b29a1c6",
+      "what": "All34 fresh low/high WebGPU frames personally inspected. Technician walks out through actual open door, glances, takes parcel, signs, then carries box back inside; door closes and Delivered latch follows. Both707-tick traces retain364 transfer ticks with zero hidden transfer ticks. Six broken-data controls pass. Compared with personally viewed archived labelled PROD/candidate panels: current coat/goggles/gloves/clipboard, hand/box poses and complete Annex scene retain at least the same recognizable cues. Historical PROD reference is archived; no live deployed-PROD rebuild claim. P: judge hand/clipboard pose polish in offsets240–540."
+    },
+    {
+      "file": "docs/reports/final-a/L1-04-PROD-reference.json",
+      "sha256": "c3405a0bdf9cddc17d7873b3249256083fe10cf77500f3d56882178ac5ba59a2",
+      "what": "All34 fresh low/high WebGPU frames personally inspected. Technician walks out through actual open door, glances, takes parcel, signs, then carries box back inside; door closes and Delivered latch follows. Both707-tick traces retain364 transfer ticks with zero hidden transfer ticks. Six broken-data controls pass. Compared with personally viewed archived labelled PROD/candidate panels: current coat/goggles/gloves/clipboard, hand/box poses and complete Annex scene retain at least the same recognizable cues. Historical PROD reference is archived; no live deployed-PROD rebuild claim. P: judge hand/clipboard pose polish in offsets240–540."
     }
   ],
-  "notes": "P: PO to inspect technician parcel/clipboard hand poses and lab-door walk-back quality against the archived labelled PROD reference."
+  "notes": "Current frozen runtime source4e570db; pooled headless browsers, private port4783; screenshots remain under test-results. No runtime edits.",
+  "sourceDigest": "00a81dbceddae37bdb1b6540d29f8e3658cdd7d6b7b51968d1fd068c9a6eb63c"
 }

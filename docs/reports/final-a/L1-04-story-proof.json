@@ -1,0 +1,126 @@
+{
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+  "revision": "1cd2b6dc16497c5ace5a59ae81cc717535627f7b",
+  "stage": "handover",
+  "runs": [
+    {
+      "tier": "low",
+      "actorIds": [
+        147
+      ],
+      "ticks": 707,
+      "clips": [
+        "npc-carry",
+        "npc-glance",
+        "npc-sign",
+        "npc-walk"
+      ],
+      "transferTicks": 364,
+      "hiddenTransferTicks": 0,
+      "betweenRenderNotDrawnFlags": 231,
+      "final": {
+        "tick": 3326,
+        "beat": null,
+        "carrying": false,
+        "delivered": true,
+        "phase": "calm",
+        "actor": 147,
+        "entity": {
+          "hidden": false,
+          "at": {
+            "x": 66,
+            "z": -16.5,
+            "y": 0.9949999999999999,
+            "yaw": 3.105497226653861,
+            "radius": 2
+          },
+          "story": null
+        },
+        "drawn": true,
+        "player": {
+          "x": 65.62980651855469,
+          "y": 0.7049999833106995,
+          "z": -11.612318992614746,
+          "yaw": 1.076953709622342
+        },
+        "doors": [],
+        "done": true
+      },
+      "pass": true
+    },
+    {
+      "tier": "high",
+      "actorIds": [
+        154
+      ],
+      "ticks": 707,
+      "clips": [
+        "npc-carry",
+        "npc-glance",
+        "npc-sign",
+        "npc-walk"
+      ],
+      "transferTicks": 364,
+      "hiddenTransferTicks": 0,
+      "betweenRenderNotDrawnFlags": 196,
+      "final": {
+        "tick": 3326,
+        "beat": null,
+        "carrying": false,
+        "delivered": true,
+        "phase": "calm",
+        "actor": 154,
+        "entity": {
+          "hidden": false,
+          "at": {
+            "x": 66,
+            "z": -16.5,
+            "y": 0.9949999999999999,
+            "yaw": 3.105497226653861,
+            "radius": 2
+          },
+          "story": null
+        },
+        "drawn": false,
+        "player": {
+          "x": 65.62980651855469,
+          "y": 0.7049999833106995,
+          "z": -11.612318992614746,
+          "yaw": 1.076953709622342
+        },
+        "doors": [],
+        "done": true
+      },
+      "pass": true
+    }
+  ],
+  "controls": [
+    {
+      "test": "missing quality",
+      "pass": true
+    },
+    {
+      "test": "duplicate quality",
+      "pass": true
+    },
+    {
+      "test": "incomplete story",
+      "pass": true
+    },
+    {
+      "test": "hidden transfer",
+      "pass": true
+    },
+    {
+      "test": "actor identity substitution",
+      "pass": true
+    },
+    {
+      "test": "parcel ownership never transfers",
+      "pass": true
+    }
+  ],
+  "pass": true,
+  "method": "Same nonzero actor identity, actual ownership handoff and full final latch; every-tick simulation nonhidden transfer; between-render drawn flags retained as diagnostics only and required clip progression. Manual images supply visual quality comparison."
+}

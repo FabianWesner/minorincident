@@ -1,0 +1,816 @@
+{
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+  "revision": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "criterion": "50–60 civilians at start, none idle facing nowhere > 3 s; 0 infected; 0 `combat.*`.",
+  "method": "Seed1, ordinary stationary opening, no relocation/protection/mission skips, both qualities, every tick0–3600. Actual yaw uses transform-to-target, matching Outbreak.face; the technician faces the authored lab door. Hidden interiors do not establish visible idle. Facing nowhere is observed as no authored meaningful target ahead (missing target, coincident target, or target behind the actual body heading). More than0.1m cumulative actual travel ends an idle interval. Full actual heading errors are retained; merely being slightly off exact mathematical yaw does not mean facing nowhere. Population targets correspond to partners, seats, flowers, doorways and shop displays, as authored in Population.ts and MorningRoutines.ts.",
+  "controls": [
+    {
+      "name": "stationary actor facing away for181ticks fails",
+      "pass": true
+    },
+    {
+      "name": "stationary actor with no facing target for181ticks fails",
+      "pass": true
+    },
+    {
+      "name": "exact180tick bound passes",
+      "pass": true
+    },
+    {
+      "name": "stationary actor actually facing target passes",
+      "pass": true
+    }
+  ],
+  "toolSha256": "0b284493d6a236172cc4926979079e368e757c10a6b07e8ef4594fdfddde49ad",
+  "ledger": {
+    "file": "docs/reports/final-a/L1-02-current-ledger.json.gz",
+    "sha256": "d567286a726381d7265d73bc5eca119c6ca42ddf15939a91c858230af9ed5b2e"
+  },
+  "runs": [
+    {
+      "tier": "low",
+      "humanCount": 51,
+      "maxInfected": 0,
+      "combatEvents": 0,
+      "phase": "morning",
+      "pass": true,
+      "actors": [
+        {
+          "id": 95,
+          "maxUnfacedIdleTicks": 20,
+          "endTick": 1300,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 96,
+          "maxUnfacedIdleTicks": 39,
+          "endTick": 2072,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 97,
+          "maxUnfacedIdleTicks": 17,
+          "endTick": 680,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 98,
+          "maxUnfacedIdleTicks": 18,
+          "endTick": 513,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 99,
+          "maxUnfacedIdleTicks": 18,
+          "endTick": 676,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 100,
+          "maxUnfacedIdleTicks": 18,
+          "endTick": 745,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 101,
+          "maxUnfacedIdleTicks": 17,
+          "endTick": 957,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 102,
+          "maxUnfacedIdleTicks": 132,
+          "endTick": 1014,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 103,
+          "maxUnfacedIdleTicks": 25,
+          "endTick": 2113,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 104,
+          "maxUnfacedIdleTicks": 133,
+          "endTick": 1178,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 105,
+          "maxUnfacedIdleTicks": 18,
+          "endTick": 673,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 106,
+          "maxUnfacedIdleTicks": 20,
+          "endTick": 575,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 107,
+          "maxUnfacedIdleTicks": 20,
+          "endTick": 748,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 108,
+          "maxUnfacedIdleTicks": 21,
+          "endTick": 645,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 109,
+          "maxUnfacedIdleTicks": 45,
+          "endTick": 2349,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 110,
+          "maxUnfacedIdleTicks": 17,
+          "endTick": 1414,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 111,
+          "maxUnfacedIdleTicks": 18,
+          "endTick": 807,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 112,
+          "maxUnfacedIdleTicks": 17,
+          "endTick": 693,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 113,
+          "maxUnfacedIdleTicks": 17,
+          "endTick": 604,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 114,
+          "maxUnfacedIdleTicks": 17,
+          "endTick": 783,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 115,
+          "maxUnfacedIdleTicks": 2,
+          "endTick": 443,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 116,
+          "maxUnfacedIdleTicks": 61,
+          "endTick": 419,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 117,
+          "maxUnfacedIdleTicks": 61,
+          "endTick": 535,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 118,
+          "maxUnfacedIdleTicks": 76,
+          "endTick": 76,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 119,
+          "maxUnfacedIdleTicks": 65,
+          "endTick": 65,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 120,
+          "maxUnfacedIdleTicks": 49,
+          "endTick": 1978,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 121,
+          "maxUnfacedIdleTicks": 35,
+          "endTick": 35,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 122,
+          "maxUnfacedIdleTicks": 49,
+          "endTick": 1111,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 123,
+          "maxUnfacedIdleTicks": 34,
+          "endTick": 34,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 124,
+          "maxUnfacedIdleTicks": 90,
+          "endTick": 90,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 126,
+          "maxUnfacedIdleTicks": 100,
+          "endTick": 100,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 127,
+          "maxUnfacedIdleTicks": 47,
+          "endTick": 645,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 128,
+          "maxUnfacedIdleTicks": 30,
+          "endTick": 30,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 130,
+          "maxUnfacedIdleTicks": 94,
+          "endTick": 94,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 131,
+          "maxUnfacedIdleTicks": 92,
+          "endTick": 92,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 132,
+          "maxUnfacedIdleTicks": 42,
+          "endTick": 42,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 133,
+          "maxUnfacedIdleTicks": 42,
+          "endTick": 700,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 134,
+          "maxUnfacedIdleTicks": 26,
+          "endTick": 26,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 135,
+          "maxUnfacedIdleTicks": 77,
+          "endTick": 77,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 136,
+          "maxUnfacedIdleTicks": 36,
+          "endTick": 36,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 137,
+          "maxUnfacedIdleTicks": 77,
+          "endTick": 77,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 138,
+          "maxUnfacedIdleTicks": 64,
+          "endTick": 64,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 139,
+          "maxUnfacedIdleTicks": 47,
+          "endTick": 746,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 140,
+          "maxUnfacedIdleTicks": 106,
+          "endTick": 106,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 141,
+          "maxUnfacedIdleTicks": 88,
+          "endTick": 88,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 142,
+          "maxUnfacedIdleTicks": 37,
+          "endTick": 37,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 143,
+          "maxUnfacedIdleTicks": 44,
+          "endTick": 44,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 144,
+          "maxUnfacedIdleTicks": 45,
+          "endTick": 2671,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 145,
+          "maxUnfacedIdleTicks": 74,
+          "endTick": 74,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 146,
+          "maxUnfacedIdleTicks": 38,
+          "endTick": 38,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 147,
+          "maxUnfacedIdleTicks": 0,
+          "endTick": 0,
+          "pass": true,
+          "sampleCount": 3601
+        }
+      ]
+    },
+    {
+      "tier": "high",
+      "humanCount": 58,
+      "maxInfected": 0,
+      "combatEvents": 0,
+      "phase": "morning",
+      "pass": true,
+      "actors": [
+        {
+          "id": 95,
+          "maxUnfacedIdleTicks": 45,
+          "endTick": 2746,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 96,
+          "maxUnfacedIdleTicks": 28,
+          "endTick": 3233,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 97,
+          "maxUnfacedIdleTicks": 18,
+          "endTick": 716,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 98,
+          "maxUnfacedIdleTicks": 18,
+          "endTick": 551,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 99,
+          "maxUnfacedIdleTicks": 18,
+          "endTick": 930,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 100,
+          "maxUnfacedIdleTicks": 17,
+          "endTick": 744,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 101,
+          "maxUnfacedIdleTicks": 17,
+          "endTick": 872,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 102,
+          "maxUnfacedIdleTicks": 132,
+          "endTick": 1014,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 103,
+          "maxUnfacedIdleTicks": 35,
+          "endTick": 2203,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 104,
+          "maxUnfacedIdleTicks": 133,
+          "endTick": 1178,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 105,
+          "maxUnfacedIdleTicks": 18,
+          "endTick": 725,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 106,
+          "maxUnfacedIdleTicks": 18,
+          "endTick": 601,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 107,
+          "maxUnfacedIdleTicks": 17,
+          "endTick": 800,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 108,
+          "maxUnfacedIdleTicks": 18,
+          "endTick": 578,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 109,
+          "maxUnfacedIdleTicks": 17,
+          "endTick": 769,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 110,
+          "maxUnfacedIdleTicks": 44,
+          "endTick": 2937,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 111,
+          "maxUnfacedIdleTicks": 17,
+          "endTick": 855,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 112,
+          "maxUnfacedIdleTicks": 18,
+          "endTick": 648,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 113,
+          "maxUnfacedIdleTicks": 32,
+          "endTick": 2270,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 114,
+          "maxUnfacedIdleTicks": 17,
+          "endTick": 770,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 115,
+          "maxUnfacedIdleTicks": 18,
+          "endTick": 771,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 116,
+          "maxUnfacedIdleTicks": 63,
+          "endTick": 800,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 117,
+          "maxUnfacedIdleTicks": 2,
+          "endTick": 415,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 118,
+          "maxUnfacedIdleTicks": 61,
+          "endTick": 398,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 119,
+          "maxUnfacedIdleTicks": 61,
+          "endTick": 538,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 120,
+          "maxUnfacedIdleTicks": 90,
+          "endTick": 90,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 121,
+          "maxUnfacedIdleTicks": 20,
+          "endTick": 302,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 122,
+          "maxUnfacedIdleTicks": 43,
+          "endTick": 43,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 123,
+          "maxUnfacedIdleTicks": 37,
+          "endTick": 37,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 124,
+          "maxUnfacedIdleTicks": 46,
+          "endTick": 2194,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 125,
+          "maxUnfacedIdleTicks": 21,
+          "endTick": 21,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 126,
+          "maxUnfacedIdleTicks": 32,
+          "endTick": 63,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 128,
+          "maxUnfacedIdleTicks": 47,
+          "endTick": 47,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 129,
+          "maxUnfacedIdleTicks": 50,
+          "endTick": 1773,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 130,
+          "maxUnfacedIdleTicks": 26,
+          "endTick": 26,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 132,
+          "maxUnfacedIdleTicks": 21,
+          "endTick": 21,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 133,
+          "maxUnfacedIdleTicks": 103,
+          "endTick": 103,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 134,
+          "maxUnfacedIdleTicks": 67,
+          "endTick": 67,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 135,
+          "maxUnfacedIdleTicks": 49,
+          "endTick": 885,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 136,
+          "maxUnfacedIdleTicks": 46,
+          "endTick": 46,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 137,
+          "maxUnfacedIdleTicks": 81,
+          "endTick": 81,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 138,
+          "maxUnfacedIdleTicks": 54,
+          "endTick": 54,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 139,
+          "maxUnfacedIdleTicks": 95,
+          "endTick": 95,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 140,
+          "maxUnfacedIdleTicks": 67,
+          "endTick": 67,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 141,
+          "maxUnfacedIdleTicks": 40,
+          "endTick": 1513,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 142,
+          "maxUnfacedIdleTicks": 89,
+          "endTick": 89,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 143,
+          "maxUnfacedIdleTicks": 66,
+          "endTick": 66,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 144,
+          "maxUnfacedIdleTicks": 38,
+          "endTick": 38,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 145,
+          "maxUnfacedIdleTicks": 72,
+          "endTick": 72,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 146,
+          "maxUnfacedIdleTicks": 43,
+          "endTick": 2439,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 147,
+          "maxUnfacedIdleTicks": 51,
+          "endTick": 51,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 148,
+          "maxUnfacedIdleTicks": 93,
+          "endTick": 93,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 149,
+          "maxUnfacedIdleTicks": 24,
+          "endTick": 24,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 150,
+          "maxUnfacedIdleTicks": 61,
+          "endTick": 61,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 151,
+          "maxUnfacedIdleTicks": 93,
+          "endTick": 93,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 152,
+          "maxUnfacedIdleTicks": 85,
+          "endTick": 85,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 153,
+          "maxUnfacedIdleTicks": 55,
+          "endTick": 55,
+          "pass": true,
+          "sampleCount": 3601
+        },
+        {
+          "id": 154,
+          "maxUnfacedIdleTicks": 0,
+          "endTick": 0,
+          "pass": true,
+          "sampleCount": 3601
+        }
+      ]
+    }
+  ],
+  "status": "PASS"
+}

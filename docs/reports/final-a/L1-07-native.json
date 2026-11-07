@@ -1,0 +1,524 @@
+{
+  "row": "L1-07",
+  "verdict": "PASS",
+  "frozenHead": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+  "fixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4",
+  "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
+  "generatedAt": "2026-11-06T23:43:23.520Z",
+  "criterion": "Spread: infected 5 → **≥ 15 at +120 s** (floor 12) → **≥ 25 at +240 s** with an idle remote observer; every new one from a bite.",
+  "automatedComplete": true,
+  "checks": [
+    {
+      "id": "L1-07",
+      "clause": "remote idle initial five infected",
+      "value": 5,
+      "target": "exactly5 at release",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-low-fixtures.json",
+      "level": "L1"
+    },
+    {
+      "id": "L1-07",
+      "clause": "remote idle living infected at120s",
+      "value": 30,
+      "target": "≥15 at+120s",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-low-fixtures.json",
+      "level": "L1"
+    },
+    {
+      "id": "L1-07",
+      "clause": "remote idle living infected at240s",
+      "value": 30,
+      "target": "≥25 at+240s",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-low-fixtures.json",
+      "level": "L1"
+    },
+    {
+      "id": "L1-07",
+      "clause": "remote idle every additional turn follows a bite",
+      "value": {
+        "turns": [
+          {
+            "id": 131,
+            "tick": 4752,
+            "bitten": true
+          },
+          {
+            "id": 130,
+            "tick": 4785,
+            "bitten": true
+          },
+          {
+            "id": 133,
+            "tick": 5166,
+            "bitten": true
+          },
+          {
+            "id": 132,
+            "tick": 5421,
+            "bitten": true
+          },
+          {
+            "id": 113,
+            "tick": 5793,
+            "bitten": true
+          },
+          {
+            "id": 114,
+            "tick": 5825,
+            "bitten": true
+          },
+          {
+            "id": 106,
+            "tick": 6708,
+            "bitten": true
+          },
+          {
+            "id": 107,
+            "tick": 6725,
+            "bitten": true
+          },
+          {
+            "id": 136,
+            "tick": 6832,
+            "bitten": true
+          },
+          {
+            "id": 105,
+            "tick": 6922,
+            "bitten": true
+          },
+          {
+            "id": 109,
+            "tick": 6952,
+            "bitten": true
+          },
+          {
+            "id": 137,
+            "tick": 7027,
+            "bitten": true
+          },
+          {
+            "id": 110,
+            "tick": 7051,
+            "bitten": true
+          },
+          {
+            "id": 142,
+            "tick": 7121,
+            "bitten": true
+          },
+          {
+            "id": 141,
+            "tick": 7137,
+            "bitten": true
+          },
+          {
+            "id": 108,
+            "tick": 7178,
+            "bitten": true
+          },
+          {
+            "id": 144,
+            "tick": 7224,
+            "bitten": true
+          },
+          {
+            "id": 138,
+            "tick": 7298,
+            "bitten": true
+          },
+          {
+            "id": 143,
+            "tick": 7614,
+            "bitten": true
+          },
+          {
+            "id": 145,
+            "tick": 8224,
+            "bitten": true
+          },
+          {
+            "id": 146,
+            "tick": 8304,
+            "bitten": true
+          },
+          {
+            "id": 101,
+            "tick": 8695,
+            "bitten": true
+          },
+          {
+            "id": 99,
+            "tick": 8812,
+            "bitten": true
+          },
+          {
+            "id": 96,
+            "tick": 8848,
+            "bitten": true
+          },
+          {
+            "id": 120,
+            "tick": 8945,
+            "bitten": true
+          }
+        ],
+        "directSpawns": []
+      },
+      "target": "every new turn has a preceding bite on the same ID; no direct additions",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-low-fixtures.json",
+      "level": "L1"
+    },
+    {
+      "id": "L1-07",
+      "clause": "remote observer remains undisturbed",
+      "value": {
+        "deaths": 0,
+        "damage": 0,
+        "knockdowns": 0,
+        "kills": 0
+      },
+      "target": "zero deaths, damage and player knockdowns/kills",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-low-fixtures.json",
+      "level": "L1"
+    },
+    {
+      "id": "L1-07",
+      "clause": "remote idle initial five infected",
+      "value": 5,
+      "target": "exactly5 at release",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-high-fixtures.json",
+      "level": "L1"
+    },
+    {
+      "id": "L1-07",
+      "clause": "remote idle living infected at120s",
+      "value": 49,
+      "target": "≥15 at+120s",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-high-fixtures.json",
+      "level": "L1"
+    },
+    {
+      "id": "L1-07",
+      "clause": "remote idle living infected at240s",
+      "value": 53,
+      "target": "≥25 at+240s",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-high-fixtures.json",
+      "level": "L1"
+    },
+    {
+      "id": "L1-07",
+      "clause": "remote idle every additional turn follows a bite",
+      "value": {
+        "turns": [
+          {
+            "id": 133,
+            "tick": 4751,
+            "bitten": true
+          },
+          {
+            "id": 132,
+            "tick": 4943,
+            "bitten": true
+          },
+          {
+            "id": 135,
+            "tick": 6153,
+            "bitten": true
+          },
+          {
+            "id": 134,
+            "tick": 6381,
+            "bitten": true
+          },
+          {
+            "id": 109,
+            "tick": 6651,
+            "bitten": true
+          },
+          {
+            "id": 143,
+            "tick": 6858,
+            "bitten": true
+          },
+          {
+            "id": 110,
+            "tick": 7010,
+            "bitten": true
+          },
+          {
+            "id": 114,
+            "tick": 7124,
+            "bitten": true
+          },
+          {
+            "id": 113,
+            "tick": 7175,
+            "bitten": true
+          },
+          {
+            "id": 153,
+            "tick": 7181,
+            "bitten": true
+          },
+          {
+            "id": 108,
+            "tick": 7236,
+            "bitten": true
+          },
+          {
+            "id": 144,
+            "tick": 7410,
+            "bitten": true
+          },
+          {
+            "id": 139,
+            "tick": 7631,
+            "bitten": true
+          },
+          {
+            "id": 140,
+            "tick": 7634,
+            "bitten": true
+          },
+          {
+            "id": 107,
+            "tick": 7779,
+            "bitten": true
+          },
+          {
+            "id": 138,
+            "tick": 7882,
+            "bitten": true
+          },
+          {
+            "id": 106,
+            "tick": 7936,
+            "bitten": true
+          },
+          {
+            "id": 105,
+            "tick": 8087,
+            "bitten": true
+          },
+          {
+            "id": 128,
+            "tick": 8360,
+            "bitten": true
+          },
+          {
+            "id": 115,
+            "tick": 8406,
+            "bitten": true
+          },
+          {
+            "id": 103,
+            "tick": 8455,
+            "bitten": true
+          },
+          {
+            "id": 117,
+            "tick": 8469,
+            "bitten": true
+          },
+          {
+            "id": 146,
+            "tick": 8476,
+            "bitten": true
+          },
+          {
+            "id": 116,
+            "tick": 8548,
+            "bitten": true
+          },
+          {
+            "id": 141,
+            "tick": 8687,
+            "bitten": true
+          },
+          {
+            "id": 145,
+            "tick": 8709,
+            "bitten": true
+          },
+          {
+            "id": 142,
+            "tick": 9070,
+            "bitten": true
+          },
+          {
+            "id": 147,
+            "tick": 9092,
+            "bitten": true
+          },
+          {
+            "id": 122,
+            "tick": 9143,
+            "bitten": true
+          },
+          {
+            "id": 148,
+            "tick": 9201,
+            "bitten": true
+          },
+          {
+            "id": 152,
+            "tick": 9439,
+            "bitten": true
+          },
+          {
+            "id": 96,
+            "tick": 9551,
+            "bitten": true
+          },
+          {
+            "id": 123,
+            "tick": 9622,
+            "bitten": true
+          },
+          {
+            "id": 97,
+            "tick": 9639,
+            "bitten": true
+          },
+          {
+            "id": 101,
+            "tick": 9683,
+            "bitten": true
+          },
+          {
+            "id": 95,
+            "tick": 9797,
+            "bitten": true
+          },
+          {
+            "id": 99,
+            "tick": 9861,
+            "bitten": true
+          },
+          {
+            "id": 120,
+            "tick": 9868,
+            "bitten": true
+          },
+          {
+            "id": 100,
+            "tick": 9871,
+            "bitten": true
+          },
+          {
+            "id": 149,
+            "tick": 9882,
+            "bitten": true
+          },
+          {
+            "id": 98,
+            "tick": 9907,
+            "bitten": true
+          },
+          {
+            "id": 136,
+            "tick": 10003,
+            "bitten": true
+          },
+          {
+            "id": 126,
+            "tick": 10669,
+            "bitten": true
+          },
+          {
+            "id": 129,
+            "tick": 11142,
+            "bitten": true
+          },
+          {
+            "id": 130,
+            "tick": 11554,
+            "bitten": true
+          },
+          {
+            "id": 112,
+            "tick": 13142,
+            "bitten": true
+          },
+          {
+            "id": 111,
+            "tick": 13181,
+            "bitten": true
+          },
+          {
+            "id": 121,
+            "tick": 13685,
+            "bitten": true
+          }
+        ],
+        "directSpawns": []
+      },
+      "target": "every new turn has a preceding bite on the same ID; no direct additions",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-high-fixtures.json",
+      "level": "L1"
+    },
+    {
+      "id": "L1-07",
+      "clause": "remote observer remains undisturbed",
+      "value": {
+        "deaths": 0,
+        "damage": 0,
+        "knockdowns": 0,
+        "kills": 0
+      },
+      "target": "zero deaths, damage and player knockdowns/kills",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-high-fixtures.json",
+      "level": "L1"
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/final-a/native-receipts/L1-low-fixtures.json.gz",
+      "sha256": "800c578b84549c6260c6eafc413e0bd3f12eec8867ee04d39f696b809d231cb2",
+      "what": "Frozen-head L1-07 native input receipt, evaluated by the exact clauses retained in the row proof.",
+      "canonicalFile": "docs/reports/fix51-verify/receipts/L1-low-fixtures.json",
+      "decodedSha256": "732c5f9ec817571bf782ffe583daf68650a18b5d5268d44b43d50e7350167ab2"
+    },
+    {
+      "file": "docs/reports/final-a/native-receipts/L1-high-fixtures.json.gz",
+      "sha256": "0d126c713ffbdd45c4a52c6fd750dc91f257ffeb31e08ead2b0dc21cc23792ac",
+      "what": "Frozen-head L1-07 native input receipt, evaluated by the exact clauses retained in the row proof.",
+      "canonicalFile": "docs/reports/fix51-verify/receipts/L1-high-fixtures.json",
+      "decodedSha256": "3054f70f6c66327395b15d588d753169b64a88e97203f415503c30605baa6fce"
+    }
+  ],
+  "observation": "10 current native checks PASS across low/high. low/controlled-fixture remote idle initial five infected: 5; target exactly5 at release (PASS); low/controlled-fixture remote idle living infected at120s: 30; target ≥15 at+120s (PASS); low/controlled-fixture remote idle living infected at240s: 30; target ≥25 at+240s (PASS); low/controlled-fixture remote idle every additional turn follows a bite: {\"turns\":[{\"id\":131,\"tick\":4752,\"bitten\":true},{\"id\":130,\"tick\":4785,\"bitten\":true},{\"id\":133,\"tick\":5166,\"bitten\":true},{\"id\":132,\"tick\":5421,\"bitten\":true},{\"id\":113,\"tick\":5793,\"bitten\":true},{\"id\":114,\"tick\":5825,\"bitten\":true},{\"id\":106,\"tick\":6708,\"bitten\":true},{\"id\":107,\"tick\":6725,\"bitten\":true},{\"id\":136,\"tick\":6832,\"bitten\":true},{\"id\":105,\"tick\":6922,\"bitten\":true},{\"id\":109,\"tick\":6952,\"bitten\":true},{\"id\":137, [full value in proof]; low/controlled-fixture remote observer remains undisturbed: {\"deaths\":0,\"damage\":0,\"knockdowns\":0,\"kills\":0}; target zero deaths, damage and player knockdowns/kills (PASS); high/controlled-fixture remote idle initial five infected: 5; target exactly5 at release (PASS); high/controlled-fixture remote idle living infected at120s: 49; target ≥15 at+120s (PASS); high/controlled-fixture remote idle living infected at240s: 53; target ≥25 at+240s (PASS); high/controlled-fixture remote idle every additional turn follows a bite: {\"turns\":[{\"id\":133,\"tick\":4751,\"bitten\":true},{\"id\":132,\"tick\":4943,\"bitten\":true},{\"id\":135,\"tick\":6153,\"bitten\":true},{\"id\":134,\"tick\":6381,\"bitten\":true},{\"id\":109,\"tick\":6651,\"bitten\":true},{\"id\":143,\"tick\":6858,\"bitten\":true},{\"id\":110,\"tick\":7010,\"bitten\":true},{\"id\":114,\"tick\":7124,\"bitten\":true},{\"id\":113,\"tick\":7175,\"bitten\":true},{\"id\":153,\"tick\":7181,\"bitten\":true},{\"id\":108,\"tick\":7236,\"bitten\":true},{\"id\":144 [full value in proof]; high/controlled-fixture remote observer remains undisturbed: {\"deaths\":0,\"damage\":0,\"knockdowns\":0,\"kills\":0}; target zero deaths, damage and player knockdowns/kills (PASS)"
+}

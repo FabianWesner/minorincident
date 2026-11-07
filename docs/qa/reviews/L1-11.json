@@ -1,167 +1,33 @@
 {
   "row": "L1-11",
   "status": "PASS",
-  "reviewer": "Codex sweep-a2",
-  "date": "2026-11-05",
-  "commit": "994dba0083f3a93e072e460b4b365cc335649b98",
+  "reviewer": "Codex final-a",
+  "date": "2026-11-07",
+  "commit": "d7f1938e7c70f826ccec279c2f12aa65844c67ad",
   "clauses": [
     {
       "clause": "Bicycle: 7.5 m/s, WASD relative to the bike; after dismount it stands on the player's side of any fence/wall.",
       "verdict": "PASS",
-      "note": "Both physical quality runs sustain actual7.5m/s, A/D steer relative to bike and S brakes then reverses. After physical E by depot facade and real privacy fence, parked bike and rider stay in same separating half-plane. All68 new images personally inspected on18 retained sheets: visible frame remains beside rider outside depot and east of brown fence. Earlier expired/incorrectly targeted fence trials retained and explicitly excluded. Seven rejection controls pass. Source Bicycle.reachable uses rider-to-frame solid raycasts, supporting same-side placement beyond the sampled wall/fence."
+      "note": "Current physical WASD/E low+high trials after ordinary parcel pickup, carrying parcel throughout. Per-tick displacement reaches7.5m/s for84 consecutive forward ticks and114 reverse ticks in each tier (60Hz, ±0.01m/s tolerance). A changes heading -0.01555→-0.49067rad, D then -0.49067→-0.17420rad; steering follows bicycle axes. Both E dismounts leave courier and bicycle on the approach side: depot wall maxZ=-38.5, courierZ=-36.9683/bikeZ=-36.8697; actual privacy-fence127 minX=-25.635, courierX=-26.5611/bikeX=-28.3073. All four dismounts mounted=false, parcel retained. Personally inspected all42 original frames, dismounts visibly remain outside wall/fence. Route assist aimed at a farther fence but collided safely with fence127 first; that actual contacted fence is the qualified example, not the unreached target. Earlier cooldown/heading mistakes were harness attempts, excluded. Source collision policy plus these physical opposing wall/fence examples support same-side behavior."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-a2/L1-11-measurement.json",
-      "sha256": "ed745633d457d7dd6613bda9f29c7c237ebc848b1282b5dfc0d5cd939f02fca9",
-      "what": "Physical input receipt, actual measured motion/same-side geometry, all-frame seen notes and retained sheets; failed setup attempts are excluded."
+      "file": "docs/reports/final-a/L1-11-browser-ledger.json.gz",
+      "sha256": "8f129ea9ef03cad721c03b96b3bcd8fdc23f2107e66d9367c6fc647e4304de5c",
+      "what": "Current physical WASD/E low+high trials after ordinary parcel pickup, carrying parcel throughout. Per-tick displacement reaches7.5m/s for84 consecutive forward ticks and114 reverse ticks in each tier (60Hz, ±0.01m/s tolerance). A changes heading -0.01555→-0.49067rad, D then -0.49067→-0.17420rad; steering follows bicycle axes. Both E dismounts leave courier and bicycle on the approach side: depot wall maxZ=-38.5, courierZ=-36.9683/bikeZ=-36.8697; actual privacy-fence127 minX=-25.635, courierX=-26.5611/bikeX=-28.3073. All four dismounts mounted=false, parcel retained. Personally inspected all42 original frames, dismounts visibly remain outside wall/fence. Route assist aimed at a farther fence but collided safely with fence127 first; that actual contacted fence is the qualified example, not the unreached target. Earlier cooldown/heading mistakes were harness attempts, excluded. Source collision policy plus these physical opposing wall/fence examples support same-side behavior."
     },
     {
-      "file": "docs/reports/sweep-a2/L1-11-image-review.json",
-      "sha256": "ef0ee576c3b65fa92333c299f149723c57b0adb735a17e8a8a22301c73286cb9",
-      "what": "Physical input receipt, actual measured motion/same-side geometry, all-frame seen notes and retained sheets; failed setup attempts are excluded."
+      "file": "docs/reports/final-a/L1-11-image-review.json",
+      "sha256": "fe0d8b0d2bc83e566ee7fb74c71affdfc03bade4228d7a19c357857d2b085ce2",
+      "what": "Current physical WASD/E low+high trials after ordinary parcel pickup, carrying parcel throughout. Per-tick displacement reaches7.5m/s for84 consecutive forward ticks and114 reverse ticks in each tier (60Hz, ±0.01m/s tolerance). A changes heading -0.01555→-0.49067rad, D then -0.49067→-0.17420rad; steering follows bicycle axes. Both E dismounts leave courier and bicycle on the approach side: depot wall maxZ=-38.5, courierZ=-36.9683/bikeZ=-36.8697; actual privacy-fence127 minX=-25.635, courierX=-26.5611/bikeX=-28.3073. All four dismounts mounted=false, parcel retained. Personally inspected all42 original frames, dismounts visibly remain outside wall/fence. Route assist aimed at a farther fence but collided safely with fence127 first; that actual contacted fence is the qualified example, not the unreached target. Earlier cooldown/heading mistakes were harness attempts, excluded. Source collision policy plus these physical opposing wall/fence examples support same-side behavior."
     },
     {
-      "file": "docs/reports/sweep-a2/bike-high-fence-ledger.json.gz",
-      "sha256": "00b9b4eee5bf286deb68a698def8d5d9e9e8252107419bd6a59609f49cebbda9",
-      "what": "Physical input receipt, actual measured motion/same-side geometry, all-frame seen notes and retained sheets; failed setup attempts are excluded."
-    },
-    {
-      "file": "docs/reports/sweep-a2/bike-low-batch-ledger.json.gz",
-      "sha256": "abd4a4295ebd737ea4bfd3fdc778c6fee1cffb3f740b1682f1e6bac79ce4978f",
-      "what": "Physical input receipt, actual measured motion/same-side geometry, all-frame seen notes and retained sheets; failed setup attempts are excluded."
-    },
-    {
-      "file": "docs/reports/sweep-a2/bike-low-fence-ledger.json.gz",
-      "sha256": "20814a194c73111de344046aec569ceeeba0430766519797344ec321fd42d5ce",
-      "what": "Physical input receipt, actual measured motion/same-side geometry, all-frame seen notes and retained sheets; failed setup attempts are excluded."
-    },
-    {
-      "file": "docs/reports/sweep-a2/bike-low-final-ledger.json.gz",
-      "sha256": "d2444ee11611d43ead4723eb10d19a6c7c5a1fa9abfe743d2c7f490d53527a60",
-      "what": "Physical input receipt, actual measured motion/same-side geometry, all-frame seen notes and retained sheets; failed setup attempts are excluded."
-    },
-    {
-      "file": "docs/reports/sweep-a2/bike-low-ledger.json.gz",
-      "sha256": "6c0441f7ad210c943fe08230beed119b5f5e2745572eaf5ab68d176905e5f53d",
-      "what": "Physical input receipt, actual measured motion/same-side geometry, all-frame seen notes and retained sheets; failed setup attempts are excluded."
-    },
-    {
-      "file": "docs/reports/sweep-a2/bike-high-fence-photos.json",
-      "sha256": "569ce4cb3efedd975ad802dfa4eb65c7fd1454abbe39637f58a6fa3cd070c137",
-      "what": "Physical input receipt, actual measured motion/same-side geometry, all-frame seen notes and retained sheets; failed setup attempts are excluded."
-    },
-    {
-      "file": "docs/reports/sweep-a2/bike-low-batch-photos.json",
-      "sha256": "ce04360f865fb1ec23cc8a80264cac44fe91502e1347f5c2f0244a84b259ed22",
-      "what": "Physical input receipt, actual measured motion/same-side geometry, all-frame seen notes and retained sheets; failed setup attempts are excluded."
-    },
-    {
-      "file": "docs/reports/sweep-a2/bike-low-fence-photos.json",
-      "sha256": "a03eca79529ba3a4b9d4dbb0d857272f6077a3be5978238884aa937e90ac3d6a",
-      "what": "Physical input receipt, actual measured motion/same-side geometry, all-frame seen notes and retained sheets; failed setup attempts are excluded."
-    },
-    {
-      "file": "docs/reports/sweep-a2/bike-low-final-photos.json",
-      "sha256": "4c3154a59de628f494f91838811727ced6f89a10f056c565dda083217045d14d",
-      "what": "Physical input receipt, actual measured motion/same-side geometry, all-frame seen notes and retained sheets; failed setup attempts are excluded."
-    },
-    {
-      "file": "docs/reports/sweep-a2/bike-low-photos.json",
-      "sha256": "611dd822d39fd1bde6c7d3876a4a481dbc71422d7eccc1b88e325aca3fb98d37",
-      "what": "Physical input receipt, actual measured motion/same-side geometry, all-frame seen notes and retained sheets; failed setup attempts are excluded."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/bike-high-fence-01.jpg",
-      "sha256": "e4f2887bfa8d3c4ee3b187abaf0d720fc2ce944d377931e4ba12326a60b1a49c",
-      "what": "Physical input receipt, actual measured motion/same-side geometry, all-frame seen notes and retained sheets; failed setup attempts are excluded."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/bike-high-fence-02.jpg",
-      "sha256": "26a45fd606759f97549016ec214af5fb731457c4b9fb8184eb3d93f64534641d",
-      "what": "Physical input receipt, actual measured motion/same-side geometry, all-frame seen notes and retained sheets; failed setup attempts are excluded."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/bike-high-fence-03.jpg",
-      "sha256": "8d9653a9d508ba4945ceeffca6bed1d6732cfc702c6307876463a4dd747f7509",
-      "what": "Physical input receipt, actual measured motion/same-side geometry, all-frame seen notes and retained sheets; failed setup attempts are excluded."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/bike-high-fence-04.jpg",
-      "sha256": "f8ec03676fb6de414ac8b71edfa96d4c0f36cfd3f37ff406652265d3f0cf642d",
-      "what": "Physical input receipt, actual measured motion/same-side geometry, all-frame seen notes and retained sheets; failed setup attempts are excluded."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/bike-low-01.jpg",
-      "sha256": "a0929416c72c5477221f2c6d7892bd492a463b60b7888d7fbdae26920da0e758",
-      "what": "Physical input receipt, actual measured motion/same-side geometry, all-frame seen notes and retained sheets; failed setup attempts are excluded."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/bike-low-02.jpg",
-      "sha256": "2cb24bd3bce163aaf30d7e80d5208795f5e26d4e0a17a4cbf78c15b9f1e212ff",
-      "what": "Physical input receipt, actual measured motion/same-side geometry, all-frame seen notes and retained sheets; failed setup attempts are excluded."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/bike-low-batch-01.jpg",
-      "sha256": "a0929416c72c5477221f2c6d7892bd492a463b60b7888d7fbdae26920da0e758",
-      "what": "Physical input receipt, actual measured motion/same-side geometry, all-frame seen notes and retained sheets; failed setup attempts are excluded."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/bike-low-batch-02.jpg",
-      "sha256": "d133de6cf556ea07ed331f3b94a0e4f5c79548540253dd0fc6f3fbeaa477f948",
-      "what": "Physical input receipt, actual measured motion/same-side geometry, all-frame seen notes and retained sheets; failed setup attempts are excluded."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/bike-low-batch-03.jpg",
-      "sha256": "4002a1744467dcd74365fdb9c1f51e1a168e1d3057cc1bdb9ae4d5a6d71ff27b",
-      "what": "Physical input receipt, actual measured motion/same-side geometry, all-frame seen notes and retained sheets; failed setup attempts are excluded."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/bike-low-batch-04.jpg",
-      "sha256": "6aa6a89ee73d825f0e533b706a6cc41778ab79160bd5dcc7e256836e955614f6",
-      "what": "Physical input receipt, actual measured motion/same-side geometry, all-frame seen notes and retained sheets; failed setup attempts are excluded."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/bike-low-fence-01.jpg",
-      "sha256": "a0929416c72c5477221f2c6d7892bd492a463b60b7888d7fbdae26920da0e758",
-      "what": "Physical input receipt, actual measured motion/same-side geometry, all-frame seen notes and retained sheets; failed setup attempts are excluded."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/bike-low-fence-02.jpg",
-      "sha256": "46ca3837a58ce7a85c627810feab8e99872bab64132282f25d51bcc37ca831bf",
-      "what": "Physical input receipt, actual measured motion/same-side geometry, all-frame seen notes and retained sheets; failed setup attempts are excluded."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/bike-low-fence-03.jpg",
-      "sha256": "1f038d1983dd4b60b0cec41f14c4bccf1ae5f402c8aad9ef49a124c0df47b88e",
-      "what": "Physical input receipt, actual measured motion/same-side geometry, all-frame seen notes and retained sheets; failed setup attempts are excluded."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/bike-low-fence-04.jpg",
-      "sha256": "c98557699c115071b0fb524ebdc0aae5e2f88766f829927df83125446fd42ec7",
-      "what": "Physical input receipt, actual measured motion/same-side geometry, all-frame seen notes and retained sheets; failed setup attempts are excluded."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/bike-low-final-01.jpg",
-      "sha256": "a0929416c72c5477221f2c6d7892bd492a463b60b7888d7fbdae26920da0e758",
-      "what": "Physical input receipt, actual measured motion/same-side geometry, all-frame seen notes and retained sheets; failed setup attempts are excluded."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/bike-low-final-02.jpg",
-      "sha256": "46ca3837a58ce7a85c627810feab8e99872bab64132282f25d51bcc37ca831bf",
-      "what": "Physical input receipt, actual measured motion/same-side geometry, all-frame seen notes and retained sheets; failed setup attempts are excluded."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/bike-low-final-03.jpg",
-      "sha256": "1f038d1983dd4b60b0cec41f14c4bccf1ae5f402c8aad9ef49a124c0df47b88e",
-      "what": "Physical input receipt, actual measured motion/same-side geometry, all-frame seen notes and retained sheets; failed setup attempts are excluded."
-    },
-    {
-      "file": "docs/reports/sweep-a2/reviewed/bike-low-final-04.jpg",
-      "sha256": "209ab5c3c0db510bfb3a48bc98db7cb125dc4acaca45482e1c7000dde10d5772",
-      "what": "Physical input receipt, actual measured motion/same-side geometry, all-frame seen notes and retained sheets; failed setup attempts are excluded."
+      "file": "docs/reports/final-a/L1-11-current-proof.json",
+      "sha256": "c979b1982f9e650276b098ac06dc56def22584e39b258ad04146a378ffad146d",
+      "what": "Current physical WASD/E low+high trials after ordinary parcel pickup, carrying parcel throughout. Per-tick displacement reaches7.5m/s for84 consecutive forward ticks and114 reverse ticks in each tier (60Hz, ±0.01m/s tolerance). A changes heading -0.01555→-0.49067rad, D then -0.49067→-0.17420rad; steering follows bicycle axes. Both E dismounts leave courier and bicycle on the approach side: depot wall maxZ=-38.5, courierZ=-36.9683/bikeZ=-36.8697; actual privacy-fence127 minX=-25.635, courierX=-26.5611/bikeX=-28.3073. All four dismounts mounted=false, parcel retained. Personally inspected all42 original frames, dismounts visibly remain outside wall/fence. Route assist aimed at a farther fence but collided safely with fence127 first; that actual contacted fence is the qualified example, not the unreached target. Earlier cooldown/heading mistakes were harness attempts, excluded. Source collision policy plus these physical opposing wall/fence examples support same-side behavior."
     }
   ],
-  "notes": "No game change. Native complete input prefix obtains parcel only; all bike tests use physical page.keyboard WASD/E. Explicit read-only coordinate assistance means these are not screen-only navigation proof. No performance timing."
+  "notes": "Game source frozen at4e570db. Current pooled headless capture/input evidence and exact sourceDigest; image files retained only under test-results.",
+  "sourceDigest": "00a81dbceddae37bdb1b6540d29f8e3658cdd7d6b7b51968d1fd068c9a6eb63c"
 }

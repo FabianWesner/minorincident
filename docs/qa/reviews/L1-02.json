@@ -1,27 +1,28 @@
 {
   "row": "L1-02",
   "status": "PASS",
-  "reviewer": "Codex sweep-a3",
-  "date": "2026-11-06",
-  "commit": "10e01ad8c1073f575580ef08ad216e6b736557dc",
+  "reviewer": "Codex final-a",
+  "date": "2026-11-07",
+  "commit": "1cd2b6dc16497c5ace5a59ae81cc717535627f7b",
   "clauses": [
     {
       "clause": "50–60 civilians at start, none idle facing nowhere > 3 s; 0 infected; 0 `combat.*`.",
       "verdict": "PASS",
-      "note": "Fresh untouched native seed1 morning at both qualities, every tick0–3600:51 low/58 high human civilians, zero infected and zero combat events for60 active seconds. All109 actors have at most133 ticks(2.2167s) near-stationary with no meaningful authored facing target ahead, below180ticks. Partner/bench/shop/flower/doorway targets and actual yaw retained per actor; hidden interiors excluded from visible idling. Four controls include181-tick missing/away-facing failures and exact180-tick bound. No relocation, mission skip, protection or input."
+      "note": "Fresh untouched seed1 morning at both qualities, every tick0–3600:51 low/58 high human civilians; zero infected and zero combat events over60s. Maximum unfaced stationary interval133ticks=2.2167s, below180ticks. Every actor actual yaw/position and authored facing target retained. Four broken/boundary controls pass. Hidden interiors excluded from visible idle. No relocation, protection or input."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-a3/L1-02-current-review.json",
-      "sha256": "148ec696982637b5bc139f93fe79d74d7dd5041bfd10d4e546f11bc8bb008cd3",
-      "what": "Fresh untouched native seed1 morning at both qualities, every tick0–3600:51 low/58 high human civilians, zero infected and zero combat events for60 active seconds. All109 actors have at most133 ticks(2.2167s) near-stationary with no meaningful authored facing target ahead, below180ticks. Partner/bench/shop/flower/doorway targets and actual yaw retained per actor; hidden interiors excluded from visible idling. Four controls include181-tick missing/away-facing failures and exact180-tick bound. No relocation, mission skip, protection or input."
+      "file": "docs/reports/final-a/L1-02-current-review.json",
+      "sha256": "e02dee81c8705d57662abdfd8a9bbfcc558bd7f0655e5adc78dc570fefcb9149",
+      "what": "Fresh untouched seed1 morning at both qualities, every tick0–3600:51 low/58 high human civilians; zero infected and zero combat events over60s. Maximum unfaced stationary interval133ticks=2.2167s, below180ticks. Every actor actual yaw/position and authored facing target retained. Four broken/boundary controls pass. Hidden interiors excluded from visible idle. No relocation, protection or input."
     },
     {
-      "file": "docs/reports/sweep-a3/L1-02-current-ledger.json.gz",
-      "sha256": "daa59a04ed1e5be7d61c86666d0f219456281144f76716fb216d5f62bd5671fd",
-      "what": "Fresh untouched native seed1 morning at both qualities, every tick0–3600:51 low/58 high human civilians, zero infected and zero combat events for60 active seconds. All109 actors have at most133 ticks(2.2167s) near-stationary with no meaningful authored facing target ahead, below180ticks. Partner/bench/shop/flower/doorway targets and actual yaw retained per actor; hidden interiors excluded from visible idling. Four controls include181-tick missing/away-facing failures and exact180-tick bound. No relocation, mission skip, protection or input."
+      "file": "docs/reports/final-a/L1-02-current-ledger.json.gz",
+      "sha256": "d567286a726381d7265d73bc5eca119c6ca42ddf15939a91c858230af9ed5b2e",
+      "what": "Fresh untouched seed1 morning at both qualities, every tick0–3600:51 low/58 high human civilians; zero infected and zero combat events over60s. Maximum unfaced stationary interval133ticks=2.2167s, below180ticks. Every actor actual yaw/position and authored facing target retained. Four broken/boundary controls pass. Hidden interiors excluded from visible idle. No relocation, protection or input."
     }
   ],
-  "notes": "Scripted sim criterion. Actual actor positions/yaws, authored targets, civilian identity census and combat events measured for every tick; no visual appearance claim. Native scripted observation rerun after the final constant-width ring change."
+  "notes": "Fresh observation on frozen runtime source4e570db; current sourceDigest recorded by writeReview.",
+  "sourceDigest": "00a81dbceddae37bdb1b6540d29f8e3658cdd7d6b7b51968d1fd068c9a6eb63c"
 }

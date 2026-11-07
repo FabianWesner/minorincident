@@ -1,0 +1,120 @@
+{
+  "row": "L3-01",
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "criterion": "Handgun only at the armory, within 40 s of start; no reload/ammo UI over 600 shots; 40 HP infected = 2 hits.",
+  "nativeChecks": [
+    {
+      "id": "L3-01",
+      "clause": "actual handgun pickup clock",
+      "level": "L3",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 4.45,
+      "target": "0 ≤ value ≤ 40",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-complete.json"
+    },
+    {
+      "id": "L3-01",
+      "clause": "actual handgun pickup clock",
+      "level": "L3",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 4.45,
+      "target": "0 ≤ value ≤ 40",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-stationary.json"
+    },
+    {
+      "id": "L3-01",
+      "clause": "actual handgun pickup clock",
+      "level": "L3",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 4.45,
+      "target": "0 ≤ value ≤ 40",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-high-complete.json"
+    },
+    {
+      "id": "L3-01",
+      "clause": "actual handgun pickup clock",
+      "level": "L3",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 4.45,
+      "target": "0 ≤ value ≤ 40",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-high-stationary.json"
+    },
+    {
+      "id": "L3-01",
+      "clause": "actual first handgun acquisition clock",
+      "value": 4.45,
+      "target": "≤40s",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
+      "level": "L3"
+    },
+    {
+      "id": "L3-01",
+      "clause": "handgun hits versus40 HP specimen",
+      "value": {
+        "weapon": "weapon.handgun",
+        "flank": false,
+        "initialHp": 40,
+        "endHp": 0,
+        "hitCount": 2,
+        "seconds": 0.45,
+        "hpAmounts": [
+          20,
+          20
+        ],
+        "isolatedAI": true
+      },
+      "target": "2 hits",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
+      "level": "L3"
+    },
+    {
+      "id": "L3-01",
+      "clause": "actual first handgun acquisition clock",
+      "value": 4.45,
+      "target": "≤40s",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
+      "level": "L3"
+    },
+    {
+      "id": "L3-01",
+      "clause": "handgun hits versus40 HP specimen",
+      "value": {
+        "weapon": "weapon.handgun",
+        "flank": false,
+        "initialHp": 40,
+        "endHp": 0,
+        "hitCount": 2,
+        "seconds": 0.45,
+        "hpAmounts": [
+          20,
+          20
+        ],
+        "isolatedAI": true
+      },
+      "target": "2 hits",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
+      "level": "L3"
+    }
+  ],
+  "observation": "All18 current WebGPU low/high full-HUD frames personally inspected on five original-resolution sheets at0/100/200/300/400/500/600 actual handgun attacks. No courier ammunition/reload UI;798 HUD samples/tier retain40low/35high NPC Reloading callouts, not misclassified as courier widgets. Normal armory pickup267ticks=4.45s; current source withholds loose handgun and sole grant occurs on actual l3-armory interaction. Fresh native40HP specimen dies after two20HP hits both tiers. Actual600shots/tier,594 regular20tick gaps; five capture-induced gaps24/36 at100shot boundaries explicitly retained. Courier damage protection only for600shot observation. Requested final zoom0.5/1/1.5 remains scripted yard1; no zoom-extreme claim."
+}

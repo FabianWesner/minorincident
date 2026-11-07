@@ -1,42 +1,33 @@
 {
   "row": "L3-13",
   "status": "FAIL",
-  "reviewer": "Codex fix64-a",
-  "date": "2026-11-05",
-  "commit": "f8d88ddc14f6c9608e9004f80aa757788d795b8a",
+  "reviewer": "Codex final-a",
+  "date": "2026-11-07",
+  "commit": "79231cd1fb28ec46b2549f04f6fa3ae673e86694",
   "clauses": [
     {
       "clause": "Raised corridor: no deck gaps or dark seams at the ramps; no infected clumps stuck between barrier rows; no body hanging on walls.",
       "verdict": "FAIL",
-      "note": "Fresh full physical traversal from x135 to216 at both tiers, followed by10s settling. All72 frames inspected. The entry S-bends still show interrupted deck/rail surfaces and living infected appearing suspended beyond the visible inner edge, notably high/x150 close view. The trajectory/foot ledger and support audit do not prove actor roots outside the nominal deck width; rendering/occlusion versus physical support remains unresolved. Keep FAIL; no small causal game fix established. Final rescue camera locks the requested zoom pair, so no independent late-route zoom qualification is claimed. Final-source refresh after the unrelated L1 cue change: all16 high entry images inspected at recorded actualzoom0.5/1.5; the same living body appears past the broken inner edge atx150 and remains visible after10s atx157. This fresh counterexample retains FAIL."
+      "note": "Fresh low WebGL2 ordinary physical route from x135 to177.14; all22 photographs personally inspected at original resolution. Counterexample: at x177.14 the close0.5 view shows a dark triangular seam across the deck, extending from approximately image(945,576) to right edge(1279,592), over300px long. It remains in after, settled-5s and settled-10s frames. Thus no-dark-seams clause FAIL. Repro: seed1 low, take the raised corridor to x177 beside parked van, look back/down at the ramp joint at zoom0.5. The assisted controller stalled at this van; that is not itself a route/collision failure. No full-route, high-tier, hanging-body or physical support conclusion is claimed; one current visible seam suffices for FAIL."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix64-a/L3-13-entry-high.json.gz",
-      "sha256": "67d417100fb2494f7cd23ff9df5509236baa052cda10456d049ed305ded35caf",
-      "what": "Current-source actual camera, actor health, transform and rendered-foot states; native physical entry traversal and10s settling. Raw53MB command duplication omitted; full receipt hash retained."
+      "file": "docs/reports/final-a/L3-13-browser-ledger.json.gz",
+      "sha256": "6d4a89de3ed9ba80660656792ae2bc1fbed7aced58606778d4be5bc1582b5032",
+      "what": "Fresh low WebGL2 ordinary physical route from x135 to177.14; all22 photographs personally inspected at original resolution. Counterexample: at x177.14 the close0.5 view shows a dark triangular seam across the deck, extending from approximately image(945,576) to right edge(1279,592), over300px long. It remains in after, settled-5s and settled-10s frames. Thus no-dark-seams clause FAIL. Repro: seed1 low, take the raised corridor to x177 beside parked van, look back/down at the ramp joint at zoom0.5. The assisted controller stalled at this van; that is not itself a route/collision failure. No full-route, high-tier, hanging-body or physical support conclusion is claimed; one current visible seam suffices for FAIL."
     },
     {
-      "file": "docs/reports/fix64-a/L3-13-entry-high-images.json",
-      "sha256": "ada5e8da2b461f8c3436316a37522d6effd8f2bc8243ccdabe2ee969ddc7bc2b",
-      "what": "Personally inspected all16 current-source high entry images, actual zoom0.5/1.5; ten-second settling atx157. Living wall-body appearance persists. Collision root penetration is not established."
+      "file": "docs/reports/final-a/L3-13-image-review.json",
+      "sha256": "0d6ac4e54360d874a4615a597e4b413dce414bf8c99fc5956d265a640e96e80a",
+      "what": "Fresh low WebGL2 ordinary physical route from x135 to177.14; all22 photographs personally inspected at original resolution. Counterexample: at x177.14 the close0.5 view shows a dark triangular seam across the deck, extending from approximately image(945,576) to right edge(1279,592), over300px long. It remains in after, settled-5s and settled-10s frames. Thus no-dark-seams clause FAIL. Repro: seed1 low, take the raised corridor to x177 beside parked van, look back/down at the ramp joint at zoom0.5. The assisted controller stalled at this van; that is not itself a route/collision failure. No full-route, high-tier, hanging-body or physical support conclusion is claimed; one current visible seam suffices for FAIL."
     },
     {
-      "file": "docs/reports/fix64-a/L3-13-image-review.json",
-      "sha256": "c0921ce211634204f4aa9e4b99b57471260308a286f99c5519468eba276afbf8",
-      "what": "Personally inspected all72 captures; exact per-image hashes, observations, full-route command count/tick endpoints and actual camera limitation."
-    },
-    {
-      "file": "docs/reports/fix64-a/L3-13-frames.json.gz",
-      "sha256": "d95fabb8a9b7b051b87c062692d97ffcda6b524b148aa94a7fb42a8d5888a9eb",
-      "what": "Exact captured actor health/transforms and rendered-foot samples for both tiers across the full route; compressed from the physical traversal receipts."
-    },
-    {
-      "file": "docs/reports/fix64-a/L3-13-support-audit.json",
-      "sha256": "f8f91efc0e90644ec335863554c197da91c64348c41a1b64a5aa8ee852b426c9",
-      "what": "Read-only native support/formula correlation:167 root/foot witnesses,0 outside-width roots. Prevents falsely attributing the visible hanging appearance to actor-root penetration."
+      "file": "docs/reports/final-a/L3-13-current-proof.json",
+      "sha256": "ddca664c01c7f31aca8159be831b7e364ca02144223dd1a7c65af7d80b42b0c1",
+      "what": "Fresh low WebGL2 ordinary physical route from x135 to177.14; all22 photographs personally inspected at original resolution. Counterexample: at x177.14 the close0.5 view shows a dark triangular seam across the deck, extending from approximately image(945,576) to right edge(1279,592), over300px long. It remains in after, settled-5s and settled-10s frames. Thus no-dark-seams clause FAIL. Repro: seed1 low, take the raised corridor to x177 beside parked van, look back/down at the ramp joint at zoom0.5. The assisted controller stalled at this van; that is not itself a route/collision failure. No full-route, high-tier, hanging-body or physical support conclusion is claimed; one current visible seam suffices for FAIL."
     }
   ],
-  "notes": "All captures are under test-results and will be deleted after recording their SHA-256 and observations. No targets, counts, timers or collision geometry were changed."
+  "notes": "Game source frozen at4e570db. Current pooled headless capture/input evidence and exact sourceDigest; image files retained only under test-results.",
+  "sourceDigest": "b54f676bf2eb09a12c8059dce4ebe53003816773db044d7acfc253fccbedccf9"
 }

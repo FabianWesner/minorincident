@@ -1,0 +1,239 @@
+{
+  "row": "L2-08",
+  "verdict": "PASS",
+  "frozenHead": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+  "fixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4",
+  "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
+  "generatedAt": "2026-11-06T23:49:03.138Z",
+  "criterion": "Snowball: infected **≥ 20 at +60 s, ≥ 30 at +120 s** (idle bot); ≥ 2 firefighters turned by +90 s; firefighters fight (≥ 1 hit) and have no immunity.",
+  "automatedComplete": true,
+  "checks": [
+    {
+      "id": "L2-08",
+      "clause": "idle snowball live infected census",
+      "value": {
+        "at60": {
+          "all": 30,
+          "rescue": 8
+        },
+        "at120": {
+          "all": 30,
+          "rescue": 7
+        },
+        "protected": true
+      },
+      "target": "≥20 at+60s;≥30 at+120s",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
+      "level": "L2"
+    },
+    {
+      "id": "L2-08",
+      "clause": "idle firefighter combat and turns",
+      "value": {
+        "hits": 111,
+        "turnedBy90": 4,
+        "turns": [
+          {
+            "id": 126,
+            "seconds": 3.3833333333333333,
+            "sameAsset": true
+          },
+          {
+            "id": 125,
+            "seconds": 3.1333333333333333,
+            "sameAsset": true
+          },
+          {
+            "id": 121,
+            "seconds": 2.6666666666666665,
+            "sameAsset": true
+          },
+          {
+            "id": 124,
+            "seconds": 3.2,
+            "sameAsset": true
+          }
+        ]
+      },
+      "target": "≥1 firefighter hit;≥2 turn by90s",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
+      "level": "L2"
+    },
+    {
+      "id": "L2-08",
+      "clause": "idle every firefighter has no story immunity after doors open",
+      "value": [
+        {
+          "id": 121,
+          "samples": 493,
+          "protectedTicks": 0
+        },
+        {
+          "id": 122,
+          "samples": 747,
+          "protectedTicks": 0
+        },
+        {
+          "id": 123,
+          "samples": 978,
+          "protectedTicks": 0
+        },
+        {
+          "id": 124,
+          "samples": 483,
+          "protectedTicks": 0
+        },
+        {
+          "id": 125,
+          "samples": 460,
+          "protectedTicks": 0
+        },
+        {
+          "id": 126,
+          "samples": 408,
+          "protectedTicks": 0
+        }
+      ],
+      "target": "all6 crew observed alive after opening; zero protected ticks",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
+      "level": "L2"
+    },
+    {
+      "id": "L2-08",
+      "clause": "idle snowball live infected census",
+      "value": {
+        "at60": {
+          "all": 60,
+          "rescue": 40
+        },
+        "at120": {
+          "all": 60,
+          "rescue": 31
+        },
+        "protected": true
+      },
+      "target": "≥20 at+60s;≥30 at+120s",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
+      "level": "L2"
+    },
+    {
+      "id": "L2-08",
+      "clause": "idle firefighter combat and turns",
+      "value": {
+        "hits": 43,
+        "turnedBy90": 6,
+        "turns": [
+          {
+            "id": 126,
+            "seconds": 2.683333333333333,
+            "sameAsset": true
+          },
+          {
+            "id": 121,
+            "seconds": 2.8833333333333333,
+            "sameAsset": true
+          },
+          {
+            "id": 124,
+            "seconds": 2.9,
+            "sameAsset": true
+          },
+          {
+            "id": 125,
+            "seconds": 2.75,
+            "sameAsset": true
+          },
+          {
+            "id": 122,
+            "seconds": 3.2,
+            "sameAsset": true
+          },
+          {
+            "id": 123,
+            "seconds": 2.6666666666666665,
+            "sameAsset": true
+          }
+        ]
+      },
+      "target": "≥1 firefighter hit;≥2 turn by90s",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
+      "level": "L2"
+    },
+    {
+      "id": "L2-08",
+      "clause": "idle every firefighter has no story immunity after doors open",
+      "value": [
+        {
+          "id": 121,
+          "samples": 391,
+          "protectedTicks": 0
+        },
+        {
+          "id": 122,
+          "samples": 605,
+          "protectedTicks": 0
+        },
+        {
+          "id": 123,
+          "samples": 719,
+          "protectedTicks": 0
+        },
+        {
+          "id": 124,
+          "samples": 402,
+          "protectedTicks": 0
+        },
+        {
+          "id": 125,
+          "samples": 426,
+          "protectedTicks": 0
+        },
+        {
+          "id": 126,
+          "samples": 366,
+          "protectedTicks": 0
+        }
+      ],
+      "target": "all6 crew observed alive after opening; zero protected ticks",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
+      "level": "L2"
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/final-a/native-receipts/L2-low-fixtures.json.gz",
+      "sha256": "2ae191d09dd6f71c03b5b425c37bc94d39927fc2c4254e3924c0495c7768ac94",
+      "what": "Frozen-head L2-08 native input receipt, evaluated by the exact clauses retained in the row proof.",
+      "canonicalFile": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
+      "decodedSha256": "260e6b2630be1e593395f867cffd45f125d4b45e8fc973a9e4376eb931683aff"
+    },
+    {
+      "file": "docs/reports/final-a/native-receipts/L2-high-fixtures.json.gz",
+      "sha256": "31bb5cc70b62a6a5cbc38aa2e8eaef53b50262b9fa6c58437087aa18576ee86b",
+      "what": "Frozen-head L2-08 native input receipt, evaluated by the exact clauses retained in the row proof.",
+      "canonicalFile": "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
+      "decodedSha256": "ebcffc44ba056bc652015d345e957523462d8adbb8a977c1edaa333550202650"
+    }
+  ],
+  "observation": "6 current native checks PASS across low/high. low/controlled-fixture idle snowball live infected census: {\"at60\":{\"all\":30,\"rescue\":8},\"at120\":{\"all\":30,\"rescue\":7},\"protected\":true}; target ≥20 at+60s;≥30 at+120s (PASS); low/controlled-fixture idle firefighter combat and turns: {\"hits\":111,\"turnedBy90\":4,\"turns\":[{\"id\":126,\"seconds\":3.3833333333333333,\"sameAsset\":true},{\"id\":125,\"seconds\":3.1333333333333333,\"sameAsset\":true},{\"id\":121,\"seconds\":2.6666666666666665,\"sameAsset\":true},{\"id\":124,\"seconds\":3.2,\"sameAsset\":true}]}; target ≥1 firefighter hit;≥2 turn by90s (PASS); low/controlled-fixture idle every firefighter has no story immunity after doors open: [{\"id\":121,\"samples\":493,\"protectedTicks\":0},{\"id\":122,\"samples\":747,\"protectedTicks\":0},{\"id\":123,\"samples\":978,\"protectedTicks\":0},{\"id\":124,\"samples\":483,\"protectedTicks\":0},{\"id\":125,\"samples\":460,\"protectedTicks\":0},{\"id\":126,\"samples\":408,\"protectedTicks\":0}]; target all6 crew observed alive after opening; zero protected ticks (PASS); high/controlled-fixture idle snowball live infected census: {\"at60\":{\"all\":60,\"rescue\":40},\"at120\":{\"all\":60,\"rescue\":31},\"protected\":true}; target ≥20 at+60s;≥30 at+120s (PASS); high/controlled-fixture idle firefighter combat and turns: {\"hits\":43,\"turnedBy90\":6,\"turns\":[{\"id\":126,\"seconds\":2.683333333333333,\"sameAsset\":true},{\"id\":121,\"seconds\":2.8833333333333333,\"sameAsset\":true},{\"id\":124,\"seconds\":2.9,\"sameAsset\":true},{\"id\":125,\"seconds\":2.75,\"sameAsset\":true},{\"id\":122,\"seconds\":3.2,\"sameAsset\":true},{\"id\":123,\"seconds\":2.6666666666666665,\"sameAsset\":true}]}; target ≥1 firefighter hit;≥2 turn by90s (PASS); high/controlled-fixture idle every firefighter has no story immunity after doors open: [{\"id\":121,\"samples\":391,\"protectedTicks\":0},{\"id\":122,\"samples\":605,\"protectedTicks\":0},{\"id\":123,\"samples\":719,\"protectedTicks\":0},{\"id\":124,\"samples\":402,\"protectedTicks\":0},{\"id\":125,\"samples\":426,\"protectedTicks\":0},{\"id\":126,\"samples\":366,\"protectedTicks\":0}]; target all6 crew observed alive after opening; zero protected ticks (PASS)"
+}

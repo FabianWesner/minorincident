@@ -1,0 +1,33 @@
+{
+  "row": "L1-13",
+  "status": "PASS",
+  "reviewer": "Codex final-a",
+  "date": "2026-11-07",
+  "commit": "0cbd817165f89940d2810fe2091000538a263ba0",
+  "clauses": [
+    {
+      "clause": "Bat only in the garage; unarmed needs 6–7 hits per infected, bat 2.",
+      "verdict": "PASS",
+      "note": "6 current native checks PASS across low/high. low/controlled-fixture ordinary first bat acquisition at garage: {\"initialBat\":false,\"first\":{\"tick\":5132,\"x\":23.257389068603516,\"z\":37.310020446777344,\"distance\":0.9915504447802522,\"step\":\"completed\"},\"garage\":{\"x\":23.1,\"z\":38.289,\"radius\":2,\"yaw\":0},\"outcome\":\"complete\",\"deaths\":0}; target no initial bat; first ownership inside the garage interaction radius after its objective (PASS); low/controlled-fixture weapon.fists hits to incapacitate native regular: {\"weapon\":\"weapon.fists\",\"flank\":false,\"initialHp\":60,\"endHp\":0,\"hitCount\":7,\"seconds\":1.7166666666666666,\"hpAmounts\":[9,9,9,9,9,9,6],\"isolatedAI\":true}; target 6–7 hits (PASS); low/controlled-fixture weapon.bat hits to incapacitate native regular: {\"weapon\":\"weapon.bat\",\"flank\":false,\"initialHp\":60,\"endHp\":0,\"hitCount\":2,\"seconds\":0.4166666666666667,\"hpAmounts\":[30,30],\"isolatedAI\":true}; target 2 hits (PASS); high/controlled-fixture ordinary first bat acquisition at garage: {\"initialBat\":false,\"first\":{\"tick\":5132,\"x\":23.257389068603516,\"z\":37.310020446777344,\"distance\":0.9915504447802522,\"step\":\"completed\"},\"garage\":{\"x\":23.1,\"z\":38.289,\"radius\":2,\"yaw\":0},\"outcome\":\"complete\",\"deaths\":0}; target no initial bat; first ownership inside the garage interaction radius after its objective (PASS); high/controlled-fixture weapon.fists hits to incapacitate native regular: {\"weapon\":\"weapon.fists\",\"flank\":false,\"initialHp\":60,\"endHp\":0,\"hitCount\":7,\"seconds\":1.7166666666666666,\"hpAmounts\":[9,9,9,9,9,9,6],\"isolatedAI\":true}; target 6–7 hits (PASS); high/controlled-fixture weapon.bat hits to incapacitate native regular: {\"weapon\":\"weapon.bat\",\"flank\":false,\"initialHp\":60,\"endHp\":0,\"hitCount\":2,\"seconds\":0.4166666666666667,\"hpAmounts\":[30,30],\"isolatedAI\":true}; target 2 hits (PASS)"
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/final-a/L1-13-native.json",
+      "sha256": "2f829d811d7e85eb644b77589a3ae62b4a347b7ba4e037ab292c5bcd6e6f2d54",
+      "what": "6 current native checks PASS across low/high. low/controlled-fixture ordinary first bat acquisition at garage: {\"initialBat\":false,\"first\":{\"tick\":5132,\"x\":23.257389068603516,\"z\":37.310020446777344,\"distance\":0.9915504447802522,\"step\":\"completed\"},\"garage\":{\"x\":23.1,\"z\":38.289,\"radius\":2,\"yaw\":0},\"outcome\":\"complete\",\"deaths\":0}; target no initial bat; first ownership inside the garage interaction radius after its objective (PASS); low/controlled-fixture weapon.fists hits to incapacitate native regular: {\"weapon\":\"weapon.fists\",\"flank\":false,\"initialHp\":60,\"endHp\":0,\"hitCount\":7,\"seconds\":1.7166666666666666,\"hpAmounts\":[9,9,9,9,9,9,6],\"isolatedAI\":true}; target 6–7 hits (PASS); low/controlled-fixture weapon.bat hits to incapacitate native regular: {\"weapon\":\"weapon.bat\",\"flank\":false,\"initialHp\":60,\"endHp\":0,\"hitCount\":2,\"seconds\":0.4166666666666667,\"hpAmounts\":[30,30],\"isolatedAI\":true}; target 2 hits (PASS); high/controlled-fixture ordinary first bat acquisition at garage: {\"initialBat\":false,\"first\":{\"tick\":5132,\"x\":23.257389068603516,\"z\":37.310020446777344,\"distance\":0.9915504447802522,\"step\":\"completed\"},\"garage\":{\"x\":23.1,\"z\":38.289,\"radius\":2,\"yaw\":0},\"outcome\":\"complete\",\"deaths\":0}; target no initial bat; first ownership inside the garage interaction radius after its objective (PASS); high/controlled-fixture weapon.fists hits to incapacitate native regular: {\"weapon\":\"weapon.fists\",\"flank\":false,\"initialHp\":60,\"endHp\":0,\"hitCount\":7,\"seconds\":1.7166666666666666,\"hpAmounts\":[9,9,9,9,9,9,6],\"isolatedAI\":true}; target 6–7 hits (PASS); high/controlled-fixture weapon.bat hits to incapacitate native regular: {\"weapon\":\"weapon.bat\",\"flank\":false,\"initialHp\":60,\"endHp\":0,\"hitCount\":2,\"seconds\":0.4166666666666667,\"hpAmounts\":[30,30],\"isolatedAI\":true}; target 2 hits (PASS)"
+    },
+    {
+      "file": "docs/reports/final-a/native-receipts/L1-low-fixtures.json.gz",
+      "sha256": "800c578b84549c6260c6eafc413e0bd3f12eec8867ee04d39f696b809d231cb2",
+      "what": "Frozen-head L1-13 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
+    },
+    {
+      "file": "docs/reports/final-a/native-receipts/L1-high-fixtures.json.gz",
+      "sha256": "0d126c713ffbdd45c4a52c6fd750dc91f257ffeb31e08ead2b0dc21cc23792ac",
+      "what": "Frozen-head L1-13 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
+    }
+  ],
+  "notes": "Numeric-only criterion; all evaluator clauses measured at both qualities on the frozen runtime source. No visual or route-readability inference.",
+  "sourceDigest": "00a81dbceddae37bdb1b6540d29f8e3658cdd7d6b7b51968d1fd068c9a6eb63c"
+}

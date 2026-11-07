@@ -1,0 +1,183 @@
+{
+  "row": "L2-15",
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "criterion": "Checkpoint: ≥ 3 police vehicles with light bars, ≥ 4 officers firing visibly, ≥ 8 civilians; gate closes ≤ 1.5 s after the player crosses; no infected crosses after.",
+  "nativeChecks": [
+    {
+      "id": "L2-15",
+      "clause": "prepared checkpoint officers",
+      "level": "L2",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 4,
+      "target": "4 ≤ value ≤ Infinity",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-complete.json"
+    },
+    {
+      "id": "L2-15",
+      "clause": "prepared checkpoint civilians",
+      "level": "L2",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 8,
+      "target": "8 ≤ value ≤ Infinity",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-complete.json"
+    },
+    {
+      "id": "L2-15",
+      "clause": "gate delay after crossing",
+      "level": "L2",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 0.6,
+      "target": "0 ≤ value ≤ 1.5",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-complete.json"
+    },
+    {
+      "id": "L2-15",
+      "clause": "prepared checkpoint officers",
+      "level": "L2",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 4,
+      "target": "4 ≤ value ≤ Infinity",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-stationary.json"
+    },
+    {
+      "id": "L2-15",
+      "clause": "prepared checkpoint civilians",
+      "level": "L2",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 8,
+      "target": "8 ≤ value ≤ Infinity",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-stationary.json"
+    },
+    {
+      "id": "L2-15",
+      "clause": "gate delay after crossing",
+      "level": "L2",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "NOT CHECKED",
+      "value": null,
+      "target": "0 ≤ value ≤ 1.5",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-stationary.json"
+    },
+    {
+      "id": "L2-15",
+      "clause": "prepared checkpoint officers",
+      "level": "L2",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 4,
+      "target": "4 ≤ value ≤ Infinity",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-complete.json"
+    },
+    {
+      "id": "L2-15",
+      "clause": "prepared checkpoint civilians",
+      "level": "L2",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 8,
+      "target": "8 ≤ value ≤ Infinity",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-complete.json"
+    },
+    {
+      "id": "L2-15",
+      "clause": "gate delay after crossing",
+      "level": "L2",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 0.6,
+      "target": "0 ≤ value ≤ 1.5",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-complete.json"
+    },
+    {
+      "id": "L2-15",
+      "clause": "prepared checkpoint officers",
+      "level": "L2",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 4,
+      "target": "4 ≤ value ≤ Infinity",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-stationary.json"
+    },
+    {
+      "id": "L2-15",
+      "clause": "prepared checkpoint civilians",
+      "level": "L2",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 8,
+      "target": "8 ≤ value ≤ Infinity",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-stationary.json"
+    },
+    {
+      "id": "L2-15",
+      "clause": "gate delay after crossing",
+      "level": "L2",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "NOT CHECKED",
+      "value": null,
+      "target": "0 ≤ value ≤ 1.5",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-stationary.json"
+    },
+    {
+      "id": "L2-15",
+      "clause": "gate close and post-close infected crossings",
+      "value": {
+        "closeS": 0.6,
+        "infectedInsideAfter": 4,
+        "infectedInsideAtClosure": [
+          280,
+          282,
+          286,
+          288
+        ],
+        "crossingsAfterClosure": []
+      },
+      "target": "close≤1.5s;0 infected cross the gate after closure",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
+      "level": "L2"
+    },
+    {
+      "id": "L2-15",
+      "clause": "gate close and post-close infected crossings",
+      "value": {
+        "closeS": 0.6,
+        "infectedInsideAfter": 5,
+        "infectedInsideAtClosure": [
+          290,
+          292,
+          294,
+          296,
+          304
+        ],
+        "crossingsAfterClosure": []
+      },
+      "target": "close≤1.5s;0 infected cross the gate after closure",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
+      "level": "L2"
+    }
+  ],
+  "observation": "All22 current low/high WebGPU route/checkpoint frames personally inspected at full resolution, including actual checkpoint zoom0.5/1.5. Four distinct officers visibly fire amid muzzle/tracer flashes; actual rendered shot history confirms all four IDs131–134 at each tier. Three police vehicles show lit bars, matching three current authored lit checkpoint placements. Eight actual prepared civilian IDs each tier. Fresh native gate-close delay0.6s each (<=1.5); every-tick crossing fixture records zero infected crossing after closure. Four low/five high were already inside at closure; these are explicitly retained, not falsely described as zero infected inside. Ordinary complete side-route InputFrames; damage protection supports presentation only. Browser transitions to L3 before a5s follow-up image; post-close crossing qualification comes from current immutable native fixture."
+}

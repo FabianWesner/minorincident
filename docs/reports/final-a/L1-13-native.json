@@ -1,0 +1,189 @@
+{
+  "row": "L1-13",
+  "verdict": "PASS",
+  "frozenHead": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+  "fixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4",
+  "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
+  "generatedAt": "2026-11-06T23:43:23.520Z",
+  "criterion": "Bat only in the garage; unarmed needs 6–7 hits per infected, bat 2.",
+  "automatedComplete": true,
+  "checks": [
+    {
+      "id": "L1-13",
+      "clause": "ordinary first bat acquisition at garage",
+      "value": {
+        "initialBat": false,
+        "first": {
+          "tick": 5132,
+          "x": 23.257389068603516,
+          "z": 37.310020446777344,
+          "distance": 0.9915504447802522,
+          "step": "completed"
+        },
+        "garage": {
+          "x": 23.1,
+          "z": 38.289,
+          "radius": 2,
+          "yaw": 0
+        },
+        "outcome": "complete",
+        "deaths": 0
+      },
+      "target": "no initial bat; first ownership inside the garage interaction radius after its objective",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-low-fixtures.json",
+      "level": "L1"
+    },
+    {
+      "id": "L1-13",
+      "clause": "weapon.fists hits to incapacitate native regular",
+      "value": {
+        "weapon": "weapon.fists",
+        "flank": false,
+        "initialHp": 60,
+        "endHp": 0,
+        "hitCount": 7,
+        "seconds": 1.7166666666666666,
+        "hpAmounts": [
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          6
+        ],
+        "isolatedAI": true
+      },
+      "target": "6–7 hits",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-low-fixtures.json",
+      "level": "L1"
+    },
+    {
+      "id": "L1-13",
+      "clause": "weapon.bat hits to incapacitate native regular",
+      "value": {
+        "weapon": "weapon.bat",
+        "flank": false,
+        "initialHp": 60,
+        "endHp": 0,
+        "hitCount": 2,
+        "seconds": 0.4166666666666667,
+        "hpAmounts": [
+          30,
+          30
+        ],
+        "isolatedAI": true
+      },
+      "target": "2 hits",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-low-fixtures.json",
+      "level": "L1"
+    },
+    {
+      "id": "L1-13",
+      "clause": "ordinary first bat acquisition at garage",
+      "value": {
+        "initialBat": false,
+        "first": {
+          "tick": 5132,
+          "x": 23.257389068603516,
+          "z": 37.310020446777344,
+          "distance": 0.9915504447802522,
+          "step": "completed"
+        },
+        "garage": {
+          "x": 23.1,
+          "z": 38.289,
+          "radius": 2,
+          "yaw": 0
+        },
+        "outcome": "complete",
+        "deaths": 0
+      },
+      "target": "no initial bat; first ownership inside the garage interaction radius after its objective",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-high-fixtures.json",
+      "level": "L1"
+    },
+    {
+      "id": "L1-13",
+      "clause": "weapon.fists hits to incapacitate native regular",
+      "value": {
+        "weapon": "weapon.fists",
+        "flank": false,
+        "initialHp": 60,
+        "endHp": 0,
+        "hitCount": 7,
+        "seconds": 1.7166666666666666,
+        "hpAmounts": [
+          9,
+          9,
+          9,
+          9,
+          9,
+          9,
+          6
+        ],
+        "isolatedAI": true
+      },
+      "target": "6–7 hits",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-high-fixtures.json",
+      "level": "L1"
+    },
+    {
+      "id": "L1-13",
+      "clause": "weapon.bat hits to incapacitate native regular",
+      "value": {
+        "weapon": "weapon.bat",
+        "flank": false,
+        "initialHp": 60,
+        "endHp": 0,
+        "hitCount": 2,
+        "seconds": 0.4166666666666667,
+        "hpAmounts": [
+          30,
+          30
+        ],
+        "isolatedAI": true
+      },
+      "target": "2 hits",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-high-fixtures.json",
+      "level": "L1"
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/final-a/native-receipts/L1-low-fixtures.json.gz",
+      "sha256": "800c578b84549c6260c6eafc413e0bd3f12eec8867ee04d39f696b809d231cb2",
+      "what": "Frozen-head L1-13 native input receipt, evaluated by the exact clauses retained in the row proof.",
+      "canonicalFile": "docs/reports/fix51-verify/receipts/L1-low-fixtures.json",
+      "decodedSha256": "732c5f9ec817571bf782ffe583daf68650a18b5d5268d44b43d50e7350167ab2"
+    },
+    {
+      "file": "docs/reports/final-a/native-receipts/L1-high-fixtures.json.gz",
+      "sha256": "0d126c713ffbdd45c4a52c6fd750dc91f257ffeb31e08ead2b0dc21cc23792ac",
+      "what": "Frozen-head L1-13 native input receipt, evaluated by the exact clauses retained in the row proof.",
+      "canonicalFile": "docs/reports/fix51-verify/receipts/L1-high-fixtures.json",
+      "decodedSha256": "3054f70f6c66327395b15d588d753169b64a88e97203f415503c30605baa6fce"
+    }
+  ],
+  "observation": "6 current native checks PASS across low/high. low/controlled-fixture ordinary first bat acquisition at garage: {\"initialBat\":false,\"first\":{\"tick\":5132,\"x\":23.257389068603516,\"z\":37.310020446777344,\"distance\":0.9915504447802522,\"step\":\"completed\"},\"garage\":{\"x\":23.1,\"z\":38.289,\"radius\":2,\"yaw\":0},\"outcome\":\"complete\",\"deaths\":0}; target no initial bat; first ownership inside the garage interaction radius after its objective (PASS); low/controlled-fixture weapon.fists hits to incapacitate native regular: {\"weapon\":\"weapon.fists\",\"flank\":false,\"initialHp\":60,\"endHp\":0,\"hitCount\":7,\"seconds\":1.7166666666666666,\"hpAmounts\":[9,9,9,9,9,9,6],\"isolatedAI\":true}; target 6–7 hits (PASS); low/controlled-fixture weapon.bat hits to incapacitate native regular: {\"weapon\":\"weapon.bat\",\"flank\":false,\"initialHp\":60,\"endHp\":0,\"hitCount\":2,\"seconds\":0.4166666666666667,\"hpAmounts\":[30,30],\"isolatedAI\":true}; target 2 hits (PASS); high/controlled-fixture ordinary first bat acquisition at garage: {\"initialBat\":false,\"first\":{\"tick\":5132,\"x\":23.257389068603516,\"z\":37.310020446777344,\"distance\":0.9915504447802522,\"step\":\"completed\"},\"garage\":{\"x\":23.1,\"z\":38.289,\"radius\":2,\"yaw\":0},\"outcome\":\"complete\",\"deaths\":0}; target no initial bat; first ownership inside the garage interaction radius after its objective (PASS); high/controlled-fixture weapon.fists hits to incapacitate native regular: {\"weapon\":\"weapon.fists\",\"flank\":false,\"initialHp\":60,\"endHp\":0,\"hitCount\":7,\"seconds\":1.7166666666666666,\"hpAmounts\":[9,9,9,9,9,9,6],\"isolatedAI\":true}; target 6–7 hits (PASS); high/controlled-fixture weapon.bat hits to incapacitate native regular: {\"weapon\":\"weapon.bat\",\"flank\":false,\"initialHp\":60,\"endHp\":0,\"hitCount\":2,\"seconds\":0.4166666666666667,\"hpAmounts\":[30,30],\"isolatedAI\":true}; target 2 hits (PASS)"
+}

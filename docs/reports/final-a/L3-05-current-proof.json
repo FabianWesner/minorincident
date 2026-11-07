@@ -1,0 +1,7 @@
+{
+  "row": "L3-05",
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "criterion": "Camera pulls back ×1.5 while the attack runs and the player is in the yard (east-gate fights in frame).",
+  "nativeChecks": [],
+  "observation": "Current ordinary mortal complete-input route, WebGPU low/high: camera distance before attack 19.000m, steady attack 28.500m, ratio 1.500. At attack+63 ticks the eased distance is 28.36673m; by the 10s sample it is 28.5m in both tiers. Personally inspected all41 original frames: yard east-gate infected, firing officers and courier remain in the attack framing; no debug framing replaces production follow. The camera ease-in is reported explicitly rather than treated as instantaneous."
+}

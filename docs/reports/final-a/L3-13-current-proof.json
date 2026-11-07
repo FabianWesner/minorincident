@@ -1,0 +1,7 @@
+{
+  "row": "L3-13",
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "criterion": "Raised corridor: no deck gaps or dark seams at the ramps; no infected clumps stuck between barrier rows; no body hanging on walls.",
+  "nativeChecks": [],
+  "observation": "Fresh low WebGL2 ordinary physical route from x135 to177.14; all22 photographs personally inspected at original resolution. Counterexample: at x177.14 the close0.5 view shows a dark triangular seam across the deck, extending from approximately image(945,576) to right edge(1279,592), over300px long. It remains in after, settled-5s and settled-10s frames. Thus no-dark-seams clause FAIL. Repro: seed1 low, take the raised corridor to x177 beside parked van, look back/down at the ramp joint at zoom0.5. The assisted controller stalled at this van; that is not itself a route/collision failure. No full-route, high-tier, hanging-body or physical support conclusion is claimed; one current visible seam suffices for FAIL."
+}

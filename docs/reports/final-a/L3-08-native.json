@@ -1,0 +1,109 @@
+{
+  "row": "L3-08",
+  "verdict": "FAIL",
+  "frozenHead": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+  "fixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4",
+  "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
+  "generatedAt": "2026-11-06T23:57:28.205Z",
+  "criterion": "Pre-populated infected per segment **250 / 625 / 1000 ±20 %**; median live within 30 m rises from S1 to S3; caps 200 / 100 never exceeded.",
+  "automatedComplete": false,
+  "checks": [
+    {
+      "id": "L3-08",
+      "clause": "authored segment populations before admission/death relief",
+      "value": [
+        250,
+        600,
+        1030
+      ],
+      "target": "250/625/1000 each±20%; these are pending population slots, not simultaneous live entities",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
+      "level": "L3"
+    },
+    {
+      "id": "L3-08",
+      "clause": "median live within30m by traversed segment and concurrent cap",
+      "value": {
+        "prepopulated": [
+          250,
+          600,
+          1030
+        ],
+        "near30": [
+          20,
+          21,
+          20
+        ],
+        "maxConcurrent": 100,
+        "cap": 100
+      },
+      "target": "medianS1<S2<S3;max≤200high/100low",
+      "status": "FAIL",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
+      "level": "L3"
+    },
+    {
+      "id": "L3-08",
+      "clause": "authored segment populations before admission/death relief",
+      "value": [
+        250,
+        600,
+        1030
+      ],
+      "target": "250/625/1000 each±20%; these are pending population slots, not simultaneous live entities",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
+      "level": "L3"
+    },
+    {
+      "id": "L3-08",
+      "clause": "median live within30m by traversed segment and concurrent cap",
+      "value": {
+        "prepopulated": [
+          250,
+          600,
+          1030
+        ],
+        "near30": [
+          72,
+          89,
+          79
+        ],
+        "maxConcurrent": 200,
+        "cap": 200
+      },
+      "target": "medianS1<S2<S3;max≤200high/100low",
+      "status": "FAIL",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
+      "level": "L3"
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/final-a/native-receipts/L3-low-fixtures.json.gz",
+      "sha256": "5bb7a9d05574c189a8bec9fe20a06b1a7988f48a3175a8841aef1fa147209724",
+      "what": "Frozen-head L3-08 native input receipt, evaluated by the exact clauses retained in the row proof.",
+      "canonicalFile": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
+      "decodedSha256": "1dbb6554d364c1372e298abab060319623af1f8871fbd2e7e24dad1a1382d0cc"
+    },
+    {
+      "file": "docs/reports/final-a/native-receipts/L3-high-fixtures.json.gz",
+      "sha256": "87d97237be8ee7ecb0019d923692b5c60332643dfee8640b4274c1c5727fe14c",
+      "what": "Frozen-head L3-08 native input receipt, evaluated by the exact clauses retained in the row proof.",
+      "canonicalFile": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
+      "decodedSha256": "e4dd4c36be5c14615ed61548e5c0cb95e00a5363f1741e70547ed354a08a8086"
+    }
+  ],
+  "observation": "low/controlled-fixture median live within30m by traversed segment and concurrent cap: {\"prepopulated\":[250,600,1030],\"near30\":[20,21,20],\"maxConcurrent\":100,\"cap\":100}; target medianS1<S2<S3;max≤200high/100low (FAIL); high/controlled-fixture median live within30m by traversed segment and concurrent cap: {\"prepopulated\":[250,600,1030],\"near30\":[72,89,79],\"maxConcurrent\":200,\"cap\":200}; target medianS1<S2<S3;max≤200high/100low (FAIL)"
+}

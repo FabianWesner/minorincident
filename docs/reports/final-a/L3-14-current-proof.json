@@ -1,0 +1,18 @@
+{
+  "row": "L3-14",
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "criterion": "Army compound: ≥ 8 soldiers, ≥ 2 military vehicles, ≥ 2 buses with civilians; no active infected in the 5 s rest; ring visible during the camera pull-back; evacuation wait **15 s**.",
+  "observed": {
+    "crossedAt": 11440,
+    "doneAt": 12812,
+    "barrierClosedAt": 12812,
+    "expectedTicks": 900,
+    "actualTicks": 1372,
+    "actualSeconds": 22.866666666666667,
+    "soldiers": 9,
+    "restSamples": 301,
+    "maxInside": 0,
+    "maxNear": 0
+  },
+  "observation": "Measured high-tier seed1 FAIL: ordinary mortal complete InputFrames reach army zone at tick11440; empty input holds the courier at x224.2303,z-0.0362. Completion occurs tick12812,1372ticks=22.8667s after entry, versus required900ticks=15s (+472ticks=7.8667s). Barrier closes on that same late tick12812; delay is not a render/frame-time measurement. This repeats the prior independent run that stopped on the900tick assertion. Full1373-sample evacuation trace is now saved. Nine actual soldiers present;301 first-five-second samples have zero living infected inside compound or within20m. The timer counterexample alone establishes FAIL; vehicles/bus presentation are not being claimed PASS from native data. Repro: L3 seed1 high, ordinary complete policy to first crossedAt, release movement immediately and wait inside the ring. No God mode, teleport, actor edits, skips or frozen AI."
+}

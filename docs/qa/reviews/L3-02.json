@@ -1,32 +1,53 @@
 {
   "row": "L3-02",
   "status": "FAIL",
-  "reviewer": "Codex sweep-a2",
-  "date": "2026-11-05",
-  "commit": "39c9c759134a16637f62d3359d5495d1a188e157",
+  "reviewer": "Codex final-a",
+  "date": "2026-11-07",
+  "commit": "0cbd817165f89940d2810fe2091000538a263ba0",
   "clauses": [
     {
-      "clause": "Attack starts 5 s after pickup (latest 40 s); waves **30 / 60 / 100** at 0 / 20 / 40 s (low \u00d70.5), streamed over 18 s from 5 directions, 20 % as police zombies from the station door; a quarter on screen within 2 s.",
+      "clause": "Attack starts 5 s after pickup (latest 40 s); waves **30 / 60 / 100** at 0 / 20 / 40 s (low ×0.5), streamed over 18 s from 5 directions, 20 % as police zombies from the station door; a quarter on screen within 2 s.",
       "verdict": "FAIL",
-      "note": "PO-owned opening visibility failure retained: low moving3/15=20percent visible within2s, high moving/stationary5/30=16.67percent, below25percent. Actual native observer counts; no new alarm-shot pixel qualification or game tuning."
+      "note": "high/stationary wave 2 actual admissions: 90; target 100 ≤ value ≤ 100 (FAIL)"
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-a2/L3-03-low-complete.json.gz",
-      "sha256": "c26eead29c602872ee9d8cdfec7df98f45062b5d3bec7905c6297d5802cea326",
-      "what": "PO-owned opening visibility failure retained: low moving3/15=20percent visible within2s, high moving/stationary5/30=16.67percent, below25percent. Actual native observer counts; no new alarm-shot pixel qualification or game tuning."
+      "file": "docs/reports/final-a/L3-02-native.json",
+      "sha256": "731f23878241359b029eae7cf486d7b581c7e7d2a8f64cf4d660ddfe7e4bef37",
+      "what": "high/stationary wave 2 actual admissions: 90; target 100 ≤ value ≤ 100 (FAIL)"
     },
     {
-      "file": "docs/reports/sweep-a2/L3-03-high-complete.json.gz",
-      "sha256": "b7670fd381eb548506f3dadc3525180dbd3a3f5e03cb22d2665850bc22178fac",
-      "what": "PO-owned opening visibility failure retained: low moving3/15=20percent visible within2s, high moving/stationary5/30=16.67percent, below25percent. Actual native observer counts; no new alarm-shot pixel qualification or game tuning."
+      "file": "docs/reports/final-a/native-receipts/L3-low-complete.json.gz",
+      "sha256": "81ae6486e8fab6d955d04751cb09cce2159e3b986d19198ff720988e54c8b0b7",
+      "what": "Frozen-head L3-02 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
     },
     {
-      "file": "docs/reports/sweep-a2/L3-02-PO-record.json",
-      "sha256": "a83da2200347741ba9bd35a91f743d7f8022799375478c2cf4cd5cddee992dc5",
-      "what": "PO-owned opening visibility failure retained: low moving3/15=20percent visible within2s, high moving/stationary5/30=16.67percent, below25percent. Actual native observer counts; no new alarm-shot pixel qualification or game tuning."
+      "file": "docs/reports/final-a/native-receipts/L3-low-stationary.json.gz",
+      "sha256": "024f22953d5c2e3f1bbefbba6fe6943dddd8ecc05664082f2a2fe6cc32d7c146",
+      "what": "Frozen-head L3-02 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
+    },
+    {
+      "file": "docs/reports/final-a/native-receipts/L3-high-complete.json.gz",
+      "sha256": "d976b4c6b69eda34c20121ae9cb96e8a3cdd6a07fac104fba0b26e56fd8755c0",
+      "what": "Frozen-head L3-02 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
+    },
+    {
+      "file": "docs/reports/final-a/native-receipts/L3-high-stationary.json.gz",
+      "sha256": "2046af461e64e70381568acc5905423f47b44bf18d205557d43b0ad61770b9b1",
+      "what": "Frozen-head L3-02 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
+    },
+    {
+      "file": "docs/reports/final-a/native-receipts/L3-low-fixtures.json.gz",
+      "sha256": "5bb7a9d05574c189a8bec9fe20a06b1a7988f48a3175a8841aef1fa147209724",
+      "what": "Frozen-head L3-02 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
+    },
+    {
+      "file": "docs/reports/final-a/native-receipts/L3-high-fixtures.json.gz",
+      "sha256": "87d97237be8ee7ecb0019d923692b5c60332643dfee8640b4274c1c5727fe14c",
+      "what": "Frozen-head L3-02 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
     }
   ],
-  "notes": "Current source PO-owned measured failure recorded only, as instructed. No game/spec/criteria tuning or PO decision fabricated."
+  "notes": "A measured failing clause establishes whole-row FAIL; remaining manual clauses are not asserted to pass. Game source unchanged from frozen head.",
+  "sourceDigest": "b54f676bf2eb09a12c8059dce4ebe53003816773db044d7acfc253fccbedccf9"
 }

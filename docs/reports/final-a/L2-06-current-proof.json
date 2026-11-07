@@ -1,0 +1,220 @@
+{
+  "row": "L2-06",
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "criterion": "Ambush **24** (3 doors × 8, ≥ 3 directions ≥ 60° apart), first visible ≤ 0.5 s after doorsOpen; spread over directions, not one pack.",
+  "nativeChecks": [
+    {
+      "id": "L2-06",
+      "clause": "maximum admitted ambush identity ledger before retry thinning",
+      "level": "L2",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 24,
+      "target": "24 ≤ value ≤ 24",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-complete.json"
+    },
+    {
+      "id": "L2-06",
+      "clause": "maximum admitted ambush identity ledger before retry thinning",
+      "level": "L2",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 24,
+      "target": "24 ≤ value ≤ 24",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-stationary.json"
+    },
+    {
+      "id": "L2-06",
+      "clause": "maximum admitted ambush identity ledger before retry thinning",
+      "level": "L2",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 24,
+      "target": "24 ≤ value ≤ 24",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-complete.json"
+    },
+    {
+      "id": "L2-06",
+      "clause": "maximum admitted ambush identity ledger before retry thinning",
+      "level": "L2",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 24,
+      "target": "24 ≤ value ≤ 24",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-stationary.json"
+    },
+    {
+      "id": "L2-06",
+      "clause": "native admitted ambush source counts and angular separation",
+      "value": {
+        "playerAtOpening": {
+          "x": -45.97011184692383,
+          "y": 0.7049999833106995,
+          "z": -36.76974105834961,
+          "yaw": 1.977493168738604
+        },
+        "sources": [
+          {
+            "door": "refuge-door-1",
+            "count": 8,
+            "x": -76.64875,
+            "z": -37.5,
+            "angle": -3.1177936485067197
+          },
+          {
+            "door": "refuge-door-17",
+            "count": 8,
+            "x": -19.615,
+            "z": -35,
+            "angle": 0.06704916537786619
+          },
+          {
+            "door": "refuge-door-9",
+            "count": 8,
+            "x": -47.3825,
+            "z": -27,
+            "angle": 1.7143692401256314
+          }
+        ],
+        "angles": [
+          177.52194835184412,
+          83.13746056162186,
+          94.38448779022224
+        ]
+      },
+      "target": "3 admitted doors×8; pairwise source directions≥60deg from courier at opening; first pixel visibility remains separate",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
+      "level": "L2"
+    },
+    {
+      "id": "L2-06",
+      "clause": "actual follow-camera first-half-second visibility at zoom0.5",
+      "value": {
+        "qualified": false,
+        "allOffscreen": false,
+        "samples": 31,
+        "firstTick": 3489,
+        "lastTick": 3519,
+        "path": "docs/reports/fix55-a/L2-06-visibility.json",
+        "sha256": "2ba398865efe901b85bc6065ac506f9a9cc3d3688964b73e49cc077c54fdfbdb"
+      },
+      "target": "first ambush visible in actual camera within0.5s after doorsOpen",
+      "status": "NOT CHECKED",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
+      "level": "L2"
+    },
+    {
+      "id": "L2-06",
+      "clause": "actual follow-camera first-half-second visibility at zoom1.5",
+      "value": {
+        "qualified": false,
+        "allOffscreen": false,
+        "samples": 31,
+        "firstTick": 3489,
+        "lastTick": 3519,
+        "path": "docs/reports/fix55-a/L2-06-visibility.json",
+        "sha256": "2ba398865efe901b85bc6065ac506f9a9cc3d3688964b73e49cc077c54fdfbdb"
+      },
+      "target": "first ambush visible in actual camera within0.5s after doorsOpen",
+      "status": "NOT CHECKED",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
+      "level": "L2"
+    },
+    {
+      "id": "L2-06",
+      "clause": "native admitted ambush source counts and angular separation",
+      "value": {
+        "playerAtOpening": {
+          "x": -45.97011184692383,
+          "y": 0.7049999833106995,
+          "z": -36.76974105834961,
+          "yaw": 1.977493168738604
+        },
+        "sources": [
+          {
+            "door": "refuge-door-1",
+            "count": 8,
+            "x": -76.64875,
+            "z": -37.5,
+            "angle": -3.1177936485067197
+          },
+          {
+            "door": "refuge-door-17",
+            "count": 8,
+            "x": -19.615,
+            "z": -35,
+            "angle": 0.06704916537786619
+          },
+          {
+            "door": "refuge-door-9",
+            "count": 8,
+            "x": -47.3825,
+            "z": -27,
+            "angle": 1.7143692401256314
+          }
+        ],
+        "angles": [
+          177.52194835184412,
+          83.13746056162186,
+          94.38448779022224
+        ]
+      },
+      "target": "3 admitted doors×8; pairwise source directions≥60deg from courier at opening; first pixel visibility remains separate",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
+      "level": "L2"
+    },
+    {
+      "id": "L2-06",
+      "clause": "actual follow-camera first-half-second visibility at zoom0.5",
+      "value": {
+        "qualified": false,
+        "allOffscreen": false,
+        "samples": 31,
+        "firstTick": 3489,
+        "lastTick": 3519,
+        "path": "docs/reports/fix55-a/L2-06-visibility.json",
+        "sha256": "2ba398865efe901b85bc6065ac506f9a9cc3d3688964b73e49cc077c54fdfbdb"
+      },
+      "target": "first ambush visible in actual camera within0.5s after doorsOpen",
+      "status": "NOT CHECKED",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
+      "level": "L2"
+    },
+    {
+      "id": "L2-06",
+      "clause": "actual follow-camera first-half-second visibility at zoom1.5",
+      "value": {
+        "qualified": false,
+        "allOffscreen": false,
+        "samples": 31,
+        "firstTick": 3489,
+        "lastTick": 3519,
+        "path": "docs/reports/fix55-a/L2-06-visibility.json",
+        "sha256": "2ba398865efe901b85bc6065ac506f9a9cc3d3688964b73e49cc077c54fdfbdb"
+      },
+      "target": "first ambush visible in actual camera within0.5s after doorsOpen",
+      "status": "NOT CHECKED",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
+      "level": "L2"
+    }
+  ],
+  "observation": "All12 current low/high WebGL2 opening/+0.5s/inspection-control images personally inspected at full resolution. At the actual30th tick after doorsOpen, a distinct infected with health bar is visible at the lower-left pavement in all four actual production zoom0.5/1.5 frames; first visibility therefore <=0.5s, not inferred merely from body-box overlap. Native current counts24=3 doors×8; pairwise source separations83.1375/94.3845/177.5219 degrees, all>=60, source positions widely separated rather than one pack. Every tick0–30 body-box ledger retained; controls move only camera after the measured sample. Ordinary no-axe InputFrames, no protection/teleport/spawn/skip. Inspection view does not qualify production visibility."
+}

@@ -1,32 +1,33 @@
 {
   "row": "L3-05",
   "status": "PASS",
-  "reviewer": "Codex sweep-a3",
-  "date": "2026-11-06",
-  "commit": "cb2cfbe37be3661adcda8a986d8a587fb85a44c2",
+  "reviewer": "Codex final-a",
+  "date": "2026-11-07",
+  "commit": "dbb81c413b1df19a3eb61b63b7384949da70d4f4",
   "clauses": [
     {
       "clause": "Camera pulls back ×1.5 while the attack runs and the player is in the yard (east-gate fights in frame).",
       "verdict": "PASS",
-      "note": "All34 current route frames inspected, including yard before attack, attack1s and10s at both qualities. Camera smoothly pulls from19m to28.5m (x1.5); after3s all attack samples are within blend precision. East-gate fighting remains in frame to the right of courtyard; no camera overrides. Attack1s is28.3667m while blend still settling."
+      "note": "Current ordinary mortal complete-input route, WebGPU low/high: camera distance before attack 19.000m, steady attack 28.500m, ratio 1.500. At attack+63 ticks the eased distance is 28.36673m; by the 10s sample it is 28.5m in both tiers. Personally inspected all41 original frames: yard east-gate infected, firing officers and courier remain in the attack framing; no debug framing replaces production follow. The camera ease-in is reported explicitly rather than treated as instantaneous."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-a3/L3-05-camera-measurements.json",
-      "sha256": "4ed7f2bc0bba9608fd7ea8b30d5039a8f842b0f8bc404f4c097161f94134d739",
-      "what": "All34 current route frames inspected, including yard before attack, attack1s and10s at both qualities. Camera smoothly pulls from19m to28.5m (x1.5); after3s all attack samples are within blend precision. East-gate fighting remains in frame to the right of courtyard; no camera overrides. Attack1s is28.3667m while blend still settling."
+      "file": "docs/reports/final-a/L3-05-browser-ledger.json.gz",
+      "sha256": "0781d49e8c30bcbcfc53609aa1d9d538a631104084388f67550ef0ed03c9b6fb",
+      "what": "Current ordinary mortal complete-input route, WebGPU low/high: camera distance before attack 19.000m, steady attack 28.500m, ratio 1.500. At attack+63 ticks the eased distance is 28.36673m; by the 10s sample it is 28.5m in both tiers. Personally inspected all41 original frames: yard east-gate infected, firing officers and courier remain in the attack framing; no debug framing replaces production follow. The camera ease-in is reported explicitly rather than treated as instantaneous."
     },
     {
-      "file": "docs/reports/sweep-a3/L3-07-current-ledger.json.gz",
-      "sha256": "c0d74c29aa4ea8801ce92ca52c5324c679b9fd53dfe70647345e512474749d86",
-      "what": "All34 current route frames inspected, including yard before attack, attack1s and10s at both qualities. Camera smoothly pulls from19m to28.5m (x1.5); after3s all attack samples are within blend precision. East-gate fighting remains in frame to the right of courtyard; no camera overrides. Attack1s is28.3667m while blend still settling."
+      "file": "docs/reports/final-a/L3-05-image-review.json",
+      "sha256": "ba48f3b1dfe7278853a83480db98b55abcec87ece5161edf690cf5222a273822",
+      "what": "Current ordinary mortal complete-input route, WebGPU low/high: camera distance before attack 19.000m, steady attack 28.500m, ratio 1.500. At attack+63 ticks the eased distance is 28.36673m; by the 10s sample it is 28.5m in both tiers. Personally inspected all41 original frames: yard east-gate infected, firing officers and courier remain in the attack framing; no debug framing replaces production follow. The camera ease-in is reported explicitly rather than treated as instantaneous."
     },
     {
-      "file": "docs/reports/sweep-a3/L3-07-current-images.json",
-      "sha256": "7735ce4fcf3b06910736ceea2094c9876ecb39132f6e6d5a37e9eb91dd17faa8",
-      "what": "All34 current route frames inspected, including yard before attack, attack1s and10s at both qualities. Camera smoothly pulls from19m to28.5m (x1.5); after3s all attack samples are within blend precision. East-gate fighting remains in frame to the right of courtyard; no camera overrides. Attack1s is28.3667m while blend still settling."
+      "file": "docs/reports/final-a/L3-05-current-proof.json",
+      "sha256": "c6c60716324ac5435c139319563d262d2001cf36ca53e095f92752fb529c823d",
+      "what": "Current ordinary mortal complete-input route, WebGPU low/high: camera distance before attack 19.000m, steady attack 28.500m, ratio 1.500. At attack+63 ticks the eased distance is 28.36673m; by the 10s sample it is 28.5m in both tiers. Personally inspected all41 original frames: yard east-gate infected, firing officers and courier remain in the attack framing; no debug framing replaces production follow. The camera ease-in is reported explicitly rather than treated as instantaneous."
     }
   ],
-  "notes": ""
+  "notes": "Game source frozen at4e570db. Current pooled headless capture/input evidence and exact sourceDigest; image files retained only under test-results.",
+  "sourceDigest": "b54f676bf2eb09a12c8059dce4ebe53003816773db044d7acfc253fccbedccf9"
 }

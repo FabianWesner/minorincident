@@ -1,22 +1,33 @@
 {
   "row": "L2-12",
   "status": "PASS",
-  "reviewer": "Codex sweep-a3",
-  "date": "2026-11-06",
-  "commit": "10e01ad8c1073f575580ef08ad216e6b736557dc",
+  "reviewer": "Codex final-a",
+  "date": "2026-11-07",
+  "commit": "0cbd817165f89940d2810fe2091000538a263ba0",
   "clauses": [
     {
       "clause": "combat: competent run meets ≥ 1 infected per 30 m of route (tune); attacks on the player ≥ 2/min, ≤ 20/min (tune).",
       "verdict": "PASS",
-      "note": "Current-source competent native bridge routes pass both clauses at both tiers: player attacks10.3765/min low,15.7424/min high (required2–20); distinct visible infected per30m5.23384/4.60775 (required≥1). Trajectories257.9366/279.9633m have zero discontinuities. Reviewed full clause/ID ledgers and exact receipt hashes. No performance or visual-gameplay claim; this scripted criterion uses actual native attack events and route sight queries."
+      "note": "4 current native checks PASS across low/high. low/complete competent bridge player attack rate: 10.376508737164475; target 2 ≤ value ≤ 20 (PASS); low/complete visible infected encountered per30m of actual bridge route: {\"metres\":257.93660948553963,\"ticks\":5551,\"discontinuities\":0,\"maxEncounterGapM\":40.886333493601065,\"encounterIds\":[185,193,195,203,211,213,221,229,183,191,187,197,189,207,201,215,209,199,217,227,126,219,233,235,237,239,247,243,245,241,265,257,259,287,283,277,297,293,289,275,279,295,273,285,291],\"infectedPer30m\":5.23384409329333}; target ≥1 distinct living admitted infected within15m with clear sight per30m walked; complete [full value in proof]; high/complete competent bridge player attack rate: 15.742397137745975; target 2 ≤ value ≤ 20 (PASS); high/complete visible infected encountered per30m of actual bridge route: {\"metres\":279.9633285130393,\"ticks\":5031,\"discontinuities\":0,\"maxEncounterGapM\":10.874970625774736,\"encounterIds\":[195,203,205,213,221,223,231,239,193,201,219,197,199,207,211,217,209,227,237,229,161,154,241,243,247,245,249,251,255,253,171,167,277,265,267,283,269,271,285,289,295,309,301],\"infectedPer30m\":4.607746331819734}; target ≥1 distinct living admitted infected within15m with clear sight per30m walked; completed route [full value in proof]"
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-a3/L2-12-clauses.json",
-      "sha256": "e868454e7eefcd84b49036197bc306d0d36849af976c01f88221085de6ab9b9e",
-      "what": "Current-source competent native bridge routes pass both clauses at both tiers: player attacks10.3765/min low,15.7424/min high (required2–20); distinct visible infected per30m5.23384/4.60775 (required≥1). Trajectories257.9366/279.9633m have zero discontinuities. Reviewed full clause/ID ledgers and exact receipt hashes. No performance or visual-gameplay claim; this scripted criterion uses actual native attack events and route sight queries."
+      "file": "docs/reports/final-a/L2-12-native.json",
+      "sha256": "1b35e1cd0d393a67c9bf356d57cdd35498845150eb5254564472d3f1e44db59c",
+      "what": "4 current native checks PASS across low/high. low/complete competent bridge player attack rate: 10.376508737164475; target 2 ≤ value ≤ 20 (PASS); low/complete visible infected encountered per30m of actual bridge route: {\"metres\":257.93660948553963,\"ticks\":5551,\"discontinuities\":0,\"maxEncounterGapM\":40.886333493601065,\"encounterIds\":[185,193,195,203,211,213,221,229,183,191,187,197,189,207,201,215,209,199,217,227,126,219,233,235,237,239,247,243,245,241,265,257,259,287,283,277,297,293,289,275,279,295,273,285,291],\"infectedPer30m\":5.23384409329333}; target ≥1 distinct living admitted infected within15m with clear sight per30m walked; complete [full value in proof]; high/complete competent bridge player attack rate: 15.742397137745975; target 2 ≤ value ≤ 20 (PASS); high/complete visible infected encountered per30m of actual bridge route: {\"metres\":279.9633285130393,\"ticks\":5031,\"discontinuities\":0,\"maxEncounterGapM\":10.874970625774736,\"encounterIds\":[195,203,205,213,221,223,231,239,193,201,219,197,199,207,211,217,209,227,237,229,161,154,241,243,247,245,249,251,255,253,171,167,277,265,267,283,269,271,285,289,295,309,301],\"infectedPer30m\":4.607746331819734}; target ≥1 distinct living admitted infected within15m with clear sight per30m walked; completed route [full value in proof]"
+    },
+    {
+      "file": "docs/reports/final-a/native-receipts/L2-low-complete.json.gz",
+      "sha256": "d0b884e0602ceef5ef9631ae082a1ab9352582a0c6a95c4cb79c8cf8f873b64b",
+      "what": "Frozen-head L2-12 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
+    },
+    {
+      "file": "docs/reports/final-a/native-receipts/L2-high-complete.json.gz",
+      "sha256": "7853a2405a6a51a9207f11122053806542b1a655c78ef73f3a15fa7a31524afb",
+      "what": "Frozen-head L2-12 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
     }
   ],
-  "notes": "Fresh exact-criterion review supersedes the historical bridge attack-rate failure; targets/checkers and game were unchanged. Final-source refresh after constant-width ring change; native receipts rerun, browser frames recaptured and compared by SHA-256; changed pixels freshly viewed."
+  "notes": "Numeric-only criterion; all evaluator clauses measured at both qualities on the frozen runtime source. No visual or route-readability inference.",
+  "sourceDigest": "9f88ba48ca13900ca4f429225cbac3045a96d48adee791c50179dde9c8cd025f"
 }

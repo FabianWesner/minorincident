@@ -1,22 +1,43 @@
 {
   "row": "L3-06",
   "status": "FAIL",
-  "reviewer": "Codex sweep-a3",
-  "date": "2026-11-06",
-  "commit": "430f4bc493c6cac113093ed4d185734fb2dc592d",
+  "reviewer": "Codex final-a",
+  "date": "2026-11-07",
+  "commit": "0cbd817165f89940d2810fe2091000538a263ba0",
   "clauses": [
     {
       "clause": "Squad of 3–4 forms, follows 3–6 m (officers fire while moving, PO 2026-11-05), never teleports; size non-increasing per segment, ≤ 2 at the army line; every loss a bite/kill/separation.",
       "verdict": "FAIL",
-      "note": "Current-source low calm samples show member33 outside the unchanged3–6m range once:19/20 within, median5.3141m, maximum6.1412m. Members31/32 are20/20 within, medians4.3863/4.3863m and maxima4.9189/5.2923m. High has no calm surviving-member samples and is unqualified for spacing. Low seed1 also reaches the army with3 officers, above the literal≤2 criterion, although the automated three-seed aggregate labels2/3 seeds as PASS; that aggregate does not establish the absolute per-run bound. Initial squads4/4; high three seeds end0/0/0. This is a measured FAIL; no target, cap, population, controller or checker changed. Moving-fire/teleport clauses are not newly inferred from these numbers."
+      "note": "low/controlled-fixture calm squad following distance by member: [{\"id\":31,\"samples\":20,\"within3to6\":20,\"minM\":4.153436653198363,\"medianM\":4.38632285721454,\"maxM\":4.918941595084811},{\"id\":32,\"samples\":20,\"within3to6\":20,\"minM\":3.8428412273744765,\"medianM\":4.386336376347121,\"maxM\":5.292343323711613},{\"id\":33,\"samples\":20,\"within3to6\":19,\"minM\":5.039442021567916,\"medianM\":5.314123378540392,\"maxM\":6.141181316260594}]; target every sampled living officer follows 3–6 m from the courier outside combat (FAIL)"
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-a3/L3-06-clauses.json",
-      "sha256": "c043330845404aaf9b14b9af83f5ba04eddc33cf1bab80037071737b6d137bb5",
-      "what": "Current-source low calm samples show member33 outside the unchanged3–6m range once:19/20 within, median5.3141m, maximum6.1412m. Members31/32 are20/20 within, medians4.3863/4.3863m and maxima4.9189/5.2923m. High has no calm surviving-member samples and is unqualified for spacing. Low seed1 also reaches the army with3 officers, above the literal≤2 criterion, although the automated three-seed aggregate labels2/3 seeds as PASS; that aggregate does not establish the absolute per-run bound. Initial squads4/4; high three seeds end0/0/0. This is a measured FAIL; no target, cap, population, controller or checker changed. Moving-fire/teleport clauses are not newly inferred from these numbers."
+      "file": "docs/reports/final-a/L3-06-native.json",
+      "sha256": "8f97b502ec1fa86b39488166b490ebbeaf931521ecc53658b4da4acd27cf1cbc",
+      "what": "low/controlled-fixture calm squad following distance by member: [{\"id\":31,\"samples\":20,\"within3to6\":20,\"minM\":4.153436653198363,\"medianM\":4.38632285721454,\"maxM\":4.918941595084811},{\"id\":32,\"samples\":20,\"within3to6\":20,\"minM\":3.8428412273744765,\"medianM\":4.386336376347121,\"maxM\":5.292343323711613},{\"id\":33,\"samples\":20,\"within3to6\":19,\"minM\":5.039442021567916,\"medianM\":5.314123378540392,\"maxM\":6.141181316260594}]; target every sampled living officer follows 3–6 m from the courier outside combat (FAIL)"
+    },
+    {
+      "file": "docs/reports/final-a/native-receipts/L3-low-complete.json.gz",
+      "sha256": "81ae6486e8fab6d955d04751cb09cce2159e3b986d19198ff720988e54c8b0b7",
+      "what": "Frozen-head L3-06 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
+    },
+    {
+      "file": "docs/reports/final-a/native-receipts/L3-high-complete.json.gz",
+      "sha256": "d976b4c6b69eda34c20121ae9cb96e8a3cdd6a07fac104fba0b26e56fd8755c0",
+      "what": "Frozen-head L3-06 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
+    },
+    {
+      "file": "docs/reports/final-a/native-receipts/L3-low-fixtures.json.gz",
+      "sha256": "5bb7a9d05574c189a8bec9fe20a06b1a7988f48a3175a8841aef1fa147209724",
+      "what": "Frozen-head L3-06 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
+    },
+    {
+      "file": "docs/reports/final-a/native-receipts/L3-high-fixtures.json.gz",
+      "sha256": "87d97237be8ee7ecb0019d923692b5c60332643dfee8640b4274c1c5727fe14c",
+      "what": "Frozen-head L3-06 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
     }
   ],
-  "notes": "Fresh both-tier fixtures and mortal native routes/seeds1–3. The concrete low spacing and seed1 army-count counterexamples suffice for FAIL; absent high calm samples remain unqualified rather than treated as a pass."
+  "notes": "A measured failing clause establishes whole-row FAIL; remaining manual clauses are not asserted to pass. Game source unchanged from frozen head.",
+  "sourceDigest": "b54f676bf2eb09a12c8059dce4ebe53003816773db044d7acfc253fccbedccf9"
 }

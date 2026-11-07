@@ -1,0 +1,261 @@
+{
+  "row": "L2-04",
+  "verdict": "PASS",
+  "frozenHead": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+  "fixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4",
+  "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
+  "generatedAt": "2026-11-06T23:49:03.138Z",
+  "criterion": "Order truckArrived → crewExit → atDoors → doorsOpen; no infected within 40 m before doors open; doors forced in 4 s.",
+  "automatedComplete": true,
+  "checks": [
+    {
+      "id": "L2-04",
+      "clause": "arrival/exit/doors event order",
+      "level": "L2",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": [
+        2943,
+        2991,
+        3276,
+        3516
+      ],
+      "target": "arrival ≤crewExit ≤atDoors ≤doorsOpen; all observed",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-complete.json"
+    },
+    {
+      "id": "L2-04",
+      "clause": "door forcing duration",
+      "level": "L2",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 4,
+      "target": "4 ≤ value ≤ 4",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-complete.json"
+    },
+    {
+      "id": "L2-04",
+      "clause": "nearest living infected before doors open",
+      "level": "L2",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": {
+        "samples": 3515,
+        "nearest": null
+      },
+      "target": "none within40 m",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-complete.json"
+    },
+    {
+      "id": "L2-04",
+      "clause": "arrival/exit/doors event order",
+      "level": "L2",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": [
+        2943,
+        2991,
+        3276,
+        3516
+      ],
+      "target": "arrival ≤crewExit ≤atDoors ≤doorsOpen; all observed",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-stationary.json"
+    },
+    {
+      "id": "L2-04",
+      "clause": "door forcing duration",
+      "level": "L2",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 4,
+      "target": "4 ≤ value ≤ 4",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-stationary.json"
+    },
+    {
+      "id": "L2-04",
+      "clause": "nearest living infected before doors open",
+      "level": "L2",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": {
+        "samples": 3515,
+        "nearest": null
+      },
+      "target": "none within40 m",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-stationary.json"
+    },
+    {
+      "id": "L2-04",
+      "clause": "arrival/exit/doors event order",
+      "level": "L2",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": [
+        2943,
+        2991,
+        3276,
+        3516
+      ],
+      "target": "arrival ≤crewExit ≤atDoors ≤doorsOpen; all observed",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-complete.json"
+    },
+    {
+      "id": "L2-04",
+      "clause": "door forcing duration",
+      "level": "L2",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 4,
+      "target": "4 ≤ value ≤ 4",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-complete.json"
+    },
+    {
+      "id": "L2-04",
+      "clause": "nearest living infected before doors open",
+      "level": "L2",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": {
+        "samples": 3515,
+        "nearest": null
+      },
+      "target": "none within40 m",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-complete.json"
+    },
+    {
+      "id": "L2-04",
+      "clause": "arrival/exit/doors event order",
+      "level": "L2",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": [
+        2943,
+        2991,
+        3276,
+        3516
+      ],
+      "target": "arrival ≤crewExit ≤atDoors ≤doorsOpen; all observed",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-stationary.json"
+    },
+    {
+      "id": "L2-04",
+      "clause": "door forcing duration",
+      "level": "L2",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 4,
+      "target": "4 ≤ value ≤ 4",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-stationary.json"
+    },
+    {
+      "id": "L2-04",
+      "clause": "nearest living infected before doors open",
+      "level": "L2",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": {
+        "samples": 3515,
+        "nearest": null
+      },
+      "target": "none within40 m",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-stationary.json"
+    },
+    {
+      "id": "L2-04",
+      "clause": "door order and four-second forcing clock",
+      "value": {
+        "order": [
+          48.6,
+          49.4,
+          54.15,
+          58.15
+        ],
+        "nearBefore": 0
+      },
+      "target": "ordered arrival→exit→atDoors→open;4s force;0 infected within40m",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
+      "level": "L2"
+    },
+    {
+      "id": "L2-04",
+      "clause": "door order and four-second forcing clock",
+      "value": {
+        "order": [
+          48.6,
+          49.4,
+          54.15,
+          58.15
+        ],
+        "nearBefore": 0
+      },
+      "target": "ordered arrival→exit→atDoors→open;4s force;0 infected within40m",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
+      "level": "L2"
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/final-a/native-receipts/L2-low-complete.json.gz",
+      "sha256": "d0b884e0602ceef5ef9631ae082a1ab9352582a0c6a95c4cb79c8cf8f873b64b",
+      "what": "Frozen-head L2-04 native input receipt, evaluated by the exact clauses retained in the row proof.",
+      "canonicalFile": "docs/reports/fix51-verify/receipts/L2-low-complete.json",
+      "decodedSha256": "65a3334f373fd381cd4cb412459ffe65c837cbeeb04599a477f404bb7428db05"
+    },
+    {
+      "file": "docs/reports/final-a/native-receipts/L2-low-stationary.json.gz",
+      "sha256": "a0cff1248de36d5a38ff2ed18174ee80ddf0b665e4c4c8f77b0991216898dd74",
+      "what": "Frozen-head L2-04 native input receipt, evaluated by the exact clauses retained in the row proof.",
+      "canonicalFile": "docs/reports/fix51-verify/receipts/L2-low-stationary.json",
+      "decodedSha256": "806226e790065da9eff8e67d235cff3810b4510242ecc8a8518ef01067a57278"
+    },
+    {
+      "file": "docs/reports/final-a/native-receipts/L2-high-complete.json.gz",
+      "sha256": "7853a2405a6a51a9207f11122053806542b1a655c78ef73f3a15fa7a31524afb",
+      "what": "Frozen-head L2-04 native input receipt, evaluated by the exact clauses retained in the row proof.",
+      "canonicalFile": "docs/reports/fix51-verify/receipts/L2-high-complete.json",
+      "decodedSha256": "17691eef6a8fc71fe9e26e3ccc91ca7cb2038d19bca0856309ed4afafa423932"
+    },
+    {
+      "file": "docs/reports/final-a/native-receipts/L2-high-stationary.json.gz",
+      "sha256": "88dbf4ff7941f2a3eabd5e4a284fb8d4b07cb36f3c592b381203c42cc6404842",
+      "what": "Frozen-head L2-04 native input receipt, evaluated by the exact clauses retained in the row proof.",
+      "canonicalFile": "docs/reports/fix51-verify/receipts/L2-high-stationary.json",
+      "decodedSha256": "9c8480be3077aee3ba22c0f173ca74cd1989fb0c4328cbe4459eaca812844586"
+    },
+    {
+      "file": "docs/reports/final-a/native-receipts/L2-low-fixtures.json.gz",
+      "sha256": "2ae191d09dd6f71c03b5b425c37bc94d39927fc2c4254e3924c0495c7768ac94",
+      "what": "Frozen-head L2-04 native input receipt, evaluated by the exact clauses retained in the row proof.",
+      "canonicalFile": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
+      "decodedSha256": "260e6b2630be1e593395f867cffd45f125d4b45e8fc973a9e4376eb931683aff"
+    },
+    {
+      "file": "docs/reports/final-a/native-receipts/L2-high-fixtures.json.gz",
+      "sha256": "31bb5cc70b62a6a5cbc38aa2e8eaef53b50262b9fa6c58437087aa18576ee86b",
+      "what": "Frozen-head L2-04 native input receipt, evaluated by the exact clauses retained in the row proof.",
+      "canonicalFile": "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
+      "decodedSha256": "ebcffc44ba056bc652015d345e957523462d8adbb8a977c1edaa333550202650"
+    }
+  ],
+  "observation": "14 current native checks PASS across low/high. low/complete arrival/exit/doors event order: [2943,2991,3276,3516]; target arrival ≤crewExit ≤atDoors ≤doorsOpen; all observed (PASS); low/complete door forcing duration: 4; target 4 ≤ value ≤ 4 (PASS); low/complete nearest living infected before doors open: {\"samples\":3515,\"nearest\":null}; target none within40 m (PASS); low/stationary arrival/exit/doors event order: [2943,2991,3276,3516]; target arrival ≤crewExit ≤atDoors ≤doorsOpen; all observed (PASS); low/stationary door forcing duration: 4; target 4 ≤ value ≤ 4 (PASS); low/stationary nearest living infected before doors open: {\"samples\":3515,\"nearest\":null}; target none within40 m (PASS); high/complete arrival/exit/doors event order: [2943,2991,3276,3516]; target arrival ≤crewExit ≤atDoors ≤doorsOpen; all observed (PASS); high/complete door forcing duration: 4; target 4 ≤ value ≤ 4 (PASS); high/complete nearest living infected before doors open: {\"samples\":3515,\"nearest\":null}; target none within40 m (PASS); high/stationary arrival/exit/doors event order: [2943,2991,3276,3516]; target arrival ≤crewExit ≤atDoors ≤doorsOpen; all observed (PASS); high/stationary door forcing duration: 4; target 4 ≤ value ≤ 4 (PASS); high/stationary nearest living infected before doors open: {\"samples\":3515,\"nearest\":null}; target none within40 m (PASS); low/controlled-fixture door order and four-second forcing clock: {\"order\":[48.6,49.4,54.15,58.15],\"nearBefore\":0}; target ordered arrival→exit→atDoors→open;4s force;0 infected within40m (PASS); high/controlled-fixture door order and four-second forcing clock: {\"order\":[48.6,49.4,54.15,58.15],\"nearBefore\":0}; target ordered arrival→exit→atDoors→open;4s force;0 infected within40m (PASS)"
+}

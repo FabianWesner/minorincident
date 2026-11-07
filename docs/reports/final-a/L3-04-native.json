@@ -1,0 +1,385 @@
+{
+  "row": "L3-04",
+  "verdict": "PASS",
+  "frozenHead": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+  "fixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4",
+  "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
+  "generatedAt": "2026-11-06T23:57:28.205Z",
+  "criterion": "The police lose without the player: fallback fires by its first-of rule (60 s / 3 turned / 8 inside) also with the idle bot; ≥ 1 officer turns (same id, uniform). PO: \"Ideally the Zombies will win against police when the player isn't doing anything\".",
+  "automatedComplete": true,
+  "checks": [
+    {
+      "id": "L3-04",
+      "clause": "fallback within sixty seconds without player fire",
+      "level": "L3",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 28.483333333333334,
+      "target": "0 ≤ value ≤ 60",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-stationary.json"
+    },
+    {
+      "id": "L3-04",
+      "clause": "same-id turned officer ledger",
+      "level": "L3",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 5,
+      "target": "1 ≤ value ≤ Infinity",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-stationary.json"
+    },
+    {
+      "id": "L3-04",
+      "clause": "fallback within sixty seconds without player fire",
+      "level": "L3",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 14.25,
+      "target": "0 ≤ value ≤ 60",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-high-stationary.json"
+    },
+    {
+      "id": "L3-04",
+      "clause": "same-id turned officer ledger",
+      "level": "L3",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 10,
+      "target": "1 ≤ value ≤ Infinity",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-high-stationary.json"
+    },
+    {
+      "id": "L3-04",
+      "clause": "exact first-of fallback boundary and cause",
+      "value": {
+        "fallbackBoundary": [
+          {
+            "tick": 3960,
+            "firstEligibleTick": 3960,
+            "expectedCause": "inside",
+            "actualCause": "inside",
+            "inside": 8,
+            "turned": 1,
+            "elapsed": 775
+          }
+        ],
+        "delayedFallback": false
+      },
+      "target": "first eligible tick; priority: 3 turned, 8 inside, 60 seconds; no delayed fallback",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
+      "level": "L3"
+    },
+    {
+      "id": "L3-04",
+      "clause": "idle fallback deadline and officer identity/uniform",
+      "value": {
+        "officers": 10,
+        "directions": [
+          "station",
+          "commerce",
+          "river",
+          "blvd",
+          "oak"
+        ],
+        "turnedDuring": 1,
+        "sameLook": true,
+        "fallbackCause": "inside",
+        "fallbackAfterS": 12.916666666666666
+      },
+      "target": "fallback≤60s afterattack;≥1 officer turns;uniform retained",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
+      "level": "L3"
+    },
+    {
+      "id": "L3-04",
+      "clause": "controlled first-of fallback boundaries",
+      "value": [
+        {
+          "name": "seven inside",
+          "inside": 7,
+          "turned": 0,
+          "elapsed": 1,
+          "station": false,
+          "expected": null,
+          "actual": null,
+          "calls": 0,
+          "pass": true
+        },
+        {
+          "name": "eight inside",
+          "inside": 8,
+          "turned": 0,
+          "elapsed": 1,
+          "station": false,
+          "expected": "inside",
+          "actual": "inside",
+          "calls": 1,
+          "pass": true
+        },
+        {
+          "name": "two turned",
+          "inside": 0,
+          "turned": 2,
+          "elapsed": 1,
+          "station": false,
+          "expected": null,
+          "actual": null,
+          "calls": 0,
+          "pass": true
+        },
+        {
+          "name": "three turned",
+          "inside": 0,
+          "turned": 3,
+          "elapsed": 1,
+          "station": false,
+          "expected": "turned",
+          "actual": "turned",
+          "calls": 1,
+          "pass": true
+        },
+        {
+          "name": "one tick before60s",
+          "inside": 0,
+          "turned": 0,
+          "elapsed": 3599,
+          "station": false,
+          "expected": null,
+          "actual": null,
+          "calls": 0,
+          "pass": true
+        },
+        {
+          "name": "exactly60s",
+          "inside": 0,
+          "turned": 0,
+          "elapsed": 3600,
+          "station": false,
+          "expected": "time",
+          "actual": "time",
+          "calls": 1,
+          "pass": true
+        },
+        {
+          "name": "simultaneous thresholds",
+          "inside": 8,
+          "turned": 3,
+          "elapsed": 3600,
+          "station": false,
+          "expected": "turned",
+          "actual": "turned",
+          "calls": 1,
+          "pass": true
+        },
+        {
+          "name": "station cohort excluded",
+          "inside": 8,
+          "turned": 0,
+          "elapsed": 1,
+          "station": true,
+          "expected": null,
+          "actual": null,
+          "calls": 0,
+          "pass": true
+        }
+      ],
+      "target": "3turned /8inside /3600ticks; exact threshold and priority; station cohort excluded",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
+      "level": "L3"
+    },
+    {
+      "id": "L3-04",
+      "clause": "exact first-of fallback boundary and cause",
+      "value": {
+        "fallbackBoundary": [
+          {
+            "tick": 2892,
+            "firstEligibleTick": 2892,
+            "expectedCause": "turned",
+            "actualCause": "turned",
+            "inside": 6,
+            "turned": 3,
+            "elapsed": 492
+          }
+        ],
+        "delayedFallback": false
+      },
+      "target": "first eligible tick; priority: 3 turned, 8 inside, 60 seconds; no delayed fallback",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
+      "level": "L3"
+    },
+    {
+      "id": "L3-04",
+      "clause": "idle fallback deadline and officer identity/uniform",
+      "value": {
+        "officers": 10,
+        "directions": [
+          "station",
+          "commerce",
+          "river",
+          "blvd",
+          "oak"
+        ],
+        "turnedDuring": 3,
+        "sameLook": true,
+        "fallbackCause": "turned",
+        "fallbackAfterS": 8.2
+      },
+      "target": "fallback≤60s afterattack;≥1 officer turns;uniform retained",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
+      "level": "L3"
+    },
+    {
+      "id": "L3-04",
+      "clause": "controlled first-of fallback boundaries",
+      "value": [
+        {
+          "name": "seven inside",
+          "inside": 7,
+          "turned": 0,
+          "elapsed": 1,
+          "station": false,
+          "expected": null,
+          "actual": null,
+          "calls": 0,
+          "pass": true
+        },
+        {
+          "name": "eight inside",
+          "inside": 8,
+          "turned": 0,
+          "elapsed": 1,
+          "station": false,
+          "expected": "inside",
+          "actual": "inside",
+          "calls": 1,
+          "pass": true
+        },
+        {
+          "name": "two turned",
+          "inside": 0,
+          "turned": 2,
+          "elapsed": 1,
+          "station": false,
+          "expected": null,
+          "actual": null,
+          "calls": 0,
+          "pass": true
+        },
+        {
+          "name": "three turned",
+          "inside": 0,
+          "turned": 3,
+          "elapsed": 1,
+          "station": false,
+          "expected": "turned",
+          "actual": "turned",
+          "calls": 1,
+          "pass": true
+        },
+        {
+          "name": "one tick before60s",
+          "inside": 0,
+          "turned": 0,
+          "elapsed": 3599,
+          "station": false,
+          "expected": null,
+          "actual": null,
+          "calls": 0,
+          "pass": true
+        },
+        {
+          "name": "exactly60s",
+          "inside": 0,
+          "turned": 0,
+          "elapsed": 3600,
+          "station": false,
+          "expected": "time",
+          "actual": "time",
+          "calls": 1,
+          "pass": true
+        },
+        {
+          "name": "simultaneous thresholds",
+          "inside": 8,
+          "turned": 3,
+          "elapsed": 3600,
+          "station": false,
+          "expected": "turned",
+          "actual": "turned",
+          "calls": 1,
+          "pass": true
+        },
+        {
+          "name": "station cohort excluded",
+          "inside": 8,
+          "turned": 0,
+          "elapsed": 1,
+          "station": true,
+          "expected": null,
+          "actual": null,
+          "calls": 0,
+          "pass": true
+        }
+      ],
+      "target": "3turned /8inside /3600ticks; exact threshold and priority; station cohort excluded",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
+      "level": "L3"
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/final-a/native-receipts/L3-low-stationary.json.gz",
+      "sha256": "024f22953d5c2e3f1bbefbba6fe6943dddd8ecc05664082f2a2fe6cc32d7c146",
+      "what": "Frozen-head L3-04 native input receipt, evaluated by the exact clauses retained in the row proof.",
+      "canonicalFile": "docs/reports/fix51-verify/receipts/L3-low-stationary.json",
+      "decodedSha256": "397baa017658a0b23da1cece00753b1b6e9363ed1272bff5125d3de615c52def"
+    },
+    {
+      "file": "docs/reports/final-a/native-receipts/L3-high-stationary.json.gz",
+      "sha256": "2046af461e64e70381568acc5905423f47b44bf18d205557d43b0ad61770b9b1",
+      "what": "Frozen-head L3-04 native input receipt, evaluated by the exact clauses retained in the row proof.",
+      "canonicalFile": "docs/reports/fix51-verify/receipts/L3-high-stationary.json",
+      "decodedSha256": "260dd369e09316f288a0de9e176ff1abc26bbc5547a1f7be1e20cadeecc29b80"
+    },
+    {
+      "file": "docs/reports/final-a/native-receipts/L3-low-fixtures.json.gz",
+      "sha256": "5bb7a9d05574c189a8bec9fe20a06b1a7988f48a3175a8841aef1fa147209724",
+      "what": "Frozen-head L3-04 native input receipt, evaluated by the exact clauses retained in the row proof.",
+      "canonicalFile": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
+      "decodedSha256": "1dbb6554d364c1372e298abab060319623af1f8871fbd2e7e24dad1a1382d0cc"
+    },
+    {
+      "file": "docs/reports/final-a/native-receipts/L3-high-fixtures.json.gz",
+      "sha256": "87d97237be8ee7ecb0019d923692b5c60332643dfee8640b4274c1c5727fe14c",
+      "what": "Frozen-head L3-04 native input receipt, evaluated by the exact clauses retained in the row proof.",
+      "canonicalFile": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
+      "decodedSha256": "e4dd4c36be5c14615ed61548e5c0cb95e00a5363f1741e70547ed354a08a8086"
+    }
+  ],
+  "observation": "10 current native checks PASS across low/high. low/stationary fallback within sixty seconds without player fire: 28.483333333333334; target 0 ≤ value ≤ 60 (PASS); low/stationary same-id turned officer ledger: 5; target 1 ≤ value ≤ Infinity (PASS); high/stationary fallback within sixty seconds without player fire: 14.25; target 0 ≤ value ≤ 60 (PASS); high/stationary same-id turned officer ledger: 10; target 1 ≤ value ≤ Infinity (PASS); low/controlled-fixture exact first-of fallback boundary and cause: {\"fallbackBoundary\":[{\"tick\":3960,\"firstEligibleTick\":3960,\"expectedCause\":\"inside\",\"actualCause\":\"inside\",\"inside\":8,\"turned\":1,\"elapsed\":775}],\"delayedFallback\":false}; target first eligible tick; priority: 3 turned, 8 inside, 60 seconds; no delayed fallback (PASS); low/controlled-fixture idle fallback deadline and officer identity/uniform: {\"officers\":10,\"directions\":[\"station\",\"commerce\",\"river\",\"blvd\",\"oak\"],\"turnedDuring\":1,\"sameLook\":true,\"fallbackCause\":\"inside\",\"fallbackAfterS\":12.916666666666666}; target fallback≤60s afterattack;≥1 officer turns;uniform retained (PASS); low/controlled-fixture controlled first-of fallback boundaries: [{\"name\":\"seven inside\",\"inside\":7,\"turned\":0,\"elapsed\":1,\"station\":false,\"expected\":null,\"actual\":null,\"calls\":0,\"pass\":true},{\"name\":\"eight inside\",\"inside\":8,\"turned\":0,\"elapsed\":1,\"station\":false,\"expected\":\"inside\",\"actual\":\"inside\",\"calls\":1,\"pass\":true},{\"name\":\"two turned\",\"inside\":0,\"turned\":2,\"elapsed\":1,\"station\":false,\"expected\":null,\"actual\":null,\"calls\":0,\"pass\":true},{\"name\":\"three turned\",\"inside\":0,\"turned\":3,\"elaps [full value in proof]; high/controlled-fixture exact first-of fallback boundary and cause: {\"fallbackBoundary\":[{\"tick\":2892,\"firstEligibleTick\":2892,\"expectedCause\":\"turned\",\"actualCause\":\"turned\",\"inside\":6,\"turned\":3,\"elapsed\":492}],\"delayedFallback\":false}; target first eligible tick; priority: 3 turned, 8 inside, 60 seconds; no delayed fallback (PASS); high/controlled-fixture idle fallback deadline and officer identity/uniform: {\"officers\":10,\"directions\":[\"station\",\"commerce\",\"river\",\"blvd\",\"oak\"],\"turnedDuring\":3,\"sameLook\":true,\"fallbackCause\":\"turned\",\"fallbackAfterS\":8.2}; target fallback≤60s afterattack;≥1 officer turns;uniform retained (PASS); high/controlled-fixture controlled first-of fallback boundaries: [{\"name\":\"seven inside\",\"inside\":7,\"turned\":0,\"elapsed\":1,\"station\":false,\"expected\":null,\"actual\":null,\"calls\":0,\"pass\":true},{\"name\":\"eight inside\",\"inside\":8,\"turned\":0,\"elapsed\":1,\"station\":false,\"expected\":\"inside\",\"actual\":\"inside\",\"calls\":1,\"pass\":true},{\"name\":\"two turned\",\"inside\":0,\"turned\":2,\"elapsed\":1,\"station\":false,\"expected\":null,\"actual\":null,\"calls\":0,\"pass\":true},{\"name\":\"three turned\",\"inside\":0,\"turned\":3,\"elap [full value in proof]"
+}
