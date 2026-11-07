@@ -168,7 +168,7 @@ export function levelThreeLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
       // The Oak gate fits a .35 m body, but this lamp closed four .5 m crowd cells
       // beside the reviewed wreck footprint. Keep that passage open at full clearance.
       if (p.assetId === 'prop.street-lamp' && p.position[0] === -68 && p.position[2] === 25) {
-        p.position[2] += .5; p.visualAabb.min[2] += .5; p.visualAabb.max[2] += .5;
+        p.position[2] += .1; p.visualAabb.min[2] += .1; p.visualAabb.max[2] += .1;
       }
       // Mount the span's lamp on the elevated deck, so its night pool lights the walking surface.
       if(p.assetId === 'prop.street-lamp' && p.position[0]===174) {
