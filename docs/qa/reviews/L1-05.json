@@ -1,0 +1,48 @@
+{
+  "row": "L1-05",
+  "status": "PASS",
+  "reviewer": "Codex final-a",
+  "date": "2026-11-07",
+  "commit": "1ed831e432ed79fbbc5790ac0b9c32eb442f3258",
+  "clauses": [
+    {
+      "clause": "After \"Delivered\" a 4–6 s window with no objective and no infected; flicker → blast → ringing → smoke → screams within 8 s; blast frame ≤ 50 ms.",
+      "verdict": "PASS",
+      "note": "Current low/high ordinary-delivery event ledgers: delivered3326; flicker3610, blast3700, ringing3712, smoke3784, screams3820. Quiet window284ticks=4.7333s with no active objective/infected, ordered flicker→screams210ticks=3.5s <8s. Personally inspected all14 current WebGPU event frames: quiet completed objective, light flicker, flash/debris then smoke, no premature infected. Exclusive quiet native Chrome Metal WebGL2 timing admitted at1m load2.8579: enclosing blast RAF5.6ms low/6.2ms high, following4.5/8.9ms; worst100ms before/500ms after5.6/29.8ms, both≤50. Full RAF/perf ledger retained, no screenshot/CDP work during interval. Initial resume gap from paused prefix is explicitly excluded, not mislabelled blast timing."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/final-a/L1-05-native-frame-ledger.json.gz",
+      "sha256": "e3d5f02c655badd95d9310a7e7a6d9346fadd47adbd91b89c3f8b69a479e00a6",
+      "what": "Current low/high ordinary-delivery event ledgers: delivered3326; flicker3610, blast3700, ringing3712, smoke3784, screams3820. Quiet window284ticks=4.7333s with no active objective/infected, ordered flicker→screams210ticks=3.5s <8s. Personally inspected all14 current WebGPU event frames: quiet completed objective, light flicker, flash/debris then smoke, no premature infected. Exclusive quiet native Chrome Metal WebGL2 timing admitted at1m load2.8579: enclosing blast RAF5.6ms low/6.2ms high, following4.5/8.9ms; worst100ms before/500ms after5.6/29.8ms, both≤50. Full RAF/perf ledger retained, no screenshot/CDP work during interval. Initial resume gap from paused prefix is explicitly excluded, not mislabelled blast timing."
+    },
+    {
+      "file": "docs/reports/final-a/L1-05-quiet-admission.json",
+      "sha256": "e8ec360e6941bfa1d560880a164261e8babc53488a065d88cb4d7881a92c9a80",
+      "what": "Current low/high ordinary-delivery event ledgers: delivered3326; flicker3610, blast3700, ringing3712, smoke3784, screams3820. Quiet window284ticks=4.7333s with no active objective/infected, ordered flicker→screams210ticks=3.5s <8s. Personally inspected all14 current WebGPU event frames: quiet completed objective, light flicker, flash/debris then smoke, no premature infected. Exclusive quiet native Chrome Metal WebGL2 timing admitted at1m load2.8579: enclosing blast RAF5.6ms low/6.2ms high, following4.5/8.9ms; worst100ms before/500ms after5.6/29.8ms, both≤50. Full RAF/perf ledger retained, no screenshot/CDP work during interval. Initial resume gap from paused prefix is explicitly excluded, not mislabelled blast timing."
+    },
+    {
+      "file": "docs/reports/final-a/L1-05-frame-measurement.json",
+      "sha256": "a7e8231ad30616d4d63e4f54af22b6322a5758f754495694fc6b8d309a543016",
+      "what": "Current low/high ordinary-delivery event ledgers: delivered3326; flicker3610, blast3700, ringing3712, smoke3784, screams3820. Quiet window284ticks=4.7333s with no active objective/infected, ordered flicker→screams210ticks=3.5s <8s. Personally inspected all14 current WebGPU event frames: quiet completed objective, light flicker, flash/debris then smoke, no premature infected. Exclusive quiet native Chrome Metal WebGL2 timing admitted at1m load2.8579: enclosing blast RAF5.6ms low/6.2ms high, following4.5/8.9ms; worst100ms before/500ms after5.6/29.8ms, both≤50. Full RAF/perf ledger retained, no screenshot/CDP work during interval. Initial resume gap from paused prefix is explicitly excluded, not mislabelled blast timing."
+    },
+    {
+      "file": "docs/reports/final-a/L1-05-browser-ledger.json.gz",
+      "sha256": "b7b445279bb5cf5248b8b069b5289345dd3b0a8a5c596aa679e56b47862578cf",
+      "what": "Current low/high ordinary-delivery event ledgers: delivered3326; flicker3610, blast3700, ringing3712, smoke3784, screams3820. Quiet window284ticks=4.7333s with no active objective/infected, ordered flicker→screams210ticks=3.5s <8s. Personally inspected all14 current WebGPU event frames: quiet completed objective, light flicker, flash/debris then smoke, no premature infected. Exclusive quiet native Chrome Metal WebGL2 timing admitted at1m load2.8579: enclosing blast RAF5.6ms low/6.2ms high, following4.5/8.9ms; worst100ms before/500ms after5.6/29.8ms, both≤50. Full RAF/perf ledger retained, no screenshot/CDP work during interval. Initial resume gap from paused prefix is explicitly excluded, not mislabelled blast timing."
+    },
+    {
+      "file": "docs/reports/final-a/L1-05-image-review.json",
+      "sha256": "d3a5ab93e4fe8bad13271fe08815b2a0602f623eec15c9d229c1b9a95bd066d7",
+      "what": "Current low/high ordinary-delivery event ledgers: delivered3326; flicker3610, blast3700, ringing3712, smoke3784, screams3820. Quiet window284ticks=4.7333s with no active objective/infected, ordered flicker→screams210ticks=3.5s <8s. Personally inspected all14 current WebGPU event frames: quiet completed objective, light flicker, flash/debris then smoke, no premature infected. Exclusive quiet native Chrome Metal WebGL2 timing admitted at1m load2.8579: enclosing blast RAF5.6ms low/6.2ms high, following4.5/8.9ms; worst100ms before/500ms after5.6/29.8ms, both≤50. Full RAF/perf ledger retained, no screenshot/CDP work during interval. Initial resume gap from paused prefix is explicitly excluded, not mislabelled blast timing."
+    },
+    {
+      "file": "docs/reports/final-a/L1-05-current-proof.json",
+      "sha256": "c3cdb7632edd843bbb6eccd79eb63aad0e855954e552df8ef6b21d6581a975b1",
+      "what": "Current low/high ordinary-delivery event ledgers: delivered3326; flicker3610, blast3700, ringing3712, smoke3784, screams3820. Quiet window284ticks=4.7333s with no active objective/infected, ordered flicker→screams210ticks=3.5s <8s. Personally inspected all14 current WebGPU event frames: quiet completed objective, light flicker, flash/debris then smoke, no premature infected. Exclusive quiet native Chrome Metal WebGL2 timing admitted at1m load2.8579: enclosing blast RAF5.6ms low/6.2ms high, following4.5/8.9ms; worst100ms before/500ms after5.6/29.8ms, both≤50. Full RAF/perf ledger retained, no screenshot/CDP work during interval. Initial resume gap from paused prefix is explicitly excluded, not mislabelled blast timing."
+    }
+  ],
+  "notes": "Game source frozen at4e570db. Current pooled headless capture/input evidence and exact sourceDigest; image files retained only under test-results.",
+  "sourceDigest": "00a81dbceddae37bdb1b6540d29f8e3658cdd7d6b7b51968d1fd068c9a6eb63c"
+}
