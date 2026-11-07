@@ -1,20 +1,22 @@
 {
   "level": "L10",
   "reviewer": "final-g/Codex",
-  "scope": "Physical low and high opening plus both second production Resume segments reviewed; low incomplete first defense attempt reviewed through Charge27/60s. Final defense/boss/ending continuations are still running.",
+  "scope": "Complete physical low and high routes through cure release, 150-second epilogue, credits and actual main menu, using three contiguous production Resume segments each. Every produced capture personally reviewed; optional step-capture matrices were disabled for the final repeats, so every individual intermediate ending card is not claimed as visually covered.",
   "glitches": [
     "Following corgi stops at(933.1482,-9.3378); courier reaches(2133.5679,-18.8824):1200.4576m separation by26851. Exact frozen static query is clear, nav query blocked, no contact >5mm. This establishes follow/pathing failure, not geometry penetration.",
     "Independent high opening keeps corgi beside player across all reviewed opening/industrial/military/campus frames; do not generalize the low stuck-dog trial to every route.",
-    "The first low third batch stopped responding after the last observation Charge54/60s. Cause is unclassified; this aborted browser attempt is NOT CHECKED for console completion, not a fabricated game-error verdict. Retry uses unchanged console observer with optional capture/ledger probes disabled."
+    "The first low third batch stopped responding after the last observation Charge54/60s. Cause is unclassified; this aborted browser attempt is NOT CHECKED for console completion, not a fabricated game-error verdict. Retry uses unchanged console observer with optional capture/ledger probes disabled.",
+    "High finale credits frame21704 has very low-contrast central copy on dark card; heading/button are legible. Both quality finales return to actual main menu. Dense deformed corpse fragments remain visible; G14 already records the blocking mesh defect."
   ],
   "stunning": {
     "verdict": "P",
-    "observation": "Checkpoint road, lit house, fenced parking and some combat are readable. Much of first447s is broad flat green transit with little distinct industrial/military scenery. High second segment adds trucks, a watchtower, research console, medical shop, ambulance and rocket/cure equipment; most dispersal approach remains a sparse dark field. Low defense has dense active combat and explosions.",
-    "missing": "PO: judge environment identity and visual density in retained industrial7668/military16198 wide frames; finale/ending review pending. Second low segment also has long nearly featureless blue-ground transit toward dispersal; exact17765wide retained."
+    "observation": "Checkpoint road, lit house, fenced parking and some combat are readable. Much of first447s is broad flat green transit with little distinct industrial/military scenery. High second segment adds trucks, a watchtower, research console, medical shop, ambulance and rocket/cure equipment; most dispersal approach remains a sparse dark field. Low defense has dense active combat and explosions. Final console defense is dense and explosive, but its aftermath is a large carpet of overlapping corpse fragments around the console. Late pullout reveals distinct industrial towers and the arena; terminal sunset menu art is readable and composed.",
+    "missing": "PO: environment identity/density in retained industrial7668/military16198 and blue-field17765; finale corpse-carpet high16274 and low21753; low24458 industrial pullout; high21704 low-contrast credits copy. Finales are complete, not awaiting a route continuation."
   },
   "boringHarmlessBabysitting": [
     "Boring/pacing concern: longest sampled span without a living drawn enemy within20m is31.6833s (ticks16353\u201318254), across133m of mostly flat field. Roughly1Hz observations split at>3s gaps; this is visible pacing evidence, not mortal harmlessness proof. Actual close attackers/telegraphs are visible at24493.",
-    "Dog pathing leaves companion1200m behind but no waiting gate in this segment; whether player must go back later is not yet measured. L3 already supplies a blocking babysitting counterexample."
+    "The low dog remains absent locally through the finale, but the full L10 route completes without a wait-for-dog gate. This trial proves a follow/pathing problem, not an added mandatory babysitting interval. L3 supplies the measured blocking babysitting counterexample.",
+    "Defense has numerous actual living attack telegraphs and explosions at both qualities; protected health does not prove mortal harmlessness. After release, reviewed43/88/133s low and19/64/109s high epilogue frames are mostly static corpse-filled views before pullout/credits. This is a pacing/presentation question about the authored150s ending, not live combat safety."
   ],
   "evidence": [
     {
@@ -48,6 +50,22 @@
     {
       "file": "docs/reports/final-g/G-25-L10-low-batch3-unresponsive.json",
       "sha256": "e4116d5cf7a4000a4272243221e3c15ba7620df6e7c2966b131cc86309ce6e19"
+    },
+    {
+      "file": "docs/reports/final-g/L10-low-batch3-retry-captures.json",
+      "sha256": "76ab5b0dbeefb9656c47562850b965d366ce2772249372bfec4b07c7709ec6e2"
+    },
+    {
+      "file": "docs/reports/final-g/L10-high-batch3-retry-captures.json",
+      "sha256": "743537f19b2ac9300702564b689dc1a1acba487ff246d3b0dd5cdcd977f6d90b"
+    },
+    {
+      "file": "docs/reports/final-g/G-25-L10-low.json",
+      "sha256": "813212f95c635eb0541ee812a747b2d581152a2b96be7cd98a7281002e87b4be"
+    },
+    {
+      "file": "docs/reports/final-g/G-25-L10-high.json",
+      "sha256": "b24fd232b13cab3bbece710d311c2c66dc46f912d289dbf21e0e66a5b0097e43"
     }
   ]
 }
