@@ -1,0 +1,63 @@
+{
+  "generatedAt": "2026-11-07T09:02:18.143Z",
+  "rows": [
+    {
+      "id": "L9-05",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "checks": [],
+      "remaining": "NEXT: Drive a real-input APC reduced to zero HP before the bridge; measure 60% speed and smoke while retaining steering/control, then continue to the forced crash."
+    }
+  ],
+  "command": "npm run qa:accept -- --level L9 --tier both --skip-browser",
+  "relevantCommit": "e854f5f",
+  "sourceFile": "src/render/vfx/Blasts.ts",
+  "sourceSha256": "b24898b96a54efe7e273546d19b893361c2cf2733f3994482d566880de66952b",
+  "overallRows": [
+    {
+      "id": "L9-01",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "L9-02",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "L9-03",
+      "status": "FAIL",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "L9-04",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "L9-05",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "L9-06",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "L9-07",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "L9-08",
+      "status": "PASS",
+      "currentStatus": "PASS"
+    },
+    {
+      "id": "L9-09",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    }
+  ]
+}

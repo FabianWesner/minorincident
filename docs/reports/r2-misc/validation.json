@@ -1,0 +1,222 @@
+{
+  "sharedGate": {
+    "E19": {
+      "target": "E19",
+      "epics": [
+        "E19"
+      ],
+      "checks": [
+        {
+          "command": "npm run typecheck",
+          "status": 0,
+          "seconds": 16.971
+        },
+        {
+          "command": "npm run lint",
+          "status": 0,
+          "seconds": 10.694
+        },
+        {
+          "command": "npm test",
+          "status": 0,
+          "seconds": 29.225
+        }
+      ]
+    },
+    "E21": {
+      "target": "E21",
+      "epics": [
+        "E21"
+      ],
+      "checks": [
+        {
+          "command": "npm run typecheck",
+          "status": 0,
+          "seconds": 30.157
+        },
+        {
+          "command": "npm run lint",
+          "status": 0,
+          "seconds": 18.023
+        },
+        {
+          "command": "npm test",
+          "status": 0,
+          "seconds": 59.902
+        }
+      ]
+    },
+    "unitTestFiles": 27,
+    "unitTests": 107,
+    "maxVitestWorkers": 4,
+    "finalVerificationCommit": "4d60482"
+  },
+  "acceptance": {
+    "L2": {
+      "freshFailingRows": 0,
+      "incompleteRows": 10,
+      "targetChecks": "all four L2-11 PASS",
+      "inheritedFailRows": [
+        "L2-12"
+      ],
+      "currentL212": "PASS",
+      "exitCode": 1
+    },
+    "L9": {
+      "freshFailingRows": 0,
+      "incompleteRows": 8,
+      "inheritedFailRows": [
+        "L9-03"
+      ],
+      "exitCode": 1
+    },
+    "L3": {
+      "freshFailingRows": 2,
+      "freshFailRows": [
+        "L3-06",
+        "L3-08"
+      ],
+      "incompleteRows": 10,
+      "incompleteRowIds": [
+        "L3-01",
+        "L3-02",
+        "L3-05",
+        "L3-07",
+        "L3-10",
+        "L3-12",
+        "L3-13",
+        "L3-14",
+        "L3-15",
+        "L3-16"
+      ],
+      "targetChecks": [],
+      "exitCode": 1
+    },
+    "L1": {
+      "freshFailingRows": 0,
+      "freshFailRows": [],
+      "incompleteRows": 12,
+      "incompleteRowIds": [
+        "L1-02",
+        "L1-03",
+        "L1-04",
+        "L1-05",
+        "L1-06",
+        "L1-10",
+        "L1-11",
+        "L1-12",
+        "L1-14",
+        "L1-15",
+        "L1-16",
+        "L1-17"
+      ],
+      "targetChecks": [
+        {
+          "clause": "combat hard rule on actual player windups",
+          "status": "PASS",
+          "tier": "low",
+          "policy": "complete"
+        },
+        {
+          "clause": "real player/group windups per minute",
+          "status": "PASS",
+          "tier": "low",
+          "policy": "complete"
+        },
+        {
+          "clause": "minimum bounded-path reachable share within30m (path≤2.5×direct)",
+          "status": "PASS",
+          "tier": "low",
+          "policy": "complete"
+        },
+        {
+          "clause": "combat hard rule on actual player windups",
+          "status": "PASS",
+          "tier": "low",
+          "policy": "stationary"
+        },
+        {
+          "clause": "stationary first real player attack (phase clock)",
+          "status": "PASS",
+          "tier": "low",
+          "policy": "stationary"
+        },
+        {
+          "clause": "real player/group windups per minute",
+          "status": "PASS",
+          "tier": "low",
+          "policy": "stationary"
+        },
+        {
+          "clause": "minimum bounded-path reachable share within30m (path≤2.5×direct)",
+          "status": "PASS",
+          "tier": "low",
+          "policy": "stationary"
+        },
+        {
+          "clause": "combat hard rule on actual player windups",
+          "status": "PASS",
+          "tier": "high",
+          "policy": "complete"
+        },
+        {
+          "clause": "real player/group windups per minute",
+          "status": "PASS",
+          "tier": "high",
+          "policy": "complete"
+        },
+        {
+          "clause": "minimum bounded-path reachable share within30m (path≤2.5×direct)",
+          "status": "PASS",
+          "tier": "high",
+          "policy": "complete"
+        },
+        {
+          "clause": "combat hard rule on actual player windups",
+          "status": "PASS",
+          "tier": "high",
+          "policy": "stationary"
+        },
+        {
+          "clause": "stationary first real player attack (phase clock)",
+          "status": "PASS",
+          "tier": "high",
+          "policy": "stationary"
+        },
+        {
+          "clause": "real player/group windups per minute",
+          "status": "PASS",
+          "tier": "high",
+          "policy": "stationary"
+        },
+        {
+          "clause": "minimum bounded-path reachable share within30m (path≤2.5×direct)",
+          "status": "PASS",
+          "tier": "high",
+          "policy": "stationary"
+        }
+      ],
+      "exitCode": 1
+    }
+  },
+  "threat": {
+    "command": "npm run qa:threat -- --out test-results/r2-misc/threat",
+    "exitCode": 0,
+    "revision": "4d60482dbe1d0923219f67dc959dc6c299c90e7c",
+    "workers": 2,
+    "seconds": 347.900257791,
+    "levels": 10,
+    "flags": [],
+    "summary": "threat-summary.json"
+  },
+  "acceptanceGlobal": {
+    "freshFailRows": [
+      "G-24"
+    ],
+    "observedIn": [
+      "L1",
+      "L3"
+    ],
+    "detail": "Far healthy Alpha bar eligibility true; fixture target false on both tiers. Outside this brief."
+  }
+}

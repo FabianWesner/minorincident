@@ -1,0 +1,97 @@
+{
+  "command": "npm run qa:threat -- --out test-results/r2-misc/threat",
+  "exitCode": 0,
+  "sourceFile": "test-results/r2-misc/threat/audit.json",
+  "sourceSha256": "725e4eaee6733eb362ac13e987b9480776f21fafafad6efb61c583b168e8ae8e",
+  "revision": "4d60482dbe1d0923219f67dc959dc6c299c90e7c",
+  "mainRevision": "af5d84549957a6e1a9297560f74542bb8fcfd746",
+  "sourceMatchesMain": false,
+  "seed": 1,
+  "policy": "complete + passive",
+  "tier": "low",
+  "workers": 2,
+  "seconds": 347.900257791,
+  "flags": [],
+  "levels": [
+    {
+      "level": "L1",
+      "flags": [],
+      "passiveFlags": [],
+      "wallSeconds": 17.209571125,
+      "outcome": "complete",
+      "passiveOutcome": "complete"
+    },
+    {
+      "level": "L2",
+      "flags": [],
+      "passiveFlags": [],
+      "wallSeconds": 27.162064708,
+      "outcome": "complete",
+      "passiveOutcome": "complete"
+    },
+    {
+      "level": "L3",
+      "flags": [],
+      "passiveFlags": [],
+      "wallSeconds": 75.732337208,
+      "outcome": "complete",
+      "passiveOutcome": "tick-budget"
+    },
+    {
+      "level": "L4",
+      "flags": [],
+      "passiveFlags": [],
+      "wallSeconds": 153.737916125,
+      "outcome": "complete",
+      "passiveOutcome": "tick-budget"
+    },
+    {
+      "level": "L5",
+      "flags": [],
+      "passiveFlags": [],
+      "wallSeconds": 253.562018916,
+      "outcome": "complete",
+      "passiveOutcome": "tick-budget"
+    },
+    {
+      "level": "L6",
+      "flags": [],
+      "passiveFlags": [],
+      "wallSeconds": 8.933445167,
+      "outcome": "complete",
+      "passiveOutcome": "tick-budget"
+    },
+    {
+      "level": "L7",
+      "flags": [],
+      "passiveFlags": [],
+      "wallSeconds": 39.860892541,
+      "outcome": "complete",
+      "passiveOutcome": "complete"
+    },
+    {
+      "level": "L8",
+      "flags": [],
+      "passiveFlags": [],
+      "wallSeconds": 23.551508541,
+      "outcome": "complete",
+      "passiveOutcome": "complete"
+    },
+    {
+      "level": "L9",
+      "flags": [],
+      "passiveFlags": [],
+      "wallSeconds": 11.870696083999999,
+      "outcome": "complete",
+      "passiveOutcome": "complete"
+    },
+    {
+      "level": "L10",
+      "flags": [],
+      "passiveFlags": [],
+      "wallSeconds": 44.260940917,
+      "outcome": "complete",
+      "passiveOutcome": "tick-budget"
+    }
+  ]
+}

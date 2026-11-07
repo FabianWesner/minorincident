@@ -1,0 +1,563 @@
+{
+  "revision": "4e570db",
+  "method": "Frozen source snapshot from git; current unchanged D-GROVE asset files; ordinary low/complete input. Read-only actor166 trace around original worst tick.",
+  "run": {
+    "level": "L1",
+    "policy": "complete",
+    "seed": 1,
+    "completed": true,
+    "time": 115.08333333333333,
+    "deaths": 0,
+    "kills": 0,
+    "damageTaken": 30,
+    "failures": {},
+    "objectiveTimeline": [
+      {
+        "id": "pickup",
+        "t": 15.466666666666667
+      },
+      {
+        "id": "deliver",
+        "t": 55.43333333333333
+      },
+      {
+        "id": "escape",
+        "t": 69.45
+      },
+      {
+        "id": "weapon",
+        "t": 85.53333333333333
+      },
+      {
+        "id": "firestation",
+        "t": 110.08333333333333
+      }
+    ],
+    "furthestObjective": "firestation",
+    "activeObjectives": [],
+    "outcome": "complete",
+    "blocker": null,
+    "collision": {
+      "failures": 0,
+      "pending": 0,
+      "admitted": 5027,
+      "deferred": 7,
+      "requests": [],
+      "offenders": []
+    }
+  },
+  "phases": [
+    {
+      "key": "step/escape",
+      "label": "escape: Get away from the facility",
+      "threat": false,
+      "startSeconds": 69.43333333333334,
+      "seconds": 0.016666666666666666,
+      "spawned": 0,
+      "initial": 5,
+      "observed": 5,
+      "reachableEver": 5,
+      "within2_5m": 0,
+      "attacks": 0,
+      "attacksPerMinute": 0,
+      "firstAttackSeconds": null,
+      "groupAttacks": 0,
+      "groupAttacksPerMinute": 0,
+      "firstGroupAttackSeconds": null,
+      "followerSpeeds": [],
+      "followerMin": null,
+      "followerMedian": null,
+      "boundedPaths": {
+        "samples": 1,
+        "minimumPercent": 100,
+        "worstTick": 4166,
+        "nearby": 5,
+        "reachable": 5,
+        "blockedIds": []
+      },
+      "maxBlockedSeconds": 0,
+      "blockedEvidence": null,
+      "last": {
+        "tick": 4166,
+        "alive": 5,
+        "reachable": 5,
+        "playerX": 65.30667877197266,
+        "playerZ": -9.539332389831543,
+        "positions": []
+      },
+      "flags": []
+    },
+    {
+      "key": "phase/spread",
+      "label": "controller: spread",
+      "threat": true,
+      "startSeconds": 69.43333333333334,
+      "seconds": 40.65,
+      "spawned": 23,
+      "initial": 5,
+      "observed": 28,
+      "reachableEver": 28,
+      "within2_5m": 8,
+      "attacks": 17,
+      "attacksPerMinute": 25.092250922509226,
+      "firstAttackSeconds": 12.666666666666666,
+      "groupAttacks": 0,
+      "groupAttacksPerMinute": 0,
+      "firstGroupAttackSeconds": null,
+      "followerSpeeds": [
+        {
+          "id": 83,
+          "samples": 77,
+          "median": 6.227285314063075
+        }
+      ],
+      "followerMin": 6.227285314063075,
+      "followerMedian": 6.227285314063075,
+      "boundedPaths": {
+        "samples": 23,
+        "minimumPercent": 88.88888888888889,
+        "worstTick": 5252,
+        "nearby": 9,
+        "reachable": 8,
+        "blockedIds": [
+          166
+        ]
+      },
+      "maxBlockedSeconds": 0,
+      "blockedEvidence": null,
+      "last": {
+        "tick": 6572,
+        "alive": 24,
+        "reachable": 24,
+        "playerX": -73.91126251220703,
+        "playerZ": 40.46430969238281,
+        "positions": []
+      },
+      "flags": []
+    },
+    {
+      "key": "step/weapon",
+      "label": "weapon: Find something to defend yourself",
+      "threat": false,
+      "startSeconds": 69.45,
+      "seconds": 16.083333333333332,
+      "spawned": 15,
+      "initial": 5,
+      "observed": 20,
+      "reachableEver": 20,
+      "within2_5m": 4,
+      "attacks": 5,
+      "attacksPerMinute": 18.65284974093264,
+      "firstAttackSeconds": 12.65,
+      "groupAttacks": 0,
+      "groupAttacksPerMinute": 0,
+      "firstGroupAttackSeconds": null,
+      "followerSpeeds": [
+        {
+          "id": 83,
+          "samples": 32,
+          "median": 7.993294263507268
+        }
+      ],
+      "followerMin": 7.993294263507268,
+      "followerMedian": 7.993294263507268,
+      "boundedPaths": {
+        "samples": 9,
+        "minimumPercent": 100,
+        "worstTick": 5127,
+        "nearby": 9,
+        "reachable": 9,
+        "blockedIds": []
+      },
+      "maxBlockedSeconds": 0,
+      "blockedEvidence": null,
+      "last": {
+        "tick": 5127,
+        "alive": 20,
+        "reachable": 20,
+        "playerX": 23.257389068603516,
+        "playerZ": 37.310020446777344,
+        "positions": []
+      },
+      "flags": []
+    },
+    {
+      "key": "step/firestation",
+      "label": "firestation: Get inside the fire station",
+      "threat": false,
+      "startSeconds": 85.53333333333333,
+      "seconds": 24.55,
+      "spawned": 8,
+      "initial": 20,
+      "observed": 28,
+      "reachableEver": 28,
+      "within2_5m": 6,
+      "attacks": 12,
+      "attacksPerMinute": 29.327902240325866,
+      "firstAttackSeconds": 0.4166666666666667,
+      "groupAttacks": 0,
+      "groupAttacksPerMinute": 0,
+      "firstGroupAttackSeconds": null,
+      "followerSpeeds": [
+        {
+          "id": 83,
+          "samples": 45,
+          "median": 4.547830762033034
+        }
+      ],
+      "followerMin": 4.547830762033034,
+      "followerMedian": 4.547830762033034,
+      "boundedPaths": {
+        "samples": 13,
+        "minimumPercent": 88.88888888888889,
+        "worstTick": 5252,
+        "nearby": 9,
+        "reachable": 8,
+        "blockedIds": [
+          166
+        ]
+      },
+      "maxBlockedSeconds": 0,
+      "blockedEvidence": null,
+      "last": {
+        "tick": 6572,
+        "alive": 24,
+        "reachable": 24,
+        "playerX": -73.91126251220703,
+        "playerZ": 40.46430969238281,
+        "positions": []
+      },
+      "flags": []
+    },
+    {
+      "key": "phase/run-out",
+      "label": "level-end run-out",
+      "threat": false,
+      "startSeconds": 110.08333333333333,
+      "seconds": 5,
+      "spawned": 2,
+      "initial": 24,
+      "observed": 29,
+      "reachableEver": 28,
+      "within2_5m": 5,
+      "attacks": 12,
+      "attacksPerMinute": 144,
+      "firstAttackSeconds": 1.1333333333333333,
+      "groupAttacks": 0,
+      "groupAttacksPerMinute": 0,
+      "firstGroupAttackSeconds": null,
+      "followerSpeeds": [],
+      "followerMin": null,
+      "followerMedian": null,
+      "boundedPaths": {
+        "samples": 3,
+        "minimumPercent": 0,
+        "worstTick": 6725,
+        "nearby": 4,
+        "reachable": 0,
+        "blockedIds": [
+          179,
+          189,
+          191,
+          211
+        ]
+      },
+      "maxBlockedSeconds": 0,
+      "blockedEvidence": null,
+      "last": {
+        "tick": 6845,
+        "alive": 28,
+        "reachable": 28,
+        "playerX": -76.03812408447266,
+        "playerZ": 41.14918899536133,
+        "positions": []
+      },
+      "flags": []
+    }
+  ],
+  "trace": [
+    {
+      "movedSignDistance": 9.2090165806345,
+      "tick": 5252,
+      "actor": {
+        "x": 17.103456441029817,
+        "z": 34.09320885851876,
+        "y": 0.83,
+        "yaw": -8.151958962580437
+      },
+      "player": {
+        "x": 23.257389068603516,
+        "y": 0.9649999737739563,
+        "z": 37.310020446777344,
+        "yaw": 1.7596292420389532
+      },
+      "distance": null,
+      "nearWalls": [
+        {
+          "x": 20.2548,
+          "z": 37.57745,
+          "y": 0.43435,
+          "halfX": 0.1814,
+          "halfZ": 0.16595000000000226,
+          "halfY": 0.21305
+        },
+        {
+          "x": 20.5995,
+          "z": 37.5976,
+          "y": 0.45225,
+          "halfX": 0.09200000000000053,
+          "halfZ": 0.13289999999999935,
+          "halfY": 0.16675
+        },
+        {
+          "x": 20.15105,
+          "z": 37.829499999999996,
+          "y": 0.4236,
+          "halfX": 0.09205000000000041,
+          "halfZ": 0.10420000000000229,
+          "halfY": 0.14880000000000002
+        },
+        {
+          "x": 19.550449999999998,
+          "z": 38.4176,
+          "y": 0.4711,
+          "halfX": 0.23494999999999955,
+          "halfZ": 0.16219999999999857,
+          "halfY": 0.193
+        },
+        {
+          "x": 20.364800000000002,
+          "z": 37.430049999999994,
+          "y": 0.3843,
+          "halfX": 0.11770000000000103,
+          "halfZ": 0.09014999999999773,
+          "halfY": 0.124
+        },
+        {
+          "x": 19.780450000000002,
+          "z": 37.08945,
+          "y": 0.42974999999999997,
+          "halfX": 0.1648499999999995,
+          "halfZ": 0.21114999999999995,
+          "halfY": 0.20074999999999998
+        },
+        {
+          "x": 20.05065,
+          "z": 37.54075,
+          "y": 0.42379999999999995,
+          "halfX": 0.13104999999999833,
+          "halfZ": 0.10684999999999789,
+          "halfY": 0.162
+        },
+        {
+          "x": 20.01095,
+          "z": 36.93315,
+          "y": 0.43310000000000004,
+          "halfX": 0.1236499999999996,
+          "halfZ": 0.1206499999999977,
+          "halfY": 0.17140000000000002
+        },
+        {
+          "x": 19.89045,
+          "z": 37.250150000000005,
+          "y": 0.4285,
+          "halfX": 0.13235000000000063,
+          "halfZ": 0.03865000000000052,
+          "halfY": 0.15949999999999998
+        },
+        {
+          "x": 20.30565,
+          "z": 36.70825,
+          "y": 0.3922,
+          "halfX": 0.06284999999999918,
+          "halfZ": 0.15254999999999797,
+          "halfY": 0.1613
+        },
+        {
+          "x": 20.41675,
+          "z": 37.1249,
+          "y": 0.4205,
+          "halfX": 0.09604999999999997,
+          "halfZ": 0.20090000000000074,
+          "halfY": 0.1452
+        },
+        {
+          "x": 20.0946,
+          "z": 36.8056,
+          "y": 0.3956,
+          "halfX": 0.15029999999999966,
+          "halfZ": 0.12299999999999756,
+          "halfY": 0.1637
+        },
+        {
+          "x": 20.441850000000002,
+          "z": 37.34285,
+          "y": 0.46775,
+          "halfX": 0.09705000000000119,
+          "halfZ": 0.06824999999999903,
+          "halfY": 0.24705
+        },
+        {
+          "x": 20.387950000000004,
+          "z": 36.8208,
+          "y": 0.41559999999999997,
+          "halfX": 0.05635000000000012,
+          "halfZ": 0.10110000000000241,
+          "halfY": 0.1664
+        },
+        {
+          "x": 20.5543,
+          "z": 37.14435,
+          "y": 0.4213,
+          "halfX": 0.15360000000000085,
+          "halfZ": 0.06214999999999904,
+          "halfY": 0.1142
+        },
+        {
+          "x": 19.77795,
+          "z": 37.420100000000005,
+          "y": 0.45499999999999996,
+          "halfX": 0.06765000000000043,
+          "halfZ": 0.1936,
+          "halfY": 0.1307
+        },
+        {
+          "x": 20.47125,
+          "z": 37.71939999999999,
+          "y": 0.4885,
+          "halfX": 0.2079500000000003,
+          "halfZ": 0.12829999999999941,
+          "halfY": 0.1708
+        },
+        {
+          "x": 19.740850000000002,
+          "z": 38.28525,
+          "y": 0.4167,
+          "halfX": 0.04075000000000095,
+          "halfZ": 0.08435000000000059,
+          "halfY": 0.17109999999999997
+        },
+        {
+          "x": 20.36325,
+          "z": 36.94735,
+          "y": 0.42904999999999993,
+          "halfX": 0.13885000000000147,
+          "halfZ": 0.09795000000000087,
+          "halfY": 0.12184999999999999
+        },
+        {
+          "x": 20.5104,
+          "z": 37.2266,
+          "y": 0.43479999999999996,
+          "halfX": 0.11710000000000065,
+          "halfZ": 0.06640000000000157,
+          "halfY": 0.16749999999999998
+        },
+        {
+          "x": 19.91635,
+          "z": 37.4966,
+          "y": 0.41989999999999994,
+          "halfX": 0.03744999999999976,
+          "halfZ": 0.15649999999999764,
+          "halfY": 0.1238
+        },
+        {
+          "x": 20.1939,
+          "z": 36.662499999999994,
+          "y": 0.4091,
+          "halfX": 0.09879999999999889,
+          "halfZ": 0.1036999999999999,
+          "halfY": 0.12339999999999998
+        },
+        {
+          "x": 20.50255,
+          "z": 36.9123,
+          "y": 0.42874999999999996,
+          "halfX": 0.08694999999999986,
+          "halfZ": 0.04980000000000118,
+          "halfY": 0.20174999999999998
+        },
+        {
+          "x": 21.07240628834692,
+          "z": 34.75,
+          "y": 0.75945,
+          "halfX": 0.12755813599685517,
+          "halfZ": 0.1255000000000024,
+          "halfY": 0.57945
+        },
+        {
+          "x": 18.92759371165308,
+          "z": 34.75,
+          "y": 0.75945,
+          "halfX": 0.12755813599685517,
+          "halfZ": 0.1255000000000024,
+          "halfY": 0.57945
+        },
+        {
+          "x": 20,
+          "z": 34.805,
+          "y": 0.825,
+          "halfX": 1.072451731216887,
+          "halfZ": 0.05749999999999744,
+          "halfY": 0.08000000000000002
+        },
+        {
+          "x": 20.817971659402712,
+          "z": 34.71,
+          "y": 0.6594,
+          "halfX": 0.11360717491704264,
+          "halfZ": 0.06499999999999773,
+          "halfY": 0.47940000000000005
+        },
+        {
+          "x": 20.490782995641627,
+          "z": 34.71,
+          "y": 0.6594,
+          "halfX": 0.11360717491704264,
+          "halfZ": 0.06499999999999773,
+          "halfY": 0.47940000000000005
+        },
+        {
+          "x": 20.163594331880542,
+          "z": 34.71,
+          "y": 0.6594,
+          "halfX": 0.11360717491704264,
+          "halfZ": 0.06499999999999773,
+          "halfY": 0.47940000000000005
+        },
+        {
+          "x": 19.836405668119458,
+          "z": 34.71,
+          "y": 0.6594,
+          "halfX": 0.11360717491704264,
+          "halfZ": 0.06499999999999773,
+          "halfY": 0.47940000000000005
+        },
+        {
+          "x": 19.509217004358373,
+          "z": 34.71,
+          "y": 0.6594,
+          "halfX": 0.11360717491704264,
+          "halfZ": 0.06499999999999773,
+          "halfY": 0.47940000000000005
+        },
+        {
+          "x": 19.182028340597288,
+          "z": 34.71,
+          "y": 0.6594,
+          "halfX": 0.11360717491704264,
+          "halfZ": 0.06499999999999773,
+          "halfY": 0.47940000000000005
+        },
+        {
+          "x": 17.5,
+          "z": 33.763999999999996,
+          "y": 0.8140000000000001,
+          "halfX": 0.04639999999999844,
+          "halfZ": 0.046400000000001995,
+          "halfY": 0.506
+        }
+      ]
+    }
+  ]
+}

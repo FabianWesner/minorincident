@@ -1,0 +1,611 @@
+{
+  "generatedAt": "2026-11-07T09:32:01.991Z",
+  "command": "npm run qa:accept -- --level L1 --tier both --skip-browser",
+  "relevantCommit": "4d60482",
+  "sourceFile": "docs/reports/fix51-verify/L1.json",
+  "sourceSha256": "56ee1970b22c67b572b7570e43f68c9daefbf6133e88ea649630431cb2fec160",
+  "rows": [
+    {
+      "id": "L1-08",
+      "status": "PASS",
+      "currentStatus": "PASS",
+      "value": "low/complete combat hard rule on actual player windups: {\"seconds\":40.733333333333334,\"playerWindups\":22,\"groupWindups\":0,\"attacksPerMinute\":32.40589198036007} (target nonzero player windups in each combat policy; PASS); low/complete real player/group windups per minute: 32.40589198036007 (target 3 ≤ value ≤ Infinity; PASS); low/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); low/stationary combat hard rule on actual player windups: {\"seconds\":290.56666666666666,\"playerWindups\":1596,\"groupWindups\":0,\"attacksPerMinute\":329.5629230239761} (target nonzero player windups in each combat policy; PASS); low/stationary stationary first real player attack (phase clock): {\"seconds\":2.316666666666667,\"windowSeconds\":290.56666666666666} (target ≤20 s; PASS); low/stationary real player/group windups per minute: 329.5629230239761 (target 3 ≤ value ≤ Infinity; PASS); low/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS); high/complete combat hard rule on actual player windups: {\"seconds\":40.65,\"playerWindups\":21,\"groupWindups\":0,\"attacksPerMinute\":30.99630996309963} (target nonzero player windups in each combat policy; PASS); high/complete real player/group windups per minute: 30.99630996309963 (target 3 ≤ value ≤ Infinity; PASS); high/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 95 (target 90 ≤ value ≤ 100; PASS); high/stationary combat hard rule on actual player windups: {\"seconds\":290.56666666666666,\"playerWindups\":1595,\"groupWindups\":0,\"attacksPerMinute\":329.3564299644373} (target nonzero player windups in each combat policy; PASS); high/stationary stationary first real player attack (phase clock): {\"seconds\":2.316666666666667,\"windowSeconds\":290.56666666666666} (target ≤20 s; PASS); high/stationary real player/group windups per minute: 329.3564299644373 (target 3 ≤ value ≤ Infinity; PASS); high/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 100 (target 90 ≤ value ≤ 100; PASS) Manual review FAIL (STALE, Codex final-a): low/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 88.88888888888889; target 90 ≤ value ≤ 100 (FAIL)",
+      "automatedComplete": true,
+      "receipt": [
+        "docs/reports/fix51-verify/receipts/L1-low-complete.json",
+        "docs/reports/fix51-verify/receipts/L1-low-stationary.json",
+        "docs/reports/fix51-verify/receipts/L1-high-complete.json",
+        "docs/reports/fix51-verify/receipts/L1-high-stationary.json",
+        "docs/reports/final-a/L1-08-native.json",
+        "docs/reports/final-a/native-receipts/L1-low-complete.json.gz",
+        "docs/reports/final-a/native-receipts/L1-low-stationary.json.gz",
+        "docs/reports/final-a/native-receipts/L1-high-complete.json.gz",
+        "docs/reports/final-a/native-receipts/L1-high-stationary.json.gz"
+      ],
+      "expected": "combat: reachable ≥ 90 %; passive first attack ≤ 20 s (measured 8.25 s); passive attacks ≥ 3/min (tune).",
+      "checks": [
+        {
+          "id": "L1-08",
+          "clause": "combat hard rule on actual player windups",
+          "level": "L1",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 40.733333333333334,
+            "playerWindups": 22,
+            "groupWindups": 0,
+            "attacksPerMinute": 32.40589198036007
+          },
+          "target": "nonzero player windups in each combat policy"
+        },
+        {
+          "id": "L1-08",
+          "clause": "real player/group windups per minute",
+          "level": "L1",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 32.40589198036007,
+          "target": "3 ≤ value ≤ Infinity"
+        },
+        {
+          "id": "L1-08",
+          "clause": "minimum bounded-path reachable share within30m (path≤2.5×direct)",
+          "level": "L1",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 100,
+          "target": "90 ≤ value ≤ 100"
+        },
+        {
+          "id": "L1-08",
+          "clause": "combat hard rule on actual player windups",
+          "level": "L1",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": {
+            "seconds": 290.56666666666666,
+            "playerWindups": 1596,
+            "groupWindups": 0,
+            "attacksPerMinute": 329.5629230239761
+          },
+          "target": "nonzero player windups in each combat policy"
+        },
+        {
+          "id": "L1-08",
+          "clause": "stationary first real player attack (phase clock)",
+          "level": "L1",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": {
+            "seconds": 2.316666666666667,
+            "windowSeconds": 290.56666666666666
+          },
+          "target": "≤20 s"
+        },
+        {
+          "id": "L1-08",
+          "clause": "real player/group windups per minute",
+          "level": "L1",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": 329.5629230239761,
+          "target": "3 ≤ value ≤ Infinity"
+        },
+        {
+          "id": "L1-08",
+          "clause": "minimum bounded-path reachable share within30m (path≤2.5×direct)",
+          "level": "L1",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": 100,
+          "target": "90 ≤ value ≤ 100"
+        },
+        {
+          "id": "L1-08",
+          "clause": "combat hard rule on actual player windups",
+          "level": "L1",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": {
+            "seconds": 40.65,
+            "playerWindups": 21,
+            "groupWindups": 0,
+            "attacksPerMinute": 30.99630996309963
+          },
+          "target": "nonzero player windups in each combat policy"
+        },
+        {
+          "id": "L1-08",
+          "clause": "real player/group windups per minute",
+          "level": "L1",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 30.99630996309963,
+          "target": "3 ≤ value ≤ Infinity"
+        },
+        {
+          "id": "L1-08",
+          "clause": "minimum bounded-path reachable share within30m (path≤2.5×direct)",
+          "level": "L1",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "value": 95,
+          "target": "90 ≤ value ≤ 100"
+        },
+        {
+          "id": "L1-08",
+          "clause": "combat hard rule on actual player windups",
+          "level": "L1",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": {
+            "seconds": 290.56666666666666,
+            "playerWindups": 1595,
+            "groupWindups": 0,
+            "attacksPerMinute": 329.3564299644373
+          },
+          "target": "nonzero player windups in each combat policy"
+        },
+        {
+          "id": "L1-08",
+          "clause": "stationary first real player attack (phase clock)",
+          "level": "L1",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": {
+            "seconds": 2.316666666666667,
+            "windowSeconds": 290.56666666666666
+          },
+          "target": "≤20 s"
+        },
+        {
+          "id": "L1-08",
+          "clause": "real player/group windups per minute",
+          "level": "L1",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": 329.3564299644373,
+          "target": "3 ≤ value ≤ Infinity"
+        },
+        {
+          "id": "L1-08",
+          "clause": "minimum bounded-path reachable share within30m (path≤2.5×direct)",
+          "level": "L1",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "PASS",
+          "value": 100,
+          "target": "90 ≤ value ≤ 100"
+        }
+      ],
+      "historical": {
+        "id": "L1-08",
+        "level": "L1",
+        "status": "NOT CHECKED",
+        "value": "Tested tier meets the measured clauses; full requested-tier coverage is incomplete. Low native passive: last reach 25/27 = 92.6%; first attack 13.38 s; 11.83 player attacks/min.",
+        "evidence": [
+          "docs/reports/batch51-qa/native-threat.json"
+        ],
+        "method": "Current-head native passive spread-phase route, actual infected.attack events and independent nav-path snapshot. NEXT: repeat the same complete clause ledger in the other quality tier before closing this row for the full requested scope."
+      },
+      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure.",
+      "reviewDecision": {
+        "row": "L1-08",
+        "status": "FAIL",
+        "reviewer": "Codex final-a",
+        "date": "2026-11-07",
+        "commit": "0cbd817165f89940d2810fe2091000538a263ba0",
+        "clauses": [
+          {
+            "clause": "combat: reachable ≥ 90 %; passive first attack ≤ 20 s (measured 8.25 s); passive attacks ≥ 3/min (tune).",
+            "verdict": "FAIL",
+            "note": "low/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 88.88888888888889; target 90 ≤ value ≤ 100 (FAIL)"
+          }
+        ],
+        "evidence": [
+          {
+            "file": "docs/reports/final-a/L1-08-native.json",
+            "sha256": "eb82b216a115afdeca2f0e6d53d7b31674e42a150c471e5752a9e8410dbe8fe9",
+            "what": "low/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 88.88888888888889; target 90 ≤ value ≤ 100 (FAIL)"
+          },
+          {
+            "file": "docs/reports/final-a/native-receipts/L1-low-complete.json.gz",
+            "sha256": "24d4c1141afa43b565ea6df3de3d35d94375a810a044c963ec2fdca683816f81",
+            "what": "Frozen-head L1-08 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
+          },
+          {
+            "file": "docs/reports/final-a/native-receipts/L1-low-stationary.json.gz",
+            "sha256": "143201691dbe313ff86c5dd98e62b3ca786fe7c63ce2bb50ca41b9a50cef28d4",
+            "what": "Frozen-head L1-08 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
+          },
+          {
+            "file": "docs/reports/final-a/native-receipts/L1-high-complete.json.gz",
+            "sha256": "49121e9b52fb11525c024b7861014a4c85a9b4dd6e6c76ceab6d7327e157e0f4",
+            "what": "Frozen-head L1-08 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
+          },
+          {
+            "file": "docs/reports/final-a/native-receipts/L1-high-stationary.json.gz",
+            "sha256": "9480dc39df6b3cc953f056efe50c2e9bfae5901402ea20cdfbeaa91c7fd366e1",
+            "what": "Frozen-head L1-08 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
+          }
+        ],
+        "notes": "A measured failing clause establishes whole-row FAIL; remaining manual clauses are not asserted to pass. Game source unchanged from frozen head.",
+        "sourceDigest": "00a81dbceddae37bdb1b6540d29f8e3658cdd7d6b7b51968d1fd068c9a6eb63c",
+        "freshness": "STALE",
+        "latestRelevantCommit": "4d60482dbe1d0923219f67dc959dc6c299c90e7c"
+      }
+    }
+  ],
+  "overallRows": [
+    {
+      "id": "L1-01",
+      "status": "PASS",
+      "currentStatus": "PASS"
+    },
+    {
+      "id": "L1-02",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "L1-03",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "L1-04",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "L1-05",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "L1-06",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "L1-07",
+      "status": "PASS",
+      "currentStatus": "PASS"
+    },
+    {
+      "id": "L1-08",
+      "status": "PASS",
+      "currentStatus": "PASS"
+    },
+    {
+      "id": "L1-09",
+      "status": "PASS",
+      "currentStatus": "PASS"
+    },
+    {
+      "id": "L1-10",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "L1-11",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "L1-12",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "L1-13",
+      "status": "PASS",
+      "currentStatus": "PASS"
+    },
+    {
+      "id": "L1-14",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "L1-15",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "L1-16",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "L1-17",
+      "status": "PASS",
+      "currentStatus": "NOT CHECKED"
+    }
+  ],
+  "freshFailRows": [],
+  "incompleteRows": [
+    "L1-02",
+    "L1-03",
+    "L1-04",
+    "L1-05",
+    "L1-06",
+    "L1-10",
+    "L1-11",
+    "L1-12",
+    "L1-14",
+    "L1-15",
+    "L1-16",
+    "L1-17"
+  ],
+  "globals": [
+    {
+      "id": "G-01",
+      "status": "FAIL",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-02",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-03",
+      "status": "FAIL",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-04",
+      "status": "FAIL",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-05",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-06",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-07",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-08",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-09",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-10",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-11",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-12",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-13",
+      "status": "FAIL",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-14",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-15",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-16",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-17",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-18",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-19",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-20",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-21",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-22",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-23",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-24",
+      "status": "FAIL",
+      "currentStatus": "FAIL"
+    },
+    {
+      "id": "G-25",
+      "status": "FAIL",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-26",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-27",
+      "status": "FAIL",
+      "currentStatus": "NOT CHECKED"
+    }
+  ],
+  "outstandingGlobalChecks": [
+    {
+      "id": "G-24",
+      "clause": "production enemy-bar eligibility at distance/health boundaries",
+      "value": [
+        {
+          "archetype": "infected.alpha",
+          "near": true,
+          "farHealthy": true,
+          "farDamaged": true,
+          "dead": false,
+          "healthyAnimal": false
+        },
+        {
+          "archetype": "infected.lion",
+          "near": true,
+          "farHealthy": false,
+          "farDamaged": true,
+          "dead": false,
+          "healthyAnimal": false
+        },
+        {
+          "archetype": "infected.gorilla",
+          "near": true,
+          "farHealthy": false,
+          "farDamaged": true,
+          "dead": false,
+          "healthyAnimal": false
+        },
+        {
+          "archetype": "infected.elephant",
+          "near": true,
+          "farHealthy": false,
+          "farDamaged": true,
+          "dead": false,
+          "healthyAnimal": false
+        },
+        {
+          "archetype": "infected.zebra",
+          "near": true,
+          "farHealthy": false,
+          "farDamaged": true,
+          "dead": false,
+          "healthyAnimal": false
+        },
+        {
+          "archetype": "infected.flamingo",
+          "near": true,
+          "farHealthy": false,
+          "farDamaged": true,
+          "dead": false,
+          "healthyAnimal": false
+        }
+      ],
+      "target": "near/full and far/damaged true; far/full, dead and healthy animals false",
+      "status": "FAIL",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "level": "L1"
+    },
+    {
+      "id": "G-24",
+      "clause": "production enemy-bar eligibility at distance/health boundaries",
+      "value": [
+        {
+          "archetype": "infected.alpha",
+          "near": true,
+          "farHealthy": true,
+          "farDamaged": true,
+          "dead": false,
+          "healthyAnimal": false
+        },
+        {
+          "archetype": "infected.lion",
+          "near": true,
+          "farHealthy": false,
+          "farDamaged": true,
+          "dead": false,
+          "healthyAnimal": false
+        },
+        {
+          "archetype": "infected.gorilla",
+          "near": true,
+          "farHealthy": false,
+          "farDamaged": true,
+          "dead": false,
+          "healthyAnimal": false
+        },
+        {
+          "archetype": "infected.elephant",
+          "near": true,
+          "farHealthy": false,
+          "farDamaged": true,
+          "dead": false,
+          "healthyAnimal": false
+        },
+        {
+          "archetype": "infected.zebra",
+          "near": true,
+          "farHealthy": false,
+          "farDamaged": true,
+          "dead": false,
+          "healthyAnimal": false
+        },
+        {
+          "archetype": "infected.flamingo",
+          "near": true,
+          "farHealthy": false,
+          "farDamaged": true,
+          "dead": false,
+          "healthyAnimal": false
+        }
+      ],
+      "target": "near/full and far/damaged true; far/full, dead and healthy animals false",
+      "status": "FAIL",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "level": "L1"
+    }
+  ]
+}
