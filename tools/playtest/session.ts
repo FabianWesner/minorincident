@@ -1507,6 +1507,18 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     }
     const marketEscape = e.level === 'L2' && e.step === 'bridge';
     const marketCrowd = marketEscape && e.enemies.filter(b => b.d < 4).length >= 3;
+    // The L7 launcher is a required pickup before the corridor horde. A nearby
+    // fight used to pre-empt the objective route and leave the courier firing
+    // the army gun at the truck while the launcher sat three metres away.
+    const l7Launcher = e.level === 'L7' && !e.player?.weapons.includes('weapon.rocket-launcher')
+      ? e.weaponPickups?.find(pickup => pickup.action === 'weapon.rocket-launcher') : undefined;
+    if (l7Launcher) {
+      await releaseAim();
+      const keys = wasdToward(e, l7Launcher.screen.x, l7Launcher.screen.y);
+      await press(keys);
+      await hold(150);
+      continue;
+    }
     // Keep the escape route in charge even between dense crowds. Chasing each
     // recovering straggler could pull the driver to the map edge indefinitely.
     if (!marketEscape && await fight(e)) { await hold(120); continue; }
