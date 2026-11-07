@@ -1,0 +1,53 @@
+{
+  "row": "L10-13",
+  "status": "PASS",
+  "reviewer": "Codex final-c",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "clauses": [
+    {
+      "clause": "Release only with charge 60 + Mega dead + cure installed, player at the console.",
+      "verdict": "PASS",
+      "note": "Both complete native routes release only at charge3600, cure installed, Mega dead, and console distances 1.5926/1.2197m (<2m). At both tiers the complete missing-prerequisite matrix refuses release when charge, cure, boss death, console proximity, or fresh E is absent; the full eligible control releases. No release is inferred from source inspection alone."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/final-c/L10-13/numeric-review.json",
+      "sha256": "f1bf3cdec377cd8a8b829596565dff5638e0771e09ce9f1b344048ab7585b9aa",
+      "what": "Both complete native routes release only at charge3600, cure installed, Mega dead, and console distances 1.5926/1.2197m (<2m). At both tiers the complete missing-prerequisite matrix refuses release when charge, cure, boss death, console proximity, or fresh E is absent; the full eligible control releases. No release is inferred from source inspection alone."
+    },
+    {
+      "file": "docs/reports/final-c/native/L10-low-complete.json.gz",
+      "sha256": "8f2e11bb7ea3604d0c1f7db62cca453818f18a6706a9676b876f34b46e24da1f",
+      "what": "Immutable frozen-head native source receipt: docs/reports/fix51-verify/receipts/L10-low-complete.json. Row-specific measured checks are reproduced in numeric-review.json."
+    },
+    {
+      "file": "docs/reports/final-c/native/L10-low-stationary.json.gz",
+      "sha256": "dfdb72e5fcd79f5db665c40e096ced326d0a148a06e29450824d48bee6612882",
+      "what": "Immutable frozen-head native source receipt: docs/reports/fix51-verify/receipts/L10-low-stationary.json. Row-specific measured checks are reproduced in numeric-review.json."
+    },
+    {
+      "file": "docs/reports/final-c/native/L10-high-complete.json.gz",
+      "sha256": "0af4d7200e9b341063d2fa1a65bb0070b7531f3eb390259ed15d7c31e7ab50cb",
+      "what": "Immutable frozen-head native source receipt: docs/reports/fix51-verify/receipts/L10-high-complete.json. Row-specific measured checks are reproduced in numeric-review.json."
+    },
+    {
+      "file": "docs/reports/final-c/native/L10-high-stationary.json.gz",
+      "sha256": "cb525c30e1a0766f5c58135f55129ebe4b91c76b920dd0bd955472a14acd58a9",
+      "what": "Immutable frozen-head native source receipt: docs/reports/fix51-verify/receipts/L10-high-stationary.json. Row-specific measured checks are reproduced in numeric-review.json."
+    },
+    {
+      "file": "docs/reports/final-c/native/L10-low-fixtures.json.gz",
+      "sha256": "11fcbea0af38305871180125c31ad74e19f74034a087b486d849b291fde9c581",
+      "what": "Immutable frozen-head native source receipt: docs/reports/fix51-verify/receipts/L10-low-fixtures.json. Row-specific measured checks are reproduced in numeric-review.json."
+    },
+    {
+      "file": "docs/reports/final-c/native/L10-high-fixtures.json.gz",
+      "sha256": "514522e7edc040f73110c272d60efe194211f8689c77e687b9917836a2e81144",
+      "what": "Immutable frozen-head native source receipt: docs/reports/fix51-verify/receipts/L10-high-fixtures.json. Row-specific measured checks are reproduced in numeric-review.json."
+    }
+  ],
+  "notes": "Frozen-head numeric review. No gameplay source or criterion changed. No browser, performance, or visual evidence is claimed for this numeric-only criterion.",
+  "sourceDigest": "75720d4df4ad59ad1814e1cda498bc4620d28edfa0298106dd53315c5f2fba05"
+}
