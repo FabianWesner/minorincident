@@ -467,10 +467,11 @@ export class LevelTwoRescue {
     for (let i = 0; i < l2.cluster.count; i++) cluster.push({ id: -2, door: list[i % list.length].d, at: 0, home });
     for (const [x, z, size] of [...l2.escape.groups].sort((a, b) => b[2] - a[2])) {
       const home = { x, z }, list = near(home).slice(0, 1);
-      // Preserve the authored four-person formations on low. Halving each
-      // group made every formation a pair, so it could never meet the escape
-      // composition. The existing queue still waits for the unchanged cap.
-      const count = size >= 4 ? Math.ceil(size * (1 - this.relief())) : Math.ceil(size * scale);
+      // Low-tier formations need four actual admissions, including the two
+      // outlying homes that otherwise became singletons. Their queue still
+      // shares the unchanged cap with the rescue and bridge populations.
+      const formation = this.world.infected!.director.tier === 'low' ? Math.max(4, size) : size;
+      const count = formation >= 4 ? Math.ceil(formation * (1 - this.relief())) : Math.ceil(size * scale);
       for (let i = 0; i < count; i++) s.pending.push({ id: 0, door: list[i % list.length].d, at: 0, home });
     }
     // Singles keep their authored corners, but do not split the three street
@@ -517,6 +518,9 @@ export class LevelTwoRescue {
       // not retire its opening attackers before their first approach completes.
       if (!this.s.radioAt && world.tick - this.s.doorsOpenAt < ticks(4) && collapseAttackers.has(id)) continue;
       if (!rescue.has(id)) {
+        // Prepared street formations belong to the next encounter. Preserve
+        // them through its opening census before recycling distant members.
+        if (starting || !this.s.radioAt) continue;
         const origin = this.anchor('l2-forecourt');
         // A distant group ahead still belongs to the walk. Only retire street
         // groups after the courier has advanced beyond their rescue distance.
@@ -583,7 +587,12 @@ export class LevelTwoRescue {
       const prepareDue = tick - s.doorsOpenAt >= ticks(l2.rescue.radioAfterS - ESCAPE_PREPARE_LEAD_S);
       if (!s.escapeSpawned && (preparing || prepareDue || s.radioAt || radioDue)) this.spawnEscape();
       if (!s.radioAt) {
-        if (tick - s.doorsOpenAt >= ticks(l2.rescue.radioAfterS) || away) {
+        const forecourt = this.anchor('l2-forecourt'), living = world.infected!.active.filter(e => e.health.current > 0);
+        // An early break-away must wait for actual street admissions under
+        // the shared cap, rather than announce the next encounter half-filled.
+        const escapeReady = living.filter(e => Math.hypot(e.transform.x - forecourt.x, e.transform.z - forecourt.z) >= 40).length >= 25
+          && living.filter(e => e.infected?.l1?.mode === 'chase' && e.infected.l1.targetId === 1).length <= living.length * .2;
+        if (radioDue || away && escapeReady) {
           s.radioAt = tick; s.phase = 'escape';
           // The collapse window has ended. Free only safely distant actors so
           // prepared street groups can complete the bridge census at radio.

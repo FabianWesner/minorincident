@@ -295,7 +295,7 @@ def slab(name, token, pts, top, thick):
     ring = pts if area > 0 else pts[::-1]
     n = len(ring)
     verts = [(x, -z, top) for x, z in ring] + [(x, -z, top - thick) for x, z in ring]
-    faces = [tuple(range(n)), tuple(range(2 * n - 1, n - 1, -1))] + [(i, i + n, (i + 1) % n + n, (i + 1) % n) for i in range(n)]
+    faces = [tuple(range(n))] if not thick else [tuple(range(n)), tuple(range(2 * n - 1, n - 1, -1))] + [(i, i + n, (i + 1) % n + n, (i + 1) % n) for i in range(n)]
     mesh = bpy.data.meshes.new(name); mesh.from_pydata(verts, [], faces); mesh.update()
     o = bpy.data.objects.new(name, mesh); bpy.context.collection.objects.link(o)
     o.data.materials.append(_material(token)); l.layers[0].append(o)
@@ -311,9 +311,12 @@ def strip(name, token, a, b, width, top):
 slab('highway-deck', 'asphalt', [(167.5, -2.31), (179.5, -2.31), (179.5, 2.31), (167.5, 2.31)], DECK_TOP, .5)
 # PO P1-113: each ramp's road ends on a line tilted ~48 deg while the span ends square, leaving a dark wedge beside the joint rail
 # (x 179.5-181.3 at z<0 east, mirrored west). Fill exactly that quad, 5 cm into the deck and the road (collision: l3-highway-wedge in levels/L3/layout.ts).
-EAST_HOLE = [(179.45, 0.0), (181.25, -1.55), (181.45, -1.75), (179.45, -2.4)]
-slab('highway-wedge', 'asphalt', EAST_HOLE, DECK_TOP, .5)
-slab('highway-wedge', 'asphalt', [(347.0 - x, -z) for x, z in EAST_HOLE], DECK_TOP, .5)
+# The tilted road starts at x = 179.5 - z * (4.3 * 2*pi / 24).
+# Overlap that edge rather than stopping 5 cm short of it: the exposed slab
+# fascia otherwise draws a long dark triangle at the centre of the joint.
+EAST_HOLE = [(179.45, .05), (179.55, .05), (181.30, -1.55), (181.45, -1.75), (179.45, -2.4)]
+slab('highway-wedge', 'asphalt', EAST_HOLE, DECK_TOP, 0)
+slab('highway-wedge', 'asphalt', [(347.0 - x, -z) for x, z in EAST_HOLE], DECK_TOP, 0)
 # Lane paint of the deck, the kit's own bands (assets/kit.highway-onramp/build.py: yellow edge lines +-1.895..2.025, a 5 cm centre dash
 # every 1.043 m, dash .5 m long) kept between the two kits' tilted road ends (x 169.3-177.7) and joined to the kit's edge lines across the wedges.
 top = DECK_TOP + PAINT

@@ -1,0 +1,369 @@
+{
+  "generatedAt": "2026-11-07T09:26:17.651Z",
+  "command": "npm run qa:accept -- --level L3 --tier both --skip-browser",
+  "relevantCommit": "eb391bf",
+  "sourceFile": "docs/reports/fix51-verify/L3.json",
+  "sourceSha256": "2a1472533094aecc58e4ce2e16f05537b20bad617824e4bb27869459943fe58d",
+  "rows": [
+    {
+      "id": "L3-13",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "value": "Manual review FAIL (STALE, Codex final-a): Fresh low WebGL2 ordinary physical route from x135 to177.14; all22 photographs personally inspected at original resolution. Counterexample: at x177.14 the close0.5 view shows a dark triangular seam across the deck, extending from approximately image(945,576) to right edge(1279,592), over300px long. It remains in after, settled-5s and settled-10s frames. Thus no-dark-seams clause FAIL. Repro: seed1 low, take the raised corridor to x177 beside parked van, look back/down at the ramp joint at zoom0.5. The assisted controller stalled at this van; that is not itself a route/collision failure. No full-route, high-tier, hanging-body or physical support conclusion is claimed; one current visible seam suffices for FAIL. Reviewed raised-corridor/army-approach poses show continuous deck and no obvious hanging body. Full ramp-seam and stuck-clump trajectories across both tiers remain unqualified.",
+      "automatedComplete": false,
+      "receipt": [
+        "docs/reports/final-a/L3-13-browser-ledger.json.gz",
+        "docs/reports/final-a/L3-13-image-review.json",
+        "docs/reports/final-a/L3-13-current-proof.json"
+      ],
+      "expected": "Raised corridor: no deck gaps or dark seams at the ramps; no infected clumps stuck between barrier rows; no body hanging on walls.",
+      "checks": [],
+      "historical": {
+        "id": "L3-13",
+        "level": "L3",
+        "status": "NOT CHECKED",
+        "value": "Reviewed raised-corridor/army-approach poses show continuous deck and no obvious hanging body. Full ramp-seam and stuck-clump trajectories across both tiers remain unqualified.",
+        "evidence": [
+          "docs/reports/batch51-qa/L3.jpg"
+        ],
+        "method": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L3 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Raised corridor: no deck gaps or dark seams at the ramps; no infected clumps stuck between barrier rows; no body hanging on walls."
+      },
+      "remaining": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L3 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Raised corridor: no deck gaps or dark seams at the ramps; no infected clumps stuck between barrier rows; no body hanging on walls.",
+      "review": {
+        "tag": "O",
+        "instruction": "Raised corridor: no deck gaps or dark seams at the ramps; no infected clumps stuck between barrier rows; no body hanging on walls.",
+        "clause": "Raised corridor: no deck gaps or dark seams at the ramps; no infected clumps stuck between barrier rows; no body hanging on walls."
+      },
+      "reviewDecision": {
+        "row": "L3-13",
+        "status": "FAIL",
+        "reviewer": "Codex final-a",
+        "date": "2026-11-07",
+        "commit": "79231cd1fb28ec46b2549f04f6fa3ae673e86694",
+        "clauses": [
+          {
+            "clause": "Raised corridor: no deck gaps or dark seams at the ramps; no infected clumps stuck between barrier rows; no body hanging on walls.",
+            "verdict": "FAIL",
+            "note": "Fresh low WebGL2 ordinary physical route from x135 to177.14; all22 photographs personally inspected at original resolution. Counterexample: at x177.14 the close0.5 view shows a dark triangular seam across the deck, extending from approximately image(945,576) to right edge(1279,592), over300px long. It remains in after, settled-5s and settled-10s frames. Thus no-dark-seams clause FAIL. Repro: seed1 low, take the raised corridor to x177 beside parked van, look back/down at the ramp joint at zoom0.5. The assisted controller stalled at this van; that is not itself a route/collision failure. No full-route, high-tier, hanging-body or physical support conclusion is claimed; one current visible seam suffices for FAIL."
+          }
+        ],
+        "evidence": [
+          {
+            "file": "docs/reports/final-a/L3-13-browser-ledger.json.gz",
+            "sha256": "6d4a89de3ed9ba80660656792ae2bc1fbed7aced58606778d4be5bc1582b5032",
+            "what": "Fresh low WebGL2 ordinary physical route from x135 to177.14; all22 photographs personally inspected at original resolution. Counterexample: at x177.14 the close0.5 view shows a dark triangular seam across the deck, extending from approximately image(945,576) to right edge(1279,592), over300px long. It remains in after, settled-5s and settled-10s frames. Thus no-dark-seams clause FAIL. Repro: seed1 low, take the raised corridor to x177 beside parked van, look back/down at the ramp joint at zoom0.5. The assisted controller stalled at this van; that is not itself a route/collision failure. No full-route, high-tier, hanging-body or physical support conclusion is claimed; one current visible seam suffices for FAIL."
+          },
+          {
+            "file": "docs/reports/final-a/L3-13-image-review.json",
+            "sha256": "0d6ac4e54360d874a4615a597e4b413dce414bf8c99fc5956d265a640e96e80a",
+            "what": "Fresh low WebGL2 ordinary physical route from x135 to177.14; all22 photographs personally inspected at original resolution. Counterexample: at x177.14 the close0.5 view shows a dark triangular seam across the deck, extending from approximately image(945,576) to right edge(1279,592), over300px long. It remains in after, settled-5s and settled-10s frames. Thus no-dark-seams clause FAIL. Repro: seed1 low, take the raised corridor to x177 beside parked van, look back/down at the ramp joint at zoom0.5. The assisted controller stalled at this van; that is not itself a route/collision failure. No full-route, high-tier, hanging-body or physical support conclusion is claimed; one current visible seam suffices for FAIL."
+          },
+          {
+            "file": "docs/reports/final-a/L3-13-current-proof.json",
+            "sha256": "ddca664c01c7f31aca8159be831b7e364ca02144223dd1a7c65af7d80b42b0c1",
+            "what": "Fresh low WebGL2 ordinary physical route from x135 to177.14; all22 photographs personally inspected at original resolution. Counterexample: at x177.14 the close0.5 view shows a dark triangular seam across the deck, extending from approximately image(945,576) to right edge(1279,592), over300px long. It remains in after, settled-5s and settled-10s frames. Thus no-dark-seams clause FAIL. Repro: seed1 low, take the raised corridor to x177 beside parked van, look back/down at the ramp joint at zoom0.5. The assisted controller stalled at this van; that is not itself a route/collision failure. No full-route, high-tier, hanging-body or physical support conclusion is claimed; one current visible seam suffices for FAIL."
+          }
+        ],
+        "notes": "Game source frozen at4e570db. Current pooled headless capture/input evidence and exact sourceDigest; image files retained only under test-results.",
+        "sourceDigest": "b54f676bf2eb09a12c8059dce4ebe53003816773db044d7acfc253fccbedccf9",
+        "freshness": "STALE",
+        "latestRelevantCommit": "eb391bf40fcefed6e3cea67be81c03e874d645f8"
+      }
+    }
+  ],
+  "overallRows": [
+    {
+      "id": "L3-01",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "L3-02",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "L3-03",
+      "status": "FAIL",
+      "currentStatus": "PASS"
+    },
+    {
+      "id": "L3-04",
+      "status": "PASS",
+      "currentStatus": "PASS"
+    },
+    {
+      "id": "L3-05",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "L3-06",
+      "status": "FAIL",
+      "currentStatus": "FAIL"
+    },
+    {
+      "id": "L3-07",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "L3-08",
+      "status": "FAIL",
+      "currentStatus": "FAIL"
+    },
+    {
+      "id": "L3-09",
+      "status": "PASS",
+      "currentStatus": "PASS"
+    },
+    {
+      "id": "L3-10",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "L3-11",
+      "status": "PASS",
+      "currentStatus": "PASS"
+    },
+    {
+      "id": "L3-12",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "L3-13",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "L3-14",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "L3-15",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "L3-16",
+      "status": "FAIL",
+      "currentStatus": "NOT CHECKED"
+    }
+  ],
+  "freshFailRows": [
+    "L3-06",
+    "L3-08"
+  ],
+  "incompleteRows": [
+    "L3-01",
+    "L3-02",
+    "L3-05",
+    "L3-07",
+    "L3-10",
+    "L3-12",
+    "L3-13",
+    "L3-14",
+    "L3-15",
+    "L3-16"
+  ],
+  "outstandingChecks": [
+    {
+      "id": "L3-06",
+      "clause": "calm squad following distance by member",
+      "value": [
+        {
+          "id": 31,
+          "samples": 20,
+          "within3to6": 18,
+          "minM": 3.690169157532437,
+          "medianM": 4.385860559322221,
+          "maxM": 6.402876896269428
+        },
+        {
+          "id": 32,
+          "samples": 20,
+          "within3to6": 18,
+          "minM": 3.688412153747815,
+          "medianM": 4.370938332263041,
+          "maxM": 6.58016829340065
+        },
+        {
+          "id": 33,
+          "samples": 20,
+          "within3to6": 20,
+          "minM": 4.363912089399311,
+          "medianM": 5.167462186295056,
+          "maxM": 5.393960720235842
+        }
+      ],
+      "target": "every sampled living officer follows 3–6 m from the courier outside combat",
+      "status": "FAIL",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "level": "L3"
+    },
+    {
+      "id": "L3-08",
+      "clause": "median live within30m by traversed segment and concurrent cap",
+      "value": {
+        "prepopulated": [
+          250,
+          600,
+          1030
+        ],
+        "near30": [
+          22,
+          23,
+          22
+        ],
+        "maxConcurrent": 100,
+        "cap": 100
+      },
+      "target": "medianS1<S2<S3;max≤200high/100low",
+      "status": "FAIL",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "level": "L3"
+    }
+  ],
+  "globals": [
+    {
+      "id": "G-01",
+      "status": "FAIL",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-02",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-03",
+      "status": "FAIL",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-04",
+      "status": "FAIL",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-05",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-06",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-07",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-08",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-09",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-10",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-11",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-12",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-13",
+      "status": "FAIL",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-14",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-15",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-16",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-17",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-18",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-19",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-20",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-21",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-22",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-23",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-24",
+      "status": "FAIL",
+      "currentStatus": "FAIL"
+    },
+    {
+      "id": "G-25",
+      "status": "FAIL",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-26",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-27",
+      "status": "FAIL",
+      "currentStatus": "NOT CHECKED"
+    }
+  ]
+}

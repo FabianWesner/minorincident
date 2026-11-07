@@ -1,0 +1,19 @@
+// Producer snapshot: copy to the root of the git source archive before running.
+// Baseline: use the frozen L1 layout and L1_PATCHED=0; fixed: copy the changed L1 layout and set L1_PATCHED=1.
+import { writeFileSync } from 'node:fs';
+import { runLevel } from './tools/sim-runner/levels';
+import { newCampaign } from './src/sim/progression/Campaign';
+import { NavGrid } from './src/sim/ai/NavGrid';
+import { ThreatObserver, PathProbe } from './tools/qa/threat/observer';
+const trace: unknown[] = [];
+let observer: ThreatObserver;
+let phases: unknown;
+const campaign = newCampaign('female', 1);
+campaign.settings.quality = 'low';
+const run = await runLevel('L1', 'complete', 1, undefined, 'auto', campaign, undefined, 0, { quality: 'low', beforeBegin: w => { observer = new ThreatObserver(w, 'L1'); w.events.on('sim.tick', () => { if (w.tick !== 5252)
+        return; const e = w.entities.get(166), p = w.entities.get(1)!; if (!e)
+        return; const grid = w.infected!.navigation.grid(e.transform); const moved = new NavGrid(grid.ground, grid.walls.map(v => Math.abs(v.x - 17.5) < .001 && Math.abs(v.z - 33.764) < .001 ? { ...v, x: v.x - .1 } : v), grid.clearance, grid.center, grid.mask, grid.cellSize); for (const [id, v] of (grid as any).blockers)
+        moved.setBlocker(id, v, true); trace.push({ movedSignDistance: new PathProbe().distance(moved, e, p.transform), tick: w.tick, actor: { ...e.transform }, player: { ...p.transform }, distance: new PathProbe().distance(grid, e, p.transform), nearWalls: grid.walls.filter(v => Math.hypot(v.x - e.transform.x, v.z - e.transform.z) < 5).map(v => ({ ...v })) }); }); }, beforeDispose: () => { phases = observer!.finish().phases.filter(p => p.boundedPaths); } });
+const result = { revision: process.env.L1_PATCHED === '1' ? '4e570db plus L1 sign relocation only' : '4e570db', method: 'Frozen source snapshot from git; current unchanged D-GROVE asset files; ordinary low/complete input. Read-only actor166 trace around original worst tick.', run, phases, trace };
+writeFileSync(process.env.L1_PATCHED === '1' ? 'docs/reports/r2-misc/L1-frozen-fixed.json' : 'docs/reports/r2-misc/L1-frozen-diagnostic.json', JSON.stringify(result, null, 2) + '\n');
+console.log(JSON.stringify({ run, phases, trace: trace.filter((x: any) => x.tick === 5252) }, null, 2));
