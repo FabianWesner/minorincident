@@ -1,5 +1,6 @@
 import type { LevelReceipt } from '../threat-audit';
 import { l3SeedVerdict } from './l3SeedVote';
+import { l3WaveCount } from '../../../src/data/l3';
 
 export interface CriterionRow { id: string; passive: string; skilled: string; expected: string; verdict: 'PASS' | 'FAIL' | 'NOT MEASURED' | 'NEEDS CLARIFICATION'; }
 /** Absolute acceptance checks; unresolved reference clocks stay explicit. */
@@ -9,7 +10,7 @@ export function focusedCriteria(levels: LevelReceipt[]): CriterionRow[] {
   const l3 = levels.find(r => r.level === 'L3'), l4 = levels.find(r => r.level === 'L4');
   const waves = l3?.passiveObservation?.waves.filter(w => w.key.startsWith('station-'));
   const completedWaves = l3?.observation?.waves.filter(w => w.key.startsWith('station-'));
-  add('L3-02 cohorts', waves?.map(w => `${w.spawned}/${w.expected}`).join(', ') ?? 'not measured', '15/30/50 actual members on low tier', waves && waves.length === 3 && waves.every(w => w.spawned === w.expected) && completedWaves?.length === 3 && completedWaves.every(w => w.spawned === w.expected), completedWaves?.map(w => `${w.spawned}/${w.expected}`).join(', ') ?? 'not measured');
+  add('L3-02 cohorts', waves?.map(w => `${w.spawned}/${w.expected}`).join(', ') ?? 'not measured', `${[0, 1, 2].map(i => l3WaveCount(i, true)).join('/')} actual members on low tier`, waves && waves.length === 3 && waves.every(w => w.spawned === w.expected) && completedWaves?.length === 3 && completedWaves.every(w => w.spawned === w.expected), completedWaves?.map(w => `${w.spawned}/${w.expected}`).join(', ') ?? 'not measured');
   add('L3-02 stream', waves?.map(w => `${w.scheduledStreamSeconds.toFixed(2)} s scheduled; ${w.spawnedWithinEighteenSeconds} admitted`).join('; ') ?? 'not measured', 'every cohort admitted within its ≤18 s stream', waves && waves.length === 3 && waves.every(w => w.scheduledStreamSeconds <= 18 && w.spawnedWithinEighteenSeconds === w.expected));
   const opening = waves?.find(w => w.key === 'station-0');
   add('L3-02 alarm frame', opening ? `${opening.visibleWithinTwoSeconds}/${opening.expected}` : 'not measured', '≥25% of opening wave on screen within 2 s', opening && opening.visibleWithinTwoSeconds >= Math.ceil(opening.expected! / 4));
@@ -19,7 +20,7 @@ export function focusedCriteria(levels: LevelReceipt[]): CriterionRow[] {
   }
   const squad = l3?.observation?.l3Squad;
   const army = l3?.l3Army;
-  add('L3-06 squad counts/losses', '—', '3–4 at fallback; ≤2 at army (seeds 1–3: ≥2 valid, ≥2 of them ≤2); every loss a bite/kill/separation', squad && squad.initial !== null && squad.initial >= 3 && squad.initial <= 4 && squad.losses.every(q => ['bite', 'kill', 'separated'].includes(q.cause)) ? army?.pass : squad ? false : undefined, squad ? `${squad.initial} → army ${army ? army.seeds.map(q => `s${q.seed}:${q.valid ? q.army : 'invalid'}`).join('/') : 'not measured'} (${army?.within ?? 0}/${army?.measured ?? 0} ≤2); ${squad.losses.map(q => q.cause).join(', ')}` : 'not measured');
+  add('L3-06 squad counts/losses', '—', '3–4 at fallback; ≥2 at army (PO 2026-11-07; seeds 1–3: ≥2 valid, ≥2 of them ≥2); every loss a bite/kill/separation', squad && squad.initial !== null && squad.initial >= 3 && squad.initial <= 4 && squad.losses.every(q => ['bite', 'kill', 'separated'].includes(q.cause)) ? army?.pass : squad ? false : undefined, squad ? `${squad.initial} → army ${army ? army.seeds.map(q => `s${q.seed}:${q.valid ? q.army : 'invalid'}`).join('/') : 'not measured'} (${army?.within ?? 0}/${army?.measured ?? 0} ≥2); ${squad.losses.map(q => q.cause).join(', ')}` : 'not measured');
   const survival = l3?.l3SurvivalSeeds ?? [];
   const s1Vote = l3SeedVerdict(survival.map(seed => ({ seed: seed.seed, valid: seed.valid && !!seed.s1?.completed, pass: seed.s1?.completed ? seed.s1.officerHits > 0 && seed.s1.damage < 100 : null })));
   add('L3-07 squad hits and player damage', '—', 'officer hits>0; player damage<100HP; 2 of 3 valid seeds pass', s1Vote.pass, `${s1Vote.within}/${s1Vote.measured} seeds pass (${survival.map(seed => `s${seed.seed}:${seed.s1?.officerHits ?? '—'} hits, ${seed.s1?.damage ?? '—'}HP`).join(', ')})`);

@@ -3,6 +3,7 @@ import { createHash } from 'node:crypto';
 import { existsSync, readFileSync } from 'node:fs';
 import type { NativeReceipt } from './probe';
 import { l3SeedVerdict } from '../threat/l3SeedVote';
+import { l3WaveCount } from '../../../src/data/l3';
 import type { PhaseReceipt } from '../threat/observer';
 import { median } from '../threat/observer';
 import { followerPaceVerdict } from '../threat/followerPace';
@@ -162,13 +163,13 @@ export function evaluate(receipt: NativeReceipt, path: string): Clause[] {
       number('L3-02', 'attack delay after handgun pickup', firstAttack && handgun ? (firstAttack.tick - handgun.tick) / 60 : null, 5, 5);
       number('L3-02', 'latest attack clock', firstAttack ? firstAttack.tick / 60 : null, 0, 40);
       const waves = threat?.waves.filter(wave => wave.key.startsWith('station-')) ?? [];
-      for (let i = 0; i < 3; i++) { const wave = waves.find(w => w.key === `station-${i}`); number('L3-02', `wave ${i} actual admissions`, wave?.spawned, (low ? [15, 30, 50] : [30, 60, 100])[i], (low ? [15, 30, 50] : [30, 60, 100])[i]); }
+      for (let i = 0; i < 3; i++) { const wave = waves.find(w => w.key === `station-${i}`); number('L3-02', `wave ${i} actual admissions`, wave?.spawned, l3WaveCount(i, low), l3WaveCount(i, low)); }
       const opening = waves.find(wave => wave.key === 'station-0');
       add('L3-02', 'opening wave visible within two seconds', opening ? { visible: opening.visibleWithinTwoSeconds, expected: opening.expected } : null,
         'at least 25% of the opening wave in frame within two seconds', opening && opening.expected !== null ? opening.visibleWithinTwoSeconds >= Math.ceil(opening.expected / 4) : undefined);
       if (competent) for (let i = 0; i < 3; i++) {
         const admitted = s3?.waves.filter(wave => wave.wave === i && wave.id > 0) ?? [];
-        const total = (low ? [15, 30, 50] : [30, 60, 100])[i], police = admitted.filter(wave => wave.dir === 'station').length;
+        const total = l3WaveCount(i, low), police = admitted.filter(wave => wave.dir === 'station').length;
         add('L3-02', `wave ${i} admitted station-door share`, { admitted: admitted.length, police, percent: admitted.length ? police * 100 / admitted.length : null },
           `exactly 20% of the full ${total}-infected wave emerges from the station door`,
           receipt.run?.completed && admitted.length === total ? police === total * .2 : undefined);
@@ -180,7 +181,7 @@ export function evaluate(receipt: NativeReceipt, path: string): Clause[] {
       const squad = threat?.l3Squad;
       if (competent) {
         number('L3-06', 'initial squad count', squad?.initial, 3, 4); const army = receipt.l3Army;
-        add('L3-06', 'squad remaining at army arrival (seeds 1–3)', army ?? { seed1: squad?.army ?? null }, '≤2 at the army line: ≥2 valid seeds, ≥2 of them ≤2', army?.pass);
+        add('L3-06', 'squad remaining at army arrival (seeds 1–3)', army ?? { seed1: squad?.army ?? null }, '≥2 at the army line (PO 2026-11-07): ≥2 valid seeds, ≥2 of them ≥2', army?.pass);
         add('L3-06', 'logged squad-loss causes', squad?.losses ?? null, 'each loss bite, kill, or separation', squad ? squad.losses.every(loss => ['bite', 'kill', 'separated'].includes(loss.cause)) : undefined);
         // The historical clause name counts infected windups against the courier.
         const attackVote = l3SeedVerdict((receipt.l3Army?.seeds ?? []).map(seed => ({ seed: seed.seed, valid: seed.valid && seed.attacksPerMinute != null, pass: seed.attacksPerMinute == null ? null : seed.attacksPerMinute >= 3 && seed.attacksPerMinute <= 25 })));

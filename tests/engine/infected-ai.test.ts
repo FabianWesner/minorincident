@@ -7,6 +7,7 @@ import type { DamageEvent } from '../../src/sim/combat/Damage';
 import type { EntitySnapshot, GameEvent } from '../../src/sim/world/types';
 import { clickable } from '../../src/input/ClickPick';
 import { l1v2 } from '../../src/data/l1v2';
+import { l3 } from '../../src/data/l3';
 import { SimWorld } from '../../src/sim/world/SimWorld';
 import { missionSandbox } from '../fixtures/scenarios/mission-sandbox';
 import { followFrustum, loadL3 } from '../../tools/sim-runner/l3Bots';
@@ -35,10 +36,14 @@ test('every human and animal role validates and spawns with its catalog health a
     });
     step(w, 1);
     expect(warnings, `${tier}: pursuing at two metres must not repeatedly wind up out of contact`).toEqual([]);
-    e.transform.x = .9001; e.transform.z = 0;
+    // r6-l3 (PO 2026-11-07, "I can just walk through it"): the retreat commit range must lie outside the melee separation ring,
+    // or no runner can ever commit on a moving courier (0.9 m < 1.08 m did exactly that).
+    const lunge = l3.infected.retreatLungeM[tier];
+    expect(lunge).toBeGreaterThan(meleeRing);
+    e.transform.x = lunge + .0001; e.transform.z = 0;
     step(w, 1);
     expect(warnings, `${tier}: contact reached during steering must commit before separation`).toHaveLength(1);
-    expect(warnings[0]).toBeLessThanOrEqual(.9);
+    expect(warnings[0]).toBeLessThanOrEqual(lunge);
     if (tier === 'low') {
       mission.state.l3!.segment = 0;
       const early = spawn(w, 'runner', 2), approach = early.infected!.l1!;

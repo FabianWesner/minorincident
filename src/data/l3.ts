@@ -23,17 +23,18 @@ export const l3 = {
   armory: { interactS: .6, attackAfterS: 5, attackLatestS: 40, briefingAtS: 2 },
   /** Section 5.5: waves from three directions (river path, Boulevard, Oak Avenue); first-of fallback rule. */
   attack: {
-    waves: [{ atS: 0, count: 30 }, { atS: 20, count: 60 }, { atS: 40, count: 100 }] as readonly { atS: number; count: number }[],
+    /** PO 2026-11-07 ("Far too many Zombies"): 15 / 25 / 35 (were 30 / 60 / 100; low quality 15 / 30 / 50); low quality now uses the same waves. */
+    waves: [{ atS: 0, count: 15 }, { atS: 20, count: 25 }, { atS: 40, count: 35 }] as readonly { atS: number; count: number }[],
     fallback: { defenseS: 60, turned: 3, inside: 8 },
     /** Seconds between two emergences of one wave at one direction (they string out instead of a single blob). */
     staggerS: .1,
     /** PO 2026-10-12 ("don't cluster Zombies, let they come from all directions"): each wave streams in over this many seconds
-     * from five directions. Exactly one fifth of the attackers comes from the station door; low-tier floors scale with the half-sized
-     * waves. Total counts stay fixed. */
-    streamS: 18, stationShare: .2, stationMinimum: [3, 6, 10] as readonly number[],
+     * from five directions. Exactly one fifth of the attackers comes from the station door; low-tier floors scale with the smaller
+     * low-quality waves. Total counts stay fixed. */
+    streamS: 18, stationShare: .2, stationMinimum: [3, 5, 7] as readonly number[],
     /** Stream front-loading (time ~ (i/n)^streamFront): about a quarter of a wave is out within 2 s, so the alarm shows a fight at once. */
     streamFront: 3,
-    lowScale: .5,
+    lowScale: 1,
     /** Brief l3-polish (alarm: first infected on screen at 5.8 s; the street fights at the east gate sat just outside the close
      * frame): while the station attack runs and the courier is in the yard, the camera pulls back by this factor (eased). */
     viewScale: 1.5,
@@ -46,20 +47,25 @@ export const l3 = {
     hp: 100,
     gun: { damage: 15, shotS: 1 / 1.5, rangeM: 22, nearM: 15, hitNear: .6, hitFar: .25 },
     /** The squad follows 3-8 m around/behind the courier; running beyond its band is a regroup order. */
-    squad: { gun: { damage: 25, shotS: .35, rangeM: 22, nearM: 15, hitNear: .85, hitFar: .55 }, s1HitNear: .9, size: 4, minFollowM: 3, maxFollowM: 6, engageM: 18, leashM: 8, separatedM: 40, separatedS: 3, moveMs: 6.2, slowerMs: 0, breakoutS: 12 },
+    squad: { gun: { damage: 25, shotS: .35, rangeM: 22, nearM: 15, hitNear: .85, hitFar: .55 }, s1HitNear: .9, size: 4, minFollowM: 3, maxFollowM: 6, engageM: 18, leashM: 8, separatedM: 40, separatedS: 3, moveMs: 6.2, slowerMs: 0, breakoutS: 12,
+      /** PO 2026-11-07: a bite on a following officer costs 40 HP (the third bite turns him at 100 HP) and shoves the biter off 0.75 s (L7 evacuee rule). */
+      bite: { damage: 40, shoveTicks: 45 } },
     moveMs: 3.6,
   },
   /** Section 5.10: soldiers at the army checkpoint cover the last 20 m before the zone line. */
   /** The riflemen use `gun` (spec rifles); the mounted gun is one HMG gunner (l4.soldiers.hmg, anchor l3-hmg) in the sandbag nest at the line. */
   soldiers: { deckY: 4.26, count: 8, hp: 150, gun: { damage: 25, shotS: .45, rangeM: 26, nearM: 20, hitNear: .85, hitFar: .5 }, coverM: 20 },
   /** Section 5.3: each gunshot is a loud event for non-chasing infected within 20 m. */
-  /** `handgunStaggerS`: a courier handgun hit staggers the infected like an L3 police pistol hit (brief l3-polish, E21-AC05). */
-  gunfire: { radiusM: 20, holdS: 6, minGapS: .5, handgunStaggerS: .25 },
+  /** PO 2026-11-07 ("The gun should not let Zombies fall back (that's why they cannot catch up)"): the courier's handgun no
+   * longer staggers what it hits (was 0.25 s per hit at 3 shots/s, which froze pursuers and cancelled their windups). */
+  gunfire: { radiusM: 20, holdS: 6, minGapS: .5 },
   /** Section 5.6: pre-populated wanderers per segment (groups: x, street, size), forward pressure, caps. */
   density: {
-    /** PO 2026-10-12: five times every existing L3 encounter, including the previously increased street population. */
-    streetMultiplier: 25,
-    targets: [250, 625, 1000] as readonly number[],
+    /** PO 2026-10-12 set five times every L3 encounter (x25); PO 2026-11-07 ("Far too many Zombies. The police crew that should
+     * follow me has zero chance to survive"): x12 / x10 / x18 per segment, so the authored residents per segment are 125 / 240 / 710
+     * (incl. the 2 x 60 horde), and the live median near the courier still rises from S1 to S3 under the lower caps (L3-08). */
+    streetMultiplier: [12, 10, 18] as readonly number[],
+    targets: [125, 240, 710] as readonly number[],
     groups: [
       // S1 (x -126..-40): about 10, spread thin; the squad shoots most of them.
       [[-98, 'blvd', 2], [-84, 'oak', 2], [-70, 'commerce', 2], [-60, 'blvd', 2], [-48, 'oak', 2]],
@@ -74,23 +80,24 @@ export const l3 = {
     mouth: { mouths: [[-13.75, 'blvd'], [-13.75, 'commerce'], [-13.75, 'oak']] as readonly (readonly [number, 'blvd' | 'commerce' | 'oak'])[], clearM: 8, shiftM: 16 },
     /** A segment is populated (out of view) once the player is this far before its start. */
     populateAheadM: 55,
-    /** S1 emergences count returning downed infected as live; retain queued residents for later streets. Low uses half. */
-    s1LiveBudget: 40,
+    /** S1 emergences count returning downed infected as live; retain queued residents for later streets (PO 2026-11-07: per quality tier). */
+    s1LiveBudget: { high: 30, low: 30 },
     /** Initial S1 residents while the station fight runs; low uses half. Remaining authored residents stay queued. */
     s1Preload: 12,
-    /** Segment 3 also holds the horde: two packs of 125 at the on-ramp end of two avenues (seeded), streaming west. */
-    horde: { packSize: 125, fromX: 72, toX: 132 },
+    /** Segment 3 also holds the horde: two packs of 60 (PO 2026-11-07; was 125) at the on-ramp end of two avenues (seeded), streaming west. */
+    horde: { packSize: 60, fromX: 72, toX: 132 },
     leashM: 9,
-    /** Side streets spill: a shot within `nearM` of a cross-link in S2/S3 brings `size[seg]` out of the doors along it. */
+    /** Side streets spill (PO 2026-11-07: 30 / 45, were 50 / 75): a shot within `nearM` of a cross-link in S2/S3 brings `size[seg]` out of the doors along it. */
     /** `policeM`: the spill runs at the nearest squad officer within this distance of the shot (else at the shot). */
-    spill: { links: [-55, -15, 40, 85] as readonly number[], nearM: 14, doorM: 16, size: [50, 75] as P, maxPerLink: 2, cooldownS: 18, policeM: 25 },
+    spill: { links: [-55, -15, 40, 85] as readonly number[], nearM: 14, doorM: 16, size: [30, 45] as P, maxPerLink: 2, cooldownS: 18, policeM: 25 },
     pressure: { idleS: 20, everyS: 10, count: [25, 75] as P, behindM: [15, 35] as P },
     /** Brief l3-finish (PO 10-12 "so they have a chance against the policeman group"): during the station attack, infected
      * choosing a target count the courier this many metres farther away, so the 5x waves press the police line first. */
     playerBiasM: 4,
     /** Infected far behind the furthest progress line and out of view leave the director's books (cap headroom). */
     retireBehindM: 35,
-    caps: { high: 200, low: 100 },
+    /** Live infected caps (PO 2026-11-07; high was 200). Low keeps the 100 low-quality budget (G-05): L3 sets it itself (SpawnDirector), not half the high cap. */
+    caps: { high: 140, low: 100 },
   },
   /** Chase through the last 75 m: side-street packs follow the courier into the army line. */
   finale: { startX: 65, packs: [[72, 40], [94, 60], [116, 75]] as readonly P[], rescueX: 174, sources: [[163, -4], [163, -3], [163, -2], [165, -3], [165, -2], [165, -1], [167, -1.5], [167, 0], [167, 1.5]] as readonly P[], farSources: [[126, -3], [126, 0], [126, 3], [129, -3], [129, 0], [129, 3]] as readonly P[], chaseS: 90, surge: { stageX: 191, count: [25, 15] as P, maxWaitS: 12 }, minFightS: 60, evacuationS: 15, streamS: [.8, .45, .2] as readonly number[], barrierX: 137.1 + l3ArmyOffset, passX: 138.2 + l3ArmyOffset, closeS: .7 },
@@ -119,7 +126,9 @@ export const l3 = {
   /** The courier outruns regulars; one in twenty humans is a sprinter. Humans recover near the upper end of the epic's 10–20 s window. */
   // Later retreat crowds commit at body contact rather than repeatedly
   // winding up two metres behind the moving courier.
-  infected: { maxRegularMs: 4, retreatLungeM: { low: .9, high: .9 }, sprinterEvery: 20, recoverS: [18, 20] as P },
+  // PO 2026-11-07 (r6-l3): 1.4 m, was 0.9 m. 0.9 m lay inside the 1.08 m melee separation ring (CharacterSeparation.meleeRing), so
+  // after the fallback no runner could ever commit to a windup on a moving courier ("I can just walk through it").
+  infected: { maxRegularMs: 4, retreatLungeM: { low: 1.4, high: 1.4 }, sprinterEvery: 20, recoverS: [18, 20] as P },
   /**
    * PO 10-09: a courier who keeps dying at one spot is not meant to hit the same wall for 20 deaths. From the `fromDeaths`-th death at the same checkpoint on,
    * every respawn thins the infected (living or still waiting at their doors) between `aheadM` metres ahead of the courier by
@@ -167,6 +176,8 @@ export const l3PhotoSpots: readonly (readonly [string, readonly [number, number,
 export function l3AttackView(world: { scenario?: string | null; missions?: { state: { l3?: { phase: string } | null } } | null; entities: { get(id: number): { transform: { x: number } } | undefined } }): boolean {
   return world.scenario === 'L3' && ['attack', 'fallback', 'corridor'].includes(world.missions?.state.l3?.phase ?? '') && (world.entities.get(1)?.transform.x ?? 0) < l3.map.yard.x1 + 12;
 }
+/** Members of station wave `wave` (0..2) on a quality tier, as LevelThreeCollapse.startAttack admits them (acceptance tooling). */
+export function l3WaveCount(wave: number, low: boolean): number { return Math.ceil(l3.attack.waves[wave].count * (low ? l3.attack.lowScale : 1)); }
 /** Street of a world point (nearest street line), for population, forced-street bots and dressing tests. */
 export function l3Street(z: number): 'blvd' | 'commerce' | 'oak' { return z < -14 ? 'blvd' : z > 14 ? 'oak' : 'commerce'; }
 /** Segment index (0..2) of an X coordinate inside the corridor, -1 before it, 3 past it. */

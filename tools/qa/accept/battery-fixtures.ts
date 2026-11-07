@@ -2,7 +2,7 @@ import { armyLineVerdict } from '../threat/l3ArmyLine';
 import { l3SeedVerdict } from '../threat/l3SeedVote';
 import { loadL2, runL2 } from '../../sim-runner/l2Bots';
 import { loadL3, runL3 } from '../../sim-runner/l3Bots';
-import { l3, l3Street } from '../../../src/data/l3';
+import { l3, l3Street, l3WaveCount } from '../../../src/data/l3';
 import { l3CourierFight } from '../../../src/sim/missions/LevelThreeCollapse';
 import type { RunnerLevel } from '../../sim-runner/levels';
 import type { Tier } from './probe';
@@ -193,7 +193,7 @@ export async function batteryFixtures(level: RunnerLevel, tier: Tier, add: Add, 
         const report = runL3(world, mission, profile, { maxSeconds: profile === 'idle' ? 110 : 600, god: false });
         observations[`L3/${profile}`] = { protected: false, medkits, report };
         if (profile === 'complete') {
-          const expected = tier === 'low' ? [15, 30, 50] : [30, 60, 100];
+          const expected = [0, 1, 2].map(wave => l3WaveCount(wave, tier === 'low'));
           const waveCensus = expected.map((total, wave) => {
             const admitted = waveAdmissions.filter(entry => entry.wave === wave);
             const byDirection = Object.fromEntries(['river', 'blvd', 'oak', 'commerce', 'station'].map(dir => [dir, admitted.filter(entry => entry.dir === dir).length]));
@@ -210,8 +210,8 @@ export async function batteryFixtures(level: RunnerLevel, tier: Tier, add: Add, 
           const census = l3HumanCensus(humans);
           add('L3-09', 'native L3 human speed and admitted sprinter fraction', { ...census, outcome: report.outcome, counting: 'spawn transactions; checkpoint-reused IDs are separate admissions' }, 'regular≤4m/s; sprinters≤5% of actual admissions', census.regularMax > 4 ? false : census.count && report.outcome === 'complete' ? l3HumansPass(census) : undefined);
           const density = report.density;
-          add('L3-08', 'authored segment populations before admission/death relief', density.prepopulated, '250/625/1000 each±20%; these are pending population slots, not simultaneous live entities', density.prepopulated.every(n => n > 0) ? density.prepopulated.every((n, i) => Math.abs(n - [250, 625, 1000][i]) <= [250, 625, 1000][i] * .2) : undefined);
-          // fix66-a: one pushable bag shifts the squad's losses between seeds, so the "<= 2 at the army line" clause is measured on
+          add('L3-08', 'authored segment populations before admission/death relief', density.prepopulated, `${l3.density.targets.join('/')} each±20% (PO 2026-11-07); these are pending population slots, not simultaneous live entities`, density.prepopulated.every(n => n > 0) ? density.prepopulated.every((n, i) => Math.abs(n - l3.density.targets[i]) <= l3.density.targets[i] * .2) : undefined);
+          // fix66-a: one pushable bag shifts the squad's losses between seeds, so the ">= 2 at the army line" clause (PO 2026-11-07; was "<= 2") is measured on
           // three seeds (1 = the run above, 2 and 3 = extra complete runs) and passes when at least two of the three agree (median).
           const seedRuns: { seed: number; outcome: string; deaths: number; atFallback: number | null; atCheckpoint: number | null; segmentEnds: number[]; losses: { cause: string }[]; followRange: NonNullable<typeof report.squad>['followRange'] }[] = [];
           const measurementRuns = [{ seed: 1, report }];
@@ -229,16 +229,16 @@ export async function batteryFixtures(level: RunnerLevel, tier: Tier, add: Add, 
           const seedOk = (r: typeof seedRuns[number]) => r.atFallback !== null && r.atFallback >= 3 && r.atFallback <= 4 && r.segmentEnds.every((n, i, a) => n >= 0 && n <= (i ? a[i - 1] : r.atFallback!)) && r.losses.every(loss => ['bite', 'kill', 'separated'].includes(loss.cause));
           const army = armyLineVerdict(seedRuns.map(r => ({ seed: r.seed, valid: valid(r), army: r.atCheckpoint })));
           const armyOk = army.within, measured = army.measured;
-          add('L3-06', 'native squad cardinality and loss causes (formation/teleport review open)', { seeds: seedRuns.map(r => ({ seed: r.seed, outcome: r.outcome, deaths: r.deaths, atFallback: r.atFallback, atCheckpoint: r.atCheckpoint, segmentEnds: r.segmentEnds, lossCauses: r.losses.map(l => l.cause) })), atArmyAtMost2: `${armyOk}/${measured}` }, 'forms3–4;nonincreasing;≤2 atcheckpoint;loss causes bite/kill/separation (three seeds, at least two agree on the army line)', army.pass === undefined ? undefined : seedRuns.filter(valid).every(seedOk) && army.pass);
+          add('L3-06', 'native squad cardinality and loss causes (formation/teleport review open)', { seeds: seedRuns.map(r => ({ seed: r.seed, outcome: r.outcome, deaths: r.deaths, atFallback: r.atFallback, atCheckpoint: r.atCheckpoint, segmentEnds: r.segmentEnds, lossCauses: r.losses.map(l => l.cause) })), atArmyAtLeast2: `${armyOk}/${measured}` }, 'forms3–4;nonincreasing;≥2 atcheckpoint (PO 2026-11-07);loss causes bite/kill/separation (three seeds, at least two agree on the army line)', army.pass === undefined ? undefined : seedRuns.filter(valid).every(seedOk) && army.pass);
           const s1Votes = measurementRuns.map(({ seed, report: r }) => ({ seed, valid: r.outcome === 'complete' && !!r.s1?.completed, pass: r.s1?.completed ? r.s1.officerHits > 0 && r.s1.damage < 100 : null }));
           const s1Vote = l3SeedVerdict(s1Votes);
           add('L3-07', 'mortal segment1 officers land hits and player damage', { seeds: measurementRuns.map(({ seed, report: r }) => ({ seed, outcome: r.outcome, ...r.s1, deaths: r.deaths })), vote: `${s1Vote.within}/${s1Vote.measured}` }, 'officers land at least one hit and player damage<100HP; 2 of 3 valid seeds pass', s1Vote.pass);
           const densityVotes = measurementRuns.map(({ seed, report: r }) => {
-            const d = r.density, pass = r.outcome === 'complete' ? d.near30[0] < d.near30[1] && d.near30[1] < d.near30[2] && d.maxConcurrent <= (tier === 'low' ? 100 : 200) : null;
+            const d = r.density, pass = r.outcome === 'complete' ? d.near30[0] < d.near30[1] && d.near30[1] < d.near30[2] && d.maxConcurrent <= l3.density.caps[tier] : null;
             return { seed, valid: r.outcome === 'complete', pass, density: d };
           });
           const densityVote = l3SeedVerdict(densityVotes);
-          add('L3-08', 'median live within30m by traversed segment and concurrent cap', { seeds: densityVotes.map(({ seed, density }) => ({ seed, ...density })), vote: `${densityVote.within}/${densityVote.measured}` }, `medianS1<S2<S3;max≤${tier === 'low' ? 100 : 200}; 2 of 3 valid seeds pass`, densityVote.pass);
+          add('L3-08', 'median live within30m by traversed segment and concurrent cap', { seeds: densityVotes.map(({ seed, density }) => ({ seed, ...density })), vote: `${densityVote.within}/${densityVote.measured}` }, `medianS1<S2<S3;max≤${l3.density.caps[tier]}; 2 of 3 valid seeds pass`, densityVote.pass);
           const followRange = report.squad?.followRange ?? [];
           add('L3-06', 'calm squad following distance by member', followRange, 'every sampled living officer follows 3–6 m from the courier outside combat', report.squad && report.outcome === 'complete' && followRange.length > 0 ? followRange.every(member => member.samples > 0 && member.within3to6 === member.samples) : undefined);
           add('L3-11', 'initial authored medkit entities by street', medkits, '≥2 perstreet;≥7total', Object.values(medkits).every(n => n >= 2) && Object.values(medkits).reduce((a, b) => a + b, 0) >= 7);

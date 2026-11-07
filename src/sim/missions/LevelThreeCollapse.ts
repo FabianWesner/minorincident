@@ -131,13 +131,8 @@ export class LevelThreeCollapse {
     // Gunfire is a loud event (section 5.3): the player's handgun and every ally shot.
     world.events.on('combat.attack', e => { if (e.type === 'combat.attack' && e.sourceId === 1 && e.actionId === 'weapon.handgun') this.gunshot(1, e.position); });
     world.events.on('ally.attack', e => { if (e.type === 'ally.attack' && e.role !== 'firefighter' && e.from) this.gunshot(e.sourceId, e.from); });
-    // E21-AC05 "ranged before contact" (brief l3-polish): a handgun hit checks the target like a police pistol hit (0.25 s stagger),
-    // so the courier can drop a runner before it closes in now that the weaker police (PO 10-12) let more of them through.
-    world.events.on('combat.hit', e => {
-      if (e.type !== 'combat.hit' || e.sourceId !== 1 || e.actionId !== 'weapon.handgun') return;
-      const c = world.entities.get(e.targetId)?.combat; if (!c || !world.entities.get(e.targetId)?.infected) return;
-      c.staggerUntil = Math.max(c.staggerUntil, world.tick + ticks(l3.gunfire.handgunStaggerS)); c.attacking = false;
-    });
+    // PO 2026-11-07: the courier's handgun no longer staggers its target (the former 0.25 s check per hit, brief l3-polish,
+    // froze kited pursuers and cancelled their windups: "I walk and shoot backwards, so no Zombie can attack me").
     world.events.on('player.died', () => { this.lastDeathX = world.entities.get(1)!.transform.x; this.spentSpills = structuredClone(this.mission.state.l3?.spills ?? {}); });
     world.events.on('outbreak.bite', e => { if (e.type === 'outbreak.bite') this.bitten(e.targetId); });
     world.events.on('civilian.turned', e => { if (e.type === 'civilian.turned') this.turned(e.id); });
@@ -320,7 +315,7 @@ export class LevelThreeCollapse {
     const ai = this.world.infected!, s = this.s;
     const x = this.world.entities.get(1)!.transform.x;
     const opening = (s.phase === 'fallback' || s.phase === 'corridor') && x >= l3.map.corridor[0] && (s1 || x < l3.map.segments[0][1]);
-    return opening && !pressure && !announced ? Math.min(ai.director.cap, l3.density.s1LiveBudget / (ai.director.tier === 'low' ? 2 : 1)) : ai.director.cap;
+    return opening && !pressure && !announced ? Math.min(ai.director.cap, l3.density.s1LiveBudget[ai.director.tier === 'low' ? 'low' : 'high']) : ai.director.cap;
   }
   /** An infected comes out of a door: a pedestrian turned in place (same pipeline as L1/L2). Returns the id or 0 at the cap. */
   private emerge(at: Point, home?: Point, running = false, police = false, s1 = false, pressure = false, cover = false, announced = false): number {
@@ -500,7 +495,7 @@ export class LevelThreeCollapse {
       const home = this.snap({ x, z: l3.map.streets[street] + (street === 'blvd' ? 0 : 0) }, .5);
       const highway = x > 128;
       const clusterSize = Math.ceil(size * scale), offsets = [0, -24, -12, 12, 24];
-      for (let i = 0; i < 5 * Math.ceil(size * scale * (highway ? 1 : l3.density.streetMultiplier / 5)); i++) {
+      for (let i = 0; i < 5 * Math.ceil(size * scale * (highway ? 1 : l3.density.streetMultiplier[segment] / 5)); i++) {
         // Five small clusters across the neighbourhood, with breathing room along the walking line (PO 10-09 lulls; the PO 10-12
         // "don't cluster" applies to the station attack, which streams in spread from five directions).
         const cluster = Math.floor(i / clusterSize) % offsets.length;
