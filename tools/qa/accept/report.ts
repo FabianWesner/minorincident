@@ -180,10 +180,9 @@ export function rowResult(source: SourceRow, checks: Clause[]): AcceptanceRow {
   const required = completeNativeRows.get(source.id);
   const complete = !!required && ['low', 'high'].every(tier => required.every(requirement => checks.some(check => check.tier === tier && check.policy === requirement.policy && (!requirement.level || check.level === requirement.level) && check.clause === requirement.clause && check.status === 'PASS'))) && checks.every(check => check.status !== 'FAIL');
   const decision = loadReviews(source.id);
-  // A fresh measured counterexample must also close a plain S row. Previously
-  // these valid FAIL reviews were silently ignored unless the row had a named
-  // review gate or an older failure. PASS still needs its existing full scope.
-  const reviewCheck = review || source.baseline.status === 'FAIL' || decision?.status === 'FAIL' ? decision : undefined;
+  // Display review provenance on plain numeric rows too. The existing native
+  // completion and exact-criterion gates below still determine qualification.
+  const reviewCheck = decision;
   const freshness = reviewCheck ? reviewFreshness(reviewCheck, source.level) : undefined;
   const matchingReview = reviewClause ? reviewCheck?.clauses.find(clause => clause.clause === reviewClause) : undefined;
   const allReviewPass = !reviewClause || (!!reviewCheck && !!matchingReview && freshness === 'FRESH' && reviewCheck.status === 'PASS' && matchingReview.verdict === 'PASS');
