@@ -1,43 +1,33 @@
 {
   "row": "L7-01",
   "status": "FAIL",
-  "reviewer": "Codex final-c",
+  "reviewer": "Codex rr-b",
   "date": "2026-11-07",
-  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "commit": "50be7c824705fc3cdbb3a7ab7dd78f72c7bf2001",
   "clauses": [
     {
       "clause": "Launcher ≤ 5 m from the exit, taken on approach, no hitch (max frame ≤ 50 ms at pickup and first shot).",
       "verdict": "FAIL",
-      "note": "Fresh exclusive Metal WebGL2 frame gates FAIL at both tiers. Launcher distance3m and actual moving auto-pickup/noE pass. Low pickup50.1ms/firstrocket66.6ms; high pickup133.2ms/firstrocket66.6ms versus strict50ms. Quiet preflight load<3/no foreign busy process passed; one context, unpaused production clock, no prior manual step/forced render/photo."
+      "note": "Fresh current QA production build, exclusive pooled Metal WebGL2; quiet admission load2.9307<3, no busy processes. Both tiers: launcher3m from exit; actual moving auto-pickup at tick14 without E; actual physical Digit7/Shift+LMB first rocket at tick34low/29high. Strict50ms frame gate FAIL: low pickup66.7ms/shot33.3ms (15/21 eligible frames), high pickup83.4ms/shot83.4ms (15/15 frames). Gate windows cover100ms before through250ms after actual events, normal unpaused production clock, no prior stepping/photo/warm-up. Repro: npm run build:qa; BROWSER_POOL_JOB_ID=rr-b E2E_ADMISSION_TIMEOUT_SECONDS=300 PERF_CONDITIONS_LOG=test-results/rr-b/L7-01-quiet-admission.jsonl sh tools/perf/quiet-run.sh node --import tsx/esm test-results/rr-b/l7-quiet-producer.ts both."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/final-c/L7-01/quiet-admission.log",
-      "sha256": "70be7657afdfddcd2856c6ca64247fff2807f38e8201042671efb8cd13257569",
-      "what": "Fresh exclusive Metal WebGL2 frame gates FAIL at both tiers. Launcher distance3m and actual moving auto-pickup/noE pass. Low pickup50.1ms/firstrocket66.6ms; high pickup133.2ms/firstrocket66.6ms versus strict50ms. Quiet preflight load<3/no foreign busy process passed; one context, unpaused production clock, no prior manual step/forced render/photo."
+      "file": "test-results/rr-b/L7-01-quiet/low.json",
+      "sha256": "3df90d0725f3e6b01423665749e942e50838ccb4e52a2521f7b6ecf3758337e9",
+      "what": "Fresh current QA production build, exclusive pooled Metal WebGL2; quiet admission load2.9307<3, no busy processes. Both tiers: launcher3m from exit; actual moving auto-pickup at tick14 without E; actual physical Digit7/Shift+LMB first rocket at tick34low/29high. Strict50ms frame gate FAIL: low pickup66.7ms/shot33.3ms (15/21 eligible frames), high pickup83.4ms/shot83.4ms (15/15 frames). Gate windows cover100ms before through250ms after actual events, normal unpaused production clock, no prior stepping/photo/warm-up. Repro: npm run build:qa; BROWSER_POOL_JOB_ID=rr-b E2E_ADMISSION_TIMEOUT_SECONDS=300 PERF_CONDITIONS_LOG=test-results/rr-b/L7-01-quiet-admission.jsonl sh tools/perf/quiet-run.sh node --import tsx/esm test-results/rr-b/l7-quiet-producer.ts both."
     },
     {
-      "file": "docs/reports/final-c/L7-01/timing-review.json",
-      "sha256": "66564212afd33e9423c6e445e97f0170bb66f5daeee0b1e67f9b5e137819a581",
-      "what": "Fresh exclusive Metal WebGL2 frame gates FAIL at both tiers. Launcher distance3m and actual moving auto-pickup/noE pass. Low pickup50.1ms/firstrocket66.6ms; high pickup133.2ms/firstrocket66.6ms versus strict50ms. Quiet preflight load<3/no foreign busy process passed; one context, unpaused production clock, no prior manual step/forced render/photo."
+      "file": "test-results/rr-b/L7-01-quiet/high.json",
+      "sha256": "529cbea5dd429ff813923feac1c7964f9132f0d36c89032bd7b910a5acdd55d7",
+      "what": "Fresh current QA production build, exclusive pooled Metal WebGL2; quiet admission load2.9307<3, no busy processes. Both tiers: launcher3m from exit; actual moving auto-pickup at tick14 without E; actual physical Digit7/Shift+LMB first rocket at tick34low/29high. Strict50ms frame gate FAIL: low pickup66.7ms/shot33.3ms (15/21 eligible frames), high pickup83.4ms/shot83.4ms (15/15 frames). Gate windows cover100ms before through250ms after actual events, normal unpaused production clock, no prior stepping/photo/warm-up. Repro: npm run build:qa; BROWSER_POOL_JOB_ID=rr-b E2E_ADMISSION_TIMEOUT_SECONDS=300 PERF_CONDITIONS_LOG=test-results/rr-b/L7-01-quiet-admission.jsonl sh tools/perf/quiet-run.sh node --import tsx/esm test-results/rr-b/l7-quiet-producer.ts both."
     },
     {
-      "file": "docs/reports/final-c/L7-01/high.json",
-      "sha256": "0ada0e11cea10c306d5b0e36500f0b439cd7793c880016db238d07d37662ba26",
-      "what": "Fresh exclusive Metal WebGL2 frame gates FAIL at both tiers. Launcher distance3m and actual moving auto-pickup/noE pass. Low pickup50.1ms/firstrocket66.6ms; high pickup133.2ms/firstrocket66.6ms versus strict50ms. Quiet preflight load<3/no foreign busy process passed; one context, unpaused production clock, no prior manual step/forced render/photo."
-    },
-    {
-      "file": "docs/reports/final-c/L7-01/producer.ts",
-      "sha256": "ec79763d27e35bde9f7203b92c6b16dc0d79141930da115d32f020862bcad458",
-      "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
-    },
-    {
-      "file": "docs/reports/final-c/L7-01/low.json",
-      "sha256": "b1e71f04e15005912ace83e21bf349132d5681d75880e5677fdbb37a28b41034",
-      "what": "Fresh exclusive Metal WebGL2 frame gates FAIL at both tiers. Launcher distance3m and actual moving auto-pickup/noE pass. Low pickup50.1ms/firstrocket66.6ms; high pickup133.2ms/firstrocket66.6ms versus strict50ms. Quiet preflight load<3/no foreign busy process passed; one context, unpaused production clock, no prior manual step/forced render/photo."
+      "file": "test-results/rr-b/L7-01-quiet-admission.jsonl",
+      "sha256": "8261981b7fccb12b3e0a57ac23f5c9fcf7bf39d6afdce5f1839da209c45e4520",
+      "what": "Fresh current QA production build, exclusive pooled Metal WebGL2; quiet admission load2.9307<3, no busy processes. Both tiers: launcher3m from exit; actual moving auto-pickup at tick14 without E; actual physical Digit7/Shift+LMB first rocket at tick34low/29high. Strict50ms frame gate FAIL: low pickup66.7ms/shot33.3ms (15/21 eligible frames), high pickup83.4ms/shot83.4ms (15/15 frames). Gate windows cover100ms before through250ms after actual events, normal unpaused production clock, no prior stepping/photo/warm-up. Repro: npm run build:qa; BROWSER_POOL_JOB_ID=rr-b E2E_ADMISSION_TIMEOUT_SECONDS=300 PERF_CONDITIONS_LOG=test-results/rr-b/L7-01-quiet-admission.jsonl sh tools/perf/quiet-run.sh node --import tsx/esm test-results/rr-b/l7-quiet-producer.ts both."
     }
   ],
-  "notes": "Frozen-head row review. Current immutable evidence, unchanged criterion and game source.",
-  "sourceDigest": "1aff45872f0c1603cfc94e9f01d515824d2304b5b5d9e5f96fee9cc461ad064a"
+  "notes": "Fresh qualified timing failure; prior shared-loaded-host diagnostics are excluded from the decision. Current game source is frozen; no threshold or preload policy changed.",
+  "sourceDigest": "8662eca6a12814d0c946624f2a41774bdc4bbfde4816d1be1b0a6f0dd919c65d"
 }
