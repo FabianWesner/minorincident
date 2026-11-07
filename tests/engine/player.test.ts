@@ -1,5 +1,6 @@
 // Courier locomotion and health: one kinematic controller and one health/respawn model for every level.
 import { afterEach, expect, test } from 'vitest';
+import * as RAPIER from '@dimforge/rapier3d-compat';
 import { survivor } from '../../src/data/survivor';
 import { SimWorld } from '../../src/sim/world/SimWorld';
 
@@ -24,7 +25,7 @@ test('movement: fast acceleration and stop, capped diagonal speed, 720°/s turni
   step(a, 14); expect(Math.abs(p.transform.yaw)).toBeCloseTo(Math.PI);
 });
 
-test('walls: a 72-direction capsule sweep never penetrates the wall ring; sliding keeps 60 % tangential speed', async () => {
+test('walls: a 72-direction capsule sweep never penetrates the wall ring; sliding keeps 60 % tangential speed; head-on corners slip', async () => {
   const w = await setup('survivor-ring');
   for (let i = 0; i < 72; i++) {
     const angle = i * Math.PI * 2 / 72;
@@ -42,6 +43,7 @@ test('walls: a 72-direction capsule sweep never penetrates the wall ring; slidin
   s.setInput({ move: { x: 1, z: 1 } }); step(s, 30);
   const start = s.entities.get(1)!.transform.z; step(s, 30);
   expect((s.entities.get(1)!.transform.z - start) / 0.5).toBeGreaterThanOrEqual(0.6 * 4.5 / Math.SQRT2);
+  await cornerSlip();
 });
 
 test('health: invulnerability window, delayed regeneration, one death event, respawn at the last checkpoint with level state kept', async () => {
@@ -66,3 +68,28 @@ test('health: invulnerability window, delayed regeneration, one death event, res
   expect(p.entity.health.current).toBe(100);
   expect({ mission: d.mission, progression: d.progression }).toEqual(retained);
 });
+
+// r2-bike: keyboard movement held head-on into a post or a box corner sidesteps round it instead of stopping dead; a long
+// wall still stops her, she never overlaps either solid, and open-ground speed is unchanged.
+async function cornerSlip(): Promise<void> {
+  const run = async (halfZ: number, centreZ: number) => {
+    const w = await setup(), world = w.physics.world!;
+    world.createCollider(RAPIER.ColliderDesc.cuboid(.15, 1, halfZ).setTranslation(3, 1, centreZ));
+    world.step();
+    w.setInput({ move: { x: 1, z: 0 } });
+    let minGap = Infinity;
+    for (let tick = 0; tick < 150; tick++) {
+      w.update(); const p = w.entities.get(1)!.transform;
+      minGap = Math.min(minGap, Math.hypot(Math.max(0, Math.abs(p.x - 3) - .15), Math.max(0, Math.abs(p.z - centreZ) - halfZ)) - survivor.radius);
+      if (tick === 12) expect(w.player!.locomotion.displacement.x * 60, 'open ground keeps full run speed').toBeCloseTo(survivor.speed, 1);
+    }
+    return { ...w.entities.get(1)!.transform, minGap };
+  };
+  const post = await run(.15, 0);
+  expect(post.x, 'past the post').toBeGreaterThan(5); expect(post.minGap).toBeGreaterThan(-.02);
+  // The courier's line runs 1.05 m inside a 2.8 m fence panel (the L1 house-a lot west of the depot apron).
+  const corner = await run(1.4, -1.05);
+  expect(corner.x, 'round the lot corner').toBeGreaterThan(5); expect(corner.minGap).toBeGreaterThan(-.02);
+  const wall = await run(6, 0);
+  expect(wall.x, 'a long wall stops her').toBeLessThan(3 - .15 - survivor.radius + .02); expect(Math.abs(wall.z)).toBeLessThan(.05);
+}
