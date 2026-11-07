@@ -1,0 +1,68 @@
+{
+  "row": "L3-12",
+  "level": "L3",
+  "generatedAt": "2026-11-07T10:14:28.636Z",
+  "sourceHash": "379947e61cacf3a5e26075eb669a697d7277dec3e511270ff404afc960d1e544",
+  "checks": [
+    {
+      "clause": "native fixed army checkpoint marker coordinates",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": {
+        "id": "l3-zone",
+        "x": 225,
+        "z": 0,
+        "samples": 7995,
+        "maxDisplacement": 0
+      },
+      "target": "l3-zone remains fixed; HUD distance and route readability remain open",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-complete.json"
+    },
+    {
+      "clause": "native fixed army checkpoint marker coordinates",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": {
+        "id": "l3-zone",
+        "x": 225,
+        "z": 0,
+        "samples": 3125,
+        "maxDisplacement": 0
+      },
+      "target": "l3-zone remains fixed; HUD distance and route readability remain open",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-stationary.json"
+    },
+    {
+      "clause": "native fixed army checkpoint marker coordinates",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": {
+        "id": "l3-zone",
+        "x": 225,
+        "z": 0,
+        "samples": 9231,
+        "maxDisplacement": 0
+      },
+      "target": "l3-zone remains fixed; HUD distance and route readability remain open",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-high-complete.json"
+    },
+    {
+      "clause": "native fixed army checkpoint marker coordinates",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": {
+        "id": "l3-zone",
+        "x": 225,
+        "z": 0,
+        "samples": 3979,
+        "maxDisplacement": 0
+      },
+      "target": "l3-zone remains fixed; HUD distance and route readability remain open",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-high-stationary.json"
+    }
+  ]
+}

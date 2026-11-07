@@ -1,53 +1,23 @@
 {
   "row": "L3-11",
   "status": "PASS",
-  "reviewer": "Codex final-a",
+  "reviewer": "Codex rr-a",
   "date": "2026-11-07",
-  "commit": "0cbd817165f89940d2810fe2091000538a263ba0",
+  "commit": "50be7c824705fc3cdbb3a7ab7dd78f72c7bf2001",
+  "sourceDigest": "4775569227eac4bde52bcf09d08438f35bb8dd5135560d4fca21da6b16b6d5e1",
   "clauses": [
     {
       "clause": "combat: attacks on the player ≥ 3/min, ≤ 25/min for the competent run (tune); medkits ≥ 2 per street (≥ 7 total), newbie below 20 % HP ≤ 10 % of the time.",
       "verdict": "PASS",
-      "note": "10 current native checks PASS across low/high. low/complete competent player attack rate on checkpoint route: 5.3857661893567; target 3 ≤ value ≤ 25 (PASS); low/complete all-street medkit census (per-street split still open): 33; target 7 ≤ value ≤ Infinity (PASS); low/stationary all-street medkit census (per-street split still open): 33; target 7 ≤ value ≤ Infinity (PASS); high/complete competent player attack rate on checkpoint route: 12.020606754436177; target 3 ≤ value ≤ 25 (PASS); high/complete all-street medkit census (per-street split still open): 33; target 7 ≤ value ≤ Infinity (PASS); high/stationary all-street medkit census (per-street split still open): 33; target 7 ≤ value ≤ Infinity (PASS); low/controlled-fixture initial authored medkit entities by street: {\"blvd\":9,\"commerce\":15,\"oak\":9}; target ≥2 perstreet;≥7total (PASS); low/controlled-fixture mortal newbie time below20percent HP: {\"share\":0.02549827413428349,\"outcome\":\"complete\",\"deaths\":3,\"simulatedSeconds\":305.35}; target ≤10% of alive samples; fullroute completed (PASS); high/controlled-fixture initial authored medkit entities by street: {\"blvd\":9,\"commerce\":15,\"oak\":9}; target ≥2 perstreet;≥7total (PASS); high/controlled-fixture mortal newbie time below20percent HP: {\"share\":0,\"outcome\":\"complete\",\"deaths\":0,\"simulatedSeconds\":219.51666666666668}; target ≤10% of alive samples; fullroute completed (PASS)"
+      "note": "Fresh competent complete-route checks PASS: low attack-rate seed vote 3/3; high 2/3, within 3–25/min qualification; 33 medkits total (9/15/9 by street); newbie below20% HP shares ≤2.32% low and 0% high."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/final-a/L3-11-native.json",
-      "sha256": "20e0488f8053a308b88df38f92e4f12bacd8a65933f13ed067f5bdc13663aab5",
-      "what": "10 current native checks PASS across low/high. low/complete competent player attack rate on checkpoint route: 5.3857661893567; target 3 ≤ value ≤ 25 (PASS); low/complete all-street medkit census (per-street split still open): 33; target 7 ≤ value ≤ Infinity (PASS); low/stationary all-street medkit census (per-street split still open): 33; target 7 ≤ value ≤ Infinity (PASS); high/complete competent player attack rate on checkpoint route: 12.020606754436177; target 3 ≤ value ≤ 25 (PASS); high/complete all-street medkit census (per-street split still open): 33; target 7 ≤ value ≤ Infinity (PASS); high/stationary all-street medkit census (per-street split still open): 33; target 7 ≤ value ≤ Infinity (PASS); low/controlled-fixture initial authored medkit entities by street: {\"blvd\":9,\"commerce\":15,\"oak\":9}; target ≥2 perstreet;≥7total (PASS); low/controlled-fixture mortal newbie time below20percent HP: {\"share\":0.02549827413428349,\"outcome\":\"complete\",\"deaths\":3,\"simulatedSeconds\":305.35}; target ≤10% of alive samples; fullroute completed (PASS); high/controlled-fixture initial authored medkit entities by street: {\"blvd\":9,\"commerce\":15,\"oak\":9}; target ≥2 perstreet;≥7total (PASS); high/controlled-fixture mortal newbie time below20percent HP: {\"share\":0,\"outcome\":\"complete\",\"deaths\":0,\"simulatedSeconds\":219.51666666666668}; target ≤10% of alive samples; fullroute completed (PASS)"
-    },
-    {
-      "file": "docs/reports/final-a/native-receipts/L3-low-complete.json.gz",
-      "sha256": "81ae6486e8fab6d955d04751cb09cce2159e3b986d19198ff720988e54c8b0b7",
-      "what": "Frozen-head L3-11 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
-    },
-    {
-      "file": "docs/reports/final-a/native-receipts/L3-low-stationary.json.gz",
-      "sha256": "024f22953d5c2e3f1bbefbba6fe6943dddd8ecc05664082f2a2fe6cc32d7c146",
-      "what": "Frozen-head L3-11 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
-    },
-    {
-      "file": "docs/reports/final-a/native-receipts/L3-high-complete.json.gz",
-      "sha256": "d976b4c6b69eda34c20121ae9cb96e8a3cdd6a07fac104fba0b26e56fd8755c0",
-      "what": "Frozen-head L3-11 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
-    },
-    {
-      "file": "docs/reports/final-a/native-receipts/L3-high-stationary.json.gz",
-      "sha256": "2046af461e64e70381568acc5905423f47b44bf18d205557d43b0ad61770b9b1",
-      "what": "Frozen-head L3-11 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
-    },
-    {
-      "file": "docs/reports/final-a/native-receipts/L3-low-fixtures.json.gz",
-      "sha256": "5bb7a9d05574c189a8bec9fe20a06b1a7988f48a3175a8841aef1fa147209724",
-      "what": "Frozen-head L3-11 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
-    },
-    {
-      "file": "docs/reports/final-a/native-receipts/L3-high-fixtures.json.gz",
-      "sha256": "87d97237be8ee7ecb0019d923692b5c60332643dfee8640b4274c1c5727fe14c",
-      "what": "Frozen-head L3-11 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
+      "file": "docs/reports/rr-a/evidence/L3-11.json",
+      "sha256": "5b9fc2dd7a9e63c32b50368c6d65678193b4e9b23f654868bef8703ff2bd0dbc",
+      "what": "Fresh native acceptance row snapshot generated by qa:accept on frozen main; contains current measured clauses for L3-11."
     }
   ],
-  "notes": "Numeric-only criterion; all evaluator clauses measured at both qualities on the frozen runtime source. No visual or route-readability inference.",
-  "sourceDigest": "b54f676bf2eb09a12c8059dce4ebe53003816773db044d7acfc253fccbedccf9"
+  "notes": "All measured row clauses are covered by fresh current-source native acceptance evidence."
 }

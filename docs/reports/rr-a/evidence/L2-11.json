@@ -1,0 +1,232 @@
+{
+  "row": "L2-11",
+  "level": "L2",
+  "generatedAt": "2026-11-07T10:02:01.388Z",
+  "sourceHash": "379947e61cacf3a5e26075eb669a697d7277dec3e511270ff404afc960d1e544",
+  "checks": [
+    {
+      "clause": "native ordinary-route bridge-start population and route singles",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "status": "PASS",
+      "value": {
+        "radio": {
+          "infected": 30,
+          "escapeArea": 29,
+          "groupsOf4": 5,
+          "chasingPlayer": 6,
+          "chasingFraction": 0.2,
+          "scatteredSingles": 5
+        },
+        "scatteredSingleAdmissions": [
+          {
+            "id": 274,
+            "tick": 4120,
+            "x": -33.5,
+            "z": -14
+          },
+          {
+            "id": 276,
+            "tick": 4120,
+            "x": -34.35355339059328,
+            "z": 1.6464466094067263
+          },
+          {
+            "id": 278,
+            "tick": 4130,
+            "x": -27.2,
+            "z": 19
+          },
+          {
+            "id": 280,
+            "tick": 4560,
+            "x": -13,
+            "z": 26.5
+          },
+          {
+            "id": 282,
+            "tick": 4930,
+            "x": 6,
+            "z": 26.5
+          },
+          {
+            "id": 284,
+            "tick": 5570,
+            "x": 25,
+            "z": 26.5
+          }
+        ]
+      },
+      "target": "\u226525 living escape-area infected;\u22653 admitted groups of\u22654;\u226420% chasing; low\u22654 / high\u22656 distinct scattered singles along the walk",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json"
+    },
+    {
+      "clause": "native axe-route bridge-start escape-area census, groups, chase share and scattered singles",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "status": "PASS",
+      "value": {
+        "radio": {
+          "infected": 30,
+          "escapeArea": 29,
+          "groupsOf4": 6,
+          "chasingPlayer": 0,
+          "chasingFraction": 0,
+          "scatteredSingles": 6
+        },
+        "scatteredSingleAdmissions": [
+          {
+            "id": 274,
+            "tick": 4120,
+            "x": -33.5,
+            "z": -14
+          },
+          {
+            "id": 276,
+            "tick": 4120,
+            "x": -34.35355339059328,
+            "z": 1.6464466094067263
+          },
+          {
+            "id": 278,
+            "tick": 4130,
+            "x": -27.2,
+            "z": 19
+          },
+          {
+            "id": 280,
+            "tick": 4560,
+            "x": -13,
+            "z": 26.5
+          },
+          {
+            "id": 282,
+            "tick": 4930,
+            "x": 6,
+            "z": 26.5
+          },
+          {
+            "id": 284,
+            "tick": 5570,
+            "x": 25,
+            "z": 26.5
+          }
+        ]
+      },
+      "target": "\u226525 living escape-area infected;\u22653 admitted groups of\u22654;\u226420% chasing; low\u22654 / high\u22656 distinct scattered singles along the walk",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json"
+    },
+    {
+      "clause": "native ordinary-route bridge-start population and route singles",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "status": "PASS",
+      "value": {
+        "radio": {
+          "infected": 42,
+          "escapeArea": 34,
+          "groupsOf4": 4,
+          "chasingPlayer": 1,
+          "chasingFraction": 0.023809523809523808,
+          "scatteredSingles": 6
+        },
+        "scatteredSingleAdmissions": [
+          {
+            "id": 274,
+            "tick": 4033,
+            "x": -33.5,
+            "z": -14
+          },
+          {
+            "id": 276,
+            "tick": 4033,
+            "x": -34,
+            "z": 2
+          },
+          {
+            "id": 278,
+            "tick": 4033,
+            "x": -27.2,
+            "z": 19
+          },
+          {
+            "id": 280,
+            "tick": 4033,
+            "x": -13,
+            "z": 26.5
+          },
+          {
+            "id": 282,
+            "tick": 4033,
+            "x": 6,
+            "z": 26.5
+          },
+          {
+            "id": 284,
+            "tick": 4033,
+            "x": 25,
+            "z": 26.5
+          }
+        ]
+      },
+      "target": "\u226525 living escape-area infected;\u22653 admitted groups of\u22654;\u226420% chasing; low\u22654 / high\u22656 distinct scattered singles along the walk",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-fixtures.json"
+    },
+    {
+      "clause": "native axe-route bridge-start escape-area census, groups, chase share and scattered singles",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "status": "PASS",
+      "value": {
+        "radio": {
+          "infected": 39,
+          "escapeArea": 36,
+          "groupsOf4": 4,
+          "chasingPlayer": 0,
+          "chasingFraction": 0,
+          "scatteredSingles": 6
+        },
+        "scatteredSingleAdmissions": [
+          {
+            "id": 274,
+            "tick": 4033,
+            "x": -33.5,
+            "z": -14
+          },
+          {
+            "id": 276,
+            "tick": 4033,
+            "x": -34,
+            "z": 2
+          },
+          {
+            "id": 278,
+            "tick": 4033,
+            "x": -27.2,
+            "z": 19
+          },
+          {
+            "id": 280,
+            "tick": 4033,
+            "x": -13,
+            "z": 26.5
+          },
+          {
+            "id": 282,
+            "tick": 4033,
+            "x": 6,
+            "z": 26.5
+          },
+          {
+            "id": 284,
+            "tick": 4033,
+            "x": 25,
+            "z": 26.5
+          }
+        ]
+      },
+      "target": "\u226525 living escape-area infected;\u22653 admitted groups of\u22654;\u226420% chasing; low\u22654 / high\u22656 distinct scattered singles along the walk",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-fixtures.json"
+    }
+  ]
+}

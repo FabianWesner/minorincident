@@ -1,0 +1,94 @@
+{
+  "row": "L3-07",
+  "level": "L3",
+  "generatedAt": "2026-11-07T10:14:28.636Z",
+  "sourceHash": "379947e61cacf3a5e26075eb669a697d7277dec3e511270ff404afc960d1e544",
+  "checks": [
+    {
+      "clause": "mortal segment1 officers land hits and player damage",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "status": "PASS",
+      "value": {
+        "seeds": [
+          {
+            "seed": 1,
+            "outcome": "complete",
+            "completed": true,
+            "officerHits": 135,
+            "officerKills": 33,
+            "playerKills": 20,
+            "damage": 11,
+            "deaths": 0
+          },
+          {
+            "seed": 2,
+            "outcome": "complete",
+            "completed": true,
+            "officerHits": 216,
+            "officerKills": 49,
+            "playerKills": 34,
+            "damage": 100,
+            "deaths": 1
+          },
+          {
+            "seed": 3,
+            "outcome": "complete",
+            "completed": true,
+            "officerHits": 38,
+            "officerKills": 6,
+            "playerKills": 41,
+            "damage": 99,
+            "deaths": 0
+          }
+        ],
+        "vote": "2/3"
+      },
+      "target": "officers land at least one hit and player damage<100HP; 2 of 3 valid seeds pass",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json"
+    },
+    {
+      "clause": "mortal segment1 officers land hits and player damage",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "status": "PASS",
+      "value": {
+        "seeds": [
+          {
+            "seed": 1,
+            "outcome": "complete",
+            "completed": true,
+            "officerHits": 27,
+            "officerKills": 3,
+            "playerKills": 124,
+            "damage": 44,
+            "deaths": 0
+          },
+          {
+            "seed": 2,
+            "outcome": "complete",
+            "completed": true,
+            "officerHits": 132,
+            "officerKills": 27,
+            "playerKills": 19,
+            "damage": 0,
+            "deaths": 1
+          },
+          {
+            "seed": 3,
+            "outcome": "timeout",
+            "completed": true,
+            "officerHits": 44,
+            "officerKills": 5,
+            "playerKills": 5,
+            "damage": 0,
+            "deaths": 0
+          }
+        ],
+        "vote": "2/2"
+      },
+      "target": "officers land at least one hit and player damage<100HP; 2 of 3 valid seeds pass",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json"
+    }
+  ]
+}

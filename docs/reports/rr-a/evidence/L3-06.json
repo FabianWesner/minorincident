@@ -1,0 +1,311 @@
+{
+  "row": "L3-06",
+  "level": "L3",
+  "generatedAt": "2026-11-07T10:14:28.636Z",
+  "sourceHash": "379947e61cacf3a5e26075eb669a697d7277dec3e511270ff404afc960d1e544",
+  "checks": [
+    {
+      "clause": "initial squad count",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 4,
+      "target": "3 \u2264 value \u2264 4",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-complete.json"
+    },
+    {
+      "clause": "squad remaining at army arrival (seeds 1\u20133)",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": {
+        "seeds": [
+          {
+            "seed": 1,
+            "valid": true,
+            "army": 4,
+            "attacksPerMinute": 4.451939291736931
+          },
+          {
+            "seed": 2,
+            "valid": true,
+            "army": 0,
+            "attacksPerMinute": 18.588640275387263
+          },
+          {
+            "seed": 3,
+            "valid": true,
+            "army": 0,
+            "attacksPerMinute": 26.765799256505577
+          }
+        ],
+        "measured": 3,
+        "within": 2,
+        "pass": true
+      },
+      "target": "\u22642 at the army line: \u22652 valid seeds, \u22652 of them \u22642",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-complete.json"
+    },
+    {
+      "clause": "logged squad-loss causes",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": [],
+      "target": "each loss bite, kill, or separation",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-complete.json"
+    },
+    {
+      "clause": "initial squad count",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 4,
+      "target": "3 \u2264 value \u2264 4",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-high-complete.json"
+    },
+    {
+      "clause": "squad remaining at army arrival (seeds 1\u20133)",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": {
+        "seeds": [
+          {
+            "seed": 1,
+            "valid": true,
+            "army": 0,
+            "attacksPerMinute": 8.528279538051525
+          },
+          {
+            "seed": 2,
+            "valid": true,
+            "army": 0,
+            "attacksPerMinute": 13.093604172385398
+          },
+          {
+            "seed": 3,
+            "valid": false,
+            "army": 0,
+            "attacksPerMinute": 1.0262696523511552
+          }
+        ],
+        "measured": 2,
+        "within": 2,
+        "pass": true
+      },
+      "target": "\u22642 at the army line: \u22652 valid seeds, \u22652 of them \u22642",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-high-complete.json"
+    },
+    {
+      "clause": "logged squad-loss causes",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": [
+        {
+          "id": 32,
+          "cause": "bite",
+          "tick": 2223
+        },
+        {
+          "id": 30,
+          "cause": "bite",
+          "tick": 2232
+        },
+        {
+          "id": 31,
+          "cause": "bite",
+          "tick": 2262
+        },
+        {
+          "id": 33,
+          "cause": "bite",
+          "tick": 2267
+        }
+      ],
+      "target": "each loss bite, kill, or separation",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-high-complete.json"
+    },
+    {
+      "clause": "native squad cardinality and loss causes (formation/teleport review open)",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "status": "PASS",
+      "value": {
+        "seeds": [
+          {
+            "seed": 1,
+            "outcome": "complete",
+            "deaths": 0,
+            "atFallback": 4,
+            "atCheckpoint": 4,
+            "segmentEnds": [
+              4,
+              4,
+              4
+            ],
+            "lossCauses": []
+          },
+          {
+            "seed": 2,
+            "outcome": "complete",
+            "deaths": 1,
+            "atFallback": 4,
+            "atCheckpoint": 0,
+            "segmentEnds": [
+              4,
+              0,
+              0
+            ],
+            "lossCauses": [
+              "bite",
+              "bite",
+              "bite",
+              "bite"
+            ]
+          },
+          {
+            "seed": 3,
+            "outcome": "complete",
+            "deaths": 0,
+            "atFallback": 4,
+            "atCheckpoint": 0,
+            "segmentEnds": [
+              0,
+              0,
+              0
+            ],
+            "lossCauses": [
+              "bite",
+              "bite",
+              "bite",
+              "bite"
+            ]
+          }
+        ],
+        "atArmyAtMost2": "2/3"
+      },
+      "target": "forms3\u20134;nonincreasing;\u22642 atcheckpoint;loss causes bite/kill/separation (three seeds, at least two agree on the army line)",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json"
+    },
+    {
+      "clause": "calm squad following distance by member",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "status": "PASS",
+      "value": [
+        {
+          "id": 30,
+          "samples": 4,
+          "within3to6": 4,
+          "minM": 4.609311526320669,
+          "medianM": 4.8185918670537715,
+          "maxM": 4.823791693825784
+        },
+        {
+          "id": 31,
+          "samples": 4,
+          "within3to6": 4,
+          "minM": 4.085537276428918,
+          "medianM": 4.1334386225545945,
+          "maxM": 4.135413010648857
+        },
+        {
+          "id": 32,
+          "samples": 4,
+          "within3to6": 4,
+          "minM": 4.037998816695193,
+          "medianM": 4.170387191831461,
+          "maxM": 4.170530547963734
+        },
+        {
+          "id": 33,
+          "samples": 4,
+          "within3to6": 4,
+          "minM": 4.789474730429861,
+          "medianM": 4.790571706119192,
+          "maxM": 4.794909258196949
+        }
+      ],
+      "target": "every sampled living officer follows 3\u20136 m from the courier outside combat",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json"
+    },
+    {
+      "clause": "native squad cardinality and loss causes (formation/teleport review open)",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "status": "PASS",
+      "value": {
+        "seeds": [
+          {
+            "seed": 1,
+            "outcome": "complete",
+            "deaths": 0,
+            "atFallback": 4,
+            "atCheckpoint": 0,
+            "segmentEnds": [
+              0,
+              0,
+              0
+            ],
+            "lossCauses": [
+              "bite",
+              "bite",
+              "bite",
+              "bite"
+            ]
+          },
+          {
+            "seed": 2,
+            "outcome": "complete",
+            "deaths": 1,
+            "atFallback": 4,
+            "atCheckpoint": 0,
+            "segmentEnds": [
+              0,
+              0,
+              0
+            ],
+            "lossCauses": [
+              "bite",
+              "bite",
+              "bite",
+              "bite"
+            ]
+          },
+          {
+            "seed": 3,
+            "outcome": "timeout",
+            "deaths": 0,
+            "atFallback": 4,
+            "atCheckpoint": 0,
+            "segmentEnds": [
+              0,
+              0,
+              0
+            ],
+            "lossCauses": [
+              "bite",
+              "bite",
+              "bite",
+              "bite"
+            ]
+          }
+        ],
+        "atArmyAtMost2": "2/2"
+      },
+      "target": "forms3\u20134;nonincreasing;\u22642 atcheckpoint;loss causes bite/kill/separation (three seeds, at least two agree on the army line)",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json"
+    },
+    {
+      "clause": "calm squad following distance by member",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "status": "NOT CHECKED",
+      "value": [],
+      "target": "every sampled living officer follows 3\u20136 m from the courier outside combat",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json"
+    }
+  ]
+}
