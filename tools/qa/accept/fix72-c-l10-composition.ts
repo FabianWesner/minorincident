@@ -17,7 +17,7 @@ const targets = [
   { region: 'destroyed-corridor', low: [50, 75], high: [80, 130], dogs: [3, 5], alphas: [2, 3] },
   { region: 'dispersal-complex', low: [75, 95], high: [140, 190] },
 ] as const;
-const identity = provenance(), rows = [];
+const identity = provenance(process.env.QA_ACCEPT_REVISION), rows = [];
 type Census = { tick: number; count: number; regular: number; dogs: number; alphas: number; ids: number[];
   specialActors: { id: number; archetype: string; x: number; z: number; cureRegion?: string; hidden: boolean }[] };
 type Interval = { firstTick: number; lastTick: number; count: number; regular: number; dogs: number; alphas: number };

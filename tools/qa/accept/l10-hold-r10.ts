@@ -9,7 +9,7 @@ import { ThreatObserver } from '../threat/observer';
 import { provenance } from './probe';
 import { atomicJson } from './report';
 
-const identity = provenance(), rows = [];
+const identity = provenance(process.env.QA_ACCEPT_REVISION), rows = [];
 for (const tier of ['low', 'high'] as const) {
   const campaign = preset('L10-default'); campaign.settings.quality = tier;
   let activation: number | null = null, arena: number | null = null, close: number | null = null;
