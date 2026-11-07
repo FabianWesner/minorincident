@@ -23,6 +23,8 @@ export class Npcs {
   /** A failed route search is retried after a second, not every tick (l4-collapse-2: a soldier sent to a post behind a closed
    * barricade ran a 1600-expansion A* per tick, 3 ms of every L4 war tick). */
   private readonly unreachable = new Map<number, { x: number; z: number; until: number }>();
+  /** G-27: first tick of an L3 companion's current run of failed route searches. */
+  private readonly routeless = new Map<number, number>();
   constructor(readonly world: SimWorld) {
     this.civilians = new Civilians(world); this.companion = new Companion(world); this.escorts = new Escorts(world); this.traffic = new Traffic(world); }
   /** False only when the target is unreachable (no route within the steering budget). */
@@ -64,7 +66,10 @@ export class Npcs {
       this.waypoint.x = nav.x(escape); this.waypoint.z = nav.z(escape);
     } else if (flowNext >= 0 && flowNext !== cell) {
       // Reuse the shared reverse field rather than starving a long per-officer A* search.
-      this.waypoint.x = nav.x(flowNext); this.waypoint.z = nav.z(flowNext);
+      // L3-14: the routed speed cap (4 × waypoint distance) held a far L3 corgi on the adjacent half-metre cell to ~2 m/s,
+      // so it crawled 40 m to the army boom while the evacuation waited for it. Look further along the same field.
+      const step = e.companion && this.world.missions?.def.l3 ? nav.flowWaypoint(cell, e.transform, footprint) : flowNext;
+      this.waypoint.x = nav.x(step); this.waypoint.z = nav.z(step);
     } else if (e.civilian?.vehicleYield?.target === target && nav.visible(e.transform, target, footprint)) {
       // Kerb orders have a clear direct approach. A grid-centre detour can send
       // an actor back underneath the bus it is stepping away from.
@@ -80,8 +85,17 @@ export class Npcs {
       const routeRadius = e.companion && !routeFollower && nav.clear(target.x, target.z, wide, true) ? wide : footprint;
       if (!nav.steer(e.transform, target, path, routeRadius, this.waypoint, budget) &&
           (routeRadius === footprint || !nav.steer(e.transform, target, path, footprint, this.waypoint, budget))) {
-        this.unreachable.set(e.id, { x: target.x, z: target.z, until: tick + 60 }); return false;
-      }
+        // G-27 (blk-l3): an L3 corgi squeezed into a fence gate beside the Oak wreck stands on a grid cell that is
+        // cut off from the street (the wreck's baked box closes the lane the courier and dog physically fit through).
+        // Every route search from that pocket fails, so it stood there for the rest of the level and the army boom waited
+        // for it forever. After 2 s without any route, body-swept movement toward the courier's own trail slides it back
+        // out and the grid takes over again; brief transient failures keep the established stand-and-retry.
+        const pocket = !!e.companion && !!this.world.missions?.def.l3;
+        if (pocket && !(this.routeless.get(e.id)! <= tick)) this.routeless.set(e.id, tick); // first failure, or a restored earlier tick
+        const trail = pocket && tick - this.routeless.get(e.id)! >= 120 ? this.companion.trailPoint(e) : null;
+        if (!trail) { this.unreachable.set(e.id, { x: target.x, z: target.z, until: tick + 60 }); return false; }
+        this.waypoint.x = trail.x; this.waypoint.z = trail.z;
+      } else this.routeless.delete(e.id);
       if (failed) this.unreachable.delete(e.id);
     }
     dx = this.waypoint.x - e.transform.x; dz = this.waypoint.z - e.transform.z;
