@@ -260,7 +260,8 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
         // Warm headlamp highlights on pale hair used to outshine the bounded red emitter.
         // Scale RGB together: preserve the infected's authored colours and keep healthy people unchanged.
         const body = nodes.threat.mul(nodes.emissiveOnly.oneMinus()).mul(lighting.subwayDarkness);
-        result.mulAssign(mix(1, float(.1).div(luminance(result).max(.1)), body));
+        // Leave room for the bounded red eye emitter after the warm subway grade.
+        result.mulAssign(mix(1, float(.05).div(luminance(result).max(.05)), body));
       }
       result.addAssign(this.hitFlash);
       // Palette output bypasses three's emissiveNode. Apply the foreground
