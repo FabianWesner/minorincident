@@ -1,0 +1,128 @@
+{
+  "row": "L1-16",
+  "status": "FAIL",
+  "reviewer": "Codex rr-a2",
+  "date": "2026-11-07",
+  "commit": "537ff6e98933529c11f1e1fedcad4fa003f8da95",
+  "clauses": [
+    {
+      "clause": "Route readability: Luna reaches the depot, Annex and garage without > 60 s lost (tune).",
+      "verdict": "FAIL",
+      "note": "Fresh fixed-legend Luna low seed1 trial FAIL: ordinary depot-pickup prefix to tick990, then screenshot-only physical control. At turn2 (tick1477), Annex95m; turn17 tick5111 still95m after60.5667 active seconds (>60s). All17 original1280×720 action captures opened: the courier repeatedly hits the fenced house corner or returns to the Sunset Parcel bike; HUD alternates95/107m. No model tools, DOM, coordinates, maps or route hints. Courier protected; no teleport/skip. A17-turn batch bound deliberately stopped the controller via409 after the counterexample; that response is not a game failure."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "test-results/rr-a2/L1-valid/identity.json",
+      "sha256": "68118e75e280171abe1cfedeca648395efa047e3fda89ca9f423bb365d4ffd15",
+      "what": "Fresh fixed-legend Luna low seed1 trial FAIL: ordinary depot-pickup prefix to tick990, then screenshot-only physical control. At turn2 (tick1477), Annex95m; turn17 tick5111 still95m after60.5667 active seconds (>60s). All17 original1280×720 action captures opened: the courier repeatedly hits the fenced house corner or returns to the Sunset Parcel bike; HUD alternates95/107m. No model tools, DOM, coordinates, maps or route hints. Courier protected; no teleport/skip. A17-turn batch bound deliberately stopped the controller via409 after the counterexample; that response is not a game failure."
+    },
+    {
+      "file": "test-results/rr-a2/L1-valid/prefix.json",
+      "sha256": "68084060013146152f0d47cbb1988100a43cc3c0b361c7a8dce7dc18c2ff6db6",
+      "what": "Fresh fixed-legend Luna low seed1 trial FAIL: ordinary depot-pickup prefix to tick990, then screenshot-only physical control. At turn2 (tick1477), Annex95m; turn17 tick5111 still95m after60.5667 active seconds (>60s). All17 original1280×720 action captures opened: the courier repeatedly hits the fenced house corner or returns to the Sunset Parcel bike; HUD alternates95/107m. No model tools, DOM, coordinates, maps or route hints. Courier protected; no teleport/skip. A17-turn batch bound deliberately stopped the controller via409 after the counterexample; that response is not a game failure."
+    },
+    {
+      "file": "test-results/rr-a2/L1-valid/player-prompt.txt",
+      "sha256": "e29028eb6612e13b2511ff93f57b3c2b5466a18bb40af892fd0ef77ec12c6561",
+      "what": "Fresh fixed-legend Luna low seed1 trial FAIL: ordinary depot-pickup prefix to tick990, then screenshot-only physical control. At turn2 (tick1477), Annex95m; turn17 tick5111 still95m after60.5667 active seconds (>60s). All17 original1280×720 action captures opened: the courier repeatedly hits the fenced house corner or returns to the Sunset Parcel bike; HUD alternates95/107m. No model tools, DOM, coordinates, maps or route hints. Courier protected; no teleport/skip. A17-turn batch bound deliberately stopped the controller via409 after the counterexample; that response is not a game failure."
+    },
+    {
+      "file": "test-results/rr-a2/L1-valid/player.jsonl",
+      "sha256": "6f366b041cfd50e20def9f8328073262df2e23a661b891e63857865962a12679",
+      "what": "Fresh fixed-legend Luna low seed1 trial FAIL: ordinary depot-pickup prefix to tick990, then screenshot-only physical control. At turn2 (tick1477), Annex95m; turn17 tick5111 still95m after60.5667 active seconds (>60s). All17 original1280×720 action captures opened: the courier repeatedly hits the fenced house corner or returns to the Sunset Parcel bike; HUD alternates95/107m. No model tools, DOM, coordinates, maps or route hints. Courier protected; no teleport/skip. A17-turn batch bound deliberately stopped the controller via409 after the counterexample; that response is not a game failure."
+    },
+    {
+      "file": "test-results/rr-a2/L1-valid/timing.jsonl",
+      "sha256": "01296ae822ea2b99c45a4dd819000706a67d267d1ef90fa351d0b80de1fa454a",
+      "what": "Fresh fixed-legend Luna low seed1 trial FAIL: ordinary depot-pickup prefix to tick990, then screenshot-only physical control. At turn2 (tick1477), Annex95m; turn17 tick5111 still95m after60.5667 active seconds (>60s). All17 original1280×720 action captures opened: the courier repeatedly hits the fenced house corner or returns to the Sunset Parcel bike; HUD alternates95/107m. No model tools, DOM, coordinates, maps or route hints. Courier protected; no teleport/skip. A17-turn batch bound deliberately stopped the controller via409 after the counterexample; that response is not a game failure."
+    },
+    {
+      "file": "test-results/rr-a2/L1-valid/.frames/turn-000001-action.jpg",
+      "sha256": "756f5e309f50812a319f7fb40a7c9508003f8bf20423f40e2d5d8572710b1efb",
+      "what": "Fresh fixed-legend Luna low seed1 trial FAIL: ordinary depot-pickup prefix to tick990, then screenshot-only physical control. At turn2 (tick1477), Annex95m; turn17 tick5111 still95m after60.5667 active seconds (>60s). All17 original1280×720 action captures opened: the courier repeatedly hits the fenced house corner or returns to the Sunset Parcel bike; HUD alternates95/107m. No model tools, DOM, coordinates, maps or route hints. Courier protected; no teleport/skip. A17-turn batch bound deliberately stopped the controller via409 after the counterexample; that response is not a game failure."
+    },
+    {
+      "file": "test-results/rr-a2/L1-valid/.frames/turn-000002-action.jpg",
+      "sha256": "36121bf1f688bf357ce0dfd09148fa215a6b05a0864cd58d223b497353270476",
+      "what": "Fresh fixed-legend Luna low seed1 trial FAIL: ordinary depot-pickup prefix to tick990, then screenshot-only physical control. At turn2 (tick1477), Annex95m; turn17 tick5111 still95m after60.5667 active seconds (>60s). All17 original1280×720 action captures opened: the courier repeatedly hits the fenced house corner or returns to the Sunset Parcel bike; HUD alternates95/107m. No model tools, DOM, coordinates, maps or route hints. Courier protected; no teleport/skip. A17-turn batch bound deliberately stopped the controller via409 after the counterexample; that response is not a game failure."
+    },
+    {
+      "file": "test-results/rr-a2/L1-valid/.frames/turn-000003-action.jpg",
+      "sha256": "80cf89b9d2bad32596ed018ae34d0984a799abec768864e074fc5cb2119ac7cc",
+      "what": "Fresh fixed-legend Luna low seed1 trial FAIL: ordinary depot-pickup prefix to tick990, then screenshot-only physical control. At turn2 (tick1477), Annex95m; turn17 tick5111 still95m after60.5667 active seconds (>60s). All17 original1280×720 action captures opened: the courier repeatedly hits the fenced house corner or returns to the Sunset Parcel bike; HUD alternates95/107m. No model tools, DOM, coordinates, maps or route hints. Courier protected; no teleport/skip. A17-turn batch bound deliberately stopped the controller via409 after the counterexample; that response is not a game failure."
+    },
+    {
+      "file": "test-results/rr-a2/L1-valid/.frames/turn-000004-action.jpg",
+      "sha256": "f02785cea38e9f496996300e4de81d982ba612801a3fe935d7fc785c561d7e02",
+      "what": "Fresh fixed-legend Luna low seed1 trial FAIL: ordinary depot-pickup prefix to tick990, then screenshot-only physical control. At turn2 (tick1477), Annex95m; turn17 tick5111 still95m after60.5667 active seconds (>60s). All17 original1280×720 action captures opened: the courier repeatedly hits the fenced house corner or returns to the Sunset Parcel bike; HUD alternates95/107m. No model tools, DOM, coordinates, maps or route hints. Courier protected; no teleport/skip. A17-turn batch bound deliberately stopped the controller via409 after the counterexample; that response is not a game failure."
+    },
+    {
+      "file": "test-results/rr-a2/L1-valid/.frames/turn-000005-action.jpg",
+      "sha256": "98f1df5eb2b67f6f784fa5ce13a7c61f56b93aaad11fe37022de28193c5adc61",
+      "what": "Fresh fixed-legend Luna low seed1 trial FAIL: ordinary depot-pickup prefix to tick990, then screenshot-only physical control. At turn2 (tick1477), Annex95m; turn17 tick5111 still95m after60.5667 active seconds (>60s). All17 original1280×720 action captures opened: the courier repeatedly hits the fenced house corner or returns to the Sunset Parcel bike; HUD alternates95/107m. No model tools, DOM, coordinates, maps or route hints. Courier protected; no teleport/skip. A17-turn batch bound deliberately stopped the controller via409 after the counterexample; that response is not a game failure."
+    },
+    {
+      "file": "test-results/rr-a2/L1-valid/.frames/turn-000006-action.jpg",
+      "sha256": "2900901db9ad276243e2a0d2a0dbdbe93f4ee9798d0a0513e551e3fbb9afbd24",
+      "what": "Fresh fixed-legend Luna low seed1 trial FAIL: ordinary depot-pickup prefix to tick990, then screenshot-only physical control. At turn2 (tick1477), Annex95m; turn17 tick5111 still95m after60.5667 active seconds (>60s). All17 original1280×720 action captures opened: the courier repeatedly hits the fenced house corner or returns to the Sunset Parcel bike; HUD alternates95/107m. No model tools, DOM, coordinates, maps or route hints. Courier protected; no teleport/skip. A17-turn batch bound deliberately stopped the controller via409 after the counterexample; that response is not a game failure."
+    },
+    {
+      "file": "test-results/rr-a2/L1-valid/.frames/turn-000007-action.jpg",
+      "sha256": "71129649943f8ad2eb17441130dbfd58f40e3b01938776b019505a08c593ff81",
+      "what": "Fresh fixed-legend Luna low seed1 trial FAIL: ordinary depot-pickup prefix to tick990, then screenshot-only physical control. At turn2 (tick1477), Annex95m; turn17 tick5111 still95m after60.5667 active seconds (>60s). All17 original1280×720 action captures opened: the courier repeatedly hits the fenced house corner or returns to the Sunset Parcel bike; HUD alternates95/107m. No model tools, DOM, coordinates, maps or route hints. Courier protected; no teleport/skip. A17-turn batch bound deliberately stopped the controller via409 after the counterexample; that response is not a game failure."
+    },
+    {
+      "file": "test-results/rr-a2/L1-valid/.frames/turn-000008-action.jpg",
+      "sha256": "c34fd37a06133ba7b39676cff8f92ced7f65b06bc4248d8d8012053bd7ca2afb",
+      "what": "Fresh fixed-legend Luna low seed1 trial FAIL: ordinary depot-pickup prefix to tick990, then screenshot-only physical control. At turn2 (tick1477), Annex95m; turn17 tick5111 still95m after60.5667 active seconds (>60s). All17 original1280×720 action captures opened: the courier repeatedly hits the fenced house corner or returns to the Sunset Parcel bike; HUD alternates95/107m. No model tools, DOM, coordinates, maps or route hints. Courier protected; no teleport/skip. A17-turn batch bound deliberately stopped the controller via409 after the counterexample; that response is not a game failure."
+    },
+    {
+      "file": "test-results/rr-a2/L1-valid/.frames/turn-000009-action.jpg",
+      "sha256": "7123ed1cb18de2a388d766f215beaedc9b3f849b0bbbe36a321fd8063a3370f1",
+      "what": "Fresh fixed-legend Luna low seed1 trial FAIL: ordinary depot-pickup prefix to tick990, then screenshot-only physical control. At turn2 (tick1477), Annex95m; turn17 tick5111 still95m after60.5667 active seconds (>60s). All17 original1280×720 action captures opened: the courier repeatedly hits the fenced house corner or returns to the Sunset Parcel bike; HUD alternates95/107m. No model tools, DOM, coordinates, maps or route hints. Courier protected; no teleport/skip. A17-turn batch bound deliberately stopped the controller via409 after the counterexample; that response is not a game failure."
+    },
+    {
+      "file": "test-results/rr-a2/L1-valid/.frames/turn-000010-action.jpg",
+      "sha256": "9a82847a4ca312dafbd722ed5d0d2a0aa96f9c901f91f6952975b8c8a985e397",
+      "what": "Fresh fixed-legend Luna low seed1 trial FAIL: ordinary depot-pickup prefix to tick990, then screenshot-only physical control. At turn2 (tick1477), Annex95m; turn17 tick5111 still95m after60.5667 active seconds (>60s). All17 original1280×720 action captures opened: the courier repeatedly hits the fenced house corner or returns to the Sunset Parcel bike; HUD alternates95/107m. No model tools, DOM, coordinates, maps or route hints. Courier protected; no teleport/skip. A17-turn batch bound deliberately stopped the controller via409 after the counterexample; that response is not a game failure."
+    },
+    {
+      "file": "test-results/rr-a2/L1-valid/.frames/turn-000011-action.jpg",
+      "sha256": "b9b68ddd5dfce72030c17a43ba7596d4350f1199e628352e31bf6c4b63e53ca6",
+      "what": "Fresh fixed-legend Luna low seed1 trial FAIL: ordinary depot-pickup prefix to tick990, then screenshot-only physical control. At turn2 (tick1477), Annex95m; turn17 tick5111 still95m after60.5667 active seconds (>60s). All17 original1280×720 action captures opened: the courier repeatedly hits the fenced house corner or returns to the Sunset Parcel bike; HUD alternates95/107m. No model tools, DOM, coordinates, maps or route hints. Courier protected; no teleport/skip. A17-turn batch bound deliberately stopped the controller via409 after the counterexample; that response is not a game failure."
+    },
+    {
+      "file": "test-results/rr-a2/L1-valid/.frames/turn-000012-action.jpg",
+      "sha256": "74b763b139ff48a6066d6a7f35397c714eefd00f60398b7dcbb2eaefb5d0dc46",
+      "what": "Fresh fixed-legend Luna low seed1 trial FAIL: ordinary depot-pickup prefix to tick990, then screenshot-only physical control. At turn2 (tick1477), Annex95m; turn17 tick5111 still95m after60.5667 active seconds (>60s). All17 original1280×720 action captures opened: the courier repeatedly hits the fenced house corner or returns to the Sunset Parcel bike; HUD alternates95/107m. No model tools, DOM, coordinates, maps or route hints. Courier protected; no teleport/skip. A17-turn batch bound deliberately stopped the controller via409 after the counterexample; that response is not a game failure."
+    },
+    {
+      "file": "test-results/rr-a2/L1-valid/.frames/turn-000013-action.jpg",
+      "sha256": "b9a8e74c8882e93a6dddff04e3f14906e1d5f2bbbb52ed9f40703741699d4df8",
+      "what": "Fresh fixed-legend Luna low seed1 trial FAIL: ordinary depot-pickup prefix to tick990, then screenshot-only physical control. At turn2 (tick1477), Annex95m; turn17 tick5111 still95m after60.5667 active seconds (>60s). All17 original1280×720 action captures opened: the courier repeatedly hits the fenced house corner or returns to the Sunset Parcel bike; HUD alternates95/107m. No model tools, DOM, coordinates, maps or route hints. Courier protected; no teleport/skip. A17-turn batch bound deliberately stopped the controller via409 after the counterexample; that response is not a game failure."
+    },
+    {
+      "file": "test-results/rr-a2/L1-valid/.frames/turn-000014-action.jpg",
+      "sha256": "80e9a4734a6a0bd6b81ad53a3064ee4bd5cac6748e256af6d69636b021641627",
+      "what": "Fresh fixed-legend Luna low seed1 trial FAIL: ordinary depot-pickup prefix to tick990, then screenshot-only physical control. At turn2 (tick1477), Annex95m; turn17 tick5111 still95m after60.5667 active seconds (>60s). All17 original1280×720 action captures opened: the courier repeatedly hits the fenced house corner or returns to the Sunset Parcel bike; HUD alternates95/107m. No model tools, DOM, coordinates, maps or route hints. Courier protected; no teleport/skip. A17-turn batch bound deliberately stopped the controller via409 after the counterexample; that response is not a game failure."
+    },
+    {
+      "file": "test-results/rr-a2/L1-valid/.frames/turn-000015-action.jpg",
+      "sha256": "1e5e2226d812866f219b5c5065d961994c30e7ed69629a98f68f12b3f3c8ed26",
+      "what": "Fresh fixed-legend Luna low seed1 trial FAIL: ordinary depot-pickup prefix to tick990, then screenshot-only physical control. At turn2 (tick1477), Annex95m; turn17 tick5111 still95m after60.5667 active seconds (>60s). All17 original1280×720 action captures opened: the courier repeatedly hits the fenced house corner or returns to the Sunset Parcel bike; HUD alternates95/107m. No model tools, DOM, coordinates, maps or route hints. Courier protected; no teleport/skip. A17-turn batch bound deliberately stopped the controller via409 after the counterexample; that response is not a game failure."
+    },
+    {
+      "file": "test-results/rr-a2/L1-valid/.frames/turn-000016-action.jpg",
+      "sha256": "b69b12c95a2bca53a0dc4c95e706695ad5f60b289dbfe6fe51e1c13a5a080da9",
+      "what": "Fresh fixed-legend Luna low seed1 trial FAIL: ordinary depot-pickup prefix to tick990, then screenshot-only physical control. At turn2 (tick1477), Annex95m; turn17 tick5111 still95m after60.5667 active seconds (>60s). All17 original1280×720 action captures opened: the courier repeatedly hits the fenced house corner or returns to the Sunset Parcel bike; HUD alternates95/107m. No model tools, DOM, coordinates, maps or route hints. Courier protected; no teleport/skip. A17-turn batch bound deliberately stopped the controller via409 after the counterexample; that response is not a game failure."
+    },
+    {
+      "file": "test-results/rr-a2/L1-valid/.frames/turn-000017-action.jpg",
+      "sha256": "2ec9e9f1e2077e7c499b35e0e60a581668d057f0cccc56193458e5f23f433739",
+      "what": "Fresh fixed-legend Luna low seed1 trial FAIL: ordinary depot-pickup prefix to tick990, then screenshot-only physical control. At turn2 (tick1477), Annex95m; turn17 tick5111 still95m after60.5667 active seconds (>60s). All17 original1280×720 action captures opened: the courier repeatedly hits the fenced house corner or returns to the Sunset Parcel bike; HUD alternates95/107m. No model tools, DOM, coordinates, maps or route hints. Courier protected; no teleport/skip. A17-turn batch bound deliberately stopped the controller via409 after the counterexample; that response is not a game failure."
+    }
+  ],
+  "notes": "Current frozen-main source, fresh browser-pool evidence. Every cited capture personally opened at original resolution; controlled setup is disclosed in the observation.",
+  "sourceDigest": "18e3f0d7b387c6fe6e2a76c470a5301e24e5a3bbd0c764d11d275acfe1471f97"
+}
