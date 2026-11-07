@@ -7,8 +7,8 @@ This report is in progress. Each OPEN row still needs current evidence for at le
 | Row | Verdict | Numbers | Evidence | P-note |
 |---|---|---|---|---|
 | L4-01 | PASS | 5 vehicles; 30.483 s; control restored at stop tick; full bus hull inside perimeter. | [review](../../qa/reviews/L4-01.json) · [native report](../fix51-verify/L4.json) | — |
-| L4-02 | OPEN | Current whole-row measurement pending; historical observations are not a frozen-head verdict. | [review](../../qa/reviews/L4-02.json) · [native report](../fix51-verify/L4.json) | — |
-| L4-03 | OPEN | Current whole-row measurement pending; historical observations are not a frozen-head verdict. | [review](../../qa/reviews/L4-03.json) · [native report](../fix51-verify/L4.json) | — |
+| L4-02 | PASS | 32/64 civilians; minimum centre separation0.714/0.703m; zero pre-pickup combat/infected/decals. | [review](../../qa/reviews/L4-02.json) · [native report](../fix51-verify/L4.json) | — |
+| L4-03 | PASS | Pickup, klaxon, first turn and18 admissions share tick2197/2231. Game audio running/unlocked/unmuted. | [review](../../qa/reviews/L4-03.json) · [native report](../fix51-verify/L4.json) | — |
 | L4-04 | PASS | 10/20 soldiers; 32/64 civilians; armed share 50%/45.3125%; all living/reserved caps pass. | [review](../../qa/reviews/L4-04.json) · [native report](../fix51-verify/L4.json) | — |
 | L4-05 | OPEN | Current whole-row measurement pending; historical observations are not a frozen-head verdict. | [review](../../qa/reviews/L4-05.json) · [native report](../fix51-verify/L4.json) | — |
 | L4-06 | PASS | First breach 52.717 s; 67/65 living; sustained plaza minima 52/54 (low/high). | [review](../../qa/reviews/L4-06.json) · [native report](../fix51-verify/L4.json) | — |
@@ -17,19 +17,19 @@ This report is in progress. Each OPEN row still needs current evidence for at le
 | L4-09 | PASS | Line 1 52.317/60.333 s; nests 124 s; armour 170/170.6 s; camera skip/timing fixtures pass. | [review](../../qa/reviews/L4-09.json) · [native report](../fix51-verify/L4.json) | — |
 | L4-10 | OPEN | Current whole-row measurement pending; historical observations are not a frozen-head verdict. | [review](../../qa/reviews/L4-10.json) · [native report](../fix51-verify/L4.json) | — |
 | L4-11 | OPEN | Current whole-row measurement pending; historical observations are not a frozen-head verdict. | [review](../../qa/reviews/L4-11.json) · [native report](../fix51-verify/L4.json) | — |
-| L4-12 | OPEN | Current whole-row measurement pending; historical observations are not a frozen-head verdict. | [review](../../qa/reviews/L4-12.json) · [native report](../fix51-verify/L4.json) | — |
+| L4-12 | PASS | Minimum4 visible model looks across10679/10715 nearest20 living-infected ticks; current physical frames reviewed. | [review](../../qa/reviews/L4-12.json) · [native report](../fix51-verify/L4.json) | — |
 | L4-13 | FAIL | Low ticks36109–36649:0 admissions; high17245–17785:1 admission in9s, below3. No death/respawn/checkpoint in either interval. Repro: native complete collapse census. | [review](../../qa/reviews/L4-13.json) · [native report](../fix51-verify/L4.json) | — |
 | L4-14 | OPEN | Current whole-row measurement pending; historical observations are not a frozen-head verdict. | [review](../../qa/reviews/L4-14.json) · [native report](../fix51-verify/L4.json) | — |
 | L4-15 | OPEN | Current whole-row measurement pending; historical observations are not a frozen-head verdict. | [review](../../qa/reviews/L4-15.json) · [native report](../fix51-verify/L4.json) | — |
 | L4-16 | OPEN | Current whole-row measurement pending; historical observations are not a frozen-head verdict. | [review](../../qa/reviews/L4-16.json) · [native report](../fix51-verify/L4.json) | — |
 | L4-17 | OPEN | Current whole-row measurement pending; historical observations are not a frozen-head verdict. | [review](../../qa/reviews/L4-17.json) · [native report](../fix51-verify/L4.json) | — |
-| L4-18 | OPEN | Current whole-row measurement pending; historical observations are not a frozen-head verdict. | [review](../../qa/reviews/L4-18.json) · [native report](../fix51-verify/L4.json) | — |
+| L4-18 | P | Authored safe scene80 both tiers; physical war low8489/high5930; heroine identifiable. Living global76/72 versus corpses100/58 near those times. | [review](../../qa/reviews/L4-18.json) · [native report](../fix51-verify/L4.json) | PO: do the retained exact frames in [proof](L4-war-review.json) read as huge mixed war? |
 | L5-01 | PASS | Shotgun starts 2.962 m away; pickup without E; regular 1 shell/0.1 s; Alpha 2 shells/0.6 s. | [review](../../qa/reviews/L5-01.json) · [native report](../fix51-verify/L5.json) | — |
 | L5-02 | OPEN | Current whole-row measurement pending; historical observations are not a frozen-head verdict. | [review](../../qa/reviews/L5-02.json) · [native report](../fix51-verify/L5.json) | — |
-| L5-03 | OPEN | Current whole-row measurement pending; historical observations are not a frozen-head verdict. | [review](../../qa/reviews/L5-03.json) · [native report](../fix51-verify/L5.json) | — |
+| L5-03 | PASS | Actual initial100/150 living IDs; accepted groups≤2; all8 row bands/11 columns populated. | [review](../../qa/reviews/L5-03.json) · [native report](../fix51-verify/L5.json) | — |
 | L5-04 | PASS | 2 initial Alphas in every native cell; both have proven accessible paths. | [review](../../qa/reviews/L5-04.json) · [native report](../fix51-verify/L5.json) | — |
 | L5-05 | PASS | Both-tier reachability/encounter/pressure checks pass; low competent 4.377 player windups/min. | [review](../../qa/reviews/L5-05.json) · [native report](../fix51-verify/L5.json) | PO: does rescue still feel too easy? Numeric pressure is measured; taste is pending. |
-| L5-06 | OPEN | Current whole-row measurement pending; historical observations are not a frozen-head verdict. | [native report](../fix51-verify/L5.json) | — |
+| L5-06 | FAIL | Mia actual voice ended32.336s; ♪ still visible33.157333s (+0.821333s). Repro: physical L5 tour approaches Mia; compare actual ended listener and minimap DOM. | [review](../../qa/reviews/L5-06.json) · [native report](../fix51-verify/L5.json) | — |
 | L5-07 | OPEN | [Muted screen-only pilot](L5-muted-pilot.json):16 reviewed frames; praying-from-church caption readable;0/5 found before wall/crowd obstruction. Pilot is not a campaign-qualified discovery result. | [native report](../fix51-verify/L5.json) | — |
 | L5-08 | FAIL | Low straight-walk in-band shares 92.12%/89.22%/85.26%, below 95%. Repro: run native complete L5 and inspect calm straight-walk formation ledger. | [review](../../qa/reviews/L5-08.json) · [native report](../fix51-verify/L5.json) | — |
 | L5-09 | OPEN | Current whole-row measurement pending; historical observations are not a frozen-head verdict. | [native report](../fix51-verify/L5.json) | — |
@@ -54,3 +54,5 @@ This report is in progress. Each OPEN row still needs current evidence for at le
 | L6-14 | OPEN | Current whole-row measurement pending; historical observations are not a frozen-head verdict. | [review](../../qa/reviews/L6-14.json) · [native report](../fix51-verify/L6.json) | — |
 
 The required native acceptance commands ran for L4, L5, and L6 with `--tier both --skip-browser`. Further native and physical-input row probes are underway. Table figures summarize the underlying reviews; complete values and SHA-256 evidence links are in each current review. No push, merge or deployment.
+
+QA tooling correction: [report display proof](review-display-proof.json) demonstrates that `report.ts` suppressed provenance metadata for reviewed numeric PASS rows. The one-line metadata fix leaves all46 statuses, completeness flags and machine check arrays unchanged; it does not loosen acceptance. Game source is unchanged. Typecheck and lint passed after that tooling fix.
