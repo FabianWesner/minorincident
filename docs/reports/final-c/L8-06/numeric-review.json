@@ -1,0 +1,232 @@
+{
+  "row": "L8-06",
+  "frozenHead": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "verdict": "PASS",
+  "criterion": "combat: reachable ≥ 90 %; passive first attack ≤ 20 s after the breach (measured 15.7 s from level start sample); attacks on player + group ≥ 4/min (tune).",
+  "observation": "All 14 current native contact/reach checks pass at both tiers and policies. Competent rates 5.2351/min low and 4.6036/min high meet 4/min. Passive first attacks occur 3.8167/4.35 s after breach, within 20 s. Minimum bounded-path reachability is 100% low and 97.4359% high. This fresh complete numeric review supersedes the historical failure for the unchanged exact criterion.",
+  "method": "Current native qa:accept both-tier complete/stationary + production fixtures/checkpoint controls; immutable source receipt snapshots.",
+  "sources": [
+    {
+      "original": "docs/reports/fix51-verify/receipts/L8-low-complete.json",
+      "originalSha256": "9fb786de51216375c62cd419d82b3feceba7bfe0330f9a5ac877d40d3adde014",
+      "archive": "docs/reports/final-c/native/L8-low-complete.json.gz",
+      "sha256": "96688fdb8d814fe11ac0659a042df65e0712b4d29036c71660281328d7bf593f",
+      "revision": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+      "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+      "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+      "generatedAt": "2026-11-06T23:48:03.384Z"
+    },
+    {
+      "original": "docs/reports/fix51-verify/receipts/L8-low-stationary.json",
+      "originalSha256": "f07c47e82396d427f9cc5b2485d10eb65a796ef68d3b7d8acd056b5cb6928851",
+      "archive": "docs/reports/final-c/native/L8-low-stationary.json.gz",
+      "sha256": "5130f586b4bfb7d2d85bd0c4dc6b729cb7578c2ad8112d5c78a71179be49f891",
+      "revision": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+      "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+      "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+      "generatedAt": "2026-11-06T23:48:11.080Z"
+    },
+    {
+      "original": "docs/reports/fix51-verify/receipts/L8-high-complete.json",
+      "originalSha256": "ba4519b2737360c0ac46299ed7f91fb3bd3bb5be861cb168f417587ed24afba3",
+      "archive": "docs/reports/final-c/native/L8-high-complete.json.gz",
+      "sha256": "f8a12416068c3832b60c87e347766e4ce6c6f8491a4eb313c097d64976a8519a",
+      "revision": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+      "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+      "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+      "generatedAt": "2026-11-06T23:48:30.828Z"
+    },
+    {
+      "original": "docs/reports/fix51-verify/receipts/L8-high-stationary.json",
+      "originalSha256": "35bfd73b85c1ec1f59df4c4df98f518b722988c7d788f34b7a478e2014aa2c81",
+      "archive": "docs/reports/final-c/native/L8-high-stationary.json.gz",
+      "sha256": "11ffad303dd89e44a8a68225b3ad7c427372a30b80160a542c2183f75978a575",
+      "revision": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+      "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+      "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+      "generatedAt": "2026-11-06T23:48:39.754Z"
+    }
+  ],
+  "checks": [
+    {
+      "id": "L8-06",
+      "clause": "combat hard rule on actual player windups",
+      "level": "L8",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": {
+        "seconds": 34.38333333333333,
+        "playerWindups": 3,
+        "groupWindups": 0,
+        "attacksPerMinute": 5.23509452253999
+      },
+      "target": "nonzero player windups in each combat policy",
+      "receipt": "docs/reports/fix51-verify/receipts/L8-low-complete.json"
+    },
+    {
+      "id": "L8-06",
+      "clause": "real player/group windups per minute",
+      "level": "L8",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 5.23509452253999,
+      "target": "4 ≤ value ≤ Infinity",
+      "receipt": "docs/reports/fix51-verify/receipts/L8-low-complete.json"
+    },
+    {
+      "id": "L8-06",
+      "clause": "minimum bounded-path reachable share within30m (path≤2.5×direct)",
+      "level": "L8",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 100,
+      "target": "90 ≤ value ≤ 100",
+      "receipt": "docs/reports/fix51-verify/receipts/L8-low-complete.json"
+    },
+    {
+      "id": "L8-06",
+      "clause": "combat hard rule on actual player windups",
+      "level": "L8",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": {
+        "seconds": 120,
+        "playerWindups": 1067,
+        "groupWindups": 19,
+        "attacksPerMinute": 533.5
+      },
+      "target": "nonzero player windups in each combat policy",
+      "receipt": "docs/reports/fix51-verify/receipts/L8-low-stationary.json"
+    },
+    {
+      "id": "L8-06",
+      "clause": "stationary first real player attack (phase clock)",
+      "level": "L8",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": {
+        "seconds": 3.816666666666667,
+        "windowSeconds": 120
+      },
+      "target": "≤20 s",
+      "receipt": "docs/reports/fix51-verify/receipts/L8-low-stationary.json"
+    },
+    {
+      "id": "L8-06",
+      "clause": "real player/group windups per minute",
+      "level": "L8",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 543,
+      "target": "4 ≤ value ≤ Infinity",
+      "receipt": "docs/reports/fix51-verify/receipts/L8-low-stationary.json"
+    },
+    {
+      "id": "L8-06",
+      "clause": "minimum bounded-path reachable share within30m (path≤2.5×direct)",
+      "level": "L8",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 100,
+      "target": "90 ≤ value ≤ 100",
+      "receipt": "docs/reports/fix51-verify/receipts/L8-low-stationary.json"
+    },
+    {
+      "id": "L8-06",
+      "clause": "combat hard rule on actual player windups",
+      "level": "L8",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": {
+        "seconds": 39.1,
+        "playerWindups": 3,
+        "groupWindups": 0,
+        "attacksPerMinute": 4.603580562659847
+      },
+      "target": "nonzero player windups in each combat policy",
+      "receipt": "docs/reports/fix51-verify/receipts/L8-high-complete.json"
+    },
+    {
+      "id": "L8-06",
+      "clause": "real player/group windups per minute",
+      "level": "L8",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 4.603580562659847,
+      "target": "4 ≤ value ≤ Infinity",
+      "receipt": "docs/reports/fix51-verify/receipts/L8-high-complete.json"
+    },
+    {
+      "id": "L8-06",
+      "clause": "minimum bounded-path reachable share within30m (path≤2.5×direct)",
+      "level": "L8",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 100,
+      "target": "90 ≤ value ≤ 100",
+      "receipt": "docs/reports/fix51-verify/receipts/L8-high-complete.json"
+    },
+    {
+      "id": "L8-06",
+      "clause": "combat hard rule on actual player windups",
+      "level": "L8",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": {
+        "seconds": 120,
+        "playerWindups": 2540,
+        "groupWindups": 19,
+        "attacksPerMinute": 1270
+      },
+      "target": "nonzero player windups in each combat policy",
+      "receipt": "docs/reports/fix51-verify/receipts/L8-high-stationary.json"
+    },
+    {
+      "id": "L8-06",
+      "clause": "stationary first real player attack (phase clock)",
+      "level": "L8",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": {
+        "seconds": 4.35,
+        "windowSeconds": 120
+      },
+      "target": "≤20 s",
+      "receipt": "docs/reports/fix51-verify/receipts/L8-high-stationary.json"
+    },
+    {
+      "id": "L8-06",
+      "clause": "real player/group windups per minute",
+      "level": "L8",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 1279.5,
+      "target": "4 ≤ value ≤ Infinity",
+      "receipt": "docs/reports/fix51-verify/receipts/L8-high-stationary.json"
+    },
+    {
+      "id": "L8-06",
+      "clause": "minimum bounded-path reachable share within30m (path≤2.5×direct)",
+      "level": "L8",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 97.43589743589743,
+      "target": "90 ≤ value ≤ 100",
+      "receipt": "docs/reports/fix51-verify/receipts/L8-high-stationary.json"
+    }
+  ]
+}

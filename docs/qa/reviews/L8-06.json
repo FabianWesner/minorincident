@@ -1,37 +1,43 @@
 {
   "row": "L8-06",
   "status": "PASS",
-  "reviewer": "Codex sweep-c4",
-  "date": "2026-11-05",
-  "commit": "2cc5adb25d06a3597a31fe4e3ec6d4d8a8c299c7",
+  "reviewer": "Codex final-c",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
   "clauses": [
     {
-      "clause": "combat: reachable \u2265 90 %; passive first attack \u2264 20 s after the breach (measured 15.7 s from level start sample); attacks on player + group \u2265 4/min (tune).",
+      "clause": "combat: reachable ≥ 90 %; passive first attack ≤ 20 s after the breach (measured 15.7 s from level start sample); attacks on player + group ≥ 4/min (tune).",
       "verdict": "PASS",
-      "note": "Current-source low/high complete and stationary native receipts show all 14 clauses PASS. Skilled breach windows are 34.383 s low and 37.5 s high, each with three actual courier windups (5.235 and 4.8 per minute; target \u22654). Passive first attacks occur at 3.817 s in both tiers (target \u226420 s). All four bounded-path reachability samples are 100% (target \u226590%). No clause failed; targets and game source were unchanged."
+      "note": "All 14 current native contact/reach checks pass at both tiers and policies. Competent rates 5.2351/min low and 4.6036/min high meet 4/min. Passive first attacks occur 3.8167/4.35 s after breach, within 20 s. Minimum bounded-path reachability is 100% low and 97.4359% high. This fresh complete numeric review supersedes the historical failure for the unchanged exact criterion."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-g/inherited-review-evidence/L8-low-complete-fc9e1b33d9d0.json.gz",
-      "sha256": "0f6305369b5fd79673bb88d37e3a29a6dd8b23564da6a5b25c8a29bd683dc95d",
-      "what": "Current-source low-tier complete route; actual player windups, phase attack rate, and independent bounded-path reachability. Original receipt archived before mutable acceptance refresh; uncompressed SHA-256 fc9e1b33d9d04066cc9397e82475062d2a826e88d7b0fdafb8d587974c5bb3b5."
+      "file": "docs/reports/final-c/L8-06/numeric-review.json",
+      "sha256": "93070e81b5e80fa8cc24554ec9bd6dd6505ff6dca2f7ad64f37d809a441a881e",
+      "what": "All 14 current native contact/reach checks pass at both tiers and policies. Competent rates 5.2351/min low and 4.6036/min high meet 4/min. Passive first attacks occur 3.8167/4.35 s after breach, within 20 s. Minimum bounded-path reachability is 100% low and 97.4359% high. This fresh complete numeric review supersedes the historical failure for the unchanged exact criterion."
     },
     {
-      "file": "docs/reports/sweep-g/inherited-review-evidence/L8-low-stationary-ead3e02ab7fb.json.gz",
-      "sha256": "0c14a587177c60c122c232208212aa858ae88c752018f9d2ed393e996bd008db",
-      "what": "Current-source low-tier passive route; first attack clock, actual player/group attack rate, and independent bounded-path reachability. Original receipt archived before mutable acceptance refresh; uncompressed SHA-256 ead3e02ab7fb4d94c8240d9421b4fbdbcd20941a229b9b0aebd78f22eeb9e0a7."
+      "file": "docs/reports/final-c/native/L8-low-complete.json.gz",
+      "sha256": "96688fdb8d814fe11ac0659a042df65e0712b4d29036c71660281328d7bf593f",
+      "what": "Immutable frozen-head native source receipt: docs/reports/fix51-verify/receipts/L8-low-complete.json. Row-specific measured checks are reproduced in numeric-review.json."
     },
     {
-      "file": "docs/reports/sweep-g/inherited-review-evidence/L8-high-complete-3108e6abed9c.json.gz",
-      "sha256": "33984d04da5cb5913e072cf5e499daa8ec1f16e5b36ed24ba7686d51e94dee02",
-      "what": "Current-source high-tier complete route; actual player windups, phase attack rate, and independent bounded-path reachability. Original receipt archived before mutable acceptance refresh; uncompressed SHA-256 3108e6abed9ca7a64b786d5118e7c68c8df085074e3a814b88922d8b5089beb2."
+      "file": "docs/reports/final-c/native/L8-low-stationary.json.gz",
+      "sha256": "5130f586b4bfb7d2d85bd0c4dc6b729cb7578c2ad8112d5c78a71179be49f891",
+      "what": "Immutable frozen-head native source receipt: docs/reports/fix51-verify/receipts/L8-low-stationary.json. Row-specific measured checks are reproduced in numeric-review.json."
     },
     {
-      "file": "docs/reports/sweep-g/inherited-review-evidence/L8-high-stationary-8387aa0a89b5.json.gz",
-      "sha256": "bc29aa9cec0d5ca31c6a3a31091b487e56ce93ddf73559f09b7d8b25a1e84666",
-      "what": "Current-source high-tier passive route; first attack clock, actual player/group attack rate, and independent bounded-path reachability. Original receipt archived before mutable acceptance refresh; uncompressed SHA-256 8387aa0a89b593aa3fdff2e04ed6863ae5a46a56682a5fed45afffad13571333."
+      "file": "docs/reports/final-c/native/L8-high-complete.json.gz",
+      "sha256": "f8a12416068c3832b60c87e347766e4ce6c6f8491a4eb313c097d64976a8519a",
+      "what": "Immutable frozen-head native source receipt: docs/reports/fix51-verify/receipts/L8-high-complete.json. Row-specific measured checks are reproduced in numeric-review.json."
+    },
+    {
+      "file": "docs/reports/final-c/native/L8-high-stationary.json.gz",
+      "sha256": "11ffad303dd89e44a8a68225b3ad7c427372a30b80160a542c2183f75978a575",
+      "what": "Immutable frozen-head native source receipt: docs/reports/fix51-verify/receipts/L8-high-stationary.json. Row-specific measured checks are reproduced in numeric-review.json."
     }
   ],
-  "notes": "Exact unchanged numerical criterion reviewed against all four current-source receipts. Historical FAIL is requalified. No game, checker, target, timer or cap changes."
+  "notes": "Frozen-head numeric review. No gameplay source or criterion changed. No browser, performance, or visual evidence is claimed for this numeric-only criterion.",
+  "sourceDigest": "3f346fc1f0af18cb190b29844498febc36a720450de65904caad638582d717b9"
 }
