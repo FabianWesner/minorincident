@@ -1,90 +1,28 @@
 {
   "row": "G-13",
-  "status": "PASS",
-  "reviewer": "Codex/fix73-b",
-  "date": "2026-11-06",
-  "commit": "d6167897fdd39772a96a7a2dbfb69ea4c5cee5db",
+  "status": "FAIL",
+  "reviewer": "final-g/Codex",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
   "clauses": [
     {
-      "clause": "L5 followers: every observed follower phase median >=0.95 of the group median and waiting for a follower >10m behind <=10% of escort time.",
-      "verdict": "PASS",
-      "note": "Current L5 high canonical source d97192f688d1e72561fb49f26eb4afff8d84d9f6cc4dabfe56bd373cd1bfb0b5: every human follower/step passes production seed voting; at least two qualified valid seeds each. Follower28 search ratios1.0119/0.9873/0.8945 with47/46/46 samples: one failure, below the two required to flag. Waiting upper bound0%. Scoped high-tier PASS; whole L5-08 formation/bars and all-level G-13 remain separately open. Historical L3 clauses and global freshness metadata are retained, not newly approved."
-    },
-    {
-      "clause": "L3 observed human follower medians >=0.95 of the phase human group median, both tiers.",
-      "verdict": "PASS",
-      "note": "Final-source low four officers min99.54%; high one officer reaches10 qualified samples, ratio100%; other high officers overwhelmed before qualification."
-    },
-    {
-      "clause": "Eligible L3 human follower waiting <=10% of human escort time, both tiers.",
-      "verdict": "PASS",
-      "note": "Conservative sum-individual-far/max-individual-escort bound1.229%/2.091%. Same corgi exclusion as existing pace evaluator. Aggregate including corgi12.951% at high remains inconclusive; no checker threshold changed."
+      "clause": "**No single follower is slower than the group.** While the group moves, every follower's median speed ≥ 0.95× the group median (tune); time the player stands waiting for one follower > 10 m behind ≤ 10 % of escort time (tune). PO: \"let me stay with the crowd for suvivor.\"",
+      "verdict": "FAIL",
+      "note": "Fresh ordinary L7 high seed1 completion: departure followers62/65/74 median/group ratios0.9137348293/0.8780749680/0.8707108993, each with>=10 walking samples and a valid completed route; all are below0.95. The existing majority-of-three vote passes these IDs, but does not erase these concrete violations of the unchanged every-follower criterion. L5 high seed3 follower28 also reaches0.8945363771. L6 exact empty-input waiting is39/16082 ticks=0.242507% at both tiers (canonical final hashes identical), so its48.3% stationary upper bound is not classified as an actual wait failure."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix73-b/G13-high-summary.json",
-      "sha256": "7395dbf7e0c740ba4c19aad36b920a7ba74b592ae11cba0c7ada6c7eb5b3af26",
-      "what": "Current L5 high canonical source d97192f688d1e72561fb49f26eb4afff8d84d9f6cc4dabfe56bd373cd1bfb0b5: every human follower/step passes production seed voting; at least two qualified valid seeds each. Follower28 search ratios1.0119/0.9873/0.8945 with47/46/46 samples: one failure, below the two required to flag. Waiting upper bound0%. Scoped high-tier PASS; whole L5-08 formation/bars and all-level G-13 remain separately open. Historical L3 clauses and global freshness metadata are retained, not newly approved."
+      "file": "docs/reports/final-g/G-13-native.json",
+      "sha256": "455a1d189ace19902b881289b13bcaa26cfb1b963b40caa96247dfbbb429c4cd",
+      "what": "Fresh ordinary L7 high seed1 completion: departure followers62/65/74 median/group ratios0.9137348293/0.8780749680/0.8707108993, each with>=10 walking samples and a valid completed route; all are below0.95. The existing majority-of-three vote passes these IDs, but does not erase these concrete violations of the unchanged every-follower criterion. L5 high seed3 follower28 also reaches0.8945363771. L6 exact empty-input waiting is39/16082 ticks=0.242507% at both tiers (canonical final hashes identical), so its48.3% stationary upper bound is not classified as an actual wait failure."
     },
     {
-      "file": "docs/reports/fix68-g/G-13-final/G-13-L5-low-complete.json.gz",
-      "sha256": "82d6cbfd2190132afbad8171028d0446d12cb3522ab56025d8ddb70cf7ff7744",
-      "what": "Complete native routes, exact pace medians, waiting bound, five-person shelter roster and separate distance failures."
-    },
-    {
-      "file": "docs/reports/fix68-g/G-13-final/G-13-L5-high-complete.json.gz",
-      "sha256": "157c2c402a91a125647973af7a746b15eb021ccc23b4fc3a114c0120275b1546",
-      "what": "Complete native routes, exact pace medians, waiting bound, five-person shelter roster and separate distance failures."
-    },
-    {
-      "file": "docs/reports/fix68-g/G-13-fix.json",
-      "sha256": "f96258968825d34633b799bdca2366cd779b091f97877a96869286771fa8e4eb",
-      "what": "Complete native routes, exact pace medians, waiting bound, five-person shelter roster and separate distance failures."
-    },
-    {
-      "file": "docs/reports/fix68-g/G-13-trials.json",
-      "sha256": "a468229f22527de669eab639c3232765e2ef516dd4e229a5ca3e8388f9431193",
-      "what": "Complete native routes, exact pace medians, waiting bound, five-person shelter roster and separate distance failures."
-    },
-    {
-      "file": "docs/reports/fix68-g/G-13-L3-fix.json",
-      "sha256": "f3788fd7a413bb0b59668450c9877af711171504289ceef230be39b594de1f0a",
-      "what": "L3 follow-up before/after and rejected variants; selected final states exactly match the successful prototype. Limited high-tier roster coverage is explicit."
-    },
-    {
-      "file": "docs/reports/fix68-g/G-13-L3-trials.json",
-      "sha256": "1f72a2f979ce07d95643ba1dd22ee4d1b1767e5efd70ee839227bbaf6950e2a0",
-      "what": "L3 follow-up before/after and rejected variants; selected final states exactly match the successful prototype. Limited high-tier roster coverage is explicit."
-    },
-    {
-      "file": "docs/reports/fix68-g/G-13-L3-regression.json",
-      "sha256": "f96f6f399b9c076f76233bcdcbca6b6c7d51fae7bbbdd2cd386acd450cd0fe8a",
-      "what": "L3 follow-up before/after and rejected variants; selected final states exactly match the successful prototype. Limited high-tier roster coverage is explicit."
-    },
-    {
-      "file": "docs/reports/fix68-g/G-13-final-source.json",
-      "sha256": "288c720cfb683f40371aa07e34c7404e8ef15aa982ea2f4843f1a4a24e1b31c5",
-      "what": "Final-source eligible human pace/wait; limited high roster and aggregate including-corgi wait remain explicit."
-    },
-    {
-      "file": "docs/reports/fix68-g/G-13-L3-human-wait-bound.json",
-      "sha256": "2074090064937eeb357bf9e167ac16cedf424dd902835343cb48efd45f04b4e1",
-      "what": "Final-source eligible human pace/wait; limited high roster and aggregate including-corgi wait remain explicit."
-    },
-    {
-      "file": "docs/reports/fix68-g/threat-final/manifest.json",
-      "sha256": "ea41ae0f54ab603666cc879342e4759ea57478f73a621206f51b41733f237a1f",
-      "what": "Final standalone gate FAIL with14 flags; scoped counterexample PASS does not close the all-level criterion or waive the gate."
-    },
-    {
-      "file": "docs/reports/fix68-g/L3-retirement-fix.json",
-      "sha256": "9b0fccf318f18387be5826d76cc0a9091d421a62e50684ea3ae0cfcec64ec20f",
-      "what": "Frozen main-source L3 both-tier acceptance, unchanged complete-route final world states, army-line and attack-clock checks; low admission lifecycle fixed while high stationary pending quota remains FAIL."
+      "file": "docs/reports/final-g/G-13-L6-wait.json",
+      "sha256": "b05dcc36301049094788f05f8057fddd19b86d0ffa3f05613afc03d025486a1a",
+      "what": "Fresh ordinary L7 high seed1 completion: departure followers62/65/74 median/group ratios0.9137348293/0.8780749680/0.8707108993, each with>=10 walking samples and a valid completed route; all are below0.95. The existing majority-of-three vote passes these IDs, but does not erase these concrete violations of the unchanged every-follower criterion. L5 high seed3 follower28 also reaches0.8945363771. L6 exact empty-input waiting is39/16082 ticks=0.242507% at both tiers (canonical final hashes identical), so its48.3% stationary upper bound is not classified as an actual wait failure."
     }
   ],
-  "notes": [
-    "Scoped L5 correction and observed L3 human follow-up. No all-level/full-row or full high-tier roster qualification; independent L5-08 distance failures remain open. Reviewed final gameplay commit d485990; evidence retains original provenance and stated scope. Final standalone threat gate FAIL:14 flags (L3 cohort count, L6 breach-2 membership, L7 passive follower pace). No release or whole-row approval. Continuation review: d616789 changes only announced L3 admission retirement after d10848b L6 quota priority. Historical proofs retain their original identities and immutable archived receipts. Scoped clauses only; full release acceptance is pending.",
-    "Final load-qualified standalone threat: exit1,12 L7 pace flags; L3/L6 threat flags cleared. Full global-row qualification remains open. See docs/reports/fix68-g/README.md."
-  ]
+  "notes": "Repro: ordinary L7 complete policy at high quality, seed1; inspect step/departure follower medians for IDs62,65,74. No game or seed-vote checker change.",
+  "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186"
 }
