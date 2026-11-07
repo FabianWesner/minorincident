@@ -1,0 +1,446 @@
+{
+  "verdict": "FAIL",
+  "scope": "L4-only lateral spread; exact ground-relative frozen vertex tops, airborne blast excluded. No target change or corpse deletion.",
+  "method": "Matched complete-bot production InputFrames, survival-protected courier, not physical input and not threat qualification.",
+  "results": [
+    {
+      "stage": "before",
+      "tier": "low",
+      "receipt": "docs/reports/blk-v/L4-before-low.json.gz",
+      "sha256": "bb0522a396f98f1169bae672ba2b4d2cd392037f896e07e3cb86052dc2796433",
+      "samples": 387,
+      "finalTick": 23130,
+      "permanentIds": 295,
+      "missingIds": [],
+      "maxVertexTopM": 2.0773882985115053,
+      "maxRootLiftM": 0.8799999999999999,
+      "errors": []
+    },
+    {
+      "stage": "before",
+      "tier": "high",
+      "receipt": "docs/reports/blk-v/L4-before-high.json.gz",
+      "sha256": "c5d6eed1473beecd4756379808afa8951d5dc0f67890542f10be8adc8ed55945",
+      "samples": 306,
+      "finalTick": 18270,
+      "permanentIds": 351,
+      "missingIds": [],
+      "maxVertexTopM": 2.1394463896751406,
+      "maxRootLiftM": 0.8799999999999999,
+      "errors": []
+    },
+    {
+      "stage": "after",
+      "tier": "low",
+      "receipt": "docs/reports/blk-v/L4-after-low.json.gz",
+      "sha256": "af6c8c834c3072289612c3c04666ddd5b921190584e6c6a91403e5c802d89576",
+      "samples": 387,
+      "finalTick": 23130,
+      "permanentIds": 295,
+      "missingIds": [],
+      "maxVertexTopM": 2.0452142477035524,
+      "maxRootLiftM": 0.6599999999999999,
+      "errors": []
+    },
+    {
+      "stage": "after",
+      "tier": "high",
+      "receipt": "docs/reports/blk-v/L4-after-high.json.gz",
+      "sha256": "66a3e43eda09fe90a9822aa862d4e17b6ffcceed2700ecc8300440e2a6dbf111",
+      "samples": 306,
+      "finalTick": 18270,
+      "permanentIds": 351,
+      "missingIds": [],
+      "maxVertexTopM": 1.825214248895645,
+      "maxRootLiftM": 0.6599999999999999,
+      "errors": []
+    }
+  ],
+  "captures": [
+    {
+      "file": "test-results/blk-v/before/L4-low/captures/tall-pile-z0.5-route.jpg",
+      "sha256": "46dafadf95ee119d8a880b034b02d0aec5330e3c731aef52cd490bfd4ae8dda9",
+      "seen": "Personally viewed. Early war shows bulky folded dead bodies amid living crowd; the heap remains visibly raised. Baseline; body carpet and raised folded poses.",
+      "reason": "tall-pile",
+      "zoom": 0.5,
+      "view": "ordinary follow"
+    },
+    {
+      "file": "test-results/blk-v/before/L4-low/captures/tall-pile-z0.5-pile.jpg",
+      "sha256": "963ec292264050e131e670efd08d95daafe30db618909e7b8389d3806a95aeeb",
+      "seen": "Personally viewed. Early war shows bulky folded dead bodies amid living crowd; the heap remains visibly raised. Baseline; body carpet and raised folded poses.",
+      "reason": "tall-pile",
+      "zoom": 0.5,
+      "view": "render-only heap detail; courier unmoved"
+    },
+    {
+      "file": "test-results/blk-v/before/L4-low/captures/tall-pile-z1.5-route.jpg",
+      "sha256": "fa080523d1cc78ccc2e1acb68caa9971adcb69d06a35c26bc23624163c400d43",
+      "seen": "Personally viewed. Early war shows bulky folded dead bodies amid living crowd; the heap remains visibly raised. Baseline; body carpet and raised folded poses.",
+      "reason": "tall-pile",
+      "zoom": 1.5,
+      "view": "ordinary follow"
+    },
+    {
+      "file": "test-results/blk-v/before/L4-low/captures/tall-pile-z1.5-pile.jpg",
+      "sha256": "2ffde1aa34faada5230504be0bab6ac99ace694c84fbe7f93544d69219164a20",
+      "seen": "Personally viewed. Early war shows bulky folded dead bodies amid living crowd; the heap remains visibly raised. Baseline; body carpet and raised folded poses.",
+      "reason": "tall-pile",
+      "zoom": 1.5,
+      "view": "render-only heap detail; courier unmoved"
+    },
+    {
+      "file": "test-results/blk-v/before/L4-low/captures/war-120-z0.5-route.jpg",
+      "sha256": "12355e237a5aa076c92b61ed383a9e62ef98d98cfa6b21b59be271d20698289f",
+      "seen": "Personally viewed. Dense war crowd and folded elevated bodies; full courier silhouette visible in route close view. Baseline; body carpet and raised folded poses.",
+      "reason": "war-120",
+      "zoom": 0.5,
+      "view": "ordinary follow"
+    },
+    {
+      "file": "test-results/blk-v/before/L4-low/captures/war-120-z0.5-pile.jpg",
+      "sha256": "852c4e36724b1b7af4ecefdab4777cf949d4376a747b5d94142ed2bf6131fbcb",
+      "seen": "Personally viewed. Dense war crowd and folded elevated bodies; full courier silhouette visible in route close view. Baseline; body carpet and raised folded poses.",
+      "reason": "war-120",
+      "zoom": 0.5,
+      "view": "render-only heap detail; courier unmoved"
+    },
+    {
+      "file": "test-results/blk-v/before/L4-low/captures/war-120-z1.5-route.jpg",
+      "sha256": "ebb5fe39302c0d028a758d6694619a38bac06d5133df1bc0a7f4629ab6b8f242",
+      "seen": "Personally viewed. Dense war crowd and folded elevated bodies; full courier silhouette visible in route close view. Baseline; body carpet and raised folded poses.",
+      "reason": "war-120",
+      "zoom": 1.5,
+      "view": "ordinary follow"
+    },
+    {
+      "file": "test-results/blk-v/before/L4-low/captures/war-120-z1.5-pile.jpg",
+      "sha256": "5d9fe2e4832e10046aaf4de9526e5f3a8b9f4493b80ea96e081c54e71871aa9b",
+      "seen": "Personally viewed. Dense war crowd and folded elevated bodies; full courier silhouette visible in route close view. Baseline; body carpet and raised folded poses.",
+      "reason": "war-120",
+      "zoom": 1.5,
+      "view": "render-only heap detail; courier unmoved"
+    },
+    {
+      "file": "test-results/blk-v/before/L4-low/captures/cellar-entry-z0.5-route.jpg",
+      "sha256": "ae66d1e34736a193e1e5e08ef2adcb072ae335fda88db0f67362f87989a0fa2b",
+      "seen": "Personally viewed. Cellar route shows courier and dog clearly; heap detail still shows angular folded bodies. Baseline; body carpet and raised folded poses.",
+      "reason": "cellar-entry",
+      "zoom": 0.5,
+      "view": "ordinary follow"
+    },
+    {
+      "file": "test-results/blk-v/before/L4-low/captures/cellar-entry-z0.5-pile.jpg",
+      "sha256": "0967d431ceccc70f51d3296d34fb3142179f891b0612f7bbc3bd8102109cc49f",
+      "seen": "Personally viewed. Cellar route shows courier and dog clearly; heap detail still shows angular folded bodies. Baseline; body carpet and raised folded poses.",
+      "reason": "cellar-entry",
+      "zoom": 0.5,
+      "view": "render-only heap detail; courier unmoved"
+    },
+    {
+      "file": "test-results/blk-v/before/L4-low/captures/cellar-entry-z1.5-route.jpg",
+      "sha256": "01c68fb25d11da48f66fe5092e80724616b05065157df4170b8e3930bb638208",
+      "seen": "Personally viewed. Cellar route shows courier and dog clearly; heap detail still shows angular folded bodies. Baseline; body carpet and raised folded poses.",
+      "reason": "cellar-entry",
+      "zoom": 1.5,
+      "view": "ordinary follow"
+    },
+    {
+      "file": "test-results/blk-v/before/L4-low/captures/cellar-entry-z1.5-pile.jpg",
+      "sha256": "a0ddecdb8ed43562b5b678e28396a57761b4afac44302d720a2be3bb5dffb707",
+      "seen": "Personally viewed. Cellar route shows courier and dog clearly; heap detail still shows angular folded bodies. Baseline; body carpet and raised folded poses.",
+      "reason": "cellar-entry",
+      "zoom": 1.5,
+      "view": "render-only heap detail; courier unmoved"
+    },
+    {
+      "file": "test-results/blk-v/before/L4-high/captures/tall-pile-z0.5-route.jpg",
+      "sha256": "ee2f03ad465fcb5cd9c8c7e51b45d9cf5ed68ffa9aca1926fc9f202c428f256a",
+      "seen": "Personally viewed. Early war shows bulky folded dead bodies amid living crowd; the heap remains visibly raised. Baseline; body carpet and raised folded poses.",
+      "reason": "tall-pile",
+      "zoom": 0.5,
+      "view": "ordinary follow"
+    },
+    {
+      "file": "test-results/blk-v/before/L4-high/captures/tall-pile-z0.5-pile.jpg",
+      "sha256": "766affa11db940186533a26bf8c31e3b5af3a9db281466708894400b34e1f8cd",
+      "seen": "Personally viewed. Early war shows bulky folded dead bodies amid living crowd; the heap remains visibly raised. Baseline; body carpet and raised folded poses.",
+      "reason": "tall-pile",
+      "zoom": 0.5,
+      "view": "render-only heap detail; courier unmoved"
+    },
+    {
+      "file": "test-results/blk-v/before/L4-high/captures/tall-pile-z1.5-route.jpg",
+      "sha256": "39ff07526ddaa979b473518ed0059c37df55276d9a9d0efe16d800866b84111b",
+      "seen": "Personally viewed. Early war shows bulky folded dead bodies amid living crowd; the heap remains visibly raised. Baseline; body carpet and raised folded poses.",
+      "reason": "tall-pile",
+      "zoom": 1.5,
+      "view": "ordinary follow"
+    },
+    {
+      "file": "test-results/blk-v/before/L4-high/captures/tall-pile-z1.5-pile.jpg",
+      "sha256": "6e21b74a8967050a16d73999d3d70aa36a0378534d93d8fb82df604a9465b04c",
+      "seen": "Personally viewed. Early war shows bulky folded dead bodies amid living crowd; the heap remains visibly raised. Baseline; body carpet and raised folded poses.",
+      "reason": "tall-pile",
+      "zoom": 1.5,
+      "view": "render-only heap detail; courier unmoved"
+    },
+    {
+      "file": "test-results/blk-v/before/L4-high/captures/war-120-z0.5-route.jpg",
+      "sha256": "066ff6548a4f6a1b333c706187aea4bb60c1d5a75266389355d715ba4fb5b914",
+      "seen": "Personally viewed. Dense war crowd and folded elevated bodies; full courier silhouette visible in route close view. Baseline; body carpet and raised folded poses.",
+      "reason": "war-120",
+      "zoom": 0.5,
+      "view": "ordinary follow"
+    },
+    {
+      "file": "test-results/blk-v/before/L4-high/captures/war-120-z0.5-pile.jpg",
+      "sha256": "c1cd2485597d89fe1fc0b4ff9b1f71b839d16fdf1ac37410096889e89f45e3e8",
+      "seen": "Personally viewed. Dense war crowd and folded elevated bodies; full courier silhouette visible in route close view. Baseline; body carpet and raised folded poses.",
+      "reason": "war-120",
+      "zoom": 0.5,
+      "view": "render-only heap detail; courier unmoved"
+    },
+    {
+      "file": "test-results/blk-v/before/L4-high/captures/war-120-z1.5-route.jpg",
+      "sha256": "449c7f1e5357248403dedb66615c996138ee7c90e4a5afb8dc8f0600c1fa32dc",
+      "seen": "Personally viewed. Dense war crowd and folded elevated bodies; full courier silhouette visible in route close view. Baseline; body carpet and raised folded poses.",
+      "reason": "war-120",
+      "zoom": 1.5,
+      "view": "ordinary follow"
+    },
+    {
+      "file": "test-results/blk-v/before/L4-high/captures/war-120-z1.5-pile.jpg",
+      "sha256": "2b67adb2564b85369f36a4c56e48290f4be9bf3456550899b9d3d83db15f29b5",
+      "seen": "Personally viewed. Dense war crowd and folded elevated bodies; full courier silhouette visible in route close view. Baseline; body carpet and raised folded poses.",
+      "reason": "war-120",
+      "zoom": 1.5,
+      "view": "render-only heap detail; courier unmoved"
+    },
+    {
+      "file": "test-results/blk-v/before/L4-high/captures/cellar-entry-z0.5-route.jpg",
+      "sha256": "760e58b8a6c10fd24db19c2de7ad288d0fad4063afb86964d0da0a4ac39310bb",
+      "seen": "Personally viewed. Cellar route shows courier and dog clearly; heap detail still shows angular folded bodies. Baseline; body carpet and raised folded poses.",
+      "reason": "cellar-entry",
+      "zoom": 0.5,
+      "view": "ordinary follow"
+    },
+    {
+      "file": "test-results/blk-v/before/L4-high/captures/cellar-entry-z0.5-pile.jpg",
+      "sha256": "3526e968f6635a814c25c91a72523aad01c348817859d2289cea60ec8c021dfc",
+      "seen": "Personally viewed. Cellar route shows courier and dog clearly; heap detail still shows angular folded bodies. Baseline; body carpet and raised folded poses.",
+      "reason": "cellar-entry",
+      "zoom": 0.5,
+      "view": "render-only heap detail; courier unmoved"
+    },
+    {
+      "file": "test-results/blk-v/before/L4-high/captures/cellar-entry-z1.5-route.jpg",
+      "sha256": "ac2710f2bab0195f185278f567d2e41960d6325c20b1d8fc4a2dc5f10ea3d0ef",
+      "seen": "Personally viewed. Cellar route shows courier and dog clearly; heap detail still shows angular folded bodies. Baseline; body carpet and raised folded poses.",
+      "reason": "cellar-entry",
+      "zoom": 1.5,
+      "view": "ordinary follow"
+    },
+    {
+      "file": "test-results/blk-v/before/L4-high/captures/cellar-entry-z1.5-pile.jpg",
+      "sha256": "0df625480517ab693718315757c9b5e79efc0a4ac22041ccb3ce90b48ab691c4",
+      "seen": "Personally viewed. Cellar route shows courier and dog clearly; heap detail still shows angular folded bodies. Baseline; body carpet and raised folded poses.",
+      "reason": "cellar-entry",
+      "zoom": 1.5,
+      "view": "render-only heap detail; courier unmoved"
+    },
+    {
+      "file": "test-results/blk-v/after/L4-low/captures/tall-pile-z0.5-route.jpg",
+      "sha256": "fdf0c304c9915d97101fa3d31eb8666b8a0b3799014e0ef7f08eb52e28c1bbbe",
+      "seen": "Personally viewed. Early war shows bulky folded dead bodies amid living crowd; the heap remains visibly raised. Wider spread after change, but no visual or measured height PASS.",
+      "reason": "tall-pile",
+      "zoom": 0.5,
+      "view": "ordinary follow"
+    },
+    {
+      "file": "test-results/blk-v/after/L4-low/captures/tall-pile-z0.5-pile.jpg",
+      "sha256": "59db8ab6ad8b1427801161623a157e35ca09c8fabe4ffec774da970db6ccf870",
+      "seen": "Personally viewed. Early war shows bulky folded dead bodies amid living crowd; the heap remains visibly raised. Wider spread after change, but no visual or measured height PASS.",
+      "reason": "tall-pile",
+      "zoom": 0.5,
+      "view": "render-only heap detail; courier unmoved"
+    },
+    {
+      "file": "test-results/blk-v/after/L4-low/captures/tall-pile-z1.5-route.jpg",
+      "sha256": "8a5943c11f2207677149de501c1e4597c0bcdb942ba57ba806f90a53b6662aa8",
+      "seen": "Personally viewed. Early war shows bulky folded dead bodies amid living crowd; the heap remains visibly raised. Wider spread after change, but no visual or measured height PASS.",
+      "reason": "tall-pile",
+      "zoom": 1.5,
+      "view": "ordinary follow"
+    },
+    {
+      "file": "test-results/blk-v/after/L4-low/captures/tall-pile-z1.5-pile.jpg",
+      "sha256": "05718a3ca010c4fb316f1fb20db041cc6e818c9e2f62f67dc40f3b849fc14953",
+      "seen": "Personally viewed. Early war shows bulky folded dead bodies amid living crowd; the heap remains visibly raised. Wider spread after change, but no visual or measured height PASS.",
+      "reason": "tall-pile",
+      "zoom": 1.5,
+      "view": "render-only heap detail; courier unmoved"
+    },
+    {
+      "file": "test-results/blk-v/after/L4-low/captures/war-120-z0.5-route.jpg",
+      "sha256": "b8f47534d2a7ecc8cb0d9a48afaccbc870cee2e7033cacfd3f3657bb5bc87318",
+      "seen": "Personally viewed. Dense war crowd and folded elevated bodies; full courier silhouette visible in route close view. Wider spread after change, but no visual or measured height PASS.",
+      "reason": "war-120",
+      "zoom": 0.5,
+      "view": "ordinary follow"
+    },
+    {
+      "file": "test-results/blk-v/after/L4-low/captures/war-120-z0.5-pile.jpg",
+      "sha256": "2e5881fce354b0e1f24b542dede96fa02aae031dcf878d159444fccdb2d3690f",
+      "seen": "Personally viewed. Dense war crowd and folded elevated bodies; full courier silhouette visible in route close view. Wider spread after change, but no visual or measured height PASS.",
+      "reason": "war-120",
+      "zoom": 0.5,
+      "view": "render-only heap detail; courier unmoved"
+    },
+    {
+      "file": "test-results/blk-v/after/L4-low/captures/war-120-z1.5-route.jpg",
+      "sha256": "b535f76dc981426f3135d1aa8e966a5a3fe5e5f3d113d663ad79bb3560b37591",
+      "seen": "Personally viewed. Dense war crowd and folded elevated bodies; full courier silhouette visible in route close view. Wider spread after change, but no visual or measured height PASS.",
+      "reason": "war-120",
+      "zoom": 1.5,
+      "view": "ordinary follow"
+    },
+    {
+      "file": "test-results/blk-v/after/L4-low/captures/war-120-z1.5-pile.jpg",
+      "sha256": "22d1b918f71ccf0f89300344efb3c8337827ff827de096586661b3783a00deb7",
+      "seen": "Personally viewed. Dense war crowd and folded elevated bodies; full courier silhouette visible in route close view. Wider spread after change, but no visual or measured height PASS.",
+      "reason": "war-120",
+      "zoom": 1.5,
+      "view": "render-only heap detail; courier unmoved"
+    },
+    {
+      "file": "test-results/blk-v/after/L4-low/captures/cellar-entry-z0.5-route.jpg",
+      "sha256": "ae66d1e34736a193e1e5e08ef2adcb072ae335fda88db0f67362f87989a0fa2b",
+      "seen": "Personally viewed. Cellar route shows courier and dog clearly; heap detail still shows angular folded bodies. Wider spread after change, but no visual or measured height PASS.",
+      "reason": "cellar-entry",
+      "zoom": 0.5,
+      "view": "ordinary follow"
+    },
+    {
+      "file": "test-results/blk-v/after/L4-low/captures/cellar-entry-z0.5-pile.jpg",
+      "sha256": "ff18ecb5d91297d2ce4f4ac81599a75fb74430e3b86f23ee729e9f83907e33c3",
+      "seen": "Personally viewed. Cellar route shows courier and dog clearly; heap detail still shows angular folded bodies. Wider spread after change, but no visual or measured height PASS.",
+      "reason": "cellar-entry",
+      "zoom": 0.5,
+      "view": "render-only heap detail; courier unmoved"
+    },
+    {
+      "file": "test-results/blk-v/after/L4-low/captures/cellar-entry-z1.5-route.jpg",
+      "sha256": "01c68fb25d11da48f66fe5092e80724616b05065157df4170b8e3930bb638208",
+      "seen": "Personally viewed. Cellar route shows courier and dog clearly; heap detail still shows angular folded bodies. Wider spread after change, but no visual or measured height PASS.",
+      "reason": "cellar-entry",
+      "zoom": 1.5,
+      "view": "ordinary follow"
+    },
+    {
+      "file": "test-results/blk-v/after/L4-low/captures/cellar-entry-z1.5-pile.jpg",
+      "sha256": "f464242f2a461f7a2f390cb30738de1d7a0396cdb929bbe432dc60353dc1d8a4",
+      "seen": "Personally viewed. Cellar route shows courier and dog clearly; heap detail still shows angular folded bodies. Wider spread after change, but no visual or measured height PASS.",
+      "reason": "cellar-entry",
+      "zoom": 1.5,
+      "view": "render-only heap detail; courier unmoved"
+    },
+    {
+      "file": "test-results/blk-v/after/L4-high/captures/tall-pile-z0.5-route.jpg",
+      "sha256": "96c6966f97470ebaff9d333b70f1ec67dc158af554886f148ea105723268f811",
+      "seen": "Personally viewed. Early war shows bulky folded dead bodies amid living crowd; the heap remains visibly raised. Wider spread after change, but no visual or measured height PASS.",
+      "reason": "tall-pile",
+      "zoom": 0.5,
+      "view": "ordinary follow"
+    },
+    {
+      "file": "test-results/blk-v/after/L4-high/captures/tall-pile-z0.5-pile.jpg",
+      "sha256": "766affa11db940186533a26bf8c31e3b5af3a9db281466708894400b34e1f8cd",
+      "seen": "Personally viewed. Early war shows bulky folded dead bodies amid living crowd; the heap remains visibly raised. Wider spread after change, but no visual or measured height PASS.",
+      "reason": "tall-pile",
+      "zoom": 0.5,
+      "view": "render-only heap detail; courier unmoved"
+    },
+    {
+      "file": "test-results/blk-v/after/L4-high/captures/tall-pile-z1.5-route.jpg",
+      "sha256": "afc139eeb25de31c5181531b31849af38bb4fc8e4dc419bb6a8e0bd9c9c3a3b6",
+      "seen": "Personally viewed. Early war shows bulky folded dead bodies amid living crowd; the heap remains visibly raised. Wider spread after change, but no visual or measured height PASS.",
+      "reason": "tall-pile",
+      "zoom": 1.5,
+      "view": "ordinary follow"
+    },
+    {
+      "file": "test-results/blk-v/after/L4-high/captures/tall-pile-z1.5-pile.jpg",
+      "sha256": "33f9533b111f062808e8223d8b6cd2ba99afca65f83cec3dc9d99a8839894cde",
+      "seen": "Personally viewed. Early war shows bulky folded dead bodies amid living crowd; the heap remains visibly raised. Wider spread after change, but no visual or measured height PASS.",
+      "reason": "tall-pile",
+      "zoom": 1.5,
+      "view": "render-only heap detail; courier unmoved"
+    },
+    {
+      "file": "test-results/blk-v/after/L4-high/captures/war-120-z0.5-route.jpg",
+      "sha256": "c03699e5e388f252bcf4d392167a0fcd3bb6b908c882dfcfa34a35f141ced7ce",
+      "seen": "Personally viewed. Dense war crowd and folded elevated bodies; full courier silhouette visible in route close view. Wider spread after change, but no visual or measured height PASS.",
+      "reason": "war-120",
+      "zoom": 0.5,
+      "view": "ordinary follow"
+    },
+    {
+      "file": "test-results/blk-v/after/L4-high/captures/war-120-z0.5-pile.jpg",
+      "sha256": "24edfb69caf355ce0f02fb43e850771084e3612f0fe2923dc41496ac166715c6",
+      "seen": "Personally viewed. Dense war crowd and folded elevated bodies; full courier silhouette visible in route close view. Wider spread after change, but no visual or measured height PASS.",
+      "reason": "war-120",
+      "zoom": 0.5,
+      "view": "render-only heap detail; courier unmoved"
+    },
+    {
+      "file": "test-results/blk-v/after/L4-high/captures/war-120-z1.5-route.jpg",
+      "sha256": "29cb11f48d38b00fd00d84602538f775e822a786ff36034b113006e01737f699",
+      "seen": "Personally viewed. Dense war crowd and folded elevated bodies; full courier silhouette visible in route close view. Wider spread after change, but no visual or measured height PASS.",
+      "reason": "war-120",
+      "zoom": 1.5,
+      "view": "ordinary follow"
+    },
+    {
+      "file": "test-results/blk-v/after/L4-high/captures/war-120-z1.5-pile.jpg",
+      "sha256": "740a2446654c890c61a22aabb19610fb106dbee93a944ffc0e94bac18a7e0a69",
+      "seen": "Personally viewed. Dense war crowd and folded elevated bodies; full courier silhouette visible in route close view. Wider spread after change, but no visual or measured height PASS.",
+      "reason": "war-120",
+      "zoom": 1.5,
+      "view": "render-only heap detail; courier unmoved"
+    },
+    {
+      "file": "test-results/blk-v/after/L4-high/captures/cellar-entry-z0.5-route.jpg",
+      "sha256": "760e58b8a6c10fd24db19c2de7ad288d0fad4063afb86964d0da0a4ac39310bb",
+      "seen": "Personally viewed. Cellar route shows courier and dog clearly; heap detail still shows angular folded bodies. Wider spread after change, but no visual or measured height PASS.",
+      "reason": "cellar-entry",
+      "zoom": 0.5,
+      "view": "ordinary follow"
+    },
+    {
+      "file": "test-results/blk-v/after/L4-high/captures/cellar-entry-z0.5-pile.jpg",
+      "sha256": "86021e5a2e580f87f95ebeeff78fc6bbf85044381f0037059ccb27d9af75d4f1",
+      "seen": "Personally viewed. Cellar route shows courier and dog clearly; heap detail still shows angular folded bodies. Wider spread after change, but no visual or measured height PASS.",
+      "reason": "cellar-entry",
+      "zoom": 0.5,
+      "view": "render-only heap detail; courier unmoved"
+    },
+    {
+      "file": "test-results/blk-v/after/L4-high/captures/cellar-entry-z1.5-route.jpg",
+      "sha256": "ac2710f2bab0195f185278f567d2e41960d6325c20b1d8fc4a2dc5f10ea3d0ef",
+      "seen": "Personally viewed. Cellar route shows courier and dog clearly; heap detail still shows angular folded bodies. Wider spread after change, but no visual or measured height PASS.",
+      "reason": "cellar-entry",
+      "zoom": 1.5,
+      "view": "ordinary follow"
+    },
+    {
+      "file": "test-results/blk-v/after/L4-high/captures/cellar-entry-z1.5-pile.jpg",
+      "sha256": "77fc4f5dcb2d8e5bb956b5adcf5a76565373c016f9e0d6eea0b61c4b5faa24ab",
+      "seen": "Personally viewed. Cellar route shows courier and dog clearly; heap detail still shows angular folded bodies. Wider spread after change, but no visual or measured height PASS.",
+      "reason": "cellar-entry",
+      "zoom": 1.5,
+      "view": "render-only heap detail; courier unmoved"
+    }
+  ],
+  "remaining": "Intrinsic alpha death-back pose rises about 1.60m even without layering. Asset pose/skinning repair is not a small well-understood release fix. P: PO inspect 10m lateral spread and retained body carpet; no taste approval claimed."
+}
