@@ -1,0 +1,7 @@
+{
+  "row": "L1-11",
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "criterion": "Bicycle: 7.5 m/s, WASD relative to the bike; after dismount it stands on the player's side of any fence/wall.",
+  "nativeChecks": [],
+  "observation": "Current physical WASD/E low+high trials after ordinary parcel pickup, carrying parcel throughout. Per-tick displacement reaches7.5m/s for84 consecutive forward ticks and114 reverse ticks in each tier (60Hz, ±0.01m/s tolerance). A changes heading -0.01555→-0.49067rad, D then -0.49067→-0.17420rad; steering follows bicycle axes. Both E dismounts leave courier and bicycle on the approach side: depot wall maxZ=-38.5, courierZ=-36.9683/bikeZ=-36.8697; actual privacy-fence127 minX=-25.635, courierX=-26.5611/bikeX=-28.3073. All four dismounts mounted=false, parcel retained. Personally inspected all42 original frames, dismounts visibly remain outside wall/fence. Route assist aimed at a farther fence but collided safely with fence127 first; that actual contacted fence is the qualified example, not the unreached target. Earlier cooldown/heading mistakes were harness attempts, excluded. Source collision policy plus these physical opposing wall/fence examples support same-side behavior."
+}

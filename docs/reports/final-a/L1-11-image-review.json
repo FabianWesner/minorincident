@@ -1,0 +1,2840 @@
+{
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "revision": "dbb81c413b1df19a3eb61b63b7384949da70d4f4",
+  "personallyInspectedAll": true,
+  "observation": "Current physical WASD/E low+high trials after ordinary parcel pickup, carrying parcel throughout. Per-tick displacement reaches7.5m/s for84 consecutive forward ticks and114 reverse ticks in each tier (60Hz, ±0.01m/s tolerance). A changes heading -0.01555→-0.49067rad, D then -0.49067→-0.17420rad; steering follows bicycle axes. Both E dismounts leave courier and bicycle on the approach side: depot wall maxZ=-38.5, courierZ=-36.9683/bikeZ=-36.8697; actual privacy-fence127 minX=-25.635, courierX=-26.5611/bikeX=-28.3073. All four dismounts mounted=false, parcel retained. Personally inspected all42 original frames, dismounts visibly remain outside wall/fence. Route assist aimed at a farther fence but collided safely with fence127 first; that actual contacted fence is the qualified example, not the unreached target. Earlier cooldown/heading mistakes were harness attempts, excluded. Source collision policy plus these physical opposing wall/fence examples support same-side behavior.",
+  "captures": [
+    {
+      "file": "test-results/final-a/L1-11-low-r2/captures/00-parcel-ready.png",
+      "sha256": "0873bcd482e861dea0e6f5060f6d2e4344228c6080095409a34b22069a3b2e89",
+      "label": "parcel-ready",
+      "state": {
+        "tick": 1110,
+        "player": {
+          "x": -37.83695983886719,
+          "y": 0.7049999833106995,
+          "z": -36.707008361816406,
+          "yaw": 1.5242178746765045
+        },
+        "carrying": true,
+        "storyLock": false,
+        "phase": "morning",
+        "bike": {
+          "at": {
+            "x": -38.699999999999996,
+            "y": 0.05,
+            "z": -36.6,
+            "yaw": -1.5707963267948966
+          },
+          "mounted": false,
+          "heading": 1.5707963267948966,
+          "speed": 0,
+          "pedal": 1.2319999999999998,
+          "steer": 0,
+          "lean": 0,
+          "standTicks": 4,
+          "armed": true,
+          "lockUntil": 821
+        },
+        "distance": 0.869648842479983,
+        "canInteract": true,
+        "interaction": false,
+        "azimuth": 0.7853981633974483,
+        "zoom": 1,
+        "walls": [
+          {
+            "id": "bld.courier-depot:782",
+            "min": [
+              -40.433,
+              -43.05
+            ],
+            "max": [
+              -35.166999999999994,
+              -38.5
+            ]
+          },
+          {
+            "id": "l1-depot-hedge-seal",
+            "min": [
+              -40.45,
+              -39.45
+            ],
+            "max": [
+              -39.8,
+              -38.5
+            ]
+          }
+        ]
+      },
+      "tier": "low"
+    },
+    {
+      "file": "test-results/final-a/L1-11-low-r2/captures/01-to-bike.png",
+      "sha256": "c589d5d0ab8934a7a03d596cd7d275d3fd5a76369c2dcebc04ca807242c071f9",
+      "label": "to-bike",
+      "state": {
+        "tick": 1110,
+        "player": {
+          "x": -37.83695983886719,
+          "y": 0.7049999833106995,
+          "z": -36.707008361816406,
+          "yaw": 1.5242178746765045
+        },
+        "carrying": true,
+        "storyLock": false,
+        "phase": "morning",
+        "bike": {
+          "at": {
+            "x": -38.699999999999996,
+            "y": 0.05,
+            "z": -36.6,
+            "yaw": -1.5707963267948966
+          },
+          "mounted": false,
+          "heading": 1.5707963267948966,
+          "speed": 0,
+          "pedal": 1.2319999999999998,
+          "steer": 0,
+          "lean": 0,
+          "standTicks": 4,
+          "armed": true,
+          "lockUntil": 821
+        },
+        "distance": 0.869648842479983,
+        "canInteract": true,
+        "interaction": false,
+        "azimuth": 0.7853981633974483,
+        "zoom": 1,
+        "walls": [
+          {
+            "id": "bld.courier-depot:782",
+            "min": [
+              -40.433,
+              -43.05
+            ],
+            "max": [
+              -35.166999999999994,
+              -38.5
+            ]
+          },
+          {
+            "id": "l1-depot-hedge-seal",
+            "min": [
+              -40.45,
+              -39.45
+            ],
+            "max": [
+              -39.8,
+              -38.5
+            ]
+          }
+        ]
+      },
+      "tier": "low"
+    },
+    {
+      "file": "test-results/final-a/L1-11-low-r2/captures/02-mount.png",
+      "sha256": "c3317742c2eb927c0454d18061b45b71b3879cd7b1187189eefec0dd4103ab5e",
+      "label": "mount",
+      "state": {
+        "tick": 1111,
+        "player": {
+          "x": -37.83695983886719,
+          "y": 0.7699999809265137,
+          "z": -37.00700759887695,
+          "yaw": -1.5707963267948966
+        },
+        "carrying": true,
+        "storyLock": false,
+        "phase": "morning",
+        "bike": {
+          "at": {
+            "x": -37.83695983886719,
+            "y": 0.05,
+            "z": -37.00700759887695,
+            "yaw": -1.5707963267948966
+          },
+          "mounted": true,
+          "heading": 1.5707963267948966,
+          "speed": 0,
+          "pedal": 1.2319999999999998,
+          "steer": 0,
+          "lean": 0,
+          "standTicks": 0,
+          "armed": true,
+          "lockUntil": 821
+        },
+        "distance": 0,
+        "canInteract": true,
+        "interaction": false,
+        "azimuth": 0.7853981633974483,
+        "zoom": 1,
+        "walls": [
+          {
+            "id": "bld.courier-depot:782",
+            "min": [
+              -40.433,
+              -43.05
+            ],
+            "max": [
+              -35.166999999999994,
+              -38.5
+            ]
+          },
+          {
+            "id": "l1-depot-hedge-seal",
+            "min": [
+              -40.45,
+              -39.45
+            ],
+            "max": [
+              -39.8,
+              -38.5
+            ]
+          }
+        ]
+      },
+      "tier": "low"
+    },
+    {
+      "file": "test-results/final-a/L1-11-low-r2/captures/03-to-asphalt.png",
+      "sha256": "02c99739b47ef95bc5961b5ed68b847aec78e33dd2fe20f33b2f3db5a8a7df7b",
+      "label": "to-asphalt",
+      "state": {
+        "tick": 1312,
+        "player": {
+          "x": -30.275836944580078,
+          "y": 0.7099999785423279,
+          "z": -31.187358856201172,
+          "yaw": -0.534976775141659
+        },
+        "carrying": true,
+        "storyLock": false,
+        "phase": "morning",
+        "bike": {
+          "at": {
+            "x": -30.275836944580078,
+            "y": 0,
+            "z": -31.187358856201172,
+            "yaw": -0.534976775141659
+          },
+          "mounted": true,
+          "heading": 0.534976775141659,
+          "speed": 0.09999999999998782,
+          "pedal": 19.411499999999986,
+          "steer": 0.000039901630933953726,
+          "lean": 0.0002581885753451353,
+          "standTicks": 0,
+          "armed": true,
+          "lockUntil": 821
+        },
+        "distance": 0,
+        "canInteract": true,
+        "interaction": false,
+        "azimuth": 0.7853981633974483,
+        "zoom": 1,
+        "walls": []
+      },
+      "tier": "low"
+    },
+    {
+      "file": "test-results/final-a/L1-11-low-r2/captures/04-asphalt-ride.png",
+      "sha256": "f7be5ddb4dbe85b30811b5d4ca9740d98430ee3b6db324bb73f0e280a36db14a",
+      "label": "asphalt-ride",
+      "state": {
+        "tick": 1502,
+        "player": {
+          "x": -15.596693992614746,
+          "y": 0.7099999785423279,
+          "z": -31.11080551147461,
+          "yaw": 0.015548175474308212
+        },
+        "carrying": true,
+        "storyLock": false,
+        "phase": "morning",
+        "bike": {
+          "at": {
+            "x": -15.596693992614746,
+            "y": 0,
+            "z": -31.11080551147461,
+            "yaw": 0.015548175474308212
+          },
+          "mounted": true,
+          "heading": -0.015548175474308212,
+          "speed": -6.494804694057166e-15,
+          "pedal": 45.974000000000004,
+          "steer": 1.582177270852776e-8,
+          "lean": 3.413988327616187e-7,
+          "standTicks": 0,
+          "armed": true,
+          "lockUntil": 821
+        },
+        "distance": 0,
+        "canInteract": true,
+        "interaction": false,
+        "azimuth": 0.7853981633974483,
+        "zoom": 1,
+        "walls": []
+      },
+      "tier": "low"
+    },
+    {
+      "file": "test-results/final-a/L1-11-low-r2/captures/05-forward.png",
+      "sha256": "b065e375be0339457ff4d4a913ab842fdb31ac40a8479f9bc046fba7b15aa156",
+      "label": "forward",
+      "state": {
+        "tick": 1682,
+        "player": {
+          "x": 0.9368574619293213,
+          "y": 0.7099999785423279,
+          "z": -31.367902755737305,
+          "yaw": 0.01554817465939812
+        },
+        "carrying": true,
+        "storyLock": false,
+        "phase": "morning",
+        "bike": {
+          "at": {
+            "x": 0.9368574619293213,
+            "y": 0,
+            "z": -31.367902755737305,
+            "yaw": 0.01554817465939812
+          },
+          "mounted": true,
+          "heading": -0.01554817465939812,
+          "speed": 7.5,
+          "pedal": 75.73799999999973,
+          "steer": 1.0295132169046654e-19,
+          "lean": 1.6002237662087345e-17,
+          "standTicks": 0,
+          "armed": true,
+          "lockUntil": 821
+        },
+        "distance": 0,
+        "canInteract": true,
+        "interaction": false,
+        "azimuth": 0.7853981633974483,
+        "zoom": 1,
+        "walls": []
+      },
+      "tier": "low"
+    },
+    {
+      "file": "test-results/final-a/L1-11-low-r2/captures/06-left.png",
+      "sha256": "07eaae54466c8fca69d3bc89d795a1623f96aa3d614dd1ba0dd4422537365b59",
+      "label": "left",
+      "state": {
+        "tick": 1712,
+        "player": {
+          "x": 4.184946060180664,
+          "y": 0.7099999785423279,
+          "z": -32.084896087646484,
+          "yaw": 0.49066915846274317
+        },
+        "carrying": true,
+        "storyLock": false,
+        "phase": "morning",
+        "bike": {
+          "at": {
+            "x": 4.184946060180664,
+            "y": 0,
+            "z": -32.084896087646484,
+            "yaw": 0.49066915846274317
+          },
+          "mounted": true,
+          "heading": -0.49066915846274317,
+          "speed": 6.000000000000005,
+          "pedal": 75.73799999999973,
+          "steer": -0.9863364736855615,
+          "lean": -0.3133461578344957,
+          "standTicks": 0,
+          "armed": true,
+          "lockUntil": 821
+        },
+        "distance": 0,
+        "canInteract": true,
+        "interaction": false,
+        "azimuth": 0.7853981633974483,
+        "zoom": 1,
+        "walls": [
+          {
+            "id": "prop.mailbox-blue:614",
+            "min": [
+              4.587099987411503,
+              -36.49559999853373
+            ],
+            "max": [
+              5.340700012588505,
+              -35.90440000146628
+            ]
+          }
+        ]
+      },
+      "tier": "low"
+    },
+    {
+      "file": "test-results/final-a/L1-11-low-r2/captures/07-right.png",
+      "sha256": "ded4b024ac9c0a9e1e6b13960bf930b2ec55b46e8c8492037f2cb67cec93e042",
+      "label": "right",
+      "state": {
+        "tick": 1742,
+        "player": {
+          "x": 6.574892520904541,
+          "y": 0.7099999785423279,
+          "z": -33.09920883178711,
+          "yaw": 0.17420100262959998
+        },
+        "carrying": true,
+        "storyLock": false,
+        "phase": "morning",
+        "bike": {
+          "at": {
+            "x": 6.574892520904541,
+            "y": 0,
+            "z": -33.09920883178711,
+            "yaw": 0.17420100262959998
+          },
+          "mounted": true,
+          "heading": -0.17420100262959998,
+          "speed": 4.500000000000011,
+          "pedal": 75.73799999999973,
+          "steer": 0.9728596393224687,
+          "lean": 0.297400188771766,
+          "standTicks": 0,
+          "armed": true,
+          "lockUntil": 821
+        },
+        "distance": 0,
+        "canInteract": true,
+        "interaction": false,
+        "azimuth": 0.7853981633974483,
+        "zoom": 1,
+        "walls": [
+          {
+            "id": "prop.privacy-fence:573",
+            "min": [
+              9.365000000000004,
+              -38.4875
+            ],
+            "max": [
+              9.635000000000003,
+              -35.64999999999999
+            ]
+          },
+          {
+            "id": "bld.house-e:607",
+            "min": [
+              0.2596500000000037,
+              -43.783649999999994
+            ],
+            "max": [
+              7.068150000000005,
+              -36.5
+            ]
+          },
+          {
+            "id": "prop.garden-bush:613",
+            "min": [
+              7.500000000000004,
+              -37.32
+            ],
+            "max": [
+              9.100000000000005,
+              -35.88
+            ]
+          },
+          {
+            "id": "prop.mailbox-blue:614",
+            "min": [
+              4.587099987411503,
+              -36.49559999853373
+            ],
+            "max": [
+              5.340700012588505,
+              -35.90440000146628
+            ]
+          },
+          {
+            "id": "prop.fire-hydrant:1266",
+            "min": [
+              10.24274971485138,
+              -34.75725028514862
+            ],
+            "max": [
+              10.75725028514862,
+              -34.24274971485138
+            ]
+          }
+        ]
+      },
+      "tier": "low"
+    },
+    {
+      "file": "test-results/final-a/L1-11-low-r2/captures/08-reverse.png",
+      "sha256": "e6d8149ba4ead8e03a8f41a041597291c868494546595f2eb0d1b046be4fb359",
+      "label": "reverse",
+      "state": {
+        "tick": 1982,
+        "player": {
+          "x": -12.570770263671875,
+          "y": 0.7099999785423279,
+          "z": -31.670827865600586,
+          "yaw": 0.0760702428999837
+        },
+        "carrying": true,
+        "storyLock": false,
+        "phase": "morning",
+        "bike": {
+          "at": {
+            "x": -12.570770263671875,
+            "y": 0,
+            "z": -31.670827865600586,
+            "yaw": 0.0760702428999837
+          },
+          "mounted": true,
+          "heading": -0.0760702428999837,
+          "speed": -7.5,
+          "pedal": 41.18149999999963,
+          "steer": 1.1818233507545326e-15,
+          "lean": 6.461522033209403e-14,
+          "standTicks": 0,
+          "armed": true,
+          "lockUntil": 821
+        },
+        "distance": 0,
+        "canInteract": true,
+        "interaction": false,
+        "azimuth": 0.7853981633974483,
+        "zoom": 1,
+        "walls": [
+          {
+            "id": "prop.hedge:565",
+            "min": [
+              -13.9729238284111,
+              -38.4875
+            ],
+            "max": [
+              -12.959676171588894,
+              -35.64999999999999
+            ]
+          }
+        ]
+      },
+      "tier": "low"
+    },
+    {
+      "file": "test-results/final-a/L1-11-low-r2/captures/09-return-asphalt.png",
+      "sha256": "054410055a5fd9598ac3a33273c9ad22ba350972a0c6e04063b0a125f291acca",
+      "label": "return-asphalt",
+      "state": {
+        "tick": 2542,
+        "player": {
+          "x": -29.726818084716797,
+          "y": 0.7099999785423279,
+          "z": -31.084074020385742,
+          "yaw": 3.320714280960064
+        },
+        "carrying": true,
+        "storyLock": false,
+        "phase": "morning",
+        "bike": {
+          "at": {
+            "x": -29.726818084716797,
+            "y": 0,
+            "z": -31.084074020385742,
+            "yaw": 3.320714280960064
+          },
+          "mounted": true,
+          "heading": -3.320714280960064,
+          "speed": -6.494804694057166e-15,
+          "pedal": 79.98449999999914,
+          "steer": 0.000005452983032786691,
+          "lean": 0.00005852907315440453,
+          "standTicks": 0,
+          "armed": true,
+          "lockUntil": 821
+        },
+        "distance": 0,
+        "canInteract": true,
+        "interaction": false,
+        "azimuth": 0.7853981633974483,
+        "zoom": 1,
+        "walls": []
+      },
+      "tier": "low"
+    },
+    {
+      "file": "test-results/final-a/L1-11-low-r2/captures/10-wall-approach.png",
+      "sha256": "53d009ee823db58628e9710bc9106cf9c4e951e8dc3c80d02cd5ee4a31d6cde4",
+      "label": "wall-approach",
+      "state": {
+        "tick": 5386,
+        "player": {
+          "x": -36.76058578491211,
+          "y": 0.7070000171661377,
+          "z": -36.968284606933594,
+          "yaw": 2.246396492295063
+        },
+        "carrying": true,
+        "storyLock": false,
+        "phase": "morning",
+        "bike": {
+          "at": {
+            "x": -36.76058578491211,
+            "y": 0.05,
+            "z": -36.968284606933594,
+            "yaw": 2.246396492295063
+          },
+          "mounted": true,
+          "heading": -2.246396492295063,
+          "speed": 0,
+          "pedal": 87.72650000000019,
+          "steer": 0.007873569074561092,
+          "lean": 0.00024002434070658009,
+          "standTicks": 0,
+          "armed": true,
+          "lockUntil": 821
+        },
+        "distance": 0,
+        "canInteract": true,
+        "interaction": false,
+        "azimuth": 0.7853981633974483,
+        "zoom": 1,
+        "walls": [
+          {
+            "id": "bld.courier-depot:782",
+            "min": [
+              -40.433,
+              -43.05
+            ],
+            "max": [
+              -35.166999999999994,
+              -38.5
+            ]
+          },
+          {
+            "id": "prop.fire-hydrant:1264",
+            "min": [
+              -33.75725028514862,
+              -34.75725028514862
+            ],
+            "max": [
+              -33.24274971485138,
+              -34.24274971485138
+            ]
+          },
+          {
+            "id": "l1-depot-hedge-seal",
+            "min": [
+              -40.45,
+              -39.45
+            ],
+            "max": [
+              -39.8,
+              -38.5
+            ]
+          }
+        ]
+      },
+      "tier": "low"
+    },
+    {
+      "file": "test-results/final-a/L1-11-low-r2/captures/11-wall-dismount.png",
+      "sha256": "774c0c79e2cb45f1352c6adc0f0380a27c463d07f6ee7a62af3bac6058f4b588",
+      "label": "wall-dismount",
+      "state": {
+        "tick": 5387,
+        "player": {
+          "x": -36.76058578491211,
+          "y": 0.7049999833106995,
+          "z": -36.968284606933594,
+          "yaw": 2.246396492295063
+        },
+        "carrying": true,
+        "storyLock": false,
+        "phase": "morning",
+        "bike": {
+          "at": {
+            "x": -35.86600535709958,
+            "y": 0.05,
+            "z": -36.869664841294295,
+            "yaw": 1.460998328897615
+          },
+          "mounted": false,
+          "heading": -1.460998328897615,
+          "speed": 0,
+          "pedal": 87.72650000000019,
+          "steer": 0,
+          "lean": 0,
+          "standTicks": 0,
+          "armed": false,
+          "lockUntil": 5405
+        },
+        "distance": 0.8999999999999977,
+        "canInteract": false,
+        "interaction": false,
+        "azimuth": 0.7853981633974483,
+        "zoom": 1,
+        "walls": [
+          {
+            "id": "bld.courier-depot:782",
+            "min": [
+              -40.433,
+              -43.05
+            ],
+            "max": [
+              -35.166999999999994,
+              -38.5
+            ]
+          },
+          {
+            "id": "prop.fire-hydrant:1264",
+            "min": [
+              -33.75725028514862,
+              -34.75725028514862
+            ],
+            "max": [
+              -33.24274971485138,
+              -34.24274971485138
+            ]
+          },
+          {
+            "id": "l1-depot-hedge-seal",
+            "min": [
+              -40.45,
+              -39.45
+            ],
+            "max": [
+              -39.8,
+              -38.5
+            ]
+          }
+        ]
+      },
+      "tier": "low"
+    },
+    {
+      "file": "test-results/final-a/L1-11-low-r2/captures/12-return-bike.png",
+      "sha256": "50ce6905de3ebc8165d8fab6e7cafccd2fcaedf4dae080e8ca8ee6de09c9b8cf",
+      "label": "return-bike",
+      "state": {
+        "tick": 5387,
+        "player": {
+          "x": -36.76058578491211,
+          "y": 0.7049999833106995,
+          "z": -36.968284606933594,
+          "yaw": 2.246396492295063
+        },
+        "carrying": true,
+        "storyLock": false,
+        "phase": "morning",
+        "bike": {
+          "at": {
+            "x": -35.86600535709958,
+            "y": 0.05,
+            "z": -36.869664841294295,
+            "yaw": 1.460998328897615
+          },
+          "mounted": false,
+          "heading": -1.460998328897615,
+          "speed": 0,
+          "pedal": 87.72650000000019,
+          "steer": 0,
+          "lean": 0,
+          "standTicks": 0,
+          "armed": false,
+          "lockUntil": 5405
+        },
+        "distance": 0.8999999999999977,
+        "canInteract": false,
+        "interaction": false,
+        "azimuth": 0.7853981633974483,
+        "zoom": 1,
+        "walls": [
+          {
+            "id": "bld.courier-depot:782",
+            "min": [
+              -40.433,
+              -43.05
+            ],
+            "max": [
+              -35.166999999999994,
+              -38.5
+            ]
+          },
+          {
+            "id": "prop.fire-hydrant:1264",
+            "min": [
+              -33.75725028514862,
+              -34.75725028514862
+            ],
+            "max": [
+              -33.24274971485138,
+              -34.24274971485138
+            ]
+          },
+          {
+            "id": "l1-depot-hedge-seal",
+            "min": [
+              -40.45,
+              -39.45
+            ],
+            "max": [
+              -39.8,
+              -38.5
+            ]
+          }
+        ]
+      },
+      "tier": "low"
+    },
+    {
+      "file": "test-results/final-a/L1-11-low-r2/captures/13-mount-cooldown.png",
+      "sha256": "6e48eae813f0be66b3dc6279c886445e1be4742bdf0960a17a1b4c453806c359",
+      "label": "mount-cooldown",
+      "state": {
+        "tick": 5417,
+        "player": {
+          "x": -36.76058578491211,
+          "y": 0.7049999833106995,
+          "z": -36.968284606933594,
+          "yaw": 2.246396492295063
+        },
+        "carrying": true,
+        "storyLock": false,
+        "phase": "morning",
+        "bike": {
+          "at": {
+            "x": -35.86600535709958,
+            "y": 0.05,
+            "z": -36.869664841294295,
+            "yaw": 1.460998328897615
+          },
+          "mounted": false,
+          "heading": -1.460998328897615,
+          "speed": 0,
+          "pedal": 87.72650000000019,
+          "steer": 0,
+          "lean": 0,
+          "standTicks": 0,
+          "armed": false,
+          "lockUntil": 5405
+        },
+        "distance": 0.8999999999999977,
+        "canInteract": true,
+        "interaction": false,
+        "azimuth": 0.7853981633974483,
+        "zoom": 1,
+        "walls": [
+          {
+            "id": "bld.courier-depot:782",
+            "min": [
+              -40.433,
+              -43.05
+            ],
+            "max": [
+              -35.166999999999994,
+              -38.5
+            ]
+          },
+          {
+            "id": "prop.fire-hydrant:1264",
+            "min": [
+              -33.75725028514862,
+              -34.75725028514862
+            ],
+            "max": [
+              -33.24274971485138,
+              -34.24274971485138
+            ]
+          },
+          {
+            "id": "l1-depot-hedge-seal",
+            "min": [
+              -40.45,
+              -39.45
+            ],
+            "max": [
+              -39.8,
+              -38.5
+            ]
+          }
+        ]
+      },
+      "tier": "low"
+    },
+    {
+      "file": "test-results/final-a/L1-11-low-r2/captures/14-mount-again.png",
+      "sha256": "2d340ac6fd5160b52dbb4c4c8b483ba6ffbd9cab1d1437c95f74ec2552a558c2",
+      "label": "mount-again",
+      "state": {
+        "tick": 5418,
+        "player": {
+          "x": -36.793460845947266,
+          "y": 0.7699999809265137,
+          "z": -36.67008972167969,
+          "yaw": 1.460998328897615
+        },
+        "carrying": true,
+        "storyLock": false,
+        "phase": "morning",
+        "bike": {
+          "at": {
+            "x": -36.793460845947266,
+            "y": 0.05,
+            "z": -36.67008972167969,
+            "yaw": 1.460998328897615
+          },
+          "mounted": true,
+          "heading": -1.460998328897615,
+          "speed": 0,
+          "pedal": 87.72650000000019,
+          "steer": 0,
+          "lean": 0,
+          "standTicks": 0,
+          "armed": false,
+          "lockUntil": 5405
+        },
+        "distance": 0,
+        "canInteract": true,
+        "interaction": false,
+        "azimuth": 0.7853981633974483,
+        "zoom": 1,
+        "walls": [
+          {
+            "id": "bld.courier-depot:782",
+            "min": [
+              -40.433,
+              -43.05
+            ],
+            "max": [
+              -35.166999999999994,
+              -38.5
+            ]
+          },
+          {
+            "id": "prop.fire-hydrant:1264",
+            "min": [
+              -33.75725028514862,
+              -34.75725028514862
+            ],
+            "max": [
+              -33.24274971485138,
+              -34.24274971485138
+            ]
+          },
+          {
+            "id": "l1-depot-hedge-seal",
+            "min": [
+              -40.45,
+              -39.45
+            ],
+            "max": [
+              -39.8,
+              -38.5
+            ]
+          }
+        ]
+      },
+      "tier": "low"
+    },
+    {
+      "file": "test-results/final-a/L1-11-low-r2/captures/15-fence-route-0.png",
+      "sha256": "babff9b980cd8d1b0343b5575836b8a268b97150312a8cf502d18e0babed8be9",
+      "label": "fence-route-0",
+      "state": {
+        "tick": 5671,
+        "player": {
+          "x": -30.512348175048828,
+          "y": 0.7099999785423279,
+          "z": -35.15135192871094,
+          "yaw": -0.7960241310460844
+        },
+        "carrying": true,
+        "storyLock": false,
+        "phase": "morning",
+        "bike": {
+          "at": {
+            "x": -30.512348175048828,
+            "y": 0,
+            "z": -35.15135192871094,
+            "yaw": -0.7960241310460844
+          },
+          "mounted": true,
+          "heading": 0.7960241310460844,
+          "speed": 0.0055555555555463765,
+          "pedal": 102.35783333333352,
+          "steer": 0.0021263757452637043,
+          "lean": 0.005601184641449239,
+          "standTicks": 0,
+          "armed": false,
+          "lockUntil": 5405
+        },
+        "distance": 0,
+        "canInteract": true,
+        "interaction": false,
+        "azimuth": 0.7853981633974483,
+        "zoom": 1,
+        "walls": [
+          {
+            "id": "prop.fire-hydrant:1264",
+            "min": [
+              -33.75725028514862,
+              -34.75725028514862
+            ],
+            "max": [
+              -33.24274971485138,
+              -34.24274971485138
+            ]
+          }
+        ]
+      },
+      "tier": "low"
+    },
+    {
+      "file": "test-results/final-a/L1-11-low-r2/captures/16-fence-route-1.png",
+      "sha256": "d152b672177e0000171c79fec2d3bb9fcf94be9e196d2e28d8d3fb02c327d1d5",
+      "label": "fence-route-1",
+      "state": {
+        "tick": 5901,
+        "player": {
+          "x": -30.037153244018555,
+          "y": 0.7099999785423279,
+          "z": -15.779932022094727,
+          "yaw": -1.504377279613188
+        },
+        "carrying": true,
+        "storyLock": false,
+        "phase": "morning",
+        "bike": {
+          "at": {
+            "x": -30.037153244018555,
+            "y": 0,
+            "z": -15.779932022094727,
+            "yaw": -1.504377279613188
+          },
+          "mounted": true,
+          "heading": 1.504377279613188,
+          "speed": -6.494804694057166e-15,
+          "pedal": 137.65033333333298,
+          "steer": -0.0003990911261927289,
+          "lean": -0.0015554205287714147,
+          "standTicks": 0,
+          "armed": false,
+          "lockUntil": 5405
+        },
+        "distance": 0,
+        "canInteract": true,
+        "interaction": false,
+        "azimuth": 0.7853981633974483,
+        "zoom": 1,
+        "walls": []
+      },
+      "tier": "low"
+    },
+    {
+      "file": "test-results/final-a/L1-11-low-r2/captures/17-fence-route-2.png",
+      "sha256": "329fe4d46a5f77392ced7a9324973a1713899f8f545b3e98e96554b108efd04c",
+      "label": "fence-route-2",
+      "state": {
+        "tick": 7103,
+        "player": {
+          "x": -26.518281936645508,
+          "y": 0.8500000238418579,
+          "z": -12.3236665725708,
+          "yaw": 0.0496517227041477
+        },
+        "carrying": true,
+        "storyLock": false,
+        "phase": "morning",
+        "bike": {
+          "at": {
+            "x": -26.518281936645508,
+            "y": 0.13,
+            "z": -12.3236665725708,
+            "yaw": 0.0496517227041477
+          },
+          "mounted": true,
+          "heading": -0.0496517227041477,
+          "speed": 0.0888888888888889,
+          "pedal": 156.72583333333424,
+          "steer": -5.7011817023007406e-68,
+          "lean": -4.1619932070255664e-64,
+          "standTicks": 0,
+          "armed": false,
+          "lockUntil": 5405
+        },
+        "distance": 0,
+        "canInteract": true,
+        "interaction": false,
+        "azimuth": 0.7853981633974483,
+        "zoom": 1,
+        "walls": [
+          {
+            "id": "prop.privacy-fence:126",
+            "min": [
+              -25.635,
+              -14
+            ],
+            "max": [
+              -25.365,
+              -11.662500000000001
+            ]
+          },
+          {
+            "id": "prop.privacy-fence:127",
+            "min": [
+              -25.635,
+              -11.6625
+            ],
+            "max": [
+              -25.365,
+              -9.325000000000001
+            ]
+          },
+          {
+            "id": "prop.privacy-fence:128",
+            "min": [
+              -25.635,
+              -9.325
+            ],
+            "max": [
+              -25.365,
+              -6.9875
+            ]
+          },
+          {
+            "id": "prop.privacy-fence:141",
+            "min": [
+              -25.5,
+              -14.135
+            ],
+            "max": [
+              -22.807692307692307,
+              -13.865
+            ]
+          },
+          {
+            "id": "bld.house-c:154",
+            "min": [
+              -24.8,
+              -13.022559999999999
+            ],
+            "max": [
+              -18.559679999999997,
+              -5.499999999999999
+            ]
+          }
+        ]
+      },
+      "tier": "low"
+    },
+    {
+      "file": "test-results/final-a/L1-11-low-r2/captures/18-fence-route-3.png",
+      "sha256": "5eab357bc34b09b4a7e86bd688877d723777155876315c3fed4324c3cfdfecaf",
+      "label": "fence-route-3",
+      "state": {
+        "tick": 8304,
+        "player": {
+          "x": -26.555631637573242,
+          "y": 0.8500000238418579,
+          "z": -12.319976806640625,
+          "yaw": 0.24508576552189884
+        },
+        "carrying": true,
+        "storyLock": false,
+        "phase": "morning",
+        "bike": {
+          "at": {
+            "x": -26.555631637573242,
+            "y": 0.13,
+            "z": -12.319976806640625,
+            "yaw": 0.24508576552189884
+          },
+          "mounted": true,
+          "heading": -0.24508576552189884,
+          "speed": 0.005555555555555564,
+          "pedal": 166.9723333333356,
+          "steer": -7.975401453269999e-74,
+          "lean": -1.3886848531856066e-69,
+          "standTicks": 0,
+          "armed": false,
+          "lockUntil": 5405
+        },
+        "distance": 0,
+        "canInteract": true,
+        "interaction": false,
+        "azimuth": 0.7853981633974483,
+        "zoom": 1,
+        "walls": [
+          {
+            "id": "prop.privacy-fence:126",
+            "min": [
+              -25.635,
+              -14
+            ],
+            "max": [
+              -25.365,
+              -11.662500000000001
+            ]
+          },
+          {
+            "id": "prop.privacy-fence:127",
+            "min": [
+              -25.635,
+              -11.6625
+            ],
+            "max": [
+              -25.365,
+              -9.325000000000001
+            ]
+          },
+          {
+            "id": "prop.privacy-fence:128",
+            "min": [
+              -25.635,
+              -9.325
+            ],
+            "max": [
+              -25.365,
+              -6.9875
+            ]
+          },
+          {
+            "id": "prop.privacy-fence:141",
+            "min": [
+              -25.5,
+              -14.135
+            ],
+            "max": [
+              -22.807692307692307,
+              -13.865
+            ]
+          },
+          {
+            "id": "bld.house-c:154",
+            "min": [
+              -24.8,
+              -13.022559999999999
+            ],
+            "max": [
+              -18.559679999999997,
+              -5.499999999999999
+            ]
+          }
+        ]
+      },
+      "tier": "low"
+    },
+    {
+      "file": "test-results/final-a/L1-11-low-r2/captures/19-fence-approach.png",
+      "sha256": "3130c231ef296f699101d399a96be1e17b99ba9981a6dcab4f0829df2efc150b",
+      "label": "fence-approach",
+      "state": {
+        "tick": 11904,
+        "player": {
+          "x": -26.561100006103516,
+          "y": 0.8500000238418579,
+          "z": -12.318591117858887,
+          "yaw": 0.24508576552189884
+        },
+        "carrying": true,
+        "storyLock": false,
+        "phase": "morning",
+        "bike": {
+          "at": {
+            "x": -26.561100006103516,
+            "y": 0.13,
+            "z": -12.318591117858887,
+            "yaw": 0.24508576552189884
+          },
+          "mounted": true,
+          "heading": -0.24508576552189884,
+          "speed": 0,
+          "pedal": 176.76150000000356,
+          "steer": -1.4766863392925016e-297,
+          "lean": -4.800138993045672e-278,
+          "standTicks": 0,
+          "armed": false,
+          "lockUntil": 5405
+        },
+        "distance": 0,
+        "canInteract": true,
+        "interaction": false,
+        "azimuth": 0.7853981633974483,
+        "zoom": 1,
+        "walls": [
+          {
+            "id": "prop.privacy-fence:126",
+            "min": [
+              -25.635,
+              -14
+            ],
+            "max": [
+              -25.365,
+              -11.662500000000001
+            ]
+          },
+          {
+            "id": "prop.privacy-fence:127",
+            "min": [
+              -25.635,
+              -11.6625
+            ],
+            "max": [
+              -25.365,
+              -9.325000000000001
+            ]
+          },
+          {
+            "id": "prop.privacy-fence:128",
+            "min": [
+              -25.635,
+              -9.325
+            ],
+            "max": [
+              -25.365,
+              -6.9875
+            ]
+          },
+          {
+            "id": "prop.privacy-fence:141",
+            "min": [
+              -25.5,
+              -14.135
+            ],
+            "max": [
+              -22.807692307692307,
+              -13.865
+            ]
+          },
+          {
+            "id": "bld.house-c:154",
+            "min": [
+              -24.8,
+              -13.022559999999999
+            ],
+            "max": [
+              -18.559679999999997,
+              -5.499999999999999
+            ]
+          }
+        ]
+      },
+      "tier": "low"
+    },
+    {
+      "file": "test-results/final-a/L1-11-low-r2/captures/20-fence-dismount.png",
+      "sha256": "39e01ce15ed77b78127980d98e916acf23590f0f612f8e4deb87d655c4121450",
+      "label": "fence-dismount",
+      "state": {
+        "tick": 11905,
+        "player": {
+          "x": -26.561100006103516,
+          "y": 0.8500000238418579,
+          "z": -12.318591117858887,
+          "yaw": 0.24508576552189884
+        },
+        "carrying": true,
+        "storyLock": false,
+        "phase": "morning",
+        "bike": {
+          "at": {
+            "x": -28.307309739286236,
+            "y": 0,
+            "z": -11.881839967044218,
+            "yaw": -1.3257105612729978
+          },
+          "mounted": false,
+          "heading": 1.3257105612729978,
+          "speed": 0,
+          "pedal": 176.76150000000356,
+          "steer": 0,
+          "lean": 0,
+          "standTicks": 0,
+          "armed": false,
+          "lockUntil": 11923
+        },
+        "distance": 1.8000000000000014,
+        "canInteract": false,
+        "interaction": false,
+        "azimuth": 0.7853981633974483,
+        "zoom": 1,
+        "walls": [
+          {
+            "id": "prop.privacy-fence:126",
+            "min": [
+              -25.635,
+              -14
+            ],
+            "max": [
+              -25.365,
+              -11.662500000000001
+            ]
+          },
+          {
+            "id": "prop.privacy-fence:127",
+            "min": [
+              -25.635,
+              -11.6625
+            ],
+            "max": [
+              -25.365,
+              -9.325000000000001
+            ]
+          },
+          {
+            "id": "prop.privacy-fence:128",
+            "min": [
+              -25.635,
+              -9.325
+            ],
+            "max": [
+              -25.365,
+              -6.9875
+            ]
+          },
+          {
+            "id": "prop.privacy-fence:141",
+            "min": [
+              -25.5,
+              -14.135
+            ],
+            "max": [
+              -22.807692307692307,
+              -13.865
+            ]
+          },
+          {
+            "id": "bld.house-c:154",
+            "min": [
+              -24.8,
+              -13.022559999999999
+            ],
+            "max": [
+              -18.559679999999997,
+              -5.499999999999999
+            ]
+          }
+        ]
+      },
+      "tier": "low"
+    },
+    {
+      "file": "test-results/final-a/L1-11-high-r2/captures/00-parcel-ready.png",
+      "sha256": "5134a5ce1228b5b4e36bf7a0ebaaeaa40b1d0e8e2ce37731aa19271982f070ba",
+      "label": "parcel-ready",
+      "state": {
+        "tick": 1110,
+        "player": {
+          "x": -37.83695983886719,
+          "y": 0.7049999833106995,
+          "z": -36.707008361816406,
+          "yaw": 1.5242178746765045
+        },
+        "carrying": true,
+        "storyLock": false,
+        "phase": "morning",
+        "bike": {
+          "at": {
+            "x": -38.699999999999996,
+            "y": 0.05,
+            "z": -36.6,
+            "yaw": -1.5707963267948966
+          },
+          "mounted": false,
+          "heading": 1.5707963267948966,
+          "speed": 0,
+          "pedal": 1.2319999999999998,
+          "steer": 0,
+          "lean": 0,
+          "standTicks": 4,
+          "armed": true,
+          "lockUntil": 821
+        },
+        "distance": 0.869648842479983,
+        "canInteract": true,
+        "interaction": false,
+        "azimuth": 0.7853981633974483,
+        "zoom": 1,
+        "walls": [
+          {
+            "id": "bld.courier-depot:782",
+            "min": [
+              -40.433,
+              -43.05
+            ],
+            "max": [
+              -35.166999999999994,
+              -38.5
+            ]
+          },
+          {
+            "id": "l1-depot-hedge-seal",
+            "min": [
+              -40.45,
+              -39.45
+            ],
+            "max": [
+              -39.8,
+              -38.5
+            ]
+          }
+        ]
+      },
+      "tier": "high"
+    },
+    {
+      "file": "test-results/final-a/L1-11-high-r2/captures/01-to-bike.png",
+      "sha256": "3e2572a467d2d9fbebb8bcbdc9a03f57dd9962dc469b9b8925cea8cff3437315",
+      "label": "to-bike",
+      "state": {
+        "tick": 1110,
+        "player": {
+          "x": -37.83695983886719,
+          "y": 0.7049999833106995,
+          "z": -36.707008361816406,
+          "yaw": 1.5242178746765045
+        },
+        "carrying": true,
+        "storyLock": false,
+        "phase": "morning",
+        "bike": {
+          "at": {
+            "x": -38.699999999999996,
+            "y": 0.05,
+            "z": -36.6,
+            "yaw": -1.5707963267948966
+          },
+          "mounted": false,
+          "heading": 1.5707963267948966,
+          "speed": 0,
+          "pedal": 1.2319999999999998,
+          "steer": 0,
+          "lean": 0,
+          "standTicks": 4,
+          "armed": true,
+          "lockUntil": 821
+        },
+        "distance": 0.869648842479983,
+        "canInteract": true,
+        "interaction": false,
+        "azimuth": 0.7853981633974483,
+        "zoom": 1,
+        "walls": [
+          {
+            "id": "bld.courier-depot:782",
+            "min": [
+              -40.433,
+              -43.05
+            ],
+            "max": [
+              -35.166999999999994,
+              -38.5
+            ]
+          },
+          {
+            "id": "l1-depot-hedge-seal",
+            "min": [
+              -40.45,
+              -39.45
+            ],
+            "max": [
+              -39.8,
+              -38.5
+            ]
+          }
+        ]
+      },
+      "tier": "high"
+    },
+    {
+      "file": "test-results/final-a/L1-11-high-r2/captures/02-mount.png",
+      "sha256": "eb61eaa5628b6761d2b96dcbff307b33b53301a958c2ebc9d8f5b83eec87280c",
+      "label": "mount",
+      "state": {
+        "tick": 1111,
+        "player": {
+          "x": -37.83695983886719,
+          "y": 0.7699999809265137,
+          "z": -37.00700759887695,
+          "yaw": -1.5707963267948966
+        },
+        "carrying": true,
+        "storyLock": false,
+        "phase": "morning",
+        "bike": {
+          "at": {
+            "x": -37.83695983886719,
+            "y": 0.05,
+            "z": -37.00700759887695,
+            "yaw": -1.5707963267948966
+          },
+          "mounted": true,
+          "heading": 1.5707963267948966,
+          "speed": 0,
+          "pedal": 1.2319999999999998,
+          "steer": 0,
+          "lean": 0,
+          "standTicks": 0,
+          "armed": true,
+          "lockUntil": 821
+        },
+        "distance": 0,
+        "canInteract": true,
+        "interaction": false,
+        "azimuth": 0.7853981633974483,
+        "zoom": 1,
+        "walls": [
+          {
+            "id": "bld.courier-depot:782",
+            "min": [
+              -40.433,
+              -43.05
+            ],
+            "max": [
+              -35.166999999999994,
+              -38.5
+            ]
+          },
+          {
+            "id": "l1-depot-hedge-seal",
+            "min": [
+              -40.45,
+              -39.45
+            ],
+            "max": [
+              -39.8,
+              -38.5
+            ]
+          }
+        ]
+      },
+      "tier": "high"
+    },
+    {
+      "file": "test-results/final-a/L1-11-high-r2/captures/03-to-asphalt.png",
+      "sha256": "6fd49e5eda25efed5de7f8c7fba234eaf89ad54f039e774d3d92bbd67ac1d380",
+      "label": "to-asphalt",
+      "state": {
+        "tick": 1312,
+        "player": {
+          "x": -30.275836944580078,
+          "y": 0.7099999785423279,
+          "z": -31.187358856201172,
+          "yaw": -0.534976775141659
+        },
+        "carrying": true,
+        "storyLock": false,
+        "phase": "morning",
+        "bike": {
+          "at": {
+            "x": -30.275836944580078,
+            "y": 0,
+            "z": -31.187358856201172,
+            "yaw": -0.534976775141659
+          },
+          "mounted": true,
+          "heading": 0.534976775141659,
+          "speed": 0.09999999999998782,
+          "pedal": 19.411499999999986,
+          "steer": 0.000039901630933953726,
+          "lean": 0.0002581885753451353,
+          "standTicks": 0,
+          "armed": true,
+          "lockUntil": 821
+        },
+        "distance": 0,
+        "canInteract": true,
+        "interaction": false,
+        "azimuth": 0.7853981633974483,
+        "zoom": 1,
+        "walls": []
+      },
+      "tier": "high"
+    },
+    {
+      "file": "test-results/final-a/L1-11-high-r2/captures/04-asphalt-ride.png",
+      "sha256": "a6119b28ee117811ecbf772ac4f97ec234ee12c6cd1528c3e5ccb96bad43a165",
+      "label": "asphalt-ride",
+      "state": {
+        "tick": 1502,
+        "player": {
+          "x": -15.596693992614746,
+          "y": 0.7099999785423279,
+          "z": -31.11080551147461,
+          "yaw": 0.015548175474308212
+        },
+        "carrying": true,
+        "storyLock": false,
+        "phase": "morning",
+        "bike": {
+          "at": {
+            "x": -15.596693992614746,
+            "y": 0,
+            "z": -31.11080551147461,
+            "yaw": 0.015548175474308212
+          },
+          "mounted": true,
+          "heading": -0.015548175474308212,
+          "speed": -6.494804694057166e-15,
+          "pedal": 45.974000000000004,
+          "steer": 1.582177270852776e-8,
+          "lean": 3.413988327616187e-7,
+          "standTicks": 0,
+          "armed": true,
+          "lockUntil": 821
+        },
+        "distance": 0,
+        "canInteract": true,
+        "interaction": false,
+        "azimuth": 0.7853981633974483,
+        "zoom": 1,
+        "walls": []
+      },
+      "tier": "high"
+    },
+    {
+      "file": "test-results/final-a/L1-11-high-r2/captures/05-forward.png",
+      "sha256": "3096b40c3ab875813be47a381c4eec092306c366dd891221b2587a3b6cf1ee7d",
+      "label": "forward",
+      "state": {
+        "tick": 1682,
+        "player": {
+          "x": 0.9368574619293213,
+          "y": 0.7099999785423279,
+          "z": -31.367902755737305,
+          "yaw": 0.01554817465939812
+        },
+        "carrying": true,
+        "storyLock": false,
+        "phase": "morning",
+        "bike": {
+          "at": {
+            "x": 0.9368574619293213,
+            "y": 0,
+            "z": -31.367902755737305,
+            "yaw": 0.01554817465939812
+          },
+          "mounted": true,
+          "heading": -0.01554817465939812,
+          "speed": 7.5,
+          "pedal": 75.73799999999973,
+          "steer": 1.0295132169046654e-19,
+          "lean": 1.6002237662087345e-17,
+          "standTicks": 0,
+          "armed": true,
+          "lockUntil": 821
+        },
+        "distance": 0,
+        "canInteract": true,
+        "interaction": false,
+        "azimuth": 0.7853981633974483,
+        "zoom": 1,
+        "walls": []
+      },
+      "tier": "high"
+    },
+    {
+      "file": "test-results/final-a/L1-11-high-r2/captures/06-left.png",
+      "sha256": "7b41e149cc74d133ed1dd57df06baf3f400cc1857097316de12c9160fcc3acf2",
+      "label": "left",
+      "state": {
+        "tick": 1712,
+        "player": {
+          "x": 4.184946060180664,
+          "y": 0.7099999785423279,
+          "z": -32.084896087646484,
+          "yaw": 0.49066915846274317
+        },
+        "carrying": true,
+        "storyLock": false,
+        "phase": "morning",
+        "bike": {
+          "at": {
+            "x": 4.184946060180664,
+            "y": 0,
+            "z": -32.084896087646484,
+            "yaw": 0.49066915846274317
+          },
+          "mounted": true,
+          "heading": -0.49066915846274317,
+          "speed": 6.000000000000005,
+          "pedal": 75.73799999999973,
+          "steer": -0.9863364736855615,
+          "lean": -0.3133461578344957,
+          "standTicks": 0,
+          "armed": true,
+          "lockUntil": 821
+        },
+        "distance": 0,
+        "canInteract": true,
+        "interaction": false,
+        "azimuth": 0.7853981633974483,
+        "zoom": 1,
+        "walls": [
+          {
+            "id": "prop.mailbox-blue:614",
+            "min": [
+              4.587099987411503,
+              -36.49559999853373
+            ],
+            "max": [
+              5.340700012588505,
+              -35.90440000146628
+            ]
+          }
+        ]
+      },
+      "tier": "high"
+    },
+    {
+      "file": "test-results/final-a/L1-11-high-r2/captures/07-right.png",
+      "sha256": "342dbfcc5c94d67fccffe37b175b0ac8ef7012316112169d72953f1e69d7f19a",
+      "label": "right",
+      "state": {
+        "tick": 1742,
+        "player": {
+          "x": 6.574892520904541,
+          "y": 0.7099999785423279,
+          "z": -33.09920883178711,
+          "yaw": 0.17420100262959998
+        },
+        "carrying": true,
+        "storyLock": false,
+        "phase": "morning",
+        "bike": {
+          "at": {
+            "x": 6.574892520904541,
+            "y": 0,
+            "z": -33.09920883178711,
+            "yaw": 0.17420100262959998
+          },
+          "mounted": true,
+          "heading": -0.17420100262959998,
+          "speed": 4.500000000000011,
+          "pedal": 75.73799999999973,
+          "steer": 0.9728596393224687,
+          "lean": 0.297400188771766,
+          "standTicks": 0,
+          "armed": true,
+          "lockUntil": 821
+        },
+        "distance": 0,
+        "canInteract": true,
+        "interaction": false,
+        "azimuth": 0.7853981633974483,
+        "zoom": 1,
+        "walls": [
+          {
+            "id": "prop.privacy-fence:573",
+            "min": [
+              9.365000000000004,
+              -38.4875
+            ],
+            "max": [
+              9.635000000000003,
+              -35.64999999999999
+            ]
+          },
+          {
+            "id": "bld.house-e:607",
+            "min": [
+              0.2596500000000037,
+              -43.783649999999994
+            ],
+            "max": [
+              7.068150000000005,
+              -36.5
+            ]
+          },
+          {
+            "id": "prop.garden-bush:613",
+            "min": [
+              7.500000000000004,
+              -37.32
+            ],
+            "max": [
+              9.100000000000005,
+              -35.88
+            ]
+          },
+          {
+            "id": "prop.mailbox-blue:614",
+            "min": [
+              4.587099987411503,
+              -36.49559999853373
+            ],
+            "max": [
+              5.340700012588505,
+              -35.90440000146628
+            ]
+          },
+          {
+            "id": "prop.fire-hydrant:1266",
+            "min": [
+              10.24274971485138,
+              -34.75725028514862
+            ],
+            "max": [
+              10.75725028514862,
+              -34.24274971485138
+            ]
+          }
+        ]
+      },
+      "tier": "high"
+    },
+    {
+      "file": "test-results/final-a/L1-11-high-r2/captures/08-reverse.png",
+      "sha256": "952e4b501f219726f5fd29e84c10d07af539e4f8daa1ec92b28c4f06a02edcb5",
+      "label": "reverse",
+      "state": {
+        "tick": 1982,
+        "player": {
+          "x": -12.570770263671875,
+          "y": 0.7099999785423279,
+          "z": -31.670827865600586,
+          "yaw": 0.0760702428999837
+        },
+        "carrying": true,
+        "storyLock": false,
+        "phase": "morning",
+        "bike": {
+          "at": {
+            "x": -12.570770263671875,
+            "y": 0,
+            "z": -31.670827865600586,
+            "yaw": 0.0760702428999837
+          },
+          "mounted": true,
+          "heading": -0.0760702428999837,
+          "speed": -7.5,
+          "pedal": 41.18149999999963,
+          "steer": 1.1818233507545326e-15,
+          "lean": 6.461522033209403e-14,
+          "standTicks": 0,
+          "armed": true,
+          "lockUntil": 821
+        },
+        "distance": 0,
+        "canInteract": true,
+        "interaction": false,
+        "azimuth": 0.7853981633974483,
+        "zoom": 1,
+        "walls": [
+          {
+            "id": "prop.hedge:565",
+            "min": [
+              -13.9729238284111,
+              -38.4875
+            ],
+            "max": [
+              -12.959676171588894,
+              -35.64999999999999
+            ]
+          }
+        ]
+      },
+      "tier": "high"
+    },
+    {
+      "file": "test-results/final-a/L1-11-high-r2/captures/09-return-asphalt.png",
+      "sha256": "2accfbcaa388d4d5bbca93292461e96bd240458ed4239ddbf6fda9197e989e4d",
+      "label": "return-asphalt",
+      "state": {
+        "tick": 2542,
+        "player": {
+          "x": -29.726818084716797,
+          "y": 0.7099999785423279,
+          "z": -31.084074020385742,
+          "yaw": 3.320714280960064
+        },
+        "carrying": true,
+        "storyLock": false,
+        "phase": "morning",
+        "bike": {
+          "at": {
+            "x": -29.726818084716797,
+            "y": 0,
+            "z": -31.084074020385742,
+            "yaw": 3.320714280960064
+          },
+          "mounted": true,
+          "heading": -3.320714280960064,
+          "speed": -6.494804694057166e-15,
+          "pedal": 79.98449999999914,
+          "steer": 0.000005452983032786691,
+          "lean": 0.00005852907315440453,
+          "standTicks": 0,
+          "armed": true,
+          "lockUntil": 821
+        },
+        "distance": 0,
+        "canInteract": true,
+        "interaction": false,
+        "azimuth": 0.7853981633974483,
+        "zoom": 1,
+        "walls": []
+      },
+      "tier": "high"
+    },
+    {
+      "file": "test-results/final-a/L1-11-high-r2/captures/10-wall-approach.png",
+      "sha256": "2938ff62f9e2de0efc0febd2b67d41e8ccebe53dac69c7a085ce699af2ad1c31",
+      "label": "wall-approach",
+      "state": {
+        "tick": 5386,
+        "player": {
+          "x": -36.76058578491211,
+          "y": 0.7070000171661377,
+          "z": -36.968284606933594,
+          "yaw": 2.246396492295063
+        },
+        "carrying": true,
+        "storyLock": false,
+        "phase": "morning",
+        "bike": {
+          "at": {
+            "x": -36.76058578491211,
+            "y": 0.05,
+            "z": -36.968284606933594,
+            "yaw": 2.246396492295063
+          },
+          "mounted": true,
+          "heading": -2.246396492295063,
+          "speed": 0,
+          "pedal": 87.72650000000019,
+          "steer": 0.007873569074561092,
+          "lean": 0.00024002434070658009,
+          "standTicks": 0,
+          "armed": true,
+          "lockUntil": 821
+        },
+        "distance": 0,
+        "canInteract": true,
+        "interaction": false,
+        "azimuth": 0.7853981633974483,
+        "zoom": 1,
+        "walls": [
+          {
+            "id": "bld.courier-depot:782",
+            "min": [
+              -40.433,
+              -43.05
+            ],
+            "max": [
+              -35.166999999999994,
+              -38.5
+            ]
+          },
+          {
+            "id": "prop.fire-hydrant:1264",
+            "min": [
+              -33.75725028514862,
+              -34.75725028514862
+            ],
+            "max": [
+              -33.24274971485138,
+              -34.24274971485138
+            ]
+          },
+          {
+            "id": "l1-depot-hedge-seal",
+            "min": [
+              -40.45,
+              -39.45
+            ],
+            "max": [
+              -39.8,
+              -38.5
+            ]
+          }
+        ]
+      },
+      "tier": "high"
+    },
+    {
+      "file": "test-results/final-a/L1-11-high-r2/captures/11-wall-dismount.png",
+      "sha256": "199112d4b075851a98b06358339dd89c86e429340ef4c8ac3848114416481474",
+      "label": "wall-dismount",
+      "state": {
+        "tick": 5387,
+        "player": {
+          "x": -36.76058578491211,
+          "y": 0.7049999833106995,
+          "z": -36.968284606933594,
+          "yaw": 2.246396492295063
+        },
+        "carrying": true,
+        "storyLock": false,
+        "phase": "morning",
+        "bike": {
+          "at": {
+            "x": -35.86600535709958,
+            "y": 0.05,
+            "z": -36.869664841294295,
+            "yaw": 1.460998328897615
+          },
+          "mounted": false,
+          "heading": -1.460998328897615,
+          "speed": 0,
+          "pedal": 87.72650000000019,
+          "steer": 0,
+          "lean": 0,
+          "standTicks": 0,
+          "armed": false,
+          "lockUntil": 5405
+        },
+        "distance": 0.8999999999999977,
+        "canInteract": false,
+        "interaction": false,
+        "azimuth": 0.7853981633974483,
+        "zoom": 1,
+        "walls": [
+          {
+            "id": "bld.courier-depot:782",
+            "min": [
+              -40.433,
+              -43.05
+            ],
+            "max": [
+              -35.166999999999994,
+              -38.5
+            ]
+          },
+          {
+            "id": "prop.fire-hydrant:1264",
+            "min": [
+              -33.75725028514862,
+              -34.75725028514862
+            ],
+            "max": [
+              -33.24274971485138,
+              -34.24274971485138
+            ]
+          },
+          {
+            "id": "l1-depot-hedge-seal",
+            "min": [
+              -40.45,
+              -39.45
+            ],
+            "max": [
+              -39.8,
+              -38.5
+            ]
+          }
+        ]
+      },
+      "tier": "high"
+    },
+    {
+      "file": "test-results/final-a/L1-11-high-r2/captures/12-return-bike.png",
+      "sha256": "199112d4b075851a98b06358339dd89c86e429340ef4c8ac3848114416481474",
+      "label": "return-bike",
+      "state": {
+        "tick": 5387,
+        "player": {
+          "x": -36.76058578491211,
+          "y": 0.7049999833106995,
+          "z": -36.968284606933594,
+          "yaw": 2.246396492295063
+        },
+        "carrying": true,
+        "storyLock": false,
+        "phase": "morning",
+        "bike": {
+          "at": {
+            "x": -35.86600535709958,
+            "y": 0.05,
+            "z": -36.869664841294295,
+            "yaw": 1.460998328897615
+          },
+          "mounted": false,
+          "heading": -1.460998328897615,
+          "speed": 0,
+          "pedal": 87.72650000000019,
+          "steer": 0,
+          "lean": 0,
+          "standTicks": 0,
+          "armed": false,
+          "lockUntil": 5405
+        },
+        "distance": 0.8999999999999977,
+        "canInteract": false,
+        "interaction": false,
+        "azimuth": 0.7853981633974483,
+        "zoom": 1,
+        "walls": [
+          {
+            "id": "bld.courier-depot:782",
+            "min": [
+              -40.433,
+              -43.05
+            ],
+            "max": [
+              -35.166999999999994,
+              -38.5
+            ]
+          },
+          {
+            "id": "prop.fire-hydrant:1264",
+            "min": [
+              -33.75725028514862,
+              -34.75725028514862
+            ],
+            "max": [
+              -33.24274971485138,
+              -34.24274971485138
+            ]
+          },
+          {
+            "id": "l1-depot-hedge-seal",
+            "min": [
+              -40.45,
+              -39.45
+            ],
+            "max": [
+              -39.8,
+              -38.5
+            ]
+          }
+        ]
+      },
+      "tier": "high"
+    },
+    {
+      "file": "test-results/final-a/L1-11-high-r2/captures/13-mount-cooldown.png",
+      "sha256": "11e687ea347d909e6037a6f585696113480751e8267b326de1570bd8122275db",
+      "label": "mount-cooldown",
+      "state": {
+        "tick": 5417,
+        "player": {
+          "x": -36.76058578491211,
+          "y": 0.7049999833106995,
+          "z": -36.968284606933594,
+          "yaw": 2.246396492295063
+        },
+        "carrying": true,
+        "storyLock": false,
+        "phase": "morning",
+        "bike": {
+          "at": {
+            "x": -35.86600535709958,
+            "y": 0.05,
+            "z": -36.869664841294295,
+            "yaw": 1.460998328897615
+          },
+          "mounted": false,
+          "heading": -1.460998328897615,
+          "speed": 0,
+          "pedal": 87.72650000000019,
+          "steer": 0,
+          "lean": 0,
+          "standTicks": 0,
+          "armed": false,
+          "lockUntil": 5405
+        },
+        "distance": 0.8999999999999977,
+        "canInteract": true,
+        "interaction": false,
+        "azimuth": 0.7853981633974483,
+        "zoom": 1,
+        "walls": [
+          {
+            "id": "bld.courier-depot:782",
+            "min": [
+              -40.433,
+              -43.05
+            ],
+            "max": [
+              -35.166999999999994,
+              -38.5
+            ]
+          },
+          {
+            "id": "prop.fire-hydrant:1264",
+            "min": [
+              -33.75725028514862,
+              -34.75725028514862
+            ],
+            "max": [
+              -33.24274971485138,
+              -34.24274971485138
+            ]
+          },
+          {
+            "id": "l1-depot-hedge-seal",
+            "min": [
+              -40.45,
+              -39.45
+            ],
+            "max": [
+              -39.8,
+              -38.5
+            ]
+          }
+        ]
+      },
+      "tier": "high"
+    },
+    {
+      "file": "test-results/final-a/L1-11-high-r2/captures/14-mount-again.png",
+      "sha256": "16cc08ca0cfb104f6785e38e54c060314cd680c214c468cf22f208aa949f6ab8",
+      "label": "mount-again",
+      "state": {
+        "tick": 5418,
+        "player": {
+          "x": -36.793460845947266,
+          "y": 0.7699999809265137,
+          "z": -36.67008972167969,
+          "yaw": 1.460998328897615
+        },
+        "carrying": true,
+        "storyLock": false,
+        "phase": "morning",
+        "bike": {
+          "at": {
+            "x": -36.793460845947266,
+            "y": 0.05,
+            "z": -36.67008972167969,
+            "yaw": 1.460998328897615
+          },
+          "mounted": true,
+          "heading": -1.460998328897615,
+          "speed": 0,
+          "pedal": 87.72650000000019,
+          "steer": 0,
+          "lean": 0,
+          "standTicks": 0,
+          "armed": false,
+          "lockUntil": 5405
+        },
+        "distance": 0,
+        "canInteract": true,
+        "interaction": false,
+        "azimuth": 0.7853981633974483,
+        "zoom": 1,
+        "walls": [
+          {
+            "id": "bld.courier-depot:782",
+            "min": [
+              -40.433,
+              -43.05
+            ],
+            "max": [
+              -35.166999999999994,
+              -38.5
+            ]
+          },
+          {
+            "id": "prop.fire-hydrant:1264",
+            "min": [
+              -33.75725028514862,
+              -34.75725028514862
+            ],
+            "max": [
+              -33.24274971485138,
+              -34.24274971485138
+            ]
+          },
+          {
+            "id": "l1-depot-hedge-seal",
+            "min": [
+              -40.45,
+              -39.45
+            ],
+            "max": [
+              -39.8,
+              -38.5
+            ]
+          }
+        ]
+      },
+      "tier": "high"
+    },
+    {
+      "file": "test-results/final-a/L1-11-high-r2/captures/15-fence-route-0.png",
+      "sha256": "5579bb19ae048f994ea917cb72c3987ada82e5a30ba0dc052443b465368357ea",
+      "label": "fence-route-0",
+      "state": {
+        "tick": 5671,
+        "player": {
+          "x": -30.512348175048828,
+          "y": 0.7099999785423279,
+          "z": -35.15135192871094,
+          "yaw": -0.7960241310460844
+        },
+        "carrying": true,
+        "storyLock": false,
+        "phase": "morning",
+        "bike": {
+          "at": {
+            "x": -30.512348175048828,
+            "y": 0,
+            "z": -35.15135192871094,
+            "yaw": -0.7960241310460844
+          },
+          "mounted": true,
+          "heading": 0.7960241310460844,
+          "speed": 0.0055555555555463765,
+          "pedal": 102.35783333333352,
+          "steer": 0.0021263757452637043,
+          "lean": 0.005601184641449239,
+          "standTicks": 0,
+          "armed": false,
+          "lockUntil": 5405
+        },
+        "distance": 0,
+        "canInteract": true,
+        "interaction": false,
+        "azimuth": 0.7853981633974483,
+        "zoom": 1,
+        "walls": [
+          {
+            "id": "prop.fire-hydrant:1264",
+            "min": [
+              -33.75725028514862,
+              -34.75725028514862
+            ],
+            "max": [
+              -33.24274971485138,
+              -34.24274971485138
+            ]
+          }
+        ]
+      },
+      "tier": "high"
+    },
+    {
+      "file": "test-results/final-a/L1-11-high-r2/captures/16-fence-route-1.png",
+      "sha256": "2cab8b0e39fe62b4564b86d8ef2bf840f4a0c33f15b58ee5aa4187dff9322532",
+      "label": "fence-route-1",
+      "state": {
+        "tick": 5901,
+        "player": {
+          "x": -30.037153244018555,
+          "y": 0.7099999785423279,
+          "z": -15.779932022094727,
+          "yaw": -1.504377279613188
+        },
+        "carrying": true,
+        "storyLock": false,
+        "phase": "morning",
+        "bike": {
+          "at": {
+            "x": -30.037153244018555,
+            "y": 0,
+            "z": -15.779932022094727,
+            "yaw": -1.504377279613188
+          },
+          "mounted": true,
+          "heading": 1.504377279613188,
+          "speed": -6.494804694057166e-15,
+          "pedal": 137.65033333333298,
+          "steer": -0.0003990911261927289,
+          "lean": -0.0015554205287714147,
+          "standTicks": 0,
+          "armed": false,
+          "lockUntil": 5405
+        },
+        "distance": 0,
+        "canInteract": true,
+        "interaction": false,
+        "azimuth": 0.7853981633974483,
+        "zoom": 1,
+        "walls": []
+      },
+      "tier": "high"
+    },
+    {
+      "file": "test-results/final-a/L1-11-high-r2/captures/17-fence-route-2.png",
+      "sha256": "e06d57a90ea7c5115e16d2563b57025c5038cfaf0ae3b7fb307cd89762ec90a3",
+      "label": "fence-route-2",
+      "state": {
+        "tick": 7103,
+        "player": {
+          "x": -26.518281936645508,
+          "y": 0.8500000238418579,
+          "z": -12.3236665725708,
+          "yaw": 0.0496517227041477
+        },
+        "carrying": true,
+        "storyLock": false,
+        "phase": "morning",
+        "bike": {
+          "at": {
+            "x": -26.518281936645508,
+            "y": 0.13,
+            "z": -12.3236665725708,
+            "yaw": 0.0496517227041477
+          },
+          "mounted": true,
+          "heading": -0.0496517227041477,
+          "speed": 0.0888888888888889,
+          "pedal": 156.72583333333424,
+          "steer": -5.7011817023007406e-68,
+          "lean": -4.1619932070255664e-64,
+          "standTicks": 0,
+          "armed": false,
+          "lockUntil": 5405
+        },
+        "distance": 0,
+        "canInteract": true,
+        "interaction": false,
+        "azimuth": 0.7853981633974483,
+        "zoom": 1,
+        "walls": [
+          {
+            "id": "prop.privacy-fence:126",
+            "min": [
+              -25.635,
+              -14
+            ],
+            "max": [
+              -25.365,
+              -11.662500000000001
+            ]
+          },
+          {
+            "id": "prop.privacy-fence:127",
+            "min": [
+              -25.635,
+              -11.6625
+            ],
+            "max": [
+              -25.365,
+              -9.325000000000001
+            ]
+          },
+          {
+            "id": "prop.privacy-fence:128",
+            "min": [
+              -25.635,
+              -9.325
+            ],
+            "max": [
+              -25.365,
+              -6.9875
+            ]
+          },
+          {
+            "id": "prop.privacy-fence:141",
+            "min": [
+              -25.5,
+              -14.135
+            ],
+            "max": [
+              -22.807692307692307,
+              -13.865
+            ]
+          },
+          {
+            "id": "bld.house-c:154",
+            "min": [
+              -24.8,
+              -13.022559999999999
+            ],
+            "max": [
+              -18.559679999999997,
+              -5.499999999999999
+            ]
+          }
+        ]
+      },
+      "tier": "high"
+    },
+    {
+      "file": "test-results/final-a/L1-11-high-r2/captures/18-fence-route-3.png",
+      "sha256": "39996a3e45f30f80a3ed41eaa4854f8a4c341a6f456cc457d9c5342999bdbda3",
+      "label": "fence-route-3",
+      "state": {
+        "tick": 8304,
+        "player": {
+          "x": -26.555631637573242,
+          "y": 0.8500000238418579,
+          "z": -12.319976806640625,
+          "yaw": 0.24508576552189884
+        },
+        "carrying": true,
+        "storyLock": false,
+        "phase": "morning",
+        "bike": {
+          "at": {
+            "x": -26.555631637573242,
+            "y": 0.13,
+            "z": -12.319976806640625,
+            "yaw": 0.24508576552189884
+          },
+          "mounted": true,
+          "heading": -0.24508576552189884,
+          "speed": 0.005555555555555564,
+          "pedal": 166.9723333333356,
+          "steer": -7.975401453269999e-74,
+          "lean": -1.3886848531856066e-69,
+          "standTicks": 0,
+          "armed": false,
+          "lockUntil": 5405
+        },
+        "distance": 0,
+        "canInteract": true,
+        "interaction": false,
+        "azimuth": 0.7853981633974483,
+        "zoom": 1,
+        "walls": [
+          {
+            "id": "prop.privacy-fence:126",
+            "min": [
+              -25.635,
+              -14
+            ],
+            "max": [
+              -25.365,
+              -11.662500000000001
+            ]
+          },
+          {
+            "id": "prop.privacy-fence:127",
+            "min": [
+              -25.635,
+              -11.6625
+            ],
+            "max": [
+              -25.365,
+              -9.325000000000001
+            ]
+          },
+          {
+            "id": "prop.privacy-fence:128",
+            "min": [
+              -25.635,
+              -9.325
+            ],
+            "max": [
+              -25.365,
+              -6.9875
+            ]
+          },
+          {
+            "id": "prop.privacy-fence:141",
+            "min": [
+              -25.5,
+              -14.135
+            ],
+            "max": [
+              -22.807692307692307,
+              -13.865
+            ]
+          },
+          {
+            "id": "bld.house-c:154",
+            "min": [
+              -24.8,
+              -13.022559999999999
+            ],
+            "max": [
+              -18.559679999999997,
+              -5.499999999999999
+            ]
+          }
+        ]
+      },
+      "tier": "high"
+    },
+    {
+      "file": "test-results/final-a/L1-11-high-r2/captures/19-fence-approach.png",
+      "sha256": "a90f4e9f75bfe632c7d9308cefccae29c4f1018f1a7fed1abdaaac87e72d1bef",
+      "label": "fence-approach",
+      "state": {
+        "tick": 11904,
+        "player": {
+          "x": -26.561100006103516,
+          "y": 0.8500000238418579,
+          "z": -12.318591117858887,
+          "yaw": 0.24508576552189884
+        },
+        "carrying": true,
+        "storyLock": false,
+        "phase": "morning",
+        "bike": {
+          "at": {
+            "x": -26.561100006103516,
+            "y": 0.13,
+            "z": -12.318591117858887,
+            "yaw": 0.24508576552189884
+          },
+          "mounted": true,
+          "heading": -0.24508576552189884,
+          "speed": 0,
+          "pedal": 176.76150000000356,
+          "steer": -1.4766863392925016e-297,
+          "lean": -4.800138993045672e-278,
+          "standTicks": 0,
+          "armed": false,
+          "lockUntil": 5405
+        },
+        "distance": 0,
+        "canInteract": true,
+        "interaction": false,
+        "azimuth": 0.7853981633974483,
+        "zoom": 1,
+        "walls": [
+          {
+            "id": "prop.privacy-fence:126",
+            "min": [
+              -25.635,
+              -14
+            ],
+            "max": [
+              -25.365,
+              -11.662500000000001
+            ]
+          },
+          {
+            "id": "prop.privacy-fence:127",
+            "min": [
+              -25.635,
+              -11.6625
+            ],
+            "max": [
+              -25.365,
+              -9.325000000000001
+            ]
+          },
+          {
+            "id": "prop.privacy-fence:128",
+            "min": [
+              -25.635,
+              -9.325
+            ],
+            "max": [
+              -25.365,
+              -6.9875
+            ]
+          },
+          {
+            "id": "prop.privacy-fence:141",
+            "min": [
+              -25.5,
+              -14.135
+            ],
+            "max": [
+              -22.807692307692307,
+              -13.865
+            ]
+          },
+          {
+            "id": "bld.house-c:154",
+            "min": [
+              -24.8,
+              -13.022559999999999
+            ],
+            "max": [
+              -18.559679999999997,
+              -5.499999999999999
+            ]
+          }
+        ]
+      },
+      "tier": "high"
+    },
+    {
+      "file": "test-results/final-a/L1-11-high-r2/captures/20-fence-dismount.png",
+      "sha256": "86833aaeddd53eeb9d6d10841b21706ac2152fe99e019684991ff429638b856b",
+      "label": "fence-dismount",
+      "state": {
+        "tick": 11905,
+        "player": {
+          "x": -26.561100006103516,
+          "y": 0.8500000238418579,
+          "z": -12.318591117858887,
+          "yaw": 0.24508576552189884
+        },
+        "carrying": true,
+        "storyLock": false,
+        "phase": "morning",
+        "bike": {
+          "at": {
+            "x": -28.307309739286236,
+            "y": 0,
+            "z": -11.881839967044218,
+            "yaw": -1.3257105612729978
+          },
+          "mounted": false,
+          "heading": 1.3257105612729978,
+          "speed": 0,
+          "pedal": 176.76150000000356,
+          "steer": 0,
+          "lean": 0,
+          "standTicks": 0,
+          "armed": false,
+          "lockUntil": 11923
+        },
+        "distance": 1.8000000000000014,
+        "canInteract": false,
+        "interaction": false,
+        "azimuth": 0.7853981633974483,
+        "zoom": 1,
+        "walls": [
+          {
+            "id": "prop.privacy-fence:126",
+            "min": [
+              -25.635,
+              -14
+            ],
+            "max": [
+              -25.365,
+              -11.662500000000001
+            ]
+          },
+          {
+            "id": "prop.privacy-fence:127",
+            "min": [
+              -25.635,
+              -11.6625
+            ],
+            "max": [
+              -25.365,
+              -9.325000000000001
+            ]
+          },
+          {
+            "id": "prop.privacy-fence:128",
+            "min": [
+              -25.635,
+              -9.325
+            ],
+            "max": [
+              -25.365,
+              -6.9875
+            ]
+          },
+          {
+            "id": "prop.privacy-fence:141",
+            "min": [
+              -25.5,
+              -14.135
+            ],
+            "max": [
+              -22.807692307692307,
+              -13.865
+            ]
+          },
+          {
+            "id": "bld.house-c:154",
+            "min": [
+              -24.8,
+              -13.022559999999999
+            ],
+            "max": [
+              -18.559679999999997,
+              -5.499999999999999
+            ]
+          }
+        ]
+      },
+      "tier": "high"
+    }
+  ]
+}
