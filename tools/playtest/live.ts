@@ -124,6 +124,27 @@ if (process.argv.includes('--l3-retreat-prefix')) {
   if (!step) await page.evaluate(() => window.__SS__!.resume());
 }
 
+// L1-16 measures route readability after the depot: an ordinary native InputFrame prefix collects the parcel, then the
+// screenshot player owns every input from the Annex objective on (same rules as the L3 retreat prefix).
+if (process.argv.includes('--l1-pickup-prefix')) {
+  if (!screenOnly || level !== 'L1' || !process.env.LUNA_RUN_DIR) throw Error('Pickup prefix requires a recorded screenshot-only L1 session');
+  const prefix = await page.evaluate(async () => {
+    const a = window.__SS__!;
+    const deliver = () => (a.missions.state() as unknown as { steps?: Record<string, { status?: string }> }).steps?.deliver?.status === 'active';
+    a.pause(); a.bot.start('complete');
+    try {
+      for (let i = 0; i < 1800 && !deliver(); i++) await a.step(5);
+    } finally { a.bot.stop(); a.input.clear(); }
+    if (!deliver()) throw Error('Native pickup prefix did not reach the delivery objective');
+    a.camera.follow(); a.camera.zoom(1);
+    return { tick: a.getState().tick, marker: a.missions.state()!.marker,
+      method: 'Ordinary native complete InputFrames through the depot pickup; no relocation, actor protection, objective skips or onward route assist.' };
+  });
+  mkdirSync(process.env.LUNA_RUN_DIR, { recursive: true });
+  writeFileSync(resolve(process.env.LUNA_RUN_DIR, 'prefix.json'), JSON.stringify(prefix, null, 2) + '\n');
+  if (!step) await page.evaluate(() => window.__SS__!.resume());
+}
+
 if (step) await page.evaluate(() => window.__SS__!.pause());
 
 // PO 11-01: "a mode where the user cannot die, so an agent has a chance to play it. This is not for judging fun but to check
