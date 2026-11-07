@@ -1,0 +1,60 @@
+{
+  "actual": [
+    {
+      "tier": "low",
+      "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+      "gate": {
+        "distance": 3,
+        "windows": [
+          {
+            "event": "pickup.collected",
+            "tick": 14,
+            "samples": 18,
+            "maxMs": 50.100000000000364
+          },
+          {
+            "event": "combat.attack",
+            "tick": 30,
+            "samples": 20,
+            "maxMs": 66.60000000000036
+          }
+        ],
+        "pass": false
+      },
+      "seed": {
+        "file": "docs/reports/final-c/campaign/L7-low-carried-save.json.gz",
+        "sha256": "a4e9f1014f764c4eca7965496b05d35bdf1df562d3db7711bd4407a532fb684e"
+      },
+      "method": "Headless Metal WebGL2, sole quiet context. Authentic carried campaign; actual moving WASD auto-pickup without E, then physical Digit7/ShiftLMB first rocket. Unpaused production clock throughout measurement; no manual stepping, forced render, photos or weapon use before either event. Existing playtest frame probe records every RAF interval. Gate windows cover100ms before through250ms after each actual event; screenshots follow measurement. No actors, damage, timers or caps edited."
+    },
+    {
+      "tier": "high",
+      "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+      "gate": {
+        "distance": 3,
+        "windows": [
+          {
+            "event": "pickup.collected",
+            "tick": 14,
+            "samples": 15,
+            "maxMs": 133.20000000000073
+          },
+          {
+            "event": "combat.attack",
+            "tick": 27,
+            "samples": 19,
+            "maxMs": 66.59999999999854
+          }
+        ],
+        "pass": false
+      },
+      "seed": {
+        "file": "docs/reports/final-c/campaign/L7-high-carried-save.json.gz",
+        "sha256": "8c0a2e53e5dd6a0a9574f728b4e229d9d6694ddadc8261b02b79d56d564d7a0e"
+      },
+      "method": "Headless Metal WebGL2, sole quiet context. Authentic carried campaign; actual moving WASD auto-pickup without E, then physical Digit7/ShiftLMB first rocket. Unpaused production clock throughout measurement; no manual stepping, forced render, photos or weapon use before either event. Existing playtest frame probe records every RAF interval. Gate windows cover100ms before through250ms after each actual event; screenshots follow measurement. No actors, damage, timers or caps edited."
+    }
+  ],
+  "observation": "Both tiers exceed strict50ms in measured actual pickup/first-shot windows after successful exclusive quiet preflight, one context at a time. Unpaused production clock; moving pickup noE, later real Digit7/ShiftLMB first rocket; no manual steps, forced renders or photos before timing events. These are measured current failures, not stale receipt rejection.",
+  "admissionSha256": "70be7657afdfddcd2856c6ca64247fff2807f38e8201042671efb8cd13257569"
+}

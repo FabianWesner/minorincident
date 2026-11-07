@@ -1,57 +1,43 @@
 {
   "row": "L7-01",
-  "status": "PASS",
-  "reviewer": "Codex fix72-c",
-  "date": "2026-11-06",
-  "commit": "66f29ff356f3a3c3aada91a304408a9cff66b887",
+  "status": "FAIL",
+  "reviewer": "Codex final-c",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
   "clauses": [
     {
-      "clause": "Launcher \u2264 5 m from the exit, taken on approach, no hitch (max frame \u2264 50 ms at pickup and first shot).",
-      "verdict": "PASS",
-      "note": "Fresh unchanged quiet gate PASS after restoring carried quality before asset/pipeline warm-up. Low pickup49.9ms/first-shot16.8ms; high50.0/16.8ms, each\u226450ms without quantization tolerance. Exit distance3m, moving auto-pickup without E, first physical Digit7/ShiftLMB rocket, no driver/god/actor edits/manual stepping/forced rendering before measurement. Four current two-tier/two-zoom captures personally reviewed and raw JPEGs deleted. All22 timing/mechanical/provenance faults reject;50ms passes and50.01ms fails. Original and intermediate failures remain archived; no best-of repeat on unchanged source. Broad performance matrix not remeasured."
+      "clause": "Launcher ≤ 5 m from the exit, taken on approach, no hitch (max frame ≤ 50 ms at pickup and first shot).",
+      "verdict": "FAIL",
+      "note": "Fresh exclusive Metal WebGL2 frame gates FAIL at both tiers. Launcher distance3m and actual moving auto-pickup/noE pass. Low pickup50.1ms/firstrocket66.6ms; high pickup133.2ms/firstrocket66.6ms versus strict50ms. Quiet preflight load<3/no foreign busy process passed; one context, unpaused production clock, no prior manual step/forced render/photo."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix72-c/L7-01/low.json",
-      "sha256": "ed4450519d2e7b02d55b3982e912eac15f030924791e58a01aee2cf9c7eff505",
-      "what": "Low uninstrumented quiet physical pickup/first-shot raw intervals, both event maxima pass."
+      "file": "docs/reports/final-c/L7-01/quiet-admission.log",
+      "sha256": "70be7657afdfddcd2856c6ca64247fff2807f38e8201042671efb8cd13257569",
+      "what": "Fresh exclusive Metal WebGL2 frame gates FAIL at both tiers. Launcher distance3m and actual moving auto-pickup/noE pass. Low pickup50.1ms/firstrocket66.6ms; high pickup133.2ms/firstrocket66.6ms versus strict50ms. Quiet preflight load<3/no foreign busy process passed; one context, unpaused production clock, no prior manual step/forced render/photo."
     },
     {
-      "file": "docs/reports/fix72-c/L7-01/high.json",
-      "sha256": "8671220577b628066ea07f29ed21c6826a2f4c40e97389e1cc42a0d583a88401",
-      "what": "High uninstrumented quiet physical pickup/first-shot raw intervals, both event maxima pass."
+      "file": "docs/reports/final-c/L7-01/timing-review.json",
+      "sha256": "66564212afd33e9423c6e445e97f0170bb66f5daeee0b1e67f9b5e137819a581",
+      "what": "Fresh exclusive Metal WebGL2 frame gates FAIL at both tiers. Launcher distance3m and actual moving auto-pickup/noE pass. Low pickup50.1ms/firstrocket66.6ms; high pickup133.2ms/firstrocket66.6ms versus strict50ms. Quiet preflight load<3/no foreign busy process passed; one context, unpaused production clock, no prior manual step/forced render/photo."
     },
     {
-      "file": "docs/reports/fix72-c/L7-01/review.json",
-      "sha256": "eda2cecc1b42077e41a0bf8c49e1e01b4c34316f57a5dd1ba50febb046c3e5ad",
-      "what": "All4 current image SHA-256 and personal observations; raw captures deleted."
+      "file": "docs/reports/final-c/L7-01/high.json",
+      "sha256": "0ada0e11cea10c306d5b0e36500f0b439cd7793c880016db238d07d37662ba26",
+      "what": "Fresh exclusive Metal WebGL2 frame gates FAIL at both tiers. Launcher distance3m and actual moving auto-pickup/noE pass. Low pickup50.1ms/firstrocket66.6ms; high pickup133.2ms/firstrocket66.6ms versus strict50ms. Quiet preflight load<3/no foreign busy process passed; one context, unpaused production clock, no prior manual step/forced render/photo."
     },
     {
-      "file": "docs/reports/fix72-c/L7-01/quiet-conditions.jsonl",
-      "sha256": "f526790288bd8ff4d4fa0ddf44fe23801a5a545a25ef28f68abef3b26ae9c5be",
-      "what": "Exclusive shared-pool admission; host load<3 and no foreign build/browser/test processes."
+      "file": "docs/reports/final-c/L7-01/producer.ts",
+      "sha256": "ec79763d27e35bde9f7203b92c6b16dc0d79141930da115d32f020862bcad458",
+      "what": "Exact measurement producer snapshot; only output locations differ from the existing observer."
     },
     {
-      "file": "docs/reports/fix72-c/L7-01/fault-proof.json",
-      "sha256": "5b0478842f4db1d981f5f0fd84fe7e28c3a2743c53e5fe1160b9853b448112f8",
-      "what": "22 mechanical/timing/provenance faults rejected, unchanged strict50ms boundary."
-    },
-    {
-      "file": "docs/reports/fix72-c/L7-01/quality-order-cause.json",
-      "sha256": "c2f5c9c313ab73c717bec275547752e70b18f0e81c800e1ac24d0d0c628b1fb6",
-      "what": "Same material/geometry/context warmed with sun visible then rebuilt without it; carried quality applied too late. Rejected render experiments retained, final game change only restores quality before loading."
-    },
-    {
-      "file": "docs/reports/fix73-g/L7-opening.json",
-      "sha256": "8e36c8ec37ad1ea4b72686f1d25b1255e3faf6e52c7763b4b5ee8c73fc4273d8",
-      "what": "Mortal physical continue: pickup at tick 133 high and 85 low, 100 HP and 24 followers. This checks opening access only; no performance measurement or full compound-row requalification. Per-capture SHA256 and personal visual observations archived in this receipt."
-    },
-    {
-      "file": "docs/reports/fix73-g/L7-release-opening.json",
-      "sha256": "263dc36b35bc432abee748324b155f73028775b2827d5141aa18eba658705de0",
-      "what": "Final35d5042 mortal continue FAIL high: armedtick1125 at20HP with21living; low tick67at100HP/24followers. Eight-second opening grace does not resolve high pickup reliably. No performance qualification."
+      "file": "docs/reports/final-c/L7-01/low.json",
+      "sha256": "b1e71f04e15005912ace83e21bf349132d5681d75880e5677fdbb37a28b41034",
+      "what": "Fresh exclusive Metal WebGL2 frame gates FAIL at both tiers. Launcher distance3m and actual moving auto-pickup/noE pass. Low pickup50.1ms/firstrocket66.6ms; high pickup133.2ms/firstrocket66.6ms versus strict50ms. Quiet preflight load<3/no foreign busy process passed; one context, unpaused production clock, no prior manual step/forced render/photo."
     }
   ],
-  "notes": "Scoped fix73-g observation 2026-11-06, 11555ca: Mortal physical continue: pickup at tick 133 high and 85 low, 100 HP and 24 followers. This checks opening access only; no performance measurement or full compound-row requalification. Existing whole-row decision, clauses and source qualification retained. Final source35d5042 supersedes earlier scoped success claims: Final35d5042 mortal continue FAIL high: armedtick1125 at20HP with21living; low tick67at100HP/24followers. Eight-second opening grace does not resolve high pickup reliably. No performance qualification. Existing compound decision/clauses/source qualification remain unchanged."
+  "notes": "Frozen-head row review. Current immutable evidence, unchanged criterion and game source.",
+  "sourceDigest": "1aff45872f0c1603cfc94e9f01d515824d2304b5b5d9e5f96fee9cc461ad064a"
 }
