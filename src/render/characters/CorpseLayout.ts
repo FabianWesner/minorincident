@@ -35,6 +35,7 @@ function segmentDistanceSquared(ax: number, az: number, bx: number, bz: number, 
   return Math.min(pointDistanceSquared(ax, az, p.ax, p.az, p.bx, p.bz), pointDistanceSquared(bx, bz, p.ax, p.az, p.bx, p.bz), pointDistanceSquared(p.ax, p.az, ax, az, bx, bz), pointDistanceSquared(p.bx, p.bz, ax, az, bx, bz));
 }
 const yawDistance = (a: number, b: number) => Math.abs(Math.atan2(Math.sin(a - b), Math.cos(a - b)));
+const supportOffsets = [0, 0, 1, 0, -1, 0, 0, 1, 0, -1];
 interface SearchState {
   e: EntitySnapshot; player: EntitySnapshot['transform'] | undefined;
   nav: NonNullable<SimWorld['infected']>['nav'] | undefined; support: SimWorld['districts'];
@@ -112,10 +113,16 @@ function evaluateCandidate(state: SearchState, x: number, z: number, yaw: number
   // higher than the current winner. Dense heaps reject those before sweeping.
   if (state.bestY !== Infinity && y > feet + .05 && !(y < state.bestY - .001)) return;
   if (!reachableRoot(state)) return;
-  if (supported) for (let sample = 0; sample < 3; sample++) {
+  for (let sample = 0; sample < 3; sample++) {
     const t = sample * .5;
     const px = ax + (bx - ax) * t, pz = az + (bz - az) * t;
-    if (!nav?.clear(px, pz, radius) || support && Math.abs(support.supportBelow(px, pz, feet) - feet) > .3) return;
+    if (supported && !nav?.clear(px, pz, radius)) return;
+    // A flat corpse needs one supporting surface across its width, rather
+    // than merely a walkable root. The old 30 cm step allowance let torsos
+    // disappear into kerbs/planter edges while the raised legs remained visible.
+    if (support) for (let i = 0; i < supportOffsets.length; i += 2) {
+      if (Math.abs(support.supportBelow(px + radius * supportOffsets[i], pz + radius * supportOffsets[i + 1], feet) - state.rootFloor) > .05) return;
+    }
   }
   pose.x = x; pose.z = z; pose.yaw = yaw; pose.ax = ax; pose.az = az; pose.bx = bx; pose.bz = bz; pose.y = y;
   // Reuse search scratch; only the winning pose needs an owned record.

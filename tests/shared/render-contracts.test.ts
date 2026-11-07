@@ -49,6 +49,7 @@ import type { AssetRegistry } from '../../src/assets/registry';
 import { GroundContacts } from '../../src/render/characters/GroundContacts';
 import { resolveRig, disposeCharacter } from '../../src/render/characters/rig';
 import { heroineStandingHeight } from '../../src/render/npc/figureHeight';
+import { CorpseLayout } from '../../src/render/characters/CorpseLayout';
 
 function checkChangingSupport(): void {
   const model = createSurvivorPlaceholder('female'), rig = resolveRig(model);
@@ -354,6 +355,21 @@ test('skinned crowd: four-influence packing, joint·bind⁻¹ atlas rows, and co
 });
 
 test('corpse pages: bodies persist past the old cap, bounds stay conservative, culling restores identity/pose/tint, normals survive vec4 padding', () => {
+  // Raised kerbs, planters and steps must support the whole flat body. A root
+  // on one side of an edge must not leave the torso buried on the other side.
+  for (const stepHeight of [.13, .35, .6]) for (const doorway of [false, true]) {
+    const floor = (_x: number, z: number) => z > 0 ? stepHeight : 0;
+    const world = { scenario: 'L1', entities: { revision: 0, get: () => undefined, *iterate() {} },
+      districts: { districts: [], supportBelow: floor }, infected: { nav: { clear: () => !doorway, move: (p: { x: number; z: number }, dx: number, dz: number) => { p.x += dx; p.z += dz; } } } } as unknown as SimWorld;
+    const body = { id: 900, health: { current: 0 }, transform: { x: 0, y: .7 + stepHeight, z: .05, yaw: 0 }, combat: { radius: .35 } } as EntitySnapshot;
+    const pose = new CorpseLayout(world).place(body);
+    expect('ax' in pose).toBe(true);
+    if ('ax' in pose) {
+      const low = Math.min(pose.az, pose.bz) - pose.radius, high = Math.max(pose.az, pose.bz) + pose.radius;
+      expect(floor(0, low), `step ${stepHeight}: body straddles the edge`).toBe(floor(0, high));
+      expect(pose.y).toBe(floor(pose.x, pose.z));
+    }
+  }
   const baked = bakeInfected(createSkinnedCrowdFixture()); packCrowdParts(baked.geometry);
   const pool = new StaticCorpses(), material = new MeshLambertNodeMaterial(), records = new Map<number, EntitySnapshot>();
   try {
