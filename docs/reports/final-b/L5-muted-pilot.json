@@ -1,0 +1,279 @@
+{
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "revision": "273823774d69f04543d129f6bd3d37bcae307742",
+  "tier": "high",
+  "damageProtected": true,
+  "status": "INCOMPLETE pilot; no row verdict",
+  "method": "Assistant chooses physical WASD/E commands solely from screenshots and HUD text. No bots, player/actor coordinates, nav meshes, objective anchor queries, injected actors or progression skips. Fixed-tick stepping only advances simulation while physical keys are held. Every command has an explicit visible-cue decision note.",
+  "facts": "Shared pool4329, one owned headless Metal WebGL2 context, private Vite4393, physical keyboard/click input, muted default SceneSession audio, no actor coordinates/map/anchor queries used for decisions. Scene began through normal L5 cellar unbar; all16 screenshots personally reviewed. No survivor found in this bounded pilot; this does not prove impossibility of finding4/5. Captions are legible; repeated wall/crowd obstruction prevented a discovery. SceneSession debug-level load is not a qualified progressed campaign save; extra weapon/loadout parity is not asserted.",
+  "steps": [
+    {
+      "command": {
+        "note": "Fresh ordinary start, before route input."
+      },
+      "file": "test-results/final-b/l5-muted/captures/000.png",
+      "sha256": "e06f490ede11848ef9ed4f592345ac2b0ab0dc0124d813e409d1f1f7db8e5ee0",
+      "visible": {
+        "objective": "Unbar the cellar door \u00b7 4\u00a0m"
+      },
+      "observation": "Initial cellar objective and Hours later caption, heroine and corgi visible.",
+      "personallyReviewed": true
+    },
+    {
+      "command": {
+        "click": [
+          386,
+          324
+        ],
+        "ticks": 180,
+        "note": "The visible cellar-door interaction ring is left of the courier; click it to follow the current objective."
+      },
+      "file": "test-results/final-b/l5-muted/captures/001.png",
+      "sha256": "ae733b40c921449669e6070ee3969a98c42796e8a903d984d4ff6f16c26729e3",
+      "visible": {
+        "objective": "Unbar the cellar door \u00b7 4\u00a0m"
+      },
+      "observation": "Cellar ring left, no movement from first click.",
+      "personallyReviewed": true
+    },
+    {
+      "command": {
+        "keys": [
+          "a",
+          "s"
+        ],
+        "ticks": 60,
+        "note": "The door ring is directly screen-left; use a short diagonal movement toward it."
+      },
+      "file": "test-results/final-b/l5-muted/captures/002.png",
+      "sha256": "b71829e1b16601b45a8531f9cdf660567469168085f9df153a5fbe3e5fbb1c9e",
+      "visible": {
+        "objective": "Hold still or press E \u00b7 Unbar the cellar door \u00b7 32%"
+      },
+      "observation": "Door interaction at32%; heroine inside visible interaction ring.",
+      "personallyReviewed": true
+    },
+    {
+      "command": {
+        "ticks": 180,
+        "note": "The visible objective says hold still to unbar and is already at32%; wait without movement."
+      },
+      "file": "test-results/final-b/l5-muted/captures/003.png",
+      "sha256": "cde7e3c2f2639a94fb8bc7ca47ec7a828cf03649c72b088a5028abf2cd1d777b",
+      "visible": {
+        "objective": ""
+      },
+      "observation": "Outside cellar on street, no search objective yet.",
+      "personallyReviewed": true
+    },
+    {
+      "command": {
+        "keys": [
+          "a"
+        ],
+        "ticks": 300,
+        "zoom": 0.5,
+        "note": "Outside the cellar, explore the visible street toward the upper-left and widen the camera to watch for survivor captions."
+      },
+      "file": "test-results/final-b/l5-muted/captures/004.png",
+      "sha256": "337101b8a8cc20555af4205136599912edeb68c94da8edd57d45db4f79d78d95",
+      "visible": {
+        "objective": ""
+      },
+      "observation": "Close view beside fence with two infected.",
+      "personallyReviewed": true
+    },
+    {
+      "command": {
+        "keys": [
+          "s"
+        ],
+        "ticks": 300,
+        "zoom": 1.5,
+        "note": "The previous direction reached a wall. Turn toward the visible open road at lower-left; zoom1.5 provides the wider search view."
+      },
+      "file": "test-results/final-b/l5-muted/captures/005.png",
+      "sha256": "c71bab902f3cf7d29fc69180ce777783c7d082d009507a994ff75f84ac381051",
+      "visible": {
+        "objective": "Look for anyone still alive"
+      },
+      "observation": "Search active0/5, heroine in cutaway building and pursued.",
+      "personallyReviewed": true
+    },
+    {
+      "command": {
+        "keys": [
+          "d",
+          "w"
+        ],
+        "ticks": 300,
+        "note": "The search objective is active with0/5 found. Move screen-right toward the visible street crossing, away from the cutaway building."
+      },
+      "file": "test-results/final-b/l5-muted/captures/006.png",
+      "sha256": "636f056e6b26ecab35b88fef7f2a0ded4ba974db63c814aa78fe0a6a8c30fc27",
+      "visible": {
+        "objective": "Look for anyone still alive"
+      },
+      "observation": "Fairhaven Bakery and Harbor Books visible,0/5, nearby attackers.",
+      "personallyReviewed": true
+    },
+    {
+      "command": {
+        "keys": [
+          "d"
+        ],
+        "ticks": 300,
+        "note": "Explore the open sidewalk past Harbor Books toward the lower-right, watching the muted caption channel for a survivor."
+      },
+      "file": "test-results/final-b/l5-muted/captures/007.png",
+      "sha256": "53137b458d20b684d1eeea858b8047ca61626050e3f78fa4ca1a6e3fa7072195",
+      "visible": {
+        "objective": "Look for anyone still alive"
+      },
+      "observation": "Same bakery frontage, movement obstructed by group.",
+      "personallyReviewed": true
+    },
+    {
+      "command": {
+        "click": [
+          626,
+          357
+        ],
+        "keys": [
+          "Space"
+        ],
+        "ticks": 180,
+        "note": "The courier has not advanced and is surrounded by visible infected. Aim at the nearby attacker and fire to clear a way onto the road."
+      },
+      "file": "test-results/final-b/l5-muted/captures/008.png",
+      "sha256": "0223676a55c86bce98a661d8e75e1047ae89d8616d610a044b04723de46aa38a",
+      "visible": {
+        "objective": "Look for anyone still alive"
+      },
+      "observation": "One body on street after physical attack, other attackers remain.",
+      "personallyReviewed": true
+    },
+    {
+      "command": {
+        "keys": [
+          "s",
+          "Space"
+        ],
+        "ticks": 300,
+        "note": "One infected is down on the road. Keep firing while moving toward the open lower-left roadway to escape the remaining close attackers."
+      },
+      "file": "test-results/final-b/l5-muted/captures/009.png",
+      "sha256": "657427235333df05fcca90c8fb9da9a1775778b5ca13a829d6f01b788e73c927",
+      "visible": {
+        "objective": "Look for anyone still alive"
+      },
+      "observation": "Open road at left with cutaway building at right,0/5.",
+      "personallyReviewed": true
+    },
+    {
+      "command": {
+        "keys": [
+          "a",
+          "s"
+        ],
+        "ticks": 300,
+        "note": "The building fills the right side while the open road is to the left. Cross onto that visible road to continue the caption-only search."
+      },
+      "file": "test-results/final-b/l5-muted/captures/010.png",
+      "sha256": "fd33db6dda67e243fd42d7169460a98376dad270c45a3124a2e9e9db57513437",
+      "visible": {
+        "objective": "Look for anyone still alive"
+      },
+      "observation": "Readable praying-from-church caption at bottom-right; note icon on minimap; no survivor destination ring seen.",
+      "personallyReviewed": true
+    },
+    {
+      "command": {
+        "keys": [
+          "d"
+        ],
+        "ticks": 180,
+        "note": "A visible caption reads 'A voice, softly praying, from the church' at the lower-right. Move toward that captioned location."
+      },
+      "file": "test-results/final-b/l5-muted/captures/011.png",
+      "sha256": "1f4c3c040b85127739d7b0d119ece4cfab7854ce21e148a5177eaafb197fd45e",
+      "visible": {
+        "objective": "Look for anyone still alive"
+      },
+      "observation": "Building corner and close attackers, caption absent in this frame.",
+      "personallyReviewed": true
+    },
+    {
+      "command": {
+        "keys": [
+          "s",
+          "Space"
+        ],
+        "ticks": 300,
+        "note": "The direct approach is blocked by the building corner and attackers. Follow the visible sidewalk around the lower-left corner while firing at the nearby infected."
+      },
+      "file": "test-results/final-b/l5-muted/captures/012.png",
+      "sha256": "48e32530e3dc79b2782fb5fb64cf16582fe836dfdb49fc003e366460d945c1f7",
+      "visible": {
+        "objective": "Look for anyone still alive"
+      },
+      "observation": "Readable praying-from-church caption with right direction tick; church arch visible,0/5.",
+      "personallyReviewed": true
+    },
+    {
+      "command": {
+        "keys": [
+          "d",
+          "w",
+          "Space"
+        ],
+        "ticks": 180,
+        "note": "The praying caption now points right beside a visible church arch. Move along the outside wall toward that arch while keeping the close attackers back."
+      },
+      "file": "test-results/final-b/l5-muted/captures/013.png",
+      "sha256": "5542cb8f4c0eb0f19d4f493b5534b43b944e87d84b081857f2ee1261fe21b8b6",
+      "visible": {
+        "objective": "Look for anyone still alive"
+      },
+      "observation": "Returned to building corner, surrounded,0/5.",
+      "personallyReviewed": true
+    },
+    {
+      "command": {
+        "keys": [
+          "s",
+          "Space"
+        ],
+        "ticks": 600,
+        "note": "Return along the sidewalk that exposed the praying caption and continue past the church frontage, using the visible street rather than the blocked corner."
+      },
+      "file": "test-results/final-b/l5-muted/captures/014.png",
+      "sha256": "b009431712ed3a99e51dd5e90561a6e32f1a2b928cca4f56967a6d7ce7199a3c",
+      "visible": {
+        "objective": "Look for anyone still alive"
+      },
+      "observation": "Church frontage/praying caption visible, attackers pin courier,0/5.",
+      "personallyReviewed": true
+    },
+    {
+      "command": {
+        "click": [
+          610,
+          287
+        ],
+        "keys": [
+          "Space"
+        ],
+        "ticks": 600,
+        "note": "The courier remains pinned at the wall by a dense visible group. Aim into the group immediately above-left and fire continuously before trying the church approach again."
+      },
+      "file": "test-results/final-b/l5-muted/captures/015.png",
+      "sha256": "dc2ea60ef012fface6595a7a7538b0199370213427d63a55426b352e93e89ffd",
+      "visible": {
+        "objective": "Look for anyone still alive"
+      },
+      "observation": "Church frontage still blocked by attackers after physical firing,0/5.",
+      "personallyReviewed": true
+    }
+  ]
+}

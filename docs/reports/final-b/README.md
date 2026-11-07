@@ -18,7 +18,7 @@ This report is in progress. Each OPEN row still needs current evidence for at le
 | L4-10 | OPEN | Current whole-row measurement pending; historical observations are not a frozen-head verdict. | [review](../../qa/reviews/L4-10.json) · [native report](../fix51-verify/L4.json) | — |
 | L4-11 | OPEN | Current whole-row measurement pending; historical observations are not a frozen-head verdict. | [review](../../qa/reviews/L4-11.json) · [native report](../fix51-verify/L4.json) | — |
 | L4-12 | OPEN | Current whole-row measurement pending; historical observations are not a frozen-head verdict. | [review](../../qa/reviews/L4-12.json) · [native report](../fix51-verify/L4.json) | — |
-| L4-13 | OPEN | Current whole-row measurement pending; historical observations are not a frozen-head verdict. | [review](../../qa/reviews/L4-13.json) · [native report](../fix51-verify/L4.json) | — |
+| L4-13 | FAIL | Low ticks36109–36649:0 admissions; high17245–17785:1 admission in9s, below3. No death/respawn/checkpoint in either interval. Repro: native complete collapse census. | [review](../../qa/reviews/L4-13.json) · [native report](../fix51-verify/L4.json) | — |
 | L4-14 | OPEN | Current whole-row measurement pending; historical observations are not a frozen-head verdict. | [review](../../qa/reviews/L4-14.json) · [native report](../fix51-verify/L4.json) | — |
 | L4-15 | OPEN | Current whole-row measurement pending; historical observations are not a frozen-head verdict. | [review](../../qa/reviews/L4-15.json) · [native report](../fix51-verify/L4.json) | — |
 | L4-16 | OPEN | Current whole-row measurement pending; historical observations are not a frozen-head verdict. | [review](../../qa/reviews/L4-16.json) · [native report](../fix51-verify/L4.json) | — |
@@ -30,7 +30,7 @@ This report is in progress. Each OPEN row still needs current evidence for at le
 | L5-04 | PASS | 2 initial Alphas in every native cell; both have proven accessible paths. | [review](../../qa/reviews/L5-04.json) · [native report](../fix51-verify/L5.json) | — |
 | L5-05 | PASS | Both-tier reachability/encounter/pressure checks pass; low competent 4.377 player windups/min. | [review](../../qa/reviews/L5-05.json) · [native report](../fix51-verify/L5.json) | PO: does rescue still feel too easy? Numeric pressure is measured; taste is pending. |
 | L5-06 | OPEN | Current whole-row measurement pending; historical observations are not a frozen-head verdict. | [native report](../fix51-verify/L5.json) | — |
-| L5-07 | OPEN | Current whole-row measurement pending; historical observations are not a frozen-head verdict. | [native report](../fix51-verify/L5.json) | — |
+| L5-07 | OPEN | [Muted screen-only pilot](L5-muted-pilot.json):16 reviewed frames; praying-from-church caption readable;0/5 found before wall/crowd obstruction. Pilot is not a campaign-qualified discovery result. | [native report](../fix51-verify/L5.json) | — |
 | L5-08 | FAIL | Low straight-walk in-band shares 92.12%/89.22%/85.26%, below 95%. Repro: run native complete L5 and inspect calm straight-walk formation ledger. | [review](../../qa/reviews/L5-08.json) · [native report](../fix51-verify/L5.json) | — |
 | L5-09 | OPEN | Current whole-row measurement pending; historical observations are not a frozen-head verdict. | [native report](../fix51-verify/L5.json) | — |
 | L5-10 | OPEN | Current whole-row measurement pending; historical observations are not a frozen-head verdict. | [native report](../fix51-verify/L5.json) | — |
