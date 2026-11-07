@@ -1,0 +1,32 @@
+{
+  "row": "L6-13",
+  "status": "PASS",
+  "reviewer": "Codex/final-b",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "clauses": [
+    {
+      "clause": "Fists-only run finishable (no soft-lock).",
+      "verdict": "PASS",
+      "note": "Both tiers finish the ordinary L6 mission result in236.6167s with3 mortal deaths/retries. Only fists/kick are offered; all actual attack events use fists. Zero kills and6 knockdowns; production checkpoints handle retries. Driver changes only local evasion policy at exit, where the original900s/44-death diagnostic repeatedly diverted from the final route. No actor/HP/clock/objective changes. This proves finishability, not the separate competent death/rescue targets."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/final-b/L6-13-proof.json",
+      "sha256": "a1ff882a173730f074c69582bd1680ef3739a235248a2b67683afbeb8d629815",
+      "what": "Both tiers finish the ordinary L6 mission result in236.6167s with3 mortal deaths/retries. Only fists/kick are offered; all actual attack events use fists. Zero kills and6 knockdowns; production checkpoints handle retries. Driver changes only local evasion policy at exit, where the original900s/44-death diagnostic repeatedly diverted from the final route. No actor/HP/clock/objective changes. This proves finishability, not the separate competent death/rescue targets."
+    },
+    {
+      "file": "docs/reports/final-b/L6-13-ledger.json.gz",
+      "sha256": "6af36df4452d07a1e1a291bd4cb0ce9df5502467b75ce6ae25e39fc4acd027be",
+      "what": "Both tiers finish the ordinary L6 mission result in236.6167s with3 mortal deaths/retries. Only fists/kick are offered; all actual attack events use fists. Zero kills and6 knockdowns; production checkpoints handle retries. Driver changes only local evasion policy at exit, where the original900s/44-death diagnostic repeatedly diverted from the final route. No actor/HP/clock/objective changes. This proves finishability, not the separate competent death/rescue targets."
+    },
+    {
+      "file": "docs/reports/final-b/L6-13-driver.ts.gz",
+      "sha256": "cf8526f438682618ac99519fe86060c74e2912eaf501340a831b4b94c597c579",
+      "what": "Both tiers finish the ordinary L6 mission result in236.6167s with3 mortal deaths/retries. Only fists/kick are offered; all actual attack events use fists. Zero kills and6 knockdowns; production checkpoints handle retries. Driver changes only local evasion policy at exit, where the original900s/44-death diagnostic repeatedly diverted from the final route. No actor/HP/clock/objective changes. This proves finishability, not the separate competent death/rescue targets."
+    }
+  ],
+  "sourceDigest": "7fd8f0ebc3d3fcb362d200567b5da5e2e4f5bea018074dcf4fbbfccc06fdf698"
+}
