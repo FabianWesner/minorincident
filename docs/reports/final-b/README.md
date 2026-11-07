@@ -50,7 +50,7 @@ This report is in progress. Each OPEN row still needs current evidence for at le
 | L6-10 | PASS | Every active retreat/exit marker tick matches fixed gate/platform; all 3 gates ×4 courier poses pass. | [review](../../qa/reviews/L6-10.json) · [native report](../fix51-verify/L6.json) | — |
 | L6-11 | PASS | Both tiers: complete20/29=68.97%; evade1/29=3.45%. Complete hashes match current controls; all rosters balance. | [review](../../qa/reviews/L6-11.json) · [native report](../fix51-verify/L6.json) | — |
 | L6-12 | OPEN | Current whole-row measurement pending; historical observations are not a frozen-head verdict. | [review](../../qa/reviews/L6-12.json) · [native report](../fix51-verify/L6.json) | — |
-| L6-13 | OPEN | Current whole-row measurement pending; historical observations are not a frozen-head verdict. | [native report](../fix51-verify/L6.json) | — |
+| L6-13 | PASS | Both mortal fists-only routes complete in236.6167s,3 retries each; only fists/kick offered and fists used. [Proof](L6-13-proof.json). | [native report](../fix51-verify/L6.json) | — |
 | L6-14 | OPEN | Current whole-row measurement pending; historical observations are not a frozen-head verdict. | [review](../../qa/reviews/L6-14.json) · [native report](../fix51-verify/L6.json) | — |
 
 The required native acceptance commands ran for L4, L5, and L6 with `--tier both --skip-browser`. Further native and physical-input row probes are underway. Table figures summarize the underlying reviews; complete values and SHA-256 evidence links are in each current review. No push, merge or deployment.
