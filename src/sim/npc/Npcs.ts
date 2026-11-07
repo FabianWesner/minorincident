@@ -80,7 +80,13 @@ export class Npcs {
       const routeRadius = e.companion && !routeFollower && nav.clear(target.x, target.z, wide, true) ? wide : footprint;
       if (!nav.steer(e.transform, target, path, routeRadius, this.waypoint, budget) &&
           (routeRadius === footprint || !nav.steer(e.transform, target, path, footprint, this.waypoint, budget))) {
-        this.unreachable.set(e.id, { x: target.x, z: target.z, until: tick + 60 }); return false;
+        // G-27 (blk-l3): an L3 corgi squeezed into a fence gate beside the Oak wreck stands on a grid cell that is
+        // cut off from the street (the wreck's baked box closes the lane the courier and dog physically fit through).
+        // Every route search from that pocket fails, so it stood there for the rest of the level and the army boom waited
+        // for it forever. Body-swept movement toward the courier's own trail slides it back out; the grid takes over again.
+        const trail = e.companion && this.world.missions?.def.l3 ? this.companion.trailPoint(e) : null;
+        if (!trail) { this.unreachable.set(e.id, { x: target.x, z: target.z, until: tick + 60 }); return false; }
+        this.waypoint.x = trail.x; this.waypoint.z = trail.z;
       }
       if (failed) this.unreachable.delete(e.id);
     }

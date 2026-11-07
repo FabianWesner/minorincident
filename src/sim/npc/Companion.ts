@@ -117,8 +117,23 @@ export class Companion {
     w.npcs!.move(e, best, 3, e.companion!, .1);
     return true;
   }
+  /** G-27: where the courier actually walked (0.5 m spacing, last ~400 m). Only read when grid routing fails. */
+  private readonly trail: { x: number; z: number }[] = [];
+  private recordTrail(p: { x: number; z: number }): void {
+    const last = this.trail[this.trail.length - 1];
+    if (last && Math.hypot(p.x - last.x, p.z - last.z) > 6) this.trail.length = 0; // respawn, restore or a ride: a new trail
+    else if (last && Math.hypot(p.x - last.x, p.z - last.z) < .5) return;
+    this.trail.push({ x: p.x, z: p.z }); if (this.trail.length > 800) this.trail.shift();
+  }
+  /** The courier's own trail ~2 m past the point nearest the dog (she fit through there), or null when the dog is off it. */
+  trailPoint(e: EntitySnapshot): { x: number; z: number } | null {
+    let best = -1, distance = 3;
+    for (let i = 0; i < this.trail.length; i++) { const d = Math.hypot(this.trail[i].x - e.transform.x, this.trail[i].z - e.transform.z); if (d < distance) { best = i; distance = d; } }
+    return best < 0 ? null : this.trail[Math.min(this.trail.length - 1, best + 4)];
+  }
   update(): void {
     const player = this.world.entities.get(1)!, ai = this.world.infected!, progress = this.courierProgress;
+    if (this.world.missions?.def.l3 && player.health.current > 0 && !player.hidden) this.recordTrail(player.transform);
     const speed = Math.hypot(player.survivor?.velocity.x ?? 0, player.survivor?.velocity.z ?? 0);
     if (this.world.tick < progress.tick) this.yieldUntil = 0;
     if (speed <= .5 || this.world.tick < progress.tick || !Number.isFinite(progress.x) || Math.hypot(player.transform.x - progress.x, player.transform.z - progress.z) > .05) {
