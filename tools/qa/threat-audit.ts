@@ -13,10 +13,10 @@ import { stateHash } from '../../src/sim/world/stateHash';
 import { L4HoldCensus } from './threat/l4-hold';
 import { focusedCriteria } from './threat/criteria';
 import { armyLineVerdict, type ArmyLineVerdict } from './threat/l3ArmyLine';
-import { l3ArmySeeds } from './threat/l3ArmySeeds';
+import { l3SharedSeeds } from './threat/l3SharedSeeds';
 import { followerPaceVerdict, type FollowerPaceSeed, type FollowerPaceVerdict } from './threat/followerPace';
 import { extraFollowerPaceSeeds } from './threat/followerPaceSeeds';
-import { l3SurvivalSeeds, type L3SurvivalSeed } from './threat/l3SurvivalSeeds';
+import type { L3SurvivalSeed } from './threat/l3SurvivalSeeds';
 
 export interface LevelReceipt {
   level: RunnerLevel; quality: string; definitions: ThreatObserver['definitions']; run: LevelReport | null;
@@ -42,7 +42,7 @@ const { values } = parseArgs({ options: {
   'passive-from': { type: 'string' },
 } });
 const maxWorkers = Number(values.maxWorkers);
-if (!Number.isInteger(maxWorkers) || maxWorkers < 1 || maxWorkers > 2) throw new Error('--maxWorkers must be 1 or 2');
+if (!Number.isInteger(maxWorkers) || maxWorkers < 1 || maxWorkers > 4) throw new Error('--maxWorkers must be 1–4');
 if (values.proof) { await proveThreatAudit(); process.exit(0); }
 if (values['passive-from']) { await provePassiveFrom(values['passive-from'], values.out!, values.report); process.exit(0); }
 const selected = values.levels ? values.levels.split(',') as RunnerLevel[] : [...runnerLevels];
@@ -57,9 +57,8 @@ const sourceMatchesMain = process.env.QA_THREAT_SOURCE_MATCHES_MAIN !== undefine
   : mainRevision === 'not-supplied' ? null : git('diff', mainRevision, '--', 'src', 'public') === '' && git('ls-files', '--others', '--exclude-standard', '--', 'src', 'public') === '';
 const started = performance.now(), levels: LevelReceipt[] = [];
 await mkdir(values.out!, { recursive: true });
-// Each leaf uses one simulation process, including serial extra follower seeds.
-// Waiting for exit keeps the whole audit within the existing two-worker cap.
-const parallelLevels = maxWorkers === 2 && selected.length > 1;
+// Isolated leaves let L5 use a second seed worker while keeping total simulation concurrency at four.
+const parallelLevels = maxWorkers > 1 && selected.length > 1;
 if (parallelLevels) {
   // Start the measured long routes first so L5's extra follower seeds do not
   // become a late tail after the other worker has exhausted its queue.
@@ -70,8 +69,9 @@ if (parallelLevels) {
     for (let level = pending.shift(); level; level = pending.shift()) {
       const out = join(values.out!, level);
       await rm(join(out, 'audit.json'), { force: true });
+      const seedWorkers = level === 'L5' && maxWorkers < 4 ? 2 : 1;
       const code = await new Promise<number | null>((resolve, reject) => {
-        const child = fork(fileURLToPath(import.meta.url), ['--levels', level, '--maxWorkers', '1', '--out', out], {
+        const child = fork(fileURLToPath(import.meta.url), ['--levels', level, '--maxWorkers', String(seedWorkers), '--out', out], {
           execArgv: ['--import', 'tsx/esm'], stdio: 'inherit',
           env: { ...process.env, QA_THREAT_REVISION: revision, QA_THREAT_MAIN_REVISION: mainRevision,
             ...(sourceMatchesMain === null ? {} : { QA_THREAT_SOURCE_MATCHES_MAIN: String(sourceMatchesMain) }) },
@@ -83,7 +83,7 @@ if (parallelLevels) {
       const partial = 'PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate';
       const row = audit.levels[0];
       if (audit.revision !== revision || audit.mainRevision !== mainRevision || audit.sourceMatchesMain !== sourceMatchesMain
-        || audit.seed !== 1 || audit.tier !== 'low' || audit.policy !== 'complete + passive' || audit.workers !== 1
+        || audit.seed !== 1 || audit.tier !== 'low' || audit.policy !== 'complete + passive' || audit.workers !== seedWorkers
         || audit.levels.length !== 1 || row?.level !== level
         || audit.flags.filter(flag => flag === partial).length !== 1
         || JSON.stringify(audit.flags.filter(flag => flag !== partial)) !== JSON.stringify(row.passiveFlags.map(flag => `${level}/${flag}`))
@@ -92,8 +92,8 @@ if (parallelLevels) {
       await writeFile(join(values.out!, `${level}.json`), JSON.stringify(row, null, 2) + '\n');
     }
   };
-  // allSettled waits for both owned workers even if a leaf fails unexpectedly.
-  const results = await Promise.allSettled([worker(), worker()]);
+  // allSettled waits for every owned worker even if a leaf fails unexpectedly.
+  const results = await Promise.allSettled(Array.from({ length: Math.min(maxWorkers, selected.length) }, worker));
   for (const result of results) if (result.status === 'rejected') throw result.reason;
   for (const level of selected) {
     const row = completed.get(level);
@@ -105,20 +105,29 @@ for (const level of parallelLevels ? [] : selected) {
   console.log(`[qa:threat] ${level}: skilled and passive native routes, seed=1, low population`);
   const multiSeedPace = level === 'L5' || level === 'L7';
   const start = performance.now(), holder: { audit?: ThreatObserver; observation?: ReturnType<ThreatObserver['finish']>; hash?: string } = {};
+  let sharedDefinitions: ThreatObserver['definitions'] = [], sharedQuality: string | undefined;
   const campaign = level === 'L1' ? newCampaign('female', 1) : preset(`${level}-default` as ProgressionPreset);
   campaign.seed = 1; campaign.settings.quality = 'low';
   let run: LevelReport | null = null;
+  let sharedL3: Awaited<ReturnType<typeof l3SharedSeeds>> = [];
   const flags: string[] = [];
   try {
-    run = await runLevel(level, 'complete', 1, undefined, 'auto', campaign, undefined, 0, {
-      quality: 'low', beforeBegin: world => { holder.audit = new ThreatObserver(world, level); },
-      beforeDispose: world => { holder.observation = holder.audit?.finish(); holder.hash = stateHash(world.getState()); },
-    });
+    if (level === 'L3') {
+      sharedL3 = await l3SharedSeeds('low', campaign);
+      const seedOne = sharedL3[0];
+      run = seedOne?.run ?? null; holder.observation = seedOne?.observation; holder.hash = seedOne?.nativeStateHash;
+      sharedDefinitions = seedOne?.definitions ?? []; sharedQuality = seedOne?.quality;
+    } else {
+      run = await runLevel(level, 'complete', 1, undefined, 'auto', campaign, undefined, 0, {
+        quality: 'low', beforeBegin: world => { holder.audit = new ThreatObserver(world, level); },
+        beforeDispose: world => { holder.observation = holder.audit?.finish(); holder.hash = stateHash(world.getState()); },
+      });
+    }
   } catch (error) { flags.push(`AUDIT_ERROR:${String(error)}`); }
-  const observation = holder.observation ?? null, definitions = holder.audit?.definitions ?? [];
+  const observation = holder.observation ?? null, definitions = holder.audit?.definitions ?? sharedDefinitions;
   if (!run?.completed) flags.push(`INCOMPLETE_NATIVE_POLICY:${run?.outcome ?? 'error'}`);
   if (!observation?.phases.length) flags.push('MISSING_PHASE_OBSERVATIONS');
-  if (holder.audit?.quality !== 'low') flags.push(`WRONG_POPULATION_TIER:${holder.audit?.quality ?? 'missing'}`);
+  if ((holder.audit?.quality ?? sharedQuality) !== 'low') flags.push(`WRONG_POPULATION_TIER:${holder.audit?.quality ?? sharedQuality ?? 'missing'}`);
   for (const id of Object.keys(threatSteps[level])) {
     if (!definitions.some(step => step.id === id)) flags.push(`THREAT_INVENTORY_DRIFT:${id}`);
     if (!observation?.phases.some(row => row.key === `step/${id}`)) flags.push(`UNOBSERVED_THREAT_STEP:${id}`);
@@ -173,7 +182,7 @@ for (const level of parallelLevels ? [] : selected) {
   for (const wave of passiveObservation?.waves ?? []) passiveFlags.push(...wave.flags.map(flag => `wave/${wave.key}:${flag}`));
   if (!multiSeedPace) passiveFlags.push(...followerCoverageFlags(level, observation?.phases ?? []));
   if (followerPaceChecks[level]) passiveFlags.push(...followerWaitFlags(observation?.followerWait));
-  const receipt: LevelReceipt = { level, quality: holder.audit?.quality ?? 'missing', definitions, run, observation, flags, passiveRun, passiveObservation, passiveFlags, wallSeconds: (performance.now() - start) / 1000, nativeStateHash: holder.hash ?? null };
+  const receipt: LevelReceipt = { level, quality: holder.audit?.quality ?? sharedQuality ?? 'missing', definitions, run, observation, flags, passiveRun, passiveObservation, passiveFlags, wallSeconds: (performance.now() - start) / 1000, nativeStateHash: holder.hash ?? null };
   if (level === 'L4') {
     console.log('[qa:threat] L4: high-tier native hold census through the line break');
     let census: L4HoldCensus | undefined;
@@ -182,10 +191,8 @@ for (const level of parallelLevels ? [] : selected) {
     console.log(`[qa:threat] L4 high hold: ${JSON.stringify(receipt.highHold)}`);
   }
   if (level === 'L3') {
-    const army = observation?.l3Squad?.army ?? null;
-    const checkpoint = observation?.phases.find(phase => phase.key === 'step/checkpoint');
-    receipt.l3Army = armyLineVerdict([{ seed: 1, valid: !!run?.completed && army !== null, army, attacksPerMinute: checkpoint?.attacksPerMinute ?? null }, ...await l3ArmySeeds('low')]);
-    receipt.l3SurvivalSeeds = await l3SurvivalSeeds('low');
+    receipt.l3Army = armyLineVerdict(sharedL3.map(row => row.army));
+    receipt.l3SurvivalSeeds = sharedL3.map(row => row.survival);
     console.log(`[qa:threat] L3 army line over seeds 1–3: ${JSON.stringify(receipt.l3Army)}`);
   }
   if (multiSeedPace) {
