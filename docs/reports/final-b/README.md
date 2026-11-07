@@ -2,7 +2,7 @@
 
 Frozen source: `4e570db8499bd1d76dcc17f9d13d1949d5cf2096`. Game source remains unchanged. The native receipts were generated on that source at both tiers. Historical reviews have their original provenance; an older review is not refreshed merely by inserting the current source digest.
 
-This report is in progress (39/46 rows have current measured reviews). Table verdicts refer to the explicit reviews; the tracker separately retains any missing machine coverage, including rows with no implemented full-row machine binding. A FRESH review is not a claim that automatedComplete is true.
+This report is in progress (41/46 rows have current measured reviews). Table verdicts refer to the explicit reviews; the tracker separately retains any missing machine coverage, including rows with no implemented full-row machine binding. A FRESH review is not a claim that automatedComplete is true.
 
  Each OPEN row still needs current evidence for at least one objective clause. It has no final verdict yet. The former blanket digest refresh and superseded historical failures have been removed.
 
@@ -35,11 +35,11 @@ This report is in progress (39/46 rows have current measured reviews). Table ver
 | L5-07 | OPEN | Current campaign-qualified muted screen-only trial foundMia1/5, followed pharmacy caption; continued actual save preserved. Incomplete trial is not a FAIL. | [trial review](supplemental-capture-review.json) | Caption cue interpretation pending. |
 | L5-08 | FAIL | Low straight-walk in-band shares 92.12%/89.22%/85.26%, below 95%. Repro: run native complete L5 and inspect calm straight-walk formation ledger. | [review](../../qa/reviews/L5-08.json) · [native report](../fix51-verify/L5.json) | — |
 | L5-09 | OPEN | Current whole-row measurement pending; historical observations are not a frozen-head verdict. | [native report](../fix51-verify/L5.json) | — |
-| L5-10 | OPEN | Current whole-row measurement pending; historical observations are not a frozen-head verdict. | [native report](../fix51-verify/L5.json) | — |
+| L5-10 | PASS | 4 production gun types held idle/walking;8 street weapons stay put20s. Exact mortal routes:9 initial weapon births,0 later;0 street-weapon fetches. | [review](../../qa/reviews/L5-10.json) · [proof](L5-10-proof.json) | — |
 | L5-11 | OPEN | Current whole-row measurement pending; historical observations are not a frozen-head verdict. | [review](../../qa/reviews/L5-11.json) · [native report](../fix51-verify/L5.json) | — |
-| L5-12 | PASS | 24 inside;20/21 heads in viewport at peak. All5 followers+corgi inside at shutter185/230; pair separation≥.7459/.7476m. | [review](../../qa/reviews/L5-12.json) · [proof](L5-12-proof.json) | PO: natural ending composition on exact14-frame sheet in proof. |
+| L5-12 | P | 24 inside;20/21 heads in viewport at peak. All5 followers+corgi inside at shutter185/230; pair separation≥.7459/.7476m. | [review](../../qa/reviews/L5-12.json) · [proof](L5-12-proof.json) | PO: natural ending composition on exact14-frame sheet in proof. |
 | L5-13 | PASS | Zero-survivor controlled routes complete at both tiers and report rescued=0. | [review](../../qa/reviews/L5-13.json) · [native report](../fix51-verify/L5.json) | — |
-| L5-14 | OPEN | Current whole-row measurement pending; historical observations are not a frozen-head verdict. | [review](../../qa/reviews/L5-14.json) · [native report](../fix51-verify/L5.json) | — |
+| L5-14 | P | 4 exact camera pairs×2 tiers; matching positions/targets. Actual sun multiplier0.5 at metro/end,50% fall. | [review](../../qa/reviews/L5-14.json) · [proof](L5-14-proof.json) | PO: do the16 exact matched frames read as same place, fallen? |
 | L6-01 | PASS | Actual carried29 IDs, fullHP;11 posture samples/5s. Stored seated rifle stowed in actual renderer; empty hands. | [review](../../qa/reviews/L6-01.json) · [proof](L6-01-proof.json) | — |
 | L6-02 | PASS | Approach pickup139; unchanged uncollected after120ticks. Beam/movement dot−.9713/−.9957 under actual opposed pointer input;0 new weapons. | [review](../../qa/reviews/L6-02.json) · [proof](L6-02-proof.json) | — |
 | L6-03 | PASS | Breach 1 at 33.2 s; 8 admitted bodies reach shelter floor; bang timing passes both tiers. | [review](../../qa/reviews/L6-03.json) · [native report](../fix51-verify/L6.json) | — |

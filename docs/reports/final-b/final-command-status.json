@@ -1,0 +1,34 @@
+[
+  {
+    "command": [
+      "npm",
+      "run",
+      "qa:accept",
+      "--",
+      "--level",
+      "L4",
+      "--tier",
+      "both",
+      "--skip-browser"
+    ],
+    "exitCode": 1,
+    "seconds": 428.6886157989502,
+    "log": "test-results/final-b/final-accept-L4.log"
+  },
+  {
+    "command": [
+      "npm",
+      "run",
+      "qa:accept",
+      "--",
+      "--level",
+      "L5",
+      "--tier",
+      "both",
+      "--skip-browser"
+    ],
+    "exitCode": 1,
+    "seconds": 342.8457570075989,
+    "log": "test-results/final-b/final-accept-L5.log"
+  }
+]
