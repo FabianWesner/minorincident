@@ -1,0 +1,39 @@
+{
+  "method": "Post-run read-only audit of actual reached Resume after lease ended. Resume rebases elapsed timestamps; negative foundAt is a valid past discovery. This fixes only exported audit count, never movement/input/cues or mission state.",
+  "counter": 1,
+  "rows": [
+    {
+      "key": "dale",
+      "foundAt": 0,
+      "status": "hidden"
+    },
+    {
+      "key": "rosa",
+      "foundAt": 0,
+      "status": "hidden"
+    },
+    {
+      "key": "okafor",
+      "foundAt": 0,
+      "status": "hidden"
+    },
+    {
+      "key": "mia",
+      "foundAt": -5011,
+      "status": "dead"
+    },
+    {
+      "key": "sam",
+      "foundAt": 0,
+      "status": "hidden"
+    }
+  ],
+  "oldPositiveFilter": [],
+  "correctNonzeroFilter": [
+    "mia"
+  ],
+  "sourceFile": "test-results/final-b/muted-low-qualified3/last-progress.json.gz",
+  "sourceSha256": "783d53f9d300fc0a8689a2595fbf37a3cdfce2885a94215fe5f44215fe36c5af",
+  "oldDriverSha256": "0727568173c745588c4571cbea5c9169e2f3b143809cd983fdfe0b40e13abfce",
+  "newDriverSha256": "5096e0b21b361baa209e53d7d881d17985c16b950e3c8767892aadace40cb9dc"
+}

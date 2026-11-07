@@ -1,36 +1,47 @@
 {
   "row": "L4-16",
   "status": "PASS",
-  "reviewer": "Codex/fix71-b",
-  "date": "2026-11-06",
-  "commit": "86bab6be6c0b25a4f1e32b00dc694e3f0e37f09f",
+  "reviewer": "Codex/final-b",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
   "clauses": [
     {
       "clause": "Only the player (+ corgi) enters; door barred in 1.0 s; battle audible above \u2265 6 s (low-pass); L5 loads in the same basement.",
       "verdict": "PASS",
-      "note": "Final four-cell live decoded matrix PASS: low-z0.5 6.917s, low-z1.5 6.850s, high-z0.5 6.867s, high-z1.5 6.917s of positive decoded <=750Hz battle audio under ordinary-weapon voice stress. Actual roster at bar contains only courier+corgi. Actual L5 handover starts1m from L4 cellar entry in every cell. Current native fixture bars in exactly60ticks with E false, both tiers. Captures personally reviewed; L5 briefing partly obscures actors, while environment and coordinates establish same basement. Native-save fixture is labelled, not claimed as a new full physical level route."
+      "note": "Both tiers only courier/corgi in cellar; native full uninterrupted bar60ticks. Actual decoded RMS\u2265.001 filtered battle spans6.8667s low,6.8833/6.7s high at zoom1.5/0.5, maximum750Hz; onset\u2264.067s and gaps\u2264.984s. L5 loads same basement within1m. Low full physical completion; high source-matched actual reached-brace Resume plus physical E continuation. Six frames personally reviewed, both tiers/zooms; saved1tick retained and not misrepresented as a full physical60tick bar."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix71-b/L4-16-release-summary.json",
-      "sha256": "844d913e352ccc114b08db781c3bebb11110eb66596d2564d1d0821517bc4563",
-      "what": "Final four-cell live decoded matrix PASS: low-z0.5 6.917s, low-z1.5 6.850s, high-z0.5 6.867s, high-z1.5 6.917s of positive decoded <=750Hz battle audio under ordinary-weapon voice stress. Actual roster at bar contains only courier+corgi. Actual L5 handover starts1m from L4 cellar entry in every cell. Current native fixture bars in exactly60ticks with E false, both tiers. Captures personally reviewed; L5 briefing partly obscures actors, while environment and coordinates establish same basement. Native-save fixture is labelled, not claimed as a new full physical level route."
+      "file": "docs/reports/final-b/L4-16-proof.json",
+      "sha256": "9def0d0e69115651418be4e138b96bfcf22e21712f12512e88defdc6c31e4fa7",
+      "what": "Both tiers only courier/corgi in cellar; native full uninterrupted bar60ticks. Actual decoded RMS\u2265.001 filtered battle spans6.8667s low,6.8833/6.7s high at zoom1.5/0.5, maximum750Hz; onset\u2264.067s and gaps\u2264.984s. L5 loads same basement within1m. Low full physical completion; high source-matched actual reached-brace Resume plus physical E continuation. Six frames personally reviewed, both tiers/zooms; saved1tick retained and not misrepresented as a full physical60tick bar."
     },
     {
-      "file": "docs/reports/fix71-b/L4-16-release-decoded.json.gz",
-      "sha256": "5c9ce0901f1539bdd6fda12f312924dfa0ac2167a46df0d96f2e869b211b0d0b",
-      "what": "Current-source live PCM/voice ledger, current production timing fixture, full-budget mapper proof or personally reviewed capture digests."
+      "file": "docs/reports/final-b/L4-low-physical.json.gz",
+      "sha256": "24bb97cf30e4e9d3ba13a82e00b7da9a1f45e13a1626ecaa27d82c9bab0a5c61",
+      "what": "Current actual saved state, executed driver and decoded audio/roster source receipt."
     },
     {
-      "file": "docs/reports/fix71-b/L4-16-release-priority.json",
-      "sha256": "11a6cce579ac213d922633e941b08ea5317a7e79f3a3910243e93940975aa915",
-      "what": "Current-source live PCM/voice ledger, current production timing fixture, full-budget mapper proof or personally reviewed capture digests."
+      "file": "docs/reports/final-b/L4-cellar-high-z1.5.json.gz",
+      "sha256": "c2567bcbb70398b7034b85af2aed90080cb2074d991786fffd3cfb7bfb354b61",
+      "what": "Current actual saved state, executed driver and decoded audio/roster source receipt."
     },
     {
-      "file": "docs/reports/fix71-b/L4-16-release-capture-review.json",
-      "sha256": "f32ed9e2da02e9ff7e167a26c0a9ce2816456276e7614412bdcd672a07ac0e6e",
-      "what": "Current-source live PCM/voice ledger, current production timing fixture, full-budget mapper proof or personally reviewed capture digests."
+      "file": "docs/reports/final-b/L4-cellar-high-z0.5.json.gz",
+      "sha256": "1bbf41da89cfc971f8b9d62fc2d39f7269e0308b745e1ef22bc89d6e349f32ac",
+      "what": "Current actual saved state, executed driver and decoded audio/roster source receipt."
+    },
+    {
+      "file": "docs/reports/final-b/L4-cellar-cellar-driver.ts.gz",
+      "sha256": "cd49ec4ad074c0b986a9717f36a73aa3d8e59c8b33d6597734ad4d5f7406fcfc",
+      "what": "Current actual saved state, executed driver and decoded audio/roster source receipt."
+    },
+    {
+      "file": "docs/reports/final-b/L4-cellar-cellar-brace-resume-high.json.gz",
+      "sha256": "667135259e19149dc6211bc3b1499c02ee8f42aa1fd4d068defa256a4c118d43",
+      "what": "Current actual saved state, executed driver and decoded audio/roster source receipt."
     }
-  ]
+  ],
+  "sourceDigest": "e3dafe0694468ae05c6e72a1f303adf938a6c33391416d38d67a60534e2fe51b"
 }

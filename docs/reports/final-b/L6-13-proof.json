@@ -1,0 +1,52 @@
+{
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "frozenCommit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "producer": {
+    "original": "tools/qa/accept/fix53-fists.ts",
+    "originalSha256": "65b83ef64c3cf8ff22f56fbfa092b25dd0c62fc3d19f0a3bc53744cd10547b5b",
+    "executedSnapshot": "docs/reports/final-b/L6-13-driver.ts.gz",
+    "executedSnapshotSha256": "cf8526f438682618ac99519fe86060c74e2912eaf501340a831b4b94c597c579",
+    "policyPatch": "if(enemies.length){ → if(enemies.length && s.phase!=='exit'){; only disable local evasion at exit. Imports resolved to original absolute paths; invocation appended."
+  },
+  "method": "Mortal native production physics/mission/combat. Only initial campaign racks set to fists/kick. Ordinary input and production checkpoint retries. No game source, actor, HP, clock, objective or collision mutation. Original driver times out after reaching exit; new variant stops local evasion from diverting the courier from the final route. Finishability only; not a competent-route mortality or rescue-rate benchmark.",
+  "rows": [
+    {
+      "tier": "low",
+      "completed": true,
+      "phase": "result",
+      "seconds": 236.61666666666667,
+      "deaths": 3,
+      "kills": 0,
+      "knockdowns": 6,
+      "damage": 453.56666666666536,
+      "offered": [
+        "weapon.fists",
+        "weapon.kick"
+      ],
+      "attacks": [
+        "weapon.fists"
+      ],
+      "nativeStateHash": "ab3dd71c"
+    },
+    {
+      "tier": "high",
+      "completed": true,
+      "phase": "result",
+      "seconds": 236.61666666666667,
+      "deaths": 3,
+      "kills": 0,
+      "knockdowns": 6,
+      "damage": 453.56666666666536,
+      "offered": [
+        "weapon.fists",
+        "weapon.kick"
+      ],
+      "attacks": [
+        "weapon.fists"
+      ],
+      "nativeStateHash": "ffa024c6"
+    }
+  ],
+  "ledger": "docs/reports/final-b/L6-13-ledger.json.gz",
+  "ledgerSha256": "6af36df4452d07a1e1a291bd4cb0ce9df5502467b75ce6ae25e39fc4acd027be"
+}

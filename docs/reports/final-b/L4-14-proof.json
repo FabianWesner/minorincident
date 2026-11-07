@@ -1,0 +1,58 @@
+{
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "rows": [
+    {
+      "tier": "low",
+      "tick": 23130,
+      "descendAt": 23116,
+      "damage": {
+        "fires": 4,
+        "glass": 10,
+        "burning": [
+          81,
+          78,
+          77
+        ],
+        "scorch": 21
+      }
+    },
+    {
+      "tier": "high",
+      "tick": 18270,
+      "descendAt": 18268,
+      "damage": {
+        "fires": 4,
+        "glass": 10,
+        "burning": [
+          124,
+          121,
+          120
+        ],
+        "scorch": 20
+      }
+    }
+  ],
+  "sourceRules": [
+    "src/sim/missions/L4Spectacle.ts: fire duration3600 seconds",
+    "src/render/VehicleView.ts: fire visible for burning or exploded"
+  ],
+  "row": "L4-14",
+  "status": "PASS",
+  "observation": "Both actual cellar-entry renderer routes:4 live long-duration fires,3 burning/exploded vehicle wrecks,10 shattered windows; actual renderer scorch pool21 low/20 high (required6). Untouched ordinary mortal ledger separately confirms4/3/10. Production L4 fire duration3600 seconds keeps these fires alive at entry; VehicleView draws fire for burning OR exploded, so exploded wrecks are not excluded incorrectly. Renderer route protects only courier, NPCs remain mortal; no forced damage counts or objective advance.",
+  "frozenCommit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "frames": [],
+  "evidence": [
+    {
+      "file": "docs/reports/final-b/corpses-final-low-full-receipt.json.gz",
+      "sha256": "60e598c1ca27cc94ba7dfd15427d4d2d1c7896c7dd31df5f5ddafa14083a196c"
+    },
+    {
+      "file": "docs/reports/final-b/corpses-final-high-receipt.json.gz",
+      "sha256": "a4a522ff959e8c2519a06488463d358fd232ecea57721b992ce502d9722ea37c"
+    },
+    {
+      "file": "docs/reports/final-b/L4-native-ledger.json.gz",
+      "sha256": "e58087fab4794a1c1afeedf0039c17ee44d5066a5393a75cfb4079a6527a9299"
+    }
+  ]
+}

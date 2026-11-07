@@ -3,165 +3,906 @@
   "level": "L4",
   "tier": "high",
   "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
-  "fixtureHash": "3a1aa6ffd344dc12e40e887d5787eccb7b7f2da10d19445898a88e94befd6f3f",
-  "browserHash": "3a1aa6ffd344dc12e40e887d5787eccb7b7f2da10d19445898a88e94befd6f3f",
+  "fixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4",
+  "browserHash": "9388d0056ef51321f7a42b0d246655834460a88af205dee82674435822fa31c9",
+  "errors": [],
+  "observations": {
+    "scope": "Scoped qualified final-b opening/war/hide evidence. Controlled collider fixture is identified by policy; no full-route G-25 claim.",
+    "frozenCommit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096"
+  },
   "checks": [
     {
-      "id": "G-25",
-      "clause": "physical WASD/mouse full-level browser console",
+      "id": "L4-03",
+      "clause": "actual MG pickup klaxon and attack start share simulation tick",
+      "level": "L4",
       "tier": "high",
       "policy": "real-input-webgl2",
       "status": "PASS",
       "value": {
-        "backend": "webgl2",
-        "zoom": 1.5,
-        "completed": true,
-        "skipped": [],
-        "consoleErrors": [],
-        "immortal": true,
-        "frameTiming": false
+        "tier": "high",
+        "pickupTick": 2231,
+        "gunTick": 2231,
+        "turnTick": 2231,
+        "klaxonTick": 2231,
+        "actualVoiceGains": [
+          0.33000001311302185,
+          0.33000001311302185,
+          0.33000001311302185,
+          0.06599999964237213
+        ],
+        "firstAdmittedTick": 2231,
+        "admittedCount": 18,
+        "input": "docs/reports/final-b/L4-high-opening-physical.json.gz",
+        "inputSha256": "81502974ece4ec840999900852f723f20627c704221f842ba9ef68cca1caa843",
+        "pass": true
       },
-      "target": "complete ordinary-input route; zero console/page errors; no objective skips",
-      "receipt": "docs/reports/final-g/G-25-L4-high.json"
-    }
-  ],
-  "errors": [],
-  "run": [
+      "target": "pickup=gun=turn=actual klaxon=actual first admissions; positive-gain voices and running/unmuted/unlocked graph",
+      "receipt": "docs/reports/final-b/L4-03-proof.json"
+    },
     {
+      "id": "L4-02",
+      "clause": "pre-pickup reception census routines separation and reviewed calm visuals",
       "level": "L4",
-      "entry": "debug",
-      "heroine": "female",
-      "finished": true,
-      "skipped": [],
-      "wallSeconds": 301,
-      "simSeconds": 0,
-      "maxNoProgressSeconds": 11.033333333333333,
-      "deaths": 0,
-      "assists": 0,
-      "attacks": {
-        "weapon.army-mg": 1246
+      "tier": "high",
+      "policy": "real-input-webgl2",
+      "status": "PASS",
+      "value": {
+        "tier": "high",
+        "sampleCadenceTicks": 30,
+        "samples": 14,
+        "firstTick": 1830,
+        "lastTick": 2220,
+        "minimumCivilians": 64,
+        "target": 40,
+        "minimumHumanCentreSeparationM": 0.7029606600245242,
+        "closestPair": {
+          "tick": 1980,
+          "ids": [
+            38,
+            42
+          ]
+        },
+        "maximumInfected": 0,
+        "maximumDamageDecals": 0,
+        "combatWindups": 0,
+        "anyEngagedSoldier": false,
+        "civilianRoutines": [
+          "bus-stop",
+          "carry-belongings",
+          "chat",
+          "jog",
+          "shop",
+          "walk-dog"
+        ],
+        "civilianActivities": [
+          "chat",
+          "look",
+          "walk",
+          "water"
+        ],
+        "allCalmPurposeful": true
       },
-      "weaponsStart": [
-        "weapon.fire-axe",
-        "weapon.bat",
-        "weapon.kick",
-        "weapon.handgun",
-        "ability.corgi-lure"
-      ],
-      "weaponsEnd": [
-        "weapon.fire-axe",
-        "weapon.bat",
-        "weapon.kick",
-        "weapon.army-mg",
-        "weapon.handgun",
-        "ability.corgi-lure"
-      ],
-      "steps": [
-        {
-          "id": "ride",
-          "text": "Ride into Fairhaven with the convoy · 57 m",
-          "tick": 30,
-          "marker": {
-            "anchor": "l4-plaza",
-            "ring": {
-              "x": -17,
-              "y": 0,
-              "z": 3
-            },
-            "drawn": null,
-            "playerY": 0.7049999833106995,
-            "pinVisible": true
-          }
+      "target": "high>=40/low>=30; calm routines; zero infected/combat/damage; separated people and reviewed orderly reception",
+      "receipt": "docs/reports/final-b/L4-02-proof.json"
+    },
+    {
+      "id": "L4-15",
+      "clause": "actual military-wall capsule solidity and bounded isometric camera family",
+      "level": "L4",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "status": "PASS",
+      "value": {
+        "native": {
+          "file": "docs/reports/final-b/L4-solids.json.gz",
+          "sha256": "c6e02ac02caf1eac54604ccea2c472959e07d0ce5cd182f97f5f15700db84025",
+          "observation": "All60 actual military barricade capsules blocked the normal production Rapier courier capsule at each quality. No colliders removed. Fixture is explicit opening-war setup; not a playthrough."
         },
-        {
-          "id": "quartermaster",
-          "text": "Report to the quartermaster · 10 m",
-          "tick": 1847,
-          "marker": {
-            "anchor": "l4-quartermaster",
-            "ring": {
-              "x": -23.2,
-              "y": 0,
-              "z": 0.6
+        "cameraPitchEndpoints": [
+          36,
+          41.85015
+        ],
+        "blocked": 60,
+        "tested": 60,
+        "tier": "high"
+      },
+      "target": "Existing exact checker clause measured on frozen source; see scoped proof and limits.",
+      "receipt": "docs/reports/final-b/L4-15-proof.json"
+    },
+    {
+      "id": "L4-18",
+      "clause": "reviewed clean living plaza and readable battle courier",
+      "level": "L4",
+      "tier": "high",
+      "policy": "real-input-webgl2",
+      "status": "PASS",
+      "value": {
+        "proof": "docs/reports/final-b/L4-war-review.json",
+        "sha256": "59c79b8b78a5dc022785b6e42423ff9e6c0cbfd0f8122a08e486dbb8833050c0",
+        "taste": "huge mixed war is P; objective clean scene and courier readability personally reviewed"
+      },
+      "target": "Existing exact checker clause measured on frozen source; see scoped proof and limits.",
+      "receipt": "docs/reports/final-b/L4-war-review.json"
+    },
+    {
+      "id": "L4-08",
+      "clause": "actual Alpha admission directions and line hits",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "status": "PASS",
+      "value": {
+        "tier": "high",
+        "actualAdmissions": [
+          {
+            "id": 277,
+            "tick": 2329,
+            "at": {
+              "x": -46,
+              "y": 0.7,
+              "z": 21,
+              "yaw": 0.5554937352655437
             },
-            "drawn": [
-              -23.2,
-              0.05,
-              0.6
+            "anchor": "l4-alpha-west-slot",
+            "offscreen": true,
+            "playerDistance": 30.667787474541136
+          },
+          {
+            "id": 320,
+            "tick": 3889,
+            "at": {
+              "x": -24,
+              "y": 0.7,
+              "z": -37.4,
+              "yaw": -1.3992323404389209
+            },
+            "anchor": "l4-alpha-nw",
+            "offscreen": true,
+            "playerDistance": 38.46585636246704
+          },
+          {
+            "id": 446,
+            "tick": 7009,
+            "at": {
+              "x": -5.8826834323650905,
+              "y": 0.83,
+              "z": 41.676120467488715,
+              "yaw": 1.8506967595228738
+            },
+            "anchor": "l4-alpha-south",
+            "offscreen": true,
+            "playerDistance": 45.71692527131723
+          },
+          {
+            "id": 462,
+            "tick": 7489,
+            "at": {
+              "x": -18,
+              "z": -38.4,
+              "y": 0.7,
+              "yaw": -1.5466464333973808
+            },
+            "anchor": "l4-alpha-north",
+            "offscreen": true,
+            "playerDistance": 34.93322422664498
+          },
+          {
+            "id": 463,
+            "tick": 7969,
+            "at": {
+              "x": 13.4,
+              "y": 0.7,
+              "z": -3,
+              "yaw": -2.946728733900921
+            },
+            "anchor": "l4-alpha-east",
+            "offscreen": true,
+            "playerDistance": 30.56764125369783
+          },
+          {
+            "id": 508,
+            "tick": 9169,
+            "at": {
+              "x": -23,
+              "z": 42.6,
+              "y": 0.7,
+              "yaw": 1.4204248987877621
+            },
+            "anchor": "l4-alpha-sw",
+            "offscreen": true,
+            "playerDistance": 48.14045111962232
+          },
+          {
+            "id": 537,
+            "tick": 10249,
+            "at": {
+              "x": -39.2,
+              "y": 0.83,
+              "z": -35,
+              "yaw": -1.0420676422826194
+            },
+            "anchor": "l4-alpha-west",
+            "offscreen": true,
+            "playerDistance": 59.676267546995106
+          },
+          {
+            "id": 567,
+            "tick": 10849,
+            "at": {
+              "x": 0.9,
+              "y": 0.7,
+              "z": -23.3,
+              "yaw": -2.1683888717423656
+            },
+            "anchor": "l4-alpha-ne",
+            "offscreen": true,
+            "playerDistance": 44.89779822475557
+          }
+        ],
+        "distinctSourceAnchors": 8,
+        "distinctTicks": 8,
+        "minCourierDistanceM": 30.56764125369783,
+        "lineDamagingIDs": [
+          277,
+          320,
+          508
+        ],
+        "actualLineHits": [
+          {
+            "type": "barricade.damaged",
+            "tick": 2683,
+            "id": 180,
+            "sourceId": 277,
+            "attackId": 1,
+            "slotId": "l4-wall-35",
+            "groupId": "l4-wall",
+            "previousHp": 600,
+            "hp": 300,
+            "amount": 300,
+            "props": []
+          },
+          {
+            "type": "barricade.damaged",
+            "tick": 2683,
+            "id": 181,
+            "sourceId": 277,
+            "attackId": 1,
+            "slotId": "l4-wall-36",
+            "groupId": "l4-wall",
+            "previousHp": 600,
+            "hp": 300,
+            "amount": 300,
+            "props": []
+          },
+          {
+            "type": "barricade.damaged",
+            "tick": 3165,
+            "id": 180,
+            "sourceId": 277,
+            "attackId": 8,
+            "slotId": "l4-wall-35",
+            "groupId": "l4-wall",
+            "previousHp": 300,
+            "hp": 0,
+            "amount": 300,
+            "props": []
+          },
+          {
+            "type": "barricade.damaged",
+            "tick": 3165,
+            "id": 181,
+            "sourceId": 277,
+            "attackId": 8,
+            "slotId": "l4-wall-36",
+            "groupId": "l4-wall",
+            "previousHp": 300,
+            "hp": 0,
+            "amount": 300,
+            "props": []
+          },
+          {
+            "type": "barricade.damaged",
+            "tick": 3183,
+            "id": 27,
+            "sourceId": 277,
+            "attackId": 8,
+            "slotId": "l4-line-west",
+            "groupId": "l4-line",
+            "previousHp": 300,
+            "hp": 0,
+            "amount": 300,
+            "props": []
+          },
+          {
+            "type": "barricade.damaged",
+            "tick": 4210,
+            "id": 151,
+            "sourceId": 320,
+            "attackId": 57,
+            "slotId": "l4-wall-6",
+            "groupId": "l4-wall",
+            "previousHp": 600,
+            "hp": 300,
+            "amount": 300,
+            "props": []
+          },
+          {
+            "type": "barricade.damaged",
+            "tick": 4210,
+            "id": 152,
+            "sourceId": 320,
+            "attackId": 57,
+            "slotId": "l4-wall-7",
+            "groupId": "l4-wall",
+            "previousHp": 600,
+            "hp": 300,
+            "amount": 300,
+            "props": []
+          },
+          {
+            "type": "barricade.damaged",
+            "tick": 4684,
+            "id": 151,
+            "sourceId": 320,
+            "attackId": 73,
+            "slotId": "l4-wall-6",
+            "groupId": "l4-wall",
+            "previousHp": 300,
+            "hp": 0,
+            "amount": 300,
+            "props": []
+          },
+          {
+            "type": "barricade.damaged",
+            "tick": 4684,
+            "id": 152,
+            "sourceId": 320,
+            "attackId": 73,
+            "slotId": "l4-wall-7",
+            "groupId": "l4-wall",
+            "previousHp": 300,
+            "hp": 0,
+            "amount": 300,
+            "props": []
+          },
+          {
+            "type": "barricade.damaged",
+            "tick": 4707,
+            "id": 26,
+            "sourceId": 320,
+            "attackId": 73,
+            "slotId": "l4-line-north",
+            "groupId": "l4-line",
+            "previousHp": 300,
+            "hp": 0,
+            "amount": 300,
+            "props": []
+          },
+          {
+            "type": "barricade.damaged",
+            "tick": 11489,
+            "id": 204,
+            "sourceId": 508,
+            "attackId": 546,
+            "slotId": "l4-wall-59",
+            "groupId": "l4-wall",
+            "previousHp": 1000000,
+            "hp": 999700,
+            "amount": 300,
+            "props": []
+          },
+          {
+            "type": "barricade.damaged",
+            "tick": 12507,
+            "id": 170,
+            "sourceId": 508,
+            "attackId": 631,
+            "slotId": "l4-wall-25",
+            "groupId": "l4-wall",
+            "previousHp": 1000000,
+            "hp": 999900,
+            "amount": 100,
+            "props": []
+          },
+          {
+            "type": "barricade.damaged",
+            "tick": 12595,
+            "id": 170,
+            "sourceId": 508,
+            "attackId": 642,
+            "slotId": "l4-wall-25",
+            "groupId": "l4-wall",
+            "previousHp": 999900,
+            "hp": 999800,
+            "amount": 100,
+            "props": []
+          },
+          {
+            "type": "barricade.damaged",
+            "tick": 12655,
+            "id": 170,
+            "sourceId": 508,
+            "attackId": 651,
+            "slotId": "l4-wall-25",
+            "groupId": "l4-wall",
+            "previousHp": 999800,
+            "hp": 999700,
+            "amount": 100,
+            "props": []
+          }
+        ],
+        "observedHash": "86ab19e8",
+        "canonicalHash": "86ab19e8"
+      },
+      "target": "6low/8high actual identities;\u22656 distinct sources/ticks;offscreen births;\u22653 same IDs hit defensive line",
+      "receipt": "docs/reports/final-b/L4-08-proof.json"
+    },
+    {
+      "id": "L4-16",
+      "clause": "actual cellar entrant roster",
+      "tier": "high",
+      "policy": "real-input-webgl2",
+      "status": "PASS",
+      "value": {
+        "proof": "docs/reports/final-b/L4-16-proof.json",
+        "sha256": "7d637f94cb13e7f19305dae14f864874fc602cd6f6818ff5cfd2db402104d718",
+        "tierRows": [
+          {
+            "tier": "high",
+            "zoom": "1.5",
+            "source": "Actual native reached-brace Resume; ordinary bot stops in cellar, physical keyboard E finishes bar, saved interaction1 retained. Protected only by normal mortal world state; separate ordinary-gun stress audio sources injected at barring.",
+            "audibleSimSeconds": 6.883333333333334,
+            "startLagSeconds": 0.06666666666666667,
+            "maxAudibleGapSeconds": 0.6666666666666666,
+            "maxFilterHz": 750,
+            "stressAccepted": 16,
+            "outgoingActors": [
+              {
+                "id": 1,
+                "companion": false,
+                "at": {
+                  "x": 74.79524230957031,
+                  "y": 0.7049999833106995,
+                  "z": -3.083186388015747,
+                  "yaw": -1.7217940466774073
+                }
+              },
+              {
+                "id": 29,
+                "companion": true,
+                "at": {
+                  "x": 74.79524230957031,
+                  "z": -1.5400000000000003,
+                  "y": 0.3,
+                  "yaw": 1.5707963267948966
+                }
+              }
             ],
-            "playerY": 0.7049999833106995,
-            "pinVisible": true
-          }
-        },
-        {
-          "id": "hold",
-          "text": "Hold the plaza with the army · 3:10 remaining",
-          "tick": 2240,
-          "marker": {
-            "anchor": "l4-quartermaster",
-            "ring": null,
-            "drawn": null,
-            "playerY": 0.7049999833106995,
-            "pinVisible": false
-          }
-        },
-        {
-          "id": "hide",
-          "text": "Run to the cellar via Lakeshore, Metro Road and Harbor Street · 62 m",
-          "tick": 13680,
-          "marker": {
-            "anchor": "l4-cellar-door",
-            "ring": {
-              "x": -79.29999999999998,
-              "y": 0,
-              "z": -45.2801
+            "handover": {
+              "level": "L5",
+              "player": {
+                "x": 75.3,
+                "y": 0.705,
+                "z": -5.4,
+                "yaw": 0.3205919885488634
+              }
             },
-            "drawn": [
-              -79.3,
-              0.13,
-              -45.28
-            ],
-            "playerY": 0.7049999833106995,
-            "pinVisible": true
-          }
-        },
-        {
-          "id": "bar",
-          "text": "Bar the cellar door · 5 m",
-          "tick": 14839,
-          "marker": {
-            "anchor": "l4-brace",
-            "ring": {
-              "x": 74.6,
-              "y": 0,
-              "z": -1.7999999999999998
+            "cellarAnchor": {
+              "x": 75.3,
+              "z": -6.4,
+              "radius": 2,
+              "yaw": 0
             },
-            "drawn": [
-              74.6,
-              0.05,
-              -1.8
+            "entryDistanceM": 1,
+            "errors": []
+          },
+          {
+            "tier": "high",
+            "zoom": "0.5",
+            "source": "Actual native reached-brace Resume; ordinary bot stops in cellar, physical keyboard E finishes bar, saved interaction1 retained. Protected only by normal mortal world state; separate ordinary-gun stress audio sources injected at barring.",
+            "audibleSimSeconds": 6.7,
+            "startLagSeconds": 0.06666666666666667,
+            "maxAudibleGapSeconds": 0.85,
+            "maxFilterHz": 750,
+            "stressAccepted": 18,
+            "outgoingActors": [
+              {
+                "id": 1,
+                "companion": false,
+                "at": {
+                  "x": 74.79524230957031,
+                  "y": 0.7049999833106995,
+                  "z": -3.083186388015747,
+                  "yaw": -1.7217940466774073
+                }
+              },
+              {
+                "id": 29,
+                "companion": true,
+                "at": {
+                  "x": 74.79524230957031,
+                  "z": -1.5400000000000003,
+                  "y": 0.3,
+                  "yaw": 1.5707963267948966
+                }
+              }
             ],
-            "playerY": 0.7049999833106995,
-            "pinVisible": true
+            "handover": {
+              "level": "L5",
+              "player": {
+                "x": 75.3,
+                "y": 0.705,
+                "z": -5.4,
+                "yaw": 0.3205919885488634
+              }
+            },
+            "cellarAnchor": {
+              "x": 75.3,
+              "z": -6.4,
+              "radius": 2,
+              "yaw": 0
+            },
+            "entryDistanceM": 1,
+            "errors": []
           }
-        },
-        {
-          "id": "wait",
-          "text": "Stay down · 0:07 remaining",
-          "tick": 14991,
-          "marker": {
-            "anchor": "l4-brace",
-            "ring": null,
-            "drawn": null,
-            "playerY": 0.7049999833106995,
-            "pinVisible": false
+        ],
+        "reviewedZooms": [
+          0.5,
+          1.5
+        ]
+      },
+      "target": "Exact existing required clause; see measured source proof and disclosed high Resume prefix.",
+      "receipt": "docs/reports/final-b/L4-16-proof.json"
+    },
+    {
+      "id": "L4-16",
+      "clause": "decoded low-pass battle audible after barring",
+      "tier": "high",
+      "policy": "real-input-webgl2",
+      "status": "PASS",
+      "value": {
+        "proof": "docs/reports/final-b/L4-16-proof.json",
+        "sha256": "7d637f94cb13e7f19305dae14f864874fc602cd6f6818ff5cfd2db402104d718",
+        "tierRows": [
+          {
+            "tier": "high",
+            "zoom": "1.5",
+            "source": "Actual native reached-brace Resume; ordinary bot stops in cellar, physical keyboard E finishes bar, saved interaction1 retained. Protected only by normal mortal world state; separate ordinary-gun stress audio sources injected at barring.",
+            "audibleSimSeconds": 6.883333333333334,
+            "startLagSeconds": 0.06666666666666667,
+            "maxAudibleGapSeconds": 0.6666666666666666,
+            "maxFilterHz": 750,
+            "stressAccepted": 16,
+            "outgoingActors": [
+              {
+                "id": 1,
+                "companion": false,
+                "at": {
+                  "x": 74.79524230957031,
+                  "y": 0.7049999833106995,
+                  "z": -3.083186388015747,
+                  "yaw": -1.7217940466774073
+                }
+              },
+              {
+                "id": 29,
+                "companion": true,
+                "at": {
+                  "x": 74.79524230957031,
+                  "z": -1.5400000000000003,
+                  "y": 0.3,
+                  "yaw": 1.5707963267948966
+                }
+              }
+            ],
+            "handover": {
+              "level": "L5",
+              "player": {
+                "x": 75.3,
+                "y": 0.705,
+                "z": -5.4,
+                "yaw": 0.3205919885488634
+              }
+            },
+            "cellarAnchor": {
+              "x": 75.3,
+              "z": -6.4,
+              "radius": 2,
+              "yaw": 0
+            },
+            "entryDistanceM": 1,
+            "errors": []
+          },
+          {
+            "tier": "high",
+            "zoom": "0.5",
+            "source": "Actual native reached-brace Resume; ordinary bot stops in cellar, physical keyboard E finishes bar, saved interaction1 retained. Protected only by normal mortal world state; separate ordinary-gun stress audio sources injected at barring.",
+            "audibleSimSeconds": 6.7,
+            "startLagSeconds": 0.06666666666666667,
+            "maxAudibleGapSeconds": 0.85,
+            "maxFilterHz": 750,
+            "stressAccepted": 18,
+            "outgoingActors": [
+              {
+                "id": 1,
+                "companion": false,
+                "at": {
+                  "x": 74.79524230957031,
+                  "y": 0.7049999833106995,
+                  "z": -3.083186388015747,
+                  "yaw": -1.7217940466774073
+                }
+              },
+              {
+                "id": 29,
+                "companion": true,
+                "at": {
+                  "x": 74.79524230957031,
+                  "z": -1.5400000000000003,
+                  "y": 0.3,
+                  "yaw": 1.5707963267948966
+                }
+              }
+            ],
+            "handover": {
+              "level": "L5",
+              "player": {
+                "x": 75.3,
+                "y": 0.705,
+                "z": -5.4,
+                "yaw": 0.3205919885488634
+              }
+            },
+            "cellarAnchor": {
+              "x": 75.3,
+              "z": -6.4,
+              "radius": 2,
+              "yaw": 0
+            },
+            "entryDistanceM": 1,
+            "errors": []
           }
-        }
-      ]
+        ],
+        "reviewedZooms": [
+          0.5,
+          1.5
+        ]
+      },
+      "target": "Exact existing required clause; see measured source proof and disclosed high Resume prefix.",
+      "receipt": "docs/reports/final-b/L4-16-proof.json"
+    },
+    {
+      "id": "L4-16",
+      "clause": "actual same-basement L5 handover",
+      "tier": "high",
+      "policy": "real-input-webgl2",
+      "status": "PASS",
+      "value": {
+        "proof": "docs/reports/final-b/L4-16-proof.json",
+        "sha256": "7d637f94cb13e7f19305dae14f864874fc602cd6f6818ff5cfd2db402104d718",
+        "tierRows": [
+          {
+            "tier": "high",
+            "zoom": "1.5",
+            "source": "Actual native reached-brace Resume; ordinary bot stops in cellar, physical keyboard E finishes bar, saved interaction1 retained. Protected only by normal mortal world state; separate ordinary-gun stress audio sources injected at barring.",
+            "audibleSimSeconds": 6.883333333333334,
+            "startLagSeconds": 0.06666666666666667,
+            "maxAudibleGapSeconds": 0.6666666666666666,
+            "maxFilterHz": 750,
+            "stressAccepted": 16,
+            "outgoingActors": [
+              {
+                "id": 1,
+                "companion": false,
+                "at": {
+                  "x": 74.79524230957031,
+                  "y": 0.7049999833106995,
+                  "z": -3.083186388015747,
+                  "yaw": -1.7217940466774073
+                }
+              },
+              {
+                "id": 29,
+                "companion": true,
+                "at": {
+                  "x": 74.79524230957031,
+                  "z": -1.5400000000000003,
+                  "y": 0.3,
+                  "yaw": 1.5707963267948966
+                }
+              }
+            ],
+            "handover": {
+              "level": "L5",
+              "player": {
+                "x": 75.3,
+                "y": 0.705,
+                "z": -5.4,
+                "yaw": 0.3205919885488634
+              }
+            },
+            "cellarAnchor": {
+              "x": 75.3,
+              "z": -6.4,
+              "radius": 2,
+              "yaw": 0
+            },
+            "entryDistanceM": 1,
+            "errors": []
+          },
+          {
+            "tier": "high",
+            "zoom": "0.5",
+            "source": "Actual native reached-brace Resume; ordinary bot stops in cellar, physical keyboard E finishes bar, saved interaction1 retained. Protected only by normal mortal world state; separate ordinary-gun stress audio sources injected at barring.",
+            "audibleSimSeconds": 6.7,
+            "startLagSeconds": 0.06666666666666667,
+            "maxAudibleGapSeconds": 0.85,
+            "maxFilterHz": 750,
+            "stressAccepted": 18,
+            "outgoingActors": [
+              {
+                "id": 1,
+                "companion": false,
+                "at": {
+                  "x": 74.79524230957031,
+                  "y": 0.7049999833106995,
+                  "z": -3.083186388015747,
+                  "yaw": -1.7217940466774073
+                }
+              },
+              {
+                "id": 29,
+                "companion": true,
+                "at": {
+                  "x": 74.79524230957031,
+                  "z": -1.5400000000000003,
+                  "y": 0.3,
+                  "yaw": 1.5707963267948966
+                }
+              }
+            ],
+            "handover": {
+              "level": "L5",
+              "player": {
+                "x": 75.3,
+                "y": 0.705,
+                "z": -5.4,
+                "yaw": 0.3205919885488634
+              }
+            },
+            "cellarAnchor": {
+              "x": 75.3,
+              "z": -6.4,
+              "radius": 2,
+              "yaw": 0
+            },
+            "entryDistanceM": 1,
+            "errors": []
+          }
+        ],
+        "reviewedZooms": [
+          0.5,
+          1.5
+        ]
+      },
+      "target": "Exact existing required clause; see measured source proof and disclosed high Resume prefix.",
+      "receipt": "docs/reports/final-b/L4-16-proof.json"
+    },
+    {
+      "id": "L4-16",
+      "clause": "reviewed visible companion in cellar",
+      "tier": "high",
+      "policy": "real-input-webgl2",
+      "status": "PASS",
+      "value": {
+        "proof": "docs/reports/final-b/L4-16-proof.json",
+        "sha256": "7d637f94cb13e7f19305dae14f864874fc602cd6f6818ff5cfd2db402104d718",
+        "tierRows": [
+          {
+            "tier": "high",
+            "zoom": "1.5",
+            "source": "Actual native reached-brace Resume; ordinary bot stops in cellar, physical keyboard E finishes bar, saved interaction1 retained. Protected only by normal mortal world state; separate ordinary-gun stress audio sources injected at barring.",
+            "audibleSimSeconds": 6.883333333333334,
+            "startLagSeconds": 0.06666666666666667,
+            "maxAudibleGapSeconds": 0.6666666666666666,
+            "maxFilterHz": 750,
+            "stressAccepted": 16,
+            "outgoingActors": [
+              {
+                "id": 1,
+                "companion": false,
+                "at": {
+                  "x": 74.79524230957031,
+                  "y": 0.7049999833106995,
+                  "z": -3.083186388015747,
+                  "yaw": -1.7217940466774073
+                }
+              },
+              {
+                "id": 29,
+                "companion": true,
+                "at": {
+                  "x": 74.79524230957031,
+                  "z": -1.5400000000000003,
+                  "y": 0.3,
+                  "yaw": 1.5707963267948966
+                }
+              }
+            ],
+            "handover": {
+              "level": "L5",
+              "player": {
+                "x": 75.3,
+                "y": 0.705,
+                "z": -5.4,
+                "yaw": 0.3205919885488634
+              }
+            },
+            "cellarAnchor": {
+              "x": 75.3,
+              "z": -6.4,
+              "radius": 2,
+              "yaw": 0
+            },
+            "entryDistanceM": 1,
+            "errors": []
+          },
+          {
+            "tier": "high",
+            "zoom": "0.5",
+            "source": "Actual native reached-brace Resume; ordinary bot stops in cellar, physical keyboard E finishes bar, saved interaction1 retained. Protected only by normal mortal world state; separate ordinary-gun stress audio sources injected at barring.",
+            "audibleSimSeconds": 6.7,
+            "startLagSeconds": 0.06666666666666667,
+            "maxAudibleGapSeconds": 0.85,
+            "maxFilterHz": 750,
+            "stressAccepted": 18,
+            "outgoingActors": [
+              {
+                "id": 1,
+                "companion": false,
+                "at": {
+                  "x": 74.79524230957031,
+                  "y": 0.7049999833106995,
+                  "z": -3.083186388015747,
+                  "yaw": -1.7217940466774073
+                }
+              },
+              {
+                "id": 29,
+                "companion": true,
+                "at": {
+                  "x": 74.79524230957031,
+                  "z": -1.5400000000000003,
+                  "y": 0.3,
+                  "yaw": 1.5707963267948966
+                }
+              }
+            ],
+            "handover": {
+              "level": "L5",
+              "player": {
+                "x": 75.3,
+                "y": 0.705,
+                "z": -5.4,
+                "yaw": 0.3205919885488634
+              }
+            },
+            "cellarAnchor": {
+              "x": 75.3,
+              "z": -6.4,
+              "radius": 2,
+              "yaw": 0
+            },
+            "entryDistanceM": 1,
+            "errors": []
+          }
+        ],
+        "reviewedZooms": [
+          0.5,
+          1.5
+        ]
+      },
+      "target": "Exact existing required clause; see measured source proof and disclosed high Resume prefix.",
+      "receipt": "docs/reports/final-b/L4-16-proof.json"
     }
-  ],
-  "issues": [],
-  "frameTiming": false,
-  "backend": "webgl2",
-  "zoom": 1.5
+  ]
 }

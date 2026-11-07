@@ -1,0 +1,37 @@
+{
+  "row": "L5-09",
+  "status": "PASS",
+  "reviewer": "Codex/final-b",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "sourceDigest": "96b95aaf00218387ac838466ba4e849719809eef34f96b67f54241001dca8a39",
+  "clauses": [
+    {
+      "clause": "Protection matters: an infected reaching an unprotected survivor bites \u2264 1.5 s; `evade-only` rescues \u2264 2, `complete` \u2265 4.",
+      "verdict": "PASS",
+      "note": "PASS for the specified native single-seed benchmark: complete evacuates5/5 and completes in193.3667s low/222.3167s high; evade-only evacuates0 actual identities during each native default1200s trial, emits0 courier attacks, ends tick-budget with result=null (not a completed zero-rescued result). Unprotected eligible contact resolves within79/68ticks (1.3167/1.1333s), under1.5s. Complete final hashes0a23911a/147553b8 match the frozen canonical controls."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/final-b/L5-09-proof.json",
+      "sha256": "96413b7f093b1b5fb4dcb675e6b212178ac151e0d3a7418e4cec6e5d59848ead",
+      "what": "PASS for the specified native single-seed benchmark: complete evacuates5/5 and completes in193.3667s low/222.3167s high; evade-only evacuates0 actual identities during each native default1200s trial, emits0 courier attacks, ends tick-budget with result=null (not a completed zero-rescued result). Unprotected eligible contact resolves within79/68ticks (1.3167/1.1333s), under1.5s. Complete final hashes0a23911a/147553b8 match the frozen canonical controls."
+    },
+    {
+      "file": "docs/reports/final-b/L5-protection-benchmark.json.gz",
+      "sha256": "cddfc602c05c705151e3c3b2821b46d2340711189699f317f98cc8decd5520f3",
+      "what": "PASS for the specified native single-seed benchmark: complete evacuates5/5 and completes in193.3667s low/222.3167s high; evade-only evacuates0 actual identities during each native default1200s trial, emits0 courier attacks, ends tick-budget with result=null (not a completed zero-rescued result). Unprotected eligible contact resolves within79/68ticks (1.3167/1.1333s), under1.5s. Complete final hashes0a23911a/147553b8 match the frozen canonical controls."
+    },
+    {
+      "file": "docs/reports/final-b/L5-protection-benchmark-executed.ts.gz",
+      "sha256": "4ce658e0351f46033bafe2a25f8fa11c7ce3255f59caaab0c51c5bb179d32c90",
+      "what": "PASS for the specified native single-seed benchmark: complete evacuates5/5 and completes in193.3667s low/222.3167s high; evade-only evacuates0 actual identities during each native default1200s trial, emits0 courier attacks, ends tick-budget with result=null (not a completed zero-rescued result). Unprotected eligible contact resolves within79/68ticks (1.3167/1.1333s), under1.5s. Complete final hashes0a23911a/147553b8 match the frozen canonical controls."
+    },
+    {
+      "file": "docs/reports/final-b/L5-contact.json.gz",
+      "sha256": "f65de864431fe15a9ec0aab163ff897d3a0386b969547bd7317a74526cc07f88",
+      "what": "PASS for the specified native single-seed benchmark: complete evacuates5/5 and completes in193.3667s low/222.3167s high; evade-only evacuates0 actual identities during each native default1200s trial, emits0 courier attacks, ends tick-budget with result=null (not a completed zero-rescued result). Unprotected eligible contact resolves within79/68ticks (1.3167/1.1333s), under1.5s. Complete final hashes0a23911a/147553b8 match the frozen canonical controls."
+    }
+  ]
+}

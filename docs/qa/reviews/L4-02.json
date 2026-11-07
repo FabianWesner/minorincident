@@ -1,26 +1,32 @@
 {
   "row": "L4-02",
   "status": "PASS",
-  "reviewer": "Codex/sweep-b",
-  "date": "2026-11-06",
-  "commit": "eaf9203be269eec226d90064f13a4302114cfb3e",
+  "reviewer": "Codex/final-b",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
   "clauses": [
     {
-      "clause": "Until pickup: 0 infected, 0 combat, 0 damage decals; \u2265 40 civilians in routines at high, \u2265 30 at low (orchestrator 2026-11-04: low follows the L4-04 50 % low budget, 30\u201335; the old \u2265 40 at low contradicted L4-04); soldiers relaxed (chat/coffee/patrol). Civilians do not clump outside the camp or overlap.",
+      "clause": "Until pickup: 0 infected, 0 combat, 0 damage decals; ≥ 40 civilians in routines at high, ≥ 30 at low (orchestrator 2026-11-04: low follows the L4-04 50 % low budget, 30–35; the old ≥ 40 at low contradicted L4-04); soldiers relaxed (chat/coffee/patrol). Civilians do not clump outside the camp or overlap.",
       "verdict": "PASS",
-      "note": "Four current physical cells: throughout actual quartermaster/plaza phase low32/high64 civilians, zero infected, zero combat windups and zero damage decals. Minimum observed default-human centre separation0.7115/0.7030m exceeds summed0.7m radii. Civilian calm routine activities and nonengaged soldiers observed; clean shops/reception captures show separated people, lowered rifles and no outside-camp body clump. The convoy ride is outside this quartermaster criterion. Current written targets30low/40high are retained; old40low helper contradicted the already-corrected criterion and was not used. All24 injected wrong-fact controls reject PASS."
+      "note": "Fresh physical reception low32/high64 civilians;13/14 half-second plaza samples. Zero infected, damage decals, combat windups or engaged soldiers; every civilian has calm purposeful activity. Minimum normal-human centre separation0.713771/0.702961m exceeds0.7m summed radii. Six current frames personally inspected at both zooms/tiers: clean camp/shops, lowered guard rifles, separated people. Outside connected groups of6/12 are orderly queues alongside the second bus, not overlapping clumps; a camera-only replay matches the physical positions exactly. The convoy ride is excluded from this quartermaster-phase census."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-b/L4-02-proof.json",
-      "sha256": "1c7528318ea6083e77d99cfffa815e89745fc12baabbd265ba1437e739418784",
-      "what": "Four current physical cells: throughout actual quartermaster/plaza phase low32/high64 civilians, zero infected, zero combat windups and zero damage decals. Minimum observed default-human centre separation0.7115/0.7030m exceeds summed0.7m radii. Civilian calm routine activities and nonengaged soldiers observed; clean shops/reception captures show separated people, lowered rifles and no outside-camp body clump. The convoy ride is outside this quartermaster criterion. Current written targets30low/40high are retained; old40low helper contradicted the already-corrected criterion and was not used. All24 injected wrong-fact controls reject PASS."
+      "file": "docs/reports/final-b/L4-02-proof.json",
+      "sha256": "bedb48da53dbeb88daef46f9095f8d0926a4a21669d702570a2c1e0a05b3554f",
+      "what": "Fresh physical reception low32/high64 civilians;13/14 half-second plaza samples. Zero infected, damage decals, combat windups or engaged soldiers; every civilian has calm purposeful activity. Minimum normal-human centre separation0.713771/0.702961m exceeds0.7m summed radii. Six current frames personally inspected at both zooms/tiers: clean camp/shops, lowered guard rifles, separated people. Outside connected groups of6/12 are orderly queues alongside the second bus, not overlapping clumps; a camera-only replay matches the physical positions exactly. The convoy ride is excluded from this quartermaster-phase census."
     },
     {
-      "file": "docs/reports/sweep-b/L4-capture-review.json",
-      "sha256": "fb0ebb8226f31b8765bffe7e91452d6c7f26f10bec5b2c236948d59ffab874d9",
-      "what": "Four current physical cells: throughout actual quartermaster/plaza phase low32/high64 civilians, zero infected, zero combat windups and zero damage decals. Minimum observed default-human centre separation0.7115/0.7030m exceeds summed0.7m radii. Civilian calm routine activities and nonengaged soldiers observed; clean shops/reception captures show separated people, lowered rifles and no outside-camp body clump. The convoy ride is outside this quartermaster criterion. Current written targets30low/40high are retained; old40low helper contradicted the already-corrected criterion and was not used. All24 injected wrong-fact controls reject PASS."
+      "file": "docs/reports/final-b/L4-low-physical.json.gz",
+      "sha256": "24bb97cf30e4e9d3ba13a82e00b7da9a1f45e13a1626ecaa27d82c9bab0a5c61",
+      "what": "Fresh physical reception low32/high64 civilians;13/14 half-second plaza samples. Zero infected, damage decals, combat windups or engaged soldiers; every civilian has calm purposeful activity. Minimum normal-human centre separation0.713771/0.702961m exceeds0.7m summed radii. Six current frames personally inspected at both zooms/tiers: clean camp/shops, lowered guard rifles, separated people. Outside connected groups of6/12 are orderly queues alongside the second bus, not overlapping clumps; a camera-only replay matches the physical positions exactly. The convoy ride is excluded from this quartermaster-phase census."
+    },
+    {
+      "file": "docs/reports/final-b/L4-high-opening-physical.json.gz",
+      "sha256": "81502974ece4ec840999900852f723f20627c704221f842ba9ef68cca1caa843",
+      "what": "Fresh physical reception low32/high64 civilians;13/14 half-second plaza samples. Zero infected, damage decals, combat windups or engaged soldiers; every civilian has calm purposeful activity. Minimum normal-human centre separation0.713771/0.702961m exceeds0.7m summed radii. Six current frames personally inspected at both zooms/tiers: clean camp/shops, lowered guard rifles, separated people. Outside connected groups of6/12 are orderly queues alongside the second bus, not overlapping clumps; a camera-only replay matches the physical positions exactly. The convoy ride is excluded from this quartermaster-phase census."
     }
-  ]
+  ],
+  "sourceDigest": "e3dafe0694468ae05c6e72a1f303adf938a6c33391416d38d67a60534e2fe51b"
 }

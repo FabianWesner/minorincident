@@ -1,21 +1,28 @@
 {
   "row": "L6-07",
   "status": "PASS",
-  "reviewer": "Codex/fix71-b2",
-  "date": "2026-11-06",
-  "commit": "cca991dfebf7ff2a8deadb2b3aff616f967661d3",
+  "reviewer": "Codex/final-b",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "sourceDigest": "7fd8f0ebc3d3fcb362d200567b5da5e2e4f5bea018074dcf4fbbfccc06fdf698",
   "clauses": [
     {
       "clause": "combat: attacks on player + group \u2265 4/min across the retreat (tune); competent damage taken \u2265 30 HP (tune); concurrent infected \u2264 60 / 30.",
       "verdict": "PASS",
-      "note": "Both final merged-source ordinary complete routes finish. Whole retreat measures23.278 player/group windups/min,80 actual player HP lost,17 concurrent infected peak, both tiers. All unchanged numeric thresholds pass; no human difficulty or perceived-pressure claim."
+      "note": "low/complete: ordinary retreat route completion=\"complete\"; target complete; PASS\nlow/complete: retreat player/group windups per minute=19.67466083713753; target 4 \u2264 value \u2264 Infinity; PASS\nlow/complete: actual HP lost during retreat=170; target 30 \u2264 value \u2264 Infinity; PASS\nlow/complete: retreat concurrent infected cap=17; target 0 \u2264 value \u2264 30; PASS\nhigh/complete: ordinary retreat route completion=\"complete\"; target complete; PASS\nhigh/complete: retreat player/group windups per minute=19.67466083713753; target 4 \u2264 value \u2264 Infinity; PASS\nhigh/complete: actual HP lost during retreat=170; target 30 \u2264 value \u2264 Infinity; PASS\nhigh/complete: retreat concurrent infected cap=17; target 0 \u2264 value \u2264 60; PASS"
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix71-b2/retreat-summary.json",
-      "sha256": "6b7d50fce609f874ebf22d8e4c8936c0404d8dcb277abe93199200a4bc16db25",
-      "what": "Both final merged-source ordinary complete routes finish. Whole retreat measures23.278 player/group windups/min,80 actual player HP lost,17 concurrent infected peak, both tiers. All unchanged numeric thresholds pass; no human difficulty or perceived-pressure claim."
+      "file": "docs/reports/final-b/frozen-native/L6-low-complete.json.gz",
+      "sha256": "c89ff203c3573506a8fcf6d8c32509e3b6bb7abc163af2853e912f77ac3d3d70",
+      "what": "Frozen-head native measurement: L6-07. ordinary retreat route completion; retreat player/group windups per minute; actual HP lost during retreat; retreat concurrent infected cap."
+    },
+    {
+      "file": "docs/reports/final-b/frozen-native/L6-high-complete.json.gz",
+      "sha256": "7e64ae00d4c1c0a788c932a232a05eb870297346ed6de4d1e63d134c22452e81",
+      "what": "Frozen-head native measurement: L6-07. ordinary retreat route completion; retreat player/group windups per minute; actual HP lost during retreat; retreat concurrent infected cap."
     }
-  ]
+  ],
+  "notes": "Fresh native measurements on the frozen source. No claim of new browser observations. L5-01 legacy diagnostic NOT CHECKED entries are redundant with the explicit pickup/regular/Alpha timing fixtures, whose full clauses pass."
 }

@@ -1,22 +1,28 @@
 {
   "row": "L4-06",
   "status": "PASS",
-  "reviewer": "Codex/fix67-b",
-  "date": "2026-11-06",
-  "commit": "dd26478ea061e8c0092e8e80939aeea6b76bb3b6",
+  "reviewer": "Codex/final-b",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "sourceDigest": "e3dafe0694468ae05c6e72a1f303adf938a6c33391416d38d67a60534e2fe51b",
   "clauses": [
     {
       "clause": "**Horde present:** first breach into the plaza at ~45 s (level clock, \u00b115 s) with \u2265 60 alive at once (~74 at the PO-accepted 10-27 level) (PO 10-27 accepted level); alive in the plaza \u2265 40 from +45 s to the line break (tune). PO: \"Almost no fight action. Just two alphas, instead of the Zombie horede\".",
       "verdict": "PASS",
-      "note": "Final source: both stationary policies complete190s. First breach52.716667s,61 low/66 high alive; sustained plaza minima66/66. Original low59 fails\u226560. Alarm9\u219218; caps/timers/criteria unchanged."
+      "note": "low/stationary: first physical breach level clock=52.71666666666667; target 30 \u2264 value \u2264 60; PASS\nlow/stationary: living infected at first breach=67; target 60 \u2264 value \u2264 Infinity; PASS\nlow/stationary: sustained plaza living minimum after +45 s=52; target 40 \u2264 value \u2264 Infinity; PASS\nhigh/stationary: first physical breach level clock=52.71666666666667; target 30 \u2264 value \u2264 60; PASS\nhigh/stationary: living infected at first breach=65; target 60 \u2264 value \u2264 Infinity; PASS\nhigh/stationary: sustained plaza living minimum after +45 s=54; target 40 \u2264 value \u2264 Infinity; PASS"
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix67-b/final-qualification.json",
-      "sha256": "72006fdd3b5917deec96d44edf18e014cab4e7a64a892a5d5b860591354bfde1",
-      "what": "Final source: both stationary policies complete190s. First breach52.716667s,61 low/66 high alive; sustained plaza minima66/66. Original low59 fails\u226560. Alarm9\u219218; caps/timers/criteria unchanged."
+      "file": "docs/reports/final-b/frozen-native/L4-low-stationary.json.gz",
+      "sha256": "e2d4bdce84e54d6f3be85edfaf70c43c13f951918092849b9fc384cc31b01f6d",
+      "what": "Frozen-head native measurement: L4-06. first physical breach level clock; living infected at first breach; sustained plaza living minimum after +45 s."
+    },
+    {
+      "file": "docs/reports/final-b/frozen-native/L4-high-stationary.json.gz",
+      "sha256": "a5dd8f66a6349e5193ea414161720de1687c4b8effa589e0bf54d90e884971cc",
+      "what": "Frozen-head native measurement: L4-06. first physical breach level clock; living infected at first breach; sustained plaza living minimum after +45 s."
     }
   ],
-  "notes": "Current-source native measurements at both tiers. A FAIL closes the verdict through the cited counterexample; unmeasured clauses are not promoted to PASS."
+  "notes": "Fresh native measurements on the frozen source. No claim of new browser observations. L5-01 legacy diagnostic NOT CHECKED entries are redundant with the explicit pickup/regular/Alpha timing fixtures, whose full clauses pass."
 }

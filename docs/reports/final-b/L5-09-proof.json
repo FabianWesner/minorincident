@@ -1,0 +1,118 @@
+{
+  "benchmark": [
+    {
+      "tier": "low",
+      "policy": "complete",
+      "seed": 1,
+      "observedTicks": 11602,
+      "playerAttacks": 167,
+      "evacuatedIds": [
+        "dale",
+        "rosa",
+        "okafor",
+        "mia",
+        "sam"
+      ],
+      "evacuatedCount": 5,
+      "hash": "0a23911a",
+      "outcome": "complete",
+      "result": {
+        "rescued": 5,
+        "time": 193.36666666666667
+      },
+      "shutterEvents": 1,
+      "completionEvents": 1
+    },
+    {
+      "tier": "low",
+      "policy": "evade-only",
+      "seed": 1,
+      "observedTicks": 72000,
+      "playerAttacks": 0,
+      "evacuatedIds": [],
+      "evacuatedCount": 0,
+      "hash": "4cfd32be",
+      "outcome": "tick-budget",
+      "result": null,
+      "shutterEvents": 0,
+      "completionEvents": 0
+    },
+    {
+      "tier": "high",
+      "policy": "complete",
+      "seed": 1,
+      "observedTicks": 13339,
+      "playerAttacks": 240,
+      "evacuatedIds": [
+        "dale",
+        "rosa",
+        "okafor",
+        "mia",
+        "sam"
+      ],
+      "evacuatedCount": 5,
+      "hash": "147553b8",
+      "outcome": "complete",
+      "result": {
+        "rescued": 5,
+        "time": 222.31666666666666
+      },
+      "shutterEvents": 1,
+      "completionEvents": 1
+    },
+    {
+      "tier": "high",
+      "policy": "evade-only",
+      "seed": 1,
+      "observedTicks": 72000,
+      "playerAttacks": 0,
+      "evacuatedIds": [],
+      "evacuatedCount": 0,
+      "hash": "2d6b0654",
+      "outcome": "tick-budget",
+      "result": null,
+      "shutterEvents": 0,
+      "completionEvents": 0
+    }
+  ],
+  "contact": [
+    {
+      "tier": "low",
+      "episodes": 79,
+      "resolvedEpisodes": 46,
+      "maximumResolvedTicks": 79
+    },
+    {
+      "tier": "high",
+      "episodes": 93,
+      "resolvedEpisodes": 59,
+      "maximumResolvedTicks": 68
+    }
+  ],
+  "protocolRationale": "E23-AC02 explicitly requires complete-bot completion; E23-AC10 requires a single-seed protection comparison but does not require evade-only completion. tools/sim-runner/levels.ts uses a native default1200s horizon. Actual sheltered identity union is observed every sim tick, not inferred from null result or timeout. This finite native benchmark gives no claim about unbounded future rescues. Earlier OPEN assumed an additional completed-evade requirement; this review supersedes it based on the stated spec and the new actual evacuation observer. No acceptance/game/AI/stat modification.",
+  "sources": [
+    "specs/epic-23-level-5-aftermath.md E23-AC02/E23-AC10",
+    "specs/90-test-concept.md evade-only negative control",
+    "tools/sim-runner/levels.ts runLevel default maxSeconds1200"
+  ],
+  "supersedes": "L5-09-unqualified.json",
+  "row": "L5-09",
+  "status": "PASS",
+  "observation": "PASS for the specified native single-seed benchmark: complete evacuates5/5 and completes in193.3667s low/222.3167s high; evade-only evacuates0 actual identities during each native default1200s trial, emits0 courier attacks, ends tick-budget with result=null (not a completed zero-rescued result). Unprotected eligible contact resolves within79/68ticks (1.3167/1.1333s), under1.5s. Complete final hashes0a23911a/147553b8 match the frozen canonical controls.",
+  "frozenCommit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "frames": [],
+  "evidence": [
+    {
+      "file": "docs/reports/final-b/L5-protection-benchmark.json.gz",
+      "sha256": "cddfc602c05c705151e3c3b2821b46d2340711189699f317f98cc8decd5520f3"
+    },
+    {
+      "file": "docs/reports/final-b/L5-protection-benchmark-executed.ts.gz",
+      "sha256": "4ce658e0351f46033bafe2a25f8fa11c7ce3255f59caaab0c51c5bb179d32c90"
+    },
+    {
+      "file": "docs/reports/final-b/L5-contact.json.gz",
+      "sha256": "f65de864431fe15a9ec0aab163ff897d3a0386b969547bd7317a74526cc07f88"
+    }
+  ]
+}

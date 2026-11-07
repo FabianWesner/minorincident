@@ -1,26 +1,27 @@
 {
   "row": "L6-11",
   "status": "PASS",
-  "reviewer": "Codex/fix71-b2",
-  "date": "2026-11-06",
-  "commit": "cca991dfebf7ff2a8deadb2b3aff616f967661d3",
+  "reviewer": "Codex/final-b",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
   "clauses": [
     {
-      "clause": "Covering matters: `evade-only` \u2264 30 % out, `complete` \u2265 60 %.",
+      "clause": "Covering matters: `evade-only` ≤ 30 % out, `complete` ≥ 60 %.",
       "verdict": "PASS",
-      "note": "Final merged mortal named bots, seed1 both qualities: complete21/29=72.41%,0 deaths; evade-only1/29=3.45%,12 deaths. Retains unchanged >=60%/<=30% thresholds while restoring opening courier pressure. Complete saves5 fewer than previous26/29; no human or physical-controller rescue qualification claimed."
+      "note": "Both tiers: mortal complete saves20/29=68.9655%, loses9, zero deaths,323.067s; evade-only saves1/29=3.4483%, loses28,12 deaths,568.333s. All four native result records balance in=out+lost. Complete hashes equal fresh canonical controls. Thresholds>=60% complete and<=30% evade pass. Native-policy qualification only."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix71-b2/merged-summary.json",
-      "sha256": "331cec0349d5d00846f610ebed7ca82206268aff4fabb8de75d1d8417187890e",
-      "what": "Final merged mortal named bots, seed1 both qualities: complete21/29=72.41%,0 deaths; evade-only1/29=3.45%,12 deaths. Retains unchanged >=60%/<=30% thresholds while restoring opening courier pressure. Complete saves5 fewer than previous26/29; no human or physical-controller rescue qualification claimed."
+      "file": "docs/reports/final-b/L6-11-native.json.gz",
+      "sha256": "9397ed55ceccebf4b3545f9659fdcf30f4c52a662081d3e9b735ae3bf5acb1f7",
+      "what": "Both tiers: mortal complete saves20/29=68.9655%, loses9, zero deaths,323.067s; evade-only saves1/29=3.4483%, loses28,12 deaths,568.333s. All four native result records balance in=out+lost. Complete hashes equal fresh canonical controls. Thresholds>=60% complete and<=30% evade pass. Native-policy qualification only."
     },
     {
-      "file": "docs/reports/fix71-b2/merged-protection.json.gz",
-      "sha256": "3a6b79f3013815000373e669da989d69eaa5fc8b2073f682ac76e724f57ff46b",
-      "what": "Read-only full mortal per-identity roster, bite and position ledger for complete/evade-only, both tiers."
+      "file": "docs/reports/final-b/L6-11-summary.json",
+      "sha256": "58f930bbdf0fc20cc2965a0851d41953225fad3f686a3feb4bdd0b69256c8bf2",
+      "what": "Both tiers: mortal complete saves20/29=68.9655%, loses9, zero deaths,323.067s; evade-only saves1/29=3.4483%, loses28,12 deaths,568.333s. All four native result records balance in=out+lost. Complete hashes equal fresh canonical controls. Thresholds>=60% complete and<=30% evade pass. Native-policy qualification only."
     }
-  ]
+  ],
+  "sourceDigest": "7fd8f0ebc3d3fcb362d200567b5da5e2e4f5bea018074dcf4fbbfccc06fdf698"
 }

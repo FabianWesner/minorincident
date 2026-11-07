@@ -1,0 +1,891 @@
+{
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "method": "Read-only production pickup spawn/arm wrappers and actual corgi fetch events on unchanged mortal complete route. Exact final native hash matches current canonical; initial/born IDs, real pickup fields and distances retained. Normal dropped courier weapons distinguished from unwanted armed street respawns.",
+  "rows": [
+    {
+      "tier": "low",
+      "native": {
+        "tier": "low",
+        "run": {
+          "level": "L5",
+          "policy": "complete",
+          "seed": 1,
+          "completed": true,
+          "time": 193.36666666666667,
+          "deaths": 1,
+          "kills": 61,
+          "damageTaken": 137.5,
+          "failures": {
+            "player-died": 1
+          },
+          "objectiveTimeline": [
+            {
+              "id": "emerge",
+              "t": 1
+            },
+            {
+              "id": "look",
+              "t": 158.71666666666667
+            },
+            {
+              "id": "metro",
+              "t": 193.36666666666667
+            }
+          ],
+          "furthestObjective": "metro",
+          "activeObjectives": [],
+          "outcome": "complete",
+          "blocker": null,
+          "collision": {
+            "failures": 0,
+            "pending": 0,
+            "admitted": 275,
+            "deferred": 0,
+            "requests": [],
+            "offenders": []
+          }
+        },
+        "hash": "0a23911a",
+        "canonicalHash": "0a23911a",
+        "initial": [],
+        "births": [
+          {
+            "tick": 0,
+            "id": 19,
+            "pickup": {
+              "actionId": "weapon.shotgun",
+              "armed": true,
+              "retain": true,
+              "interactTicks": 36,
+              "surfaceY": 0.385
+            },
+            "at": {
+              "x": 73.07,
+              "y": 0.535,
+              "z": -3.45,
+              "yaw": 0
+            },
+            "player": {
+              "x": 75.3,
+              "y": 0.705,
+              "z": -5.4,
+              "yaw": 0.3205919885488634
+            },
+            "distance": 2.9623301639081383,
+            "phase": "briefing"
+          },
+          {
+            "tick": 0,
+            "id": 20,
+            "pickup": {
+              "actionId": "weapon.assault-rifle",
+              "armed": true,
+              "survivorOnly": true,
+              "surfaceY": 0
+            },
+            "at": {
+              "x": -26.2,
+              "y": 0.15,
+              "z": -11.4,
+              "yaw": 0
+            },
+            "player": {
+              "x": 75.3,
+              "y": 0.705,
+              "z": -5.4,
+              "yaw": 0.3205919885488634
+            },
+            "distance": 101.67718524821582,
+            "phase": "briefing"
+          },
+          {
+            "tick": 0,
+            "id": 21,
+            "pickup": {
+              "actionId": "weapon.assault-rifle",
+              "armed": true,
+              "survivorOnly": true,
+              "surfaceY": 0
+            },
+            "at": {
+              "x": -24.6,
+              "y": 0.15,
+              "z": 16,
+              "yaw": 0
+            },
+            "player": {
+              "x": 75.3,
+              "y": 0.705,
+              "z": -5.4,
+              "yaw": 0.3205919885488634
+            },
+            "distance": 102.16638390390453,
+            "phase": "briefing"
+          },
+          {
+            "tick": 0,
+            "id": 22,
+            "pickup": {
+              "actionId": "weapon.assault-rifle",
+              "armed": true,
+              "survivorOnly": true,
+              "surfaceY": 0
+            },
+            "at": {
+              "x": -13.4,
+              "y": 0.15,
+              "z": -2.6,
+              "yaw": 0
+            },
+            "player": {
+              "x": 75.3,
+              "y": 0.705,
+              "z": -5.4,
+              "yaw": 0.3205919885488634
+            },
+            "distance": 88.74418290795178,
+            "phase": "briefing"
+          },
+          {
+            "tick": 0,
+            "id": 23,
+            "pickup": {
+              "actionId": "weapon.army-mg",
+              "armed": true,
+              "survivorOnly": true,
+              "surfaceY": 0
+            },
+            "at": {
+              "x": -31.6,
+              "y": 0.15,
+              "z": 5.4,
+              "yaw": 0
+            },
+            "player": {
+              "x": 75.3,
+              "y": 0.705,
+              "z": -5.4,
+              "yaw": 0.3205919885488634
+            },
+            "distance": 107.44417154969366,
+            "phase": "briefing"
+          },
+          {
+            "tick": 0,
+            "id": 24,
+            "pickup": {
+              "actionId": "weapon.assault-rifle",
+              "armed": true,
+              "survivorOnly": true,
+              "surfaceY": 0
+            },
+            "at": {
+              "x": -9,
+              "y": 0.15,
+              "z": 12.4,
+              "yaw": 0
+            },
+            "player": {
+              "x": 75.3,
+              "y": 0.705,
+              "z": -5.4,
+              "yaw": 0.3205919885488634
+            },
+            "distance": 86.1587488302842,
+            "phase": "briefing"
+          },
+          {
+            "tick": 0,
+            "id": 25,
+            "pickup": {
+              "actionId": "weapon.handgun",
+              "armed": true,
+              "survivorOnly": true,
+              "surfaceY": 0.13
+            },
+            "at": {
+              "x": 10,
+              "y": 0.28,
+              "z": -8.4,
+              "yaw": 0
+            },
+            "player": {
+              "x": 75.3,
+              "y": 0.705,
+              "z": -5.4,
+              "yaw": 0.3205919885488634
+            },
+            "distance": 65.36887638624363,
+            "phase": "briefing"
+          },
+          {
+            "tick": 0,
+            "id": 26,
+            "pickup": {
+              "actionId": "weapon.shotgun",
+              "armed": true,
+              "survivorOnly": true,
+              "surfaceY": 0
+            },
+            "at": {
+              "x": -20,
+              "y": 0.15,
+              "z": 4,
+              "yaw": 0
+            },
+            "player": {
+              "x": 75.3,
+              "y": 0.705,
+              "z": -5.4,
+              "yaw": 0.3205919885488634
+            },
+            "distance": 95.76246655135822,
+            "phase": "briefing"
+          },
+          {
+            "tick": 0,
+            "id": 27,
+            "pickup": {
+              "actionId": "weapon.assault-rifle",
+              "armed": true,
+              "survivorOnly": true,
+              "surfaceY": 0
+            },
+            "at": {
+              "x": -72,
+              "y": 0.15,
+              "z": 44.8,
+              "yaw": 0
+            },
+            "player": {
+              "x": 75.3,
+              "y": 0.705,
+              "z": -5.4,
+              "yaw": 0.3205919885488634
+            },
+            "distance": 155.61918262219473,
+            "phase": "briefing"
+          }
+        ],
+        "fetches": [],
+        "armed": [
+          {
+            "tick": 4910,
+            "id": 30,
+            "ally": {
+              "role": "civilian",
+              "engaged": true,
+              "run": null,
+              "runSpeed": 3.8,
+              "post": null,
+              "hold": false,
+              "targetId": 0,
+              "nextAttack": 0,
+              "hits": 0,
+              "forceUntil": 0,
+              "actionId": "weapon.army-mg",
+              "weapon": "rifle",
+              "gun": {
+                "damage": 18,
+                "shotS": 0.4,
+                "rangeM": 26,
+                "nearM": 20,
+                "hitNear": 0.65,
+                "hitFar": 0.35
+              }
+            },
+            "appearance": {
+              "entityId": 30,
+              "asset": "npc.mr-okafor.aftermath",
+              "tint": "#3178ac",
+              "accessories": [],
+              "handProp": "rifle",
+              "tier": "frail"
+            }
+          },
+          {
+            "tick": 5064,
+            "id": 31,
+            "ally": {
+              "role": "civilian",
+              "engaged": true,
+              "run": null,
+              "runSpeed": 3.8,
+              "post": null,
+              "hold": false,
+              "targetId": 0,
+              "nextAttack": 0,
+              "hits": 0,
+              "forceUntil": 0,
+              "actionId": "weapon.assault-rifle",
+              "weapon": "rifle",
+              "gun": {
+                "damage": 18,
+                "shotS": 0.4,
+                "rangeM": 28,
+                "nearM": 20,
+                "hitNear": 0.65,
+                "hitFar": 0.35
+              }
+            },
+            "appearance": {
+              "entityId": 31,
+              "asset": "npc.mia.aftermath",
+              "tint": "#3178ac",
+              "accessories": [],
+              "handProp": "rifle",
+              "tier": "average"
+            }
+          },
+          {
+            "tick": 7418,
+            "id": 32,
+            "ally": {
+              "role": "civilian",
+              "engaged": true,
+              "run": null,
+              "runSpeed": 3.8,
+              "post": null,
+              "hold": false,
+              "targetId": 0,
+              "nextAttack": 0,
+              "hits": 0,
+              "forceUntil": 0,
+              "actionId": "weapon.assault-rifle",
+              "weapon": "rifle",
+              "gun": {
+                "damage": 18,
+                "shotS": 0.4,
+                "rangeM": 28,
+                "nearM": 20,
+                "hitNear": 0.65,
+                "hitFar": 0.35
+              }
+            },
+            "appearance": {
+              "entityId": 32,
+              "asset": "npc.sam.aftermath",
+              "tint": "#486e69",
+              "accessories": [],
+              "handProp": "rifle",
+              "tier": "average"
+            }
+          }
+        ],
+        "streetWeaponIds": [
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27
+        ]
+      },
+      "controlledFetch": {
+        "street": 8,
+        "fetched": 0,
+        "moved": 0
+      },
+      "arming": [
+        {
+          "key": "dale",
+          "model": "npc.dale.aftermath",
+          "weapon": "rifle",
+          "ok": true
+        },
+        {
+          "key": "okafor",
+          "model": "npc.mr-okafor.aftermath",
+          "weapon": "shotgun",
+          "ok": true
+        },
+        {
+          "key": "mia",
+          "model": "npc.mia.aftermath",
+          "weapon": "hunting-rifle",
+          "ok": true
+        },
+        {
+          "key": "sam",
+          "model": "npc.sam.aftermath",
+          "weapon": "pistol",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "tier": "high",
+      "native": {
+        "tier": "high",
+        "run": {
+          "level": "L5",
+          "policy": "complete",
+          "seed": 1,
+          "completed": true,
+          "time": 222.31666666666666,
+          "deaths": 1,
+          "kills": 107,
+          "damageTaken": 187.5,
+          "failures": {
+            "player-died": 1
+          },
+          "objectiveTimeline": [
+            {
+              "id": "emerge",
+              "t": 1
+            },
+            {
+              "id": "look",
+              "t": 176.38333333333333
+            },
+            {
+              "id": "metro",
+              "t": 222.31666666666666
+            }
+          ],
+          "furthestObjective": "metro",
+          "activeObjectives": [],
+          "outcome": "complete",
+          "blocker": null,
+          "collision": {
+            "failures": 0,
+            "pending": 0,
+            "admitted": 375,
+            "deferred": 0,
+            "requests": [],
+            "offenders": []
+          }
+        },
+        "hash": "147553b8",
+        "canonicalHash": "147553b8",
+        "initial": [],
+        "births": [
+          {
+            "tick": 0,
+            "id": 19,
+            "pickup": {
+              "actionId": "weapon.shotgun",
+              "armed": true,
+              "retain": true,
+              "interactTicks": 36,
+              "surfaceY": 0.385
+            },
+            "at": {
+              "x": 73.07,
+              "y": 0.535,
+              "z": -3.45,
+              "yaw": 0
+            },
+            "player": {
+              "x": 75.3,
+              "y": 0.705,
+              "z": -5.4,
+              "yaw": 0.3205919885488634
+            },
+            "distance": 2.9623301639081383,
+            "phase": "briefing"
+          },
+          {
+            "tick": 0,
+            "id": 20,
+            "pickup": {
+              "actionId": "weapon.assault-rifle",
+              "armed": true,
+              "survivorOnly": true,
+              "surfaceY": 0
+            },
+            "at": {
+              "x": -26.2,
+              "y": 0.15,
+              "z": -11.4,
+              "yaw": 0
+            },
+            "player": {
+              "x": 75.3,
+              "y": 0.705,
+              "z": -5.4,
+              "yaw": 0.3205919885488634
+            },
+            "distance": 101.67718524821582,
+            "phase": "briefing"
+          },
+          {
+            "tick": 0,
+            "id": 21,
+            "pickup": {
+              "actionId": "weapon.assault-rifle",
+              "armed": true,
+              "survivorOnly": true,
+              "surfaceY": 0
+            },
+            "at": {
+              "x": -24.6,
+              "y": 0.15,
+              "z": 16,
+              "yaw": 0
+            },
+            "player": {
+              "x": 75.3,
+              "y": 0.705,
+              "z": -5.4,
+              "yaw": 0.3205919885488634
+            },
+            "distance": 102.16638390390453,
+            "phase": "briefing"
+          },
+          {
+            "tick": 0,
+            "id": 22,
+            "pickup": {
+              "actionId": "weapon.assault-rifle",
+              "armed": true,
+              "survivorOnly": true,
+              "surfaceY": 0
+            },
+            "at": {
+              "x": -13.4,
+              "y": 0.15,
+              "z": -2.6,
+              "yaw": 0
+            },
+            "player": {
+              "x": 75.3,
+              "y": 0.705,
+              "z": -5.4,
+              "yaw": 0.3205919885488634
+            },
+            "distance": 88.74418290795178,
+            "phase": "briefing"
+          },
+          {
+            "tick": 0,
+            "id": 23,
+            "pickup": {
+              "actionId": "weapon.army-mg",
+              "armed": true,
+              "survivorOnly": true,
+              "surfaceY": 0
+            },
+            "at": {
+              "x": -31.6,
+              "y": 0.15,
+              "z": 5.4,
+              "yaw": 0
+            },
+            "player": {
+              "x": 75.3,
+              "y": 0.705,
+              "z": -5.4,
+              "yaw": 0.3205919885488634
+            },
+            "distance": 107.44417154969366,
+            "phase": "briefing"
+          },
+          {
+            "tick": 0,
+            "id": 24,
+            "pickup": {
+              "actionId": "weapon.assault-rifle",
+              "armed": true,
+              "survivorOnly": true,
+              "surfaceY": 0
+            },
+            "at": {
+              "x": -9,
+              "y": 0.15,
+              "z": 12.4,
+              "yaw": 0
+            },
+            "player": {
+              "x": 75.3,
+              "y": 0.705,
+              "z": -5.4,
+              "yaw": 0.3205919885488634
+            },
+            "distance": 86.1587488302842,
+            "phase": "briefing"
+          },
+          {
+            "tick": 0,
+            "id": 25,
+            "pickup": {
+              "actionId": "weapon.handgun",
+              "armed": true,
+              "survivorOnly": true,
+              "surfaceY": 0.13
+            },
+            "at": {
+              "x": 10,
+              "y": 0.28,
+              "z": -8.4,
+              "yaw": 0
+            },
+            "player": {
+              "x": 75.3,
+              "y": 0.705,
+              "z": -5.4,
+              "yaw": 0.3205919885488634
+            },
+            "distance": 65.36887638624363,
+            "phase": "briefing"
+          },
+          {
+            "tick": 0,
+            "id": 26,
+            "pickup": {
+              "actionId": "weapon.shotgun",
+              "armed": true,
+              "survivorOnly": true,
+              "surfaceY": 0
+            },
+            "at": {
+              "x": -20,
+              "y": 0.15,
+              "z": 4,
+              "yaw": 0
+            },
+            "player": {
+              "x": 75.3,
+              "y": 0.705,
+              "z": -5.4,
+              "yaw": 0.3205919885488634
+            },
+            "distance": 95.76246655135822,
+            "phase": "briefing"
+          },
+          {
+            "tick": 0,
+            "id": 27,
+            "pickup": {
+              "actionId": "weapon.assault-rifle",
+              "armed": true,
+              "survivorOnly": true,
+              "surfaceY": 0
+            },
+            "at": {
+              "x": -72,
+              "y": 0.15,
+              "z": 44.8,
+              "yaw": 0
+            },
+            "player": {
+              "x": 75.3,
+              "y": 0.705,
+              "z": -5.4,
+              "yaw": 0.3205919885488634
+            },
+            "distance": 155.61918262219473,
+            "phase": "briefing"
+          }
+        ],
+        "fetches": [
+          {
+            "type": "corgi.fetched",
+            "tick": 10561,
+            "id": 18,
+            "pickupId": 388
+          }
+        ],
+        "armed": [
+          {
+            "tick": 7959,
+            "id": 32,
+            "ally": {
+              "role": "civilian",
+              "engaged": true,
+              "run": null,
+              "runSpeed": 3.8,
+              "post": null,
+              "hold": false,
+              "targetId": 0,
+              "nextAttack": 0,
+              "hits": 0,
+              "forceUntil": 0,
+              "actionId": "weapon.assault-rifle",
+              "weapon": "rifle",
+              "gun": {
+                "damage": 18,
+                "shotS": 0.4,
+                "rangeM": 28,
+                "nearM": 20,
+                "hitNear": 0.65,
+                "hitFar": 0.35
+              }
+            },
+            "appearance": {
+              "entityId": 32,
+              "asset": "npc.sam.aftermath",
+              "tint": "#486e69",
+              "accessories": [],
+              "handProp": "rifle",
+              "tier": "average"
+            }
+          }
+        ],
+        "streetWeaponIds": [
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27
+        ]
+      },
+      "controlledFetch": {
+        "street": 8,
+        "fetched": 0,
+        "moved": 0
+      },
+      "arming": [
+        {
+          "key": "dale",
+          "model": "npc.dale.aftermath",
+          "weapon": "rifle",
+          "ok": true
+        },
+        {
+          "key": "okafor",
+          "model": "npc.mr-okafor.aftermath",
+          "weapon": "shotgun",
+          "ok": true
+        },
+        {
+          "key": "mia",
+          "model": "npc.mia.aftermath",
+          "weapon": "hunting-rifle",
+          "ok": true
+        },
+        {
+          "key": "sam",
+          "model": "npc.sam.aftermath",
+          "weapon": "pistol",
+          "ok": true
+        }
+      ]
+    }
+  ],
+  "row": "L5-10",
+  "status": "PASS",
+  "observation": "Both tiers controlled production armSurvivor fixture exercises rifle, shotgun, hunting rifle and pistol on four surviving named followers; personally reviewed idle/walk close/wide frames show guns held in hands. Sixteen images inspected; hostile crowd occlusion disclosed. Corgi20s beside8 actual street weapons:0 fetched,0 moved. Separate untouched mortal complete routes exactly match canonical hashes0a23911a/147553b8: all9 weapon births occur at initial tick0 (8 street+retained shotgun), none later or under player; no actual corgi fetch targets a street weapon. High one fetch is not among weapon birth IDs. No game source change; controlled arming/positioning disclosed, not a full physical protection benchmark.",
+  "frozenCommit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "frames": [
+    {
+      "file": "test-results/final-b/weapons-low/low-armed-walk-z1.5.jpg",
+      "sha256": "ea9c7fedef7041aab45a8e432e8b1323df56c5cdb2f3c8abfddee72c8fcaca04",
+      "personallyReviewed": true,
+      "observation": "Personally inspected labelled idle/walk close/wide and street frames. Opaque green heroine; armed survivors carry black/brown firearm stocks and barrels in hands while idle and following, with some body occlusion from hostile crowd. Four production-armed rifle/shotgun/hunting-rifle/pistol combos per tier are exercised; not an all-frames unobscured claim."
+    },
+    {
+      "file": "test-results/final-b/weapons-low/low-armed-idle-z0.5.jpg",
+      "sha256": "5393fdb5e5035ddb4b0a5ae6ca23bc489b2d94afeb64fd7f4300e801d1dcb8a9",
+      "personallyReviewed": true,
+      "observation": "Personally inspected labelled idle/walk close/wide and street frames. Opaque green heroine; armed survivors carry black/brown firearm stocks and barrels in hands while idle and following, with some body occlusion from hostile crowd. Four production-armed rifle/shotgun/hunting-rifle/pistol combos per tier are exercised; not an all-frames unobscured claim."
+    },
+    {
+      "file": "test-results/final-b/weapons-low/low-hiding-place-z0.5.jpg",
+      "sha256": "21d7544a6b1a076fdc34eed25b5e058063df0cd6e36fb32c2fa102473d74cc14",
+      "personallyReviewed": true,
+      "observation": "Personally inspected labelled idle/walk close/wide and street frames. Opaque green heroine; armed survivors carry black/brown firearm stocks and barrels in hands while idle and following, with some body occlusion from hostile crowd. Four production-armed rifle/shotgun/hunting-rifle/pistol combos per tier are exercised; not an all-frames unobscured claim."
+    },
+    {
+      "file": "test-results/final-b/weapons-low/low-armed-idle-z1.5.jpg",
+      "sha256": "f7fa7685664c2c852b2faf672fda20f6aa8e6a6e07c4c52b4d8b46c7c38b0bf1",
+      "personallyReviewed": true,
+      "observation": "Personally inspected labelled idle/walk close/wide and street frames. Opaque green heroine; armed survivors carry black/brown firearm stocks and barrels in hands while idle and following, with some body occlusion from hostile crowd. Four production-armed rifle/shotgun/hunting-rifle/pistol combos per tier are exercised; not an all-frames unobscured claim."
+    },
+    {
+      "file": "test-results/final-b/weapons-low/low-armed-walk-z0.5.jpg",
+      "sha256": "66e70ff78abc9ef48f5525597078739cca1c8e66b0c4147ded72c20d730ed412",
+      "personallyReviewed": true,
+      "observation": "Personally inspected labelled idle/walk close/wide and street frames. Opaque green heroine; armed survivors carry black/brown firearm stocks and barrels in hands while idle and following, with some body occlusion from hostile crowd. Four production-armed rifle/shotgun/hunting-rifle/pistol combos per tier are exercised; not an all-frames unobscured claim."
+    },
+    {
+      "file": "test-results/final-b/weapons-low/low-hiding-place-z1.5.jpg",
+      "sha256": "476a718c286491cd6728849ed2d3514e0dfcc6d6749e835faa61a45fe531ba1f",
+      "personallyReviewed": true,
+      "observation": "Personally inspected labelled idle/walk close/wide and street frames. Opaque green heroine; armed survivors carry black/brown firearm stocks and barrels in hands while idle and following, with some body occlusion from hostile crowd. Four production-armed rifle/shotgun/hunting-rifle/pistol combos per tier are exercised; not an all-frames unobscured claim."
+    },
+    {
+      "file": "test-results/final-b/weapons-low/low-street-weapon-z1.5.jpg",
+      "sha256": "cfbcca02800bff251b0d6c3a5f71b60eeedaff085e90519256207852257758c8",
+      "personallyReviewed": true,
+      "observation": "Personally inspected labelled idle/walk close/wide and street frames. Opaque green heroine; armed survivors carry black/brown firearm stocks and barrels in hands while idle and following, with some body occlusion from hostile crowd. Four production-armed rifle/shotgun/hunting-rifle/pistol combos per tier are exercised; not an all-frames unobscured claim."
+    },
+    {
+      "file": "test-results/final-b/weapons-low/low-street-weapon-z0.5.jpg",
+      "sha256": "083bfe5b7592aad9f08e3fbe29da9c510f45f669a9d396c24a7a46369c17e872",
+      "personallyReviewed": true,
+      "observation": "Personally inspected labelled idle/walk close/wide and street frames. Opaque green heroine; armed survivors carry black/brown firearm stocks and barrels in hands while idle and following, with some body occlusion from hostile crowd. Four production-armed rifle/shotgun/hunting-rifle/pistol combos per tier are exercised; not an all-frames unobscured claim."
+    },
+    {
+      "file": "test-results/final-b/weapons-high/high-hiding-place-z1.5.jpg",
+      "sha256": "4c1119da6b9f290f110b28ae5d3336f6714cfab13827445f11162fd00f516c44",
+      "personallyReviewed": true,
+      "observation": "Personally inspected labelled idle/walk close/wide and street frames. Opaque green heroine; armed survivors carry black/brown firearm stocks and barrels in hands while idle and following, with some body occlusion from hostile crowd. Four production-armed rifle/shotgun/hunting-rifle/pistol combos per tier are exercised; not an all-frames unobscured claim."
+    },
+    {
+      "file": "test-results/final-b/weapons-high/high-hiding-place-z0.5.jpg",
+      "sha256": "715573f9264f4170fa81fa2b68a9cfdca78e8ff0e499fd4bc215ad8492c6b69d",
+      "personallyReviewed": true,
+      "observation": "Personally inspected labelled idle/walk close/wide and street frames. Opaque green heroine; armed survivors carry black/brown firearm stocks and barrels in hands while idle and following, with some body occlusion from hostile crowd. Four production-armed rifle/shotgun/hunting-rifle/pistol combos per tier are exercised; not an all-frames unobscured claim."
+    },
+    {
+      "file": "test-results/final-b/weapons-high/high-armed-idle-z1.5.jpg",
+      "sha256": "8656e398289d67d2763ed98b585912bf3b24658604646152dff1ddc961fe4410",
+      "personallyReviewed": true,
+      "observation": "Personally inspected labelled idle/walk close/wide and street frames. Opaque green heroine; armed survivors carry black/brown firearm stocks and barrels in hands while idle and following, with some body occlusion from hostile crowd. Four production-armed rifle/shotgun/hunting-rifle/pistol combos per tier are exercised; not an all-frames unobscured claim."
+    },
+    {
+      "file": "test-results/final-b/weapons-high/high-armed-walk-z0.5.jpg",
+      "sha256": "ebe839faf293ee1571cf79cd0de17b135ecbfb44f62eb868be121b82ac1e0df6",
+      "personallyReviewed": true,
+      "observation": "Personally inspected labelled idle/walk close/wide and street frames. Opaque green heroine; armed survivors carry black/brown firearm stocks and barrels in hands while idle and following, with some body occlusion from hostile crowd. Four production-armed rifle/shotgun/hunting-rifle/pistol combos per tier are exercised; not an all-frames unobscured claim."
+    },
+    {
+      "file": "test-results/final-b/weapons-high/high-street-weapon-z1.5.jpg",
+      "sha256": "40ff7f882b1a007e8273a27b532739e6dde693415b2e04c7629971325b6eb08b",
+      "personallyReviewed": true,
+      "observation": "Personally inspected labelled idle/walk close/wide and street frames. Opaque green heroine; armed survivors carry black/brown firearm stocks and barrels in hands while idle and following, with some body occlusion from hostile crowd. Four production-armed rifle/shotgun/hunting-rifle/pistol combos per tier are exercised; not an all-frames unobscured claim."
+    },
+    {
+      "file": "test-results/final-b/weapons-high/high-street-weapon-z0.5.jpg",
+      "sha256": "dfa919c3003f10f8d5c5a23be4603731f0b11fad4282ec687e8ae3d80a64711f",
+      "personallyReviewed": true,
+      "observation": "Personally inspected labelled idle/walk close/wide and street frames. Opaque green heroine; armed survivors carry black/brown firearm stocks and barrels in hands while idle and following, with some body occlusion from hostile crowd. Four production-armed rifle/shotgun/hunting-rifle/pistol combos per tier are exercised; not an all-frames unobscured claim."
+    },
+    {
+      "file": "test-results/final-b/weapons-high/high-armed-walk-z1.5.jpg",
+      "sha256": "1bea1667e42c526a91894f51a8ce2d7acad355e2252fd799c5f13015b72c1d5f",
+      "personallyReviewed": true,
+      "observation": "Personally inspected labelled idle/walk close/wide and street frames. Opaque green heroine; armed survivors carry black/brown firearm stocks and barrels in hands while idle and following, with some body occlusion from hostile crowd. Four production-armed rifle/shotgun/hunting-rifle/pistol combos per tier are exercised; not an all-frames unobscured claim."
+    },
+    {
+      "file": "test-results/final-b/weapons-high/high-armed-idle-z0.5.jpg",
+      "sha256": "933a6fd6ae8e315f3dc6fd19bcd1092dc832dbf0153e2bfe52f39da83bf356d5",
+      "personallyReviewed": true,
+      "observation": "Personally inspected labelled idle/walk close/wide and street frames. Opaque green heroine; armed survivors carry black/brown firearm stocks and barrels in hands while idle and following, with some body occlusion from hostile crowd. Four production-armed rifle/shotgun/hunting-rifle/pistol combos per tier are exercised; not an all-frames unobscured claim."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/final-b/L5-weapons-native.json.gz",
+      "sha256": "d59bd5f97a71ac49e14f3d9d45c1a6cf23f1d4d2f11e12b05ab99b116e1e8b3f"
+    },
+    {
+      "file": "docs/reports/final-b/L5-weapons-render-executed.ts.gz",
+      "sha256": "52fb33c5d0b0ec0588ec9409029079fb5ffcf78b812545f70feecfa753c9c29a"
+    },
+    {
+      "file": "docs/reports/final-b/L5-weapons-low-render-ledger.json.gz",
+      "sha256": "52b100f74b5e426664d0f8e8ef63d4f7c5dcf9c4a61fd51d861c14f24281acd1"
+    },
+    {
+      "file": "docs/reports/final-b/L5-weapons-high-render-ledger.json.gz",
+      "sha256": "122ce502f52ca85a808a42d7f27fd7553bcd659d92849c7d16e53624c1772350"
+    }
+  ]
+}

@@ -1,36 +1,28 @@
 {
   "row": "L4-12",
   "status": "PASS",
-  "reviewer": "Codex/fix73-b",
-  "date": "2026-11-06",
-  "commit": "166205b9600ebef710ec16709af5e36648170bc0",
+  "reviewer": "Codex/final-b",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
   "clauses": [
     {
       "clause": "Horde mix: ≥ 4 distinct infected looks in every 20-infected sample (not only suits).",
       "verdict": "PASS",
-      "note": "Current source d97192f688d1e72561fb49f26eb4afff8d84d9f6cc4dabfe56bd373cd1bfb0b5: full-rate nearest20 war census passes>=4 looks at every measured tick, low10679/high10715 checks, minimum4 both. Existing inf.firefighter and npc.firefighter-alive bodies share the unchanged firefighter archetype. Full canonical gameplay state hashes after omitting only cosmetic infected.model match baseline (low17026cfd/high1995724f); all route stats, admissions, populations and recorded actor positions are deeply identical. Both distinct infected body batches draw together in130 low/139 high renderer samples, and all16 frames were personally inspected. No counts, stats, timers, caps or criteria lowered. Supplemental seeds2/3 at both tiers also PASS: minima4/4 and4/5, respectively. Across seeds1–3, all6 mortal routes complete and all66270 eligible war ticks meet>=4. Exact baseline gameplay equivalence is established for seed1."
+      "note": "Both tiers minimum4 distinct production model looks in all10679/10715 eligible nearest20-infected ticks. Current physical frames show visibly distinct riot, hazmat, slim firefighter, bulky responder and ordinary clothing; not suits alone."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix73-b/L4-look-equivalence.json",
-      "sha256": "0f599a33e10f7638c9d51b1a24e9411ad6a4072748d107a653b2a3af0559527a",
-      "what": "Current source d97192f688d1e72561fb49f26eb4afff8d84d9f6cc4dabfe56bd373cd1bfb0b5: full-rate nearest20 war census passes>=4 looks at every measured tick, low10679/high10715 checks, minimum4 both. Existing inf.firefighter and npc.firefighter-alive bodies share the unchanged firefighter archetype. Full canonical gameplay state hashes after omitting only cosmetic infected.model match baseline (low17026cfd/high1995724f); all route stats, admissions, populations and recorded actor positions are deeply identical. Both distinct infected body batches draw together in130 low/139 high renderer samples, and all16 frames were personally inspected. No counts, stats, timers, caps or criteria lowered. Supplemental seeds2/3 at both tiers also PASS: minima4/4 and4/5, respectively. Across seeds1–3, all6 mortal routes complete and all66270 eligible war ticks meet>=4. Exact baseline gameplay equivalence is established for seed1."
+      "file": "docs/reports/final-b/L4-war-review.json",
+      "sha256": "59c79b8b78a5dc022785b6e42423ff9e6c0cbfd0f8122a08e486dbb8833050c0",
+      "what": "Both tiers minimum4 distinct production model looks in all10679/10715 eligible nearest20-infected ticks. Current physical frames show visibly distinct riot, hazmat, slim firefighter, bulky responder and ordinary clothing; not suits alone."
     },
     {
-      "file": "docs/reports/fix73-b/L4-look-after-native.json.gz",
-      "sha256": "a17791c400093f43111697a254c5af58ebe0f2ff26d9390b505713a45c0d5a7c",
-      "what": "Complete current-source census/admission observer data, both native routes."
-    },
-    {
-      "file": "docs/reports/fix73-b/L4-17-render-review.json",
-      "sha256": "6f79ea4950bf57cff56d452b35274477abc0ea33dc7e6b8058a9e955de9ed0af",
-      "what": "All16 inspected frames plus actual simultaneous body-batch identities; distinct slim and bulky responder looks."
-    },
-    {
-      "file": "docs/reports/fix73-b/L4-look-seeds.json",
-      "sha256": "062b65e16ad458b9beaacd429adc0fe34c9624655476025bd5dc11e7ecd253f0",
-      "what": "Six complete native routes, source-matched full census receipts, all66270 eligible ticks passing without seed selection."
+      "file": "docs/reports/final-b/L4-native.json.gz",
+      "sha256": "ccc8b1981bd291bf8099489e26cb27a2ccb26664b349a2a33cc5709039832757",
+      "what": "Fresh actual native look census, preserved canonical route; raw per-sample identities and model variants."
     }
-  ]
+  ],
+  "notes": "Nearest20 living infected sample is checked each eligible tick, not every combinatorial subset of20 in the city.",
+  "sourceDigest": "e3dafe0694468ae05c6e72a1f303adf938a6c33391416d38d67a60534e2fe51b"
 }

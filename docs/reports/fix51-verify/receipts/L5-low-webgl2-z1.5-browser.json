@@ -3,116 +3,326 @@
   "level": "L5",
   "tier": "low",
   "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
-  "fixtureHash": "3a1aa6ffd344dc12e40e887d5787eccb7b7f2da10d19445898a88e94befd6f3f",
-  "browserHash": "3a1aa6ffd344dc12e40e887d5787eccb7b7f2da10d19445898a88e94befd6f3f",
+  "fixtureHash": "9fb879417a3b4534da7a31ad0b56029c212bd06373c52c096eae91729ad6f682",
+  "browserHash": "9388d0056ef51321f7a42b0d246655834460a88af205dee82674435822fa31c9",
+  "errors": [],
+  "observations": {
+    "scope": "Supplementary current native qualification only; no full browser route/G-25 claim."
+  },
   "checks": [
     {
-      "id": "G-25",
-      "clause": "physical WASD/mouse full-level browser console",
+      "id": "L5-03",
+      "clause": "actual initial infected positions accepted cohorts and all street bands",
       "tier": "low",
-      "policy": "real-input-webgl2",
+      "policy": "controlled-fixture",
       "status": "PASS",
       "value": {
-        "backend": "webgl2",
-        "zoom": 1.5,
-        "completed": true,
-        "skipped": [],
-        "consoleErrors": [],
-        "immortal": true,
-        "frameTiming": false
+        "tier": "low",
+        "initialCount": 100,
+        "maximumGroup": 2,
+        "bands": [
+          {
+            "z": -50,
+            "ids": [
+              136
+            ]
+          },
+          {
+            "z": -37.4,
+            "ids": [
+              84,
+              86,
+              91,
+              97,
+              104,
+              106,
+              108,
+              112,
+              114,
+              142,
+              150,
+              158,
+              164,
+              182,
+              190,
+              200,
+              216,
+              226,
+              252,
+              262,
+              270
+            ]
+          },
+          {
+            "z": -24,
+            "ids": [
+              118,
+              124,
+              174,
+              244,
+              278,
+              280
+            ]
+          },
+          {
+            "z": -12,
+            "ids": [
+              144,
+              148,
+              152,
+              156,
+              160,
+              184,
+              194,
+              228,
+              230,
+              232,
+              256,
+              258,
+              260,
+              264
+            ]
+          },
+          {
+            "z": 2,
+            "ids": [
+              100,
+              126,
+              128,
+              134,
+              168,
+              172,
+              176,
+              178,
+              206,
+              212,
+              238,
+              246,
+              274
+            ]
+          },
+          {
+            "z": 14,
+            "ids": [
+              88,
+              102,
+              110,
+              154,
+              162,
+              186,
+              192,
+              218,
+              266
+            ]
+          },
+          {
+            "z": 28,
+            "ids": [
+              122,
+              170,
+              180,
+              204,
+              208,
+              210,
+              214,
+              236,
+              240,
+              242,
+              248,
+              276
+            ]
+          },
+          {
+            "z": 43.6,
+            "ids": [
+              90,
+              93,
+              95,
+              98,
+              116,
+              120,
+              130,
+              132,
+              138,
+              140,
+              146,
+              166,
+              188,
+              196,
+              198,
+              202,
+              220,
+              222,
+              224,
+              234,
+              250,
+              254,
+              268,
+              272
+            ]
+          }
+        ],
+        "streetColumns": [
+          {
+            "x": -68,
+            "ids": [
+              166,
+              202,
+              270,
+              272
+            ]
+          },
+          {
+            "x": -56,
+            "ids": [
+              120,
+              138,
+              164,
+              198,
+              200,
+              234
+            ]
+          },
+          {
+            "x": -40,
+            "ids": [
+              97,
+              112,
+              124,
+              140,
+              162,
+              180,
+              196,
+              232,
+              264,
+              266,
+              268
+            ]
+          },
+          {
+            "x": -26,
+            "ids": [
+              84,
+              88,
+              93,
+              95,
+              134,
+              136,
+              158,
+              160,
+              178,
+              194,
+              212,
+              214,
+              230,
+              244,
+              246,
+              248,
+              260,
+              262
+            ]
+          },
+          {
+            "x": -12,
+            "ids": [
+              86,
+              102,
+              108,
+              116,
+              126,
+              156,
+              176,
+              210,
+              228,
+              242
+            ]
+          },
+          {
+            "x": 2,
+            "ids": [
+              98,
+              122,
+              128,
+              150,
+              152,
+              154,
+              174,
+              190,
+              192,
+              258,
+              280
+            ]
+          },
+          {
+            "x": 14,
+            "ids": [
+              100,
+              110,
+              118,
+              148,
+              188,
+              224,
+              226,
+              256
+            ]
+          },
+          {
+            "x": 28,
+            "ids": [
+              91,
+              114,
+              222,
+              254
+            ]
+          },
+          {
+            "x": 44,
+            "ids": [
+              90,
+              104,
+              106,
+              144,
+              146,
+              172,
+              186,
+              208,
+              220,
+              278
+            ]
+          },
+          {
+            "x": 58,
+            "ids": [
+              130,
+              170,
+              182,
+              184,
+              206,
+              216,
+              218,
+              238,
+              240,
+              274,
+              276
+            ]
+          },
+          {
+            "x": 66,
+            "ids": [
+              132,
+              142,
+              168,
+              204,
+              236,
+              250,
+              252
+            ]
+          }
+        ],
+        "proof": "docs/reports/final-b/L5-census.json"
       },
-      "target": "complete ordinary-input route; zero console/page errors; no objective skips",
-      "receipt": "docs/reports/final-g/G-25-L5-low.json"
+      "target": "Existing exact required clause; fresh full raw proof retained, no game edits.",
+      "receipt": "docs/reports/final-b/L5-census.json"
     }
-  ],
-  "errors": [],
-  "run": [
-    {
-      "level": "L5",
-      "entry": "debug",
-      "heroine": "female",
-      "finished": true,
-      "skipped": [],
-      "wallSeconds": 183,
-      "simSeconds": 0,
-      "maxNoProgressSeconds": 8.375,
-      "deaths": 0,
-      "assists": 5,
-      "attacks": {
-        "weapon.army-mg": 863
-      },
-      "weaponsStart": [
-        "weapon.fire-axe",
-        "weapon.bat",
-        "weapon.army-mg",
-        "weapon.handgun",
-        "weapon.kick"
-      ],
-      "weaponsEnd": [
-        "weapon.fire-axe",
-        "weapon.bat",
-        "weapon.army-mg",
-        "weapon.handgun",
-        "weapon.kick"
-      ],
-      "steps": [
-        {
-          "id": "emerge",
-          "text": "Unbar the cellar door · 4 m",
-          "tick": 18,
-          "marker": {
-            "anchor": "l5-brace",
-            "ring": {
-              "x": 74.6,
-              "y": 0,
-              "z": -1.4
-            },
-            "drawn": [
-              74.6,
-              0.05,
-              -1.4
-            ],
-            "playerY": 0.7049999833106995,
-            "pinVisible": true
-          }
-        },
-        {
-          "id": "look",
-          "text": "Look for anyone still alive",
-          "tick": 800,
-          "marker": {
-            "anchor": "l5-brace",
-            "ring": null,
-            "drawn": null,
-            "playerY": 0.8500000238418579,
-            "pinVisible": false
-          }
-        },
-        {
-          "id": "metro",
-          "text": "Lead the survivors down into the Metro · Survivors in 0/1 · 92 m",
-          "tick": 7874,
-          "marker": {
-            "anchor": "l5-metro-in",
-            "ring": {
-              "x": 37.485400000000006,
-              "y": 0.94,
-              "z": -48.44
-            },
-            "drawn": [
-              37.49,
-              0.94,
-              -48.44
-            ],
-            "playerY": 0.8500000238418579,
-            "pinVisible": true
-          }
-        }
-      ]
-    }
-  ],
-  "issues": [],
-  "frameTiming": false,
-  "backend": "webgl2",
-  "zoom": 1.5
+  ]
 }

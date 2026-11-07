@@ -1,41 +1,37 @@
 {
   "row": "L4-14",
   "status": "PASS",
-  "reviewer": "Codex/sweep-b",
-  "date": "2026-11-06",
-  "commit": "c041d834dd217a1209e1878feff754ac62a1fe35",
+  "reviewer": "Codex/final-b",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "sourceDigest": "e3dafe0694468ae05c6e72a1f303adf938a6c33391416d38d67a60534e2fe51b",
   "clauses": [
     {
       "clause": "Live damage at cellar entry: \u2265 4 fires, \u2265 2 burning vehicles, \u2265 10 shattered windows, \u2265 6 scorch decals.",
       "verdict": "PASS",
-      "note": "Both current low/high renderer worlds at actual cellar entry contain4 persistent fires,3 burned/burning vehicle identities,14 shattered-window events and21 live production Blasts.scorch pool instances (target\u22656). Actual render and director tiers agree with each requested tier. Native ordinary route damage ledgers independently retain actual exploded/burned vehicle entities; collapse fire effects persist. The old s.scorch controller field is not the renderer count and is not used. Both new entry images were inspected; they frame the courtyard, so the remote damage census is supplied by the production state/pools and earlier151-frame full-route review."
+      "note": "Both actual cellar-entry renderer routes:4 live long-duration fires,3 burning/exploded vehicle wrecks,10 shattered windows; actual renderer scorch pool21 low/20 high (required6). Untouched ordinary mortal ledger separately confirms4/3/10. Production L4 fire duration3600 seconds keeps these fires alive at entry; VehicleView draws fire for burning OR exploded, so exploded wrecks are not excluded incorrectly. Renderer route protects only courier, NPCs remain mortal; no forced damage counts or objective advance."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-b/L4-14-proof.json",
-      "sha256": "eff3db914709011475aaab1ba3983fcf4ea58ae04c47557705287c4c0a0bd16f",
-      "what": "Both current low/high renderer worlds at actual cellar entry contain4 persistent fires,3 burned/burning vehicle identities,14 shattered-window events and21 live production Blasts.scorch pool instances (target\u22656). Actual render and director tiers agree with each requested tier. Native ordinary route damage ledgers independently retain actual exploded/burned vehicle entities; collapse fire effects persist. The old s.scorch controller field is not the renderer count and is not used. Both new entry images were inspected; they frame the courtyard, so the remote damage census is supplied by the production state/pools and earlier151-frame full-route review."
+      "file": "docs/reports/final-b/L4-14-proof.json",
+      "sha256": "244229bd15fe996a99742abdfbf9b4add2f61f3cd572e189c9d80292e137f82f",
+      "what": "Both actual cellar-entry renderer routes:4 live long-duration fires,3 burning/exploded vehicle wrecks,10 shattered windows; actual renderer scorch pool21 low/20 high (required6). Untouched ordinary mortal ledger separately confirms4/3/10. Production L4 fire duration3600 seconds keeps these fires alive at entry; VehicleView draws fire for burning OR exploded, so exploded wrecks are not excluded incorrectly. Renderer route protects only courier, NPCs remain mortal; no forced damage counts or objective advance."
     },
     {
-      "file": "docs/reports/sweep-b/L4-render-ledger.json.gz",
-      "sha256": "c5a78a159a045fb81f5edce0941c595089c711887848613693a01a9b503a40df",
-      "what": "Both current low/high renderer worlds at actual cellar entry contain4 persistent fires,3 burned/burning vehicle identities,14 shattered-window events and21 live production Blasts.scorch pool instances (target\u22656). Actual render and director tiers agree with each requested tier. Native ordinary route damage ledgers independently retain actual exploded/burned vehicle entities; collapse fire effects persist. The old s.scorch controller field is not the renderer count and is not used. Both new entry images were inspected; they frame the courtyard, so the remote damage census is supplied by the production state/pools and earlier151-frame full-route review."
+      "file": "docs/reports/final-b/corpses-final-low-full-receipt.json.gz",
+      "sha256": "60e598c1ca27cc94ba7dfd15427d4d2d1c7896c7dd31df5f5ddafa14083a196c",
+      "what": "Both actual cellar-entry renderer routes:4 live long-duration fires,3 burning/exploded vehicle wrecks,10 shattered windows; actual renderer scorch pool21 low/20 high (required6). Untouched ordinary mortal ledger separately confirms4/3/10. Production L4 fire duration3600 seconds keeps these fires alive at entry; VehicleView draws fire for burning OR exploded, so exploded wrecks are not excluded incorrectly. Renderer route protects only courier, NPCs remain mortal; no forced damage counts or objective advance."
     },
     {
-      "file": "docs/reports/sweep-b/L4-render-capture-review.json",
-      "sha256": "ce05ab815de90e1e508ea3dfee534afd8ccd4c2713ed571492f4e71b237390e3",
-      "what": "Both current low/high renderer worlds at actual cellar entry contain4 persistent fires,3 burned/burning vehicle identities,14 shattered-window events and21 live production Blasts.scorch pool instances (target\u22656). Actual render and director tiers agree with each requested tier. Native ordinary route damage ledgers independently retain actual exploded/burned vehicle entities; collapse fire effects persist. The old s.scorch controller field is not the renderer count and is not used. Both new entry images were inspected; they frame the courtyard, so the remote damage census is supplied by the production state/pools and earlier151-frame full-route review."
+      "file": "docs/reports/final-b/corpses-final-high-receipt.json.gz",
+      "sha256": "a4a522ff959e8c2519a06488463d358fd232ecea57721b992ce502d9722ea37c",
+      "what": "Both actual cellar-entry renderer routes:4 live long-duration fires,3 burning/exploded vehicle wrecks,10 shattered windows; actual renderer scorch pool21 low/20 high (required6). Untouched ordinary mortal ledger separately confirms4/3/10. Production L4 fire duration3600 seconds keeps these fires alive at entry; VehicleView draws fire for burning OR exploded, so exploded wrecks are not excluded incorrectly. Renderer route protects only courier, NPCs remain mortal; no forced damage counts or objective advance."
     },
     {
-      "file": "docs/reports/sweep-b/L4-native-ledger.json.gz",
-      "sha256": "476901193887d5ba5a1b4898af5752bb7aa7fcc4f3e0a30a5245766d692343a6",
-      "what": "Both current low/high renderer worlds at actual cellar entry contain4 persistent fires,3 burned/burning vehicle identities,14 shattered-window events and21 live production Blasts.scorch pool instances (target\u22656). Actual render and director tiers agree with each requested tier. Native ordinary route damage ledgers independently retain actual exploded/burned vehicle entities; collapse fire effects persist. The old s.scorch controller field is not the renderer count and is not used. Both new entry images were inspected; they frame the courtyard, so the remote damage census is supplied by the production state/pools and earlier151-frame full-route review."
-    },
-    {
-      "file": "docs/reports/sweep-b/L4-capture-review.json",
-      "sha256": "fb0ebb8226f31b8765bffe7e91452d6c7f26f10bec5b2c236948d59ffab874d9",
-      "what": "Both current low/high renderer worlds at actual cellar entry contain4 persistent fires,3 burned/burning vehicle identities,14 shattered-window events and21 live production Blasts.scorch pool instances (target\u22656). Actual render and director tiers agree with each requested tier. Native ordinary route damage ledgers independently retain actual exploded/burned vehicle entities; collapse fire effects persist. The old s.scorch controller field is not the renderer count and is not used. Both new entry images were inspected; they frame the courtyard, so the remote damage census is supplied by the production state/pools and earlier151-frame full-route review."
+      "file": "docs/reports/final-b/L4-native-ledger.json.gz",
+      "sha256": "e58087fab4794a1c1afeedf0039c17ee44d5066a5393a75cfb4079a6527a9299",
+      "what": "Both actual cellar-entry renderer routes:4 live long-duration fires,3 burning/exploded vehicle wrecks,10 shattered windows; actual renderer scorch pool21 low/20 high (required6). Untouched ordinary mortal ledger separately confirms4/3/10. Production L4 fire duration3600 seconds keeps these fires alive at entry; VehicleView draws fire for burning OR exploded, so exploded wrecks are not excluded incorrectly. Renderer route protects only courier, NPCs remain mortal; no forced damage counts or objective advance."
     }
   ]
 }

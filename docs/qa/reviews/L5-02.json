@@ -1,41 +1,42 @@
 {
   "row": "L5-02",
   "status": "PASS",
-  "reviewer": "Codex/sweep-b",
-  "date": "2026-11-06",
-  "commit": "7d5bce454d4383ed0e1d8a4136466af915f4752e",
+  "reviewer": "Codex/final-b",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "sourceDigest": "96b95aaf00218387ac838466ba4e849719809eef34f96b67f54241001dca8a39",
   "clauses": [
     {
       "clause": "Caption, then ~10 s without objective; no music until survivor 1; first 60 s no allies, vehicles or non-player gunfire.",
       "verdict": "PASS",
-      "note": "Both tiers: Hours-later caption is visible in prior current physical opening captures; actual emergence99 to search699 is exactly10s without the search objective. Actual running/unmuted/unlocked audio snapshots have no music request before survivor1 (1921low/2126high); first observed calm-score requests2040/2220. First60s have zero allied fighters, zero allied shots and unchanged positions for every vehicle. Unarmed Mia can join after32/35s; E23-AC04 forbids allied fighters, not an early survivor rescue. Independent native80s observers preserve exact unobserved-control hashes. Initial100/150 census and protection=false are asserted; rejected earlier Scene Lab setups are not used."
+      "note": "Both tiers: actual Hours later. dialogue eventtick0; emerge99, search/objective699, exactly10s quiet objective interval, matched read-only80s native control hashes. Untouched mortal complete first60s census:0 allies,0 active vehicles,0 non-player gunfire. Fresh actual browser WebAudio is running/unlocked/unmuted/backgroundfalse, master2/musicbus1: all44 low/37 high sampled pre-find seconds have no streamed deck, no transition and radio stopped; first-found samples2700/2280. After find actual calm-L5 deck advances with gain.5 and pausedfalse at both tiers, positive playback control. Ordinary production bot/audio supplement, no objective/actor/HP edits and no subjective listening claim. Production pre-find music-bus guard independently enforces the between-sample rule."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-b/L5-02-proof.json",
-      "sha256": "fc5c9768c3ae7412e4be8796264cfabdd264ad02c969ac76a6c8bfb9b8895818",
-      "what": "Both tiers: Hours-later caption is visible in prior current physical opening captures; actual emergence99 to search699 is exactly10s without the search objective. Actual running/unmuted/unlocked audio snapshots have no music request before survivor1 (1921low/2126high); first observed calm-score requests2040/2220. First60s have zero allied fighters, zero allied shots and unchanged positions for every vehicle. Unarmed Mia can join after32/35s; E23-AC04 forbids allied fighters, not an early survivor rescue. Independent native80s observers preserve exact unobserved-control hashes. Initial100/150 census and protection=false are asserted; rejected earlier Scene Lab setups are not used."
+      "file": "docs/reports/final-b/L5-02-proof.json",
+      "sha256": "2d23079af327a06b92311ce15599ff2db9a8e146b8c829b4ac6de936c18fb8f1",
+      "what": "Both tiers: actual Hours later. dialogue eventtick0; emerge99, search/objective699, exactly10s quiet objective interval, matched read-only80s native control hashes. Untouched mortal complete first60s census:0 allies,0 active vehicles,0 non-player gunfire. Fresh actual browser WebAudio is running/unlocked/unmuted/backgroundfalse, master2/musicbus1: all44 low/37 high sampled pre-find seconds have no streamed deck, no transition and radio stopped; first-found samples2700/2280. After find actual calm-L5 deck advances with gain.5 and pausedfalse at both tiers, positive playback control. Ordinary production bot/audio supplement, no objective/actor/HP edits and no subjective listening claim. Production pre-find music-bus guard independently enforces the between-sample rule."
     },
     {
-      "file": "docs/reports/sweep-b/L5-render-ledger.json.gz",
-      "sha256": "af5375bb80c5c745837834a73e24ab6eeb15a6feee8fd50dfbd704956cb1432a",
-      "what": "Both tiers: Hours-later caption is visible in prior current physical opening captures; actual emergence99 to search699 is exactly10s without the search objective. Actual running/unmuted/unlocked audio snapshots have no music request before survivor1 (1921low/2126high); first observed calm-score requests2040/2220. First60s have zero allied fighters, zero allied shots and unchanged positions for every vehicle. Unarmed Mia can join after32/35s; E23-AC04 forbids allied fighters, not an early survivor rescue. Independent native80s observers preserve exact unobserved-control hashes. Initial100/150 census and protection=false are asserted; rejected earlier Scene Lab setups are not used."
+      "file": "docs/reports/final-b/L5-audio-opening-current.json.gz",
+      "sha256": "0dec9b4230038dd55ed6b6500bfa33a96e8cbc41888df0dd89d702f18e2e3a6f",
+      "what": "Both tiers: actual Hours later. dialogue eventtick0; emerge99, search/objective699, exactly10s quiet objective interval, matched read-only80s native control hashes. Untouched mortal complete first60s census:0 allies,0 active vehicles,0 non-player gunfire. Fresh actual browser WebAudio is running/unlocked/unmuted/backgroundfalse, master2/musicbus1: all44 low/37 high sampled pre-find seconds have no streamed deck, no transition and radio stopped; first-found samples2700/2280. After find actual calm-L5 deck advances with gain.5 and pausedfalse at both tiers, positive playback control. Ordinary production bot/audio supplement, no objective/actor/HP edits and no subjective listening claim. Production pre-find music-bus guard independently enforces the between-sample rule."
     },
     {
-      "file": "docs/reports/sweep-b/L5-render-capture-review.json",
-      "sha256": "9638449ebcd7745be40d55af2a61df1014b8cdcf8d6144bcfa3963d779d4c698",
-      "what": "Both tiers: Hours-later caption is visible in prior current physical opening captures; actual emergence99 to search699 is exactly10s without the search objective. Actual running/unmuted/unlocked audio snapshots have no music request before survivor1 (1921low/2126high); first observed calm-score requests2040/2220. First60s have zero allied fighters, zero allied shots and unchanged positions for every vehicle. Unarmed Mia can join after32/35s; E23-AC04 forbids allied fighters, not an early survivor rescue. Independent native80s observers preserve exact unobserved-control hashes. Initial100/150 census and protection=false are asserted; rejected earlier Scene Lab setups are not used."
+      "file": "docs/reports/final-b/L5-audio-opening-executed.ts.gz",
+      "sha256": "898182d673b141e22aff21838f28759cdf8f2bd497c885bc532272b7b5138156",
+      "what": "Both tiers: actual Hours later. dialogue eventtick0; emerge99, search/objective699, exactly10s quiet objective interval, matched read-only80s native control hashes. Untouched mortal complete first60s census:0 allies,0 active vehicles,0 non-player gunfire. Fresh actual browser WebAudio is running/unlocked/unmuted/backgroundfalse, master2/musicbus1: all44 low/37 high sampled pre-find seconds have no streamed deck, no transition and radio stopped; first-found samples2700/2280. After find actual calm-L5 deck advances with gain.5 and pausedfalse at both tiers, positive playback control. Ordinary production bot/audio supplement, no objective/actor/HP edits and no subjective listening claim. Production pre-find music-bus guard independently enforces the between-sample rule."
     },
     {
-      "file": "docs/reports/sweep-b/L5-opening.json",
-      "sha256": "a9e840c8ba212d53cae5d79c935f58d59a2d63224610e14df1640f192cdb6cf1",
-      "what": "Both tiers: Hours-later caption is visible in prior current physical opening captures; actual emergence99 to search699 is exactly10s without the search objective. Actual running/unmuted/unlocked audio snapshots have no music request before survivor1 (1921low/2126high); first observed calm-score requests2040/2220. First60s have zero allied fighters, zero allied shots and unchanged positions for every vehicle. Unarmed Mia can join after32/35s; E23-AC04 forbids allied fighters, not an early survivor rescue. Independent native80s observers preserve exact unobserved-control hashes. Initial100/150 census and protection=false are asserted; rejected earlier Scene Lab setups are not used."
+      "file": "docs/reports/final-b/L5-opening-native.json.gz",
+      "sha256": "2cbbb5f9eac139a152e57b870d7208844edbe78c0bd709d8359024f4f98c46bb",
+      "what": "Both tiers: actual Hours later. dialogue eventtick0; emerge99, search/objective699, exactly10s quiet objective interval, matched read-only80s native control hashes. Untouched mortal complete first60s census:0 allies,0 active vehicles,0 non-player gunfire. Fresh actual browser WebAudio is running/unlocked/unmuted/backgroundfalse, master2/musicbus1: all44 low/37 high sampled pre-find seconds have no streamed deck, no transition and radio stopped; first-found samples2700/2280. After find actual calm-L5 deck advances with gain.5 and pausedfalse at both tiers, positive playback control. Ordinary production bot/audio supplement, no objective/actor/HP edits and no subjective listening claim. Production pre-find music-bus guard independently enforces the between-sample rule."
     },
     {
-      "file": "docs/reports/sweep-b/L5-capture-review.json",
-      "sha256": "0b6832f91759ce472ef35b246a382ed0c813112c35aa2283757f1e04b9e90813",
-      "what": "Both tiers: Hours-later caption is visible in prior current physical opening captures; actual emergence99 to search699 is exactly10s without the search objective. Actual running/unmuted/unlocked audio snapshots have no music request before survivor1 (1921low/2126high); first observed calm-score requests2040/2220. First60s have zero allied fighters, zero allied shots and unchanged positions for every vehicle. Unarmed Mia can join after32/35s; E23-AC04 forbids allied fighters, not an early survivor rescue. Independent native80s observers preserve exact unobserved-control hashes. Initial100/150 census and protection=false are asserted; rejected earlier Scene Lab setups are not used."
+      "file": "docs/reports/final-b/L5-metro-resume-native.json.gz",
+      "sha256": "aa59ecdce9627e617276dbb0a201a2d6ddf3027f4370284c5e57429e0fe817d2",
+      "what": "Both tiers: actual Hours later. dialogue eventtick0; emerge99, search/objective699, exactly10s quiet objective interval, matched read-only80s native control hashes. Untouched mortal complete first60s census:0 allies,0 active vehicles,0 non-player gunfire. Fresh actual browser WebAudio is running/unlocked/unmuted/backgroundfalse, master2/musicbus1: all44 low/37 high sampled pre-find seconds have no streamed deck, no transition and radio stopped; first-found samples2700/2280. After find actual calm-L5 deck advances with gain.5 and pausedfalse at both tiers, positive playback control. Ordinary production bot/audio supplement, no objective/actor/HP edits and no subjective listening claim. Production pre-find music-bus guard independently enforces the between-sample rule."
     }
   ]
 }

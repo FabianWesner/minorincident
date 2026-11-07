@@ -1,0 +1,45 @@
+{
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "frozenCommit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "method": "Fresh read-only every-tick admission conservation. Exact final-state control equality proves observer does not change the native route. Counterexamples use complete9s windows with no death/respawn/checkpoint event inside. Even the weaker reading of3 total arrivals is missed; no reliance on an inferred per-edge requirement. Native routes have24/6 deaths and are not qualified as competent protection routes. Other escape/contact clauses remain unqualified.",
+  "rows": [
+    {
+      "tier": "low",
+      "windowTicks": [
+        36109,
+        36649
+      ],
+      "observedSeconds": 9,
+      "totalActualAdmissions": 0,
+      "actualByEdge": {
+        "1": 0,
+        "2": 0,
+        "3": 0
+      },
+      "announcedQuota": 6,
+      "routeCompleted": true,
+      "routeDeaths": 24,
+      "canonicalHash": "18e71cbb",
+      "noDeathRespawnOrCheckpointInsideWindow": true
+    },
+    {
+      "tier": "high",
+      "windowTicks": [
+        17245,
+        17785
+      ],
+      "observedSeconds": 9,
+      "totalActualAdmissions": 1,
+      "actualByEdge": {
+        "1": 0,
+        "2": 0,
+        "3": 1
+      },
+      "announcedQuota": 9,
+      "routeCompleted": true,
+      "routeDeaths": 6,
+      "canonicalHash": "86ab19e8",
+      "noDeathRespawnOrCheckpointInsideWindow": true
+    }
+  ]
+}

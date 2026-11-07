@@ -1,0 +1,3113 @@
+{
+  "method": "Delete only own raw captures after recording SHA and disposition in their row review or explicit rejected/unused diagnostic manifest. Keep exact frames still needed by PO. No excluded diagnostic image is represented as visually qualifying evidence.",
+  "removed": [
+    {
+      "file": "test-results/vqa-1b/final-b-L4-low-z1.5/captures/final-b-L4-low-z1.5-L4-quartermaster-t1829-low-z1-5.jpg",
+      "sha256": "1b45a6faa5c653941fbea4e4e0086ebac8991e1426c82a04bf55588e59a4f0dc",
+      "bytes": 103453,
+      "review": "docs/reports/final-b/L4-02-proof.json"
+    },
+    {
+      "file": "test-results/vqa-1b/final-b-L4-low-z1.5/captures/final-b-L4-low-z1.5-L4-quartermaster-t1829-low-z0-5.jpg",
+      "sha256": "0629833d0adbbdd7c80f3f7c2879dce422a5b6169a6de894fb979579d19f4bf5",
+      "bytes": 78585,
+      "review": "docs/reports/final-b/L4-02-proof.json"
+    },
+    {
+      "file": "test-results/vqa-1b/final-b-L4-high-opening/captures/final-b-L4-high-opening-L4-quartermaster-t1849-high-z1-5.jpg",
+      "sha256": "4a0524278b7ad7471f3805ad69bd14d9ebc0392df460ac1712a4404be4b95a36",
+      "bytes": 101563,
+      "review": "docs/reports/final-b/L4-02-proof.json"
+    },
+    {
+      "file": "test-results/vqa-1b/final-b-L4-high-opening/captures/final-b-L4-high-opening-L4-quartermaster-t1849-high-z0-5.jpg",
+      "sha256": "26531273ecb70b51f75b9645b6d449abb421f2b2baa15c40d3789d259c9d191c",
+      "bytes": 88521,
+      "review": "docs/reports/final-b/L4-02-proof.json"
+    },
+    {
+      "file": "test-results/final-b/l4-outside-low.png",
+      "sha256": "8e6acaafd5c41a796f49573386aa55baa5a6f65a7175103c7f58b650ceabe409",
+      "bytes": 564065,
+      "review": "docs/reports/final-b/L4-02-proof.json"
+    },
+    {
+      "file": "test-results/final-b/l4-outside-high.png",
+      "sha256": "4f321bb5b889b61935b7e902ad9147015b6a36785b477a69bb41e95996f204c1",
+      "bytes": 620411,
+      "review": "docs/reports/final-b/L4-02-proof.json"
+    },
+    {
+      "file": "test-results/final-b/l5-muted/captures/000.png",
+      "sha256": "e06f490ede11848ef9ed4f592345ac2b0ab0dc0124d813e409d1f1f7db8e5ee0",
+      "bytes": 418638,
+      "review": "docs/reports/final-b/L5-muted-pilot.json"
+    },
+    {
+      "file": "test-results/final-b/l5-muted/captures/001.png",
+      "sha256": "ae733b40c921449669e6070ee3969a98c42796e8a903d984d4ff6f16c26729e3",
+      "bytes": 426290,
+      "review": "docs/reports/final-b/L5-muted-pilot.json"
+    },
+    {
+      "file": "test-results/final-b/l5-muted/captures/002.png",
+      "sha256": "b71829e1b16601b45a8531f9cdf660567469168085f9df153a5fbe3e5fbb1c9e",
+      "bytes": 428633,
+      "review": "docs/reports/final-b/L5-muted-pilot.json"
+    },
+    {
+      "file": "test-results/final-b/l5-muted/captures/003.png",
+      "sha256": "cde7e3c2f2639a94fb8bc7ca47ec7a828cf03649c72b088a5028abf2cd1d777b",
+      "bytes": 559652,
+      "review": "docs/reports/final-b/L5-muted-pilot.json"
+    },
+    {
+      "file": "test-results/final-b/l5-muted/captures/004.png",
+      "sha256": "337101b8a8cc20555af4205136599912edeb68c94da8edd57d45db4f79d78d95",
+      "bytes": 435563,
+      "review": "docs/reports/final-b/L5-muted-pilot.json"
+    },
+    {
+      "file": "test-results/final-b/l5-muted/captures/005.png",
+      "sha256": "c71bab902f3cf7d29fc69180ce777783c7d082d009507a994ff75f84ac381051",
+      "bytes": 421945,
+      "review": "docs/reports/final-b/L5-muted-pilot.json"
+    },
+    {
+      "file": "test-results/final-b/l5-muted/captures/006.png",
+      "sha256": "636f056e6b26ecab35b88fef7f2a0ded4ba974db63c814aa78fe0a6a8c30fc27",
+      "bytes": 602613,
+      "review": "docs/reports/final-b/L5-muted-pilot.json"
+    },
+    {
+      "file": "test-results/final-b/l5-muted/captures/007.png",
+      "sha256": "53137b458d20b684d1eeea858b8047ca61626050e3f78fa4ca1a6e3fa7072195",
+      "bytes": 588229,
+      "review": "docs/reports/final-b/L5-muted-pilot.json"
+    },
+    {
+      "file": "test-results/final-b/l5-muted/captures/008.png",
+      "sha256": "0223676a55c86bce98a661d8e75e1047ae89d8616d610a044b04723de46aa38a",
+      "bytes": 583173,
+      "review": "docs/reports/final-b/L5-muted-pilot.json"
+    },
+    {
+      "file": "test-results/final-b/l5-muted/captures/009.png",
+      "sha256": "657427235333df05fcca90c8fb9da9a1775778b5ca13a829d6f01b788e73c927",
+      "bytes": 522133,
+      "review": "docs/reports/final-b/L5-muted-pilot.json"
+    },
+    {
+      "file": "test-results/final-b/l5-muted/captures/010.png",
+      "sha256": "fd33db6dda67e243fd42d7169460a98376dad270c45a3124a2e9e9db57513437",
+      "bytes": 343148,
+      "review": "docs/reports/final-b/L5-muted-pilot.json"
+    },
+    {
+      "file": "test-results/final-b/l5-muted/captures/011.png",
+      "sha256": "1f4c3c040b85127739d7b0d119ece4cfab7854ce21e148a5177eaafb197fd45e",
+      "bytes": 336615,
+      "review": "docs/reports/final-b/L5-muted-pilot.json"
+    },
+    {
+      "file": "test-results/final-b/l5-muted/captures/012.png",
+      "sha256": "48e32530e3dc79b2782fb5fb64cf16582fe836dfdb49fc003e366460d945c1f7",
+      "bytes": 412751,
+      "review": "docs/reports/final-b/L5-muted-pilot.json"
+    },
+    {
+      "file": "test-results/final-b/l5-muted/captures/013.png",
+      "sha256": "5542cb8f4c0eb0f19d4f493b5534b43b944e87d84b081857f2ee1261fe21b8b6",
+      "bytes": 359981,
+      "review": "docs/reports/final-b/L5-muted-pilot.json"
+    },
+    {
+      "file": "test-results/final-b/l5-muted/captures/014.png",
+      "sha256": "b009431712ed3a99e51dd5e90561a6e32f1a2b928cca4f56967a6d7ce7199a3c",
+      "bytes": 406593,
+      "review": "docs/reports/final-b/L5-muted-pilot.json"
+    },
+    {
+      "file": "test-results/final-b/l5-muted/captures/015.png",
+      "sha256": "dc2ea60ef012fface6595a7a7538b0199370213427d63a55426b352e93e89ffd",
+      "bytes": 382962,
+      "review": "docs/reports/final-b/L5-muted-pilot.json"
+    },
+    {
+      "file": "test-results/vqa-1b/final-b-L5-cue-low/captures/final-b-L5-cue-low-L5-note-after-call-ended.jpg",
+      "sha256": "22837306af0bffcf9317b0b796ba0511658f6321793900b5f9b4e1d8fa7cb854",
+      "bytes": 87412,
+      "review": "docs/reports/final-b/L5-06-proof.json"
+    },
+    {
+      "file": "test-results/vqa-1b/final-b-L4-low-z1.5/captures/final-b-L4-low-z1.5-L4-hide-t13597-low-z1-5.jpg",
+      "sha256": "37d7e13b5652a15860f29f06217879da76779398ea84db2afa3396dab7cc2a16",
+      "bytes": 158586,
+      "review": "docs/reports/final-b/L4-15-proof.json"
+    },
+    {
+      "file": "test-results/vqa-1b/final-b-L4-low-z1.5/captures/final-b-L4-low-z1.5-L4-hide-t13597-low-z0-5.jpg",
+      "sha256": "a88f1b16667cc54821409d168c047265b455692002f21b7b4652ef4f28ebdd0f",
+      "bytes": 117429,
+      "review": "docs/reports/final-b/L4-15-proof.json"
+    },
+    {
+      "file": "test-results/vqa-1b/final-b-L4-high-retry-z1.5/captures/final-b-L4-high-retry-z1.5-L4-hide-t14219-high-z1-5.jpg",
+      "sha256": "5f71ddc711609f85427b7f80a51ab249e691c53a1ee7cccf4c64f06a7e6f8191",
+      "bytes": 173244,
+      "review": "docs/reports/final-b/L4-15-proof.json"
+    },
+    {
+      "file": "test-results/vqa-1b/final-b-L4-high-retry-z1.5/captures/final-b-L4-high-retry-z1.5-L4-hide-t14219-high-z0-5.jpg",
+      "sha256": "0f99806f7ac00bd3346589cc8a9b3a9cf931ee40327df98302359479db41f3d5",
+      "bytes": 145278,
+      "review": "docs/reports/final-b/L4-15-proof.json"
+    },
+    {
+      "file": "test-results/final-b/cellar/captures/high-z1.5-barred.jpg",
+      "sha256": "0b071adc90961b075682b57898facf3885727d67982daa25a5c5e41c2755f243",
+      "bytes": 136499,
+      "review": "docs/reports/final-b/L4-16-proof.json"
+    },
+    {
+      "file": "test-results/final-b/cellar/captures/high-z1.5-end.jpg",
+      "sha256": "038a129fdf0512c6ff375801096f30459a5128bb3e9bcb71d59e6c46d13b508a",
+      "bytes": 108553,
+      "review": "docs/reports/final-b/L4-16-proof.json"
+    },
+    {
+      "file": "test-results/final-b/cellar/captures/high-z0.5-barred.jpg",
+      "sha256": "3c715c1376e892973a3a61bea7ea0d59ed9cf4f9b569d9d45c16f1d7564434cf",
+      "bytes": 141839,
+      "review": "docs/reports/final-b/L4-16-proof.json"
+    },
+    {
+      "file": "test-results/final-b/cellar/captures/high-z0.5-end.jpg",
+      "sha256": "eb120b2a3891c9cc6324062565a8c2b0df3f3f451ecd501c710706bd05dc68ae",
+      "bytes": 92871,
+      "review": "docs/reports/final-b/L4-16-proof.json"
+    },
+    {
+      "file": "test-results/vqa-1b/final-b-L4-low-z1.5/captures/final-b-L4-low-z1.5-L4-wait-t16452-low-z0-5.jpg",
+      "sha256": "7706038bd846f44502a3a9b5143317ed6eb509e6d637a494ae4179b5be175dc1",
+      "bytes": 84500,
+      "review": "docs/reports/final-b/L4-16-proof.json"
+    },
+    {
+      "file": "test-results/vqa-1b/final-b-L4-low-z1.5/captures/final-b-L4-low-z1.5-L4-wait-t16452-low-z1-5.jpg",
+      "sha256": "e9a0d316b2ae03d93ed7f1aaabb7d1211c8f8cf8ec1e7760089d172e4941c8d5",
+      "bytes": 123386,
+      "review": "docs/reports/final-b/L4-16-proof.json"
+    },
+    {
+      "file": "test-results/vqa-1b/final-b-L6-high/captures/final-b-L6-high-L6-shelter-t639-low-z1-5.jpg",
+      "sha256": "c6ee22e54668f6ab4869dbdc528b2971b8dc968891bf8d879a05dbe7c1e4fb48",
+      "bytes": 69469,
+      "review": "docs/reports/final-b/L6-01-proof.json"
+    },
+    {
+      "file": "test-results/vqa-1b/final-b-L6-high/captures/final-b-L6-high-L6-shelter-t639-high-z1-5.jpg",
+      "sha256": "9d95d53302629b051be1f074a0d797b6171b723b54c5f504da79966f588c247d",
+      "bytes": 69458,
+      "review": "docs/reports/final-b/L6-01-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-carried-okafor/wide.png",
+      "sha256": "a9d7e7238cc1ee289bb61e61f038a68785c850b1a59990d572acdd02f580010f",
+      "bytes": 464735,
+      "review": "docs/reports/final-b/L6-01-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-carried-okafor/close.png",
+      "sha256": "40bfff8e9e2de6c4803dbbbb6a7d8cb43a6046a946849dc544c957931353e45c",
+      "bytes": 419714,
+      "review": "docs/reports/final-b/L6-01-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-bars-low/captures/low-16.png",
+      "sha256": "11185a61d0a81870767028689d511fd3c22e3c4ac0c51bd4142941ac4a2e3a63",
+      "bytes": 319386,
+      "review": "docs/reports/final-b/L6-08-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-bars-low/captures/low-17.png",
+      "sha256": "785e50d8a5470e9ed9ff52e3ee5fa374c23b4a0b2a2896fd0776a5e6c5431c83",
+      "bytes": 321174,
+      "review": "docs/reports/final-b/L6-08-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-bars-low/captures/low-18.png",
+      "sha256": "deae1d3cb5a087bdfcdd52b4fe1e74a5977b3b8fd71f53cfc6628257d553d198",
+      "bytes": 326710,
+      "review": "docs/reports/final-b/L6-08-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-bars-low/captures/low-19.png",
+      "sha256": "088d56c9db59ac70d2470db9b169c997819bd7f5ba2bd21c72074bf81512a5ba",
+      "bytes": 322919,
+      "review": "docs/reports/final-b/L6-08-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-bars-low/captures/low-20.png",
+      "sha256": "9801c4a915af091d18e8f6d4dd5904810e9b3d0daa0240e4f5030ac7cb8b8234",
+      "bytes": 321853,
+      "review": "docs/reports/final-b/L6-08-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-bars-low/captures/low-21.png",
+      "sha256": "f48ffec084366b68fb811abf84bda685fd8aeda7f455dd9ba40c720edbd736b3",
+      "bytes": 329893,
+      "review": "docs/reports/final-b/L6-08-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-bars-low/captures/low-22.png",
+      "sha256": "b02de4d0c289add8e7f182c0f16d055cd71cf7002a6a359bcf51ed0fed24ee79",
+      "bytes": 332926,
+      "review": "docs/reports/final-b/L6-08-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-bars-low/captures/low-23.png",
+      "sha256": "f9d3a7fe97e5ed06ecd652c757957a136c3a9a4666ed0a4ff2cf08074e9bc6b9",
+      "bytes": 325602,
+      "review": "docs/reports/final-b/L6-08-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-bars-low/captures/low-24.png",
+      "sha256": "e474140b4752beb1083703a5a0ff0c6ff15b83d665b933e44a91e0b917257f02",
+      "bytes": 322550,
+      "review": "docs/reports/final-b/L6-08-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-bars-low/captures/low-25.png",
+      "sha256": "6f5f290983ec9f33e3ff97a3a398bca18b4ca63a72fc29e69a31f66a90d4241e",
+      "bytes": 326029,
+      "review": "docs/reports/final-b/L6-08-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-bars-low/captures/low-26.png",
+      "sha256": "f9eab5f56ab1e6cf41ebf3ebe225e5d379d03d70c830f5df6493bf3ef22d2ea3",
+      "bytes": 321450,
+      "review": "docs/reports/final-b/L6-08-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-bars-low/captures/low-27.png",
+      "sha256": "093f53573bf380fb70206fec4e021454ebb3495dddf606152abde3e36f50fc60",
+      "bytes": 319795,
+      "review": "docs/reports/final-b/L6-08-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-bars-low/captures/low-28.png",
+      "sha256": "47c945d0afc330cc97e0b48e7a748faf17e951675ed9c25cf919d176f88ee653",
+      "bytes": 328365,
+      "review": "docs/reports/final-b/L6-08-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-bars-low/captures/low-29.png",
+      "sha256": "f1f5e90ac64b536a6607e911ed8aa5b576875ab0a51599b313a22b539be928b3",
+      "bytes": 335680,
+      "review": "docs/reports/final-b/L6-08-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-bars-low/captures/low-30.png",
+      "sha256": "c4700ffc4cfd65416dc050db271c748df1c86243aff552177ee1eec6f4282c38",
+      "bytes": 329221,
+      "review": "docs/reports/final-b/L6-08-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-bars-low/captures/low-31.png",
+      "sha256": "05ad2f3d214a42310846fcc94b19c6ceb17ab2d897fab937d8715138dcaa954a",
+      "bytes": 330154,
+      "review": "docs/reports/final-b/L6-08-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-bars-low/captures/low-32.png",
+      "sha256": "2d7dd7ac1ef6df9a359210b1ce2c54f94b9d74d9032062c79780278389a464cb",
+      "bytes": 335747,
+      "review": "docs/reports/final-b/L6-08-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-bars-low/captures/low-33.png",
+      "sha256": "8872824df66e60bc428825d0aca6feabab6567575313bf5e5e563090332282ae",
+      "bytes": 334412,
+      "review": "docs/reports/final-b/L6-08-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-bars-low/captures/low-34.png",
+      "sha256": "18e83b21510d921982fe1acc1f687f4925c112b128ba69c9535d1fcb4cb735af",
+      "bytes": 327330,
+      "review": "docs/reports/final-b/L6-08-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-bars-low/captures/low-35.png",
+      "sha256": "f942b79a2c72556d7097d11a166e36319485893bacaadac63f0992ed234a9647",
+      "bytes": 327684,
+      "review": "docs/reports/final-b/L6-08-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-bars-low/captures/low-36.png",
+      "sha256": "5588a5f307653318f783d722537250394c7f0db694576ae6286ea14247fc9e6e",
+      "bytes": 332369,
+      "review": "docs/reports/final-b/L6-08-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-bars-low/captures/low-37.png",
+      "sha256": "e7601e77f384c6a06d901eec20be014c5362004cda965091db574ce77001bef9",
+      "bytes": 333714,
+      "review": "docs/reports/final-b/L6-08-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-bars-low/captures/low-38.png",
+      "sha256": "1b1c5727c629072aa5a6fc232af055693bdaa963c993d583a9a60bb8a39fa13f",
+      "bytes": 330869,
+      "review": "docs/reports/final-b/L6-08-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-bars-low/captures/low-39.png",
+      "sha256": "0221e425b40341d3fcdbcd3eed626ac7350a9e5d70759f7b854ccab950bfb4c6",
+      "bytes": 338656,
+      "review": "docs/reports/final-b/L6-08-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-bars-low/captures/low-40.png",
+      "sha256": "4800ae6c38a76097eb94dfb4106e20ee786b3a6893f6f9ff7ee551d2f16e0152",
+      "bytes": 342887,
+      "review": "docs/reports/final-b/L6-08-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-bars-low/captures/low-41.png",
+      "sha256": "1c0731e5dd773666535f2f7299787db59aac4be33efe7f8345d1a51f807dc0bb",
+      "bytes": 334225,
+      "review": "docs/reports/final-b/L6-08-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-bars-low/captures/low-42.png",
+      "sha256": "da2bf53651c521bfb6633f659e9cb2b0b80dcb01d50243ccc72e3a5a65e706c1",
+      "bytes": 330082,
+      "review": "docs/reports/final-b/L6-08-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-bars-low/captures/low-43.png",
+      "sha256": "f6cfb1e01e983ec21e0694699d571decfd6a009f529532cbfff9288044512f6d",
+      "bytes": 335439,
+      "review": "docs/reports/final-b/L6-08-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-bars-low/captures/low-44.png",
+      "sha256": "6de11032d783c4b89d29c2590cd795672a1c6b3fdc862bf8cd65951603e41ff5",
+      "bytes": 330345,
+      "review": "docs/reports/final-b/L6-08-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-bars-high/captures/high-16.png",
+      "sha256": "b95c4a0f60aeada0b4bc9fbe774d5cef5070bec447bed75ef8755c16cf6a4d35",
+      "bytes": 323941,
+      "review": "docs/reports/final-b/L6-08-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-bars-high/captures/high-17.png",
+      "sha256": "8594b39df8d5b3ff7f204b3f9dfeb3db5d0433dc0cb61044b4c2bcd09c455f2a",
+      "bytes": 325774,
+      "review": "docs/reports/final-b/L6-08-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-bars-high/captures/high-18.png",
+      "sha256": "311aa33b1513361c8820be5b15672cad42100659b85a0b39697db57e4bc916d9",
+      "bytes": 333322,
+      "review": "docs/reports/final-b/L6-08-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-bars-high/captures/high-19.png",
+      "sha256": "9a40f0a789826659d4d46da82dc4a1cc6f4e04f3f5558e0cc283138f62633cd3",
+      "bytes": 327743,
+      "review": "docs/reports/final-b/L6-08-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-bars-high/captures/high-20.png",
+      "sha256": "5ee9a8c316d171e5ba5caa726cb83df4496bdbd2e6aa04f7fa0d70bfec39cecf",
+      "bytes": 327461,
+      "review": "docs/reports/final-b/L6-08-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-bars-high/captures/high-21.png",
+      "sha256": "622083542338690f12bad4cde86eb27927c2c293538f3acc43ba78bf22f22320",
+      "bytes": 338019,
+      "review": "docs/reports/final-b/L6-08-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-bars-high/captures/high-22.png",
+      "sha256": "8e7686ac4736923829f4337761031766c7db175db4829dff5c0e317deaed12ea",
+      "bytes": 338814,
+      "review": "docs/reports/final-b/L6-08-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-bars-high/captures/high-23.png",
+      "sha256": "1620ae3c9803ac5e7bf07a5a4e6bf71bc62ba0eca4d76160bdf1471ef71b2b37",
+      "bytes": 331036,
+      "review": "docs/reports/final-b/L6-08-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-bars-high/captures/high-24.png",
+      "sha256": "6a13b27827168237f94cd1e3c2d1e1b7739dfe74ea987a338d166747dee5f17e",
+      "bytes": 327322,
+      "review": "docs/reports/final-b/L6-08-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-bars-high/captures/high-25.png",
+      "sha256": "3dd9c2d3e165794777e9d403692f6401234e4cf13d5307f1a47f1dc00c2e83eb",
+      "bytes": 333022,
+      "review": "docs/reports/final-b/L6-08-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-bars-high/captures/high-26.png",
+      "sha256": "929e7aea7da008226378ea0479f538dda19700f83ad7a7d870dba5d85bcd7716",
+      "bytes": 327125,
+      "review": "docs/reports/final-b/L6-08-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-bars-high/captures/high-27.png",
+      "sha256": "881147ca4bf8442aeb5449a175a42945bc8314facd44b3d01e30b4c77b7476e3",
+      "bytes": 323283,
+      "review": "docs/reports/final-b/L6-08-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-bars-high/captures/high-28.png",
+      "sha256": "9d4919f989e119627acb3109f19813897b8671e71ffc0a547e0a35940e0647d3",
+      "bytes": 334736,
+      "review": "docs/reports/final-b/L6-08-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-bars-high/captures/high-29.png",
+      "sha256": "a8e73d2055a09ce258d55355421e41e078f0e1f88da017351f651f41308c6c97",
+      "bytes": 341603,
+      "review": "docs/reports/final-b/L6-08-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-bars-high/captures/high-30.png",
+      "sha256": "63fd754a2b66cb07afa8b730af4edc9e71405bf9d17aff2b0a6af0e1603df9ee",
+      "bytes": 336165,
+      "review": "docs/reports/final-b/L6-08-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-bars-high/captures/high-31.png",
+      "sha256": "3b47e41664864e5ac88d167b52e0bd48c65241871da5c702ae1a171b65635377",
+      "bytes": 336398,
+      "review": "docs/reports/final-b/L6-08-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-bars-high/captures/high-32.png",
+      "sha256": "fc9358dd31531b1e80840a6da6f22c73374b42f8e919cea6086d6292e73b4172",
+      "bytes": 343687,
+      "review": "docs/reports/final-b/L6-08-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-bars-high/captures/high-33.png",
+      "sha256": "f9a05e4dd010439c796d9e6dddb56522b3fe04d691a924668a787a1c3a7a5b63",
+      "bytes": 342044,
+      "review": "docs/reports/final-b/L6-08-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-bars-high/captures/high-34.png",
+      "sha256": "94df7730a3a66f7f8c707e8026adb48fc662ad9a25b9de4254f31b083bd16d54",
+      "bytes": 331161,
+      "review": "docs/reports/final-b/L6-08-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-bars-high/captures/high-35.png",
+      "sha256": "f9f5745ce0b59e7d2751d8311d6cb72c17eb000f3c2b2ddd5d69619bc58f73c9",
+      "bytes": 331330,
+      "review": "docs/reports/final-b/L6-08-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-bars-high/captures/high-36.png",
+      "sha256": "4d0eb52c6d5a1917e34cff10e4b6f65b4c9540a8d090d14326f755fdaa02ff6c",
+      "bytes": 339464,
+      "review": "docs/reports/final-b/L6-08-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-bars-high/captures/high-37.png",
+      "sha256": "0e6fabde49780557c565ce63fa0f26d1feb9d28a241b862c375e707adde102eb",
+      "bytes": 338642,
+      "review": "docs/reports/final-b/L6-08-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-bars-high/captures/high-38.png",
+      "sha256": "3310e1f73bf9d92c21cd39b072e5c5c5d259586a7e61677eb45a4997d6f994aa",
+      "bytes": 336003,
+      "review": "docs/reports/final-b/L6-08-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-bars-high/captures/high-39.png",
+      "sha256": "b184f1f8e7fa49b1d2252460614220831dd93e1ab95f23580e9d74a1104a09ac",
+      "bytes": 346438,
+      "review": "docs/reports/final-b/L6-08-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-bars-high/captures/high-40.png",
+      "sha256": "4021a1ca1d294501ba77e35ead2aceedb43323ec650837df49b641f7689a7c80",
+      "bytes": 348924,
+      "review": "docs/reports/final-b/L6-08-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-bars-high/captures/high-41.png",
+      "sha256": "68b3ec19a491bce5d778324ad7ed75b8580457ee54171b318269aec080fcc5fc",
+      "bytes": 339604,
+      "review": "docs/reports/final-b/L6-08-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-bars-high/captures/high-42.png",
+      "sha256": "8ca8b8df693f741944facbfbbbc96d36fc08c59135fdc70ef32d37110c5fc309",
+      "bytes": 334465,
+      "review": "docs/reports/final-b/L6-08-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-bars-high/captures/high-43.png",
+      "sha256": "512c08579eff1829e2a70e580a2b7824f47ae816d0e004828dc5d3749a6114c2",
+      "bytes": 341585,
+      "review": "docs/reports/final-b/L6-08-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-bars-high/captures/high-44.png",
+      "sha256": "41d5e7a785b7bd6bfeabee9baa57c21cede5ad80ecd9e4764b22461c7874360e",
+      "bytes": 336401,
+      "review": "docs/reports/final-b/L6-08-proof.json"
+    },
+    {
+      "file": "test-results/final-b/last-scenes/lamp-low-before.png",
+      "sha256": "b7a7aec2856b8e1877f73542a391b8a6ca2c487964c1cae348e8081ec2e1e345",
+      "bytes": 414990,
+      "review": "docs/reports/final-b/L6-02-proof.json"
+    },
+    {
+      "file": "test-results/final-b/last-scenes/lamp-low-approach.png",
+      "sha256": "e0779e880a2f4b144c93ef29e979c3e84bd7279c845d07ef0735501fe49932ca",
+      "bytes": 459301,
+      "review": "docs/reports/final-b/L6-02-proof.json"
+    },
+    {
+      "file": "test-results/final-b/last-scenes/lamp-low-opposed.png",
+      "sha256": "b412015ab5b989b71fc4bc7d59efa0983f912481eb46139adb661b5bc588cb9a",
+      "bytes": 472940,
+      "review": "docs/reports/final-b/L6-02-proof.json"
+    },
+    {
+      "file": "test-results/final-b/last-scenes/lamp-high-before.png",
+      "sha256": "ed2600494813743c19e9f3919059fecd9d3d991977c0e051e1cdc4fe1448de87",
+      "bytes": 417779,
+      "review": "docs/reports/final-b/L6-02-proof.json"
+    },
+    {
+      "file": "test-results/final-b/last-scenes/lamp-high-approach.png",
+      "sha256": "e6a50982bbf13b5d06f716cd0466cbe6d66a4248419a5d117de28be1d4eac721",
+      "bytes": 451261,
+      "review": "docs/reports/final-b/L6-02-proof.json"
+    },
+    {
+      "file": "test-results/final-b/last-scenes/lamp-high-opposed.png",
+      "sha256": "77c4a953e957ee721d9245542079af7e606aa9381172638404f4c8db59191920",
+      "bytes": 435842,
+      "review": "docs/reports/final-b/L6-02-proof.json"
+    },
+    {
+      "file": "test-results/final-b/last-scenes/exit-low-open.png",
+      "sha256": "39e5e4376446b877da65fb9ae6dc4b8d90539729204cdfd88c6d27a769d022c7",
+      "bytes": 396637,
+      "review": "docs/reports/final-b/L6-12-proof.json"
+    },
+    {
+      "file": "test-results/final-b/last-scenes/exit-low-closed.png",
+      "sha256": "39945da33d5200e3090b811dc2931c4fdfe25f88d4248edd220efc4a810400d0",
+      "bytes": 558475,
+      "review": "docs/reports/final-b/L6-12-proof.json"
+    },
+    {
+      "file": "test-results/final-b/last-scenes/exit-low-after-60-2.png",
+      "sha256": "a1e009435dff176cfc22eaa1b4149fa9606544bdda3934d632de1c70851638ab",
+      "bytes": 476014,
+      "review": "docs/reports/final-b/L6-12-proof.json"
+    },
+    {
+      "file": "test-results/final-b/last-scenes/exit-low-after-120-3.png",
+      "sha256": "8fd562783594ad955e8de8c9840cbb98c9f1a75d666eae27fb43215910a924ac",
+      "bytes": 474874,
+      "review": "docs/reports/final-b/L6-12-proof.json"
+    },
+    {
+      "file": "test-results/final-b/last-scenes/exit-low-after-120-4.png",
+      "sha256": "8c780d7c23a7726dd472289d250beda6e4747c198cce2d28d0d598556a636bca",
+      "bytes": 475680,
+      "review": "docs/reports/final-b/L6-12-proof.json"
+    },
+    {
+      "file": "test-results/final-b/last-scenes/exit-low-after-180-5.png",
+      "sha256": "3931677643e2367ea9a915e32f204cf896657721abebe8feeabdd855589e93e5",
+      "bytes": 520938,
+      "review": "docs/reports/final-b/L6-12-proof.json"
+    },
+    {
+      "file": "test-results/final-b/last-scenes/exit-high-open.png",
+      "sha256": "10253748b38060d6e05579fde1a214d69e49942c246399ee7eeb0cf658312f97",
+      "bytes": 404581,
+      "review": "docs/reports/final-b/L6-12-proof.json"
+    },
+    {
+      "file": "test-results/final-b/last-scenes/exit-high-closed.png",
+      "sha256": "89b647a070bc1c8b3b412599212977d4124d19d67682c244f36fd0c2042e3b46",
+      "bytes": 571165,
+      "review": "docs/reports/final-b/L6-12-proof.json"
+    },
+    {
+      "file": "test-results/final-b/last-scenes/exit-high-after-60-2.png",
+      "sha256": "5e72ef9d78b64831fd06268a1c28ef8615d4a018a6ac684c3f5c7431ccf5b423",
+      "bytes": 475962,
+      "review": "docs/reports/final-b/L6-12-proof.json"
+    },
+    {
+      "file": "test-results/final-b/last-scenes/exit-high-after-120-3.png",
+      "sha256": "965c5acfbc4d3afab3aa2341de72e610c004f253932ede8f63f41f1aa415a3ed",
+      "bytes": 477381,
+      "review": "docs/reports/final-b/L6-12-proof.json"
+    },
+    {
+      "file": "test-results/final-b/last-scenes/exit-high-after-120-4.png",
+      "sha256": "61b81695de8c48f732178dbe4a4537c40eaa0ff009f9c6af1107e674d4fc6208",
+      "bytes": 474062,
+      "review": "docs/reports/final-b/L6-12-proof.json"
+    },
+    {
+      "file": "test-results/final-b/last-scenes/exit-high-after-180-5.png",
+      "sha256": "54420be67c6c3d281881118661116b44fe8fe4cd1b02c8afb94dc0312a8df6ad",
+      "bytes": 536196,
+      "review": "docs/reports/final-b/L6-12-proof.json"
+    },
+    {
+      "file": "test-results/final-b/corpses-final-low-full/captures/cellar-entry-z0.5-pile.jpg",
+      "sha256": "ded923a7086c720481a97b024a4096b6d52d3f440e68fa8ad5e2949eb9daaf4e",
+      "bytes": 257309,
+      "review": "docs/reports/final-b/L4-17-proof.json"
+    },
+    {
+      "file": "test-results/final-b/corpses-final-low-full/captures/cellar-entry-z1.5-pile.jpg",
+      "sha256": "24cdcafd86bd0f97f09bfcdff33af3531466cacb3901aadacd45e681afbb8903",
+      "bytes": 238721,
+      "review": "docs/reports/final-b/L4-17-proof.json"
+    },
+    {
+      "file": "test-results/final-b/corpses-final-high/captures/cellar-entry-z0.5-pile.jpg",
+      "sha256": "2671fde2195b0d97bdd3db78a1ac2260e00e426988c32f1d3dc68611a9b6ed55",
+      "bytes": 328517,
+      "review": "docs/reports/final-b/L4-17-proof.json"
+    },
+    {
+      "file": "test-results/final-b/corpses-final-high/captures/cellar-entry-z1.5-pile.jpg",
+      "sha256": "b9d5ff88cbc683c96562151611d375da9f15d8ce13affcdb8fdfbbbd7fc2f1a1",
+      "bytes": 273051,
+      "review": "docs/reports/final-b/L4-17-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-readability-low-tunnel-62-repeat/captures/native.png",
+      "sha256": "95c5e5264ddbc3f858f221e95631002118d9fb0ae95c4a0b1697a8fbb1c66471",
+      "bytes": 424924,
+      "review": "docs/reports/final-b/L6-14-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-readability-low-tunnel-62-repeat/captures/courier-hidden.png",
+      "sha256": "69b3b4c796e362d94af97cf0c4f66a0cba2678d03b15d9b07d97eb56bbcde3a5",
+      "bytes": 325745,
+      "review": "docs/reports/final-b/L6-14-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-readability-low-tunnel-62-repeat/captures/courier-id.png",
+      "sha256": "5258588dbbc82cd5a3acc2dd7744e55e96aae943e394edb031d0fed26f62bd5e",
+      "bytes": 26569,
+      "review": "docs/reports/final-b/L6-14-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-readability-low-tunnel-62-repeat/captures/actor-black.png",
+      "sha256": "2296280d126a1427f0f5086310a2c2b4828903d90a5344a148e585e151ef59fa",
+      "bytes": 27827,
+      "review": "docs/reports/final-b/L6-14-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-readability-low-tunnel-62-repeat/captures/actor-body.png",
+      "sha256": "fdfe67be16b2a81d067d9fe99daabef02696e350a7af115ab6f756534d8fae69",
+      "bytes": 28860,
+      "review": "docs/reports/final-b/L6-14-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-readability-low-tunnel-62-repeat/captures/actor-eyes.png",
+      "sha256": "eb77d075fe7cf1dc5c6ba8afc35dfe66ce2387b3b942e2fe2324a57967e46393",
+      "bytes": 27869,
+      "review": "docs/reports/final-b/L6-14-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-readability-low-tunnel-62-repeat/captures/native-repeat.png",
+      "sha256": "95c5e5264ddbc3f858f221e95631002118d9fb0ae95c4a0b1697a8fbb1c66471",
+      "bytes": 424924,
+      "review": "docs/reports/final-b/L6-14-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-readability-high-tunnel-62-repeat/captures/native.png",
+      "sha256": "5bd9640196958dc296b9c1b74dd688ce3dc6510cb85238c9677458695123a8b1",
+      "bytes": 435216,
+      "review": "docs/reports/final-b/L6-14-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-readability-high-tunnel-62-repeat/captures/courier-hidden.png",
+      "sha256": "570b5b6a7969bb8ca14f1a774c1a5409b5b6110ab072cb6fa95e716f0efb5287",
+      "bytes": 331605,
+      "review": "docs/reports/final-b/L6-14-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-readability-high-tunnel-62-repeat/captures/courier-id.png",
+      "sha256": "fd3003364fb31ee967acd466f999be9514b7b3f33421057e1dd92c710ca7a018",
+      "bytes": 26589,
+      "review": "docs/reports/final-b/L6-14-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-readability-high-tunnel-62-repeat/captures/actor-black.png",
+      "sha256": "cb3a98623066b38897095319b8ad912ddbbd9ef5c36e59257c4716a77ca40286",
+      "bytes": 27831,
+      "review": "docs/reports/final-b/L6-14-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-readability-high-tunnel-62-repeat/captures/actor-body.png",
+      "sha256": "b3f10f0fee4b0b6358c763b9de2b56b32f5d9a92d868212c42c79019cfcd9737",
+      "bytes": 28839,
+      "review": "docs/reports/final-b/L6-14-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-readability-high-tunnel-62-repeat/captures/actor-eyes.png",
+      "sha256": "66efe38167c927346034fdc438c0f5f0bc80d9b6b30f96419c66c1b83ebbca8b",
+      "bytes": 27856,
+      "review": "docs/reports/final-b/L6-14-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L6-readability-high-tunnel-62-repeat/captures/native-repeat.png",
+      "sha256": "5bd9640196958dc296b9c1b74dd688ce3dc6510cb85238c9677458695123a8b1",
+      "bytes": 435216,
+      "review": "docs/reports/final-b/L6-14-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L5-final-visual/low-arrival.png",
+      "sha256": "6af43c1445b0598dcbcb89048ddd57556c656fb4ea3161e236d06b68a3d1241b",
+      "bytes": 545734,
+      "review": "docs/reports/final-b/L5-12-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L5-final-visual/low-metro-1.png",
+      "sha256": "931841a6442dcd6a50ced3b8733ef03b1229d7f980128a10b2f98ed97ffcc456",
+      "bytes": 483275,
+      "review": "docs/reports/final-b/L5-12-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L5-final-visual/low-metro-2.png",
+      "sha256": "7e87c3bc19cf3cafd0eba894c9b1587d9b0915ff8a901be4e3df5c07b50b085f",
+      "bytes": 424156,
+      "review": "docs/reports/final-b/L5-12-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L5-final-visual/low-metro-3.png",
+      "sha256": "259c9f0654d6a5dcd4ec934f5533cb14ad14cf73a42ee5fbbbc3ff75512ccfba",
+      "bytes": 413983,
+      "review": "docs/reports/final-b/L5-12-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L5-final-visual/low-metro-4.png",
+      "sha256": "c795260d3d5cd65b09a69ad98694f2234c79157ecf7f89db7224911468b08ce7",
+      "bytes": 415563,
+      "review": "docs/reports/final-b/L5-12-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L5-final-visual/low-metro-5.png",
+      "sha256": "fccf6141b22433c6228d68003cc2b9e0fa1e454a792a14f32983dab9f93c117c",
+      "bytes": 485104,
+      "review": "docs/reports/final-b/L5-12-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L5-final-visual/low-metro-6.png",
+      "sha256": "db26d76da37d3c7470019888b719e675601d583f97605858d38574f20fa9ae1d",
+      "bytes": 499057,
+      "review": "docs/reports/final-b/L5-12-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L5-final-visual/high-arrival.png",
+      "sha256": "7d671a56a67c89001e9afe27e104f69d93199f644b8df5973ecb8f5b80c989fa",
+      "bytes": 560252,
+      "review": "docs/reports/final-b/L5-12-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L5-final-visual/high-metro-1.png",
+      "sha256": "25a55d19b47b25a37691cad4effff1f8148d000a83af95c8d3b508b03125fa12",
+      "bytes": 500469,
+      "review": "docs/reports/final-b/L5-12-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L5-final-visual/high-metro-2.png",
+      "sha256": "3f736805ee945854380ec501d8a3b1e8ceda1144050add354c2f25b3442905ed",
+      "bytes": 435507,
+      "review": "docs/reports/final-b/L5-12-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L5-final-visual/high-metro-3.png",
+      "sha256": "744ff6d1bfab46212254a16e45357d2a217fff1276673be71603a2e483c50572",
+      "bytes": 455065,
+      "review": "docs/reports/final-b/L5-12-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L5-final-visual/high-metro-4.png",
+      "sha256": "a06c82cef881b9d3a5d2af56543c9575b978864f475d3abdf710d3a3e7d602d9",
+      "bytes": 443778,
+      "review": "docs/reports/final-b/L5-12-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L5-final-visual/high-metro-5.png",
+      "sha256": "2c5f7c2edacf65f9fdca0efc1639995078dc1ba630944a8bced4804ac35de866",
+      "bytes": 497687,
+      "review": "docs/reports/final-b/L5-12-proof.json"
+    },
+    {
+      "file": "test-results/final-b/L5-final-visual/high-metro-6.png",
+      "sha256": "9a3da6e69d498ecd2af380d0c62f74761908b87d9e9ca4fa93ef56a7443aad70",
+      "bytes": 533339,
+      "review": "docs/reports/final-b/L5-12-proof.json"
+    },
+    {
+      "file": "test-results/final-b/corpses-final-low/captures/tall-pile-z0.5-route.jpg",
+      "sha256": "d137c5ec57a3a9199f5f05e9b6f60a86e46f4fe2041a7e58663e6940251a8c07",
+      "bytes": 180780,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/corpses-final-low/captures/war-120-z0.5-pile.jpg",
+      "sha256": "a2275416a851c685904f57ac87d0fbb038a19f021aa28f4f0a2c80bc115b6c4a",
+      "bytes": 282327,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/corpses-final-low/captures/war-120-z1.5-route.jpg",
+      "sha256": "f22d38b8e8b581fdb1732f219afa7769f79098ad8a5b83e28e9652cc03cb3510",
+      "bytes": 326046,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/corpses-final-low/captures/tall-pile-z1.5-pile.jpg",
+      "sha256": "bf8c14a528825c94292809b40adb21c631e211c07314809cef72b646b3bccedc",
+      "bytes": 177338,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/corpses-final-low/captures/tall-pile-z1.5-route.jpg",
+      "sha256": "46610d3f4a4c9767bfe9ea2d9620fec2705b48d650f73137ee4fbdf7d857a3cd",
+      "bytes": 272700,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/corpses-final-low/captures/war-120-z0.5-route.jpg",
+      "sha256": "61196a130b0a9a62afb50271655fc9df0670615bc9ec7ee4ba378acce8178669",
+      "bytes": 209350,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/corpses-final-low/captures/tall-pile-z0.5-pile.jpg",
+      "sha256": "8211136122ca5d3bc7559008f2a0daebd411b8704ea5fb9447f1e228df0eaac8",
+      "bytes": 116687,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/corpses-final-low/captures/war-120-z1.5-pile.jpg",
+      "sha256": "8031699bdecbf958b57288abc0acdae744df20df98fce0c2553cd5f5dfcbc675",
+      "bytes": 308311,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/corpses-final-low-full/captures/tall-pile-z0.5-route.jpg",
+      "sha256": "8abaf2aba3d18e0eac559c6ae9b56605774f6f84aa5a7c59118659afe312a3c9",
+      "bytes": 279338,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/corpses-final-low-full/captures/war-120-z0.5-pile.jpg",
+      "sha256": "ed05edd9de275457d95c63f810960223d816bb8b02825b0383f7e9dc7dfeb6a1",
+      "bytes": 208086,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/corpses-final-low-full/captures/cellar-entry-z1.5-route.jpg",
+      "sha256": "d56ecb636ff56446376c24ca87ace13e9034950a4cb4019c2de854851ba64ad3",
+      "bytes": 148617,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/corpses-final-low-full/captures/war-120-z1.5-route.jpg",
+      "sha256": "cd32097fbae4682f9e22c62baf0213db6d77bb939215d31452f062ecd1314186",
+      "bytes": 321999,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/corpses-final-low-full/captures/tall-pile-z1.5-pile.jpg",
+      "sha256": "3e28cf32a9d7313844979fb0ea4fc30fbf77cff04663238a5876a3c21535d3ac",
+      "bytes": 293265,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/corpses-final-low-full/captures/tall-pile-z1.5-route.jpg",
+      "sha256": "19849995e67f247239ba0a8dbad828a6fe8ef8a3ca31ac4d4e665fa8d354648d",
+      "bytes": 290208,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/corpses-final-low-full/captures/war-120-z0.5-route.jpg",
+      "sha256": "76ef228545218f12699bcfd76658188adf3b6fc43cd30e53bfcf6d29ff3574ed",
+      "bytes": 225109,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/corpses-final-low-full/captures/tall-pile-z0.5-pile.jpg",
+      "sha256": "9dd14f9e7ce27ab92a878692c3ec3f5c12ddca893de67465514f7fe01064aea8",
+      "bytes": 214729,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/corpses-final-low-full/captures/cellar-entry-z0.5-route.jpg",
+      "sha256": "ea16383ef58bf6279bf3a9694acc741afce2c955239e7591237b8b3356cc6ac9",
+      "bytes": 97783,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/corpses-final-low-full/captures/war-120-z1.5-pile.jpg",
+      "sha256": "5925fc2e06cac95604432dd97d225e20f6d9cca8dd9da1372ed94a0bcca9c87e",
+      "bytes": 310301,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/corpses-final-high/captures/tall-pile-z0.5-route.jpg",
+      "sha256": "96c6966f97470ebaff9d333b70f1ec67dc158af554886f148ea105723268f811",
+      "bytes": 149491,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/corpses-final-high/captures/war-120-z0.5-pile.jpg",
+      "sha256": "7c7b08e636a4ce4c390a1ecb493e8e50f8c48a9ee1142173ef4a6ba7156e008b",
+      "bytes": 190951,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/corpses-final-high/captures/cellar-entry-z1.5-route.jpg",
+      "sha256": "3db8a56f0280e1d441d2e059e7601617bdab827ae545114a9f3e627a42cb835f",
+      "bytes": 132420,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/corpses-final-high/captures/war-120-z1.5-route.jpg",
+      "sha256": "353da73aefad8caf493d4dded93a158ef480a2965da79f7bf025a5511f72fa28",
+      "bytes": 322635,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/corpses-final-high/captures/tall-pile-z1.5-pile.jpg",
+      "sha256": "074e290cf7fd20aa2181d86ae6d3b41b9a63673a78abbe173fb24aa5c08b3d66",
+      "bytes": 250738,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/corpses-final-high/captures/tall-pile-z1.5-route.jpg",
+      "sha256": "c6769cda9f45c6b4250e3e98f6948a0eeea1864d935aa07275a811437571ceec",
+      "bytes": 228626,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/corpses-final-high/captures/war-120-z0.5-route.jpg",
+      "sha256": "74bd11754c70626d4dc1a081006cf1bf8805b37cef4fdc9e9d13125c4cd2ed5a",
+      "bytes": 250815,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/corpses-final-high/captures/tall-pile-z0.5-pile.jpg",
+      "sha256": "766affa11db940186533a26bf8c31e3b5af3a9db281466708894400b34e1f8cd",
+      "bytes": 159242,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/corpses-final-high/captures/cellar-entry-z0.5-route.jpg",
+      "sha256": "fb5547fd5dd4ca6f14cdb626e4a316b1f1e41738893cc7340e1a7878c4546eb0",
+      "bytes": 122840,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/corpses-final-high/captures/war-120-z1.5-pile.jpg",
+      "sha256": "27d4f2d32ddd4a803824d5e1d70d9cc366c649a14bb24dbd3b76720fe984520e",
+      "bytes": 280624,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/L6-readability-high-shelter-57-repeat/captures/native-repeat.png",
+      "sha256": "d43b84ceb3384f5f84f829db15ae639ec5c234a1e047072573c2dbfc7d8449a4",
+      "bytes": 396916,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/L6-readability-high-shelter-57-repeat/captures/actor-eyes.png",
+      "sha256": "5bb75218ba5f28bd5517d2cd396656d78ee7fbb158f3d044777ff28812b542b7",
+      "bytes": 29973,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/L6-readability-high-shelter-57-repeat/captures/native.png",
+      "sha256": "a085bfe8bb18b7c4f07715e08446cd9f780b57612104f8c867bbc09a7655c4b9",
+      "bytes": 396898,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/L6-readability-high-shelter-57-repeat/captures/courier-id.png",
+      "sha256": "1d8aa06ebfd5192076033ec838dc64c39497c4526b4d0fa5481c5b03d41271e0",
+      "bytes": 28646,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/L6-readability-high-shelter-57-repeat/captures/actor-body.png",
+      "sha256": "dcf5479f470fb130b10df9639f204371cd056bb03a67a8a788171ef4f0687b69",
+      "bytes": 31073,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/L6-readability-high-shelter-57-repeat/captures/actor-black.png",
+      "sha256": "b14d770d60c70e468253ac9e42a40a42a1717e99cb28f40de507eeddf800beba",
+      "bytes": 29954,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/L6-readability-high-shelter-57-repeat/captures/courier-hidden.png",
+      "sha256": "b7282a4b15b4dbc6fbfaa95a306a360b3972495edf1a7cad0c5c03d06ea74c16",
+      "bytes": 357855,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/L6-readability-high-tunnel-57-repeat/captures/native-repeat.png",
+      "sha256": "c4c8561b583d5a6587a5afd47dfe3d5bafbece5ccbf65012837374f9369c6f72",
+      "bytes": 434732,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/L6-readability-high-tunnel-57-repeat/captures/actor-eyes.png",
+      "sha256": "32d05364b7cdcd78dd2f98630c56f84857dbe09dfc94f204ad08b560334580f1",
+      "bytes": 27851,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/L6-readability-high-tunnel-57-repeat/captures/native.png",
+      "sha256": "c4c8561b583d5a6587a5afd47dfe3d5bafbece5ccbf65012837374f9369c6f72",
+      "bytes": 434732,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/L6-readability-high-tunnel-57-repeat/captures/courier-id.png",
+      "sha256": "fd3003364fb31ee967acd466f999be9514b7b3f33421057e1dd92c710ca7a018",
+      "bytes": 26589,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/L6-readability-high-tunnel-57-repeat/captures/actor-body.png",
+      "sha256": "8a2b16e6ed64a8ded0ab32a65b746fe4118a0d75cd0d96ac930d8704b13db822",
+      "bytes": 28759,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/L6-readability-high-tunnel-57-repeat/captures/actor-black.png",
+      "sha256": "cb3a98623066b38897095319b8ad912ddbbd9ef5c36e59257c4716a77ca40286",
+      "bytes": 27831,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/L6-readability-high-tunnel-57-repeat/captures/courier-hidden.png",
+      "sha256": "e1364a348ad3a8bd1663ffa4e180253d50c1973ab11526451ef3fa371f11c8ca",
+      "bytes": 331250,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/L6-readability-low-tunnel-57-repeat/captures/native-repeat.png",
+      "sha256": "f614bc408c8c2ac242ac7c466cc224bfaf2513520ddf7039907a780ccf986d8a",
+      "bytes": 423803,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/L6-readability-low-tunnel-57-repeat/captures/actor-eyes.png",
+      "sha256": "7f2f38b8d1c62116319536b18411a8052693861f445705f389fbec3dcac0cfb1",
+      "bytes": 27847,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/L6-readability-low-tunnel-57-repeat/captures/native.png",
+      "sha256": "f614bc408c8c2ac242ac7c466cc224bfaf2513520ddf7039907a780ccf986d8a",
+      "bytes": 423803,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/L6-readability-low-tunnel-57-repeat/captures/courier-id.png",
+      "sha256": "5258588dbbc82cd5a3acc2dd7744e55e96aae943e394edb031d0fed26f62bd5e",
+      "bytes": 26569,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/L6-readability-low-tunnel-57-repeat/captures/actor-body.png",
+      "sha256": "2dfcbe40e3af1f3bfb4badcd1530b92e3ec998f93c80de0bb743ffc727e92ad9",
+      "bytes": 28762,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/L6-readability-low-tunnel-57-repeat/captures/actor-black.png",
+      "sha256": "2296280d126a1427f0f5086310a2c2b4828903d90a5344a148e585e151ef59fa",
+      "bytes": 27827,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/L6-readability-low-tunnel-57-repeat/captures/courier-hidden.png",
+      "sha256": "8417a05cad293a27a63d5ad2c80df2275e2527e5e2aea26cf97f7a58311c236c",
+      "bytes": 325450,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/L6-readability-low-shelter-57-repeat/captures/native-repeat.png",
+      "sha256": "5a8c8908ab920002a642769a57969a7831ee1d136f57b252969f0a8b5bc5610f",
+      "bytes": 405655,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/L6-readability-low-shelter-57-repeat/captures/actor-eyes.png",
+      "sha256": "a6eaf6380fc14413cc329d38317940edd72e32f5d2cf92bfe3d7622176cee2b5",
+      "bytes": 29990,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/L6-readability-low-shelter-57-repeat/captures/native.png",
+      "sha256": "5a8c8908ab920002a642769a57969a7831ee1d136f57b252969f0a8b5bc5610f",
+      "bytes": 405655,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/L6-readability-low-shelter-57-repeat/captures/courier-id.png",
+      "sha256": "09458e10c99da72509d9d9f40574a17e926f7ad2609d6e5d396e2861568a4353",
+      "bytes": 28686,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/L6-readability-low-shelter-57-repeat/captures/actor-body.png",
+      "sha256": "c92f64bbaa172e6a00ec8bd8b1a75b156d6e79ed8664f15ae107a051a7e53325",
+      "bytes": 31068,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/L6-readability-low-shelter-57-repeat/captures/actor-black.png",
+      "sha256": "1ba95bdee902a16a864313b09f1fce03db3d46309fa5ed714b803a69e680bd2f",
+      "bytes": 29967,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/L6-readability-low-shelter-57-repeat/captures/courier-hidden.png",
+      "sha256": "5f12fef8c8849926a9759492d56e0db5807b94f8f72eda081aee2ff2628a968c",
+      "bytes": 349310,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified/captures/002.png",
+      "sha256": "7c1c64bb7c053d54cae3629e33df6f13b1de35728c56635ebb070cb4dd3aae03",
+      "bytes": 569763,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified/captures/003.png",
+      "sha256": "3c8e74f3c286c22dc1ed5fa5cad96ef58176de743ad7fb74fb1ee41dbb249054",
+      "bytes": 623099,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified/captures/001.png",
+      "sha256": "d7cbc678dffd2b36dd0a78d4b952f2281145d31bf7ef75e8995862e5ccf1ce2a",
+      "bytes": 493405,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified/captures/000.png",
+      "sha256": "8844cfb98620de251229a3c2a7da9c4c1152e1cbe9493d3b0db03cf326e8ff9b",
+      "bytes": 452933,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified/captures/010.png",
+      "sha256": "124b60cdf88420293cd9d26534bd7b1b36121702de510c7594a8de811dedea2e",
+      "bytes": 516079,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified/captures/004.png",
+      "sha256": "d90e88ff42bcf579d5541783d8e00327affe86350d4f44f64d7bda1b004b3f49",
+      "bytes": 631890,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified/captures/005.png",
+      "sha256": "b99a88f7e162627cd295b8f00b04cf6f154f8046c598f5d707298d76e394eb4e",
+      "bytes": 627829,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified/captures/011.png",
+      "sha256": "cfb976b0c343e2d08449ae9f24a3b51ab69cf70dfeef4b3472d1a75f51dd5d94",
+      "bytes": 516036,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified/captures/007.png",
+      "sha256": "299f2f303a130f021bbdea66f0f85b5cf3039ddf0551de47742fdd376983cf4b",
+      "bytes": 557588,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified/captures/012.png",
+      "sha256": "8aecf6c19e3d0595338c2e8846bbc71e388511ab3ef7359ff3fbf04d8b8fdedb",
+      "bytes": 539633,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified/captures/006.png",
+      "sha256": "4d465c190ad0f99c7510a322269d30d0724cc4a343ca24f4eecddf852ae6b6e8",
+      "bytes": 551677,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified/captures/008.png",
+      "sha256": "eeab0abba839a2c8f80f7a24f7190bf31649cc09c273a8330aab149d659a1a34",
+      "bytes": 450542,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified/captures/009.png",
+      "sha256": "c54a82281b7670ada34f60e1a250779a4f77b0824e677fa7c8a210c4320cd2ae",
+      "bytes": 587343,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified2/captures/002.png",
+      "sha256": "f6839442913adfa9ba565df1b3e837fa21a34477e1421c32fe6b6d82a912ad22",
+      "bytes": 587631,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified2/captures/016.png",
+      "sha256": "cb22f468cb11264229644e947f1095e535c169b9f526a8cbb446a3f48549d6aa",
+      "bytes": 514714,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified2/captures/017.png",
+      "sha256": "363e567eea27ea3a6b9f11cd29d8d450e79dfaeaf853e1ec5adb641b49c034c5",
+      "bytes": 515250,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified2/captures/003.png",
+      "sha256": "7ffffaaf06372970ce337fdd3485a39471878819b690111ed424023ef684ee58",
+      "bytes": 612028,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified2/captures/015.png",
+      "sha256": "c842835d1621b169196f2aac42dee84fbf7181f89ef42ab4a48ac3b147ef3708",
+      "bytes": 565482,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified2/captures/001.png",
+      "sha256": "5a329c4cc5ef2f6aa15e5c7147a46c6b284cba80bd69d1fcc123400081cc62b3",
+      "bytes": 627403,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified2/captures/000.png",
+      "sha256": "06d76a4f22c80c5af0e9a1f7b659f6de5f767a78e0968d5e96b95bf8a37a69f5",
+      "bytes": 618047,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified2/captures/014.png",
+      "sha256": "b4c079d7e84375a5da8b1df503304b03c0e375134408d483c3d6ae20da94c372",
+      "bytes": 465745,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified2/captures/010.png",
+      "sha256": "1da42969b5a4ffb55542d2a81c7c3cfbad1eb9826a8c40def2546ca10b6ef0e7",
+      "bytes": 478460,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified2/captures/004.png",
+      "sha256": "500eded4ce872676f492eee929ade27bc0660d8b65d6147eccfb1cd7a8b0f10b",
+      "bytes": 590609,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified2/captures/005.png",
+      "sha256": "bbee4aeaafdc466b60fff3a22d8586ee3c4ace3a7f81099850a69ae1ea993b0c",
+      "bytes": 562000,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified2/captures/011.png",
+      "sha256": "845f256aacb5d45ec714c217f9dea61251d6aa92872971dde88099c07938f3f1",
+      "bytes": 435049,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified2/captures/007.png",
+      "sha256": "6d5daa4c7e08b57a114055e6317f310f4fef9b79809ab2cfdfc3cc021de6b047",
+      "bytes": 414672,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified2/captures/013.png",
+      "sha256": "bcb23fb4cb7ac7d35763dc72ad5fa91bb9d8ec2f0575df8c83eb0a2885d17a59",
+      "bytes": 443309,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified2/captures/012.png",
+      "sha256": "8709cb5f23fa5df929903dc4ba995dc10eacf26855c927dbea63d6dda4636a41",
+      "bytes": 393016,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified2/captures/006.png",
+      "sha256": "ca84e11d4be0628c6152fcfdfec6a486c94b3080c0894403f43ea929feae5927",
+      "bytes": 573694,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified2/captures/023.png",
+      "sha256": "bd129b4c6a4dbddaf61a926a56f9f3bc2a36d2fe3dc84b3badaf353db90dff46",
+      "bytes": 426243,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified2/captures/022.png",
+      "sha256": "6aa9459a82925d5076940ef97e794d7bfbd6d32b1b26938a0cf9b6dcefaa6ede",
+      "bytes": 529341,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified2/captures/008.png",
+      "sha256": "2cd67b3f5f00558e73d617e896fde8d738a445eda934aba1ab2739a2a6984b3d",
+      "bytes": 284398,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified2/captures/020.png",
+      "sha256": "cd5daa229ada213941c4da5f594a4c2225f438bd93030b68b877d4d73c3240c3",
+      "bytes": 522739,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified2/captures/021.png",
+      "sha256": "372da94e46b07a8943b2869a35e6c6c3ba930f2305b856ca094fb17774694cea",
+      "bytes": 533830,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified2/captures/009.png",
+      "sha256": "4c22dca6da67d6002efb955459d4c547300f4f13956fdf267a3b6cc6cd0741ba",
+      "bytes": 486196,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified2/captures/019.png",
+      "sha256": "7482278b096bec0da3aa75dde504e555dd99514c9841e1a93282e10066d7fe24",
+      "bytes": 523730,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified2/captures/018.png",
+      "sha256": "e6b0de6954e4b55f2f0817d3e866218b8c9f9761cadfd553728b981e937a0eeb",
+      "bytes": 521030,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-live2/captures/002.png",
+      "sha256": "7c1c64bb7c053d54cae3629e33df6f13b1de35728c56635ebb070cb4dd3aae03",
+      "bytes": 569763,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-live2/captures/016.png",
+      "sha256": "d014f69c1fe1f8d4f6f4bd757a333d30f903579a410343dfc6d83a6c87801958",
+      "bytes": 576463,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-live2/captures/017.png",
+      "sha256": "d4e917fded341f7bb005a3724d28f395380ee03405bc3cc7c38219f25fe00342",
+      "bytes": 583935,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-live2/captures/003.png",
+      "sha256": "0a3e310619bc7ea0e61dc0885ae774666059d4ffeb0013326a535ecb40705dd7",
+      "bytes": 513845,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-live2/captures/015.png",
+      "sha256": "bbd659dfa1951287c5b88789b8c4e276513e4a65102fdfb1764f1d5b6fc2a867",
+      "bytes": 587261,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-live2/captures/001.png",
+      "sha256": "b4e19851bb6b3360c4870acf2616c2f035eeae914de2dcd1d88e4b9513a9f5b6",
+      "bytes": 492220,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-live2/captures/000.png",
+      "sha256": "8844cfb98620de251229a3c2a7da9c4c1152e1cbe9493d3b0db03cf326e8ff9b",
+      "bytes": 452933,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-live2/captures/014.png",
+      "sha256": "715b7880b6eaed0829d7021f050f52b72a55e789f1dbcdde512f91ab3a0dbdb5",
+      "bytes": 590632,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-live2/captures/010.png",
+      "sha256": "b8ac782a6e7eb2b94b082917ff9e30beb294a7af19111c0806c7d503a8108718",
+      "bytes": 593985,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-live2/captures/004.png",
+      "sha256": "231638312a6266bd813cdc0161ee365fbae6bd1319569830ad1eecb93aafe733",
+      "bytes": 623410,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-live2/captures/005.png",
+      "sha256": "6551857fc6e73af04fe193edcd87b3532e956c921dc8c612058dad62d76ead28",
+      "bytes": 626679,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-live2/captures/011.png",
+      "sha256": "c2089666ccc98b3ae2ecbc1ff47ea5bc752e650e7d9434328ca404296221d2c2",
+      "bytes": 579011,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-live2/captures/007.png",
+      "sha256": "1f29bd013d2088fa6d369d7665a0c3912b3a910acfbbbfa4542e6e70c3d89ee7",
+      "bytes": 530314,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-live2/captures/013.png",
+      "sha256": "10ec9b28034ef81db2cbcec2779f2f1f27f685bc32627586342080c7412eb2a1",
+      "bytes": 627440,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-live2/captures/012.png",
+      "sha256": "28d3ac3caf6cbaa4e5163292a83908d4064073036b23f39c92e34d18646aeebf",
+      "bytes": 593915,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-live2/captures/006.png",
+      "sha256": "f76129b23b11907a2098fd72edef8fc203a0e7faff9b4d769484eab473e443dd",
+      "bytes": 537090,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-live2/captures/008.png",
+      "sha256": "017fa0d32a04d5e894600520f7c7cc6406d588b56fe88df0867f015440a3352e",
+      "bytes": 645185,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-live2/captures/020.png",
+      "sha256": "8a298fc3c4faf30e8e8405970517330c88f874911b29559fc34741631f03804d",
+      "bytes": 493383,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-live2/captures/009.png",
+      "sha256": "796705a0f2bdbc92718dfc64e71f9a7708838f264574fd4fa59272dcc715f958",
+      "bytes": 585459,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-live2/captures/019.png",
+      "sha256": "8b3c9adcd0f0b740befc72a73ccc6e6b827f6b6d63d10829df4bca8c68c763e3",
+      "bytes": 482164,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-live2/captures/018.png",
+      "sha256": "56146bf6679af797b3cd471c17690ad5315644a6f957b114741efbe3ba9d7f82",
+      "bytes": 370313,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-live/captures/000.png",
+      "sha256": "88bee56002a4c6f9668ad2e444d36cd995c277862f0b7d4ed56151bd490f810f",
+      "bytes": 421174,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low/captures/000.png",
+      "sha256": "88bee56002a4c6f9668ad2e444d36cd995c277862f0b7d4ed56151bd490f810f",
+      "bytes": 421174,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/L6-render/captures/low-lamp-opposed.jpg",
+      "sha256": "8ee80de69fb0e7942a2db761ebfb1dacb023397b851defaa6f1062cbe86d330b",
+      "bytes": 146404,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/L6-render/captures/high-northgate-open.jpg",
+      "sha256": "282f663f5355c3df6bfb9debdeab99e71441b721226a1e6572b853fd42f22b86",
+      "bytes": 106959,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/L6-render/captures/high-lamp-opposed.jpg",
+      "sha256": "80d9cfc61c820bf8e286287d819905444749bb5f820484834b648ffeec580a19",
+      "bytes": 138670,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/L6-render/captures/low-lamp-uncollected.jpg",
+      "sha256": "cd60301510273cc5a09f9631fc9be3c3d8d1edbb0a740d92332cdf9784c53a52",
+      "bytes": 134403,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/L6-render/captures/low-night-0.jpg",
+      "sha256": "f53daeb02d36fce2711a65983e1ffddb9dc81abbdfed9fd04cbde17af71df995",
+      "bytes": 134966,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/L6-render/captures/low-bars-1.jpg",
+      "sha256": "02c688722d0451bbd2122b7cd658cf718bb9193f9cebbea9998caf517cc77b42",
+      "bytes": 136816,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/L6-render/captures/low-bars-0.jpg",
+      "sha256": "f528c02558b7ef77fa7323cebca4df154b690ba1426d45741e08f9c9093c5c21",
+      "bytes": 130492,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/L6-render/captures/low-night-1.jpg",
+      "sha256": "4b1e1f4d708af62f32e879a0d049c108d56dd7e3f47ebae5473b3023b172d23d",
+      "bytes": 102004,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/L6-render/captures/high-night-5.jpg",
+      "sha256": "2e9865276f9f91d3706b78774bf924477aada5a7d3047f17ff4e55bc2cdd57ef",
+      "bytes": 105716,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/L6-render/captures/low-night-3.jpg",
+      "sha256": "05e3d19a0928cde4f22c49700d2b0914fcf18372063e359badd141e92ce16774",
+      "bytes": 101072,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/L6-render/captures/low-bars-2.jpg",
+      "sha256": "4e87aef8be97f01b9e9f0bd04ac31a896f88ddf795326ac3ad3d6656351113a0",
+      "bytes": 136134,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/L6-render/captures/low-bars-3.jpg",
+      "sha256": "8b624bced2de56aa5e9903d35161b3fd808e02de9d54b55e8f64d67f5fd7473e",
+      "bytes": 136010,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/L6-render/captures/low-northgate-open.jpg",
+      "sha256": "ceb12bd5009804d5fc4eb582a1b0de71122bea6195d26718528d2a478a6e09f5",
+      "bytes": 107184,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/L6-render/captures/low-night-2.jpg",
+      "sha256": "05e3d19a0928cde4f22c49700d2b0914fcf18372063e359badd141e92ce16774",
+      "bytes": 101072,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/L6-render/captures/high-night-4.jpg",
+      "sha256": "2e9865276f9f91d3706b78774bf924477aada5a7d3047f17ff4e55bc2cdd57ef",
+      "bytes": 105716,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/L6-render/captures/high-night-0.jpg",
+      "sha256": "622771e703a3069c815ab897181b0905d577b8016e89defca002ece03bca1d49",
+      "bytes": 140338,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/L6-render/captures/high-lamp-approach.jpg",
+      "sha256": "89ccaba0d37d5a0fd74cfbbbb71678fff4feced917b1dc88d42d125384c7ce26",
+      "bytes": 151339,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/L6-render/captures/high-night-1.jpg",
+      "sha256": "70f27b79321ff535498a7ec16e8bed44eeaf003da2a62e4bd6a6b8736daa8352",
+      "bytes": 107439,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/L6-render/captures/high-night-3.jpg",
+      "sha256": "2e9865276f9f91d3706b78774bf924477aada5a7d3047f17ff4e55bc2cdd57ef",
+      "bytes": 105716,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/L6-render/captures/low-night-5.jpg",
+      "sha256": "05e3d19a0928cde4f22c49700d2b0914fcf18372063e359badd141e92ce16774",
+      "bytes": 101072,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/L6-render/captures/low-bars-4.jpg",
+      "sha256": "833963b5157d7facea29f64e179079b6a7d632863789b491cd41db407c0a0269",
+      "bytes": 139969,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/L6-render/captures/low-bars-5.jpg",
+      "sha256": "01a93ada344ba005583f9147ce64ee0a1bc5a1270ca64b1f843ac74cb6c85c83",
+      "bytes": 136406,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/L6-render/captures/low-night-4.jpg",
+      "sha256": "05e3d19a0928cde4f22c49700d2b0914fcf18372063e359badd141e92ce16774",
+      "bytes": 101072,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/L6-render/captures/high-night-2.jpg",
+      "sha256": "2e9865276f9f91d3706b78774bf924477aada5a7d3047f17ff4e55bc2cdd57ef",
+      "bytes": 105716,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/L6-render/captures/high-bars-0.jpg",
+      "sha256": "ae30c6bc1b2c2b1afd2958903f3aa66da455bffb2e6458f386b9fa84e9fd68ad",
+      "bytes": 134436,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/L6-render/captures/high-lamp-uncollected.jpg",
+      "sha256": "c046dbd27d4b6a398d3e7c4256979845f800b7ae0927e27dfe6d9b00248abfde",
+      "bytes": 134453,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/L6-render/captures/high-bars-1.jpg",
+      "sha256": "1ce622f28db0e219603786ff72df798fab803a70eed56d8759abe7cd6b72a189",
+      "bytes": 138693,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/L6-render/captures/high-bars-3.jpg",
+      "sha256": "6a118ff0676b003b7ca9303aae925055a347b429b8f65e6914d2b8cdee16a47b",
+      "bytes": 131652,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/L6-render/captures/high-bars-2.jpg",
+      "sha256": "ff87c8857c39ed65d640d132f2974c9a018bf29de1bb0e65cfa7b1a1667d38d3",
+      "bytes": 133764,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/L6-render/captures/high-bars-5.jpg",
+      "sha256": "31f60867851c06db35c63ad9e3e6aa0b7986d327b9a16d76515039638b137f35",
+      "bytes": 132441,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/L6-render/captures/high-bars-4.jpg",
+      "sha256": "25a8345aafefeb04f4e33b86baa36300175420496e626a8151f62603fea38c62",
+      "bytes": 134326,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/L6-render/captures/low-lamp-approach.jpg",
+      "sha256": "dd7d62457fc115ccaeaadf2101426f2fd84997463b5b2842e0e28d4690881e10",
+      "bytes": 156377,
+      "review": "docs/reports/final-b/supplemental-capture-review.json"
+    },
+    {
+      "file": "test-results/final-b/pairs/captures/low-bus-fog-L5.jpg",
+      "sha256": "879e1c174f114dca08ea3899db063e8adb218461841a7c60f6aa78705308b38f",
+      "bytes": 293286,
+      "review": "docs/reports/final-b/rejected-bus-setup-review.json"
+    },
+    {
+      "file": "test-results/final-b/pairs/captures/high-bus-fog-L5.jpg",
+      "sha256": "165b70c07937d8d166d30d8f195e3a24a782c9462c18316e2e7bab7a5402cd8a",
+      "bytes": 317298,
+      "review": "docs/reports/final-b/rejected-bus-setup-review.json"
+    },
+    {
+      "file": "test-results/final-b/weapons-low/low-armed-walk-z1.5.jpg",
+      "sha256": "ea9c7fedef7041aab45a8e432e8b1323df56c5cdb2f3c8abfddee72c8fcaca04",
+      "bytes": 73556,
+      "review": "docs/reports/final-b/L5-10-proof.json"
+    },
+    {
+      "file": "test-results/final-b/weapons-low/low-armed-idle-z0.5.jpg",
+      "sha256": "5393fdb5e5035ddb4b0a5ae6ca23bc489b2d94afeb64fd7f4300e801d1dcb8a9",
+      "bytes": 95775,
+      "review": "docs/reports/final-b/L5-10-proof.json"
+    },
+    {
+      "file": "test-results/final-b/weapons-low/low-hiding-place-z0.5.jpg",
+      "sha256": "21d7544a6b1a076fdc34eed25b5e058063df0cd6e36fb32c2fa102473d74cc14",
+      "bytes": 48184,
+      "review": "docs/reports/final-b/L5-10-proof.json"
+    },
+    {
+      "file": "test-results/final-b/weapons-low/low-armed-idle-z1.5.jpg",
+      "sha256": "f7fa7685664c2c852b2faf672fda20f6aa8e6a6e07c4c52b4d8b46c7c38b0bf1",
+      "bytes": 75588,
+      "review": "docs/reports/final-b/L5-10-proof.json"
+    },
+    {
+      "file": "test-results/final-b/weapons-low/low-armed-walk-z0.5.jpg",
+      "sha256": "66e70ff78abc9ef48f5525597078739cca1c8e66b0c4147ded72c20d730ed412",
+      "bytes": 49880,
+      "review": "docs/reports/final-b/L5-10-proof.json"
+    },
+    {
+      "file": "test-results/final-b/weapons-low/low-hiding-place-z1.5.jpg",
+      "sha256": "476a718c286491cd6728849ed2d3514e0dfcc6d6749e835faa61a45fe531ba1f",
+      "bytes": 65578,
+      "review": "docs/reports/final-b/L5-10-proof.json"
+    },
+    {
+      "file": "test-results/final-b/weapons-low/low-street-weapon-z1.5.jpg",
+      "sha256": "cfbcca02800bff251b0d6c3a5f71b60eeedaff085e90519256207852257758c8",
+      "bytes": 70224,
+      "review": "docs/reports/final-b/L5-10-proof.json"
+    },
+    {
+      "file": "test-results/final-b/weapons-low/low-street-weapon-z0.5.jpg",
+      "sha256": "083bfe5b7592aad9f08e3fbe29da9c510f45f669a9d396c24a7a46369c17e872",
+      "bytes": 58842,
+      "review": "docs/reports/final-b/L5-10-proof.json"
+    },
+    {
+      "file": "test-results/final-b/weapons-high/high-hiding-place-z1.5.jpg",
+      "sha256": "4c1119da6b9f290f110b28ae5d3336f6714cfab13827445f11162fd00f516c44",
+      "bytes": 64841,
+      "review": "docs/reports/final-b/L5-10-proof.json"
+    },
+    {
+      "file": "test-results/final-b/weapons-high/high-hiding-place-z0.5.jpg",
+      "sha256": "715573f9264f4170fa81fa2b68a9cfdca78e8ff0e499fd4bc215ad8492c6b69d",
+      "bytes": 43390,
+      "review": "docs/reports/final-b/L5-10-proof.json"
+    },
+    {
+      "file": "test-results/final-b/weapons-high/high-armed-idle-z1.5.jpg",
+      "sha256": "8656e398289d67d2763ed98b585912bf3b24658604646152dff1ddc961fe4410",
+      "bytes": 68989,
+      "review": "docs/reports/final-b/L5-10-proof.json"
+    },
+    {
+      "file": "test-results/final-b/weapons-high/high-armed-walk-z0.5.jpg",
+      "sha256": "ebe839faf293ee1571cf79cd0de17b135ecbfb44f62eb868be121b82ac1e0df6",
+      "bytes": 40869,
+      "review": "docs/reports/final-b/L5-10-proof.json"
+    },
+    {
+      "file": "test-results/final-b/weapons-high/high-street-weapon-z1.5.jpg",
+      "sha256": "40ff7f882b1a007e8273a27b532739e6dde693415b2e04c7629971325b6eb08b",
+      "bytes": 60045,
+      "review": "docs/reports/final-b/L5-10-proof.json"
+    },
+    {
+      "file": "test-results/final-b/weapons-high/high-street-weapon-z0.5.jpg",
+      "sha256": "dfa919c3003f10f8d5c5a23be4603731f0b11fad4282ec687e8ae3d80a64711f",
+      "bytes": 51729,
+      "review": "docs/reports/final-b/L5-10-proof.json"
+    },
+    {
+      "file": "test-results/final-b/weapons-high/high-armed-walk-z1.5.jpg",
+      "sha256": "1bea1667e42c526a91894f51a8ce2d7acad355e2252fd799c5f13015b72c1d5f",
+      "bytes": 71593,
+      "review": "docs/reports/final-b/L5-10-proof.json"
+    },
+    {
+      "file": "test-results/final-b/weapons-high/high-armed-idle-z0.5.jpg",
+      "sha256": "933a6fd6ae8e315f3dc6fd19bcd1092dc832dbf0153e2bfe52f39da83bf356d5",
+      "bytes": 106806,
+      "review": "docs/reports/final-b/L5-10-proof.json"
+    },
+    {
+      "file": "test-results/final-b/riot-physical/low-20-before.png",
+      "sha256": "4ed59bbb8af202f67bab5b789dd95d8a0e53424a5f42460d738e2efe343767e6",
+      "bytes": 296234,
+      "review": "docs/reports/final-b/L4-11-unqualified.json"
+    },
+    {
+      "file": "test-results/final-b/riot-physical/low-20-end.png",
+      "sha256": "6b7d6265e74c4749df218826850be1e1a44a29ab280b5607977e01a872397530",
+      "bytes": 297389,
+      "review": "docs/reports/final-b/L4-11-unqualified.json"
+    },
+    {
+      "file": "test-results/final-b/riot-physical/low-26-before.png",
+      "sha256": "3a65220afd7541bf88c29ac5a9ee3c7ddaedc3310ef77d516977ffe3c5751cc7",
+      "bytes": 291458,
+      "review": "docs/reports/final-b/L4-11-unqualified.json"
+    },
+    {
+      "file": "test-results/final-b/riot-physical/low-26-end.png",
+      "sha256": "26ced5df3275b8eeb94ae9566aab0978f1c6c6dd177b0c22af87d9dd27f9376d",
+      "bytes": 290127,
+      "review": "docs/reports/final-b/L4-11-unqualified.json"
+    },
+    {
+      "file": "test-results/final-b/riot-physical/high-20-before.png",
+      "sha256": "e64cd482cfca5a93193858cd73fc6b7b3adfe43d9a41affa5cfa43d251c729ce",
+      "bytes": 311320,
+      "review": "docs/reports/final-b/L4-11-unqualified.json"
+    },
+    {
+      "file": "test-results/final-b/riot-physical/high-20-end.png",
+      "sha256": "761d66504f4173d62a293d45002078a6c843d6bf8a6fa91c930f282f60ffdc03",
+      "bytes": 310566,
+      "review": "docs/reports/final-b/L4-11-unqualified.json"
+    },
+    {
+      "file": "test-results/final-b/riot-physical/high-26-before.png",
+      "sha256": "b6f698bc9079d1b78fce59e90311b796e62b9e672533982f615d94b686968b4f",
+      "bytes": 304284,
+      "review": "docs/reports/final-b/L4-11-unqualified.json"
+    },
+    {
+      "file": "test-results/final-b/riot-physical/high-26-end.png",
+      "sha256": "6d779e8594285c06342f69b1aeaa3896cb3993ebefed3567ab7845a8b7956ecf",
+      "bytes": 303341,
+      "review": "docs/reports/final-b/L4-11-unqualified.json"
+    },
+    {
+      "file": "test-results/final-b/bus-final/low-bus.png",
+      "sha256": "e224f825c6e90cde7b1613e79d63eba04129ee64eebdc08e94d00f69bad701e8",
+      "bytes": 532027,
+      "review": "docs/reports/final-b/L5-11-proof.json"
+    },
+    {
+      "file": "test-results/final-b/bus-final/high-bus.png",
+      "sha256": "184fa9c4a624954709399d2bea3871a8dc6a9eb1226fe1bd70c1016f70df8cd9",
+      "bytes": 621975,
+      "review": "docs/reports/final-b/L5-11-proof.json"
+    },
+    {
+      "file": "test-results/final-b/riot-bar-normal/low-14-healthy.png",
+      "sha256": "1da250153c1704849a918400dc63afb2e30df7e77543fcb3877d678ef1a99c3d",
+      "bytes": 579477,
+      "review": "docs/reports/final-b/L4-11-proof.json"
+    },
+    {
+      "file": "test-results/final-b/riot-bar-normal/low-16-healthy.png",
+      "sha256": "6705c65317199e06e025d9161655246327aa977e3f2bad3df4c51bdbe240430f",
+      "bytes": 579681,
+      "review": "docs/reports/final-b/L4-11-proof.json"
+    },
+    {
+      "file": "test-results/final-b/riot-bar-normal/low-16-hurt.png",
+      "sha256": "61dc7a1313acbbb1ba0592061871f09bf2515f6ffa684d67843a009ec463f420",
+      "bytes": 583776,
+      "review": "docs/reports/final-b/L4-11-proof.json"
+    },
+    {
+      "file": "test-results/final-b/riot-bar-normal/high-14-healthy.png",
+      "sha256": "a290fb6c7b834d37d5bc0bc04e7a9e3186264fd9428a1facfa76ebf4fbcc9dc7",
+      "bytes": 582046,
+      "review": "docs/reports/final-b/L4-11-proof.json"
+    },
+    {
+      "file": "test-results/final-b/riot-bar-normal/high-16-healthy.png",
+      "sha256": "fe92f7dc3a64bdd2a7e99f483c743ba747862ee01807f0477322f4a673bea4f6",
+      "bytes": 581233,
+      "review": "docs/reports/final-b/L4-11-proof.json"
+    },
+    {
+      "file": "test-results/final-b/riot-bar-normal/high-16-hurt.png",
+      "sha256": "1276d33fcdb3ffe425a51ca4124a7fe74123e88023838af2990fa471d5a17fc2",
+      "bytes": 587865,
+      "review": "docs/reports/final-b/L4-11-proof.json"
+    },
+    {
+      "file": "test-results/final-b/riot-physical/high-6-end.png",
+      "sha256": "acf35bc6b17c60e2f188e62bb18b2e97896b890f3ad352a696adeb0dfdbaff53",
+      "bytes": 572058,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-physical/low-3-before.png",
+      "sha256": "ef57e8dc10a750edf1b1c0d631f5a962225226eb6fe4107e35977ccbcaebadf4",
+      "bytes": 560069,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-physical/high-0.9-before.png",
+      "sha256": "0db6d0f0d001037cb33efdba149c09b0884ac16e4fd1594e22c3d24b2b5ea2f7",
+      "bytes": 542621,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-physical/low-6-end.png",
+      "sha256": "a92970ed0663ea789cbf7fa9f9b6584a047a27eeb2b105bf5ada80605579cfdb",
+      "bytes": 569688,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-physical/low-6-before.png",
+      "sha256": "339416c484a1883608d9823e7599eeb3d0acd63f70f64509d251254ab581dc09",
+      "bytes": 562403,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-physical/high-6-chip.png",
+      "sha256": "163fceba43cc2914e023dea7fff1451f470321ce8b037c20cbb21918234cf851",
+      "bytes": 567121,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-physical/low-3-chip.png",
+      "sha256": "a1dff819d3d43ce25d574faf44b21e4b8a8b310e2e2d86acf292a1447a7377e7",
+      "bytes": 559570,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-physical/low-0.9-end.png",
+      "sha256": "98737f9075af2e8e619d1ae2871b725a7b1818e2c664808ba4d0d3aed3a2bbc8",
+      "bytes": 558956,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-physical/low-0.9-chip.png",
+      "sha256": "546f58d605a3188614dca73678f102516f2eb28ba8835c36b95cc47234f40cb2",
+      "bytes": 559417,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-physical/high-0.9-end.png",
+      "sha256": "9e3129428b1c6f53368f7243618162749e72722534e771b27b463016f669aa1c",
+      "bytes": 553683,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-physical/high-3-before.png",
+      "sha256": "2208aa9dab616a7ab3f9ab7508d1c157d59fceff435e9b9331f50089d87d0b1b",
+      "bytes": 554090,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-physical/high-6-before.png",
+      "sha256": "e8389fdebb6bbb81b0dae43fd52b4f1f53f6e6db4657e031884e5951ab543e96",
+      "bytes": 559850,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-physical/low-3-end.png",
+      "sha256": "267e22b8da8328b2e45108994322bdf4ae9304d2a8498948f05ad9d5eb2594ea",
+      "bytes": 564748,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-physical/low-6-chip.png",
+      "sha256": "41dbf3c06c252c546b354bca312830026f702dccba16b8ab4bc9c17c35eb38f0",
+      "bytes": 568306,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-physical/low-0.9-before.png",
+      "sha256": "cdac8f4547d159832f9165f85a0ce8ee1b2c06fc8984e8e24c848fd08346672a",
+      "bytes": 550589,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-physical/high-3-end.png",
+      "sha256": "4b2376ecc5625b9aeb8e894efc56171c7cdd202bcaa76ffc46ee7e0a1873b078",
+      "bytes": 564646,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-physical/high-0.9-chip.png",
+      "sha256": "c55fac940286c65e0f6a67f310c5317ee61927fc56df68bff25c2223d5dae701",
+      "bytes": 551959,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-physical/high-3-chip.png",
+      "sha256": "a5c92972b019360cf1060b54e229f40cd856f4e74b63d3682d29f8b61710f578",
+      "bytes": 555308,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-long-physical/low-26-end.png",
+      "sha256": "765ba092ae468423b64dc055c4b261ba1d4961edf6c7a0257d904211d6c01ba5",
+      "bytes": 478434,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-long-physical/low-20-before.png",
+      "sha256": "36fae6a5a92d99bc5fa893fd9c58f413c5d6dd8a127bbd1930f3900d31dcff0b",
+      "bytes": 501611,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-long-physical/high-26-before.png",
+      "sha256": "0d00b451dd6cc360e1cf2f27985ec271a452c7c8b04c1e280c51561148f81829",
+      "bytes": 516953,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-long-physical/high-20-end.png",
+      "sha256": "ceee51228df627303333271ebe6e14c4d1cea8e761c745f44d3c2c14079d03f9",
+      "bytes": 592756,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-long-physical/high-20-before.png",
+      "sha256": "7a34a922c14408248c2e4c854e1fd74185780b6747ef4e32dcd7ba9eee3aeae7",
+      "bytes": 553669,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-long-physical/low-20-end.png",
+      "sha256": "4dd5b3f5da66976cce7801c75592740e1e82a5402f8d95f00b4151689418af1a",
+      "bytes": 527417,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-long-physical/high-26-end.png",
+      "sha256": "3dc31d8043e363a57a0efef35b2cd81c14bfaf957bcb78f23e3c8880e68d4133",
+      "bytes": 532434,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-long-physical/low-26-before.png",
+      "sha256": "d14c20af7d05c68eb9c84245de0b137de251c6a3a0644ad7aee7e5ef4f8807c5",
+      "bytes": 472074,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-clear-physical/low-26-end.png",
+      "sha256": "53edeb1c57d4fbb383e6abcd0662d72f702b4ab70515eacb5ef8f139b881e257",
+      "bytes": 310613,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-clear-physical/low-20-before.png",
+      "sha256": "876aa81379b96215a6aa90746b339f84bf39af79bd04491beefab7abb502d877",
+      "bytes": 644880,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-clear-physical/high-26-before.png",
+      "sha256": "ff6865cfa99bb5b6a211ce425380ad7728a6bbc6e4d7189058b2a197b5b9b4ba",
+      "bytes": 333666,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-clear-physical/high-20-end.png",
+      "sha256": "ffb25776aa38efcf763052b59fda4e0adb5ee74faba34295e89df01005bcc6fd",
+      "bytes": 601365,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-clear-physical/high-20-before.png",
+      "sha256": "4498da7fa56fae7164f92d63c3925d997916047a174ade34e7947a58634a81b9",
+      "bytes": 588090,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-clear-physical/low-20-end.png",
+      "sha256": "60dedef507a1c166e15ff5049e6086f5048e49fe5b5c51146556dcfe218f3bae",
+      "bytes": 654367,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-clear-physical/high-26-end.png",
+      "sha256": "f69126a1d3e0733409d5ad53496c4eb546806eb8caf023485c05e7db56555f7a",
+      "bytes": 331852,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-clear-physical/low-26-before.png",
+      "sha256": "60af2fdb5e2b2849683cad780b9a04d135b2f220c434c71c84c7a7e9c1d0256d",
+      "bytes": 317591,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-camera-physical/low-26-end.png",
+      "sha256": "d181b0d2eca68d91ea39ddaad6d4e58b147b314acab4c3fa0a5a86a2b61d9ef9",
+      "bytes": 619036,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-camera-physical/low-20-before.png",
+      "sha256": "e0ea22756a50a0e1604f5bb1e119da07bc115e78d081d3821a991c31ad44c240",
+      "bytes": 595934,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-camera-physical/high-26-before.png",
+      "sha256": "295073c0ff8d83cf4508f3aa9750dd4c01e46578902ffbbc4142ff22343604df",
+      "bytes": 663155,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-camera-physical/high-20-end.png",
+      "sha256": "1f59a5172c2923c4aeec060bfc889fa9a39ac085c1bd3f6a39488203050110de",
+      "bytes": 612295,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-camera-physical/high-20-before.png",
+      "sha256": "06292474c8d57dfdfcfda13c3c6e70bb3a3d1c266485871bb26e1c197cbed364",
+      "bytes": 609398,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-camera-physical/low-20-end.png",
+      "sha256": "9eec2eac06b20f9d3624ae2f521f892cdd5af11e39990b45973cf1a51517aa24",
+      "bytes": 606290,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-camera-physical/high-26-end.png",
+      "sha256": "05cb19701e8692d0ee6a52fd71c201f53a86c22078c8915aae66707423c22a74",
+      "bytes": 676824,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-camera-physical/low-26-before.png",
+      "sha256": "3b7de7c4a6083423400a4d51a0f510513170f0554fe25646d0b1b4820b281414",
+      "bytes": 608038,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-verified-physical/high-6-end.png",
+      "sha256": "86fda5ad17bd17349c11ebca4dc259a5383e1746545349a00c5002d25826ba1a",
+      "bytes": 577346,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-verified-physical/low-1.6-chip.png",
+      "sha256": "4676b8a0b3901ce8f639a96d49ae50e2473a69cb1dada7521d769c2a19a56541",
+      "bytes": 538122,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-verified-physical/low-26-end.png",
+      "sha256": "7e67c4e38bf9d5ad4701f80e748de8f6fdb76335328a5c756508f47af95b0b39",
+      "bytes": 618226,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-verified-physical/low-26-chip.png",
+      "sha256": "0b7c26d7257688a3256aff0ce4291c26f9d133b0d6b80408b27e2eb594ab1927",
+      "bytes": 618730,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-verified-physical/low-3-before.png",
+      "sha256": "8efcfa575e5b1b2a39325e1d975206428d714887acfa3e7675226122a980e467",
+      "bytes": 547045,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-verified-physical/high-0.9-before.png",
+      "sha256": "82133f50abf73e2b2642b4ca741e6fffc44d1dfe31f3c420ed1d1f39469a321a",
+      "bytes": 577330,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-verified-physical/low-6-end.png",
+      "sha256": "dcd7e4f37822c2afc9e73b6655156b85fcc76a74dc8cd7677bd138c2aff90fa5",
+      "bytes": 540639,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-verified-physical/low-6-before.png",
+      "sha256": "f52205c8de864ecafbf863a49f5435075cbda76fbc19206e1198074627935b7d",
+      "bytes": 538455,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-verified-physical/high-6-chip.png",
+      "sha256": "dd0b49cd310f229e03c7d1d944786ee21bd881df7cb5ee070b4f5a31cbe00a44",
+      "bytes": 577088,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-verified-physical/low-3-chip.png",
+      "sha256": "8bf956438c63416c9e0b0a90b74bead6f3cea9f5f526877e2e5ac3623f9ce571",
+      "bytes": 547344,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-verified-physical/high-26-chip.png",
+      "sha256": "b677ba78e6e4ff799423bacddf240226700a81b0ee3b667f827fac4548a02d69",
+      "bytes": 677159,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-verified-physical/low-20-before.png",
+      "sha256": "59dbcf1e452c9351dece5e8db0b17c21780355f8dd9e3094b825d988afd676f7",
+      "bytes": 601511,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-verified-physical/high-26-before.png",
+      "sha256": "6bcd3707a024ee22bbd1c02b79c46fdda6415e06a9987a06f72e0ce6cebc8ef8",
+      "bytes": 676910,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-verified-physical/high-20-chip.png",
+      "sha256": "cb9ae36205e1cfceaff87778a62321095f85be2291f27860023b77769cf64cd3",
+      "bytes": 598286,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-verified-physical/low-0.9-end.png",
+      "sha256": "a5c1026a4474ca8305d9eb1c62cea830b91486923fb30e3d160e2b1a01222d3c",
+      "bytes": 535252,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-verified-physical/high-1.6-before.png",
+      "sha256": "7d56b403e8635068997612ed8a17b1421372f628922d550ac251a169c8d1e0f4",
+      "bytes": 574977,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-verified-physical/low-0.9-chip.png",
+      "sha256": "4491ba6f10aa110b0d91dbb69591734b94fda14a7fea76848937ee5423e9f6b1",
+      "bytes": 538070,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-verified-physical/low-20-chip.png",
+      "sha256": "4a6dddb75f19643804e64032d828acfcf3a1bd17e48ad0a9c8786bb845f3e688",
+      "bytes": 601736,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-verified-physical/high-20-end.png",
+      "sha256": "ece60544848122ea8c10f2a6adee14f91e93204593fad90d5f688c6048fea7b1",
+      "bytes": 597253,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-verified-physical/high-0.9-end.png",
+      "sha256": "6fdd574a337491f6271e60e7b2900d5b5350b9f0101652d4f3d98272a845ae17",
+      "bytes": 570880,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-verified-physical/high-1.6-end.png",
+      "sha256": "3145c0b34dc3c0c714e2df19137ab3491dfe33aa24cccb54d7fc5d1a847d1d87",
+      "bytes": 568980,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-verified-physical/high-3-before.png",
+      "sha256": "3981042c5b328e8be0e11fd70719351dd376b144966e3e8f3817e496fa2ee1da",
+      "bytes": 584787,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-verified-physical/high-20-before.png",
+      "sha256": "0d92350c5531a7d37eb085f47676b9dbdb768e257eaf4d6e40cba22e22890d3d",
+      "bytes": 598101,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-verified-physical/low-1.6-before.png",
+      "sha256": "616a8ee06230faac3f681ccfaf5a66d1682ecdcc5b2f45e33bc25196bbd7d784",
+      "bytes": 537873,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-verified-physical/high-1.6-chip.png",
+      "sha256": "289443d4cb6360cac81f76a26ff1b612105b223bcaff3d89bbbf7c560d9b60d4",
+      "bytes": 574914,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-verified-physical/low-1.6-end.png",
+      "sha256": "37a9b37fab19de7996021ad502d92cdf33405a0060bcadc7d4bd137efbc68b2d",
+      "bytes": 532742,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-verified-physical/low-20-end.png",
+      "sha256": "17095f8ea41189b899c3af2690668f1278050fa79f24a56ae99e139d28e331b5",
+      "bytes": 601667,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-verified-physical/high-6-before.png",
+      "sha256": "6698b335c3fc8279d4c566a725d74bda7dd823d63286a80c66d3694a4d897b9f",
+      "bytes": 576650,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-verified-physical/high-26-end.png",
+      "sha256": "62bf121b0bb7c9768c31c49f63791f3d24ab855537088210ff94814d4062c735",
+      "bytes": 679402,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-verified-physical/low-3-end.png",
+      "sha256": "781285fd1b4911caae74793ba463cb93127122af770682acf560d76829940d86",
+      "bytes": 540666,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-verified-physical/low-6-chip.png",
+      "sha256": "9279ccf171e6bf6b50d0fd6b3a171ca9c16cc1668f83b1fd03b96ca3b221e4f8",
+      "bytes": 538112,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-verified-physical/low-0.9-before.png",
+      "sha256": "a06777b47e001b8b2acea3a6bd74c77caf2ed59b1c9f1be05f98b5163d1be138",
+      "bytes": 540387,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-verified-physical/low-26-before.png",
+      "sha256": "2bee41dd12de90d241c65d7d8a2bb213054c0a34af55bf885febfc2eaf24ec4a",
+      "bytes": 619558,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-verified-physical/high-3-end.png",
+      "sha256": "e9ebf3fb83c86c3328299a5f8e829f959a39f82b35defab9cfdf3492bbc70f1b",
+      "bytes": 576838,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-verified-physical/high-0.9-chip.png",
+      "sha256": "213e7d6c3e10ebd6f3752c36e4f16f7e4c6136603acd5c51f0eeb5878e527aff",
+      "bytes": 574513,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-verified-physical/high-3-chip.png",
+      "sha256": "a2e8534fe7ce130e2c211bdce8d50cc03532187f859a465d623c90dedad18e48",
+      "bytes": 585989,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-plaza-physical/high-6-end.png",
+      "sha256": "15eeb65ea749a9d27d429efd9a4388e85238f92822e9ef1b7548a929b8a69d53",
+      "bytes": 750930,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-plaza-physical/low-1.6-chip.png",
+      "sha256": "f2ee044e9b65f4525eaaba889effb0f4f0dae40d792fdc3e3084932f617daf9d",
+      "bytes": 666752,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-plaza-physical/low-26-end.png",
+      "sha256": "80beab94fa8dba5d828f9fcea8afbbcccb70c91a44fbfed949255713de9cd3a8",
+      "bytes": 810002,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-plaza-physical/low-26-chip.png",
+      "sha256": "2a63a4774b3063db23d6b9a747a5b94f4170f23c35d57d258b8332b09c45ae01",
+      "bytes": 808014,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-plaza-physical/low-3-before.png",
+      "sha256": "cb828cda817f83051c7ad53055f6e080d8bc3f8911cb0bcced5a73eb1a1c8eca",
+      "bytes": 670975,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-plaza-physical/high-0.9-before.png",
+      "sha256": "7cdf8c6d1781661a85ff983743151d4ab2b3321a9449432be476d74db0a3b6ba",
+      "bytes": 695137,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-plaza-physical/low-6-end.png",
+      "sha256": "a768b943e529366bd353b35781328bfbe6b26b730a45bff219936c86cbab7854",
+      "bytes": 697695,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-plaza-physical/low-6-before.png",
+      "sha256": "1f7bb5b51517a91ca2ec62b7a96037806f5001ccfc65eeb9c8d7643c09a50714",
+      "bytes": 691743,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-plaza-physical/high-6-chip.png",
+      "sha256": "2a0e0b58911a9af6b7dbd0d5cc74e6f1658fe44362c55b1ef7831f93caf407fd",
+      "bytes": 740248,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-plaza-physical/low-3-chip.png",
+      "sha256": "bbfc98944a47f1a2dd81904b1508e19433c5e14a4c9bc6f42afb9cbfc5d9159e",
+      "bytes": 672143,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-plaza-physical/high-26-chip.png",
+      "sha256": "213be33b5df19247a60facb177d7b5203e87ce63cb6e44169b461d2114645e5a",
+      "bytes": 777672,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-plaza-physical/low-20-before.png",
+      "sha256": "d51d848c59660cdf6ef093e68b12f485b59a64dda7a3468ed677e887f2817315",
+      "bytes": 790783,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-plaza-physical/high-26-before.png",
+      "sha256": "f07efdd55d4370d86b6b713afa82ff90669a9cc4ece09cca7b24f57dbf940f5b",
+      "bytes": 778378,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-plaza-physical/high-20-chip.png",
+      "sha256": "f58d294e00e9cc6666aed31694d3c27f8220e1af1f997890a0a6d85c1c6bb0c5",
+      "bytes": 769815,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-plaza-physical/low-0.9-end.png",
+      "sha256": "2695fc2683cf7a5cf99ca4b2c2f96a265bce2e447d069c425d66c2749e7ea880",
+      "bytes": 667425,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-plaza-physical/high-1.6-before.png",
+      "sha256": "e994013903624c3713ad29c98664f891661a0d55e22b84a544f53a706f6c4734",
+      "bytes": 695788,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-plaza-physical/low-0.9-chip.png",
+      "sha256": "813418a2b52db8a32d97c9e6b39d62d1ebe3756357d11f1d82ca9fb7f38b708d",
+      "bytes": 665903,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-plaza-physical/low-20-chip.png",
+      "sha256": "c322eff0637821c54e542a5d4815c0a387a3bb7b242a03c1bb71521f7ecc6a20",
+      "bytes": 792877,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-plaza-physical/high-20-end.png",
+      "sha256": "3d7b06c5a44970e34ea199494c629343682dad89ed3ce2a26d74381daaf3272e",
+      "bytes": 774296,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-plaza-physical/high-0.9-end.png",
+      "sha256": "6adc6b5ec15ac29fb7d3dd6867ff14eb0c47081e2f58de578146d5f19073bf31",
+      "bytes": 698876,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-plaza-physical/high-1.6-end.png",
+      "sha256": "a56716bb801ca3e1a69647fd6c8c45efc7d65397c0cdbaa8f303ed1bec591930",
+      "bytes": 703841,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-plaza-physical/high-3-before.png",
+      "sha256": "b5c6af3d9a30501478f590d74b2907eff39de11e8f3a3097dd1f4080b120d729",
+      "bytes": 702812,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-plaza-physical/high-20-before.png",
+      "sha256": "f8ff4c36d346ac28205c7e3de3b51a916d46196465620ba2205e113455bdd419",
+      "bytes": 769091,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-plaza-physical/low-1.6-before.png",
+      "sha256": "05adf6b1455d9e7c1fe359a873b3ecd2b7f7a0846456fd6942b85dff3089b354",
+      "bytes": 666191,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-plaza-physical/high-1.6-chip.png",
+      "sha256": "55b8b9737959436a6fbfe5ba112cf8738c350d8cb96aa9d9711fdb870c7fbdfb",
+      "bytes": 697309,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-plaza-physical/low-1.6-end.png",
+      "sha256": "05e3c279d88e9a5873e97ac39f60378e14dcc820537545c80feb7bea48a6a29a",
+      "bytes": 671138,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-plaza-physical/low-20-end.png",
+      "sha256": "f4e225b51c2a99608c2fb9d920891efe2e7a7916758a36095192d43191a07cad",
+      "bytes": 796500,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-plaza-physical/high-6-before.png",
+      "sha256": "dbb4f9c28c2033de650bc2f6139f63757366ca5e037afb4c0aabbb48186a7dae",
+      "bytes": 738456,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-plaza-physical/high-26-end.png",
+      "sha256": "2e20af8dab2484eea78d4a9c2ff60e9e3abd15aea36da117a5445051ed932cb6",
+      "bytes": 782476,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-plaza-physical/low-3-end.png",
+      "sha256": "61b1424daf528a8cdf19194918da5b73ac2be26fcc98c18d6530fb68fc003949",
+      "bytes": 692515,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-plaza-physical/low-6-chip.png",
+      "sha256": "fceff3afc5bb978236fe9d2abb0d055c78a4e4b8d2f3737bd415526e544638fc",
+      "bytes": 692519,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-plaza-physical/low-0.9-before.png",
+      "sha256": "2e0aec1cbf8883fa554a098fadf11aa35c42a556c3da088d9a5646fd5378b9d6",
+      "bytes": 667366,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-plaza-physical/low-26-before.png",
+      "sha256": "18c8c151c85993d02297a853fdca8e09b2630da4d22eec5293d32c900a3eecd1",
+      "bytes": 808659,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-plaza-physical/high-3-end.png",
+      "sha256": "5f5161a51a4b1cf5637f3a452642dea669ab8b38b7480091d9ec2336d73ab2db",
+      "bytes": 739437,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-plaza-physical/high-0.9-chip.png",
+      "sha256": "dcfedc42fdd94262651f993253d746ed379b5df989897be79e2fdc1f5e9be644",
+      "bytes": 692666,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/riot-plaza-physical/high-3-chip.png",
+      "sha256": "574b3847915d8cc2439cdf654379e11658b731465cf219202bf071c9740bd353",
+      "bytes": 704790,
+      "review": "docs/reports/final-b/riot-diagnostic-cleanup.json",
+      "disposition": "excluded auxiliary diagnostic"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified3/captures/000.png",
+      "sha256": "10b02443833fa2e84af7e041216049814a1ea61972e7f045ae1cea752f43893c",
+      "bytes": 654671,
+      "review": "docs/reports/final-b/L5-07-proof.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified3/captures/001.png",
+      "sha256": "3288b53c134124784fd18abfc44638d494e6a807e7b546a5c7ee662c9946e985",
+      "bytes": 625354,
+      "review": "docs/reports/final-b/L5-07-proof.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified3/captures/002.png",
+      "sha256": "984b73d1f38758db11f4f4bac8c203d4c4a789e1a4f2a8ce7a4b640c9084582b",
+      "bytes": 639213,
+      "review": "docs/reports/final-b/L5-07-proof.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified3/captures/003.png",
+      "sha256": "08b4b0cbd1c8c4bd5ab9dfa4a1f1948ba034a0b60803c0138c5f0776b828a5d8",
+      "bytes": 669225,
+      "review": "docs/reports/final-b/L5-07-proof.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified3/captures/004.png",
+      "sha256": "20b7e360ce2043ad2e2cf9679d51be40b9cbc725b044121228fae2ca12adfdea",
+      "bytes": 651356,
+      "review": "docs/reports/final-b/L5-07-proof.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified3/captures/005.png",
+      "sha256": "8cb09cec63e6ca57a6374c47f131132db208b253e663f6edf80b7236a138fe35",
+      "bytes": 643736,
+      "review": "docs/reports/final-b/L5-07-proof.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified3/captures/006.png",
+      "sha256": "2ec59f5c074b0baaa2ccd586b912e82a9bc7641952c75f795fd8136e8255c5fc",
+      "bytes": 641813,
+      "review": "docs/reports/final-b/L5-07-proof.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified3/captures/007.png",
+      "sha256": "82d3d57c70af1ccd3ea6fe5a7e185fbd088600f9a57e691b67ad648176c1b6db",
+      "bytes": 635217,
+      "review": "docs/reports/final-b/L5-07-proof.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified3/captures/008.png",
+      "sha256": "d2797c731827d59305c78520ea563b907f1359f6c73b6e7bef8b4b8fbbedea22",
+      "bytes": 629375,
+      "review": "docs/reports/final-b/L5-07-proof.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified3/captures/009.png",
+      "sha256": "44be7cc2e6d2eaa51e1a8bf526cf2761a91e018228abe92d3bd367a64cfd9cda",
+      "bytes": 624640,
+      "review": "docs/reports/final-b/L5-07-proof.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified4/captures/000.png",
+      "sha256": "3cb1e5b78a62cabd35aca57af5100d355bfdb3e2fe2ec61322d59f815a4d01dc",
+      "bytes": 646106,
+      "review": "docs/reports/final-b/L5-07-proof.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified4/captures/001.png",
+      "sha256": "a508976a65fd8baf440c79cac0a15805d27cb31814b09b376d58b9133b36b0b1",
+      "bytes": 650835,
+      "review": "docs/reports/final-b/L5-07-proof.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified4/captures/002.png",
+      "sha256": "9a1a15a357e176310324b0fe1bdee12459da3058ab5d3069d0688b432bf78d1d",
+      "bytes": 646784,
+      "review": "docs/reports/final-b/L5-07-proof.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified4/captures/003.png",
+      "sha256": "e06d6d0732cabf44243a542addfe225e2ef846449a700071fe11228d59f9affc",
+      "bytes": 602923,
+      "review": "docs/reports/final-b/L5-07-proof.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified4/captures/004.png",
+      "sha256": "3b453ae08c3e3f9a1fb90194b845b6c762a15d87aafc70365898e6979b2a378c",
+      "bytes": 635330,
+      "review": "docs/reports/final-b/L5-07-proof.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified4/captures/005.png",
+      "sha256": "d7b7173922f36e4f756b5e848af15354efc8a04c8906e6df54722ddab30c412c",
+      "bytes": 529973,
+      "review": "docs/reports/final-b/L5-07-proof.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified4/captures/006.png",
+      "sha256": "afd2a1ac8b78b02f329a92d99578b28345cd0f2d4c0d170d4c076ef113addfc8",
+      "bytes": 548265,
+      "review": "docs/reports/final-b/L5-07-proof.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified4/captures/007.png",
+      "sha256": "6c54efcb73e405af7a40a1b41d9b039fffdb563fb76fdffea36e3e684479d4e4",
+      "bytes": 628478,
+      "review": "docs/reports/final-b/L5-07-proof.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified4/captures/008.png",
+      "sha256": "95275715733d0c59d88535c2090165c3a4d05b183224f6717496ad47a0e78e37",
+      "bytes": 640414,
+      "review": "docs/reports/final-b/L5-07-proof.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified5/captures/000.png",
+      "sha256": "4fde97c5d386b66ca42bd45b48e49acb8ab159ddb423acc679866c6c01d05c85",
+      "bytes": 681085,
+      "review": "docs/reports/final-b/L5-07-proof.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified6/captures/000.png",
+      "sha256": "80111e8566b3a398d9a8ae5cdb72e220d926c5fc078a029dd48b29cc2e3c025e",
+      "bytes": 680241,
+      "review": "docs/reports/final-b/L5-07-proof.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified6/captures/001.png",
+      "sha256": "69e45bdefdbb92a0d34db500829c398bbedaaaf42736ff4ab67b51f18b7485e9",
+      "bytes": 654633,
+      "review": "docs/reports/final-b/L5-07-proof.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified6/captures/002.png",
+      "sha256": "952cc71d0a9f68a89c68d7fae1de20bd1a84f0af3c3025e66d68bdd440514152",
+      "bytes": 657260,
+      "review": "docs/reports/final-b/L5-07-proof.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified6/captures/003.png",
+      "sha256": "1c484bd9ce61d8420d12990b6d1fa084d2041b5236256b1c793f9e79b6d87731",
+      "bytes": 638632,
+      "review": "docs/reports/final-b/L5-07-proof.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified6/captures/004.png",
+      "sha256": "0295777019dd24d9d83c07ee239016a4dbdcb16b752cc241f4c6380b3f126489",
+      "bytes": 568563,
+      "review": "docs/reports/final-b/L5-07-proof.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified6/captures/005.png",
+      "sha256": "2cabdf4eb035d4d9b0447ef8472b45e971795fb546b76d44eecf4d1f01bcad34",
+      "bytes": 538508,
+      "review": "docs/reports/final-b/L5-07-proof.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified6/captures/006.png",
+      "sha256": "a3d1f083ab60ade9606dd2663ed018123baef0c51bc2aa10645a7aea16c189b0",
+      "bytes": 550137,
+      "review": "docs/reports/final-b/L5-07-proof.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified6/captures/007.png",
+      "sha256": "74149926e6e71eac48194de4c51419b38d057bd7a13d64ddd8c86fa8e54b9736",
+      "bytes": 555807,
+      "review": "docs/reports/final-b/L5-07-proof.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified6/captures/008.png",
+      "sha256": "38cfc1927bd2de37669ad71a204d4a2658221b87ea46c8b520572e32d8cdefc9",
+      "bytes": 633320,
+      "review": "docs/reports/final-b/L5-07-proof.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified6/captures/009.png",
+      "sha256": "e192835323bf4b59f696755d73c9f41b5678133eff77d5e016f5a39f2b5106ac",
+      "bytes": 431170,
+      "review": "docs/reports/final-b/L5-07-proof.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified6/captures/010.png",
+      "sha256": "d52bfa7bf23d98d203d69c99d5ea4bd7e2050d1cdf91cea154041b45e60341b7",
+      "bytes": 420199,
+      "review": "docs/reports/final-b/L5-07-proof.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified6/captures/011.png",
+      "sha256": "918229117aa44887dfcb6a5c8187b1f599260bb1cba124225acfbd652b0da1df",
+      "bytes": 408142,
+      "review": "docs/reports/final-b/L5-07-proof.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified6/captures/012.png",
+      "sha256": "cfb92f5f1ed7f83903ed1dd38baf022a25824fb702ab5de4efa330ccee89b12c",
+      "bytes": 369152,
+      "review": "docs/reports/final-b/L5-07-proof.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified6/captures/013.png",
+      "sha256": "89e2bc40426455d6887bf2d991ab930432f245cd9a9457b3ab01fc958a39b970",
+      "bytes": 391975,
+      "review": "docs/reports/final-b/L5-07-proof.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified6/captures/014.png",
+      "sha256": "8b7b98aff3b5aad7bf7c79a5b5c7d32e5c96531376a49580fbdad496b1e25fc8",
+      "bytes": 368634,
+      "review": "docs/reports/final-b/L5-07-proof.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified6/captures/015.png",
+      "sha256": "2ce9bf0cc42241c519fcd580c2f2af0f2a5eb47860da075c82502c4eae0975ed",
+      "bytes": 523445,
+      "review": "docs/reports/final-b/L5-07-proof.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified6/captures/016.png",
+      "sha256": "4a9eb4e94336096a6e8c7b66a0e02eacb6218b9f296e9799dc39d2454fba068b",
+      "bytes": 582859,
+      "review": "docs/reports/final-b/L5-07-proof.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified6/captures/017.png",
+      "sha256": "f83d102328db7c7bf23cba92282a4cef225a2740804fea8dc8226235950676d6",
+      "bytes": 514271,
+      "review": "docs/reports/final-b/L5-07-proof.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified6/captures/018.png",
+      "sha256": "af55c67c09567d720c15dadf385cb8dc797c6c6761bfce1057866f9098d09956",
+      "bytes": 387344,
+      "review": "docs/reports/final-b/L5-07-proof.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified6/captures/019.png",
+      "sha256": "9dfebf90a05e5696da0d8c5d4a21c6737ea5387dc549defe2d844576094d01f3",
+      "bytes": 415067,
+      "review": "docs/reports/final-b/L5-07-proof.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified6/captures/020.png",
+      "sha256": "493f153e235b6fe284dc044a4701aec322d71f85da3cfcb8b661bbbacb9c0087",
+      "bytes": 417662,
+      "review": "docs/reports/final-b/L5-07-proof.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified6/captures/021.png",
+      "sha256": "851c0f0dea777f51ea81a7e85237c6cbe2a27b6d7e18bc2f3553fa59227d07f9",
+      "bytes": 421092,
+      "review": "docs/reports/final-b/L5-07-proof.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified6/captures/022.png",
+      "sha256": "1b5d9d13ea0f2aedc1f40da3cbf1b25b77df81e177e7b598fdfda9f07c174a9b",
+      "bytes": 465569,
+      "review": "docs/reports/final-b/L5-07-proof.json"
+    },
+    {
+      "file": "test-results/final-b/muted-low-qualified6/captures/023.png",
+      "sha256": "328e488e1bf89c57412478b47e329fb70f4995edad3a0c5939acce6e88ae4cb8",
+      "bytes": 445493,
+      "review": "docs/reports/final-b/L5-07-proof.json"
+    },
+    {
+      "file": "test-results/final-b/readability-close.png",
+      "sha256": "ce776b10a15f046063f76b1f4d5a472a092b5112e3c156f0a8251b8e20b5e303",
+      "bytes": 96855,
+      "reason": "Final reviewed rows already carry observations and SHA evidence; extra aggregate/diagnostic sheet not required for remaining PO questions. Unreviewed diagnostics remain excluded from verdicts.",
+      "review": "docs/reports/final-b/final-review-retention.json"
+    },
+    {
+      "file": "test-results/final-b/corpse-unreviewed-sheet.jpg",
+      "sha256": "89ec5165688490a3463774e4682e7aa5fbba399b810a0b4b39c3514a782d914b",
+      "bytes": 380443,
+      "reason": "Final reviewed rows already carry observations and SHA evidence; extra aggregate/diagnostic sheet not required for remaining PO questions. Unreviewed diagnostics remain excluded from verdicts.",
+      "review": "docs/reports/final-b/final-review-retention.json"
+    },
+    {
+      "file": "test-results/final-b/readability57-sheet.jpg",
+      "sha256": "d27ef61f07c1dbd985efa63332e4081c3ddaff471051026557788128d7eae5f9",
+      "bytes": 155437,
+      "reason": "Final reviewed rows already carry observations and SHA evidence; extra aggregate/diagnostic sheet not required for remaining PO questions. Unreviewed diagnostics remain excluded from verdicts.",
+      "review": "docs/reports/final-b/final-review-retention.json"
+    },
+    {
+      "file": "test-results/final-b/readability-62-sheet.jpg",
+      "sha256": "f6fdf1f2febb8866fd8cadf54493246f9f56ce53403a487a01ddcc3af9f80205",
+      "bytes": 151534,
+      "reason": "Final reviewed rows already carry observations and SHA evidence; extra aggregate/diagnostic sheet not required for remaining PO questions. Unreviewed diagnostics remain excluded from verdicts.",
+      "review": "docs/reports/final-b/final-review-retention.json"
+    },
+    {
+      "file": "test-results/final-b/weapons-final-sheet.jpg",
+      "sha256": "60663a9b0c2edff0fba009b64fba6b02d3682e92d2de75bf6b791a00bd80a395",
+      "bytes": 216176,
+      "reason": "Final reviewed rows already carry observations and SHA evidence; extra aggregate/diagnostic sheet not required for remaining PO questions. Unreviewed diagnostics remain excluded from verdicts.",
+      "review": "docs/reports/final-b/final-review-retention.json"
+    },
+    {
+      "file": "test-results/final-b/riot-first-sheet.jpg",
+      "sha256": "5796ed39203c0cad7ed695452cd8733a820ba87541bb46b1070a6842fd0db45a",
+      "bytes": 259199,
+      "reason": "Final reviewed rows already carry observations and SHA evidence; extra aggregate/diagnostic sheet not required for remaining PO questions. Unreviewed diagnostics remain excluded from verdicts.",
+      "review": "docs/reports/final-b/final-review-retention.json"
+    },
+    {
+      "file": "test-results/final-b/L6-render/low-sheet.jpg",
+      "sha256": "3ff395e4594073933e062af902bda547e071434441e97af94d2a8e6e9828a819",
+      "bytes": 274407,
+      "reason": "Final reviewed rows already carry observations and SHA evidence; extra aggregate/diagnostic sheet not required for remaining PO questions. Unreviewed diagnostics remain excluded from verdicts.",
+      "review": "docs/reports/final-b/final-review-retention.json"
+    },
+    {
+      "file": "test-results/final-b/L6-render/high-sheet.jpg",
+      "sha256": "406053a33bd000601b1a0890ad865c2ce50814e7270de8f11eccae2ec06a4e94",
+      "bytes": 276308,
+      "reason": "Final reviewed rows already carry observations and SHA evidence; extra aggregate/diagnostic sheet not required for remaining PO questions. Unreviewed diagnostics remain excluded from verdicts.",
+      "review": "docs/reports/final-b/final-review-retention.json"
+    },
+    {
+      "file": "test-results/final-b/L6-bars-low/per-id-sheet.jpg",
+      "sha256": "63cd66cbca5183e805b1f05a2c90f03127a513137dd5608be991287f0b076850",
+      "bytes": 98835,
+      "reason": "Final reviewed rows already carry observations and SHA evidence; extra aggregate/diagnostic sheet not required for remaining PO questions. Unreviewed diagnostics remain excluded from verdicts.",
+      "review": "docs/reports/final-b/final-review-retention.json"
+    },
+    {
+      "file": "test-results/final-b/last-scenes/exit-sheet.jpg",
+      "sha256": "fe71221112745888e94f4cc83cc69fd59d769e531fc69edb68f058e76bd6c03b",
+      "bytes": 174526,
+      "reason": "Final reviewed rows already carry observations and SHA evidence; extra aggregate/diagnostic sheet not required for remaining PO questions. Unreviewed diagnostics remain excluded from verdicts.",
+      "review": "docs/reports/final-b/final-review-retention.json"
+    },
+    {
+      "file": "test-results/final-b/last-scenes/lamp-sheet.jpg",
+      "sha256": "92bd260a7a09d2c78f460851847df9b450075696b43a80988c3ac7c7bdc3a99c",
+      "bytes": 90526,
+      "reason": "Final reviewed rows already carry observations and SHA evidence; extra aggregate/diagnostic sheet not required for remaining PO questions. Unreviewed diagnostics remain excluded from verdicts.",
+      "review": "docs/reports/final-b/final-review-retention.json"
+    },
+    {
+      "file": "test-results/final-b/L6-bars-high/per-id-sheet.jpg",
+      "sha256": "5ec4becf164406459125eb93d28a478aec2dd9e330bbe918f79c8f319007c43d",
+      "bytes": 103061,
+      "reason": "Final reviewed rows already carry observations and SHA evidence; extra aggregate/diagnostic sheet not required for remaining PO questions. Unreviewed diagnostics remain excluded from verdicts.",
+      "review": "docs/reports/final-b/final-review-retention.json"
+    }
+  ]
+}

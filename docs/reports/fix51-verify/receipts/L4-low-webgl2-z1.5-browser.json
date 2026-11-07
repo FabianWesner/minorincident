@@ -3,165 +3,861 @@
   "level": "L4",
   "tier": "low",
   "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
-  "fixtureHash": "3a1aa6ffd344dc12e40e887d5787eccb7b7f2da10d19445898a88e94befd6f3f",
-  "browserHash": "3a1aa6ffd344dc12e40e887d5787eccb7b7f2da10d19445898a88e94befd6f3f",
+  "fixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4",
+  "browserHash": "9388d0056ef51321f7a42b0d246655834460a88af205dee82674435822fa31c9",
+  "errors": [],
+  "observations": {
+    "scope": "Scoped qualified final-b opening/war/hide evidence. Controlled collider fixture is identified by policy; no full-route G-25 claim.",
+    "frozenCommit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096"
+  },
   "checks": [
     {
-      "id": "G-25",
-      "clause": "physical WASD/mouse full-level browser console",
+      "id": "L4-03",
+      "clause": "actual MG pickup klaxon and attack start share simulation tick",
+      "level": "L4",
       "tier": "low",
       "policy": "real-input-webgl2",
       "status": "PASS",
       "value": {
-        "backend": "webgl2",
-        "zoom": 1.5,
-        "completed": true,
-        "skipped": [],
-        "consoleErrors": [],
-        "immortal": true,
-        "frameTiming": false
+        "tier": "low",
+        "pickupTick": 2197,
+        "gunTick": 2197,
+        "turnTick": 2197,
+        "klaxonTick": 2197,
+        "actualVoiceGains": [
+          0.33000001311302185,
+          0.33000001311302185,
+          0.33000001311302185,
+          0.06599999964237213
+        ],
+        "firstAdmittedTick": 2197,
+        "admittedCount": 18,
+        "input": "docs/reports/final-b/L4-low-physical.json.gz",
+        "inputSha256": "24bb97cf30e4e9d3ba13a82e00b7da9a1f45e13a1626ecaa27d82c9bab0a5c61",
+        "pass": true
       },
-      "target": "complete ordinary-input route; zero console/page errors; no objective skips",
-      "receipt": "docs/reports/final-g/G-25-L4-low.json"
-    }
-  ],
-  "errors": [],
-  "run": [
+      "target": "pickup=gun=turn=actual klaxon=actual first admissions; positive-gain voices and running/unmuted/unlocked graph",
+      "receipt": "docs/reports/final-b/L4-03-proof.json"
+    },
     {
+      "id": "L4-02",
+      "clause": "pre-pickup reception census routines separation and reviewed calm visuals",
       "level": "L4",
-      "entry": "debug",
-      "heroine": "female",
-      "finished": true,
-      "skipped": [],
-      "wallSeconds": 303,
-      "simSeconds": 0,
-      "maxNoProgressSeconds": 11.4,
-      "deaths": 0,
-      "assists": 0,
-      "attacks": {
-        "weapon.army-mg": 1246
+      "tier": "low",
+      "policy": "real-input-webgl2",
+      "status": "PASS",
+      "value": {
+        "tier": "low",
+        "sampleCadenceTicks": 30,
+        "samples": 13,
+        "firstTick": 1830,
+        "lastTick": 2190,
+        "minimumCivilians": 32,
+        "target": 30,
+        "minimumHumanCentreSeparationM": 0.7137709951300143,
+        "closestPair": {
+          "tick": 1980,
+          "ids": [
+            38,
+            44
+          ]
+        },
+        "maximumInfected": 0,
+        "maximumDamageDecals": 0,
+        "combatWindups": 0,
+        "anyEngagedSoldier": false,
+        "civilianRoutines": [
+          "bus-stop",
+          "carry-belongings",
+          "chat",
+          "jog",
+          "shop",
+          "walk-dog"
+        ],
+        "civilianActivities": [
+          "chat",
+          "look",
+          "walk",
+          "water"
+        ],
+        "allCalmPurposeful": true
       },
-      "weaponsStart": [
-        "weapon.fire-axe",
-        "weapon.bat",
-        "weapon.kick",
-        "weapon.handgun",
-        "ability.corgi-lure"
-      ],
-      "weaponsEnd": [
-        "weapon.fire-axe",
-        "weapon.bat",
-        "weapon.kick",
-        "weapon.army-mg",
-        "weapon.handgun",
-        "ability.corgi-lure"
-      ],
-      "steps": [
-        {
-          "id": "ride",
-          "text": "Ride into Fairhaven with the convoy · 57 m",
-          "tick": 34,
-          "marker": {
-            "anchor": "l4-plaza",
-            "ring": {
-              "x": -17,
-              "y": 0,
-              "z": 3
+      "target": "high>=40/low>=30; calm routines; zero infected/combat/damage; separated people and reviewed orderly reception",
+      "receipt": "docs/reports/final-b/L4-02-proof.json"
+    },
+    {
+      "id": "L4-15",
+      "clause": "actual military-wall capsule solidity and bounded isometric camera family",
+      "level": "L4",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "status": "PASS",
+      "value": {
+        "native": {
+          "file": "docs/reports/final-b/L4-solids.json.gz",
+          "sha256": "c6e02ac02caf1eac54604ccea2c472959e07d0ce5cd182f97f5f15700db84025",
+          "observation": "All60 actual military barricade capsules blocked the normal production Rapier courier capsule at each quality. No colliders removed. Fixture is explicit opening-war setup; not a playthrough."
+        },
+        "cameraPitchEndpoints": [
+          36,
+          41.85015
+        ],
+        "blocked": 60,
+        "tested": 60,
+        "tier": "low"
+      },
+      "target": "Existing exact checker clause measured on frozen source; see scoped proof and limits.",
+      "receipt": "docs/reports/final-b/L4-15-proof.json"
+    },
+    {
+      "id": "L4-18",
+      "clause": "reviewed clean living plaza and readable battle courier",
+      "level": "L4",
+      "tier": "low",
+      "policy": "real-input-webgl2",
+      "status": "PASS",
+      "value": {
+        "proof": "docs/reports/final-b/L4-war-review.json",
+        "sha256": "59c79b8b78a5dc022785b6e42423ff9e6c0cbfd0f8122a08e486dbb8833050c0",
+        "taste": "huge mixed war is P; objective clean scene and courier readability personally reviewed"
+      },
+      "target": "Existing exact checker clause measured on frozen source; see scoped proof and limits.",
+      "receipt": "docs/reports/final-b/L4-war-review.json"
+    },
+    {
+      "id": "L4-08",
+      "clause": "actual Alpha admission directions and line hits",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "status": "PASS",
+      "value": {
+        "tier": "low",
+        "actualAdmissions": [
+          {
+            "id": 210,
+            "tick": 2329,
+            "at": {
+              "x": -46,
+              "y": 0.7,
+              "z": 21,
+              "yaw": 0.5554937352655437
             },
-            "drawn": null,
-            "playerY": 0.7049999833106995,
-            "pinVisible": true
-          }
-        },
-        {
-          "id": "quartermaster",
-          "text": "Report to the quartermaster · 10 m",
-          "tick": 1850,
-          "marker": {
-            "anchor": "l4-quartermaster",
-            "ring": {
-              "x": -23.2,
-              "y": 0,
-              "z": 0.6
+            "anchor": "l4-alpha-west-slot",
+            "offscreen": true,
+            "playerDistance": 30.667787474541136
+          },
+          {
+            "id": 375,
+            "tick": 7009,
+            "at": {
+              "x": -5.8826834323650905,
+              "y": 0.83,
+              "z": 41.676120467488715,
+              "yaw": 1.8506967595228738
             },
-            "drawn": [
-              -23.2,
-              0.05,
-              0.6
-            ],
-            "playerY": 0.7049999833106995,
-            "pinVisible": true
-          }
-        },
-        {
-          "id": "hold",
-          "text": "Hold the plaza with the army · 3:10 remaining",
-          "tick": 2218,
-          "marker": {
-            "anchor": "l4-quartermaster",
-            "ring": null,
-            "drawn": null,
-            "playerY": 0.7049999833106995,
-            "pinVisible": false
-          }
-        },
-        {
-          "id": "hide",
-          "text": "Run to the cellar via Lakeshore, Metro Road and Harbor Street · 68 m",
-          "tick": 13631,
-          "marker": {
-            "anchor": "l4-cellar-door",
-            "ring": {
-              "x": -79.29999999999998,
-              "y": 0,
-              "z": -45.2801
+            "anchor": "l4-alpha-south",
+            "offscreen": true,
+            "playerDistance": 43.202498208168635
+          },
+          {
+            "id": 394,
+            "tick": 7489,
+            "at": {
+              "x": -18,
+              "y": 0.7,
+              "z": -39.15,
+              "yaw": -1.5466464333973808
             },
-            "drawn": [
-              -79.3,
-              0.13,
-              -45.28
-            ],
-            "playerY": 0.7049999833106995,
-            "pinVisible": true
-          }
-        },
-        {
-          "id": "bar",
-          "text": "Bar the cellar door · 3 m",
-          "tick": 15068,
-          "marker": {
-            "anchor": "l4-brace",
-            "ring": {
-              "x": 74.6,
-              "y": 0,
-              "z": -1.7999999999999998
+            "anchor": "l4-alpha-north",
+            "offscreen": true,
+            "playerDistance": 35.523773015268354
+          },
+          {
+            "id": 445,
+            "tick": 9169,
+            "at": {
+              "x": -23,
+              "y": 0.7,
+              "z": 42.6,
+              "yaw": 1.4204248987877621
             },
-            "drawn": [
-              74.6,
-              0.05,
-              -1.8
-            ],
-            "playerY": 0.7049999833106995,
-            "pinVisible": true
+            "anchor": "l4-alpha-sw",
+            "offscreen": true,
+            "playerDistance": 45.0426377227949
+          },
+          {
+            "id": 476,
+            "tick": 10249,
+            "at": {
+              "x": -39.2,
+              "y": 0.83,
+              "z": -35,
+              "yaw": -1.0420676422826194
+            },
+            "anchor": "l4-alpha-west",
+            "offscreen": true,
+            "playerDistance": 55.355369473057685
+          },
+          {
+            "id": 484,
+            "tick": 10849,
+            "at": {
+              "x": 0.9,
+              "y": 0.7,
+              "z": -23.3,
+              "yaw": -2.1683888717423656
+            },
+            "anchor": "l4-alpha-ne",
+            "offscreen": true,
+            "playerDistance": 41.21386360428683
           }
-        },
-        {
-          "id": "wait",
-          "text": "Stay down · 0:07 remaining",
-          "tick": 15238,
-          "marker": {
-            "anchor": "l4-brace",
-            "ring": null,
-            "drawn": null,
-            "playerY": 0.7049999833106995,
-            "pinVisible": false
+        ],
+        "distinctSourceAnchors": 6,
+        "distinctTicks": 6,
+        "minCourierDistanceM": 30.667787474541136,
+        "lineDamagingIDs": [
+          210,
+          375,
+          394,
+          445
+        ],
+        "actualLineHits": [
+          {
+            "type": "barricade.damaged",
+            "tick": 2681,
+            "id": 137,
+            "sourceId": 210,
+            "attackId": 4,
+            "slotId": "l4-wall-35",
+            "groupId": "l4-wall",
+            "previousHp": 600,
+            "hp": 300,
+            "amount": 300,
+            "props": []
+          },
+          {
+            "type": "barricade.damaged",
+            "tick": 2681,
+            "id": 138,
+            "sourceId": 210,
+            "attackId": 4,
+            "slotId": "l4-wall-36",
+            "groupId": "l4-wall",
+            "previousHp": 600,
+            "hp": 300,
+            "amount": 300,
+            "props": []
+          },
+          {
+            "type": "barricade.damaged",
+            "tick": 3163,
+            "id": 137,
+            "sourceId": 210,
+            "attackId": 14,
+            "slotId": "l4-wall-35",
+            "groupId": "l4-wall",
+            "previousHp": 300,
+            "hp": 0,
+            "amount": 300,
+            "props": []
+          },
+          {
+            "type": "barricade.damaged",
+            "tick": 3163,
+            "id": 138,
+            "sourceId": 210,
+            "attackId": 14,
+            "slotId": "l4-wall-36",
+            "groupId": "l4-wall",
+            "previousHp": 300,
+            "hp": 0,
+            "amount": 300,
+            "props": []
+          },
+          {
+            "type": "barricade.damaged",
+            "tick": 3181,
+            "id": 27,
+            "sourceId": 210,
+            "attackId": 14,
+            "slotId": "l4-line-west",
+            "groupId": "l4-line",
+            "previousHp": 300,
+            "hp": 0,
+            "amount": 300,
+            "props": []
+          },
+          {
+            "type": "barricade.damaged",
+            "tick": 8065,
+            "id": 108,
+            "sourceId": 394,
+            "attackId": 450,
+            "slotId": "l4-wall-6",
+            "groupId": "l4-wall",
+            "previousHp": 600,
+            "hp": 300,
+            "amount": 300,
+            "props": []
+          },
+          {
+            "type": "barricade.damaged",
+            "tick": 8065,
+            "id": 109,
+            "sourceId": 394,
+            "attackId": 450,
+            "slotId": "l4-wall-7",
+            "groupId": "l4-wall",
+            "previousHp": 600,
+            "hp": 300,
+            "amount": 300,
+            "props": []
+          },
+          {
+            "type": "barricade.damaged",
+            "tick": 8540,
+            "id": 108,
+            "sourceId": 394,
+            "attackId": 477,
+            "slotId": "l4-wall-6",
+            "groupId": "l4-wall",
+            "previousHp": 300,
+            "hp": 0,
+            "amount": 300,
+            "props": []
+          },
+          {
+            "type": "barricade.damaged",
+            "tick": 8540,
+            "id": 109,
+            "sourceId": 394,
+            "attackId": 477,
+            "slotId": "l4-wall-7",
+            "groupId": "l4-wall",
+            "previousHp": 300,
+            "hp": 0,
+            "amount": 300,
+            "props": []
+          },
+          {
+            "type": "barricade.damaged",
+            "tick": 8563,
+            "id": 26,
+            "sourceId": 394,
+            "attackId": 477,
+            "slotId": "l4-line-north",
+            "groupId": "l4-line",
+            "previousHp": 40,
+            "hp": 0,
+            "amount": 40,
+            "props": []
+          },
+          {
+            "type": "barricade.damaged",
+            "tick": 9007,
+            "id": 122,
+            "sourceId": 375,
+            "attackId": 489,
+            "slotId": "l4-wall-20",
+            "groupId": "l4-wall",
+            "previousHp": 600,
+            "hp": 300,
+            "amount": 300,
+            "props": []
+          },
+          {
+            "type": "barricade.damaged",
+            "tick": 9007,
+            "id": 123,
+            "sourceId": 375,
+            "attackId": 489,
+            "slotId": "l4-wall-21",
+            "groupId": "l4-wall",
+            "previousHp": 600,
+            "hp": 300,
+            "amount": 300,
+            "props": []
+          },
+          {
+            "type": "barricade.damaged",
+            "tick": 9752,
+            "id": 122,
+            "sourceId": 445,
+            "attackId": 498,
+            "slotId": "l4-wall-20",
+            "groupId": "l4-wall",
+            "previousHp": 300,
+            "hp": 0,
+            "amount": 300,
+            "props": []
+          },
+          {
+            "type": "barricade.damaged",
+            "tick": 9752,
+            "id": 123,
+            "sourceId": 445,
+            "attackId": 498,
+            "slotId": "l4-wall-21",
+            "groupId": "l4-wall",
+            "previousHp": 300,
+            "hp": 0,
+            "amount": 300,
+            "props": []
           }
-        }
-      ]
+        ],
+        "observedHash": "18e71cbb",
+        "canonicalHash": "18e71cbb"
+      },
+      "target": "6low/8high actual identities;\u22656 distinct sources/ticks;offscreen births;\u22653 same IDs hit defensive line",
+      "receipt": "docs/reports/final-b/L4-08-proof.json"
+    },
+    {
+      "id": "L4-16",
+      "clause": "actual cellar entrant roster",
+      "tier": "low",
+      "policy": "real-input-webgl2",
+      "status": "PASS",
+      "value": {
+        "proof": "docs/reports/final-b/L4-16-proof.json",
+        "sha256": "7d637f94cb13e7f19305dae14f864874fc602cd6f6818ff5cfd2db402104d718",
+        "tierRows": [
+          {
+            "tier": "low",
+            "source": "full physical WASD mouse E route",
+            "audibleSimSeconds": 6.866666666666666,
+            "startLagSeconds": 0.06666666666666667,
+            "maxAudibleGapSeconds": 0.9833333333333333,
+            "maxFilterHz": 750,
+            "outgoingRoster": {
+              "anchor": {
+                "x": 75.3,
+                "z": -6.4,
+                "radius": 2,
+                "yaw": 0
+              },
+              "entry": {
+                "x": -79.29999999999998,
+                "z": -45.2801,
+                "radius": 1.4,
+                "yaw": -1.5707963267948966
+              },
+              "player": {
+                "x": 75.3,
+                "y": 0.8500000238418579,
+                "z": -6.4,
+                "yaw": 2.9321531433504737
+              },
+              "doorway": {
+                "x": -79.29999999999998,
+                "z": -45.2801,
+                "yaw": -1.5707963267948966
+              },
+              "actors": [
+                {
+                  "id": 1,
+                  "archetype": "player.survivor",
+                  "companion": false,
+                  "x": 75.3,
+                  "y": 0.8500000238418579,
+                  "z": -6.4,
+                  "pendingAdmission": false
+                },
+                {
+                  "id": 29,
+                  "archetype": "char.corgi",
+                  "companion": true,
+                  "x": 76.4656333251285,
+                  "y": 0.3,
+                  "z": -7,
+                  "pendingAdmission": false
+                }
+              ]
+            },
+            "incomingRoster": {
+              "anchor": {
+                "x": 75.3,
+                "z": -5.4,
+                "radius": 2,
+                "yaw": 0
+              },
+              "entry": {
+                "x": -79.29999999999998,
+                "z": -45.2801,
+                "radius": 2,
+                "yaw": -1.5707963267948966
+              },
+              "player": {
+                "x": 75.3,
+                "y": 0.705,
+                "z": -5.4,
+                "yaw": 0.3205919885488634
+              },
+              "actors": [
+                {
+                  "id": 1,
+                  "archetype": "player.survivor",
+                  "companion": false,
+                  "x": 75.3,
+                  "y": 0.705,
+                  "z": -5.4,
+                  "pendingAdmission": false
+                },
+                {
+                  "id": 18,
+                  "archetype": "char.corgi",
+                  "companion": true,
+                  "x": 76.03806023374436,
+                  "y": 0.3,
+                  "z": -6.191341716182545,
+                  "pendingAdmission": false
+                }
+              ]
+            }
+          }
+        ],
+        "reviewedZooms": [
+          0.5,
+          1.5
+        ]
+      },
+      "target": "Exact existing required clause; see measured source proof and disclosed high Resume prefix.",
+      "receipt": "docs/reports/final-b/L4-16-proof.json"
+    },
+    {
+      "id": "L4-16",
+      "clause": "decoded low-pass battle audible after barring",
+      "tier": "low",
+      "policy": "real-input-webgl2",
+      "status": "PASS",
+      "value": {
+        "proof": "docs/reports/final-b/L4-16-proof.json",
+        "sha256": "7d637f94cb13e7f19305dae14f864874fc602cd6f6818ff5cfd2db402104d718",
+        "tierRows": [
+          {
+            "tier": "low",
+            "source": "full physical WASD mouse E route",
+            "audibleSimSeconds": 6.866666666666666,
+            "startLagSeconds": 0.06666666666666667,
+            "maxAudibleGapSeconds": 0.9833333333333333,
+            "maxFilterHz": 750,
+            "outgoingRoster": {
+              "anchor": {
+                "x": 75.3,
+                "z": -6.4,
+                "radius": 2,
+                "yaw": 0
+              },
+              "entry": {
+                "x": -79.29999999999998,
+                "z": -45.2801,
+                "radius": 1.4,
+                "yaw": -1.5707963267948966
+              },
+              "player": {
+                "x": 75.3,
+                "y": 0.8500000238418579,
+                "z": -6.4,
+                "yaw": 2.9321531433504737
+              },
+              "doorway": {
+                "x": -79.29999999999998,
+                "z": -45.2801,
+                "yaw": -1.5707963267948966
+              },
+              "actors": [
+                {
+                  "id": 1,
+                  "archetype": "player.survivor",
+                  "companion": false,
+                  "x": 75.3,
+                  "y": 0.8500000238418579,
+                  "z": -6.4,
+                  "pendingAdmission": false
+                },
+                {
+                  "id": 29,
+                  "archetype": "char.corgi",
+                  "companion": true,
+                  "x": 76.4656333251285,
+                  "y": 0.3,
+                  "z": -7,
+                  "pendingAdmission": false
+                }
+              ]
+            },
+            "incomingRoster": {
+              "anchor": {
+                "x": 75.3,
+                "z": -5.4,
+                "radius": 2,
+                "yaw": 0
+              },
+              "entry": {
+                "x": -79.29999999999998,
+                "z": -45.2801,
+                "radius": 2,
+                "yaw": -1.5707963267948966
+              },
+              "player": {
+                "x": 75.3,
+                "y": 0.705,
+                "z": -5.4,
+                "yaw": 0.3205919885488634
+              },
+              "actors": [
+                {
+                  "id": 1,
+                  "archetype": "player.survivor",
+                  "companion": false,
+                  "x": 75.3,
+                  "y": 0.705,
+                  "z": -5.4,
+                  "pendingAdmission": false
+                },
+                {
+                  "id": 18,
+                  "archetype": "char.corgi",
+                  "companion": true,
+                  "x": 76.03806023374436,
+                  "y": 0.3,
+                  "z": -6.191341716182545,
+                  "pendingAdmission": false
+                }
+              ]
+            }
+          }
+        ],
+        "reviewedZooms": [
+          0.5,
+          1.5
+        ]
+      },
+      "target": "Exact existing required clause; see measured source proof and disclosed high Resume prefix.",
+      "receipt": "docs/reports/final-b/L4-16-proof.json"
+    },
+    {
+      "id": "L4-16",
+      "clause": "actual same-basement L5 handover",
+      "tier": "low",
+      "policy": "real-input-webgl2",
+      "status": "PASS",
+      "value": {
+        "proof": "docs/reports/final-b/L4-16-proof.json",
+        "sha256": "7d637f94cb13e7f19305dae14f864874fc602cd6f6818ff5cfd2db402104d718",
+        "tierRows": [
+          {
+            "tier": "low",
+            "source": "full physical WASD mouse E route",
+            "audibleSimSeconds": 6.866666666666666,
+            "startLagSeconds": 0.06666666666666667,
+            "maxAudibleGapSeconds": 0.9833333333333333,
+            "maxFilterHz": 750,
+            "outgoingRoster": {
+              "anchor": {
+                "x": 75.3,
+                "z": -6.4,
+                "radius": 2,
+                "yaw": 0
+              },
+              "entry": {
+                "x": -79.29999999999998,
+                "z": -45.2801,
+                "radius": 1.4,
+                "yaw": -1.5707963267948966
+              },
+              "player": {
+                "x": 75.3,
+                "y": 0.8500000238418579,
+                "z": -6.4,
+                "yaw": 2.9321531433504737
+              },
+              "doorway": {
+                "x": -79.29999999999998,
+                "z": -45.2801,
+                "yaw": -1.5707963267948966
+              },
+              "actors": [
+                {
+                  "id": 1,
+                  "archetype": "player.survivor",
+                  "companion": false,
+                  "x": 75.3,
+                  "y": 0.8500000238418579,
+                  "z": -6.4,
+                  "pendingAdmission": false
+                },
+                {
+                  "id": 29,
+                  "archetype": "char.corgi",
+                  "companion": true,
+                  "x": 76.4656333251285,
+                  "y": 0.3,
+                  "z": -7,
+                  "pendingAdmission": false
+                }
+              ]
+            },
+            "incomingRoster": {
+              "anchor": {
+                "x": 75.3,
+                "z": -5.4,
+                "radius": 2,
+                "yaw": 0
+              },
+              "entry": {
+                "x": -79.29999999999998,
+                "z": -45.2801,
+                "radius": 2,
+                "yaw": -1.5707963267948966
+              },
+              "player": {
+                "x": 75.3,
+                "y": 0.705,
+                "z": -5.4,
+                "yaw": 0.3205919885488634
+              },
+              "actors": [
+                {
+                  "id": 1,
+                  "archetype": "player.survivor",
+                  "companion": false,
+                  "x": 75.3,
+                  "y": 0.705,
+                  "z": -5.4,
+                  "pendingAdmission": false
+                },
+                {
+                  "id": 18,
+                  "archetype": "char.corgi",
+                  "companion": true,
+                  "x": 76.03806023374436,
+                  "y": 0.3,
+                  "z": -6.191341716182545,
+                  "pendingAdmission": false
+                }
+              ]
+            }
+          }
+        ],
+        "reviewedZooms": [
+          0.5,
+          1.5
+        ]
+      },
+      "target": "Exact existing required clause; see measured source proof and disclosed high Resume prefix.",
+      "receipt": "docs/reports/final-b/L4-16-proof.json"
+    },
+    {
+      "id": "L4-16",
+      "clause": "reviewed visible companion in cellar",
+      "tier": "low",
+      "policy": "real-input-webgl2",
+      "status": "PASS",
+      "value": {
+        "proof": "docs/reports/final-b/L4-16-proof.json",
+        "sha256": "7d637f94cb13e7f19305dae14f864874fc602cd6f6818ff5cfd2db402104d718",
+        "tierRows": [
+          {
+            "tier": "low",
+            "source": "full physical WASD mouse E route",
+            "audibleSimSeconds": 6.866666666666666,
+            "startLagSeconds": 0.06666666666666667,
+            "maxAudibleGapSeconds": 0.9833333333333333,
+            "maxFilterHz": 750,
+            "outgoingRoster": {
+              "anchor": {
+                "x": 75.3,
+                "z": -6.4,
+                "radius": 2,
+                "yaw": 0
+              },
+              "entry": {
+                "x": -79.29999999999998,
+                "z": -45.2801,
+                "radius": 1.4,
+                "yaw": -1.5707963267948966
+              },
+              "player": {
+                "x": 75.3,
+                "y": 0.8500000238418579,
+                "z": -6.4,
+                "yaw": 2.9321531433504737
+              },
+              "doorway": {
+                "x": -79.29999999999998,
+                "z": -45.2801,
+                "yaw": -1.5707963267948966
+              },
+              "actors": [
+                {
+                  "id": 1,
+                  "archetype": "player.survivor",
+                  "companion": false,
+                  "x": 75.3,
+                  "y": 0.8500000238418579,
+                  "z": -6.4,
+                  "pendingAdmission": false
+                },
+                {
+                  "id": 29,
+                  "archetype": "char.corgi",
+                  "companion": true,
+                  "x": 76.4656333251285,
+                  "y": 0.3,
+                  "z": -7,
+                  "pendingAdmission": false
+                }
+              ]
+            },
+            "incomingRoster": {
+              "anchor": {
+                "x": 75.3,
+                "z": -5.4,
+                "radius": 2,
+                "yaw": 0
+              },
+              "entry": {
+                "x": -79.29999999999998,
+                "z": -45.2801,
+                "radius": 2,
+                "yaw": -1.5707963267948966
+              },
+              "player": {
+                "x": 75.3,
+                "y": 0.705,
+                "z": -5.4,
+                "yaw": 0.3205919885488634
+              },
+              "actors": [
+                {
+                  "id": 1,
+                  "archetype": "player.survivor",
+                  "companion": false,
+                  "x": 75.3,
+                  "y": 0.705,
+                  "z": -5.4,
+                  "pendingAdmission": false
+                },
+                {
+                  "id": 18,
+                  "archetype": "char.corgi",
+                  "companion": true,
+                  "x": 76.03806023374436,
+                  "y": 0.3,
+                  "z": -6.191341716182545,
+                  "pendingAdmission": false
+                }
+              ]
+            }
+          }
+        ],
+        "reviewedZooms": [
+          0.5,
+          1.5
+        ]
+      },
+      "target": "Exact existing required clause; see measured source proof and disclosed high Resume prefix.",
+      "receipt": "docs/reports/final-b/L4-16-proof.json"
     }
-  ],
-  "issues": [],
-  "frameTiming": false,
-  "backend": "webgl2",
-  "zoom": 1.5
+  ]
 }

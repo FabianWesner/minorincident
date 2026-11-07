@@ -1,0 +1,165 @@
+{
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "frozenCommit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "method": "Ordinary mortal L5 complete run matches canonical hash. Actual resulting mission result passed to production completeCampaignLevel, exactly the application handover operation, to produce carried save. Production L6 load, no actor/health/objective edits; ordinary empty input for5s with every0.5s roster/HP/activity snapshots.",
+  "rendererStowGuard": {
+    "file": "src/render/npc/CivilianCrowd.ts",
+    "sha256": "8b1b6d9ab3546ca69e390d060020f3f9df035bb1e7b5028ca58122756aab226b",
+    "observation": "Actual production holding = !stowed, and stowed matches sit/death poses. Every seated/lying actor in the current carry census has npc-sit/death-side. Low Okafor retains stored rifle state, so the exact source save was rendered to confirm the guard: both detail frames show his empty hands; nearby rifle belongs to standing Rosa."
+  },
+  "rows": [
+    {
+      "tier": "low",
+      "residents": 24,
+      "rescued": 5,
+      "actualCarriedIDs": [
+        28,
+        29,
+        30,
+        31,
+        32,
+        289,
+        290,
+        291,
+        292,
+        293,
+        294,
+        295,
+        296,
+        297,
+        298,
+        299,
+        300,
+        301,
+        302,
+        303,
+        304,
+        305,
+        306,
+        307,
+        308,
+        309,
+        310,
+        311,
+        312
+      ],
+      "L5ObservedHash": "0a23911a",
+      "L5CanonicalHash": "0a23911a",
+      "halfSecondSamples": 11,
+      "actorObservations": 319,
+      "seconds": 5,
+      "fullHpEverySample": true,
+      "purposefulStoryEverySample": true,
+      "routines": [
+        "guard",
+        "rest",
+        "share",
+        "sit",
+        "talk",
+        "treat"
+      ],
+      "seatedLyingActorObservations": 121,
+      "storedGunObservations": 11,
+      "allSeatedLyingClipsStowGuns": true
+    },
+    {
+      "tier": "high",
+      "residents": 24,
+      "rescued": 5,
+      "actualCarriedIDs": [
+        28,
+        29,
+        30,
+        31,
+        32,
+        389,
+        390,
+        391,
+        392,
+        393,
+        394,
+        395,
+        396,
+        397,
+        398,
+        399,
+        400,
+        401,
+        402,
+        403,
+        404,
+        405,
+        406,
+        407,
+        408,
+        409,
+        410,
+        411,
+        412
+      ],
+      "L5ObservedHash": "147553b8",
+      "L5CanonicalHash": "147553b8",
+      "halfSecondSamples": 11,
+      "actorObservations": 319,
+      "seconds": 5,
+      "fullHpEverySample": true,
+      "purposefulStoryEverySample": true,
+      "routines": [
+        "guard",
+        "rest",
+        "share",
+        "sit",
+        "talk",
+        "treat"
+      ],
+      "seatedLyingActorObservations": 121,
+      "storedGunObservations": 0,
+      "allSeatedLyingClipsStowGuns": true
+    }
+  ],
+  "frames": [
+    {
+      "file": "test-results/vqa-1b/final-b-L6-high/captures/final-b-L6-high-L6-shelter-t639-low-z1-5.jpg",
+      "sha256": "c6ee22e54668f6ab4869dbdc528b2971b8dc968891bf8d879a05dbe7c1e4fb48",
+      "personallyReviewed": true,
+      "observation": "Current physical L6 progressed preset with29 people, paused renderer low variant at tick639. Visible residents sit along benches, lie on bedding, face/talk or work around supply/treatment tables. No gun in hands of visible seated/lying residents. This image is a representative renderer/posture check; actual carried identity/full-HP/no-idle census comes from the separate production L5-to-L6 native handover, not inferred from this preset image. The photograph does not show every offscreen resident."
+    },
+    {
+      "file": "test-results/vqa-1b/final-b-L6-high/captures/final-b-L6-high-L6-shelter-t639-high-z1-5.jpg",
+      "sha256": "9d95d53302629b051be1f074a0d797b6171b723b54c5f504da79966f588c247d",
+      "personallyReviewed": true,
+      "observation": "Current physical L6 progressed preset with29 people, paused renderer high variant at tick639. Visible residents sit along benches, lie on bedding, face/talk or work around supply/treatment tables. No gun in hands of visible seated/lying residents. This image is a representative renderer/posture check; actual carried identity/full-HP/no-idle census comes from the separate production L5-to-L6 native handover, not inferred from this preset image. The photograph does not show every offscreen resident."
+    },
+    {
+      "file": "test-results/final-b/L6-carried-okafor/wide.png",
+      "sha256": "a9d7e7238cc1ee289bb61e61f038a68785c850b1a59990d572acdd02f580010f",
+      "personallyReviewed": true,
+      "observation": "Exact current low carried Okafor ID30: drawn npc-sit with empty hands, hands held separately above lap. Standing Rosa at right holds red/black rifle; that gun is not Okafor. Stored rifle state does not mean a drawn held prop. Actual W then idle supplied normal physical input before the camera-only detail. Background lying and seated residents are unarmed."
+    },
+    {
+      "file": "test-results/final-b/L6-carried-okafor/close.png",
+      "sha256": "40bfff8e9e2de6c4803dbbbb6a7d8cb43a6046a946849dc544c957931353e45c",
+      "personallyReviewed": true,
+      "observation": "Exact current low carried Okafor ID30: drawn npc-sit with empty hands, hands held separately above lap. Standing Rosa at right holds red/black rifle; that gun is not Okafor. Stored rifle state does not mean a drawn held prop. Actual W then idle supplied normal physical input before the camera-only detail. Background lying and seated residents are unarmed."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/final-b/L6-carry-native.json.gz",
+      "sha256": "cbd3ac97e20835c66764aee7a3f4482161a0686be809b1a048a290dd3e48f333"
+    },
+    {
+      "file": "docs/reports/final-b/L5-low-completed-save.json.gz",
+      "sha256": "4f804fecd1578eb0a8be88b248148bfff9c3c59cd4b9b5c4e1a06a4c4fb21ae1"
+    },
+    {
+      "file": "docs/reports/final-b/L5-high-completed-save.json.gz",
+      "sha256": "3101d26c60b4ab514a8f0738270bb375c03dee9e4f2ae050253dfbc2d89ec775"
+    },
+    {
+      "file": "docs/reports/final-b/L6-carried-okafor-render.json.gz",
+      "sha256": "eb1b20746f6e8a92b47fbfe7d8d2565b842a3a793776e60d0a3762995f96645d"
+    }
+  ],
+  "limits": "Actual IDs/full HP/routine continuity come from native L5 completed result passed to production completeCampaignLevel, then actual L6 load. Representative physical preset29-person images verify the current routine presentation; they are not a claim that preset IDs are the carried native IDs. Purposeful production story clips remain active throughout5s, so no idle interval>3s appears."
+}

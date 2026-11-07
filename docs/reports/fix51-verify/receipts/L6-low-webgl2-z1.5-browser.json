@@ -3,145 +3,1445 @@
   "level": "L6",
   "tier": "low",
   "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
-  "fixtureHash": "3a1aa6ffd344dc12e40e887d5787eccb7b7f2da10d19445898a88e94befd6f3f",
-  "browserHash": "3a1aa6ffd344dc12e40e887d5787eccb7b7f2da10d19445898a88e94befd6f3f",
+  "fixtureHash": "07ce4c28bcee06ed308a9e8f7cd0b7f101d70196c5d2fcabe2840b73f962d1e9",
+  "browserHash": "9388d0056ef51321f7a42b0d246655834460a88af205dee82674435822fa31c9",
+  "errors": [],
+  "observations": {
+    "scope": "Supplementary native L6-04/09 only; no browser route or G-25 claim."
+  },
   "checks": [
     {
-      "id": "G-25",
-      "clause": "physical WASD/mouse full-level browser console",
+      "id": "L6-04",
+      "clause": "actual second breach arrivals power and abandon condition",
       "tier": "low",
-      "policy": "real-input-webgl2",
+      "policy": "controlled-fixture",
       "status": "PASS",
       "value": {
-        "backend": "webgl2",
-        "zoom": 1.5,
+        "tier": "low",
+        "breach1": 1992,
+        "breach2": 3253,
+        "delaySeconds": 21.016666666666666,
+        "sameTickArrivals": 10,
+        "accesses": [
+          0,
+          1
+        ],
+        "reachFloor": 10,
+        "powerOffTick": 3253,
+        "mainLightsOff": 56,
+        "redEmergencyLightsOn": 46,
+        "abandonTick": 3253,
+        "infectedRosterAtAbandon": [
+          {
+            "id": 21,
+            "status": "turned",
+            "infected": true,
+            "infection": false
+          },
+          {
+            "id": 31,
+            "status": "turned",
+            "infected": true,
+            "infection": false
+          },
+          {
+            "id": 40,
+            "status": "turned",
+            "infected": true,
+            "infection": false
+          }
+        ],
+        "observedHash": "66632916",
+        "controlHash": "66632916",
+        "status": "PASS"
+      },
+      "target": "20\u201330s;10 bodies from2 accesses; power off in1tick and red emergency on; abandon at15s or3 bitten",
+      "receipt": "docs/reports/final-b/L6-04-proof.json"
+    },
+    {
+      "id": "L6-09",
+      "clause": "actual gates width collision endurance refusal and persistent prompt",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "status": "PASS",
+      "value": {
+        "tier": "low",
+        "gates": [
+          {
+            "x": 90,
+            "widthM": 2.200000000000001,
+            "holdSeconds": 9.816666666666666,
+            "openMovement": true,
+            "closedMovement": false,
+            "openSight": true,
+            "closedSight": false,
+            "attacks": 37
+          },
+          {
+            "x": 150,
+            "widthM": 2.200000000000001,
+            "holdSeconds": 9.816666666666666,
+            "openMovement": true,
+            "closedMovement": false,
+            "openSight": true,
+            "closedSight": false,
+            "attacks": 37
+          },
+          {
+            "x": 210,
+            "widthM": 2.200000000000001,
+            "holdSeconds": 9.816666666666666,
+            "openMovement": true,
+            "closedMovement": false,
+            "openSight": true,
+            "closedSight": false,
+            "attacks": 37
+          }
+        ],
+        "inputs": [
+          {
+            "x": 90,
+            "mode": "E",
+            "elapsedTicks": 60
+          },
+          {
+            "x": 90,
+            "mode": "click",
+            "elapsedTicks": 60
+          },
+          {
+            "x": 150,
+            "mode": "E",
+            "elapsedTicks": 60
+          },
+          {
+            "x": 150,
+            "mode": "click",
+            "elapsedTicks": 60
+          },
+          {
+            "x": 210,
+            "mode": "E",
+            "elapsedTicks": 60
+          },
+          {
+            "x": 210,
+            "mode": "click",
+            "elapsedTicks": 60
+          }
+        ],
+        "boundariesAndMarkers": [
+          {
+            "x": 90,
+            "boundaries": [
+              {
+                "survivorOffsetM": -1.99,
+                "closable": false,
+                "status": "Let everyone pass \u00b7 28/29 through"
+              },
+              {
+                "survivorOffsetM": 0,
+                "closable": false,
+                "status": "Let everyone pass \u00b7 28/29 through"
+              },
+              {
+                "survivorOffsetM": 1.8,
+                "closable": false,
+                "status": "Let everyone pass \u00b7 28/29 through"
+              },
+              {
+                "survivorOffsetM": 2,
+                "closable": false,
+                "status": "Let everyone pass \u00b7 28/29 through"
+              },
+              {
+                "survivorOffsetM": 2.01,
+                "closable": true,
+                "status": "Everyone through \u00b7 E or click the gate to close it"
+              }
+            ],
+            "markerSamples": [
+              {
+                "player": {
+                  "x": 92.4,
+                  "z": 17.3
+                },
+                "marker": "l6-next",
+                "at": {
+                  "x": 92.4,
+                  "z": 17.3,
+                  "y": 0.6,
+                  "radius": 2
+                },
+                "prompt": "Everyone through \u00b7 E or click the gate to close it",
+                "closedAt": 0
+              },
+              {
+                "player": {
+                  "x": 93.5,
+                  "z": 16.5
+                },
+                "marker": "l6-next",
+                "at": {
+                  "x": 92.4,
+                  "z": 17.3,
+                  "y": 0.6,
+                  "radius": 2
+                },
+                "prompt": "Everyone through \u00b7 E or click the gate to close it",
+                "closedAt": 0
+              },
+              {
+                "player": {
+                  "x": 92.4,
+                  "z": 17.3
+                },
+                "marker": "l6-next",
+                "at": {
+                  "x": 92.4,
+                  "z": 17.3,
+                  "y": 0.6,
+                  "radius": 2
+                },
+                "prompt": "Everyone through \u00b7 E or click the gate to close it",
+                "closedAt": 0
+              }
+            ]
+          },
+          {
+            "x": 150,
+            "boundaries": [
+              {
+                "survivorOffsetM": -1.99,
+                "closable": false,
+                "status": "Let everyone pass \u00b7 28/29 through"
+              },
+              {
+                "survivorOffsetM": 0,
+                "closable": false,
+                "status": "Let everyone pass \u00b7 28/29 through"
+              },
+              {
+                "survivorOffsetM": 1.8,
+                "closable": false,
+                "status": "Let everyone pass \u00b7 28/29 through"
+              },
+              {
+                "survivorOffsetM": 2,
+                "closable": false,
+                "status": "Let everyone pass \u00b7 28/29 through"
+              },
+              {
+                "survivorOffsetM": 2.01,
+                "closable": true,
+                "status": "Everyone through \u00b7 E or click the gate to close it"
+              }
+            ],
+            "markerSamples": [
+              {
+                "player": {
+                  "x": 152.4,
+                  "z": 17.3
+                },
+                "marker": "l6-next",
+                "at": {
+                  "x": 152.4,
+                  "z": 17.3,
+                  "y": 0.6,
+                  "radius": 2
+                },
+                "prompt": "Everyone through \u00b7 E or click the gate to close it",
+                "closedAt": 0
+              },
+              {
+                "player": {
+                  "x": 153.5,
+                  "z": 16.5
+                },
+                "marker": "l6-next",
+                "at": {
+                  "x": 152.4,
+                  "z": 17.3,
+                  "y": 0.6,
+                  "radius": 2
+                },
+                "prompt": "Everyone through \u00b7 E or click the gate to close it",
+                "closedAt": 0
+              },
+              {
+                "player": {
+                  "x": 152.4,
+                  "z": 17.3
+                },
+                "marker": "l6-next",
+                "at": {
+                  "x": 152.4,
+                  "z": 17.3,
+                  "y": 0.6,
+                  "radius": 2
+                },
+                "prompt": "Everyone through \u00b7 E or click the gate to close it",
+                "closedAt": 0
+              }
+            ]
+          },
+          {
+            "x": 210,
+            "boundaries": [
+              {
+                "survivorOffsetM": -1.99,
+                "closable": false,
+                "status": "Let everyone pass \u00b7 28/29 through"
+              },
+              {
+                "survivorOffsetM": 0,
+                "closable": false,
+                "status": "Let everyone pass \u00b7 28/29 through"
+              },
+              {
+                "survivorOffsetM": 1.8,
+                "closable": false,
+                "status": "Let everyone pass \u00b7 28/29 through"
+              },
+              {
+                "survivorOffsetM": 2,
+                "closable": false,
+                "status": "Let everyone pass \u00b7 28/29 through"
+              },
+              {
+                "survivorOffsetM": 2.01,
+                "closable": true,
+                "status": "Everyone through \u00b7 E or click the gate to close it"
+              }
+            ],
+            "markerSamples": [
+              {
+                "player": {
+                  "x": 212.4,
+                  "z": 17.3
+                },
+                "marker": "l6-next",
+                "at": {
+                  "x": 212.4,
+                  "z": 17.3,
+                  "y": 0.6,
+                  "radius": 2
+                },
+                "prompt": "Everyone through \u00b7 E or click the gate to close it",
+                "closedAt": 0
+              },
+              {
+                "player": {
+                  "x": 213.5,
+                  "z": 16.5
+                },
+                "marker": "l6-next",
+                "at": {
+                  "x": 212.4,
+                  "z": 17.3,
+                  "y": 0.6,
+                  "radius": 2
+                },
+                "prompt": "Everyone through \u00b7 E or click the gate to close it",
+                "closedAt": 0
+              },
+              {
+                "player": {
+                  "x": 212.4,
+                  "z": 17.3
+                },
+                "marker": "l6-next",
+                "at": {
+                  "x": 212.4,
+                  "z": 17.3,
+                  "y": 0.6,
+                  "radius": 2
+                },
+                "prompt": "Everyone through \u00b7 E or click the gate to close it",
+                "closedAt": 0
+              }
+            ]
+          }
+        ],
+        "status": "PASS"
+      },
+      "target": "3 gates<=2.5m; closed collision and sight;8\u201312s vs5;refuse<=2m;fixed prompt/ring until actual E/click closure",
+      "receipt": "docs/reports/final-b/L6-09-proof.json"
+    },
+    {
+      "id": "L6-13",
+      "clause": "ordinary fists-only route completion",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "status": "PASS",
+      "value": {
+        "tier": "low",
         "completed": true,
-        "skipped": [],
-        "consoleErrors": [],
-        "immortal": true,
-        "frameTiming": false
+        "phase": "result",
+        "seconds": 236.61666666666667,
+        "deaths": 3,
+        "kills": 0,
+        "knockdowns": 6,
+        "damage": 453.56666666666536,
+        "offered": [
+          "weapon.fists",
+          "weapon.kick"
+        ],
+        "attacks": [
+          "weapon.fists"
+        ],
+        "nativeStateHash": "ab3dd71c",
+        "proof": "docs/reports/final-b/L6-13-proof.json"
       },
-      "target": "complete ordinary-input route; zero console/page errors; no objective skips",
-      "receipt": "docs/reports/final-g/G-25-L6-low.json"
-    }
-  ],
-  "errors": [],
-  "run": [
+      "target": "Existing exact required clause; fresh full raw proof retained, no game edits.",
+      "receipt": "docs/reports/final-b/L6-13-proof.json"
+    },
     {
-      "level": "L6",
-      "entry": "debug",
-      "heroine": "female",
-      "finished": true,
-      "skipped": [],
-      "wallSeconds": 215,
-      "simSeconds": 189,
-      "maxNoProgressSeconds": 32.473,
-      "deaths": 0,
-      "assists": 1,
-      "attacks": {
-        "weapon.army-mg": 1186
+      "id": "L6-08",
+      "clause": "all original follower settled speed and per-ID visible bars",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "status": "PASS",
+      "value": {
+        "tier": "low",
+        "originalIds": 29,
+        "bars": [
+          {
+            "id": 16,
+            "injured": false,
+            "bar": {
+              "id": 16,
+              "fraction": 1,
+              "x": 847.252682835735,
+              "y": 403.14556425612557,
+              "width": 18,
+              "height": 3,
+              "gap": 0,
+              "anchor": [
+                260.3321054922122,
+                5.157925219585268,
+                15.642104481317219
+              ]
+            },
+            "greenPixels": 54,
+            "drawn": true,
+            "capture": "test-results/final-b/L6-bars-low/captures/low-16.png",
+            "sha256": "11185a61d0a81870767028689d511fd3c22e3c4ac0c51bd4142941ac4a2e3a63",
+            "crop": [
+              802,
+              393,
+              892,
+              503
+            ]
+          },
+          {
+            "id": 17,
+            "injured": false,
+            "bar": {
+              "id": 17,
+              "fraction": 1,
+              "x": 835.2022864333383,
+              "y": 406.6951668716208,
+              "width": 18,
+              "height": 3,
+              "gap": 0,
+              "anchor": [
+                260.2471388836961,
+                5.14558174163858,
+                15.833094026670736
+              ]
+            },
+            "greenPixels": 54,
+            "drawn": true,
+            "capture": "test-results/final-b/L6-bars-low/captures/low-17.png",
+            "sha256": "785e50d8a5470e9ed9ff52e3ee5fa374c23b4a0b2a2896fd0776a5e6c5431c83",
+            "crop": [
+              790,
+              397,
+              880,
+              507
+            ]
+          },
+          {
+            "id": 18,
+            "injured": false,
+            "bar": {
+              "id": 18,
+              "fraction": 1,
+              "x": 843.0940908474126,
+              "y": 403.9147216442816,
+              "width": 18,
+              "height": 3,
+              "gap": 0,
+              "anchor": [
+                260.357153717497,
+                5.233479300646634,
+                15.783999268034055
+              ]
+            },
+            "greenPixels": 54,
+            "drawn": true,
+            "capture": "test-results/final-b/L6-bars-low/captures/low-18.png",
+            "sha256": "deae1d3cb5a087bdfcdd52b4fe1e74a5977b3b8fd71f53cfc6628257d553d198",
+            "crop": [
+              798,
+              394,
+              888,
+              504
+            ]
+          },
+          {
+            "id": 19,
+            "injured": false,
+            "bar": {
+              "id": 19,
+              "fraction": 1,
+              "x": 857.2385534439928,
+              "y": 394.2013352319822,
+              "width": 18,
+              "height": 3,
+              "gap": 0,
+              "anchor": [
+                260.3454591636076,
+                5.220907077442265,
+                15.418556869448537
+              ]
+            },
+            "greenPixels": 54,
+            "drawn": true,
+            "capture": "test-results/final-b/L6-bars-low/captures/low-19.png",
+            "sha256": "088d56c9db59ac70d2470db9b169c997819bd7f5ba2bd21c72074bf81512a5ba",
+            "crop": [
+              812,
+              384,
+              902,
+              494
+            ]
+          },
+          {
+            "id": 20,
+            "injured": false,
+            "bar": {
+              "id": 20,
+              "fraction": 1,
+              "x": 850.7262621801233,
+              "y": 398.1455913133021,
+              "width": 18,
+              "height": 3,
+              "gap": 0,
+              "anchor": [
+                260.2565773744048,
+                5.116238110828322,
+                15.457880379623212
+              ]
+            },
+            "greenPixels": 54,
+            "drawn": true,
+            "capture": "test-results/final-b/L6-bars-low/captures/low-20.png",
+            "sha256": "9801c4a915af091d18e8f6d4dd5904810e9b3d0daa0240e4f5030ac7cb8b8234",
+            "crop": [
+              806,
+              388,
+              896,
+              498
+            ]
+          },
+          {
+            "id": 21,
+            "injured": true,
+            "bar": {
+              "id": 21,
+              "fraction": 1,
+              "x": 844.8058139990978,
+              "y": 397.3695024714052,
+              "width": 18,
+              "height": 3,
+              "gap": 0,
+              "anchor": [
+                260.1876579705981,
+                5.128920820182222,
+                15.521791595628489
+              ]
+            },
+            "greenPixels": 54,
+            "drawn": true,
+            "capture": "test-results/final-b/L6-bars-low/captures/low-21.png",
+            "sha256": "f48ffec084366b68fb811abf84bda685fd8aeda7f455dd9ba40c720edbd736b3",
+            "crop": [
+              800,
+              387,
+              890,
+              497
+            ]
+          },
+          {
+            "id": 22,
+            "injured": false,
+            "bar": {
+              "id": 22,
+              "fraction": 1,
+              "x": 848.2563694482556,
+              "y": 395.400778983362,
+              "width": 18,
+              "height": 3,
+              "gap": 0,
+              "anchor": [
+                260.24668370450036,
+                5.196920736751331,
+                15.516741382722891
+              ]
+            },
+            "greenPixels": 54,
+            "drawn": true,
+            "capture": "test-results/final-b/L6-bars-low/captures/low-22.png",
+            "sha256": "b02de4d0c289add8e7f182c0f16d055cd71cf7002a6a359bcf51ed0fed24ee79",
+            "crop": [
+              803,
+              385,
+              893,
+              495
+            ]
+          },
+          {
+            "id": 23,
+            "injured": false,
+            "bar": {
+              "id": 23,
+              "fraction": 1,
+              "x": 849.2851919745943,
+              "y": 395.2389850349583,
+              "width": 18,
+              "height": 3,
+              "gap": 0,
+              "anchor": [
+                260.2477091520992,
+                5.18697986526384,
+                15.491281387206545
+              ]
+            },
+            "greenPixels": 54,
+            "drawn": true,
+            "capture": "test-results/final-b/L6-bars-low/captures/low-23.png",
+            "sha256": "f9d3a7fe97e5ed06ecd652c757957a136c3a9a4666ed0a4ff2cf08074e9bc6b9",
+            "crop": [
+              804,
+              385,
+              894,
+              495
+            ]
+          },
+          {
+            "id": 24,
+            "injured": false,
+            "bar": {
+              "id": 24,
+              "fraction": 1,
+              "x": 845.7949349325215,
+              "y": 399.0356047647343,
+              "width": 18,
+              "height": 3,
+              "gap": 0,
+              "anchor": [
+                260.23000246958895,
+                5.133895450302152,
+                15.549824780990257
+              ]
+            },
+            "greenPixels": 54,
+            "drawn": true,
+            "capture": "test-results/final-b/L6-bars-low/captures/low-24.png",
+            "sha256": "e474140b4752beb1083703a5a0ff0c6ff15b83d665b933e44a91e0b917257f02",
+            "crop": [
+              801,
+              389,
+              891,
+              499
+            ]
+          },
+          {
+            "id": 25,
+            "injured": false,
+            "bar": {
+              "id": 25,
+              "fraction": 1,
+              "x": 844.512685212016,
+              "y": 400.6012962906715,
+              "width": 18,
+              "height": 3,
+              "gap": 0,
+              "anchor": [
+                260.27759948697854,
+                5.18037620153399,
+                15.645414981515806
+              ]
+            },
+            "greenPixels": 54,
+            "drawn": true,
+            "capture": "test-results/final-b/L6-bars-low/captures/low-25.png",
+            "sha256": "6f5f290983ec9f33e3ff97a3a398bca18b4ca63a72fc29e69a31f66a90d4241e",
+            "crop": [
+              800,
+              391,
+              890,
+              501
+            ]
+          },
+          {
+            "id": 26,
+            "injured": true,
+            "bar": {
+              "id": 26,
+              "fraction": 1,
+              "x": 843.9760792957373,
+              "y": 398.51077177326016,
+              "width": 18,
+              "height": 3,
+              "gap": 0,
+              "anchor": [
+                260.2452086411123,
+                5.19042851815694,
+                15.620101352751686
+              ]
+            },
+            "greenPixels": 54,
+            "drawn": true,
+            "capture": "test-results/final-b/L6-bars-low/captures/low-26.png",
+            "sha256": "f9eab5f56ab1e6cf41ebf3ebe225e5d379d03d70c830f5df6493bf3ef22d2ea3",
+            "crop": [
+              799,
+              389,
+              889,
+              499
+            ]
+          },
+          {
+            "id": 27,
+            "injured": false,
+            "bar": {
+              "id": 27,
+              "fraction": 1,
+              "x": 816.0273801502842,
+              "y": 381.83522066329806,
+              "width": 18,
+              "height": 3,
+              "gap": 0,
+              "anchor": [
+                259.65953019133735,
+                5.198018092954538,
+                15.602201967155096
+              ]
+            },
+            "greenPixels": 54,
+            "drawn": true,
+            "capture": "test-results/final-b/L6-bars-low/captures/low-27.png",
+            "sha256": "093f53573bf380fb70206fec4e021454ebb3495dddf606152abde3e36f50fc60",
+            "crop": [
+              771,
+              372,
+              861,
+              482
+            ]
+          },
+          {
+            "id": 28,
+            "injured": false,
+            "bar": {
+              "id": 28,
+              "fraction": 1,
+              "x": 837.8938411126546,
+              "y": 401.8256917171089,
+              "width": 18,
+              "height": 3,
+              "gap": 0,
+              "anchor": [
+                260.2643004472684,
+                5.231541516470873,
+                15.79767952517971
+              ]
+            },
+            "greenPixels": 54,
+            "drawn": true,
+            "capture": "test-results/final-b/L6-bars-low/captures/low-28.png",
+            "sha256": "47c945d0afc330cc97e0b48e7a748faf17e951675ed9c25cf919d176f88ee653",
+            "crop": [
+              793,
+              392,
+              883,
+              502
+            ]
+          },
+          {
+            "id": 29,
+            "injured": false,
+            "bar": {
+              "id": 29,
+              "fraction": 1,
+              "x": 845.6475299314363,
+              "y": 400.46995125147436,
+              "width": 18,
+              "height": 3,
+              "gap": 0,
+              "anchor": [
+                260.22864904431714,
+                5.103922865275161,
+                15.548302078527296
+              ]
+            },
+            "greenPixels": 54,
+            "drawn": true,
+            "capture": "test-results/final-b/L6-bars-low/captures/low-29.png",
+            "sha256": "f1f5e90ac64b536a6607e911ed8aa5b576875ab0a51599b313a22b539be928b3",
+            "crop": [
+              801,
+              390,
+              891,
+              500
+            ]
+          },
+          {
+            "id": 30,
+            "injured": false,
+            "bar": {
+              "id": 30,
+              "fraction": 1,
+              "x": 843.5557703817772,
+              "y": 400.438266256629,
+              "width": 18,
+              "height": 3,
+              "gap": 0,
+              "anchor": [
+                260.19765984181413,
+                5.09470509501873,
+                15.561096540727547
+              ]
+            },
+            "greenPixels": 54,
+            "drawn": true,
+            "capture": "test-results/final-b/L6-bars-low/captures/low-30.png",
+            "sha256": "c4700ffc4cfd65416dc050db271c748df1c86243aff552177ee1eec6f4282c38",
+            "crop": [
+              799,
+              390,
+              889,
+              500
+            ]
+          },
+          {
+            "id": 31,
+            "injured": true,
+            "bar": {
+              "id": 31,
+              "fraction": 1,
+              "x": 848.4104267469975,
+              "y": 397.5560033065628,
+              "width": 18,
+              "height": 3,
+              "gap": 0,
+              "anchor": [
+                260.28678978050885,
+                5.200769999660553,
+                15.562777405630747
+              ]
+            },
+            "greenPixels": 54,
+            "drawn": true,
+            "capture": "test-results/final-b/L6-bars-low/captures/low-31.png",
+            "sha256": "05ad2f3d214a42310846fcc94b19c6ceb17ab2d897fab937d8715138dcaa954a",
+            "crop": [
+              803,
+              388,
+              893,
+              498
+            ]
+          },
+          {
+            "id": 32,
+            "injured": false,
+            "bar": {
+              "id": 32,
+              "fraction": 1,
+              "x": 809.5373960761895,
+              "y": 384.6428868573388,
+              "width": 18,
+              "height": 3,
+              "gap": 0,
+              "anchor": [
+                259.62128658299036,
+                5.181618814867621,
+                15.714711380048428
+              ]
+            },
+            "greenPixels": 54,
+            "drawn": true,
+            "capture": "test-results/final-b/L6-bars-low/captures/low-32.png",
+            "sha256": "2d7dd7ac1ef6df9a359210b1ce2c54f94b9d74d9032062c79780278389a464cb",
+            "crop": [
+              765,
+              375,
+              855,
+              485
+            ]
+          },
+          {
+            "id": 33,
+            "injured": false,
+            "bar": {
+              "id": 33,
+              "fraction": 1,
+              "x": 837.3859740818232,
+              "y": 403.39326611162187,
+              "width": 18,
+              "height": 3,
+              "gap": 0,
+              "anchor": [
+                260.2680994440623,
+                5.210774968277228,
+                15.812408583313932
+              ]
+            },
+            "greenPixels": 54,
+            "drawn": true,
+            "capture": "test-results/final-b/L6-bars-low/captures/low-33.png",
+            "sha256": "8872824df66e60bc428825d0aca6feabab6567575313bf5e5e563090332282ae",
+            "crop": [
+              792,
+              393,
+              882,
+              503
+            ]
+          },
+          {
+            "id": 34,
+            "injured": false,
+            "bar": {
+              "id": 34,
+              "fraction": 1,
+              "x": 837.8176704977982,
+              "y": 397.15028847722,
+              "width": 18,
+              "height": 3,
+              "gap": 0,
+              "anchor": [
+                260.2046890061147,
+                5.25435002417027,
+                15.729460219646079
+              ]
+            },
+            "greenPixels": 54,
+            "drawn": true,
+            "capture": "test-results/final-b/L6-bars-low/captures/low-34.png",
+            "sha256": "18e83b21510d921982fe1acc1f687f4925c112b128ba69c9535d1fcb4cb735af",
+            "crop": [
+              793,
+              387,
+              883,
+              497
+            ]
+          },
+          {
+            "id": 35,
+            "injured": false,
+            "bar": {
+              "id": 35,
+              "fraction": 1,
+              "x": 847.5758377274151,
+              "y": 396.6687163722876,
+              "width": 18,
+              "height": 3,
+              "gap": 0,
+              "anchor": [
+                260.23818987950256,
+                5.168972004665504,
+                15.51985043629573
+              ]
+            },
+            "greenPixels": 54,
+            "drawn": true,
+            "capture": "test-results/final-b/L6-bars-low/captures/low-35.png",
+            "sha256": "f942b79a2c72556d7097d11a166e36319485893bacaadac63f0992ed234a9647",
+            "crop": [
+              803,
+              387,
+              893,
+              497
+            ]
+          },
+          {
+            "id": 36,
+            "injured": true,
+            "bar": {
+              "id": 36,
+              "fraction": 1,
+              "x": 842.5480709409636,
+              "y": 402.3293476258811,
+              "width": 18,
+              "height": 3,
+              "gap": 0,
+              "anchor": [
+                260.2550057036307,
+                5.142920282706568,
+                15.66185413426414
+              ]
+            },
+            "greenPixels": 54,
+            "drawn": true,
+            "capture": "test-results/final-b/L6-bars-low/captures/low-36.png",
+            "sha256": "5588a5f307653318f783d722537250394c7f0db694576ae6286ea14247fc9e6e",
+            "crop": [
+              798,
+              392,
+              888,
+              502
+            ]
+          },
+          {
+            "id": 37,
+            "injured": false,
+            "bar": {
+              "id": 37,
+              "fraction": 1,
+              "x": 817.3775056465342,
+              "y": 380.63054706904546,
+              "width": 18,
+              "height": 3,
+              "gap": 0,
+              "anchor": [
+                259.59986726454895,
+                5.1318053015589715,
+                15.491082112113613
+              ]
+            },
+            "greenPixels": 54,
+            "drawn": true,
+            "capture": "test-results/final-b/L6-bars-low/captures/low-37.png",
+            "sha256": "e7601e77f384c6a06d901eec20be014c5362004cda965091db574ce77001bef9",
+            "crop": [
+              772,
+              371,
+              862,
+              481
+            ]
+          },
+          {
+            "id": 38,
+            "injured": false,
+            "bar": {
+              "id": 38,
+              "fraction": 1,
+              "x": 821.4737705416403,
+              "y": 373.6033099368136,
+              "width": 18,
+              "height": 3,
+              "gap": 0,
+              "anchor": [
+                259.5670411013177,
+                5.183261605988299,
+                15.35520667062304
+              ]
+            },
+            "greenPixels": 54,
+            "drawn": true,
+            "capture": "test-results/final-b/L6-bars-low/captures/low-38.png",
+            "sha256": "1b1c5727c629072aa5a6fc232af055693bdaa963c993d583a9a60bb8a39fa13f",
+            "crop": [
+              776,
+              364,
+              866,
+              474
+            ]
+          },
+          {
+            "id": 39,
+            "injured": false,
+            "bar": {
+              "id": 39,
+              "fraction": 1,
+              "x": 818.9147023696826,
+              "y": 377.75063062402376,
+              "width": 18,
+              "height": 3,
+              "gap": 0,
+              "anchor": [
+                259.5481705874933,
+                5.1081848060183574,
+                15.388751527739728
+              ]
+            },
+            "greenPixels": 54,
+            "drawn": true,
+            "capture": "test-results/final-b/L6-bars-low/captures/low-39.png",
+            "sha256": "0221e425b40341d3fcdbcd3eed626ac7350a9e5d70759f7b854ccab950bfb4c6",
+            "crop": [
+              774,
+              368,
+              864,
+              478
+            ]
+          },
+          {
+            "id": 40,
+            "injured": false,
+            "bar": {
+              "id": 40,
+              "fraction": 1,
+              "x": 857.992873120937,
+              "y": 403.9989807225488,
+              "width": 18,
+              "height": 3,
+              "gap": 0,
+              "anchor": [
+                260.485301294515,
+                5.184686973955467,
+                15.569138326832984
+              ]
+            },
+            "greenPixels": 54,
+            "drawn": true,
+            "capture": "test-results/final-b/L6-bars-low/captures/low-40.png",
+            "sha256": "4800ae6c38a76097eb94dfb4106e20ee786b3a6893f6f9ff7ee551d2f16e0152",
+            "crop": [
+              813,
+              394,
+              903,
+              504
+            ]
+          },
+          {
+            "id": 41,
+            "injured": false,
+            "bar": {
+              "id": 41,
+              "fraction": 1,
+              "x": 839.7809431680741,
+              "y": 397.60095070906584,
+              "width": 18,
+              "height": 3,
+              "gap": 0,
+              "anchor": [
+                260.1512950880501,
+                5.149099918835564,
+                15.60408677887655
+              ]
+            },
+            "greenPixels": 54,
+            "drawn": true,
+            "capture": "test-results/final-b/L6-bars-low/captures/low-41.png",
+            "sha256": "1c0731e5dd773666535f2f7299787db59aac4be33efe7f8345d1a51f807dc0bb",
+            "crop": [
+              795,
+              388,
+              885,
+              498
+            ]
+          },
+          {
+            "id": 42,
+            "injured": false,
+            "bar": {
+              "id": 42,
+              "fraction": 1,
+              "x": 844.6446010718358,
+              "y": 394.95113196253607,
+              "width": 18,
+              "height": 3,
+              "gap": 0,
+              "anchor": [
+                260.1943154227455,
+                5.19078818373881,
+                15.541179646225558
+              ]
+            },
+            "greenPixels": 54,
+            "drawn": true,
+            "capture": "test-results/final-b/L6-bars-low/captures/low-42.png",
+            "sha256": "da2bf53651c521bfb6633f659e9cb2b0b80dcb01d50243ccc72e3a5a65e706c1",
+            "crop": [
+              800,
+              385,
+              890,
+              495
+            ]
+          },
+          {
+            "id": 43,
+            "injured": false,
+            "bar": {
+              "id": 43,
+              "fraction": 1,
+              "x": 846.5547116187383,
+              "y": 398.5637641830914,
+              "width": 18,
+              "height": 3,
+              "gap": 0,
+              "anchor": [
+                260.2803959311047,
+                5.197775179051472,
+                15.600459522107982
+              ]
+            },
+            "greenPixels": 54,
+            "drawn": true,
+            "capture": "test-results/final-b/L6-bars-low/captures/low-43.png",
+            "sha256": "f6cfb1e01e983ec21e0694699d571decfd6a009f529532cbfff9288044512f6d",
+            "crop": [
+              802,
+              389,
+              892,
+              499
+            ]
+          },
+          {
+            "id": 44,
+            "injured": false,
+            "bar": {
+              "id": 44,
+              "fraction": 1,
+              "x": 843.5042901037295,
+              "y": 398.0331242384662,
+              "width": 18,
+              "height": 3,
+              "gap": 0,
+              "anchor": [
+                260.21228792562175,
+                5.165016547655281,
+                15.588453315636293
+              ]
+            },
+            "greenPixels": 54,
+            "drawn": true,
+            "capture": "test-results/final-b/L6-bars-low/captures/low-44.png",
+            "sha256": "6de11032d783c4b89d29c2590cd795672a1c6b3fdc862bf8cd65951603e41ff5",
+            "crop": [
+              799,
+              388,
+              889,
+              498
+            ]
+          }
+        ],
+        "sheet": "test-results/final-b/L6-bars-low/per-id-sheet.jpg",
+        "sheetSha256": "63cd66cbca5183e805b1f05a2c90f03127a513137dd5608be991287f0b076850",
+        "personallyReviewedSheet": true,
+        "sheetObservation": "All29 labelled body/head crops inspected, including injured21/26/31/36. Every selected bar is distinct and visible; source IDs/HP are preserved. Neighbouring figures do not erase the selected pip.",
+        "minSettledSpeed": 2.199515698416391,
+        "maxSettledSpeed": 2.1999999413204994,
+        "injuredCount": 4,
+        "nativeGroupPace": {
+          "id": "L6-08",
+          "clause": "observed human follower pace versus phase group median",
+          "level": "L6",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "value": [
+            {
+              "phase": "step/retreat",
+              "id": 16,
+              "samples": 157,
+              "median": 2.199178058767299,
+              "groupMedian": 2.1990672983796364,
+              "ratio": 1.0000503669841045
+            },
+            {
+              "phase": "step/retreat",
+              "id": 17,
+              "samples": 80,
+              "median": 2.1999159107088087,
+              "groupMedian": 2.1990672983796364,
+              "ratio": 1.0003858964797474
+            },
+            {
+              "phase": "step/retreat",
+              "id": 19,
+              "samples": 157,
+              "median": 2.1967789182055237,
+              "groupMedian": 2.1990672983796364,
+              "ratio": 0.9989593860197917
+            },
+            {
+              "phase": "step/retreat",
+              "id": 20,
+              "samples": 157,
+              "median": 2.199955445929548,
+              "groupMedian": 2.1990672983796364,
+              "ratio": 1.000403874656572
+            },
+            {
+              "phase": "step/retreat",
+              "id": 22,
+              "samples": 117,
+              "median": 2.192817194537768,
+              "groupMedian": 2.1990672983796364,
+              "ratio": 0.9971578387589712
+            },
+            {
+              "phase": "step/retreat",
+              "id": 23,
+              "samples": 117,
+              "median": 2.199258748957515,
+              "groupMedian": 2.1990672983796364,
+              "ratio": 1.0000870598994491
+            },
+            {
+              "phase": "step/retreat",
+              "id": 24,
+              "samples": 157,
+              "median": 2.1997927072550283,
+              "groupMedian": 2.1990672983796364,
+              "ratio": 1.0003298711576158
+            },
+            {
+              "phase": "step/retreat",
+              "id": 25,
+              "samples": 117,
+              "median": 2.1954659254447613,
+              "groupMedian": 2.1990672983796364,
+              "ratio": 0.9983623179983947
+            },
+            {
+              "phase": "step/retreat",
+              "id": 27,
+              "samples": 157,
+              "median": 2.199811399492639,
+              "groupMedian": 2.1990672983796364,
+              "ratio": 1.000338371232909
+            },
+            {
+              "phase": "step/retreat",
+              "id": 28,
+              "samples": 112,
+              "median": 2.1696844948527625,
+              "groupMedian": 2.1990672983796364,
+              "ratio": 0.9866385155431466
+            },
+            {
+              "phase": "step/retreat",
+              "id": 30,
+              "samples": 157,
+              "median": 2.199190231671572,
+              "groupMedian": 2.1990672983796364,
+              "ratio": 1.0000559024692086
+            },
+            {
+              "phase": "step/retreat",
+              "id": 32,
+              "samples": 149,
+              "median": 2.198956537991974,
+              "groupMedian": 2.1990672983796364,
+              "ratio": 0.9999496330158953
+            },
+            {
+              "phase": "step/retreat",
+              "id": 33,
+              "samples": 152,
+              "median": 2.1992885513634546,
+              "groupMedian": 2.1990672983796364,
+              "ratio": 1.00010061219317
+            },
+            {
+              "phase": "step/retreat",
+              "id": 34,
+              "samples": 111,
+              "median": 2.1687738532330987,
+              "groupMedian": 2.1990672983796364,
+              "ratio": 0.9862244119728126
+            },
+            {
+              "phase": "step/retreat",
+              "id": 35,
+              "samples": 149,
+              "median": 2.1689810132426204,
+              "groupMedian": 2.1990672983796364,
+              "ratio": 0.9863186155516092
+            },
+            {
+              "phase": "step/retreat",
+              "id": 37,
+              "samples": 110,
+              "median": 2.195108185115122,
+              "groupMedian": 2.1990672983796364,
+              "ratio": 0.9981996397893637
+            },
+            {
+              "phase": "step/retreat",
+              "id": 38,
+              "samples": 147,
+              "median": 2.1997394751794705,
+              "groupMedian": 2.1990672983796364,
+              "ratio": 1.0003056644970936
+            },
+            {
+              "phase": "step/retreat",
+              "id": 42,
+              "samples": 110,
+              "median": 2.1993845457921486,
+              "groupMedian": 2.1990672983796364,
+              "ratio": 1.0001442645310337
+            },
+            {
+              "phase": "step/retreat",
+              "id": 43,
+              "samples": 34,
+              "median": 2.19781308007172,
+              "groupMedian": 2.1990672983796364,
+              "ratio": 0.9994296589700367
+            },
+            {
+              "phase": "step/retreat",
+              "id": 44,
+              "samples": 151,
+              "median": 2.196999107962882,
+              "groupMedian": 2.1990672983796364,
+              "ratio": 0.9990595147232292
+            },
+            {
+              "phase": "step/exit",
+              "id": 32,
+              "samples": 10,
+              "median": 2.1440257638076705,
+              "groupMedian": 2.1741303518179294,
+              "ratio": 0.9861532736594719
+            },
+            {
+              "phase": "step/exit",
+              "id": 33,
+              "samples": 10,
+              "median": 2.1741303518179294,
+              "groupMedian": 2.1741303518179294,
+              "ratio": 1
+            },
+            {
+              "phase": "step/exit",
+              "id": 35,
+              "samples": 10,
+              "median": 2.314352996923331,
+              "groupMedian": 2.1741303518179294,
+              "ratio": 1.0644959696129317
+            },
+            {
+              "phase": "step/exit",
+              "id": 38,
+              "samples": 12,
+              "median": 2.1458701036658065,
+              "groupMedian": 2.1741303518179294,
+              "ratio": 0.9870015851954357
+            },
+            {
+              "phase": "step/exit",
+              "id": 44,
+              "samples": 15,
+              "median": 2.1996590954709365,
+              "groupMedian": 2.1741303518179294,
+              "ratio": 1.0117420483236716
+            }
+          ],
+          "target": "every ratio\u22650.95; bar pixels and absolute formation remain open",
+          "receipt": "docs/reports/fix51-verify/receipts/L6-low-complete.json"
+        },
+        "errors": []
       },
-      "weaponsStart": [
-        "weapon.fire-axe",
-        "weapon.bat",
-        "weapon.army-mg",
-        "weapon.handgun",
-        "weapon.kick",
-        "weapon.shotgun"
-      ],
-      "weaponsEnd": [
-        "weapon.fire-axe",
-        "weapon.bat",
-        "weapon.army-mg",
-        "weapon.handgun",
-        "weapon.kick",
-        "weapon.shotgun"
-      ],
-      "steps": [
-        {
-          "id": "shelter",
-          "text": "Look around the shelter · rest while you can",
-          "tick": 19,
-          "marker": {
-            "anchor": null,
-            "ring": null,
-            "drawn": null,
-            "playerY": 1.3200000524520874,
-            "pinVisible": false
-          }
-        },
-        {
-          "id": "stop",
-          "text": "Stop the infected · Retreat in 0:36",
-          "tick": 1997,
-          "marker": {
-            "anchor": null,
-            "ring": null,
-            "drawn": null,
-            "playerY": 1.3200000524520874,
-            "pinVisible": false
-          }
-        },
-        {
-          "id": "retreat",
-          "text": "Cover the retreat through the tunnel · 248 m",
-          "tick": 3410,
-          "marker": {
-            "anchor": "l6-next",
-            "ring": {
-              "x": 242,
-              "y": 0.6,
-              "z": 15
-            },
-            "drawn": [
-              242,
-              0.6,
-              15
-            ],
-            "playerY": 1.3200000524520874,
-            "pinVisible": true
-          }
-        },
-        {
-          "id": "exit",
-          "text": "Bring the survivors into the night · 0/1 out · 32 m",
-          "tick": 10956,
-          "marker": {
-            "anchor": "night-exit",
-            "ring": {
-              "x": 273,
-              "y": 3.9,
-              "z": 15
-            },
-            "drawn": [
-              273,
-              3.9,
-              15
-            ],
-            "playerY": 1.2699999809265137,
-            "pinVisible": true
-          }
-        }
-      ]
+      "target": "All29 original IDs including injured at2.2m/s; same-HP drawn bodies and actual visible per-ID pip pixels",
+      "receipt": "docs/reports/final-b/L6-08-proof.json"
     }
-  ],
-  "issues": [
-    {
-      "level": "L6",
-      "tick": 1240,
-      "x": 3,
-      "z": 0,
-      "severity": "P2",
-      "kind": "stuck-navigating",
-      "text": "20 s without objective progress (distance none m, no marker: true); HUD: \"Look around the shelter · rest while you can\"",
-      "captures": [
-        "captures/accept-L6-1240-stuck-navigating.jpg"
-      ],
-      "step": "shelter",
-      "objective": "Look around the shelter · rest while you can"
-    }
-  ],
-  "frameTiming": false,
-  "backend": "webgl2",
-  "zoom": 1.5
+  ]
 }

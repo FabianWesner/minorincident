@@ -1,0 +1,44 @@
+{
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+  "revision": "c5cb426e24fa37db526894e3a31dab91477676d2",
+  "rows": [
+    {
+      "tier": "low",
+      "pickupTick": 2197,
+      "gunTick": 2197,
+      "turnTick": 2197,
+      "klaxonTick": 2197,
+      "actualVoiceGains": [
+        0.33000001311302185,
+        0.33000001311302185,
+        0.33000001311302185,
+        0.06599999964237213
+      ],
+      "firstAdmittedTick": 2197,
+      "admittedCount": 18,
+      "input": "docs/reports/final-b/L4-low-physical.json.gz",
+      "inputSha256": "24bb97cf30e4e9d3ba13a82e00b7da9a1f45e13a1626ecaa27d82c9bab0a5c61",
+      "pass": true
+    },
+    {
+      "tier": "high",
+      "pickupTick": 2231,
+      "gunTick": 2231,
+      "turnTick": 2231,
+      "klaxonTick": 2231,
+      "actualVoiceGains": [
+        0.33000001311302185,
+        0.33000001311302185,
+        0.33000001311302185,
+        0.06599999964237213
+      ],
+      "firstAdmittedTick": 2231,
+      "admittedCount": 18,
+      "input": "docs/reports/final-b/L4-high-opening-physical.json.gz",
+      "inputSha256": "81502974ece4ec840999900852f723f20627c704221f842ba9ef68cca1caa843",
+      "pass": true
+    }
+  ],
+  "method": "Read actual post-mapper event/graph microtask snapshots from both physical input runs. Positive-gain active klaxon voices and ordinary first-turn/admission transactions must share exactly the physical pickup tick. No sound inferred from still screenshots. High receipt is bounded to the opening; complete L4 is not required to measure this pickup criterion."
+}

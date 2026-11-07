@@ -1,46 +1,42 @@
 {
   "row": "L6-01",
   "status": "PASS",
-  "reviewer": "Codex/fix67-b",
-  "date": "2026-11-06",
-  "commit": "e5b4fe09aa7d452544c1a12e1ec95b46762c54ae",
+  "reviewer": "Codex/final-b",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
   "clauses": [
     {
-      "clause": "24 occupants + 0\u20135 L5 survivors (same ids, full health); routines sit/talk/treat/rest/share; nobody idle > 3 s; no gun on seated/lying people.",
+      "clause": "24 occupants + 0–5 L5 survivors (same ids, full health); routines sit/talk/treat/rest/share; nobody idle > 3 s; no gun on seated/lying people.",
       "verdict": "PASS",
-      "note": "Both qualities load actual completed mortal L5 campaign saves, preserving24 station occupants plus5 low /4 high rescues with identical IDs and full health. All five non-guard routines are present; every-tick four-second census records zero idle ticks, matched routine clips and no gun on any sitting/resting person. All6 final frames personally inspected: carried people occupy the furnished shelter, not the old track rows; sit, rest, gesture and treatment poses are visible. Real L5 inputs and before/after state are retained; the before fixture failed routine and placement checks at both tiers."
+      "note": "Both tiers: actual mortal canonical L5 route hands24 residents+5 rescued through production completeCampaignLevel into L6. All29 same IDs and full HP in11 half-second samples (319 actor observations per tier); purposeful sit/talk/treat/rest/share/guard story stays active for5s, no idle>3s. Every seated/lying actor uses npc-sit/death-side, which the actual renderer stows. Low Okafor retains stored rifle state, so his exact carried save was rendered after physical W/idle: both detail frames show empty hands, nearby rifle belongs to standing Rosa. Physical preset images at both renderer qualities corroborate routine presentation; IDs come from native ledger."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix67-b/L6-01-qualification.json",
-      "sha256": "00bc36dae8d2bec1466d6aeb9d2c3ed8a1da8ec8cd3400fab1e69a1421e4ff62",
-      "what": "Both qualities load actual completed mortal L5 campaign saves, preserving24 station occupants plus5 low /4 high rescues with identical IDs and full health. All five non-guard routines are present; every-tick four-second census records zero idle ticks, matched routine clips and no gun on any sitting/resting person. All6 final frames personally inspected: carried people occupy the furnished shelter, not the old track rows; sit, rest, gesture and treatment poses are visible. Real L5 inputs and before/after state are retained; the before fixture failed routine and placement checks at both tiers."
+      "file": "docs/reports/final-b/L6-01-proof.json",
+      "sha256": "babc9bdea2856112af69a59ef3b39e6d6b668991d75a19d4f7082fd8e4b3bc1d",
+      "what": "Both tiers: actual mortal canonical L5 route hands24 residents+5 rescued through production completeCampaignLevel into L6. All29 same IDs and full HP in11 half-second samples (319 actor observations per tier); purposeful sit/talk/treat/rest/share/guard story stays active for5s, no idle>3s. Every seated/lying actor uses npc-sit/death-side, which the actual renderer stows. Low Okafor retains stored rifle state, so his exact carried save was rendered after physical W/idle: both detail frames show empty hands, nearby rifle belongs to standing Rosa. Physical preset images at both renderer qualities corroborate routine presentation; IDs come from native ledger."
     },
     {
-      "file": "docs/reports/fix67-b/l6-handover-before.json.gz",
-      "sha256": "eb6c7cf4b02dd032ef649f373ed909434a6ded3640cacb7e49704fcb0e90c165",
-      "what": "Both qualities load actual completed mortal L5 campaign saves, preserving24 station occupants plus5 low /4 high rescues with identical IDs and full health. All five non-guard routines are present; every-tick four-second census records zero idle ticks, matched routine clips and no gun on any sitting/resting person. All6 final frames personally inspected: carried people occupy the furnished shelter, not the old track rows; sit, rest, gesture and treatment poses are visible. Real L5 inputs and before/after state are retained; the before fixture failed routine and placement checks at both tiers."
+      "file": "docs/reports/final-b/L6-carry-native.json.gz",
+      "sha256": "cbd3ac97e20835c66764aee7a3f4482161a0686be809b1a048a290dd3e48f333",
+      "what": "Current actual L5 result carried save and L6 half-second census."
     },
     {
-      "file": "docs/reports/fix67-b/l6-handover-after.json.gz",
-      "sha256": "5a9c628da88441ed7228d937119f9218fa9ceb4e07217d4d7bc7d5be3bb6832c",
-      "what": "Both qualities load actual completed mortal L5 campaign saves, preserving24 station occupants plus5 low /4 high rescues with identical IDs and full health. All five non-guard routines are present; every-tick four-second census records zero idle ticks, matched routine clips and no gun on any sitting/resting person. All6 final frames personally inspected: carried people occupy the furnished shelter, not the old track rows; sit, rest, gesture and treatment poses are visible. Real L5 inputs and before/after state are retained; the before fixture failed routine and placement checks at both tiers."
+      "file": "docs/reports/final-b/L5-low-completed-save.json.gz",
+      "sha256": "4f804fecd1578eb0a8be88b248148bfff9c3c59cd4b9b5c4e1a06a4c4fb21ae1",
+      "what": "Current actual L5 result carried save and L6 half-second census."
     },
     {
-      "file": "docs/reports/fix67-b/l6-carry-render-after.json.gz",
-      "sha256": "c619382093df13171f910fbbf45b82c8680569c365680cfd4c08342de84331e0",
-      "what": "Both qualities load actual completed mortal L5 campaign saves, preserving24 station occupants plus5 low /4 high rescues with identical IDs and full health. All five non-guard routines are present; every-tick four-second census records zero idle ticks, matched routine clips and no gun on any sitting/resting person. All6 final frames personally inspected: carried people occupy the furnished shelter, not the old track rows; sit, rest, gesture and treatment poses are visible. Real L5 inputs and before/after state are retained; the before fixture failed routine and placement checks at both tiers."
+      "file": "docs/reports/final-b/L5-high-completed-save.json.gz",
+      "sha256": "3101d26c60b4ab514a8f0738270bb375c03dee9e4f2ae050253dfbc2d89ec775",
+      "what": "Current actual L5 result carried save and L6 half-second census."
     },
     {
-      "file": "docs/reports/fix67-b/l6-handover-low-save.json.gz",
-      "sha256": "ccadeb811d6d0c4828472d98da7f38c5ca09526739732573cd73d13fa69de5da",
-      "what": "Both qualities load actual completed mortal L5 campaign saves, preserving24 station occupants plus5 low /4 high rescues with identical IDs and full health. All five non-guard routines are present; every-tick four-second census records zero idle ticks, matched routine clips and no gun on any sitting/resting person. All6 final frames personally inspected: carried people occupy the furnished shelter, not the old track rows; sit, rest, gesture and treatment poses are visible. Real L5 inputs and before/after state are retained; the before fixture failed routine and placement checks at both tiers."
-    },
-    {
-      "file": "docs/reports/fix67-b/l6-handover-high-save.json.gz",
-      "sha256": "bfe8a8aa18d891dd5685d4eb3082d796087fcffdf1fb78da9eb0f2a2e6757a93",
-      "what": "Both qualities load actual completed mortal L5 campaign saves, preserving24 station occupants plus5 low /4 high rescues with identical IDs and full health. All five non-guard routines are present; every-tick four-second census records zero idle ticks, matched routine clips and no gun on any sitting/resting person. All6 final frames personally inspected: carried people occupy the furnished shelter, not the old track rows; sit, rest, gesture and treatment poses are visible. Real L5 inputs and before/after state are retained; the before fixture failed routine and placement checks at both tiers."
+      "file": "docs/reports/final-b/L6-carried-okafor-render.json.gz",
+      "sha256": "eb1b20746f6e8a92b47fbfe7d8d2565b842a3a793776e60d0a3762995f96645d",
+      "what": "Current actual L5 result carried save and L6 half-second census."
     }
-  ]
+  ],
+  "sourceDigest": "7fd8f0ebc3d3fcb362d200567b5da5e2e4f5bea018074dcf4fbbfccc06fdf698"
 }

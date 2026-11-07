@@ -1,0 +1,84 @@
+{
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "row": "L5-09",
+  "status": "SUPERSEDED diagnostic",
+  "observation": "Fresh actual unprotected contact episodes resolve within79/68ticks, under1.5s. Current mortal complete routes rescue5 both tiers. Default seed1 and independent seed2 mortal evade-only each run1200simseconds but produce no result;47/60 and41/70 deaths respectively. A timeout or null result is not a completed zero-rescued result and is not a measured game failure. This row stays OPEN until an actual qualified evade-only endpoint is observed or the benchmark endpoint is clarified by the owner. No game/AI/stat changes. Additional unchanged seed3 run2400s: neither tier reaches a result. These are still timeouts, not zero-rescued results.",
+  "rows": [
+    {
+      "tier": "low",
+      "seed": 1,
+      "budgetSeconds": 1200,
+      "completed": false,
+      "result": null,
+      "deaths": 47,
+      "resolvedContactEpisodes": 46,
+      "maximumResolvedTicks": 79
+    },
+    {
+      "tier": "high",
+      "seed": 1,
+      "budgetSeconds": 1200,
+      "completed": false,
+      "result": null,
+      "deaths": 60,
+      "resolvedContactEpisodes": 59,
+      "maximumResolvedTicks": 68
+    },
+    {
+      "tier": "low",
+      "seed": 2,
+      "budgetSeconds": 1200,
+      "completed": false,
+      "outcome": "tick-budget",
+      "deaths": 41
+    },
+    {
+      "tier": "high",
+      "seed": 2,
+      "budgetSeconds": 1200,
+      "completed": false,
+      "outcome": "tick-budget",
+      "deaths": 70
+    },
+    {
+      "tier": "low",
+      "seed": 3,
+      "budgetSeconds": 2400,
+      "completed": false,
+      "outcome": "tick-budget",
+      "deaths": 0
+    },
+    {
+      "tier": "high",
+      "seed": 3,
+      "budgetSeconds": 2400,
+      "completed": false,
+      "outcome": "tick-budget",
+      "deaths": 105
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/final-b/L5-contact.json.gz",
+      "sha256": "f65de864431fe15a9ec0aab163ff897d3a0386b969547bd7317a74526cc07f88"
+    },
+    {
+      "file": "docs/reports/final-b/L5-evade-seed2.json.gz",
+      "sha256": "b0dd2e97932df38266a93a9fc1fe43aba9bdd0e161e0c9716868c58ffed9b4c0"
+    },
+    {
+      "file": "docs/reports/final-b/frozen-native/L5-low-complete.json.gz",
+      "sha256": "cb29f4c6d1972a5a5a476acd5446da0e30871dd4924930a8b744726a4b7dffa6"
+    },
+    {
+      "file": "docs/reports/final-b/frozen-native/L5-high-complete.json.gz",
+      "sha256": "99b75bba9cc1418d60e5d7c88a7eb82d45e8ab532a331ed4820c21134f130a51"
+    },
+    {
+      "file": "docs/reports/final-b/L5-evade-seed3.json.gz",
+      "sha256": "75ae81fdefa035bc8d40c2f4e51db70de5d2c6ee3da15f17a549043502001814"
+    }
+  ],
+  "supersededBy": "docs/reports/final-b/L5-09-proof.json",
+  "interpretationCorrection": "The prior OPEN added an evade-completion requirement not stated by E23-AC10. The current review measures the actual evacuated identity union during the existing native default trial and preserves the missing result. These old extra-seed diagnostics remain unqualified as completed outcomes."
+}

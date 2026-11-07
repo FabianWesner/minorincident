@@ -180,11 +180,8 @@ export function rowResult(source: SourceRow, checks: Clause[]): AcceptanceRow {
   const required = completeNativeRows.get(source.id);
   const complete = !!required && ['low', 'high'].every(tier => required.every(requirement => checks.some(check => check.tier === tier && check.policy === requirement.policy && (!requirement.level || check.level === requirement.level) && check.clause === requirement.clause && check.status === 'PASS'))) && checks.every(check => check.status !== 'FAIL');
   const decision = loadReviews(source.id);
-  // A fresh measured counterexample must also close a plain S row. Previously
-  // these valid FAIL reviews were silently ignored unless the row had a named
-  // review gate or an older failure. PASS still needs its existing full scope.
-  // Retain every supplied decision so numeric PASS and pending taste reviews
-  // expose their source freshness too. Qualification still requires PASS below.
+  // Display review provenance on plain numeric rows too. The existing native
+  // completion and exact-criterion gates below still determine qualification.
   const reviewCheck = decision;
   const freshness = reviewCheck ? reviewFreshness(reviewCheck, source.level) : undefined;
   const matchingReview = reviewClause ? reviewCheck?.clauses.find(clause => clause.clause === reviewClause) : undefined;
@@ -220,13 +217,10 @@ export function buildLevelReport(level: RunnerLevel, receipts: { path: string; r
   const fixtureGroup = (path: string) => path.endsWith('-browser.json') ? 2 : path.endsWith('-checkpoints.json') ? 1 : 0;
   fixtures = [...fixtures].sort((a, b) => fixtureGroup(a.path) - fixtureGroup(b.path) || (a.receipt.tier === b.receipt.tier ? a.path.localeCompare(b.path) : a.receipt.tier === 'low' ? -1 : 1));
   const identity = receipts[0].receipt;
-  // Auxiliary probes retain their own hashes; the report identity belongs to
-  // the canonical native fixture set used by writeIndexes' provenance gate.
-  const nativeFixture = fixtures.find(item => item.path === join(reportRoot, 'receipts', `${level}-${item.receipt.tier}-fixtures.json`));
   if (receipts.some(item => item.receipt.level !== level || item.receipt.sourceHash !== identity.sourceHash || item.receipt.observerHash !== identity.observerHash)) throw new Error('Mixed native receipt provenance');
   const sources = sourceRows(), checks = [...receipts.flatMap(item => evaluate(item.receipt, item.path)), ...fixtures.flatMap(item => item.receipt.checks.map(check => ({ ...check, level: item.receipt.level })))];
   const build = (source: SourceRow) => rowResult(source, checks.filter(check => check.id === source.id));
-  return { version: 2, level, sourceHash: identity.sourceHash, observerHash: identity.observerHash, fixtureHash: nativeFixture?.receipt.fixtureHash ?? fixtures[0]?.receipt.fixtureHash, checkpointHash, generatedAt: new Date().toISOString(),
+  return { version: 2, level, sourceHash: identity.sourceHash, observerHash: identity.observerHash, fixtureHash: fixtures[0]?.receipt.fixtureHash, checkpointHash, generatedAt: new Date().toISOString(),
     policies: [...receipts.map(item => ({ tier: item.receipt.tier, policy: item.receipt.policy, outcome: item.receipt.run?.outcome ?? null, error: item.receipt.error, receipt: item.path })), ...fixtures.map(item => ({ tier: item.receipt.tier, policy: item.path.endsWith('-browser.json') ? item.receipt.checks.find(check => check.id === 'G-25')?.policy ?? 'real-input-browser' : item.path.endsWith('-checkpoints.json') ? 'checkpoint-death-control' : 'controlled-fixtures', outcome: item.receipt.errors.length ? 'fixture-error' : item.path.endsWith('-browser.json') && item.receipt.checks.some(check => check.status !== 'PASS') ? 'incomplete' : 'complete', error: item.receipt.errors.length ? item.receipt.errors.join('; ') : null, receipt: item.path }))],
     globals: sources.filter(source => source.level === 'global').map(build), rows: sources.filter(source => source.level === level).map(build) };
 }

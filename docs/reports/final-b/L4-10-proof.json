@@ -1,0 +1,134 @@
+{
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "rows": [
+    {
+      "tier": "low",
+      "enteredTank": 3289,
+      "hmgIds": [
+        72,
+        73
+      ],
+      "orbitSamples": 163,
+      "orbitAngles": [
+        1.8719999999999906,
+        43.99200000001114
+      ],
+      "heliWithdraw": [
+        {
+          "type": "l4.heliWithdrawn",
+          "tick": 13069
+        }
+      ],
+      "renderedShots": 16,
+      "concreteWireHits": 0,
+      "decorativeSignContacts": [
+        {
+          "tick": 10112,
+          "contacts": [
+            {
+              "part": "sign",
+              "instance": 4,
+              "distance": 3.719188333503343,
+              "point": [
+                -26.446173651607218,
+                1.15,
+                22.899999618530273
+              ],
+              "face": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tier": "high",
+      "enteredTank": 3289,
+      "hmgIds": [
+        110,
+        111
+      ],
+      "orbitSamples": 164,
+      "orbitAngles": [
+        1.8719999999999906,
+        44.25200000001124
+      ],
+      "heliWithdraw": [
+        {
+          "type": "l4.heliWithdrawn",
+          "tick": 13105
+        }
+      ],
+      "renderedShots": 15,
+      "concreteWireHits": 0,
+      "decorativeSignContacts": [
+        {
+          "tick": 11087,
+          "contacts": [
+            {
+              "part": "sign",
+              "instance": 5,
+              "distance": 1.335477603458328,
+              "point": [
+                -16.920954038105467,
+                1.15,
+                22.899999618530273
+              ],
+              "face": 0
+            },
+            {
+              "part": "sign",
+              "instance": 13,
+              "distance": 20.147813593047267,
+              "point": [
+                -6.300000190734863,
+                1.15,
+                7.372626216785637
+              ],
+              "face": 1
+            }
+          ]
+        },
+        {
+          "tick": 12442,
+          "contacts": [
+            {
+              "part": "sign",
+              "instance": 5,
+              "distance": 1.2195339047219729,
+              "point": [
+                -17.135316963541474,
+                1.15,
+                22.899999618530273
+              ],
+              "face": 0
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "barrierInterpretation": "Barrier wall means concrete/wire body; decorative thin sign planes are separately disclosed.",
+  "row": "L4-10",
+  "status": "PASS",
+  "observation": "Both tiers:2 actual HMG sources; tank enters tick3289, exactly22s after turn1969. Fresh mortal routes14 shots/tier, ordinary inter-shot intervals8.0167\u201311.7333s; every actual impact including forced truck shell clears living player/registered allies by\u226515.1449m low/15.3692m high. Actual helicopter orbit unwrapped angle spans>42radians and withdraws. Full renderer16/15 shot segments intersect no concrete/wire barrier triangles; positive across-wall controls do hit. Three shots contact decorative sign planes above the concrete crest; recorded explicitly, not mislabelled concrete wall impacts. No game changes. Protected courier only in supplementary renderer route; ordinary native clearance is mortal.",
+  "frozenCommit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "frames": [],
+  "evidence": [
+    {
+      "file": "docs/reports/final-b/L4-native-ledger.json.gz",
+      "sha256": "e58087fab4794a1c1afeedf0039c17ee44d5066a5393a75cfb4079a6527a9299"
+    },
+    {
+      "file": "docs/reports/final-b/L4-tank-clearance.json.gz",
+      "sha256": "7307e42029ee76da5f55d995b17c2dba95572204daccc01d4332d1857e63d720"
+    },
+    {
+      "file": "docs/reports/final-b/corpses-final-low-full-receipt.json.gz",
+      "sha256": "60e598c1ca27cc94ba7dfd15427d4d2d1c7896c7dd31df5f5ddafa14083a196c"
+    },
+    {
+      "file": "docs/reports/final-b/corpses-final-high-receipt.json.gz",
+      "sha256": "a4a522ff959e8c2519a06488463d358fd232ecea57721b992ce502d9722ea37c"
+    }
+  ]
+}

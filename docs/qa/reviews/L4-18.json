@@ -1,26 +1,28 @@
 {
   "row": "L4-18",
   "status": "PASS",
-  "reviewer": "Codex/sweep-b",
-  "date": "2026-11-06",
-  "commit": "68a6f4a229eb9e997ad2df235df9dbda69c4475e",
+  "reviewer": "Codex/final-b",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
   "clauses": [
     {
       "clause": "Frames: `l4-plaza-safe` clean and alive; war frames read \"huge mixed war\"; player readable in the battle.",
       "verdict": "PASS",
-      "note": "All151 current L4 physical captures inspected across low/high and both photo zooms. Pre-alarm reception is clean and populated, with separated civilians, lowered soldier rifles and no blood/fire damage. Battle frames contain a large horde, soldiers, armoured vehicles, helicopter, fire and corpse fields. Courier clothing/outline remains distinguishable when surrounded; living bodies can overlap the courier, but the inspected battle frames retain an identifiable player. P: PO: do the war frames read as a huge mixed war? Use the reviewed battle captures; player readability remains an objective inspection. This verdict closes objective inspected clauses only and does not answer that feel question."
+      "note": "Objective scene/frame review: authored l4-plaza-safe frame80 clean and alive both tiers; exact physical war frames low8489/high5930 show mixed living enemies, separate corpse field and identifiable heroine. Nearby global living76/72 versus tracked corpses100/58 are not image-local counts. P: huge mixed war remains for PO judgment on the retained exact frames."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-b/L4-18-proof.json",
-      "sha256": "210cd37424c3440ae7c3ccd74715ca0ebfd7d1a4aa6be7081e5842f31e5b18ef",
-      "what": "All151 current L4 physical captures inspected across low/high and both photo zooms. Pre-alarm reception is clean and populated, with separated civilians, lowered soldier rifles and no blood/fire damage. Battle frames contain a large horde, soldiers, armoured vehicles, helicopter, fire and corpse fields. Courier clothing/outline remains distinguishable when surrounded; living bodies can overlap the courier, but the inspected battle frames retain an identifiable player. P: PO: do the war frames read as a huge mixed war? Use the reviewed battle captures; player readability remains an objective inspection. This verdict closes objective inspected clauses only and does not answer that feel question."
+      "file": "docs/reports/final-b/L4-war-review.json",
+      "sha256": "59c79b8b78a5dc022785b6e42423ff9e6c0cbfd0f8122a08e486dbb8833050c0",
+      "what": "Objective scene/frame review: authored l4-plaza-safe frame80 clean and alive both tiers; exact physical war frames low8489/high5930 show mixed living enemies, separate corpse field and identifiable heroine. Nearby global living76/72 versus tracked corpses100/58 are not image-local counts. P: huge mixed war remains for PO judgment on the retained exact frames."
     },
     {
-      "file": "docs/reports/sweep-b/L4-capture-review.json",
-      "sha256": "fb0ebb8226f31b8765bffe7e91452d6c7f26f10bec5b2c236948d59ffab874d9",
-      "what": "All151 current L4 physical captures inspected across low/high and both photo zooms. Pre-alarm reception is clean and populated, with separated civilians, lowered soldier rifles and no blood/fire damage. Battle frames contain a large horde, soldiers, armoured vehicles, helicopter, fire and corpse fields. Courier clothing/outline remains distinguishable when surrounded; living bodies can overlap the courier, but the inspected battle frames retain an identifiable player. P: PO: do the war frames read as a huge mixed war? Use the reviewed battle captures; player readability remains an objective inspection. This verdict closes objective inspected clauses only and does not answer that feel question."
+      "file": "docs/reports/final-b/L4-native.json.gz",
+      "sha256": "ccc8b1981bd291bf8099489e26cb27a2ccb26664b349a2a33cc5709039832757",
+      "what": "Fresh actual native look census, preserved canonical route; raw per-sample identities and model variants."
     }
-  ]
+  ],
+  "notes": "PO: do the exact retained war frames read as a huge mixed war? Especially judge low8489 dense centre versus high5930 broad fight and close crowding. This subjective choice is pending.",
+  "sourceDigest": "e3dafe0694468ae05c6e72a1f303adf938a6c33391416d38d67a60534e2fe51b"
 }

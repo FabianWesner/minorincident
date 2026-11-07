@@ -1,0 +1,28 @@
+{
+  "row": "L5-01",
+  "status": "PASS",
+  "reviewer": "Codex/final-b",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "sourceDigest": "96b95aaf00218387ac838466ba4e849719809eef34f96b67f54241001dca8a39",
+  "clauses": [
+    {
+      "clause": "Shotgun within 3 m of the start, taken on approach; one close shell kills a 60 HP infected; 2 shells incapacitate an Alpha \u2264 0.6 s.",
+      "verdict": "PASS",
+      "note": "low/controlled-fixture: authored shotgun start distance and moving approach pickup={\"tier\":\"low\",\"initial\":{\"x\":75.3,\"y\":0.705,\"z\":-5.4,\"yaw\":0.3205919885488634},\"at\":{\"x\":73.07,\"y\":0.535,\"z\":-3.45,\"yaw\":1.5707963267948966},\"starts\":2.9623301639081383,\"shelf\":true,\"collections\":[{\"tick\":14,\"distance\":2.1573425966053907,\"motion\":0,\"interact\":false}],\"movedMetres\":0.8049875673813621,\"owned\":true,\"pass\":true}; target start\u22643m; moving E-free approach; shelf collection\u22642.2m; exactly one collection; PASS\nlow/controlled-fixture: one close shotgun shell incapacitates60HP regular={\"tier\":\"low\",\"archetype\":\"infected.runner\",\"initialHp\":60,\"endHp\":0,\"firstActionStarted\":1,\"incapacitatedAt\":7,\"shots\":[{\"tick\":7,\"hp\":60}],\"hits\":[{\"tick\":7,\"amount\":60,\"hp\":0}],\"seconds\":0.1,\"isolatedAI\":true,\"pass\":true}; target one actual shell; native60HP specimen incapacitated; PASS\nlow/controlled-fixture: two close shotgun shells incapacitate300HP Alpha within0.6s={\"tier\":\"low\",\"archetype\":\"infected.alpha\",\"initialHp\":300,\"endHp\":0,\"firstActionStarted\":1,\"incapacitatedAt\":37,\"shots\":[{\"tick\":7,\"hp\":300},{\"tick\":37,\"hp\":108}],\"hits\":[{\"tick\":7,\"amount\":192,\"hp\":108},{\"tick\":37,\"amount\":108,\"hp\":0}],\"seconds\":0.6,\"isolatedAI\":true,\"pass\":true}; target two actual shells; native300HP Alpha incapacitated\u22640.6s from first action start including raise; PASS\nhigh/controlled-fixture: authored shotgun start distance and moving approach pickup={\"tier\":\"high\",\"initial\":{\"x\":75.3,\"y\":0.705,\"z\":-5.4,\"yaw\":0.3205919885488634},\"at\":{\"x\":73.07,\"y\":0.535,\"z\":-3.45,\"yaw\":1.5707963267948966},\"starts\":2.9623301639081383,\"shelf\":true,\"collections\":[{\"tick\":14,\"distance\":2.1573425966053907,\"motion\":0,\"interact\":false}],\"movedMetres\":0.8049875673813621,\"owned\":true,\"pass\":true}; target start\u22643m; moving E-free approach; shelf collection\u22642.2m; exactly one collection; PASS\nhigh/controlled-fixture: one close shotgun shell incapacitates60HP regular={\"tier\":\"high\",\"archetype\":\"infected.runner\",\"initialHp\":60,\"endHp\":0,\"firstActionStarted\":1,\"incapacitatedAt\":7,\"shots\":[{\"tick\":7,\"hp\":60}],\"hits\":[{\"tick\":7,\"amount\":60,\"hp\":0}],\"seconds\":0.1,\"isolatedAI\":true,\"pass\":true}; target one actual shell; native60HP specimen incapacitated; PASS\nhigh/controlled-fixture: two close shotgun shells incapacitate300HP Alpha within0.6s={\"tier\":\"high\",\"archetype\":\"infected.alpha\",\"initialHp\":300,\"endHp\":0,\"firstActionStarted\":1,\"incapacitatedAt\":37,\"shots\":[{\"tick\":7,\"hp\":300},{\"tick\":37,\"hp\":108}],\"hits\":[{\"tick\":7,\"amount\":192,\"hp\":108},{\"tick\":37,\"amount\":108,\"hp\":0}],\"seconds\":0.6,\"isolatedAI\":true,\"pass\":true}; target two actual shells; native300HP Alpha incapacitated\u22640.6s from first action start including raise; PASS"
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/final-b/frozen-native/L5-low-fixtures.json.gz",
+      "sha256": "5c094cb8aa805d65f1f57829a7275ea01c4e05c62cd67420150dbf3c66d2e83e",
+      "what": "Frozen-head native measurement: L5-01. authored shotgun start distance and moving approach pickup; one close shotgun shell incapacitates60HP regular; two close shotgun shells incapacitate300HP Alpha within0.6s."
+    },
+    {
+      "file": "docs/reports/final-b/frozen-native/L5-high-fixtures.json.gz",
+      "sha256": "6f1e1696fc4bf5a35ac33e2dfa12828f6c15334f54080ead24ef054f706a0737",
+      "what": "Frozen-head native measurement: L5-01. authored shotgun start distance and moving approach pickup; one close shotgun shell incapacitates60HP regular; two close shotgun shells incapacitate300HP Alpha within0.6s."
+    }
+  ],
+  "notes": "Fresh native measurements on the frozen source. No claim of new browser observations. L5-01 legacy diagnostic NOT CHECKED entries are redundant with the explicit pickup/regular/Alpha timing fixtures, whose full clauses pass."
+}

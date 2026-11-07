@@ -1,26 +1,32 @@
 {
   "row": "L4-03",
   "status": "PASS",
-  "reviewer": "Codex/sweep-b",
-  "date": "2026-11-06",
-  "commit": "9771a75d22b0351a4a2c5cb76ada6c62535c8548",
+  "reviewer": "Codex/final-b",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
   "clauses": [
     {
       "clause": "Alarm (klaxon) and attack start **on the MG pickup tick**. PO: \"start the alam and attack at the moment when I picked up the MP\".",
       "verdict": "PASS",
-      "note": "Four physical WASD/mouse/E routes at low/high and zoom0.5/1.5 pass actual same-tick pickup/gun/turn/klaxon graph/admissions. All28 missing/delayed controls reject PASS. Every151 frame inspected: clean pre-pickup courtyard, then gunfire/infected and alarm HUD; stills do not establish tick equality."
+      "note": "Fresh physical low/high: MG pickup, gun event, first turn, actual klaxon graph start and first18 admitted infected all share tick2197low/2231high. Four active looped klaxon voices per tier have positive gains(.33/.33/.33/.066); game audio is running, unlocked and unmuted. Host speakers alone are muted. No objective skips/actor writes. High opening intentionally bounded; no full route or cellar claim."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-b/L4-03-proof.json",
-      "sha256": "2843eabb5f30ff1b3c0eb4de62018c031f8b9ca111b1120d848b08b0b3b11e28",
-      "what": "Four physical WASD/mouse/E routes at low/high and zoom0.5/1.5 pass actual same-tick pickup/gun/turn/klaxon graph/admissions. All28 missing/delayed controls reject PASS. Every151 frame inspected: clean pre-pickup courtyard, then gunfire/infected and alarm HUD; stills do not establish tick equality."
+      "file": "docs/reports/final-b/L4-03-proof.json",
+      "sha256": "93c3310f733f0882759817d1e592f79d7617e5493fe9665070f979fcf4c2d973",
+      "what": "Fresh physical low/high: MG pickup, gun event, first turn, actual klaxon graph start and first18 admitted infected all share tick2197low/2231high. Four active looped klaxon voices per tier have positive gains(.33/.33/.33/.066); game audio is running, unlocked and unmuted. Host speakers alone are muted. No objective skips/actor writes. High opening intentionally bounded; no full route or cellar claim."
     },
     {
-      "file": "docs/reports/sweep-b/L4-capture-review.json",
-      "sha256": "fb0ebb8226f31b8765bffe7e91452d6c7f26f10bec5b2c236948d59ffab874d9",
-      "what": "Every151 capture reviewed with per-image hash and sheet observation; raw images deleted afterward."
+      "file": "docs/reports/final-b/L4-low-physical.json.gz",
+      "sha256": "24bb97cf30e4e9d3ba13a82e00b7da9a1f45e13a1626ecaa27d82c9bab0a5c61",
+      "what": "Fresh physical low/high: MG pickup, gun event, first turn, actual klaxon graph start and first18 admitted infected all share tick2197low/2231high. Four active looped klaxon voices per tier have positive gains(.33/.33/.33/.066); game audio is running, unlocked and unmuted. Host speakers alone are muted. No objective skips/actor writes. High opening intentionally bounded; no full route or cellar claim."
+    },
+    {
+      "file": "docs/reports/final-b/L4-high-opening-physical.json.gz",
+      "sha256": "81502974ece4ec840999900852f723f20627c704221f842ba9ef68cca1caa843",
+      "what": "Fresh physical low/high: MG pickup, gun event, first turn, actual klaxon graph start and first18 admitted infected all share tick2197low/2231high. Four active looped klaxon voices per tier have positive gains(.33/.33/.33/.066); game audio is running, unlocked and unmuted. Host speakers alone are muted. No objective skips/actor writes. High opening intentionally bounded; no full route or cellar claim."
     }
-  ]
+  ],
+  "sourceDigest": "e3dafe0694468ae05c6e72a1f303adf938a6c33391416d38d67a60534e2fe51b"
 }

@@ -1,0 +1,22 @@
+{
+  "row": "L5-06",
+  "status": "FAIL",
+  "reviewer": "Codex/final-b",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "clauses": [
+    {
+      "clause": "Hiding places draw **no ring, arrow or pin**; found by sound + caption at the spot + edge direction; ♪ radar ping only while a call is heard; cue heard ≤ 25 m, never > 30 m.",
+      "verdict": "FAIL",
+      "note": "Mia call at24.948m: positive-gain source ended audio32.336s/tick1381; same ♪ still visible audio33.157333s/tick1433 (0.821333s later), cue.until1440. Running/unlocked/unmuted game audio. Fails only-while-heard clause. Other range/hidden-place clauses are not promoted to PASS. Repro: L5 physical authored tour approaches Mia; observe actual source ended against minimap DOM."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/final-b/L5-06-proof.json",
+      "sha256": "79322beb3eabe4bb2f0a49d2dbf053687b0415bbff51134fdd9cf80e574cd1e7",
+      "what": "Mia call at24.948m: positive-gain source ended audio32.336s/tick1381; same ♪ still visible audio33.157333s/tick1433 (0.821333s later), cue.until1440. Running/unlocked/unmuted game audio. Fails only-while-heard clause. Other range/hidden-place clauses are not promoted to PASS. Repro: L5 physical authored tour approaches Mia; observe actual source ended against minimap DOM."
+    }
+  ],
+  "sourceDigest": "96b95aaf00218387ac838466ba4e849719809eef34f96b67f54241001dca8a39"
+}
