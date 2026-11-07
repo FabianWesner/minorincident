@@ -65,20 +65,22 @@ export function skinnedCrowdMatrix(texture: DataTexture | TextureNode, dominant:
  * `onlyRow` computes one coordinate for bounds and leaves the other rows zero. */
 export function skinnedVertexMatrix(clip: CrowdClip, frameOffset: number, parts: BufferAttribute | import('three').InterleavedBufferAttribute, skin: BufferAttribute | import('three').InterleavedBufferAttribute, i: number, out: Float32Array, pose?: Float32Array, onlyRow?: 0 | 1 | 2 | 3): Float32Array {
   const binds = clip.binds!, matrices = clip.matrices, packed = skin.getX(i);
-  const joints = [parts.getX(i), packed % 32, Math.floor(packed / 32) % 32, Math.floor(packed / 1024)];
-  const w = [0, skin.getY(i), skin.getZ(i), skin.getW(i) % 1]; w[0] = 1 - w[1] - w[2] - w[3];
+  const w1 = skin.getY(i), w2 = skin.getZ(i), w3 = skin.getW(i) % 1, w0 = 1 - w1 - w2 - w3;
   out.fill(0);
   // Bounds searches need only one coordinate. Keep its joint accumulation and
   // Float32 rounding identical to the full matrix; other rows remain zero.
   const firstRow = onlyRow ?? 0, lastRow = onlyRow === undefined ? 4 : onlyRow + 1;
   for (let k = 0; k < 4; k++) {
-    if (w[k] <= 0) continue;
-    const m = frameOffset + joints[k] * 16, b = joints[k] * 16;
+    const weight = k === 0 ? w0 : k === 1 ? w1 : k === 2 ? w2 : w3;
+    if (weight <= 0) continue;
+    // Avoid allocating joint/weight arrays for every sampled vertex.
+    const joint = k === 0 ? parts.getX(i) : k === 1 ? packed % 32 : k === 2 ? Math.floor(packed / 32) % 32 : Math.floor(packed / 1024);
+    const m = frameOffset + joint * 16, b = joint * 16;
     // out += w · (M · B)  (column-major)
     for (let col = 0; col < 4; col++) for (let row = firstRow; row < lastRow; row++) {
       let sum = pose?.[b + col * 4 + row] ?? 0;
       if (!pose) for (let x = 0; x < 4; x++) sum += matrices[m + x * 4 + row] * binds[b + col * 4 + x];
-      out[col * 4 + row] += w[k] * sum;
+      out[col * 4 + row] += weight * sum;
     }
   }
   return out;
