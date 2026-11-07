@@ -1,0 +1,47 @@
+{
+  "at": "2026-11-07T15:45:28.511578+00:00",
+  "cleanupComplete": true,
+  "removedRawRoot": "test-results/perf9",
+  "rawFilesRemoved": 2923,
+  "rawBytesRemoved": 763556600,
+  "removedOwnedCandidateBuild": "dist",
+  "candidateBuildFilesRemoved": 2757,
+  "candidateBuildBytesRemoved": 536963130,
+  "validationOutputFilesRemoved": [
+    {
+      "path": "test-results/epics/E18/checks.json",
+      "bytes": 335
+    },
+    {
+      "path": "test-results/playwright/results.json",
+      "bytes": 9603
+    },
+    {
+      "path": "test-results/qa-invariants/browser.json",
+      "bytes": 9584
+    },
+    {
+      "path": "test-results/timings/budget-fixture.json",
+      "bytes": 551
+    },
+    {
+      "path": "test-results/timings/test.json",
+      "bytes": 469
+    }
+  ],
+  "ownedPreviewPortsStopped": [
+    4901,
+    4902
+  ],
+  "ownedServerPid": 16948,
+  "ownedServerSignal": "SIGTERM",
+  "finalMirrorRehashVerifiedFiles": 2756,
+  "finalMirrorRehashMismatches": 0,
+  "globalBrowserPool": "left running; not owned by this job",
+  "gameSourceChanged": [
+    "src/render/characters/StaticCorpses.ts",
+    "src/render/characters/deathPose.ts",
+    "src/render/characters/skinnedCrowd.ts"
+  ],
+  "deployOrPush": false
+}

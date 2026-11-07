@@ -1,0 +1,122 @@
+[
+  {
+    "side": "prod",
+    "source": "test-results/perf9/diagnostic/L10-early/strips/webgpu/L10-prod.cpuprofile.gz",
+    "repairSymbol": null,
+    "skinSymbol": "MT",
+    "cpu": {
+      "skinInFrozenMs": 1.504
+    },
+    "topSelf": [
+      [
+        "(idle)",
+        6191.746000000008
+      ],
+      [
+        "(program)",
+        1291.811
+      ],
+      [
+        "update",
+        858.6900000000002
+      ],
+      [
+        "",
+        380.39399999999966
+      ],
+      [
+        "_renderObjectDirect",
+        274.39299999999986
+      ],
+      [
+        "updateForRender",
+        251.4629999999999
+      ],
+      [
+        "_update",
+        216.21499999999992
+      ],
+      [
+        "writeBuffer",
+        197.43799999999985
+      ],
+      [
+        "updateMatrixWorld",
+        188.2559999999999
+      ],
+      [
+        "updateReference",
+        181.381
+      ],
+      [
+        "(garbage collector)",
+        158.83999999999995
+      ],
+      [
+        "_projectObject",
+        158.49999999999997
+      ]
+    ]
+  },
+  {
+    "side": "candidate",
+    "source": "test-results/perf9/diagnostic/L10-early/strips/webgpu/L10-candidate.cpuprofile.gz",
+    "repairSymbol": "l5",
+    "skinSymbol": "w7",
+    "cpu": {
+      "repairInclusiveMs": 331.6889999999999,
+      "skinInRepairMs": 233.5459999999999,
+      "skinInFrozenMs": 3.009
+    },
+    "topSelf": [
+      [
+        "(idle)",
+        5993.742000000016
+      ],
+      [
+        "(program)",
+        1279.6320000000007
+      ],
+      [
+        "update",
+        759.2109999999998
+      ],
+      [
+        "",
+        377.8080000000001
+      ],
+      [
+        "updateForRender",
+        259.7819999999999
+      ],
+      [
+        "_renderObjectDirect",
+        241.73399999999998
+      ],
+      [
+        "w7",
+        236.5549999999999
+      ],
+      [
+        "_update",
+        202.26399999999995
+      ],
+      [
+        "writeBuffer",
+        181.586
+      ],
+      [
+        "updateMatrixWorld",
+        180.079
+      ],
+      [
+        "updateReference",
+        179.66099999999994
+      ],
+      [
+        "_projectObject",
+        170.988
+      ]
+    ]
+  }
+]

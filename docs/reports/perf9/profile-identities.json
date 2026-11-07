@@ -1,0 +1,50 @@
+[
+  {
+    "side": "candidate",
+    "temperature": "cold",
+    "bundle": "dist/build/index-DnjIp4Ne.js",
+    "bundleSha256": "1264a333b77b9b054bed7a49f16640c3032f35bf81013c7e9cb01466d63d5cf2",
+    "sourceFunction": "skinnedVertexMatrix",
+    "minifiedName": "w7",
+    "definitionPrefix": "function w7(n,e,t,s,i,a,o){const r=n.binds,l=n.matrices,c=s.getX(i),d=[t.getX(i),c%32,Math.floor(c/32)%32,Math.floor(c/1",
+    "sampledSelfMs": 157.94299999999993,
+    "frozenPoseSelfMs": 30.542000000000005,
+    "garbageCollectionSelfMs": 178.88000000000002
+  },
+  {
+    "side": "candidate",
+    "temperature": "warm",
+    "bundle": "dist/build/index-DnjIp4Ne.js",
+    "bundleSha256": "1264a333b77b9b054bed7a49f16640c3032f35bf81013c7e9cb01466d63d5cf2",
+    "sourceFunction": "skinnedVertexMatrix",
+    "minifiedName": "w7",
+    "definitionPrefix": "function w7(n,e,t,s,i,a,o){const r=n.binds,l=n.matrices,c=s.getX(i),d=[t.getX(i),c%32,Math.floor(c/32)%32,Math.floor(c/1",
+    "sampledSelfMs": 147.757,
+    "frozenPoseSelfMs": 38.532999999999994,
+    "garbageCollectionSelfMs": 182.87199999999996
+  },
+  {
+    "side": "prod",
+    "temperature": "cold",
+    "bundle": "test-results/perf9/prod/build/index-DbFAIX8_.js",
+    "bundleSha256": "71dabceb1895250205ad7cdca0592f729930caf60867843113a29fc90b32eded",
+    "sourceFunction": "skinnedVertexMatrix",
+    "minifiedName": "MT",
+    "definitionPrefix": "function MT(n,e,t,s,i,a,o){const r=n.binds,l=n.matrices,c=s.getX(i),d=[t.getX(i),c%32,Math.floor(c/32)%32,Math.floor(c/1",
+    "sampledSelfMs": 27.994,
+    "frozenPoseSelfMs": 19.555999999999997,
+    "garbageCollectionSelfMs": 145.53400000000002
+  },
+  {
+    "side": "prod",
+    "temperature": "warm",
+    "bundle": "test-results/perf9/prod/build/index-DbFAIX8_.js",
+    "bundleSha256": "71dabceb1895250205ad7cdca0592f729930caf60867843113a29fc90b32eded",
+    "sourceFunction": "skinnedVertexMatrix",
+    "minifiedName": "MT",
+    "definitionPrefix": "function MT(n,e,t,s,i,a,o){const r=n.binds,l=n.matrices,c=s.getX(i),d=[t.getX(i),c%32,Math.floor(c/32)%32,Math.floor(c/1",
+    "sampledSelfMs": 22.483999999999998,
+    "frozenPoseSelfMs": 26.421,
+    "garbageCollectionSelfMs": 152.816
+  }
+]

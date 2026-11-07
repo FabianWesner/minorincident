@@ -1,0 +1,123 @@
+[
+  {
+    "command": [
+      "npm",
+      "run",
+      "typecheck"
+    ],
+    "started": "2026-11-07T14:59:24.984Z",
+    "finished": "2026-11-07T14:59:36.280Z",
+    "seconds": 11.296,
+    "exitCode": 0,
+    "revision": "af5f7355abb0a7ce5123981b5ec31fc1075ca3a4",
+    "outputSha256": "768699d3cead53493237d3322201d28ee449107e90af9a5aa6f5dcab3f066b0c",
+    "outputTail": [
+      "",
+      "> typecheck",
+      "> tsc --noEmit && tsc --noEmit -p tsconfig.sim.json",
+      "",
+      ""
+    ]
+  },
+  {
+    "command": [
+      "npm",
+      "run",
+      "lint"
+    ],
+    "started": "2026-11-07T14:59:36.287Z",
+    "finished": "2026-11-07T14:59:44.140Z",
+    "seconds": 7.853,
+    "exitCode": 0,
+    "revision": "af5f7355abb0a7ce5123981b5ec31fc1075ca3a4",
+    "outputSha256": "5f9aee6b798507e187dcd3d4fbd5bcf5fdc37488cb89c27a01d5667ca7bb9fa1",
+    "outputTail": [
+      "",
+      "> lint",
+      "> eslint src tests tools functions *.config.ts eslint.config.js",
+      "",
+      ""
+    ]
+  },
+  {
+    "command": [
+      "npm",
+      "run",
+      "test:unit"
+    ],
+    "started": "2026-11-07T14:59:44.236Z",
+    "finished": "2026-11-07T15:00:10.023Z",
+    "seconds": 25.787,
+    "exitCode": 0,
+    "revision": "4c4cbac41026a897b9bbf67cde3270f540323d93",
+    "outputSha256": "f2a35b23f8dbf8705522f62cb31c9472474ebe8a0a69ac7f75f52dffecc39560",
+    "outputTail": [
+      "",
+      "> test:unit",
+      "> npm test",
+      "",
+      "",
+      "> test",
+      "> node tools/qa/test-budget.mjs --name test --max-seconds 240 -- node node_modules/vitest/vitest.mjs run --project default --configLoader runner",
+      "",
+      "[test-budget] 150/150 test cases ({\"vitest\":129,\"e2e\":9,\"invariantsBrowser\":12}), 43/45 files",
+      "",
+      " RUN  v5.0.3 /Users/wesner/Workspace/minorincident/.claude/worktrees/perf9",
+      "",
+      "",
+      " Test Files  27 passed (27)",
+      "      Tests  107 passed (107)",
+      "   Start at  15:59:46",
+      "   Duration  23.67s (tests 92%, import 4%, transform 4%, setup 1%)",
+      "",
+      "[test-budget] test: 25.6 s (budget 240 s)",
+      ""
+    ]
+  },
+  {
+    "command": [
+      "npm",
+      "run",
+      "verify",
+      "--",
+      "E18"
+    ],
+    "started": "2026-11-07T15:00:10.028Z",
+    "finished": "2026-11-07T15:00:55.417Z",
+    "seconds": 45.389,
+    "exitCode": 0,
+    "revision": "4c4cbac41026a897b9bbf67cde3270f540323d93",
+    "outputSha256": "26d22359edb697b6616960a06163e97b2afbdb29c243aa0c208a8ed4365ed0cd",
+    "outputTail": [
+      "",
+      "> verify",
+      "> tsx tools/verify.ts E18",
+      "",
+      "[verify] E18 (E18): per-epic AC tests were retired; running the per-change gate.",
+      "",
+      "> typecheck",
+      "> tsc --noEmit && tsc --noEmit -p tsconfig.sim.json",
+      "",
+      "",
+      "> lint",
+      "> eslint src tests tools functions *.config.ts eslint.config.js",
+      "",
+      "",
+      "> test",
+      "> node tools/qa/test-budget.mjs --name test --max-seconds 240 -- node node_modules/vitest/vitest.mjs run --project default --configLoader runner",
+      "",
+      "[test-budget] 150/150 test cases ({\"vitest\":129,\"e2e\":9,\"invariantsBrowser\":12}), 43/45 files",
+      "",
+      " RUN  v5.0.3 /Users/wesner/Workspace/minorincident/.claude/worktrees/perf9",
+      "",
+      "",
+      " Test Files  27 passed (27)",
+      "      Tests  107 passed (107)",
+      "   Start at  16:00:31",
+      "   Duration  23.81s (tests 92%, import 4%, transform 4%, setup 1%)",
+      "",
+      "[test-budget] test: 25.7 s (budget 240 s)",
+      ""
+    ]
+  }
+]

@@ -1,0 +1,81 @@
+[
+  {
+    "context": "L7 high warm load",
+    "side": "prod",
+    "source": "test-results/perf9/diagnostic/load-high-L7/loads/L7-prod-warm.cpuprofile.gz",
+    "sourceSha256": "1b987716343c4a7f95e23885946db4859e54456cf99b6414e9a800b8d4caf307",
+    "bundleSha256": "71dabceb1895250205ad7cdca0592f729930caf60867843113a29fc90b32eded",
+    "repairSymbol": null,
+    "skinSymbol": "MT",
+    "cpu": {
+      "skinInFrozenMs": 22.483999999999998
+    }
+  },
+  {
+    "context": "L7 high warm load",
+    "side": "candidate",
+    "source": "test-results/perf9/diagnostic/load-high-L7/loads/L7-candidate-warm.cpuprofile.gz",
+    "sourceSha256": "c639695204574c932a2f58d92d8d8fbfa1679a18d8480093288014e9456f2589",
+    "bundleSha256": "1264a333b77b9b054bed7a49f16640c3032f35bf81013c7e9cb01466d63d5cf2",
+    "repairSymbol": "l5",
+    "skinSymbol": "w7",
+    "cpu": {
+      "repairInclusiveMs": 198.2129999999999,
+      "skinInRepairMs": 129.09900000000002,
+      "skinInFrozenMs": 18.658
+    }
+  },
+  {
+    "context": "L10 high early charge",
+    "side": "prod",
+    "source": "test-results/perf9/diagnostic/L10-early/strips/webgpu/L10-prod.cpuprofile.gz",
+    "sourceSha256": "3913b002d5f762aa2b84d6f8ad2e6b97b94033764077a45f159310f4893176b2",
+    "bundleSha256": "71dabceb1895250205ad7cdca0592f729930caf60867843113a29fc90b32eded",
+    "repairSymbol": null,
+    "skinSymbol": "MT",
+    "cpu": {
+      "skinInFrozenMs": 1.504
+    }
+  },
+  {
+    "context": "L10 high early charge",
+    "side": "candidate",
+    "source": "test-results/perf9/diagnostic/L10-early/strips/webgpu/L10-candidate.cpuprofile.gz",
+    "sourceSha256": "dc82af46d0e65f5760850981939d4b279285363ff0257574419e29a56e5dcdcb",
+    "bundleSha256": "1264a333b77b9b054bed7a49f16640c3032f35bf81013c7e9cb01466d63d5cf2",
+    "repairSymbol": "l5",
+    "skinSymbol": "w7",
+    "cpu": {
+      "repairInclusiveMs": 331.6889999999999,
+      "skinInRepairMs": 233.5459999999999,
+      "skinInFrozenMs": 3.009
+    }
+  },
+  {
+    "context": "L4 low early war",
+    "side": "prod",
+    "source": "test-results/perf9/diagnostic/L4-early/strips/webgpu/L4-prod.cpuprofile.gz",
+    "sourceSha256": "25a1a59576464ec39195b0ad8c04b6c0e4026314e1543e9328eacd724f5dc347",
+    "bundleSha256": "71dabceb1895250205ad7cdca0592f729930caf60867843113a29fc90b32eded",
+    "repairSymbol": null,
+    "skinSymbol": "MT",
+    "cpu": {
+      "skinInFrozenMs": 48.769,
+      "skinOtherMs": 1.485
+    }
+  },
+  {
+    "context": "L4 low early war",
+    "side": "candidate",
+    "source": "test-results/perf9/diagnostic/L4-early/strips/webgpu/L4-candidate.cpuprofile.gz",
+    "sourceSha256": "d0aa1e5635c937ace9c67fd5f21ea74b1c705e12c4d4680a590076fae8efd56e",
+    "bundleSha256": "1264a333b77b9b054bed7a49f16640c3032f35bf81013c7e9cb01466d63d5cf2",
+    "repairSymbol": "l5",
+    "skinSymbol": "w7",
+    "cpu": {
+      "repairInclusiveMs": 369.3649999999996,
+      "skinInRepairMs": 271.0579999999999,
+      "skinInFrozenMs": 45.474
+    }
+  }
+]
