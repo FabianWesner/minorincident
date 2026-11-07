@@ -8,11 +8,13 @@ import { runLevel } from '../sim-runner/levels';
 import { provenance } from './accept/probe';
 const seedArg=process.argv.indexOf('--seed'),seed=seedArg<0?1:Number(process.argv[seedArg+1]);assert(Number.isInteger(seed)&&seed>=0&&seed<=0xffffffff,'--seed requires an unsigned32-bit integer');
 const identity={...provenance(),seed},rows=[];
+const secondsArg=process.argv.indexOf('--seconds'),seconds=secondsArg<0?undefined:Number(process.argv[secondsArg+1]);
+assert(seconds===undefined||(Number.isFinite(seconds)&&seconds>0),'--seconds requires a positive number');
 for(const tier of ['low','high'] as const){
  const campaign=preset('L4-default');campaign.settings.quality=tier;
  const waves:{tick:number;count:number;edges:number[]}[]=[],admissions:unknown[]=[],mix:unknown[]=[],windows:unknown[]=[],population:unknown[]=[];
  let previous:{pend:number[];cursor:number;ids:number;tick:number}|undefined,finalHash='',gameplayHash='',gap=0,peak=0,lastMix='',mixChecks=0,savedCellar=false;
- const run=await runLevel('L4','complete',seed,process.argv.includes('--war-only')?211:undefined,'auto',campaign,undefined,0,{quality:tier,beforeBegin:w=>{
+ const run=await runLevel('L4','complete',seed,seconds??(process.argv.includes('--war-only')?211:undefined),'auto',campaign,undefined,0,{quality:tier,beforeBegin:w=>{
   w.events.on('l4.wave',e=>{if(e.type==='l4.wave'&&w.missions!.state.l4!.phase==='collapse')waves.push({tick:e.tick,count:e.count,edges:[...e.edges]});});
   w.events.on('sim.tick',()=>{
    const s=w.missions!.state.l4!,p=w.entities.get(1)!.transform;

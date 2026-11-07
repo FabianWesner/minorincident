@@ -1,0 +1,25 @@
+{
+  "row": "L4-13",
+  "status": "FAIL",
+  "sourceCommit": "a86baf5",
+  "method": "Read-only native admission observer on seed 1, both tiers, extended to 300 seconds so the route enters collapse. It records actual admissions by edge for each announced 9-second collapse cohort, population, cap reservations, and escape windows.",
+  "evidence": {
+    "file": "test-results/fix71-b/L4-native.json.gz",
+    "sha256": "b784580696d8ce8e8122c38ceebe731e46446bfe69ff6556523c771f9559fe57",
+    "what": "I inspected the native admission ledger. Both tiers open a 40-second escape gap and retain the authored 9-second wave schedule. In later 9-second windows low admitted 4, 2, 1, 4, 4, 5, 6 actual bodies; high admitted 9, 4, 2, 5, 3, 3, 3. Thus both tiers contain a complete window below the minimum 3 admissions. High reached the unchanged 120 infected cap with 44 reserved slots while collapse demand remained pending."
+  },
+  "observed": {
+    "low": {
+      "lateWindowTicks": [14149, 14689, 15229, 15769, 16309, 16849, 17389],
+      "actualAdmissions": [4, 2, 1, 4, 4, 5, 6],
+      "cap": 80
+    },
+    "high": {
+      "lateWindowTicks": [14149, 14689, 15229, 15769, 16309, 16849, 17389],
+      "actualAdmissions": [9, 4, 2, 5, 3, 3, 3],
+      "cap": 120,
+      "reservedAtCap": 44
+    }
+  },
+  "whyOpen": "At least one full 9-second window per tier misses 3 actual admissions. A safe fix needs a design decision about freeing live population capacity while preserving the current caps and pending threat; changing caps, wave sizes, or the criterion is not supported by this evidence."
+}
