@@ -3,8 +3,8 @@
   "status": "P",
   "reviewer": "Codex/blk-b",
   "date": "2026-11-07",
-  "commit": "0d18785f8a8cbd66a6ca9241377b96a23458e5de",
-  "sourceDigest": "374d3466d47c337b2dfa86c8d4d40b1d11aaacbbc25dc7dfb7ec7d4405340913",
+  "commit": "c206e4d3c3bfaab6114e008a66d2e41e965c6dd8",
+  "sourceDigest": "1b5d830ddb0f37bd067ad89387d400caf7cc149928d15d97c8ae3f521245aef5",
   "clauses": [
     {
       "clause": "Riot infected: frontal MG hits visibly chip HP + recoil at every range incl. point blank; frontal MG kill ≤ 6 s (measured 3.7 s), flank ≤ 2 s; health bar always shown; one riot cop alone does not down a full-HP player that keeps firing (tune). PO: \"I feel I have zero effect when I shoot them.\"",
@@ -15,17 +15,17 @@
   "evidence": [
     {
       "file": "docs/reports/blk-b/L4-11-proof.json",
-      "sha256": "5fa08b774b0e80eb818546af9e95e4c23e132827d2b68961500c19d9027db350",
+      "sha256": "e4b6240d288fdd9ad22547bc08f8988c37f5c244cba181a98d662045f682cd10",
       "what": "All six full-size captures inspected. Full red bars with white outlines appear above the unobscured riot at14m and16m, both tiers. At16m the bar is clamped to the upper viewport edge and remains visible; the actual2.52HP frontal MG chip remains visible at16.0719m. This closes the formerly missing healthy16m bar counterexample."
     },
     {
       "file": "docs/reports/blk-b/L4-low-fixtures-reviewed.json",
-      "sha256": "817b71bb5fe942613ba4ddde05e6b72ecd734ba30a092f7e577c13b51788052c",
+      "sha256": "88274b149b78516c8ce48e5e83bb890e047d0187e34fbaaa0160ac5b520912bf",
       "what": "Current-source native frontal/flank damage and TTK checks; zero fixture errors."
     },
     {
       "file": "docs/reports/blk-b/L4-high-fixtures-reviewed.json",
-      "sha256": "971e6fb13d619c1af922c93c060a3b120f56b786b6e42d41ef46b040b9112314",
+      "sha256": "111c7f3bcea914344e2cca5f0abae649c0a7f8613e17e0dc97f8c51003d05b42",
       "what": "Current-source native frontal/flank damage and TTK checks; zero fixture errors."
     },
     {
