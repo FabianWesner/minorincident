@@ -62,9 +62,10 @@ export const l3 = {
   /** Section 5.6: pre-populated wanderers per segment (groups: x, street, size), forward pressure, caps. */
   density: {
     /** PO 2026-10-12 set five times every L3 encounter (x25); PO 2026-11-07 ("Far too many Zombies. The police crew that should
-     * follow me has zero chance to survive"): x12, so the authored residents per segment are 125 / 305 / 535 (incl. the horde). */
-    streetMultiplier: 12,
-    targets: [125, 305, 535] as readonly number[],
+     * follow me has zero chance to survive"): x12 / x10 / x18 per segment, so the authored residents per segment are 125 / 240 / 710
+     * (incl. the 2 x 60 horde), and the live median near the courier still rises from S1 to S3 under the lower caps (L3-08). */
+    streetMultiplier: [12, 10, 18] as readonly number[],
+    targets: [125, 240, 710] as readonly number[],
     groups: [
       // S1 (x -126..-40): about 10, spread thin; the squad shoots most of them.
       [[-98, 'blvd', 2], [-84, 'oak', 2], [-70, 'commerce', 2], [-60, 'blvd', 2], [-48, 'oak', 2]],

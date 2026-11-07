@@ -495,7 +495,7 @@ export class LevelThreeCollapse {
       const home = this.snap({ x, z: l3.map.streets[street] + (street === 'blvd' ? 0 : 0) }, .5);
       const highway = x > 128;
       const clusterSize = Math.ceil(size * scale), offsets = [0, -24, -12, 12, 24];
-      for (let i = 0; i < 5 * Math.ceil(size * scale * (highway ? 1 : l3.density.streetMultiplier / 5)); i++) {
+      for (let i = 0; i < 5 * Math.ceil(size * scale * (highway ? 1 : l3.density.streetMultiplier[segment] / 5)); i++) {
         // Five small clusters across the neighbourhood, with breathing room along the walking line (PO 10-09 lulls; the PO 10-12
         // "don't cluster" applies to the station attack, which streams in spread from five directions).
         const cluster = Math.floor(i / clusterSize) % offsets.length;
