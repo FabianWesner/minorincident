@@ -259,10 +259,16 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     }
     if (process.env.PLAYTEST_ACCEPTANCE_CAPTURES === '1' && eyes.level && eyes.phase === 'playing' && !eyes.loading && !eyes.menu && eyes.player) {
       const key = `${eyes.level}-${eyes.step}`;
-      if (!acceptanceStarts.has(eyes.level)) acceptanceStarts.set(eyes.level, eyes.tick);
-      // Timing runs preserve their cold interval. Functional runs also measure
-      // the first step's two-second marker deadline instead of waiting ten seconds.
-      if ((noFrameTiming || eyes.tick - acceptanceStarts.get(eyes.level)! >= 600) && (!acceptanceCaptured.has(key) || eyes.tick - acceptanceTick >= 60 * 60)) {
+      if (!acceptanceStarts.has(eyes.level)) {
+        acceptanceStarts.set(eyes.level, eyes.tick);
+        // Record the opening HUD without waiting for a tier swap. Production
+        // terrain swaps need four seconds of running play; pausing at the first
+        // tick and awaiting their readiness deadlocks the high-quality photo.
+        if (noFrameTiming) await capture(`${key}-opening-t${eyes.tick}`);
+      }
+      // Let production streaming admission open before pausing for the matrix.
+      // Timing runs retain their longer cold interval.
+      if (eyes.tick - acceptanceStarts.get(eyes.level)! >= (noFrameTiming ? 300 : 600) && (!acceptanceCaptured.has(key) || eyes.tick - acceptanceTick >= 60 * 60)) {
         acceptanceCaptured.add(key); acceptanceTick = eyes.tick;
         await press([]); await releaseAim();
         await page.evaluate(() => window.__SS__!.pause());
