@@ -1,0 +1,63 @@
+{
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "runs": [
+    {
+      "tier": "low",
+      "officerIds": [
+        131,
+        132,
+        133,
+        134
+      ],
+      "actualShotSources": [
+        131,
+        132,
+        133,
+        134
+      ],
+      "checkpointCivilianIds": [
+        135,
+        136,
+        137,
+        138,
+        139,
+        140,
+        141,
+        142
+      ],
+      "arrivalTick": 9240
+    },
+    {
+      "tier": "high",
+      "officerIds": [
+        131,
+        132,
+        133,
+        134
+      ],
+      "actualShotSources": [
+        131,
+        132,
+        133,
+        134
+      ],
+      "checkpointCivilianIds": [
+        135,
+        136,
+        137,
+        138,
+        139,
+        140,
+        141,
+        142
+      ],
+      "arrivalTick": 9120
+    }
+  ],
+  "vehicleSource": {
+    "file": "src/levels/L2/layout.ts",
+    "sha256": "3cd5794496d1dfabd96fbe6b051a6b2f30977da21b33fac86e2bd02c5a009837",
+    "observation": "Three checkpoint placements lines63–65: police-suv(78.4,25.9), police-sedan(83.3,27.6), police-sedan(69.6,26.3), all lit:true; corroborated by current actual lightbar pixels."
+  },
+  "pixelObservation": "Both-tier checkpoint images show four distinct blue-uniformed officers firing, multiple muzzle/tracer flashes, three police vehicles/light bars. High between-render drawn flags are false in the pre-photo sample and are not used as absence/visibility proof; actual pixels are reviewed after screenshotReady."
+}
