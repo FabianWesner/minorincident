@@ -131,13 +131,8 @@ export class LevelThreeCollapse {
     // Gunfire is a loud event (section 5.3): the player's handgun and every ally shot.
     world.events.on('combat.attack', e => { if (e.type === 'combat.attack' && e.sourceId === 1 && e.actionId === 'weapon.handgun') this.gunshot(1, e.position); });
     world.events.on('ally.attack', e => { if (e.type === 'ally.attack' && e.role !== 'firefighter' && e.from) this.gunshot(e.sourceId, e.from); });
-    // E21-AC05 "ranged before contact" (brief l3-polish): a handgun hit checks the target like a police pistol hit (0.25 s stagger),
-    // so the courier can drop a runner before it closes in now that the weaker police (PO 10-12) let more of them through.
-    world.events.on('combat.hit', e => {
-      if (e.type !== 'combat.hit' || e.sourceId !== 1 || e.actionId !== 'weapon.handgun') return;
-      const c = world.entities.get(e.targetId)?.combat; if (!c || !world.entities.get(e.targetId)?.infected) return;
-      c.staggerUntil = Math.max(c.staggerUntil, world.tick + ticks(l3.gunfire.handgunStaggerS)); c.attacking = false;
-    });
+    // PO 2026-11-07: the courier's handgun no longer staggers its target (the former 0.25 s check per hit, brief l3-polish,
+    // froze kited pursuers and cancelled their windups: "I walk and shoot backwards, so no Zombie can attack me").
     world.events.on('player.died', () => { this.lastDeathX = world.entities.get(1)!.transform.x; this.spentSpills = structuredClone(this.mission.state.l3?.spills ?? {}); });
     world.events.on('outbreak.bite', e => { if (e.type === 'outbreak.bite') this.bitten(e.targetId); });
     world.events.on('civilian.turned', e => { if (e.type === 'civilian.turned') this.turned(e.id); });

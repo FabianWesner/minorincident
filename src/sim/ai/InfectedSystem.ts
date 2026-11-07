@@ -1239,6 +1239,18 @@ export class InfectedSystem {
     // grab boundary on every tick, despite the runner reaching it each time.
     if (this.world.scenario === 'L4' && this.director.tier === 'high' && Math.hypot(target.position.x - e.transform.x, target.position.z - e.transform.z) <= contact && this.l1!.lineOfSight(e.transform, target.position)) this.startBite(e, b, brain, target);
   }
+  /** PO 2026-11-07 ("The police crew that should follow me has zero chance to survive"): like the L7 evacuees (r5-l7), a bite on
+   * a following L3 squad officer costs his shown health first and shoves the biter off; only the bite that empties it turns him. */
+  private woundL3Officer(target: EntitySnapshot, biter: EntitySnapshot): boolean {
+    const squad = this.world.scenario === 'L3' ? this.world.missions?.state.l3?.squad : undefined;
+    if (!squad?.some(m => m.id === target.id)) return false;
+    const { damage, shoveTicks } = l3.officers.squad.bite, tick = this.world.tick;
+    if (target.health.current <= damage) return false;
+    target.health.current -= damage;
+    if (biter.combat) biter.combat.staggerUntil = Math.max(biter.combat.staggerUntil, tick + shoveTicks);
+    this.world.events.emit({ type: 'infected.attack', tick, sourceId: biter.id, attackId: 0, targetId: target.id, special: 'bite', amount: damage });
+    return true;
+  }
   private startBite(e: EntitySnapshot, b: InfectedState, brain: L1Brain, target: HumanTarget): void {
     const tick = this.world.tick, victim = this.world.entities.get(target.id);
     brain.mode = 'bite'; b.state = 'bite'; brain.biteTargetId = target.id; b.grabHits = 0; b.grabUntil = tick + l1Ticks(l1v2.civilians.grabS); e.combat!.attacking = true;
@@ -1264,6 +1276,7 @@ export class InfectedSystem {
     const target = this.world.entities.get(victimId);
     // r5-l7: an L7 evacuee's bite costs its shown health first; only the bite that empties it kills or turns.
     if (bitten && victim && target && this.world.l7Encounters?.woundFollower(target, e)) bitten = false;
+    if (bitten && victim && target && this.woundL3Officer(target, e)) bitten = false;
     if (bitten && victim && (!target || !isCorgi(target) && !storyProtected(this.world, target))) {
       while (this.recentTurns.length && tick - this.recentTurns[0] > l1Ticks(l1v2.civilians.transformS + l1v2.civilians.transformJitterS)) this.recentTurns.shift();
       // At the cap a bite kills instead of turning (L1 section 5.9): L1/L2 60 high / 30 low; a strict level cap (L3: 80 / 40).
