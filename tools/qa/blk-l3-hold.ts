@@ -18,7 +18,8 @@ const who = () => {
 };
 for (let k = 0; k < 60 * 60 && !s.doneAt; k++) {
   followFrustum(world); world.applyInput(emptyInput(), 'keyboard'); world.update();
-  if ((world.tick - s.crossedAt) % 60 === 0) console.log(world.tick - s.crossedAt, 'barrier', s.barrierClosedAt ? s.barrierClosedAt - s.crossedAt : 0, who());
+  if ((world.tick - s.crossedAt) % 60 === 0) { const bx = 137.1 + 76; const under = [...world.entities.iterate()].filter(e => !e.infected && e.health.current > 0 && Math.abs(e.transform.z) < 2.2 && Math.abs(e.transform.x - bx) < .6).map(e => `${e.id}:${e.kind}/${e.archetype}@${e.transform.x.toFixed(2)},${e.transform.z.toFixed(2)}${e.civilian ? ' civ' : ''}`); if (under.length && !s.barrierClosedAt) console.log('  under', under.join(' ')); }
+  console.log(world.tick - s.crossedAt, 'barrier', s.barrierClosedAt ? s.barrierClosedAt - s.crossedAt : 0, who());
 }
 console.log('done', s.doneAt ? s.doneAt - s.crossedAt : null, 'barrier', (s.barrierClosedAt ?? 0) - s.crossedAt, zoneX);
 world.dispose();
