@@ -11,13 +11,9 @@ import { PaletteMaterial } from '../PaletteMaterial';
 import { staticInstanceAttributes } from '../StaticInstanceAttributes';
 import { SpatialHash } from '../../sim/spatial/SpatialHash';
 import { corpseLod } from '../lodPolicy';
-import { seeThroughKeepCorpse } from '../SeeThrough';
-import type { Node } from 'three/webgpu';
 import { corpseStencil } from './figureStencil';
 
 const CELL = 40;
-/** Every frozen body carries the courier cut from its first compile (Q-209); SeeThrough.corpse switches it, no rebuild. */
-const corpseMask = (surface?: Node<'bool'>) => surface ? surface.and(seeThroughKeepCorpse()) : seeThroughKeepCorpse();
 // Civilian model/LOD pools already share their source material. Keep one frozen
 // graph too: copies per pool rebuilt identical shaders as new blast victims
 // settled. Pages still own their geometry and per-instance appearance buffers.
@@ -306,14 +302,14 @@ export class StaticCorpses extends Group {
         if (material instanceof PaletteMaterial) {
           let shared = sharedFrozenMaterials.get(material);
           if (!shared) {
-            const copy = material.frozenCopy(true); copy.name = `corpse_${material.name}`; copy.positionNode = null; copy.normalNode = null; copy.maskNode = corpseMask(material.userData.frozenSurfaceMask);
+            const copy = material.frozenCopy(true); copy.name = `corpse_${material.name}`; copy.positionNode = null; copy.normalNode = null; copy.maskNode = material.userData.frozenSurfaceMask ?? null;
             shared = { material: copy, users: 0 }; sharedFrozenMaterials.set(material, shared);
           }
           shared.users++; frozenMaterial = shared.material;
         } else {
           // Plain fallback materials retain their per-pool value snapshot.
           frozenMaterial = new MeshLambertNodeMaterial().copy(material);
-          frozenMaterial.positionNode = null; frozenMaterial.normalNode = null; frozenMaterial.maskNode = corpseMask(material.userData.frozenSurfaceMask);
+          frozenMaterial.positionNode = null; frozenMaterial.normalNode = null; frozenMaterial.maskNode = material.userData.frozenSurfaceMask ?? null;
         }
         frozenMaterial.normalNode = skinnedWoundNormal(normalViewGeometry);
         corpseStencil(frozenMaterial);

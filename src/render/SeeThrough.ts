@@ -25,9 +25,6 @@ export const seeThrough = {
   hullCenter: uniform(new Vector2(-10, -10)).setGroup(renderGroup),
   hullRadius: uniform(0).setGroup(renderGroup),
   hullDepth: uniform(0).setGroup(renderGroup),
-  /** Frozen corpses (StaticCorpses) dissolve inside the subject disc while the courier is on foot (Q-209): a small-corpse pile
-   * at her feet buried her (L4 west breach). A uniform switch: the corpse programs compile once with the cut. */
-  corpse: uniform(0).setGroup(renderGroup),
   /** L6 (metro tunnel and station) uses a clean silhouette cut instead of fragment dither (Q-241: stipple on the arches). */
   solidSilhouette: uniform(0).setGroup(renderGroup),
   /** Height above her feet that solid occluders always keep (vertical faces; support faces keep .08 m more). 0.22 everywhere
@@ -114,17 +111,6 @@ export const seeThroughKeepBoss = () => {
   const noise = fract(fract(dot(screenCoordinate.xy.floor(), vec2(.06711056, .00583715))).mul(52.9829189));
   return hole.greaterThan(noise);
 };
-
-/** Q-209 corpse cut: corpse fragments nearer the lens than the courier's far body point and inside the solid subject disc are
- * dropped, with no kept floor band (bodies lie below it) and a clean disc (PO #45: no dither dots over her). Bodies elsewhere keep every pixel. */
-let corpseKeep: Node<'bool'> | undefined;
-export const seeThroughKeepCorpse = (): Node<'bool'> => corpseKeep ??= (() => {
-  // Polish-p3 (QA: halftone dots slicing the nearer bodies at zoom 1): same fully clear disc (.85 R) but the dithered rim is
-  // a quarter as wide (.85 R to .89 R), so only a thin edge, not a 15% band, shows dots.
-  const hole = mix(1, seeThroughHole(1, seeThrough.solidRadius.mul(.89), .955), seeThrough.corpse);
-  const noise = fract(fract(dot(screenCoordinate.xy.floor(), vec2(.06711056, .00583715))).mul(52.9829189));
-  return hole.greaterThan(noise);
-})();
 
 const revealCorner = new Vector3();
 /** Project the subject (courier or whole player vehicle) into the shared hole uniforms: the fully clear inner disc encloses every corner, depth is its nearest point.
