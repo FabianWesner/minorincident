@@ -23,6 +23,7 @@ function checkWallGeometry() {
 /** Every checkpoint/objective plus a whole-graph audit, including the PO's lower street. */
 export async function checkL7Navigation() {
   checkWallGeometry();
+  await checkFollowerBites();
   await checkCorpseCatchup();
   await checkPharmacyCatchup();
   const w = await loadLevel('L7', 29);
@@ -91,6 +92,30 @@ export async function checkL7Navigation() {
         previous = next;
       }
     }
+  } finally { w.dispose(); }
+}
+
+/** r5-l7 (vqa58 survivor losses): a completed bite costs an evacuee a third of its bar instead of killing it, the
+ * biter reels while it tears free, and a loss inside the column never raises "Survivor lost behind you!". */
+async function checkFollowerBites() {
+  const w = await loadLevel('L7', 3, undefined, 0, { quality: 'low' });
+  try {
+    for (const e of [...w.infected!.active]) { w.solids.forget(e); w.infected!.release(e); }
+    const roster = w.l7Encounters!.state.roster, follower = w.entities.get(roster[0].id)!;
+    const runner = w.entities.get(w.infected!.spawn('infected.runner', { x: follower.transform.x + 1.2, z: follower.transform.z }, { state: 'chase' }))!;
+    const wounds = new Map<number, number[]>(), alarms: string[] = [];
+    w.events.on('infected.attack', e => { if (e.type === 'infected.attack' && e.special === 'bite') wounds.set(e.targetId, [...wounds.get(e.targetId) ?? [], w.entities.get(e.targetId)!.health.current]); });
+    w.events.on('l7.follower-alarm', e => { if (e.type === 'l7.follower-alarm') alarms.push(e.kind); });
+    let staggered = false;
+    for (let tick = 0; tick < 60 * 60 && roster.every(r => r.status === 'following'); tick++) {
+      w.applyInput(emptyInput(), 'keyboard'); w.update();
+      staggered ||= (runner.combat?.staggerUntil ?? 0) > w.tick;
+    }
+    const lost = roster.find(r => r.status !== 'following');
+    expect(lost, 'one unopposed runner still kills an evacuee').toBeDefined();
+    expect(wounds.get(lost!.id), 'the fatal bite is the third: 100 → 66 → 32 → dead').toEqual([66, 32]);
+    expect(staggered, 'the biter reels after a survived bite').toBe(true);
+    expect(alarms.filter(kind => kind !== 'wait'), 'a loss beside the courier is not "behind you"').toEqual([]);
   } finally { w.dispose(); }
 }
 
