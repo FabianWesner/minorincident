@@ -7,7 +7,7 @@
   "browserHash": "9388d0056ef51321f7a42b0d246655834460a88af205dee82674435822fa31c9",
   "errors": [],
   "observations": {
-    "scope": "Supplementary native L6-04 only; no browser route or G-25 claim."
+    "scope": "Supplementary native L6-04/09 only; no browser route or G-25 claim."
   },
   "checks": [
     {
@@ -55,8 +55,318 @@
         "controlHash": "66632916",
         "status": "PASS"
       },
-      "target": "20–30s;10 bodies from2 accesses; power off in1tick and red emergency on; abandon at15s or3 bitten",
+      "target": "20\u201330s;10 bodies from2 accesses; power off in1tick and red emergency on; abandon at15s or3 bitten",
       "receipt": "docs/reports/final-b/L6-04-proof.json"
+    },
+    {
+      "id": "L6-09",
+      "clause": "actual gates width collision endurance refusal and persistent prompt",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "status": "PASS",
+      "value": {
+        "tier": "low",
+        "gates": [
+          {
+            "x": 90,
+            "widthM": 2.200000000000001,
+            "holdSeconds": 9.816666666666666,
+            "openMovement": true,
+            "closedMovement": false,
+            "openSight": true,
+            "closedSight": false,
+            "attacks": 37
+          },
+          {
+            "x": 150,
+            "widthM": 2.200000000000001,
+            "holdSeconds": 9.816666666666666,
+            "openMovement": true,
+            "closedMovement": false,
+            "openSight": true,
+            "closedSight": false,
+            "attacks": 37
+          },
+          {
+            "x": 210,
+            "widthM": 2.200000000000001,
+            "holdSeconds": 9.816666666666666,
+            "openMovement": true,
+            "closedMovement": false,
+            "openSight": true,
+            "closedSight": false,
+            "attacks": 37
+          }
+        ],
+        "inputs": [
+          {
+            "x": 90,
+            "mode": "E",
+            "elapsedTicks": 60
+          },
+          {
+            "x": 90,
+            "mode": "click",
+            "elapsedTicks": 60
+          },
+          {
+            "x": 150,
+            "mode": "E",
+            "elapsedTicks": 60
+          },
+          {
+            "x": 150,
+            "mode": "click",
+            "elapsedTicks": 60
+          },
+          {
+            "x": 210,
+            "mode": "E",
+            "elapsedTicks": 60
+          },
+          {
+            "x": 210,
+            "mode": "click",
+            "elapsedTicks": 60
+          }
+        ],
+        "boundariesAndMarkers": [
+          {
+            "x": 90,
+            "boundaries": [
+              {
+                "survivorOffsetM": -1.99,
+                "closable": false,
+                "status": "Let everyone pass \u00b7 28/29 through"
+              },
+              {
+                "survivorOffsetM": 0,
+                "closable": false,
+                "status": "Let everyone pass \u00b7 28/29 through"
+              },
+              {
+                "survivorOffsetM": 1.8,
+                "closable": false,
+                "status": "Let everyone pass \u00b7 28/29 through"
+              },
+              {
+                "survivorOffsetM": 2,
+                "closable": false,
+                "status": "Let everyone pass \u00b7 28/29 through"
+              },
+              {
+                "survivorOffsetM": 2.01,
+                "closable": true,
+                "status": "Everyone through \u00b7 E or click the gate to close it"
+              }
+            ],
+            "markerSamples": [
+              {
+                "player": {
+                  "x": 92.4,
+                  "z": 17.3
+                },
+                "marker": "l6-next",
+                "at": {
+                  "x": 92.4,
+                  "z": 17.3,
+                  "y": 0.6,
+                  "radius": 2
+                },
+                "prompt": "Everyone through \u00b7 E or click the gate to close it",
+                "closedAt": 0
+              },
+              {
+                "player": {
+                  "x": 93.5,
+                  "z": 16.5
+                },
+                "marker": "l6-next",
+                "at": {
+                  "x": 92.4,
+                  "z": 17.3,
+                  "y": 0.6,
+                  "radius": 2
+                },
+                "prompt": "Everyone through \u00b7 E or click the gate to close it",
+                "closedAt": 0
+              },
+              {
+                "player": {
+                  "x": 92.4,
+                  "z": 17.3
+                },
+                "marker": "l6-next",
+                "at": {
+                  "x": 92.4,
+                  "z": 17.3,
+                  "y": 0.6,
+                  "radius": 2
+                },
+                "prompt": "Everyone through \u00b7 E or click the gate to close it",
+                "closedAt": 0
+              }
+            ]
+          },
+          {
+            "x": 150,
+            "boundaries": [
+              {
+                "survivorOffsetM": -1.99,
+                "closable": false,
+                "status": "Let everyone pass \u00b7 28/29 through"
+              },
+              {
+                "survivorOffsetM": 0,
+                "closable": false,
+                "status": "Let everyone pass \u00b7 28/29 through"
+              },
+              {
+                "survivorOffsetM": 1.8,
+                "closable": false,
+                "status": "Let everyone pass \u00b7 28/29 through"
+              },
+              {
+                "survivorOffsetM": 2,
+                "closable": false,
+                "status": "Let everyone pass \u00b7 28/29 through"
+              },
+              {
+                "survivorOffsetM": 2.01,
+                "closable": true,
+                "status": "Everyone through \u00b7 E or click the gate to close it"
+              }
+            ],
+            "markerSamples": [
+              {
+                "player": {
+                  "x": 152.4,
+                  "z": 17.3
+                },
+                "marker": "l6-next",
+                "at": {
+                  "x": 152.4,
+                  "z": 17.3,
+                  "y": 0.6,
+                  "radius": 2
+                },
+                "prompt": "Everyone through \u00b7 E or click the gate to close it",
+                "closedAt": 0
+              },
+              {
+                "player": {
+                  "x": 153.5,
+                  "z": 16.5
+                },
+                "marker": "l6-next",
+                "at": {
+                  "x": 152.4,
+                  "z": 17.3,
+                  "y": 0.6,
+                  "radius": 2
+                },
+                "prompt": "Everyone through \u00b7 E or click the gate to close it",
+                "closedAt": 0
+              },
+              {
+                "player": {
+                  "x": 152.4,
+                  "z": 17.3
+                },
+                "marker": "l6-next",
+                "at": {
+                  "x": 152.4,
+                  "z": 17.3,
+                  "y": 0.6,
+                  "radius": 2
+                },
+                "prompt": "Everyone through \u00b7 E or click the gate to close it",
+                "closedAt": 0
+              }
+            ]
+          },
+          {
+            "x": 210,
+            "boundaries": [
+              {
+                "survivorOffsetM": -1.99,
+                "closable": false,
+                "status": "Let everyone pass \u00b7 28/29 through"
+              },
+              {
+                "survivorOffsetM": 0,
+                "closable": false,
+                "status": "Let everyone pass \u00b7 28/29 through"
+              },
+              {
+                "survivorOffsetM": 1.8,
+                "closable": false,
+                "status": "Let everyone pass \u00b7 28/29 through"
+              },
+              {
+                "survivorOffsetM": 2,
+                "closable": false,
+                "status": "Let everyone pass \u00b7 28/29 through"
+              },
+              {
+                "survivorOffsetM": 2.01,
+                "closable": true,
+                "status": "Everyone through \u00b7 E or click the gate to close it"
+              }
+            ],
+            "markerSamples": [
+              {
+                "player": {
+                  "x": 212.4,
+                  "z": 17.3
+                },
+                "marker": "l6-next",
+                "at": {
+                  "x": 212.4,
+                  "z": 17.3,
+                  "y": 0.6,
+                  "radius": 2
+                },
+                "prompt": "Everyone through \u00b7 E or click the gate to close it",
+                "closedAt": 0
+              },
+              {
+                "player": {
+                  "x": 213.5,
+                  "z": 16.5
+                },
+                "marker": "l6-next",
+                "at": {
+                  "x": 212.4,
+                  "z": 17.3,
+                  "y": 0.6,
+                  "radius": 2
+                },
+                "prompt": "Everyone through \u00b7 E or click the gate to close it",
+                "closedAt": 0
+              },
+              {
+                "player": {
+                  "x": 212.4,
+                  "z": 17.3
+                },
+                "marker": "l6-next",
+                "at": {
+                  "x": 212.4,
+                  "z": 17.3,
+                  "y": 0.6,
+                  "radius": 2
+                },
+                "prompt": "Everyone through \u00b7 E or click the gate to close it",
+                "closedAt": 0
+              }
+            ]
+          }
+        ],
+        "status": "PASS"
+      },
+      "target": "3 gates<=2.5m; closed collision and sight;8\u201312s vs5;refuse<=2m;fixed prompt/ring until actual E/click closure",
+      "receipt": "docs/reports/final-b/L6-09-proof.json"
     }
   ]
 }
