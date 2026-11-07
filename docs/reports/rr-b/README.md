@@ -1,0 +1,28 @@
+# rr-b fresh review results
+
+Frozen source: `50be7c824705fc3cdbb3a7ab7dd78f72c7bf2001` (2026-11-07). Native acceptance was refreshed on current main. Per-row receipts are retained under ignored `test-results/rr-b/`; no screenshots were produced.
+
+The shared browser pool was unavailable (`sh tools/browser-status.sh`: fetch failed). A retry with `npm run browser:pool` failed before startup with `listen EPERM` creating its tsx IPC pipe; the Vite scene server also failed to bind loopback (`listen EPERM`). Therefore browser, physical-input, and visual clauses that required those tools remain **NOT CHECKED**. No such row was marked P; P is reserved for PO taste decisions. Perf rows G-01..G-05 remain **NOT CHECKED — perf pending** because no quiet window was available during this run.
+
+| Row | Result | Fresh measurement / reason | Evidence |
+|---|---|---|---|
+| L6-14 | NOT CHECKED | Requires fresh visual captures and original-resolution inspection; browser pool could not start. | No current capture. |
+| L7-01 | NOT CHECKED | Old physical-pickup/frame-gate evidence is stale; cannot refresh the physical-input and quiet-frame clauses without the pool. | No current capture. |
+| L7-05 | PASS | Fresh native low/high complete and stationary policies: bounded-path reachability 100% throughout; attacks/min 7.4006, 704.9354, 12.2951, 1092.0617 respectively. First stationary attack 1.3s low and 9.3s high (≤10s). | [Native L7 report](../../test-results/rr-b/L7-05-native.json) |
+| L9-05 | NOT CHECKED | Requires a fresh physical zero-HP drive and visible smoke inspection; prior physical evidence is stale. | No current capture. |
+| L10-03 | PASS | Fresh same-tick census covers 12/12 regional tier windows with contiguous intervals and zero upper-bound violations. R6 witnesses: low 68/4 dogs/3 Alphas, high 97/5/2; R7 low/high peaks 140/189. Pickup tick3497; first residential dogs tick4950; zero premature dog ticks. Native group-size checks also refreshed. | [Census](../../test-results/rr-b/L10-03-simultaneous-census.json), [native L10 report](../../test-results/rr-b/L10-03-native.json) |
+| L10-11 | PASS | Fresh 240s low/high holds: peak 95/190; walking arena arrivals 144.3333s/134.6s (within 120–160s); minimum reachability 100%; attack rates 977.2666/1240.3846 per minute; persistent Mega identity and zero scheduled relocations. | [Hold proof](../../test-results/rr-b/L10-11-hold-proof.json) |
+| G-01 | NOT CHECKED | perf pending: no quiet window; fresh backend/menu-load matrix not run. | No current measurement. |
+| G-02 | NOT CHECKED | perf pending: no quiet window; real campaign handover measurements not run. | No current measurement. |
+| G-03 | NOT CHECKED | perf pending: no quiet window; isolated frame/startup matrix not run. | No current measurement. |
+| G-04 | NOT CHECKED | perf pending: no quiet window; current named-moment regression comparison not run. | No current measurement. |
+| G-05 | NOT CHECKED | perf pending: no quiet window; current frame-time matrix not run. | No current measurement. |
+| G-13 | FAIL | Fresh L1 low/high escort durations 6095/6090 ticks; waiting >10m behind a follower for 1003 ticks each = 16.4561%/16.4696%, over the 10% ceiling. | [Native L1 report](../../test-results/rr-b/G-13-native-L1.json) |
+| G-14 | NOT CHECKED | Requires fresh corpse-pose visual review after current changes; browser pool could not start. | No current capture. |
+| G-22 | FAIL | Fresh L4 high stationary breach-north announcement at 167.1s spawned 43; first actual player attack was 22.3667s later, over 20s. | [Native L4 report](../../test-results/rr-b/G-22-native-L4.json) |
+| G-26 | NOT CHECKED | Requires fresh hand/prop visual captures and original-resolution inspection; browser pool could not start. | No current capture. |
+| G-27 | NOT CHECKED | Requires current visual review across all ten levels; browser pool could not start. | No current captures. |
+
+## Reproduction
+
+Native reports were generated with `npm run qa:accept -- --level all --skip-browser --reuse`, plus the current L10 composition and 240-second hold producers. Review freshness is tied to the frozen source digest. Review JSONs are written only for rows with complete fresh clause measurements; unavailable rows are documented as NOT CHECKED here and in `docs/qa/acceptance-status.md`.

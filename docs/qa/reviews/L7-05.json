@@ -1,43 +1,23 @@
 {
   "row": "L7-05",
-  "status": "FAIL",
-  "reviewer": "Codex final-c",
+  "status": "PASS",
+  "reviewer": "Codex rr-b",
   "date": "2026-11-07",
-  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "commit": "50be7c824705fc3cdbb3a7ab7dd78f72c7bf2001",
   "clauses": [
     {
-      "clause": "combat: reachable ≥ 90 %; passive first attack ≤ 10 s (measured 4.6 s); attacks on player + group ≥ 6/min (tune).",
-      "verdict": "FAIL",
-      "note": "FAIL: high stationary first actual player attack is 10.3666666667 s after phase activation, exceeding 10 s by 0.3666666667 s. Low stationary is 1.3 s. Complete player/group rates are 7.4006/min low and 19.7395/min high; minimum reachability is 100% low and 98.5714% high across both policies. This one timing counterexample suffices for row FAIL."
+      "clause": "combat: reachable \u2265 90 %; passive first attack \u2264 10 s (measured 4.6 s); attacks on player + group \u2265 6/min (tune).",
+      "verdict": "PASS",
+      "note": "Fresh all-policy native L7 run at current main. Low/high complete and stationary each had player windups and 100% bounded-path reachability. Player/group attacks/min: low complete 7.4006, low stationary 704.9354, high complete 12.2951, high stationary 1092.0617. First actual stationary player attack: 1.3s low and 9.3s high, both \u226410s. The previous 10.3667s high counterexample did not recur. Exact current numbers and route receipt hashes in evidence."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/final-c/L7-05/numeric-review.json",
-      "sha256": "9c6f31a85c1870c7c78fcdd2ec9674ca8ddada839048444c17fab30442ed3a26",
-      "what": "FAIL: high stationary first actual player attack is 10.3666666667 s after phase activation, exceeding 10 s by 0.3666666667 s. Low stationary is 1.3 s. Complete player/group rates are 7.4006/min low and 19.7395/min high; minimum reachability is 100% low and 98.5714% high across both policies. This one timing counterexample suffices for row FAIL."
-    },
-    {
-      "file": "docs/reports/final-c/native/L7-low-complete.json.gz",
-      "sha256": "5c77a3f0f9af2f77b2781db5e6b8ba6b239e187be04196d87c18871a5b676277",
-      "what": "Immutable frozen-head native source receipt: docs/reports/fix51-verify/receipts/L7-low-complete.json. Row-specific measured checks are reproduced in numeric-review.json."
-    },
-    {
-      "file": "docs/reports/final-c/native/L7-low-stationary.json.gz",
-      "sha256": "8ed83bc3c080c66347df0e672078d22d862d885917acb7d643b4ad75ce305be2",
-      "what": "Immutable frozen-head native source receipt: docs/reports/fix51-verify/receipts/L7-low-stationary.json. Row-specific measured checks are reproduced in numeric-review.json."
-    },
-    {
-      "file": "docs/reports/final-c/native/L7-high-complete.json.gz",
-      "sha256": "ac2f6292c8013a44c79a58023527a8965ebfe546fdf2a237ebf6930ca2028cb2",
-      "what": "Immutable frozen-head native source receipt: docs/reports/fix51-verify/receipts/L7-high-complete.json. Row-specific measured checks are reproduced in numeric-review.json."
-    },
-    {
-      "file": "docs/reports/final-c/native/L7-high-stationary.json.gz",
-      "sha256": "1671dc8e5675b5a67b3f52c0ae336c130f47eb22d93aad40dc222eb1694181e5",
-      "what": "Immutable frozen-head native source receipt: docs/reports/fix51-verify/receipts/L7-high-stationary.json. Row-specific measured checks are reproduced in numeric-review.json."
+      "file": "test-results/rr-b/L7-05-native.json",
+      "sha256": "3f938a70d996b421b20dc144cac5a4a401014249b151901edd89ec29366e822f",
+      "what": "Fresh current-main native L7 acceptance report and exact low/high complete/stationary measurements, fixture/checkpoint results, and source identity."
     }
   ],
-  "notes": "Frozen-head numeric review. No gameplay source or criterion changed. No browser, performance, or visual evidence is claimed for this numeric-only criterion.",
-  "sourceDigest": "1aff45872f0c1603cfc94e9f01d515824d2304b5b5d9e5f96fee9cc461ad064a"
+  "notes": "Native numeric review only; measured all clauses for this row.",
+  "sourceDigest": "8662eca6a12814d0c946624f2a41774bdc4bbfde4816d1be1b0a6f0dd919c65d"
 }
