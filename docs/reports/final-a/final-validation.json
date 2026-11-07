@@ -1,0 +1,163 @@
+{
+  "runs": [
+    {
+      "command": "npm run qa:accept -- --level L1 --tier both --skip-browser",
+      "startedAt": "2026-11-07T01:28:11.821229+00:00",
+      "finishedAt": "2026-11-07T01:45:39.912493+00:00",
+      "exitCode": 1,
+      "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+      "report": "docs/reports/fix51-verify/L1.json",
+      "reportSha256": "fe160571b365f49baeab1f12cddca2b75983494c04f409b961ab425240ea83a6",
+      "fixtureResults": [
+        {
+          "tier": "low",
+          "errors": [],
+          "checks": 16
+        },
+        {
+          "tier": "high",
+          "errors": [],
+          "checks": 16
+        }
+      ],
+      "statuses": {
+        "FAIL": 2,
+        "NOT CHECKED": 1,
+        "PASS": 14
+      },
+      "checkpointResults": [
+        {
+          "tier": "low",
+          "errors": [],
+          "checks": 2,
+          "controlIdentical": true,
+          "receipt": "docs/reports/fix51-verify/receipts/L1-low-checkpoints.json",
+          "sha256": "49828a886848f280f775c807bff017ea85d2324142b6a11a440fccbd60258d54"
+        },
+        {
+          "tier": "high",
+          "errors": [],
+          "checks": 2,
+          "controlIdentical": true,
+          "receipt": "docs/reports/fix51-verify/receipts/L1-high-checkpoints.json",
+          "sha256": "309b2d446598f08ed36c9578b00ca533148abcb29d152dec12fb6191eafb35b5"
+        }
+      ],
+      "nativeErrors": [],
+      "nativeCurrentStatuses": {
+        "FAIL": 2,
+        "NOT CHECKED": 2,
+        "PASS": 13
+      },
+      "nativeIncompleteRows": [
+        "L1-05",
+        "L1-17"
+      ]
+    },
+    {
+      "command": "npm run qa:accept -- --level L2 --tier both --skip-browser",
+      "startedAt": "2026-11-07T01:45:39.921739+00:00",
+      "finishedAt": "2026-11-07T02:05:52.349392+00:00",
+      "exitCode": 1,
+      "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+      "report": "docs/reports/fix51-verify/L2.json",
+      "reportSha256": "05bde4d7fb549b6da95bf92b6a413e1c265fa9034ec2cfaaf081f38153713eb9",
+      "fixtureResults": [
+        {
+          "tier": "low",
+          "errors": [],
+          "checks": 28
+        },
+        {
+          "tier": "high",
+          "errors": [],
+          "checks": 28
+        }
+      ],
+      "statuses": {
+        "FAIL": 1,
+        "PASS": 15
+      },
+      "checkpointResults": [
+        {
+          "tier": "low",
+          "errors": [],
+          "checks": 4,
+          "controlIdentical": true,
+          "receipt": "docs/reports/fix51-verify/receipts/L2-low-checkpoints.json",
+          "sha256": "85165029a37f5e4089b228e8d61f2c5ff494a99f1bc581ac63a7e0422cf4ac94"
+        },
+        {
+          "tier": "high",
+          "errors": [],
+          "checks": 3,
+          "controlIdentical": true,
+          "receipt": "docs/reports/fix51-verify/receipts/L2-high-checkpoints.json",
+          "sha256": "dcfa9566715b10448568d2e5c0d3b84d4585e0a42eb36548896116032eb4a019"
+        }
+      ],
+      "nativeErrors": [],
+      "nativeCurrentStatuses": {
+        "FAIL": 1,
+        "NOT CHECKED": 1,
+        "PASS": 14
+      },
+      "nativeIncompleteRows": [
+        "L2-16"
+      ]
+    },
+    {
+      "command": "npm run qa:accept -- --level L3 --tier both --skip-browser",
+      "startedAt": "2026-11-07T02:05:52.350736+00:00",
+      "finishedAt": "2026-11-07T02:18:59.110037+00:00",
+      "exitCode": 1,
+      "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+      "report": "docs/reports/fix51-verify/L3.json",
+      "reportSha256": "9459ad401b9209c3adf7dbdc4ea03fc7986b53b1432fa485e1aec2f248ada057",
+      "fixtureResults": [
+        {
+          "tier": "low",
+          "errors": [],
+          "checks": 21
+        },
+        {
+          "tier": "high",
+          "errors": [],
+          "checks": 21
+        }
+      ],
+      "statuses": {
+        "FAIL": 8,
+        "PASS": 8
+      },
+      "checkpointResults": [
+        {
+          "tier": "low",
+          "errors": [],
+          "checks": 6,
+          "controlIdentical": true,
+          "receipt": "docs/reports/fix51-verify/receipts/L3-low-checkpoints.json",
+          "sha256": "c6a38157e126de457060259ae51b31d8c7920f26e05bf40a990f712e71028171"
+        },
+        {
+          "tier": "high",
+          "errors": [],
+          "checks": 6,
+          "controlIdentical": true,
+          "receipt": "docs/reports/fix51-verify/receipts/L3-high-checkpoints.json",
+          "sha256": "206e58a58f78ff3f105567e05081f9eca0bdc6a6c484a64664f0b567eab3373c"
+        }
+      ],
+      "nativeErrors": [],
+      "nativeCurrentStatuses": {
+        "FAIL": 8,
+        "PASS": 8
+      },
+      "nativeIncompleteRows": []
+    }
+  ],
+  "commandLogs": {
+    "file": "docs/reports/final-a/final-command-logs.json.gz",
+    "sha256": "e2fc6b4baad68c82d74cbd6d645085e7a74fd928bbcd87fd7d47668dfc76279e"
+  }
+}
