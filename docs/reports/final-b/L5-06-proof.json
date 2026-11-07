@@ -1,0 +1,96 @@
+{
+  "frozenCommit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "tier": "low",
+  "method": "Physical tools/playtest with read-only audio source ended listeners and DOM sampling; authored-tour navigation assist, god courier. This is audio/DOM timing evidence, not a muted discovery or mortal difficulty qualification. Browser host output muted, game AudioContext running/unlocked/unmuted. No game edits.",
+  "counterexample": {
+    "call": {
+      "key": "mia",
+      "tick": 1200,
+      "distance": 24.948208073722018,
+      "position": {
+        "x": -30.3699,
+        "z": -44.4
+      },
+      "contextState": "running",
+      "audioTime": 29.27466666666667,
+      "muted": false,
+      "unlocked": true,
+      "voices": [
+        {
+          "id": 145,
+          "cue": "dialogue.radio",
+          "gain": 0.3149999976158142,
+          "baseGain": 0.3149999976158142,
+          "rate": 1,
+          "bufferDuration": 9.24,
+          "ended": {
+            "tick": 1381,
+            "audioTime": 32.336,
+            "contextState": "running",
+            "pin": {
+              "visible": true,
+              "key": "mia",
+              "text": "\u266a"
+            }
+          }
+        }
+      ]
+    },
+    "sample": {
+      "tick": 1433,
+      "audioTime": 33.157333333333334,
+      "contextState": "running",
+      "pin": {
+        "visible": true,
+        "key": "mia",
+        "text": "\u266a"
+      },
+      "until": 1440,
+      "callTick": 1200,
+      "voices": [
+        {
+          "id": 145,
+          "stillInGraph": false,
+          "ended": {
+            "tick": 1381,
+            "audioTime": 32.336,
+            "contextState": "running",
+            "pin": {
+              "visible": true,
+              "key": "mia",
+              "text": "\u266a"
+            }
+          }
+        }
+      ]
+    },
+    "secondsAfterAllVoicesEnded": 0.8213333333333352,
+    "file": "captures/final-b-L5-cue-low-L5-note-after-call-ended.jpg"
+  },
+  "observation": "Actual positive-gain Mia dialogue.radio source ended at audio32.336s/tick1381; the same Mia note remains visible at audio33.157333s/tick1433, until tick1440. The source is no longer in graph. 0.821333s after actual ended is outside the call window. Full buffer duration is not clip duration and is not used to infer the ending. Voice culling, if responsible, still ends the actual call.",
+  "screenshot": {
+    "file": "test-results/vqa-1b/final-b-L5-cue-low/captures/final-b-L5-cue-low-L5-note-after-call-ended.jpg",
+    "sha256": "22837306af0bffcf9317b0b796ba0511658f6321793900b5f9b4e1d8fa7cb854",
+    "personallyReviewed": true,
+    "observation": "Later screenshot shows heroine beside Lantern Cafe with corgi, Alpha at left and no visible musical note. It does not prove the earlier temporal mismatch; audio/DOM trace does."
+  },
+  "rawEvidence": [
+    {
+      "file": "docs/reports/final-b/L5-06-cue-audit.json.gz",
+      "sha256": "3c72c75b18b0fda1c7e1429678534d7e94fd04985176e8d3e63a014a2199aba6"
+    },
+    {
+      "file": "docs/reports/final-b/L5-06-cue-observer.js.gz",
+      "sha256": "7ee0d7707fb00f70301f3e2a4cf1ec3edb0b2f62760015704e3f13b41a79d0ef"
+    },
+    {
+      "file": "docs/reports/final-b/L5-06-l5-cue-session.ts.gz",
+      "sha256": "a7f679e5cc8310b6ef868452cdee28c1cf68b7969b2809b7756d3c9838d739ff"
+    },
+    {
+      "file": "docs/reports/final-b/L5-06-l5-cue-run.ts.gz",
+      "sha256": "39130920182e530e10620aa35595d2752b59dc091f3b1b028f1fb96b8d110491"
+    }
+  ]
+}
