@@ -7,7 +7,7 @@ import { expect, test, vi } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { gunzipSync } from 'node:zlib';
 import { decodeCivilianBake } from '../../src/assets/civilianBakeData';
-import { repairDeathPoses } from '../../src/render/characters/deathPose';
+import { deathReach, registerDeathPoseRepair, repairDeathPoses } from '../../src/render/characters/deathPose';
 import { packCrowdParts } from '../../src/assets/crowd';
 import { bakeInfected, framesPerClip, infectedClips } from '../../src/render/characters/bakeInfected';
 import { crowdVertexLayout, resolveCrowdAppearance, markCrowdAppearance } from '../../src/render/characters/CrowdAppearance';
@@ -451,6 +451,23 @@ test('corpse pages: bodies persist past the old cap, bounds stay conservative, c
   expect(Array.from(alpha.clip.matrices)).toEqual(settled);
   for (const death of ['death-back', 'death-side', 'death-crumple'] as const) expect(lying(alpha, death).max).toBeLessThan(1.5);
   for (const model of ['inf.dog', 'inf.crawler']) { const bake = delivered(model), before = Array.from(bake.clip.matrices); expect(repairDeathPoses(bake.clip, bake.geometry)).toBe(false); expect(Array.from(bake.clip.matrices)).toEqual(before); }
+  // A transferred worker repair retains its exact pose rows and reach. The renderer
+  // must recognize the completed work instead of blending the fall a second time.
+  for (const model of ['inf.common-worker', 'inf.alpha']) {
+    const raw = gunzipSync(readFileSync(`public${deliveries[`${model}:lod0:infected`]}`));
+    const bytes = raw.buffer.slice(raw.byteOffset, raw.byteOffset + raw.byteLength) as ArrayBuffer;
+    const prepared = decodeCivilianBake(bytes), prone = model === 'inf.alpha';
+    expect(repairDeathPoses(prepared.clip, prepared.geometry, { prone })).toBe(true);
+    const matrices = Array.from(prepared.clip.matrices), reach = deathReach.get(prepared.clip)!;
+    const received = decodeCivilianBake(structuredClone(bytes, { transfer: [bytes] }));
+    registerDeathPoseRepair(received.clip, { prone, reach });
+    expect(repairDeathPoses(received.clip, received.geometry, { prone })).toBe(true);
+    expect(Array.from(received.clip.matrices)).toEqual(matrices);
+    expect(deathReach.get(received.clip)).toBe(reach);
+    expect(repairDeathPoses(received.clip, received.geometry, { prone: !prone })).toBe(false);
+    prepared.geometry.dispose(); received.geometry.dispose();
+  }
+
 });
 
 test('LOD selection: authored distance bands with hysteresis; game-camera-size crowd figures never take the far silhouette', () => {

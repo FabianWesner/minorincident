@@ -1,6 +1,6 @@
 import type { PreparedCivilian } from '../render/npc/prepareCivilianGeometry';
 import { decodeCivilianBake } from './civilianBakeData';
-import { repairDeathPoses } from '../render/characters/deathPose';
+import { registerDeathPoseRepair, type DeathPoseRepair } from '../render/characters/deathPose';
 import deliveries from './civilianBakes.json' with { type: 'json' };
 export const civilianBakeStats = { workers: 0, submitted: 0, completed: 0, prebuilt: 0, failed: 0 };
 type Job = { id: number; model: string; lod: string; source: boolean; infected?: boolean; resolve: (value: PreparedCivilian | undefined) => void };
@@ -15,13 +15,13 @@ function drain(): void {
     try { worker = new Worker(new URL('../render/npc/civilianBake.worker.ts', import.meta.url), { type: 'module' }); }
     catch { unavailable = true; for (const slot of workers.splice(0)) { slot.job?.resolve(undefined); slot.worker.terminate(); } drain(); return; }
     const slot: typeof workers[number] = { worker }; workers.push(slot); civilianBakeStats.workers++;
-    worker.onmessage = (event: MessageEvent<{ bytes?: ArrayBuffer; prebuilt?: boolean }>) => {
+    worker.onmessage = (event: MessageEvent<{ bytes?: ArrayBuffer; prebuilt?: boolean; deathPose?: DeathPoseRepair }>) => {
       const job = slot.job; slot.job = undefined;
       if (job) {
         try {
           if (!event.data.bytes) throw new Error('Worker preparation failed');
           const baked = decodeCivilianBake(event.data.bytes); civilianBakeStats.completed++;
-          repairDeathPoses(baked.clip, baked.geometry, { prone: /^inf\.(mega-)?alpha/.test(job.model) });
+          if (event.data.deathPose) registerDeathPoseRepair(baked.clip, event.data.deathPose);
           if (event.data.prebuilt) civilianBakeStats.prebuilt++;
           job.resolve(baked);
         } catch { civilianBakeStats.failed++; job.resolve(undefined); }
