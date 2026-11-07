@@ -123,6 +123,318 @@
       },
       "target": "Existing exact checker clause measured on frozen source; see scoped proof and limits.",
       "receipt": "docs/reports/final-b/L4-war-review.json"
+    },
+    {
+      "id": "L4-08",
+      "clause": "actual Alpha admission directions and line hits",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "status": "PASS",
+      "value": {
+        "tier": "high",
+        "actualAdmissions": [
+          {
+            "id": 277,
+            "tick": 2329,
+            "at": {
+              "x": -46,
+              "y": 0.7,
+              "z": 21,
+              "yaw": 0.5554937352655437
+            },
+            "anchor": "l4-alpha-west-slot",
+            "offscreen": true,
+            "playerDistance": 30.667787474541136
+          },
+          {
+            "id": 320,
+            "tick": 3889,
+            "at": {
+              "x": -24,
+              "y": 0.7,
+              "z": -37.4,
+              "yaw": -1.3992323404389209
+            },
+            "anchor": "l4-alpha-nw",
+            "offscreen": true,
+            "playerDistance": 38.46585636246704
+          },
+          {
+            "id": 446,
+            "tick": 7009,
+            "at": {
+              "x": -5.8826834323650905,
+              "y": 0.83,
+              "z": 41.676120467488715,
+              "yaw": 1.8506967595228738
+            },
+            "anchor": "l4-alpha-south",
+            "offscreen": true,
+            "playerDistance": 45.71692527131723
+          },
+          {
+            "id": 462,
+            "tick": 7489,
+            "at": {
+              "x": -18,
+              "z": -38.4,
+              "y": 0.7,
+              "yaw": -1.5466464333973808
+            },
+            "anchor": "l4-alpha-north",
+            "offscreen": true,
+            "playerDistance": 34.93322422664498
+          },
+          {
+            "id": 463,
+            "tick": 7969,
+            "at": {
+              "x": 13.4,
+              "y": 0.7,
+              "z": -3,
+              "yaw": -2.946728733900921
+            },
+            "anchor": "l4-alpha-east",
+            "offscreen": true,
+            "playerDistance": 30.56764125369783
+          },
+          {
+            "id": 508,
+            "tick": 9169,
+            "at": {
+              "x": -23,
+              "z": 42.6,
+              "y": 0.7,
+              "yaw": 1.4204248987877621
+            },
+            "anchor": "l4-alpha-sw",
+            "offscreen": true,
+            "playerDistance": 48.14045111962232
+          },
+          {
+            "id": 537,
+            "tick": 10249,
+            "at": {
+              "x": -39.2,
+              "y": 0.83,
+              "z": -35,
+              "yaw": -1.0420676422826194
+            },
+            "anchor": "l4-alpha-west",
+            "offscreen": true,
+            "playerDistance": 59.676267546995106
+          },
+          {
+            "id": 567,
+            "tick": 10849,
+            "at": {
+              "x": 0.9,
+              "y": 0.7,
+              "z": -23.3,
+              "yaw": -2.1683888717423656
+            },
+            "anchor": "l4-alpha-ne",
+            "offscreen": true,
+            "playerDistance": 44.89779822475557
+          }
+        ],
+        "distinctSourceAnchors": 8,
+        "distinctTicks": 8,
+        "minCourierDistanceM": 30.56764125369783,
+        "lineDamagingIDs": [
+          277,
+          320,
+          508
+        ],
+        "actualLineHits": [
+          {
+            "type": "barricade.damaged",
+            "tick": 2683,
+            "id": 180,
+            "sourceId": 277,
+            "attackId": 1,
+            "slotId": "l4-wall-35",
+            "groupId": "l4-wall",
+            "previousHp": 600,
+            "hp": 300,
+            "amount": 300,
+            "props": []
+          },
+          {
+            "type": "barricade.damaged",
+            "tick": 2683,
+            "id": 181,
+            "sourceId": 277,
+            "attackId": 1,
+            "slotId": "l4-wall-36",
+            "groupId": "l4-wall",
+            "previousHp": 600,
+            "hp": 300,
+            "amount": 300,
+            "props": []
+          },
+          {
+            "type": "barricade.damaged",
+            "tick": 3165,
+            "id": 180,
+            "sourceId": 277,
+            "attackId": 8,
+            "slotId": "l4-wall-35",
+            "groupId": "l4-wall",
+            "previousHp": 300,
+            "hp": 0,
+            "amount": 300,
+            "props": []
+          },
+          {
+            "type": "barricade.damaged",
+            "tick": 3165,
+            "id": 181,
+            "sourceId": 277,
+            "attackId": 8,
+            "slotId": "l4-wall-36",
+            "groupId": "l4-wall",
+            "previousHp": 300,
+            "hp": 0,
+            "amount": 300,
+            "props": []
+          },
+          {
+            "type": "barricade.damaged",
+            "tick": 3183,
+            "id": 27,
+            "sourceId": 277,
+            "attackId": 8,
+            "slotId": "l4-line-west",
+            "groupId": "l4-line",
+            "previousHp": 300,
+            "hp": 0,
+            "amount": 300,
+            "props": []
+          },
+          {
+            "type": "barricade.damaged",
+            "tick": 4210,
+            "id": 151,
+            "sourceId": 320,
+            "attackId": 57,
+            "slotId": "l4-wall-6",
+            "groupId": "l4-wall",
+            "previousHp": 600,
+            "hp": 300,
+            "amount": 300,
+            "props": []
+          },
+          {
+            "type": "barricade.damaged",
+            "tick": 4210,
+            "id": 152,
+            "sourceId": 320,
+            "attackId": 57,
+            "slotId": "l4-wall-7",
+            "groupId": "l4-wall",
+            "previousHp": 600,
+            "hp": 300,
+            "amount": 300,
+            "props": []
+          },
+          {
+            "type": "barricade.damaged",
+            "tick": 4684,
+            "id": 151,
+            "sourceId": 320,
+            "attackId": 73,
+            "slotId": "l4-wall-6",
+            "groupId": "l4-wall",
+            "previousHp": 300,
+            "hp": 0,
+            "amount": 300,
+            "props": []
+          },
+          {
+            "type": "barricade.damaged",
+            "tick": 4684,
+            "id": 152,
+            "sourceId": 320,
+            "attackId": 73,
+            "slotId": "l4-wall-7",
+            "groupId": "l4-wall",
+            "previousHp": 300,
+            "hp": 0,
+            "amount": 300,
+            "props": []
+          },
+          {
+            "type": "barricade.damaged",
+            "tick": 4707,
+            "id": 26,
+            "sourceId": 320,
+            "attackId": 73,
+            "slotId": "l4-line-north",
+            "groupId": "l4-line",
+            "previousHp": 300,
+            "hp": 0,
+            "amount": 300,
+            "props": []
+          },
+          {
+            "type": "barricade.damaged",
+            "tick": 11489,
+            "id": 204,
+            "sourceId": 508,
+            "attackId": 546,
+            "slotId": "l4-wall-59",
+            "groupId": "l4-wall",
+            "previousHp": 1000000,
+            "hp": 999700,
+            "amount": 300,
+            "props": []
+          },
+          {
+            "type": "barricade.damaged",
+            "tick": 12507,
+            "id": 170,
+            "sourceId": 508,
+            "attackId": 631,
+            "slotId": "l4-wall-25",
+            "groupId": "l4-wall",
+            "previousHp": 1000000,
+            "hp": 999900,
+            "amount": 100,
+            "props": []
+          },
+          {
+            "type": "barricade.damaged",
+            "tick": 12595,
+            "id": 170,
+            "sourceId": 508,
+            "attackId": 642,
+            "slotId": "l4-wall-25",
+            "groupId": "l4-wall",
+            "previousHp": 999900,
+            "hp": 999800,
+            "amount": 100,
+            "props": []
+          },
+          {
+            "type": "barricade.damaged",
+            "tick": 12655,
+            "id": 170,
+            "sourceId": 508,
+            "attackId": 651,
+            "slotId": "l4-wall-25",
+            "groupId": "l4-wall",
+            "previousHp": 999800,
+            "hp": 999700,
+            "amount": 100,
+            "props": []
+          }
+        ],
+        "observedHash": "86ab19e8",
+        "canonicalHash": "86ab19e8"
+      },
+      "target": "6low/8high actual identities;\u22656 distinct sources/ticks;offscreen births;\u22653 same IDs hit defensive line",
+      "receipt": "docs/reports/final-b/L4-08-proof.json"
     }
   ]
 }

@@ -1,26 +1,27 @@
 {
   "row": "L4-08",
   "status": "PASS",
-  "reviewer": "Codex/sweep-b",
-  "date": "2026-11-06",
-  "commit": "4836e5320c0f4aa50cd339dd94372507007547d5",
+  "reviewer": "Codex/final-b",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
   "clauses": [
     {
-      "clause": "Alphas **8 high / 6 low**, staggered from \u2265 6 directions, \u2265 3 reach a line; no Alpha \"appears out of nothing\".",
+      "clause": "Alphas **8 high / 6 low**, staggered from ≥ 6 directions, ≥ 3 reach a line; no Alpha \"appears out of nothing\".",
       "verdict": "PASS",
-      "note": "Low6/high8 actual Alphas enter at distinct ticks from6/8 source directions; all actual bodies offscreen and at least24m from courier. Low3/high6 unique Alpha IDs actually damage the defensive line. Physical frames show large Alphas advancing among the war crowd; no onscreen admission is claimed from sparse stills, the live frustum ledger supplies that check. Canonical state hashes match."
+      "note": "Current low6/high8 actual Alphas,6/8 distinct source anchors and6/8 different admission ticks. Every actual body is offscreen at admission and≥30.6678/30.5676m from courier. Four low/three high unique IDs actually damage defensive line. Read-only full-route hashes18e71cbb/86ab19e8 match current controls. Birth visibility is measured by live frustum telemetry, not guessed from sparse frames."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-b/L4-08-proof.json",
-      "sha256": "1f65d414109ce73508b36e09cf62609cebadf6bd3d37ef4c0c37e32834532059",
-      "what": "Low6/high8 actual Alphas enter at distinct ticks from6/8 source directions; all actual bodies offscreen and at least24m from courier. Low3/high6 unique Alpha IDs actually damage the defensive line. Physical frames show large Alphas advancing among the war crowd; no onscreen admission is claimed from sparse stills, the live frustum ledger supplies that check. Canonical state hashes match."
+      "file": "docs/reports/final-b/L4-08-proof.json",
+      "sha256": "f12ec3b8825d00dbb5da4600f522819e2767e30b11f62512a385171e56ba8199",
+      "what": "Current low6/high8 actual Alphas,6/8 distinct source anchors and6/8 different admission ticks. Every actual body is offscreen at admission and≥30.6678/30.5676m from courier. Four low/three high unique IDs actually damage defensive line. Read-only full-route hashes18e71cbb/86ab19e8 match current controls. Birth visibility is measured by live frustum telemetry, not guessed from sparse frames."
     },
     {
-      "file": "docs/reports/sweep-b/L4-capture-review.json",
-      "sha256": "fb0ebb8226f31b8765bffe7e91452d6c7f26f10bec5b2c236948d59ffab874d9",
-      "what": "Low6/high8 actual Alphas enter at distinct ticks from6/8 source directions; all actual bodies offscreen and at least24m from courier. Low3/high6 unique Alpha IDs actually damage the defensive line. Physical frames show large Alphas advancing among the war crowd; no onscreen admission is claimed from sparse stills, the live frustum ledger supplies that check. Canonical state hashes match."
+      "file": "docs/reports/final-b/L4-native-ledger.json.gz",
+      "sha256": "e58087fab4794a1c1afeedf0039c17ee44d5066a5393a75cfb4079a6527a9299",
+      "what": "Read-only actual events and every-tick actor identities; nearest20 living infected sampled at2Hz; no authored positions substituted for admissions. Canonical final-state hashes must match."
     }
-  ]
+  ],
+  "sourceDigest": "e3dafe0694468ae05c6e72a1f303adf938a6c33391416d38d67a60534e2fe51b"
 }

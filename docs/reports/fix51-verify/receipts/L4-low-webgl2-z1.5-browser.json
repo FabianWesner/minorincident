@@ -123,6 +123,293 @@
       },
       "target": "Existing exact checker clause measured on frozen source; see scoped proof and limits.",
       "receipt": "docs/reports/final-b/L4-war-review.json"
+    },
+    {
+      "id": "L4-08",
+      "clause": "actual Alpha admission directions and line hits",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "status": "PASS",
+      "value": {
+        "tier": "low",
+        "actualAdmissions": [
+          {
+            "id": 210,
+            "tick": 2329,
+            "at": {
+              "x": -46,
+              "y": 0.7,
+              "z": 21,
+              "yaw": 0.5554937352655437
+            },
+            "anchor": "l4-alpha-west-slot",
+            "offscreen": true,
+            "playerDistance": 30.667787474541136
+          },
+          {
+            "id": 375,
+            "tick": 7009,
+            "at": {
+              "x": -5.8826834323650905,
+              "y": 0.83,
+              "z": 41.676120467488715,
+              "yaw": 1.8506967595228738
+            },
+            "anchor": "l4-alpha-south",
+            "offscreen": true,
+            "playerDistance": 43.202498208168635
+          },
+          {
+            "id": 394,
+            "tick": 7489,
+            "at": {
+              "x": -18,
+              "y": 0.7,
+              "z": -39.15,
+              "yaw": -1.5466464333973808
+            },
+            "anchor": "l4-alpha-north",
+            "offscreen": true,
+            "playerDistance": 35.523773015268354
+          },
+          {
+            "id": 445,
+            "tick": 9169,
+            "at": {
+              "x": -23,
+              "y": 0.7,
+              "z": 42.6,
+              "yaw": 1.4204248987877621
+            },
+            "anchor": "l4-alpha-sw",
+            "offscreen": true,
+            "playerDistance": 45.0426377227949
+          },
+          {
+            "id": 476,
+            "tick": 10249,
+            "at": {
+              "x": -39.2,
+              "y": 0.83,
+              "z": -35,
+              "yaw": -1.0420676422826194
+            },
+            "anchor": "l4-alpha-west",
+            "offscreen": true,
+            "playerDistance": 55.355369473057685
+          },
+          {
+            "id": 484,
+            "tick": 10849,
+            "at": {
+              "x": 0.9,
+              "y": 0.7,
+              "z": -23.3,
+              "yaw": -2.1683888717423656
+            },
+            "anchor": "l4-alpha-ne",
+            "offscreen": true,
+            "playerDistance": 41.21386360428683
+          }
+        ],
+        "distinctSourceAnchors": 6,
+        "distinctTicks": 6,
+        "minCourierDistanceM": 30.667787474541136,
+        "lineDamagingIDs": [
+          210,
+          375,
+          394,
+          445
+        ],
+        "actualLineHits": [
+          {
+            "type": "barricade.damaged",
+            "tick": 2681,
+            "id": 137,
+            "sourceId": 210,
+            "attackId": 4,
+            "slotId": "l4-wall-35",
+            "groupId": "l4-wall",
+            "previousHp": 600,
+            "hp": 300,
+            "amount": 300,
+            "props": []
+          },
+          {
+            "type": "barricade.damaged",
+            "tick": 2681,
+            "id": 138,
+            "sourceId": 210,
+            "attackId": 4,
+            "slotId": "l4-wall-36",
+            "groupId": "l4-wall",
+            "previousHp": 600,
+            "hp": 300,
+            "amount": 300,
+            "props": []
+          },
+          {
+            "type": "barricade.damaged",
+            "tick": 3163,
+            "id": 137,
+            "sourceId": 210,
+            "attackId": 14,
+            "slotId": "l4-wall-35",
+            "groupId": "l4-wall",
+            "previousHp": 300,
+            "hp": 0,
+            "amount": 300,
+            "props": []
+          },
+          {
+            "type": "barricade.damaged",
+            "tick": 3163,
+            "id": 138,
+            "sourceId": 210,
+            "attackId": 14,
+            "slotId": "l4-wall-36",
+            "groupId": "l4-wall",
+            "previousHp": 300,
+            "hp": 0,
+            "amount": 300,
+            "props": []
+          },
+          {
+            "type": "barricade.damaged",
+            "tick": 3181,
+            "id": 27,
+            "sourceId": 210,
+            "attackId": 14,
+            "slotId": "l4-line-west",
+            "groupId": "l4-line",
+            "previousHp": 300,
+            "hp": 0,
+            "amount": 300,
+            "props": []
+          },
+          {
+            "type": "barricade.damaged",
+            "tick": 8065,
+            "id": 108,
+            "sourceId": 394,
+            "attackId": 450,
+            "slotId": "l4-wall-6",
+            "groupId": "l4-wall",
+            "previousHp": 600,
+            "hp": 300,
+            "amount": 300,
+            "props": []
+          },
+          {
+            "type": "barricade.damaged",
+            "tick": 8065,
+            "id": 109,
+            "sourceId": 394,
+            "attackId": 450,
+            "slotId": "l4-wall-7",
+            "groupId": "l4-wall",
+            "previousHp": 600,
+            "hp": 300,
+            "amount": 300,
+            "props": []
+          },
+          {
+            "type": "barricade.damaged",
+            "tick": 8540,
+            "id": 108,
+            "sourceId": 394,
+            "attackId": 477,
+            "slotId": "l4-wall-6",
+            "groupId": "l4-wall",
+            "previousHp": 300,
+            "hp": 0,
+            "amount": 300,
+            "props": []
+          },
+          {
+            "type": "barricade.damaged",
+            "tick": 8540,
+            "id": 109,
+            "sourceId": 394,
+            "attackId": 477,
+            "slotId": "l4-wall-7",
+            "groupId": "l4-wall",
+            "previousHp": 300,
+            "hp": 0,
+            "amount": 300,
+            "props": []
+          },
+          {
+            "type": "barricade.damaged",
+            "tick": 8563,
+            "id": 26,
+            "sourceId": 394,
+            "attackId": 477,
+            "slotId": "l4-line-north",
+            "groupId": "l4-line",
+            "previousHp": 40,
+            "hp": 0,
+            "amount": 40,
+            "props": []
+          },
+          {
+            "type": "barricade.damaged",
+            "tick": 9007,
+            "id": 122,
+            "sourceId": 375,
+            "attackId": 489,
+            "slotId": "l4-wall-20",
+            "groupId": "l4-wall",
+            "previousHp": 600,
+            "hp": 300,
+            "amount": 300,
+            "props": []
+          },
+          {
+            "type": "barricade.damaged",
+            "tick": 9007,
+            "id": 123,
+            "sourceId": 375,
+            "attackId": 489,
+            "slotId": "l4-wall-21",
+            "groupId": "l4-wall",
+            "previousHp": 600,
+            "hp": 300,
+            "amount": 300,
+            "props": []
+          },
+          {
+            "type": "barricade.damaged",
+            "tick": 9752,
+            "id": 122,
+            "sourceId": 445,
+            "attackId": 498,
+            "slotId": "l4-wall-20",
+            "groupId": "l4-wall",
+            "previousHp": 300,
+            "hp": 0,
+            "amount": 300,
+            "props": []
+          },
+          {
+            "type": "barricade.damaged",
+            "tick": 9752,
+            "id": 123,
+            "sourceId": 445,
+            "attackId": 498,
+            "slotId": "l4-wall-21",
+            "groupId": "l4-wall",
+            "previousHp": 300,
+            "hp": 0,
+            "amount": 300,
+            "props": []
+          }
+        ],
+        "observedHash": "18e71cbb",
+        "canonicalHash": "18e71cbb"
+      },
+      "target": "6low/8high actual identities;\u22656 distinct sources/ticks;offscreen births;\u22653 same IDs hit defensive line",
+      "receipt": "docs/reports/final-b/L4-08-proof.json"
     }
   ]
 }
