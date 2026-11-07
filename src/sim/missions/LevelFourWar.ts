@@ -125,6 +125,26 @@ export class LevelFourWar {
     }
     this.reserveSlots();
   }
+  /** Collapse waves share the hard tier cap with distant war fillers. Yield only
+   * offscreen, unengaged ordinary infected for the newly announced cohort. */
+  private retireIdleForCollapse(): void {
+    const { world } = this.mission, s = this.s, ai = this.infected, player = world.entities.get(1)!.transform;
+    if (s.collapseRetireWave === s.collapseWaves || !s.collapsePend?.some(n => n > 0)) return;
+    s.collapseRetireWave = s.collapseWaves;
+    const needed = Math.min(3, s.collapsePend.reduce((sum, n) => sum + n, 0));
+    const capacity = ai.director.cap - ai.director.pendingTurns - needed;
+    if (ai.director.count <= capacity) return;
+    const protectedIds = new Set(s.alphaIds);
+    for (const e of [...ai.active]) {
+      if (ai.director.count + ai.director.pendingTurns <= capacity) break;
+      const b = e.infected;
+      if (!b || protectedIds.has(e.id) || e.health.current <= 0 || e.corpse || e.hidden || e.emerging || e.infectionRise || b.recoverAt >= 0 || b.scripted || b.breachApproach ||
+        b.state !== 'idle' && b.state !== 'wander' || ['chase', 'bite'].includes(b.l1?.mode ?? '') || e.combat?.attacking || b.specialAttack ||
+        e.archetype === 'infected.alpha' || dist(e.transform, player) <= 32 || !ai.director.offscreen(e.transform, e.transform.y - .7)) continue;
+      ai.release(e);
+    }
+    this.reserveSlots();
+  }
   private get low(): boolean { return this.infected.director.tier === 'low'; }
   /** Legacy convoy riders have an explicit owner in the existing seated/roster state. */
   passengerHull(e: EntitySnapshot): number | undefined {
@@ -1498,6 +1518,7 @@ export class LevelFourWar {
         if (this.gateOpenAt && tick >= this.gateOpenAt) { this.gateOpenAt = 0; this.openGate(); }
         if (s.director.burnAt && tick >= s.director.burnAt) this.burnCars();
       }
+      if (s.phase === 'collapse') this.retireIdleForCollapse();
       if (tick % 20 === 0) this.clearGap();
       if (s.phase === 'cellar') this.cellarUpdate();
       // L4 infected hit like L3's (section 5.1 tuning; PO: a sensible player finishes with few deaths).

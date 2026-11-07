@@ -194,7 +194,7 @@ export interface L4State {
   soldiersAtTurn: number; civiliansAtTurn: number; infectedAtT30: number; killsAtBreak: number; infectedAtBreak: number; soldiersAtBreak: number; soldiersAtCellar: number;
   /** The war: waves emerged, the next wave tick, infected brought from the street edges, and the collapse waves. */
   alphaIds: number[]; alphaAnchors: string[];
-  wave: number; waveAt: number; pend: number[]; carIds: number[]; emergedIds: number[]; collapseWaveAt: number; collapseIds: number[]; collapseWaves: number; collapseEdgeCursor?: number;
+  wave: number; waveAt: number; pend: number[]; carIds: number[]; emergedIds: number[]; collapseWaveAt: number; collapseIds: number[]; collapseWaves: number; collapseEdgeCursor?: number; collapseRetireWave?: number;
   /** Scheduled collapse quotas awaiting actual admission, also included in pend. */
   collapsePend?: number[];
   /**
