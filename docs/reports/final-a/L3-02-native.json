@@ -1,0 +1,626 @@
+{
+  "row": "L3-02",
+  "verdict": "FAIL",
+  "frozenHead": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+  "fixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4",
+  "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
+  "generatedAt": "2026-11-06T23:57:28.205Z",
+  "criterion": "Attack starts 5 s after pickup (latest 40 s); waves **30 / 60 / 100** at 0 / 20 / 40 s (low ×0.5), streamed over 18 s from 5 directions, 20 % as police zombies from the station door; a quarter on screen within 2 s.",
+  "automatedComplete": false,
+  "checks": [
+    {
+      "id": "L3-02",
+      "clause": "attack delay after handgun pickup",
+      "level": "L3",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 5,
+      "target": "5 ≤ value ≤ 5",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-complete.json"
+    },
+    {
+      "id": "L3-02",
+      "clause": "latest attack clock",
+      "level": "L3",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 9.45,
+      "target": "0 ≤ value ≤ 40",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-complete.json"
+    },
+    {
+      "id": "L3-02",
+      "clause": "wave 0 actual admissions",
+      "level": "L3",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 15,
+      "target": "15 ≤ value ≤ 15",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-complete.json"
+    },
+    {
+      "id": "L3-02",
+      "clause": "wave 1 actual admissions",
+      "level": "L3",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 30,
+      "target": "30 ≤ value ≤ 30",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-complete.json"
+    },
+    {
+      "id": "L3-02",
+      "clause": "wave 2 actual admissions",
+      "level": "L3",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 50,
+      "target": "50 ≤ value ≤ 50",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-complete.json"
+    },
+    {
+      "id": "L3-02",
+      "clause": "opening wave visible within two seconds",
+      "level": "L3",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": {
+        "visible": 5,
+        "expected": 15
+      },
+      "target": "at least 25% of the opening wave in frame within two seconds",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-complete.json"
+    },
+    {
+      "id": "L3-02",
+      "clause": "wave 0 admitted station-door share",
+      "level": "L3",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": {
+        "admitted": 15,
+        "police": 3,
+        "percent": 20
+      },
+      "target": "exactly 20% of the full 15-infected wave emerges from the station door",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-complete.json"
+    },
+    {
+      "id": "L3-02",
+      "clause": "wave 1 admitted station-door share",
+      "level": "L3",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": {
+        "admitted": 30,
+        "police": 6,
+        "percent": 20
+      },
+      "target": "exactly 20% of the full 30-infected wave emerges from the station door",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-complete.json"
+    },
+    {
+      "id": "L3-02",
+      "clause": "wave 2 admitted station-door share",
+      "level": "L3",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": {
+        "admitted": 50,
+        "police": 10,
+        "percent": 20
+      },
+      "target": "exactly 20% of the full 50-infected wave emerges from the station door",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-complete.json"
+    },
+    {
+      "id": "L3-02",
+      "clause": "attack delay after handgun pickup",
+      "level": "L3",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 5,
+      "target": "5 ≤ value ≤ 5",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-stationary.json"
+    },
+    {
+      "id": "L3-02",
+      "clause": "latest attack clock",
+      "level": "L3",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 9.45,
+      "target": "0 ≤ value ≤ 40",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-stationary.json"
+    },
+    {
+      "id": "L3-02",
+      "clause": "wave 0 actual admissions",
+      "level": "L3",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 15,
+      "target": "15 ≤ value ≤ 15",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-stationary.json"
+    },
+    {
+      "id": "L3-02",
+      "clause": "wave 1 actual admissions",
+      "level": "L3",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 30,
+      "target": "30 ≤ value ≤ 30",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-stationary.json"
+    },
+    {
+      "id": "L3-02",
+      "clause": "wave 2 actual admissions",
+      "level": "L3",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 50,
+      "target": "50 ≤ value ≤ 50",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-stationary.json"
+    },
+    {
+      "id": "L3-02",
+      "clause": "opening wave visible within two seconds",
+      "level": "L3",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": {
+        "visible": 5,
+        "expected": 15
+      },
+      "target": "at least 25% of the opening wave in frame within two seconds",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-stationary.json"
+    },
+    {
+      "id": "L3-02",
+      "clause": "attack delay after handgun pickup",
+      "level": "L3",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 5,
+      "target": "5 ≤ value ≤ 5",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-high-complete.json"
+    },
+    {
+      "id": "L3-02",
+      "clause": "latest attack clock",
+      "level": "L3",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 9.45,
+      "target": "0 ≤ value ≤ 40",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-high-complete.json"
+    },
+    {
+      "id": "L3-02",
+      "clause": "wave 0 actual admissions",
+      "level": "L3",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 30,
+      "target": "30 ≤ value ≤ 30",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-high-complete.json"
+    },
+    {
+      "id": "L3-02",
+      "clause": "wave 1 actual admissions",
+      "level": "L3",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 60,
+      "target": "60 ≤ value ≤ 60",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-high-complete.json"
+    },
+    {
+      "id": "L3-02",
+      "clause": "wave 2 actual admissions",
+      "level": "L3",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 100,
+      "target": "100 ≤ value ≤ 100",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-high-complete.json"
+    },
+    {
+      "id": "L3-02",
+      "clause": "opening wave visible within two seconds",
+      "level": "L3",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": {
+        "visible": 9,
+        "expected": 30
+      },
+      "target": "at least 25% of the opening wave in frame within two seconds",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-high-complete.json"
+    },
+    {
+      "id": "L3-02",
+      "clause": "wave 0 admitted station-door share",
+      "level": "L3",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": {
+        "admitted": 30,
+        "police": 6,
+        "percent": 20
+      },
+      "target": "exactly 20% of the full 30-infected wave emerges from the station door",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-high-complete.json"
+    },
+    {
+      "id": "L3-02",
+      "clause": "wave 1 admitted station-door share",
+      "level": "L3",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": {
+        "admitted": 60,
+        "police": 12,
+        "percent": 20
+      },
+      "target": "exactly 20% of the full 60-infected wave emerges from the station door",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-high-complete.json"
+    },
+    {
+      "id": "L3-02",
+      "clause": "wave 2 admitted station-door share",
+      "level": "L3",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": {
+        "admitted": 100,
+        "police": 20,
+        "percent": 20
+      },
+      "target": "exactly 20% of the full 100-infected wave emerges from the station door",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-high-complete.json"
+    },
+    {
+      "id": "L3-02",
+      "clause": "attack delay after handgun pickup",
+      "level": "L3",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 5,
+      "target": "5 ≤ value ≤ 5",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-high-stationary.json"
+    },
+    {
+      "id": "L3-02",
+      "clause": "latest attack clock",
+      "level": "L3",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 9.45,
+      "target": "0 ≤ value ≤ 40",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-high-stationary.json"
+    },
+    {
+      "id": "L3-02",
+      "clause": "wave 0 actual admissions",
+      "level": "L3",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 30,
+      "target": "30 ≤ value ≤ 30",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-high-stationary.json"
+    },
+    {
+      "id": "L3-02",
+      "clause": "wave 1 actual admissions",
+      "level": "L3",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 60,
+      "target": "60 ≤ value ≤ 60",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-high-stationary.json"
+    },
+    {
+      "id": "L3-02",
+      "clause": "wave 2 actual admissions",
+      "level": "L3",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "FAIL",
+      "value": 90,
+      "target": "100 ≤ value ≤ 100",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-high-stationary.json"
+    },
+    {
+      "id": "L3-02",
+      "clause": "opening wave visible within two seconds",
+      "level": "L3",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": {
+        "visible": 9,
+        "expected": 30
+      },
+      "target": "at least 25% of the opening wave in frame within two seconds",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-high-stationary.json"
+    },
+    {
+      "id": "L3-02",
+      "clause": "actual wave source, species, direction and police-look census",
+      "value": [
+        {
+          "wave": 0,
+          "expected": 15,
+          "admitted": 15,
+          "byDirection": {
+            "river": 3,
+            "blvd": 3,
+            "oak": 3,
+            "commerce": 3,
+            "station": 3
+          },
+          "bySource": {
+            "blvd": 2,
+            "commerce": 2,
+            "oak": 3,
+            "river": 2,
+            "station": 3,
+            "yard-cover": 3
+          },
+          "bySpecies": {
+            "npc.bathrobe-neighbor": 3,
+            "npc.bbq-dad": 4,
+            "npc.delivery-driver": 2,
+            "npc.jogger": 2,
+            "npc.officer": 3,
+            "npc.suburban-mom": 1
+          },
+          "stationPoliceLook": 3,
+          "station": 3,
+          "missingAppearance": 0
+        },
+        {
+          "wave": 1,
+          "expected": 30,
+          "admitted": 30,
+          "byDirection": {
+            "river": 6,
+            "blvd": 6,
+            "oak": 6,
+            "commerce": 6,
+            "station": 6
+          },
+          "bySource": {
+            "blvd": 6,
+            "commerce": 6,
+            "oak": 6,
+            "river": 6,
+            "station": 6
+          },
+          "bySpecies": {
+            "npc.bathrobe-neighbor": 3,
+            "npc.bbq-dad": 3,
+            "npc.cashier": 6,
+            "npc.delivery-driver": 5,
+            "npc.jogger": 1,
+            "npc.officer": 6,
+            "npc.suburban-mom": 6
+          },
+          "stationPoliceLook": 6,
+          "station": 6,
+          "missingAppearance": 0
+        },
+        {
+          "wave": 2,
+          "expected": 50,
+          "admitted": 50,
+          "byDirection": {
+            "river": 10,
+            "blvd": 10,
+            "oak": 10,
+            "commerce": 10,
+            "station": 10
+          },
+          "bySource": {
+            "blvd": 10,
+            "commerce": 10,
+            "oak": 10,
+            "river": 10,
+            "station": 10
+          },
+          "bySpecies": {
+            "npc.bathrobe-neighbor": 13,
+            "npc.bbq-dad": 7,
+            "npc.cashier": 6,
+            "npc.delivery-driver": 3,
+            "npc.jogger": 5,
+            "npc.officer": 10,
+            "npc.suburban-mom": 6
+          },
+          "stationPoliceLook": 10,
+          "station": 10,
+          "missingAppearance": 0
+        }
+      ],
+      "target": "each tier wave has exact expected total; all five directions represented; exactly20% station-door admissions retain police look",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
+      "level": "L3"
+    },
+    {
+      "id": "L3-02",
+      "clause": "actual wave source, species, direction and police-look census",
+      "value": [
+        {
+          "wave": 0,
+          "expected": 30,
+          "admitted": 30,
+          "byDirection": {
+            "river": 6,
+            "blvd": 6,
+            "oak": 6,
+            "commerce": 6,
+            "station": 6
+          },
+          "bySource": {
+            "blvd": 5,
+            "commerce": 4,
+            "oak": 5,
+            "river": 4,
+            "station": 6,
+            "yard-cover": 6
+          },
+          "bySpecies": {
+            "npc.bathrobe-neighbor": 3,
+            "npc.bbq-dad": 3,
+            "npc.cashier": 4,
+            "npc.delivery-driver": 5,
+            "npc.jogger": 6,
+            "npc.officer": 6,
+            "npc.suburban-mom": 3
+          },
+          "stationPoliceLook": 6,
+          "station": 6,
+          "missingAppearance": 0
+        },
+        {
+          "wave": 1,
+          "expected": 60,
+          "admitted": 60,
+          "byDirection": {
+            "river": 12,
+            "blvd": 12,
+            "oak": 12,
+            "commerce": 12,
+            "station": 12
+          },
+          "bySource": {
+            "blvd": 9,
+            "commerce": 9,
+            "oak": 9,
+            "river": 9,
+            "station": 12,
+            "yard-cover": 12
+          },
+          "bySpecies": {
+            "npc.bathrobe-neighbor": 13,
+            "npc.bbq-dad": 8,
+            "npc.cashier": 7,
+            "npc.delivery-driver": 5,
+            "npc.jogger": 9,
+            "npc.officer": 12,
+            "npc.suburban-mom": 6
+          },
+          "stationPoliceLook": 12,
+          "station": 12,
+          "missingAppearance": 0
+        },
+        {
+          "wave": 2,
+          "expected": 100,
+          "admitted": 100,
+          "byDirection": {
+            "river": 20,
+            "blvd": 20,
+            "oak": 20,
+            "commerce": 20,
+            "station": 20
+          },
+          "bySource": {
+            "blvd": 15,
+            "commerce": 15,
+            "oak": 15,
+            "river": 15,
+            "station": 20,
+            "yard-cover": 20
+          },
+          "bySpecies": {
+            "npc.bathrobe-neighbor": 17,
+            "npc.bbq-dad": 15,
+            "npc.cashier": 10,
+            "npc.delivery-driver": 13,
+            "npc.jogger": 8,
+            "npc.officer": 20,
+            "npc.suburban-mom": 17
+          },
+          "stationPoliceLook": 20,
+          "station": 20,
+          "missingAppearance": 0
+        }
+      ],
+      "target": "each tier wave has exact expected total; all five directions represented; exactly20% station-door admissions retain police look",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
+      "level": "L3"
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/fix51-verify/receipts/L3-low-complete.json",
+      "sha256": "26aa4ed49dfbfcdf86a690bc83d902a5c8b9b4c93933f99d67484a55c70a971a",
+      "what": "Frozen-head L3-02 native input receipt, evaluated by the exact clauses retained in the row proof."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L3-low-stationary.json",
+      "sha256": "397baa017658a0b23da1cece00753b1b6e9363ed1272bff5125d3de615c52def",
+      "what": "Frozen-head L3-02 native input receipt, evaluated by the exact clauses retained in the row proof."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L3-high-complete.json",
+      "sha256": "f62f48629e8a32b71b162b49eb6d4f0a9cfb7cc46cbbd97a141e6e39bf3d89b1",
+      "what": "Frozen-head L3-02 native input receipt, evaluated by the exact clauses retained in the row proof."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L3-high-stationary.json",
+      "sha256": "260dd369e09316f288a0de9e176ff1abc26bbc5547a1f7be1e20cadeecc29b80",
+      "what": "Frozen-head L3-02 native input receipt, evaluated by the exact clauses retained in the row proof."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
+      "sha256": "1dbb6554d364c1372e298abab060319623af1f8871fbd2e7e24dad1a1382d0cc",
+      "what": "Frozen-head L3-02 native input receipt, evaluated by the exact clauses retained in the row proof."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
+      "sha256": "e4dd4c36be5c14615ed61548e5c0cb95e00a5363f1741e70547ed354a08a8086",
+      "what": "Frozen-head L3-02 native input receipt, evaluated by the exact clauses retained in the row proof."
+    }
+  ],
+  "observation": "high/stationary wave 2 actual admissions: 90; target 100 ≤ value ≤ 100 (FAIL)"
+}
