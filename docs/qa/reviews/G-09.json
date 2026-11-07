@@ -14,7 +14,7 @@
   "evidence": [
     {
       "file": "docs/reports/final-g/G-09-L1-start-review.json",
-      "sha256": "5a82318c217baf608eefb3bb9b91b601de9ab2b710b0925ec70eda273fbf7e86",
+      "sha256": "3fed775f0e17f7a65c86ba9afaa0c637271fb8e5e40f40f426526c675a2cc0ac",
       "what": "Fresh L1 high step-start observer: wide-view first cue onset25/94/0/4/83ticks for pickup/deliver/escape/weapon/firestation, all≤120ticks. Full-size deliver/firestation story frames inspected: requested zoom1 is overridden to1.5 and the directional edge pin is hidden while the destination text remains readable. This is a concrete framing/guide-priority handoff for PO; no false hidden-hold failure and no unobserved zoom1 PASS are claimed."
     },
     {
@@ -23,6 +23,6 @@
       "what": "Old first-step capture at635ticks and missing zoom1 could not measure this deadline; current passive marker-start observer and functional photo matrix address the capture gap."
     }
   ],
-  "notes": "PO: review the forced story framing and temporary direction-pin suppression at L1 parcel handover and garage departure. Exact frames are retained in G-09-L1-start-review.json; requested zoom1 actually renders at1.5. Decide the intended cue/camera priority during these story beats. Numeric deadline observations at actual1.5 pass; this P remains open for presentation review.",
+  "notes": "PO: approve native story-camera zoom clamping and temporary direction-pin suppression while destination text remains. Retained exact full-size frames: L1-high/captures/accept-L1-deliver-t1030-high-z1.jpg (actual1.5) and accept-L1-escape-t5237-high-z1.jpg (actual1). Original firestation photo was inspected and then archived during raw cleanup; its digest/state remain in the receipt. No full five-step zoom1 PASS is claimed.",
   "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186"
 }

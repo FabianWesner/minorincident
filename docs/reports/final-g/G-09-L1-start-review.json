@@ -11,7 +11,7 @@
           "zoom": 1,
           "firstObservedTick": 0,
           "firstVisibleTick": 0,
-          "hud": "Pick up the package at the courier depot \u00b7 55\u00a0m",
+          "hud": "Pick up the package at the courier depot · 55 m",
           "hudVisible": true,
           "pinVisible": true,
           "worldMarkerVisible": false,
@@ -21,7 +21,7 @@
           "zoom": 1.5,
           "firstObservedTick": 25,
           "firstVisibleTick": 25,
-          "hud": "Pick up the package at the courier depot \u00b7 55\u00a0m",
+          "hud": "Pick up the package at the courier depot · 55 m",
           "hudVisible": true,
           "pinVisible": true,
           "worldMarkerVisible": true,
@@ -38,7 +38,7 @@
           "zoom": 1.5,
           "firstObservedTick": 977,
           "firstVisibleTick": 1071,
-          "hud": "Deliver the package to the Medical Annex \u00b7 108\u00a0m",
+          "hud": "Deliver the package to the Medical Annex · 108 m",
           "hudVisible": true,
           "pinVisible": false,
           "worldMarkerVisible": true,
@@ -55,7 +55,7 @@
           "zoom": 1.5,
           "firstObservedTick": 5237,
           "firstVisibleTick": 5237,
-          "hud": "Get away from the facility \u00b7 63\u00a0m",
+          "hud": "Get away from the facility · 63 m",
           "hudVisible": true,
           "pinVisible": true,
           "worldMarkerVisible": true,
@@ -72,7 +72,7 @@
           "zoom": 1.5,
           "firstObservedTick": 5242,
           "firstVisibleTick": 5242,
-          "hud": "Find something to defend yourself \u00b7 63\u00a0m",
+          "hud": "Find something to defend yourself · 63 m",
           "hudVisible": true,
           "pinVisible": true,
           "worldMarkerVisible": true,
@@ -82,7 +82,7 @@
           "zoom": 1,
           "firstObservedTick": 5250,
           "firstVisibleTick": 5250,
-          "hud": "Find something to defend yourself \u00b7 63\u00a0m",
+          "hud": "Find something to defend yourself · 63 m",
           "hudVisible": true,
           "pinVisible": true,
           "worldMarkerVisible": true,
@@ -99,7 +99,7 @@
           "zoom": 1.5,
           "firstObservedTick": 7874,
           "firstVisibleTick": 7957,
-          "hud": "Get inside the fire station \u00b7 99\u00a0m",
+          "hud": "Get inside the fire station · 99 m",
           "hudVisible": true,
           "pinVisible": false,
           "worldMarkerVisible": true,
@@ -125,6 +125,24 @@
       "seen": "Full-size inspected: native story framing overrides the requested zoom1 with actual1.5; destination text is readable, while the screen-edge direction pin is hidden during the story bubble. Courier/corgi remain visible."
     },
     {
+      "file": "test-results/final-g/L1-high/captures/accept-L1-escape-t5237-high-z1.jpg",
+      "sha256": "5bfbe2c57ca41c80ed52f228928e8565a6cb494046b87de434e92a67bb224960",
+      "captureTick": 5250,
+      "requestedZoom": 1,
+      "actualZoom": 1,
+      "active": [
+        {
+          "id": "weapon",
+          "anchor": "garage-bat",
+          "started": 5238
+        }
+      ],
+      "seen": "Full-size inspected: post-blast escape→weapon transition keeps actual zoom1, readable destination text and a visible left screen-edge arrow, while delivery comparison clamps actual1.5 and hides that arrow during story framing. Courier/corgi remain visible. This retained contrast is the PO target; archived firestation observation remains in this receipt."
+    }
+  ],
+  "observation": "Actual wide-view cue onset is25/94/0/4/83ticks after pickup/deliver/escape/weapon/firestation starts. Story delivery and firestation beats clamp the requested zoom1 to1.5; no zoom1 PASS is invented for these beats.",
+  "archivedCaptures": [
+    {
       "file": "test-results/final-g/L1-high/captures/accept-L1-firestation-t7908-high-z1.jpg",
       "sha256": "aae1f81aa69e59c14b1744d5d2a630d2269beba06deb18bddf98f9022c61c6e4",
       "captureTick": 7917,
@@ -137,8 +155,9 @@
           "started": 7874
         }
       ],
-      "seen": "Full-size inspected: native story framing overrides the requested zoom1 with actual1.5; destination text is readable, while the screen-edge direction pin is hidden during the story bubble. Courier/corgi remain visible."
+      "seen": "Full-size inspected: native story framing overrides the requested zoom1 with actual1.5; destination text is readable, while the screen-edge direction pin is hidden during the story bubble. Courier/corgi remain visible.",
+      "availability": "Original full-size image was inspected, then raw was removed during cleanup. State and original image digest remain archived. This is no longer a retained PO-photo target."
     }
   ],
-  "observation": "Actual wide-view cue onset is25/94/0/4/83ticks after pickup/deliver/escape/weapon/firestation starts. Story delivery and firestation beats clamp the requested zoom1 to1.5; no zoom1 PASS is invented for these beats."
+  "POSelection": "Retained delivery1030 requested1/actual1.5 versus escape5237 requested1/actual1. Exact story-camera/pin policy question; original firestation photo is archived. Active step in the retained escape-named capture is weapon, started5238, capture5250."
 }
