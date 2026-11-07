@@ -1,47 +1,38 @@
 {
   "row": "L10-04",
   "status": "PASS",
-  "reviewer": "Codex sweep-c5",
-  "date": "2026-11-06",
-  "commit": "7314277ffc656d91d38dcaa5e8a0581aeade8bbc",
+  "reviewer": "Codex final-c",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
   "clauses": [
     {
-      "clause": "combat in every region: reachable \u2265 90 %; attacks on player \u2265 2/min in R1\u2013R2, \u2265 4/min from R3 (tune); no region crossable with 0 attacks.",
+      "clause": "combat in every region: reachable ≥ 90 %; attacks on player ≥ 2/min in R1–R2, ≥ 4/min from R3 (tune); no region crossable with 0 attacks.",
       "verdict": "PASS",
-      "note": "Fresh exact-source ordinary competent native routes at both tiers. Every region had player attacks above its criterion floor: low 7.27\u201339.00/min; high 7.27\u2013114.89/min. All 14 region/tier path windows had samples; reachability minima are 100% except high dispersal-complex 94.7368%, above 90%. Independent complete-route canonical state hashes match. The observer runs every 30 ticks over all living infected within 30 m, including pending admissions as blocked; body-clear path bound is 2.5\u00d7 direct distance. No actor/input/RNG changes."
+      "note": "All seven geographic regions at both tiers meet player-contact and bounded-path reach thresholds under current competent and passive policies. Competent rates R1–R7 low7.2691/8.4043/8.3789/11.5681/27.2799/5.6014/19.2625 per minute; high7.2691/11.3611/9.7620/19.5688/40.0517/5.3168/57.3379. Minimum reach100%low/98.5507%high competent and100%/98.1481% passive. Every region records positive attacks, passive minimum rates167.1883low/72.5459high. Observers preserve independent canonical final hashes; pending admissions count as blocked."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix51-verify/receipts/L10-regional-reach.json",
-      "sha256": "e0c07f3f77780ad5c7d683b6690eb387fa38f88ab74b2598f386ebd6b3b81827",
-      "what": "Exact-source both-tier regional reach and player-rate proof with unchanged canonical controls."
+      "file": "docs/reports/final-c/L10-04/region-reach.json",
+      "sha256": "7efefb54c89ab7f1338c136b66280962af2d9d1ad9e489bb3914cb0e00b1597c",
+      "what": "All seven geographic regions at both tiers meet player-contact and bounded-path reach thresholds under current competent and passive policies. Competent rates R1–R7 low7.2691/8.4043/8.3789/11.5681/27.2799/5.6014/19.2625 per minute; high7.2691/11.3611/9.7620/19.5688/40.0517/5.3168/57.3379. Minimum reach100%low/98.5507%high competent and100%/98.1481% passive. Every region records positive attacks, passive minimum rates167.1883low/72.5459high. Observers preserve independent canonical final hashes; pending admissions count as blocked."
     },
     {
-      "file": "docs/reports/sweep-c6/L10-11/prior-receipts/L10-low-complete.json",
-      "sha256": "ba12b2682ccd3073e9c46f3e11d451e66fe91f13b1300f7df4cb1c850bedc180",
-      "what": "Current-source low complete campaign control."
+      "file": "docs/reports/final-c/L10-04/passive-producer.ts",
+      "sha256": "e5d404873a31200ab16da1af6d89e34b15d9e4a271100fd6d136e6e95117dcc9",
+      "what": "Exact measurement producer snapshot; only output locations differ from the existing observer."
     },
     {
-      "file": "docs/reports/sweep-c6/L10-11/prior-receipts/L10-low-stationary.json",
-      "sha256": "61f4c308e6f0270cbcc8651c37833bc53766e05cdf26ac6e5b3630c3b70948c2",
-      "what": "Current-source low stationary campaign control."
+      "file": "docs/reports/final-c/L10-04/producer.ts",
+      "sha256": "508610d37e9da87ae6727573579a9c3bae16010e5bdb805ee978be94c1aa3ac0",
+      "what": "Exact measurement producer snapshot; only output locations differ from the existing observer."
     },
     {
-      "file": "docs/reports/sweep-c6/L10-11/prior-receipts/L10-high-complete.json",
-      "sha256": "e8598f59d5bf0319a1c9f510e65ca7746849fc2c72a190c689d0e00e3305454d",
-      "what": "Current-source high complete campaign control."
-    },
-    {
-      "file": "docs/reports/sweep-c6/L10-11/prior-receipts/L10-high-stationary.json",
-      "sha256": "62f369054b2812c6c5c8a87c8b69577b0e13e274336a2ef11bc2decc72f18158",
-      "what": "Current-source high stationary campaign control."
-    },
-    {
-      "file": "docs/reports/fix73-g/L10-corridor.json",
-      "sha256": "4a035349bc80b2527ab75c549558c91ea7d3c4c4cd51a12a3163e9f8cb1f54e2",
-      "what": "Scoped fix73-g observation, 739a504: real-input tracked traversal from R6 entrance through R7 meets all17 new patrol identities per tier, no regional cap excess. Conservative0.5second camera-visible-within40m R6 gaps26.5s low /15s high;57/59 actual attack starts over bounded runs. All18 captures personally inspected, hashes/seen and input archived. This does not requalify all seven regions or the whole compound row."
+      "file": "docs/reports/final-c/L10-04/region-reach-passive.json",
+      "sha256": "1ff0ff90d75408016940616cc8be4cf8ac2de41029700f79648b1aeb0f444016",
+      "what": "All seven geographic regions at both tiers meet player-contact and bounded-path reach thresholds under current competent and passive policies. Competent rates R1–R7 low7.2691/8.4043/8.3789/11.5681/27.2799/5.6014/19.2625 per minute; high7.2691/11.3611/9.7620/19.5688/40.0517/5.3168/57.3379. Minimum reach100%low/98.5507%high competent and100%/98.1481% passive. Every region records positive attacks, passive minimum rates167.1883low/72.5459high. Observers preserve independent canonical final hashes; pending admissions count as blocked."
     }
   ],
-  "notes": "Full geographic and attack-rate clauses PASS in both tiers; measured margins remain against unchanged target values. No cross-level campaign-completion claim.\nScoped fix73-g observation, 739a504: real-input tracked traversal from R6 entrance through R7 meets all17 new patrol identities per tier, no regional cap excess. Conservative0.5second camera-visible-within40m R6 gaps26.5s low /15s high;57/59 actual attack starts over bounded runs. All18 captures personally inspected, hashes/seen and input archived. This does not requalify all seven regions or the whole compound row."
+  "notes": "Frozen-head row review. Current immutable evidence, unchanged criterion and game source.",
+  "sourceDigest": "75720d4df4ad59ad1814e1cda498bc4620d28edfa0298106dd53315c5f2fba05"
 }
