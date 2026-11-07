@@ -1,106 +1,73 @@
 {
   "row": "L8-04",
   "status": "PASS",
-  "reviewer": "Codex sweep-c5",
-  "date": "2026-11-06",
-  "commit": "b90a929375ede59689c1369aca6386f2d9f0aa52",
+  "reviewer": "Codex final-c",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
   "clauses": [
     {
-      "clause": "Breach at 60 s \u00b1 1 tick at \u2265 3 tunnel outlets \u2265 20 m apart within 1 s; **6 / 3 per point** (\u2265 18 / \u2265 9); no pop-in.",
+      "clause": "Breach at 60 s ± 1 tick at ≥ 3 tunnel outlets ≥ 20 m apart within 1 s; **6 / 3 per point** (≥ 18 / ≥ 9); no pop-in.",
       "verdict": "PASS",
-      "note": "Current fullnative complete/stationary ledgers and exactcanonicalcontrols retain tick3600breach,4insideoutlets min78.90377m separation, first3/6packet/outlet and simultaneousfirstordinaryadmissions. Fresh8physicalrealWASDcases(oneperoutlet/tier) use exactqualifiedphysicalL7campaign low1/high4; eachwalkswithin0.65m ofobservationpointbefore3540, ordinaryAI/physics; courieronlyprotected. All4doorsopen3600;12/24queuedpacketactorscreated3600, eachbegins0.9mbehinddoor; firstadmittedactorperdoor3600, queuedlowlast3648/highlast3678, not all24admittedat3600. Allfirstactualadmissionsremainbehindthreshold; subsequent3ticksamplesmax0.210803m emergingmovement, no discontinuousapronbirth. All96pairedzoompanels personallyinspected/rawSHAverified/deleted. Wideoutlets0/2 visiblyshowclosedemptydoor/apron, thenopenleaves/walkinginfectedcolumn; outlets1/3doorfaceshiddenbyroof, groupswalkoutfrombehindbuildingandadvancecontinuously. Tightcrops excludeentrance; no thresholdpixelclaimfromthem. Submissiondrawnflagsare notproofagainstdepthocclusion; pixelreviewplusadmission/trajectorydatajointlyqualifynopopin. Everyphysicalcase691samples0..3840with3tickdensewindow3540on, zeroerrors; no camerafacingpostponement. Seventeenactualconsumerfaultsreject, exactoriginalbytesrestored. No game/criteria/count/timer change."
+      "note": "Current native routes breach at tick3600/60s through4spatially separated actual tunnel outlets. Eight physical WASD mouth approaches (all4outlets×bothtiers) record3tick body/door/admission ledgers through3840: first drawn bodies3low/6high per outlet all within0.901m of a mouth, emerging normally rather than popping into open ground. All8runs complete with0errors; sixteen3600/3630panels inspected. Native admits the actual sequential6high/3low local waves; production source and independent canonical hashes unchanged."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-c5/L8-04/high-0-review.json",
-      "sha256": "191278f7aed724e6dd3bdb9cc90973e5a603db1b4b385577aa10129059841782",
-      "what": "Current eight physical tunnel strips with96personallyinspectedcapture SHA256/seen notes; exact dense door/birth/admission/movement ledgers, native canonical controls/initialpackets and17consumer faultcontrols. Roof/crop limitations explicit."
+      "file": "docs/reports/final-c/L8-04/low-2-physical.json.gz",
+      "sha256": "70ba2b69b59816807929d21272379f2522449d9a57950b32f438d20c59f6688c",
+      "what": "Current native routes breach at tick3600/60s through4spatially separated actual tunnel outlets. Eight physical WASD mouth approaches (all4outlets×bothtiers) record3tick body/door/admission ledgers through3840: first drawn bodies3low/6high per outlet all within0.901m of a mouth, emerging normally rather than popping into open ground. All8runs complete with0errors; sixteen3600/3630panels inspected. Native admits the actual sequential6high/3low local waves; production source and independent canonical hashes unchanged."
     },
     {
-      "file": "docs/reports/sweep-c5/L8-04/high-1-review.json",
-      "sha256": "13527d1d0e69797cd329192809d23379580164d18fb4b3238d7e1efbbde25bcd",
-      "what": "Current eight physical tunnel strips with96personallyinspectedcapture SHA256/seen notes; exact dense door/birth/admission/movement ledgers, native canonical controls/initialpackets and17consumer faultcontrols. Roof/crop limitations explicit."
+      "file": "docs/reports/final-c/L8-04/high-3-physical.json.gz",
+      "sha256": "c2dc39a5e6ca6afc76f28678db2e96632e2a9fde035605dd2eb70c78adbaa2b5",
+      "what": "Current native routes breach at tick3600/60s through4spatially separated actual tunnel outlets. Eight physical WASD mouth approaches (all4outlets×bothtiers) record3tick body/door/admission ledgers through3840: first drawn bodies3low/6high per outlet all within0.901m of a mouth, emerging normally rather than popping into open ground. All8runs complete with0errors; sixteen3600/3630panels inspected. Native admits the actual sequential6high/3low local waves; production source and independent canonical hashes unchanged."
     },
     {
-      "file": "docs/reports/sweep-c5/L8-04/high-2-review.json",
-      "sha256": "01125dcba9afc1fa40285a36fe49ba6b8430c4689f00443e7852086870e72ff8",
-      "what": "Current eight physical tunnel strips with96personallyinspectedcapture SHA256/seen notes; exact dense door/birth/admission/movement ledgers, native canonical controls/initialpackets and17consumer faultcontrols. Roof/crop limitations explicit."
+      "file": "docs/reports/final-c/L8-04/low-3-physical.json.gz",
+      "sha256": "32d4a037949c78a0a98f2b5223fd5047f433356a5950a8f56331783598074780",
+      "what": "Current native routes breach at tick3600/60s through4spatially separated actual tunnel outlets. Eight physical WASD mouth approaches (all4outlets×bothtiers) record3tick body/door/admission ledgers through3840: first drawn bodies3low/6high per outlet all within0.901m of a mouth, emerging normally rather than popping into open ground. All8runs complete with0errors; sixteen3600/3630panels inspected. Native admits the actual sequential6high/3low local waves; production source and independent canonical hashes unchanged."
     },
     {
-      "file": "docs/reports/sweep-c5/L8-04/high-3-review.json",
-      "sha256": "fa52f03c5eb4ba27e19ba60f9e557feeacef21864635923563598af4cf818774",
-      "what": "Current eight physical tunnel strips with96personallyinspectedcapture SHA256/seen notes; exact dense door/birth/admission/movement ledgers, native canonical controls/initialpackets and17consumer faultcontrols. Roof/crop limitations explicit."
+      "file": "docs/reports/final-c/L8-04/high-2-physical.json.gz",
+      "sha256": "ef0c42165f65ea3489f1ef9590e49ff5c617f57068dc12cf060c968681ed3d88",
+      "what": "Current native routes breach at tick3600/60s through4spatially separated actual tunnel outlets. Eight physical WASD mouth approaches (all4outlets×bothtiers) record3tick body/door/admission ledgers through3840: first drawn bodies3low/6high per outlet all within0.901m of a mouth, emerging normally rather than popping into open ground. All8runs complete with0errors; sixteen3600/3630panels inspected. Native admits the actual sequential6high/3low local waves; production source and independent canonical hashes unchanged."
     },
     {
-      "file": "docs/reports/sweep-c5/L8-04/low-0-review.json",
-      "sha256": "b64278abd8796c99b93342602df6e5ef09e3c8f5f0bbec5a8cf30c07df8516e7",
-      "what": "Current eight physical tunnel strips with96personallyinspectedcapture SHA256/seen notes; exact dense door/birth/admission/movement ledgers, native canonical controls/initialpackets and17consumer faultcontrols. Roof/crop limitations explicit."
+      "file": "docs/reports/final-c/L8-04/sweep-c5-l8-breach-producer.ts",
+      "sha256": "75353f0df156b20ab3acf6b8df0446a8abb8c08e3be5173480e62845e6c6e417",
+      "what": "Exact measurement producer snapshot; only output locations differ from the existing observer."
     },
     {
-      "file": "docs/reports/sweep-c5/L8-04/low-1-review.json",
-      "sha256": "a0c4b4db40e9ae2d5a0eb8961b29936e04b78ae6c7a5d5fefc42113c34a726eb",
-      "what": "Current eight physical tunnel strips with96personallyinspectedcapture SHA256/seen notes; exact dense door/birth/admission/movement ledgers, native canonical controls/initialpackets and17consumer faultcontrols. Roof/crop limitations explicit."
+      "file": "docs/reports/final-c/L8-04/high-1-physical.json.gz",
+      "sha256": "6b10b46d1ba9b71ff3ea037d7b0b317566dd46f81bf1ddb2452109707cd46466",
+      "what": "Current native routes breach at tick3600/60s through4spatially separated actual tunnel outlets. Eight physical WASD mouth approaches (all4outlets×bothtiers) record3tick body/door/admission ledgers through3840: first drawn bodies3low/6high per outlet all within0.901m of a mouth, emerging normally rather than popping into open ground. All8runs complete with0errors; sixteen3600/3630panels inspected. Native admits the actual sequential6high/3low local waves; production source and independent canonical hashes unchanged."
     },
     {
-      "file": "docs/reports/sweep-c5/L8-04/low-2-review.json",
-      "sha256": "f5e9ab4aead80059c2778e7bf5db4f71065085ba029af4236604b33fede11baf",
-      "what": "Current eight physical tunnel strips with96personallyinspectedcapture SHA256/seen notes; exact dense door/birth/admission/movement ledgers, native canonical controls/initialpackets and17consumer faultcontrols. Roof/crop limitations explicit."
+      "file": "docs/reports/final-c/L8-04/low-0-physical.json.gz",
+      "sha256": "527439463cdff3aa8a47eda3ee465a36e5e8e4b5ea5787cbe8ce16050e83b475",
+      "what": "Current native routes breach at tick3600/60s through4spatially separated actual tunnel outlets. Eight physical WASD mouth approaches (all4outlets×bothtiers) record3tick body/door/admission ledgers through3840: first drawn bodies3low/6high per outlet all within0.901m of a mouth, emerging normally rather than popping into open ground. All8runs complete with0errors; sixteen3600/3630panels inspected. Native admits the actual sequential6high/3low local waves; production source and independent canonical hashes unchanged."
     },
     {
-      "file": "docs/reports/sweep-c5/L8-04/low-3-review.json",
-      "sha256": "e7c6ee834e76a54fcc8eefeae0352f586e9524e3875d0abb494d7345e0977f8b",
-      "what": "Current eight physical tunnel strips with96personallyinspectedcapture SHA256/seen notes; exact dense door/birth/admission/movement ledgers, native canonical controls/initialpackets and17consumer faultcontrols. Roof/crop limitations explicit."
+      "file": "docs/reports/final-c/L8-04/coverage.json",
+      "sha256": "5548ef8b073b4d3c798e20e0f3e57fa420f24f6f86ea1fa09feac92de7a78c0b",
+      "what": "Current native routes breach at tick3600/60s through4spatially separated actual tunnel outlets. Eight physical WASD mouth approaches (all4outlets×bothtiers) record3tick body/door/admission ledgers through3840: first drawn bodies3low/6high per outlet all within0.901m of a mouth, emerging normally rather than popping into open ground. All8runs complete with0errors; sixteen3600/3630panels inspected. Native admits the actual sequential6high/3low local waves; production source and independent canonical hashes unchanged."
     },
     {
-      "file": "docs/reports/sweep-c5/L8-04/high-0-physical.json.gz",
-      "sha256": "ed5dacf9ba47cfcdf1a60e82741eadab2f0b779af46e4e3161cdcd6d04032c75",
-      "what": "Current eight physical tunnel strips with96personallyinspectedcapture SHA256/seen notes; exact dense door/birth/admission/movement ledgers, native canonical controls/initialpackets and17consumer faultcontrols. Roof/crop limitations explicit."
+      "file": "docs/reports/final-c/L8-04/high-0-physical.json.gz",
+      "sha256": "2c25c6f64b6258961eec36efc9a607d0dceddcf412517c36558c960a1759a263",
+      "what": "Current native routes breach at tick3600/60s through4spatially separated actual tunnel outlets. Eight physical WASD mouth approaches (all4outlets×bothtiers) record3tick body/door/admission ledgers through3840: first drawn bodies3low/6high per outlet all within0.901m of a mouth, emerging normally rather than popping into open ground. All8runs complete with0errors; sixteen3600/3630panels inspected. Native admits the actual sequential6high/3low local waves; production source and independent canonical hashes unchanged."
     },
     {
-      "file": "docs/reports/sweep-c5/L8-04/high-1-physical.json.gz",
-      "sha256": "bfc17b2455376c09ee107b36f3277a28eeafe3b4c18d8b399d095ec0bbe2d4d4",
-      "what": "Current eight physical tunnel strips with96personallyinspectedcapture SHA256/seen notes; exact dense door/birth/admission/movement ledgers, native canonical controls/initialpackets and17consumer faultcontrols. Roof/crop limitations explicit."
+      "file": "docs/reports/final-c/L8-04/low-1-physical.json.gz",
+      "sha256": "9cc71e0a26772f90c76c13555e20299fb2e68975e6a5fa09dc5d89f5efa45af9",
+      "what": "Current native routes breach at tick3600/60s through4spatially separated actual tunnel outlets. Eight physical WASD mouth approaches (all4outlets×bothtiers) record3tick body/door/admission ledgers through3840: first drawn bodies3low/6high per outlet all within0.901m of a mouth, emerging normally rather than popping into open ground. All8runs complete with0errors; sixteen3600/3630panels inspected. Native admits the actual sequential6high/3low local waves; production source and independent canonical hashes unchanged."
     },
     {
-      "file": "docs/reports/sweep-c5/L8-04/high-2-physical.json.gz",
-      "sha256": "649ca69c8d319772afb1ce93fba6eab83bf270b1da6432b79331495c851d84b3",
-      "what": "Current eight physical tunnel strips with96personallyinspectedcapture SHA256/seen notes; exact dense door/birth/admission/movement ledgers, native canonical controls/initialpackets and17consumer faultcontrols. Roof/crop limitations explicit."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L8-04/high-3-physical.json.gz",
-      "sha256": "b5fc3090a6636950b89a8e7e2d36892485ba8739c51ac18df71b600a49bf7a8d",
-      "what": "Current eight physical tunnel strips with96personallyinspectedcapture SHA256/seen notes; exact dense door/birth/admission/movement ledgers, native canonical controls/initialpackets and17consumer faultcontrols. Roof/crop limitations explicit."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L8-04/low-0-physical.json.gz",
-      "sha256": "e703edee4ce0757e25f0e42e5fdee71748a8618c77f6228865dd429669cf621b",
-      "what": "Current eight physical tunnel strips with96personallyinspectedcapture SHA256/seen notes; exact dense door/birth/admission/movement ledgers, native canonical controls/initialpackets and17consumer faultcontrols. Roof/crop limitations explicit."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L8-04/low-1-physical.json.gz",
-      "sha256": "58016d87da9d84511a52ffcf05b2e1e5e98dfe08a5d8eb5ec700142fad8d79ff",
-      "what": "Current eight physical tunnel strips with96personallyinspectedcapture SHA256/seen notes; exact dense door/birth/admission/movement ledgers, native canonical controls/initialpackets and17consumer faultcontrols. Roof/crop limitations explicit."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L8-04/low-2-physical.json.gz",
-      "sha256": "e42b9c0da27d06efe543d04e1bb478a534ee675c9400e4f63e15db080015c479",
-      "what": "Current eight physical tunnel strips with96personallyinspectedcapture SHA256/seen notes; exact dense door/birth/admission/movement ledgers, native canonical controls/initialpackets and17consumer faultcontrols. Roof/crop limitations explicit."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L8-04/low-3-physical.json.gz",
-      "sha256": "eea349b16d0fda6190f9b1b83327ca235242a7f53eae5587fe2765ab0af3fea1",
-      "what": "Current eight physical tunnel strips with96personallyinspectedcapture SHA256/seen notes; exact dense door/birth/admission/movement ledgers, native canonical controls/initialpackets and17consumer faultcontrols. Roof/crop limitations explicit."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L8-04/native-observation.json.gz",
-      "sha256": "8fb0b3176fba2bd2760e899441a2caa0012458e063a2cd19077ec4fc375eb2d5",
-      "what": "Current eight physical tunnel strips with96personallyinspectedcapture SHA256/seen notes; exact dense door/birth/admission/movement ledgers, native canonical controls/initialpackets and17consumer faultcontrols. Roof/crop limitations explicit."
-    },
-    {
-      "file": "docs/reports/sweep-c5/L8-04/coverage-proof.json",
-      "sha256": "071238936f2ade37603ca25629dd7c6e750de27a88338a7728b28b8e80f48c06",
-      "what": "Current eight physical tunnel strips with96personallyinspectedcapture SHA256/seen notes; exact dense door/birth/admission/movement ledgers, native canonical controls/initialpackets and17consumer faultcontrols. Roof/crop limitations explicit."
+      "file": "docs/reports/final-c/shared-l8/native.json.gz",
+      "sha256": "c103e65df509435bc174568c6e1fe086708e3a09833b830b225a959096b9de9b",
+      "what": "Current native routes breach at tick3600/60s through4spatially separated actual tunnel outlets. Eight physical WASD mouth approaches (all4outlets×bothtiers) record3tick body/door/admission ledgers through3840: first drawn bodies3low/6high per outlet all within0.901m of a mouth, emerging normally rather than popping into open ground. All8runs complete with0errors; sixteen3600/3630panels inspected. Native admits the actual sequential6high/3low local waves; production source and independent canonical hashes unchanged."
     }
-  ]
+  ],
+  "notes": "Frozen-head row review. Current immutable evidence, unchanged criterion and game source.",
+  "sourceDigest": "3f346fc1f0af18cb190b29844498febc36a720450de65904caad638582d717b9"
 }
