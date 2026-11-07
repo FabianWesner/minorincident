@@ -3669,14 +3669,18 @@
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix51-verify/receipts/L1-low-fixtures.json",
-      "sha256": "732c5f9ec817571bf782ffe583daf68650a18b5d5268d44b43d50e7350167ab2",
-      "what": "Frozen-head L1-09 native input receipt, evaluated by the exact clauses retained in the row proof."
+      "file": "docs/reports/final-a/native-receipts/L1-low-fixtures.json.gz",
+      "sha256": "800c578b84549c6260c6eafc413e0bd3f12eec8867ee04d39f696b809d231cb2",
+      "what": "Frozen-head L1-09 native input receipt, evaluated by the exact clauses retained in the row proof.",
+      "canonicalFile": "docs/reports/fix51-verify/receipts/L1-low-fixtures.json",
+      "decodedSha256": "732c5f9ec817571bf782ffe583daf68650a18b5d5268d44b43d50e7350167ab2"
     },
     {
-      "file": "docs/reports/fix51-verify/receipts/L1-high-fixtures.json",
-      "sha256": "3054f70f6c66327395b15d588d753169b64a88e97203f415503c30605baa6fce",
-      "what": "Frozen-head L1-09 native input receipt, evaluated by the exact clauses retained in the row proof."
+      "file": "docs/reports/final-a/native-receipts/L1-high-fixtures.json.gz",
+      "sha256": "0d126c713ffbdd45c4a52c6fd750dc91f257ffeb31e08ead2b0dc21cc23792ac",
+      "what": "Frozen-head L1-09 native input receipt, evaluated by the exact clauses retained in the row proof.",
+      "canonicalFile": "docs/reports/fix51-verify/receipts/L1-high-fixtures.json",
+      "decodedSha256": "3054f70f6c66327395b15d588d753169b64a88e97203f415503c30605baa6fce"
     }
   ],
   "observation": "4 current native checks PASS across low/high. low/controlled-fixture production L1 tier run-speed bounds: [{\"id\":2,\"tier\":\"frail\",\"speed\":4.782269563749273,\"upper\":4.888000000000001},{\"id\":3,\"tier\":\"frail\",\"speed\":4.431517784928222,\"upper\":4.888000000000001},{\"id\":4,\"tier\":\"frail\",\"speed\":4.665051918562728,\"upper\":4.888000000000001},{\"id\":5,\"tier\":\"frail\",\"speed\":4.840459392090183,\"upper\":4.888000000000001},{\"id\":6,\"tier\":\"frail\",\"speed\":4.526221226848699,\"upper\":4.888000000000001},{\"id\":7,\"tier\":\"frail\",\"speed\":4.740438595043894,\"upper\":4. [full value in proof]; low/controlled-fixture equal-tier spawn share faster than4.5m/s: {\"perTier\":100,\"total\":300,\"faster\":274,\"percent\":91.33333333333333}; target ≥85% of an equal tier mix faster than the4.5 m/s player (PASS); high/controlled-fixture production L1 tier run-speed bounds: [{\"id\":2,\"tier\":\"frail\",\"speed\":4.782269563749273,\"upper\":4.888000000000001},{\"id\":3,\"tier\":\"frail\",\"speed\":4.431517784928222,\"upper\":4.888000000000001},{\"id\":4,\"tier\":\"frail\",\"speed\":4.665051918562728,\"upper\":4.888000000000001},{\"id\":5,\"tier\":\"frail\",\"speed\":4.840459392090183,\"upper\":4.888000000000001},{\"id\":6,\"tier\":\"frail\",\"speed\":4.526221226848699,\"upper\":4.888000000000001},{\"id\":7,\"tier\":\"frail\",\"speed\":4.740438595043894,\"upper\":4 [full value in proof]; high/controlled-fixture equal-tier spawn share faster than4.5m/s: {\"perTier\":100,\"total\":300,\"faster\":274,\"percent\":91.33333333333333}; target ≥85% of an equal tier mix faster than the4.5 m/s player (PASS)"
