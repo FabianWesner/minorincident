@@ -145,7 +145,16 @@ export class LevelSevenEncounters {
     // fix69-r (L7-05): arming (the launcher pickup) sets the opening verge ranks on the courier, so they close in within
     // seconds instead of waiting for their idle leash. The close cluster east of the anchor keeps its own native notice;
     // pressing it too drove it through the following party.
-    for (const e of this.world.infected!.active) if (e.infected!.pack === l7Encounters.firstStreetGroup && e.transform.x <= l7Encounters.streets[0].x + 2) this.world.infected!.press(e.id, 1, this.world.tick + 20 * 60);
+    const firstStreet = this.world.infected!.active.filter(e => e.infected!.pack === l7Encounters.firstStreetGroup && e.health.current > 0);
+    for (const e of firstStreet) if (e.transform.x <= l7Encounters.streets[0].x + 2) this.world.infected!.press(e.id, 1, this.world.tick + 20 * 60);
+    if (this.world.infected!.director.tier === 'high') {
+    // One high-tier kerb runner needs the same focus as the opening verge ranks;
+    // otherwise nearby survivor targets delay first courier contact.
+      const player = this.world.entities.get(1)!;
+      const close = firstStreet.filter(e => e.archetype === 'infected.runner' && e.transform.x > l7Encounters.streets[0].x + 2)
+        .sort((a, b) => distance(a.transform, player.transform) - distance(b.transform, player.transform))[0];
+      if (close) this.world.infected!.press(close.id, 1, this.world.tick + 20 * 60);
+    }
     const low = this.world.infected!.director.tier === 'low';
     // Final horde is present before approach. Its Alphas get slots before ordinary queued arrivals.
     const streetCount = low ? 140 : 280;
