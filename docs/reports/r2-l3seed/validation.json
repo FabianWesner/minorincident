@@ -1,0 +1,111 @@
+{
+  "runtimeRevision": "58f6da14c30abebd1778b8c82c87daf0b6725917",
+  "acceptanceRevision": "fccd7bc03bdf7b5ccc632453ddd5d4a6e6de3890",
+  "schedulingValidation": {
+    "revision": "58f6da14c30abebd1778b8c82c87daf0b6725917",
+    "typecheck": 0,
+    "lint": 0
+  },
+  "sourceHash": "85b46e24e6f17194c47e3b79b3eea2f198e25948dc9809e2f5f0bf0659f16a2f",
+  "observerHash": "7f2ba02c82a52f461e55141d0d71fe09be4647b4b0cbb5914c85c8ce45fcecb8",
+  "verifyE21": {
+    "target": "E21",
+    "epics": [
+      "E21"
+    ],
+    "checks": [
+      {
+        "command": "npm run typecheck",
+        "status": 0,
+        "seconds": 39.027
+      },
+      {
+        "command": "npm run lint",
+        "status": 0,
+        "seconds": 18.959
+      },
+      {
+        "command": "npm test",
+        "status": 0,
+        "seconds": 76.329
+      }
+    ]
+  },
+  "unitTests": {
+    "passed": 107,
+    "files": 27
+  },
+  "acceptance": {
+    "command": "npm run qa:accept -- --level L3 --skip-browser --reuse",
+    "priorFullRun": "npm run qa:accept -- --level L3 --skip-browser",
+    "exitCode": 1,
+    "freshFailRows": [
+      "L3-08"
+    ],
+    "incompleteRows": 11,
+    "checkpointChecksPassed": 12,
+    "controlRunsIdentical": true,
+    "fixtureAndCheckpointErrors": 0
+  },
+  "threat": {
+    "command": "npm run qa:threat",
+    "revision": "58f6da14c30abebd1778b8c82c87daf0b6725917",
+    "flags": [],
+    "levels": 10,
+    "tier": "low",
+    "policy": "complete + passive",
+    "workers": 2,
+    "auditSeconds": 319.831065,
+    "budgetReceipt": {
+      "name": "qa-threat",
+      "cases": 150,
+      "counts": {
+        "vitest": 129,
+        "e2e": 9,
+        "invariantsBrowser": 12
+      },
+      "files": 43,
+      "limits": {
+        "cases": 150,
+        "files": 45,
+        "seconds": 600
+      },
+      "command": [
+        "node",
+        "--import",
+        "tsx/esm",
+        "tools/qa/threat-audit.ts"
+      ],
+      "seconds": 322.0106375,
+      "exitCode": 0,
+      "signal": null,
+      "failures": [],
+      "at": "2026-11-07T09:21:38.131Z"
+    },
+    "skilledSeedRows": [
+      {
+        "id": "L3-07 squad hits and player damage",
+        "passive": "\u2014",
+        "skilled": "2/3 seeds pass (s1:135 hits, 11HP, s2:216 hits, 100HP, s3:38 hits, 99HP)",
+        "expected": "officer hits>0; player damage<100HP; 2 of 3 valid seeds pass",
+        "verdict": "PASS"
+      },
+      {
+        "id": "L3-08 segment density and concurrent cap",
+        "passive": "\u2014",
+        "skilled": "2/3 seeds pass (s1:16/23/20, s2:19/21/31, s3:22/27/36)",
+        "expected": "medianS1<S2<S3;max\u2264100 low; 2 of 3 valid seeds pass",
+        "verdict": "PASS"
+      },
+      {
+        "id": "L3-11 native competent rate",
+        "passive": "\u2014",
+        "skilled": "s1:4.44/min, s2:19.01/min, s3:24.66/min; 3/3",
+        "expected": "3\u201325 infected attacks against player/min; 2 of 3 valid seeds pass",
+        "verdict": "PASS"
+      }
+    ]
+  },
+  "baselinePassesRetained": true,
+  "calmBandOutsideAfter": 0
+}
