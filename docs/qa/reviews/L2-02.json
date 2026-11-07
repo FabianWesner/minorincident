@@ -1,32 +1,33 @@
 {
   "row": "L2-02",
   "status": "PASS",
-  "reviewer": "Codex sweep-a3",
-  "date": "2026-11-06",
-  "commit": "10e01ad8c1073f575580ef08ad216e6b736557dc",
+  "reviewer": "Codex final-a",
+  "date": "2026-11-07",
+  "commit": "68489d7e263da5bcb2dceabbdbc0c4dfa196ebdc",
   "clauses": [
     {
       "clause": "Axe rack ring visible from the game camera (not behind sign/bollard); axe optional (`no-axe` run finishes).",
       "verdict": "PASS",
-      "note": "All12 current-source WebGL2/WebGPU low/high actualzoom0.5/1/1.5 opening frames personally inspected. Yellow axe ring is readable on the paving below the freestanding sign and to the near side of the apron bollards. Corgi/pack overlap part of its right edge; high-tier grass partly overlaps the left edge, but sign and bollards do not hide the ring. Both exact-source native no-axe fixtures complete without axe ownership. These optional-weapon fixtures suppress incoming damage and establish absence of an axe prerequisite, not mortal survival difficulty."
+      "note": "All12 current opening captures personally inspected: the rack ring is visibly on the pavement in front of the sign/bollard at all three actual zooms and both qualities/backends. Corgi overlaps part of the right arc; the remaining arc clearly locates the rack. Current native no-axe fixture completes at both qualities without collecting axe. Fixture courier damage protection explicitly retained; no mortal difficulty claim."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-a3/L2-02-clauses.json",
-      "sha256": "ec4eeaa386fb928bcd39354a11abc3424cbc45775ef795c1d15dd7db6ed6fab5",
-      "what": "All12 current-source WebGL2/WebGPU low/high actualzoom0.5/1/1.5 opening frames personally inspected. Yellow axe ring is readable on the paving below the freestanding sign and to the near side of the apron bollards. Corgi/pack overlap part of its right edge; high-tier grass partly overlaps the left edge, but sign and bollards do not hide the ring. Both exact-source native no-axe fixtures complete without axe ownership. These optional-weapon fixtures suppress incoming damage and establish absence of an axe prerequisite, not mortal survival difficulty."
+      "file": "docs/reports/final-a/L2-02-browser-ledger.json.gz",
+      "sha256": "2e4bdca48fcd8b23f6ed15823686e8678ce1f020cbf4d492e32b7ee3d56f0af4",
+      "what": "All12 current opening captures personally inspected: the rack ring is visibly on the pavement in front of the sign/bollard at all three actual zooms and both qualities/backends. Corgi overlaps part of the right arc; the remaining arc clearly locates the rack. Current native no-axe fixture completes at both qualities without collecting axe. Fixture courier damage protection explicitly retained; no mortal difficulty claim."
     },
     {
-      "file": "docs/reports/sweep-a3/L2-opening-images.json",
-      "sha256": "c6bb4ca5f676368db78b593868b853f5fd03d065c61adf9da74fbe6a512f49e9",
-      "what": "All12 current-source WebGL2/WebGPU low/high actualzoom0.5/1/1.5 opening frames personally inspected. Yellow axe ring is readable on the paving below the freestanding sign and to the near side of the apron bollards. Corgi/pack overlap part of its right edge; high-tier grass partly overlaps the left edge, but sign and bollards do not hide the ring. Both exact-source native no-axe fixtures complete without axe ownership. These optional-weapon fixtures suppress incoming damage and establish absence of an axe prerequisite, not mortal survival difficulty."
+      "file": "docs/reports/final-a/L2-02-image-review.json",
+      "sha256": "357c92942880a0f0e15739a189ff4b2a6d7b6fe02d19a3bf8aab1ef90a976314",
+      "what": "All12 current opening captures personally inspected: the rack ring is visibly on the pavement in front of the sign/bollard at all three actual zooms and both qualities/backends. Corgi overlaps part of the right arc; the remaining arc clearly locates the rack. Current native no-axe fixture completes at both qualities without collecting axe. Fixture courier damage protection explicitly retained; no mortal difficulty claim."
     },
     {
-      "file": "docs/reports/sweep-a3/L2-opening-ledger.json.gz",
-      "sha256": "f82a2e57e2af4159a16d170f20151e0ba4867e1c101b69e13039486a812b211c",
-      "what": "All12 current-source WebGL2/WebGPU low/high actualzoom0.5/1/1.5 opening frames personally inspected. Yellow axe ring is readable on the paving below the freestanding sign and to the near side of the apron bollards. Corgi/pack overlap part of its right edge; high-tier grass partly overlaps the left edge, but sign and bollards do not hide the ring. Both exact-source native no-axe fixtures complete without axe ownership. These optional-weapon fixtures suppress incoming damage and establish absence of an axe prerequisite, not mortal survival difficulty."
+      "file": "docs/reports/final-a/L2-02-current-proof.json",
+      "sha256": "78884ab162acdf5bb537d621e8758d69dc45b245a14609b7221f984ae14ffc61",
+      "what": "All12 current opening captures personally inspected: the rack ring is visibly on the pavement in front of the sign/bollard at all three actual zooms and both qualities/backends. Corgi overlaps part of the right arc; the remaining arc clearly locates the rack. Current native no-axe fixture completes at both qualities without collecting axe. Fixture courier damage protection explicitly retained; no mortal difficulty claim."
     }
   ],
-  "notes": "Untouched opening and pooled headless capture matrix. No relocation/actor injection in the visual fixture; protection only in the separately labelled native optional-axe completion fixture. Final-source refresh after constant-width ring change; native receipts rerun, browser frames recaptured and compared by SHA-256; changed pixels freshly viewed."
+  "notes": "Current frozen runtime source4e570db; pooled headless browsers, private port4783; screenshots remain under test-results. No runtime edits.",
+  "sourceDigest": "9f88ba48ca13900ca4f429225cbac3045a96d48adee791c50179dde9c8cd025f"
 }

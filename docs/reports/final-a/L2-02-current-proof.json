@@ -1,0 +1,38 @@
+{
+  "row": "L2-02",
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "criterion": "Axe rack ring visible from the game camera (not behind sign/bollard); axe optional (`no-axe` run finishes).",
+  "checks": [
+    {
+      "id": "L2-02",
+      "clause": "native no-axe completion (rack pixels remain open)",
+      "value": {
+        "outcome": "complete",
+        "axe": false,
+        "protected": true
+      },
+      "target": "complete without collecting axe; rack pixels remain open",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
+      "level": "L2"
+    },
+    {
+      "id": "L2-02",
+      "clause": "native no-axe completion (rack pixels remain open)",
+      "value": {
+        "outcome": "complete",
+        "axe": false,
+        "protected": true
+      },
+      "target": "complete without collecting axe; rack pixels remain open",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
+      "level": "L2"
+    }
+  ],
+  "observation": "All12 current opening captures personally inspected: the rack ring is visibly on the pavement in front of the sign/bollard at all three actual zooms and both qualities/backends. Corgi overlaps part of the right arc; the remaining arc clearly locates the rack. Current native no-axe fixture completes at both qualities without collecting axe. Fixture courier damage protection explicitly retained; no mortal difficulty claim."
+}
