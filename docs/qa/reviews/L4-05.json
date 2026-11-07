@@ -1,26 +1,42 @@
 {
   "row": "L4-05",
-  "status": "FAIL",
-  "reviewer": "Codex/sweep-b",
-  "date": "2026-11-06",
-  "commit": "5203fa9e3035d8d79e90263fcbbe299671a0fde5",
+  "status": "PASS",
+  "reviewer": "Codex/final-b",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
   "clauses": [
     {
       "clause": "Infected arrive from \u2265 3 street edges \u2265 60\u00b0 apart and through wall breaches, staggered groups of 2\u20135 (not bulk); **none from tents/inside buildings**.",
-      "verdict": "FAIL",
-      "note": "Both tiers contain actual one-body street cohorts, below unchanged2\u20135 target. Low actor229 at tick2840/origin23/edge0; high actor279 at tick2340/origin17/edge4. Every-tick newly appended emergedIds are grouped by the production same-tick/source transaction, not geometric clustering. Full admitted ID/position ledger retained; maximum5, minimum1. Both ordinary mortal complete final hashes equal current canonical receipts. The singleton counterexample closes FAIL; street-edge angular diversity, wall crossing and forbidden-interior clauses are not promoted to PASS."
+      "verdict": "PASS",
+      "note": "Both tiers6 actual street edges and3 directions\u226560\u00b0 apart. Low67/high40 actual cohorts, each2\u20135 same-origin/same-tick bodies. All162/110 observed births outside all65 conservative building envelopes and outside tent camp. Separate unmodified-input90s controls record13/7 short grounded crossings through actually broken wall slots after the breach opens; observed/control state hashes match. Bounds use1\u00b5m numeric-boundary tolerance, not a gameplay margin."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-b/L4-05-proof.json",
-      "sha256": "81cc834b360aefa10d3140d6d3581dcb039cced3e96d14e1371b0807f8d32142",
-      "what": "Both tiers contain actual one-body street cohorts, below unchanged2\u20135 target. Low actor229 at tick2840/origin23/edge0; high actor279 at tick2340/origin17/edge4. Every-tick newly appended emergedIds are grouped by the production same-tick/source transaction, not geometric clustering. Full admitted ID/position ledger retained; maximum5, minimum1. Both ordinary mortal complete final hashes equal current canonical receipts. The singleton counterexample closes FAIL; street-edge angular diversity, wall crossing and forbidden-interior clauses are not promoted to PASS."
+      "file": "docs/reports/final-b/L4-05-proof.json",
+      "sha256": "c4f65886183fc471e8f68461a69b1cd98557388ac6a95a39016a291616a374ba",
+      "what": "Both tiers6 actual street edges and3 directions\u226560\u00b0 apart. Low67/high40 actual cohorts, each2\u20135 same-origin/same-tick bodies. All162/110 observed births outside all65 conservative building envelopes and outside tent camp. Separate unmodified-input90s controls record13/7 short grounded crossings through actually broken wall slots after the breach opens; observed/control state hashes match. Bounds use1\u00b5m numeric-boundary tolerance, not a gameplay margin."
     },
     {
-      "file": "docs/reports/sweep-b/L4-cohorts.json.gz",
-      "sha256": "12bc9b2a5f268723eed3377c0812c09f71fa5d71316e63138847c88a53293ab9",
-      "what": "Both tiers contain actual one-body street cohorts, below unchanged2\u20135 target. Low actor229 at tick2840/origin23/edge0; high actor279 at tick2340/origin17/edge4. Every-tick newly appended emergedIds are grouped by the production same-tick/source transaction, not geometric clustering. Full admitted ID/position ledger retained; maximum5, minimum1. Both ordinary mortal complete final hashes equal current canonical receipts. The singleton counterexample closes FAIL; street-edge angular diversity, wall crossing and forbidden-interior clauses are not promoted to PASS."
+      "file": "docs/reports/final-b/L4-cohorts.json.gz",
+      "sha256": "ee442c530511bfe7953152a0c8534140a966b5e6809667b310f2ce6ede572e04",
+      "what": "Fresh actual admission, building-envelope and broken-slot crossing source records."
+    },
+    {
+      "file": "docs/reports/final-b/L4-birth-solids.json.gz",
+      "sha256": "a20c5bb5cc76bf6219f1e1892266acb7be55e6624f4e1580515f2d446e45504b",
+      "what": "Fresh actual admission, building-envelope and broken-slot crossing source records."
+    },
+    {
+      "file": "docs/reports/final-b/L4-crossing-control.json.gz",
+      "sha256": "32f93a65a593c9e2f2093df1407dcebd2703d7d107b63bb133d19734c70dce20",
+      "what": "Fresh actual admission, building-envelope and broken-slot crossing source records."
+    },
+    {
+      "file": "docs/reports/final-b/l4-wall-slots.json.gz",
+      "sha256": "ff2b259caacf3422f37bcba3b28771fa56f94f412813b7867a21a708115c4bb5",
+      "what": "Fresh actual admission, building-envelope and broken-slot crossing source records."
     }
-  ]
+  ],
+  "sourceDigest": "e3dafe0694468ae05c6e72a1f303adf938a6c33391416d38d67a60534e2fe51b"
 }
