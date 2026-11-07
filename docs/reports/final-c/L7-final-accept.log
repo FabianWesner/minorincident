@@ -1,0 +1,27 @@
+
+> qa:accept
+> node --import tsx/esm tools/qa/accept.ts --level L7 --tier both --skip-browser
+
+[qa:accept] L7 low/complete: native global and level observation
+[qa:follower-pace] L7 low/complete seed 3
+[qa:follower-pace] L7 low/complete seed 2
+[qa:accept] L7 low/complete: complete
+[qa:accept] L7 low/stationary: native global and level observation
+[qa:accept] L7 low/stationary: tick-budget
+[qa:accept] L7 high/complete: native global and level observation
+[qa:follower-pace] L7 high/complete seed 3
+[qa:follower-pace] L7 high/complete seed 2
+[qa:accept] L7 high/complete: complete
+[qa:accept] L7 high/stationary: native global and level observation
+[qa:accept] L7 high/stationary: tick-budget
+[qa:accept] L7 low/fixtures: 8 clauses, 0 errors
+[qa:accept] L7 high/fixtures: 8 clauses, 0 errors
+[qa:accept:checkpoint] L7 low/night-exit: PASS
+[qa:accept:checkpoint] L7 low/rocket: PASS
+[qa:accept:checkpoint] L7 low/corridor: PASS
+[qa:accept] L7 low/checkpoints: 3 clauses; control identical; 0 errors
+[qa:accept:checkpoint] L7 high/night-exit: PASS
+[qa:accept:checkpoint] L7 high/rocket: PASS
+[qa:accept:checkpoint] L7 high/corridor: PASS
+[qa:accept] L7 high/checkpoints: 3 clauses; control identical; 0 errors
+[qa:accept] L7: 2 fresh failing rows; 8 incomplete rows; docs/reports/fix51-verify/L7.json

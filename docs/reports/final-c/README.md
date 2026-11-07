@@ -8,7 +8,7 @@ L10 first report assembly stopped because sparse checkout omitted two tracked ep
 
 ## Row table
 
-Final row counts and freshness verification are recorded after the final timing batch and native report refresh.
+Final result: **47/47 reviews FRESH**, including **37 PASS, 5 measured FAIL, 5 P**. [Final audit](final-audit.json) verifies all47 tracker decisions FRESH, every review on the frozen game commit, all322 unique evidence files present with matching SHA256, and an empty game-source diff. The taste questions remain open; no release approval is inferred.
 
 Browser probes restore the exact current native completed campaign/Resume archives named in each receipt. They exercise actual physical keyboard/mouse input after restoration; they do not establish a physical full-campaign prefix. Some retained legacy producer method strings still use “physical qualified save”; the actual seed path, SHA256 and the [boundary ledger](campaign/boundaries.json) define provenance. High L8 uses the canonical24-follower completion after the separately retained carried23-follower prefix failed; that rejected prefix is not marked PASS.
 
@@ -64,21 +64,24 @@ Browser probes restore the exact current native completed campaign/Resume archiv
 
 ## Native command results
 
-| Level | Result |
-|---|---|
-| L7 | 2 measured failing rows; 8 incomplete rows; 2 current row passes |
-| L8 | 0 measured failing rows; 10 incomplete rows; 1 current row passes |
-| L9 | 0 measured failing rows; 8 incomplete rows; 1 current row passes |
-| L10 | 1 measured failing rows; 10 incomplete rows; 4 current row passes |
+All four required commands were executed again during final closure. The [command receipt](final-commands.json) records exact commands, elapsed times, exit codes and log hashes. L10 metadata was refreshed from matching native receipts after the last browser review.
 
-Commands run on this frozen head:
+| Level | Command exit | Machine PASS / FAIL / NOT CHECKED |
+|---|---|---|
+| L7 | 1 | 2 / 2 / 8 |
+| L8 | 1 | 1 / 1 / 9 |
+| L9 | 1 | 1 / 1 / 7 |
+| L10 | 1 | 4 / 2 / 9 |
 
-- `npm run qa:accept -- --level L7 --tier both --skip-browser` (exit 1; retained failures/incomplete rows).
-- `npm run qa:accept -- --level L8 --tier both --skip-browser` (exit 2; incomplete rows).
-- `npm run qa:accept -- --level L9 --tier both --skip-browser` (exit 2; incomplete rows).
-- `npm run qa:accept -- --level L10 --tier both --skip-browser` (exit 1; retained failures/incomplete rows).
+Machine statuses remain distinct from this table: legacy browser adapters use their existing receipt roots/fingerprints and do not consume every new final-c immutable proof. Their remaining NOT CHECKED clauses are retained, and all fresh manual review metadata is visible. No acceptance adapter, threshold or measurement requirement was relaxed. Nonzero command exits are preserved.
 
-The final command results and freshness/hash audit below will close the report. L8-11 retains its explicit external Opus question. No push, deploy or merge was made.
+## Measurement scope and observer corrections
+
+Native campaign continuation, checkpoints and fixtures use actual production transactions with independent controls. Physical browser runs restore the named current native save; they establish real keyboard/mouse behavior from that point, rather than a physical whole-campaign prefix. Explicit protected-courier or isolated presentation fixtures are identified per row.
+
+The omitted L8 transport transaction in the first harness, inside-bus L7 waypoint, standalone radar globals, and VFX particle-clock sampling were diagnosed as observer errors and corrected with separate receipts; they were not relabeled as game defects. The first high fight observer timed out without a terminal receipt. Valid earlier results were preserved; corrected high-only observer and every unadmitted reservation are archived in L10-12. Timing admission obeyed exclusive shared-pool preflight; known foreign native CPU activity is disclosed where present. The brief’s ~3h wall-clock box was exceeded while waiting for the final quiet reservation; the admission logs retain those waits and the explicit observer correction.
+
+Raw captures were deleted after each review, preserving only the frames/sheets needed by the review and their hashes. No push, deploy, merge, game-code or specification change was made.
 
 ## QA reporting correction
 

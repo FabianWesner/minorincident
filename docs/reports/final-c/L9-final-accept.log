@@ -1,0 +1,23 @@
+
+> qa:accept
+> node --import tsx/esm tools/qa/accept.ts --level L9 --tier both --skip-browser
+
+[qa:accept] L9 low/complete: native global and level observation
+[qa:accept] L9 low/complete: complete
+[qa:accept] L9 low/stationary: native global and level observation
+[qa:accept] L9 low/stationary: complete
+[qa:accept] L9 high/complete: native global and level observation
+[qa:accept] L9 high/complete: complete
+[qa:accept] L9 high/stationary: native global and level observation
+[qa:accept] L9 high/stationary: complete
+[campaign] selected action weapon.rocket-launcher unavailable (scripted crossing arsenal loss); falling back to weapon.fire-axe
+[qa:accept] L9 low/fixtures: 5 clauses, 0 errors
+[campaign] selected action weapon.rocket-launcher unavailable (scripted crossing arsenal loss); falling back to weapon.fire-axe
+[qa:accept] L9 high/fixtures: 5 clauses, 0 errors
+[qa:accept:checkpoint] L9 low/crossing-start: PASS
+[qa:accept:checkpoint] L9 low/outskirts-approach: PASS
+[qa:accept] L9 low/checkpoints: 2 clauses; control identical; 0 errors
+[qa:accept:checkpoint] L9 high/crossing-start: PASS
+[qa:accept:checkpoint] L9 high/outskirts-approach: PASS
+[qa:accept] L9 high/checkpoints: 2 clauses; control identical; 0 errors
+[qa:accept] L9: 1 fresh failing rows; 7 incomplete rows; docs/reports/fix51-verify/L9.json

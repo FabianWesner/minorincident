@@ -1,0 +1,557 @@
+{
+  "frozenGameHead": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "at": "2026-11-07T02:52:26.671Z",
+  "rows": 47,
+  "allFresh": true,
+  "allTrackerFresh": true,
+  "allEvidencePresent": true,
+  "allEvidenceHashesMatch": true,
+  "uniqueEvidenceFiles": 322,
+  "gameSourceDiffEmpty": true,
+  "nativeControls": [
+    {
+      "receipt": "L10-high-complete.json.gz",
+      "sourceIdentical": true,
+      "stateHashIdentical": true,
+      "stateHash": "abd987b8"
+    },
+    {
+      "receipt": "L10-high-stationary.json.gz",
+      "sourceIdentical": true,
+      "stateHashIdentical": true,
+      "stateHash": "9b7c7fe2"
+    },
+    {
+      "receipt": "L10-low-complete.json.gz",
+      "sourceIdentical": true,
+      "stateHashIdentical": true,
+      "stateHash": "56e575ab"
+    },
+    {
+      "receipt": "L10-low-stationary.json.gz",
+      "sourceIdentical": true,
+      "stateHashIdentical": true,
+      "stateHash": "2e46679e"
+    },
+    {
+      "receipt": "L7-high-complete.json.gz",
+      "sourceIdentical": true,
+      "stateHashIdentical": true,
+      "stateHash": "08b6e3e8"
+    },
+    {
+      "receipt": "L7-high-stationary.json.gz",
+      "sourceIdentical": true,
+      "stateHashIdentical": true,
+      "stateHash": "f03b9e4b"
+    },
+    {
+      "receipt": "L7-low-complete.json.gz",
+      "sourceIdentical": true,
+      "stateHashIdentical": true,
+      "stateHash": "30e28540"
+    },
+    {
+      "receipt": "L7-low-stationary.json.gz",
+      "sourceIdentical": true,
+      "stateHashIdentical": true,
+      "stateHash": "f7f51d4e"
+    },
+    {
+      "receipt": "L8-high-complete.json.gz",
+      "sourceIdentical": true,
+      "stateHashIdentical": true,
+      "stateHash": "b12fc825"
+    },
+    {
+      "receipt": "L8-high-stationary.json.gz",
+      "sourceIdentical": true,
+      "stateHashIdentical": true,
+      "stateHash": "b480e68f"
+    },
+    {
+      "receipt": "L8-low-complete.json.gz",
+      "sourceIdentical": true,
+      "stateHashIdentical": true,
+      "stateHash": "b1b9cd1a"
+    },
+    {
+      "receipt": "L8-low-stationary.json.gz",
+      "sourceIdentical": true,
+      "stateHashIdentical": true,
+      "stateHash": "7aab142d"
+    }
+  ],
+  "decisions": [
+    {
+      "row": "L7-01",
+      "review": "docs/qa/reviews/L7-01.json",
+      "sha256": "5ef4c29ebba401716087ad38f739a84165d64cef3088c97052b67f56e009107b",
+      "freshness": "FRESH",
+      "trackerFreshness": "FRESH",
+      "reviewStatus": "FAIL",
+      "machineStatus": "FAIL",
+      "evidenceFiles": 5
+    },
+    {
+      "row": "L7-02",
+      "review": "docs/qa/reviews/L7-02.json",
+      "sha256": "6dd2773de2bca01328bca26018097d2607b59598a20e46d215a8d4193aa5275f",
+      "freshness": "FRESH",
+      "trackerFreshness": "FRESH",
+      "reviewStatus": "PASS",
+      "machineStatus": "NOT CHECKED",
+      "evidenceFiles": 10
+    },
+    {
+      "row": "L7-03",
+      "review": "docs/qa/reviews/L7-03.json",
+      "sha256": "80f7202376da1946eb03220a01f51b7d6c9c354814f73b7b91266bfdc5df8f89",
+      "freshness": "FRESH",
+      "trackerFreshness": "FRESH",
+      "reviewStatus": "PASS",
+      "machineStatus": "NOT CHECKED",
+      "evidenceFiles": 10
+    },
+    {
+      "row": "L7-04",
+      "review": "docs/qa/reviews/L7-04.json",
+      "sha256": "c82d429cfc1c7fa48361c66e1e21fd2ca9a407ced344b187c7234b4fd3e12996",
+      "freshness": "FRESH",
+      "trackerFreshness": "FRESH",
+      "reviewStatus": "PASS",
+      "machineStatus": "PASS",
+      "evidenceFiles": 5
+    },
+    {
+      "row": "L7-05",
+      "review": "docs/qa/reviews/L7-05.json",
+      "sha256": "782216c3f97b5a0081015464cfcf63b22c6e12c963d890118cb4d9e395520b65",
+      "freshness": "FRESH",
+      "trackerFreshness": "FRESH",
+      "reviewStatus": "FAIL",
+      "machineStatus": "FAIL",
+      "evidenceFiles": 5
+    },
+    {
+      "row": "L7-06",
+      "review": "docs/qa/reviews/L7-06.json",
+      "sha256": "284eebe6d0198f9f16dc26e14e96d85f3ed4ee71fe6ac40a1cd68f39aebe81d0",
+      "freshness": "FRESH",
+      "trackerFreshness": "FRESH",
+      "reviewStatus": "PASS",
+      "machineStatus": "NOT CHECKED",
+      "evidenceFiles": 10
+    },
+    {
+      "row": "L7-07",
+      "review": "docs/qa/reviews/L7-07.json",
+      "sha256": "5358dad4c547a895cdb9cb0b8e878bd52841789dae3bcd7aba8c9268afec2033",
+      "freshness": "FRESH",
+      "trackerFreshness": "FRESH",
+      "reviewStatus": "PASS",
+      "machineStatus": "NOT CHECKED",
+      "evidenceFiles": 2
+    },
+    {
+      "row": "L7-08",
+      "review": "docs/qa/reviews/L7-08.json",
+      "sha256": "247c592ee01f4e887137a7467c40ce46563c276a3374971b560c63ee6b5179da",
+      "freshness": "FRESH",
+      "trackerFreshness": "FRESH",
+      "reviewStatus": "PASS",
+      "machineStatus": "NOT CHECKED",
+      "evidenceFiles": 5
+    },
+    {
+      "row": "L7-09",
+      "review": "docs/qa/reviews/L7-09.json",
+      "sha256": "3f45c4f64898a001346d5bd106f331edd8f0be4367a300f7541876cb5fbc4806",
+      "freshness": "FRESH",
+      "trackerFreshness": "FRESH",
+      "reviewStatus": "PASS",
+      "machineStatus": "NOT CHECKED",
+      "evidenceFiles": 6
+    },
+    {
+      "row": "L7-10",
+      "review": "docs/qa/reviews/L7-10.json",
+      "sha256": "e380e6b03c8cd8d5c9b815f73ebf2f1aa90cf80b3dc16da326a3903068357d1b",
+      "freshness": "FRESH",
+      "trackerFreshness": "FRESH",
+      "reviewStatus": "PASS",
+      "machineStatus": "PASS",
+      "evidenceFiles": 5
+    },
+    {
+      "row": "L7-11",
+      "review": "docs/qa/reviews/L7-11.json",
+      "sha256": "cb8877826f95f3e8b34a58e279394cf2303924e861b3c97ed423189007124073",
+      "freshness": "FRESH",
+      "trackerFreshness": "FRESH",
+      "reviewStatus": "PASS",
+      "machineStatus": "NOT CHECKED",
+      "evidenceFiles": 7
+    },
+    {
+      "row": "L7-12",
+      "review": "docs/qa/reviews/L7-12.json",
+      "sha256": "c8bb5bb9adbd34cd7684c5688fa51c3be984fcdfb9b33ea52ef857d473e529dd",
+      "freshness": "FRESH",
+      "trackerFreshness": "FRESH",
+      "reviewStatus": "PASS",
+      "machineStatus": "NOT CHECKED",
+      "evidenceFiles": 7
+    },
+    {
+      "row": "L8-01",
+      "review": "docs/qa/reviews/L8-01.json",
+      "sha256": "ce09eee15c24c686d4252f652711dbf312c7fd0005a91fb7b63fc41115b78796",
+      "freshness": "FRESH",
+      "trackerFreshness": "FRESH",
+      "reviewStatus": "PASS",
+      "machineStatus": "NOT CHECKED",
+      "evidenceFiles": 9
+    },
+    {
+      "row": "L8-02",
+      "review": "docs/qa/reviews/L8-02.json",
+      "sha256": "7ff267b1c5ea14eb1f7ec8ff830ffe1191bc31250623805cd6e0712b4694118d",
+      "freshness": "FRESH",
+      "trackerFreshness": "FRESH",
+      "reviewStatus": "PASS",
+      "machineStatus": "NOT CHECKED",
+      "evidenceFiles": 7
+    },
+    {
+      "row": "L8-03",
+      "review": "docs/qa/reviews/L8-03.json",
+      "sha256": "9c374971d2c7f93d37443734ed140285c9ec0b0e92bdb072cf08561007078cf3",
+      "freshness": "FRESH",
+      "trackerFreshness": "FRESH",
+      "reviewStatus": "PASS",
+      "machineStatus": "NOT CHECKED",
+      "evidenceFiles": 6
+    },
+    {
+      "row": "L8-04",
+      "review": "docs/qa/reviews/L8-04.json",
+      "sha256": "f9b7a9ef8fd3f9a33be3a59935a4c397b0f552b47be137636a50c92b13c3c07b",
+      "freshness": "FRESH",
+      "trackerFreshness": "FRESH",
+      "reviewStatus": "PASS",
+      "machineStatus": "NOT CHECKED",
+      "evidenceFiles": 11
+    },
+    {
+      "row": "L8-05",
+      "review": "docs/qa/reviews/L8-05.json",
+      "sha256": "a81ca0521fafcaf41579478b831c4062133447d67621d2dd468d8c5970a126e3",
+      "freshness": "FRESH",
+      "trackerFreshness": "FRESH",
+      "reviewStatus": "PASS",
+      "machineStatus": "NOT CHECKED",
+      "evidenceFiles": 5
+    },
+    {
+      "row": "L8-06",
+      "review": "docs/qa/reviews/L8-06.json",
+      "sha256": "d528c70623856de26750732e2bdb000b8c123c9336b1aacbce1a2d0e6414fd45",
+      "freshness": "FRESH",
+      "trackerFreshness": "FRESH",
+      "reviewStatus": "PASS",
+      "machineStatus": "PASS",
+      "evidenceFiles": 5
+    },
+    {
+      "row": "L8-07",
+      "review": "docs/qa/reviews/L8-07.json",
+      "sha256": "c1098d6d8fbd49c4e8022806e413b7bf81a4a71e5e718bdbb5dce201af82e869",
+      "freshness": "FRESH",
+      "trackerFreshness": "FRESH",
+      "reviewStatus": "PASS",
+      "machineStatus": "NOT CHECKED",
+      "evidenceFiles": 5
+    },
+    {
+      "row": "L8-08",
+      "review": "docs/qa/reviews/L8-08.json",
+      "sha256": "b7b19f70712ee11552459be3c3646c644244a736d7cfcbbd1e438cb16fc9bea7",
+      "freshness": "FRESH",
+      "trackerFreshness": "FRESH",
+      "reviewStatus": "PASS",
+      "machineStatus": "NOT CHECKED",
+      "evidenceFiles": 12
+    },
+    {
+      "row": "L8-09",
+      "review": "docs/qa/reviews/L8-09.json",
+      "sha256": "e5f150de2ccc60eb783eccaca793211bcd5d51a61aad8a19a04ef97f5645079f",
+      "freshness": "FRESH",
+      "trackerFreshness": "FRESH",
+      "reviewStatus": "PASS",
+      "machineStatus": "NOT CHECKED",
+      "evidenceFiles": 15
+    },
+    {
+      "row": "L8-10",
+      "review": "docs/qa/reviews/L8-10.json",
+      "sha256": "04fb2f001b28c6f7f869610622dae3f498877240fcd2a398ff3dde8a7dd53599",
+      "freshness": "FRESH",
+      "trackerFreshness": "FRESH",
+      "reviewStatus": "PASS",
+      "machineStatus": "NOT CHECKED",
+      "evidenceFiles": 9
+    },
+    {
+      "row": "L8-11",
+      "review": "docs/qa/reviews/L8-11.json",
+      "sha256": "9bfcd2517552c44c0927ec08e3d78dc0964332ca64c4d2aaa6b0f563066cf236",
+      "freshness": "FRESH",
+      "trackerFreshness": "FRESH",
+      "reviewStatus": "FAIL",
+      "machineStatus": "FAIL",
+      "evidenceFiles": 4
+    },
+    {
+      "row": "L9-01",
+      "review": "docs/qa/reviews/L9-01.json",
+      "sha256": "391c4631ab4fbf63c99734cb4cec9176cb76cf221c7dc2dcbf3c5f8908c51b7f",
+      "freshness": "FRESH",
+      "trackerFreshness": "FRESH",
+      "reviewStatus": "PASS",
+      "machineStatus": "NOT CHECKED",
+      "evidenceFiles": 12
+    },
+    {
+      "row": "L9-02",
+      "review": "docs/qa/reviews/L9-02.json",
+      "sha256": "bc553a54d550b29092a2c993f1e8f27f85c6687a24d23cf7671d3715104619ed",
+      "freshness": "FRESH",
+      "trackerFreshness": "FRESH",
+      "reviewStatus": "PASS",
+      "machineStatus": "NOT CHECKED",
+      "evidenceFiles": 12
+    },
+    {
+      "row": "L9-03",
+      "review": "docs/qa/reviews/L9-03.json",
+      "sha256": "03e6fde47bd8743b20287cb92550ae7b35abe613074dce7a245daab743bc641c",
+      "freshness": "FRESH",
+      "trackerFreshness": "FRESH",
+      "reviewStatus": "PASS",
+      "machineStatus": "NOT CHECKED",
+      "evidenceFiles": 23
+    },
+    {
+      "row": "L9-04",
+      "review": "docs/qa/reviews/L9-04.json",
+      "sha256": "5908e0338b6583fb636e320eb6541dcc74e6cd4ca438e90283568f76b60350e8",
+      "freshness": "FRESH",
+      "trackerFreshness": "FRESH",
+      "reviewStatus": "PASS",
+      "machineStatus": "NOT CHECKED",
+      "evidenceFiles": 6
+    },
+    {
+      "row": "L9-05",
+      "review": "docs/qa/reviews/L9-05.json",
+      "sha256": "83675aec85fddeeb67507310d6d8c29ddfe7e1cb8d0ca48213aa9c83b5297d64",
+      "freshness": "FRESH",
+      "trackerFreshness": "FRESH",
+      "reviewStatus": "FAIL",
+      "machineStatus": "FAIL",
+      "evidenceFiles": 8
+    },
+    {
+      "row": "L9-06",
+      "review": "docs/qa/reviews/L9-06.json",
+      "sha256": "e636835fe2e4d5b8ab7c6f3e71736ceb61a130cf544d6b2356a014d62cb3a733",
+      "freshness": "FRESH",
+      "trackerFreshness": "FRESH",
+      "reviewStatus": "PASS",
+      "machineStatus": "NOT CHECKED",
+      "evidenceFiles": 5
+    },
+    {
+      "row": "L9-07",
+      "review": "docs/qa/reviews/L9-07.json",
+      "sha256": "c161f968587ce8baab0c4b994f1d385020bf673074987235f12d7d065814a686",
+      "freshness": "FRESH",
+      "trackerFreshness": "FRESH",
+      "reviewStatus": "PASS",
+      "machineStatus": "NOT CHECKED",
+      "evidenceFiles": 3
+    },
+    {
+      "row": "L9-08",
+      "review": "docs/qa/reviews/L9-08.json",
+      "sha256": "8446229a913ad702548377bced22ebe2fd754039fec3a63b128f79512f31ae79",
+      "freshness": "FRESH",
+      "trackerFreshness": "FRESH",
+      "reviewStatus": "PASS",
+      "machineStatus": "PASS",
+      "evidenceFiles": 3
+    },
+    {
+      "row": "L9-09",
+      "review": "docs/qa/reviews/L9-09.json",
+      "sha256": "0b20c1c7d83197b86a0dc99f75383dd8884d9ce33bda6c7ff3530f9e23605300",
+      "freshness": "FRESH",
+      "trackerFreshness": "FRESH",
+      "reviewStatus": "PASS",
+      "machineStatus": "NOT CHECKED",
+      "evidenceFiles": 18
+    },
+    {
+      "row": "L10-01",
+      "review": "docs/qa/reviews/L10-01.json",
+      "sha256": "be1842f90ce91b1985dea5b822b7e19669dd70098d2a15fadd57ad3f0b2ad82f",
+      "freshness": "FRESH",
+      "trackerFreshness": "FRESH",
+      "reviewStatus": "PASS",
+      "machineStatus": "PASS",
+      "evidenceFiles": 5
+    },
+    {
+      "row": "L10-02",
+      "review": "docs/qa/reviews/L10-02.json",
+      "sha256": "8ba1fd66087e08fcc49314245c7fc9951a4d3f249decf40f269377dd596d1638",
+      "freshness": "FRESH",
+      "trackerFreshness": "FRESH",
+      "reviewStatus": "PASS",
+      "machineStatus": "NOT CHECKED",
+      "evidenceFiles": 2
+    },
+    {
+      "row": "L10-03",
+      "review": "docs/qa/reviews/L10-03.json",
+      "sha256": "6ddff073b658bb8ffafd2435866ae194f305fba16b601952411535dd908f4f3a",
+      "freshness": "FRESH",
+      "trackerFreshness": "FRESH",
+      "reviewStatus": "FAIL",
+      "machineStatus": "FAIL",
+      "evidenceFiles": 2
+    },
+    {
+      "row": "L10-04",
+      "review": "docs/qa/reviews/L10-04.json",
+      "sha256": "9fc3966f8f6a82b43507ec4a8383fc0aa597cf9c7b8f3998983429699789d627",
+      "freshness": "FRESH",
+      "trackerFreshness": "FRESH",
+      "reviewStatus": "PASS",
+      "machineStatus": "NOT CHECKED",
+      "evidenceFiles": 4
+    },
+    {
+      "row": "L10-05",
+      "review": "docs/qa/reviews/L10-05.json",
+      "sha256": "4a4dba9b5928a1bc91c856572553b132c685fafe14790e88a77f2d7bddabd772",
+      "freshness": "FRESH",
+      "trackerFreshness": "FRESH",
+      "reviewStatus": "PASS",
+      "machineStatus": "NOT CHECKED",
+      "evidenceFiles": 15
+    },
+    {
+      "row": "L10-06",
+      "review": "docs/qa/reviews/L10-06.json",
+      "sha256": "aabf3e897a5ec1cf471f9043660994356c0c1ef1e48e6aebf070c3ce2d4221ae",
+      "freshness": "FRESH",
+      "trackerFreshness": "FRESH",
+      "reviewStatus": "PASS",
+      "machineStatus": "NOT CHECKED",
+      "evidenceFiles": 21
+    },
+    {
+      "row": "L10-07",
+      "review": "docs/qa/reviews/L10-07.json",
+      "sha256": "631077e889d8fd0295de7259bd89e42618363ba228e760c01d0e619fe506bed0",
+      "freshness": "FRESH",
+      "trackerFreshness": "FRESH",
+      "reviewStatus": "PASS",
+      "machineStatus": "NOT CHECKED",
+      "evidenceFiles": 8
+    },
+    {
+      "row": "L10-08",
+      "review": "docs/qa/reviews/L10-08.json",
+      "sha256": "89bdeefd161bebe46b7e7acab830913919e62bbdb23d7df648687cbb4633dffa",
+      "freshness": "FRESH",
+      "trackerFreshness": "FRESH",
+      "reviewStatus": "PASS",
+      "machineStatus": "NOT CHECKED",
+      "evidenceFiles": 30
+    },
+    {
+      "row": "L10-09",
+      "review": "docs/qa/reviews/L10-09.json",
+      "sha256": "dbb79fd449856f48f2581df33520e0529161fc37dca1b583b2dbabf88dea1f0e",
+      "freshness": "FRESH",
+      "trackerFreshness": "FRESH",
+      "reviewStatus": "PASS",
+      "machineStatus": "NOT CHECKED",
+      "evidenceFiles": 10
+    },
+    {
+      "row": "L10-10",
+      "review": "docs/qa/reviews/L10-10.json",
+      "sha256": "253750f2bf4b985bc3c652333cbbca30de4994978a0ff4857e43dff6f2ae58f1",
+      "freshness": "FRESH",
+      "trackerFreshness": "FRESH",
+      "reviewStatus": "PASS",
+      "machineStatus": "PASS",
+      "evidenceFiles": 7
+    },
+    {
+      "row": "L10-11",
+      "review": "docs/qa/reviews/L10-11.json",
+      "sha256": "f46d05ac301e6366bc7a344d4b0395d13957fe6c9ea2ec2d0429129e5b6641b4",
+      "freshness": "FRESH",
+      "trackerFreshness": "FRESH",
+      "reviewStatus": "FAIL",
+      "machineStatus": "FAIL",
+      "evidenceFiles": 2
+    },
+    {
+      "row": "L10-12",
+      "review": "docs/qa/reviews/L10-12.json",
+      "sha256": "88453259752f3369c79cc4fc1dfb85fd496284b2fb867700082d39a263fd10f8",
+      "freshness": "FRESH",
+      "trackerFreshness": "FRESH",
+      "reviewStatus": "PASS",
+      "machineStatus": "NOT CHECKED",
+      "evidenceFiles": 21
+    },
+    {
+      "row": "L10-13",
+      "review": "docs/qa/reviews/L10-13.json",
+      "sha256": "04193a4b4d711e199ef4e46b2e079d4711785993b30e8dc1f8d641aadd9a3a9f",
+      "freshness": "FRESH",
+      "trackerFreshness": "FRESH",
+      "reviewStatus": "PASS",
+      "machineStatus": "PASS",
+      "evidenceFiles": 7
+    },
+    {
+      "row": "L10-14",
+      "review": "docs/qa/reviews/L10-14.json",
+      "sha256": "b2d0f1ff735aab6e4a4440e9794198c471b3334fda568c6a86ea465716197327",
+      "freshness": "FRESH",
+      "trackerFreshness": "FRESH",
+      "reviewStatus": "PASS",
+      "machineStatus": "NOT CHECKED",
+      "evidenceFiles": 8
+    },
+    {
+      "row": "L10-15",
+      "review": "docs/qa/reviews/L10-15.json",
+      "sha256": "3bba81c2bd2c887aa7d926faae52ac42654fc0018392a79ec5a83d2d8b9aa2bc",
+      "freshness": "FRESH",
+      "trackerFreshness": "FRESH",
+      "reviewStatus": "PASS",
+      "machineStatus": "PASS",
+      "evidenceFiles": 3
+    }
+  ]
+}
