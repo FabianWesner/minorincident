@@ -1,21 +1,42 @@
 {
   "row": "L4-10",
-  "status": "FAIL",
-  "reviewer": "Codex/fix67-b",
-  "date": "2026-11-06",
-  "commit": "4081152a7fb5e9041bae7cd5ca159369770043ef",
+  "status": "PASS",
+  "reviewer": "Codex/final-b",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "sourceDigest": "e3dafe0694468ae05c6e72a1f303adf938a6c33391416d38d67a60534e2fe51b",
   "clauses": [
     {
       "clause": "Spectacle: \u2265 2 HMGs fire, tank enters at +22 s and fires every 8\u201312 s (never within 15 m of player/ally), never through the barrier wall; helicopter orbits and withdraws.",
-      "verdict": "FAIL",
-      "note": "Final-source every ordinary/forced tank impact clears living registered protected actors\u226515m at both tiers. Low minimum15.003722m, high15.407197m; forced21.330389/20.680260m. Exact canonical route hashes match. High actual interval721ticks=12.016667s violates unchanged\u226412s; low cadence passes. This fresh measured cadence counterexample retains whole-row FAIL; renderer/wall/HMG/helicopter clauses remain unqualified. The original forced-truck clearance failure is fixed."
+      "verdict": "PASS",
+      "note": "Both tiers:2 actual HMG sources; tank enters tick3289, exactly22s after turn1969. Fresh mortal routes14 shots/tier, ordinary inter-shot intervals8.0167\u201311.7333s; every actual impact including forced truck shell clears living player/registered allies by\u226515.1449m low/15.3692m high. Actual helicopter orbit unwrapped angle spans>42radians and withdraws. Full renderer16/15 shot segments intersect no concrete/wire barrier triangles; positive across-wall controls do hit. Three shots contact decorative sign planes above the concrete crest; recorded explicitly, not mislabelled concrete wall impacts. No game changes. Protected courier only in supplementary renderer route; ordinary native clearance is mortal."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix67-b/L4-10-final-recheck.json",
-      "sha256": "9cb177d41249ad5139c57f9ed04a2af1b11365d481c371c725d126d24875ec68",
-      "what": "Final-source every ordinary/forced tank impact clears living registered protected actors\u226515m at both tiers. Low minimum15.003722m, high15.407197m; forced21.330389/20.680260m. Exact canonical route hashes match. High actual interval721ticks=12.016667s violates unchanged\u226412s; low cadence passes. This fresh measured cadence counterexample retains whole-row FAIL; renderer/wall/HMG/helicopter clauses remain unqualified. The original forced-truck clearance failure is fixed."
+      "file": "docs/reports/final-b/L4-10-proof.json",
+      "sha256": "fd1ef1124a4f56c76044c70a3e87f242299a2ed4429acdedf7646a8f45f98ec8",
+      "what": "Both tiers:2 actual HMG sources; tank enters tick3289, exactly22s after turn1969. Fresh mortal routes14 shots/tier, ordinary inter-shot intervals8.0167\u201311.7333s; every actual impact including forced truck shell clears living player/registered allies by\u226515.1449m low/15.3692m high. Actual helicopter orbit unwrapped angle spans>42radians and withdraws. Full renderer16/15 shot segments intersect no concrete/wire barrier triangles; positive across-wall controls do hit. Three shots contact decorative sign planes above the concrete crest; recorded explicitly, not mislabelled concrete wall impacts. No game changes. Protected courier only in supplementary renderer route; ordinary native clearance is mortal."
+    },
+    {
+      "file": "docs/reports/final-b/L4-native-ledger.json.gz",
+      "sha256": "e58087fab4794a1c1afeedf0039c17ee44d5066a5393a75cfb4079a6527a9299",
+      "what": "Both tiers:2 actual HMG sources; tank enters tick3289, exactly22s after turn1969. Fresh mortal routes14 shots/tier, ordinary inter-shot intervals8.0167\u201311.7333s; every actual impact including forced truck shell clears living player/registered allies by\u226515.1449m low/15.3692m high. Actual helicopter orbit unwrapped angle spans>42radians and withdraws. Full renderer16/15 shot segments intersect no concrete/wire barrier triangles; positive across-wall controls do hit. Three shots contact decorative sign planes above the concrete crest; recorded explicitly, not mislabelled concrete wall impacts. No game changes. Protected courier only in supplementary renderer route; ordinary native clearance is mortal."
+    },
+    {
+      "file": "docs/reports/final-b/L4-tank-clearance.json.gz",
+      "sha256": "7307e42029ee76da5f55d995b17c2dba95572204daccc01d4332d1857e63d720",
+      "what": "Both tiers:2 actual HMG sources; tank enters tick3289, exactly22s after turn1969. Fresh mortal routes14 shots/tier, ordinary inter-shot intervals8.0167\u201311.7333s; every actual impact including forced truck shell clears living player/registered allies by\u226515.1449m low/15.3692m high. Actual helicopter orbit unwrapped angle spans>42radians and withdraws. Full renderer16/15 shot segments intersect no concrete/wire barrier triangles; positive across-wall controls do hit. Three shots contact decorative sign planes above the concrete crest; recorded explicitly, not mislabelled concrete wall impacts. No game changes. Protected courier only in supplementary renderer route; ordinary native clearance is mortal."
+    },
+    {
+      "file": "docs/reports/final-b/corpses-final-low-full-receipt.json.gz",
+      "sha256": "60e598c1ca27cc94ba7dfd15427d4d2d1c7896c7dd31df5f5ddafa14083a196c",
+      "what": "Both tiers:2 actual HMG sources; tank enters tick3289, exactly22s after turn1969. Fresh mortal routes14 shots/tier, ordinary inter-shot intervals8.0167\u201311.7333s; every actual impact including forced truck shell clears living player/registered allies by\u226515.1449m low/15.3692m high. Actual helicopter orbit unwrapped angle spans>42radians and withdraws. Full renderer16/15 shot segments intersect no concrete/wire barrier triangles; positive across-wall controls do hit. Three shots contact decorative sign planes above the concrete crest; recorded explicitly, not mislabelled concrete wall impacts. No game changes. Protected courier only in supplementary renderer route; ordinary native clearance is mortal."
+    },
+    {
+      "file": "docs/reports/final-b/corpses-final-high-receipt.json.gz",
+      "sha256": "a4a522ff959e8c2519a06488463d358fd232ecea57721b992ce502d9722ea37c",
+      "what": "Both tiers:2 actual HMG sources; tank enters tick3289, exactly22s after turn1969. Fresh mortal routes14 shots/tier, ordinary inter-shot intervals8.0167\u201311.7333s; every actual impact including forced truck shell clears living player/registered allies by\u226515.1449m low/15.3692m high. Actual helicopter orbit unwrapped angle spans>42radians and withdraws. Full renderer16/15 shot segments intersect no concrete/wire barrier triangles; positive across-wall controls do hit. Three shots contact decorative sign planes above the concrete crest; recorded explicitly, not mislabelled concrete wall impacts. No game changes. Protected courier only in supplementary renderer route; ordinary native clearance is mortal."
     }
   ]
 }
