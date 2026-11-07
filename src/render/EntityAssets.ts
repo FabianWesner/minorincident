@@ -194,10 +194,13 @@ export class EntityAssets extends Group {
         // The authored coach has six rows of four cushions at FLOOR + .5.
         // Larger carried campaign groups keep every copy inside the cabin.
         // Fill both window seats first, then the aisle seats in the same row.
-        seat.position.set(-4.25 + (Math.floor(index / 4) + .5) * (7.37 / rows), 1.64, [-.94, .94, -.48, .48][index % 4]);
+        const x = -4.25 + (Math.floor(index / 4) + .5) * (7.37 / rows), z = [-.94, .94, -.48, .48][index % 4];
+        const changed = copy.parent !== record.model || seat.position.x !== x || seat.position.z !== z;
+        seat.position.set(x, 1.64, z);
         if (seat.parent !== record.model) record.model.add(seat);
         if (copy.parent !== record.model) record.model.add(copy);
-        copy.pose(seat, undefined, .85); copy.visible = true;
+        if (changed) copy.pose(seat, undefined, .85);
+        copy.visible = true;
       }
     }
   }
