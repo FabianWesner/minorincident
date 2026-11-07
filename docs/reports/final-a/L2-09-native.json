@@ -1,0 +1,175 @@
+{
+  "row": "L2-09",
+  "verdict": "PASS",
+  "frozenHead": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+  "fixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4",
+  "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
+  "generatedAt": "2026-11-06T23:49:03.138Z",
+  "criterion": "Lesson: staying within 15 m of the doors with the axe, live infected at +90 s ≥ value at +10 s and the player reaches 0 HP at least once within 120 s.",
+  "automatedComplete": true,
+  "checks": [
+    {
+      "id": "L2-09",
+      "clause": "mortal aggressive axe lesson death",
+      "value": {
+        "axe": true,
+        "diedBy120": true,
+        "firstDeathS": 78.85,
+        "infectedAt": {
+          "0": {
+            "all": 0,
+            "rescue": 0
+          },
+          "10": {
+            "all": 18,
+            "rescue": 18
+          }
+        },
+        "deathsAt": [
+          "79s@-47,-34/collapse"
+        ]
+      },
+      "target": "player reaches0HP within120s after doors",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
+      "level": "L2"
+    },
+    {
+      "id": "L2-09",
+      "clause": "mortal aggressive live census at10/90s",
+      "value": {
+        "early": {
+          "all": 18,
+          "rescue": 18
+        },
+        "stoppedAtFirstDeath": true
+      },
+      "target": "+90s live infected≥+10s; missing post-death observation stays open",
+      "status": "NOT CHECKED",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
+      "level": "L2"
+    },
+    {
+      "id": "L2-09",
+      "clause": "uninterrupted protected aggressive live census at10/90s",
+      "value": {
+        "early": {
+          "all": 18,
+          "rescue": 18
+        },
+        "late": {
+          "all": 30,
+          "rescue": 0
+        },
+        "protected": true,
+        "countOnly": true,
+        "qualified": true,
+        "route": {
+          "samples": 5401,
+          "maxDoorDistanceM": 9.466926905811153,
+          "outside15mTicks": 0
+        },
+        "deaths": 0
+      },
+      "target": "+90s live infected≥+10s; one unrestarted opening; axe policy stays within15m; protection is count-only",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
+      "level": "L2"
+    },
+    {
+      "id": "L2-09",
+      "clause": "mortal aggressive axe lesson death",
+      "value": {
+        "axe": true,
+        "diedBy120": true,
+        "firstDeathS": 78.33333333333333,
+        "infectedAt": {
+          "0": {
+            "all": 0,
+            "rescue": 0
+          },
+          "10": {
+            "all": 16,
+            "rescue": 16
+          }
+        },
+        "deathsAt": [
+          "78s@-42,-37/collapse"
+        ]
+      },
+      "target": "player reaches0HP within120s after doors",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
+      "level": "L2"
+    },
+    {
+      "id": "L2-09",
+      "clause": "mortal aggressive live census at10/90s",
+      "value": {
+        "early": {
+          "all": 16,
+          "rescue": 16
+        },
+        "stoppedAtFirstDeath": true
+      },
+      "target": "+90s live infected≥+10s; missing post-death observation stays open",
+      "status": "NOT CHECKED",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
+      "level": "L2"
+    },
+    {
+      "id": "L2-09",
+      "clause": "uninterrupted protected aggressive live census at10/90s",
+      "value": {
+        "early": {
+          "all": 16,
+          "rescue": 16
+        },
+        "late": {
+          "all": 48,
+          "rescue": 14
+        },
+        "protected": true,
+        "countOnly": true,
+        "qualified": true,
+        "route": {
+          "samples": 5401,
+          "maxDoorDistanceM": 11.800666244822747,
+          "outside15mTicks": 0
+        },
+        "deaths": 0
+      },
+      "target": "+90s live infected≥+10s; one unrestarted opening; axe policy stays within15m; protection is count-only",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
+      "level": "L2"
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
+      "sha256": "260e6b2630be1e593395f867cffd45f125d4b45e8fc973a9e4376eb931683aff",
+      "what": "Frozen-head L2-09 native input receipt, evaluated by the exact clauses retained in the row proof."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
+      "sha256": "ebcffc44ba056bc652015d345e957523462d8adbb8a977c1edaa333550202650",
+      "what": "Frozen-head L2-09 native input receipt, evaluated by the exact clauses retained in the row proof."
+    }
+  ],
+  "observation": "6 current native checks PASS across low/high. low/controlled-fixture mortal aggressive axe lesson death: {\"axe\":true,\"diedBy120\":true,\"firstDeathS\":78.85,\"infectedAt\":{\"0\":{\"all\":0,\"rescue\":0},\"10\":{\"all\":18,\"rescue\":18}},\"deathsAt\":[\"79s@-47,-34/collapse\"]}; target player reaches0HP within120s after doors (PASS); low/controlled-fixture mortal aggressive live census at10/90s: {\"early\":{\"all\":18,\"rescue\":18},\"stoppedAtFirstDeath\":true}; target +90s live infected≥+10s; missing post-death observation stays open (NOT CHECKED); low/controlled-fixture uninterrupted protected aggressive live census at10/90s: {\"early\":{\"all\":18,\"rescue\":18},\"late\":{\"all\":30,\"rescue\":0},\"protected\":true,\"countOnly\":true,\"qualified\":true,\"route\":{\"samples\":5401,\"maxDoorDistanceM\":9.466926905811153,\"outside15mTicks\":0},\"deaths\":0}; target +90s live infected≥+10s; one unrestarted opening; axe policy stays within15m; protection is count-only (PASS); high/controlled-fixture mortal aggressive axe lesson death: {\"axe\":true,\"diedBy120\":true,\"firstDeathS\":78.33333333333333,\"infectedAt\":{\"0\":{\"all\":0,\"rescue\":0},\"10\":{\"all\":16,\"rescue\":16}},\"deathsAt\":[\"78s@-42,-37/collapse\"]}; target player reaches0HP within120s after doors (PASS); high/controlled-fixture mortal aggressive live census at10/90s: {\"early\":{\"all\":16,\"rescue\":16},\"stoppedAtFirstDeath\":true}; target +90s live infected≥+10s; missing post-death observation stays open (NOT CHECKED); high/controlled-fixture uninterrupted protected aggressive live census at10/90s: {\"early\":{\"all\":16,\"rescue\":16},\"late\":{\"all\":48,\"rescue\":14},\"protected\":true,\"countOnly\":true,\"qualified\":true,\"route\":{\"samples\":5401,\"maxDoorDistanceM\":11.800666244822747,\"outside15mTicks\":0},\"deaths\":0}; target +90s live infected≥+10s; one unrestarted opening; axe policy stays within15m; protection is count-only (PASS)"
+}
