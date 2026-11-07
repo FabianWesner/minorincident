@@ -14,18 +14,18 @@
   "evidence": [
     {
       "file": "docs/reports/final-a/L3-09-native.json",
-      "sha256": "50007e0531172c4679025dc1d38338e817fddcb4ea3062f5d1a522755e02087a",
+      "sha256": "6b5c6c8cb7d37eae0482b1ca9e1c74fbcec153a912fae4c6b13032005fe1ce8b",
       "what": "2 current native checks PASS across low/high. low/controlled-fixture native L3 human speed and admitted sprinter fraction: {\"count\":1616,\"sprinters\":80,\"fraction\":0.04950495049504951,\"regularMax\":4,\"outcome\":\"complete\",\"counting\":\"spawn transactions; checkpoint-reused IDs are separate admissions\"}; target regular≤4m/s; sprinters≤5% of actual admissions (PASS); high/controlled-fixture native L3 human speed and admitted sprinter fraction: {\"count\":2093,\"sprinters\":104,\"fraction\":0.049689440993788817,\"regularMax\":4,\"outcome\":\"complete\",\"counting\":\"spawn transactions; checkpoint-reused IDs are separate admissions\"}; target regular≤4m/s; sprinters≤5% of actual admissions (PASS)"
     },
     {
-      "file": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
-      "sha256": "1dbb6554d364c1372e298abab060319623af1f8871fbd2e7e24dad1a1382d0cc",
-      "what": "Frozen-head L3-09 native input receipt, evaluated by the exact clauses retained in the row proof."
+      "file": "docs/reports/final-a/native-receipts/L3-low-fixtures.json.gz",
+      "sha256": "5bb7a9d05574c189a8bec9fe20a06b1a7988f48a3175a8841aef1fa147209724",
+      "what": "Frozen-head L3-09 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
     },
     {
-      "file": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
-      "sha256": "e4dd4c36be5c14615ed61548e5c0cb95e00a5363f1741e70547ed354a08a8086",
-      "what": "Frozen-head L3-09 native input receipt, evaluated by the exact clauses retained in the row proof."
+      "file": "docs/reports/final-a/native-receipts/L3-high-fixtures.json.gz",
+      "sha256": "87d97237be8ee7ecb0019d923692b5c60332643dfee8640b4274c1c5727fe14c",
+      "what": "Frozen-head L3-09 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
     }
   ],
   "notes": "Numeric-only criterion; all evaluator clauses measured at both qualities on the frozen runtime source. No visual or route-readability inference.",
