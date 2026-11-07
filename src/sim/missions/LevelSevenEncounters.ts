@@ -164,8 +164,10 @@ export class LevelSevenEncounters {
     // otherwise nearby survivor targets delay first courier contact.
       const player = this.world.entities.get(1)!;
       const close = firstStreet.filter(e => e.archetype === 'infected.runner' && e.transform.x > l7Encounters.streets[0].x + 2)
-        .sort((a, b) => distance(a.transform, player.transform) - distance(b.transform, player.transform))[0];
-      if (close) this.world.infected!.press(close.id, 1, this.world.tick + 20 * 60);
+        .sort((a, b) => distance(a.transform, player.transform) - distance(b.transform, player.transform));
+      // r5-l7: evacuees now survive their first bites, so a kerb runner that reaches the party first stays busy
+      // with it; two pressed runners keep the courier's first contact inside L7-05's 10 s.
+      for (const e of close.slice(0, 2)) this.world.infected!.press(e.id, 1, this.world.tick + 20 * 60);
     }
     const low = this.world.infected!.director.tier === 'low';
     // Final horde is present before approach. Its Alphas get slots before ordinary queued arrivals.
