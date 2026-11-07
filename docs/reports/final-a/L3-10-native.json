@@ -1,0 +1,1555 @@
+{
+  "row": "L3-10",
+  "verdict": "FAIL",
+  "frozenHead": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+  "fixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4",
+  "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
+  "generatedAt": "2026-11-06T23:57:28.205Z",
+  "criterion": "Forward pressure: idle 20 s behind the progress line → 25–75 infected per 10 s from 15–35 m behind, off-screen; stops when the player advances.",
+  "automatedComplete": false,
+  "checks": [
+    {
+      "id": "L3-10",
+      "clause": "native idle pressure schedule and offscreen source band",
+      "value": [
+        {
+          "tick": 5382,
+          "afterLastAdvanceS": 20,
+          "furthest": -79.99566650390625,
+          "queued": [
+            {
+              "door": "refuge-door-3",
+              "x": -111.825,
+              "z": -23.4,
+              "behindLineM": 31.829333496093753,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-8",
+              "x": -105.375,
+              "z": -23.4,
+              "behindLineM": 25.37933349609375,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-12",
+              "x": -98.64875038146974,
+              "z": -32.6,
+              "behindLineM": 18.65308387756349,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-2",
+              "x": -112.01338115384615,
+              "z": 32,
+              "behindLineM": 32.017714649939904,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-9",
+              "x": -104.04075,
+              "z": 3.6,
+              "behindLineM": 24.045083496093753,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-11",
+              "x": -98.925,
+              "z": -23.4,
+              "behindLineM": 18.929333496093747,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-10",
+              "x": -101.95605346153847,
+              "z": 32,
+              "behindLineM": 21.960386957632224,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-12",
+              "x": -98.64875038146974,
+              "z": -32.6,
+              "behindLineM": 18.65308387756349,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-12",
+              "x": -98.64875038146974,
+              "z": -32.6,
+              "behindLineM": 18.65308387756349,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-4",
+              "x": -111.825,
+              "z": 3.6,
+              "behindLineM": 31.829333496093753,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-9",
+              "x": -104.04075,
+              "z": 3.6,
+              "behindLineM": 24.045083496093753,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-7",
+              "x": -107.79010000000001,
+              "z": 24,
+              "behindLineM": 27.79443349609376,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-9",
+              "x": -104.04075,
+              "z": 3.6,
+              "behindLineM": 24.045083496093753,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-8",
+              "x": -105.375,
+              "z": -23.4,
+              "behindLineM": 25.37933349609375,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-7",
+              "x": -107.79010000000001,
+              "z": 24,
+              "behindLineM": 27.79443349609376,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-6",
+              "x": -109.30000019073486,
+              "z": -3.6,
+              "behindLineM": 29.304333686828613,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-9",
+              "x": -104.04075,
+              "z": 3.6,
+              "behindLineM": 24.045083496093753,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-5",
+              "x": -109.30000019073486,
+              "z": -32.6,
+              "behindLineM": 29.304333686828613,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-6",
+              "x": -109.30000019073486,
+              "z": -3.6,
+              "behindLineM": 29.304333686828613,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-11",
+              "x": -98.925,
+              "z": -23.4,
+              "behindLineM": 18.929333496093747,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-11",
+              "x": -98.925,
+              "z": -23.4,
+              "behindLineM": 18.929333496093747,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-13",
+              "x": -98.64875038146974,
+              "z": -3.6,
+              "behindLineM": 18.65308387756349,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-10",
+              "x": -101.95605346153847,
+              "z": 32,
+              "behindLineM": 21.960386957632224,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-4",
+              "x": -111.825,
+              "z": 3.6,
+              "behindLineM": 31.829333496093753,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-10",
+              "x": -101.95605346153847,
+              "z": 32,
+              "behindLineM": 21.960386957632224,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-8",
+              "x": -105.375,
+              "z": -23.4,
+              "behindLineM": 25.37933349609375,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-10",
+              "x": -101.95605346153847,
+              "z": 32,
+              "behindLineM": 21.960386957632224,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-12",
+              "x": -98.64875038146974,
+              "z": -32.6,
+              "behindLineM": 18.65308387756349,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-6",
+              "x": -109.30000019073486,
+              "z": -3.6,
+              "behindLineM": 29.304333686828613,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-7",
+              "x": -107.79010000000001,
+              "z": 24,
+              "behindLineM": 27.79443349609376,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-13",
+              "x": -98.64875038146974,
+              "z": -3.6,
+              "behindLineM": 18.65308387756349,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-8",
+              "x": -105.375,
+              "z": -23.4,
+              "behindLineM": 25.37933349609375,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-11",
+              "x": -98.925,
+              "z": -23.4,
+              "behindLineM": 18.929333496093747,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-11",
+              "x": -98.925,
+              "z": -23.4,
+              "behindLineM": 18.929333496093747,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-6",
+              "x": -109.30000019073486,
+              "z": -3.6,
+              "behindLineM": 29.304333686828613,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-4",
+              "x": -111.825,
+              "z": 3.6,
+              "behindLineM": 31.829333496093753,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-9",
+              "x": -104.04075,
+              "z": 3.6,
+              "behindLineM": 24.045083496093753,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-5",
+              "x": -109.30000019073486,
+              "z": -32.6,
+              "behindLineM": 29.304333686828613,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-8",
+              "x": -105.375,
+              "z": -23.4,
+              "behindLineM": 25.37933349609375,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-2",
+              "x": -112.01338115384615,
+              "z": 32,
+              "behindLineM": 32.017714649939904,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-8",
+              "x": -105.375,
+              "z": -23.4,
+              "behindLineM": 25.37933349609375,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-9",
+              "x": -104.04075,
+              "z": 3.6,
+              "behindLineM": 24.045083496093753,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-4",
+              "x": -111.825,
+              "z": 3.6,
+              "behindLineM": 31.829333496093753,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-13",
+              "x": -98.64875038146974,
+              "z": -3.6,
+              "behindLineM": 18.65308387756349,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-10",
+              "x": -101.95605346153847,
+              "z": 32,
+              "behindLineM": 21.960386957632224,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-10",
+              "x": -101.95605346153847,
+              "z": 32,
+              "behindLineM": 21.960386957632224,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-8",
+              "x": -105.375,
+              "z": -23.4,
+              "behindLineM": 25.37933349609375,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-15",
+              "x": -96.2565,
+              "z": 3.6,
+              "behindLineM": 16.260833496093753,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-15",
+              "x": -96.2565,
+              "z": 3.6,
+              "behindLineM": 16.260833496093753,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-6",
+              "x": -109.30000019073486,
+              "z": -3.6,
+              "behindLineM": 29.304333686828613,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-6",
+              "x": -109.30000019073486,
+              "z": -3.6,
+              "behindLineM": 29.304333686828613,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-4",
+              "x": -111.825,
+              "z": 3.6,
+              "behindLineM": 31.829333496093753,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-14",
+              "x": -97.7401,
+              "z": 24,
+              "behindLineM": 17.744433496093748,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-6",
+              "x": -109.30000019073486,
+              "z": -3.6,
+              "behindLineM": 29.304333686828613,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-6",
+              "x": -109.30000019073486,
+              "z": -3.6,
+              "behindLineM": 29.304333686828613,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-9",
+              "x": -104.04075,
+              "z": 3.6,
+              "behindLineM": 24.045083496093753,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-15",
+              "x": -96.2565,
+              "z": 3.6,
+              "behindLineM": 16.260833496093753,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-10",
+              "x": -101.95605346153847,
+              "z": 32,
+              "behindLineM": 21.960386957632224,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-2",
+              "x": -112.01338115384615,
+              "z": 32,
+              "behindLineM": 32.017714649939904,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-13",
+              "x": -98.64875038146974,
+              "z": -3.6,
+              "behindLineM": 18.65308387756349,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-4",
+              "x": -111.825,
+              "z": 3.6,
+              "behindLineM": 31.829333496093753,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-2",
+              "x": -112.01338115384615,
+              "z": 32,
+              "behindLineM": 32.017714649939904,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-3",
+              "x": -111.825,
+              "z": -23.4,
+              "behindLineM": 31.829333496093753,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-6",
+              "x": -109.30000019073486,
+              "z": -3.6,
+              "behindLineM": 29.304333686828613,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-10",
+              "x": -101.95605346153847,
+              "z": 32,
+              "behindLineM": 21.960386957632224,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-6",
+              "x": -109.30000019073486,
+              "z": -3.6,
+              "behindLineM": 29.304333686828613,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-7",
+              "x": -107.79010000000001,
+              "z": 24,
+              "behindLineM": 27.79443349609376,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-11",
+              "x": -98.925,
+              "z": -23.4,
+              "behindLineM": 18.929333496093747,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-9",
+              "x": -104.04075,
+              "z": 3.6,
+              "behindLineM": 24.045083496093753,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-12",
+              "x": -98.64875038146974,
+              "z": -32.6,
+              "behindLineM": 18.65308387756349,
+              "offscreen": true
+            }
+          ]
+        },
+        {
+          "tick": 5982,
+          "afterLastAdvanceS": 30,
+          "furthest": -79.99566650390625,
+          "queued": [
+            {
+              "door": "refuge-door-6",
+              "x": -109.30000019073486,
+              "z": -3.6,
+              "behindLineM": 29.304333686828613,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-6",
+              "x": -109.30000019073486,
+              "z": -3.6,
+              "behindLineM": 29.304333686828613,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-10",
+              "x": -101.95605346153847,
+              "z": 32,
+              "behindLineM": 21.960386957632224,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-6",
+              "x": -109.30000019073486,
+              "z": -3.6,
+              "behindLineM": 29.304333686828613,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-6",
+              "x": -109.30000019073486,
+              "z": -3.6,
+              "behindLineM": 29.304333686828613,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-8",
+              "x": -105.375,
+              "z": -23.4,
+              "behindLineM": 25.37933349609375,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-8",
+              "x": -105.375,
+              "z": -23.4,
+              "behindLineM": 25.37933349609375,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-6",
+              "x": -109.30000019073486,
+              "z": -3.6,
+              "behindLineM": 29.304333686828613,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-15",
+              "x": -96.2565,
+              "z": 3.6,
+              "behindLineM": 16.260833496093753,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-15",
+              "x": -96.2565,
+              "z": 3.6,
+              "behindLineM": 16.260833496093753,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-11",
+              "x": -98.925,
+              "z": -23.4,
+              "behindLineM": 18.929333496093747,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-6",
+              "x": -109.30000019073486,
+              "z": -3.6,
+              "behindLineM": 29.304333686828613,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-14",
+              "x": -97.7401,
+              "z": 24,
+              "behindLineM": 17.744433496093748,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-14",
+              "x": -97.7401,
+              "z": 24,
+              "behindLineM": 17.744433496093748,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-9",
+              "x": -104.04075,
+              "z": 3.6,
+              "behindLineM": 24.045083496093753,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-12",
+              "x": -98.64875038146974,
+              "z": -32.6,
+              "behindLineM": 18.65308387756349,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-5",
+              "x": -109.30000019073486,
+              "z": -32.6,
+              "behindLineM": 29.304333686828613,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-10",
+              "x": -101.95605346153847,
+              "z": 32,
+              "behindLineM": 21.960386957632224,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-13",
+              "x": -98.64875038146974,
+              "z": -3.6,
+              "behindLineM": 18.65308387756349,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-7",
+              "x": -107.79010000000001,
+              "z": 24,
+              "behindLineM": 27.79443349609376,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-10",
+              "x": -101.95605346153847,
+              "z": 32,
+              "behindLineM": 21.960386957632224,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-6",
+              "x": -109.30000019073486,
+              "z": -3.6,
+              "behindLineM": 29.304333686828613,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-6",
+              "x": -109.30000019073486,
+              "z": -3.6,
+              "behindLineM": 29.304333686828613,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-12",
+              "x": -98.64875038146974,
+              "z": -32.6,
+              "behindLineM": 18.65308387756349,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-3",
+              "x": -111.825,
+              "z": -23.4,
+              "behindLineM": 31.829333496093753,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-4",
+              "x": -111.825,
+              "z": 3.6,
+              "behindLineM": 31.829333496093753,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-10",
+              "x": -101.95605346153847,
+              "z": 32,
+              "behindLineM": 21.960386957632224,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-8",
+              "x": -105.375,
+              "z": -23.4,
+              "behindLineM": 25.37933349609375,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-8",
+              "x": -105.375,
+              "z": -23.4,
+              "behindLineM": 25.37933349609375,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-2",
+              "x": -112.01338115384615,
+              "z": 32,
+              "behindLineM": 32.017714649939904,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-11",
+              "x": -98.925,
+              "z": -23.4,
+              "behindLineM": 18.929333496093747,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-6",
+              "x": -109.30000019073486,
+              "z": -3.6,
+              "behindLineM": 29.304333686828613,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-9",
+              "x": -104.04075,
+              "z": 3.6,
+              "behindLineM": 24.045083496093753,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-5",
+              "x": -109.30000019073486,
+              "z": -32.6,
+              "behindLineM": 29.304333686828613,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-3",
+              "x": -111.825,
+              "z": -23.4,
+              "behindLineM": 31.829333496093753,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-15",
+              "x": -96.2565,
+              "z": 3.6,
+              "behindLineM": 16.260833496093753,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-13",
+              "x": -98.64875038146974,
+              "z": -3.6,
+              "behindLineM": 18.65308387756349,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-12",
+              "x": -98.64875038146974,
+              "z": -32.6,
+              "behindLineM": 18.65308387756349,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-11",
+              "x": -98.925,
+              "z": -23.4,
+              "behindLineM": 18.929333496093747,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-5",
+              "x": -109.30000019073486,
+              "z": -32.6,
+              "behindLineM": 29.304333686828613,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-3",
+              "x": -111.825,
+              "z": -23.4,
+              "behindLineM": 31.829333496093753,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-6",
+              "x": -109.30000019073486,
+              "z": -3.6,
+              "behindLineM": 29.304333686828613,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-10",
+              "x": -101.95605346153847,
+              "z": 32,
+              "behindLineM": 21.960386957632224,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-12",
+              "x": -98.64875038146974,
+              "z": -32.6,
+              "behindLineM": 18.65308387756349,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-11",
+              "x": -98.925,
+              "z": -23.4,
+              "behindLineM": 18.929333496093747,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-7",
+              "x": -107.79010000000001,
+              "z": 24,
+              "behindLineM": 27.79443349609376,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-10",
+              "x": -101.95605346153847,
+              "z": 32,
+              "behindLineM": 21.960386957632224,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-13",
+              "x": -98.64875038146974,
+              "z": -3.6,
+              "behindLineM": 18.65308387756349,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-11",
+              "x": -98.925,
+              "z": -23.4,
+              "behindLineM": 18.929333496093747,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-13",
+              "x": -98.64875038146974,
+              "z": -3.6,
+              "behindLineM": 18.65308387756349,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-6",
+              "x": -109.30000019073486,
+              "z": -3.6,
+              "behindLineM": 29.304333686828613,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-15",
+              "x": -96.2565,
+              "z": 3.6,
+              "behindLineM": 16.260833496093753,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-7",
+              "x": -107.79010000000001,
+              "z": 24,
+              "behindLineM": 27.79443349609376,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-11",
+              "x": -98.925,
+              "z": -23.4,
+              "behindLineM": 18.929333496093747,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-13",
+              "x": -98.64875038146974,
+              "z": -3.6,
+              "behindLineM": 18.65308387756349,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-5",
+              "x": -109.30000019073486,
+              "z": -32.6,
+              "behindLineM": 29.304333686828613,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-11",
+              "x": -98.925,
+              "z": -23.4,
+              "behindLineM": 18.929333496093747,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-13",
+              "x": -98.64875038146974,
+              "z": -3.6,
+              "behindLineM": 18.65308387756349,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-2",
+              "x": -112.01338115384615,
+              "z": 32,
+              "behindLineM": 32.017714649939904,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-7",
+              "x": -107.79010000000001,
+              "z": 24,
+              "behindLineM": 27.79443349609376,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-10",
+              "x": -101.95605346153847,
+              "z": 32,
+              "behindLineM": 21.960386957632224,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-5",
+              "x": -109.30000019073486,
+              "z": -32.6,
+              "behindLineM": 29.304333686828613,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-15",
+              "x": -96.2565,
+              "z": 3.6,
+              "behindLineM": 16.260833496093753,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-5",
+              "x": -109.30000019073486,
+              "z": -32.6,
+              "behindLineM": 29.304333686828613,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-14",
+              "x": -97.7401,
+              "z": 24,
+              "behindLineM": 17.744433496093748,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-11",
+              "x": -98.925,
+              "z": -23.4,
+              "behindLineM": 18.929333496093747,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-11",
+              "x": -98.925,
+              "z": -23.4,
+              "behindLineM": 18.929333496093747,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-2",
+              "x": -112.01338115384615,
+              "z": 32,
+              "behindLineM": 32.017714649939904,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-7",
+              "x": -107.79010000000001,
+              "z": 24,
+              "behindLineM": 27.79443349609376,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-3",
+              "x": -111.825,
+              "z": -23.4,
+              "behindLineM": 31.829333496093753,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-8",
+              "x": -105.375,
+              "z": -23.4,
+              "behindLineM": 25.37933349609375,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-14",
+              "x": -97.7401,
+              "z": 24,
+              "behindLineM": 17.744433496093748,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-13",
+              "x": -98.64875038146974,
+              "z": -3.6,
+              "behindLineM": 18.65308387756349,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-15",
+              "x": -96.2565,
+              "z": 3.6,
+              "behindLineM": 16.260833496093753,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-5",
+              "x": -109.30000019073486,
+              "z": -32.6,
+              "behindLineM": 29.304333686828613,
+              "offscreen": true
+            }
+          ]
+        }
+      ],
+      "target": "idle≥20s;25–75 queued;source15–35m behind and offscreen",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
+      "level": "L3"
+    },
+    {
+      "id": "L3-10",
+      "clause": "native idle pressure actual admissions per full ten-second window",
+      "value": [
+        {
+          "tick": 5382,
+          "seconds": 10,
+          "actualAdmissions": 59
+        }
+      ],
+      "target": "25–75 actual admissions per10s, distinct from pending demand",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
+      "level": "L3"
+    },
+    {
+      "id": "L3-10",
+      "clause": "native pressure queued admissions stop on advance",
+      "value": {
+        "tick": 6449,
+        "player": {
+          "x": -78.9478530883789,
+          "y": 0.7099999785423279,
+          "z": 27.7825870513916,
+          "yaw": -6.274373365770594
+        },
+        "pressureAt": 0,
+        "queued": 0
+      },
+      "target": "pressure clock cleared and zero unadmitted pressure entries after advancing",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
+      "level": "L3"
+    },
+    {
+      "id": "L3-10",
+      "clause": "native idle pressure schedule and offscreen source band",
+      "value": [
+        {
+          "tick": 4313,
+          "afterLastAdvanceS": 20,
+          "furthest": -79.71852111816406,
+          "queued": [
+            {
+              "door": "refuge-door-13",
+              "x": -98.64875038146974,
+              "z": -3.6,
+              "behindLineM": 18.930229263305677,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-15",
+              "x": -96.2565,
+              "z": 3.6,
+              "behindLineM": 16.53797888183594,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-3",
+              "x": -111.825,
+              "z": -23.4,
+              "behindLineM": 32.10647888183594,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-14",
+              "x": -97.7401,
+              "z": 24,
+              "behindLineM": 18.021578881835936,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-6",
+              "x": -109.30000019073486,
+              "z": -3.6,
+              "behindLineM": 29.5814790725708,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-6",
+              "x": -109.30000019073486,
+              "z": -3.6,
+              "behindLineM": 29.5814790725708,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-14",
+              "x": -97.7401,
+              "z": 24,
+              "behindLineM": 18.021578881835936,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-10",
+              "x": -101.95605346153847,
+              "z": 32,
+              "behindLineM": 22.23753234337441,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-4",
+              "x": -111.825,
+              "z": 3.6,
+              "behindLineM": 32.10647888183594,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-9",
+              "x": -104.04075,
+              "z": 3.6,
+              "behindLineM": 24.32222888183594,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-3",
+              "x": -111.825,
+              "z": -23.4,
+              "behindLineM": 32.10647888183594,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-14",
+              "x": -97.7401,
+              "z": 24,
+              "behindLineM": 18.021578881835936,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-8",
+              "x": -105.375,
+              "z": -23.4,
+              "behindLineM": 25.656478881835938,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-7",
+              "x": -107.79010000000001,
+              "z": 24,
+              "behindLineM": 28.071578881835947,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-12",
+              "x": -98.64875038146974,
+              "z": -32.6,
+              "behindLineM": 18.930229263305677,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-2",
+              "x": -112.01338115384615,
+              "z": 32,
+              "behindLineM": 32.29486003568209,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-7",
+              "x": -107.79010000000001,
+              "z": 24,
+              "behindLineM": 28.071578881835947,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-5",
+              "x": -109.30000019073486,
+              "z": -32.6,
+              "behindLineM": 29.5814790725708,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-9",
+              "x": -104.04075,
+              "z": 3.6,
+              "behindLineM": 24.32222888183594,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-8",
+              "x": -105.375,
+              "z": -23.4,
+              "behindLineM": 25.656478881835938,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-14",
+              "x": -97.7401,
+              "z": 24,
+              "behindLineM": 18.021578881835936,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-7",
+              "x": -107.79010000000001,
+              "z": 24,
+              "behindLineM": 28.071578881835947,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-10",
+              "x": -101.95605346153847,
+              "z": 32,
+              "behindLineM": 22.23753234337441,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-7",
+              "x": -107.79010000000001,
+              "z": 24,
+              "behindLineM": 28.071578881835947,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-5",
+              "x": -109.30000019073486,
+              "z": -32.6,
+              "behindLineM": 29.5814790725708,
+              "offscreen": true
+            }
+          ]
+        },
+        {
+          "tick": 4913,
+          "afterLastAdvanceS": 30,
+          "furthest": -79.71852111816406,
+          "queued": [
+            {
+              "door": "refuge-door-4",
+              "x": -111.825,
+              "z": 3.6,
+              "behindLineM": 32.10647888183594,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-5",
+              "x": -109.30000019073486,
+              "z": -32.6,
+              "behindLineM": 29.5814790725708,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-6",
+              "x": -109.30000019073486,
+              "z": -3.6,
+              "behindLineM": 29.5814790725708,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-15",
+              "x": -96.2565,
+              "z": 3.6,
+              "behindLineM": 16.53797888183594,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-12",
+              "x": -98.64875038146974,
+              "z": -32.6,
+              "behindLineM": 18.930229263305677,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-2",
+              "x": -112.01338115384615,
+              "z": 32,
+              "behindLineM": 32.29486003568209,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-4",
+              "x": -111.825,
+              "z": 3.6,
+              "behindLineM": 32.10647888183594,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-9",
+              "x": -104.04075,
+              "z": 3.6,
+              "behindLineM": 24.32222888183594,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-4",
+              "x": -111.825,
+              "z": 3.6,
+              "behindLineM": 32.10647888183594,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-6",
+              "x": -109.30000019073486,
+              "z": -3.6,
+              "behindLineM": 29.5814790725708,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-9",
+              "x": -104.04075,
+              "z": 3.6,
+              "behindLineM": 24.32222888183594,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-6",
+              "x": -109.30000019073486,
+              "z": -3.6,
+              "behindLineM": 29.5814790725708,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-4",
+              "x": -111.825,
+              "z": 3.6,
+              "behindLineM": 32.10647888183594,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-7",
+              "x": -107.79010000000001,
+              "z": 24,
+              "behindLineM": 28.071578881835947,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-7",
+              "x": -107.79010000000001,
+              "z": 24,
+              "behindLineM": 28.071578881835947,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-5",
+              "x": -109.30000019073486,
+              "z": -32.6,
+              "behindLineM": 29.5814790725708,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-11",
+              "x": -98.925,
+              "z": -23.4,
+              "behindLineM": 19.206478881835935,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-8",
+              "x": -105.375,
+              "z": -23.4,
+              "behindLineM": 25.656478881835938,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-15",
+              "x": -96.2565,
+              "z": 3.6,
+              "behindLineM": 16.53797888183594,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-9",
+              "x": -104.04075,
+              "z": 3.6,
+              "behindLineM": 24.32222888183594,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-4",
+              "x": -111.825,
+              "z": 3.6,
+              "behindLineM": 32.10647888183594,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-4",
+              "x": -111.825,
+              "z": 3.6,
+              "behindLineM": 32.10647888183594,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-4",
+              "x": -111.825,
+              "z": 3.6,
+              "behindLineM": 32.10647888183594,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-11",
+              "x": -98.925,
+              "z": -23.4,
+              "behindLineM": 19.206478881835935,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-3",
+              "x": -111.825,
+              "z": -23.4,
+              "behindLineM": 32.10647888183594,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-3",
+              "x": -111.825,
+              "z": -23.4,
+              "behindLineM": 32.10647888183594,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-4",
+              "x": -111.825,
+              "z": 3.6,
+              "behindLineM": 32.10647888183594,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-6",
+              "x": -109.30000019073486,
+              "z": -3.6,
+              "behindLineM": 29.5814790725708,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-5",
+              "x": -109.30000019073486,
+              "z": -32.6,
+              "behindLineM": 29.5814790725708,
+              "offscreen": true
+            },
+            {
+              "door": "refuge-door-13",
+              "x": -98.64875038146974,
+              "z": -3.6,
+              "behindLineM": 18.930229263305677,
+              "offscreen": true
+            }
+          ]
+        }
+      ],
+      "target": "idle≥20s;25–75 queued;source15–35m behind and offscreen",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
+      "level": "L3"
+    },
+    {
+      "id": "L3-10",
+      "clause": "native idle pressure actual admissions per full ten-second window",
+      "value": [
+        {
+          "tick": 4313,
+          "seconds": 10,
+          "actualAdmissions": 21
+        }
+      ],
+      "target": "25–75 actual admissions per10s, distinct from pending demand",
+      "status": "FAIL",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
+      "level": "L3"
+    },
+    {
+      "id": "L3-10",
+      "clause": "native pressure queued admissions stop on advance",
+      "value": {
+        "tick": 5377,
+        "player": {
+          "x": -79.21354675292969,
+          "y": 0.7099999785423279,
+          "z": 28.245088577270508,
+          "yaw": -0.0012392784678453683
+        },
+        "pressureAt": 0,
+        "queued": 0
+      },
+      "target": "pressure clock cleared and zero unadmitted pressure entries after advancing",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
+      "level": "L3"
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
+      "sha256": "1dbb6554d364c1372e298abab060319623af1f8871fbd2e7e24dad1a1382d0cc",
+      "what": "Frozen-head L3-10 native input receipt, evaluated by the exact clauses retained in the row proof."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
+      "sha256": "e4dd4c36be5c14615ed61548e5c0cb95e00a5363f1741e70547ed354a08a8086",
+      "what": "Frozen-head L3-10 native input receipt, evaluated by the exact clauses retained in the row proof."
+    }
+  ],
+  "observation": "high/controlled-fixture native idle pressure actual admissions per full ten-second window: [{\"tick\":4313,\"seconds\":10,\"actualAdmissions\":21}]; target 25–75 actual admissions per10s, distinct from pending demand (FAIL)"
+}
