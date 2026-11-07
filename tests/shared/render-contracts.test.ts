@@ -19,6 +19,7 @@ import type { SimWorld } from '../../src/sim/world/SimWorld';
 import { Lighting } from '../../src/render/Lighting';
 import { corpseLod, crowdLod, pickLod, propLod } from '../../src/render/lodPolicy';
 import { Materials } from '../../src/render/Materials';
+import type { PaletteMaterial } from '../../src/render/PaletteMaterial';
 import { installTextureRanges } from '../../src/render/TextureRanges';
 import { uploadFloatTexture, type FloatUploadDevice } from '../../src/render/TextureUpload';
 import { weatherMaterialFlags } from '../../src/render/WeatherView';
@@ -565,12 +566,30 @@ function checkCivilianShaderBindings(): void {
   const otherPose = new DataTexture();
   crowdSurfaceBindings.set(first.geometry, { bind() {}, textures: [a], pose });
   crowdSurfaceBindings.set(second.geometry, { bind() {}, textures: [b], pose: otherPose });
-  const frame = new NodeFrame();
-  for (const object of [first, second, first]) {
-    frame.object = object; atlas.update(frame); poses.update(frame);
-    expect(atlas.value).toBe(object === first ? a : b);
-    expect(poses.value).toBe(object === first ? pose : otherPose);
+  const baked = bakeInfected(createSkinnedCrowdFixture()); packCrowdParts(baked.geometry);
+  const bodyA = baked.geometry, bodyB = baked.geometry.clone(), pools = [new StaticCorpses(), new StaticCorpses()];
+  crowdSurfaceBindings.set(bodyA, { bind() {}, textures: [a], pose });
+  crowdSurfaceBindings.set(bodyB, { bind() {}, textures: [b], pose: otherPose });
+  const corpseA = pools[0].prepare('a', bodyA, one.material, baked.clip, deathFrame());
+  const corpseB = pools[1].prepare('b', bodyB, other.material, baked.clip, deathFrame());
+  const frozenA = corpseA.material as PaletteMaterial, frozenB = corpseB.material as PaletteMaterial;
+  expect(frozenA).not.toBe(frozenB);
+  expect(frozenA.outputNode).not.toBe(one.material.outputNode);
+  for (const mode of [0, 1, 0]) {
+    frozenA.setWeatherMode(mode); frozenB.setWeatherMode(mode);
+    expect(frozenA.outputNode).toBe(frozenB.outputNode);
+    expect(frozenA.customProgramCacheKey()).toBe(frozenB.customProgramCacheKey());
   }
+  const otherFrozen = (differentLayout.material as PaletteMaterial).frozenCopy(true);
+  expect(otherFrozen.outputNode).not.toBe(frozenA.outputNode); otherFrozen.dispose();
+  const frame = new NodeFrame();
+  for (const object of [first, second, corpseA, corpseB, corpseA]) {
+    frame.object = object; atlas.update(frame); poses.update(frame);
+    const usesA = object === first || object === corpseA;
+    expect(atlas.value).toBe(usesA ? a : b);
+    expect(poses.value).toBe(usesA ? pose : otherPose);
+  }
+  pools.forEach(pool => pool.dispose()); bodyA.dispose(); bodyB.dispose();
   first.geometry.dispose(); second.geometry.dispose();
   const disposed = vi.fn(); one.material.addEventListener('dispose', disposed);
   one.release(); expect(disposed).not.toHaveBeenCalled();

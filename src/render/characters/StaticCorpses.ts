@@ -19,6 +19,7 @@ const CELL = 40;
 // settled. Pages still own their geometry and per-instance appearance buffers.
 const sharedFrozenMaterials = new WeakMap<PaletteMaterial, { material: PaletteMaterial; users: number }>();
 const interleavedSurfaces = new WeakMap<BufferGeometry, Record<string, BufferGeometry['attributes'][string]>>();
+const corpseNormal = skinnedWoundNormal(normalViewGeometry);
 interface Chunk { mesh: InstancedMesh; tint: InstancedBufferAttribute; overlay: InstancedBufferAttribute; probe: CrowdFigureProbe; keys: string[]; spheres: Sphere[] }
 interface CorpseSurface { source: BufferGeometry; material: MeshLambertNodeMaterial; clip: CrowdClip; frame: number }
 interface DetailBody {
@@ -318,7 +319,7 @@ export class StaticCorpses extends Group {
           frozenMaterial = new MeshLambertNodeMaterial().copy(material);
           frozenMaterial.positionNode = null; frozenMaterial.normalNode = null; frozenMaterial.maskNode = material.userData.frozenSurfaceMask ?? null;
         }
-        frozenMaterial.normalNode = skinnedWoundNormal(normalViewGeometry);
+        frozenMaterial.normalNode = corpseNormal;
         corpseStencil(frozenMaterial);
         this.frozenMaterials.set(material, frozenMaterial);
       }

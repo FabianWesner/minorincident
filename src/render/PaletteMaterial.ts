@@ -36,6 +36,7 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
   readonly movingFigure = uniform(0).setGroup(this._uniformGroup);
   // Frozen copies borrow the same immutable output graphs and source shading uniforms.
   private _outputs = new Map<string, Node>();
+  private _corpseOutputs = new Map<string, Node>();
   private readonly _propertyHashes = new Map<string, number>();
   private readonly _programValues: number[] = [];
   private outputFor: (mode: number, corpse?: boolean) => Node;
@@ -286,7 +287,10 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
   frozenCopy(corpse = false): PaletteMaterial {
     const copy = this.newCopy(); copy.copy(this);
     copy.outputFor = corpse ? mode => this.outputFor(mode, true) : this.outputFor;
-    copy._outputs = corpse ? new Map() : this._outputs; copy.weatherMode = -1; copy.setWeatherMode(this.weatherMode);
+    // Atlas-specific living copies already share their shader and uniforms.
+    // Their frozen copies need the same shared corpse graph for each weather mode.
+    copy._corpseOutputs = this._corpseOutputs;
+    copy._outputs = corpse ? this._corpseOutputs : this._outputs; copy.weatherMode = -1; copy.setWeatherMode(this.weatherMode);
     return copy;
   }
   /** Same key as NodeMaterial, without allocating a child record and hashing
