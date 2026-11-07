@@ -1,36 +1,42 @@
 {
   "row": "L5-14",
   "status": "PASS",
-  "reviewer": "Codex/sweep-b",
-  "date": "2026-11-06",
-  "commit": "3c715f7aa8ec3e98a114c0c8eb0b37e1ebe61272",
+  "reviewer": "Codex/final-b",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "sourceDigest": "96b95aaf00218387ac838466ba4e849719809eef34f96b67f54241001dca8a39",
   "clauses": [
     {
       "clause": "Same city as L4 (pair cameras read \"same place, fallen\"); sun intensity falls \u2265 30 % to the metro.",
       "verdict": "PASS",
-      "note": "All16 current matched-camera captures inspected: four authored L4/L5 camera pairs at both tiers have exactly equal positions/targets and1280x720 framing. Same plaza/convoy arrangement, Harbor cafe, Metro sign/frontage and Kessler fence/tree/block remain identifiable; L5 adds shattered facades, wrecks, bodies and fog. Heavy plaza fog is disclosed. Actual L5 renderer sun drops from0.816 to0.44965 (44.90%) by metro/end, exceeding30%; sim end multiplier0.5. P: PO: do matched L4/L5 views read as the same place, fallen? Sun intensity reduction remains a numeric clause. No taste verdict is claimed. Native named photo-preset lookup was unavailable, so the existing authored offsets were applied as explicit identical cinematic poses."
+      "note": "Eight exact matched L4/L5 camera pairs (4 authored city anchors\u00d72 tiers) personally reviewed: camera position and target identical per pair. Same plaza/Harbor storefront/metro/Kessler fence corner, with actual aftermath damage, wrecks, ash and fog. Native current complete sun multiplier0.5 at metro/end both tiers, a50% fall (required\u226530%); actual initial renderer L4 intensity1.3 versus L5.816 is separately recorded. Sixteen original frames retained for PO same-place-fallen taste, with SHA and concrete comparison; taste is not answered for PO. Explicit controlled photo anchors/objective setup, no route benchmark claim."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-b/L5-14-proof.json",
-      "sha256": "b87a4205ffc304223f7307c1f4b456bcb06a396d8a18cdccc903bf4cce9c2739",
-      "what": "All16 current matched-camera captures inspected: four authored L4/L5 camera pairs at both tiers have exactly equal positions/targets and1280x720 framing. Same plaza/convoy arrangement, Harbor cafe, Metro sign/frontage and Kessler fence/tree/block remain identifiable; L5 adds shattered facades, wrecks, bodies and fog. Heavy plaza fog is disclosed. Actual L5 renderer sun drops from0.816 to0.44965 (44.90%) by metro/end, exceeding30%; sim end multiplier0.5. P: PO: do matched L4/L5 views read as the same place, fallen? Sun intensity reduction remains a numeric clause. No taste verdict is claimed. Native named photo-preset lookup was unavailable, so the existing authored offsets were applied as explicit identical cinematic poses."
+      "file": "docs/reports/final-b/L5-14-proof.json",
+      "sha256": "ed5fc6748fc644853d3c7c10921619bd5f8a9ebb9709bb742e05adab888a40b0",
+      "what": "Eight exact matched L4/L5 camera pairs (4 authored city anchors\u00d72 tiers) personally reviewed: camera position and target identical per pair. Same plaza/Harbor storefront/metro/Kessler fence corner, with actual aftermath damage, wrecks, ash and fog. Native current complete sun multiplier0.5 at metro/end both tiers, a50% fall (required\u226530%); actual initial renderer L4 intensity1.3 versus L5.816 is separately recorded. Sixteen original frames retained for PO same-place-fallen taste, with SHA and concrete comparison; taste is not answered for PO. Explicit controlled photo anchors/objective setup, no route benchmark claim."
     },
     {
-      "file": "docs/reports/sweep-b/pairs-ledger.json.gz",
-      "sha256": "f04c6fc996303a55096487394f5a57abf61ebe5fbe77de43e58969bd88bf87b6",
-      "what": "All16 current matched-camera captures inspected: four authored L4/L5 camera pairs at both tiers have exactly equal positions/targets and1280x720 framing. Same plaza/convoy arrangement, Harbor cafe, Metro sign/frontage and Kessler fence/tree/block remain identifiable; L5 adds shattered facades, wrecks, bodies and fog. Heavy plaza fog is disclosed. Actual L5 renderer sun drops from0.816 to0.44965 (44.90%) by metro/end, exceeding30%; sim end multiplier0.5. P: PO: do matched L4/L5 views read as the same place, fallen? Sun intensity reduction remains a numeric clause. No taste verdict is claimed. Native named photo-preset lookup was unavailable, so the existing authored offsets were applied as explicit identical cinematic poses."
+      "file": "docs/reports/final-b/matched-pairs-current.json.gz",
+      "sha256": "baf92d19b26ac36c09ba158aee395f5ffe460ab7cb61eb72ef295084ede4eaf9",
+      "what": "Eight exact matched L4/L5 camera pairs (4 authored city anchors\u00d72 tiers) personally reviewed: camera position and target identical per pair. Same plaza/Harbor storefront/metro/Kessler fence corner, with actual aftermath damage, wrecks, ash and fog. Native current complete sun multiplier0.5 at metro/end both tiers, a50% fall (required\u226530%); actual initial renderer L4 intensity1.3 versus L5.816 is separately recorded. Sixteen original frames retained for PO same-place-fallen taste, with SHA and concrete comparison; taste is not answered for PO. Explicit controlled photo anchors/objective setup, no route benchmark claim."
     },
     {
-      "file": "docs/reports/sweep-b/pairs-capture-review.json",
-      "sha256": "2c15fa0cf8a82fa1b3b4ca26b3ab08aecaa958bfd9d960cc0c2668463ef238c6",
-      "what": "All16 current matched-camera captures inspected: four authored L4/L5 camera pairs at both tiers have exactly equal positions/targets and1280x720 framing. Same plaza/convoy arrangement, Harbor cafe, Metro sign/frontage and Kessler fence/tree/block remain identifiable; L5 adds shattered facades, wrecks, bodies and fog. Heavy plaza fog is disclosed. Actual L5 renderer sun drops from0.816 to0.44965 (44.90%) by metro/end, exceeding30%; sim end multiplier0.5. P: PO: do matched L4/L5 views read as the same place, fallen? Sun intensity reduction remains a numeric clause. No taste verdict is claimed. Native named photo-preset lookup was unavailable, so the existing authored offsets were applied as explicit identical cinematic poses."
+      "file": "docs/reports/final-b/matched-pairs-executed.ts.gz",
+      "sha256": "6656ae52d39e012a5adcfff4a312d4839e2749bd492bc1577cd1c2ddde6de226",
+      "what": "Eight exact matched L4/L5 camera pairs (4 authored city anchors\u00d72 tiers) personally reviewed: camera position and target identical per pair. Same plaza/Harbor storefront/metro/Kessler fence corner, with actual aftermath damage, wrecks, ash and fog. Native current complete sun multiplier0.5 at metro/end both tiers, a50% fall (required\u226530%); actual initial renderer L4 intensity1.3 versus L5.816 is separately recorded. Sixteen original frames retained for PO same-place-fallen taste, with SHA and concrete comparison; taste is not answered for PO. Explicit controlled photo anchors/objective setup, no route benchmark claim."
     },
     {
-      "file": "docs/reports/sweep-b/L5-render-ledger.json.gz",
-      "sha256": "af5375bb80c5c745837834a73e24ab6eeb15a6feee8fd50dfbd704956cb1432a",
-      "what": "All16 current matched-camera captures inspected: four authored L4/L5 camera pairs at both tiers have exactly equal positions/targets and1280x720 framing. Same plaza/convoy arrangement, Harbor cafe, Metro sign/frontage and Kessler fence/tree/block remain identifiable; L5 adds shattered facades, wrecks, bodies and fog. Heavy plaza fog is disclosed. Actual L5 renderer sun drops from0.816 to0.44965 (44.90%) by metro/end, exceeding30%; sim end multiplier0.5. P: PO: do matched L4/L5 views read as the same place, fallen? Sun intensity reduction remains a numeric clause. No taste verdict is claimed. Native named photo-preset lookup was unavailable, so the existing authored offsets were applied as explicit identical cinematic poses."
+      "file": "docs/reports/final-b/frozen-native/L5-low-complete.json.gz",
+      "sha256": "cb29f4c6d1972a5a5a476acd5446da0e30871dd4924930a8b744726a4b7dffa6",
+      "what": "Eight exact matched L4/L5 camera pairs (4 authored city anchors\u00d72 tiers) personally reviewed: camera position and target identical per pair. Same plaza/Harbor storefront/metro/Kessler fence corner, with actual aftermath damage, wrecks, ash and fog. Native current complete sun multiplier0.5 at metro/end both tiers, a50% fall (required\u226530%); actual initial renderer L4 intensity1.3 versus L5.816 is separately recorded. Sixteen original frames retained for PO same-place-fallen taste, with SHA and concrete comparison; taste is not answered for PO. Explicit controlled photo anchors/objective setup, no route benchmark claim."
+    },
+    {
+      "file": "docs/reports/final-b/frozen-native/L5-high-complete.json.gz",
+      "sha256": "99b75bba9cc1418d60e5d7c88a7eb82d45e8ab532a331ed4820c21134f130a51",
+      "what": "Eight exact matched L4/L5 camera pairs (4 authored city anchors\u00d72 tiers) personally reviewed: camera position and target identical per pair. Same plaza/Harbor storefront/metro/Kessler fence corner, with actual aftermath damage, wrecks, ash and fog. Native current complete sun multiplier0.5 at metro/end both tiers, a50% fall (required\u226530%); actual initial renderer L4 intensity1.3 versus L5.816 is separately recorded. Sixteen original frames retained for PO same-place-fallen taste, with SHA and concrete comparison; taste is not answered for PO. Explicit controlled photo anchors/objective setup, no route benchmark claim."
     }
   ]
 }
