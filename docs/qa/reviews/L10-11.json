@@ -1,28 +1,22 @@
 {
   "row": "L10-11",
-  "status": "FAIL",
-  "reviewer": "Codex final-c",
+  "status": "PASS",
+  "reviewer": "Codex blk-c",
   "date": "2026-11-07",
-  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "commit": "564b16a89b67136949938d58fa72a522cd4fee7f",
   "clauses": [
     {
       "clause": "Assault: infected at the capped peak (140–190 / 75–95), reachable ≥ 90 %, attacks on player ≥ 8/min (tune); Mega reaches the arena ~140 s after activation (orchestrator 2026-11-04: \"~140 s\" = 120–160 s, by walking; no relocation).",
-      "verdict": "FAIL",
-      "note": "Current 240s native stationary holds FAIL the clarified120–160s walking arena-arrival window at both tiers: low162.4833s (+2.4833s beyond upper bound), high95.4833s (24.5167s before lower bound). Peaks reach95low/190high. Each tier retains one persistent Mega ID (119/122) and zero scheduled relocations; both final control hashes match current canonical stationary receipts. The timing counterexamples suffice for rowFAIL; no game, cap, input-policy or criterion adjustment was made."
+      "verdict": "PASS",
+      "note": "Fresh 240s native stationary holds from charge activation. Low arrives at 144.33333333333334s (peak 95); high at 134.6s (peak 190). Both meet 120–160s, reach their capped peaks, retain one persistent Mega ID, have zero scheduled relocations and match canonical controls. Only hidden far final-approach speed was tuned; no relocation, timer, cap or criterion changed."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/final-c/L10-11/hold.json",
-      "sha256": "ad3430242332096db46eefcb7c68b810a99f1d6d47fbad59bf06eaf693859243",
-      "what": "Current 240s native stationary holds FAIL the clarified120–160s walking arena-arrival window at both tiers: low162.4833s (+2.4833s beyond upper bound), high95.4833s (24.5167s before lower bound). Peaks reach95low/190high. Each tier retains one persistent Mega ID (119/122) and zero scheduled relocations; both final control hashes match current canonical stationary receipts. The timing counterexamples suffice for rowFAIL; no game, cap, input-policy or criterion adjustment was made."
-    },
-    {
-      "file": "docs/reports/final-c/L10-11/producer.ts",
-      "sha256": "75613e2daa33f41133db554a92a001eb96e4a21aceb581d0bced2b557b153cb3",
-      "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
+      "file": "docs/reports/fix51-r10c/l10-hold-proof.json",
+      "sha256": "e93708d4a12de1a1471ec00cd6c9d0ca192a8d9ff2eff50da3d0b9eba12dfc1a",
+      "what": "Inspected source-bound low/high four-minute hold measurements and tick trajectories. Arena arrivals are 144.33333333333334s low and 134.6s high; peak alive counts are 95/190; both controls match, each tier keeps one Mega ID, and no scheduled relocation occurred."
     }
   ],
-  "notes": "Frozen-head row review. Current immutable evidence, unchanged criterion and game source.",
   "sourceDigest": "75720d4df4ad59ad1814e1cda498bc4620d28edfa0298106dd53315c5f2fba05"
 }
