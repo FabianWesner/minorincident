@@ -209,7 +209,11 @@ export class CorpseLayout {
     // Searching a ground heap there snapped airborne bodies up into the pile
     // and repeated that search for every moving victim on successive frames.
     // The simulation clears corpseBlast on landing; settle exactly once then.
-    if (e.corpseThrown && e.corpseBlast) return { ...e.transform, y: e.transform.y - .7 };
+    if (e.corpseThrown && e.corpseBlast) {
+      if (this.search?.body === e) this.search = undefined;
+      this.deferred.delete(e.id);
+      return { ...e.transform, y: e.transform.y - .7 };
+    }
     const player = this.world.entities.get(1)?.transform, previous = this.bodies.get(e.id);
     if (this.search?.body === e && (this.search.deadAt !== deadAt || this.search.x !== e.transform.x || this.search.z !== e.transform.z)) this.search = undefined;
     if (previous?.deadAt === deadAt && previous.sourceX === e.transform.x && previous.sourceZ === e.transform.z

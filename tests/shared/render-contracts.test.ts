@@ -387,6 +387,23 @@ test('corpse pages: bodies persist past the old cap, bounds stay conservative, c
     infected: { nav: { clear: () => true, move: () => {} } } } as unknown as SimWorld;
   const pinnedBody = { id: 901, health: { current: 0 }, transform: { x: 0, y: .7, z: -.05, yaw: 0 }, combat: { radius: .35 } } as EntitySnapshot;
   expect(new CorpseLayout(pinnedWorld).place(pinnedBody).y).toBe(.35);
+  // A rocket can launch a body while its ground pose is still deferred.
+  // Readiness must drain that entry without waiting for a paused flight to land.
+  const airborne = { ...pinnedBody, id: 902, transform: { ...pinnedBody.transform } };
+  const flightWorld = { ...pinnedWorld, entities: { revision: 0, get: () => airborne, *iterate() {} } } as unknown as SimWorld;
+  const flightLayout = new CorpseLayout(flightWorld);
+  flightLayout.beginFrame(0); flightLayout.place(airborne);
+  airborne.corpseThrown = true; airborne.corpseBlast = { delay: 0, x: 1, y: 2, z: 1 };
+  const placeFlight = flightLayout.place.bind(flightLayout); let flightCalls = 0;
+  flightLayout.place = (...args) => {
+    if (++flightCalls > 2) throw new Error('airborne deferred pose never drains');
+    return placeFlight(...args);
+  };
+  flightLayout.settleAll();
+  expect(flightCalls).toBe(1);
+  airborne.corpseBlast = undefined;
+  flightLayout.beginFrame(Infinity);
+  expect('ax' in flightLayout.place(airborne)).toBe(true);
   const baked = bakeInfected(createSkinnedCrowdFixture()); packCrowdParts(baked.geometry);
   const pool = new StaticCorpses(), material = new MeshLambertNodeMaterial(), records = new Map<number, EntitySnapshot>();
   try {
