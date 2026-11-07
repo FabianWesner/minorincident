@@ -1,0 +1,53 @@
+{
+  "row": "G-19",
+  "status": "PASS",
+  "reviewer": "final-g/Codex",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "clauses": [
+    {
+      "clause": "Corgi: never damaged, no HP bar, never targeted, never inside geometry or a vehicle hull, inside with the player when a door/shutter closes.",
+      "verdict": "PASS",
+      "note": "Native all40 low/high complete/stationary cells: 778367 samples,0 targeted windups,0 hits,min health fraction1. Rendered physical 425 dog samples across17 archives:0dogHPbars,minhealth1;34 intentionally hidden passenger samples. Both-tier closure/fence/wreck fixtures reviewed; actual L8 boarding→L9 transport and low L9 crash→L10 safe-dog handover reviewed. No visible geometry/hull penetration established. Low L3distantdog remains a G27babysitting FAIL; closure correctly waits. Rejected scripted APC fixture is excluded."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/final-g/G-19-native.json",
+      "sha256": "f7e119a8f1c02d30d43028062c3bd53950ad9e1f616d2877ca75816ebac8ea49",
+      "what": "Native all40 low/high complete/stationary cells: 778367 samples,0 targeted windups,0 hits,min health fraction1. Rendered physical 425 dog samples across17 archives:0dogHPbars,minhealth1;34 intentionally hidden passenger samples. Both-tier closure/fence/wreck fixtures reviewed; actual L8 boarding→L9 transport and low L9 crash→L10 safe-dog handover reviewed. No visible geometry/hull penetration established. Low L3distantdog remains a G27babysitting FAIL; closure correctly waits. Rejected scripted APC fixture is excluded."
+    },
+    {
+      "file": "docs/reports/final-g/G-19-physical-summary.json",
+      "sha256": "9f2c09c5dcad2354bd2f8f0db24dee529309c80b0472c544d84a6a61353bf55f",
+      "what": "Native all40 low/high complete/stationary cells: 778367 samples,0 targeted windups,0 hits,min health fraction1. Rendered physical 425 dog samples across17 archives:0dogHPbars,minhealth1;34 intentionally hidden passenger samples. Both-tier closure/fence/wreck fixtures reviewed; actual L8 boarding→L9 transport and low L9 crash→L10 safe-dog handover reviewed. No visible geometry/hull penetration established. Low L3distantdog remains a G27babysitting FAIL; closure correctly waits. Rejected scripted APC fixture is excluded."
+    },
+    {
+      "file": "docs/reports/final-g/G-19-G-07-reviewed.json",
+      "sha256": "550a7b8d91e2a0a43c36860f8d5cd1302655a88666c1ee2bc5336025a72c26d2",
+      "what": "Native all40 low/high complete/stationary cells: 778367 samples,0 targeted windups,0 hits,min health fraction1. Rendered physical 425 dog samples across17 archives:0dogHPbars,minhealth1;34 intentionally hidden passenger samples. Both-tier closure/fence/wreck fixtures reviewed; actual L8 boarding→L9 transport and low L9 crash→L10 safe-dog handover reviewed. No visible geometry/hull penetration established. Low L3distantdog remains a G27babysitting FAIL; closure correctly waits. Rejected scripted APC fixture is excluded."
+    },
+    {
+      "file": "docs/reports/final-g/G-19-L3-static-query.json",
+      "sha256": "17f051222733b9430745fbc831e177dfce99879ff4c2b0d64969ab6c4c7fff22",
+      "what": "Native all40 low/high complete/stationary cells: 778367 samples,0 targeted windups,0 hits,min health fraction1. Rendered physical 425 dog samples across17 archives:0dogHPbars,minhealth1;34 intentionally hidden passenger samples. Both-tier closure/fence/wreck fixtures reviewed; actual L8 boarding→L9 transport and low L9 crash→L10 safe-dog handover reviewed. No visible geometry/hull penetration established. Low L3distantdog remains a G27babysitting FAIL; closure correctly waits. Rejected scripted APC fixture is excluded."
+    },
+    {
+      "file": "docs/reports/final-g/L8-low-captures.json",
+      "sha256": "35824fa902171ae106b0b97529a2e972c8b9b9378d92dd8df5621d3e9ce73dd7",
+      "what": "Native all40 low/high complete/stationary cells: 778367 samples,0 targeted windups,0 hits,min health fraction1. Rendered physical 425 dog samples across17 archives:0dogHPbars,minhealth1;34 intentionally hidden passenger samples. Both-tier closure/fence/wreck fixtures reviewed; actual L8 boarding→L9 transport and low L9 crash→L10 safe-dog handover reviewed. No visible geometry/hull penetration established. Low L3distantdog remains a G27babysitting FAIL; closure correctly waits. Rejected scripted APC fixture is excluded."
+    },
+    {
+      "file": "docs/reports/final-g/L8-high-captures.json",
+      "sha256": "d55817b07f9b528aba7077e8cb2c00faa4d6111663776283b8048325786576ff",
+      "what": "Native all40 low/high complete/stationary cells: 778367 samples,0 targeted windups,0 hits,min health fraction1. Rendered physical 425 dog samples across17 archives:0dogHPbars,minhealth1;34 intentionally hidden passenger samples. Both-tier closure/fence/wreck fixtures reviewed; actual L8 boarding→L9 transport and low L9 crash→L10 safe-dog handover reviewed. No visible geometry/hull penetration established. Low L3distantdog remains a G27babysitting FAIL; closure correctly waits. Rejected scripted APC fixture is excluded."
+    },
+    {
+      "file": "docs/reports/final-g/L9-low-captures.json",
+      "sha256": "001878974f036ce58adadc854bb5f4485ab1870e78138a674f4e76fae273cbbc",
+      "what": "Native all40 low/high complete/stationary cells: 778367 samples,0 targeted windups,0 hits,min health fraction1. Rendered physical 425 dog samples across17 archives:0dogHPbars,minhealth1;34 intentionally hidden passenger samples. Both-tier closure/fence/wreck fixtures reviewed; actual L8 boarding→L9 transport and low L9 crash→L10 safe-dog handover reviewed. No visible geometry/hull penetration established. Low L3distantdog remains a G27babysitting FAIL; closure correctly waits. Rejected scripted APC fixture is excluded."
+    }
+  ],
+  "notes": "PASS applies to measured health/target/bar/clearance/closure clauses. Hidden seated passengers are intentional and do not render embedded in the hull. No new game code or geometry fixes. Earlier APC setup rejection does not qualify boarding; actual production route provides that evidence.",
+  "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186"
+}
