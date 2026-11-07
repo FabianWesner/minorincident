@@ -1,0 +1,43 @@
+{
+  "row": "L3-06",
+  "status": "FAIL",
+  "reviewer": "Codex rr-a2",
+  "date": "2026-11-07",
+  "commit": "696d3264a773668ecc5c41836bfd3781fbd4d894",
+  "clauses": [
+    {
+      "clause": "Squad of 3–4 forms, follows 3–6 m (officers fire while moving, PO 2026-11-05), never teleports; size non-increasing per segment, ≤ 2 at the army line; every loss a bite/kill/separation.",
+      "verdict": "FAIL",
+      "note": "Fresh high following measurement: initial actual squad30/31/32/33 all100HP, ordinary fallback tick1935. Controlled calm fixture removes infected each tick; no squad relocation, HP or speed edits. After4s settling, physical KeyD movement samples every6ticks for8s retain all4 IDs. At tick2199 (0.4s into movement), living officer32 follows at2.47113m, below the written3m lower bound, while the courier moves>1m/s. Moving-sample ranges/medians:30=2.927–5.265/3.921m;31=2.863–5.849/3.370m;32=2.471–4.970/4.078m;33=3.638–5.990/4.103m. Largest officer displacement between0.1s samples0.640m; no teleport observed. All3 original1280×720 captures opened: officers form by the truck, follow along the north fence, and remain behind the courier at the corner. Numeric out-of-band sample establishes FAIL against the literal range; no new formation tolerance is assumed."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "test-results/rr-a2/L3-06-calm/result.json",
+      "sha256": "0acbb258b9d56dc321356d2a6778eb02b54d8a6e42873b82cd289f7aec63cacd",
+      "what": "Fresh high following measurement: initial actual squad30/31/32/33 all100HP, ordinary fallback tick1935. Controlled calm fixture removes infected each tick; no squad relocation, HP or speed edits. After4s settling, physical KeyD movement samples every6ticks for8s retain all4 IDs. At tick2199 (0.4s into movement), living officer32 follows at2.47113m, below the written3m lower bound, while the courier moves>1m/s. Moving-sample ranges/medians:30=2.927–5.265/3.921m;31=2.863–5.849/3.370m;32=2.471–4.970/4.078m;33=3.638–5.990/4.103m. Largest officer displacement between0.1s samples0.640m; no teleport observed. All3 original1280×720 captures opened: officers form by the truck, follow along the north fence, and remain behind the courier at the corner. Numeric out-of-band sample establishes FAIL against the literal range; no new formation tolerance is assumed."
+    },
+    {
+      "file": "test-results/rr-a2/L3-06-calm/formed.png",
+      "sha256": "84661b7ee9183115f73af71439f4f9faa57aa75b78fb88fb72a64552026d5852",
+      "what": "Fresh high following measurement: initial actual squad30/31/32/33 all100HP, ordinary fallback tick1935. Controlled calm fixture removes infected each tick; no squad relocation, HP or speed edits. After4s settling, physical KeyD movement samples every6ticks for8s retain all4 IDs. At tick2199 (0.4s into movement), living officer32 follows at2.47113m, below the written3m lower bound, while the courier moves>1m/s. Moving-sample ranges/medians:30=2.927–5.265/3.921m;31=2.863–5.849/3.370m;32=2.471–4.970/4.078m;33=3.638–5.990/4.103m. Largest officer displacement between0.1s samples0.640m; no teleport observed. All3 original1280×720 captures opened: officers form by the truck, follow along the north fence, and remain behind the courier at the corner. Numeric out-of-band sample establishes FAIL against the literal range; no new formation tolerance is assumed."
+    },
+    {
+      "file": "test-results/rr-a2/L3-06-calm/moving.png",
+      "sha256": "c0496b8ac076dfde0994da49436d4eb6ddbcda5ae9b3539a393ac5db7e9e0f05",
+      "what": "Fresh high following measurement: initial actual squad30/31/32/33 all100HP, ordinary fallback tick1935. Controlled calm fixture removes infected each tick; no squad relocation, HP or speed edits. After4s settling, physical KeyD movement samples every6ticks for8s retain all4 IDs. At tick2199 (0.4s into movement), living officer32 follows at2.47113m, below the written3m lower bound, while the courier moves>1m/s. Moving-sample ranges/medians:30=2.927–5.265/3.921m;31=2.863–5.849/3.370m;32=2.471–4.970/4.078m;33=3.638–5.990/4.103m. Largest officer displacement between0.1s samples0.640m; no teleport observed. All3 original1280×720 captures opened: officers form by the truck, follow along the north fence, and remain behind the courier at the corner. Numeric out-of-band sample establishes FAIL against the literal range; no new formation tolerance is assumed."
+    },
+    {
+      "file": "test-results/rr-a2/L3-06-calm/end.png",
+      "sha256": "0a3bd138aba263a2f0da0d02dae9adb41a011beff9f96b30247cf849fbf886a4",
+      "what": "Fresh high following measurement: initial actual squad30/31/32/33 all100HP, ordinary fallback tick1935. Controlled calm fixture removes infected each tick; no squad relocation, HP or speed edits. After4s settling, physical KeyD movement samples every6ticks for8s retain all4 IDs. At tick2199 (0.4s into movement), living officer32 follows at2.47113m, below the written3m lower bound, while the courier moves>1m/s. Moving-sample ranges/medians:30=2.927–5.265/3.921m;31=2.863–5.849/3.370m;32=2.471–4.970/4.078m;33=3.638–5.990/4.103m. Largest officer displacement between0.1s samples0.640m; no teleport observed. All3 original1280×720 captures opened: officers form by the truck, follow along the north fence, and remain behind the courier at the corner. Numeric out-of-band sample establishes FAIL against the literal range; no new formation tolerance is assumed."
+    },
+    {
+      "file": "docs/reports/rr-a/evidence/L3-06.json",
+      "sha256": "be2f8f05332e7bb7abee472cb32f7d830a72e9054a1b08dedfec04b67e7b3325",
+      "what": "Fresh high following measurement: initial actual squad30/31/32/33 all100HP, ordinary fallback tick1935. Controlled calm fixture removes infected each tick; no squad relocation, HP or speed edits. After4s settling, physical KeyD movement samples every6ticks for8s retain all4 IDs. At tick2199 (0.4s into movement), living officer32 follows at2.47113m, below the written3m lower bound, while the courier moves>1m/s. Moving-sample ranges/medians:30=2.927–5.265/3.921m;31=2.863–5.849/3.370m;32=2.471–4.970/4.078m;33=3.638–5.990/4.103m. Largest officer displacement between0.1s samples0.640m; no teleport observed. All3 original1280×720 captures opened: officers form by the truck, follow along the north fence, and remain behind the courier at the corner. Numeric out-of-band sample establishes FAIL against the literal range; no new formation tolerance is assumed."
+    }
+  ],
+  "notes": "Current frozen-main source, fresh browser-pool evidence. Every cited capture personally opened at original resolution; controlled setup is disclosed in the observation.",
+  "sourceDigest": "4775569227eac4bde52bcf09d08438f35bb8dd5135560d4fca21da6b16b6d5e1"
+}
