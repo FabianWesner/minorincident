@@ -8,16 +8,21 @@
     {
       "clause": "**No single follower is slower than the group.** While the group moves, every follower's median speed ≥ 0.95× the group median (tune); time the player stands waiting for one follower > 10 m behind ≤ 10 % of escort time (tune). PO: \"let me stay with the crowd for suvivor.\"",
       "verdict": "FAIL",
-      "note": "Fresh all-level native acceptance on current main finds a binding L1 low/high counterexample: escort time6095/6090 ticks; player waits with a follower>10m behind for1003 ticks in each tier, 16.4561%/16.4696% (>10%). One violation is sufficient for the global row to FAIL. Other completed levels were also run; unavailable rows are not treated as passes. Repro: npm run qa:accept -- --level L1 --skip-browser; seed1, complete policy, both tiers; inspect G-13 stationary far-follower waiting fractions."
+      "note": "Fresh current-main native L7 high complete seed2: departure follower66 has27 qualified walking samples, median4.3485318979m/s versus group4.5812160184m/s, ratio0.9492090922 (<0.95). This is a small strict numeric miss (0.0791 percentage points), not evidence of large visible babysitting. The majority-of-three diagnostic passes the follower, but does not meet the unchanged every-follower criterion for this valid seed. L1 stationary-far fractions16.4561%/16.4696% are upper bounds and are explicitly rejected as causal waiting FAIL evidence. Repro: npm run qa:accept -- --level L7 --skip-browser; inspect G-13 high/complete, step/departure follower66 seed2."
     }
   ],
   "evidence": [
     {
-      "file": "test-results/rr-b/G-13-native-L1.json",
-      "sha256": "a4d94b22a86ac1821d26eb6374133596d1b167d12dfc7370ea635c03e11ffdbf",
-      "what": "Fresh all-level native acceptance on current main finds a binding L1 low/high counterexample: escort time6095/6090 ticks; player waits with a follower>10m behind for1003 ticks in each tier, 16.4561%/16.4696% (>10%). One violation is sufficient for the global row to FAIL. Other completed levels were also run; unavailable rows are not treated as passes. Repro: npm run qa:accept -- --level L1 --skip-browser; seed1, complete policy, both tiers; inspect G-13 stationary far-follower waiting fractions."
+      "file": "test-results/rr-b/G-13-individual-pace.json",
+      "sha256": "f91a069d1f0b5b44dbe13a215c2c4f39ddc1db8f01e4fd23dda30dee9ce36294",
+      "what": "Fresh current-main native L7 high complete seed2: departure follower66 has27 qualified walking samples, median4.3485318979m/s versus group4.5812160184m/s, ratio0.9492090922 (<0.95). This is a small strict numeric miss (0.0791 percentage points), not evidence of large visible babysitting. The majority-of-three diagnostic passes the follower, but does not meet the unchanged every-follower criterion for this valid seed. L1 stationary-far fractions16.4561%/16.4696% are upper bounds and are explicitly rejected as causal waiting FAIL evidence. Repro: npm run qa:accept -- --level L7 --skip-browser; inspect G-13 high/complete, step/departure follower66 seed2."
+    },
+    {
+      "file": "test-results/rr-b/L7-05-native.json",
+      "sha256": "3f938a70d996b421b20dc144cac5a4a401014249b151901edd89ec29366e822f",
+      "what": "Fresh current-main native L7 high complete seed2: departure follower66 has27 qualified walking samples, median4.3485318979m/s versus group4.5812160184m/s, ratio0.9492090922 (<0.95). This is a small strict numeric miss (0.0791 percentage points), not evidence of large visible babysitting. The majority-of-three diagnostic passes the follower, but does not meet the unchanged every-follower criterion for this valid seed. L1 stationary-far fractions16.4561%/16.4696% are upper bounds and are explicitly rejected as causal waiting FAIL evidence. Repro: npm run qa:accept -- --level L7 --skip-browser; inspect G-13 high/complete, step/departure follower66 seed2."
     }
   ],
-  "notes": "Fresh measured FAIL. No P status; this is a numeric criterion failure.",
+  "notes": "Exact unchanged-criterion individual speed counterexample. Current L1 upper-bound evidence does not establish an actual waiting failure; previous rr-b causal-wait wording is withdrawn.",
   "sourceDigest": "826eaf34ba69c9272cce1759bdd1699e67d8e35ebbd3c7d1739661bfaa751923"
 }
