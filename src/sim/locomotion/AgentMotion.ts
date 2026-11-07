@@ -65,6 +65,7 @@ function forced(e: EntitySnapshot, tick: number, world: SimWorld): boolean {
  * tick, then publishes post-separation/grounding displacement for every figure. */
 export function installAgentMotion(world: SimWorld): void {
   const previous = new Map<number, { x: number; z: number; following: boolean }>();
+  const rejectedCompanions = new Map<EntitySnapshot, EntitySnapshot>();
   world.events.on('sim.tick', () => {
     for (const [id] of previous) if (!world.entities.get(id) || world.entities.get(id)!.corpse) previous.delete(id);
     for (const e of world.entities.iterate()) if (actor(e)) {
@@ -148,11 +149,19 @@ export function installAgentMotion(world: SimWorld): void {
     }
   }, SimPhase.cleanup + .6);
   world.events.on('sim.tick', () => {
+    rejectedCompanions.clear();
     for (const e of world.entities.iterate()) if (actor(e)) {
       const p = previous.get(e.id); if (!p) continue;
       const dx = e.transform.x - p.x, dz = e.transform.z - p.z, distance = Math.hypot(dx, dz);
       const motion = e.motion ??= { velocity: { x: 0, z: 0 }, speed: 0, moving: false, distance: e.id * .137 };
       const response = e.locomotion, blocker = world.solids.blockingBody(e.id);
+      // Either half of the pair can be rejected: a stationary corgi can also
+      // seal a follower's route. Let just the companion yield to break symmetry.
+      if (world.scenario === 'L5' && response?.updatedAt === world.tick && distance / FIXED_DT <= 1.2 && !forced(e, world.tick, world)) {
+        const companion = e.companion && blocker?.civilian?.survivor?.mode === 'follow' ? e
+          : e.civilian?.survivor?.mode === 'follow' && blocker?.companion ? blocker : undefined;
+        if (companion) rejectedCompanions.set(companion, e.companion ? blocker! : e);
+      }
       // The final collision pass can reject a step after navigation moved.
       // Clear rejected momentum at a solid corpse or following body so the
       // next step starts from resolved motion instead of pushing into it again.
@@ -161,6 +170,16 @@ export function installAgentMotion(world: SimWorld): void {
       }
       motion.velocity.x = dx / FIXED_DT; motion.velocity.z = dz / FIXED_DT; motion.speed = distance / FIXED_DT;
       motion.moving = motion.speed > (motion.moving ? .04 : .12); if (distance < 3) motion.distance += distance;
+    }
+    if (world.scenario === 'L5') for (const e of world.entities.iterate()) if (e.companion) {
+      const c = e.companion;
+      // Projection can alternate tiny accepted and rejected steps. Reset on
+      // real progress or a contact gap, rather than losing the stall on jitter.
+      if (c.contactFrom && (Math.hypot(e.transform.x - c.contactFrom.x, e.transform.z - c.contactFrom.z) > .2 || world.tick - c.contactFrom.at > 30)) { delete c.contactFrom; c.contactRejected = 0; }
+      if (rejectedCompanions.has(e)) {
+        c.contactFrom ??= { x: e.transform.x, z: e.transform.z, at: world.tick, blocker: rejectedCompanions.get(e)!.id };
+        c.contactFrom.at = world.tick; c.contactFrom.blocker = rejectedCompanions.get(e)!.id; c.contactRejected = (c.contactRejected ?? 0) + 1;
+      }
     }
   }, SimPhase.cleanup + 1);
 }

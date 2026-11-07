@@ -1,0 +1,589 @@
+{
+  "baseline": "5f64c4d0",
+  "final": "7233cab6",
+  "method": "Unchanged r2-l5-trace.ts, native complete policy, seeds 1\u20133 \u00d7 low/high; badStraightTicks / straightTicks summed over every follower.",
+  "before": {
+    "runs": [
+      {
+        "tier": "low",
+        "seed": 1,
+        "outcome": "complete",
+        "straightTicks": 6001,
+        "badStraightTicks": 334,
+        "outOfBandPercent": 5.565739043492751,
+        "followers": [
+          {
+            "id": 31,
+            "straightTicks": 1771,
+            "badStraightTicks": 41,
+            "inBandStraightShare": 0.9768492377188029,
+            "maxBadRun": 27
+          },
+          {
+            "id": 30,
+            "straightTicks": 1606,
+            "badStraightTicks": 63,
+            "inBandStraightShare": 0.960772104607721,
+            "maxBadRun": 50
+          },
+          {
+            "id": 32,
+            "straightTicks": 1235,
+            "badStraightTicks": 6,
+            "inBandStraightShare": 0.9951417004048583,
+            "maxBadRun": 6
+          },
+          {
+            "id": 28,
+            "straightTicks": 878,
+            "badStraightTicks": 224,
+            "inBandStraightShare": 0.744874715261959,
+            "maxBadRun": 75
+          },
+          {
+            "id": 29,
+            "straightTicks": 511,
+            "badStraightTicks": 0,
+            "inBandStraightShare": 1,
+            "maxBadRun": 0
+          }
+        ]
+      },
+      {
+        "tier": "low",
+        "seed": 2,
+        "outcome": "complete",
+        "straightTicks": 7322,
+        "badStraightTicks": 355,
+        "outOfBandPercent": 4.848402075935537,
+        "followers": [
+          {
+            "id": 31,
+            "straightTicks": 2108,
+            "badStraightTicks": 8,
+            "inBandStraightShare": 0.9962049335863378,
+            "maxBadRun": 8
+          },
+          {
+            "id": 30,
+            "straightTicks": 1980,
+            "badStraightTicks": 72,
+            "inBandStraightShare": 0.9636363636363636,
+            "maxBadRun": 66
+          },
+          {
+            "id": 32,
+            "straightTicks": 1567,
+            "badStraightTicks": 179,
+            "inBandStraightShare": 0.8857689853222719,
+            "maxBadRun": 127
+          },
+          {
+            "id": 28,
+            "straightTicks": 1011,
+            "badStraightTicks": 96,
+            "inBandStraightShare": 0.9050445103857567,
+            "maxBadRun": 68
+          },
+          {
+            "id": 29,
+            "straightTicks": 656,
+            "badStraightTicks": 0,
+            "inBandStraightShare": 1,
+            "maxBadRun": 0
+          }
+        ]
+      },
+      {
+        "tier": "low",
+        "seed": 3,
+        "outcome": "complete",
+        "straightTicks": 6281,
+        "badStraightTicks": 36,
+        "outOfBandPercent": 0.5731571405827097,
+        "followers": [
+          {
+            "id": 31,
+            "straightTicks": 1758,
+            "badStraightTicks": 0,
+            "inBandStraightShare": 1,
+            "maxBadRun": 0
+          },
+          {
+            "id": 30,
+            "straightTicks": 1650,
+            "badStraightTicks": 0,
+            "inBandStraightShare": 1,
+            "maxBadRun": 0
+          },
+          {
+            "id": 32,
+            "straightTicks": 1350,
+            "badStraightTicks": 36,
+            "inBandStraightShare": 0.9733333333333334,
+            "maxBadRun": 36
+          },
+          {
+            "id": 28,
+            "straightTicks": 957,
+            "badStraightTicks": 0,
+            "inBandStraightShare": 1,
+            "maxBadRun": 0
+          },
+          {
+            "id": 29,
+            "straightTicks": 566,
+            "badStraightTicks": 0,
+            "inBandStraightShare": 1,
+            "maxBadRun": 0
+          }
+        ]
+      },
+      {
+        "tier": "high",
+        "seed": 1,
+        "outcome": "complete",
+        "straightTicks": 3804,
+        "badStraightTicks": 92,
+        "outOfBandPercent": 2.4185068349106205,
+        "followers": [
+          {
+            "id": 31,
+            "straightTicks": 1120,
+            "badStraightTicks": 29,
+            "inBandStraightShare": 0.9741071428571428,
+            "maxBadRun": 23
+          },
+          {
+            "id": 30,
+            "straightTicks": 968,
+            "badStraightTicks": 42,
+            "inBandStraightShare": 0.9566115702479339,
+            "maxBadRun": 27
+          },
+          {
+            "id": 32,
+            "straightTicks": 791,
+            "badStraightTicks": 12,
+            "inBandStraightShare": 0.9848293299620733,
+            "maxBadRun": 12
+          },
+          {
+            "id": 28,
+            "straightTicks": 613,
+            "badStraightTicks": 0,
+            "inBandStraightShare": 1,
+            "maxBadRun": 0
+          },
+          {
+            "id": 29,
+            "straightTicks": 312,
+            "badStraightTicks": 9,
+            "inBandStraightShare": 0.9711538461538461,
+            "maxBadRun": 9
+          }
+        ]
+      },
+      {
+        "tier": "high",
+        "seed": 2,
+        "outcome": "complete",
+        "straightTicks": 5467,
+        "badStraightTicks": 176,
+        "outOfBandPercent": 3.2193158953722336,
+        "followers": [
+          {
+            "id": 31,
+            "straightTicks": 1786,
+            "badStraightTicks": 6,
+            "inBandStraightShare": 0.9966405375139977,
+            "maxBadRun": 6
+          },
+          {
+            "id": 30,
+            "straightTicks": 982,
+            "badStraightTicks": 126,
+            "inBandStraightShare": 0.8716904276985743,
+            "maxBadRun": 72
+          },
+          {
+            "id": 32,
+            "straightTicks": 1275,
+            "badStraightTicks": 44,
+            "inBandStraightShare": 0.9654901960784313,
+            "maxBadRun": 44
+          },
+          {
+            "id": 28,
+            "straightTicks": 875,
+            "badStraightTicks": 0,
+            "inBandStraightShare": 1,
+            "maxBadRun": 0
+          },
+          {
+            "id": 29,
+            "straightTicks": 549,
+            "badStraightTicks": 0,
+            "inBandStraightShare": 1,
+            "maxBadRun": 0
+          }
+        ]
+      },
+      {
+        "tier": "high",
+        "seed": 3,
+        "outcome": "complete",
+        "straightTicks": 5885,
+        "badStraightTicks": 274,
+        "outOfBandPercent": 4.655904842820731,
+        "followers": [
+          {
+            "id": 31,
+            "straightTicks": 1629,
+            "badStraightTicks": 9,
+            "inBandStraightShare": 0.994475138121547,
+            "maxBadRun": 9
+          },
+          {
+            "id": 30,
+            "straightTicks": 1531,
+            "badStraightTicks": 124,
+            "inBandStraightShare": 0.9190071848465056,
+            "maxBadRun": 99
+          },
+          {
+            "id": 32,
+            "straightTicks": 1297,
+            "badStraightTicks": 35,
+            "inBandStraightShare": 0.9730146491904395,
+            "maxBadRun": 29
+          },
+          {
+            "id": 28,
+            "straightTicks": 872,
+            "badStraightTicks": 106,
+            "inBandStraightShare": 0.8784403669724771,
+            "maxBadRun": 106
+          },
+          {
+            "id": 29,
+            "straightTicks": 556,
+            "badStraightTicks": 0,
+            "inBandStraightShare": 1,
+            "maxBadRun": 0
+          }
+        ]
+      }
+    ],
+    "straightTicks": 34760,
+    "badStraightTicks": 1267,
+    "outOfBandPercent": 3.644994246260069
+  },
+  "after": {
+    "runs": [
+      {
+        "tier": "low",
+        "seed": 1,
+        "outcome": "complete",
+        "straightTicks": 6001,
+        "badStraightTicks": 334,
+        "outOfBandPercent": 5.565739043492751,
+        "followers": [
+          {
+            "id": 31,
+            "straightTicks": 1771,
+            "badStraightTicks": 41,
+            "inBandStraightShare": 0.9768492377188029,
+            "maxBadRun": 27
+          },
+          {
+            "id": 30,
+            "straightTicks": 1606,
+            "badStraightTicks": 63,
+            "inBandStraightShare": 0.960772104607721,
+            "maxBadRun": 50
+          },
+          {
+            "id": 32,
+            "straightTicks": 1235,
+            "badStraightTicks": 6,
+            "inBandStraightShare": 0.9951417004048583,
+            "maxBadRun": 6
+          },
+          {
+            "id": 28,
+            "straightTicks": 878,
+            "badStraightTicks": 224,
+            "inBandStraightShare": 0.744874715261959,
+            "maxBadRun": 75
+          },
+          {
+            "id": 29,
+            "straightTicks": 511,
+            "badStraightTicks": 0,
+            "inBandStraightShare": 1,
+            "maxBadRun": 0
+          }
+        ]
+      },
+      {
+        "tier": "low",
+        "seed": 2,
+        "outcome": "complete",
+        "straightTicks": 6896,
+        "badStraightTicks": 355,
+        "outOfBandPercent": 5.147911832946636,
+        "followers": [
+          {
+            "id": 31,
+            "straightTicks": 2023,
+            "badStraightTicks": 8,
+            "inBandStraightShare": 0.9960454770143351,
+            "maxBadRun": 8
+          },
+          {
+            "id": 30,
+            "straightTicks": 1895,
+            "badStraightTicks": 72,
+            "inBandStraightShare": 0.9620052770448548,
+            "maxBadRun": 66
+          },
+          {
+            "id": 32,
+            "straightTicks": 1481,
+            "badStraightTicks": 179,
+            "inBandStraightShare": 0.8791357191087104,
+            "maxBadRun": 127
+          },
+          {
+            "id": 28,
+            "straightTicks": 926,
+            "badStraightTicks": 96,
+            "inBandStraightShare": 0.896328293736501,
+            "maxBadRun": 68
+          },
+          {
+            "id": 29,
+            "straightTicks": 571,
+            "badStraightTicks": 0,
+            "inBandStraightShare": 1,
+            "maxBadRun": 0
+          }
+        ]
+      },
+      {
+        "tier": "low",
+        "seed": 3,
+        "outcome": "complete",
+        "straightTicks": 5629,
+        "badStraightTicks": 156,
+        "outOfBandPercent": 2.771362586605081,
+        "followers": [
+          {
+            "id": 31,
+            "straightTicks": 1623,
+            "badStraightTicks": 14,
+            "inBandStraightShare": 0.9913739987677141,
+            "maxBadRun": 14
+          },
+          {
+            "id": 30,
+            "straightTicks": 1514,
+            "badStraightTicks": 0,
+            "inBandStraightShare": 1,
+            "maxBadRun": 0
+          },
+          {
+            "id": 32,
+            "straightTicks": 1214,
+            "badStraightTicks": 36,
+            "inBandStraightShare": 0.9703459637561779,
+            "maxBadRun": 36
+          },
+          {
+            "id": 28,
+            "straightTicks": 821,
+            "badStraightTicks": 106,
+            "inBandStraightShare": 0.8708891595615104,
+            "maxBadRun": 95
+          },
+          {
+            "id": 29,
+            "straightTicks": 457,
+            "badStraightTicks": 0,
+            "inBandStraightShare": 1,
+            "maxBadRun": 0
+          }
+        ]
+      },
+      {
+        "tier": "high",
+        "seed": 1,
+        "outcome": "complete",
+        "straightTicks": 5648,
+        "badStraightTicks": 256,
+        "outOfBandPercent": 4.53257790368272,
+        "followers": [
+          {
+            "id": 31,
+            "straightTicks": 1715,
+            "badStraightTicks": 22,
+            "inBandStraightShare": 0.9871720116618076,
+            "maxBadRun": 22
+          },
+          {
+            "id": 30,
+            "straightTicks": 1551,
+            "badStraightTicks": 3,
+            "inBandStraightShare": 0.9980657640232108,
+            "maxBadRun": 3
+          },
+          {
+            "id": 32,
+            "straightTicks": 1271,
+            "badStraightTicks": 122,
+            "inBandStraightShare": 0.9040125885129819,
+            "maxBadRun": 67
+          },
+          {
+            "id": 28,
+            "straightTicks": 743,
+            "badStraightTicks": 109,
+            "inBandStraightShare": 0.8532974427994616,
+            "maxBadRun": 62
+          },
+          {
+            "id": 29,
+            "straightTicks": 368,
+            "badStraightTicks": 0,
+            "inBandStraightShare": 1,
+            "maxBadRun": 0
+          }
+        ]
+      },
+      {
+        "tier": "high",
+        "seed": 2,
+        "outcome": "complete",
+        "straightTicks": 5329,
+        "badStraightTicks": 186,
+        "outOfBandPercent": 3.4903358979170576,
+        "followers": [
+          {
+            "id": 31,
+            "straightTicks": 1652,
+            "badStraightTicks": 6,
+            "inBandStraightShare": 0.9963680387409201,
+            "maxBadRun": 6
+          },
+          {
+            "id": 30,
+            "straightTicks": 1397,
+            "badStraightTicks": 126,
+            "inBandStraightShare": 0.9098067287043665,
+            "maxBadRun": 72
+          },
+          {
+            "id": 32,
+            "straightTicks": 1126,
+            "badStraightTicks": 54,
+            "inBandStraightShare": 0.9520426287744227,
+            "maxBadRun": 54
+          },
+          {
+            "id": 28,
+            "straightTicks": 741,
+            "badStraightTicks": 0,
+            "inBandStraightShare": 1,
+            "maxBadRun": 0
+          },
+          {
+            "id": 29,
+            "straightTicks": 413,
+            "badStraightTicks": 0,
+            "inBandStraightShare": 1,
+            "maxBadRun": 0
+          }
+        ]
+      },
+      {
+        "tier": "high",
+        "seed": 3,
+        "outcome": "complete",
+        "straightTicks": 5885,
+        "badStraightTicks": 274,
+        "outOfBandPercent": 4.655904842820731,
+        "followers": [
+          {
+            "id": 31,
+            "straightTicks": 1629,
+            "badStraightTicks": 9,
+            "inBandStraightShare": 0.994475138121547,
+            "maxBadRun": 9
+          },
+          {
+            "id": 30,
+            "straightTicks": 1531,
+            "badStraightTicks": 124,
+            "inBandStraightShare": 0.9190071848465056,
+            "maxBadRun": 99
+          },
+          {
+            "id": 32,
+            "straightTicks": 1297,
+            "badStraightTicks": 35,
+            "inBandStraightShare": 0.9730146491904395,
+            "maxBadRun": 29
+          },
+          {
+            "id": 28,
+            "straightTicks": 872,
+            "badStraightTicks": 106,
+            "inBandStraightShare": 0.8784403669724771,
+            "maxBadRun": 106
+          },
+          {
+            "id": 29,
+            "straightTicks": 556,
+            "badStraightTicks": 0,
+            "inBandStraightShare": 1,
+            "maxBadRun": 0
+          }
+        ]
+      }
+    ],
+    "straightTicks": 35388,
+    "badStraightTicks": 1561,
+    "outOfBandPercent": 4.411099807844467
+  },
+  "reportedHighSeed2Follower30Corpse90": {
+    "r3-before": {
+      "contactTicks": 711,
+      "stationaryTicks": 530,
+      "stationaryMaxRun": {
+        "ticks": 475,
+        "start": 11622,
+        "seconds": 7.916666666666667
+      },
+      "calmStationaryMaxRun": {
+        "ticks": 156,
+        "start": 11622,
+        "seconds": 2.6
+      }
+    },
+    "r3-final": {
+      "contactTicks": 81,
+      "stationaryTicks": 17,
+      "stationaryMaxRun": {
+        "ticks": 6,
+        "start": 11463,
+        "seconds": 0.1
+      },
+      "calmStationaryMaxRun": {
+        "ticks": 6,
+        "start": 11463,
+        "seconds": 0.1
+      }
+    }
+  }
+}

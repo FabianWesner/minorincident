@@ -52,6 +52,7 @@ export class Companion {
       for (const [dx, dz] of [[0, 2], [2, 0], [-2, 0], [0, -2], [1.4, 1.4], [-1.4, -1.4], [0, 1], [0, 0]]) if (nav.clear(player.x + dx, player.z + dz, .35)) { spot = { x: player.x + dx, z: player.z + dz }; break; }
       spot ??= { x: player.x, z: player.z };
       this.world.solids.relocate(e, { ...spot, y: .3 + (this.world.districts?.groundBelow(spot.x, spot.z, player.y - .7) ?? 0) }, 'companion.respawn'); e.transform.yaw = -Math.atan2(player.z - spot.z, player.x - spot.x);
+      delete c.contactYield; delete c.contactFrom; delete c.contactRejected;
       delete e.locomotion; c.velocity = { x: 0, z: 0 }; c.path.length = 0; c.goal = -1; c.pathIndex = 0; c.following = false; c.pickup = null;
       if (e.motion) { e.motion.velocity.x = e.motion.velocity.z = 0; e.motion.speed = 0; e.motion.moving = false; }
       this.world.spatial.set(e.id, e.transform.x, e.transform.z);
@@ -77,6 +78,7 @@ export class Companion {
         at.y = .3 + (this.world.districts?.groundBelow(at.x, at.z, e.transform.y - .3) ?? 0);
         if (!this.world.solids.relocate(e, at, 'companion.door', 0, false)) continue;
         c.path.length = 0; c.goal = -1; c.pathIndex = 0; c.pickup = null; c.following = false; c.velocity = { x: 0, z: 0 };
+        delete c.contactYield; delete c.contactFrom; delete c.contactRejected;
         delete e.locomotion; delete e.motion;
         c.transitionUntil = this.world.tick + 12; this.yieldUntil = 0; e.hidden = true; placed = true; break;
       }
@@ -157,6 +159,12 @@ export class Companion {
           this.world.solids.forget(e); c.courage = 100; c.state = 'follow';
         }
         continue;
+      }
+      // A stopped companion must yield too when a follower's rejected route
+      // crosses its body; ordinary follow hysteresis may supply no move at all.
+      if (this.world.scenario === 'L5' && ((c.contactRejected ?? 0) >= 30 || c.contactYield)) {
+        this.world.npcs!.move(e, player.transform, 4.5, c, 2);
+        if (c.contactYield) { c.following = true; continue; }
       }
       let pickup = c.pickup === null ? undefined : this.world.entities.get(c.pickup);
       if (Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z) > 6 || !this.canFetch(pickup, player)) { pickup = undefined; c.pickup = null; }

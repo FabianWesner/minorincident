@@ -48,6 +48,8 @@ export interface Civilian {
 }
 /** Serializable E23 survivor state. `leader` = entity id it follows in single file (the player or the follower ahead); ticks are sim ticks. */
 export interface SurvivorState { key: string; mode: 'hidden' | 'follow'; slot: number; leader: number; cover: boolean; /** Story injury, independent of the civilian's ambient walking pace. */ injured?: boolean; fearUntil?: number; waitAt: number; foundAt: number; /** L5 calm travel tick: this tick the follower tracks the courier's pace without crowd response lag (L5-08). */ briskAt?: number;
+  /** Swept L7 detour legs around a large solid corpse during L5 travel. */
+  corpseRoute?: Point[];
   /** Courier travel velocity as this follower perceives it: rises with the courier at once, eases off over ~0.6 s. */
   pace?: { x: number; z: number; tick: number } }
 /** E21 allied fighters v2: a handgun/rifle with a distance-dependent hit chance (one target per shot, no ammunition). */
@@ -87,7 +89,10 @@ export interface AllyState {
    * where and since when the fighter stands on one spot, and its last call-out. */
   mag?: number; burstN?: number; reloadUntil?: number; flinchUntil?: number; lastHp?: number; still?: { x: number; z: number; tick: number }; calloutAt?: number; blockedAt?: number;
 }
-export interface Companion { transitionUntil?: number; following?: boolean; velocity?: Point; state: 'follow' | 'fetch' | 'hide'; courage: number; until: number; barkAt: number; hurtAt: number; pickup: number | null; path: number[]; goal: number; pathIndex: number;
+export interface Companion {
+  /** Rejected L5 pair steps without meaningful progress, and the bounded yielding leg. */
+  contactRejected?: number; contactFrom?: Point & { at: number; blocker: number }; contactYield?: Point & { until: number };
+  transitionUntil?: number; following?: boolean; velocity?: Point; state: 'follow' | 'fetch' | 'hide'; courage: number; until: number; barkAt: number; hurtAt: number; pickup: number | null; path: number[]; goal: number; pathIndex: number;
   /** L1 v2 warning state (spec 5.8): highest stage reached for the current threat, and the nervous-idle end tick. */
   warn?: { stage: CorgiWarnStage; threat: number; nervousUntil: number } }
 export type CorgiWarnStage = 'none' | 'stiffen' | 'growl' | 'bark' | 'nervous';
