@@ -156,6 +156,7 @@ export class Blasts extends Group {
       })();
     }
     // Smoke puffs: origin(x,y,z,birth), motion(vx,vy,vz,life), style(size0,size1,heat,shade).
+    // Heat 2 marks street columns; 3 marks engine smoke outside the vehicle reveal mask.
     const puffMaterial = new MeshBasicNodeMaterial({ transparent: true, depthWrite: false });
     ({ mesh: this.puffs, attrs: this.pf } = instanced(new IcosahedronGeometry(1, 2), puffMaterial, PUFFS, { pOrigin: 4, pMotion: 4, pStyle: 4 }));
     {
@@ -176,6 +177,7 @@ export class Blasts extends Group {
         const ray = cameraPosition.sub(this.playerNode), length = ray.length().max(.001), direction = ray.div(length);
         const along = dot(positionWorld.sub(this.playerNode), direction).clamp(0, length);
         const streetSmoke = st.z.greaterThan(1.5);
+        const vehicleSmoke = st.z.greaterThan(2.5);
         const nearRay = positionWorld.sub(this.playerNode.add(direction.mul(along))).length().lessThanEqual(streetSmoke.select(1, 6));
         const sun = normalWorld.dot(vec3(.45, .78, .43)).mul(.5).add(.5);
         const ambient = host.ambient ? host.ambient.clamp(.12, 1) : float(1);
@@ -197,11 +199,11 @@ export class Blasts extends Group {
         // vqa-3 #3 (L3 street columns read as hanging teardrops: densest, rounded bottoms fading upward). Rise from the base:
         // a thin wispy stem that thickens over its first quarter, then widens and fades from mid-height to the top.
         const streetFade = smoothstep(0, .28, progress).mul(.75).add(.25).mul(float(1).sub(smoothstep(.3, 1, progress)));
-        const fade = age.div(.45).min(1).mul(st.z.greaterThan(1.5).select(streetFade, mix(float(1).sub(progress).pow(1.3), float(1).sub(smoothstep(.35, 1, progress)), dark)));
+        const fade = age.div(vehicleSmoke.select(.08, .45)).min(1).mul(vehicleSmoke.select(float(1).sub(smoothstep(.5, 1, progress)), streetSmoke.select(streetFade, mix(float(1).sub(progress).pow(1.3), float(1).sub(smoothstep(.35, 1, progress)), dark))));
         // Retain 20% in the 6 m player-ray tube, leaving headroom for antialiasing
         // and bloom while keeping the final measured coverage below the 40% cap.
         const dither = fract(fract(dot(screenCoordinate.xy.floor(), vec2(.06711056, .00583715))).mul(52.9829189));
-        nearRay.and(dither.greaterThanEqual(.2)).discard();
+        nearRay.and(vehicleSmoke.not()).and(dither.greaterThanEqual(.2)).discard();
         // The playable epilogue mist is a ground-plane cloud. A radial feather
         // hides the low-poly puff silhouette without changing title/credits mist.
         const playableMist = st.z.lessThan(-1.5).and(this.softCureMist.greaterThan(.5));
@@ -473,7 +475,12 @@ export class Blasts extends Group {
     for (const [id, c] of this.vehicleColumns) {
       const e = this.world.entities.get(id); if (!e) continue;
       // Exhaust at the rear: keep the cab and forward route clear, track movement each frame.
-      c.x = e.transform.x - Math.cos(e.transform.yaw) * 2; c.z = e.transform.z + Math.sin(e.transform.yaw) * 2; c.ground = e.transform.y + .1;
+      // Emit outside the APC's rear side vent. A centreline source inside the
+      // closed hull hid young puffs until the trail had left the close frame.
+      const yaw = e.transform.yaw;
+      c.x = e.transform.x - Math.cos(yaw) * 2 + Math.sin(yaw) * 1.65;
+      c.z = e.transform.z + Math.sin(yaw) * 2 + Math.cos(yaw) * 1.65;
+      c.ground = e.transform.y + .1;
       // A driving hull spaced its puffs 2 m apart (scattered round dots, QA L9-Q1): emit per metre so the trail stays continuous.
       const rate = c.rate; c.rate += Math.abs(e.vehicle?.speed ?? 0) * (c.trail ?? 0);
       this.emit(c, seconds); c.rate = rate;
@@ -610,8 +617,10 @@ export class Blasts extends Group {
       if (e.vehicle?.floor && (e.vehicle.stage ?? 0) >= 3) {
         vehicles.add(e.id);
         let c = this.vehicleColumns.get(e.id);
-        if (!c) { c = { born: now, x: e.transform.x, z: e.transform.z, until: Infinity, rate: 0, size: 0, heat: 0, acc: 1, shade: .3, cloud: 0 }; this.vehicleColumns.set(e.id, c); }
-        const heavy = e.vehicle.stage === 4; c.rate = (heavy ? 5 : 2) * (low ? .5 : 1); c.size = heavy ? 1.25 : .65; c.shade = heavy ? .22 : .5; c.trail = (heavy ? 1.4 : .7) * (low ? .5 : 1);
+        // Engine smoke uses the column silhouette mask. The blast mask clears
+        // the whole player vehicle and erased its nearby exhaust at both zooms.
+        if (!c) { c = { born: now, x: e.transform.x, z: e.transform.z, until: Infinity, rate: 0, size: 0, heat: 3, acc: 1, shade: .3, cloud: 0 }; this.vehicleColumns.set(e.id, c); }
+        const heavy = e.vehicle.stage === 4; c.rate = (heavy ? 5 : 2) * (low ? .5 : 1); c.size = heavy ? 1.8 : .65; c.shade = heavy ? .22 : .5; c.trail = (heavy ? 1.4 : .7) * (low ? .5 : 1);
       }
       const burningFire = e.hazard?.kind === 'fire' && this.world.tick < e.hazard.activeUntil;
       const burningProp = !!e.destructible && !e.destructible.broken && e.destructible.burningUntil > this.world.tick;
