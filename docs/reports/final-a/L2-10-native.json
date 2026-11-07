@@ -1,0 +1,213 @@
+{
+  "row": "L2-10",
+  "verdict": "PASS",
+  "frozenHead": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+  "fixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4",
+  "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
+  "generatedAt": "2026-11-06T23:49:03.138Z",
+  "criterion": "Axe: single swing with 1–2 infected in 2.5 m; roundhouse hits all (≥ 3) and pushes ≥ 2 m with ≥ 3 in range.",
+  "automatedComplete": true,
+  "checks": [
+    {
+      "id": "L2-10",
+      "clause": "axe single/roundhouse target selection",
+      "value": [
+        {
+          "count": 1,
+          "style": "single",
+          "hitIds": [
+            2
+          ],
+          "pushes": [
+            {
+              "id": 2,
+              "metres": 0.3999999999999999
+            }
+          ],
+          "setup": "native AI update; walking speed fixed to0 to distinguish shove from walking"
+        },
+        {
+          "count": 2,
+          "style": "single",
+          "hitIds": [
+            2,
+            3
+          ],
+          "pushes": [
+            {
+              "id": 2,
+              "metres": 0.4
+            },
+            {
+              "id": 3,
+              "metres": 0.4
+            }
+          ],
+          "setup": "native AI update; walking speed fixed to0 to distinguish shove from walking"
+        },
+        {
+          "count": 3,
+          "style": "roundhouse",
+          "hitIds": [
+            3,
+            2,
+            4
+          ],
+          "pushes": [
+            {
+              "id": 2,
+              "metres": 2.5
+            },
+            {
+              "id": 3,
+              "metres": 2.5000000000000018
+            },
+            {
+              "id": 4,
+              "metres": 2.5
+            }
+          ],
+          "setup": "native AI update; walking speed fixed to0 to distinguish shove from walking"
+        }
+      ],
+      "target": "single swing with1–2 nearby; roundhouse hits all3",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
+      "level": "L2"
+    },
+    {
+      "id": "L2-10",
+      "clause": "axe measured roundhouse displacement",
+      "value": [
+        {
+          "id": 2,
+          "metres": 2.5
+        },
+        {
+          "id": 3,
+          "metres": 2.5000000000000018
+        },
+        {
+          "id": 4,
+          "metres": 2.5
+        }
+      ],
+      "target": "each of3 targets pushed≥2 m",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
+      "level": "L2"
+    },
+    {
+      "id": "L2-10",
+      "clause": "axe single/roundhouse target selection",
+      "value": [
+        {
+          "count": 1,
+          "style": "single",
+          "hitIds": [
+            2
+          ],
+          "pushes": [
+            {
+              "id": 2,
+              "metres": 0.3999999999999999
+            }
+          ],
+          "setup": "native AI update; walking speed fixed to0 to distinguish shove from walking"
+        },
+        {
+          "count": 2,
+          "style": "single",
+          "hitIds": [
+            2,
+            3
+          ],
+          "pushes": [
+            {
+              "id": 2,
+              "metres": 0.4
+            },
+            {
+              "id": 3,
+              "metres": 0.4
+            }
+          ],
+          "setup": "native AI update; walking speed fixed to0 to distinguish shove from walking"
+        },
+        {
+          "count": 3,
+          "style": "roundhouse",
+          "hitIds": [
+            3,
+            2,
+            4
+          ],
+          "pushes": [
+            {
+              "id": 2,
+              "metres": 2.5
+            },
+            {
+              "id": 3,
+              "metres": 2.5000000000000018
+            },
+            {
+              "id": 4,
+              "metres": 2.5
+            }
+          ],
+          "setup": "native AI update; walking speed fixed to0 to distinguish shove from walking"
+        }
+      ],
+      "target": "single swing with1–2 nearby; roundhouse hits all3",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
+      "level": "L2"
+    },
+    {
+      "id": "L2-10",
+      "clause": "axe measured roundhouse displacement",
+      "value": [
+        {
+          "id": 2,
+          "metres": 2.5
+        },
+        {
+          "id": 3,
+          "metres": 2.5000000000000018
+        },
+        {
+          "id": 4,
+          "metres": 2.5
+        }
+      ],
+      "target": "each of3 targets pushed≥2 m",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
+      "level": "L2"
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
+      "sha256": "260e6b2630be1e593395f867cffd45f125d4b45e8fc973a9e4376eb931683aff",
+      "what": "Frozen-head L2-10 native input receipt, evaluated by the exact clauses retained in the row proof."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
+      "sha256": "ebcffc44ba056bc652015d345e957523462d8adbb8a977c1edaa333550202650",
+      "what": "Frozen-head L2-10 native input receipt, evaluated by the exact clauses retained in the row proof."
+    }
+  ],
+  "observation": "4 current native checks PASS across low/high. low/controlled-fixture axe single/roundhouse target selection: [{\"count\":1,\"style\":\"single\",\"hitIds\":[2],\"pushes\":[{\"id\":2,\"metres\":0.3999999999999999}],\"setup\":\"native AI update; walking speed fixed to0 to distinguish shove from walking\"},{\"count\":2,\"style\":\"single\",\"hitIds\":[2,3],\"pushes\":[{\"id\":2,\"metres\":0.4},{\"id\":3,\"metres\":0.4}],\"setup\":\"native AI update; walking speed fixed to0 to distinguish shove from walking\"},{\"count\":3,\"style\":\"roundhouse\",\"hitIds\":[3,2,4],\"pushes\":[{\"id\":2,\"metres\" [full value in proof]; low/controlled-fixture axe measured roundhouse displacement: [{\"id\":2,\"metres\":2.5},{\"id\":3,\"metres\":2.5000000000000018},{\"id\":4,\"metres\":2.5}]; target each of3 targets pushed≥2 m (PASS); high/controlled-fixture axe single/roundhouse target selection: [{\"count\":1,\"style\":\"single\",\"hitIds\":[2],\"pushes\":[{\"id\":2,\"metres\":0.3999999999999999}],\"setup\":\"native AI update; walking speed fixed to0 to distinguish shove from walking\"},{\"count\":2,\"style\":\"single\",\"hitIds\":[2,3],\"pushes\":[{\"id\":2,\"metres\":0.4},{\"id\":3,\"metres\":0.4}],\"setup\":\"native AI update; walking speed fixed to0 to distinguish shove from walking\"},{\"count\":3,\"style\":\"roundhouse\",\"hitIds\":[3,2,4],\"pushes\":[{\"id\":2,\"metres [full value in proof]; high/controlled-fixture axe measured roundhouse displacement: [{\"id\":2,\"metres\":2.5},{\"id\":3,\"metres\":2.5000000000000018},{\"id\":4,\"metres\":2.5}]; target each of3 targets pushed≥2 m (PASS)"
+}
