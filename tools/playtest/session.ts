@@ -1644,7 +1644,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     }
     // Being within the four-metre observation band is not arrival. The L1
     // fire-bay lip can still need a detour three metres from the trigger;
-    // suppressing route recovery there repeated the same blocked key forever.
+    // suppressing route recovery there leaves the blocked bearing unrecovered.
     if ((e.level !== 'L10' || !visibleOnly) && stalled && !arrived && ring && e.player) {
       if (visibleOnly) {
         const points = await page.evaluate(({ p, goal }) => [window.__SS__!.input.project(p, 'player'), window.__SS__!.input.project(goal, 'player')], { p: e.player, goal: ring });
