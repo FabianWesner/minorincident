@@ -1,0 +1,854 @@
+{
+  "command": "sh tools/remote/run.sh \"$PWD\" --pull test-results/r3-l5corpse/threat --env QA_THREAT_REVISION=7233cab6 -- npm run qa:threat -- --levels L5 --out test-results/r3-l5corpse/threat",
+  "revision": "7233cab6",
+  "quality": "low",
+  "seconds": 532.164513063,
+  "exitCode": 1,
+  "auditFlags": [
+    "PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate"
+  ],
+  "level": "L5",
+  "skilledOutcome": "complete",
+  "passiveOutcome": "tick-budget",
+  "levelFlags": [],
+  "passiveFlags": [],
+  "nativeStateHash": "f8daf942",
+  "followerPace": {
+    "rows": [
+      {
+        "phase": "step/look",
+        "id": 18,
+        "seeds": [
+          {
+            "seed": 1,
+            "valid": true,
+            "samples": 155,
+            "median": 4.4999874944558105,
+            "groupMedian": 4.470379079088337,
+            "ratio": 1.006623244884528
+          },
+          {
+            "seed": 2,
+            "valid": true,
+            "samples": 157,
+            "median": 4.494420866873289,
+            "groupMedian": 4.3861466957089075,
+            "ratio": 1.0246854878954024
+          },
+          {
+            "seed": 3,
+            "valid": true,
+            "samples": 150,
+            "median": 4.49999997529395,
+            "groupMedian": 4.424238487571578,
+            "ratio": 1.017124187119478
+          }
+        ],
+        "measured": 3,
+        "failures": 0,
+        "pass": true
+      },
+      {
+        "phase": "step/look",
+        "id": 31,
+        "seeds": [
+          {
+            "seed": 1,
+            "valid": true,
+            "samples": 129,
+            "median": 4.3046312954604415,
+            "groupMedian": 4.470379079088337,
+            "ratio": 0.9629231032322885
+          },
+          {
+            "seed": 2,
+            "valid": true,
+            "samples": 136,
+            "median": 4.320009046370509,
+            "groupMedian": 4.3861466957089075,
+            "ratio": 0.9849212409144676
+          },
+          {
+            "seed": 3,
+            "valid": true,
+            "samples": 125,
+            "median": 4.424238487571578,
+            "groupMedian": 4.424238487571578,
+            "ratio": 1
+          }
+        ],
+        "measured": 3,
+        "failures": 0,
+        "pass": true
+      },
+      {
+        "phase": "step/look",
+        "id": 30,
+        "seeds": [
+          {
+            "seed": 1,
+            "valid": true,
+            "samples": 111,
+            "median": 4.430891316393229,
+            "groupMedian": 4.470379079088337,
+            "ratio": 0.9911667977152485
+          },
+          {
+            "seed": 2,
+            "valid": true,
+            "samples": 112,
+            "median": 4.3861466957089075,
+            "groupMedian": 4.3861466957089075,
+            "ratio": 1
+          },
+          {
+            "seed": 3,
+            "valid": true,
+            "samples": 111,
+            "median": 4.4118148219468845,
+            "groupMedian": 4.424238487571578,
+            "ratio": 0.9971919086957918
+          }
+        ],
+        "measured": 3,
+        "failures": 0,
+        "pass": true
+      },
+      {
+        "phase": "step/look",
+        "id": 32,
+        "seeds": [
+          {
+            "seed": 1,
+            "valid": true,
+            "samples": 75,
+            "median": 4.470379079088337,
+            "groupMedian": 4.470379079088337,
+            "ratio": 1
+          },
+          {
+            "seed": 2,
+            "valid": true,
+            "samples": 79,
+            "median": 4.502158772914234,
+            "groupMedian": 4.3861466957089075,
+            "ratio": 1.0264496573538737
+          },
+          {
+            "seed": 3,
+            "valid": true,
+            "samples": 79,
+            "median": 4.435482551773471,
+            "groupMedian": 4.424238487571578,
+            "ratio": 1.0025414688275687
+          }
+        ],
+        "measured": 3,
+        "failures": 0,
+        "pass": true
+      },
+      {
+        "phase": "step/look",
+        "id": 28,
+        "seeds": [
+          {
+            "seed": 1,
+            "valid": true,
+            "samples": 43,
+            "median": 4.5233920512670664,
+            "groupMedian": 4.470379079088337,
+            "ratio": 1.0118587196389486
+          },
+          {
+            "seed": 2,
+            "valid": true,
+            "samples": 45,
+            "median": 4.238876127936308,
+            "groupMedian": 4.3861466957089075,
+            "ratio": 0.9664237021719592
+          },
+          {
+            "seed": 3,
+            "valid": true,
+            "samples": 43,
+            "median": 4.023441658126301,
+            "groupMedian": 4.424238487571578,
+            "ratio": 0.9094088552027243
+          }
+        ],
+        "measured": 3,
+        "failures": 1,
+        "pass": true
+      },
+      {
+        "phase": "phase/search",
+        "id": 18,
+        "seeds": [
+          {
+            "seed": 1,
+            "valid": true,
+            "samples": 155,
+            "median": 4.4999874944558105,
+            "groupMedian": 4.470379079088337,
+            "ratio": 1.006623244884528
+          },
+          {
+            "seed": 2,
+            "valid": true,
+            "samples": 157,
+            "median": 4.494420866873289,
+            "groupMedian": 4.3861466957089075,
+            "ratio": 1.0246854878954024
+          },
+          {
+            "seed": 3,
+            "valid": true,
+            "samples": 150,
+            "median": 4.49999997529395,
+            "groupMedian": 4.424238487571578,
+            "ratio": 1.017124187119478
+          }
+        ],
+        "measured": 3,
+        "failures": 0,
+        "pass": true
+      },
+      {
+        "phase": "phase/search",
+        "id": 31,
+        "seeds": [
+          {
+            "seed": 1,
+            "valid": true,
+            "samples": 129,
+            "median": 4.3046312954604415,
+            "groupMedian": 4.470379079088337,
+            "ratio": 0.9629231032322885
+          },
+          {
+            "seed": 2,
+            "valid": true,
+            "samples": 136,
+            "median": 4.320009046370509,
+            "groupMedian": 4.3861466957089075,
+            "ratio": 0.9849212409144676
+          },
+          {
+            "seed": 3,
+            "valid": true,
+            "samples": 125,
+            "median": 4.424238487571578,
+            "groupMedian": 4.424238487571578,
+            "ratio": 1
+          }
+        ],
+        "measured": 3,
+        "failures": 0,
+        "pass": true
+      },
+      {
+        "phase": "phase/search",
+        "id": 30,
+        "seeds": [
+          {
+            "seed": 1,
+            "valid": true,
+            "samples": 111,
+            "median": 4.430891316393229,
+            "groupMedian": 4.470379079088337,
+            "ratio": 0.9911667977152485
+          },
+          {
+            "seed": 2,
+            "valid": true,
+            "samples": 112,
+            "median": 4.3861466957089075,
+            "groupMedian": 4.3861466957089075,
+            "ratio": 1
+          },
+          {
+            "seed": 3,
+            "valid": true,
+            "samples": 111,
+            "median": 4.4118148219468845,
+            "groupMedian": 4.424238487571578,
+            "ratio": 0.9971919086957918
+          }
+        ],
+        "measured": 3,
+        "failures": 0,
+        "pass": true
+      },
+      {
+        "phase": "phase/search",
+        "id": 32,
+        "seeds": [
+          {
+            "seed": 1,
+            "valid": true,
+            "samples": 75,
+            "median": 4.470379079088337,
+            "groupMedian": 4.470379079088337,
+            "ratio": 1
+          },
+          {
+            "seed": 2,
+            "valid": true,
+            "samples": 79,
+            "median": 4.502158772914234,
+            "groupMedian": 4.3861466957089075,
+            "ratio": 1.0264496573538737
+          },
+          {
+            "seed": 3,
+            "valid": true,
+            "samples": 79,
+            "median": 4.435482551773471,
+            "groupMedian": 4.424238487571578,
+            "ratio": 1.0025414688275687
+          }
+        ],
+        "measured": 3,
+        "failures": 0,
+        "pass": true
+      },
+      {
+        "phase": "phase/search",
+        "id": 28,
+        "seeds": [
+          {
+            "seed": 1,
+            "valid": true,
+            "samples": 43,
+            "median": 4.5233920512670664,
+            "groupMedian": 4.470379079088337,
+            "ratio": 1.0118587196389486
+          },
+          {
+            "seed": 2,
+            "valid": true,
+            "samples": 45,
+            "median": 4.238876127936308,
+            "groupMedian": 4.3861466957089075,
+            "ratio": 0.9664237021719592
+          },
+          {
+            "seed": 3,
+            "valid": true,
+            "samples": 43,
+            "median": 4.023441658126301,
+            "groupMedian": 4.424238487571578,
+            "ratio": 0.9094088552027243
+          }
+        ],
+        "measured": 3,
+        "failures": 1,
+        "pass": true
+      },
+      {
+        "phase": "step/metro",
+        "id": 18,
+        "seeds": [
+          {
+            "seed": 1,
+            "valid": true,
+            "samples": 47,
+            "median": 4.499385558547002,
+            "groupMedian": 4.499570583638147,
+            "ratio": 0.9999588793891092
+          },
+          {
+            "seed": 2,
+            "valid": true,
+            "samples": 41,
+            "median": 4.49947880098292,
+            "groupMedian": 4.488984483876415,
+            "ratio": 1.0023377931343267
+          },
+          {
+            "seed": 3,
+            "valid": true,
+            "samples": 47,
+            "median": 4.48675943828118,
+            "groupMedian": 4.456513949946196,
+            "ratio": 1.0067868043665273
+          }
+        ],
+        "measured": 3,
+        "failures": 0,
+        "pass": true
+      },
+      {
+        "phase": "step/metro",
+        "id": 28,
+        "seeds": [
+          {
+            "seed": 1,
+            "valid": true,
+            "samples": 47,
+            "median": 4.502767424237598,
+            "groupMedian": 4.499570583638147,
+            "ratio": 1.0007104768199606
+          },
+          {
+            "seed": 2,
+            "valid": true,
+            "samples": 42,
+            "median": 4.4774303671173215,
+            "groupMedian": 4.488984483876415,
+            "ratio": 0.997426117911391
+          },
+          {
+            "seed": 3,
+            "valid": true,
+            "samples": 45,
+            "median": 4.216031673005954,
+            "groupMedian": 4.456513949946196,
+            "ratio": 0.9460380289075175
+          }
+        ],
+        "measured": 3,
+        "failures": 1,
+        "pass": true
+      },
+      {
+        "phase": "step/metro",
+        "id": 30,
+        "seeds": [
+          {
+            "seed": 1,
+            "valid": true,
+            "samples": 48,
+            "median": 4.4959648903908,
+            "groupMedian": 4.499570583638147,
+            "ratio": 0.9991986583652097
+          },
+          {
+            "seed": 2,
+            "valid": true,
+            "samples": 42,
+            "median": 4.4072045378922855,
+            "groupMedian": 4.488984483876415,
+            "ratio": 0.9817820831687284
+          },
+          {
+            "seed": 3,
+            "valid": true,
+            "samples": 45,
+            "median": 4.399789677437237,
+            "groupMedian": 4.456513949946196,
+            "ratio": 0.9872716044096208
+          }
+        ],
+        "measured": 3,
+        "failures": 0,
+        "pass": true
+      },
+      {
+        "phase": "step/metro",
+        "id": 31,
+        "seeds": [
+          {
+            "seed": 1,
+            "valid": true,
+            "samples": 48,
+            "median": 4.463309424067778,
+            "groupMedian": 4.499570583638147,
+            "ratio": 0.9919411955215847
+          },
+          {
+            "seed": 2,
+            "valid": true,
+            "samples": 41,
+            "median": 4.500207484502434,
+            "groupMedian": 4.488984483876415,
+            "ratio": 1.0025001201644448
+          },
+          {
+            "seed": 3,
+            "valid": true,
+            "samples": 45,
+            "median": 4.433138242575796,
+            "groupMedian": 4.456513949946196,
+            "ratio": 0.9947547101539576
+          }
+        ],
+        "measured": 3,
+        "failures": 0,
+        "pass": true
+      },
+      {
+        "phase": "step/metro",
+        "id": 32,
+        "seeds": [
+          {
+            "seed": 1,
+            "valid": true,
+            "samples": 48,
+            "median": 4.666383706373201,
+            "groupMedian": 4.499570583638147,
+            "ratio": 1.0370731205643577
+          },
+          {
+            "seed": 2,
+            "valid": true,
+            "samples": 42,
+            "median": 4.494852940147897,
+            "groupMedian": 4.488984483876415,
+            "ratio": 1.0013073015272298
+          },
+          {
+            "seed": 3,
+            "valid": true,
+            "samples": 47,
+            "median": 4.479889657316596,
+            "groupMedian": 4.456513949946196,
+            "ratio": 1.0052452898460427
+          }
+        ],
+        "measured": 3,
+        "failures": 0,
+        "pass": true
+      },
+      {
+        "phase": "step/metro",
+        "id": 29,
+        "seeds": [
+          {
+            "seed": 1,
+            "valid": true,
+            "samples": 47,
+            "median": 4.499755608729292,
+            "groupMedian": 4.499570583638147,
+            "ratio": 1.0000411206108908
+          },
+          {
+            "seed": 2,
+            "valid": true,
+            "samples": 41,
+            "median": 4.483116027604933,
+            "groupMedian": 4.488984483876415,
+            "ratio": 0.9986926984727704
+          },
+          {
+            "seed": 3,
+            "valid": true,
+            "samples": 46,
+            "median": 4.50014580367063,
+            "groupMedian": 4.456513949946196,
+            "ratio": 1.009790579411282
+          }
+        ],
+        "measured": 3,
+        "failures": 0,
+        "pass": true
+      },
+      {
+        "phase": "phase/metro",
+        "id": 18,
+        "seeds": [
+          {
+            "seed": 1,
+            "valid": true,
+            "samples": 47,
+            "median": 4.499385558547002,
+            "groupMedian": 4.499570583638147,
+            "ratio": 0.9999588793891092
+          },
+          {
+            "seed": 2,
+            "valid": true,
+            "samples": 41,
+            "median": 4.49947880098292,
+            "groupMedian": 4.488984483876415,
+            "ratio": 1.0023377931343267
+          },
+          {
+            "seed": 3,
+            "valid": true,
+            "samples": 47,
+            "median": 4.48675943828118,
+            "groupMedian": 4.456513949946196,
+            "ratio": 1.0067868043665273
+          }
+        ],
+        "measured": 3,
+        "failures": 0,
+        "pass": true
+      },
+      {
+        "phase": "phase/metro",
+        "id": 28,
+        "seeds": [
+          {
+            "seed": 1,
+            "valid": true,
+            "samples": 47,
+            "median": 4.502767424237598,
+            "groupMedian": 4.499570583638147,
+            "ratio": 1.0007104768199606
+          },
+          {
+            "seed": 2,
+            "valid": true,
+            "samples": 42,
+            "median": 4.4774303671173215,
+            "groupMedian": 4.488984483876415,
+            "ratio": 0.997426117911391
+          },
+          {
+            "seed": 3,
+            "valid": true,
+            "samples": 45,
+            "median": 4.216031673005954,
+            "groupMedian": 4.456513949946196,
+            "ratio": 0.9460380289075175
+          }
+        ],
+        "measured": 3,
+        "failures": 1,
+        "pass": true
+      },
+      {
+        "phase": "phase/metro",
+        "id": 30,
+        "seeds": [
+          {
+            "seed": 1,
+            "valid": true,
+            "samples": 48,
+            "median": 4.4959648903908,
+            "groupMedian": 4.499570583638147,
+            "ratio": 0.9991986583652097
+          },
+          {
+            "seed": 2,
+            "valid": true,
+            "samples": 42,
+            "median": 4.4072045378922855,
+            "groupMedian": 4.488984483876415,
+            "ratio": 0.9817820831687284
+          },
+          {
+            "seed": 3,
+            "valid": true,
+            "samples": 45,
+            "median": 4.399789677437237,
+            "groupMedian": 4.456513949946196,
+            "ratio": 0.9872716044096208
+          }
+        ],
+        "measured": 3,
+        "failures": 0,
+        "pass": true
+      },
+      {
+        "phase": "phase/metro",
+        "id": 31,
+        "seeds": [
+          {
+            "seed": 1,
+            "valid": true,
+            "samples": 48,
+            "median": 4.463309424067778,
+            "groupMedian": 4.499570583638147,
+            "ratio": 0.9919411955215847
+          },
+          {
+            "seed": 2,
+            "valid": true,
+            "samples": 41,
+            "median": 4.500207484502434,
+            "groupMedian": 4.488984483876415,
+            "ratio": 1.0025001201644448
+          },
+          {
+            "seed": 3,
+            "valid": true,
+            "samples": 45,
+            "median": 4.433138242575796,
+            "groupMedian": 4.456513949946196,
+            "ratio": 0.9947547101539576
+          }
+        ],
+        "measured": 3,
+        "failures": 0,
+        "pass": true
+      },
+      {
+        "phase": "phase/metro",
+        "id": 32,
+        "seeds": [
+          {
+            "seed": 1,
+            "valid": true,
+            "samples": 48,
+            "median": 4.666383706373201,
+            "groupMedian": 4.499570583638147,
+            "ratio": 1.0370731205643577
+          },
+          {
+            "seed": 2,
+            "valid": true,
+            "samples": 42,
+            "median": 4.494852940147897,
+            "groupMedian": 4.488984483876415,
+            "ratio": 1.0013073015272298
+          },
+          {
+            "seed": 3,
+            "valid": true,
+            "samples": 47,
+            "median": 4.479889657316596,
+            "groupMedian": 4.456513949946196,
+            "ratio": 1.0052452898460427
+          }
+        ],
+        "measured": 3,
+        "failures": 0,
+        "pass": true
+      },
+      {
+        "phase": "phase/metro",
+        "id": 29,
+        "seeds": [
+          {
+            "seed": 1,
+            "valid": true,
+            "samples": 47,
+            "median": 4.499755608729292,
+            "groupMedian": 4.499570583638147,
+            "ratio": 1.0000411206108908
+          },
+          {
+            "seed": 2,
+            "valid": true,
+            "samples": 41,
+            "median": 4.483116027604933,
+            "groupMedian": 4.488984483876415,
+            "ratio": 0.9986926984727704
+          },
+          {
+            "seed": 3,
+            "valid": true,
+            "samples": 46,
+            "median": 4.50014580367063,
+            "groupMedian": 4.456513949946196,
+            "ratio": 1.009790579411282
+          }
+        ],
+        "measured": 3,
+        "failures": 0,
+        "pass": true
+      }
+    ],
+    "flags": [],
+    "pass": true
+  },
+  "passiveFollowerPace": {
+    "rows": [
+      {
+        "phase": "step/look",
+        "id": 18,
+        "seeds": [
+          {
+            "seed": 1,
+            "valid": true,
+            "samples": 1047,
+            "median": 2.186280953202414,
+            "groupMedian": 2.186280953202414,
+            "ratio": 1
+          },
+          {
+            "seed": 2,
+            "valid": true,
+            "samples": 936,
+            "median": 2.3624466942161693,
+            "groupMedian": 2.3624466942161693,
+            "ratio": 1
+          },
+          {
+            "seed": 3,
+            "valid": true,
+            "samples": 2081,
+            "median": 2.9096924747465867,
+            "groupMedian": 2.9096924747465867,
+            "ratio": 1
+          }
+        ],
+        "measured": 3,
+        "failures": 0,
+        "pass": true
+      },
+      {
+        "phase": "phase/search",
+        "id": 18,
+        "seeds": [
+          {
+            "seed": 1,
+            "valid": true,
+            "samples": 1047,
+            "median": 2.186280953202414,
+            "groupMedian": 2.186280953202414,
+            "ratio": 1
+          },
+          {
+            "seed": 2,
+            "valid": true,
+            "samples": 936,
+            "median": 2.3624466942161693,
+            "groupMedian": 2.3624466942161693,
+            "ratio": 1
+          },
+          {
+            "seed": 3,
+            "valid": true,
+            "samples": 2081,
+            "median": 2.9096924747465867,
+            "groupMedian": 2.9096924747465867,
+            "ratio": 1
+          }
+        ],
+        "measured": 3,
+        "failures": 0,
+        "pass": true
+      }
+    ],
+    "flags": [],
+    "pass": true
+  },
+  "followerPaceSeeds": [
+    {
+      "seed": 1,
+      "outcome": "complete",
+      "valid": true
+    },
+    {
+      "seed": 2,
+      "outcome": "complete",
+      "valid": true
+    },
+    {
+      "seed": 3,
+      "outcome": "complete",
+      "valid": true
+    }
+  ],
+  "passiveFollowerPaceSeeds": [
+    {
+      "seed": 1,
+      "outcome": "tick-budget",
+      "valid": true
+    },
+    {
+      "seed": 2,
+      "outcome": "tick-budget",
+      "valid": true
+    },
+    {
+      "seed": 3,
+      "outcome": "tick-budget",
+      "valid": true
+    }
+  ]
+}

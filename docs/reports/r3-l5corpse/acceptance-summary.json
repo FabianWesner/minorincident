@@ -1,0 +1,75 @@
+{
+  "command": "npm run qa:accept -- --level L5 --skip-browser",
+  "revision": "7233cab6",
+  "exitCode": 1,
+  "sourceHash": "991c72a5414b3e00983ff5a28c9a864bdb8a83bc14a3f4898583093ecd9a0502",
+  "observerHash": "7f2ba02c82a52f461e55141d0d71fe09be4647b4b0cbb5914c85c8ce45fcecb8",
+  "freshFail": [
+    "L5-08"
+  ],
+  "incomplete": [
+    "L5-02",
+    "L5-03",
+    "L5-06",
+    "L5-07",
+    "L5-09",
+    "L5-10",
+    "L5-11",
+    "L5-12",
+    "L5-14"
+  ],
+  "tiers": [
+    {
+      "tier": "low",
+      "complete": {
+        "outcome": "complete",
+        "error": null,
+        "nativeStateHash": "f8daf942"
+      },
+      "stationary": {
+        "outcome": "tick-budget",
+        "error": null,
+        "nativeStateHash": "aa8ecbe7"
+      },
+      "fixtures": {
+        "clauses": 10,
+        "errors": []
+      },
+      "checkpoints": {
+        "clauses": 6,
+        "errors": [],
+        "control": {
+          "observed": "f8daf942",
+          "control": "f8daf942",
+          "identical": true
+        }
+      }
+    },
+    {
+      "tier": "high",
+      "complete": {
+        "outcome": "complete",
+        "error": null,
+        "nativeStateHash": "347162cf"
+      },
+      "stationary": {
+        "outcome": "tick-budget",
+        "error": null,
+        "nativeStateHash": "041b0c04"
+      },
+      "fixtures": {
+        "clauses": 10,
+        "errors": []
+      },
+      "checkpoints": {
+        "clauses": 6,
+        "errors": [],
+        "control": {
+          "observed": "347162cf",
+          "control": "347162cf",
+          "identical": true
+        }
+      }
+    }
+  ]
+}
