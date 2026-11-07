@@ -14,28 +14,28 @@
   "evidence": [
     {
       "file": "docs/reports/final-a/L3-03-native.json",
-      "sha256": "2dfb435543e79d85759999bee2cd9fbc8ccae7e26eddb9eebef25bda3838fffc",
+      "sha256": "6f39659d8eace26cafb305d022a656b49c2e5cd29a4ce5c9cae476a5082e677c",
       "what": "14 current native checks PASS across low/high. low/complete combat hard rule on actual player windups: {\"seconds\":25.55,\"playerWindups\":10,\"groupWindups\":0,\"attacksPerMinute\":23.483365949119374}; target nonzero player windups in each combat policy (PASS); low/complete real player/group windups per minute: 23.483365949119374; target 4 ≤ value ≤ Infinity (PASS); low/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100; target 90 ≤ value ≤ 100 (PASS); low/stationary combat hard rule on actual player windups: {\"seconds\":28.483333333333334,\"playerWindups\":71,\"groupWindups\":0,\"attacksPerMinute\":149.56114686951435}; target nonzero player windups in each combat policy (PASS); low/stationary stationary first real player attack (phase clock): {\"seconds\":2.95,\"windowSeconds\":28.483333333333334}; target ≤10 s (PASS); low/stationary real player/group windups per minute: 149.56114686951435; target 4 ≤ value ≤ Infinity (PASS); low/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 100; target 90 ≤ value ≤ 100 (PASS); high/complete combat hard rule on actual player windups: {\"seconds\":22.8,\"playerWindups\":12,\"groupWindups\":0,\"attacksPerMinute\":31.57894736842105}; target nonzero player windups in each combat policy (PASS); high/complete real player/group windups per minute: 31.57894736842105; target 4 ≤ value ≤ Infinity (PASS); high/complete minimum bounded-path reachable share within30m (path≤2.5×direct): 100; target 90 ≤ value ≤ 100 (PASS); high/stationary combat hard rule on actual player windups: {\"seconds\":14.25,\"playerWindups\":71,\"groupWindups\":0,\"attacksPerMinute\":298.94736842105266}; target nonzero player windups in each combat policy (PASS); high/stationary stationary first real player attack (phase clock): {\"seconds\":2.4166666666666665,\"windowSeconds\":14.25}; target ≤10 s (PASS); high/stationary real player/group windups per minute: 298.94736842105266; target 4 ≤ value ≤ Infinity (PASS); high/stationary minimum bounded-path reachable share within30m (path≤2.5×direct): 95; target 90 ≤ value ≤ 100 (PASS)"
     },
     {
-      "file": "docs/reports/fix51-verify/receipts/L3-low-complete.json",
-      "sha256": "26aa4ed49dfbfcdf86a690bc83d902a5c8b9b4c93933f99d67484a55c70a971a",
-      "what": "Frozen-head L3-03 native input receipt, evaluated by the exact clauses retained in the row proof."
+      "file": "docs/reports/final-a/native-receipts/L3-low-complete.json.gz",
+      "sha256": "81ae6486e8fab6d955d04751cb09cce2159e3b986d19198ff720988e54c8b0b7",
+      "what": "Frozen-head L3-03 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
     },
     {
-      "file": "docs/reports/fix51-verify/receipts/L3-low-stationary.json",
-      "sha256": "397baa017658a0b23da1cece00753b1b6e9363ed1272bff5125d3de615c52def",
-      "what": "Frozen-head L3-03 native input receipt, evaluated by the exact clauses retained in the row proof."
+      "file": "docs/reports/final-a/native-receipts/L3-low-stationary.json.gz",
+      "sha256": "024f22953d5c2e3f1bbefbba6fe6943dddd8ecc05664082f2a2fe6cc32d7c146",
+      "what": "Frozen-head L3-03 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
     },
     {
-      "file": "docs/reports/fix51-verify/receipts/L3-high-complete.json",
-      "sha256": "f62f48629e8a32b71b162b49eb6d4f0a9cfb7cc46cbbd97a141e6e39bf3d89b1",
-      "what": "Frozen-head L3-03 native input receipt, evaluated by the exact clauses retained in the row proof."
+      "file": "docs/reports/final-a/native-receipts/L3-high-complete.json.gz",
+      "sha256": "d976b4c6b69eda34c20121ae9cb96e8a3cdd6a07fac104fba0b26e56fd8755c0",
+      "what": "Frozen-head L3-03 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
     },
     {
-      "file": "docs/reports/fix51-verify/receipts/L3-high-stationary.json",
-      "sha256": "260dd369e09316f288a0de9e176ff1abc26bbc5547a1f7be1e20cadeecc29b80",
-      "what": "Frozen-head L3-03 native input receipt, evaluated by the exact clauses retained in the row proof."
+      "file": "docs/reports/final-a/native-receipts/L3-high-stationary.json.gz",
+      "sha256": "2046af461e64e70381568acc5905423f47b44bf18d205557d43b0ad61770b9b1",
+      "what": "Frozen-head L3-03 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
     }
   ],
   "notes": "Numeric-only criterion; all evaluator clauses measured at both qualities on the frozen runtime source. No visual or route-readability inference.",
