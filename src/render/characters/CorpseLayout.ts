@@ -224,7 +224,7 @@ export class CorpseLayout {
     this.search ??= { body: e, deadAt, prone, x: e.transform.x, z: e.transform.z, iterator: this.settle(e, deadAt, prone, epilogue) };
     try {
       const result = this.search.iterator.next();
-      if (result.done) { this.search = undefined; return result.value; }
+      if (result.done) { this.search = undefined; this.deferred.delete(e.id); return result.value; }
       return this.defer(e, deadAt, prone, previous);
     } finally { this.remainingMs -= performance.now() - start; }
   }

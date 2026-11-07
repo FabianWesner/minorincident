@@ -402,6 +402,13 @@ test('corpse pages: bodies persist past the old cap, bounds stay conservative, c
   flightLayout.settleAll();
   expect(flightCalls).toBe(1);
   airborne.corpseBlast = undefined;
+  // A legacy flight or unloaded support can return an airborne pose from the
+  // search itself, rather than the active-blast shortcut above.
+  airborne.transform.y = 2;
+  flightLayout.beginFrame(0); placeFlight(airborne); flightCalls = 0;
+  flightLayout.settleAll();
+  expect(flightCalls).toBe(1);
+  airborne.transform.y = .7;
   flightLayout.beginFrame(Infinity);
   expect('ax' in flightLayout.place(airborne)).toBe(true);
   const baked = bakeInfected(createSkinnedCrowdFixture()); packCrowdParts(baked.geometry);
