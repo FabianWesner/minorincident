@@ -11,7 +11,7 @@ Status counts: FAIL: 21, NOT CHECKED: 115, PASS: 33.
 | ID | Status | Measured value / gap | Receipt | Remaining / PO review |
 |---|---|---|---|---|
 | G-01 | NOT CHECKED | perf pending: fresh exclusive menu cold/warm load matrix not run; current host quiet preflight rejects admission (load24.65/18.42/14.77, ceiling<3, busy processes). No prior stale PASS/FAIL is promoted to current evidence. | [perf-admission-current.json](../../test-results/rr-b/perf-admission-current.json) | Fresh qualified timing remains pending. |
-| G-02 | NOT CHECKED | perf pending: no quiet window; current real campaign handovers not measured. | No current measurement | Measure all nine campaign handovers. |
+| G-02 | NOT CHECKED | perf pending: fresh exclusive all nine real campaign handovers not run; current host quiet preflight rejects admission (load24.65/18.42/14.77, ceiling<3, busy processes). No prior stale PASS/FAIL is promoted to current evidence. | [perf-admission-current.json](../../test-results/rr-b/perf-admission-current.json) | Fresh qualified timing remains pending. |
 | G-03 | NOT CHECKED | perf pending: no quiet window; current isolated startup/frame matrix not run. | No current measurement | Repeat startup and first-action frame measurements in an exclusive quiet window. |
 | G-04 | NOT CHECKED | perf pending: no quiet window; current named-moment comparison not run. | No current measurement | Repeat current named moments against production baselines in an exclusive quiet window. |
 | G-05 | NOT CHECKED | perf pending: no quiet window; current frame-time matrix not run. | No current measurement | Repeat requested p95/max frame matrix in an exclusive quiet window. |
