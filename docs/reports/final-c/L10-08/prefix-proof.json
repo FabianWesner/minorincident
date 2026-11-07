@@ -1,0 +1,629 @@
+{
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+  "revision": "22252c708dd26c38547d151052015921f19b3cbc",
+  "toolSha256": "8026ba82961cee58b725c4a2c7a07515af1d13b8fffe9bc64fcfc258eca8e216",
+  "method": "Read-only snapshots of normal native complete InputFrame route, exact canonical final state hash preserved. Unmodified production saveResume plus actual arsenal, loaded normally for subsequent physical-input qualification. This is a native prefix, not claimed as physical whole-route evidence.",
+  "rows": [
+    {
+      "tier": "low",
+      "run": {
+        "level": "L10",
+        "policy": "complete",
+        "seed": 1,
+        "completed": true,
+        "time": 1312.0166666666667,
+        "deaths": 0,
+        "kills": 737,
+        "damageTaken": 340,
+        "failures": {},
+        "objectiveTimeline": [
+          {
+            "id": "crash",
+            "t": 0.016666666666666666
+          },
+          {
+            "id": "residential-fringe",
+            "t": 58.28333333333333
+          },
+          {
+            "id": "industrial-area",
+            "t": 191.01666666666668
+          },
+          {
+            "id": "military-zone",
+            "t": 356.15
+          },
+          {
+            "id": "research-campus",
+            "t": 528.7666666666667
+          },
+          {
+            "id": "research",
+            "t": 592.5666666666667
+          },
+          {
+            "id": "cure",
+            "t": 594.0166666666667
+          },
+          {
+            "id": "research-exit",
+            "t": 614.7833333333333
+          },
+          {
+            "id": "destroyed-corridor",
+            "t": 654.1166666666667
+          },
+          {
+            "id": "dispersal-complex",
+            "t": 870.5666666666667
+          },
+          {
+            "id": "install",
+            "t": 946.0166666666667
+          },
+          {
+            "id": "hold",
+            "t": 1008.3833333333333
+          },
+          {
+            "id": "mega",
+            "t": 1156.55
+          },
+          {
+            "id": "release",
+            "t": 1162.0166666666667
+          },
+          {
+            "id": "epilogue",
+            "t": 1312.0166666666667
+          },
+          {
+            "id": "credits",
+            "t": 1329.0166666666667
+          }
+        ],
+        "furthestObjective": "credits",
+        "activeObjectives": [],
+        "outcome": "complete",
+        "blocker": null,
+        "cureReleases": 1,
+        "regions": [
+          {
+            "id": "crash-outskirts",
+            "seconds": 66.04999999999754,
+            "travelSeconds": 62.799999999997716,
+            "combatSeconds": 3.21666666666666,
+            "interactionSeconds": 0.03333333333333333,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 296.44077342764035
+          },
+          {
+            "id": "residential-fringe",
+            "seconds": 121.36666666666106,
+            "travelSeconds": 93.88333333332929,
+            "combatSeconds": 27.483333333333054,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 543.0703822284006
+          },
+          {
+            "id": "industrial-area",
+            "seconds": 164.7000000000232,
+            "travelSeconds": 49.11666666666516,
+            "combatSeconds": 115.56666666666139,
+            "interactionSeconds": 0.016666666666666666,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 740.1545552636434
+          },
+          {
+            "id": "military-zone",
+            "seconds": 181.53333333336994,
+            "travelSeconds": 132.33333333333078,
+            "combatSeconds": 49.183333333331824,
+            "interactionSeconds": 0.016666666666666666,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 813.0622066026029
+          },
+          {
+            "id": "research-campus",
+            "seconds": 127.56666666666071,
+            "travelSeconds": 82.66666666666326,
+            "combatSeconds": 44.84999999999874,
+            "interactionSeconds": 0.05,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 573.2859988630142
+          },
+          {
+            "id": "destroyed-corridor",
+            "seconds": 214.23333333339596,
+            "travelSeconds": 187.050000000041,
+            "combatSeconds": 27.18333333333307,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 963.0005682536012
+          },
+          {
+            "id": "dispersal-complex",
+            "seconds": 436.5666666665983,
+            "travelSeconds": 66.01666666666421,
+            "combatSeconds": 9.983333333333409,
+            "interactionSeconds": 0.03333333333333333,
+            "holdSeconds": 210.53333333339302,
+            "epilogueSeconds": 150.0000000000115,
+            "otherSeconds": 0,
+            "metres": 1057.5026449611262
+          }
+        ],
+        "maxConcurrentInfected": 95,
+        "collision": {
+          "failures": 0,
+          "pending": 0,
+          "admitted": 908,
+          "deferred": 0,
+          "requests": [],
+          "offenders": []
+        }
+      },
+      "nativeStateHash": "56e575ab",
+      "controlIdentical": true,
+      "seeds": [
+        {
+          "stage": "road1",
+          "file": "docs/reports/final-c/L10-08/low-road1-save.json.gz",
+          "sha256": "5bb64fe7e6c347e8976f0e5ac0685be113ca3e332ad2b206923985ba3e11b1aa",
+          "tick": 711,
+          "states": {
+            "charge-active": false,
+            "console-held": false,
+            "terminal-read": false,
+            "cure-carried": false,
+            "cure-installed": false,
+            "charge-ready": false,
+            "mega-dead": false,
+            "cure-released": false,
+            "epilogue-finished": false,
+            "credits-finished": false,
+            "anchor-unavailable": false
+          }
+        },
+        {
+          "stage": "road2",
+          "file": "docs/reports/final-c/L10-08/low-road2-save.json.gz",
+          "sha256": "42c9c57d51c83f49bd238c6fe9784c7e904808dfcd6aee213b28b683e7edfee7",
+          "tick": 7085,
+          "states": {
+            "charge-active": false,
+            "console-held": false,
+            "terminal-read": false,
+            "cure-carried": false,
+            "cure-installed": false,
+            "charge-ready": false,
+            "mega-dead": false,
+            "cure-released": false,
+            "epilogue-finished": false,
+            "credits-finished": false,
+            "anchor-unavailable": false
+          }
+        },
+        {
+          "stage": "road3",
+          "file": "docs/reports/final-c/L10-08/low-road3-save.json.gz",
+          "sha256": "30b3322e1ef6876316a8fa37250624360b28b49bf1c429a80ade237e5a18b12f",
+          "tick": 15673,
+          "states": {
+            "charge-active": false,
+            "console-held": false,
+            "terminal-read": false,
+            "cure-carried": false,
+            "cure-installed": false,
+            "charge-ready": false,
+            "mega-dead": false,
+            "cure-released": false,
+            "epilogue-finished": false,
+            "credits-finished": false,
+            "anchor-unavailable": false
+          }
+        },
+        {
+          "stage": "road4",
+          "file": "docs/reports/final-c/L10-08/low-road4-save.json.gz",
+          "sha256": "ea1752dbf5c01df3938e1f005148578fd51eefd49d9689ef2ac5ad8b3bb760a7",
+          "tick": 25965,
+          "states": {
+            "charge-active": false,
+            "console-held": false,
+            "terminal-read": false,
+            "cure-carried": false,
+            "cure-installed": false,
+            "charge-ready": false,
+            "mega-dead": false,
+            "cure-released": false,
+            "epilogue-finished": false,
+            "credits-finished": false,
+            "anchor-unavailable": false
+          }
+        },
+        {
+          "stage": "road5",
+          "file": "docs/reports/final-c/L10-08/low-road5-save.json.gz",
+          "sha256": "b18751c1622e6678aac9faa4e67e21c2ccd7060e0c7785133d68e9c1f85b7d46",
+          "tick": 34552,
+          "states": {
+            "charge-active": false,
+            "console-held": false,
+            "terminal-read": false,
+            "cure-carried": false,
+            "cure-installed": false,
+            "charge-ready": false,
+            "mega-dead": false,
+            "cure-released": false,
+            "epilogue-finished": false,
+            "credits-finished": false,
+            "anchor-unavailable": false
+          }
+        },
+        {
+          "stage": "charge",
+          "file": "docs/reports/final-c/L10-08/low-charge-save.json.gz",
+          "sha256": "b9210452ac7b5a885f59e89b63c13d6c74fa6cf6472e2a98d319fcf6a4929075",
+          "tick": 56903,
+          "states": {
+            "charge-active": true,
+            "console-held": true,
+            "terminal-read": true,
+            "cure-carried": false,
+            "cure-installed": true,
+            "charge-ready": false,
+            "mega-dead": false,
+            "cure-released": false,
+            "epilogue-finished": false,
+            "credits-finished": false,
+            "anchor-unavailable": false
+          }
+        },
+        {
+          "stage": "release",
+          "file": "docs/reports/final-c/L10-08/low-release-save.json.gz",
+          "sha256": "eb4745b14bf1e90c1261712b0d9803db0c2b3c2b500b40f25192f2b53839d899",
+          "tick": 69393,
+          "states": {
+            "charge-active": true,
+            "console-held": false,
+            "terminal-read": true,
+            "cure-carried": false,
+            "cure-installed": true,
+            "charge-ready": true,
+            "mega-dead": true,
+            "cure-released": false,
+            "epilogue-finished": false,
+            "credits-finished": false,
+            "anchor-unavailable": false
+          }
+        }
+      ]
+    },
+    {
+      "tier": "high",
+      "run": {
+        "level": "L10",
+        "policy": "complete",
+        "seed": 1,
+        "completed": true,
+        "time": 1262.0166666666667,
+        "deaths": 0,
+        "kills": 1309,
+        "damageTaken": 350,
+        "failures": {},
+        "objectiveTimeline": [
+          {
+            "id": "crash",
+            "t": 0.016666666666666666
+          },
+          {
+            "id": "residential-fringe",
+            "t": 58.28333333333333
+          },
+          {
+            "id": "industrial-area",
+            "t": 191.01666666666668
+          },
+          {
+            "id": "military-zone",
+            "t": 357.5
+          },
+          {
+            "id": "research-campus",
+            "t": 529.4833333333333
+          },
+          {
+            "id": "research",
+            "t": 594.0166666666667
+          },
+          {
+            "id": "cure",
+            "t": 595.2666666666667
+          },
+          {
+            "id": "research-exit",
+            "t": 616.15
+          },
+          {
+            "id": "destroyed-corridor",
+            "t": 656.1
+          },
+          {
+            "id": "dispersal-complex",
+            "t": 872.7333333333333
+          },
+          {
+            "id": "install",
+            "t": 948.1
+          },
+          {
+            "id": "hold",
+            "t": 1012.2833333333333
+          },
+          {
+            "id": "mega",
+            "t": 1109.2333333333333
+          },
+          {
+            "id": "release",
+            "t": 1112.0166666666667
+          },
+          {
+            "id": "epilogue",
+            "t": 1262.0166666666667
+          },
+          {
+            "id": "credits",
+            "t": 1279.0166666666667
+          }
+        ],
+        "furthestObjective": "credits",
+        "activeObjectives": [],
+        "outcome": "complete",
+        "blocker": null,
+        "cureReleases": 1,
+        "regions": [
+          {
+            "id": "crash-outskirts",
+            "seconds": 66.04999999999754,
+            "travelSeconds": 63.933333333330985,
+            "combatSeconds": 2.083333333333331,
+            "interactionSeconds": 0.03333333333333333,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 296.44077342764035
+          },
+          {
+            "id": "residential-fringe",
+            "seconds": 121.46666666666106,
+            "travelSeconds": 63.466666666664345,
+            "combatSeconds": 57.99999999999799,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 543.0727553025105
+          },
+          {
+            "id": "industrial-area",
+            "seconds": 165.9500000000242,
+            "travelSeconds": 46.39999999999865,
+            "combatSeconds": 119.53333333332783,
+            "interactionSeconds": 0.016666666666666666,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 740.097249453485
+          },
+          {
+            "id": "military-zone",
+            "seconds": 180.9000000000361,
+            "travelSeconds": 133.99999999999878,
+            "combatSeconds": 46.883333333331954,
+            "interactionSeconds": 0.016666666666666666,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 813.0809755317974
+          },
+          {
+            "id": "research-campus",
+            "seconds": 128.833333333328,
+            "travelSeconds": 73.49999999999712,
+            "combatSeconds": 55.28333333333148,
+            "interactionSeconds": 0.05,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 573.3201127124969
+          },
+          {
+            "id": "destroyed-corridor",
+            "seconds": 214.41666666672944,
+            "travelSeconds": 181.75000000003678,
+            "combatSeconds": 32.666666666666096,
+            "interactionSeconds": 0,
+            "holdSeconds": 0,
+            "epilogueSeconds": 0,
+            "otherSeconds": 0,
+            "metres": 963.3846604994884
+          },
+          {
+            "id": "dispersal-complex",
+            "seconds": 384.39999999997906,
+            "travelSeconds": 60.48333333333118,
+            "combatSeconds": 12.750000000000213,
+            "interactionSeconds": 0.03333333333333333,
+            "holdSeconds": 161.1333333333537,
+            "epilogueSeconds": 150.0000000000115,
+            "otherSeconds": 0,
+            "metres": 1327.5794272677783
+          }
+        ],
+        "maxConcurrentInfected": 190,
+        "collision": {
+          "failures": 0,
+          "pending": 0,
+          "admitted": 1527,
+          "deferred": 0,
+          "requests": [],
+          "offenders": []
+        }
+      },
+      "nativeStateHash": "abd987b8",
+      "controlIdentical": true,
+      "seeds": [
+        {
+          "stage": "road1",
+          "file": "docs/reports/final-c/L10-08/high-road1-save.json.gz",
+          "sha256": "e1899945e6f44064c42dba03da6ce77da5b873b8fe1caf6a52b2035c6436a47f",
+          "tick": 711,
+          "states": {
+            "charge-active": false,
+            "console-held": false,
+            "terminal-read": false,
+            "cure-carried": false,
+            "cure-installed": false,
+            "charge-ready": false,
+            "mega-dead": false,
+            "cure-released": false,
+            "epilogue-finished": false,
+            "credits-finished": false,
+            "anchor-unavailable": false
+          }
+        },
+        {
+          "stage": "road2",
+          "file": "docs/reports/final-c/L10-08/high-road2-save.json.gz",
+          "sha256": "557d370f6849a733bf44aaed5e8b08d4b3807fc4d399f7ac287ea845f5693544",
+          "tick": 7091,
+          "states": {
+            "charge-active": false,
+            "console-held": false,
+            "terminal-read": false,
+            "cure-carried": false,
+            "cure-installed": false,
+            "charge-ready": false,
+            "mega-dead": false,
+            "cure-released": false,
+            "epilogue-finished": false,
+            "credits-finished": false,
+            "anchor-unavailable": false
+          }
+        },
+        {
+          "stage": "road3",
+          "file": "docs/reports/final-c/L10-08/high-road3-save.json.gz",
+          "sha256": "65ca39135391621923b8757f5eec88d0361d2bc0d81a7e8202afbdd433877ef2",
+          "tick": 15755,
+          "states": {
+            "charge-active": false,
+            "console-held": false,
+            "terminal-read": false,
+            "cure-carried": false,
+            "cure-installed": false,
+            "charge-ready": false,
+            "mega-dead": false,
+            "cure-released": false,
+            "epilogue-finished": false,
+            "credits-finished": false,
+            "anchor-unavailable": false
+          }
+        },
+        {
+          "stage": "road4",
+          "file": "docs/reports/final-c/L10-08/high-road4-save.json.gz",
+          "sha256": "a834e55129bd9d9d1dfcbdf7a6af3413d529fa8b22da33d214ae2a5ef01367fc",
+          "tick": 26008,
+          "states": {
+            "charge-active": false,
+            "console-held": false,
+            "terminal-read": false,
+            "cure-carried": false,
+            "cure-installed": false,
+            "charge-ready": false,
+            "mega-dead": false,
+            "cure-released": false,
+            "epilogue-finished": false,
+            "credits-finished": false,
+            "anchor-unavailable": false
+          }
+        },
+        {
+          "stage": "road5",
+          "file": "docs/reports/final-c/L10-08/high-road5-save.json.gz",
+          "sha256": "73459e993b4a248dbf5d41bf3be51217e429ce0d1aa6ef284898898ec48878c7",
+          "tick": 34634,
+          "states": {
+            "charge-active": false,
+            "console-held": false,
+            "terminal-read": false,
+            "cure-carried": false,
+            "cure-installed": false,
+            "charge-ready": false,
+            "mega-dead": false,
+            "cure-released": false,
+            "epilogue-finished": false,
+            "credits-finished": false,
+            "anchor-unavailable": false
+          }
+        },
+        {
+          "stage": "charge",
+          "file": "docs/reports/final-c/L10-08/high-charge-save.json.gz",
+          "sha256": "4d65e5ca7d6fe2b5357f5d0293c438c11cc5f42b23131a5d47c5367a9e71e4a2",
+          "tick": 57025,
+          "states": {
+            "charge-active": true,
+            "console-held": true,
+            "terminal-read": true,
+            "cure-carried": false,
+            "cure-installed": true,
+            "charge-ready": false,
+            "mega-dead": false,
+            "cure-released": false,
+            "epilogue-finished": false,
+            "credits-finished": false,
+            "anchor-unavailable": false
+          }
+        },
+        {
+          "stage": "release",
+          "file": "docs/reports/final-c/L10-08/high-release-save.json.gz",
+          "sha256": "76d229253e924f715f08baa426f28b79e29067486ec1311196ea57de1bad41e3",
+          "tick": 66554,
+          "states": {
+            "charge-active": true,
+            "console-held": false,
+            "terminal-read": true,
+            "cure-carried": false,
+            "cure-installed": true,
+            "charge-ready": true,
+            "mega-dead": true,
+            "cure-released": false,
+            "epilogue-finished": false,
+            "credits-finished": false,
+            "anchor-unavailable": false
+          }
+        }
+      ]
+    }
+  ]
+}

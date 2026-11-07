@@ -1,61 +1,168 @@
 {
   "row": "L10-08",
   "status": "PASS",
-  "reviewer": "Codex sweep-c6",
-  "date": "2026-11-06",
-  "commit": "2b292be2d78914a3eab914bf29961a024dab158f",
+  "reviewer": "Codex final-c",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
   "clauses": [
     {
-      "clause": "Road regions framed \u00d71.3 (verges/fields in frame), base \u00d7 max zoom \u2264 2.0; not in the finale. Suit crowds readable at night, slam telegraph is a ground effect.",
+      "clause": "Road regions framed ×1.3 (verges/fields in frame), base × max zoom ≤ 2.0; not in the finale. Suit crowds readable at night, slam telegraph is a ground effect.",
       "verdict": "PASS",
-      "note": "Fresh physical input from current native progressed saves across all5roadregions, both tiers and actualzoom0.5/1.5 plusmaxuserrequest. Roadbase1.3 in all50roadframes; finale base1.0. Actual productionView28cells (five roads/corridor/finale,gun/rocket,bothtierlabels) capcombinedat2.0, inclusiveboundarypasses. All82frames personally inspected: wide frames include both verges/grass/fields and roadside lights/vehicles/structures; closezoom crops context as expected. Night jackets/suits, pale collars/faces and limbs visible against lit gray road, including live formal-clothed crowds at finale. Sparse rectangular verge seams and passive body pile-up explicitly retained, no taste claim. First240s passive attempts show charges only, excluded fromslamqualification. Current canonical stationary18m snapshots preservefullnativecontrolhash; three actual physical rockets clear local bodies, actualspacing then schedulesMega groundslam naturally. SameattackID six/twelve-tick strips at bothzooms show flat red/orange floor circle beneathMega; productionVfx tellshape1radius3 matches authoredmegaAlpha radius, distinctfrombodyaura. Mega remainsalive, noactor/HP/schedulerwrites, no objective skip, couriergodonly. Nativeprefix is not claimed as full physical journey; post-loadcommands allphysical.27semantic faults rejected, source evidence restored. No game/criterion edits and no performance timing."
+      "note": "Actual5roadregions ×2tiers ×2POzooms show verges/fields, recognizable suit crowds and production L10-night lighting. Roadbase1.3, finale1.0;28productionView capability cells cap combined user/weapon zoom at2.0 including request100. Both separate physical approaches naturally trigger slam; inspected ground-plane red segmented rings at0/6/12ticks. Initial framing branch reached no slam within240s, covered by separate successful approach; no actor/scheduler writes."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-c6/L10-08/review.json",
-      "sha256": "97bddcbc2203e7fdcff28f69bf23c6ec11cbb3a6b80803f192a3cb626b5021a5",
-      "what": "Current source physical camera/render receipts, exact reviewed frame digests/observations, native prefix/control identity, production rig clamp or semantic fault controls and verified raw cleanup."
+      "file": "docs/reports/final-c/L10-08/low-road5-save.json.gz",
+      "sha256": "b18751c1622e6678aac9faa4e67e21c2ccd7060e0c7785133d68e9c1f85b7d46",
+      "what": "Actual5roadregions ×2tiers ×2POzooms show verges/fields, recognizable suit crowds and production L10-night lighting. Roadbase1.3, finale1.0;28productionView capability cells cap combined user/weapon zoom at2.0 including request100. Both separate physical approaches naturally trigger slam; inspected ground-plane red segmented rings at0/6/12ticks. Initial framing branch reached no slam within240s, covered by separate successful approach; no actor/scheduler writes."
     },
     {
-      "file": "docs/reports/sweep-c6/L10-08/framing-review.json",
-      "sha256": "9afe02ae3a1cc8804fb71b5d3e54f1745825c03e8551fe5aeb99dc8052ff42f7",
-      "what": "Current source physical camera/render receipts, exact reviewed frame digests/observations, native prefix/control identity, production rig clamp or semantic fault controls and verified raw cleanup."
+      "file": "docs/reports/final-c/L10-08/low-road2-save.json.gz",
+      "sha256": "42c9c57d51c83f49bd238c6fe9784c7e904808dfcd6aee213b28b683e7edfee7",
+      "what": "Actual5roadregions ×2tiers ×2POzooms show verges/fields, recognizable suit crowds and production L10-night lighting. Roadbase1.3, finale1.0;28productionView capability cells cap combined user/weapon zoom at2.0 including request100. Both separate physical approaches naturally trigger slam; inspected ground-plane red segmented rings at0/6/12ticks. Initial framing branch reached no slam within240s, covered by separate successful approach; no actor/scheduler writes."
     },
     {
-      "file": "docs/reports/sweep-c6/L10-08/framing-producer.mjs",
-      "sha256": "088a417f78d5ccaa65a653bbfd23f459006bfb1d5b50430c994d5d046ce82191",
-      "what": "Current source physical camera/render receipts, exact reviewed frame digests/observations, native prefix/control identity, production rig clamp or semantic fault controls and verified raw cleanup."
+      "file": "docs/reports/final-c/L10-08/low-physical.json.gz",
+      "sha256": "2d3d1dd5a286b776913b0e46840de48cca786b1f55886b1fa8c32a88bc57cdf8",
+      "what": "Actual5roadregions ×2tiers ×2POzooms show verges/fields, recognizable suit crowds and production L10-night lighting. Roadbase1.3, finale1.0;28productionView capability cells cap combined user/weapon zoom at2.0 including request100. Both separate physical approaches naturally trigger slam; inspected ground-plane red segmented rings at0/6/12ticks. Initial framing branch reached no slam within240s, covered by separate successful approach; no actor/scheduler writes."
     },
     {
-      "file": "docs/reports/sweep-c6/L10-08/slam-producer.mjs",
-      "sha256": "3899375b17f11b9bcbd956cb769979394ce8b283a26dd205bf5966f631448747",
-      "what": "Current source physical camera/render receipts, exact reviewed frame digests/observations, native prefix/control identity, production rig clamp or semantic fault controls and verified raw cleanup."
+      "file": "docs/reports/final-c/L10-08/high-close-save.json.gz",
+      "sha256": "d5b1d0ddfaceb8038107169e7e0bbbcfa778d095f708a44ce5d9f6e40a54760b",
+      "what": "Actual5roadregions ×2tiers ×2POzooms show verges/fields, recognizable suit crowds and production L10-night lighting. Roadbase1.3, finale1.0;28productionView capability cells cap combined user/weapon zoom at2.0 including request100. Both separate physical approaches naturally trigger slam; inspected ground-plane red segmented rings at0/6/12ticks. Initial framing branch reached no slam within240s, covered by separate successful approach; no actor/scheduler writes."
     },
     {
-      "file": "docs/reports/sweep-c6/L10-08/camera-capability.json",
-      "sha256": "a90823734c584778e27608dc36f36f39cab6c44b2a4e054d64b760edd8a012fe",
-      "what": "Current source physical camera/render receipts, exact reviewed frame digests/observations, native prefix/control identity, production rig clamp or semantic fault controls and verified raw cleanup."
+      "file": "docs/reports/final-c/L10-08/high-charge-save.json.gz",
+      "sha256": "4d65e5ca7d6fe2b5357f5d0293c438c11cc5f42b23131a5d47c5367a9e71e4a2",
+      "what": "Actual5roadregions ×2tiers ×2POzooms show verges/fields, recognizable suit crowds and production L10-night lighting. Roadbase1.3, finale1.0;28productionView capability cells cap combined user/weapon zoom at2.0 including request100. Both separate physical approaches naturally trigger slam; inspected ground-plane red segmented rings at0/6/12ticks. Initial framing branch reached no slam within240s, covered by separate successful approach; no actor/scheduler writes."
     },
     {
-      "file": "docs/reports/sweep-c6/L10-08/prefix-proof.json",
-      "sha256": "9f38f1a104e7a002526a46f9435669740f81e67d45075552be3e7e87112e0f56",
-      "what": "Current source physical camera/render receipts, exact reviewed frame digests/observations, native prefix/control identity, production rig clamp or semantic fault controls and verified raw cleanup."
+      "file": "docs/reports/final-c/L10-08/sweep-c6-l10-prefix.mjs",
+      "sha256": "8026ba82961cee58b725c4a2c7a07515af1d13b8fffe9bc64fcfc258eca8e216",
+      "what": "Actual5roadregions ×2tiers ×2POzooms show verges/fields, recognizable suit crowds and production L10-night lighting. Roadbase1.3, finale1.0;28productionView capability cells cap combined user/weapon zoom at2.0 including request100. Both separate physical approaches naturally trigger slam; inspected ground-plane red segmented rings at0/6/12ticks. Initial framing branch reached no slam within240s, covered by separate successful approach; no actor/scheduler writes."
     },
     {
-      "file": "docs/reports/sweep-c6/L10-08/close-prefix-proof.json",
-      "sha256": "07c715b7221f1470ae307e5206d9018fdebda5fd1b88eb532247421aac073068",
-      "what": "Current source physical camera/render receipts, exact reviewed frame digests/observations, native prefix/control identity, production rig clamp or semantic fault controls and verified raw cleanup."
+      "file": "docs/reports/final-c/L10-08/high-physical.json.gz",
+      "sha256": "d49a97baaa113ba2c61d0052d5f62c9294eb8ae9f8a81a91fd79ead82628892f",
+      "what": "Actual5roadregions ×2tiers ×2POzooms show verges/fields, recognizable suit crowds and production L10-night lighting. Roadbase1.3, finale1.0;28productionView capability cells cap combined user/weapon zoom at2.0 including request100. Both separate physical approaches naturally trigger slam; inspected ground-plane red segmented rings at0/6/12ticks. Initial framing branch reached no slam within240s, covered by separate successful approach; no actor/scheduler writes."
     },
     {
-      "file": "docs/reports/sweep-c6/L10-08/coverage-proof.json",
-      "sha256": "c8ce72d8959dbfa573c9252ff079413e7c2b46cd239a95ba3866d98cbca03593",
-      "what": "Current source physical camera/render receipts, exact reviewed frame digests/observations, native prefix/control identity, production rig clamp or semantic fault controls and verified raw cleanup."
+      "file": "docs/reports/final-c/L10-08/low-road3-save.json.gz",
+      "sha256": "30b3322e1ef6876316a8fa37250624360b28b49bf1c429a80ade237e5a18b12f",
+      "what": "Actual5roadregions ×2tiers ×2POzooms show verges/fields, recognizable suit crowds and production L10-night lighting. Roadbase1.3, finale1.0;28productionView capability cells cap combined user/weapon zoom at2.0 including request100. Both separate physical approaches naturally trigger slam; inspected ground-plane red segmented rings at0/6/12ticks. Initial framing branch reached no slam within240s, covered by separate successful approach; no actor/scheduler writes."
     },
     {
-      "file": "docs/reports/sweep-c6/L10-08/raw-cleanup.json",
-      "sha256": "96a3c7a1293975726c999f4a99a66596ec34d6e93936fcf78e32803a4477d036",
-      "what": "Current source physical camera/render receipts, exact reviewed frame digests/observations, native prefix/control identity, production rig clamp or semantic fault controls and verified raw cleanup."
+      "file": "docs/reports/final-c/L10-08/low-road4-save.json.gz",
+      "sha256": "ea1752dbf5c01df3938e1f005148578fd51eefd49d9689ef2ac5ad8b3bb760a7",
+      "what": "Actual5roadregions ×2tiers ×2POzooms show verges/fields, recognizable suit crowds and production L10-night lighting. Roadbase1.3, finale1.0;28productionView capability cells cap combined user/weapon zoom at2.0 including request100. Both separate physical approaches naturally trigger slam; inspected ground-plane red segmented rings at0/6/12ticks. Initial framing branch reached no slam within240s, covered by separate successful approach; no actor/scheduler writes."
+    },
+    {
+      "file": "docs/reports/final-c/L10-08/camera-capability.json",
+      "sha256": "83b0ed535b83b066148ce2d82e5938e966431ac282c442e8d99ff0bd6c057c1c",
+      "what": "Actual5roadregions ×2tiers ×2POzooms show verges/fields, recognizable suit crowds and production L10-night lighting. Roadbase1.3, finale1.0;28productionView capability cells cap combined user/weapon zoom at2.0 including request100. Both separate physical approaches naturally trigger slam; inspected ground-plane red segmented rings at0/6/12ticks. Initial framing branch reached no slam within240s, covered by separate successful approach; no actor/scheduler writes."
+    },
+    {
+      "file": "docs/reports/final-c/L10-08/low-close-save.json.gz",
+      "sha256": "c76183b29b16be82cea17d5b7d984493781f1d510dde591c25e4600f848bc9e5",
+      "what": "Actual5roadregions ×2tiers ×2POzooms show verges/fields, recognizable suit crowds and production L10-night lighting. Roadbase1.3, finale1.0;28productionView capability cells cap combined user/weapon zoom at2.0 including request100. Both separate physical approaches naturally trigger slam; inspected ground-plane red segmented rings at0/6/12ticks. Initial framing branch reached no slam within240s, covered by separate successful approach; no actor/scheduler writes."
+    },
+    {
+      "file": "docs/reports/final-c/L10-08/low-release-save.json.gz",
+      "sha256": "eb4745b14bf1e90c1261712b0d9803db0c2b3c2b500b40f25192f2b53839d899",
+      "what": "Actual5roadregions ×2tiers ×2POzooms show verges/fields, recognizable suit crowds and production L10-night lighting. Roadbase1.3, finale1.0;28productionView capability cells cap combined user/weapon zoom at2.0 including request100. Both separate physical approaches naturally trigger slam; inspected ground-plane red segmented rings at0/6/12ticks. Initial framing branch reached no slam within240s, covered by separate successful approach; no actor/scheduler writes."
+    },
+    {
+      "file": "docs/reports/final-c/L10-08/close-prefix-proof.json",
+      "sha256": "23a0ef8e53cc6ffd8b5027484fd75e0726bd139b5be718fed6f935eff719ea9b",
+      "what": "Actual5roadregions ×2tiers ×2POzooms show verges/fields, recognizable suit crowds and production L10-night lighting. Roadbase1.3, finale1.0;28productionView capability cells cap combined user/weapon zoom at2.0 including request100. Both separate physical approaches naturally trigger slam; inspected ground-plane red segmented rings at0/6/12ticks. Initial framing branch reached no slam within240s, covered by separate successful approach; no actor/scheduler writes."
+    },
+    {
+      "file": "docs/reports/final-c/L10-08/high-road5-save.json.gz",
+      "sha256": "73459e993b4a248dbf5d41bf3be51217e429ce0d1aa6ef284898898ec48878c7",
+      "what": "Actual5roadregions ×2tiers ×2POzooms show verges/fields, recognizable suit crowds and production L10-night lighting. Roadbase1.3, finale1.0;28productionView capability cells cap combined user/weapon zoom at2.0 including request100. Both separate physical approaches naturally trigger slam; inspected ground-plane red segmented rings at0/6/12ticks. Initial framing branch reached no slam within240s, covered by separate successful approach; no actor/scheduler writes."
+    },
+    {
+      "file": "docs/reports/final-c/L10-08/high-road2-save.json.gz",
+      "sha256": "557d370f6849a733bf44aaed5e8b08d4b3807fc4d399f7ac287ea845f5693544",
+      "what": "Actual5roadregions ×2tiers ×2POzooms show verges/fields, recognizable suit crowds and production L10-night lighting. Roadbase1.3, finale1.0;28productionView capability cells cap combined user/weapon zoom at2.0 including request100. Both separate physical approaches naturally trigger slam; inspected ground-plane red segmented rings at0/6/12ticks. Initial framing branch reached no slam within240s, covered by separate successful approach; no actor/scheduler writes."
+    },
+    {
+      "file": "docs/reports/final-c/L10-08/sweep-c6-l10-close-prefix.mjs",
+      "sha256": "ef492576f702f1802b97e5f35838951c1f8a8165d732f5e4358b7618647bd10d",
+      "what": "Actual5roadregions ×2tiers ×2POzooms show verges/fields, recognizable suit crowds and production L10-night lighting. Roadbase1.3, finale1.0;28productionView capability cells cap combined user/weapon zoom at2.0 including request100. Both separate physical approaches naturally trigger slam; inspected ground-plane red segmented rings at0/6/12ticks. Initial framing branch reached no slam within240s, covered by separate successful approach; no actor/scheduler writes."
+    },
+    {
+      "file": "docs/reports/final-c/L10-08/high-road3-save.json.gz",
+      "sha256": "65ca39135391621923b8757f5eec88d0361d2bc0d81a7e8202afbdd433877ef2",
+      "what": "Actual5roadregions ×2tiers ×2POzooms show verges/fields, recognizable suit crowds and production L10-night lighting. Roadbase1.3, finale1.0;28productionView capability cells cap combined user/weapon zoom at2.0 including request100. Both separate physical approaches naturally trigger slam; inspected ground-plane red segmented rings at0/6/12ticks. Initial framing branch reached no slam within240s, covered by separate successful approach; no actor/scheduler writes."
+    },
+    {
+      "file": "docs/reports/final-c/L10-08/high-road4-save.json.gz",
+      "sha256": "a834e55129bd9d9d1dfcbdf7a6af3413d529fa8b22da33d214ae2a5ef01367fc",
+      "what": "Actual5roadregions ×2tiers ×2POzooms show verges/fields, recognizable suit crowds and production L10-night lighting. Roadbase1.3, finale1.0;28productionView capability cells cap combined user/weapon zoom at2.0 including request100. Both separate physical approaches naturally trigger slam; inspected ground-plane red segmented rings at0/6/12ticks. Initial framing branch reached no slam within240s, covered by separate successful approach; no actor/scheduler writes."
+    },
+    {
+      "file": "docs/reports/final-c/L10-08/high-slam-physical.json.gz",
+      "sha256": "a1459e36d5f886ff335313ecf4973fea32f87a753461e0bcdd1ff1a982c0cf2b",
+      "what": "Actual5roadregions ×2tiers ×2POzooms show verges/fields, recognizable suit crowds and production L10-night lighting. Roadbase1.3, finale1.0;28productionView capability cells cap combined user/weapon zoom at2.0 including request100. Both separate physical approaches naturally trigger slam; inspected ground-plane red segmented rings at0/6/12ticks. Initial framing branch reached no slam within240s, covered by separate successful approach; no actor/scheduler writes."
+    },
+    {
+      "file": "docs/reports/final-c/L10-08/prefix-proof.json",
+      "sha256": "cc17f5f5d7419291f7fd632fa8e32be238bf4248bea15b2f0057b6b60e7917fa",
+      "what": "Actual5roadregions ×2tiers ×2POzooms show verges/fields, recognizable suit crowds and production L10-night lighting. Roadbase1.3, finale1.0;28productionView capability cells cap combined user/weapon zoom at2.0 including request100. Both separate physical approaches naturally trigger slam; inspected ground-plane red segmented rings at0/6/12ticks. Initial framing branch reached no slam within240s, covered by separate successful approach; no actor/scheduler writes."
+    },
+    {
+      "file": "docs/reports/final-c/L10-08/high-road1-save.json.gz",
+      "sha256": "e1899945e6f44064c42dba03da6ce77da5b873b8fe1caf6a52b2035c6436a47f",
+      "what": "Actual5roadregions ×2tiers ×2POzooms show verges/fields, recognizable suit crowds and production L10-night lighting. Roadbase1.3, finale1.0;28productionView capability cells cap combined user/weapon zoom at2.0 including request100. Both separate physical approaches naturally trigger slam; inspected ground-plane red segmented rings at0/6/12ticks. Initial framing branch reached no slam within240s, covered by separate successful approach; no actor/scheduler writes."
+    },
+    {
+      "file": "docs/reports/final-c/L10-08/sweep-c6-l10-framing-producer.ts",
+      "sha256": "09a393ebd601e698fe68c1908741cf117a42be4232f5f7f595ef6b676169b03d",
+      "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
+    },
+    {
+      "file": "docs/reports/final-c/L10-08/coverage.json",
+      "sha256": "2753af272a51b6e26453ccfb67f9728a93410876cdadccae33a38a83133c7675",
+      "what": "Actual5roadregions ×2tiers ×2POzooms show verges/fields, recognizable suit crowds and production L10-night lighting. Roadbase1.3, finale1.0;28productionView capability cells cap combined user/weapon zoom at2.0 including request100. Both separate physical approaches naturally trigger slam; inspected ground-plane red segmented rings at0/6/12ticks. Initial framing branch reached no slam within240s, covered by separate successful approach; no actor/scheduler writes."
+    },
+    {
+      "file": "docs/reports/final-c/L10-08/low-slam-physical.json.gz",
+      "sha256": "36beeb02d10db61307d9a9bf951c42cc9aeefc1fccd60a7e3971d618f166b5eb",
+      "what": "Actual5roadregions ×2tiers ×2POzooms show verges/fields, recognizable suit crowds and production L10-night lighting. Roadbase1.3, finale1.0;28productionView capability cells cap combined user/weapon zoom at2.0 including request100. Both separate physical approaches naturally trigger slam; inspected ground-plane red segmented rings at0/6/12ticks. Initial framing branch reached no slam within240s, covered by separate successful approach; no actor/scheduler writes."
+    },
+    {
+      "file": "docs/reports/final-c/L10-08/low-road1-save.json.gz",
+      "sha256": "5bb64fe7e6c347e8976f0e5ac0685be113ca3e332ad2b206923985ba3e11b1aa",
+      "what": "Actual5roadregions ×2tiers ×2POzooms show verges/fields, recognizable suit crowds and production L10-night lighting. Roadbase1.3, finale1.0;28productionView capability cells cap combined user/weapon zoom at2.0 including request100. Both separate physical approaches naturally trigger slam; inspected ground-plane red segmented rings at0/6/12ticks. Initial framing branch reached no slam within240s, covered by separate successful approach; no actor/scheduler writes."
+    },
+    {
+      "file": "docs/reports/final-c/L10-08/sweep-c6-l10-camera.ts",
+      "sha256": "e2f230fbd0536d4d64cab23a1b395abed08c59d65546d48d53eab34b563b8453",
+      "what": "Actual5roadregions ×2tiers ×2POzooms show verges/fields, recognizable suit crowds and production L10-night lighting. Roadbase1.3, finale1.0;28productionView capability cells cap combined user/weapon zoom at2.0 including request100. Both separate physical approaches naturally trigger slam; inspected ground-plane red segmented rings at0/6/12ticks. Initial framing branch reached no slam within240s, covered by separate successful approach; no actor/scheduler writes."
+    },
+    {
+      "file": "docs/reports/final-c/L10-08/low-charge-save.json.gz",
+      "sha256": "b9210452ac7b5a885f59e89b63c13d6c74fa6cf6472e2a98d319fcf6a4929075",
+      "what": "Actual5roadregions ×2tiers ×2POzooms show verges/fields, recognizable suit crowds and production L10-night lighting. Roadbase1.3, finale1.0;28productionView capability cells cap combined user/weapon zoom at2.0 including request100. Both separate physical approaches naturally trigger slam; inspected ground-plane red segmented rings at0/6/12ticks. Initial framing branch reached no slam within240s, covered by separate successful approach; no actor/scheduler writes."
+    },
+    {
+      "file": "docs/reports/final-c/L10-08/capture-review.json",
+      "sha256": "1074e614cd71a7d73f0467a2711422e935971dead562a19bc0bae2742cd6e582",
+      "what": "Actual5roadregions ×2tiers ×2POzooms show verges/fields, recognizable suit crowds and production L10-night lighting. Roadbase1.3, finale1.0;28productionView capability cells cap combined user/weapon zoom at2.0 including request100. Both separate physical approaches naturally trigger slam; inspected ground-plane red segmented rings at0/6/12ticks. Initial framing branch reached no slam within240s, covered by separate successful approach; no actor/scheduler writes."
+    },
+    {
+      "file": "docs/reports/final-c/L10-08/sweep-c6-l10-slam-producer.ts",
+      "sha256": "5fc2e6a161934138d69bb43348c92068aa25830b5e9a8012d3785db79900825e",
+      "what": "Exact executed measurement producer snapshot; the receipt and review describe observer scope and any explicit capability fixture."
+    },
+    {
+      "file": "docs/reports/final-c/L10-08/high-release-save.json.gz",
+      "sha256": "76d229253e924f715f08baa426f28b79e29067486ec1311196ea57de1bad41e3",
+      "what": "Actual5roadregions ×2tiers ×2POzooms show verges/fields, recognizable suit crowds and production L10-night lighting. Roadbase1.3, finale1.0;28productionView capability cells cap combined user/weapon zoom at2.0 including request100. Both separate physical approaches naturally trigger slam; inspected ground-plane red segmented rings at0/6/12ticks. Initial framing branch reached no slam within240s, covered by separate successful approach; no actor/scheduler writes."
     }
-  ]
+  ],
+  "notes": "Frozen-head row review. Current immutable evidence, unchanged criterion and game source.",
+  "sourceDigest": "75720d4df4ad59ad1814e1cda498bc4620d28edfa0298106dd53315c5f2fba05"
 }
