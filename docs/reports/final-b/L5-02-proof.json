@@ -1,0 +1,223 @@
+{
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "method": "Fresh actual L5-default unmuted running/unlocked WebAudio. Ordinary mortal complete bot inputs, no objective/actor/HP edits. Every native second captures actual graph/music until after first survivor. Global browser audio muted only at output; game muted flag remains false. No subjective listening claim.",
+  "rows": [
+    {
+      "tier": "low",
+      "prefoundAudioSamples": 44,
+      "lastPrefoundTick": 2640,
+      "firstFoundSampleTick": 2700,
+      "positiveAfterFind": {
+        "state": "calm",
+        "peak": false,
+        "transitions": [
+          {
+            "state": "calm",
+            "requested": 55.744,
+            "time": 57.050666666666665
+          }
+        ],
+        "decks": [
+          {
+            "state": "calm",
+            "file": "calm-L5",
+            "paused": false,
+            "position": 30.138667,
+            "gain": 0.5
+          }
+        ]
+      },
+      "first60": {
+        "samples": 60,
+        "allies": 0,
+        "vehicles": 0,
+        "nonPlayerGunshots": 0
+      },
+      "opening": {
+        "tier": "low",
+        "hashes": [
+          "44868d1e",
+          "44868d1e"
+        ],
+        "events": [
+          {
+            "type": "dialogue.line",
+            "id": "L5.hours",
+            "text": "Hours later.",
+            "tick": 0
+          },
+          {
+            "type": "l5.emerged",
+            "tick": 99
+          },
+          {
+            "type": "l5.searching",
+            "tick": 699
+          },
+          {
+            "type": "dialogue.line",
+            "id": "L5.search",
+            "text": "Is anyone still alive?",
+            "tick": 699
+          },
+          {
+            "type": "l5.searching",
+            "tick": 1397
+          },
+          {
+            "type": "dialogue.line",
+            "id": "L5.search",
+            "text": "Is anyone still alive?",
+            "tick": 1397
+          },
+          {
+            "type": "l5.found",
+            "tick": 2657,
+            "key": "mia",
+            "id": 31,
+            "count": 1
+          },
+          {
+            "type": "dialogue.line",
+            "id": "L5.found.mia",
+            "text": "Mia: Is it over? Please say it\u2019s over. Take me with you.",
+            "tick": 2657
+          },
+          {
+            "type": "l5.found",
+            "tick": 4515,
+            "key": "okafor",
+            "id": 30,
+            "count": 2
+          },
+          {
+            "type": "dialogue.line",
+            "id": "L5.found.okafor",
+            "text": "Mr. Okafor: Bless you, child. Please, take me with you.",
+            "tick": 4515
+          }
+        ]
+      }
+    },
+    {
+      "tier": "high",
+      "prefoundAudioSamples": 37,
+      "lastPrefoundTick": 2220,
+      "firstFoundSampleTick": 2280,
+      "positiveAfterFind": {
+        "state": "calm",
+        "peak": false,
+        "transitions": [
+          {
+            "state": "calm",
+            "requested": 69.84266666666667,
+            "time": 71.22133333333333
+          }
+        ],
+        "decks": [
+          {
+            "state": "calm",
+            "file": "calm-L5",
+            "paused": false,
+            "position": 31.363961,
+            "gain": 0.5
+          }
+        ]
+      },
+      "first60": {
+        "samples": 60,
+        "allies": 0,
+        "vehicles": 0,
+        "nonPlayerGunshots": 0
+      },
+      "opening": {
+        "tier": "high",
+        "hashes": [
+          "4eb58733",
+          "4eb58733"
+        ],
+        "events": [
+          {
+            "type": "dialogue.line",
+            "id": "L5.hours",
+            "text": "Hours later.",
+            "tick": 0
+          },
+          {
+            "type": "l5.emerged",
+            "tick": 99
+          },
+          {
+            "type": "l5.searching",
+            "tick": 699
+          },
+          {
+            "type": "dialogue.line",
+            "id": "L5.search",
+            "text": "Is anyone still alive?",
+            "tick": 699
+          },
+          {
+            "type": "l5.searching",
+            "tick": 1398
+          },
+          {
+            "type": "dialogue.line",
+            "id": "L5.search",
+            "text": "Is anyone still alive?",
+            "tick": 1398
+          },
+          {
+            "type": "l5.found",
+            "tick": 2225,
+            "key": "mia",
+            "id": 31,
+            "count": 1
+          },
+          {
+            "type": "dialogue.line",
+            "id": "L5.found.mia",
+            "text": "Mia: Is it over? Please say it\u2019s over. Take me with you.",
+            "tick": 2225
+          },
+          {
+            "type": "l5.found",
+            "tick": 4363,
+            "key": "okafor",
+            "id": 30,
+            "count": 2
+          },
+          {
+            "type": "dialogue.line",
+            "id": "L5.found.okafor",
+            "text": "Mr. Okafor: Bless you, child. Please, take me with you.",
+            "tick": 4363
+          }
+        ]
+      }
+    }
+  ],
+  "row": "L5-02",
+  "status": "PASS",
+  "observation": "Both tiers: actual Hours later. dialogue eventtick0; emerge99, search/objective699, exactly10s quiet objective interval, matched read-only80s native control hashes. Untouched mortal complete first60s census:0 allies,0 active vehicles,0 non-player gunfire. Fresh actual browser WebAudio is running/unlocked/unmuted/backgroundfalse, master2/musicbus1: all44 low/37 high sampled pre-find seconds have no streamed deck, no transition and radio stopped; first-found samples2700/2280. After find actual calm-L5 deck advances with gain.5 and pausedfalse at both tiers, positive playback control. Ordinary production bot/audio supplement, no objective/actor/HP edits and no subjective listening claim. Production pre-find music-bus guard independently enforces the between-sample rule.",
+  "frozenCommit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "frames": [],
+  "evidence": [
+    {
+      "file": "docs/reports/final-b/L5-audio-opening-current.json.gz",
+      "sha256": "0dec9b4230038dd55ed6b6500bfa33a96e8cbc41888df0dd89d702f18e2e3a6f"
+    },
+    {
+      "file": "docs/reports/final-b/L5-audio-opening-executed.ts.gz",
+      "sha256": "898182d673b141e22aff21838f28759cdf8f2bd497c885bc532272b7b5138156"
+    },
+    {
+      "file": "docs/reports/final-b/L5-opening-native.json.gz",
+      "sha256": "2cbbb5f9eac139a152e57b870d7208844edbe78c0bd709d8359024f4f98c46bb"
+    },
+    {
+      "file": "docs/reports/final-b/L5-metro-resume-native.json.gz",
+      "sha256": "aa59ecdce9627e617276dbb0a201a2d6ddf3027f4370284c5e57429e0fe817d2"
+    }
+  ]
+}
