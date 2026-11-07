@@ -1,0 +1,48 @@
+{
+  "row": "L4-01",
+  "status": "PASS",
+  "reviewer": "Codex/final-b",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "sourceDigest": "e3dafe0694468ae05c6e72a1f303adf938a6c33391416d38d67a60534e2fe51b",
+  "clauses": [
+    {
+      "clause": "5-vehicle convoy reaches the plaza in **20–35 s**; control ≤ 0.5 s after the stop; bus parks inside the military area.",
+      "verdict": "PASS",
+      "note": "low/complete: convoy vehicle identities=5; target 5 ≤ value ≤ 5; PASS\nlow/complete: convoy duration=30.483333333333334; target 20 ≤ value ≤ 35; PASS\nlow/stationary: convoy vehicle identities=5; target 5 ≤ value ≤ 5; PASS\nlow/stationary: convoy duration=30.483333333333334; target 20 ≤ value ≤ 35; PASS\nhigh/complete: convoy vehicle identities=5; target 5 ≤ value ≤ 5; PASS\nhigh/complete: convoy duration=30.483333333333334; target 20 ≤ value ≤ 35; PASS\nhigh/stationary: convoy vehicle identities=5; target 5 ≤ value ≤ 5; PASS\nhigh/stationary: convoy duration=30.483333333333334; target 20 ≤ value ≤ 35; PASS\nlow/controlled-fixture: courier control restored after actual convoy stop={\"arrivedAt\":1829,\"readyAt\":1829,\"controlTicks\":0}; target visible, unseated, collider enabled, no story lock within30ticks of stop; PASS\nlow/controlled-fixture: full passenger bus parks inside the military perimeter={\"bus\":{\"x\":-11,\"y\":0.7,\"z\":-0.3945018561967264,\"yaw\":-4.712388965169803},\"bounds\":{\"x0\":-12.480000071205668,\"x1\":-9.519999928794332,\"z0\":-5.0745018787147576,\"z1\":4.285498166321304},\"militaryArea\":{\"x0\":-35.6,\"x1\":-6.7,\"z0\":-17.4,\"z1\":22.5,\"barkM\":1.2,\"barkEveryS\":12,\"barrier\":\"prop.jersey-barrier\"}}; target all four hull bounds inside the actual military area; PASS\nhigh/controlled-fixture: courier control restored after actual convoy stop={\"arrivedAt\":1829,\"readyAt\":1829,\"controlTicks\":0}; target visible, unseated, collider enabled, no story lock within30ticks of stop; PASS\nhigh/controlled-fixture: full passenger bus parks inside the military perimeter={\"bus\":{\"x\":-11,\"y\":0.7,\"z\":-0.3945018561967264,\"yaw\":-4.712388965169803},\"bounds\":{\"x0\":-12.480000071205668,\"x1\":-9.519999928794332,\"z0\":-5.0745018787147576,\"z1\":4.285498166321304},\"militaryArea\":{\"x0\":-35.6,\"x1\":-6.7,\"z0\":-17.4,\"z1\":22.5,\"barkM\":1.2,\"barkEveryS\":12,\"barrier\":\"prop.jersey-barrier\"}}; target all four hull bounds inside the actual military area; PASS"
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/fix51-verify/receipts/L4-low-complete.json",
+      "sha256": "926dc23d5d84b06429fd944df09e7c1f37665084591c3621e4f404411c9fa12e",
+      "what": "Frozen-head native measurement: L4-01. convoy vehicle identities; convoy duration."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L4-low-stationary.json",
+      "sha256": "48ed85795986fb72f3bbfcbe230ec61f4dcca5409e0407bebe0a88f97fad5917",
+      "what": "Frozen-head native measurement: L4-01. convoy vehicle identities; convoy duration."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L4-high-complete.json",
+      "sha256": "2165e1d8528b8e40fc594234a6f6c33fb950c4aa00ba825e7b38893c475692a2",
+      "what": "Frozen-head native measurement: L4-01. convoy vehicle identities; convoy duration."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L4-high-stationary.json",
+      "sha256": "6241fac80ec6397550cb3859f6f5c506ab541a1125a65a81cf4e768a996d403e",
+      "what": "Frozen-head native measurement: L4-01. convoy vehicle identities; convoy duration."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L4-low-fixtures.json",
+      "sha256": "acd49bd687820e0421216d7b8d6f471caf2cc0ecd8a7f3bae7538c91c48856f3",
+      "what": "Frozen-head native measurement: L4-01. courier control restored after actual convoy stop; full passenger bus parks inside the military perimeter."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L4-high-fixtures.json",
+      "sha256": "e165612405da31f0eef50e04a35104ed02015f355c52926b79bf6804488871bf",
+      "what": "Frozen-head native measurement: L4-01. courier control restored after actual convoy stop; full passenger bus parks inside the military perimeter."
+    }
+  ],
+  "notes": "Fresh native measurements on the frozen source. No claim of new browser observations. L5-01 legacy diagnostic NOT CHECKED entries are redundant with the explicit pickup/regular/Alpha timing fixtures, whose full clauses pass."
+}
