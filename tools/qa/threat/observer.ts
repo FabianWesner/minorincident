@@ -389,7 +389,10 @@ export class ThreatObserver {
       if (!Number.isFinite(speed) || speed < 0) throw new Error(`Invalid follower speed for ${this.level}/${e.id}`);
       // Formation shuffling around a parked courier is not group walking.
       // Incapacitated followers cannot walk; their bites/losses remain recorded separately.
-      const incapacitated = e.civilian?.state === 'grabbed' || e.civilian?.state === 'bitten' || (e.civilian?.knockedUntil ?? 0) > w.tick;
+      // r5-l7: a follower with a living infected at grab contact is being fought over, not walking; since L7 bites
+      // wound instead of kill, a passive courier's mauled evacuees otherwise entered the pace median while dying.
+      const engaged = w.infected!.active.some(o => o.health.current > 0 && !o.corpse && Math.hypot(o.transform.x - e.transform.x, o.transform.z - e.transform.z) <= 1.5);
+      const incapacitated = e.civilian?.state === 'grabbed' || e.civilian?.state === 'bitten' || (e.civilian?.knockedUntil ?? 0) > w.tick || engaged;
       if (!isWalkingSample(speed, leaderSpeed, lagging, incapacitated)) continue;
       for (const row of this.active) {
         const values = row.followers.get(e.id) ?? []; values.push(speed); row.followers.set(e.id, values);
