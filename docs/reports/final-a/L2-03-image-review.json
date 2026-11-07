@@ -1,0 +1,7136 @@
+{
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "revision": "7509b79434ff9d984296d2520236b91a70a77556",
+  "personallyInspectedAll": true,
+  "observation": "All40 fresh WebGL2/WebGPU low/high boarding/ride/arrival frames personally inspected on ten original-resolution four-cell sheets (seconds0/3/12/22/26, requested zoom0.5/1.5). Open cab visibly retains six firefighters around identifiable courier head/backpack; truck shell never fully obscures courier in reviewed poses. Both native full-ride ledgers measure24.3167s and all seven seated identities throughout, all seven out0.8167s after arrival, control restored in one tick (0.0167s). Scripted playerZoom reports0.5 while requested presentation framings differ; no independent freely unlocked ride-camera zoom claim. Ordinary native no-axe InputFrames, no relocation/spawns/skips, no performance inference.",
+  "captures": [
+    {
+      "backend": "webgl2",
+      "tier": "low",
+      "seconds": 0,
+      "zoom": 0.5,
+      "tick": 1470,
+      "phase": "ride",
+      "seated": true,
+      "departAt": 1457,
+      "actualZoom": 0.5,
+      "render": {
+        "backend": "webgl",
+        "quality": "low",
+        "camera": {
+          "zoom": 0.5,
+          "targetZoom": 0.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 10.516730664474226,
+          "regionScale": 1,
+          "focus": [
+            -68.96683744348192,
+            1.250604673938003,
+            34.75453578082102
+          ],
+          "target": [
+            -68.96683744348192,
+            1.250604673938003,
+            34.75453578082102
+          ],
+          "position": [
+            -62.95062174650704,
+            7.432183860847974,
+            40.770751477795905
+          ],
+          "spot": null
+        }
+      },
+      "occupants": {
+        "id": 120,
+        "apcDamage": null,
+        "transitionCouriers": [],
+        "doors": [
+          {
+            "name": "doorL",
+            "yaw": 0,
+            "meshes": 3
+          },
+          {
+            "name": "doorR",
+            "yaw": 0,
+            "meshes": 3
+          }
+        ],
+        "decay": null,
+        "bloodCoverage": 0,
+        "windshieldBloodCoverage": 0,
+        "wheels": [
+          {
+            "spin": 0.19582128663678344,
+            "steer": -0.6144143860987197
+          },
+          {
+            "spin": 0.19582128663678344,
+            "steer": -0.6144143860987197
+          },
+          {
+            "spin": 0.19582128663678344,
+            "steer": 0
+          },
+          {
+            "spin": 0.19582128663678344,
+            "steer": 0
+          }
+        ],
+        "brake": 0.15,
+        "sirens": [
+          [
+            0.1,
+            0.0026241221889696346,
+            0.0026241221889696346
+          ],
+          [
+            0.11370415799629023,
+            0.5881090659506806,
+            4
+          ]
+        ],
+        "placeholder": false,
+        "occupants": [
+          {
+            "actorId": 1,
+            "asset": "char.courier-female",
+            "seated": true,
+            "position": [
+              2.528956080961784,
+              1.5725466629198337,
+              -1.4210854715202004e-14
+            ],
+            "handGapM": [
+              1.4217791915866692e-14,
+              8.881784197001252e-16
+            ]
+          },
+          {
+            "actorId": 121,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.8251042919617246,
+              1.5725466629198335,
+              0.36627908016359356
+            ],
+            "handGapM": [
+              1.4383281002407285e-14,
+              8.498827956506644e-15
+            ]
+          },
+          {
+            "actorId": 122,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.8113351563656224,
+              1.5725466629198337,
+              -0.36627908016359356
+            ],
+            "handGapM": [
+              1.6233571577148212e-14,
+              1.6233571577148212e-14
+            ]
+          },
+          {
+            "actorId": 123,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.246576609531573,
+              1.5725466629198332,
+              0.366279080163622
+            ],
+            "handGapM": [
+              1.6189472992030383e-14,
+              2.0175535360778957e-14
+            ]
+          },
+          {
+            "actorId": 124,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.24657660953158,
+              1.5725466629198337,
+              -0.36627908016359356
+            ],
+            "handGapM": [
+              7.119291619286993e-15,
+              7.160723346098895e-15
+            ]
+          },
+          {
+            "actorId": 125,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              1.7814816618076037,
+              1.5725466629198335,
+              0.3662790801636078
+            ],
+            "handGapM": [
+              1.6189472992030383e-14,
+              1.9984014443252818e-15
+            ]
+          },
+          {
+            "actorId": 126,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              1.7814816618076037,
+              1.5725466629198337,
+              -0.36627908016359356
+            ],
+            "handGapM": [
+              3.3306690738754696e-15,
+              1.649718195029833e-14
+            ]
+          }
+        ]
+      },
+      "file": "test-results/final-a/L2-03/captures/webgl2-low-s0-z0.5.png",
+      "sha256": "9685ad39a999015cf69fe361da2fd5ca2643c5915e98b3abedf02604e8d06339"
+    },
+    {
+      "backend": "webgl2",
+      "tier": "low",
+      "seconds": 0,
+      "zoom": 1.5,
+      "tick": 1470,
+      "phase": "ride",
+      "seated": true,
+      "departAt": 1457,
+      "actualZoom": 1.5,
+      "render": {
+        "backend": "webgl",
+        "quality": "low",
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 31.550191993422676,
+          "regionScale": 1,
+          "focus": [
+            -68.96683744348192,
+            1.250604673938003,
+            34.75453578082102
+          ],
+          "target": [
+            -68.96683744348192,
+            1.250604673938003,
+            34.75453578082102
+          ],
+          "position": [
+            -50.918190352557275,
+            19.795342234667917,
+            52.80318287174567
+          ],
+          "spot": null
+        }
+      },
+      "occupants": {
+        "id": 120,
+        "apcDamage": null,
+        "transitionCouriers": [],
+        "doors": [
+          {
+            "name": "doorL",
+            "yaw": 0,
+            "meshes": 3
+          },
+          {
+            "name": "doorR",
+            "yaw": 0,
+            "meshes": 3
+          }
+        ],
+        "decay": null,
+        "bloodCoverage": 0,
+        "windshieldBloodCoverage": 0,
+        "wheels": [
+          {
+            "spin": 0.19582128663678344,
+            "steer": -0.6144143860987197
+          },
+          {
+            "spin": 0.19582128663678344,
+            "steer": -0.6144143860987197
+          },
+          {
+            "spin": 0.19582128663678344,
+            "steer": 0
+          },
+          {
+            "spin": 0.19582128663678344,
+            "steer": 0
+          }
+        ],
+        "brake": 0.15,
+        "sirens": [
+          [
+            0.1,
+            0.0026241221889696346,
+            0.0026241221889696346
+          ],
+          [
+            0.11370415799629023,
+            0.5881090659506806,
+            4
+          ]
+        ],
+        "placeholder": false,
+        "occupants": [
+          {
+            "actorId": 1,
+            "asset": "char.courier-female",
+            "seated": true,
+            "position": [
+              2.528956080961777,
+              1.572546662919834,
+              -1.4210854715202004e-14
+            ],
+            "handGapM": [
+              1.5902176704146846e-14,
+              1.5889770088874795e-14
+            ]
+          },
+          {
+            "actorId": 121,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.8251042919617246,
+              1.572546662919834,
+              0.36627908016359356
+            ],
+            "handGapM": [
+              7.119291619286993e-15,
+              1.4217791915866692e-14
+            ]
+          },
+          {
+            "actorId": 122,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.8113351563656153,
+              1.5725466629198341,
+              -0.3662790801636078
+            ],
+            "handGapM": [
+              1.432144669219779e-14,
+              2.930399971231995e-14
+            ]
+          },
+          {
+            "actorId": 123,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.246576609531573,
+              1.572546662919834,
+              0.36627908016359356
+            ],
+            "handGapM": [
+              1.589442370446406e-14,
+              7.381104677948019e-15
+            ]
+          },
+          {
+            "actorId": 124,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.246576609531573,
+              1.572546662919834,
+              -0.3662790801636078
+            ],
+            "handGapM": [
+              1.4238583238573986e-14,
+              1.4238583238573986e-14
+            ]
+          },
+          {
+            "actorId": 125,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              1.7814816618076037,
+              1.5725466629198341,
+              0.36627908016359356
+            ],
+            "handGapM": [
+              1.432144669219779e-14,
+              1.422645865968639e-14
+            ]
+          },
+          {
+            "actorId": 126,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              1.7814816618076108,
+              1.572546662919834,
+              -0.36627908016359356
+            ],
+            "handGapM": [
+              1.5902176704146846e-14,
+              1.422645865968639e-14
+            ]
+          }
+        ]
+      },
+      "file": "test-results/final-a/L2-03/captures/webgl2-low-s0-z1.5.png",
+      "sha256": "ed6cc7f9640812cbdd5631a18b329ec709d83ae789df3ccd828c184dafb42ee1"
+    },
+    {
+      "backend": "webgl2",
+      "tier": "low",
+      "seconds": 3,
+      "zoom": 0.5,
+      "tick": 1637,
+      "phase": "ride",
+      "seated": true,
+      "departAt": 1457,
+      "actualZoom": 0.5,
+      "render": {
+        "backend": "webgl",
+        "quality": "low",
+        "camera": {
+          "zoom": 0.5,
+          "targetZoom": 0.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 10.924999999999999,
+          "regionScale": 1,
+          "focus": [
+            -63.78793303907877,
+            1.5524914257356868,
+            30.087158479422442
+          ],
+          "target": [
+            -63.78793303907877,
+            1.5524914257356868,
+            30.087158479422442
+          ],
+          "position": [
+            -57.53816221329557,
+            7.974045307030955,
+            36.33692930520564
+          ],
+          "spot": null
+        }
+      },
+      "occupants": {
+        "id": 120,
+        "apcDamage": null,
+        "transitionCouriers": [],
+        "doors": [
+          {
+            "name": "doorL",
+            "yaw": 0,
+            "meshes": 3
+          },
+          {
+            "name": "doorR",
+            "yaw": 0,
+            "meshes": 3
+          }
+        ],
+        "decay": null,
+        "bloodCoverage": 0,
+        "windshieldBloodCoverage": 0,
+        "wheels": [
+          {
+            "spin": 18.953357245439864,
+            "steer": -0.608301133050142
+          },
+          {
+            "spin": 18.953357245439864,
+            "steer": -0.608301133050142
+          },
+          {
+            "spin": 18.953357245439864,
+            "steer": 0
+          },
+          {
+            "spin": 18.953357245439864,
+            "steer": 0
+          }
+        ],
+        "brake": 0.15,
+        "sirens": [
+          [
+            4,
+            0.10496488755878539,
+            0.10496488755878539
+          ],
+          [
+            0.002842603949907256,
+            0.014702726648767015,
+            0.1
+          ]
+        ],
+        "placeholder": false,
+        "occupants": [
+          {
+            "actorId": 1,
+            "asset": "char.courier-female",
+            "seated": true,
+            "position": [
+              2.528956080961791,
+              1.5725466629198341,
+              3.552713678800501e-15
+            ],
+            "handGapM": [
+              1.0087767680389479e-14,
+              7.119291619286993e-15
+            ]
+          },
+          {
+            "actorId": 121,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.8251042919617317,
+              1.5725466629198341,
+              0.36627908016360067
+            ],
+            "handGapM": [
+              1.0695084443661336e-14,
+              9.155133597044475e-15
+            ]
+          },
+          {
+            "actorId": 122,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.8113351563656295,
+              1.5725466629198337,
+              -0.3662790801636042
+            ],
+            "handGapM": [
+              1.1077778413041292e-14,
+              8.498827956506644e-15
+            ]
+          },
+          {
+            "actorId": 123,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.246576609531587,
+              1.572546662919834,
+              0.3662790801635971
+            ],
+            "handGapM": [
+              1.6233571577148212e-14,
+              1.8160208208854855e-14
+            ]
+          },
+          {
+            "actorId": 124,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.246576609531587,
+              1.572546662919834,
+              -0.3662790801636042
+            ],
+            "handGapM": [
+              6.661338147750939e-16,
+              1.6013403698258692e-14
+            ]
+          },
+          {
+            "actorId": 125,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              1.781481661807618,
+              1.5725466629198341,
+              0.36627908016360067
+            ],
+            "handGapM": [
+              1.4663352293363957e-14,
+              7.160723346098895e-15
+            ]
+          },
+          {
+            "actorId": 126,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              1.781481661807618,
+              1.572546662919834,
+              -0.3662790801635971
+            ],
+            "handGapM": [
+              1.787562503581584e-14,
+              7.136584070361083e-15
+            ]
+          }
+        ]
+      },
+      "file": "test-results/final-a/L2-03/captures/webgl2-low-s3-z0.5.png",
+      "sha256": "d1187f79cbce7372d4f099f06ff262a8e0be1cbe09a19efc409270a12fd2ee2f"
+    },
+    {
+      "backend": "webgl2",
+      "tier": "low",
+      "seconds": 3,
+      "zoom": 1.5,
+      "tick": 1637,
+      "phase": "ride",
+      "seated": true,
+      "departAt": 1457,
+      "actualZoom": 1.5,
+      "render": {
+        "backend": "webgl",
+        "quality": "low",
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 32.775,
+          "regionScale": 1,
+          "focus": [
+            -63.78793303907877,
+            1.5524914257356868,
+            30.087158479422442
+          ],
+          "target": [
+            -63.78793303907877,
+            1.5524914257356868,
+            30.087158479422442
+          ],
+          "position": [
+            -45.038620561729175,
+            20.817153069621494,
+            48.83647095677205
+          ],
+          "spot": null
+        }
+      },
+      "occupants": {
+        "id": 120,
+        "apcDamage": null,
+        "transitionCouriers": [],
+        "doors": [
+          {
+            "name": "doorL",
+            "yaw": 0,
+            "meshes": 3
+          },
+          {
+            "name": "doorR",
+            "yaw": 0,
+            "meshes": 3
+          }
+        ],
+        "decay": null,
+        "bloodCoverage": 0,
+        "windshieldBloodCoverage": 0,
+        "wheels": [
+          {
+            "spin": 18.953357245439864,
+            "steer": -0.608301133050142
+          },
+          {
+            "spin": 18.953357245439864,
+            "steer": -0.608301133050142
+          },
+          {
+            "spin": 18.953357245439864,
+            "steer": 0
+          },
+          {
+            "spin": 18.953357245439864,
+            "steer": 0
+          }
+        ],
+        "brake": 0.15,
+        "sirens": [
+          [
+            4,
+            0.10496488755878539,
+            0.10496488755878539
+          ],
+          [
+            0.002842603949907256,
+            0.014702726648767015,
+            0.1
+          ]
+        ],
+        "placeholder": false,
+        "occupants": [
+          {
+            "actorId": 1,
+            "asset": "char.courier-female",
+            "seated": true,
+            "position": [
+              2.528956080961777,
+              1.5725466629198337,
+              7.105427357601002e-15
+            ],
+            "handGapM": [
+              8.140289677804162e-15,
+              1.020439314654103e-14
+            ]
+          },
+          {
+            "actorId": 121,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.8251042919617175,
+              1.5725466629198337,
+              0.3662790801636042
+            ],
+            "handGapM": [
+              1.0048591735576161e-14,
+              1.5694642960426368e-14
+            ]
+          },
+          {
+            "actorId": 122,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.8113351563656153,
+              1.5725466629198337,
+              -0.36627908016359356
+            ],
+            "handGapM": [
+              2.0371306780686127e-14,
+              9.325873406851315e-15
+            ]
+          },
+          {
+            "actorId": 123,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.246576609531573,
+              1.5725466629198337,
+              0.3662790801636078
+            ],
+            "handGapM": [
+              1.0087767680389479e-14,
+              1.9984014443252818e-15
+            ]
+          },
+          {
+            "actorId": 124,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.246576609531573,
+              1.5725466629198335,
+              -0.36627908016359
+            ],
+            "handGapM": [
+              7.971988878370802e-15,
+              1.1234667099445444e-14
+            ]
+          },
+          {
+            "actorId": 125,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              1.7814816618076037,
+              1.5725466629198337,
+              0.3662790801636078
+            ],
+            "handGapM": [
+              1.481555084624755e-14,
+              1.4654943925052066e-14
+            ]
+          },
+          {
+            "actorId": 126,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              1.7814816618076037,
+              1.5725466629198337,
+              -0.36627908016359
+            ],
+            "handGapM": [
+              2.0448608352983646e-14,
+              1.467511591522657e-14
+            ]
+          }
+        ]
+      },
+      "file": "test-results/final-a/L2-03/captures/webgl2-low-s3-z1.5.png",
+      "sha256": "5e212cc7863cb065c2d1f734817258ca12256f61e55242887be49d267d0b06a0"
+    },
+    {
+      "backend": "webgl2",
+      "tier": "low",
+      "seconds": 12,
+      "zoom": 0.5,
+      "tick": 2177,
+      "phase": "ride",
+      "seated": true,
+      "departAt": 1457,
+      "actualZoom": 0.5,
+      "render": {
+        "backend": "webgl",
+        "quality": "low",
+        "camera": {
+          "zoom": 0.5,
+          "targetZoom": 0.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 10.924999999999999,
+          "regionScale": 1,
+          "focus": [
+            -28.47295047234528,
+            1.552426347406035,
+            20.891367574097483
+          ],
+          "target": [
+            -28.47295047234528,
+            1.552426347406035,
+            20.891367574097483
+          ],
+          "position": [
+            -22.22317964656208,
+            7.973980228701303,
+            27.141138399880685
+          ],
+          "spot": null
+        }
+      },
+      "occupants": {
+        "id": 120,
+        "apcDamage": null,
+        "transitionCouriers": [],
+        "doors": [
+          {
+            "name": "doorL",
+            "yaw": 0,
+            "meshes": 3
+          },
+          {
+            "name": "doorR",
+            "yaw": 0,
+            "meshes": 3
+          }
+        ],
+        "decay": null,
+        "bloodCoverage": 0,
+        "windshieldBloodCoverage": 0,
+        "wheels": [
+          {
+            "spin": 140.83946040985026,
+            "steer": 0.4543649275547959
+          },
+          {
+            "spin": 140.83946040985026,
+            "steer": 0.4543649275547959
+          },
+          {
+            "spin": 140.83946040985026,
+            "steer": 0
+          },
+          {
+            "spin": 140.83946040985026,
+            "steer": 0
+          }
+        ],
+        "brake": 0.15,
+        "sirens": [
+          [
+            4,
+            0.10496488755878539,
+            0.10496488755878539
+          ],
+          [
+            0.002842603949907256,
+            0.014702726648767015,
+            0.1
+          ]
+        ],
+        "placeholder": false,
+        "occupants": [
+          {
+            "actorId": 1,
+            "asset": "char.courier-female",
+            "seated": true,
+            "position": [
+              2.52895608096178,
+              1.5725466629198335,
+              -3.5527136788005e-15
+            ],
+            "handGapM": [
+              1.020439314654103e-14,
+              5.197930934883577e-15
+            ]
+          },
+          {
+            "actorId": 121,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.8251042919617166,
+              1.5725466629198335,
+              0.3662790801636006
+            ],
+            "handGapM": [
+              7.66938336801217e-15,
+              5.197930934883577e-15
+            ]
+          },
+          {
+            "actorId": 122,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.811335156365615,
+              1.5725466629198335,
+              -0.3662790801636006
+            ],
+            "handGapM": [
+              5.068262347813025e-15,
+              1.5087600039861815e-14
+            ]
+          },
+          {
+            "actorId": 123,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.2465766095315725,
+              1.5725466629198335,
+              0.3662790801636006
+            ],
+            "handGapM": [
+              3.8778423131653425e-15,
+              8.31111502828681e-15
+            ]
+          },
+          {
+            "actorId": 124,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.2465766095315725,
+              1.5725466629198335,
+              -0.3662790801636006
+            ],
+            "handGapM": [
+              3.66205343881779e-15,
+              5.102196573270515e-15
+            ]
+          },
+          {
+            "actorId": 125,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              1.7814816618076068,
+              1.5725466629198335,
+              0.36627908016359706
+            ],
+            "handGapM": [
+              3.5596458096434965e-15,
+              7.993605777301127e-15
+            ]
+          },
+          {
+            "actorId": 126,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              1.7814816618076033,
+              1.5725466629198335,
+              -0.3662790801636006
+            ],
+            "handGapM": [
+              7.108895957933346e-15,
+              7.94721185223203e-15
+            ]
+          }
+        ]
+      },
+      "file": "test-results/final-a/L2-03/captures/webgl2-low-s12-z0.5.png",
+      "sha256": "443a998b27c57144620adc6acc7a70a13969c51bde9f50c5223a20950575b1bd"
+    },
+    {
+      "backend": "webgl2",
+      "tier": "low",
+      "seconds": 12,
+      "zoom": 1.5,
+      "tick": 2177,
+      "phase": "ride",
+      "seated": true,
+      "departAt": 1457,
+      "actualZoom": 1.5,
+      "render": {
+        "backend": "webgl",
+        "quality": "low",
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 32.775,
+          "regionScale": 1,
+          "focus": [
+            -28.47295047234528,
+            1.552426347406035,
+            20.891367574097483
+          ],
+          "target": [
+            -28.47295047234528,
+            1.552426347406035,
+            20.891367574097483
+          ],
+          "position": [
+            -9.723637994995677,
+            20.81708799129184,
+            39.64068005144709
+          ],
+          "spot": null
+        }
+      },
+      "occupants": {
+        "id": 120,
+        "apcDamage": null,
+        "transitionCouriers": [],
+        "doors": [
+          {
+            "name": "doorL",
+            "yaw": 0,
+            "meshes": 3
+          },
+          {
+            "name": "doorR",
+            "yaw": 0,
+            "meshes": 3
+          }
+        ],
+        "decay": null,
+        "bloodCoverage": 0,
+        "windshieldBloodCoverage": 0,
+        "wheels": [
+          {
+            "spin": 140.83946040985026,
+            "steer": 0.4543649275547959
+          },
+          {
+            "spin": 140.83946040985026,
+            "steer": 0.4543649275547959
+          },
+          {
+            "spin": 140.83946040985026,
+            "steer": 0
+          },
+          {
+            "spin": 140.83946040985026,
+            "steer": 0
+          }
+        ],
+        "brake": 0.15,
+        "sirens": [
+          [
+            4,
+            0.10496488755878539,
+            0.10496488755878539
+          ],
+          [
+            0.002842603949907256,
+            0.014702726648767015,
+            0.1
+          ]
+        ],
+        "placeholder": false,
+        "occupants": [
+          {
+            "actorId": 1,
+            "asset": "char.courier-female",
+            "seated": true,
+            "position": [
+              2.5289560809617764,
+              1.5725466629198335,
+              3.5527136788005e-15
+            ],
+            "handGapM": [
+              7.108895957933346e-15,
+              7.94721185223203e-15
+            ]
+          },
+          {
+            "actorId": 121,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.8251042919617166,
+              1.5725466629198335,
+              0.3662790801636006
+            ],
+            "handGapM": [
+              3.66205343881779e-15,
+              4.189529226675416e-15
+            ]
+          },
+          {
+            "actorId": 122,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.8113351563656184,
+              1.5725466629198337,
+              -0.36627908016359706
+            ],
+            "handGapM": [
+              8.248590975149166e-15,
+              7.381104677948019e-15
+            ]
+          },
+          {
+            "actorId": 123,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.246576609531576,
+              1.5725466629198337,
+              0.36627908016360416
+            ],
+            "handGapM": [
+              1.5543122344752192e-15,
+              5.4930801582266845e-15
+            ]
+          },
+          {
+            "actorId": 124,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.2465766095315725,
+              1.5725466629198335,
+              -0.36627908016359706
+            ],
+            "handGapM": [
+              5.259223848564703e-15,
+              3.8778423131653425e-15
+            ]
+          },
+          {
+            "actorId": 125,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              1.7814816618076068,
+              1.5725466629198332,
+              0.3662790801636006
+            ],
+            "handGapM": [
+              1.5543122344752192e-15,
+              8.094736496015192e-15
+            ]
+          },
+          {
+            "actorId": 126,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              1.7814816618076033,
+              1.5725466629198332,
+              -0.3662790801636006
+            ],
+            "handGapM": [
+              4.189529226675416e-15,
+              8.094736496015192e-15
+            ]
+          }
+        ]
+      },
+      "file": "test-results/final-a/L2-03/captures/webgl2-low-s12-z1.5.png",
+      "sha256": "bdb08bee6044b33ce9f27dce367ffbe6696f4856a6d27ec36c62bca4b6bf96cb"
+    },
+    {
+      "backend": "webgl2",
+      "tier": "low",
+      "seconds": 22,
+      "zoom": 0.5,
+      "tick": 2777,
+      "phase": "ride",
+      "seated": true,
+      "departAt": 1457,
+      "actualZoom": 0.5,
+      "render": {
+        "backend": "webgl",
+        "quality": "low",
+        "camera": {
+          "zoom": 0.5,
+          "targetZoom": 0.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 10.924999999999999,
+          "regionScale": 1,
+          "focus": [
+            -37.70267007533986,
+            1.5524263432458474,
+            -32.375887447128775
+          ],
+          "target": [
+            -37.70267007533986,
+            1.5524263432458474,
+            -32.375887447128775
+          ],
+          "position": [
+            -31.45289924955666,
+            7.9739802245411155,
+            -26.126116621345574
+          ],
+          "spot": null
+        }
+      },
+      "occupants": {
+        "id": 120,
+        "apcDamage": null,
+        "transitionCouriers": [],
+        "doors": [
+          {
+            "name": "doorL",
+            "yaw": 0,
+            "meshes": 3
+          },
+          {
+            "name": "doorR",
+            "yaw": 0,
+            "meshes": 3
+          }
+        ],
+        "decay": null,
+        "bloodCoverage": 0,
+        "windshieldBloodCoverage": 0,
+        "wheels": [
+          {
+            "spin": 311.4962480900188,
+            "steer": 0.45436389030195135
+          },
+          {
+            "spin": 311.4962480900188,
+            "steer": 0.45436389030195135
+          },
+          {
+            "spin": 311.4962480900188,
+            "steer": 0
+          },
+          {
+            "spin": 311.4962480900188,
+            "steer": 0
+          }
+        ],
+        "brake": 0.15,
+        "sirens": [
+          [
+            4,
+            0.10496488755878539,
+            0.10496488755878539
+          ],
+          [
+            0.002842603949907256,
+            0.014702726648767015,
+            0.1
+          ]
+        ],
+        "placeholder": false,
+        "occupants": [
+          {
+            "actorId": 1,
+            "asset": "char.courier-female",
+            "seated": true,
+            "position": [
+              2.528956080961777,
+              1.5725466629198332,
+              -7.105427357601002e-15
+            ],
+            "handGapM": [
+              7.273443782444743e-15,
+              7.588599744428075e-15
+            ]
+          },
+          {
+            "actorId": 121,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.8251042919617175,
+              1.5725466629198332,
+              0.36627908016360067
+            ],
+            "handGapM": [
+              7.119291619286993e-15,
+              7.32410687763558e-15
+            ]
+          },
+          {
+            "actorId": 122,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.8113351563656153,
+              1.5725466629198337,
+              -0.3662790801636078
+            ],
+            "handGapM": [
+              1.0058400026574543e-14,
+              7.119291619286993e-15
+            ]
+          },
+          {
+            "actorId": 123,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.246576609531573,
+              1.5725466629198332,
+              0.36627908016359356
+            ],
+            "handGapM": [
+              7.119291619286993e-15,
+              1.9984014443252818e-15
+            ]
+          },
+          {
+            "actorId": 124,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.246576609531566,
+              1.5725466629198337,
+              -0.3662790801636042
+            ],
+            "handGapM": [
+              1.0070646956748923e-14,
+              7.160723346098895e-15
+            ]
+          },
+          {
+            "actorId": 125,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              1.7814816618076037,
+              1.5725466629198332,
+              0.36627908016360067
+            ],
+            "handGapM": [
+              1.020439314654103e-14,
+              7.755684626330685e-15
+            ]
+          },
+          {
+            "actorId": 126,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              1.7814816618076037,
+              1.5725466629198337,
+              -0.3662790801636078
+            ],
+            "handGapM": [
+              1.05861963116107e-14,
+              7.119291619286993e-15
+            ]
+          }
+        ]
+      },
+      "file": "test-results/final-a/L2-03/captures/webgl2-low-s22-z0.5.png",
+      "sha256": "953dfa7a96e8fc2561df1c64700851c531d346d187d20f5961a82f61a009aa6b"
+    },
+    {
+      "backend": "webgl2",
+      "tier": "low",
+      "seconds": 22,
+      "zoom": 1.5,
+      "tick": 2777,
+      "phase": "ride",
+      "seated": true,
+      "departAt": 1457,
+      "actualZoom": 1.5,
+      "render": {
+        "backend": "webgl",
+        "quality": "low",
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 32.775,
+          "regionScale": 1,
+          "focus": [
+            -37.70267007533986,
+            1.5524263432458474,
+            -32.375887447128775
+          ],
+          "target": [
+            -37.70267007533986,
+            1.5524263432458474,
+            -32.375887447128775
+          ],
+          "position": [
+            -18.95335759799026,
+            20.817087987131654,
+            -13.62657496977917
+          ],
+          "spot": null
+        }
+      },
+      "occupants": {
+        "id": 120,
+        "apcDamage": null,
+        "transitionCouriers": [],
+        "doors": [
+          {
+            "name": "doorL",
+            "yaw": 0,
+            "meshes": 3
+          },
+          {
+            "name": "doorR",
+            "yaw": 0,
+            "meshes": 3
+          }
+        ],
+        "decay": null,
+        "bloodCoverage": 0,
+        "windshieldBloodCoverage": 0,
+        "wheels": [
+          {
+            "spin": 311.4962480900188,
+            "steer": 0.45436389030195135
+          },
+          {
+            "spin": 311.4962480900188,
+            "steer": 0.45436389030195135
+          },
+          {
+            "spin": 311.4962480900188,
+            "steer": 0
+          },
+          {
+            "spin": 311.4962480900188,
+            "steer": 0
+          }
+        ],
+        "brake": 0.15,
+        "sirens": [
+          [
+            4,
+            0.10496488755878539,
+            0.10496488755878539
+          ],
+          [
+            0.002842603949907256,
+            0.014702726648767015,
+            0.1
+          ]
+        ],
+        "placeholder": false,
+        "occupants": [
+          {
+            "actorId": 1,
+            "asset": "char.courier-female",
+            "seated": true,
+            "position": [
+              2.528956080961777,
+              1.5725466629198337,
+              -7.105427357601002e-15
+            ],
+            "handGapM": [
+              1.0070646956748923e-14,
+              4.440892098500626e-16
+            ]
+          },
+          {
+            "actorId": 121,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.8251042919617175,
+              1.5725466629198337,
+              0.36627908016359356
+            ],
+            "handGapM": [
+              7.381104677948019e-15,
+              1.0206808673417459e-14
+            ]
+          },
+          {
+            "actorId": 122,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.8113351563656153,
+              1.5725466629198332,
+              -0.3662790801636078
+            ],
+            "handGapM": [
+              1.591302455776226e-14,
+              1.591302455776226e-14
+            ]
+          },
+          {
+            "actorId": 123,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.246576609531573,
+              1.5725466629198337,
+              0.36627908016359356
+            ],
+            "handGapM": [
+              1.0058400026574543e-14,
+              4.440892098500626e-16
+            ]
+          },
+          {
+            "actorId": 124,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.246576609531573,
+              1.5725466629198337,
+              -0.3662790801636042
+            ],
+            "handGapM": [
+              7.444291678311382e-15,
+              7.136584070361083e-15
+            ]
+          },
+          {
+            "actorId": 125,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              1.7814816618075966,
+              1.5725466629198337,
+              0.3662790801635971
+            ],
+            "handGapM": [
+              7.847321480213184e-15,
+              3.3306690738754696e-15
+            ]
+          },
+          {
+            "actorId": 126,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              1.7814816618076108,
+              1.5725466629198337,
+              -0.3662790801636078
+            ],
+            "handGapM": [
+              8.702335715267317e-15,
+              3.614624287906422e-15
+            ]
+          }
+        ]
+      },
+      "file": "test-results/final-a/L2-03/captures/webgl2-low-s22-z1.5.png",
+      "sha256": "5dc85bb7fcac7880f611b6c9e42192a677abda41bc9f82ebb1b9d5fa8d08d49f"
+    },
+    {
+      "backend": "webgl2",
+      "tier": "low",
+      "seconds": 26,
+      "zoom": 0.5,
+      "tick": 3017,
+      "phase": "arrived",
+      "seated": false,
+      "departAt": 1457,
+      "actualZoom": 0.5,
+      "render": {
+        "backend": "webgl",
+        "quality": "low",
+        "camera": {
+          "zoom": 0.5,
+          "targetZoom": 0.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -45.969958302652344,
+            0.000438013254517004,
+            -36.76938535094309
+          ],
+          "target": [
+            -45.969958302652344,
+            0.000438013254517004,
+            -36.76938535094309
+          ],
+          "position": [
+            -29.666208322348343,
+            16.752317703590002,
+            -20.465635370639085
+          ],
+          "spot": null
+        }
+      },
+      "occupants": {
+        "id": 120,
+        "apcDamage": null,
+        "transitionCouriers": [],
+        "doors": [
+          {
+            "name": "doorL",
+            "yaw": 0,
+            "meshes": 3
+          },
+          {
+            "name": "doorR",
+            "yaw": 0,
+            "meshes": 3
+          }
+        ],
+        "decay": null,
+        "bloodCoverage": 0,
+        "windshieldBloodCoverage": 0,
+        "wheels": [
+          {
+            "spin": 333.46501262728196,
+            "steer": 0
+          },
+          {
+            "spin": 333.46501262728196,
+            "steer": 0
+          },
+          {
+            "spin": 333.46501262728196,
+            "steer": 0
+          },
+          {
+            "spin": 333.46501262728196,
+            "steer": 0
+          }
+        ],
+        "brake": 4,
+        "sirens": [
+          [
+            4,
+            0.10496488755878539,
+            0.10496488755878539
+          ],
+          [
+            0.002842603949907256,
+            0.014702726648767015,
+            0.1
+          ]
+        ],
+        "placeholder": false,
+        "occupants": []
+      },
+      "file": "test-results/final-a/L2-03/captures/webgl2-low-s26-z0.5.png",
+      "sha256": "1698f387a3cc06ed6e40dc4f48ecf1898791f175629ed9048afc843ad21bdbb8"
+    },
+    {
+      "backend": "webgl2",
+      "tier": "low",
+      "seconds": 26,
+      "zoom": 1.5,
+      "tick": 3017,
+      "phase": "arrived",
+      "seated": false,
+      "departAt": 1457,
+      "actualZoom": 0.5,
+      "render": {
+        "backend": "webgl",
+        "quality": "low",
+        "camera": {
+          "zoom": 0.5,
+          "targetZoom": 0.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -45.969958302652344,
+            0.000438013254517004,
+            -36.76938535094309
+          ],
+          "target": [
+            -45.969958302652344,
+            0.000438013254517004,
+            -36.76938535094309
+          ],
+          "position": [
+            -29.666208322348343,
+            16.752317703590002,
+            -20.465635370639085
+          ],
+          "spot": null
+        }
+      },
+      "occupants": {
+        "id": 120,
+        "apcDamage": null,
+        "transitionCouriers": [],
+        "doors": [
+          {
+            "name": "doorL",
+            "yaw": 0,
+            "meshes": 3
+          },
+          {
+            "name": "doorR",
+            "yaw": 0,
+            "meshes": 3
+          }
+        ],
+        "decay": null,
+        "bloodCoverage": 0,
+        "windshieldBloodCoverage": 0,
+        "wheels": [
+          {
+            "spin": 333.46501262728196,
+            "steer": 0
+          },
+          {
+            "spin": 333.46501262728196,
+            "steer": 0
+          },
+          {
+            "spin": 333.46501262728196,
+            "steer": 0
+          },
+          {
+            "spin": 333.46501262728196,
+            "steer": 0
+          }
+        ],
+        "brake": 4,
+        "sirens": [
+          [
+            4,
+            0.10496488755878539,
+            0.10496488755878539
+          ],
+          [
+            0.002842603949907256,
+            0.014702726648767015,
+            0.1
+          ]
+        ],
+        "placeholder": false,
+        "occupants": []
+      },
+      "file": "test-results/final-a/L2-03/captures/webgl2-low-s26-z1.5.png",
+      "sha256": "49606c082386b93b0d3b1acd912a29179c54f08dd6dcf3cf03c4150ff372b570"
+    },
+    {
+      "backend": "webgl2",
+      "tier": "high",
+      "seconds": 0,
+      "zoom": 0.5,
+      "tick": 1470,
+      "phase": "ride",
+      "seated": true,
+      "departAt": 1457,
+      "actualZoom": 0.5,
+      "render": {
+        "backend": "webgl",
+        "quality": "high",
+        "camera": {
+          "zoom": 0.5,
+          "targetZoom": 0.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 10.516730664474226,
+          "regionScale": 1,
+          "focus": [
+            -68.96683744348192,
+            1.250604673938003,
+            34.75453578082102
+          ],
+          "target": [
+            -68.96683744348192,
+            1.250604673938003,
+            34.75453578082102
+          ],
+          "position": [
+            -62.95062174650704,
+            7.432183860847974,
+            40.770751477795905
+          ],
+          "spot": null
+        }
+      },
+      "occupants": {
+        "id": 120,
+        "apcDamage": null,
+        "transitionCouriers": [],
+        "doors": [
+          {
+            "name": "doorL",
+            "yaw": 0,
+            "meshes": 5
+          },
+          {
+            "name": "doorR",
+            "yaw": 0,
+            "meshes": 5
+          }
+        ],
+        "decay": null,
+        "bloodCoverage": 0,
+        "windshieldBloodCoverage": 0,
+        "wheels": [
+          {
+            "spin": 0.19582128663678344,
+            "steer": -0.6144143860987197
+          },
+          {
+            "spin": 0.19582128663678344,
+            "steer": -0.6144143860987197
+          },
+          {
+            "spin": 0.19582128663678344,
+            "steer": 0
+          },
+          {
+            "spin": 0.19582128663678344,
+            "steer": 0
+          }
+        ],
+        "brake": 0.15,
+        "sirens": [
+          [
+            0.1,
+            0.0026241221889696346,
+            0.0026241221889696346
+          ],
+          [
+            0.11370415799629023,
+            0.5881090659506806,
+            4
+          ]
+        ],
+        "placeholder": false,
+        "occupants": [
+          {
+            "actorId": 1,
+            "asset": "char.courier-female",
+            "seated": true,
+            "position": [
+              2.528956253929813,
+              1.5725466084083024,
+              0
+            ],
+            "handGapM": [
+              1.4254156828833717e-14,
+              7.108895957933346e-15
+            ]
+          },
+          {
+            "actorId": 121,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.825104464929754,
+              1.572546608408302,
+              0.366279080163622
+            ],
+            "handGapM": [
+              1.4823868115664955e-14,
+              2.9337630296305466e-14
+            ]
+          },
+          {
+            "actorId": 122,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.8113355273468414,
+              1.5725466084083024,
+              -0.36627908016359356
+            ],
+            "handGapM": [
+              4.440892098500626e-16,
+              1.422645865968639e-14
+            ]
+          },
+          {
+            "actorId": 123,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.2465767824996092,
+              1.5725466084083022,
+              0.3662790801636078
+            ],
+            "handGapM": [
+              1.5987211554602254e-14,
+              1.6233571577148212e-14
+            ]
+          },
+          {
+            "actorId": 124,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.2465767824996092,
+              1.5725466084083022,
+              -0.36627908016359356
+            ],
+            "handGapM": [
+              1.6013403698258692e-14,
+              1.435067942883752e-14
+            ]
+          },
+          {
+            "actorId": 125,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              1.7814816367624573,
+              1.572546608408302,
+              0.3662790801636078
+            ],
+            "handGapM": [
+              1.9984014443252818e-15,
+              2.019629648737212e-14
+            ]
+          },
+          {
+            "actorId": 126,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              1.7814816367624573,
+              1.5725466084083022,
+              -0.3662790801636078
+            ],
+            "handGapM": [
+              1.9984014443252818e-15,
+              1.6189472992030383e-14
+            ]
+          }
+        ]
+      },
+      "file": "test-results/final-a/L2-03/captures/webgl2-high-s0-z0.5.png",
+      "sha256": "d6dd2d071c76cd745b7b4e3e93966dc86130f63882e09150e55f0966c8320957"
+    },
+    {
+      "backend": "webgl2",
+      "tier": "high",
+      "seconds": 0,
+      "zoom": 1.5,
+      "tick": 1470,
+      "phase": "ride",
+      "seated": true,
+      "departAt": 1457,
+      "actualZoom": 1.5,
+      "render": {
+        "backend": "webgl",
+        "quality": "high",
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 31.550191993422676,
+          "regionScale": 1,
+          "focus": [
+            -68.96683744348192,
+            1.250604673938003,
+            34.75453578082102
+          ],
+          "target": [
+            -68.96683744348192,
+            1.250604673938003,
+            34.75453578082102
+          ],
+          "position": [
+            -50.918190352557275,
+            19.795342234667917,
+            52.80318287174567
+          ],
+          "spot": null
+        }
+      },
+      "occupants": {
+        "id": 120,
+        "apcDamage": null,
+        "transitionCouriers": [],
+        "doors": [
+          {
+            "name": "doorL",
+            "yaw": 0,
+            "meshes": 5
+          },
+          {
+            "name": "doorR",
+            "yaw": 0,
+            "meshes": 5
+          }
+        ],
+        "decay": null,
+        "bloodCoverage": 0,
+        "windshieldBloodCoverage": 0,
+        "wheels": [
+          {
+            "spin": 0.19582128663678344,
+            "steer": -0.6144143860987197
+          },
+          {
+            "spin": 0.19582128663678344,
+            "steer": -0.6144143860987197
+          },
+          {
+            "spin": 0.19582128663678344,
+            "steer": 0
+          },
+          {
+            "spin": 0.19582128663678344,
+            "steer": 0
+          }
+        ],
+        "brake": 0.15,
+        "sirens": [
+          [
+            0.1,
+            0.0026241221889696346,
+            0.0026241221889696346
+          ],
+          [
+            0.11370415799629023,
+            0.5881090659506806,
+            4
+          ]
+        ],
+        "placeholder": false,
+        "occupants": [
+          {
+            "actorId": 1,
+            "asset": "char.courier-female",
+            "seated": true,
+            "position": [
+              2.528956253929806,
+              1.5725466084083026,
+              1.4210854715202004e-14
+            ],
+            "handGapM": [
+              6.661338147750939e-16,
+              7.847321480213184e-15
+            ]
+          },
+          {
+            "actorId": 121,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.825104464929754,
+              1.5725466084083026,
+              0.3662790801636078
+            ],
+            "handGapM": [
+              2.845291731937278e-14,
+              1.5943977756741603e-14
+            ]
+          },
+          {
+            "actorId": 122,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.8113355273468343,
+              1.5725466084083028,
+              -0.3662790801636078
+            ],
+            "handGapM": [
+              1.591302455776226e-14,
+              1.591302455776226e-14
+            ]
+          },
+          {
+            "actorId": 123,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.2465767824996092,
+              1.5725466084083028,
+              0.3662790801636078
+            ],
+            "handGapM": [
+              1.589442370446406e-14,
+              1.4217791915866692e-14
+            ]
+          },
+          {
+            "actorId": 124,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.2465767824996092,
+              1.5725466084083028,
+              -0.3662790801636078
+            ],
+            "handGapM": [
+              7.32410687763558e-15,
+              7.136584070361083e-15
+            ]
+          },
+          {
+            "actorId": 125,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              1.7814816367624573,
+              1.5725466084083024,
+              0.36627908016359356
+            ],
+            "handGapM": [
+              7.160723346098895e-15,
+              1.422645865968639e-14
+            ]
+          },
+          {
+            "actorId": 126,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              1.7814816367624573,
+              1.5725466084083026,
+              -0.36627908016359356
+            ],
+            "handGapM": [
+              1.435067942883752e-14,
+              1.591302455776226e-14
+            ]
+          }
+        ]
+      },
+      "file": "test-results/final-a/L2-03/captures/webgl2-high-s0-z1.5.png",
+      "sha256": "e41ddbe92d818f416dc20331d1045012c115554672dd2320e298990ceb7f124e"
+    },
+    {
+      "backend": "webgl2",
+      "tier": "high",
+      "seconds": 3,
+      "zoom": 0.5,
+      "tick": 1637,
+      "phase": "ride",
+      "seated": true,
+      "departAt": 1457,
+      "actualZoom": 0.5,
+      "render": {
+        "backend": "webgl",
+        "quality": "high",
+        "camera": {
+          "zoom": 0.5,
+          "targetZoom": 0.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 10.924999999999999,
+          "regionScale": 1,
+          "focus": [
+            -63.787932893349065,
+            1.5524913712262653,
+            30.08715838652566
+          ],
+          "target": [
+            -63.787932893349065,
+            1.5524913712262653,
+            30.08715838652566
+          ],
+          "position": [
+            -57.538162067565864,
+            7.974045252521534,
+            36.33692921230886
+          ],
+          "spot": null
+        }
+      },
+      "occupants": {
+        "id": 120,
+        "apcDamage": null,
+        "transitionCouriers": [],
+        "doors": [
+          {
+            "name": "doorL",
+            "yaw": 0,
+            "meshes": 5
+          },
+          {
+            "name": "doorR",
+            "yaw": 0,
+            "meshes": 5
+          }
+        ],
+        "decay": null,
+        "bloodCoverage": 0,
+        "windshieldBloodCoverage": 0,
+        "wheels": [
+          {
+            "spin": 18.953357245439864,
+            "steer": -0.608301133050142
+          },
+          {
+            "spin": 18.953357245439864,
+            "steer": -0.608301133050142
+          },
+          {
+            "spin": 18.953357245439864,
+            "steer": 0
+          },
+          {
+            "spin": 18.953357245439864,
+            "steer": 0
+          }
+        ],
+        "brake": 0.15,
+        "sirens": [
+          [
+            4,
+            0.10496488755878539,
+            0.10496488755878539
+          ],
+          [
+            0.002842603949907256,
+            0.014702726648767015,
+            0.1
+          ]
+        ],
+        "placeholder": false,
+        "occupants": [
+          {
+            "actorId": 1,
+            "asset": "char.courier-female",
+            "seated": true,
+            "position": [
+              2.528956253929806,
+              1.5725466084083026,
+              -1.0658141036401503e-14
+            ],
+            "handGapM": [
+              1.7763568394002505e-15,
+              1.5306589719811546e-14
+            ]
+          },
+          {
+            "actorId": 121,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.8251044649297468,
+              1.5725466084083026,
+              0.36627908016359356
+            ],
+            "handGapM": [
+              8.43769498715119e-15,
+              8.530675149520015e-15
+            ]
+          },
+          {
+            "actorId": 122,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.8113355273468272,
+              1.5725466084083024,
+              -0.3662790801636078
+            ],
+            "handGapM": [
+              9.441466109136565e-15,
+              1.6330471204814584e-14
+            ]
+          },
+          {
+            "actorId": 123,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.2465767824996163,
+              1.5725466084083026,
+              0.36627908016359
+            ],
+            "handGapM": [
+              1.4238583238573986e-14,
+              2.409567650518791e-14
+            ]
+          },
+          {
+            "actorId": 124,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.246576782499602,
+              1.5725466084083026,
+              -0.36627908016360067
+            ],
+            "handGapM": [
+              1.706135029904003e-14,
+              1.9459014222361976e-14
+            ]
+          },
+          {
+            "actorId": 125,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              1.7814816367624502,
+              1.5725466084083028,
+              0.36627908016359356
+            ],
+            "handGapM": [
+              7.136584070361083e-15,
+              7.160723346098895e-15
+            ]
+          },
+          {
+            "actorId": 126,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              1.7814816367624502,
+              1.5725466084083024,
+              -0.36627908016360067
+            ],
+            "handGapM": [
+              7.944109290391274e-15,
+              1.4238583238573986e-14
+            ]
+          }
+        ]
+      },
+      "file": "test-results/final-a/L2-03/captures/webgl2-high-s3-z0.5.png",
+      "sha256": "a23b401c43f2732a27720d598a6110cea7e4972109b38b305c91cda16881b243"
+    },
+    {
+      "backend": "webgl2",
+      "tier": "high",
+      "seconds": 3,
+      "zoom": 1.5,
+      "tick": 1637,
+      "phase": "ride",
+      "seated": true,
+      "departAt": 1457,
+      "actualZoom": 1.5,
+      "render": {
+        "backend": "webgl",
+        "quality": "high",
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 32.775,
+          "regionScale": 1,
+          "focus": [
+            -63.787932893349065,
+            1.5524913712262653,
+            30.08715838652566
+          ],
+          "target": [
+            -63.787932893349065,
+            1.5524913712262653,
+            30.08715838652566
+          ],
+          "position": [
+            -45.03862041599946,
+            20.81715301511207,
+            48.83647086387526
+          ],
+          "spot": null
+        }
+      },
+      "occupants": {
+        "id": 120,
+        "apcDamage": null,
+        "transitionCouriers": [],
+        "doors": [
+          {
+            "name": "doorL",
+            "yaw": 0,
+            "meshes": 5
+          },
+          {
+            "name": "doorR",
+            "yaw": 0,
+            "meshes": 5
+          }
+        ],
+        "decay": null,
+        "bloodCoverage": 0,
+        "windshieldBloodCoverage": 0,
+        "wheels": [
+          {
+            "spin": 18.953357245439864,
+            "steer": -0.608301133050142
+          },
+          {
+            "spin": 18.953357245439864,
+            "steer": -0.608301133050142
+          },
+          {
+            "spin": 18.953357245439864,
+            "steer": 0
+          },
+          {
+            "spin": 18.953357245439864,
+            "steer": 0
+          }
+        ],
+        "brake": 0.15,
+        "sirens": [
+          [
+            4,
+            0.10496488755878539,
+            0.10496488755878539
+          ],
+          [
+            0.002842603949907256,
+            0.014702726648767015,
+            0.1
+          ]
+        ],
+        "placeholder": false,
+        "occupants": [
+          {
+            "actorId": 1,
+            "asset": "char.courier-female",
+            "seated": true,
+            "position": [
+              2.5289562539298203,
+              1.5725466084083026,
+              3.552713678800501e-15
+            ],
+            "handGapM": [
+              6.661338147750939e-16,
+              8.094736496015192e-15
+            ]
+          },
+          {
+            "actorId": 121,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.8251044649297468,
+              1.5725466084083024,
+              0.3662790801636113
+            ],
+            "handGapM": [
+              1.681099102657031e-14,
+              9.739636741317752e-15
+            ]
+          },
+          {
+            "actorId": 122,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.8113355273468272,
+              1.5725466084083024,
+              -0.36627908016359
+            ],
+            "handGapM": [
+              4.440892098500626e-16,
+              7.119291619286993e-15
+            ]
+          },
+          {
+            "actorId": 123,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.246576782499602,
+              1.5725466084083026,
+              0.3662790801636113
+            ],
+            "handGapM": [
+              8.248590975149166e-15,
+              4.884981308350689e-15
+            ]
+          },
+          {
+            "actorId": 124,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.246576782499602,
+              1.5725466084083024,
+              -0.36627908016358646
+            ],
+            "handGapM": [
+              7.444291678311382e-15,
+              1.0290994924006174e-14
+            ]
+          },
+          {
+            "actorId": 125,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              1.7814816367624502,
+              1.5725466084083024,
+              0.3662790801636113
+            ],
+            "handGapM": [
+              8.248590975149166e-15,
+              1.4654943925052066e-14
+            ]
+          },
+          {
+            "actorId": 126,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              1.7814816367624644,
+              1.5725466084083022,
+              -0.36627908016359
+            ],
+            "handGapM": [
+              3.580361673049448e-15,
+              4.440892098500626e-16
+            ]
+          }
+        ]
+      },
+      "file": "test-results/final-a/L2-03/captures/webgl2-high-s3-z1.5.png",
+      "sha256": "d84be8101955de8831a54004a626344a2bf1be0afa2b3887fa8ec4aa9ceb3f31"
+    },
+    {
+      "backend": "webgl2",
+      "tier": "high",
+      "seconds": 12,
+      "zoom": 0.5,
+      "tick": 2177,
+      "phase": "ride",
+      "seated": true,
+      "departAt": 1457,
+      "actualZoom": 0.5,
+      "render": {
+        "backend": "webgl",
+        "quality": "high",
+        "camera": {
+          "zoom": 0.5,
+          "targetZoom": 0.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 10.924999999999999,
+          "regionScale": 1,
+          "focus": [
+            -28.472950449866318,
+            1.5524262928986754,
+            20.891367402744358
+          ],
+          "target": [
+            -28.472950449866318,
+            1.5524262928986754,
+            20.891367402744358
+          ],
+          "position": [
+            -22.223179624083116,
+            7.973980174193944,
+            27.14113822852756
+          ],
+          "spot": null
+        }
+      },
+      "occupants": {
+        "id": 120,
+        "apcDamage": null,
+        "transitionCouriers": [],
+        "doors": [
+          {
+            "name": "doorL",
+            "yaw": 0,
+            "meshes": 5
+          },
+          {
+            "name": "doorR",
+            "yaw": 0,
+            "meshes": 5
+          }
+        ],
+        "decay": null,
+        "bloodCoverage": 0,
+        "windshieldBloodCoverage": 0,
+        "wheels": [
+          {
+            "spin": 140.83946040985026,
+            "steer": 0.4543649275547959
+          },
+          {
+            "spin": 140.83946040985026,
+            "steer": 0.4543649275547959
+          },
+          {
+            "spin": 140.83946040985026,
+            "steer": 0
+          },
+          {
+            "spin": 140.83946040985026,
+            "steer": 0
+          }
+        ],
+        "brake": 0.15,
+        "sirens": [
+          [
+            4,
+            0.10496488755878539,
+            0.10496488755878539
+          ],
+          [
+            0.002842603949907256,
+            0.014702726648767015,
+            0.1
+          ]
+        ],
+        "placeholder": false,
+        "occupants": [
+          {
+            "actorId": 1,
+            "asset": "char.courier-female",
+            "seated": true,
+            "position": [
+              2.5289562539298056,
+              1.572546608408302,
+              0
+            ],
+            "handGapM": [
+              3.722145839155691e-15,
+              3.614624287906422e-15
+            ]
+          },
+          {
+            "actorId": 121,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.8251044649297494,
+              1.572546608408302,
+              0.36627908016359706
+            ],
+            "handGapM": [
+              5.0292000132872715e-15,
+              7.993605777301127e-15
+            ]
+          },
+          {
+            "actorId": 122,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.811335527346827,
+              1.5725466084083022,
+              -0.3662790801636006
+            ],
+            "handGapM": [
+              7.273443782444743e-15,
+              8.31111502828681e-15
+            ]
+          },
+          {
+            "actorId": 123,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.2465767824996017,
+              1.5725466084083022,
+              0.3662790801636006
+            ],
+            "handGapM": [
+              5.102196573270515e-15,
+              7.136584070361083e-15
+            ]
+          },
+          {
+            "actorId": 124,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.2465767824996017,
+              1.572546608408302,
+              -0.3662790801636006
+            ],
+            "handGapM": [
+              7.160723346098895e-15,
+              8.881784197001252e-16
+            ]
+          },
+          {
+            "actorId": 125,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              1.7814816367624497,
+              1.5725466084083022,
+              0.3662790801636006
+            ],
+            "handGapM": [
+              3.794299872214038e-15,
+              5.102196573270515e-15
+            ]
+          },
+          {
+            "actorId": 126,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              1.7814816367624497,
+              1.5725466084083022,
+              -0.36627908016359706
+            ],
+            "handGapM": [
+              8.055048693485857e-15,
+              7.993605777301127e-15
+            ]
+          }
+        ]
+      },
+      "file": "test-results/final-a/L2-03/captures/webgl2-high-s12-z0.5.png",
+      "sha256": "52c82c3cd5ba2e5226fb93def1f232e73b5da130a0de075963cd2a985602c0fc"
+    },
+    {
+      "backend": "webgl2",
+      "tier": "high",
+      "seconds": 12,
+      "zoom": 1.5,
+      "tick": 2177,
+      "phase": "ride",
+      "seated": true,
+      "departAt": 1457,
+      "actualZoom": 1.5,
+      "render": {
+        "backend": "webgl",
+        "quality": "high",
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 32.775,
+          "regionScale": 1,
+          "focus": [
+            -28.472950449866318,
+            1.5524262928986754,
+            20.891367402744358
+          ],
+          "target": [
+            -28.472950449866318,
+            1.5524262928986754,
+            20.891367402744358
+          ],
+          "position": [
+            -9.723637972516716,
+            20.817087936784482,
+            39.64067988009396
+          ],
+          "spot": null
+        }
+      },
+      "occupants": {
+        "id": 120,
+        "apcDamage": null,
+        "transitionCouriers": [],
+        "doors": [
+          {
+            "name": "doorL",
+            "yaw": 0,
+            "meshes": 5
+          },
+          {
+            "name": "doorR",
+            "yaw": 0,
+            "meshes": 5
+          }
+        ],
+        "decay": null,
+        "bloodCoverage": 0,
+        "windshieldBloodCoverage": 0,
+        "wheels": [
+          {
+            "spin": 140.83946040985026,
+            "steer": 0.4543649275547959
+          },
+          {
+            "spin": 140.83946040985026,
+            "steer": 0.4543649275547959
+          },
+          {
+            "spin": 140.83946040985026,
+            "steer": 0
+          },
+          {
+            "spin": 140.83946040985026,
+            "steer": 0
+          }
+        ],
+        "brake": 0.15,
+        "sirens": [
+          [
+            4,
+            0.10496488755878539,
+            0.10496488755878539
+          ],
+          [
+            0.002842603949907256,
+            0.014702726648767015,
+            0.1
+          ]
+        ],
+        "placeholder": false,
+        "occupants": [
+          {
+            "actorId": 1,
+            "asset": "char.courier-female",
+            "seated": true,
+            "position": [
+              2.528956253929802,
+              1.5725466084083024,
+              3.5527136788005e-15
+            ],
+            "handGapM": [
+              3.722145839155691e-15,
+              5.197930934883577e-15
+            ]
+          },
+          {
+            "actorId": 121,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.825104464929746,
+              1.5725466084083024,
+              0.36627908016360416
+            ],
+            "handGapM": [
+              5.102196573270515e-15,
+              3.66205343881779e-15
+            ]
+          },
+          {
+            "actorId": 122,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.811335527346827,
+              1.5725466084083026,
+              -0.3662790801636006
+            ],
+            "handGapM": [
+              3.8778423131653425e-15,
+              7.229248575812844e-15
+            ]
+          },
+          {
+            "actorId": 123,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.246576782499598,
+              1.5725466084083024,
+              0.3662790801636077
+            ],
+            "handGapM": [
+              3.66205343881779e-15,
+              3.5596458096434965e-15
+            ]
+          },
+          {
+            "actorId": 124,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.2465767824996017,
+              1.5725466084083024,
+              -0.36627908016359706
+            ],
+            "handGapM": [
+              1.067893742893049e-14,
+              7.136584070361083e-15
+            ]
+          },
+          {
+            "actorId": 125,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              1.7814816367624462,
+              1.5725466084083024,
+              0.36627908016360416
+            ],
+            "handGapM": [
+              3.66205343881779e-15,
+              3.8778423131653425e-15
+            ]
+          },
+          {
+            "actorId": 126,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              1.7814816367624497,
+              1.5725466084083024,
+              -0.36627908016359706
+            ],
+            "handGapM": [
+              1.067893742893049e-14,
+              7.971988878370802e-15
+            ]
+          }
+        ]
+      },
+      "file": "test-results/final-a/L2-03/captures/webgl2-high-s12-z1.5.png",
+      "sha256": "4c72b5be747417c8fb875a57bef7a32bd26899a2c81c8fc09d6d7f6a7e116727"
+    },
+    {
+      "backend": "webgl2",
+      "tier": "high",
+      "seconds": 22,
+      "zoom": 0.5,
+      "tick": 2777,
+      "phase": "ride",
+      "seated": true,
+      "departAt": 1457,
+      "actualZoom": 0.5,
+      "render": {
+        "backend": "webgl",
+        "quality": "high",
+        "camera": {
+          "zoom": 0.5,
+          "targetZoom": 0.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 10.924999999999999,
+          "regionScale": 1,
+          "focus": [
+            -37.7026702413874,
+            1.5524262887384872,
+            -32.37588749503928
+          ],
+          "target": [
+            -37.7026702413874,
+            1.5524262887384872,
+            -32.37588749503928
+          ],
+          "position": [
+            -31.4528994156042,
+            7.973980170033755,
+            -26.126116669256078
+          ],
+          "spot": null
+        }
+      },
+      "occupants": {
+        "id": 120,
+        "apcDamage": null,
+        "transitionCouriers": [],
+        "doors": [
+          {
+            "name": "doorL",
+            "yaw": 0,
+            "meshes": 5
+          },
+          {
+            "name": "doorR",
+            "yaw": 0,
+            "meshes": 5
+          }
+        ],
+        "decay": null,
+        "bloodCoverage": 0,
+        "windshieldBloodCoverage": 0,
+        "wheels": [
+          {
+            "spin": 311.4962480900188,
+            "steer": 0.45436389030195135
+          },
+          {
+            "spin": 311.4962480900188,
+            "steer": 0.45436389030195135
+          },
+          {
+            "spin": 311.4962480900188,
+            "steer": 0
+          },
+          {
+            "spin": 311.4962480900188,
+            "steer": 0
+          }
+        ],
+        "brake": 0.15,
+        "sirens": [
+          [
+            4,
+            0.10496488755878539,
+            0.10496488755878539
+          ],
+          [
+            0.002842603949907256,
+            0.014702726648767015,
+            0.1
+          ]
+        ],
+        "placeholder": false,
+        "occupants": [
+          {
+            "actorId": 1,
+            "asset": "char.courier-female",
+            "seated": true,
+            "position": [
+              2.528956253929806,
+              1.572546608408302,
+              -7.105427357601002e-15
+            ],
+            "handGapM": [
+              7.66938336801217e-15,
+              3.774758283725532e-15
+            ]
+          },
+          {
+            "actorId": 121,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.8251044649297468,
+              1.572546608408302,
+              0.36627908016359356
+            ],
+            "handGapM": [
+              1.4956315403090868e-14,
+              1.2436480258895385e-14
+            ]
+          },
+          {
+            "actorId": 122,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.8113355273468272,
+              1.5725466084083024,
+              -0.3662790801636078
+            ],
+            "handGapM": [
+              7.32410687763558e-15,
+              4.440892098500626e-15
+            ]
+          },
+          {
+            "actorId": 123,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.2465767824996092,
+              1.572546608408302,
+              0.36627908016359356
+            ],
+            "handGapM": [
+              1.533876673602434e-14,
+              7.755684626330685e-15
+            ]
+          },
+          {
+            "actorId": 124,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.2465767824996092,
+              1.572546608408302,
+              -0.3662790801636078
+            ],
+            "handGapM": [
+              1.05861963116107e-14,
+              7.847321480213184e-15
+            ]
+          },
+          {
+            "actorId": 125,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              1.7814816367624502,
+              1.572546608408302,
+              0.36627908016359356
+            ],
+            "handGapM": [
+              7.755684626330685e-15,
+              1.0051044705644574e-14
+            ]
+          },
+          {
+            "actorId": 126,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              1.7814816367624502,
+              1.572546608408302,
+              -0.3662790801636042
+            ],
+            "handGapM": [
+              7.971988878370802e-15,
+              7.119291619286993e-15
+            ]
+          }
+        ]
+      },
+      "file": "test-results/final-a/L2-03/captures/webgl2-high-s22-z0.5.png",
+      "sha256": "d52b29ee0c1d7bacc7970166119a858ec151746ccd665a81c83aed49fd650a0e"
+    },
+    {
+      "backend": "webgl2",
+      "tier": "high",
+      "seconds": 22,
+      "zoom": 1.5,
+      "tick": 2777,
+      "phase": "ride",
+      "seated": true,
+      "departAt": 1457,
+      "actualZoom": 1.5,
+      "render": {
+        "backend": "webgl",
+        "quality": "high",
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 32.775,
+          "regionScale": 1,
+          "focus": [
+            -37.7026702413874,
+            1.5524262887384872,
+            -32.37588749503928
+          ],
+          "target": [
+            -37.7026702413874,
+            1.5524262887384872,
+            -32.37588749503928
+          ],
+          "position": [
+            -18.9533577640378,
+            20.817087932624293,
+            -13.626575017689674
+          ],
+          "spot": null
+        }
+      },
+      "occupants": {
+        "id": 120,
+        "apcDamage": null,
+        "transitionCouriers": [],
+        "doors": [
+          {
+            "name": "doorL",
+            "yaw": 0,
+            "meshes": 5
+          },
+          {
+            "name": "doorR",
+            "yaw": 0,
+            "meshes": 5
+          }
+        ],
+        "decay": null,
+        "bloodCoverage": 0,
+        "windshieldBloodCoverage": 0,
+        "wheels": [
+          {
+            "spin": 311.4962480900188,
+            "steer": 0.45436389030195135
+          },
+          {
+            "spin": 311.4962480900188,
+            "steer": 0.45436389030195135
+          },
+          {
+            "spin": 311.4962480900188,
+            "steer": 0
+          },
+          {
+            "spin": 311.4962480900188,
+            "steer": 0
+          }
+        ],
+        "brake": 0.15,
+        "sirens": [
+          [
+            4,
+            0.10496488755878539,
+            0.10496488755878539
+          ],
+          [
+            0.002842603949907256,
+            0.014702726648767015,
+            0.1
+          ]
+        ],
+        "placeholder": false,
+        "occupants": [
+          {
+            "actorId": 1,
+            "asset": "char.courier-female",
+            "seated": true,
+            "position": [
+              2.528956253929806,
+              1.572546608408302,
+              -7.105427357601002e-15
+            ],
+            "handGapM": [
+              1.0245379651382904e-14,
+              3.9968028886505635e-15
+            ]
+          },
+          {
+            "actorId": 121,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.8251044649297468,
+              1.572546608408302,
+              0.36627908016360067
+            ],
+            "handGapM": [
+              1.3322676295501878e-15,
+              1.0814278949565478e-14
+            ]
+          },
+          {
+            "actorId": 122,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.8113355273468272,
+              1.572546608408302,
+              -0.3662790801636078
+            ],
+            "handGapM": [
+              1.117305858980544e-14,
+              1.05861963116107e-14
+            ]
+          },
+          {
+            "actorId": 123,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.246576782499602,
+              1.572546608408302,
+              0.36627908016359
+            ],
+            "handGapM": [
+              3.3306690738754696e-15,
+              8.498827956506644e-15
+            ]
+          },
+          {
+            "actorId": 124,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.246576782499602,
+              1.572546608408302,
+              -0.3662790801636078
+            ],
+            "handGapM": [
+              1.0290994924006174e-14,
+              7.381104677948019e-15
+            ]
+          },
+          {
+            "actorId": 125,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              1.781481636762443,
+              1.572546608408302,
+              0.36627908016359356
+            ],
+            "handGapM": [
+              1.6013403698258692e-14,
+              7.847321480213184e-15
+            ]
+          },
+          {
+            "actorId": 126,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              1.7814816367624573,
+              1.5725466084083024,
+              -0.3662790801636078
+            ],
+            "handGapM": [
+              1.0290994924006174e-14,
+              1.6042626665492003e-14
+            ]
+          }
+        ]
+      },
+      "file": "test-results/final-a/L2-03/captures/webgl2-high-s22-z1.5.png",
+      "sha256": "e70fadcf3574e40c9661a7471ed993484c64a13bcf808c50fff95c246b41a6f6"
+    },
+    {
+      "backend": "webgl2",
+      "tier": "high",
+      "seconds": 26,
+      "zoom": 0.5,
+      "tick": 3017,
+      "phase": "arrived",
+      "seated": false,
+      "departAt": 1457,
+      "actualZoom": 0.5,
+      "render": {
+        "backend": "webgl",
+        "quality": "high",
+        "camera": {
+          "zoom": 0.5,
+          "targetZoom": 0.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -45.96995830265235,
+            0.00043801325238921555,
+            -36.76938535094309
+          ],
+          "target": [
+            -45.96995830265235,
+            0.00043801325238921555,
+            -36.76938535094309
+          ],
+          "position": [
+            -29.66620832234835,
+            16.752317703587874,
+            -20.465635370639085
+          ],
+          "spot": null
+        }
+      },
+      "occupants": {
+        "id": 120,
+        "apcDamage": null,
+        "transitionCouriers": [],
+        "doors": [
+          {
+            "name": "doorL",
+            "yaw": 0,
+            "meshes": 5
+          },
+          {
+            "name": "doorR",
+            "yaw": 0,
+            "meshes": 5
+          }
+        ],
+        "decay": null,
+        "bloodCoverage": 0,
+        "windshieldBloodCoverage": 0,
+        "wheels": [
+          {
+            "spin": 333.46501262728196,
+            "steer": 0
+          },
+          {
+            "spin": 333.46501262728196,
+            "steer": 0
+          },
+          {
+            "spin": 333.46501262728196,
+            "steer": 0
+          },
+          {
+            "spin": 333.46501262728196,
+            "steer": 0
+          }
+        ],
+        "brake": 4,
+        "sirens": [
+          [
+            4,
+            0.10496488755878539,
+            0.10496488755878539
+          ],
+          [
+            0.002842603949907256,
+            0.014702726648767015,
+            0.1
+          ]
+        ],
+        "placeholder": false,
+        "occupants": []
+      },
+      "file": "test-results/final-a/L2-03/captures/webgl2-high-s26-z0.5.png",
+      "sha256": "1ad0f486636305a70c3f3ad5547141460569c9065447af55836b099d6402e5aa"
+    },
+    {
+      "backend": "webgl2",
+      "tier": "high",
+      "seconds": 26,
+      "zoom": 1.5,
+      "tick": 3017,
+      "phase": "arrived",
+      "seated": false,
+      "departAt": 1457,
+      "actualZoom": 0.5,
+      "render": {
+        "backend": "webgl",
+        "quality": "high",
+        "camera": {
+          "zoom": 0.5,
+          "targetZoom": 0.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -45.96995830265235,
+            0.00043801325238921555,
+            -36.76938535094309
+          ],
+          "target": [
+            -45.96995830265235,
+            0.00043801325238921555,
+            -36.76938535094309
+          ],
+          "position": [
+            -29.66620832234835,
+            16.752317703587874,
+            -20.465635370639085
+          ],
+          "spot": null
+        }
+      },
+      "occupants": {
+        "id": 120,
+        "apcDamage": null,
+        "transitionCouriers": [],
+        "doors": [
+          {
+            "name": "doorL",
+            "yaw": 0,
+            "meshes": 5
+          },
+          {
+            "name": "doorR",
+            "yaw": 0,
+            "meshes": 5
+          }
+        ],
+        "decay": null,
+        "bloodCoverage": 0,
+        "windshieldBloodCoverage": 0,
+        "wheels": [
+          {
+            "spin": 333.46501262728196,
+            "steer": 0
+          },
+          {
+            "spin": 333.46501262728196,
+            "steer": 0
+          },
+          {
+            "spin": 333.46501262728196,
+            "steer": 0
+          },
+          {
+            "spin": 333.46501262728196,
+            "steer": 0
+          }
+        ],
+        "brake": 4,
+        "sirens": [
+          [
+            4,
+            0.10496488755878539,
+            0.10496488755878539
+          ],
+          [
+            0.002842603949907256,
+            0.014702726648767015,
+            0.1
+          ]
+        ],
+        "placeholder": false,
+        "occupants": []
+      },
+      "file": "test-results/final-a/L2-03/captures/webgl2-high-s26-z1.5.png",
+      "sha256": "7919a9960c90c9255b6a31577bd6c654769bf1614a21278b725b49c01d5aeaf2"
+    },
+    {
+      "backend": "webgpu",
+      "tier": "low",
+      "seconds": 0,
+      "zoom": 0.5,
+      "tick": 1470,
+      "phase": "ride",
+      "seated": true,
+      "departAt": 1457,
+      "actualZoom": 0.5,
+      "render": {
+        "backend": "webgpu",
+        "quality": "low",
+        "camera": {
+          "zoom": 0.5,
+          "targetZoom": 0.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 10.516730664474226,
+          "regionScale": 1,
+          "focus": [
+            -68.96683744348192,
+            1.250604673938003,
+            34.75453578082102
+          ],
+          "target": [
+            -68.96683744348192,
+            1.250604673938003,
+            34.75453578082102
+          ],
+          "position": [
+            -62.95062174650704,
+            7.432183860847974,
+            40.770751477795905
+          ],
+          "spot": null
+        }
+      },
+      "occupants": {
+        "id": 120,
+        "apcDamage": null,
+        "transitionCouriers": [],
+        "doors": [
+          {
+            "name": "doorL",
+            "yaw": 0,
+            "meshes": 3
+          },
+          {
+            "name": "doorR",
+            "yaw": 0,
+            "meshes": 3
+          }
+        ],
+        "decay": null,
+        "bloodCoverage": 0,
+        "windshieldBloodCoverage": 0,
+        "wheels": [
+          {
+            "spin": 0.19582128663678344,
+            "steer": -0.6144143860987197
+          },
+          {
+            "spin": 0.19582128663678344,
+            "steer": -0.6144143860987197
+          },
+          {
+            "spin": 0.19582128663678344,
+            "steer": 0
+          },
+          {
+            "spin": 0.19582128663678344,
+            "steer": 0
+          }
+        ],
+        "brake": 0.15,
+        "sirens": [
+          [
+            0.1,
+            0.0026241221889696346,
+            0.0026241221889696346
+          ],
+          [
+            0.11370415799629023,
+            0.5881090659506806,
+            4
+          ]
+        ],
+        "placeholder": false,
+        "occupants": [
+          {
+            "actorId": 1,
+            "asset": "char.courier-female",
+            "seated": true,
+            "position": [
+              2.528956080961784,
+              1.5725466629198337,
+              -1.4210854715202004e-14
+            ],
+            "handGapM": [
+              1.4217791915866692e-14,
+              8.881784197001252e-16
+            ]
+          },
+          {
+            "actorId": 121,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.8251042919617246,
+              1.5725466629198335,
+              0.36627908016359356
+            ],
+            "handGapM": [
+              1.4383281002407285e-14,
+              8.498827956506644e-15
+            ]
+          },
+          {
+            "actorId": 122,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.8113351563656224,
+              1.5725466629198337,
+              -0.36627908016359356
+            ],
+            "handGapM": [
+              1.6233571577148212e-14,
+              1.6233571577148212e-14
+            ]
+          },
+          {
+            "actorId": 123,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.246576609531573,
+              1.5725466629198332,
+              0.366279080163622
+            ],
+            "handGapM": [
+              1.6189472992030383e-14,
+              2.0175535360778957e-14
+            ]
+          },
+          {
+            "actorId": 124,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.24657660953158,
+              1.5725466629198337,
+              -0.36627908016359356
+            ],
+            "handGapM": [
+              7.119291619286993e-15,
+              7.160723346098895e-15
+            ]
+          },
+          {
+            "actorId": 125,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              1.7814816618076037,
+              1.5725466629198335,
+              0.3662790801636078
+            ],
+            "handGapM": [
+              1.6189472992030383e-14,
+              1.9984014443252818e-15
+            ]
+          },
+          {
+            "actorId": 126,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              1.7814816618076037,
+              1.5725466629198337,
+              -0.36627908016359356
+            ],
+            "handGapM": [
+              3.3306690738754696e-15,
+              1.649718195029833e-14
+            ]
+          }
+        ]
+      },
+      "file": "test-results/final-a/L2-03/captures/webgpu-low-s0-z0.5.png",
+      "sha256": "7af1ba09c42b4d466f4c76a79844606d3dc67cb1d8837fd7403bd91009d876d8"
+    },
+    {
+      "backend": "webgpu",
+      "tier": "low",
+      "seconds": 0,
+      "zoom": 1.5,
+      "tick": 1470,
+      "phase": "ride",
+      "seated": true,
+      "departAt": 1457,
+      "actualZoom": 1.5,
+      "render": {
+        "backend": "webgpu",
+        "quality": "low",
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 31.550191993422676,
+          "regionScale": 1,
+          "focus": [
+            -68.96683744348192,
+            1.250604673938003,
+            34.75453578082102
+          ],
+          "target": [
+            -68.96683744348192,
+            1.250604673938003,
+            34.75453578082102
+          ],
+          "position": [
+            -50.918190352557275,
+            19.795342234667917,
+            52.80318287174567
+          ],
+          "spot": null
+        }
+      },
+      "occupants": {
+        "id": 120,
+        "apcDamage": null,
+        "transitionCouriers": [],
+        "doors": [
+          {
+            "name": "doorL",
+            "yaw": 0,
+            "meshes": 3
+          },
+          {
+            "name": "doorR",
+            "yaw": 0,
+            "meshes": 3
+          }
+        ],
+        "decay": null,
+        "bloodCoverage": 0,
+        "windshieldBloodCoverage": 0,
+        "wheels": [
+          {
+            "spin": 0.19582128663678344,
+            "steer": -0.6144143860987197
+          },
+          {
+            "spin": 0.19582128663678344,
+            "steer": -0.6144143860987197
+          },
+          {
+            "spin": 0.19582128663678344,
+            "steer": 0
+          },
+          {
+            "spin": 0.19582128663678344,
+            "steer": 0
+          }
+        ],
+        "brake": 0.15,
+        "sirens": [
+          [
+            0.1,
+            0.0026241221889696346,
+            0.0026241221889696346
+          ],
+          [
+            0.11370415799629023,
+            0.5881090659506806,
+            4
+          ]
+        ],
+        "placeholder": false,
+        "occupants": [
+          {
+            "actorId": 1,
+            "asset": "char.courier-female",
+            "seated": true,
+            "position": [
+              2.528956080961777,
+              1.572546662919834,
+              -1.4210854715202004e-14
+            ],
+            "handGapM": [
+              1.5902176704146846e-14,
+              1.5889770088874795e-14
+            ]
+          },
+          {
+            "actorId": 121,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.8251042919617246,
+              1.572546662919834,
+              0.36627908016359356
+            ],
+            "handGapM": [
+              7.119291619286993e-15,
+              1.4217791915866692e-14
+            ]
+          },
+          {
+            "actorId": 122,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.8113351563656153,
+              1.5725466629198341,
+              -0.3662790801636078
+            ],
+            "handGapM": [
+              1.432144669219779e-14,
+              2.930399971231995e-14
+            ]
+          },
+          {
+            "actorId": 123,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.246576609531573,
+              1.572546662919834,
+              0.36627908016359356
+            ],
+            "handGapM": [
+              1.589442370446406e-14,
+              7.381104677948019e-15
+            ]
+          },
+          {
+            "actorId": 124,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.246576609531573,
+              1.572546662919834,
+              -0.3662790801636078
+            ],
+            "handGapM": [
+              1.4238583238573986e-14,
+              1.4238583238573986e-14
+            ]
+          },
+          {
+            "actorId": 125,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              1.7814816618076037,
+              1.5725466629198341,
+              0.36627908016359356
+            ],
+            "handGapM": [
+              1.432144669219779e-14,
+              1.422645865968639e-14
+            ]
+          },
+          {
+            "actorId": 126,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              1.7814816618076108,
+              1.572546662919834,
+              -0.36627908016359356
+            ],
+            "handGapM": [
+              1.5902176704146846e-14,
+              1.422645865968639e-14
+            ]
+          }
+        ]
+      },
+      "file": "test-results/final-a/L2-03/captures/webgpu-low-s0-z1.5.png",
+      "sha256": "64ddc02486e9827e7dfab8518ecd6e8b894327443b61fc6e7d9396a02244c8b3"
+    },
+    {
+      "backend": "webgpu",
+      "tier": "low",
+      "seconds": 3,
+      "zoom": 0.5,
+      "tick": 1637,
+      "phase": "ride",
+      "seated": true,
+      "departAt": 1457,
+      "actualZoom": 0.5,
+      "render": {
+        "backend": "webgpu",
+        "quality": "low",
+        "camera": {
+          "zoom": 0.5,
+          "targetZoom": 0.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 10.924999999999999,
+          "regionScale": 1,
+          "focus": [
+            -63.78793303907877,
+            1.5524914257356868,
+            30.087158479422442
+          ],
+          "target": [
+            -63.78793303907877,
+            1.5524914257356868,
+            30.087158479422442
+          ],
+          "position": [
+            -57.53816221329557,
+            7.974045307030955,
+            36.33692930520564
+          ],
+          "spot": null
+        }
+      },
+      "occupants": {
+        "id": 120,
+        "apcDamage": null,
+        "transitionCouriers": [],
+        "doors": [
+          {
+            "name": "doorL",
+            "yaw": 0,
+            "meshes": 3
+          },
+          {
+            "name": "doorR",
+            "yaw": 0,
+            "meshes": 3
+          }
+        ],
+        "decay": null,
+        "bloodCoverage": 0,
+        "windshieldBloodCoverage": 0,
+        "wheels": [
+          {
+            "spin": 18.953357245439864,
+            "steer": -0.608301133050142
+          },
+          {
+            "spin": 18.953357245439864,
+            "steer": -0.608301133050142
+          },
+          {
+            "spin": 18.953357245439864,
+            "steer": 0
+          },
+          {
+            "spin": 18.953357245439864,
+            "steer": 0
+          }
+        ],
+        "brake": 0.15,
+        "sirens": [
+          [
+            4,
+            0.10496488755878539,
+            0.10496488755878539
+          ],
+          [
+            0.002842603949907256,
+            0.014702726648767015,
+            0.1
+          ]
+        ],
+        "placeholder": false,
+        "occupants": [
+          {
+            "actorId": 1,
+            "asset": "char.courier-female",
+            "seated": true,
+            "position": [
+              2.528956080961791,
+              1.5725466629198341,
+              3.552713678800501e-15
+            ],
+            "handGapM": [
+              1.0087767680389479e-14,
+              7.119291619286993e-15
+            ]
+          },
+          {
+            "actorId": 121,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.8251042919617317,
+              1.5725466629198341,
+              0.36627908016360067
+            ],
+            "handGapM": [
+              1.0695084443661336e-14,
+              9.155133597044475e-15
+            ]
+          },
+          {
+            "actorId": 122,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.8113351563656295,
+              1.5725466629198337,
+              -0.3662790801636042
+            ],
+            "handGapM": [
+              1.1077778413041292e-14,
+              8.498827956506644e-15
+            ]
+          },
+          {
+            "actorId": 123,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.246576609531587,
+              1.572546662919834,
+              0.3662790801635971
+            ],
+            "handGapM": [
+              1.6233571577148212e-14,
+              1.8160208208854855e-14
+            ]
+          },
+          {
+            "actorId": 124,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.246576609531587,
+              1.572546662919834,
+              -0.3662790801636042
+            ],
+            "handGapM": [
+              6.661338147750939e-16,
+              1.6013403698258692e-14
+            ]
+          },
+          {
+            "actorId": 125,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              1.781481661807618,
+              1.5725466629198341,
+              0.36627908016360067
+            ],
+            "handGapM": [
+              1.4663352293363957e-14,
+              7.160723346098895e-15
+            ]
+          },
+          {
+            "actorId": 126,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              1.781481661807618,
+              1.572546662919834,
+              -0.3662790801635971
+            ],
+            "handGapM": [
+              1.787562503581584e-14,
+              7.136584070361083e-15
+            ]
+          }
+        ]
+      },
+      "file": "test-results/final-a/L2-03/captures/webgpu-low-s3-z0.5.png",
+      "sha256": "a582eeeb5f415eebe4d303b038547e4a3b18834e252aa62bd6bb88e73577bc74"
+    },
+    {
+      "backend": "webgpu",
+      "tier": "low",
+      "seconds": 3,
+      "zoom": 1.5,
+      "tick": 1637,
+      "phase": "ride",
+      "seated": true,
+      "departAt": 1457,
+      "actualZoom": 1.5,
+      "render": {
+        "backend": "webgpu",
+        "quality": "low",
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 32.775,
+          "regionScale": 1,
+          "focus": [
+            -63.78793303907877,
+            1.5524914257356868,
+            30.087158479422442
+          ],
+          "target": [
+            -63.78793303907877,
+            1.5524914257356868,
+            30.087158479422442
+          ],
+          "position": [
+            -45.038620561729175,
+            20.817153069621494,
+            48.83647095677205
+          ],
+          "spot": null
+        }
+      },
+      "occupants": {
+        "id": 120,
+        "apcDamage": null,
+        "transitionCouriers": [],
+        "doors": [
+          {
+            "name": "doorL",
+            "yaw": 0,
+            "meshes": 3
+          },
+          {
+            "name": "doorR",
+            "yaw": 0,
+            "meshes": 3
+          }
+        ],
+        "decay": null,
+        "bloodCoverage": 0,
+        "windshieldBloodCoverage": 0,
+        "wheels": [
+          {
+            "spin": 18.953357245439864,
+            "steer": -0.608301133050142
+          },
+          {
+            "spin": 18.953357245439864,
+            "steer": -0.608301133050142
+          },
+          {
+            "spin": 18.953357245439864,
+            "steer": 0
+          },
+          {
+            "spin": 18.953357245439864,
+            "steer": 0
+          }
+        ],
+        "brake": 0.15,
+        "sirens": [
+          [
+            4,
+            0.10496488755878539,
+            0.10496488755878539
+          ],
+          [
+            0.002842603949907256,
+            0.014702726648767015,
+            0.1
+          ]
+        ],
+        "placeholder": false,
+        "occupants": [
+          {
+            "actorId": 1,
+            "asset": "char.courier-female",
+            "seated": true,
+            "position": [
+              2.528956080961777,
+              1.5725466629198337,
+              7.105427357601002e-15
+            ],
+            "handGapM": [
+              8.140289677804162e-15,
+              1.020439314654103e-14
+            ]
+          },
+          {
+            "actorId": 121,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.8251042919617175,
+              1.5725466629198337,
+              0.3662790801636042
+            ],
+            "handGapM": [
+              1.0048591735576161e-14,
+              1.5694642960426368e-14
+            ]
+          },
+          {
+            "actorId": 122,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.8113351563656153,
+              1.5725466629198337,
+              -0.36627908016359356
+            ],
+            "handGapM": [
+              2.0371306780686127e-14,
+              9.325873406851315e-15
+            ]
+          },
+          {
+            "actorId": 123,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.246576609531573,
+              1.5725466629198337,
+              0.3662790801636078
+            ],
+            "handGapM": [
+              1.0087767680389479e-14,
+              1.9984014443252818e-15
+            ]
+          },
+          {
+            "actorId": 124,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.246576609531573,
+              1.5725466629198335,
+              -0.36627908016359
+            ],
+            "handGapM": [
+              7.971988878370802e-15,
+              1.1234667099445444e-14
+            ]
+          },
+          {
+            "actorId": 125,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              1.7814816618076037,
+              1.5725466629198337,
+              0.3662790801636078
+            ],
+            "handGapM": [
+              1.481555084624755e-14,
+              1.4654943925052066e-14
+            ]
+          },
+          {
+            "actorId": 126,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              1.7814816618076037,
+              1.5725466629198337,
+              -0.36627908016359
+            ],
+            "handGapM": [
+              2.0448608352983646e-14,
+              1.467511591522657e-14
+            ]
+          }
+        ]
+      },
+      "file": "test-results/final-a/L2-03/captures/webgpu-low-s3-z1.5.png",
+      "sha256": "1042886e05e69bd2548f6151078a35fabf38f9337c5ac6780fb02d3d094d0f0a"
+    },
+    {
+      "backend": "webgpu",
+      "tier": "low",
+      "seconds": 12,
+      "zoom": 0.5,
+      "tick": 2177,
+      "phase": "ride",
+      "seated": true,
+      "departAt": 1457,
+      "actualZoom": 0.5,
+      "render": {
+        "backend": "webgpu",
+        "quality": "low",
+        "camera": {
+          "zoom": 0.5,
+          "targetZoom": 0.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 10.924999999999999,
+          "regionScale": 1,
+          "focus": [
+            -28.47295047234528,
+            1.552426347406035,
+            20.891367574097483
+          ],
+          "target": [
+            -28.47295047234528,
+            1.552426347406035,
+            20.891367574097483
+          ],
+          "position": [
+            -22.22317964656208,
+            7.973980228701303,
+            27.141138399880685
+          ],
+          "spot": null
+        }
+      },
+      "occupants": {
+        "id": 120,
+        "apcDamage": null,
+        "transitionCouriers": [],
+        "doors": [
+          {
+            "name": "doorL",
+            "yaw": 0,
+            "meshes": 3
+          },
+          {
+            "name": "doorR",
+            "yaw": 0,
+            "meshes": 3
+          }
+        ],
+        "decay": null,
+        "bloodCoverage": 0,
+        "windshieldBloodCoverage": 0,
+        "wheels": [
+          {
+            "spin": 140.83946040985026,
+            "steer": 0.4543649275547959
+          },
+          {
+            "spin": 140.83946040985026,
+            "steer": 0.4543649275547959
+          },
+          {
+            "spin": 140.83946040985026,
+            "steer": 0
+          },
+          {
+            "spin": 140.83946040985026,
+            "steer": 0
+          }
+        ],
+        "brake": 0.15,
+        "sirens": [
+          [
+            4,
+            0.10496488755878539,
+            0.10496488755878539
+          ],
+          [
+            0.002842603949907256,
+            0.014702726648767015,
+            0.1
+          ]
+        ],
+        "placeholder": false,
+        "occupants": [
+          {
+            "actorId": 1,
+            "asset": "char.courier-female",
+            "seated": true,
+            "position": [
+              2.52895608096178,
+              1.5725466629198335,
+              -3.5527136788005e-15
+            ],
+            "handGapM": [
+              1.020439314654103e-14,
+              5.197930934883577e-15
+            ]
+          },
+          {
+            "actorId": 121,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.8251042919617166,
+              1.5725466629198335,
+              0.3662790801636006
+            ],
+            "handGapM": [
+              7.66938336801217e-15,
+              5.197930934883577e-15
+            ]
+          },
+          {
+            "actorId": 122,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.811335156365615,
+              1.5725466629198335,
+              -0.3662790801636006
+            ],
+            "handGapM": [
+              5.068262347813025e-15,
+              1.5087600039861815e-14
+            ]
+          },
+          {
+            "actorId": 123,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.2465766095315725,
+              1.5725466629198335,
+              0.3662790801636006
+            ],
+            "handGapM": [
+              3.8778423131653425e-15,
+              8.31111502828681e-15
+            ]
+          },
+          {
+            "actorId": 124,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.2465766095315725,
+              1.5725466629198335,
+              -0.3662790801636006
+            ],
+            "handGapM": [
+              3.66205343881779e-15,
+              5.102196573270515e-15
+            ]
+          },
+          {
+            "actorId": 125,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              1.7814816618076068,
+              1.5725466629198335,
+              0.36627908016359706
+            ],
+            "handGapM": [
+              3.5596458096434965e-15,
+              7.993605777301127e-15
+            ]
+          },
+          {
+            "actorId": 126,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              1.7814816618076033,
+              1.5725466629198335,
+              -0.3662790801636006
+            ],
+            "handGapM": [
+              7.108895957933346e-15,
+              7.94721185223203e-15
+            ]
+          }
+        ]
+      },
+      "file": "test-results/final-a/L2-03/captures/webgpu-low-s12-z0.5.png",
+      "sha256": "a18f8a8ba7fb20118ff39988f459aa2d2828858a6b4677de760221eb6aa6ce12"
+    },
+    {
+      "backend": "webgpu",
+      "tier": "low",
+      "seconds": 12,
+      "zoom": 1.5,
+      "tick": 2177,
+      "phase": "ride",
+      "seated": true,
+      "departAt": 1457,
+      "actualZoom": 1.5,
+      "render": {
+        "backend": "webgpu",
+        "quality": "low",
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 32.775,
+          "regionScale": 1,
+          "focus": [
+            -28.47295047234528,
+            1.552426347406035,
+            20.891367574097483
+          ],
+          "target": [
+            -28.47295047234528,
+            1.552426347406035,
+            20.891367574097483
+          ],
+          "position": [
+            -9.723637994995677,
+            20.81708799129184,
+            39.64068005144709
+          ],
+          "spot": null
+        }
+      },
+      "occupants": {
+        "id": 120,
+        "apcDamage": null,
+        "transitionCouriers": [],
+        "doors": [
+          {
+            "name": "doorL",
+            "yaw": 0,
+            "meshes": 3
+          },
+          {
+            "name": "doorR",
+            "yaw": 0,
+            "meshes": 3
+          }
+        ],
+        "decay": null,
+        "bloodCoverage": 0,
+        "windshieldBloodCoverage": 0,
+        "wheels": [
+          {
+            "spin": 140.83946040985026,
+            "steer": 0.4543649275547959
+          },
+          {
+            "spin": 140.83946040985026,
+            "steer": 0.4543649275547959
+          },
+          {
+            "spin": 140.83946040985026,
+            "steer": 0
+          },
+          {
+            "spin": 140.83946040985026,
+            "steer": 0
+          }
+        ],
+        "brake": 0.15,
+        "sirens": [
+          [
+            4,
+            0.10496488755878539,
+            0.10496488755878539
+          ],
+          [
+            0.002842603949907256,
+            0.014702726648767015,
+            0.1
+          ]
+        ],
+        "placeholder": false,
+        "occupants": [
+          {
+            "actorId": 1,
+            "asset": "char.courier-female",
+            "seated": true,
+            "position": [
+              2.5289560809617764,
+              1.5725466629198335,
+              3.5527136788005e-15
+            ],
+            "handGapM": [
+              7.108895957933346e-15,
+              7.94721185223203e-15
+            ]
+          },
+          {
+            "actorId": 121,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.8251042919617166,
+              1.5725466629198335,
+              0.3662790801636006
+            ],
+            "handGapM": [
+              3.66205343881779e-15,
+              4.189529226675416e-15
+            ]
+          },
+          {
+            "actorId": 122,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.8113351563656184,
+              1.5725466629198337,
+              -0.36627908016359706
+            ],
+            "handGapM": [
+              8.248590975149166e-15,
+              7.381104677948019e-15
+            ]
+          },
+          {
+            "actorId": 123,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.246576609531576,
+              1.5725466629198337,
+              0.36627908016360416
+            ],
+            "handGapM": [
+              1.5543122344752192e-15,
+              5.4930801582266845e-15
+            ]
+          },
+          {
+            "actorId": 124,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.2465766095315725,
+              1.5725466629198335,
+              -0.36627908016359706
+            ],
+            "handGapM": [
+              5.259223848564703e-15,
+              3.8778423131653425e-15
+            ]
+          },
+          {
+            "actorId": 125,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              1.7814816618076068,
+              1.5725466629198332,
+              0.3662790801636006
+            ],
+            "handGapM": [
+              1.5543122344752192e-15,
+              8.094736496015192e-15
+            ]
+          },
+          {
+            "actorId": 126,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              1.7814816618076033,
+              1.5725466629198332,
+              -0.3662790801636006
+            ],
+            "handGapM": [
+              4.189529226675416e-15,
+              8.094736496015192e-15
+            ]
+          }
+        ]
+      },
+      "file": "test-results/final-a/L2-03/captures/webgpu-low-s12-z1.5.png",
+      "sha256": "e6a725fce6d5b53588bd73441718a611b02053d0e2b4b96b5acc205a222e0ab0"
+    },
+    {
+      "backend": "webgpu",
+      "tier": "low",
+      "seconds": 22,
+      "zoom": 0.5,
+      "tick": 2777,
+      "phase": "ride",
+      "seated": true,
+      "departAt": 1457,
+      "actualZoom": 0.5,
+      "render": {
+        "backend": "webgpu",
+        "quality": "low",
+        "camera": {
+          "zoom": 0.5,
+          "targetZoom": 0.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 10.924999999999999,
+          "regionScale": 1,
+          "focus": [
+            -37.70267007533986,
+            1.5524263432458474,
+            -32.375887447128775
+          ],
+          "target": [
+            -37.70267007533986,
+            1.5524263432458474,
+            -32.375887447128775
+          ],
+          "position": [
+            -31.45289924955666,
+            7.9739802245411155,
+            -26.126116621345574
+          ],
+          "spot": null
+        }
+      },
+      "occupants": {
+        "id": 120,
+        "apcDamage": null,
+        "transitionCouriers": [],
+        "doors": [
+          {
+            "name": "doorL",
+            "yaw": 0,
+            "meshes": 3
+          },
+          {
+            "name": "doorR",
+            "yaw": 0,
+            "meshes": 3
+          }
+        ],
+        "decay": null,
+        "bloodCoverage": 0,
+        "windshieldBloodCoverage": 0,
+        "wheels": [
+          {
+            "spin": 311.4962480900188,
+            "steer": 0.45436389030195135
+          },
+          {
+            "spin": 311.4962480900188,
+            "steer": 0.45436389030195135
+          },
+          {
+            "spin": 311.4962480900188,
+            "steer": 0
+          },
+          {
+            "spin": 311.4962480900188,
+            "steer": 0
+          }
+        ],
+        "brake": 0.15,
+        "sirens": [
+          [
+            4,
+            0.10496488755878539,
+            0.10496488755878539
+          ],
+          [
+            0.002842603949907256,
+            0.014702726648767015,
+            0.1
+          ]
+        ],
+        "placeholder": false,
+        "occupants": [
+          {
+            "actorId": 1,
+            "asset": "char.courier-female",
+            "seated": true,
+            "position": [
+              2.528956080961777,
+              1.5725466629198332,
+              -7.105427357601002e-15
+            ],
+            "handGapM": [
+              7.273443782444743e-15,
+              7.588599744428075e-15
+            ]
+          },
+          {
+            "actorId": 121,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.8251042919617175,
+              1.5725466629198332,
+              0.36627908016360067
+            ],
+            "handGapM": [
+              7.119291619286993e-15,
+              7.32410687763558e-15
+            ]
+          },
+          {
+            "actorId": 122,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.8113351563656153,
+              1.5725466629198337,
+              -0.3662790801636078
+            ],
+            "handGapM": [
+              1.0058400026574543e-14,
+              7.119291619286993e-15
+            ]
+          },
+          {
+            "actorId": 123,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.246576609531573,
+              1.5725466629198332,
+              0.36627908016359356
+            ],
+            "handGapM": [
+              7.119291619286993e-15,
+              1.9984014443252818e-15
+            ]
+          },
+          {
+            "actorId": 124,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.246576609531566,
+              1.5725466629198337,
+              -0.3662790801636042
+            ],
+            "handGapM": [
+              1.0070646956748923e-14,
+              7.160723346098895e-15
+            ]
+          },
+          {
+            "actorId": 125,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              1.7814816618076037,
+              1.5725466629198332,
+              0.36627908016360067
+            ],
+            "handGapM": [
+              1.020439314654103e-14,
+              7.755684626330685e-15
+            ]
+          },
+          {
+            "actorId": 126,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              1.7814816618076037,
+              1.5725466629198337,
+              -0.3662790801636078
+            ],
+            "handGapM": [
+              1.05861963116107e-14,
+              7.119291619286993e-15
+            ]
+          }
+        ]
+      },
+      "file": "test-results/final-a/L2-03/captures/webgpu-low-s22-z0.5.png",
+      "sha256": "195f68cf5d5c239e2ee9bde6b071e7820acf5a2d09b410c5e52b8e957bf1f16b"
+    },
+    {
+      "backend": "webgpu",
+      "tier": "low",
+      "seconds": 22,
+      "zoom": 1.5,
+      "tick": 2777,
+      "phase": "ride",
+      "seated": true,
+      "departAt": 1457,
+      "actualZoom": 1.5,
+      "render": {
+        "backend": "webgpu",
+        "quality": "low",
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 32.775,
+          "regionScale": 1,
+          "focus": [
+            -37.70267007533986,
+            1.5524263432458474,
+            -32.375887447128775
+          ],
+          "target": [
+            -37.70267007533986,
+            1.5524263432458474,
+            -32.375887447128775
+          ],
+          "position": [
+            -18.95335759799026,
+            20.817087987131654,
+            -13.62657496977917
+          ],
+          "spot": null
+        }
+      },
+      "occupants": {
+        "id": 120,
+        "apcDamage": null,
+        "transitionCouriers": [],
+        "doors": [
+          {
+            "name": "doorL",
+            "yaw": 0,
+            "meshes": 3
+          },
+          {
+            "name": "doorR",
+            "yaw": 0,
+            "meshes": 3
+          }
+        ],
+        "decay": null,
+        "bloodCoverage": 0,
+        "windshieldBloodCoverage": 0,
+        "wheels": [
+          {
+            "spin": 311.4962480900188,
+            "steer": 0.45436389030195135
+          },
+          {
+            "spin": 311.4962480900188,
+            "steer": 0.45436389030195135
+          },
+          {
+            "spin": 311.4962480900188,
+            "steer": 0
+          },
+          {
+            "spin": 311.4962480900188,
+            "steer": 0
+          }
+        ],
+        "brake": 0.15,
+        "sirens": [
+          [
+            4,
+            0.10496488755878539,
+            0.10496488755878539
+          ],
+          [
+            0.002842603949907256,
+            0.014702726648767015,
+            0.1
+          ]
+        ],
+        "placeholder": false,
+        "occupants": [
+          {
+            "actorId": 1,
+            "asset": "char.courier-female",
+            "seated": true,
+            "position": [
+              2.528956080961777,
+              1.5725466629198337,
+              -7.105427357601002e-15
+            ],
+            "handGapM": [
+              1.0070646956748923e-14,
+              4.440892098500626e-16
+            ]
+          },
+          {
+            "actorId": 121,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.8251042919617175,
+              1.5725466629198337,
+              0.36627908016359356
+            ],
+            "handGapM": [
+              7.381104677948019e-15,
+              1.0206808673417459e-14
+            ]
+          },
+          {
+            "actorId": 122,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.8113351563656153,
+              1.5725466629198332,
+              -0.3662790801636078
+            ],
+            "handGapM": [
+              1.591302455776226e-14,
+              1.591302455776226e-14
+            ]
+          },
+          {
+            "actorId": 123,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.246576609531573,
+              1.5725466629198337,
+              0.36627908016359356
+            ],
+            "handGapM": [
+              1.0058400026574543e-14,
+              4.440892098500626e-16
+            ]
+          },
+          {
+            "actorId": 124,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.246576609531573,
+              1.5725466629198337,
+              -0.3662790801636042
+            ],
+            "handGapM": [
+              7.444291678311382e-15,
+              7.136584070361083e-15
+            ]
+          },
+          {
+            "actorId": 125,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              1.7814816618075966,
+              1.5725466629198337,
+              0.3662790801635971
+            ],
+            "handGapM": [
+              7.847321480213184e-15,
+              3.3306690738754696e-15
+            ]
+          },
+          {
+            "actorId": 126,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              1.7814816618076108,
+              1.5725466629198337,
+              -0.3662790801636078
+            ],
+            "handGapM": [
+              8.702335715267317e-15,
+              3.614624287906422e-15
+            ]
+          }
+        ]
+      },
+      "file": "test-results/final-a/L2-03/captures/webgpu-low-s22-z1.5.png",
+      "sha256": "1990600f6e73af49c42ffd4042c7a30b74bb11f0be548af895ae023d94dcf12a"
+    },
+    {
+      "backend": "webgpu",
+      "tier": "low",
+      "seconds": 26,
+      "zoom": 0.5,
+      "tick": 3017,
+      "phase": "arrived",
+      "seated": false,
+      "departAt": 1457,
+      "actualZoom": 0.5,
+      "render": {
+        "backend": "webgpu",
+        "quality": "low",
+        "camera": {
+          "zoom": 0.5,
+          "targetZoom": 0.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -45.969958302652344,
+            0.000438013254517004,
+            -36.76938535094309
+          ],
+          "target": [
+            -45.969958302652344,
+            0.000438013254517004,
+            -36.76938535094309
+          ],
+          "position": [
+            -29.666208322348343,
+            16.752317703590002,
+            -20.465635370639085
+          ],
+          "spot": null
+        }
+      },
+      "occupants": {
+        "id": 120,
+        "apcDamage": null,
+        "transitionCouriers": [],
+        "doors": [
+          {
+            "name": "doorL",
+            "yaw": 0,
+            "meshes": 3
+          },
+          {
+            "name": "doorR",
+            "yaw": 0,
+            "meshes": 3
+          }
+        ],
+        "decay": null,
+        "bloodCoverage": 0,
+        "windshieldBloodCoverage": 0,
+        "wheels": [
+          {
+            "spin": 333.46501262728196,
+            "steer": 0
+          },
+          {
+            "spin": 333.46501262728196,
+            "steer": 0
+          },
+          {
+            "spin": 333.46501262728196,
+            "steer": 0
+          },
+          {
+            "spin": 333.46501262728196,
+            "steer": 0
+          }
+        ],
+        "brake": 4,
+        "sirens": [
+          [
+            4,
+            0.10496488755878539,
+            0.10496488755878539
+          ],
+          [
+            0.002842603949907256,
+            0.014702726648767015,
+            0.1
+          ]
+        ],
+        "placeholder": false,
+        "occupants": []
+      },
+      "file": "test-results/final-a/L2-03/captures/webgpu-low-s26-z0.5.png",
+      "sha256": "a13c0e41395fcd69e2a8210fc42d411929c4c9b45881215f783f59985e4689ae"
+    },
+    {
+      "backend": "webgpu",
+      "tier": "low",
+      "seconds": 26,
+      "zoom": 1.5,
+      "tick": 3017,
+      "phase": "arrived",
+      "seated": false,
+      "departAt": 1457,
+      "actualZoom": 0.5,
+      "render": {
+        "backend": "webgpu",
+        "quality": "low",
+        "camera": {
+          "zoom": 0.5,
+          "targetZoom": 0.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -45.969958302652344,
+            0.000438013254517004,
+            -36.76938535094309
+          ],
+          "target": [
+            -45.969958302652344,
+            0.000438013254517004,
+            -36.76938535094309
+          ],
+          "position": [
+            -29.666208322348343,
+            16.752317703590002,
+            -20.465635370639085
+          ],
+          "spot": null
+        }
+      },
+      "occupants": {
+        "id": 120,
+        "apcDamage": null,
+        "transitionCouriers": [],
+        "doors": [
+          {
+            "name": "doorL",
+            "yaw": 0,
+            "meshes": 3
+          },
+          {
+            "name": "doorR",
+            "yaw": 0,
+            "meshes": 3
+          }
+        ],
+        "decay": null,
+        "bloodCoverage": 0,
+        "windshieldBloodCoverage": 0,
+        "wheels": [
+          {
+            "spin": 333.46501262728196,
+            "steer": 0
+          },
+          {
+            "spin": 333.46501262728196,
+            "steer": 0
+          },
+          {
+            "spin": 333.46501262728196,
+            "steer": 0
+          },
+          {
+            "spin": 333.46501262728196,
+            "steer": 0
+          }
+        ],
+        "brake": 4,
+        "sirens": [
+          [
+            4,
+            0.10496488755878539,
+            0.10496488755878539
+          ],
+          [
+            0.002842603949907256,
+            0.014702726648767015,
+            0.1
+          ]
+        ],
+        "placeholder": false,
+        "occupants": []
+      },
+      "file": "test-results/final-a/L2-03/captures/webgpu-low-s26-z1.5.png",
+      "sha256": "dbb8deb01547d52ebc86fc3efbc240e5f6074a870778ee5e847098cd738e6339"
+    },
+    {
+      "backend": "webgpu",
+      "tier": "high",
+      "seconds": 0,
+      "zoom": 0.5,
+      "tick": 1470,
+      "phase": "ride",
+      "seated": true,
+      "departAt": 1457,
+      "actualZoom": 0.5,
+      "render": {
+        "backend": "webgpu",
+        "quality": "high",
+        "camera": {
+          "zoom": 0.5,
+          "targetZoom": 0.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 10.516730664474226,
+          "regionScale": 1,
+          "focus": [
+            -68.96683744348192,
+            1.250604673938003,
+            34.75453578082102
+          ],
+          "target": [
+            -68.96683744348192,
+            1.250604673938003,
+            34.75453578082102
+          ],
+          "position": [
+            -62.95062174650704,
+            7.432183860847974,
+            40.770751477795905
+          ],
+          "spot": null
+        }
+      },
+      "occupants": {
+        "id": 120,
+        "apcDamage": null,
+        "transitionCouriers": [],
+        "doors": [
+          {
+            "name": "doorL",
+            "yaw": 0,
+            "meshes": 5
+          },
+          {
+            "name": "doorR",
+            "yaw": 0,
+            "meshes": 5
+          }
+        ],
+        "decay": null,
+        "bloodCoverage": 0,
+        "windshieldBloodCoverage": 0,
+        "wheels": [
+          {
+            "spin": 0.19582128663678344,
+            "steer": -0.6144143860987197
+          },
+          {
+            "spin": 0.19582128663678344,
+            "steer": -0.6144143860987197
+          },
+          {
+            "spin": 0.19582128663678344,
+            "steer": 0
+          },
+          {
+            "spin": 0.19582128663678344,
+            "steer": 0
+          }
+        ],
+        "brake": 0.15,
+        "sirens": [
+          [
+            0.1,
+            0.0026241221889696346,
+            0.0026241221889696346
+          ],
+          [
+            0.11370415799629023,
+            0.5881090659506806,
+            4
+          ]
+        ],
+        "placeholder": false,
+        "occupants": [
+          {
+            "actorId": 1,
+            "asset": "char.courier-female",
+            "seated": true,
+            "position": [
+              2.528956253929813,
+              1.5725466084083024,
+              0
+            ],
+            "handGapM": [
+              1.4254156828833717e-14,
+              7.108895957933346e-15
+            ]
+          },
+          {
+            "actorId": 121,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.825104464929754,
+              1.572546608408302,
+              0.366279080163622
+            ],
+            "handGapM": [
+              1.4823868115664955e-14,
+              2.9337630296305466e-14
+            ]
+          },
+          {
+            "actorId": 122,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.8113355273468414,
+              1.5725466084083024,
+              -0.36627908016359356
+            ],
+            "handGapM": [
+              4.440892098500626e-16,
+              1.422645865968639e-14
+            ]
+          },
+          {
+            "actorId": 123,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.2465767824996092,
+              1.5725466084083022,
+              0.3662790801636078
+            ],
+            "handGapM": [
+              1.5987211554602254e-14,
+              1.6233571577148212e-14
+            ]
+          },
+          {
+            "actorId": 124,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.2465767824996092,
+              1.5725466084083022,
+              -0.36627908016359356
+            ],
+            "handGapM": [
+              1.6013403698258692e-14,
+              1.435067942883752e-14
+            ]
+          },
+          {
+            "actorId": 125,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              1.7814816367624573,
+              1.572546608408302,
+              0.3662790801636078
+            ],
+            "handGapM": [
+              1.9984014443252818e-15,
+              2.019629648737212e-14
+            ]
+          },
+          {
+            "actorId": 126,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              1.7814816367624573,
+              1.5725466084083022,
+              -0.3662790801636078
+            ],
+            "handGapM": [
+              1.9984014443252818e-15,
+              1.6189472992030383e-14
+            ]
+          }
+        ]
+      },
+      "file": "test-results/final-a/L2-03/captures/webgpu-high-s0-z0.5.png",
+      "sha256": "d6df78355ef689b2aeae45dffc3c70b5e8de2a3cfa5b2b070aa3ba557bf2cecd"
+    },
+    {
+      "backend": "webgpu",
+      "tier": "high",
+      "seconds": 0,
+      "zoom": 1.5,
+      "tick": 1470,
+      "phase": "ride",
+      "seated": true,
+      "departAt": 1457,
+      "actualZoom": 1.5,
+      "render": {
+        "backend": "webgpu",
+        "quality": "high",
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 31.550191993422676,
+          "regionScale": 1,
+          "focus": [
+            -68.96683744348192,
+            1.250604673938003,
+            34.75453578082102
+          ],
+          "target": [
+            -68.96683744348192,
+            1.250604673938003,
+            34.75453578082102
+          ],
+          "position": [
+            -50.918190352557275,
+            19.795342234667917,
+            52.80318287174567
+          ],
+          "spot": null
+        }
+      },
+      "occupants": {
+        "id": 120,
+        "apcDamage": null,
+        "transitionCouriers": [],
+        "doors": [
+          {
+            "name": "doorL",
+            "yaw": 0,
+            "meshes": 5
+          },
+          {
+            "name": "doorR",
+            "yaw": 0,
+            "meshes": 5
+          }
+        ],
+        "decay": null,
+        "bloodCoverage": 0,
+        "windshieldBloodCoverage": 0,
+        "wheels": [
+          {
+            "spin": 0.19582128663678344,
+            "steer": -0.6144143860987197
+          },
+          {
+            "spin": 0.19582128663678344,
+            "steer": -0.6144143860987197
+          },
+          {
+            "spin": 0.19582128663678344,
+            "steer": 0
+          },
+          {
+            "spin": 0.19582128663678344,
+            "steer": 0
+          }
+        ],
+        "brake": 0.15,
+        "sirens": [
+          [
+            0.1,
+            0.0026241221889696346,
+            0.0026241221889696346
+          ],
+          [
+            0.11370415799629023,
+            0.5881090659506806,
+            4
+          ]
+        ],
+        "placeholder": false,
+        "occupants": [
+          {
+            "actorId": 1,
+            "asset": "char.courier-female",
+            "seated": true,
+            "position": [
+              2.528956253929806,
+              1.5725466084083026,
+              1.4210854715202004e-14
+            ],
+            "handGapM": [
+              6.661338147750939e-16,
+              7.847321480213184e-15
+            ]
+          },
+          {
+            "actorId": 121,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.825104464929754,
+              1.5725466084083026,
+              0.3662790801636078
+            ],
+            "handGapM": [
+              2.845291731937278e-14,
+              1.5943977756741603e-14
+            ]
+          },
+          {
+            "actorId": 122,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.8113355273468343,
+              1.5725466084083028,
+              -0.3662790801636078
+            ],
+            "handGapM": [
+              1.591302455776226e-14,
+              1.591302455776226e-14
+            ]
+          },
+          {
+            "actorId": 123,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.2465767824996092,
+              1.5725466084083028,
+              0.3662790801636078
+            ],
+            "handGapM": [
+              1.589442370446406e-14,
+              1.4217791915866692e-14
+            ]
+          },
+          {
+            "actorId": 124,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.2465767824996092,
+              1.5725466084083028,
+              -0.3662790801636078
+            ],
+            "handGapM": [
+              7.32410687763558e-15,
+              7.136584070361083e-15
+            ]
+          },
+          {
+            "actorId": 125,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              1.7814816367624573,
+              1.5725466084083024,
+              0.36627908016359356
+            ],
+            "handGapM": [
+              7.160723346098895e-15,
+              1.422645865968639e-14
+            ]
+          },
+          {
+            "actorId": 126,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              1.7814816367624573,
+              1.5725466084083026,
+              -0.36627908016359356
+            ],
+            "handGapM": [
+              1.435067942883752e-14,
+              1.591302455776226e-14
+            ]
+          }
+        ]
+      },
+      "file": "test-results/final-a/L2-03/captures/webgpu-high-s0-z1.5.png",
+      "sha256": "b66f895056017f8513052b69fda22898192e016b36af8d7c5a4e1a3cbf8c44c9"
+    },
+    {
+      "backend": "webgpu",
+      "tier": "high",
+      "seconds": 3,
+      "zoom": 0.5,
+      "tick": 1637,
+      "phase": "ride",
+      "seated": true,
+      "departAt": 1457,
+      "actualZoom": 0.5,
+      "render": {
+        "backend": "webgpu",
+        "quality": "high",
+        "camera": {
+          "zoom": 0.5,
+          "targetZoom": 0.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 10.924999999999999,
+          "regionScale": 1,
+          "focus": [
+            -63.787932893349065,
+            1.5524913712262653,
+            30.08715838652566
+          ],
+          "target": [
+            -63.787932893349065,
+            1.5524913712262653,
+            30.08715838652566
+          ],
+          "position": [
+            -57.538162067565864,
+            7.974045252521534,
+            36.33692921230886
+          ],
+          "spot": null
+        }
+      },
+      "occupants": {
+        "id": 120,
+        "apcDamage": null,
+        "transitionCouriers": [],
+        "doors": [
+          {
+            "name": "doorL",
+            "yaw": 0,
+            "meshes": 5
+          },
+          {
+            "name": "doorR",
+            "yaw": 0,
+            "meshes": 5
+          }
+        ],
+        "decay": null,
+        "bloodCoverage": 0,
+        "windshieldBloodCoverage": 0,
+        "wheels": [
+          {
+            "spin": 18.953357245439864,
+            "steer": -0.608301133050142
+          },
+          {
+            "spin": 18.953357245439864,
+            "steer": -0.608301133050142
+          },
+          {
+            "spin": 18.953357245439864,
+            "steer": 0
+          },
+          {
+            "spin": 18.953357245439864,
+            "steer": 0
+          }
+        ],
+        "brake": 0.15,
+        "sirens": [
+          [
+            4,
+            0.10496488755878539,
+            0.10496488755878539
+          ],
+          [
+            0.002842603949907256,
+            0.014702726648767015,
+            0.1
+          ]
+        ],
+        "placeholder": false,
+        "occupants": [
+          {
+            "actorId": 1,
+            "asset": "char.courier-female",
+            "seated": true,
+            "position": [
+              2.528956253929806,
+              1.5725466084083026,
+              -1.0658141036401503e-14
+            ],
+            "handGapM": [
+              1.7763568394002505e-15,
+              1.5306589719811546e-14
+            ]
+          },
+          {
+            "actorId": 121,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.8251044649297468,
+              1.5725466084083026,
+              0.36627908016359356
+            ],
+            "handGapM": [
+              8.43769498715119e-15,
+              8.530675149520015e-15
+            ]
+          },
+          {
+            "actorId": 122,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.8113355273468272,
+              1.5725466084083024,
+              -0.3662790801636078
+            ],
+            "handGapM": [
+              9.441466109136565e-15,
+              1.6330471204814584e-14
+            ]
+          },
+          {
+            "actorId": 123,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.2465767824996163,
+              1.5725466084083026,
+              0.36627908016359
+            ],
+            "handGapM": [
+              1.4238583238573986e-14,
+              2.409567650518791e-14
+            ]
+          },
+          {
+            "actorId": 124,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.246576782499602,
+              1.5725466084083026,
+              -0.36627908016360067
+            ],
+            "handGapM": [
+              1.706135029904003e-14,
+              1.9459014222361976e-14
+            ]
+          },
+          {
+            "actorId": 125,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              1.7814816367624502,
+              1.5725466084083028,
+              0.36627908016359356
+            ],
+            "handGapM": [
+              7.136584070361083e-15,
+              7.160723346098895e-15
+            ]
+          },
+          {
+            "actorId": 126,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              1.7814816367624502,
+              1.5725466084083024,
+              -0.36627908016360067
+            ],
+            "handGapM": [
+              7.944109290391274e-15,
+              1.4238583238573986e-14
+            ]
+          }
+        ]
+      },
+      "file": "test-results/final-a/L2-03/captures/webgpu-high-s3-z0.5.png",
+      "sha256": "162e7a95dfbeb5b94c29d375bbc22a60107b5c4d115c125f1d1adc43fa56dd70"
+    },
+    {
+      "backend": "webgpu",
+      "tier": "high",
+      "seconds": 3,
+      "zoom": 1.5,
+      "tick": 1637,
+      "phase": "ride",
+      "seated": true,
+      "departAt": 1457,
+      "actualZoom": 1.5,
+      "render": {
+        "backend": "webgpu",
+        "quality": "high",
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 32.775,
+          "regionScale": 1,
+          "focus": [
+            -63.787932893349065,
+            1.5524913712262653,
+            30.08715838652566
+          ],
+          "target": [
+            -63.787932893349065,
+            1.5524913712262653,
+            30.08715838652566
+          ],
+          "position": [
+            -45.03862041599946,
+            20.81715301511207,
+            48.83647086387526
+          ],
+          "spot": null
+        }
+      },
+      "occupants": {
+        "id": 120,
+        "apcDamage": null,
+        "transitionCouriers": [],
+        "doors": [
+          {
+            "name": "doorL",
+            "yaw": 0,
+            "meshes": 5
+          },
+          {
+            "name": "doorR",
+            "yaw": 0,
+            "meshes": 5
+          }
+        ],
+        "decay": null,
+        "bloodCoverage": 0,
+        "windshieldBloodCoverage": 0,
+        "wheels": [
+          {
+            "spin": 18.953357245439864,
+            "steer": -0.608301133050142
+          },
+          {
+            "spin": 18.953357245439864,
+            "steer": -0.608301133050142
+          },
+          {
+            "spin": 18.953357245439864,
+            "steer": 0
+          },
+          {
+            "spin": 18.953357245439864,
+            "steer": 0
+          }
+        ],
+        "brake": 0.15,
+        "sirens": [
+          [
+            4,
+            0.10496488755878539,
+            0.10496488755878539
+          ],
+          [
+            0.002842603949907256,
+            0.014702726648767015,
+            0.1
+          ]
+        ],
+        "placeholder": false,
+        "occupants": [
+          {
+            "actorId": 1,
+            "asset": "char.courier-female",
+            "seated": true,
+            "position": [
+              2.5289562539298203,
+              1.5725466084083026,
+              3.552713678800501e-15
+            ],
+            "handGapM": [
+              6.661338147750939e-16,
+              8.094736496015192e-15
+            ]
+          },
+          {
+            "actorId": 121,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.8251044649297468,
+              1.5725466084083024,
+              0.3662790801636113
+            ],
+            "handGapM": [
+              1.681099102657031e-14,
+              9.739636741317752e-15
+            ]
+          },
+          {
+            "actorId": 122,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.8113355273468272,
+              1.5725466084083024,
+              -0.36627908016359
+            ],
+            "handGapM": [
+              4.440892098500626e-16,
+              7.119291619286993e-15
+            ]
+          },
+          {
+            "actorId": 123,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.246576782499602,
+              1.5725466084083026,
+              0.3662790801636113
+            ],
+            "handGapM": [
+              8.248590975149166e-15,
+              4.884981308350689e-15
+            ]
+          },
+          {
+            "actorId": 124,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.246576782499602,
+              1.5725466084083024,
+              -0.36627908016358646
+            ],
+            "handGapM": [
+              7.444291678311382e-15,
+              1.0290994924006174e-14
+            ]
+          },
+          {
+            "actorId": 125,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              1.7814816367624502,
+              1.5725466084083024,
+              0.3662790801636113
+            ],
+            "handGapM": [
+              8.248590975149166e-15,
+              1.4654943925052066e-14
+            ]
+          },
+          {
+            "actorId": 126,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              1.7814816367624644,
+              1.5725466084083022,
+              -0.36627908016359
+            ],
+            "handGapM": [
+              3.580361673049448e-15,
+              4.440892098500626e-16
+            ]
+          }
+        ]
+      },
+      "file": "test-results/final-a/L2-03/captures/webgpu-high-s3-z1.5.png",
+      "sha256": "5ed79b1d31b05ec609d5900c67e343958d8373383b0d49635728a48b99b44c41"
+    },
+    {
+      "backend": "webgpu",
+      "tier": "high",
+      "seconds": 12,
+      "zoom": 0.5,
+      "tick": 2177,
+      "phase": "ride",
+      "seated": true,
+      "departAt": 1457,
+      "actualZoom": 0.5,
+      "render": {
+        "backend": "webgpu",
+        "quality": "high",
+        "camera": {
+          "zoom": 0.5,
+          "targetZoom": 0.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 10.924999999999999,
+          "regionScale": 1,
+          "focus": [
+            -28.472950449866318,
+            1.5524262928986754,
+            20.891367402744358
+          ],
+          "target": [
+            -28.472950449866318,
+            1.5524262928986754,
+            20.891367402744358
+          ],
+          "position": [
+            -22.223179624083116,
+            7.973980174193944,
+            27.14113822852756
+          ],
+          "spot": null
+        }
+      },
+      "occupants": {
+        "id": 120,
+        "apcDamage": null,
+        "transitionCouriers": [],
+        "doors": [
+          {
+            "name": "doorL",
+            "yaw": 0,
+            "meshes": 5
+          },
+          {
+            "name": "doorR",
+            "yaw": 0,
+            "meshes": 5
+          }
+        ],
+        "decay": null,
+        "bloodCoverage": 0,
+        "windshieldBloodCoverage": 0,
+        "wheels": [
+          {
+            "spin": 140.83946040985026,
+            "steer": 0.4543649275547959
+          },
+          {
+            "spin": 140.83946040985026,
+            "steer": 0.4543649275547959
+          },
+          {
+            "spin": 140.83946040985026,
+            "steer": 0
+          },
+          {
+            "spin": 140.83946040985026,
+            "steer": 0
+          }
+        ],
+        "brake": 0.15,
+        "sirens": [
+          [
+            4,
+            0.10496488755878539,
+            0.10496488755878539
+          ],
+          [
+            0.002842603949907256,
+            0.014702726648767015,
+            0.1
+          ]
+        ],
+        "placeholder": false,
+        "occupants": [
+          {
+            "actorId": 1,
+            "asset": "char.courier-female",
+            "seated": true,
+            "position": [
+              2.5289562539298056,
+              1.572546608408302,
+              0
+            ],
+            "handGapM": [
+              3.722145839155691e-15,
+              3.614624287906422e-15
+            ]
+          },
+          {
+            "actorId": 121,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.8251044649297494,
+              1.572546608408302,
+              0.36627908016359706
+            ],
+            "handGapM": [
+              5.0292000132872715e-15,
+              7.993605777301127e-15
+            ]
+          },
+          {
+            "actorId": 122,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.811335527346827,
+              1.5725466084083022,
+              -0.3662790801636006
+            ],
+            "handGapM": [
+              7.273443782444743e-15,
+              8.31111502828681e-15
+            ]
+          },
+          {
+            "actorId": 123,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.2465767824996017,
+              1.5725466084083022,
+              0.3662790801636006
+            ],
+            "handGapM": [
+              5.102196573270515e-15,
+              7.136584070361083e-15
+            ]
+          },
+          {
+            "actorId": 124,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.2465767824996017,
+              1.572546608408302,
+              -0.3662790801636006
+            ],
+            "handGapM": [
+              7.160723346098895e-15,
+              8.881784197001252e-16
+            ]
+          },
+          {
+            "actorId": 125,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              1.7814816367624497,
+              1.5725466084083022,
+              0.3662790801636006
+            ],
+            "handGapM": [
+              3.794299872214038e-15,
+              5.102196573270515e-15
+            ]
+          },
+          {
+            "actorId": 126,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              1.7814816367624497,
+              1.5725466084083022,
+              -0.36627908016359706
+            ],
+            "handGapM": [
+              8.055048693485857e-15,
+              7.993605777301127e-15
+            ]
+          }
+        ]
+      },
+      "file": "test-results/final-a/L2-03/captures/webgpu-high-s12-z0.5.png",
+      "sha256": "d1efb6f61d64cdb678603e5876b13028fd8714153b43086b7e61b0b2693688e4"
+    },
+    {
+      "backend": "webgpu",
+      "tier": "high",
+      "seconds": 12,
+      "zoom": 1.5,
+      "tick": 2177,
+      "phase": "ride",
+      "seated": true,
+      "departAt": 1457,
+      "actualZoom": 1.5,
+      "render": {
+        "backend": "webgpu",
+        "quality": "high",
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 32.775,
+          "regionScale": 1,
+          "focus": [
+            -28.472950449866318,
+            1.5524262928986754,
+            20.891367402744358
+          ],
+          "target": [
+            -28.472950449866318,
+            1.5524262928986754,
+            20.891367402744358
+          ],
+          "position": [
+            -9.723637972516716,
+            20.817087936784482,
+            39.64067988009396
+          ],
+          "spot": null
+        }
+      },
+      "occupants": {
+        "id": 120,
+        "apcDamage": null,
+        "transitionCouriers": [],
+        "doors": [
+          {
+            "name": "doorL",
+            "yaw": 0,
+            "meshes": 5
+          },
+          {
+            "name": "doorR",
+            "yaw": 0,
+            "meshes": 5
+          }
+        ],
+        "decay": null,
+        "bloodCoverage": 0,
+        "windshieldBloodCoverage": 0,
+        "wheels": [
+          {
+            "spin": 140.83946040985026,
+            "steer": 0.4543649275547959
+          },
+          {
+            "spin": 140.83946040985026,
+            "steer": 0.4543649275547959
+          },
+          {
+            "spin": 140.83946040985026,
+            "steer": 0
+          },
+          {
+            "spin": 140.83946040985026,
+            "steer": 0
+          }
+        ],
+        "brake": 0.15,
+        "sirens": [
+          [
+            4,
+            0.10496488755878539,
+            0.10496488755878539
+          ],
+          [
+            0.002842603949907256,
+            0.014702726648767015,
+            0.1
+          ]
+        ],
+        "placeholder": false,
+        "occupants": [
+          {
+            "actorId": 1,
+            "asset": "char.courier-female",
+            "seated": true,
+            "position": [
+              2.528956253929802,
+              1.5725466084083024,
+              3.5527136788005e-15
+            ],
+            "handGapM": [
+              3.722145839155691e-15,
+              5.197930934883577e-15
+            ]
+          },
+          {
+            "actorId": 121,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.825104464929746,
+              1.5725466084083024,
+              0.36627908016360416
+            ],
+            "handGapM": [
+              5.102196573270515e-15,
+              3.66205343881779e-15
+            ]
+          },
+          {
+            "actorId": 122,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.811335527346827,
+              1.5725466084083026,
+              -0.3662790801636006
+            ],
+            "handGapM": [
+              3.8778423131653425e-15,
+              7.229248575812844e-15
+            ]
+          },
+          {
+            "actorId": 123,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.246576782499598,
+              1.5725466084083024,
+              0.3662790801636077
+            ],
+            "handGapM": [
+              3.66205343881779e-15,
+              3.5596458096434965e-15
+            ]
+          },
+          {
+            "actorId": 124,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.2465767824996017,
+              1.5725466084083024,
+              -0.36627908016359706
+            ],
+            "handGapM": [
+              1.067893742893049e-14,
+              7.136584070361083e-15
+            ]
+          },
+          {
+            "actorId": 125,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              1.7814816367624462,
+              1.5725466084083024,
+              0.36627908016360416
+            ],
+            "handGapM": [
+              3.66205343881779e-15,
+              3.8778423131653425e-15
+            ]
+          },
+          {
+            "actorId": 126,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              1.7814816367624497,
+              1.5725466084083024,
+              -0.36627908016359706
+            ],
+            "handGapM": [
+              1.067893742893049e-14,
+              7.971988878370802e-15
+            ]
+          }
+        ]
+      },
+      "file": "test-results/final-a/L2-03/captures/webgpu-high-s12-z1.5.png",
+      "sha256": "cdc0c1b9f98935a589b471675d2de990b6a40f896351c42ddec8749bb702ce8b"
+    },
+    {
+      "backend": "webgpu",
+      "tier": "high",
+      "seconds": 22,
+      "zoom": 0.5,
+      "tick": 2777,
+      "phase": "ride",
+      "seated": true,
+      "departAt": 1457,
+      "actualZoom": 0.5,
+      "render": {
+        "backend": "webgpu",
+        "quality": "high",
+        "camera": {
+          "zoom": 0.5,
+          "targetZoom": 0.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 10.924999999999999,
+          "regionScale": 1,
+          "focus": [
+            -37.7026702413874,
+            1.5524262887384872,
+            -32.37588749503928
+          ],
+          "target": [
+            -37.7026702413874,
+            1.5524262887384872,
+            -32.37588749503928
+          ],
+          "position": [
+            -31.4528994156042,
+            7.973980170033755,
+            -26.126116669256078
+          ],
+          "spot": null
+        }
+      },
+      "occupants": {
+        "id": 120,
+        "apcDamage": null,
+        "transitionCouriers": [],
+        "doors": [
+          {
+            "name": "doorL",
+            "yaw": 0,
+            "meshes": 5
+          },
+          {
+            "name": "doorR",
+            "yaw": 0,
+            "meshes": 5
+          }
+        ],
+        "decay": null,
+        "bloodCoverage": 0,
+        "windshieldBloodCoverage": 0,
+        "wheels": [
+          {
+            "spin": 311.4962480900188,
+            "steer": 0.45436389030195135
+          },
+          {
+            "spin": 311.4962480900188,
+            "steer": 0.45436389030195135
+          },
+          {
+            "spin": 311.4962480900188,
+            "steer": 0
+          },
+          {
+            "spin": 311.4962480900188,
+            "steer": 0
+          }
+        ],
+        "brake": 0.15,
+        "sirens": [
+          [
+            4,
+            0.10496488755878539,
+            0.10496488755878539
+          ],
+          [
+            0.002842603949907256,
+            0.014702726648767015,
+            0.1
+          ]
+        ],
+        "placeholder": false,
+        "occupants": [
+          {
+            "actorId": 1,
+            "asset": "char.courier-female",
+            "seated": true,
+            "position": [
+              2.528956253929806,
+              1.572546608408302,
+              -7.105427357601002e-15
+            ],
+            "handGapM": [
+              7.66938336801217e-15,
+              3.774758283725532e-15
+            ]
+          },
+          {
+            "actorId": 121,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.8251044649297468,
+              1.572546608408302,
+              0.36627908016359356
+            ],
+            "handGapM": [
+              1.4956315403090868e-14,
+              1.2436480258895385e-14
+            ]
+          },
+          {
+            "actorId": 122,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.8113355273468272,
+              1.5725466084083024,
+              -0.3662790801636078
+            ],
+            "handGapM": [
+              7.32410687763558e-15,
+              4.440892098500626e-15
+            ]
+          },
+          {
+            "actorId": 123,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.2465767824996092,
+              1.572546608408302,
+              0.36627908016359356
+            ],
+            "handGapM": [
+              1.533876673602434e-14,
+              7.755684626330685e-15
+            ]
+          },
+          {
+            "actorId": 124,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.2465767824996092,
+              1.572546608408302,
+              -0.3662790801636078
+            ],
+            "handGapM": [
+              1.05861963116107e-14,
+              7.847321480213184e-15
+            ]
+          },
+          {
+            "actorId": 125,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              1.7814816367624502,
+              1.572546608408302,
+              0.36627908016359356
+            ],
+            "handGapM": [
+              7.755684626330685e-15,
+              1.0051044705644574e-14
+            ]
+          },
+          {
+            "actorId": 126,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              1.7814816367624502,
+              1.572546608408302,
+              -0.3662790801636042
+            ],
+            "handGapM": [
+              7.971988878370802e-15,
+              7.119291619286993e-15
+            ]
+          }
+        ]
+      },
+      "file": "test-results/final-a/L2-03/captures/webgpu-high-s22-z0.5.png",
+      "sha256": "7198773f2070f9fada7b496306b04168a82b24287f8ca348d9f91201cd1fb8d4"
+    },
+    {
+      "backend": "webgpu",
+      "tier": "high",
+      "seconds": 22,
+      "zoom": 1.5,
+      "tick": 2777,
+      "phase": "ride",
+      "seated": true,
+      "departAt": 1457,
+      "actualZoom": 1.5,
+      "render": {
+        "backend": "webgpu",
+        "quality": "high",
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 32.775,
+          "regionScale": 1,
+          "focus": [
+            -37.7026702413874,
+            1.5524262887384872,
+            -32.37588749503928
+          ],
+          "target": [
+            -37.7026702413874,
+            1.5524262887384872,
+            -32.37588749503928
+          ],
+          "position": [
+            -18.9533577640378,
+            20.817087932624293,
+            -13.626575017689674
+          ],
+          "spot": null
+        }
+      },
+      "occupants": {
+        "id": 120,
+        "apcDamage": null,
+        "transitionCouriers": [],
+        "doors": [
+          {
+            "name": "doorL",
+            "yaw": 0,
+            "meshes": 5
+          },
+          {
+            "name": "doorR",
+            "yaw": 0,
+            "meshes": 5
+          }
+        ],
+        "decay": null,
+        "bloodCoverage": 0,
+        "windshieldBloodCoverage": 0,
+        "wheels": [
+          {
+            "spin": 311.4962480900188,
+            "steer": 0.45436389030195135
+          },
+          {
+            "spin": 311.4962480900188,
+            "steer": 0.45436389030195135
+          },
+          {
+            "spin": 311.4962480900188,
+            "steer": 0
+          },
+          {
+            "spin": 311.4962480900188,
+            "steer": 0
+          }
+        ],
+        "brake": 0.15,
+        "sirens": [
+          [
+            4,
+            0.10496488755878539,
+            0.10496488755878539
+          ],
+          [
+            0.002842603949907256,
+            0.014702726648767015,
+            0.1
+          ]
+        ],
+        "placeholder": false,
+        "occupants": [
+          {
+            "actorId": 1,
+            "asset": "char.courier-female",
+            "seated": true,
+            "position": [
+              2.528956253929806,
+              1.572546608408302,
+              -7.105427357601002e-15
+            ],
+            "handGapM": [
+              1.0245379651382904e-14,
+              3.9968028886505635e-15
+            ]
+          },
+          {
+            "actorId": 121,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.8251044649297468,
+              1.572546608408302,
+              0.36627908016360067
+            ],
+            "handGapM": [
+              1.3322676295501878e-15,
+              1.0814278949565478e-14
+            ]
+          },
+          {
+            "actorId": 122,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.8113355273468272,
+              1.572546608408302,
+              -0.3662790801636078
+            ],
+            "handGapM": [
+              1.117305858980544e-14,
+              1.05861963116107e-14
+            ]
+          },
+          {
+            "actorId": 123,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.246576782499602,
+              1.572546608408302,
+              0.36627908016359
+            ],
+            "handGapM": [
+              3.3306690738754696e-15,
+              8.498827956506644e-15
+            ]
+          },
+          {
+            "actorId": 124,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              2.246576782499602,
+              1.572546608408302,
+              -0.3662790801636078
+            ],
+            "handGapM": [
+              1.0290994924006174e-14,
+              7.381104677948019e-15
+            ]
+          },
+          {
+            "actorId": 125,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              1.781481636762443,
+              1.572546608408302,
+              0.36627908016359356
+            ],
+            "handGapM": [
+              1.6013403698258692e-14,
+              7.847321480213184e-15
+            ]
+          },
+          {
+            "actorId": 126,
+            "asset": "npc.firefighter-alive",
+            "seated": true,
+            "position": [
+              1.7814816367624573,
+              1.5725466084083024,
+              -0.3662790801636078
+            ],
+            "handGapM": [
+              1.0290994924006174e-14,
+              1.6042626665492003e-14
+            ]
+          }
+        ]
+      },
+      "file": "test-results/final-a/L2-03/captures/webgpu-high-s22-z1.5.png",
+      "sha256": "a6b45811005953798ca64ff87fc521f0f2d0ab1f0fe80225e01bb30492bffd11"
+    },
+    {
+      "backend": "webgpu",
+      "tier": "high",
+      "seconds": 26,
+      "zoom": 0.5,
+      "tick": 3017,
+      "phase": "arrived",
+      "seated": false,
+      "departAt": 1457,
+      "actualZoom": 0.5,
+      "render": {
+        "backend": "webgpu",
+        "quality": "high",
+        "camera": {
+          "zoom": 0.5,
+          "targetZoom": 0.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -45.96995830265235,
+            0.00043801325238921555,
+            -36.76938535094309
+          ],
+          "target": [
+            -45.96995830265235,
+            0.00043801325238921555,
+            -36.76938535094309
+          ],
+          "position": [
+            -29.66620832234835,
+            16.752317703587874,
+            -20.465635370639085
+          ],
+          "spot": null
+        }
+      },
+      "occupants": {
+        "id": 120,
+        "apcDamage": null,
+        "transitionCouriers": [],
+        "doors": [
+          {
+            "name": "doorL",
+            "yaw": 0,
+            "meshes": 5
+          },
+          {
+            "name": "doorR",
+            "yaw": 0,
+            "meshes": 5
+          }
+        ],
+        "decay": null,
+        "bloodCoverage": 0,
+        "windshieldBloodCoverage": 0,
+        "wheels": [
+          {
+            "spin": 333.46501262728196,
+            "steer": 0
+          },
+          {
+            "spin": 333.46501262728196,
+            "steer": 0
+          },
+          {
+            "spin": 333.46501262728196,
+            "steer": 0
+          },
+          {
+            "spin": 333.46501262728196,
+            "steer": 0
+          }
+        ],
+        "brake": 4,
+        "sirens": [
+          [
+            4,
+            0.10496488755878539,
+            0.10496488755878539
+          ],
+          [
+            0.002842603949907256,
+            0.014702726648767015,
+            0.1
+          ]
+        ],
+        "placeholder": false,
+        "occupants": []
+      },
+      "file": "test-results/final-a/L2-03/captures/webgpu-high-s26-z0.5.png",
+      "sha256": "a0663b767dbf899d47c9af71fbe98875521a5a821a5024c848ea95aa7838c1f7"
+    },
+    {
+      "backend": "webgpu",
+      "tier": "high",
+      "seconds": 26,
+      "zoom": 1.5,
+      "tick": 3017,
+      "phase": "arrived",
+      "seated": false,
+      "departAt": 1457,
+      "actualZoom": 0.5,
+      "render": {
+        "backend": "webgpu",
+        "quality": "high",
+        "camera": {
+          "zoom": 0.5,
+          "targetZoom": 0.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 28.5,
+          "regionScale": 1,
+          "focus": [
+            -45.96995830265235,
+            0.00043801325238921555,
+            -36.76938535094309
+          ],
+          "target": [
+            -45.96995830265235,
+            0.00043801325238921555,
+            -36.76938535094309
+          ],
+          "position": [
+            -29.66620832234835,
+            16.752317703587874,
+            -20.465635370639085
+          ],
+          "spot": null
+        }
+      },
+      "occupants": {
+        "id": 120,
+        "apcDamage": null,
+        "transitionCouriers": [],
+        "doors": [
+          {
+            "name": "doorL",
+            "yaw": 0,
+            "meshes": 5
+          },
+          {
+            "name": "doorR",
+            "yaw": 0,
+            "meshes": 5
+          }
+        ],
+        "decay": null,
+        "bloodCoverage": 0,
+        "windshieldBloodCoverage": 0,
+        "wheels": [
+          {
+            "spin": 333.46501262728196,
+            "steer": 0
+          },
+          {
+            "spin": 333.46501262728196,
+            "steer": 0
+          },
+          {
+            "spin": 333.46501262728196,
+            "steer": 0
+          },
+          {
+            "spin": 333.46501262728196,
+            "steer": 0
+          }
+        ],
+        "brake": 4,
+        "sirens": [
+          [
+            4,
+            0.10496488755878539,
+            0.10496488755878539
+          ],
+          [
+            0.002842603949907256,
+            0.014702726648767015,
+            0.1
+          ]
+        ],
+        "placeholder": false,
+        "occupants": []
+      },
+      "file": "test-results/final-a/L2-03/captures/webgpu-high-s26-z1.5.png",
+      "sha256": "a2fc4f210c37f0cfbb7110c219a5329693a91f4174421652d058a03c688aa2c9"
+    }
+  ]
+}

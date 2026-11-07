@@ -1,0 +1,186 @@
+{
+  "row": "L2-03",
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "criterion": "Truck route 15–25 s with player + 6 firefighters seated; all 7 out ≤ 4 s after arrival; control ≤ 0.5 s. Fire-engine crew visible, never hiding the courier.",
+  "nativeChecks": [
+    {
+      "id": "L2-03",
+      "clause": "actual departure-to-arrival route time",
+      "level": "L2",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 24.316666666666666,
+      "target": "15 ≤ value ≤ 25",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-complete.json"
+    },
+    {
+      "id": "L2-03",
+      "clause": "crew-exit start after arrival (not all-seven exit completion)",
+      "level": "L2",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 0.8,
+      "target": "0 ≤ value ≤ 4",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-complete.json"
+    },
+    {
+      "id": "L2-03",
+      "clause": "actual departure-to-arrival route time",
+      "level": "L2",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 24.316666666666666,
+      "target": "15 ≤ value ≤ 25",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-stationary.json"
+    },
+    {
+      "id": "L2-03",
+      "clause": "crew-exit start after arrival (not all-seven exit completion)",
+      "level": "L2",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 0.8,
+      "target": "0 ≤ value ≤ 4",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-stationary.json"
+    },
+    {
+      "id": "L2-03",
+      "clause": "actual departure-to-arrival route time",
+      "level": "L2",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 24.316666666666666,
+      "target": "15 ≤ value ≤ 25",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-complete.json"
+    },
+    {
+      "id": "L2-03",
+      "clause": "crew-exit start after arrival (not all-seven exit completion)",
+      "level": "L2",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 0.8,
+      "target": "0 ≤ value ≤ 4",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-complete.json"
+    },
+    {
+      "id": "L2-03",
+      "clause": "actual departure-to-arrival route time",
+      "level": "L2",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 24.316666666666666,
+      "target": "15 ≤ value ≤ 25",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-stationary.json"
+    },
+    {
+      "id": "L2-03",
+      "clause": "crew-exit start after arrival (not all-seven exit completion)",
+      "level": "L2",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 0.8,
+      "target": "0 ≤ value ≤ 4",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-stationary.json"
+    },
+    {
+      "id": "L2-03",
+      "clause": "native ride seating and timing",
+      "value": {
+        "passenger": true,
+        "seconds": 24.316666666666666,
+        "seatedEveryTick": true,
+        "crewExitS": 0.8,
+        "controlS": 0
+      },
+      "target": "15–25s; all seated; exits≤4s; control≤0.5s",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
+      "level": "L2"
+    },
+    {
+      "id": "L2-03",
+      "clause": "native seven-person seated roster and complete exit/control clocks",
+      "value": {
+        "ids": [
+          1,
+          121,
+          122,
+          123,
+          124,
+          125,
+          126
+        ],
+        "rideTicks": 1459,
+        "unseatedTicks": 0,
+        "allOutAt": 2965,
+        "controlAt": 2917,
+        "arrivedAt": 2916,
+        "allOutS": 0.8166666666666667,
+        "controlS": 0.016666666666666666
+      },
+      "target": "7 distinct identities;900–1500 seated ticks;0 unseated ticks;all7 out≤4s;control≤0.5s",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
+      "level": "L2"
+    },
+    {
+      "id": "L2-03",
+      "clause": "native ride seating and timing",
+      "value": {
+        "passenger": true,
+        "seconds": 24.316666666666666,
+        "seatedEveryTick": true,
+        "crewExitS": 0.8,
+        "controlS": 0
+      },
+      "target": "15–25s; all seated; exits≤4s; control≤0.5s",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
+      "level": "L2"
+    },
+    {
+      "id": "L2-03",
+      "clause": "native seven-person seated roster and complete exit/control clocks",
+      "value": {
+        "ids": [
+          1,
+          121,
+          122,
+          123,
+          124,
+          125,
+          126
+        ],
+        "rideTicks": 1459,
+        "unseatedTicks": 0,
+        "allOutAt": 2965,
+        "controlAt": 2917,
+        "arrivedAt": 2916,
+        "allOutS": 0.8166666666666667,
+        "controlS": 0.016666666666666666
+      },
+      "target": "7 distinct identities;900–1500 seated ticks;0 unseated ticks;all7 out≤4s;control≤0.5s",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
+      "level": "L2"
+    }
+  ],
+  "observation": "All40 fresh WebGL2/WebGPU low/high boarding/ride/arrival frames personally inspected on ten original-resolution four-cell sheets (seconds0/3/12/22/26, requested zoom0.5/1.5). Open cab visibly retains six firefighters around identifiable courier head/backpack; truck shell never fully obscures courier in reviewed poses. Both native full-ride ledgers measure24.3167s and all seven seated identities throughout, all seven out0.8167s after arrival, control restored in one tick (0.0167s). Scripted playerZoom reports0.5 while requested presentation framings differ; no independent freely unlocked ride-camera zoom claim. Ordinary native no-axe InputFrames, no relocation/spawns/skips, no performance inference."
+}
