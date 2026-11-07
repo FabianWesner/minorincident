@@ -1,72 +1,33 @@
 {
   "row": "G-24",
   "status": "PASS",
-  "reviewer": "sweep-g/Codex",
-  "date": "2026-11-06",
-  "commit": "e7fe7fff51eb4a9a53b1444d03fb174c1af44e85",
+  "reviewer": "final-g/Codex",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
   "clauses": [
     {
-      "clause": "Health bars: Alphas and infected zoo animals show the world-space bar (damaged or \u2264 15 m); dead ones show none; normal animals none.",
+      "clause": "Health bars: Alphas and infected zoo animals show the world-space bar (damaged or ≤ 15 m); dead ones show none; normal animals none.",
       "verdict": "PASS",
-      "note": "All20 current-source captures reviewed. Alpha and all five infected zoo species: six full bars nearby, zero far/healthy, six half bars far/damaged, zero after native lethal damage. All five healthy species show none. Both renderers and qualities; exact count and red-fill pixels pass. Controlled shared production renderer fixture; no campaign route claim."
+      "note": "Fresh five-state matrix at both qualities,10 rendered frames reviewed: counts6/0/6/0/0 for near healthy, far healthy, far damaged, dead near and normal healthy zoo animals. All individual red-fill pixel checks and exact species/HP/distance counts pass. Actual Alpha and lion/gorilla/elephant/zebra/flamingo; native lethal damage removes bars. Shared production eligibility excludes healthy noninfected animals."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-g/final-cue/G-24-webgl2-high.json",
-      "sha256": "f7991992c53b66734afd47b16358d781dc940e7fd380d25edd22496f42b8f9f3",
-      "what": "Final-source WebGL2 fixture refresh; historical WebGPU receipts retain their own source identity."
+      "file": "docs/reports/final-g/G-24-webgl2-low.json",
+      "sha256": "83f3f0ba2f5e5632ee9c3fc98e39d6f48929cee591fa2958f95fe29db4a620c0",
+      "what": "Fresh five-state matrix at both qualities,10 rendered frames reviewed: counts6/0/6/0/0 for near healthy, far healthy, far damaged, dead near and normal healthy zoo animals. All individual red-fill pixel checks and exact species/HP/distance counts pass. Actual Alpha and lion/gorilla/elephant/zebra/flamingo; native lethal damage removes bars. Shared production eligibility excludes healthy noninfected animals."
     },
     {
-      "file": "docs/reports/sweep-g/final-cue/G-24-webgl2-low.json",
-      "sha256": "6305299a6c866e9e6ee9af5c8e0640dba4a6d30431f7e12bd7fccdccbb1f9e54",
-      "what": "Final-source WebGL2 fixture refresh; historical WebGPU receipts retain their own source identity."
+      "file": "docs/reports/final-g/G-24-webgl2-high.json",
+      "sha256": "4a5aec799e6576cfed64580ea0b94511bf1a5db4267f8d08b194fcb8e490c02a",
+      "what": "Fresh five-state matrix at both qualities,10 rendered frames reviewed: counts6/0/6/0/0 for near healthy, far healthy, far damaged, dead near and normal healthy zoo animals. All individual red-fill pixel checks and exact species/HP/distance counts pass. Actual Alpha and lion/gorilla/elephant/zebra/flamingo; native lethal damage removes bars. Shared production eligibility excludes healthy noninfected animals."
     },
     {
-      "file": "docs/reports/sweep-g/G-24-final-captures.json",
-      "sha256": "dd8f7c480ce8c4a71a9362ca6e797331bde540a466ef7ca2886b88e094c5fcab",
-      "what": "All ten original frames viewed: full bars for nearby healthy Alpha/zoo infected, no bars for far healthy actors, partial bars for far damaged actors, none for normal animals or dead actors."
-    },
-    {
-      "file": "docs/reports/sweep-g/G-24-webgl2-high-captures.json",
-      "sha256": "46336ef1f0cc845c90788ea7a4adf19f8fec1fd6e51d850ba6fff6049abca52d",
-      "what": "Five state captures inspected in labelled640px cells; original SHA-256 retained."
-    },
-    {
-      "file": "docs/reports/sweep-g/G-24-webgl2-low-captures.json",
-      "sha256": "cb6c8182df8afbca8bf416c95c4631f0360daeaa0ac9e50cce7fa1d1a49a9fc1",
-      "what": "Five state captures inspected in labelled640px cells; original SHA-256 retained."
-    },
-    {
-      "file": "docs/reports/sweep-g/G-24-webgpu-high-captures.json",
-      "sha256": "ed0987ca3d8f8468e9a23ececd99a6368ad4f1dcdd53fc2887f2739b762c6e6b",
-      "what": "Five state captures inspected in labelled640px cells; original SHA-256 retained."
-    },
-    {
-      "file": "docs/reports/sweep-g/G-24-webgpu-low-captures.json",
-      "sha256": "2e9a0c908f169676fabf325874de3b2e26612de116de37f07c783a278cb5f0b3",
-      "what": "Five state captures inspected in labelled640px cells; original SHA-256 retained."
-    },
-    {
-      "file": "docs/reports/sweep-g/G-24-webgl2-high.json",
-      "sha256": "e140c745a32849338b23c8390b4d791b9ccf90779f78ba4460ba2bfeabaa515c",
-      "what": "webgl2/high: exact species/HP/distance/count and individual red-fill pixel measurements all pass."
-    },
-    {
-      "file": "docs/reports/sweep-g/G-24-webgl2-low.json",
-      "sha256": "fbf709bea979ba7b435afff41733a91cd1ac2ebe7cf47ad7631e018ccbac031d",
-      "what": "webgl2/low: exact species/HP/distance/count and individual red-fill pixel measurements all pass."
-    },
-    {
-      "file": "docs/reports/sweep-g/G-24-webgpu-high.json",
-      "sha256": "06198465d8d728b8e8015f1d542dc8c6bce26e6c31b28ae8d3c8b77a25cd2448",
-      "what": "webgpu/high: exact species/HP/distance/count and individual red-fill pixel measurements all pass."
-    },
-    {
-      "file": "docs/reports/sweep-g/G-24-webgpu-low.json",
-      "sha256": "e2103ba73abba5c12cce45c68301abd638cd0169aba23b8ed67f0cd76c669112",
-      "what": "webgpu/low: exact species/HP/distance/count and individual red-fill pixel measurements all pass."
+      "file": "docs/reports/final-g/G-24-reviewed.json",
+      "sha256": "7af2b2a28e292a5ad48fe182ea0aec8b0c197613b72a0d1d06d5b4b7fe7735ad",
+      "what": "Fresh five-state matrix at both qualities,10 rendered frames reviewed: counts6/0/6/0/0 for near healthy, far healthy, far damaged, dead near and normal healthy zoo animals. All individual red-fill pixel checks and exact species/HP/distance counts pass. Actual Alpha and lion/gorilla/elephant/zebra/flamingo; native lethal damage removes bars. Shared production eligibility excludes healthy noninfected animals."
     }
   ],
-  "notes": "Final-source both-quality fixture refresh inspected. Whole native matrix was explicitly stopped by orchestrator; no complete final-source acceptance consolidation is claimed."
+  "notes": "Controlled production-renderer fixture; every setup, exact actor identity, pixel ROI and negative control is retained. No campaign-route or performance claim is substituted for the rendered clause.",
+  "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186"
 }
