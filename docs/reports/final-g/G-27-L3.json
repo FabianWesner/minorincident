@@ -1,0 +1,29 @@
+{
+  "level": "L3",
+  "reviewer": "final-g/Codex",
+  "glitches": [
+    "Low run reaches checkpoint but corgi23 remains(-72.5633,23.4243) while courier is(224.2017,-1.5857),~298m apart. Crowd/corpse pile grows outside gate; no static penetration at dog pose. High run completes."
+  ],
+  "stunning": {
+    "verdict": "P",
+    "observation": "Sunset police collapse, burning neighborhood and elevated evacuation checkpoint are visually distinct; corpse pile artifacts need repair.",
+    "missing": "PO polish judgment on exact reviewed frames"
+  },
+  "boringHarmlessBabysitting": [
+    "FAIL:144 matching HUD observations from tick9708 through19976 span171.133333s waiting for squad; dog297.816993m away at final capture. Repro: ordinary low physical route, enter checkpoint and wait. High success does not erase this babysitting run."
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/final-g/L3-low-captures.json",
+      "sha256": "f7e5bdadd32a7ea07092b4fe7b59bc550c9873e2f7dd731569ca6ff5b7e8fd63"
+    },
+    {
+      "file": "docs/reports/final-g/L3-high-captures.json",
+      "sha256": "abf095ec818865e3c1becd676671684f76d1b640e7a4a958a9099a8262a4a556"
+    },
+    {
+      "file": "docs/reports/final-g/G-27-L3-wait.json",
+      "sha256": "0518001774a352b94f69e32c6f215f67a5b86365b2bfefd0519b8eadfc2d9833"
+    }
+  ]
+}

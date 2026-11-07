@@ -1,47 +1,78 @@
 {
   "row": "G-27",
   "status": "FAIL",
-  "reviewer": "vqa-1/Opus",
-  "date": "2026-11-04",
-  "commit": "e5f6ae5a2256b28c1f8d180cba824edad0f48744",
+  "reviewer": "final-g/Codex",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
   "clauses": [
     {
-      "clause": "For each level, judge whether it looks stunning and list any boring, harmless or babysitting moments. Glitches remain objective defects to list separately.",
+      "clause": "Opus answers three questions per level: glitches (list), stunning (verdict + missing), **boring / harmless / babysitting** (list). Any \"harmless\" or \"babysitting\" finding blocks GO.",
       "verdict": "FAIL",
-      "note": "Scope L1, L2, L3, L7, L8, L9, L10 (L4-L6 not reviewed). Harmless: L10 last 30 s of the console charge with 0 infected on screen; L9 6 % of observations with infected on screen and a 136 s empty approach drive; L7 no threat for 6 min while the group stood at the pharmacy corner. Boring: L10 Mega does not come to the arena; the objective sends the player 300 m back and then 335 m back again on an empty road. Not stunning: L10 research/military/corridor flat empty slabs, L3 zoom-1 smoke curtain, L8 dark monotone night. Glitches are listed separately in the README (P1: L2 fire engine cut in half on foot; L10 courier hidden at the console)."
+      "note": "Blocking babysitting counterexample: low L3 records144 matching waiting-for-squad HUD samples from tick9708 to19976,171.133333seconds; final corgi separation297.816993m. Route cannot finish, no objective skips. High L3 completion does not erase this trial. Ten level files answer glitches, scene quality/missing detail, and boring/harmless/babysitting within their stated observed scope. Low L10 also strands the following corgi1200.4576m behind; static geometry is clear, nav blocked. No mortal harmlessness conclusion is inferred from protected player damage."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/vqa-1/README.md",
-      "sha256": "452c6c5db2c83959c6024893ee720d97bd67dfe09e69b9ed8c7f1dc435d5f71d",
-      "what": "Per-level glitches / stunning / boring-harmless-babysitting judgments for L1, L2, L3, L7, L8, L9, L10 with ticks, positions and coverage limits."
+      "file": "docs/reports/final-g/G-27-L1.json",
+      "sha256": "1c5a5e27d4df8efcb2c9672346d8ae81621431d2bebd79af9d51daff01ba3d80",
+      "what": "Blocking babysitting counterexample: low L3 records144 matching waiting-for-squad HUD samples from tick9708 to19976,171.133333seconds; final corgi separation297.816993m. Route cannot finish, no objective skips. High L3 completion does not erase this trial. Ten level files answer glitches, scene quality/missing detail, and boring/harmless/babysitting within their stated observed scope. Low L10 also strands the following corgi1200.4576m behind; static geometry is clear, nav blocked. No mortal harmlessness conclusion is inferred from protected player damage."
     },
     {
-      "file": "docs/reports/vqa-1/L2-hull-and-door-camera.jpg",
-      "sha256": "176d4d0d471865314968eebf54636319486bfedd4a944b69484274e073fcf431",
-      "what": "L2: ride hull reveal (high z0.5), fire engine cut in half on foot (low z0.5), rescue-door camera at zoom 0.5 before/at/after the 57 m over-pull."
+      "file": "docs/reports/final-g/G-27-L2.json",
+      "sha256": "fa7b04a32530ead2f4aa4acbe389f5c1c0756e9d274c250b71d18f76c74f0cb9",
+      "what": "Blocking babysitting counterexample: low L3 records144 matching waiting-for-squad HUD samples from tick9708 to19976,171.133333seconds; final corgi separation297.816993m. Route cannot finish, no objective skips. High L3 completion does not erase this trial. Ten level files answer glitches, scene quality/missing detail, and boring/harmless/babysitting within their stated observed scope. Low L10 also strands the following corgi1200.4576m behind; static geometry is clear, nav blocked. No mortal harmlessness conclusion is inferred from protected player damage."
     },
     {
-      "file": "docs/reports/vqa-1/L3-smoke-z1-high.jpg",
-      "sha256": "8b6ae109ac16a8c4bb83c1df211c9914f3ba7f2780abac84e053e21f7481be81",
-      "what": "L3 zoom 1 high: smoke columns covering infected (health bars without bodies) and porthole cut-outs."
+      "file": "docs/reports/final-g/G-27-L3.json",
+      "sha256": "0dd4734c08f0b31ab7208fe970b49903a1ccdfd2d2a63948797c664cd5e7cabf",
+      "what": "Blocking babysitting counterexample: low L3 records144 matching waiting-for-squad HUD samples from tick9708 to19976,171.133333seconds; final corgi separation297.816993m. Route cannot finish, no objective skips. High L3 completion does not erase this trial. Ten level files answer glitches, scene quality/missing detail, and boring/harmless/babysitting within their stated observed scope. Low L10 also strands the following corgi1200.4576m behind; static geometry is clear, nav blocked. No mortal harmlessness conclusion is inferred from protected player damage."
     },
     {
-      "file": "docs/reports/vqa-1/L10-R2-roofs-maxzoom.jpg",
-      "sha256": "a5d081994580ad242ad74440ab3bb230643808b6e87a853e47bb45037ca90c22",
-      "what": "L10 R2 at max zoom (1.5 x region 1.3): near-side roofs filling the frame, faint infected under the dithered roof."
+      "file": "docs/reports/final-g/G-27-L4.json",
+      "sha256": "742ed8811f5b3151f3355fcdeaa030db19a351659d37dbab61a4f5cc22996bfc",
+      "what": "Blocking babysitting counterexample: low L3 records144 matching waiting-for-squad HUD samples from tick9708 to19976,171.133333seconds; final corgi separation297.816993m. Route cannot finish, no objective skips. High L3 completion does not erase this trial. Ten level files answer glitches, scene quality/missing detail, and boring/harmless/babysitting within their stated observed scope. Low L10 also strands the following corgi1200.4576m behind; static geometry is clear, nav blocked. No mortal harmlessness conclusion is inferred from protected player damage."
     },
     {
-      "file": "docs/reports/vqa-1/L10-hold-and-mega.jpg",
-      "sha256": "de7379bf5715cc31a994e4c3cc2f929e7ee99f11c22dbd98941a431e08e2f974",
-      "what": "L10: courier hidden at the console charge, arena, Mega fight, death flash, empty walk back to release."
+      "file": "docs/reports/final-g/G-27-L5.json",
+      "sha256": "f88eb08cfe667f1a002b21927ef1b8f20d8b32010ecc8996e86f8cdec6c147f6",
+      "what": "Blocking babysitting counterexample: low L3 records144 matching waiting-for-squad HUD samples from tick9708 to19976,171.133333seconds; final corgi separation297.816993m. Route cannot finish, no objective skips. High L3 completion does not erase this trial. Ten level files answer glitches, scene quality/missing detail, and boring/harmless/babysitting within their stated observed scope. Low L10 also strands the following corgi1200.4576m behind; static geometry is clear, nav blocked. No mortal harmlessness conclusion is inferred from protected player damage."
     },
     {
-      "file": "docs/reports/vqa-1/misc-L1-L3-L7-L8-L9.jpg",
-      "sha256": "11efad0f8519d6bd9943472dd27277f23c2f1ed8a288bffd04998a578c43d6b2",
-      "what": "L1 station black void, L3 yard police, L7 group at the pharmacy fence, L8 black burning APC and mission-failed card, L9 arrow decals."
+      "file": "docs/reports/final-g/G-27-L6.json",
+      "sha256": "785267f1713346d6ba2833d78bd5a804c74b03cb857a7fbe2b3fe0a99ca392b9",
+      "what": "Blocking babysitting counterexample: low L3 records144 matching waiting-for-squad HUD samples from tick9708 to19976,171.133333seconds; final corgi separation297.816993m. Route cannot finish, no objective skips. High L3 completion does not erase this trial. Ten level files answer glitches, scene quality/missing detail, and boring/harmless/babysitting within their stated observed scope. Low L10 also strands the following corgi1200.4576m behind; static geometry is clear, nav blocked. No mortal harmlessness conclusion is inferred from protected player damage."
+    },
+    {
+      "file": "docs/reports/final-g/G-27-L7.json",
+      "sha256": "2c0a5e336ee2873912a8b3d8f6149fad00e73d4e8d0dee917f102edaf7a92ac6",
+      "what": "Blocking babysitting counterexample: low L3 records144 matching waiting-for-squad HUD samples from tick9708 to19976,171.133333seconds; final corgi separation297.816993m. Route cannot finish, no objective skips. High L3 completion does not erase this trial. Ten level files answer glitches, scene quality/missing detail, and boring/harmless/babysitting within their stated observed scope. Low L10 also strands the following corgi1200.4576m behind; static geometry is clear, nav blocked. No mortal harmlessness conclusion is inferred from protected player damage."
+    },
+    {
+      "file": "docs/reports/final-g/G-27-L8.json",
+      "sha256": "6b17d6e7b0c500ec605cb80d4f0c3e972d5ffa2e2a0bc45c23477ef285b34a24",
+      "what": "Blocking babysitting counterexample: low L3 records144 matching waiting-for-squad HUD samples from tick9708 to19976,171.133333seconds; final corgi separation297.816993m. Route cannot finish, no objective skips. High L3 completion does not erase this trial. Ten level files answer glitches, scene quality/missing detail, and boring/harmless/babysitting within their stated observed scope. Low L10 also strands the following corgi1200.4576m behind; static geometry is clear, nav blocked. No mortal harmlessness conclusion is inferred from protected player damage."
+    },
+    {
+      "file": "docs/reports/final-g/G-27-L9.json",
+      "sha256": "5283521548299af6ec51b759a7dcfc9aad8ad9f603f332b803c9f17e589ec8b3",
+      "what": "Blocking babysitting counterexample: low L3 records144 matching waiting-for-squad HUD samples from tick9708 to19976,171.133333seconds; final corgi separation297.816993m. Route cannot finish, no objective skips. High L3 completion does not erase this trial. Ten level files answer glitches, scene quality/missing detail, and boring/harmless/babysitting within their stated observed scope. Low L10 also strands the following corgi1200.4576m behind; static geometry is clear, nav blocked. No mortal harmlessness conclusion is inferred from protected player damage."
+    },
+    {
+      "file": "docs/reports/final-g/G-27-L10.json",
+      "sha256": "2f053d415a1bfc2ddc2e58e3a66d6dee73848ad0691de19d5cf62cdb1a5304ba",
+      "what": "Blocking babysitting counterexample: low L3 records144 matching waiting-for-squad HUD samples from tick9708 to19976,171.133333seconds; final corgi separation297.816993m. Route cannot finish, no objective skips. High L3 completion does not erase this trial. Ten level files answer glitches, scene quality/missing detail, and boring/harmless/babysitting within their stated observed scope. Low L10 also strands the following corgi1200.4576m behind; static geometry is clear, nav blocked. No mortal harmlessness conclusion is inferred from protected player damage."
+    },
+    {
+      "file": "docs/reports/final-g/G-27-L3-wait.json",
+      "sha256": "0518001774a352b94f69e32c6f215f67a5b86365b2bfefd0519b8eadfc2d9833",
+      "what": "Blocking babysitting counterexample: low L3 records144 matching waiting-for-squad HUD samples from tick9708 to19976,171.133333seconds; final corgi separation297.816993m. Route cannot finish, no objective skips. High L3 completion does not erase this trial. Ten level files answer glitches, scene quality/missing detail, and boring/harmless/babysitting within their stated observed scope. Low L10 also strands the following corgi1200.4576m behind; static geometry is clear, nav blocked. No mortal harmlessness conclusion is inferred from protected player damage."
+    },
+    {
+      "file": "docs/reports/final-g/G-25-L3-low.json",
+      "sha256": "b10fb91027693a0b790a61a0c90b0f9bc0cea054202b310b89d848bc8c69f7d0",
+      "what": "Blocking babysitting counterexample: low L3 records144 matching waiting-for-squad HUD samples from tick9708 to19976,171.133333seconds; final corgi separation297.816993m. Route cannot finish, no objective skips. High L3 completion does not erase this trial. Ten level files answer glitches, scene quality/missing detail, and boring/harmless/babysitting within their stated observed scope. Low L10 also strands the following corgi1200.4576m behind; static geometry is clear, nav blocked. No mortal harmlessness conclusion is inferred from protected player damage."
     }
   ],
-  "notes": "Real-input playtest driver (WebGPU, god mode, per-step captures low/high x zoom 1.5/0.5) plus test-API sim-bot camera probes. Every listed capture was inspected; raw captures deleted, compact sheets retained."
+  "notes": "Any babysitting finding blocks GO. These are independent Codex observations and a measured blocking failure; Opus taste/signoff was requested through the scheduler and is not falsely claimed. Each level states its actual run/review scope; G25 separately qualifies completed console coverage. PO presentation questions and exact retained frames are listed in the level files.",
+  "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186"
 }

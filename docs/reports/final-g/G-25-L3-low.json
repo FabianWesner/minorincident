@@ -1,0 +1,142 @@
+{
+  "version": 1,
+  "level": "L3",
+  "tier": "low",
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "fixtureHash": "3a1aa6ffd344dc12e40e887d5787eccb7b7f2da10d19445898a88e94befd6f3f",
+  "browserHash": "3a1aa6ffd344dc12e40e887d5787eccb7b7f2da10d19445898a88e94befd6f3f",
+  "checks": [
+    {
+      "id": "G-25",
+      "clause": "physical WASD/mouse full-level browser console",
+      "tier": "low",
+      "policy": "real-input-webgl2",
+      "status": "NOT CHECKED",
+      "value": {
+        "backend": "webgl2",
+        "zoom": 1.5,
+        "completed": false,
+        "skipped": [],
+        "consoleErrors": [],
+        "immortal": true,
+        "frameTiming": false
+      },
+      "target": "complete ordinary-input route; zero console/page errors; no objective skips",
+      "receipt": "docs/reports/final-g/G-25-L3-low.json"
+    }
+  ],
+  "errors": [],
+  "run": [
+    {
+      "level": "L3",
+      "entry": "debug",
+      "heroine": "female",
+      "finished": false,
+      "skipped": [],
+      "wallSeconds": 361,
+      "simSeconds": 334,
+      "maxNoProgressSeconds": 57.916666666666664,
+      "deaths": 0,
+      "assists": 0,
+      "attacks": {},
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "ability.corgi-lure"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.handgun",
+        "ability.corgi-lure"
+      ],
+      "steps": [
+        {
+          "id": "armory",
+          "text": "Take a handgun from the armory · 19 m",
+          "tick": 1,
+          "marker": {
+            "anchor": "l3-armory",
+            "ring": {
+              "x": -139.2,
+              "y": 0,
+              "z": -8.4
+            },
+            "drawn": [
+              -139.2,
+              0.05,
+              -8.4
+            ],
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "defend",
+          "text": "Help defend the station · 10 m",
+          "tick": 928,
+          "marker": {
+            "anchor": "l3-armory",
+            "ring": null,
+            "drawn": null,
+            "playerY": 0.7049999833106995,
+            "pinVisible": false
+          }
+        },
+        {
+          "id": "checkpoint",
+          "text": "Get inside the army checkpoint · 364 m",
+          "tick": 1627,
+          "marker": {
+            "anchor": "l3-zone",
+            "ring": {
+              "x": 225,
+              "y": 0,
+              "z": 0
+            },
+            "drawn": [
+              225,
+              0.05,
+              0
+            ],
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        }
+      ]
+    }
+  ],
+  "issues": [
+    {
+      "level": "L3",
+      "tick": 10868,
+      "x": 224.2,
+      "z": -1.6,
+      "severity": "P2",
+      "kind": "stuck-at-ring",
+      "text": "20 s without objective progress standing at the ring (2.0 m); HUD: \"Checkpoint reached · Waiting for your squad · 2 m\"",
+      "captures": [
+        "captures/accept-L3-10868-stuck-at-ring.jpg"
+      ],
+      "step": "checkpoint",
+      "objective": "Checkpoint reached · Waiting for your squad · 2 m"
+    },
+    {
+      "level": "L3",
+      "tick": 19997,
+      "x": 224.2,
+      "z": -1.6,
+      "severity": "P0",
+      "kind": "cannot-finish",
+      "text": "Driver could not finish step checkpoint (\"Checkpoint reached · Waiting for your squad · 2 m\") after 14 s on it (6 min level cap: true); stopping without advancing the objective",
+      "captures": [
+        "captures/accept-L3-19997-cannot-finish.jpg"
+      ],
+      "step": "checkpoint",
+      "objective": "Checkpoint reached · Waiting for your squad · 2 m"
+    }
+  ],
+  "frameTiming": false,
+  "backend": "webgl2",
+  "zoom": 1.5
+}
