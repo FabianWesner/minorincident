@@ -1,5 +1,5 @@
 import { l5 } from '../../data/l5';
-import { formationBack, formationSlot } from '../missions/missionHelpers';
+import { corpseDetour, formationBack, formationSlot } from '../missions/missionHelpers';
 import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
 import type { Point } from '../npc/types';
@@ -76,6 +76,7 @@ export function updateSurvivor(world: SimWorld, e: EntitySnapshot): boolean {
   const v = player.survivor?.velocity ?? { x: 0, z: 0 }, speed = Math.hypot(v.x, v.z), slot = Math.max(0, s.slot);
   const behind = speed > .2 ? -((me.x - p.x) * v.x + (me.z - p.z) * v.z) / speed : 0;
   const inCombat = followerInCombat(world, e);
+  if (inCombat) delete s.corpseRoute;
   const catchingUp = !inCombat && speed > .2 && behind > f.maxM;
   const stop = formationBack(slot);
   const pace = courierPace(s, v, tick), paceSpeed = Math.hypot(pace.x, pace.z);
@@ -112,7 +113,10 @@ export function updateSurvivor(world: SimWorld, e: EntitySnapshot): boolean {
       const lead = { x: target.x + pace.x * .5, z: target.z + pace.z * .5 };
       // A short clear stride can still lead into a frontage pocket while the
       // courier is around its corner. Keep the global slot route until it is visible.
-      const goal = nav.visible(me, target, .35) && nav.visible(me, aim, .35) ? aim : nav.clear(lead.x, lead.z, .35) && nav.visible(target, lead, .35) ? lead : target;
+      let goal = nav.visible(me, target, .35) && nav.visible(me, aim, .35) ? aim : nav.clear(lead.x, lead.z, .35) && nav.visible(target, lead, .35) ? lead : target;
+      // Large corpses are physical bodies but are absent from the route grid.
+      // Reuse L7's swept local detour before the calm stride enters one.
+      goal = aroundCorpse(world, e, goal);
       // Track her already smooth pace without the crowd response lag: a
       // critically damped 6/s response trails a starting courier by 1-1.5 m,
       // which a 1.05x catch-up then needs seconds to win back.
@@ -145,11 +149,21 @@ export function updateSurvivor(world: SimWorld, e: EntitySnapshot): boolean {
     // The shared resolved-motion limiter applies the outside-combat catch-up
     // cap. Keep navigation's requested speed at the authored run pace so the
     // extra catch-up speed does not distort path steering or threat reachability.
-    world.npcs!.move(e, goal, speedMs, c, goal === p ? reach : 0);
+    const routed = inCombat ? goal : aroundCorpse(world, e, goal);
+    world.npcs!.move(e, routed, speedMs, c, routed === p ? reach : 0);
   } else {
     const yaw = -Math.atan2(p.z - me.z, p.x - me.x), delta = Math.atan2(Math.sin(yaw - me.yaw), Math.cos(yaw - me.yaw));
     me.yaw += Math.max(-.1, Math.min(.1, delta));
   }
   world.spatial.set(e.id, me.x, me.z);
   return true;
+}
+
+/** Keep the L7 swept legs until reached; recomputing an arc every tick can orbit the body. */
+function aroundCorpse(world: SimWorld, e: EntitySnapshot, goal: Point): Point {
+  if (world.scenario !== 'L5') return goal;
+  const s = e.civilian!.survivor!;
+  while (s.corpseRoute?.length && dist(e.transform, s.corpseRoute[0]) < .15) s.corpseRoute.shift();
+  if (!s.corpseRoute?.length) s.corpseRoute = corpseDetour(world, e, goal);
+  return s.corpseRoute?.[0] ?? goal;
 }

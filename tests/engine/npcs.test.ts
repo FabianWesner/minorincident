@@ -9,6 +9,7 @@ import { preset } from '../../src/sim/progression/Campaign';
 import { missionControls } from '../../src/sim/missions/controls';
 import { adultMaleStandingHeight, civilianHeight, fitCivilianHeight, heroineStandingHeight } from '../../src/render/npc/figureHeight';
 import { SimWorld } from '../../src/sim/world/SimWorld';
+import { actorRadius, solidLargeCorpse } from '../../src/sim/world/SolidRegistry';
 import { followerInCombat, updateSurvivor } from '../../src/sim/outbreak/Survivors';
 
 const worlds: SimWorld[] = [];
@@ -139,6 +140,28 @@ test('escort: shared combat pace, follows through a maze, a 2 s stand revives to
     escort.health.current = 0; step(r, 1); expect(escort.escort!.state).toBe('downed');
     if (revive) { step(r, 119); expect(escort.health.current).toBe(50); }
     else { step(r, 1200); expect(r.events.events().find(ev => ev.type === 'mission.failed')).toMatchObject({ reason: 'escort-died' }); }
+  }
+  // A real Alpha corpse blocks the calm stride despite an unobstructed route grid.
+  {
+    const w = await world();
+    for (const enemy of [...w.infected!.active]) w.infected!.release(enemy);
+    w.scenario = 'L5'; teleport(w, 4, 0);
+    const body = w.entities.get(w.infected!.spawn('infected.alpha', { x: 1.6, z: 0 }, { state: 'idle' }))!;
+    body.health.current = 0; Object.assign(body.infected!, { state: 'dead', deadAt: w.tick - 120, recoverAt: -1 }); w.infected!.settle(body);
+    const follower = w.entities.get(w.npcs!.civilians.spawn('cashier', { x: 0, z: 0 }))!;
+    follower.civilian!.survivor = { key: 'corpse-route', mode: 'follow', leader: 1, slot: 1, cover: false, foundAt: 0, waitAt: 9999 };
+    vi.spyOn(w.npcs!.civilians, 'update').mockImplementation(() => { updateSurvivor(w, follower); });
+    expect(solidLargeCorpse(body)).toBe(true);
+    expect(w.infected!.nav.visible(follower.transform, { x: 4, z: 0 }, actorRadius(follower))).toBe(true);
+    w.setInput({ move: { x: 1, z: 0 } });
+    let detoured = false;
+    for (let i = 0; i < 240; i++) {
+      w.update(); detoured ||= Math.abs(follower.transform.z) > .8;
+      expect(Math.hypot(follower.transform.x - body.transform.x, follower.transform.z - body.transform.z)).toBeGreaterThanOrEqual(actorRadius(follower) + actorRadius(body) - .021);
+    }
+    expect(detoured).toBe(true);
+    expect(follower.transform.x).toBeGreaterThan(body.transform.x + 3);
+    expect(w.solids.offenders).toEqual([]);
   }
 });
 
