@@ -102,10 +102,13 @@ export class LevelTenEncounters {
         }
         if (slot.archetype === 'infected.dog') {
           const limit = cure.threatDepth.find(r => r.region === group.region)?.dogs?.[1] ?? 4;
-          // A prior-region dog can cross the corridor boundary after this
-          // admission. Reserve its concurrent slot before it enters, just as
-          // for the other regions; deferred authored pack slots remain queued.
+          // The long destroyed corridor has a local dog budget: dogs still
+          // outside its envelope cannot reserve the authored corridor packs.
+          // Count every visitor and recoverable body once it enters the region.
+          const local = group.region === 'destroyed-corridor' && !low;
           const living = ai.active.filter(e => e.archetype === 'infected.dog' &&
+            (!local || e.transform.x >= region.envelope[0][0] && e.transform.x <= region.envelope[1][0] &&
+              e.transform.z >= region.envelope[0][1] && e.transform.z <= region.envelope[1][1]) &&
             (e.health.current > 0 || (e.infected?.recoverAt ?? -1) >= 0)).length;
           if (living >= limit) continue;
         }

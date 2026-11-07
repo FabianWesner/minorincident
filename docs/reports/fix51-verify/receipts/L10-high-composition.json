@@ -2,7 +2,7 @@
   "version": 1,
   "level": "L10",
   "tier": "high",
-  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "sourceHash": "eca9e19daf62c6c77c7372ea033a7412de5c62074e9838cc9a2a24fa26f22261",
   "fixtureHash": "92c8c4dbd27db2b7dd03df5289fc530a85fd20da6035f4f296a61ec08d88a9e3",
   "errors": [],
   "checks": [
@@ -11,9 +11,9 @@
       "clause": "same-tick regional count and species composition",
       "tier": "high",
       "policy": "complete",
-      "status": "FAIL",
+      "status": "PASS",
       "value": {
-        "fresh": false,
+        "fresh": true,
         "regions": [
           {
             "region": "residential-fringe",
@@ -253,12 +253,11 @@
             "upperViolations": 0,
             "sample": {
               "tick": 33930,
-              "count": 58,
-              "regular": 53,
+              "count": 57,
+              "regular": 52,
               "dogs": 4,
               "alphas": 1,
               "ids": [
-                266,
                 274,
                 275,
                 276,
@@ -321,16 +320,16 @@
                 {
                   "id": 276,
                   "archetype": "infected.dog",
-                  "x": 2509.700367011313,
-                  "z": -2.011699413321054,
+                  "x": 2519.8295151985158,
+                  "z": -6.319021999358688,
                   "cureRegion": "research-campus",
                   "hidden": false
                 },
                 {
                   "id": 277,
                   "archetype": "infected.dog",
-                  "x": 2509.547945268949,
-                  "z": -0.08559744608648442,
+                  "x": 2505.9422181939763,
+                  "z": -1.2683692541778666,
                   "cureRegion": "research-campus",
                   "hidden": false
                 },
@@ -368,11 +367,12 @@
             "upperViolations": 0,
             "sample": {
               "tick": 41790,
-              "count": 98,
-              "regular": 91,
+              "count": 97,
+              "regular": 90,
               "dogs": 5,
               "alphas": 2,
               "ids": [
+                349,
                 354,
                 372,
                 376,
@@ -468,9 +468,7 @@
                 466,
                 467,
                 468,
-                469,
-                470,
-                471
+                469
               ],
               "specialActors": [
                 {
@@ -689,8 +687,8 @@
                 {
                   "id": 482,
                   "archetype": "infected.alpha",
-                  "x": 3934.6213138155613,
-                  "z": -28.745040872818123,
+                  "x": 3934.622925707236,
+                  "z": -28.74504028587223,
                   "cureRegion": "destroyed-corridor",
                   "hidden": false
                 },
@@ -747,13 +745,13 @@
       "clause": "residential dogs follow actual handgun pickup",
       "tier": "high",
       "policy": "complete",
-      "status": "FAIL",
+      "status": "PASS",
       "value": {
         "tier": "high",
         "pickupTick": 3497,
         "firstDogTick": 4950,
         "prematureTicks": 0,
-        "nativeStateHash": "860b50df",
+        "nativeStateHash": "586d721c",
         "controlIdentical": true
       },
       "target": "Actual handgun pickup observed; first admitted fringe dog at or after pickup; zero premature ticks; canonical control identical.",

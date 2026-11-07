@@ -329,7 +329,7 @@ export class MegaPursuit {
     const tier = this.world.infected!.director.tier;
     // Hidden final-route pressure is faster than the ordinary far-pursuit pace
     // without collapsing the arrival interval before the charge is activated.
-    const farSpeed = finalApproach ? (tier === 'low' ? 1.15 : 1.35) : tier === 'low' ? 1.15 : 1.11;
+    const farSpeed = finalApproach ? (tier === 'low' ? 1.2 : 1.24) : tier === 'low' ? 1.15 : 1.11;
     let budget = megaAlpha.cruiseMs * Status.speed(e) * (farHidden ? farSpeed : 1) / 60;
     const t = e.transform, startX = t.x, startZ = t.z;
     while (budget > 1e-6) {
