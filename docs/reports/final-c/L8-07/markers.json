@@ -1,0 +1,85 @@
+{
+  "method": "Extract unchanged per-tick production acceptance marker observations from immutable current native receipts; retain exact source archive hashes.",
+  "rows": [
+    {
+      "tier": "low",
+      "file": "docs/reports/final-c/native/L8-low-complete.json.gz",
+      "sha256": "96688fdb8d814fe11ac0659a042df65e0712b4d29036c71660281328d7bf593f",
+      "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+      "markers": [
+        {
+          "id": "exit",
+          "x": 96.71,
+          "z": 76.275,
+          "samples": 2063,
+          "maxDisplacement": 0
+        }
+      ],
+      "markerChanges": [
+        {
+          "tick": 1,
+          "step": "escape",
+          "marker": null
+        },
+        {
+          "tick": 3600,
+          "step": "escape",
+          "marker": "exit",
+          "x": 96.71,
+          "z": 76.275
+        },
+        {
+          "tick": 5663,
+          "step": "depart",
+          "marker": null
+        },
+        {
+          "tick": 5723,
+          "step": "",
+          "marker": null
+        }
+      ],
+      "nativeStateHash": "b1b9cd1a"
+    },
+    {
+      "tier": "high",
+      "file": "docs/reports/final-c/native/L8-high-complete.json.gz",
+      "sha256": "f8a12416068c3832b60c87e347766e4ce6c6f8491a4eb313c097d64976a8519a",
+      "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+      "markers": [
+        {
+          "id": "exit",
+          "x": 96.71,
+          "z": 76.275,
+          "samples": 2346,
+          "maxDisplacement": 0
+        }
+      ],
+      "markerChanges": [
+        {
+          "tick": 1,
+          "step": "escape",
+          "marker": null
+        },
+        {
+          "tick": 3600,
+          "step": "escape",
+          "marker": "exit",
+          "x": 96.71,
+          "z": 76.275
+        },
+        {
+          "tick": 5946,
+          "step": "depart",
+          "marker": null
+        },
+        {
+          "tick": 6006,
+          "step": "",
+          "marker": null
+        }
+      ],
+      "nativeStateHash": "b12fc825"
+    }
+  ]
+}
