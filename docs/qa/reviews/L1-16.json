@@ -1,27 +1,33 @@
 {
   "row": "L1-16",
   "status": "FAIL",
-  "reviewer": "Codex fix64-a",
-  "date": "2026-11-05",
-  "commit": "13d197612f1536864d4d299d793b2b38f259ae2e",
+  "reviewer": "Codex final-a",
+  "date": "2026-11-07",
+  "commit": "4f0f157d4b32f955b6b8bd288e8b6b388447117f",
   "clauses": [
     {
       "clause": "Route readability: Luna reaches the depot, Annex and garage without > 60 s lost (tune).",
       "verdict": "FAIL",
-      "note": "Fresh named Luna low L1 with one attached screenshot per action, all68 input/action captures personally reviewed (35 unique). Two unproductive episodes total66.967s active: actions5\u201313 repeat the bench/hydrant at30m for36.017s; actions18\u201332 backtrack21\u219237\u219221m and repeat the blue-bin/fence dead end for30.950s. Intervening forward progress14\u201317 and recovery33\u201334 are excluded, as is all model latency. Cumulative lost time exceeds60s; no single uninterrupted60s stall is asserted. The courier moves successfully afterward and ends10m from depot at the595s browser cap, without pickup. This low counterexample retains FAIL. Annex/garage and high whole route remain unqualified. The new approach cues extend existing depot behavior to Annex/garage, but this fresh test still fails earlier in L1."
+      "note": "Fresh named Luna screenshot-only low-tier trial: depot pickup reached at turn33. Personally inspected all19 action states35–53 at original resolution on five four-cell sheets: bakery/ambulance/depot facade/fence/excavator block repeatedly revisited; no Annex route found. Ticks3009–7249 span70.6667 active seconds, exceeding60. HUD Annex distances123m at35, minimum97m at46,108m at53. Later turns54–57 improve102→73m; retained rather than hidden, but prior >60s lost episode remains. Model receives only fresh attached screenshot plus its recent decisions/actions, no tools/DOM/coordinates/maps; all agent item audits tool-free. Protection/aim assist for navigation, no skips/relocation. Reservation deliberately stopped before10min; resulting fetch error is a harness bound, not game failure. Low counterexample establishes FAIL; no high-tier route PASS claimed."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix64-a/screen-L1-low-observed-images.json",
-      "sha256": "68c4deea4c21acca7fb4876f891ca52533501355ede57e4663edec50ded63bc5",
-      "what": "Personally inspected all68 input/action images, plus final full-size10m snapshot. Exact hashes, duplicate references and observations by frame."
+      "file": "docs/reports/final-a/L1-16-input-ledger.json.gz",
+      "sha256": "d4d1c9c9d0ab4c7ad65d8bd484ab738f1cb47eed413c2d7ff6c06af7c338a2be",
+      "what": "Fresh named Luna screenshot-only low-tier trial: depot pickup reached at turn33. Personally inspected all19 action states35–53 at original resolution on five four-cell sheets: bakery/ambulance/depot facade/fence/excavator block repeatedly revisited; no Annex route found. Ticks3009–7249 span70.6667 active seconds, exceeding60. HUD Annex distances123m at35, minimum97m at46,108m at53. Later turns54–57 improve102→73m; retained rather than hidden, but prior >60s lost episode remains. Model receives only fresh attached screenshot plus its recent decisions/actions, no tools/DOM/coordinates/maps; all agent item audits tool-free. Protection/aim assist for navigation, no skips/relocation. Reservation deliberately stopped before10min; resulting fetch error is a harness bound, not game failure. Low counterexample establishes FAIL; no high-tier route PASS claimed."
     },
     {
-      "file": "docs/reports/fix64-a/screen-L1-low-observed-ledger.json.gz",
-      "sha256": "3bc50480704b85eb285abbf9d0c553b98d32fa77e6e29019ea34b8a7a5c7f0c3",
-      "what": "Authoritative accepted keyboard inputs, private before/after ticks, two lost intervals totaling66.967s, visible HUD and full model-command audit. No hidden navigation assistance."
+      "file": "docs/reports/final-a/L1-16-image-review.json",
+      "sha256": "b9b1129e65a6ed025ec4411f17b9ad19353f610c91ded4cf1f3e897e6d9fa52e",
+      "what": "Fresh named Luna screenshot-only low-tier trial: depot pickup reached at turn33. Personally inspected all19 action states35–53 at original resolution on five four-cell sheets: bakery/ambulance/depot facade/fence/excavator block repeatedly revisited; no Annex route found. Ticks3009–7249 span70.6667 active seconds, exceeding60. HUD Annex distances123m at35, minimum97m at46,108m at53. Later turns54–57 improve102→73m; retained rather than hidden, but prior >60s lost episode remains. Model receives only fresh attached screenshot plus its recent decisions/actions, no tools/DOM/coordinates/maps; all agent item audits tool-free. Protection/aim assist for navigation, no skips/relocation. Reservation deliberately stopped before10min; resulting fetch error is a harness bound, not game failure. Low counterexample establishes FAIL; no high-tier route PASS claimed."
+    },
+    {
+      "file": "docs/reports/final-a/L1-16-current-proof.json",
+      "sha256": "db827e0d9344bb28c2620f686091905002c3c8c93bd117643516c7126afee026",
+      "what": "Fresh named Luna screenshot-only low-tier trial: depot pickup reached at turn33. Personally inspected all19 action states35–53 at original resolution on five four-cell sheets: bakery/ambulance/depot facade/fence/excavator block repeatedly revisited; no Annex route found. Ticks3009–7249 span70.6667 active seconds, exceeding60. HUD Annex distances123m at35, minimum97m at46,108m at53. Later turns54–57 improve102→73m; retained rather than hidden, but prior >60s lost episode remains. Model receives only fresh attached screenshot plus its recent decisions/actions, no tools/DOM/coordinates/maps; all agent item audits tool-free. Protection/aim assist for navigation, no skips/relocation. Reservation deliberately stopped before10min; resulting fetch error is a harness bound, not game failure. Low counterexample establishes FAIL; no high-tier route PASS claimed."
     }
   ],
-  "notes": "Only the fresh first run decides the threshold. Excluded diagnostics are disclosed in the lane README. A physical-input replay reached a different ordinary pose; its9-action scoped follow-up is not stitched to this run or counted toward timing, and the unused replay feature was reverted. No counts, timers, caps or criterion changed. Raw images deleted after SHA/observation recording."
+  "notes": "One measured low-tier readability counterexample; no inference from harness exit status. Full subsequent progress and incomplete tail retained. High parity and full route completion are not needed to establish this failing clause.",
+  "sourceDigest": "00a81dbceddae37bdb1b6540d29f8e3658cdd7d6b7b51968d1fd068c9a6eb63c"
 }

@@ -1,0 +1,293 @@
+{
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+  "revision": "7509b79434ff9d984296d2520236b91a70a77556",
+  "observation": "Fresh named Luna screenshot-only low-tier trial: depot pickup reached at turn33. Personally inspected all19 action states35–53 at original resolution on five four-cell sheets: bakery/ambulance/depot facade/fence/excavator block repeatedly revisited; no Annex route found. Ticks3009–7249 span70.6667 active seconds, exceeding60. HUD Annex distances123m at35, minimum97m at46,108m at53. Later turns54–57 improve102→73m; retained rather than hidden, but prior >60s lost episode remains. Model receives only fresh attached screenshot plus its recent decisions/actions, no tools/DOM/coordinates/maps; all agent item audits tool-free. Protection/aim assist for navigation, no skips/relocation. Reservation deliberately stopped before10min; resulting fetch error is a harness bound, not game failure. Low counterexample establishes FAIL; no high-tier route PASS claimed.",
+  "frames": [
+    {
+      "turn": 35,
+      "file": "test-results/final-a/L1-16-screen-r1/.frames/turn-000035-action.jpg",
+      "sha256": "5dd57d76b670ed8380f5f98d5c611b8dabe98f7eb2585aac8442f74958cab7da",
+      "tick": 3009,
+      "decision": {
+        "move": "wa",
+        "interact": false,
+        "ms": 4000,
+        "what_you_saw": "The HUD objective says “Deliver the package to the Medical Annex · 107 m.” The character is on foot beside the courier depot, and the minimap shows the yellow objective marker to the right of the player marker. The Corgi is following.",
+        "route_decision": "Head toward the objective marker, moving upper-left on the minimap.",
+        "stuck": ""
+      },
+      "personallyViewed": true
+    },
+    {
+      "turn": 36,
+      "file": "test-results/final-a/L1-16-screen-r1/.frames/turn-000036-action.jpg",
+      "sha256": "19ad5e726199a2ed1801f181d9c8af12b77f98f765b085d50cdb8c45a802884e",
+      "tick": 3243,
+      "decision": {
+        "move": "wa",
+        "interact": false,
+        "ms": 4000,
+        "what_you_saw": "The objective says “Deliver the package to the Medical Annex · 123 m.” The yellow minimap marker is to the right of the player marker, and the Corgi is following.",
+        "route_decision": "Continue toward the objective marker, moving upper-left on the minimap.",
+        "stuck": ""
+      },
+      "personallyViewed": true
+    },
+    {
+      "turn": 37,
+      "file": "test-results/final-a/L1-16-screen-r1/.frames/turn-000037-action.jpg",
+      "sha256": "c03979fc84ac49b2875459c9aa4383297aa23f605c686af33f111b0bcea9c756",
+      "tick": 3482,
+      "decision": {
+        "move": "d",
+        "interact": false,
+        "ms": 4000,
+        "what_you_saw": "The objective is “Deliver the package to the Medical Annex · 127 m.” The yellow minimap marker is to the right of the player marker, and the Corgi is following.",
+        "route_decision": "Move upper-right on the minimap toward the objective marker.",
+        "stuck": ""
+      },
+      "personallyViewed": true
+    },
+    {
+      "turn": 38,
+      "file": "test-results/final-a/L1-16-screen-r1/.frames/turn-000038-action.jpg",
+      "sha256": "7a99f7ad64da6724b337c66d6888763d37684f3db4fb49ff2d9ba9164db1bfe1",
+      "tick": 3721,
+      "decision": {
+        "move": "d",
+        "interact": false,
+        "ms": 4000,
+        "what_you_saw": "The HUD says “Deliver the package to the Medical Annex · 115 m.” The yellow objective marker is on the right edge of the minimap, with the player arrow near its center; the Corgi is following.",
+        "route_decision": "Continue upper-right on the minimap toward the objective marker.",
+        "stuck": ""
+      },
+      "personallyViewed": true
+    },
+    {
+      "turn": 39,
+      "file": "test-results/final-a/L1-16-screen-r1/.frames/turn-000039-action.jpg",
+      "sha256": "e827839ced7299f752a9c7f58f90ebe5e607bcbc8ec42b9e8d5fdfd117ce8672",
+      "tick": 3960,
+      "decision": {
+        "move": "d",
+        "interact": false,
+        "ms": 4000,
+        "what_you_saw": "The objective reads “Deliver the package to the Medical Annex · 108 m.” The yellow minimap marker is near the right edge and the player arrow is near the center; the Corgi is following.",
+        "route_decision": "Continue upper-right on the minimap toward the objective marker.",
+        "stuck": ""
+      },
+      "personallyViewed": true
+    },
+    {
+      "turn": 40,
+      "file": "test-results/final-a/L1-16-screen-r1/.frames/turn-000040-action.jpg",
+      "sha256": "a9c58f96db66f3ebab03f2fcc3a2b077bbb63856589100d8bce0592024a0eb6d",
+      "tick": 4199,
+      "decision": {
+        "move": "d",
+        "interact": false,
+        "ms": 4000,
+        "what_you_saw": "The objective reads “Deliver the package to the Medical Annex · 108 m.” The yellow minimap marker is to the right of the player arrow, and the Corgi is following.",
+        "route_decision": "Continue upper-right on the minimap toward the objective marker.",
+        "stuck": ""
+      },
+      "personallyViewed": true
+    },
+    {
+      "turn": 41,
+      "file": "test-results/final-a/L1-16-screen-r1/.frames/turn-000041-action.jpg",
+      "sha256": "d6765a001ff8e88284196223becd587dcffafb4d57babdd3a7dc23f412369bf1",
+      "tick": 4440,
+      "decision": {
+        "move": "d",
+        "interact": false,
+        "ms": 4000,
+        "what_you_saw": "The HUD says “Deliver the package to the Medical Annex · 108 m.” The yellow objective dot is on the right side of the minimap, and the Corgi is following.",
+        "route_decision": "Continue upper-right on the minimap toward the objective.",
+        "stuck": ""
+      },
+      "personallyViewed": true
+    },
+    {
+      "turn": 42,
+      "file": "test-results/final-a/L1-16-screen-r1/.frames/turn-000042-action.jpg",
+      "sha256": "be301c807ab87279ccaadca77e6ff18fa6e50bc3a820934fd5adabd441f9c545",
+      "tick": 4680,
+      "decision": {
+        "move": "w",
+        "interact": false,
+        "ms": 4000,
+        "what_you_saw": "The package delivery objective is 108 m away. The player arrow is near the middle of the minimap, the yellow objective dot is on its right edge, and the Corgi is following.",
+        "route_decision": "Change course toward the upper part of the screen to get around the storefront and approach the objective.",
+        "stuck": ""
+      },
+      "personallyViewed": true
+    },
+    {
+      "turn": 43,
+      "file": "test-results/final-a/L1-16-screen-r1/.frames/turn-000043-action.jpg",
+      "sha256": "782978a6f290df35b0425860ef34e8b831d9c478d25b6f3cae3ab06ced6f6f02",
+      "tick": 4919,
+      "decision": {
+        "move": "d",
+        "interact": false,
+        "ms": 4000,
+        "what_you_saw": "The package delivery objective is 119 m away. The player is beside the storefront, the Corgi is following, and the yellow objective marker is on the minimap’s right side.",
+        "route_decision": "Continue right on the minimap toward the objective, following the roadway around the storefront.",
+        "stuck": ""
+      },
+      "personallyViewed": true
+    },
+    {
+      "turn": 44,
+      "file": "test-results/final-a/L1-16-screen-r1/.frames/turn-000044-action.jpg",
+      "sha256": "0d5756d4de8058b2a9acf435091d0aff45dcd909117c08dca61b9b86348bc5cd",
+      "tick": 5158,
+      "decision": {
+        "move": "d",
+        "interact": false,
+        "ms": 4000,
+        "what_you_saw": "The objective reads “Deliver the package to the Medical Annex · 108 m.” The yellow objective marker is on the minimap’s right side; the player and Corgi are beside the storefront.",
+        "route_decision": "Move right on screen toward the objective marker.",
+        "stuck": ""
+      },
+      "personallyViewed": true
+    },
+    {
+      "turn": 45,
+      "file": "test-results/final-a/L1-16-screen-r1/.frames/turn-000045-action.jpg",
+      "sha256": "0a72e6d49b597de8531db51481f8e0bc51cac2c4285cafdad66cef36f198715c",
+      "tick": 5398,
+      "decision": {
+        "move": "s",
+        "interact": false,
+        "ms": 4000,
+        "what_you_saw": "The package delivery objective is 108 m away. The yellow objective dot is at the minimap’s right edge, while the player arrow is near its center; the Corgi is following beside the storefront.",
+        "route_decision": "Move down-screen to get around the storefront, then reorient toward the objective.",
+        "stuck": ""
+      },
+      "personallyViewed": true
+    },
+    {
+      "turn": 46,
+      "file": "test-results/final-a/L1-16-screen-r1/.frames/turn-000046-action.jpg",
+      "sha256": "e0c7bd92365b3e80b8a81c653b05fd30f19f888c41b2a9c3b1a716d57b6c5362",
+      "tick": 5638,
+      "decision": {
+        "move": "d",
+        "interact": false,
+        "ms": 4000,
+        "what_you_saw": "The player stands in the roadway beside a bench. The HUD shows “Deliver the package to the Medical Annex · 100 m,” and the yellow objective dot is on the minimap’s right side. The Corgi is following.",
+        "route_decision": "Move toward the objective on the minimap’s right side along the open roadway.",
+        "stuck": ""
+      },
+      "personallyViewed": true
+    },
+    {
+      "turn": 47,
+      "file": "test-results/final-a/L1-16-screen-r1/.frames/turn-000047-action.jpg",
+      "sha256": "dfb3183db7cb1df9a3e1c5935cb205b160e7570011e7a58b2b0808c2ef3958c6",
+      "tick": 5880,
+      "decision": {
+        "move": "w",
+        "interact": false,
+        "ms": 4000,
+        "what_you_saw": "The objective is 97 m away. The player and Corgi are on the sidewalk beside a fence, with a large tree ahead. The yellow objective marker is on the minimap’s right side.",
+        "route_decision": "Head upper-left on the minimap toward the objective, following the sidewalk around the tree.",
+        "stuck": ""
+      },
+      "personallyViewed": true
+    },
+    {
+      "turn": 48,
+      "file": "test-results/final-a/L1-16-screen-r1/.frames/turn-000048-action.jpg",
+      "sha256": "deef85bc2b83b1370081317fb51a11afac49513e7e3049c7f9f8eb76bb3b39c1",
+      "tick": 6022,
+      "decision": {
+        "move": "d",
+        "interact": false,
+        "ms": 4000,
+        "what_you_saw": "The HUD says the Medical Annex is 111 m away. The player is beside a wooden fence and yellow truck, with the Corgi following. The yellow objective marker is on the minimap’s right side.",
+        "route_decision": "Continue right on the minimap toward the objective, following the road past the truck and fence.",
+        "stuck": ""
+      },
+      "personallyViewed": true
+    },
+    {
+      "turn": 49,
+      "file": "test-results/final-a/L1-16-screen-r1/.frames/turn-000049-action.jpg",
+      "sha256": "e93c75ec91123ef1dd60cf79b4144750d0b974909f5f28a3f27e2d40cfbcb46c",
+      "tick": 6272,
+      "decision": {
+        "move": "d",
+        "interact": false,
+        "ms": 4000,
+        "what_you_saw": "The Medical Annex objective reads 108 m. The player and Corgi are beside a yellow truck and wooden fence; the minimap’s yellow objective marker is to the right of the player arrow.",
+        "route_decision": "Continue right on the minimap toward the objective along the open path past the truck and fence.",
+        "stuck": ""
+      },
+      "personallyViewed": true
+    },
+    {
+      "turn": 50,
+      "file": "test-results/final-a/L1-16-screen-r1/.frames/turn-000050-action.jpg",
+      "sha256": "67fb3a428e842d297fb6a260f72408b87dab1853382a0658e4a46184b31352b8",
+      "tick": 6521,
+      "decision": {
+        "move": "d",
+        "interact": false,
+        "ms": 4000,
+        "what_you_saw": "The Medical Annex objective is 108 m away. The player and Corgi are beside the yellow truck and wooden fence; the objective marker is to the right on the minimap.",
+        "route_decision": "Keep moving right on the minimap toward the objective, along the roadway past the truck and fence.",
+        "stuck": ""
+      },
+      "personallyViewed": true
+    },
+    {
+      "turn": 51,
+      "file": "test-results/final-a/L1-16-screen-r1/.frames/turn-000051-action.jpg",
+      "sha256": "48e03a81b3c0e20bc17a2e183f66c5481cf4b5500d92e223cf0bea634b40cef9",
+      "tick": 6764,
+      "decision": {
+        "move": "w",
+        "interact": false,
+        "ms": 4000,
+        "what_you_saw": "The Medical Annex is 108 m away. The player and Corgi are beside the yellow truck and fence, with the yellow objective marker to the right on the minimap.",
+        "route_decision": "Turn upper-left on the minimap and follow the visible roadway around the truck and fence.",
+        "stuck": ""
+      },
+      "personallyViewed": true
+    },
+    {
+      "turn": 52,
+      "file": "test-results/final-a/L1-16-screen-r1/.frames/turn-000052-action.jpg",
+      "sha256": "ffdf499e6b636ecaf48757a54ab676023d2d0f0167c8b1e458eccfc86e6035fa",
+      "tick": 7004,
+      "decision": {
+        "move": "d",
+        "interact": false,
+        "ms": 4000,
+        "what_you_saw": "The Medical Annex is 120 m away. The player is beside a wooden fence and tree; the yellow objective marker is to the right on the minimap.",
+        "route_decision": "Continue right on the minimap along the open path toward the objective.",
+        "stuck": ""
+      },
+      "personallyViewed": true
+    },
+    {
+      "turn": 53,
+      "file": "test-results/final-a/L1-16-screen-r1/.frames/turn-000053-action.jpg",
+      "sha256": "1ecaddf36413e4d21db46148322a89e1f1264d656faee401792c70c335f083c3",
+      "tick": 7249,
+      "decision": {
+        "move": "d",
+        "interact": false,
+        "ms": 4000,
+        "what_you_saw": "The Medical Annex objective reads 108 m. The player and Corgi are beside a yellow construction truck and wooden fence. On the minimap, the yellow objective dot is to the right of the player arrow.",
+        "route_decision": "Move right on the minimap along the visible roadway toward the objective, past the truck and fence.",
+        "stuck": ""
+      },
+      "personallyViewed": true
+    }
+  ]
+}
