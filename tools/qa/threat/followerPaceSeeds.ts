@@ -14,7 +14,7 @@ export async function runSeed({ level, tier, passive, seed }: SeedJob): Promise<
   const row: FollowerPaceSeed = { seed, valid: false, companions: [], phases: [] };
   try {
     const run = await runLevel(level, 'complete', seed, undefined, 'auto', campaign, undefined, 0, {
-      quality: tier, passive, beforeBegin: world => { observer = new ThreatObserver(world, level, { paths: false }); },
+      quality: tier, passive, beforeBegin: world => { observer = new ThreatObserver(world, level, { paths: false, followersOnly: true }); },
       beforeDispose: world => {
         row.phases = observer!.finish().phases.map(({ key, followerSpeeds, followerMedian }) => ({ key, followerSpeeds, followerMedian }));
         row.nativeStateHash = stateHash(world.getState());

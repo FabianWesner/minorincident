@@ -248,33 +248,36 @@ export class ThreatObserver {
   readonly waves: WaveObserver;
   readonly definitions: { id: string; text: string; type: string }[];
   readonly quality: string;
-  constructor(readonly world: SimWorld, readonly level: RunnerLevel, options: { paths?: boolean } = {}) {
+  constructor(readonly world: SimWorld, readonly level: RunnerLevel, options: { paths?: boolean; followersOnly?: boolean } = {}) {
     this.definitions = world.missions!.def.steps.map(s => ({ id: s.id, text: s.text, type: s.type }));
     this.quality = world.infected!.director.tier;
-    this.waves = new WaveObserver(world, level, e => this.identity(e));
-    world.events.on('l3.fallback', e => { if (e.type === 'l3.fallback') this.initialSquad = e.squad.length; });
-    const update = world.update.bind(world), ai = world.infected!, spawn = ai.spawn.bind(ai);
-    // Per-instance observation; no game data, health, inputs, movement or AI budgets are changed.
-    ai.spawn = (...args) => {
-      const id = spawn(...args);
-      if (!args[3]) { const e = ai.active.find(e => e.id === id); if (e) this.born(e); }
-      return id;
-    };
-    observeAttackStarts(world, (sourceId, targetId, tick) => {
-      const target = world.entities.get(targetId);
-      const groupTarget = !!target && (target.civilian?.survivor?.mode === 'follow' || target.escort?.state === 'follow' || target.civilian?.ally?.follow?.targetId === 1 || target.companion?.state === 'follow');
-      if (targetId !== 1 && !groupTarget) return;
-      const source = world.entities.get(sourceId), player = world.entities.get(1)!;
-      for (const row of this.active) {
-        if (targetId === 1) { row.attacks++; row.firstAttack ??= (tick - row.start) / 60; }
-        else { row.groupAttacks++; row.firstGroupAttack ??= (tick - row.start) / 60; }
-        if (source) {
-          const token = this.identity(source); row.seen.add(token);
-          if (Math.hypot(source.transform.x - player.transform.x, source.transform.z - player.transform.z) <= 2.5) row.near.add(token);
+    this.waves = new WaveObserver(world, level, e => this.identity(e), !options.followersOnly);
+    const update = world.update.bind(world);
+    if (!options.followersOnly) {
+      world.events.on('l3.fallback', e => { if (e.type === 'l3.fallback') this.initialSquad = e.squad.length; });
+      const ai = world.infected!, spawn = ai.spawn.bind(ai);
+      // Per-instance observation; no game data, health, inputs, movement or AI budgets are changed.
+      ai.spawn = (...args) => {
+        const id = spawn(...args);
+        if (!args[3]) { const e = ai.active.find(e => e.id === id); if (e) this.born(e); }
+        return id;
+      };
+      observeAttackStarts(world, (sourceId, targetId, tick) => {
+        const target = world.entities.get(targetId);
+        const groupTarget = !!target && (target.civilian?.survivor?.mode === 'follow' || target.escort?.state === 'follow' || target.civilian?.ally?.follow?.targetId === 1 || target.companion?.state === 'follow');
+        if (targetId !== 1 && !groupTarget) return;
+        const source = world.entities.get(sourceId), player = world.entities.get(1)!;
+        for (const row of this.active) {
+          if (targetId === 1) { row.attacks++; row.firstAttack ??= (tick - row.start) / 60; }
+          else { row.groupAttacks++; row.firstGroupAttack ??= (tick - row.start) / 60; }
+          if (source) {
+            const token = this.identity(source); row.seen.add(token);
+            if (Math.hypot(source.transform.x - player.transform.x, source.transform.z - player.transform.z) <= 2.5) row.near.add(token);
+          }
         }
-      }
-    });
-    for (const e of ai.active) this.identity(e); // Composition-owned actors already exist before mission Begin.
+      });
+      for (const e of ai.active) this.identity(e); // Composition-owned actors already exist before mission Begin.
+    }
     world.events.on('objective.started', event => {
       if (event.type !== 'objective.started') return;
       const def = world.missions!.def.steps.find(step => step.id === event.id);
@@ -295,13 +298,13 @@ export class ThreatObserver {
       if (world.tick === before) return;
       for (const row of this.active) row.ticks += world.tick - before;
       const leaderAfter = world.entities.get(1)!.transform;
-      this.observe(Math.hypot(leaderAfter.x - leaderX, leaderAfter.z - leaderZ) * 60 / (world.tick - before));
+      this.observe(Math.hypot(leaderAfter.x - leaderX, leaderAfter.z - leaderZ) * 60 / (world.tick - before), options.followersOnly);
       this.waves.afterTick();
       const changed = phases(world, level).map(p => p.key).join('|') !== descriptors.map(p => p.key).join('|');
       // Extra follower-only seed routes retain every tick and pace sample;
       // their unused independent path diagnostics can be omitted.
       if (world.tick >= this.nextPathAt || changed) {
-        if (options.paths === false) for (const phase of phases(world, level)) this.row(phase);
+        if (options.paths === false || options.followersOnly) for (const phase of phases(world, level)) this.row(phase);
         else this.observePaths();
         this.nextPathAt = world.tick + 120;
       }
@@ -324,18 +327,23 @@ export class ThreatObserver {
   private living(): EntitySnapshot[] {
     return this.world.infected!.active.filter(e => e.health.current > 0 && !e.corpse);
   }
-  private observe(leaderSpeed: number): void {
+  private observe(leaderSpeed: number, followersOnly = false): void {
     const w = this.world, player = w.entities.get(1)!;
-    if (this.level === 'L3' && this.armySquad === null && player.transform.x >= l3.map.zoneX) this.armySquad = w.missions!.state.l3!.squad.length;
-    for (const e of w.infected!.active) this.identity(e); // Includes hidden/deferred admissions and same-ID conversions.
-    for (const e of this.living()) {
-      const token = this.identity(e);
-      for (const row of this.active) {
-        if (!row.ticks || row.ticks === 1) row.initial++;
-        row.seen.add(token);
-        if (!e.hidden && !e.infected!.hidden && !e.pendingAdmission && Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z) <= 2.5) row.near.add(token);
+    if (!followersOnly) {
+      if (this.level === 'L3' && this.armySquad === null && player.transform.x >= l3.map.zoneX) this.armySquad = w.missions!.state.l3!.squad.length;
+      for (const e of w.infected!.active) this.identity(e); // Includes hidden/deferred admissions and same-ID conversions.
+      for (const e of this.living()) {
+        const token = this.identity(e);
+        for (const row of this.active) {
+          if (!row.ticks || row.ticks === 1) row.initial++;
+          row.seen.add(token);
+          if (!e.hidden && !e.infected!.hidden && !e.pendingAdmission && Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z) <= 2.5) row.near.add(token);
+        }
       }
     }
+    // Extra seed receipts retain only 2 Hz follower samples. The per-tick
+    // infected and waiting censuses are used by the main audit, not those votes.
+    if (followersOnly && w.tick % 30) return;
     let escorting = false, stationaryFar = false;
     // Use resolved displacement: requested velocity can remain nonzero while
     // the courier is blocked or a cinematic owns movement.
@@ -351,7 +359,7 @@ export class ThreatObserver {
       // The L8 escape-escort acceptance window begins at the breach; the
       // deliberate sanctuary minute is outside its pace/wait denominator.
       if (this.level === 'L8' && !w.missions!.l8?.state.breachedAt) continue;
-      if (w.missions!.state.phase === 'playing') {
+      if (!followersOnly && w.missions!.state.phase === 'playing') {
         escorting = true;
         const wait = this.followerWait.followers.get(e.id) ?? { escortTicks: 0, stationaryFarTicks: 0 };
         wait.escortTicks++;
