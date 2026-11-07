@@ -1,0 +1,180 @@
+{
+  "row": "L3-11",
+  "level": "L3",
+  "generatedAt": "2026-11-07T10:14:28.636Z",
+  "sourceHash": "379947e61cacf3a5e26075eb669a697d7277dec3e511270ff404afc960d1e544",
+  "checks": [
+    {
+      "clause": "competent player attack rate on checkpoint route",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": {
+        "seeds": [
+          {
+            "seed": 1,
+            "attacksPerMinute": 4.451939291736931
+          },
+          {
+            "seed": 2,
+            "attacksPerMinute": 18.588640275387263
+          },
+          {
+            "seed": 3,
+            "attacksPerMinute": 26.765799256505577
+          }
+        ],
+        "vote": "2/3"
+      },
+      "target": "3\u201325 infected attacks against player/min; 2 of 3 valid seeds pass",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-complete.json"
+    },
+    {
+      "clause": "all-street medkit census (per-street split still open)",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 33,
+      "target": "7 \u2264 value \u2264 Infinity",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-complete.json"
+    },
+    {
+      "clause": "all-street medkit census (per-street split still open)",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 33,
+      "target": "7 \u2264 value \u2264 Infinity",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-stationary.json"
+    },
+    {
+      "clause": "competent player attack rate on checkpoint route",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": {
+        "seeds": [
+          {
+            "seed": 1,
+            "attacksPerMinute": 8.528279538051525
+          },
+          {
+            "seed": 2,
+            "attacksPerMinute": 13.093604172385398
+          },
+          {
+            "seed": 3,
+            "attacksPerMinute": 1.0262696523511552
+          }
+        ],
+        "vote": "2/2"
+      },
+      "target": "3\u201325 infected attacks against player/min; 2 of 3 valid seeds pass",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-high-complete.json"
+    },
+    {
+      "clause": "all-street medkit census (per-street split still open)",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 33,
+      "target": "7 \u2264 value \u2264 Infinity",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-high-complete.json"
+    },
+    {
+      "clause": "all-street medkit census (per-street split still open)",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 33,
+      "target": "7 \u2264 value \u2264 Infinity",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-high-stationary.json"
+    },
+    {
+      "clause": "initial authored medkit entities by street",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "status": "PASS",
+      "value": {
+        "blvd": 9,
+        "commerce": 15,
+        "oak": 9
+      },
+      "target": "\u22652 perstreet;\u22657total",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json"
+    },
+    {
+      "clause": "mortal newbie time below20percent HP",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "status": "PASS",
+      "value": {
+        "seeds": [
+          {
+            "seed": 1,
+            "outcome": "complete",
+            "share": 0.02314004376367615
+          },
+          {
+            "seed": 2,
+            "outcome": "complete",
+            "share": 0
+          },
+          {
+            "seed": 3,
+            "outcome": "complete",
+            "share": 0
+          }
+        ],
+        "vote": "3/3",
+        "deaths": 2,
+        "simulatedSeconds": 308.65
+      },
+      "target": "\u226410% of alive samples; fullroute completed; 2 of 3 valid seeds pass",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json"
+    },
+    {
+      "clause": "initial authored medkit entities by street",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "status": "PASS",
+      "value": {
+        "blvd": 9,
+        "commerce": 15,
+        "oak": 9
+      },
+      "target": "\u22652 perstreet;\u22657total",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json"
+    },
+    {
+      "clause": "mortal newbie time below20percent HP",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "status": "PASS",
+      "value": {
+        "seeds": [
+          {
+            "seed": 1,
+            "outcome": "complete",
+            "share": 0
+          },
+          {
+            "seed": 2,
+            "outcome": "complete",
+            "share": 0
+          },
+          {
+            "seed": 3,
+            "outcome": "complete",
+            "share": 0
+          }
+        ],
+        "vote": "3/3",
+        "deaths": 0,
+        "simulatedSeconds": 204.26666666666668
+      },
+      "target": "\u226410% of alive samples; fullroute completed; 2 of 3 valid seeds pass",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json"
+    }
+  ]
+}

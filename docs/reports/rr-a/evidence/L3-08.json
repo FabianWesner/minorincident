@@ -1,0 +1,150 @@
+{
+  "row": "L3-08",
+  "level": "L3",
+  "generatedAt": "2026-11-07T10:14:28.636Z",
+  "sourceHash": "379947e61cacf3a5e26075eb669a697d7277dec3e511270ff404afc960d1e544",
+  "checks": [
+    {
+      "clause": "authored segment populations before admission/death relief",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "status": "PASS",
+      "value": [
+        250,
+        600,
+        1030
+      ],
+      "target": "250/625/1000 each\u00b120%; these are pending population slots, not simultaneous live entities",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json"
+    },
+    {
+      "clause": "median live within30m by traversed segment and concurrent cap",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "status": "PASS",
+      "value": {
+        "seeds": [
+          {
+            "seed": 1,
+            "prepopulated": [
+              250,
+              600,
+              1030
+            ],
+            "near30": [
+              19,
+              23,
+              24
+            ],
+            "maxConcurrent": 100,
+            "cap": 100
+          },
+          {
+            "seed": 2,
+            "prepopulated": [
+              250,
+              583,
+              1030
+            ],
+            "near30": [
+              19,
+              25,
+              34
+            ],
+            "maxConcurrent": 100,
+            "cap": 100
+          },
+          {
+            "seed": 3,
+            "prepopulated": [
+              250,
+              600,
+              1030
+            ],
+            "near30": [
+              22,
+              29,
+              67
+            ],
+            "maxConcurrent": 100,
+            "cap": 100
+          }
+        ],
+        "vote": "3/3"
+      },
+      "target": "medianS1<S2<S3;max\u2264100; 2 of 3 valid seeds pass",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json"
+    },
+    {
+      "clause": "authored segment populations before admission/death relief",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "status": "PASS",
+      "value": [
+        250,
+        600,
+        1030
+      ],
+      "target": "250/625/1000 each\u00b120%; these are pending population slots, not simultaneous live entities",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json"
+    },
+    {
+      "clause": "median live within30m by traversed segment and concurrent cap",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "status": "FAIL",
+      "value": {
+        "seeds": [
+          {
+            "seed": 1,
+            "prepopulated": [
+              250,
+              600,
+              1030
+            ],
+            "near30": [
+              72,
+              72,
+              79
+            ],
+            "maxConcurrent": 200,
+            "cap": 200
+          },
+          {
+            "seed": 2,
+            "prepopulated": [
+              250,
+              600,
+              1030
+            ],
+            "near30": [
+              81,
+              92,
+              76
+            ],
+            "maxConcurrent": 200,
+            "cap": 200
+          },
+          {
+            "seed": 3,
+            "prepopulated": [
+              250,
+              600,
+              1030
+            ],
+            "near30": [
+              59,
+              92,
+              77
+            ],
+            "maxConcurrent": 200,
+            "cap": 200
+          }
+        ],
+        "vote": "0/2"
+      },
+      "target": "medianS1<S2<S3;max\u2264200; 2 of 3 valid seeds pass",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json"
+    }
+  ]
+}

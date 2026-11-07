@@ -1,43 +1,23 @@
 {
   "row": "L3-07",
   "status": "PASS",
-  "reviewer": "Codex final-a",
+  "reviewer": "Codex rr-a",
   "date": "2026-11-07",
-  "commit": "f756c03ef63f1f00f38aabb6d4ad328bde2e313b",
+  "commit": "50be7c824705fc3cdbb3a7ab7dd78f72c7bf2001",
+  "sourceDigest": "4775569227eac4bde52bcf09d08438f35bb8dd5135560d4fca21da6b16b6d5e1",
   "clauses": [
     {
       "clause": "Segment 1: the squad visibly fights (officers fire at infected and land hits; kills not required — at high quality they may be overwhelmed before scoring one); player damage < 100 HP (never a whole life). PO 2026-11-05: \"Overwhelmed is the point\" — the ≥ 60 % officer-kill share is dropped; the squad may be overwhelmed in the yard.",
       "verdict": "PASS",
-      "note": "Personally inspected all41 current ordinary mortal route frames, including attack+1s/+10s and fallback in both qualities: multiple uniformed officers visibly aim/fire, muzzle flashes and tracers reach the infected; raw render.vfx.shots retains actual allied source IDs. Independent fresh mortal segment1 fixture records low122/high31 officer hits,27/3 officer kills,22/0 player damage and0/0 deaths. Both damage totals <100HP. Browser high courier reaches39HP at fallback, corroborating survival with61HP net loss on this different ordinary route. No kill-share requirement is applied (PO removed it)."
+      "note": "Fresh low/high mortal segment-1 fixture checks PASS: officers landed hits and the player remained below the 100 HP loss limit."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/final-a/native-receipts/L3-low-fixtures.json.gz",
-      "sha256": "5bb7a9d05574c189a8bec9fe20a06b1a7988f48a3175a8841aef1fa147209724",
-      "what": "Personally inspected all41 current ordinary mortal route frames, including attack+1s/+10s and fallback in both qualities: multiple uniformed officers visibly aim/fire, muzzle flashes and tracers reach the infected; raw render.vfx.shots retains actual allied source IDs. Independent fresh mortal segment1 fixture records low122/high31 officer hits,27/3 officer kills,22/0 player damage and0/0 deaths. Both damage totals <100HP. Browser high courier reaches39HP at fallback, corroborating survival with61HP net loss on this different ordinary route. No kill-share requirement is applied (PO removed it)."
-    },
-    {
-      "file": "docs/reports/final-a/native-receipts/L3-high-fixtures.json.gz",
-      "sha256": "87d97237be8ee7ecb0019d923692b5c60332643dfee8640b4274c1c5727fe14c",
-      "what": "Personally inspected all41 current ordinary mortal route frames, including attack+1s/+10s and fallback in both qualities: multiple uniformed officers visibly aim/fire, muzzle flashes and tracers reach the infected; raw render.vfx.shots retains actual allied source IDs. Independent fresh mortal segment1 fixture records low122/high31 officer hits,27/3 officer kills,22/0 player damage and0/0 deaths. Both damage totals <100HP. Browser high courier reaches39HP at fallback, corroborating survival with61HP net loss on this different ordinary route. No kill-share requirement is applied (PO removed it)."
-    },
-    {
-      "file": "docs/reports/final-a/L3-07-browser-ledger.json.gz",
-      "sha256": "0781d49e8c30bcbcfc53609aa1d9d538a631104084388f67550ef0ed03c9b6fb",
-      "what": "Personally inspected all41 current ordinary mortal route frames, including attack+1s/+10s and fallback in both qualities: multiple uniformed officers visibly aim/fire, muzzle flashes and tracers reach the infected; raw render.vfx.shots retains actual allied source IDs. Independent fresh mortal segment1 fixture records low122/high31 officer hits,27/3 officer kills,22/0 player damage and0/0 deaths. Both damage totals <100HP. Browser high courier reaches39HP at fallback, corroborating survival with61HP net loss on this different ordinary route. No kill-share requirement is applied (PO removed it)."
-    },
-    {
-      "file": "docs/reports/final-a/L3-07-image-review.json",
-      "sha256": "fc2feec7a01c5b1567c2ecc33d1e14c818b31ac4ae27dd46f2b3716ff2ea6146",
-      "what": "Personally inspected all41 current ordinary mortal route frames, including attack+1s/+10s and fallback in both qualities: multiple uniformed officers visibly aim/fire, muzzle flashes and tracers reach the infected; raw render.vfx.shots retains actual allied source IDs. Independent fresh mortal segment1 fixture records low122/high31 officer hits,27/3 officer kills,22/0 player damage and0/0 deaths. Both damage totals <100HP. Browser high courier reaches39HP at fallback, corroborating survival with61HP net loss on this different ordinary route. No kill-share requirement is applied (PO removed it)."
-    },
-    {
-      "file": "docs/reports/final-a/L3-07-current-proof.json",
-      "sha256": "57df5af2dd9a04d0a9a955dc5c66e172ffe0428763cc1e435ea2188a29616a75",
-      "what": "Personally inspected all41 current ordinary mortal route frames, including attack+1s/+10s and fallback in both qualities: multiple uniformed officers visibly aim/fire, muzzle flashes and tracers reach the infected; raw render.vfx.shots retains actual allied source IDs. Independent fresh mortal segment1 fixture records low122/high31 officer hits,27/3 officer kills,22/0 player damage and0/0 deaths. Both damage totals <100HP. Browser high courier reaches39HP at fallback, corroborating survival with61HP net loss on this different ordinary route. No kill-share requirement is applied (PO removed it)."
+      "file": "docs/reports/rr-a/evidence/L3-07.json",
+      "sha256": "8eb42eb71ed1cbe9cb8c1a423155f71543bc9d3b42b49262a92239fe86659575",
+      "what": "Fresh native acceptance row snapshot generated by qa:accept on frozen main; contains current measured clauses for L3-07."
     }
   ],
-  "notes": "Game source frozen at4e570db. Current pooled headless capture/input evidence and exact sourceDigest; image files retained only under test-results.",
-  "sourceDigest": "b54f676bf2eb09a12c8059dce4ebe53003816773db044d7acfc253fccbedccf9"
+  "notes": "All measured row clauses are covered by fresh current-source native acceptance evidence."
 }
