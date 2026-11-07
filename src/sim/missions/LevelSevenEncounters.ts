@@ -18,6 +18,8 @@ export interface L7EncounterState {
   alarm?: { key: string; id: number; x: number; z: number; text: string; until: number; kind: 'wait' | 'attack' | 'lost' };
 }
 const distance = (a: Point, b: Point) => Math.hypot(a.x - b.x, a.z - b.z);
+/** Eighteen metres covers the three-column formation (corridor group check and straggler warnings). */
+const l7FollowerRangeM = 18;
 /** L7-E1 owns population and physical group passage. Boarding/departure is owned by L7-E2. */
 export class LevelSevenEncounters {
   state: L7EncounterState = { started: false, roster: [], arrivals: [], finalReady: false, passageReady: false, waitAt: 0 };
@@ -31,8 +33,14 @@ export class LevelSevenEncounters {
     world.events.on('infected.attack', event => {
       if (event.type !== 'infected.attack') return;
       const follower = world.entities.get(event.targetId);
-      if (follower && this.state.roster.some(r => r.id === follower.id && r.status === 'following') && !world.infected!.director.inFrame(follower.transform)) this.warn(follower, 'attack');
+      if (follower && this.state.roster.some(r => r.id === follower.id && r.status === 'following') && this.behind(follower)) this.warn(follower, 'attack');
     });
+  }
+  /** r5-l7 (vqa58): "behind you" only for an evacuee who really is away from the courier's group (the 18 m corridor
+   * group range) and off screen. A loss inside the column next to her is not a straggler, even off a close-zoom frame. */
+  private behind(e: EntitySnapshot): boolean {
+    const p = this.world.entities.get(1)!.transform;
+    return distance(e.transform, p) > l7FollowerRangeM && !this.world.infected!.director.inFrame(e.transform);
   }
   private warn(e: EntitySnapshot, kind: 'wait' | 'attack' | 'lost'): void {
     const w = this.world, current = this.state.alarm;
@@ -156,8 +164,10 @@ export class LevelSevenEncounters {
     // otherwise nearby survivor targets delay first courier contact.
       const player = this.world.entities.get(1)!;
       const close = firstStreet.filter(e => e.archetype === 'infected.runner' && e.transform.x > l7Encounters.streets[0].x + 2)
-        .sort((a, b) => distance(a.transform, player.transform) - distance(b.transform, player.transform))[0];
-      if (close) this.world.infected!.press(close.id, 1, this.world.tick + 20 * 60);
+        .sort((a, b) => distance(a.transform, player.transform) - distance(b.transform, player.transform));
+      // r5-l7: evacuees now survive their first bites, so a kerb runner that reaches the party first stays busy
+      // with it; two pressed runners keep the courier's first contact inside L7-05's 10 s.
+      for (const e of close.slice(0, 2)) this.world.infected!.press(e.id, 1, this.world.tick + 20 * 60);
     }
     const low = this.world.infected!.director.tier === 'low';
     // Final horde is present before approach. Its Alphas get slots before ordinary queued arrivals.
@@ -196,7 +206,7 @@ export class LevelSevenEncounters {
       else if (e.infected || e.infection) r.status = 'turned';
       else if (e.transform.x <= l7Encounters.passage.x && Math.abs(e.transform.z - l7Encounters.passage.z) < 7) r.passed = true;
       if (r.status !== 'following') {
-        if (e && !ai.director.inFrame(e.transform)) this.warn(e, 'lost');
+        if (e && this.behind(e)) this.warn(e, 'lost');
         w.events.emit({ type: 'mission.signal', tick: w.tick, name: `l7.survivor-${r.status}`, actorId: r.id });
       }
     }
@@ -213,10 +223,21 @@ export class LevelSevenEncounters {
       m.setState('corridor-group',arrived&&this.corridorGroup().missing.length===0);
     }
   }
+  /** A completed bite on a following evacuee costs `followerBite.damage` of its health and staggers the biter while
+   * the evacuee tears free. True when it survives; the bite that would empty its health kills/turns as usual. */
+  woundFollower(target: EntitySnapshot, biter: EntitySnapshot): boolean {
+    if (!this.state.roster.some(r => r.id === target.id && r.status === 'following')) return false;
+    const { damage, shoveTicks } = l7Encounters.followerBite, w = this.world;
+    if (target.health.current <= damage) return false;
+    target.health.current -= damage;
+    if (biter.combat) biter.combat.staggerUntil = Math.max(biter.combat.staggerUntil, w.tick + shoveTicks);
+    w.events.emit({ type: 'infected.attack', tick: w.tick, sourceId: biter.id, attackId: 0, targetId: target.id, special: 'bite', amount: damage });
+    return true;
+  }
   /** Eighteen metres covers the three-column formation while requiring every living member to accompany the courier. */
   corridorGroup(){
     const p=this.world.entities.get(1)!.transform,live=this.state.roster.filter(r=>r.status==='following');
-    const missing=live.filter(r=>distance(this.world.entities.get(r.id)!.transform,p)>18);
+    const missing=live.filter(r=>distance(this.world.entities.get(r.id)!.transform,p)>l7FollowerRangeM);
     return {total:live.length,near:live.length-missing.length,missing};
   }
   follower(e: EntitySnapshot): boolean {

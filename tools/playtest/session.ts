@@ -1208,6 +1208,14 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     }
     if(Date.now()-lastObservation>=1000) {
       lastObservation=Date.now();log({observation:{tick:e.tick,step:e.step,checkpoint:e.checkpoint,menu:e.menu,text:e.objective,player:e.player?{x:e.player.x,z:e.player.z,hp:e.player.hp,weapon:e.player.current}:null,driving:e.driving,enemies:e.enemies.map(b=>({id:b.id,d:b.d,hp:b.hp,max:b.max,drawn:b.drawn,x:b.x,z:b.z})),...(e.level==='L6'?{allies:e.allies.filter(b=>b.drawn&&b.hp>0&&!b.corpse).map(b=>({id:b.id,x:b.x,z:b.z,hp:b.hp,kind:b.kind}))}:{}),marker:ring,noProgressSeconds:observed.seconds}});
+      // r5-l7: read-only roster audit (following/dead/turned/boarded and the HUD follower alarm) for survivor-loss counts.
+      if (e.level === 'L7' && process.env.PLAYTEST_L7_ROSTER_AUDIT === '1') log({ l7Roster: await page.evaluate(() => {
+        const w = (window.__SCENE__ as unknown as { game: Game }).game.world, s = w.l7Encounters?.state, p = w.entities.get(1)!.transform;
+        const live = s?.roster.filter(r => r.status === 'following') ?? [];
+        return { tick: w.tick, following: live.length, dead: s?.roster.filter(r => r.status === 'dead').length, turned: s?.roster.filter(r => r.status === 'turned').length,
+          near18: live.filter(r => { const f = w.entities.get(r.id); return f && Math.hypot(f.transform.x - p.x, f.transform.z - p.z) <= 18; }).length,
+          boarded: w.l7Departure?.state.boarded.length ?? 0, alarm: s?.alarm && w.tick < s.alarm.until ? s.alarm.text : null };
+      }).catch(() => null) });
       if (e.level === 'L5' && process.env.PLAYTEST_METRO_AUDIT === '1') {
         const metro = await page.evaluate(() => {
           const g = (window.__SCENE__ as unknown as { game: Game }).game, w = g.world, s = w.missions!.state.l5!;
