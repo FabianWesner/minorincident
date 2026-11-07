@@ -5,7 +5,7 @@
   "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
   "fixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
-  "generatedAt": "2026-11-07T02:33:56.999Z",
+  "generatedAt": "2026-11-07T03:05:32.037Z",
   "policies": [
     {
       "tier": "low",
@@ -6830,15 +6830,21 @@
     },
     {
       "id": "L4-11",
-      "status": "NOT CHECKED",
-      "currentStatus": "NOT CHECKED",
-      "value": "low/controlled-fixture front MG isolated riot incapacitation: {\"weapon\":\"weapon.army-mg\",\"flank\":false,\"initialHp\":225,\"endHp\":0,\"hitCount\":21,\"seconds\":2.183333333333333,\"hpAmounts\":[2.52,2.52,2.52,2.52,2.52,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,2.399999999999949],\"isolatedAI\":true} (target ≤6 s and positive frontal damage; PASS); low/controlled-fixture flank MG isolated riot incapacitation: {\"weapon\":\"weapon.army-mg\",\"flank\":true,\"initialHp\":225,\"endHp\":0,\"hitCount\":17,\"seconds\":1.7833333333333334,\"hpAmounts\":[14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,1],\"isolatedAI\":true} (target ≤2 s; PASS); high/controlled-fixture front MG isolated riot incapacitation: {\"weapon\":\"weapon.army-mg\",\"flank\":false,\"initialHp\":225,\"endHp\":0,\"hitCount\":21,\"seconds\":2.183333333333333,\"hpAmounts\":[2.52,2.52,2.52,2.52,2.52,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,2.399999999999949],\"isolatedAI\":true} (target ≤6 s and positive frontal damage; PASS); high/controlled-fixture flank MG isolated riot incapacitation: {\"weapon\":\"weapon.army-mg\",\"flank\":true,\"initialHp\":225,\"endHp\":0,\"hitCount\":17,\"seconds\":1.7833333333333334,\"hpAmounts\":[14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,1],\"isolatedAI\":true} (target ≤2 s; PASS) Manual review FAIL (STALE, Codex/fix67-b): Current-source native duels pass the frontal kill-time and survival clauses: 1.6–26 m finishes within4.70s in both tiers, and the courier survives each duel. Full row remains open because flank TTK, current-source rendered HP chip/recoil/bar presentation, and the exact PO feel question have not been qualified. Current browser capture attempt was blocked by sandbox Vite-bind EPERM. PO: does sustained fire now feel effective against the riot?",
+      "status": "FAIL",
+      "currentStatus": "FAIL",
+      "value": "low/controlled-fixture front MG isolated riot incapacitation: {\"weapon\":\"weapon.army-mg\",\"flank\":false,\"initialHp\":225,\"endHp\":0,\"hitCount\":21,\"seconds\":2.183333333333333,\"hpAmounts\":[2.52,2.52,2.52,2.52,2.52,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,2.399999999999949],\"isolatedAI\":true} (target ≤6 s and positive frontal damage; PASS); low/controlled-fixture flank MG isolated riot incapacitation: {\"weapon\":\"weapon.army-mg\",\"flank\":true,\"initialHp\":225,\"endHp\":0,\"hitCount\":17,\"seconds\":1.7833333333333334,\"hpAmounts\":[14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,1],\"isolatedAI\":true} (target ≤2 s; PASS); high/controlled-fixture front MG isolated riot incapacitation: {\"weapon\":\"weapon.army-mg\",\"flank\":false,\"initialHp\":225,\"endHp\":0,\"hitCount\":21,\"seconds\":2.183333333333333,\"hpAmounts\":[2.52,2.52,2.52,2.52,2.52,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,2.399999999999949],\"isolatedAI\":true} (target ≤6 s and positive frontal damage; PASS); high/controlled-fixture flank MG isolated riot incapacitation: {\"weapon\":\"weapon.army-mg\",\"flank\":true,\"initialHp\":225,\"endHp\":0,\"hitCount\":17,\"seconds\":1.7833333333333334,\"hpAmounts\":[14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,1],\"isolatedAI\":true} (target ≤2 s; PASS) Manual review FAIL (FRESH, Codex/final-b): FAIL health-bar-always clause at both tiers in the normal follow camera, zoom1.5: unobscured healthy riot225HP at16.000m has no bar; healthy14.000m positive control has a full bar. After one actual frontal MG hit, HP222.48 and distance16.071892m, the bar appears. All6 full-resolution control frames personally inspected. Frozen HealthBars.barEligible excludes every healthy infected beyond15m before the mandatory-riot cap exception is applied. Separate verified physical MG assays at actual.9/1.6/3/6/20/26m, both tiers, record only weapon.army-mg attacks, kill in1.8–3.8s, and courier survives with78–100HP; isolated native flank1.7833s passes≤2. These numeric successes do not waive the visible missing bar. Earlier selection/occlusion setups are explicitly rejected, not game failures. Repro: full-health riot16m away in the normal wide camera; compare before and after2.52HP chip. PO subjective effect feedback is not promoted PASS.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L4-low-fixtures.json",
         "docs/reports/fix51-verify/receipts/L4-high-fixtures.json",
-        "docs/reports/sweep-b/L4-11-recheck.json",
-        "docs/reports/sweep-b/L4-riot-duels.json"
+        "docs/reports/final-b/L4-11-proof.json",
+        "docs/reports/final-b/L4-riot-bar-normal.json.gz",
+        "docs/reports/final-b/L4-riot-bar-executed.ts.gz",
+        "docs/reports/final-b/L4-riot-MG-verified.json.gz",
+        "docs/reports/final-b/L4-riot-MG-executed.ts.gz",
+        "docs/reports/final-b/L4-healthbars-frozen-source.ts.gz",
+        "docs/reports/final-b/frozen-native/L4-low-fixtures.json.gz",
+        "docs/reports/final-b/frozen-native/L4-high-fixtures.json.gz"
       ],
       "expected": "Riot infected: frontal MG hits visibly chip HP + recoil at every range incl. point blank; frontal MG kill ≤ 6 s (measured 3.7 s), flank ≤ 2 s; health bar always shown; one riot cop alone does not down a full-HP player that keeps firing (tune). PO: \"I feel I have zero effect when I shoot them.\"",
       "checks": [
@@ -7019,29 +7025,60 @@
       "reviewDecision": {
         "row": "L4-11",
         "status": "FAIL",
-        "reviewer": "Codex/fix67-b",
-        "date": "2026-11-06",
-        "commit": "2b0024d17c870a0fe1cca6de45b6454207ec90cf",
+        "reviewer": "Codex/final-b",
+        "date": "2026-11-07",
+        "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+        "sourceDigest": "e3dafe0694468ae05c6e72a1f303adf938a6c33391416d38d67a60534e2fe51b",
         "clauses": [
           {
             "clause": "Riot infected: frontal MG hits visibly chip HP + recoil at every range incl. point blank; frontal MG kill ≤ 6 s (measured 3.7 s), flank ≤ 2 s; health bar always shown; one riot cop alone does not down a full-HP player that keeps firing (tune). PO: \"I feel I have zero effect when I shoot them.\"",
             "verdict": "FAIL",
-            "note": "Current-source native duels pass the frontal kill-time and survival clauses: 1.6–26 m finishes within4.70s in both tiers, and the courier survives each duel. Full row remains open because flank TTK, current-source rendered HP chip/recoil/bar presentation, and the exact PO feel question have not been qualified. Current browser capture attempt was blocked by sandbox Vite-bind EPERM. PO: does sustained fire now feel effective against the riot?"
+            "note": "FAIL health-bar-always clause at both tiers in the normal follow camera, zoom1.5: unobscured healthy riot225HP at16.000m has no bar; healthy14.000m positive control has a full bar. After one actual frontal MG hit, HP222.48 and distance16.071892m, the bar appears. All6 full-resolution control frames personally inspected. Frozen HealthBars.barEligible excludes every healthy infected beyond15m before the mandatory-riot cap exception is applied. Separate verified physical MG assays at actual.9/1.6/3/6/20/26m, both tiers, record only weapon.army-mg attacks, kill in1.8–3.8s, and courier survives with78–100HP; isolated native flank1.7833s passes≤2. These numeric successes do not waive the visible missing bar. Earlier selection/occlusion setups are explicitly rejected, not game failures. Repro: full-health riot16m away in the normal wide camera; compare before and after2.52HP chip. PO subjective effect feedback is not promoted PASS."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/sweep-b/L4-11-recheck.json",
-            "sha256": "7e8c96b6764ad28747da4f75e58506b5942864de5a2e9d27129518cdb8631398",
-            "what": "Current-source low/high mortal duels across0.9–26m; frontal TTK and first-hit-to-kill are under6s from1.6–26m, and the courier survives every duel."
+            "file": "docs/reports/final-b/L4-11-proof.json",
+            "sha256": "c8111eac6f937be5a2a9cb8ecfbb66ac78af56a122b4041129b24289954283c9",
+            "what": "FAIL health-bar-always clause at both tiers in the normal follow camera, zoom1.5: unobscured healthy riot225HP at16.000m has no bar; healthy14.000m positive control has a full bar. After one actual frontal MG hit, HP222.48 and distance16.071892m, the bar appears. All6 full-resolution control frames personally inspected. Frozen HealthBars.barEligible excludes every healthy infected beyond15m before the mandatory-riot cap exception is applied. Separate verified physical MG assays at actual.9/1.6/3/6/20/26m, both tiers, record only weapon.army-mg attacks, kill in1.8–3.8s, and courier survives with78–100HP; isolated native flank1.7833s passes≤2. These numeric successes do not waive the visible missing bar. Earlier selection/occlusion setups are explicitly rejected, not game failures. Repro: full-health riot16m away in the normal wide camera; compare before and after2.52HP chip. PO subjective effect feedback is not promoted PASS."
           },
           {
-            "file": "docs/reports/sweep-b/L4-riot-duels.json",
-            "sha256": "0f86da3b69ef71b5c0e5d1d594e3adb46612f8f80d3f92d3c6726cfc5fb118dd",
-            "what": "Underlying production combat ledger with hit ticks, actual damage, player health, riot health, and measured completion time."
+            "file": "docs/reports/final-b/L4-riot-bar-normal.json.gz",
+            "sha256": "398b6fcda347843b14f06a23364673c937d7d30db0b28a0aaf7517ba217cdfb9",
+            "what": "FAIL health-bar-always clause at both tiers in the normal follow camera, zoom1.5: unobscured healthy riot225HP at16.000m has no bar; healthy14.000m positive control has a full bar. After one actual frontal MG hit, HP222.48 and distance16.071892m, the bar appears. All6 full-resolution control frames personally inspected. Frozen HealthBars.barEligible excludes every healthy infected beyond15m before the mandatory-riot cap exception is applied. Separate verified physical MG assays at actual.9/1.6/3/6/20/26m, both tiers, record only weapon.army-mg attacks, kill in1.8–3.8s, and courier survives with78–100HP; isolated native flank1.7833s passes≤2. These numeric successes do not waive the visible missing bar. Earlier selection/occlusion setups are explicitly rejected, not game failures. Repro: full-health riot16m away in the normal wide camera; compare before and after2.52HP chip. PO subjective effect feedback is not promoted PASS."
+          },
+          {
+            "file": "docs/reports/final-b/L4-riot-bar-executed.ts.gz",
+            "sha256": "2b91d72720319f71de64f622d42c27bf2e1aca87d2f3e260e95d208d307cb5e9",
+            "what": "FAIL health-bar-always clause at both tiers in the normal follow camera, zoom1.5: unobscured healthy riot225HP at16.000m has no bar; healthy14.000m positive control has a full bar. After one actual frontal MG hit, HP222.48 and distance16.071892m, the bar appears. All6 full-resolution control frames personally inspected. Frozen HealthBars.barEligible excludes every healthy infected beyond15m before the mandatory-riot cap exception is applied. Separate verified physical MG assays at actual.9/1.6/3/6/20/26m, both tiers, record only weapon.army-mg attacks, kill in1.8–3.8s, and courier survives with78–100HP; isolated native flank1.7833s passes≤2. These numeric successes do not waive the visible missing bar. Earlier selection/occlusion setups are explicitly rejected, not game failures. Repro: full-health riot16m away in the normal wide camera; compare before and after2.52HP chip. PO subjective effect feedback is not promoted PASS."
+          },
+          {
+            "file": "docs/reports/final-b/L4-riot-MG-verified.json.gz",
+            "sha256": "008e019f10644bdd9d3e81fed1a7bc6a5f300cf83f1c6d9ab6da8000dd236250",
+            "what": "FAIL health-bar-always clause at both tiers in the normal follow camera, zoom1.5: unobscured healthy riot225HP at16.000m has no bar; healthy14.000m positive control has a full bar. After one actual frontal MG hit, HP222.48 and distance16.071892m, the bar appears. All6 full-resolution control frames personally inspected. Frozen HealthBars.barEligible excludes every healthy infected beyond15m before the mandatory-riot cap exception is applied. Separate verified physical MG assays at actual.9/1.6/3/6/20/26m, both tiers, record only weapon.army-mg attacks, kill in1.8–3.8s, and courier survives with78–100HP; isolated native flank1.7833s passes≤2. These numeric successes do not waive the visible missing bar. Earlier selection/occlusion setups are explicitly rejected, not game failures. Repro: full-health riot16m away in the normal wide camera; compare before and after2.52HP chip. PO subjective effect feedback is not promoted PASS."
+          },
+          {
+            "file": "docs/reports/final-b/L4-riot-MG-executed.ts.gz",
+            "sha256": "839d3ddd0f91418d32f73053460f91136f569f57a089ceb5527de253ac8f2675",
+            "what": "FAIL health-bar-always clause at both tiers in the normal follow camera, zoom1.5: unobscured healthy riot225HP at16.000m has no bar; healthy14.000m positive control has a full bar. After one actual frontal MG hit, HP222.48 and distance16.071892m, the bar appears. All6 full-resolution control frames personally inspected. Frozen HealthBars.barEligible excludes every healthy infected beyond15m before the mandatory-riot cap exception is applied. Separate verified physical MG assays at actual.9/1.6/3/6/20/26m, both tiers, record only weapon.army-mg attacks, kill in1.8–3.8s, and courier survives with78–100HP; isolated native flank1.7833s passes≤2. These numeric successes do not waive the visible missing bar. Earlier selection/occlusion setups are explicitly rejected, not game failures. Repro: full-health riot16m away in the normal wide camera; compare before and after2.52HP chip. PO subjective effect feedback is not promoted PASS."
+          },
+          {
+            "file": "docs/reports/final-b/L4-healthbars-frozen-source.ts.gz",
+            "sha256": "94cf0ac36a74da2a2692bb3aab6dccbb46af7aa77d12638069720262295a3dc7",
+            "what": "FAIL health-bar-always clause at both tiers in the normal follow camera, zoom1.5: unobscured healthy riot225HP at16.000m has no bar; healthy14.000m positive control has a full bar. After one actual frontal MG hit, HP222.48 and distance16.071892m, the bar appears. All6 full-resolution control frames personally inspected. Frozen HealthBars.barEligible excludes every healthy infected beyond15m before the mandatory-riot cap exception is applied. Separate verified physical MG assays at actual.9/1.6/3/6/20/26m, both tiers, record only weapon.army-mg attacks, kill in1.8–3.8s, and courier survives with78–100HP; isolated native flank1.7833s passes≤2. These numeric successes do not waive the visible missing bar. Earlier selection/occlusion setups are explicitly rejected, not game failures. Repro: full-health riot16m away in the normal wide camera; compare before and after2.52HP chip. PO subjective effect feedback is not promoted PASS."
+          },
+          {
+            "file": "docs/reports/final-b/frozen-native/L4-low-fixtures.json.gz",
+            "sha256": "15731ced4648a70d569c52f8195b4384a11e9a5862f6a70b77353c7e46778503",
+            "what": "FAIL health-bar-always clause at both tiers in the normal follow camera, zoom1.5: unobscured healthy riot225HP at16.000m has no bar; healthy14.000m positive control has a full bar. After one actual frontal MG hit, HP222.48 and distance16.071892m, the bar appears. All6 full-resolution control frames personally inspected. Frozen HealthBars.barEligible excludes every healthy infected beyond15m before the mandatory-riot cap exception is applied. Separate verified physical MG assays at actual.9/1.6/3/6/20/26m, both tiers, record only weapon.army-mg attacks, kill in1.8–3.8s, and courier survives with78–100HP; isolated native flank1.7833s passes≤2. These numeric successes do not waive the visible missing bar. Earlier selection/occlusion setups are explicitly rejected, not game failures. Repro: full-health riot16m away in the normal wide camera; compare before and after2.52HP chip. PO subjective effect feedback is not promoted PASS."
+          },
+          {
+            "file": "docs/reports/final-b/frozen-native/L4-high-fixtures.json.gz",
+            "sha256": "6e2c24d1e918ce893d9f59eb41bc8c45c65ae81423a5241b840054797ca0a07a",
+            "what": "FAIL health-bar-always clause at both tiers in the normal follow camera, zoom1.5: unobscured healthy riot225HP at16.000m has no bar; healthy14.000m positive control has a full bar. After one actual frontal MG hit, HP222.48 and distance16.071892m, the bar appears. All6 full-resolution control frames personally inspected. Frozen HealthBars.barEligible excludes every healthy infected beyond15m before the mandatory-riot cap exception is applied. Separate verified physical MG assays at actual.9/1.6/3/6/20/26m, both tiers, record only weapon.army-mg attacks, kill in1.8–3.8s, and courier survives with78–100HP; isolated native flank1.7833s passes≤2. These numeric successes do not waive the visible missing bar. Earlier selection/occlusion setups are explicitly rejected, not game failures. Repro: full-health riot16m away in the normal wide camera; compare before and after2.52HP chip. PO subjective effect feedback is not promoted PASS."
           }
         ],
-        "freshness": "STALE",
+        "freshness": "FRESH",
         "latestRelevantCommit": "564b16a89b67136949938d58fa72a522cd4fee7f"
       }
     },

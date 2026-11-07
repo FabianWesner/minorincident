@@ -2,7 +2,7 @@
 
 Frozen source: `4e570db8499bd1d76dcc17f9d13d1949d5cf2096`. Game source remains unchanged. The native receipts were generated on that source at both tiers. Historical reviews have their original provenance; an older review is not refreshed merely by inserting the current source digest.
 
-This report is in progress (42/46 rows have current measured reviews). Table verdicts refer to the explicit reviews; the tracker separately retains any missing machine coverage, including rows with no implemented full-row machine binding. A FRESH review is not a claim that automatedComplete is true.
+This report is in progress (44/46 rows have current measured reviews). Table verdicts refer to the explicit reviews; the tracker separately retains any missing machine coverage, including rows with no implemented full-row machine binding. A FRESH review is not a claim that automatedComplete is true.
 
  Each OPEN row still needs current evidence for at least one objective clause. It has no final verdict yet. The former blanket digest refresh and superseded historical failures have been removed.
 
@@ -18,7 +18,7 @@ This report is in progress (42/46 rows have current measured reviews). Table ver
 | L4-08 | PASS | 6/8 actual Alphas,6/8 distinct anchors/ticks; all offscreen,≥30.57m;4/3 distinct Alphas damage line. | [review](../../qa/reviews/L4-08.json) · [proof](L4-08-proof.json) | — |
 | L4-09 | PASS | Line 1 52.317/60.333 s; nests 124 s; armour 170/170.6 s; camera skip/timing fixtures pass. | [review](../../qa/reviews/L4-09.json) · [native report](../fix51-verify/L4.json) | — |
 | L4-10 | PASS | 2 HMGs; tank+22s,8.0167–11.7333s cadence; clearance≥15.1449m;0 concrete/wire intersections. Decorative sign contacts disclosed. | [review](../../qa/reviews/L4-10.json) · [proof](L4-10-proof.json) | — |
-| L4-11 | OPEN | Current whole-row measurement pending; historical observations are not a frozen-head verdict. | [review](../../qa/reviews/L4-11.json) · [native report](../fix51-verify/L4.json) | — |
+| L4-11 | FAIL | Normal zoom1.5: healthy225HP riot at16m has0 bar;14m control and damaged222.48HP at16.0719m have bars. Repro: compare healthy vs first chip. | [review](../../qa/reviews/L4-11.json) · [proof](L4-11-proof.json) | — |
 | L4-12 | PASS | Minimum4 visible model looks across10679/10715 nearest20 living-infected ticks; current physical frames reviewed. | [review](../../qa/reviews/L4-12.json) · [native report](../fix51-verify/L4.json) | — |
 | L4-13 | FAIL | Low ticks36109–36649:0 admissions; high17245–17785:1 admission in9s, below3. No death/respawn/checkpoint in either interval. Repro: native complete collapse census. | [review](../../qa/reviews/L4-13.json) · [native report](../fix51-verify/L4.json) | — |
 | L4-14 | PASS | Cellar entry4 live fires,3 burning wrecks,10 windows; actual scorch21/20. | [review](../../qa/reviews/L4-14.json) · [proof](L4-14-proof.json) | — |
@@ -36,7 +36,7 @@ This report is in progress (42/46 rows have current measured reviews). Table ver
 | L5-08 | FAIL | Low straight-walk in-band shares 92.12%/89.22%/85.26%, below 95%. Repro: run native complete L5 and inspect calm straight-walk formation ledger. | [review](../../qa/reviews/L5-08.json) · [native report](../fix51-verify/L5.json) | — |
 | L5-09 | OPEN | Current whole-row measurement pending; historical observations are not a frozen-head verdict. | [native report](../fix51-verify/L5.json) | — |
 | L5-10 | PASS | 4 production gun types held idle/walking;8 street weapons stay put20s. Exact mortal routes:9 initial weapon births,0 later;0 street-weapon fetches. | [review](../../qa/reviews/L5-10.json) · [proof](L5-10-proof.json) | — |
-| L5-11 | OPEN | Current whole-row measurement pending; historical observations are not a frozen-head verdict. | [review](../../qa/reviews/L5-11.json) · [native report](../fix51-verify/L5.json) | — |
+| L5-11 | PASS | Current whole-row measurement pending; historical observations are not a frozen-head verdict. | [review](../../qa/reviews/L5-11.json) · [proof](L5-11-proof.json) | — |
 | L5-12 | P | 24 inside;20/21 heads in viewport at peak. All5 followers+corgi inside at shutter185/230; pair separation≥.7459/.7476m. | [review](../../qa/reviews/L5-12.json) · [proof](L5-12-proof.json) | PO: natural ending composition on exact14-frame sheet in proof. |
 | L5-13 | PASS | Zero-survivor controlled routes complete at both tiers and report rescued=0. | [review](../../qa/reviews/L5-13.json) · [native report](../fix51-verify/L5.json) | — |
 | L5-14 | P | 4 exact camera pairs×2 tiers; matching positions/targets. Actual sun multiplier0.5 at metro/end,50% fall. | [review](../../qa/reviews/L5-14.json) · [proof](L5-14-proof.json) | PO: do the16 exact matched frames read as same place, fallen? |
@@ -61,10 +61,12 @@ QA tooling correction: [report display proof](review-display-proof.json) demonst
 
 ## Time-box handoff
 
-The3-hour brief limit is reached with42/46 current measured reviews (36 objective PASS,6 FAIL; P decisions remain explicit in the table). Four rows stay OPEN: L4-11 long-range physical recoil/bar retake; L5-07 muted caption-only discovery≥4/5; L5-09 actual evade-only endpoint; L5-11 corrected standard-camera bus/fog photo. An extension is requested; no missing objective evidence is labelled PASS or P.
+The3-hour brief limit is reached with42/46 current measured reviews (36 objective PASS,6 FAIL; P decisions remain explicit in the table). That handoff has been superseded: all L4/L6 rows are now measured. Only L5-07 muted caption-only discovery≥4/5 and L5-09 actual evade-only endpoint stay OPEN. An extension is requested; no missing objective evidence is labelled PASS or P.
 
 Owned queued visual workers were stopped at the time box. Resume drivers: `test-results/final-b/riot-long-final.ts` (4401) and `bus-final.ts` (4400). Muted actual reached save: `docs/reports/final-b/muted-low-qualified2-last-progress.json.gz`; use `muted-screen-qualified.ts` with a unique SCREEN_OUT and zoom1.5 (the widest normal zoom). No actor/anchor coordinates may inform that route. L5-09 evidence and the null-result caveat are in [unqualified benchmark](L5-09-unqualified.json). Current exact short-range riot frames/values and rejected off-canvas long setup are in [partial riot review](L4-11-unqualified.json).
 
 The final required native commands completed; a supplementary receipt-reuse index refresh completed (all exit1). The resumed L5 refresh now includes L5-02: the tracker shows42 FRESH reviews, matching the independent production audit. Independent production review validation checks each current content digest and present evidence SHA in [audit](current-review-audit.json). Game-source diff against frozen head is empty. Raw cleanup currently records311 captures/93.8MiB, plus subsequent row-specific cleanup. Remaining full-resolution matched-camera and short-duel frames are retained only for the explicit PO questions.
 
 Continuation requested after the handoff: corrected visual probes restarted; the original frozen source and all review standards remain in force.
+
+Resume progress:44/46 current reviews. L4-11 closes measured FAIL on the healthy>15m riot bar rule; actual MG TTK/survival succeeds. L5-11 closes PASS with the corrected normal-camera bus frames. Current muted route has foundMia+Rosa2/5 from caption-guided physical approaches; discovery is still incomplete. An additional unchanged seed3 evade-only run2400s at both tiers also has no result (0/105 deaths), so L5-09 remains unqualified.
