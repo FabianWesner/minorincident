@@ -144,12 +144,12 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
   // following the courier must not suppress the escort's own defence.
   if (follower && world.missions?.def.l3 && !closeThreat && dist(e.transform, leader!.transform) > a.follow!.maxM && leaderMoving) {
     a.targetId = 0; a.strikeAt = 0; a.baton = false;
-    return regroup(world, e, a, leader!.transform);
+    return regroup(world, e, a, leader!.transform, !closeThreat);
   }
   if (!a.engaged && !closeThreat) { a.targetId = 0; a.strikeAt = 0; a.baton = false; }
   if (follower && a.engaged && !closeThreat && !a.strikeAt && (breakout || dist(e.transform, leader!.transform) > a.follow!.leashM)) {
     forced = dist(e.transform, leader!.transform) <= a.follow!.leashM ? ai.active.find(o => o.health.current > 0 && !o.hidden && !o.infectionRise && !o.emerging && policeCanEngage(o) && dist(o.transform, e.transform) < 3.5 && visible(e.transform, o.transform, o.id)) : undefined;
-    if (!forced) { a.targetId = 0; return regroup(world, e, a, leader!.transform); }
+    if (!forced) { a.targetId = 0; return regroup(world, e, a, leader!.transform, !closeThreat); }
     a.targetId = forced.id;
   }
   if (a.engaged || closeThreat) {
@@ -233,7 +233,7 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
     }
     if (a.strikeAt) {
       // A pending gunshot must keep following; contact baton windups still plant.
-      if (squadRun && c.state !== 'grabbed' && !a.baton) regroup(world, e, a, leader!.transform);
+      if (squadRun && c.state !== 'grabbed' && !a.baton) regroup(world, e, a, leader!.transform, !closeThreat);
       return true;
     }
     if (c.state === 'grabbed' && target) a.targetId = target.id;
@@ -251,7 +251,7 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
       // Defend while obeying retreat orders and catching up; only a contact shove plants the officer.
       if (!finishing && c.state !== 'grabbed' && dist(e.transform, target.transform) > pt.batonReachM) {
         if (a.run && !subwayRun) npcs.move(e, a.run, a.runSpeed, c, .25, runBudget);
-        else if (follower && (breakout || squadRun || dist(e.transform, leader!.transform) > a.follow!.leashM)) regroup(world, e, a, leader!.transform);
+        else if (follower && (breakout || squadRun || dist(e.transform, leader!.transform) > a.follow!.leashM)) regroup(world, e, a, leader!.transform, !closeThreat);
       }
       const dx = target.transform.x - e.transform.x, dz = target.transform.z - e.transform.z, d = Math.hypot(dx, dz);
       const reach = defence(target) ? Math.max(reachM, pt.defendM) : gun ? reachM : shooter ? l2.allies.officer.rangeM + 4 : ff.reachM;
@@ -299,7 +299,7 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
     if (Math.hypot(a.run.x - e.transform.x, a.run.z - e.transform.z) <= .35) { a.run = null; return true; }
     if (!subwayRun) npcs.move(e, a.run, a.runSpeed, c, .25, runBudget); return true;
   }
-  if (follower) return regroup(world, e, a, leader!.transform);
+  if (follower) return regroup(world, e, a, leader!.transform, !closeThreat);
   // Disengaged fighters follow their routine; a held post (officers) is kept regardless.
   if (!a.engaged && !a.hold) return false;
   const post = a.post;
@@ -312,11 +312,33 @@ function rampPullback(world: SimWorld, leader: EntitySnapshot): boolean {
   return world.scenario === 'L3' && leader.transform.x >= 167.5 && leader.transform.x <= 179.5
     && Math.hypot(leader.survivor?.velocity.x ?? 0, leader.survivor?.velocity.z ?? 0) <= .5;
 }
-function regroup(world: SimWorld, e: EntitySnapshot, a: AllyState, p: Point): boolean {
+function regroup(world: SimWorld, e: EntitySnapshot, a: AllyState, p: Point, unthreatened = false): boolean {
   const f = a.follow!, d = dist(e.transform, p);
   const leader = world.entities.get(f.targetId)!;
   const spread = rampPullback(world, leader);
-  const moving = Math.hypot(leader.survivor?.velocity.x ?? 0, leader.survivor?.velocity.z ?? 0) > .5;
+  const calm = !a.targetId && !a.strikeAt;
+  // Intent remains nonzero against a wall; the swept step is the pace the
+  // formation can actually follow this tick, including sliding and stopping.
+  const tracking = world.scenario === 'L3' && unthreatened && calm && f.targetId === 1 && !!world.player && leader.locomotion?.updatedAt === world.tick;
+  const velocity = tracking
+    ? { x: world.player!.locomotion.displacement.x * 60, z: world.player!.locomotion.displacement.z * 60 } : leader.survivor?.velocity;
+  const moving = Math.hypot(velocity?.x ?? 0, velocity?.z ?? 0) > .5;
+  // A resting officer can be ahead of a newly moving courier. Going straight
+  // to the trailing slot cuts through her 3 m band. Travel with her while
+  // circling into the slot, preserving radial room during that crossing.
+  if (tracking && !spread && velocity && d < f.minM + .8 && (!moving || (e.transform.x - p.x) * velocity.x + (e.transform.z - p.z) * velocity.z > 0)) {
+    const speed = Math.hypot(velocity.x, velocity.z) || 1, nx = (e.transform.x - p.x) / (d || 1), nz = (e.transform.z - p.z) / (d || 1);
+    const side = f.slot % 2 ? 1.8 : -1.8;
+    const tx = -velocity.x / speed * 3.8 - velocity.z / speed * side, tz = -velocity.z / speed * 3.8 + velocity.x / speed * side;
+    const angle = Math.atan2(nx * tz - nz * tx, nx * tx + nz * tz);
+    const across = moving && d < f.minM + .8 ? Math.max(-4, Math.min(4, angle * 4)) : 0;
+    const outward = d < f.minM + .5 ? (f.minM + .5 - d) * 4 : 0;
+    const vx = velocity.x + nx * outward - nz * across, vz = velocity.z + nz * outward + nx * across;
+    f.spacingAt = world.tick;
+    const cap = Math.min(1, f.moveMs / (Math.hypot(vx, vz) || 1));
+    world.npcs!.moveStep(e, vx * cap / 60, vz * cap / 60);
+    return true;
+  }
   // A stop or a tight turn can leave a follower inside the band. Step into nearby clear space, never onto the courier.
   if (d < f.minM && !spread) {
     const nav = world.infected!.nav, angle = Math.atan2(e.transform.z - p.z, e.transform.x - p.x);
@@ -336,10 +358,8 @@ function regroup(world: SimWorld, e: EntitySnapshot, a: AllyState, p: Point): bo
     // L3's armed retreat can aim behind while walking forward. Keep its
     // formation behind the travel direction instead of swinging every slot
     // across the courier whenever she switches targets.
-    const velocity = leader.survivor?.velocity;
     const forward = moving && world.missions?.def.l3 && velocity
       ? -Math.atan2(velocity.z, velocity.x) : leader.transform.yaw;
-    const calm = !a.targetId && !a.strikeAt;
     // The closer rest slots fix the 3–6 m calm-follow band. During a fight
     // retain the prior depth so officers do not move into the infected line.
     const behind = calm ? 3.8 + Math.floor((f.slot % 6) / 2) * .6 : 4 + Math.floor((f.slot % 6) / 2);
