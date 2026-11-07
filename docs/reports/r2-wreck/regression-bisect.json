@@ -1,0 +1,277 @@
+{
+  "reportedMainBaseline": {
+    "revision": "daada5d",
+    "flags": 0,
+    "source": "orchestrator supplied baseline"
+  },
+  "runs": [
+    {
+      "revision": "381d6a0",
+      "command": "npm run qa:threat -- --levels L3,L7,L8 --out test-results/r2-wreck-b/bisect-381d6a0",
+      "actualFlags": [
+        "L3/criterion/L3-06 squad counts/losses:FAIL",
+        "L7/FOLLOWER_WAIT_UPPER_BOUND_OVER_10_PERCENT",
+        "L7/step/departure:SLOW_FOLLOWER:20",
+        "L7/step/corridor:SLOW_FOLLOWER:61",
+        "L7/step/corridor:SLOW_FOLLOWER:63",
+        "L7/step/corridor:SLOW_FOLLOWER:72",
+        "L7/phase/encounters:SLOW_FOLLOWER:61",
+        "L7/phase/encounters:SLOW_FOLLOWER:63",
+        "L7/phase/encounters:SLOW_FOLLOWER:72",
+        "L8/step/escape:SLOW_FOLLOWER:354",
+        "L8/phase/breached:SLOW_FOLLOWER:354"
+      ],
+      "diagnosticFlag": "PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate"
+    },
+    {
+      "revision": "0a2c8f6",
+      "command": "npm run qa:threat -- --levels L3,L7,L8 --out test-results/r2-wreck-b/bisect-0a2c8f6",
+      "actualFlags": [
+        "L3/criterion/L3-06 squad counts/losses:FAIL",
+        "L7/FOLLOWER_WAIT_UPPER_BOUND_OVER_10_PERCENT",
+        "L7/step/departure:SLOW_FOLLOWER:20",
+        "L7/step/corridor:SLOW_FOLLOWER:61",
+        "L7/step/corridor:SLOW_FOLLOWER:63",
+        "L7/step/corridor:SLOW_FOLLOWER:72",
+        "L7/phase/encounters:SLOW_FOLLOWER:61",
+        "L7/phase/encounters:SLOW_FOLLOWER:63",
+        "L7/phase/encounters:SLOW_FOLLOWER:72",
+        "L8/step/escape:SLOW_FOLLOWER:354",
+        "L8/phase/breached:SLOW_FOLLOWER:354"
+      ],
+      "diagnosticFlag": "PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate"
+    }
+  ],
+  "sameActualFlags": true,
+  "attribution": "All 11 flags are already present in the footprint commit; enabling the global companion trail adds no flags.",
+  "verifiedPocketObstructions": [
+    {
+      "level": "L2",
+      "id": "l2-abandoned-9",
+      "position": [
+        4,
+        -28.6
+      ],
+      "oldPocketSeed": [
+        5.25,
+        -26.75
+      ],
+      "oldPocketCells": 8,
+      "verifiedConnectedCells": 35336
+    },
+    {
+      "level": "L3",
+      "id": "l3-crashed-59",
+      "position": [
+        -72,
+        26.8
+      ],
+      "oldPocketSeed": [
+        -72.75,
+        23.25
+      ],
+      "oldPocketCells": 2
+    }
+  ],
+  "lampRouteRegression": {
+    "id": "prop.street-lamp:1211",
+    "before": [
+      -68,
+      25
+    ],
+    "after": [
+      -68,
+      25.1
+    ],
+    "blockedCrowdCells": [
+      [
+        -68.75,
+        24.25
+      ],
+      [
+        -68.25,
+        24.25
+      ],
+      [
+        -67.75,
+        24.25
+      ],
+      [
+        -67.25,
+        24.25
+      ]
+    ],
+    "bodyRadius": 0.35,
+    "crowdRadius": 0.5,
+    "testBefore": "fails",
+    "testAfter": "passes"
+  },
+  "roundedRouteRegression": {
+    "commit": "7467e7a",
+    "cause": "Cell clearance used circular hull corners while segment visibility and penetration still used square dilation.",
+    "existingTest": "capsule moves: a body inside the wall margin slides out and never moves deeper or crosses the solid",
+    "before": "fails: segment clearance agrees with rounded cell clearance",
+    "after": "14 tests pass in navigation, NPC and combat suites",
+    "radii": {
+      "body": 0.35,
+      "crowd": 0.5
+    }
+  },
+  "wreckRoutePlacement": {
+    "id": "l3-crashed-59",
+    "before": [
+      -72,
+      26.8
+    ],
+    "after": [
+      -72,
+      27.3
+    ],
+    "crowdRadius": 0.5,
+    "gridStep": 0.5,
+    "opened": [
+      [
+        -70.75,
+        24.25
+      ],
+      [
+        -71.75,
+        24.75
+      ],
+      [
+        -71.25,
+        24.75
+      ],
+      [
+        -70.25,
+        24.75
+      ],
+      [
+        -72.25,
+        25.25
+      ],
+      [
+        -69.75,
+        25.25
+      ],
+      [
+        -73.25,
+        25.75
+      ],
+      [
+        -72.75,
+        25.75
+      ],
+      [
+        -73.75,
+        26.25
+      ],
+      [
+        -69.25,
+        26.25
+      ],
+      [
+        -74.75,
+        26.75
+      ],
+      [
+        -74.25,
+        26.75
+      ]
+    ],
+    "closed": [
+      [
+        -69.25,
+        27.25
+      ],
+      [
+        -74.75,
+        27.75
+      ],
+      [
+        -70.25,
+        27.75
+      ],
+      [
+        -69.75,
+        27.75
+      ],
+      [
+        -70.75,
+        28.25
+      ],
+      [
+        -74.25,
+        28.75
+      ],
+      [
+        -71.75,
+        28.75
+      ],
+      [
+        -71.25,
+        28.75
+      ],
+      [
+        -73.75,
+        29.25
+      ],
+      [
+        -72.25,
+        29.25
+      ],
+      [
+        -73.25,
+        29.75
+      ],
+      [
+        -72.75,
+        29.75
+      ]
+    ],
+    "commit": "a300d4c",
+    "cause": "The accurately rotated wreck still occupied a full-clearance cell along the authored southern gate aisle. Moving the hull and matching fire dressing one grid cell north opens that aisle.",
+    "testBefore": "fails: the wreck leaves a full-clearance cell on the authored gate-side aisle",
+    "testAfter": "14 focused tests pass, including original catch-up less than 6 m",
+    "nativeDiagnostic": {
+      "armySeeds": [
+        0,
+        4,
+        0
+      ],
+      "seed1AttacksPerMinute": 12.317262830482115,
+      "seed1Deaths": 0,
+      "allThreeComplete": true
+    }
+  },
+  "final": {
+    "runtimeRevision": "a300d4c50c995f0c7a3da774cdec62dad7337219",
+    "observedMainRevision": "22e2810e77c0cbaf0689ef80b61bb435aa9549a7",
+    "actualFlags": [],
+    "exitCode": 0,
+    "seconds": 307.23345125,
+    "l3Army": {
+      "seeds": [
+        {
+          "seed": 1,
+          "valid": true,
+          "army": 0
+        },
+        {
+          "seed": 2,
+          "valid": true,
+          "army": 4
+        },
+        {
+          "seed": 3,
+          "valid": true,
+          "army": 0
+        }
+      ],
+      "measured": 3,
+      "within": 2,
+      "pass": true
+    },
+    "l3AttacksPerMinute": 12.317262830482115
+  }
+}

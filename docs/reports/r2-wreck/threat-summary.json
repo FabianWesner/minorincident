@@ -1,106 +1,121 @@
 {
-  "revision": "0a2c8f6305c72b95f6cce6d5a21b4f02dfb4200a",
-  "mainRevision": "daada5d6e6e55b598408462078c8e48f66a88571",
+  "revision": "a300d4c50c995f0c7a3da774cdec62dad7337219",
+  "mainRevision": "22e2810e77c0cbaf0689ef80b61bb435aa9549a7",
   "sourceMatchesMain": false,
   "seed": 1,
   "policy": "complete + passive",
   "tier": "low",
   "workers": 2,
-  "seconds": 539.117246125,
-  "flags": [
-    "L3/criterion/L3-06 squad counts/losses:FAIL",
-    "L7/FOLLOWER_WAIT_UPPER_BOUND_OVER_10_PERCENT",
-    "L7/step/departure:SLOW_FOLLOWER:20",
-    "L7/step/corridor:SLOW_FOLLOWER:61",
-    "L7/step/corridor:SLOW_FOLLOWER:63",
-    "L7/step/corridor:SLOW_FOLLOWER:72",
-    "L7/phase/encounters:SLOW_FOLLOWER:61",
-    "L7/phase/encounters:SLOW_FOLLOWER:63",
-    "L7/phase/encounters:SLOW_FOLLOWER:72",
-    "L8/step/escape:SLOW_FOLLOWER:354",
-    "L8/phase/breached:SLOW_FOLLOWER:354"
-  ],
-  "command": "npm run qa:threat -- --out test-results/qa-threat-r2-final",
+  "seconds": 307.23345125,
+  "flags": [],
+  "baseRevision": "daada5d",
+  "command": "npm run qa:threat -- --out test-results/r2-wreck-b/final",
+  "startedUtc": "2026-11-07T08:13:42.749051+00:00",
   "startLoadAverages": [
-    4.35400390625,
-    5.02001953125,
-    5.3291015625
+    4.0068359375,
+    4.14599609375,
+    4.12255859375
   ],
-  "exitCode": 1,
+  "ranAloneAfterOtherChecks": true,
+  "exitCode": 0,
+  "wrapperSeconds": 309.4,
   "levels": [
     {
       "level": "L1",
       "skilled": "complete",
       "passive": "complete",
+      "skilledFlags": [],
       "passiveFlags": []
     },
     {
       "level": "L2",
       "skilled": "complete",
       "passive": "complete",
+      "skilledFlags": [],
       "passiveFlags": []
     },
     {
       "level": "L3",
       "skilled": "complete",
       "passive": "tick-budget",
-      "passiveFlags": [
-        "criterion/L3-06 squad counts/losses:FAIL"
-      ]
+      "skilledFlags": [],
+      "passiveFlags": []
     },
     {
       "level": "L4",
       "skilled": "complete",
       "passive": "tick-budget",
+      "skilledFlags": [],
       "passiveFlags": []
     },
     {
       "level": "L5",
       "skilled": "complete",
       "passive": "tick-budget",
+      "skilledFlags": [],
       "passiveFlags": []
     },
     {
       "level": "L6",
       "skilled": "complete",
       "passive": "tick-budget",
+      "skilledFlags": [],
       "passiveFlags": []
     },
     {
       "level": "L7",
       "skilled": "complete",
       "passive": "complete",
-      "passiveFlags": [
-        "FOLLOWER_WAIT_UPPER_BOUND_OVER_10_PERCENT",
-        "step/departure:SLOW_FOLLOWER:20",
-        "step/corridor:SLOW_FOLLOWER:61",
-        "step/corridor:SLOW_FOLLOWER:63",
-        "step/corridor:SLOW_FOLLOWER:72",
-        "phase/encounters:SLOW_FOLLOWER:61",
-        "phase/encounters:SLOW_FOLLOWER:63",
-        "phase/encounters:SLOW_FOLLOWER:72"
-      ]
+      "skilledFlags": [],
+      "passiveFlags": []
     },
     {
       "level": "L8",
       "skilled": "complete",
-      "passive": "tick-budget",
-      "passiveFlags": [
-        "step/escape:SLOW_FOLLOWER:354",
-        "phase/breached:SLOW_FOLLOWER:354"
-      ]
+      "passive": "complete",
+      "skilledFlags": [],
+      "passiveFlags": []
     },
     {
       "level": "L9",
       "skilled": "complete",
       "passive": "complete",
+      "skilledFlags": [],
       "passiveFlags": []
     },
     {
       "level": "L10",
       "skilled": "complete",
       "passive": "tick-budget",
+      "skilledFlags": [],
       "passiveFlags": []
     }
-  ]
+  ],
+  "l3Army": {
+    "seeds": [
+      {
+        "seed": 1,
+        "valid": true,
+        "army": 0
+      },
+      {
+        "seed": 2,
+        "valid": true,
+        "army": 4
+      },
+      {
+        "seed": 3,
+        "valid": true,
+        "army": 0
+      }
+    ],
+    "measured": 3,
+    "within": 2,
+    "pass": true
+  },
+  "l3Native": {
+    "attacksPerMinute": 12.317262830482115,
+    "deaths": 0,
+    "damageTaken": 77
+  }
 }
