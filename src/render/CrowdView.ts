@@ -234,7 +234,10 @@ export class CrowdView extends Group {
       // fallback when the opening camera contains no infected yet.
       await Promise.all([...this.neededModels(view)].map(key => {
         const def = this.definitions.get(key)!;
-        return this.requestBatch(def, alphaLookAssets.includes(def.asset) ? 'lod0' : 'lod2');
+        // L7 starts in a fight. All nearby living/death tiers belong to the
+        // loading draw, rather than the first pickup/shot's background queue.
+        const lods: CrowdLod[] = this.world.scenario === 'L7' ? this.plannedLods.get(key)! : [alphaLookAssets.includes(def.asset) ? 'lod0' : 'lod2'];
+        return Promise.all(lods.map(lod => this.requestBatch(def, lod)));
       }));
     }
     this.update(view);
@@ -245,6 +248,9 @@ export class CrowdView extends Group {
   startStreaming(): void {
     if (this.streaming || !this.staged) return;
     this.streaming = true;
+    // update() already requests every tier as actors approach. Do not bake
+    // the whole city's future Alpha wardrobe during L7's opening combat.
+    if (this.world.scenario === 'L7') return;
     this.streamingReady = (async () => {
       for (const [key, lods] of this.plannedLods) {
         if (this.disposed) return;
@@ -563,7 +569,7 @@ export class CrowdView extends Group {
       // A streamed actor's static corpse pages are siblings of its living batch.
       // Warm them after preparation; warming only `mesh` leaves the first settled
       // body to compile its corpse_* palette graph during gameplay.
-      if (this.world.scenario === 'L10') {
+      if (this.world.scenario === 'L10' || this.world.scenario === 'L7') {
         for (const page of corpsePages) {
           if (this.disposed) return;
           await this.warmBatch?.(page);
