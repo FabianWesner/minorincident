@@ -1,26 +1,27 @@
 {
   "row": "L6-04",
   "status": "PASS",
-  "reviewer": "Codex/sweep-b",
-  "date": "2026-11-06",
-  "commit": "0dbc9a92cd16e681cec94c730d756d4298ef5df5",
+  "reviewer": "Codex/final-b",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
   "clauses": [
     {
-      "clause": "Breach 2 at +20\u201330 s from \u2265 2 accesses, \u2265 10 infected (tune); power off within 1 frame, red emergency light; abandon at breach 2 + 15 s or \u2265 3 bitten.",
+      "clause": "Breach 2 at +20–30 s from ≥ 2 accesses, ≥ 10 infected (tune); power off within 1 frame, red emergency light; abandon at breach 2 + 15 s or ≥ 3 bitten.",
       "verdict": "PASS",
-      "note": "Both tiers: second breach21.0167s after first, ten actual same-ID bodies from accesses0/1 reach shelter floor; main power off and red emergency group active on actual breach tick3253 and next tick. Abandon4147 is14.9s later with three bitten/lost roster members, satisfying the explicit alternative. Independent80s ordinary controls retain identical world hashes. Physical frames show main-light fall and red emergency fixtures; unfinished browser routes are not promoted to completion."
+      "note": "Both tiers: breach2 tick3253,21.016667s after breach1; ten actual identities from accesses0/1 reach floor. At that same tick all56 main-light anchors are off and46 positive-intensity light_siren_red emergency anchors are on. Abandon occurs at breach2 with at least3 already infected roster members, satisfying the alternative to15s. Independent80s controls match hashes."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-b/L6-04-proof.json",
-      "sha256": "2e36462a6b2b56d7807b5c66114ad90d782b08663817d52951c788f4b93c769f",
-      "what": "Both tiers: second breach21.0167s after first, ten actual same-ID bodies from accesses0/1 reach shelter floor; main power off and red emergency group active on actual breach tick3253 and next tick. Abandon4147 is14.9s later with three bitten/lost roster members, satisfying the explicit alternative. Independent80s ordinary controls retain identical world hashes. Physical frames show main-light fall and red emergency fixtures; unfinished browser routes are not promoted to completion."
+      "file": "docs/reports/final-b/L6-04-proof.json",
+      "sha256": "07ce4c28bcee06ed308a9e8f7cd0b7f101d70196c5d2fcabe2840b73f962d1e9",
+      "what": "Both tiers: breach2 tick3253,21.016667s after breach1; ten actual identities from accesses0/1 reach floor. At that same tick all56 main-light anchors are off and46 positive-intensity light_siren_red emergency anchors are on. Abandon occurs at breach2 with at least3 already infected roster members, satisfying the alternative to15s. Independent80s controls match hashes."
     },
     {
-      "file": "docs/reports/sweep-b/L6-capture-review.json",
-      "sha256": "e8791a8e677a56622066d5f163e5fce5feceb12a6876e6df4cd6f62207efe083",
-      "what": "Both tiers: second breach21.0167s after first, ten actual same-ID bodies from accesses0/1 reach shelter floor; main power off and red emergency group active on actual breach tick3253 and next tick. Abandon4147 is14.9s later with three bitten/lost roster members, satisfying the explicit alternative. Independent80s ordinary controls retain identical world hashes. Physical frames show main-light fall and red emergency fixtures; unfinished browser routes are not promoted to completion."
+      "file": "docs/reports/final-b/L6-controls-lights.json.gz",
+      "sha256": "bed29d500640e8880fa7d441e858423015eb3b8d6015ed0ba2fcf85767efb513",
+      "what": "Current event/light registry, gate boundaries and independent controls."
     }
-  ]
+  ],
+  "sourceDigest": "7fd8f0ebc3d3fcb362d200567b5da5e2e4f5bea018074dcf4fbbfccc06fdf698"
 }

@@ -1,0 +1,95 @@
+{
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "frozenCommit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "rows": [
+    {
+      "tier": "low",
+      "breach1": 1992,
+      "breach2": 3253,
+      "delaySeconds": 21.016666666666666,
+      "sameTickArrivals": 10,
+      "accesses": [
+        0,
+        1
+      ],
+      "reachFloor": 10,
+      "powerOffTick": 3253,
+      "mainLightsOff": 56,
+      "redEmergencyLightsOn": 46,
+      "abandonTick": 3253,
+      "infectedRosterAtAbandon": [
+        {
+          "id": 21,
+          "status": "turned",
+          "infected": true,
+          "infection": false
+        },
+        {
+          "id": 31,
+          "status": "turned",
+          "infected": true,
+          "infection": false
+        },
+        {
+          "id": 40,
+          "status": "turned",
+          "infected": true,
+          "infection": false
+        }
+      ],
+      "observedHash": "66632916",
+      "controlHash": "66632916",
+      "status": "PASS"
+    },
+    {
+      "tier": "high",
+      "breach1": 1992,
+      "breach2": 3253,
+      "delaySeconds": 21.016666666666666,
+      "sameTickArrivals": 10,
+      "accesses": [
+        0,
+        1
+      ],
+      "reachFloor": 10,
+      "powerOffTick": 3253,
+      "mainLightsOff": 56,
+      "redEmergencyLightsOn": 46,
+      "abandonTick": 3253,
+      "infectedRosterAtAbandon": [
+        {
+          "id": 21,
+          "status": "turned",
+          "infected": true,
+          "infection": false
+        },
+        {
+          "id": 31,
+          "status": "turned",
+          "infected": true,
+          "infection": false
+        },
+        {
+          "id": 40,
+          "status": "turned",
+          "infected": true,
+          "infection": false
+        }
+      ],
+      "observedHash": "9c2fba78",
+      "controlHash": "9c2fba78",
+      "status": "PASS"
+    }
+  ],
+  "method": "Fresh80s ordinary mortal route plus independent unobserved80s control at both tiers. Actual event tick and production placed-light registry records prove power state and red enabled fixtures. Separate current full-route identity ledger proves ten actual bodies from two accesses reach shelter floor. No camera/visual aesthetic or full physical-route claim.",
+  "evidence": [
+    {
+      "file": "docs/reports/final-b/L6-controls-lights.json.gz",
+      "sha256": "bed29d500640e8880fa7d441e858423015eb3b8d6015ed0ba2fcf85767efb513"
+    },
+    {
+      "file": "docs/reports/final-b/L6-trajectories.json.gz",
+      "sha256": "cb4738a0a36f6e1a5a182d91b81b1ef15ad91afaf521700aa596d8ea5f13892f"
+    }
+  ]
+}
