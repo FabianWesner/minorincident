@@ -1,0 +1,222 @@
+{
+  "matrix": [
+    {
+      "backend": "webgpu",
+      "level": "L3",
+      "tier": "low",
+      "loads": {
+        "prod": {"cold":3241.1000003814697,"warm":2745.0999994277954},
+        "candidate": {"cold":2924.699999809265,"warm":2729.2000007629395}
+      },
+      "native": {
+        "prod": {"samples":3602,"p95":16.799999999995634,"maximum":150,"spikes66":1},
+        "candidate": {"samples":3611,"p95":16.799999999995634,"maximum":16.80000000000291,"spikes66":0}
+      },
+      "verdict": "PASS",
+      "issues": []
+    },
+    {
+      "backend": "webgpu",
+      "level": "L4",
+      "tier": "low",
+      "loads": {
+        "prod": {"cold":4090.5,"warm":2993.0999994277954},
+        "candidate": {"cold":3091.8999996185303,"warm":3027.3999996185303}
+      },
+      "native": {
+        "prod": {"samples":3581,"p95":16.700000000004366,"maximum":233.29999999999563,"spikes66":3},
+        "candidate": {"samples":3606,"p95":16.700000000004366,"maximum":33.30000000000109,"spikes66":0}
+      },
+      "verdict": "PASS",
+      "issues": []
+    },
+    {
+      "backend": "webgpu",
+      "level": "L7",
+      "tier": "low",
+      "loads": {
+        "prod": {"cold":2790.199999809265,"warm":2510.800000190735},
+        "candidate": {"cold":2541,"warm":2578.1000003814697}
+      },
+      "native": {
+        "prod": {"samples":3601,"p95":16.799999999995634,"maximum":50,"spikes66":0},
+        "candidate": {"samples":3600,"p95":16.700000000004366,"maximum":50,"spikes66":0}
+      },
+      "verdict": "PASS",
+      "issues": []
+    },
+    {
+      "backend": "webgpu",
+      "level": "L9",
+      "tier": "low",
+      "loads": {
+        "prod": {"cold":4723.700000762939,"warm":3111.699999809265},
+        "candidate": {"cold":3292.0999994277954,"warm":3043.699999809265}
+      },
+      "native": {
+        "prod": {"samples":3599,"p95":16.700000000004366,"maximum":50,"spikes66":0},
+        "candidate": {"samples":3598,"p95":16.799999999995634,"maximum":50,"spikes66":0}
+      },
+      "verdict": "PASS",
+      "issues": []
+    },
+    {
+      "backend": "webgpu",
+      "level": "L10",
+      "tier": "low",
+      "loads": {
+        "prod": {"cold":3410.4000005722046,"warm":3242.5999994277954},
+        "candidate": {"cold":3326.8999996185303,"warm":3211.300000190735}
+      },
+      "native": {
+        "prod": {"samples":3588,"p95":16.799999999995634,"maximum":50.099999999998545,"spikes66":0},
+        "candidate": {"samples":3600,"p95":16.799999999995634,"maximum":50,"spikes66":0}
+      },
+      "verdict": "PASS",
+      "issues": []
+    },
+    {
+      "backend": "webgpu",
+      "level": "L3",
+      "tier": "high",
+      "loads": {
+        "prod": {"cold":2574.1000003814697,"warm":2438.699999809265},
+        "candidate": {"cold":2573.5999994277954,"warm":2460.199999809265}
+      },
+      "native": {
+        "prod": {"samples":3609,"p95":16.799999999995634,"maximum":16.80000000000291,"spikes66":0},
+        "candidate": {"samples":3610,"p95":16.700000000004366,"maximum":33.400000000001455,"spikes66":0}
+      },
+      "verdict": "PASS",
+      "issues": []
+    },
+    {
+      "backend": "webgpu",
+      "level": "L4",
+      "tier": "high",
+      "loads": {
+        "prod": {"cold":3423.6000003814697,"warm":3292.199999809265},
+        "candidate": {"cold":3405.5,"warm":3274.699999809265}
+      },
+      "native": {
+        "prod": {"samples":3598,"p95":16.799999999995634,"maximum":50,"spikes66":0},
+        "candidate": {"samples":3598,"p95":16.79999999998836,"maximum":49.900000000001455,"spikes66":0}
+      },
+      "verdict": "PASS",
+      "issues": []
+    },
+    {
+      "backend": "webgpu",
+      "level": "L7",
+      "tier": "high",
+      "loads": {
+        "prod": {"cold":6841,"warm":2726.300000190735},
+        "candidate": {"cold":3008.800000190735,"warm":2772.3999996185303}
+      },
+      "native": {
+        "prod": {"samples":3602,"p95":16.799999999995634,"maximum":33.399999999999636,"spikes66":0},
+        "candidate": {"samples":3605,"p95":16.700000000004366,"maximum":50.100000000000364,"spikes66":0}
+      },
+      "verdict": "PASS",
+      "issues": []
+    },
+    {
+      "backend": "webgpu",
+      "level": "L9",
+      "tier": "high",
+      "loads": {
+        "prod": {"cold":2920.3999996185303,"warm":2908.3999996185303},
+        "candidate": {"cold":2941.699999809265,"warm":2889.9000005722046}
+      },
+      "native": {
+        "prod": {"samples":3597,"p95":16.799999999995634,"maximum":50,"spikes66":0},
+        "candidate": {"samples":3596,"p95":16.799999999995634,"maximum":33.400000000001455,"spikes66":0}
+      },
+      "verdict": "PASS",
+      "issues": []
+    },
+    {
+      "backend": "webgpu",
+      "level": "L10",
+      "tier": "high",
+      "loads": {
+        "prod": {"cold":3076.300000190735,"warm":2939.3999996185303},
+        "candidate": {"cold":3024.699999809265,"warm":2906}
+      },
+      "native": {
+        "prod": {"samples":5366,"p95":16.79999999998836,"maximum":216.60000000000218,"spikes66":3},
+        "candidate": {"samples":5361,"p95":16.79999999998836,"maximum":250,"spikes66":2}
+      },
+      "verdict": "FAIL",
+      "issues": ["max > PROD+1 frame"]
+    },
+    {
+      "backend": "webgl2",
+      "level": "L4",
+      "tier": "low",
+      "loads": {
+        "prod": {"cold":6624,"warm":3159.699999809265},
+        "candidate": {"cold":3260.199999809265,"warm":3156.5}
+      },
+      "native": {},
+      "verdict": "PASS",
+      "issues": []
+    },
+    {
+      "backend": "webgl2",
+      "level": "L10",
+      "tier": "low",
+      "loads": {
+        "prod": {"cold":7925.60000038147,"warm":3453.699999809265},
+        "candidate": {"cold":3809.2999992370605,"warm":3456.4000005722046}
+      },
+      "native": {},
+      "verdict": "PASS",
+      "issues": []
+    }
+  ],
+  "moments": [
+    {
+      "name": "L10 captured charge through completion (+2 s)",
+      "sides": {
+        "prod": {"samples":3672,"p95":16.799999999995634,"maximum":216.60000000000218,"spikes66":3},
+        "candidate": {"samples":3671,"p95":16.799999999995634,"maximum":250,"spikes66":2}
+      },
+      "verdict": "FAIL",
+      "issues": ["max > PROD+1 frame"],
+      "inherited66": true
+    },
+    {
+      "name": "L10 charge 43/60",
+      "sides": {
+        "prod": {"samples":60,"p95":16.700000000004366,"maximum":16.80000000000291,"spikes66":0},
+        "candidate": {"samples":60,"p95":16.799999999995634,"maximum":16.80000000000291,"spikes66":0}
+      },
+      "verdict": "PASS",
+      "issues": [],
+      "inherited66": false
+    },
+    {
+      "name": "L10 charge 55/60",
+      "sides": {
+        "prod": {"samples":60,"p95":16.70000000001164,"maximum":16.80000000000291,"spikes66":0},
+        "candidate": {"samples":60,"p95":16.70000000001164,"maximum":16.80000000000291,"spikes66":0}
+      },
+      "verdict": "PASS",
+      "issues": [],
+      "inherited66": false
+    },
+    {
+      "name": "L4 war phase within first 60 s",
+      "sides": {
+        "prod": {"samples":3548,"p95":16.799999999995634,"maximum":50,"spikes66":0},
+        "candidate": {"samples":3579,"p95":16.70000000001164,"maximum":49.900000000001455,"spikes66":0}
+      },
+      "verdict": "PASS",
+      "issues": [],
+      "inherited66": false
+    }
+  ],
+  "loadRows": 48,
+  "nativeRows": 20
+}
