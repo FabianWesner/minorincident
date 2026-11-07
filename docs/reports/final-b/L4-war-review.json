@@ -1,0 +1,76 @@
+{
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "frozenCommit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "method": "Current ordinary native route nearest20 living infected every eligible tick, plus personally reviewed physical-input renderer frames. Model identity is the numeric look census; the visible samples verify distinct looks rather than treating archetype labels alone as visible differences. Safe authored scene is a scene reference, not a physical route.",
+  "mix": [
+    {
+      "tier": "low",
+      "eligibleTicks": 10679,
+      "changedSamples": 1161,
+      "minimumDistinctModels": 4,
+      "finalHash": "18e71cbb"
+    },
+    {
+      "tier": "high",
+      "eligibleTicks": 10715,
+      "changedSamples": 1118,
+      "minimumDistinctModels": 4,
+      "finalHash": "86ab19e8"
+    }
+  ],
+  "frames": [
+    {
+      "file": "test-results/final-b/l4-plaza-safe-low.png",
+      "sha256": "1501db7e8baac96a9f395a38e91c83d80b59dd8c3dd4fbf3f825d5d219c4bca3",
+      "personallyReviewed": true,
+      "observation": "Authored safe-plaza frame80 low: intact tents, tables, sandbag perimeter, walking/standing people and clean paving; no combat or body field.",
+      "retainedForPO": true
+    },
+    {
+      "file": "test-results/final-b/l4-plaza-safe-high.png",
+      "sha256": "a69577ef17194d78d782d30075bfad691e34de3ff5be5a0d4d83ece4622fc48f",
+      "personallyReviewed": true,
+      "observation": "Same authored scene/camera high: clean paving and relaxed live people among intact camp props; stronger shadows preserve layout.",
+      "retainedForPO": true
+    },
+    {
+      "file": "test-results/vqa-1b/final-b-L4-low-z1.5/captures/final-b-L4-low-z1.5-L4-t8489.jpg",
+      "sha256": "64dcd1c0212ecc09b88163139b95aae7981b7d5bec2630348f71698315ccb382",
+      "personallyReviewed": true,
+      "observation": "Low physical tick8489: mixed active knot with yellow hazmat, riot shields, firefighters and ordinary clothes; many surrounding bodies are corpses. Heroine remains locatable at centre by gold silhouette/hair/backpack, though crowded.",
+      "retainedForPO": true
+    },
+    {
+      "file": "test-results/vqa-1b/final-b-L4-high-opening/captures/final-b-L4-high-opening-L4-hold-t5930-high-z1-5.jpg",
+      "sha256": "6c63f7519757f827255292f6f1e01e74b37a2ec468857e54167ac63f5a2dde77",
+      "personallyReviewed": true,
+      "observation": "High physical tick5930 zoom1.5: broad mixed fight, riot shield and hazmat/firefighters plus ordinary clothing. Heroine is gold outlined in centre with corgi above; corpse field is distinct from moving groups.",
+      "retainedForPO": true
+    },
+    {
+      "file": "test-results/vqa-1b/final-b-L4-high-opening/captures/final-b-L4-high-opening-L4-hold-t5930-high-z0-5.jpg",
+      "sha256": "dd82fe47a2234f07ffa61418b6e2a4d57661f123d04c944c2e92c22477334279",
+      "personallyReviewed": true,
+      "observation": "Same high tick5930 close zoom0.5: slim red-helmet firefighter and bulkier tan/red-helmet responder, yellow hazmat and riot armour all distinct. Heroine back/hair and boots remain identifiable between bodies; corgi/backpack visible above.",
+      "retainedForPO": true
+    }
+  ],
+  "populationContext": [
+    {
+      "tier": "low",
+      "physicalTick": 8490,
+      "livingGlobal": 76,
+      "corpseRegistryTick": 8520,
+      "trackedCorpsesGlobal": 100
+    },
+    {
+      "tier": "high",
+      "physicalTick": 5940,
+      "livingGlobal": 72,
+      "corpseRegistryTick": 5880,
+      "trackedCorpsesGlobal": 58
+    }
+  ],
+  "populationLimit": "Nearby ledger samples are global populations, not image-local counts; the entire visible body field must not be described as living horde.",
+  "P": "PO: do the exact retained war frames read as a huge mixed war? Especially judge low8489 dense centre versus high5930 broad fight and close crowding. This subjective choice is pending."
+}
