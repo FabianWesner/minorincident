@@ -31,6 +31,14 @@ export interface VehicleDef {
 const sedan: VehicleDef = { doorX: .35, stepHeight: .12, id: 'vehicle.sedan', asset: 'veh.sedan-red', mass: 1200, length: 4.2, width: 1.8, wheelbase: 2.7, wheelRadius: .34, suspension: .3, stiffness: 40, engineForce: 3000, topSpeed: 16, steering: .42, hp: 300, ramStrength: 1, emergency: false,
   handling: { highSpeedSteering: .18, steeringResponse: 10, engineTaperStart: .35, reverseSpeed: 6, brake: .16, idleBrake: .004, handbrake: .08, grip: 3, driftGrip: .65, compression: 4.4, relaxation: 2.3, suspensionTravel: .25, suspensionResponse: 25, centerOfMass: -.3, flipDelay: 3, flipLift: 3, flipTorque: 4 },
 };
+/** r6-truck (PO 11-07 "L2 Some part is missing of the truck"): the seat-footprint cut ran 0.3 m behind the crew cab into the closed
+ * shutter housing, whose AO-black inside read as a hole, and sliced the cab walls at the waist. Vehicles listed here cut only the roof
+ * over the cab interior (walls, rear wall, windows and the front roof with its light bar stay) and close the opening with a framed glass
+ * roof. Authored frame of the asset's `root` node (parent of `crew_cab`, glTF Y-up, front +X), from assets/veh.fire-engine/build.py:
+ * cabin void x 1.98..4.0, |z| < 1.14, ceiling 2.74, roof top 2.86; light bar from x 3.21; seated heads stay below 2.6. */
+export const crewRoofs: { readonly [asset: string]: { x0: number; x1: number; z: number; cut: number; top: number } } = {
+  'veh.fire-engine': { x0: 1.99, x1: 3.19, z: 1.13, cut: 2.66, top: 2.86 },
+};
 /** The cargo bicycle retains capsule collision and click navigation; these tune its direct steering and frame lean. */
 /** reverseMs: a rider backs a bicycle up at walking pace; full-speed reverse with A/D held drew 10 m loops (r2-bike). */
 export const bicycleHandling = { slowTurnRadius: 1.6, fastTurnRadius: 6, steeringResponse: 8, maxSteering: .5, leanResponse: 8, maxLean: .32, reverseMs: 1.8 } as const;

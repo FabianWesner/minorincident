@@ -7,14 +7,16 @@ import { SubjectOcclusion } from './SubjectOcclusion';
 import { seeThroughKeepCutaway, seeThroughKeepHull } from './SeeThrough';
 import type { Node, UniformNode } from 'three/webgpu';
 import { paletteTokens } from '../data/palette';
+import { crewRoofs } from '../data/vehicles';
 // Adapted from Bruno Simon folio-2025 VisualVehicle.js (MIT, 41046b5): wheel pivots/suspension and lamps.
-import { Box3, BoxGeometry, Color, Group, Matrix4, Mesh, MeshBasicNodeMaterial, MeshLambertNodeMaterial, Quaternion, SphereGeometry, TorusGeometry, Vector3, type Object3D } from 'three/webgpu';
+import { Box3, BoxGeometry, Color, DoubleSide, Group, Matrix4, Mesh, MeshBasicNodeMaterial, MeshLambertNodeMaterial, Quaternion, SphereGeometry, TorusGeometry, Vector3, type Object3D } from 'three/webgpu';
 import { productionObstacleAssets } from './EntityAssets';
 import { AssetRegistry } from '../assets/registry';
 import { atLeast } from '../assets/types';
 import { disposeTransportCab, openTransportCab, prepareTransportModel } from './transportModel';
 import { vehiclePlaceholder } from '../assets/vehiclePlaceholder';
-import { bool, color, Fn, mix, positionGeometry, sin, uniform } from 'three/tsl';
+import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
+import { color, Fn, mix, positionGeometry, sin, uniform } from 'three/tsl';
 import { PaletteMaterial } from './PaletteMaterial';
 import type { VehicleFeedbackEvent } from './vfx/VehicleFeedback';
 import type { SimWorld } from '../sim/world/SimWorld';
@@ -26,7 +28,7 @@ import { anchorsFor } from './WorldLights';
 import { footprint, type LightField } from './LightField';
 import { lightPalette } from '../data/lights';
 const lampPosition = new Vector3(), lampDirection = new Vector3(), beamColor = new Color();
-interface Record { bounds: Box3; apc?: ApcDamage; doorHeldAt: number; decay?: string; lod: AssetQuality; parent: Group; model: Object3D; wheels: { node: Object3D; y: number; steer: number; spin: number; contacts: Vector3[]; contactPose: Matrix4; contactOffset: number; contactGround: VehicleView['ground'] }[]; brake: MeshBasicNodeMaterial; sirens: MeshBasicNodeMaterial[]; smoke: Group; fire: Mesh; door: Mesh; paint: (import('three').Material & { bloodCoverage: { value: number } })[]; blood: number; charred: boolean; feel: { tick: number; speed: number; accel: number; roll: number; pitch: number; restRoll: number; restPitch: number } }
+interface Record { bounds: Box3; crewRoof?: { frame: Object3D; glass: Group }; apc?: ApcDamage; doorHeldAt: number; decay?: string; lod: AssetQuality; parent: Group; model: Object3D; wheels: { node: Object3D; y: number; steer: number; spin: number; contacts: Vector3[]; contactPose: Matrix4; contactOffset: number; contactGround: VehicleView['ground'] }[]; brake: MeshBasicNodeMaterial; sirens: MeshBasicNodeMaterial[]; smoke: Group; fire: Mesh; door: Mesh; paint: (import('three').Material & { bloodCoverage: { value: number } })[]; blood: number; charred: boolean; feel: { tick: number; speed: number; accel: number; roll: number; pitch: number; restRoll: number; restPitch: number } }
 /** Seated cutaway: footprint pad around the seat roots and cut height above them (metres, chassis frame). */
 const cutawayPad = .55, cutawayWaist = .15;
 /** Registry models follow authoritative chassis/wheel snapshots; no render state feeds physics. */
@@ -117,7 +119,10 @@ export class VehicleView extends Group {
   prewarmReveal(enabled: boolean): () => void {
     const saved = [...this.reveal.values()].map(({ on }) => [on, on.value] as const);
     for (const [on] of saved) on.value = +enabled;
-    return () => { for (const [on, value] of saved) on.value = value; };
+    // The crew glass roof's two palette programs compile with the reveal graph, not on the first ride frame.
+    const roofs = [...this.variants.values()].flatMap(variants => [...variants.values()]).flatMap(r => r.crewRoof ? [[r.crewRoof.glass, r.crewRoof.glass.visible] as const] : []);
+    for (const [glass] of roofs) glass.visible = enabled;
+    return () => { for (const [on, value] of saved) on.value = value; for (const [glass, visible] of roofs) glass.visible = visible; };
   }
   private paintModel(model: Object3D, id: number, mask: Node): Record['paint'] {
     const paint: Record['paint'] = [];
@@ -175,7 +180,9 @@ export class VehicleView extends Group {
     let reveal = this.reveal.get(id);
     if (!reveal) {
       const on = uniform(0), cutInverse = uniform(new Matrix4()), cutMin = uniform(new Vector3()), cutMax = uniform(new Vector3());
-      const perPass = Fn((builder: { material?: { isShadowPassMaterial?: boolean } }) => builder.material?.isShadowPassMaterial ? bool(true)
+      // The world-space crew cut also applies in the shadow pass: the removed roof must not keep shading the seated crew.
+      // The screen-space hull disc does not (its screen position is meaningless in the light's view).
+      const perPass = Fn((builder: { material?: { isShadowPassMaterial?: boolean } }) => builder.material?.isShadowPassMaterial ? on.lessThan(1.5).or(seeThroughKeepCutaway(cutInverse, cutMin, cutMax))
         : on.lessThan(.5).or(on.lessThan(1.5).select(seeThroughKeepHull(), seeThroughKeepCutaway(cutInverse, cutMin, cutMax)))) as unknown as () => Node;
       const mask = perPass();
       reveal = { on, mask, cutInverse, cutMin, cutMax }; this.reveal.set(id, reveal);
@@ -209,7 +216,8 @@ export class VehicleView extends Group {
     for (let i = 0; i < 5; i++) { const mesh = new Mesh(this.puffGeometry, this.smokeMaterial); mesh.position.set(def.length * .3, 1 + i * .32, (i % 2 ? 1 : -1) * .12); mesh.scale.setScalar(1 + i * .25); smoke.add(mesh); }
     const fire = new Mesh(this.puffGeometry, this.fireMaterial); fire.position.set(def.length * .3, .9, 0); fire.scale.set(1.8, 2.8, 1.3); parent.add(fire);
     const apc = car.entity.vehicle!.floor && def.asset === 'veh.military-apc' ? new ApcDamage(model) : undefined;
-    const record = { bounds, apc, doorHeldAt: -carTransitionTicks, decay, lod, parent, model, wheels, brake, sirens, smoke, fire, door, paint, blood: 0, charred: false, feel: { tick: this.world.tick, speed: car.entity.vehicle!.speed, accel: 0, roll: 0, pitch: 0, restRoll: model.rotation.x, restPitch: model.rotation.z } };
+    const crewRoof = decay ? undefined : this.crewRoof(model);
+    const record = { bounds, crewRoof, apc, doorHeldAt: -carTransitionTicks, decay, lod, parent, model, wheels, brake, sirens, smoke, fire, door, paint, blood: 0, charred: false, feel: { tick: this.world.tick, speed: car.entity.vehicle!.speed, accel: 0, roll: 0, pitch: 0, restRoll: model.rotation.x, restPitch: model.rotation.z } };
     variants.set(key, record);
     if (activate) { const previous = this.records.get(id); if (previous) previous.parent.visible = false; this.records.set(id, record); }
     const feedback = this.feedbackEvents.get(id); if (feedback) this.feedback(feedback, this.bloodEnabled);
@@ -493,6 +501,7 @@ export class VehicleView extends Group {
       // On foot only her own chest or head behind a vehicle counts (not a padded subject corner beside the cab).
       if (carryingL2Crew && !full && this.crewCutaway(record, reveal)) reveal.on.value = 2;
       else reveal.on.value = +(enabled && !onFoot && !full);
+      if (record.crewRoof) record.crewRoof.glass.visible = reveal.on.value === 2;
       if (hidesHer && vehicle) this.courierOccluded = true;
       if (this.silhouette?.id === id) record.parent.visible = this.silhouette.mode !== 'hidden';
     }
@@ -500,6 +509,13 @@ export class VehicleView extends Group {
   /** Chassis-frame box over the occupied seats, from the seat copies' fitted poses (no geometry scan). The hull is removed
    * above roughly the occupants' waist inside the seat footprint, padded so the cut faces clear their shoulders. */
   private crewCutaway(record: Record, reveal: { cutInverse: UniformNode<'mat4', Matrix4>; cutMin: UniformNode<'vec3', Vector3>; cutMax: UniformNode<'vec3', Vector3> }): boolean {
+    if (record.crewRoof) {
+      const roof = crewRoofs[record.model.userData.assetId], frame = record.crewRoof.frame;
+      reveal.cutMin.value.set(roof.x0, roof.cut, -roof.z); reveal.cutMax.value.set(roof.x1, 1e4, roof.z);
+      frame.updateWorldMatrix(true, false);
+      reveal.cutInverse.value.copy(frame.matrixWorld).invert();
+      return true;
+    }
     const min = reveal.cutMin.value.set(Infinity, Infinity, Infinity), max = reveal.cutMax.value.set(-Infinity, -Infinity, -Infinity);
     for (const occupant of this.occupants.values()) if (occupant.parent === record.model && occupant.visible) { min.min(occupant.position); max.max(occupant.position); }
     if (min.x > max.x) return false;
@@ -508,6 +524,22 @@ export class VehicleView extends Group {
     record.model.updateWorldMatrix(true, false);
     reveal.cutInverse.value.copy(record.model.matrixWorld).invert();
     return true;
+  }
+  /** Framed glass roof closing the crew cut: a tinted pane at roof height and a dark frame whose bars stand across the cut roof
+   * edges (ceiling to roof top), so no slab cross-section shows. Hidden unless the crew cutaway is on. */
+  private crewRoof(model: Object3D): Record['crewRoof'] {
+    const roof = crewRoofs[model.userData.assetId], frame = roof && model.getObjectByName('crew_cab')?.parent;
+    if (!roof || !frame) return undefined;
+    const { x0, x1, z, top } = roof, bar = .05, low = 2.7, w = x1 - x0, mid = (x0 + x1) / 2;
+    // Side, rear and front bars (sx, sz, centre x, centre z). No centre rib: the courier sits on the centre line.
+    const h = top + .015 - low, edge = ([sx, sz, x, cz]: number[]) => new BoxGeometry(sx, h, sz).translate(x, low + h / 2, cz);
+    const bars = [[w + bar, bar, mid, z], [w + bar, bar, mid, -z], [bar, 2 * z, x0, 0], [bar, 2 * z, x1, 0]].map(edge);
+    const glass = new Group(); glass.name = 'crewGlassRoof'; glass.visible = false;
+    const pane = new Mesh(new BoxGeometry(w, .015, 2 * z).translate(mid, top - .01, 0), this.materials.world('backpackTeal', 0, false, DoubleSide, 0, true, .18, false));
+    const rim = new Mesh(mergeGeometries(bars)!, this.materials.world('uiDark')); for (const g of bars) g.dispose();
+    pane.castShadow = false; rim.castShadow = rim.receiveShadow = pane.receiveShadow = true;
+    glass.add(rim, pane); frame.add(glass);
+    return { frame, glass };
   }
   /** Complete drawn chassis, including wheels, for the player's bounded reveal. */
   playerBounds(out: Box3): boolean {
@@ -530,6 +562,7 @@ export class VehicleView extends Group {
   snapshot() { return [...this.records].map(([id, r]) => ({ id, apcDamage: r.apc?.snapshot() ?? null, transitionCouriers: [...this.occupants.values()].filter(o => o.parent === r.parent && o.visible).map(o => ({ actorId: o.actorId, asset: o.asset, phase: 'exit', position: o.position.toArray() })), doors: ['doorL','doorR','door_near_0','door_near_1','door_far_0','door_far_1'].flatMap(name => { const node = r.model.getObjectByName(name); let meshes = 0; node?.traverse(child => { if (child instanceof Mesh) meshes++; }); return node ? [{ name, yaw: node.rotation.y, meshes }] : []; }), decay: r.decay ?? null, bloodCoverage: this.bloodEnabled ? r.blood : 0, windshieldBloodCoverage: this.bloodEnabled ? r.blood : 0, wheels: r.wheels.map(w => ({ spin: w.node.rotation.z, steer: w.node.rotation.y })), brake: r.brake.color.r, sirens: r.sirens.map(s => s.color.toArray()), placeholder: !!r.model.userData.placeholder, occupants: [...this.occupants.values()].filter(o => o.parent === r.model && o.visible).map(o => ({ actorId: o.actorId, asset: o.asset, seated: true, position: o.position.toArray(), handGapM: [...o.handGapM] })) })); }
   private releaseRecord(record: Record): void {
     record.apc?.dispose(); disposeTransportCab(record.model);
+    record.crewRoof?.glass.traverse(node => { if (node instanceof Mesh) node.geometry.dispose(); });
     record.door.geometry.dispose(); record.brake.dispose(); for (const material of record.sirens) material.dispose();
   }
   dispose(): void {

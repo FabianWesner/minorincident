@@ -1,6 +1,8 @@
 // Asset contract: every shipped GLB (all levels, all LODs) passes the one validator in tools/assets/validate.ts.
 // Validator rejection cases and atlas identity details are shared across every figure build.
 import { Document } from '@gltf-transform/core';
+import { assetIO } from '../../tools/assets/io';
+import { crewRoofs } from '../../src/data/vehicles';
 import { cloneDocument } from '@gltf-transform/functions';
 import { expect, test } from 'vitest';
 import manifest from '../../src/assets/manifest.json';
@@ -11,7 +13,7 @@ import { adoptStandingBind } from '../../tools/assets/skin-crowd-standing';
 import { classifyCrowdAtlas } from '../../tools/assets/skin-crowd-regions';
 import { paintCrowdShirt, paintCrowdWraps } from '../../tools/assets/skin-crowd-wraps';
 import { crowdRegion } from '../../src/render/characters/crowdRegionData';
-import { Group, Object3D, Quaternion } from 'three';
+import { Box3, Group, Matrix4, Object3D, Quaternion, Triangle, Vector3 } from 'three';
 import { retargetClip } from '../../src/render/characters/clips';
 
 function fixture(): { doc: Document; def: AssetDef } {
@@ -174,3 +176,38 @@ test('the asset validator rejects every contract violation, and every production
   expect(reports.length).toBeGreaterThanOrEqual(sample.length);
   expect(reports.flatMap(r => r.errors.map(e => `${r.id}: ${e}`))).toEqual([]);
 }, 120_000);
+
+test('r6-truck: the seated crew roof cut removes only roof geometry above the cab interior, at every fire-engine LOD', async () => {
+  // PO 11-07 "L2 Some part is missing of the truck": the seat-footprint cut reached 0.3 m into the closed shutter housing behind the
+  // cab, whose AO-black inside read as a hole. Inside the cut footprint (asset root frame) the band from head height (2.3) to just
+  // under the ceiling (2.74) must be open cabin air: a wall or a neighbouring assembly there would be sliced open by the cut.
+  // The rear crew seats sit inside the footprint with their heads below the cut, so the glazed opening shows them.
+  const roof = crewRoofs['veh.fire-engine'], io = await assetIO(), p = new Vector3();
+  const air = new Box3(new Vector3(roof.x0, 2.3, -roof.z), new Vector3(roof.x1, 2.72, roof.z)), above = new Box3(new Vector3(roof.x0, roof.cut, -roof.z), new Vector3(roof.x1, 1e4, roof.z));
+  for (const file of ['veh.fire-engine.glb', 'veh.fire-engine.lod1.glb', 'veh.fire-engine.lod2.glb']) {
+    const doc = await io.read(`public/assets/models/${file}`), nodes = doc.getRoot().listNodes();
+    const frame = nodes.find(n => n.getName() === 'crew_cab')!.getParentNode()!;
+    const toFrame = new Matrix4().fromArray(frame.getWorldMatrix()).invert();
+    let sliced = 0, cut = 0;
+    for (const node of nodes) {
+      const mesh = node.getMesh(); if (!mesh) continue;
+      const matrix = new Matrix4().multiplyMatrices(toFrame, new Matrix4().fromArray(node.getWorldMatrix()));
+      for (const prim of mesh.listPrimitives()) {
+        const position = prim.getAttribute('POSITION')!, index = prim.getIndices()?.getArray(), v: number[] = [];
+        const corner = (i: number) => new Vector3().fromArray(position.getElement(index ? index[i] : i, v)).applyMatrix4(matrix);
+        for (let i = 0; i + 2 < (index ? index.length : position.getCount()); i += 3) {
+          const triangle = new Triangle(corner(i), corner(i + 1), corner(i + 2));
+          if (air.intersectsTriangle(triangle)) sliced++;
+          if (above.intersectsTriangle(triangle)) cut++;
+        }
+      }
+    }
+    expect(cut, file).toBeGreaterThan(0);
+    expect(sliced, `${file}: triangles between head height and the ceiling inside the crew cut`).toBe(0);
+    for (const seat of nodes.filter(n => /^crewSeat[0-5]$/.test(n.getName()) && n.getName() !== 'crewSeat1')) {
+      p.setFromMatrixPosition(new Matrix4().fromArray(seat.getWorldMatrix()).premultiply(toFrame));
+      expect(p.y + .9, `${file} ${seat.getName()} head`).toBeLessThan(roof.cut);
+      expect(p.x > roof.x0 && p.x < roof.x1 && Math.abs(p.z) < roof.z, `${file} ${seat.getName()}`).toBe(true);
+    }
+  }
+});
