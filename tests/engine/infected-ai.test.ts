@@ -8,6 +8,8 @@ import type { EntitySnapshot, GameEvent } from '../../src/sim/world/types';
 import { clickable } from '../../src/input/ClickPick';
 import { l1v2 } from '../../src/data/l1v2';
 import { SimWorld } from '../../src/sim/world/SimWorld';
+import { missionSandbox } from '../fixtures/scenarios/mission-sandbox';
+import { followFrustum, loadL3 } from '../../tools/sim-runner/l3Bots';
 
 const worlds: SimWorld[] = [];
 afterEach(() => { for (const w of worlds) w.dispose(); worlds.length = 0; });
@@ -20,6 +22,31 @@ function hit(w: SimWorld, e: EntitySnapshot, type: DamageEvent['type'] = 'melee'
 const [lowS, highS] = infectedRecovery.downS;
 
 test('every human and animal role validates and spawns with its catalog health and speed; every attack is telegraphed', async () => {
+  for (const tier of ['low', 'high'] as const) {
+    const w = await arena(); w.scenario = 'L3'; w.infected!.configureL1v2(); w.infected!.director.setTier(tier);
+    // Isolate the retreat AI from the level's population and objective graph.
+    const definition = missionSandbox(); definition.onStart = [];
+    const mission = w.loadMission(definition); mission.begin(); Object.assign(mission.state, { l3: { fallbackAt: 1, segment: 1 } });
+    const e = spawn(w, 'runner', 2), brain = e.infected!.l1!;
+    brain.mode = 'chase'; brain.targetId = 1; brain.pauseUntil = 0;
+    const warnings: number[] = [];
+    w.events.on('telegraph', event => {
+      if (event.type === 'telegraph' && event.sourceId === e.id) warnings.push(Math.hypot(e.transform.x, e.transform.z));
+    });
+    step(w, 1);
+    expect(warnings, `${tier}: pursuing at two metres must not repeatedly wind up out of contact`).toEqual([]);
+    e.transform.x = .9001; e.transform.z = 0;
+    step(w, 1);
+    expect(warnings, `${tier}: contact reached during steering must commit before separation`).toHaveLength(1);
+    expect(warnings[0]).toBeLessThanOrEqual(.9);
+    if (tier === 'low') {
+      mission.state.l3!.segment = 0;
+      const early = spawn(w, 'runner', 2), approach = early.infected!.l1!;
+      approach.mode = 'chase'; approach.targetId = 1; approach.pauseUntil = 0;
+      step(w, 1);
+      expect(w.events.events().some(event => event.type === 'telegraph' && event.sourceId === early.id), 'the first squad segment retains its original lunge').toBe(true);
+    }
+  }
   {
     const w = await arena(); w.scenario = 'L3'; w.infected!.configureL1v2();
     const e = spawn(w, 'runner', 1.8), b = e.infected!, brain = b.l1!;
@@ -125,6 +152,28 @@ test('perception: sight cone, facing-independent gunshots, silent melee misses, 
   const s = await arena(); spawn(s, 'screamer', 1);
   const within = spawn(s, 'runner', 20.5, 0, 'idle'), past = spawn(s, 'runner', 22, 0, 'idle'); step(s, 51);
   expect(within.infected!.state).not.toBe('idle'); expect(past.infected!.state).toBe('idle');
+
+  // A delayed L3 gunfire spill remembers the noise, not the shooter's later
+  // live position. Losing a designated officer must not grant a player target.
+  const { world: retreat, mission } = await loadL3(1, 'low'); worlds.push(retreat);
+  const player = retreat.entities.get(1)!;
+  Object.assign(player.transform, { x: 120, z: 0 }); followFrustum(retreat);
+  for (const e of [...retreat.infected!.active]) retreat.infected!.release(e);
+  const state = mission.state.l3!, home = { x: -15, z: 0 };
+  state.phase = 'corridor'; state.fallbackAt = 1; state.waves = [];
+  const door = Object.keys(mission.def.anchors).filter(name => name.startsWith('refuge-door-'))
+    .sort((a, b) => Math.hypot(mission.def.anchors[a].x - home.x, mission.def.anchors[a].z - home.z) - Math.hypot(mission.def.anchors[b].x - home.x, mission.def.anchors[b].z - home.z))[0];
+  const controller = mission.l3! as unknown as { emergePending(all: boolean): void };
+  const officer = retreat.entities.get(state.officerIds[0])!; officer.health.current = 0;
+  for (const targetId of [1, officer.id]) {
+    const entry = { id: 0, door, home, segment: 1, at: retreat.tick, kind: 'spill' as const, targetId };
+    state.pending = [entry]; controller.emergePending(true);
+    expect(entry.id, 'the native offscreen spill is actually admitted').toBeGreaterThan(0);
+    const e = retreat.entities.get(entry.id)!, brain = e.infected!.l1!;
+    expect(brain.focusId, 'noise must not reveal the courier at her new position').not.toBe(1);
+    expect([brain.search.originX, brain.search.originZ]).toEqual([home.x, home.z]);
+    retreat.infected!.release(e);
+  }
 });
 
 test('melee knocks down for a seeded 10-20 s, respects the L2 recovery pool, then up at full HP; explosives and burns kill for good', async () => {

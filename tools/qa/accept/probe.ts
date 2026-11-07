@@ -75,7 +75,8 @@ export async function probeLevel(level: RunnerLevel, tier: Tier, policy: NativeR
   } catch (error) { receipt.error = error instanceof Error ? error.stack ?? error.message : String(error); }
   if (level === 'L3' && policy === 'complete') {
     const army = receipt.threat?.l3Squad?.army ?? null;
-    receipt.l3Army = armyLineVerdict([{ seed: 1, valid: !!receipt.run?.completed && army !== null, army }, ...await l3ArmySeeds(tier)]);
+    const checkpoint = receipt.threat?.phases.find(phase => phase.key === 'step/checkpoint');
+    receipt.l3Army = armyLineVerdict([{ seed: 1, valid: !!receipt.run?.completed && army !== null, army, attacksPerMinute: checkpoint?.attacksPerMinute ?? null }, ...await l3ArmySeeds(tier)]);
   }
   if ((level === 'L5' || level === 'L7') && policy === 'complete') {
     receipt.followerPaceSeeds = [{ seed: 1, outcome: receipt.run?.outcome, nativeStateHash: receipt.nativeStateHash ?? undefined, valid: !!receipt.run?.completed && !receipt.error, companions: receipt.observation?.corgi.ids ?? [], phases: receipt.threat?.phases ?? [] }, ...await extraFollowerPaceSeeds(level, tier)];

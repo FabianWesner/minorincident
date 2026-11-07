@@ -117,9 +117,9 @@ export const l3 = {
   /** Multiplier on the infected hit (L1: 10 per hit, 0.9 s cycle): PO 10-09: was 1.8 (the L2 value), too punishing; 1.1 still hits harder than L1 but a straight-line player survives a few bites. */
   infectedDamage: 1.1,
   /** The courier outruns regulars; one in twenty humans is a sprinter. Humans recover near the upper end of the epic's 10–20 s window. */
-  // Dense high-tier retreat crowds commit at body contact rather than repeatedly
+  // Later retreat crowds commit at body contact rather than repeatedly
   // winding up two metres behind the moving courier.
-  infected: { maxRegularMs: 4, retreatLungeM: { low: 2.5, high: .9 }, sprinterEvery: 20, recoverS: [18, 20] as P },
+  infected: { maxRegularMs: 4, retreatLungeM: { low: .9, high: .9 }, sprinterEvery: 20, recoverS: [18, 20] as P },
   /**
    * PO 10-09: a courier who keeps dying at one spot is not meant to hit the same wall for 20 deaths. From the `fromDeaths`-th death at the same checkpoint on,
    * every respawn thins the infected (living or still waiting at their doors) between `aheadM` metres ahead of the courier by

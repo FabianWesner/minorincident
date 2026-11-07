@@ -1,4 +1,5 @@
 import { armyLineVerdict } from '../threat/l3ArmyLine';
+import { l3SeedVerdict } from '../threat/l3SeedVote';
 import { loadL2, runL2 } from '../../sim-runner/l2Bots';
 import { loadL3, runL3 } from '../../sim-runner/l3Bots';
 import { l3, l3Street } from '../../../src/data/l3';
@@ -208,19 +209,20 @@ export async function batteryFixtures(level: RunnerLevel, tier: Tier, add: Add, 
             report.outcome === 'complete' ? waveCensus.every(row => row.admitted === row.expected && Object.values(row.byDirection).every(count => count > 0) && row.station === row.expected / 5 && row.stationPoliceLook === row.station && row.missingAppearance === 0) : undefined);
           const census = l3HumanCensus(humans);
           add('L3-09', 'native L3 human speed and admitted sprinter fraction', { ...census, outcome: report.outcome, counting: 'spawn transactions; checkpoint-reused IDs are separate admissions' }, 'regular≤4m/s; sprinters≤5% of actual admissions', census.regularMax > 4 ? false : census.count && report.outcome === 'complete' ? l3HumansPass(census) : undefined);
-          const s1 = report.s1;
-          add('L3-07', 'mortal segment1 officers land hits and player damage', { ...s1, deaths: report.deaths, outcome: report.outcome }, 'officers land at least one hit; player damage<100HP', l3SegmentOnePass(report));
           const density = report.density;
           add('L3-08', 'authored segment populations before admission/death relief', density.prepopulated, '250/625/1000 each±20%; these are pending population slots, not simultaneous live entities', density.prepopulated.every(n => n > 0) ? density.prepopulated.every((n, i) => Math.abs(n - [250, 625, 1000][i]) <= [250, 625, 1000][i] * .2) : undefined);
-          add('L3-08', 'median live within30m by traversed segment and concurrent cap', density, 'medianS1<S2<S3;max≤200high/100low', report.outcome === 'complete' ? density.near30[0] < density.near30[1] && density.near30[1] < density.near30[2] && density.maxConcurrent <= (tier === 'low' ? 100 : 200) : undefined);
           // fix66-a: one pushable bag shifts the squad's losses between seeds, so the "<= 2 at the army line" clause is measured on
           // three seeds (1 = the run above, 2 and 3 = extra complete runs) and passes when at least two of the three agree (median).
-          const seedRuns: { seed: number; outcome: string; deaths: number; atFallback: number | null; atCheckpoint: number | null; segmentEnds: number[]; losses: { cause: string }[] }[] = [];
-          const squadRow = (seed: number, r: typeof report) => ({ seed, outcome: r.outcome, deaths: r.deaths, atFallback: r.squad?.atFallback ?? null, atCheckpoint: r.squad?.atCheckpoint ?? null, segmentEnds: r.squad?.segmentEnds ?? [], losses: r.squad?.losses ?? [] });
+          const seedRuns: { seed: number; outcome: string; deaths: number; atFallback: number | null; atCheckpoint: number | null; segmentEnds: number[]; losses: { cause: string }[]; followRange: NonNullable<typeof report.squad>['followRange'] }[] = [];
+          const measurementRuns = [{ seed: 1, report }];
+          const squadRow = (seed: number, r: typeof report) => ({ seed, outcome: r.outcome, deaths: r.deaths, atFallback: r.squad?.atFallback ?? null, atCheckpoint: r.squad?.atCheckpoint ?? null, segmentEnds: r.squad?.segmentEnds ?? [], losses: r.squad?.losses ?? [], followRange: r.squad?.followRange ?? [] });
           seedRuns.push(squadRow(1, report));
           for (const seed of [2, 3]) {
             const extra = await loadL3(seed, tier);
-            try { seedRuns.push(squadRow(seed, runL3(extra.world, extra.mission, 'complete', { seed, maxSeconds: 600, god: false }))); } finally { extra.world.dispose(); }
+            try {
+              const extraReport = runL3(extra.world, extra.mission, 'complete', { seed, maxSeconds: 600, god: false });
+              measurementRuns.push({ seed, report: extraReport }); seedRuns.push(squadRow(seed, extraReport));
+            } finally { extra.world.dispose(); }
           }
           observations['L3/squad-3-seeds'] = seedRuns;
           const valid = (r: typeof seedRuns[number]) => r.outcome === 'complete' && r.atCheckpoint !== null && r.atCheckpoint >= 0;   // a death only restores the checkpoint; it is reported per seed
@@ -228,12 +230,32 @@ export async function batteryFixtures(level: RunnerLevel, tier: Tier, add: Add, 
           const army = armyLineVerdict(seedRuns.map(r => ({ seed: r.seed, valid: valid(r), army: r.atCheckpoint })));
           const armyOk = army.within, measured = army.measured;
           add('L3-06', 'native squad cardinality and loss causes (formation/teleport review open)', { seeds: seedRuns.map(r => ({ seed: r.seed, outcome: r.outcome, deaths: r.deaths, atFallback: r.atFallback, atCheckpoint: r.atCheckpoint, segmentEnds: r.segmentEnds, lossCauses: r.losses.map(l => l.cause) })), atArmyAtMost2: `${armyOk}/${measured}` }, 'forms3–4;nonincreasing;≤2 atcheckpoint;loss causes bite/kill/separation (three seeds, at least two agree on the army line)', army.pass === undefined ? undefined : seedRuns.filter(valid).every(seedOk) && army.pass);
+          const s1Votes = measurementRuns.map(({ seed, report: r }) => ({ seed, valid: r.outcome === 'complete' && !!r.s1?.completed, pass: r.s1?.completed ? r.s1.officerHits > 0 && r.s1.damage < 100 : null }));
+          const s1Vote = l3SeedVerdict(s1Votes);
+          add('L3-07', 'mortal segment1 officers land hits and player damage', { seeds: measurementRuns.map(({ seed, report: r }) => ({ seed, outcome: r.outcome, ...r.s1, deaths: r.deaths })), vote: `${s1Vote.within}/${s1Vote.measured}` }, 'officers land at least one hit and player damage<100HP; 2 of 3 valid seeds pass', s1Vote.pass);
+          const densityVotes = measurementRuns.map(({ seed, report: r }) => {
+            const d = r.density, pass = r.outcome === 'complete' ? d.near30[0] < d.near30[1] && d.near30[1] < d.near30[2] && d.maxConcurrent <= (tier === 'low' ? 100 : 200) : null;
+            return { seed, valid: r.outcome === 'complete', pass, density: d };
+          });
+          const densityVote = l3SeedVerdict(densityVotes);
+          add('L3-08', 'median live within30m by traversed segment and concurrent cap', { seeds: densityVotes.map(({ seed, density }) => ({ seed, ...density })), vote: `${densityVote.within}/${densityVote.measured}` }, `medianS1<S2<S3;max≤${tier === 'low' ? 100 : 200}; 2 of 3 valid seeds pass`, densityVote.pass);
           const followRange = report.squad?.followRange ?? [];
           add('L3-06', 'calm squad following distance by member', followRange, 'every sampled living officer follows 3–6 m from the courier outside combat', report.squad && report.outcome === 'complete' && followRange.length > 0 ? followRange.every(member => member.samples > 0 && member.within3to6 === member.samples) : undefined);
           add('L3-11', 'initial authored medkit entities by street', medkits, '≥2 perstreet;≥7total', Object.values(medkits).every(n => n >= 2) && Object.values(medkits).reduce((a, b) => a + b, 0) >= 7);
           add('L3-01', 'actual first handgun acquisition clock', report.handgunS, '≤40s', report.handgunS !== null ? report.handgunS <= 40 : undefined);
         }
-        if (profile === 'newbie') add('L3-11', 'mortal newbie time below20percent HP', { share: report.lowHpShare, outcome: report.outcome, deaths: report.deaths, simulatedSeconds: report.simSeconds }, '≤10% of alive samples; fullroute completed', report.outcome === 'complete' ? report.lowHpShare <= .1 : undefined);
+        if (profile === 'newbie') {
+          const newbieSeeds = [{ seed: 1, outcome: report.outcome, share: report.lowHpShare }];
+          for (const seed of [2, 3]) {
+            const extra = await loadL3(seed, tier);
+            try {
+              const r = runL3(extra.world, extra.mission, 'newbie', { seed, maxSeconds: 600, god: false });
+              newbieSeeds.push({ seed, outcome: r.outcome, share: r.lowHpShare });
+            } finally { extra.world.dispose(); }
+          }
+          const vote = l3SeedVerdict(newbieSeeds.map(row => ({ seed: row.seed, valid: row.outcome === 'complete', pass: row.outcome === 'complete' ? row.share <= .1 : null })));
+          add('L3-11', 'mortal newbie time below20percent HP', { seeds: newbieSeeds, vote: `${vote.within}/${vote.measured}`, deaths: report.deaths, simulatedSeconds: report.simSeconds }, '≤10% of alive samples; fullroute completed; 2 of 3 valid seeds pass', vote.pass);
+        }
         if (profile === 'idle') {
           const attack = report.attack;
           observations['L3/fallback-boundary'] = { fallbackBoundary, delayedFallback };

@@ -339,7 +339,11 @@ function regroup(world: SimWorld, e: EntitySnapshot, a: AllyState, p: Point): bo
     const velocity = leader.survivor?.velocity;
     const forward = moving && world.missions?.def.l3 && velocity
       ? -Math.atan2(velocity.z, velocity.x) : leader.transform.yaw;
-    const behind = 4 + Math.floor((f.slot % 6) / 2), side = (f.slot % 2 ? 1 : -1) * (1.8 + Math.floor(f.slot / 6) * 1.8);
+    const calm = !a.targetId && !a.strikeAt;
+    // The closer rest slots fix the 3–6 m calm-follow band. During a fight
+    // retain the prior depth so officers do not move into the infected line.
+    const behind = calm ? 3.8 + Math.floor((f.slot % 6) / 2) * .6 : 4 + Math.floor((f.slot % 6) / 2);
+    const side = (f.slot % 2 ? 1 : -1) * (1.8 + Math.floor(f.slot / 6) * 1.8);
     const at = (b: number, s: number): Point => ({ x: p.x - Math.cos(forward) * b + Math.sin(forward) * s, z: p.z + Math.sin(forward) * b + Math.cos(forward) * s });
     const nav = world.infected!.nav;
     const usable = (q: Point) => d <= 10 && nav.clear(q.x, q.z, .4) && nav.visible(e.transform, q, .4) && nav.visible(q, p, .4);
@@ -352,7 +356,6 @@ function regroup(world: SimWorld, e: EntitySnapshot, a: AllyState, p: Point): bo
     // fix67-a (L3-06): a calm officer walking to a moving slot settles where the arrival ramp ((distance - stop) * 4) matches
     // her pace, i.e. stop + pace / 4 behind it (1.2 m at the street pace). Aim that far ahead of the slot so the officer
     // stands on it; Npcs.move grants the matching catch-up headroom. Fights keep the old movement.
-    const calm = !a.targetId && !a.strikeAt;
     if (calm && moving && world.missions?.def.l3 && velocity && goal !== p) {
       const v = Math.hypot(velocity.x, velocity.z), lead = Math.min(2, .5 + v / 4);
       const ahead = { x: goal.x + velocity.x / v * lead, z: goal.z + velocity.z / v * lead };

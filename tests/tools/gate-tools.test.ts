@@ -10,6 +10,7 @@ import { afterEach, expect, test } from 'vitest';
 import { backoffAdmission, classifyQuietProcesses } from '../../tools/browser-pool/host';
 import { evidenceIsArchivedOrMatches, loadReviews, reviewFreshness, reviewSourceDigest, validateReview, type ReviewDecision } from '../../tools/qa/accept/reviews';
 import { armyLineVerdict } from '../../tools/qa/threat/l3ArmyLine';
+import { l3SeedVerdict } from '../../tools/qa/threat/l3SeedVote';
 import { followerPaceVerdict } from '../../tools/qa/threat/followerPace';
 import { focusedCriteria } from '../../tools/qa/threat/criteria';
 import type { LevelReceipt } from '../../tools/qa/threat-audit';
@@ -87,6 +88,11 @@ test('browser pool admission backs off under WindowServer pressure, keeps a one-
   const seeds = (...army: (number | null)[]) => army.map((n, i) => ({ seed: i + 1, valid: n !== null, army: n }));
   for (const [label, army, pass] of [['lane 3/0/0', [3, 0, 0], true], ['two over', [3, 3, 0], false], ['one valid', [1, null, null], undefined], ['two valid, one over', [3, null, 2], false], ['all within', [2, 2, 1], true]] as const)
     expect(armyLineVerdict(seeds(...army)).pass, label).toBe(pass);
+  for (const [votes, expected] of [
+    [[true, false, true], true], [[true, false, false], false], [[true, null, null], undefined],
+    [[true, false, null], false],
+  ] as const) expect(l3SeedVerdict(votes.map((pass, i) => ({ seed: i + 1, valid: true, pass }))).pass).toBe(expected);
+  expect(l3SeedVerdict([{ seed: 1, valid: true, pass: true }, { seed: 1, valid: true, pass: false }, { seed: 2, valid: true, pass: true }]).measured).toBe(2);
   // G-13/L7-09: vote per follower and phase over seeds 1–3.
   const seed = (n: number, slow: number[] = [], valid = true) => ({ seed: n, valid, companions: [], phases: [{ key: 'step/corridor', followerMedian: 4, followerSpeeds: [60, 63, 64].map(id => ({ id, samples: 12, median: slow.includes(id) ? 3.76 : 4 })) }] });
   const one = seed(1, [60]), two = seed(2), three = seed(3);
@@ -108,6 +114,19 @@ test('browser pool admission backs off under WindowServer pressure, keeps a one-
   const l3 = (army: (number | null)[]) => ({ level: 'L3', observation: { phases: [], waves: [], l3Squad: { initial: 4, army: army[0], losses: [{ id: 30, cause: 'bite', tick: 1 }] } }, passiveObservation: { phases: [], waves: [] }, l3Army: armyLineVerdict(seeds(...army)) }) as unknown as LevelReceipt;
   expect(focusedCriteria([l3([3, 0, 0])]).find(r => r.id === 'L3-06 squad counts/losses')?.verdict).toBe('PASS');
   expect(focusedCriteria([l3([3, 3, 0])]).find(r => r.id === 'L3-06 squad counts/losses')?.verdict).toBe('FAIL');
+  const seeded = l3([3, 0, 0]);
+  seeded.l3Army!.seeds.forEach((row, i) => { row.attacksPerMinute = [30, 5, 6][i]; });
+  seeded.l3SurvivalSeeds = [1, 2, 3].map(seed => ({ seed, valid: true,
+    s1: { completed: true, officerHits: 1, damage: seed === 1 ? 100 : 11 },
+    density: { near30: seed === 1 ? [2, 1, 3] : [1, 2, 3], maxConcurrent: 100, cap: 100 } }));
+  const seededRows = focusedCriteria([seeded]);
+  for (const id of ['L3-07 squad hits and player damage', 'L3-08 segment density and concurrent cap', 'L3-11 native competent rate']) {
+    const row = seededRows.find(row => row.id === id)!;
+    expect(row.verdict, id).toBe('PASS');
+    expect(row.passive, `${id} is measured by mortal complete routes`).toBe('—');
+    expect(row.skilled, id).toContain('2/3');
+  }
+  expect(seededRows.find(row => row.id === 'L3-11 native competent rate')!.skilled).toContain('s2:5.00/min');
 });
 
 

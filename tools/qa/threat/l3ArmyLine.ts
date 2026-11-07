@@ -7,7 +7,8 @@
  */
 export const armyLineLimit = 2;
 export const armyLineSeeds = [1, 2, 3] as const;
-export interface ArmySeed { seed: number; valid: boolean; army: number | null }
+/** attacksPerMinute counts infected windups targeting the courier, not her shots. */
+export interface ArmySeed { seed: number; valid: boolean; army: number | null; attacksPerMinute?: number | null }
 export interface ArmyLineVerdict { seeds: ArmySeed[]; measured: number; within: number; pass: boolean | undefined }
 
 export function armyLineVerdict(seeds: ArmySeed[]): ArmyLineVerdict {

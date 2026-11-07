@@ -1,0 +1,502 @@
+{
+  "baseline": "7d2c9af",
+  "baselineSourceProof": {
+    "runtimeRevision": "7d2c9af",
+    "files": {
+      "src/data/l3.ts": "fcb0f23d34114bef056fff1d444070db472cc401af4638e90b2d92daef9bea5a",
+      "src/sim/ai/InfectedSystem.ts": "542c091e4c4061acdf483293e5cb8aafbb5b001a9b2849f37c3b639105708d2f",
+      "src/sim/missions/LevelThreeCollapse.ts": "f5a808a136a827a4d8eeb23aae59146ca83742af17c936b39555ccec6eb51fcb",
+      "src/sim/outbreak/Allies.ts": "4d7a6f9b222918459922ce7e4a10e1807773e4ff43cd22980fb27e35c411ba71"
+    }
+  },
+  "tiers": {
+    "low": {
+      "before": {
+        "army": [
+          3,
+          0,
+          0
+        ],
+        "incomingAttacksPerMinute": [
+          5.3857661893567,
+          43.43240651965484,
+          40.0551724137931
+        ],
+        "segmentOneDamage": [
+          22,
+          111,
+          99
+        ],
+        "segmentOneOfficerHits": [
+          122,
+          215,
+          38
+        ],
+        "near30": [
+          [
+            20,
+            21,
+            20
+          ],
+          [
+            20,
+            24,
+            24
+          ],
+          [
+            22,
+            27,
+            25
+          ]
+        ],
+        "maxConcurrent": [
+          100,
+          100,
+          100
+        ],
+        "newbieLowHealthShare": [
+          0.02549827413428349,
+          0,
+          0.029091750906705766
+        ],
+        "followBand": [
+          {
+            "seed": 1,
+            "samples": 60,
+            "outside3to6": 1,
+            "maxM": 6.141181316260594
+          },
+          {
+            "seed": 2,
+            "samples": 132,
+            "outside3to6": 1,
+            "maxM": 6.220879969478483
+          },
+          {
+            "seed": 3,
+            "samples": 0,
+            "outside3to6": 0,
+            "maxM": null
+          }
+        ],
+        "votes": {
+          "L3-06": {
+            "within": 2,
+            "measured": 3,
+            "pass": true
+          },
+          "L3-07": {
+            "within": 2,
+            "measured": 3,
+            "pass": true
+          },
+          "L3-08": {
+            "within": 0,
+            "measured": 3,
+            "pass": false
+          },
+          "L3-11": {
+            "within": 1,
+            "measured": 3,
+            "pass": false
+          },
+          "L3-11-newbie": {
+            "within": 3,
+            "measured": 3,
+            "pass": true
+          }
+        }
+      },
+      "after": {
+        "army": [
+          4,
+          0,
+          0
+        ],
+        "incomingAttacksPerMinute": [
+          4.438508168087949,
+          19.00804985717995,
+          24.65998213044773
+        ],
+        "segmentOneDamage": [
+          11,
+          100,
+          99
+        ],
+        "segmentOneOfficerHits": [
+          135,
+          216,
+          38
+        ],
+        "near30": [
+          [
+            16,
+            23,
+            20
+          ],
+          [
+            19,
+            21,
+            31
+          ],
+          [
+            22,
+            27,
+            36
+          ]
+        ],
+        "maxConcurrent": [
+          100,
+          100,
+          100
+        ],
+        "newbieLowHealthShare": [
+          0.02623418506574051,
+          0,
+          0
+        ],
+        "followBand": [
+          {
+            "seed": 1,
+            "samples": 24,
+            "outside3to6": 0,
+            "maxM": 5.467199425168378
+          },
+          {
+            "seed": 2,
+            "samples": 16,
+            "outside3to6": 0,
+            "maxM": 5.295381513892609
+          },
+          {
+            "seed": 3,
+            "samples": 0,
+            "outside3to6": 0,
+            "maxM": null
+          }
+        ],
+        "votes": {
+          "L3-06": {
+            "within": 2,
+            "measured": 3,
+            "pass": true
+          },
+          "L3-07": {
+            "within": 2,
+            "measured": 3,
+            "pass": true
+          },
+          "L3-08": {
+            "within": 2,
+            "measured": 3,
+            "pass": true
+          },
+          "L3-11": {
+            "within": 3,
+            "measured": 3,
+            "pass": true
+          },
+          "L3-11-newbie": {
+            "within": 3,
+            "measured": 3,
+            "pass": true
+          }
+        }
+      },
+      "sourceHash": "85b46e24e6f17194c47e3b79b3eea2f198e25948dc9809e2f5f0bf0659f16a2f",
+      "revision": "fccd7bc03bdf7b5ccc632453ddd5d4a6e6de3890",
+      "fixtureHash": "affb7ac840ecdcaa5f7029c4ddb5ac12d2261d5eb895ae4554d6051293d4e0ba"
+    },
+    "high": {
+      "before": {
+        "army": [
+          0,
+          0,
+          0
+        ],
+        "incomingAttacksPerMinute": [
+          13.580750407830342,
+          14.23872767392481,
+          15.776777098745578
+        ],
+        "segmentOneDamage": [
+          11,
+          22,
+          77
+        ],
+        "segmentOneOfficerHits": [
+          27,
+          209,
+          180
+        ],
+        "near30": [
+          [
+            80,
+            115,
+            101
+          ],
+          [
+            80,
+            89,
+            57
+          ],
+          [
+            76,
+            95,
+            82
+          ]
+        ],
+        "maxConcurrent": [
+          200,
+          200,
+          200
+        ],
+        "newbieLowHealthShare": [
+          0,
+          0,
+          0
+        ],
+        "followBand": [
+          {
+            "seed": 1,
+            "samples": 0,
+            "outside3to6": 0,
+            "maxM": null
+          },
+          {
+            "seed": 2,
+            "samples": 0,
+            "outside3to6": 0,
+            "maxM": null
+          },
+          {
+            "seed": 3,
+            "samples": 0,
+            "outside3to6": 0,
+            "maxM": null
+          }
+        ],
+        "votes": {
+          "L3-06": {
+            "within": 3,
+            "measured": 3,
+            "pass": true
+          },
+          "L3-07": {
+            "within": 3,
+            "measured": 3,
+            "pass": true
+          },
+          "L3-08": {
+            "within": 0,
+            "measured": 3,
+            "pass": false
+          },
+          "L3-11": {
+            "within": 3,
+            "measured": 3,
+            "pass": true
+          },
+          "L3-11-newbie": {
+            "within": 3,
+            "measured": 3,
+            "pass": true
+          }
+        }
+      },
+      "after": {
+        "army": [
+          0,
+          0,
+          0
+        ],
+        "incomingAttacksPerMinute": [
+          13.430449458163084,
+          17.23746145106314,
+          6.321334503950834
+        ],
+        "segmentOneDamage": [
+          11,
+          0,
+          0
+        ],
+        "segmentOneOfficerHits": [
+          27,
+          68,
+          44
+        ],
+        "near30": [
+          [
+            80,
+            115,
+            70
+          ],
+          [
+            75,
+            102,
+            73
+          ],
+          [
+            63,
+            111,
+            67
+          ]
+        ],
+        "maxConcurrent": [
+          200,
+          200,
+          200
+        ],
+        "newbieLowHealthShare": [
+          0,
+          0,
+          0
+        ],
+        "followBand": [
+          {
+            "seed": 1,
+            "samples": 0,
+            "outside3to6": 0,
+            "maxM": null
+          },
+          {
+            "seed": 2,
+            "samples": 0,
+            "outside3to6": 0,
+            "maxM": null
+          },
+          {
+            "seed": 3,
+            "samples": 0,
+            "outside3to6": 0,
+            "maxM": null
+          }
+        ],
+        "votes": {
+          "L3-06": {
+            "within": 3,
+            "measured": 3,
+            "pass": true
+          },
+          "L3-07": {
+            "within": 3,
+            "measured": 3,
+            "pass": true
+          },
+          "L3-08": {
+            "within": 0,
+            "measured": 3,
+            "pass": false
+          },
+          "L3-11": {
+            "within": 3,
+            "measured": 3,
+            "pass": true
+          },
+          "L3-11-newbie": {
+            "within": 3,
+            "measured": 3,
+            "pass": true
+          }
+        }
+      },
+      "sourceHash": "85b46e24e6f17194c47e3b79b3eea2f198e25948dc9809e2f5f0bf0659f16a2f",
+      "revision": "fccd7bc03bdf7b5ccc632453ddd5d4a6e6de3890",
+      "fixtureHash": "affb7ac840ecdcaa5f7029c4ddb5ac12d2261d5eb895ae4554d6051293d4e0ba"
+    }
+  },
+  "formationCause": {
+    "old": {
+      "reachedSegmentTwo": true,
+      "deaths": 0,
+      "segmentOneDamage": 22,
+      "damageWithSquad": 22,
+      "damageAlone": 0,
+      "losses": [
+        {
+          "afterFallback": 28.7,
+          "life": 0,
+          "id": 30,
+          "cause": "bite",
+          "remaining": 3,
+          "courier": {
+            "x": -90.2018051147461,
+            "z": 12.894723892211914
+          }
+        }
+      ]
+    },
+    "closer-combat": {
+      "reachedSegmentTwo": true,
+      "deaths": 1,
+      "segmentOneDamage": 141.13333333333253,
+      "damageWithSquad": 44,
+      "damageAlone": 97.13333333333254,
+      "losses": [
+        {
+          "afterFallback": 9.366666666666667,
+          "life": 0,
+          "id": 32,
+          "cause": "bite",
+          "remaining": 3,
+          "courier": {
+            "x": -105.23074340820312,
+            "z": -1.9669225215911865
+          }
+        },
+        {
+          "afterFallback": 10.666666666666666,
+          "life": 0,
+          "id": 30,
+          "cause": "bite",
+          "remaining": 2,
+          "courier": {
+            "x": -101.34245300292969,
+            "z": -0.8620923757553101
+          }
+        },
+        {
+          "afterFallback": 11.066666666666666,
+          "life": 0,
+          "id": 31,
+          "cause": "bite",
+          "remaining": 1,
+          "courier": {
+            "x": -101.34245300292969,
+            "z": -0.8620923757553101
+          }
+        },
+        {
+          "afterFallback": 12.733333333333333,
+          "life": 0,
+          "id": 33,
+          "cause": "bite",
+          "remaining": 0,
+          "courier": {
+            "x": -101.34245300292969,
+            "z": -0.8620923757553101
+          }
+        },
+        {
+          "afterFallback": 51.68333333333333,
+          "life": 1,
+          "id": 33,
+          "cause": "bite",
+          "remaining": 3,
+          "courier": {
+            "x": -47.347869873046875,
+            "z": 0.8429003953933716
+          }
+        }
+      ]
+    },
+    "calm-only": {
+      "reachedSegmentTwo": true,
+      "deaths": 0,
+      "segmentOneDamage": 11,
+      "damageWithSquad": 11,
+      "damageAlone": 0,
+      "losses": []
+    }
+  }
+}
