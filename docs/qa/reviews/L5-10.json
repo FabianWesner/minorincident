@@ -1,0 +1,42 @@
+{
+  "row": "L5-10",
+  "status": "PASS",
+  "reviewer": "Codex/final-b",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "sourceDigest": "96b95aaf00218387ac838466ba4e849719809eef34f96b67f54241001dca8a39",
+  "clauses": [
+    {
+      "clause": "Armed survivors hold the gun in the hand; the corgi never fetches street weapons; no weapon respawns under the player.",
+      "verdict": "PASS",
+      "note": "Both tiers controlled production armSurvivor fixture exercises rifle, shotgun, hunting rifle and pistol on four surviving named followers; personally reviewed idle/walk close/wide frames show guns held in hands. Sixteen images inspected; hostile crowd occlusion disclosed. Corgi20s beside8 actual street weapons:0 fetched,0 moved. Separate untouched mortal complete routes exactly match canonical hashes0a23911a/147553b8: all9 weapon births occur at initial tick0 (8 street+retained shotgun), none later or under player; no actual corgi fetch targets a street weapon. High one fetch is not among weapon birth IDs. No game source change; controlled arming/positioning disclosed, not a full physical protection benchmark."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/final-b/L5-10-proof.json",
+      "sha256": "1703674ddb9e5fb8c6af3e08ca927efaf6f290789f4e603f8113dadb5bf480c8",
+      "what": "Both tiers controlled production armSurvivor fixture exercises rifle, shotgun, hunting rifle and pistol on four surviving named followers; personally reviewed idle/walk close/wide frames show guns held in hands. Sixteen images inspected; hostile crowd occlusion disclosed. Corgi20s beside8 actual street weapons:0 fetched,0 moved. Separate untouched mortal complete routes exactly match canonical hashes0a23911a/147553b8: all9 weapon births occur at initial tick0 (8 street+retained shotgun), none later or under player; no actual corgi fetch targets a street weapon. High one fetch is not among weapon birth IDs. No game source change; controlled arming/positioning disclosed, not a full physical protection benchmark."
+    },
+    {
+      "file": "docs/reports/final-b/L5-weapons-native.json.gz",
+      "sha256": "d59bd5f97a71ac49e14f3d9d45c1a6cf23f1d4d2f11e12b05ab99b116e1e8b3f",
+      "what": "Both tiers controlled production armSurvivor fixture exercises rifle, shotgun, hunting rifle and pistol on four surviving named followers; personally reviewed idle/walk close/wide frames show guns held in hands. Sixteen images inspected; hostile crowd occlusion disclosed. Corgi20s beside8 actual street weapons:0 fetched,0 moved. Separate untouched mortal complete routes exactly match canonical hashes0a23911a/147553b8: all9 weapon births occur at initial tick0 (8 street+retained shotgun), none later or under player; no actual corgi fetch targets a street weapon. High one fetch is not among weapon birth IDs. No game source change; controlled arming/positioning disclosed, not a full physical protection benchmark."
+    },
+    {
+      "file": "docs/reports/final-b/L5-weapons-render-executed.ts.gz",
+      "sha256": "52fb33c5d0b0ec0588ec9409029079fb5ffcf78b812545f70feecfa753c9c29a",
+      "what": "Both tiers controlled production armSurvivor fixture exercises rifle, shotgun, hunting rifle and pistol on four surviving named followers; personally reviewed idle/walk close/wide frames show guns held in hands. Sixteen images inspected; hostile crowd occlusion disclosed. Corgi20s beside8 actual street weapons:0 fetched,0 moved. Separate untouched mortal complete routes exactly match canonical hashes0a23911a/147553b8: all9 weapon births occur at initial tick0 (8 street+retained shotgun), none later or under player; no actual corgi fetch targets a street weapon. High one fetch is not among weapon birth IDs. No game source change; controlled arming/positioning disclosed, not a full physical protection benchmark."
+    },
+    {
+      "file": "docs/reports/final-b/L5-weapons-low-render-ledger.json.gz",
+      "sha256": "52b100f74b5e426664d0f8e8ef63d4f7c5dcf9c4a61fd51d861c14f24281acd1",
+      "what": "Both tiers controlled production armSurvivor fixture exercises rifle, shotgun, hunting rifle and pistol on four surviving named followers; personally reviewed idle/walk close/wide frames show guns held in hands. Sixteen images inspected; hostile crowd occlusion disclosed. Corgi20s beside8 actual street weapons:0 fetched,0 moved. Separate untouched mortal complete routes exactly match canonical hashes0a23911a/147553b8: all9 weapon births occur at initial tick0 (8 street+retained shotgun), none later or under player; no actual corgi fetch targets a street weapon. High one fetch is not among weapon birth IDs. No game source change; controlled arming/positioning disclosed, not a full physical protection benchmark."
+    },
+    {
+      "file": "docs/reports/final-b/L5-weapons-high-render-ledger.json.gz",
+      "sha256": "122ce502f52ca85a808a42d7f27fd7553bcd659d92849c7d16e53624c1772350",
+      "what": "Both tiers controlled production armSurvivor fixture exercises rifle, shotgun, hunting rifle and pistol on four surviving named followers; personally reviewed idle/walk close/wide frames show guns held in hands. Sixteen images inspected; hostile crowd occlusion disclosed. Corgi20s beside8 actual street weapons:0 fetched,0 moved. Separate untouched mortal complete routes exactly match canonical hashes0a23911a/147553b8: all9 weapon births occur at initial tick0 (8 street+retained shotgun), none later or under player; no actual corgi fetch targets a street weapon. High one fetch is not among weapon birth IDs. No game source change; controlled arming/positioning disclosed, not a full physical protection benchmark."
+    }
+  ]
+}
