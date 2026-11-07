@@ -1,0 +1,216 @@
+{
+  "row": "L2-01",
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "criterion": "0 infected and 0 `combat.*` until the alarm; alarm at 20–30 s; crew at the truck ≤ 8 s later; 4 civilians on the 2 benches.",
+  "checks": [
+    {
+      "id": "L2-01",
+      "clause": "first alarm level clock (before any checkpoint rebasing)",
+      "level": "L2",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 23.15,
+      "target": "20 ≤ value ≤ 30",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-complete.json"
+    },
+    {
+      "id": "L2-01",
+      "clause": "bench civilian identity count",
+      "level": "L2",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 4,
+      "target": "4 ≤ value ≤ 4",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-complete.json"
+    },
+    {
+      "id": "L2-01",
+      "clause": "pre-alarm combat/infected census",
+      "level": "L2",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": {
+        "ticks": 1388,
+        "maxAlive": 0,
+        "combatEvents": 0,
+        "markerTicks": 0
+      },
+      "target": "zero infected; zero combat events",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-complete.json"
+    },
+    {
+      "id": "L2-01",
+      "clause": "first alarm level clock (before any checkpoint rebasing)",
+      "level": "L2",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 23.15,
+      "target": "20 ≤ value ≤ 30",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-stationary.json"
+    },
+    {
+      "id": "L2-01",
+      "clause": "bench civilian identity count",
+      "level": "L2",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 4,
+      "target": "4 ≤ value ≤ 4",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-stationary.json"
+    },
+    {
+      "id": "L2-01",
+      "clause": "pre-alarm combat/infected census",
+      "level": "L2",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": {
+        "ticks": 1388,
+        "maxAlive": 0,
+        "combatEvents": 0,
+        "markerTicks": 0
+      },
+      "target": "zero infected; zero combat events",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-stationary.json"
+    },
+    {
+      "id": "L2-01",
+      "clause": "first alarm level clock (before any checkpoint rebasing)",
+      "level": "L2",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 23.15,
+      "target": "20 ≤ value ≤ 30",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-complete.json"
+    },
+    {
+      "id": "L2-01",
+      "clause": "bench civilian identity count",
+      "level": "L2",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 4,
+      "target": "4 ≤ value ≤ 4",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-complete.json"
+    },
+    {
+      "id": "L2-01",
+      "clause": "pre-alarm combat/infected census",
+      "level": "L2",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": {
+        "ticks": 1388,
+        "maxAlive": 0,
+        "combatEvents": 0,
+        "markerTicks": 0
+      },
+      "target": "zero infected; zero combat events",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-complete.json"
+    },
+    {
+      "id": "L2-01",
+      "clause": "first alarm level clock (before any checkpoint rebasing)",
+      "level": "L2",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 23.15,
+      "target": "20 ≤ value ≤ 30",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-stationary.json"
+    },
+    {
+      "id": "L2-01",
+      "clause": "bench civilian identity count",
+      "level": "L2",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 4,
+      "target": "4 ≤ value ≤ 4",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-stationary.json"
+    },
+    {
+      "id": "L2-01",
+      "clause": "pre-alarm combat/infected census",
+      "level": "L2",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": {
+        "ticks": 1388,
+        "maxAlive": 0,
+        "combatEvents": 0,
+        "markerTicks": 0
+      },
+      "target": "zero infected; zero combat events",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-stationary.json"
+    },
+    {
+      "id": "L2-01",
+      "clause": "calm combat and alarm/crew clocks",
+      "value": {
+        "infectedMax": 0,
+        "combatEvents": 0,
+        "alarmS": 23.15,
+        "crewAtTruckS": 1.1333333333333333,
+        "axeActive": true
+      },
+      "target": "0 infected/combat; alarm20–30s; crew seated≤8s later",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
+      "level": "L2"
+    },
+    {
+      "id": "L2-01",
+      "clause": "initial bench civilian identity census (seat geometry unreviewed)",
+      "value": 4,
+      "target": "4 bench civilians",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-fixtures.json",
+      "level": "L2"
+    },
+    {
+      "id": "L2-01",
+      "clause": "calm combat and alarm/crew clocks",
+      "value": {
+        "infectedMax": 0,
+        "combatEvents": 0,
+        "alarmS": 23.15,
+        "crewAtTruckS": 1.1333333333333333,
+        "axeActive": true
+      },
+      "target": "0 infected/combat; alarm20–30s; crew seated≤8s later",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
+      "level": "L2"
+    },
+    {
+      "id": "L2-01",
+      "clause": "initial bench civilian identity census (seat geometry unreviewed)",
+      "value": 4,
+      "target": "4 bench civilians",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-fixtures.json",
+      "level": "L2"
+    }
+  ],
+  "observation": "All12 current opening captures personally inspected: WebGL2/WebGPU, low/high, actual zoom0.5/1/1.5. Default/wide frames show four distinct civilians as two seated pairs on two benches; close zoom crops that row and does not establish the count. Fresh native low/high checks retain zero infected/combat through1388 pre-alarm ticks, alarm23.15s, crew seated1.1333s later and four bench identities."
+}

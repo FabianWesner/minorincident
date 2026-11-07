@@ -1,32 +1,33 @@
 {
   "row": "L2-01",
   "status": "PASS",
-  "reviewer": "Codex sweep-a3",
-  "date": "2026-11-06",
-  "commit": "10e01ad8c1073f575580ef08ad216e6b736557dc",
+  "reviewer": "Codex final-a",
+  "date": "2026-11-07",
+  "commit": "71b9c5d607d61b71784abbe7554b5f83bf605189",
   "clauses": [
     {
       "clause": "0 infected and 0 `combat.*` until the alarm; alarm at 20–30 s; crew at the truck ≤ 8 s later; 4 civilians on the 2 benches.",
       "verdict": "PASS",
-      "note": "Personally inspected all12 current-source WebGL2/WebGPU low/high opening captures at actualzoom0.5/1/1.5. At default/wide camera four distinct civilians sit on two benches as two seated pairs; close camera crops the row and is excluded from the pixel count. Exact-source native receipts observe zero infected and zero combat through1388 pre-alarm ticks, alarm23.15s, crew seated1.1333s later, four bench identities at both tiers."
+      "note": "All12 current opening captures personally inspected: WebGL2/WebGPU, low/high, actual zoom0.5/1/1.5. Default/wide frames show four distinct civilians as two seated pairs on two benches; close zoom crops that row and does not establish the count. Fresh native low/high checks retain zero infected/combat through1388 pre-alarm ticks, alarm23.15s, crew seated1.1333s later and four bench identities."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-a3/L2-01-clauses.json",
-      "sha256": "48bf036aa0a829ec6fe7dd07baa62e798c20391576af651320feeaadbeeba22d",
-      "what": "Personally inspected all12 current-source WebGL2/WebGPU low/high opening captures at actualzoom0.5/1/1.5. At default/wide camera four distinct civilians sit on two benches as two seated pairs; close camera crops the row and is excluded from the pixel count. Exact-source native receipts observe zero infected and zero combat through1388 pre-alarm ticks, alarm23.15s, crew seated1.1333s later, four bench identities at both tiers."
+      "file": "docs/reports/final-a/L2-01-browser-ledger.json.gz",
+      "sha256": "2e4bdca48fcd8b23f6ed15823686e8678ce1f020cbf4d492e32b7ee3d56f0af4",
+      "what": "All12 current opening captures personally inspected: WebGL2/WebGPU, low/high, actual zoom0.5/1/1.5. Default/wide frames show four distinct civilians as two seated pairs on two benches; close zoom crops that row and does not establish the count. Fresh native low/high checks retain zero infected/combat through1388 pre-alarm ticks, alarm23.15s, crew seated1.1333s later and four bench identities."
     },
     {
-      "file": "docs/reports/sweep-a3/L2-opening-images.json",
-      "sha256": "c6bb4ca5f676368db78b593868b853f5fd03d065c61adf9da74fbe6a512f49e9",
-      "what": "Personally inspected all12 current-source WebGL2/WebGPU low/high opening captures at actualzoom0.5/1/1.5. At default/wide camera four distinct civilians sit on two benches as two seated pairs; close camera crops the row and is excluded from the pixel count. Exact-source native receipts observe zero infected and zero combat through1388 pre-alarm ticks, alarm23.15s, crew seated1.1333s later, four bench identities at both tiers."
+      "file": "docs/reports/final-a/L2-01-image-review.json",
+      "sha256": "5e51033b51f74493f029291c4aab271851442a2b30baa3888d06323114241a3c",
+      "what": "All12 current opening captures personally inspected: WebGL2/WebGPU, low/high, actual zoom0.5/1/1.5. Default/wide frames show four distinct civilians as two seated pairs on two benches; close zoom crops that row and does not establish the count. Fresh native low/high checks retain zero infected/combat through1388 pre-alarm ticks, alarm23.15s, crew seated1.1333s later and four bench identities."
     },
     {
-      "file": "docs/reports/sweep-a3/L2-opening-ledger.json.gz",
-      "sha256": "f82a2e57e2af4159a16d170f20151e0ba4867e1c101b69e13039486a812b211c",
-      "what": "Personally inspected all12 current-source WebGL2/WebGPU low/high opening captures at actualzoom0.5/1/1.5. At default/wide camera four distinct civilians sit on two benches as two seated pairs; close camera crops the row and is excluded from the pixel count. Exact-source native receipts observe zero infected and zero combat through1388 pre-alarm ticks, alarm23.15s, crew seated1.1333s later, four bench identities at both tiers."
+      "file": "docs/reports/final-a/L2-01-current-proof.json",
+      "sha256": "35c176be9460913b71ce59b77149410514b7071d4b6ec1fcfd3befa6cd14cc50",
+      "what": "All12 current opening captures personally inspected: WebGL2/WebGPU, low/high, actual zoom0.5/1/1.5. Default/wide frames show four distinct civilians as two seated pairs on two benches; close zoom crops that row and does not establish the count. Fresh native low/high checks retain zero infected/combat through1388 pre-alarm ticks, alarm23.15s, crew seated1.1333s later and four bench identities."
     }
   ],
-  "notes": "Untouched opening seed1, full HUD/follow camera. Shared headless browser pool, no relocation, actor injection, protection or performance timing. All capture hashes verified and each frame personally viewed. Final-source refresh after constant-width ring change; native receipts rerun, browser frames recaptured and compared by SHA-256; changed pixels freshly viewed."
+  "notes": "Current frozen runtime source4e570db; pooled headless browsers, private port4783; screenshots remain under test-results. No runtime edits.",
+  "sourceDigest": "9f88ba48ca13900ca4f429225cbac3045a96d48adee791c50179dde9c8cd025f"
 }
