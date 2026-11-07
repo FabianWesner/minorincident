@@ -8,21 +8,36 @@
     {
       "clause": "**No single follower is slower than the group.** While the group moves, every follower's median speed ≥ 0.95× the group median (tune); time the player stands waiting for one follower > 10 m behind ≤ 10 % of escort time (tune). PO: \"let me stay with the crowd for suvivor.\"",
       "verdict": "FAIL",
-      "note": "Fresh current-main native L7 high complete seed2: departure follower66 has27 qualified walking samples, median4.3485318979m/s versus group4.5812160184m/s, ratio0.9492090922 (<0.95). This is a small strict numeric miss (0.0791 percentage points), not evidence of large visible babysitting. The majority-of-three diagnostic passes the follower, but does not meet the unchanged every-follower criterion for this valid seed. L1 stationary-far fractions16.4561%/16.4696% are upper bounds and are explicitly rejected as causal waiting FAIL evidence. Repro: npm run qa:accept -- --level L7 --skip-browser; inspect G-13 high/complete, step/departure follower66 seed2."
+      "note": "Fresh current-main native L5 high complete seed3: follower28 in step/look has46 qualified walking samples, median3.9477449638m/s versus group4.4131743157m/s, ratio0.8945363771 (<0.95). L7 high complete seed2 departure follower66 additionally has27 samples and ratio0.9492090922. Majority-of-three diagnostics pass these followers, but a vote does not erase valid violations of the unchanged every-follower criterion. L1 stationary-far16.4561%/16.4696% values are upper bounds and are rejected as causal waiting FAIL evidence. Repro: npm run qa:accept -- --level L5 --skip-browser; inspect G-13 high/complete seed3 follower28 step/look; or node --import tsx/esm test-results/rr-b/g13-l5.mjs."
     }
   ],
   "evidence": [
     {
-      "file": "test-results/rr-b/G-13-individual-pace.json",
-      "sha256": "f91a069d1f0b5b44dbe13a215c2c4f39ddc1db8f01e4fd23dda30dee9ce36294",
-      "what": "Fresh current-main native L7 high complete seed2: departure follower66 has27 qualified walking samples, median4.3485318979m/s versus group4.5812160184m/s, ratio0.9492090922 (<0.95). This is a small strict numeric miss (0.0791 percentage points), not evidence of large visible babysitting. The majority-of-three diagnostic passes the follower, but does not meet the unchanged every-follower criterion for this valid seed. L1 stationary-far fractions16.4561%/16.4696% are upper bounds and are explicitly rejected as causal waiting FAIL evidence. Repro: npm run qa:accept -- --level L7 --skip-browser; inspect G-13 high/complete, step/departure follower66 seed2."
+      "file": "test-results/rr-b/G-13-L5-high-native.json",
+      "sha256": "3cbdd7df9de8644d9fa8fb301ff2737bc28848d460a3e8781e04a2ff0f3ef010",
+      "what": "Fresh current-main native L5 high complete seed3: follower28 in step/look has46 qualified walking samples, median3.9477449638m/s versus group4.4131743157m/s, ratio0.8945363771 (<0.95). L7 high complete seed2 departure follower66 additionally has27 samples and ratio0.9492090922. Majority-of-three diagnostics pass these followers, but a vote does not erase valid violations of the unchanged every-follower criterion. L1 stationary-far16.4561%/16.4696% values are upper bounds and are rejected as causal waiting FAIL evidence. Repro: npm run qa:accept -- --level L5 --skip-browser; inspect G-13 high/complete seed3 follower28 step/look; or node --import tsx/esm test-results/rr-b/g13-l5.mjs."
     },
     {
-      "file": "test-results/rr-b/L7-05-native.json",
-      "sha256": "3f938a70d996b421b20dc144cac5a4a401014249b151901edd89ec29366e822f",
-      "what": "Fresh current-main native L7 high complete seed2: departure follower66 has27 qualified walking samples, median4.3485318979m/s versus group4.5812160184m/s, ratio0.9492090922 (<0.95). This is a small strict numeric miss (0.0791 percentage points), not evidence of large visible babysitting. The majority-of-three diagnostic passes the follower, but does not meet the unchanged every-follower criterion for this valid seed. L1 stationary-far fractions16.4561%/16.4696% are upper bounds and are explicitly rejected as causal waiting FAIL evidence. Repro: npm run qa:accept -- --level L7 --skip-browser; inspect G-13 high/complete, step/departure follower66 seed2."
+      "file": "test-results/rr-b/G-13-L5-high-pace.json",
+      "sha256": "36832fdc4149c17d4b6cbfc1a712105264c2da316045a8e25e70263764e32f22",
+      "what": "Fresh current-main native L5 high complete seed3: follower28 in step/look has46 qualified walking samples, median3.9477449638m/s versus group4.4131743157m/s, ratio0.8945363771 (<0.95). L7 high complete seed2 departure follower66 additionally has27 samples and ratio0.9492090922. Majority-of-three diagnostics pass these followers, but a vote does not erase valid violations of the unchanged every-follower criterion. L1 stationary-far16.4561%/16.4696% values are upper bounds and are rejected as causal waiting FAIL evidence. Repro: npm run qa:accept -- --level L5 --skip-browser; inspect G-13 high/complete seed3 follower28 step/look; or node --import tsx/esm test-results/rr-b/g13-l5.mjs."
+    },
+    {
+      "file": "test-results/rr-b/G-13-L5-low-native.json",
+      "sha256": "7e325c4dbb7e2e7a5396b6095985d7785b633d347effb26d29d8f95cd7725861",
+      "what": "Fresh current-main native L5 high complete seed3: follower28 in step/look has46 qualified walking samples, median3.9477449638m/s versus group4.4131743157m/s, ratio0.8945363771 (<0.95). L7 high complete seed2 departure follower66 additionally has27 samples and ratio0.9492090922. Majority-of-three diagnostics pass these followers, but a vote does not erase valid violations of the unchanged every-follower criterion. L1 stationary-far16.4561%/16.4696% values are upper bounds and are rejected as causal waiting FAIL evidence. Repro: npm run qa:accept -- --level L5 --skip-browser; inspect G-13 high/complete seed3 follower28 step/look; or node --import tsx/esm test-results/rr-b/g13-l5.mjs."
+    },
+    {
+      "file": "test-results/rr-b/G-13-L5-low-pace.json",
+      "sha256": "32c97a8a11a751be783cae4ea7dc0b666e5f995d32774c3095f3e6a62b3160f7",
+      "what": "Fresh current-main native L5 high complete seed3: follower28 in step/look has46 qualified walking samples, median3.9477449638m/s versus group4.4131743157m/s, ratio0.8945363771 (<0.95). L7 high complete seed2 departure follower66 additionally has27 samples and ratio0.9492090922. Majority-of-three diagnostics pass these followers, but a vote does not erase valid violations of the unchanged every-follower criterion. L1 stationary-far16.4561%/16.4696% values are upper bounds and are rejected as causal waiting FAIL evidence. Repro: npm run qa:accept -- --level L5 --skip-browser; inspect G-13 high/complete seed3 follower28 step/look; or node --import tsx/esm test-results/rr-b/g13-l5.mjs."
+    },
+    {
+      "file": "test-results/rr-b/G-13-individual-pace.json",
+      "sha256": "f91a069d1f0b5b44dbe13a215c2c4f39ddc1db8f01e4fd23dda30dee9ce36294",
+      "what": "Fresh current-main native L5 high complete seed3: follower28 in step/look has46 qualified walking samples, median3.9477449638m/s versus group4.4131743157m/s, ratio0.8945363771 (<0.95). L7 high complete seed2 departure follower66 additionally has27 samples and ratio0.9492090922. Majority-of-three diagnostics pass these followers, but a vote does not erase valid violations of the unchanged every-follower criterion. L1 stationary-far16.4561%/16.4696% values are upper bounds and are rejected as causal waiting FAIL evidence. Repro: npm run qa:accept -- --level L5 --skip-browser; inspect G-13 high/complete seed3 follower28 step/look; or node --import tsx/esm test-results/rr-b/g13-l5.mjs."
     }
   ],
-  "notes": "Exact unchanged-criterion individual speed counterexample. Current L1 upper-bound evidence does not establish an actual waiting failure; previous rr-b causal-wait wording is withdrawn.",
+  "notes": "Fresh complete native low/high, seeds1–3. Strict measured individual speed failures establish the global FAIL; no large visible babysitting or causal waiting failure is inferred from pace or stationary upper bounds.",
   "sourceDigest": "826eaf34ba69c9272cce1759bdd1699e67d8e35ebbd3c7d1739661bfaa751923"
 }
