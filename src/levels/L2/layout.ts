@@ -12,7 +12,7 @@ const L2_TIER: Tier = 1;
 /** Kinds of the W1 "wounded, but still standing" dressing (E20 section 5.7); counted by the static AC15 test. */
 export type DressingKind = 'corpse' | 'abandoned' | 'crashed' | 'bin' | 'belongings' | 'broken-window' | 'blood' | 'emergency' | 'smoking' | 'fighting' | 'station' | 'checkpoint' | 'river';
 /** `entity`: not a static placement: an entity the L2 controller spawns (dead bystanders) or L2Props code art (broken windows). */
-export interface Dressing { kind: DressingKind; assetId: string; x: number; z: number; yaw?: number; scale?: number; count?: number; lit?: boolean; entity?: boolean }
+export interface Dressing { orientedFootprint?: boolean; kind: DressingKind; assetId: string; x: number; z: number; yaw?: number; scale?: number; count?: number; lit?: boolean; entity?: boolean }
 const H = Math.PI / 2;
 /**
  * Static L2 dressing manifest. Asset ids are manifest ids; ids that are not integrated yet (`decay.dropped-belongings`,
@@ -26,7 +26,7 @@ export const l2Dressing: readonly Dressing[] = [
   // Abandoned vehicles, doors open, pulled onto the kerb.
   { kind: 'abandoned', assetId: 'veh.sedan-blue', x: -47.5, z: 26.9, yaw: .12 },
   { kind: 'abandoned', assetId: 'veh.suv-dark', x: -12, z: 32.2, yaw: Math.PI - .2 },
-  { kind: 'abandoned', assetId: 'veh.pickup-white', x: 4, z: -28.6, yaw: Math.PI + .15 },
+  { kind: 'abandoned', assetId: 'veh.pickup-white', x: 4, z: -28.6, yaw: Math.PI + .15, orientedFootprint: true },
   { kind: 'abandoned', assetId: 'veh.sedan-white', x: 30, z: -28.0, yaw: .1 },
   { kind: 'abandoned', assetId: 'veh.courier-van', x: -61.6, z: -22, yaw: H + .1 },
   { kind: 'abandoned', assetId: 'veh.courier-van', x: -70.4, z: -24, yaw: H - .08 },
@@ -163,6 +163,7 @@ export function levelTwoLayouts(layouts: DistrictLayout[], aftermath: L1Aftermat
       if (d.entity) continue;
       const s = d.scale ?? 1, decal = d.assetId.startsWith('decal.');
       const placement: Placement = { id: `l2-${d.kind}-${i}`, assetId: d.assetId, position: [d.x, decal ? .06 : d.kind === 'station' ? .4 : 0, d.z], yaw: d.yaw ?? 0, scale: decal ? [1.4, 1, 2.6] : [s, s, s], minTier: 0, maxTier: 5, allowRoad: true, lightGroup: 'l2', visualAabb: { min: [d.x - 1, 0, d.z - 1], max: [d.x + 1, 1.5, d.z + 1] } };
+      if (d.orientedFootprint) placement.orientedFootprint = true;
       if (d.kind === 'station' && d.assetId === 'prop.bench') placement.fixed = true;
       // Checkpoint barriers are intentional; belongings and bins belong beside the road.
       if (pushableProps[d.assetId] && d.kind !== 'checkpoint') {

@@ -22,7 +22,7 @@ export type L3Street = 'oak' | 'commerce' | 'blvd' | 'yard' | 'army';
  * PO rule's "fire kills"); `smoke` entries are smoke columns of fires deep inside a block (unreachable, visible from every
  * street). `lit`: police light bars (L3Props). `decay`: the asset's reviewed decay variant.
  */
-export interface L3Dressing { kind: L3DressingKind; street: L3Street; assetId: string; x: number; z: number; yaw?: number; scale?: number; decay?: string; lit?: boolean; entity?: boolean; count?: number }
+export interface L3Dressing { orientedFootprint?: boolean; kind: L3DressingKind; street: L3Street; assetId: string; x: number; z: number; yaw?: number; scale?: number; decay?: string; lit?: boolean; entity?: boolean; count?: number }
 const H = Math.PI / 2, PI = Math.PI;
 const N = -29.9, S = -26.1;   // Boulevard lanes
 const d = (kind: L3DressingKind, street: L3Street, assetId: string, x: number, z: number, more: Partial<L3Dressing> = {}): L3Dressing => ({ kind, street, assetId, x, z, ...more });
@@ -64,7 +64,7 @@ export const l3Dressing: readonly L3Dressing[] = [
   d('blood', 'commerce', 'decal.blood-trail', -43, 2.6, { yaw: .4 }),
   fire('commerce', 110, -1.3, 1.1), fire('commerce', 70.4, -3.7, .9),
   // ---------------------------------------------------------------- Oak Avenue: crashed cars, barricades, trampled gardens
-  d('crashed', 'oak', 'veh.sedan-red', -72, 26.8, { yaw: .6, decay: 'wrecked' }),
+  d('crashed', 'oak', 'veh.sedan-red', -72, 26.8, { yaw: .6, decay: 'wrecked', orientedFootprint: true }),
   d('crashed', 'oak', 'veh.suv-dark', 20, 28.2, { yaw: -.5, decay: 'wrecked' }),
   d('crashed', 'oak', 'veh.pickup-red', 98, 27.2, { yaw: 2.6, decay: 'wrecked' }),
   d('abandoned', 'oak', 'veh.sedan-green', -36, 29.6, { yaw: PI }), d('abandoned', 'oak', 'veh.suv-green', 58, 26.2, { yaw: .1 }),
@@ -175,10 +175,11 @@ export function levelThreeLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     }
     const obstacles = obstaclesOf(layout, 2);
     const index = new FootprintIndex(obstacles);
-    const add = (id: string, assetId: string, x: number, z: number, yaw = 0, scale = 1, decay?: string) => {
+    const add = (id: string, assetId: string, x: number, z: number, yaw = 0, scale = 1, decay?: string, orientedFootprint = false) => {
       const decal = assetId.startsWith('decal.');
       const p: Placement = { id, assetId, position: [x, decal ? .06 : 0, z], yaw, scale: decal ? [1.4, 1, 2.6] : [scale, scale, scale], minTier: 0, maxTier: 5, allowRoad: true, lightGroup: 'l3', visualAabb: { min: [x - 1, 0, z - 1], max: [x + 1, 1.5, z + 1] } };
       if (decay) p.decay = decay;
+      if (orientedFootprint) p.orientedFootprint = true;
       if (!decal && footprints(p, 0, true).length) {
         const spot = findClearSpot(layout, p, obstacles, { index, slide: assetId.startsWith('veh.'), margin: assetId.startsWith('veh.') ? .1 : .3, maxRadius: 8 });
         if (!spot) throw new Error(`No clear spot for ${id} (${assetId}) near ${x}, ${z}`);
@@ -188,7 +189,7 @@ export function levelThreeLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
       }
       layout.placements.push(p); return p;
     };
-    for (const [i, entry] of l3Dressing.entries()) if (!entry.entity) add(`l3-${entry.kind}-${i}`, entry.assetId, entry.x, entry.z, entry.yaw ?? 0, entry.scale ?? 1, entry.decay);
+    for (const [i, entry] of l3Dressing.entries()) if (!entry.entity) add(`l3-${entry.kind}-${i}`, entry.assetId, entry.x, entry.z, entry.yaw ?? 0, entry.scale ?? 1, entry.decay, entry.orientedFootprint);
     const cover = add(l3AlarmCoverId, 'veh.military-truck', -131.5, 5), box = l3AlarmCoverBox;
     layout.colliders.push({ id: `${l3AlarmCoverId}/cargo`, minTier: 0, maxTier: 5, aabb: {
       min: [cover.position[0] + box.x - box.halfX, box.y - box.halfY, cover.position[2] + box.z - box.halfZ],

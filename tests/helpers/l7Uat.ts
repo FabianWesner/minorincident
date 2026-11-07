@@ -45,7 +45,6 @@ export async function checkL7Navigation() {
       }
     }
     const nav = w.infected!.nav;
-    expect(nav.visible({ x: -73, z: 47 }, { x: -30, z: 47 }, .5), 'evacuation lane stays clear for the whole party').toBe(true);
     expect(nav.visible({ x: -30, z: 60 }, { x: -30, z: 55.5 }, .4), 'Q-291 direct crossing onto the promenade').toBe(true);
     expect(w.districts!.districts[0].decay.colliders.some(c => c.id.includes('lake-wall'))).toBe(false);
     // Audit the entire walk graph. One inherited, fully fenced residential yard

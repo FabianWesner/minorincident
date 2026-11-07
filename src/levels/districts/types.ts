@@ -33,7 +33,7 @@ export interface PlacementTransform {
   yaw: number;
 }
 export interface Aabb {
-  /** Oriented planar footprint used by crowd navigation; bounds remain the collision broad phase. */
+  /** Oriented planar collision footprint; bounds remain the broad phase. */
   navFootprint?: { x: number; z: number; halfX: number; halfZ: number; yaw: number };
   /** Obstacle on an elevated route, retained by planar navigation despite its height. */
   navBlocker?: boolean;
@@ -45,6 +45,8 @@ export interface Aabb {
   max: [number, number, number];
 }
 export interface Placement extends PlacementTransform {
+  /** Reviewed navigation obstruction: use the authored box yaw instead of its conservative collision proxy. */
+  orientedFootprint?: boolean;
   /** Bolted furniture keeps a prop body/seat anchor but cannot be pushed out of its authored position. */
   fixed?: boolean;
   navBlocker?: boolean;

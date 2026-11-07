@@ -9,8 +9,8 @@ function blocksCell(a: Aabb, x: number, z: number): boolean {
   const f = a.navFootprint;
   if (!f) return x >= a.min[0] - .4 && x <= a.max[0] + .4 && z >= a.min[2] - .4 && z <= a.max[2] + .4;
   const dx = x - f.x, dz = z - f.z, c = Math.cos(f.yaw), s = Math.sin(f.yaw);
-  const margin = .4 * (Math.abs(c) + Math.abs(s));
-  return x >= a.min[0] - .4 && x <= a.max[0] + .4 && z >= a.min[2] - .4 && z <= a.max[2] + .4 && Math.abs(dx * c - dz * s) <= f.halfX + margin && Math.abs(dx * s + dz * c) <= f.halfZ + margin;
+  const ox = Math.max(0, Math.abs(dx * c - dz * s) - f.halfX), oz = Math.max(0, Math.abs(dx * s + dz * c) - f.halfZ);
+  return ox * ox + oz * oz <= .4 * .4;
 }
 /** Dense 1m grid, baked once at load. The occupancy/hash contains no wall time or render data. */
 export class NavGrid {

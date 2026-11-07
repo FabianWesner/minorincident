@@ -2,7 +2,8 @@
 import { afterEach, expect, test } from 'vitest';
 import { NavGrid } from '../../src/sim/ai/NavGrid';
 import { bakeNav } from '../../src/sim/world/NavGrid';
-import type { DistrictLayout } from '../../src/levels/districts/types';
+import type { DistrictLayout, Placement } from '../../src/levels/districts/types';
+import { placementColliders } from '../../src/levels/districts/staticCollision';
 import { SimWorld } from '../../src/sim/world/SimWorld';
 import { loadL4 } from '../../tools/sim-runner/l4Bots';
 import { survivor } from '../../src/data/survivor';
@@ -28,6 +29,19 @@ test('capsule moves: a body inside the wall margin slides out and never moves de
   nav.move(p, .1, 0, .34); expect(nav.clear(p.x, p.z, .34)).toBe(true);
   for (let i = 0; i < 30; i++) nav.move(p, -.1, -.1, .34);
   expect(nav.clear(p.x, p.z, .34)).toBe(true);
+  const wreck: Placement = { id: 'reviewed-wreck', assetId: 'veh.sedan-red', position: [-72, 0, 26.8], yaw: .6,
+    scale: [1, 1, 1], minTier: 0, maxTier: 5, allowRoad: true, lightGroup: 'test', visualAabb: { min: [0, 0, 0], max: [0, 0, 0] } };
+  const proxy = placementColliders([wreck], [])[0].aabb;
+  const oriented = placementColliders([{ ...wreck, orientedFootprint: true }], [])[0].aabb;
+  expect(proxy.navFootprint, 'authored collision proxies require explicit review').toBeUndefined();
+  expect(oriented.navFootprint).toMatchObject({ yaw: .6, halfX: 2.298, halfZ: 1.144 });
+  expect(oriented.min).toEqual(proxy.min); expect(oriented.max).toEqual(proxy.max);
+  const hull = { x: (oriented.min[0] + oriented.max[0]) / 2, z: (oriented.min[2] + oriented.max[2]) / 2,
+    y: 1, halfY: 1, halfX: (oriented.max[0] - oriented.min[0]) / 2, halfZ: (oriented.max[2] - oriented.min[2]) / 2, navFootprint: oriented.navFootprint! };
+  const gate = new NavGrid({ width: 20, depth: 20 }, [hull], .5, { x: -72, z: 26.8 });
+  const gateProxy = new NavGrid(gate.ground, [{ ...hull, navFootprint: undefined }], .5, gate.center);
+  expect(gateProxy.clear(-70.25, 24.25, .5), 'the proxy closes a physically clear corner').toBe(false);
+  expect(gate.clear(-70.25, 24.25, .5), 'the unchanged crowd radius fits the actual hull corner').toBe(true);
   const layout = { bounds: [[-8, -8], [8, -8], [8, 8], [-8, 8]], walkable: { excluded: [] } } as unknown as DistrictLayout;
   const bounds = { min: [-4, 0, -4] as [number, number, number], max: [4, 2, 4] as [number, number, number], navFootprint: { x: 0, z: 0, halfX: 3.5, halfZ: .5, yaw: Math.PI / 4 } };
   const districtNav = bakeNav([{ layout, origin: [0, 0], colliders: [bounds] }], 1, .5);
@@ -38,13 +52,13 @@ test('capsule moves: a body inside the wall margin slides out and never moves de
   expect(aiNav.visible({ x: 3, z: -3 }, { x: 5, z: -1 }, .35)).toBe(true);
   const maskedNav = new NavGrid(aiNav.ground, aiNav.walls, aiNav.clearance, aiNav.center, () => true);
   expect(aiNav.blocked).toEqual(maskedNav.blocked);
-  // Keep the existing world-space crowd padding when rotating the prop.
-  // Rotating the padding with the hull closed previously clear cells.
+  // Exact circular clearance around reviewed rotated hulls cannot close
+  // cells that were clear of the old conservative proxy.
   const cornerWall = { x: 0, z: 0, y: 1, halfX: 2.5 / Math.SQRT2, halfZ: 2.5 / Math.SQRT2, halfY: 1,
     navFootprint: { x: 0, z: 0, halfX: 2, halfZ: .5, yaw: Math.PI / 4 } };
   const corners = new NavGrid({ width: 10, depth: 10 }, [cornerWall], .5);
   expect(corners.clear(2.4, -1.1, .5)).toBe(true);
-  expect(corners.clear(2.25, -1.25, .5)).toBe(false);
+  expect(corners.clear(2.25, -1.25, .5)).toBe(true);
   expect(corners.clear(2.25, -1.25, .5, true)).toBe(true);
   const broad = new NavGrid(corners.ground, [{ ...cornerWall, navFootprint: undefined }], .5);
   for (let cell = 0; cell < corners.blocked.length; cell++) if (!broad.blocked[cell]) expect(corners.blocked[cell], `no newly closed cell ${cell}`).toBe(0);
@@ -80,6 +94,14 @@ test('A*: budgeted search resumes across ticks within its expansion budget; conn
   expect(nav.visible(corner, { x: nav.x(next), z: nav.z(next) }, .35)).toBe(true);
   }
   await checkL7Navigation();
+  {
+    const w = await loadLevel('L2', 1, undefined, 0, { quality: 'low' }); worlds.push(w);
+    const nav = w.infected!.nav, path: number[] = [], from = nav.cell(5.25, -26.75), goal = nav.nearestCell(10, -30);
+    const proxy = new NavGrid(nav.ground, nav.walls.map(wall => ({ ...wall, navFootprint: undefined })), .5, nav.center, nav.mask);
+    expect(proxy.path(from, goal, path, Infinity), 'pickup proxy created an eight-cell island').toBe(false);
+    expect(nav.path(from, goal, path, Infinity), 'reviewed pickup footprint connects the island to the street').toBe(true);
+  }
+
   const w = await arena('maze'), nav = w.infected!.nav, result: number[] = [];
   let complete = false;
   for (let tick = 0; tick < 500 && !complete; tick++) { complete = nav.path(nav.cell(-20, 0), nav.cell(20, 0), result, 10); expect(nav.expansions).toBeLessThanOrEqual(10); }
