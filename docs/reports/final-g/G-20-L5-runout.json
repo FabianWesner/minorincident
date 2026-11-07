@@ -1,0 +1,63 @@
+{
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+  "revision": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "method": "Explicit fixture setup: load real mission, arrange completed final predicates, reuse one existing live runner and place it within2m (the original fixture could not spawn at the intact L5 concurrency cap), invoke actual Mission.finish edge. Then ordinary empty-input world updates. No timer/threshold/finish logic changes.",
+  "cells": [
+    {
+      "tier": "low",
+      "level": "L5",
+      "start": 0,
+      "atStart": {
+        "phase": "playing",
+        "playerHp": 100,
+        "enemyId": 84,
+        "enemyState": "chase",
+        "distance": 2
+      },
+      "immediate": {
+        "phase": "playing",
+        "cinematic": null,
+        "runOutUntil": 300,
+        "invulnerableUntil": 300
+      },
+      "transitioned": 300,
+      "maxTick": 300,
+      "minProtection": 300,
+      "finalPhase": "progression",
+      "playerHp": 100,
+      "delay": 300,
+      "pass": true
+    },
+    {
+      "tier": "high",
+      "level": "L5",
+      "start": 0,
+      "atStart": {
+        "phase": "playing",
+        "playerHp": 100,
+        "enemyId": 84,
+        "enemyState": "chase",
+        "distance": 2
+      },
+      "immediate": {
+        "phase": "playing",
+        "cinematic": null,
+        "runOutUntil": 300,
+        "invulnerableUntil": 300
+      },
+      "transitioned": 300,
+      "maxTick": 300,
+      "minProtection": 300,
+      "finalPhase": "progression",
+      "playerHp": 100,
+      "delay": 300,
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "limitations": [
+    "Terminal predicates and enemy placement are arranged, not a naturally completed physical route.",
+    "Special cinematic/vehicle endings require route confirmation; immediate result without run-out is retained as a concrete common-finish counterexample."
+  ]
+}
