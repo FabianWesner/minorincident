@@ -1,0 +1,36 @@
+[
+  {
+    "stage": "baseline",
+    "bundle": "index-DkTUBysS.js",
+    "bundleSha256": "d35026c1e6532c59dd0dc605f44036fa13e50fa6af06134419afd53e80d0d79b",
+    "symbols": [
+      {
+        "sourceFunction": "repairDeathPoses",
+        "minifiedName": "l5",
+        "definitionPrefix": "function l5(n,e,t={}){const s=!!t.prone,i=om.get(n);if(i)return i.prone===s;const a=[Oo,ea].find(I=>I.length*gt===n.frames);if(!a||!n.binds)return!1;const o=n.parts.length,r=Object"
+      },
+      {
+        "sourceFunction": "skinnedVertexMatrix",
+        "minifiedName": "w7",
+        "definitionPrefix": "function w7(n,e,t,s,i,a,o,r){const l=n.binds,c=n.matrices,d=s.getX(i),h=s.getY(i),f=s.getZ(i),u=s.getW(i)%1,m=1-h-f-u;a.fill(0);const p=r??0,g=r===void 0?4:r+1;for(let b=0;b<4;b++)"
+      }
+    ]
+  },
+  {
+    "stage": "final",
+    "bundle": "index-XVRWzTu7.js",
+    "bundleSha256": "9af8e820532bbd85dd2cfdd8be0525aebce17e1b9c727795af6c37f9319ae9b3",
+    "symbols": [
+      {
+        "sourceFunction": "repairDeathPoses",
+        "minifiedName": "nm",
+        "definitionPrefix": "function nm(n,e,t={}){const s=!!t.prone,i=l5.get(n);if(i)return i.prone===s;const a=[Oo,ea].find(I=>I.length*gt===n.frames);if(!a||!n.binds)return!1;const o=n.parts.length,r=Object"
+      },
+      {
+        "sourceFunction": "skinnedVertexMatrix",
+        "minifiedName": "x7",
+        "definitionPrefix": "function x7(n,e,t,s,i,a,o,r){const l=n.binds,c=n.matrices,d=s.getY(i),h=s.getZ(i),f=s.getW(i)%1,u=1-d-h-f;if(o&&d===0&&h===0&&f===0){const b=t.getX(i)*16;if(r===void 0)for(let y=0;"
+      }
+    ]
+  }
+]

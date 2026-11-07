@@ -1,0 +1,4577 @@
+{
+  "at": "2026-11-07T16:24:54.993Z",
+  "sourceIdentities": {
+    "StaticCorpses": {
+      "before": "886db20927fb93c77c1d965c89658d7fdb9023ab8252fcb9787e46c1a72fd7cc",
+      "after": "886db20927fb93c77c1d965c89658d7fdb9023ab8252fcb9787e46c1a72fd7cc"
+    },
+    "deathPose": {
+      "before": "7c2e7dd3cd0d867946a376dbf74c7f7121ff42ebeaede4f4ac417d40af5a22fd",
+      "after": "7c2e7dd3cd0d867946a376dbf74c7f7121ff42ebeaede4f4ac417d40af5a22fd"
+    },
+    "skinnedCrowd": {
+      "before": "a18167560ecfd7b16b902066d70da372bb4515d453507c8f5e4bb1b3c8cdee46",
+      "after": "df157c5204d9da251b9a154284d3784ec3d399252cb97d82c7658cf731ee787a"
+    }
+  },
+  "beforeSourceSha256": "886db20927fb93c77c1d965c89658d7fdb9023ab8252fcb9787e46c1a72fd7cc",
+  "afterSourceSha256": "886db20927fb93c77c1d965c89658d7fdb9023ab8252fcb9787e46c1a72fd7cc",
+  "cases": 288,
+  "bitIdenticalCases": 288,
+  "poseCases": 24,
+  "bitIdenticalPoseCases": 24,
+  "helperCases": 72,
+  "helperVertices": 19350,
+  "totalsMs": {
+    "before": 304.554372999999,
+    "after": 245.75270599999897
+  },
+  "speedup": 1.2392716969716715,
+  "poseTotalsMs": {
+    "before": 99.06891399999972,
+    "after": 80.44808000000006
+  },
+  "poseSpeedup": 1.2314639951630872,
+  "inputs": [
+    {
+      "key": "npc.civilian-man-a:lod0",
+      "url": "/assets/civilians/npc.civilian-man-a.lod0.5f2d005e221a5d2e.bin.gz",
+      "sha256": "5f2d005e221a5d2e006f4ecd421cf954acd66f5ace21c3882e92b75c1dd61f8b"
+    },
+    {
+      "key": "npc.civilian-man-a:lod1",
+      "url": "/assets/civilians/npc.civilian-man-a.lod1.53ac4d82ed60f961.bin.gz",
+      "sha256": "53ac4d82ed60f96103bada43a922554437ed868d30a31f64297b12fd544aa266"
+    },
+    {
+      "key": "npc.civilian-man-a:lod2",
+      "url": "/assets/civilians/npc.civilian-man-a.lod2.49c85894692753f9.bin.gz",
+      "sha256": "49c85894692753f95510e632294be81b6a7a3520b6229cb7ed895a9082bc2784"
+    },
+    {
+      "key": "npc.civilian-woman-b:lod0",
+      "url": "/assets/civilians/npc.civilian-woman-b.lod0.d710be70d765053c.bin.gz",
+      "sha256": "d710be70d765053c2a45f95636def6ba1f16df93ad9999b0d489fd9509908a07"
+    },
+    {
+      "key": "npc.civilian-woman-b:lod1",
+      "url": "/assets/civilians/npc.civilian-woman-b.lod1.7b76829a74c21b6c.bin.gz",
+      "sha256": "7b76829a74c21b6c3f668390f5dc098ca7f00b85826d6a5de5f8ab3f3dd32b56"
+    },
+    {
+      "key": "npc.civilian-woman-b:lod2",
+      "url": "/assets/civilians/npc.civilian-woman-b.lod2.3492ada7075347f7.bin.gz",
+      "sha256": "3492ada7075347f733fee6d6c932965ca1bbe38b7a6a845ba5d1476c29742e4a"
+    },
+    {
+      "key": "npc.civilian-elderly:lod0",
+      "url": "/assets/civilians/npc.civilian-elderly.lod0.35f396363150e6e1.bin.gz",
+      "sha256": "35f396363150e6e1f269e78f596924ad1cb45a8df680d49f8f8cb5289cf61819"
+    },
+    {
+      "key": "npc.civilian-elderly:lod1",
+      "url": "/assets/civilians/npc.civilian-elderly.lod1.c2876cf78753f9c7.bin.gz",
+      "sha256": "c2876cf78753f9c7349aae935afc0a556f1fc73541e8b834a9fc112b166d85cc"
+    },
+    {
+      "key": "npc.civilian-elderly:lod2",
+      "url": "/assets/civilians/npc.civilian-elderly.lod2.c2876cf78753f9c7.bin.gz",
+      "sha256": "c2876cf78753f9c7349aae935afc0a556f1fc73541e8b834a9fc112b166d85cc"
+    },
+    {
+      "key": "npc.national-guard:lod0",
+      "url": "/assets/civilians/npc.national-guard.lod0.430c62c91eaa59af.bin.gz",
+      "sha256": "430c62c91eaa59af58e3b49ebdd574caaaf5b0ea2cb1cdfe57b834bb4defc1e3"
+    },
+    {
+      "key": "npc.national-guard:lod1",
+      "url": "/assets/civilians/npc.national-guard.lod1.e747212a849ff6c0.bin.gz",
+      "sha256": "e747212a849ff6c0e161b167a517d75e6756b2af149cdc747241c2da4fab85b4"
+    },
+    {
+      "key": "npc.national-guard:lod2",
+      "url": "/assets/civilians/npc.national-guard.lod2.e747212a849ff6c0.bin.gz",
+      "sha256": "e747212a849ff6c0e161b167a517d75e6756b2af149cdc747241c2da4fab85b4"
+    },
+    {
+      "key": "inf.common-worker:lod0:infected",
+      "url": "/assets/civilians/inf.common-worker.lod0.infected.0da56f6a53651d50.bin.gz",
+      "sha256": "0da56f6a53651d50bb19d6ba38b541af0bfb59897e9dc19943973f56ac6dbf2f"
+    },
+    {
+      "key": "inf.common-worker:lod1:infected",
+      "url": "/assets/civilians/inf.common-worker.lod1.infected.7d23ebfa1ccb766d.bin.gz",
+      "sha256": "7d23ebfa1ccb766df12668f4ed334578f4ffb96f2251e59dd148ad2bce67c389"
+    },
+    {
+      "key": "inf.common-worker:lod2:infected",
+      "url": "/assets/civilians/inf.common-worker.lod2.infected.73b7ebfb22f498d8.bin.gz",
+      "sha256": "73b7ebfb22f498d8034a2760212a989a4a444261e5ed9e48a0319b73f74975d0"
+    },
+    {
+      "key": "inf.cashier:lod0:infected",
+      "url": "/assets/civilians/inf.cashier.lod0.infected.c19f5c8ef9af7288.bin.gz",
+      "sha256": "c19f5c8ef9af728856fcd4981309e88bc8d19975c6f3eebdf441f7e020ae31de"
+    },
+    {
+      "key": "inf.cashier:lod1:infected",
+      "url": "/assets/civilians/inf.cashier.lod1.infected.c98e3c26f9801b40.bin.gz",
+      "sha256": "c98e3c26f9801b407589073fbcb38cd17e8085f191e032e7be65951a31ef98d8"
+    },
+    {
+      "key": "inf.cashier:lod2:infected",
+      "url": "/assets/civilians/inf.cashier.lod2.infected.19ebf77550161ec1.bin.gz",
+      "sha256": "19ebf77550161ec19c8f55702debf889cdc16d6ba35f76dc98a5d559528fbe61"
+    },
+    {
+      "key": "inf.alpha:lod0:infected",
+      "url": "/assets/civilians/inf.alpha.lod0.infected.8b8be45f471f5227.bin.gz",
+      "sha256": "8b8be45f471f522732fe98a21535ba7e70dda782846fb12cda11f1c42c88c130"
+    },
+    {
+      "key": "inf.alpha:lod1:infected",
+      "url": "/assets/civilians/inf.alpha.lod1.infected.5e502087f4b05832.bin.gz",
+      "sha256": "5e502087f4b05832ce95b04a890efe1722b5720f3dc3e0da3d8b94cd1d8a2a1c"
+    },
+    {
+      "key": "inf.alpha:lod2:infected",
+      "url": "/assets/civilians/inf.alpha.lod2.infected.0e1c9fc1c6bdb04d.bin.gz",
+      "sha256": "0e1c9fc1c6bdb04d615deb0277e76e9d04a715e7506c81a589bee79df7521f29"
+    },
+    {
+      "key": "inf.delivery-driver:lod0:infected",
+      "url": "/assets/civilians/inf.delivery-driver.lod0.infected.73f1de0ddf6e496a.bin.gz",
+      "sha256": "73f1de0ddf6e496a91596153657ada1c548bcaa9d9183d2ed00ff537c13d6ab5"
+    },
+    {
+      "key": "inf.delivery-driver:lod1:infected",
+      "url": "/assets/civilians/inf.delivery-driver.lod1.infected.8abe04cfa6a2a6f1.bin.gz",
+      "sha256": "8abe04cfa6a2a6f1416d8553cdb82f50dd6870e238de15aad05151aa95242106"
+    },
+    {
+      "key": "inf.delivery-driver:lod2:infected",
+      "url": "/assets/civilians/inf.delivery-driver.lod2.infected.6e465b3518a227cd.bin.gz",
+      "sha256": "6e465b3518a227cddcc629c9873ef1b66e259dff6802b98d3b5d73ca6568e814"
+    }
+  ],
+  "poseMeasurements": [
+    {
+      "key": "npc.civilian-man-a:lod0",
+      "identical": true,
+      "ms": {
+        "before": 6.384041999999965,
+        "after": 5.03166699999997
+      },
+      "clipSha256": "353f97bde72f7c71b228e41b0af6a1c2868630c823195ece510c38827daef747",
+      "reach": 0.9736771732568741
+    },
+    {
+      "key": "npc.civilian-man-a:lod1",
+      "identical": true,
+      "ms": {
+        "after": 2.7415829999999914,
+        "before": 3.5259169999999926
+      },
+      "clipSha256": "c127f29f463e867bd0b9eaf00d083db0040a11cbfa8ccf3e8dcb139167a8789b",
+      "reach": 0.9750568717718124
+    },
+    {
+      "key": "npc.civilian-man-a:lod2",
+      "identical": true,
+      "ms": {
+        "before": 1.0743330000000242,
+        "after": 0.844208999999978
+      },
+      "clipSha256": "a99e0265465a5cacd128d42bc7068fcd821dbaa044435d4d2700f8b5656c9064",
+      "reach": 0.9781437665224075
+    },
+    {
+      "key": "npc.civilian-woman-b:lod0",
+      "identical": true,
+      "ms": {
+        "after": 2.0623750000000314,
+        "before": 2.9292910000000347
+      },
+      "clipSha256": "93b7277f7c3bc2cb9a771ac54abcfd61e23ea83f7a8b82381197731d84b89b5c",
+      "reach": 0.9458911865949631
+    },
+    {
+      "key": "npc.civilian-woman-b:lod1",
+      "identical": true,
+      "ms": {
+        "before": 2.523541000000023,
+        "after": 1.7587909999999738
+      },
+      "clipSha256": "c1892a81419b5b5f0edd07880372e00601f7de3889d2e89475d3ab9fb87e4a63",
+      "reach": 0.9637131094932556
+    },
+    {
+      "key": "npc.civilian-woman-b:lod2",
+      "identical": true,
+      "ms": {
+        "after": 1.4235840000000053,
+        "before": 1.5254159999999501
+      },
+      "clipSha256": "86d6880b1689651ac67e6af0ba92f2903f314456eed35f8ee3d777ee69f461b2",
+      "reach": 0.9864722043275833
+    },
+    {
+      "key": "npc.civilian-elderly:lod0",
+      "identical": true,
+      "ms": {
+        "before": 3.7232500000000073,
+        "after": 3.198666000000003
+      },
+      "clipSha256": "d229eaa46bf373f4dee7739b8c48f390d895c6a680815980dc04bbff3a6e2fd7",
+      "reach": 0.9560747891664505
+    },
+    {
+      "key": "npc.civilian-elderly:lod1",
+      "identical": true,
+      "ms": {
+        "after": 3.4247080000000096,
+        "before": 3.793457999999987
+      },
+      "clipSha256": "830cc360d537d2d137dc214971f4a1881c540016f00089293a5d83fd270b55ac",
+      "reach": 0.955614447593689
+    },
+    {
+      "key": "npc.civilian-elderly:lod2",
+      "identical": true,
+      "ms": {
+        "before": 3.405208000000016,
+        "after": 3.094333000000006
+      },
+      "clipSha256": "830cc360d537d2d137dc214971f4a1881c540016f00089293a5d83fd270b55ac",
+      "reach": 0.955614447593689
+    },
+    {
+      "key": "npc.national-guard:lod0",
+      "identical": true,
+      "ms": {
+        "after": 2.782041999999933,
+        "before": 3.5469590000000153
+      },
+      "clipSha256": "ee9e046672656af6bc6b47b74e982052e0eebce9e036ca3cdbed1ac3c665fdca",
+      "reach": 0.9402922093868256
+    },
+    {
+      "key": "npc.national-guard:lod1",
+      "identical": true,
+      "ms": {
+        "before": 2.8892080000000533,
+        "after": 2.405458000000067
+      },
+      "clipSha256": "2e48e98f5ae946782381ec9bbcb4a2b5357ff93dab9bbfdfc41da0a8b55b12ed",
+      "reach": 0.9428282529115677
+    },
+    {
+      "key": "npc.national-guard:lod2",
+      "identical": true,
+      "ms": {
+        "after": 2.344916000000012,
+        "before": 2.933375000000069
+      },
+      "clipSha256": "2e48e98f5ae946782381ec9bbcb4a2b5357ff93dab9bbfdfc41da0a8b55b12ed",
+      "reach": 0.9428282529115677
+    },
+    {
+      "key": "inf.common-worker:lod0:infected",
+      "identical": true,
+      "ms": {
+        "before": 4.253000000000043,
+        "after": 3.679708000000005
+      },
+      "clipSha256": "105c78bf296b3070fed51cc9c17a92250ab8a929137ac67ff88309599630b172",
+      "reach": 1.117287688665769
+    },
+    {
+      "key": "inf.common-worker:lod1:infected",
+      "identical": true,
+      "ms": {
+        "after": 1.7787909999999556,
+        "before": 2.0854170000000067
+      },
+      "clipSha256": "90fa69c48032d9e98c9950877d410f5090a9768850dec4823e041582b5727e91",
+      "reach": 1.1364859943382728
+    },
+    {
+      "key": "inf.common-worker:lod2:infected",
+      "identical": true,
+      "ms": {
+        "before": 1.1607499999998936,
+        "after": 1.1739580000000842
+      },
+      "clipSha256": "4a87231d441a642f0e97697ac91885c0672a5f2d0a900c6cc413d431a5aa93f3",
+      "reach": 1.13695188554216
+    },
+    {
+      "key": "inf.cashier:lod0:infected",
+      "identical": true,
+      "ms": {
+        "after": 3.128208000000086,
+        "before": 3.749458000000004
+      },
+      "clipSha256": "7c96de15684ccd47d8983c92c634579625258c0f5d737e75c8a7753fe3dfe98a",
+      "reach": 0.7916387695460907
+    },
+    {
+      "key": "inf.cashier:lod1:infected",
+      "identical": true,
+      "ms": {
+        "before": 3.282124999999951,
+        "after": 2.5364589999999225
+      },
+      "clipSha256": "a3406080f5e14f81f978754011899818462890c1fb3ca9f9f6da76663b181f07",
+      "reach": 0.7746208351536101
+    },
+    {
+      "key": "inf.cashier:lod2:infected",
+      "identical": true,
+      "ms": {
+        "after": 1.8781669999998485,
+        "before": 3.446583000000146
+      },
+      "clipSha256": "4d51adc7e30ac20dc06a1f6e17fb097acab2721c618a92c7d4e8fd275c93d59e",
+      "reach": 0.7747616271078549
+    },
+    {
+      "key": "inf.alpha:lod0:infected",
+      "identical": true,
+      "ms": {
+        "before": 16.06333299999983,
+        "after": 13.911207999999988
+      },
+      "clipSha256": "6381c2b37a075dccb70c9f343f01ee2a96bd07081bfb13f7d558f10b0cdf7bed",
+      "reach": 1.3380467162487606
+    },
+    {
+      "key": "inf.alpha:lod1:infected",
+      "identical": true,
+      "ms": {
+        "after": 11.066625000000158,
+        "before": 13.835124999999834
+      },
+      "clipSha256": "af8342f1b143034708a400f0bc868ae0460e09c3c4a0f27535ffd3ea62ff8acc",
+      "reach": 1.3031551782825397
+    },
+    {
+      "key": "inf.alpha:lod2:infected",
+      "identical": true,
+      "ms": {
+        "before": 4.789207999999917,
+        "after": 4.073333000000048
+      },
+      "clipSha256": "0e8fde80fe1c5cb434d6ec552f29318d093d9af59b0cc32ea26d427ecc2935d7",
+      "reach": 1.3098409704913836
+    },
+    {
+      "key": "inf.delivery-driver:lod0:infected",
+      "identical": true,
+      "ms": {
+        "after": 3.45962499999996,
+        "before": 4.554041999999981
+      },
+      "clipSha256": "b92f8236672d53182a4fa477b006d89f4bbb0b9822c4e458ea4484bd2e3914a6",
+      "reach": 0.9496713655444021
+    },
+    {
+      "key": "inf.delivery-driver:lod1:infected",
+      "identical": true,
+      "ms": {
+        "before": 1.7926250000000437,
+        "after": 1.319833000000017
+      },
+      "clipSha256": "a91b4a08551e5978b809205005e096d07987f025c268328aa6c2562e06362c97",
+      "reach": 0.9282175438217778
+    },
+    {
+      "key": "inf.delivery-driver:lod2:infected",
+      "identical": true,
+      "ms": {
+        "after": 1.3298330000000078,
+        "before": 1.8032499999999345
+      },
+      "clipSha256": "5774c3d8a050057c864a83971e43d30fdf1b0e20cd4488a73ff805a20dcd62ab",
+      "reach": 0.9282276716658129
+    }
+  ],
+  "measurements": [
+    {
+      "key": "npc.civilian-man-a:lod0",
+      "death": "death-back",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 5.924040999999988,
+        "after": 5.032916
+      },
+      "geometrySha256": "2fc3439da0cb2ccd1ab155f6becac1b609bc5b9ae528b5df7fa118549e3ee2a1"
+    },
+    {
+      "key": "npc.civilian-man-a:lod0",
+      "death": "death-back",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 4.3245000000000005,
+        "before": 3.401457999999991
+      },
+      "geometrySha256": "2fc3439da0cb2ccd1ab155f6becac1b609bc5b9ae528b5df7fa118549e3ee2a1"
+    },
+    {
+      "key": "npc.civilian-man-a:lod0",
+      "death": "death-back",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 2.3317499999999995,
+        "after": 2.647958000000017
+      },
+      "geometrySha256": "2fc3439da0cb2ccd1ab155f6becac1b609bc5b9ae528b5df7fa118549e3ee2a1"
+    },
+    {
+      "key": "npc.civilian-man-a:lod0",
+      "death": "death-back",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 1.3747920000000136,
+        "before": 1.3238339999999766
+      },
+      "geometrySha256": "2fc3439da0cb2ccd1ab155f6becac1b609bc5b9ae528b5df7fa118549e3ee2a1"
+    },
+    {
+      "key": "npc.civilian-man-a:lod0",
+      "death": "death-side",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 1.464458000000036,
+        "after": 1.0116669999999885
+      },
+      "geometrySha256": "562eb8a43836e2e06c9f1a227e95c9ad48bf922c2282f3a2f6695c423767c3af"
+    },
+    {
+      "key": "npc.civilian-man-a:lod0",
+      "death": "death-side",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 1.0087909999999738,
+        "before": 1.2311659999999733
+      },
+      "geometrySha256": "562eb8a43836e2e06c9f1a227e95c9ad48bf922c2282f3a2f6695c423767c3af"
+    },
+    {
+      "key": "npc.civilian-man-a:lod0",
+      "death": "death-side",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 1.1954999999999814,
+        "after": 0.9627909999999815
+      },
+      "geometrySha256": "562eb8a43836e2e06c9f1a227e95c9ad48bf922c2282f3a2f6695c423767c3af"
+    },
+    {
+      "key": "npc.civilian-man-a:lod0",
+      "death": "death-side",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 1.05516700000004,
+        "before": 1.3306670000000054
+      },
+      "geometrySha256": "562eb8a43836e2e06c9f1a227e95c9ad48bf922c2282f3a2f6695c423767c3af"
+    },
+    {
+      "key": "npc.civilian-man-a:lod0",
+      "death": "death-crumple",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 1.4047919999999863,
+        "after": 1.0325840000000426
+      },
+      "geometrySha256": "4bddce793a35b14598f0f53b6f0a92a0dd2889c4f854f36f5b68c9bc44bf3df0"
+    },
+    {
+      "key": "npc.civilian-man-a:lod0",
+      "death": "death-crumple",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 1.0351250000000505,
+        "before": 1.2983330000000137
+      },
+      "geometrySha256": "4bddce793a35b14598f0f53b6f0a92a0dd2889c4f854f36f5b68c9bc44bf3df0"
+    },
+    {
+      "key": "npc.civilian-man-a:lod0",
+      "death": "death-crumple",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 1.2647499999999923,
+        "after": 1.0058750000000032
+      },
+      "geometrySha256": "4bddce793a35b14598f0f53b6f0a92a0dd2889c4f854f36f5b68c9bc44bf3df0"
+    },
+    {
+      "key": "npc.civilian-man-a:lod0",
+      "death": "death-crumple",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.8505420000000186,
+        "before": 0.934791999999959
+      },
+      "geometrySha256": "4bddce793a35b14598f0f53b6f0a92a0dd2889c4f854f36f5b68c9bc44bf3df0"
+    },
+    {
+      "key": "npc.civilian-man-a:lod1",
+      "death": "death-back",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.4838330000000042,
+        "after": 0.36062499999997044
+      },
+      "geometrySha256": "d7967fc2a7c6581b4e9c46800ce294084be511c1b69ff9166d87342d05c53ea1"
+    },
+    {
+      "key": "npc.civilian-man-a:lod1",
+      "death": "death-back",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.39400000000000546,
+        "before": 0.47904099999999517
+      },
+      "geometrySha256": "d7967fc2a7c6581b4e9c46800ce294084be511c1b69ff9166d87342d05c53ea1"
+    },
+    {
+      "key": "npc.civilian-man-a:lod1",
+      "death": "death-back",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.47825000000000273,
+        "after": 0.35983299999998053
+      },
+      "geometrySha256": "d7967fc2a7c6581b4e9c46800ce294084be511c1b69ff9166d87342d05c53ea1"
+    },
+    {
+      "key": "npc.civilian-man-a:lod1",
+      "death": "death-back",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.359375,
+        "before": 0.4673750000000041
+      },
+      "geometrySha256": "d7967fc2a7c6581b4e9c46800ce294084be511c1b69ff9166d87342d05c53ea1"
+    },
+    {
+      "key": "npc.civilian-man-a:lod1",
+      "death": "death-side",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.4606249999999932,
+        "after": 0.3526249999999891
+      },
+      "geometrySha256": "583eb2c5814e413a2872139889bcb78ecda8f99eb1b4a39c98d4da1f9b66fec4"
+    },
+    {
+      "key": "npc.civilian-man-a:lod1",
+      "death": "death-side",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.3529169999999908,
+        "before": 0.4549999999999841
+      },
+      "geometrySha256": "583eb2c5814e413a2872139889bcb78ecda8f99eb1b4a39c98d4da1f9b66fec4"
+    },
+    {
+      "key": "npc.civilian-man-a:lod1",
+      "death": "death-side",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.4607090000000085,
+        "after": 0.396000000000015
+      },
+      "geometrySha256": "583eb2c5814e413a2872139889bcb78ecda8f99eb1b4a39c98d4da1f9b66fec4"
+    },
+    {
+      "key": "npc.civilian-man-a:lod1",
+      "death": "death-side",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.36412500000000136,
+        "before": 0.4600419999999872
+      },
+      "geometrySha256": "583eb2c5814e413a2872139889bcb78ecda8f99eb1b4a39c98d4da1f9b66fec4"
+    },
+    {
+      "key": "npc.civilian-man-a:lod1",
+      "death": "death-crumple",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.46608399999996664,
+        "after": 0.4549170000000231
+      },
+      "geometrySha256": "63e82953cec03a20412326190742dd51b717973adc8138e876c3c35319e67df2"
+    },
+    {
+      "key": "npc.civilian-man-a:lod1",
+      "death": "death-crumple",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.369624999999985,
+        "before": 0.4636249999999791
+      },
+      "geometrySha256": "63e82953cec03a20412326190742dd51b717973adc8138e876c3c35319e67df2"
+    },
+    {
+      "key": "npc.civilian-man-a:lod1",
+      "death": "death-crumple",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.45595800000000963,
+        "after": 0.3744580000000042
+      },
+      "geometrySha256": "63e82953cec03a20412326190742dd51b717973adc8138e876c3c35319e67df2"
+    },
+    {
+      "key": "npc.civilian-man-a:lod1",
+      "death": "death-crumple",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.36574999999999136,
+        "before": 0.45983300000000327
+      },
+      "geometrySha256": "63e82953cec03a20412326190742dd51b717973adc8138e876c3c35319e67df2"
+    },
+    {
+      "key": "npc.civilian-man-a:lod2",
+      "death": "death-back",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.20912500000002865,
+        "after": 0.14987500000000864
+      },
+      "geometrySha256": "2b7feafbdb2d5c0b804f1f6331da2d48d00ccc3635d92d946c6a640f8ead1103"
+    },
+    {
+      "key": "npc.civilian-man-a:lod2",
+      "death": "death-back",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.14904200000000856,
+        "before": 0.19916699999998855
+      },
+      "geometrySha256": "2b7feafbdb2d5c0b804f1f6331da2d48d00ccc3635d92d946c6a640f8ead1103"
+    },
+    {
+      "key": "npc.civilian-man-a:lod2",
+      "death": "death-back",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.19845900000001393,
+        "after": 0.15029099999998152
+      },
+      "geometrySha256": "2b7feafbdb2d5c0b804f1f6331da2d48d00ccc3635d92d946c6a640f8ead1103"
+    },
+    {
+      "key": "npc.civilian-man-a:lod2",
+      "death": "death-back",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.164874999999995,
+        "before": 0.19845800000001645
+      },
+      "geometrySha256": "2b7feafbdb2d5c0b804f1f6331da2d48d00ccc3635d92d946c6a640f8ead1103"
+    },
+    {
+      "key": "npc.civilian-man-a:lod2",
+      "death": "death-side",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.2210839999999621,
+        "after": 0.1669170000000122
+      },
+      "geometrySha256": "7c83f2ad032e58f21a4e78d2704511ecc18d6e9b4f0ee90879514f196db9f188"
+    },
+    {
+      "key": "npc.civilian-man-a:lod2",
+      "death": "death-side",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.16775000000001228,
+        "before": 0.22341699999998355
+      },
+      "geometrySha256": "7c83f2ad032e58f21a4e78d2704511ecc18d6e9b4f0ee90879514f196db9f188"
+    },
+    {
+      "key": "npc.civilian-man-a:lod2",
+      "death": "death-side",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.23241600000000062,
+        "after": 0.1558329999999728
+      },
+      "geometrySha256": "7c83f2ad032e58f21a4e78d2704511ecc18d6e9b4f0ee90879514f196db9f188"
+    },
+    {
+      "key": "npc.civilian-man-a:lod2",
+      "death": "death-side",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.15066699999999855,
+        "before": 0.19762499999995953
+      },
+      "geometrySha256": "7c83f2ad032e58f21a4e78d2704511ecc18d6e9b4f0ee90879514f196db9f188"
+    },
+    {
+      "key": "npc.civilian-man-a:lod2",
+      "death": "death-crumple",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.1951249999999618,
+        "after": 0.1479999999999677
+      },
+      "geometrySha256": "1920b11ba8dd37bd018d9cf2f07b11b16f062aad2d047ef520db600580e9790f"
+    },
+    {
+      "key": "npc.civilian-man-a:lod2",
+      "death": "death-crumple",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.16629100000000108,
+        "before": 0.19537500000001273
+      },
+      "geometrySha256": "1920b11ba8dd37bd018d9cf2f07b11b16f062aad2d047ef520db600580e9790f"
+    },
+    {
+      "key": "npc.civilian-man-a:lod2",
+      "death": "death-crumple",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.1958750000000009,
+        "after": 0.14691700000003038
+      },
+      "geometrySha256": "1920b11ba8dd37bd018d9cf2f07b11b16f062aad2d047ef520db600580e9790f"
+    },
+    {
+      "key": "npc.civilian-man-a:lod2",
+      "death": "death-crumple",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.16550000000000864,
+        "before": 0.22716700000000856
+      },
+      "geometrySha256": "1920b11ba8dd37bd018d9cf2f07b11b16f062aad2d047ef520db600580e9790f"
+    },
+    {
+      "key": "npc.civilian-woman-b:lod0",
+      "death": "death-back",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 1.390625,
+        "after": 1.7246250000000032
+      },
+      "geometrySha256": "252f36e2ee38d764c6dbb7dcafe617c20c15dad79972112a4e3f32dda53994e6"
+    },
+    {
+      "key": "npc.civilian-woman-b:lod0",
+      "death": "death-back",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 1.383375000000001,
+        "before": 1.3397090000000276
+      },
+      "geometrySha256": "252f36e2ee38d764c6dbb7dcafe617c20c15dad79972112a4e3f32dda53994e6"
+    },
+    {
+      "key": "npc.civilian-woman-b:lod0",
+      "death": "death-back",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 1.503832999999986,
+        "after": 1.5204579999999623
+      },
+      "geometrySha256": "252f36e2ee38d764c6dbb7dcafe617c20c15dad79972112a4e3f32dda53994e6"
+    },
+    {
+      "key": "npc.civilian-woman-b:lod0",
+      "death": "death-back",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 1.405958000000055,
+        "before": 1.3592080000000237
+      },
+      "geometrySha256": "252f36e2ee38d764c6dbb7dcafe617c20c15dad79972112a4e3f32dda53994e6"
+    },
+    {
+      "key": "npc.civilian-woman-b:lod0",
+      "death": "death-side",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 1.3329580000000192,
+        "after": 1.3140829999999823
+      },
+      "geometrySha256": "1b720cfd54c0e7352bb626b5584801d6be4b412d75066427705651f842f74a2c"
+    },
+    {
+      "key": "npc.civilian-woman-b:lod0",
+      "death": "death-side",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 1.2337079999999787,
+        "before": 1.2409170000000813
+      },
+      "geometrySha256": "1b720cfd54c0e7352bb626b5584801d6be4b412d75066427705651f842f74a2c"
+    },
+    {
+      "key": "npc.civilian-woman-b:lod0",
+      "death": "death-side",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 1.2163329999999632,
+        "after": 1.2540409999999156
+      },
+      "geometrySha256": "1b720cfd54c0e7352bb626b5584801d6be4b412d75066427705651f842f74a2c"
+    },
+    {
+      "key": "npc.civilian-woman-b:lod0",
+      "death": "death-side",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 1.3857499999999163,
+        "before": 1.3298750000000155
+      },
+      "geometrySha256": "1b720cfd54c0e7352bb626b5584801d6be4b412d75066427705651f842f74a2c"
+    },
+    {
+      "key": "npc.civilian-woman-b:lod0",
+      "death": "death-crumple",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 1.3673339999999143,
+        "after": 1.4748749999999973
+      },
+      "geometrySha256": "2c9a6624cf23ff36ba1832c07898015d517b13ad6e9589582fcef0226c25ee68"
+    },
+    {
+      "key": "npc.civilian-woman-b:lod0",
+      "death": "death-crumple",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 1.435041999999953,
+        "before": 1.3007499999999936
+      },
+      "geometrySha256": "2c9a6624cf23ff36ba1832c07898015d517b13ad6e9589582fcef0226c25ee68"
+    },
+    {
+      "key": "npc.civilian-woman-b:lod0",
+      "death": "death-crumple",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 1.164083000000005,
+        "after": 0.8920000000000528
+      },
+      "geometrySha256": "2c9a6624cf23ff36ba1832c07898015d517b13ad6e9589582fcef0226c25ee68"
+    },
+    {
+      "key": "npc.civilian-woman-b:lod0",
+      "death": "death-crumple",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.9104170000000522,
+        "before": 1.2453749999999673
+      },
+      "geometrySha256": "2c9a6624cf23ff36ba1832c07898015d517b13ad6e9589582fcef0226c25ee68"
+    },
+    {
+      "key": "npc.civilian-woman-b:lod1",
+      "death": "death-back",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.5998749999999973,
+        "after": 0.9688330000000178
+      },
+      "geometrySha256": "d419b7d050aa47b56956984f7d670d47f47bc159588112dca739cb03ffe5871e"
+    },
+    {
+      "key": "npc.civilian-woman-b:lod1",
+      "death": "death-back",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.55275000000006,
+        "before": 0.6797080000000051
+      },
+      "geometrySha256": "d419b7d050aa47b56956984f7d670d47f47bc159588112dca739cb03ffe5871e"
+    },
+    {
+      "key": "npc.civilian-woman-b:lod1",
+      "death": "death-back",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.6880419999999958,
+        "after": 0.4432919999999285
+      },
+      "geometrySha256": "d419b7d050aa47b56956984f7d670d47f47bc159588112dca739cb03ffe5871e"
+    },
+    {
+      "key": "npc.civilian-woman-b:lod1",
+      "death": "death-back",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.4430419999999913,
+        "before": 0.8363329999999678
+      },
+      "geometrySha256": "d419b7d050aa47b56956984f7d670d47f47bc159588112dca739cb03ffe5871e"
+    },
+    {
+      "key": "npc.civilian-woman-b:lod1",
+      "death": "death-side",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.7207080000000587,
+        "after": 0.44279100000005656
+      },
+      "geometrySha256": "5b8cbc8dc386dbc1e6ed7925e12025aa17518deb7fd2d82866f4b0c2ed59be7d"
+    },
+    {
+      "key": "npc.civilian-woman-b:lod1",
+      "death": "death-side",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.44162500000004457,
+        "before": 0.6812499999999773
+      },
+      "geometrySha256": "5b8cbc8dc386dbc1e6ed7925e12025aa17518deb7fd2d82866f4b0c2ed59be7d"
+    },
+    {
+      "key": "npc.civilian-woman-b:lod1",
+      "death": "death-side",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.7047919999999976,
+        "after": 0.4530000000000882
+      },
+      "geometrySha256": "5b8cbc8dc386dbc1e6ed7925e12025aa17518deb7fd2d82866f4b0c2ed59be7d"
+    },
+    {
+      "key": "npc.civilian-woman-b:lod1",
+      "death": "death-side",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.46195799999998144,
+        "before": 0.7113329999999678
+      },
+      "geometrySha256": "5b8cbc8dc386dbc1e6ed7925e12025aa17518deb7fd2d82866f4b0c2ed59be7d"
+    },
+    {
+      "key": "npc.civilian-woman-b:lod1",
+      "death": "death-crumple",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.8818750000000364,
+        "after": 0.47299999999995634
+      },
+      "geometrySha256": "638545f09d3ec71482c0b9966e96942f1d25d18c9058aa9e042f87a4030ff3b9"
+    },
+    {
+      "key": "npc.civilian-woman-b:lod1",
+      "death": "death-crumple",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.4743339999999989,
+        "before": 0.6888329999999314
+      },
+      "geometrySha256": "638545f09d3ec71482c0b9966e96942f1d25d18c9058aa9e042f87a4030ff3b9"
+    },
+    {
+      "key": "npc.civilian-woman-b:lod1",
+      "death": "death-crumple",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.7010420000000295,
+        "after": 0.4337080000000242
+      },
+      "geometrySha256": "638545f09d3ec71482c0b9966e96942f1d25d18c9058aa9e042f87a4030ff3b9"
+    },
+    {
+      "key": "npc.civilian-woman-b:lod1",
+      "death": "death-crumple",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.45820800000001327,
+        "before": 0.7085000000000719
+      },
+      "geometrySha256": "638545f09d3ec71482c0b9966e96942f1d25d18c9058aa9e042f87a4030ff3b9"
+    },
+    {
+      "key": "npc.civilian-woman-b:lod2",
+      "death": "death-back",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.7830840000000308,
+        "after": 0.58725000000004
+      },
+      "geometrySha256": "6338d2a541ac62aa154d37a54f84aed1f7e16418c6faa39d9bc35cb428836559"
+    },
+    {
+      "key": "npc.civilian-woman-b:lod2",
+      "death": "death-back",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.2574580000000424,
+        "before": 0.29037500000004
+      },
+      "geometrySha256": "6338d2a541ac62aa154d37a54f84aed1f7e16418c6faa39d9bc35cb428836559"
+    },
+    {
+      "key": "npc.civilian-woman-b:lod2",
+      "death": "death-back",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.2929589999999962,
+        "after": 0.2687499999999545
+      },
+      "geometrySha256": "6338d2a541ac62aa154d37a54f84aed1f7e16418c6faa39d9bc35cb428836559"
+    },
+    {
+      "key": "npc.civilian-woman-b:lod2",
+      "death": "death-back",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.2661669999999958,
+        "before": 0.2913749999999027
+      },
+      "geometrySha256": "6338d2a541ac62aa154d37a54f84aed1f7e16418c6faa39d9bc35cb428836559"
+    },
+    {
+      "key": "npc.civilian-woman-b:lod2",
+      "death": "death-side",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.2842080000000351,
+        "after": 0.2643749999999727
+      },
+      "geometrySha256": "53382c039a954f27b29afc566451c35df1771e97f12533532aeb49ad07910c33"
+    },
+    {
+      "key": "npc.civilian-woman-b:lod2",
+      "death": "death-side",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.25870800000006966,
+        "before": 0.26024999999992815
+      },
+      "geometrySha256": "53382c039a954f27b29afc566451c35df1771e97f12533532aeb49ad07910c33"
+    },
+    {
+      "key": "npc.civilian-woman-b:lod2",
+      "death": "death-side",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.26224999999999454,
+        "after": 0.20087499999999636
+      },
+      "geometrySha256": "53382c039a954f27b29afc566451c35df1771e97f12533532aeb49ad07910c33"
+    },
+    {
+      "key": "npc.civilian-woman-b:lod2",
+      "death": "death-side",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.21504099999992832,
+        "before": 0.2617079999999987
+      },
+      "geometrySha256": "53382c039a954f27b29afc566451c35df1771e97f12533532aeb49ad07910c33"
+    },
+    {
+      "key": "npc.civilian-woman-b:lod2",
+      "death": "death-crumple",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.24870799999996507,
+        "after": 0.20258300000000418
+      },
+      "geometrySha256": "45dd7cbcfe3561bac7ff45a2a343c633fb9994c579749ce5a34161e604412c72"
+    },
+    {
+      "key": "npc.civilian-woman-b:lod2",
+      "death": "death-crumple",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.23216600000000653,
+        "before": 0.2748340000000553
+      },
+      "geometrySha256": "45dd7cbcfe3561bac7ff45a2a343c633fb9994c579749ce5a34161e604412c72"
+    },
+    {
+      "key": "npc.civilian-woman-b:lod2",
+      "death": "death-crumple",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.3917500000000018,
+        "after": 0.1993329999999105
+      },
+      "geometrySha256": "45dd7cbcfe3561bac7ff45a2a343c633fb9994c579749ce5a34161e604412c72"
+    },
+    {
+      "key": "npc.civilian-woman-b:lod2",
+      "death": "death-crumple",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.21204099999999926,
+        "before": 0.24937499999998636
+      },
+      "geometrySha256": "45dd7cbcfe3561bac7ff45a2a343c633fb9994c579749ce5a34161e604412c72"
+    },
+    {
+      "key": "npc.civilian-elderly:lod0",
+      "death": "death-back",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 2.207667000000015,
+        "after": 1.5976670000000013
+      },
+      "geometrySha256": "1697b0d4e8288530097d5dbbd29888ffba42c1dbbff074edfdd015480d3d07c0"
+    },
+    {
+      "key": "npc.civilian-elderly:lod0",
+      "death": "death-back",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 1.5989590000000362,
+        "before": 1.9256249999999682
+      },
+      "geometrySha256": "1697b0d4e8288530097d5dbbd29888ffba42c1dbbff074edfdd015480d3d07c0"
+    },
+    {
+      "key": "npc.civilian-elderly:lod0",
+      "death": "death-back",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 1.8227500000000418,
+        "after": 1.497333000000026
+      },
+      "geometrySha256": "1697b0d4e8288530097d5dbbd29888ffba42c1dbbff074edfdd015480d3d07c0"
+    },
+    {
+      "key": "npc.civilian-elderly:lod0",
+      "death": "death-back",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 1.528208999999947,
+        "before": 1.895458000000076
+      },
+      "geometrySha256": "1697b0d4e8288530097d5dbbd29888ffba42c1dbbff074edfdd015480d3d07c0"
+    },
+    {
+      "key": "npc.civilian-elderly:lod0",
+      "death": "death-side",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 1.8275830000000042,
+        "after": 1.5187500000000682
+      },
+      "geometrySha256": "0ecda639a4372eb16cecad5b534f6853519c44f1a34c6c3d3246d67700aba378"
+    },
+    {
+      "key": "npc.civilian-elderly:lod0",
+      "death": "death-side",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 1.5226670000000695,
+        "before": 1.8677089999999907
+      },
+      "geometrySha256": "0ecda639a4372eb16cecad5b534f6853519c44f1a34c6c3d3246d67700aba378"
+    },
+    {
+      "key": "npc.civilian-elderly:lod0",
+      "death": "death-side",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 1.8947920000000522,
+        "after": 1.5954579999998941
+      },
+      "geometrySha256": "0ecda639a4372eb16cecad5b534f6853519c44f1a34c6c3d3246d67700aba378"
+    },
+    {
+      "key": "npc.civilian-elderly:lod0",
+      "death": "death-side",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 1.6688329999999496,
+        "before": 1.9301249999999754
+      },
+      "geometrySha256": "0ecda639a4372eb16cecad5b534f6853519c44f1a34c6c3d3246d67700aba378"
+    },
+    {
+      "key": "npc.civilian-elderly:lod0",
+      "death": "death-crumple",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 1.9114590000000362,
+        "after": 1.632665999999972
+      },
+      "geometrySha256": "8e36210a8d65fa554e1731168042588fad338824e27ab2849ca58eb91e8aad24"
+    },
+    {
+      "key": "npc.civilian-elderly:lod0",
+      "death": "death-crumple",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 1.593166999999994,
+        "before": 1.9089579999999842
+      },
+      "geometrySha256": "8e36210a8d65fa554e1731168042588fad338824e27ab2849ca58eb91e8aad24"
+    },
+    {
+      "key": "npc.civilian-elderly:lod0",
+      "death": "death-crumple",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 1.994374999999991,
+        "after": 1.5932080000000042
+      },
+      "geometrySha256": "8e36210a8d65fa554e1731168042588fad338824e27ab2849ca58eb91e8aad24"
+    },
+    {
+      "key": "npc.civilian-elderly:lod0",
+      "death": "death-crumple",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 1.6278750000000173,
+        "before": 1.9718329999999469
+      },
+      "geometrySha256": "8e36210a8d65fa554e1731168042588fad338824e27ab2849ca58eb91e8aad24"
+    },
+    {
+      "key": "npc.civilian-elderly:lod1",
+      "death": "death-back",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 1.1097500000000764,
+        "after": 0.8985830000000306
+      },
+      "geometrySha256": "a826117a7c445b4991984cb2e5f1bd122ea7995543549ca4afe1a87d7615658d"
+    },
+    {
+      "key": "npc.civilian-elderly:lod1",
+      "death": "death-back",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.9583750000000464,
+        "before": 1.0134579999999005
+      },
+      "geometrySha256": "a826117a7c445b4991984cb2e5f1bd122ea7995543549ca4afe1a87d7615658d"
+    },
+    {
+      "key": "npc.civilian-elderly:lod1",
+      "death": "death-back",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 1.0166249999999764,
+        "after": 0.867458000000056
+      },
+      "geometrySha256": "a826117a7c445b4991984cb2e5f1bd122ea7995543549ca4afe1a87d7615658d"
+    },
+    {
+      "key": "npc.civilian-elderly:lod1",
+      "death": "death-back",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.8770409999999629,
+        "before": 1.036958000000027
+      },
+      "geometrySha256": "a826117a7c445b4991984cb2e5f1bd122ea7995543549ca4afe1a87d7615658d"
+    },
+    {
+      "key": "npc.civilian-elderly:lod1",
+      "death": "death-side",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 1.0871660000000247,
+        "after": 0.941082999999935
+      },
+      "geometrySha256": "eacc2c48f85a6226601754df903668a267bf57be3b51f7d280f6f364e53d4b45"
+    },
+    {
+      "key": "npc.civilian-elderly:lod1",
+      "death": "death-side",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.8725000000000591,
+        "before": 1.0214589999999362
+      },
+      "geometrySha256": "eacc2c48f85a6226601754df903668a267bf57be3b51f7d280f6f364e53d4b45"
+    },
+    {
+      "key": "npc.civilian-elderly:lod1",
+      "death": "death-side",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 1.027541000000042,
+        "after": 0.8827909999999974
+      },
+      "geometrySha256": "eacc2c48f85a6226601754df903668a267bf57be3b51f7d280f6f364e53d4b45"
+    },
+    {
+      "key": "npc.civilian-elderly:lod1",
+      "death": "death-side",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.895958999999948,
+        "before": 1.0387920000000577
+      },
+      "geometrySha256": "eacc2c48f85a6226601754df903668a267bf57be3b51f7d280f6f364e53d4b45"
+    },
+    {
+      "key": "npc.civilian-elderly:lod1",
+      "death": "death-crumple",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.9640419999999494,
+        "after": 0.8502919999999676
+      },
+      "geometrySha256": "f718e8568b5d4ffc4f6765be4372ef6321bfc2af772a0574b4ef570ce83f0172"
+    },
+    {
+      "key": "npc.civilian-elderly:lod1",
+      "death": "death-crumple",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.8710839999999962,
+        "before": 1.0122499999999945
+      },
+      "geometrySha256": "f718e8568b5d4ffc4f6765be4372ef6321bfc2af772a0574b4ef570ce83f0172"
+    },
+    {
+      "key": "npc.civilian-elderly:lod1",
+      "death": "death-crumple",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 1.027249999999981,
+        "after": 0.8802919999999403
+      },
+      "geometrySha256": "f718e8568b5d4ffc4f6765be4372ef6321bfc2af772a0574b4ef570ce83f0172"
+    },
+    {
+      "key": "npc.civilian-elderly:lod1",
+      "death": "death-crumple",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.9441249999999854,
+        "before": 1.008707999999956
+      },
+      "geometrySha256": "f718e8568b5d4ffc4f6765be4372ef6321bfc2af772a0574b4ef570ce83f0172"
+    },
+    {
+      "key": "npc.civilian-elderly:lod2",
+      "death": "death-back",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 1.0164999999999509,
+        "after": 0.8462919999999485
+      },
+      "geometrySha256": "a826117a7c445b4991984cb2e5f1bd122ea7995543549ca4afe1a87d7615658d"
+    },
+    {
+      "key": "npc.civilian-elderly:lod2",
+      "death": "death-back",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.8572499999999081,
+        "before": 1.000915999999961
+      },
+      "geometrySha256": "a826117a7c445b4991984cb2e5f1bd122ea7995543549ca4afe1a87d7615658d"
+    },
+    {
+      "key": "npc.civilian-elderly:lod2",
+      "death": "death-back",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 1.0543330000000424,
+        "after": 0.8582920000000058
+      },
+      "geometrySha256": "a826117a7c445b4991984cb2e5f1bd122ea7995543549ca4afe1a87d7615658d"
+    },
+    {
+      "key": "npc.civilian-elderly:lod2",
+      "death": "death-back",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.8839590000000044,
+        "before": 0.9957909999999401
+      },
+      "geometrySha256": "a826117a7c445b4991984cb2e5f1bd122ea7995543549ca4afe1a87d7615658d"
+    },
+    {
+      "key": "npc.civilian-elderly:lod2",
+      "death": "death-side",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 1.0017090000000053,
+        "after": 0.8645419999999149
+      },
+      "geometrySha256": "eacc2c48f85a6226601754df903668a267bf57be3b51f7d280f6f364e53d4b45"
+    },
+    {
+      "key": "npc.civilian-elderly:lod2",
+      "death": "death-side",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.8562090000000353,
+        "before": 1.0041250000000446
+      },
+      "geometrySha256": "eacc2c48f85a6226601754df903668a267bf57be3b51f7d280f6f364e53d4b45"
+    },
+    {
+      "key": "npc.civilian-elderly:lod2",
+      "death": "death-side",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 1.014458999999988,
+        "after": 0.8625000000000682
+      },
+      "geometrySha256": "eacc2c48f85a6226601754df903668a267bf57be3b51f7d280f6f364e53d4b45"
+    },
+    {
+      "key": "npc.civilian-elderly:lod2",
+      "death": "death-side",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.9133749999999736,
+        "before": 1.0024999999999409
+      },
+      "geometrySha256": "eacc2c48f85a6226601754df903668a267bf57be3b51f7d280f6f364e53d4b45"
+    },
+    {
+      "key": "npc.civilian-elderly:lod2",
+      "death": "death-crumple",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 1.0002080000000433,
+        "after": 0.8673750000000382
+      },
+      "geometrySha256": "f718e8568b5d4ffc4f6765be4372ef6321bfc2af772a0574b4ef570ce83f0172"
+    },
+    {
+      "key": "npc.civilian-elderly:lod2",
+      "death": "death-crumple",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.855792000000065,
+        "before": 1.002999999999929
+      },
+      "geometrySha256": "f718e8568b5d4ffc4f6765be4372ef6321bfc2af772a0574b4ef570ce83f0172"
+    },
+    {
+      "key": "npc.civilian-elderly:lod2",
+      "death": "death-crumple",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 1.0004160000000866,
+        "after": 0.8395000000000437
+      },
+      "geometrySha256": "f718e8568b5d4ffc4f6765be4372ef6321bfc2af772a0574b4ef570ce83f0172"
+    },
+    {
+      "key": "npc.civilian-elderly:lod2",
+      "death": "death-crumple",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.827666000000022,
+        "before": 0.9748749999999973
+      },
+      "geometrySha256": "f718e8568b5d4ffc4f6765be4372ef6321bfc2af772a0574b4ef570ce83f0172"
+    },
+    {
+      "key": "npc.national-guard:lod0",
+      "death": "death-back",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 1.4946249999999281,
+        "after": 1.273416999999995
+      },
+      "geometrySha256": "cbf2c606e717a4f39e5a366095f391f44f43e37968edffdf79a4b7794f37e6cc"
+    },
+    {
+      "key": "npc.national-guard:lod0",
+      "death": "death-back",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 1.2557910000000447,
+        "before": 1.5081250000000637
+      },
+      "geometrySha256": "cbf2c606e717a4f39e5a366095f391f44f43e37968edffdf79a4b7794f37e6cc"
+    },
+    {
+      "key": "npc.national-guard:lod0",
+      "death": "death-back",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 1.5792079999999942,
+        "after": 1.2749999999999773
+      },
+      "geometrySha256": "cbf2c606e717a4f39e5a366095f391f44f43e37968edffdf79a4b7794f37e6cc"
+    },
+    {
+      "key": "npc.national-guard:lod0",
+      "death": "death-back",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 1.258583999999928,
+        "before": 1.517417000000023
+      },
+      "geometrySha256": "cbf2c606e717a4f39e5a366095f391f44f43e37968edffdf79a4b7794f37e6cc"
+    },
+    {
+      "key": "npc.national-guard:lod0",
+      "death": "death-side",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 1.5869159999999738,
+        "after": 1.1997920000000022
+      },
+      "geometrySha256": "f01652dcd723e6a3993c4fd3a392f10a300bd1fe9ebba6e1526f5def09635905"
+    },
+    {
+      "key": "npc.national-guard:lod0",
+      "death": "death-side",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 1.2002089999999725,
+        "before": 1.4539170000000468
+      },
+      "geometrySha256": "f01652dcd723e6a3993c4fd3a392f10a300bd1fe9ebba6e1526f5def09635905"
+    },
+    {
+      "key": "npc.national-guard:lod0",
+      "death": "death-side",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 1.4600000000000364,
+        "after": 1.2922090000000708
+      },
+      "geometrySha256": "f01652dcd723e6a3993c4fd3a392f10a300bd1fe9ebba6e1526f5def09635905"
+    },
+    {
+      "key": "npc.national-guard:lod0",
+      "death": "death-side",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 1.2367910000000393,
+        "before": 1.4977499999999964
+      },
+      "geometrySha256": "f01652dcd723e6a3993c4fd3a392f10a300bd1fe9ebba6e1526f5def09635905"
+    },
+    {
+      "key": "npc.national-guard:lod0",
+      "death": "death-crumple",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 1.4999579999999924,
+        "after": 1.2617079999999987
+      },
+      "geometrySha256": "5f1320effcac2966556d2879b527e604cde45ab961cc3665ef4a7827fc4ef826"
+    },
+    {
+      "key": "npc.national-guard:lod0",
+      "death": "death-crumple",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 1.199083000000087,
+        "before": 1.4562909999999647
+      },
+      "geometrySha256": "5f1320effcac2966556d2879b527e604cde45ab961cc3665ef4a7827fc4ef826"
+    },
+    {
+      "key": "npc.national-guard:lod0",
+      "death": "death-crumple",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 1.4971249999999827,
+        "after": 1.2725410000000466
+      },
+      "geometrySha256": "5f1320effcac2966556d2879b527e604cde45ab961cc3665ef4a7827fc4ef826"
+    },
+    {
+      "key": "npc.national-guard:lod0",
+      "death": "death-crumple",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 1.19825000000003,
+        "before": 1.4651660000000675
+      },
+      "geometrySha256": "5f1320effcac2966556d2879b527e604cde45ab961cc3665ef4a7827fc4ef826"
+    },
+    {
+      "key": "npc.national-guard:lod1",
+      "death": "death-back",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.8256659999999556,
+        "after": 0.7077080000000251
+      },
+      "geometrySha256": "d6ccc450a7927d87f7f1c13e649b80391e34b193cda2667b382cf0154106bec2"
+    },
+    {
+      "key": "npc.national-guard:lod1",
+      "death": "death-back",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.7179579999999532,
+        "before": 0.8637079999999742
+      },
+      "geometrySha256": "d6ccc450a7927d87f7f1c13e649b80391e34b193cda2667b382cf0154106bec2"
+    },
+    {
+      "key": "npc.national-guard:lod1",
+      "death": "death-back",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.8495830000000524,
+        "after": 0.6934170000000677
+      },
+      "geometrySha256": "d6ccc450a7927d87f7f1c13e649b80391e34b193cda2667b382cf0154106bec2"
+    },
+    {
+      "key": "npc.national-guard:lod1",
+      "death": "death-back",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.7586250000000518,
+        "before": 0.86099999999999
+      },
+      "geometrySha256": "d6ccc450a7927d87f7f1c13e649b80391e34b193cda2667b382cf0154106bec2"
+    },
+    {
+      "key": "npc.national-guard:lod1",
+      "death": "death-side",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.8533750000000282,
+        "after": 0.6963749999999891
+      },
+      "geometrySha256": "c70fb73d00578faee49c799663ef5475a73145291dcfad8b00ff4476f293c112"
+    },
+    {
+      "key": "npc.national-guard:lod1",
+      "death": "death-side",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.6936249999999973,
+        "before": 0.8495000000000346
+      },
+      "geometrySha256": "c70fb73d00578faee49c799663ef5475a73145291dcfad8b00ff4476f293c112"
+    },
+    {
+      "key": "npc.national-guard:lod1",
+      "death": "death-side",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.8581669999999804,
+        "after": 0.7210830000000215
+      },
+      "geometrySha256": "c70fb73d00578faee49c799663ef5475a73145291dcfad8b00ff4476f293c112"
+    },
+    {
+      "key": "npc.national-guard:lod1",
+      "death": "death-side",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.7187910000000102,
+        "before": 0.8710419999999885
+      },
+      "geometrySha256": "c70fb73d00578faee49c799663ef5475a73145291dcfad8b00ff4476f293c112"
+    },
+    {
+      "key": "npc.national-guard:lod1",
+      "death": "death-crumple",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.8579169999999294,
+        "after": 0.7132500000000164
+      },
+      "geometrySha256": "05ba618a431a6215fff9a1875ad0bff1e270439799fc5dc9037b52b40b4886cd"
+    },
+    {
+      "key": "npc.national-guard:lod1",
+      "death": "death-crumple",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.7169999999999845,
+        "before": 0.8654999999999973
+      },
+      "geometrySha256": "05ba618a431a6215fff9a1875ad0bff1e270439799fc5dc9037b52b40b4886cd"
+    },
+    {
+      "key": "npc.national-guard:lod1",
+      "death": "death-crumple",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.8608330000000706,
+        "after": 0.7029579999999669
+      },
+      "geometrySha256": "05ba618a431a6215fff9a1875ad0bff1e270439799fc5dc9037b52b40b4886cd"
+    },
+    {
+      "key": "npc.national-guard:lod1",
+      "death": "death-crumple",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.6877090000000408,
+        "before": 0.8278749999999491
+      },
+      "geometrySha256": "05ba618a431a6215fff9a1875ad0bff1e270439799fc5dc9037b52b40b4886cd"
+    },
+    {
+      "key": "npc.national-guard:lod2",
+      "death": "death-back",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.9002500000000282,
+        "after": 0.6776250000000346
+      },
+      "geometrySha256": "d6ccc450a7927d87f7f1c13e649b80391e34b193cda2667b382cf0154106bec2"
+    },
+    {
+      "key": "npc.national-guard:lod2",
+      "death": "death-back",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.6775420000000167,
+        "before": 0.8245830000000751
+      },
+      "geometrySha256": "d6ccc450a7927d87f7f1c13e649b80391e34b193cda2667b382cf0154106bec2"
+    },
+    {
+      "key": "npc.national-guard:lod2",
+      "death": "death-back",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.8468329999999469,
+        "after": 0.7012090000000626
+      },
+      "geometrySha256": "d6ccc450a7927d87f7f1c13e649b80391e34b193cda2667b382cf0154106bec2"
+    },
+    {
+      "key": "npc.national-guard:lod2",
+      "death": "death-back",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.7081249999999955,
+        "before": 0.8615409999999883
+      },
+      "geometrySha256": "d6ccc450a7927d87f7f1c13e649b80391e34b193cda2667b382cf0154106bec2"
+    },
+    {
+      "key": "npc.national-guard:lod2",
+      "death": "death-side",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.8502079999999523,
+        "after": 0.7196250000000646
+      },
+      "geometrySha256": "c70fb73d00578faee49c799663ef5475a73145291dcfad8b00ff4476f293c112"
+    },
+    {
+      "key": "npc.national-guard:lod2",
+      "death": "death-side",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.7094999999999345,
+        "before": 0.8642919999999776
+      },
+      "geometrySha256": "c70fb73d00578faee49c799663ef5475a73145291dcfad8b00ff4476f293c112"
+    },
+    {
+      "key": "npc.national-guard:lod2",
+      "death": "death-side",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.8658329999999523,
+        "after": 0.7143330000000105
+      },
+      "geometrySha256": "c70fb73d00578faee49c799663ef5475a73145291dcfad8b00ff4476f293c112"
+    },
+    {
+      "key": "npc.national-guard:lod2",
+      "death": "death-side",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.7104590000000144,
+        "before": 0.9030420000000277
+      },
+      "geometrySha256": "c70fb73d00578faee49c799663ef5475a73145291dcfad8b00ff4476f293c112"
+    },
+    {
+      "key": "npc.national-guard:lod2",
+      "death": "death-crumple",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.8202079999999796,
+        "after": 0.6728339999999662
+      },
+      "geometrySha256": "05ba618a431a6215fff9a1875ad0bff1e270439799fc5dc9037b52b40b4886cd"
+    },
+    {
+      "key": "npc.national-guard:lod2",
+      "death": "death-crumple",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.674666000000002,
+        "before": 0.8182919999999285
+      },
+      "geometrySha256": "05ba618a431a6215fff9a1875ad0bff1e270439799fc5dc9037b52b40b4886cd"
+    },
+    {
+      "key": "npc.national-guard:lod2",
+      "death": "death-crumple",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.8231250000000045,
+        "after": 0.6741250000000036
+      },
+      "geometrySha256": "05ba618a431a6215fff9a1875ad0bff1e270439799fc5dc9037b52b40b4886cd"
+    },
+    {
+      "key": "npc.national-guard:lod2",
+      "death": "death-crumple",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.7184159999999338,
+        "before": 0.8432080000000042
+      },
+      "geometrySha256": "05ba618a431a6215fff9a1875ad0bff1e270439799fc5dc9037b52b40b4886cd"
+    },
+    {
+      "key": "inf.common-worker:lod0:infected",
+      "death": "death-back",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 4.236249999999927,
+        "after": 3.360166999999933
+      },
+      "geometrySha256": "beb4a45bab83c3d3916794499b32b833736572e4756b93b70a0155edecc240e0"
+    },
+    {
+      "key": "inf.common-worker:lod0:infected",
+      "death": "death-back",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 1.8970829999999523,
+        "before": 2.903250000000071
+      },
+      "geometrySha256": "cfda169e62806cb7cb79829ed60c9abe3464fa43eec8145a4407d4352abf1daf"
+    },
+    {
+      "key": "inf.common-worker:lod0:infected",
+      "death": "death-back",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 1.886082999999985,
+        "after": 1.463083000000097
+      },
+      "geometrySha256": "beb4a45bab83c3d3916794499b32b833736572e4756b93b70a0155edecc240e0"
+    },
+    {
+      "key": "inf.common-worker:lod0:infected",
+      "death": "death-back",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 1.1646670000000086,
+        "before": 1.5411249999999654
+      },
+      "geometrySha256": "cfda169e62806cb7cb79829ed60c9abe3464fa43eec8145a4407d4352abf1daf"
+    },
+    {
+      "key": "inf.common-worker:lod0:infected",
+      "death": "death-side",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 1.7520409999999629,
+        "after": 1.2752910000000384
+      },
+      "geometrySha256": "98d93cd3446d53de2af89685a10a82dc9b7c76bf7b16283f5c43d00f867351d4"
+    },
+    {
+      "key": "inf.common-worker:lod0:infected",
+      "death": "death-side",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 1.1864170000000058,
+        "before": 1.5807909999999765
+      },
+      "geometrySha256": "5871c9d7359174bb3029d0febcd24b487e69d440e484922bb3d1ed36f4969695"
+    },
+    {
+      "key": "inf.common-worker:lod0:infected",
+      "death": "death-side",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 1.7481669999999667,
+        "after": 1.2587080000000697
+      },
+      "geometrySha256": "98d93cd3446d53de2af89685a10a82dc9b7c76bf7b16283f5c43d00f867351d4"
+    },
+    {
+      "key": "inf.common-worker:lod0:infected",
+      "death": "death-side",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 1.1973749999999654,
+        "before": 1.5970000000000937
+      },
+      "geometrySha256": "5871c9d7359174bb3029d0febcd24b487e69d440e484922bb3d1ed36f4969695"
+    },
+    {
+      "key": "inf.common-worker:lod0:infected",
+      "death": "death-crumple",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 1.7333329999999023,
+        "after": 1.165124999999989
+      },
+      "geometrySha256": "07cdfa77c865a63ec5a9243b2abe86a86064aca5a14560211b674809ef8210df"
+    },
+    {
+      "key": "inf.common-worker:lod0:infected",
+      "death": "death-crumple",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.8596250000000509,
+        "before": 1.2172919999999294
+      },
+      "geometrySha256": "5a3c366690ff10866a566a8faf6d2dafa28c38f708212c7d5cd25fbc5ea06b07"
+    },
+    {
+      "key": "inf.common-worker:lod0:infected",
+      "death": "death-crumple",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 1.3323340000000599,
+        "after": 0.9065420000000586
+      },
+      "geometrySha256": "07cdfa77c865a63ec5a9243b2abe86a86064aca5a14560211b674809ef8210df"
+    },
+    {
+      "key": "inf.common-worker:lod0:infected",
+      "death": "death-crumple",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.852542000000085,
+        "before": 1.219082999999955
+      },
+      "geometrySha256": "5a3c366690ff10866a566a8faf6d2dafa28c38f708212c7d5cd25fbc5ea06b07"
+    },
+    {
+      "key": "inf.common-worker:lod1:infected",
+      "death": "death-back",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.5427089999999453,
+        "after": 0.38541700000007495
+      },
+      "geometrySha256": "eeeb9df9cfb80a1afe16f5b602437ddeaf6ef27fc4d17922c4d0b1d116ef5de3"
+    },
+    {
+      "key": "inf.common-worker:lod1:infected",
+      "death": "death-back",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.3690409999999247,
+        "before": 0.487041999999974
+      },
+      "geometrySha256": "f97af3a08a01537b4de0f52f2e36c1c7d2c515436210da25ce8280cd4b20c0c7"
+    },
+    {
+      "key": "inf.common-worker:lod1:infected",
+      "death": "death-back",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.5305000000000746,
+        "after": 0.4032079999999496
+      },
+      "geometrySha256": "eeeb9df9cfb80a1afe16f5b602437ddeaf6ef27fc4d17922c4d0b1d116ef5de3"
+    },
+    {
+      "key": "inf.common-worker:lod1:infected",
+      "death": "death-back",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.3689170000000104,
+        "before": 0.5042920000000777
+      },
+      "geometrySha256": "f97af3a08a01537b4de0f52f2e36c1c7d2c515436210da25ce8280cd4b20c0c7"
+    },
+    {
+      "key": "inf.common-worker:lod1:infected",
+      "death": "death-side",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.5267920000000004,
+        "after": 0.37887499999999363
+      },
+      "geometrySha256": "11b5f5b86afabf81a1b690b35b7fda10e64c8b494b92cb161352d2930a94033e"
+    },
+    {
+      "key": "inf.common-worker:lod1:infected",
+      "death": "death-side",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.37370800000007875,
+        "before": 0.5049579999999878
+      },
+      "geometrySha256": "b575c2ddbfeb47321e107fe6fdde6b9295c7b9a814d0d726948a389b5b10e6e7"
+    },
+    {
+      "key": "inf.common-worker:lod1:infected",
+      "death": "death-side",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.5314590000000408,
+        "after": 0.3828330000000051
+      },
+      "geometrySha256": "11b5f5b86afabf81a1b690b35b7fda10e64c8b494b92cb161352d2930a94033e"
+    },
+    {
+      "key": "inf.common-worker:lod1:infected",
+      "death": "death-side",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.37570900000002894,
+        "before": 0.5092079999999441
+      },
+      "geometrySha256": "b575c2ddbfeb47321e107fe6fdde6b9295c7b9a814d0d726948a389b5b10e6e7"
+    },
+    {
+      "key": "inf.common-worker:lod1:infected",
+      "death": "death-crumple",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.5257080000000087,
+        "after": 0.3775420000000622
+      },
+      "geometrySha256": "58d954b39b12b86d40e0af38c4c036aff3902d82d18fa44e03b47774c3c0e0ae"
+    },
+    {
+      "key": "inf.common-worker:lod1:infected",
+      "death": "death-crumple",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.3570000000000846,
+        "before": 0.5077079999999796
+      },
+      "geometrySha256": "31c733b97c281fb3ac419c5ed4225b36a7ffbbc11c270583cfc2b47f22b84c43"
+    },
+    {
+      "key": "inf.common-worker:lod1:infected",
+      "death": "death-crumple",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.51887499999998,
+        "after": 0.36725000000001273
+      },
+      "geometrySha256": "58d954b39b12b86d40e0af38c4c036aff3902d82d18fa44e03b47774c3c0e0ae"
+    },
+    {
+      "key": "inf.common-worker:lod1:infected",
+      "death": "death-crumple",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.3695830000000342,
+        "before": 0.5074170000000322
+      },
+      "geometrySha256": "31c733b97c281fb3ac419c5ed4225b36a7ffbbc11c270583cfc2b47f22b84c43"
+    },
+    {
+      "key": "inf.common-worker:lod2:infected",
+      "death": "death-back",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.2762920000000122,
+        "after": 0.20287499999994907
+      },
+      "geometrySha256": "b2782e93b169f48c1ce784046c940c7aa276965723c5c36afd2c8ed4dd6aeb14"
+    },
+    {
+      "key": "inf.common-worker:lod2:infected",
+      "death": "death-back",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.18987499999991542,
+        "before": 0.25175000000001546
+      },
+      "geometrySha256": "cb2b6e1b56884cbce242bcd49fd12117c0ce91398c009070a8aca522d678060e"
+    },
+    {
+      "key": "inf.common-worker:lod2:infected",
+      "death": "death-back",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.262958000000026,
+        "after": 0.20500000000004093
+      },
+      "geometrySha256": "b2782e93b169f48c1ce784046c940c7aa276965723c5c36afd2c8ed4dd6aeb14"
+    },
+    {
+      "key": "inf.common-worker:lod2:infected",
+      "death": "death-back",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.19037500000001728,
+        "before": 0.24795799999992596
+      },
+      "geometrySha256": "cb2b6e1b56884cbce242bcd49fd12117c0ce91398c009070a8aca522d678060e"
+    },
+    {
+      "key": "inf.common-worker:lod2:infected",
+      "death": "death-side",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.2790830000000142,
+        "after": 0.19937500000003183
+      },
+      "geometrySha256": "6ef0f4e67d520333227d064d94e76201c4401c34e1001e64169aca00f5c857ff"
+    },
+    {
+      "key": "inf.common-worker:lod2:infected",
+      "death": "death-side",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.188541999999984,
+        "before": 0.24804199999994125
+      },
+      "geometrySha256": "ecb90ebc9181679203269afe8bece3b31cc04e4383d2a1ebfcdfd1112b4fef6e"
+    },
+    {
+      "key": "inf.common-worker:lod2:infected",
+      "death": "death-side",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.2663749999999254,
+        "after": 0.19962499999996908
+      },
+      "geometrySha256": "6ef0f4e67d520333227d064d94e76201c4401c34e1001e64169aca00f5c857ff"
+    },
+    {
+      "key": "inf.common-worker:lod2:infected",
+      "death": "death-side",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.21600000000000819,
+        "before": 0.27912500000002183
+      },
+      "geometrySha256": "ecb90ebc9181679203269afe8bece3b31cc04e4383d2a1ebfcdfd1112b4fef6e"
+    },
+    {
+      "key": "inf.common-worker:lod2:infected",
+      "death": "death-crumple",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.2736250000000382,
+        "after": 0.20291699999995672
+      },
+      "geometrySha256": "fc555d5165bf2560bf66e1ab521ed46b7615a80ce9c48faf44fc58d17a7ae01a"
+    },
+    {
+      "key": "inf.common-worker:lod2:infected",
+      "death": "death-crumple",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.19375000000002274,
+        "before": 0.24687500000004547
+      },
+      "geometrySha256": "3ab5f12db2c0eec4aaa2885d208679df9fdf3c0504b731bd85a876e30d2c27a7"
+    },
+    {
+      "key": "inf.common-worker:lod2:infected",
+      "death": "death-crumple",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.2582909999999856,
+        "after": 0.19354199999997945
+      },
+      "geometrySha256": "fc555d5165bf2560bf66e1ab521ed46b7615a80ce9c48faf44fc58d17a7ae01a"
+    },
+    {
+      "key": "inf.common-worker:lod2:infected",
+      "death": "death-crumple",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.18641700000000583,
+        "before": 0.2457089999999198
+      },
+      "geometrySha256": "3ab5f12db2c0eec4aaa2885d208679df9fdf3c0504b731bd85a876e30d2c27a7"
+    },
+    {
+      "key": "inf.cashier:lod0:infected",
+      "death": "death-back",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 1.974375000000009,
+        "after": 1.4115419999999403
+      },
+      "geometrySha256": "694e2dd651f3c0aa2193816db2a2a87bd5d5870180d96becce07d9b2d22c1223"
+    },
+    {
+      "key": "inf.cashier:lod0:infected",
+      "death": "death-back",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 1.4745419999999285,
+        "before": 1.8772920000000113
+      },
+      "geometrySha256": "520bfcc74fd3e3eecce628b64c635bf83af3301c362a35f385a298b6bc325f13"
+    },
+    {
+      "key": "inf.cashier:lod0:infected",
+      "death": "death-back",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 1.9814999999999827,
+        "after": 1.479082999999946
+      },
+      "geometrySha256": "694e2dd651f3c0aa2193816db2a2a87bd5d5870180d96becce07d9b2d22c1223"
+    },
+    {
+      "key": "inf.cashier:lod0:infected",
+      "death": "death-back",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 1.399958999999967,
+        "before": 1.9865000000000919
+      },
+      "geometrySha256": "520bfcc74fd3e3eecce628b64c635bf83af3301c362a35f385a298b6bc325f13"
+    },
+    {
+      "key": "inf.cashier:lod0:infected",
+      "death": "death-side",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 2.14383399999997,
+        "after": 1.453834000000029
+      },
+      "geometrySha256": "f8e2616d6e67c535c1d166a8b84feb07e3a536248ee9d9bbd3587f6adfea737e"
+    },
+    {
+      "key": "inf.cashier:lod0:infected",
+      "death": "death-side",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 1.3826249999999618,
+        "before": 1.9832080000001042
+      },
+      "geometrySha256": "57dd17aa10fd0bb6fc9a3fa253d00d67869d4718d15549f75098bda148ee9d0e"
+    },
+    {
+      "key": "inf.cashier:lod0:infected",
+      "death": "death-side",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 2.0229170000000067,
+        "after": 1.4389169999999467
+      },
+      "geometrySha256": "f8e2616d6e67c535c1d166a8b84feb07e3a536248ee9d9bbd3587f6adfea737e"
+    },
+    {
+      "key": "inf.cashier:lod0:infected",
+      "death": "death-side",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 1.4240409999999883,
+        "before": 1.992083999999977
+      },
+      "geometrySha256": "57dd17aa10fd0bb6fc9a3fa253d00d67869d4718d15549f75098bda148ee9d0e"
+    },
+    {
+      "key": "inf.cashier:lod0:infected",
+      "death": "death-crumple",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 2.1202919999998358,
+        "after": 1.4175829999999223
+      },
+      "geometrySha256": "033953935ba4c8abc9486a865a3fed6886bc9b7b27bc6685f5530464a66f8597"
+    },
+    {
+      "key": "inf.cashier:lod0:infected",
+      "death": "death-crumple",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 1.386541999999963,
+        "before": 1.9965829999998732
+      },
+      "geometrySha256": "ec83368cd7577ec7bae119f3700b80a02e60094c5e101ed3de1238dad82fa7f2"
+    },
+    {
+      "key": "inf.cashier:lod0:infected",
+      "death": "death-crumple",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 2.0314579999999296,
+        "after": 1.471749999999929
+      },
+      "geometrySha256": "033953935ba4c8abc9486a865a3fed6886bc9b7b27bc6685f5530464a66f8597"
+    },
+    {
+      "key": "inf.cashier:lod0:infected",
+      "death": "death-crumple",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 1.4259170000000267,
+        "before": 2.00525000000016
+      },
+      "geometrySha256": "ec83368cd7577ec7bae119f3700b80a02e60094c5e101ed3de1238dad82fa7f2"
+    },
+    {
+      "key": "inf.cashier:lod1:infected",
+      "death": "death-back",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.88412500000004,
+        "after": 0.6454579999999623
+      },
+      "geometrySha256": "dc42af2eb65bc554e1796a8343f599aaab762f58d1c584d9dffbaea6533fc6c6"
+    },
+    {
+      "key": "inf.cashier:lod1:infected",
+      "death": "death-back",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.6264170000001741,
+        "before": 1.0344579999998587
+      },
+      "geometrySha256": "9a7e08e67c2ad59587cb9f35decf9d3d51b3459798475c0c28674604d1377a59"
+    },
+    {
+      "key": "inf.cashier:lod1:infected",
+      "death": "death-back",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.91274999999996,
+        "after": 0.6511250000000928
+      },
+      "geometrySha256": "dc42af2eb65bc554e1796a8343f599aaab762f58d1c584d9dffbaea6533fc6c6"
+    },
+    {
+      "key": "inf.cashier:lod1:infected",
+      "death": "death-back",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.6746249999998781,
+        "before": 0.7697920000000522
+      },
+      "geometrySha256": "9a7e08e67c2ad59587cb9f35decf9d3d51b3459798475c0c28674604d1377a59"
+    },
+    {
+      "key": "inf.cashier:lod1:infected",
+      "death": "death-side",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.79362500000002,
+        "after": 0.6506249999999909
+      },
+      "geometrySha256": "13f20a6fd0e0056881895c9b380531bff14caaa5b7a1e5dd24685a8744ea1f82"
+    },
+    {
+      "key": "inf.cashier:lod1:infected",
+      "death": "death-side",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.772083000000066,
+        "before": 0.8763329999999314
+      },
+      "geometrySha256": "cc65d59e53e22250ab54f14e2b24b77bca6f66d7851184f672b94a301c3115b0"
+    },
+    {
+      "key": "inf.cashier:lod1:infected",
+      "death": "death-side",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.8914999999999509,
+        "after": 0.6496670000001359
+      },
+      "geometrySha256": "13f20a6fd0e0056881895c9b380531bff14caaa5b7a1e5dd24685a8744ea1f82"
+    },
+    {
+      "key": "inf.cashier:lod1:infected",
+      "death": "death-side",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.6398330000001806,
+        "before": 0.8817500000000109
+      },
+      "geometrySha256": "cc65d59e53e22250ab54f14e2b24b77bca6f66d7851184f672b94a301c3115b0"
+    },
+    {
+      "key": "inf.cashier:lod1:infected",
+      "death": "death-crumple",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.8760839999999916,
+        "after": 0.6600000000000819
+      },
+      "geometrySha256": "0d4abb6a97bb0787ae5edb3a16db27026501415919f83a38abbbe7c91e0fbf0d"
+    },
+    {
+      "key": "inf.cashier:lod1:infected",
+      "death": "death-crumple",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.6434169999999995,
+        "before": 0.8640410000000429
+      },
+      "geometrySha256": "0a4a2ca60e6b8a1b060398619dcb7ba92a8826f5402170743cc5f8acdc3ad2a8"
+    },
+    {
+      "key": "inf.cashier:lod1:infected",
+      "death": "death-crumple",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.8061670000001868,
+        "after": 0.5914999999999964
+      },
+      "geometrySha256": "0d4abb6a97bb0787ae5edb3a16db27026501415919f83a38abbbe7c91e0fbf0d"
+    },
+    {
+      "key": "inf.cashier:lod1:infected",
+      "death": "death-crumple",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.5617919999999685,
+        "before": 0.9101250000001073
+      },
+      "geometrySha256": "0a4a2ca60e6b8a1b060398619dcb7ba92a8826f5402170743cc5f8acdc3ad2a8"
+    },
+    {
+      "key": "inf.cashier:lod2:infected",
+      "death": "death-back",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.7982089999998152,
+        "after": 0.59699999999998
+      },
+      "geometrySha256": "09e59193440af103d0c6e0c7980b3e822d4964fe7aa01e83ce6291a634be389d"
+    },
+    {
+      "key": "inf.cashier:lod2:infected",
+      "death": "death-back",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.946999999999889,
+        "before": 1.0344169999998485
+      },
+      "geometrySha256": "7cfa1a24213cf4f7a04ba7ea86f20f1eb8dd974270d6baba08321896cba6c0f8"
+    },
+    {
+      "key": "inf.cashier:lod2:infected",
+      "death": "death-back",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.9121660000000702,
+        "after": 0.7194999999999254
+      },
+      "geometrySha256": "09e59193440af103d0c6e0c7980b3e822d4964fe7aa01e83ce6291a634be389d"
+    },
+    {
+      "key": "inf.cashier:lod2:infected",
+      "death": "death-back",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.693416999999954,
+        "before": 0.8623749999999291
+      },
+      "geometrySha256": "7cfa1a24213cf4f7a04ba7ea86f20f1eb8dd974270d6baba08321896cba6c0f8"
+    },
+    {
+      "key": "inf.cashier:lod2:infected",
+      "death": "death-side",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.9013330000000224,
+        "after": 0.6702499999998963
+      },
+      "geometrySha256": "c404339675ce8443ae3a9fb9a4685126ac17b79bd959e033c16b20cca013dff9"
+    },
+    {
+      "key": "inf.cashier:lod2:infected",
+      "death": "death-side",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.65037499999994,
+        "before": 0.8702920000000631
+      },
+      "geometrySha256": "4711d8440686f9f16b6e39cab063cc0cd72de622ed77db083d6558f334cbb41b"
+    },
+    {
+      "key": "inf.cashier:lod2:infected",
+      "death": "death-side",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.8946250000001328,
+        "after": 0.6850419999998394
+      },
+      "geometrySha256": "c404339675ce8443ae3a9fb9a4685126ac17b79bd959e033c16b20cca013dff9"
+    },
+    {
+      "key": "inf.cashier:lod2:infected",
+      "death": "death-side",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.6525839999999334,
+        "before": 0.9142920000001595
+      },
+      "geometrySha256": "4711d8440686f9f16b6e39cab063cc0cd72de622ed77db083d6558f334cbb41b"
+    },
+    {
+      "key": "inf.cashier:lod2:infected",
+      "death": "death-crumple",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.9364579999999023,
+        "after": 0.6968329999999696
+      },
+      "geometrySha256": "7b30ee290e3c1f0d491f6ca8928c0158dc8b088bc0cb586c941b668cd296e0f2"
+    },
+    {
+      "key": "inf.cashier:lod2:infected",
+      "death": "death-crumple",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.6439580000001115,
+        "before": 0.8909579999999551
+      },
+      "geometrySha256": "9b772022dc45dedd2192e4ad8b09cefafae47d62c8b063d3e1392ebebf7b6164"
+    },
+    {
+      "key": "inf.cashier:lod2:infected",
+      "death": "death-crumple",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.9227079999998296,
+        "after": 0.686708999999837
+      },
+      "geometrySha256": "7b30ee290e3c1f0d491f6ca8928c0158dc8b088bc0cb586c941b668cd296e0f2"
+    },
+    {
+      "key": "inf.cashier:lod2:infected",
+      "death": "death-crumple",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.6682909999999538,
+        "before": 0.9237499999999272
+      },
+      "geometrySha256": "9b772022dc45dedd2192e4ad8b09cefafae47d62c8b063d3e1392ebebf7b6164"
+    },
+    {
+      "key": "inf.alpha:lod0:infected",
+      "death": "death-back",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 2.2124579999999696,
+        "after": 1.8483750000000327
+      },
+      "geometrySha256": "2472c2bf69f18c8ab4d8471ba3db8ec3ea0b6dcd88fe879a61b4243389964e3e"
+    },
+    {
+      "key": "inf.alpha:lod0:infected",
+      "death": "death-back",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 1.535665999999992,
+        "before": 1.8336659999999938
+      },
+      "geometrySha256": "d102ebcb4c463829b839dc988d4399138c8e64b50305ec8a4d2cc59f2c8d9f00"
+    },
+    {
+      "key": "inf.alpha:lod0:infected",
+      "death": "death-back",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 2.0675410000001193,
+        "after": 1.7212919999999485
+      },
+      "geometrySha256": "2472c2bf69f18c8ab4d8471ba3db8ec3ea0b6dcd88fe879a61b4243389964e3e"
+    },
+    {
+      "key": "inf.alpha:lod0:infected",
+      "death": "death-back",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 1.6682499999999436,
+        "before": 1.8297919999999976
+      },
+      "geometrySha256": "d102ebcb4c463829b839dc988d4399138c8e64b50305ec8a4d2cc59f2c8d9f00"
+    },
+    {
+      "key": "inf.alpha:lod0:infected",
+      "death": "death-side",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 1.925416000000041,
+        "after": 1.6469999999999345
+      },
+      "geometrySha256": "74fae43991c8e9ba9a192535bf0f7b8c50ad891040f7a721da64c7563e873641"
+    },
+    {
+      "key": "inf.alpha:lod0:infected",
+      "death": "death-side",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 1.5762079999999514,
+        "before": 1.9081670000000486
+      },
+      "geometrySha256": "5778604f951ee1ef3b5e7f37643500572c17ac472343f63aea9d9fa06af0f792"
+    },
+    {
+      "key": "inf.alpha:lod0:infected",
+      "death": "death-side",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 1.9999169999998685,
+        "after": 1.7110000000000127
+      },
+      "geometrySha256": "74fae43991c8e9ba9a192535bf0f7b8c50ad891040f7a721da64c7563e873641"
+    },
+    {
+      "key": "inf.alpha:lod0:infected",
+      "death": "death-side",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 1.54816599999981,
+        "before": 1.849917000000005
+      },
+      "geometrySha256": "5778604f951ee1ef3b5e7f37643500572c17ac472343f63aea9d9fa06af0f792"
+    },
+    {
+      "key": "inf.alpha:lod0:infected",
+      "death": "death-crumple",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 2.1215830000001006,
+        "after": 1.6299169999999776
+      },
+      "geometrySha256": "d72b2b3a2a3bc77bc4d359cd9b3a37e798c8f4c87914c32f4df666dd45f300ec"
+    },
+    {
+      "key": "inf.alpha:lod0:infected",
+      "death": "death-crumple",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 1.4542919999998958,
+        "before": 1.7227499999999054
+      },
+      "geometrySha256": "4a07ad262e4a9a5e260a5764b0a9e7abb0eb4d901936256215510647be95df60"
+    },
+    {
+      "key": "inf.alpha:lod0:infected",
+      "death": "death-crumple",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 1.9453750000000127,
+        "after": 1.7180000000000746
+      },
+      "geometrySha256": "d72b2b3a2a3bc77bc4d359cd9b3a37e798c8f4c87914c32f4df666dd45f300ec"
+    },
+    {
+      "key": "inf.alpha:lod0:infected",
+      "death": "death-crumple",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 1.4989160000000084,
+        "before": 1.7758750000000418
+      },
+      "geometrySha256": "4a07ad262e4a9a5e260a5764b0a9e7abb0eb4d901936256215510647be95df60"
+    },
+    {
+      "key": "inf.alpha:lod1:infected",
+      "death": "death-back",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.9635840000000826,
+        "after": 0.8117910000000848
+      },
+      "geometrySha256": "11366abf8c2a9d301411b42dcd23b1a0686c4d5085c145995f02b6e435458b42"
+    },
+    {
+      "key": "inf.alpha:lod1:infected",
+      "death": "death-back",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.6867499999998472,
+        "before": 0.806833000000097
+      },
+      "geometrySha256": "97a51ed5df62090a696fc397eee02ff4d906405813de3bcfe501f4d042cb05f7"
+    },
+    {
+      "key": "inf.alpha:lod1:infected",
+      "death": "death-back",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.9790419999999358,
+        "after": 0.8252500000000964
+      },
+      "geometrySha256": "11366abf8c2a9d301411b42dcd23b1a0686c4d5085c145995f02b6e435458b42"
+    },
+    {
+      "key": "inf.alpha:lod1:infected",
+      "death": "death-back",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.7045000000000528,
+        "before": 0.8317500000000564
+      },
+      "geometrySha256": "97a51ed5df62090a696fc397eee02ff4d906405813de3bcfe501f4d042cb05f7"
+    },
+    {
+      "key": "inf.alpha:lod1:infected",
+      "death": "death-side",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.9970419999999649,
+        "after": 0.927791999999954
+      },
+      "geometrySha256": "7bc4ae4b42d8ceeb7a66badbb77c2d8a871d6bca09e6221db4d3f29a34f79878"
+    },
+    {
+      "key": "inf.alpha:lod1:infected",
+      "death": "death-side",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.6885409999999865,
+        "before": 0.8054160000001502
+      },
+      "geometrySha256": "4105f37ce9113bf9ff2ab05b0d7582f923e00b2f7b46c3eb6c65572753d20ce1"
+    },
+    {
+      "key": "inf.alpha:lod1:infected",
+      "death": "death-side",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.9602090000000771,
+        "after": 0.8114170000001195
+      },
+      "geometrySha256": "7bc4ae4b42d8ceeb7a66badbb77c2d8a871d6bca09e6221db4d3f29a34f79878"
+    },
+    {
+      "key": "inf.alpha:lod1:infected",
+      "death": "death-side",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.6847089999998843,
+        "before": 0.8464579999999842
+      },
+      "geometrySha256": "4105f37ce9113bf9ff2ab05b0d7582f923e00b2f7b46c3eb6c65572753d20ce1"
+    },
+    {
+      "key": "inf.alpha:lod1:infected",
+      "death": "death-crumple",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.9732500000000073,
+        "after": 0.8492080000000897
+      },
+      "geometrySha256": "f5ac8764cb333da0f5db4937428d5bccea0bd02400da521cadc1745196fe7739"
+    },
+    {
+      "key": "inf.alpha:lod1:infected",
+      "death": "death-crumple",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.7078750000000582,
+        "before": 0.8976249999998345
+      },
+      "geometrySha256": "11682f6dbaa71e8b4372c77b8cd2c394f8f65eec9216fe379e96ea7a25884acf"
+    },
+    {
+      "key": "inf.alpha:lod1:infected",
+      "death": "death-crumple",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 1.0113330000001497,
+        "after": 0.878832999999986
+      },
+      "geometrySha256": "f5ac8764cb333da0f5db4937428d5bccea0bd02400da521cadc1745196fe7739"
+    },
+    {
+      "key": "inf.alpha:lod1:infected",
+      "death": "death-crumple",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.7219589999999698,
+        "before": 0.8274579999999787
+      },
+      "geometrySha256": "11682f6dbaa71e8b4372c77b8cd2c394f8f65eec9216fe379e96ea7a25884acf"
+    },
+    {
+      "key": "inf.alpha:lod2:infected",
+      "death": "death-back",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.3609590000000935,
+        "after": 0.3011659999999665
+      },
+      "geometrySha256": "aeaaf8fe390c65d7e56aa94b0ca95bd1551dfda71b9a0821acd19ce39dd2e356"
+    },
+    {
+      "key": "inf.alpha:lod2:infected",
+      "death": "death-back",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.2780410000000302,
+        "before": 0.3188749999999345
+      },
+      "geometrySha256": "29d7680d64ddaa9766080fc0611dbed2acb3780e34a852e3458501f31e413bbf"
+    },
+    {
+      "key": "inf.alpha:lod2:infected",
+      "death": "death-back",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.33741699999995944,
+        "after": 0.28662499999995816
+      },
+      "geometrySha256": "aeaaf8fe390c65d7e56aa94b0ca95bd1551dfda71b9a0821acd19ce39dd2e356"
+    },
+    {
+      "key": "inf.alpha:lod2:infected",
+      "death": "death-back",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.27395799999999326,
+        "before": 0.3272079999999278
+      },
+      "geometrySha256": "29d7680d64ddaa9766080fc0611dbed2acb3780e34a852e3458501f31e413bbf"
+    },
+    {
+      "key": "inf.alpha:lod2:infected",
+      "death": "death-side",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.33566700000005767,
+        "after": 0.28604199999995217
+      },
+      "geometrySha256": "e2545c18424a0a81ea3940f7303d799110d822cc3b0f4c489e5d28e0d3c411dd"
+    },
+    {
+      "key": "inf.alpha:lod2:infected",
+      "death": "death-side",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.26587500000005093,
+        "before": 0.3225410000000011
+      },
+      "geometrySha256": "8fe4608e7302d3d11706c7f837ec4630f015fe1947398137fbd2b38f2045a603"
+    },
+    {
+      "key": "inf.alpha:lod2:infected",
+      "death": "death-side",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.3370840000000044,
+        "after": 0.2982079999999314
+      },
+      "geometrySha256": "e2545c18424a0a81ea3940f7303d799110d822cc3b0f4c489e5d28e0d3c411dd"
+    },
+    {
+      "key": "inf.alpha:lod2:infected",
+      "death": "death-side",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.27320899999995163,
+        "before": 0.31416699999999764
+      },
+      "geometrySha256": "8fe4608e7302d3d11706c7f837ec4630f015fe1947398137fbd2b38f2045a603"
+    },
+    {
+      "key": "inf.alpha:lod2:infected",
+      "death": "death-crumple",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.35362499999996544,
+        "after": 0.32216699999980847
+      },
+      "geometrySha256": "cf90946de6882ca22510d4b9c949e23724890a6a8c78425bdda22309a808cc5f"
+    },
+    {
+      "key": "inf.alpha:lod2:infected",
+      "death": "death-crumple",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.2729159999998956,
+        "before": 0.3492919999998776
+      },
+      "geometrySha256": "7f7de49e84df8f23d5a814463f07879c71b33dd03e6efe087e3debe8d1b3e8f9"
+    },
+    {
+      "key": "inf.alpha:lod2:infected",
+      "death": "death-crumple",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.3560419999998885,
+        "after": 0.30579099999999926
+      },
+      "geometrySha256": "cf90946de6882ca22510d4b9c949e23724890a6a8c78425bdda22309a808cc5f"
+    },
+    {
+      "key": "inf.alpha:lod2:infected",
+      "death": "death-crumple",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.2659169999999449,
+        "before": 0.3183339999998225
+      },
+      "geometrySha256": "7f7de49e84df8f23d5a814463f07879c71b33dd03e6efe087e3debe8d1b3e8f9"
+    },
+    {
+      "key": "inf.delivery-driver:lod0:infected",
+      "death": "death-back",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 1.9987089999999625,
+        "after": 1.456000000000131
+      },
+      "geometrySha256": "73097bebfb70af96ff46eb8061046c97566dbdbd36d1aea52accc3683a3de073"
+    },
+    {
+      "key": "inf.delivery-driver:lod0:infected",
+      "death": "death-back",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 1.4382499999999254,
+        "before": 1.9690420000001723
+      },
+      "geometrySha256": "87c8be3c2de0a0636ba1ee5d450463a556b65658300a6ce2dead71b7f4d73cc0"
+    },
+    {
+      "key": "inf.delivery-driver:lod0:infected",
+      "death": "death-back",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 2.109375,
+        "after": 1.4843340000002172
+      },
+      "geometrySha256": "73097bebfb70af96ff46eb8061046c97566dbdbd36d1aea52accc3683a3de073"
+    },
+    {
+      "key": "inf.delivery-driver:lod0:infected",
+      "death": "death-back",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 1.4537499999999,
+        "before": 2.001459000000068
+      },
+      "geometrySha256": "87c8be3c2de0a0636ba1ee5d450463a556b65658300a6ce2dead71b7f4d73cc0"
+    },
+    {
+      "key": "inf.delivery-driver:lod0:infected",
+      "death": "death-side",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 2.032833999999866,
+        "after": 1.4782500000001164
+      },
+      "geometrySha256": "51b890eaf179338d7e1f8772fbd8128f9ef65e117194bbc8783ccf10e1e560f6"
+    },
+    {
+      "key": "inf.delivery-driver:lod0:infected",
+      "death": "death-side",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 1.484416999999894,
+        "before": 1.9771249999998872
+      },
+      "geometrySha256": "d505787b909558a1a7d1731cc59b5e42af347b3fd1d46114d2171e34aa1da026"
+    },
+    {
+      "key": "inf.delivery-driver:lod0:infected",
+      "death": "death-side",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 2.042707999999948,
+        "after": 1.4570420000000013
+      },
+      "geometrySha256": "51b890eaf179338d7e1f8772fbd8128f9ef65e117194bbc8783ccf10e1e560f6"
+    },
+    {
+      "key": "inf.delivery-driver:lod0:infected",
+      "death": "death-side",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 1.4340839999999844,
+        "before": 1.9953749999999673
+      },
+      "geometrySha256": "d505787b909558a1a7d1731cc59b5e42af347b3fd1d46114d2171e34aa1da026"
+    },
+    {
+      "key": "inf.delivery-driver:lod0:infected",
+      "death": "death-crumple",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 2.0226249999998345,
+        "after": 1.4032090000000608
+      },
+      "geometrySha256": "d287d2e56e829b423c8604a2497b86336839d4b9edfb03031c4b96d1bfd1b51e"
+    },
+    {
+      "key": "inf.delivery-driver:lod0:infected",
+      "death": "death-crumple",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 1.3807500000000346,
+        "before": 1.8732500000000982
+      },
+      "geometrySha256": "154f77d986cb9a2728ce7af3dca643c8bd9758ac56088beb002aa7c6cb69a462"
+    },
+    {
+      "key": "inf.delivery-driver:lod0:infected",
+      "death": "death-crumple",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 1.9360420000000431,
+        "after": 1.4735420000001795
+      },
+      "geometrySha256": "d287d2e56e829b423c8604a2497b86336839d4b9edfb03031c4b96d1bfd1b51e"
+    },
+    {
+      "key": "inf.delivery-driver:lod0:infected",
+      "death": "death-crumple",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 1.4230419999998958,
+        "before": 1.9102499999999054
+      },
+      "geometrySha256": "154f77d986cb9a2728ce7af3dca643c8bd9758ac56088beb002aa7c6cb69a462"
+    },
+    {
+      "key": "inf.delivery-driver:lod1:infected",
+      "death": "death-back",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.80074999999988,
+        "after": 0.59050000000002
+      },
+      "geometrySha256": "1f765b73faf0d9dfdc4250b5c262b689ba8bf0c72e2345003c418c02431d68f5"
+    },
+    {
+      "key": "inf.delivery-driver:lod1:infected",
+      "death": "death-back",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.6206250000000182,
+        "before": 0.7830420000000231
+      },
+      "geometrySha256": "c8f23b42f71d5a3885c1349d342c7a21b525097ffb90fbdc6c91a0b552f3a608"
+    },
+    {
+      "key": "inf.delivery-driver:lod1:infected",
+      "death": "death-back",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.8303330000001097,
+        "after": 0.6013330000000678
+      },
+      "geometrySha256": "1f765b73faf0d9dfdc4250b5c262b689ba8bf0c72e2345003c418c02431d68f5"
+    },
+    {
+      "key": "inf.delivery-driver:lod1:infected",
+      "death": "death-back",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.6746669999999995,
+        "before": 0.7962079999999787
+      },
+      "geometrySha256": "c8f23b42f71d5a3885c1349d342c7a21b525097ffb90fbdc6c91a0b552f3a608"
+    },
+    {
+      "key": "inf.delivery-driver:lod1:infected",
+      "death": "death-side",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.8034159999999702,
+        "after": 0.6057499999999436
+      },
+      "geometrySha256": "b6f998cb374d530af94b124db7efb6d5b1e6a50fc55af2333486d7ee01a8018d"
+    },
+    {
+      "key": "inf.delivery-driver:lod1:infected",
+      "death": "death-side",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.60024999999996,
+        "before": 0.800457999999935
+      },
+      "geometrySha256": "6ac0162eff3e23f430f09b252935cc765321777245b30434a06a764fd53c644b"
+    },
+    {
+      "key": "inf.delivery-driver:lod1:infected",
+      "death": "death-side",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.8301249999999527,
+        "after": 0.6056249999999181
+      },
+      "geometrySha256": "b6f998cb374d530af94b124db7efb6d5b1e6a50fc55af2333486d7ee01a8018d"
+    },
+    {
+      "key": "inf.delivery-driver:lod1:infected",
+      "death": "death-side",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.598459000000048,
+        "before": 0.801834000000099
+      },
+      "geometrySha256": "6ac0162eff3e23f430f09b252935cc765321777245b30434a06a764fd53c644b"
+    },
+    {
+      "key": "inf.delivery-driver:lod1:infected",
+      "death": "death-crumple",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.8278339999999389,
+        "after": 0.622957999999926
+      },
+      "geometrySha256": "085b1145f2a593dc3287209ceedef34c298fd6a8a48794d146bdee445f6c1510"
+    },
+    {
+      "key": "inf.delivery-driver:lod1:infected",
+      "death": "death-crumple",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.6133339999998952,
+        "before": 0.8388750000001437
+      },
+      "geometrySha256": "007718f492bb8740721dc2b9a3f3ad446032aff0759047cc3d62fc5669bad163"
+    },
+    {
+      "key": "inf.delivery-driver:lod1:infected",
+      "death": "death-crumple",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.9200000000000728,
+        "after": 0.601165999999921
+      },
+      "geometrySha256": "085b1145f2a593dc3287209ceedef34c298fd6a8a48794d146bdee445f6c1510"
+    },
+    {
+      "key": "inf.delivery-driver:lod1:infected",
+      "death": "death-crumple",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.5912499999999454,
+        "before": 0.7867080000000897
+      },
+      "geometrySha256": "007718f492bb8740721dc2b9a3f3ad446032aff0759047cc3d62fc5669bad163"
+    },
+    {
+      "key": "inf.delivery-driver:lod2:infected",
+      "death": "death-back",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.7942090000001372,
+        "after": 0.5893330000001242
+      },
+      "geometrySha256": "b2822a851e68ef7e75b64ae85d55f7833a8d0c22bf23fc2b213508cddade1007"
+    },
+    {
+      "key": "inf.delivery-driver:lod2:infected",
+      "death": "death-back",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.6161660000000211,
+        "before": 0.7939159999998537
+      },
+      "geometrySha256": "d194cf0f19170ec0a8da28a0bf93e2869539563033784316408100399e319b96"
+    },
+    {
+      "key": "inf.delivery-driver:lod2:infected",
+      "death": "death-back",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.8182919999999285,
+        "after": 0.6102080000000569
+      },
+      "geometrySha256": "b2822a851e68ef7e75b64ae85d55f7833a8d0c22bf23fc2b213508cddade1007"
+    },
+    {
+      "key": "inf.delivery-driver:lod2:infected",
+      "death": "death-back",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.603249999999889,
+        "before": 0.8189159999999447
+      },
+      "geometrySha256": "d194cf0f19170ec0a8da28a0bf93e2869539563033784316408100399e319b96"
+    },
+    {
+      "key": "inf.delivery-driver:lod2:infected",
+      "death": "death-side",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.8661660000000211,
+        "after": 0.5944580000000315
+      },
+      "geometrySha256": "6a398901263aa5ed506edf933ae50c940a9fdbedd8fdcc67871278f2711ca89f"
+    },
+    {
+      "key": "inf.delivery-driver:lod2:infected",
+      "death": "death-side",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.5871250000000146,
+        "before": 0.7724590000000262
+      },
+      "geometrySha256": "d461104838b6969e9f6c35d93b5c65c9fae7df8eee1a520f56d5d25cd81a160f"
+    },
+    {
+      "key": "inf.delivery-driver:lod2:infected",
+      "death": "death-side",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.7927910000000793,
+        "after": 0.6088749999998981
+      },
+      "geometrySha256": "6a398901263aa5ed506edf933ae50c940a9fdbedd8fdcc67871278f2711ca89f"
+    },
+    {
+      "key": "inf.delivery-driver:lod2:infected",
+      "death": "death-side",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.5998329999999896,
+        "before": 0.7931250000001455
+      },
+      "geometrySha256": "d461104838b6969e9f6c35d93b5c65c9fae7df8eee1a520f56d5d25cd81a160f"
+    },
+    {
+      "key": "inf.delivery-driver:lod2:infected",
+      "death": "death-crumple",
+      "hair": false,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.798584000000119,
+        "after": 0.6071669999998903
+      },
+      "geometrySha256": "e55cd9ae9357486cd0baae4bfc49f066a19c998331237f4ed666f3957ca49bb5"
+    },
+    {
+      "key": "inf.delivery-driver:lod2:infected",
+      "death": "death-crumple",
+      "hair": false,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.6095000000000255,
+        "before": 0.7805829999999787
+      },
+      "geometrySha256": "589e119c8e91a79355e2bf3063afdecb99329ff8a812a0bf6286a517cb8655ba"
+    },
+    {
+      "key": "inf.delivery-driver:lod2:infected",
+      "death": "death-crumple",
+      "hair": true,
+      "mask": [],
+      "paddedNormal": true,
+      "identical": true,
+      "ms": {
+        "before": 0.8326659999997901,
+        "after": 0.7215830000000096
+      },
+      "geometrySha256": "e55cd9ae9357486cd0baae4bfc49f066a19c998331237f4ed666f3957ca49bb5"
+    },
+    {
+      "key": "inf.delivery-driver:lod2:infected",
+      "death": "death-crumple",
+      "hair": true,
+      "mask": [
+        "armL",
+        "foreArmL"
+      ],
+      "paddedNormal": false,
+      "identical": true,
+      "ms": {
+        "after": 0.5871659999997974,
+        "before": 0.7768750000000182
+      },
+      "geometrySha256": "589e119c8e91a79355e2bf3063afdecb99329ff8a812a0bf6286a517cb8655ba"
+    }
+  ]
+}
