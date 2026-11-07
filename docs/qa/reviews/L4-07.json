@@ -1,22 +1,47 @@
 {
   "row": "L4-07",
   "status": "FAIL",
-  "reviewer": "Codex/fix67-b",
-  "date": "2026-11-06",
-  "commit": "4081152a7fb5e9041bae7cd5ca159369770043ef",
+  "reviewer": "Codex/final-b",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "sourceDigest": "e3dafe0694468ae05c6e72a1f303adf938a6c33391416d38d67a60534e2fe51b",
   "clauses": [
     {
       "clause": "combat: reachable \u2265 90 % (no clumps locked at sheds/walls); passive first attack \u2264 10 s (measured 4.87 s); passive attacks \u2265 6/min (tune). PO: \"they are not attacking me\" / \"The Zombies are somehow locked there\". Clarification: score reachability from the first physical perimeter breach/gate opening onward; every infected must have a legal ground, vault, or attack-through-barrier path once the perimeter permits it, with no permanent geometry trap.",
       "verdict": "FAIL",
-      "note": "Final-source high complete bounded-path minimum80.645161% fails90%; low complete95.833333%, low stationary100%, high stationary98.214286%. Passive first actual player windups8.416667/7.366667s pass10s. Full phase/legal-route samples and canonical receipts retained. No universal no-permanent-trap PASS or new checker tolerance is inferred."
+      "note": "FAIL every-infected legal-path clause after the actual perimeter opening: high complete legal share96.428571%, blockedIDs515/516; high stationary97.014925%, blocked421/422. Independent actual high complete prefix at ticks10129 and10729 proves515/516 on clear ground nearz57.5\u201357.75, but exhaustive cloned production-grid A* (Infinity work, actual body radius) has no connected ground path to actual courier. Independent production attack-through-barrier/vault route search also returns Infinity. Same-grid actual actor349 is a positive legal-ground-path control at all4 queries. Canonical full-hash86ab19e8 trace independently tracks these actual IDs outside through the rest of hold; this is no longer an inference from a timed-out A* budget. It establishes absent legal production navigation at those times, without claiming an infinite-duration physical-world trap. Other clauses pass: bounded reachable\u226598%, passive first attack8.833/8.417s, passive898.42/722.53attacks/min. Repro: high seed1 complete, inspect515/516 at tick10129 after perimeter opens."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix67-b/L4-07-recheck.json",
-      "sha256": "c2dc0b94cf4c3bc660fb88a458baa46df63599c55ca6e0016e6a82022c40208a",
-      "what": "Final-source high complete bounded-path minimum80.645161% fails90%; low complete95.833333%, low stationary100%, high stationary98.214286%. Passive first actual player windups8.416667/7.366667s pass10s. Full phase/legal-route samples and canonical receipts retained. No universal no-permanent-trap PASS or new checker tolerance is inferred."
+      "file": "docs/reports/final-b/L4-07-proof.json",
+      "sha256": "7284c3da24463a37c334bf2b58db38ac47b040f1a98c377fe6ff591aed2ee329",
+      "what": "FAIL every-infected legal-path clause after the actual perimeter opening: high complete legal share96.428571%, blockedIDs515/516; high stationary97.014925%, blocked421/422. Independent actual high complete prefix at ticks10129 and10729 proves515/516 on clear ground nearz57.5\u201357.75, but exhaustive cloned production-grid A* (Infinity work, actual body radius) has no connected ground path to actual courier. Independent production attack-through-barrier/vault route search also returns Infinity. Same-grid actual actor349 is a positive legal-ground-path control at all4 queries. Canonical full-hash86ab19e8 trace independently tracks these actual IDs outside through the rest of hold; this is no longer an inference from a timed-out A* budget. It establishes absent legal production navigation at those times, without claiming an infinite-duration physical-world trap. Other clauses pass: bounded reachable\u226598%, passive first attack8.833/8.417s, passive898.42/722.53attacks/min. Repro: high seed1 complete, inspect515/516 at tick10129 after perimeter opens."
+    },
+    {
+      "file": "docs/reports/final-b/L4-path-proof.json.gz",
+      "sha256": "deee9efefa649fdd3e6a8a7a058d2a23037fbc796eda2acf40c5106707284a61",
+      "what": "FAIL every-infected legal-path clause after the actual perimeter opening: high complete legal share96.428571%, blockedIDs515/516; high stationary97.014925%, blocked421/422. Independent actual high complete prefix at ticks10129 and10729 proves515/516 on clear ground nearz57.5\u201357.75, but exhaustive cloned production-grid A* (Infinity work, actual body radius) has no connected ground path to actual courier. Independent production attack-through-barrier/vault route search also returns Infinity. Same-grid actual actor349 is a positive legal-ground-path control at all4 queries. Canonical full-hash86ab19e8 trace independently tracks these actual IDs outside through the rest of hold; this is no longer an inference from a timed-out A* budget. It establishes absent legal production navigation at those times, without claiming an infinite-duration physical-world trap. Other clauses pass: bounded reachable\u226598%, passive first attack8.833/8.417s, passive898.42/722.53attacks/min. Repro: high seed1 complete, inspect515/516 at tick10129 after perimeter opens."
+    },
+    {
+      "file": "docs/reports/final-b/L4-blocked-trace.json.gz",
+      "sha256": "ebff2ffd3417e8920c6bf817ca3769eb7aeb6d0fde16e6e21a18380b48014145",
+      "what": "FAIL every-infected legal-path clause after the actual perimeter opening: high complete legal share96.428571%, blockedIDs515/516; high stationary97.014925%, blocked421/422. Independent actual high complete prefix at ticks10129 and10729 proves515/516 on clear ground nearz57.5\u201357.75, but exhaustive cloned production-grid A* (Infinity work, actual body radius) has no connected ground path to actual courier. Independent production attack-through-barrier/vault route search also returns Infinity. Same-grid actual actor349 is a positive legal-ground-path control at all4 queries. Canonical full-hash86ab19e8 trace independently tracks these actual IDs outside through the rest of hold; this is no longer an inference from a timed-out A* budget. It establishes absent legal production navigation at those times, without claiming an infinite-duration physical-world trap. Other clauses pass: bounded reachable\u226598%, passive first attack8.833/8.417s, passive898.42/722.53attacks/min. Repro: high seed1 complete, inspect515/516 at tick10129 after perimeter opens."
+    },
+    {
+      "file": "docs/reports/final-b/l4-path-proof-executed.ts.gz",
+      "sha256": "749ff73353eb5d2f431af5d1fee8f4312618b1071c10e236a9f1e57906447adb",
+      "what": "FAIL every-infected legal-path clause after the actual perimeter opening: high complete legal share96.428571%, blockedIDs515/516; high stationary97.014925%, blocked421/422. Independent actual high complete prefix at ticks10129 and10729 proves515/516 on clear ground nearz57.5\u201357.75, but exhaustive cloned production-grid A* (Infinity work, actual body radius) has no connected ground path to actual courier. Independent production attack-through-barrier/vault route search also returns Infinity. Same-grid actual actor349 is a positive legal-ground-path control at all4 queries. Canonical full-hash86ab19e8 trace independently tracks these actual IDs outside through the rest of hold; this is no longer an inference from a timed-out A* budget. It establishes absent legal production navigation at those times, without claiming an infinite-duration physical-world trap. Other clauses pass: bounded reachable\u226598%, passive first attack8.833/8.417s, passive898.42/722.53attacks/min. Repro: high seed1 complete, inspect515/516 at tick10129 after perimeter opens."
+    },
+    {
+      "file": "docs/reports/final-b/frozen-native/L4-high-complete.json.gz",
+      "sha256": "677631ad29ee5d560f110ab3b9a5e3537ddbe88135a2ad96162eabfdcaca25a6",
+      "what": "FAIL every-infected legal-path clause after the actual perimeter opening: high complete legal share96.428571%, blockedIDs515/516; high stationary97.014925%, blocked421/422. Independent actual high complete prefix at ticks10129 and10729 proves515/516 on clear ground nearz57.5\u201357.75, but exhaustive cloned production-grid A* (Infinity work, actual body radius) has no connected ground path to actual courier. Independent production attack-through-barrier/vault route search also returns Infinity. Same-grid actual actor349 is a positive legal-ground-path control at all4 queries. Canonical full-hash86ab19e8 trace independently tracks these actual IDs outside through the rest of hold; this is no longer an inference from a timed-out A* budget. It establishes absent legal production navigation at those times, without claiming an infinite-duration physical-world trap. Other clauses pass: bounded reachable\u226598%, passive first attack8.833/8.417s, passive898.42/722.53attacks/min. Repro: high seed1 complete, inspect515/516 at tick10129 after perimeter opens."
+    },
+    {
+      "file": "docs/reports/final-b/frozen-native/L4-high-stationary.json.gz",
+      "sha256": "a5dd8f66a6349e5193ea414161720de1687c4b8effa589e0bf54d90e884971cc",
+      "what": "FAIL every-infected legal-path clause after the actual perimeter opening: high complete legal share96.428571%, blockedIDs515/516; high stationary97.014925%, blocked421/422. Independent actual high complete prefix at ticks10129 and10729 proves515/516 on clear ground nearz57.5\u201357.75, but exhaustive cloned production-grid A* (Infinity work, actual body radius) has no connected ground path to actual courier. Independent production attack-through-barrier/vault route search also returns Infinity. Same-grid actual actor349 is a positive legal-ground-path control at all4 queries. Canonical full-hash86ab19e8 trace independently tracks these actual IDs outside through the rest of hold; this is no longer an inference from a timed-out A* budget. It establishes absent legal production navigation at those times, without claiming an infinite-duration physical-world trap. Other clauses pass: bounded reachable\u226598%, passive first attack8.833/8.417s, passive898.42/722.53attacks/min. Repro: high seed1 complete, inspect515/516 at tick10129 after perimeter opens."
     }
-  ],
-  "notes": "Current-source native measurements at both tiers. A FAIL closes the verdict through the cited counterexample; unmeasured clauses are not promoted to PASS."
+  ]
 }
