@@ -1,0 +1,937 @@
+{
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "revision": "1cd2b6dc16497c5ace5a59ae81cc717535627f7b",
+  "reviewer": "Codex final-a",
+  "allFramesPersonallyInspected": true,
+  "note": "All22 fresh WebGPU low/high frames personally inspected at full size: same clerk emerges carrying the parcel, gives it to courier, waves and walks back through the open depot door before closure. Both321-tick ledgers retain94 transfer ticks, zero hidden transfer ticks, actual ownership handoff and closed final door. Clerk remains nonhidden through the internal walk at z-39.34; no outdoor disappearance observed. Seven broken-data controls pass. Normal native input prefix then idle cutscene, no relocation/protection/skips. Default production camera; zoom extremes not claimed.",
+  "captures": [
+    {
+      "file": "test-results/final-a/L1-03/captures/low-0000-npc-carry.png",
+      "sha256": "4480f06f78d406a000704d50dcf9498c7909fc241f15620a0103f66067ad44f3",
+      "sample": {
+        "tick": 930,
+        "beat": {
+          "id": "pickup",
+          "start": 928,
+          "until": 1228,
+          "actor": 148,
+          "fx": -37.6184799194336,
+          "fz": -38.1060041809082,
+          "ax": -37.4,
+          "az": -39.875,
+          "mx": -37.674946041560474,
+          "mz": -37.74443379503185
+        },
+        "carrying": false,
+        "delivered": false,
+        "phase": "morning",
+        "actor": 148,
+        "entity": {
+          "hidden": true,
+          "at": {
+            "x": -37.4,
+            "z": -39.82159936716754,
+            "y": 1.03,
+            "yaw": -1.5707963267948966
+          },
+          "story": {
+            "clip": "npc-carry",
+            "start": 929,
+            "prop": "parcel"
+          }
+        },
+        "drawn": false,
+        "player": {
+          "x": -37.83695983886719,
+          "y": 0.7049999833106995,
+          "z": -36.707008361816406,
+          "yaw": 1.5242178746765045
+        },
+        "doors": [
+          "l1-depot-clerk"
+        ],
+        "done": false
+      },
+      "tier": "low",
+      "observation": "Clerk emerges through the open doorway carrying box."
+    },
+    {
+      "file": "test-results/final-a/L1-03/captures/low-0060-npc-carry.png",
+      "sha256": "9e62cfcff380b564d61e86dac8c6f40feff2b4a1c22a398d585e0a4f1d489bb0",
+      "sample": {
+        "tick": 990,
+        "beat": {
+          "id": "pickup",
+          "start": 928,
+          "until": 1228,
+          "actor": 148,
+          "fx": -37.6184799194336,
+          "fz": -38.1060041809082,
+          "ax": -37.4,
+          "az": -39.875,
+          "mx": -37.674946041560474,
+          "mz": -37.74443379503185
+        },
+        "carrying": false,
+        "delivered": false,
+        "phase": "morning",
+        "actor": 148,
+        "entity": {
+          "hidden": false,
+          "at": {
+            "x": -37.4,
+            "z": -38.21958038219376,
+            "y": 0.97,
+            "yaw": -1.5707963267948966
+          },
+          "story": {
+            "clip": "npc-carry",
+            "start": 929,
+            "prop": "parcel"
+          }
+        },
+        "drawn": false,
+        "player": {
+          "x": -37.83695983886719,
+          "y": 0.7049999833106995,
+          "z": -36.707008361816406,
+          "yaw": 1.5242178746765045
+        },
+        "doors": [
+          "l1-depot-clerk"
+        ],
+        "done": false
+      },
+      "tier": "low",
+      "observation": "Clerk emerges through the open doorway carrying box."
+    },
+    {
+      "file": "test-results/final-a/L1-03/captures/low-0082-npc-give.png",
+      "sha256": "028c394ae87b5a801c33b8accb4f50c0dedf7e4e8c05b37a6ffaf09c1a639c7d",
+      "sample": {
+        "tick": 1012,
+        "beat": {
+          "id": "pickup",
+          "start": 928,
+          "until": 1228,
+          "actor": 148,
+          "fx": -37.6184799194336,
+          "fz": -38.1060041809082,
+          "ax": -37.4,
+          "az": -39.875,
+          "mx": -37.674946041560474,
+          "mz": -37.74443379503185
+        },
+        "carrying": false,
+        "delivered": false,
+        "phase": "morning",
+        "actor": 148,
+        "entity": {
+          "hidden": false,
+          "at": {
+            "x": -37.674946041560474,
+            "z": -37.74443379503185,
+            "y": 0.7,
+            "yaw": -1.725714096791561
+          },
+          "story": {
+            "clip": "npc-give",
+            "start": 1012,
+            "prop": "parcel"
+          }
+        },
+        "drawn": false,
+        "player": {
+          "x": -37.83695983886719,
+          "y": 0.7049999833106995,
+          "z": -36.707008361816406,
+          "yaw": 1.5242178746765045
+        },
+        "doors": [
+          "l1-depot-clerk"
+        ],
+        "done": false
+      },
+      "tier": "low",
+      "observation": "Clerk extends box toward courier; parcel handoff visible."
+    },
+    {
+      "file": "test-results/final-a/L1-03/captures/low-0120-npc-give.png",
+      "sha256": "3699ae52685abe80bfb84c2e5e8540fc4975b3708d5ff6daed53347e17ccfb2e",
+      "sample": {
+        "tick": 1050,
+        "beat": {
+          "id": "pickup",
+          "start": 928,
+          "until": 1228,
+          "actor": 148,
+          "fx": -37.6184799194336,
+          "fz": -38.1060041809082,
+          "ax": -37.4,
+          "az": -39.875,
+          "mx": -37.674946041560474,
+          "mz": -37.74443379503185
+        },
+        "carrying": true,
+        "delivered": false,
+        "phase": "morning",
+        "actor": 148,
+        "entity": {
+          "hidden": false,
+          "at": {
+            "x": -37.674946041560474,
+            "z": -37.74443379503185,
+            "y": 0.7,
+            "yaw": -1.725714096791561
+          },
+          "story": {
+            "clip": "npc-give",
+            "start": 1038
+          }
+        },
+        "drawn": false,
+        "player": {
+          "x": -37.83695983886719,
+          "y": 0.7049999833106995,
+          "z": -36.707008361816406,
+          "yaw": 1.5242178746765045
+        },
+        "doors": [
+          "l1-depot-clerk"
+        ],
+        "done": false
+      },
+      "tier": "low",
+      "observation": "Clerk extends box toward courier; parcel handoff visible."
+    },
+    {
+      "file": "test-results/final-a/L1-03/captures/low-0136-npc-wave.png",
+      "sha256": "4fadf0294a71507ab64a775cd1992cee8c2dce9424ddfeaabb9d0e4dc9fddcad",
+      "sample": {
+        "tick": 1066,
+        "beat": {
+          "id": "pickup",
+          "start": 928,
+          "until": 1228,
+          "actor": 148,
+          "fx": -37.6184799194336,
+          "fz": -38.1060041809082,
+          "ax": -37.4,
+          "az": -39.875,
+          "mx": -37.674946041560474,
+          "mz": -37.74443379503185
+        },
+        "carrying": true,
+        "delivered": false,
+        "phase": "morning",
+        "actor": 148,
+        "entity": {
+          "hidden": false,
+          "at": {
+            "x": -37.674946041560474,
+            "z": -37.74443379503185,
+            "y": 0.7,
+            "yaw": -1.725714096791561
+          },
+          "story": {
+            "clip": "npc-wave",
+            "start": 1066
+          }
+        },
+        "drawn": false,
+        "player": {
+          "x": -37.83695983886719,
+          "y": 0.7049999833106995,
+          "z": -36.707008361816406,
+          "yaw": 1.5242178746765045
+        },
+        "doors": [
+          "l1-depot-clerk"
+        ],
+        "done": false
+      },
+      "tier": "low",
+      "observation": "Clerk remains outside beside courier after handoff."
+    },
+    {
+      "file": "test-results/final-a/L1-03/captures/low-0176-npc-walk.png",
+      "sha256": "f0677befcd86d108cabd1578c31d4a3426bd10805f5b6b6b095199260e4ab71a",
+      "sample": {
+        "tick": 1106,
+        "beat": {
+          "id": "pickup",
+          "start": 928,
+          "until": 1228,
+          "actor": 148,
+          "fx": -37.6184799194336,
+          "fz": -38.1060041809082,
+          "ax": -37.4,
+          "az": -39.875,
+          "mx": -37.674946041560474,
+          "mz": -37.74443379503185
+        },
+        "carrying": true,
+        "delivered": false,
+        "phase": "morning",
+        "actor": 148,
+        "entity": {
+          "hidden": false,
+          "at": {
+            "x": -37.674946041560474,
+            "z": -37.74443379503185,
+            "y": 0.7,
+            "yaw": 0.7955149010630392
+          },
+          "story": {
+            "clip": "npc-walk",
+            "start": 1106
+          }
+        },
+        "drawn": false,
+        "player": {
+          "x": -37.83695983886719,
+          "y": 0.7049999833106995,
+          "z": -36.707008361816406,
+          "yaw": 1.5242178746765045
+        },
+        "doors": [
+          "l1-depot-clerk"
+        ],
+        "done": false
+      },
+      "tier": "low",
+      "observation": "Clerk turns/walks back toward depot doorway."
+    },
+    {
+      "file": "test-results/final-a/L1-03/captures/low-0180-npc-walk.png",
+      "sha256": "5d6501b69b86c3bc764dfe656f9e29358b76914630c04d5c598249e3bc3c914d",
+      "sample": {
+        "tick": 1110,
+        "beat": {
+          "id": "pickup",
+          "start": 928,
+          "until": 1228,
+          "actor": 148,
+          "fx": -37.6184799194336,
+          "fz": -38.1060041809082,
+          "ax": -37.4,
+          "az": -39.875,
+          "mx": -37.674946041560474,
+          "mz": -37.74443379503185
+        },
+        "carrying": true,
+        "delivered": false,
+        "phase": "morning",
+        "actor": 148,
+        "entity": {
+          "hidden": false,
+          "at": {
+            "x": -37.60019400898235,
+            "z": -37.82071383156217,
+            "y": 0.7,
+            "yaw": 0.7955149010630392
+          },
+          "story": {
+            "clip": "npc-walk",
+            "start": 1106
+          }
+        },
+        "drawn": true,
+        "player": {
+          "x": -37.83695983886719,
+          "y": 0.7049999833106995,
+          "z": -36.707008361816406,
+          "yaw": 1.5242178746765045
+        },
+        "doors": [
+          "l1-depot-clerk"
+        ],
+        "done": false
+      },
+      "tier": "low",
+      "observation": "Clerk turns/walks back toward depot doorway."
+    },
+    {
+      "file": "test-results/final-a/L1-03/captures/low-0240-npc-walk.png",
+      "sha256": "fc33dca838df108f9450fe8c25fd2dc2e4d60b444de75dc00c2a92e318d7bdd1",
+      "sample": {
+        "tick": 1170,
+        "beat": {
+          "id": "pickup",
+          "start": 928,
+          "until": 1228,
+          "actor": 148,
+          "fx": -37.6184799194336,
+          "fz": -38.1060041809082,
+          "ax": -37.4,
+          "az": -39.875,
+          "mx": -37.674946041560474,
+          "mz": -37.74443379503185
+        },
+        "carrying": true,
+        "delivered": false,
+        "phase": "morning",
+        "actor": 148,
+        "entity": {
+          "hidden": false,
+          "at": {
+            "x": -37.4,
+            "z": -39.340993671675406,
+            "y": 0.97,
+            "yaw": 1.5707963267948966
+          },
+          "story": {
+            "clip": "npc-walk",
+            "start": 1106
+          }
+        },
+        "drawn": false,
+        "player": {
+          "x": -37.83695983886719,
+          "y": 0.7049999833106995,
+          "z": -37.00700759887695,
+          "yaw": -1.5707963267948966
+        },
+        "doors": [
+          "l1-depot-clerk"
+        ],
+        "done": false
+      },
+      "tier": "low",
+      "observation": "Clerk turns/walks back toward depot doorway."
+    },
+    {
+      "file": "test-results/final-a/L1-03/captures/low-0260-none.png",
+      "sha256": "7adf156f5b37c6b1941ff0c74bf51d83cdc0ee7e8397b99025ea12626c68306e",
+      "sample": {
+        "tick": 1190,
+        "beat": null,
+        "carrying": true,
+        "delivered": false,
+        "phase": "morning",
+        "actor": 0,
+        "drawn": false,
+        "player": {
+          "x": -37.83695983886719,
+          "y": 0.7049999833106995,
+          "z": -37.00700759887695,
+          "yaw": -1.5707963267948966
+        },
+        "doors": [],
+        "done": true
+      },
+      "tier": "low",
+      "observation": "Clerk is inside; doorway open during return, closed in later tail frames."
+    },
+    {
+      "file": "test-results/final-a/L1-03/captures/low-0300-none.png",
+      "sha256": "951e4a24dbd5275151e47de883a9a61c7bce8dbb5273e42c91916383b5a128c1",
+      "sample": {
+        "tick": 1230,
+        "beat": null,
+        "carrying": true,
+        "delivered": false,
+        "phase": "morning",
+        "actor": 0,
+        "drawn": false,
+        "player": {
+          "x": -37.83695983886719,
+          "y": 0.7049999833106995,
+          "z": -37.00700759887695,
+          "yaw": -1.5707963267948966
+        },
+        "doors": [],
+        "done": true
+      },
+      "tier": "low",
+      "observation": "Clerk is inside; doorway open during return, closed in later tail frames."
+    },
+    {
+      "file": "test-results/final-a/L1-03/captures/low-0320-none.png",
+      "sha256": "c2960270b4e0db9761067733bcd274ddd40e5b0e5c08ce5403c9a747a49a272e",
+      "sample": {
+        "tick": 1250,
+        "beat": null,
+        "carrying": true,
+        "delivered": false,
+        "phase": "morning",
+        "actor": 0,
+        "drawn": false,
+        "player": {
+          "x": -37.83695983886719,
+          "y": 0.7049999833106995,
+          "z": -37.00700759887695,
+          "yaw": -1.5707963267948966
+        },
+        "doors": [],
+        "done": true
+      },
+      "tier": "low",
+      "observation": "Clerk is inside; doorway open during return, closed in later tail frames."
+    },
+    {
+      "file": "test-results/final-a/L1-03/captures/high-0000-npc-carry.png",
+      "sha256": "437797546fab60de6d366d4d917e1e05a83631907f30aa92d7ad78236e574ac2",
+      "sample": {
+        "tick": 930,
+        "beat": {
+          "id": "pickup",
+          "start": 928,
+          "until": 1228,
+          "actor": 155,
+          "fx": -37.6184799194336,
+          "fz": -38.1060041809082,
+          "ax": -37.4,
+          "az": -39.875,
+          "mx": -37.674946041560474,
+          "mz": -37.74443379503185
+        },
+        "carrying": false,
+        "delivered": false,
+        "phase": "morning",
+        "actor": 155,
+        "entity": {
+          "hidden": true,
+          "at": {
+            "x": -37.4,
+            "z": -39.82159936716754,
+            "y": 1.03,
+            "yaw": -1.5707963267948966
+          },
+          "story": {
+            "clip": "npc-carry",
+            "start": 929,
+            "prop": "parcel"
+          }
+        },
+        "drawn": false,
+        "player": {
+          "x": -37.83695983886719,
+          "y": 0.7049999833106995,
+          "z": -36.707008361816406,
+          "yaw": 1.5242178746765045
+        },
+        "doors": [
+          "l1-depot-clerk"
+        ],
+        "done": false
+      },
+      "tier": "high",
+      "observation": "Clerk emerges through the open doorway carrying box."
+    },
+    {
+      "file": "test-results/final-a/L1-03/captures/high-0060-npc-carry.png",
+      "sha256": "9b06f1390132fc3b435fc1021b83b397b2c8dfeca5a22057e415487dbf8d44df",
+      "sample": {
+        "tick": 990,
+        "beat": {
+          "id": "pickup",
+          "start": 928,
+          "until": 1228,
+          "actor": 155,
+          "fx": -37.6184799194336,
+          "fz": -38.1060041809082,
+          "ax": -37.4,
+          "az": -39.875,
+          "mx": -37.674946041560474,
+          "mz": -37.74443379503185
+        },
+        "carrying": false,
+        "delivered": false,
+        "phase": "morning",
+        "actor": 155,
+        "entity": {
+          "hidden": false,
+          "at": {
+            "x": -37.4,
+            "z": -38.21958038219376,
+            "y": 0.97,
+            "yaw": -1.5707963267948966
+          },
+          "story": {
+            "clip": "npc-carry",
+            "start": 929,
+            "prop": "parcel"
+          }
+        },
+        "drawn": false,
+        "player": {
+          "x": -37.83695983886719,
+          "y": 0.7049999833106995,
+          "z": -36.707008361816406,
+          "yaw": 1.5242178746765045
+        },
+        "doors": [
+          "l1-depot-clerk"
+        ],
+        "done": false
+      },
+      "tier": "high",
+      "observation": "Clerk emerges through the open doorway carrying box."
+    },
+    {
+      "file": "test-results/final-a/L1-03/captures/high-0082-npc-give.png",
+      "sha256": "21342e1fc33e784afbe830b2815e97d36b2d8efb8c04e8ada31854ab721a51f2",
+      "sample": {
+        "tick": 1012,
+        "beat": {
+          "id": "pickup",
+          "start": 928,
+          "until": 1228,
+          "actor": 155,
+          "fx": -37.6184799194336,
+          "fz": -38.1060041809082,
+          "ax": -37.4,
+          "az": -39.875,
+          "mx": -37.674946041560474,
+          "mz": -37.74443379503185
+        },
+        "carrying": false,
+        "delivered": false,
+        "phase": "morning",
+        "actor": 155,
+        "entity": {
+          "hidden": false,
+          "at": {
+            "x": -37.674946041560474,
+            "z": -37.74443379503185,
+            "y": 0.7,
+            "yaw": -1.725714096791561
+          },
+          "story": {
+            "clip": "npc-give",
+            "start": 1012,
+            "prop": "parcel"
+          }
+        },
+        "drawn": false,
+        "player": {
+          "x": -37.83695983886719,
+          "y": 0.7049999833106995,
+          "z": -36.707008361816406,
+          "yaw": 1.5242178746765045
+        },
+        "doors": [
+          "l1-depot-clerk"
+        ],
+        "done": false
+      },
+      "tier": "high",
+      "observation": "Clerk extends box toward courier; parcel handoff visible."
+    },
+    {
+      "file": "test-results/final-a/L1-03/captures/high-0120-npc-give.png",
+      "sha256": "e32de203bc569606506e7e201b479d9a2f26a747560641d1f551235a6ac7457a",
+      "sample": {
+        "tick": 1050,
+        "beat": {
+          "id": "pickup",
+          "start": 928,
+          "until": 1228,
+          "actor": 155,
+          "fx": -37.6184799194336,
+          "fz": -38.1060041809082,
+          "ax": -37.4,
+          "az": -39.875,
+          "mx": -37.674946041560474,
+          "mz": -37.74443379503185
+        },
+        "carrying": true,
+        "delivered": false,
+        "phase": "morning",
+        "actor": 155,
+        "entity": {
+          "hidden": false,
+          "at": {
+            "x": -37.674946041560474,
+            "z": -37.74443379503185,
+            "y": 0.7,
+            "yaw": -1.725714096791561
+          },
+          "story": {
+            "clip": "npc-give",
+            "start": 1038
+          }
+        },
+        "drawn": false,
+        "player": {
+          "x": -37.83695983886719,
+          "y": 0.7049999833106995,
+          "z": -36.707008361816406,
+          "yaw": 1.5242178746765045
+        },
+        "doors": [
+          "l1-depot-clerk"
+        ],
+        "done": false
+      },
+      "tier": "high",
+      "observation": "Clerk extends box toward courier; parcel handoff visible."
+    },
+    {
+      "file": "test-results/final-a/L1-03/captures/high-0136-npc-wave.png",
+      "sha256": "21dfccdcbaecc3874c890fd89b8e3db6eabea6e4f76586287a54278975208be8",
+      "sample": {
+        "tick": 1066,
+        "beat": {
+          "id": "pickup",
+          "start": 928,
+          "until": 1228,
+          "actor": 155,
+          "fx": -37.6184799194336,
+          "fz": -38.1060041809082,
+          "ax": -37.4,
+          "az": -39.875,
+          "mx": -37.674946041560474,
+          "mz": -37.74443379503185
+        },
+        "carrying": true,
+        "delivered": false,
+        "phase": "morning",
+        "actor": 155,
+        "entity": {
+          "hidden": false,
+          "at": {
+            "x": -37.674946041560474,
+            "z": -37.74443379503185,
+            "y": 0.7,
+            "yaw": -1.725714096791561
+          },
+          "story": {
+            "clip": "npc-wave",
+            "start": 1066
+          }
+        },
+        "drawn": false,
+        "player": {
+          "x": -37.83695983886719,
+          "y": 0.7049999833106995,
+          "z": -36.707008361816406,
+          "yaw": 1.5242178746765045
+        },
+        "doors": [
+          "l1-depot-clerk"
+        ],
+        "done": false
+      },
+      "tier": "high",
+      "observation": "Clerk remains outside beside courier after handoff."
+    },
+    {
+      "file": "test-results/final-a/L1-03/captures/high-0176-npc-walk.png",
+      "sha256": "cc09329bc71ab3553e40fc6d40404a183eb9186ecf5346b5056fec159a08a803",
+      "sample": {
+        "tick": 1106,
+        "beat": {
+          "id": "pickup",
+          "start": 928,
+          "until": 1228,
+          "actor": 155,
+          "fx": -37.6184799194336,
+          "fz": -38.1060041809082,
+          "ax": -37.4,
+          "az": -39.875,
+          "mx": -37.674946041560474,
+          "mz": -37.74443379503185
+        },
+        "carrying": true,
+        "delivered": false,
+        "phase": "morning",
+        "actor": 155,
+        "entity": {
+          "hidden": false,
+          "at": {
+            "x": -37.674946041560474,
+            "z": -37.74443379503185,
+            "y": 0.7,
+            "yaw": 0.7955149010630392
+          },
+          "story": {
+            "clip": "npc-walk",
+            "start": 1106
+          }
+        },
+        "drawn": false,
+        "player": {
+          "x": -37.83695983886719,
+          "y": 0.7049999833106995,
+          "z": -36.707008361816406,
+          "yaw": 1.5242178746765045
+        },
+        "doors": [
+          "l1-depot-clerk"
+        ],
+        "done": false
+      },
+      "tier": "high",
+      "observation": "Clerk turns/walks back toward depot doorway."
+    },
+    {
+      "file": "test-results/final-a/L1-03/captures/high-0180-npc-walk.png",
+      "sha256": "b4a1aa8a84c9d669ba8716151b8371818e6cdcd9e07500e5c20a2c4b2e4b9b0f",
+      "sample": {
+        "tick": 1110,
+        "beat": {
+          "id": "pickup",
+          "start": 928,
+          "until": 1228,
+          "actor": 155,
+          "fx": -37.6184799194336,
+          "fz": -38.1060041809082,
+          "ax": -37.4,
+          "az": -39.875,
+          "mx": -37.674946041560474,
+          "mz": -37.74443379503185
+        },
+        "carrying": true,
+        "delivered": false,
+        "phase": "morning",
+        "actor": 155,
+        "entity": {
+          "hidden": false,
+          "at": {
+            "x": -37.60019400898235,
+            "z": -37.82071383156217,
+            "y": 0.7,
+            "yaw": 0.7955149010630392
+          },
+          "story": {
+            "clip": "npc-walk",
+            "start": 1106
+          }
+        },
+        "drawn": false,
+        "player": {
+          "x": -37.83695983886719,
+          "y": 0.7049999833106995,
+          "z": -36.707008361816406,
+          "yaw": 1.5242178746765045
+        },
+        "doors": [
+          "l1-depot-clerk"
+        ],
+        "done": false
+      },
+      "tier": "high",
+      "observation": "Clerk turns/walks back toward depot doorway."
+    },
+    {
+      "file": "test-results/final-a/L1-03/captures/high-0240-npc-walk.png",
+      "sha256": "95fa507c90d77697584e13e1ff851000258224c687d8d9f7a215256d2b9ce7ff",
+      "sample": {
+        "tick": 1170,
+        "beat": {
+          "id": "pickup",
+          "start": 928,
+          "until": 1228,
+          "actor": 155,
+          "fx": -37.6184799194336,
+          "fz": -38.1060041809082,
+          "ax": -37.4,
+          "az": -39.875,
+          "mx": -37.674946041560474,
+          "mz": -37.74443379503185
+        },
+        "carrying": true,
+        "delivered": false,
+        "phase": "morning",
+        "actor": 155,
+        "entity": {
+          "hidden": false,
+          "at": {
+            "x": -37.4,
+            "z": -39.340993671675406,
+            "y": 0.97,
+            "yaw": 1.5707963267948966
+          },
+          "story": {
+            "clip": "npc-walk",
+            "start": 1106
+          }
+        },
+        "drawn": false,
+        "player": {
+          "x": -37.83695983886719,
+          "y": 0.7049999833106995,
+          "z": -37.00700759887695,
+          "yaw": -1.5707963267948966
+        },
+        "doors": [
+          "l1-depot-clerk"
+        ],
+        "done": false
+      },
+      "tier": "high",
+      "observation": "Clerk turns/walks back toward depot doorway."
+    },
+    {
+      "file": "test-results/final-a/L1-03/captures/high-0260-none.png",
+      "sha256": "d7f37cbfe78e47cfb13ea825181adbe213ed57aef8f9c2c10c1447ef236ebab0",
+      "sample": {
+        "tick": 1190,
+        "beat": null,
+        "carrying": true,
+        "delivered": false,
+        "phase": "morning",
+        "actor": 0,
+        "drawn": false,
+        "player": {
+          "x": -37.83695983886719,
+          "y": 0.7049999833106995,
+          "z": -37.00700759887695,
+          "yaw": -1.5707963267948966
+        },
+        "doors": [],
+        "done": true
+      },
+      "tier": "high",
+      "observation": "Clerk is inside; doorway open during return, closed in later tail frames."
+    },
+    {
+      "file": "test-results/final-a/L1-03/captures/high-0300-none.png",
+      "sha256": "36ba0942616e0beefa5d2499cb261bada8d6bee400d25fc66e1d5db02ca68c05",
+      "sample": {
+        "tick": 1230,
+        "beat": null,
+        "carrying": true,
+        "delivered": false,
+        "phase": "morning",
+        "actor": 0,
+        "drawn": false,
+        "player": {
+          "x": -37.83695983886719,
+          "y": 0.7049999833106995,
+          "z": -37.00700759887695,
+          "yaw": -1.5707963267948966
+        },
+        "doors": [],
+        "done": true
+      },
+      "tier": "high",
+      "observation": "Clerk is inside; doorway open during return, closed in later tail frames."
+    },
+    {
+      "file": "test-results/final-a/L1-03/captures/high-0320-none.png",
+      "sha256": "f58f2e9f8da127b059948a41ff42631e0006c28984fb6498dd086f798697aa97",
+      "sample": {
+        "tick": 1250,
+        "beat": null,
+        "carrying": true,
+        "delivered": false,
+        "phase": "morning",
+        "actor": 0,
+        "drawn": false,
+        "player": {
+          "x": -37.83695983886719,
+          "y": 0.7049999833106995,
+          "z": -37.00700759887695,
+          "yaw": -1.5707963267948966
+        },
+        "doors": [],
+        "done": true
+      },
+      "tier": "high",
+      "observation": "Clerk is inside; doorway open during return, closed in later tail frames."
+    }
+  ]
+}
