@@ -1,0 +1,37 @@
+import{measureCourierShare}from'../../scenelab/run.ts';
+/** Scoped G-19/G-26 production SceneLab fixtures; hashes for every saved image. */
+import{mkdirSync,readFileSync,writeFileSync}from'node:fs';import{createHash}from'node:crypto';import{Matrix4,Vector3,Triangle}from'three';import{SceneSession,readSpec,stopServer}from'../../scenelab/session.ts';import{provenance}from'./probe.ts';
+const row='G-19';if(!['G-19','G-26'].includes(row))throw Error('Expected G-19|G-26');
+const cases=row==='G-19'?[['tests/scenes/catalog/collision-placement-l1-shutter.json',[0,12,36]],['tests/scenes/catalog/collision-placement-corgi-fence.json',[0,60,120]],['tests/scenes/catalog/collision-placement-corgi-wreck.json',[0,60,120]],['tests/scenes/l8-apc/companion.json',[0,61,120,160,220,320]],['tests/scenes/catalog/collision-placement-l5-metro.json',[0,120,360,600]]]:[['specs/scenes/catalog/ped-sit-all.json',[300]],['specs/scenes/catalog/ped-newchars-sit.json',[300]],['specs/scenes/catalog/ped-water-flowerbed.json',[420]],['specs/scenes/catalog/ped-zoo-staff.json',[60]],['tests/scenes/catalog/ped-grip-coffee-standing.json',[60]]];
+const out=process.env.SWEEP_G_CAPTURE_OUT??`test-results/sweep-g/${row}-scenes`;mkdirSync(out,{recursive:true});const result={...provenance(),row,method:'Existing authored production SceneLab cases, no actor/geometry/grip/balance edits. Read-only renderer and geometry evidence. Explicit fixture setup and scripted scene inputs; no campaign route or performance claim.',cells:[],critical:[],errors:[]};
+function gripGap(c){const matrix=new Matrix4().fromArray(c.matrix),p=c.positions,index=c.index,triangles=[];for(let t=0;t<(index?.length??p.length/3);t+=3){const tri=new Triangle();for(const [k,v]of [[0,tri.a],[1,tri.b],[2,tri.c]])v.fromArray(p,(index?index[t+k]:t+k)*3).applyMatrix4(matrix);triangles.push(tri);}let gap=Infinity,nearest=null;const point=new Vector3(),near=new Vector3(),center=new Vector3();for(let i=0;i<c.hand.length;i+=3){point.fromArray(c.hand,i);center.add(point);for(const tri of triangles){tri.closestPointToPoint(point,near);const d=point.distanceTo(near);if(d<gap){gap=d;nearest=[point.toArray(),near.toArray()];}}}return{prop:c.prop,entity:c.entity,gapM:gap,nearest,handVertices:c.hand.length/3,propTriangles:triangles.length,handCenter:center.divideScalar(c.hand.length/3).toArray()};}
+try{for(const tier of [process.argv[2]??'low']){
+ const s=new SceneSession({backend:'webgl2',tier});try{await s.open();
+ for(const [file,frames]of cases){const spec=readSpec(file);try{await s.load(spec);let at=0;
+  for(const frame of frames){await s.step(frame-at);at=frame;await s.ready();const cell={tier,case:spec.name,frame,captures:[]};
+   if(row==='G-19')for(const zoom of [.5,1.5]){await s.page.evaluate(z=>window.__SS__.camera.zoom(z),zoom);const path=`${out}/${tier}-${spec.name}-f${frame}-z${zoom}.png`;await s.screenshot(path);cell.captures.push({file:path,zoom,sha256:createHash('sha256').update(readFileSync(path)).digest('hex')});}
+   else{const path=`${out}/${tier}-${spec.name}-scene.png`;await s.screenshot(path);cell.captures.push({file:path,sha256:createHash('sha256').update(readFileSync(path)).digest('hex')});const contacts=await s.page.evaluate(()=>window.__SCENE__.game.view.labProbes().heldProps.map(c=>({prop:c.prop,entity:c.entity,matrix:c.matrix.toArray(),hand:Array.from(c.hand),positions:Array.from(c.geometry.getAttribute('position').array),index:c.geometry.index?Array.from(c.geometry.index.array):null})));cell.grips=contacts.map(gripGap);
+    for(const [i,grip]of cell.grips.entries()){if(!grip.handVertices)continue;await s.page.evaluate(p=>window.__SCENE__.setCamera({mode:'pose',target:p,position:[p[0]+1.4,p[1]+.6,p[2]+1.4]}),grip.handCenter);const path=`${out}/${tier}-${spec.name}-grip${i}-${grip.prop}.png`;await s.screenshot(path);cell.captures.push({file:path,entity:grip.entity,prop:grip.prop,sha256:createHash('sha256').update(readFileSync(path)).digest('hex')});}
+   }
+   cell.observation=await s.page.evaluate(()=>{const g=window.__SCENE__.game,w=g.world,render=g.view.getState();return{tick:w.tick,quality:g.quality.snapshot().tier,backend:render.backend,healthBars:render.healthBars,accessories:render.accessories,corgis:[...w.entities.iterate()].filter(e=>e.companion).map(e=>({id:e.id,hp:e.health.current,maxHp:e.health.max,hidden:!!e.hidden,passengerOf:e.passengerOf??null,at:{...e.transform}})),gates:w.missions?{values:{...w.missions.state.gates},shutter:w.missions.def.gates['fire-shutter']?w.missions.def.anchors[w.missions.def.gates['fire-shutter'].anchor]:null,inside:w.missions.def.anchors['fire-bay-trigger'],player:{...w.entities.get(1).transform}}:null};});
+   const metrics=await s.metrics();cell.metrics={actors:metrics.actors,collision:metrics.collision,bodies:metrics.bodies,doors:metrics.doors,shutter:metrics.shutter,log:metrics.log};result.cells.push(cell);console.log(row,tier,spec.name,frame);
+  }
+ }catch(error){result.errors.push({tier,case:spec.name,error:String(error)});}}
+ await critical(s,tier);result.errors.push(...s.errors);
+ }finally{await s.close();}
+}}finally{stopServer();writeFileSync(process.env.SWEEP_G_RECEIPT_OUT??`docs/reports/sweep-g/${row}-scenes.json`,JSON.stringify(result,null,2)+'\n');}
+
+async function critical(s,tier){
+ for(const [level,at,label]of [['L2',{x:-70.5,z:36.7},'fire-engine'],['L7',{x:286.8,z:15},'east-perimeter'],['L8',{x:105.9,z:-1},'canopy']]){
+  await s.page.evaluate(async({level,at,tier})=>{const a=window.__SS__;await a.loadLevel(level,{seed:1,progression:level+'-default'});a.settings.set({quality:tier});a.missions.begin();a.pause();a.cheats.god(true);a.teleport(1,at);const g=window.__SCENE__.game;g.inspect?.enable(false);g.ui.show(null);g.view.settings({cameraShake:false,cheapDof:false});g.view.view.reset(g.world.entities.get(1).transform);}, {level,at,tier});
+  const before=await s.page.evaluate(()=>({...window.__SCENE__.game.world.entities.get(1).transform}));
+  await s.page.keyboard.down('KeyD');await s.page.evaluate(()=>window.__SS__.step(12));await s.page.keyboard.up('KeyD');
+  const after=await s.page.evaluate(()=>({...window.__SCENE__.game.world.entities.get(1).transform}));
+  for(const zoom of [.5,1.5]){
+   await s.page.evaluate(async z=>{window.__SS__.camera.follow();window.__SS__.camera.zoom(z);await window.__SS__.screenshotReady()},zoom);
+   const visibility=await measureCourierShare(s),file=`${out}/${tier}-${level}-${label}-z${zoom}.png`;await s.screenshot(file);
+   const state=await s.page.evaluate(()=>{const g=window.__SCENE__.game;return{quality:g.quality.snapshot().tier,backend:g.view.getState().backend,player:{...g.world.entities.get(1).transform},camera:g.view.view.getState(),placeholders:g.view.getState().placeholderDraws}});
+   result.critical.push({level,tier,label,setup:at,physicalInput:{key:'KeyD',ticks:12,before,after},requestedZoom:zoom,visibility,file,sha256:createHash('sha256').update(readFileSync(file)).digest('hex'),state});
+  }
+ }
+}

@@ -1,0 +1,43 @@
+{
+  "row": "G-07",
+  "status": "PASS",
+  "reviewer": "final-g/Codex",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "clauses": [
+    {
+      "clause": "Player remains visible through camera-side fences, walls, hordes and corpses by cut/dither/silhouette.",
+      "verdict": "PASS",
+      "note": "Both actual low/high quality, fire engine/wall/canopy at actual zoom0.5/1.5:12 focused views after physical KeyD12ticks. Courier-only mask retains ≥0.9305556 share and ≥1047visible pixels; zero fully hidden cases. Reviewed L1–L6 ordinary physical route frames also show courier foreground silhouette through fences, walls, shield crowds and corpse piles. L2 amber silhouette counts as visible; transport ride hiding is scripted interior presentation. Later-level route observations are retained in the final campaign manifests. No rule weakened to demand a large unoccluded body."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/final-g/G-19-G-07-reviewed.json",
+      "sha256": "550a7b8d91e2a0a43c36860f8d5cd1302655a88666c1ee2bc5336025a72c26d2",
+      "what": "Both actual low/high quality, fire engine/wall/canopy at actual zoom0.5/1.5:12 focused views after physical KeyD12ticks. Courier-only mask retains ≥0.9305556 share and ≥1047visible pixels; zero fully hidden cases. Reviewed L1–L6 ordinary physical route frames also show courier foreground silhouette through fences, walls, shield crowds and corpse piles. L2 amber silhouette counts as visible; transport ride hiding is scripted interior presentation. Later-level route observations are retained in the final campaign manifests. No rule weakened to demand a large unoccluded body."
+    },
+    {
+      "file": "docs/reports/final-g/G-19-low-scenes.json",
+      "sha256": "f52db73870cb8422e720c0453e3fdf3efa5853859dfdefa68933956251576231",
+      "what": "Both actual low/high quality, fire engine/wall/canopy at actual zoom0.5/1.5:12 focused views after physical KeyD12ticks. Courier-only mask retains ≥0.9305556 share and ≥1047visible pixels; zero fully hidden cases. Reviewed L1–L6 ordinary physical route frames also show courier foreground silhouette through fences, walls, shield crowds and corpse piles. L2 amber silhouette counts as visible; transport ride hiding is scripted interior presentation. Later-level route observations are retained in the final campaign manifests. No rule weakened to demand a large unoccluded body."
+    },
+    {
+      "file": "docs/reports/final-g/G-19-high-scenes.json",
+      "sha256": "71c9a5e023d86fb4bc8713238f402a4ee57d9b892b4d8e344757a6aa2deb5e07",
+      "what": "Both actual low/high quality, fire engine/wall/canopy at actual zoom0.5/1.5:12 focused views after physical KeyD12ticks. Courier-only mask retains ≥0.9305556 share and ≥1047visible pixels; zero fully hidden cases. Reviewed L1–L6 ordinary physical route frames also show courier foreground silhouette through fences, walls, shield crowds and corpse piles. L2 amber silhouette counts as visible; transport ride hiding is scripted interior presentation. Later-level route observations are retained in the final campaign manifests. No rule weakened to demand a large unoccluded body."
+    },
+    {
+      "file": "docs/reports/final-g/L4-low-captures.json",
+      "sha256": "f53cfd602ed787274fcd81468facfabbe615a119d4cf52d068490a0cbd5438e4",
+      "what": "Both actual low/high quality, fire engine/wall/canopy at actual zoom0.5/1.5:12 focused views after physical KeyD12ticks. Courier-only mask retains ≥0.9305556 share and ≥1047visible pixels; zero fully hidden cases. Reviewed L1–L6 ordinary physical route frames also show courier foreground silhouette through fences, walls, shield crowds and corpse piles. L2 amber silhouette counts as visible; transport ride hiding is scripted interior presentation. Later-level route observations are retained in the final campaign manifests. No rule weakened to demand a large unoccluded body."
+    },
+    {
+      "file": "docs/reports/final-g/L4-high-captures.json",
+      "sha256": "11a456a17872b0dd20e998d51b7fb6b4641215f4f9cb72020c6e3951da0663b5",
+      "what": "Both actual low/high quality, fire engine/wall/canopy at actual zoom0.5/1.5:12 focused views after physical KeyD12ticks. Courier-only mask retains ≥0.9305556 share and ≥1047visible pixels; zero fully hidden cases. Reviewed L1–L6 ordinary physical route frames also show courier foreground silhouette through fences, walls, shield crowds and corpse piles. L2 amber silhouette counts as visible; transport ride hiding is scripted interior presentation. Later-level route observations are retained in the final campaign manifests. No rule weakened to demand a large unoccluded body."
+    }
+  ],
+  "notes": "The silhouette mechanism is directly measured and visibly reviewed. Pose-camera duplicate zoom requests and rejected APC fixture are excluded from additional coverage claims.",
+  "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186"
+}
