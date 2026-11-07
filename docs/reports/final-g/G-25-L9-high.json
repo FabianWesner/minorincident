@@ -1,0 +1,115 @@
+{
+  "version": 1,
+  "level": "L9",
+  "tier": "high",
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "fixtureHash": "3a1aa6ffd344dc12e40e887d5787eccb7b7f2da10d19445898a88e94befd6f3f",
+  "browserHash": "3a1aa6ffd344dc12e40e887d5787eccb7b7f2da10d19445898a88e94befd6f3f",
+  "checks": [
+    {
+      "id": "G-25",
+      "clause": "physical WASD/mouse full-level browser console",
+      "tier": "high",
+      "policy": "real-input-webgl2",
+      "status": "NOT CHECKED",
+      "value": {
+        "backend": "webgl2",
+        "zoom": 1.5,
+        "completed": false,
+        "skipped": [],
+        "consoleErrors": [],
+        "immortal": true,
+        "frameTiming": false
+      },
+      "target": "complete ordinary-input route; zero console/page errors; no objective skips",
+      "receipt": "docs/reports/final-g/G-25-L9-high.json"
+    }
+  ],
+  "errors": [],
+  "run": [
+    {
+      "level": "L9",
+      "entry": "debug",
+      "heroine": "female",
+      "finished": false,
+      "skipped": [],
+      "wallSeconds": 361,
+      "simSeconds": 331,
+      "maxNoProgressSeconds": 69.78333333333333,
+      "deaths": 0,
+      "assists": 1,
+      "attacks": {},
+      "weaponsStart": [
+        "weapon.bat",
+        "weapon.fire-axe",
+        "weapon.rocket-launcher",
+        "weapon.army-mg",
+        "weapon.shotgun",
+        "weapon.handgun"
+      ],
+      "weaponsEnd": [
+        "weapon.bat",
+        "weapon.fire-axe",
+        "weapon.rocket-launcher",
+        "weapon.army-mg",
+        "weapon.shotgun",
+        "weapon.handgun"
+      ],
+      "steps": [
+        {
+          "id": "approach",
+          "text": "Drive toward the city · 1020 m",
+          "tick": 6,
+          "marker": {
+            "anchor": "crash-approach",
+            "ring": {
+              "x": 470,
+              "y": 0,
+              "z": 0
+            },
+            "drawn": [
+              470,
+              0,
+              0
+            ],
+            "playerY": 1.0238580703735352,
+            "pinVisible": true
+          }
+        }
+      ]
+    }
+  ],
+  "issues": [
+    {
+      "level": "L9",
+      "tick": 5122,
+      "x": -91.7,
+      "z": -325.5,
+      "severity": "P2",
+      "kind": "stuck-navigating",
+      "text": "20 s without objective progress (distance 649.0 m, no marker: false); HUD: \"Drive toward the city · 649 m\"",
+      "captures": [
+        "captures/accept-L9-5122-stuck-navigating.jpg"
+      ],
+      "step": "approach",
+      "objective": "Drive toward the city · 649 m"
+    },
+    {
+      "level": "L9",
+      "tick": 19804,
+      "x": 4.3,
+      "z": -362.7,
+      "severity": "P0",
+      "kind": "cannot-finish",
+      "text": "Driver could not finish step approach (\"Drive toward the city · 590 m\") after 70 s on it (6 min level cap: true); stopping without advancing the objective",
+      "captures": [
+        "captures/accept-L9-19804-cannot-finish.jpg"
+      ],
+      "step": "approach",
+      "objective": "Drive toward the city · 590 m"
+    }
+  ],
+  "frameTiming": false,
+  "backend": "webgl2",
+  "zoom": 1.5
+}

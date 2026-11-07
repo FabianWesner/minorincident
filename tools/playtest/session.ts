@@ -125,9 +125,9 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
           return e ? { text: e.textContent, visible: !e.hidden && e.getClientRects().length > 0 && getComputedStyle(e).visibility !== 'hidden', style: e.getAttribute('style') } : null;
         };
         const objective = { markerId: mission?.state.marker, authoredAnchors: mission?.def.anchors,
-          activeSteps: mission?.def.steps.filter(s => mission.state.steps[s.id].status === 'active').map(s => ({ id: s.id, anchor: s.anchor })),
+          activeSteps: mission?.def.steps.filter(s => mission.state.steps[s.id].status === 'active').map(s => ({ id: s.id, anchor: s.anchor, started: mission.state.steps[s.id].started })),
           marker: marker && { visible: marker.visible, position: marker.getWorldPosition(marker.position.clone()).toArray(), children: marker.children.map(c => ({ visible: c.visible, position: c.getWorldPosition(c.position.clone()).toArray() })) },
-          tracker: hud('mission-tracker'), minimap: hud('minimap-objective'), route: hud('minimap-route') };
+          tracker: hud('mission-tracker'), pin: hud('mission-marker'), minimap: hud('minimap-objective'), route: hud('minimap-route') };
         const companions = [...g.world.entities.iterate()].filter(e => !!e.companion).map(e => ({ id: e.id, archetype: e.archetype, health: { ...e.health }, hidden: !!e.hidden, passengerOf: e.passengerOf, state: e.companion?.state, transform: { ...e.transform } }));
         const vehicles = [...(g.world.vehicles?.cars.values() ?? [])].filter(c => c.entity.id === g.world.vehicles?.active || c.entity.vehicle?.driver != null || (c.entity.vehicle?.attached.length ?? 0) > 0 || (c.entity.vehicle?.passengers?.length ?? 0) > 0).map(c => ({ id: c.entity.id, archetype: c.entity.archetype, transform: { ...c.entity.transform }, vehicle: c.entity.vehicle }));
         return { tick: g.world.tick, objective, companions, vehicles, alarmCue, paused: g.clock.paused, backend: render.backend, quality: render.quality, healthBars: render.healthBars, bodies, player: { x: p.x, y: p.y, z: p.z }, camera: g.view.view.getState(), audit: g.view.districts?.seeThroughAudit(), courierForeground: g.view.courierForeground };
@@ -236,8 +236,9 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     if (process.env.PLAYTEST_ACCEPTANCE_CAPTURES === '1' && eyes.level && eyes.phase === 'playing' && !eyes.loading && !eyes.menu && eyes.player) {
       const key = `${eyes.level}-${eyes.step}`;
       if (!acceptanceStarts.has(eyes.level)) acceptanceStarts.set(eyes.level, eyes.tick);
-      // Observe the first ten seconds before photo settings can warm a variant.
-      if (eyes.tick - acceptanceStarts.get(eyes.level)! >= 600 && (!acceptanceCaptured.has(key) || eyes.tick - acceptanceTick >= 60 * 60)) {
+      // Timing runs preserve their cold interval. Functional runs also measure
+      // the first step's two-second marker deadline instead of waiting ten seconds.
+      if ((noFrameTiming || eyes.tick - acceptanceStarts.get(eyes.level)! >= 600) && (!acceptanceCaptured.has(key) || eyes.tick - acceptanceTick >= 60 * 60)) {
         acceptanceCaptured.add(key); acceptanceTick = eyes.tick;
         await press([]); await releaseAim();
         await page.evaluate(() => window.__SS__!.pause());
@@ -245,7 +246,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
           const tiers = process.env.PLAYTEST_ACCEPTANCE_CAPTURE_TIERS === 'single' ? [o.quality] : ['low', 'high'] as const;
           for (const quality of tiers) {
             await page.evaluate(q => window.__SS__!.settings.set({ quality: q }), quality);
-            for (const zoom of [1.5, .5]) {
+            for (const zoom of noFrameTiming ? [1.5, 1, .5] : [1.5, .5]) {
               await page.evaluate(async z => { window.__SS__!.camera.zoom(z); await window.__SS__!.screenshotReady(); }, zoom);
               const file = await capture(`${key}-t${eyes.tick}-${quality}-z${zoom}`);
               const presentation = await photoPresentation();

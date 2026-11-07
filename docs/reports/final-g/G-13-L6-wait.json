@@ -1,0 +1,78 @@
+{
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+  "revision": "3b093cedd61a59241b76cf99671d18770ba2c824",
+  "method": "Canonical complete driver. Read-only applyInput/update wrappers preserve every input and world update. Human following roster only; wait requires an empty movement/attack/interact frame, resolved player speed<=0.2m/s, and a live follower>10m. Story locks and nonplaying phases excluded. Canonical final state comparison.",
+  "rows": [
+    {
+      "tier": "low",
+      "completed": true,
+      "escortTicks": 16082,
+      "waitTicks": 39,
+      "soleWaitTicks": 0,
+      "waitPercent": 0.2425071508518841,
+      "soleWaitPercent": 0,
+      "spans": [
+        {
+          "start": 4554,
+          "end": 4592,
+          "phase": "retreat",
+          "far": [
+            16,
+            17,
+            20,
+            23,
+            24,
+            27,
+            30,
+            32,
+            33,
+            35,
+            38,
+            42,
+            43,
+            44
+          ]
+        }
+      ],
+      "hash": "8e0aeea0",
+      "controlHash": "8e0aeea0",
+      "identical": true
+    },
+    {
+      "tier": "high",
+      "completed": true,
+      "escortTicks": 16082,
+      "waitTicks": 39,
+      "soleWaitTicks": 0,
+      "waitPercent": 0.2425071508518841,
+      "soleWaitPercent": 0,
+      "spans": [
+        {
+          "start": 4554,
+          "end": 4592,
+          "phase": "retreat",
+          "far": [
+            16,
+            17,
+            20,
+            23,
+            24,
+            27,
+            30,
+            32,
+            33,
+            35,
+            38,
+            42,
+            43,
+            44
+          ]
+        }
+      ],
+      "hash": "7d2bd834",
+      "controlHash": "7d2bd834",
+      "identical": true
+    }
+  ]
+}

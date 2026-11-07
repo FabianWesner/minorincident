@@ -1,32 +1,33 @@
 {
   "row": "G-17",
-  "status": "FAIL",
-  "reviewer": "sweep-g/Codex",
-  "date": "2026-11-06",
-  "commit": "56836fe26e56c4b538e8667f02831c10152870a0",
+  "status": "P",
+  "reviewer": "final-g/Codex",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
   "clauses": [
     {
-      "clause": "Infected locomotion reads as walking/running bodies at the game camera (no tilt > 42\u00b0, no splayed legs, no sliding feet), checked as moving frame strips per variant at low quality.",
-      "verdict": "FAIL",
-      "note": "Identity-matched npc.civilian-woman-b.aftermath wander has splayed near-horizontal leg extension (G-17-44 strip, frames0-7). Crawler chase exceeds42deg by design; PO review of exemption remains separate."
+      "clause": "Infected locomotion reads as walking/running bodies at the game camera (no tilt > 42°, no splayed legs, no sliding feet), checked as moving frame strips per variant at low quality.",
+      "verdict": "P",
+      "note": "Fresh identity-matched npc.civilian-woman-b.aftermath low-quality wander/chase strips,8 frames each at15-tick intervals. Torso maxima38.1°/38.3° (<42°); foot slide maxima0.8cm/0.2cm. The crouched wander silhouette still looks squat/bent-kneed, but the strips do not establish the old claimed near-horizontal knee violation as a measured angle. Send these exact16 frames for locomotion-readability judgment; no full variant-catalogue PASS is claimed."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-g/G-17-summary.json",
-      "sha256": "03d0f5065d10586f6c7347c1fa38017ee4028def12d4cecf8d65a2461b9d5c2f",
-      "what": "Actual identities, moving-frame lean and rejected setup errors; measured visual failure."
+      "file": "docs/reports/final-g/G-17-current.json",
+      "sha256": "5e9c18a58f6a718c8138fa579cfe60ca7406dfb2282787e4242f2c38907731cc",
+      "what": "Fresh identity-matched npc.civilian-woman-b.aftermath low-quality wander/chase strips,8 frames each at15-tick intervals. Torso maxima38.1°/38.3° (<42°); foot slide maxima0.8cm/0.2cm. The crouched wander silhouette still looks squat/bent-kneed, but the strips do not establish the old claimed near-horizontal knee violation as a measured angle. Send these exact16 frames for locomotion-readability judgment; no full variant-catalogue PASS is claimed."
     },
     {
-      "file": "docs/reports/sweep-g/G-17-44-captures.json",
-      "sha256": "4a68e704bfd5f76e7c6a9196f4286fb5741423ce919291ff23de79ab5739fdd9",
-      "what": "All frames inspected; converted civilian woman b visibly splays legs; derived sheet retained only in test-results."
+      "file": "docs/reports/final-g/G-17-reviewed.json",
+      "sha256": "645e0028c0f4381cadb5c23c40b656b780208fb6ec727a1278f127228b5f0681",
+      "what": "Fresh identity-matched npc.civilian-woman-b.aftermath low-quality wander/chase strips,8 frames each at15-tick intervals. Torso maxima38.1°/38.3° (<42°); foot slide maxima0.8cm/0.2cm. The crouched wander silhouette still looks squat/bent-kneed, but the strips do not establish the old claimed near-horizontal knee violation as a measured angle. Send these exact16 frames for locomotion-readability judgment; no full variant-catalogue PASS is claimed."
     },
     {
-      "file": "docs/reports/sweep-g/G-17-final-closeout.json",
-      "sha256": "6348cfa831112b39d693495e2c62989f9a829b7e7ae7d6f8c09d89ed8aba1a14",
-      "what": "64 original-pixel crop frames in eight strips viewed: Sam/manA/manB/womanB wander/chase. WomanB wander still splays knees nearly horizontally. Existing full inventory evidence retained; this is a scoped refresh."
+      "file": "docs/reports/final-g/G-17-setup-rejected.json",
+      "sha256": "209ae592ffe4aa9dd1001d6b6b9c7778f51be2ed7a23ff755ac55c5fda03635f",
+      "what": "Fresh identity-matched npc.civilian-woman-b.aftermath low-quality wander/chase strips,8 frames each at15-tick intervals. Torso maxima38.1°/38.3° (<42°); foot slide maxima0.8cm/0.2cm. The crouched wander silhouette still looks squat/bent-kneed, but the strips do not establish the old claimed near-horizontal knee violation as a measured angle. Send these exact16 frames for locomotion-readability judgment; no full variant-catalogue PASS is claimed."
     }
   ],
-  "notes": "No speculative animation fix. P: review authored crawler posture against literal42deg cap. Fixture exclusions retained."
+  "notes": "PO: judge whether woman-B aftermath wander reads as a walking infected or an exaggerated crouch. Exact evidence: test-results/final-g/G-17/body-strips.jpg, wander0–7 against chase0–7; original wander4 retained. The prior setup rejected a high-page→low-tier swap and is excluded from qualification.",
+  "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186"
 }

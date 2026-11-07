@@ -1,0 +1,23 @@
+{
+  "row": "G-16",
+  "status": "PASS",
+  "reviewer": "final-g/Codex",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "clauses": [
+    {
+      "clause": "The weapon rack at level start offers only the weapons the story has given by that level: L1 none (bat in L1), L2 +axe, L3 +handgun, L4 +MG, L5 +shotgun, L6 none new, L7 +rocket, L8 none, L9 driving, L10 axe only.",
+      "verdict": "PASS",
+      "note": "All20 ordinary level/quality starts inspected in current completion receipts. Zero forbidden initial offers; L1 empty; L10 exactly weapon.fire-axe. The maximum story inventory is checked at each level, preserving prior acquired weapons in L6/L8 and the L9 carried inventory."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/final-g/G-16-native.json",
+      "sha256": "eb95608acac61a02c863739dbaa6e19cd78695b7533b7c38e46b69cf4490c3b8",
+      "what": "All20 ordinary level/quality starts inspected in current completion receipts. Zero forbidden initial offers; L1 empty; L10 exactly weapon.fire-axe. The maximum story inventory is checked at each level, preserving prior acquired weapons in L6/L8 and the L9 carried inventory."
+    }
+  ],
+  "notes": "Fresh review of frozen source and current receipt values. Source digest is computed from current relevant file bytes; archived prior evidence is not relabelled.",
+  "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186"
+}

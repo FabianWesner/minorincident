@@ -1,0 +1,2552 @@
+{
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+  "revision": "c0ecfc4d9f1e2699c9f1fe6ecd8d3f7f2a109d63",
+  "row": "G-26",
+  "method": "Existing authored production SceneLab cases, no actor/geometry/grip/balance edits. Read-only renderer and geometry evidence. Explicit fixture setup and scripted scene inputs; no campaign route or performance claim.",
+  "cells": [
+    {
+      "tier": "high",
+      "case": "ped-sit-all",
+      "frame": 300,
+      "captures": [
+        {
+          "file": "test-results/final-g/G-26-high/high-ped-sit-all-scene.png",
+          "sha256": "fac03f54440b063592b40a083704a609de31407965cba8c6ee2035c5083e76d1"
+        },
+        {
+          "file": "test-results/final-g/G-26-high/high-ped-sit-all-grip0-cane.png",
+          "entity": 5,
+          "prop": "cane",
+          "sha256": "371055d57dc4be43fbc427477d49fb777c35688b5f77214f0d90277002659563"
+        }
+      ],
+      "grips": [
+        {
+          "prop": "cane",
+          "entity": 5,
+          "gapM": 0.014310416628015245,
+          "nearest": [
+            [
+              0.3315105438232422,
+              0.8367882966995239,
+              5.5210137367248535
+            ],
+            [
+              0.3318930430428963,
+              0.834849317151291,
+              5.5068404492894745
+            ]
+          ],
+          "handVertices": 535,
+          "propTriangles": 96,
+          "handCenter": [
+            0.3662869453430176,
+            0.8378526451431703,
+            5.558167265063134
+          ]
+        }
+      ],
+      "observation": {
+        "tick": 300,
+        "quality": "high",
+        "backend": "webgl",
+        "healthBars": {
+          "count": 0,
+          "draws": 0,
+          "bars": []
+        },
+        "accessories": [
+          {
+            "id": "acc.hair-afro:lod0",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hair-afro:lod1",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hair-bun:lod0",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hair-bun:lod1",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hair-long-straight:lod1",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hair-long-straight:lod0",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hair-ponytail:lod0",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hair-ponytail:lod1",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hair-short-crop:lod0",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hat-baseball-cap:lod0",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hat-baseball-cap:lod1",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hair-short-crop:lod1",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hair-side-part:lod0",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hair-side-part:lod1",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hat-beanie:lod1",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hat-bucket-hat:lod0",
+            "instances": 1,
+            "draws": 1,
+            "triangles": 144,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hat-bucket-hat:lod1",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hat-beanie:lod0",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hat-flat-cap:lod0",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hat-flat-cap:lod1",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hat-hard-hat:lod1",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hat-sun-hat:lod0",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hat-hard-hat:lod0",
+            "instances": 1,
+            "draws": 1,
+            "triangles": 110,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hat-sun-hat:lod1",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          }
+        ],
+        "corgis": [],
+        "gates": null
+      },
+      "metrics": {
+        "actors": {
+          "s1": {
+            "kind": "pedestrian",
+            "entity": 3,
+            "position": [
+              -0.141,
+              -5.27
+            ],
+            "yawDeg": 86.1,
+            "travelM": 3.387544006841608,
+            "maxX": 2.999793993060108,
+            "heldWeapon": null,
+            "targetId": null,
+            "state": "calm",
+            "health": 100,
+            "drawnFrames": 0,
+            "inViewFrames": 0,
+            "missedInViewFrames": 0,
+            "lod": {},
+            "firstDrawn": null,
+            "farLodCloseFrames": 0,
+            "motion": {
+              "frames": 300,
+              "torsoPitchMinDeg": null,
+              "torsoPitchMaxDeg": null,
+              "contacts": 0,
+              "slideMaxCm": 0,
+              "slideP95Cm": null,
+              "yawDriftMaxDeg": 0,
+              "liftMaxCm": 0,
+              "sinkMaxCm": 0,
+              "jitterRunMax": 0,
+              "worstSlideFrame": null
+            }
+          },
+          "s2": {
+            "kind": "pedestrian",
+            "entity": 4,
+            "position": [
+              -0.097,
+              0.885
+            ],
+            "yawDeg": 87.3,
+            "travelM": 3.291211187139568,
+            "maxX": 2.999810520288031,
+            "heldWeapon": null,
+            "targetId": null,
+            "state": "calm",
+            "health": 100,
+            "drawnFrames": 300,
+            "inViewFrames": 271,
+            "missedInViewFrames": 0,
+            "lod": {
+              "lod0": 300
+            },
+            "firstDrawn": {
+              "frame": 1,
+              "at": [
+                3,
+                2
+              ]
+            },
+            "farLodCloseFrames": 0,
+            "motion": {
+              "frames": 300,
+              "torsoPitchMinDeg": -0.8,
+              "torsoPitchMaxDeg": 8.3,
+              "contacts": 10,
+              "slideMaxCm": 0.3,
+              "slideP95Cm": 0.1,
+              "yawDriftMaxDeg": 0,
+              "liftMaxCm": 10.7,
+              "sinkMaxCm": 0,
+              "jitterRunMax": 0,
+              "worstSlideFrame": 1
+            }
+          },
+          "s3": {
+            "kind": "pedestrian",
+            "entity": 5,
+            "position": [
+              -0.056,
+              4.9
+            ],
+            "yawDeg": 88.5,
+            "travelM": 3.2479677417227504,
+            "maxX": 2.9998438733013675,
+            "heldWeapon": null,
+            "targetId": null,
+            "state": "calm",
+            "health": 100,
+            "drawnFrames": 300,
+            "inViewFrames": 0,
+            "missedInViewFrames": 0,
+            "lod": {
+              "lod0": 300
+            },
+            "firstDrawn": {
+              "frame": 1,
+              "at": [
+                3,
+                6
+              ]
+            },
+            "farLodCloseFrames": 0,
+            "motion": {
+              "frames": 300,
+              "torsoPitchMinDeg": 0,
+              "torsoPitchMaxDeg": 10.4,
+              "contacts": 13,
+              "slideMaxCm": 0.4,
+              "slideP95Cm": 0.3,
+              "yawDriftMaxDeg": 0,
+              "liftMaxCm": 11.1,
+              "sinkMaxCm": 0,
+              "jitterRunMax": 0,
+              "worstSlideFrame": 1
+            }
+          }
+        },
+        "collision": {
+          "failures": 0,
+          "pending": 0,
+          "admitted": 4,
+          "deferred": 0,
+          "requests": [],
+          "offenders": []
+        },
+        "bodies": [],
+        "doors": {},
+        "log": []
+      }
+    },
+    {
+      "tier": "high",
+      "case": "ped-newchars-sit",
+      "frame": 300,
+      "captures": [
+        {
+          "file": "test-results/final-g/G-26-high/high-ped-newchars-sit-scene.png",
+          "sha256": "60f5e22755a3d9f08d5c82d160ad42858d67796121466fe4c0e2e227037ddc37"
+        },
+        {
+          "file": "test-results/final-g/G-26-high/high-ped-newchars-sit-grip0-cane.png",
+          "entity": 3,
+          "prop": "cane",
+          "sha256": "5651566fc217f058abef728b12ecc6a05b9207c1292d747e04ee1c0a04e2964b"
+        }
+      ],
+      "grips": [
+        {
+          "prop": "cane",
+          "entity": 3,
+          "gapM": 0.007737629034811265,
+          "nearest": [
+            [
+              -3.6177899837493896,
+              0.8440408706665039,
+              -0.48227307200431824
+            ],
+            [
+              -3.6193488004354006,
+              0.837820647238434,
+              -0.4866031775601515
+            ]
+          ],
+          "handVertices": 562,
+          "propTriangles": 96,
+          "handCenter": [
+            -3.6407946789391947,
+            0.8262214732764029,
+            -0.44512811536466523
+          ]
+        }
+      ],
+      "observation": {
+        "tick": 300,
+        "quality": "high",
+        "backend": "webgl",
+        "healthBars": {
+          "count": 0,
+          "draws": 0,
+          "bars": []
+        },
+        "accessories": [
+          {
+            "id": "acc.hair-bun:lod1",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hair-afro:lod0",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hair-afro:lod1",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hair-bun:lod0",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hair-long-straight:lod1",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hair-long-straight:lod0",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hair-short-crop:lod0",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hair-ponytail:lod0",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hair-ponytail:lod1",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hair-short-crop:lod1",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hair-side-part:lod1",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hair-side-part:lod0",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hat-baseball-cap:lod1",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hat-beanie:lod0",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hat-baseball-cap:lod0",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hat-beanie:lod1",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hat-bucket-hat:lod1",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hat-bucket-hat:lod0",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hat-flat-cap:lod0",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hat-hard-hat:lod0",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hat-flat-cap:lod1",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hat-hard-hat:lod1",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hat-sun-hat:lod1",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hat-sun-hat:lod0",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          }
+        ],
+        "corgis": [],
+        "gates": null
+      },
+      "metrics": {
+        "actors": {
+          "p0": {
+            "kind": "pedestrian",
+            "entity": 3,
+            "position": [
+              -4.095,
+              -1.167
+            ],
+            "yawDeg": 87.3,
+            "travelM": 3.9494089218582653,
+            "maxX": -3.186307311041963,
+            "heldWeapon": null,
+            "targetId": null,
+            "state": "calm",
+            "health": 100,
+            "drawnFrames": 300,
+            "inViewFrames": 56,
+            "missedInViewFrames": 0,
+            "lod": {
+              "lod0": 300
+            },
+            "firstDrawn": {
+              "frame": 1,
+              "at": [
+                -4,
+                2
+              ]
+            },
+            "farLodCloseFrames": 0,
+            "motion": {
+              "frames": 300,
+              "torsoPitchMinDeg": 0,
+              "torsoPitchMaxDeg": 10.4,
+              "contacts": 0,
+              "slideMaxCm": 0,
+              "slideP95Cm": null,
+              "yawDriftMaxDeg": 0,
+              "liftMaxCm": 32.4,
+              "sinkMaxCm": 0,
+              "jitterRunMax": 0,
+              "worstSlideFrame": null
+            }
+          },
+          "p1": {
+            "kind": "pedestrian",
+            "entity": 4,
+            "position": [
+              -1.605,
+              -1.177
+            ],
+            "yawDeg": 87,
+            "travelM": 3.968303583802337,
+            "maxX": -0.66604420792103,
+            "heldWeapon": null,
+            "targetId": null,
+            "state": "calm",
+            "health": 100,
+            "drawnFrames": 300,
+            "inViewFrames": 262,
+            "missedInViewFrames": 0,
+            "lod": {
+              "lod0": 300
+            },
+            "firstDrawn": {
+              "frame": 1,
+              "at": [
+                -1.5,
+                2
+              ]
+            },
+            "farLodCloseFrames": 0,
+            "motion": {
+              "frames": 300,
+              "torsoPitchMinDeg": -1,
+              "torsoPitchMaxDeg": 10.6,
+              "contacts": 13,
+              "slideMaxCm": 0.4,
+              "slideP95Cm": 0.2,
+              "yawDriftMaxDeg": 0.1,
+              "liftMaxCm": 12.6,
+              "sinkMaxCm": 0,
+              "jitterRunMax": 1,
+              "worstSlideFrame": 1
+            }
+          },
+          "p2": {
+            "kind": "pedestrian",
+            "entity": 5,
+            "position": [
+              2.871,
+              -1.223
+            ],
+            "yawDeg": 177,
+            "travelM": 4.530188275743568,
+            "maxX": 3.995663905977703,
+            "heldWeapon": null,
+            "targetId": null,
+            "state": "calm",
+            "health": 100,
+            "drawnFrames": 300,
+            "inViewFrames": 22,
+            "missedInViewFrames": 0,
+            "lod": {
+              "lod0": 300
+            },
+            "firstDrawn": {
+              "frame": 1,
+              "at": [
+                2.491,
+                2
+              ]
+            },
+            "farLodCloseFrames": 0,
+            "motion": {
+              "frames": 300,
+              "torsoPitchMinDeg": 0,
+              "torsoPitchMaxDeg": 2.1,
+              "contacts": 24,
+              "slideMaxCm": 0.4,
+              "slideP95Cm": 0.2,
+              "yawDriftMaxDeg": 0.1,
+              "liftMaxCm": 12.5,
+              "sinkMaxCm": 0,
+              "jitterRunMax": 2,
+              "worstSlideFrame": 95
+            }
+          },
+          "p3": {
+            "kind": "pedestrian",
+            "entity": 6,
+            "position": [
+              2.158,
+              -1.262
+            ],
+            "yawDeg": 80.7,
+            "travelM": 4.709845591034997,
+            "maxX": 3.851484032962726,
+            "heldWeapon": null,
+            "targetId": null,
+            "state": "calm",
+            "health": 100,
+            "drawnFrames": 300,
+            "inViewFrames": 107,
+            "missedInViewFrames": 0,
+            "lod": {
+              "lod0": 300
+            },
+            "firstDrawn": {
+              "frame": 1,
+              "at": [
+                3.205,
+                2
+              ]
+            },
+            "farLodCloseFrames": 0,
+            "motion": {
+              "frames": 300,
+              "torsoPitchMinDeg": -0.9,
+              "torsoPitchMaxDeg": 10.3,
+              "contacts": 16,
+              "slideMaxCm": 0.2,
+              "slideP95Cm": 0.2,
+              "yawDriftMaxDeg": 0,
+              "liftMaxCm": 16.1,
+              "sinkMaxCm": 0,
+              "jitterRunMax": 2,
+              "worstSlideFrame": 35
+            }
+          }
+        },
+        "collision": {
+          "failures": 0,
+          "pending": 0,
+          "admitted": 5,
+          "deferred": 0,
+          "requests": [],
+          "offenders": []
+        },
+        "bodies": [],
+        "doors": {},
+        "log": []
+      }
+    },
+    {
+      "tier": "high",
+      "case": "ped-water-flowerbed",
+      "frame": 420,
+      "captures": [
+        {
+          "file": "test-results/final-g/G-26-high/high-ped-water-flowerbed-scene.png",
+          "sha256": "cd5302fbff76a5a2741911672030a7378ce242339c071919d840cb214bbfae07"
+        },
+        {
+          "file": "test-results/final-g/G-26-high/high-ped-water-flowerbed-grip0-watering-can.png",
+          "entity": 3,
+          "prop": "watering-can",
+          "sha256": "5517a00460a500f22698c4a6cfb05715f3bff30c6c1b21be7623859c84f59691"
+        }
+      ],
+      "grips": [
+        {
+          "prop": "watering-can",
+          "entity": 3,
+          "gapM": 0.0019573204924472646,
+          "nearest": [
+            [
+              0.2984973192214966,
+              0.7816520929336548,
+              0.5725594758987427
+            ],
+            [
+              0.2986766057569806,
+              0.7798714065085635,
+              0.5717669383893189
+            ]
+          ],
+          "handVertices": 472,
+          "propTriangles": 216,
+          "handCenter": [
+            0.32704495651237037,
+            0.808400763040882,
+            0.5936829883415821
+          ]
+        }
+      ],
+      "observation": {
+        "tick": 420,
+        "quality": "high",
+        "backend": "webgl",
+        "healthBars": {
+          "count": 0,
+          "draws": 0,
+          "bars": []
+        },
+        "accessories": [
+          {
+            "id": "acc.hair-afro:lod1",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hair-afro:lod0",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hair-bun:lod0",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hair-bun:lod1",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hair-long-straight:lod0",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hair-long-straight:lod1",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hair-ponytail:lod0",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hair-short-crop:lod0",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hair-ponytail:lod1",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hair-short-crop:lod1",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hair-side-part:lod0",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hair-side-part:lod1",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hat-baseball-cap:lod0",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hat-baseball-cap:lod1",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hat-beanie:lod0",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hat-beanie:lod1",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hat-bucket-hat:lod0",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hat-bucket-hat:lod1",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hat-flat-cap:lod1",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hat-flat-cap:lod0",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hat-hard-hat:lod0",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hat-hard-hat:lod1",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hat-sun-hat:lod0",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hat-sun-hat:lod1",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          }
+        ],
+        "corgis": [],
+        "gates": null
+      },
+      "metrics": {
+        "actors": {
+          "gardener": {
+            "kind": "pedestrian",
+            "entity": 3,
+            "position": [
+              -0.052,
+              0.83
+            ],
+            "yawDeg": 77.3,
+            "travelM": 4.399991349315928,
+            "maxX": 2.9998575726315306,
+            "heldWeapon": null,
+            "targetId": null,
+            "state": "calm",
+            "health": 100,
+            "drawnFrames": 420,
+            "inViewFrames": 420,
+            "missedInViewFrames": 0,
+            "lod": {
+              "lod0": 420
+            },
+            "firstDrawn": {
+              "frame": 1,
+              "at": [
+                3,
+                4
+              ]
+            },
+            "farLodCloseFrames": 0,
+            "motion": {
+              "frames": 420,
+              "torsoPitchMinDeg": 0,
+              "torsoPitchMaxDeg": 7.3,
+              "contacts": 19,
+              "slideMaxCm": 1.2,
+              "slideP95Cm": 0.5,
+              "yawDriftMaxDeg": 0,
+              "liftMaxCm": 13.5,
+              "sinkMaxCm": 0,
+              "jitterRunMax": 0,
+              "worstSlideFrame": 234
+            }
+          }
+        },
+        "collision": {
+          "failures": 0,
+          "pending": 0,
+          "admitted": 2,
+          "deferred": 0,
+          "requests": [],
+          "offenders": []
+        },
+        "bodies": [],
+        "doors": {},
+        "log": []
+      }
+    },
+    {
+      "tier": "high",
+      "case": "ped-zoo-staff",
+      "frame": 60,
+      "captures": [
+        {
+          "file": "test-results/final-g/G-26-high/high-ped-zoo-staff-scene.png",
+          "sha256": "80a878e1ae90a7f653fc6427d47693b705546a2e741fd50b0ef419ef660201d3"
+        },
+        {
+          "file": "test-results/final-g/G-26-high/high-ped-zoo-staff-grip0-coffee.png",
+          "entity": 3,
+          "prop": "coffee",
+          "sha256": "33e22dc2bca20b5cb2a901c3f4be63fb751c8cccee3d114537e33ec5de0ff45a"
+        },
+        {
+          "file": "test-results/final-g/G-26-high/high-ped-zoo-staff-grip1-phone.png",
+          "entity": 4,
+          "prop": "phone",
+          "sha256": "659416227aa0368252205c734c105f114763155b034361de4aba1cd5b2661a56"
+        },
+        {
+          "file": "test-results/final-g/G-26-high/high-ped-zoo-staff-grip2-watering-can.png",
+          "entity": 8,
+          "prop": "watering-can",
+          "sha256": "2b3a96f1f11d5f5ac292393d3d88e8da3e61f9c4d7d9cfe8a5701190140efb1e"
+        },
+        {
+          "file": "test-results/final-g/G-26-high/high-ped-zoo-staff-grip3-bag.png",
+          "entity": 6,
+          "prop": "bag",
+          "sha256": "cdc4f9786816b99ffe0cc90b1d069d594a45a2f1ac9b4352558068673fb877b8"
+        },
+        {
+          "file": "test-results/final-g/G-26-high/high-ped-zoo-staff-grip4-bag.png",
+          "entity": 7,
+          "prop": "bag",
+          "sha256": "09cdf3fbbca374135a9484900edc5ae690ef068e18dbc15c91760374825547f1"
+        }
+      ],
+      "grips": [
+        {
+          "prop": "coffee",
+          "entity": 3,
+          "gapM": 0.003561246657279346,
+          "nearest": [
+            [
+              -4.695004940032959,
+              0.9084122180938721,
+              0.20530188083648682
+            ],
+            [
+              -4.691714777293526,
+              0.9084122180938721,
+              0.20393905036205934
+            ]
+          ],
+          "handVertices": 217,
+          "propTriangles": 192,
+          "handCenter": [
+            -4.725340355376494,
+            0.9682847964598836,
+            0.1844952670591218
+          ]
+        },
+        {
+          "prop": "phone",
+          "entity": 4,
+          "gapM": 0.0011331145385753416,
+          "nearest": [
+            [
+              -4.692843437194824,
+              0.9196062088012695,
+              2.1253621578216553
+            ],
+            [
+              -4.691710322656249,
+              0.9196062088012695,
+              2.1253621578216553
+            ]
+          ],
+          "handVertices": 210,
+          "propTriangles": 24,
+          "handCenter": [
+            -4.723206733521962,
+            0.9304144893373762,
+            2.155495355242775
+          ]
+        },
+        {
+          "prop": "watering-can",
+          "entity": 8,
+          "gapM": 0.0026311223922148574,
+          "nearest": [
+            [
+              0.12441712617874146,
+              0.6091941595077515,
+              -1.625110387802124
+            ],
+            [
+              0.126847966545452,
+              0.6091941595077515,
+              -1.624103501435951
+            ]
+          ],
+          "handVertices": 559,
+          "propTriangles": 216,
+          "handCenter": [
+            0.08715299992074053,
+            0.6446772449131728,
+            -1.6426324633238354
+          ]
+        },
+        {
+          "prop": "bag",
+          "entity": 6,
+          "gapM": 0.014022636853865678,
+          "nearest": [
+            [
+              0.35576990246772766,
+              0.7689159512519836,
+              0.41685447096824646
+            ],
+            [
+              0.36872512993379003,
+              0.7742821813661304,
+              0.41685447096824646
+            ]
+          ],
+          "handVertices": 521,
+          "propTriangles": 140,
+          "handCenter": [
+            0.3346901663548658,
+            0.7828475794041683,
+            0.3972886831083133
+          ]
+        },
+        {
+          "prop": "bag",
+          "entity": 7,
+          "gapM": 0.0019573071554380623,
+          "nearest": [
+            [
+              0.2967160642147064,
+              0.8150056600570679,
+              2.3230602741241455
+            ],
+            [
+              0.2985243804137431,
+              0.8142566314694755,
+              2.3230602741241455
+            ]
+          ],
+          "handVertices": 472,
+          "propTriangles": 140,
+          "handCenter": [
+            0.2680169766989805,
+            0.8248271596128658,
+            2.3555651150517543
+          ]
+        }
+      ],
+      "observation": {
+        "tick": 60,
+        "quality": "high",
+        "backend": "webgl",
+        "healthBars": {
+          "count": 0,
+          "draws": 0,
+          "bars": []
+        },
+        "accessories": [
+          {
+            "id": "acc.hair-afro:lod0",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hair-afro:lod1",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hair-bun:lod0",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hair-long-straight:lod1",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hair-ponytail:lod0",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hair-bun:lod1",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hair-long-straight:lod0",
+            "instances": 1,
+            "draws": 1,
+            "triangles": 108,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hair-ponytail:lod1",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hair-short-crop:lod1",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hair-short-crop:lod0",
+            "instances": 1,
+            "draws": 1,
+            "triangles": 60,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hair-side-part:lod0",
+            "instances": 1,
+            "draws": 1,
+            "triangles": 72,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hair-side-part:lod1",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hat-baseball-cap:lod1",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hat-baseball-cap:lod0",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hat-beanie:lod0",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hat-beanie:lod1",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hat-bucket-hat:lod0",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hat-bucket-hat:lod1",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hat-flat-cap:lod0",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hat-flat-cap:lod1",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hat-hard-hat:lod0",
+            "instances": 2,
+            "draws": 1,
+            "triangles": 220,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hat-hard-hat:lod1",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hat-sun-hat:lod0",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hat-sun-hat:lod1",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          }
+        ],
+        "corgis": [],
+        "gates": null
+      },
+      "metrics": {
+        "actors": {
+          "visitor-a": {
+            "kind": "pedestrian",
+            "entity": 3,
+            "position": [
+              -5,
+              0
+            ],
+            "yawDeg": 0,
+            "travelM": 0,
+            "maxX": -5,
+            "heldWeapon": null,
+            "targetId": null,
+            "state": "calm",
+            "health": 100,
+            "drawnFrames": 60,
+            "inViewFrames": 60,
+            "missedInViewFrames": 0,
+            "lod": {
+              "lod1": 60
+            },
+            "firstDrawn": {
+              "frame": 1,
+              "at": [
+                -5,
+                0
+              ]
+            },
+            "farLodCloseFrames": 0,
+            "motion": {
+              "frames": 60,
+              "torsoPitchMinDeg": 0.2,
+              "torsoPitchMaxDeg": 10.3,
+              "contacts": 2,
+              "slideMaxCm": 0,
+              "slideP95Cm": 0,
+              "yawDriftMaxDeg": 0,
+              "liftMaxCm": 0,
+              "sinkMaxCm": 0,
+              "jitterRunMax": 0,
+              "worstSlideFrame": 37
+            }
+          },
+          "visitor-b": {
+            "kind": "pedestrian",
+            "entity": 4,
+            "position": [
+              -5,
+              2
+            ],
+            "yawDeg": 0,
+            "travelM": 0,
+            "maxX": -5,
+            "heldWeapon": null,
+            "targetId": null,
+            "state": "calm",
+            "health": 100,
+            "drawnFrames": 60,
+            "inViewFrames": 60,
+            "missedInViewFrames": 0,
+            "lod": {
+              "lod1": 60
+            },
+            "firstDrawn": {
+              "frame": 1,
+              "at": [
+                -5,
+                2
+              ]
+            },
+            "farLodCloseFrames": 0,
+            "motion": {
+              "frames": 60,
+              "torsoPitchMinDeg": 0.2,
+              "torsoPitchMaxDeg": 11.7,
+              "contacts": 2,
+              "slideMaxCm": 0,
+              "slideP95Cm": 0,
+              "yawDriftMaxDeg": 0,
+              "liftMaxCm": 0,
+              "sinkMaxCm": 0,
+              "jitterRunMax": 0,
+              "worstSlideFrame": 37
+            }
+          },
+          "visitor-c": {
+            "kind": "pedestrian",
+            "entity": 5,
+            "position": [
+              -5,
+              -2
+            ],
+            "yawDeg": 0,
+            "travelM": 0,
+            "maxX": -5,
+            "heldWeapon": null,
+            "targetId": null,
+            "state": "calm",
+            "health": 100,
+            "drawnFrames": 60,
+            "inViewFrames": 60,
+            "missedInViewFrames": 0,
+            "lod": {
+              "lod1": 60
+            },
+            "firstDrawn": {
+              "frame": 1,
+              "at": [
+                -5,
+                -2
+              ]
+            },
+            "farLodCloseFrames": 0,
+            "motion": {
+              "frames": 60,
+              "torsoPitchMinDeg": -1.9,
+              "torsoPitchMaxDeg": 7.4,
+              "contacts": 2,
+              "slideMaxCm": 0,
+              "slideP95Cm": 0,
+              "yawDriftMaxDeg": 0,
+              "liftMaxCm": 0,
+              "sinkMaxCm": 0,
+              "jitterRunMax": 0,
+              "worstSlideFrame": 37
+            }
+          },
+          "keeper": {
+            "kind": "pedestrian",
+            "entity": 6,
+            "position": [
+              0,
+              0
+            ],
+            "yawDeg": 0,
+            "travelM": 0,
+            "maxX": 0,
+            "heldWeapon": null,
+            "targetId": null,
+            "state": "calm",
+            "health": 100,
+            "drawnFrames": 60,
+            "inViewFrames": 60,
+            "missedInViewFrames": 0,
+            "lod": {
+              "lod0": 60
+            },
+            "firstDrawn": {
+              "frame": 1,
+              "at": [
+                0,
+                0
+              ]
+            },
+            "farLodCloseFrames": 0,
+            "motion": {
+              "frames": 60,
+              "torsoPitchMinDeg": 0.2,
+              "torsoPitchMaxDeg": 10.3,
+              "contacts": 2,
+              "slideMaxCm": 0,
+              "slideP95Cm": 0,
+              "yawDriftMaxDeg": 0,
+              "liftMaxCm": 0,
+              "sinkMaxCm": 0,
+              "jitterRunMax": 0,
+              "worstSlideFrame": 37
+            }
+          },
+          "vet": {
+            "kind": "pedestrian",
+            "entity": 7,
+            "position": [
+              0,
+              2
+            ],
+            "yawDeg": 0,
+            "travelM": 0,
+            "maxX": 0,
+            "heldWeapon": null,
+            "targetId": null,
+            "state": "calm",
+            "health": 100,
+            "drawnFrames": 60,
+            "inViewFrames": 60,
+            "missedInViewFrames": 0,
+            "lod": {
+              "lod0": 60
+            },
+            "firstDrawn": {
+              "frame": 1,
+              "at": [
+                0,
+                2
+              ]
+            },
+            "farLodCloseFrames": 0,
+            "motion": {
+              "frames": 60,
+              "torsoPitchMinDeg": 0.2,
+              "torsoPitchMaxDeg": 9.7,
+              "contacts": 2,
+              "slideMaxCm": 0,
+              "slideP95Cm": 0,
+              "yawDriftMaxDeg": 0,
+              "liftMaxCm": 0,
+              "sinkMaxCm": 0,
+              "jitterRunMax": 0,
+              "worstSlideFrame": 37
+            }
+          },
+          "grounds": {
+            "kind": "pedestrian",
+            "entity": 8,
+            "position": [
+              0,
+              -2
+            ],
+            "yawDeg": 0,
+            "travelM": 0,
+            "maxX": 0,
+            "heldWeapon": null,
+            "targetId": null,
+            "state": "calm",
+            "health": 100,
+            "drawnFrames": 60,
+            "inViewFrames": 60,
+            "missedInViewFrames": 0,
+            "lod": {
+              "lod0": 60
+            },
+            "firstDrawn": {
+              "frame": 1,
+              "at": [
+                0,
+                -2
+              ]
+            },
+            "farLodCloseFrames": 0,
+            "motion": {
+              "frames": 60,
+              "torsoPitchMinDeg": -2,
+              "torsoPitchMaxDeg": 5.5,
+              "contacts": 2,
+              "slideMaxCm": 0,
+              "slideP95Cm": 0,
+              "yawDriftMaxDeg": 0,
+              "liftMaxCm": 0,
+              "sinkMaxCm": 0,
+              "jitterRunMax": 0,
+              "worstSlideFrame": 37
+            }
+          }
+        },
+        "collision": {
+          "failures": 0,
+          "pending": 0,
+          "admitted": 7,
+          "deferred": 0,
+          "requests": [],
+          "offenders": []
+        },
+        "bodies": [],
+        "doors": {},
+        "log": []
+      }
+    },
+    {
+      "tier": "high",
+      "case": "ped-grip-coffee-standing",
+      "frame": 60,
+      "captures": [
+        {
+          "file": "test-results/final-g/G-26-high/high-ped-grip-coffee-standing-scene.png",
+          "sha256": "38cd8c9f6a3a6c9fd16c57623872db9f238ad9b39a963c89714e165891a1aa99"
+        },
+        {
+          "file": "test-results/final-g/G-26-high/high-ped-grip-coffee-standing-grip0-coffee.png",
+          "entity": 3,
+          "prop": "coffee",
+          "sha256": "dedcd54bd3258f7092747e9333d8997153bee7cdef16c84abdbc670cbfe01634"
+        }
+      ],
+      "grips": [
+        {
+          "prop": "coffee",
+          "entity": 3,
+          "gapM": 0.0010289728974808635,
+          "nearest": [
+            [
+              0.18994195759296417,
+              0.9155346751213074,
+              0.1887810230255127
+            ],
+            [
+              0.1908926046867096,
+              0.9151409044686382,
+              0.1887810230255127
+            ]
+          ],
+          "handVertices": 559,
+          "propTriangles": 192,
+          "handCenter": [
+            0.15583165560404175,
+            0.9054771163809064,
+            0.23008784219915837
+          ]
+        }
+      ],
+      "observation": {
+        "tick": 60,
+        "quality": "high",
+        "backend": "webgl",
+        "healthBars": {
+          "count": 0,
+          "draws": 0,
+          "bars": []
+        },
+        "accessories": [
+          {
+            "id": "acc.hair-long-straight:lod1",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hair-afro:lod0",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hair-afro:lod1",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hair-bun:lod0",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hair-bun:lod1",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hair-ponytail:lod0",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hair-ponytail:lod1",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hair-short-crop:lod0",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hair-short-crop:lod1",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hair-long-straight:lod0",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hair-side-part:lod1",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hat-baseball-cap:lod0",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hat-baseball-cap:lod1",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hat-beanie:lod0",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hair-side-part:lod0",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hat-bucket-hat:lod0",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hat-bucket-hat:lod1",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hat-flat-cap:lod0",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hat-flat-cap:lod1",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hat-beanie:lod1",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hat-hard-hat:lod1",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hat-sun-hat:lod0",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hat-sun-hat:lod1",
+            "instances": 0,
+            "draws": 0,
+            "triangles": 0,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          },
+          {
+            "id": "acc.hat-hard-hat:lod0",
+            "instances": 1,
+            "draws": 1,
+            "triangles": 110,
+            "layout": {
+              "buffers": 5,
+              "locations": 8,
+              "webgpu": true,
+              "webgl2": true
+            }
+          }
+        ],
+        "corgis": [],
+        "gates": null
+      },
+      "metrics": {
+        "actors": {
+          "holder": {
+            "kind": "pedestrian",
+            "entity": 3,
+            "position": [
+              0,
+              0
+            ],
+            "yawDeg": 0,
+            "travelM": 0,
+            "maxX": 0,
+            "heldWeapon": null,
+            "targetId": null,
+            "state": "calm",
+            "health": 100,
+            "drawnFrames": 60,
+            "inViewFrames": 0,
+            "missedInViewFrames": 0,
+            "lod": {
+              "lod0": 60
+            },
+            "firstDrawn": {
+              "frame": 1,
+              "at": [
+                0,
+                0
+              ]
+            },
+            "farLodCloseFrames": 0,
+            "motion": {
+              "frames": 60,
+              "torsoPitchMinDeg": -2,
+              "torsoPitchMaxDeg": 5.5,
+              "contacts": 0,
+              "slideMaxCm": 0,
+              "slideP95Cm": null,
+              "yawDriftMaxDeg": 0,
+              "liftMaxCm": 0,
+              "sinkMaxCm": 0,
+              "jitterRunMax": 0,
+              "worstSlideFrame": null
+            }
+          }
+        },
+        "collision": {
+          "failures": 0,
+          "pending": 0,
+          "admitted": 2,
+          "deferred": 0,
+          "requests": [],
+          "offenders": []
+        },
+        "bodies": [],
+        "doors": {},
+        "log": []
+      }
+    }
+  ],
+  "errors": []
+}

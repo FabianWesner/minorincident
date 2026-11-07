@@ -1,0 +1,6885 @@
+{
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "method": "Read-only rendered sidecar samples from personally reviewed frozen-source physical routes, including ordinary low L8 boarding and high L8 handover, low L9 drive/crash→L10 safe-corgi handover. SceneLab closure/fence/wreck views supplement these; its APC scripted boarding failure is excluded.",
+  "inputs": [
+    {
+      "file": "docs/reports/final-g/L1-high-physical-source.json.gz",
+      "sha256": "f18cb1d6b235cfc492c0a86e93cfbcbe93e5dc2834977827b33d5d5ccf702960"
+    },
+    {
+      "file": "docs/reports/final-g/L1-low-physical-source.json.gz",
+      "sha256": "2659034fda4e086ae843de0ceefcbc73783dc324bdf8ba920c04a848bd8a0d0c"
+    },
+    {
+      "file": "docs/reports/final-g/L2-high-physical-source.json.gz",
+      "sha256": "fd3a9a57d7de35b19d30547d8f087bfb2c9a2f23dc86adb8e913c447c3c5469f"
+    },
+    {
+      "file": "docs/reports/final-g/L2-low-physical-source.json.gz",
+      "sha256": "ad1fce3610b6dbd674c4f802701e35cf1c4944064d19ca24cc90539d1efdad93"
+    },
+    {
+      "file": "docs/reports/final-g/L3-high-physical-source.json.gz",
+      "sha256": "207f20783f2ef834bbbd206e0d082b4e3ef2632db1d401c82fcd071fa8653b14"
+    },
+    {
+      "file": "docs/reports/final-g/L3-low-physical-source.json.gz",
+      "sha256": "89557498050f966bfb2ea24c14863059dd794306b37c4b14fa8b65d36edbf7d5"
+    },
+    {
+      "file": "docs/reports/final-g/L4-high-physical-source.json.gz",
+      "sha256": "8210fc771ce386218f0fb339076a6a09bd7c54bebaf74c66453c5b9f04a74a12"
+    },
+    {
+      "file": "docs/reports/final-g/L4-low-physical-source.json.gz",
+      "sha256": "a44637d3ea1e4ad65bce6cd62dcaf4f91a16a96dc92e70a6bceefca5b6cceb50"
+    },
+    {
+      "file": "docs/reports/final-g/L5-high-physical-source.json.gz",
+      "sha256": "6a7dd30b156a492963cd48bffe458ce215cc8242c468dfe62f1b9eea90a6c7dd"
+    },
+    {
+      "file": "docs/reports/final-g/L5-low-physical-source.json.gz",
+      "sha256": "ff8b583478838cf71ab7f0b7d1d8fe99d10e5925b154a20f6dddcfc5c46cf307"
+    },
+    {
+      "file": "docs/reports/final-g/L6-high-physical-source.json.gz",
+      "sha256": "aeac26870406ed799086638d355c5d27eb63ed9e1e9ef76a0bfa4c3181c847a3"
+    },
+    {
+      "file": "docs/reports/final-g/L6-low-physical-source.json.gz",
+      "sha256": "0b4b1259126f83d738bc13790866a840869ca5b9f033ef3c6e11efeef5f3854f"
+    },
+    {
+      "file": "docs/reports/final-g/L7-high-physical-source.json.gz",
+      "sha256": "ccbb8c2fefa1365a8f8b0e963603adf954f332b2fa3167c0a553951da27e0f3f"
+    },
+    {
+      "file": "docs/reports/final-g/L7-low-physical-source.json.gz",
+      "sha256": "ec561df2d4553838be93ed869249b3cb1a5c88030be36136eaba8a9f344498b4"
+    },
+    {
+      "file": "docs/reports/final-g/L8-high-physical-source.json.gz",
+      "sha256": "9767c56c1ba786b30555006e67a1c49b73d15d337c44fae3b47c807c2103231b"
+    },
+    {
+      "file": "docs/reports/final-g/L8-low-physical-source.json.gz",
+      "sha256": "b6eb272af6d4d4a8648133ebb978b40e7587b77e066e1e30c8bdc963735f5f46"
+    },
+    {
+      "file": "docs/reports/final-g/L9-low-physical-source.json.gz",
+      "sha256": "16ddab2222d89455cf14a8b866774597bbc85382a7aa232e8edfd37b205df193"
+    }
+  ],
+  "summary": {
+    "captureSamples": 425,
+    "archives": 17,
+    "minHealthFraction": 1,
+    "dogBars": 0,
+    "hiddenTransportSamples": 34
+  },
+  "samples": [
+    {
+      "file": "test-results/final-g/L1-high/captures/accept-L1-pickup-t23-high-z1-5.json",
+      "tick": 25,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -66.4,
+        "z": 11,
+        "y": 0.43,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L1-high/captures/accept-L1-pickup-t23-high-z1.json",
+      "tick": 25,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -66.4,
+        "z": 11,
+        "y": 0.43,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L1-high/captures/accept-L1-pickup-t23-high-z0-5.json",
+      "tick": 25,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -66.4,
+        "z": 11,
+        "y": 0.43,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L1-high/captures/accept-L1-t25.json",
+      "tick": 29,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -66.4,
+        "z": 11,
+        "y": 0.43,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L1-high/captures/accept-L1-deliver-t1030-high-z1-5.json",
+      "tick": 1032,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -45.606202685496605,
+        "z": -36.432944491335974,
+        "y": 0.3,
+        "yaw": 2.0799435910871678
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L1-high/captures/accept-L1-deliver-t1030-high-z1.json",
+      "tick": 1032,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -45.606202685496605,
+        "z": -36.432944491335974,
+        "y": 0.3,
+        "yaw": 2.0799435910871678
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L1-high/captures/accept-L1-deliver-t1030-high-z0-5.json",
+      "tick": 1032,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -45.606202685496605,
+        "z": -36.432944491335974,
+        "y": 0.3,
+        "yaw": 2.0799435910871678
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L1-high/captures/accept-L1-t2731.json",
+      "tick": 2738,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 57.8410629239435,
+        "z": -23.913780541715006,
+        "y": 0.3,
+        "yaw": -1.5950355288382534
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L1-high/captures/accept-L1-null-t4403-high-z1-5.json",
+      "tick": 4405,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 66.80431945295031,
+        "z": -11.529758413626801,
+        "y": 0.3,
+        "yaw": 1.1841777570887304
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L1-high/captures/accept-L1-null-t4403-high-z1.json",
+      "tick": 4405,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 66.80431945295031,
+        "z": -11.529758413626801,
+        "y": 0.3,
+        "yaw": 1.1841777570887304
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L1-high/captures/accept-L1-null-t4403-high-z0-5.json",
+      "tick": 4405,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 66.80431945295031,
+        "z": -11.529758413626801,
+        "y": 0.3,
+        "yaw": 1.1841777570887304
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L1-high/captures/accept-L1-escape-t5237-high-z1-5.json",
+      "tick": 5250,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 66.80431945295031,
+        "z": -11.529758413626801,
+        "y": 0.3,
+        "yaw": 1.1841777570887304
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L1-high/captures/accept-L1-escape-t5237-high-z1.json",
+      "tick": 5250,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 66.80431945295031,
+        "z": -11.529758413626801,
+        "y": 0.3,
+        "yaw": 1.1841777570887304
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L1-high/captures/accept-L1-escape-t5237-high-z0-5.json",
+      "tick": 5250,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 66.80431945295031,
+        "z": -11.529758413626801,
+        "y": 0.3,
+        "yaw": 1.1841777570887304
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L1-high/captures/accept-L1-weapon-t5311-high-z1-5.json",
+      "tick": 5314,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 66.45441649458219,
+        "z": -11.184308527146937,
+        "y": 0.3,
+        "yaw": -2.3967477019603205
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L1-high/captures/accept-L1-weapon-t5311-high-z1.json",
+      "tick": 5314,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 66.45441649458219,
+        "z": -11.184308527146937,
+        "y": 0.3,
+        "yaw": -2.3967477019603205
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L1-high/captures/accept-L1-weapon-t5311-high-z0-5.json",
+      "tick": 5314,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 66.45441649458219,
+        "z": -11.184308527146937,
+        "y": 0.3,
+        "yaw": -2.3967477019603205
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L1-high/captures/accept-L1-t5472.json",
+      "tick": 5492,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 59.948285692242074,
+        "z": -9.21435811692176,
+        "y": 0.3,
+        "yaw": 2.0702283817541356
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L1-high/captures/accept-L1-firestation-t7908-high-z1-5.json",
+      "tick": 7917,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 24.947733064426085,
+        "z": 32.12268019384299,
+        "y": 0.3,
+        "yaw": -0.3612568260448571
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L1-high/captures/accept-L1-firestation-t7908-high-z1.json",
+      "tick": 7917,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 24.947733064426085,
+        "z": 32.12268019384299,
+        "y": 0.3,
+        "yaw": -0.3612568260448571
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L1-high/captures/accept-L1-firestation-t7908-high-z0-5.json",
+      "tick": 7917,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 24.947733064426085,
+        "z": 32.12268019384299,
+        "y": 0.3,
+        "yaw": -0.3612568260448571
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L1-high/captures/accept-L1-t8195.json",
+      "tick": 8213,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 21.96366933510009,
+        "z": 35.18398302095158,
+        "y": 0.3,
+        "yaw": -3.038399316211351
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L1-high/captures/accept-L1-result.json",
+      "tick": 9963,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -77.32361070944104,
+        "z": 41.920855431909864,
+        "y": 0.8300000000000001,
+        "yaw": 0.5065993080305937
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L1-high/captures/accept-L2-calm-t12-high-z1-5.json",
+      "tick": 13,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -73.2,
+        "z": 47.2,
+        "y": 0.7,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L1-high/captures/accept-L2-calm-t12-high-z1.json",
+      "tick": 13,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -73.2,
+        "z": 47.2,
+        "y": 0.7,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L1-high/captures/accept-L2-calm-t12-high-z0-5.json",
+      "tick": 13,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -73.2,
+        "z": 47.2,
+        "y": 0.7,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L1-low/captures/accept-L1-t14.json",
+      "tick": 19,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -66.4,
+        "z": 11,
+        "y": 0.43,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L1-low/captures/accept-L1-pickup-t635-low-z1-5.json",
+      "tick": 636,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -60.79850237495187,
+        "z": -28.787943127431873,
+        "y": 0.43,
+        "yaw": 1.331734302121549
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L1-low/captures/accept-L1-pickup-t635-low-z0-5.json",
+      "tick": 636,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -60.79850237495187,
+        "z": -28.787943127431873,
+        "y": 0.43,
+        "yaw": 1.331734302121549
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L1-low/captures/accept-L1-deliver-t959-low-z1-5.json",
+      "tick": 960,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -42.67362044803539,
+        "z": -32.51781486272821,
+        "y": 0.3,
+        "yaw": -1.4326735662164187
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L1-low/captures/accept-L1-deliver-t959-low-z0-5.json",
+      "tick": 960,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -42.67362044803539,
+        "z": -32.51781486272821,
+        "y": 0.3,
+        "yaw": -1.4326735662164187
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L1-low/captures/accept-L1-t2726.json",
+      "tick": 2740,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 57.797401785041366,
+        "z": -24.25467634547857,
+        "y": 0.3,
+        "yaw": -1.0814080241819384
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L1-low/captures/accept-L1-null-t4625-low-z1-5.json",
+      "tick": 4646,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 65.03717866273632,
+        "z": -13.166194774318376,
+        "y": 0.6199,
+        "yaw": -3.8410322388316205
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L1-low/captures/accept-L1-null-t4625-low-z0-5.json",
+      "tick": 4646,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 65.03717866273632,
+        "z": -13.166194774318376,
+        "y": 0.6199,
+        "yaw": -3.8410322388316205
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L1-low/captures/accept-L1-escape-t5428-low-z1-5.json",
+      "tick": 5433,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 65.61083475700632,
+        "z": -10.481766940877888,
+        "y": 0.3,
+        "yaw": -1.4413375364314014
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L1-low/captures/accept-L1-escape-t5428-low-z0-5.json",
+      "tick": 5433,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 65.61083475700632,
+        "z": -10.481766940877888,
+        "y": 0.3,
+        "yaw": -1.4413375364314014
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L1-low/captures/accept-L1-t5433.json",
+      "tick": 5443,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 65.61083475700632,
+        "z": -10.481766940877888,
+        "y": 0.3,
+        "yaw": -1.4413375364314014
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L1-low/captures/accept-L1-weapon-t5486-low-z1-5.json",
+      "tick": 5492,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 65.51629416773572,
+        "z": -10.298240664355406,
+        "y": 0.3,
+        "yaw": -2.0272700397474863
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L1-low/captures/accept-L1-weapon-t5486-low-z0-5.json",
+      "tick": 5492,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 65.51629416773572,
+        "z": -10.298240664355406,
+        "y": 0.3,
+        "yaw": -2.0272700397474863
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L1-low/captures/accept-L1-firestation-t6782-low-z1-5.json",
+      "tick": 6785,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 23.017118255460293,
+        "z": 31.91005550397214,
+        "y": 0.3,
+        "yaw": -2.975528112538924
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L1-low/captures/accept-L1-firestation-t6782-low-z0-5.json",
+      "tick": 6785,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 23.017118255460293,
+        "z": 31.91005550397214,
+        "y": 0.3,
+        "yaw": -2.975528112538924
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L1-low/captures/accept-L1-t8210.json",
+      "tick": 8253,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -38.92689643168303,
+        "z": 36.02138335572839,
+        "y": 0.5949,
+        "yaw": 0.8997084618136022
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L1-low/captures/accept-L1-result.json",
+      "tick": 8961,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -77.5847174181483,
+        "z": 41.335293635244994,
+        "y": 0.8300000000000001,
+        "yaw": -0.56220527755093
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L2-high/captures/accept-L2-calm-t23-high-z1-5.json",
+      "tick": 24,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -73.2,
+        "z": 47.2,
+        "y": 0.7,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L2-high/captures/accept-L2-calm-t23-high-z1.json",
+      "tick": 24,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -73.2,
+        "z": 47.2,
+        "y": 0.7,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L2-high/captures/accept-L2-calm-t23-high-z0-5.json",
+      "tick": 24,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -73.2,
+        "z": 47.2,
+        "y": 0.7,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L2-high/captures/accept-L2-t24.json",
+      "tick": 32,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -73.2,
+        "z": 47.2,
+        "y": 0.7,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L2-high/captures/accept-L2-1262-stuck-navigating.json",
+      "tick": 1292,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -73.2,
+        "z": 47.2,
+        "y": 0.7,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L2-high/captures/accept-L2-board-t1398-high-z1-5.json",
+      "tick": 1399,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -73.2,
+        "z": 47.2,
+        "y": 0.7,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L2-high/captures/accept-L2-board-t1398-high-z1.json",
+      "tick": 1399,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -73.2,
+        "z": 47.2,
+        "y": 0.7,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L2-high/captures/accept-L2-board-t1398-high-z0-5.json",
+      "tick": 1399,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -73.2,
+        "z": 47.2,
+        "y": 0.7,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L2-high/captures/accept-L2-ride-t1517-high-z1-5.json",
+      "tick": 1519,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": true,
+      "passengerOf": null,
+      "at": {
+        "x": -68.79954710550484,
+        "z": 36.629224148227486,
+        "y": 0.3,
+        "yaw": 1.4587132785288592
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L2-high/captures/accept-L2-ride-t1517-high-z1.json",
+      "tick": 1519,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": true,
+      "passengerOf": null,
+      "at": {
+        "x": -68.79954710550484,
+        "z": 36.629224148227486,
+        "y": 0.3,
+        "yaw": 1.4587132785288592
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L2-high/captures/accept-L2-ride-t1517-high-z0-5.json",
+      "tick": 1519,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": true,
+      "passengerOf": null,
+      "at": {
+        "x": -68.79954710550484,
+        "z": 36.629224148227486,
+        "y": 0.3,
+        "yaw": 1.4587132785288592
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L2-high/captures/accept-L2-t2737.json",
+      "tick": 2749,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": true,
+      "passengerOf": null,
+      "at": {
+        "x": -31.47324123366017,
+        "z": -29.44997560145394,
+        "y": 0.3,
+        "yaw": 2.359348533393262
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L2-high/captures/accept-L2-doors-t2998-high-z1-5.json",
+      "tick": 3000,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -41.4,
+        "z": -34.2,
+        "y": 0.43,
+        "yaw": 1.0420000403794638
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L2-high/captures/accept-L2-doors-t2998-high-z1.json",
+      "tick": 3000,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -41.4,
+        "z": -34.2,
+        "y": 0.43,
+        "yaw": 1.0420000403794638
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L2-high/captures/accept-L2-doors-t2998-high-z0-5.json",
+      "tick": 3000,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -41.4,
+        "z": -34.2,
+        "y": 0.43,
+        "yaw": 1.0420000403794638
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L2-high/captures/accept-L2-bridge-t3734-high-z1-5.json",
+      "tick": 3737,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -41.4,
+        "z": -34.2,
+        "y": 0.43,
+        "yaw": 1.0420000403794638
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L2-high/captures/accept-L2-bridge-t3734-high-z1.json",
+      "tick": 3737,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -41.4,
+        "z": -34.2,
+        "y": 0.43,
+        "yaw": 1.0420000403794638
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L2-high/captures/accept-L2-bridge-t3734-high-z0-5.json",
+      "tick": 3737,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -41.4,
+        "z": -34.2,
+        "y": 0.43,
+        "yaw": 1.0420000403794638
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L2-high/captures/accept-L2-t5449.json",
+      "tick": 5488,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 6.63889151781307,
+        "z": 30.35742129138853,
+        "y": 0.3,
+        "yaw": 0.04662392589690626
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L2-high/captures/accept-L2-null-t6548-high-z1-5.json",
+      "tick": 6554,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 77.86484703662585,
+        "z": 32.495877017802236,
+        "y": 0.43,
+        "yaw": 1.6557453508232425
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L2-high/captures/accept-L2-null-t6548-high-z1.json",
+      "tick": 6554,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 77.86484703662585,
+        "z": 32.495877017802236,
+        "y": 0.43,
+        "yaw": 1.6557453508232425
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L2-high/captures/accept-L2-null-t6548-high-z0-5.json",
+      "tick": 6554,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 77.86484703662585,
+        "z": 32.495877017802236,
+        "y": 0.43,
+        "yaw": 1.6557453508232425
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L2-high/captures/accept-L2-result.json",
+      "tick": 0,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -155.5,
+        "z": 3.6,
+        "y": 0.43,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L2-high/captures/accept-L3-armory-t11-high-z1-5.json",
+      "tick": 12,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -155.5,
+        "z": 3.6,
+        "y": 0.43,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L2-high/captures/accept-L3-armory-t11-high-z1.json",
+      "tick": 12,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -155.5,
+        "z": 3.6,
+        "y": 0.43,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L2-high/captures/accept-L3-armory-t11-high-z0-5.json",
+      "tick": 12,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -155.5,
+        "z": 3.6,
+        "y": 0.43,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L2-low/captures/accept-L2-t48.json",
+      "tick": 114,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -73.2,
+        "z": 47.2,
+        "y": 0.7,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L2-low/captures/accept-L2-calm-t663-low-z1-5.json",
+      "tick": 702,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -73.2,
+        "z": 47.2,
+        "y": 0.7,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L2-low/captures/accept-L2-calm-t663-low-z0-5.json",
+      "tick": 702,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -73.2,
+        "z": 47.2,
+        "y": 0.7,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L2-low/captures/accept-L2-1250-stuck-navigating.json",
+      "tick": 1286,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -73.2,
+        "z": 47.2,
+        "y": 0.7,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L2-low/captures/accept-L2-board-t1401-low-z1-5.json",
+      "tick": 1403,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -73.2,
+        "z": 47.2,
+        "y": 0.7,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L2-low/captures/accept-L2-board-t1401-low-z0-5.json",
+      "tick": 1403,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -73.2,
+        "z": 47.2,
+        "y": 0.7,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L2-low/captures/accept-L2-ride-t1559-low-z1-5.json",
+      "tick": 1561,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": true,
+      "passengerOf": null,
+      "at": {
+        "x": -68.79748639134256,
+        "z": 36.5252463150841,
+        "y": 0.3,
+        "yaw": 1.5455323717626037
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L2-low/captures/accept-L2-ride-t1559-low-z0-5.json",
+      "tick": 1561,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": true,
+      "passengerOf": null,
+      "at": {
+        "x": -68.79748639134256,
+        "z": 36.5252463150841,
+        "y": 0.3,
+        "yaw": 1.5455323717626037
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L2-low/captures/accept-L2-t2879.json",
+      "tick": 2902,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": true,
+      "passengerOf": null,
+      "at": {
+        "x": -38.21204507699106,
+        "z": -32,
+        "y": 0.3,
+        "yaw": 3.1415926535897936
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L2-low/captures/accept-L2-doors-t3010-low-z1-5.json",
+      "tick": 3015,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -41.4,
+        "z": -34.2,
+        "y": 0.43,
+        "yaw": 1.0420000403794638
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L2-low/captures/accept-L2-doors-t3010-low-z0-5.json",
+      "tick": 3015,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -41.4,
+        "z": -34.2,
+        "y": 0.43,
+        "yaw": 1.0420000403794638
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L2-low/captures/accept-L2-bridge-t3771-low-z1-5.json",
+      "tick": 3776,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -41.4,
+        "z": -34.2,
+        "y": 0.43,
+        "yaw": 1.0420000403794638
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L2-low/captures/accept-L2-bridge-t3771-low-z0-5.json",
+      "tick": 3776,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -41.4,
+        "z": -34.2,
+        "y": 0.43,
+        "yaw": 1.0420000403794638
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L2-low/captures/accept-L2-t5595.json",
+      "tick": 5618,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -9.260355981581187,
+        "z": 29.755724054359575,
+        "y": 0.3,
+        "yaw": 0.36920361749368863
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L2-low/captures/accept-L2-null-t7069-low-z1-5.json",
+      "tick": 7077,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 77.3156089743572,
+        "z": 29.01077961876236,
+        "y": 0.3,
+        "yaw": 0.7776565670764266
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L2-low/captures/accept-L2-null-t7069-low-z0-5.json",
+      "tick": 7077,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 77.3156089743572,
+        "z": 29.01077961876236,
+        "y": 0.3,
+        "yaw": 0.7776565670764266
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L2-low/captures/accept-L2-result.json",
+      "tick": 0,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -155.5,
+        "z": 3.6,
+        "y": 0.43,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L3-high/captures/accept-L3-armory-t13-high-z1-5.json",
+      "tick": 14,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -155.5,
+        "z": 3.6,
+        "y": 0.43,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L3-high/captures/accept-L3-armory-t13-high-z1.json",
+      "tick": 14,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -155.5,
+        "z": 3.6,
+        "y": 0.43,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L3-high/captures/accept-L3-armory-t13-high-z0-5.json",
+      "tick": 14,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -155.5,
+        "z": 3.6,
+        "y": 0.43,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L3-high/captures/accept-L3-t14.json",
+      "tick": 23,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -155.5,
+        "z": 3.6,
+        "y": 0.43,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L3-high/captures/accept-L3-null-t555-high-z1-5.json",
+      "tick": 556,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -139.2662477540818,
+        "z": -6.724375662489384,
+        "y": 0.3,
+        "yaw": -0.15097496654654088
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L3-high/captures/accept-L3-null-t555-high-z1.json",
+      "tick": 556,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -139.2662477540818,
+        "z": -6.724375662489384,
+        "y": 0.3,
+        "yaw": -0.15097496654654088
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L3-high/captures/accept-L3-null-t555-high-z0-5.json",
+      "tick": 556,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -139.2662477540818,
+        "z": -6.724375662489384,
+        "y": 0.3,
+        "yaw": -0.15097496654654088
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L3-high/captures/accept-L3-defend-t868-high-z1-5.json",
+      "tick": 869,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -138.7751361057045,
+        "z": -6.763073888651956,
+        "y": 0.3,
+        "yaw": -0.8892019374584941
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L3-high/captures/accept-L3-defend-t868-high-z1.json",
+      "tick": 869,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -138.7751361057045,
+        "z": -6.763073888651956,
+        "y": 0.3,
+        "yaw": -0.8892019374584941
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L3-high/captures/accept-L3-defend-t868-high-z0-5.json",
+      "tick": 869,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -138.7751361057045,
+        "z": -6.763073888651956,
+        "y": 0.3,
+        "yaw": -0.8892019374584941
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L3-high/captures/accept-L3-checkpoint-t1362-high-z1-5.json",
+      "tick": 1363,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -138.7751361057045,
+        "z": -6.763073888651956,
+        "y": 0.3,
+        "yaw": -0.32836764792392287
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L3-high/captures/accept-L3-checkpoint-t1362-high-z1.json",
+      "tick": 1363,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -138.7751361057045,
+        "z": -6.763073888651956,
+        "y": 0.3,
+        "yaw": -0.32836764792392287
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L3-high/captures/accept-L3-checkpoint-t1362-high-z0-5.json",
+      "tick": 1363,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -138.7751361057045,
+        "z": -6.763073888651956,
+        "y": 0.3,
+        "yaw": -0.32836764792392287
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L3-high/captures/accept-L3-t2726.json",
+      "tick": 2742,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -85.76173546361686,
+        "z": 25.43652319049773,
+        "y": 0.43,
+        "yaw": 0.020881525817783086
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L3-high/captures/accept-L3-checkpoint-t4976-high-z1-5.json",
+      "tick": 4983,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -17.7925703148156,
+        "z": -4.274041569149549,
+        "y": 0.43,
+        "yaw": -0.12540680265736814
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L3-high/captures/accept-L3-checkpoint-t4976-high-z1.json",
+      "tick": 4983,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -17.7925703148156,
+        "z": -4.274041569149549,
+        "y": 0.43,
+        "yaw": -0.12540680265736814
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L3-high/captures/accept-L3-checkpoint-t4976-high-z0-5.json",
+      "tick": 4983,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -17.7925703148156,
+        "z": -4.274041569149549,
+        "y": 0.43,
+        "yaw": -0.12540680265736814
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L3-high/captures/accept-L3-t5450.json",
+      "tick": 5473,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -8.970514229148522,
+        "z": -22.923870805018986,
+        "y": 0.43,
+        "yaw": -0.0774292887126711
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L3-high/captures/accept-L3-t8175.json",
+      "tick": 8194,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 147.83354464459046,
+        "z": 3.2698710817465604,
+        "y": 2.799999999999999,
+        "yaw": -1.2384410531433654
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L3-high/captures/accept-L3-checkpoint-t8588-high-z1-5.json",
+      "tick": 8594,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 165.93205000477894,
+        "z": -3.600680965008891,
+        "y": 5.971875,
+        "yaw": -0.6553833024066644
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L3-high/captures/accept-L3-checkpoint-t8588-high-z1.json",
+      "tick": 8594,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 165.93205000477894,
+        "z": -3.600680965008891,
+        "y": 5.971875,
+        "yaw": -0.6553833024066644
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L3-high/captures/accept-L3-checkpoint-t8588-high-z0-5.json",
+      "tick": 8594,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 165.93205000477894,
+        "z": -3.600680965008891,
+        "y": 5.971875,
+        "yaw": -0.6553833024066644
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L3-high/captures/accept-L3-t10881.json",
+      "tick": 10911,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 210.85215748463065,
+        "z": 0.478563541862443,
+        "y": 0.3,
+        "yaw": -0.002294094230436183
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L3-high/captures/accept-L3-result.json",
+      "tick": 0,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": true,
+      "passengerOf": null,
+      "at": {
+        "x": -57.51318469372172,
+        "z": 43.895870222922596,
+        "y": 0.3,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L3-high/captures/accept-L4-ride-t65-high-z1-5.json",
+      "tick": 81,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": true,
+      "passengerOf": null,
+      "at": {
+        "x": -56.75,
+        "z": 40.696725710664005,
+        "y": 0.3,
+        "yaw": 1.5053464798451381
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L3-high/captures/accept-L4-ride-t65-high-z1.json",
+      "tick": 81,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": true,
+      "passengerOf": null,
+      "at": {
+        "x": -56.75,
+        "z": 40.696725710664005,
+        "y": 0.3,
+        "yaw": 1.5053464798451381
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L3-high/captures/accept-L4-ride-t65-high-z0-5.json",
+      "tick": 81,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": true,
+      "passengerOf": null,
+      "at": {
+        "x": -56.75,
+        "z": 40.696725710664005,
+        "y": 0.3,
+        "yaw": 1.5053464798451381
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L3-low/captures/accept-L3-armory-t1-low-z1-5.json",
+      "tick": 1,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -155.5,
+        "z": 3.6,
+        "y": 0.43,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L3-low/captures/accept-L3-armory-t1-low-z1.json",
+      "tick": 1,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -155.5,
+        "z": 3.6,
+        "y": 0.43,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L3-low/captures/accept-L3-armory-t1-low-z0-5.json",
+      "tick": 1,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -155.5,
+        "z": 3.6,
+        "y": 0.43,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L3-low/captures/accept-L3-t1.json",
+      "tick": 5,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -155.5,
+        "z": 3.6,
+        "y": 0.43,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L3-low/captures/accept-L3-null-t624-low-z1-5.json",
+      "tick": 624,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -140.18067569893907,
+        "z": -6.497399187970711,
+        "y": 0.3,
+        "yaw": 0.7031274034198868
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L3-low/captures/accept-L3-null-t624-low-z1.json",
+      "tick": 624,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -140.18067569893907,
+        "z": -6.497399187970711,
+        "y": 0.3,
+        "yaw": 0.7031274034198868
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L3-low/captures/accept-L3-null-t624-low-z0-5.json",
+      "tick": 624,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -140.18067569893907,
+        "z": -6.497399187970711,
+        "y": 0.3,
+        "yaw": 0.7031274034198868
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L3-low/captures/accept-L3-defend-t927-low-z1-5.json",
+      "tick": 928,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -140.05616765812755,
+        "z": -6.602938442939749,
+        "y": 0.3,
+        "yaw": 0.7031288634190205
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L3-low/captures/accept-L3-defend-t927-low-z1.json",
+      "tick": 928,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -140.05616765812755,
+        "z": -6.602938442939749,
+        "y": 0.3,
+        "yaw": 0.7031288634190205
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L3-low/captures/accept-L3-defend-t927-low-z0-5.json",
+      "tick": 928,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -140.05616765812755,
+        "z": -6.602938442939749,
+        "y": 0.3,
+        "yaw": 0.7031288634190205
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L3-low/captures/accept-L3-checkpoint-t1623-low-z1-5.json",
+      "tick": 1626,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -140.05616765812755,
+        "z": -6.592724830214658,
+        "y": 0.3,
+        "yaw": -0.23574704043825512
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L3-low/captures/accept-L3-checkpoint-t1623-low-z1.json",
+      "tick": 1626,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -140.05616765812755,
+        "z": -6.592724830214658,
+        "y": 0.3,
+        "yaw": -0.23574704043825512
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L3-low/captures/accept-L3-checkpoint-t1623-low-z0-5.json",
+      "tick": 1626,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -140.05616765812755,
+        "z": -6.592724830214658,
+        "y": 0.3,
+        "yaw": -0.23574704043825512
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L3-low/captures/accept-L3-t2707.json",
+      "tick": 2725,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -91.25524361189166,
+        "z": 15.987076290961829,
+        "y": 0.3,
+        "yaw": -1.5688193380333553
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L3-low/captures/accept-L3-checkpoint-t5227-low-z1-5.json",
+      "tick": 5231,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -72.56331499497162,
+        "z": 23.424293864630357,
+        "y": 0.43,
+        "yaw": 0.9722764019817356
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L3-low/captures/accept-L3-checkpoint-t5227-low-z1.json",
+      "tick": 5231,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -72.56331499497162,
+        "z": 23.424293864630357,
+        "y": 0.43,
+        "yaw": 0.9722764019817356
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L3-low/captures/accept-L3-checkpoint-t5227-low-z0-5.json",
+      "tick": 5231,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -72.56331499497162,
+        "z": 23.424293864630357,
+        "y": 0.43,
+        "yaw": 0.9722764019817356
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L3-low/captures/accept-L3-t5408.json",
+      "tick": 5417,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -72.56331499497162,
+        "z": 23.424293864630357,
+        "y": 0.43,
+        "yaw": 0.9722764019817356
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L3-low/captures/accept-L3-t8110.json",
+      "tick": 8148,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -72.56331499497162,
+        "z": 23.424293864630357,
+        "y": 0.43,
+        "yaw": 0.9722764019817356
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L3-low/captures/accept-L3-checkpoint-t8835-low-z1-5.json",
+      "tick": 8836,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -72.56331499497162,
+        "z": 23.424293864630357,
+        "y": 0.43,
+        "yaw": 0.9722764019817356
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L3-low/captures/accept-L3-checkpoint-t8835-low-z1.json",
+      "tick": 8836,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -72.56331499497162,
+        "z": 23.424293864630357,
+        "y": 0.43,
+        "yaw": 0.9722764019817356
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L3-low/captures/accept-L3-checkpoint-t8835-low-z0-5.json",
+      "tick": 8836,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -72.56331499497162,
+        "z": 23.424293864630357,
+        "y": 0.43,
+        "yaw": 0.9722764019817356
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L3-low/captures/accept-L3-t10815.json",
+      "tick": 10846,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -72.56331499497162,
+        "z": 23.424293864630357,
+        "y": 0.43,
+        "yaw": 0.9722764019817356
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L3-low/captures/accept-L3-10868-stuck-at-ring.json",
+      "tick": 10883,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -72.56331499497162,
+        "z": 23.424293864630357,
+        "y": 0.43,
+        "yaw": 0.9722764019817356
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L3-low/captures/accept-L3-checkpoint-t12448-low-z1-5.json",
+      "tick": 12450,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -72.56331499497162,
+        "z": 23.424293864630357,
+        "y": 0.43,
+        "yaw": 0.9722764019817356
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L3-low/captures/accept-L3-checkpoint-t12448-low-z1.json",
+      "tick": 12450,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -72.56331499497162,
+        "z": 23.424293864630357,
+        "y": 0.43,
+        "yaw": 0.9722764019817356
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L3-low/captures/accept-L3-checkpoint-t12448-low-z0-5.json",
+      "tick": 12450,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -72.56331499497162,
+        "z": 23.424293864630357,
+        "y": 0.43,
+        "yaw": 0.9722764019817356
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L3-low/captures/accept-L3-t13532.json",
+      "tick": 13605,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -72.56331499497162,
+        "z": 23.424293864630357,
+        "y": 0.43,
+        "yaw": 0.9722764019817356
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L3-low/captures/accept-L3-checkpoint-t16051-low-z1-5.json",
+      "tick": 16052,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -72.56331499497162,
+        "z": 23.424293864630357,
+        "y": 0.43,
+        "yaw": 0.9722764019817356
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L3-low/captures/accept-L3-checkpoint-t16051-low-z1.json",
+      "tick": 16052,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -72.56331499497162,
+        "z": 23.424293864630357,
+        "y": 0.43,
+        "yaw": 0.9722764019817356
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L3-low/captures/accept-L3-checkpoint-t16051-low-z0-5.json",
+      "tick": 16052,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -72.56331499497162,
+        "z": 23.424293864630357,
+        "y": 0.43,
+        "yaw": 0.9722764019817356
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L3-low/captures/accept-L3-t16233.json",
+      "tick": 16250,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -72.56331499497162,
+        "z": 23.424293864630357,
+        "y": 0.43,
+        "yaw": 0.9722764019817356
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L3-low/captures/accept-L3-t18948.json",
+      "tick": 18964,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -72.56331499497162,
+        "z": 23.424293864630357,
+        "y": 0.43,
+        "yaw": 0.9722764019817356
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L3-low/captures/accept-L3-checkpoint-t19662-low-z1-5.json",
+      "tick": 19685,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -72.56331499497162,
+        "z": 23.424293864630357,
+        "y": 0.43,
+        "yaw": 0.9722764019817356
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L3-low/captures/accept-L3-checkpoint-t19662-low-z1.json",
+      "tick": 19685,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -72.56331499497162,
+        "z": 23.424293864630357,
+        "y": 0.43,
+        "yaw": 0.9722764019817356
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L3-low/captures/accept-L3-checkpoint-t19662-low-z0-5.json",
+      "tick": 19685,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -72.56331499497162,
+        "z": 23.424293864630357,
+        "y": 0.43,
+        "yaw": 0.9722764019817356
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L3-low/captures/accept-L3-19997-cannot-finish.json",
+      "tick": 20019,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -72.56331499497162,
+        "z": 23.424293864630357,
+        "y": 0.43,
+        "yaw": 0.9722764019817356
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-high/captures/accept-L4-ride-t18-high-z1-5.json",
+      "tick": 30,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": true,
+      "passengerOf": null,
+      "at": {
+        "x": -57.307520452769886,
+        "z": 43.47882439810989,
+        "y": 0.3,
+        "yaw": 1.1126473981464133
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-high/captures/accept-L4-ride-t18-high-z1.json",
+      "tick": 30,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": true,
+      "passengerOf": null,
+      "at": {
+        "x": -57.307520452769886,
+        "z": 43.47882439810989,
+        "y": 0.3,
+        "yaw": 1.1126473981464133
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-high/captures/accept-L4-ride-t18-high-z0-5.json",
+      "tick": 30,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": true,
+      "passengerOf": null,
+      "at": {
+        "x": -57.307520452769886,
+        "z": 43.47882439810989,
+        "y": 0.3,
+        "yaw": 1.1126473981464133
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-high/captures/accept-L4-t30.json",
+      "tick": 34,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": true,
+      "passengerOf": null,
+      "at": {
+        "x": -57.25899062642543,
+        "z": 43.358516397345646,
+        "y": 0.3,
+        "yaw": 1.2435470920460567
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-high/captures/accept-L4-quartermaster-t1846-high-z1-5.json",
+      "tick": 1847,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -14.741939679835086,
+        "z": 5.476839909890645,
+        "y": 0.3,
+        "yaw": -2.2383942257418634
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-high/captures/accept-L4-quartermaster-t1846-high-z1.json",
+      "tick": 1847,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -14.741939679835086,
+        "z": 5.476839909890645,
+        "y": 0.3,
+        "yaw": -2.2383942257418634
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-high/captures/accept-L4-quartermaster-t1846-high-z0-5.json",
+      "tick": 1847,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -14.741939679835086,
+        "z": 5.476839909890645,
+        "y": 0.3,
+        "yaw": -2.2383942257418634
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-high/captures/accept-L4-hold-t2239-high-z1-5.json",
+      "tick": 2240,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -21.583301133584012,
+        "z": 2.6402049917547608,
+        "y": 0.3,
+        "yaw": 2.5229495083635323
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-high/captures/accept-L4-hold-t2239-high-z1.json",
+      "tick": 2240,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -21.583301133584012,
+        "z": 2.6402049917547608,
+        "y": 0.3,
+        "yaw": 2.5229495083635323
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-high/captures/accept-L4-hold-t2239-high-z0-5.json",
+      "tick": 2240,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -21.583301133584012,
+        "z": 2.6402049917547608,
+        "y": 0.3,
+        "yaw": 2.5229495083635323
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-high/captures/accept-L4-t2735.json",
+      "tick": 2756,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -22.06575776375193,
+        "z": 2.1236625308381187,
+        "y": 0.3,
+        "yaw": 2.2648765546161056
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-high/captures/accept-L4-t5458.json",
+      "tick": 5479,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -24.3585589563706,
+        "z": -11.286658084448067,
+        "y": 0.3,
+        "yaw": 1.2797329817221068
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-high/captures/accept-L4-hold-t5852-high-z1-5.json",
+      "tick": 5858,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -21.127348918162554,
+        "z": -9.584287980341406,
+        "y": 0.3,
+        "yaw": -2.8830226436770894
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-high/captures/accept-L4-hold-t5852-high-z1.json",
+      "tick": 5858,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -21.127348918162554,
+        "z": -9.584287980341406,
+        "y": 0.3,
+        "yaw": -2.8830226436770894
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-high/captures/accept-L4-hold-t5852-high-z0-5.json",
+      "tick": 5858,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -21.127348918162554,
+        "z": -9.584287980341406,
+        "y": 0.3,
+        "yaw": -2.8830226436770894
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-high/captures/accept-L4-t8181.json",
+      "tick": 8203,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -21.998795703305582,
+        "z": -7.972840126268859,
+        "y": 0.3,
+        "yaw": 0.09785116853274102
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-high/captures/accept-L4-hold-t9458-high-z1-5.json",
+      "tick": 9469,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -23.24208735078783,
+        "z": 5.219786191551241,
+        "y": 0.3,
+        "yaw": 1.0087393231021684
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-high/captures/accept-L4-hold-t9458-high-z1.json",
+      "tick": 9469,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -23.24208735078783,
+        "z": 5.219786191551241,
+        "y": 0.3,
+        "yaw": 1.0087393231021684
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-high/captures/accept-L4-hold-t9458-high-z0-5.json",
+      "tick": 9469,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -23.24208735078783,
+        "z": 5.219786191551241,
+        "y": 0.3,
+        "yaw": 1.0087393231021684
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-high/captures/accept-L4-t10893.json",
+      "tick": 10919,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -20.66971915668523,
+        "z": -7.730170940665017,
+        "y": 0.3,
+        "yaw": -1.3507756637468313
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-high/captures/accept-L4-hold-t13089-high-z1-5.json",
+      "tick": 13095,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -20.537525420162943,
+        "z": -3.2105727139924127,
+        "y": 0.3,
+        "yaw": 0.09077961469506363
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-high/captures/accept-L4-hold-t13089-high-z1.json",
+      "tick": 13095,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -20.537525420162943,
+        "z": -3.2105727139924127,
+        "y": 0.3,
+        "yaw": 0.09077961469506363
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-high/captures/accept-L4-hold-t13089-high-z0-5.json",
+      "tick": 13095,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -20.537525420162943,
+        "z": -3.2105727139924127,
+        "y": 0.3,
+        "yaw": 0.09077961469506363
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-high/captures/accept-L4-t13608.json",
+      "tick": 13643,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -18.727882150594287,
+        "z": -11.884641093486476,
+        "y": 0.3,
+        "yaw": -0.8462659083655797
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-high/captures/accept-L4-hide-t13675-high-z1-5.json",
+      "tick": 13680,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -18.83766579648436,
+        "z": -11.674891274745134,
+        "y": 0.3,
+        "yaw": -0.8485562207367323
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-high/captures/accept-L4-hide-t13675-high-z1.json",
+      "tick": 13680,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -18.83766579648436,
+        "z": -11.674891274745134,
+        "y": 0.3,
+        "yaw": -0.8485562207367323
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-high/captures/accept-L4-hide-t13675-high-z0-5.json",
+      "tick": 13680,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -18.83766579648436,
+        "z": -11.674891274745134,
+        "y": 0.3,
+        "yaw": -0.8485562207367323
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-high/captures/accept-L4-bar-t14834-high-z1-5.json",
+      "tick": 14839,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 76.10935227429283,
+        "z": -7.165545928418295,
+        "y": 0.3,
+        "yaw": 1.7375115265233385
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-high/captures/accept-L4-bar-t14834-high-z1.json",
+      "tick": 14839,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 76.10935227429283,
+        "z": -7.165545928418295,
+        "y": 0.3,
+        "yaw": 1.7375115265233385
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-high/captures/accept-L4-bar-t14834-high-z0-5.json",
+      "tick": 14839,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 76.10935227429283,
+        "z": -7.165545928418295,
+        "y": 0.3,
+        "yaw": 1.7375115265233385
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-high/captures/accept-L4-wait-t14990-high-z1-5.json",
+      "tick": 14991,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 74.45908221110983,
+        "z": -2.7832825360450806,
+        "y": 0.3,
+        "yaw": -2.396582215891926
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-high/captures/accept-L4-wait-t14990-high-z1.json",
+      "tick": 14991,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 74.45908221110983,
+        "z": -2.7832825360450806,
+        "y": 0.3,
+        "yaw": -2.396582215891926
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-high/captures/accept-L4-wait-t14990-high-z0-5.json",
+      "tick": 14991,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 74.45908221110983,
+        "z": -2.7832825360450806,
+        "y": 0.3,
+        "yaw": -2.396582215891926
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-high/captures/accept-L4-result.json",
+      "tick": 0,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 76.03806023374436,
+        "z": -6.191341716182545,
+        "y": 0.3,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-high/captures/accept-L5-emerge-t11-high-z1-5.json",
+      "tick": 12,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 76.16280549703863,
+        "z": -6.325093031464906,
+        "y": 0.3,
+        "yaw": 0.7202241976085195
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-high/captures/accept-L5-emerge-t11-high-z1.json",
+      "tick": 12,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 76.16280549703863,
+        "z": -6.325093031464906,
+        "y": 0.3,
+        "yaw": 0.7202241976085195
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-high/captures/accept-L5-emerge-t11-high-z0-5.json",
+      "tick": 12,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 76.16280549703863,
+        "z": -6.325093031464906,
+        "y": 0.3,
+        "yaw": 0.7202241976085195
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-low/captures/accept-L4-ride-t20-low-z1-5.json",
+      "tick": 31,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": true,
+      "passengerOf": null,
+      "at": {
+        "x": -57.2938095033731,
+        "z": 43.451021343122385,
+        "y": 0.3,
+        "yaw": 1.1126473981464222
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-low/captures/accept-L4-ride-t20-low-z1.json",
+      "tick": 31,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": true,
+      "passengerOf": null,
+      "at": {
+        "x": -57.2938095033731,
+        "z": 43.451021343122385,
+        "y": 0.3,
+        "yaw": 1.1126473981464222
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-low/captures/accept-L4-ride-t20-low-z0-5.json",
+      "tick": 31,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": true,
+      "passengerOf": null,
+      "at": {
+        "x": -57.2938095033731,
+        "z": 43.451021343122385,
+        "y": 0.3,
+        "yaw": 1.1126473981464222
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-low/captures/accept-L4-t34.json",
+      "tick": 45,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": true,
+      "passengerOf": null,
+      "at": {
+        "x": -57.11755726169204,
+        "z": 42.9418671403678,
+        "y": 0.3,
+        "yaw": 1.2435470920459895
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-low/captures/accept-L4-quartermaster-t1848-low-z1-5.json",
+      "tick": 1850,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -14.741939679835086,
+        "z": 5.476839909890645,
+        "y": 0.3,
+        "yaw": -2.2383942257418634
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-low/captures/accept-L4-quartermaster-t1848-low-z1.json",
+      "tick": 1850,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -14.741939679835086,
+        "z": 5.476839909890645,
+        "y": 0.3,
+        "yaw": -2.2383942257418634
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-low/captures/accept-L4-quartermaster-t1848-low-z0-5.json",
+      "tick": 1850,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -14.741939679835086,
+        "z": 5.476839909890645,
+        "y": 0.3,
+        "yaw": -2.2383942257418634
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-low/captures/accept-L4-hold-t2212-low-z1-5.json",
+      "tick": 2217,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -20.883510310797785,
+        "z": 2.323902913441625,
+        "y": 0.3,
+        "yaw": 2.741516123743809
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-low/captures/accept-L4-hold-t2212-low-z1.json",
+      "tick": 2217,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -20.883510310797785,
+        "z": 2.323902913441625,
+        "y": 0.3,
+        "yaw": 2.741516123743809
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-low/captures/accept-L4-hold-t2212-low-z0-5.json",
+      "tick": 2217,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -20.883510310797785,
+        "z": 2.323902913441625,
+        "y": 0.3,
+        "yaw": 2.741516123743809
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-low/captures/accept-L4-t2739.json",
+      "tick": 2755,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -20.89779374081222,
+        "z": 2.3178679021278916,
+        "y": 0.3,
+        "yaw": 2.7418697289537737
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-low/captures/accept-L4-t5476.json",
+      "tick": 5513,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -25.401045698277873,
+        "z": -3.186641355495107,
+        "y": 0.3,
+        "yaw": 2.8421473391397667
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-low/captures/accept-L4-hold-t5839-low-z1-5.json",
+      "tick": 5850,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -27.454156308859343,
+        "z": -0.8928223964908433,
+        "y": 0.3,
+        "yaw": 1.0087534275881995
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-low/captures/accept-L4-hold-t5839-low-z1.json",
+      "tick": 5850,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -27.454156308859343,
+        "z": -0.8928223964908433,
+        "y": 0.3,
+        "yaw": 1.0087534275881995
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-low/captures/accept-L4-hold-t5839-low-z0-5.json",
+      "tick": 5850,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -27.454156308859343,
+        "z": -0.8928223964908433,
+        "y": 0.3,
+        "yaw": 1.0087534275881995
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-low/captures/accept-L4-t8188.json",
+      "tick": 8251,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -23.951510788218652,
+        "z": -8.23373162643627,
+        "y": 0.3,
+        "yaw": -1.7463564342870026
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-low/captures/accept-L4-hold-t9466-low-z1-5.json",
+      "tick": 9473,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -27.134301683930982,
+        "z": -6.5192554464269685,
+        "y": 0.3,
+        "yaw": -1.8296592148337503
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-low/captures/accept-L4-hold-t9466-low-z1.json",
+      "tick": 9473,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -27.134301683930982,
+        "z": -6.5192554464269685,
+        "y": 0.3,
+        "yaw": -1.8296592148337503
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-low/captures/accept-L4-hold-t9466-low-z0-5.json",
+      "tick": 9473,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -27.134301683930982,
+        "z": -6.5192554464269685,
+        "y": 0.3,
+        "yaw": -1.8296592148337503
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-low/captures/accept-L4-t10914.json",
+      "tick": 10972,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -27.308428705498425,
+        "z": -6.453131187720015,
+        "y": 0.3,
+        "yaw": -1.754695576639949
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-low/captures/accept-L4-hold-t13079-low-z1-5.json",
+      "tick": 13093,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -25.994240924634724,
+        "z": 3.9322657242033894,
+        "y": 0.3,
+        "yaw": 2.570218804289356
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-low/captures/accept-L4-hold-t13079-low-z1.json",
+      "tick": 13093,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -25.994240924634724,
+        "z": 3.9322657242033894,
+        "y": 0.3,
+        "yaw": 2.570218804289356
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-low/captures/accept-L4-hold-t13079-low-z0-5.json",
+      "tick": 13093,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -25.994240924634724,
+        "z": 3.9322657242033894,
+        "y": 0.3,
+        "yaw": 2.570218804289356
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-low/captures/accept-L4-hide-t13612-low-z1-5.json",
+      "tick": 13630,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -19.45403531116607,
+        "z": -7.66779647033029,
+        "y": 0.3,
+        "yaw": 1.6916205324648637
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-low/captures/accept-L4-hide-t13612-low-z1.json",
+      "tick": 13630,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -19.45403531116607,
+        "z": -7.66779647033029,
+        "y": 0.3,
+        "yaw": 1.6916205324648637
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-low/captures/accept-L4-hide-t13612-low-z0-5.json",
+      "tick": 13630,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -19.45403531116607,
+        "z": -7.66779647033029,
+        "y": 0.3,
+        "yaw": 1.6916205324648637
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-low/captures/accept-L4-t13631.json",
+      "tick": 13658,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -17.702157896407048,
+        "z": -8.20157501311923,
+        "y": 0.3,
+        "yaw": 1.7055950088850729
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-low/captures/accept-L4-bar-t15059-low-z1-5.json",
+      "tick": 15067,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 75.7589820081434,
+        "z": -7.016292309716407,
+        "y": 0.3,
+        "yaw": -2.965104633662905
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-low/captures/accept-L4-bar-t15059-low-z1.json",
+      "tick": 15067,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 75.7589820081434,
+        "z": -7.016292309716407,
+        "y": 0.3,
+        "yaw": -2.965104633662905
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-low/captures/accept-L4-bar-t15059-low-z0-5.json",
+      "tick": 15067,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 75.7589820081434,
+        "z": -7.016292309716407,
+        "y": 0.3,
+        "yaw": -2.965104633662905
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-low/captures/accept-L4-wait-t15232-low-z1-5.json",
+      "tick": 15235,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 74.798907841314,
+        "z": -2.3071942463292183,
+        "y": 0.3,
+        "yaw": -1.5487056875441012
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-low/captures/accept-L4-wait-t15232-low-z1.json",
+      "tick": 15235,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 74.798907841314,
+        "z": -2.3071942463292183,
+        "y": 0.3,
+        "yaw": -1.5487056875441012
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-low/captures/accept-L4-wait-t15232-low-z0-5.json",
+      "tick": 15235,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 74.798907841314,
+        "z": -2.3071942463292183,
+        "y": 0.3,
+        "yaw": -1.5487056875441012
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-low/captures/accept-L4-result.json",
+      "tick": 0,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 76.03806023374436,
+        "z": -6.191341716182545,
+        "y": 0.3,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-low/captures/accept-L5-emerge-t14-low-z1-5.json",
+      "tick": 17,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 76.16280549703863,
+        "z": -6.325093031464906,
+        "y": 0.3,
+        "yaw": 0.7202241976085195
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-low/captures/accept-L5-emerge-t14-low-z1.json",
+      "tick": 17,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 76.16280549703863,
+        "z": -6.325093031464906,
+        "y": 0.3,
+        "yaw": 0.7202241976085195
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L4-low/captures/accept-L5-emerge-t14-low-z0-5.json",
+      "tick": 17,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 76.16280549703863,
+        "z": -6.325093031464906,
+        "y": 0.3,
+        "yaw": 0.7202241976085195
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L5-high/captures/accept-L5-emerge-t16-high-z1-5.json",
+      "tick": 17,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 76.16280549703863,
+        "z": -6.325093031464906,
+        "y": 0.3,
+        "yaw": 0.7202241976085195
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L5-high/captures/accept-L5-emerge-t16-high-z1.json",
+      "tick": 17,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 76.16280549703863,
+        "z": -6.325093031464906,
+        "y": 0.3,
+        "yaw": 0.7202241976085195
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L5-high/captures/accept-L5-emerge-t16-high-z0-5.json",
+      "tick": 17,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 76.16280549703863,
+        "z": -6.325093031464906,
+        "y": 0.3,
+        "yaw": 0.7202241976085195
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L5-high/captures/accept-L5-t17.json",
+      "tick": 23,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 76.16280549703863,
+        "z": -6.325093031464906,
+        "y": 0.3,
+        "yaw": 0.7202241976085195
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L5-high/captures/accept-L5-null-t164-high-z1-5.json",
+      "tick": 168,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 75.26009043175598,
+        "z": -2.6042485894420855,
+        "y": 0.3,
+        "yaw": -1.5822014075737938
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L5-high/captures/accept-L5-null-t164-high-z1.json",
+      "tick": 168,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 75.26009043175598,
+        "z": -2.6042485894420855,
+        "y": 0.3,
+        "yaw": -1.5822014075737938
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L5-high/captures/accept-L5-null-t164-high-z0-5.json",
+      "tick": 168,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 75.26009043175598,
+        "z": -2.6042485894420855,
+        "y": 0.3,
+        "yaw": -1.5822014075737938
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L5-high/captures/accept-L5-look-t796-high-z1-5.json",
+      "tick": 799,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -80.49999999999999,
+        "z": -43.4801,
+        "y": 0.43,
+        "yaw": 2.984951428253803
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L5-high/captures/accept-L5-look-t796-high-z1.json",
+      "tick": 799,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -80.49999999999999,
+        "z": -43.4801,
+        "y": 0.43,
+        "yaw": 2.984951428253803
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L5-high/captures/accept-L5-look-t796-high-z0-5.json",
+      "tick": 799,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -80.49999999999999,
+        "z": -43.4801,
+        "y": 0.43,
+        "yaw": 2.984951428253803
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L5-high/captures/accept-L5-t2735.json",
+      "tick": 2747,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -30.643400018346508,
+        "z": -8.137885639133959,
+        "y": 0.3,
+        "yaw": -1.5984248187119847
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L5-high/captures/accept-L5-look-t4423-high-z1-5.json",
+      "tick": 4439,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 0.5288306605624241,
+        "z": 3.1868216150256092,
+        "y": 0.3,
+        "yaw": -0.03209754668438894
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L5-high/captures/accept-L5-look-t4423-high-z1.json",
+      "tick": 4439,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 0.5288306605624241,
+        "z": 3.1868216150256092,
+        "y": 0.3,
+        "yaw": -0.03209754668438894
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L5-high/captures/accept-L5-look-t4423-high-z0-5.json",
+      "tick": 4439,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 0.5288306605624241,
+        "z": 3.1868216150256092,
+        "y": 0.3,
+        "yaw": -0.03209754668438894
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L5-high/captures/accept-L5-t5444.json",
+      "tick": 5457,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -21.792664241315162,
+        "z": 14.800209371432997,
+        "y": 0.3,
+        "yaw": 3.855979414356401
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L5-high/captures/accept-L5-look-t8030-high-z1-5.json",
+      "tick": 8031,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 55.13737073227592,
+        "z": 48.08750129582537,
+        "y": 0.3,
+        "yaw": 0.781427098471763
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L5-high/captures/accept-L5-look-t8030-high-z1.json",
+      "tick": 8031,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 55.13737073227592,
+        "z": 48.08750129582537,
+        "y": 0.3,
+        "yaw": 0.781427098471763
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L5-high/captures/accept-L5-look-t8030-high-z0-5.json",
+      "tick": 8031,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 55.13737073227592,
+        "z": 48.08750129582537,
+        "y": 0.3,
+        "yaw": 0.781427098471763
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L5-high/captures/accept-L5-metro-t8167-high-z1-5.json",
+      "tick": 8168,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 59.01460361048422,
+        "z": 44.212296641166965,
+        "y": 0.3,
+        "yaw": 0.7853666765460346
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L5-high/captures/accept-L5-metro-t8167-high-z1.json",
+      "tick": 8168,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 59.01460361048422,
+        "z": 44.212296641166965,
+        "y": 0.3,
+        "yaw": 0.7853666765460346
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L5-high/captures/accept-L5-metro-t8167-high-z0-5.json",
+      "tick": 8168,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 59.01460361048422,
+        "z": 44.212296641166965,
+        "y": 0.3,
+        "yaw": 0.7853666765460346
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L5-high/captures/accept-L5-t8169.json",
+      "tick": 8178,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 59.01460361048422,
+        "z": 44.212296641166965,
+        "y": 0.3,
+        "yaw": 0.7853666765460346
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L5-high/captures/accept-L5-result.json",
+      "tick": 0,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 3,
+        "z": 2,
+        "y": 0.900000011920929,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L5-high/captures/accept-L6-shelter-t6-high-z1-5.json",
+      "tick": 7,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 3,
+        "z": 2,
+        "y": 0.900000011920929,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L5-high/captures/accept-L6-shelter-t6-high-z1.json",
+      "tick": 7,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 3,
+        "z": 2,
+        "y": 0.900000011920929,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L5-high/captures/accept-L6-shelter-t6-high-z0-5.json",
+      "tick": 7,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 3,
+        "z": 2,
+        "y": 0.900000011920929,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L5-low/captures/accept-L5-emerge-t17-low-z1-5.json",
+      "tick": 18,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 76.16280549703863,
+        "z": -6.325093031464906,
+        "y": 0.3,
+        "yaw": 0.7202241976085195
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L5-low/captures/accept-L5-emerge-t17-low-z1.json",
+      "tick": 18,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 76.16280549703863,
+        "z": -6.325093031464906,
+        "y": 0.3,
+        "yaw": 0.7202241976085195
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L5-low/captures/accept-L5-emerge-t17-low-z0-5.json",
+      "tick": 18,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 76.16280549703863,
+        "z": -6.325093031464906,
+        "y": 0.3,
+        "yaw": 0.7202241976085195
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L5-low/captures/accept-L5-t18.json",
+      "tick": 23,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 76.16280549703863,
+        "z": -6.325093031464906,
+        "y": 0.3,
+        "yaw": 0.7202241976085195
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L5-low/captures/accept-L5-null-t155-low-z1-5.json",
+      "tick": 156,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 75.27197171283197,
+        "z": -2.8587144555618904,
+        "y": 0.3,
+        "yaw": -1.588804262652164
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L5-low/captures/accept-L5-null-t155-low-z1.json",
+      "tick": 156,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 75.27197171283197,
+        "z": -2.8587144555618904,
+        "y": 0.3,
+        "yaw": -1.588804262652164
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L5-low/captures/accept-L5-null-t155-low-z0-5.json",
+      "tick": 156,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 75.27197171283197,
+        "z": -2.8587144555618904,
+        "y": 0.3,
+        "yaw": -1.588804262652164
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L5-low/captures/accept-L5-look-t800-low-z1-5.json",
+      "tick": 800,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -80.49999999999999,
+        "z": -43.4801,
+        "y": 0.43,
+        "yaw": 2.986499107658771
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L5-low/captures/accept-L5-look-t800-low-z1.json",
+      "tick": 800,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -80.49999999999999,
+        "z": -43.4801,
+        "y": 0.43,
+        "yaw": 2.986499107658771
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L5-low/captures/accept-L5-look-t800-low-z0-5.json",
+      "tick": 800,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -80.49999999999999,
+        "z": -43.4801,
+        "y": 0.43,
+        "yaw": 2.986499107658771
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L5-low/captures/accept-L5-t2732.json",
+      "tick": 2757,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -19.780703450684335,
+        "z": -23.732243806706588,
+        "y": 0.3,
+        "yaw": -1.6257345355745016
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L5-low/captures/accept-L5-look-t4400-low-z1-5.json",
+      "tick": 4415,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -8.964224730245675,
+        "z": 2.0810765025325777,
+        "y": 0.3,
+        "yaw": -1.8780313631674639
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L5-low/captures/accept-L5-look-t4400-low-z1.json",
+      "tick": 4415,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -8.964224730245675,
+        "z": 2.0810765025325777,
+        "y": 0.3,
+        "yaw": -1.8780313631674639
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L5-low/captures/accept-L5-look-t4400-low-z0-5.json",
+      "tick": 4415,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -8.964224730245675,
+        "z": 2.0810765025325777,
+        "y": 0.3,
+        "yaw": -1.8780313631674639
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L5-low/captures/accept-L5-t5433.json",
+      "tick": 5440,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -33.01004203761757,
+        "z": 47.661543900479664,
+        "y": 0.3,
+        "yaw": -3.119944156772906
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L5-low/captures/accept-L5-metro-t7846-low-z1-5.json",
+      "tick": 7873,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -7.830280967832975,
+        "z": 39.75000003419493,
+        "y": 0.3,
+        "yaw": 3.1415978875056836
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L5-low/captures/accept-L5-metro-t7846-low-z1.json",
+      "tick": 7873,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -7.830280967832975,
+        "z": 39.75000003419493,
+        "y": 0.3,
+        "yaw": 3.1415978875056836
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L5-low/captures/accept-L5-metro-t7846-low-z0-5.json",
+      "tick": 7873,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -7.830280967832975,
+        "z": 39.75000003419493,
+        "y": 0.3,
+        "yaw": 3.1415978875056836
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L5-low/captures/accept-L5-t8141.json",
+      "tick": 8159,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -9.595173646343838,
+        "z": 37.88043481347495,
+        "y": 0.3,
+        "yaw": 3.106607844218509
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L5-low/captures/accept-L5-result.json",
+      "tick": 0,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 3,
+        "z": 2,
+        "y": 0.900000011920929,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L5-low/captures/accept-L6-shelter-t7-low-z1-5.json",
+      "tick": 9,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 3,
+        "z": 2,
+        "y": 0.900000011920929,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L5-low/captures/accept-L6-shelter-t7-low-z1.json",
+      "tick": 9,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 3,
+        "z": 2,
+        "y": 0.900000011920929,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L5-low/captures/accept-L6-shelter-t7-low-z0-5.json",
+      "tick": 9,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 3,
+        "z": 2,
+        "y": 0.900000011920929,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L6-high/captures/accept-L6-shelter-t24-high-z1-5.json",
+      "tick": 33,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 3,
+        "z": 2,
+        "y": 0.900000011920929,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L6-high/captures/accept-L6-shelter-t24-high-z1.json",
+      "tick": 33,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 3,
+        "z": 2,
+        "y": 0.900000011920929,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L6-high/captures/accept-L6-shelter-t24-high-z0-5.json",
+      "tick": 33,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 3,
+        "z": 2,
+        "y": 0.900000011920929,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L6-high/captures/accept-L6-t34.json",
+      "tick": 48,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 3,
+        "z": 2,
+        "y": 0.900000011920929,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L6-high/captures/accept-L6-1242-stuck-navigating.json",
+      "tick": 1251,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 3,
+        "z": 2,
+        "y": 0.900000011920929,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L6-high/captures/accept-L6-stop-t1993-high-z1-5.json",
+      "tick": 1994,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 3,
+        "z": 2,
+        "y": 0.900000011920929,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L6-high/captures/accept-L6-stop-t1993-high-z1.json",
+      "tick": 1994,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 3,
+        "z": 2,
+        "y": 0.900000011920929,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L6-high/captures/accept-L6-stop-t1993-high-z0-5.json",
+      "tick": 1994,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 3,
+        "z": 2,
+        "y": 0.900000011920929,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L6-high/captures/accept-L6-t2736.json",
+      "tick": 2751,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 3,
+        "z": 2,
+        "y": 0.900000011920929,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L6-high/captures/accept-L6-retreat-t3263-high-z1-5.json",
+      "tick": 3264,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -0.7098354071310721,
+        "z": 0.4036162570019992,
+        "y": 0.900000011920929,
+        "yaw": 2.8186193757124625
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L6-high/captures/accept-L6-retreat-t3263-high-z1.json",
+      "tick": 3264,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -0.7098354071310721,
+        "z": 0.4036162570019992,
+        "y": 0.900000011920929,
+        "yaw": 2.8186193757124625
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L6-high/captures/accept-L6-retreat-t3263-high-z0-5.json",
+      "tick": 3264,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -0.7098354071310721,
+        "z": 0.4036162570019992,
+        "y": 0.900000011920929,
+        "yaw": 2.8186193757124625
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L6-high/captures/accept-L6-t5442.json",
+      "tick": 5450,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 59.47293574611301,
+        "z": 11.719360996206348,
+        "y": 1.1700000143051148,
+        "yaw": 0.9281590199978141
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L6-high/captures/accept-L6-retreat-t6866-high-z1-5.json",
+      "tick": 6872,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 88.06081392257632,
+        "z": 11.611107481027963,
+        "y": 1.1700000143051148,
+        "yaw": 1.2845819882662917
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L6-high/captures/accept-L6-retreat-t6866-high-z1.json",
+      "tick": 6872,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 88.06081392257632,
+        "z": 11.611107481027963,
+        "y": 1.1700000143051148,
+        "yaw": 1.2845819882662917
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L6-high/captures/accept-L6-retreat-t6866-high-z0-5.json",
+      "tick": 6872,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 88.06081392257632,
+        "z": 11.611107481027963,
+        "y": 1.1700000143051148,
+        "yaw": 1.2845819882662917
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L6-high/captures/accept-L6-t8147.json",
+      "tick": 8152,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 136.30693915309192,
+        "z": 17.49248933374014,
+        "y": 1.1700000143051148,
+        "yaw": -1.6588308541869077
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L6-high/captures/accept-L6-retreat-t10479-high-z1-5.json",
+      "tick": 10482,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 212.25630957553315,
+        "z": 15.429895706827406,
+        "y": 0.8500000014901161,
+        "yaw": -2.0981614544880705
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L6-high/captures/accept-L6-retreat-t10479-high-z1.json",
+      "tick": 10482,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 212.25630957553315,
+        "z": 15.429895706827406,
+        "y": 0.8500000014901161,
+        "yaw": -2.0981614544880705
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L6-high/captures/accept-L6-retreat-t10479-high-z0-5.json",
+      "tick": 10482,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 212.25630957553315,
+        "z": 15.429895706827406,
+        "y": 0.8500000014901161,
+        "yaw": -2.0981614544880705
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L6-high/captures/accept-L6-t10857.json",
+      "tick": 10864,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 223.32055216242682,
+        "z": 14.315806200929558,
+        "y": 0.8500000014901161,
+        "yaw": 0.7326500451218667
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L6-high/captures/accept-L6-exit-t11105-high-z1-5.json",
+      "tick": 11108,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 236.06490139083493,
+        "z": 15.941169541341306,
+        "y": 0.8500000014901161,
+        "yaw": -0.1880321849665089
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L6-high/captures/accept-L6-exit-t11105-high-z1.json",
+      "tick": 11108,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 236.06490139083493,
+        "z": 15.941169541341306,
+        "y": 0.8500000014901161,
+        "yaw": -0.1880321849665089
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L6-high/captures/accept-L6-exit-t11105-high-z0-5.json",
+      "tick": 11108,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 236.06490139083493,
+        "z": 15.941169541341306,
+        "y": 0.8500000014901161,
+        "yaw": -0.1880321849665089
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L6-high/captures/accept-L6-result.json",
+      "tick": 11559,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 268.2684907974353,
+        "z": 12.012100734114194,
+        "y": 0.3,
+        "yaw": -0.5338866000561354
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L6-high/captures/accept-L7-rocket-t33-high-z1-5.json",
+      "tick": 44,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 273,
+        "z": 17,
+        "y": 4.2,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L6-high/captures/accept-L7-rocket-t33-high-z1.json",
+      "tick": 44,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 273,
+        "z": 17,
+        "y": 4.2,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L6-high/captures/accept-L7-rocket-t33-high-z0-5.json",
+      "tick": 44,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 273,
+        "z": 17,
+        "y": 4.2,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L6-low/captures/accept-L6-shelter-t17-low-z1-5.json",
+      "tick": 19,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 3,
+        "z": 2,
+        "y": 0.900000011920929,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L6-low/captures/accept-L6-shelter-t17-low-z1.json",
+      "tick": 19,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 3,
+        "z": 2,
+        "y": 0.900000011920929,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L6-low/captures/accept-L6-shelter-t17-low-z0-5.json",
+      "tick": 19,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 3,
+        "z": 2,
+        "y": 0.900000011920929,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L6-low/captures/accept-L6-t19.json",
+      "tick": 31,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 3,
+        "z": 2,
+        "y": 0.900000011920929,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L6-low/captures/accept-L6-1240-stuck-navigating.json",
+      "tick": 1263,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 3,
+        "z": 2,
+        "y": 0.900000011920929,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L6-low/captures/accept-L6-stop-t1992-low-z1-5.json",
+      "tick": 1996,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 3,
+        "z": 2,
+        "y": 0.900000011920929,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L6-low/captures/accept-L6-stop-t1992-low-z1.json",
+      "tick": 1996,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 3,
+        "z": 2,
+        "y": 0.900000011920929,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L6-low/captures/accept-L6-stop-t1992-low-z0-5.json",
+      "tick": 1996,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 3,
+        "z": 2,
+        "y": 0.900000011920929,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L6-low/captures/accept-L6-t2724.json",
+      "tick": 2740,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 3,
+        "z": 2,
+        "y": 0.900000011920929,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L6-low/captures/accept-L6-retreat-t3378-low-z1-5.json",
+      "tick": 3408,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -2.8697904992074847,
+        "z": 3.1315119125469324,
+        "y": 0.900000011920929,
+        "yaw": -3.1474724849026163
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L6-low/captures/accept-L6-retreat-t3378-low-z1.json",
+      "tick": 3408,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -2.8697904992074847,
+        "z": 3.1315119125469324,
+        "y": 0.900000011920929,
+        "yaw": -3.1474724849026163
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L6-low/captures/accept-L6-retreat-t3378-low-z0-5.json",
+      "tick": 3408,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -2.8697904992074847,
+        "z": 3.1315119125469324,
+        "y": 0.900000011920929,
+        "yaw": -3.1474724849026163
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L6-low/captures/accept-L6-t5434.json",
+      "tick": 5446,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 45.58651991404693,
+        "z": 15.30218079111363,
+        "y": 0.8500000014901161,
+        "yaw": 0.17096212618816445
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L6-low/captures/accept-L6-retreat-t6981-low-z1-5.json",
+      "tick": 6985,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 110.5037516872741,
+        "z": 15.681617332956952,
+        "y": 0.8500000014901161,
+        "yaw": 0.06367409856383266
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L6-low/captures/accept-L6-retreat-t6981-low-z1.json",
+      "tick": 6985,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 110.5037516872741,
+        "z": 15.681617332956952,
+        "y": 0.8500000014901161,
+        "yaw": 0.06367409856383266
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L6-low/captures/accept-L6-retreat-t6981-low-z0-5.json",
+      "tick": 6985,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 110.5037516872741,
+        "z": 15.681617332956952,
+        "y": 0.8500000014901161,
+        "yaw": 0.06367409856383266
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L6-low/captures/accept-L6-t8140.json",
+      "tick": 8150,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 151.917526013922,
+        "z": 15.139025082874292,
+        "y": 0.8500000014901161,
+        "yaw": 0.11997296699202703
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L6-low/captures/accept-L6-retreat-t10670-low-z1-5.json",
+      "tick": 10673,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 230.70463711146374,
+        "z": 13.84980186762765,
+        "y": 0.8500000014901161,
+        "yaw": -2.6506958720469758
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L6-low/captures/accept-L6-retreat-t10670-low-z1.json",
+      "tick": 10673,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 230.70463711146374,
+        "z": 13.84980186762765,
+        "y": 0.8500000014901161,
+        "yaw": -2.6506958720469758
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L6-low/captures/accept-L6-retreat-t10670-low-z0-5.json",
+      "tick": 10673,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 230.70463711146374,
+        "z": 13.84980186762765,
+        "y": 0.8500000014901161,
+        "yaw": -2.6506958720469758
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L6-low/captures/accept-L6-t10867.json",
+      "tick": 10874,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 235.29947604605542,
+        "z": 17.976648855323475,
+        "y": 1.1700000143051148,
+        "yaw": -0.2730614553735803
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L6-low/captures/accept-L6-exit-t10954-low-z1-5.json",
+      "tick": 10956,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 239.07841719014658,
+        "z": 14.497765939966753,
+        "y": 0.8500000014901161,
+        "yaw": 0.6607185072107579
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L6-low/captures/accept-L6-exit-t10954-low-z1.json",
+      "tick": 10956,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 239.07841719014658,
+        "z": 14.497765939966753,
+        "y": 0.8500000014901161,
+        "yaw": 0.6607185072107579
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L6-low/captures/accept-L6-exit-t10954-low-z0-5.json",
+      "tick": 10956,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 239.07841719014658,
+        "z": 14.497765939966753,
+        "y": 0.8500000014901161,
+        "yaw": 0.6607185072107579
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L6-low/captures/accept-L6-result.json",
+      "tick": 11357,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 265.67635472202426,
+        "z": 10.638376627462637,
+        "y": 0.3,
+        "yaw": 0.035126179456167916
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L6-low/captures/accept-L7-rocket-t1-low-z1-5.json",
+      "tick": 6,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 273,
+        "z": 17,
+        "y": 4.2,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L6-low/captures/accept-L7-rocket-t1-low-z1.json",
+      "tick": 6,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 273,
+        "z": 17,
+        "y": 4.2,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L6-low/captures/accept-L7-rocket-t1-low-z0-5.json",
+      "tick": 6,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 273,
+        "z": 17,
+        "y": 4.2,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L7-high/captures/accept-L7-rocket-t13-high-z1-5.json",
+      "tick": 17,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 273,
+        "z": 17,
+        "y": 4.2,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L7-high/captures/accept-L7-rocket-t13-high-z1.json",
+      "tick": 17,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 273,
+        "z": 17,
+        "y": 4.2,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L7-high/captures/accept-L7-rocket-t13-high-z0-5.json",
+      "tick": 17,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 273,
+        "z": 17,
+        "y": 4.2,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L7-high/captures/accept-L7-t18.json",
+      "tick": 29,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 273,
+        "z": 17,
+        "y": 4.2,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L7-high/captures/accept-L7-corridor-t111-high-z1-5.json",
+      "tick": 120,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 271.8987010886582,
+        "z": 17.277824550188228,
+        "y": 4.2,
+        "yaw": 0.5970854844423581
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L7-high/captures/accept-L7-corridor-t111-high-z1.json",
+      "tick": 120,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 271.8987010886582,
+        "z": 17.277824550188228,
+        "y": 4.2,
+        "yaw": 0.5970854844423581
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L7-high/captures/accept-L7-corridor-t111-high-z0-5.json",
+      "tick": 120,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 271.8987010886582,
+        "z": 17.277824550188228,
+        "y": 4.2,
+        "yaw": 0.5970854844423581
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L7-high/captures/accept-L7-t2801.json",
+      "tick": 2813,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 161.96658650368397,
+        "z": 21.85118540879154,
+        "y": 2.5499999999999994,
+        "yaw": 0.7774756178312826
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L7-high/captures/accept-L7-corridor-t3727-high-z1-5.json",
+      "tick": 3733,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 127.14623147201439,
+        "z": 21.877989231994846,
+        "y": 1.5,
+        "yaw": 3.141606579963244
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L7-high/captures/accept-L7-corridor-t3727-high-z1.json",
+      "tick": 3733,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 127.14623147201439,
+        "z": 21.877989231994846,
+        "y": 1.5,
+        "yaw": 3.141606579963244
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L7-high/captures/accept-L7-corridor-t3727-high-z0-5.json",
+      "tick": 3733,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 127.14623147201439,
+        "z": 21.877989231994846,
+        "y": 1.5,
+        "yaw": 3.141606579963244
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L7-high/captures/accept-L7-t5506.json",
+      "tick": 5539,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 37.73939993932738,
+        "z": 49.51179307514194,
+        "y": 0.43,
+        "yaw": -3.311294586622025
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L7-high/captures/accept-L7-departure-t7132-high-z1-5.json",
+      "tick": 7137,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -22.356101609313278,
+        "z": 52.282604029354815,
+        "y": 0.41,
+        "yaw": 2.9692372441010115
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L7-high/captures/accept-L7-departure-t7132-high-z1.json",
+      "tick": 7137,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -22.356101609313278,
+        "z": 52.282604029354815,
+        "y": 0.41,
+        "yaw": 2.9692372441010115
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L7-high/captures/accept-L7-departure-t7132-high-z0-5.json",
+      "tick": 7137,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -22.356101609313278,
+        "z": 52.282604029354815,
+        "y": 0.41,
+        "yaw": 2.9692372441010115
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L7-high/captures/accept-L7-t8225.json",
+      "tick": 8234,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -40.97657900721326,
+        "z": 49.81245407190491,
+        "y": 0.62266,
+        "yaw": 3.189331576563768
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L7-high/captures/accept-L7-result.json",
+      "tick": 0,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 0,
+        "z": 72,
+        "y": 0.42,
+        "yaw": 1.5707963267948966
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L7-high/captures/accept-L8-escape-t7-high-z1-5.json",
+      "tick": 8,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 0,
+        "z": 72,
+        "y": 0.42,
+        "yaw": 1.5707963267948966
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L7-high/captures/accept-L8-escape-t7-high-z1.json",
+      "tick": 8,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 0,
+        "z": 72,
+        "y": 0.42,
+        "yaw": 1.5707963267948966
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L7-high/captures/accept-L8-escape-t7-high-z0-5.json",
+      "tick": 8,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 0,
+        "z": 72,
+        "y": 0.42,
+        "yaw": 1.5707963267948966
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L7-low/captures/accept-L7-rocket-t9-low-z1-5.json",
+      "tick": 14,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 273,
+        "z": 17,
+        "y": 4.2,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L7-low/captures/accept-L7-rocket-t9-low-z1.json",
+      "tick": 14,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 273,
+        "z": 17,
+        "y": 4.2,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L7-low/captures/accept-L7-rocket-t9-low-z0-5.json",
+      "tick": 14,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 273,
+        "z": 17,
+        "y": 4.2,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L7-low/captures/accept-L7-t14.json",
+      "tick": 29,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 273,
+        "z": 17,
+        "y": 4.2,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L7-low/captures/accept-L7-corridor-t105-low-z1-5.json",
+      "tick": 109,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 272.1579198098385,
+        "z": 17.53255876150575,
+        "y": 4.2,
+        "yaw": 0.6858342830083003
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L7-low/captures/accept-L7-corridor-t105-low-z1.json",
+      "tick": 109,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 272.1579198098385,
+        "z": 17.53255876150575,
+        "y": 4.2,
+        "yaw": 0.6858342830083003
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L7-low/captures/accept-L7-corridor-t105-low-z0-5.json",
+      "tick": 109,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 272.1579198098385,
+        "z": 17.53255876150575,
+        "y": 4.2,
+        "yaw": 0.6858342830083003
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L7-low/captures/accept-L7-t2729.json",
+      "tick": 2745,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 159.06063607230354,
+        "z": 23.23164882609757,
+        "y": 2.3999999999999995,
+        "yaw": 0.12889382571426808
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L7-low/captures/accept-L7-corridor-t3847-low-z1-5.json",
+      "tick": 3852,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 144.14416439295962,
+        "z": 29.680801622233965,
+        "y": 1.95,
+        "yaw": 3.1435886022274206
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L7-low/captures/accept-L7-corridor-t3847-low-z1.json",
+      "tick": 3852,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 144.14416439295962,
+        "z": 29.680801622233965,
+        "y": 1.95,
+        "yaw": 3.1435886022274206
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L7-low/captures/accept-L7-corridor-t3847-low-z0-5.json",
+      "tick": 3852,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 144.14416439295962,
+        "z": 29.680801622233965,
+        "y": 1.95,
+        "yaw": 3.1435886022274206
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L7-low/captures/accept-L7-t5443.json",
+      "tick": 5450,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 46.04694861589692,
+        "z": 39.594833289294634,
+        "y": 0.43,
+        "yaw": -2.123538647771337
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L7-low/captures/accept-L7-departure-t7344-low-z1-5.json",
+      "tick": 7346,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -27.828213651147493,
+        "z": 49.07024185607146,
+        "y": 0.3,
+        "yaw": 3.1295401279642423
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L7-low/captures/accept-L7-departure-t7344-low-z1.json",
+      "tick": 7346,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -27.828213651147493,
+        "z": 49.07024185607146,
+        "y": 0.3,
+        "yaw": 3.1295401279642423
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L7-low/captures/accept-L7-departure-t7344-low-z0-5.json",
+      "tick": 7346,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -27.828213651147493,
+        "z": 49.07024185607146,
+        "y": 0.3,
+        "yaw": 3.1295401279642423
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L7-low/captures/accept-L7-t8193.json",
+      "tick": 8203,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": -64.36446043700587,
+        "z": 49.04364005211342,
+        "y": 0.43,
+        "yaw": -0.768819232555739
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L7-low/captures/accept-L7-result.json",
+      "tick": 0,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 0,
+        "z": 72,
+        "y": 0.42,
+        "yaw": 1.5707963267948966
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L7-low/captures/accept-L8-escape-t17-low-z1-5.json",
+      "tick": 18,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 0,
+        "z": 72,
+        "y": 0.42,
+        "yaw": 1.5707963267948966
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L7-low/captures/accept-L8-escape-t17-low-z1.json",
+      "tick": 18,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 0,
+        "z": 72,
+        "y": 0.42,
+        "yaw": 1.5707963267948966
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L7-low/captures/accept-L8-escape-t17-low-z0-5.json",
+      "tick": 18,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 0,
+        "z": 72,
+        "y": 0.42,
+        "yaw": 1.5707963267948966
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L8-high/captures/accept-L8-escape-t17-high-z1-5.json",
+      "tick": 20,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 0,
+        "z": 72,
+        "y": 0.42,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L8-high/captures/accept-L8-escape-t17-high-z1.json",
+      "tick": 20,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 0,
+        "z": 72,
+        "y": 0.42,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L8-high/captures/accept-L8-escape-t17-high-z0-5.json",
+      "tick": 20,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 0,
+        "z": 72,
+        "y": 0.42,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L8-high/captures/accept-L8-t20.json",
+      "tick": 27,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 0,
+        "z": 72,
+        "y": 0.42,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L8-high/captures/accept-L8-1255-stuck-navigating.json",
+      "tick": 1267,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 0,
+        "z": 72,
+        "y": 0.42,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L8-high/captures/accept-L8-t2722.json",
+      "tick": 2729,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 0,
+        "z": 72,
+        "y": 0.42,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L8-high/captures/accept-L8-escape-t3652-high-z1-5.json",
+      "tick": 3672,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 1.1727747026450601,
+        "z": 71.17916069288034,
+        "y": 0.42,
+        "yaw": 0.5543703529222255
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L8-high/captures/accept-L8-escape-t3652-high-z1.json",
+      "tick": 3672,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 1.1727747026450601,
+        "z": 71.17916069288034,
+        "y": 0.42,
+        "yaw": 0.5543703529222255
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L8-high/captures/accept-L8-escape-t3652-high-z0-5.json",
+      "tick": 3672,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 1.1727747026450601,
+        "z": 71.17916069288034,
+        "y": 0.42,
+        "yaw": 0.5543703529222255
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L8-high/captures/accept-L8-t5537.json",
+      "tick": 5555,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": true,
+      "passengerOf": 406,
+      "at": {
+        "x": 95.45,
+        "z": 74.55,
+        "y": 0.42,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L8-high/captures/accept-L8-depart-t5971-high-z1-5.json",
+      "tick": 5986,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": true,
+      "passengerOf": 406,
+      "at": {
+        "x": 95.45,
+        "z": 74.55,
+        "y": 0.42,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L8-high/captures/accept-L8-depart-t5971-high-z1.json",
+      "tick": 5986,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": true,
+      "passengerOf": 406,
+      "at": {
+        "x": 95.45,
+        "z": 74.55,
+        "y": 0.42,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L8-high/captures/accept-L8-depart-t5971-high-z0-5.json",
+      "tick": 5986,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": true,
+      "passengerOf": 406,
+      "at": {
+        "x": 95.45,
+        "z": 74.55,
+        "y": 0.42,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L8-high/captures/accept-L8-result.json",
+      "tick": 0,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": true,
+      "passengerOf": 406,
+      "at": {
+        "x": -550.55,
+        "z": 0.55,
+        "y": 1.2254345226287844,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L8-high/captures/accept-L9-approach-t8-high-z1-5.json",
+      "tick": 9,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": true,
+      "passengerOf": 406,
+      "at": {
+        "x": -550.55,
+        "z": 0.55,
+        "y": 0.3,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L8-high/captures/accept-L9-approach-t8-high-z1.json",
+      "tick": 9,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": true,
+      "passengerOf": 406,
+      "at": {
+        "x": -550.55,
+        "z": 0.55,
+        "y": 0.3,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L8-high/captures/accept-L9-approach-t8-high-z0-5.json",
+      "tick": 9,
+      "quality": "high",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": true,
+      "passengerOf": 406,
+      "at": {
+        "x": -550.55,
+        "z": 0.55,
+        "y": 0.3,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L8-low/captures/accept-L8-escape-t19-low-z1-5.json",
+      "tick": 19,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 0,
+        "z": 72,
+        "y": 0.42,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L8-low/captures/accept-L8-escape-t19-low-z1.json",
+      "tick": 19,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 0,
+        "z": 72,
+        "y": 0.42,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L8-low/captures/accept-L8-escape-t19-low-z0-5.json",
+      "tick": 19,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 0,
+        "z": 72,
+        "y": 0.42,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L8-low/captures/accept-L8-t20.json",
+      "tick": 31,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 0,
+        "z": 72,
+        "y": 0.42,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L8-low/captures/accept-L8-1259-stuck-navigating.json",
+      "tick": 1271,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 0,
+        "z": 72,
+        "y": 0.42,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L8-low/captures/accept-L8-t2728.json",
+      "tick": 2732,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 0,
+        "z": 72,
+        "y": 0.42,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L8-low/captures/accept-L8-escape-t3643-low-z1-5.json",
+      "tick": 3646,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 0.304601620618061,
+        "z": 71.62385879764538,
+        "y": 0.42,
+        "yaw": 0.8217256601443126
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L8-low/captures/accept-L8-escape-t3643-low-z1.json",
+      "tick": 3646,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 0.304601620618061,
+        "z": 71.62385879764538,
+        "y": 0.42,
+        "yaw": 0.8217256601443126
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L8-low/captures/accept-L8-escape-t3643-low-z0-5.json",
+      "tick": 3646,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 0.304601620618061,
+        "z": 71.62385879764538,
+        "y": 0.42,
+        "yaw": 0.8217256601443126
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L8-low/captures/accept-L8-t5452.json",
+      "tick": 5466,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": true,
+      "passengerOf": 406,
+      "at": {
+        "x": 95.51063860047168,
+        "z": 74.53632829773724,
+        "y": 0.42,
+        "yaw": 3.1406776201659326e-7
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L8-low/captures/accept-L8-depart-t5480-low-z1-5.json",
+      "tick": 5483,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": true,
+      "passengerOf": 406,
+      "at": {
+        "x": 95.51063860047168,
+        "z": 74.53632829773724,
+        "y": 0.42,
+        "yaw": 3.1406776201659326e-7
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L8-low/captures/accept-L8-depart-t5480-low-z1.json",
+      "tick": 5483,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": true,
+      "passengerOf": 406,
+      "at": {
+        "x": 95.51063860047168,
+        "z": 74.53632829773724,
+        "y": 0.42,
+        "yaw": 3.1406776201659326e-7
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L8-low/captures/accept-L8-depart-t5480-low-z0-5.json",
+      "tick": 5483,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": true,
+      "passengerOf": 406,
+      "at": {
+        "x": 95.51063860047168,
+        "z": 74.53632829773724,
+        "y": 0.42,
+        "yaw": 3.1406776201659326e-7
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L8-low/captures/accept-L8-null-t6337-low-z1-5.json",
+      "tick": 6338,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": true,
+      "passengerOf": 406,
+      "at": {
+        "x": 95.51063860047168,
+        "z": 74.53632829773724,
+        "y": 0.42,
+        "yaw": 3.1406776201659326e-7
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L8-low/captures/accept-L8-null-t6337-low-z1.json",
+      "tick": 6338,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": true,
+      "passengerOf": 406,
+      "at": {
+        "x": 95.51063860047168,
+        "z": 74.53632829773724,
+        "y": 0.42,
+        "yaw": 3.1406776201659326e-7
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L8-low/captures/accept-L8-null-t6337-low-z0-5.json",
+      "tick": 6338,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": true,
+      "passengerOf": 406,
+      "at": {
+        "x": 95.51063860047168,
+        "z": 74.53632829773724,
+        "y": 0.42,
+        "yaw": 3.1406776201659326e-7
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L8-low/captures/accept-L8-result.json",
+      "tick": 0,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": true,
+      "passengerOf": 406,
+      "at": {
+        "x": -550.55,
+        "z": 0.55,
+        "y": 1.2254345226287844,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L8-low/captures/accept-L9-approach-t6-low-z1-5.json",
+      "tick": 6,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": true,
+      "passengerOf": 406,
+      "at": {
+        "x": -550.55,
+        "z": 0.55,
+        "y": 0.3,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L8-low/captures/accept-L9-approach-t6-low-z1.json",
+      "tick": 6,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": true,
+      "passengerOf": 406,
+      "at": {
+        "x": -550.55,
+        "z": 0.55,
+        "y": 0.3,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L8-low/captures/accept-L9-approach-t6-low-z0-5.json",
+      "tick": 6,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": true,
+      "passengerOf": 406,
+      "at": {
+        "x": -550.55,
+        "z": 0.55,
+        "y": 0.3,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L9-low/captures/accept-L9-approach-t14-low-z1-5.json",
+      "tick": 21,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": true,
+      "passengerOf": 667,
+      "at": {
+        "x": -550.55,
+        "z": 0.55,
+        "y": 0.3,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L9-low/captures/accept-L9-approach-t14-low-z1.json",
+      "tick": 21,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": true,
+      "passengerOf": 667,
+      "at": {
+        "x": -550.55,
+        "z": 0.55,
+        "y": 0.3,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L9-low/captures/accept-L9-approach-t14-low-z0-5.json",
+      "tick": 21,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": true,
+      "passengerOf": 667,
+      "at": {
+        "x": -550.55,
+        "z": 0.55,
+        "y": 0.3,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L9-low/captures/accept-L9-t22.json",
+      "tick": 27,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": true,
+      "passengerOf": 667,
+      "at": {
+        "x": -550.55,
+        "z": 0.55,
+        "y": 0.3,
+        "yaw": 0
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L9-low/captures/accept-L9-t2729.json",
+      "tick": 2742,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": true,
+      "passengerOf": 667,
+      "at": {
+        "x": -38.949627120216,
+        "z": -326.06903765277474,
+        "y": 0.3,
+        "yaw": -0.016053137584433993
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L9-low/captures/accept-L9-approach-t3615-low-z1-5.json",
+      "tick": 3617,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": true,
+      "passengerOf": 667,
+      "at": {
+        "x": 194.04187499035817,
+        "z": -329.27952694145387,
+        "y": 0.3,
+        "yaw": -0.025259564521900233
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L9-low/captures/accept-L9-approach-t3615-low-z1.json",
+      "tick": 3617,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": true,
+      "passengerOf": 667,
+      "at": {
+        "x": 194.04187499035817,
+        "z": -329.27952694145387,
+        "y": 0.3,
+        "yaw": -0.025259564521900233
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L9-low/captures/accept-L9-approach-t3615-low-z0-5.json",
+      "tick": 3617,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": true,
+      "passengerOf": 667,
+      "at": {
+        "x": 194.04187499035817,
+        "z": -329.27952694145387,
+        "y": 0.3,
+        "yaw": -0.025259564521900233
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L9-low/captures/accept-L9-t5435.json",
+      "tick": 5439,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": true,
+      "passengerOf": 667,
+      "at": {
+        "x": 399.1333337744972,
+        "z": -174.6447833114474,
+        "y": 0.3,
+        "yaw": -1.2854379692580833
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L9-low/captures/accept-L9-null-t6122-low-z1-5.json",
+      "tick": 6134,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": true,
+      "passengerOf": 667,
+      "at": {
+        "x": 467.65061842265345,
+        "z": 3.193506143169521,
+        "y": 0.3,
+        "yaw": 0.0924042111410488
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L9-low/captures/accept-L9-null-t6122-low-z1.json",
+      "tick": 6134,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": true,
+      "passengerOf": 667,
+      "at": {
+        "x": 467.65061842265345,
+        "z": 3.193506143169521,
+        "y": 0.3,
+        "yaw": 0.0924042111410488
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L9-low/captures/accept-L9-null-t6122-low-z0-5.json",
+      "tick": 6134,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": true,
+      "passengerOf": 667,
+      "at": {
+        "x": 467.65061842265345,
+        "z": 3.193506143169521,
+        "y": 0.3,
+        "yaw": 0.0924042111410488
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L9-low/captures/accept-L9-reach-outskirts-t6422-low-z1-5.json",
+      "tick": 6441,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": true,
+      "passengerOf": 667,
+      "at": {
+        "x": 467.65061842265345,
+        "z": 3.193506143169521,
+        "y": 0.3,
+        "yaw": 0.0924042111410488
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L9-low/captures/accept-L9-reach-outskirts-t6422-low-z1.json",
+      "tick": 6441,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": true,
+      "passengerOf": 667,
+      "at": {
+        "x": 467.65061842265345,
+        "z": 3.193506143169521,
+        "y": 0.3,
+        "yaw": 0.0924042111410488
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L9-low/captures/accept-L9-reach-outskirts-t6422-low-z0-5.json",
+      "tick": 6441,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": true,
+      "passengerOf": 667,
+      "at": {
+        "x": 467.65061842265345,
+        "z": 3.193506143169521,
+        "y": 0.3,
+        "yaw": 0.0924042111410488
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L9-low/captures/accept-L9-result.json",
+      "tick": 0,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 547,
+        "z": 2,
+        "y": 0.3,
+        "yaw": 1.5707963267948966
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L9-low/captures/accept-L10-residential-fringe-t1-low-z1-5.json",
+      "tick": 9,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 547,
+        "z": 2,
+        "y": 0.3,
+        "yaw": 1.5707963267948966
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L9-low/captures/accept-L10-residential-fringe-t1-low-z1.json",
+      "tick": 9,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 547,
+        "z": 2,
+        "y": 0.3,
+        "yaw": 1.5707963267948966
+      },
+      "bar": false
+    },
+    {
+      "file": "test-results/final-g/L9-low/captures/accept-L10-residential-fringe-t1-low-z0-5.json",
+      "tick": 9,
+      "quality": "low",
+      "hp": 100,
+      "maxHp": 100,
+      "hidden": false,
+      "passengerOf": null,
+      "at": {
+        "x": 547,
+        "z": 2,
+        "y": 0.3,
+        "yaw": 1.5707963267948966
+      },
+      "bar": false
+    }
+  ],
+  "closure": "Both-tier L1 shutter admits dog to west/inside of x=-75.4 closed gate; both-tier L5 Metro at360/600 shows corgi inside before closure/progression; both physical L4 cellar wait frames contain player+dog; L6 safe-side gate views show dog with player. Failed low L3 gate correctly stays open while dog is distant: this is G27babysitting, not an inside-wall finding.",
+  "geometry": "No visible dog mesh intersection established in reviewed fence/wreck/door/hull frames. Read-only L3 failed-pose static/nav queries are clear at radius0.44. Hidden seated transport dogs are intentionally not drawn through opaque hulls; they are not scored as a visible hull intersection."
+}

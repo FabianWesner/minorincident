@@ -2,1209 +2,166 @@
   "version": 1,
   "level": "L4",
   "tier": "low",
-  "sourceHash": "aec13daf090fd1d27a23e0e5ca5469729cc461885d10a55fafa2feeb4c937f2d",
-  "fixtureHash": "0662781c20ccde1a6ee7d8de6c4a55b65033e0f1d90c62cfeda935ddac6b3fcc",
-  "browserHash": "9e227fa3b945360df3ced89d37da620661482cf42990f8f02eb07b7f9c843069",
-  "errors": [],
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "fixtureHash": "3a1aa6ffd344dc12e40e887d5787eccb7b7f2da10d19445898a88e94befd6f3f",
+  "browserHash": "3a1aa6ffd344dc12e40e887d5787eccb7b7f2da10d19445898a88e94befd6f3f",
   "checks": [
     {
-      "id": "L4-03",
-      "clause": "actual MG pickup klaxon and attack start share simulation tick",
+      "id": "G-25",
+      "clause": "physical WASD/mouse full-level browser console",
       "tier": "low",
       "policy": "real-input-webgl2",
       "status": "PASS",
       "value": {
-        "pickupTicks": [
-          2176
-        ],
-        "gunTicks": [
-          2176
-        ],
-        "turnTicks": [
-          2176
-        ],
-        "alarms": [
-          {
-            "type": "actual-klaxon-start",
-            "tick": 2176,
-            "observedWorldTick": 2176,
-            "handled": true,
-            "active": true,
-            "scheduled": [
-              {
-                "cue": "l4.klaxon",
-                "time": 50.90133333333333,
-                "positional": true
-              },
-              {
-                "cue": "l4.klaxon",
-                "time": 50.90133333333333,
-                "positional": true
-              },
-              {
-                "cue": "l4.klaxon",
-                "time": 50.90133333333333,
-                "positional": true
-              },
-              {
-                "cue": "l4.klaxon",
-                "time": 50.90133333333333,
-                "positional": false
-              }
-            ],
-            "voices": [
-              {
-                "id": 311,
-                "cue": "l4.klaxon",
-                "gain": 0.33000001311302185,
-                "loop": true
-              },
-              {
-                "id": 312,
-                "cue": "l4.klaxon",
-                "gain": 0.33000001311302185,
-                "loop": true
-              },
-              {
-                "id": 313,
-                "cue": "l4.klaxon",
-                "gain": 0.33000001311302185,
-                "loop": true
-              },
-              {
-                "id": 314,
-                "cue": "l4.klaxon",
-                "gain": 0.06599999964237213,
-                "loop": true
-              }
-            ]
-          }
-        ],
-        "firstAdmission": {
-          "type": "actual-l4-admissions",
-          "tick": 2176,
-          "ids": [
-            {
-              "id": 162,
-              "x": -39.513124999999995,
-              "z": 16,
-              "hp": 60,
-              "hidden": false,
-              "pendingAdmission": false
-            },
-            {
-              "id": 163,
-              "x": -38.59375,
-              "z": 16,
-              "hp": 45,
-              "hidden": false,
-              "pendingAdmission": false
-            },
-            {
-              "id": 164,
-              "x": -37.7,
-              "z": 16,
-              "hp": 210,
-              "hidden": false,
-              "pendingAdmission": false
-            },
-            {
-              "id": 165,
-              "x": -24.9,
-              "z": 25.5,
-              "hp": 37.5,
-              "hidden": false,
-              "pendingAdmission": false
-            },
-            {
-              "id": 166,
-              "x": -24,
-              "z": 25.5,
-              "hp": 225,
-              "hidden": false,
-              "pendingAdmission": false
-            },
-            {
-              "id": 167,
-              "x": -23.1,
-              "z": 25.5,
-              "hp": 180,
-              "hidden": false,
-              "pendingAdmission": false
-            },
-            {
-              "id": 168,
-              "x": -16.9,
-              "z": 25.5,
-              "hp": 60,
-              "hidden": false,
-              "pendingAdmission": false
-            },
-            {
-              "id": 169,
-              "x": -16,
-              "z": 25.5,
-              "hp": 225,
-              "hidden": false,
-              "pendingAdmission": false
-            },
-            {
-              "id": 170,
-              "x": -15.1,
-              "z": 25.5,
-              "hp": 37.5,
-              "hidden": false,
-              "pendingAdmission": false
-            }
-          ]
-        },
+        "backend": "webgl2",
         "zoom": 1.5,
-        "controls": [
-          {
-            "fault": "l4.gun delayed one tick",
-            "status": "FAIL"
-          },
-          {
-            "fault": "l4.firstTurn delayed one tick",
-            "status": "FAIL"
-          },
-          {
-            "fault": "actual-klaxon-start delayed one tick",
-            "status": "FAIL"
-          },
-          {
-            "fault": "actual-l4-admissions delayed one tick",
-            "status": "FAIL"
-          },
-          {
-            "fault": "observed tick delayed",
-            "status": "FAIL"
-          },
-          {
-            "fault": "missing voices",
-            "status": "FAIL"
-          },
-          {
-            "fault": "missing admissions",
-            "status": "NOT CHECKED"
-          }
-        ],
-        "archived": "docs/reports/sweep-b/L4-low-z1.5-ledger.json.gz",
-        "sha256": "ca337b9dc30084f7254b751ddecf5f82ab33fbb9a018fc42e859286565ad3528"
+        "completed": true,
+        "skipped": [],
+        "consoleErrors": [],
+        "immortal": true,
+        "frameTiming": false
       },
-      "target": "actual pickup, gun/turn, live positive-gain klaxon voices and first living admissions share one simulation tick",
-      "receipt": "docs/reports/fix51-verify/receipts/L4-low-webgl2-z1.5-browser.json"
-    },
-    {
-      "id": "L4-16",
-      "clause": "actual cellar entrant roster",
-      "tier": "low",
-      "policy": "real-input-webgl2",
-      "status": "PASS",
-      "value": {
-        "anchor": {
-          "x": 75.3,
-          "z": -6.4,
-          "radius": 2,
-          "yaw": 0
-        },
-        "entry": {
-          "x": -79.29999999999998,
-          "z": -45.2801,
-          "radius": 1.4,
-          "yaw": -1.5707963267948966
-        },
-        "player": {
-          "x": 75.3,
-          "y": 0.7049999833106995,
-          "z": -6.4,
-          "yaw": -3.9269908169872423
-        },
-        "doorway": {
-          "x": -79.29999999999998,
-          "z": -45.2801,
-          "yaw": -1.5707963267948966
-        },
-        "actors": [
-          {
-            "id": 1,
-            "archetype": "player.survivor",
-            "companion": false,
-            "x": 75.3,
-            "y": 0.7049999833106995,
-            "z": -6.4,
-            "pendingAdmission": false
-          },
-          {
-            "id": 29,
-            "archetype": "char.corgi",
-            "companion": true,
-            "x": 76.5,
-            "y": 0.3,
-            "z": -7,
-            "pendingAdmission": false
-          }
-        ]
-      },
-      "target": "only player and corgi, no pending admissions",
-      "receipt": "docs/reports/fix51-verify/receipts/L4-low-webgl2-z1.5-browser.json"
-    },
-    {
-      "id": "L4-16",
-      "clause": "decoded low-pass battle audible after barring",
-      "tier": "low",
-      "policy": "real-input-webgl2",
-      "status": "FAIL",
-      "value": {
-        "barTick": 14739,
-        "first": {
-          "tick": 14815,
-          "time": 269.19466666666665,
-          "state": "running",
-          "rms": 0.007213569060632349,
-          "peak": 0.026407107710838318
-        },
-        "last": {
-          "tick": 15148,
-          "time": 274.74133333333333,
-          "state": "running",
-          "rms": 0.02183018660322483,
-          "peak": 0.06744764745235443
-        },
-        "spanSeconds": 5.55,
-        "maximumGap": 0.7,
-        "voices": [
-          {
-            "id": 8186,
-            "cue": "action.weapon.army-mg",
-            "tick": 14814,
-            "filter": 750,
-            "gain": 0.31533628702163696
-          },
-          {
-            "id": 8187,
-            "cue": "action.weapon.army-mg",
-            "tick": 14814,
-            "filter": 750,
-            "gain": 0.35402053594589233
-          },
-          {
-            "id": 8188,
-            "cue": "action.weapon.army-mg",
-            "tick": 14814,
-            "filter": 750,
-            "gain": 0.34507519006729126
-          },
-          {
-            "id": 8222,
-            "cue": "action.weapon.army-mg",
-            "tick": 14889,
-            "filter": 750,
-            "gain": 0.33256229758262634
-          },
-          {
-            "id": 8223,
-            "cue": "action.weapon.army-mg",
-            "tick": 14889,
-            "filter": 750,
-            "gain": 0.3194776475429535
-          },
-          {
-            "id": 8224,
-            "cue": "action.weapon.army-mg",
-            "tick": 14889,
-            "filter": 750,
-            "gain": 0.3215910494327545
-          },
-          {
-            "id": 8262,
-            "cue": "action.weapon.army-mg",
-            "tick": 14964,
-            "filter": 750,
-            "gain": 0.3412744700908661
-          },
-          {
-            "id": 8263,
-            "cue": "action.weapon.army-mg",
-            "tick": 14964,
-            "filter": 750,
-            "gain": 0.34050214290618896
-          },
-          {
-            "id": 8264,
-            "cue": "action.weapon.army-mg",
-            "tick": 14964,
-            "filter": 750,
-            "gain": 0.3407568037509918
-          },
-          {
-            "id": 8265,
-            "cue": "explosion.boom",
-            "tick": 14964,
-            "filter": 500,
-            "gain": 0.13977648317813873
-          },
-          {
-            "id": 8302,
-            "cue": "action.weapon.army-mg",
-            "tick": 15039,
-            "filter": 750,
-            "gain": 0.303732693195343
-          },
-          {
-            "id": 8303,
-            "cue": "action.weapon.army-mg",
-            "tick": 15039,
-            "filter": 750,
-            "gain": 0.35011717677116394
-          },
-          {
-            "id": 8349,
-            "cue": "action.weapon.army-mg",
-            "tick": 15114,
-            "filter": 750,
-            "gain": 0.35777273774147034
-          },
-          {
-            "id": 8350,
-            "cue": "action.weapon.army-mg",
-            "tick": 15114,
-            "filter": 750,
-            "gain": 0.3104580342769623
-          }
-        ],
-        "audioSettings": {
-          "browserOutputMuted": true,
-          "state": "running",
-          "unlocked": true,
-          "background": false,
-          "muted": false,
-          "master": 2,
-          "output": 1,
-          "voices": 8,
-          "voiceLimit": 16,
-          "music": {
-            "level": "L5",
-            "story": {
-              "beat": "safe",
-              "minimum": 0
-            },
-            "state": "calm",
-            "streamed": {
-              "state": null,
-              "peak": false,
-              "transitions": [],
-              "decks": [
-                {
-                  "state": "combat",
-                  "file": "combat",
-                  "paused": true,
-                  "position": 0,
-                  "gain": 0
-                },
-                {
-                  "state": "calm",
-                  "file": "calm-L4",
-                  "paused": true,
-                  "position": 0,
-                  "gain": 0
-                },
-                {
-                  "state": "tension",
-                  "file": "tension-L4",
-                  "paused": true,
-                  "position": 0,
-                  "gain": 0
-                },
-                {
-                  "state": "aftermath",
-                  "file": "aftermath",
-                  "paused": true,
-                  "position": 0,
-                  "gain": 0
-                }
-              ]
-            },
-            "radio": {
-              "level": 0,
-              "playing": false
-            },
-            "paused": false,
-            "position": 0.7800000000000296,
-            "layers": [
-              "base"
-            ],
-            "score": 0,
-            "transitions": []
-          },
-          "buses": {
-            "music": 0.3981071710586548,
-            "weapons": 1,
-            "impacts": 1,
-            "vehicles": 1,
-            "props": 1,
-            "gore": 1,
-            "telegraph": 1,
-            "ambience": 0.9830366969108582,
-            "dialogue": 1,
-            "barks": 1,
-            "ui": 1
-          },
-          "errors": [],
-          "cues": [
-            {
-              "cue": "dialogue.radio",
-              "variant": "dialogue.radio",
-              "time": 278.6186666666667,
-              "tick": 0,
-              "gain": 0.044167015701532364,
-              "rate": 1,
-              "lowpass": 20000,
-              "voice": 8376
-            },
-            {
-              "cue": "horde.loop.grass",
-              "variant": "horde.loop.grass",
-              "time": 278.928,
-              "tick": 12,
-              "sourceId": 100000,
-              "position": {
-                "id": 0,
-                "x": 50,
-                "z": -12,
-                "count": 2
-              },
-              "gain": 0.07124999910593033,
-              "rate": 0.9796608090400696,
-              "lowpass": 20000,
-              "voice": 8377
-            },
-            {
-              "cue": "horde.loop.grass",
-              "variant": "horde.loop.grass",
-              "time": 278.928,
-              "tick": 12,
-              "sourceId": 100001,
-              "position": {
-                "id": 1,
-                "x": 60,
-                "z": 2,
-                "count": 3
-              },
-              "gain": 0.07124999910593033,
-              "rate": 0.981606662273407,
-              "lowpass": 20000,
-              "voice": 8378
-            },
-            {
-              "cue": "horde.loop.grass",
-              "variant": "horde.loop.grass",
-              "time": 278.928,
-              "tick": 12,
-              "sourceId": 100002,
-              "position": {
-                "id": 2,
-                "x": 50,
-                "z": 2,
-                "count": 2
-              },
-              "gain": 0.07124999910593033,
-              "rate": 1.0279557704925537,
-              "lowpass": 20000,
-              "voice": 8379
-            },
-            {
-              "cue": "bed.wind",
-              "variant": "bed.wind",
-              "time": 278.97066666666666,
-              "tick": 15,
-              "gain": 0.02852807752788067,
-              "rate": 0.9742308855056763,
-              "lowpass": 20000,
-              "voice": 8380
-            },
-            {
-              "cue": "bed.fire",
-              "variant": "bed.fire",
-              "time": 278.97066666666666,
-              "tick": 15,
-              "gain": 0.02852807752788067,
-              "rate": 0.9890089631080627,
-              "lowpass": 20000,
-              "voice": 8381
-            },
-            {
-              "cue": "infected.hurt",
-              "variant": "infected.hurt",
-              "time": 279.712,
-              "tick": 60,
-              "sourceId": 254,
-              "position": {
-                "x": 11.926451915332569,
-                "z": -11.747872886687134,
-                "y": 0.7,
-                "yaw": 3.7228867235972394
-              },
-              "gain": 0.23533910512924194,
-              "rate": 0.9660122990608215,
-              "lowpass": 20000,
-              "voice": 8382
-            },
-            {
-              "cue": "gore.squelch",
-              "variant": "gore.squelch.v2",
-              "time": 279.712,
-              "tick": 60,
-              "sourceId": 72,
-              "position": {
-                "x": 11.926451915332569,
-                "z": -11.747872886687134,
-                "y": 0.7,
-                "yaw": 3.7228867235972394
-              },
-              "gain": 0.18026359379291534,
-              "rate": 0.9735692143440247,
-              "lowpass": 20000,
-              "voice": 8383
-            }
-          ],
-          "clusters": [
-            {
-              "id": 0,
-              "x": 50.00359154002875,
-              "z": -11.765193746227673,
-              "count": 2
-            },
-            {
-              "id": 1,
-              "x": 61.81744877012416,
-              "z": 1.8963666958511352,
-              "count": 2
-            },
-            {
-              "id": 2,
-              "x": 51.98669114470791,
-              "z": 1.8294315084065536,
-              "count": 3
-            }
-          ],
-          "captions": []
-        },
-        "input": "docs/reports/sweep-b/L4-low-z1.5-ledger.json.gz",
-        "inputSha256": "ca337b9dc30084f7254b751ddecf5f82ab33fbb9a018fc42e859286565ad3528",
-        "audioPath": "test-results/vqa-1b/sweep-b-L4-low-z1.5/sweep-b-L4-low-z1.5-audio.json",
-        "audioSha256": "a909961586fd6b4085fb9e0cf9878d67e32f3b93ecd48ebe2a71c440d2b53551"
-      },
-      "target": "decoded RMS\u22650.001 spans\u22656sim seconds; gaps\u22641.5s; positive-gain voices filtered\u2264750Hz in live graph",
-      "receipt": "docs/reports/fix51-verify/receipts/L4-low-webgl2-z1.5-browser.json"
-    },
-    {
-      "id": "L4-16",
-      "clause": "actual same-basement L5 handover",
-      "tier": "low",
-      "policy": "real-input-webgl2",
-      "status": "PASS",
-      "value": {
-        "outgoing": {
-          "anchor": {
-            "x": 75.3,
-            "z": -6.4,
-            "radius": 2,
-            "yaw": 0
-          },
-          "entry": {
-            "x": -79.29999999999998,
-            "z": -45.2801,
-            "radius": 1.4,
-            "yaw": -1.5707963267948966
-          },
-          "player": {
-            "x": 75.3,
-            "y": 0.7049999833106995,
-            "z": -6.4,
-            "yaw": -3.9269908169872423
-          },
-          "doorway": {
-            "x": -79.29999999999998,
-            "z": -45.2801,
-            "yaw": -1.5707963267948966
-          },
-          "actors": [
-            {
-              "id": 1,
-              "archetype": "player.survivor",
-              "companion": false,
-              "x": 75.3,
-              "y": 0.7049999833106995,
-              "z": -6.4,
-              "pendingAdmission": false
-            },
-            {
-              "id": 29,
-              "archetype": "char.corgi",
-              "companion": true,
-              "x": 76.5,
-              "y": 0.3,
-              "z": -7,
-              "pendingAdmission": false
-            }
-          ]
-        },
-        "incoming": {
-          "anchor": {
-            "x": 75.3,
-            "z": -5.4,
-            "radius": 2,
-            "yaw": 0
-          },
-          "entry": {
-            "x": -79.29999999999998,
-            "z": -45.2801,
-            "radius": 2,
-            "yaw": -1.5707963267948966
-          },
-          "player": {
-            "x": 75.3,
-            "y": 0.705,
-            "z": -5.4,
-            "yaw": 0.3205919885488634
-          },
-          "actors": [
-            {
-              "id": 1,
-              "archetype": "player.survivor",
-              "companion": false,
-              "x": 75.3,
-              "y": 0.705,
-              "z": -5.4,
-              "pendingAdmission": false
-            },
-            {
-              "id": 18,
-              "archetype": "char.corgi",
-              "companion": true,
-              "x": 76.03806023374436,
-              "y": 0.3,
-              "z": -6.191341716182545,
-              "pendingAdmission": false
-            }
-          ]
-        }
-      },
-      "target": "same doorway, interior within2m; courier and corgi inside",
-      "receipt": "docs/reports/fix51-verify/receipts/L4-low-webgl2-z1.5-browser.json"
-    },
-    {
-      "id": "L4-16",
-      "clause": "reviewed visible companion in cellar",
-      "tier": "low",
-      "policy": "real-input-webgl2",
-      "status": "PASS",
-      "value": {
-        "file": "docs/reports/sweep-b/L4-capture-review.json",
-        "sha256": "fb0ebb8226f31b8765bffe7e91452d6c7f26f10bec5b2c236948d59ffab874d9",
-        "routeZoom": 1.5
-      },
-      "target": "courier/corgi inspected in actual cellar at both photo zooms and qualities",
-      "receipt": "docs/reports/fix51-verify/receipts/L4-low-webgl2-z1.5-browser.json"
-    },
-    {
-      "id": "L4-12",
-      "clause": "actual nearest20 living infected distinct looks",
-      "tier": "low",
-      "policy": "controlled-fixture",
-      "status": "PASS",
-      "value": {
-        "tier": "low",
-        "samples": 356,
-        "minimumDistinctLooks": 4,
-        "counterexample": {
-          "tick": 4050,
-          "actors": [
-            {
-              "id": 244,
-              "x": -25.751726863009807,
-              "z": 1.9501623764007538,
-              "model": "infected.firefighter",
-              "archetype": "infected.firefighter"
-            },
-            {
-              "id": 207,
-              "x": -26.65596376633165,
-              "z": 2.1088522670605085,
-              "model": "infected.hazmat",
-              "archetype": "infected.hazmat"
-            },
-            {
-              "id": 259,
-              "x": -23.638151974967563,
-              "z": 4.285686337648589,
-              "model": "infected.riot",
-              "archetype": "infected.riot"
-            },
-            {
-              "id": 268,
-              "x": -22.177075241717638,
-              "z": 2.127848023224969,
-              "model": "infected.riot",
-              "archetype": "infected.riot"
-            },
-            {
-              "id": 182,
-              "x": -26.79223432946332,
-              "z": 3.9616705344358434,
-              "model": "infected.riot",
-              "archetype": "infected.riot"
-            },
-            {
-              "id": 222,
-              "x": -22.022038559166948,
-              "z": 3.4291172450001457,
-              "model": "infected.firefighter",
-              "archetype": "infected.firefighter"
-            },
-            {
-              "id": 206,
-              "x": -27.58937792485642,
-              "z": 2.892339816434932,
-              "model": "infected.firefighter",
-              "archetype": "infected.firefighter"
-            },
-            {
-              "id": 209,
-              "x": -27.65434319023702,
-              "z": 1.9720090551523566,
-              "model": "infected.riot",
-              "archetype": "infected.riot"
-            },
-            {
-              "id": 191,
-              "x": -21.835727741298808,
-              "z": 1.2617995207060153,
-              "model": "infected.firefighter",
-              "archetype": "infected.firefighter"
-            },
-            {
-              "id": 253,
-              "x": -26.798065424731345,
-              "z": 4.937456707842665,
-              "model": "infected.crawler",
-              "archetype": "infected.crawler"
-            },
-            {
-              "id": 252,
-              "x": -24.806520686192222,
-              "z": 5.780564584035353,
-              "model": "infected.crawler",
-              "archetype": "infected.crawler"
-            },
-            {
-              "id": 256,
-              "x": -21.29305680255669,
-              "z": 2.8056795710501525,
-              "model": "infected.firefighter",
-              "archetype": "infected.firefighter"
-            },
-            {
-              "id": 251,
-              "x": -21.25861076476015,
-              "z": 1.9228485340308419,
-              "model": "infected.riot",
-              "archetype": "infected.riot"
-            },
-            {
-              "id": 179,
-              "x": -24.41639243785805,
-              "z": -1.1652067425093153,
-              "model": "infected.hazmat",
-              "archetype": "infected.hazmat"
-            },
-            {
-              "id": 264,
-              "x": -27.788031458104875,
-              "z": 5.029562187674461,
-              "model": "infected.crawler",
-              "archetype": "infected.crawler"
-            },
-            {
-              "id": 236,
-              "x": -27.164208246516363,
-              "z": 5.763384380533289,
-              "model": "infected.hazmat",
-              "archetype": "infected.hazmat"
-            },
-            {
-              "id": 262,
-              "x": -20.436844756381443,
-              "z": 2.3338439362116894,
-              "model": "infected.riot",
-              "archetype": "infected.riot"
-            },
-            {
-              "id": 165,
-              "x": -26.480754167952597,
-              "z": 6.355423923192456,
-              "model": "infected.crawler",
-              "archetype": "infected.crawler"
-            },
-            {
-              "id": 164,
-              "x": -24.047291490886238,
-              "z": -1.8285746975770865,
-              "model": "infected.firefighter",
-              "archetype": "infected.firefighter"
-            },
-            {
-              "id": 257,
-              "x": -21.43813655661675,
-              "z": -0.976458104880686,
-              "model": "infected.riot",
-              "archetype": "infected.riot"
-            }
-          ]
-        },
-        "observedHash": "1a99e716",
-        "canonicalHash": "1a99e716"
-      },
-      "target": "at least4 distinct infected looks in every20-infected sample",
-      "receipt": "docs/reports/sweep-b/L4-12-proof.json"
-    },
-    {
-      "id": "L4-08",
-      "clause": "actual Alpha admission directions and line hits",
-      "tier": "low",
-      "policy": "controlled-fixture",
-      "status": "PASS",
-      "value": {
-        "tier": "low",
-        "pass": true,
-        "actualAdmissions": [
-          {
-            "id": 202,
-            "tick": 2329,
-            "at": {
-              "x": -46,
-              "y": 0.7,
-              "z": 21,
-              "yaw": 0.5554937352655437
-            },
-            "anchor": "l4-alpha-west-slot",
-            "offscreen": true,
-            "playerDistance": 30.667787474541136,
-            "bearingDegrees": 148.17255342332692
-          },
-          {
-            "id": 374,
-            "tick": 7009,
-            "at": {
-              "x": -5.8826834323650905,
-              "y": 0.83,
-              "z": 41.676120467488715,
-              "yaw": 1.8506967595228738
-            },
-            "anchor": "l4-alpha-south",
-            "offscreen": true,
-            "playerDistance": 46.833571125947365,
-            "bearingDegrees": 73.9628865208015
-          },
-          {
-            "id": 397,
-            "tick": 7489,
-            "at": {
-              "x": -17.75,
-              "y": 0.7,
-              "z": -38.4,
-              "yaw": -1.5466464333973808
-            },
-            "anchor": "l4-alpha-north",
-            "offscreen": true,
-            "playerDistance": 37.13350464170694,
-            "bearingDegrees": -91.03785349330137
-          },
-          {
-            "id": 456,
-            "tick": 9169,
-            "at": {
-              "x": -23,
-              "y": 0.7,
-              "z": 42.6,
-              "yaw": 1.4204248987877621
-            },
-            "anchor": "l4-alpha-sw",
-            "offscreen": true,
-            "playerDistance": 43.6047150196436,
-            "bearingDegrees": 98.61564818416412
-          },
-          {
-            "id": 490,
-            "tick": 10249,
-            "at": {
-              "x": -39.2,
-              "y": 0.83,
-              "z": -35,
-              "yaw": -1.0420676422826194
-            },
-            "anchor": "l4-alpha-west",
-            "offscreen": true,
-            "playerDistance": 57.05712395943278,
-            "bearingDegrees": -120.2939221300575
-          },
-          {
-            "id": 505,
-            "tick": 10849,
-            "at": {
-              "x": 0.9,
-              "y": 0.7,
-              "z": -23.3,
-              "yaw": -2.1683888717423656
-            },
-            "anchor": "l4-alpha-ne",
-            "offscreen": true,
-            "playerDistance": 39.96301144404295,
-            "bearingDegrees": -55.76046930602808
-          }
-        ],
-        "actualAlphaLineDamageSources": [
-          202,
-          397,
-          456
-        ],
-        "observedHash": "1a99e716",
-        "canonicalHash": "1a99e716"
-      },
-      "target": "6low/8high; at least6 actual source directions, staggered offscreen; at least3 same-ID Alphas damage a line",
-      "receipt": "docs/reports/sweep-b/L4-08-proof.json"
-    },
-    {
-      "id": "L4-02",
-      "clause": "pre-pickup reception census routines separation and reviewed calm visuals",
-      "tier": "low",
-      "policy": "real-input-webgl2",
-      "status": "PASS",
-      "value": {
-        "tier": "low",
-        "zoom": 1.5,
-        "samples": 12,
-        "firstTick": 1830,
-        "lastTick": 2160,
-        "minimumCivilians": 32,
-        "requiredCivilians": 30,
-        "minimumCentreSeparationM": 0.7137709951300143,
-        "closestPair": [
-          1980,
-          38,
-          44
-        ],
-        "infected": 0,
-        "combatWindups": 0,
-        "damageDecals": 0,
-        "anyEngagedSoldier": false,
-        "routines": [
-          "bus-stop",
-          "carry-belongings",
-          "chat",
-          "jog",
-          "shop",
-          "walk-dog"
-        ],
-        "allCivilianActivitiesCalm": true,
-        "status": "PASS",
-        "controlsRejectWrongFact": {
-          "count": true,
-          "separation": true,
-          "infected": true,
-          "decals": true,
-          "combat": true,
-          "engaged": true
-        },
-        "input": "docs/reports/sweep-b/L4-low-z1.5-ledger.json.gz",
-        "inputSha256": "ca337b9dc30084f7254b751ddecf5f82ab33fbb9a018fc42e859286565ad3528"
-      },
-      "target": "high\u226540/low\u226530 civilians; no infected/combat/damage decals; calm routines, relaxed soldiers, no overlap or outside-camp clump",
-      "receipt": "docs/reports/sweep-b/L4-02-proof.json"
-    },
-    {
-      "id": "L4-18",
-      "clause": "reviewed clean living plaza and readable battle courier",
-      "tier": "low",
-      "policy": "real-input-webgl2",
-      "status": "PASS",
-      "value": "All151 current L4 physical captures inspected across low/high and both photo zooms. Pre-alarm reception is clean and populated, with separated civilians, lowered soldier rifles and no blood/fire damage. Battle frames contain a large horde, soldiers, armoured vehicles, helicopter, fire and corpse fields. Courier clothing/outline remains distinguishable when surrounded; living bodies can overlap the courier, but the inspected battle frames retain an identifiable player. P: PO: do the war frames read as a huge mixed war? Use the reviewed battle captures; player readability remains an objective inspection. This verdict closes objective inspected clauses only and does not answer that feel question.",
-      "target": "Clean living safe plaza; readable battle courier. Huge-mixed-war feel remains P.",
-      "receipt": "docs/reports/sweep-b/L4-18-proof.json"
-    },
-    {
-      "id": "L4-05",
-      "clause": "actual admitted street cohort sizes",
-      "tier": "low",
-      "policy": "controlled-fixture",
-      "status": "FAIL",
-      "value": {
-        "tier": "low",
-        "smallest": 1,
-        "largest": 5,
-        "firstSingleton": {
-          "key": "2840:23",
-          "actors": [
-            {
-              "id": 229,
-              "tick": 2840,
-              "origin": 23,
-              "edge": 0,
-              "x": -76.9,
-              "z": 55
-            }
-          ]
-        },
-        "nativeStateHash": "1a99e716",
-        "canonicalStateHash": "1a99e716"
-      },
-      "target": "Both tiers contain actual one-body street cohorts, below unchanged2\u20135 target. Low actor229 at tick2840/origin23/edge0; high actor279 at tick2340/origin17/edge4. Every-tick newly appended emergedIds are grouped by the production same-tick/source transaction, not geometric clustering. Full admitted ID/position ledger retained; maximum5, minimum1. Both ordinary mortal complete final hashes equal current canonical receipts. The singleton counterexample closes FAIL; street-edge angular diversity, wall crossing and forbidden-interior clauses are not promoted to PASS.",
-      "receipt": "docs/reports/sweep-b/L4-05-proof.json"
-    },
-    {
-      "id": "L4-14",
-      "clause": "actual cellar-entry live damage and renderer scorch census",
-      "tier": "low",
-      "policy": "controlled-fixture",
-      "status": "PASS",
-      "value": {
-        "tier": "low",
-        "tick": 19710,
-        "descendAt": 19691,
-        "actualTier": "low",
-        "renderTier": "low",
-        "fires": 4,
-        "shatteredWindows": 14,
-        "burningVehicleIds": [
-          124,
-          121,
-          120
-        ],
-        "actualRendererScorch": 21
-      },
-      "target": "Both current low/high renderer worlds at actual cellar entry contain4 persistent fires,3 burned/burning vehicle identities,14 shattered-window events and21 live production Blasts.scorch pool instances (target\u22656). Actual render and director tiers agree with each requested tier. Native ordinary route damage ledgers independently retain actual exploded/burned vehicle entities; collapse fire effects persist. The old s.scorch controller field is not the renderer count and is not used. Both new entry images were inspected; they frame the courtyard, so the remote damage census is supplied by the production state/pools and earlier151-frame full-route review.",
-      "receipt": "docs/reports/sweep-b/L4-14-proof.json"
-    },
-    {
-      "id": "L4-17",
-      "clause": "actual renderer corpse pile lift counterexample",
-      "tier": "low",
-      "policy": "controlled-fixture",
-      "status": "FAIL",
-      "value": {
-        "tier": "low",
-        "tick": 12300,
-        "audit": {
-          "count": 214,
-          "sunkPairs": 0,
-          "heapPairs": 609,
-          "repeatedPairs": 0,
-          "maxDisplacementM": 1.0000000000000024,
-          "maxLiftM": 1.7599999999999998,
-          "courierClear": true
-        }
-      },
-      "target": "Actual production CorpseLayout.audit reports corpse roots lifted1.76m low and2.86m high above their source feet, already exceeding the ~1m pile limit before adding body thickness. Worst rendered-second samples and full layout audit timeline retained. These are ground heap lifts, not airborne corpseBlast positions (the production layout excludes those flights). This closes FAIL through pile height; no claim that all limbs or continuous player/corpse ordering pass. The two entry frames do not frame the remote piles; the quantitative counterexample is the actual shared render layout.",
-      "receipt": "docs/reports/sweep-b/L4-17-proof.json"
-    },
-    {
-      "id": "L4-11",
-      "clause": "mortal live frontal MG riot duel across point-blank and long ranges",
-      "tier": "low",
-      "policy": "controlled-fixture",
-      "status": "FAIL",
-      "value": {
-        "tier": "low",
-        "longRangeCounterexamples": [
-          {
-            "startDistance": 20,
-            "firstDamageTick": 32,
-            "incapacitatedTick": 596,
-            "firstDamageToIncapacitationS": 9.4,
-            "fightStartToIncapacitationS": 9.933333333333334,
-            "playerHp": 100,
-            "initialFrontalChip": 2.52
-          },
-          {
-            "startDistance": 26,
-            "firstDamageTick": 76,
-            "incapacitatedTick": 838,
-            "firstDamageToIncapacitationS": 12.7,
-            "fightStartToIncapacitationS": 13.966666666666667,
-            "playerHp": 100,
-            "initialFrontalChip": 2.52
-          }
-        ],
-        "allSixMortalDuelsWon": true
-      },
-      "target": "Frontal MG incapacitates\u22646s; no solo riot downs a continuously firing full-HP courier",
-      "receipt": "docs/reports/sweep-b/L4-11-proof.json"
-    },
-    {
-      "id": "L4-15",
-      "clause": "actual military-wall capsule solidity and bounded isometric camera family",
-      "tier": "low",
-      "policy": "controlled-fixture",
-      "status": "PASS",
-      "value": {
-        "tier": "low",
-        "actualSolidWallSegments": 60,
-        "allCapsulesBlocked": true,
-        "observedCameraSamples": 330,
-        "minCameraElevationDeg": 35.99999999999999,
-        "maxCameraElevationDeg": 41.84980547114921,
-        "allAuthoredCinematicOffsets": [
-          15,
-          19,
-          15
-        ]
-      },
-      "target": "No top-down snap; actual structures solid and textured/readable; surrounding terrain not void",
-      "receipt": "docs/reports/sweep-b/L4-15-proof.json"
+      "target": "complete ordinary-input route; zero console/page errors; no objective skips",
+      "receipt": "docs/reports/final-g/G-25-L4-low.json"
     }
   ],
-  "observations": {
-    "source": {
-      "sourceHash": "aec13daf090fd1d27a23e0e5ca5469729cc461885d10a55fafa2feeb4c937f2d",
-      "observerHash": "9179102da8341b22bf530fc4cde87f8c517c555317a30b5fad472579256f99cb",
-      "revision": "4321c37573da59b9e1dcf7d1610f67ed370be0bd",
-      "method": "Physical WASD/mouse/E, progressed preset, protected courier, mortal followers; shared headless Metal WebGL2; no performance timing; L5 authored-map tour is not caption-only evidence.",
-      "results": [
+  "errors": [],
+  "run": [
+    {
+      "level": "L4",
+      "entry": "debug",
+      "heroine": "female",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 303,
+      "simSeconds": 0,
+      "maxNoProgressSeconds": 11.4,
+      "deaths": 0,
+      "assists": 0,
+      "attacks": {
+        "weapon.army-mg": 1246
+      },
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.handgun",
+        "ability.corgi-lure"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "ability.corgi-lure"
+      ],
+      "steps": [
         {
-          "tag": "sweep-b-L4-low-z1.5",
-          "tier": "low",
-          "zoom": 1.5,
-          "started": "2026-11-05T23:46:15.595Z",
-          "ended": "2026-11-05T23:50:58.281Z",
-          "exit": 0
+          "id": "ride",
+          "text": "Ride into Fairhaven with the convoy · 57 m",
+          "tick": 34,
+          "marker": {
+            "anchor": "l4-plaza",
+            "ring": {
+              "x": -17,
+              "y": 0,
+              "z": 3
+            },
+            "drawn": null,
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
         },
         {
-          "tag": "sweep-b-L4-high-z1.5",
-          "tier": "high",
-          "zoom": 1.5,
-          "started": "2026-11-05T23:46:15.610Z",
-          "ended": "2026-11-05T23:51:17.422Z",
-          "exit": 0
+          "id": "quartermaster",
+          "text": "Report to the quartermaster · 10 m",
+          "tick": 1850,
+          "marker": {
+            "anchor": "l4-quartermaster",
+            "ring": {
+              "x": -23.2,
+              "y": 0,
+              "z": 0.6
+            },
+            "drawn": [
+              -23.2,
+              0.05,
+              0.6
+            ],
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
         },
         {
-          "tag": "sweep-b-L4-low-z0.5",
-          "tier": "low",
-          "zoom": 0.5,
-          "started": "2026-11-05T23:51:17.423Z",
-          "ended": "2026-11-05T23:56:12.077Z",
-          "exit": 0
+          "id": "hold",
+          "text": "Hold the plaza with the army · 3:10 remaining",
+          "tick": 2218,
+          "marker": {
+            "anchor": "l4-quartermaster",
+            "ring": null,
+            "drawn": null,
+            "playerY": 0.7049999833106995,
+            "pinVisible": false
+          }
         },
         {
-          "tag": "sweep-b-L4-high-z0.5",
-          "tier": "high",
-          "zoom": 0.5,
-          "started": "2026-11-05T23:51:17.424Z",
-          "ended": "2026-11-05T23:57:01.641Z",
-          "exit": 0
+          "id": "hide",
+          "text": "Run to the cellar via Lakeshore, Metro Road and Harbor Street · 68 m",
+          "tick": 13631,
+          "marker": {
+            "anchor": "l4-cellar-door",
+            "ring": {
+              "x": -79.29999999999998,
+              "y": 0,
+              "z": -45.2801
+            },
+            "drawn": [
+              -79.3,
+              0.13,
+              -45.28
+            ],
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "bar",
+          "text": "Bar the cellar door · 3 m",
+          "tick": 15068,
+          "marker": {
+            "anchor": "l4-brace",
+            "ring": {
+              "x": 74.6,
+              "y": 0,
+              "z": -1.7999999999999998
+            },
+            "drawn": [
+              74.6,
+              0.05,
+              -1.8
+            ],
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "wait",
+          "text": "Stay down · 0:07 remaining",
+          "tick": 15238,
+          "marker": {
+            "anchor": "l4-brace",
+            "ring": null,
+            "drawn": null,
+            "playerY": 0.7049999833106995,
+            "pinVisible": false
+          }
         }
       ]
-    },
-    "scope": "Protected courier; actual physical full L4 route, no skips; no performance timing. The event/graph ledger establishes same-tick equality, not the stills."
-  }
+    }
+  ],
+  "issues": [],
+  "frameTiming": false,
+  "backend": "webgl2",
+  "zoom": 1.5
 }

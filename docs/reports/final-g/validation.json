@@ -1,0 +1,56 @@
+{
+  "frozenGameplayHead": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "recordedAt": "2026-11-07T03:02:34.397607+00:00",
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "typecheck": {
+    "command": "npm run typecheck",
+    "exitCode": 0,
+    "stdoutSha256": "768699d3cead53493237d3322201d28ee449107e90af9a5aa6f5dcab3f066b0c",
+    "stdout": "\n> typecheck\n> tsc --noEmit && tsc --noEmit -p tsconfig.sim.json\n\n"
+  },
+  "lint": {
+    "command": "npm run lint",
+    "exitCode": 0,
+    "stdoutSha256": "5f9aee6b798507e187dcd3d4fbd5bcf5fdc37488cb89c27a01d5667ca7bb9fa1",
+    "stdout": "\n> lint\n> eslint src tests tools functions *.config.ts eslint.config.js\n\n"
+  },
+  "nativeAcceptance": {
+    "command": "npm run qa:accept -- --level all --tier both --skip-browser --reuse",
+    "exitCode": 1,
+    "stdoutSha256": "3b5eaba66d3d2707bfe3a04025efc50b7717d5e7ed81ae2429aba3e6c498fe8e",
+    "stdout": "\n> qa:accept\n> node --import tsx/esm tools/qa/accept.ts --level all --tier both --skip-browser --reuse\n\n[qa:accept] L1 low/complete: reuse matching receipt\n[qa:accept] L1 low/stationary: reuse matching receipt\n[qa:accept] L1 high/complete: reuse matching receipt\n[qa:accept] L1 high/stationary: reuse matching receipt\n[qa:accept] L1 low/fixtures: 16 clauses, 0 errors\n[qa:accept] L1 high/fixtures: 16 clauses, 0 errors\n[qa:accept] L1 low/checkpoints: 2 clauses; control identical; 0 errors\n[qa:accept] L1 high/checkpoints: 2 clauses; control identical; 0 errors\n[qa:accept] L1: 1 fresh failing rows; 12 incomplete rows; docs/reports/fix51-verify/L1.json\n[qa:accept] L2 low/complete: reuse matching receipt\n[qa:accept] L2 low/stationary: reuse matching receipt\n[qa:accept] L2 high/complete: reuse matching receipt\n[qa:accept] L2 high/stationary: reuse matching receipt\n[qa:accept] L2 low/fixtures: 28 clauses, 0 errors\n[qa:accept] L2 high/fixtures: 28 clauses, 0 errors\n[qa:accept] L2 low/checkpoints: 4 clauses; control identical; 0 errors\n[qa:accept] L2 high/checkpoints: 3 clauses; control identical; 0 errors\n[qa:accept] L2: 1 fresh failing rows; 9 incomplete rows; docs/reports/fix51-verify/L2.json\n[qa:accept] L3 low/complete: reuse matching receipt\n[qa:accept] L3 low/stationary: reuse matching receipt\n[qa:accept] L3 high/complete: reuse matching receipt\n[qa:accept] L3 high/stationary: reuse matching receipt\n[qa:accept] L3 low/fixtures: 21 clauses, 0 errors\n[qa:accept] L3 high/fixtures: 21 clauses, 0 errors\n[qa:accept] L3 low/checkpoints: 6 clauses; control identical; 0 errors\n[qa:accept] L3 high/checkpoints: 6 clauses; control identical; 0 errors\n[qa:accept] L3: 4 fresh failing rows; 8 incomplete rows; docs/reports/fix51-verify/L3.json\n[qa:accept] L4 low/complete: reuse matching receipt\n[qa:accept] L4 low/stationary: reuse matching receipt\n[qa:accept] L4 high/complete: reuse matching receipt\n[qa:accept] L4 high/stationary: reuse matching receipt\n[qa:accept] L4 low/fixtures: 10 clauses, 0 errors\n[qa:accept] L4 high/fixtures: 10 clauses, 0 errors\n[qa:accept] L4 low/checkpoints: 6 clauses; control identical; 0 errors\n[qa:accept] L4 high/checkpoints: 6 clauses; control identical; 0 errors\n[qa:accept] L4: 0 fresh failing rows; 14 incomplete rows; docs/reports/fix51-verify/L4.json\n[qa:accept] L5 low/complete: reuse matching receipt\n[qa:accept] L5 low/stationary: reuse matching receipt\n[qa:accept] L5 high/complete: reuse matching receipt\n[qa:accept] L5 high/stationary: reuse matching receipt\n[qa:accept] L5 low/fixtures: 10 clauses, 0 errors\n[qa:accept] L5 high/fixtures: 10 clauses, 0 errors\n[qa:accept] L5 low/checkpoints: 6 clauses; control identical; 0 errors\n[qa:accept] L5 high/checkpoints: 6 clauses; control identical; 0 errors\n[qa:accept] L5: 1 fresh failing rows; 9 incomplete rows; docs/reports/fix51-verify/L5.json\n[qa:accept] L6 low/complete: reuse matching receipt\n[qa:accept] L6 low/stationary: reuse matching receipt\n[qa:accept] L6 high/complete: reuse matching receipt\n[qa:accept] L6 high/stationary: reuse matching receipt\n[qa:accept] L6 low/fixtures: 8 clauses, 0 errors\n[qa:accept] L6 high/fixtures: 8 clauses, 0 errors\n[qa:accept] L6 low/checkpoints: 7 clauses; control identical; 0 errors\n[qa:accept] L6 high/checkpoints: 7 clauses; control identical; 0 errors\n[qa:accept] L6: 0 fresh failing rows; 10 incomplete rows; docs/reports/fix51-verify/L6.json\n[qa:accept] L7 low/complete: reuse matching receipt\n[qa:accept] L7 low/stationary: reuse matching receipt\n[qa:accept] L7 high/complete: reuse matching receipt\n[qa:accept] L7 high/stationary: reuse matching receipt\n[qa:accept] L7 low/fixtures: 8 clauses, 0 errors\n[qa:accept] L7 high/fixtures: 8 clauses, 0 errors\n[qa:accept] L7 low/checkpoints: 3 clauses; control identical; 0 errors\n[qa:accept] L7 high/checkpoints: 3 clauses; control identical; 0 errors\n[qa:accept] L7: 2 fresh failing rows; 8 incomplete rows; docs/reports/fix51-verify/L7.json\n[qa:accept] L8 low/complete: reuse matching receipt\n[qa:accept] L8 low/stationary: reuse matching receipt\n[qa:accept] L8 high/complete: reuse matching receipt\n[qa:accept] L8 high/stationary: reuse matching receipt\n[qa:accept] L8 low/fixtures: 4 clauses, 0 errors\n[qa:accept] L8 high/fixtures: 4 clauses, 0 errors\n[qa:accept] L8 low/checkpoints: 3 clauses; control identical; 0 errors\n[qa:accept] L8 high/checkpoints: 3 clauses; control identical; 0 errors\n[qa:accept] L8: 0 fresh failing rows; 10 incomplete rows; docs/reports/fix51-verify/L8.json\n[qa:accept] L9 low/complete: reuse matching receipt\n[qa:accept] L9 low/stationary: reuse matching receipt\n[qa:accept] L9 high/complete: reuse matching receipt\n[qa:accept] L9 high/stationary: reuse matching receipt\n[qa:accept] L9 low/fixtures: 5 clauses, 0 errors\n[qa:accept] L9 high/fixtures: 5 clauses, 0 errors\n[qa:accept] L9 low/checkpoints: 2 clauses; control identical; 0 errors\n[qa:accept] L9 high/checkpoints: 2 clauses; control identical; 0 errors\n[qa:accept] L9: 0 fresh failing rows; 8 incomplete rows; docs/reports/fix51-verify/L9.json\n[qa:accept] L10 low/complete: reuse matching receipt\n[qa:accept] L10 low/stationary: reuse matching receipt\n[qa:accept] L10 high/complete: reuse matching receipt\n[qa:accept] L10 high/stationary: reuse matching receipt\n[qa:accept] L10 low/fixtures: 16 clauses, 0 errors\n[qa:accept] L10 high/fixtures: 16 clauses, 0 errors\n[qa:accept] L10 low/checkpoints: 27 clauses; control identical; 0 errors\n[qa:accept] L10 high/checkpoints: 27 clauses; control identical; 0 errors\n[qa:accept] L10: 1 fresh failing rows; 10 incomplete rows; docs/reports/fix51-verify/L10.json\n",
+    "allLevelsCompleted": [
+      "L1",
+      "L2",
+      "L3",
+      "L4",
+      "L5",
+      "L6",
+      "L7",
+      "L8",
+      "L9",
+      "L10"
+    ],
+    "note": "Actual exit1 retains measured FAIL rows and open native/PO gates; it is not a successful release verdict. All10 final reports completed. Matching receipts were freshly produced on the frozen gameplay content earlier in this job."
+  },
+  "integrityAudit": {
+    "command": "node --import tsx/esm tools/qa/accept/final-g-audit.mjs",
+    "exitCode": 0,
+    "file": "docs/reports/final-g/final-audit.json",
+    "sha256": "9c763b450caff2be66afcc472efb1f6d8e4d90b9d8442ee29db0f62ff296b3f8",
+    "result": "PASS: all22 current review digests, all20 complete physical console cells, both production Resume chains, all10 final native reports and README table verified."
+  },
+  "verdictCounts": {
+    "P": 5,
+    "PASS": 12,
+    "FAIL": 5
+  },
+  "gameplayDiff": [],
+  "cleanup": {
+    "file": "docs/reports/final-g/raw-cleanup-final.json",
+    "sha256": "50378cbfd941fd4c70c32cbd7d7d7357289c9144e799f4a38dc4c0fad7ada8fb",
+    "physicalReviewedImages": 759,
+    "physicalRetainedOriginals": 71,
+    "ownedBrowsersAndPreviewStopped": true
+  }
+}

@@ -1,0 +1,147 @@
+{
+  "version": 1,
+  "level": "L6",
+  "tier": "high",
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "fixtureHash": "3a1aa6ffd344dc12e40e887d5787eccb7b7f2da10d19445898a88e94befd6f3f",
+  "browserHash": "3a1aa6ffd344dc12e40e887d5787eccb7b7f2da10d19445898a88e94befd6f3f",
+  "checks": [
+    {
+      "id": "G-25",
+      "clause": "physical WASD/mouse full-level browser console",
+      "tier": "high",
+      "policy": "real-input-webgl2",
+      "status": "PASS",
+      "value": {
+        "backend": "webgl2",
+        "zoom": 1.5,
+        "completed": true,
+        "skipped": [],
+        "consoleErrors": [],
+        "immortal": true,
+        "frameTiming": false
+      },
+      "target": "complete ordinary-input route; zero console/page errors; no objective skips",
+      "receipt": "docs/reports/final-g/G-25-L6-high.json"
+    }
+  ],
+  "errors": [],
+  "run": [
+    {
+      "level": "L6",
+      "entry": "debug",
+      "heroine": "female",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 218,
+      "simSeconds": 193,
+      "maxNoProgressSeconds": 32.43333333333333,
+      "deaths": 0,
+      "assists": 1,
+      "attacks": {
+        "weapon.army-mg": 1190
+      },
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "weapon.kick",
+        "weapon.shotgun"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "weapon.kick",
+        "weapon.shotgun"
+      ],
+      "steps": [
+        {
+          "id": "shelter",
+          "text": "Look around the shelter · rest while you can",
+          "tick": 34,
+          "marker": {
+            "anchor": null,
+            "ring": null,
+            "drawn": null,
+            "playerY": 1.3200000524520874,
+            "pinVisible": false
+          }
+        },
+        {
+          "id": "stop",
+          "text": "Stop the infected · Retreat in 0:36",
+          "tick": 1994,
+          "marker": {
+            "anchor": null,
+            "ring": null,
+            "drawn": null,
+            "playerY": 1.3200000524520874,
+            "pinVisible": false
+          }
+        },
+        {
+          "id": "retreat",
+          "text": "Cover the retreat through the tunnel · 245 m",
+          "tick": 3264,
+          "marker": {
+            "anchor": "l6-next",
+            "ring": {
+              "x": 242,
+              "y": 0.6,
+              "z": 15
+            },
+            "drawn": [
+              242,
+              0.6,
+              15
+            ],
+            "playerY": 1.3200000524520874,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "exit",
+          "text": "Bring the survivors into the night · 0/1 out · 32 m",
+          "tick": 11108,
+          "marker": {
+            "anchor": "night-exit",
+            "ring": {
+              "x": 273,
+              "y": 3.9,
+              "z": 15
+            },
+            "drawn": [
+              273,
+              3.9,
+              15
+            ],
+            "playerY": 1.2699999809265137,
+            "pinVisible": true
+          }
+        }
+      ]
+    }
+  ],
+  "issues": [
+    {
+      "level": "L6",
+      "tick": 1242,
+      "x": 3,
+      "z": 0,
+      "severity": "P2",
+      "kind": "stuck-navigating",
+      "text": "20 s without objective progress (distance none m, no marker: true); HUD: \"Look around the shelter · rest while you can\"",
+      "captures": [
+        "captures/accept-L6-1242-stuck-navigating.jpg"
+      ],
+      "step": "shelter",
+      "objective": "Look around the shelter · rest while you can"
+    }
+  ],
+  "frameTiming": false,
+  "backend": "webgl2",
+  "zoom": 1.5
+}

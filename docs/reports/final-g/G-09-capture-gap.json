@@ -1,0 +1,21 @@
+{
+  "producer": "tools/playtest/session.ts",
+  "producerSha256": "6927745ec07f46a3d361d0462fd031261baaf568769fadd5d8190c30566c9338",
+  "receipt": "docs/reports/final-g/L1-low-captures.json",
+  "firstStepMatrixTick": 635,
+  "requiredMaxTicks": 120,
+  "matrixZooms": [
+    0.5,
+    1.5
+  ],
+  "requiredMarkerZooms": [
+    1,
+    1.5
+  ],
+  "firstFrames": [
+    "test-results/final-g/L1-low/captures/accept-L1-pickup-t635-low-z1-5.jpg",
+    "test-results/final-g/L1-low/captures/accept-L1-pickup-t635-low-z0-5.jpg"
+  ],
+  "problem": "The timing-warmup capture rule cannot qualify the marker-start deadline. No existing G-09 PASS is inferred from it.",
+  "changeScope": "In runs with frame timing disabled, capture step starts immediately and add zoom1; keep ordinary inputs, objectives, timing targets and performance-mode capture rule intact."
+}

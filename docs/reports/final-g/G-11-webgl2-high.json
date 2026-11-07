@@ -1,0 +1,142 @@
+{
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+  "revision": "d1cec8da6f118bcb9ecbb0eafa3a6b8aaf779af0",
+  "scriptSha256": "8a5e912314f5dacb9d4a360cefa742a8289fb7827a1c193ef4398409dcf28dbb",
+  "backend": "webgl2",
+  "tier": "high",
+  "setup": "paired authored/survivor-only pickup renderer fixture and Scene Lab native run-input out-and-back route; no timing claim",
+  "rows": [
+    {
+      "stage": "before",
+      "backend": "webgl",
+      "quality": "high",
+      "pickups": [
+        {
+          "id": 4,
+          "at": {
+            "x": -3,
+            "z": 0
+          },
+          "survivorOnly": false,
+          "present": true,
+          "markerMeshes": 1,
+          "modelLoaded": true,
+          "pixel": {
+            "x": 435.072880032671,
+            "y": 235.79375629784565
+          }
+        },
+        {
+          "id": 5,
+          "at": {
+            "x": 3,
+            "z": 0
+          },
+          "survivorOnly": true,
+          "present": true,
+          "markerMeshes": 0,
+          "modelLoaded": true,
+          "pixel": {
+            "x": 885.6108066181343,
+            "y": 505.6296349072946
+          }
+        }
+      ],
+      "player": {
+        "x": -8,
+        "y": 0.705,
+        "z": -3,
+        "yaw": 0
+      },
+      "ledger": {
+        "collections": [],
+        "maxAwayAfterCollection": 0,
+        "returned": false
+      },
+      "replacementAtCourierSpot": [
+        4
+      ],
+      "pixels": [
+        {
+          "id": 4,
+          "yellowPixels": 628
+        },
+        {
+          "id": 5,
+          "yellowPixels": 0
+        }
+      ],
+      "file": "test-results/final-g/G-11-webgl2-high/before.png",
+      "sha256": "ecce22b431f66588020d28afe81ccfdbf52ce5ec02090c22aed1526eebbd5c7c"
+    },
+    {
+      "stage": "after-revisit",
+      "backend": "webgl",
+      "quality": "high",
+      "pickups": [
+        {
+          "id": 4,
+          "at": {
+            "x": -3,
+            "z": 0
+          },
+          "survivorOnly": false,
+          "present": false,
+          "markerMeshes": 0,
+          "modelLoaded": false,
+          "pixel": {
+            "x": 435.072880032671,
+            "y": 235.79375629784565
+          }
+        },
+        {
+          "id": 5,
+          "at": {
+            "x": 3,
+            "z": 0
+          },
+          "survivorOnly": true,
+          "present": true,
+          "markerMeshes": 0,
+          "modelLoaded": true,
+          "pixel": {
+            "x": 885.6108066181343,
+            "y": 505.6296349072946
+          }
+        }
+      ],
+      "player": {
+        "x": -3.129439115524292,
+        "y": 0.7049999833106995,
+        "z": -0.07766369730234146,
+        "yaw": -6.823606207736799
+      },
+      "ledger": {
+        "collections": [
+          {
+            "id": 4,
+            "tick": 62,
+            "source": 1
+          }
+        ],
+        "maxAwayAfterCollection": 5.79595056474294,
+        "returned": true
+      },
+      "replacementAtCourierSpot": [],
+      "pixels": [
+        {
+          "id": 4,
+          "yellowPixels": 107
+        },
+        {
+          "id": 5,
+          "yellowPixels": 0
+        }
+      ],
+      "file": "test-results/final-g/G-11-webgl2-high/after-revisit.png",
+      "sha256": "11f53b4bb0837f20c65f42263fe04ce48c5eefca838c9d599c7406e96fab4629"
+    }
+  ],
+  "errors": []
+}

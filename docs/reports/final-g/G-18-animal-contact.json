@@ -1,0 +1,1293 @@
+{
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+  "revision": "ba16ffb1fcb8f9a78c086b6e492066f0137ae10a",
+  "method": "Explicit controlled fixture: production level/nav, director paused, ambient actors hidden, each animal infected archetype in the authored zoo/cure worlds directed past a nearby player or waiting escort. Read-only real attack-start observer, no path/AI tuning.",
+  "cells": [
+    {
+      "tier": "low",
+      "level": "L8",
+      "archetype": "infected.dog",
+      "target": "player",
+      "targetId": 1,
+      "ticks": 1,
+      "attacks": [
+        {
+          "tick": 1,
+          "targetId": 1
+        }
+      ],
+      "scriptInterrupted": true,
+      "state": "attack",
+      "firstAttack": {
+        "tick": 1,
+        "targetId": 1
+      }
+    },
+    {
+      "tier": "low",
+      "level": "L8",
+      "archetype": "infected.cat",
+      "target": "player",
+      "targetId": 1,
+      "ticks": 1,
+      "attacks": [
+        {
+          "tick": 2,
+          "targetId": 1
+        }
+      ],
+      "scriptInterrupted": true,
+      "state": "attack",
+      "firstAttack": {
+        "tick": 2,
+        "targetId": 1
+      }
+    },
+    {
+      "tier": "low",
+      "level": "L8",
+      "archetype": "infected.crow",
+      "target": "player",
+      "targetId": 1,
+      "ticks": 1,
+      "attacks": [
+        {
+          "tick": 3,
+          "targetId": 1
+        }
+      ],
+      "scriptInterrupted": true,
+      "state": "attack",
+      "firstAttack": {
+        "tick": 3,
+        "targetId": 1
+      }
+    },
+    {
+      "tier": "low",
+      "level": "L8",
+      "archetype": "infected.lion",
+      "target": "player",
+      "targetId": 1,
+      "ticks": 1,
+      "attacks": [
+        {
+          "tick": 4,
+          "targetId": 1
+        }
+      ],
+      "scriptInterrupted": true,
+      "state": "chase",
+      "firstAttack": {
+        "tick": 4,
+        "targetId": 1
+      }
+    },
+    {
+      "tier": "low",
+      "level": "L8",
+      "archetype": "infected.gorilla",
+      "target": "player",
+      "targetId": 1,
+      "ticks": 1,
+      "attacks": [
+        {
+          "tick": 5,
+          "targetId": 1
+        }
+      ],
+      "scriptInterrupted": true,
+      "state": "chase",
+      "firstAttack": {
+        "tick": 5,
+        "targetId": 1
+      }
+    },
+    {
+      "tier": "low",
+      "level": "L8",
+      "archetype": "infected.elephant",
+      "target": "player",
+      "targetId": 1,
+      "ticks": 1,
+      "attacks": [
+        {
+          "tick": 6,
+          "targetId": 1
+        }
+      ],
+      "scriptInterrupted": true,
+      "state": "chase",
+      "firstAttack": {
+        "tick": 6,
+        "targetId": 1
+      }
+    },
+    {
+      "tier": "low",
+      "level": "L8",
+      "archetype": "infected.zebra",
+      "target": "player",
+      "targetId": 1,
+      "ticks": 44,
+      "attacks": [
+        {
+          "tick": 50,
+          "targetId": 1
+        }
+      ],
+      "scriptInterrupted": true,
+      "state": "attack",
+      "firstAttack": {
+        "tick": 50,
+        "targetId": 1
+      }
+    },
+    {
+      "tier": "low",
+      "level": "L8",
+      "archetype": "infected.flamingo",
+      "target": "player",
+      "targetId": 1,
+      "ticks": 43,
+      "attacks": [
+        {
+          "tick": 93,
+          "targetId": 1
+        }
+      ],
+      "scriptInterrupted": true,
+      "state": "attack",
+      "firstAttack": {
+        "tick": 93,
+        "targetId": 1
+      }
+    },
+    {
+      "tier": "low",
+      "level": "L8",
+      "archetype": "infected.dog",
+      "target": "escort",
+      "targetId": 407,
+      "ticks": 1,
+      "attacks": [
+        {
+          "tick": 94,
+          "targetId": 407
+        }
+      ],
+      "scriptInterrupted": true,
+      "state": "attack",
+      "firstAttack": {
+        "tick": 94,
+        "targetId": 407
+      }
+    },
+    {
+      "tier": "low",
+      "level": "L8",
+      "archetype": "infected.cat",
+      "target": "escort",
+      "targetId": 407,
+      "ticks": 1,
+      "attacks": [
+        {
+          "tick": 95,
+          "targetId": 407
+        }
+      ],
+      "scriptInterrupted": true,
+      "state": "attack",
+      "firstAttack": {
+        "tick": 95,
+        "targetId": 407
+      }
+    },
+    {
+      "tier": "low",
+      "level": "L8",
+      "archetype": "infected.crow",
+      "target": "escort",
+      "targetId": 407,
+      "ticks": 1,
+      "attacks": [
+        {
+          "tick": 96,
+          "targetId": 407
+        }
+      ],
+      "scriptInterrupted": true,
+      "state": "attack",
+      "firstAttack": {
+        "tick": 96,
+        "targetId": 407
+      }
+    },
+    {
+      "tier": "low",
+      "level": "L8",
+      "archetype": "infected.lion",
+      "target": "escort",
+      "targetId": 407,
+      "ticks": 1,
+      "attacks": [
+        {
+          "tick": 97,
+          "targetId": 407
+        }
+      ],
+      "scriptInterrupted": true,
+      "state": "chase",
+      "firstAttack": {
+        "tick": 97,
+        "targetId": 407
+      }
+    },
+    {
+      "tier": "low",
+      "level": "L8",
+      "archetype": "infected.gorilla",
+      "target": "escort",
+      "targetId": 407,
+      "ticks": 1,
+      "attacks": [
+        {
+          "tick": 98,
+          "targetId": 407
+        }
+      ],
+      "scriptInterrupted": true,
+      "state": "chase",
+      "firstAttack": {
+        "tick": 98,
+        "targetId": 407
+      }
+    },
+    {
+      "tier": "low",
+      "level": "L8",
+      "archetype": "infected.elephant",
+      "target": "escort",
+      "targetId": 407,
+      "ticks": 1,
+      "attacks": [
+        {
+          "tick": 99,
+          "targetId": 407
+        }
+      ],
+      "scriptInterrupted": true,
+      "state": "chase",
+      "firstAttack": {
+        "tick": 99,
+        "targetId": 407
+      }
+    },
+    {
+      "tier": "low",
+      "level": "L8",
+      "archetype": "infected.zebra",
+      "target": "escort",
+      "targetId": 407,
+      "ticks": 48,
+      "attacks": [
+        {
+          "tick": 147,
+          "targetId": 407
+        }
+      ],
+      "scriptInterrupted": true,
+      "state": "attack",
+      "firstAttack": {
+        "tick": 147,
+        "targetId": 407
+      }
+    },
+    {
+      "tier": "low",
+      "level": "L8",
+      "archetype": "infected.flamingo",
+      "target": "escort",
+      "targetId": 407,
+      "ticks": 43,
+      "attacks": [
+        {
+          "tick": 190,
+          "targetId": 407
+        }
+      ],
+      "scriptInterrupted": true,
+      "state": "attack",
+      "firstAttack": {
+        "tick": 190,
+        "targetId": 407
+      }
+    },
+    {
+      "tier": "low",
+      "level": "L10",
+      "archetype": "infected.dog",
+      "target": "player",
+      "targetId": 1,
+      "ticks": 1,
+      "attacks": [
+        {
+          "tick": 1,
+          "targetId": 1
+        }
+      ],
+      "scriptInterrupted": true,
+      "state": "attack",
+      "firstAttack": {
+        "tick": 1,
+        "targetId": 1
+      }
+    },
+    {
+      "tier": "low",
+      "level": "L10",
+      "archetype": "infected.cat",
+      "target": "player",
+      "targetId": 1,
+      "ticks": 1,
+      "attacks": [
+        {
+          "tick": 2,
+          "targetId": 1
+        }
+      ],
+      "scriptInterrupted": true,
+      "state": "attack",
+      "firstAttack": {
+        "tick": 2,
+        "targetId": 1
+      }
+    },
+    {
+      "tier": "low",
+      "level": "L10",
+      "archetype": "infected.crow",
+      "target": "player",
+      "targetId": 1,
+      "ticks": 1,
+      "attacks": [
+        {
+          "tick": 3,
+          "targetId": 1
+        }
+      ],
+      "scriptInterrupted": true,
+      "state": "attack",
+      "firstAttack": {
+        "tick": 3,
+        "targetId": 1
+      }
+    },
+    {
+      "tier": "low",
+      "level": "L10",
+      "archetype": "infected.lion",
+      "target": "player",
+      "targetId": 1,
+      "ticks": 1,
+      "attacks": [
+        {
+          "tick": 4,
+          "targetId": 1
+        }
+      ],
+      "scriptInterrupted": true,
+      "state": "chase",
+      "firstAttack": {
+        "tick": 4,
+        "targetId": 1
+      }
+    },
+    {
+      "tier": "low",
+      "level": "L10",
+      "archetype": "infected.gorilla",
+      "target": "player",
+      "targetId": 1,
+      "ticks": 1,
+      "attacks": [
+        {
+          "tick": 5,
+          "targetId": 1
+        }
+      ],
+      "scriptInterrupted": true,
+      "state": "chase",
+      "firstAttack": {
+        "tick": 5,
+        "targetId": 1
+      }
+    },
+    {
+      "tier": "low",
+      "level": "L10",
+      "archetype": "infected.elephant",
+      "target": "player",
+      "targetId": 1,
+      "ticks": 1,
+      "attacks": [
+        {
+          "tick": 6,
+          "targetId": 1
+        }
+      ],
+      "scriptInterrupted": true,
+      "state": "chase",
+      "firstAttack": {
+        "tick": 6,
+        "targetId": 1
+      }
+    },
+    {
+      "tier": "low",
+      "level": "L10",
+      "archetype": "infected.zebra",
+      "target": "player",
+      "targetId": 1,
+      "ticks": 44,
+      "attacks": [
+        {
+          "tick": 50,
+          "targetId": 1
+        }
+      ],
+      "scriptInterrupted": true,
+      "state": "attack",
+      "firstAttack": {
+        "tick": 50,
+        "targetId": 1
+      }
+    },
+    {
+      "tier": "low",
+      "level": "L10",
+      "archetype": "infected.flamingo",
+      "target": "player",
+      "targetId": 1,
+      "ticks": 43,
+      "attacks": [
+        {
+          "tick": 93,
+          "targetId": 1
+        }
+      ],
+      "scriptInterrupted": true,
+      "state": "attack",
+      "firstAttack": {
+        "tick": 93,
+        "targetId": 1
+      }
+    },
+    {
+      "tier": "low",
+      "level": "L10",
+      "archetype": "infected.dog",
+      "target": "escort",
+      "targetId": 100,
+      "ticks": 1,
+      "attacks": [
+        {
+          "tick": 94,
+          "targetId": 100
+        }
+      ],
+      "scriptInterrupted": true,
+      "state": "attack",
+      "firstAttack": {
+        "tick": 94,
+        "targetId": 100
+      }
+    },
+    {
+      "tier": "low",
+      "level": "L10",
+      "archetype": "infected.cat",
+      "target": "escort",
+      "targetId": 100,
+      "ticks": 1,
+      "attacks": [
+        {
+          "tick": 95,
+          "targetId": 100
+        }
+      ],
+      "scriptInterrupted": true,
+      "state": "attack",
+      "firstAttack": {
+        "tick": 95,
+        "targetId": 100
+      }
+    },
+    {
+      "tier": "low",
+      "level": "L10",
+      "archetype": "infected.crow",
+      "target": "escort",
+      "targetId": 100,
+      "ticks": 1,
+      "attacks": [
+        {
+          "tick": 96,
+          "targetId": 100
+        }
+      ],
+      "scriptInterrupted": true,
+      "state": "attack",
+      "firstAttack": {
+        "tick": 96,
+        "targetId": 100
+      }
+    },
+    {
+      "tier": "low",
+      "level": "L10",
+      "archetype": "infected.lion",
+      "target": "escort",
+      "targetId": 100,
+      "ticks": 1,
+      "attacks": [
+        {
+          "tick": 97,
+          "targetId": 100
+        }
+      ],
+      "scriptInterrupted": true,
+      "state": "chase",
+      "firstAttack": {
+        "tick": 97,
+        "targetId": 100
+      }
+    },
+    {
+      "tier": "low",
+      "level": "L10",
+      "archetype": "infected.gorilla",
+      "target": "escort",
+      "targetId": 100,
+      "ticks": 1,
+      "attacks": [
+        {
+          "tick": 98,
+          "targetId": 100
+        }
+      ],
+      "scriptInterrupted": true,
+      "state": "chase",
+      "firstAttack": {
+        "tick": 98,
+        "targetId": 100
+      }
+    },
+    {
+      "tier": "low",
+      "level": "L10",
+      "archetype": "infected.elephant",
+      "target": "escort",
+      "targetId": 100,
+      "ticks": 1,
+      "attacks": [
+        {
+          "tick": 99,
+          "targetId": 100
+        }
+      ],
+      "scriptInterrupted": true,
+      "state": "chase",
+      "firstAttack": {
+        "tick": 99,
+        "targetId": 100
+      }
+    },
+    {
+      "tier": "low",
+      "level": "L10",
+      "archetype": "infected.zebra",
+      "target": "escort",
+      "targetId": 100,
+      "ticks": 48,
+      "attacks": [
+        {
+          "tick": 147,
+          "targetId": 100
+        }
+      ],
+      "scriptInterrupted": true,
+      "state": "attack",
+      "firstAttack": {
+        "tick": 147,
+        "targetId": 100
+      }
+    },
+    {
+      "tier": "low",
+      "level": "L10",
+      "archetype": "infected.flamingo",
+      "target": "escort",
+      "targetId": 100,
+      "ticks": 43,
+      "attacks": [
+        {
+          "tick": 190,
+          "targetId": 100
+        }
+      ],
+      "scriptInterrupted": true,
+      "state": "attack",
+      "firstAttack": {
+        "tick": 190,
+        "targetId": 100
+      }
+    },
+    {
+      "tier": "high",
+      "level": "L8",
+      "archetype": "infected.dog",
+      "target": "player",
+      "targetId": 1,
+      "ticks": 1,
+      "attacks": [
+        {
+          "tick": 1,
+          "targetId": 1
+        }
+      ],
+      "scriptInterrupted": true,
+      "state": "attack",
+      "firstAttack": {
+        "tick": 1,
+        "targetId": 1
+      }
+    },
+    {
+      "tier": "high",
+      "level": "L8",
+      "archetype": "infected.cat",
+      "target": "player",
+      "targetId": 1,
+      "ticks": 1,
+      "attacks": [
+        {
+          "tick": 2,
+          "targetId": 1
+        }
+      ],
+      "scriptInterrupted": true,
+      "state": "attack",
+      "firstAttack": {
+        "tick": 2,
+        "targetId": 1
+      }
+    },
+    {
+      "tier": "high",
+      "level": "L8",
+      "archetype": "infected.crow",
+      "target": "player",
+      "targetId": 1,
+      "ticks": 1,
+      "attacks": [
+        {
+          "tick": 3,
+          "targetId": 1
+        }
+      ],
+      "scriptInterrupted": true,
+      "state": "attack",
+      "firstAttack": {
+        "tick": 3,
+        "targetId": 1
+      }
+    },
+    {
+      "tier": "high",
+      "level": "L8",
+      "archetype": "infected.lion",
+      "target": "player",
+      "targetId": 1,
+      "ticks": 1,
+      "attacks": [
+        {
+          "tick": 4,
+          "targetId": 1
+        }
+      ],
+      "scriptInterrupted": true,
+      "state": "chase",
+      "firstAttack": {
+        "tick": 4,
+        "targetId": 1
+      }
+    },
+    {
+      "tier": "high",
+      "level": "L8",
+      "archetype": "infected.gorilla",
+      "target": "player",
+      "targetId": 1,
+      "ticks": 1,
+      "attacks": [
+        {
+          "tick": 5,
+          "targetId": 1
+        }
+      ],
+      "scriptInterrupted": true,
+      "state": "chase",
+      "firstAttack": {
+        "tick": 5,
+        "targetId": 1
+      }
+    },
+    {
+      "tier": "high",
+      "level": "L8",
+      "archetype": "infected.elephant",
+      "target": "player",
+      "targetId": 1,
+      "ticks": 1,
+      "attacks": [
+        {
+          "tick": 6,
+          "targetId": 1
+        }
+      ],
+      "scriptInterrupted": true,
+      "state": "chase",
+      "firstAttack": {
+        "tick": 6,
+        "targetId": 1
+      }
+    },
+    {
+      "tier": "high",
+      "level": "L8",
+      "archetype": "infected.zebra",
+      "target": "player",
+      "targetId": 1,
+      "ticks": 44,
+      "attacks": [
+        {
+          "tick": 50,
+          "targetId": 1
+        }
+      ],
+      "scriptInterrupted": true,
+      "state": "attack",
+      "firstAttack": {
+        "tick": 50,
+        "targetId": 1
+      }
+    },
+    {
+      "tier": "high",
+      "level": "L8",
+      "archetype": "infected.flamingo",
+      "target": "player",
+      "targetId": 1,
+      "ticks": 43,
+      "attacks": [
+        {
+          "tick": 93,
+          "targetId": 1
+        }
+      ],
+      "scriptInterrupted": true,
+      "state": "attack",
+      "firstAttack": {
+        "tick": 93,
+        "targetId": 1
+      }
+    },
+    {
+      "tier": "high",
+      "level": "L8",
+      "archetype": "infected.dog",
+      "target": "escort",
+      "targetId": 407,
+      "ticks": 1,
+      "attacks": [
+        {
+          "tick": 94,
+          "targetId": 407
+        }
+      ],
+      "scriptInterrupted": true,
+      "state": "attack",
+      "firstAttack": {
+        "tick": 94,
+        "targetId": 407
+      }
+    },
+    {
+      "tier": "high",
+      "level": "L8",
+      "archetype": "infected.cat",
+      "target": "escort",
+      "targetId": 407,
+      "ticks": 1,
+      "attacks": [
+        {
+          "tick": 95,
+          "targetId": 407
+        }
+      ],
+      "scriptInterrupted": true,
+      "state": "attack",
+      "firstAttack": {
+        "tick": 95,
+        "targetId": 407
+      }
+    },
+    {
+      "tier": "high",
+      "level": "L8",
+      "archetype": "infected.crow",
+      "target": "escort",
+      "targetId": 407,
+      "ticks": 1,
+      "attacks": [
+        {
+          "tick": 96,
+          "targetId": 407
+        }
+      ],
+      "scriptInterrupted": true,
+      "state": "attack",
+      "firstAttack": {
+        "tick": 96,
+        "targetId": 407
+      }
+    },
+    {
+      "tier": "high",
+      "level": "L8",
+      "archetype": "infected.lion",
+      "target": "escort",
+      "targetId": 407,
+      "ticks": 1,
+      "attacks": [
+        {
+          "tick": 97,
+          "targetId": 407
+        }
+      ],
+      "scriptInterrupted": true,
+      "state": "chase",
+      "firstAttack": {
+        "tick": 97,
+        "targetId": 407
+      }
+    },
+    {
+      "tier": "high",
+      "level": "L8",
+      "archetype": "infected.gorilla",
+      "target": "escort",
+      "targetId": 407,
+      "ticks": 1,
+      "attacks": [
+        {
+          "tick": 98,
+          "targetId": 407
+        }
+      ],
+      "scriptInterrupted": true,
+      "state": "chase",
+      "firstAttack": {
+        "tick": 98,
+        "targetId": 407
+      }
+    },
+    {
+      "tier": "high",
+      "level": "L8",
+      "archetype": "infected.elephant",
+      "target": "escort",
+      "targetId": 407,
+      "ticks": 1,
+      "attacks": [
+        {
+          "tick": 99,
+          "targetId": 407
+        }
+      ],
+      "scriptInterrupted": true,
+      "state": "chase",
+      "firstAttack": {
+        "tick": 99,
+        "targetId": 407
+      }
+    },
+    {
+      "tier": "high",
+      "level": "L8",
+      "archetype": "infected.zebra",
+      "target": "escort",
+      "targetId": 407,
+      "ticks": 48,
+      "attacks": [
+        {
+          "tick": 147,
+          "targetId": 407
+        }
+      ],
+      "scriptInterrupted": true,
+      "state": "attack",
+      "firstAttack": {
+        "tick": 147,
+        "targetId": 407
+      }
+    },
+    {
+      "tier": "high",
+      "level": "L8",
+      "archetype": "infected.flamingo",
+      "target": "escort",
+      "targetId": 407,
+      "ticks": 43,
+      "attacks": [
+        {
+          "tick": 190,
+          "targetId": 407
+        }
+      ],
+      "scriptInterrupted": true,
+      "state": "attack",
+      "firstAttack": {
+        "tick": 190,
+        "targetId": 407
+      }
+    },
+    {
+      "tier": "high",
+      "level": "L10",
+      "archetype": "infected.dog",
+      "target": "player",
+      "targetId": 1,
+      "ticks": 1,
+      "attacks": [
+        {
+          "tick": 1,
+          "targetId": 1
+        }
+      ],
+      "scriptInterrupted": true,
+      "state": "attack",
+      "firstAttack": {
+        "tick": 1,
+        "targetId": 1
+      }
+    },
+    {
+      "tier": "high",
+      "level": "L10",
+      "archetype": "infected.cat",
+      "target": "player",
+      "targetId": 1,
+      "ticks": 1,
+      "attacks": [
+        {
+          "tick": 2,
+          "targetId": 1
+        }
+      ],
+      "scriptInterrupted": true,
+      "state": "attack",
+      "firstAttack": {
+        "tick": 2,
+        "targetId": 1
+      }
+    },
+    {
+      "tier": "high",
+      "level": "L10",
+      "archetype": "infected.crow",
+      "target": "player",
+      "targetId": 1,
+      "ticks": 1,
+      "attacks": [
+        {
+          "tick": 3,
+          "targetId": 1
+        }
+      ],
+      "scriptInterrupted": true,
+      "state": "attack",
+      "firstAttack": {
+        "tick": 3,
+        "targetId": 1
+      }
+    },
+    {
+      "tier": "high",
+      "level": "L10",
+      "archetype": "infected.lion",
+      "target": "player",
+      "targetId": 1,
+      "ticks": 1,
+      "attacks": [
+        {
+          "tick": 4,
+          "targetId": 1
+        }
+      ],
+      "scriptInterrupted": true,
+      "state": "chase",
+      "firstAttack": {
+        "tick": 4,
+        "targetId": 1
+      }
+    },
+    {
+      "tier": "high",
+      "level": "L10",
+      "archetype": "infected.gorilla",
+      "target": "player",
+      "targetId": 1,
+      "ticks": 1,
+      "attacks": [
+        {
+          "tick": 5,
+          "targetId": 1
+        }
+      ],
+      "scriptInterrupted": true,
+      "state": "chase",
+      "firstAttack": {
+        "tick": 5,
+        "targetId": 1
+      }
+    },
+    {
+      "tier": "high",
+      "level": "L10",
+      "archetype": "infected.elephant",
+      "target": "player",
+      "targetId": 1,
+      "ticks": 1,
+      "attacks": [
+        {
+          "tick": 6,
+          "targetId": 1
+        }
+      ],
+      "scriptInterrupted": true,
+      "state": "chase",
+      "firstAttack": {
+        "tick": 6,
+        "targetId": 1
+      }
+    },
+    {
+      "tier": "high",
+      "level": "L10",
+      "archetype": "infected.zebra",
+      "target": "player",
+      "targetId": 1,
+      "ticks": 44,
+      "attacks": [
+        {
+          "tick": 50,
+          "targetId": 1
+        }
+      ],
+      "scriptInterrupted": true,
+      "state": "attack",
+      "firstAttack": {
+        "tick": 50,
+        "targetId": 1
+      }
+    },
+    {
+      "tier": "high",
+      "level": "L10",
+      "archetype": "infected.flamingo",
+      "target": "player",
+      "targetId": 1,
+      "ticks": 43,
+      "attacks": [
+        {
+          "tick": 93,
+          "targetId": 1
+        }
+      ],
+      "scriptInterrupted": true,
+      "state": "attack",
+      "firstAttack": {
+        "tick": 93,
+        "targetId": 1
+      }
+    },
+    {
+      "tier": "high",
+      "level": "L10",
+      "archetype": "infected.dog",
+      "target": "escort",
+      "targetId": 100,
+      "ticks": 1,
+      "attacks": [
+        {
+          "tick": 94,
+          "targetId": 100
+        }
+      ],
+      "scriptInterrupted": true,
+      "state": "attack",
+      "firstAttack": {
+        "tick": 94,
+        "targetId": 100
+      }
+    },
+    {
+      "tier": "high",
+      "level": "L10",
+      "archetype": "infected.cat",
+      "target": "escort",
+      "targetId": 100,
+      "ticks": 1,
+      "attacks": [
+        {
+          "tick": 95,
+          "targetId": 100
+        }
+      ],
+      "scriptInterrupted": true,
+      "state": "attack",
+      "firstAttack": {
+        "tick": 95,
+        "targetId": 100
+      }
+    },
+    {
+      "tier": "high",
+      "level": "L10",
+      "archetype": "infected.crow",
+      "target": "escort",
+      "targetId": 100,
+      "ticks": 1,
+      "attacks": [
+        {
+          "tick": 96,
+          "targetId": 100
+        }
+      ],
+      "scriptInterrupted": true,
+      "state": "attack",
+      "firstAttack": {
+        "tick": 96,
+        "targetId": 100
+      }
+    },
+    {
+      "tier": "high",
+      "level": "L10",
+      "archetype": "infected.lion",
+      "target": "escort",
+      "targetId": 100,
+      "ticks": 1,
+      "attacks": [
+        {
+          "tick": 97,
+          "targetId": 100
+        }
+      ],
+      "scriptInterrupted": true,
+      "state": "chase",
+      "firstAttack": {
+        "tick": 97,
+        "targetId": 100
+      }
+    },
+    {
+      "tier": "high",
+      "level": "L10",
+      "archetype": "infected.gorilla",
+      "target": "escort",
+      "targetId": 100,
+      "ticks": 1,
+      "attacks": [
+        {
+          "tick": 98,
+          "targetId": 100
+        }
+      ],
+      "scriptInterrupted": true,
+      "state": "chase",
+      "firstAttack": {
+        "tick": 98,
+        "targetId": 100
+      }
+    },
+    {
+      "tier": "high",
+      "level": "L10",
+      "archetype": "infected.elephant",
+      "target": "escort",
+      "targetId": 100,
+      "ticks": 1,
+      "attacks": [
+        {
+          "tick": 99,
+          "targetId": 100
+        }
+      ],
+      "scriptInterrupted": true,
+      "state": "chase",
+      "firstAttack": {
+        "tick": 99,
+        "targetId": 100
+      }
+    },
+    {
+      "tier": "high",
+      "level": "L10",
+      "archetype": "infected.zebra",
+      "target": "escort",
+      "targetId": 100,
+      "ticks": 48,
+      "attacks": [
+        {
+          "tick": 147,
+          "targetId": 100
+        }
+      ],
+      "scriptInterrupted": true,
+      "state": "attack",
+      "firstAttack": {
+        "tick": 147,
+        "targetId": 100
+      }
+    },
+    {
+      "tier": "high",
+      "level": "L10",
+      "archetype": "infected.flamingo",
+      "target": "escort",
+      "targetId": 100,
+      "ticks": 43,
+      "attacks": [
+        {
+          "tick": 190,
+          "targetId": 100
+        }
+      ],
+      "scriptInterrupted": true,
+      "state": "attack",
+      "firstAttack": {
+        "tick": 190,
+        "targetId": 100
+      }
+    }
+  ],
+  "errors": [],
+  "limitations": [
+    "Companion immunity/perception and every authored finite-focus arrival policy remain separate; this fixture does not establish full G-18 PASS.",
+    "Player/escort placement and scripted travel are fixture setup, not native campaign route evidence."
+  ]
+}

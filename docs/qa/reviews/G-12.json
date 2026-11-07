@@ -1,72 +1,33 @@
 {
   "row": "G-12",
   "status": "PASS",
-  "reviewer": "sweep-g/Codex",
-  "date": "2026-11-06",
-  "commit": "8023bad78de3aea29241fe2f5594a32d5f06a120",
+  "reviewer": "final-g/Codex",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
   "clauses": [
     {
       "clause": "Every following survivor shows its health bar, at every group size (L6/L7 up to 35).",
       "verdict": "PASS",
-      "note": "140 exact group-size identity/count samples (1\u201335 across both renderers and qualities) pass. All17 captures inspected; separate compact pips at35/6 and full bars at5/1. Negative render suppression removes every bar and is detected. Actual L6 roster plus L7 fallback models; this qualifies shared follower-bar renderer in view, campaign occluders remain G-07."
+      "note": "Fresh70 group-size samples (35→1 at both qualities),0 missing follower IDs; all35 eligible at maximum group size, with no finite cap. All8 main state frames plus the negative control reviewed. Counts35/6 show compact teal pips and5/1 full bars. Every positive bar ROI passes; hidden-bars control has0 teal pixels in all35 ROIs."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-g/final-cue/G-12-webgl2-high.json",
-      "sha256": "6cfc667b17305aa15f6c9295b5e929eac90020fa32dd80f5594bb4b6a56a8dcc",
-      "what": "Final-source WebGL2 fixture refresh; historical WebGPU receipts retain their own source identity."
+      "file": "docs/reports/final-g/G-12-webgl2-low.json",
+      "sha256": "a5dc6fbcb39932fc2b2c0036bad8e9d9b116a35a94b1d5ae6bf461cde7104647",
+      "what": "Fresh70 group-size samples (35→1 at both qualities),0 missing follower IDs; all35 eligible at maximum group size, with no finite cap. All8 main state frames plus the negative control reviewed. Counts35/6 show compact teal pips and5/1 full bars. Every positive bar ROI passes; hidden-bars control has0 teal pixels in all35 ROIs."
     },
     {
-      "file": "docs/reports/sweep-g/final-cue/G-12-webgl2-low.json",
-      "sha256": "078797f07956c0ba381468d206bb448d6614121947311fca14329d2baed95b90",
-      "what": "Final-source WebGL2 fixture refresh; historical WebGPU receipts retain their own source identity."
+      "file": "docs/reports/final-g/G-12-webgl2-high.json",
+      "sha256": "cfbc61b6a051aa149be28aba95fa70ac82a51dc66b0a75dba89ae5e59f7dfe34",
+      "what": "Fresh70 group-size samples (35→1 at both qualities),0 missing follower IDs; all35 eligible at maximum group size, with no finite cap. All8 main state frames plus the negative control reviewed. Counts35/6 show compact teal pips and5/1 full bars. Every positive bar ROI passes; hidden-bars control has0 teal pixels in all35 ROIs."
     },
     {
-      "file": "docs/reports/sweep-g/G-12-final-captures.json",
-      "sha256": "3e83a7ccac3b5699a211cb51f090ed439590e3fc38beb4868d4611a5d3650f04",
-      "what": "All nine original frames viewed: compact teal pips above all35/6 followers, full bars at5/1, and no bars in deliberate hidden-bars negative control. Both qualities retain all35 group-size samples and exact identities."
-    },
-    {
-      "file": "docs/reports/sweep-g/G-12-webgl2-high-captures.json",
-      "sha256": "f5dec25a6711d0480fe8ece480243af40dbaf9584111226456f8924826c7bfc1",
-      "what": "Every capture inspected in labelled640px cells; 35-follower WebGL2/low also inspected full-size. Includes exact original hashes."
-    },
-    {
-      "file": "docs/reports/sweep-g/G-12-webgl2-low-captures.json",
-      "sha256": "f27dfe4e81571a43c69d53a9f218062634efdfe8362a616e65c42a8bc916eaf7",
-      "what": "Every capture inspected in labelled640px cells; 35-follower WebGL2/low also inspected full-size. Includes exact original hashes."
-    },
-    {
-      "file": "docs/reports/sweep-g/G-12-webgpu-high-captures.json",
-      "sha256": "a9a124dca517b214fa134ccc8984c9329b3ba62f896faa368297665187c17011",
-      "what": "Every capture inspected in labelled640px cells; 35-follower WebGL2/low also inspected full-size. Includes exact original hashes."
-    },
-    {
-      "file": "docs/reports/sweep-g/G-12-webgpu-low-captures.json",
-      "sha256": "aad182b19377069725780e303f77fd320cf8dd312af896eb640d182d5a8d8606",
-      "what": "Every capture inspected in labelled640px cells; 35-follower WebGL2/low also inspected full-size. Includes exact original hashes."
-    },
-    {
-      "file": "docs/reports/sweep-g/G-12-webgl2-high.json",
-      "sha256": "61ef24e7c26e5662420ecf7735e1f10ef8da9666df1df50a113c31f6bf23f7c9",
-      "what": "webgl2/high: all35 group sizes, exact identities/counts and individual captured bar pixels pass."
-    },
-    {
-      "file": "docs/reports/sweep-g/G-12-webgl2-low.json",
-      "sha256": "34e2c03d93460316efe932eef7e1666dccb0081b359032493ddddde7b4e2961e",
-      "what": "webgl2/low: all35 group sizes, exact identities/counts and individual captured bar pixels pass."
-    },
-    {
-      "file": "docs/reports/sweep-g/G-12-webgpu-high.json",
-      "sha256": "73569264c5249d80032df4a623b0d61bf7b72b5e6e4d7f23bc33e00f856ac361",
-      "what": "webgpu/high: all35 group sizes, exact identities/counts and individual captured bar pixels pass."
-    },
-    {
-      "file": "docs/reports/sweep-g/G-12-webgpu-low.json",
-      "sha256": "6bc309dc85ecffd1ecef1767501096876673af8dae00607ce25971f3887668f8",
-      "what": "webgpu/low: all35 group sizes, exact identities/counts and individual captured bar pixels pass."
+      "file": "docs/reports/final-g/G-12-reviewed.json",
+      "sha256": "e7002bd9f880f236bb33fe596511a021b5002f7f2fe35bf7125089685041fd0d",
+      "what": "Fresh70 group-size samples (35→1 at both qualities),0 missing follower IDs; all35 eligible at maximum group size, with no finite cap. All8 main state frames plus the negative control reviewed. Counts35/6 show compact teal pips and5/1 full bars. Every positive bar ROI passes; hidden-bars control has0 teal pixels in all35 ROIs."
     }
   ],
-  "notes": "Final-source both-quality fixture refresh inspected. Whole native matrix was explicitly stopped by orchestrator; no complete final-source acceptance consolidation is claimed."
+  "notes": "Controlled production-renderer fixture; every setup, exact actor identity, pixel ROI and negative control is retained. No campaign-route or performance claim is substituted for the rendered clause.",
+  "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186"
 }

@@ -1,0 +1,38 @@
+{
+  "level": "L2",
+  "reviewer": "final-g/Codex",
+  "glitches": [
+    "Crew and seated NPCs read clearly; truck roof opens for crew visibility and the amber silhouette remains visible when behind the engine. Some black corpse fragments occur during escape (G14)."
+  ],
+  "stunning": {
+    "verdict": "P",
+    "observation": "Bright station and crowd-to-outbreak transition read well; PO should judge the exposed cab and thin amber silhouette.",
+    "missing": "PO: exact low repeat ride1491 close open cab and doors2951 wide tiny amber courier foreground silhouette; both originals retained."
+  },
+  "boringHarmlessBabysitting": [
+    "Authored25-second calm is brief; escape has active melee pursuers. No babysitting stall in either completed route."
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/final-g/L2-low-captures.json",
+      "sha256": "72338597e2c358a19ebc54010c8d9ece6bf49adbcb96a73af69e7f7380d9351d"
+    },
+    {
+      "file": "docs/reports/final-g/L2-high-captures.json",
+      "sha256": "681f4e756c24aa54693e8f60251ec3f0a97f17d8254b46789d0f3ef949951665"
+    },
+    {
+      "file": "docs/reports/final-g/L2-low-repeat-captures.json",
+      "sha256": "a7c36c46c970d61467712d41daf5160a62e266ac23faa9d46b7ed96a1587e44e"
+    },
+    {
+      "file": "docs/reports/final-g/G-25-L2-low-repeat.json",
+      "sha256": "2048cfed27f233180bbb73c5553235bf4e49f95b15ade42f165094510234cbf0"
+    }
+  ],
+  "scope": "Original low/high complete routes plus current-observer completed low repeat, zero console errors/skips. Every26repeat capture personally reviewed.",
+  "POFrames": [
+    "test-results/final-g/L2-low-repeat/captures/accept-L2-ride-t1491-low-z0-5.jpg",
+    "test-results/final-g/L2-low-repeat/captures/accept-L2-doors-t2951-low-z1-5.jpg"
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "recordedAt": "2026-11-07T02:58:43.466842+00:00",
+  "frozenGameplayHead": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "bug": "buildLevelReport sorts auxiliary composition before canonical fixtures and uses fixtures[0].fixtureHash. writeIndexes then rejects L10 because this auxiliary hash differs from the current canonical fixtureHash.",
+  "reportSourceBeforeSha256": "185a2951a5cfcb72f1678b55f9eb5db3a9d1de1af90bd0ffb003dbc532ab3140",
+  "selectionBefore": "fixtureHash: fixtures[0]?.receipt.fixtureHash",
+  "actual": {
+    "L10FixtureHash": "92c8c4dbd27db2b7dd03df5289fc530a85fd20da6035f4f296a61ec08d88a9e3",
+    "canonicalL10FixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4",
+    "compositionHash": "92c8c4dbd27db2b7dd03df5289fc530a85fd20da6035f4f296a61ec08d88a9e3",
+    "globalLevels": [
+      "L1",
+      "L2",
+      "L3",
+      "L4",
+      "L5",
+      "L6",
+      "L7",
+      "L8",
+      "L9"
+    ],
+    "G25Status": "FAIL",
+    "G25CurrentStatus": "NOT CHECKED",
+    "G25PhysicalChecks": 18,
+    "L10PhysicalChecks": [
+      {
+        "tier": "low",
+        "status": "PASS",
+        "completed": true
+      },
+      {
+        "tier": "high",
+        "status": "PASS",
+        "completed": true
+      }
+    ]
+  },
+  "expected": "Select the canonical native fixture receipt identity; retain every auxiliary check with its own provenance. All10 source/observer-matching reports must enter global aggregation; G25 has20 completed matching physical receipts."
+}

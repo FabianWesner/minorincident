@@ -1,0 +1,939 @@
+{
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
+  "revision": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "row": "G-16",
+  "generatedAt": "2026-11-07T01:03:21.280Z",
+  "inputs": [
+    {
+      "file": "docs/reports/fix51-verify/receipts/L1-high-complete.json",
+      "sha256": "1c7f830ebdd39781268db20dd2ab1fa445e032f4284799c226fcc676c89aef7d",
+      "level": "L1",
+      "tier": "high",
+      "policy": "complete",
+      "generatedAt": "2026-11-06T23:42:51.147Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L1-high-stationary.json",
+      "sha256": "0322e1ee830fbc1f7c147e6ded974dd6cc292a2e0e7f040782c62cf834cedf81",
+      "level": "L1",
+      "tier": "high",
+      "policy": "stationary",
+      "generatedAt": "2026-11-06T23:43:00.073Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L1-low-complete.json",
+      "sha256": "28ec1a7ecf109a82bdc17598f79a2b9637bb7e7e0038f2938cdff9c89341ae80",
+      "level": "L1",
+      "tier": "low",
+      "policy": "complete",
+      "generatedAt": "2026-11-06T23:42:26.241Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L1-low-stationary.json",
+      "sha256": "d9b24dbb921fd3e4fe7587b08b70f36e4bba309e3e12515665604c1d7eb6c9b1",
+      "level": "L1",
+      "tier": "low",
+      "policy": "stationary",
+      "generatedAt": "2026-11-06T23:42:32.488Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-high-complete.json",
+      "sha256": "43b67a54a2e7760fbe7344459235f6ac1043c0e06419d45509fbb83e83324d71",
+      "level": "L10",
+      "tier": "high",
+      "policy": "complete",
+      "generatedAt": "2026-11-07T00:48:25.568Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-high-stationary.json",
+      "sha256": "3ae546b86e08ab08a7ddf65a8d84b5a68c5a6b5f87bc590a89af0086e085c6b5",
+      "level": "L10",
+      "tier": "high",
+      "policy": "stationary",
+      "generatedAt": "2026-11-07T00:53:49.948Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-low-complete.json",
+      "sha256": "5047aee569fc18acc063f8e1562617110b5be116f6ada86216bbf49d7288954e",
+      "level": "L10",
+      "tier": "low",
+      "policy": "complete",
+      "generatedAt": "2026-11-07T00:39:31.259Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L10-low-stationary.json",
+      "sha256": "28b05461529520d185453a897450fdcb2c131724f2335d0931399804f85928f3",
+      "level": "L10",
+      "tier": "low",
+      "policy": "stationary",
+      "generatedAt": "2026-11-07T00:44:43.303Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-high-complete.json",
+      "sha256": "b1b95bd4a8a6c5aad61c862ea49271e3614348b840e4274e12557ce24a5c2ba2",
+      "level": "L2",
+      "tier": "high",
+      "policy": "complete",
+      "generatedAt": "2026-11-06T23:47:04.154Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-high-stationary.json",
+      "sha256": "712c3a07bd89507a562b20ad5ebdd557c8bebe3f342c059325a9b191b9bd9f09",
+      "level": "L2",
+      "tier": "high",
+      "policy": "stationary",
+      "generatedAt": "2026-11-06T23:47:17.470Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-low-complete.json",
+      "sha256": "61f5b4055bfc326a89d7457bac497480b56627f61e9b80dd3b24af7952528f15",
+      "level": "L2",
+      "tier": "low",
+      "policy": "complete",
+      "generatedAt": "2026-11-06T23:46:34.932Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L2-low-stationary.json",
+      "sha256": "23f055cf98010a9fe734a9ef1b9e1e975af9bfa35fd4b22a9b401b215a445235",
+      "level": "L2",
+      "tier": "low",
+      "policy": "stationary",
+      "generatedAt": "2026-11-06T23:46:45.943Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L3-high-complete.json",
+      "sha256": "60150c0b2c6756dbf5c54991d1f4cc23c674de5e76f318085ce49e33b3ee05ee",
+      "level": "L3",
+      "tier": "high",
+      "policy": "complete",
+      "generatedAt": "2026-11-06T23:51:28.310Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L3-high-stationary.json",
+      "sha256": "e2e86df90b779a99c404decc93954648991c1478d15489f989abd3c8dd4c0c35",
+      "level": "L3",
+      "tier": "high",
+      "policy": "stationary",
+      "generatedAt": "2026-11-06T23:52:52.984Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L3-low-complete.json",
+      "sha256": "d0bead0779e4ec9eb738109cd31d136ad1cca05a9742d7e13d7cdde55bdb4b5a",
+      "level": "L3",
+      "tier": "low",
+      "policy": "complete",
+      "generatedAt": "2026-11-06T23:50:16.888Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L3-low-stationary.json",
+      "sha256": "4b108dd9f2bc0e90b9de7db828b49845c8d4821c9b86b4083555207b463a2f55",
+      "level": "L3",
+      "tier": "low",
+      "policy": "stationary",
+      "generatedAt": "2026-11-06T23:51:21.752Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L4-high-complete.json",
+      "sha256": "905bee51d2cb00b569832da6a4c37f5901ba6d20f720740d02815cef2426975f",
+      "level": "L4",
+      "tier": "high",
+      "policy": "complete",
+      "generatedAt": "2026-11-06T23:59:36.550Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L4-high-stationary.json",
+      "sha256": "adff86f9191046d67104a60263bf0fc8622bc0553cfd4ca96d28740b710e2b03",
+      "level": "L4",
+      "tier": "high",
+      "policy": "stationary",
+      "generatedAt": "2026-11-07T00:00:33.401Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L4-low-complete.json",
+      "sha256": "d418b74afcd11d3a0649a14654e4220f07a99a342025b597d82aaec4815c7c40",
+      "level": "L4",
+      "tier": "low",
+      "policy": "complete",
+      "generatedAt": "2026-11-06T23:57:03.732Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L4-low-stationary.json",
+      "sha256": "2c215a7e067fa9d3061f3b35a3ba67972f4df60ec211757df1eae416b3d5764f",
+      "level": "L4",
+      "tier": "low",
+      "policy": "stationary",
+      "generatedAt": "2026-11-06T23:59:02.861Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L5-high-complete.json",
+      "sha256": "4adbe19053dd808abb92458b9b2c711dbc39b0c000cd5a3efa56435ffe5e76c9",
+      "level": "L5",
+      "tier": "high",
+      "policy": "complete",
+      "generatedAt": "2026-11-07T00:05:55.327Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L5-high-stationary.json",
+      "sha256": "f30307df7b87c2eefa309057fd069b3bc9d07a8cc547c0fd398523f2f636f48a",
+      "level": "L5",
+      "tier": "high",
+      "policy": "stationary",
+      "generatedAt": "2026-11-07T00:06:27.049Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L5-low-complete.json",
+      "sha256": "adbfe0e3f800089d623f743036ee8ebe6ae683a6c5877055561a64f9b6a0aa5e",
+      "level": "L5",
+      "tier": "low",
+      "policy": "complete",
+      "generatedAt": "2026-11-07T00:05:20.349Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L5-low-stationary.json",
+      "sha256": "fc8b434b0c09b635651b37aa8c00622fe31f73110cd3bb76e5c563d35bd80117",
+      "level": "L5",
+      "tier": "low",
+      "policy": "stationary",
+      "generatedAt": "2026-11-07T00:05:41.672Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-high-complete.json",
+      "sha256": "427c24bae08e22c0f76e434842a7f9d83548463323290288455f6ac95dd80ce9",
+      "level": "L6",
+      "tier": "high",
+      "policy": "complete",
+      "generatedAt": "2026-11-07T00:08:55.427Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-high-stationary.json",
+      "sha256": "974464b795656fa31224610cb1c6a22ea7cce2bdf1e45a91327784666c525f98",
+      "level": "L6",
+      "tier": "high",
+      "policy": "stationary",
+      "generatedAt": "2026-11-07T00:09:01.514Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-low-complete.json",
+      "sha256": "13b9f59b010d4aa8d8daee4a40ae469f0d41924a73e1544fcdc91704f7584c5c",
+      "level": "L6",
+      "tier": "low",
+      "policy": "complete",
+      "generatedAt": "2026-11-07T00:08:38.008Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-low-stationary.json",
+      "sha256": "cee96e76dbb95d54fc882db643e46c86ae17121f9ce17c5173126c093f8c5651",
+      "level": "L6",
+      "tier": "low",
+      "policy": "stationary",
+      "generatedAt": "2026-11-07T00:08:47.487Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L7-high-complete.json",
+      "sha256": "f60d6be2d21000b01e4124143247b25dc444497dd2042f4ff6141c2c710c615a",
+      "level": "L7",
+      "tier": "high",
+      "policy": "complete",
+      "generatedAt": "2026-11-07T00:15:42.421Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L7-high-stationary.json",
+      "sha256": "a20e9947893d6dbaf67e2011103e99625071da546fc524f41601a171ab66fb85",
+      "level": "L7",
+      "tier": "high",
+      "policy": "stationary",
+      "generatedAt": "2026-11-07T00:21:26.852Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L7-low-complete.json",
+      "sha256": "2de716153c2ee47da57dff155a33fa827355b0c6e12d857a9f8b6f6d342af9a4",
+      "level": "L7",
+      "tier": "low",
+      "policy": "complete",
+      "generatedAt": "2026-11-07T00:13:13.300Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L7-low-stationary.json",
+      "sha256": "119eb9392f6236143e3f02043b8b72578b9ef71c93eae8fb8f2ea27c1c5d9bb0",
+      "level": "L7",
+      "tier": "low",
+      "policy": "stationary",
+      "generatedAt": "2026-11-07T00:14:54.749Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L8-high-complete.json",
+      "sha256": "2cb65cbbf27554bae7892ba2f125379be970c49adce16802090ea1a82bbf126c",
+      "level": "L8",
+      "tier": "high",
+      "policy": "complete",
+      "generatedAt": "2026-11-07T00:30:45.710Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L8-high-stationary.json",
+      "sha256": "0e5012769f15e636d59c5bc699858a459c2d83b02db02acfef9f4dac365052c7",
+      "level": "L8",
+      "tier": "high",
+      "policy": "stationary",
+      "generatedAt": "2026-11-07T00:31:23.356Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L8-low-complete.json",
+      "sha256": "8ac2d7c6a232c636af0da76165ee1cf7b2a2b65ab00490433f3fe1123aa0028d",
+      "level": "L8",
+      "tier": "low",
+      "policy": "complete",
+      "generatedAt": "2026-11-07T00:28:14.583Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L8-low-stationary.json",
+      "sha256": "9cb09a189818b06e0915cbc8b2427345a6de6aaa4568def7e0adccfd02903fff",
+      "level": "L8",
+      "tier": "low",
+      "policy": "stationary",
+      "generatedAt": "2026-11-07T00:29:03.636Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L9-high-complete.json",
+      "sha256": "91522f3ef3dcc5166ab67b26569288c69b1e1707dce30e52e237c2be6feee75b",
+      "level": "L9",
+      "tier": "high",
+      "policy": "complete",
+      "generatedAt": "2026-11-07T00:35:31.239Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L9-high-stationary.json",
+      "sha256": "29d56c10c80f942cd021adc9a0d9a39c927430fb378ba18ac57e1e9217a93d78",
+      "level": "L9",
+      "tier": "high",
+      "policy": "stationary",
+      "generatedAt": "2026-11-07T00:36:07.602Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L9-low-complete.json",
+      "sha256": "99228a4df2bec1cf08b09d0dedb27472f8cb4abfc235b804c98992710a0e8603",
+      "level": "L9",
+      "tier": "low",
+      "policy": "complete",
+      "generatedAt": "2026-11-07T00:34:38.663Z"
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L9-low-stationary.json",
+      "sha256": "5b77768248b2c32969cf7280096ddca57b4de02d2e8d270f3c8bf63230912e2b",
+      "level": "L9",
+      "tier": "low",
+      "policy": "stationary",
+      "generatedAt": "2026-11-07T00:35:02.935Z"
+    }
+  ],
+  "checks": [
+    {
+      "id": "G-16",
+      "clause": "weapons offered in the ordinary initial racks",
+      "level": "L1",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": [],
+      "target": "subset of []",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-high-complete.json"
+    },
+    {
+      "id": "G-16",
+      "clause": "weapons offered in the ordinary initial racks",
+      "level": "L1",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": [],
+      "target": "subset of []",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-high-stationary.json"
+    },
+    {
+      "id": "G-16",
+      "clause": "weapons offered in the ordinary initial racks",
+      "level": "L1",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": [],
+      "target": "subset of []",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-low-complete.json"
+    },
+    {
+      "id": "G-16",
+      "clause": "weapons offered in the ordinary initial racks",
+      "level": "L1",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": [],
+      "target": "subset of []",
+      "receipt": "docs/reports/fix51-verify/receipts/L1-low-stationary.json"
+    },
+    {
+      "id": "G-16",
+      "clause": "weapons offered in the ordinary initial racks",
+      "level": "L10",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": [
+        "weapon.fire-axe"
+      ],
+      "target": "exactly [axe]",
+      "receipt": "docs/reports/fix51-verify/receipts/L10-high-complete.json"
+    },
+    {
+      "id": "G-16",
+      "clause": "weapons offered in the ordinary initial racks",
+      "level": "L10",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": [
+        "weapon.fire-axe"
+      ],
+      "target": "exactly [axe]",
+      "receipt": "docs/reports/fix51-verify/receipts/L10-high-stationary.json"
+    },
+    {
+      "id": "G-16",
+      "clause": "weapons offered in the ordinary initial racks",
+      "level": "L10",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": [
+        "weapon.fire-axe"
+      ],
+      "target": "exactly [axe]",
+      "receipt": "docs/reports/fix51-verify/receipts/L10-low-complete.json"
+    },
+    {
+      "id": "G-16",
+      "clause": "weapons offered in the ordinary initial racks",
+      "level": "L10",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": [
+        "weapon.fire-axe"
+      ],
+      "target": "exactly [axe]",
+      "receipt": "docs/reports/fix51-verify/receipts/L10-low-stationary.json"
+    },
+    {
+      "id": "G-16",
+      "clause": "weapons offered in the ordinary initial racks",
+      "level": "L2",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": [
+        "weapon.bat"
+      ],
+      "target": "subset of [\"weapon.bat\",\"weapon.fire-axe\"]",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-complete.json"
+    },
+    {
+      "id": "G-16",
+      "clause": "weapons offered in the ordinary initial racks",
+      "level": "L2",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": [
+        "weapon.bat"
+      ],
+      "target": "subset of [\"weapon.bat\",\"weapon.fire-axe\"]",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-high-stationary.json"
+    },
+    {
+      "id": "G-16",
+      "clause": "weapons offered in the ordinary initial racks",
+      "level": "L2",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": [
+        "weapon.bat"
+      ],
+      "target": "subset of [\"weapon.bat\",\"weapon.fire-axe\"]",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-complete.json"
+    },
+    {
+      "id": "G-16",
+      "clause": "weapons offered in the ordinary initial racks",
+      "level": "L2",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": [
+        "weapon.bat"
+      ],
+      "target": "subset of [\"weapon.bat\",\"weapon.fire-axe\"]",
+      "receipt": "docs/reports/fix51-verify/receipts/L2-low-stationary.json"
+    },
+    {
+      "id": "G-16",
+      "clause": "weapons offered in the ordinary initial racks",
+      "level": "L3",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": [
+        "weapon.fire-axe",
+        "weapon.bat"
+      ],
+      "target": "subset of [\"weapon.bat\",\"weapon.fire-axe\",\"weapon.handgun\"]",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-high-complete.json"
+    },
+    {
+      "id": "G-16",
+      "clause": "weapons offered in the ordinary initial racks",
+      "level": "L3",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": [
+        "weapon.fire-axe",
+        "weapon.bat"
+      ],
+      "target": "subset of [\"weapon.bat\",\"weapon.fire-axe\",\"weapon.handgun\"]",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-high-stationary.json"
+    },
+    {
+      "id": "G-16",
+      "clause": "weapons offered in the ordinary initial racks",
+      "level": "L3",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": [
+        "weapon.fire-axe",
+        "weapon.bat"
+      ],
+      "target": "subset of [\"weapon.bat\",\"weapon.fire-axe\",\"weapon.handgun\"]",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-complete.json"
+    },
+    {
+      "id": "G-16",
+      "clause": "weapons offered in the ordinary initial racks",
+      "level": "L3",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": [
+        "weapon.fire-axe",
+        "weapon.bat"
+      ],
+      "target": "subset of [\"weapon.bat\",\"weapon.fire-axe\",\"weapon.handgun\"]",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-stationary.json"
+    },
+    {
+      "id": "G-16",
+      "clause": "weapons offered in the ordinary initial racks",
+      "level": "L4",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.handgun"
+      ],
+      "target": "subset of [\"weapon.bat\",\"weapon.fire-axe\",\"weapon.handgun\",\"weapon.army-mg\"]",
+      "receipt": "docs/reports/fix51-verify/receipts/L4-high-complete.json"
+    },
+    {
+      "id": "G-16",
+      "clause": "weapons offered in the ordinary initial racks",
+      "level": "L4",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.handgun"
+      ],
+      "target": "subset of [\"weapon.bat\",\"weapon.fire-axe\",\"weapon.handgun\",\"weapon.army-mg\"]",
+      "receipt": "docs/reports/fix51-verify/receipts/L4-high-stationary.json"
+    },
+    {
+      "id": "G-16",
+      "clause": "weapons offered in the ordinary initial racks",
+      "level": "L4",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.handgun"
+      ],
+      "target": "subset of [\"weapon.bat\",\"weapon.fire-axe\",\"weapon.handgun\",\"weapon.army-mg\"]",
+      "receipt": "docs/reports/fix51-verify/receipts/L4-low-complete.json"
+    },
+    {
+      "id": "G-16",
+      "clause": "weapons offered in the ordinary initial racks",
+      "level": "L4",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.handgun"
+      ],
+      "target": "subset of [\"weapon.bat\",\"weapon.fire-axe\",\"weapon.handgun\",\"weapon.army-mg\"]",
+      "receipt": "docs/reports/fix51-verify/receipts/L4-low-stationary.json"
+    },
+    {
+      "id": "G-16",
+      "clause": "weapons offered in the ordinary initial racks",
+      "level": "L5",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.army-mg",
+        "weapon.handgun"
+      ],
+      "target": "subset of [\"weapon.bat\",\"weapon.fire-axe\",\"weapon.handgun\",\"weapon.army-mg\",\"weapon.shotgun\"]",
+      "receipt": "docs/reports/fix51-verify/receipts/L5-high-complete.json"
+    },
+    {
+      "id": "G-16",
+      "clause": "weapons offered in the ordinary initial racks",
+      "level": "L5",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.army-mg",
+        "weapon.handgun"
+      ],
+      "target": "subset of [\"weapon.bat\",\"weapon.fire-axe\",\"weapon.handgun\",\"weapon.army-mg\",\"weapon.shotgun\"]",
+      "receipt": "docs/reports/fix51-verify/receipts/L5-high-stationary.json"
+    },
+    {
+      "id": "G-16",
+      "clause": "weapons offered in the ordinary initial racks",
+      "level": "L5",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.army-mg",
+        "weapon.handgun"
+      ],
+      "target": "subset of [\"weapon.bat\",\"weapon.fire-axe\",\"weapon.handgun\",\"weapon.army-mg\",\"weapon.shotgun\"]",
+      "receipt": "docs/reports/fix51-verify/receipts/L5-low-complete.json"
+    },
+    {
+      "id": "G-16",
+      "clause": "weapons offered in the ordinary initial racks",
+      "level": "L5",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.army-mg",
+        "weapon.handgun"
+      ],
+      "target": "subset of [\"weapon.bat\",\"weapon.fire-axe\",\"weapon.handgun\",\"weapon.army-mg\",\"weapon.shotgun\"]",
+      "receipt": "docs/reports/fix51-verify/receipts/L5-low-stationary.json"
+    },
+    {
+      "id": "G-16",
+      "clause": "weapons offered in the ordinary initial racks",
+      "level": "L6",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "weapon.shotgun"
+      ],
+      "target": "subset of [\"weapon.bat\",\"weapon.fire-axe\",\"weapon.handgun\",\"weapon.army-mg\",\"weapon.shotgun\"]",
+      "receipt": "docs/reports/fix51-verify/receipts/L6-high-complete.json"
+    },
+    {
+      "id": "G-16",
+      "clause": "weapons offered in the ordinary initial racks",
+      "level": "L6",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "weapon.shotgun"
+      ],
+      "target": "subset of [\"weapon.bat\",\"weapon.fire-axe\",\"weapon.handgun\",\"weapon.army-mg\",\"weapon.shotgun\"]",
+      "receipt": "docs/reports/fix51-verify/receipts/L6-high-stationary.json"
+    },
+    {
+      "id": "G-16",
+      "clause": "weapons offered in the ordinary initial racks",
+      "level": "L6",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "weapon.shotgun"
+      ],
+      "target": "subset of [\"weapon.bat\",\"weapon.fire-axe\",\"weapon.handgun\",\"weapon.army-mg\",\"weapon.shotgun\"]",
+      "receipt": "docs/reports/fix51-verify/receipts/L6-low-complete.json"
+    },
+    {
+      "id": "G-16",
+      "clause": "weapons offered in the ordinary initial racks",
+      "level": "L6",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": [
+        "weapon.fire-axe",
+        "weapon.bat",
+        "weapon.army-mg",
+        "weapon.handgun",
+        "weapon.shotgun"
+      ],
+      "target": "subset of [\"weapon.bat\",\"weapon.fire-axe\",\"weapon.handgun\",\"weapon.army-mg\",\"weapon.shotgun\"]",
+      "receipt": "docs/reports/fix51-verify/receipts/L6-low-stationary.json"
+    },
+    {
+      "id": "G-16",
+      "clause": "weapons offered in the ordinary initial racks",
+      "level": "L7",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": [
+        "weapon.bat",
+        "weapon.fire-axe",
+        "weapon.handgun",
+        "weapon.army-mg",
+        "weapon.shotgun"
+      ],
+      "target": "subset of [\"weapon.bat\",\"weapon.fire-axe\",\"weapon.handgun\",\"weapon.army-mg\",\"weapon.shotgun\",\"weapon.rocket-launcher\"]",
+      "receipt": "docs/reports/fix51-verify/receipts/L7-high-complete.json"
+    },
+    {
+      "id": "G-16",
+      "clause": "weapons offered in the ordinary initial racks",
+      "level": "L7",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": [
+        "weapon.bat",
+        "weapon.fire-axe",
+        "weapon.handgun",
+        "weapon.army-mg",
+        "weapon.shotgun"
+      ],
+      "target": "subset of [\"weapon.bat\",\"weapon.fire-axe\",\"weapon.handgun\",\"weapon.army-mg\",\"weapon.shotgun\",\"weapon.rocket-launcher\"]",
+      "receipt": "docs/reports/fix51-verify/receipts/L7-high-stationary.json"
+    },
+    {
+      "id": "G-16",
+      "clause": "weapons offered in the ordinary initial racks",
+      "level": "L7",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": [
+        "weapon.bat",
+        "weapon.fire-axe",
+        "weapon.handgun",
+        "weapon.army-mg",
+        "weapon.shotgun"
+      ],
+      "target": "subset of [\"weapon.bat\",\"weapon.fire-axe\",\"weapon.handgun\",\"weapon.army-mg\",\"weapon.shotgun\",\"weapon.rocket-launcher\"]",
+      "receipt": "docs/reports/fix51-verify/receipts/L7-low-complete.json"
+    },
+    {
+      "id": "G-16",
+      "clause": "weapons offered in the ordinary initial racks",
+      "level": "L7",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": [
+        "weapon.bat",
+        "weapon.fire-axe",
+        "weapon.handgun",
+        "weapon.army-mg",
+        "weapon.shotgun"
+      ],
+      "target": "subset of [\"weapon.bat\",\"weapon.fire-axe\",\"weapon.handgun\",\"weapon.army-mg\",\"weapon.shotgun\",\"weapon.rocket-launcher\"]",
+      "receipt": "docs/reports/fix51-verify/receipts/L7-low-stationary.json"
+    },
+    {
+      "id": "G-16",
+      "clause": "weapons offered in the ordinary initial racks",
+      "level": "L8",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": [
+        "weapon.bat",
+        "weapon.fire-axe",
+        "weapon.rocket-launcher",
+        "weapon.army-mg",
+        "weapon.shotgun",
+        "weapon.handgun"
+      ],
+      "target": "subset of [\"weapon.bat\",\"weapon.fire-axe\",\"weapon.handgun\",\"weapon.army-mg\",\"weapon.shotgun\",\"weapon.rocket-launcher\"]",
+      "receipt": "docs/reports/fix51-verify/receipts/L8-high-complete.json"
+    },
+    {
+      "id": "G-16",
+      "clause": "weapons offered in the ordinary initial racks",
+      "level": "L8",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": [
+        "weapon.bat",
+        "weapon.fire-axe",
+        "weapon.rocket-launcher",
+        "weapon.army-mg",
+        "weapon.shotgun",
+        "weapon.handgun"
+      ],
+      "target": "subset of [\"weapon.bat\",\"weapon.fire-axe\",\"weapon.handgun\",\"weapon.army-mg\",\"weapon.shotgun\",\"weapon.rocket-launcher\"]",
+      "receipt": "docs/reports/fix51-verify/receipts/L8-high-stationary.json"
+    },
+    {
+      "id": "G-16",
+      "clause": "weapons offered in the ordinary initial racks",
+      "level": "L8",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": [
+        "weapon.bat",
+        "weapon.fire-axe",
+        "weapon.rocket-launcher",
+        "weapon.army-mg",
+        "weapon.shotgun",
+        "weapon.handgun"
+      ],
+      "target": "subset of [\"weapon.bat\",\"weapon.fire-axe\",\"weapon.handgun\",\"weapon.army-mg\",\"weapon.shotgun\",\"weapon.rocket-launcher\"]",
+      "receipt": "docs/reports/fix51-verify/receipts/L8-low-complete.json"
+    },
+    {
+      "id": "G-16",
+      "clause": "weapons offered in the ordinary initial racks",
+      "level": "L8",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": [
+        "weapon.bat",
+        "weapon.fire-axe",
+        "weapon.rocket-launcher",
+        "weapon.army-mg",
+        "weapon.shotgun",
+        "weapon.handgun"
+      ],
+      "target": "subset of [\"weapon.bat\",\"weapon.fire-axe\",\"weapon.handgun\",\"weapon.army-mg\",\"weapon.shotgun\",\"weapon.rocket-launcher\"]",
+      "receipt": "docs/reports/fix51-verify/receipts/L8-low-stationary.json"
+    },
+    {
+      "id": "G-16",
+      "clause": "weapons offered in the ordinary initial racks",
+      "level": "L9",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": [
+        "weapon.bat",
+        "weapon.fire-axe",
+        "weapon.rocket-launcher",
+        "weapon.army-mg",
+        "weapon.shotgun",
+        "weapon.handgun"
+      ],
+      "target": "subset of [\"weapon.bat\",\"weapon.fire-axe\",\"weapon.handgun\",\"weapon.army-mg\",\"weapon.shotgun\",\"weapon.rocket-launcher\"]",
+      "receipt": "docs/reports/fix51-verify/receipts/L9-high-complete.json"
+    },
+    {
+      "id": "G-16",
+      "clause": "weapons offered in the ordinary initial racks",
+      "level": "L9",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": [
+        "weapon.bat",
+        "weapon.fire-axe",
+        "weapon.rocket-launcher",
+        "weapon.army-mg",
+        "weapon.shotgun",
+        "weapon.handgun"
+      ],
+      "target": "subset of [\"weapon.bat\",\"weapon.fire-axe\",\"weapon.handgun\",\"weapon.army-mg\",\"weapon.shotgun\",\"weapon.rocket-launcher\"]",
+      "receipt": "docs/reports/fix51-verify/receipts/L9-high-stationary.json"
+    },
+    {
+      "id": "G-16",
+      "clause": "weapons offered in the ordinary initial racks",
+      "level": "L9",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": [
+        "weapon.bat",
+        "weapon.fire-axe",
+        "weapon.rocket-launcher",
+        "weapon.army-mg",
+        "weapon.shotgun",
+        "weapon.handgun"
+      ],
+      "target": "subset of [\"weapon.bat\",\"weapon.fire-axe\",\"weapon.handgun\",\"weapon.army-mg\",\"weapon.shotgun\",\"weapon.rocket-launcher\"]",
+      "receipt": "docs/reports/fix51-verify/receipts/L9-low-complete.json"
+    },
+    {
+      "id": "G-16",
+      "clause": "weapons offered in the ordinary initial racks",
+      "level": "L9",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": [
+        "weapon.bat",
+        "weapon.fire-axe",
+        "weapon.rocket-launcher",
+        "weapon.army-mg",
+        "weapon.shotgun",
+        "weapon.handgun"
+      ],
+      "target": "subset of [\"weapon.bat\",\"weapon.fire-axe\",\"weapon.handgun\",\"weapon.army-mg\",\"weapon.shotgun\",\"weapon.rocket-launcher\"]",
+      "receipt": "docs/reports/fix51-verify/receipts/L9-low-stationary.json"
+    }
+  ]
+}

@@ -1,30 +1,33 @@
 {
   "row": "G-09",
-  "status": "PASS",
-  "reviewer": "fix68-g/Codex",
-  "date": "2026-11-06",
-  "commit": "d6167897fdd39772a96a7a2dbfb69ea4c5cee5db",
+  "status": "P",
+  "reviewer": "final-g/Codex",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
   "clauses": [
     {
-      "clause": "Steps without a spatial destination show no world ring by design; the HUD objective text is the marker there (2026-11-06 clarification).",
-      "verdict": "PASS",
-      "note": "L4 hold: all 28 observations across low/high and zoom 1/1.5 show the actual objective HUD, with no world ring. All 12 captures reviewed including intermediate UI configurations. The former hold counterexample is closed."
+      "clause": "The objective marker is visible within 2 s of every step start, at zoom 1.5 and 1, not hidden inside a prop (Q-283). Orchestrator 2026-11-06: steps without a spatial destination (hold/defend in place, e.g. the L4 hold) show no world ring by design; the HUD objective text is the marker there.",
+      "verdict": "P",
+      "note": "Fresh L1 high step-start observer: wide-view first cue onset25/94/0/4/83ticks for pickup/deliver/escape/weapon/firestation, all≤120ticks. Full-size deliver/firestation story frames inspected: requested zoom1 is overridden to1.5 and the directional edge pin is hidden while the destination text remains readable. This is a concrete framing/guide-priority handoff for PO; no false hidden-hold failure and no unobserved zoom1 PASS are claimed."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/fix68-g/G-09-visible.json",
-      "sha256": "fd358185e537ea17e87c68fac7f0c2ce6a54ff4676e8544d8729ba32214a0ffa",
-      "what": "Real HUD visibility, objective text, ring state and capture hashes/observations."
+      "file": "docs/reports/final-g/G-09-L1-start-review.json",
+      "sha256": "3fed775f0e17f7a65c86ba9afaa0c637271fb8e5e40f40f426526c675a2cc0ac",
+      "what": "Fresh L1 high step-start observer: wide-view first cue onset25/94/0/4/83ticks for pickup/deliver/escape/weapon/firestation, all≤120ticks. Full-size deliver/firestation story frames inspected: requested zoom1 is overridden to1.5 and the directional edge pin is hidden while the destination text remains readable. This is a concrete framing/guide-priority handoff for PO; no false hidden-hold failure and no unobserved zoom1 PASS are claimed."
     },
     {
-      "file": "docs/reports/fix68-g/G-09-closure.json",
-      "sha256": "c3cedc87fb3d453d407875524105d7f2f8afe51b7f7e9138f7e86eaed0247fff",
-      "what": "Real HUD visibility, objective text, ring state and capture hashes/observations."
+      "file": "docs/reports/final-g/G-09-capture-gap.json",
+      "sha256": "eeefd36397f0611c0fd51e2fc0312f31bff4e0194144a8d19e9150deb8d38b07",
+      "what": "Old first-step capture at635ticks and missing zoom1 could not measure this deadline; current passive marker-start observer and functional photo matrix address the capture gap."
+    },
+    {
+      "file": "docs/reports/final-g/L1-low-repeat-captures.json",
+      "sha256": "fbc98ae2e8f6d6e3c52082def1c9d541c616f1b8d6bc18efad71e890782da031",
+      "what": "Additional current-observer complete low repeat retains firestation-t6608-low-z1.jpg: requested zoom1, actual camera zoom/targetZoom1.5 at tick6609, fixed story framing. This supplies a new exact fire-station PO comparison; it does not claim unclamped zoom1 coverage."
     }
   ],
-  "notes": [
-    "Scoped clarification review; this does not certify every spatial step start or prop-hidden pickup. Historical literal-ring receipts remain in sweep-g. Reviewed final gameplay commit d485990; evidence retains original provenance and stated scope. Continuation review: d616789 changes only announced L3 admission retirement after d10848b L6 quota priority. Historical proofs retain their original identities and immutable archived receipts. Scoped clauses only; full release acceptance is pending.",
-    "Final load-qualified standalone threat: exit1,12 L7 pace flags; L3/L6 threat flags cleared. Full global-row qualification remains open. See docs/reports/fix68-g/README.md."
-  ]
+  "notes": "PO: approve native story-camera zoom clamping and temporary direction-pin suppression while destination text remains. Retained exact full-size frames: L1-high/captures/accept-L1-deliver-t1030-high-z1.jpg (actual1.5) and accept-L1-escape-t5237-high-z1.jpg (actual1). Original firestation photo was inspected and then archived during raw cleanup; its digest/state remain in the receipt. No full five-step zoom1 PASS is claimed. Additional current-observer complete low repeat retains firestation-t6608-low-z1.jpg: requested zoom1, actual camera zoom/targetZoom1.5 at tick6609, fixed story framing. This supplies a new exact fire-station PO comparison; it does not claim unclamped zoom1 coverage.",
+  "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186"
 }

@@ -1,0 +1,23 @@
+{
+  "row": "G-10",
+  "status": "PASS",
+  "reviewer": "final-g/Codex",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "clauses": [
+    {
+      "clause": "Pickups (weapons, medkits, headlamp, rocket) are taken **on approach** (≤ 1.5 m ground, ≤ 2.2 m shelf), no E/click/standing still. PO: \"You should just take it when I come close to it\".",
+      "verdict": "PASS",
+      "note": "Both qualities: moving approach fixtures collect exactly once with interact=false and mouseButtons=false. Ground contacts at 1.4949994m (≤1.5m); shelf at 2.1699998m (≤2.2m). Every fixture effect is applied while moving 0.075m; weapon, medkit and lamp classes included. Native approach-only observations with no pickup are inconclusive and are supplemented by the deliberate moving fixtures."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/final-g/G-10-native.json",
+      "sha256": "dcadf7a652aaef8534e6db56600c4e82d4c84236c1613de149e28f4d0c2f558e",
+      "what": "Both qualities: moving approach fixtures collect exactly once with interact=false and mouseButtons=false. Ground contacts at 1.4949994m (≤1.5m); shelf at 2.1699998m (≤2.2m). Every fixture effect is applied while moving 0.075m; weapon, medkit and lamp classes included. Native approach-only observations with no pickup are inconclusive and are supplemented by the deliberate moving fixtures."
+    }
+  ],
+  "notes": "Fresh review of frozen source and current receipt values. Source digest is computed from current relevant file bytes; archived prior evidence is not relabelled.",
+  "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186"
+}

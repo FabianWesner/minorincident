@@ -1,0 +1,158 @@
+{
+  "version": 1,
+  "level": "L2",
+  "tier": "high",
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "fixtureHash": "3a1aa6ffd344dc12e40e887d5787eccb7b7f2da10d19445898a88e94befd6f3f",
+  "browserHash": "3a1aa6ffd344dc12e40e887d5787eccb7b7f2da10d19445898a88e94befd6f3f",
+  "checks": [
+    {
+      "id": "G-25",
+      "clause": "physical WASD/mouse full-level browser console",
+      "tier": "high",
+      "policy": "real-input-webgl2",
+      "status": "PASS",
+      "value": {
+        "backend": "webgl2",
+        "zoom": 1.5,
+        "completed": true,
+        "skipped": [],
+        "consoleErrors": [],
+        "immortal": true,
+        "frameTiming": false
+      },
+      "target": "complete ordinary-input route; zero console/page errors; no objective skips",
+      "receipt": "docs/reports/final-g/G-25-L2-high.json"
+    }
+  ],
+  "errors": [],
+  "run": [
+    {
+      "level": "L2",
+      "entry": "debug",
+      "heroine": "female",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 145,
+      "simSeconds": 0,
+      "maxNoProgressSeconds": 22.109,
+      "deaths": 0,
+      "assists": 1,
+      "attacks": {
+        "weapon.bat": 4
+      },
+      "weaponsStart": [
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.kick"
+      ],
+      "weaponsEnd": [
+        "weapon.bat",
+        "weapon.kick",
+        "ability.corgi-lure",
+        "weapon.kick"
+      ],
+      "steps": [
+        {
+          "id": "calm",
+          "text": "Take the fire axe",
+          "tick": 24,
+          "marker": {
+            "anchor": null,
+            "ring": null,
+            "drawn": null,
+            "playerY": 1.1200000047683716,
+            "pinVisible": false
+          }
+        },
+        {
+          "id": "board",
+          "text": "Get on the fire truck · 5 m · Take the fire axe",
+          "tick": 1400,
+          "marker": {
+            "anchor": "l2-board",
+            "ring": {
+              "x": -70.6,
+              "y": 0,
+              "z": 41.1
+            },
+            "drawn": [
+              -70.6,
+              0,
+              41.1
+            ],
+            "playerY": 1.1200000047683716,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "ride",
+          "text": "Ride with Engine 3 to Grove Market · 73 m",
+          "tick": 1520,
+          "marker": {
+            "anchor": "l2-truck-stop",
+            "ring": {
+              "x": -43,
+              "y": 0,
+              "z": -32
+            },
+            "drawn": null,
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "doors",
+          "text": "Cover the firefighters while they force the doors",
+          "tick": 3001,
+          "marker": {
+            "anchor": "l2-truck-stop",
+            "ring": null,
+            "drawn": null,
+            "playerY": 0.8500000238418579,
+            "pinVisible": false
+          }
+        },
+        {
+          "id": "bridge",
+          "text": "Reach the police checkpoint at the bridge · 139 m",
+          "tick": 3738,
+          "marker": {
+            "anchor": "l2-gate-inside",
+            "ring": {
+              "x": 79.5,
+              "y": 0,
+              "z": 30
+            },
+            "drawn": [
+              79.5,
+              0,
+              30
+            ],
+            "playerY": 0.8500000238418579,
+            "pinVisible": true
+          }
+        }
+      ]
+    }
+  ],
+  "issues": [
+    {
+      "level": "L2",
+      "tick": 1262,
+      "x": -73.2,
+      "z": 45.2,
+      "severity": "P2",
+      "kind": "stuck-navigating",
+      "text": "20 s without objective progress (distance none m, no marker: true); HUD: \"Take the fire axe\"",
+      "captures": [
+        "captures/accept-L2-1262-stuck-navigating.jpg"
+      ],
+      "step": "calm",
+      "objective": "Take the fire axe"
+    }
+  ],
+  "frameTiming": false,
+  "backend": "webgl2",
+  "zoom": 1.5
+}

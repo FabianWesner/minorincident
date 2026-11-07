@@ -1,52 +1,38 @@
 {
   "row": "G-11",
   "status": "PASS",
-  "reviewer": "sweep-g/Codex",
-  "date": "2026-11-06",
-  "commit": "d6945beba8e279996e878593305b5806db9386e3",
+  "reviewer": "final-g/Codex",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
   "clauses": [
     {
       "clause": "Survivor-only weapon pickups have no yellow checkpoint ring; a pickup never respawns (no \"unlimited weapons\").",
       "verdict": "PASS",
-      "note": "All four backend/quality cells inspected full-size: survivor-only handgun has no ring. Courier pickup collected exactly once, original entity/marker absent after5.796m away and return; no replacement. Native all-level duplicate ledgers and L1 persistence fixture are refreshed separately; visual review qualifies shared renderer and revisit behavior."
+      "note": "Fresh both-quality renderer/out-and-back fixtures: courier pickup has1 marker mesh, survivor-only pickup0; collection occurs once at tick62. Courier leaves5.79595m then returns; pickup remains absent and no replacement appears. Native40 route timelines have0 duplicate positive pickup IDs after excluding explicit restore boundaries. All4 rendered frames reviewed."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-g/final-cue/G-11-webgl2-high.json",
-      "sha256": "4acf8341653c6c8439e0c70463a4dfe0e446878fd49bb305da71f436143f42ef",
-      "what": "Final-source WebGL2 fixture refresh; historical WebGPU receipts retain their own source identity."
+      "file": "docs/reports/final-g/G-11-webgl2-low.json",
+      "sha256": "f03c416446f7538fb16930a3ab53c4b5d3972474f65b9c21dd61ba30a959d649",
+      "what": "Fresh both-quality renderer/out-and-back fixtures: courier pickup has1 marker mesh, survivor-only pickup0; collection occurs once at tick62. Courier leaves5.79595m then returns; pickup remains absent and no replacement appears. Native40 route timelines have0 duplicate positive pickup IDs after excluding explicit restore boundaries. All4 rendered frames reviewed."
     },
     {
-      "file": "docs/reports/sweep-g/final-cue/G-11-webgl2-low.json",
-      "sha256": "be46ae710bb67ba3432952335a205d04ebecbf97cad7f07ced9faf6e868753ed",
-      "what": "Final-source WebGL2 fixture refresh; historical WebGPU receipts retain their own source identity."
+      "file": "docs/reports/final-g/G-11-webgl2-high.json",
+      "sha256": "1194627ec78bf068523a9ec64833b2500ea29f870034bd86c0e9fc6fe25ffe5b",
+      "what": "Fresh both-quality renderer/out-and-back fixtures: courier pickup has1 marker mesh, survivor-only pickup0; collection occurs once at tick62. Courier leaves5.79595m then returns; pickup remains absent and no replacement appears. Native40 route timelines have0 duplicate positive pickup IDs after excluding explicit restore boundaries. All4 rendered frames reviewed."
     },
     {
-      "file": "docs/reports/sweep-g/G-11-final-captures.json",
-      "sha256": "3fda6e214c4703366675a6dbd79ef5895001fcf6d229442251a2573112aa12b6",
-      "what": "All four original frames viewed: yellow ring only around courier pickup; survivor-only handgun has no ring. Courier pickup absent after collection/return, survivor-only item remains. Native collection ledger retained."
+      "file": "docs/reports/final-g/G-11-reviewed.json",
+      "sha256": "77f5073ba81e241a10372eb5f8ac72b4de00fbc6696dc03d2fb65fdbcb1affc1",
+      "what": "Fresh both-quality renderer/out-and-back fixtures: courier pickup has1 marker mesh, survivor-only pickup0; collection occurs once at tick62. Courier leaves5.79595m then returns; pickup remains absent and no replacement appears. Native40 route timelines have0 duplicate positive pickup IDs after excluding explicit restore boundaries. All4 rendered frames reviewed."
     },
     {
-      "file": "docs/reports/sweep-g/G-11-webgl2-high.json",
-      "sha256": "5d8d4632d508f4cdda17f857f8fe31be86a9ecdaf1906cf62e47d54684aff053",
-      "what": "webgl2/high: two inspected full-size captures; exact renderer identities, transaction and out-and-back ledger. No console errors."
-    },
-    {
-      "file": "docs/reports/sweep-g/G-11-webgl2-low.json",
-      "sha256": "e6cb38494e924f58057ab0e2e85422457fc006e0436e37068e55eb7d443cd460",
-      "what": "webgl2/low: two inspected full-size captures; exact renderer identities, transaction and out-and-back ledger. No console errors."
-    },
-    {
-      "file": "docs/reports/sweep-g/G-11-webgpu-high.json",
-      "sha256": "718324492fffe96fcef3701a92a6103a7757abc0191264818b6a2b9142e3310b",
-      "what": "webgpu/high: two inspected full-size captures; exact renderer identities, transaction and out-and-back ledger. No console errors."
-    },
-    {
-      "file": "docs/reports/sweep-g/G-11-webgpu-low.json",
-      "sha256": "225158e7be06df47dbb74847fc0b7b3d341f7effe21cf15920a9c7672a96c0cc",
-      "what": "webgpu/low: two inspected full-size captures; exact renderer identities, transaction and out-and-back ledger. No console errors."
+      "file": "docs/reports/final-g/G-11-native.json",
+      "sha256": "e6340b7cb88b6582ba45e681e2499cc262d066002f04b626c54dd1b6fe8ee367",
+      "what": "Fresh both-quality renderer/out-and-back fixtures: courier pickup has1 marker mesh, survivor-only pickup0; collection occurs once at tick62. Courier leaves5.79595m then returns; pickup remains absent and no replacement appears. Native40 route timelines have0 duplicate positive pickup IDs after excluding explicit restore boundaries. All4 rendered frames reviewed."
     }
   ],
-  "notes": "Eight raw PNGs hashed and deleted after inspection. Images generated only under test-results. No timing claim. Final-source both-quality fixture refresh inspected. Whole native matrix was explicitly stopped by orchestrator; no complete final-source acceptance consolidation is claimed."
+  "notes": "Controlled production-renderer fixture; every setup, exact actor identity, pixel ROI and negative control is retained. No campaign-route or performance claim is substituted for the rendered clause.",
+  "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186"
 }
