@@ -38,9 +38,9 @@ function lying(death: Death, prone: boolean): Matrix4 {
 }
 /** Angle (degrees) from the feet direction at which a limb lies; side = +1 (z+) or -1. */
 const spread: Record<Death, { arm: (side: number) => number; leg: (side: number) => number }> = {
-  'death-back': { arm: () => 28, leg: () => 9 },
-  'death-side': { arm: side => side > 0 ? 75 : 20, leg: side => side > 0 ? 24 : 4 },
-  'death-crumple': { arm: () => 125, leg: () => 14 },
+  'death-back': { arm: () => 20, leg: () => 9 },
+  'death-side': { arm: side => side > 0 ? 50 : 15, leg: side => side > 0 ? 24 : 4 },
+  'death-crumple': { arm: () => 40, leg: () => 14 },
 };
 const limbs = [['armL', 'foreArmL', 'handL', 'arm', 1], ['armR', 'foreArmR', 'handR', 'arm', -1], ['legL', 'shinL', 'footL', 'leg', 1], ['legR', 'shinR', 'footR', 'leg', -1]] as const;
 
@@ -67,7 +67,7 @@ export function repairDeathPoses(clip: CrowdClip, geometry?: BufferGeometry, opt
   const limbAxis = (root: number, unit: number[], origin = root): Vector3 => {
     const key = root * 100 + unit[0]; const cached = axes.get(key); if (cached) return cached.clone();
     const out = new Vector3(), joint = new Vector3().setFromMatrixPosition(rest[origin] ?? new Matrix4());
-    if (geometry) {
+    if (geometry && prone) {
       const position = geometry.getAttribute('position'), parts = geometry.getAttribute('_parts') ?? geometry.getAttribute('_part_index');
       const emissive = geometry.getAttribute('_emissive'), vein = geometry.getAttribute('_vein'), packed = !!geometry.getAttribute('_parts');
       let n = 0;
@@ -95,7 +95,9 @@ export function repairDeathPoses(clip: CrowdClip, geometry?: BufferGeometry, opt
     const upper = ['torso', 'head', 'armL', 'foreArmL', 'handL', 'armR', 'foreArmR', 'handR'].map(name => index[name]);
     const spine = limbAxis(index.hip, [index.torso, index.head], index.hip).applyMatrix4(new Matrix4().extractRotation(lie));
     let straighten = new Matrix4();
-    if (spine.lengthSq() > 1e-8) {
+    // Only a hunched rest pose (Alpha) needs it; an upright figure turned about the hip shears the skirt/apron/shirt hem skinned to the torso against its thighs.
+    const tilt0 = Math.atan2(Math.hypot(spineRest.x, spineRest.z), spineRest.y);
+    if (spine.lengthSq() > 1e-8 && (prone || tilt0 > .8)) {
       const turnUp = new Matrix4().makeRotationFromQuaternion(new Quaternion().setFromUnitVectors(spine.normalize(), new Vector3(-1, 0, 0)));
       straighten = new Matrix4().makeTranslation(hipAt.x, hipAt.y, hipAt.z).multiply(turnUp).multiply(new Matrix4().makeTranslation(-hipAt.x, -hipAt.y, -hipAt.z));
     }
@@ -112,7 +114,8 @@ export function repairDeathPoses(clip: CrowdClip, geometry?: BufferGeometry, opt
       reach[limbIndex] = 2 * axis.length(); heights[limbIndex] = joint.y;
       const angle = (kind === 'arm' ? spread[death].arm(side) : spread[death].leg(side)) * Math.PI / 180;
       const tilt = tilts[limbIndex] ?? 0, want = new Vector3(Math.cos(tilt) * Math.cos(angle), -Math.sin(tilt), Math.cos(tilt) * side * Math.sin(angle));
-      const turn = new Matrix4().makeRotationFromQuaternion(new Quaternion().setFromUnitVectors(axis.normalize(), want));
+      const full = new Quaternion().setFromUnitVectors(axis.normalize(), want), swing = axis.angleTo(want), limit = (prone ? 180 : kind === "arm" ? 25 : 12) * Math.PI / 180;
+      const turn = new Matrix4().makeRotationFromQuaternion(swing > limit ? new Quaternion().slerp(full, limit / swing) : full);
       const about = new Matrix4().makeTranslation(joint.x, joint.y, joint.z).multiply(turn).multiply(new Matrix4().makeTranslation(-joint.x, -joint.y, -joint.z));
       for (const p of unit) lifted[p]!.premultiply(about);
     });
@@ -141,14 +144,14 @@ export function repairDeathPoses(clip: CrowdClip, geometry?: BufferGeometry, opt
   // (the hunched Alpha) also tries lowering the head end, and keeps the flattest result.
   const settle = (pitch: number) => {
     const flat = lay([], pitch);
-    const tilts = flat.reach.map((length, k) => length > 0 ? Math.asin(Math.max(0, Math.min(.85, (flat.heights[k] + flat.drop - .15 * length) / length))) : 0);
+    const tilts = flat.reach.map((length, k) => length > 0 ? Math.asin(Math.max(0, Math.min(prone ? .85 : .5, (flat.heights[k] + flat.drop - .15 * length) / length))) : 0);
     return { ...(geometry ? lay(tilts, pitch) : flat), tilts, pitch };
   };
   let best = settle(0);
   if (geometry) for (const degrees of [10, 20, 30, 40, 50]) {
-    if (best.extent < .9) break;
+    if (best.extent < (prone ? .9 : 1)) break;
     const tried = settle(degrees * Math.PI / 180);
-    if (tried.extent < best.extent - .01) best = tried;
+    if (tried.extent < best.extent - (prone ? .01 : .1)) best = tried;
   }
   // The search samples ~2500 vertices; the floor itself is fitted on every vertex of the chosen pose.
   const { lifted, drop } = geometry ? lay(best.tilts, best.pitch, true) : best;
