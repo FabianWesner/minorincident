@@ -1,0 +1,46 @@
+{
+  "row": "L3-07",
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "criterion": "Segment 1: the squad visibly fights (officers fire at infected and land hits; kills not required — at high quality they may be overwhelmed before scoring one); player damage < 100 HP (never a whole life). PO 2026-11-05: \"Overwhelmed is the point\" — the ≥ 60 % officer-kill share is dropped; the squad may be overwhelmed in the yard.",
+  "nativeChecks": [
+    {
+      "id": "L3-07",
+      "clause": "mortal segment1 officers land hits and player damage",
+      "value": {
+        "completed": true,
+        "officerHits": 122,
+        "officerKills": 27,
+        "playerKills": 26,
+        "damage": 22,
+        "deaths": 0,
+        "outcome": "complete"
+      },
+      "target": "officers land at least one hit; player damage<100HP",
+      "status": "PASS",
+      "tier": "low",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
+      "level": "L3"
+    },
+    {
+      "id": "L3-07",
+      "clause": "mortal segment1 officers land hits and player damage",
+      "value": {
+        "completed": true,
+        "officerHits": 31,
+        "officerKills": 3,
+        "playerKills": 0,
+        "damage": 0,
+        "deaths": 0,
+        "outcome": "complete"
+      },
+      "target": "officers land at least one hit; player damage<100HP",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
+      "level": "L3"
+    }
+  ],
+  "observation": "Personally inspected all41 current ordinary mortal route frames, including attack+1s/+10s and fallback in both qualities: multiple uniformed officers visibly aim/fire, muzzle flashes and tracers reach the infected; raw render.vfx.shots retains actual allied source IDs. Independent fresh mortal segment1 fixture records low122/high31 officer hits,27/3 officer kills,22/0 player damage and0/0 deaths. Both damage totals <100HP. Browser high courier reaches39HP at fallback, corroborating survival with61HP net loss on this different ordinary route. No kill-share requirement is applied (PO removed it)."
+}
