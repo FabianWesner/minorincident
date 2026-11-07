@@ -207,9 +207,10 @@ export class StaticCorpses extends Group {
     if (near) this.detailed.add(body.e.id); else this.detailed.delete(body.e.id);
   }
   /** Prepare a cast member's frozen death page before shader warm-up. */
-  prepare(key: string, source: BufferGeometry, material: MeshLambertNodeMaterial, clip: CrowdClip, frame: number, headwear = false, hiddenParts: readonly string[] = []): void {
+  prepare(key: string, source: BufferGeometry, material: MeshLambertNodeMaterial, clip: CrowdClip, frame: number, headwear = false, hiddenParts: readonly string[] = []): InstancedMesh {
     if (headwear) this.frozenPose(source, material, clip, frame, hiddenParts, true);
-    if (![...this.chunks.keys()].some(k => k === key || k.startsWith(`${key}/`))) this.createPage(key, source, material, clip, frame, hiddenParts);
+    const existing = [...this.chunks].find(([k]) => k === key || k.startsWith(`${key}/`))?.[1][0];
+    return (existing ?? this.createPage(key, source, material, clip, frame, hiddenParts)).mesh;
   }
   private frozenPose(source: BufferGeometry, material: MeshLambertNodeMaterial, clip: CrowdClip, frame: number, hiddenParts: readonly string[], hidesHair = false) {
     if (!clip.binds || !source.hasAttribute('_skin')) throw new Error('Frozen crowd bodies require the v2 skinned contract');

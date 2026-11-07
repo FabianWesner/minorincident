@@ -1,0 +1,27 @@
+{
+  "target": "E32",
+  "epics": [
+    "E32"
+  ],
+  "checks": [
+    {
+      "command": "npm run typecheck",
+      "status": 0,
+      "seconds": 19.438
+    },
+    {
+      "command": "npm run lint",
+      "status": 0,
+      "seconds": 13.077
+    },
+    {
+      "command": "npm test",
+      "status": 0,
+      "seconds": 32.545
+    }
+  ],
+  "sourceRevision": "a3f867dfd1c8973beb0057eca3fbca6b91e64b41",
+  "testFiles": 27,
+  "tests": 107,
+  "logSha256": "3edd6f245c3de62a57def0b91177e5865a2b124ceabb804a8bea0947838bc5d0"
+}
