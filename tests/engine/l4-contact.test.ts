@@ -260,6 +260,13 @@ test('L4: every contact archetype interrupts approach/lure and attacks within 3 
     }
     const soldier = world.entities.get(mission.state.l4!.soldierIds[1])!;
     Object.assign(soldier.transform, { x: -15, z: 5 });
+    // A healthy shielded threat stays eligible beyond the ordinary 15 m
+    // healthy-infected cutoff; this is the normal-zoom L4 riot-bar control.
+    const distantRiot = world.entities.get(ai.spawn('infected.riot', { x: courier.transform.x + 16, z: courier.transform.z }))!;
+    expect(distantRiot.health.current).toBe(distantRiot.health.max);
+    expect(distantRiot.combat?.shield, 'riot actor carries its authored shield').toBeTruthy();
+    expect(barEligible(distantRiot, courier.transform, infectedDef(distantRiot.archetype).bar === true), 'healthy riot at 16 m keeps its health bar').toBe(true);
+    ai.release(distantRiot);
     for (const archetype of [...l4InfectedArchetypes, 'infected.alpha']) for (const state of ['attracted', 'attack', 'stagger'] as const) {
       courier.health.current = courier.health.max;
       const e = world.entities.get(ai.spawn(archetype, { x: -17, z: 3.8 }, { yaw: Math.PI }))!;
