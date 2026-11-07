@@ -173,6 +173,16 @@ export class ThreatObserver {
   private active: Row[] = [];
   private readonly births = new SpawnIdentities(() => { for (const row of this.active) row.spawned++; });
   private readonly paths = new PathProbe();
+  private entityRevision = -1;
+  private entityRows: EntitySnapshot[] = [];
+  /** Keep live records in insertion order; component/state mutations remain visible. */
+  private entities(): readonly EntitySnapshot[] {
+    const store = this.world.entities;
+    if (this.entityRevision !== store.revision) {
+      this.entityRows = [...store.iterate()]; this.entityRevision = store.revision;
+    }
+    return this.entityRows;
+  }
   private readonly barrierGrids = new WeakMap<NavGrid, {
     revision: number; x: number; z: number; grids: Map<number, NavGrid>;
     changes: Map<number, { wall: Parameters<NavGrid['setBlocker']>[1]; blocked: boolean }>;
@@ -208,7 +218,7 @@ export class ThreatObserver {
     for (const [id, change] of cache.changes) for (const [removed, grid] of cache.grids)
       if (id !== removed) grid.setBlocker(id, change.wall, change.blocked);
     cache.changes.clear();
-    const barriers = [...this.world.entities.iterate()].filter(e => e.barricade?.intact && e.health.current > 0
+    const barriers = this.entities().filter(e => e.barricade?.intact && e.health.current > 0
       && e.barricade.slot.groupId === 'l4-wall' && (entity.archetype === 'infected.alpha' || (e.barricade.slot.hordeShare ?? 1) > 0));
     barriers.sort((a, b) => Math.hypot(a.transform.x - entity.transform.x, a.transform.z - entity.transform.z)
       - Math.hypot(b.transform.x - entity.transform.x, b.transform.z - entity.transform.z));
@@ -331,13 +341,17 @@ export class ThreatObserver {
     const w = this.world, player = w.entities.get(1)!;
     if (!followersOnly) {
       if (this.level === 'L3' && this.armySquad === null && player.transform.x >= l3.map.zoneX) this.armySquad = w.missions!.state.l3!.squad.length;
-      for (const e of w.infected!.active) this.identity(e); // Includes hidden/deferred admissions and same-ID conversions.
-      for (const e of this.living()) {
+      // Visit every admission for identity accounting, then census the living
+      // cohort in the same order without a second scan/allocation.
+      for (const e of w.infected!.active) {
         const token = this.identity(e);
+        if (!(e.health.current > 0) || e.corpse) continue;
         for (const row of this.active) {
           if (!row.ticks || row.ticks === 1) row.initial++;
           row.seen.add(token);
-          if (!e.hidden && !e.infected!.hidden && !e.pendingAdmission && Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z) <= 2.5) row.near.add(token);
+          // Near is a lifetime union; an admitted identity already in it
+          // cannot change this row's result by repeating the distance query.
+          if (!row.near.has(token) && !e.hidden && !e.infected!.hidden && !e.pendingAdmission && Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z) <= 2.5) row.near.add(token);
         }
       }
     }
@@ -347,7 +361,7 @@ export class ThreatObserver {
     let escorting = false, stationaryFar = false;
     // Use resolved displacement: requested velocity can remain nonzero while
     // the courier is blocked or a cinematic owns movement.
-    for (const e of w.entities.iterate()) {
+    for (const e of this.entities()) {
       if (e.id === 1 || e.health.current <= 0 || e.infected || e.hidden || e.corpse || e.passengerOf !== undefined) continue;
       const group = e.civilian?.survivor;
       const follower = group?.mode === 'follow' || e.escort?.state === 'follow' || e.civilian?.ally?.follow?.targetId === 1 || e.companion?.state === 'follow';
