@@ -185,14 +185,16 @@ export class EntityAssets extends Group {
     for (const copy of this.passengers.values()) copy.visible = false;
     for (const [id, record] of this.records) {
       if (record.model.userData.assetId !== 'veh.evac-bus') continue;
+      const rows = Math.max(6, Math.ceil(this.busRoster(id, true).length / 4));
       for (const [index, actorId] of this.busRoster(id).entries()) {
         const entity = this.world.entities.get(actorId), copy = this.passengers.get(actorId);
         if (!copy || !entity?.hidden || entity.health.current <= 0) continue;
         let seat = this.passengerSeats.get(actorId);
         if (!seat) { seat = new Group(); this.passengerSeats.set(actorId, seat); }
         // The authored coach has six rows of four cushions at FLOOR + .5.
+        // Larger carried campaign groups keep every copy inside the cabin.
         // Fill both window seats first, then the aisle seats in the same row.
-        seat.position.set(-4.25 + (Math.floor(index / 4) + .5) * (7.37 / 6), 1.64, [-.94, .94, -.48, .48][index % 4]);
+        seat.position.set(-4.25 + (Math.floor(index / 4) + .5) * (7.37 / rows), 1.64, [-.94, .94, -.48, .48][index % 4]);
         if (seat.parent !== record.model) record.model.add(seat);
         if (copy.parent !== record.model) record.model.add(copy);
         copy.pose(seat, undefined, .85); copy.visible = true;
