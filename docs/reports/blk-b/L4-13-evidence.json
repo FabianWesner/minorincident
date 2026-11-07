@@ -1,0 +1,105 @@
+{
+  "row": "L4-13",
+  "status": "FAIL",
+  "sourceCommit": "a86baf5",
+  "method": "Read-only native admission observer on seed 1, both tiers, extended to 300 seconds so the route enters collapse. It records actual admissions by edge for each announced 9-second collapse cohort, population, cap reservations, and escape windows.",
+  "evidence": {
+    "file": "docs/reports/blk-b/L4-13-native.json.gz",
+    "sha256": "b784580696d8ce8e8122c38ceebe731e46446bfe69ff6556523c771f9559fe57",
+    "what": "I inspected the actual all-edge admission ledger. Low complete 9-second windows admit5,4,2,3,7,7,8 bodies; high admits9,9,4,3,8,5,5 over the same seven windows. Low tick14689–15229 admits only2, below3. High has no under-three window in this measured prefix; its later complete-route scope is unqualified. Both tiers open the authored40-second escape gap. The former summary counted only each wave’s requested edges; these totals correctly include every admitted edge."
+  },
+  "observed": {
+    "low": {
+      "windows": [
+        {
+          "start": 13609,
+          "end": 14149,
+          "actualAdmissions": 5
+        },
+        {
+          "start": 14149,
+          "end": 14689,
+          "actualAdmissions": 4
+        },
+        {
+          "start": 14689,
+          "end": 15229,
+          "actualAdmissions": 2
+        },
+        {
+          "start": 15229,
+          "end": 15769,
+          "actualAdmissions": 3
+        },
+        {
+          "start": 15769,
+          "end": 16309,
+          "actualAdmissions": 7
+        },
+        {
+          "start": 16309,
+          "end": 16849,
+          "actualAdmissions": 7
+        },
+        {
+          "start": 16849,
+          "end": 17389,
+          "actualAdmissions": 8
+        }
+      ],
+      "cap": 80
+    },
+    "high": {
+      "windows": [
+        {
+          "start": 13609,
+          "end": 14149,
+          "actualAdmissions": 9
+        },
+        {
+          "start": 14149,
+          "end": 14689,
+          "actualAdmissions": 9
+        },
+        {
+          "start": 14689,
+          "end": 15229,
+          "actualAdmissions": 4
+        },
+        {
+          "start": 15229,
+          "end": 15769,
+          "actualAdmissions": 3
+        },
+        {
+          "start": 15769,
+          "end": 16309,
+          "actualAdmissions": 8
+        },
+        {
+          "start": 16309,
+          "end": 16849,
+          "actualAdmissions": 5
+        },
+        {
+          "start": 16849,
+          "end": 17389,
+          "actualAdmissions": 5
+        }
+      ],
+      "cap": 120
+    }
+  },
+  "whyOpen": "Low has a complete9-second window with only2 actual all-edge admissions. The measured300-second route prefix does not qualify the complete competent route, later high windows, or >=10 route contacts. No population-capacity fix was established within the unchanged live caps.",
+  "currentSimulationEquivalence": {
+    "from": "a86baf5",
+    "to": "6216390e42bcd4dc7c849c30fa5b1af7f95efd17",
+    "paths": [
+      "src/sim",
+      "src/data",
+      "src/levels"
+    ],
+    "changed": [],
+    "what": "The native admission reproduction and current branch have byte-identical simulation, data, and level files; later changes affect rendering and evidence only."
+  }
+}

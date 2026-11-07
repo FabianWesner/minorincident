@@ -323,7 +323,10 @@ export const l4Edges: readonly { id: string; at: P }[] = [
 export const l4OffscreenMouths: readonly { id: string; edge: number; at: P }[] = [
   { id: 'west-end', edge: 0, at: [-76, 55] }, { id: 'nw-alley-end', edge: 1, at: [-76, -45] },
   { id: 'north-end', edge: 2, at: [26, -45] }, { id: 'east-alley', edge: 3, at: [24, -37] },
-  { id: 'southeast-end', edge: 4, at: [36, 55] }, { id: 'southwest-end', edge: 5, at: [-40, 55] },
+  // Keep these outer mouths on the connected south street grid. The old
+  // positions sat beyond the final paved block and could admit bodies onto
+  // isolated clear ground (two high-tier actors had no route back to combat).
+  { id: 'southeast-end', edge: 4, at: [36, 41.2] }, { id: 'southwest-end', edge: 5, at: [-40, 41.2] },
 ];
 export const l4Emergence: readonly { edge: number; at: P; door?: boolean }[] = [
   { edge: 0, at: [-46, 21] }, { edge: 0, at: [-42.3, 10.2], door: true },

@@ -1,0 +1,214 @@
+{
+  "revision": "7f078cb757be65b27ed8bb11b6064e8d39850696",
+  "what": "Current both-tier complete/stationary native receipts clear the original high disconnected actors: high complete and stationary are100% across85 post-opening samples each; low stationary is100%. Low complete retains one unproven continuous body-clear query (98.64865%, actor376 at tick8809). Independent actual same-source low prefix locates the living sprinter atx-22.9435/z-19.8092. Exhaustive native-grid A* is connected (59cells), but continuous body-clear and barrier proofs fail there. The actor moves tox-20.8865/z-19.0360 and has a body-clear route by tick8929. No permanent trap is inferred from that transient two-second failure; the strict every-body path clause is still not fully proved.",
+  "measurements": [
+    {
+      "tier": "low",
+      "policy": "complete",
+      "sourceHash": "91dcc89e8e49f5b5ad5483b25edc6a90b7ee7fd8c2be07d0459f7fa657986c93",
+      "legalPaths": {
+        "firstTick": 3169,
+        "lastTick": 13249,
+        "samples": 85,
+        "minimumPercent": 98.64864864864865,
+        "worstTick": 8809,
+        "blockedIds": [
+          376
+        ]
+      },
+      "file": "docs/reports/blk-b/L4-low-complete-reviewed.json.gz",
+      "sha256": "771f970374836b0b8bb4481351de64d405ce22025c6a9a7f4cedb46704223103"
+    },
+    {
+      "tier": "low",
+      "policy": "stationary",
+      "sourceHash": "91dcc89e8e49f5b5ad5483b25edc6a90b7ee7fd8c2be07d0459f7fa657986c93",
+      "legalPaths": {
+        "firstTick": 3169,
+        "lastTick": 13249,
+        "samples": 85,
+        "minimumPercent": 100,
+        "worstTick": 13249,
+        "blockedIds": []
+      },
+      "file": "docs/reports/blk-b/L4-low-stationary-reviewed.json.gz",
+      "sha256": "46aefedffff8be8886a9e1da4a5a53d5630ac9f3c27f05d70847ee962d683181"
+    },
+    {
+      "tier": "high",
+      "policy": "complete",
+      "sourceHash": "91dcc89e8e49f5b5ad5483b25edc6a90b7ee7fd8c2be07d0459f7fa657986c93",
+      "legalPaths": {
+        "firstTick": 3169,
+        "lastTick": 13249,
+        "samples": 85,
+        "minimumPercent": 100,
+        "worstTick": 13249,
+        "blockedIds": []
+      },
+      "file": "docs/reports/blk-b/L4-high-complete-reviewed.json.gz",
+      "sha256": "083a513c05f9ab137535df4cedf361883be6eedeb647d57c402356df3a7ca02a"
+    },
+    {
+      "tier": "high",
+      "policy": "stationary",
+      "sourceHash": "91dcc89e8e49f5b5ad5483b25edc6a90b7ee7fd8c2be07d0459f7fa657986c93",
+      "legalPaths": {
+        "firstTick": 3169,
+        "lastTick": 13249,
+        "samples": 85,
+        "minimumPercent": 100,
+        "worstTick": 13249,
+        "blockedIds": []
+      },
+      "file": "docs/reports/blk-b/L4-high-stationary-reviewed.json.gz",
+      "sha256": "25416368738d2a8329981b297a02c94d0d12ecbea0bf6bde7209d286c7ae4674"
+    }
+  ],
+  "diagnostic": {
+    "sourceHash": "91dcc89e8e49f5b5ad5483b25edc6a90b7ee7fd8c2be07d0459f7fa657986c93",
+    "method": "Actual unchanged mortal low complete prefix at exact failed legal-path sample. Independent cloned production grid exhausts A* with Infinity work, body radius retained; actual production barrier-route algorithm independently checks every intact permitted barrier. No actor/input edits.",
+    "run": {
+      "level": "L4",
+      "policy": "complete",
+      "seed": 1,
+      "completed": false,
+      "time": 149,
+      "deaths": 5,
+      "kills": 21,
+      "damageTaken": 575.9833333333329,
+      "failures": {
+        "player-died": 5,
+        "tick-budget": 1
+      },
+      "objectiveTimeline": [
+        {
+          "id": "ride",
+          "t": 30.483333333333334
+        },
+        {
+          "id": "quartermaster",
+          "t": 32.81666666666667
+        }
+      ],
+      "furthestObjective": "hold",
+      "activeObjectives": [
+        "hold"
+      ],
+      "outcome": "tick-budget",
+      "blocker": {
+        "objective": "hold",
+        "detail": "tick-budget: Hold the plaza with the army",
+        "player": {
+          "x": -24.53343963623047,
+          "z": -1.6158348321914673
+        },
+        "distance": 8.835080302453413,
+        "actors": {}
+      },
+      "collision": {
+        "failures": 0,
+        "pending": 0,
+        "admitted": 321,
+        "deferred": 0,
+        "requests": [],
+        "offenders": []
+      }
+    },
+    "rows": [
+      {
+        "tick": 8809,
+        "id": 376,
+        "archetype": "infected.sprinter",
+        "at": {
+          "x": -22.94345683623266,
+          "y": 0.75,
+          "z": -19.809161972890145,
+          "yaw": -6.286046744182133
+        },
+        "health": {
+          "current": 40.6,
+          "max": 45
+        },
+        "aliveAtQuery": true,
+        "player": {
+          "x": -22.692354202270508,
+          "y": 0.7099999785423279,
+          "z": -3.287447929382324,
+          "yaw": -2.0051580721646975
+        },
+        "radius": 0.35,
+        "navClear": true,
+        "from": 30724,
+        "to": 41944,
+        "connected": true,
+        "pathCells": 59,
+        "bodyClearGround": false,
+        "barrierDistance": null,
+        "positiveControlId": 168
+      },
+      {
+        "tick": 8810,
+        "id": 376,
+        "archetype": "infected.sprinter",
+        "at": {
+          "x": -22.907093067969758,
+          "y": 0.75,
+          "z": -19.836658435438483,
+          "yaw": -6.28923009474862
+        },
+        "health": {
+          "current": 40.6,
+          "max": 45
+        },
+        "aliveAtQuery": true,
+        "player": {
+          "x": -22.636104583740234,
+          "y": 0.7099999785423279,
+          "z": -3.2870609760284424,
+          "yaw": -2.0482205733143553
+        },
+        "radius": 0.35,
+        "navClear": true,
+        "from": 30724,
+        "to": 41944,
+        "connected": true,
+        "pathCells": 59,
+        "bodyClearGround": false,
+        "barrierDistance": null,
+        "positiveControlId": 168
+      },
+      {
+        "tick": 8929,
+        "id": 376,
+        "archetype": "infected.sprinter",
+        "at": {
+          "x": -20.886491493391258,
+          "y": 0.75,
+          "z": -19.0359852445445,
+          "yaw": -8.86415092157154
+        },
+        "health": {
+          "current": 40.6,
+          "max": 45
+        },
+        "aliveAtQuery": true,
+        "player": {
+          "x": -24.263019561767578,
+          "y": 0.7099999785423279,
+          "z": -1.779997706413269,
+          "yaw": -0.7220875075809808
+        },
+        "radius": 0.35,
+        "navClear": true,
+        "from": 31068,
+        "to": 42961,
+        "connected": true,
+        "pathCells": 60,
+        "bodyClearGround": true,
+        "barrierDistance": 26.394377387166355,
+        "positiveControlId": 168
+      }
+    ]
+  }
+}

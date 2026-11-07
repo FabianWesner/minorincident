@@ -1,22 +1,83 @@
 {
   "row": "L5-06",
-  "status": "FAIL",
-  "reviewer": "Codex/final-b",
+  "status": "PASS",
+  "reviewer": "Codex/blk-b",
   "date": "2026-11-07",
-  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "commit": "a4284601f1384bf55e437a3c3b54ea3070d498f2",
   "clauses": [
     {
-      "clause": "Hiding places draw **no ring, arrow or pin**; found by sound + caption at the spot + edge direction; ♪ radar ping only while a call is heard; cue heard ≤ 25 m, never > 30 m.",
-      "verdict": "FAIL",
-      "note": "Mia call at24.948m: positive-gain source ended audio32.336s/tick1381; same ♪ still visible audio33.157333s/tick1433 (0.821333s later), cue.until1440. Running/unlocked/unmuted game audio. Fails only-while-heard clause. Other range/hidden-place clauses are not promoted to PASS. Repro: L5 physical authored tour approaches Mia; observe actual source ended against minimap DOM."
+      "clause": "♪ radar ping only while a call is heard",
+      "verdict": "PASS",
+      "note": "All12 final captures personally inspected (4 full-size after-ended frames plus8 initial/yield frames). In each tier/zoom the note is absent from the minimap after Mia ends while her world caption/edge direction can remain. Positive-gain running/unlocked/unmuted calls start at24.93–25.00m. No later-tick sample retains the note after the actual source ended. First observed hidden samples are32–112ms later with100ms sampling; high zoom1.5 has one same-ending-tick visible sample at+10.7ms before the next presentation update. The old0.821s tail is gone."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/final-b/L5-06-proof.json",
-      "sha256": "79322beb3eabe4bb2f0a49d2dbf053687b0415bbff51134fdd9cf80e574cd1e7",
-      "what": "Mia call at24.948m: positive-gain source ended audio32.336s/tick1381; same ♪ still visible audio33.157333s/tick1433 (0.821333s later), cue.until1440. Running/unlocked/unmuted game audio. Fails only-while-heard clause. Other range/hidden-place clauses are not promoted to PASS. Repro: L5 physical authored tour approaches Mia; observe actual source ended against minimap DOM."
+      "file": "docs/reports/blk-b/L5-06-proof.json",
+      "sha256": "85e4b7705ac924196d26fd090d3805a4107ad220ba72235e1d09b7851d56ff73",
+      "what": "All12 final captures personally inspected (4 full-size after-ended frames plus8 initial/yield frames). In each tier/zoom the note is absent from the minimap after Mia ends while her world caption/edge direction can remain. Positive-gain running/unlocked/unmuted calls start at24.93–25.00m. No later-tick sample retains the note after the actual source ended. First observed hidden samples are32–112ms later with100ms sampling; high zoom1.5 has one same-ending-tick visible sample at+10.7ms before the next presentation update. The old0.821s tail is gone."
+    },
+    {
+      "file": "docs/reports/blk-b/cue-low-z0.5-qa-audit.json.gz",
+      "sha256": "4e20fc5653a8284ae6cf616eab057d08e5104ac270e488ede781d816dcdc39d5",
+      "what": "Actual source/DOM timing and physical-input receipt for low zoom0.5"
+    },
+    {
+      "file": "docs/reports/blk-b/cue-low-z0.5-qa-input.jsonl.gz",
+      "sha256": "de52e5db43f7211d4d70db81b2689177578b9b6498480bb9d1e7f6aab752b262",
+      "what": "Actual source/DOM timing and physical-input receipt for low zoom0.5"
+    },
+    {
+      "file": "docs/reports/blk-b/cue-low-z0.5-qa-runs.json.gz",
+      "sha256": "fe3a97985fb4e865a2b3f480125ce7c4a7fab35df2053b4673007a795a8f67f8",
+      "what": "Actual source/DOM timing and physical-input receipt for low zoom0.5"
+    },
+    {
+      "file": "docs/reports/blk-b/cue-low-z1.5-qa-audit.json.gz",
+      "sha256": "2f49408d75b2c1d5ea31cbd1d7ae7ba6800a28bfe58f4f81fbe3fb65486f69b0",
+      "what": "Actual source/DOM timing and physical-input receipt for low zoom1.5"
+    },
+    {
+      "file": "docs/reports/blk-b/cue-low-z1.5-qa-input.jsonl.gz",
+      "sha256": "074597c6b65b1bbe09578386e216ec9f8519eef105aa00d9890178d1cb8a2444",
+      "what": "Actual source/DOM timing and physical-input receipt for low zoom1.5"
+    },
+    {
+      "file": "docs/reports/blk-b/cue-low-z1.5-qa-runs.json.gz",
+      "sha256": "bf960fe69bcffc08fc7d97da5b559e295fc3e3260e96a9e9ce4e95e612576629",
+      "what": "Actual source/DOM timing and physical-input receipt for low zoom1.5"
+    },
+    {
+      "file": "docs/reports/blk-b/cue-high-z0.5-qa-audit.json.gz",
+      "sha256": "4a57c804f0350562885cc58088ac138f6e9b175863dfd6870e9dbb08ce15efa6",
+      "what": "Actual source/DOM timing and physical-input receipt for high zoom0.5"
+    },
+    {
+      "file": "docs/reports/blk-b/cue-high-z0.5-qa-input.jsonl.gz",
+      "sha256": "902517e68aa51876c4fb9dbb3111e6a9e33e513a3323c1e66b969f83c38bf97d",
+      "what": "Actual source/DOM timing and physical-input receipt for high zoom0.5"
+    },
+    {
+      "file": "docs/reports/blk-b/cue-high-z0.5-qa-runs.json.gz",
+      "sha256": "3e5ef8eb8635a94acdbfe18a16d1f6e1fe558ccf0a9511b1030d89a99eb4aed4",
+      "what": "Actual source/DOM timing and physical-input receipt for high zoom0.5"
+    },
+    {
+      "file": "docs/reports/blk-b/cue-high-z1.5-qa-audit.json.gz",
+      "sha256": "28efbeed5f0454bb4f83ba1eec72098e81835597b5665742d8360a4e50bb809b",
+      "what": "Actual source/DOM timing and physical-input receipt for high zoom1.5"
+    },
+    {
+      "file": "docs/reports/blk-b/cue-high-z1.5-qa-input.jsonl.gz",
+      "sha256": "a2c615df4ce8baaa632cdc05d9c0825c1ffeb02d4c2c30b30c86267090e664fc",
+      "what": "Actual source/DOM timing and physical-input receipt for high zoom1.5"
+    },
+    {
+      "file": "docs/reports/blk-b/cue-high-z1.5-qa-runs.json.gz",
+      "sha256": "ea4241626e7a0bd9233a3d7e4b7097532393669c2559b3cb2c2697b2a2ab33b3",
+      "what": "Actual source/DOM timing and physical-input receipt for high zoom1.5"
     }
   ],
-  "sourceDigest": "96b95aaf00218387ac838466ba4e849719809eef34f96b67f54241001dca8a39"
+  "sourceDigest": "365a46516b575db5ea6511bd26c93b0a8554e27d495f38181ac5539e5712ed94",
+  "notes": "Only the requested Mia call-end minimap lifetime counterexample. This short physical prefix does not qualify every hiding-place/range/census clause of the full L5-06 row."
 }

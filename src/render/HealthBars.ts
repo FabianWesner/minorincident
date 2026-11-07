@@ -23,7 +23,7 @@ export const isFollower = (e: EntitySnapshot) => e.civilian?.survivor?.mode === 
 export function barEligible(e: EntitySnapshot, player: { x: number; z: number }, bar: boolean, fullFollowers = true): boolean {
   if (e.civilian?.survivor?.mode === 'follow') return isFollower(e) && (fullFollowers || e.health.current < e.health.max);
   return bar && e.faction === 'infected' && !!e.infected && e.health.current > 0 && !e.hidden && !e.infected.hidden && !e.corpse &&
-    (e.health.current < e.health.max || Math.hypot(e.transform.x - player.x, e.transform.z - player.z) <= 15);
+    (e.health.current < e.health.max || mandatoryBar(e) || Math.hypot(e.transform.x - player.x, e.transform.z - player.z) <= 15);
 }
 export function barSize(width: number, height: number, mega = false): { width: number; height: number } {
   const phone = Math.min(width, height) <= 480;

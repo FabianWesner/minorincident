@@ -1,37 +1,33 @@
 {
   "row": "L6-14",
-  "status": "FAIL",
-  "reviewer": "Codex/final-b",
+  "status": "PASS",
+  "reviewer": "Codex/blk-b",
   "date": "2026-11-07",
-  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
-  "sourceDigest": "7fd8f0ebc3d3fcb362d200567b5da5e2e4f5bea018074dcf4fbbfccc06fdf698",
+  "commit": "5edb190d10d29beafcf664827ab10bc0fefe8f9b",
+  "sourceDigest": "eb7cb3b93838b9b714cddcf54265aaacf615e5f73a22e00c0a69d5a55e4beb1b",
   "clauses": [
     {
-      "clause": "Underground readability: player contrast \u2265 3:1; infected eyes brightest pixels.",
-      "verdict": "FAIL",
-      "note": "FAIL strict eyes-brightest clause in both tiers: actual elderly infected62 forehead pixel(772,384), RGB175/125/98, linear luminance0.24663033 exceeds brightest eye0.24487004 low/0.23464440 high (0.719%/5.108%). Forehead9.055px from eye, outside2px eye-edge exclusion. Same-pose native-repeat body pixels all bitwise identical after mask restoration. Courier P90/2m ground-ring contrast passes3:1. Fourteen native/mask captures and exact face closeups personally inspected: red eye islands resolve below brighter tan forehead. This is a strict small numeric failure, not a subjective claim of poor visibility. Controlled existing-actor pose/emergency fixture disclosed; no source edits. Repro: actual second-breach emergency/headlamp tunnel x110/z15, original actor62 nearby facing camera; differential actual instance masks and linear-sRGB comparison."
+      "clause": "Underground readability: player contrast ≥ 3:1; infected eyes brightest pixels.",
+      "verdict": "PASS",
+      "note": "Personally inspected all14 native/background/ID-mask/repeat frames and both enlarged face crops. The tan forehead remains a broad warm patch and the red eyes remain tiny separate islands. Exact linear-sRGB peaks now put both eyes above every non-eye body pixel: low eye0.24487004, high0.23464440, body0.23217151. Native repeat body pixels are unchanged after mask restoration; courier/background contrasts21.78/21.52 exceed3:1. Scope: the specified elderly emergency-tunnel fixture, both tiers."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/final-b/L6-14-proof.json",
-      "sha256": "1f3f74b5c1849afc2d9591423b90c5d1ebe5924af6aa801375e06944a89c36ff",
-      "what": "FAIL strict eyes-brightest clause in both tiers: actual elderly infected62 forehead pixel(772,384), RGB175/125/98, linear luminance0.24663033 exceeds brightest eye0.24487004 low/0.23464440 high (0.719%/5.108%). Forehead9.055px from eye, outside2px eye-edge exclusion. Same-pose native-repeat body pixels all bitwise identical after mask restoration. Courier P90/2m ground-ring contrast passes3:1. Fourteen native/mask captures and exact face closeups personally inspected: red eye islands resolve below brighter tan forehead. This is a strict small numeric failure, not a subjective claim of poor visibility. Controlled existing-actor pose/emergency fixture disclosed; no source edits. Repro: actual second-breach emergency/headlamp tunnel x110/z15, original actor62 nearby facing camera; differential actual instance masks and linear-sRGB comparison."
+      "file": "docs/reports/blk-b/L6-14-proof.json",
+      "sha256": "3b78e7e1d88a2cb380b979b183780c8fe2342e8dc3c5a58f7cf65f914c87b343",
+      "what": "Personally inspected all14 native/background/ID-mask/repeat frames and both enlarged face crops. The tan forehead remains a broad warm patch and the red eyes remain tiny separate islands. Exact linear-sRGB peaks now put both eyes above every non-eye body pixel: low eye0.24487004, high0.23464440, body0.23217151. Native repeat body pixels are unchanged after mask restoration; courier/background contrasts21.78/21.52 exceed3:1."
     },
     {
-      "file": "docs/reports/final-b/L6-readability-low-tunnel-62-repeat-ledger.json.gz",
-      "sha256": "a349a2d0e6708afe1ac032098cd49f9681f497ab6126e51b988be9f1c2bb107f",
-      "what": "FAIL strict eyes-brightest clause in both tiers: actual elderly infected62 forehead pixel(772,384), RGB175/125/98, linear luminance0.24663033 exceeds brightest eye0.24487004 low/0.23464440 high (0.719%/5.108%). Forehead9.055px from eye, outside2px eye-edge exclusion. Same-pose native-repeat body pixels all bitwise identical after mask restoration. Courier P90/2m ground-ring contrast passes3:1. Fourteen native/mask captures and exact face closeups personally inspected: red eye islands resolve below brighter tan forehead. This is a strict small numeric failure, not a subjective claim of poor visibility. Controlled existing-actor pose/emergency fixture disclosed; no source edits. Repro: actual second-breach emergency/headlamp tunnel x110/z15, original actor62 nearby facing camera; differential actual instance masks and linear-sRGB comparison."
+      "file": "docs/reports/blk-b/L6-readability-low-tunnel-62-repeat-ledger.json.gz",
+      "sha256": "5e9cf1426be88eefcd38f0395e52c44137e8434ee5bfa4ce31f22d58412ebe8d",
+      "what": "Source-bound capture ledger; all seven frames personally inspected, masks resolve actual actor62, restoration bitwise identical."
     },
     {
-      "file": "docs/reports/final-b/L6-readability-high-tunnel-62-repeat-ledger.json.gz",
-      "sha256": "d47e748afd6cba10b02b579626ed0d51db21e8b80466d539e61f6984f12108a7",
-      "what": "FAIL strict eyes-brightest clause in both tiers: actual elderly infected62 forehead pixel(772,384), RGB175/125/98, linear luminance0.24663033 exceeds brightest eye0.24487004 low/0.23464440 high (0.719%/5.108%). Forehead9.055px from eye, outside2px eye-edge exclusion. Same-pose native-repeat body pixels all bitwise identical after mask restoration. Courier P90/2m ground-ring contrast passes3:1. Fourteen native/mask captures and exact face closeups personally inspected: red eye islands resolve below brighter tan forehead. This is a strict small numeric failure, not a subjective claim of poor visibility. Controlled existing-actor pose/emergency fixture disclosed; no source edits. Repro: actual second-breach emergency/headlamp tunnel x110/z15, original actor62 nearby facing camera; differential actual instance masks and linear-sRGB comparison."
-    },
-    {
-      "file": "docs/reports/final-b/readability-analysis-executed.py.gz",
-      "sha256": "64964655b2c8e9790a070926f202b0e28aad1efed93ddb99ac65abe550bc200e",
-      "what": "FAIL strict eyes-brightest clause in both tiers: actual elderly infected62 forehead pixel(772,384), RGB175/125/98, linear luminance0.24663033 exceeds brightest eye0.24487004 low/0.23464440 high (0.719%/5.108%). Forehead9.055px from eye, outside2px eye-edge exclusion. Same-pose native-repeat body pixels all bitwise identical after mask restoration. Courier P90/2m ground-ring contrast passes3:1. Fourteen native/mask captures and exact face closeups personally inspected: red eye islands resolve below brighter tan forehead. This is a strict small numeric failure, not a subjective claim of poor visibility. Controlled existing-actor pose/emergency fixture disclosed; no source edits. Repro: actual second-breach emergency/headlamp tunnel x110/z15, original actor62 nearby facing camera; differential actual instance masks and linear-sRGB comparison."
+      "file": "docs/reports/blk-b/L6-readability-high-tunnel-62-repeat-ledger.json.gz",
+      "sha256": "7e3dd403f52ded9214cdf269a77badfc078c34ae50a6933aef2d76b9757f3e0c",
+      "what": "Source-bound capture ledger; all seven frames personally inspected, masks resolve actual actor62, restoration bitwise identical."
     }
-  ]
+  ],
+  "notes": "Named elderly infected62 counterexample, actual L6 second-breach emergency/headlamp tunnel x110/z15, both tiers at normal zoom1.5. Controlled existing-actor pose, no actor HP/stat/AI edits. This is a measured fixture, not an exhaustive census of all tunnel poses."
 }
