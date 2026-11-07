@@ -293,10 +293,15 @@ export class LevelThreeCollapse {
       const doors = retreating ? this.doors().filter(p => dist(p, player) <= 30 &&
         (p.x - player.x) * velocity.x + (p.z - player.z) * velocity.z >= 0) : [];
       const sources = doors.length ? doors : cover && !retreating ? this.alarmCoverSources : this.sources(q.dir);
-      const pts = sources.filter(p => (ai.director.offscreen(p) || !retreating && ai.director.occluded(p, cover ? this.alarmCoverWalls : [])) && !ai.active.some(e => e.health.current > 0 && dist(e.transform, p) < .85))
+      const usable = (list: Point[], covered: boolean) => list.filter(p => (ai.director.offscreen(p) || !retreating && ai.director.occluded(p, covered ? this.alarmCoverWalls : [])) && !ai.active.some(e => e.health.current > 0 && dist(e.transform, p) < .85))
         .sort((a, b) => dist(a, player) - dist(b, player));
+      let pts = usable(sources, cover), coverEntry = cover;
+      // r2-l3 (L3-02): the six cover points sit a few metres from a courier who holds the yard. Once the horde around her
+      // stands on all of them, the remaining cover share of the wave never entered (high stationary: 90/100). After the
+      // 2 s in-frame window the member uses its own street direction instead, still off screen.
+      if (!pts.length && cover && !retreating && !doors.length && tick - q.at >= ticks(2)) { pts = usable(this.sources(q.dir), false); coverEntry = false; }
       if (!pts.length) continue;
-      const id = this.emerge(pts[0], undefined, true, q.dir === 'station', true, false, cover, true);
+      const id = this.emerge(pts[0], undefined, true, q.dir === 'station', true, false, coverEntry, true);
       if (!id) { if (ai.director.count >= ai.director.cap) break; continue; }
       q.id = id; s.waveIds.push(id); s.wavesSpawned = Math.max(s.wavesSpawned, q.wave + 1);
       this.reserveWaves();
@@ -618,7 +623,9 @@ export class LevelThreeCollapse {
     if (s.pressureAt && tick - s.pressureAt < ticks(l3.density.pressure.everyS)) return;
     s.pressureAt = tick;
     const [b0, b1] = l3.density.pressure.behindM, rng = new Rng(world.seed, `l3-pressure:${tick}`);
-    const doors = this.doors().filter(d => d.x <= s.furthest - b0 && d.x >= s.furthest - b1 && ai.director.offscreen(d));
+    // r2-l3 (L3-10): admission (emergePending) refuses a pressure door closer than 15 m to the courier. A door inside the
+    // band behind the line but within 15 m of a courier who stepped back held its share of the batch for the whole window.
+    const doors = this.doors().filter(d => d.x <= s.furthest - b0 && d.x >= s.furthest - b1 && ai.director.offscreen(d) && dist(d, p) >= b0);
     const [n0, n1] = l3.density.pressure.count, n = Math.round((n0 + 5 * Math.floor(rng.next() * ((n1 - n0) / 5 + 1))) * (1 - this.mercyFraction()));
     for (let i = 0; i < n && doors.length; i++) {
       const door = doors[Math.floor(rng.next() * doors.length)];
