@@ -1,0 +1,43 @@
+{
+  "row": "G-23",
+  "status": "P",
+  "reviewer": "final-g/Codex",
+  "date": "2026-11-07",
+  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "clauses": [
+    {
+      "clause": "No misleading meaningful geometry, walk-through walls/gates, false route dead ends, placeholder props or black map-edge voids.",
+      "verdict": "P",
+      "note": "Fresh both-quality production boundary sweep:423runs per tier,1269walk approaches and990vehicle approaches per tier, zero traversal failures. The low game-camera L7 east-perimeter view shows a broad unlit exterior beyond a continuous raised wall and a largely featureless dark foreground. PO must judge whether this reads as an intentional enclosing city boundary or unfinished map-edge art. No placeholder draws occur in the six focused views. Street-route completion and the L3 corgi stall are recorded separately; an uncompleted route is not falsely counted as a walk-through-wall defect."
+    }
+  ],
+  "evidence": [
+    {
+      "file": "docs/reports/final-g/G-23-bounds-summary.json",
+      "sha256": "e43b5f346c316a8ec9962817ecb98cb0d482a534dbe6033a07eeace92840b17a",
+      "what": "Fresh both-quality production boundary sweep:423runs per tier,1269walk approaches and990vehicle approaches per tier, zero traversal failures. The low game-camera L7 east-perimeter view shows a broad unlit exterior beyond a continuous raised wall and a largely featureless dark foreground. PO must judge whether this reads as an intentional enclosing city boundary or unfinished map-edge art. No placeholder draws occur in the six focused views. Street-route completion and the L3 corgi stall are recorded separately; an uncompleted route is not falsely counted as a walk-through-wall defect."
+    },
+    {
+      "file": "docs/reports/final-g/G-23-low-bounds.json.gz",
+      "sha256": "7d4b8b667dca4f9229da2e3f64b27b95a9f7db468b0b402ed4d91b2bde57e6f4",
+      "what": "Fresh both-quality production boundary sweep:423runs per tier,1269walk approaches and990vehicle approaches per tier, zero traversal failures. The low game-camera L7 east-perimeter view shows a broad unlit exterior beyond a continuous raised wall and a largely featureless dark foreground. PO must judge whether this reads as an intentional enclosing city boundary or unfinished map-edge art. No placeholder draws occur in the six focused views. Street-route completion and the L3 corgi stall are recorded separately; an uncompleted route is not falsely counted as a walk-through-wall defect."
+    },
+    {
+      "file": "docs/reports/final-g/G-23-high-bounds.json.gz",
+      "sha256": "763781e1d45260860cacd82d1c60decc40c6f78130077bdc8323958f7d385e14",
+      "what": "Fresh both-quality production boundary sweep:423runs per tier,1269walk approaches and990vehicle approaches per tier, zero traversal failures. The low game-camera L7 east-perimeter view shows a broad unlit exterior beyond a continuous raised wall and a largely featureless dark foreground. PO must judge whether this reads as an intentional enclosing city boundary or unfinished map-edge art. No placeholder draws occur in the six focused views. Street-route completion and the L3 corgi stall are recorded separately; an uncompleted route is not falsely counted as a walk-through-wall defect."
+    },
+    {
+      "file": "docs/reports/final-g/G-19-low-scenes.json",
+      "sha256": "f52db73870cb8422e720c0453e3fdf3efa5853859dfdefa68933956251576231",
+      "what": "Fresh both-quality production boundary sweep:423runs per tier,1269walk approaches and990vehicle approaches per tier, zero traversal failures. The low game-camera L7 east-perimeter view shows a broad unlit exterior beyond a continuous raised wall and a largely featureless dark foreground. PO must judge whether this reads as an intentional enclosing city boundary or unfinished map-edge art. No placeholder draws occur in the six focused views. Street-route completion and the L3 corgi stall are recorded separately; an uncompleted route is not falsely counted as a walk-through-wall defect."
+    },
+    {
+      "file": "test-results/final-g/G-19-low/low-L7-east-perimeter-z1.5.png",
+      "sha256": "a190799dc82511689e2174776583acfdc6e576e1bb4d65e35bf345ad439c0040",
+      "what": "Fresh both-quality production boundary sweep:423runs per tier,1269walk approaches and990vehicle approaches per tier, zero traversal failures. The low game-camera L7 east-perimeter view shows a broad unlit exterior beyond a continuous raised wall and a largely featureless dark foreground. PO must judge whether this reads as an intentional enclosing city boundary or unfinished map-edge art. No placeholder draws occur in the six focused views. Street-route completion and the L3 corgi stall are recorded separately; an uncompleted route is not falsely counted as a walk-through-wall defect."
+    }
+  ],
+  "notes": "PO: exact low-L7-east-perimeter-z1.5.png, dark area outside and alongside the raised wall. Judge boundary finish/readability, with its zero-failure physical sweep as context.",
+  "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186"
+}
