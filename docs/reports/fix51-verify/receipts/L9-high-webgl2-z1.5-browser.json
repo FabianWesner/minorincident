@@ -1,0 +1,106 @@
+{
+  "version": 1,
+  "level": "L9",
+  "tier": "high",
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "fixtureHash": "3a1aa6ffd344dc12e40e887d5787eccb7b7f2da10d19445898a88e94befd6f3f",
+  "browserHash": "3a1aa6ffd344dc12e40e887d5787eccb7b7f2da10d19445898a88e94befd6f3f",
+  "checks": [
+    {
+      "id": "G-25",
+      "clause": "physical WASD/mouse full-level browser console",
+      "tier": "high",
+      "policy": "real-input-webgl2",
+      "status": "PASS",
+      "value": {
+        "backend": "webgl2",
+        "zoom": 1.5,
+        "completed": true,
+        "skipped": [],
+        "consoleErrors": [],
+        "immortal": true,
+        "frameTiming": false
+      },
+      "target": "complete ordinary-input route; zero console/page errors; no objective skips",
+      "receipt": "docs/reports/final-g/G-25-L9-high-countryside.json"
+    }
+  ],
+  "errors": [],
+  "run": [
+    {
+      "level": "L9",
+      "entry": "debug",
+      "heroine": "female",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 132,
+      "simSeconds": 0,
+      "maxNoProgressSeconds": 4.793,
+      "deaths": 0,
+      "assists": 1,
+      "attacks": {},
+      "weaponsStart": [
+        "weapon.bat",
+        "weapon.fire-axe",
+        "weapon.rocket-launcher",
+        "weapon.army-mg",
+        "weapon.shotgun",
+        "weapon.handgun"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.fire-axe"
+      ],
+      "steps": [
+        {
+          "id": "approach",
+          "text": "Drive toward the city · 1020 m",
+          "tick": 16,
+          "marker": {
+            "anchor": "crash-approach",
+            "ring": {
+              "x": 470,
+              "y": 0,
+              "z": 0
+            },
+            "drawn": [
+              470,
+              0,
+              0
+            ],
+            "playerY": 0.9953889846801758,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "reach-outskirts",
+          "text": "Get clear of the wreck · 20 m",
+          "tick": 6825,
+          "marker": {
+            "anchor": "crawl-end",
+            "ring": {
+              "x": 547,
+              "y": 0,
+              "z": 0
+            },
+            "drawn": null,
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        }
+      ]
+    }
+  ],
+  "issues": [],
+  "frameTiming": false,
+  "backend": "webgl2",
+  "zoom": 1.5,
+  "observations": {
+    "alternateRoute": "countryside",
+    "producer": {
+      "file": "tools/qa/accept/final-g-l9-worker.ts",
+      "sha256": "22a71daf85abc940c9cf0962a31f00cc1a0dc56a6605c16ccf9b933c07194f4e"
+    },
+    "provenanceNote": "browserHash identifies the unchanged canonical observer/playtest bundle. This separately identified launcher selects the existing authored countryside route; the canonical road trial remains unchanged and retained."
+  }
+}

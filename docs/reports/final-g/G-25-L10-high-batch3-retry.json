@@ -1,0 +1,187 @@
+{
+  "version": 1,
+  "level": "L10",
+  "tier": "high",
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "fixtureHash": "3a1aa6ffd344dc12e40e887d5787eccb7b7f2da10d19445898a88e94befd6f3f",
+  "browserHash": "3a1aa6ffd344dc12e40e887d5787eccb7b7f2da10d19445898a88e94befd6f3f",
+  "checks": [
+    {
+      "id": "G-25",
+      "clause": "physical WASD/mouse full-level browser console",
+      "tier": "high",
+      "policy": "real-input-webgl2",
+      "status": "PASS",
+      "value": {
+        "backend": "webgl2",
+        "zoom": 1.5,
+        "completed": true,
+        "skipped": [],
+        "consoleErrors": [],
+        "immortal": true,
+        "frameTiming": false
+      },
+      "target": "complete ordinary-input route; zero console/page errors; no objective skips",
+      "receipt": "docs/reports/final-g/G-25-L10-high-batch3-retry.json"
+    }
+  ],
+  "errors": [],
+  "run": [
+    {
+      "level": "L10",
+      "entry": "continue",
+      "heroine": "female",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 403,
+      "simSeconds": 374,
+      "maxNoProgressSeconds": 16.956,
+      "deaths": 0,
+      "assists": 0,
+      "attacks": {
+        "weapon.rocket-launcher": 187
+      },
+      "weaponsStart": [
+        "weapon.fire-axe",
+        "weapon.pistol",
+        "weapon.shotgun",
+        "weapon.army-mg",
+        "weapon.rocket-launcher"
+      ],
+      "weaponsEnd": [
+        "weapon.fire-axe",
+        "weapon.pistol",
+        "weapon.shotgun",
+        "weapon.army-mg",
+        "weapon.rocket-launcher"
+      ],
+      "steps": [
+        {
+          "id": "install",
+          "text": "Install the cure in the dispersal device · 112 m",
+          "tick": 9,
+          "marker": {
+            "anchor": "cure-install",
+            "ring": {
+              "x": 4006.5,
+              "y": 0,
+              "z": -39
+            },
+            "drawn": [
+              4006.5,
+              0,
+              -39
+            ],
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "hold",
+          "text": "Activate the dispersal console · 12 m",
+          "tick": 2088,
+          "marker": {
+            "anchor": "cure-console",
+            "ring": {
+              "x": 4002,
+              "y": 0,
+              "z": -27
+            },
+            "drawn": [
+              4002,
+              0,
+              -27
+            ],
+            "playerY": 0.7049999833106995,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "mega",
+          "text": "Kill the Mega Alpha · 348 m",
+          "tick": 6012,
+          "marker": {
+            "anchor": "cure-mega",
+            "ring": {
+              "x": 3639.1587573751226,
+              "y": 0.7,
+              "z": -6.7343444342773395
+            },
+            "drawn": [
+              3640.58,
+              0.7,
+              -7.18
+            ],
+            "playerY": 0.7099999785423279,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "release",
+          "text": "Release the cure at the console · 212 m",
+          "tick": 9316,
+          "marker": {
+            "anchor": "cure-console",
+            "ring": {
+              "x": 4002,
+              "y": 0,
+              "z": -27
+            },
+            "drawn": [
+              4002,
+              0,
+              -27
+            ],
+            "playerY": 0.7099999785423279,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "epilogue",
+          "text": "Watch the cure spread · 1/150 s",
+          "tick": 12481,
+          "marker": {
+            "anchor": "cure-console",
+            "ring": null,
+            "drawn": null,
+            "playerY": 0.7049999833106995,
+            "pinVisible": false
+          }
+        },
+        {
+          "id": "credits",
+          "text": "Minor Incident",
+          "tick": 21405,
+          "marker": {
+            "anchor": "cure-console",
+            "ring": null,
+            "drawn": null,
+            "playerY": 0.7049999833106995,
+            "pinVisible": false
+          }
+        }
+      ]
+    }
+  ],
+  "issues": [],
+  "frameTiming": false,
+  "backend": "webgl2",
+  "zoom": 1.5,
+  "batch": {
+    "index": 3,
+    "yielded": false,
+    "startSaveHash": "9deb74bda274ee8af8f22f90ab63f1c89e6d566a0318d77d61d085c9ca4efbb2",
+    "endSaveHash": null,
+    "startSeconds": 929.1,
+    "endSeconds": 1285.85,
+    "savePath": null
+  },
+  "observations": {
+    "runtime": {
+      "backend": "webgl",
+      "quality": "high",
+      "zoom": 1.5
+    },
+    "productionResume": true
+  }
+}
