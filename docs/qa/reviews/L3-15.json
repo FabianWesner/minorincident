@@ -1,27 +1,38 @@
 {
   "row": "L3-15",
   "status": "PASS",
-  "reviewer": "Codex sweep-a3",
-  "date": "2026-11-06",
-  "commit": "1f1fbdb3670ed78ae20985e7eb4a1511329aa063",
+  "reviewer": "Codex final-a",
+  "date": "2026-11-07",
+  "commit": "a4dcba471b9e0016878ef7e2675d3bdcbe517308",
   "clauses": [
     {
       "clause": "Player visible inside the 80-infected horde (silhouette/outline).",
       "verdict": "PASS",
-      "note": "All18 shared handgun/horde captures inspected, including high600-shot frame at full resolution. Courier remains identifiable as gold outlined central silhouette through packed infected. Final living census84low/187high;82low/185high drawn and projected in camera, each exceeding80. Silhouette is visible among the horde rather than inferred from foreground boolean alone."
+      "note": "All18 shared current handgun/horde frames personally inspected. Final both-tier600shot frames show the courier as a distinct gold outlined central silhouette amid dense overlapping living infected. Actual living counts84low/187high;82low/185high figures drawn and projected within the production camera, exceeding80. Visibility judged from pixels, not foreground boolean alone. Whole horde, surrounding bodies and full HUD retained; current actual yard zoom1 despite requested endpoints. Damage protection supports visual observation only. P: assess outline color/intensity in low/high600-shot frames; no taste approval claimed."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-a3/L3-01-current-ledger.json.gz",
-      "sha256": "ece1164f144839b77c5453af1c71ccfb00384c38cfafd01a81970484203c5325",
-      "what": "All18 shared handgun/horde captures inspected, including high600-shot frame at full resolution. Courier remains identifiable as gold outlined central silhouette through packed infected. Final living census84low/187high;82low/185high drawn and projected in camera, each exceeding80. Silhouette is visible among the horde rather than inferred from foreground boolean alone."
+      "file": "docs/reports/final-a/L3-15-horde-proof.json",
+      "sha256": "eb6b0150e7e7d35b7b57dd11954ffa555bcebb9b41ea2f3786b8837021217e5d",
+      "what": "All18 shared current handgun/horde frames personally inspected. Final both-tier600shot frames show the courier as a distinct gold outlined central silhouette amid dense overlapping living infected. Actual living counts84low/187high;82low/185high figures drawn and projected within the production camera, exceeding80. Visibility judged from pixels, not foreground boolean alone. Whole horde, surrounding bodies and full HUD retained; current actual yard zoom1 despite requested endpoints. Damage protection supports visual observation only. P: assess outline color/intensity in low/high600-shot frames; no taste approval claimed."
     },
     {
-      "file": "docs/reports/sweep-a3/L3-01-current-images.json",
-      "sha256": "f4b479c3041a7f4c01864cfcb10b69fb1926c7a2b1129bf8d7f8176c1db2f3ed",
-      "what": "All18 shared handgun/horde captures inspected, including high600-shot frame at full resolution. Courier remains identifiable as gold outlined central silhouette through packed infected. Final living census84low/187high;82low/185high drawn and projected in camera, each exceeding80. Silhouette is visible among the horde rather than inferred from foreground boolean alone."
+      "file": "docs/reports/final-a/L3-01-shots-and-grant.json",
+      "sha256": "9b25d23dbee5cd8fe9eb3ec70482ba4087aa4614d9688d8c24edb2187a7588f9",
+      "what": "All18 shared current handgun/horde frames personally inspected. Final both-tier600shot frames show the courier as a distinct gold outlined central silhouette amid dense overlapping living infected. Actual living counts84low/187high;82low/185high figures drawn and projected within the production camera, exceeding80. Visibility judged from pixels, not foreground boolean alone. Whole horde, surrounding bodies and full HUD retained; current actual yard zoom1 despite requested endpoints. Damage protection supports visual observation only. P: assess outline color/intensity in low/high600-shot frames; no taste approval claimed."
+    },
+    {
+      "file": "docs/reports/final-a/L3-01-browser-ledger.json.gz",
+      "sha256": "7d21ce96dbb0158816fa97c1cb94fafa4ab65976f57bef10073ec38825e492f3",
+      "what": "All18 shared current handgun/horde frames personally inspected. Final both-tier600shot frames show the courier as a distinct gold outlined central silhouette amid dense overlapping living infected. Actual living counts84low/187high;82low/185high figures drawn and projected within the production camera, exceeding80. Visibility judged from pixels, not foreground boolean alone. Whole horde, surrounding bodies and full HUD retained; current actual yard zoom1 despite requested endpoints. Damage protection supports visual observation only. P: assess outline color/intensity in low/high600-shot frames; no taste approval claimed."
+    },
+    {
+      "file": "docs/reports/final-a/L3-01-image-review.json",
+      "sha256": "70d83f7169924ab6282035034ce15d9c6b4254c3c78abe4aa72870bc1629ec29",
+      "what": "All18 shared current handgun/horde frames personally inspected. Final both-tier600shot frames show the courier as a distinct gold outlined central silhouette amid dense overlapping living infected. Actual living counts84low/187high;82low/185high figures drawn and projected within the production camera, exceeding80. Visibility judged from pixels, not foreground boolean alone. Whole horde, surrounding bodies and full HUD retained; current actual yard zoom1 despite requested endpoints. Damage protection supports visual observation only. P: assess outline color/intensity in low/high600-shot frames; no taste approval claimed."
     }
   ],
-  "notes": "P: PO to inspect gold courier contour among tightly overlapping bodies. Actual yard zoom1; requested limits do not override it. Stationary physical handgun firing, count-only courier protection."
+  "notes": "Fresh source4e570db. Shared ordinary-input handgun setup, not spawned horde; no performance or mortal-survival inference.",
+  "sourceDigest": "b54f676bf2eb09a12c8059dce4ebe53003816773db044d7acfc253fccbedccf9"
 }
