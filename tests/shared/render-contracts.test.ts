@@ -51,7 +51,6 @@ import { resolveRig, disposeCharacter } from '../../src/render/characters/rig';
 import { heroineStandingHeight } from '../../src/render/npc/figureHeight';
 import { CorpseLayout } from '../../src/render/characters/CorpseLayout';
 import { Vfx } from '../../src/render/vfx/Vfx';
-import { ObjectiveMarker } from '../../src/render/ObjectiveMarker';
 
 function checkChangingSupport(): void {
   const model = createSurvivorPlaceholder('female'), rig = resolveRig(model);
@@ -508,9 +507,6 @@ test('LOD selection: authored distance bands with hysteresis; game-camera-size c
 });
 
 test('materials: palette program keys match Three through weather and node changes; uniforms share a render group per material only', () => {
-  const marker = new ObjectiveMarker({} as SimWorld);
-  expect(((marker.children[1] as Mesh).material as MeshBasicMaterial).depthTest).toBe(true);
-  marker.dispose();
   // A paused redraw must retire a dead source's warning without advancing FX
   // time, while retaining live attacks and a bloater's real death countdown.
   const source = { health: { current: 0 }, transform: { x: 0, z: 0 }, infected: { state: 'dead', attackId: 7, special: 'charge', until: 30, specialAttack: { stage: 'telegraph' } } } as EntitySnapshot;

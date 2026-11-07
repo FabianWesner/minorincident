@@ -10,7 +10,7 @@ export function markerSurfaceY(world: SimWorld, anchor: { x: number; z: number; 
 }
 /** Shared geometries; no per-frame marker allocation or renderer state read by sim. */
 export class ObjectiveMarker extends Group {
-  private readonly material = new MeshBasicNodeMaterial({ color: '#ffcf77', depthTest: true, depthWrite: false, toneMapped: false, fog: false });
+  private readonly material = new MeshBasicNodeMaterial({ color: '#ffcf77', depthTest: false, depthWrite: false, toneMapped: false, fog: false });
   private readonly ringMaterial = new MeshBasicNodeMaterial({ color: '#ffcf77', depthTest: true, depthWrite: false, toneMapped: false, fog: false });
   private readonly ring = new Mesh(new TorusGeometry(objectiveRingRadius-.05,.05,6,24),this.ringMaterial);
   private ringRadius = objectiveRingRadius;
