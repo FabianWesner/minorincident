@@ -2,7 +2,9 @@
 
 Frozen source: `4e570db8499bd1d76dcc17f9d13d1949d5cf2096`. Game source remains unchanged. The native receipts were generated on that source at both tiers. Historical reviews have their original provenance; an older review is not refreshed merely by inserting the current source digest.
 
-This report is in progress. Each OPEN row still needs current evidence for at least one objective clause. It has no final verdict yet. The former blanket digest refresh and superseded historical failures have been removed.
+This report is in progress (25/46 rows have current measured reviews). Table verdicts refer to the explicit reviews; the tracker separately retains any missing machine coverage, including rows with no implemented full-row machine binding. A FRESH review is not a claim that automatedComplete is true.
+
+ Each OPEN row still needs current evidence for at least one objective clause. It has no final verdict yet. The former blanket digest refresh and superseded historical failures have been removed.
 
 | Row | Verdict | Numbers | Evidence | P-note |
 |---|---|---|---|---|
@@ -20,7 +22,7 @@ This report is in progress. Each OPEN row still needs current evidence for at le
 | L4-12 | PASS | Minimum4 visible model looks across10679/10715 nearest20 living-infected ticks; current physical frames reviewed. | [review](../../qa/reviews/L4-12.json) · [native report](../fix51-verify/L4.json) | — |
 | L4-13 | FAIL | Low ticks36109–36649:0 admissions; high17245–17785:1 admission in9s, below3. No death/respawn/checkpoint in either interval. Repro: native complete collapse census. | [review](../../qa/reviews/L4-13.json) · [native report](../fix51-verify/L4.json) | — |
 | L4-14 | OPEN | Current whole-row measurement pending; historical observations are not a frozen-head verdict. | [review](../../qa/reviews/L4-14.json) · [native report](../fix51-verify/L4.json) | — |
-| L4-15 | OPEN | Current whole-row measurement pending; historical observations are not a frozen-head verdict. | [review](../../qa/reviews/L4-15.json) · [native report](../fix51-verify/L4.json) | — |
+| L4-15 | PASS | 60/60 actual walls block courier capsule at each tier; follow/cinematic pitch36–41.85°. Four hide frames reviewed at both zooms; continuous ground. | [review](../../qa/reviews/L4-15.json) · [proof](L4-15-proof.json) | — |
 | L4-16 | OPEN | Current whole-row measurement pending; historical observations are not a frozen-head verdict. | [review](../../qa/reviews/L4-16.json) · [native report](../fix51-verify/L4.json) | — |
 | L4-17 | OPEN | Current whole-row measurement pending; historical observations are not a frozen-head verdict. | [review](../../qa/reviews/L4-17.json) · [native report](../fix51-verify/L4.json) | — |
 | L4-18 | P | Authored safe scene80 both tiers; physical war low8489/high5930; heroine identifiable. Living global76/72 versus corpses100/58 near those times. | [review](../../qa/reviews/L4-18.json) · [native report](../fix51-verify/L4.json) | PO: do the retained exact frames in [proof](L4-war-review.json) read as huge mixed war? |
@@ -41,12 +43,12 @@ This report is in progress. Each OPEN row still needs current evidence for at le
 | L6-01 | OPEN | Current whole-row measurement pending; historical observations are not a frozen-head verdict. | [review](../../qa/reviews/L6-01.json) · [native report](../fix51-verify/L6.json) | — |
 | L6-02 | OPEN | Current whole-row measurement pending; historical observations are not a frozen-head verdict. | [review](../../qa/reviews/L6-02.json) · [native report](../fix51-verify/L6.json) | — |
 | L6-03 | PASS | Breach 1 at 33.2 s; 8 admitted bodies reach shelter floor; bang timing passes both tiers. | [review](../../qa/reviews/L6-03.json) · [native report](../fix51-verify/L6.json) | — |
-| L6-04 | OPEN | Current whole-row measurement pending; historical observations are not a frozen-head verdict. | [review](../../qa/reviews/L6-04.json) · [native report](../fix51-verify/L6.json) | — |
+| L6-04 | PASS | Breach2 +21.016667s;10 actual arrivals/2 accesses;56 main lights off,46 red emergency on in same tick; abandon with≥3 infected. | [review](../../qa/reviews/L6-04.json) · [proof](L6-04-proof.json) | — |
 | L6-05 | PASS | Both-tier complete/stationary reachability and player windup clauses pass. | [review](../../qa/reviews/L6-05.json) · [native report](../fix51-verify/L6.json) | — |
 | L6-06 | OPEN | Current whole-row measurement pending; historical observations are not a frozen-head verdict. | [review](../../qa/reviews/L6-06.json) · [native report](../fix51-verify/L6.json) | — |
 | L6-07 | PASS | Both-tier retreat pressure and >=30 HP loss pass; concurrent peaks below 30/60 caps. | [review](../../qa/reviews/L6-07.json) · [native report](../fix51-verify/L6.json) | — |
 | L6-08 | OPEN | Current whole-row measurement pending; historical observations are not a frozen-head verdict. | [review](../../qa/reviews/L6-08.json) · [native report](../fix51-verify/L6.json) | — |
-| L6-09 | OPEN | Current whole-row measurement pending; historical observations are not a frozen-head verdict. | [review](../../qa/reviews/L6-09.json) · [native report](../fix51-verify/L6.json) | — |
+| L6-09 | PASS | 3 gates×2 tiers:2.2m wide; movement/sight blocked;9.816667s vs5 runners; refusal≤2m. E and one click each close in60ticks. | [review](../../qa/reviews/L6-09.json) · [proof](L6-09-proof.json) | — |
 | L6-10 | PASS | Every active retreat/exit marker tick matches fixed gate/platform; all 3 gates ×4 courier poses pass. | [review](../../qa/reviews/L6-10.json) · [native report](../fix51-verify/L6.json) | — |
 | L6-11 | PASS | Both tiers: complete20/29=68.97%; evade1/29=3.45%. Complete hashes match current controls; all rosters balance. | [review](../../qa/reviews/L6-11.json) · [native report](../fix51-verify/L6.json) | — |
 | L6-12 | OPEN | Current whole-row measurement pending; historical observations are not a frozen-head verdict. | [review](../../qa/reviews/L6-12.json) · [native report](../fix51-verify/L6.json) | — |
