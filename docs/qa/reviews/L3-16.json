@@ -1,27 +1,33 @@
 {
   "row": "L3-16",
   "status": "FAIL",
-  "reviewer": "Codex sweep-a3",
-  "date": "2026-11-06",
-  "commit": "5d99cf0b5225d154488301099c88453cb594e4b5",
+  "reviewer": "Codex final-a",
+  "date": "2026-11-07",
+  "commit": "8a4eb56af5da3a3d44d14cf9df1ad8a931709928",
   "clauses": [
     {
       "clause": "Late-afternoon light, ≥ 2 smoke columns in every street frame; streets read their damage type.",
       "verdict": "FAIL",
-      "note": "Personally inspected all24 fresh low/high street frames. Late-afternoon warm light and damage cues remain visible; wide views show multiple rising grey smoke columns. Literal every-frame minimum fails: actual moving route low x−40 at zoom0.5 contains no distinct complete smoke column, and close static commerce/oak views also miss two. Columns recorded in VFX world state are not proof of visible columns. No target relaxed."
+      "note": "Current ordinary moving street route, both qualities, personally inspected all41 original frames. Counterexample: low street-x-40-close at tick5400, player x=-39.4842, actual player zoom0.5,1280x720:0 visible smoke columns (<2 required in every street frame). High corresponding close frame tick4020 x=-38.1486 also has0 visible smoke columns. The production zoom1 counterpart contains smoke near its top edge, which disappears at supported closer framing. Late-afternoon warm light and route damage are visible, but this universal smoke clause fails. Repro: L3 seed1 ordinary complete route to x≈-40, set supported zoom0.5 and inspect street frame."
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/sweep-a3/L3-16-current-ledger.json.gz",
-      "sha256": "cc939588ed64ea7e7e06a43bb391c9266e9e0d1e5dc74405d1aee204fee2aad5",
-      "what": "Personally inspected all24 fresh low/high street frames. Late-afternoon warm light and damage cues remain visible; wide views show multiple rising grey smoke columns. Literal every-frame minimum fails: actual moving route low x−40 at zoom0.5 contains no distinct complete smoke column, and close static commerce/oak views also miss two. Columns recorded in VFX world state are not proof of visible columns. No target relaxed."
+      "file": "docs/reports/final-a/L3-16-browser-ledger.json.gz",
+      "sha256": "0781d49e8c30bcbcfc53609aa1d9d538a631104084388f67550ef0ed03c9b6fb",
+      "what": "Current ordinary moving street route, both qualities, personally inspected all41 original frames. Counterexample: low street-x-40-close at tick5400, player x=-39.4842, actual player zoom0.5,1280x720:0 visible smoke columns (<2 required in every street frame). High corresponding close frame tick4020 x=-38.1486 also has0 visible smoke columns. The production zoom1 counterpart contains smoke near its top edge, which disappears at supported closer framing. Late-afternoon warm light and route damage are visible, but this universal smoke clause fails. Repro: L3 seed1 ordinary complete route to x≈-40, set supported zoom0.5 and inspect street frame."
     },
     {
-      "file": "docs/reports/sweep-a3/L3-16-current-images.json",
-      "sha256": "3066b4c11fdbc869741728f1f2f265ebf4d3bd71a68f0bdd422e320843ddbb7b",
-      "what": "Personally inspected all24 fresh low/high street frames. Late-afternoon warm light and damage cues remain visible; wide views show multiple rising grey smoke columns. Literal every-frame minimum fails: actual moving route low x−40 at zoom0.5 contains no distinct complete smoke column, and close static commerce/oak views also miss two. Columns recorded in VFX world state are not proof of visible columns. No target relaxed."
+      "file": "docs/reports/final-a/L3-16-image-review.json",
+      "sha256": "8041380cc0bf496f0b5da9cfb1fa95e8fb5a5e8e71dbfe76b1359cd3239aac0b",
+      "what": "Current ordinary moving street route, both qualities, personally inspected all41 original frames. Counterexample: low street-x-40-close at tick5400, player x=-39.4842, actual player zoom0.5,1280x720:0 visible smoke columns (<2 required in every street frame). High corresponding close frame tick4020 x=-38.1486 also has0 visible smoke columns. The production zoom1 counterpart contains smoke near its top edge, which disappears at supported closer framing. Late-afternoon warm light and route damage are visible, but this universal smoke clause fails. Repro: L3 seed1 ordinary complete route to x≈-40, set supported zoom0.5 and inspect street frame."
+    },
+    {
+      "file": "docs/reports/final-a/L3-16-current-proof.json",
+      "sha256": "edfda862293b755057b3d643210a6c466d7290e4f62bf3269a626434af242444",
+      "what": "Current ordinary moving street route, both qualities, personally inspected all41 original frames. Counterexample: low street-x-40-close at tick5400, player x=-39.4842, actual player zoom0.5,1280x720:0 visible smoke columns (<2 required in every street frame). High corresponding close frame tick4020 x=-38.1486 also has0 visible smoke columns. The production zoom1 counterpart contains smoke near its top edge, which disappears at supported closer framing. Late-afternoon warm light and route damage are visible, but this universal smoke clause fails. Repro: L3 seed1 ordinary complete route to x≈-40, set supported zoom0.5 and inspect street frame."
     }
   ],
-  "notes": "Static poses explicitly controlled relocation; moving-x samples are ordinary native complete route with courier protection. P: inspect smoke in close street framing; wide-frame improvement does not close every-frame requirement."
+  "notes": "Game source frozen at4e570db. Current pooled headless capture/input evidence and exact sourceDigest; image files retained only under test-results.",
+  "sourceDigest": "b54f676bf2eb09a12c8059dce4ebe53003816773db044d7acfc253fccbedccf9"
 }

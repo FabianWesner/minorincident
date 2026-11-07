@@ -1,0 +1,7 @@
+{
+  "row": "L3-16",
+  "sourceHash": "2d4498cb2e99f3ae6ddb76c87e48972ad9c3e343eac5c7691daf06a024896a17",
+  "criterion": "Late-afternoon light, ≥ 2 smoke columns in every street frame; streets read their damage type.",
+  "nativeChecks": [],
+  "observation": "Current ordinary moving street route, both qualities, personally inspected all41 original frames. Counterexample: low street-x-40-close at tick5400, player x=-39.4842, actual player zoom0.5,1280x720:0 visible smoke columns (<2 required in every street frame). High corresponding close frame tick4020 x=-38.1486 also has0 visible smoke columns. The production zoom1 counterpart contains smoke near its top edge, which disappears at supported closer framing. Late-afternoon warm light and route damage are visible, but this universal smoke clause fails. Repro: L3 seed1 ordinary complete route to x≈-40, set supported zoom0.5 and inspect street frame."
+}
