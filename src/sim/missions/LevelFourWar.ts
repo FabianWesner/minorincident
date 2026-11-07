@@ -1128,7 +1128,11 @@ export class LevelFourWar {
     // those slots are free. Waiting for ten simultaneous vacancies could
     // leave an announced breach empty for over eighteen seconds. The rest of
     // the pending group stays queued, with the same demand and population cap.
-    if (!this.low && room < Math.min(s.perimeterPending, fresh.length ? 3 : 10)) return;
+    // The first three arrivals at a fresh breach consume their own reserved
+    // slots and bypass the general headroom. Applying this batch-level room
+    // guard to them too waited for extra vacancies on top of those reserves,
+    // delaying the promised spearhead until well after the breach opened.
+    if (!this.low && !fresh.length && room < Math.min(s.perimeterPending, 10)) return;
     // Spread each group across several exterior approach points.
     let admitted = 0;
     const pending = s.perimeterPending;
@@ -1155,7 +1159,7 @@ export class LevelFourWar {
         && Object.values(s.breaches ?? {}).some(other => other && other !== breach && other.openAt && other.openAt < breach.openAt);
       // fix69-r: the first three bodies of an open breach use the slots reserveSlots() holds for them.
       const owed = !!breach && (breach.arrivals ?? 0) < 3;
-      const id = this.emerge({ x: source.at.x + (lane % 3 - 1) * .55, z: source.at.z + Math.floor(lane / 3) * .55 }, false, this.headroom(), owed, spearhead ? l4.war.spearhead.archetypes : l4InfectedArchetypes);
+      const id = this.emerge({ x: source.at.x + (lane % 3 - 1) * .55, z: source.at.z + Math.floor(lane / 3) * .55 }, spearhead, this.headroom(), owed, spearhead ? l4.war.spearhead.archetypes : l4InfectedArchetypes);
       if (!id) continue;
       released.set(source.k, (released.get(source.k) ?? 0) + 1);
       admitted++; s.perimeterPending--; s.emergedIds.push(id); s.origin[id] = l4Emergence.length + source.k;
