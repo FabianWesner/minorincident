@@ -1,6 +1,6 @@
 # Lane r2-l4l5
 
-The two requested admission/formation defects are fixed. The lane is **not fully green**: the required zero-flag threat gate remains unresolved by the scoped fixes. Compound L5-08 also retains its separate G-13 pace failure.
+**L4-13 is fixed. L5-08 is not fixed. The full goal is not achieved.** The formation candidate passed the band tolerance but introduced threat/pace regressions. A fresh baseline control proved those failures were introduced by the candidate; all L5 source and fixture changes were therefore reverted in `789eeb7`. The earlier report's scoped-success claim is superseded by this result.
 
 ## L4-13 collapse admissions — fixed
 
@@ -19,40 +19,33 @@ Twelve low / nine high windows have full 9-second observation. Each final window
 
 The completion audit also corrected double-counting of pending conversions in the reclaim loop. A controlled capacity case with 78 living infected, two pending conversions and cap 80 now retires exactly three bodies for three admissions; before correction it retired five. Calling the method again in the same wave retires no additional bodies.
 
-## L5-08 requested formation tolerance — fixed
+## L5-08 — not fixed; candidate reverted
 
-Wide side slots steer into street cover; the resulting route corrections and crowd separation leave bodies behind after turns. Rear targets also needed more margin from the 5 m boundary. The final formation uses front/rear depths **2.5 / 3.2 m** and side offsets **±0.9 / ±0.45 m**, with staggered rear columns. The original **1.05× catch-up ceiling** and **3.8 m/s combat pace** remain unchanged.
+The candidate used 2.5 / 3.2 m depths and ±0.9 / ±0.45 m side offsets while preserving the 1.05× catch-up ceiling and 3.8 m/s combat pace. It improved seed-1 in-band minima to **95.56% low / 96.97% high**, with maximum excursions **0.83 / 0.57 seconds**. However, its skilled attack rate fell to **2.08/min** against 3/min, and follower 28 failed the pace comparison in multiple seeds. Passing the band alone did not make it an acceptable fix.
 
-Focused traces and full native acceptance reproduce the same seed-1 measurements:
+### Fresh baseline control
 
-| Follower | Low in band | Low longest outside | High in band | High longest outside |
-|---|---:|---:|---:|---:|
-| 31 | 100% | 0 ticks | 96.97% | 34 ticks |
-| 30 | 98.57% | 29 ticks | 98.00% | 22 ticks |
-| 32 | 97.52% | 31 ticks | 100% | 0 ticks |
-| 28 | 95.56% | 50 ticks | 100% | 0 ticks |
-| 29 | 100% | 0 ticks | 100% | 0 ticks |
+A read-only Node module-load override supplied `src/sim/outbreak/Survivors.ts` exactly from `7d2c9af` (Git blob `82c884a598d0f4aa0ab84b00466dc9c4678418fe`). This is the sole L5 runtime file changed by the lane; the other runtime changes are L4-only. The override was asserted to execute. Three low-tier complete routes used the unchanged native observer and thresholds:
 
-Every follower has at least 691 qualifying ticks on low / 494 on high. Every share exceeds 95%; the longest excursions are 0.83 s low / 0.57 s high, below 2 seconds. These results qualify the requested band defect, not every clause of the compound L5-08 row. The engine fixture now places followers at the new authored slots; its steady-pace and 1.05× cap assertions are unchanged.
+| Seed | Baseline skilled attacks/min |
+|---|---:|
+| 1 | 4.38 |
+| 2 | 5.47 |
+| 3 | 5.27 |
 
-An earlier passing experiment raised catch-up to 1.5× and increased defensive reposition speeds. The completion audit rejected it as incompatible with L5-08. Those changes are absent. Routing, steering and shared-combat experiments that did not consistently pass were also discarded.
+The baseline has **no follower-pace flags** across those seeds. Follower 28's step/look median/group ratios are **101.63%, 99.36%, 97.66%**. This contradicts treating the candidate's attack-rate and pace failures as unrelated or pre-existing.
 
-## Remaining failures — not fixed
+The baseline still reproduces the assigned band bug. Seed-1 low shares for followers 31, 30, 32, 28, 29 are **97.68%, 96.08%, 99.51%, 74.49%, 100%**, with a maximum outside run of 75 ticks (1.25 s). L5 needs a controller/spacing fix that improves the band without regressing pressure and pace. The candidate and unsuccessful speed, routing, steering and shared-combat experiments are absent from the final source.
 
-- **L5-05:** latest low-tier skilled route attack rate **2.08/min** against 3/min; bounded-path reachability **85.71%** against 90%.
-- **L5-08 / G-13:** follower 28 still falls below 95% of its phase group median in multiple seeds. Low ratios: **92.17%, 96.33%, 89.89%**; high: **92.31%, 92.81%, 94.97%**. The formation tolerance passes, but the whole compound row remains open.
-- A low-tier search trace at tick 8190 shows follower 28 requesting 4.72 m/s but resolving to 3.10 m/s, with neighboring followers 0.71, 0.87 and 0.72 m away. Residual crowd/turn steering remains a cause of the separate pace failure.
-- These remaining failures are retained rather than changing targets, speed ceilings, observer thresholds or eligibility rules.
+Local control evidence: `test-results/r2-l4l5/baseline-control.json` and `.log`. The final diff contains **no L5 gameplay or test-fixture changes** relative to `7d2c9af`.
 
-## Final validation
+## Validation and remaining work
 
-- L5 `qa:accept --level L5 --tier both --skip-browser`: exit 1, **2 fresh failing rows / 9 incomplete rows**. Both formation-tolerance checks pass. Both complete routes finish; stationary controls reach tick budget. Both fixtures have 10 clauses / 0 errors; all 12 checkpoint clauses pass.
-- `npm run test:unit`: **107 tests / 27 files passed**, four workers.
-- `npm run verify -- E22`: passed typecheck, lint and **107 tests / 27 files**, with Vitest capped at 4 workers.
-- `npm run verify -- E23`: passed typecheck, lint and **107 tests / 27 files**, with Vitest capped at 4 workers.
-- Final L4 `qa:accept --level L4 --tier both --skip-browser`: **0 fresh failing rows / 14 incomplete rows**. Both complete routes finish; stationary controls reach tick budget. Both fixtures have 10 clauses / 0 errors; all 12 checkpoint clauses pass.
-- Final standalone `npm run qa:threat`: exit 1, **3 flags** (276.3 seconds). The **zero-flag requirement is not met**: `L5/step/look:SKILLED_BELOW_ATTACKS_PER_MINUTE_3`, `L5/step/look:SLOW_FOLLOWER:28`, and `L5/phase/search:SLOW_FOLLOWER:28`.
+- L4 full native admission probe: both routes complete; all announced windows meet three admissions; canonical final state hashes match. The L4 source files are unchanged since these measurements.
+- L4 `qa:accept --level L4 --tier both --skip-browser`: **0 fresh failing rows / 14 incomplete rows**. Both complete routes finish; stationary controls reach tick budget. Both fixtures have 10 clauses / 0 errors; all 12 checkpoint clauses pass.
+- Before L5 candidate removal, `npm run verify -- E22` and `-- E23` passed typecheck, lint and **107 tests / 27 files**, with four Vitest workers.
+- **After the L5 reversion**, `npm run test:unit` passes **107 tests / 27 files**, four workers.
+- The last full L5 acceptance and standalone threat audit apply to the **rejected candidate**: acceptance exited 1 (2 fresh failing rows / 9 incomplete rows); threat exited 1 with three L5 attack-rate/pace flags. They do not qualify the reverted final source.
+- Final-source L5 acceptance and standalone zero-flag threat qualification remain required. The baseline control is not a substitute for those full commands. The original 2.5-hour timebox ends at **09:54 UTC**; completing L5 and repeating its gates requires an extension.
 
-Final runtime source digest: `52e33a922e7bda962f711280d1d6b950ba5c9cc3f20db5c4f855e8483364cb98`.
-
-Commits: `fa1bcc1` initial slot centering; `e134902` L4 capacity reclamation; `b0996f2` final L5 formation; `f111973` steady-slot test fixture; `6d9066e` pending-conversion accounting correction. No specifications, protected references, captures, acceptance targets or thresholds were edited. No deploy or push.
+Retained fix commits: `e134902` L4 reclamation; `6d9066e` pending-conversion accounting. Rejected L5 candidate commits remain in history (`fa1bcc1`, `b0996f2`, `f111973`) and are undone by `789eeb7`. No specifications, protected references, captures, acceptance targets, observer eligibility rules or speed ceilings were changed. No deploy or push.
