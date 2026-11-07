@@ -5,14 +5,48 @@ import type { observeAttackStarts } from '../qa/threat/attackStarts';
  * path queries, gameplay writes or synthetic combat events. Runs in the page. */
 export function installAcceptanceLedger(observeStarts: typeof observeAttackStarts): void {
   type Step = { ticks: number; playerWindups: number; groupWindups: number; playerDamage: number; peakAlive: number };
-  type Record = { level: string; steps: { [id: string]: Step }; samples: unknown[]; events: unknown[]; audioCues: unknown[]; corpseLife?: unknown[]; corpseSamples?: unknown[]; l4Calm?: unknown[]; cellarAudio?: { voices: unknown[]; samples: unknown[] } };
+  type MarkerStart = { id: string; started: number; spatial: boolean; views: { zoom: number; firstObservedTick: number; firstVisibleTick: number | null; hud: string; hudVisible: boolean; pinVisible: boolean; worldMarkerVisible: boolean; pickupMarkerIds: number[] }[] };
+  type Record = { level: string; steps: { [id: string]: Step }; samples: unknown[]; events: unknown[]; audioCues: unknown[]; markerStarts?: MarkerStart[]; corpseLife?: unknown[]; corpseSamples?: unknown[]; l4Calm?: unknown[]; cellarAudio?: { voices: unknown[]; samples: unknown[] } };
   const root = window as unknown as { __SCENE__?: { game: Game }; __acceptanceInputLedger?: Record[] };
   const records: Record[] = root.__acceptanceInputLedger = [];
   let bound: Game['world']['missions'];
   const bind = () => {
     requestAnimationFrame(bind);
     const world = root.__SCENE__?.game.world, mission = world?.missions;
-    if (!world || !mission || mission === bound) return;
+    if (!world || !mission) return;
+    if (mission === bound) {
+      // Passive rendered-frame observation also runs while a photo pauses the
+      // simulation, so both requested zooms retain the actual step-start clock.
+      const record = records.at(-1)!, active = mission.def.steps.filter(def => mission.state.steps[def.id].status === 'active');
+      if (!active.length || active.every(def => record.markerStarts?.find(s => s.id === def.id && s.started === mission.state.steps[def.id].started)?.views.filter(v => v.firstVisibleTick !== null).length === 2)) return;
+      const presentation = root.__SCENE__!.game.view;
+      const markers = presentation as unknown as { marker?: { visible: boolean }; actions?: { pickups: Map<number, { visible: boolean; children: { isMesh?: boolean; visible: boolean }[] }> } };
+      const zoom = presentation.view.getState().zoom;
+      if (zoom === undefined || ![1, 1.5].some(z => Math.abs(z - zoom) < 1e-6)) return;
+      const visible = (node: HTMLElement | null) => !!node && !node.hidden && node.getClientRects().length > 0 && getComputedStyle(node).visibility !== 'hidden';
+      const hud = document.querySelector<HTMLElement>('[data-testid="objective-text"]');
+      const pin = document.querySelector<HTMLElement>('[data-testid="mission-marker"]');
+      for (const def of active) {
+        const step = mission.state.steps[def.id];
+        if (step.status !== 'active') continue;
+        const starts = record.markerStarts ??= [];
+        let start = starts.find(s => s.id === def.id && s.started === step.started);
+        if (!start) { start = { id: def.id, started: step.started, spatial: def.waypoint !== false && !!def.anchor, views: [] }; starts.push(start); }
+        let view = start.views.find(v => Math.abs(v.zoom - zoom) < 1e-6);
+        if (!view) { view = { zoom, firstObservedTick: world.tick, firstVisibleTick: null, hud: '', hudVisible: false, pinVisible: false, worldMarkerVisible: false, pickupMarkerIds: [] }; start.views.push(view); }
+        if (view.firstVisibleTick !== null) continue;
+        view.hud = hud?.textContent ?? ''; view.hudVisible = visible(hud);
+        view.pinVisible = visible(pin); view.worldMarkerVisible = !!markers.marker?.visible;
+        const anchor = mission.def.anchors[def.anchor];
+        view.pickupMarkerIds = anchor ? [...world.entities.iterate()].filter(e => {
+          if (!e.pickup || Math.hypot(e.transform.x - anchor.x, e.transform.z - anchor.z) > 2.2) return false;
+          const group = markers.actions?.pickups.get(e.id);
+          return group?.visible && group.children.some(c => c.isMesh && c.visible);
+        }).map(e => e.id) : [];
+        if (start.spatial ? view.pinVisible || view.worldMarkerVisible || view.pickupMarkerIds.length > 0 : view.hudVisible && !!view.hud.trim()) view.firstVisibleTick = world.tick;
+      }
+      return;
+    }
     bound = mission;
     const record: Record = { level: mission.def.id, steps: {}, samples: [], events: [], audioCues: [] }; records.push(record);
     // G-14: logical dead identities include sleeping streamed records. A
