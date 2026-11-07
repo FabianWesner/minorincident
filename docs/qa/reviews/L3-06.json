@@ -14,28 +14,28 @@
   "evidence": [
     {
       "file": "docs/reports/final-a/L3-06-native.json",
-      "sha256": "6f86c3820a51ab07cdb218519a3f4af8f157c04994fb1fa81b47b1ad4a656e76",
+      "sha256": "8f97b502ec1fa86b39488166b490ebbeaf931521ecc53658b4da4acd27cf1cbc",
       "what": "low/controlled-fixture calm squad following distance by member: [{\"id\":31,\"samples\":20,\"within3to6\":20,\"minM\":4.153436653198363,\"medianM\":4.38632285721454,\"maxM\":4.918941595084811},{\"id\":32,\"samples\":20,\"within3to6\":20,\"minM\":3.8428412273744765,\"medianM\":4.386336376347121,\"maxM\":5.292343323711613},{\"id\":33,\"samples\":20,\"within3to6\":19,\"minM\":5.039442021567916,\"medianM\":5.314123378540392,\"maxM\":6.141181316260594}]; target every sampled living officer follows 3–6 m from the courier outside combat (FAIL)"
     },
     {
-      "file": "docs/reports/fix51-verify/receipts/L3-low-complete.json",
-      "sha256": "26aa4ed49dfbfcdf86a690bc83d902a5c8b9b4c93933f99d67484a55c70a971a",
-      "what": "Frozen-head L3-06 native input receipt, evaluated by the exact clauses retained in the row proof."
+      "file": "docs/reports/final-a/native-receipts/L3-low-complete.json.gz",
+      "sha256": "81ae6486e8fab6d955d04751cb09cce2159e3b986d19198ff720988e54c8b0b7",
+      "what": "Frozen-head L3-06 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
     },
     {
-      "file": "docs/reports/fix51-verify/receipts/L3-high-complete.json",
-      "sha256": "f62f48629e8a32b71b162b49eb6d4f0a9cfb7cc46cbbd97a141e6e39bf3d89b1",
-      "what": "Frozen-head L3-06 native input receipt, evaluated by the exact clauses retained in the row proof."
+      "file": "docs/reports/final-a/native-receipts/L3-high-complete.json.gz",
+      "sha256": "d976b4c6b69eda34c20121ae9cb96e8a3cdd6a07fac104fba0b26e56fd8755c0",
+      "what": "Frozen-head L3-06 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
     },
     {
-      "file": "docs/reports/fix51-verify/receipts/L3-low-fixtures.json",
-      "sha256": "1dbb6554d364c1372e298abab060319623af1f8871fbd2e7e24dad1a1382d0cc",
-      "what": "Frozen-head L3-06 native input receipt, evaluated by the exact clauses retained in the row proof."
+      "file": "docs/reports/final-a/native-receipts/L3-low-fixtures.json.gz",
+      "sha256": "5bb7a9d05574c189a8bec9fe20a06b1a7988f48a3175a8841aef1fa147209724",
+      "what": "Frozen-head L3-06 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
     },
     {
-      "file": "docs/reports/fix51-verify/receipts/L3-high-fixtures.json",
-      "sha256": "e4dd4c36be5c14615ed61548e5c0cb95e00a5363f1741e70547ed354a08a8086",
-      "what": "Frozen-head L3-06 native input receipt, evaluated by the exact clauses retained in the row proof."
+      "file": "docs/reports/final-a/native-receipts/L3-high-fixtures.json.gz",
+      "sha256": "87d97237be8ee7ecb0019d923692b5c60332643dfee8640b4274c1c5727fe14c",
+      "what": "Frozen-head L3-06 native input receipt, evaluated by the exact clauses retained in the row proof. Immutable gzip snapshot; canonical path and decoded SHA are retained in the row proof."
     }
   ],
   "notes": "A measured failing clause establishes whole-row FAIL; remaining manual clauses are not asserted to pass. Game source unchanged from frozen head.",
