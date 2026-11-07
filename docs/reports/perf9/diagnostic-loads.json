@@ -1,0 +1,2426 @@
+[
+  {
+    "side": "prod",
+    "level": "L7",
+    "tier": "high",
+    "backend": "webgpu",
+    "temperature": "cold",
+    "measuredAt": "2026-11-07T14:52:57.916Z",
+    "errors": [],
+    "ms": 2862.699999809265,
+    "start": 1290.8000001907349,
+    "shown": 1293.1999998092651,
+    "done": 4153.5,
+    "stages": [
+      {
+        "at": 2.3999996185302734,
+        "text": "Level 7 \u00b7 The Ruined CityNight. While you were underground, Fairhaven was overrun. A wrecked army truck by the exit still holds a rocket launcher. Blast a way through for the survivors to the evacuation bus at the city edge.Loading neighborhood\u2026Try again"
+      },
+      {
+        "at": 19,
+        "text": "Level 7 \u00b7 The Ruined CityNight. While you were underground, Fairhaven was overrun. A wrecked army truck by the exit still holds a rocket launcher. Blast a way through for the survivors to the evacuation bus at the city edge.Building the neighborhood\u2026Try again"
+      },
+      {
+        "at": 429.19999980926514,
+        "text": "Level 7 \u00b7 The Ruined CityNight. While you were underground, Fairhaven was overrun. A wrecked army truck by the exit still holds a rocket launcher. Blast a way through for the survivors to the evacuation bus at the city edge.Loading assets\u2026Try again"
+      },
+      {
+        "at": 1157.3999996185303,
+        "text": "Level 7 \u00b7 The Ruined CityNight. While you were underground, Fairhaven was overrun. A wrecked army truck by the exit still holds a rocket launcher. Blast a way through for the survivors to the evacuation bus at the city edge.Preparing the scene\u2026Try again"
+      },
+      {
+        "at": 2754.6000003814697,
+        "text": "Level 7 \u00b7 The Ruined CityNight. While you were underground, Fairhaven was overrun. A wrecked army truck by the exit still holds a rocket launcher. Blast a way through for the survivors to the evacuation bus at the city edge.Preparing sound\u2026Try again"
+      }
+    ],
+    "loadMeasures": [
+      {
+        "name": "view:actors",
+        "startTime": 428.1000003814697,
+        "duration": 62.5
+      },
+      {
+        "name": "view:lod-ready",
+        "startTime": 490.6000003814697,
+        "duration": 5.09999942779541
+      },
+      {
+        "name": "view:warm-up",
+        "startTime": 495.69999980926514,
+        "duration": 151.60000038146973
+      },
+      {
+        "name": "level:layouts",
+        "startTime": 1305.6000003814697,
+        "duration": 4.09999942779541
+      },
+      {
+        "name": "transition:L7:first-frame",
+        "startTime": 1305.6000003814697,
+        "duration": 2847.800000190735
+      },
+      {
+        "name": "level:sim",
+        "startTime": 1309.6999998092651,
+        "duration": 293.80000019073486
+      },
+      {
+        "name": "level:boot-audio-wait",
+        "startTime": 1309.8000001907349,
+        "duration": 0
+      },
+      {
+        "name": "level:world+nav",
+        "startTime": 1312.1999998092651,
+        "duration": 252.9000005722046
+      },
+      {
+        "name": "level:mission+cast",
+        "startTime": 1565.1000003814697,
+        "duration": 28
+      },
+      {
+        "name": "level:physics-prepare",
+        "startTime": 1593.1000003814697,
+        "duration": 10.199999809265137
+      },
+      {
+        "name": "level:view",
+        "startTime": 1603.5,
+        "duration": 2441.1000003814697
+      },
+      {
+        "name": "view:districts+character",
+        "startTime": 1615.9000005722046,
+        "duration": 694.7999992370605
+      },
+      {
+        "name": "view:civilian-crowd",
+        "startTime": 1633.4000005722046,
+        "duration": 617.8999996185303
+      },
+      {
+        "name": "view:infected-crowd",
+        "startTime": 1633.8000001907349,
+        "duration": 86.30000019073486
+      },
+      {
+        "name": "bake:inf.cashier:lod2",
+        "startTime": 2148.800000190735,
+        "duration": 0
+      },
+      {
+        "name": "bake:inf.common-worker:lod2",
+        "startTime": 2171.1000003814697,
+        "duration": 0
+      },
+      {
+        "name": "bake:inf.suburban-mom:lod2",
+        "startTime": 2176.300000190735,
+        "duration": 0
+      },
+      {
+        "name": "bake:inf.alpha-suit:lod0",
+        "startTime": 2183.9000005722046,
+        "duration": 0
+      },
+      {
+        "name": "bake:inf.alpha:lod0",
+        "startTime": 2195.300000190735,
+        "duration": 0
+      },
+      {
+        "name": "bake:inf.jogger:lod2",
+        "startTime": 2223.300000190735,
+        "duration": 0
+      },
+      {
+        "name": "bake:inf.bathrobe-neighbor:lod2",
+        "startTime": 2255.800000190735,
+        "duration": 0
+      },
+      {
+        "name": "bake:inf.bbq-dad:lod2",
+        "startTime": 2263.800000190735,
+        "duration": 0
+      },
+      {
+        "name": "bake:inf.delivery-driver:lod2",
+        "startTime": 2270.6000003814697,
+        "duration": 0
+      },
+      {
+        "name": "view:actors",
+        "startTime": 2325.6000003814697,
+        "duration": 46
+      },
+      {
+        "name": "bake:inf.alpha-suit:lod2",
+        "startTime": 2327.1000003814697,
+        "duration": 0
+      },
+      {
+        "name": "view:lod-ready",
+        "startTime": 2371.6000003814697,
+        "duration": 51.30000019073486
+      },
+      {
+        "name": "view:warm-up",
+        "startTime": 2422.9000005722046,
+        "duration": 1565.0999994277954
+      },
+      {
+        "name": "Texture atlas upload",
+        "startTime": 2427,
+        "duration": 10.300000190734863
+      },
+      {
+        "name": "L1 warm-up chunks",
+        "startTime": 2427,
+        "duration": 1294.1000003814697
+      },
+      {
+        "name": "L1 shader compilation",
+        "startTime": 2437.5,
+        "duration": 1107.6000003814697
+      },
+      {
+        "name": "L1 warm-up draw",
+        "startTime": 3724.4000005722046,
+        "duration": 46
+      },
+      {
+        "name": "L1 driver warm-up",
+        "startTime": 3724.4000005722046,
+        "duration": 78.79999923706055
+      },
+      {
+        "name": "L1 warm-up instanced draw",
+        "startTime": 3770.4000005722046,
+        "duration": 32.79999923706055
+      },
+      {
+        "name": "L1 warm-up solo draws",
+        "startTime": 3803.199999809265,
+        "duration": 0
+      },
+      {
+        "name": "Texture atlas upload",
+        "startTime": 3804.699999809265,
+        "duration": 2.3000001907348633
+      },
+      {
+        "name": "L1 warm-up chunks",
+        "startTime": 3804.699999809265,
+        "duration": 64.40000057220459
+      },
+      {
+        "name": "L1 shader compilation",
+        "startTime": 3807,
+        "duration": 38.60000038146973
+      },
+      {
+        "name": "L1 warm-up draw",
+        "startTime": 3872,
+        "duration": 32.80000019073486
+      },
+      {
+        "name": "L1 driver warm-up",
+        "startTime": 3872,
+        "duration": 65
+      },
+      {
+        "name": "L1 warm-up instanced draw",
+        "startTime": 3904.800000190735,
+        "duration": 32.19999980926514
+      },
+      {
+        "name": "L1 warm-up solo draws",
+        "startTime": 3937,
+        "duration": 0
+      },
+      {
+        "name": "L1 shader compilation",
+        "startTime": 3953.199999809265,
+        "duration": 6.800000190734863
+      },
+      {
+        "name": "L1 warm-up draw",
+        "startTime": 3960,
+        "duration": 10.699999809265137
+      },
+      {
+        "name": "L1 driver warm-up",
+        "startTime": 3960,
+        "duration": 28
+      },
+      {
+        "name": "L1 warm-up instanced draw",
+        "startTime": 3970.699999809265,
+        "duration": 17.300000190734863
+      },
+      {
+        "name": "L1 warm-up solo draws",
+        "startTime": 3988,
+        "duration": 0
+      },
+      {
+        "name": "level:audio",
+        "startTime": 4044.6000003814697,
+        "duration": 0.8000001907348633
+      },
+      {
+        "name": "level:hud",
+        "startTime": 4051.1000003814697,
+        "duration": 7.199999809265137
+      }
+    ],
+    "quality": "high",
+    "bundle": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+    "begin": false,
+    "contexts": [
+      "webgpu",
+      "webgpu",
+      "webgpu",
+      "2d",
+      "webgpu",
+      "webgpu",
+      "webgpu",
+      "webgpu",
+      "webgpu"
+    ],
+    "adapter": {
+      "vendor": "apple",
+      "architecture": "metal-3",
+      "description": "",
+      "fallback": false
+    },
+    "glRenderer": null,
+    "diagnostic": true,
+    "rawSource": "test-results/perf9/diagnostic/fixed-1-L7-load/loads/L7.json",
+    "rawSha256": "0d3c3e57c58190b5cffaf80cdd2304ba91718f79d576295162e03208593e6a05",
+    "networkCount": 285,
+    "networkStatuses": {
+      "200": 285
+    }
+  },
+  {
+    "side": "prod",
+    "level": "L7",
+    "tier": "high",
+    "backend": "webgpu",
+    "temperature": "warm",
+    "measuredAt": "2026-11-07T14:53:01.966Z",
+    "errors": [],
+    "ms": 2720.800000190735,
+    "start": 1068.0999994277954,
+    "shown": 1069.6999998092651,
+    "done": 3788.8999996185303,
+    "stages": [
+      {
+        "at": 1.6000003814697266,
+        "text": "Level 7 \u00b7 The Ruined CityNight. While you were underground, Fairhaven was overrun. A wrecked army truck by the exit still holds a rocket launcher. Blast a way through for the survivors to the evacuation bus at the city edge.Loading neighborhood\u2026Try again"
+      },
+      {
+        "at": 11.700000762939453,
+        "text": "Level 7 \u00b7 The Ruined CityNight. While you were underground, Fairhaven was overrun. A wrecked army truck by the exit still holds a rocket launcher. Blast a way through for the survivors to the evacuation bus at the city edge.Building the neighborhood\u2026Try again"
+      },
+      {
+        "at": 363.6000003814697,
+        "text": "Level 7 \u00b7 The Ruined CityNight. While you were underground, Fairhaven was overrun. A wrecked army truck by the exit still holds a rocket launcher. Blast a way through for the survivors to the evacuation bus at the city edge.Loading assets\u2026Try again"
+      },
+      {
+        "at": 1019.7000007629395,
+        "text": "Level 7 \u00b7 The Ruined CityNight. While you were underground, Fairhaven was overrun. A wrecked army truck by the exit still holds a rocket launcher. Blast a way through for the survivors to the evacuation bus at the city edge.Preparing the scene\u2026Try again"
+      },
+      {
+        "at": 2613.1000003814697,
+        "text": "Level 7 \u00b7 The Ruined CityNight. While you were underground, Fairhaven was overrun. A wrecked army truck by the exit still holds a rocket launcher. Blast a way through for the survivors to the evacuation bus at the city edge.Preparing sound\u2026Try again"
+      }
+    ],
+    "loadMeasures": [
+      {
+        "name": "view:actors",
+        "startTime": 210.80000019073486,
+        "duration": 50.29999923706055
+      },
+      {
+        "name": "view:lod-ready",
+        "startTime": 261.0999994277954,
+        "duration": 3.700000762939453
+      },
+      {
+        "name": "view:warm-up",
+        "startTime": 264.80000019073486,
+        "duration": 127.89999961853027
+      },
+      {
+        "name": "level:layouts",
+        "startTime": 1072.1999998092651,
+        "duration": 7.5
+      },
+      {
+        "name": "transition:L7:first-frame",
+        "startTime": 1072.1999998092651,
+        "duration": 2716.6000003814697
+      },
+      {
+        "name": "level:boot-audio-wait",
+        "startTime": 1079.6999998092651,
+        "duration": 0.10000038146972656
+      },
+      {
+        "name": "level:sim",
+        "startTime": 1079.6999998092651,
+        "duration": 251.80000019073486
+      },
+      {
+        "name": "level:world+nav",
+        "startTime": 1080.8999996185303,
+        "duration": 226.80000019073486
+      },
+      {
+        "name": "level:mission+cast",
+        "startTime": 1307.6999998092651,
+        "duration": 21.800000190734863
+      },
+      {
+        "name": "level:physics-prepare",
+        "startTime": 1329.5,
+        "duration": 2
+      },
+      {
+        "name": "level:view",
+        "startTime": 1331.5,
+        "duration": 2349
+      },
+      {
+        "name": "view:districts+character",
+        "startTime": 1341.5,
+        "duration": 629.5999994277954
+      },
+      {
+        "name": "view:civilian-crowd",
+        "startTime": 1351.3999996185303,
+        "duration": 570.9000005722046
+      },
+      {
+        "name": "view:infected-crowd",
+        "startTime": 1351.5999994277954,
+        "duration": 80.20000076293945
+      },
+      {
+        "name": "bake:inf.suburban-mom:lod2",
+        "startTime": 1831.0999994277954,
+        "duration": 0
+      },
+      {
+        "name": "bake:inf.cashier:lod2",
+        "startTime": 1851.1999998092651,
+        "duration": 0
+      },
+      {
+        "name": "bake:inf.alpha-suit:lod0",
+        "startTime": 1859.3000001907349,
+        "duration": 0
+      },
+      {
+        "name": "bake:inf.common-worker:lod2",
+        "startTime": 1868.5999994277954,
+        "duration": 0
+      },
+      {
+        "name": "bake:inf.alpha:lod0",
+        "startTime": 1871.5,
+        "duration": 0
+      },
+      {
+        "name": "bake:inf.jogger:lod2",
+        "startTime": 1912,
+        "duration": 0.09999942779541016
+      },
+      {
+        "name": "bake:inf.bathrobe-neighbor:lod2",
+        "startTime": 1925.3999996185303,
+        "duration": 0
+      },
+      {
+        "name": "bake:inf.delivery-driver:lod2",
+        "startTime": 1934.6999998092651,
+        "duration": 0
+      },
+      {
+        "name": "bake:inf.bbq-dad:lod2",
+        "startTime": 1942.3999996185303,
+        "duration": 0
+      },
+      {
+        "name": "bake:inf.alpha-suit:lod2",
+        "startTime": 1954.8000001907349,
+        "duration": 0
+      },
+      {
+        "name": "view:actors",
+        "startTime": 1985.6999998092651,
+        "duration": 31
+      },
+      {
+        "name": "view:lod-ready",
+        "startTime": 2016.6999998092651,
+        "duration": 49.30000019073486
+      },
+      {
+        "name": "view:warm-up",
+        "startTime": 2066,
+        "duration": 1556
+      },
+      {
+        "name": "Texture atlas upload",
+        "startTime": 2069.300000190735,
+        "duration": 8.59999942779541
+      },
+      {
+        "name": "L1 warm-up chunks",
+        "startTime": 2069.300000190735,
+        "duration": 1267.8999996185303
+      },
+      {
+        "name": "L1 shader compilation",
+        "startTime": 2078,
+        "duration": 1086.6999998092651
+      },
+      {
+        "name": "L1 warm-up draw",
+        "startTime": 3337.8999996185303,
+        "duration": 34.30000019073486
+      },
+      {
+        "name": "L1 driver warm-up",
+        "startTime": 3337.8999996185303,
+        "duration": 67.30000019073486
+      },
+      {
+        "name": "L1 warm-up instanced draw",
+        "startTime": 3372.199999809265,
+        "duration": 33
+      },
+      {
+        "name": "L1 warm-up solo draws",
+        "startTime": 3405.199999809265,
+        "duration": 0
+      },
+      {
+        "name": "Texture atlas upload",
+        "startTime": 3406.800000190735,
+        "duration": 2.1999998092651367
+      },
+      {
+        "name": "L1 warm-up chunks",
+        "startTime": 3406.800000190735,
+        "duration": 63.09999942779541
+      },
+      {
+        "name": "L1 shader compilation",
+        "startTime": 3409.0999994277954,
+        "duration": 37.30000019073486
+      },
+      {
+        "name": "L1 warm-up draw",
+        "startTime": 3472.5999994277954,
+        "duration": 16.600000381469727
+      },
+      {
+        "name": "L1 driver warm-up",
+        "startTime": 3472.5999994277954,
+        "duration": 49.30000019073486
+      },
+      {
+        "name": "L1 warm-up instanced draw",
+        "startTime": 3489.199999809265,
+        "duration": 32.69999980926514
+      },
+      {
+        "name": "L1 warm-up solo draws",
+        "startTime": 3521.8999996185303,
+        "duration": 0
+      },
+      {
+        "name": "L1 shader compilation",
+        "startTime": 3539,
+        "duration": 45.69999980926514
+      },
+      {
+        "name": "L1 warm-up draw",
+        "startTime": 3584.699999809265,
+        "duration": 20.699999809265137
+      },
+      {
+        "name": "L1 driver warm-up",
+        "startTime": 3584.699999809265,
+        "duration": 37.19999980926514
+      },
+      {
+        "name": "L1 warm-up instanced draw",
+        "startTime": 3605.3999996185303,
+        "duration": 16.5
+      },
+      {
+        "name": "L1 warm-up solo draws",
+        "startTime": 3621.8999996185303,
+        "duration": 0
+      },
+      {
+        "name": "level:audio",
+        "startTime": 3680.5,
+        "duration": 0.6999998092651367
+      },
+      {
+        "name": "level:hud",
+        "startTime": 3686.3999996185303,
+        "duration": 3.90000057220459
+      }
+    ],
+    "quality": "high",
+    "bundle": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+    "begin": false,
+    "contexts": [
+      "webgpu",
+      "webgpu",
+      "webgpu",
+      "2d",
+      "webgpu",
+      "webgpu",
+      "webgpu",
+      "webgpu",
+      "webgpu"
+    ],
+    "adapter": {
+      "vendor": "apple",
+      "architecture": "metal-3",
+      "description": "",
+      "fallback": false
+    },
+    "glRenderer": null,
+    "diagnostic": true,
+    "rawSource": "test-results/perf9/diagnostic/fixed-1-L7-load/loads/L7.json",
+    "rawSha256": "0d3c3e57c58190b5cffaf80cdd2304ba91718f79d576295162e03208593e6a05",
+    "networkCount": 298,
+    "networkStatuses": {
+      "200": 295,
+      "304": 3
+    }
+  },
+  {
+    "side": "candidate",
+    "level": "L7",
+    "tier": "high",
+    "backend": "webgpu",
+    "temperature": "cold",
+    "measuredAt": "2026-11-07T14:53:07.002Z",
+    "errors": [],
+    "ms": 3528.199999809265,
+    "start": 1177.8000001907349,
+    "shown": 1180.5,
+    "done": 4706,
+    "stages": [
+      {
+        "at": 2.6999998092651367,
+        "text": "Level 7 \u00b7 The Ruined CityNight. While you were underground, Fairhaven was overrun. A wrecked army truck by the exit still holds a rocket launcher. Blast a way through for the survivors to the evacuation bus at the city edge.Loading neighborhood\u2026Try again"
+      },
+      {
+        "at": 15.799999237060547,
+        "text": "Level 7 \u00b7 The Ruined CityNight. While you were underground, Fairhaven was overrun. A wrecked army truck by the exit still holds a rocket launcher. Blast a way through for the survivors to the evacuation bus at the city edge.Building the neighborhood\u2026Try again"
+      },
+      {
+        "at": 429.0999994277954,
+        "text": "Level 7 \u00b7 The Ruined CityNight. While you were underground, Fairhaven was overrun. A wrecked army truck by the exit still holds a rocket launcher. Blast a way through for the survivors to the evacuation bus at the city edge.Loading assets\u2026Try again"
+      },
+      {
+        "at": 1424.0999994277954,
+        "text": "Level 7 \u00b7 The Ruined CityNight. While you were underground, Fairhaven was overrun. A wrecked army truck by the exit still holds a rocket launcher. Blast a way through for the survivors to the evacuation bus at the city edge.Preparing the scene\u2026Try again"
+      },
+      {
+        "at": 3352.7999992370605,
+        "text": "Level 7 \u00b7 The Ruined CityNight. While you were underground, Fairhaven was overrun. A wrecked army truck by the exit still holds a rocket launcher. Blast a way through for the survivors to the evacuation bus at the city edge.Preparing sound\u2026Try again"
+      }
+    ],
+    "loadMeasures": [
+      {
+        "name": "view:actors",
+        "startTime": 267.80000019073486,
+        "duration": 54
+      },
+      {
+        "name": "view:lod-ready",
+        "startTime": 321.80000019073486,
+        "duration": 5.09999942779541
+      },
+      {
+        "name": "view:warm-up",
+        "startTime": 326.8999996185303,
+        "duration": 136.69999980926514
+      },
+      {
+        "name": "level:layouts",
+        "startTime": 1189.8000001907349,
+        "duration": 3.799999237060547
+      },
+      {
+        "name": "transition:L7:first-frame",
+        "startTime": 1189.8000001907349,
+        "duration": 3516.199999809265
+      },
+      {
+        "name": "level:boot-audio-wait",
+        "startTime": 1193.5999994277954,
+        "duration": 0
+      },
+      {
+        "name": "level:sim",
+        "startTime": 1193.5999994277954,
+        "duration": 295.70000076293945
+      },
+      {
+        "name": "level:world+nav",
+        "startTime": 1195.6999998092651,
+        "duration": 251.80000019073486
+      },
+      {
+        "name": "level:mission+cast",
+        "startTime": 1447.5,
+        "duration": 32.09999942779541
+      },
+      {
+        "name": "level:physics-prepare",
+        "startTime": 1479.5999994277954,
+        "duration": 9.600000381469727
+      },
+      {
+        "name": "level:view",
+        "startTime": 1489.3000001907349,
+        "duration": 3040.2999992370605
+      },
+      {
+        "name": "view:districts+character",
+        "startTime": 1501.8999996185303,
+        "duration": 862.4000005722046
+      },
+      {
+        "name": "view:civilian-crowd",
+        "startTime": 1520.8000001907349,
+        "duration": 946.0999994277954
+      },
+      {
+        "name": "view:infected-crowd",
+        "startTime": 1521.1999998092651,
+        "duration": 85.80000019073486
+      },
+      {
+        "name": "bake:inf.common-worker:lod2",
+        "startTime": 2149.0999994277954,
+        "duration": 0
+      },
+      {
+        "name": "bake:inf.common-worker:lod1",
+        "startTime": 2159.5999994277954,
+        "duration": 0
+      },
+      {
+        "name": "bake:inf.alpha:lod0",
+        "startTime": 2170.800000190735,
+        "duration": 0
+      },
+      {
+        "name": "bake:inf.common-worker:lod0",
+        "startTime": 2179.199999809265,
+        "duration": 0
+      },
+      {
+        "name": "bake:inf.alpha:lod1",
+        "startTime": 2215.8999996185303,
+        "duration": 0.10000038146972656
+      },
+      {
+        "name": "bake:inf.alpha:lod2",
+        "startTime": 2220.199999809265,
+        "duration": 0
+      },
+      {
+        "name": "bake:inf.alpha-suit:lod0",
+        "startTime": 2221.800000190735,
+        "duration": 0
+      },
+      {
+        "name": "bake:inf.alpha-suit:lod1",
+        "startTime": 2230.5,
+        "duration": 0
+      },
+      {
+        "name": "bake:inf.alpha-suit:lod2",
+        "startTime": 2266.800000190735,
+        "duration": 0
+      },
+      {
+        "name": "view:actors",
+        "startTime": 2385.5999994277954,
+        "duration": 120.10000038146973
+      },
+      {
+        "name": "view:lod-ready",
+        "startTime": 2505.699999809265,
+        "duration": 51.80000019073486
+      },
+      {
+        "name": "view:warm-up",
+        "startTime": 2557.5,
+        "duration": 1914.5
+      },
+      {
+        "name": "Texture atlas upload",
+        "startTime": 2561.699999809265,
+        "duration": 26.100000381469727
+      },
+      {
+        "name": "L1 warm-up chunks",
+        "startTime": 2561.699999809265,
+        "duration": 1636.1000003814697
+      },
+      {
+        "name": "L1 shader compilation",
+        "startTime": 2588,
+        "duration": 1246
+      },
+      {
+        "name": "L1 warm-up draw",
+        "startTime": 4199.099999427795,
+        "duration": 40.30000019073486
+      },
+      {
+        "name": "L1 driver warm-up",
+        "startTime": 4199.099999427795,
+        "duration": 73.5
+      },
+      {
+        "name": "L1 warm-up instanced draw",
+        "startTime": 4239.39999961853,
+        "duration": 33.19999980926514
+      },
+      {
+        "name": "L1 warm-up solo draws",
+        "startTime": 4272.599999427795,
+        "duration": 0
+      },
+      {
+        "name": "Texture atlas upload",
+        "startTime": 4274.199999809265,
+        "duration": 2.1999998092651367
+      },
+      {
+        "name": "L1 warm-up chunks",
+        "startTime": 4274.199999809265,
+        "duration": 83.10000038146973
+      },
+      {
+        "name": "L1 shader compilation",
+        "startTime": 4276.39999961853,
+        "duration": 47
+      },
+      {
+        "name": "L1 warm-up draw",
+        "startTime": 4357.89999961853,
+        "duration": 31.5
+      },
+      {
+        "name": "L1 driver warm-up",
+        "startTime": 4357.89999961853,
+        "duration": 64.90000057220459
+      },
+      {
+        "name": "L1 warm-up instanced draw",
+        "startTime": 4389.39999961853,
+        "duration": 33.40000057220459
+      },
+      {
+        "name": "L1 warm-up solo draws",
+        "startTime": 4422.800000190735,
+        "duration": 0
+      },
+      {
+        "name": "L1 shader compilation",
+        "startTime": 4439.800000190735,
+        "duration": 6
+      },
+      {
+        "name": "L1 warm-up draw",
+        "startTime": 4445.800000190735,
+        "duration": 9.09999942779541
+      },
+      {
+        "name": "L1 driver warm-up",
+        "startTime": 4445.800000190735,
+        "duration": 26
+      },
+      {
+        "name": "L1 warm-up instanced draw",
+        "startTime": 4454.89999961853,
+        "duration": 16.90000057220459
+      },
+      {
+        "name": "L1 warm-up solo draws",
+        "startTime": 4471.800000190735,
+        "duration": 0
+      },
+      {
+        "name": "level:audio",
+        "startTime": 4529.599999427795,
+        "duration": 57.60000038146973
+      },
+      {
+        "name": "level:hud",
+        "startTime": 4595.5,
+        "duration": 6.09999942779541
+      }
+    ],
+    "quality": "high",
+    "bundle": "http://127.0.0.1:4901/build/index-QNcw6d5J.js",
+    "begin": false,
+    "contexts": [
+      "webgpu",
+      "webgpu",
+      "webgpu",
+      "2d",
+      "webgpu",
+      "webgpu",
+      "webgpu",
+      "webgpu",
+      "webgpu"
+    ],
+    "adapter": {
+      "vendor": "apple",
+      "architecture": "metal-3",
+      "description": "",
+      "fallback": false
+    },
+    "glRenderer": null,
+    "diagnostic": true,
+    "rawSource": "test-results/perf9/diagnostic/fixed-1-L7-load/loads/L7.json",
+    "rawSha256": "0d3c3e57c58190b5cffaf80cdd2304ba91718f79d576295162e03208593e6a05",
+    "networkCount": 352,
+    "networkStatuses": {
+      "200": 352
+    }
+  },
+  {
+    "side": "candidate",
+    "level": "L7",
+    "tier": "high",
+    "backend": "webgpu",
+    "temperature": "warm",
+    "measuredAt": "2026-11-07T14:53:11.810Z",
+    "errors": [],
+    "ms": 3421.5,
+    "start": 1161,
+    "shown": 1162.3999996185303,
+    "done": 4582.5,
+    "stages": [
+      {
+        "at": 1.3999996185302734,
+        "text": "Level 7 \u00b7 The Ruined CityNight. While you were underground, Fairhaven was overrun. A wrecked army truck by the exit still holds a rocket launcher. Blast a way through for the survivors to the evacuation bus at the city edge.Loading neighborhood\u2026Try again"
+      },
+      {
+        "at": 11,
+        "text": "Level 7 \u00b7 The Ruined CityNight. While you were underground, Fairhaven was overrun. A wrecked army truck by the exit still holds a rocket launcher. Blast a way through for the survivors to the evacuation bus at the city edge.Building the neighborhood\u2026Try again"
+      },
+      {
+        "at": 378.5999994277954,
+        "text": "Level 7 \u00b7 The Ruined CityNight. While you were underground, Fairhaven was overrun. A wrecked army truck by the exit still holds a rocket launcher. Blast a way through for the survivors to the evacuation bus at the city edge.Loading assets\u2026Try again"
+      },
+      {
+        "at": 1324,
+        "text": "Level 7 \u00b7 The Ruined CityNight. While you were underground, Fairhaven was overrun. A wrecked army truck by the exit still holds a rocket launcher. Blast a way through for the survivors to the evacuation bus at the city edge.Preparing the scene\u2026Try again"
+      },
+      {
+        "at": 3259.3999996185303,
+        "text": "Level 7 \u00b7 The Ruined CityNight. While you were underground, Fairhaven was overrun. A wrecked army truck by the exit still holds a rocket launcher. Blast a way through for the survivors to the evacuation bus at the city edge.Preparing sound\u2026Try again"
+      }
+    ],
+    "loadMeasures": [
+      {
+        "name": "view:actors",
+        "startTime": 191,
+        "duration": 50.5
+      },
+      {
+        "name": "view:lod-ready",
+        "startTime": 241.5,
+        "duration": 3.8999996185302734
+      },
+      {
+        "name": "view:warm-up",
+        "startTime": 245.39999961853027,
+        "duration": 126.60000038146973
+      },
+      {
+        "name": "level:layouts",
+        "startTime": 1165.3000001907349,
+        "duration": 6.59999942779541
+      },
+      {
+        "name": "transition:L7:first-frame",
+        "startTime": 1165.3000001907349,
+        "duration": 3417.199999809265
+      },
+      {
+        "name": "level:sim",
+        "startTime": 1171.8999996185303,
+        "duration": 266.30000019073486
+      },
+      {
+        "name": "level:boot-audio-wait",
+        "startTime": 1172,
+        "duration": 0
+      },
+      {
+        "name": "level:world+nav",
+        "startTime": 1173,
+        "duration": 237
+      },
+      {
+        "name": "level:mission+cast",
+        "startTime": 1410,
+        "duration": 26.199999809265137
+      },
+      {
+        "name": "level:physics-prepare",
+        "startTime": 1436.1999998092651,
+        "duration": 2
+      },
+      {
+        "name": "level:view",
+        "startTime": 1438.1999998092651,
+        "duration": 2981.6000003814697
+      },
+      {
+        "name": "view:districts+character",
+        "startTime": 1448.3999996185303,
+        "duration": 786.6999998092651
+      },
+      {
+        "name": "view:civilian-crowd",
+        "startTime": 1457.3999996185303,
+        "duration": 897.5
+      },
+      {
+        "name": "view:infected-crowd",
+        "startTime": 1457.5999994277954,
+        "duration": 82.10000038146973
+      },
+      {
+        "name": "bake:inf.common-worker:lod1",
+        "startTime": 2074.8999996185303,
+        "duration": 0.10000038146972656
+      },
+      {
+        "name": "bake:inf.common-worker:lod2",
+        "startTime": 2097,
+        "duration": 0.09999942779541016
+      },
+      {
+        "name": "bake:inf.alpha:lod0",
+        "startTime": 2101.3999996185303,
+        "duration": 0
+      },
+      {
+        "name": "bake:inf.common-worker:lod0",
+        "startTime": 2115.5999994277954,
+        "duration": 0
+      },
+      {
+        "name": "bake:inf.alpha:lod1",
+        "startTime": 2140.699999809265,
+        "duration": 0
+      },
+      {
+        "name": "bake:inf.alpha:lod2",
+        "startTime": 2155.300000190735,
+        "duration": 0
+      },
+      {
+        "name": "bake:inf.alpha-suit:lod0",
+        "startTime": 2160.5,
+        "duration": 0
+      },
+      {
+        "name": "bake:inf.alpha-suit:lod1",
+        "startTime": 2168.5999994277954,
+        "duration": 0
+      },
+      {
+        "name": "bake:inf.alpha-suit:lod2",
+        "startTime": 2175.5,
+        "duration": 0
+      },
+      {
+        "name": "view:actors",
+        "startTime": 2253.300000190735,
+        "duration": 139.69999980926514
+      },
+      {
+        "name": "view:lod-ready",
+        "startTime": 2393,
+        "duration": 47.89999961853027
+      },
+      {
+        "name": "view:warm-up",
+        "startTime": 2440.8999996185303,
+        "duration": 1923.1000003814697
+      },
+      {
+        "name": "Texture atlas upload",
+        "startTime": 2444.3999996185303,
+        "duration": 24.90000057220459
+      },
+      {
+        "name": "L1 warm-up chunks",
+        "startTime": 2444.3999996185303,
+        "duration": 1642.6999998092651
+      },
+      {
+        "name": "L1 shader compilation",
+        "startTime": 2469.300000190735,
+        "duration": 1254.0999994277954
+      },
+      {
+        "name": "L1 warm-up draw",
+        "startTime": 4087.800000190735,
+        "duration": 44.79999923706055
+      },
+      {
+        "name": "L1 driver warm-up",
+        "startTime": 4087.800000190735,
+        "duration": 76.5
+      },
+      {
+        "name": "L1 warm-up instanced draw",
+        "startTime": 4132.599999427795,
+        "duration": 31.700000762939453
+      },
+      {
+        "name": "L1 warm-up solo draws",
+        "startTime": 4164.300000190735,
+        "duration": 0
+      },
+      {
+        "name": "Texture atlas upload",
+        "startTime": 4166.099999427795,
+        "duration": 2.40000057220459
+      },
+      {
+        "name": "L1 warm-up chunks",
+        "startTime": 4166.099999427795,
+        "duration": 85
+      },
+      {
+        "name": "L1 shader compilation",
+        "startTime": 4168.599999427795,
+        "duration": 49.40000057220459
+      },
+      {
+        "name": "L1 warm-up draw",
+        "startTime": 4251.599999427795,
+        "duration": 30.800000190734863
+      },
+      {
+        "name": "L1 driver warm-up",
+        "startTime": 4251.599999427795,
+        "duration": 62.20000076293945
+      },
+      {
+        "name": "L1 warm-up instanced draw",
+        "startTime": 4282.39999961853,
+        "duration": 31.40000057220459
+      },
+      {
+        "name": "L1 warm-up solo draws",
+        "startTime": 4313.800000190735,
+        "duration": 0
+      },
+      {
+        "name": "L1 shader compilation",
+        "startTime": 4331.800000190735,
+        "duration": 6.299999237060547
+      },
+      {
+        "name": "L1 warm-up draw",
+        "startTime": 4338.099999427795,
+        "duration": 9.100000381469727
+      },
+      {
+        "name": "L1 driver warm-up",
+        "startTime": 4338.099999427795,
+        "duration": 25.90000057220459
+      },
+      {
+        "name": "L1 warm-up instanced draw",
+        "startTime": 4347.199999809265,
+        "duration": 16.800000190734863
+      },
+      {
+        "name": "L1 warm-up solo draws",
+        "startTime": 4364,
+        "duration": 0
+      },
+      {
+        "name": "level:audio",
+        "startTime": 4419.800000190735,
+        "duration": 57
+      },
+      {
+        "name": "level:hud",
+        "startTime": 4484.89999961853,
+        "duration": 3
+      }
+    ],
+    "quality": "high",
+    "bundle": "http://127.0.0.1:4901/build/index-QNcw6d5J.js",
+    "begin": false,
+    "contexts": [
+      "webgpu",
+      "webgpu",
+      "webgpu",
+      "2d",
+      "webgpu",
+      "webgpu",
+      "webgpu",
+      "webgpu",
+      "webgpu"
+    ],
+    "adapter": {
+      "vendor": "apple",
+      "architecture": "metal-3",
+      "description": "",
+      "fallback": false
+    },
+    "glRenderer": null,
+    "diagnostic": true,
+    "rawSource": "test-results/perf9/diagnostic/fixed-1-L7-load/loads/L7.json",
+    "rawSha256": "0d3c3e57c58190b5cffaf80cdd2304ba91718f79d576295162e03208593e6a05",
+    "networkCount": 352,
+    "networkStatuses": {
+      "200": 346,
+      "304": 6
+    }
+  },
+  {
+    "side": "prod",
+    "level": "L7",
+    "tier": "high",
+    "backend": "webgpu",
+    "temperature": "cold",
+    "measuredAt": "2026-11-07T14:03:07.902Z",
+    "errors": [],
+    "ms": 2825.6000003814697,
+    "start": 1296.1000003814697,
+    "shown": 1298.4000005722046,
+    "done": 4121.700000762939,
+    "stages": [
+      {
+        "at": 2.3000001907348633,
+        "text": "Level 7 \u00b7 The Ruined CityNight. While you were underground, Fairhaven was overrun. A wrecked army truck by the exit still holds a rocket launcher. Blast a way through for the survivors to the evacuation bus at the city edge.Loading neighborhood\u2026Try again"
+      },
+      {
+        "at": 14.399999618530273,
+        "text": "Level 7 \u00b7 The Ruined CityNight. While you were underground, Fairhaven was overrun. A wrecked army truck by the exit still holds a rocket launcher. Blast a way through for the survivors to the evacuation bus at the city edge.Building the neighborhood\u2026Try again"
+      },
+      {
+        "at": 424.1000003814697,
+        "text": "Level 7 \u00b7 The Ruined CityNight. While you were underground, Fairhaven was overrun. A wrecked army truck by the exit still holds a rocket launcher. Blast a way through for the survivors to the evacuation bus at the city edge.Loading assets\u2026Try again"
+      },
+      {
+        "at": 1143.8000001907349,
+        "text": "Level 7 \u00b7 The Ruined CityNight. While you were underground, Fairhaven was overrun. A wrecked army truck by the exit still holds a rocket launcher. Blast a way through for the survivors to the evacuation bus at the city edge.Preparing the scene\u2026Try again"
+      },
+      {
+        "at": 2719.199999809265,
+        "text": "Level 7 \u00b7 The Ruined CityNight. While you were underground, Fairhaven was overrun. A wrecked army truck by the exit still holds a rocket launcher. Blast a way through for the survivors to the evacuation bus at the city edge.Preparing sound\u2026Try again"
+      }
+    ],
+    "loadMeasures": [
+      {
+        "name": "view:actors",
+        "startTime": 370.20000076293945,
+        "duration": 54.79999923706055
+      },
+      {
+        "name": "view:lod-ready",
+        "startTime": 425,
+        "duration": 5
+      },
+      {
+        "name": "view:warm-up",
+        "startTime": 430,
+        "duration": 139
+      },
+      {
+        "name": "level:layouts",
+        "startTime": 1306.6000003814697,
+        "duration": 3.8000001907348633
+      },
+      {
+        "name": "transition:L7:first-frame",
+        "startTime": 1306.6000003814697,
+        "duration": 2815
+      },
+      {
+        "name": "level:sim",
+        "startTime": 1310.4000005722046,
+        "duration": 292.69999980926514
+      },
+      {
+        "name": "level:boot-audio-wait",
+        "startTime": 1310.5,
+        "duration": 0
+      },
+      {
+        "name": "level:world+nav",
+        "startTime": 1312.8000001907349,
+        "duration": 250.5
+      },
+      {
+        "name": "level:mission+cast",
+        "startTime": 1563.3000001907349,
+        "duration": 27.800000190734863
+      },
+      {
+        "name": "level:physics-prepare",
+        "startTime": 1591.1000003814697,
+        "duration": 12
+      },
+      {
+        "name": "level:view",
+        "startTime": 1603.1000003814697,
+        "duration": 2411.3999996185303
+      },
+      {
+        "name": "view:districts+character",
+        "startTime": 1615.3000001907349,
+        "duration": 692.9000005722046
+      },
+      {
+        "name": "view:civilian-crowd",
+        "startTime": 1633.2000007629395,
+        "duration": 605.2999992370605
+      },
+      {
+        "name": "view:infected-crowd",
+        "startTime": 1633.7000007629395,
+        "duration": 86.59999942779541
+      },
+      {
+        "name": "bake:inf.suburban-mom:lod2",
+        "startTime": 2149.7000007629395,
+        "duration": 0
+      },
+      {
+        "name": "bake:inf.common-worker:lod2",
+        "startTime": 2168.9000005722046,
+        "duration": 0
+      },
+      {
+        "name": "bake:inf.alpha:lod0",
+        "startTime": 2172,
+        "duration": 0
+      },
+      {
+        "name": "bake:inf.cashier:lod2",
+        "startTime": 2185.2000007629395,
+        "duration": 0
+      },
+      {
+        "name": "bake:inf.alpha-suit:lod0",
+        "startTime": 2192.7000007629395,
+        "duration": 0
+      },
+      {
+        "name": "bake:inf.jogger:lod2",
+        "startTime": 2242.1000003814697,
+        "duration": 0.10000038146972656
+      },
+      {
+        "name": "bake:inf.bathrobe-neighbor:lod2",
+        "startTime": 2251.6000003814697,
+        "duration": 0
+      },
+      {
+        "name": "bake:inf.delivery-driver:lod2",
+        "startTime": 2260.1000003814697,
+        "duration": 0.10000038146972656
+      },
+      {
+        "name": "bake:inf.bbq-dad:lod2",
+        "startTime": 2268.2000007629395,
+        "duration": 0
+      },
+      {
+        "name": "bake:inf.alpha-suit:lod2",
+        "startTime": 2282,
+        "duration": 0
+      },
+      {
+        "name": "view:actors",
+        "startTime": 2323.6000003814697,
+        "duration": 41.60000038146973
+      },
+      {
+        "name": "view:lod-ready",
+        "startTime": 2365.2000007629395,
+        "duration": 50.39999961853027
+      },
+      {
+        "name": "view:warm-up",
+        "startTime": 2415.6000003814697,
+        "duration": 1540.8999996185303
+      },
+      {
+        "name": "Texture atlas upload",
+        "startTime": 2419.7000007629395,
+        "duration": 9.09999942779541
+      },
+      {
+        "name": "L1 warm-up chunks",
+        "startTime": 2419.7000007629395,
+        "duration": 1290.1999998092651
+      },
+      {
+        "name": "L1 shader compilation",
+        "startTime": 2428.9000005722046,
+        "duration": 1103.5999994277954
+      },
+      {
+        "name": "L1 warm-up draw",
+        "startTime": 3710.6000003814697,
+        "duration": 29.399999618530273
+      },
+      {
+        "name": "L1 driver warm-up",
+        "startTime": 3710.6000003814697,
+        "duration": 60.89999961853027
+      },
+      {
+        "name": "L1 warm-up instanced draw",
+        "startTime": 3740,
+        "duration": 31.5
+      },
+      {
+        "name": "L1 warm-up solo draws",
+        "startTime": 3771.5,
+        "duration": 0
+      },
+      {
+        "name": "Texture atlas upload",
+        "startTime": 3773.4000005722046,
+        "duration": 2.1999998092651367
+      },
+      {
+        "name": "L1 warm-up chunks",
+        "startTime": 3773.4000005722046,
+        "duration": 63.09999942779541
+      },
+      {
+        "name": "L1 shader compilation",
+        "startTime": 3775.7000007629395,
+        "duration": 36.19999980926514
+      },
+      {
+        "name": "L1 warm-up draw",
+        "startTime": 3839.5,
+        "duration": 33.70000076293945
+      },
+      {
+        "name": "L1 driver warm-up",
+        "startTime": 3839.5,
+        "duration": 67
+      },
+      {
+        "name": "L1 warm-up instanced draw",
+        "startTime": 3873.2000007629395,
+        "duration": 33.29999923706055
+      },
+      {
+        "name": "L1 warm-up solo draws",
+        "startTime": 3906.5,
+        "duration": 0
+      },
+      {
+        "name": "L1 shader compilation",
+        "startTime": 3923.6000003814697,
+        "duration": 5.800000190734863
+      },
+      {
+        "name": "L1 warm-up draw",
+        "startTime": 3929.4000005722046,
+        "duration": 9.300000190734863
+      },
+      {
+        "name": "L1 driver warm-up",
+        "startTime": 3929.4000005722046,
+        "duration": 27.09999942779541
+      },
+      {
+        "name": "L1 warm-up instanced draw",
+        "startTime": 3938.800000190735,
+        "duration": 17.699999809265137
+      },
+      {
+        "name": "L1 warm-up solo draws",
+        "startTime": 3956.5,
+        "duration": 0
+      },
+      {
+        "name": "level:audio",
+        "startTime": 4014.5,
+        "duration": 0.9000005722045898
+      },
+      {
+        "name": "level:hud",
+        "startTime": 4020.9000005722046,
+        "duration": 5.800000190734863
+      }
+    ],
+    "quality": "high",
+    "bundle": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+    "begin": false,
+    "contexts": [
+      "webgpu",
+      "webgpu",
+      "webgpu",
+      "2d",
+      "webgpu",
+      "webgpu",
+      "webgpu",
+      "webgpu",
+      "webgpu"
+    ],
+    "adapter": {
+      "vendor": "apple",
+      "architecture": "metal-3",
+      "description": "",
+      "fallback": false
+    },
+    "glRenderer": null,
+    "diagnostic": true,
+    "rawSource": "test-results/perf9/diagnostic/load-high-L7/loads/L7.json",
+    "rawSha256": "0d5885205c05fd59417956158072645167d038a9296f8e809c758b5e68ed0a99",
+    "networkCount": 285,
+    "networkStatuses": {
+      "200": 285
+    }
+  },
+  {
+    "side": "prod",
+    "level": "L7",
+    "tier": "high",
+    "backend": "webgpu",
+    "temperature": "warm",
+    "measuredAt": "2026-11-07T14:03:11.938Z",
+    "errors": [],
+    "ms": 2735.4000005722046,
+    "start": 1048.0999994277954,
+    "shown": 1049.5999994277954,
+    "done": 3783.5,
+    "stages": [
+      {
+        "at": 1.5,
+        "text": "Level 7 \u00b7 The Ruined CityNight. While you were underground, Fairhaven was overrun. A wrecked army truck by the exit still holds a rocket launcher. Blast a way through for the survivors to the evacuation bus at the city edge.Loading neighborhood\u2026Try again"
+      },
+      {
+        "at": 6.600000381469727,
+        "text": "Level 7 \u00b7 The Ruined CityNight. While you were underground, Fairhaven was overrun. A wrecked army truck by the exit still holds a rocket launcher. Blast a way through for the survivors to the evacuation bus at the city edge.Building the neighborhood\u2026Try again"
+      },
+      {
+        "at": 366.69999980926514,
+        "text": "Level 7 \u00b7 The Ruined CityNight. While you were underground, Fairhaven was overrun. A wrecked army truck by the exit still holds a rocket launcher. Blast a way through for the survivors to the evacuation bus at the city edge.Loading assets\u2026Try again"
+      },
+      {
+        "at": 1019.6999998092651,
+        "text": "Level 7 \u00b7 The Ruined CityNight. While you were underground, Fairhaven was overrun. A wrecked army truck by the exit still holds a rocket launcher. Blast a way through for the survivors to the evacuation bus at the city edge.Preparing the scene\u2026Try again"
+      },
+      {
+        "at": 2622.800000190735,
+        "text": "Level 7 \u00b7 The Ruined CityNight. While you were underground, Fairhaven was overrun. A wrecked army truck by the exit still holds a rocket launcher. Blast a way through for the survivors to the evacuation bus at the city edge.Preparing sound\u2026Try again"
+      }
+    ],
+    "loadMeasures": [
+      {
+        "name": "view:actors",
+        "startTime": 194.0999994277954,
+        "duration": 51.19999980926514
+      },
+      {
+        "name": "view:lod-ready",
+        "startTime": 245.29999923706055,
+        "duration": 3.8000001907348633
+      },
+      {
+        "name": "view:warm-up",
+        "startTime": 249.0999994277954,
+        "duration": 128.80000019073486
+      },
+      {
+        "name": "level:layouts",
+        "startTime": 1050.8999996185303,
+        "duration": 3.6999998092651367
+      },
+      {
+        "name": "transition:L7:first-frame",
+        "startTime": 1050.8999996185303,
+        "duration": 2732.6000003814697
+      },
+      {
+        "name": "level:sim",
+        "startTime": 1054.5999994277954,
+        "duration": 257.6000003814697
+      },
+      {
+        "name": "level:boot-audio-wait",
+        "startTime": 1054.6999998092651,
+        "duration": 0
+      },
+      {
+        "name": "level:world+nav",
+        "startTime": 1055.8999996185303,
+        "duration": 231.69999980926514
+      },
+      {
+        "name": "level:mission+cast",
+        "startTime": 1287.5999994277954,
+        "duration": 22.699999809265137
+      },
+      {
+        "name": "level:physics-prepare",
+        "startTime": 1310.2999992370605,
+        "duration": 1.9000005722045898
+      },
+      {
+        "name": "level:view",
+        "startTime": 1312.1999998092651,
+        "duration": 2358
+      },
+      {
+        "name": "view:districts+character",
+        "startTime": 1322.5999994277954,
+        "duration": 630.6000003814697
+      },
+      {
+        "name": "view:civilian-crowd",
+        "startTime": 1332.5,
+        "duration": 574.1999998092651
+      },
+      {
+        "name": "view:infected-crowd",
+        "startTime": 1332.6999998092651,
+        "duration": 82.19999980926514
+      },
+      {
+        "name": "bake:inf.suburban-mom:lod2",
+        "startTime": 1811.8999996185303,
+        "duration": 0
+      },
+      {
+        "name": "bake:inf.cashier:lod2",
+        "startTime": 1832.1999998092651,
+        "duration": 0
+      },
+      {
+        "name": "bake:inf.common-worker:lod2",
+        "startTime": 1840.8999996185303,
+        "duration": 0
+      },
+      {
+        "name": "bake:inf.alpha:lod0",
+        "startTime": 1847.8999996185303,
+        "duration": 0
+      },
+      {
+        "name": "bake:inf.alpha-suit:lod0",
+        "startTime": 1870.2999992370605,
+        "duration": 0
+      },
+      {
+        "name": "bake:inf.jogger:lod2",
+        "startTime": 1895.3999996185303,
+        "duration": 0
+      },
+      {
+        "name": "bake:inf.bathrobe-neighbor:lod2",
+        "startTime": 1909.3999996185303,
+        "duration": 0
+      },
+      {
+        "name": "bake:inf.delivery-driver:lod2",
+        "startTime": 1919.1999998092651,
+        "duration": 0
+      },
+      {
+        "name": "bake:inf.bbq-dad:lod2",
+        "startTime": 1927.0999994277954,
+        "duration": 0.10000038146972656
+      },
+      {
+        "name": "bake:inf.alpha-suit:lod2",
+        "startTime": 1939.3999996185303,
+        "duration": 0
+      },
+      {
+        "name": "view:actors",
+        "startTime": 1964.5,
+        "duration": 31.699999809265137
+      },
+      {
+        "name": "view:lod-ready",
+        "startTime": 1996.1999998092651,
+        "duration": 49.30000019073486
+      },
+      {
+        "name": "view:warm-up",
+        "startTime": 2045.5,
+        "duration": 1572.5
+      },
+      {
+        "name": "Texture atlas upload",
+        "startTime": 2049.0999994277954,
+        "duration": 8.699999809265137
+      },
+      {
+        "name": "L1 warm-up chunks",
+        "startTime": 2049.0999994277954,
+        "duration": 1318.9000005722046
+      },
+      {
+        "name": "L1 shader compilation",
+        "startTime": 2057.8999996185303,
+        "duration": 1132.1999998092651
+      },
+      {
+        "name": "L1 warm-up draw",
+        "startTime": 3368.7999992370605,
+        "duration": 32.60000038146973
+      },
+      {
+        "name": "L1 driver warm-up",
+        "startTime": 3368.7999992370605,
+        "duration": 65.80000019073486
+      },
+      {
+        "name": "L1 warm-up instanced draw",
+        "startTime": 3401.3999996185303,
+        "duration": 33.19999980926514
+      },
+      {
+        "name": "L1 warm-up solo draws",
+        "startTime": 3434.5999994277954,
+        "duration": 0
+      },
+      {
+        "name": "Texture atlas upload",
+        "startTime": 3436.2999992370605,
+        "duration": 2.200000762939453
+      },
+      {
+        "name": "L1 warm-up chunks",
+        "startTime": 3436.2999992370605,
+        "duration": 60.5
+      },
+      {
+        "name": "L1 shader compilation",
+        "startTime": 3438.5,
+        "duration": 34.59999942779541
+      },
+      {
+        "name": "L1 warm-up draw",
+        "startTime": 3501.5,
+        "duration": 33.19999980926514
+      },
+      {
+        "name": "L1 driver warm-up",
+        "startTime": 3501.5,
+        "duration": 66.5
+      },
+      {
+        "name": "L1 warm-up instanced draw",
+        "startTime": 3534.699999809265,
+        "duration": 33.30000019073486
+      },
+      {
+        "name": "L1 warm-up solo draws",
+        "startTime": 3568,
+        "duration": 0
+      },
+      {
+        "name": "L1 shader compilation",
+        "startTime": 3585.0999994277954,
+        "duration": 5.800000190734863
+      },
+      {
+        "name": "L1 warm-up draw",
+        "startTime": 3590.8999996185303,
+        "duration": 8.899999618530273
+      },
+      {
+        "name": "L1 driver warm-up",
+        "startTime": 3590.8999996185303,
+        "duration": 27
+      },
+      {
+        "name": "L1 warm-up instanced draw",
+        "startTime": 3599.7999992370605,
+        "duration": 18.100000381469727
+      },
+      {
+        "name": "L1 warm-up solo draws",
+        "startTime": 3617.8999996185303,
+        "duration": 0
+      },
+      {
+        "name": "level:audio",
+        "startTime": 3670.2999992370605,
+        "duration": 0.7000007629394531
+      },
+      {
+        "name": "level:hud",
+        "startTime": 3675.699999809265,
+        "duration": 3.8999996185302734
+      }
+    ],
+    "quality": "high",
+    "bundle": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+    "begin": false,
+    "contexts": [
+      "webgpu",
+      "webgpu",
+      "webgpu",
+      "2d",
+      "webgpu",
+      "webgpu",
+      "webgpu",
+      "webgpu",
+      "webgpu"
+    ],
+    "adapter": {
+      "vendor": "apple",
+      "architecture": "metal-3",
+      "description": "",
+      "fallback": false
+    },
+    "glRenderer": null,
+    "diagnostic": true,
+    "rawSource": "test-results/perf9/diagnostic/load-high-L7/loads/L7.json",
+    "rawSha256": "0d5885205c05fd59417956158072645167d038a9296f8e809c758b5e68ed0a99",
+    "networkCount": 298,
+    "networkStatuses": {
+      "200": 295,
+      "304": 3
+    }
+  },
+  {
+    "side": "candidate",
+    "level": "L7",
+    "tier": "high",
+    "backend": "webgpu",
+    "temperature": "cold",
+    "measuredAt": "2026-11-07T14:03:17.037Z",
+    "errors": [],
+    "ms": 3587.699999809265,
+    "start": 1184.6999998092651,
+    "shown": 1187.1999998092651,
+    "done": 4772.39999961853,
+    "stages": [
+      {
+        "at": 2.5,
+        "text": "Level 7 \u00b7 The Ruined CityNight. While you were underground, Fairhaven was overrun. A wrecked army truck by the exit still holds a rocket launcher. Blast a way through for the survivors to the evacuation bus at the city edge.Loading neighborhood\u2026Try again"
+      },
+      {
+        "at": 8.300000190734863,
+        "text": "Level 7 \u00b7 The Ruined CityNight. While you were underground, Fairhaven was overrun. A wrecked army truck by the exit still holds a rocket launcher. Blast a way through for the survivors to the evacuation bus at the city edge.Building the neighborhood\u2026Try again"
+      },
+      {
+        "at": 414.1000003814697,
+        "text": "Level 7 \u00b7 The Ruined CityNight. While you were underground, Fairhaven was overrun. A wrecked army truck by the exit still holds a rocket launcher. Blast a way through for the survivors to the evacuation bus at the city edge.Loading assets\u2026Try again"
+      },
+      {
+        "at": 1462.1999998092651,
+        "text": "Level 7 \u00b7 The Ruined CityNight. While you were underground, Fairhaven was overrun. A wrecked army truck by the exit still holds a rocket launcher. Blast a way through for the survivors to the evacuation bus at the city edge.Preparing the scene\u2026Try again"
+      },
+      {
+        "at": 3416.1000003814697,
+        "text": "Level 7 \u00b7 The Ruined CityNight. While you were underground, Fairhaven was overrun. A wrecked army truck by the exit still holds a rocket launcher. Blast a way through for the survivors to the evacuation bus at the city edge.Preparing sound\u2026Try again"
+      }
+    ],
+    "loadMeasures": [
+      {
+        "name": "view:actors",
+        "startTime": 270.5999994277954,
+        "duration": 53.90000057220459
+      },
+      {
+        "name": "view:lod-ready",
+        "startTime": 324.5,
+        "duration": 5.09999942779541
+      },
+      {
+        "name": "view:warm-up",
+        "startTime": 329.5999994277954,
+        "duration": 144
+      },
+      {
+        "name": "level:layouts",
+        "startTime": 1189.1999998092651,
+        "duration": 3.8000001907348633
+      },
+      {
+        "name": "transition:L7:first-frame",
+        "startTime": 1189.1999998092651,
+        "duration": 3583.199999809265
+      },
+      {
+        "name": "level:boot-audio-wait",
+        "startTime": 1193,
+        "duration": 0
+      },
+      {
+        "name": "level:sim",
+        "startTime": 1193,
+        "duration": 286
+      },
+      {
+        "name": "level:world+nav",
+        "startTime": 1195.1999998092651,
+        "duration": 242.19999980926514
+      },
+      {
+        "name": "level:mission+cast",
+        "startTime": 1437.3999996185303,
+        "duration": 32.10000038146973
+      },
+      {
+        "name": "level:physics-prepare",
+        "startTime": 1469.5,
+        "duration": 9.399999618530273
+      },
+      {
+        "name": "level:view",
+        "startTime": 1479,
+        "duration": 3121
+      },
+      {
+        "name": "view:districts+character",
+        "startTime": 1491.5999994277954,
+        "duration": 1026
+      },
+      {
+        "name": "view:civilian-crowd",
+        "startTime": 1510.5,
+        "duration": 983.5999994277954
+      },
+      {
+        "name": "view:infected-crowd",
+        "startTime": 1510.8999996185303,
+        "duration": 88
+      },
+      {
+        "name": "bake:inf.alpha:lod0",
+        "startTime": 2182.199999809265,
+        "duration": 0.10000038146972656
+      },
+      {
+        "name": "bake:inf.common-worker:lod2",
+        "startTime": 2200.8999996185303,
+        "duration": 0.10000038146972656
+      },
+      {
+        "name": "bake:inf.common-worker:lod1",
+        "startTime": 2205.8999996185303,
+        "duration": 0
+      },
+      {
+        "name": "bake:inf.common-worker:lod0",
+        "startTime": 2230.8999996185303,
+        "duration": 0
+      },
+      {
+        "name": "bake:inf.alpha:lod1",
+        "startTime": 2264.800000190735,
+        "duration": 0
+      },
+      {
+        "name": "bake:inf.alpha:lod2",
+        "startTime": 2273.699999809265,
+        "duration": 0
+      },
+      {
+        "name": "bake:inf.alpha-suit:lod0",
+        "startTime": 2274.8999996185303,
+        "duration": 0
+      },
+      {
+        "name": "bake:inf.alpha-suit:lod1",
+        "startTime": 2286.3999996185303,
+        "duration": 0
+      },
+      {
+        "name": "bake:inf.alpha-suit:lod2",
+        "startTime": 2320.0999994277954,
+        "duration": 0
+      },
+      {
+        "name": "view:actors",
+        "startTime": 2531.3999996185303,
+        "duration": 29.699999809265137
+      },
+      {
+        "name": "view:lod-ready",
+        "startTime": 2561.0999994277954,
+        "duration": 51.40000057220459
+      },
+      {
+        "name": "view:warm-up",
+        "startTime": 2612.5,
+        "duration": 1926.3999996185303
+      },
+      {
+        "name": "Texture atlas upload",
+        "startTime": 2616.800000190735,
+        "duration": 16.09999942779541
+      },
+      {
+        "name": "L1 warm-up chunks",
+        "startTime": 2616.800000190735,
+        "duration": 1646.2999992370605
+      },
+      {
+        "name": "L1 shader compilation",
+        "startTime": 2633.0999994277954,
+        "duration": 1258.6000003814697
+      },
+      {
+        "name": "L1 warm-up draw",
+        "startTime": 4263.800000190735,
+        "duration": 41.79999923706055
+      },
+      {
+        "name": "L1 driver warm-up",
+        "startTime": 4263.800000190735,
+        "duration": 75.09999942779541
+      },
+      {
+        "name": "L1 warm-up instanced draw",
+        "startTime": 4305.599999427795,
+        "duration": 33.30000019073486
+      },
+      {
+        "name": "L1 warm-up solo draws",
+        "startTime": 4338.89999961853,
+        "duration": 0
+      },
+      {
+        "name": "Texture atlas upload",
+        "startTime": 4340.699999809265,
+        "duration": 2.3000001907348633
+      },
+      {
+        "name": "L1 warm-up chunks",
+        "startTime": 4340.699999809265,
+        "duration": 82.80000019073486
+      },
+      {
+        "name": "L1 shader compilation",
+        "startTime": 4343.099999427795,
+        "duration": 45.90000057220459
+      },
+      {
+        "name": "L1 warm-up draw",
+        "startTime": 4424.099999427795,
+        "duration": 31.40000057220459
+      },
+      {
+        "name": "L1 driver warm-up",
+        "startTime": 4424.099999427795,
+        "duration": 64.60000038146973
+      },
+      {
+        "name": "L1 warm-up instanced draw",
+        "startTime": 4455.5,
+        "duration": 33.19999980926514
+      },
+      {
+        "name": "L1 warm-up solo draws",
+        "startTime": 4488.699999809265,
+        "duration": 0
+      },
+      {
+        "name": "L1 shader compilation",
+        "startTime": 4504,
+        "duration": 5.699999809265137
+      },
+      {
+        "name": "L1 warm-up draw",
+        "startTime": 4509.699999809265,
+        "duration": 12.600000381469727
+      },
+      {
+        "name": "L1 driver warm-up",
+        "startTime": 4509.699999809265,
+        "duration": 29.100000381469727
+      },
+      {
+        "name": "L1 warm-up instanced draw",
+        "startTime": 4522.300000190735,
+        "duration": 16.399999618530273
+      },
+      {
+        "name": "L1 warm-up solo draws",
+        "startTime": 4538.800000190735,
+        "duration": 0
+      },
+      {
+        "name": "level:audio",
+        "startTime": 4600,
+        "duration": 59.09999942779541
+      },
+      {
+        "name": "level:hud",
+        "startTime": 4667.39999961853,
+        "duration": 4.800000190734863
+      }
+    ],
+    "quality": "high",
+    "bundle": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+    "begin": false,
+    "contexts": [
+      "webgpu",
+      "webgpu",
+      "webgpu",
+      "2d",
+      "webgpu",
+      "webgpu",
+      "webgpu",
+      "webgpu",
+      "webgpu"
+    ],
+    "adapter": {
+      "vendor": "apple",
+      "architecture": "metal-3",
+      "description": "",
+      "fallback": false
+    },
+    "glRenderer": null,
+    "diagnostic": true,
+    "rawSource": "test-results/perf9/diagnostic/load-high-L7/loads/L7.json",
+    "rawSha256": "0d5885205c05fd59417956158072645167d038a9296f8e809c758b5e68ed0a99",
+    "networkCount": 352,
+    "networkStatuses": {
+      "200": 352
+    }
+  },
+  {
+    "side": "candidate",
+    "level": "L7",
+    "tier": "high",
+    "backend": "webgpu",
+    "temperature": "warm",
+    "measuredAt": "2026-11-07T14:03:21.730Z",
+    "errors": [],
+    "ms": 3404,
+    "start": 1044.8999996185303,
+    "shown": 1046.2999992370605,
+    "done": 4448.89999961853,
+    "stages": [
+      {
+        "at": 1.3999996185302734,
+        "text": "Level 7 \u00b7 The Ruined CityNight. While you were underground, Fairhaven was overrun. A wrecked army truck by the exit still holds a rocket launcher. Blast a way through for the survivors to the evacuation bus at the city edge.Loading neighborhood\u2026Try again"
+      },
+      {
+        "at": 11.300000190734863,
+        "text": "Level 7 \u00b7 The Ruined CityNight. While you were underground, Fairhaven was overrun. A wrecked army truck by the exit still holds a rocket launcher. Blast a way through for the survivors to the evacuation bus at the city edge.Building the neighborhood\u2026Try again"
+      },
+      {
+        "at": 374.5,
+        "text": "Level 7 \u00b7 The Ruined CityNight. While you were underground, Fairhaven was overrun. A wrecked army truck by the exit still holds a rocket launcher. Blast a way through for the survivors to the evacuation bus at the city edge.Loading assets\u2026Try again"
+      },
+      {
+        "at": 1338.8999996185303,
+        "text": "Level 7 \u00b7 The Ruined CityNight. While you were underground, Fairhaven was overrun. A wrecked army truck by the exit still holds a rocket launcher. Blast a way through for the survivors to the evacuation bus at the city edge.Preparing the scene\u2026Try again"
+      },
+      {
+        "at": 3225.199999809265,
+        "text": "Level 7 \u00b7 The Ruined CityNight. While you were underground, Fairhaven was overrun. A wrecked army truck by the exit still holds a rocket launcher. Blast a way through for the survivors to the evacuation bus at the city edge.Preparing sound\u2026Try again"
+      }
+    ],
+    "loadMeasures": [
+      {
+        "name": "view:actors",
+        "startTime": 193,
+        "duration": 50.69999980926514
+      },
+      {
+        "name": "view:lod-ready",
+        "startTime": 243.69999980926514,
+        "duration": 3.6999998092651367
+      },
+      {
+        "name": "view:warm-up",
+        "startTime": 247.39999961853027,
+        "duration": 127.80000019073486
+      },
+      {
+        "name": "level:layouts",
+        "startTime": 1048.5,
+        "duration": 7.699999809265137
+      },
+      {
+        "name": "transition:L7:first-frame",
+        "startTime": 1048.5,
+        "duration": 3400.2999992370605
+      },
+      {
+        "name": "level:boot-audio-wait",
+        "startTime": 1056.1999998092651,
+        "duration": 0
+      },
+      {
+        "name": "level:sim",
+        "startTime": 1056.1999998092651,
+        "duration": 258.3999996185303
+      },
+      {
+        "name": "level:world+nav",
+        "startTime": 1057.5,
+        "duration": 229.0999994277954
+      },
+      {
+        "name": "level:mission+cast",
+        "startTime": 1286.5999994277954,
+        "duration": 26
+      },
+      {
+        "name": "level:physics-prepare",
+        "startTime": 1312.5999994277954,
+        "duration": 2
+      },
+      {
+        "name": "level:view",
+        "startTime": 1314.5999994277954,
+        "duration": 2954.800000190735
+      },
+      {
+        "name": "view:districts+character",
+        "startTime": 1326.3999996185303,
+        "duration": 934.3999996185303
+      },
+      {
+        "name": "view:civilian-crowd",
+        "startTime": 1335.6999998092651,
+        "duration": 905.6999998092651
+      },
+      {
+        "name": "view:infected-crowd",
+        "startTime": 1335.7999992370605,
+        "duration": 83.70000076293945
+      },
+      {
+        "name": "bake:inf.common-worker:lod2",
+        "startTime": 1966,
+        "duration": 0.09999942779541016
+      },
+      {
+        "name": "bake:inf.common-worker:lod1",
+        "startTime": 1973.7999992370605,
+        "duration": 0
+      },
+      {
+        "name": "bake:inf.common-worker:lod0",
+        "startTime": 1988.5999994277954,
+        "duration": 0
+      },
+      {
+        "name": "bake:inf.alpha:lod0",
+        "startTime": 1992.2999992370605,
+        "duration": 0
+      },
+      {
+        "name": "bake:inf.alpha:lod1",
+        "startTime": 2039.2999992370605,
+        "duration": 0
+      },
+      {
+        "name": "bake:inf.alpha:lod2",
+        "startTime": 2047.3999996185303,
+        "duration": 0
+      },
+      {
+        "name": "bake:inf.alpha-suit:lod0",
+        "startTime": 2048.699999809265,
+        "duration": 0
+      },
+      {
+        "name": "bake:inf.alpha-suit:lod1",
+        "startTime": 2058.8999996185303,
+        "duration": 0.10000038146972656
+      },
+      {
+        "name": "bake:inf.alpha-suit:lod2",
+        "startTime": 2080.5999994277954,
+        "duration": 0
+      },
+      {
+        "name": "view:actors",
+        "startTime": 2273,
+        "duration": 28.09999942779541
+      },
+      {
+        "name": "view:lod-ready",
+        "startTime": 2301.0999994277954,
+        "duration": 49.5
+      },
+      {
+        "name": "view:warm-up",
+        "startTime": 2350.5999994277954,
+        "duration": 1863.3000001907349
+      },
+      {
+        "name": "Texture atlas upload",
+        "startTime": 2353.5,
+        "duration": 17.199999809265137
+      },
+      {
+        "name": "L1 warm-up chunks",
+        "startTime": 2353.5,
+        "duration": 1617.5999994277954
+      },
+      {
+        "name": "L1 shader compilation",
+        "startTime": 2370.699999809265,
+        "duration": 1244.0999994277954
+      },
+      {
+        "name": "L1 warm-up draw",
+        "startTime": 3971.7999992370605,
+        "duration": 26
+      },
+      {
+        "name": "L1 driver warm-up",
+        "startTime": 3971.7999992370605,
+        "duration": 60.20000076293945
+      },
+      {
+        "name": "L1 warm-up instanced draw",
+        "startTime": 3997.7999992370605,
+        "duration": 34.20000076293945
+      },
+      {
+        "name": "L1 warm-up solo draws",
+        "startTime": 4032,
+        "duration": 0
+      },
+      {
+        "name": "Texture atlas upload",
+        "startTime": 4033.699999809265,
+        "duration": 2.3000001907348633
+      },
+      {
+        "name": "L1 warm-up chunks",
+        "startTime": 4033.699999809265,
+        "duration": 65.09999942779541
+      },
+      {
+        "name": "L1 shader compilation",
+        "startTime": 4036,
+        "duration": 45.89999961853027
+      },
+      {
+        "name": "L1 warm-up draw",
+        "startTime": 4099.39999961853,
+        "duration": 32.69999980926514
+      },
+      {
+        "name": "L1 driver warm-up",
+        "startTime": 4099.39999961853,
+        "duration": 66
+      },
+      {
+        "name": "L1 warm-up instanced draw",
+        "startTime": 4132.099999427795,
+        "duration": 33.30000019073486
+      },
+      {
+        "name": "L1 warm-up solo draws",
+        "startTime": 4165.39999961853,
+        "duration": 0
+      },
+      {
+        "name": "L1 shader compilation",
+        "startTime": 4180.199999809265,
+        "duration": 5.699999809265137
+      },
+      {
+        "name": "L1 warm-up draw",
+        "startTime": 4185.89999961853,
+        "duration": 12.899999618530273
+      },
+      {
+        "name": "L1 driver warm-up",
+        "startTime": 4185.89999961853,
+        "duration": 28
+      },
+      {
+        "name": "L1 warm-up instanced draw",
+        "startTime": 4198.799999237061,
+        "duration": 15.100000381469727
+      },
+      {
+        "name": "L1 warm-up solo draws",
+        "startTime": 4213.89999961853,
+        "duration": 0
+      },
+      {
+        "name": "level:audio",
+        "startTime": 4269.39999961853,
+        "duration": 59.89999961853027
+      },
+      {
+        "name": "level:hud",
+        "startTime": 4337.199999809265,
+        "duration": 3.09999942779541
+      }
+    ],
+    "quality": "high",
+    "bundle": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+    "begin": false,
+    "contexts": [
+      "webgpu",
+      "webgpu",
+      "webgpu",
+      "2d",
+      "webgpu",
+      "webgpu",
+      "webgpu",
+      "webgpu",
+      "webgpu"
+    ],
+    "adapter": {
+      "vendor": "apple",
+      "architecture": "metal-3",
+      "description": "",
+      "fallback": false
+    },
+    "glRenderer": null,
+    "diagnostic": true,
+    "rawSource": "test-results/perf9/diagnostic/load-high-L7/loads/L7.json",
+    "rawSha256": "0d5885205c05fd59417956158072645167d038a9296f8e809c758b5e68ed0a99",
+    "networkCount": 352,
+    "networkStatuses": {
+      "200": 349,
+      "304": 3
+    }
+  }
+]

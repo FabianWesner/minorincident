@@ -1,0 +1,3434 @@
+[
+  {
+    "path": "test-results/perf9/diagnostic/L10-early/strips/webgpu/L10-candidate.cpuprofile.gz",
+    "durationMs": 15618.906,
+    "samples": 10771,
+    "topSelf": [
+      {
+        "function": "(idle)",
+        "url": "",
+        "line": 0,
+        "ms": 5993.742
+      },
+      {
+        "function": "(program)",
+        "url": "",
+        "line": 0,
+        "ms": 1279.632
+      },
+      {
+        "function": "update",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 18,
+        "ms": 343.322
+      },
+      {
+        "function": "_renderObjectDirect",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 44,
+        "ms": 241.734
+      },
+      {
+        "function": "w7",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 18,
+        "ms": 236.555
+      },
+      {
+        "function": "updateForRender",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 41,
+        "ms": 224.153
+      },
+      {
+        "function": "_update",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 33,
+        "ms": 199.497
+      },
+      {
+        "function": "writeBuffer",
+        "url": "",
+        "line": 0,
+        "ms": 181.586
+      },
+      {
+        "function": "updateMatrixWorld",
+        "url": "http://127.0.0.1:4901/build/three-core-DQooTupI.js",
+        "line": 5,
+        "ms": 177.081
+      },
+      {
+        "function": "updateReference",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 27,
+        "ms": 176.66
+      },
+      {
+        "function": "_projectObject",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 44,
+        "ms": 170.988
+      },
+      {
+        "function": "(garbage collector)",
+        "url": "",
+        "line": 0,
+        "ms": 168.2
+      },
+      {
+        "function": "y3",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 18,
+        "ms": 164.005
+      },
+      {
+        "function": "query",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 1,
+        "ms": 149.677
+      },
+      {
+        "function": "update",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 44,
+        "ms": 143.373
+      },
+      {
+        "function": "NE.n.get",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 18,
+        "ms": 121.017
+      },
+      {
+        "function": "updateFrame",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 18,
+        "ms": 118.606
+      },
+      {
+        "function": "occludesBar",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 18,
+        "ms": 103.885
+      },
+      {
+        "function": "emit",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 1,
+        "ms": 102.873
+      },
+      {
+        "function": "build",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 8,
+        "ms": 96.312
+      },
+      {
+        "function": "cutBlockers",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 18,
+        "ms": 94.202
+      },
+      {
+        "function": "get value",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 27,
+        "ms": 91.63
+      },
+      {
+        "function": "update",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 27,
+        "ms": 83.737
+      },
+      {
+        "function": "",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 18,
+        "ms": 83.509
+      },
+      {
+        "function": "updateWorldMatrix",
+        "url": "http://127.0.0.1:4901/build/three-core-DQooTupI.js",
+        "line": 5,
+        "ms": 71.803
+      },
+      {
+        "function": "update",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 1,
+        "ms": 70.168
+      },
+      {
+        "function": "updateAttributes",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 33,
+        "ms": 66.912
+      },
+      {
+        "function": "",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 6,
+        "ms": 64.97
+      },
+      {
+        "function": "commit",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 1,
+        "ms": 63.614
+      },
+      {
+        "function": "",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 21,
+        "ms": 58.649
+      },
+      {
+        "function": "multiplyMatrices",
+        "url": "http://127.0.0.1:4901/build/three-core-DQooTupI.js",
+        "line": 5,
+        "ms": 56.237
+      },
+      {
+        "function": "submit",
+        "url": "",
+        "line": 0,
+        "ms": 56.04
+      },
+      {
+        "function": "_7",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 18,
+        "ms": 54.572
+      },
+      {
+        "function": "wasm-function[2664]",
+        "url": "http://127.0.0.1:4901/build/rapier-C6GCbKVJ.wasm",
+        "line": 1,
+        "ms": 52.123
+      },
+      {
+        "function": "draw",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 579,
+        "ms": 51.37
+      }
+    ],
+    "topInclusive": [
+      {
+        "function": "(root)",
+        "url": "",
+        "line": 0,
+        "ms": 15618.146
+      },
+      {
+        "function": "frame",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 13,
+        "ms": 7100.488
+      },
+      {
+        "function": "emit",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 1,
+        "ms": 7093.012
+      },
+      {
+        "function": "",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 21,
+        "ms": 7088.479
+      },
+      {
+        "function": "(idle)",
+        "url": "",
+        "line": 0,
+        "ms": 5993.742
+      },
+      {
+        "function": "update",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 18,
+        "ms": 5275.969
+      },
+      {
+        "function": "updateFrame",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 18,
+        "ms": 5250.098
+      },
+      {
+        "function": "render",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 18,
+        "ms": 2872.006
+      },
+      {
+        "function": "_renderScene",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 44,
+        "ms": 2858.977
+      },
+      {
+        "function": "renderObject",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 44,
+        "ms": 2787.912
+      },
+      {
+        "function": "_renderObjectDirect",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 44,
+        "ms": 2787.912
+      },
+      {
+        "function": "_renderObjects",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 44,
+        "ms": 2787.912
+      },
+      {
+        "function": "render",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 579,
+        "ms": 2728.421
+      },
+      {
+        "function": "updateBefore",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 41,
+        "ms": 2693.552
+      },
+      {
+        "function": "updateBefore",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 33,
+        "ms": 2514.799
+      },
+      {
+        "function": "advance",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 1,
+        "ms": 1300.628
+      },
+      {
+        "function": "simTick",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 21,
+        "ms": 1293.084
+      },
+      {
+        "function": "(program)",
+        "url": "",
+        "line": 0,
+        "ms": 1279.632
+      },
+      {
+        "function": "update",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 21,
+        "ms": 1117.876
+      },
+      {
+        "function": "updateForRender",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 33,
+        "ms": 957.522
+      },
+      {
+        "function": "",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 18,
+        "ms": 707.382
+      },
+      {
+        "function": "_updateBindings",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 33,
+        "ms": 606.889
+      },
+      {
+        "function": "updateForRender",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 41,
+        "ms": 579.449
+      },
+      {
+        "function": "_update",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 33,
+        "ms": 571.371
+      },
+      {
+        "function": "present",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 18,
+        "ms": 449.374
+      },
+      {
+        "function": "buildAsync",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 40,
+        "ms": 413.423
+      },
+      {
+        "function": "build",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 33,
+        "ms": 400.565
+      },
+      {
+        "function": "place",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 18,
+        "ms": 398.318
+      },
+      {
+        "function": "build",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 8,
+        "ms": 392.91
+      },
+      {
+        "function": "build",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 21,
+        "ms": 387.662
+      },
+      {
+        "function": "corpsePosition",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 18,
+        "ms": 371.79
+      },
+      {
+        "function": "compileAsync",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 41,
+        "ms": 351.587
+      },
+      {
+        "function": "solve",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 18,
+        "ms": 344.978
+      },
+      {
+        "function": "settle",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 18,
+        "ms": 340.656
+      },
+      {
+        "function": "P0.e.onmessage",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 18,
+        "ms": 334.706
+      }
+    ]
+  },
+  {
+    "path": "test-results/perf9/diagnostic/L10-early/strips/webgpu/L10-prod.cpuprofile.gz",
+    "durationMs": 15730.675,
+    "samples": 10904,
+    "topSelf": [
+      {
+        "function": "(idle)",
+        "url": "",
+        "line": 0,
+        "ms": 6191.746
+      },
+      {
+        "function": "(program)",
+        "url": "",
+        "line": 0,
+        "ms": 1291.811
+      },
+      {
+        "function": "update",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 18,
+        "ms": 401.805
+      },
+      {
+        "function": "_renderObjectDirect",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 44,
+        "ms": 274.393
+      },
+      {
+        "function": "updateForRender",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 41,
+        "ms": 218.734
+      },
+      {
+        "function": "_update",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 33,
+        "ms": 213.646
+      },
+      {
+        "function": "writeBuffer",
+        "url": "",
+        "line": 0,
+        "ms": 197.438
+      },
+      {
+        "function": "updateMatrixWorld",
+        "url": "http://127.0.0.1:4902/build/three-core-DQooTupI.js",
+        "line": 5,
+        "ms": 186.756
+      },
+      {
+        "function": "updateReference",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 27,
+        "ms": 181.381
+      },
+      {
+        "function": "(garbage collector)",
+        "url": "",
+        "line": 0,
+        "ms": 158.84
+      },
+      {
+        "function": "_projectObject",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 44,
+        "ms": 158.5
+      },
+      {
+        "function": "p3",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 18,
+        "ms": 131.244
+      },
+      {
+        "function": "query",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 1,
+        "ms": 124.637
+      },
+      {
+        "function": "updateFrame",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 18,
+        "ms": 122.846
+      },
+      {
+        "function": "build",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 8,
+        "ms": 116.496
+      },
+      {
+        "function": "occludesBar",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 18,
+        "ms": 115.951
+      },
+      {
+        "function": "update",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 27,
+        "ms": 114.217
+      },
+      {
+        "function": "emit",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 1,
+        "ms": 107.44
+      },
+      {
+        "function": "update",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 44,
+        "ms": 106.477
+      },
+      {
+        "function": "update",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 1,
+        "ms": 96.385
+      },
+      {
+        "function": "n.get",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 18,
+        "ms": 89.832
+      },
+      {
+        "function": "updateAttributes",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 33,
+        "ms": 86.665
+      },
+      {
+        "function": "cutBlockers",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 18,
+        "ms": 79.737
+      },
+      {
+        "function": "multiplyMatrices",
+        "url": "http://127.0.0.1:4902/build/three-core-DQooTupI.js",
+        "line": 5,
+        "ms": 78.82
+      },
+      {
+        "function": "",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 18,
+        "ms": 75.679
+      },
+      {
+        "function": "",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 21,
+        "ms": 73.507
+      },
+      {
+        "function": "get value",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 27,
+        "ms": 68.32
+      },
+      {
+        "function": "",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 6,
+        "ms": 68.244
+      },
+      {
+        "function": "updateWorldMatrix",
+        "url": "http://127.0.0.1:4902/build/three-core-DQooTupI.js",
+        "line": 5,
+        "ms": 65.824
+      },
+      {
+        "function": "update",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 19,
+        "ms": 63.682
+      },
+      {
+        "function": "submit",
+        "url": "",
+        "line": 0,
+        "ms": 56.713
+      },
+      {
+        "function": "F7",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 18,
+        "ms": 56.668
+      },
+      {
+        "function": "setProperty",
+        "url": "",
+        "line": 0,
+        "ms": 56.528
+      },
+      {
+        "function": "",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 1,
+        "ms": 54.384
+      },
+      {
+        "function": "commit",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 1,
+        "ms": 53.026
+      }
+    ],
+    "topInclusive": [
+      {
+        "function": "(root)",
+        "url": "",
+        "line": 0,
+        "ms": 15729.908
+      },
+      {
+        "function": "frame",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 13,
+        "ms": 7421.041
+      },
+      {
+        "function": "",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 21,
+        "ms": 7418.05
+      },
+      {
+        "function": "emit",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 1,
+        "ms": 7418.05
+      },
+      {
+        "function": "(idle)",
+        "url": "",
+        "line": 0,
+        "ms": 6191.746
+      },
+      {
+        "function": "update",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 18,
+        "ms": 5571.395
+      },
+      {
+        "function": "updateFrame",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 18,
+        "ms": 5540.253
+      },
+      {
+        "function": "render",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 18,
+        "ms": 3095.304
+      },
+      {
+        "function": "_renderScene",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 44,
+        "ms": 3088.224
+      },
+      {
+        "function": "renderObject",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 44,
+        "ms": 3013.484
+      },
+      {
+        "function": "_renderObjects",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 44,
+        "ms": 3013.484
+      },
+      {
+        "function": "_renderObjectDirect",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 44,
+        "ms": 3010.494
+      },
+      {
+        "function": "render",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 579,
+        "ms": 2952.857
+      },
+      {
+        "function": "updateBefore",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 41,
+        "ms": 2920.6
+      },
+      {
+        "function": "updateBefore",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 33,
+        "ms": 2720.106
+      },
+      {
+        "function": "advance",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 1,
+        "ms": 1359.291
+      },
+      {
+        "function": "simTick",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 21,
+        "ms": 1354.792
+      },
+      {
+        "function": "(program)",
+        "url": "",
+        "line": 0,
+        "ms": 1291.811
+      },
+      {
+        "function": "update",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 21,
+        "ms": 1191.155
+      },
+      {
+        "function": "updateForRender",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 33,
+        "ms": 1004.806
+      },
+      {
+        "function": "",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 18,
+        "ms": 723.884
+      },
+      {
+        "function": "_updateBindings",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 33,
+        "ms": 614.018
+      },
+      {
+        "function": "updateForRender",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 41,
+        "ms": 586.696
+      },
+      {
+        "function": "_update",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 33,
+        "ms": 567.877
+      },
+      {
+        "function": "present",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 18,
+        "ms": 555.607
+      },
+      {
+        "function": "build",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 33,
+        "ms": 450.715
+      },
+      {
+        "function": "build",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 8,
+        "ms": 449.156
+      },
+      {
+        "function": "build",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 21,
+        "ms": 446.482
+      },
+      {
+        "function": "solve",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 18,
+        "ms": 419.39
+      },
+      {
+        "function": "correct",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 18,
+        "ms": 392.602
+      },
+      {
+        "function": "getForRender",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 41,
+        "ms": 378.992
+      },
+      {
+        "function": "place",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 18,
+        "ms": 366.153
+      },
+      {
+        "function": "",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 19,
+        "ms": 361.06
+      },
+      {
+        "function": "updateBefore",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 35,
+        "ms": 352.289
+      },
+      {
+        "function": "updateShadow",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 35,
+        "ms": 350.788
+      }
+    ]
+  },
+  {
+    "path": "test-results/perf9/diagnostic/L4-early/strips/webgpu/L4-candidate.cpuprofile.gz",
+    "durationMs": 15574.422,
+    "samples": 11052,
+    "topSelf": [
+      {
+        "function": "(idle)",
+        "url": "",
+        "line": 0,
+        "ms": 7553.132
+      },
+      {
+        "function": "(program)",
+        "url": "",
+        "line": 0,
+        "ms": 696.091
+      },
+      {
+        "function": "update",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 18,
+        "ms": 320.8
+      },
+      {
+        "function": "w7",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 18,
+        "ms": 316.532
+      },
+      {
+        "function": "_renderObjectDirect",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 44,
+        "ms": 305.175
+      },
+      {
+        "function": "updateForRender",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 41,
+        "ms": 219.021
+      },
+      {
+        "function": "updateMatrixWorld",
+        "url": "http://127.0.0.1:4901/build/three-core-DQooTupI.js",
+        "line": 5,
+        "ms": 217.04
+      },
+      {
+        "function": "writeBuffer",
+        "url": "",
+        "line": 0,
+        "ms": 186.449
+      },
+      {
+        "function": "_update",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 33,
+        "ms": 182.401
+      },
+      {
+        "function": "_projectObject",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 44,
+        "ms": 173.471
+      },
+      {
+        "function": "updateReference",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 27,
+        "ms": 171.961
+      },
+      {
+        "function": "update",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 44,
+        "ms": 133.904
+      },
+      {
+        "function": "update",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 1,
+        "ms": 121.691
+      },
+      {
+        "function": "multiplyMatrices",
+        "url": "http://127.0.0.1:4901/build/three-core-DQooTupI.js",
+        "line": 5,
+        "ms": 118.24
+      },
+      {
+        "function": "(garbage collector)",
+        "url": "",
+        "line": 0,
+        "ms": 107.887
+      },
+      {
+        "function": "get value",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 27,
+        "ms": 105.36
+      },
+      {
+        "function": "update",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 27,
+        "ms": 102.649
+      },
+      {
+        "function": "emit",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 1,
+        "ms": 102.102
+      },
+      {
+        "function": "updateFrame",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 18,
+        "ms": 99.431
+      },
+      {
+        "function": "getObjectByProperty",
+        "url": "http://127.0.0.1:4901/build/three-core-DQooTupI.js",
+        "line": 5,
+        "ms": 96.634
+      },
+      {
+        "function": "query",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 1,
+        "ms": 88.191
+      },
+      {
+        "function": "updateWorldMatrix",
+        "url": "http://127.0.0.1:4901/build/three-core-DQooTupI.js",
+        "line": 5,
+        "ms": 82.673
+      },
+      {
+        "function": "NE.n.get",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 18,
+        "ms": 78.199
+      },
+      {
+        "function": "",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 1,
+        "ms": 65.096
+      },
+      {
+        "function": "updateAttributes",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 33,
+        "ms": 62.975
+      },
+      {
+        "function": "visible",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 6,
+        "ms": 62.922
+      },
+      {
+        "function": "",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 19,
+        "ms": 56.624
+      },
+      {
+        "function": "_needsRenderUpdate",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 33,
+        "ms": 55.892
+      },
+      {
+        "function": "get",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 33,
+        "ms": 53.158
+      },
+      {
+        "function": "k2",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 1,
+        "ms": 52.647
+      },
+      {
+        "function": "",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 6,
+        "ms": 51.274
+      },
+      {
+        "function": "setVertexBuffer",
+        "url": "",
+        "line": 0,
+        "ms": 51.04
+      },
+      {
+        "function": "updateNumber",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 44,
+        "ms": 49.028
+      },
+      {
+        "function": "update",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 6,
+        "ms": 48.298
+      },
+      {
+        "function": "getX",
+        "url": "http://127.0.0.1:4901/build/three-core-DQooTupI.js",
+        "line": 5,
+        "ms": 44.51
+      }
+    ],
+    "topInclusive": [
+      {
+        "function": "(root)",
+        "url": "",
+        "line": 0,
+        "ms": 15574.265
+      },
+      {
+        "function": "(idle)",
+        "url": "",
+        "line": 0,
+        "ms": 7553.132
+      },
+      {
+        "function": "frame",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 13,
+        "ms": 6373.391
+      },
+      {
+        "function": "emit",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 1,
+        "ms": 6373.391
+      },
+      {
+        "function": "",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 21,
+        "ms": 6373.391
+      },
+      {
+        "function": "update",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 18,
+        "ms": 4614.913
+      },
+      {
+        "function": "updateFrame",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 18,
+        "ms": 4568.174
+      },
+      {
+        "function": "render",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 18,
+        "ms": 3045.359
+      },
+      {
+        "function": "_renderScene",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 44,
+        "ms": 3042.252
+      },
+      {
+        "function": "render",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 44,
+        "ms": 3042.252
+      },
+      {
+        "function": "_renderObjects",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 44,
+        "ms": 2988.851
+      },
+      {
+        "function": "renderObject",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 44,
+        "ms": 2987.36
+      },
+      {
+        "function": "_renderObjectDirect",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 44,
+        "ms": 2984.348
+      },
+      {
+        "function": "render",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 33,
+        "ms": 2948.446
+      },
+      {
+        "function": "render",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 579,
+        "ms": 2948.446
+      },
+      {
+        "function": "updateBefore",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 41,
+        "ms": 2921.193
+      },
+      {
+        "function": "updateBefore",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 33,
+        "ms": 2803.966
+      },
+      {
+        "function": "advance",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 1,
+        "ms": 1582.727
+      },
+      {
+        "function": "simTick",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 21,
+        "ms": 1581.199
+      },
+      {
+        "function": "update",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 21,
+        "ms": 1513.774
+      },
+      {
+        "function": "updateForRender",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 33,
+        "ms": 901.277
+      },
+      {
+        "function": "(program)",
+        "url": "",
+        "line": 0,
+        "ms": 696.091
+      },
+      {
+        "function": "",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 19,
+        "ms": 685.24
+      },
+      {
+        "function": "updateForRender",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 41,
+        "ms": 616.855
+      },
+      {
+        "function": "_updateBindings",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 33,
+        "ms": 559.527
+      },
+      {
+        "function": "_update",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 33,
+        "ms": 518.109
+      },
+      {
+        "function": "update",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 1,
+        "ms": 499.952
+      },
+      {
+        "function": "updateBefore",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 35,
+        "ms": 438.226
+      },
+      {
+        "function": "updateShadow",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 35,
+        "ms": 438.226
+      },
+      {
+        "function": "renderShadow",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 35,
+        "ms": 432.498
+      },
+      {
+        "function": "update",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 19,
+        "ms": 420.886
+      },
+      {
+        "function": "P0.e.onmessage",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 18,
+        "ms": 372.378
+      },
+      {
+        "function": "l5",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 18,
+        "ms": 369.365
+      },
+      {
+        "function": "present",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 18,
+        "ms": 365.951
+      },
+      {
+        "function": "",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 18,
+        "ms": 356.579
+      }
+    ]
+  },
+  {
+    "path": "test-results/perf9/diagnostic/L4-early/strips/webgpu/L4-prod.cpuprofile.gz",
+    "durationMs": 15606.487,
+    "samples": 11046,
+    "topSelf": [
+      {
+        "function": "(idle)",
+        "url": "",
+        "line": 0,
+        "ms": 7838.731
+      },
+      {
+        "function": "(program)",
+        "url": "",
+        "line": 0,
+        "ms": 758.319
+      },
+      {
+        "function": "_renderObjectDirect",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 44,
+        "ms": 312.151
+      },
+      {
+        "function": "update",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 18,
+        "ms": 307.724
+      },
+      {
+        "function": "updateMatrixWorld",
+        "url": "http://127.0.0.1:4902/build/three-core-DQooTupI.js",
+        "line": 5,
+        "ms": 245.288
+      },
+      {
+        "function": "_update",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 33,
+        "ms": 215.004
+      },
+      {
+        "function": "updateForRender",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 41,
+        "ms": 190.689
+      },
+      {
+        "function": "writeBuffer",
+        "url": "",
+        "line": 0,
+        "ms": 173.485
+      },
+      {
+        "function": "_projectObject",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 44,
+        "ms": 168.884
+      },
+      {
+        "function": "updateReference",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 27,
+        "ms": 162.835
+      },
+      {
+        "function": "multiplyMatrices",
+        "url": "http://127.0.0.1:4902/build/three-core-DQooTupI.js",
+        "line": 5,
+        "ms": 125.816
+      },
+      {
+        "function": "update",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 44,
+        "ms": 122.602
+      },
+      {
+        "function": "update",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 27,
+        "ms": 114.906
+      },
+      {
+        "function": "update",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 1,
+        "ms": 113.952
+      },
+      {
+        "function": "query",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 1,
+        "ms": 110.057
+      },
+      {
+        "function": "get value",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 27,
+        "ms": 101.98
+      },
+      {
+        "function": "emit",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 1,
+        "ms": 97.031
+      },
+      {
+        "function": "(garbage collector)",
+        "url": "",
+        "line": 0,
+        "ms": 87.626
+      },
+      {
+        "function": "updateFrame",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 18,
+        "ms": 85.969
+      },
+      {
+        "function": "getObjectByProperty",
+        "url": "http://127.0.0.1:4902/build/three-core-DQooTupI.js",
+        "line": 5,
+        "ms": 84.789
+      },
+      {
+        "function": "n.get",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 18,
+        "ms": 75.249
+      },
+      {
+        "function": "updateWorldMatrix",
+        "url": "http://127.0.0.1:4902/build/three-core-DQooTupI.js",
+        "line": 5,
+        "ms": 72.211
+      },
+      {
+        "function": "w2",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 1,
+        "ms": 71.018
+      },
+      {
+        "function": "",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 6,
+        "ms": 69.519
+      },
+      {
+        "function": "updateAttributes",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 33,
+        "ms": 66.542
+      },
+      {
+        "function": "get",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 33,
+        "ms": 65.244
+      },
+      {
+        "function": "updateNumber",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 44,
+        "ms": 61.189
+      },
+      {
+        "function": "visible",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 6,
+        "ms": 53.592
+      },
+      {
+        "function": "solids",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 1,
+        "ms": 52.69
+      },
+      {
+        "function": "",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 19,
+        "ms": 52.035
+      },
+      {
+        "function": "MT",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 18,
+        "ms": 50.254
+      },
+      {
+        "function": "",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 21,
+        "ms": 48.957
+      },
+      {
+        "function": "isOn",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 19,
+        "ms": 48.091
+      },
+      {
+        "function": "copy",
+        "url": "http://127.0.0.1:4902/build/three-core-DQooTupI.js",
+        "line": 5,
+        "ms": 47.586
+      },
+      {
+        "function": "_draw",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 579,
+        "ms": 46.122
+      }
+    ],
+    "topInclusive": [
+      {
+        "function": "(root)",
+        "url": "",
+        "line": 0,
+        "ms": 15606.209
+      },
+      {
+        "function": "(idle)",
+        "url": "",
+        "line": 0,
+        "ms": 7838.731
+      },
+      {
+        "function": "frame",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 13,
+        "ms": 6452.576
+      },
+      {
+        "function": "emit",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 1,
+        "ms": 6448.099
+      },
+      {
+        "function": "",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 21,
+        "ms": 6445.098
+      },
+      {
+        "function": "update",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 18,
+        "ms": 4653.757
+      },
+      {
+        "function": "updateFrame",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 18,
+        "ms": 4600.648
+      },
+      {
+        "function": "render",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 18,
+        "ms": 3089.432
+      },
+      {
+        "function": "render",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 44,
+        "ms": 3072.941
+      },
+      {
+        "function": "_renderScene",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 44,
+        "ms": 3071.448
+      },
+      {
+        "function": "_renderObjectDirect",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 44,
+        "ms": 3034.199
+      },
+      {
+        "function": "renderObject",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 44,
+        "ms": 3033.898
+      },
+      {
+        "function": "_renderObjects",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 44,
+        "ms": 3033.898
+      },
+      {
+        "function": "render",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 579,
+        "ms": 2979.845
+      },
+      {
+        "function": "render",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 33,
+        "ms": 2978.355
+      },
+      {
+        "function": "updateBefore",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 41,
+        "ms": 2959.095
+      },
+      {
+        "function": "updateBefore",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 33,
+        "ms": 2850.27
+      },
+      {
+        "function": "advance",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 1,
+        "ms": 1613.617
+      },
+      {
+        "function": "simTick",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 21,
+        "ms": 1604.905
+      },
+      {
+        "function": "update",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 21,
+        "ms": 1537.986
+      },
+      {
+        "function": "updateForRender",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 33,
+        "ms": 909.493
+      },
+      {
+        "function": "(program)",
+        "url": "",
+        "line": 0,
+        "ms": 758.319
+      },
+      {
+        "function": "",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 19,
+        "ms": 671.273
+      },
+      {
+        "function": "_updateBindings",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 33,
+        "ms": 601.814
+      },
+      {
+        "function": "updateForRender",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 41,
+        "ms": 576.135
+      },
+      {
+        "function": "_update",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 33,
+        "ms": 553.255
+      },
+      {
+        "function": "update",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 1,
+        "ms": 505.309
+      },
+      {
+        "function": "updateBefore",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 35,
+        "ms": 459.742
+      },
+      {
+        "function": "updateShadow",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 35,
+        "ms": 458.238
+      },
+      {
+        "function": "renderShadow",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 35,
+        "ms": 453.751
+      },
+      {
+        "function": "",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 18,
+        "ms": 424.565
+      },
+      {
+        "function": "update",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 19,
+        "ms": 416.737
+      },
+      {
+        "function": "present",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 18,
+        "ms": 376.743
+      },
+      {
+        "function": "updateMatrixWorld",
+        "url": "http://127.0.0.1:4902/build/three-core-DQooTupI.js",
+        "line": 5,
+        "ms": 345.347
+      },
+      {
+        "function": "correct",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 18,
+        "ms": 344.781
+      }
+    ]
+  },
+  {
+    "path": "test-results/perf9/diagnostic/load-high-L7/loads/L7-candidate-cold.cpuprofile.gz",
+    "durationMs": 3759.79,
+    "samples": 3733,
+    "topSelf": [
+      {
+        "function": "build",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 8,
+        "ms": 326.53
+      },
+      {
+        "function": "(idle)",
+        "url": "",
+        "line": 0,
+        "ms": 293.494
+      },
+      {
+        "function": "(program)",
+        "url": "",
+        "line": 0,
+        "ms": 241.073
+      },
+      {
+        "function": "(garbage collector)",
+        "url": "",
+        "line": 0,
+        "ms": 178.88
+      },
+      {
+        "function": "w7",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 18,
+        "ms": 157.943
+      },
+      {
+        "function": "_getChildren",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 8,
+        "ms": 95.655
+      },
+      {
+        "function": "tx",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 1,
+        "ms": 93.254
+      },
+      {
+        "function": "getChildren",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 8,
+        "ms": 92.143
+      },
+      {
+        "function": "",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 1,
+        "ms": 66.185
+      },
+      {
+        "function": "",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 18,
+        "ms": 63.346
+      },
+      {
+        "function": "getDataFromNode",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 35,
+        "ms": 62.352
+      },
+      {
+        "function": "n",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 8,
+        "ms": 53.738
+      },
+      {
+        "function": "getX",
+        "url": "http://127.0.0.1:4901/build/three-core-DQooTupI.js",
+        "line": 5,
+        "ms": 50.207
+      },
+      {
+        "function": "getNodeFromHash",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 35,
+        "ms": 48.308
+      },
+      {
+        "function": "cb",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 18,
+        "ms": 45.524
+      },
+      {
+        "function": "generate",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 8,
+        "ms": 41.838
+      },
+      {
+        "function": "analyze",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 8,
+        "ms": 41.744
+      },
+      {
+        "function": "wm",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 18,
+        "ms": 32.303
+      },
+      {
+        "function": "frozenPose",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 18,
+        "ms": 30.542
+      },
+      {
+        "function": "setHashNode",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 35,
+        "ms": 29.947
+      },
+      {
+        "function": "getNodeType",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 8,
+        "ms": 29.648
+      },
+      {
+        "function": "getTypeLength",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 35,
+        "ms": 28.607
+      },
+      {
+        "function": "build",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 21,
+        "ms": 26.314
+      },
+      {
+        "function": "setup",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 8,
+        "ms": 26.158
+      },
+      {
+        "function": "dx",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 1,
+        "ms": 25.453
+      },
+      {
+        "function": "getZ",
+        "url": "http://127.0.0.1:4901/build/three-core-DQooTupI.js",
+        "line": 5,
+        "ms": 24.812
+      },
+      {
+        "function": "generateNodeType",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 8,
+        "ms": 23.864
+      },
+      {
+        "function": "setData",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 35,
+        "ms": 23.602
+      },
+      {
+        "function": "build",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 33,
+        "ms": 22.197
+      },
+      {
+        "function": "getData",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 35,
+        "ms": 20.905
+      },
+      {
+        "function": "update",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 18,
+        "ms": 20.874
+      },
+      {
+        "function": "Q0",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 18,
+        "ms": 20.688
+      },
+      {
+        "function": "ch",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 1,
+        "ms": 20.379
+      },
+      {
+        "function": "j",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 18,
+        "ms": 20.358
+      },
+      {
+        "function": "CL",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 18,
+        "ms": 19.243
+      }
+    ],
+    "topInclusive": [
+      {
+        "function": "(root)",
+        "url": "",
+        "line": 0,
+        "ms": 3758.165
+      },
+      {
+        "function": "getForRender",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 41,
+        "ms": 1351.954
+      },
+      {
+        "function": "build",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 40,
+        "ms": 1348.956
+      },
+      {
+        "function": "build",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 33,
+        "ms": 1326.405
+      },
+      {
+        "function": "build",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 8,
+        "ms": 1319.14
+      },
+      {
+        "function": "build",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 21,
+        "ms": 1299.004
+      },
+      {
+        "function": "compileAsync",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 41,
+        "ms": 1154.704
+      },
+      {
+        "function": "e.getForRenderAsync",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 18,
+        "ms": 1063.502
+      },
+      {
+        "function": "build",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 23,
+        "ms": 694.099
+      },
+      {
+        "function": "setup",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 21,
+        "ms": 559.683
+      },
+      {
+        "function": "",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 21,
+        "ms": 507.042
+      },
+      {
+        "function": "",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 18,
+        "ms": 473.974
+      },
+      {
+        "function": "render",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 18,
+        "ms": 458.629
+      },
+      {
+        "function": "_renderScene",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 44,
+        "ms": 457.629
+      },
+      {
+        "function": "render",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 44,
+        "ms": 457.107
+      },
+      {
+        "function": "renderObject",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 44,
+        "ms": 456.163
+      },
+      {
+        "function": "_renderObjects",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 44,
+        "ms": 456.163
+      },
+      {
+        "function": "_renderObjectDirect",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 44,
+        "ms": 455.288
+      },
+      {
+        "function": "flowNodeFromShaderStage",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 36,
+        "ms": 450.966
+      },
+      {
+        "function": "render",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 33,
+        "ms": 442.898
+      },
+      {
+        "function": "render",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 579,
+        "ms": 442.898
+      },
+      {
+        "function": "updateBeforeNode",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 41,
+        "ms": 439.52
+      },
+      {
+        "function": "updateBefore",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 41,
+        "ms": 439.52
+      },
+      {
+        "function": "updateBefore",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 33,
+        "ms": 430.178
+      },
+      {
+        "function": "Dm",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 18,
+        "ms": 427.936
+      },
+      {
+        "function": "r",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 18,
+        "ms": 388.654
+      },
+      {
+        "function": "flowChildNode",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 36,
+        "ms": 332.489
+      },
+      {
+        "function": "generate",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 8,
+        "ms": 320.704
+      },
+      {
+        "function": "renderShadow",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 35,
+        "ms": 313.454
+      },
+      {
+        "function": "updateBefore",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 35,
+        "ms": 313.454
+      },
+      {
+        "function": "updateShadow",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 35,
+        "ms": 313.454
+      },
+      {
+        "function": "r",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 35,
+        "ms": 310.02
+      },
+      {
+        "function": "(idle)",
+        "url": "",
+        "line": 0,
+        "ms": 293.494
+      },
+      {
+        "function": "needsRefresh",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 41,
+        "ms": 291.477
+      },
+      {
+        "function": "getNodeBuilderState",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 33,
+        "ms": 289.955
+      }
+    ]
+  },
+  {
+    "path": "test-results/perf9/diagnostic/load-high-L7/loads/L7-candidate-warm.cpuprofile.gz",
+    "durationMs": 3536.907,
+    "samples": 3069,
+    "topSelf": [
+      {
+        "function": "build",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 8,
+        "ms": 343.824
+      },
+      {
+        "function": "(idle)",
+        "url": "",
+        "line": 0,
+        "ms": 257.348
+      },
+      {
+        "function": "(program)",
+        "url": "",
+        "line": 0,
+        "ms": 184.138
+      },
+      {
+        "function": "(garbage collector)",
+        "url": "",
+        "line": 0,
+        "ms": 182.872
+      },
+      {
+        "function": "w7",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 18,
+        "ms": 147.757
+      },
+      {
+        "function": "_getChildren",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 8,
+        "ms": 89.274
+      },
+      {
+        "function": "tx",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 1,
+        "ms": 81.504
+      },
+      {
+        "function": "getChildren",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 8,
+        "ms": 76.283
+      },
+      {
+        "function": "n",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 8,
+        "ms": 75.726
+      },
+      {
+        "function": "",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 1,
+        "ms": 72.121
+      },
+      {
+        "function": "getDataFromNode",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 35,
+        "ms": 58.715
+      },
+      {
+        "function": "generate",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 8,
+        "ms": 52.982
+      },
+      {
+        "function": "cb",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 18,
+        "ms": 50.719
+      },
+      {
+        "function": "analyze",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 8,
+        "ms": 44.491
+      },
+      {
+        "function": "",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 18,
+        "ms": 43.99
+      },
+      {
+        "function": "getX",
+        "url": "http://127.0.0.1:4901/build/three-core-DQooTupI.js",
+        "line": 5,
+        "ms": 43.808
+      },
+      {
+        "function": "setHashNode",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 35,
+        "ms": 39.989
+      },
+      {
+        "function": "frozenPose",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 18,
+        "ms": 38.533
+      },
+      {
+        "function": "wm",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 18,
+        "ms": 35.98
+      },
+      {
+        "function": "build",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 21,
+        "ms": 31.492
+      },
+      {
+        "function": "setup",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 8,
+        "ms": 29.85
+      },
+      {
+        "function": "CL",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 18,
+        "ms": 27.087
+      },
+      {
+        "function": "dx",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 1,
+        "ms": 26.916
+      },
+      {
+        "function": "getNodeFromHash",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 35,
+        "ms": 23.923
+      },
+      {
+        "function": "setData",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 35,
+        "ms": 23.43
+      },
+      {
+        "function": "generateNodeType",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 8,
+        "ms": 22.482
+      },
+      {
+        "function": "Q0",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 18,
+        "ms": 20.91
+      },
+      {
+        "function": "L",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 18,
+        "ms": 20.56
+      },
+      {
+        "function": "yi",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 20,
+        "ms": 20.233
+      },
+      {
+        "function": "getData",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 35,
+        "ms": 19.556
+      },
+      {
+        "function": "getVertexPosition",
+        "url": "http://127.0.0.1:4901/build/three-core-DQooTupI.js",
+        "line": 5,
+        "ms": 18.473
+      },
+      {
+        "function": "bQ",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 20,
+        "ms": 17.998
+      },
+      {
+        "function": "build",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 33,
+        "ms": 17.991
+      },
+      {
+        "function": "getInputType",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 8,
+        "ms": 17.975
+      },
+      {
+        "function": "Cd",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 20,
+        "ms": 16.751
+      }
+    ],
+    "topInclusive": [
+      {
+        "function": "(root)",
+        "url": "",
+        "line": 0,
+        "ms": 3535.831
+      },
+      {
+        "function": "getForRender",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 41,
+        "ms": 1332.279
+      },
+      {
+        "function": "build",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 40,
+        "ms": 1329.263
+      },
+      {
+        "function": "build",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 33,
+        "ms": 1307.922
+      },
+      {
+        "function": "build",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 8,
+        "ms": 1296.088
+      },
+      {
+        "function": "build",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 21,
+        "ms": 1272.922
+      },
+      {
+        "function": "compileAsync",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 41,
+        "ms": 1139.032
+      },
+      {
+        "function": "e.getForRenderAsync",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 18,
+        "ms": 1047.187
+      },
+      {
+        "function": "build",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 23,
+        "ms": 686.639
+      },
+      {
+        "function": "setup",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 21,
+        "ms": 547.592
+      },
+      {
+        "function": "",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 21,
+        "ms": 462.585
+      },
+      {
+        "function": "renderObject",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 44,
+        "ms": 459.005
+      },
+      {
+        "function": "_renderObjects",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 44,
+        "ms": 459.005
+      },
+      {
+        "function": "_renderScene",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 44,
+        "ms": 458.349
+      },
+      {
+        "function": "_renderObjectDirect",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 44,
+        "ms": 454.721
+      },
+      {
+        "function": "render",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 18,
+        "ms": 450.274
+      },
+      {
+        "function": "flowNodeFromShaderStage",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 36,
+        "ms": 447.524
+      },
+      {
+        "function": "",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 18,
+        "ms": 445.843
+      },
+      {
+        "function": "render",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 33,
+        "ms": 438.099
+      },
+      {
+        "function": "render",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 579,
+        "ms": 438.099
+      },
+      {
+        "function": "updateBeforeNode",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 41,
+        "ms": 435.628
+      },
+      {
+        "function": "updateBefore",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 41,
+        "ms": 435.628
+      },
+      {
+        "function": "updateBefore",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 33,
+        "ms": 431.125
+      },
+      {
+        "function": "Dm",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 18,
+        "ms": 417.77
+      },
+      {
+        "function": "r",
+        "url": "http://127.0.0.1:4901/build/index-DnjIp4Ne.js",
+        "line": 18,
+        "ms": 382.461
+      },
+      {
+        "function": "renderShadow",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 35,
+        "ms": 315.187
+      },
+      {
+        "function": "updateBefore",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 35,
+        "ms": 315.187
+      },
+      {
+        "function": "updateShadow",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 35,
+        "ms": 315.187
+      },
+      {
+        "function": "r",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 35,
+        "ms": 311.414
+      },
+      {
+        "function": "flowChildNode",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 36,
+        "ms": 310.852
+      },
+      {
+        "function": "generate",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 8,
+        "ms": 290.952
+      },
+      {
+        "function": "getNodeBuilderState",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 33,
+        "ms": 286.606
+      },
+      {
+        "function": "needsRefresh",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 41,
+        "ms": 286.596
+      },
+      {
+        "function": "getMonitor",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 33,
+        "ms": 285.092
+      },
+      {
+        "function": "flowNode",
+        "url": "http://127.0.0.1:4901/build/three-webgpu-Cy_8JUkS.js",
+        "line": 36,
+        "ms": 267.574
+      }
+    ]
+  },
+  {
+    "path": "test-results/perf9/diagnostic/load-high-L7/loads/L7-prod-cold.cpuprofile.gz",
+    "durationMs": 2995.814,
+    "samples": 3011,
+    "topSelf": [
+      {
+        "function": "build",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 8,
+        "ms": 252.663
+      },
+      {
+        "function": "(idle)",
+        "url": "",
+        "line": 0,
+        "ms": 226.083
+      },
+      {
+        "function": "(program)",
+        "url": "",
+        "line": 0,
+        "ms": 195.292
+      },
+      {
+        "function": "(garbage collector)",
+        "url": "",
+        "line": 0,
+        "ms": 145.534
+      },
+      {
+        "function": "_getChildren",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 8,
+        "ms": 88.41
+      },
+      {
+        "function": "$w",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 1,
+        "ms": 76.697
+      },
+      {
+        "function": "",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 1,
+        "ms": 76.279
+      },
+      {
+        "function": "getChildren",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 8,
+        "ms": 68.709
+      },
+      {
+        "function": "ab",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 18,
+        "ms": 50.214
+      },
+      {
+        "function": "",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 18,
+        "ms": 49.044
+      },
+      {
+        "function": "getDataFromNode",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 35,
+        "ms": 48.978
+      },
+      {
+        "function": "n",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 8,
+        "ms": 44.315
+      },
+      {
+        "function": "build",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 21,
+        "ms": 41.427
+      },
+      {
+        "function": "generate",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 8,
+        "ms": 37.785
+      },
+      {
+        "function": "ax",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 1,
+        "ms": 33.481
+      },
+      {
+        "function": "fm",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 18,
+        "ms": 31.969
+      },
+      {
+        "function": "getNodeType",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 8,
+        "ms": 30.709
+      },
+      {
+        "function": "MT",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 18,
+        "ms": 27.994
+      },
+      {
+        "function": "analyze",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 8,
+        "ms": 26.793
+      },
+      {
+        "function": "setHashNode",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 35,
+        "ms": 26.692
+      },
+      {
+        "function": "getNodeProperties",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 35,
+        "ms": 24.898
+      },
+      {
+        "function": "lQ",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 20,
+        "ms": 24.559
+      },
+      {
+        "function": "generateNodeType",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 8,
+        "ms": 23.805
+      },
+      {
+        "function": "groundHeight",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 21,
+        "ms": 19.611
+      },
+      {
+        "function": "frozenPose",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 18,
+        "ms": 19.556
+      },
+      {
+        "function": "setData",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 35,
+        "ms": 19.494
+      },
+      {
+        "function": "addNode",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 35,
+        "ms": 19.488
+      },
+      {
+        "function": "jG",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 20,
+        "ms": 19.349
+      },
+      {
+        "function": "N0",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 18,
+        "ms": 19.071
+      },
+      {
+        "function": "",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 20,
+        "ms": 18.082
+      },
+      {
+        "function": "U",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 18,
+        "ms": 17.254
+      },
+      {
+        "function": "getX",
+        "url": "http://127.0.0.1:4902/build/three-core-DQooTupI.js",
+        "line": 5,
+        "ms": 17.094
+      },
+      {
+        "function": "setup",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 8,
+        "ms": 16.331
+      },
+      {
+        "function": "wL",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 18,
+        "ms": 15.936
+      },
+      {
+        "function": "getTypeLength",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 35,
+        "ms": 14.328
+      }
+    ],
+    "topInclusive": [
+      {
+        "function": "(root)",
+        "url": "",
+        "line": 0,
+        "ms": 2994.476
+      },
+      {
+        "function": "getForRender",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 41,
+        "ms": 1048.427
+      },
+      {
+        "function": "build",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 40,
+        "ms": 1043.979
+      },
+      {
+        "function": "build",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 33,
+        "ms": 1028.493
+      },
+      {
+        "function": "build",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 8,
+        "ms": 1011.566
+      },
+      {
+        "function": "build",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 21,
+        "ms": 1008.491
+      },
+      {
+        "function": "compileAsync",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 41,
+        "ms": 1008.247
+      },
+      {
+        "function": "e.getForRenderAsync",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 18,
+        "ms": 927.107
+      },
+      {
+        "function": "",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 21,
+        "ms": 508.303
+      },
+      {
+        "function": "build",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 23,
+        "ms": 487.722
+      },
+      {
+        "function": "",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 18,
+        "ms": 419.09
+      },
+      {
+        "function": "setup",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 21,
+        "ms": 374.705
+      },
+      {
+        "function": "_renderScene",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 44,
+        "ms": 275.047
+      },
+      {
+        "function": "render",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 44,
+        "ms": 274.606
+      },
+      {
+        "function": "render",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 18,
+        "ms": 274.606
+      },
+      {
+        "function": "_renderObjects",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 44,
+        "ms": 273.811
+      },
+      {
+        "function": "renderObject",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 44,
+        "ms": 272.303
+      },
+      {
+        "function": "_renderObjectDirect",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 44,
+        "ms": 272.035
+      },
+      {
+        "function": "flowChildNode",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 36,
+        "ms": 267.912
+      },
+      {
+        "function": "render",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 33,
+        "ms": 261.917
+      },
+      {
+        "function": "render",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 579,
+        "ms": 261.917
+      },
+      {
+        "function": "updateBeforeNode",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 41,
+        "ms": 254.156
+      },
+      {
+        "function": "updateBefore",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 41,
+        "ms": 254.156
+      },
+      {
+        "function": "updateBefore",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 33,
+        "ms": 249.884
+      },
+      {
+        "function": "generate",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 8,
+        "ms": 249.376
+      },
+      {
+        "function": "Tm",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 18,
+        "ms": 243.432
+      },
+      {
+        "function": "flowNodeFromShaderStage",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 36,
+        "ms": 237.835
+      },
+      {
+        "function": "flowNode",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 36,
+        "ms": 236.734
+      },
+      {
+        "function": "loadComposition",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 21,
+        "ms": 236.104
+      },
+      {
+        "function": "(idle)",
+        "url": "",
+        "line": 0,
+        "ms": 226.083
+      },
+      {
+        "function": "r",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 18,
+        "ms": 210.993
+      },
+      {
+        "function": "generate",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 21,
+        "ms": 200.344
+      },
+      {
+        "function": "load",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 18,
+        "ms": 199.794
+      },
+      {
+        "function": "(program)",
+        "url": "",
+        "line": 0,
+        "ms": 195.292
+      },
+      {
+        "function": "N0",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 18,
+        "ms": 188.917
+      }
+    ]
+  },
+  {
+    "path": "test-results/perf9/diagnostic/load-high-L7/loads/L7-prod-warm.cpuprofile.gz",
+    "durationMs": 2875.242,
+    "samples": 3310,
+    "topSelf": [
+      {
+        "function": "(idle)",
+        "url": "",
+        "line": 0,
+        "ms": 242.996
+      },
+      {
+        "function": "build",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 8,
+        "ms": 241.488
+      },
+      {
+        "function": "(program)",
+        "url": "",
+        "line": 0,
+        "ms": 186.223
+      },
+      {
+        "function": "(garbage collector)",
+        "url": "",
+        "line": 0,
+        "ms": 152.816
+      },
+      {
+        "function": "$w",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 1,
+        "ms": 82.493
+      },
+      {
+        "function": "_getChildren",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 8,
+        "ms": 79.789
+      },
+      {
+        "function": "",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 1,
+        "ms": 70.152
+      },
+      {
+        "function": "n",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 8,
+        "ms": 52.922
+      },
+      {
+        "function": "getChildren",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 8,
+        "ms": 52.136
+      },
+      {
+        "function": "getDataFromNode",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 35,
+        "ms": 49.913
+      },
+      {
+        "function": "ab",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 18,
+        "ms": 42.835
+      },
+      {
+        "function": "generate",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 8,
+        "ms": 40.931
+      },
+      {
+        "function": "",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 18,
+        "ms": 36.564
+      },
+      {
+        "function": "analyze",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 8,
+        "ms": 36.524
+      },
+      {
+        "function": "getNodeFromHash",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 35,
+        "ms": 33.909
+      },
+      {
+        "function": "getX",
+        "url": "http://127.0.0.1:4902/build/three-core-DQooTupI.js",
+        "line": 5,
+        "ms": 27.215
+      },
+      {
+        "function": "isAssign",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 21,
+        "ms": 26.998
+      },
+      {
+        "function": "frozenPose",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 18,
+        "ms": 26.421
+      },
+      {
+        "function": "setData",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 35,
+        "ms": 23.659
+      },
+      {
+        "function": "rh",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 1,
+        "ms": 23.161
+      },
+      {
+        "function": "fm",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 18,
+        "ms": 22.642
+      },
+      {
+        "function": "MT",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 18,
+        "ms": 22.484
+      },
+      {
+        "function": "setHashNode",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 35,
+        "ms": 22.406
+      },
+      {
+        "function": "N0",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 18,
+        "ms": 22.25
+      },
+      {
+        "function": "lQ",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 20,
+        "ms": 21.919
+      },
+      {
+        "function": "generateNodeType",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 8,
+        "ms": 21.332
+      },
+      {
+        "function": "wL",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 18,
+        "ms": 20.721
+      },
+      {
+        "function": "getHash",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 8,
+        "ms": 19.889
+      },
+      {
+        "function": "setup",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 8,
+        "ms": 19.654
+      },
+      {
+        "function": "U",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 18,
+        "ms": 19.556
+      },
+      {
+        "function": "jG",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 20,
+        "ms": 18.371
+      },
+      {
+        "function": "getUniformFromNode",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 447,
+        "ms": 17.73
+      },
+      {
+        "function": "build",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 21,
+        "ms": 17.468
+      },
+      {
+        "function": "bL",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 18,
+        "ms": 16.966
+      },
+      {
+        "function": "ax",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 1,
+        "ms": 16.631
+      }
+    ],
+    "topInclusive": [
+      {
+        "function": "(root)",
+        "url": "",
+        "line": 0,
+        "ms": 2875.084
+      },
+      {
+        "function": "getForRender",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 41,
+        "ms": 1042.579
+      },
+      {
+        "function": "build",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 40,
+        "ms": 1036.547
+      },
+      {
+        "function": "build",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 33,
+        "ms": 1019.327
+      },
+      {
+        "function": "build",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 8,
+        "ms": 1011.337
+      },
+      {
+        "function": "compileAsync",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 41,
+        "ms": 1007.315
+      },
+      {
+        "function": "build",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 21,
+        "ms": 998.95
+      },
+      {
+        "function": "e.getForRenderAsync",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 18,
+        "ms": 913.213
+      },
+      {
+        "function": "build",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 23,
+        "ms": 484.289
+      },
+      {
+        "function": "",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 21,
+        "ms": 449.17
+      },
+      {
+        "function": "",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 18,
+        "ms": 402.571
+      },
+      {
+        "function": "setup",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 21,
+        "ms": 374.149
+      },
+      {
+        "function": "flowChildNode",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 36,
+        "ms": 283.128
+      },
+      {
+        "function": "_renderScene",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 44,
+        "ms": 270.752
+      },
+      {
+        "function": "renderObject",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 44,
+        "ms": 267.766
+      },
+      {
+        "function": "_renderObjects",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 44,
+        "ms": 267.766
+      },
+      {
+        "function": "_renderObjectDirect",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 44,
+        "ms": 266.695
+      },
+      {
+        "function": "generate",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 8,
+        "ms": 263.268
+      },
+      {
+        "function": "render",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 44,
+        "ms": 263.229
+      },
+      {
+        "function": "render",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 18,
+        "ms": 263.229
+      },
+      {
+        "function": "flowNode",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 36,
+        "ms": 251.485
+      },
+      {
+        "function": "render",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 33,
+        "ms": 251.421
+      },
+      {
+        "function": "render",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 579,
+        "ms": 251.421
+      },
+      {
+        "function": "updateBefore",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 41,
+        "ms": 248.6
+      },
+      {
+        "function": "updateBeforeNode",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 41,
+        "ms": 248.6
+      },
+      {
+        "function": "updateBefore",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 33,
+        "ms": 244.101
+      },
+      {
+        "function": "flowNodeFromShaderStage",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 36,
+        "ms": 243.693
+      },
+      {
+        "function": "(idle)",
+        "url": "",
+        "line": 0,
+        "ms": 242.996
+      },
+      {
+        "function": "Tm",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 18,
+        "ms": 233.223
+      },
+      {
+        "function": "loadComposition",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 21,
+        "ms": 211.698
+      },
+      {
+        "function": "r",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 18,
+        "ms": 205.339
+      },
+      {
+        "function": "generate",
+        "url": "http://127.0.0.1:4902/build/three-webgpu-Cy_8JUkS.js",
+        "line": 21,
+        "ms": 202.756
+      },
+      {
+        "function": "(program)",
+        "url": "",
+        "line": 0,
+        "ms": 186.223
+      },
+      {
+        "function": "N0",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 18,
+        "ms": 181.161
+      },
+      {
+        "function": "load",
+        "url": "http://127.0.0.1:4902/build/index-DbFAIX8_.js",
+        "line": 18,
+        "ms": 170.402
+      }
+    ]
+  }
+]

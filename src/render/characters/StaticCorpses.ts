@@ -249,15 +249,15 @@ export class StaticCorpses extends Group {
         // A frozen pose reuses each joint × inverse bind for every vertex.
         const skinPose = new Float32Array(clip.parts.length * 16);
         premultiplyRow(clip.matrices, skinPose, clip.binds, frameOffset, clip.parts.length, 0);
-        for (const name of ['position', 'normal', 'color', '_parts', ...(source.hasAttribute('uv') ? ['uv'] : [])]) {
+        // GPU backends may pad normals to vec4; frozen surfaces retain xyz.
+        const normals = source.getAttribute('normal'), normalData = new Float32Array(kept.length * 3);
+        for (const name of ['position', 'color', '_parts', ...(source.hasAttribute('uv') ? ['uv'] : [])]) {
           const original = source.getAttribute(name), coveredScalp = name === 'position' && hidesHair && source.userData.headwearMorph ? source.getAttribute('_gripPosition') : undefined;
-          // GPU backends may pad normals to vec4. Frozen geometry retains the
-          // semantic xyz layout warmed before combat, including accessory pages.
-          const size = name === 'position' || name === 'normal' ? 3 : original.itemSize;
+          const size = name === 'position' ? 3 : original.itemSize;
           const data = new Float32Array(kept.length * size);
           for (let output = 0; output < kept.length; output++) {
             const i = kept[output];
-            if (name === 'position' || name === 'normal') {
+            if (name === 'position') {
               // Blend the premultiplied joint matrices of this vertex.
               const matrices = skinnedVertexMatrix(clip, frameOffset, parts, skin, i, skinMatrix, skinPose);
               const sample = coveredScalp && parts.getX(i) === clip.parts.indexOf('head') ? coveredScalp : original;
@@ -265,15 +265,21 @@ export class StaticCorpses extends Group {
               let nx = matrices[m] * x + matrices[m + 4] * y + matrices[m + 8] * z;
               let ny = matrices[m + 1] * x + matrices[m + 5] * y + matrices[m + 9] * z;
               let nz = matrices[m + 2] * x + matrices[m + 6] * y + matrices[m + 10] * z;
-              let scale: number;
-              if (name === 'position') {
-                nx += matrices[m + 12]; ny += matrices[m + 13]; nz += matrices[m + 14];
-                scale = 1 / (matrices[m + 3] * x + matrices[m + 7] * y + matrices[m + 11] * z + matrices[m + 15]);
-              } else scale = 1 / (Math.sqrt(nx * nx + ny * ny + nz * nz) || 1);
+              nx += matrices[m + 12]; ny += matrices[m + 13]; nz += matrices[m + 14];
+              let scale = 1 / (matrices[m + 3] * x + matrices[m + 7] * y + matrices[m + 11] * z + matrices[m + 15]);
               data[output * 3] = nx * scale; data[output * 3 + 1] = ny * scale; data[output * 3 + 2] = nz * scale;
+              // The normal uses the same weighted skin matrix as the position.
+              // Reuse it instead of blending all four joints again per vertex.
+              const ax = normals.getX(i), ay = normals.getY(i), az = normals.getZ(i);
+              nx = matrices[m] * ax + matrices[m + 4] * ay + matrices[m + 8] * az;
+              ny = matrices[m + 1] * ax + matrices[m + 5] * ay + matrices[m + 9] * az;
+              nz = matrices[m + 2] * ax + matrices[m + 6] * ay + matrices[m + 10] * az;
+              scale = 1 / (Math.sqrt(nx * nx + ny * ny + nz * nz) || 1);
+              normalData[output * 3] = nx * scale; normalData[output * 3 + 1] = ny * scale; normalData[output * 3 + 2] = nz * scale;
             } else for (let c = 0; c < size; c++) data[output * size + c] = original.getComponent(i, c);
           }
           geometry.setAttribute(name, new BufferAttribute(data, size));
+          if (name === 'position') geometry.setAttribute('normal', new BufferAttribute(normalData, 3));
         }
         // The shared crowd geometry is indexed: keep triangles whose vertices all survive, renumbered.
         const index = source.getIndex();
