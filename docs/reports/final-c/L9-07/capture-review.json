@@ -1,0 +1,167 @@
+{
+  "runs": [
+    {
+      "tier": "low",
+      "mode": "full",
+      "impact": [
+        {
+          "type": "mission.signal",
+          "tick": 7305,
+          "name": "l9.crash-impact",
+          "actorId": 667
+        }
+      ],
+      "objective": [
+        {
+          "type": "objective.started",
+          "id": "reach-outskirts",
+          "tick": 7305
+        }
+      ]
+    },
+    {
+      "tier": "low",
+      "mode": "zero",
+      "impact": [
+        {
+          "type": "mission.signal",
+          "tick": 15086,
+          "name": "l9.crash-impact",
+          "actorId": 667
+        }
+      ],
+      "objective": [
+        {
+          "type": "objective.started",
+          "id": "reach-outskirts",
+          "tick": 15086
+        }
+      ]
+    },
+    {
+      "tier": "high",
+      "mode": "full",
+      "impact": [
+        {
+          "type": "mission.signal",
+          "tick": 7305,
+          "name": "l9.crash-impact",
+          "actorId": 667
+        }
+      ],
+      "objective": [
+        {
+          "type": "objective.started",
+          "id": "reach-outskirts",
+          "tick": 7305
+        }
+      ]
+    },
+    {
+      "tier": "high",
+      "mode": "zero",
+      "impact": [
+        {
+          "type": "mission.signal",
+          "tick": 10603,
+          "name": "l9.crash-impact",
+          "actorId": 667
+        }
+      ],
+      "objective": [
+        {
+          "type": "objective.started",
+          "id": "reach-outskirts",
+          "tick": 10603
+        }
+      ]
+    }
+  ],
+  "retainedFrames": [
+    {
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/final-c/test-results/final-c/l9-zero-1794010866480/low-full-fall-0-z1.5.jpg",
+      "sha256": "d075783738bf8448278e4c589b246f01311e3783577120fdb6a02de587589b95",
+      "tick": 7188,
+      "zoom": 1.5,
+      "label": "fall-0"
+    },
+    {
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/final-c/test-results/final-c/l9-zero-1794010866480/low-full-fall-4-z1.5.jpg",
+      "sha256": "d5c07a0f48b7a011a796a0c168c46138b33d33a1b764de0036f59c34f48fc7fe",
+      "tick": 7236,
+      "zoom": 1.5,
+      "label": "fall-4"
+    },
+    {
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/final-c/test-results/final-c/l9-zero-1794010866480/low-full-fall-9-z1.5.jpg",
+      "sha256": "a02b53e9239a8b6e698f2a98df3c452bea5fe258e94cef57207e833ae8416367",
+      "tick": 7296,
+      "zoom": 1.5,
+      "label": "fall-9"
+    },
+    {
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/final-c/test-results/final-c/l9-zero-1794010866480/low-zero-fall-0-z1.5.jpg",
+      "sha256": "c183146fadcb77c9a1fec5168e2d2a5fb61fae5e1903f47e22634876e8f558a1",
+      "tick": 14976,
+      "zoom": 1.5,
+      "label": "fall-0"
+    },
+    {
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/final-c/test-results/final-c/l9-zero-1794010866480/low-zero-fall-4-z1.5.jpg",
+      "sha256": "2a84fba21ff0b546df15b4e8ca1af56805964646ce419a7bcd33a0965470633e",
+      "tick": 15024,
+      "zoom": 1.5,
+      "label": "fall-4"
+    },
+    {
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/final-c/test-results/final-c/l9-zero-1794010866480/low-zero-fall-9-z1.5.jpg",
+      "sha256": "96fb9d4a6ab08b3e2a83365ceed817b8d356dc8e67a44a2160409e70cc84efb5",
+      "tick": 15084,
+      "zoom": 1.5,
+      "label": "fall-9"
+    },
+    {
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/final-c/test-results/final-c/l9-zero-1794010987013/high-full-fall-0-z1.5.jpg",
+      "sha256": "9ec834e534277ca79427a2986eb45e013741319d59cc4097e0d213494f823838",
+      "tick": 7188,
+      "zoom": 1.5,
+      "label": "fall-0"
+    },
+    {
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/final-c/test-results/final-c/l9-zero-1794010987013/high-full-fall-4-z1.5.jpg",
+      "sha256": "bc14701abb3c2b3d7613bb8394a9ac2f39a83108c5aed27bf5068d8ed3c9b200",
+      "tick": 7236,
+      "zoom": 1.5,
+      "label": "fall-4"
+    },
+    {
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/final-c/test-results/final-c/l9-zero-1794010987013/high-full-fall-9-z1.5.jpg",
+      "sha256": "20720d101fc61bd8d7d41e2c2116719aa12317924a81f815f57c2ec84fae4ec5",
+      "tick": 7296,
+      "zoom": 1.5,
+      "label": "fall-9"
+    },
+    {
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/final-c/test-results/final-c/l9-zero-1794010987013/high-zero-fall-0-z1.5.jpg",
+      "sha256": "e21149d6fe0a711a4deee1e1ed93268d8702a66f20302b0f6fc6400e9ebeed58",
+      "tick": 10487,
+      "zoom": 1.5,
+      "label": "fall-0"
+    },
+    {
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/final-c/test-results/final-c/l9-zero-1794010987013/high-zero-fall-4-z1.5.jpg",
+      "sha256": "5f27803999f8aed77b0c223ae4b6849dbd10cb73a3e6b811bb0d6c5d0ff46b60",
+      "tick": 10535,
+      "zoom": 1.5,
+      "label": "fall-4"
+    },
+    {
+      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/final-c/test-results/final-c/l9-zero-1794010987013/high-zero-fall-9-z1.5.jpg",
+      "sha256": "7e0c6306a6d6b53d234b0879a483436f92f42ea7e07b9a12a418e1549b34fc25",
+      "tick": 10595,
+      "zoom": 1.5,
+      "label": "fall-9"
+    }
+  ],
+  "observation": "Personally reviewed24fall panels at progress0/4/9, bothtiers/zooms, healthy and exactzero setup: whole hull with attached wheels throughout, no floating wheel cluster or vanished shell. Four complete production event ledgers have exactlyone impact and reach-outskirts objective starts same impacttick, never before. Healthy routes start1000HP and arrive820low/650high after ordinary collisions; zero route is exactly0at crash. Not falsely described as1000at the bridge."
+}
