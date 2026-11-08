@@ -1,0 +1,25 @@
+{
+  "generatedAt": "2026-11-08T05:17:43.757709+00:00",
+  "revision": "05723d0c661f17363fb82f19e5e5d74e7dc7e561",
+  "sourceHash": "ae3460f112fae48cbd80d877cd24d8e99acf1c41c5d0b8edbb5a7fca004e1111",
+  "sameSourceAsPhysical": true,
+  "batchExitCode": 0,
+  "checks": [
+    {
+      "command": "npm run typecheck",
+      "exitCode": 0,
+      "log": "test-results/r8-nobox/typecheck-final.log",
+      "logSha256": "768699d3cead53493237d3322201d28ee449107e90af9a5aa6f5dcab3f066b0c"
+    },
+    {
+      "command": "npm run lint",
+      "exitCode": 0,
+      "log": "test-results/r8-nobox/lint-final.log",
+      "logSha256": "5f9aee6b798507e187dcd3d4fbd5bcf5fdc37488cb89c27a01d5667ca7bb9fa1"
+    }
+  ],
+  "testFileSha256": {
+    "tests/helpers/l7Uat.ts": "77e40b397fd4bcdbddd4df64bc7c5268b51bfbf67438776adf1d11e25c5cacee",
+    "tests/engine/collision.test.ts": "58a475c73640216ee914663c65ad226ffc6701a60b8bc2763861fc2aae60c010"
+  }
+}

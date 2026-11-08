@@ -32,7 +32,7 @@ Maximum no-progress windows were 12.415 s and 8.9 s respectively, including boar
 ## Validation and remaining blocker
 
 - Focused collision/navigation suite: **8/8 pass** on `bde97d0b`; the final pharmacy motion assertion separately passes in the registered navigation case. The global registered-test budget remains 150/150.
-- Typecheck and lint: passed on `6feb5d98`; the final cache refinement and test assertion still need the full verification gate.
+- Typecheck and lint: **passed on the final game and test source** at `05723d0c`; [static receipts](proofs/static-final.json) confirm the same game source hash as both final physical runs. The full unit gate remains pending.
 - Final-source QA build: **passed**.
 - `git diff --check`: **passed**.
 - `npm run verify -- E08`: **NOT RUN**. Its remote wrapper never reached a runner.
