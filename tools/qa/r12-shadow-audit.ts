@@ -12,9 +12,10 @@ import type { SceneSpec } from '../../src/debug/scenelab/spec';
 
 const out = 'docs/reports/r12-shadow', scratchPath = 'test-results/r12-shadow-cells.json';
 const resume = process.env.R12_RESUME === '1' && existsSync(`${out}/measurements.json`);
-const previous = resume ? JSON.parse(readFileSync(`${out}/measurements.json`, 'utf8')) as { rows: object[]; failures: string[] } : undefined;
+const previous = resume ? JSON.parse(readFileSync(`${out}/measurements.json`, 'utf8')) as { rows: object[]; failures: string[]; completed?: string[] } : undefined;
 const cells: { label: string; jpeg: string }[] = resume && existsSync(scratchPath) ? JSON.parse(readFileSync(scratchPath, 'utf8')) : [];
 const rows: object[] = previous?.rows ?? [];
+const completed = previous?.completed ?? [];
 mkdirSync(out, { recursive: true });
 const baselineRef = 'a0d4f7ba^';
 const original = execFileSync('git', ['show', `${baselineRef}:src/render/Lighting.ts`], { encoding: 'utf8' });
@@ -24,10 +25,11 @@ const methods = declaration.members.filter(ts.isMethodDeclaration).filter(m => [
 const baseline = ts.transpileModule(`class Baseline { ${methods.map(m => ts.createPrinter().printNode(ts.EmitHint.Unspecified, m, ast)).join('\n')} }`, { compilerOptions: { target: ts.ScriptTarget.ES2022 } }).outputText + '\nreturn Baseline;';
 const fixture: SceneSpec = { name: 'shadow-dominance', seed: 1, time: 'night', ground: 'asphalt', size: 42, dof: false,
   props: [{ id: 'weak', asset: 'prop.street-lamp', at: [-4, -1] }, { id: 'strong', asset: 'prop.street-lamp', at: [4, 1] }],
-  actors: [{ id: 'courier', kind: 'courier', at: [0, 0], yaw: 135 }, { id: 'corgi', kind: 'corgi', at: [-1, 2] }, { id: 'nearby', kind: 'infected', archetype: 'infected.runner', at: [1, -2], state: 'idle' }],
+  actors: [{ id: 'courier', kind: 'courier', at: [-2, 0], yaw: 135 }, { id: 'corgi', kind: 'corgi', at: [-1, 2] }, { id: 'nearby', kind: 'infected', archetype: 'infected.runner', at: [1, -2], state: 'idle' }],
   camera: { mode: 'game', target: 'courier', zoom: 1 } };
 const lin = (v: number) => v <= 10 ? v / 3294.6 : ((v / 255 + .055) / 1.055) ** 2.4;
 const lum = (p: PNG, x: number, y: number) => { const i = (Math.round(y) * p.width + Math.round(x)) * 4; return .2126 * lin(p.data[i]) + .7152 * lin(p.data[i + 1]) + .0722 * lin(p.data[i + 2]); };
+const hue = (c: number[]) => { const hi = Math.max(...c), lo = Math.min(...c), d = hi - lo; return d ? (((hi === c[0] ? (c[1] - c[2]) / d : hi === c[1] ? (c[2] - c[0]) / d + 2 : (c[0] - c[1]) / d + 4) * 60 + 360) % 360 : 0; };
 const failures: string[] = previous?.failures ?? [];
 let session: SceneSession | undefined;
 async function capture(s: SceneSession, label: string, sheet = true) {
@@ -92,12 +94,23 @@ try {
         const right = lights.find(v => v.x > 0)!;
         if (!right?.id || lights.length !== 2) throw Error('Expected two native street-lamp pools');
         right.r *= 2.5; right.g *= 2.5; right.b *= 2.5;
-        const lamp = g.world.lightPower!.lamps.get(right.id)!; lamp.powered = false; lamp.startedAt = -1;
         l.set('night');
       }, { baseline, presets: timeOfDay, phase });
       await s.step(60);
-      await s.page.evaluate(() => { const g = (window.__SCENE__ as unknown as { game: Game }).game; for (const lamp of g.world.lightPower!.lamps.values()) { lamp.powered = true; lamp.startedAt = -1; } });
-      await s.step(60);
+      const walk = await s.page.evaluate(async () => {
+        const g = (window.__SCENE__ as unknown as { game: Game }).game, l = (g.view as unknown as { lighting: Lighting }).lighting;
+        const start = g.world.entities.get(1)!.transform.x, frames: { id: string | null; sun: number; spot: number; maps: number }[] = [];
+        for (let frame = 0; frame < 60; frame++) {
+          g.world.setInput({ move: { x: 1, z: 0 }, walk: true }); g.world.update(); g.view.advance(1 / 60); g.view.renderer.nextNodeFrame(); g.view.update(1);
+          frames.push({ id: l.heroLight, sun: l.sun.shadow.intensity, spot: l.spot.shadow.intensity, maps: Number(l.sun.visible && l.sun.shadow.autoUpdate) + Number(l.spot.visible && l.spot.shadow.autoUpdate) });
+          if (frame % 10 === 0) await new Promise<void>(r => requestAnimationFrame(() => r()));
+        }
+        g.world.setInput({ move: { x: 0, z: 0 } });
+        return { start, end: g.world.entities.get(1)!.transform.x, frames };
+      });
+      rows.push({ label: `${phase} ${backend}/${tier} real walk`, ...walk });
+      if (walk.end - walk.start < 1.9 || walk.frames.some(f => f.maps > 1)) failures.push(`${phase} ${backend}/${tier}: walk or map budget failed`);
+      await s.step(30);
       for (const zoom of [1, 1.5]) {
         await s.page.evaluate(zoom => window.__SS__!.camera.zoom(zoom), zoom);
         const label = `${phase} ${backend}/${tier} z${zoom}`;
@@ -105,13 +118,16 @@ try {
         {
           const selected = rows.at(-1) as { position: number[]; refreshed: number };
           if (phase === 'after' && (selected.position[0] < 0 || selected.refreshed !== 1)) failures.push(`${label}: dominant right lamp not active`);
-          const points = await s.page.evaluate(() => [-1, 1].map(side => Array.from({ length: 25 }, (_, i) => { const d = 1 + Math.floor(i / 5) * .4, across = (i % 5 - 2) * .15; return window.__SCENE__!.project([side * d * .9701 - across * .2425, .03, side * d * .2425 + across * .9701]); })));
+          const points = await s.page.evaluate(() => { const hero = (window.__SCENE__ as unknown as { game: Game }).game.world.entities.get(1)!.transform; return [-1, 1].map(side => Array.from({ length: 25 }, (_, i) => { const d = 1 + Math.floor(i / 5) * .4, across = (i % 5 - 2) * .15; return window.__SCENE__!.project([hero.x + side * d * .9701 - across * .2425, .03, hero.z + side * d * .2425 + across * .9701]); })); });
           await s.page.evaluate(() => (window.__SCENE__ as unknown as { game: Game }).game.view.labProbes().character!.traverse(o => { o.userData.r12Cast = o.castShadow; o.castShadow = false; }));
           const absent = await capture(s, `${label} no-caster`, false);
           await s.page.evaluate(() => (window.__SCENE__ as unknown as { game: Game }).game.view.labProbes().character!.traverse(o => { o.castShadow = o.userData.r12Cast; delete o.userData.r12Cast; }));
           const darkness = points.map(mask => mask.reduce((v, p) => v + Math.max(0, 1 - lum(beauty, p.x, p.y) / Math.max(.001, lum(absent, p.x, p.y))), 0) / mask.length);
-          rows.push({ label: `${label} ground shadow`, away: darkness[0], towards: darkness[1] });
+          const qualified = points[0].filter(p => 1 - lum(beauty, p.x, p.y) / Math.max(.001, lum(absent, p.x, p.y)) >= .35);
+          const shadowHue = qualified.length ? hue([0, 1, 2].map(c => qualified.reduce((sum, p) => sum + beauty.data[(Math.round(p.y) * beauty.width + Math.round(p.x)) * 4 + c], 0) / qualified.length)) : null;
+          rows.push({ label: `${label} ground shadow`, away: darkness[0], towards: darkness[1], qualifyingPixels: qualified.length, shadowHue });
           if (phase === 'after' && !(darkness[0] > darkness[1] + .05)) failures.push(`${label}: shadow does not point away from right lamp`);
+          if (phase === 'after' && (shadowHue === null || shadowHue < 230 || shadowHue > 290)) failures.push(`${label}: E25 shadow hue outside 230–290 degrees`);
         }
       }
       if (phase === 'before') await s.page.evaluate(() => { const l = ((window.__SCENE__ as unknown as { game: Game }).game.view as unknown as { lighting: Lighting }).lighting as unknown as Record<string, unknown>; Object.assign(l, l.qaRestore); delete l.qaRestore; });
@@ -120,18 +136,33 @@ try {
       const scenes = ['catalog/atmosphere-l5', 'catalog/qa-l6-po-headlamp', 'catalog/qa-l6-exit-approach', 'catalog/qa-l7-entry-night-exit', 'l8-district/walk', 'catalog/night-read-l9-road', 'catalog/night-read-l10-r1', 'catalog/world-fill-l8-driveout'];
       for (const name of scenes) {
         const spec = readSpec(`tests/scenes/${name}.json`); delete spec.script;
+        if (name.endsWith('world-fill-l8-driveout')) spec.actors = [{ id: 'beam-target', kind: 'infected', archetype: 'infected.runner', at: [-534, 1], state: 'idle' }];
         // Hold the authored location for the zoom/backend matrix.
         for (const actor of spec.actors ?? []) if (actor.state && typeof actor.state === 'object' && 'walk' in actor.state) actor.state = { idle: true };
         await s.load(spec); await s.step(30);
-        for (const zoom of [1, 1.5]) { await s.page.evaluate(zoom => window.__SS__!.camera.zoom(zoom), zoom); await capture(s, `${spec.name} ${backend}/${tier} z${zoom}`, zoom === 1.5); }
+        for (const zoom of [1, 1.5]) {
+          await s.page.evaluate(zoom => window.__SS__!.camera.zoom(zoom), zoom); await capture(s, `${spec.name} ${backend}/${tier} z${zoom}`, zoom === 1.5);
+          if (name.endsWith('world-fill-l8-driveout') && !(rows.at(-1) as { selected: string | null }).selected?.startsWith('vehicle-')) failures.push(`${backend}/${tier}: driven headlights not promoted`);
+        }
+      }
+      const practicals: SceneSpec[] = [readSpec('tests/scenes/catalog/spec-audit-b-light-lab.json'), { ...fixture, name: 'fire-source', props: [], actors: [{ id: 'courier', kind: 'courier', at: [0, 0] }, { id: 'corgi', kind: 'corgi', at: [-1, 2] }], script: [{ frame: 0, effect: { fire: [3, 1], radius: 1.2, duration: 20 } }] }];
+      for (const spec of practicals) {
+        await s.load(spec); await s.step(60);
+        for (const zoom of [1, 1.5]) {
+          await s.page.evaluate(zoom => window.__SS__!.camera.zoom(zoom), zoom); await capture(s, `${spec.name} ${backend}/${tier} z${zoom}`, zoom === 1.5);
+          if (!(rows.at(-1) as { selected: string | null }).selected) failures.push(`${spec.name} ${backend}/${tier}: practical shadow missing`);
+        }
       }
     }
     if (s.errors.length) failures.push(...s.errors);
     await writeSheet(s); await s.close(); session = undefined; stopServer();
+    completed.push(`${backend}/${tier}`);
     console.log(`${backend}/${tier}: ${rows.length} receipts, ${failures.length} failures`);
   }
+} catch (error) {
+  failures.push(String(error).split('\n')[0]); throw error;
 } finally {
-  writeFileSync(`${out}/measurements.json`, JSON.stringify({ baselineRef, rows, failures }, null, 2) + '\n');
+  writeFileSync(`${out}/measurements.json`, JSON.stringify({ baselineRef, completed, rows, failures }, null, 2) + '\n');
   mkdirSync('test-results', { recursive: true }); writeFileSync(scratchPath, JSON.stringify(cells));
   await session?.close(); stopServer();
 }

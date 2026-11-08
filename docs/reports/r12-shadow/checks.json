@@ -1,0 +1,28 @@
+{
+  "target": "E25",
+  "epics": [
+    "E25"
+  ],
+  "checks": [
+    {
+      "command": "npm run typecheck",
+      "status": 0,
+      "seconds": 26.85
+    },
+    {
+      "command": "npm run lint",
+      "status": 0,
+      "seconds": 29.462
+    },
+    {
+      "command": "npm test",
+      "status": 0,
+      "seconds": 117.323
+    }
+  ],
+  "commit": "a76b96fd5841bcec85e7d60b90730c17f118eda7",
+  "unitTests": 107,
+  "unitFiles": 27,
+  "inventoryCases": 150,
+  "vitestWorkers": 2
+}
