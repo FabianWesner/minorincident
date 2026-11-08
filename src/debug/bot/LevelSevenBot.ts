@@ -32,8 +32,8 @@ export class LevelSevenBot {
     const enemies = w.infected!.active.filter(e => e.health.current > 0 && !e.hidden && !e.emerging && !e.infectionRise && distance(e.transform, p.transform) < 24 && w.infected!.nav.visible(p.transform, e.transform, 0)).sort((a, b) => distance(a.transform, p.transform) - distance(b.transform, p.transform));
     if (enemies[0] && this.profile !== 'evade-only') {
       const close = distance(enemies[0].transform, p.transform) < 6;
-      const mg = p.weapons!.RIGHT.rack.findIndex(s => s.id === 'weapon.army-mg');
-      if (close && mg >= 0) f.selectedSlot = { side: 'RIGHT', index: mg };
+      const backup = p.weapons!.RIGHT.rack.findIndex(s => s.id === 'weapon.shotgun');
+      if (close && backup >= 0) f.selectedSlot = { side: 'RIGHT', index: backup };
       strikeAt(f, enemies[0], 'RIGHT', p.transform, false);
     }
     const followers = w.l7Encounters!.state.roster.filter(r => r.status === 'following' && !w.l7Departure!.state.boarded.includes(r.id));
