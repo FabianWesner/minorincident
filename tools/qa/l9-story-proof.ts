@@ -105,7 +105,7 @@ async function crossingStorySequence(): Promise<void> {
     passed = true;
   } catch (error) { failure = String(error); throw error; }
   finally {
-    const result = { ...provenance(), method: 'Explicit native phase fixtures with initial vehicle placements and courier HP refill; civilians retain ordinary mortality. Covers mechanics, not difficulty or route completion.', passed, failure, state: w.missions!.l9!.snapshot(), player: w.getEntity(1), handover: w.progression?.campaign?.crossingHandover };
+    const result = { ...provenance(), method: 'Explicit native phase fixtures with initial vehicle placements and courier HP refill; civilians retain ordinary mortality. Covers mechanics, not difficulty or route completion.', passed, failure, state: w.missions!.l9!.snapshot(), player: w.getEntity(1), researchActor: w.getEntity(w.missions!.l9!.driving.state.samId), handover: w.progression?.campaign?.crossingHandover };
     mkdirSync('test-results/eg-l9', { recursive: true }); writeFileSync('test-results/eg-l9/story.json', `${JSON.stringify(result, null, 2)}\n`);
     console.log(JSON.stringify({ output: 'test-results/eg-l9/story.json', passed, failure, phase: w.missions!.l9!.state.phase })); w.dispose();
   }

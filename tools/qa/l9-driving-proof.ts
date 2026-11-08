@@ -56,8 +56,9 @@ try {
     firstNear: { method: 'First shown native actor within a conservative 45 m radius; this is a headless proxy, not a rendered max-zoom frustum.', actors: firstNear, idle: firstNear.filter(e => e.state === 'idle') },
     cpu: { p95: durations[Math.floor(durations.length * .95)], max: durations[durations.length - 1], note: 'Shared runner diagnostic; rendering and device performance are not measured.' },
     handover: world.progression?.campaign?.crossingHandover,
+    passengers: car.entity.vehicle!.passengers, companion: [...world.entities.iterate()].find(e => e.companion), researchCompanion: world.getEntity(l9.driving.state.samId),
   };
   mkdirSync(dirname(output), { recursive: true }); writeFileSync(output, `${JSON.stringify(result, null, 2)}\n`);
-  console.log(JSON.stringify({ output, completed: result.completed, seconds: result.seconds, hp: result.hp, peakAlive, peakChunks, grabs, shakes, collisionFailures: collision.failures, admissionViolations: result.admissions.violations, signals, last: samples[samples.length - 1], roster: l9.driving.state.roster.map(id => { const e = world.entities.get(id)!; return { id, key: e.civilian?.survivor?.key, position: e.transform, hp: e.health.current, passengerOf: e.passengerOf }; }) }));
+  console.log(JSON.stringify({ output, completed: result.completed, seconds: result.seconds, hp: result.hp, peakAlive, peakChunks, grabs, shakes, collisionFailures: collision.failures, admissionViolations: result.admissions.violations, signals, last: samples[samples.length - 1], passengers: result.passengers, dog: result.companion && { p: result.companion.transform, owner: result.companion.passengerOf }, roster: l9.driving.state.roster.map(id => { const e = world.entities.get(id)!; return { id, key: e.civilian?.survivor?.key, position: e.transform, hp: e.health.current, passengerOf: e.passengerOf }; }) }));
   if (!result.completed || collision.failures) process.exitCode = 1;
 } finally { world.dispose(); }
