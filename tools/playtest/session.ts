@@ -117,6 +117,10 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
         const bodies = [...g.world.entities.iterate()].filter(e => e.health.current <= 0 && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) <= 12).slice(0, 30).map(e => ({
           id: e.id, archetype: e.archetype, at: { ...e.transform }, corpse: !!e.corpse, state: e.infected?.state,
           lod: figures.get(e.id)?.lod, clip: figures.get(e.id)?.clip, drawn: figures.get(e.id)?.drawn }));
+        const followers = (g.world.l7Encounters?.state.roster ?? []).filter(r => r.status === 'following').map(r => {
+          const e = g.world.entities.get(r.id)!, figure = figures.get(r.id);
+          return { id: e.id, hp: e.health.current, at: { ...e.transform }, state: e.civilian?.state, knockedUntil: e.civilian?.knockedUntil, clip: figure?.clip, lod: figure?.lod, drawn: figure?.drawn, joints: figure?.joints };
+        });
         const cue = document.querySelector<HTMLElement>('[data-testid=survivor-world-cue]'), box = cue?.getBoundingClientRect();
         const alarmCue = cue ? { text: cue.innerText, hidden: cue.hidden, alarm: cue.dataset.alarm, opacity: getComputedStyle(cue).opacity, box: box && { x: box.x, y: box.y, width: box.width, height: box.height } } : null;
         const marker = g.view.marker, mission = g.world.missions;
@@ -130,7 +134,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
           tracker: hud('mission-tracker'), pin: hud('mission-marker'), minimap: hud('minimap-objective'), route: hud('minimap-route') };
         const companions = [...g.world.entities.iterate()].filter(e => !!e.companion).map(e => ({ id: e.id, archetype: e.archetype, health: { ...e.health }, hidden: !!e.hidden, passengerOf: e.passengerOf, state: e.companion?.state, transform: { ...e.transform } }));
         const vehicles = [...(g.world.vehicles?.cars.values() ?? [])].filter(c => c.entity.id === g.world.vehicles?.active || c.entity.vehicle?.driver != null || (c.entity.vehicle?.attached.length ?? 0) > 0 || (c.entity.vehicle?.passengers?.length ?? 0) > 0).map(c => ({ id: c.entity.id, archetype: c.entity.archetype, transform: { ...c.entity.transform }, vehicle: c.entity.vehicle }));
-        return { tick: g.world.tick, objective, companions, vehicles, alarmCue, paused: g.clock.paused, backend: render.backend, quality: render.quality, healthBars: render.healthBars, bodies, player: { x: p.x, y: p.y, z: p.z }, camera: g.view.view.getState(), audit: g.view.districts?.seeThroughAudit(), courierForeground: g.view.courierForeground };
+        return { tick: g.world.tick, objective, companions, vehicles, alarmCue, paused: g.clock.paused, backend: render.backend, quality: render.quality, healthBars: render.healthBars, bodies, followers, player: { x: p.x, y: p.y, z: p.z }, camera: g.view.view.getState(), audit: g.view.districts?.seeThroughAudit(), courierForeground: g.view.courierForeground };
       }), null, 1));
     } catch { /* page busy */ }
     finally { if (resume) await page.evaluate(() => window.__SS__!.resume()).catch(() => undefined); }
@@ -1235,7 +1239,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
           near18: live.filter(r => { const f = w.entities.get(r.id); return f && Math.hypot(f.transform.x - p.x, f.transform.z - p.z) <= 18; }).length,
           boarded: w.l7Departure?.state.boarded.length ?? 0, departure: w.l7Departure?.state.phase, blockedBy: w.solids.blockingBody(1)?.id, move: { ...w.inputFrame.move },
           survivor: { variant: w.entities.get(1)!.survivor!.variant, gearTier: w.entities.get(1)!.survivor!.gearTier },
-          followers: live.map(r => { const f = w.entities.get(r.id)!; return { id: r.id, x: f.transform.x, z: f.transform.z, hp: f.health.current, blockedBy: w.solids.blockingBody(f.id)?.id }; }),
+          followers: live.map(r => { const f = w.entities.get(r.id)!; return { id: r.id, x: f.transform.x, z: f.transform.z, hp: f.health.current, state: f.civilian?.state, knockedUntil: f.civilian?.knockedUntil, blockedBy: w.solids.blockingBody(f.id)?.id }; }),
           alarm: s?.alarm && w.tick < s.alarm.until ? s.alarm.text : null };
       }).catch(() => null) });
       if (e.level === 'L5' && process.env.PLAYTEST_METRO_AUDIT === '1') {
