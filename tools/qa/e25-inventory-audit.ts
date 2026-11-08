@@ -22,7 +22,7 @@ const report = { at: new Date().toISOString(), method: 'Every exported GLB valid
   errors: all.flatMap(r => r.errors).length, missingEmitterReferences: all.flatMap(r => r.errors).filter(e => e.includes('emissive node ')).length, uncoveredEmissive: all.flatMap(r => r.uncoveredEmissive).length,
   sourceErrors: sources.flatMap(r => r.errors).length, sourceUncoveredEmissive: sources.flatMap(r => r.uncoveredEmissive).length,
   missingAuthored: rows.filter(r => !r.source).map(r => r.path), issues: rows.filter(r => r.errors.length || r.uncoveredEmissive.length || r.source?.errors.length || r.source?.uncoveredEmissive.length), rows, otherExports };
-const out = process.env.E25_INVENTORY_OUT ?? 'docs/reports/e25-emitters/evidence/inventory-final.json';
+const out = process.env.E25_INVENTORY_OUT ?? 'test-results/epics/E25/emitters-inventory-final.json';
 mkdirSync(dirname(out), { recursive: true }); writeFileSync(out, JSON.stringify(report, null, 2) + '\n');
 console.log({ ...report, missingAuthored: report.missingAuthored.length, issues: report.issues.length, rows: report.rows.length, otherExports: report.otherExports.length, out });
 if (process.argv.includes('--check') && (report.errors || report.uncoveredEmissive || report.sourceErrors || report.sourceUncoveredEmissive || otherExports.some(r => r.errors.length || r.uncoveredEmissive.length))) process.exitCode = 1;

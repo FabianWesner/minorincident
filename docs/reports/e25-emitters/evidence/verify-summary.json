@@ -1,0 +1,42 @@
+{
+  "command": "MI_LOCAL_FALLBACK=0 sh tools/remote/run.sh \"$PWD\" --pull test-results/epics/E25/checks.json --pull test-results/epics/E25/runtimechecks.json --pull test-results/timings/test.json --env VITEST_MAX_WORKERS=2 -- bash tools/qa/e25-remote-gate.sh",
+  "exitCode": 0,
+  "sourceRevision": "c0aae022",
+  "disposableRemoteSourceSnapshot": "5a3794998bb8cf038a36537648aff935b3f444cc",
+  "filesPassed": 27,
+  "testsPassed": 106,
+  "testsSkipped": 1,
+  "budgetCases": 150,
+  "budgetFiles": 43,
+  "buildQA": 0,
+  "cameraHelperFinalTypecheck": 0,
+  "cameraHelperFinalLint": 0,
+  "cameraHelperRevision": "f1b0ea89",
+  "finalLocalTest": {
+    "command": "npm test -- --maxWorkers=2",
+    "revision": "f1b0ea89",
+    "filesPassed": 27,
+    "testsPassed": 107,
+    "testsSkipped": 0,
+    "seconds": 111.038263125,
+    "exitCode": 0
+  },
+  "finalLocalVerify": {
+    "command": "VITEST_MAX_WORKERS=2 npm run verify -- E25",
+    "revision": "ed842306 plus raw-output destination changes",
+    "exitCode": 0,
+    "filesPassed": 27,
+    "testsPassed": 107,
+    "testsSkipped": 0,
+    "includes": [
+      "npm run typecheck",
+      "npm run lint",
+      "npm test"
+    ],
+    "testedQAFileSHA256": {
+      "tools/qa/e25-inventory-audit.ts": "b69dcf545aab7412813c06938d085d4f4308181a323340d2d4f903ba87027857",
+      "tools/qa/e25-emitter-compare.py": "143171537208708055e5ca11d1e15181056e147afcfc6bb5e2ede8cf84b6e460"
+    },
+    "testsSeconds": 95.981591
+  }
+}

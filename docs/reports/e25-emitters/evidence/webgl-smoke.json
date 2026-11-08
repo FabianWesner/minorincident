@@ -1,0 +1,13 @@
+{
+  "command": "E2E_PORT=4485 sh tools/e2e-lock.sh npx playwright test tests/e2e/crowd-gpu-limits.spec.ts tests/e2e/smoke.spec.ts --project=chromium --grep 'on webgl @smoke|\\(webgl\\).*@smoke' --workers=2",
+  "exitCode": 0,
+  "passed": 2,
+  "backend": "WebGL2",
+  "headless": true,
+  "macOSANGLE": "metal",
+  "compiledPrograms": 502,
+  "crowdPrograms": 73,
+  "maxAttributes": 13,
+  "maxVaryings": 14,
+  "fullWebGPUSmoke": "not automated: repository manual-WebGPU policy"
+}

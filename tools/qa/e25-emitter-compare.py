@@ -83,5 +83,5 @@ report = {'method': 'Entire RGBA frame comparison at 1280x720. Identical seeds, 
           'pairs': len(rows), 'identical': sum(r['changedPixels'] == 0 for r in rows),
           'changed': len(changed), 'acceptedChanged': sum(r['level'] != 'equipment-night' for r in changed),
           'equipmentChanged': sum(r['level'] == 'equipment-night' for r in changed), 'rows': rows, 'sheets': sheets}
-Path('docs/reports/e25-emitters/evidence/visual-comparison.json').write_text(json.dumps(report, indent=2) + '\n')
+Path('test-results/epics/E25/emitters-comparison.json').write_text(json.dumps(report, indent=2) + '\n')
 print(json.dumps({k: v for k, v in report.items() if k not in ('rows', 'sheets')}, indent=2))
