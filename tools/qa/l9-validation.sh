@@ -14,7 +14,7 @@ run() {
 }
 # The runner normally supplies an index-only manifest. The existing QA tools
 # and review freshness tests need an actual HEAD in this disposable checkout.
-git add -u
+git add --renormalize -u
 git -c user.name='Remote validation' -c user.email=validation@localhost commit -qm 'Remote validation source snapshot' || exit 1
 run typecheck npm run typecheck
 run lint npm run lint
