@@ -47,7 +47,7 @@ const run = await runLevel('L8', 'complete', 1, 360, 'auto', campaign, undefined
     const zoo = world.missions!.l8!, s = zoo.state, car = world.entities.get(s.carId)!, actor = world.entities.get(s.megaId);
     Object.assign(end, { breachedAt: s.breachedAt, departed: !!world.missions!.state.states.departed, carX: car.transform.x, carZ: car.transform.z, megaX: actor?.transform.x ?? 0, megaZ: actor?.transform.z ?? 0, alphas: s.alphas,
       keys: (car.vehicle!.passengers ?? []).map(seat => world.entities.get(seat.id)?.civilian?.survivor?.key ?? 'corgi') });
-    finalState = { tick: world.tick, objective: world.missions!.active().map(step => step.id), zoo: s,
+    finalState = { tick: world.tick, objective: world.missions!.def.steps.filter(step => world.missions!.state.steps[step.id].status === 'active').map(step => step.id), zoo: s,
       cast: [1, s.keeperId, s.pondKeeperId, s.haleId, s.reyesId, s.animalInterceptionId, s.dogId, ...s.roster].map(id => {
         const e = world.entities.get(id); return { id, at: e?.transform, hp: e?.health.current, civilian: e?.civilian, infected: e?.infected, emerging: e?.emerging, passengerOf: e?.passengerOf };
       }) };
