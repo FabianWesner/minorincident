@@ -180,6 +180,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   const handoversCaptured = new Set<string>();
   let acceptanceTick = -Infinity;
   let l6FightCaptured = false, l6RetreatFightCaptured = false;
+  const l6RailCaptures = new Set<string>();
   const l6ShieldPhotos = new Set<number>();
   const l7DeparturePhotos = new Set<number>();
   let l6GatePhoto = false;
@@ -362,6 +363,29 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
           const audit = (window as unknown as { __l6HoldAudit?: Record<string, unknown> }).__l6HoldAudit;
           if (audit) { audit.captureFinishedAt = performance.now(); audit.capturePaused = false; }
         }, o.zoom);
+      }
+    }
+    if (process.env.PLAYTEST_L6_RAIL_CAPTURES === '1' && eyes.level === 'L6' && !eyes.loading) {
+      const escape = await page.evaluate(() => {
+        const w = (window.__SCENE__ as unknown as { game: Game }).game.world, m = w.missions!.state, s = m.l6!;
+        return { phase: m.phase, caption: m.subtitle?.text, out: s.survivors.filter(r => r.status === 'out').map(r => {
+          const e = w.entities.get(r.id)!; return { id: r.id, hidden: !!e.hidden, ...e.transform };
+        }) };
+      });
+      const stage = escape.phase === 'cinematic' ? 'night'
+        : escape.out.length && escape.caption === 'The survivors are safe.' ? 'safe'
+        : eyes.step === 'retreat' && (eyes.player?.x ?? 0) > 95 && eyes.enemies.some(e => e.drawn && e.hp > 0) ? 'rail' : null;
+      if (stage && !l6RailCaptures.has(stage)) {
+        l6RailCaptures.add(stage); await page.evaluate(() => window.__SS__!.pause());
+        try {
+          for (const zoom of [1, 1.5]) {
+            await page.evaluate(async z => { window.__SS__!.camera.zoom(z); await window.__SS__!.screenshotReady(); }, zoom);
+            const file = await capture(`L6-${stage}-${o.quality}-z${zoom}`);
+            log({ l6RailCapture: { stage, file, quality: o.quality, zoom, ...escape } });
+          }
+        } finally {
+          await page.evaluate(z => { window.__SS__!.camera.zoom(z); window.__SS__!.resume(); }, o.zoom);
+        }
       }
     }
     if (process.env.PLAYTEST_THREAT_CAPTURES === '1' && eyes.level && eyes.phase === 'playing' && !eyes.menu && !eyes.loading
@@ -1443,7 +1467,8 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       // group-waits instruction means the column is paused. Stay with the
       // group instead means the courier strayed; the column keeps walking.
       const rememberedRear = l6GroupMemory.rear && { x: Math.min(263, l6GroupMemory.rear.x + (/group waits|Bring the injured/i.test(e.objective) ? 0 : 2.2 * Math.max(0, e.tick - l6GroupMemory.rear.tick) / 60)), z: l6GroupMemory.rear.z };
-      const groupTarget = coverRear && rememberedRear ? { x: rememberedRear.x + 3, z: rememberedRear.z }
+      const groupTarget = e.level === 'L6' && /^Rejoin /.test(e.objective) && e.cue ? e.cue
+        : coverRear && rememberedRear ? { x: rememberedRear.x + 3, z: rememberedRear.z }
         // A repeated bark can outlive the missing-member condition. Follow
         // the objective's actual group check instead of turning back when it
         // already says everyone is nearby (or while boarding owns the group).

@@ -236,13 +236,13 @@ Feel: "calm shelter → **a defence: waves pour in through the breaches** → fi
 | L6-04 | stop | Breach 2 at +20–30 s from ≥ 2 accesses, ≥ 10 infected (tune); power off within 1 frame, red emergency light; abandon at breach 2 + 15 s or ≥ 3 bitten. | E24-AC06/07 | S |
 | L6-05 | stop | combat: **reachable ≥ 95 %** (every infected spawns inside the walkable station/tunnel, none behind the tunnel wall); passive first attack ≤ 15 s after each breach caption; attacks on player ≥ 4/min (tune). | Q-326, Q-327 | S |
 | L6-06 | retreat | Infected enter the tunnel from 6 side entries (2 each, alternating sides) **and reach the tracks**; reachable ≥ 95 %; none stand harmless behind the platform/gate line. PO: "Just let them enter and it's good." | Q-327, l6Entries | S |
-| L6-07 | retreat | combat: attacks on player + group ≥ 4/min across the retreat (tune); competent damage taken ≥ 30 HP (tune); concurrent infected ≤ 60 / 30. | Q-308, E24-AC13 | S, P |
+| L6-07 | retreat | PO 2026-11-08: recurring rail pressure arrives as **3-infected cohorts every 40 s**, alternating between an entry ahead of the walking tail and one behind it. Across complete seeds 1–3, low + high: ≥ 4.4 arrivals/min, with ≥ 1 arrival from each direction per run; attacks on player **≥ 11/min**, attacks on followers **≥ 5/min**; competent damage taken ≥ 30 HP; concurrent infected ≤ 60 high / 30 low. | Q-308, E24-AC13, PO 2026-11-08; `docs/reports/r12-l6/evidence/pressure-after.json` | S, P |
 | L6-08 | retreat | Group walks at 2.2 m/s; **injured survivors at group speed** (no single straggler that needs babysitting); every follower's bar visible. | Q-328, Q-323 | S |
 | | | **Conflict:** E24-AC10 "injured move at 1.4 m/s and become stragglers" → Q-328 (11-01) wins. | | |
 | L6-09 | retreat | Gates: ≥ 3 chokepoints ≤ 2.5 m; a closed gate blocks movement + sight and holds 8–12 s vs 5 infected; refuses to close with a survivor ≤ 2 m; when everyone is through, its prompt and ring stay at the gate until closed (E or click). | E24-AC11, Q-305 | S |
 | L6-10 | retreat | Markers fixed at the gate / exit platform; never walking ahead of the group. | Q-306 | S |
-| L6-11 | retreat | Covering matters: `evade-only` ≤ 30 % out, `complete` ≥ 60 %. | E24-AC09 | S |
-| L6-12 | exit | Northgate is solid when closed and drawn open when passable; night caption "Night. Still alive."; end shot frames the scene; result counts match the objective. | Q-307, Q-144, E24-AC14 | S, O |
+| L6-11 | retreat | PO 2026-11-08: covering matters: `evade-only` ≤ 30 % out; `complete` exits with **≥ 22/29 (76 %) survivors** and ≤ 3 courier deaths on seeds 1–3, low + high. Measured: 22–26/29 out, 1–3 deaths. | E24-AC09, PO 2026-11-08; `docs/reports/r12-l6/evidence/pressure-after.json` | S |
+| L6-12 | exit | PO 2026-11-08: survivors visibly pass Northgate into the night street, with "The survivors are safe." while they leave; rescued bodies remain visible in the end shot, never disappear on the platform. Northgate is solid when closed and drawn open when passable; night caption "Night. Still alive."; end shot frames the scene; result counts match the objective. | Q-307, Q-144, E24-AC14, PO 2026-11-08 | S, O |
 | L6-13 | all | Fists-only run finishable (no soft-lock). | PO 10-22 | S |
 | L6-14 | all | Underground readability: player contrast ≥ 3:1; infected eyes brightest pixels. | E24-AC15 | O |
 

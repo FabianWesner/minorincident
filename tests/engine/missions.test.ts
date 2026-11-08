@@ -401,7 +401,31 @@ test('checkpoints: death restores objectives, HP, charges and escorts; a boss ki
     expect(restored.survivors.every(r => r.status !== 'shelter'), 'no survivor remains in the shelter-only state').toBe(true);
   } finally { w.dispose(); }
   await shelterRecoveryIsScoped();
+  await northgateSurvivorsStayVisible();
 });
+
+async function northgateSurvivorsStayVisible(): Promise<void> {
+  const w = await loadMissionLevel('L6', 1);
+  try {
+    const m = w.missions!;
+    m.completeObjective('shelter'); m.completeObjective('stop'); m.completeObjective('retreat');
+    for (const e of [...w.infected!.active]) w.infected!.release(e);
+    const s = m.state.l6!;
+    for (const [i, row] of s.survivors.entries()) {
+      row.status = 'following';
+      w.solids.relocate(w.entities.get(row.id)!, { x: 263.2 + Math.floor(i / 6) * .8, y: 4.62, z: 12 + (i % 6) * 1.2 }, 'test.northgate-exit', 0, false);
+    }
+    w.solids.relocate(w.entities.get(1)!, { x: 269, y: 4.62, z: 19 }, 'test.northgate-courier', 0, false);
+    w.update();
+    expect(s.survivors.every(row => row.status === 'out')).toBe(true);
+    expect(m.state.subtitle?.text).toBe('The survivors are safe.');
+    const before = s.survivors.map(row => w.entities.get(row.id)!.transform.x);
+    for (let i = 0; i < 120; i++) w.update();
+    expect(s.survivors.every(row => !w.entities.get(row.id)!.hidden), 'rescued actors remain visible through the end shot').toBe(true);
+    expect(s.survivors.some((row, i) => w.entities.get(row.id)!.transform.x > before[i] + 1), 'evacuees walk clear of the exit instead of vanishing').toBe(true);
+    expect(s.gateAt, 'the visible group still permits normal Northgate closure').toBeGreaterThan(0);
+  } finally { w.dispose(); }
+}
 
 async function shelterRecoveryIsScoped(): Promise<void> {
   const w = await loadMissionLevel('L6', 1);
