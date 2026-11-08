@@ -1,0 +1,361 @@
+{
+  "revision": "9058e8e1d9a198e85cf91da126ba121de7dee3e1",
+  "sourceHash": "10b2cc9caaf5de60ac81e25bd1006529ec6e6a924168cd8057b8f0f67a1392f1",
+  "observationSeconds": 300,
+  "method": "ordinary native inputs; final-state-only observation before disposal",
+  "run": {
+    "level": "L8",
+    "policy": "complete",
+    "seed": 1,
+    "completed": false,
+    "time": 300,
+    "deaths": 4,
+    "kills": 216,
+    "damageTaken": 450,
+    "failures": {
+      "player-died": 4,
+      "tick-budget": 1
+    },
+    "objectiveTimeline": [
+      {
+        "id": "sanctuary",
+        "t": 60
+      }
+    ],
+    "furthestObjective": "escape",
+    "activeObjectives": [
+      "escape"
+    ],
+    "outcome": "tick-budget",
+    "blocker": {
+      "objective": "escape",
+      "detail": "tick-budget: Lead the group to the armored vehicle",
+      "player": {
+        "x": 96.16588592529297,
+        "z": 76.08329772949219
+      },
+      "distance": 0.5768967730990829,
+      "actors": {
+        "majorHale": {
+          "x": 95.9249610601406,
+          "z": 79.64290900513573,
+          "hp": 100
+        },
+        "privateReyes": {
+          "x": 95.45,
+          "z": 73.45,
+          "hp": 100
+        },
+        "nadia": {
+          "x": 115.2498550343071,
+          "z": -81.1248638127195,
+          "hp": 100
+        },
+        "apc": {
+          "x": 96,
+          "z": 74,
+          "hp": 630,
+          "state": "normal",
+          "driver": null,
+          "speed": 0,
+          "yaw": 0
+        }
+      }
+    },
+    "collision": {
+      "failures": 0,
+      "pending": 0,
+      "admitted": 905,
+      "deferred": 193,
+      "requests": [],
+      "offenders": []
+    }
+  },
+  "final": {
+    "tick": 18000,
+    "phase": "playing",
+    "failure": null,
+    "active": [
+      "escape"
+    ],
+    "states": {
+      "breached": true,
+      "player-boarded": false,
+      "aboard": false,
+      "apc-destroyed": false,
+      "hale-fallen": false,
+      "hale-keys": false,
+      "elephant-fallen": false,
+      "elephant-turning": true,
+      "reyes-fallback": true,
+      "departed": false
+    },
+    "player": {
+      "id": 1,
+      "at": {
+        "x": 96.16588592529297,
+        "y": 0.8399999737739563,
+        "z": 76.08329772949219,
+        "yaw": -1.1986811139942524
+      },
+      "hp": 50,
+      "kind": "player",
+      "archetype": "player.survivor"
+    },
+    "input": {
+      "x": 0,
+      "z": 0
+    },
+    "door": {
+      "x": 96.71,
+      "z": 76.025
+    },
+    "protecting": false,
+    "boarding": true,
+    "passengers": [
+      {
+        "id": 354,
+        "seat": 0,
+        "phase": "seated",
+        "started": 16092,
+        "from": {
+          "x": 92.12782428890134,
+          "z": 73.59806542280029,
+          "y": 0.42,
+          "yaw": -0.6560090219285201
+        },
+        "pauseUntil": 0
+      },
+      {
+        "id": 355,
+        "seat": 1,
+        "phase": "seated",
+        "started": 16203,
+        "from": {
+          "x": 92.24107613892382,
+          "z": 74.55590682848566,
+          "y": 0.82,
+          "yaw": -0.3167721455437995
+        },
+        "pauseUntil": 0,
+        "story": null
+      },
+      {
+        "id": 356,
+        "seat": 2,
+        "phase": "seated",
+        "started": 16296,
+        "from": {
+          "x": 92.28267939272138,
+          "z": 74.55807984956779,
+          "y": 0.82,
+          "yaw": 0.7517901368231732
+        },
+        "pauseUntil": 0,
+        "story": null
+      },
+      {
+        "id": 357,
+        "seat": 3,
+        "phase": "seated",
+        "started": 16395,
+        "from": {
+          "x": 92.52800463818224,
+          "z": 74.68170977422318,
+          "y": 0.82,
+          "yaw": 0.8208435998186063
+        },
+        "pauseUntil": 0,
+        "story": null
+      },
+      {
+        "id": 358,
+        "seat": 4,
+        "phase": "seated",
+        "started": 16485,
+        "from": {
+          "x": 92.35423077965915,
+          "z": 74.59169464302806,
+          "y": 0.82,
+          "yaw": 0.5400272024670736
+        },
+        "pauseUntil": 0,
+        "story": null
+      },
+      {
+        "id": 359,
+        "seat": 5,
+        "phase": "seated",
+        "started": 16578,
+        "from": {
+          "x": 92.37527268295928,
+          "z": 74.62630320120769,
+          "y": 0.82,
+          "yaw": 0.7512542438870742
+        },
+        "pauseUntil": 0,
+        "story": null
+      },
+      {
+        "id": 360,
+        "seat": 0,
+        "phase": "seated",
+        "started": 16675,
+        "from": {
+          "x": 92.38233875192658,
+          "z": 74.63265622222681,
+          "y": 0.82,
+          "yaw": 0.8929747195282702
+        },
+        "pauseUntil": 0,
+        "story": null
+      },
+      {
+        "id": 361,
+        "seat": 1,
+        "phase": "seated",
+        "started": 16770,
+        "from": {
+          "x": 92.50726031073732,
+          "z": 74.65237433212387,
+          "y": 0.82,
+          "yaw": 0.7864399130414947
+        },
+        "pauseUntil": 0,
+        "story": null
+      },
+      {
+        "id": 362,
+        "seat": 2,
+        "phase": "seated",
+        "started": 16860,
+        "from": {
+          "x": 92.26899734523454,
+          "z": 74.57454389404447,
+          "y": 0.82,
+          "yaw": 0.9652358423392808
+        },
+        "pauseUntil": 0,
+        "story": null
+      },
+      {
+        "id": 363,
+        "seat": 3,
+        "phase": "seated",
+        "started": 16970,
+        "from": {
+          "x": 91.95223900241112,
+          "z": 74.02922267134731,
+          "y": 0.7,
+          "yaw": -0.24814382860710393
+        },
+        "pauseUntil": 0,
+        "story": null
+      },
+      {
+        "id": 364,
+        "seat": 4,
+        "phase": "seated",
+        "started": 17100,
+        "from": {
+          "x": 92.65799250135358,
+          "z": 74.69795862405319,
+          "y": 0.82,
+          "yaw": 0.8564913389099802
+        },
+        "pauseUntil": 0,
+        "story": null
+      },
+      {
+        "id": 365,
+        "seat": 5,
+        "phase": "seated",
+        "started": 17199,
+        "from": {
+          "x": 92.43460940113151,
+          "z": 74.62864290612747,
+          "y": 0.82,
+          "yaw": 0.6704013316150568
+        },
+        "pauseUntil": 0,
+        "story": null
+      },
+      {
+        "id": 366,
+        "seat": 0,
+        "phase": "seated",
+        "started": 17309,
+        "from": {
+          "x": 92.61489670949543,
+          "z": 74.67834550649474,
+          "y": 0.82,
+          "yaw": 0.806590639760431
+        },
+        "pauseUntil": 0,
+        "story": null
+      },
+      {
+        "id": 408,
+        "seat": 1,
+        "phase": "seated",
+        "started": 17413,
+        "from": {
+          "x": 92.01517658886289,
+          "z": 74.18321738630416,
+          "y": 0.82,
+          "yaw": 0.7699814366809189
+        },
+        "pauseUntil": 8043,
+        "story": null
+      }
+    ],
+    "missing": [],
+    "keeper": {
+      "id": 405,
+      "at": {
+        "x": 115.2498550343071,
+        "z": -81.1248638127195,
+        "y": 0.7,
+        "yaw": -4.712388980384688
+      },
+      "hp": 100,
+      "kind": "civilian",
+      "archetype": "npc.zookeeper",
+      "state": "flee",
+      "speed": 1.999174078616761
+    },
+    "hale": {
+      "id": 407,
+      "at": {
+        "x": 95.9249610601406,
+        "z": 79.64290900513573,
+        "y": 0.7,
+        "yaw": 1.0475806421559464
+      },
+      "hp": 100,
+      "kind": "civilian",
+      "archetype": "npc.soldier",
+      "state": "calm",
+      "speed": 0.46621366706505124,
+      "blocker": 478
+    },
+    "reyes": {
+      "id": 408,
+      "at": {
+        "x": 95.45,
+        "z": 73.45,
+        "y": 1.2254347014427187,
+        "yaw": 0
+      },
+      "hp": 100,
+      "kind": "civilian",
+      "archetype": "npc.soldier",
+      "key": "reyes",
+      "mode": "follow",
+      "passengerOf": 410,
+      "state": "calm",
+      "restAt": 17414,
+      "speed": 0
+    }
+  }
+}

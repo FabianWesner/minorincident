@@ -3,6 +3,7 @@ import type { CoverWall } from '../combat/HitQuery';
 import type { Point } from '../npc/types';
 import type { EntitySnapshot } from '../world/types';
 import { actorRadius, solidLargeCorpse } from '../world/SolidRegistry';
+import { looseSlotOffset } from '../outbreak/groupNature';
 
 /** Shared level-mission mechanics (nearest-clear search, blocker events, follower slots, player relocation). */
 
@@ -83,9 +84,10 @@ export function leaderHeading(yaw: number, velocity?: Point): Point {
 /** Distance behind the leader of a follower slot (rows of three, 1.2 m apart). */
 export function formationBack(slot: number): number { return 2.3 + Math.floor(slot / 3) * 1.2; }
 
-/** Three-column follower formation behind the leader. */
-export function formationSlot(leader: Point, heading: Point, slot: number): Point {
-  const back = formationBack(slot), side = (slot % 3 - 1) * 1.2;
+/** Three-column follower formation behind the leader, loosened per slot into a
+ * cluster of pairs. Scripted L7 staging/travel passes false to retain authored targets. */
+export function formationSlot(leader: Point, heading: Point, slot: number, natural = true): Point {
+  const loose = natural ? looseSlotOffset(slot) : { back: 0, side: 0 }, back = formationBack(slot) + loose.back, side = (slot % 3 - 1) * 1.2 + loose.side;
   return { x: leader.x - heading.x * back - heading.z * side, z: leader.z - heading.z * back + heading.x * side };
 }
 

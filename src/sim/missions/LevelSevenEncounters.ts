@@ -88,7 +88,8 @@ export class LevelSevenEncounters {
     for (let slot = 0; slot < count; slot++) {
       const source = roster?.[slot];
       if (source && (source.health.current <= 0 || source.infected || source.infection)) continue;
-      const at = this.clearPoint(formationSlot(formation, heading, slot), .4);
+      // Preserve the authored entry clearance; loosen slots only after following starts.
+      const at = this.clearPoint(formationSlot(formation, heading, slot, false), .4);
       const e = source ? structuredClone(source) : w.entities.get(outbreak.spawnPedestrian(at, { model: slot % 2 ? 'npc.civilian-man-b.aftermath' : 'npc.civilian-woman-b.aftermath', role: 'cashier' }))!;
       if (source) {
         if (w.entities.get(e.id)) throw new Error(`L7 incoming survivor id collision: ${e.id}`);
@@ -281,7 +282,7 @@ export class LevelSevenEncounters {
       const exit = { x: launcher.transform.x - l7Rocket.exitOffset[0], z: launcher.transform.z - l7Rocket.exitOffset[1] };
       const road = l7Encounters.streets[0], heading = leaderHeading(-Math.atan2(road.z - exit.z, road.x - exit.x));
       const origin = { x: exit.x - heading.x * 3.5, z: exit.z - heading.z * 3.5 };
-      w.npcs!.move(e, formationSlot(origin, heading, s.slot), 5.2, c, .3);
+      w.npcs!.move(e, formationSlot(origin, heading, s.slot, false), 5.2, c, .3);
       w.spatial.set(e.id, e.transform.x, e.transform.z);
       return true;
     }
@@ -421,7 +422,7 @@ export class LevelSevenEncounters {
         remaining -= length; newer = older;
       }
     }
-    return formationSlot(player, leaderHeading(player.yaw, velocity), slot);
+    return formationSlot(player, leaderHeading(player.yaw, velocity), slot, false);
   }
   /** Rounded physical bodies can be separated into a gap the conservative
    * crowd bake closes. Find a short real walk back to the connected flow,

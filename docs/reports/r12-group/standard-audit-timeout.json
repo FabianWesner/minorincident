@@ -1,0 +1,11 @@
+{
+  "runtimeCommit": "aaa66a18d8ebc5a12d41ebf4761cdc4edba75fd1",
+  "sourceHash": "10b2cc9caaf5de60ac81e25bd1006529ec6e6a924168cd8057b8f0f67a1392f1",
+  "command": "sh tools/remote/run.sh \"$PWD\" --pull test-results/qa-threat -- npm run qa:threat",
+  "exitCode": 1,
+  "childExitCode": 124,
+  "seconds": 600.8,
+  "aggregateWritten": false,
+  "logSha256": "a19beb7db49b3d98f61a3593d98693d358424872666f1cf0d4084a4f1b72a584",
+  "note": "Old local qa-threat/audit.json has revision 8f83d2eb and is not current evidence."
+}

@@ -11,6 +11,8 @@ import { adultMaleStandingHeight, civilianHeight, fitCivilianHeight, heroineStan
 import { SimWorld } from '../../src/sim/world/SimWorld';
 import { actorRadius, solidLargeCorpse } from '../../src/sim/world/SolidRegistry';
 import { followerInCombat, updateSurvivor } from '../../src/sim/outbreak/Survivors';
+import { formationBack, formationSlot } from '../../src/sim/missions/missionHelpers';
+import { idleEligible, idleLookYaw, looseSlotOffset, startDelayTicks, swayOffset } from '../../src/sim/outbreak/groupNature';
 
 const worlds: SimWorld[] = [];
 afterEach(() => { for (const w of worlds.splice(0)) w.dispose(); });
@@ -104,6 +106,80 @@ test('civilians: seeded grab → bite → down → glowing eyes → rising → i
 
 test('escort: shared combat pace, follows through a maze, a 2 s stand revives to 50 %, unattended 20 s down fails the mission', async () => {
   {
+  // r12-group: the follower formation is a loose, persistent cluster (not the 1.2 m parade lattice) with body room between slots.
+  const heading = { x: 1, z: 0 }, slots = Array.from({ length: 48 }, (_, i) => formationSlot({ x: 0, z: 0 }, heading, i));
+  // L7 keeps its authored targets while the other levels retain loose slots.
+  for (let slot = 0; slot < 48; slot++) expect(formationSlot({ x: 0, z: 0 }, heading, slot, false))
+    .toEqual({ x: -formationBack(slot), z: (slot % 3 - 1) * 1.2 });
+  expect(slots).toEqual(Array.from({ length: 48 }, (_, i) => formationSlot({ x: 0, z: 0 }, heading, i)));
+  for (let i = 0; i < slots.length; i++) for (let j = i + 1; j < slots.length; j++) expect(Math.hypot(slots[i].x - slots[j].x, slots[i].z - slots[j].z)).toBeGreaterThan(.89);
+  expect(slots.filter((s, i) => Math.hypot(s.x + formationBack(i), s.z - (i % 3 - 1) * 1.2) > .12).length).toBeGreaterThan(16);
+  expect(Math.max(...slots.slice(0, 3).map(s => s.x))).toBeLessThan(-2.2);
+  const w = await world(), p = w.entities.get(1)!;
+  for (const e of [...w.infected!.active]) w.infected!.release(e);
+  w.scenario = 'L6';
+  const follower = w.entities.get(w.npcs!.civilians.spawn('cashier', { x: p.transform.x - 3, z: p.transform.z }))!, c = follower.civilian!;
+  c.survivor = { key: 'group-react', mode: 'follow', leader: 1, slot: 0, cover: false, foundAt: 0, waitAt: 9999, restAt: w.tick - 60 };
+  // A rested follower sets off a personal beat after it is asked, then walks.
+  const delay = startDelayTicks(follower, 'L6'), start = { ...follower.transform }, goal = { x: start.x - 4, z: start.z };
+  expect(delay).toBeGreaterThan(4);
+  for (let i = 0; i < delay; i++) {
+    // Restoring onto a later world clock preserves the reaction time still owed.
+    if (i === 2) { w.tick += 600; w.npcs!.restore(600); }
+    w.npcs!.move(follower, goal, 3, c, 0); w.tick++;
+    expect(Math.hypot(follower.transform.x - start.x, follower.transform.z - start.z)).toBe(0);
+  }
+  w.npcs!.move(follower, goal, 3, c, 0); w.tick++;
+  expect(follower.transform.x).toBeLessThan(start.x);
+  for (let i = 0; i < 20; i++) { w.npcs!.move(follower, goal, 3, c, 0); w.tick++; }
+  expect(follower.transform.x).toBeLessThan(start.x - .05);
+  w.scenario = 'L7'; c.survivor!.restAt = w.tick - 60; delete c.survivor!.stirAt;
+  const beforeL7 = follower.transform.x;
+  w.npcs!.move(follower, { x: beforeL7 - 4, z: follower.transform.z }, 3, c, 0);
+  expect(follower.transform.x).toBeLessThan(beforeL7); // no personal start delay in the gated level
+  w.scenario = 'L6';
+  // Standing, it looks toward a nearby infected before anything else.
+  const enemy = w.entities.get(w.infected!.spawn('infected.runner', { x: follower.transform.x, z: follower.transform.z + 6 }))!;
+  expect(idleEligible(follower)).toBe(true);
+  expect(idleLookYaw(w, follower)).toBeCloseTo(-Math.atan2(enemy.transform.z - follower.transform.z, enemy.transform.x - follower.transform.x));
+  // A nearby infected behind a wall must not synchronize the group's gaze through it.
+  const visible = vi.spyOn(w.infected!.nav, 'visible').mockReturnValue(false);
+  expect(idleLookYaw(w, follower)).not.toBeCloseTo(-Math.atan2(enemy.transform.z - follower.transform.z, enemy.transform.x - follower.transform.x));
+  visible.mockRestore();
+  }
+  {
+    const w = await world(); w.scenario = 'L8';
+    const group = [-3, 3].map((z, slot) => {
+      const e = w.entities.get(w.npcs!.civilians.spawn('cashier', { x: -10, z }))!;
+      e.civilian!.survivor = { key: `urgent-${slot}`, mode: 'follow', leader: 1, slot, cover: false, foundAt: 0, waitAt: 9999, injured: !!slot };
+      return e;
+    });
+    // Distinct temperaments/injury must track the same urgent evacuation intent equally.
+    const urgent: number[] = [];
+    for (let i = 0; i < 20; i++) {
+      w.tick++;
+      for (const e of group) { e.civilian!.survivor!.briskAt = w.tick; w.npcs!.moveStep(e, .05, 0); }
+      expect(group[0].locomotion!.vx).toBeCloseTo(group[1].locomotion!.vx, 10);
+      urgent.push(group[0].locomotion!.vx);
+    }
+    for (const e of group) { delete e.locomotion; delete e.civilian!.survivor!.briskAt; }
+    for (let i = 0; i < 12; i++) { w.tick++; for (const e of group) w.npcs!.moveStep(e, .05, 0); }
+    expect(group[0].locomotion!.vx).toBeCloseTo(group[1].locomotion!.vx, 10);
+    expect(group[0].locomotion!.vx).toBeCloseTo(urgent[11], 10);
+    // The subway convoy keeps its authored shared response rather than a second personality modifier.
+    w.scenario = 'L6'; for (const e of group) delete e.locomotion;
+    for (let i = 0; i < 12; i++) { w.tick++; for (const e of group) w.npcs!.moveStep(e, .05, 0); }
+    expect(group[0].locomotion!.vx).toBeCloseTo(group[1].locomotion!.vx, 10);
+    expect(group[0].locomotion!.vx).toBeLessThan(urgent[11]);
+    // A calm L5 velocity is already solved from its wandering slot: do not sway its short aim twice.
+    w.scenario = 'L5'; group[0].civilian!.survivor!.briskAt = w.tick;
+    Object.assign(w.entities.get(1)!.survivor!.velocity, { x: 3, z: 0 });
+    const move = vi.spyOn(w.npcs!, 'moveStep').mockImplementation(() => {}), at = group[0].transform;
+    w.npcs!.move(group[0], { x: at.x + 2, z: at.z }, 3, group[0].civilian!, 0);
+    expect(move).toHaveBeenCalled(); expect(move.mock.calls[0][2]).toBeCloseTo(0, 10);
+    move.mockRestore();
+  }
+  {
   const w = await world(), p = w.entities.get(1)!;
   for (const e of [...w.infected!.active]) w.infected!.release(e);
   w.scenario = 'L5'; p.survivor!.velocity = { x: 4.5, z: 0 };
@@ -146,8 +222,8 @@ test('escort: shared combat pace, follows through a maze, a 2 s stand revives to
     // In its slot: walk with the courier's velocity, no braking and no surge.
     for (let slot = 0; slot < 5; slot++) {
       c.survivor.slot = slot; delete c.survivor.pace;
-      // Calm slots sit 2.7/3.4 m back; the rear row staggers into the front row's gaps.
-      Object.assign(follower.transform, { x: p.transform.x - (slot < 3 ? 2.7 : 3.4), z: p.transform.z + (slot < 3 ? (slot % 3 - 1) * 1.2 : [-.6, .6][slot - 3]) });
+      // Calm slots sit 2.7/3.4 m back; the rear row staggers into the front row's gaps (plus the current personal slot offset and wander phase).
+      Object.assign(follower.transform, { x: p.transform.x - (slot < 3 ? 2.7 : 3.4), z: p.transform.z + (slot < 3 ? (slot % 3 - 1) * 1.2 : [-.6, .6][slot - 3]) + looseSlotOffset(slot).side * .4 + swayOffset(follower.id, w.tick, .12) });
       updateSurvivor(w, follower);
       const [, aim, pace] = movement.mock.lastCall!;
       expect(aim.x - follower.transform.x).toBeCloseTo(4.5 * .5); expect(aim.z - follower.transform.z).toBeCloseTo(0); expect(pace).toBeCloseTo(4.5);

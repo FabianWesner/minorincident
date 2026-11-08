@@ -7,8 +7,10 @@ import { Companion } from './Companion';
 import { Escorts } from './Escorts';
 import { populateMorning } from './MorningRoutines';
 import { Civilians } from './Civilians';
-import { followerTracking, l5FollowerTracking, moveAgent } from '../locomotion/AgentMotion';
+import { moveAgent, trackingFor } from '../locomotion/AgentMotion';
 import type { Point } from './types';
+import type { NavGrid } from '../ai/NavGrid';
+import { startDelayTicks, swayOffset } from '../outbreak/groupNature';
 /** E08 composition and reused E07 navigation. Public authoring hooks are also headless test hooks. */
 export class Npcs {
   readonly civilians: Civilians;
@@ -59,6 +61,13 @@ export class Npcs {
       const catchUp = e.civilian!.ally!.targetId ? 0 : Math.max(0, Math.hypot(target.x - e.transform.x, target.z - e.transform.z) - stop) * 2;
       if (leaderSpeed > .5 && Math.hypot(e.transform.x - leader.transform.x, e.transform.z - leader.transform.z) <= follow.maxM + 2)
         speed = Math.min(speed, leaderSpeed + catchUp);
+    }
+    const survivor = e.civilian?.survivor;
+    // R12 remains disabled for L7: its authored queue and encounter lanes stay exact.
+    if (this.world.scenario !== 'L7' && survivor?.mode === 'follow' && !e.civilian!.vehicleYield && stop <= .5) {
+      // r12-group: a resting follower sets off a personal beat after it is asked to.
+      if (this.reacting(e, target, stop)) return true;
+      target = this.sway(e, target, nav);
     }
     const footprint = actorRadius(e);
     let dx = target.x - e.transform.x, dz = target.z - e.transform.z;
@@ -125,6 +134,24 @@ export class Npcs {
     this.moveStep(e, vx / 60, vz / 60, nav);
     this.world.spatial.set(e.id, e.transform.x, e.transform.z); return true;
   }
+  /** True while a follower that rested for half a second still waits out its personal reaction delay. */
+  private reacting(e: EntitySnapshot, target: Point, stop: number): boolean {
+    const s = e.civilian!.survivor!, tick = this.world.tick, delay = startDelayTicks(e, this.world.scenario);
+    if (s.restAt === undefined || tick - s.restAt < 30 || Math.hypot(target.x - e.transform.x, target.z - e.transform.z) <= stop) return false;
+    if (s.stirAt === undefined || tick - s.stirAt > delay + 30) s.stirAt = tick;
+    if (tick - s.stirAt >= delay) return false;
+    // Fear is immediate: nobody dawdles with an infected anywhere near.
+    return !this.world.infected!.active.some(o => o.health.current > 0 && !o.hidden && Math.hypot(o.transform.x - e.transform.x, o.transform.z - e.transform.z) < 20);
+  }
+  /** Walking followers wander slowly to either side of their slot instead of moving on parallel rails. */
+  private sway(e: EntitySnapshot, target: Point, nav: NavGrid): Point {
+    const v = this.world.entities.get(1)?.survivor?.velocity, speed = v ? Math.hypot(v.x, v.z) : 0;
+    // Calm L5 already includes slot wander in its bounded tracking velocity.
+    if (!v || speed <= .8 || this.world.scenario === 'L5' && e.civilian?.survivor?.briskAt === this.world.tick) return target;
+    const offset = swayOffset(e.id, this.world.tick, this.world.scenario === 'L5' ? .18 : .28);
+    const swayed = { x: target.x - v.z / speed * offset, z: target.z + v.x / speed * offset };
+    return nav.clear(swayed.x, swayed.z, .4) && nav.visible(e.transform, swayed, .35) ? swayed : target;
+  }
   moveStep(e: EntitySnapshot, dx: number, dz: number, nav = this.world.missions?.l6?.navigationFor(e) ?? this.world.infected!.nav): void {
     if (e.passengerOf !== undefined || e.pendingAdmission) return;
     this.world.solids.wrote(e, 'npc.move');
@@ -133,8 +160,7 @@ export class Npcs {
     // metres beyond a corner before it can turn back toward the courier.
     // Calm L3 personal-space corrections already track her swept step; motor
     // lag must not let the accelerating courier overtake that correction.
-    moveAgent(e, dx * 60, dz * 60, nav, this.world.tick, actorRadius(e), e.civilian?.ally?.follow?.spacingAt === this.world.tick,
-      this.world.scenario === 'L7' && e.companion ? followerTracking : this.world.scenario === 'L5' && (e.companion || e.civilian?.survivor?.briskAt === this.world.tick) ? l5FollowerTracking : undefined);
+    moveAgent(e, dx * 60, dz * 60, nav, this.world.tick, actorRadius(e), e.civilian?.ally?.follow?.spacingAt === this.world.tick, trackingFor(this.world, e));
     if ((e.civilian || e.escort) && this.traffic.overlaps(e.transform)) { e.transform.x = x; e.transform.z = z; }
   }
   /** Place collision-safe rectangular routines from authored navigation, never inside buildings. */
@@ -211,6 +237,8 @@ export class Npcs {
       if (e.infectionRise) { e.infectionRise.started += delta; e.infectionRise.until += delta; }
       if (c?.survivor?.waitAt) c.survivor.waitAt += delta;
       if (c?.survivor?.fearUntil) c.survivor.fearUntil += delta;
+      if (c?.survivor?.restAt !== undefined) c.survivor.restAt += delta;
+      if (c?.survivor?.stirAt !== undefined) c.survivor.stirAt += delta;
       const l1 = e.civilian?.l1; if (l1) { l1.repickAt += delta; if (l1.noticed >= 0) l1.noticed += delta; if (l1.graceUntil) l1.graceUntil += delta; if (l1.progressAt !== undefined) l1.progressAt += delta; if (l1.doorAt !== undefined) l1.doorAt += delta; }
       if (e.infection) { e.infection.startedTick += delta; e.infection.endsTick += delta; }
       if (e.infected) for (const key of ['until', 'cooldown', 'activeUntil', 'grabUntil', 'grabNextTick', 'scatterUntil'] as const) if (e.infected[key]) e.infected[key] += delta;

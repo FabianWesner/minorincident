@@ -1,5 +1,6 @@
 import { l5 } from '../../data/l5';
 import { corpseDetour, formationBack, formationSlot } from '../missions/missionHelpers';
+import { idleEligible, looseSlotOffset, swayOffset } from './groupNature';
 import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
 import type { Point } from '../npc/types';
@@ -94,7 +95,8 @@ export function updateSurvivor(world: SimWorld, e: EntitySnapshot): boolean {
     // the resolved body's turning and braking error (2.7 m and 3.4 m back; the
     // shared slots sit 2.3 m back, 0.3 m from the band's near edge). The rear
     // row staggers into the front row's gaps so the rows can sit close.
-    const row = Math.floor(slot / 3), back = 2.7 + row * .7, side = row ? [-.6, .6, 0][slot % 3] : (slot % 3 - 1) * 1.2;
+    // Solve slot wander before the bounded velocity, so lateral intent shares the 1.05x headroom.
+    const row = Math.floor(slot / 3), back = 2.7 + row * .7, side = (row ? [-.6, .6, 0][slot % 3] : (slot % 3 - 1) * 1.2) + looseSlotOffset(slot).side * .4 + swayOffset(e.id, tick, .12);
     const target = [{ x: p.x - heading.x * back - heading.z * side, z: p.z - heading.z * back + heading.x * side }, { x: p.x - heading.x * back, z: p.z - heading.z * back }]
       .find(t => nav.clear(t.x, t.z, .35) && nav.visible(t, p, .35));
     if (target) {
@@ -151,7 +153,8 @@ export function updateSurvivor(world: SimWorld, e: EntitySnapshot): boolean {
     // extra catch-up speed does not distort path steering or threat reachability.
     const routed = inCombat ? goal : aroundCorpse(world, e, goal);
     world.npcs!.move(e, routed, speedMs, c, routed === p ? reach : 0);
-  } else {
+  } else if (s.restAt === undefined || tick - s.restAt < 20 || !idleEligible(e)) {
+    // Settled followers look around on their own (groupNature.idleLookYaw); until then face the courier.
     const yaw = -Math.atan2(p.z - me.z, p.x - me.x), delta = Math.atan2(Math.sin(yaw - me.yaw), Math.cos(yaw - me.yaw));
     me.yaw += Math.max(-.1, Math.min(.1, delta));
   }

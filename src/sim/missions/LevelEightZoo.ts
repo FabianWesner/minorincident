@@ -510,7 +510,11 @@ export class LevelEightZoo {
       // board-up; a stale carried injury flag must not leave passengers behind.
       // A follower displaced from its assigned slot catches up, then settles
       // back to courier pace. This avoids making the courier stop for it.
-      const speed = Math.min(5.2, 4.5 + Math.max(0, distance(e.transform, target) - 4) * .35);
+      // Nearby evacuees walk with the courier instead of repeatedly sprinting into their slots.
+      // Keep R13's full catch-up outside the band and its boarding approach unchanged.
+      const courierSpeed = Math.hypot(velocity.x, velocity.z);
+      const cap = !boarding && courierSpeed > .8 && distance(e.transform, p.transform) <= 10 ? courierSpeed * 1.05 : 5.2;
+      const speed = Math.min(cap, 4.5 + Math.max(0, distance(e.transform, target) - 4) * .35);
       if (!boarding || !this.approachBoardingSpot(e, target, speed)) w.npcs!.move(e, target, speed, c, boarding ? .2 : 0, 2400);
     }
     return true;

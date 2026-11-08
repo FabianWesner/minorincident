@@ -51,7 +51,9 @@ export interface SurvivorState { key: string; mode: 'hidden' | 'follow'; slot: n
   /** Swept L7 detour legs around a large solid corpse during L5 travel. */
   corpseRoute?: Point[];
   /** Courier travel velocity as this follower perceives it: rises with the courier at once, eases off over ~0.6 s. */
-  pace?: { x: number; z: number; tick: number } }
+  pace?: { x: number; z: number; tick: number };
+  /** r12-group: tick this follower came to rest, and the tick a move was first asked of it since (personal reaction delay). */
+  restAt?: number; stirAt?: number }
 /** E21 allied fighters v2: a handgun/rifle with a distance-dependent hit chance (one target per shot, no ammunition). */
 export interface AllyGun { damage: number; shotS: number; rangeM: number; nearM: number; hitNear: number; hitFar: number }
 /** Serializable allied-fighter task state (firefighters in L2, police from L3, soldiers at the L3 army checkpoint). Ticks are sim ticks. */
