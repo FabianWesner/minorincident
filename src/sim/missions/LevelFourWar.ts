@@ -808,6 +808,7 @@ export class LevelFourWar {
           if (d > 11 || !this.combat.query.visible(e.transform, target.transform)) b.scripted = this.snap(target.transform, .55);
           else {
             delete b.scripted;
+            if (b.alphaType && b.alphaType !== 'brute') { ai.press(e.id, target.id, tick + 120); continue; }
             ai.startSpecial(e.id, d <= 3.5 ? 'alpha.ground-slam' : 'alpha.charge', { id: target.id, x: target.transform.x, z: target.transform.z }, { x: e.transform.x, z: e.transform.z, radius: d <= 3.5 ? 4 : 1, dx: dx / d, dz: dz / d });
           }
           continue;
@@ -975,7 +976,7 @@ export class LevelFourWar {
       if (!spot) continue;
       const at = this.snap(spot, radius);
       if (!ai.nav.clear(at.x, at.z, radius)) continue;
-      const id = ai.spawn('infected.alpha', at, { state: 'idle', yaw: -Math.atan2(l4.map.centre.z - at.z, l4.map.centre.x - at.x) });
+      const id = ai.spawn('infected.alpha', at, { state: 'idle', alphaType: entry.job === 'armor' ? 'armoured' : entry.job === 'line' ? 'thrower' : 'brute', yaw: -Math.atan2(l4.map.centre.z - at.z, l4.map.centre.x - at.x) });
       const e = world.entities.get(id)!;
       if (!this.outsidePerimeter(e.transform) || !ok(e.transform)) { ai.release(e); continue; }
       if (e.combat) e.combat.allyResist = l4.alphas.allyResist;
