@@ -1,0 +1,70 @@
+{
+  "description": "Delivered intact truck connected cloth surface (excluding separate ties/seams): coincident-position normal continuity, tolerance 0.01 after quantization",
+  "rows": [
+    {
+      "path": "public/assets/models/veh.military-truck.glb",
+      "clothComponents": [
+        {
+          "positions": 327,
+          "min": [
+            -3.2527356796219244,
+            1.908539048748576,
+            -1.2489458458334917
+          ],
+          "max": [
+            0.027221966790997244,
+            3.6184655812695983,
+            1.2260864287834017
+          ],
+          "discontinuousSharedNormals": 0
+        }
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.military-truck.lod1.glb",
+      "clothComponents": [
+        {
+          "positions": 67,
+          "min": [
+            -3.2297344277542237,
+            1.8600068986252718,
+            -1.2246059052227554
+          ],
+          "max": [
+            0.05021704615906909,
+            3.570039343566762,
+            1.2204202916015547
+          ],
+          "discontinuousSharedNormals": 0
+        }
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.military-truck.lod2.glb",
+      "clothComponents": [
+        {
+          "positions": 28,
+          "min": [
+            -3.2297344277542237,
+            1.8599980788886756,
+            -1.1729135770009282
+          ],
+          "max": [
+            0.05021704615906909,
+            3.5700305238301664,
+            1.1669490775907174
+          ],
+          "discontinuousSharedNormals": 0
+        }
+      ]
+    }
+  ],
+  "before": {
+    "revision": "485ebce1",
+    "discontinuousClothPositionsByLod": [
+      50,
+      10,
+      4
+    ]
+  }
+}

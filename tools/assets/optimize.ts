@@ -180,16 +180,13 @@ function smoothMilitaryTruckCanvasNormals(document: Document): void {
     for (const primitive of node.getMesh()?.listPrimitives() ?? []) {
       const positions = primitive.getAttribute('POSITION')!, normals = primitive.getAttribute('NORMAL');
       if (!normals) continue;
-      const sums = new Map<string, Vector3>(), keys: (string | null)[] = [], point: number[] = [], normal: number[] = [];
+      const sums = new Map<string, Vector3>(), keys: string[] = [], point: number[] = [], normal: number[] = [];
       for (let i = 0; i < positions.getCount(); i++) {
         positions.getElement(i, point); normals.getElement(i, normal);
-        const [x, y, z] = point;
-        const canvas = x >= -3.36 && x <= .04 && y >= 1.88 && y <= 3.61 && Math.abs(z) <= 1.25;
-        if (!canvas) { keys.push(null); continue; }
         const key = point.map(value => Math.round(value * 1e5)).join('|'); keys.push(key);
         const sum = sums.get(key) ?? new Vector3(); sum.add(new Vector3().fromArray(normal)); sums.set(key, sum);
       }
-      for (let i = 0; i < keys.length; i++) if (keys[i]) normals.setElement(i, sums.get(keys[i]!)!.clone().normalize().toArray());
+      for (let i = 0; i < keys.length; i++) normals.setElement(i, sums.get(keys[i])!.clone().normalize().toArray());
     }
   }
 }
