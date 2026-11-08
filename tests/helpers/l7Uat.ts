@@ -150,6 +150,10 @@ function checkL7FollowerBars(w: SimWorld) {
     boxes.values().next().value!.set(new Vector3(-.3, -3.3, -.3), new Vector3(.3, -1.8, .3));
     bars.update(camera, 1280, 720, () => true);
     expect(bars.count, 'partially visible edge-of-frame evacuees retain their bars').toBe(boxes.size);
+    w.l7Departure!.state.phase = 'departing';
+    bars.update(camera, 1280, 720, () => true);
+    expect(bars.count, 'the HUD-free bus cinematic clears world health bars').toBe(0);
+    w.l7Departure!.state.phase = 'waiting';
   } finally { bars.dispose(); bounds.mockRestore(); top.mockRestore(); ray.mockRestore(); }
 }
 
