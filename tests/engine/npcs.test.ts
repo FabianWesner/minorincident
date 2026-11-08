@@ -282,6 +282,63 @@ test('corgi: warns of an offscreen threat within 18 m with a unit direction', as
       steer.mockRestore();
     } finally { w.dispose(); }
   }
+  // Six seconds of failed progress recover off-screen, followed by real visible running.
+  {
+    const w = await world(), dog = w.entities.get(w.npcs!.companion.spawn())!, p = w.entities.get(1)!;
+    for (const enemy of [...w.infected!.active]) w.infected!.release(enemy);
+    w.npcs!.companion.forceSafe = true;
+    Object.assign(w.infected!.director.camera, { halfWidth: 6, halfDepth: 6 });
+    for (const gap of [45, 20, 5]) {
+      Object.assign(w.infected!.director.camera, { halfWidth: gap > 6 ? 6 : 2, halfDepth: gap > 6 ? 6 : 2 });
+      Object.assign(dog.transform, { x: p.transform.x + gap, z: p.transform.z }); w.spatial.set(dog.id, dog.transform.x, dog.transform.z);
+      const move = vi.spyOn(w.npcs!, 'move').mockReturnValue(false), start = w.tick;
+      for (let tick = 1; tick <= 360; tick++) {
+        // Slow catch-up still has a six-second limit outside the 35 m leash.
+        if (gap === 45) dog.transform.x = p.transform.x + gap - tick / 120;
+        // Side-to-side escape attempts must not count as closing the gap.
+        if (gap === 20) dog.transform.z = p.transform.z + (tick % 2 ? .6 : -.6);
+        w.tick = start + tick; w.npcs!.companion.update();
+      }
+      expect(dog.transform.x).toBe(p.transform.x + gap - (gap === 45 ? 3 : 0));
+      expect(w.infected!.director.offscreen(dog.transform, dog.transform.y - .3)).toBe(true);
+      w.update();
+      expect(dog.hidden).not.toBe(true);
+      expect(dog.transform.x).toBeLessThan(p.transform.x);
+      expect(w.infected!.director.offscreen(dog.transform, dog.transform.y - .3)).toBe(true);
+      expect(dog.companion!.rejoining).toBe(true);
+      move.mockRestore();
+      let ranIntoView = false;
+      for (let tick = 0; tick < 240; tick++) {
+        const before = { ...dog.transform }; w.update();
+        expect(Math.hypot(dog.transform.x - before.x, dog.transform.z - before.z)).toBeLessThan(.2);
+        expect(dog.hidden).not.toBe(true);
+        if (!w.infected!.director.offscreen(dog.transform, dog.transform.y - .3) && Math.hypot(dog.companion!.velocity!.x, dog.companion!.velocity!.z) > 1) ranIntoView = true;
+      }
+      expect(ranIntoView).toBe(true);
+      expect(Math.hypot(dog.transform.x - p.transform.x, dog.transform.z - p.transform.z)).toBeLessThan(3);
+      expect(dog.companion!.rejoining).toBeUndefined();
+    }
+    // A visible dog cannot vanish, and scripted transport keeps ownership of its pose.
+    const move = vi.spyOn(w.npcs!, 'move').mockReturnValue(false);
+    Object.assign(dog.transform, { x: p.transform.x + 40, z: p.transform.z });
+    Object.assign(w.infected!.director.camera, { halfWidth: 50, halfDepth: 50 });
+    for (let i = 0; i < 400; i++) { w.tick++; w.npcs!.companion.update(); }
+    expect(dog.transform.x).toBe(p.transform.x + 40);
+    dog.passengerOf = 999;
+    Object.assign(w.infected!.director.camera, { halfWidth: 6, halfDepth: 6 });
+    for (let i = 0; i < 400; i++) { w.tick++; w.npcs!.companion.update(); }
+    expect(dog.transform.x).toBe(p.transform.x + 40);
+    delete dog.passengerOf; move.mockRestore();
+    w.events.emit({ type: 'cinematic.completed', id: 'test-transition', tick: w.tick });
+    expect(Math.hypot(dog.transform.x - p.transform.x, dog.transform.z - p.transform.z)).toBeLessThanOrEqual(4);
+    expect(dog.hidden).not.toBe(true);
+    expect(dog.companion!.path).toEqual([]);
+    dog.hidden = true;
+    dog.pendingAdmission = { ...dog.transform, writer: 'test.hidden-admission', hidden: true };
+    w.npcs!.companion.respawnNear();
+    expect(dog.pendingAdmission).toBeUndefined();
+    expect(dog.hidden).toBe(false);
+  }
   // G-27: the Oak sedan's rotated nav footprint must leave a route through the gate beside the wreck.
   {
     const w = await loadRunnerLevel('L3', 1, preset('L3-default'), 0, { quality: 'low' });

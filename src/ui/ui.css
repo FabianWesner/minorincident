@@ -123,7 +123,7 @@ body.full-ui:not([data-ui-screen=game]) [data-touch-controls],body.full-ui:not([
 .hud-objective-detail{pointer-events:auto;color:var(--ui-ink);width:min(420px,calc(100vw - 48px));padding:20px;font-size:calc(16px * var(--text-scale))}
 .hud-objective-detail::backdrop{background:#10182488}
 .touch-ui{--hud-top:max(12px,env(safe-area-inset-top));--hud-left:max(12px,env(safe-area-inset-left));--hud-right:max(12px,env(safe-area-inset-right));--hud-bottom:max(12px,env(safe-area-inset-bottom));--hud-map-size:min(96px,28vmin)}
-.touch-ui .hud-weapon,.touch-ui .hud-companion,.full-ui [data-touch-action=pause]{display:none!important}
+.touch-ui .hud-weapon,.full-ui [data-touch-action=pause]{display:none!important}
 .touch-ui .hud-vitals{top:var(--hud-top);left:var(--hud-left);width:min(172px,45vw);height:56px;grid-template-columns:40px 1fr;padding:5px;gap:5px;border-radius:12px}
 .touch-ui .hud-vitals .hud-portrait{width:40px;height:40px;font-size:22px;border-width:2px;grid-row:auto}
 .touch-ui .hud-bars{gap:3px}
