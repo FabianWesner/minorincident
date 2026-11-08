@@ -6,6 +6,7 @@ import { stateHash } from '../../../src/sim/world/stateHash';
 import type { ArmySeed } from './l3ArmyLine';
 import { l3SurvivalSeeds, type L3SurvivalSeed } from './l3SurvivalSeeds';
 import { L3ArmyObservation } from './l3ArmyObservation';
+import { installKitingPolicy, finishKitingReceipt, type KitingReceipt } from './kiting';
 
 export interface L3SharedSeed {
   seed: number;
@@ -14,6 +15,7 @@ export interface L3SharedSeed {
   definitions: ThreatObserver['definitions'];
   quality: string;
   nativeStateHash: string;
+  kiting: KitingReceipt;
   army: ArmySeed;
   survival: L3SurvivalSeed;
 }
@@ -26,6 +28,7 @@ export async function l3SharedSeeds(tier: 'low' | 'high', seedOneCampaign: Retur
     campaign.seed = seed; campaign.settings.quality = tier;
     let observer: ThreatObserver | undefined;
     let armyObserver: L3ArmyObservation | undefined;
+    const kiting: KitingReceipt = { kitingSeconds: 0, attacks: 0, attacksPerMinute: 0, samples: 0 };
     const world = await loadLevel('L3', seed, campaign, 0, {
       quality: tier,
       beforeBegin: value => {
@@ -41,6 +44,15 @@ export async function l3SharedSeeds(tier: 'low' | 'high', seedOneCampaign: Retur
         seed, maxSeconds: 1200, street: 'auto', stopWhen: () => { iterations++; return false; },
       });
       const observation = observer?.finish() ?? null, hash = stateHash(world.getState());
+      if (seed === 1) {
+        const kiteCampaign = preset('L3-default'); kiteCampaign.seed = seed; kiteCampaign.settings.quality = tier;
+        const kiteWorld = await loadLevel('L3', seed, kiteCampaign, 0, {
+          quality: tier, beforeBegin: value => installKitingPolicy(value, kiting, 'L3'),
+        });
+        try {
+          runL3(kiteWorld, kiteWorld.missions!, 'complete', { seed, maxSeconds: 1200, street: 'auto', stopWhen: () => false });
+        } finally { kiteWorld.dispose(); }
+      }
       const collision = world.solids.snapshot();
       const objectiveTimeline = report.timeline.filter(row => row.type.startsWith('objective:')).map(row => ({ id: row.type.slice('objective:'.length), t: row.t }));
       const levelReport: LevelReport = {
@@ -65,7 +77,7 @@ export async function l3SharedSeeds(tier: 'low' | 'high', seedOneCampaign: Retur
         s1: report.s1 ? { ...report.s1 } : null,
         density: report.density,
       } : (await l3SurvivalSeeds(tier, [seed]))[0];
-      rows.push({ seed, run: levelReport, observation, definitions, quality, nativeStateHash: hash, army: armySeed, survival });
+      rows.push({ seed, run: levelReport, observation, definitions, quality, nativeStateHash: hash, kiting: finishKitingReceipt(kiting), army: armySeed, survival });
     } finally { world.dispose(); }
   }
   return rows;

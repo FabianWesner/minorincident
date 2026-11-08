@@ -8,6 +8,7 @@ import { L4HoldCensus } from './l4-hold';
 import { l3SharedSeeds, type L3SharedSeed } from './l3SharedSeeds';
 import { runSeed } from './followerPaceSeeds';
 import type { FollowerPaceSeed } from './followerPace';
+import { installKitingPolicy, finishKitingReceipt, type KitingReceipt } from './kiting';
 
 export interface StageJob {
   id: string; level: RunnerLevel; kind: 'native' | 'follower' | 'l3' | 'high-hold'; seed: number; passive: boolean;
@@ -15,6 +16,7 @@ export interface StageJob {
 export interface NativeStage {
   run: LevelReport | null; observation: ReturnType<ThreatObserver['finish']> | null;
   definitions: ThreatObserver['definitions']; quality: string; nativeStateHash: string | null;
+  kiting?: KitingReceipt;
 }
 export interface StageResult {
   job: StageJob; seconds: number; startedAt: number; endedAt: number; error?: string;
@@ -38,6 +40,7 @@ async function execute(job: StageJob): Promise<StageResult> {
     } else {
       let observer: ThreatObserver | undefined;
       const native: NativeStage = { run: null, observation: null, definitions: [], quality: 'missing', nativeStateHash: null };
+      const kiting: KitingReceipt = { kitingSeconds: 0, attacks: 0, attacksPerMinute: 0, samples: 0 };
       result.native = native;
       // Preserve every existing passive observation window, including L5's full 1,200 seconds.
       const windows: Partial<Record<RunnerLevel, number>> = { L3: 70, L4: 250, L6: 110, L8: 150 };
@@ -46,6 +49,13 @@ async function execute(job: StageJob): Promise<StageResult> {
         beforeBegin: world => { observer = new ThreatObserver(world, job.level); native.definitions = observer.definitions; native.quality = observer.quality; },
         beforeDispose: world => { native.observation = observer?.finish() ?? null; if (!job.passive) native.nativeStateHash = stateHash(world.getState()); },
       });
+      if (!job.passive) {
+        native.kiting = kiting;
+        await runLevel(job.level, 'complete', job.seed, undefined, 'auto', campaignFor(job.level, job.seed), undefined, 0, {
+          quality: 'low', beforeBegin: world => installKitingPolicy(world, kiting, job.level),
+          beforeDispose: () => { native.kiting = finishKitingReceipt(kiting); },
+        });
+      }
     }
   } catch (error) { result.error = String(error); }
   result.seconds = (performance.now() - start) / 1000; result.endedAt = Date.now();

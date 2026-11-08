@@ -1,0 +1,755 @@
+{
+  "gameBase": "f4bba5cf9bb269d288dfcb31687bc86e4031f9aa",
+  "method": "Physical WASD/mouse via runSession; mortal courier; no skips or teleports. Entry/end pairs were opened at native resolution. Completion receipts establish quality/backend/target zoom; entry photos may precede zoom input. These are bounded samples, not full-level passes.",
+  "cases": [
+    {
+      "case": "driver-high-fresh-z1",
+      "pair": "test-results/r6-kite/driver-high-fresh-z1/pair.jpg",
+      "sources": [
+        {
+          "path": "test-results/r6-kite/driver-high-fresh-z1/captures/campaign-L7-t17.jpg",
+          "sha256": "111933eccb584f42d4bfb380e341e555deabd0c8d393faa509ce2264711f91c4"
+        },
+        {
+          "path": "test-results/r6-kite/driver-high-fresh-z1/captures/campaign-L7-checkpoint-yield.jpg",
+          "sha256": "3665f3f64f1ace8b378832f955e67fd7fed8a7b604e2cb57d13ede0e5bfbc62f"
+        }
+      ],
+      "kind": "fresh profile",
+      "level": "L7",
+      "quality": "high",
+      "zoom": 1,
+      "backend": "webgl",
+      "wallSeconds": 62,
+      "simSeconds": 37,
+      "deaths": 0,
+      "skipped": [],
+      "entryDescription": "L7 entry: lit army truck, courier and corgi visible, launcher pickup prompt 3 m away, followers in the ring.",
+      "endDescription": "Launcher held on the route, 24/24 nearby, 192 m to corridor; courier visible ahead of the column.",
+      "reviewed": true,
+      "actualZoom": 1,
+      "corridorObservedAtSeconds": 2.25,
+      "runReceiptSha256": "1b84123ada2a03cbef1cfae694122c68f57f5b5ac972a59807749c9481780a40"
+    },
+    {
+      "case": "driver-low-fresh-z1",
+      "pair": "test-results/r6-kite/driver-low-fresh-z1/pair.jpg",
+      "sources": [
+        {
+          "path": "test-results/r6-kite/driver-low-fresh-z1/captures/driver-low-fresh-z1-L7-t9.jpg",
+          "sha256": "711a7332a0cb814c9aadc2526bf9921ed9fa96f47a190572871e2c49b04ecad9"
+        },
+        {
+          "path": "test-results/r6-kite/driver-low-fresh-z1/captures/driver-low-fresh-z1-L7-checkpoint-yield.jpg",
+          "sha256": "3e5847b6950ec4cf2fd5a9b13725fb5db0f7ff908d8f187a164e2c8cfc1c153c"
+        }
+      ],
+      "kind": "fresh profile",
+      "level": "L7",
+      "quality": "low",
+      "zoom": 1,
+      "backend": "webgl",
+      "wallSeconds": 45,
+      "simSeconds": 40,
+      "deaths": 0,
+      "skipped": [],
+      "entryDescription": "L7 entry: lit army truck, courier and corgi visible, launcher pickup prompt 3 m away, followers in the ring.",
+      "endDescription": "Launcher held amid blast/scorch effects; courier visible, 24/24 nearby, 179 m to corridor.",
+      "reviewed": true,
+      "actualZoom": 1,
+      "corridorObservedAtSeconds": 1.8666666666666667,
+      "runReceiptSha256": "561ff7e78a491c938171439cb33486bb92387a9bf20d3fad016f8bf8b85c7a9f"
+    },
+    {
+      "case": "driver-low-fresh-z15-gpu",
+      "pair": "test-results/r6-kite/driver-low-fresh-z15-gpu/pair.jpg",
+      "sources": [
+        {
+          "path": "test-results/r6-kite/driver-low-fresh-z15-gpu/captures/driver-low-fresh-z15-gpu-L7-t10.jpg",
+          "sha256": "3eae66d9bca163eeca5d3fec40a1ea624f05355d12866d86aa77bfe25a75b568"
+        },
+        {
+          "path": "test-results/r6-kite/driver-low-fresh-z15-gpu/captures/driver-low-fresh-z15-gpu-L7-checkpoint-yield.jpg",
+          "sha256": "508d0475f76e2f1dd0897e3d98aca3b0acec39b6d1efbe91f789d7061103c519"
+        }
+      ],
+      "kind": "fresh profile",
+      "level": "L7",
+      "quality": "low",
+      "zoom": 1.5,
+      "backend": "webgpu",
+      "wallSeconds": 45,
+      "simSeconds": 39,
+      "deaths": 0,
+      "skipped": [],
+      "entryDescription": "L7 entry: lit army truck, courier and corgi visible, launcher pickup prompt 3 m away, followers in the ring.",
+      "endDescription": "WebGPU: launcher held beside the follower column and APC wreck, 24/24 nearby, 208 m to corridor.",
+      "reviewed": true,
+      "actualZoom": 1.5,
+      "corridorObservedAtSeconds": 1.9,
+      "runReceiptSha256": "2e56e1db2889d6a3fb0247deee71d4852619db62b76831269a30fe955c623171"
+    },
+    {
+      "case": "gear0-high-z1-webgl2",
+      "pair": "test-results/r6-kite/gear0-high-z1-webgl2/pair.jpg",
+      "sources": [
+        {
+          "path": "test-results/r6-kite/gear0-high-z1-webgl2/captures/gear0-high-z1-webgl2-L2-t34.jpg",
+          "sha256": "35dc24e042e544643b93f207fec40e8a0cd2e3287df6932d1d095cb632b050d5"
+        },
+        {
+          "path": "test-results/r6-kite/gear0-high-z1-webgl2/captures/gear0-high-z1-webgl2-L2-checkpoint-yield.jpg",
+          "sha256": "528704d31821b59245e2ff1886f2bbfafbe0c73bc2cf9c0f523ce0dfe765c3a8"
+        }
+      ],
+      "kind": "progressed preset",
+      "level": "L2",
+      "quality": "high",
+      "zoom": 1,
+      "backend": "webgl",
+      "wallSeconds": 36,
+      "simSeconds": 28,
+      "deaths": 0,
+      "skipped": [],
+      "entryDescription": "Fire-station entry: bat held, courier and corgi visible, seated civilians and firefighters present.",
+      "endDescription": "Fire-engine ride, crowded visible cab, destination 70 m away.",
+      "reviewed": true,
+      "actualZoom": 1
+    },
+    {
+      "case": "gear0-high-z1.5-webgl2",
+      "pair": "test-results/r6-kite/gear0-high-z1.5-webgl2/pair.jpg",
+      "sources": [
+        {
+          "path": "test-results/r6-kite/gear0-high-z1.5-webgl2/captures/gear0-high-z1.5-webgl2-L2-t12.jpg",
+          "sha256": "12619dbb5114f7531a9d15559af21b7abdf9a9c9f62cff11bb1a54d84b691442"
+        },
+        {
+          "path": "test-results/r6-kite/gear0-high-z1.5-webgl2/captures/gear0-high-z1.5-webgl2-L2-checkpoint-yield.jpg",
+          "sha256": "10b8a9856345eca23563eede8dacb70e8af385de97e4e5c2a3617d884e86506b"
+        }
+      ],
+      "kind": "progressed preset",
+      "level": "L2",
+      "quality": "high",
+      "zoom": 1.5,
+      "backend": "webgl",
+      "wallSeconds": 36,
+      "simSeconds": 31,
+      "deaths": 0,
+      "skipped": [],
+      "entryDescription": "Fire-station entry: bat held, courier and corgi visible, seated civilians and firefighters present.",
+      "endDescription": "Fire-engine ride in a wider street view, destination 64 m away.",
+      "reviewed": true,
+      "actualZoom": 1.5
+    },
+    {
+      "case": "gear0-low-z1-webgl2",
+      "pair": "test-results/r6-kite/gear0-low-z1-webgl2/pair.jpg",
+      "sources": [
+        {
+          "path": "test-results/r6-kite/gear0-low-z1-webgl2/captures/gear0-low-z1-webgl2-L2-t19.jpg",
+          "sha256": "08a6a9a48afea791538a6c5a92338d0fd052184123bf22fcee53ba05d74cd6cb"
+        },
+        {
+          "path": "test-results/r6-kite/gear0-low-z1-webgl2/captures/gear0-low-z1-webgl2-L2-checkpoint-yield.jpg",
+          "sha256": "8683bb958a7a199b26541dd90c1f507268c821de5463cd8d1f016832f4e288d5"
+        }
+      ],
+      "kind": "progressed preset",
+      "level": "L2",
+      "quality": "low",
+      "zoom": 1,
+      "backend": "webgl",
+      "wallSeconds": 35,
+      "simSeconds": 30,
+      "deaths": 0,
+      "skipped": [],
+      "entryDescription": "Fire-station entry: bat held, courier and corgi visible, seated civilians and firefighters present.",
+      "endDescription": "Fire-engine ride; cab occupants remain visible, destination 64 m away.",
+      "reviewed": true,
+      "actualZoom": 1
+    },
+    {
+      "case": "gear0-low-z1.5-webgpu",
+      "pair": "test-results/r6-kite/gear0-low-z1.5-webgpu/pair.jpg",
+      "sources": [
+        {
+          "path": "test-results/r6-kite/gear0-low-z1.5-webgpu/captures/gear0-low-z1.5-webgpu-L2-t12.jpg",
+          "sha256": "646eea6e90efde309d7766354b609cba23dec733ef1ca97cf524dfcf82678a20"
+        },
+        {
+          "path": "test-results/r6-kite/gear0-low-z1.5-webgpu/captures/gear0-low-z1.5-webgpu-L2-checkpoint-yield.jpg",
+          "sha256": "df7db7b3060719ed395e9d8eae15de5fb619a9ec6067e24cf3b83700f3404431"
+        }
+      ],
+      "kind": "progressed preset",
+      "level": "L2",
+      "quality": "low",
+      "zoom": 1.5,
+      "backend": "webgpu",
+      "wallSeconds": 35,
+      "simSeconds": 29,
+      "deaths": 0,
+      "skipped": [],
+      "entryDescription": "Fire-station entry: bat held, courier and corgi visible, seated civilians and firefighters present.",
+      "endDescription": "WebGPU fire-engine ride, readable street and cab, destination 65 m away.",
+      "reviewed": true,
+      "actualZoom": 1.5
+    },
+    {
+      "case": "gear1-high-z1-webgl2",
+      "pair": "test-results/r6-kite/gear1-high-z1-webgl2/pair.jpg",
+      "sources": [
+        {
+          "path": "test-results/r6-kite/gear1-high-z1-webgl2/captures/gear1-high-z1-webgl2-L3-t10.jpg",
+          "sha256": "1ec848a5ea8a81cd3c06e989b5744f58344481ba86fa656bf82209ad65630d06"
+        },
+        {
+          "path": "test-results/r6-kite/gear1-high-z1-webgl2/captures/gear1-high-z1-webgl2-L3-checkpoint-yield.jpg",
+          "sha256": "11b69c8871697e3b094439daeefa79fe73c43b5a41e0f956b2c726b38dcc8911"
+        }
+      ],
+      "kind": "progressed preset",
+      "level": "L3",
+      "quality": "high",
+      "zoom": 1,
+      "backend": "webgl",
+      "wallSeconds": 36,
+      "simSeconds": 28,
+      "deaths": 0,
+      "skipped": [],
+      "entryDescription": "Police-station entry: axe held on the roadway, courier and corgi visible, armory objective 19 m away.",
+      "endDescription": "Handgun acquired at the armory table; courier and corgi clear, 100 HP.",
+      "reviewed": true,
+      "actualZoom": 1
+    },
+    {
+      "case": "gear1-high-z1.5-webgl2",
+      "pair": "test-results/r6-kite/gear1-high-z1.5-webgl2/pair.jpg",
+      "sources": [
+        {
+          "path": "test-results/r6-kite/gear1-high-z1.5-webgl2/captures/gear1-high-z1.5-webgl2-L3-t34.jpg",
+          "sha256": "6df415c496f64b9c41e3204fce22061fcaa91ed5cdb9af5b947cdba320735d99"
+        },
+        {
+          "path": "test-results/r6-kite/gear1-high-z1.5-webgl2/captures/gear1-high-z1.5-webgl2-L3-checkpoint-yield.jpg",
+          "sha256": "6f866fb74ee532f47820e3e36e67bae7b367d19181ede538decd76eed32887b1"
+        }
+      ],
+      "kind": "progressed preset",
+      "level": "L3",
+      "quality": "high",
+      "zoom": 1.5,
+      "backend": "webgl",
+      "wallSeconds": 35,
+      "simSeconds": 29,
+      "deaths": 0,
+      "skipped": [],
+      "entryDescription": "Police-station entry: axe held on the roadway, courier and corgi visible, armory objective 19 m away.",
+      "endDescription": "Fallback street fight beside smoke and barricades; courier visible, 87 HP.",
+      "reviewed": true,
+      "actualZoom": 1.5
+    },
+    {
+      "case": "gear1-low-z1-webgl2",
+      "pair": "test-results/r6-kite/gear1-low-z1-webgl2/pair.jpg",
+      "sources": [
+        {
+          "path": "test-results/r6-kite/gear1-low-z1-webgl2/captures/gear1-low-z1-webgl2-L3-t11.jpg",
+          "sha256": "453749a4ce37878569f8c5814b5595ecc121b9329d68570252458891020f82e4"
+        },
+        {
+          "path": "test-results/r6-kite/gear1-low-z1-webgl2/captures/gear1-low-z1-webgl2-L3-checkpoint-yield.jpg",
+          "sha256": "43a451d68e8370c8a2126513983bc52a84aef3e598350229066a1311ec2101f4"
+        }
+      ],
+      "kind": "progressed preset",
+      "level": "L3",
+      "quality": "low",
+      "zoom": 1,
+      "backend": "webgl",
+      "wallSeconds": 35,
+      "simSeconds": 32,
+      "deaths": 0,
+      "skipped": [],
+      "entryDescription": "Police-station entry: axe held on the roadway, courier and corgi visible, armory objective 19 m away.",
+      "endDescription": "Fallback at the station gate, with police corpses and pursuers; courier visible, 78 HP.",
+      "reviewed": true,
+      "actualZoom": 1
+    },
+    {
+      "case": "gear1-low-z1.5-webgl2",
+      "pair": "test-results/r6-kite/gear1-low-z1.5-webgl2/pair.jpg",
+      "sources": [
+        {
+          "path": "test-results/r6-kite/gear1-low-z1.5-webgl2/captures/gear1-low-z1.5-webgl2-L3-t57.jpg",
+          "sha256": "a31a1160e6841cd7cd2efc1d2741fb5fedcdaefc51ccdc35e7463e8d3f116a66"
+        },
+        {
+          "path": "test-results/r6-kite/gear1-low-z1.5-webgl2/captures/gear1-low-z1.5-webgl2-L3-checkpoint-yield.jpg",
+          "sha256": "a548c5cf5dee17a77824a3f1992236b1e4b817bdffec46f9c5d15d5fcc1cf960"
+        }
+      ],
+      "kind": "progressed preset",
+      "level": "L3",
+      "quality": "low",
+      "zoom": 1.5,
+      "backend": "webgl",
+      "wallSeconds": 35,
+      "simSeconds": 26,
+      "deaths": 0,
+      "skipped": [],
+      "entryDescription": "Police-station entry: axe held on the roadway, courier and corgi visible, armory objective 19 m away.",
+      "endDescription": "Station defense with approaching infected and fallen officers; courier and corgi visible.",
+      "reviewed": true,
+      "actualZoom": 1.5
+    },
+    {
+      "case": "gear2-high-z1-webgl2",
+      "pair": "test-results/r6-kite/gear2-high-z1-webgl2/pair.jpg",
+      "sources": [
+        {
+          "path": "test-results/r6-kite/gear2-high-z1-webgl2/captures/gear2-high-z1-webgl2-L3-t21.jpg",
+          "sha256": "bbf305672126863a1336eee739f03f51629766f95494c7d9f8b6b2ebb6a88afe"
+        },
+        {
+          "path": "test-results/r6-kite/gear2-high-z1-webgl2/captures/gear2-high-z1-webgl2-L3-checkpoint-yield.jpg",
+          "sha256": "1cb01af56c898094bc9888e24f3db652935d4cbacaf3f82a6b6365923a0db943"
+        }
+      ],
+      "kind": "progressed preset",
+      "level": "L3",
+      "quality": "high",
+      "zoom": 1,
+      "backend": "webgl",
+      "wallSeconds": 36,
+      "simSeconds": 24,
+      "deaths": 0,
+      "skipped": [],
+      "entryDescription": "Police-station entry: axe held on the roadway, courier and corgi visible, armory objective 19 m away.",
+      "endDescription": "On-foot station defense from the later save; courier visible beside the armory, 100 HP.",
+      "reviewed": true,
+      "actualZoom": 1
+    },
+    {
+      "case": "gear2-high-z1.5-webgl2",
+      "pair": "test-results/r6-kite/gear2-high-z1.5-webgl2/pair.jpg",
+      "sources": [
+        {
+          "path": "test-results/r6-kite/gear2-high-z1.5-webgl2/captures/gear2-high-z1.5-webgl2-L3-t15.jpg",
+          "sha256": "894fa06c0e1172109f6278309626639e3349528eee6f99c649993dde904850e5"
+        },
+        {
+          "path": "test-results/r6-kite/gear2-high-z1.5-webgl2/captures/gear2-high-z1.5-webgl2-L3-checkpoint-yield.jpg",
+          "sha256": "a4a0aef55b64d7137bf2e716515750c30a9a348f52d02bfc81757b3c7c2fadba"
+        }
+      ],
+      "kind": "progressed preset",
+      "level": "L3",
+      "quality": "high",
+      "zoom": 1.5,
+      "backend": "webgl",
+      "wallSeconds": 36,
+      "simSeconds": 31,
+      "deaths": 0,
+      "skipped": [],
+      "entryDescription": "Police-station entry: axe held on the roadway, courier and corgi visible, armory objective 19 m away.",
+      "endDescription": "On-foot fallback past the hardware store and smoke; courier visible, 78 HP.",
+      "reviewed": true,
+      "actualZoom": 1.5
+    },
+    {
+      "case": "gear2-low-z1-webgl2",
+      "pair": "test-results/r6-kite/gear2-low-z1-webgl2/pair.jpg",
+      "sources": [
+        {
+          "path": "test-results/r6-kite/gear2-low-z1-webgl2/captures/gear2-low-z1-webgl2-L4-t20.jpg",
+          "sha256": "1bcf9fa4550ee0e896b9075b70592fb39633f321039324ddcab11690df46511a"
+        },
+        {
+          "path": "test-results/r6-kite/gear2-low-z1-webgl2/captures/gear2-low-z1-webgl2-L4-checkpoint-yield.jpg",
+          "sha256": "996cb7d59e2f119f0366e870d97a11c9a4cb62a80328f2a41c77587601208320"
+        }
+      ],
+      "kind": "progressed preset",
+      "level": "L4",
+      "quality": "low",
+      "zoom": 1,
+      "backend": "webgl",
+      "wallSeconds": 38,
+      "simSeconds": 28,
+      "deaths": 0,
+      "skipped": [],
+      "entryDescription": "Convoy entry: courier is a bus passenger; seated actors visible through side windows.",
+      "endDescription": "Bus approaches the convoy destination (16 m); passengers visible through windows. No on-foot outfit claim.",
+      "reviewed": true,
+      "actualZoom": 1
+    },
+    {
+      "case": "gear2-low-z1.5-webgl2",
+      "pair": "test-results/r6-kite/gear2-low-z1.5-webgl2/pair.jpg",
+      "sources": [
+        {
+          "path": "test-results/r6-kite/gear2-low-z1.5-webgl2/captures/gear2-low-z1.5-webgl2-L4-t17.jpg",
+          "sha256": "22a7bdd521696d9ec03a50657eb955f3456a0341c69eea907333b151301951b8"
+        },
+        {
+          "path": "test-results/r6-kite/gear2-low-z1.5-webgl2/captures/gear2-low-z1.5-webgl2-L4-checkpoint-yield.jpg",
+          "sha256": "2cbe969be296571ceed838d19c96d527602523890d210163279d3e0b409b891d"
+        }
+      ],
+      "kind": "progressed preset",
+      "level": "L4",
+      "quality": "low",
+      "zoom": 1.5,
+      "backend": "webgl",
+      "wallSeconds": 37,
+      "simSeconds": 31,
+      "deaths": 0,
+      "skipped": [],
+      "entryDescription": "Convoy entry: courier is a bus passenger; seated actors visible through side windows.",
+      "endDescription": "Wider convoy view, bus 7 m from destination. No on-foot outfit claim.",
+      "reviewed": true,
+      "actualZoom": 1.5
+    },
+    {
+      "case": "gear2-replay-low-z1-webgl2",
+      "pair": "test-results/r6-kite/gear2-replay-low-z1-webgl2/pair.jpg",
+      "sources": [
+        {
+          "path": "test-results/r6-kite/gear2-replay-low-z1-webgl2/captures/gear2-replay-low-z1-webgl2-L3-t11.jpg",
+          "sha256": "9482b9004b7a48b77f66fe8ae3a972b2af2a26395d3c32202af79816ef272530"
+        },
+        {
+          "path": "test-results/r6-kite/gear2-replay-low-z1-webgl2/captures/gear2-replay-low-z1-webgl2-L3-checkpoint-yield.jpg",
+          "sha256": "a28e923bde332d7d0888128d07798f72178d354193a0fbcffe21a31c45151d1f"
+        }
+      ],
+      "kind": "progressed preset",
+      "level": "L3",
+      "quality": "low",
+      "zoom": 1,
+      "backend": "webgl",
+      "wallSeconds": 35,
+      "simSeconds": 32,
+      "deaths": 0,
+      "skipped": [],
+      "entryDescription": "Police-station entry: axe held on the roadway, courier and corgi visible, armory objective 19 m away.",
+      "endDescription": "On-foot fallback in the police courtyard; courier shooting, 100 HP, bodies and pursuers visible.",
+      "reviewed": true,
+      "actualZoom": 1
+    },
+    {
+      "case": "gear2-replay-low-z1.5-webgl2",
+      "pair": "test-results/r6-kite/gear2-replay-low-z1.5-webgl2/pair.jpg",
+      "sources": [
+        {
+          "path": "test-results/r6-kite/gear2-replay-low-z1.5-webgl2/captures/gear2-replay-low-z1.5-webgl2-L3-t12.jpg",
+          "sha256": "b5dd4290c1fc95395df0122959a90fba385589797612544dbe59e776e958855f"
+        },
+        {
+          "path": "test-results/r6-kite/gear2-replay-low-z1.5-webgl2/captures/gear2-replay-low-z1.5-webgl2-L3-checkpoint-yield.jpg",
+          "sha256": "589b08b6fbbac8c1980d3b1644ed5b24a583fc40da589a3a76deefcd3cb10f51"
+        }
+      ],
+      "kind": "progressed preset",
+      "level": "L3",
+      "quality": "low",
+      "zoom": 1.5,
+      "backend": "webgl",
+      "wallSeconds": 36,
+      "simSeconds": 32,
+      "deaths": 0,
+      "skipped": [],
+      "entryDescription": "Police-station entry: axe held on the roadway, courier and corgi visible, armory objective 19 m away.",
+      "endDescription": "On-foot fallback beside the hardware-store smoke; courier and corgi clear, 80 HP.",
+      "reviewed": true,
+      "actualZoom": 1.5
+    },
+    {
+      "case": "gear3-high-z1-webgl2",
+      "pair": "test-results/r6-kite/gear3-high-z1-webgl2/pair.jpg",
+      "sources": [
+        {
+          "path": "test-results/r6-kite/gear3-high-z1-webgl2/captures/gear3-high-z1-webgl2-L5-t24.jpg",
+          "sha256": "4599b4ee47bc8eb6058d08585660b08aaa99dfd7286b7bdd59c84c82e8530e1c"
+        },
+        {
+          "path": "test-results/r6-kite/gear3-high-z1-webgl2/captures/gear3-high-z1-webgl2-L5-checkpoint-yield.jpg",
+          "sha256": "237b36d16acf758f051417597a77e612dc3c56d1e7c03519ca4136dc27eab4cf"
+        }
+      ],
+      "kind": "progressed preset",
+      "level": "L5",
+      "quality": "high",
+      "zoom": 1,
+      "backend": "webgl",
+      "wallSeconds": 36,
+      "simSeconds": 30,
+      "deaths": 0,
+      "skipped": [],
+      "entryDescription": "Cellar entry: machine gun held beside the corgi, door and pickup marker visible.",
+      "endDescription": "Street search with shotgun selected, two close infected and an attack telegraph; courier visible, 65 HP.",
+      "reviewed": true,
+      "actualZoom": 1
+    },
+    {
+      "case": "gear3-high-z1.5-webgl2",
+      "pair": "test-results/r6-kite/gear3-high-z1.5-webgl2/pair.jpg",
+      "sources": [
+        {
+          "path": "test-results/r6-kite/gear3-high-z1.5-webgl2/captures/gear3-high-z1.5-webgl2-L5-t21.jpg",
+          "sha256": "4b7572b8cf6ca6dcbfe30b88128b3c2b076671d6266faed5f3fa3066fea3c68f"
+        },
+        {
+          "path": "test-results/r6-kite/gear3-high-z1.5-webgl2/captures/gear3-high-z1.5-webgl2-L5-checkpoint-yield.jpg",
+          "sha256": "bb0e3c63eb1d5f1fce71f0125c11c6eba6f199208e3dc05770f4547bfed6b67c"
+        }
+      ],
+      "kind": "progressed preset",
+      "level": "L5",
+      "quality": "high",
+      "zoom": 1.5,
+      "backend": "webgl",
+      "wallSeconds": 36,
+      "simSeconds": 29,
+      "deaths": 0,
+      "skipped": [],
+      "entryDescription": "Cellar entry: machine gun held beside the corgi, door and pickup marker visible.",
+      "endDescription": "Street search beside a foreground roof reveal and wreck; courier discernible, 20 HP.",
+      "reviewed": true,
+      "actualZoom": 1.5
+    },
+    {
+      "case": "gear3-low-z1-webgl2",
+      "pair": "test-results/r6-kite/gear3-low-z1-webgl2/pair.jpg",
+      "sources": [
+        {
+          "path": "test-results/r6-kite/gear3-low-z1-webgl2/captures/gear3-low-z1-webgl2-L5-t33.jpg",
+          "sha256": "35de208da5381c8975f7393ca77c9e5ef4f65a3ab8ef95e6f117df5f16f487c4"
+        },
+        {
+          "path": "test-results/r6-kite/gear3-low-z1-webgl2/captures/gear3-low-z1-webgl2-L5-checkpoint-yield.jpg",
+          "sha256": "5d6726f23eb7135bfbc9470dad3a3d26be89db07a897c2a242747e6711de40f7"
+        }
+      ],
+      "kind": "progressed preset",
+      "level": "L5",
+      "quality": "low",
+      "zoom": 1,
+      "backend": "webgl",
+      "wallSeconds": 38,
+      "simSeconds": 10,
+      "deaths": 0,
+      "skipped": [],
+      "entryDescription": "Cellar entry: machine gun held beside the corgi, door and pickup marker visible.",
+      "endDescription": "Still at the cellar doorway, 3 m from unbar action; courier and corgi clearly visible.",
+      "reviewed": true,
+      "actualZoom": 1
+    },
+    {
+      "case": "gear3-low-z1.5-webgl2",
+      "pair": "test-results/r6-kite/gear3-low-z1.5-webgl2/pair.jpg",
+      "sources": [
+        {
+          "path": "test-results/r6-kite/gear3-low-z1.5-webgl2/captures/gear3-low-z1.5-webgl2-L5-t12.jpg",
+          "sha256": "2bce522b473b03b1cbc5e785f0f7b885f40181014a080629787aad1422a95fa9"
+        },
+        {
+          "path": "test-results/r6-kite/gear3-low-z1.5-webgl2/captures/gear3-low-z1.5-webgl2-L5-checkpoint-yield.jpg",
+          "sha256": "575b0e85e66719930a4356bdc73ceff8dbdf2cd38ae5f13f6033b8db4e38077c"
+        }
+      ],
+      "kind": "progressed preset",
+      "level": "L5",
+      "quality": "low",
+      "zoom": 1.5,
+      "backend": "webgl",
+      "wallSeconds": 35,
+      "simSeconds": 30,
+      "deaths": 0,
+      "skipped": [],
+      "entryDescription": "Cellar entry: machine gun held beside the corgi, door and pickup marker visible.",
+      "endDescription": "Street search near wrecks and an Alpha; courier visible with the group of nearby infected.",
+      "reviewed": true,
+      "actualZoom": 1.5
+    },
+    {
+      "case": "gear4-high-z1-webgl2",
+      "pair": "test-results/r6-kite/gear4-high-z1-webgl2/pair.jpg",
+      "sources": [
+        {
+          "path": "test-results/r6-kite/gear4-high-z1-webgl2/captures/gear4-high-z1-webgl2-L7-t16.jpg",
+          "sha256": "be849bcc9c39c83f94d07d3656fcb58133fc6dc097b32d024786614e33b6add5"
+        },
+        {
+          "path": "test-results/r6-kite/gear4-high-z1-webgl2/captures/gear4-high-z1-webgl2-L7-checkpoint-yield.jpg",
+          "sha256": "89d5edd743248d794b57fd2bffacf25e8ad6bf29faf922829d3d22cbb4221fd8"
+        }
+      ],
+      "kind": "progressed preset",
+      "level": "L7",
+      "quality": "high",
+      "zoom": 1,
+      "backend": "webgl",
+      "wallSeconds": 35,
+      "simSeconds": 30,
+      "deaths": 0,
+      "skipped": [],
+      "entryDescription": "L7 entry: lit army truck, courier and corgi visible, launcher pickup prompt 3 m away, followers in the ring.",
+      "endDescription": "Launcher held on the apron, 24/24 nearby and 232 m to corridor; an attack warning is displayed.",
+      "reviewed": true,
+      "actualZoom": 1,
+      "corridorObservedAtSeconds": 2.05,
+      "runReceiptSha256": "2606e476154a47111ddf450c9a1a8c55e48b6e8978a525efa461bd77d9843183"
+    },
+    {
+      "case": "gear4-high-z1.5-webgpu",
+      "pair": "test-results/r6-kite/gear4-high-z1.5-webgpu/pair.jpg",
+      "sources": [
+        {
+          "path": "test-results/r6-kite/gear4-high-z1.5-webgpu/captures/gear4-high-z1.5-webgpu-L7-t9.jpg",
+          "sha256": "82141896783a96092f1cfb0fe214511a3ebe93a248864ebcccaaf2c4ac400366"
+        },
+        {
+          "path": "test-results/r6-kite/gear4-high-z1.5-webgpu/captures/gear4-high-z1.5-webgpu-L7-checkpoint-yield.jpg",
+          "sha256": "8b1efad1e544f1032267303247785e2dbdb7053ed752b7e7522a7be51c0e9651"
+        }
+      ],
+      "kind": "progressed preset",
+      "level": "L7",
+      "quality": "high",
+      "zoom": 1.5,
+      "backend": "webgpu",
+      "wallSeconds": 36,
+      "simSeconds": 28,
+      "deaths": 0,
+      "skipped": [],
+      "entryDescription": "L7 entry: lit army truck, courier and corgi visible, launcher pickup prompt 3 m away, followers in the ring.",
+      "endDescription": "WebGPU: launcher held, courier and follower column visible, 24/24 nearby, 263 m to corridor.",
+      "reviewed": true,
+      "actualZoom": 1.5,
+      "corridorObservedAtSeconds": 1.7666666666666666,
+      "runReceiptSha256": "7ada06af9be57b1c4a888c5e8f635351db3421e488060965d58584c2d0c7ba2c"
+    },
+    {
+      "case": "gear4-low-z1-webgl2",
+      "pair": "test-results/r6-kite/gear4-low-z1-webgl2/pair.jpg",
+      "sources": [
+        {
+          "path": "test-results/r6-kite/gear4-low-z1-webgl2/captures/gear4-low-z1-webgl2-L7-t11.jpg",
+          "sha256": "c27423ab8e30febeca4643ca602cb29593151c3f4ca912aac0b1d7025d212e69"
+        },
+        {
+          "path": "test-results/r6-kite/gear4-low-z1-webgl2/captures/gear4-low-z1-webgl2-L7-checkpoint-yield.jpg",
+          "sha256": "68a14c7dc49c3781025646c29138bf0a021da4c0511ca0637e80e20cf64b159f"
+        }
+      ],
+      "kind": "progressed preset",
+      "level": "L7",
+      "quality": "low",
+      "zoom": 1,
+      "backend": "webgl",
+      "wallSeconds": 36,
+      "simSeconds": 22,
+      "deaths": 0,
+      "skipped": [],
+      "entryDescription": "L7 entry: lit army truck, courier and corgi visible, launcher pickup prompt 3 m away, followers in the ring.",
+      "endDescription": "Launcher held against a mostly dark apron, 57 HP; followers mostly beyond the right edge, HUD 24/24 nearby.",
+      "reviewed": true,
+      "actualZoom": 1,
+      "corridorObservedAtSeconds": 1.8666666666666667,
+      "runReceiptSha256": "ab92ac54074f56de985d0b0f6ade84bc0266c2875aeb59148ac0d9c9e53b9eba"
+    },
+    {
+      "case": "gear4-low-z1.5-webgl2",
+      "pair": "test-results/r6-kite/gear4-low-z1.5-webgl2/pair.jpg",
+      "sources": [
+        {
+          "path": "test-results/r6-kite/gear4-low-z1.5-webgl2/captures/gear4-low-z1.5-webgl2-L7-t31.jpg",
+          "sha256": "43274a28325ab49464262cef7630d8316f8a43e67f999f464302c922688b68be"
+        },
+        {
+          "path": "test-results/r6-kite/gear4-low-z1.5-webgl2/captures/gear4-low-z1.5-webgl2-L7-checkpoint-yield.jpg",
+          "sha256": "914b67fbd149f82e4a68aaf23cd5867d5893deea2ab69cacea331516750b844b"
+        }
+      ],
+      "kind": "progressed preset",
+      "level": "L7",
+      "quality": "low",
+      "zoom": 1.5,
+      "backend": "webgl",
+      "wallSeconds": 36,
+      "simSeconds": 28,
+      "deaths": 0,
+      "skipped": [],
+      "entryDescription": "L7 entry: lit army truck, courier and corgi visible, launcher pickup prompt 3 m away, followers in the ring.",
+      "endDescription": "Launcher fire and a bright upper-left blast; courier and following column remain visible, HUD 24/24 nearby.",
+      "reviewed": true,
+      "actualZoom": 1.5,
+      "corridorObservedAtSeconds": 3.216666666666667,
+      "runReceiptSha256": "d9015a27e495cc4f4749363d8da7afe9c260715b15354a951c338182384fd45f"
+    },
+    {
+      "case": "gear4-low-z1.5-webgpu",
+      "pair": "test-results/r6-kite/gear4-low-z1.5-webgpu/pair.jpg",
+      "sources": [
+        {
+          "path": "test-results/r6-kite/gear4-low-z1.5-webgpu/captures/gear4-low-z1.5-webgpu-L7-t3.jpg",
+          "sha256": "2cae4bd00662ed315bd543d1fdb8090add788f15caff57535ddec750c7dabf05"
+        },
+        {
+          "path": "test-results/r6-kite/gear4-low-z1.5-webgpu/captures/gear4-low-z1.5-webgpu-L7-checkpoint-yield.jpg",
+          "sha256": "5810ae5f61051e88a6f94dce88c00c286596c2608b0eb73968bd46e05a8dcf3f"
+        }
+      ],
+      "kind": "progressed preset",
+      "level": "L7",
+      "quality": "low",
+      "zoom": 1.5,
+      "backend": "webgpu",
+      "wallSeconds": 45,
+      "simSeconds": 39,
+      "deaths": 0,
+      "skipped": [],
+      "entryDescription": "L7 entry: lit army truck, courier and corgi visible, launcher pickup prompt 3 m away, followers in the ring.",
+      "endDescription": "WebGPU: launcher held beside the full follower column, large upper-left rocket blast and corpses; courier discernible, 100 HP, 24/24 nearby, 186 m to corridor.",
+      "reviewed": true,
+      "actualZoom": 1.5,
+      "corridorObservedAtSeconds": 1.5666666666666667,
+      "runReceiptSha256": "173e3f2b9d3abc5521957fcb51737ab2c3fb48b0e9fbf1af332cb6c1cca5874f"
+    }
+  ],
+  "fullRunCaptures": [
+    {
+      "path": "test-results/r6-kite/driver-high-fresh-z15-full/captures/driver-high-fresh-z15-full-L7-t3826.jpg",
+      "sha256": "dd7c77f103a18bc24fca00186683d206b4ac2223e256369c309f891da59be45f",
+      "description": "Large rocket blast occupies the upper-left. The prone courier is discernible in the dark center; survivors and a dense corpse field remain visible.",
+      "reviewed": true
+    },
+    {
+      "path": "test-results/r6-kite/driver-high-fresh-z15-full/captures/driver-high-fresh-z15-full-L7-t11046.jpg",
+      "sha256": "147ac489424f4fc0af63aeebdd437d997a374b25ebb1811b42fafecd06d3915d",
+      "description": "Bus departure against an ash-filled, lit city. Passenger shapes are visible at the bottom; no exposed map void in this frame.",
+      "reviewed": true
+    }
+  ],
+  "fullL7Run": {
+    "case": "driver-high-fresh-z15-full",
+    "quality": "high",
+    "zoom": 1.5,
+    "backend": "webgl",
+    "finished": true,
+    "wallSeconds": 216,
+    "deaths": 0,
+    "skipped": [],
+    "initialFollowers": 24,
+    "boarded": 9,
+    "dead": 15,
+    "corridorObservedAtSeconds": 2.6166666666666667,
+    "reportedSimSeconds": 0,
+    "simTimeNote": "The driver records 0 after the L8 handover resets tick; use wall seconds and L7 sample ticks.",
+    "runReceiptSha256": "9e82c1923b07ef8d271eeb54c5d4b7d1042b380089edfaf447effdc789055c76"
+  }
+}
