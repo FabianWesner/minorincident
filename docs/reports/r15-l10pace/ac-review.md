@@ -1,6 +1,8 @@
-# L10 acceptance review — pre-fix baseline
+# L10 acceptance review — baseline and final verification
 
-**Review stage:** Step 0, before gameplay fixes. Baseline tree: `78219de9` (main story/farm/vignettes merge), with the audit harness added but no gameplay edits. The harness has not yet completed a fresh runner execution; route facts below cite the existing native production-input diagnostic in `docs/reports/eg-l10-story/evidence/route-diagnostic.json` and explicit historical route reports. Lack of a natural-route observation is scored FAIL, not inferred PASS from implementation or fixture tests.
+**Latest result:** native pacing goal passes on low/high; full acceptance retains the explicit open rows below. See [final verification](#final-production-input-verification) and the [handoff README](README.md).
+
+**Historical review stage:** Step 0, before gameplay fixes. Baseline tree: `78219de9` (main story/farm/vignettes merge), with the audit harness added but no gameplay edits. The harness has not yet completed a fresh runner execution; route facts below cite the existing native production-input diagnostic in `docs/reports/eg-l10-story/evidence/route-diagnostic.json` and explicit historical route reports. Lack of a natural-route observation is scored FAIL, not inferred PASS from implementation or fixture tests.
 
 ## Acceptance rows
 
@@ -282,3 +284,54 @@ The mechanics receipt now contains **20/20 PASS checks**, with explicit controll
 [Reserved-slot native receipt](evidence/after-reserved-ambush-slot.json), source `fc867c06`: low/high both finish, with **9 / 8 actual emerged attackers**, separate warning events, six finds, first checkpoint 26.78 s, route checkpoint maxima 200.0/200.2 m and content gaps **25.75/24.25 s**. Low has zero deaths; high has one genuine death/retry at the then-blocked platform exit. This is preserved as an intermediate receipt, not labelled a zero-death final run.
 
 Strict L10-04 caveat: the newer user requirement of content every 20–40 s passes. The older scare-specific “about every 60–120 s” clause is not uniformly proven: high has a 231.5 s emergence gap spanning the safe hangar and exit, and another 132.8 s gap. Therefore **L10-04 as a whole remains FAIL against that older scare-only interval**, despite the passing overall content cadence. These gaps do not disappear by counting music warnings as attackers. Exact emergence times/positions are in the receipt.
+
+
+## Final production-input verification
+
+**Gameplay source `59587da4`**, seed 42, low/high, [final native receipt](evidence/final-native.json). Content hash: `704521ba76d468fbcac0f1a1ba790974989877c69bb130c111455efd43be44d1`. Both routes use production movement, aiming, weapon selection, mounted gun and interaction inputs; no pose, HP, inventory or mission writes. Both descend the real platform stair and release without a retry after the corpse/stair fixes.
+
+| Measure | Before | Final low | Final high |
+|---|---|---|---|
+| Completion | Low stalls at 36 s; no demonstrated completion | **Complete, zero deaths** | **Complete, zero deaths** |
+| Physical finds | 0 low / 1 high in 180 s | **6**, first **37.40 s** | **6**, first **37.40 s** |
+| First checkpoint | None low /45.65 s high | **26.78 s** | **26.78 s** |
+| Maximum walking checkpoint spacing | Unbounded low /572 m high | **200.0 m** | **200.2 m** |
+| Longest content gap | No viable cadence | **25.75 s** | **24.25 s** |
+| Fight groups / actual scares / Mega moments | Not established | **4 /9 /2** | **5 /8 /4** |
+| Install / release | Not reached | **879.02 /944.58 s** | **883.02 /948.67 s** |
+| Credits complete | Not reached | **1110.58 s** | **1114.67 s** |
+
+### Final whole-row acceptance verdicts
+
+The criterion text remains in the baseline table; every row is reassessed here. “FAIL” includes a partially passing row with an outstanding clause.
+
+| Row | Before → final | Final evidence / outstanding clause |
+|---|---|---|
+| L10-01 | FAIL → PASS | Opening peak 7 regulars, no dogs/ordinary Alphas; dry ground at the PO position and 236 assembled corn blocks, farm shells/remnants. [Ground receipt](evidence/ground.json). |
+| L10-02 | FAIL → PASS | First visible **72.73/102.03 s** by production visibility observer; close encounters across eight route sections, physical evasion gaps, same invulnerable actor until installation. |
+| L10-03 | FAIL → PASS | All 15 objectives and seven ordered regions; installation at 14:39/14:43, including fights and the authored hangar conversation. |
+| L10-04 | FAIL → FAIL | New overall 20–40 s content requirement passes, 25.75/24.25 s maxima; 9/8 actual scares and ordinary peaks 11/14 before assault. The separate older scare-only 60–120 s clause has longer intervals, including safe-hangar time. |
+| L10-05 | FAIL → PASS | Six actual physical pickups; larger triggers/rings and shared next-find world/minimap marker. Find timestamps/positions below. |
+| L10-06 | FAIL → PASS | Actual route dogs, distinct safe corgi, plus all exact dog contracts pass on both tiers. |
+| L10-07 | FAIL → PASS | Persistent no-LOS pursuit and real gap detours; latest low farm crossing at 94.12 s `(923.48,-10.80)` increases separation **21.94→60.16 m**; later military/corridor escapes exceed 66 m. Stillness attracts genuine attacks. HUD/audio bind to the same actor. |
+| L10-08 | FAIL → FAIL | Native camera/framing contracts pass; rendered night readability and ground-slam telegraph remain Browser QA. |
+| L10-09 | FAIL → PASS | Six living hangar cast members, injured continuity speaker, zero infected inside; ordered dialogue/cure handoff, complete arsenal and flamethrower. Native census at 520.02/530.02 s; inventory/continuity contracts pass. |
+| L10-10 | FAIL → PASS | Exactly **3600 eligible/increment ticks**, zero invalid increments on both complete runs; exact outside/dead/resume/minigun heat/rate/lock contracts pass. |
+| L10-11 | FAIL → PASS | Ordinary assault peaks **11/20**, bounded waves, same walking-in Mega; separate native stationary ground reachability 100% and attacks well above 8/min. |
+| L10-12 | FAIL → PASS | Same Mega phases/climb/kill and real platform descent; both full routes zero deaths. Shield/stair/arsenal contracts and all targeted counters pass. Raised dead body remains visually persistent but cannot seal the sole stair. |
+| L10-13 | FAIL → PASS | Real release at 944.58/948.67 s near console, all prerequisites met; negative predicate checks pass. |
+| L10-14 | FAIL → FAIL | Functional cure conversion, safe corgi, dead Mega, initial 8 s control, +50 s Delivered, +65 s title and 90 s credits all delivered. Rendered journey/survivor shots, panorama performance and credits/audio still need Browser QA. |
+| L10-15 | FAIL → PASS | Fourteen native all-region death/recovery receipts; phase-entry real-death fixture retains charge and restores phase HP. Final skilled routes need no death/retry. |
+
+### Final physical finds on the walking line
+
+| Find | Low time / position | High time / position |
+|---|---|---|
+| Hunting rifle | 37.40 s `(694.4,22.4)` | 37.40 s `(694.4,22.4)` |
+| Machete | 96.95 s `(935.6,-11.9)` | 97.18 s `(935.6,-11.2)` |
+| Molotovs | 146.97 s `(1160.5,-11.9)` | 147.20 s `(1160.5,-11.9)` |
+| Nail gun | 199.10 s `(1392.6,15.5)` | 199.43 s `(1392.7,14.9)` |
+| Assault rifle | 330.63 s `(1955.6,16.4)` | 330.40 s `(1955.6,16.4)` |
+| Flashbangs | 357.00 s `(2072.6,-1.3)` | 356.77 s `(2072.6,-1.3)` |
+
+The complete story-beat and Mega-rule tables above still apply with the final mechanics closures. The literal river-wreck emergence animation, rendered barn/warning/ending presentation and conditional corgi shot remain explicitly open; functional route completion does not approve those presentation criteria.

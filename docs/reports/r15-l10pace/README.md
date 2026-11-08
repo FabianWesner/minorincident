@@ -7,14 +7,14 @@
 - Added walking-distance checkpoints: first at 26.78 s; maximum route spacing 200.0 m low / 200.2 m high.
 - Rebuilt the shipped farm ground and restored generated corn/vignettes. The PO's exact `(858.66,-93.68)` now samples dry khaki ground; assembled production scenery includes 236 corn blocks.
 - Added small encounters, warned ambushes and usable courier-width escapes. The persistent Mega follows around those gaps; native crossings demonstrate regained separation.
-- Completed both native production-input routes, seed 42, zero deaths, six finds each. Longest content gaps: **23.52 s low / 24.52 s high**. Installation: **879 / 883 s**; credits complete: **1110 / 1120 s**.
-- Reviewed every L10 acceptance row, story beat and Mega rule before fixes, after finds, and after pacing fixes: [acceptance review](ac-review.md). Historical successful route receipt: [after step 5](evidence/after-step5-native.json), source `2e181f80`.
+- Completed both native production-input routes, seed 42, zero deaths, six finds each. Longest content gaps: **25.75 s low / 24.25 s high**. Installation: **879 / 883 s**; credits complete: **1110.58 / 1114.67 s**.
+- Reviewed every L10 acceptance row, story beat and Mega rule before fixes, after finds, and after pacing fixes: [acceptance review](ac-review.md). Final successful route receipt: [native low/high](evidence/final-native.json), gameplay source `59587da4`; historical steps are preserved.
 - Added Mega phases, machinery stun/back weak point, flame armour counter, real corpse throws, console pressure and phase retry/charge retention. Latest targeted production-mechanics run passes **20/20 checks**: [receipt](evidence/mega-mechanics.json).
 - Verified 14 deliberate native checkpoint deaths across all seven regions and both tiers, retaining inventory/cure/Mega continuity: [recovery receipt](evidence/recovery-native.json).
 
 ## Open / validation in progress
 
-- Latest source reserves one journey population slot for later warned ambushes. Its first run completes both tiers with 9/8 actual scares and content gaps 25.75/24.25 s; high required one real retry. Current stair-anchor/corpse fixes are being rerun. The zero-death metrics above are explicitly from the earlier snapshot.
+- Latest full native low/high runs pass with **zero deaths**, 9/8 actual scares and content gaps 25.75/24.25 s. Correcting the 2 m stair-anchor offset and making the raised finale corpse traversable removes the earlier exit obstruction.
 - E32 verification passed with two Vitest workers: typecheck, lint, 106 unit tests passed and one skipped. Earlier four-worker runs hit timing limits; the passing runner used a real manifest Git snapshot for tools freshness checks.
 - Optional porch-toy route: actual pickup and a complete high-tier ending are recorded, but the low-tier bot can still stall behind the dead Mega at the platform exit. A controlled landing-corpse case now passes after making the raised corpse traversable and correcting the 2 m stair-anchor offset; the complete optional route is being rerun.
 - The literal animated Mega climb from the river wreck remains unverified/unimplemented as a presentation beat. Persistent pursuit and the later real platform climb are verified separately.
