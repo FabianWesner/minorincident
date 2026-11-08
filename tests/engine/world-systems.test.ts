@@ -158,7 +158,14 @@ test('look-l6-l9 decor is render-only: L6 nav hash, colliders and pushables matc
   expect(cureCrossingStories([...cureLayout.placements, ...belt])).toEqual(stories);
   const { cureForecourtDecor } = await import('../../src/levels/L10/forecourts');
   const apron = cureForecourtDecor([...cureLayout.placements, ...belt, ...stories]);
-  expect(districtDecor('D-CURE', cureLayout.placements)).toEqual([...belt, ...stories, ...apron]);
+  const { cureVignetteCatalogue, cureVignettes } = await import('../../src/levels/L10/vignettes');
+  const vignettes = cureVignettes([...cureLayout.placements, ...belt, ...stories, ...apron]);
+  expect(districtDecor('D-CURE', cureLayout.placements)).toEqual([...belt, ...stories, ...apron, ...vignettes]);
+  expect(cureVignettes([...cureLayout.placements, ...belt, ...stories, ...apron])).toEqual(vignettes);
+  expect(cureVignetteCatalogue.every(v => v.pieces.length >= 3 && v.pieces.length <= 8)).toBe(true);
+  const vignetteGroups = new Set(vignettes.map(p => p.id.replace(/-\d+$/, '')));
+  expect(vignetteGroups.size).toBeGreaterThanOrEqual(85); // ~20/km over the 4.3 km authored route.
+  expect(vignettes.every(p => p.decor && !p.decorSolid)).toBe(true);
   expect(apron.some(p => p.position[0] > 3900 && p.roadLife)).toBe(true);
   expect(stories.filter(q => q.fieldLight).length).toBeGreaterThan(60);
   for (const li of cureCrossingLines.keys()) expect(stories.some(q => q.id.startsWith(`decor-cure-cross-${li}-`) && q.fieldLight)).toBe(true);

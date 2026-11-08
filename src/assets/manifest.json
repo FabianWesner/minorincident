@@ -11823,6 +11823,24 @@
     }
   },
   {
+    "id": "prop.l10-grave-cross",
+    "category": "prop",
+    "status": "reference",
+    "tier": "side",
+    "script": "assets/prop.l10-grave-cross/build.py",
+    "glb": "public/assets/models/prop.l10-grave-cross.glb",
+    "dimensions": { "x": 0.48, "y": 0.82, "z": 0.075, "tolerance": 0.05 },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": ["root", "body"],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": { "triangles": 800, "materials": 1, "fileKB": 120, "drawCalls": 1 },
+    "generatedLodRatios": { "lod1": 0.12, "lod2": 0.03 },
+    "lods": { "lod1": "public/assets/models/prop.l10-grave-cross.lod1.glb", "lod2": "public/assets/models/prop.l10-grave-cross.lod2.glb" },
+    "decayVariants": []
+  },
+  {
     "id": "prop.trash-bin",
     "category": "prop",
     "status": "integrated",
@@ -17790,6 +17808,7 @@
     "category": "vehicle",
     "status": "integrated",
     "tier": "hero",
+    "world": { "token": "olive", "solid": false },
     "script": "assets/veh.helicopter-military/build.py",
     "sourceGlb": "assets/veh.helicopter-military/model.glb",
     "sourceForward": "+X",
