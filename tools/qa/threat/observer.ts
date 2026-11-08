@@ -45,7 +45,7 @@ export function isWalkingSample(speed: number, leaderSpeed: number, lagging: boo
 }
 interface Row extends BlockedWindow {
   legalPaths?: { firstTick: number; lastTick: number; samples: number; minimumPercent: number; worstTick: number; blockedIds: number[] };
-  boundedPaths?: { samples: number; minimumPercent: number; worstTick: number; nearby: number; reachable: number; blockedIds: number[] };
+  boundedPaths?: { samples: number; minimumPercent: number; worstTick: number; nearby: number; reachable: number; blockedIds: number[]; blockedPositions?: Position[] };
   key: string; label: string; threat: boolean; start: number; ticks: number; lastActive: number;
   spawned: number; initial: number; seen: Set<string>; reachable: Set<string>; near: Set<string>;
   attacks: number; groupAttacks: number; firstAttack: number | null; firstGroupAttack: number | null; followers: Map<number, number[]>;
@@ -411,6 +411,7 @@ export class ThreatObserver {
     const reachable = new Set<string>();
     let nearby = 0, boundedReachable = 0;
     const boundedBlockedIds: number[] = [];
+    const boundedBlockedPositions: Position[] = [];
     for (const e of alive) {
       const token = this.identity(e), native = w.infected!.navigation;
       // Annex/house actors own a real indoor/porch walk before ordinary nav
@@ -448,7 +449,7 @@ export class ThreatObserver {
       if (Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z) <= 30) {
         nearby++;
         if ((!e.pendingAdmission || entrance || authored.length) && !disconnected && this.paths.query(source, routed, player.transform, 2.5, authored) || legalBarrierPath(2.5)) boundedReachable++;
-        else boundedBlockedIds.push(e.id);
+        else { boundedBlockedIds.push(e.id); boundedBlockedPositions.push({ identity: token, id: e.id, x: e.transform.x, z: e.transform.z, playerX: player.transform.x, playerZ: player.transform.z }); }
       }
       // L4's every-infected clause needs a continuous path at the actual body
       // radius too, rather than only A* connectivity on the narrower AI bake.
@@ -469,7 +470,7 @@ export class ThreatObserver {
         const bounded = row.boundedPaths ??= { samples: 0, minimumPercent: 100, worstTick: w.tick, nearby, reachable: boundedReachable, blockedIds: [] };
         bounded.samples++;
         const percent = boundedReachable / nearby * 100;
-        if (percent <= bounded.minimumPercent) Object.assign(bounded, { minimumPercent: percent, worstTick: w.tick, nearby, reachable: boundedReachable, blockedIds: boundedBlockedIds });
+        if (percent <= bounded.minimumPercent) Object.assign(bounded, { minimumPercent: percent, worstTick: w.tick, nearby, reachable: boundedReachable, blockedIds: boundedBlockedIds, blockedPositions: boundedBlockedPositions });
       }
       for (const token of reachable) row.reachable.add(token);
       const snapshot = { tick: w.tick, alive: alive.length, reachable: reachable.size, playerX: player.transform.x, playerZ: player.transform.z, positions };
