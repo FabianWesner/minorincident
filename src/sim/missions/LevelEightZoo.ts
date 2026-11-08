@@ -130,7 +130,11 @@ export class LevelEightZoo {
       // point once; minor physics impulses must not steer the objective ring.
       Object.assign(this.mission.def.anchors.exit, this.boardingRing());
       this.mission.setState('breached', true); this.mission.checkpoint('breach');
-      w.events.emit({ type: 'story.say', tick: t, id: 1, text: 'They are coming from the tunnels! Get to the armored vehicle!', position: w.entities.get(1)!.transform });
+      const gate = this.mission.def.anchors['zoo-gate'], player = w.entities.get(1)!;
+      const text = distance(player.transform, gate) <= gate.radius
+        ? 'They are coming from the tunnels! Get to the armored vehicle!'
+        : 'They are coming from the tunnels! Regroup at the zoo gate!';
+      w.events.emit({ type: 'story.say', tick: t, id: 1, text, position: player.transform });
     }
     this.mission.setState('apc-destroyed', w.entities.get(s.carId)!.health.current <= 0);
     const seated=this.w.vehicles!.active===s.carId;
@@ -161,7 +165,7 @@ export class LevelEightZoo {
       }
     }
     const player = w.entities.get(1)!;
-    if (!s.escapeCheckpoint && distance(player.transform, this.door()) < 12) { s.escapeCheckpoint = true; this.mission.checkpoint('escape-route'); }
+    if (!s.escapeCheckpoint && this.mission.state.steps.escape.status === 'active' && distance(player.transform, this.door()) < 12) { s.escapeCheckpoint = true; this.mission.checkpoint('escape-route'); }
     if (w.vehicles!.groupBoarded(s.carId, this.passengers())) this.mission.setState('aboard', true);
   }
   /** Complete living boarding group, including companions shown in the HUD. */

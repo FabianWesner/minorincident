@@ -119,6 +119,7 @@ async function zooParkedBoarding(): Promise<void> {
     world.tick = zoo.state.startedAt + 3599; advance(1);
     expect(mission.state.states.breached).toBe(true);
     expect(mission.state.steps.sanctuary.status, 'camping the APC does not skip the gate after the breach').toBe('active');
+    expect(mission.state.checkpoint, 'APC camping must not award the escape-route checkpoint').toBe('breach');
     expect(zoo.boarding()).toBe(false);
     expect(zoo.canBoardDriver()).toBe(false);
     expect(mission.state.steps.escape.status).toBe('pending');
