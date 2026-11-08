@@ -16,8 +16,6 @@ for (const tier of tiers) for (const seed of seeds) {
   let observer: ThreatObserver | undefined;
   let maxInfected = 0;
   let actualTier = '';
-  let infectedLimit = 0;
-  let activeCap = 0;
   const directions: { x: number; leaderX: number; direction: 'ahead' | 'behind' | 'near'; tick: number }[] = [];
   let waveCursor = 0;
   let final: Record<string, unknown> = {};
@@ -26,8 +24,6 @@ for (const tier of tiers) for (const seed of seeds) {
     beforeBegin: world => {
       observer = new ThreatObserver(world, 'L6', { paths: false });
       actualTier = world.infected!.director.tier;
-      infectedLimit = world.infected!.director.levelCap;
-      activeCap = world.infected!.director.cap;
       const update = world.update.bind(world);
       world.update = () => {
         update();
@@ -54,7 +50,7 @@ for (const tier of tiers) for (const seed of seeds) {
       const pressureSeconds = pressureTicks.length
         ? (Math.max(...pressureTicks) - Math.min(...pressureTicks)) / 60 + pressureIntervalSeconds : 0;
       final = {
-        tier, actualTier, infectedLimit, activeCap, seed, completed: world.missions?.state.phase === 'result' || world.missions?.state.phase === 'progression', outcome: world.missions?.state.phase, simSeconds: missionTime,
+        tier, actualTier, seed, completed: world.missions?.state.phase === 'result' || world.missions?.state.phase === 'progression', outcome: world.missions?.state.phase, simSeconds: missionTime,
         deaths: world.missions?.state.stats.deaths ?? 0, damageTaken: world.missions?.state.stats.damage ?? 0, survivorsOut: out,
         survivorLosses: lost, survivorRoster: state?.survivors.length ?? 0,
         escapedVisible: state?.survivors.filter(row => row.status === 'out' && !world.entities.get(row.id)?.hidden).length ?? 0,
