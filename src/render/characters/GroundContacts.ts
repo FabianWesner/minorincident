@@ -45,12 +45,12 @@ export class GroundContacts {
   }
   /** Mixer bindings skip unchanged values. Undo our last offset before it runs. */
   restore(): void { this.rig.hip.position.y += this.lowering; this.lowering = 0; }
-  update(phase: number, stride: number, run: number, weight: number, support?: number, worldReady = false): void {
+  update(phase: number, stride: number, run: number, weight: number, support?: number, worldReady = false, style?: { maxLift?: number; pelvisHeight?: number }): void {
     const rig = this.rig;
     if (!worldReady) rig.root.updateWorldMatrix(true, true);
     rig.root.matrixWorld.decompose(this.origin, this.frame, this.scale);
     this.forward.set(1, 0, 0).applyQuaternion(this.frame); this.forward.y = 0; this.forward.normalize();
-    const stance = support ?? .55 - .31 * run, lift = (.06 + .055 * run) * this.scale.y;
+    const stance = support ?? .55 - .31 * run, lift = Math.min((.06 + .055 * run) * this.scale.y, style?.maxLift ?? Infinity);
     for (const [index, foot] of this.feet.entries()) {
       const p = (phase + index * .5) % 1;
       this.lateral.set(0, 0, foot.z * this.scale.y).applyQuaternion(this.frame);
@@ -91,7 +91,7 @@ export class GroundContacts {
       const height = Math.sqrt(Math.max(.01, reach * reach - dx * dx - dz * dz));
       lowering = Math.max(lowering, this.joint.y - foot.target.y - height);
     }
-    this.lowering = Math.min(.15, lowering / this.scale.y) * weight;
+    this.lowering = style?.pelvisHeight === undefined ? Math.min(.15, lowering / this.scale.y) * weight : 0;
     // The caller refreshed the rig above. Only lowering changes its parent matrices.
     if (this.lowering > 0) { rig.hip.position.y -= this.lowering; rig.hip.updateMatrixWorld(true); }
     this.pole.copy(this.forward);

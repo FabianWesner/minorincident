@@ -8,11 +8,13 @@ const wrap = (a: number): number => Math.atan2(Math.sin(a), Math.cos(a));
  * `maxYawRate` (rad/s) limits the displayed turn speed: sim yaw snaps (face the target) become
  * turns the crowd footwork can step through instead of a body that spins over planted feet. */
 export class MotionPresentation {
-  private readonly states = new Map<number, { tick: number; from: Transform; to: Transform; yaw?: number; time?: number }>();
+  private readonly states = new Map<number, { tick: number; from: Transform; to: Transform; yaw?: number; time?: number; rate?: number }>();
   private readonly from = new Quaternion();
   private readonly to = new Quaternion();
   private readonly result = { x: 0, y: 0, z: 0, yaw: 0 };
   constructor(private readonly maxYawRate = Infinity) {}
+  /** Actual displayed heading rate, including scripted movement that has no sim angular velocity. */
+  turnRate(id: number): number { return this.states.get(id)?.rate ?? 0; }
   sample(id: number, transform: Transform, tick: number, alpha = 1, maxYawRate = this.maxYawRate): Transform {
     let state = this.states.get(id);
     const edited = state && tick === state.tick && (transform.x !== state.to.x || transform.y !== state.to.y || transform.z !== state.to.z || transform.yaw !== state.to.yaw);
@@ -35,6 +37,7 @@ export class MotionPresentation {
     if (maxYawRate < Infinity) {
       const time = (tick + t) / 60, dt = state.time === undefined ? Infinity : Math.max(0, Math.min(.1, time - state.time));
       if (state.yaw !== undefined && dt < Infinity) { const delta = wrap(this.result.yaw - state.yaw); this.result.yaw = wrap(state.yaw + Math.sign(delta) * Math.min(Math.abs(delta), maxYawRate * dt)); }
+      if (dt > 0) state.rate = state.yaw !== undefined && dt < Infinity ? wrap(this.result.yaw - state.yaw) / dt : 0;
       state.yaw = this.result.yaw; state.time = time;
     }
     return this.result;
