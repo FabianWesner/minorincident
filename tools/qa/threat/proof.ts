@@ -76,7 +76,7 @@ export async function proveThreatAudit(): Promise<void> {
     const third = world.infected!.active.pop()!;
     world.setInput(emptyInput());
     assert.equal(receipt.samples, 0, 'a lone/pair opening is not a pressing horde sample');
-    third.transform.y = 4.7; world.infected!.active.push(third); world.setInput(emptyInput());
+    third.transform.y = 1.9; world.infected!.active.push(third); world.setInput(emptyInput());
     assert.equal(receipt.samples, 0, 'an enemy on another floor cannot fill the horde denominator');
     third.transform.y = .7; frames.length = 0;
     world.setInput(emptyInput());
@@ -134,6 +134,27 @@ export async function proveThreatAudit(): Promise<void> {
     assert.equal(ledgeReceipt.samples, 0, 'a clear 2D circle cannot cross an unwalkable height step');
   }
 
+  {
+    const receipt = { kitingSeconds: 0, attacks: 0, attacksPerMinute: 0, samples: 0 };
+    const active = [25, 26, 27].map(x => ({ health: { current: 100 }, infected: { state: 'wander', heardTargetId: 1 }, transform: { x, y: .7, z: 0 } }));
+    const world = { tick: 0, events: new EventBus<GameEvent>(),
+      entities: new Map([[1, { transform: { x: 0, y: .7, z: 0 }, survivor: { velocity: { x: -2, z: 0 } }, health: { current: 100 }, weapons: { selectedSide: 'RIGHT' } }]]),
+      infected: { active }, combat: { query: { visible: () => true }, runner: { loadout: { current: () => ({ id: 'weapon.handgun' }) } } },
+      applyInput: () => {},
+    } as unknown as SimWorld;
+    installKitingPolicy(world, receipt, 'L8');
+    world.applyInput(emptyInput(), 'mouse-keyboard');
+    assert.equal(receipt.samples, 0, 'wandering L8 residents are not a pursuing horde');
+    for (const e of active) e.infected.state = 'chase';
+    world.applyInput(emptyInput(), 'mouse-keyboard');
+    assert.equal(receipt.samples, 0, 'a distant L8 horde must approach before the moving encounter starts');
+    for (const [i, e] of active.entries()) { e.transform.x = 5 + i; e.infected.heardTargetId = 99; }
+    world.applyInput(emptyInput(), 'mouse-keyboard');
+    assert.equal(receipt.samples, 0, 'infected pursuing another human cannot fill the courier horde denominator');
+    for (const e of active) e.infected.heardTargetId = 1;
+    world.applyInput(emptyInput(), 'mouse-keyboard');
+    assert.equal(receipt.samples, 1, 'a nearby courier-directed horde starts the same moving sample');
+  }
   {
     const events = new EventBus<GameEvent>(), starts: number[] = [];
     observeAttackStarts({ events } as unknown as SimWorld, (_source, target) => starts.push(target));

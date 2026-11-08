@@ -133,11 +133,18 @@ export class LevelSevenEncounters {
   private group(group: number, centre: Point, count: number, alphas: number, resident = false): void {
     const ai = this.world.infected!;
     const admit = resident ? ai.spawn.bind(ai) : ai.director.request.bind(ai.director);
+    // These authored groups occupy the street, including Northgate's raised
+    // terraces. Supply their layer explicitly; the generic spawn defaults to
+    // ground level so actors beneath an overhead deck remain beneath it.
+    const streetPoint = (at: Point, radius: number) => {
+      const p = this.clearPoint(at, radius);
+      return { ...p, y: .7 + this.world.districts!.pavingHeight(p.x, p.z) };
+    };
     for (let i = 0; i < alphas; i++) {
       const at = group === l7Encounters.finalGroup
         ? i ? { x: -43, z: 41.7 } : { x: -64, z: 50 }
         : { x: centre.x, z: centre.z + (i ? 3 : -3) };
-      admit('infected.alpha', this.clearPoint(at, .55), { pack: group, state: 'idle', yaw: Math.PI });
+      admit('infected.alpha', streetPoint(at, .55), { pack: group, state: 'idle', yaw: Math.PI });
     }
     // Only the final horde spans the wide corridor. Street packs stay on the
     // road; the wide rows put Lakeshore residents behind frontage obstacles.
@@ -165,7 +172,7 @@ export class LevelSevenEncounters {
         p.x += (row % 2 ? 1 : -1) * (group === l7Encounters.finalGroup ? 3.5 : 1.5);
       }
       // A ruined frontage may hide a cell; search locally rather than putting a figure in its mesh.
-      admit('infected.runner', this.clearPoint(p, .35), { pack: group, state: 'idle', yaw: Math.PI });
+      admit('infected.runner', streetPoint(p, .35), { pack: group, state: 'idle', yaw: Math.PI });
     }
   }
   start(): void {

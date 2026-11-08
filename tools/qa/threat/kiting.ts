@@ -6,6 +6,7 @@ import type { SimWorld } from '../../../src/sim/world/SimWorld';
 import { observeAttackStarts } from './attackStarts';
 import { SimPhase } from '../../../src/core/EventBus';
 import { Status } from '../../../src/sim/combat/Status';
+import { combatHeightReachable } from '../../../src/sim/combat/height';
 
 export interface KitingReceipt {
   kitingSeconds: number;
@@ -96,11 +97,12 @@ export function installKitingPolicy(world: SimWorld, receipt: KitingReceipt, lev
     if (world.storyLock) { kitingNow = false; return frame; }
     const threats = world.infected?.active.filter(entity => {
       if (entity.health.current <= 0 || !entity.infected || entity.hidden || !position || Math.hypot(entity.transform.x - position.x, entity.transform.z - position.z) > 30) return false;
-      if (entity.infected.special !== 'dive' && Math.abs(entity.transform.y - position.y) > 2) return false;
-      if (level === 'L8') return true;
+      if (entity.infected.special !== 'dive' && !combatHeightReachable(entity, player)) return false;
       const brain = entity.infected.l1;
       const pressing = entity.infected.state === 'chase' || entity.infected.state === 'attack' || !!entity.infected.specialAttack || brain?.mode === 'chase' || brain?.mode === 'bite';
-      return pressing && !!world.combat?.query.visible(entity.transform, position);
+      const pressure = entity.infected.pressureTarget;
+      const targetId = pressure && world.tick < pressure.until ? pressure.id : brain?.targetId || entity.infected.heardTargetId || 1;
+      return pressing && targetId === 1 && !!world.combat?.query.visible(entity.transform, position);
     }) ?? [];
     const buckets = new Map<string, { x: number; z: number; count: number }>(), cell = 7;
     for (const threat of threats) {
@@ -126,7 +128,7 @@ export function installKitingPolicy(world: SimWorld, receipt: KitingReceipt, lev
     const denseHorde = !frame.drive && player?.passengerOf === undefined && !!position && !!centre && density >= minimumHordeSize && separation > 0.01 && separation <= 30;
     // L2/L5's first distant chaser is an approach, not yet a close encounter.
     const pursuitRange = level === 'L2' || level === 'L5' ? 6 : 12;
-    const closePursuer = level === 'L8' ? denseHorde : level === 'L1' ? threats.length > 0
+    const closePursuer = level === 'L1' ? threats.length > 0
       : threats.some(entity => Math.hypot(entity.transform.x - position!.x, entity.transform.z - position!.z) <= pursuitRange);
     // A lone opening enemy killed before reaching the courier is successful
     // combat, not evidence of a moving-target miss. Sample a pressing horde;

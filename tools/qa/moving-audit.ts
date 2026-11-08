@@ -27,6 +27,7 @@ const flags: string[] = [], start = performance.now();
 const stops: { tick: number; position: { x: number; y: number; z: number }; input: { x: number; z: number }; wantedSpeed: number; pendingAdmission: boolean; blocker: string | null; mounted: boolean; hp: number }[] = [];
 const damageBuckets: Record<string, { hits: number; damage: number; minDistance: number; maxDistance: number }> = {};
 const firstHits: { tick: number; source: string; amount: number; distance: number; speed: number; hidden: boolean; seated: boolean; phase: string }[] = [];
+const movingFrames: unknown[] = [];
 try {
   run = await runLevel(level, 'complete', 1, undefined, 'auto', campaign, undefined, 0, {
     quality: 'low',
@@ -46,6 +47,10 @@ try {
       });
       if (values.trace) world.events.on('sim.tick', () => {
         const p = world.entities.get(1)!, previous = world.previousPlayer;
+        if (kiting.diagnostics?.endTick === world.tick - 1 && world.tick % 120 === 0 && movingFrames.length < 16) {
+          const nearby = world.infected!.active.filter(e => e.health.current > 0).sort((a, b) => Math.hypot(a.transform.x - p.transform.x, a.transform.z - p.transform.z) - Math.hypot(b.transform.x - p.transform.x, b.transform.z - p.transform.z)).slice(0, 4);
+          movingFrames.push({ tick: world.tick, player: { ...p.transform }, nearby: nearby.map(e => ({ id: e.id, archetype: e.archetype, position: { ...e.transform }, state: e.infected!.state, special: e.infected!.special, brain: e.infected!.l1?.mode, cooldown: e.infected!.cooldown, specialAttack: e.infected!.specialAttack?.move })) });
+        }
         if (kiting.diagnostics?.endTick !== world.tick - 1 || !previous || stops.length >= 32 || (stops.length && world.tick - stops.at(-1)!.tick < 15) || Math.hypot(p.transform.x - previous.x, p.transform.z - previous.z) * 60 > .05) return;
         const step = world.player!.locomotion.displacement, body = world.solids.blockingBody(1);
         stops.push({ tick: world.tick, position: { x: p.transform.x, y: p.transform.y, z: p.transform.z }, input: { ...world.inputFrame.move }, wantedSpeed: Math.hypot(step.x, step.z) * 60, pendingAdmission: !!p.pendingAdmission, blocker: body ? `${body.archetype}/${body.id}/${body.corpse ? 'corpse' : 'live'}` : null, mounted: !!world.mountedGun?.mounted, hp: p.health.current });
@@ -64,7 +69,7 @@ else if (level !== 'L9') {
 }
 const receipt = { level, policy, seed: 1, quality: 'low', revision: process.env.QA_THREAT_REVISION ?? 'worktree',
   runtimeSha256, policySha256, driverSha256,
-  seconds: (performance.now() - start) / 1000, run, observation, kiting: policy === 'native' ? null : kiting, ...(values.trace ? { stops, damageBuckets, firstHits } : {}), flags };
+  seconds: (performance.now() - start) / 1000, run, observation, kiting: policy === 'native' ? null : kiting, ...(values.trace ? { stops, damageBuckets, firstHits, movingFrames } : {}), flags };
 await mkdir(dirname(values.out), { recursive: true });
 await writeFile(values.out, JSON.stringify(receipt, null, 2) + '\n');
 console.log(`[moving-audit] ${level}/${policy}: ${receipt.seconds.toFixed(1)}s; ${policy === 'native' ? `${run?.outcome}, ${run?.damageTaken} HP` : `${kiting.hits ?? 0} hits / ${kiting.kitingSeconds.toFixed(2)}s`}; ${flags.join(', ') || 'PASS'}`);

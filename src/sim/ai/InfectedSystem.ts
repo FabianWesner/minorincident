@@ -45,7 +45,7 @@ const armedCampaigns = new Set(['L4', 'L5', 'L6', 'L7', 'L8', 'L10']);
 const lungeActiveTicks = (scenario: string | null | undefined) => armedCampaigns.has(scenario ?? '') ? 30 : 20;
 const introductoryCampaigns = new Set(['L1', 'L2', 'L3', 'L4', 'L5']);
 /** Introductory campaigns keep moving contacts readable without full contact wounds. */
-const movingReachBudget = 1.6, movingGlanceFraction = .1;
+const movingReachBudget = 1.6, movingGlanceFraction = .04;
 type DistrictSet = NonNullable<SimWorld['districts']>;
 type WalkableCollider = DistrictSet['districts'][number]['decay']['colliders'][number];
 type HeightSupport = { district: DistrictSet['districts'][number]; collider: WalkableCollider; group: string };
@@ -838,6 +838,7 @@ export class InfectedSystem {
     // Aim ahead of a moving victim, with a bounded ordinary lunge lead.
     // The strike still checks live position and obstruction at impact.
     const velocity = player.survivor?.velocity ?? player.motion?.velocity;
+    b.movingTargetAtWindup = player.id === 1 && Math.hypot(velocity?.x ?? 0, velocity?.z ?? 0) > .2;
     const vx = velocity?.x ?? 0, vz = velocity?.z ?? 0, lead = this.capsMovingLunge(e) ? Math.min(def.windup, movingReachBudget / Math.max(.001, Math.hypot(vx, vz))) : def.windup;
     const dx = player.transform.x + vx * lead - e.transform.x, dz = player.transform.z + vz * lead - e.transform.z, distance = Math.hypot(dx, dz);
     b.dx = distance ? dx / distance : 1; b.dz = distance ? dz / distance : 0;
@@ -944,7 +945,7 @@ export class InfectedSystem {
     // Introductory moving contacts are glancing lunges or extended-reach grazes.
     // Keep the later campaigns' reviewed combat balance and progression intact.
     const contact = infectedDef(e.archetype).range + Math.max(0, e.combat!.radius - .35) + .15;
-    const glancing = introductoryCampaigns.has(this.world.scenario ?? '') && targetId === 1 && Math.hypot(target.survivor?.velocity.x ?? 0, target.survivor?.velocity.z ?? 0) > .2 && (b.special === 'lunge' || Math.hypot(target.transform.x - e.transform.x, target.transform.z - e.transform.z) > contact);
+    const glancing = introductoryCampaigns.has(this.world.scenario ?? '') && targetId === 1 && (b.movingTargetAtWindup || Math.hypot(target.survivor?.velocity.x ?? 0, target.survivor?.velocity.z ?? 0) > .2) && (b.special === 'lunge' || Math.hypot(target.transform.x - e.transform.x, target.transform.z - e.transform.z) > contact);
     const amount = this.world.combat!.damage.apply({ attackId: b.attackId, actionId: e.archetype, sourceId: e.id, targetId, origin: e.transform, direction: { x: b.dx, z: b.dz }, base: damage * (glancing ? movingGlanceFraction : 1), multiplier: e.combat!.damageMultiplier, type: 'melee', knockback: b.special === 'charge' ? 3.2 : 0, stagger: 0 });
     this.world.events.emit({ type: 'infected.attack', tick: this.world.tick, sourceId: e.id, attackId: b.attackId, targetId, special: b.special, amount });
   }

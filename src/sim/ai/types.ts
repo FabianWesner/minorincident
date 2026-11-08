@@ -47,6 +47,8 @@ export interface InfectedState {
   /** Authored encounter boundary for heavy infected; preserved through checkpoints. */
   territory?: { x: number; z: number; radius: number };
   activeUntil: number;
+  /** Ordinary moving contact keeps its glancing classification through a brief stop during the tell. */
+  movingTargetAtWindup?: boolean;
   speed: number; until: number; cooldown: number; attackId: number; special: string; hidden: boolean;
   deadAt: number;
   /** PO "Infected recover": tick at which a knocked-down infected gets up again; -1 = alive or dead for good. `downs` counts recovery-clock draws, including hits while down. */
