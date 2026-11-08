@@ -67,20 +67,15 @@ export class LevelNineDriving {
       this.seat(e);
     }
     s.roster = (vehicle.passengers ?? []).map(p => p.id).filter(id => !!w.entities.get(id)?.civilian);
-    s.samId = s.roster.find(id => w.entities.get(id)?.civilian?.survivor?.key === 'sam') ?? 0;
-    if (!s.samId) {
-      const id = outbreak.spawnPedestrian({ x: -550, z: 5 }, { role: 'soldier', model: 'npc.national-guard', waypoints: [{ x: -550, z: 5 }] }, false);
-      const e = w.entities.get(id)!; e.civilian!.survivor = { key: 'reyes', mode: 'follow', slot: s.roster.length, leader: 1, cover: false, waitAt: 0, foundAt: 0 };
-      this.seat(e); s.roster.push(id); s.samId = id;
-    }
-    s.megaId = w.infected!.spawn('infected.alpha', { x: -430, z: 0 }, { state: 'chase', variant: 'inf.mega-alpha' });
+    s.samId = s.roster.find(id => alive(w.entities.get(id)) && ['sam', 'reyes'].includes(w.entities.get(id)?.civilian?.survivor?.key ?? '')) ?? 0;
+    s.megaId = w.infected!.spawn('infected.alpha', { x: -430, z: 0 }, { state: 'chase', variant: 'inf.mega-alpha', offNav: true });
     const mega = w.entities.get(s.megaId)!; mega.hidden = true; mega.infected!.hidden = true; mega.attachedTo = this.car.entity.id; mega.health.current = mega.health.max = 3000; w.spatial.delete(mega.id);
     // Warm the bus with the starting scene, before its offscreen road entry.
     const busAt = { x: -570, z: -120 };
     s.busId = w.vehicles!.spawn('vehicle.school-bus', busAt); const bus = w.vehicles!.cars.get(s.busId)!;
     bus.entity.hidden = true; bus.entity.vehicle!.braced = true; bus.physics.body.setEnabled(false);
     for (let i = 0; i < 6; i++) {
-      const id = w.infected!.spawn(i % 2 ? 'infected.sprinter' : 'infected.runner', busAt, { state: 'chase' }), e = w.entities.get(id)!;
+      const id = w.infected!.spawn(i % 2 ? 'infected.sprinter' : 'infected.runner', busAt, { state: 'chase', offNav: true }), e = w.entities.get(id)!;
       e.hidden = true; e.infected!.hidden = true; e.attachedTo = s.busId; s.busPassengers.push(id); w.spatial.delete(id);
     }
     for (let i = 0; i < 3; i++) {
@@ -93,6 +88,12 @@ export class LevelNineDriving {
       e.hidden = true; e.passengerOf = s.trucks[i % 3]; w.spatial.delete(id);
       e.civilian!.ally = { ...allyState('soldier', null), post: { x: 447 + i * 4, z: -7 }, hold: true, range: 35, gun: { damage: 20, shotS: .7, rangeM: 35, nearM: 12, hitNear: .75, hitFar: .3 } };
       s.soldiers.push(id);
+    }
+    if (!s.samId) {
+      // Reyes joins from the guard line after the civilians leave. Adding him
+      // to an already full arriving APC would overwrite a real passenger seat.
+      s.samId = s.soldiers[0]; s.roster.push(s.samId);
+      w.entities.get(s.samId)!.civilian!.survivor = { key: 'reyes', mode: 'follow', slot: s.roster.length - 1, leader: 1, cover: false, waitAt: 0, foundAt: 0 };
     }
     spawnSetPiece(w, 'bld.gas-station', { x: 418, z: 41 });
     spawnSetPiece(w, 'kit.rail-crossing', { x: cfg.railX, z: 0, yaw: Math.PI / 2 });
@@ -339,7 +340,13 @@ export class LevelNineDriving {
       w.vehicles!.boardPassenger(this.car.entity.id, corgi.id);
     }
     const dogAboard = !corgi || this.car.entity.vehicle!.passengers?.some(p => p.id === corgi.id && p.phase === 'seated');
-    if (w.tick - s.evacuationAt >= cfg.evacuation.defendTicks && living.every(id => s.evacuated.includes(id)) && dogAboard) {
+    const research = w.entities.get(s.samId);
+    if (alive(research) && research.passengerOf !== this.car.entity.id) {
+      w.npcs!.move(research, w.vehicles!.passengerDoor(this.car.entity.id), 3, research.civilian!, .2);
+      w.vehicles!.boardPassenger(this.car.entity.id, research.id);
+    }
+    const researchAboard = !alive(research) || this.car.entity.vehicle!.passengers?.some(p => p.id === research.id && p.phase === 'seated');
+    if (w.tick - s.evacuationAt >= cfg.evacuation.defendTicks && living.every(id => s.evacuated.includes(id)) && dogAboard && researchAboard) {
       s.evacuationDone = true; this.line('L9.sam-stays'); this.rebuild(); this.signal('evacuation-complete'); this.checkpoint('bridge');
     }
   }
