@@ -17,19 +17,20 @@ Lane: `eg-l9` · PO 2026-11-08. Timeboxed implementation handoff; full native an
 
 ## Verification
 
-The final gameplay pin is `3d1785b2`; the sequential remote harness is `e8720e57`. Fresh qualification of that version is pending. Heavy commands run exclusively on Hetzner, one at a time, with local fallback disabled. No browser was opened.
+The final gameplay pin is `3d1785b2`; the sequential remote harness is `e8720e57`. Fresh qualification of that version is pending. The final rerun was cancelled at 20:03 UTC on 2026-11-08 after about ten minutes in FIFO, before remote admission, to obey the orchestrator’s wrap-up instruction. No check was left running. Heavy commands run exclusively on Hetzner, one at a time, with local fallback disabled. No browser was opened.
 
-- A prior committed remote full unit run passed at the existing 150-case cap, with `--maxWorkers=1`. The long story scenario now runs as a standalone native probe rather than extending the suite past its time budget. No test cases were added.
+- A prior committed remote full unit run passed: 106 passed, one skipped across 27 files, with `--maxWorkers=1` (211.6 seconds including the budget wrapper). The registered test inventory remains within the existing 150-case cap. The long story scenario now runs as a standalone native probe rather than extending the suite past its time budget. No test cases were added.
 - The standalone story mechanics probe passed on the earlier `290d000b` gameplay version: held/released repair, hatch fire, rail restart, actual truck arrivals and losses, fresh checkpoint reconstruction, Sam remaining, forward-only bridge entry, continuous crash pose, input-only crawl, one explosion, axe-only arsenal, safe corgi and campaign handover. Its explicit phase placements and courier HP refill qualify mechanics, not route difficulty.
 - Both native ramp fixtures repeatedly passed: high speed clears each gap while low speed fails. The overpass reached 3.698 m with 49 airborne ticks; the ditch reached 3.468 m with 34 airborne ticks. These are explicit initial speed fixtures using ordinary native contact afterward.
 - Earlier unprotected route runs exposed repeated attachment after shake-off, fork blockers, independently sleeping seated passengers, competing companion controllers, and evacuation access problems. Those causes are fixed. The most recent road and zero-durability runs reached evacuation alive but did not finish the corgi transfer; they remain failures. The final version clears the goodbye space, uses the authored rear entry for visible transitions and gives the longer companion body an appropriate boarding reach. A subsequent story fixture exposed personal-space collision preventing the approach; `3d1785b2` extends the existing Rosa/corgi paired exemption through their approach.
-- Pending final remote batch: typecheck, lint, story and course probes; low-tier road, countryside and shortcut; high-tier road; initial-zero-durability road; full unit suite; `qa:accept -- --level L9 --skip-browser`; `qa:threat -- --levels L9 --maxWorkers 1`.
-- Raw output is under `test-results/eg-l9/`; each probe records its source hash and fixture method. Earlier logs there are not qualification for the final pin. Final results will replace this pending section after the batch exits.
+- Last completed batch on `49a6d414`: **typecheck passed; lint passed; all four ramp fixtures passed; story probe failed at the goodbye approach**. Its source hash is recorded in [verification.json](verification.json). This failure motivated `3d1785b2`.
+- **Not run on final `3d1785b2`:** typecheck, lint, story and course probes; low-tier road, countryside and shortcut; high-tier road; initial-zero-durability road; full unit suite; `qa:accept -- --level L9 --skip-browser`; `qa:threat -- --levels L9 --maxWorkers 1`. The cancelled queued batch produced no qualification for this source.
+- Raw output is under `test-results/eg-l9/`; each probe records its source hash and fixture method. Earlier logs there are not qualification for the final pin. The final batch was cancelled while queued, so no earlier result is promoted to a pass for its source.
 - Native first-visible admission is only a conservative 45 m distance proxy. Rendered max-zoom admission and device performance remain browser QA work.
 
 ## Open / follow-up lanes
 
-1. **Native completion gate:** obtain passing unprotected low-tier runs on all three routes, high-tier road, and initial-zero-durability road. Previous runs that reached camp but timed out are failures. Inspect the final batch before claiming the `3d1785b2` goodbye/boarding fix works.
+1. **Native completion gate:** obtain passing unprotected low-tier runs on all three routes, high-tier road, and initial-zero-durability road. Previous runs that reached camp but timed out are failures. Rerun the native story fixture and ordinary route matrix before claiming the `3d1785b2` goodbye/boarding fix works.
 2. **Fresh required checks:** resolve every fresh unit, acceptance or threat failure against the pinned source. Acceptance rows with rendered, device-performance or manual conditions must retain their unqualified status until QA supplies that evidence.
 3. **Browser QA:** inspect the full level in both quality tiers, including the visual crash and handover, with the checklist below. This lane was explicitly forbidden to open a browser.
 4. **Integration:** merge the L10 story lane's consumer of `crossingHandover.researchCompanion`, then verify living Sam and fallback Private Reyes campaigns separately. The producer retains actual evacuated identities separately from the research companion.
@@ -49,9 +50,19 @@ No browser was opened in this lane, as instructed. QA should inspect both qualit
 - L10 receives four evacuated named survivors when alive, the separate research companion, a safe corgi and exactly the axe.
 - Draws, triangles, frames and streaming budgets from E18/E31; only native CPU counters can be checked by this lane.
 
+## Resume validation
+
+Use the existing sequential batch, exclusively on a remote runner:
+
+```sh
+MI_LOCAL_FALLBACK=0 sh tools/remote/run.sh "$PWD" --pull test-results/eg-l9 -- sh tools/qa/l9-validation.sh
+```
+
+The batch runs typecheck, lint, story, ramps, five driving profiles, the complete unit suite (one worker), browser-skipped acceptance and threat audit. It records every stage’s exit code in `checks.tsv` and continues through functional failures. It creates an ordinary Git HEAD only inside its disposable remote snapshot for existing source-freshness checks.
+
 ## Integration
 
-The earlier sandbox prevented Git metadata writes. Permissions are now fixed: the initial progress is committed as `9f79fedd`, and `main` through `a7b70c78` is merged. Its story script is authoritative. The main implementation is committed as `74cd1db6`; subsequent native integration fixes are being validated. Native follow-up fixes and an isolated remote validation batch are committed. No deploy or push was performed.
+The earlier sandbox prevented Git metadata writes. Permissions are now fixed: the initial progress is committed as `9f79fedd`, and `main` through `a7b70c78` is merged. Its story script is authoritative. The main implementation is committed as `74cd1db6`; subsequent native integration fixes are being validated. Native follow-up fixes and the sequential remote validation batch are committed through `e8720e57`; the final gameplay change is `3d1785b2`. The report and compact evidence are committed separately. No deploy or push was performed.
 
 ## Criterion corrections
 

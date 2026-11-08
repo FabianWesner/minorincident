@@ -62,5 +62,13 @@
     }
   },
   "rawLocalArtifacts": "test-results/eg-l9-pre-approach/ (failed story) and test-results/eg-l9/ (latest batch)",
-  "browser": "Not run: QA lane only, per orchestrator"
+  "browser": "Not run: QA lane only, per orchestrator",
+  "finalRerun": {
+    "status": "Cancelled before remote admission",
+    "cancelledAt": "2026-11-08T20:03:10Z",
+    "queueWaitSecondsApprox": 578,
+    "reason": "Orchestrator requested timeboxed wrap-up; FIFO remained blocked ahead of this lane. No local fallback and no browser were used.",
+    "exitCode": 130,
+    "commandsExecuted": false
+  }
 }
