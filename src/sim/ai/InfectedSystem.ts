@@ -28,6 +28,7 @@ import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
 import type { ScenarioDefinition } from '../../levels/loader';
 import { DistrictNavigation } from './DistrictNavigation';
+import { cornSightRange, cornBlocksSight, inCorn } from '../../levels/L10/farm';
 import { AlphaSupportMoves } from './AlphaSupportMoves';
 import { PropThrows } from './PropThrows';
 import { steerFlockDive, updateFlock } from './Flock';
@@ -101,6 +102,11 @@ export class InfectedSystem {
     // Grove porches and L4's posed convoy have body-clear passages that the
     // civilian/player bake closes. Regular infected route at their own radius.
     if (['L1', 'L2', 'L4'].includes(world.scenario ?? '')) this.excludeInfected([]);
+    if (world.scenario === 'L10') {
+      const cost = (x: number, z: number) => inCorn(world, [x, z]) ? 1 / .85 : 1;
+      this.nav.movementCost = cost;
+      for (const district of this.navigation.districts) district.grid.movementCost = cost;
+    }
     this.director = new SpawnDirector(this); if (world.scenario === 'L10') this.director.strict = true; this.props = new PropThrows(world); this.alphaSupport = new AlphaSupportMoves(this);
     for (let i = 0; i < 350; i++) {
       const brain: InfectedState = { state: 'idle', pathGrid: -1, grabNextTick: 0, combo: 0, targetId: 0, activeUntil: 0, speed: 0, until: 0, cooldown: 0, attackId: 0, special: '', hidden: false, deadAt: -1, recoverAt: -1, downs: 0, revived: false, reviveUsed: false, legLost: false, detached: false, pack: 0, packIndex: 0, birds: 0, birdPositions: new Array(60).fill(0), birdAlive: new Array(20).fill(0), scatterUntil: 0, variant: '', path: [], pathIndex: 0, goal: -1, dx: 0, dz: 0, grabHits: 0, grabUntil: 0, grabX: 0, grabZ: 0, perched: false };
@@ -716,7 +722,9 @@ export class InfectedSystem {
   /** Existing archetype vision: 110 degrees / 14 m, weather, light and smoke unchanged. */
   private seesPlayer(e: EntitySnapshot, player: EntitySnapshot): boolean {
     const dx = player.transform.x - e.transform.x, dz = player.transform.z - e.transform.z, distance = Math.hypot(dx, dz);
-    return distance <= 14 * (this.world.weather?.modifiers.infectedSight ?? 1) * (this.world.lightPower?.sightMultiplier(player.transform) ?? 1)
+    const range = 14 * (this.world.weather?.modifiers.infectedSight ?? 1) * (this.world.lightPower?.sightMultiplier(player.transform) ?? 1);
+    return distance <= (this.world.scenario === 'L10' ? Math.min(range, cornSightRange(this.world, [e.transform.x, e.transform.z], [player.transform.x, player.transform.z])) : range)
+      && !(this.world.scenario === 'L10' && cornBlocksSight(this.world, [e.transform.x, e.transform.z], [player.transform.x, player.transform.z]))
       && (distance === 0 || (dx * Math.cos(e.transform.yaw) - dz * Math.sin(e.transform.yaw)) / distance >= Math.cos(55 * Math.PI / 180))
       && this.world.combat!.query.visible(e.transform, player.transform) && !this.world.combat!.effects.smokeBlocks(e.transform, player.transform);
   }

@@ -3,6 +3,7 @@ import { cloneData } from '../../core/clone';
 import { finaleGunPlacement } from '../../data/minigun';
 import { curePursuitRoute } from '../../levels/L10/district';
 import { levelTenLayouts } from '../../levels/L10/layout';
+import { inCorn } from '../../levels/L10/farm';
 import { installMegaPursuit } from '../ai/MegaPursuit';
 import { ChunkResidency } from './ChunkResidency';
 import { layoutTerrainChunks } from './TerrainChunks';
@@ -240,7 +241,7 @@ export class SimWorld implements Lifecycle {
       const player = this.entities.get(1)!;
       if (player.pendingAdmission) { body.setLinvel({ x: 0, y: 0, z: 0 }, true); body.setTranslation(player.transform, true); return; }
       if (this.vehicles?.active != null || this.mountedGun?.mounted) return;
-      if (this.player) { Object.assign(this.previousPlayer!, player.transform); this.player.locomotion.speedScale = this.player.progressionSpeed * (this.props?.pushSpeed(this.effectiveInput) ?? 1) * (this.vehicles?.bicycle.speedScale ?? 1) * (this.weather?.modifiers.playerSpeed ?? 1) * Status.speed(player) * (this.combat?.effects.speedMultiplier ?? 1) * (this.infected?.playerSpeedScale() ?? 1) * (player.speedBuff && this.tick < player.speedBuff.until ? player.speedBuff.multiplier : 1); this.player.locomotion.cornerSlip = !(this.vehicles?.bicycle.riding ?? false); this.player.prePhysics(this.effectiveInput, this.tick, !Status.stunned(player, this.tick) && !(this.infected?.playerPinned() ?? false)); return; }
+      if (this.player) { Object.assign(this.previousPlayer!, player.transform); this.player.locomotion.speedScale = this.player.progressionSpeed * (this.props?.pushSpeed(this.effectiveInput) ?? 1) * (this.vehicles?.bicycle.speedScale ?? 1) * (this.weather?.modifiers.playerSpeed ?? 1) * Status.speed(player) * (this.combat?.effects.speedMultiplier ?? 1) * (this.infected?.playerSpeedScale() ?? 1) * (inCorn(this, [player.transform.x, player.transform.z]) ? .85 : 1) * (player.speedBuff && this.tick < player.speedBuff.until ? player.speedBuff.multiplier : 1); this.player.locomotion.cornerSlip = !(this.vehicles?.bicycle.riding ?? false); this.player.prePhysics(this.effectiveInput, this.tick, !Status.stunned(player, this.tick) && !(this.infected?.playerPinned() ?? false)); return; }
       this.previousPlayer = { ...player.transform };
       // Deliberately only a cube input fixture, no survivor controller (E04).
       body.setLinvel({ x: this.effectiveInput.move.x * 5, y: body.linvel().y, z: this.effectiveInput.move.z * 5 }, true);

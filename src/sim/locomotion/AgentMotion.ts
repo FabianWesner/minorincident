@@ -21,7 +21,7 @@ export function moveAgent(e: EntitySnapshot, vx: number, vz: number, nav: NavGri
   if (state.updatedAt === tick) return;
   if (impulse) { state.vx = vx; state.vz = vz; state.ax = state.az = 0; }
   else {
-    const speed = Status.speed(e), ally = e.civilian?.ally;
+    const speed = Status.speed(e) / (nav.movementCost?.(e.transform.x, e.transform.z) ?? 1), ally = e.civilian?.ally;
     const following = e.civilian?.survivor?.briskAt === tick || ally?.follow && !ally.targetId && !ally.strikeAt;
     respond(state, vx * speed, vz * speed, tracking ?? (following ? followerTracking : undefined));
   }

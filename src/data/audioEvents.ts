@@ -99,7 +99,7 @@ export type AudioSystemEvent = {
 } | {
     type: 'music.stinger';
     tick: number;
-    kind: 'objective' | 'weapon' | 'elite' | 'low-hp' | 'twist' | 'complete' | 'extraction';
+    kind: 'objective' | 'weapon' | 'elite' | 'low-hp' | 'twist' | 'complete' | 'extraction' | 'scare';
     level: string;
 } | {
     type: 'music.intensity';

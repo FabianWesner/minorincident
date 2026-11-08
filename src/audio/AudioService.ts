@@ -183,7 +183,8 @@ export class AudioService implements Lifecycle {
         // either event to start decodeAudioData on demand can hitch the first
         // physical action while the background bank queue is still running.
         if (this.level === 'L7') await Promise.all(['pickups', 'weapons'].map(bank => this.registry.load(bank)));
-        if (this.level === 'L10' || this.world.megaPursuit) await Promise.all(['telegraph', 'music-L6'].map(bank => this.registry.load(bank)));
+        if (this.level === 'L10') await Promise.all(['telegraph', 'music-L10-fx'].map(bank => this.registry.load(bank)));
+        else if (this.world.megaPursuit) await Promise.all(['telegraph', 'music-L6'].map(bank => this.registry.load(bank)));
         // reset() or dispose() ran while the banks were loading: this world is gone, bind nothing.
         if (generation !== this.generation || this.disposed || !this.world.entities.get(1))
             return;
@@ -541,6 +542,11 @@ export class AudioService implements Lifecycle {
         const story = storyMusic(this.level, this.world.missions?.state);
         const sanctuary = this.level === 'L10' && insideCureHangar(this.world.entities.get(1)!.transform);
         const band = sanctuary ? null : this.world.megaPursuit?.band();
+        if (this.level === 'L10') {
+            if (this.score.setFinale(story.beat === 'finale')) this.scheduledTransition = null;
+            if (!sanctuary && story.beat !== 'released' && (input.danger || band === 'near' || band === 'approaching')) this.loop('l10-heartbeat', 'l10.heartbeat', { gain: .65 });
+            else this.stopLoop('l10-heartbeat');
+        }
         const minimum = Math.max(story.minimum, input.minimum ?? 0, band === 'near' ? .5 : band ? .25 : 0, input.phase === 'boss' ? .5 : input.phase === 'defend' || input.phase === 'timer' ? .25 : 0);
         this.music.update(t, { ...input, ...(input.danger !== undefined || story.minimum > 0 || band ? { minimum } : {}), ...(sanctuary ? { alerted: 0, danger: false, minimum: 0 } : {}), incident: !sanctuary && this.eventMapper.incident, complete: sanctuary || this.eventMapper.complete || input.complete || this.world.l7Departure?.cinematic || !!this.world.missions?.state.states['cure-released'] });
         // A dense fight escalates within the combat state (also when a story floor already holds it there).
@@ -570,6 +576,11 @@ export class AudioService implements Lifecycle {
             const at = this.graph.twist(t);
             this.quietMusicUntil = at;
             this.play('stinger.twist', { time: at });
+        }
+        else if (kind === 'scare') {
+            const at = this.graph.twist(t);
+            this.quietMusicUntil = at;
+            this.play(`l10.scare.${Math.floor(this.world.tick / 60) % 5}`, { time: at });
         }
         else
             this.play(kind === 'extraction' && level === 'L1' ? 'l1.outro.sting' : kind === 'extraction' && level === 'L6' ? 'stinger.dawn' : `stinger.${kind === 'extraction' ? 'complete' : kind}`);

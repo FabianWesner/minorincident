@@ -1,3 +1,4 @@
+import { updateFarmScares, type FarmScareState } from './FarmScares';
 import { cure } from '../../levels/L10/district';
 import { cureEncounters, cureEncounterSlots, cureEncounterSpot, cureMedkits, cureWeaponPickups } from '../../levels/L10/encounters';
 import { cureAlphaCap } from '../../levels/L10/alphaContracts';
@@ -5,15 +6,19 @@ import { insideCureHangar } from '../../data/l10Story';
 import type { SimWorld } from '../world/SimWorld';
 
 export interface CureEncounterState {
+  farmScares?: FarmScareState;
   spawned: Record<string, number>; medkits: Record<string, number>; weapons?: Record<string, number>;
   released?: string[]; laneOffsets?: Record<string, number>; assaultTicks?: number;
 }
-/** Once-only moving hunters on the route; reinforcement ranks continue until charging and the Mega fight are finished. */
+/** Once-only moving hunters; bounded finale waves leave time to clear stairs and cool the gun. */
 export class LevelTenEncounters {
   state: CureEncounterState = { spawned: {}, medkits: {}, weapons: {}, assaultTicks: 0 };
   constructor(private readonly world: SimWorld) {}
   snapshot(): CureEncounterState { return structuredClone(this.state); }
-  restore(value: unknown): void { this.state = structuredClone(value as CureEncounterState); this.state.weapons ??= {}; }
+  restore(value: unknown): void {
+    this.state = structuredClone(value as CureEncounterState); this.state.weapons ??= {};
+    for (const [id, scare] of Object.entries(this.state.farmScares ?? {})) if (scare.actor === undefined) delete this.state.farmScares![id];
+  }
   update(): void {
     const w = this.world, ai = w.infected, chunks = w.chunks, mission = w.missions;
     if (!ai || !chunks || mission?.state.phase !== 'playing' || mission.state.states['cure-released']) return;
@@ -31,6 +36,8 @@ export class LevelTenEncounters {
       if (weapons[pickup.id] || !at || !chunks.resident(...at)) continue;
       weapons[pickup.id] = w.combat!.pickups.spawn(pickup.action, { x: at[0], z: at[1] }, false, { retain: true });
     }
+    updateFarmScares(w, this.state.farmScares ??= {});
+
     for (const kit of cureMedkits) {
       if (this.state.medkits[kit.id] || !chunks.resident(...kit.at)) continue;
       this.state.medkits[kit.id] = w.pickups!.spawn('medkit', { x: kit.at[0], z: kit.at[1] });

@@ -112,9 +112,23 @@ She runs, fights, uses every gap. At the complex she installs the canister and h
 - When it falls — Voss (radio): "Release it. Now."
 - Objective: *Release the cure.*
 
-**Epilogue.** The mist rolls out over the corn, the farms, the river. Infected drop where they stand. Survivors step out
-of hiding. The corgi barks at the sunrise. Her phone buzzes, the same sound as the first minute of the game:
-**"Delivered ✓"**. Pull out. Title: **Minor Incident**.
+**Epilogue (after the win) — PO 2026-11-08: "Finale music is good, but could be more of a success hymn. The rest is boring, I cannot move and nothing is happening for 150 s. Make sure the storyline also shows what happens after the final win."**
+No waiting. The release is followed by a short, moving epilogue (~60–75 s total, skippable after the first view), scored by a
+triumphant hymn (build from the finale theme: brass/choir swell, then a warm resolution — not the horror score).
+1. **Release (0–8 s).** The courier slams the release lever. The canister fires; a pale mist column rises from the complex and
+   spreads outward. Around her, infected stop, stagger and drop. The corgi sits down next to her. The player keeps control
+   — she can walk through the yard while it happens.
+2. **The wave (8–30 s, cinematic, camera leaves her).** Camera rides the mist across the places of the journey, each a 3–4 s shot:
+   the corn and the burned farms; the bridge wreck in the river; the zoo's empty enclosures with Nadia's keeper cap on a fence;
+   the city skyline from L7; the Medical Annex from L1 — the infected there fall as the mist passes.
+3. **The survivors (30–50 s).** Short vignettes, one line each:
+   - North of the river, the army trucks stop; Mia, Rosa, Dale and Mr. Okafor step down into morning light. Rosa: "Look — it's over."
+   - The hangar doors open; Dr. Voss and Sgt. Ruiz help Sam outside. Sam (radio): "Delivery confirmed. …Show-off."
+   - People come out of houses and basements across the town (depot workers among them), blinking at the sun.
+4. **Back to her (50–65 s).** Sunrise over the complex. The courier sits on the platform steps, the corgi's head on her knee.
+   Her phone buzzes — the same sound as the first minute of the game: **"Delivered ✓"**. She almost smiles.
+5. **Title and credits (65 s+).** Pull out, title **Minor Incident**, credits over the hymn; a final post-credits shot: the corgi
+   carrying its toy (if found in L10) up to her.
 
 ---
 

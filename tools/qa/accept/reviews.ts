@@ -75,21 +75,28 @@ export function reviewSourceDigest(level: string, revision?: string): string {
   let entries: { path: string; bytes: Buffer }[];
   if (revision) {
     execFileSync('git', ['cat-file', '-e', `${revision}^{commit}`], { stdio: 'ignore' });
-    const tree = execFileSync('git', ['ls-tree', '-r', '-z', '--full-tree', revision, '--', ...paths]);
-    const oids: { path: string; oid: string }[] = [];
+    const tree = execFileSync('git', ['ls-tree', '-r', '-l', '-z', '--full-tree', revision, '--', ...paths]);
+    const oids: { path: string; oid: string; size: number }[] = [];
     for (const record of tree.toString().split('\0').filter(Boolean)) {
-      const match = /^(\d+) blob ([0-9a-f]+)\t(.+)$/.exec(record);
-      if (match) oids.push({ path: match[3], oid: match[2] });
+      const match = /^(\d+) blob ([0-9a-f]+)\s+(\d+)\t(.+)$/.exec(record);
+      if (match) oids.push({ path: match[4], oid: match[2], size: Number(match[3]) });
     }
-    const blobs = oids.length ? execFileSync('git', ['cat-file', '--batch'], { input: `${oids.map(item => item.oid).join('\n')}\n`, maxBuffer: 512 * 1024 * 1024 }) : Buffer.alloc(0);
     entries = [];
-    let offset = 0;
-    for (const item of oids) {
-      const endHeader = blobs.indexOf(10, offset);
-      const header = blobs.toString('utf8', offset, endHeader).split(' ');
-      const size = Number(header[2]), start = endHeader + 1;
-      entries.push({ path: item.path, bytes: blobs.subarray(start, start + size) });
-      offset = start + size + 1;
+    // The public archive exceeds 512 MiB. Bound each Git read without truncating the digest.
+    for (let begin = 0; begin < oids.length;) {
+      let end = begin + 1, bytes = oids[begin].size + 128;
+      while (end < oids.length && bytes + oids[end].size + 128 <= 32 * 1024 * 1024) bytes += oids[end++].size + 128;
+      const batch = oids.slice(begin, end);
+      const blobs = execFileSync('git', ['cat-file', '--batch'], { input: `${batch.map(item => item.oid).join('\n')}\n`, maxBuffer: Math.max(32 * 1024 * 1024, bytes) });
+      let offset = 0;
+      for (const item of batch) {
+        const endHeader = blobs.indexOf(10, offset);
+        const header = blobs.toString('utf8', offset, endHeader).split(' ');
+        const size = Number(header[2]), start = endHeader + 1;
+        entries.push({ path: item.path, bytes: blobs.subarray(start, start + size) });
+        offset = start + size + 1;
+      }
+      begin = end;
     }
   } else {
     const listed = execFileSync('git', ['ls-files', '-co', '--exclude-standard', '-z', '--', ...paths]).toString().split('\0').filter(Boolean);
