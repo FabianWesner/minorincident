@@ -141,7 +141,8 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     const world = (window as unknown as { __SCENE__: { game: Game } }).__SCENE__.game.world;
     const followedActors = [...world.entities.iterate()].filter(e => e.id !== 1 && !e.companion && !e.hidden && !e.infection && !e.infected && !e.corpse && e.health.current > 0 &&
       (e.civilian?.survivor?.mode === 'follow' || e.civilian?.ally?.follow?.targetId === 1 || e.escort?.state === 'follow')).map(e => ({ id: e.id, hp: e.health.current, maxHp: e.health.max }));
-    return { captureTick: world.tick, actualZoom: render.camera.zoom, targetZoom: render.camera.targetZoom, actualQuality: render.quality, healthBars: render.healthBars, followedActors };
+    const courier = world.entities.get(1)?.survivor;
+    return { captureTick: world.tick, actualZoom: render.camera.zoom, targetZoom: render.camera.targetZoom, actualQuality: render.quality, survivor: courier && { variant: courier.variant, gearTier: courier.gearTier }, healthBars: render.healthBars, followedActors };
   });
   const issue = async (severity: Issue['severity'], kind: string, text: string, shot = true, frame?: LongFrame): Promise<Issue> => {
     const e = eyes, item: Issue = { level: frame?.level ?? e?.level ?? '?', tick: frame?.tick ?? e?.tick ?? -1, x: +(frame?.x ?? e?.player?.x ?? 0).toFixed(1), z: +(frame?.z ?? e?.player?.z ?? 0).toFixed(1), severity, kind, text, captures: [], step: frame ? null : e?.step ?? null, objective: frame ? '' : e?.objective ?? '' };
@@ -161,6 +162,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   let acceptanceTick = -Infinity;
   let l6FightCaptured = false, l6RetreatFightCaptured = false;
   const l6ShieldPhotos = new Set<number>();
+  const l7DeparturePhotos = new Set<number>();
   let l6GatePhoto = false;
   let l5GuardStarted = false, l5GuardDone = false, l5MetroPhoto = false;
   let l6DeathExercise = process.env.PLAYTEST_L6_DIE_ONCE === '1';
@@ -171,6 +173,17 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   const l6GroupMemory: { rear: { x: number; z: number; tick: number } | null } = { rear: null };
   const see = async () => {
     eyes = await observeWithin(page.evaluate(look));
+    if (eyes.level === 'L7' && process.env.PLAYTEST_L7_DEPARTURE_CAPTURES === '1') {
+      const shot = await page.evaluate(() => {
+        const w = (window.__SCENE__ as unknown as { game: Game }).game.world, d = w.l7Departure?.state;
+        return d?.phase === 'departing' ? { tick: w.tick, seconds: (w.tick - d.startedAt) / 60, bus: { ...w.entities.get(d.busId)!.transform }, boarded: [...d.boarded] } : null;
+      });
+      if (shot) for (const seconds of [.5, 3, 8]) if (shot.seconds >= seconds && !l7DeparturePhotos.has(seconds)) {
+        l7DeparturePhotos.add(seconds);
+        const file = await capture(`L7-departure-${seconds}`);
+        log({ l7DeparturePhoto: { file, requestedSeconds: seconds, ...shot, ...await photoPresentation() } });
+      }
+    }
     if (process.env.PLAYTEST_L6_SHIELD_CAPTURES === '1' && eyes.level === 'L6' && eyes.phase === 'playing' && eyes.player && eyes.player.x > 50 && eyes.player.x < 115 && l6ShieldPhotos.size < 2) {
       const hit = await page.evaluate(() => window.__SS__!.events().filter(e => e.type === 'combat.hit' && e.sourceId === 1 && e.shieldBreak).at(-1));
       if (hit && eyes.tick - hit.tick < 60 && !l6ShieldPhotos.has(hit.tick)) {
@@ -1220,7 +1233,10 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
         const live = s?.roster.filter(r => r.status === 'following') ?? [];
         return { tick: w.tick, following: live.length, dead: s?.roster.filter(r => r.status === 'dead').length, turned: s?.roster.filter(r => r.status === 'turned').length,
           near18: live.filter(r => { const f = w.entities.get(r.id); return f && Math.hypot(f.transform.x - p.x, f.transform.z - p.z) <= 18; }).length,
-          boarded: w.l7Departure?.state.boarded.length ?? 0, alarm: s?.alarm && w.tick < s.alarm.until ? s.alarm.text : null };
+          boarded: w.l7Departure?.state.boarded.length ?? 0, departure: w.l7Departure?.state.phase, blockedBy: w.solids.blockingBody(1)?.id, move: { ...w.inputFrame.move },
+          survivor: { variant: w.entities.get(1)!.survivor!.variant, gearTier: w.entities.get(1)!.survivor!.gearTier },
+          followers: live.map(r => { const f = w.entities.get(r.id)!; return { id: r.id, x: f.transform.x, z: f.transform.z, hp: f.health.current, blockedBy: w.solids.blockingBody(f.id)?.id }; }),
+          alarm: s?.alarm && w.tick < s.alarm.until ? s.alarm.text : null };
       }).catch(() => null) });
       if (e.level === 'L5' && process.env.PLAYTEST_METRO_AUDIT === '1') {
         const metro = await page.evaluate(() => {
