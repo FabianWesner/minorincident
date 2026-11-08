@@ -40,7 +40,10 @@ function master(id: string): string {
     }
     if (hash(download) !== source.downloadSha256) throw new Error(`Recording download hash changed: ${id}`);
     if (!existsSync(path)) {
-        const result = spawnSync('bsdtar', ['-xf', download, '-C', root, source.member]);
+        let result = spawnSync('bsdtar', ['-xf', download, '-C', root, source.member]);
+        // Linux runners may omit libarchive; existing source packs are pinned ZIPs.
+        if ((result.error as NodeJS.ErrnoException | undefined)?.code === 'ENOENT' && download.endsWith('.zip'))
+            result = spawnSync('python3', ['-c', 'import sys,zipfile; zipfile.ZipFile(sys.argv[1]).extract(sys.argv[3],sys.argv[2])', download, root, source.member]);
         if (result.status !== 0) throw new Error(`Recording extraction failed: ${id}`);
     }
     if (hash(path) !== source.sha256) throw new Error(`Recording master hash changed: ${id}`);
