@@ -1,6 +1,6 @@
 # eg-l8-bosses — L8 animal arenas
 
-Status (2026-11-08, 23:13 CET): six arenas implemented and committed; all focused controls and audio audits pass. Final full-matrix and repository-gate reruns remain in progress. The goal is not yet declared complete. This is a merge handoff checkpoint; the done/open list below is authoritative over historical calibrations.
+Status (2026-11-08, 23:21 CET): six arenas implemented and committed; all focused controls and audio audits pass. Final full-matrix and repository-gate reruns remain in progress. The goal is not yet declared complete. This is a merge handoff checkpoint; the done/open list below is authoritative over historical calibrations.
 
 The binding design is `docs/design/boss-and-alpha-moves.md` (L8 table and common special rules), `docs/design/story-script.md` L8 beat 3, and the lane brief. The PO's 2026-11-08 animal-boss direction supersedes the older endless mixed-horde/regular-Alpha L8 composition. The sanctuary, keeper/K9/flamingo opening, named survivor continuity and APC escape remain required.
 
@@ -20,8 +20,10 @@ The binding design is `docs/design/boss-and-alpha-moves.md` (L8 table and common
 
 ### Open before native completion
 
-- Final full-matrix combat and route reruns after the marked-lane correction. The [focused elephant receipts](evidence/elephant-final/) already pass: skilled 57.32 s, one death (82.43 s including retry) on both tiers; passive/standing die at 9.55 s and circle-kiting at 9.23 s.
-- Final-source repository gates. Two shared-runner attempts timed out in the existing 30-second navigation test (105 passed / 1 skipped); an isolated rerun is being used without changing the test or its timeout.
+- Final full-matrix combat and route reruns after narrowing rigid special spacing to the elephant. The broad spacing change regressed the gorilla to 142.88 s (a stalled long scavenging route) and high-tier G-13 to 0.731 for one early casualty; those runs are not accepted. The latest committed correction restores the first five bosses' prior spacing and gives only the engaged gorilla/elephant the full route-search budget. The [focused elephant receipts](evidence/elephant-final/) already pass: skilled 57.32 s, one death (82.43 s including retry) on both tiers; passive/standing die at 9.55 s and circle-kiting at 9.23 s.
+- A production arena-tour diagnostic is additional integration work: its first version ignored ordinary tunnel intruders and exhausted 15 retries in the flock. The skilled arena policy now uses the real campaign shotgun against close intruders. The diagnostic is being rerun with normal damage and no fixture assistance.
+- A killed opening carrier could previously keep selecting its own dead ID for unfinished flamingo infections. A committed fallback now walks a real replacement from a tunnel after the retry delay; the existing opening still owns the first bite. A native interrupted-carrier lifecycle proof is running.
+- Repository gates passed on `7df08c10`: [check statuses](evidence/verify-7df08c10-checks.json), [full runner log](evidence/verify-7df08c10.log), 106 passed / 1 skipped. The final small source changes still require a gate refresh. Two earlier shared-runner attempts hit the existing 30-second navigation timeout ([retained failure](evidence/verify-shared-timeout.log)); the successful run held both runner slots without changing the test or its timeout.
 - Browser QA below remains deliberately unrun by this lane.
 
 ## Requirement evidence map
@@ -48,7 +50,7 @@ The binding design is `docs/design/boss-and-alpha-moves.md` (L8 table and common
 - Extra normal flock/herd/pack members join the real zoo cast. The existing shared bite/turn owner retains IDs and changes their appearance; boss HP is assigned when the turn event occurs.
 - The monkey derivative uses the shipped healthy/infected gorilla skins, reduced to 55% scale with a long hip-skinned tail. It retains the current primate joints, animation clips and healthy/infected eye distinction. `tools/assets/build-l8-monkeys.ts` is its reproducible authoring step. The former cat stand-in is removed.
 - Arena cover is added through the existing level layout adaptation before physics/destruction assembly. Gorilla pillars opt into the shared `pillar` destruction policy; benches use the existing movable prop owner.
-- Elephant evacuees wait at the entry while the courier is inside its active yard, then resume following. This keeps the column out of the charge lanes. Arena windups/active moves retain their marked line while nearby bodies yield through the shared separation owner.
+- Elephant evacuees wait at the entry while the courier is inside its active yard, then resume following. This keeps the column out of the charge lanes. Elephant windups/active moves retain their marked line while nearby bodies yield through the shared separation owner.
 - No browser, deployment or push is part of this lane.
 
 ## Native calibration 01
