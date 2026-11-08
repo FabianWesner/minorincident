@@ -1,0 +1,23 @@
+{
+  "target": "E27",
+  "epics": [
+    "E27"
+  ],
+  "checks": [
+    {
+      "command": "npm run typecheck",
+      "status": 0,
+      "seconds": 13.703
+    },
+    {
+      "command": "npm run lint",
+      "status": 0,
+      "seconds": 9.239
+    },
+    {
+      "command": "npm test",
+      "status": 1,
+      "seconds": 2.272
+    }
+  ]
+}

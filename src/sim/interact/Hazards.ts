@@ -14,6 +14,8 @@ export type HazardKind = typeof hazardKinds[number];
 export type DestructibleKind = typeof destructibleKinds[number];
 const harmfulKinds: readonly HazardKind[] = ['fire', 'toxic', 'water', 'metal-fence', 'live-wire'];
 export interface Hazard { kind: HazardKind; radius: number; fuseAt: number; exploded: boolean; activeUntil: number; leaked: boolean;
+  /** Flamethrower puddles recycle expired identities instead of growing the entity list during sustained fire. */
+  fuelPatch?: boolean;
   /** E27 fires: remaining spread generations and the tick the fire spreads once (half its life). */
   spread?: number; spreadAt?: number }
 export interface Destructible { kind: DestructibleKind | 'fuel-trail'; flammable: boolean; exposure: number; burnTime: number; burningUntil: number; broken: boolean }
@@ -59,6 +61,25 @@ export class Hazards {
       this.world.interactables!.block(e.id, { ...pos, y: .7, halfX: opts.halfX ?? .5, halfY: .7, halfZ: opts.halfZ ?? .15, entityId: e.id });
     }
     this.world.spatial.set(e.id, pos.x, pos.z); return e.id;
+  }
+  /** Deposit fuel at a clipped weapon impact, sharing the existing fire cap, damage and expiry path. */
+  ignitePatch(position: Vec2, radius: number, duration: number): number | null {
+    const until = this.world.tick + Math.ceil(duration * 60 * (this.world.weather?.modifiers.fireDuration ?? 1));
+    let fires = 0, reusable: EntitySnapshot | undefined;
+    for (const e of this.world.entities.iterate()) {
+      const h = e.hazard;
+      if (h?.kind !== 'fire') continue;
+      if (h.activeUntil <= this.world.tick) { if (h.fuelPatch) reusable ??= e; continue; }
+      fires++;
+      if (Math.hypot(e.transform.x - position.x, e.transform.z - position.z) <= Math.max(radius, h.radius) * .7) {
+        h.activeUntil = Math.max(h.activeUntil, until); return e.id;
+      }
+    }
+    if (fires >= Explosions.maxFires) return null;
+    const e = reusable ?? this.world.entities.get(this.spawn('fire', position, { radius, duration }))!;
+    e.hazard!.fuelPatch = true; e.hazard!.radius = radius; e.hazard!.activeUntil = until;
+    e.transform.x = position.x; e.transform.z = position.z; this.world.spatial.set(e.id, position.x, position.z);
+    return e.id;
   }
   /** Damage entry point for non-weapon triggers; weapons use Damage.apply and the same hit event. */
   hit(id: number, amount: number, type: DamageEvent['type']): number {
