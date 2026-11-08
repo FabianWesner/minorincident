@@ -1,4 +1,5 @@
-/** Real-input L9 comparison, using the existing playtest driver and progressed save.
+/** Real-input L9 comparison, pooled via runSession -> launchProfile,
+ * using the existing playtest driver and progressed save.
  * sh tools/e2e-lock.sh node --import tsx tools/qa/r10-l9-drive.ts before low 1
  * Use quiet-run instead of e2e-lock for exclusive frame timing. */
 import { createServer } from 'node:net';
