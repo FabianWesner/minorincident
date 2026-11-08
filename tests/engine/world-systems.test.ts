@@ -307,7 +307,10 @@ test('look-l6-l9 decor is render-only: L6 nav hash, colliders and pushables matc
   expect(cureCrossingStories([...cureLayout.placements, ...belt])).toEqual(stories);
   const { cureForecourtDecor } = await import('../../src/levels/L10/forecourts');
   const apron = cureForecourtDecor([...cureLayout.placements, ...belt, ...stories]);
-  expect(districtDecor('D-CURE', cureLayout.placements)).toEqual([...belt, ...stories, ...apron]);
+  const { cureFarmDecor } = await import('../../src/levels/L10/farmLayout');
+  const farm = cureFarmDecor([...cureLayout.placements, ...belt, ...stories, ...apron]);
+  expect(farm.filter(p => p.assetId === 'veg.corn-block').length).toBeGreaterThan(100);
+  expect(districtDecor('D-CURE', cureLayout.placements)).toEqual([...belt, ...stories, ...apron, ...farm]);
   expect(apron.some(p => p.position[0] > 3900 && p.roadLife)).toBe(true);
   expect(stories.filter(q => q.fieldLight).length).toBeGreaterThan(60);
   for (const li of cureCrossingLines.keys()) expect(stories.some(q => q.id.startsWith(`decor-cure-cross-${li}-`) && q.fieldLight)).toBe(true);

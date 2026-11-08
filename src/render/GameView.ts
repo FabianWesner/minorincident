@@ -1,3 +1,4 @@
+import { updateCorn } from './Corn';
 import { solidLargeCorpse } from '../sim/world/SolidRegistry';
 import { l6Doors, l6Entries } from '../data/l6';
 import { l5 as l5Config } from '../data/l5';
@@ -1105,6 +1106,7 @@ export class GameView implements Lifecycle {
     projectHullReveal(this.camera, subject && this.revealCourier);
     this.vehicles?.updateReveal(subject, subject && this.revealCourier);
     this.entityAssets?.updateReveal(subject, subject && this.revealCourier);
+    updateCorn(this.world);
     this.districts?.updateFoliage(this.view, current, undefined, subject, !this.world.entities.get(1)?.hidden);
     // Scenes without a DistrictView (Scene Lab asphalt scenes with asset occluders) open the same bounded, immediate reveal.
     if (!this.districts) {

@@ -1,3 +1,4 @@
+import { cornMaterial } from '../render/Corn';
 import { groundDepth } from '../render/GroundLayers';
 import { spinNodes } from "../data/spinNodes";
 import { Box3, Color, Group, Mesh, Object3D, Vector3, type BufferGeometry, type WebGPURenderer, type Material } from "three/webgpu";
@@ -269,6 +270,11 @@ export class DistrictAssets {
     return twin;
   }
   private finishBatch(id: string, root: Group): Group {
+    if (id === 'veg.corn-block') {
+      let material = this.sharedMaterials.get('l10-corn');
+      if (!material) { material = cornMaterial(this.materials); this.sharedMaterials.set('l10-corn', material); this.batchMaterials.add(material); }
+      root.traverse(node => { if (node instanceof Mesh) { node.material = material!; node.castShadow = false; } });
+    }
     this.share(root);
     if (id === 'kit.highway-onramp') {
       // The joining layout slab uses Materials.world's asphalt detail. The
@@ -298,7 +304,7 @@ export class DistrictAssets {
     const deck = id === 'kit.highway-onramp' || id === 'kit.dispersal-platform';
     root.traverse(node => { if (node instanceof Mesh) {
       // A shut metro leaf must read as a solid barrier even with the courier behind it.
-      if (node.material instanceof PaletteMaterial) {
+      if (node.material instanceof PaletteMaterial && id !== 'veg.corn-block') {
         if (id === 'bld.metro-entrance' && node.userData.door === 'shutter') node.material = node.material.frozenCopy().seeThrough(false);
         else if (solid) node.material = this.uncut(node.material);
         else if (deck) node.material = this.deckCut(node.material);

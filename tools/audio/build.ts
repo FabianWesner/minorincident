@@ -4,6 +4,7 @@ import { join } from 'node:path';
 import { createHash } from 'node:crypto';
 import { spawnSync } from 'node:child_process';
 import { audioCategories, audioCues, categoryDuration } from '../../src/data/audioCues';
+import { synthesizeL10Farm } from './l10-farm-synthesis';
 import { synthesize, wave } from '../../src/audio/synthesis';
 import imports from '../../assets/audio/imports.json';
 const scoreOnly = process.argv.includes('--score-only');
@@ -121,7 +122,7 @@ try {
             for (const cue of Object.values(audioCues)) {
                 if (cue.category !== category) continue;
                 const recipe = (imports.cues as Record<string, Recipe>)[cue.id];
-                samples.set(recipe ? recording(recipe, cue.duration, cue.loop, cue.bus === 'music') : fanfareLayers[cue.id] ? layered(cue.id, synthesize(cue, rate)) : capPeak(synthesize(cue, rate), 0.7), Math.round(cue.offset * rate));
+                samples.set(category === 'music-L10-fx' ? synthesizeL10Farm(cue, rate) : recipe ? recording(recipe, cue.duration, cue.loop, cue.bus === 'music') : fanfareLayers[cue.id] ? layered(cue.id, synthesize(cue, rate)) : capPeak(synthesize(cue, rate), 0.7), Math.round(cue.offset * rate));
             }
             if (!category.startsWith('music')) capPeak(samples, 0.6); // sprite ceiling: about -4.4 dBFS before Opus/AAC overshoot, so every file stays under -1 dBTP
             // Streamed stereo score is 96k. Compact mono sprites keep both codecs below 4MB.
@@ -133,7 +134,7 @@ try {
             const ids = Object.values(audioCues).filter(c => c.category === category).flatMap(c => {
                 const recipe = (imports.cues as Record<string, Recipe>)[c.id]; return recipe ? [recipe.source] : (fanfareLayers[c.id] ?? []).map(layer => layer.source);
             });
-            licenses.push(`| ${file} | ${ids.length ? 'CC0 / CC-BY / self-made (MIT); see segment map' : 'self-made (MIT)'} | ${notice(ids)} | ${hash(`${output}/${file}`)} |`);
+            licenses.push(`| ${file} | ${ids.length ? 'CC0 / CC-BY / self-made (MIT); see segment map' : 'self-made (MIT)'} | ${category === 'music-L10-fx' ? 'Minor Incident contributors; tools/audio/l10-farm-synthesis.ts' : notice(ids)} | ${hash(`${output}/${file}`)} |`);
         }
     }
     for (const [state, stream] of Object.entries(imports.streams) as [string, { source: string; start: number; duration: number; crossfade?: number }][]) {

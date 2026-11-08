@@ -1,3 +1,4 @@
+import { applyFarmLandscape } from '../../levels/L10/farmLayout';
 import { wreckRoofHeight } from '../../levels/districts/wreckRoofHeight';
 import { closeBarrierJoints } from '../../levels/barrierJoints';
 import { districtDecor } from '../../levels/decor';
@@ -64,6 +65,7 @@ export class DistrictWorld {
       if (!source) throw new Error(`Missing layout: ${d.id}`);
       // look-l6-l9: render-only decor joins the placements (no collider, pushable or nav footprint; Scene Lab adds its own crop).
       const layout = { ...source, placements: [...closeBarrierJoints(source.placements), ...(source.geometryHash === 'scene-lab' || source.placements.some(p => p.decor && p.id.startsWith('decor-')) ? [] : districtDecor(source.district, source.placements))] };
+      if (composition.id === 'L10' && d.id === 'D-CURE') applyFarmLandscape(layout);
       const gameplay = { ...(d.gameplay ?? districtGameplay[d.id]), ...d.overrides };
       if (gameplay.decay.some(layer => !isWorldTier(layer.tier))) throw new RangeError(`Invalid gameplay decay tier: ${d.id}`);
       const decay = resolveDecay(layout, composition.tier),
