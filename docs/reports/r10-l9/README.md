@@ -1,6 +1,8 @@
 # L9 long dark drive
 
-Base: `0ad5a72b` · 2026-11-08 · implementation complete, performance qualification pending
+Base: `0ad5a72b` · 2026-11-08 · complete; scoped checks and measurements recorded
+
+[Recorded evidence](evidence.json) · [Comparison sheet](../../../test-results/r10-l9/before-after.jpg)
 
 ## Changes
 
@@ -25,6 +27,8 @@ Values below are **before → after**:
 | High / 1 | 85.7 → 89.5 | 51.2 → 11.0 | 9.9 → 5.1 | 14 → 42 | 10 → 13 |
 | High / 1.5 | 87.5 → 86.8 | 29.2 → 0.9 | 6.0 → 0.9 | 13 → 39 | 13 → 14 |
 
+A separate exclusive low/1 pair has **84.40 → 84.53 seconds of driving**, **49.05 → 4.50 empty seconds**, and **14 → 44 ram knockdowns**. It completes the unchanged crash/crawl and L10 handover. The table measures the approach objective; the scripted finale is additional. The clean low/1.5 completion takes 102 wall seconds including entry and handover.
+
 HUD kills and permanent vehicle kills remain **zero in both builds**. Rams knock infected down under the existing recovery rules; the mission HUD credits courier-source kills. The change supplies more visible/reactive ram encounters without changing those semantics.
 
 The longer low/1.5 run stays in the table. Its trace spends extra time turning near x=373–375 m, z=9–12 m; the opened 91-second capture shows the APC facing away from the objective. An unchanged small bush is nearby at (371.39, 12.92), but the capture alone does not establish a collision with it. High/1 also wanders off the common line near the existing pickup. These are physical driver runs, not fixed-speed replays; route length and speed tuning are unchanged.
@@ -33,7 +37,7 @@ The longer low/1.5 run stays in the table. Its trace spends extra time turning n
 
 The observer samples every 0.5 seconds while the drive objective is active. “Empty” means no submitted on-screen living infected, non-stud practical, fire, or vehicle/building/kit landmark projected into the central frame. The APC, minimap dots, headlights, insects, bare terrain, and downed bodies do not count. Practical/landmark projections also require visibility and a 35 m distance cap. This is a sampled geometric estimate checked against opened captures, not pixel classification. An encounter bout begins when at least one living infected becomes visible after none were visible; it need not be a distinct group.
 
-[Matched summaries and served-bundle identities](../../../test-results/r10-l9/matrix.json) · [Runtime scope and common route](../../../test-results/r10-l9/scope-and-route.json)
+Per-run summaries, served-bundle identities and the common route are retained in `evidence.json`.
 
 ## Opened visual evidence
 
@@ -45,26 +49,61 @@ The observer samples every 0.5 seconds while the drive objective is active. “E
 - Matched high/1.5 at 45 seconds: both builds show an existing encounter. The changed frame has a larger ram aftermath and blood trail, a flare close behind the APC, and the existing verge fire/pursuer farther away; armor is 710/1000 versus 890/1000 before.
 - The low/1.5 recovery frame at 91 seconds shows nearby infected, flares and two fires while the APC turns away from the objective. Dark terrain remains between the light pools.
 
-[Detailed capture descriptions, exploratory summaries and exclusions](../../../test-results/r10-l9/reviewed-evidence.json)
+Detailed capture descriptions, exploratory summaries and exclusions are retained in `evidence.json`.
 
 ## Checks and performance
 
 | Check | Result |
 | --- | --- |
-| Typecheck / full lint | Pass, including final QA-tool changes |
+| Typecheck / full lint | Pass; final heap/CPU tooling also typechecks and lints |
 | Unit suite / E31 verification | 107 tests in 27 files pass; registry stays at 150/150; `npm run verify -- E31` exits 0 |
-| L9 native acceptance (`--skip-browser`) | All low/high completion, stationary, fixture and checkpoint runs complete; zero current failing rows; eight current incomplete rows remain as on the base |
-| Scoped L9 threat audit | Both policies complete, zero L9 passive flags; overall exit 1 is `PARTIAL_LEVEL_SELECTION`, so this is scoped evidence rather than a full campaign gate |
+| L9 native acceptance (`--skip-browser`) | Low/high completion, stationary, fixture and checkpoint runs complete; zero current failing rows; eight current incomplete rows remain as on the base |
+| Scoped L9 threat audit | Both policies complete, zero L9 passive flags; overall exit 1 is `PARTIAL_LEVEL_SELECTION`, so this is scoped evidence |
 | Full threat sweep | Exceeded the 600-second cap under concurrent host load; not a pass |
-| Scene gate | 48 rows pass; last two waiting for browser admission |
-| Cold load ≤6 s | Pending exclusive quiet measurement |
-| No new gameplay frame >66 ms | Pending exclusive quiet comparison |
+| Scene gate | All 50 selected assertions pass across 46 saved rows and a four-row shard rerun; no runtime or scene-input change between them |
+| Cold load ≤6 s | Pass: worst of 20 changed-build observations is 3.559 s low / 3.589 s high |
+| No new gameplay frame >66 ms | Pass: 23,523 candidate frames across all four cells; none >66 ms |
 
-Acceptance retains a **historical stale FAIL for L9-03**, whose current status is NOT CHECKED. L9-08 currently passes; the other eight current rows require fresh browser/manual evidence. Native completion is not represented as full acceptance signoff. [Compact check receipt](../../../test-results/r10-l9/checks.json)
+Acceptance retains a **historical stale FAIL for L9-03**, whose current status is NOT CHECKED. L9-08 currently passes; the other eight current rows require fresh browser/manual evidence. Native completion is not full acceptance signoff. The original full scene invocation exits 1 because another lane's exclusive reservation times out its final batch; `--shard 11/11 --batch 5` then exits 0 with all four rows passing. The combined 50-row coverage and unchanged input check are retained in the evidence.
 
-The shared content matrix cannot qualify frame budgets: both builds stall while the host runs concurrent jobs. Baseline maxima reach 0.75–5.03 seconds; changed maxima reach 0.40–2.72 seconds. High/1 has more >66 ms frames after the change despite a lower maximum, so a clean timing pass is not inferred from these runs.
+### Native frame qualification
 
-Observed changed-build peaks are 88–93 draws / 108–111k triangles on low, and 105–114 draws / 182–198k triangles on high, below E31's 300/600 draws and 500k/1.5M triangle ceilings. Population caps are unchanged. The page-reported heap figure is constant throughout each run and differs between shared browser contexts; it is not a reliable collected-heap budget proof. [Early shader-build diagnostic](../../../test-results/r10-l9/after-guard-build-summary.json) records 15 Alpha node builds in ticks 321–461 of an exploratory run; it does not establish a new regression or a clean compile gate.
+Headless native Metal WebGL2, 1280×720, all playing L9 phases including crash/crawl, ordinary real input, no profiler or forced GC. Each reservation passes the unmodified exclusive quiet-run preflight.
+
+| Quality / zoom | Frame p95 | Maximum | Frames >66 ms |
+| --- | ---: | ---: | ---: |
+| Low / 1 | 16.7 ms | 33.4 ms | 0 |
+| Low / 1.5, clean repeat | 16.8 ms | 50.0 ms | 0 |
+| High / 1 | 16.7 ms | 50.1 ms | 0 |
+| High / 1.5 | 16.8 ms | 50.0 ms | 0 |
+
+The paired baseline low/1 has one existing 166.7 ms frame late in the approach; its changed counterpart peaks at 33.4 ms. Presentation p95 stays in the baseline's 16.7–16.8 ms range. These are the recorded presentation timings; this report does not substitute them for a full E31/manual performance signoff.
+
+A first low/1.5 run overlaps foreign main-repo typecheck/unit work after admission. It still peaks at 50.1 ms, but is excluded from clean qualification and repeated. The retained clean repeat and the high cells have no observed foreign workload. Shared content-matrix timings, which contain multi-second stalls in both builds, are excluded from qualification.
+
+### Resource budgets
+
+Observed in the qualification runs and paused heap diagnostics:
+
+| Metric | Low observed | High observed | Low / high ceiling |
+| --- | ---: | ---: | ---: |
+| Draw calls | 93 | 114 | 300 / 600 |
+| Triangles | 113,149 | 211,726 | 500,000 / 1,500,000 |
+| Fixed-tick CPU p95 | 1.2 ms | 1.5 ms | 6 / 4 ms |
+| Collected JS heap | 210.7 MB | 221.0 MB | 250 / 400 MB |
+
+CPU is the per-frame maximum fixed-tick elapsed time, observed throughout play. Heap uses four explicit paused `HeapProfiler.collectGarbage` / `Runtime.getHeapUsage.usedSize` probes per quality, including initialization, mid-drive, late drive/crash and the bounded endpoint. Backing-storage bytes are separately retained. This matches the collected JS heap metric of the existing E31 performance tool; it is not a process-RSS measurement. Forced-GC diagnostic frame timings do not contribute to frame qualification. The coarse page memory counter is retained for diagnosis but is not the heap proof.
+
+### Cold loads
+
+Twenty isolated empty browser contexts per build and quality, native Metal WebGL2, real level click → loading card closed / Begin ready. The browser process is reused; there is no profiler. The final sample of each configuration also sends ten seconds of physical WASD input.
+
+| Quality | Before median / worst | After median / worst | N per build |
+| --- | ---: | ---: | ---: |
+| Low | 3.541 / 3.641 s | 3.541 / 3.559 s | 20 |
+| High | 3.440 / 4.271 s | 3.317 / 3.589 s | 20 |
+
+All 80 observations use the requested quality and hardware WebGL2 backend, with zero browser errors. Maximum post-card frames are 33.4 ms low and 50.0 ms high in both builds. Main-repo native checks/builds overlap part of the high cold matrix after admission; the host log records them. Every observed worst case remains below six seconds. Small timing differences are not attributed to this change.
 
 ## Reproduction and retention
 
@@ -74,6 +113,6 @@ Build with `MI_BUILD_CACHE=off npm run build:qa`. Serve the base and changed bui
 L9_DRIVE_ORIGIN=http://127.0.0.1:4843 sh tools/e2e-lock.sh node --import tsx tools/qa/r10-l9-drive.ts candidate low 1
 ```
 
-Use `tools/perf/quiet-run.sh` for timing, with `PLAYTEST_SHOT_SECONDS=9999` and the same input plan. The runner's `pair` mode accepts `L9_BEFORE_ORIGIN` and `L9_AFTER_ORIGIN` and serializes both builds inside one reservation. Shared runs are content/completion diagnostics.
+Use `tools/perf/quiet-run.sh` for timing with `PLAYTEST_SHOT_SECONDS=9999`. The runner's `pair` mode accepts `L9_BEFORE_ORIGIN` and `L9_AFTER_ORIGIN` and serializes both builds inside one reservation. Cold-load reproduction uses `tools/perf/cold-load-time.ts <origin> webgl2 <low|high> 20 L9`. For paused heap diagnostics, set `PLAYTEST_HEAP_PROBE=1`, `L9_DRIVE_SAMPLE_SECONDS=100` and `PLAYTEST_SHOT_SECONDS=45`; a bounded yield intentionally returns exit 1 and does not claim level completion.
 
-Reviewed raw captures, browser/CPU profiles, telemetry, redundant sheets and obsolete receipts were removed for disk pressure. The linked compact receipts and one comparison sheet remain. The [temporary baseline runtime](../../../test-results/r10-l9/before-dist/index.html) shares unchanged asset files with the current build until paired checks finish. No push or deployment.
+Reviewed raw captures, browser/CPU profiles, telemetry, redundant sheets and temporary baseline files are removed. The report, compact `evidence.json`, and one 274 KB comparison sheet are committed. Temporary preview servers are stopped. Commits remain local.
