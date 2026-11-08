@@ -140,6 +140,10 @@ test('interactions: ring, input and view predicates agree for every interact ste
         // without adding another registered case or relaxing the scene gate.
         expect(mission.state.marker).toBe('zoo-gate');
         expect(objectiveText(mission, mission.def.steps[0].text)).toBe('Lead the group to the zoo gate');
+        mission.completeObjective('sanctuary');
+        expect(mission.state.states.breached, 'debug graph advancement still reconstructs the real breach checkpoint').toBe(true);
+        mission.restore('sanctuary');
+        expect(mission.state.states.breached).toBe(false);
         const source = mission.l8!.state.outlets[2];
         const house = { ...source, ids: [] as number[], walking: [], route: [], ox: source.sx, oz: source.sz, speedMs: emergeSpeedMs };
         const first = new Map<number, number>();

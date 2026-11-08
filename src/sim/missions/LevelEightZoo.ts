@@ -79,9 +79,9 @@ export class LevelEightZoo {
       const exit = doorExit(w, door, start); if (!exit) throw new Error(`Disconnected zoo outlet ${door.house}`);
       const serviceRoutes: [number, number][][] = [
         [[-96, 32]],
-        [[80, 70]], // Route the east-tunnel cohort across the courier's last on-foot approach to the APC.
+        [[80, 78]], // Cross the gate-to-APC road before ordinary pursuit.
         [[-30, -64]],
-        [[32, 64]], // Intercept the south-plaza exit before ordinary pursuit.
+        [[27, 66.5], [27, 78]], // Round the bunker on its west side, then intercept the gate departure.
       ];
       const route = [...exit.route, ...serviceRoutes[index]];
       const last = route.at(-1);
@@ -178,7 +178,7 @@ export class LevelEightZoo {
   boarding(): boolean {
     return this.breached && (this.mission.state.steps.escape.status === 'active' || this.mission.state.steps.depart.status === 'active') && (this.w.vehicles!.active === this.state.carId || distance(this.w.entities.get(1)!.transform, this.door()) < 12);
   }
-  /** Cheat/test path (`completeObjective` before the breach): call the tunnel breach now so the escape objective becomes active. */
+  /** Cheat/test path (`completeObjective` before the breach): call the real tunnel breach; ordinary completion still requires the gate rendezvous. */
   advance(): boolean {
     if (this.mission.state.states.breached) return false;
     this.state.startedAt = this.w.tick - 3600; this.update();
