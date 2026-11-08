@@ -1,6 +1,6 @@
 # eg-l8-bosses — L8 animal arenas
 
-Status (2026-11-08, 23:21 CET): six arenas implemented and committed; all focused controls and audio audits pass. Final full-matrix and repository-gate reruns remain in progress. The goal is not yet declared complete. This is a merge handoff checkpoint; the done/open list below is authoritative over historical calibrations.
+Status (2026-11-08, 23:27 CET): all six arenas clear in the mortal production tour, zero courier deaths, APC departure reached. A final stricter elephant wall-counter check and gate refresh are in progress. The goal is not yet declared complete. This is a merge handoff checkpoint; the done/open list below is authoritative over historical calibrations.
 
 The binding design is `docs/design/boss-and-alpha-moves.md` (L8 table and common special rules), `docs/design/story-script.md` L8 beat 3, and the lane brief. The PO's 2026-11-08 animal-boss direction supersedes the older endless mixed-horde/regular-Alpha L8 composition. The sanctuary, keeper/K9/flamingo opening, named survivor continuity and APC escape remain required.
 
@@ -18,12 +18,18 @@ The binding design is `docs/design/boss-and-alpha-moves.md` (L8 table and common
 - Gorilla native combat collapses a real pillar and follows with scavenged throws. Controlled checks exercise the real live infected missile, airborne identity/HP, landing distance and 0.6 s rolling recovery; monkey melee escape/swap lock, entry retry/cover/ammo restoration and conditional dialogue are covered.
 - Typecheck, lint, unit suite and `verify -- E30` passed on the earlier candidate: [runner log](evidence/verify-candidate.log), 106 passed / 1 skipped, 150 collected cases budget unchanged. A final-source gate rerun is still required. The runner manifest has no HEAD, so an ephemeral runner-only commit was needed by the existing HEAD-dependent tool test.
 
+### Latest integration evidence
+
+The [production tour](evidence/production-tour-low.json) clears all six arenas and reaches campaign progression in 699.87 s, with normal damage, zero courier deaths, 12 rescued and zero collision failures. Arena engagement durations are 52.55 / 56.78 / 51.10 / 61.75 / 64.15 / 105.05 s (flamingo through elephant), all within 45–120 s. Two monkeys scatter alive after their leader dies.
+
+The [interrupted-carrier proof](evidence/carrier-retry-low.json) kills the opening carrier through the damage owner after its first flock bite. A distinct carrier physically leaves a real tunnel; all 22 animals still receive real bites and same-ID transformations, by tick 6066. The keeper opening is retained.
+
+The latest [low/high route receipts](evidence/route-final/) pass every requested clause: minimum bounded-path reachability 100%, courier contact by 17.88/18.93 s low and 19.35 s high, all follower speed ratios ≥0.9996. G-13's separate waiting-time bound remains NOT CHECKED and is not claimed passed.
+
 ### Open before native completion
 
-- Final full-matrix combat and route reruns after narrowing rigid special spacing to the elephant. The broad spacing change regressed the gorilla to 142.88 s (a stalled long scavenging route) and high-tier G-13 to 0.731 for one early casualty; those runs are not accepted. The latest committed correction restores the first five bosses' prior spacing and gives only the engaged gorilla/elephant the full route-search budget. The [focused elephant receipts](evidence/elephant-final/) already pass: skilled 57.32 s, one death (82.43 s including retry) on both tiers; passive/standing die at 9.55 s and circle-kiting at 9.23 s.
-- A production arena-tour diagnostic is additional integration work: its first version ignored ordinary tunnel intruders and exhausted 15 retries in the flock. The skilled arena policy now uses the real campaign shotgun against close intruders. The diagnostic is being rerun with normal damage and no fixture assistance.
-- A killed opening carrier could previously keep selecting its own dead ID for unfinished flamingo infections. A committed fallback now walks a real replacement from a tunnel after the retry delay; the existing opening still owns the first bite. A native interrupted-carrier lifecycle proof is running.
-- Repository gates passed on `7df08c10`: [check statuses](evidence/verify-7df08c10-checks.json), [full runner log](evidence/verify-7df08c10.log), 106 passed / 1 skipped. The final small source changes still require a gate refresh. Two earlier shared-runner attempts hit the existing 30-second navigation timeout ([retained failure](evidence/verify-shared-timeout.log)); the successful run held both runner slots without changing the test or its timeout.
+- The final audit identified a decorative bush being credited as an elephant wall impact. A committed correction now accepts only authored walls/fences or the yard truck and retains the actual obstacle IDs in checkpointed arena state. Pursuit is 5 m/s so the courier can set up the next lure. Recheck three qualified no-fire impacts, skilled duration and passive/standing/kiting pressure. Earlier elephant counter receipts are superseded for obstacle qualification.
+- Refresh the repository gates after that final correction. The full gate on the preceding runtime passed (106 passed / 1 skipped); two earlier shared-runner navigation timeouts are preserved in the evidence archive. Tests and their timeouts were not changed.
 - Browser QA below remains deliberately unrun by this lane.
 
 ## Requirement evidence map

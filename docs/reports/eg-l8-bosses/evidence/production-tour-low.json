@@ -1,0 +1,269 @@
+{
+  "sourceHash": "efd545dd1ff6a9d4ce6e2f4b4c8bb631b06ec7ec0a57e9250d0502ee52cc69cd",
+  "observerHash": "9bc78b7466b90817f6d7d366c8d18d0d6ad58da48babad13c494674c78dbc5c8",
+  "revision": "scoped-heavy-routes",
+  "pass": true,
+  "method": "Production story and arena-tour bot with normal damage, no fixture changes or god mode.",
+  "tick": 41992,
+  "phase": "progression",
+  "stats": {
+    "time": 699.8666666666667,
+    "kills": 53,
+    "knockdowns": 27,
+    "damage": 160,
+    "deaths": 0,
+    "rescued": 12,
+    "optionalObjectives": []
+  },
+  "arenas": [
+    {
+      "id": "flamingo",
+      "ids": [
+        402,
+        403,
+        404,
+        405,
+        406,
+        407,
+        408
+      ],
+      "carrier": 0,
+      "phase": 3,
+      "startedAt": 5393,
+      "endedAt": 8546,
+      "nextAt": 8789,
+      "cycle": 9,
+      "wallHits": 0,
+      "rocket": 0,
+      "grabs": 0,
+      "counters": 0,
+      "track": {
+        "x": 4.1756367683410645,
+        "z": -34.1348876953125,
+        "vx": -3.684511184692383,
+        "vz": 2.5833892822265625,
+        "turn": 0.06368028684614467,
+        "at": 8545
+      },
+      "carrierRetryAt": 5608
+    },
+    {
+      "id": "zebra",
+      "ids": [
+        400,
+        401,
+        409,
+        410
+      ],
+      "carrier": 0,
+      "phase": 3,
+      "startedAt": 9590,
+      "endedAt": 12997,
+      "nextAt": 13088,
+      "cycle": 3,
+      "wallHits": 0,
+      "rocket": 0,
+      "grabs": 0,
+      "counters": 0,
+      "carrierRetryAt": 8984,
+      "track": {
+        "x": 63.22268295288086,
+        "z": 32.093055725097656,
+        "vx": -0.5371856689453125,
+        "vz": 4.4677734375,
+        "turn": 0.000642363298484305,
+        "at": 12996
+      },
+      "lane": {
+        "x": 62.862491607666016,
+        "side": 1,
+        "staging": false
+      }
+    },
+    {
+      "id": "monkey",
+      "ids": [
+        411,
+        412,
+        413,
+        414,
+        415,
+        416,
+        417
+      ],
+      "carrier": 0,
+      "phase": 3,
+      "startedAt": 14395,
+      "endedAt": 17461,
+      "nextAt": 17581,
+      "cycle": 8,
+      "wallHits": 0,
+      "rocket": 0,
+      "grabs": 1,
+      "counters": 1,
+      "carrierRetryAt": 6921,
+      "track": {
+        "x": -4.242568492889404,
+        "z": 15.546875953674316,
+        "vx": 0,
+        "vz": 0,
+        "turn": 0.010384170996678871,
+        "at": 17461
+      }
+    },
+    {
+      "id": "lion",
+      "ids": [
+        397,
+        418
+      ],
+      "carrier": 0,
+      "phase": 3,
+      "startedAt": 18326,
+      "endedAt": 22031,
+      "nextAt": 22094,
+      "cycle": 9,
+      "wallHits": 0,
+      "rocket": 0,
+      "grabs": 0,
+      "counters": 0,
+      "carrierRetryAt": 7215,
+      "track": {
+        "x": -65.58486938476562,
+        "z": -35.22368240356445,
+        "vx": 0,
+        "vz": 0,
+        "turn": -0.04552952423945779,
+        "at": 22030
+      }
+    },
+    {
+      "id": "gorilla",
+      "ids": [
+        398
+      ],
+      "carrier": 0,
+      "phase": 3,
+      "startedAt": 24289,
+      "endedAt": 28138,
+      "nextAt": 28253,
+      "cycle": 8,
+      "wallHits": 0,
+      "rocket": 0,
+      "grabs": 0,
+      "counters": 3,
+      "carrierRetryAt": 9249,
+      "track": {
+        "x": 52.16141891479492,
+        "z": -17.641319274902344,
+        "vx": 3.2205963134765625,
+        "vz": -3.1427764892578125,
+        "turn": 0.012608688081462144,
+        "at": 28137
+      }
+    },
+    {
+      "id": "elephant",
+      "ids": [
+        399
+      ],
+      "carrier": 0,
+      "phase": 3,
+      "startedAt": 30187,
+      "endedAt": 36490,
+      "nextAt": 37477,
+      "cycle": 6,
+      "wallHits": 0,
+      "rocket": 0,
+      "grabs": 0,
+      "counters": 0,
+      "carrierRetryAt": 6561,
+      "track": {
+        "x": -70.92388153076172,
+        "z": 17.9569091796875,
+        "vx": 0,
+        "vz": 0,
+        "turn": -0.0009133410824915218,
+        "at": 36489
+      }
+    }
+  ],
+  "events": [
+    {
+      "tick": 5393,
+      "name": "l8.arena.flamingo.engaged"
+    },
+    {
+      "tick": 8129,
+      "name": "l8.arena.flamingo.phase-2"
+    },
+    {
+      "tick": 8546,
+      "name": "l8.arena.flamingo.cleared"
+    },
+    {
+      "tick": 9590,
+      "name": "l8.arena.zebra.engaged"
+    },
+    {
+      "tick": 11620,
+      "name": "l8.arena.zebra.phase-2"
+    },
+    {
+      "tick": 12997,
+      "name": "l8.arena.zebra.cleared"
+    },
+    {
+      "tick": 14395,
+      "name": "l8.arena.monkey.engaged"
+    },
+    {
+      "tick": 16313,
+      "name": "l8.arena.monkey.phase-2"
+    },
+    {
+      "tick": 17461,
+      "name": "l8.arena.monkey.cleared"
+    },
+    {
+      "tick": 18326,
+      "name": "l8.arena.lion.engaged"
+    },
+    {
+      "tick": 19498,
+      "name": "l8.arena.lion.phase-2"
+    },
+    {
+      "tick": 22031,
+      "name": "l8.arena.lion.cleared"
+    },
+    {
+      "tick": 24289,
+      "name": "l8.arena.gorilla.engaged"
+    },
+    {
+      "tick": 26504,
+      "name": "l8.arena.gorilla.phase-2"
+    },
+    {
+      "tick": 28138,
+      "name": "l8.arena.gorilla.cleared"
+    },
+    {
+      "tick": 30187,
+      "name": "l8.arena.elephant.engaged"
+    },
+    {
+      "tick": 33073,
+      "name": "l8.arena.elephant.phase-2"
+    },
+    {
+      "tick": 36490,
+      "name": "l8.arena.elephant.cleared"
+    }
+  ],
+  "collision": {
+    "failures": 0,
+    "offenders": []
+  }
+}
