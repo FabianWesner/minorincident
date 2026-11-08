@@ -16,9 +16,10 @@
 - Final E32 verification on the current gameplay source passed with two Vitest workers: typecheck, lint, **106 unit tests passed, one skipped**. [Receipt](evidence/e32-checks.json).
 - Exact dog/minigun contracts and stationary-ground pressure checks pass; all **20 Mega mechanics checks** pass.
 
-## Open / final check in progress
+- Optional porch-toy routes now also complete on **both tiers with zero deaths** (1136.27 /1140.57 s), actual toy pickup at 130.48 /130.72 s, and the same healthy corgi present through thanks/completion. [Receipt](evidence/optional-final-native.json).
 
-- Optional porch-toy route: the corrected low-tier route has completed with zero deaths; the high-tier route is still running. The final two-tier receipt will replace the historical stalled optional receipt when it finishes.
+## Open
+
 - The literal animated Mega climb from the river wreck remains unverified/unimplemented as a presentation beat. Persistent pursuit and the later real platform climb are verified separately.
 - The older scare-only 60–120 s interval is not uniformly met (including safe-hangar time); the required overall content cadence passes. L10-04 remains a strict whole-row FAIL in the review.
 - Existing global fixture G-24 fails because healthy distant Alphas receive a mandatory bar. All L10-specific contract checks pass; this broader bar policy remains open.

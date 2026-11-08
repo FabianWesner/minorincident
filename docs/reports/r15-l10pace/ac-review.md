@@ -335,3 +335,10 @@ The criterion text remains in the baseline table; every row is reassessed here. 
 | Flashbangs | 357.00 s `(2072.6,-1.3)` | 356.77 s `(2072.6,-1.3)` |
 
 The complete story-beat and Mega-rule tables above still apply with the final mechanics closures. The literal river-wreck emergence animation, rendered barn/warning/ending presentation and conditional corgi shot remain explicitly open; functional route completion does not approve those presentation criteria.
+
+
+### Optional toy route and final gate
+
+[Final optional native receipt](evidence/optional-final-native.json), same gameplay source `59587da4`: **both tiers complete with zero deaths**, low **1136.27 s**, high **1140.57 s**. Each makes the real porch detour, collects the toy at **130.48 /130.72 s**, `(1012.9,82.1)`, and reaches the six-second `thanks` phase with `toy=true`, the **same corgi ID 99 at 100 HP**, then completion. Content gaps remain **22.60 /25.72 s**, checkpoint maxima **200.2 /200.1 m**, and six weapon finds are still collected. This closes the prior optional-route navigation failure. The conditional mouth attachment/shot remains a Browser QA presentation check, so the whole story-shot verdict remains FAIL until visually reviewed.
+
+The final gameplay source also passes the complete E32 gate again: typecheck, lint, **106 tests passed /one skipped**, two workers, [final gate receipt](evidence/e32-checks.json). No browser, deploy or push occurred. **The requested native pacing goal is met and verified.** Full acceptance keeps the listed scare-interval, river-wreck presentation, global bar-policy and Browser QA items open.
