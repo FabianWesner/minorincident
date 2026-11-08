@@ -1,0 +1,1363 @@
+{
+  "policy": "quiet-run only; both attempts inside original 09:35:33\u201309:55:33 UTC 20-minute overall deadline; corrected run completed at about 09:49:43 UTC",
+  "method": "headless native Chrome, ANGLE Metal, uncapped rAF cadence; 120 warmup and 300 sampled frames per scenario; sim and drawn frame advancement asserted; 3 collected GC heap snapshots; separate serialized same-tick GPU on/off/on/off samples, 5 discarded warmups + 30 each",
+  "gpuCaveat": "WebGL cannot nest elapsed queries. light-field and inclusive Render Pipeline are timed; null inner shadow, scene, SSR and bloom durations are INCLUDED in the outer pipeline query, never reported as zero or independent timings. Serialized paused GPU elapsed spans are not native live-frame p95.",
+  "rejectedFirstAttempt": "QA producer invalidated its live visual attribution object, causing zero rendered frames. Guard rejected it; no timing row accepted. Corrected producer reloads without profile before Renderer initialization. Raw rejected receipt retained locally at perf-rejected-profile/measurements.json.",
+  "conditions": [
+    {
+      "at": "2026-11-08T09:35:33.659Z",
+      "event": "quiet-admission-wait",
+      "granted": false,
+      "quiet": false,
+      "load": [
+        7.58203125,
+        14.26708984375,
+        15.52880859375
+      ],
+      "busy": []
+    },
+    {
+      "at": "2026-11-08T09:36:04.221Z",
+      "event": "quiet-admission-wait",
+      "granted": false,
+      "quiet": false,
+      "load": [
+        5.95849609375,
+        13.236328125,
+        15.1103515625
+      ],
+      "busy": []
+    },
+    {
+      "at": "2026-11-08T09:36:34.810Z",
+      "event": "quiet-admission-wait",
+      "granted": false,
+      "quiet": false,
+      "load": [
+        4.9638671875,
+        12.29052734375,
+        14.701171875
+      ],
+      "busy": []
+    },
+    {
+      "at": "2026-11-08T09:37:05.397Z",
+      "event": "quiet-admission-wait",
+      "granted": false,
+      "quiet": false,
+      "load": [
+        4.99951171875,
+        11.6064453125,
+        14.36865234375
+      ],
+      "busy": []
+    },
+    {
+      "at": "2026-11-08T09:37:35.969Z",
+      "event": "quiet-admission-wait",
+      "granted": false,
+      "quiet": false,
+      "load": [
+        4.1669921875,
+        10.76806640625,
+        13.9677734375
+      ],
+      "busy": []
+    },
+    {
+      "at": "2026-11-08T09:38:06.651Z",
+      "event": "quiet-admission-wait",
+      "granted": true,
+      "quiet": false,
+      "load": [
+        4.27880859375,
+        10.19189453125,
+        13.64892578125
+      ],
+      "busy": []
+    },
+    {
+      "at": "2026-11-08T09:38:36.700Z",
+      "event": "quiet-admission-wait",
+      "granted": true,
+      "quiet": false,
+      "load": [
+        3.53662109375,
+        9.44091796875,
+        13.255859375
+      ],
+      "busy": []
+    },
+    {
+      "at": "2026-11-08T09:39:06.705Z",
+      "event": "quiet-admission-wait",
+      "granted": true,
+      "quiet": false,
+      "load": [
+        3.74951171875,
+        8.92138671875,
+        12.93408203125
+      ],
+      "busy": []
+    },
+    {
+      "at": "2026-11-08T09:39:36.782Z",
+      "event": "quiet-admission-wait",
+      "granted": true,
+      "quiet": false,
+      "load": [
+        3.60693359375,
+        8.38720703125,
+        12.60009765625
+      ],
+      "busy": []
+    },
+    {
+      "at": "2026-11-08T09:40:06.932Z",
+      "event": "quiet-admission-wait",
+      "granted": true,
+      "quiet": false,
+      "load": [
+        3.4560546875,
+        7.8876953125,
+        12.27197265625
+      ],
+      "busy": []
+    },
+    {
+      "at": "2026-11-08T09:40:36.954Z",
+      "event": "quiet-admission-wait",
+      "granted": true,
+      "quiet": false,
+      "load": [
+        3.56494140625,
+        7.4970703125,
+        11.9775390625
+      ],
+      "busy": []
+    },
+    {
+      "at": "2026-11-08T09:41:07.057Z",
+      "event": "quiet-admission-wait",
+      "granted": true,
+      "quiet": false,
+      "load": [
+        3.6572265625,
+        7.14501953125,
+        11.69384765625
+      ],
+      "busy": []
+    },
+    {
+      "at": "2026-11-08T09:41:37.150Z",
+      "event": "quiet-admission-wait",
+      "granted": true,
+      "quiet": false,
+      "load": [
+        3.69384765625,
+        6.837890625,
+        11.42529296875
+      ],
+      "busy": []
+    },
+    {
+      "at": "2026-11-08T09:42:07.287Z",
+      "event": "quiet-admission-wait",
+      "granted": true,
+      "quiet": false,
+      "load": [
+        3.26416015625,
+        6.380859375,
+        11.072265625
+      ],
+      "busy": []
+    },
+    {
+      "at": "2026-11-08T09:42:27.995Z",
+      "pool": true,
+      "quiet": true,
+      "load": [
+        2.89208984375,
+        6.095703125,
+        10.8603515625
+      ],
+      "busy": []
+    },
+    {
+      "at": "2026-11-08T09:44:47.534Z",
+      "event": "quiet-admission-wait",
+      "granted": false,
+      "quiet": false,
+      "load": [
+        6.626953125,
+        6.22021484375,
+        10.16748046875
+      ],
+      "busy": []
+    },
+    {
+      "at": "2026-11-08T09:45:18.055Z",
+      "event": "quiet-admission-wait",
+      "granted": false,
+      "quiet": false,
+      "load": [
+        6.8427734375,
+        6.296875,
+        10.056640625
+      ],
+      "busy": []
+    },
+    {
+      "at": "2026-11-08T09:45:48.455Z",
+      "event": "quiet-admission-wait",
+      "granted": false,
+      "quiet": false,
+      "load": [
+        7.0087890625,
+        6.3935546875,
+        9.96044921875
+      ],
+      "busy": []
+    },
+    {
+      "at": "2026-11-08T09:46:19.219Z",
+      "event": "quiet-admission-wait",
+      "granted": false,
+      "quiet": false,
+      "load": [
+        5.60205078125,
+        6.126953125,
+        9.74072265625
+      ],
+      "busy": []
+    },
+    {
+      "at": "2026-11-08T09:46:50.149Z",
+      "event": "quiet-admission-wait",
+      "granted": true,
+      "quiet": false,
+      "load": [
+        4.44677734375,
+        5.80712890625,
+        9.5
+      ],
+      "busy": []
+    },
+    {
+      "at": "2026-11-08T09:47:21.187Z",
+      "event": "quiet-admission-wait",
+      "granted": true,
+      "quiet": false,
+      "load": [
+        3.27001953125,
+        5.3935546875,
+        9.2216796875
+      ],
+      "busy": []
+    },
+    {
+      "at": "2026-11-08T09:47:51.260Z",
+      "event": "quiet-admission-wait",
+      "granted": true,
+      "quiet": false,
+      "load": [
+        3.0341796875,
+        5.1318359375,
+        8.9931640625
+      ],
+      "busy": []
+    },
+    {
+      "at": "2026-11-08T09:48:21.304Z",
+      "event": "quiet-admission-wait",
+      "granted": true,
+      "quiet": false,
+      "load": [
+        3.2939453125,
+        5.00341796875,
+        8.8125
+      ],
+      "busy": []
+    },
+    {
+      "at": "2026-11-08T09:48:37.849Z",
+      "pool": true,
+      "quiet": true,
+      "load": [
+        2.90234375,
+        4.806640625,
+        8.6533203125
+      ],
+      "busy": []
+    }
+  ],
+  "rows": [
+    {
+      "tier": "high",
+      "scenario": "reflection-lab",
+      "viewport": [
+        1600,
+        900
+      ],
+      "samples": 300,
+      "frameP50": 6.299999999999272,
+      "frameP95": 10.700000000000728,
+      "simP95": 0.5,
+      "maxDraws": 47,
+      "maxTriangles": 269348,
+      "heapBytes": 112427772,
+      "ticks": 116,
+      "renderedFrames": 301,
+      "probeMode": {
+        "profile": null,
+        "skeletonJoints": false,
+        "backend": "webgl"
+      },
+      "lighting": {
+        "lightFieldMs": 0.10000038146972656,
+        "lightPools": 3,
+        "lightCandidates": 3,
+        "shadowMaps": 1,
+        "heroLights": 0,
+        "heroShadow": 0,
+        "preset": "night"
+      },
+      "budgets": {
+        "frame": true,
+        "draws": true,
+        "triangles": true,
+        "heap": true,
+        "sim": true
+      },
+      "gpu": [
+        {
+          "ssrEnabled": 1,
+          "samples": 30,
+          "completeGpuMsMedian": 11.261896,
+          "completeGpuMsP95": 11.806791,
+          "lightFieldGpuMsMedian": 0.189437,
+          "passes": [
+            {
+              "label": "light-field",
+              "width": 1024,
+              "height": 1024,
+              "individuallyTimed": true
+            },
+            {
+              "label": "Render Pipeline",
+              "width": 1600,
+              "height": 900,
+              "individuallyTimed": true
+            },
+            {
+              "label": "output",
+              "width": 1600,
+              "height": 900,
+              "individuallyTimed": false
+            },
+            {
+              "label": "ShadowMap",
+              "width": 2048,
+              "height": 2048,
+              "individuallyTimed": false
+            },
+            {
+              "label": "SSRNode.SSR",
+              "width": 800,
+              "height": 450,
+              "individuallyTimed": false
+            },
+            {
+              "label": "RTT",
+              "width": 800,
+              "height": 450,
+              "individuallyTimed": false
+            },
+            {
+              "label": "SSRNode.Blur",
+              "width": 800,
+              "height": 450,
+              "individuallyTimed": false
+            },
+            {
+              "label": "SSRNode.Blur",
+              "width": 400,
+              "height": 225,
+              "individuallyTimed": false
+            },
+            {
+              "label": "SSRNode.Blur",
+              "width": 200,
+              "height": 112,
+              "individuallyTimed": false
+            },
+            {
+              "label": "SSRNode.Blur",
+              "width": 100,
+              "height": 56,
+              "individuallyTimed": false
+            },
+            {
+              "label": "SSRNode.Blur",
+              "width": 50,
+              "height": 28,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.bright",
+              "width": 800,
+              "height": 450,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.h0",
+              "width": 800,
+              "height": 450,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.v0",
+              "width": 800,
+              "height": 450,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.h1",
+              "width": 400,
+              "height": 225,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.v1",
+              "width": 400,
+              "height": 225,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.h2",
+              "width": 200,
+              "height": 112,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.v2",
+              "width": 200,
+              "height": 112,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.h3",
+              "width": 100,
+              "height": 56,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.v3",
+              "width": 100,
+              "height": 56,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.h4",
+              "width": 50,
+              "height": 28,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.v4",
+              "width": 50,
+              "height": 28,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.h0",
+              "width": 800,
+              "height": 450,
+              "individuallyTimed": false
+            }
+          ]
+        },
+        {
+          "ssrEnabled": 0,
+          "samples": 30,
+          "completeGpuMsMedian": 8.6695205,
+          "completeGpuMsP95": 10.751498,
+          "lightFieldGpuMsMedian": 0.178041,
+          "passes": [
+            {
+              "label": "light-field",
+              "width": 1024,
+              "height": 1024,
+              "individuallyTimed": true
+            },
+            {
+              "label": "Render Pipeline",
+              "width": 1600,
+              "height": 900,
+              "individuallyTimed": true
+            },
+            {
+              "label": "output",
+              "width": 1600,
+              "height": 900,
+              "individuallyTimed": false
+            },
+            {
+              "label": "ShadowMap",
+              "width": 2048,
+              "height": 2048,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.bright",
+              "width": 800,
+              "height": 450,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.h0",
+              "width": 800,
+              "height": 450,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.v0",
+              "width": 800,
+              "height": 450,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.h1",
+              "width": 400,
+              "height": 225,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.v1",
+              "width": 400,
+              "height": 225,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.h2",
+              "width": 200,
+              "height": 112,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.v2",
+              "width": 200,
+              "height": 112,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.h3",
+              "width": 100,
+              "height": 56,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.v3",
+              "width": 100,
+              "height": 56,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.h4",
+              "width": 50,
+              "height": 28,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.v4",
+              "width": 50,
+              "height": 28,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.h0",
+              "width": 800,
+              "height": 450,
+              "individuallyTimed": false
+            }
+          ]
+        },
+        {
+          "ssrEnabled": 1,
+          "samples": 30,
+          "completeGpuMsMedian": 16.3765825,
+          "completeGpuMsP95": 17.209666000000002,
+          "lightFieldGpuMsMedian": 0.19402049999999998,
+          "passes": [
+            {
+              "label": "light-field",
+              "width": 1024,
+              "height": 1024,
+              "individuallyTimed": true
+            },
+            {
+              "label": "Render Pipeline",
+              "width": 1600,
+              "height": 900,
+              "individuallyTimed": true
+            },
+            {
+              "label": "output",
+              "width": 1600,
+              "height": 900,
+              "individuallyTimed": false
+            },
+            {
+              "label": "ShadowMap",
+              "width": 2048,
+              "height": 2048,
+              "individuallyTimed": false
+            },
+            {
+              "label": "SSRNode.SSR",
+              "width": 800,
+              "height": 450,
+              "individuallyTimed": false
+            },
+            {
+              "label": "RTT",
+              "width": 800,
+              "height": 450,
+              "individuallyTimed": false
+            },
+            {
+              "label": "SSRNode.Blur",
+              "width": 800,
+              "height": 450,
+              "individuallyTimed": false
+            },
+            {
+              "label": "SSRNode.Blur",
+              "width": 400,
+              "height": 225,
+              "individuallyTimed": false
+            },
+            {
+              "label": "SSRNode.Blur",
+              "width": 200,
+              "height": 112,
+              "individuallyTimed": false
+            },
+            {
+              "label": "SSRNode.Blur",
+              "width": 100,
+              "height": 56,
+              "individuallyTimed": false
+            },
+            {
+              "label": "SSRNode.Blur",
+              "width": 50,
+              "height": 28,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.bright",
+              "width": 800,
+              "height": 450,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.h0",
+              "width": 800,
+              "height": 450,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.v0",
+              "width": 800,
+              "height": 450,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.h1",
+              "width": 400,
+              "height": 225,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.v1",
+              "width": 400,
+              "height": 225,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.h2",
+              "width": 200,
+              "height": 112,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.v2",
+              "width": 200,
+              "height": 112,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.h3",
+              "width": 100,
+              "height": 56,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.v3",
+              "width": 100,
+              "height": 56,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.h4",
+              "width": 50,
+              "height": 28,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.v4",
+              "width": 50,
+              "height": 28,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.h0",
+              "width": 800,
+              "height": 450,
+              "individuallyTimed": false
+            }
+          ]
+        },
+        {
+          "ssrEnabled": 0,
+          "samples": 30,
+          "completeGpuMsMedian": 10.535394499999999,
+          "completeGpuMsP95": 12.144331999999999,
+          "lightFieldGpuMsMedian": 0.1965205,
+          "passes": [
+            {
+              "label": "light-field",
+              "width": 1024,
+              "height": 1024,
+              "individuallyTimed": true
+            },
+            {
+              "label": "Render Pipeline",
+              "width": 1600,
+              "height": 900,
+              "individuallyTimed": true
+            },
+            {
+              "label": "output",
+              "width": 1600,
+              "height": 900,
+              "individuallyTimed": false
+            },
+            {
+              "label": "ShadowMap",
+              "width": 2048,
+              "height": 2048,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.bright",
+              "width": 800,
+              "height": 450,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.h0",
+              "width": 800,
+              "height": 450,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.v0",
+              "width": 800,
+              "height": 450,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.h1",
+              "width": 400,
+              "height": 225,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.v1",
+              "width": 400,
+              "height": 225,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.h2",
+              "width": 200,
+              "height": 112,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.v2",
+              "width": 200,
+              "height": 112,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.h3",
+              "width": 100,
+              "height": 56,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.v3",
+              "width": 100,
+              "height": 56,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.h4",
+              "width": 50,
+              "height": 28,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.v4",
+              "width": 50,
+              "height": 28,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.h0",
+              "width": 800,
+              "height": 450,
+              "individuallyTimed": false
+            }
+          ]
+        }
+      ],
+      "errors": [],
+      "raw": "test-results/epics/E25/final/perf-high/measurements.json",
+      "rawSha256": "4e60beee9cf58dd23f12e28b49b959a5487f065f544ad7b7368089f162b7d32c"
+    },
+    {
+      "tier": "high",
+      "scenario": "light-lab",
+      "viewport": [
+        1600,
+        900
+      ],
+      "samples": 300,
+      "frameP50": 3.2999999999992724,
+      "frameP95": 5,
+      "simP95": 0.39999961853027344,
+      "maxDraws": 34,
+      "maxTriangles": 51659,
+      "heapBytes": 112598512,
+      "ticks": 60,
+      "renderedFrames": 301,
+      "probeMode": {
+        "profile": null,
+        "skeletonJoints": false,
+        "backend": "webgl"
+      },
+      "lighting": {
+        "lightFieldMs": 0.09999942779541016,
+        "lightPools": 5,
+        "lightCandidates": 5,
+        "shadowMaps": 1,
+        "heroLights": 1,
+        "heroShadow": 1,
+        "preset": "night"
+      },
+      "budgets": {
+        "frame": true,
+        "draws": true,
+        "triangles": true,
+        "heap": true,
+        "sim": true
+      },
+      "gpu": [
+        {
+          "ssrEnabled": 1,
+          "samples": 30,
+          "completeGpuMsMedian": 5.6023945,
+          "completeGpuMsP95": 6.617665,
+          "lightFieldGpuMsMedian": 0.203749,
+          "passes": [
+            {
+              "label": "light-field",
+              "width": 1024,
+              "height": 1024,
+              "individuallyTimed": true
+            },
+            {
+              "label": "Render Pipeline",
+              "width": 1600,
+              "height": 900,
+              "individuallyTimed": true
+            },
+            {
+              "label": "output",
+              "width": 1600,
+              "height": 900,
+              "individuallyTimed": false
+            },
+            {
+              "label": "ShadowMap",
+              "width": 512,
+              "height": 512,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.bright",
+              "width": 800,
+              "height": 450,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.h0",
+              "width": 800,
+              "height": 450,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.v0",
+              "width": 800,
+              "height": 450,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.h1",
+              "width": 400,
+              "height": 225,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.v1",
+              "width": 400,
+              "height": 225,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.h2",
+              "width": 200,
+              "height": 112,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.v2",
+              "width": 200,
+              "height": 112,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.h3",
+              "width": 100,
+              "height": 56,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.v3",
+              "width": 100,
+              "height": 56,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.h4",
+              "width": 50,
+              "height": 28,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.v4",
+              "width": 50,
+              "height": 28,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.h0",
+              "width": 800,
+              "height": 450,
+              "individuallyTimed": false
+            }
+          ]
+        }
+      ],
+      "errors": [],
+      "raw": "test-results/epics/E25/final/perf-high/measurements.json",
+      "rawSha256": "4e60beee9cf58dd23f12e28b49b959a5487f065f544ad7b7368089f162b7d32c"
+    },
+    {
+      "tier": "high",
+      "scenario": "night-street",
+      "viewport": [
+        1600,
+        900
+      ],
+      "samples": 300,
+      "frameP50": 4.399999999994179,
+      "frameP95": 6.19999999999709,
+      "simP95": 0.9000005722045898,
+      "maxDraws": 141,
+      "maxTriangles": 307012,
+      "heapBytes": 144969156,
+      "ticks": 107,
+      "renderedFrames": 301,
+      "probeMode": {
+        "profile": null,
+        "skeletonJoints": false,
+        "backend": "webgl"
+      },
+      "lighting": {
+        "lightFieldMs": 0,
+        "lightPools": 128,
+        "lightCandidates": 128,
+        "shadowMaps": 1,
+        "heroLights": 0,
+        "heroShadow": 0,
+        "preset": "night"
+      },
+      "budgets": {
+        "frame": true,
+        "draws": true,
+        "triangles": true,
+        "heap": true,
+        "sim": true
+      },
+      "gpu": [
+        {
+          "ssrEnabled": 1,
+          "samples": 30,
+          "completeGpuMsMedian": 7.197958,
+          "completeGpuMsP95": 10.813915,
+          "lightFieldGpuMsMedian": 0.294583,
+          "passes": [
+            {
+              "label": "light-field",
+              "width": 1024,
+              "height": 1024,
+              "individuallyTimed": true
+            },
+            {
+              "label": "Render Pipeline",
+              "width": 1600,
+              "height": 900,
+              "individuallyTimed": true
+            },
+            {
+              "label": "output",
+              "width": 1600,
+              "height": 900,
+              "individuallyTimed": false
+            },
+            {
+              "label": "ShadowMap",
+              "width": 2048,
+              "height": 2048,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.bright",
+              "width": 800,
+              "height": 450,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.h0",
+              "width": 800,
+              "height": 450,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.v0",
+              "width": 800,
+              "height": 450,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.h1",
+              "width": 400,
+              "height": 225,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.v1",
+              "width": 400,
+              "height": 225,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.h2",
+              "width": 200,
+              "height": 112,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.v2",
+              "width": 200,
+              "height": 112,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.h3",
+              "width": 100,
+              "height": 56,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.v3",
+              "width": 100,
+              "height": 56,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.h4",
+              "width": 50,
+              "height": 28,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.v4",
+              "width": 50,
+              "height": 28,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.h0",
+              "width": 800,
+              "height": 450,
+              "individuallyTimed": false
+            }
+          ]
+        }
+      ],
+      "errors": [],
+      "raw": "test-results/epics/E25/final/perf-high/measurements.json",
+      "rawSha256": "4e60beee9cf58dd23f12e28b49b959a5487f065f544ad7b7368089f162b7d32c"
+    },
+    {
+      "tier": "low",
+      "scenario": "light-lab",
+      "viewport": [
+        1600,
+        900
+      ],
+      "samples": 300,
+      "frameP50": 2.800000000000182,
+      "frameP95": 4.799999999999272,
+      "simP95": 0.3000001907348633,
+      "maxDraws": 27,
+      "maxTriangles": 32161,
+      "heapBytes": 101561192,
+      "ticks": 45,
+      "renderedFrames": 301,
+      "probeMode": {
+        "profile": null,
+        "skeletonJoints": false,
+        "backend": "webgl"
+      },
+      "lighting": {
+        "lightFieldMs": 0.10000038146972656,
+        "lightPools": 5,
+        "lightCandidates": 5,
+        "shadowMaps": 1,
+        "heroLights": 1,
+        "heroShadow": 1,
+        "preset": "night"
+      },
+      "budgets": {
+        "frame": true,
+        "draws": true,
+        "triangles": true,
+        "heap": true,
+        "sim": true
+      },
+      "gpu": [
+        {
+          "ssrEnabled": 1,
+          "samples": 30,
+          "completeGpuMsMedian": 3.2649159999999995,
+          "completeGpuMsP95": 3.537207,
+          "lightFieldGpuMsMedian": 0.23308299999999998,
+          "passes": [
+            {
+              "label": "light-field",
+              "width": 512,
+              "height": 512,
+              "individuallyTimed": true
+            },
+            {
+              "label": "Render Pipeline",
+              "width": 1600,
+              "height": 900,
+              "individuallyTimed": true
+            },
+            {
+              "label": "output",
+              "width": 1600,
+              "height": 900,
+              "individuallyTimed": false
+            },
+            {
+              "label": "ShadowMap",
+              "width": 512,
+              "height": 512,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.bright",
+              "width": 800,
+              "height": 450,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.h0",
+              "width": 800,
+              "height": 450,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.v0",
+              "width": 800,
+              "height": 450,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.h1",
+              "width": 400,
+              "height": 225,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.v1",
+              "width": 400,
+              "height": 225,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.h0",
+              "width": 800,
+              "height": 450,
+              "individuallyTimed": false
+            }
+          ]
+        }
+      ],
+      "errors": [],
+      "raw": "test-results/epics/E25/final/perf-low/measurements.json",
+      "rawSha256": "5a2be0b5a8bf9062c8b06c36383b7258034fcef84a96114f11c81b46d39c3978"
+    },
+    {
+      "tier": "low",
+      "scenario": "night-street",
+      "viewport": [
+        1600,
+        900
+      ],
+      "samples": 300,
+      "frameP50": 4.100000000002183,
+      "frameP95": 5.5,
+      "simP95": 0.9000005722045898,
+      "maxDraws": 124,
+      "maxTriangles": 190318,
+      "heapBytes": 132201860,
+      "ticks": 100,
+      "renderedFrames": 301,
+      "probeMode": {
+        "profile": null,
+        "skeletonJoints": false,
+        "backend": "webgl"
+      },
+      "lighting": {
+        "lightFieldMs": 0.19999980926513672,
+        "lightPools": 105,
+        "lightCandidates": 105,
+        "shadowMaps": 1,
+        "heroLights": 0,
+        "heroShadow": 0,
+        "preset": "night"
+      },
+      "budgets": {
+        "frame": true,
+        "draws": true,
+        "triangles": true,
+        "heap": true,
+        "sim": true
+      },
+      "gpu": [
+        {
+          "ssrEnabled": 1,
+          "samples": 30,
+          "completeGpuMsMedian": 5.163874999999999,
+          "completeGpuMsP95": 5.685332,
+          "lightFieldGpuMsMedian": 0.3036255,
+          "passes": [
+            {
+              "label": "light-field",
+              "width": 512,
+              "height": 512,
+              "individuallyTimed": true
+            },
+            {
+              "label": "Render Pipeline",
+              "width": 1600,
+              "height": 900,
+              "individuallyTimed": true
+            },
+            {
+              "label": "output",
+              "width": 1600,
+              "height": 900,
+              "individuallyTimed": false
+            },
+            {
+              "label": "ShadowMap",
+              "width": 1024,
+              "height": 1024,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.bright",
+              "width": 800,
+              "height": 450,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.h0",
+              "width": 800,
+              "height": 450,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.v0",
+              "width": 800,
+              "height": 450,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.h1",
+              "width": 400,
+              "height": 225,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.v1",
+              "width": 400,
+              "height": 225,
+              "individuallyTimed": false
+            },
+            {
+              "label": "UnrealBloomPass.h0",
+              "width": 800,
+              "height": 450,
+              "individuallyTimed": false
+            }
+          ]
+        }
+      ],
+      "errors": [],
+      "raw": "test-results/epics/E25/final/perf-low/measurements.json",
+      "rawSha256": "5a2be0b5a8bf9062c8b06c36383b7258034fcef84a96114f11c81b46d39c3978"
+    }
+  ]
+}

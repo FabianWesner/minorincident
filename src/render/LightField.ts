@@ -1,7 +1,7 @@
 // Light-field pass adapted from Bruno Simon folio-2025 Tracks.js (MIT): a moving top-down orthographic
 // render target around the focus that world materials sample by world XZ.
 import { AdditiveBlending, DataTexture, FloatType, RGBAFormat, NearestFilter, Color, HalfFloatType, InstancedMesh, InstancedBufferAttribute, LinearFilter, Matrix4, MeshBasicNodeMaterial, OrthographicCamera, PlaneGeometry, Quaternion, RenderTarget, RendererUtils, Scene, Vector3, type WebGPURenderer, type Node } from 'three/webgpu';
-import { Fn, If, float, attribute, atan, dot, positionWorld, texture, uniform, renderGroup, uv, vec2, vec3 } from 'three/tsl';
+import { Fn, If, float, attribute, atan, dot, min, mix, positionWorld, texture, uniform, renderGroup, uv, vec2, vec3 } from 'three/tsl';
 import { lightPalette, type LightAnchor, type LightToken } from '../data/lights';
 
 /** World-space light footprint. `aim` is the horizontal pool offset; `stretch` elongates it along the aim (spots). */
@@ -62,6 +62,8 @@ export class LightField {
   readonly extent = uniform(80).setGroup(renderGroup);
   /** Time-of-day practical-light weight; fire/blast transients also work in daylight. */
   readonly strength = uniform(0).setGroup(renderGroup);
+  /** Promoted night pools feather their coarse visibility rays inward, without light leaking past blockers. */
+  readonly visibilitySoftness = uniform(0).setGroup(renderGroup);
   /** Branch within the shared daylight/fire shader, avoiding a second scene graph. */
   readonly enabled = uniform(0).setGroup(renderGroup);
   private readonly scene = new Scene();
@@ -102,9 +104,27 @@ export class LightField {
     this.visibilityData.minFilter = this.visibilityData.magFilter = NearestFilter; this.visibilityData.needsUpdate = true;
     geometry.setAttribute('visibilitySource', this.visibilitySource);
     const source = attribute('visibilitySource', 'vec3'), relative = positionWorld.xz.sub(source.xy);
-    const ray = atan(relative.y, relative.x).div(Math.PI * 2).add(1).mod(1).mul(64).round();
+    const angle = atan(relative.y, relative.x).div(Math.PI * 2).add(1).mod(1).mul(64), ray = angle.round();
     const reach = texture(this.visibilityData, vec2(ray.add(.5).div(65), source.z.add(.5).div(this.visibilitySize))).r;
-    const visible = Fn(() => { const mask = float(1).toVar(); If(source.z.greaterThan(0), () => { mask.assign(relative.length().lessThanEqual(reach.add(.025)).select(1, 0)); }); return mask; })();
+    const visible = Fn(() => {
+      const mask = float(1).toVar();
+      If(source.z.greaterThan(0), () => {
+        mask.assign(relative.length().lessThanEqual(reach.add(.025)).select(1, 0));
+        If(this.visibilitySoftness.greaterThan(0), () => {
+          const visibility = (offset: number) => {
+            const column = angle.floor().add(offset + 64).mod(64).add(.5).div(65);
+            const distance = texture(this.visibilityData, vec2(column, source.z.add(.5).div(this.visibilitySize))).r;
+            return distance.add(.025).sub(relative.length()).smoothstep(0, .6);
+          };
+          const middle = min(visibility(0), visibility(1));
+          // Both adjacent blocker rays constrain each endpoint. Interpolation can
+          // therefore soften an edge only on its lit side, never behind a fence.
+          const feather = mix(min(middle, visibility(-1)), min(middle, visibility(2)), angle.fract().smoothstep(0, 1));
+          mask.assign(mix(mask, feather, this.visibilitySoftness));
+        });
+      });
+      return mask;
+    })();
     const d = uv().sub(.5).mul(2).length();
     geometry.setAttribute('facadeClip', this.facadeClip);
     const clip = attribute('facadeClip', 'vec3');
