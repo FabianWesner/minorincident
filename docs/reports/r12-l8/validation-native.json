@@ -1,0 +1,1224 @@
+{
+  "command": "npm run qa:accept -- --level L8 --skip-browser",
+  "exitCode": 1,
+  "note": "Exit 1 includes historical/global and incomplete manual/browser rows; no fresh L8 row failures.",
+  "freshFailRows": [],
+  "incompleteRows": [
+    "L8-01",
+    "L8-02",
+    "L8-03",
+    "L8-04",
+    "L8-05",
+    "L8-07",
+    "L8-08",
+    "L8-09",
+    "L8-10",
+    "L8-11"
+  ],
+  "globalFailRows": [
+    {
+      "id": "G-24",
+      "value": "low/controlled-fixture production enemy-bar eligibility at distance/health boundaries: [{\"archetype\":\"infected.alpha\",\"near\":true,\"farHealthy\":true,\"farDamaged\":true,\"dead\":false,\"healthyAnimal\":false},{\"archetype\":\"infected.lion\",\"near\":true,\"farHealthy\":false,\"farDamaged\":true,\"dead\":false,\"healthyAnimal\":false},{\"archetype\":\"infected.gorilla\",\"near\":true,\"farHealthy\":false,\"farDamaged\":true,\"dead\":false,\"healthyAnimal\":false},{\"archetype\":\"infected.elephant\",\"near\":true,\"farHealt… (full values in JSON) (target near/full and far/damaged true; far/full, dead and healthy animals false; FAIL); high/controlled-fixture production enemy-bar eligibility at distance/health boundaries: [{\"archetype\":\"infected.alpha\",\"near\":true,\"farHealthy\":true,\"farDamaged\":true,\"dead\":false,\"healthyAnimal\":false},{\"archetype\":\"infected.lion\",\"near\":true,\"farHealthy\":false,\"farDamaged\":true,\"dead\":false,\"healthyAnimal\":false},{\"archetype\":\"infected.gorilla\",\"near\":true,\"farHealthy\":false,\"farDamaged\":true,\"dead\":false,\"healthyAnimal\":false},{\"archetype\":\"infected.elephant\",\"near\":true,\"farHealt… (full values in JSON) (target near/full and far/damaged true; far/full, dead and healthy animals false; FAIL) Manual review PASS (STALE, final-g/Codex): Fresh five-state matrix at both qualities,10 rendered frames reviewed: counts6/0/6/0/0 for near healthy, far healthy, far damaged, dead near and normal healthy zoo animals. All individual red-fill pixel checks and exact species/HP/distance counts pass. Actual Alpha and lion/gorilla/elephant/zebra/flamingo; native lethal damage removes bars. Shared production eligibility excludes healthy noninfected animals."
+    }
+  ],
+  "rows": [
+    {
+      "id": "L8-01",
+      "status": "NOT CHECKED"
+    },
+    {
+      "id": "L8-02",
+      "status": "NOT CHECKED"
+    },
+    {
+      "id": "L8-03",
+      "status": "NOT CHECKED"
+    },
+    {
+      "id": "L8-04",
+      "status": "NOT CHECKED"
+    },
+    {
+      "id": "L8-05",
+      "status": "NOT CHECKED"
+    },
+    {
+      "id": "L8-06",
+      "status": "PASS"
+    },
+    {
+      "id": "L8-07",
+      "status": "NOT CHECKED"
+    },
+    {
+      "id": "L8-08",
+      "status": "NOT CHECKED"
+    },
+    {
+      "id": "L8-09",
+      "status": "NOT CHECKED"
+    },
+    {
+      "id": "L8-10",
+      "status": "NOT CHECKED"
+    },
+    {
+      "id": "L8-11",
+      "status": "NOT CHECKED"
+    }
+  ],
+  "runs": [
+    {
+      "tier": "low",
+      "policy": "complete",
+      "revision": "ae818a71917c982b2413fa587f248055afcc52d2",
+      "sourceHash": "3ec21d7d32d2c79d71731443b101fccafb0f9ae931e65f31c10686f0f02a35c4",
+      "run": {
+        "level": "L8",
+        "policy": "complete",
+        "seed": 1,
+        "completed": true,
+        "time": 104.91666666666667,
+        "deaths": 0,
+        "kills": 26,
+        "damageTaken": 0,
+        "failures": {},
+        "objectiveTimeline": [
+          {
+            "id": "sanctuary",
+            "t": 60
+          },
+          {
+            "id": "escape",
+            "t": 98.91666666666667
+          },
+          {
+            "id": "depart",
+            "t": 99.91666666666667
+          }
+        ],
+        "furthestObjective": "depart",
+        "activeObjectives": [],
+        "outcome": "complete",
+        "blocker": null,
+        "collision": {
+          "failures": 0,
+          "pending": 0,
+          "admitted": 369,
+          "deferred": 73,
+          "requests": [],
+          "offenders": []
+        }
+      },
+      "calm": {
+        "ticks": 3599,
+        "maxAlive": 0,
+        "combatEvents": 0,
+        "markerTicks": 3599
+      },
+      "markerChanges": [
+        {
+          "tick": 1,
+          "step": "sanctuary",
+          "marker": "zoo-gate",
+          "x": 7,
+          "z": 78
+        },
+        {
+          "tick": 3600,
+          "step": "escape",
+          "marker": "exit",
+          "x": 96.71,
+          "z": 76.275
+        },
+        {
+          "tick": 5935,
+          "step": "depart",
+          "marker": null
+        },
+        {
+          "tick": 5995,
+          "step": "",
+          "marker": null
+        }
+      ],
+      "checks": [
+        {
+          "id": "L8-02",
+          "clause": "native calm marker and infected attack event state (HUD text requires browser)",
+          "status": "PASS",
+          "value": {
+            "ticks": 3599,
+            "maxAlive": 0,
+            "combatEvents": 0,
+            "markerTicks": 3599
+          },
+          "target": "3600 ticks ±1; destination marker present for the 3599 observable calm ticks; zero combat events"
+        },
+        {
+          "id": "L8-02",
+          "clause": "opening objective advances from zoo gate to APC after breach",
+          "status": "PASS",
+          "value": {
+            "gate": {
+              "tick": 1,
+              "step": "sanctuary",
+              "marker": "zoo-gate",
+              "x": 7,
+              "z": 78
+            },
+            "apc": {
+              "tick": 3600,
+              "step": "escape",
+              "marker": "exit",
+              "x": 96.71,
+              "z": 76.275
+            },
+            "noEarlyExit": true
+          },
+          "target": "zoo-gate active from first tick; APC marker only after the tick-3600 breach and the gate rendezvous"
+        },
+        {
+          "id": "L8-06",
+          "clause": "combat hard rule on actual player windups",
+          "status": "PASS",
+          "value": {
+            "seconds": 38.916666666666664,
+            "playerWindups": 2,
+            "groupWindups": 1,
+            "attacksPerMinute": 3.0835117773019274
+          },
+          "target": "nonzero player windups in each combat policy"
+        },
+        {
+          "id": "L8-06",
+          "clause": "real player/group windups per minute",
+          "status": "PASS",
+          "value": 4.625267665952891,
+          "target": "4 ≤ value ≤ Infinity"
+        },
+        {
+          "id": "L8-06",
+          "clause": "minimum bounded-path reachable share within30m (path≤2.5×direct)",
+          "status": "PASS",
+          "value": 100,
+          "target": "90 ≤ value ≤ 100"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort tunnel-breach",
+          "status": "PASS",
+          "value": {
+            "seconds": 44.916666666666664,
+            "spawned": 12,
+            "firstAttackSeconds": 5.6,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s"
+        }
+      ]
+    },
+    {
+      "tier": "low",
+      "policy": "stationary",
+      "revision": "ae818a71917c982b2413fa587f248055afcc52d2",
+      "sourceHash": "3ec21d7d32d2c79d71731443b101fccafb0f9ae931e65f31c10686f0f02a35c4",
+      "run": {
+        "level": "L8",
+        "policy": "complete",
+        "seed": 1,
+        "completed": false,
+        "time": 180,
+        "deaths": 0,
+        "kills": 0,
+        "damageTaken": 0,
+        "failures": {
+          "tick-budget": 1
+        },
+        "objectiveTimeline": [
+          {
+            "id": "sanctuary",
+            "t": 60
+          }
+        ],
+        "furthestObjective": "escape",
+        "activeObjectives": [
+          "escape"
+        ],
+        "outcome": "tick-budget",
+        "blocker": {
+          "objective": "escape",
+          "detail": "tick-budget: Lead the group to the armored vehicle",
+          "player": {
+            "x": 6.584973335266113,
+            "z": 77.24236297607422
+          },
+          "distance": 90.13021814267661,
+          "actors": {
+            "apc": {
+              "x": 96,
+              "z": 74,
+              "hp": 970,
+              "state": "normal",
+              "driver": null,
+              "speed": 0,
+              "yaw": 0
+            }
+          }
+        },
+        "collision": {
+          "failures": 0,
+          "pending": 0,
+          "admitted": 308,
+          "deferred": 55,
+          "requests": [],
+          "offenders": []
+        }
+      },
+      "calm": {
+        "ticks": 3599,
+        "maxAlive": 0,
+        "combatEvents": 0,
+        "markerTicks": 3599
+      },
+      "markerChanges": [
+        {
+          "tick": 1,
+          "step": "sanctuary",
+          "marker": "zoo-gate",
+          "x": 7,
+          "z": 78
+        },
+        {
+          "tick": 3600,
+          "step": "escape",
+          "marker": "exit",
+          "x": 96.71,
+          "z": 76.275
+        }
+      ],
+      "checks": [
+        {
+          "id": "L8-02",
+          "clause": "native calm marker and infected attack event state (HUD text requires browser)",
+          "status": "PASS",
+          "value": {
+            "ticks": 3599,
+            "maxAlive": 0,
+            "combatEvents": 0,
+            "markerTicks": 3599
+          },
+          "target": "3600 ticks ±1; destination marker present for the 3599 observable calm ticks; zero combat events"
+        },
+        {
+          "id": "L8-02",
+          "clause": "opening objective advances from zoo gate to APC after breach",
+          "status": "PASS",
+          "value": {
+            "gate": {
+              "tick": 1,
+              "step": "sanctuary",
+              "marker": "zoo-gate",
+              "x": 7,
+              "z": 78
+            },
+            "apc": {
+              "tick": 3600,
+              "step": "escape",
+              "marker": "exit",
+              "x": 96.71,
+              "z": 76.275
+            },
+            "noEarlyExit": true
+          },
+          "target": "zoo-gate active from first tick; APC marker only after the tick-3600 breach and the gate rendezvous"
+        },
+        {
+          "id": "L8-06",
+          "clause": "combat hard rule on actual player windups",
+          "status": "PASS",
+          "value": {
+            "seconds": 120,
+            "playerWindups": 1278,
+            "groupWindups": 14,
+            "attacksPerMinute": 639
+          },
+          "target": "nonzero player windups in each combat policy"
+        },
+        {
+          "id": "L8-06",
+          "clause": "stationary first real player attack (phase clock)",
+          "status": "PASS",
+          "value": {
+            "seconds": 8.616666666666667,
+            "windowSeconds": 120
+          },
+          "target": "≤20 s"
+        },
+        {
+          "id": "L8-06",
+          "clause": "real player/group windups per minute",
+          "status": "PASS",
+          "value": 646,
+          "target": "4 ≤ value ≤ Infinity"
+        },
+        {
+          "id": "L8-06",
+          "clause": "minimum bounded-path reachable share within30m (path≤2.5×direct)",
+          "status": "PASS",
+          "value": 100,
+          "target": "90 ≤ value ≤ 100"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort tunnel-breach",
+          "status": "PASS",
+          "value": {
+            "seconds": 120,
+            "spawned": 12,
+            "firstAttackSeconds": 8.616666666666667,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s"
+        }
+      ]
+    },
+    {
+      "tier": "high",
+      "policy": "complete",
+      "revision": "ae818a71917c982b2413fa587f248055afcc52d2",
+      "sourceHash": "3ec21d7d32d2c79d71731443b101fccafb0f9ae931e65f31c10686f0f02a35c4",
+      "run": {
+        "level": "L8",
+        "policy": "complete",
+        "seed": 1,
+        "completed": true,
+        "time": 112.95,
+        "deaths": 0,
+        "kills": 56,
+        "damageTaken": 0,
+        "failures": {},
+        "objectiveTimeline": [
+          {
+            "id": "sanctuary",
+            "t": 60
+          },
+          {
+            "id": "escape",
+            "t": 106.95
+          },
+          {
+            "id": "depart",
+            "t": 107.95
+          }
+        ],
+        "furthestObjective": "depart",
+        "activeObjectives": [],
+        "outcome": "complete",
+        "blocker": null,
+        "collision": {
+          "failures": 0,
+          "pending": 0,
+          "admitted": 674,
+          "deferred": 152,
+          "requests": [],
+          "offenders": []
+        }
+      },
+      "calm": {
+        "ticks": 3599,
+        "maxAlive": 0,
+        "combatEvents": 0,
+        "markerTicks": 3599
+      },
+      "markerChanges": [
+        {
+          "tick": 1,
+          "step": "sanctuary",
+          "marker": "zoo-gate",
+          "x": 7,
+          "z": 78
+        },
+        {
+          "tick": 3600,
+          "step": "escape",
+          "marker": "exit",
+          "x": 96.71,
+          "z": 76.275
+        },
+        {
+          "tick": 6417,
+          "step": "depart",
+          "marker": null
+        },
+        {
+          "tick": 6477,
+          "step": "",
+          "marker": null
+        }
+      ],
+      "checks": [
+        {
+          "id": "L8-02",
+          "clause": "native calm marker and infected attack event state (HUD text requires browser)",
+          "status": "PASS",
+          "value": {
+            "ticks": 3599,
+            "maxAlive": 0,
+            "combatEvents": 0,
+            "markerTicks": 3599
+          },
+          "target": "3600 ticks ±1; destination marker present for the 3599 observable calm ticks; zero combat events"
+        },
+        {
+          "id": "L8-02",
+          "clause": "opening objective advances from zoo gate to APC after breach",
+          "status": "PASS",
+          "value": {
+            "gate": {
+              "tick": 1,
+              "step": "sanctuary",
+              "marker": "zoo-gate",
+              "x": 7,
+              "z": 78
+            },
+            "apc": {
+              "tick": 3600,
+              "step": "escape",
+              "marker": "exit",
+              "x": 96.71,
+              "z": 76.275
+            },
+            "noEarlyExit": true
+          },
+          "target": "zoo-gate active from first tick; APC marker only after the tick-3600 breach and the gate rendezvous"
+        },
+        {
+          "id": "L8-06",
+          "clause": "combat hard rule on actual player windups",
+          "status": "PASS",
+          "value": {
+            "seconds": 46.95,
+            "playerWindups": 3,
+            "groupWindups": 5,
+            "attacksPerMinute": 3.8338658146964857
+          },
+          "target": "nonzero player windups in each combat policy"
+        },
+        {
+          "id": "L8-06",
+          "clause": "real player/group windups per minute",
+          "status": "PASS",
+          "value": 10.223642172523963,
+          "target": "4 ≤ value ≤ Infinity"
+        },
+        {
+          "id": "L8-06",
+          "clause": "minimum bounded-path reachable share within30m (path≤2.5×direct)",
+          "status": "PASS",
+          "value": 100,
+          "target": "90 ≤ value ≤ 100"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort tunnel-breach",
+          "status": "PASS",
+          "value": {
+            "seconds": 52.95,
+            "spawned": 24,
+            "firstAttackSeconds": 5.6,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s"
+        }
+      ]
+    },
+    {
+      "tier": "high",
+      "policy": "stationary",
+      "revision": "ae818a71917c982b2413fa587f248055afcc52d2",
+      "sourceHash": "3ec21d7d32d2c79d71731443b101fccafb0f9ae931e65f31c10686f0f02a35c4",
+      "run": {
+        "level": "L8",
+        "policy": "complete",
+        "seed": 1,
+        "completed": false,
+        "time": 180,
+        "deaths": 0,
+        "kills": 0,
+        "damageTaken": 0,
+        "failures": {
+          "tick-budget": 1
+        },
+        "objectiveTimeline": [
+          {
+            "id": "sanctuary",
+            "t": 60
+          }
+        ],
+        "furthestObjective": "escape",
+        "activeObjectives": [
+          "escape"
+        ],
+        "outcome": "tick-budget",
+        "blocker": {
+          "objective": "escape",
+          "detail": "tick-budget: Lead the group to the armored vehicle",
+          "player": {
+            "x": 6.584973335266113,
+            "z": 77.24236297607422
+          },
+          "distance": 90.13021814267661,
+          "actors": {
+            "apc": {
+              "x": 96,
+              "z": 74,
+              "hp": 850,
+              "state": "normal",
+              "driver": null,
+              "speed": 0,
+              "yaw": 0
+            }
+          }
+        },
+        "collision": {
+          "failures": 0,
+          "pending": 0,
+          "admitted": 594,
+          "deferred": 128,
+          "requests": [],
+          "offenders": []
+        }
+      },
+      "calm": {
+        "ticks": 3599,
+        "maxAlive": 0,
+        "combatEvents": 0,
+        "markerTicks": 3599
+      },
+      "markerChanges": [
+        {
+          "tick": 1,
+          "step": "sanctuary",
+          "marker": "zoo-gate",
+          "x": 7,
+          "z": 78
+        },
+        {
+          "tick": 3600,
+          "step": "escape",
+          "marker": "exit",
+          "x": 96.71,
+          "z": 76.275
+        }
+      ],
+      "checks": [
+        {
+          "id": "L8-02",
+          "clause": "native calm marker and infected attack event state (HUD text requires browser)",
+          "status": "PASS",
+          "value": {
+            "ticks": 3599,
+            "maxAlive": 0,
+            "combatEvents": 0,
+            "markerTicks": 3599
+          },
+          "target": "3600 ticks ±1; destination marker present for the 3599 observable calm ticks; zero combat events"
+        },
+        {
+          "id": "L8-02",
+          "clause": "opening objective advances from zoo gate to APC after breach",
+          "status": "PASS",
+          "value": {
+            "gate": {
+              "tick": 1,
+              "step": "sanctuary",
+              "marker": "zoo-gate",
+              "x": 7,
+              "z": 78
+            },
+            "apc": {
+              "tick": 3600,
+              "step": "escape",
+              "marker": "exit",
+              "x": 96.71,
+              "z": 76.275
+            },
+            "noEarlyExit": true
+          },
+          "target": "zoo-gate active from first tick; APC marker only after the tick-3600 breach and the gate rendezvous"
+        },
+        {
+          "id": "L8-06",
+          "clause": "combat hard rule on actual player windups",
+          "status": "PASS",
+          "value": {
+            "seconds": 120,
+            "playerWindups": 2195,
+            "groupWindups": 28,
+            "attacksPerMinute": 1097.5
+          },
+          "target": "nonzero player windups in each combat policy"
+        },
+        {
+          "id": "L8-06",
+          "clause": "stationary first real player attack (phase clock)",
+          "status": "PASS",
+          "value": {
+            "seconds": 8.733333333333333,
+            "windowSeconds": 120
+          },
+          "target": "≤20 s"
+        },
+        {
+          "id": "L8-06",
+          "clause": "real player/group windups per minute",
+          "status": "PASS",
+          "value": 1111.5,
+          "target": "4 ≤ value ≤ Infinity"
+        },
+        {
+          "id": "L8-06",
+          "clause": "minimum bounded-path reachable share within30m (path≤2.5×direct)",
+          "status": "PASS",
+          "value": 90,
+          "target": "90 ≤ value ≤ 100"
+        },
+        {
+          "id": "G-22",
+          "clause": "announcement cohort tunnel-breach",
+          "status": "PASS",
+          "value": {
+            "seconds": 120,
+            "spawned": 24,
+            "firstAttackSeconds": 8.733333333333333,
+            "flags": []
+          },
+          "target": "≥3 admitted cohort members; real player windup within20 s"
+        }
+      ]
+    }
+  ],
+  "checkpoints": [
+    {
+      "tier": "low",
+      "control": {
+        "observed": "f20c6c98",
+        "control": "f20c6c98",
+        "identical": true
+      },
+      "errors": [],
+      "checks": [
+        {
+          "id": "G-21",
+          "clause": "mortal checkpoint restore at L8/sanctuary",
+          "tier": "low",
+          "policy": "checkpoint-death-fixture",
+          "status": "PASS",
+          "value": {
+            "checkpoint": "sanctuary",
+            "contract": "checkpoint snapshot restored",
+            "snapshotSha256": "74730198e49af5170e1a687ad1a77bc1d030a32d268fb19e16829d1784aca7ef",
+            "damage": 100,
+            "expected": {
+              "id": "sanctuary",
+              "anchor": {
+                "x": 0,
+                "y": 0.705,
+                "z": 70,
+                "yaw": 0.3205919885488634
+              },
+              "gates": {},
+              "racks": {
+                "LEFT": [
+                  "weapon.bat",
+                  "weapon.fire-axe"
+                ],
+                "RIGHT": [
+                  "weapon.rocket-launcher",
+                  "weapon.army-mg",
+                  "weapon.shotgun",
+                  "weapon.handgun"
+                ]
+              },
+              "followers": [
+                355,
+                356,
+                357,
+                358,
+                359,
+                360,
+                361,
+                362,
+                363,
+                364,
+                365,
+                366
+              ],
+              "pickups": [],
+              "removedPickups": [],
+              "cure": false
+            },
+            "observed": {
+              "id": "sanctuary",
+              "position": {
+                "x": 0,
+                "z": 70
+              },
+              "gates": {},
+              "racks": {
+                "LEFT": [
+                  "weapon.bat",
+                  "weapon.fire-axe"
+                ],
+                "RIGHT": [
+                  "weapon.rocket-launcher",
+                  "weapon.army-mg",
+                  "weapon.shotgun",
+                  "weapon.handgun"
+                ]
+              },
+              "followerMismatches": [],
+              "missingPickups": [],
+              "unexpectedPickups": [],
+              "cure": false,
+              "bossMode": null,
+              "bossHp": null
+            },
+            "positionError": 0,
+            "gateMatch": true,
+            "rackMatch": true
+          },
+          "target": "last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored",
+          "receipt": "docs/reports/fix51-verify/receipts/L8-low-checkpoints.json"
+        },
+        {
+          "id": "G-21",
+          "clause": "mortal checkpoint restore at L8/breach",
+          "tier": "low",
+          "policy": "checkpoint-death-fixture",
+          "status": "PASS",
+          "value": {
+            "checkpoint": "breach",
+            "contract": "checkpoint snapshot restored",
+            "snapshotSha256": "21904fe03073b721efea7dc648bdcf933333047c5750d6f6eb618abf3ddb5548",
+            "damage": 100,
+            "expected": {
+              "id": "breach",
+              "anchor": {
+                "x": 6.584973335266113,
+                "y": 0.7049999833106995,
+                "z": 77.24236297607422,
+                "yaw": -1.0696486006094819
+              },
+              "gates": {},
+              "racks": {
+                "LEFT": [
+                  "weapon.bat",
+                  "weapon.fire-axe"
+                ],
+                "RIGHT": [
+                  "weapon.rocket-launcher",
+                  "weapon.army-mg",
+                  "weapon.shotgun",
+                  "weapon.handgun"
+                ]
+              },
+              "followers": [
+                355,
+                356,
+                357,
+                358,
+                359,
+                360,
+                361,
+                362,
+                363,
+                364,
+                365,
+                366
+              ],
+              "pickups": [],
+              "removedPickups": [],
+              "cure": false
+            },
+            "observed": {
+              "id": "breach",
+              "position": {
+                "x": 6.584973335266113,
+                "z": 77.24236297607422
+              },
+              "gates": {},
+              "racks": {
+                "LEFT": [
+                  "weapon.bat",
+                  "weapon.fire-axe"
+                ],
+                "RIGHT": [
+                  "weapon.rocket-launcher",
+                  "weapon.army-mg",
+                  "weapon.shotgun",
+                  "weapon.handgun"
+                ]
+              },
+              "followerMismatches": [],
+              "missingPickups": [],
+              "unexpectedPickups": [],
+              "cure": false,
+              "bossMode": null,
+              "bossHp": null
+            },
+            "positionError": 0,
+            "gateMatch": true,
+            "rackMatch": true
+          },
+          "target": "last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored",
+          "receipt": "docs/reports/fix51-verify/receipts/L8-low-checkpoints.json"
+        },
+        {
+          "id": "G-21",
+          "clause": "mortal checkpoint restore at L8/escape-route",
+          "tier": "low",
+          "policy": "checkpoint-death-fixture",
+          "status": "PASS",
+          "value": {
+            "checkpoint": "escape-route",
+            "contract": "checkpoint snapshot restored",
+            "snapshotSha256": "13ecf2295d71fe19b886fb59ae7deafe64ec654eea0f8ae014c317fb68f2e785",
+            "damage": 100,
+            "expected": {
+              "id": "escape-route",
+              "anchor": {
+                "x": 84.81227111816406,
+                "y": 0.7099999785423279,
+                "z": 77.32341766357422,
+                "yaw": 0.13224434307659155
+              },
+              "gates": {},
+              "racks": {
+                "LEFT": [
+                  "weapon.bat",
+                  "weapon.fire-axe"
+                ],
+                "RIGHT": [
+                  "weapon.rocket-launcher",
+                  "weapon.army-mg",
+                  "weapon.shotgun",
+                  "weapon.handgun"
+                ]
+              },
+              "followers": [
+                355,
+                356,
+                357,
+                358,
+                359,
+                360,
+                361,
+                362,
+                363,
+                364,
+                365,
+                366
+              ],
+              "pickups": [],
+              "removedPickups": [],
+              "cure": false
+            },
+            "observed": {
+              "id": "escape-route",
+              "position": {
+                "x": 84.81227111816406,
+                "z": 77.32341766357422
+              },
+              "gates": {},
+              "racks": {
+                "LEFT": [
+                  "weapon.bat",
+                  "weapon.fire-axe"
+                ],
+                "RIGHT": [
+                  "weapon.rocket-launcher",
+                  "weapon.army-mg",
+                  "weapon.shotgun",
+                  "weapon.handgun"
+                ]
+              },
+              "followerMismatches": [],
+              "missingPickups": [],
+              "unexpectedPickups": [],
+              "cure": false,
+              "bossMode": null,
+              "bossHp": null
+            },
+            "positionError": 0,
+            "gateMatch": true,
+            "rackMatch": true
+          },
+          "target": "last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored",
+          "receipt": "docs/reports/fix51-verify/receipts/L8-low-checkpoints.json"
+        }
+      ]
+    },
+    {
+      "tier": "high",
+      "control": {
+        "observed": "c9685bde",
+        "control": "c9685bde",
+        "identical": true
+      },
+      "errors": [],
+      "checks": [
+        {
+          "id": "G-21",
+          "clause": "mortal checkpoint restore at L8/sanctuary",
+          "tier": "high",
+          "policy": "checkpoint-death-fixture",
+          "status": "PASS",
+          "value": {
+            "checkpoint": "sanctuary",
+            "contract": "checkpoint snapshot restored",
+            "snapshotSha256": "74730198e49af5170e1a687ad1a77bc1d030a32d268fb19e16829d1784aca7ef",
+            "damage": 100,
+            "expected": {
+              "id": "sanctuary",
+              "anchor": {
+                "x": 0,
+                "y": 0.705,
+                "z": 70,
+                "yaw": 0.3205919885488634
+              },
+              "gates": {},
+              "racks": {
+                "LEFT": [
+                  "weapon.bat",
+                  "weapon.fire-axe"
+                ],
+                "RIGHT": [
+                  "weapon.rocket-launcher",
+                  "weapon.army-mg",
+                  "weapon.shotgun",
+                  "weapon.handgun"
+                ]
+              },
+              "followers": [
+                355,
+                356,
+                357,
+                358,
+                359,
+                360,
+                361,
+                362,
+                363,
+                364,
+                365,
+                366
+              ],
+              "pickups": [],
+              "removedPickups": [],
+              "cure": false
+            },
+            "observed": {
+              "id": "sanctuary",
+              "position": {
+                "x": 0,
+                "z": 70
+              },
+              "gates": {},
+              "racks": {
+                "LEFT": [
+                  "weapon.bat",
+                  "weapon.fire-axe"
+                ],
+                "RIGHT": [
+                  "weapon.rocket-launcher",
+                  "weapon.army-mg",
+                  "weapon.shotgun",
+                  "weapon.handgun"
+                ]
+              },
+              "followerMismatches": [],
+              "missingPickups": [],
+              "unexpectedPickups": [],
+              "cure": false,
+              "bossMode": null,
+              "bossHp": null
+            },
+            "positionError": 0,
+            "gateMatch": true,
+            "rackMatch": true
+          },
+          "target": "last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored",
+          "receipt": "docs/reports/fix51-verify/receipts/L8-high-checkpoints.json"
+        },
+        {
+          "id": "G-21",
+          "clause": "mortal checkpoint restore at L8/breach",
+          "tier": "high",
+          "policy": "checkpoint-death-fixture",
+          "status": "PASS",
+          "value": {
+            "checkpoint": "breach",
+            "contract": "checkpoint snapshot restored",
+            "snapshotSha256": "2b32728a366eef5325f819a8963e15d567c35ef56dfcb0ff168bdff1780a84f6",
+            "damage": 100,
+            "expected": {
+              "id": "breach",
+              "anchor": {
+                "x": 6.584973335266113,
+                "y": 0.7049999833106995,
+                "z": 77.24236297607422,
+                "yaw": -1.0696486006094819
+              },
+              "gates": {},
+              "racks": {
+                "LEFT": [
+                  "weapon.bat",
+                  "weapon.fire-axe"
+                ],
+                "RIGHT": [
+                  "weapon.rocket-launcher",
+                  "weapon.army-mg",
+                  "weapon.shotgun",
+                  "weapon.handgun"
+                ]
+              },
+              "followers": [
+                355,
+                356,
+                357,
+                358,
+                359,
+                360,
+                361,
+                362,
+                363,
+                364,
+                365,
+                366
+              ],
+              "pickups": [],
+              "removedPickups": [],
+              "cure": false
+            },
+            "observed": {
+              "id": "breach",
+              "position": {
+                "x": 6.584973335266113,
+                "z": 77.24236297607422
+              },
+              "gates": {},
+              "racks": {
+                "LEFT": [
+                  "weapon.bat",
+                  "weapon.fire-axe"
+                ],
+                "RIGHT": [
+                  "weapon.rocket-launcher",
+                  "weapon.army-mg",
+                  "weapon.shotgun",
+                  "weapon.handgun"
+                ]
+              },
+              "followerMismatches": [],
+              "missingPickups": [],
+              "unexpectedPickups": [],
+              "cure": false,
+              "bossMode": null,
+              "bossHp": null
+            },
+            "positionError": 0,
+            "gateMatch": true,
+            "rackMatch": true
+          },
+          "target": "last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored",
+          "receipt": "docs/reports/fix51-verify/receipts/L8-high-checkpoints.json"
+        },
+        {
+          "id": "G-21",
+          "clause": "mortal checkpoint restore at L8/escape-route",
+          "tier": "high",
+          "policy": "checkpoint-death-fixture",
+          "status": "PASS",
+          "value": {
+            "checkpoint": "escape-route",
+            "contract": "checkpoint snapshot restored",
+            "snapshotSha256": "4f8af78bac35edb0f950a6300fa27713fefb24fe3637be91ff67f5716f2ccca1",
+            "damage": 100,
+            "expected": {
+              "id": "escape-route",
+              "anchor": {
+                "x": 84.80744934082031,
+                "y": 0.7099999785423279,
+                "z": 77.32146453857422,
+                "yaw": 0.0514693932679372
+              },
+              "gates": {},
+              "racks": {
+                "LEFT": [
+                  "weapon.bat",
+                  "weapon.fire-axe"
+                ],
+                "RIGHT": [
+                  "weapon.rocket-launcher",
+                  "weapon.army-mg",
+                  "weapon.shotgun",
+                  "weapon.handgun"
+                ]
+              },
+              "followers": [
+                355,
+                356,
+                357,
+                358,
+                359,
+                360,
+                361,
+                362,
+                363,
+                364,
+                365,
+                366
+              ],
+              "pickups": [],
+              "removedPickups": [],
+              "cure": false
+            },
+            "observed": {
+              "id": "escape-route",
+              "position": {
+                "x": 84.80744934082031,
+                "z": 77.32146453857422
+              },
+              "gates": {},
+              "racks": {
+                "LEFT": [
+                  "weapon.bat",
+                  "weapon.fire-axe"
+                ],
+                "RIGHT": [
+                  "weapon.rocket-launcher",
+                  "weapon.army-mg",
+                  "weapon.shotgun",
+                  "weapon.handgun"
+                ]
+              },
+              "followerMismatches": [],
+              "missingPickups": [],
+              "unexpectedPickups": [],
+              "cure": false,
+              "bossMode": null,
+              "bossHp": null
+            },
+            "positionError": 0,
+            "gateMatch": true,
+            "rackMatch": true
+          },
+          "target": "last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored",
+          "receipt": "docs/reports/fix51-verify/receipts/L8-high-checkpoints.json"
+        }
+      ]
+    }
+  ]
+}
