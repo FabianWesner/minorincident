@@ -82,7 +82,8 @@ export class LevelTenBot {
     // making the native route incomparable to real-input play.
     const threats = w.infected!.active.filter(e => e.health.current > 0 && !e.hidden && !e.emerging && !e.infectionRise && distance(e.transform) < 30 && (isMega(e) || !cornBlocksSight(w, [p.x, p.z], [e.transform.x, e.transform.z])) && w.infected!.director.inPlayerView(e.transform, 30, 1, 5) && (p.y > 2 ? w.combat!.query.visible({ ...p, y: p.y + .45 }, e.transform) : w.infected!.nav.visible(p, e.transform, 0))).sort((a, b) => distance(a.transform) - distance(b.transform));
     const gun = w.mountedGun;
-    if (active.id === 'hold' && mission.state.states['charge-active'] && gun && w.tick >= this.clearStairsUntil) {
+    const approachGun = active.id === 'hold' && mission.state.states['charge-active'] && gun && w.tick >= this.clearStairsUntil;
+    if (approachGun) {
       if (gun.mounted && threats.some(e => e.transform.y > arena.gun.deckHeight && distance(e.transform) < 6)) {
         this.clearStairsUntil = w.tick + 240; f.interact = true; return f;
       }
@@ -108,6 +109,7 @@ export class LevelTenBot {
         f.move = { x: dx / d, z: dz / d };
       }
       f.interact = gun.canMount() && tick % 30 === 0;
+      if (f.interact) return f;
     }
     if (active.id !== 'hold' && gun?.mounted) { f.interact = true; return f; }
     const rack = player.weapons!.RIGHT.rack, target = active.id === 'mega' ? threats.find(isMega) ?? threats[0] : threats[0];
@@ -117,8 +119,8 @@ export class LevelTenBot {
     // launcher for distant packs/Mega and the carried shotgun for close defence.
     const travelWeapon = ['weapon.army-mg', 'weapon.assault-rifle', 'weapon.nail-gun', 'weapon.hunting-rifle', 'weapon.machete', 'weapon.fire-axe'].find(id => rack.some(slot => slot.id === id));
     const targetDistance = target ? distance(target.transform) : 0;
-    const rocket = target && isMega(target) && targetDistance >= 12 && w.combat!.query.clearDistance({ ...p, y: p.y + .45 },
-      { x: (target.transform.x - p.x) / targetDistance, z: (target.transform.z - p.z) / targetDistance }, 10) >= 10;
+    const rocket = target && isMega(target) && targetDistance >= 18 && w.combat!.query.clearDistance({ ...p, y: p.y + .45 },
+      { x: (target.transform.x - p.x) / targetDistance, z: (target.transform.z - p.z) / targetDistance }, targetDistance) >= targetDistance;
     const wanted = !finale ? travelWeapon : rocket ? 'weapon.rocket-launcher' : targetDistance < 8 ? 'weapon.shotgun' : 'weapon.army-mg';
     const choice = rack.findIndex(slot => slot.id === wanted);
     const index = choice >= 0 ? choice : rack.length - 1, weapon = rack[index]?.id;
@@ -126,7 +128,7 @@ export class LevelTenBot {
       f.selectedSlot = { side: 'RIGHT', index }; f.aimSource = 'keyboard';
       const dx = target.transform.x - p.x, dz = target.transform.z - p.z, d = Math.hypot(dx, dz) || 1;
       f.aim = { x: dx / d, z: dz / d }; f.aimPoint = { x: target.transform.x, z: target.transform.z }; f.right.held = true;
-      if (finale && d < 10 && !gun?.mounted) {
+      if (finale && d < 10 && !gun?.mounted && !approachGun) {
         const angle = Math.atan2(p.z - anchor.z, p.x - anchor.x) + Math.PI / 4;
         f.move = this.walker.step(w, { x: anchor.x + Math.cos(angle) * 18, z: anchor.z + Math.sin(angle) * 18 }, 1, 'dodge') ?? f.move;
         if (d < 8) {

@@ -145,6 +145,8 @@ export class Damage {
       return 0;
     }
     if (target.id === 1 && (hit.type === 'bullet' || hit.type === 'projectile') && !this.world.combat!.query.visible(hit.origin, target.transform)) return 0;
+    // The installed cure makes the final Mega mortal with every returned weapon.
+    if (this.world.scenario === 'L10' && target.infected?.pursuit && this.world.missions?.state.states['cure-installed']) hit = { ...hit, permanent: true };
     if (target.health.current <= 0) {
       // Explosives, fire, L5+ campaign shotgun hits and the L4 machine gun on a riot cop finish a downed infected.
       if (downed(target) && this.amount(hit, target) > 0) {
