@@ -28,7 +28,7 @@ export class LevelTenEncounters {
     const player = w.entities.get(1)!;
     const current = cure.regions.find(r => player.transform.x >= r.envelope[0][0] && player.transform.x <= r.envelope[1][0]) ?? cure.regions.at(-1)!;
     const low = ai.director.tier === 'low', depth = cure.threatDepth.find(r => r.region === current.id)!;
-    const cap = assaultActive ? low ? 14 : 22 : depth.resident[low ? 'low' : 'high'][1];
+    const cap = assaultActive ? low ? 14 : 22 : Math.min(low ? 12 : 15, depth.resident[low ? 'low' : 'high'][1]);
     ai.director.levelCap = low ? cap * 2 : cap;
     if (!this.state.toy && !mission.state.items.includes('corgi-toy') && chunks.resident(cureCorgiToy.x, cureCorgiToy.z)) this.state.toy = w.pickups!.spawn('item', cureCorgiToy, 'corgi-toy');
     const weapons = this.state.weapons ??= {};
@@ -52,6 +52,7 @@ export class LevelTenEncounters {
     const released = this.state.released ??= [], lanes = this.state.laneOffsets ??= {};
     for (const group of [...cureEncounters, ...curePaceEncounters]) {
       const assault = !!group.assault;
+      if (assaultActive && !assault) continue;
       if (assault && !assaultActive) continue;
       if (!assault && !released.includes(group.id)) {
         if (Math.abs(player.transform.x - group.at[0]) > 120) continue;
