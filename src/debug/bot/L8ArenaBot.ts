@@ -12,9 +12,14 @@ export class L8ArenaBot {
     const w = this.w, f = emptyInput(), p = w.entities.get(1)!, zoo = w.missions!.l8!;
     const arena = zoo.state.arenas.find(a => a.id === id)!, def = l8BossArenas.find(a => a.id === id)!;
     if (p.health.current <= 0) return f;
+    // The real tour keeps the tunnel cohort; clear a close intruder with the campaign shotgun before resuming the animal.
+    const intruder = policy === 'skilled' ? w.infected!.active.filter(e => e.health.current > 0 && !e.infected!.arenaBoss && !e.infected!.arenaCarrier && !e.hidden && !e.emerging && !e.infectionRise && Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z) < 6 && w.combat!.query.visible(p.transform, e.transform)).sort((a,b) => Math.hypot(a.transform.x-p.transform.x,a.transform.z-p.transform.z)-Math.hypot(b.transform.x-p.transform.x,b.transform.z-p.transform.z))[0] : undefined;
+
     if (!arena.phase) {
       if (Math.hypot(p.transform.x - def.entry.x, p.transform.z - def.entry.z) < 2) this.entered.add(id);
-      f.move = this.walker.step(w, this.entered.has(id) ? def.centre : def.entry, this.entered.has(id) ? 5 : 1, `arena-${id}-${this.entered.has(id)}`) ?? f.move; return f;
+      f.move = this.walker.step(w, this.entered.has(id) ? def.centre : def.entry, this.entered.has(id) ? 5 : 1, `arena-${id}-${this.entered.has(id)}`) ?? f.move;
+      if (intruder) { const gun = w.combat!.runner.loadout.activeEntries().find(e => e.id === 'weapon.shotgun') ?? w.combat!.runner.loadout.activeEntries().find(e => e.id === 'weapon.army-mg'); if (gun) { f.selectedSlot = { side: gun.side, index: gun.index }; strikeAt(f, intruder, gun.side, p.transform, false); } }
+      return f;
     }
     if (policy === 'passive') return f;
     const enemies = arena.ids.map(id => w.entities.get(id)).filter(e => e?.infected && e.health.current > 0 && !e.infectionRise &&
@@ -24,11 +29,11 @@ export class L8ArenaBot {
       if (id === 'monkey' && arena.phase === 2) return (b!.infected!.arenaBoss!.slot === 6 ? 1 : 0) - (a!.infected!.arenaBoss!.slot === 6 ? 1 : 0);
       return (w.tick < b!.infected!.arenaBoss!.exposedUntil ? 1 : 0) - (w.tick < a!.infected!.arenaBoss!.exposedUntil ? 1 : 0) || Math.hypot(a!.transform.x - p.transform.x, a!.transform.z - p.transform.z) - Math.hypot(b!.transform.x - p.transform.x, b!.transform.z - p.transform.z);
     });
-    const target = targets[0];
+    const target = intruder ?? targets[0];
     if (target) {
       const grabbed = policy === 'skilled' && zoo.bosses.swapBlocked();
-      const action = grabbed ? 'weapon.fire-axe' : 'weapon.army-mg';
-      const choice = w.combat!.runner.loadout.activeEntries().find(e => e.id === action)!;
+      const action = grabbed ? 'weapon.fire-axe' : intruder ? 'weapon.shotgun' : 'weapon.army-mg';
+      const choice = w.combat!.runner.loadout.activeEntries().find(e => e.id === action) ?? w.combat!.runner.loadout.activeEntries().find(e => e.id === 'weapon.army-mg');
       if (choice) { f.selectedSlot = { side: choice.side, index: choice.index }; strikeAt(f, target, choice.side, p.transform, false); if (grabbed) f[choice.side === 'LEFT' ? 'left' : 'right'].down = true; }
     }
     if (policy === 'standing') return f;
