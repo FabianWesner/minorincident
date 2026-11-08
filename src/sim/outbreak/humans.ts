@@ -1,6 +1,7 @@
 import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
 import type { HumanTarget, HumanTargetQuery, Vec2 } from './types';
+import { SpatialHash } from '../spatial/SpatialHash';
 
 /** Civilian states in which a pedestrian is a live human (perceivable, chaseable, biteable). */
 const liveStates = new Set(['calm', 'alarmed', 'flee', 'hide']);
@@ -21,14 +22,19 @@ export class HumanTargets implements HumanTargetQuery {
   private readonly list: HumanTarget[] = [];
   private readonly byId = new Map<number, HumanTarget>();
   private readonly found: HumanTarget[] = [];
+  private readonly index = new SpatialHash();
+  private readonly indexedIds: number[] = [];
+  private readonly nearby: number[] = [];
   constructor(private readonly world: SimWorld) {}
   private refresh(): void {
     if (this.tick === this.world.tick) return;
     this.tick = this.world.tick; this.list.length = 0; this.byId.clear();
+    for (const id of this.indexedIds) this.index.delete(id); this.indexedIds.length = 0;
     for (const e of this.world.entities.iterate()) {
       if (!isLiveHuman(e) || this.world.missions?.state.l3?.waitingIds?.includes(e.id) || e.id === 1 && this.world.inspectionGhost) continue;
       const target: HumanTarget = { id: e.id, kind: e.id === 1 ? 'player' : e.civilian?.zooAnimal ? 'animal' : 'civilian', position: { x: e.transform.x, z: e.transform.z }, facing: e.transform.yaw };
       this.list.push(target);
+      this.indexedIds.push(e.id); this.index.set(e.id, target.position.x, target.position.z);
     }
     this.list.sort((a, b) => a.id - b.id);
     for (const target of this.list) this.byId.set(target.id, target);
@@ -37,7 +43,12 @@ export class HumanTargets implements HumanTargetQuery {
   get(id: number): HumanTarget | undefined { this.refresh(); const e = this.world.entities.get(id); return e && isLiveHuman(e) ? this.byId.get(id) : undefined; }
   within(center: Vec2, radius: number): readonly HumanTarget[] {
     this.refresh(); this.found.length = 0;
-    for (const target of this.list) if (this.get(target.id) && (target.position.x - center.x) ** 2 + (target.position.z - center.z) ** 2 <= radius * radius) this.found.push(target);
+    this.index.query({ x: center.x, z: center.z, r: radius }, this.nearby, false);
+    for (const id of this.nearby) {
+      const target = this.byId.get(id);
+      if (target && this.get(id) && (target.position.x - center.x) ** 2 + (target.position.z - center.z) ** 2 <= radius * radius) this.found.push(target);
+    }
+    this.found.sort((a, b) => a.id - b.id);
     return this.found;
   }
   /** Forget the cache (after teleports or checkpoint restore inside one tick). */

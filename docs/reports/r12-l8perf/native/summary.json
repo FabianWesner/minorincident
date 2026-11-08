@@ -1,0 +1,446 @@
+[
+  {
+    "tier": "low",
+    "seed": 1,
+    "complete": true,
+    "tick": 11068,
+    "windows": [
+      {
+        "tick": 3600,
+        "simSeconds": 60,
+        "complete": false,
+        "wallSeconds": 5.699456499999993,
+        "simSecondsPerWallSecond": 10.52731957863001,
+        "tickMs": {
+          "p50": 0.882499999999709,
+          "p95": 3.9825420000051963,
+          "max": 101.58462500000314
+        },
+        "systems": {
+          "ai": {
+            "p50": 0.04233399999793619,
+            "p95": 0.181124999995518,
+            "max": 6.115708000004815
+          },
+          "npcs": {
+            "p50": 0.13554099999601021,
+            "p95": 0.878208000001905,
+            "max": 12.540249999998196
+          },
+          "physics": {
+            "p50": 0.021166999998968095,
+            "p95": 0.09870800000499003,
+            "max": 3.7119579999998678
+          },
+          "combat": {
+            "p50": 0.008791000000201166,
+            "p95": 0.034416000002238434,
+            "max": 1.4139159999976982
+          },
+          "player": {
+            "p50": 0,
+            "p95": 0,
+            "max": 0
+          }
+        },
+        "entities": 1042,
+        "infected": 12,
+        "livingInfected": 12,
+        "corpses": 0,
+        "livingCivilians": 88,
+        "downed": 0,
+        "followers": 50,
+        "player": {
+          "x": 23.140016555786133,
+          "z": 64.14939880371094
+        },
+        "l8": {
+          "checkpoint": "breach",
+          "step": "pending",
+          "phase": "playing"
+        },
+        "heapBytes": 168080552,
+        "aiRoutes": 0,
+        "aiBudget": 2000,
+        "mission": "playing",
+        "objective": [
+          "escape"
+        ]
+      },
+      {
+        "tick": 7200,
+        "simSeconds": 120,
+        "complete": false,
+        "wallSeconds": 30.382358708000005,
+        "simSecondsPerWallSecond": 1.9748302156738524,
+        "tickMs": {
+          "p50": 5.825040999996418,
+          "p95": 21.38025000000198,
+          "max": 173.481832999998
+        },
+        "systems": {
+          "ai": {
+            "p50": 1.1210419999988517,
+            "p95": 5.486250000001746,
+            "max": 95.4094999999943
+          },
+          "npcs": {
+            "p50": 0.6316669999941951,
+            "p95": 3.8234579999989364,
+            "max": 103.68399999999383
+          },
+          "physics": {
+            "p50": 0.10116700000071432,
+            "p95": 0.3835839999956079,
+            "max": 58.91704100000061
+          },
+          "combat": {
+            "p50": 0.0171249999984866,
+            "p95": 0.08508399999846006,
+            "max": 60.586542000004556
+          },
+          "player": {
+            "p50": 0,
+            "p95": 0,
+            "max": 0
+          }
+        },
+        "entities": 1137,
+        "infected": 81,
+        "livingInfected": 80,
+        "corpses": 36,
+        "livingCivilians": 68,
+        "downed": 10,
+        "followers": 39,
+        "player": {
+          "x": 92.37808990478516,
+          "z": 77.95866394042969
+        },
+        "l8": {
+          "checkpoint": "escape-route",
+          "step": "pending",
+          "phase": "playing"
+        },
+        "heapBytes": 327869656,
+        "aiRoutes": 0,
+        "aiBudget": 2000,
+        "mission": "playing",
+        "objective": [
+          "escape"
+        ]
+      },
+      {
+        "tick": 10800,
+        "simSeconds": 180,
+        "complete": false,
+        "wallSeconds": 35.641052042,
+        "simSecondsPerWallSecond": 1.6834519903984602,
+        "tickMs": {
+          "p50": 6.051875000004657,
+          "p95": 29.5087910000002,
+          "max": 282.68762500000594
+        },
+        "systems": {
+          "ai": {
+            "p50": 0.9536660000012489,
+            "p95": 7.129583999994793,
+            "max": 245.4285840000084
+          },
+          "npcs": {
+            "p50": 0.3805419999989681,
+            "p95": 2.934499999988475,
+            "max": 90.0219999999972
+          },
+          "physics": {
+            "p50": 0.11387500001001172,
+            "p95": 0.42824999999720603,
+            "max": 24.91533299999719
+          },
+          "combat": {
+            "p50": 0.020665999996708706,
+            "p95": 0.17629200000374112,
+            "max": 48.943249999996624
+          },
+          "player": {
+            "p50": 0,
+            "p95": 0,
+            "max": 0
+          }
+        },
+        "entities": 1144,
+        "infected": 86,
+        "livingInfected": 86,
+        "corpses": 45,
+        "livingCivilians": 59,
+        "downed": 6,
+        "followers": 39,
+        "player": {
+          "x": 96,
+          "z": 74
+        },
+        "l8": {
+          "checkpoint": "escape-route",
+          "step": "completed",
+          "phase": "playing"
+        },
+        "heapBytes": 142265208,
+        "aiRoutes": 0,
+        "aiBudget": 2000,
+        "mission": "playing",
+        "objective": []
+      },
+      {
+        "tick": 11068,
+        "simSeconds": 184.46666666666667,
+        "complete": true,
+        "wallSeconds": 1.5082901249999996,
+        "simSecondsPerWallSecond": 2.961410800635367,
+        "tickMs": {
+          "p50": 2.4973750000062864,
+          "p95": 16.94116600000416,
+          "max": 69.25804199998674
+        },
+        "systems": {
+          "ai": {
+            "p50": 0.4471250000060536,
+            "p95": 2.757832999996026,
+            "max": 49.05420800000138
+          },
+          "npcs": {
+            "p50": 0.19933300001139287,
+            "p95": 1.484916000001249,
+            "max": 18.59612499999639
+          },
+          "physics": {
+            "p50": 0.03854199999477714,
+            "p95": 0.08741700000246055,
+            "max": 2.031290999992052
+          },
+          "combat": {
+            "p50": 0.015792000005603768,
+            "p95": 0.054792000009911135,
+            "max": 0.28358299999672454
+          },
+          "player": {
+            "p50": 0,
+            "p95": 0,
+            "max": 0
+          }
+        },
+        "entities": 1144,
+        "infected": 86,
+        "livingInfected": 86,
+        "corpses": 45,
+        "livingCivilians": 59,
+        "downed": 6,
+        "followers": 39,
+        "player": {
+          "x": 96,
+          "z": 74
+        },
+        "l8": {
+          "checkpoint": "escape-route",
+          "step": "completed",
+          "phase": "progression"
+        },
+        "heapBytes": 153688904,
+        "aiRoutes": 0,
+        "aiBudget": 2000,
+        "mission": "progression",
+        "objective": []
+      }
+    ]
+  },
+  {
+    "tier": "high",
+    "seed": 1,
+    "complete": true,
+    "tick": 8120,
+    "windows": [
+      {
+        "tick": 3600,
+        "simSeconds": 60,
+        "complete": false,
+        "wallSeconds": 8.156521792,
+        "simSecondsPerWallSecond": 7.356076711380655,
+        "tickMs": {
+          "p50": 1.034708999999566,
+          "p95": 6.0037500000034925,
+          "max": 140.95066699999734
+        },
+        "systems": {
+          "ai": {
+            "p50": 0.04454100001021288,
+            "p95": 0.1981660000019474,
+            "max": 15.639750000002095
+          },
+          "npcs": {
+            "p50": 0.16170900000724941,
+            "p95": 1.0582920000015292,
+            "max": 29.51670799999556
+          },
+          "physics": {
+            "p50": 0.021875000005820766,
+            "p95": 0.09183400000620168,
+            "max": 13.982167000009213
+          },
+          "combat": {
+            "p50": 0.008874999999534339,
+            "p95": 0.032417000009445474,
+            "max": 10.568124999990687
+          },
+          "player": {
+            "p50": 0,
+            "p95": 0,
+            "max": 0
+          }
+        },
+        "entities": 1054,
+        "infected": 24,
+        "livingInfected": 24,
+        "corpses": 0,
+        "livingCivilians": 88,
+        "downed": 0,
+        "followers": 50,
+        "player": {
+          "x": 23.140016555786133,
+          "z": 64.14939880371094
+        },
+        "l8": {
+          "checkpoint": "breach",
+          "step": "pending",
+          "phase": "playing"
+        },
+        "heapBytes": 122743320,
+        "aiRoutes": 0,
+        "aiBudget": 2000,
+        "mission": "playing",
+        "objective": [
+          "escape"
+        ]
+      },
+      {
+        "tick": 7200,
+        "simSeconds": 120,
+        "complete": false,
+        "wallSeconds": 49.19100387499999,
+        "simSecondsPerWallSecond": 1.2197352213519959,
+        "tickMs": {
+          "p50": 8.525666000001365,
+          "p95": 41.03987500000221,
+          "max": 209.65104200001224
+        },
+        "systems": {
+          "ai": {
+            "p50": 1.6918749999895226,
+            "p95": 10.272666000004392,
+            "max": 165.39550000001327
+          },
+          "npcs": {
+            "p50": 0.6703329999872949,
+            "p95": 6.941499999986263,
+            "max": 101.54920800001128
+          },
+          "physics": {
+            "p50": 0.13720800000010058,
+            "p95": 0.47966700000688434,
+            "max": 37.318083000020124
+          },
+          "combat": {
+            "p50": 0.019125000020721927,
+            "p95": 0.13287500001024455,
+            "max": 17.3314160000009
+          },
+          "player": {
+            "p50": 0,
+            "p95": 0,
+            "max": 0
+          }
+        },
+        "entities": 1233,
+        "infected": 184,
+        "livingInfected": 181,
+        "corpses": 58,
+        "livingCivilians": 39,
+        "downed": 18,
+        "followers": 20,
+        "player": {
+          "x": 92.38925170898438,
+          "z": 77.96090698242188
+        },
+        "l8": {
+          "checkpoint": "escape-route",
+          "step": "pending",
+          "phase": "playing"
+        },
+        "heapBytes": 109216952,
+        "aiRoutes": 4,
+        "aiBudget": 1157,
+        "mission": "playing",
+        "objective": [
+          "escape"
+        ]
+      },
+      {
+        "tick": 8120,
+        "simSeconds": 135.33333333333334,
+        "complete": true,
+        "wallSeconds": 18.580826292000012,
+        "simSecondsPerWallSecond": 0.8252234369111513,
+        "tickMs": {
+          "p50": 12.963958999986062,
+          "p95": 58.488916000002064,
+          "max": 210.2554999999993
+        },
+        "systems": {
+          "ai": {
+            "p50": 2.670542000007117,
+            "p95": 19.925416000012774,
+            "max": 111.2197500000184
+          },
+          "npcs": {
+            "p50": 0.39537499999278225,
+            "p95": 3.730874999979278,
+            "max": 96.16924999997718
+          },
+          "physics": {
+            "p50": 0.16699999998672865,
+            "p95": 0.6345410000067204,
+            "max": 14.367874999996275
+          },
+          "combat": {
+            "p50": 0.02412499999627471,
+            "p95": 0.20824999999604188,
+            "max": 34.684166999999434
+          },
+          "player": {
+            "p50": 0,
+            "p95": 0,
+            "max": 0
+          }
+        },
+        "entities": 1252,
+        "infected": 188,
+        "livingInfected": 188,
+        "corpses": 78,
+        "livingCivilians": 32,
+        "downed": 19,
+        "followers": 19,
+        "player": {
+          "x": 96,
+          "z": 74
+        },
+        "l8": {
+          "checkpoint": "escape-route",
+          "step": "completed",
+          "phase": "progression"
+        },
+        "heapBytes": 140775040,
+        "aiRoutes": 4,
+        "aiBudget": 1454,
+        "mission": "progression",
+        "objective": []
+      }
+    ]
+  }
+]
