@@ -124,5 +124,5 @@ PO: "Which [weapons] are not used yet? (maybe a fire thrower...). How could we m
   - restricted military zone: assault rifle (with flashlight), flashbangs (stun dogs and fast infected).
   (All modelled except the throwables; throwables need small models.)
 - In the hangar, when the researchers hand over the cure, the army re-equips her: **all her weapons come back** (the full campaign arsenal plus what she found) for the delivery and the Mega fight.
-- Optional, awaiting PO: an experimental flamethrower from the researchers as the signature weapon of the final push (new model + fire VFX; not usable in the corn).
+- **Decided (PO "I think a flame thrower would be great", choice left to the orchestrator):** the researchers hand her an experimental flamethrower with the cure — the signature weapon of the final push and the Mega fight (new model + fire VFX + burn damage over time; short range cone, fuel gauge; can set dry corn ablaze, so it is issued only after the corn chapter). Walk weapons as listed above.
 - This replaces the earlier "weapons from story scenes (dead officer, Sam, armory, convoy)" sequence for the known arsenal.
