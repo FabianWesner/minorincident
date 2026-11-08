@@ -1,4 +1,4 @@
-import { cureHangar, cureHangarConversation, insideCureHangar } from '../../data/l10Story';
+import { cureEscapeGaps, cureHangar, cureHangarConversation, insideCureHangar } from '../../data/l10Story';
 import { cure } from '../../levels/L10/district';
 import { allyState } from '../outbreak/Allies';
 import { l4 } from '../../data/l4';
@@ -49,7 +49,7 @@ export class LevelTenStory {
         this.mission.requestCheckpoint(curePaceCheckpoints[next - 1]);
       }
     }
-    if (!state.states['gap-hint'] && p.transform.x >= 937) { state.states['gap-hint'] = true; this.say('L10.hide-gap'); }
+    if (!state.states['gap-hint'] && cureEscapeGaps.some(gap => Math.hypot(p.transform.x - gap.x, p.transform.z - gap.z) < 5)) { state.states['gap-hint'] = true; this.say('L10.hide-gap'); }
     if (!state.states['hangar-radio'] && p.transform.x >= 2300) { state.states['hangar-radio'] = true; this.say('L10.armory'); }
     if (!state.states['hangar-cast'] && Math.abs(p.transform.x - cureHangar.centre.x) < 120 && world.chunks?.resident(cureHangar.centre.x, cureHangar.centre.z)) this.spawnCast();
     if (state.steps.research?.status !== 'active' || !insideCureHangar(p.transform)) return;

@@ -14,6 +14,9 @@ export const cureEscapeGaps = [
   { x: 937, z: 80, detourZ: 120 },
   { x: 2137, z: -75, detourZ: -115 },
   { x: 3317, z: 95, detourZ: 135 },
+  // The objective-bearing field crossings need the same escape choice as the road.
+  { x: 925, z: -12, detourZ: -52 },
+  { x: 2110, z: -2, detourZ: 38 },
 ] as const;
 /** The hangar returns every carried weapon, including optional campaign finds and abilities. */
 export const cureRackCapacity = 32;

@@ -54,6 +54,16 @@ export function levelTenLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     place('l10-hangar-generator', 'prop.cure-generator', 2719, 73, [1.2, 1.2, 1]);
     place('l10-hangar-tent', 'prop.cure-iso-tent', 2694, 73, [2.5, 1.7, 2]);
     place('l10-hangar-light', 'prop.emergency-light', 2707, 76, [.4, 1.5, .4]);
+    // Finds belong to visible, open buildings beside the walking line. The farm
+    // shells receive their post/sill collision in applyFarmLandscape.
+    place('decor-cure-farm-route-house', 'bld.farm-house-ruin', 705, 38, [4, 1.4, 3.5], 0, [1, 1, 1], true);
+    place('decor-cure-farm-route-barn', 'bld.farm-barn-ruin', 944, -26, [5, 2.1, 4], 0, [1, 1, 1], true);
+    place('decor-cure-farm-route-shed', 'bld.farm-barn-ruin', 1170, -26, [5, 2.1, 4], 0, [.7, .7, .7], true);
+    place('decor-cure-farm-route-workshop', 'bld.farm-house-ruin', 1407, 32, [4, 1.4, 3.5], 0, [1, 1, 1], true);
+    for (let i = 0; i < 3; i++) place(`l10-barn-grave-${i}`, 'prop.l10-grave-cross', 942 + i * 2, -26, [.4, .6, .5], 0, [1, 1, 1], true);
+    const tower = place('l10-find-guard-tower', 'kit.guard-tower', 1965, 16, [1.54, 2.45, 1.4], 0, [1, 1, 1], true);
+    tower.decorSolid = true;
+    place('l10-find-checkpoint-locker', 'prop.crates', 2080, 3, [1, 1, .6], 0, [1, 1, 1], true);
     place('l10-dispersal-electric-gate', 'prop.cure-mil-fence', 4002, 1, [6.4, 1.24, .21], 0, [12.8 / 3.34, 1, 1], true);
     for (const [i, gap] of cureEscapeGaps.entries()) {
       const low = gap.z - 35, high = gap.z + 35;

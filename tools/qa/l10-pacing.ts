@@ -12,6 +12,7 @@ import { createHash } from 'node:crypto';
 import { markerAnchor } from '../../src/sim/missions/markerAnchor';
 import { AcceptanceObserver } from './accept/observer';
 import { ThreatObserver } from './threat/observer';
+import { cureEscapeGaps, insideCureHangar } from '../../src/data/l10Story';
 
 const output = process.argv.find((arg, i) => process.argv[i - 1] === '--out') ?? 'test-results/l10-pacing/report.json';
 const seed = Number(process.env.L10_PACING_SEED ?? 42);
@@ -29,7 +30,9 @@ for (const quality of tiers) {
   const world = await loadLevel('L10', seed, undefined, 0, { quality });
   const acceptance = process.env.L10_PACING_ACCEPTANCE === '1' ? new AcceptanceObserver(world) : null;
   const threat = process.env.L10_PACING_ACCEPTANCE === '1' ? new ThreatObserver(world, 'L10') : null;
-  const mission = world.missions!, bot = new LevelTenBot(world), beats: Record<string, unknown>[] = [], checkpoints: Record<string, unknown>[] = [];
+  const mission = world.missions!, bot = new LevelTenBot(world, process.env.L10_PACING_PROFILE ?? 'complete'), beats: Record<string, unknown>[] = [], checkpoints: Record<string, unknown>[] = [];
+  const gapCrossings: { index: number; seconds: number; x: number; z: number; megaDistance: number; maxSeparation20s: number }[] = [];
+  const megaActions: Record<string, unknown>[] = [], hangarVisits: Record<string, unknown>[] = [];
   const seenVignettes = new Set<string>(), knownInfected = new Set<number>(), trace: Record<string, unknown>[] = [];
   let deaths = 0, fights = 0, finds = 0, scares = 0, megaMoments = 0, fightUntil = 0, lastCombatBeat = -1200, lastMegaBand = -1, routeMetres = 0, lastEncounterBeat = -600;
   let gameplayEnd = 0, peakOpeningRegulars = 0, peakOpeningDogs = 0, peakOpeningAlphas = 0;
@@ -55,6 +58,7 @@ for (const quality of tiers) {
       fightUntil = world.tick + 20 * 60;
     }),
     world.events.on('music.stinger', e => { if (e.type === 'music.stinger' && e.kind === 'scare') { scares++; addBeat('scare', 'corn-emergence'); } }),
+    world.events.on('infected.special', e => { if (e.type === 'infected.special' && e.sourceId === world.megaPursuit?.state.id) megaActions.push({ seconds: world.tick / 60, ...e }); }),
   ];
   const vignettes = world.districts?.districts.find(d => d.id === 'D-CURE')?.decay.placements.filter(p => p.id.startsWith('decor-cure-vignette-')) ?? [];
   const megaBands = [80, 35, 15];
@@ -69,6 +73,10 @@ for (const quality of tiers) {
       followTenFrustum(world);
       const frame = bot.sample(); world.applyInput(frame, 'keyboard'); world.update();
       const p = world.entities.get(1)!.transform;
+      const separation = world.megaPursuit?.distance() ?? Infinity;
+      for (const [index, gap] of cureEscapeGaps.entries()) if (!gapCrossings.some(row => row.index === index) && Math.hypot(p.x - gap.x, p.z - gap.z) < 2) gapCrossings.push({ index, seconds: world.tick / 60, x: p.x, z: p.z, megaDistance: separation, maxSeparation20s: separation });
+      for (const row of gapCrossings) if (world.tick / 60 - row.seconds <= 20 && Number.isFinite(separation)) row.maxSeparation20s = Math.max(row.maxSeparation20s, separation);
+      if (insideCureHangar(p) && tick % 600 === 0) hangarVisits.push({ seconds: world.tick / 60, x: p.x, z: p.z, cast: Object.entries(mission.state.actors).filter(([key]) => key.startsWith('hangar-')).map(([key,id]) => ({ key, id, hp: world.entities.get(id)?.health.current })), infectedInside: world.infected!.active.filter(e=>e.health.current>0&&insideCureHangar(e.transform)).map(e=>e.id) });
       const stepMetres = distance(p, previousPosition);
       if (stepMetres < 8) routeMetres += stepMetres;
       previousPosition = { ...p };
@@ -104,7 +112,8 @@ for (const quality of tiers) {
     }
     if (mission.state.phase === 'result' || mission.state.phase === 'progression') outcome = 'complete';
   } finally { elapsedSeconds = world.tick / 60; observation = acceptance?.finish(); threatObservation = threat?.finish(); off.forEach(stop => stop()); world.dispose(); }
-  const gameplayBeats = [{ seconds: 0, kind: 'start' }, ...beats.filter(b => Number(b.seconds) <= gameplayEnd), { seconds: gameplayEnd, kind: 'gameplay-end' }];
+  // Recovery points and objective bookkeeping do not count as authored content.
+  const gameplayBeats = [{ seconds: 0, kind: 'start' }, ...beats.filter(b => Number(b.seconds) <= gameplayEnd && !['checkpoint','objective'].includes(String(b.kind))), { seconds: gameplayEnd, kind: 'gameplay-end' }];
   const gaps = gameplayBeats.slice(1).map((beat, i) => ({ seconds: Number((Number(beat.seconds) - Number(gameplayBeats[i].seconds)).toFixed(2)), from: gameplayBeats[i], to: beat }));
   const longestGap = gaps.reduce<{ seconds: number; from: Record<string, unknown> | null; to: Record<string, unknown> | null }>((best, gap) => gap.seconds > best.seconds ? gap : best, { seconds: 0, from: null, to: null });
   const routeDistances = cure.regions.flatMap((r, i) => i ? r.route.slice(1) : r.route).slice(1).reduce((acc, p, i, points) => acc + Math.hypot(p[0] - (i ? points[i - 1][0] : cure.regions[0].route[0][0]), p[1] - (i ? points[i - 1][1] : cure.regions[0].route[0][1])), 0);
@@ -114,9 +123,10 @@ for (const quality of tiers) {
     return { metres: Number((to.routeMetres - from.routeMetres).toFixed(1)), directMetres: Number(distance(from, to).toFixed(1)), from: from.id, to: to.id };
   });
   const firstRouteCheckpoint = checkpoints.find(cp => (cp as { id: string }).id !== 'cure-crash') as { seconds: number } | undefined;
-  results.push({ quality, seed, outcome, completed: outcome === 'complete', seconds: elapsedSeconds, gameplaySeconds: gameplayEnd, deaths, fights, finds, scares, megaMoments, observation, threat: threatObservation, opening: { peakRegulars: peakOpeningRegulars, peakDogs: peakOpeningDogs, peakAlphas: peakOpeningAlphas }, trace, routeMetresTravelled: routeMetres, canonicalRouteMetres: routeDistances, checkpoints, checkpointGaps, maxCheckpointGapM: Math.max(0, ...checkpointGaps.map(g => g.metres)), timeToFirstCheckpoint: firstRouteCheckpoint?.seconds ?? null, beats, longestBeatGapSeconds: longestGap.seconds, longestGap, activeAtEnd, limits: { beatGapSeconds: 40, checkpointGapMetres: 250, firstCheckpointSeconds: 60 } });
+  results.push({ quality, seed, profile: process.env.L10_PACING_PROFILE ?? 'complete', outcome, completed: outcome === 'complete', seconds: elapsedSeconds, gameplaySeconds: gameplayEnd, deaths, fights, finds, scares, megaMoments, gapCrossings, megaActions, hangarVisits, observation, threat: threatObservation, opening: { peakRegulars: peakOpeningRegulars, peakDogs: peakOpeningDogs, peakAlphas: peakOpeningAlphas }, trace, routeMetresTravelled: routeMetres, canonicalRouteMetres: routeDistances, checkpoints, checkpointGaps, maxCheckpointGapM: Math.max(0, ...checkpointGaps.map(g => g.metres)), timeToFirstCheckpoint: firstRouteCheckpoint?.seconds ?? null, beats, longestBeatGapSeconds: longestGap.seconds, longestGap, activeAtEnd, limits: { beatGapSeconds: 40, checkpointGapMetres: 250, firstCheckpointSeconds: 60 } });
 }
 
 mkdirSync(dirname(output), { recursive: true });
 writeFileSync(output, JSON.stringify({ generatedAt: new Date().toISOString(), revision, sourceHash, seed, tiers, results }, null, 2));
 console.log(JSON.stringify(results.map(r => ({ quality: r.quality, outcome: r.outcome, seconds: r.seconds, deaths: r.deaths, fights: r.fights, finds: r.finds, scares: r.scares, megaMoments: r.megaMoments, timeToFirstCheckpoint: r.timeToFirstCheckpoint, longestBeatGapSeconds: r.longestBeatGapSeconds, maxCheckpointGapM: r.maxCheckpointGapM })), null, 2));
+if (process.env.L10_PACING_ENFORCE === '1' && results.some(r => !r.completed || r.finds !== 6 || Number(r.longestBeatGapSeconds) > 40 || Number(r.maxCheckpointGapM) > 250 || r.timeToFirstCheckpoint === null || Number(r.timeToFirstCheckpoint) > 60)) process.exitCode = 1;

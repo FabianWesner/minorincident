@@ -124,8 +124,9 @@ export function applyFarmLandscape(layout: DistrictLayout): void {
     boxes.push(...[-1, 1].map(x => ({ x: x * w / 2, z: 0, hx: .12, hz: d / 2, h: .35 })));
     for (const [i, b] of boxes.entries()) {
       const c = Math.cos(p.yaw), s = Math.sin(p.yaw), x = p.position[0] + b.x * c + b.z * s, z = p.position[2] - b.x * s + b.z * c;
-      const hx = Math.abs(c) * b.hx + Math.abs(s) * b.hz, hz = Math.abs(s) * b.hx + Math.abs(c) * b.hz;
-      layout.colliders.push({ id: `${p.id}/farm-wood-${i}`, minTier: 0, maxTier: 6, aabb: { min: [x - hx, 0, z - hz], max: [x + hx, b.h, z + hz], navFootprint: { x, z, halfX: b.hx, halfZ: b.hz, yaw: p.yaw } } });
+      const hx = (Math.abs(c) * b.hx + Math.abs(s) * b.hz) * p.scale[0], hz = (Math.abs(s) * b.hx + Math.abs(c) * b.hz) * p.scale[2];
+      const sx = p.position[0] + (x - p.position[0]) * p.scale[0], sz = p.position[2] + (z - p.position[2]) * p.scale[2];
+      layout.colliders.push({ id: `${p.id}/farm-wood-${i}`, minTier: 0, maxTier: 6, aabb: { min: [sx - hx, 0, sz - hz], max: [sx + hx, b.h * p.scale[1], sz + hz], navFootprint: { x: sx, z: sz, halfX: b.hx * p.scale[0], halfZ: b.hz * p.scale[2], yaw: p.yaw } } });
     }
   }
   for (const p of layout.placements) if (['prop.farm-tractor', 'prop.farm-combine'].includes(p.assetId)) {
