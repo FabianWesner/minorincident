@@ -10,6 +10,7 @@ import { loadLevel } from '../../tools/sim-runner/levels';
 import { missionControls } from '../../src/sim/missions/controls';
 import { preset } from '../../src/sim/progression/Campaign';
 import { objectiveText } from '../../src/sim/missions/objectiveText';
+import type { PropSnapshot } from '../../src/sim/interact/PropSystem';
 
 async function car(id = 'vehicle.sedan') {
   const physics = new Physics(); await physics.init();
@@ -86,7 +87,8 @@ test('enter, drive and exit: door dwell, input ownership (no attacks while drivi
     world.loadScenario('empty'); expect(world.physics.bodyCount).toBe(2);
   } finally { world.dispose(); }
   await screenRelativeSteering();
-  await vehicleShovesProps();
+  const shoved = await vehicleShovesProps();
+  expect(await vehicleShovesProps(), 'vehicle-to-prop simulation repeats exactly').toEqual(shoved);
   await bikeMountIntent();
   await zooParkedBoarding();
 });
@@ -119,7 +121,7 @@ async function screenRelativeSteering(): Promise<void> {
   } finally { world.dispose(); }
 }
 
-async function vehicleShovesProps(): Promise<void> {
+async function vehicleShovesProps(): Promise<PropSnapshot> {
   const world = new SimWorld(); await world.init(); world.loadScenario('prop-yard');
   try {
     const prop = world.props!.spawn({ id: 'ram-test-wreck', assetId: 'veh.wreck', position: [0, 0, 0], yaw: 0, scale: [1, 1, 1], minTier: 0, maxTier: 5, allowRoad: true, lightGroup: '', visualAabb: { min: [-2.2, 0, -.9], max: [2.2, 1.8, .9] } });
@@ -155,6 +157,17 @@ async function vehicleShovesProps(): Promise<void> {
     nearbyCar.physics.body.setLinvel({ x: 18, y: 0, z: 0 }, true); nearbyCar.physics.postPhysics();
     world.props!.prePhysics();
     expect(near.body.isSleeping(), 'a nearby elongated prop stays asleep before hull contact').toBe(true);
+    for (const [assetId, x, halfX] of [['prop.traffic-cone', 0, .24], ['prop.folding-chair', 10, .33]] as const) {
+      const small = world.props!.spawn({ id: `ram-test-${assetId}`, assetId, position: [x, 0, 10], yaw: 0, scale: [1, 1, 1], minTier: 0, maxTier: 5, allowRoad: true, lightGroup: '', visualAabb: { min: [x - halfX, 0, 9.5], max: [x + halfX, 1.1, 10.5] } });
+      const sedanId = world.vehicles!.spawn('vehicle.sedan', { x: x - vehicleDef('vehicle.sedan').length / 2 - halfX + .05, z: 10 });
+      const sedan = world.vehicles!.cars.get(sedanId)!; world.vehicles!.active = sedanId;
+      sedan.physics.body.setLinvel({ x: 8, y: 0, z: 0 }, true); sedan.physics.postPhysics();
+      world.props!.prePhysics();
+      expect(small.body.linvel().x, `${assetId} moves when the lower sedan bumper reaches it`).toBeGreaterThan(0);
+    }
+    for (let i = 0; i < 60; i++) world.update();
+    expect(world.props!.items.filter(p => p.awake).length).toBeLessThanOrEqual(world.props!.awakeBudget);
+    return world.props!.snapshot();
   } finally { world.dispose(); }
 }
 
