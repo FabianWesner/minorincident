@@ -1,0 +1,9 @@
+{
+  "at": "2026-11-08T13:01:54.363Z",
+  "parent": 89901,
+  "stoppedPid": 17555,
+  "reason": "Initial source already fails four load cells; stop only the next unstarted admission after all near-scene captures finish, to verify the identified compilation repair with a complete final matrix.",
+  "noCaptureStarted": true,
+  "command": "/opt/homebrew/Cellar/node/26.0.0/bin/node test-results/perf12/run-job.mjs final-low-heavy /opt/homebrew/Cellar/node/26.0.0/bin/node --import tsx test-results/perf12/final-group.mjs low heavy",
+  "admissionLog": "Quiet-run waiting: {\"at\":\"2026-11-08T13:01:42.459Z\",\"event\":\"quiet-admission-wait\",\"cooldownSeconds\":60}\n"
+}

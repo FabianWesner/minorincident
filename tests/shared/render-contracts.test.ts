@@ -31,7 +31,7 @@ import { crowdGunHolds, longGunHolds } from '../../src/render/characters/GunAim'
 import type { EntitySnapshot } from '../../src/sim/world/types';
 import { crowdWeaponGeometry, crowdWeaponAssets } from '../../src/render/npc/crowdWeapons';
 import { isCrowdVariant, registerCrowdModel } from '../../src/render/crowdModels';
-import { installTextureBindingIdentity } from '../../src/render/Renderer';
+import { Renderer, installTextureBindingIdentity } from '../../src/render/Renderer';
 import { crowdSurfaceBindings, crowdTextureForDraw } from '../../src/render/characters/crowdTexture';
 import { addHighwayRailJoints } from '../../src/assets/highwayRailJoints';
 import { InstancedGroup } from '../../src/render/InstancedGroup';
@@ -54,6 +54,39 @@ import { resolveRig, disposeCharacter } from '../../src/render/characters/rig';
 import { heroineStandingHeight } from '../../src/render/npc/figureHeight';
 import { CorpseLayout } from '../../src/render/characters/CorpseLayout';
 import { Vfx } from '../../src/render/vfx/Vfx';
+
+async function checkWarmPipelineDraws(): Promise<void> {
+  {
+
+  const object = { pipeline: {} }, submitted: typeof object[] = [];
+  let created = false, linked = false, release!: () => void;
+  const link = new Promise<void>(resolve => { release = () => { linked = true; resolve(); }; });
+  const backend = {
+    createRenderPipeline(_object: typeof object, promises: Promise<unknown>[] | null) {
+      expect(promises).not.toBeNull(); created = true; promises!.push(link);
+    },
+    draw(value: typeof object) { expect(linked).toBe(true); submitted.push(value); },
+  };
+  const create = backend.createRenderPipeline, draw = backend.draw, nextNodeFrame = vi.fn();
+  const renderer = { backend, nextNodeFrame } as unknown as Renderer;
+  const warming = Renderer.prototype.prepareWarmRender.call(renderer, () => {
+    if (!created) backend.createRenderPipeline(object, null);
+    backend.draw(object);
+  });
+  expect(submitted).toEqual([]);
+  expect(backend.createRenderPipeline).toBe(create); expect(backend.draw).toBe(draw);
+  release(); await warming;
+  expect(submitted).toEqual([object]); expect(nextNodeFrame).toHaveBeenCalledTimes(2);
+  expect(backend.createRenderPipeline).toBe(create); expect(backend.draw).toBe(draw);
+  }
+  {
+
+  const backend = { createRenderPipeline: vi.fn(), draw: vi.fn() }, create = backend.createRenderPipeline, draw = backend.draw;
+  const renderer = { backend, nextNodeFrame: vi.fn() } as unknown as Renderer;
+  await expect(Renderer.prototype.prepareWarmRender.call(renderer, () => { throw new Error('failed draw'); })).rejects.toThrow('failed draw');
+  expect(backend.createRenderPipeline).toBe(create); expect(backend.draw).toBe(draw);
+  }
+}
 
 function checkFractionalCrowdPicking(): void {
   const matrices = new Float32Array(32);
@@ -658,7 +691,7 @@ test('materials: palette program keys match Three through weather and node chang
   } finally { materials.dispose(); lighting.dispose(); }
 });
 
-test('texture route: lossless 256-byte-aligned float uploads; cold WebGPU atlases map, warm ones reuse Three, ranges write rows', () => {
+test('texture route: lossless 256-byte-aligned float uploads; cold WebGPU atlases map, warm ones reuse Three, ranges write rows', async () => {
   let bytes = new ArrayBuffer(0);
   const buffer = { getMappedRange: () => bytes, unmap: vi.fn(), destroy: vi.fn() };
   const command = {}, encoder = { copyBufferToTexture: vi.fn(), finish: () => command };
@@ -678,6 +711,7 @@ test('texture route: lossless 256-byte-aligned float uploads; cold WebGPU atlase
   backend.updateTexture(texture, {}); expect(original).toHaveBeenCalledOnce();
   texture.addUpdateRange(96, 32); backend.updateTexture(texture, {}); expect(write).toHaveBeenCalledOnce();
   texture.dispose();
+  await checkWarmPipelineDraws();
 });
 
 test('switching equal-version colour and pose textures refreshes the GPU binding, including cloned render bindings', () => {
