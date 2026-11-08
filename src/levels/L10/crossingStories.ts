@@ -86,6 +86,30 @@ const evac: Story = rng => [
   { asset: 'veh.ambulance', along: -7.8, out: 1.4, yaw: (rng.next() - .5) * .8, decay: rng.next() < .5 ? 'wrecked' : undefined, solid: true },
   { asset: 'decay.dropped-belongings', along: 3, out: -.6, yaw: rng.next() * 6.28, solid: false },
 ];
+// Hand-laid landmarks on the two crossings that carry the biggest approach
+// beats. Unlike the generated story families, their silhouettes and prop
+// arrangement are fixed: two R4 military moments and one R6 field triage stop.
+const r4CommandPost: Story = () => [
+  { asset: 'veh.tank', along: 0, out: 2.1, yaw: -.18, decay: 'wrecked', solid: true },
+  { asset: 'prop.jersey-barrier', along: -7.4, out: -.3, yaw: .12, solid: true },
+  { asset: 'prop.sandbag-pallet', along: 4.3, out: -.5, yaw: -.22, solid: true, light: 'camp', fire: [1.8, .8] },
+  { asset: 'prop.traffic-cone', along: -7.1, out: 1.3, yaw: -.2, solid: false },
+  { asset: 'decay.dropped-belongings', along: 6.8, out: 1, yaw: .4, solid: false },
+];
+const r4EvacBlockade: Story = () => [
+  { asset: 'veh.evac-bus', along: 0, out: 2.6, yaw: .26, decay: 'burned', solid: true, light: 'wreckfire' },
+  { asset: 'prop.jersey-barrier', along: 8.2, out: -.7, yaw: -.32, solid: true },
+  { asset: 'prop.traffic-cone', along: -5.6, out: -.3, yaw: .1, solid: false },
+  { asset: 'prop.crates', along: -7.2, out: 2.4, yaw: .6, solid: false, light: 'camp', fire: [-1, -.9] },
+  { asset: 'decay.dropped-belongings', along: 7.2, out: 3.8, yaw: -1.1, solid: false },
+];
+const r6Triage: Story = () => [
+  { asset: 'prop.cure-iso-tent', along: 0, out: 3, yaw: -.12, solid: true },
+  { asset: 'veh.ambulance', along: -8.1, out: 1.2, yaw: .38, decay: 'wrecked', solid: true },
+  { asset: 'prop.cure-generator', along: 5.7, out: -.4, yaw: .08, solid: true, light: 'camp', fire: [1.7, 1.4] },
+  { asset: 'prop.medical-cooler', along: -3.3, out: -1, yaw: .2, solid: false },
+  { asset: 'decay.dropped-belongings', along: 4.8, out: 1.4, yaw: 2.1, solid: false },
+];
 const themes: Record<Theme, [Story, number][]> = {
   fringe: [[camp, 2], [wreck, 2], [evac, 1]],
   depot: [[depot, 3], [wreck, 2], [camp, 1], [military, 1]],
@@ -157,8 +181,12 @@ export function cureCrossingStories(placements: readonly Placement[]): Placement
       const style = new Rng(1108, `cure-crossing:${li}:${n}`);
       let roll = style.next() * total, story = stories[0][0];
       for (const [fn, w] of stories) { if ((roll -= w) < 0) { story = fn; break; } }
+      const hero = li === 2 && n === 12 ? ['r4-command', r4CommandPost] as const
+        : li === 2 && n === 14 ? ['r4-evac', r4EvacBlockade] as const
+          : li === 5 && n === 14 ? ['r6-triage', r6Triage] as const : null;
+      if (hero) story = hero[1];
       // Never the same scene twice in a row.
-      if (story === previous) story = stories[(stories.findIndex(([fn]) => fn === story) + 1) % stories.length][0];
+      if (!hero && story === previous) story = stories[(stories.findIndex(([fn]) => fn === story) + 1) % stories.length][0];
       const pieces = story(style);
       const preferred = n % 2 ? -1 : 1;
       let placed = null as Placement[] | null;
@@ -171,7 +199,7 @@ export function cureCrossingStories(placements: readonly Placement[]): Placement
           let ok = true;
           for (const [k, piece] of pieces.entries()) {
             const lat = lateral + piece.out, px = x + ux * piece.along + nx * lat, pz = z + uz * piece.along + nz * lat;
-            const p = make(`decor-cure-cross-${li}-${n}-${k}`, piece, px, pz, base + piece.yaw);
+            const p = make(`decor-cure-cross-${li}-${n}-${k}${hero ? `-hero-${hero[0]}` : ''}`, piece, px, pz, base + piece.yaw);
             if (!fits(p, line, nearby, list, keep)) { if (k === 0 || piece.light && lit) { ok = false; break; } continue; }
             const fx = x + ux * (piece.along + (piece.fire?.[0] ?? 0)) + nx * (lat + (piece.fire?.[1] ?? 0)), fz = z + uz * (piece.along + (piece.fire?.[0] ?? 0)) + nz * (lat + (piece.fire?.[1] ?? 0));
             // NightAccents.cureAccents only lights a fire > 8.5 m past a lane edge and 14 m from an encounter station.
