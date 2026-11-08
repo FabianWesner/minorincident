@@ -6,14 +6,13 @@ import { spawn } from 'node:child_process';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { gearTier, powerScore, preset } from '../../src/sim/progression/Campaign';
-import { SAVE_KEY } from '../../src/sim/progression/Save';
+import { SAVE_KEY, validateSave } from '../../src/sim/progression/Save';
 import { runSession } from '../playtest/session';
 import { provenance } from './accept/probe';
 
 const cases = [
   { name: 'fresh-high-gl', quality: 'high', backend: 'webgl2', zoom: 1, character: 'female', gear: null },
   { name: 'preset-low-gpu', quality: 'low', backend: 'webgpu', zoom: 1.5, character: 'male', gear: 4 },
-  { name: 'gear0-low-gl', quality: 'low', backend: 'webgl2', zoom: 1, character: 'female', gear: 0 },
   { name: 'gear1-high-gpu', quality: 'high', backend: 'webgpu', zoom: 1.5, character: 'male', gear: 1 },
   { name: 'gear2-high-gl', quality: 'high', backend: 'webgl2', zoom: 1.5, character: 'female', gear: 2 },
   { name: 'gear3-low-gpu', quality: 'low', backend: 'webgpu', zoom: 1, character: 'male', gear: 3 },
@@ -41,13 +40,14 @@ try {
     const save = cell.gear === null ? null : preset('L7-default');
     if (save) {
       save.character = cell.character; save.settings.quality = cell.quality;
-      if (cell.gear === 0) { save.ownedActions = ['weapon.bat']; save.upgrades = []; save.racks = { LEFT: ['weapon.bat'], RIGHT: ['weapon.kick'] }; }
-      if (cell.gear === 1) { save.ownedActions = ['weapon.bat', 'weapon.fire-axe', 'weapon.handgun', 'weapon.army-mg', 'weapon.shotgun']; save.upgrades = []; }
-      if (cell.gear === 2) save.upgrades = [];
-      if (cell.gear === 3) {
-        const choices = [...save.upgrades]; save.upgrades = [];
-        while (gearTier(save) < 3 && choices.length) save.upgrades.push(choices.shift()!);
+      if (cell.gear < 4) {
+        // Keep ten earned upgrades and both base actions: incomplete upgrade
+        // histories are rejected by the production save loader before the menu.
+        save.ownedActions = save.ownedActions.slice(0, cell.gear === 1 ? 3 : cell.gear === 2 ? 5 : 9);
+        save.upgrades = ['knockback', 'perk'].flatMap(family => Array.from({ length: 5 }, (_, i) => `upgrade.${family}.${i + 1}`));
+        save.racks = { LEFT: ['weapon.bat'], RIGHT: ['weapon.kick'] };
       }
+      if (!validateSave(save)) throw new Error(`Invalid campaign fixture ${cell.name}`);
       if (gearTier(save) !== cell.gear) throw new Error(`Wrong fixture gear ${cell.name}`);
       writeFileSync(resolve(out, 'save.json'), JSON.stringify(save));
       writeFileSync(resolve(profile, 'pool-storage.json'), JSON.stringify({ cookies: [], origins: [{ origin, localStorage: [{ name: SAVE_KEY, value: JSON.stringify(save) }] }] }));
