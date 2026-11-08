@@ -26,7 +26,9 @@ The final-source high-tier complete route passes at **90% reach**, first contact
 
 [All four final-source route receipts](evidence/post-merge/route-final/) pass the required clauses (the separate G-13 waiting bound remains inconclusive). The [final production tour](evidence/post-merge/production-tour-low.json) reaches campaign progression in **768.25 s**, with **two courier deaths, 14 rescued and zero collision failures**; successful arena durations are 64.37 / 57.65 / 53.05 / 66.35 / 79.72 / 92.23 s.
 
-**Open:** post-merge typecheck, lint, unit tests and corrected six-arena matrix on runners. The receipts below describe the original lane source until the post-merge results are committed. **Browser QA needed** remains open; no browsers are launched.
+**Final matrix passed:** all 12 low/high skilled clears are 47.47–88.60 s with zero deaths; all 18 passive/standing/circle rows die without clearing. All rows use source `877d7e1d`. Typecheck and lint have passed on the same source.
+
+**Open:** final unit-gate completion receipt. The receipts below describe the original lane source until the post-merge results are committed. **Browser QA needed** remains open; no browsers are launched.
 
 ## Done and open items
 
