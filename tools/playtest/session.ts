@@ -104,6 +104,9 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     let resume = false;
     try {
       if (process.env.PLAYTEST_THREAT_AUDIT === '1') resume = await page.evaluate(() => {
+        // Exclude only the RAF interval spanning an intentional screenshot pause.
+        const audit = (window as unknown as { __threatPlaytestAudit?: { captureEpoch: number } }).__threatPlaytestAudit;
+        if (audit) audit.captureEpoch++;
         const g = (window.__SCENE__ as unknown as { game?: Game })?.game;
         if (!g || g.clock.paused || g.world.missions?.state.phase !== 'playing') return false;
         window.__SS__!.pause(); return true;

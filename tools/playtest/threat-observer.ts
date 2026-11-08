@@ -5,11 +5,12 @@ import type { Game } from '../../src/Game';
 export function installThreatObserver(frameTiming = true): void {
   const root = window as unknown as {
     __SCENE__?: { game: Game };
-    __threatPlaytestAudit: { samples: unknown[]; fightFrames: unknown[] };
+    __threatPlaytestAudit: { samples: unknown[]; fightFrames: unknown[]; captureEpoch: number };
     __playtestAttacks?: Record<string, number>;
   };
   const samples: unknown[] = [], fightFrames: unknown[] = [];
-  root.__threatPlaytestAudit = { samples, fightFrames };
+  root.__threatPlaytestAudit = { samples, fightFrames, captureEpoch: 0 };
+  let previousCaptureEpoch = 0;
   let previous = 0, previousTick = -1, previousLevel: string | null = null, lastSample = 0, wasFight = false;
   const visible = (id: string) => {
     const e = document.querySelector<HTMLElement>(`[data-testid="${id}"]`);
@@ -26,7 +27,9 @@ export function installThreatObserver(frameTiming = true): void {
     const combatPhase = w.scenario === 'L8' && !!m.state.states.breached || w.scenario === 'L10' && !!m.state.states['charge-active']
       || w.scenario === 'L5' && step === 'look' || w.scenario === 'L7' && step === 'corridor' || w.scenario === 'L9'; // Include crash/crawl frame timings.
     const fight = playing && !!p && (combatPhase || enemies.some(e => Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z) < 20));
-    if (frameTiming && fight && wasFight && w.scenario === previousLevel && w.tick > previousTick && previous) fightFrames.push({ level: w.scenario, tick: w.tick, step, ms: now - previous });
+    const captureEpoch = root.__threatPlaytestAudit.captureEpoch;
+    if (frameTiming && captureEpoch === previousCaptureEpoch && fight && wasFight && w.scenario === previousLevel && w.tick > previousTick && previous) fightFrames.push({ level: w.scenario, tick: w.tick, step, ms: now - previous });
+    previousCaptureEpoch = captureEpoch;
     previous = now; previousTick = w.tick; previousLevel = w.scenario; wasFight = fight;
     if (!playing || !p || now - lastSample < 500) return;
     lastSample = now;
