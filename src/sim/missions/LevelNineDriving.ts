@@ -153,7 +153,7 @@ export class LevelNineDriving {
       || e.id === this.state.samId && this.mission.l9!.state.phase !== 'driving';
   }
   /** The cab stays occupied; only the stopped, open hatch exposes the courier and her carried arsenal. */
-  get hatch(): boolean { return this.mission.l9?.state.phase === 'driving' && this.holding(this.car.entity.id); }
+  get hatch(): boolean { return this.mission.l9?.state.phase === 'driving' && this.holding(this.car.entity.id) && this.car.physics.speed < 1; }
   canRepair(): boolean { return distance(this.car.entity.transform, cfg.repair) < cfg.repair.radius && this.car.physics.speed < 1 && this.state.restarted && this.state.evacuationAt === null && this.state.repairTicks < cfg.repair.ticks; }
   update(): void {
     const s = this.state, w = this.w, car = this.car, p = car.entity.transform, tick = w.tick;
