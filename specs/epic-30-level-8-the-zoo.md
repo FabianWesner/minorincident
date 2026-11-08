@@ -4,7 +4,7 @@
 
 ## 1. Goal
 
-The evacuation bus reaches a large zoo converted into a genuine-looking safe zone. Let the player freely explore for 60 seconds with no objective, then breach it from an unsecured underground network at several locations simultaneously. Humans and normal animals become infected; the player uses the accumulated arsenal to escort survivors to an armored military vehicle and escape.
+The evacuation bus reaches a large zoo converted into a genuine-looking safe zone. Show the opening objective while the player freely explores for 60 seconds, then breach it from an unsecured underground network at several locations simultaneously. Humans and normal animals become infected; the player uses the accumulated arsenal to escort survivors to an armored military vehicle and escape.
 
 > PO, verbatim: "The zoo has been converted into a safe zone."
 >
@@ -30,7 +30,7 @@ E29 (bus arrival, arsenal/group), E07 (Alpha and existing lion/gorilla/cat/other
 
 ## 3. Scope
 
-**In:** D-ZOO perimeter walls, military presence, civilians and zoo staff, intact facilities/paths/lights/infrastructure, normal animals; 60 s calm without objective; internal emergence from ≥ 3 tunnel points; attacks on civilians/soldiers/staff/animals; animal infection using existing archetypes including lion; regular infected, Alphas, turned humans and infected animals together; escape in an armored military vehicle with surviving group; all prior weapons retained.
+**In:** D-ZOO perimeter walls, military presence, civilians and zoo staff, intact facilities/paths/lights/infrastructure, normal animals; 60 s calm with opening objective visible; internal emergence from ≥ 3 tunnel points; attacks on civilians/soldiers/staff/animals; animal infection using existing archetypes including lion; regular infected, Alphas, turned humans and infected animals together; escape in an armored military vehicle with surviving group; all prior weapons retained.
 
 **Out:** a new weapon, clearing the entire zoo as a completion condition, a siege through the perimeter replacing the internal breach, unrelated replacement animal models; new infected elephant/zebra definitions and variants are required derivatives of normal bases. Optional infected visible outside walls cannot enter during calm.
 
@@ -54,7 +54,7 @@ Extend `src/levels/districts/D-ZOO.ts` and the existing zoo layout/assets, rathe
 
 Orchestrator default safe crowd on both tiers: carried L7 survivors plus ≥ 20 local adult civilians, ≥ 6 soldiers and ≥ 4 staff (staff clothing tint/props on civilian bases). ≥ 8 normal animals including all five species: ≥ 1 lion, ≥ 1 gorilla, ≥ 1 elephant, ≥ 2 zebras and ≥ 3 flamingos (so herd/flock moves have real participants), in functioning enclosures. All PO safety elements are present: intact facilities, clean paths, lights and functioning infrastructure. Bodies/corpses do not pre-dress the sanctuary. Civilians converse/rest, staff tend animals, soldiers guard; no idle-facing-nowhere > 3 s.
 
-**60 s of active sim time** begins when player control returns after arrival (orchestrator decision). No objective, waypoint, objective panel or forced tutorial during [0,60); free movement/weapon selection, no scripted major incident. Player-triggered firing is allowed and does not skip the timer or turn animals magically (orchestrator default). Pause freezes the timer; checkpoint restores remaining time. At 60 s start the internal breach, independently of player exploration.
+**60 s of active sim time** begins when player control returns after arrival (orchestrator decision). Show the opening objective, but no waypoint or forced tutorial during [0,60); free movement/weapon selection, no scripted major incident. Player-triggered firing is allowed and does not skip the timer or turn animals magically (orchestrator default). Pause freezes the timer; checkpoint restores remaining time. At 60 s start the internal breach, independently of player exploration.
 
 ### 5.2 Simultaneous internal breach
 
@@ -121,7 +121,7 @@ All rows **NEW 2026-10-11**. Numeric defaults come from §5; each test carries `
 | E30-AC01 | Graph (arrival/calm → internal breach → fight to vehicle → board/depart) is completable with 0–35 carried survivors, no kill-all objective or fail timer. | sim (`T-E30-01`) |
 | E30-AC02 | `complete` finishes one seed from `L8-default` without cheats, ≥ 60 % of carried group survives (orchestrator default); no need to eradicate infected elsewhere. | sim (`T-E30-02`) |
 | E30-AC03 | L7 bus arrives at D-ZOO; exact living roster/acquired arsenal transfers; companions start every level at full health (orchestrator 2026-10-16: hours pass between levels), while vehicle durability is preserved; six-weapon standalone loadout selectable, no new weapon pickup anywhere in L8, rocket remains unlimited. | sim + e2e (`T-E30-03`) |
-| E30-AC04 | For exactly 60 active sim seconds after control returns there is no objective/waypoint/forced tutorial or scripted attack/conversion/breach; movement and weapon selection work; pause and sanctuary restore preserve remaining calm time. | sim + e2e (`T-E30-04`) |
+| E30-AC04 | For exactly 60 active sim seconds after control returns the opening objective is visible, with no waypoint/forced tutorial or scripted attack/conversion/breach; movement and weapon selection work; pause and sanctuary restore preserve remaining calm time. | sim + e2e (`T-E30-04`) |
 | E30-AC05 | Before breach, strong closed walls, ≥ 20 local civilians, ≥ 6 soldiers, ≥ 4 staff, ≥ 8 normal animals incl. all five zoo species, ≥ 2 zebras and ≥ 3 flamingos, intact facilities, clean paths, powered lights and working infrastructure exist on both tiers in addition to carried group. | static + sim + visual (`T-E30-05`) |
 | E30-AC06 | Outside-wall infected fixture cannot cross the perimeter or damage inside occupants during calm; staff/civilian/soldier/normal-animal routines show no hostile brain or idle-facing-nowhere > 3 s. | sim (`T-E30-06`) |
 | E30-AC07 | First breach begins at 60 s ± 1 tick, at ≥ 3 inside tunnel points ≥ 20 m apart within a 1 s window; 6/3 initial infected per point high/low, with no visible pop-in or postponement due to camera facing. | sim + e2e (`T-E30-07`) |
@@ -157,7 +157,7 @@ Ordered lanes, each ≤ 3 h; keep all PO scope if more lanes are needed.
 | L8-S4 special moves | 3 h | Consume E07 Z-S3 zebra/flamingo behaviors and obstruction accessibility; wire all five species into L8 target/infection path. |
 | L8-D1 district | 3 h | Extend existing D-ZOO layout/data using `bld.zoo-gate`, zoo enclosures/maintenance assets, E26 fences and E25 path lights; strong walls, connected public/service paths. |
 | L8-D2 district + variants | 3 h | Derive healthy lion/gorilla/flamingo looks from shipped infected bases; normal elephant/zebra bases and derived infected variants reuse E07 Z-D1/Z-D2, civilian-base staff variants, unarmed `veh.military-apc` visual variant; author ≥ 3 occluded tunnel outlets. |
-| L8-E1 encounters | 3 h | Reuse `HouseEmergence.ts`, director, `Allies.ts` and survivor group controller: 60 s no-objective calm, simultaneous internal breach, human/animal conversion, 3–5 Alphas. |
+| L8-E1 encounters | 3 h | Reuse `HouseEmergence.ts`, director, `Allies.ts` and survivor group controller: 60 s calm with opening objective, simultaneous internal breach, human/animal conversion, 3–5 Alphas. |
 | L8-E2 escape | 2 h | Reuse `Survivors.ts`, interaction and mission/campaign handovers: route to vehicle, complete roster boarding, L9 begins inside APC. |
 | L8-Q1 Scene Lab | 3 h | Proposed `qa-l8-{sanctuary,breach,animal-turn,mixed-battle,escape}.json`; four calm/outbreak pairs, vehicle pair, E18 mixed-species counters. |
 | L8-Q1b per-move Scene Lab | 3 h | Ten §5.3b `qa-zoo-*.json` scenes, activation/impact/expiry/cooldown/wall probes and shared bars on desktop/phone; reuse E07 Z-Q1 scenes without duplication. |
