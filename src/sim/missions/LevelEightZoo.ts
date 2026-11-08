@@ -13,8 +13,10 @@ import { zooStaffLook } from '../../data/zooStaff';
 import { readyCarriedAlly, allyState } from '../outbreak/Allies';
 import { layoutHouseDoors, doorExit, emergeResident, walkResidents, type HouseEmergence } from '../outbreak/HouseEmergence';
 import { formationSlot, leaderHeading, requireClearPoint } from './missionHelpers';
+import { L8BossArenas, type L8ArenaState } from './L8BossArenas';
 
 export interface L8ZooState {
+  arenas: L8ArenaState[];
   startedAt: number; breachedAt: number; nextWave: number; alphas: number; carId: number; busId: number;
   roster: number[]; guards: number[]; animals: number[]; outlets: HouseEmergence[];
   arrivals: { id: number; outlet: number; tick: number; alpha: boolean }[];
@@ -25,7 +27,8 @@ export interface L8ZooState {
 const distance = (a: Point, b: Point) => Math.hypot(a.x - b.x, a.z - b.z);
 /** Zoo story owns timing/entrances; the shared outbreak owns all bites, rescues and same-id transformations. */
 export class LevelEightZoo {
-  state: L8ZooState = { startedAt: 0, breachedAt: 0, nextWave: 0, alphas: 0, carId: 0, busId: 0, roster: [], guards: [], animals: [], outlets: [], arrivals: [], escapeCheckpoint: false, keeperId: 0, pondKeeperId: 0, haleId: 0, reyesId: 0, dogId: 0, megaId: 0, broadcastAt: 0, greetingAt: 0, lionSpoken: false, haleGreetingAt: 0, sightingAt: 0, departureAt: 0, chaseAt: 0, departureFrom: null, turnedAnimalId: 0, animalInterceptionId: 0, animalBiteStarted: false, keeperAttacked: false };
+  readonly bosses: L8BossArenas;
+  state: L8ZooState = { arenas: [], startedAt: 0, breachedAt: 0, nextWave: 0, alphas: 0, carId: 0, busId: 0, roster: [], guards: [], animals: [], outlets: [], arrivals: [], escapeCheckpoint: false, keeperId: 0, pondKeeperId: 0, haleId: 0, reyesId: 0, dogId: 0, megaId: 0, broadcastAt: 0, greetingAt: 0, lionSpoken: false, haleGreetingAt: 0, sightingAt: 0, departureAt: 0, chaseAt: 0, departureFrom: null, turnedAnimalId: 0, animalInterceptionId: 0, animalBiteStarted: false, keeperAttacked: false };
   private prepared = false;
   private rosterCacheTick = -1;
   private rosterCacheRevision = -1;
@@ -34,6 +37,7 @@ export class LevelEightZoo {
   private readonly seatedPassengers = new Set<number>();
   private readonly cacheStops: (() => void)[] = [];
   constructor(private readonly mission: Mission) {
+    this.bosses = new L8BossArenas(mission);
     const invalidate = () => { this.rosterCacheTick = -1; this.rosterCacheRevision = -1; };
     for (const type of ['entity.spawned', 'civilian.state', 'civilian.finished', 'combat.kill'] as const)
       this.cacheStops.push(mission.world.events.on(type, invalidate));
@@ -45,6 +49,7 @@ export class LevelEightZoo {
     this.cacheStops.push(mission.world.events.on('civilian.turned', event => {
       if (event.type !== 'civilian.turned' || !this.state.animals.includes(event.id)) return;
       this.state.turnedAnimalId ||= event.id;
+      this.bosses.turned(event.id);
       mission.world.infected!.pursueTarget(event.id, 1);
     }));
   }
@@ -102,6 +107,7 @@ export class LevelEightZoo {
       const at = this.point({ x: gateX + offset * 2, z: anchor.z + gateSideZ - (speciesId === 'flamingo' && offset === 0 ? 3 : 0) }, radius), to = this.point({ x: at.x + 2, z: at.z }, radius);
       s.animals.push(civilians.spawn('cashier', at, { zooAnimal: speciesId, waypoints: [at, to] }));
     }
+    this.bosses.prepare();
     const tour = [{ x: 24, z: 64 }, { x: 24, z: 0 }, { x: 45, z: 0 }, { x: -45, z: 0 }, { x: 0, z: 0 }];
     const keeper = this.point({ x: 3, z: 66 }), staff = zooStaffLook(6);
     s.keeperId = outbreak.spawnPedestrian(keeper, { ...staff, walkSpeed: 4.6, waypoints: tour,
@@ -125,15 +131,15 @@ export class LevelEightZoo {
       const exit = doorExit(w, door, start); if (!exit) throw new Error(`Disconnected zoo outlet ${door.house}`);
       const serviceRoutes: [number, number][][] = [
         [[-96, 32]],
-        [[80, 78]], // Cross the gate-to-APC road before ordinary pursuit.
+        [], // The eastern apron is already connected; normal pursuit owns the route.
         [[-24, -64], [0, -56], [0, -44], [-11, -40], [-11, -24], [1, -19.2]], // Enter the north gate and walk the dry shore around the pond.
-        [[27, 78]], // Clear the bunker onto the gate road before ordinary pursuit.
+        [[24, 64]], // Leave onto the boulevard toward the plaza instead of walking south around the bunker.
       ];
       const route = [...exit.route, ...serviceRoutes[index]];
       const last = route.at(-1);
       // Alarm runners clear the entrance briskly; the larger high-tier queue
       // must still contact the courier within twenty seconds.
-      return { ...door, ...exit, route, ox: last?.[0] ?? exit.ox, oz: last?.[1] ?? exit.oz, next: 0, ids: [], speedMs: index === 2 ? 5.6 : 4.2 };
+      return { ...door, ...exit, route, ox: last?.[0] ?? exit.ox, oz: last?.[1] ?? exit.oz, next: 0, ids: [], speedMs: index === 2 ? 5.6 : index === 3 ? 6.8 : 4.2 };
     });
     if (s.outlets.length < 3) throw new Error('Zoo requires at least three tunnel outlets');
     // The carried group has just unloaded from L7's evacuation bus inside the perimeter.
@@ -167,7 +173,7 @@ export class LevelEightZoo {
     const healthy = [...w.entities.iterate()].filter(e => e.civilian && e.civilian.state !== 'finished' && e.health.current > 0 && !e.hidden && !e.infection);
     const conversionRoom = healthy.filter(e => e.civilian!.zooAnimal).length + Math.min(12, healthy.filter(e => !e.civilian!.zooAnimal).length);
     if (ai.director.count + ai.director.pendingTurns >= ai.director.cap - conversionRoom - 1) return;
-    const id = emergeResident(w, outlet, w.tick, alpha ? { archetype: 'infected.alpha' } : { look: { role: 'cashier' } });
+    const id = emergeResident(w, outlet, w.tick, alpha ? { archetype: 'infected.alpha' } : { ...(index === 3 ? { archetype: 'infected.sprinter' } : {}), look: { role: 'cashier' } });
     if (id) {
       this.state.arrivals.push({ id, outlet: index, tick: w.tick, alpha }); if (alpha) this.state.alphas++;
       // The K9 follows the same hidden vestibule/door walk as the human cohort.
@@ -179,6 +185,15 @@ export class LevelEightZoo {
         this.state.animalInterceptionId = id;
       }
     }
+  }
+  /** Animal carriers use the same occluded service-door emergence as the announced tunnel cohort. */
+  arenaCarrier(targetId: number): number {
+    const target = this.w.entities.get(targetId)!;
+    const outlet = [...this.state.outlets].sort((a, b) => Math.hypot(a.ox - target.transform.x, a.oz - target.transform.z) - Math.hypot(b.ox - target.transform.x, b.oz - target.transform.z))[0];
+    if (!outlet || this.w.infected!.director.count >= this.w.infected!.director.cap - 30) return 0;
+    const id = emergeResident(this.w, outlet, this.w.tick, { look: { role: 'cashier' } });
+    if (id) this.w.entities.get(id)!.infected!.arenaCarrier = targetId;
+    return id;
   }
   /** The opening shock keeps the group in the plaza before the APC route appears. */
   protecting(): boolean { return this.breached && this.w.tick < this.state.breachedAt + 30 * 60; }
@@ -301,6 +316,7 @@ export class LevelEightZoo {
   }
   update(): void {
     const w = this.w, s = this.state, ai = w.infected!, t = w.tick;
+    this.bosses.update();
     this.story();
     let pending = 0; for (const e of w.entities.iterate()) if (e.infection && !e.infected) pending++;
     ai.director.pendingTurns = pending;
@@ -329,22 +345,20 @@ export class LevelEightZoo {
     else if(this.mission.state.steps.escape.status==='active'||this.mission.state.steps.depart.status==='active')this.mission.state.marker='exit';
     if (!this.breached) return;
     if (t >= s.nextWave) {
-      s.nextWave = t + 240;
-      s.outlets.forEach((outlet, i) => {
-        // The first reinforcement brings one Alpha per outlet. The fifth follows
-        // the east cohort on the next wave, sustaining the APC approach after its first salvo.
-        this.release(outlet, i, s.alphas < 4 || s.alphas === 4 && i === 1);
-        for (let n = 0; n < 3; n++) this.release(outlet, i);
-      });
+      // The animal arenas carry the outbreak after the first tunnel surge (PO 11-08).
+      // Four ordinary arrivals sustain the opening, without turning the zoo into another horde slaughter.
+      s.nextWave = t + 36_000;
+      s.outlets.forEach((outlet, i) => this.release(outlet, i));
     }
     for (const [index, outlet] of s.outlets.entries()) for (const id of walkResidents(w, outlet, t)) {
-      if (id === s.animalInterceptionId) ai.pursueTarget(id, s.animals[5]);
+      if (w.entities.get(id)?.infected?.arenaCarrier) { ai.pursueTarget(id, w.entities.get(id)!.infected!.arenaCarrier!); continue; }
+      else if (id === s.animalInterceptionId) ai.pursueTarget(id, s.animals[5]);
       else if (id === s.dogId) ai.pursueTarget(id, s.pondKeeperId);
       else ai.pursueTarget(id, 1);
       // This gate-side cohort pressures the courier; the other outlets still attack the sanctuary population.
       // Releasing on the apron and retaining that focus avoids spending the whole encounter walking a scripted road.
       if (index === 3) ai.press(id, 1, t + 3600, 30);
-      if (index === 1) {
+      if (index === 1 && !w.entities.get(id)!.infected!.arenaCarrier) {
         // The east cohort intercepts the evacuation at its parked APC. Native
         // navigation and ordinary senses own this approach; party contact can
         // interrupt it. A perimeter tour previously arrived after departure.
@@ -474,7 +488,7 @@ export class LevelEightZoo {
     const slot = c.survivor!.slot, velocity = p.survivor!.velocity;
     // Catch-up and the tightly spaced APC queue need the shared follower
     // response: civilian steering overshoots these changing targets.
-    if (this.breached && (boarding || distance(e.transform, p.transform) > 10)) c.survivor!.briskAt = w.tick;
+    if (this.breached) c.survivor!.briskAt = w.tick;
     const goal = formationSlot(p.transform, leaderHeading(p.transform.yaw, velocity), slot);
     let target = boarding ? door : w.infected!.nav.clear(goal.x, goal.z, .35) ? goal : p.transform;
     let queueIndex = 0;
@@ -509,7 +523,7 @@ export class LevelEightZoo {
       // board-up; a stale carried injury flag must not leave passengers behind.
       // A follower displaced from its assigned slot catches up, then settles
       // back to courier pace. This avoids making the courier stop for it.
-      const speed = Math.min(5.2, 4.5 + Math.max(0, distance(e.transform, target) - 4) * .35);
+      const speed = Math.min(6.4, 4.5 + Math.max(0, distance(e.transform, target) - 2) * .6);
       if (!boarding || !this.approachBoardingSpot(e, target, speed)) w.npcs!.move(e, target, speed, c, boarding ? .2 : 0, 2400);
     }
     return true;
@@ -526,7 +540,12 @@ export class LevelEightZoo {
   snapshot() { return { state: structuredClone(this.state), prepared: this.prepared, doors: [...this.w.openDoors].map(([id, door]) => [id, { ...door }] as const), tick: this.w.tick }; }
   restore(saved: unknown): void {
     const data = saved as ReturnType<LevelEightZoo['snapshot']>, delta = this.w.tick - data.tick;
-    this.state = structuredClone(data.state); this.prepared = data.prepared;
+    this.state = structuredClone(data.state); this.state.arenas ??= []; this.prepared = data.prepared;
+    if (!data.state.arenas) {
+      this.bosses.prepare();
+      for (const arena of this.state.arenas) for (const id of arena.ids) if (this.w.entities.get(id)?.infected && this.w.entities.get(id)!.health.current > 0) this.bosses.turned(id);
+    }
+    this.bosses.restore(delta);
     this.w.openDoors.clear();
     for (const [id, door] of data.doors) this.w.openDoors.set(id, { ...door, at: door.at + delta });
     // A checkpoint restored on tick zero can have a legitimate breach time of zero.

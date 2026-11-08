@@ -47,11 +47,11 @@ export class PropThrows {
     if (!this.world.infected!.hearing.lineOfSight(source.transform, p)) return;
     this.object.id = id; this.object.corpse = corpse; this.objectDistanceSquared = squared;
   }
-  launchSpecial(source: EntitySnapshot, a: InfectedSpecialAttack, radius: number): boolean {
+  launchSpecial(source: EntitySnapshot, a: InfectedSpecialAttack, radius: number, range = 15, speed = 12): boolean {
     const object = this.nearestObject(source, radius); if (!object) return false;
     const dx = a.target.x - source.transform.x, dz = a.target.z - source.transform.z, distance = Math.hypot(dx, dz);
     if (distance < .01) return false;
-    a.projectile = { objectId: object.id, corpse: object.corpse, started: this.world.tick, x: source.transform.x, z: source.transform.z, dx: dx / distance, dz: dz / distance, distance: 0, range: Math.min(15, distance) };
+    a.projectile = { objectId: object.id, corpse: object.corpse, started: this.world.tick, x: source.transform.x, z: source.transform.z, dx: dx / distance, dz: dz / distance, distance: 0, range: Math.min(range, distance), speed };
     const body = this.world.entities.get(object.id); if (object.corpse && body) { body.corpseThrown = true; delete body.corpseBlast; }
     this.world.events.emit({ type: 'infected.prop-thrown', tick: this.world.tick, sourceId: source.id, propId: object.id, attackId: a.attackId });
     this.positionSpecial(a, false); return true;
@@ -61,7 +61,7 @@ export class PropThrows {
     const f = a.projectile!;
     if (this.world.tick === f.started) return false;
     const old = { x: f.x + f.dx * f.distance, z: f.z + f.dz * f.distance };
-    const next = Math.min(f.range, (this.world.tick - f.started) * 12 / 60), p = { x: f.x + f.dx * next, z: f.z + f.dz * next };
+    const next = Math.min(f.range, (this.world.tick - f.started) * (f.speed ?? 12) / 60), p = { x: f.x + f.dx * next, z: f.z + f.dz * next };
     // Full solid cover wins over a human behind it, including thin dynamic LOS blockers.
     if (!this.world.infected!.hearing.lineOfSight(old, p)) { this.positionSpecial(a, true); return true; }
     f.distance = next; this.positionSpecial(a, false);

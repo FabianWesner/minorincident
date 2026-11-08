@@ -69,6 +69,7 @@ export class Combat {
   intent(frame: InputFrame): void {
     if (!this.world.entities.get(1)!.weapons) return;
     this.runner.loadout.update(this.world.tick, this.switched);
+    if (this.world.missions?.l8?.bosses.swapBlocked()) frame = { ...frame, selector: 0, selectedSlot: undefined, selectedActiveSlot: undefined, selectedWeaponKey: undefined };
     this.runner.loadout.input(frame, this.world.tick);
     this.status.update();
   }
@@ -96,7 +97,12 @@ export class Combat {
     const closePoint = !!point && Math.hypot(point.x - source.transform.x, point.z - source.transform.z) < 5;
     const closeEnemy = this.query.melee(source.id, source.transform, attack.aim, 5, 30, 1000).some(target => target.faction === 'infected'
       && !target.hidden && !target.infected?.hidden && Math.hypot(target.transform.x - source.transform.x, target.transform.z - source.transform.z) < 5);
-    if (!closePoint && !closeEnemy) return true;
+    if (!closePoint && !closeEnemy) {
+      if (this.world.missions?.l8 && !this.world.missions.l8.bosses.spendRocket()) {
+        this.world.events.emit({ type: 'combat.empty', tick: this.world.tick, sourceId: source.id, actionId: attack.def.id, position: { ...source.transform } }); return false;
+      }
+      return true;
+    }
     this.world.events.emit({ type: 'combat.empty', tick: this.world.tick, sourceId: source.id, actionId: attack.def.id, position: { ...source.transform }, reason: 'too-close' });
     return false;
   };

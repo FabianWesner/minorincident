@@ -1,3 +1,4 @@
+import { L8ArenaBot } from './L8ArenaBot';
 import { strikeAt } from './helpers';
 import { emptyInput, type InputFrame } from '../../input/InputFrame';
 import type { SimWorld } from '../../sim/world/SimWorld';
@@ -7,7 +8,8 @@ export class LevelEightBot {
   finished = false;
   private readonly walker = new Walker();
   private breachHoldStarted = 0;
-  constructor(private readonly w: SimWorld, readonly profile = 'complete') {}
+  private readonly arenas: L8ArenaBot;
+  constructor(private readonly w: SimWorld, readonly profile = 'complete') { this.arenas = new L8ArenaBot(w); }
   sample(): InputFrame {
     const w = this.w, m = w.missions!, zoo = m.l8!, f = emptyInput(), player = w.entities.get(1)!;
     this.finished = m.state.phase === 'result' || m.state.phase === 'progression';
@@ -19,6 +21,10 @@ export class LevelEightBot {
       this.breachHoldStarted ||= w.tick;
       if (w.tick - this.breachHoldStarted < 60 * 60) return f;
     }
+    if (!calm && !zoo.protecting()) {
+      const arena = zoo.state.arenas.find(a => a.phase !== 3);
+      if (arena && this.profile !== 'story-only') return this.arenas.sample(arena.id);
+    }
     const door = zoo.door(), car = w.vehicles!.cars.get(zoo.state.carId)!.entity.vehicle!;
     const boarded = zoo.passengers().every(id => car.passengers?.some(p => p.id === id && p.phase === 'seated'));
     // Cover the queue on foot; the APC has no gun. Stand clear of its door so
@@ -27,7 +33,10 @@ export class LevelEightBot {
     if (!calm) {
       const enemies = w.infected!.active.filter(e => e.health.current > 0 && !e.hidden && !e.emerging && !e.infectionRise && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < 16 && w.infected!.director.inPlayerView(e.transform, 16, 1, 5) && w.infected!.nav.visible(p, e.transform, 0)).sort((a, b) => Math.hypot(a.transform.x - p.x, a.transform.z - p.z) - Math.hypot(b.transform.x - p.x, b.transform.z - p.z));
       const enemy = enemies[0];
-      if (enemy && this.profile !== 'evade-only') { strikeAt(f, enemy, 'RIGHT', p, false); }
+      if (enemy && this.profile !== 'evade-only') {
+        const gun = w.combat!.runner.loadout.activeEntries().find(e => e.id === 'weapon.army-mg');
+        if (gun) { f.selectedSlot = { side: gun.side, index: gun.index }; strikeAt(f, enemy, gun.side, p, false); }
+      }
       const live = zoo.roster().map(id => w.entities.get(id)).filter(e => e && e.health.current > 0 && !e.infected && e.passengerOf === undefined);
       if (Math.hypot(p.x - target.x, p.z - target.z) > 10 && live.some(e => Math.hypot(e!.transform.x - p.x, e!.transform.z - p.z) > Math.max(12, Math.ceil(live.length / 3) * 1.2 + 5))) return f;
     }

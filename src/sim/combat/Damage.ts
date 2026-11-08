@@ -64,7 +64,9 @@ export class Damage {
     // Retain other levels' authored segment-origin shield behavior, especially
     // the frozen L5 balance. Shield counters use the original launch point only.
     const directionalHit = (this.world.scenario === 'L4' || this.world.scenario === 'L6') && target.combat?.shield && hit.shotOrigin ? { ...hit, origin } : hit;
-    const amount = damageAmount(directionalHit, target, open, faceDot);
+    let amount = damageAmount(directionalHit, target, open, faceDot);
+    const arena = target.infected?.arenaBoss;
+    if (arena && hit.actionId !== 'arena.elephant.wall') amount *= this.world.tick < arena.exposedUntil ? 1.8 : .18;
     return glance ? amount * riotShieldResponse.chipFraction : amount;
   }
   /** True only for an actual frontal L4/L6 riot shield firearm hit outside contact and break windows. */
@@ -106,6 +108,7 @@ export class Damage {
     const target = this.world.entities.get(hit.targetId), source = this.world.entities.get(hit.sourceId);
     if (!target || !source) return 0;
     if (target.environmentObject) return 0; // placement parts own this prop's durability
+    if (target.infected?.arenaBoss) hit = { ...hit, permanent: true, knockback: 0, stagger: 0, knockdown: false, knockdownTicks: 0, part: undefined };
     if (hit.type === 'melee' && !combatHeightReachable(source, target)) return 0;
     // L7's power weapon opens a route for the column. Civilian splash already
     // deals no HP damage, but its generic reaction knocked the living followers

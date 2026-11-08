@@ -2,6 +2,9 @@ import type { InfectedSpecialMove } from '../../data/infected';
 
 /** Serializable AI and crowd animation intent; all timers are fixed sim ticks. */
 export interface InfectedState {
+  /** L8 arena ownership and punish window; copied with the actor on retries. */
+  arenaBoss?: { arena: import('../../data/l8Bosses').L8BossId; slot: number; engaged: boolean; exposedUntil: number; readyAt: number; scattered?: boolean; shakeHits?: number; scavengeId?: number; smashId?: string };
+  arenaCarrier?: number;
   /** L10 authored regular Alpha ownership, serialized with the entity. */
   cureRegion?: import('../../levels/L10/alphaContracts').CureRegion;
   /** Entity-owned timers survive checkpoints and chunk serialization. */
@@ -75,5 +78,5 @@ export interface InfectedSpecialAttack {
   members?: number[]; leaderId?: number; impactTick?: number; obstructionUntil?: number;
   grabbedId?: number; grabReleaseTick?: number;
   destination?: { x: number; z: number };
-  projectile?: { objectId: number; corpse: boolean; started: number; x: number; z: number; dx: number; dz: number; distance: number; range: number };
+  projectile?: { objectId: number; corpse: boolean; started: number; x: number; z: number; dx: number; dz: number; distance: number; range: number; speed?: number };
 }

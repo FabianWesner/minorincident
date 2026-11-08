@@ -17,7 +17,7 @@ export const l10InfectedBarCap = 5;
 export const l4InfectedBarCap = 6;
 export const infectedBarCap = l4InfectedBarCap;
 /** Shielded riot infected, Alphas and the pursuing Mega always keep their bar under the cap. */
-const mandatoryBar = (e: EntitySnapshot) => !!e.combat?.shield || e.archetype === 'infected.alpha' || !!e.infected?.pursuit;
+const mandatoryBar = (e: EntitySnapshot) => !!e.combat?.shield || e.archetype === 'infected.alpha' || !!e.infected?.pursuit || !!e.infected?.arenaBoss?.engaged;
 export const isFollower = (e: EntitySnapshot) => e.civilian?.survivor?.mode === 'follow' && !e.hidden && !e.infection && !['finished', 'infected'].includes(e.civilian?.state ?? '') && e.health.current > 0 && !e.corpse;
 /** `fullFollowers`: the group is small enough that healthy followers keep their bar too. */
 export function barEligible(e: EntitySnapshot, player: { x: number; z: number }, bar: boolean, fullFollowers = true): boolean {

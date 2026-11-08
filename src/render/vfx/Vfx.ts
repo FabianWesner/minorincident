@@ -396,19 +396,21 @@ export class Vfx extends Group {
     const move = 'move' in event ? event.move : undefined;
     const area = 'area' in event ? event.area : undefined;
     const target = 'target' in event ? event.target : undefined;
-    const directional = throwing || move === 'alpha.charge' || move === 'elephant.charge' || move === 'zebra.stampede' || move === 'lion.pounce' || move === 'lion.flank';
+    const arenaThrow = !!source?.infected?.arenaBoss && (move === 'gorilla.grab-throw' || move === 'monkey.debris');
+    const directional = !arenaThrow && (!!source?.infected?.arenaBoss && (move === 'flamingo.dive' || move === 'monkey.grab') || throwing || move === 'alpha.charge' || move === 'elephant.charge' || move === 'zebra.stampede' || move === 'lion.pounce' || move === 'lion.flank');
     const destination = source?.infected?.specialAttack?.destination;
     const length = throwing ? Math.min(15, Math.hypot(target!.x - area!.x, target!.z - area!.z))
       : directional && area ? source?.infected?.pursuit ? Math.min(megaAlpha.moves['alpha.charge'].range, megaAlpha.moves['alpha.charge'].speed)
       : destination ? Math.hypot(destination.x - area.x, destination.z - area.z)
       : move === 'elephant.charge' ? 16 : move === 'zebra.stampede' ? 15 : move === 'lion.pounce' ? Math.min(8, Math.hypot(target!.x - area.x, target!.z - area.z)) : 12 : 0;
-    const position = directional && area ? { x: area.x + area.dx * length / 2, z: area.z + area.dz * length / 2 } : 'position' in event ? event.position : area ?? source?.transform;
+    const position = arenaThrow && target ? target : directional && area ? { x: area.x + area.dx * length / 2, z: area.z + area.dz * length / 2 } : 'position' in event ? event.position : area ?? source?.transform;
     if (!position) return;
     const radius = directional ? Math.max(.1, length / 2) : 'radius' in event ? event.radius : area?.radius ?? (kind === 'bloated' || kind === 'splash' ? 3 : source ? Math.max(this.world.missions?.def.l1 ? 1 : 2, infectedDef(source.archetype).range) : 2);
     const angle = area ? Math.atan2(area.dz, area.dx) : 'angle' in event ? event.angle : Math.atan2(source?.infected?.dz ?? 0, source?.infected?.dx ?? 1);
-    const shape = move === 'zebra.kick' ? 10 : move === 'elephant.swipe' ? 9 : move === 'alpha.ground-slam' || move === 'gorilla.pound' || source?.infected?.pursuit && move === 'alpha.grab-throw' ? 1 : move === 'alpha.roar' || move === 'gorilla.roar' ? 8 : directional ? 2 : telegraphShapes[kind];
-    const width = throwing ? 2 : move === 'elephant.charge' ? 3.5 : move === 'zebra.stampede' ? 1.5 : (area?.radius ?? 1) * 2;
+    const shape = arenaThrow ? 1 : move === 'zebra.kick' ? 10 : move === 'elephant.swipe' ? 9 : move === 'alpha.ground-slam' || move === 'gorilla.pound' || source?.infected?.pursuit && move === 'alpha.grab-throw' ? 1 : move === 'alpha.roar' || move === 'gorilla.roar' || move === 'lion.roar' ? 8 : directional ? 2 : telegraphShapes[kind];
+    const width = throwing ? 2 : move === 'elephant.charge' ? 3.5 : move === 'zebra.stampede' ? source?.infected?.arenaBoss ? (area?.radius ?? .75) * 2 : 1.5 : (area?.radius ?? 1) * 2;
     const ground = this.world.districts?.groundHeight(position.x, position.z) ?? 0;
+    if (move === 'zebra.stampede' && source) this.burst(source.transform.x, source.transform.y - .5, source.transform.z, 0xb9ab8e, this.quality === 'low' ? 3 : 6, .5, 1, 0, particleShape.smoke, .6, .2);
     const slot = this.telegraphs.spawn(this.time, 1e9, position.x, ground + .065, position.z, angle, 'duration' in event ? event.duration : .6, 0, radius * 2, shape, this.telegraphColor(kind), 0, directional ? width / (radius * 2) : kind === 'charge' ? .3 : 1, true);
     if (slot < 0) return;
     this.visible = true;

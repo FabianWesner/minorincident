@@ -182,6 +182,7 @@ export class InfectedSystem {
       if (target?.infected) {
         this.provoke(target, event.sourceId);
         target.infected.grabHits++;
+        if (target.infected.arenaBoss && event.damageType === 'melee') target.infected.arenaBoss.shakeHits = (target.infected.arenaBoss.shakeHits ?? 0) + 1;
         if (target.infected.special === 'pin' && target.infected.grabHits >= 2) this.releasePin(target);
       }
     });
@@ -192,6 +193,7 @@ export class InfectedSystem {
       if (event.type !== 'combat.attack' || event.sourceId !== 1) return;
       if ((actionCatalog[event.actionId] ?? mountedActions[event.actionId])?.category === 'ranged') this.hearing.shot();
       for (const e of this.active) if (e.infected!.grabUntil > world.tick) {
+        if (e.infected!.arenaBoss?.arena === 'monkey') continue;
         if (e.infected!.special === 'cling') e.infected!.grabUntil = 0;
         else if (e.infected!.special === 'pin' && ++e.infected!.grabHits >= 2) this.releasePin(e);
       }
@@ -253,6 +255,7 @@ export class InfectedSystem {
     delete entity.infected!.scripted; delete entity.infected!.clearingStreet; delete entity.infected!.breachApproach; delete entity.infected!.l4FlankTarget;
     delete entity.infected!.investigate; delete entity.infected!.model; delete entity.infected!.birdDeadMask; delete entity.infectionRise; delete entity.appearance; delete entity.noiseTarget; delete entity.attachedTo; delete entity.hidden; delete entity.corpse;
     delete entity.infected!.roar; delete entity.corpseThrown; delete entity.corpseBlast; delete entity.infected!.pursuit; delete entity.infected!.megaStaggerReady; delete entity.infected!.megaRocketIds; delete entity.infected!.proximityNotice; delete entity.infected!.provoked; delete entity.infected!.pressureTarget;
+    delete entity.infected!.arenaBoss; delete entity.infected!.arenaCarrier;
     if (entity.infected!.l1) { delete entity.infected!.l1.focusId; delete entity.infected!.l1.focusUntil; }
     delete entity.infected!.knockdowns; delete entity.infected!.cureRegion; delete entity.infected!.territory; delete entity.infected!.vault; delete entity.infected!.specialAttack; delete entity.infected!.specialCooldowns; delete entity.infected!.specialRecoveryUntil;
     entity.archetype = id;
@@ -375,6 +378,7 @@ export class InfectedSystem {
       this.world.solids.wrote(e, 'infected.update');
       const b = e.infected!;
       if (this.heldOrDead(e, b, courier)) continue;
+      if (b.arenaBoss && this.world.missions?.l8?.bosses.control(e)) continue;
       if (this.pursuitOrVault(e, b)) continue;
       if (this.farCrowdSlot(e, b, courier)) continue;
       if (!b.specialAttack && (this.world.tick + e.id) % 3 === 0 && !e.emerging && !b.perched && !b.hidden && b.grabUntil <= this.world.tick) this.depenetrate(e);
@@ -1496,8 +1500,11 @@ export class InfectedSystem {
   private nextAttackId(): number {
     return ++this.sequence;
   }
+  /** L8 telegraphs share the monotonic infected attack identity and normal VFX event contract. */
+  arenaAttackId(): number { return this.nextAttackId(); }
   /** Rebase serialized timers when a checkpoint is restored at a later world tick. */
   restoreSpecialTimers(b: InfectedState, delta: number): void {
+    if (b.arenaBoss) { b.arenaBoss.exposedUntil += delta; b.arenaBoss.readyAt += delta; }
     this.sequence = Math.max(this.sequence, b.attackId, b.specialAttack?.attackId ?? 0, b.roar?.attackId ?? 0);
     if (b.proximityNotice) b.proximityNotice.until += delta;
     if (b.pressureTarget) b.pressureTarget.until += delta;

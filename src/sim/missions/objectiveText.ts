@@ -53,6 +53,7 @@ export function objectiveText(mission: Mission, fallback: string): string {
     const zoo=mission.l8!, seated=w.vehicles!.active===zoo.state.carId;
     if (zoo.protecting()) return 'Protect the group!';
     if (zoo.state.departureFrom) return 'Something is following you.';
+    const arena = zoo.bosses.statusText(); if (arena) return `${fallback} · ${arena}`;
     if (!seated && zoo.boarding() && !zoo.canBoardDriver()) {
       const ids = zoo.passengers(), car = w.vehicles!.cars.get(zoo.state.carId)!.entity.vehicle!;
       const aboard = ids.filter(id => car.passengers?.some(p => p.id === id && p.phase === 'seated')).length;
