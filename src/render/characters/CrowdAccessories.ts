@@ -2,8 +2,8 @@ import { livingStencil } from './figureStencil';
 import { skinnedBrow, referenceSkullWidth } from './headMeasurements';
 import { crowdSurfaceBindings } from './crowdTexture';
 export { skinnedBrow } from './headMeasurements';
-import { Box3, Vector3, BoxGeometry, BufferAttribute, BufferGeometry, Color, Group, InstancedMesh, Matrix4, Mesh, MeshLambertNodeMaterial, StreamDrawUsage } from 'three/webgpu';
-import { attribute, instanceColor } from 'three/tsl';
+import { Box3, Vector3, BoxGeometry, BufferAttribute, BufferGeometry, Color, Group, InstancedBufferAttribute, InstancedMesh, Matrix4, Mesh, MeshLambertNodeMaterial, StreamDrawUsage } from 'three/webgpu';
+import { attribute, float, instanceColor } from 'three/tsl';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { crowdShirt, crowdVertexLayout, resolveCrowdAppearance, crowdAccessoryIds } from './CrowdAppearance';
 import { batchRigidParts } from './batchRigidParts';
@@ -145,7 +145,7 @@ export class CrowdAccessories extends Group {
     return this.loading ??= Promise.all(this.ids.flatMap(id => (['lod0', 'lod1'] as const).map(lod => this.load(id, lod)))).then(() => undefined);
   }
   private async load(id: string, lod: 'lod0' | 'lod1'): Promise<void> {
-    const material = this.shading?.shaded(attribute('color', 'vec3').mul(instanceColor)) ?? new MeshLambertNodeMaterial({ vertexColors: true });
+    const material = this.shading?.shaded(attribute('color', 'vec3').mul(instanceColor), undefined, undefined, undefined, undefined, float(0), undefined, undefined, attribute('_crowdThreat', 'float')) ?? new MeshLambertNodeMaterial({ vertexColors: true });
     livingStencil(material);
     let geometry: BufferGeometry;
     if (id.startsWith('acc.placeholder-')) {
@@ -185,6 +185,9 @@ export class CrowdAccessories extends Group {
       } });
       geometry = mergeGeometries(pieces)!; pieces.forEach(g => g.dispose());
     }
+    // A shared accessory draw can contain both healthy and infected people.
+    // Inherit the body's underground highlight limit per instance.
+    geometry.setAttribute('_crowdThreat', new InstancedBufferAttribute(new Float32Array(350), 1).setUsage(StreamDrawUsage));
     const mesh = new InstancedMesh(geometry, material, 350); mesh.name = `${id}:${lod}`;
     // Hat rims can share depth with the skull. Keep their overlap independent
     // of asynchronous material creation order during level preparation.
@@ -214,6 +217,7 @@ export class CrowdAccessories extends Group {
     this.fit(id, model);
     this.headTransform.multiply(this.fitTransform);
     mesh.setMatrixAt(mesh.count, this.headTransform);
+    (mesh.geometry.getAttribute('_crowdThreat') as InstancedBufferAttribute).setX(mesh.count, e.faction === 'infected' ? 1 : 0);
     mesh.setColorAt(mesh.count++, definitions.get(id)?.tint === 'hair' ? hairColors[crowdAppearance(e.id).hair] : crowdShirt(e.id + 503));
     mesh.visible = true;
     if (e.faction === 'infected') this.infectedBatches.add(mesh);
@@ -341,7 +345,10 @@ export class CrowdAccessories extends Group {
   }
   finish(): void {
     this.resolvingFrame = false; this.frameLooks.clear();
-    for (const mesh of this.batches.values()) if (mesh.count) { mesh.instanceMatrix.clearUpdateRanges(); mesh.instanceMatrix.addUpdateRange(0, mesh.count * 16); mesh.instanceMatrix.needsUpdate = true; mesh.instanceColor!.clearUpdateRanges(); mesh.instanceColor!.addUpdateRange(0, mesh.count * 3); mesh.instanceColor!.needsUpdate = true; }
+    for (const mesh of this.batches.values()) if (mesh.count) {
+      const threat = mesh.geometry.getAttribute('_crowdThreat') as InstancedBufferAttribute;
+      threat.clearUpdateRanges(); threat.addUpdateRange(0, mesh.count); threat.needsUpdate = true;
+      mesh.instanceMatrix.clearUpdateRanges(); mesh.instanceMatrix.addUpdateRange(0, mesh.count * 16); mesh.instanceMatrix.needsUpdate = true; mesh.instanceColor!.clearUpdateRanges(); mesh.instanceColor!.addUpdateRange(0, mesh.count * 3); mesh.instanceColor!.needsUpdate = true; }
   }
   snapshot() { return [...this.batches].map(([id, mesh]) => {
     const raw = crowdVertexLayout(mesh.geometry, mesh.instanceMatrix), buffers = raw.buffers + Number(!!mesh.instanceColor), locations = raw.locations + Number(!!mesh.instanceColor);

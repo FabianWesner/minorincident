@@ -36,6 +36,7 @@ import { crowdSurfaceBindings, crowdTextureForDraw } from '../../src/render/char
 import { addHighwayRailJoints } from '../../src/assets/highwayRailJoints';
 import { InstancedGroup } from '../../src/render/InstancedGroup';
 import { batchPerimeterPosts } from '../../src/render/PerimeterPosts';
+import { CrowdAccessories } from '../../src/render/characters/CrowdAccessories';
 import { skinnedBrow } from '../../src/render/characters/headMeasurements';
 import { characterNodes } from '../../src/data/survivor';
 import { courierForegroundWanted, crowdSurroundsCourier } from '../../src/render/courierForeground';
@@ -233,7 +234,25 @@ test('a held cane reaches the floor across rig scales without moving its fitted 
   props.dispose();
 });
 
-test('authored aftermath and skinned infected headwear survives variation and accepts explicit accessories', () => {
+test('authored aftermath and skinned infected headwear survives variation and accepts explicit accessories', async () => {
+  const shaded = vi.fn((..._args: unknown[]) => new MeshLambertNodeMaterial());
+  const accessories = new CrowdAccessories({ shaded } as unknown as Materials);
+  accessories.ids.splice(0, accessories.ids.length, 'acc.placeholder-hair');
+  const poses = new CrowdPosePalette({ parts: ['head'], frames: 1, duration: 1, matrices: new Float32Array(new Matrix4().elements) }, 2);
+  try {
+    await accessories.init(); accessories.begin();
+    const person = { id: 100, faction: 'civilian', archetype: 'civilian.cashier', appearance: { entityId: 100, asset: 'npc.person.aftermath', accessories: ['acc.placeholder-hair'], tint: '#888888' } } as unknown as EntitySnapshot;
+    accessories.place(person, 'lod0', poses, 0, [0, 1], new Matrix4());
+    accessories.place({ ...person, id: 101, faction: 'infected' }, 'lod0', poses, 0, [0, 1], new Matrix4());
+    accessories.finish();
+    const mesh = accessories.children.find(m => (m as InstancedMesh).count === 2) as InstancedMesh;
+    const threat = mesh.geometry.getAttribute('_crowdThreat') as InstancedBufferAttribute;
+    expect(threat, 'separate headwear must inherit the underground body highlight limit').toBeDefined();
+    expect([threat.getX(0), threat.getX(1)]).toEqual([0, 1]);
+    expect(threat.updateRanges).toEqual([{ start: 0, count: 2 }]);
+    expect(accessories.snapshot().every(s => s.layout.webgpu && s.layout.webgl2)).toBe(true);
+    expect(shaded.mock.calls.every(args => args.length === 9 && args[5] && args[8])).toBe(true);
+  } finally { accessories.dispose(); poses.texture.dispose(); }
   for (let id = 1; id <= 32; id++) {
     const entity = { id, archetype: 'civilian.cashier', appearance: { entityId: id, asset: 'npc.person.aftermath', accessories: [], tint: '#888888' } } as unknown as EntitySnapshot;
     expect(resolveCrowdAppearance(entity, ['acc.test']).accessory, `authored headwear, entity ${id}`).toBeNull();
