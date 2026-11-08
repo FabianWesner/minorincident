@@ -22,6 +22,8 @@ export interface VfxTargets {
   camera?(): import('three').Camera;
   /** Resolve and pose the rendered gun synchronously at the shot tick. */
   muzzle?(id: number, direction: { x: number; y?: number; z: number }): { x: number; y: number; z: number } | null;
+  /** Already drawn gun socket, without reposing the interpolated character. */
+  drawnMuzzle?(id: number): { x: number; y: number; z: number } | null;
   /** Drawn spout of a pouring watering can (gardener routine), null when none. */
   spout?(id: number): { x: number; y: number; z: number } | null;
   flash(id: number, strength: number): void;
@@ -75,6 +77,7 @@ export class Vfx extends Group {
   private readonly pools = [this.particles, this.decals, this.surfaceSplats, this.telegraphs, this.waves];
   private readonly landings = Array.from({ length: 384 }, () => ({ at: Infinity, x: 0, y: 0, z: 0, size: 0, color: 0 }));
   private landingCursor = 0;
+  private flameSource: { id: number; until: number; direction: { x: number; z: number } } | null = null;
   private lastSpray = { actionId: '', direction: { x: 1, z: 0 }, droplets: 0, chunks: 0, gravity: 9.81 };
   private readonly stops: (() => void)[] = [];
   private readonly tells = new Map<number, TelegraphThreat & { kind: TelegraphKind; spawned: number; sourceId?: number }>();
@@ -221,7 +224,7 @@ export class Vfx extends Group {
     } else this.targets.blood(this.gore === 'Off' ? 0 : this.coverage);
   }
   private telegraphColor(kind: TelegraphKind): number { return this.colorblind ? kind === 'bloated' ? 0xffb347 : 0xffffff : kind === 'bloated' ? 0xff682d : 0xff4824; }
-  private resetPools(preserveTelegraphs = false): void { this.blasts.reset(); for (const pool of this.pools) if (!preserveTelegraphs || pool !== this.telegraphs) pool.reset(this.time); this.gibs.reset(); if (!preserveTelegraphs) this.tells.clear(); this.hitCount = this.hitCursor = 0; this.hitStarted.clear(); }
+  private resetPools(preserveTelegraphs = false): void { this.flameSource = null; this.blasts.reset(); for (const pool of this.pools) if (!preserveTelegraphs || pool !== this.telegraphs) pool.reset(this.time); this.gibs.reset(); if (!preserveTelegraphs) this.tells.clear(); this.hitCount = this.hitCursor = 0; this.hitStarted.clear(); }
   private pulse(id: number): void {
     const started = this.hitStarted.get(id);
     if (started !== undefined && this.time - started < hitFlashRest) return;
@@ -354,17 +357,18 @@ export class Vfx extends Group {
       if (event.actionId === 'weapon.flamethrower') {
         if (!this.enabled) return;
         const muzzle = this.targets.muzzle?.(event.sourceId, event.direction) ?? { ...event.position, y: event.position.y + .45 };
-        const range = this.world.combat?.query.clearDistance(muzzle, event.direction, def.range) ?? def.range;
-        const count = this.quality === 'high' ? 18 : 8;
-        // Existing fire particles form a short, cover-clipped cone; no additional textures or particle pools.
-        for (let i = 0; i < count; i++) {
-          const t = (i + 1) / count, spread = (this.rng.next() - .5) * t * 2;
-          const x = muzzle.x + event.direction.x * range * t - event.direction.z * spread;
-          const z = muzzle.z + event.direction.z * range * t + event.direction.x * spread;
-          this.particles.spawn(this.time, .38, x, muzzle.y + (this.rng.next() - .5) * t, z,
-            event.direction.x * 3, .6, event.direction.z * 3, .25 + t * .75, particleShape.smoke, i % 3 ? 0xff7027 : 0xffd16a);
+        const range = this.flameRange(muzzle, event.direction);
+        // Keep the flame attached across discrete attack events; Blasts renders dense, pooled cards along this clipped ray.
+        this.flameSource = { id: event.sourceId, until: this.time + 1 / def.fireRate + .08, direction: { ...event.direction } };
+        this.blasts.flameJetAt(muzzle.x, muzzle.y, muzzle.z, event.direction.x, event.direction.z, range, this.flameSource.until, event.sourceId);
+        // A few hot fragments and soot at the clipped tip add impact texture without making the jet look dotted.
+        const tipX = muzzle.x + event.direction.x * range, tipZ = muzzle.z + event.direction.z * range;
+        for (let i = 0; i < (this.quality === 'high' ? 4 : 2); i++) {
+          this.particles.spawn(this.time, .28, tipX, muzzle.y + .35, tipZ, (this.rng.next() - .5) * 1.4, .8, (this.rng.next() - .5) * 1.4,
+            .12, particleShape.spark, i % 2 ? 0xff6a24 : 0xffd66c);
         }
-        this.muzzleLight(muzzle.x, muzzle.z, muzzle.y);
+        this.particles.spawn(this.time, .5, tipX, muzzle.y + .25, tipZ, event.direction.x * .35, .55, event.direction.z * .35,
+          .2, particleShape.smoke, 0x4a3028);
         return;
       }
       // Rockets show their moving projectile. Keep the launch flash, without
@@ -612,6 +616,28 @@ export class Vfx extends Group {
     if (!player) return;
     const readable = readableTelegraphs([...this.tells.values()], player, this.time);
     for (const tell of this.tells.values()) this.telegraphs.opacity(tell.slot, readable.has(tell.slot) ? 1 : .015 / Math.max(1, this.tells.size - readable.size));
+  }
+  private updateFlameJet(): void {
+    const jet = this.flameSource;
+    if (!jet) return;
+    const source = this.world.entities.get(jet.id), side = source?.weapons?.[source.weapons.selectedSide];
+    if (!this.enabled || this.time >= jet.until || !source || source.health.current <= 0 || side?.rack[side.index]?.id !== 'weapon.flamethrower') {
+      this.flameSource = null; this.blasts.clearFlameJet(); return;
+    }
+    const direction = side.aim ?? jet.direction;
+    const muzzle = this.targets.drawnMuzzle?.(jet.id) ?? this.targets.muzzle?.(jet.id, direction) ?? { ...source.transform, y: source.transform.y + .45 };
+    const range = this.flameRange(muzzle, direction);
+    this.blasts.flameJetAt(muzzle.x, muzzle.y, muzzle.z, direction.x, direction.z, range, jet.until, jet.id);
+  }
+  private flameRange(origin: { x: number; y: number; z: number }, direction: { x: number; z: number }): number {
+    const range = actions['weapon.flamethrower'].range;
+    return Math.min(this.world.combat?.query.clearDistance(origin, direction, range) ?? range,
+      this.world.destruction?.trace(origin, { ...direction, y: 0 }, range)?.distance ?? range);
+  }
+  /** Run after actor/action posing, so movement and turns cannot leave the stream one frame behind. */
+  refreshFlameJet(): void {
+    if (!this.flameSource) return;
+    this.updateFlameJet(); this.blasts.refreshFlameJet();
   }
   advance(seconds: number): void {
     if (!Number.isFinite(seconds) || seconds < 0 || seconds > 1) throw new RangeError('Render step must be 0..1 seconds');

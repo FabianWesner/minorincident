@@ -226,6 +226,12 @@ export class Combat {
         if (target && !blocked) this.pelletHits.set(target, (this.pelletHits.get(target) ?? 0) + 1);
       }
       for (const [target, hits] of this.pelletHits) this.hit(attack, target, source.transform, 'bullet', hits / count);
+      if (def.id === 'weapon.flamethrower') {
+        const origin = { ...source.transform, y: source.transform.y + .45 };
+        const cover = this.world.destruction?.trace(origin, { ...attack.aim, y: 0 }, def.range)?.distance ?? def.range;
+        const distance = Math.max(0, Math.min(cover, this.query.clearDistance(origin, attack.aim, def.range)) - .08);
+        this.world.hazards?.ignitePatch({ x: origin.x + attack.aim.x * distance, z: origin.z + attack.aim.z * distance }, .65, 3);
+      }
     } else {
       const target = this.query.ray(source.id, { ...source.transform, y: source.transform.y + .45 }, attack.aim, def.range);
       const blocked = this.environment(attack, { ...source.transform, y: source.transform.y+.45 }, attack.aim, def.range, target);

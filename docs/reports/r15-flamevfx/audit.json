@@ -1,0 +1,80 @@
+{
+  "sourceRevision": "4eba5dbe671288524c805379d769bf532b3d41bd",
+  "sourceHashesMatch": true,
+  "sourceFiles": [
+    "src/render/GameView.ts",
+    "src/render/vfx/Vfx.ts",
+    "src/render/vfx/Blasts.ts",
+    "src/sim/combat/Combat.ts",
+    "src/sim/interact/Hazards.ts"
+  ],
+  "matchedCaptures": 8,
+  "jetCards": {
+    "high": 32,
+    "low": 16
+  },
+  "maxFlamePool": 128,
+  "sustainedSamples": 16,
+  "releasedWithGroundFire": 2,
+  "movingTurningFrames": 130,
+  "maxMuzzleGapM": 0,
+  "streamTransientLights": 1,
+  "flickerObservedBothTiers": true,
+  "nativeAcceptedWindows": 4,
+  "nativeDiscardedContendedWindows": 2,
+  "nativeDeltaMs": {
+    "high": {
+      "p50": 0.4,
+      "p95": 0.5
+    },
+    "low": {
+      "p50": 0.5,
+      "p95": 0.2
+    }
+  },
+  "verifyE27": "pass",
+  "testUnit": {
+    "status": "pass",
+    "tests": 107,
+    "files": 27
+  },
+  "optimizedQABuild": "pass",
+  "webglSmoke": {
+    "status": "pass",
+    "tests": 1
+  },
+  "consoleErrors": [],
+  "open": [
+    "Browser QA needed: manual WebGPU and independent visual review before merge"
+  ],
+  "artifacts": {
+    "compare.jpg": {
+      "bytes": 101020,
+      "sha256": "f6d2986af2829b18d52bff3853f0c3db2e672cfb43e46e1bfb0edc5a57d5ea32"
+    },
+    "runtime.jpg": {
+      "bytes": 72854,
+      "sha256": "3ccee51d162fdde7a4bc5004de15952fc942f8a7299f69208e8fc79bbd141897"
+    },
+    "evidence.json": {
+      "bytes": 359331,
+      "sha256": "c936cfe91eab33170b2dd9f77b33fb9ad179c83147af29670e6ba61ac6a34476"
+    },
+    "runtime.json": {
+      "bytes": 104874,
+      "sha256": "0baa15e5fa991c134c3ad9b4a2de7ab944f79b53b7a5cd3386bdc9009bd73c23"
+    },
+    "checks.json": {
+      "bytes": 336,
+      "sha256": "11b0aba727000f536f43375dfce6098f4efda53264e94ebdc3f2c52c4b794039"
+    },
+    "smoke.json": {
+      "bytes": 6157,
+      "sha256": "30c2cfff9b8ad1cbf9b430d0ba05f23d70e06116982ca8ae2cb7e61c8a98b453"
+    },
+    "light-spill.json": {
+      "bytes": 934,
+      "sha256": "5d22491785b24ee878a529677a9d480bf426455b9aa5a3685ed79299eaf65974"
+    }
+  }
+}
