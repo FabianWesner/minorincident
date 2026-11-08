@@ -17,7 +17,7 @@ const out = resolve(`test-results/r10-l10/${label}`), profile = `${out}/profile`
 mkdirSync(profile, { recursive: true });
 const port = Number(process.env.E2E_PORT ?? 3897);
 if (port === 3300) throw new Error('Private QA port required');
-const dist = resolve(`test-results/r10-l10/${side}-dist`), origin = `http://127.0.0.1:${port}`;
+const dist = resolve(`test-results/r10-l10/${side === 'after' ? 'final' : 'before'}-dist`), origin = `http://127.0.0.1:${port}`;
 const path = `docs/reports/sweep-c5/L10-05/seeds/L10-05-${tier}-cure-${checkpoint}-save.json.gz`;
 const bytes = execFileSync('git', ['show', `HEAD:${path}`]);
 const decoded = decodeSave(gunzipSync(bytes).toString());

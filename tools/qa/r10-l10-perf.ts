@@ -13,7 +13,7 @@ import { uncappedArgs } from '../perf/uncapped';
 assert.equal(process.env.MI_PERF_LOCK_HELD, '1', 'Use quiet-run');
 const out = 'test-results/r10-l10/perf'; mkdirSync(out, { recursive: true });
 const sides = ['before', 'after'] as const;
-const servers = await Promise.all(sides.map((side, i) => preview({ configFile: false, build: { outDir: resolve(`test-results/r10-l10/${side}-dist`) }, preview: { host: '127.0.0.1', port: 3901 + i, strictPort: true } })));
+const servers = await Promise.all(sides.map((side, i) => preview({ configFile: false, build: { outDir: resolve(`test-results/r10-l10/${side === 'after' ? 'final' : 'before'}-dist`) }, preview: { host: '127.0.0.1', port: 3901 + i, strictPort: true } })));
 const rows: unknown[] = [];
 const browser = await launchBrowser({ headless: true, args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist', ...uncappedArgs()] });
 try {
