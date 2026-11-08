@@ -3,7 +3,7 @@ import { Outbreak } from '../outbreak/Outbreak';
 import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
 import type { Point } from '../npc/types';
-import { l7Encounters } from '../../data/l7';
+import { l7Encounters, l7Rocket } from '../../data/l7';
 import { corpseDetour, formationBack, formationSlot, leaderHeading, requireClearPoint, snapToClear } from './missionHelpers';
 import { NavGrid } from '../ai/NavGrid';
 import { actorRadius, solidLargeCorpse } from '../world/SolidRegistry';
@@ -23,6 +23,7 @@ const l7FollowerRangeM = 18;
 /** L7-E1 owns population and physical group passage. Boarding/departure is owned by L7-E2. */
 export class LevelSevenEncounters {
   state: L7EncounterState = { started: false, roster: [], arrivals: [], finalReady: false, passageReady: false, waitAt: 0 };
+  private launcherId = 0;
   private prepared = false;
   private readonly seen = new Set<number>();
   private readonly waypoint = { x: 0, z: 0 };
@@ -35,6 +36,13 @@ export class LevelSevenEncounters {
       const follower = world.entities.get(event.targetId);
       if (follower && this.state.roster.some(r => r.id === follower.id && r.status === 'following') && this.behind(follower)) this.warn(follower, 'attack');
     });
+  }
+  private launcher(): EntitySnapshot | undefined {
+    if (!this.launcherId) {
+      const pickup = [...this.world.entities.iterate()].find(item => item.pickup && 'actionId' in item.pickup && item.pickup.actionId === l7Rocket.action);
+      this.launcherId = pickup?.id ?? 0;
+    }
+    return this.launcherId ? this.world.entities.get(this.launcherId) : undefined;
   }
   /** r5-l7 (vqa58): "behind you" only for an evacuee who really is away from the courier's group (the 18 m corridor
    * group range) and off screen. A loss inside the column next to her is not a straggler, even off a close-zoom frame. */
@@ -71,10 +79,13 @@ export class LevelSevenEncounters {
     // Form behind the escape direction, not the courier's briefing pose
     // facing the launcher. Otherwise the whole party crosses itself on departure.
     const road = l7Encounters.streets[0], heading = leaderHeading(-Math.atan2(road.z - leader.z, road.x - leader.x));
+    // The launcher is three metres behind the courier along this heading.
+    // Stage the column beyond its two-metre objective ring, with room for a body.
+    const formation = { x: leader.x - heading.x * 3.5, z: leader.z - heading.z * 3.5 };
     for (let slot = 0; slot < count; slot++) {
       const source = roster?.[slot];
       if (source && (source.health.current <= 0 || source.infected || source.infection)) continue;
-      const at = this.clearPoint(formationSlot(leader, heading, slot), .4);
+      const at = this.clearPoint(formationSlot(formation, heading, slot), .4);
       const e = source ? structuredClone(source) : w.entities.get(outbreak.spawnPedestrian(at, { model: slot % 2 ? 'npc.civilian-man-b.aftermath' : 'npc.civilian-woman-b.aftermath', role: 'cashier' }))!;
       if (source) {
         if (w.entities.get(e.id)) throw new Error(`L7 incoming survivor id collision: ${e.id}`);
@@ -247,6 +258,17 @@ export class LevelSevenEncounters {
     const w = this.world, p = w.entities.get(1)!, c = e.civilian!, s = c.survivor!;
     s.briskAt = w.tick;
     c.state = 'calm'; c.story = null; s.cover = false;
+    const launcher = this.launcher();
+    if (launcher && distance(p.transform, launcher.transform) < 8) {
+      // Before arming, a facing change must not swing the column through the
+      // pickup. Keep each survivor in the same separate slot used at arrival.
+      const exit = { x: launcher.transform.x - l7Rocket.exitOffset[0], z: launcher.transform.z - l7Rocket.exitOffset[1] };
+      const road = l7Encounters.streets[0], heading = leaderHeading(-Math.atan2(road.z - exit.z, road.x - exit.x));
+      const origin = { x: exit.x - heading.x * 3.5, z: exit.z - heading.z * 3.5 };
+      w.npcs!.move(e, formationSlot(origin, heading, s.slot), 5.2, c, .3);
+      w.spatial.set(e.id, e.transform.x, e.transform.z);
+      return true;
+    }
     if (this.walkPocketRoute(e)) return true;
     const d = distance(e.transform, p.transform), slot = s.slot, v = p.survivor!.velocity;
     // Departure slots follow the walked corridor around the parked bus.

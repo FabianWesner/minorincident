@@ -28,6 +28,18 @@ export async function checkL7Navigation() {
   await checkPharmacyCatchup();
   const w = await loadLevel('L7', 29);
   try {
+    const launcher = [...w.entities.iterate()].find(e => e.pickup && 'actionId' in e.pickup && e.pickup.actionId === 'weapon.rocket-launcher');
+    expect(launcher, 'the authored launcher remains present for the approach').toBeDefined();
+    for (const e of w.infected!.active) e.hidden = true;
+    for (let tick = 0; tick < 300; tick++) {
+      w.applyInput(emptyInput(), 'keyboard'); w.update();
+      expect(w.missions!.state.steps.rocket.status, 'the uncollected launcher stays active').toBe('active');
+      for (const row of w.l7Encounters!.state.roster) {
+        if (row.status !== 'following') continue;
+        const e = w.entities.get(row.id)!;
+        expect(Math.hypot(e.transform.x - launcher!.transform.x, e.transform.z - launcher!.transform.z), `survivor ${row.id} stays outside the 2 m objective ring plus body clearance at tick ${w.tick}`).toBeGreaterThanOrEqual(2.35);
+      }
+    }
     // The loading renderer must see the actual resident models at tick zero;
     // discovering their pedestrian looks on the first AI tick builds new
     // living/corpse shaders during the launcher pickup (L7-01).
