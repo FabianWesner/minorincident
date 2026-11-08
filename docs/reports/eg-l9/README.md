@@ -1,8 +1,8 @@
 # E31 / L9 driving rebuild
 
-Lane: `eg-l9` · PO 2026-11-08. Work in progress; native validation is pending.
+Lane: `eg-l9` · PO 2026-11-08. Timeboxed implementation handoff; full native and browser qualification is not yet complete.
 
-## Implemented
+## Done: implementation
 
 - Mixed route packs and patrols enter more than 100 m from the APC, then move toward its engine while the driver is hidden. This uses authored scripted travel rather than human targeting, which correctly excludes a seated courier.
 - Six hull slots (eight at low durability), a three-second climb and 10 HP bites every second. Actual yaw rate, braking or a physical scrape releases boarders. Heavy infected stop momentum and cost 40/80 durability; bloated contacts cost 60 and clear boarders. Damage progressively lowers the speed cap to the existing 60% floor.
@@ -17,15 +17,24 @@ Lane: `eg-l9` · PO 2026-11-08. Work in progress; native validation is pending.
 
 ## Verification
 
-The final gameplay pin is `49a6d414`; the sequential remote harness is `497efe76`. Fresh qualification of that version is pending. Heavy commands run exclusively on Hetzner, one at a time, with local fallback disabled. No browser was opened.
+The final gameplay pin is `3d1785b2`; the sequential remote harness is `e8720e57`. Fresh qualification of that version is pending. Heavy commands run exclusively on Hetzner, one at a time, with local fallback disabled. No browser was opened.
 
 - A prior committed remote full unit run passed at the existing 150-case cap, with `--maxWorkers=1`. The long story scenario now runs as a standalone native probe rather than extending the suite past its time budget. No test cases were added.
 - The standalone story mechanics probe passed on the earlier `290d000b` gameplay version: held/released repair, hatch fire, rail restart, actual truck arrivals and losses, fresh checkpoint reconstruction, Sam remaining, forward-only bridge entry, continuous crash pose, input-only crawl, one explosion, axe-only arsenal, safe corgi and campaign handover. Its explicit phase placements and courier HP refill qualify mechanics, not route difficulty.
 - Both native ramp fixtures repeatedly passed: high speed clears each gap while low speed fails. The overpass reached 3.698 m with 49 airborne ticks; the ditch reached 3.468 m with 34 airborne ticks. These are explicit initial speed fixtures using ordinary native contact afterward.
-- Earlier unprotected route runs exposed repeated attachment after shake-off, fork blockers, independently sleeping seated passengers, competing companion controllers, and evacuation access problems. Those causes are fixed. The most recent road and zero-durability runs reached evacuation alive but did not finish the corgi transfer; they remain failures. The final version clears the goodbye space, uses the authored rear entry for visible transitions and gives the longer companion body an appropriate boarding reach.
+- Earlier unprotected route runs exposed repeated attachment after shake-off, fork blockers, independently sleeping seated passengers, competing companion controllers, and evacuation access problems. Those causes are fixed. The most recent road and zero-durability runs reached evacuation alive but did not finish the corgi transfer; they remain failures. The final version clears the goodbye space, uses the authored rear entry for visible transitions and gives the longer companion body an appropriate boarding reach. A subsequent story fixture exposed personal-space collision preventing the approach; `3d1785b2` extends the existing Rosa/corgi paired exemption through their approach.
 - Pending final remote batch: typecheck, lint, story and course probes; low-tier road, countryside and shortcut; high-tier road; initial-zero-durability road; full unit suite; `qa:accept -- --level L9 --skip-browser`; `qa:threat -- --levels L9 --maxWorkers 1`.
 - Raw output is under `test-results/eg-l9/`; each probe records its source hash and fixture method. Earlier logs there are not qualification for the final pin. Final results will replace this pending section after the batch exits.
 - Native first-visible admission is only a conservative 45 m distance proxy. Rendered max-zoom admission and device performance remain browser QA work.
+
+## Open / follow-up lanes
+
+1. **Native completion gate:** obtain passing unprotected low-tier runs on all three routes, high-tier road, and initial-zero-durability road. Previous runs that reached camp but timed out are failures. Inspect the final batch before claiming the `3d1785b2` goodbye/boarding fix works.
+2. **Fresh required checks:** resolve every fresh unit, acceptance or threat failure against the pinned source. Acceptance rows with rendered, device-performance or manual conditions must retain their unqualified status until QA supplies that evidence.
+3. **Browser QA:** inspect the full level in both quality tiers, including the visual crash and handover, with the checklist below. This lane was explicitly forbidden to open a browser.
+4. **Integration:** merge the L10 story lane's consumer of `crossingHandover.researchCompanion`, then verify living Sam and fallback Private Reyes campaigns separately. The producer retains actual evacuated identities separately from the research companion.
+
+The original “real driving level, verified” goal is not closed by this handoff. The orchestrator requested wrap-up after the three-hour timebox; remaining qualification and any failures belong to follow-up lanes.
 
 ## Browser QA needed
 
