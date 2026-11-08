@@ -29,6 +29,9 @@ export class LevelSevenEncounters {
   private readonly waypoint = { x: 0, z: 0 };
   private readonly approaches = new Map<number, { x: number; z: number; at: number; around?: Point[] }>();
   private readonly pocketRoutes = new Map<number, { revision: number; points: Point[] }>();
+  private corpseRoutes?: { source: NavGrid; revision: number; bodies: string; nav: NavGrid };
+  private routeTick = -1;
+  private routeNav?: NavGrid;
   private readonly trail: Point[] = [];
   constructor(private readonly world: SimWorld, private readonly carried?: readonly EntitySnapshot[]) {
     world.events.on('infected.attack', event => {
@@ -274,7 +277,7 @@ export class LevelSevenEncounters {
     const d = distance(e.transform, p.transform), slot = s.slot, v = p.survivor!.velocity;
     // Departure slots follow the walked corridor around the parked bus.
     const goal = this.formationGoal(p.transform, v, slot);
-    const nav = w.infected!.nav;
+    const nav = this.followerNavigation();
     // Keep followers on their individual slots when the leader turns. Falling
     // back to the leader position sends the whole formation to one crowded point.
     const ahead = w.missions!.state.steps.departure?.status !== 'active' || Math.hypot(v.x, v.z) <= .8 || (goal.x - e.transform.x) * v.x + (goal.z - e.transform.z) * v.z >= 0;
@@ -293,7 +296,6 @@ export class LevelSevenEncounters {
       // connected route at the same range that makes the group wait; nearby
       // followers otherwise keep replacing an unfinished shared A* search.
       if (d > l7FollowerRangeM) {
-        const nav = w.infected!.nav;
         const cell = nav.nearestCell(e.transform.x, e.transform.z, .35);
         let next = nav.flowNext(cell);
         if (next >= 0 && next !== cell) {
@@ -329,10 +331,32 @@ export class LevelSevenEncounters {
       // one evacuee into a straggler the player has to babysit.
       // Every slot has the same catch-up speed through street corners.
       const budget = d > l7FollowerRangeM ? w.infected!.director.tier === 'low' ? 200 : 400 : 1600;
-      w.npcs!.move(e, destination, 5.2, c, 0, budget);
+      w.npcs!.move(e, destination, 5.2, c, 0, budget, nav);
     }
     w.spatial.set(e.id, e.transform.x, e.transform.z);
     return true;
+  }
+  /** A dead Alpha can close an entire alley. Route the human column around
+   * that closure before it packs against the corpse; infected routing stays
+   * independent. Physical movement still checks every full-size body. */
+  private followerNavigation(): NavGrid {
+    const w = this.world, source = w.infected!.nav;
+    if (this.routeTick === w.tick && this.routeNav) return this.routeNav;
+    this.routeTick = w.tick;
+    const bodies = [...w.entities.iterate()].filter(body => !body.hidden && solidLargeCorpse(body));
+    if (!bodies.length) return this.routeNav = source;
+    const key = bodies.map(body => `${body.id}:${body.transform.x}:${body.transform.z}:${actorRadius(body)}`).join('|');
+    if (!this.corpseRoutes || this.corpseRoutes.source !== source || this.corpseRoutes.revision !== source.revision || this.corpseRoutes.bodies !== key) {
+      const nav = source.withClearance(source.clearance);
+      for (const body of bodies) {
+        const radius = actorRadius(body);
+        nav.setBlocker(body.id, { x: body.transform.x, z: body.transform.z, y: body.transform.y, halfX: radius, halfZ: radius, halfY: radius, navBlocker: true }, true);
+      }
+      this.corpseRoutes = { source, revision: source.revision, bodies: key, nav };
+    }
+    const nav = this.corpseRoutes.nav, p = w.entities.get(1)!.transform;
+    nav.flow(p.x, p.z, 1500);
+    return this.routeNav = nav;
   }
   /** The courier can reverse through her column before boarding owns it. A
    * formation target behind her otherwise asks the front rank to walk into her.
@@ -452,6 +476,7 @@ export class LevelSevenEncounters {
     this.state = structuredClone(record.state); this.prepared = record.prepared;
     this.approaches.clear();
     this.pocketRoutes.clear();
+    this.corpseRoutes = undefined; this.routeNav = undefined; this.routeTick = -1;
     this.trail.splice(0, this.trail.length, ...(record.trail ?? []));
     this.state.waitAt += this.world.tick - record.tick;
     if (this.state.alarm) this.state.alarm.until += this.world.tick - record.tick;

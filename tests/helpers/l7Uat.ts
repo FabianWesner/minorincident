@@ -265,6 +265,49 @@ async function checkCorpseCatchup() {
     }
     expect(arrived, 'two dead Alphas must not keep a living follower 66 m away forever').toBe(true);
     expect(w.solids.offenders).toEqual([]);
+    // Physical gear-2 ledger, tick 27720: the dead Alpha closes the narrow
+    // pharmacy alley. All fifteen trapped followers must walk the other way.
+    for (const body of bodies) body.hidden = true;
+    const packed = [
+      [51,41.793817507065434,41.0798327218927],[52,16.281448544559957,42.62218963769826],
+      [53,45.50307032205739,41.373689426591966],[54,41.59520020314754,41.74089084110976],
+      [55,41.14141445987243,40.885577390977446],[56,42.94188656452457,41.757334982321005],
+      [57,42.266716814362205,41.568796369655885],[58,44.24738955963119,41.75787375924492],
+      [59,45.0613226291621,40.85635174804277],[60,43.6007217312818,41.54615998359314],
+      [61,42.44839186062674,40.87826854590935],[62,46.06881303966944,41.75674456223568],
+      [63,44.418795910718615,41.09150165905051],[64,43.10689465679792,41.04863026537855],
+      [65,12.082656105900048,40.12545807835455],[66,12.944564485750599,37.59012433870597],
+      [67,43.77186896502628,40.87517398944157],[68,11.241304301137603,39.27989581887278],
+      [69,12.109540452733665,36.73986712871293],[70,11.162745683190428,37.39829005981479],
+      [71,10.641392457795545,38.1867122947813],[72,44.92913360506777,41.755884337705815],
+      [73,10.360008791969387,38.84325543763489],[74,9.974445948954338,37.585024761779124],
+    ];
+    Object.assign(player.transform, { x:17.917377471923828, y:.7049999833106995, z:44.35981369018555, yaw:-402.909257822891 });
+    w.physics.playerBody!.setTranslation(player.transform,true); w.physics.playerBody!.setNextKinematicTranslation(player.transform);
+    w.solids.remember(player,'test.packed-corpse'); w.spatial.set(1,player.transform.x,player.transform.z);
+    for (const [id,x,z] of packed) {
+      const e=w.entities.get(id)!; e.hidden=false; delete e.locomotion;
+      Object.assign(e.transform,{x,z,y:w.districts!.groundHeight(x,z)+.7});
+      e.civilian!.path.length=0; e.civilian!.pathIndex=0; e.civilian!.goal=-1; e.civilian!.l1!.target=null;
+      w.solids.remember(e,'test.packed-corpse'); w.spatial.set(id,x,z);
+    }
+    const corpse=bodies[0]; corpse.hidden=false;
+    Object.assign(corpse.transform,{x:40.251549809784215,y:.83,z:41.881619730875094});
+    w.solids.remember(corpse,'test.packed-corpse'); w.spatial.set(corpse.id,corpse.transform.x,corpse.transform.z);
+    const nav=w.infected!.nav, blocked=nav.blocked.slice();
+    for (let tick=0;tick<900;tick++) {
+      w.tick++; nav.flow(player.transform.x,player.transform.z,1500);
+      for (const [id] of packed) {
+        const e=w.entities.get(id)!,before={...e.transform}; w.l7Encounters!.follower(e);
+        expect(Math.hypot(e.transform.x-before.x,e.transform.z-before.z)).toBeLessThanOrEqual(5.2/60+.001);
+        expect(Math.hypot(e.transform.x-corpse.transform.x,e.transform.z-corpse.transform.z)).toBeGreaterThanOrEqual(1.35-.021);
+      }
+      w.solids.commit();
+    }
+    for (const [id] of packed) expect(Math.hypot(w.entities.get(id)!.transform.x-player.transform.x,w.entities.get(id)!.transform.z-player.transform.z),`follower ${id} rejoins around the closed alley`).toBeLessThan(18);
+    expect(w.infected!.nav).toBe(nav); expect(nav.blocked).toEqual(blocked);
+    expect(w.solids.offenders).toEqual([]);
+
   } finally { w.dispose(); }
 }
 
