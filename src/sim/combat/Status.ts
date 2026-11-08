@@ -10,6 +10,12 @@ export class Status {
   apply(target: EntitySnapshot, def: StatusDef, sourceId: number, actionId: string, attackId = 0): void {
     if (!target.combat || target.health.current <= 0 || (target.infected?.special === 'fire-immune' && def.kind === 'burning') || (target.archetype === 'infected.hazmat' && def.kind === 'toxic')) return;
     if (target.infected?.pursuit && def.kind === 'stunned') {
+      if (this.world.scenario === 'L10' && this.world.missions?.state.states['cure-installed'] && actionId === 'weapon.flashbang') {
+        this.world.infected!.cancelSpecial(target.id);
+        target.combat.staggerUntil = Math.max(target.combat.staggerUntil, this.world.tick + 60);
+        target.infected.megaWeakTicks = Math.max(target.infected.megaWeakTicks ?? 0, 60);
+        return;
+      }
       this.world.combat!.damage.apply({ sourceId, targetId: target.id, attackId, actionId, origin: target.transform, direction: { x: 0, z: 0 }, base: 1, multiplier: 1, type: 'status', knockback: 0, stagger: def.duration });
       return;
     }

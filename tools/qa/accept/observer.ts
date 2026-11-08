@@ -29,6 +29,7 @@ export class AcceptanceObserver {
   private firstMinute = { ticks: 0, regularPeak: 0, dogPeak: 0, alphaPeak: 0 };
   private l10Story = { firstMegaVisibleSeconds: null as number | null, closeSections: [] as number[], seen: 0, idleEntries: [] as number[], fullArsenal: false, outsideAssaultPeak: 0, assaultPeak: 0 };
   private l10Moved = new Set<number>();
+  private l10FirstSightings: { id: number; seconds: number; archetype: string; state: string; speed: number; x: number; z: number }[] = [];
   private l10Seen = new Set<number>();
   private markers = new Map<string, { x: number; z: number; samples: number; maxDisplacement: number }>();
   private markerChanges: { tick: number; step: string; marker: string | null; x?: number; z?: number }[] = [];
@@ -275,7 +276,10 @@ export class AcceptanceObserver {
           if (distance(e.transform, player.transform) < 30 && !story.closeSections.includes(section)) story.closeSections.push(section);
         } else if (!this.l10Seen.has(e.id)) {
           this.l10Seen.add(e.id); story.seen++;
-          if (!this.l10Moved.has(e.id)) story.idleEntries.push(e.id);
+          this.l10FirstSightings.push({ id: e.id, seconds: w.tick / 60, archetype: e.archetype, state: e.infected!.state, speed: e.motion?.speed ?? 0, x: e.transform.x, z: e.transform.z });
+          // A warned scare's birth frame and an attacking/staggered enemy have
+          // zero velocity without being an idle roadside stand-in.
+          if (!this.l10Moved.has(e.id) && ['idle','wander'].includes(e.infected!.state)) story.idleEntries.push(e.id);
         }
       }
       if (s.states['cure-carried']) {
@@ -324,7 +328,7 @@ export class AcceptanceObserver {
     return { initial: this.initial, final: this.final, eventCounts: this.eventCounts, ledger: this.ledger, pickups: this.pickups, duplicatePickups: this.duplicatePickups,
       peakAlive: this.peakAlive, peakCharacters: this.peakCharacters, firstMinute: this.firstMinute, markers: [...this.markers].map(([id, record]) => ({ id, ...record })), markerChanges: this.markerChanges, l5Formation: this.l5Formation.snapshot(), l4Scale: this.l4Scale,
       corgi: { ...this.corgi, ids: [...this.corgi.ids] }, phaseStarts: this.phaseStarts, phasePeaks: this.phasePeaks, births: this.births, speed: this.speed, runOut: this.runOut, regions: this.regions,
-      charge: this.charge, l10Story: this.l10Story, megaIntroduction: this.megaIntroduction, maxMegaStep: this.maxMegaStep, release: this.release, calm: this.calm, l6RetreatDamage: this.l6RetreatDamage,
+      charge: this.charge, l10Story: this.l10Story, l10FirstSightings: this.l10FirstSightings, megaIntroduction: this.megaIntroduction, maxMegaStep: this.maxMegaStep, release: this.release, calm: this.calm, l6RetreatDamage: this.l6RetreatDamage,
       l2BeforeDoors: { ...this.l2BeforeDoors, nearest: Number.isFinite(this.l2BeforeDoors.nearest) ? this.l2BeforeDoors.nearest : null }, l2Contact: this.l2Contact, l2Maximum: this.l2Maximum, l2Route: { ...this.l2Route, encounterIds: [...this.l2EncounterIds] }, releaseFirstTick: this.releaseFirstTick, maxDetailedChunks: this.maxDetailedChunks,
       l5SearchRoute: { ...this.l5SearchRoute, encounters: [...this.l5SearchRoute.encounters.values()] } };
   }

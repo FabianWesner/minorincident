@@ -342,6 +342,7 @@ export class ActionView extends Group {
         if (!entity.pickup.survivorOnly) {
           const marker = new Mesh(this.pickupRingGeometry, this.pickupRingMaterial);
           marker.renderOrder = 94; marker.position.y = .018;
+          if (entity.pickup.reachM) marker.scale.setScalar(2.4);
           if (entity.pickup.surfaceY !== undefined && entity.pickup.surfaceY > support + .05) marker.scale.setScalar(.5);
           group.add(marker);
         }

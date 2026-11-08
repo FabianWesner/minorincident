@@ -3,10 +3,9 @@ import { cornBlocksSight } from '../../levels/L10/farm';
 import { cure } from '../../levels/L10/district';
 import type { SimWorld } from '../../sim/world/SimWorld';
 import { Walker } from './Walker';
-import { solidLargeCorpse } from '../../sim/world/SolidRegistry';
 import { isMega } from '../../data/megaPresentation';
 import { finale as arena } from '../../data/l10Finale';
-import { cureEscapeGaps } from '../../data/l10Story';
+import { cureCorgiToy, cureEscapeGaps } from '../../data/l10Story';
 
 /** The existing L10 sim policy, available to browser diagnostics through bot.start. */
 export class LevelTenBot {
@@ -14,21 +13,21 @@ export class LevelTenBot {
   // Ordinary exploration inputs: visit the six placed finds and the escape gaps,
   // taking the field crossings instead of every ninety-degree road bend.
   private readonly route = [
-    ...cure.regions[0].route.slice(0, 4), cure.anchors['farmhouse-rifle'], [cureEscapeGaps[0].x, cureEscapeGaps[0].z],
+    ...cure.regions[0].route.slice(0, 4), cure.anchors['farmhouse-rifle'],
     cure.anchors['barn-machete'], cure.anchors['shed-molotov'], cure.anchors['workshop-nailgun'], cure.anchors['cure-military'],
-    cure.anchors['guard-tower-rifle'], cure.anchors['checkpoint-flashbang'], [cureEscapeGaps[1].x, cureEscapeGaps[1].z], cure.anchors['r4-r5-seam'],
+    cure.anchors['guard-tower-rifle'], cure.anchors['checkpoint-flashbang'], cure.anchors['r4-r5-seam'],
     cure.anchors['cure-research-entry'], cure.anchors['cure-terminal'], cure.anchors['cure-canister'], cure.anchors['cure-research'], cure.anchors['cure-corridor'],
     [cureEscapeGaps[2].x, cureEscapeGaps[2].z], cure.anchors['cure-complex'], ...cure.regions[6].route.slice(5),
   ];
   private waypoint = 0;
-  private releaseAttempt = 0;
   private clearStairsUntil = 0;
   private coolingGun = false;
-  private releaseSidestepUntil = 0;
-  private releaseBlockedAt = 0;
   private readonly startTick: number;
   finished = false;
-  constructor(private readonly w: SimWorld, readonly profile = 'complete') { this.startTick = w.tick; }
+  constructor(private readonly w: SimWorld, readonly profile = 'complete') {
+    this.startTick = w.tick;
+    if (profile === 'optional-toy') this.route.splice(this.route.indexOf(cure.anchors['barn-machete']) + 1, 0, [cureCorgiToy.x, cureCorgiToy.z]);
+  }
   sample(): InputFrame {
     const w = this.w, mission = w.missions!, player = w.entities.get(1)!, f = emptyInput();
     this.finished = mission.state.phase === 'result' || mission.state.phase === 'progression';
@@ -48,7 +47,11 @@ export class LevelTenBot {
       return f;
     }
     const released = !!mission.state.states['cure-released'];
-    while (this.waypoint < this.route.length && distance({ x: this.route[this.waypoint][0], z: this.route[this.waypoint][1] }) < 2) this.waypoint++;
+    while (this.waypoint < this.route.length) {
+      const point = this.route[this.waypoint], toy = point[0] === cureCorgiToy.x && point[1] === cureCorgiToy.z;
+      if (distance({ x: point[0], z: point[1] }) >= (toy ? 1.2 : 2)) break;
+      this.waypoint++;
+    }
     let goal = anchor;
     // Once the boss reaches the apron, follow its private pursuit anchor
     // around console cover. Waiting at the console cannot acquire a boss on
@@ -57,25 +60,7 @@ export class LevelTenBot {
     if (active.id === 'mega' && bossMarker && Math.hypot(bossMarker.x - anchor.x, bossMarker.z - anchor.z) <= arena.holdRadius) goal = bossMarker;
     if (!released && !finale && this.waypoint < this.route.length && this.route[this.waypoint][0] < anchor.x - 2) goal = { x: this.route[this.waypoint][0], z: this.route[this.waypoint][1], radius: 2 };
     if (released) goal = { x: anchor.x + (tick % 600 < 300 ? 12 : -12), z: anchor.z, radius: 1 };
-    f.move = this.walker.step(w, goal, .8, `${active.id}-${this.waypoint}`) ?? f.move;
-    // The static grid cannot see the Mega's solid corpse. If the tank and
-    // corpse block the return route, try ordinary directional sidesteps as
-    // the physical-input driver does, then resume walking to the console.
-    if (active.id === 'release') {
-      const blocker = w.solids.blockingBody(1);
-      if (blocker && solidLargeCorpse(blocker) && (player.motion?.speed ?? 0) < .12) {
-        this.releaseBlockedAt ||= w.tick;
-        if (w.tick >= this.releaseSidestepUntil && w.tick - this.releaseBlockedAt >= 30) {
-          this.releaseAttempt++;
-          this.releaseSidestepUntil = w.tick + 90;
-          this.walker.reset();
-        }
-      } else this.releaseBlockedAt = 0;
-      if (w.tick < this.releaseSidestepUntil) {
-        const angle = (this.releaseAttempt % 8) * Math.PI / 4;
-        f.move = { x: Math.cos(angle), z: Math.sin(angle) };
-      }
-    }
+    f.move = this.walker.step(w, goal, .8, `${active.id}-${this.waypoint}`, active.id === 'release') ?? f.move;
     f.interact = !released && tick % 60 < 45 && distance(anchor) <= anchor.radius;
     // Bots share the documented camera + 5 m perception contract. A 30 m
     // omnidirectional scan shot unseen arrivals before they could enter view,
@@ -99,7 +84,8 @@ export class LevelTenBot {
         }
         return f;
       }
-      const foot = { x: anchor.x + arena.platformStair.at[0], z: anchor.z + arena.platformStair.at[1] };
+      const [footX, footZ] = cure.anchors['dispersal-stair-foot'];
+      const foot = { x: footX, z: footZ };
       const pivot = gun.placement;
       if (p.y < arena.gun.deckHeight + .2) {
         f.move = distance(foot) > 1 && p.x > foot.x - 1
@@ -113,7 +99,17 @@ export class LevelTenBot {
     }
     if (active.id !== 'hold' && gun?.mounted) { f.interact = true; return f; }
     const rack = player.weapons!.RIGHT.rack, target = active.id === 'mega' ? threats.find(isMega) ?? threats[0] : threats[0];
-    if (active.id === 'mega' && p.y > 2) f.move = this.walker.step(w, { x: anchor.x + arena.platformStair.at[0], z: anchor.z + arena.platformStair.at[1] }, .6, 'descend-stair') ?? f.move;
+    if (['mega', 'release'].includes(active.id) && p.y > 2) {
+      // Interaction console is 2 m east of the assembly origin. Use the
+      // shipped stair anchors, rather than translating them from that marker.
+      const [topX, topZ] = cure.anchors['dispersal-stair-top'], [footX, footZ] = cure.anchors['dispersal-stair-foot'];
+      const top = { x: topX, z: topZ }, foot = { x: footX, z: footZ };
+      if (p.x < top.x - .25 || Math.abs(p.z - top.z) > .25) f.move = this.walker.step(w, top, .2, 'descend-landing', true) ?? { x: 0, z: 0 };
+      else {
+        const dx = foot.x - p.x, dz = foot.z - p.z, d = Math.hypot(dx, dz) || 1;
+        f.move = { x: dx / d, z: dz / d };
+      }
+    }
 
     // Moving targets need room for the rocket to arm before contact. Keep the
     // launcher for distant packs/Mega and the carried shotgun for close defence.

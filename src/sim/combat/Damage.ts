@@ -76,7 +76,12 @@ export class Damage {
     // the frozen L5 balance. Shield counters use the original launch point only.
     const directionalHit = (this.world.scenario === 'L4' || this.world.scenario === 'L6') && target.combat?.shield && hit.shotOrigin ? { ...hit, origin } : hit;
     if (target.infected?.pursuit && this.world.scenario === 'L10' && !this.world.missions?.state.states['cure-installed']) return 0;
-    const amount = damageAmount(directionalHit, target, open, faceDot, this.world.scenario === 'L10' && !!this.world.missions?.state.states['cure-installed']);
+    let amount = damageAmount(directionalHit, target, open, faceDot, this.world.scenario === 'L10' && !!this.world.missions?.state.states['cure-installed']);
+    if (this.world.scenario === 'L10' && target.infected?.pursuit && target.infected.megaPhase === 2 && !target.infected.megaArmourBroken && !hit.actionId.includes('flamethrower') && !hit.actionId.startsWith('environment.')) {
+      const dx = origin.x - target.transform.x, dz = origin.z - target.transform.z, d = Math.hypot(dx, dz) || 1;
+      const back = (dx * Math.cos(target.transform.yaw) - dz * Math.sin(target.transform.yaw)) / d < -.3;
+      if (!(back && (target.infected.megaWeakTicks ?? 0) > 0)) amount *= .35;
+    }
     return glance ? amount * riotShieldResponse.chipFraction : amount;
   }
   /** True only for an actual frontal L4/L6 riot shield firearm hit outside contact and break windows. */
@@ -199,7 +204,7 @@ export class Damage {
       this.world.infected?.cancelSpecial(target.id);
       // An interrupt must not turn a 0.5 s stagger into the completed move's 1.2 s immobilization.
       target.infected!.specialRecoveryUntil = Math.max(recovery, this.world.tick + megaAlpha.staggerTicks);
-      target.combat!.staggerUntil = this.world.tick + Math.min(megaAlpha.staggerTicks, Math.max(this.world.scenario === 'L10' ? 30 : 1, Math.ceil(hit.stagger * 60)));
+      target.combat!.staggerUntil = Math.max(target.combat!.staggerUntil, this.world.tick + Math.min(megaAlpha.staggerTicks, Math.max(this.world.scenario === 'L10' ? 30 : 1, Math.ceil(hit.stagger * 60))));
     }
     if (mega) hit = { ...hit, knockback: megaReact ? Math.min(.4, hit.knockback) : 0, stagger: 0, knockdown: false, knockdownTicks: 0, part: undefined };
     const wasAlive = target.health.current > 0;

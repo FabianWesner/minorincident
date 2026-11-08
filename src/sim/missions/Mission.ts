@@ -463,6 +463,8 @@ export class Mission {
     if (!resume && this.state.cureFront) { this.l10?.cure.apply(); return; }
     this.world.controls.reset();
     const checkpoint = this.checkpoints.get(id); if (!checkpoint) throw new Error(`Unknown checkpoint: ${id}`);
+    const retainedCharge = !resume && this.def.id === 'L10' && this.state.states['cure-installed'] ? this.state.counters['charge-ticks'] : null;
+    const retainedCharging = !!this.state.states['charge-active'];
     const timeout = this.state.failure === 'timeout';
     const stats = this.state.stats, bosses=this.state.killedBosses, delta = this.world.tick - checkpoint.tick;
     // Optional fields absent from the snapshot belong to the discarded timeline
@@ -470,6 +472,7 @@ export class Mission {
     const previous = this.state as unknown as Record<string, unknown>;
     for (const key of Object.keys(previous)) if (!(key in checkpoint.state)) delete previous[key];
     Object.assign(this.state, structuredClone(checkpoint.state)); this.state.stats = stats; this.state.killedBosses=bosses; this.state.failure = null; this.state.phase = 'playing'; this.state.cinematic = null; this.state.result = null;
+    if (retainedCharge !== null) { this.state.counters['charge-ticks'] = Math.max(this.state.counters['charge-ticks'], retainedCharge); this.state.states['charge-active'] = retainedCharging; this.state.states['charge-ready'] = this.state.counters['charge-ticks'] >= 3600; }
     if (timeout && this.state.deadlineTicks !== null) this.state.deadlineTicks += Math.ceil((this.def.deadline?.retryGraceSeconds ?? 0) * 60);
     this.finishApplied = false; this.pendingCheckpoints.length=0; this.markerObjective=this.def.steps.find(s=>this.state.steps[s.id].status==='active')?.id??null; this.pendingMarker=null;
     for (const step of Object.values(this.state.steps)) if (step.status === 'active') step.started += delta;

@@ -1,13 +1,16 @@
-import { cureHangar, cureHangarConversation, insideCureHangar } from '../../data/l10Story';
+import { cureEscapeGaps, cureHangar, cureHangarConversation, insideCureHangar } from '../../data/l10Story';
 import { cure } from '../../levels/L10/district';
 import { allyState } from '../outbreak/Allies';
 import { l4 } from '../../data/l4';
 import type { EntitySnapshot } from '../world/types';
 import type { Mission } from './Mission';
+import { curePaceCheckpoints } from '../../levels/L10/mission';
+import { cureWeaponPickups } from '../../levels/L10/encounters';
 
 /** Exact scripted dialogue, continuity and the safe-hangar cast. All progress lives in the mission snapshot. */
 export class LevelTenStory {
-  constructor(private readonly mission: Mission) {}
+  private previous: { x: number; z: number };
+  constructor(private readonly mission: Mission) { this.previous = { ...mission.world.entities.get(1)!.transform }; }
   private savedSam(): EntitySnapshot | undefined {
     const save = this.mission.world.progression?.campaign;
     const research = save?.crossingHandover?.researchCompanion;
@@ -28,12 +31,27 @@ export class LevelTenStory {
       state.states['sam-alive'] = !!this.savedSam();
       this.say('L10.farmstead', 360);
     }
+    for (const find of cureWeaponPickups) if (p.weapons?.RIGHT.rack.some(slot => slot.id === find.action)) state.states[`found-${find.id}`] = true;
     // Checkpoints follow the region crossed, independently of the story objective and optional weapon finds.
     for (let i = 1; i <= 4; i++) if (state.counters['story-region'] < i && p.transform.x >= cure.regions[i].envelope[0][0]) {
       state.counters['story-region'] = i;
       this.mission.requestCheckpoint(cure.regions[i].checkpoint);
     }
-    if (!state.states['gap-hint'] && p.transform.x >= 937) { state.states['gap-hint'] = true; this.say('L10.hide-gap'); }
+    // Count actual walking distance, including bends and field detours. The
+    // old east-west markers left up to 320 m between recovery points.
+    const moved = Math.hypot(p.transform.x - this.previous.x, p.transform.z - this.previous.z);
+    this.previous = { x: p.transform.x, z: p.transform.z };
+    if (!state.states['cure-installed']) {
+      if (moved < 8) state.counters['pace-mm'] = (state.counters['pace-mm'] ?? 0) + Math.round(moved * 1000);
+      const index = state.counters['pace-checkpoint'] ?? 0;
+      if (state.counters['pace-mm'] >= (index ? 200000 : 120000)) {
+        const next = Math.min(curePaceCheckpoints.length, index + 1);
+        state.counters['pace-checkpoint'] = next;
+        state.counters['pace-mm'] = 0;
+        this.mission.requestCheckpoint(curePaceCheckpoints[next - 1]);
+      }
+    }
+    if (!state.states['gap-hint'] && cureEscapeGaps.some(gap => Math.hypot(p.transform.x - gap.x, p.transform.z - gap.z) < 5)) { state.states['gap-hint'] = true; this.say('L10.hide-gap'); }
     if (!state.states['hangar-radio'] && p.transform.x >= 2300) { state.states['hangar-radio'] = true; this.say('L10.armory'); }
     if (!state.states['hangar-cast'] && Math.abs(p.transform.x - cureHangar.centre.x) < 120 && world.chunks?.resident(cureHangar.centre.x, cureHangar.centre.z)) this.spawnCast();
     if (state.steps.research?.status !== 'active' || !insideCureHangar(p.transform)) return;

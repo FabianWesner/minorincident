@@ -79,6 +79,23 @@ export function cureFarmDecor(placements: readonly Placement[]): Placement[] {
   return out;
 }
 
+/** Render-only southern field detail for the off-road farm approach shown in the PO's QA capture. */
+export function cureSouthernFieldDecor(occupied: readonly Placement[]): Placement[] {
+  const out: Placement[] = [];
+  for (let x = 820; x <= 1210; x += 30) for (const z of [-145, -125, -105]) {
+    const crop = piece(`decor-cure-south-corn-${x}-${z}`, 'veg.corn-block', x, z, (x / 30) % 2 ? 0 : Math.PI);
+    if (occupied.some(p => overlaps(crop, p, .5)) || out.some(p => overlaps(crop, p, .5))) continue;
+    out.push(crop);
+  }
+  for (const [i, [asset, x, z]] of ([
+    ['prop.farm-carcass', 850, -122], ['prop.farm-scarecrow', 1025, -122], ['prop.crates', 1160, -122],
+  ] as const).entries()) {
+    const remnant = piece(`decor-cure-south-remnant-${i}`, asset, x, z);
+    if (!occupied.some(p => overlaps(remnant, p, .5)) && !out.some(p => overlaps(remnant, p, .5))) out.push(remnant);
+  }
+  return out;
+}
+
 /** Clear the later vignette pavement, retaining landmarks and moving displaced field details into surviving crops. */
 export function clearFarmFromSurfaces(placements: readonly Placement[], surfaces: DistrictLayout['surfaces']): Placement[] {
   const bounds = surfaces.map(s => ({ minX: Math.min(...s.polygon.map(p => p[0])), maxX: Math.max(...s.polygon.map(p => p[0])), minZ: Math.min(...s.polygon.map(p => p[1])), maxZ: Math.max(...s.polygon.map(p => p[1])) }));
@@ -102,7 +119,7 @@ export function clearFarmFromSurfaces(placements: readonly Placement[], surfaces
 export function applyFarmLandscape(layout: DistrictLayout): void {
   // Re-preparing an assembled layout replaces our generated solids instead of doubling them.
   layout.colliders = layout.colliders.filter(c => !c.id.includes('/farm-wood-') && !c.id.endsWith('/farm-chassis'));
-  for (const p of layout.placements) if (p.id.startsWith('decor-cure-farm-') && p.assetId.startsWith('bld.farm-')) {
+  for (const p of layout.placements) if ((p.id.startsWith('decor-cure-farm-') || p.id.startsWith('l10-find-farm-')) && p.assetId.startsWith('bld.farm-')) {
     const house = p.assetId === 'bld.farm-house-ruin', w = house ? 8 : 7, d = house ? 7 : 8, h = house ? 2.55 : 3.35;
     const opening = house ? 1.8 : 2.8, pier = (w - opening) / 2;
     // Match the rebuilt walls while preserving a traversable north/south escape aisle.
@@ -115,8 +132,9 @@ export function applyFarmLandscape(layout: DistrictLayout): void {
     );
     for (const [i, b] of boxes.entries()) {
       const c = Math.cos(p.yaw), s = Math.sin(p.yaw), x = p.position[0] + b.x * c + b.z * s, z = p.position[2] - b.x * s + b.z * c;
-      const hx = Math.abs(c) * b.hx + Math.abs(s) * b.hz, hz = Math.abs(s) * b.hx + Math.abs(c) * b.hz;
-      layout.colliders.push({ id: `${p.id}/farm-wood-${i}`, minTier: 0, maxTier: 6, aabb: { min: [x - hx, 0, z - hz], max: [x + hx, b.h, z + hz], navFootprint: { x, z, halfX: b.hx, halfZ: b.hz, yaw: p.yaw } } });
+      const hx = (Math.abs(c) * b.hx + Math.abs(s) * b.hz) * p.scale[0], hz = (Math.abs(s) * b.hx + Math.abs(c) * b.hz) * p.scale[2];
+      const sx = p.position[0] + (x - p.position[0]) * p.scale[0], sz = p.position[2] + (z - p.position[2]) * p.scale[2];
+      layout.colliders.push({ id: `${p.id}/farm-wood-${i}`, minTier: 0, maxTier: 6, aabb: { min: [sx - hx, 0, sz - hz], max: [sx + hx, b.h * p.scale[1], sz + hz], navFootprint: { x: sx, z: sz, halfX: b.hx * p.scale[0], halfZ: b.hz * p.scale[2], yaw: p.yaw } } });
     }
   }
   for (const p of layout.placements) if (['prop.farm-tractor', 'prop.farm-combine'].includes(p.assetId)) {
