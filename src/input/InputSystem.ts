@@ -142,6 +142,11 @@ export class InputSystem implements Lifecycle {
   };
   /** Explicit HUD/device action, shared by pointer buttons and the keyboard/touch frame. */
   interactOnce(): void { this.interact = true; }
+  /** HUD weapon-slot click/tap: exactly the number-key path (same frame field, so replays and telemetry see the same event). */
+  selectWeaponKey(key: number): boolean {
+    if (!Number.isInteger(key) || key < 1 || key > 9 || this.drivingContext || this.mountedGunContext) return false;
+    this.selectedWeaponKey = key; return true;
+  }
   private moving(): boolean { return this.active.has('moveUp') || this.active.has('moveDown') || this.active.has('moveLeft') || this.active.has('moveRight'); }
   private keyboardAttackHeld(): boolean {
     for (const [code, action] of this.heldTokens) if (!code.startsWith('Mouse') && (action === 'left' || action === 'right')) return true;

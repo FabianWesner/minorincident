@@ -386,10 +386,14 @@ export class Hud {
     if (signature !== this.weaponRackSignature) {
       this.weaponRackSignature = signature; this.weaponRack.replaceChildren(); this.weaponRackItems.clear();
       for (const entry of entries) {
-        const item = node('span', `weapon-rack-${entry.id}`), icon = document.createElement('img'), key = weaponKey(entry.id);
+        const item = node('button', `weapon-rack-${entry.id}`), icon = document.createElement('img'), key = weaponKey(entry.id);
         item.className = 'hud-weapon-choice'; item.dataset.weapon = entry.id;
         icon.src = actionIconUrl(action(entry.id).iconId); icon.alt = '';
         item.title = `${label(entry.id)}${key === undefined ? '' : ` · ${key}`}`; item.setAttribute('aria-label', item.title);
+        item.type = 'button'; item.tabIndex = -1; item.disabled = key === undefined;
+        // Same input path as the number key. mousedown/pointerdown never reach the canvas (HUD is a sibling), so no shot, move or aim.
+        item.addEventListener('mousedown', event => event.preventDefault()); // keep keyboard focus on the canvas so Space/Enter never re-click a slot
+        item.addEventListener('click', event => { event.preventDefault(); event.stopPropagation(); if (key !== undefined) this.game.input.selectWeaponKey(key); });
         item.append(icon);
         if (key !== undefined) { const badge = node('span', `weapon-key-${key}`, String(key)); badge.className = 'hud-weapon-key'; item.append(badge); }
         this.weaponRackItems.set(entry.id, item); this.weaponRack.append(item);
