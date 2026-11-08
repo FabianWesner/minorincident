@@ -1,0 +1,197 @@
+{
+  "at": "2026-11-08T04:01:20.596Z",
+  "anchors": {
+    "exports": 354,
+    "named": 370,
+    "parsed": 370,
+    "missing": [],
+    "absent": [
+      "public/assets/models/equip.backpack-teal.glb",
+      "public/assets/models/equip.backpack-red.glb",
+      "public/assets/models/equip.backpack-green.glb",
+      "public/assets/models/equip.backpack-blue.glb",
+      "public/assets/models/util.keys.glb",
+      "public/assets/models/util.batteries.glb",
+      "public/assets/models/util.lockpick-kit.glb",
+      "public/assets/models/haz.spike-barricade.glb",
+      "public/assets/models/haz.gas-can.glb",
+      "public/assets/models/haz.fuse-box.glb",
+      "public/assets/models/haz.propane-tank.glb",
+      "public/assets/models/proj.rocket.glb",
+      "public/assets/models/abl.turret.glb",
+      "public/assets/models/decay.downed-power-line.glb",
+      "public/assets/models/decay.fallen-tree.glb",
+      "public/assets/models/decay.body-bag.glb",
+      "public/assets/models/amb.pigeon.glb",
+      "public/assets/models/prop.picnic-table.glb",
+      "public/assets/models/kit.house-variants.glb",
+      "public/assets/models/prop.cafe-patio-set.glb",
+      "public/assets/models/prop.garden-set.glb",
+      "public/assets/models/prop.alley-set.glb"
+    ],
+    "errors": [],
+    "tableCurrent": true
+  },
+  "startup": {
+    "generator": 3,
+    "started": 1,
+    "powerOn": [
+      {
+        "type": "power.on",
+        "tick": 1,
+        "group": "trailer"
+      }
+    ],
+    "transitions": [
+      18,
+      36,
+      60
+    ],
+    "steadyOn": true,
+    "statesRLE": [
+      {
+        "startAge": 0,
+        "endAge": 17,
+        "samples": 18,
+        "emissives": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "on": [
+          false,
+          false,
+          false,
+          false
+        ]
+      },
+      {
+        "startAge": 18,
+        "endAge": 35,
+        "samples": 18,
+        "emissives": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "on": [
+          true,
+          true,
+          true,
+          true
+        ]
+      },
+      {
+        "startAge": 36,
+        "endAge": 59,
+        "samples": 24,
+        "emissives": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "on": [
+          false,
+          false,
+          false,
+          false
+        ]
+      },
+      {
+        "startAge": 60,
+        "endAge": 120,
+        "samples": 61,
+        "emissives": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "on": [
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    ],
+    "recordedSamples": 121
+  },
+  "breakage": {
+    "hitEvents": [
+      {
+        "tick": 129,
+        "attackId": 1,
+        "actionId": "weapon.pistol",
+        "sourceId": 1,
+        "targetId": 1000000000,
+        "position": {
+          "x": 3,
+          "y": 1,
+          "z": 0,
+          "yaw": 0
+        },
+        "direction": {
+          "x": 1,
+          "z": 0
+        },
+        "knockback": 0,
+        "amount": 1,
+        "damageType": "bullet",
+        "type": "combat.hit"
+      }
+    ],
+    "broken": true,
+    "brokenEvents": [
+      {
+        "type": "light.broken",
+        "tick": 129,
+        "id": "trailer:light:lamp0_L",
+        "entityId": 1000000000
+      }
+    ],
+    "sparks": [
+      {
+        "type": "vfx.effect",
+        "tick": 129,
+        "kind": "electric",
+        "position": {
+          "x": 3,
+          "y": 1,
+          "z": 0
+        },
+        "radius": 0.5
+      }
+    ],
+    "sightBefore": 1,
+    "sightAfter": 0.6,
+    "rangeBefore": 16,
+    "rangeAfter": 9.599999999976717,
+    "measuredRangeDrop": 0.4000000000014552,
+    "sightDrop": 0.4
+  },
+  "off": {
+    "event": [
+      {
+        "type": "power.off",
+        "tick": 154,
+        "group": "trailer"
+      }
+    ],
+    "on": [
+      false,
+      false,
+      false,
+      false
+    ],
+    "emissives": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}

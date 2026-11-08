@@ -1,0 +1,3009 @@
+{
+  "render-high": {
+    "pool": {
+      "inside": 0.5987398862486678,
+      "outside": 0.011754344962411623,
+      "behind": 0.006603688231954505,
+      "behindAmbient": 0.012671082080309657,
+      "sampleCounts": [
+        376,
+        125,
+        289
+      ]
+    },
+    "shadow": {
+      "behind": 0.43512438555301514,
+      "beside": 0.8389575857213146,
+      "withoutBody": 0.8613408690184424
+    },
+    "off": {
+      "practicalEffects": {
+        "beams": 0,
+        "reflections": 0,
+        "motes": 0
+      },
+      "lightField": {
+        "strength": 1,
+        "resolution": 1024,
+        "size": 80,
+        "statics": 4,
+        "litStatics": 0,
+        "candidates": 1,
+        "drawn": 1,
+        "transients": 0,
+        "capacity": 512,
+        "ms": 0.09999942779541016,
+        "center": [
+          0,
+          0
+        ]
+      }
+    },
+    "reflection": {
+      "streakLuminance": 0.19387052876101224,
+      "neighborLuminance": 0.05903957833759888
+    },
+    "errors": []
+  },
+  "windows-high": {
+    "shiftPx": 113.86896589722873,
+    "glowRatio": 9.587443720287466
+  },
+  "counters-high": {
+    "light-lab": {
+      "timingMeasured": false,
+      "heap": {
+        "usedSize": 131485592,
+        "totalSize": 134840320,
+        "embedderHeapUsedSize": 2955640,
+        "backingStorageSize": 473615831
+      },
+      "perf": {
+        "drawCalls": 34,
+        "triangles": 51659,
+        "backend": "webgl",
+        "lighting": {
+          "lightFieldMs": 0.3000001907348633,
+          "lightPools": 5,
+          "lightCandidates": 5,
+          "shadowMaps": 1,
+          "heroLights": 0,
+          "heroShadow": 0,
+          "preset": "night"
+        },
+        "geometries": 330,
+        "textures": 202,
+        "contextLost": false,
+        "quality": {
+          "setting": "high",
+          "tier": "high",
+          "p90Ms": 0,
+          "slowSeconds": 0,
+          "budgets": {
+            "frameMs": 16.7,
+            "infected": 200,
+            "drawCalls": 600,
+            "triangles": 1500000,
+            "simMs": 4,
+            "heapMB": 400,
+            "pixelRatio": 2,
+            "shadowSize": 2048,
+            "bloomMips": 5,
+            "cullDistance": 60
+          }
+        }
+      }
+    },
+    "night-street": {
+      "timingMeasured": false,
+      "heap": {
+        "usedSize": 168116476,
+        "totalSize": 173293568,
+        "embedderHeapUsedSize": 4030680,
+        "backingStorageSize": 747482677
+      },
+      "perf": {
+        "drawCalls": 155,
+        "triangles": 757965,
+        "backend": "webgl",
+        "lighting": {
+          "lightFieldMs": 0.8000001907348633,
+          "lightPools": 305,
+          "lightCandidates": 305,
+          "shadowMaps": 1,
+          "heroLights": 0,
+          "heroShadow": 0,
+          "preset": "night"
+        },
+        "geometries": 795,
+        "textures": 213,
+        "contextLost": false,
+        "quality": {
+          "setting": "high",
+          "tier": "high",
+          "p90Ms": 0,
+          "slowSeconds": 0,
+          "budgets": {
+            "frameMs": 16.7,
+            "infected": 200,
+            "drawCalls": 600,
+            "triangles": 1500000,
+            "simMs": 4,
+            "heapMB": 400,
+            "pixelRatio": 2,
+            "shadowSize": 2048,
+            "bloomMips": 5,
+            "cullDistance": 60
+          }
+        }
+      }
+    },
+    "readability": {
+      "spot": {
+        "x": 15,
+        "z": -2,
+        "distance": 10.04987562112089
+      },
+      "maskPixels": 4398,
+      "bodyMean": 0.18432466004500267,
+      "ringMean": 0.01907149196940591,
+      "ratio": 9.664931319515665,
+      "infectedEyesMeasured": false
+    },
+    "errors": []
+  },
+  "walk-high": {
+    "seconds": 60,
+    "anchors": 40,
+    "backend": "webgl",
+    "actualTier": "high",
+    "distanceM": 119.94851898215711,
+    "rollingMax": 1,
+    "maxLights": 1,
+    "maxMaps": 1,
+    "readback": "bilinear linear luminance at the projected world pool centre",
+    "maxPixelDelta": 0.08235077671827186,
+    "worst": {
+      "frame": 3049,
+      "light": 35,
+      "before": 0.2221011352448281,
+      "after": 0.24039133624224965,
+      "hero": "walk-33"
+    },
+    "changes": [
+      {
+        "frame": 0,
+        "x": 0.009999999776482582,
+        "id": "walk-0",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 0,
+            "luminance": 0.19105483457709818
+          },
+          {
+            "light": 1,
+            "luminance": 0.23087069023018844
+          }
+        ]
+      },
+      {
+        "frame": 118,
+        "x": 3.926664352416992,
+        "id": "walk-1",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 0,
+            "luminance": 0.18589589800626277
+          },
+          {
+            "light": 1,
+            "luminance": 0.2407087934137574
+          },
+          {
+            "light": 2,
+            "luminance": 0.258179285392656
+          }
+        ]
+      },
+      {
+        "frame": 208,
+        "x": 6.926661491394043,
+        "id": "walk-2",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 0,
+            "luminance": 0.17855358849059866
+          },
+          {
+            "light": 1,
+            "luminance": 0.2330434456491604
+          },
+          {
+            "light": 2,
+            "luminance": 0.25672886276284024
+          },
+          {
+            "light": 3,
+            "luminance": 0.2604304478969197
+          }
+        ]
+      },
+      {
+        "frame": 298,
+        "x": 9.92668628692627,
+        "id": "walk-3",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 1,
+            "luminance": 0.21812063628919884
+          },
+          {
+            "light": 2,
+            "luminance": 0.2553354804060689
+          },
+          {
+            "light": 3,
+            "luminance": 0.26037597098214416
+          },
+          {
+            "light": 4,
+            "luminance": 0.2555191431117522
+          }
+        ]
+      },
+      {
+        "frame": 388,
+        "x": 12.926726341247559,
+        "id": "walk-4",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 2,
+            "luminance": 0.2454682638907926
+          },
+          {
+            "light": 3,
+            "luminance": 0.2547899250687752
+          },
+          {
+            "light": 4,
+            "luminance": 0.25667153473728643
+          },
+          {
+            "light": 5,
+            "luminance": 0.24882096686060823
+          }
+        ]
+      },
+      {
+        "frame": 478,
+        "x": 15.926766395568848,
+        "id": "walk-5",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 3,
+            "luminance": 0.24951324110556375
+          },
+          {
+            "light": 4,
+            "luminance": 0.25045494840564836
+          },
+          {
+            "light": 5,
+            "luminance": 0.25315405889880893
+          },
+          {
+            "light": 6,
+            "luminance": 0.2515128212146448
+          }
+        ]
+      },
+      {
+        "frame": 568,
+        "x": 18.92672348022461,
+        "id": "walk-6",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 4,
+            "luminance": 0.2460445404992432
+          },
+          {
+            "light": 5,
+            "luminance": 0.24676233550817436
+          },
+          {
+            "light": 6,
+            "luminance": 0.25863717268786335
+          },
+          {
+            "light": 7,
+            "luminance": 0.2522305772138034
+          }
+        ]
+      },
+      {
+        "frame": 658,
+        "x": 21.926677703857422,
+        "id": "walk-7",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 5,
+            "luminance": 0.23361147620318612
+          },
+          {
+            "light": 6,
+            "luminance": 0.25779270493057294
+          },
+          {
+            "light": 7,
+            "luminance": 0.25650753619472394
+          },
+          {
+            "light": 8,
+            "luminance": 0.24817478166145895
+          }
+        ]
+      },
+      {
+        "frame": 748,
+        "x": 24.926631927490234,
+        "id": "walk-8",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 6,
+            "luminance": 0.2498434623837616
+          },
+          {
+            "light": 7,
+            "luminance": 0.24538754404286167
+          },
+          {
+            "light": 8,
+            "luminance": 0.2531207362237609
+          },
+          {
+            "light": 9,
+            "luminance": 0.27113421900416207
+          }
+        ]
+      },
+      {
+        "frame": 838,
+        "x": 27.926586151123047,
+        "id": "walk-9",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 7,
+            "luminance": 0.23856860584270725
+          },
+          {
+            "light": 8,
+            "luminance": 0.2501621130685457
+          },
+          {
+            "light": 9,
+            "luminance": 0.2648399200446976
+          },
+          {
+            "light": 10,
+            "luminance": 0.25626791291115836
+          }
+        ]
+      },
+      {
+        "frame": 928,
+        "x": 30.92654037475586,
+        "id": "walk-10",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 8,
+            "luminance": 0.2371719787423709
+          },
+          {
+            "light": 9,
+            "luminance": 0.2681976679208567
+          },
+          {
+            "light": 10,
+            "luminance": 0.26380496482637283
+          },
+          {
+            "light": 11,
+            "luminance": 0.25952448199982225
+          }
+        ]
+      },
+      {
+        "frame": 1018,
+        "x": 33.92649459838867,
+        "id": "walk-11",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 9,
+            "luminance": 0.24841133618709893
+          },
+          {
+            "light": 10,
+            "luminance": 0.25204589871756233
+          },
+          {
+            "light": 11,
+            "luminance": 0.27182160901668806
+          },
+          {
+            "light": 12,
+            "luminance": 0.2492857169358987
+          }
+        ]
+      },
+      {
+        "frame": 1108,
+        "x": 36.926448822021484,
+        "id": "walk-12",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 10,
+            "luminance": 0.242286981302613
+          },
+          {
+            "light": 11,
+            "luminance": 0.2584591507141204
+          },
+          {
+            "light": 12,
+            "luminance": 0.25479052179648154
+          },
+          {
+            "light": 13,
+            "luminance": 0.24694382339676565
+          }
+        ]
+      },
+      {
+        "frame": 1198,
+        "x": 39.9264030456543,
+        "id": "walk-13",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 11,
+            "luminance": 0.25338701309878303
+          },
+          {
+            "light": 12,
+            "luminance": 0.24942982289033078
+          },
+          {
+            "light": 13,
+            "luminance": 0.24543304822088371
+          },
+          {
+            "light": 14,
+            "luminance": 0.2478144766004593
+          }
+        ]
+      },
+      {
+        "frame": 1288,
+        "x": 42.92635726928711,
+        "id": "walk-14",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 12,
+            "luminance": 0.24021899833000626
+          },
+          {
+            "light": 13,
+            "luminance": 0.2500973353655862
+          },
+          {
+            "light": 14,
+            "luminance": 0.2501842640700854
+          },
+          {
+            "light": 15,
+            "luminance": 0.26662853656405294
+          }
+        ]
+      },
+      {
+        "frame": 1378,
+        "x": 45.92631149291992,
+        "id": "walk-15",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 13,
+            "luminance": 0.23771298297583673
+          },
+          {
+            "light": 14,
+            "luminance": 0.24870733034693238
+          },
+          {
+            "light": 15,
+            "luminance": 0.26406729180355404
+          },
+          {
+            "light": 16,
+            "luminance": 0.2642749790515439
+          }
+        ]
+      },
+      {
+        "frame": 1468,
+        "x": 48.926265716552734,
+        "id": "walk-16",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 14,
+            "luminance": 0.23731679335885353
+          },
+          {
+            "light": 15,
+            "luminance": 0.2621649083846019
+          },
+          {
+            "light": 16,
+            "luminance": 0.2619188901834191
+          },
+          {
+            "light": 17,
+            "luminance": 0.24400867004864668
+          }
+        ]
+      },
+      {
+        "frame": 1558,
+        "x": 51.92621994018555,
+        "id": "walk-17",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 15,
+            "luminance": 0.2553993038660368
+          },
+          {
+            "light": 16,
+            "luminance": 0.26577574295503714
+          },
+          {
+            "light": 17,
+            "luminance": 0.23695698862904352
+          },
+          {
+            "light": 18,
+            "luminance": 0.25467953404418997
+          }
+        ]
+      },
+      {
+        "frame": 1648,
+        "x": 54.92617416381836,
+        "id": "walk-18",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 16,
+            "luminance": 0.2516508597119699
+          },
+          {
+            "light": 17,
+            "luminance": 0.23820147083165105
+          },
+          {
+            "light": 18,
+            "luminance": 0.25892628605376533
+          },
+          {
+            "light": 19,
+            "luminance": 0.24387551376851363
+          }
+        ]
+      },
+      {
+        "frame": 1738,
+        "x": 57.92612838745117,
+        "id": "walk-19",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 17,
+            "luminance": 0.23669205804137683
+          },
+          {
+            "light": 18,
+            "luminance": 0.2576338162720415
+          },
+          {
+            "light": 19,
+            "luminance": 0.24280628704152957
+          },
+          {
+            "light": 20,
+            "luminance": 0.2557469950839034
+          }
+        ]
+      },
+      {
+        "frame": 1828,
+        "x": 60.926082611083984,
+        "id": "walk-20",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 18,
+            "luminance": 0.24195196060610497
+          },
+          {
+            "light": 19,
+            "luminance": 0.24334789334606355
+          },
+          {
+            "light": 20,
+            "luminance": 0.2598756282024095
+          },
+          {
+            "light": 21,
+            "luminance": 0.25625354871809786
+          }
+        ]
+      },
+      {
+        "frame": 1918,
+        "x": 63.9260368347168,
+        "id": "walk-21",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 19,
+            "luminance": 0.22948806730723542
+          },
+          {
+            "light": 20,
+            "luminance": 0.25460002107137003
+          },
+          {
+            "light": 21,
+            "luminance": 0.256553978256337
+          },
+          {
+            "light": 22,
+            "luminance": 0.2465629288795771
+          }
+        ]
+      },
+      {
+        "frame": 2008,
+        "x": 66.92599487304688,
+        "id": "walk-22",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 20,
+            "luminance": 0.24782419518470222
+          },
+          {
+            "light": 21,
+            "luminance": 0.2602367978320749
+          },
+          {
+            "light": 22,
+            "luminance": 0.2470711699379251
+          },
+          {
+            "light": 23,
+            "luminance": 0.24926309382292824
+          }
+        ]
+      },
+      {
+        "frame": 2098,
+        "x": 69.92594909667969,
+        "id": "walk-23",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 21,
+            "luminance": 0.2493554112819386
+          },
+          {
+            "light": 22,
+            "luminance": 0.24692228474722105
+          },
+          {
+            "light": 23,
+            "luminance": 0.2576159048682433
+          },
+          {
+            "light": 24,
+            "luminance": 0.2480051056085977
+          }
+        ]
+      },
+      {
+        "frame": 2188,
+        "x": 72.9259033203125,
+        "id": "walk-24",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 22,
+            "luminance": 0.23456758316888127
+          },
+          {
+            "light": 23,
+            "luminance": 0.25444768063003637
+          },
+          {
+            "light": 24,
+            "luminance": 0.24857322920613972
+          },
+          {
+            "light": 25,
+            "luminance": 0.24270939539221142
+          }
+        ]
+      },
+      {
+        "frame": 2278,
+        "x": 75.92585754394531,
+        "id": "walk-25",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 23,
+            "luminance": 0.23838356464153848
+          },
+          {
+            "light": 24,
+            "luminance": 0.2423878462663679
+          },
+          {
+            "light": 25,
+            "luminance": 0.2417638117464606
+          },
+          {
+            "light": 26,
+            "luminance": 0.26234942696199504
+          }
+        ]
+      },
+      {
+        "frame": 2368,
+        "x": 78.92581176757812,
+        "id": "walk-26",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 24,
+            "luminance": 0.23641405497827037
+          },
+          {
+            "light": 25,
+            "luminance": 0.22166291980923553
+          },
+          {
+            "light": 26,
+            "luminance": 0.25795918469891754
+          },
+          {
+            "light": 27,
+            "luminance": 0.24923719185578153
+          }
+        ]
+      },
+      {
+        "frame": 2458,
+        "x": 81.92576599121094,
+        "id": "walk-27",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 25,
+            "luminance": 0.19333856360420376
+          },
+          {
+            "light": 26,
+            "luminance": 0.2544535278248855
+          },
+          {
+            "light": 27,
+            "luminance": 0.25149878491493016
+          },
+          {
+            "light": 28,
+            "luminance": 0.2514675935277265
+          }
+        ]
+      },
+      {
+        "frame": 2548,
+        "x": 84.92572021484375,
+        "id": "walk-28",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 26,
+            "luminance": 0.24429578029076573
+          },
+          {
+            "light": 27,
+            "luminance": 0.25787618226374265
+          },
+          {
+            "light": 28,
+            "luminance": 0.24983589858897057
+          },
+          {
+            "light": 29,
+            "luminance": 0.2755090637671878
+          }
+        ]
+      },
+      {
+        "frame": 2638,
+        "x": 87.92567443847656,
+        "id": "walk-29",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 27,
+            "luminance": 0.24668967341224735
+          },
+          {
+            "light": 28,
+            "luminance": 0.2501821717060248
+          },
+          {
+            "light": 29,
+            "luminance": 0.2820816756427858
+          },
+          {
+            "light": 30,
+            "luminance": 0.23951868964923118
+          }
+        ]
+      },
+      {
+        "frame": 2728,
+        "x": 90.92562866210938,
+        "id": "walk-30",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 28,
+            "luminance": 0.24458967377163182
+          },
+          {
+            "light": 29,
+            "luminance": 0.27972581182848993
+          },
+          {
+            "light": 30,
+            "luminance": 0.23719069757365552
+          },
+          {
+            "light": 31,
+            "luminance": 0.2337130026346496
+          }
+        ]
+      },
+      {
+        "frame": 2818,
+        "x": 93.92558288574219,
+        "id": "walk-31",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 29,
+            "luminance": 0.26047602747106563
+          },
+          {
+            "light": 30,
+            "luminance": 0.240431262654334
+          },
+          {
+            "light": 31,
+            "luminance": 0.23507676459595778
+          },
+          {
+            "light": 32,
+            "luminance": 0.26224191013915465
+          }
+        ]
+      },
+      {
+        "frame": 2908,
+        "x": 96.925537109375,
+        "id": "walk-32",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 30,
+            "luminance": 0.22523393773323225
+          },
+          {
+            "light": 31,
+            "luminance": 0.24237543533612604
+          },
+          {
+            "light": 32,
+            "luminance": 0.2626520012670902
+          },
+          {
+            "light": 33,
+            "luminance": 0.24459743947291684
+          }
+        ]
+      },
+      {
+        "frame": 2998,
+        "x": 99.92549133300781,
+        "id": "walk-33",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 31,
+            "luminance": 0.2366598409322397
+          },
+          {
+            "light": 32,
+            "luminance": 0.2608896546312703
+          },
+          {
+            "light": 33,
+            "luminance": 0.2508317481843606
+          },
+          {
+            "light": 34,
+            "luminance": 0.25726436857811696
+          }
+        ]
+      },
+      {
+        "frame": 3088,
+        "x": 102.92544555664062,
+        "id": "walk-34",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 32,
+            "luminance": 0.2459605755814952
+          },
+          {
+            "light": 33,
+            "luminance": 0.24836684825313726
+          },
+          {
+            "light": 34,
+            "luminance": 0.2620790741583216
+          },
+          {
+            "light": 35,
+            "luminance": 0.23775013988629867
+          }
+        ]
+      },
+      {
+        "frame": 3178,
+        "x": 105.92539978027344,
+        "id": "walk-35",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 33,
+            "luminance": 0.23056516307791852
+          },
+          {
+            "light": 34,
+            "luminance": 0.2526384150265099
+          },
+          {
+            "light": 35,
+            "luminance": 0.2449560213090654
+          },
+          {
+            "light": 36,
+            "luminance": 0.23586962983906679
+          }
+        ]
+      },
+      {
+        "frame": 3268,
+        "x": 108.92535400390625,
+        "id": "walk-36",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 34,
+            "luminance": 0.2444971633417014
+          },
+          {
+            "light": 35,
+            "luminance": 0.23822588136635725
+          },
+          {
+            "light": 36,
+            "luminance": 0.24643754507160356
+          },
+          {
+            "light": 37,
+            "luminance": 0.2381727463538035
+          }
+        ]
+      },
+      {
+        "frame": 3358,
+        "x": 111.92530822753906,
+        "id": "walk-37",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 35,
+            "luminance": 0.22474914319401926
+          },
+          {
+            "light": 36,
+            "luminance": 0.24763928149487993
+          },
+          {
+            "light": 37,
+            "luminance": 0.24519091319940672
+          },
+          {
+            "light": 38,
+            "luminance": 0.2550380264061836
+          }
+        ]
+      },
+      {
+        "frame": 3448,
+        "x": 114.92526245117188,
+        "id": "walk-38",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 36,
+            "luminance": 0.2382507050671491
+          },
+          {
+            "light": 37,
+            "luminance": 0.2441214426402321
+          },
+          {
+            "light": 38,
+            "luminance": 0.2604390882410029
+          },
+          {
+            "light": 39,
+            "luminance": 0.18532830790208205
+          }
+        ]
+      },
+      {
+        "frame": 3538,
+        "x": 117.92521667480469,
+        "id": "walk-39",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 37,
+            "luminance": 0.23294450305683345
+          },
+          {
+            "light": 38,
+            "luminance": 0.2491520642556811
+          },
+          {
+            "light": 39,
+            "luminance": 0.18678000309438378
+          }
+        ]
+      }
+    ],
+    "fades": [
+      {
+        "frame": 0,
+        "id": "walk-0",
+        "start": 0,
+        "completeFrame": 18
+      },
+      {
+        "frame": 118,
+        "id": "walk-1",
+        "start": 0,
+        "completeFrame": 137
+      },
+      {
+        "frame": 208,
+        "id": "walk-2",
+        "start": 0,
+        "completeFrame": 227
+      },
+      {
+        "frame": 298,
+        "id": "walk-3",
+        "start": 0,
+        "completeFrame": 317
+      },
+      {
+        "frame": 388,
+        "id": "walk-4",
+        "start": 0,
+        "completeFrame": 407
+      },
+      {
+        "frame": 478,
+        "id": "walk-5",
+        "start": 0,
+        "completeFrame": 497
+      },
+      {
+        "frame": 568,
+        "id": "walk-6",
+        "start": 0,
+        "completeFrame": 586
+      },
+      {
+        "frame": 658,
+        "id": "walk-7",
+        "start": 0,
+        "completeFrame": 676
+      },
+      {
+        "frame": 748,
+        "id": "walk-8",
+        "start": 0,
+        "completeFrame": 766
+      },
+      {
+        "frame": 838,
+        "id": "walk-9",
+        "start": 0,
+        "completeFrame": 856
+      },
+      {
+        "frame": 928,
+        "id": "walk-10",
+        "start": 0,
+        "completeFrame": 946
+      },
+      {
+        "frame": 1018,
+        "id": "walk-11",
+        "start": 0,
+        "completeFrame": 1036
+      },
+      {
+        "frame": 1108,
+        "id": "walk-12",
+        "start": 0,
+        "completeFrame": 1126
+      },
+      {
+        "frame": 1198,
+        "id": "walk-13",
+        "start": 0,
+        "completeFrame": 1216
+      },
+      {
+        "frame": 1288,
+        "id": "walk-14",
+        "start": 0,
+        "completeFrame": 1306
+      },
+      {
+        "frame": 1378,
+        "id": "walk-15",
+        "start": 0,
+        "completeFrame": 1396
+      },
+      {
+        "frame": 1468,
+        "id": "walk-16",
+        "start": 0,
+        "completeFrame": 1486
+      },
+      {
+        "frame": 1558,
+        "id": "walk-17",
+        "start": 0,
+        "completeFrame": 1576
+      },
+      {
+        "frame": 1648,
+        "id": "walk-18",
+        "start": 0,
+        "completeFrame": 1666
+      },
+      {
+        "frame": 1738,
+        "id": "walk-19",
+        "start": 0,
+        "completeFrame": 1756
+      },
+      {
+        "frame": 1828,
+        "id": "walk-20",
+        "start": 0,
+        "completeFrame": 1846
+      },
+      {
+        "frame": 1918,
+        "id": "walk-21",
+        "start": 0,
+        "completeFrame": 1937
+      },
+      {
+        "frame": 2008,
+        "id": "walk-22",
+        "start": 0,
+        "completeFrame": 2027
+      },
+      {
+        "frame": 2098,
+        "id": "walk-23",
+        "start": 0,
+        "completeFrame": 2117
+      },
+      {
+        "frame": 2188,
+        "id": "walk-24",
+        "start": 0,
+        "completeFrame": 2207
+      },
+      {
+        "frame": 2278,
+        "id": "walk-25",
+        "start": 0,
+        "completeFrame": 2297
+      },
+      {
+        "frame": 2368,
+        "id": "walk-26",
+        "start": 0,
+        "completeFrame": 2387
+      },
+      {
+        "frame": 2458,
+        "id": "walk-27",
+        "start": 0,
+        "completeFrame": 2477
+      },
+      {
+        "frame": 2548,
+        "id": "walk-28",
+        "start": 0,
+        "completeFrame": 2567
+      },
+      {
+        "frame": 2638,
+        "id": "walk-29",
+        "start": 0,
+        "completeFrame": 2657
+      },
+      {
+        "frame": 2728,
+        "id": "walk-30",
+        "start": 0,
+        "completeFrame": 2747
+      },
+      {
+        "frame": 2818,
+        "id": "walk-31",
+        "start": 0,
+        "completeFrame": 2837
+      },
+      {
+        "frame": 2908,
+        "id": "walk-32",
+        "start": 0,
+        "completeFrame": 2927
+      },
+      {
+        "frame": 2998,
+        "id": "walk-33",
+        "start": 0,
+        "completeFrame": 3017
+      },
+      {
+        "frame": 3088,
+        "id": "walk-34",
+        "start": 0,
+        "completeFrame": 3107
+      },
+      {
+        "frame": 3178,
+        "id": "walk-35",
+        "start": 0,
+        "completeFrame": 3197
+      },
+      {
+        "frame": 3268,
+        "id": "walk-36",
+        "start": 0,
+        "completeFrame": 3287
+      },
+      {
+        "frame": 3358,
+        "id": "walk-37",
+        "start": 0,
+        "completeFrame": 3377
+      },
+      {
+        "frame": 3448,
+        "id": "walk-38",
+        "start": 0,
+        "completeFrame": 3467
+      },
+      {
+        "frame": 3538,
+        "id": "walk-39",
+        "start": 0,
+        "completeFrame": 3557
+      }
+    ],
+    "errors": []
+  },
+  "render-low": {
+    "pool": {
+      "inside": 0.5994900746103137,
+      "outside": 0.011736915140245156,
+      "behind": 0.012671082080309657,
+      "behindAmbient": 0.012671082080309657,
+      "sampleCounts": [
+        376,
+        125,
+        289
+      ]
+    },
+    "shadow": {
+      "behind": 0.43513348881251923,
+      "beside": 0.8321420302274714,
+      "withoutBody": 0.8604674557629413
+    },
+    "off": {
+      "practicalEffects": {
+        "beams": 0,
+        "reflections": 0,
+        "motes": 0
+      },
+      "lightField": {
+        "strength": 1,
+        "resolution": 512,
+        "size": 60,
+        "statics": 4,
+        "litStatics": 0,
+        "candidates": 1,
+        "drawn": 1,
+        "transients": 0,
+        "capacity": 256,
+        "ms": 0.3000001907348633,
+        "center": [
+          0,
+          0
+        ]
+      }
+    },
+    "reflection": {
+      "streakLuminance": 0.19262511811328967,
+      "neighborLuminance": 0.05736480723603042
+    },
+    "errors": []
+  },
+  "windows-low": {
+    "shiftPx": 22.211794001573026,
+    "glowRatio": 9.918866934255481
+  },
+  "counters-low": {
+    "light-lab": {
+      "timingMeasured": false,
+      "heap": {
+        "usedSize": 123544260,
+        "totalSize": 125927424,
+        "embedderHeapUsedSize": 3007680,
+        "backingStorageSize": 469605341
+      },
+      "perf": {
+        "drawCalls": 27,
+        "triangles": 32161,
+        "backend": "webgl",
+        "lighting": {
+          "lightFieldMs": 0.19999980926513672,
+          "lightPools": 5,
+          "lightCandidates": 5,
+          "shadowMaps": 1,
+          "heroLights": 0,
+          "heroShadow": 0,
+          "preset": "night"
+        },
+        "geometries": 330,
+        "textures": 199,
+        "contextLost": false,
+        "quality": {
+          "setting": "low",
+          "tier": "low",
+          "p90Ms": 0,
+          "slowSeconds": 0,
+          "budgets": {
+            "frameMs": 33.333333333333336,
+            "infected": 100,
+            "drawCalls": 300,
+            "triangles": 500000,
+            "simMs": 6,
+            "heapMB": 250,
+            "pixelRatio": 1.5,
+            "shadowSize": 1024,
+            "bloomMips": 2,
+            "cullDistance": 45
+          }
+        }
+      }
+    },
+    "night-street": {
+      "timingMeasured": false,
+      "heap": {
+        "usedSize": 164403780,
+        "totalSize": 170934272,
+        "embedderHeapUsedSize": 4062840,
+        "backingStorageSize": 610900458
+      },
+      "perf": {
+        "drawCalls": 142,
+        "triangles": 335779,
+        "backend": "webgl",
+        "lighting": {
+          "lightFieldMs": 0.3000001907348633,
+          "lightPools": 157,
+          "lightCandidates": 157,
+          "shadowMaps": 1,
+          "heroLights": 0,
+          "heroShadow": 0,
+          "preset": "night"
+        },
+        "geometries": 787,
+        "textures": 196,
+        "contextLost": false,
+        "quality": {
+          "setting": "low",
+          "tier": "low",
+          "p90Ms": 0,
+          "slowSeconds": 0,
+          "budgets": {
+            "frameMs": 33.333333333333336,
+            "infected": 100,
+            "drawCalls": 300,
+            "triangles": 500000,
+            "simMs": 6,
+            "heapMB": 250,
+            "pixelRatio": 1.5,
+            "shadowSize": 1024,
+            "bloomMips": 2,
+            "cullDistance": 45
+          }
+        }
+      }
+    },
+    "readability": {
+      "spot": {
+        "x": 15,
+        "z": -2,
+        "distance": 10.04987562112089
+      },
+      "maskPixels": 4236,
+      "bodyMean": 0.19568429020146832,
+      "ringMean": 0.01906100489548691,
+      "ratio": 10.266210584091537,
+      "infectedEyesMeasured": false
+    },
+    "errors": []
+  },
+  "walk-low": {
+    "seconds": 60,
+    "anchors": 40,
+    "backend": "webgl",
+    "actualTier": "low",
+    "distanceM": 119.94851898215711,
+    "rollingMax": 1,
+    "maxLights": 1,
+    "maxMaps": 1,
+    "readback": "bilinear linear luminance at the projected world pool centre",
+    "maxPixelDelta": 0.08262926444036828,
+    "worst": {
+      "frame": 3049,
+      "light": 35,
+      "before": 0.22204400355509743,
+      "after": 0.24039133624224965,
+      "hero": "walk-33"
+    },
+    "changes": [
+      {
+        "frame": 0,
+        "x": 0.009999999776482582,
+        "id": "walk-0",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 0,
+            "luminance": 0.19105483457709818
+          },
+          {
+            "light": 1,
+            "luminance": 0.23087069023018844
+          }
+        ]
+      },
+      {
+        "frame": 118,
+        "x": 3.926664352416992,
+        "id": "walk-1",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 0,
+            "luminance": 0.18589589800626277
+          },
+          {
+            "light": 1,
+            "luminance": 0.2407087934137574
+          },
+          {
+            "light": 2,
+            "luminance": 0.258179285392656
+          }
+        ]
+      },
+      {
+        "frame": 208,
+        "x": 6.926661491394043,
+        "id": "walk-2",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 0,
+            "luminance": 0.17855358849059866
+          },
+          {
+            "light": 1,
+            "luminance": 0.2330434456491604
+          },
+          {
+            "light": 2,
+            "luminance": 0.25672886276284024
+          },
+          {
+            "light": 3,
+            "luminance": 0.2604304478969197
+          }
+        ]
+      },
+      {
+        "frame": 298,
+        "x": 9.92668628692627,
+        "id": "walk-3",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 1,
+            "luminance": 0.21812063628919884
+          },
+          {
+            "light": 2,
+            "luminance": 0.2553354804060689
+          },
+          {
+            "light": 3,
+            "luminance": 0.26037597098214416
+          },
+          {
+            "light": 4,
+            "luminance": 0.2555191431117522
+          }
+        ]
+      },
+      {
+        "frame": 388,
+        "x": 12.926726341247559,
+        "id": "walk-4",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 2,
+            "luminance": 0.2454682638907926
+          },
+          {
+            "light": 3,
+            "luminance": 0.2547899250687752
+          },
+          {
+            "light": 4,
+            "luminance": 0.25667153473728643
+          },
+          {
+            "light": 5,
+            "luminance": 0.24882096686060823
+          }
+        ]
+      },
+      {
+        "frame": 478,
+        "x": 15.926766395568848,
+        "id": "walk-5",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 3,
+            "luminance": 0.24951324110556375
+          },
+          {
+            "light": 4,
+            "luminance": 0.25007948131175883
+          },
+          {
+            "light": 5,
+            "luminance": 0.25315405889880893
+          },
+          {
+            "light": 6,
+            "luminance": 0.2515128212146448
+          }
+        ]
+      },
+      {
+        "frame": 568,
+        "x": 18.92672348022461,
+        "id": "walk-6",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 4,
+            "luminance": 0.24539485228417285
+          },
+          {
+            "light": 5,
+            "luminance": 0.24676233550817436
+          },
+          {
+            "light": 6,
+            "luminance": 0.25863717268786335
+          },
+          {
+            "light": 7,
+            "luminance": 0.2522305772138034
+          }
+        ]
+      },
+      {
+        "frame": 658,
+        "x": 21.926677703857422,
+        "id": "walk-7",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 5,
+            "luminance": 0.23361147620318612
+          },
+          {
+            "light": 6,
+            "luminance": 0.25742275783230895
+          },
+          {
+            "light": 7,
+            "luminance": 0.25650753619472394
+          },
+          {
+            "light": 8,
+            "luminance": 0.24817478166145895
+          }
+        ]
+      },
+      {
+        "frame": 748,
+        "x": 24.926631927490234,
+        "id": "walk-8",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 6,
+            "luminance": 0.24967635281324854
+          },
+          {
+            "light": 7,
+            "luminance": 0.24538754404286167
+          },
+          {
+            "light": 8,
+            "luminance": 0.2531207362237609
+          },
+          {
+            "light": 9,
+            "luminance": 0.27125971472491384
+          }
+        ]
+      },
+      {
+        "frame": 838,
+        "x": 27.926586151123047,
+        "id": "walk-9",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 7,
+            "luminance": 0.23856860584270725
+          },
+          {
+            "light": 8,
+            "luminance": 0.2509536682511898
+          },
+          {
+            "light": 9,
+            "luminance": 0.26370073795058946
+          },
+          {
+            "light": 10,
+            "luminance": 0.2551876436215501
+          }
+        ]
+      },
+      {
+        "frame": 928,
+        "x": 30.92654037475586,
+        "id": "walk-10",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 8,
+            "luminance": 0.2371719787423709
+          },
+          {
+            "light": 9,
+            "luminance": 0.2681976679208567
+          },
+          {
+            "light": 10,
+            "luminance": 0.26380496482637283
+          },
+          {
+            "light": 11,
+            "luminance": 0.25952448199982225
+          }
+        ]
+      },
+      {
+        "frame": 1018,
+        "x": 33.92649459838867,
+        "id": "walk-11",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 9,
+            "luminance": 0.24841133618709893
+          },
+          {
+            "light": 10,
+            "luminance": 0.25204589871756233
+          },
+          {
+            "light": 11,
+            "luminance": 0.27182160901668806
+          },
+          {
+            "light": 12,
+            "luminance": 0.24920304611039198
+          }
+        ]
+      },
+      {
+        "frame": 1108,
+        "x": 36.926448822021484,
+        "id": "walk-12",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 10,
+            "luminance": 0.24152072491265156
+          },
+          {
+            "light": 11,
+            "luminance": 0.2581029133785694
+          },
+          {
+            "light": 12,
+            "luminance": 0.25479052179648154
+          },
+          {
+            "light": 13,
+            "luminance": 0.24694382339676565
+          }
+        ]
+      },
+      {
+        "frame": 1198,
+        "x": 39.9264030456543,
+        "id": "walk-13",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 11,
+            "luminance": 0.25279672707229023
+          },
+          {
+            "light": 12,
+            "luminance": 0.24942982289033078
+          },
+          {
+            "light": 13,
+            "luminance": 0.24543304822088371
+          },
+          {
+            "light": 14,
+            "luminance": 0.2478144766004593
+          }
+        ]
+      },
+      {
+        "frame": 1288,
+        "x": 42.92635726928711,
+        "id": "walk-14",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 12,
+            "luminance": 0.24021899833000626
+          },
+          {
+            "light": 13,
+            "luminance": 0.249746680784329
+          },
+          {
+            "light": 14,
+            "luminance": 0.24907663326838375
+          },
+          {
+            "light": 15,
+            "luminance": 0.26662853656405294
+          }
+        ]
+      },
+      {
+        "frame": 1378,
+        "x": 45.92631149291992,
+        "id": "walk-15",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 13,
+            "luminance": 0.23765446311963428
+          },
+          {
+            "light": 14,
+            "luminance": 0.24870733034693238
+          },
+          {
+            "light": 15,
+            "luminance": 0.26406729180355404
+          },
+          {
+            "light": 16,
+            "luminance": 0.2642749790515439
+          }
+        ]
+      },
+      {
+        "frame": 1468,
+        "x": 48.926265716552734,
+        "id": "walk-16",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 14,
+            "luminance": 0.23731679335885353
+          },
+          {
+            "light": 15,
+            "luminance": 0.2621649083846019
+          },
+          {
+            "light": 16,
+            "luminance": 0.26152160255579016
+          },
+          {
+            "light": 17,
+            "luminance": 0.24398505514545105
+          }
+        ]
+      },
+      {
+        "frame": 1558,
+        "x": 51.92621994018555,
+        "id": "walk-17",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 15,
+            "luminance": 0.2553993038660368
+          },
+          {
+            "light": 16,
+            "luminance": 0.26577574295503714
+          },
+          {
+            "light": 17,
+            "luminance": 0.23695698862904352
+          },
+          {
+            "light": 18,
+            "luminance": 0.25467953404418997
+          }
+        ]
+      },
+      {
+        "frame": 1648,
+        "x": 54.92617416381836,
+        "id": "walk-18",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 16,
+            "luminance": 0.25143835496216227
+          },
+          {
+            "light": 17,
+            "luminance": 0.23820147083165105
+          },
+          {
+            "light": 18,
+            "luminance": 0.25892628605376533
+          },
+          {
+            "light": 19,
+            "luminance": 0.24387551376851363
+          }
+        ]
+      },
+      {
+        "frame": 1738,
+        "x": 57.92612838745117,
+        "id": "walk-19",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 17,
+            "luminance": 0.23669205804137683
+          },
+          {
+            "light": 18,
+            "luminance": 0.2576338162720415
+          },
+          {
+            "light": 19,
+            "luminance": 0.24280628704152957
+          },
+          {
+            "light": 20,
+            "luminance": 0.2557469950839034
+          }
+        ]
+      },
+      {
+        "frame": 1828,
+        "x": 60.926082611083984,
+        "id": "walk-20",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 18,
+            "luminance": 0.24174318141063272
+          },
+          {
+            "light": 19,
+            "luminance": 0.24334789334606355
+          },
+          {
+            "light": 20,
+            "luminance": 0.2595393942939526
+          },
+          {
+            "light": 21,
+            "luminance": 0.25625354871809786
+          }
+        ]
+      },
+      {
+        "frame": 1918,
+        "x": 63.9260368347168,
+        "id": "walk-21",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 19,
+            "luminance": 0.2280709781379699
+          },
+          {
+            "light": 20,
+            "luminance": 0.2542559034480728
+          },
+          {
+            "light": 21,
+            "luminance": 0.256553978256337
+          },
+          {
+            "light": 22,
+            "luminance": 0.2464639688415033
+          }
+        ]
+      },
+      {
+        "frame": 2008,
+        "x": 66.92599487304688,
+        "id": "walk-22",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 20,
+            "luminance": 0.24761246346782118
+          },
+          {
+            "light": 21,
+            "luminance": 0.25839617321117564
+          },
+          {
+            "light": 22,
+            "luminance": 0.2470711699379251
+          },
+          {
+            "light": 23,
+            "luminance": 0.24926309382292824
+          }
+        ]
+      },
+      {
+        "frame": 2098,
+        "x": 69.92594909667969,
+        "id": "walk-23",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 21,
+            "luminance": 0.2491386217601556
+          },
+          {
+            "light": 22,
+            "luminance": 0.24683275508139912
+          },
+          {
+            "light": 23,
+            "luminance": 0.2576159048682433
+          },
+          {
+            "light": 24,
+            "luminance": 0.2480051056085977
+          }
+        ]
+      },
+      {
+        "frame": 2188,
+        "x": 72.9259033203125,
+        "id": "walk-24",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 22,
+            "luminance": 0.23456758316888127
+          },
+          {
+            "light": 23,
+            "luminance": 0.2553285007775269
+          },
+          {
+            "light": 24,
+            "luminance": 0.24857322920613972
+          },
+          {
+            "light": 25,
+            "luminance": 0.2415985188806309
+          }
+        ]
+      },
+      {
+        "frame": 2278,
+        "x": 75.92585754394531,
+        "id": "walk-25",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 23,
+            "luminance": 0.23838356464153848
+          },
+          {
+            "light": 24,
+            "luminance": 0.24255223842645424
+          },
+          {
+            "light": 25,
+            "luminance": 0.24134343781086312
+          },
+          {
+            "light": 26,
+            "luminance": 0.26234942696199504
+          }
+        ]
+      },
+      {
+        "frame": 2368,
+        "x": 78.92581176757812,
+        "id": "walk-26",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 24,
+            "luminance": 0.23641405497827037
+          },
+          {
+            "light": 25,
+            "luminance": 0.22166291980923553
+          },
+          {
+            "light": 26,
+            "luminance": 0.25795918469891754
+          },
+          {
+            "light": 27,
+            "luminance": 0.24923719185578153
+          }
+        ]
+      },
+      {
+        "frame": 2458,
+        "x": 81.92576599121094,
+        "id": "walk-27",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 25,
+            "luminance": 0.19333856360420376
+          },
+          {
+            "light": 26,
+            "luminance": 0.25358148205720565
+          },
+          {
+            "light": 27,
+            "luminance": 0.25149878491493016
+          },
+          {
+            "light": 28,
+            "luminance": 0.2514675935277265
+          }
+        ]
+      },
+      {
+        "frame": 2548,
+        "x": 84.92572021484375,
+        "id": "walk-28",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 26,
+            "luminance": 0.24429578029076573
+          },
+          {
+            "light": 27,
+            "luminance": 0.25787618226374265
+          },
+          {
+            "light": 28,
+            "luminance": 0.24983589858897057
+          },
+          {
+            "light": 29,
+            "luminance": 0.2755090637671878
+          }
+        ]
+      },
+      {
+        "frame": 2638,
+        "x": 87.92567443847656,
+        "id": "walk-29",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 27,
+            "luminance": 0.24668967341224735
+          },
+          {
+            "light": 28,
+            "luminance": 0.2501821717060248
+          },
+          {
+            "light": 29,
+            "luminance": 0.2820816756427858
+          },
+          {
+            "light": 30,
+            "luminance": 0.23912192485061426
+          }
+        ]
+      },
+      {
+        "frame": 2728,
+        "x": 90.92562866210938,
+        "id": "walk-30",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 28,
+            "luminance": 0.24458967377163182
+          },
+          {
+            "light": 29,
+            "luminance": 0.27972581182848993
+          },
+          {
+            "light": 30,
+            "luminance": 0.23719069757365552
+          },
+          {
+            "light": 31,
+            "luminance": 0.2337130026346496
+          }
+        ]
+      },
+      {
+        "frame": 2818,
+        "x": 93.92558288574219,
+        "id": "walk-31",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 29,
+            "luminance": 0.26047602747106563
+          },
+          {
+            "light": 30,
+            "luminance": 0.240431262654334
+          },
+          {
+            "light": 31,
+            "luminance": 0.23507676459595778
+          },
+          {
+            "light": 32,
+            "luminance": 0.26224191013915465
+          }
+        ]
+      },
+      {
+        "frame": 2908,
+        "x": 96.925537109375,
+        "id": "walk-32",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 30,
+            "luminance": 0.22523393773323225
+          },
+          {
+            "light": 31,
+            "luminance": 0.24237543533612604
+          },
+          {
+            "light": 32,
+            "luminance": 0.2626520012670902
+          },
+          {
+            "light": 33,
+            "luminance": 0.24459743947291684
+          }
+        ]
+      },
+      {
+        "frame": 2998,
+        "x": 99.92549133300781,
+        "id": "walk-33",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 31,
+            "luminance": 0.2366598409322397
+          },
+          {
+            "light": 32,
+            "luminance": 0.2608896546312703
+          },
+          {
+            "light": 33,
+            "luminance": 0.2508317481843606
+          },
+          {
+            "light": 34,
+            "luminance": 0.25726436857811696
+          }
+        ]
+      },
+      {
+        "frame": 3088,
+        "x": 102.92544555664062,
+        "id": "walk-34",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 32,
+            "luminance": 0.2459605755814952
+          },
+          {
+            "light": 33,
+            "luminance": 0.24836684825313726
+          },
+          {
+            "light": 34,
+            "luminance": 0.2620790741583216
+          },
+          {
+            "light": 35,
+            "luminance": 0.23775013988629867
+          }
+        ]
+      },
+      {
+        "frame": 3178,
+        "x": 105.92539978027344,
+        "id": "walk-35",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 33,
+            "luminance": 0.23056516307791852
+          },
+          {
+            "light": 34,
+            "luminance": 0.2526384150265099
+          },
+          {
+            "light": 35,
+            "luminance": 0.24482886144998575
+          },
+          {
+            "light": 36,
+            "luminance": 0.23586962983906679
+          }
+        ]
+      },
+      {
+        "frame": 3268,
+        "x": 108.92535400390625,
+        "id": "walk-36",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 34,
+            "luminance": 0.2444971633417014
+          },
+          {
+            "light": 35,
+            "luminance": 0.23789294133823213
+          },
+          {
+            "light": 36,
+            "luminance": 0.24643754507160356
+          },
+          {
+            "light": 37,
+            "luminance": 0.2380755493712749
+          }
+        ]
+      },
+      {
+        "frame": 3358,
+        "x": 111.92530822753906,
+        "id": "walk-37",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 35,
+            "luminance": 0.22474914319401926
+          },
+          {
+            "light": 36,
+            "luminance": 0.24763928149487993
+          },
+          {
+            "light": 37,
+            "luminance": 0.24519091319940672
+          },
+          {
+            "light": 38,
+            "luminance": 0.2550380264061836
+          }
+        ]
+      },
+      {
+        "frame": 3448,
+        "x": 114.92526245117188,
+        "id": "walk-38",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 36,
+            "luminance": 0.23676527605563627
+          },
+          {
+            "light": 37,
+            "luminance": 0.2441214426402321
+          },
+          {
+            "light": 38,
+            "luminance": 0.2604390882410029
+          },
+          {
+            "light": 39,
+            "luminance": 0.1852513815627962
+          }
+        ]
+      },
+      {
+        "frame": 3538,
+        "x": 117.92521667480469,
+        "id": "walk-39",
+        "blend": 0,
+        "lights": 1,
+        "maps": 1,
+        "samples": [
+          {
+            "light": 37,
+            "luminance": 0.23294450305683345
+          },
+          {
+            "light": 38,
+            "luminance": 0.2500127055992294
+          },
+          {
+            "light": 39,
+            "luminance": 0.18678000309438378
+          }
+        ]
+      }
+    ],
+    "fades": [
+      {
+        "frame": 0,
+        "id": "walk-0",
+        "start": 0,
+        "completeFrame": 18
+      },
+      {
+        "frame": 118,
+        "id": "walk-1",
+        "start": 0,
+        "completeFrame": 137
+      },
+      {
+        "frame": 208,
+        "id": "walk-2",
+        "start": 0,
+        "completeFrame": 227
+      },
+      {
+        "frame": 298,
+        "id": "walk-3",
+        "start": 0,
+        "completeFrame": 317
+      },
+      {
+        "frame": 388,
+        "id": "walk-4",
+        "start": 0,
+        "completeFrame": 407
+      },
+      {
+        "frame": 478,
+        "id": "walk-5",
+        "start": 0,
+        "completeFrame": 497
+      },
+      {
+        "frame": 568,
+        "id": "walk-6",
+        "start": 0,
+        "completeFrame": 586
+      },
+      {
+        "frame": 658,
+        "id": "walk-7",
+        "start": 0,
+        "completeFrame": 676
+      },
+      {
+        "frame": 748,
+        "id": "walk-8",
+        "start": 0,
+        "completeFrame": 766
+      },
+      {
+        "frame": 838,
+        "id": "walk-9",
+        "start": 0,
+        "completeFrame": 856
+      },
+      {
+        "frame": 928,
+        "id": "walk-10",
+        "start": 0,
+        "completeFrame": 946
+      },
+      {
+        "frame": 1018,
+        "id": "walk-11",
+        "start": 0,
+        "completeFrame": 1036
+      },
+      {
+        "frame": 1108,
+        "id": "walk-12",
+        "start": 0,
+        "completeFrame": 1126
+      },
+      {
+        "frame": 1198,
+        "id": "walk-13",
+        "start": 0,
+        "completeFrame": 1216
+      },
+      {
+        "frame": 1288,
+        "id": "walk-14",
+        "start": 0,
+        "completeFrame": 1306
+      },
+      {
+        "frame": 1378,
+        "id": "walk-15",
+        "start": 0,
+        "completeFrame": 1396
+      },
+      {
+        "frame": 1468,
+        "id": "walk-16",
+        "start": 0,
+        "completeFrame": 1486
+      },
+      {
+        "frame": 1558,
+        "id": "walk-17",
+        "start": 0,
+        "completeFrame": 1576
+      },
+      {
+        "frame": 1648,
+        "id": "walk-18",
+        "start": 0,
+        "completeFrame": 1666
+      },
+      {
+        "frame": 1738,
+        "id": "walk-19",
+        "start": 0,
+        "completeFrame": 1756
+      },
+      {
+        "frame": 1828,
+        "id": "walk-20",
+        "start": 0,
+        "completeFrame": 1846
+      },
+      {
+        "frame": 1918,
+        "id": "walk-21",
+        "start": 0,
+        "completeFrame": 1937
+      },
+      {
+        "frame": 2008,
+        "id": "walk-22",
+        "start": 0,
+        "completeFrame": 2027
+      },
+      {
+        "frame": 2098,
+        "id": "walk-23",
+        "start": 0,
+        "completeFrame": 2117
+      },
+      {
+        "frame": 2188,
+        "id": "walk-24",
+        "start": 0,
+        "completeFrame": 2207
+      },
+      {
+        "frame": 2278,
+        "id": "walk-25",
+        "start": 0,
+        "completeFrame": 2297
+      },
+      {
+        "frame": 2368,
+        "id": "walk-26",
+        "start": 0,
+        "completeFrame": 2387
+      },
+      {
+        "frame": 2458,
+        "id": "walk-27",
+        "start": 0,
+        "completeFrame": 2477
+      },
+      {
+        "frame": 2548,
+        "id": "walk-28",
+        "start": 0,
+        "completeFrame": 2567
+      },
+      {
+        "frame": 2638,
+        "id": "walk-29",
+        "start": 0,
+        "completeFrame": 2657
+      },
+      {
+        "frame": 2728,
+        "id": "walk-30",
+        "start": 0,
+        "completeFrame": 2747
+      },
+      {
+        "frame": 2818,
+        "id": "walk-31",
+        "start": 0,
+        "completeFrame": 2837
+      },
+      {
+        "frame": 2908,
+        "id": "walk-32",
+        "start": 0,
+        "completeFrame": 2927
+      },
+      {
+        "frame": 2998,
+        "id": "walk-33",
+        "start": 0,
+        "completeFrame": 3017
+      },
+      {
+        "frame": 3088,
+        "id": "walk-34",
+        "start": 0,
+        "completeFrame": 3107
+      },
+      {
+        "frame": 3178,
+        "id": "walk-35",
+        "start": 0,
+        "completeFrame": 3197
+      },
+      {
+        "frame": 3268,
+        "id": "walk-36",
+        "start": 0,
+        "completeFrame": 3287
+      },
+      {
+        "frame": 3358,
+        "id": "walk-37",
+        "start": 0,
+        "completeFrame": 3377
+      },
+      {
+        "frame": 3448,
+        "id": "walk-38",
+        "start": 0,
+        "completeFrame": 3467
+      },
+      {
+        "frame": 3538,
+        "id": "walk-39",
+        "start": 0,
+        "completeFrame": 3557
+      }
+    ],
+    "errors": []
+  },
+  "details": {
+    "shadow": {
+      "meanRgb": [
+        199.25333333333333,
+        164.01333333333332,
+        184.61333333333334
+      ],
+      "hue": 324.92622020431327,
+      "meanLuminance": 0.43512438555301514,
+      "samples": 75
+    },
+    "shadowMask": {
+      "reference": "same frame without the caster",
+      "threshold": 0.35,
+      "samples": 60,
+      "rgb": [
+        188.16666666666666,
+        154.71666666666667,
+        179.38333333333333
+      ],
+      "hue": 315.75485799701045,
+      "meanDarkness": 0.5576200703735793
+    },
+    "materials": [
+      {
+        "azimuth": 45,
+        "vertices": 138305,
+        "changedPixels": 97119,
+        "highlightCentroid": [
+          617.8723942788079,
+          349.38850666210885
+        ]
+      },
+      {
+        "azimuth": 60,
+        "vertices": 138305,
+        "changedPixels": 90293,
+        "highlightCentroid": [
+          643.5574589477586,
+          374.24218809187687
+        ]
+      }
+    ],
+    "eyes": [
+      {
+        "pixels": 4612,
+        "brightest": 0.3135271557670348,
+        "brightestEye": 0.212575171208116,
+        "eyePixels": 58
+      },
+      {
+        "pixels": 1525,
+        "brightest": 0.07527962871345172,
+        "brightestEye": 0,
+        "eyePixels": 0
+      },
+      {
+        "pixels": 4444,
+        "brightest": 0.3114728208954744,
+        "brightestEye": 0.1989423276358995,
+        "eyePixels": 297
+      },
+      {
+        "pixels": 4390,
+        "brightest": 0.42117032747318434,
+        "brightestEye": 0.212575171208116,
+        "eyePixels": 38
+      }
+    ],
+    "errors": [],
+    "beams": [
+      {
+        "pixels": 97,
+        "maxBeamGradient": 0.024278894245973563,
+        "maxBeautyGradient": 0.3346409536155277
+      },
+      {
+        "pixels": 96,
+        "maxBeamGradient": 0.019073635710378053,
+        "maxBeautyGradient": 0.298129687509083
+      },
+      {
+        "pixels": 101,
+        "maxBeamGradient": 0.012767460434373717,
+        "maxBeautyGradient": 0.3340159579215545
+      },
+      {
+        "pixels": 99,
+        "maxBeamGradient": 0.00940083228405349,
+        "maxBeautyGradient": 0.327029129131446
+      }
+    ],
+    "tones": [
+      {
+        "name": "shipping",
+        "mode": 0,
+        "meanLuminance": 0.06552107635403785,
+        "drawCalls": 34,
+        "triangles": 51659
+      },
+      {
+        "name": "aces",
+        "mode": 4,
+        "meanLuminance": 0.06393655189399468,
+        "drawCalls": 34,
+        "triangles": 51659
+      },
+      {
+        "name": "agx",
+        "mode": 6,
+        "meanLuminance": 0.06150645298847255,
+        "drawCalls": 34,
+        "triangles": 51659
+      }
+    ],
+    "ssrProxyExcludedFromAcceptance": {
+      "meshes": 6,
+      "maskPixels": 13438,
+      "changed": 2976,
+      "anyChange": 6629,
+      "overlap": 0.22146152701294836,
+      "overlapAtAnyChange": 0.4933025747879149,
+      "shadowsExcluded": true
+    }
+  }
+}
