@@ -53,6 +53,7 @@ export class Companion {
     for (const e of this.world.entities.iterate()) {
       const c = e.companion; if (e.passengerOf !== undefined) continue; if (!c) continue;
       delete c.rejoining; delete c.transitionUntil; e.hidden = false; this.rejoinProgress.delete(e);
+      if (e.pendingAdmission) e.pendingAdmission.hidden = false;
       c.state = 'follow'; c.courage = 100;
       // Navigation clearance alone does not account for actors or solid hulls. Find
       // a physically clear point near the courier, then commit that exact point.
@@ -70,7 +71,7 @@ export class Companion {
       delete c.contactYield; delete c.contactFrom; delete c.contactRejected;
       delete e.locomotion; c.velocity = { x: 0, z: 0 }; c.path.length = 0; c.goal = -1; c.pathIndex = 0; c.following = false; c.pickup = null;
       if (e.motion) { e.motion.velocity.x = e.motion.velocity.z = 0; e.motion.speed = 0; e.motion.moving = false; }
-      this.world.spatial.set(e.id, e.transform.x, e.transform.z);
+      if (!e.pendingAdmission) this.world.spatial.set(e.id, e.transform.x, e.transform.z);
     }
   }
   /** Close behind the whole party. A bounded relocation briefly hides the dog at a sealed threshold. */
@@ -275,7 +276,7 @@ export class Companion {
       this.rejoinProgress.delete(e); return;
     }
     const gap = Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z);
-    if (gap <= 6) { this.rejoinProgress.delete(e); delete c.rejoining; return; }
+    if (gap <= 3.2) { this.rejoinProgress.delete(e); delete c.rejoining; return; }
     let progress = this.rejoinProgress.get(e);
     const moved = progress ? Math.hypot(e.transform.x - progress.x, e.transform.z - progress.z) : 0;
     if (!progress || w.tick < progress.tick || gap < progress.distance - .5 || gap <= 35 && moved >= .5) {

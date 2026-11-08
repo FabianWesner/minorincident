@@ -255,7 +255,8 @@ test('corgi: warns of an offscreen threat within 18 m with a unit direction', as
     for (const enemy of [...w.infected!.active]) w.infected!.release(enemy);
     w.npcs!.companion.forceSafe = true;
     Object.assign(w.infected!.director.camera, { halfWidth: 6, halfDepth: 6 });
-    for (const gap of [45, 20]) {
+    for (const gap of [45, 20, 5]) {
+      Object.assign(w.infected!.director.camera, { halfWidth: gap > 6 ? 6 : 2, halfDepth: gap > 6 ? 6 : 2 });
       Object.assign(dog.transform, { x: p.transform.x + gap, z: p.transform.z }); w.spatial.set(dog.id, dog.transform.x, dog.transform.z);
       const move = vi.spyOn(w.npcs!, 'move').mockReturnValue(false), start = w.tick;
       for (let tick = 1; tick <= 360; tick++) { w.tick = start + tick; w.npcs!.companion.update(); }
@@ -293,6 +294,11 @@ test('corgi: warns of an offscreen threat within 18 m with a unit direction', as
     expect(Math.hypot(dog.transform.x - p.transform.x, dog.transform.z - p.transform.z)).toBeLessThanOrEqual(4);
     expect(dog.hidden).not.toBe(true);
     expect(dog.companion!.path).toEqual([]);
+    dog.hidden = true;
+    dog.pendingAdmission = { ...dog.transform, writer: 'test.hidden-admission', hidden: true };
+    w.npcs!.companion.respawnNear();
+    expect(dog.pendingAdmission).toBeUndefined();
+    expect(dog.hidden).toBe(false);
   }
   // G-27: the Oak sedan's rotated nav footprint must leave a route through the gate beside the wreck.
   {
