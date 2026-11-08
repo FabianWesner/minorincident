@@ -62,10 +62,12 @@ test('melee: the swing hits inside its arc/range once per target and respects ma
   const rad = (d: number) => d * Math.PI / 180;
   const inside = [dummy(w, 1), dummy(w, 1.9 * Math.cos(rad(49)), 1.9 * Math.sin(rad(49))), dummy(w, 1.9 * Math.cos(rad(-50)), 1.9 * Math.sin(rad(-50)))];
   const outside = [dummy(w, 1.91), dummy(w, Math.cos(rad(51)), Math.sin(rad(51))), dummy(w, -1)];
+  const raised = dummy(w, 1.2); w.entities.get(raised)!.transform.y += 1.2;
   const capped = dummy(w, 1.1);
   fire(w); step(w, 29);
   for (const id of inside) expect(health(w, id)).toBe(100 - forehand().damage);
   for (const id of [...outside, capped]) expect(health(w, id)).toBe(100);
+  expect(health(w, raised), 'a nearby enemy on a raised support is outside reach').toBe(100);
   const hits = w.events.events().filter(e => e.type === 'combat.hit');
   expect(hits).toHaveLength(3);
   for (const id of inside) expect(hits.filter(e => e.type === 'combat.hit' && e.targetId === id)).toHaveLength(1);

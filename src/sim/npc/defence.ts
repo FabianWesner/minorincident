@@ -6,6 +6,7 @@ import { followerInCombat } from '../outbreak/Survivors';
 import { formationBack } from '../missions/missionHelpers';
 import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
+import { combatHeightReachable } from '../combat/height';
 
 const mobile = new Set(['calm', 'alarmed', 'flee', 'hide', 'annoyed']);
 const distance = (a: EntitySnapshot, b: EntitySnapshot) => Math.hypot(a.transform.x - b.transform.x, a.transform.z - b.transform.z);
@@ -37,7 +38,7 @@ export function defendHuman(world: SimWorld, e: EntitySnapshot): boolean {
   for (const o of world.infected!.active) {
     const d = distance(e, o);
     if (!a && (o.combat?.staggerUntil ?? 0) > world.tick) continue;
-    if (o.health.current <= 0 || o.hidden || o.infected?.hidden || o.infectionRise || d > best || !world.infected!.nav.visible(e.transform, o.transform, 0)) continue;
+    if (o.health.current <= 0 || o.hidden || o.infected?.hidden || o.infectionRise || !combatHeightReachable(e, o) || d > best || !world.infected!.nav.visible(e.transform, o.transform, 0)) continue;
     threat = o; best = d;
   }
   // L5 escort (L5-08): an armed follower fights inside the shared escort

@@ -3,6 +3,7 @@ import type { EntityStore } from '../world/EntityStore';
 import type { EntitySnapshot } from '../world/types';
 import type { SpatialHash } from '../spatial/SpatialHash';
 import type { Vec2 } from '../../input/InputFrame';
+import { combatHeightReachable } from './height';
 import type { ScenarioDefinition } from '../../levels/loader';
 type RayPoint = Vec2 & { y?: number };
 export type CoverWall = NonNullable<ScenarioDefinition['walls']>[number] & { entityId?: number };
@@ -153,6 +154,8 @@ export class HitQuery {
     for (const id of this.nearby(origin, range + 1e-6)) {
       const target = this.entities.get(id)!;
       if (id === sourceId || (target.health.current <= 0 && !(id === ground && downed(target))) || (target.faction !== 'infected' && !target.civilian?.eyesGlow && !(civilianGag && target.civilian?.adult && !target.civilian.pet) && !(target.faction === 'environment' && target.combat))) continue;
+      const source = this.entities.get(sourceId);
+      if (source && !combatHeightReachable(source, target)) continue;
       const dx = target.transform.x - origin.x, dz = target.transform.z - origin.z, distance = Math.hypot(dx, dz);
       // Line of sight starts a little ahead of the attacker: standing against (or inside) a prop must not
       // swallow strikes at a target on its far side (QA2-01); walls between the two still block.
@@ -174,6 +177,8 @@ export class HitQuery {
       const radius = target.combat?.radius ?? 0.4;
       if (perpendicular > radius * radius || along + radius < 0) continue;
       const entry = Math.max(0, along - Math.sqrt(Math.max(0, radius * radius - perpendicular)));
+      const shotY = (origin.y ?? .7) + (direction.y ?? 0) * entry;
+      if (shotY < target.transform.y - .7 || shotY > target.transform.y + 1.1) continue;
       if (entry < nearest || (entry === nearest && (!hit || id < hit.id))) { nearest = entry; hit = target; }
     }
     return hit;
