@@ -24,6 +24,8 @@ export function trackingFor(world: SimWorld, e: EntitySnapshot): Parameters<type
   if (world.scenario === 'L7') return e.companion ? followerTracking : undefined;
   if (world.scenario === 'L5' && (e.companion || s?.briskAt === world.tick)) return l5FollowerTracking;
   if (s?.mode !== 'follow' || world.scenario === 'L5') return undefined;
+  // The authored subway convoy already controls pace and injury; retain its shared response.
+  if (world.scenario === 'L6') return undefined;
   // L8's moving loose slots need the same response as catch-up and boarding.
   // Arrival heals the roster, so carried injury/temperament must not dilute that response.
   if (s.briskAt === world.tick || world.scenario === 'L8') return followerTracking;

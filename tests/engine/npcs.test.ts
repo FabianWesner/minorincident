@@ -12,7 +12,7 @@ import { SimWorld } from '../../src/sim/world/SimWorld';
 import { actorRadius, solidLargeCorpse } from '../../src/sim/world/SolidRegistry';
 import { followerInCombat, updateSurvivor } from '../../src/sim/outbreak/Survivors';
 import { formationBack, formationSlot } from '../../src/sim/missions/missionHelpers';
-import { idleEligible, idleLookYaw, looseSlotOffset, startDelayTicks } from '../../src/sim/outbreak/groupNature';
+import { idleEligible, idleLookYaw, looseSlotOffset, startDelayTicks, swayOffset } from '../../src/sim/outbreak/groupNature';
 
 const worlds: SimWorld[] = [];
 afterEach(() => { for (const w of worlds.splice(0)) w.dispose(); });
@@ -166,10 +166,18 @@ test('escort: shared combat pace, follows through a maze, a 2 s stand revives to
     for (let i = 0; i < 12; i++) { w.tick++; for (const e of group) w.npcs!.moveStep(e, .05, 0); }
     expect(group[0].locomotion!.vx).toBeCloseTo(group[1].locomotion!.vx, 10);
     expect(group[0].locomotion!.vx).toBeCloseTo(urgent[11], 10);
-    // The subway's ordinary following still carries each person's temperament.
+    // The subway convoy keeps its authored shared response rather than a second personality modifier.
     w.scenario = 'L6'; for (const e of group) delete e.locomotion;
     for (let i = 0; i < 12; i++) { w.tick++; for (const e of group) w.npcs!.moveStep(e, .05, 0); }
-    expect(group[0].locomotion!.vx).not.toBeCloseTo(group[1].locomotion!.vx, 6);
+    expect(group[0].locomotion!.vx).toBeCloseTo(group[1].locomotion!.vx, 10);
+    expect(group[0].locomotion!.vx).toBeLessThan(urgent[11]);
+    // A calm L5 velocity is already solved from its wandering slot: do not sway its short aim twice.
+    w.scenario = 'L5'; group[0].civilian!.survivor!.briskAt = w.tick;
+    Object.assign(w.entities.get(1)!.survivor!.velocity, { x: 3, z: 0 });
+    const move = vi.spyOn(w.npcs!, 'moveStep').mockImplementation(() => {}), at = group[0].transform;
+    w.npcs!.move(group[0], { x: at.x + 2, z: at.z }, 3, group[0].civilian!, 0);
+    expect(move).toHaveBeenCalled(); expect(move.mock.calls[0][2]).toBeCloseTo(0, 10);
+    move.mockRestore();
   }
   {
   const w = await world(), p = w.entities.get(1)!;
@@ -214,8 +222,8 @@ test('escort: shared combat pace, follows through a maze, a 2 s stand revives to
     // In its slot: walk with the courier's velocity, no braking and no surge.
     for (let slot = 0; slot < 5; slot++) {
       c.survivor.slot = slot; delete c.survivor.pace;
-      // Calm slots sit 2.7/3.4 m back; the rear row staggers into the front row's gaps (plus a small personal side offset, r12-group).
-      Object.assign(follower.transform, { x: p.transform.x - (slot < 3 ? 2.7 : 3.4), z: p.transform.z + (slot < 3 ? (slot % 3 - 1) * 1.2 : [-.6, .6][slot - 3]) + looseSlotOffset(slot).side * .4 });
+      // Calm slots sit 2.7/3.4 m back; the rear row staggers into the front row's gaps (plus the current personal slot offset and wander phase).
+      Object.assign(follower.transform, { x: p.transform.x - (slot < 3 ? 2.7 : 3.4), z: p.transform.z + (slot < 3 ? (slot % 3 - 1) * 1.2 : [-.6, .6][slot - 3]) + looseSlotOffset(slot).side * .4 + swayOffset(follower.id, w.tick, .12) });
       updateSurvivor(w, follower);
       const [, aim, pace] = movement.mock.lastCall!;
       expect(aim.x - follower.transform.x).toBeCloseTo(4.5 * .5); expect(aim.z - follower.transform.z).toBeCloseTo(0); expect(pace).toBeCloseTo(4.5);
