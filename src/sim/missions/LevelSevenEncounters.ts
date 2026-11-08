@@ -223,8 +223,8 @@ export class LevelSevenEncounters {
     }
     const p = w.entities.get(1)!.transform;
     // The crowd already builds this field above twenty infected. Keep it
-    // available for distant followers after the fighting has thinned out too.
-    if (ai.active.length <= 20 && s.roster.some(r => r.status === 'following' && distance(w.entities.get(r.id)!.transform, p) > 30)) ai.nav.flow(p.x, p.z, 1500);
+    // available for out-of-range followers after the fighting has thinned out too.
+    if (ai.active.length <= 20 && s.roster.some(r => r.status === 'following' && distance(w.entities.get(r.id)!.transform, p) > l7FollowerRangeM)) ai.nav.flow(p.x, p.z, 1500);
     s.passageReady = s.finalReady && p.x <= l7Encounters.passage.x && Math.abs(p.z - l7Encounters.passage.z) < 7 && s.roster.every(r => r.status !== 'following' || r.passed);
     const m=w.missions;
     if(m?.state.steps.corridor?.status==='active'){
@@ -289,7 +289,10 @@ export class LevelSevenEncounters {
       // Reuse the crowd's connected route across the city. Until that field
       // reaches a follower, short searches fit the shared A* scratch budget.
       let destination = target;
-      if (d > 30) {
+      // Straight-line proximity can hide a long street detour. Start the
+      // connected route at the same range that makes the group wait; nearby
+      // followers otherwise keep replacing an unfinished shared A* search.
+      if (d > l7FollowerRangeM) {
         const nav = w.infected!.nav;
         const cell = nav.nearestCell(e.transform.x, e.transform.z, .35);
         let next = nav.flowNext(cell);
@@ -325,7 +328,7 @@ export class LevelSevenEncounters {
       // Injury remains visible in the carried story state; it must not turn
       // one evacuee into a straggler the player has to babysit.
       // Every slot has the same catch-up speed through street corners.
-      const budget = d > 30 ? w.infected!.director.tier === 'low' ? 200 : 400 : 1600;
+      const budget = d > l7FollowerRangeM ? w.infected!.director.tier === 'low' ? 200 : 400 : 1600;
       w.npcs!.move(e, destination, 5.2, c, 0, budget);
     }
     w.spatial.set(e.id, e.transform.x, e.transform.z);

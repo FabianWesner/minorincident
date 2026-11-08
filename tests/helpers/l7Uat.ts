@@ -240,8 +240,59 @@ async function checkPharmacyCatchup() {
         expect(follower.id).toBe(id); expect(follower.health.current).toBe(health);
         expect(w.solids.offenders).toEqual([]);
       }
+      if (quality === 'high') checkNearRangeCatchup(w);
     } finally { w.dispose(); }
   }
+}
+
+/** A 19 m straggler needs a 60 m street detour. Other followers must not
+ * continually replace its unfinished shared A* search. Recorded physical run. */
+function checkNearRangeCatchup(w: SimWorld) {
+  const p = w.entities.get(1)!;
+  Object.assign(p.transform, { x: 61.269737243652344, z: 30.66730499267578, y: 1.0783395767211914, yaw: -24.347343065320896 });
+  w.physics.playerBody!.setTranslation(p.transform, true); w.physics.playerBody!.setNextKinematicTranslation(p.transform);
+  w.solids.remember(p, 'test.near-range-leader'); w.spatial.set(1, p.transform.x, p.transform.z);
+  const positions = [
+    [51, 58.78636838995762, 31.622484664300757],
+    [52, 59.66041166295788, 32.262634633568425],
+    [54, 57.743503326822115, 31.988364818021306],
+    [55, 59.276612330176555, 33.27103613008447],
+    [56, 74.68640614944597, 17.79644635219723],
+    [57, 57.10050819508396, 33.5679037897464],
+    [58, 57.61519747301161, 33.07296697791254],
+    [59, 59.03115982185737, 32.6000588572461],
+    [60, 55.76477914463052, 33.05690768545542],
+    [61, 56.649254572914984, 32.995708767909086],
+    [62, 56.24601358476257, 33.58496008942835],
+    [63, 54.239179854640895, 34.70721465739254],
+    [64, 55.198830336228355, 30.95871547701691],
+    [65, 54.53497695356237, 35.35757026335401],
+    [66, 54.370162933447375, 36.0527009646696],
+    [67, 54.57997205158804, 37.542036650766306],
+    [68, 53.38056226056749, 31.59263382444471],
+    [69, 53.69396286647524, 36.59507090183298],
+    [70, 54.4612841937558, 36.83760995103941],
+    [71, 55.22384351456861, 38.763734002309455],
+    [72, 52.86765581241363, 37.454799044588164],
+    [73, 53.723382369178935, 38.30117024055273],
+    [74, 54.58651425743357, 39.1448058624385],
+  ];
+  for (const [id, x, z] of positions) {
+    const e = w.entities.get(id)!; e.hidden = false;
+    Object.assign(e.transform, { x, z, y: w.districts!.groundHeight(x, z) + .7 }); delete e.locomotion;
+    const c = e.civilian!; c.path.length = 0; c.pathIndex = 0; c.goal = -1; c.l1!.target = null;
+    w.solids.remember(e, 'test.near-range-column'); w.spatial.set(id, x, z);
+  }
+  const follower = w.entities.get(56)!, health = follower.health.current;
+  let arrived = false;
+  for (let tick = 0; tick < 900 && !arrived; tick++) {
+    w.tick++; w.infected!.nav.flow(p.transform.x, p.transform.z, 1500);
+    for (const [id] of positions) w.l7Encounters!.follower(w.entities.get(id)!);
+    w.solids.commit();
+    arrived = Math.hypot(follower.transform.x - p.transform.x, follower.transform.z - p.transform.z) < 18;
+  }
+  expect(arrived, 'the recorded 19 m straggler rejoins without moving the waiting courier').toBe(true);
+  expect(follower.health.current).toBe(health); expect(w.solids.offenders).toEqual([]);
 }
 
 async function rockets() {
