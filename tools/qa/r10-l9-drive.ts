@@ -23,6 +23,9 @@ if (variant === 'pair') {
   process.exit(0);
 }
 const tag = `${variant}-${tier}-z${zoom}${route ? `-${route}` : ''}`;
+// Keep the open objective-bearing crossing, with one physical steering bend
+// around the existing bushes at (89, 1.6) and (108, 1.8). Do not move scenery.
+const waypoints: [number, number][] | undefined = route ? undefined : [[-550, 0], [40, 0], [75, 10], [130, 10], [165, 0], [275, 0], [350, 0], [470, 0]];
 const out = resolve(`test-results/r10-l9/${tag}`), profile = `${out}/profile`;
 mkdirSync(profile, { recursive: true });
 const socket = createServer(); await new Promise<void>(done => socket.listen(0, '127.0.0.1', done));
@@ -36,11 +39,11 @@ try {
   for (let i = 0; i < 100; i++) { try { if ((await fetch(origin)).ok) break; } catch { /* startup */ } await new Promise(done => setTimeout(done, 100)); }
   const html = await (await fetch(origin)).text();
   writeFileSync(`${out}/source.json`, JSON.stringify({ revision: execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(), origin,
-    bundle: /src="([^"]+\.js)"/.exec(html)?.[1], variant, tier, zoom, route: route ?? 'objective bearing', backend, input: 'real keyboard/mouse', godMode: true }, null, 2));
+    bundle: /src="([^"]+\.js)"/.exec(html)?.[1], variant, tier, zoom, route: route ?? 'objective bearing with bush-clearance bend', waypoints, backend, input: 'real keyboard/mouse', godMode: true }, null, 2));
   Object.assign(process.env, { PLAYTEST_BACKEND: backend, PLAYTEST_GOD: '1', PLAYTEST_NO_FRAME_TIMING: '0', PLAYTEST_THREAT_AUDIT: '1', PLAYTEST_ACCEPTANCE_LEDGER: '1', PLAYTEST_SHOT_SECONDS: '10', PLAYTEST_ACCEPTANCE_CAPTURES: '0' });
   const result = await runSession({ origin, out, levels: ['L9'], quality: tier as 'low' | 'high', zoom: Number(zoom), heroine: 'female',
     entry: 'continue', profile, levelMinutes: 5, sampleSeconds: 280, stopAfterLevel: true, tag, noSkip: true,
-    l9Route: route as 'road' | 'countryside' | 'dry-shortcut' | undefined });
+    l9Route: route as 'road' | 'countryside' | 'dry-shortcut' | undefined, l9Waypoints: waypoints });
   type Sample = { level: string; tick: number; step: string; visibleInfected: number[]; crossingContent?: { practicals: number; fires: number; landmarks: number; kills: number; patrols: number; drawCalls?: number; triangles?: number; simMs?: number; heapMB?: number | null; liveCount?: number } };
   const audit = JSON.parse(readFileSync(`${out}/${tag}-threat.json`, 'utf8')) as { samples: Sample[]; fightFrames: { level: string; ms: number }[] };
   const samples = audit.samples.filter(s => s.level === 'L9' && s.step === 'approach');

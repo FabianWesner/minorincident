@@ -39,6 +39,7 @@ export interface SessionOptions {
   saveOnYield?: boolean;
   /** Authored road selected by a logged map assist; all driving stays WASD. */
   l9Route?: 'road' | 'countryside' | 'dry-shortcut';
+  l9Waypoints?: [number, number][];
 }
 export interface Issue { level: string; tick: number; x: number; z: number; severity: 'P0' | 'P1' | 'P2' | 'P3'; kind: string; text: string; captures: string[]; step: string | null; objective: string }
 export interface LevelRun { level: string; entry: string; heroine: string; finished: boolean; skipped: string[]; wallSeconds: number; simSeconds: number; maxNoProgressSeconds: number; deaths: number; assists: number; attacks: Record<string, number>; weaponsStart: string[]; weaponsEnd: string[]; steps: { id: string; text: string; tick: number; marker: unknown }[] }
@@ -866,7 +867,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   const trail: { x: number; z: number; t: number }[] = []; let steerSign = 1, steerFlip = 0, lastErr: number | null = null, steering = false;
   let vehicleRecovery = new VehicleRecovery();
   const l9Route = crossing.routes.find(r => r.id === o.l9Route);
-  const l9Path = l9Route?.points.flatMap((a, i, points) => {
+  const l9Path = o.l9Waypoints ?? l9Route?.points.flatMap((a, i, points) => {
     const b = points[i + 1]; if (!b) return [a];
     const dx = b[0] - a[0], dz = b[1] - a[1], length = Math.hypot(dx, dz);
     const along = (p: readonly number[]) => ((p[0] - a[0]) * dx + (p[1] - a[1]) * dz) / length;
@@ -1558,7 +1559,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     if (!marketEscape && await fight(e)) { await hold(120); continue; }
     if (e.driving) {
       if (e.level === 'L9' && l9Path) {
-        if (!l9RouteLogged) { l9RouteLogged = true; run.assists++; assist('L9 authored map route', { route: o.l9Route, input: 'physical WASD; no world writes', waypoints: l9Path }); }
+        if (!l9RouteLogged) { l9RouteLogged = true; run.assists++; assist('L9 authored map route', { route: o.l9Route ?? 'open crossing clearance waypoints', input: 'physical WASD; no world writes', waypoints: l9Path }); }
         const car = e.driving;
         while (l9Waypoint < l9Path.length - 1) {
           const a = l9Path[l9Waypoint - 1], b = l9Path[l9Waypoint], c = l9Path[l9Waypoint + 1];
