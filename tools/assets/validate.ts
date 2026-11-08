@@ -81,13 +81,13 @@ function visibleBounds(scene: Scene): ReturnType<typeof getBounds> {
 }
 
 /** No renderer needed: validate actual geometry, hierarchy and export contracts. */
-export function validateDocument(document: Document, def: AssetDef, bytes: number, lod = 0, source?: Document, label = `${def.id}:lod${lod}`): Validation {
+export function validateDocument(document: Document, def: AssetDef, bytes: number, lod = 0, source?: Document, label = `${def.id}:lod${lod}`, lightingSource = source): Validation {
   const errors: string[] = [];
   const root = document.getRoot(), nodes = root.listNodes();
   const byName = new Map(nodes.map((n) => [n.getName(), n]));
   // The general asset gate must enforce the same light contract as assets:lights.
   // Optimized exports merge mesh names, so resolve emitter references in the authored source.
-  const authored = source?.getRoot().listNodes() ?? nodes;
+  const authored = lightingSource?.getRoot().listNodes() ?? nodes;
   const names = new Set(authored.map(n => n.getName())), referenced = new Set<string>();
   for (const node of nodes) {
     const raw = node.getExtras().ss_light, name = node.getName();
@@ -292,7 +292,9 @@ export async function validateAssets(manifest: AssetDef[], production = true): P
       if (!existsSync(path)) { results.push({ id: def.id, errors: [`missing GLB ${path}`], triangles: 0, materials: 0, drawCalls: 0, fileKB: 0, dimensions: [], hash: '' }); continue; }
       try {
         const document = await io.read(path);
-        const validation = { ...validateDocument(document, def, statSync(path).size, lod, source), id: `${def.id}:lod${lod}` };
+        const lightSourcePath = lod && sourcePath ? sourcePath.replace(/\.glb$/, `.lod${lod}.glb`) : undefined;
+        const lightingSource = lightSourcePath && existsSync(lightSourcePath) ? await io.read(lightSourcePath) : source;
+        const validation = { ...validateDocument(document, def, statSync(path).size, lod, source, `${def.id}:lod${lod}`, lightingSource), id: `${def.id}:lod${lod}` };
         if (def.rigidDrawBase) {
           // Read the shipped baseline, including for --ids selections. Compare
           // the same distance tier; a declared budget cannot widen this limit.

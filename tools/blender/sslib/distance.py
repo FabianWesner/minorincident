@@ -214,6 +214,9 @@ def export_variant(directory, tier, omit=(), far_omit=(), owners=None, flat_part
             resolved.extend(o.name for o in (scoped or candidates))
         light['emissiveNodes'] = sorted(set(resolved))
         obj['ss_light'] = json.dumps(light)
+    if directory.name == 'veh.fire-engine':
+        from .fire_engine_lights import install
+        install(root)
     if fold_palette:
         # Preserve palette-separated authored geometry for later damage recipes.
         bpy.ops.object.select_all(action='SELECT')

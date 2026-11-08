@@ -1,0 +1,851 @@
+[
+  {
+    "suffix": "",
+    "anchors": [
+      {
+        "name": "light:brakeL",
+        "position": [
+          -3.467452049255371,
+          0.9698941111564636,
+          -0.36627906560897827
+        ],
+        "direction": [
+          0.9508908987045288,
+          -0.30859601497650146,
+          -0.023980511352419853
+        ],
+        "ss_light": {
+          "type": "point",
+          "color": "light_siren_red",
+          "intensity": 1.2,
+          "range": 3,
+          "pool": true,
+          "beam": "none",
+          "reflect": true,
+          "shadow": "none",
+          "heroPriority": 0,
+          "flicker": "none",
+          "powerGroup": "self",
+          "breakable": true,
+          "emissiveNodes": [
+            "lightsBrake_emi_sirenRed"
+          ]
+        }
+      },
+      {
+        "name": "light:brakeR",
+        "position": [
+          -3.467452049255371,
+          0.9698941111564636,
+          0.36627906560897827
+        ],
+        "direction": [
+          0.9508908987045288,
+          -0.30859601497650146,
+          -0.023980511352419853
+        ],
+        "ss_light": {
+          "type": "point",
+          "color": "light_siren_red",
+          "intensity": 1.2,
+          "range": 3,
+          "pool": true,
+          "beam": "none",
+          "reflect": true,
+          "shadow": "none",
+          "heroPriority": 0,
+          "flicker": "none",
+          "powerGroup": "self",
+          "breakable": true,
+          "emissiveNodes": [
+            "lightsBrake_emi_sirenRed"
+          ]
+        }
+      },
+      {
+        "name": "light:headlightL",
+        "position": [
+          3.4259252548217773,
+          1.2712204456329346,
+          -0.36627906560897827
+        ],
+        "direction": [
+          0.9508908987045288,
+          -0.30859601497650146,
+          -0.023980511352419853
+        ],
+        "ss_light": {
+          "type": "spot",
+          "color": "light_led_white",
+          "intensity": 4,
+          "range": 24,
+          "angle": 48,
+          "pool": true,
+          "beam": "soft",
+          "reflect": true,
+          "shadow": "hero",
+          "heroPriority": 2,
+          "flicker": "none",
+          "powerGroup": "self",
+          "breakable": true,
+          "emissiveNodes": [
+            "lightsFront_emi_windowGlow"
+          ]
+        }
+      },
+      {
+        "name": "light:headlightR",
+        "position": [
+          3.4259252548217773,
+          1.2712204456329346,
+          0.36627906560897827
+        ],
+        "direction": [
+          0.9508908987045288,
+          -0.30859601497650146,
+          -0.023980511352419853
+        ],
+        "ss_light": {
+          "type": "spot",
+          "color": "light_led_white",
+          "intensity": 4,
+          "range": 24,
+          "angle": 48,
+          "pool": true,
+          "beam": "soft",
+          "reflect": true,
+          "shadow": "hero",
+          "heroPriority": 2,
+          "flicker": "none",
+          "powerGroup": "self",
+          "breakable": true,
+          "emissiveNodes": [
+            "lightsFront_emi_windowGlow"
+          ]
+        }
+      },
+      {
+        "name": "light:markerAmber",
+        "position": [
+          1.2075386047363281,
+          1.835422396659851,
+          -0.0
+        ],
+        "direction": [
+          0.9508908987045288,
+          -0.30859601497650146,
+          -0.023980511352419853
+        ],
+        "ss_light": {
+          "type": "point",
+          "color": "light_sodium",
+          "intensity": 0.4,
+          "range": 2,
+          "pool": false,
+          "beam": "none",
+          "reflect": false,
+          "shadow": "none",
+          "heroPriority": 0,
+          "flicker": "none",
+          "powerGroup": "self",
+          "breakable": false,
+          "emissiveNodes": [
+            "body_emi_schoolBusYellow",
+            "ladder_emi_schoolBusYellow",
+            "root_emi_schoolBusYellow"
+          ]
+        }
+      },
+      {
+        "name": "light:markerRed",
+        "position": [
+          -0.19241812825202942,
+          2.0450634956359863,
+          -0.0
+        ],
+        "direction": [
+          0.9508908987045288,
+          -0.30859601497650146,
+          -0.023980511352419853
+        ],
+        "ss_light": {
+          "type": "point",
+          "color": "light_siren_red",
+          "intensity": 0.4,
+          "range": 2,
+          "pool": false,
+          "beam": "none",
+          "reflect": false,
+          "shadow": "none",
+          "heroPriority": 0,
+          "flicker": "none",
+          "powerGroup": "self",
+          "breakable": false,
+          "emissiveNodes": [
+            "root_emi_sirenRed"
+          ]
+        }
+      },
+      {
+        "name": "light:markerWarm",
+        "position": [
+          1.378879427909851,
+          1.7891247272491455,
+          -0.054941847920417786
+        ],
+        "direction": [
+          0.9508908987045288,
+          -0.30859601497650146,
+          -0.023980511352419853
+        ],
+        "ss_light": {
+          "type": "point",
+          "color": "light_window_warm",
+          "intensity": 0.4,
+          "range": 2,
+          "pool": false,
+          "beam": "none",
+          "reflect": false,
+          "shadow": "none",
+          "heroPriority": 0,
+          "flicker": "none",
+          "powerGroup": "self",
+          "breakable": false,
+          "emissiveNodes": [
+            "root_emi_windowGlow",
+            "sirenR_emi_windowGlow"
+          ]
+        }
+      },
+      {
+        "name": "light:sirenBlue",
+        "position": [
+          2.8611667156219482,
+          2.853182792663574,
+          -0.0
+        ],
+        "direction": [
+          0.9508908987045288,
+          -0.30859601497650146,
+          -0.023980511352419853
+        ],
+        "ss_light": {
+          "type": "beacon",
+          "color": "light_siren_blue",
+          "intensity": 3,
+          "range": 6,
+          "pool": true,
+          "beam": "none",
+          "reflect": true,
+          "shadow": "none",
+          "heroPriority": 0,
+          "flicker": "none",
+          "powerGroup": "self",
+          "breakable": true,
+          "emissiveNodes": [
+            "sirenL_emi_policeBlue",
+            "sirenR_emi_policeBlue"
+          ]
+        }
+      },
+      {
+        "name": "light:sirenRed",
+        "position": [
+          2.8611667156219482,
+          2.853182792663574,
+          -0.1068313866853714
+        ],
+        "direction": [
+          0.9508908987045288,
+          -0.30859601497650146,
+          -0.023980511352419853
+        ],
+        "ss_light": {
+          "type": "beacon",
+          "color": "light_siren_red",
+          "intensity": 3,
+          "range": 6,
+          "pool": true,
+          "beam": "none",
+          "reflect": true,
+          "shadow": "none",
+          "heroPriority": 0,
+          "flicker": "none",
+          "powerGroup": "self",
+          "breakable": true,
+          "emissiveNodes": [
+            "sirenL_emi_sirenRed",
+            "sirenR_emi_sirenRed"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "suffix": ".lod1",
+    "anchors": [
+      {
+        "name": "light:brakeL",
+        "position": [
+          -3.4570703506469727,
+          0.9444695711135864,
+          -0.36627906560897827
+        ],
+        "direction": [
+          0.9508908987045288,
+          -0.30859601497650146,
+          -0.023980511352419853
+        ],
+        "ss_light": {
+          "type": "point",
+          "color": "light_siren_red",
+          "intensity": 1.2,
+          "range": 3,
+          "pool": true,
+          "beam": "none",
+          "reflect": true,
+          "shadow": "none",
+          "heroPriority": 0,
+          "flicker": "none",
+          "powerGroup": "self",
+          "breakable": true,
+          "emissiveNodes": [
+            "lightsBrake_emi_sirenRed"
+          ]
+        }
+      },
+      {
+        "name": "light:brakeR",
+        "position": [
+          -3.4570703506469727,
+          0.9444695711135864,
+          0.36627906560897827
+        ],
+        "direction": [
+          0.9508908987045288,
+          -0.30859601497650146,
+          -0.023980511352419853
+        ],
+        "ss_light": {
+          "type": "point",
+          "color": "light_siren_red",
+          "intensity": 1.2,
+          "range": 3,
+          "pool": true,
+          "beam": "none",
+          "reflect": true,
+          "shadow": "none",
+          "heroPriority": 0,
+          "flicker": "none",
+          "powerGroup": "self",
+          "breakable": true,
+          "emissiveNodes": [
+            "lightsBrake_emi_sirenRed"
+          ]
+        }
+      },
+      {
+        "name": "light:headlightL",
+        "position": [
+          3.4363067150115967,
+          1.2457958459854126,
+          -0.36627906560897827
+        ],
+        "direction": [
+          0.9508908987045288,
+          -0.30859601497650146,
+          -0.023980511352419853
+        ],
+        "ss_light": {
+          "type": "spot",
+          "color": "light_led_white",
+          "intensity": 4,
+          "range": 24,
+          "angle": 48,
+          "pool": true,
+          "beam": "soft",
+          "reflect": true,
+          "shadow": "hero",
+          "heroPriority": 2,
+          "flicker": "none",
+          "powerGroup": "self",
+          "breakable": true,
+          "emissiveNodes": [
+            "lightsFront_emi_windowGlow"
+          ]
+        }
+      },
+      {
+        "name": "light:headlightR",
+        "position": [
+          3.4363067150115967,
+          1.2457958459854126,
+          0.36627906560897827
+        ],
+        "direction": [
+          0.9508908987045288,
+          -0.30859601497650146,
+          -0.023980511352419853
+        ],
+        "ss_light": {
+          "type": "spot",
+          "color": "light_led_white",
+          "intensity": 4,
+          "range": 24,
+          "angle": 48,
+          "pool": true,
+          "beam": "soft",
+          "reflect": true,
+          "shadow": "hero",
+          "heroPriority": 2,
+          "flicker": "none",
+          "powerGroup": "self",
+          "breakable": true,
+          "emissiveNodes": [
+            "lightsFront_emi_windowGlow"
+          ]
+        }
+      },
+      {
+        "name": "light:markerAmber",
+        "position": [
+          0.8588452935218811,
+          1.611271619796753,
+          1.4901161193847656e-08
+        ],
+        "direction": [
+          0.9508908987045288,
+          -0.30859601497650146,
+          -0.023980511352419853
+        ],
+        "ss_light": {
+          "type": "point",
+          "color": "light_sodium",
+          "intensity": 0.4,
+          "range": 2,
+          "pool": false,
+          "beam": "none",
+          "reflect": false,
+          "shadow": "none",
+          "heroPriority": 0,
+          "flicker": "none",
+          "powerGroup": "self",
+          "breakable": false,
+          "emissiveNodes": [
+            "body_emi_schoolBusYellow",
+            "crew_cab_emi_schoolBusYellow",
+            "ladder_emi_schoolBusYellow",
+            "rear_compartment_emi_schoolBusYellow"
+          ]
+        }
+      },
+      {
+        "name": "light:markerRed",
+        "position": [
+          -0.16575966775417328,
+          1.9825388193130493,
+          -0.0
+        ],
+        "direction": [
+          0.9508908987045288,
+          -0.30859601497650146,
+          -0.023980511352419853
+        ],
+        "ss_light": {
+          "type": "point",
+          "color": "light_siren_red",
+          "intensity": 0.4,
+          "range": 2,
+          "pool": false,
+          "beam": "none",
+          "reflect": false,
+          "shadow": "none",
+          "heroPriority": 0,
+          "flicker": "none",
+          "powerGroup": "self",
+          "breakable": false,
+          "emissiveNodes": [
+            "crew_cab_emi_sirenRed",
+            "rear_compartment_emi_sirenRed"
+          ]
+        }
+      },
+      {
+        "name": "light:markerWarm",
+        "position": [
+          1.3892611265182495,
+          1.7637003660202026,
+          -0.05494186282157898
+        ],
+        "direction": [
+          0.9508908987045288,
+          -0.30859601497650146,
+          -0.023980511352419853
+        ],
+        "ss_light": {
+          "type": "point",
+          "color": "light_window_warm",
+          "intensity": 0.4,
+          "range": 2,
+          "pool": false,
+          "beam": "none",
+          "reflect": false,
+          "shadow": "none",
+          "heroPriority": 0,
+          "flicker": "none",
+          "powerGroup": "self",
+          "breakable": false,
+          "emissiveNodes": [
+            "equipment_body_emi_windowGlow",
+            "sirenR_emi_windowGlow"
+          ]
+        }
+      },
+      {
+        "name": "light:sirenBlue",
+        "position": [
+          2.8715484142303467,
+          2.827758550643921,
+          -0.0
+        ],
+        "direction": [
+          0.9508908987045288,
+          -0.30859601497650146,
+          -0.023980511352419853
+        ],
+        "ss_light": {
+          "type": "beacon",
+          "color": "light_siren_blue",
+          "intensity": 3,
+          "range": 6,
+          "pool": true,
+          "beam": "none",
+          "reflect": true,
+          "shadow": "none",
+          "heroPriority": 0,
+          "flicker": "none",
+          "powerGroup": "self",
+          "breakable": true,
+          "emissiveNodes": [
+            "sirenL_emi_policeBlue",
+            "sirenR_emi_policeBlue"
+          ]
+        }
+      },
+      {
+        "name": "light:sirenRed",
+        "position": [
+          2.8715484142303467,
+          2.827758550643921,
+          -0.10683140158653259
+        ],
+        "direction": [
+          0.9508908987045288,
+          -0.30859601497650146,
+          -0.023980511352419853
+        ],
+        "ss_light": {
+          "type": "beacon",
+          "color": "light_siren_red",
+          "intensity": 3,
+          "range": 6,
+          "pool": true,
+          "beam": "none",
+          "reflect": true,
+          "shadow": "none",
+          "heroPriority": 0,
+          "flicker": "none",
+          "powerGroup": "self",
+          "breakable": true,
+          "emissiveNodes": [
+            "sirenL_emi_sirenRed",
+            "sirenR_emi_sirenRed"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "suffix": ".lod2",
+    "anchors": [
+      {
+        "name": "light:brakeL",
+        "position": [
+          -3.4570703506469727,
+          0.8810128569602966,
+          -0.36627906560897827
+        ],
+        "direction": [
+          0.9508908987045288,
+          -0.30859601497650146,
+          -0.023980511352419853
+        ],
+        "ss_light": {
+          "type": "point",
+          "color": "light_siren_red",
+          "intensity": 1.2,
+          "range": 3,
+          "pool": true,
+          "beam": "none",
+          "reflect": true,
+          "shadow": "none",
+          "heroPriority": 0,
+          "flicker": "none",
+          "powerGroup": "self",
+          "breakable": true,
+          "emissiveNodes": [
+            "lightsBrake_emi_sirenRed"
+          ]
+        }
+      },
+      {
+        "name": "light:brakeR",
+        "position": [
+          -3.4570703506469727,
+          0.8810128569602966,
+          0.36627906560897827
+        ],
+        "direction": [
+          0.9508908987045288,
+          -0.30859601497650146,
+          -0.023980511352419853
+        ],
+        "ss_light": {
+          "type": "point",
+          "color": "light_siren_red",
+          "intensity": 1.2,
+          "range": 3,
+          "pool": true,
+          "beam": "none",
+          "reflect": true,
+          "shadow": "none",
+          "heroPriority": 0,
+          "flicker": "none",
+          "powerGroup": "self",
+          "breakable": true,
+          "emissiveNodes": [
+            "lightsBrake_emi_sirenRed"
+          ]
+        }
+      },
+      {
+        "name": "light:headlightL",
+        "position": [
+          3.4363067150115967,
+          1.1823391914367676,
+          -0.36627906560897827
+        ],
+        "direction": [
+          0.9508908987045288,
+          -0.30859601497650146,
+          -0.023980511352419853
+        ],
+        "ss_light": {
+          "type": "spot",
+          "color": "light_led_white",
+          "intensity": 4,
+          "range": 24,
+          "angle": 48,
+          "pool": true,
+          "beam": "soft",
+          "reflect": true,
+          "shadow": "hero",
+          "heroPriority": 2,
+          "flicker": "none",
+          "powerGroup": "self",
+          "breakable": true,
+          "emissiveNodes": [
+            "lightsFront_emi_windowGlow"
+          ]
+        }
+      },
+      {
+        "name": "light:headlightR",
+        "position": [
+          3.4363067150115967,
+          1.1823391914367676,
+          0.36627906560897827
+        ],
+        "direction": [
+          0.9508908987045288,
+          -0.30859601497650146,
+          -0.023980511352419853
+        ],
+        "ss_light": {
+          "type": "spot",
+          "color": "light_led_white",
+          "intensity": 4,
+          "range": 24,
+          "angle": 48,
+          "pool": true,
+          "beam": "soft",
+          "reflect": true,
+          "shadow": "hero",
+          "heroPriority": 2,
+          "flicker": "none",
+          "powerGroup": "self",
+          "breakable": true,
+          "emissiveNodes": [
+            "lightsFront_emi_windowGlow"
+          ]
+        }
+      },
+      {
+        "name": "light:markerAmber",
+        "position": [
+          1.6847102642059326,
+          1.3871468305587769,
+          -0.0
+        ],
+        "direction": [
+          0.9508908987045288,
+          -0.30859601497650146,
+          -0.023980511352419853
+        ],
+        "ss_light": {
+          "type": "point",
+          "color": "light_sodium",
+          "intensity": 0.4,
+          "range": 2,
+          "pool": false,
+          "beam": "none",
+          "reflect": false,
+          "shadow": "none",
+          "heroPriority": 0,
+          "flicker": "none",
+          "powerGroup": "self",
+          "breakable": false,
+          "emissiveNodes": [
+            "body_emi_schoolBusYellow",
+            "crew_cab_emi_schoolBusYellow",
+            "ladder_emi_schoolBusYellow",
+            "rear_compartment_emi_schoolBusYellow"
+          ]
+        }
+      },
+      {
+        "name": "light:markerRed",
+        "position": [
+          -3.3151161670684814,
+          2.710157871246338,
+          -0.0
+        ],
+        "direction": [
+          0.9508908987045288,
+          -0.30859601497650146,
+          -0.023980511352419853
+        ],
+        "ss_light": {
+          "type": "point",
+          "color": "light_siren_red",
+          "intensity": 0.4,
+          "range": 2,
+          "pool": false,
+          "beam": "none",
+          "reflect": false,
+          "shadow": "none",
+          "heroPriority": 0,
+          "flicker": "none",
+          "powerGroup": "self",
+          "breakable": false,
+          "emissiveNodes": [
+            "rear_compartment_emi_sirenRed"
+          ]
+        }
+      },
+      {
+        "name": "light:markerWarm",
+        "position": [
+          1.3892611265182495,
+          1.700243592262268,
+          -0.05494186282157898
+        ],
+        "direction": [
+          0.9508908987045288,
+          -0.30859601497650146,
+          -0.023980511352419853
+        ],
+        "ss_light": {
+          "type": "point",
+          "color": "light_window_warm",
+          "intensity": 0.4,
+          "range": 2,
+          "pool": false,
+          "beam": "none",
+          "reflect": false,
+          "shadow": "none",
+          "heroPriority": 0,
+          "flicker": "none",
+          "powerGroup": "self",
+          "breakable": false,
+          "emissiveNodes": [
+            "equipment_body_emi_windowGlow",
+            "sirenR_emi_windowGlow"
+          ]
+        }
+      },
+      {
+        "name": "light:sirenBlue",
+        "position": [
+          2.8715484142303467,
+          2.7643017768859863,
+          -0.0
+        ],
+        "direction": [
+          0.9508908987045288,
+          -0.30859601497650146,
+          -0.023980511352419853
+        ],
+        "ss_light": {
+          "type": "beacon",
+          "color": "light_siren_blue",
+          "intensity": 3,
+          "range": 6,
+          "pool": true,
+          "beam": "none",
+          "reflect": true,
+          "shadow": "none",
+          "heroPriority": 0,
+          "flicker": "none",
+          "powerGroup": "self",
+          "breakable": true,
+          "emissiveNodes": [
+            "sirenL_emi_policeBlue",
+            "sirenR_emi_policeBlue"
+          ]
+        }
+      },
+      {
+        "name": "light:sirenRed",
+        "position": [
+          2.8715484142303467,
+          2.7643017768859863,
+          -0.10683140158653259
+        ],
+        "direction": [
+          0.9508908987045288,
+          -0.30859601497650146,
+          -0.023980511352419853
+        ],
+        "ss_light": {
+          "type": "beacon",
+          "color": "light_siren_red",
+          "intensity": 3,
+          "range": 6,
+          "pool": true,
+          "beam": "none",
+          "reflect": true,
+          "shadow": "none",
+          "heroPriority": 0,
+          "flicker": "none",
+          "powerGroup": "self",
+          "breakable": true,
+          "emissiveNodes": [
+            "sirenL_emi_sirenRed",
+            "sirenR_emi_sirenRed"
+          ]
+        }
+      }
+    ]
+  }
+]
