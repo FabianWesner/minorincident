@@ -1,7 +1,6 @@
 /** Controlled native checks complement the mortal arena runs; setup mutations never count as combat victories. */
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { L8ArenaBot } from '../../src/debug/bot/L8ArenaBot';
-import { Walker } from '../../src/debug/bot/Walker';
 import { emptyInput } from '../../src/input/InputFrame';
 import { barEligible } from '../../src/render/HealthBars';
 import { l8BossArenas, type L8BossId } from '../../src/data/l8Bosses';
@@ -100,32 +99,12 @@ try {
     w.solids.relocate(p, { x: -44, z: 25, y: .7 }, 'qa.elephant.lure-target', 2);
     arena.phase = 1; arena.nextAt = w.tick + 30; arena.cycle = 0;
     const charges: unknown[] = [];
-    w.events.on('infected.special', event => { if (event.type === 'infected.special' && event.sourceId === e.id && event.move === 'elephant.charge' && event.stage === 'recovery') charges.push({ tick: w.tick, a: structuredClone(e.infected!.specialAttack), boss: { ...e.transform }, courier: { ...p.transform } }); });
-    const generic = new L8ArenaBot(w), walker = new Walker(), contacts: unknown[] = []; let previous = 0, goal: { x: number; z: number } | undefined = { x: -44, z: 25 };
-    for (let n = 0; n < 120 * 60 && e.health.current > 0 && p.health.current > 0; n++) {
-      const a = e.infected!.specialAttack, f = emptyInput();
-      if (a?.move === 'elephant.charge' && a.stage !== 'recovery') {
-        const direction = { x: -a.area.dz, z: a.area.dx };
-        const other = { x: -direction.x, z: -direction.z };
-        const cross = Math.abs((p.transform.x - a.area.x) * a.area.dz - (p.transform.z - a.area.z) * a.area.dx);
-        if (cross < 3.2) f.move = w.solids.sweep(p, direction, 4) >= w.solids.sweep(p, other, 4) ? direction : other;
-      } else if (a?.move === 'elephant.swipe' && a.stage !== 'recovery' || Math.hypot(p.transform.x - e.transform.x, p.transform.z - e.transform.z) < 7 && a?.stage !== 'recovery') {
-        const dx = p.transform.x - e.transform.x, dz = p.transform.z - e.transform.z, d = Math.hypot(dx, dz) || 1; f.move = { x: dx / d, z: dz / d };
-      } else {
-        const candidates = [[-44,25],[-44,39],[-76,25],[-76,39],[-52,24],[-52,40],[-64,24],[-64,40]].map(([x,z]) => ({x,z}));
-        const laneClear = (at: {x:number;z:number}) => {
-          const dx=at.x-e.transform.x,dz=at.z-e.transform.z,d=Math.hypot(dx,dz);
-          return d >= 7 && d <= 40 && w.solids.clear({ ...at, y:.7 }, .35, 1, false) && w.solids.sweep(e,{x:dx/d,z:dz/d},Math.max(0,d-1),e.combat!.radius,false,false) >= d-1-.01;
-        };
-        if (!goal || !laneClear(goal)) goal = candidates.filter(laneClear).sort((a,b) => Math.hypot(a.x-p.transform.x,a.z-p.transform.z)-Math.hypot(b.x-p.transform.x,b.z-p.transform.z))[0];
-        if (goal) {
-          const dx = goal.x - p.transform.x, dz = goal.z - p.transform.z, d = Math.hypot(dx, dz);
-          f.move = d > .6 && w.solids.sweep(p, { x: dx / d, z: dz / d }, d, .35, false, false) >= d - .01 ? { x: dx / d, z: dz / d } : walker.step(w,goal, .6,`lure-${goal.x}-${goal.z}`) ?? f.move;
-          const length = Math.hypot(f.move.x, f.move.z); if (length > 0) { f.move.x /= length; f.move.z /= length; }
-        }
-      }
-      if (process.env.L8_ELEPHANT_LURE !== 'wall-points') f.move = generic.sample('elephant').move;
-      // Keep the bait inside the yard; walking through a gate is an escape, not the wall-counter tactic.
+    w.events.on('infected.special', event => { if (event.type === 'infected.special' && event.sourceId === e.id && event.move === 'elephant.charge' && event.stage === 'recovery') charges.push({ tick: w.tick, a: structuredClone(e.infected!.specialAttack), boss: { ...e.transform }, courier: { ...p.transform }, staticAhead: w.solids.sweep(e, { x: e.infected!.specialAttack!.area.dx, z: e.infected!.specialAttack!.area.dz }, 14 / 60, e.combat!.radius, false, false) }); });
+    const bot = new L8ArenaBot(w), contacts: unknown[] = []; let previous = 0;
+    for (let n = 0; n < 300 * 60 && e.health.current > 0 && p.health.current > 0; n++) {
+      const f = emptyInput();
+      // Use the same visible-cue movement policy as the skilled fighter, with both firing buttons left off.
+      f.move = bot.sample('elephant').move;
       if (p.transform.x + f.move.x * 2 < -80 || p.transform.x + f.move.x * 2 > -40) f.move.x = 0;
       if (p.transform.z + f.move.z * 2 < 14 || p.transform.z + f.move.z * 2 > 50) f.move.z = 0;
       w.applyInput(f, 'keyboard'); step(w);
