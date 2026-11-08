@@ -1,8 +1,10 @@
 {
+  "revision": "1b4e89b1",
   "tuning": "L6 pressure cadence and exit signposting",
   "runs": [
     {
       "tier": "low",
+      "actualTier": "low",
       "seed": 1,
       "completed": true,
       "outcome": "result",
@@ -12,6 +14,7 @@
       "survivorsOut": 25,
       "survivorLosses": 4,
       "survivorRoster": 29,
+      "escapedVisible": 0,
       "maxConcurrentInfected": 20,
       "pressureArrivals": 18,
       "pressureArrivalsPerMinute": 4.695652173913044,
@@ -272,6 +275,7 @@
     },
     {
       "tier": "low",
+      "actualTier": "low",
       "seed": 2,
       "completed": true,
       "outcome": "result",
@@ -281,6 +285,7 @@
       "survivorsOut": 25,
       "survivorLosses": 4,
       "survivorRoster": 29,
+      "escapedVisible": 0,
       "maxConcurrentInfected": 24,
       "pressureArrivals": 23,
       "pressureArrivalsPerMinute": 5.095384615384615,
@@ -516,6 +521,7 @@
     },
     {
       "tier": "low",
+      "actualTier": "low",
       "seed": 3,
       "completed": false,
       "outcome": "playing",
@@ -525,6 +531,7 @@
       "survivorsOut": 0,
       "survivorLosses": 9,
       "survivorRoster": 29,
+      "escapedVisible": 0,
       "maxConcurrentInfected": 30,
       "pressureArrivals": 94,
       "pressureArrivalsPerMinute": 4.924258960143188,
@@ -689,6 +696,7 @@
     },
     {
       "tier": "high",
+      "actualTier": "high",
       "seed": 1,
       "completed": true,
       "outcome": "result",
@@ -698,6 +706,7 @@
       "survivorsOut": 25,
       "survivorLosses": 4,
       "survivorRoster": 29,
+      "escapedVisible": 0,
       "maxConcurrentInfected": 20,
       "pressureArrivals": 18,
       "pressureArrivalsPerMinute": 4.695652173913044,
@@ -958,6 +967,7 @@
     },
     {
       "tier": "high",
+      "actualTier": "high",
       "seed": 2,
       "completed": true,
       "outcome": "result",
@@ -967,6 +977,7 @@
       "survivorsOut": 25,
       "survivorLosses": 4,
       "survivorRoster": 29,
+      "escapedVisible": 0,
       "maxConcurrentInfected": 24,
       "pressureArrivals": 23,
       "pressureArrivalsPerMinute": 5.095384615384615,
@@ -1202,6 +1213,7 @@
     },
     {
       "tier": "high",
+      "actualTier": "high",
       "seed": 3,
       "completed": false,
       "outcome": "playing",
@@ -1211,6 +1223,7 @@
       "survivorsOut": 0,
       "survivorLosses": 9,
       "survivorRoster": 29,
+      "escapedVisible": 0,
       "maxConcurrentInfected": 30,
       "pressureArrivals": 94,
       "pressureArrivalsPerMinute": 4.924258960143188,
