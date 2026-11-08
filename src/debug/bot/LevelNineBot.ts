@@ -28,7 +28,10 @@ export class LevelNineBot {
     });
     // A completion driver reads the road: it takes the open side of the solid
     // collapsed sections, reserving jump attempts for the dedicated fixture.
-    this.path = base.flatMap((a, i, points) => {
+    // Clear the concrete splitter before taking the fork. A zero-HP APC has
+    // a tighter slow turn and otherwise noses straight into its inner edge.
+    const approach = base.map(p => p[0] === -450 && p[1] === 0 ? [-420, 0] as Point : p);
+    this.path = approach.flatMap((a, i, points) => {
       const b = points[i + 1]; if (!b) return [a];
       const ramps = l9Course.ramps.filter(r => r.x - 18 > a[0] && r.x + 22 < b[0] && Math.abs(r.z - a[1]) < 6);
       return [a, ...ramps.flatMap(r => [[r.x - 18, r.z + 12], [r.x + 22, r.z + 12]] as Point[])];

@@ -191,7 +191,7 @@ export class LevelNineCrash {
         }
         car.vehicle!.passengers = [];
         const sam = w.entities.get(this.driving.state.samId);
-        if (sam) { delete sam.passengerOf; delete sam.emerging; if (sam.civilian) sam.civilian.pauseUntil = Number.MAX_SAFE_INTEGER; }
+        if (sam) { if (s.samFlightFrom) Object.assign(sam.transform, { x: 528, y: .7, z: -6 }); delete sam.passengerOf; delete sam.emerging; if (sam.civilian) sam.civilian.pauseUntil = Number.MAX_SAFE_INTEGER; }
         w.events.emit({ type: 'vehicle.sound', tick: w.tick, sourceId: s.carId, phase: 'crash', position: wreck, velocity: { x: 0, z: 0 }, rpm: 0, speed: 0, health: 0, impulse: 30 });
         w.events.emit({ type: 'mission.signal', tick: w.tick, name: 'l9.crash-impact', actorId: s.carId });
       }
