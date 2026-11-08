@@ -37,7 +37,7 @@ export class ActionRunner {
   snapshotChains() { return Object.fromEntries(Object.entries(this.chains).map(([side, chain]) => [side, { ...chain }])); }
   get lastAttackId(): number { return this.sequence; }
   /** `crowd(radius)` counts the living infected a sweep of that radius would reach from the source right now. */
-  update(frame: InputFrame, tick: number, enabled: boolean, started: (attack: Attack) => void, resolve: (attack: Attack) => void, crowd?: (radius: number) => number): void {
+  update(frame: InputFrame, tick: number, enabled: boolean, started: (attack: Attack) => void, resolve: (attack: Attack) => void, crowd?: (radius: number) => number, canFire?: (attack: Attack) => boolean): void {
     const selected = this.loadout.state.selectedSide, selectedId = this.loadout.current(selected).id;
     const keyedChoice = frame.selectedWeaponKey !== undefined && this.loadout.activeEntries().some(entry => weaponKey(entry.id) === frame.selectedWeaponKey);
     if (!enabled || this.gunReady.id !== selectedId || this.gunReady.side !== selected) {
@@ -84,6 +84,11 @@ export class ActionRunner {
         started(attack);
       }
       if (attack && !attack.resolved && tick >= attack.activeAt) {
+        if (attack.def.category === 'ranged' && canFire && !canFire(attack)) {
+          delete this.running[side];
+          this.loadout.current(side).readyAt = tick + 12;
+          continue;
+        }
         attack.resolved = true;
         if (attack.def.category === 'ranged') { this.loadout.spend(side, tick, attack.def, this.infiniteCharges); this.gunReady.until = tick + 24; }
         resolve(attack);

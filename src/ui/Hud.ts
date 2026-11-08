@@ -62,7 +62,7 @@ export class Hud {
   private weaponRackSignature = '';
   private readonly weaponRackItems = new Map<string, HTMLElement>();
   private weaponHintUntil = -1;
-  private emptyWeapon: { id: string; until: number } | null = null;
+  private emptyWeapon: { id: string; until: number; tooClose?: boolean } | null = null;
   private readonly vignette = node('div', 'low-health-vignette');
   private readonly damage = node('div', 'damage-direction', '▼');
   private readonly shieldBlock = node('div', 'shield-block', 'SHIELD STRAIN · CHIP');
@@ -217,7 +217,7 @@ export class Hud {
       return;
     }
     if (event.type === 'combat.empty' && event.sourceId === 1) {
-      this.emptyWeapon = { id: event.actionId, until: this.game.world.tick + 120 };
+      this.emptyWeapon = { id: event.actionId, until: this.game.world.tick + 120, ...(event.reason === 'too-close' ? { tooClose: true } : {}) };
       return;
     }
     if (event.type === 'civilian.bark' || event.type === 'ally.callout') {
@@ -407,7 +407,9 @@ export class Hud {
         if (this.weaponActionId) this.weaponHintUntil = world.tick + 120;
         this.weaponActionId = shown.id; this.weapon.icon.src = actionIconUrl(action(shown.id).iconId);
       }
-      const emptyCue = this.emptyWeapon && world.tick <= this.emptyWeapon.until ? `${label(this.emptyWeapon.id)} · Empty` : null;
+      const emptyCue = this.emptyWeapon && world.tick <= this.emptyWeapon.until
+        ? this.emptyWeapon.tooClose ? 'Too close!' : `${label(this.emptyWeapon.id)} · Empty`
+        : null;
       text(this.weapon.hint, emptyCue ?? shown.name); setHidden(this.weapon.hint, !emptyCue && world.tick > this.weaponHintUntil);
       const description = `${shown.name}, ${shown.stats}`;
       attribute(w, 'title', `${description} · ${this.game.input.scheme === 'touch' ? 'swipe up LEFT / RIGHT to switch' : 'weapon slot, RMB or Q to switch'}`); attribute(w, 'aria-label', `Active weapon: ${description}`);

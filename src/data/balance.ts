@@ -545,29 +545,29 @@ Object.assign(ttkBands, {
     flamingo: [0.01, 0.27],
   },
   // F-290: 2.4/s (25 ticks), three times the measured 0.8/s (75 ticks).
-  // Rear-exposure fixture: n = ceil(HP / (180 * (1 - armor))), T = 1/6 + (n - 1)/2.4.
+  // Rear-exposure fixture: n = ceil(HP / (180 * (1 - armor))), T = 1/6 + (n - 1)/1.2.
   // Bands use the documented 20% timing tolerance + 0.25 s:
   // [max(0.01, 0.8*T - 0.25), 1.2*T + 0.25], rounded outward to 0.01 s.
   'weapon.rocket-launcher': {
     runner: [0.01, 0.45],
     crawler: [0.01, 0.45],
-    brute: [0.21, 0.95],
+    brute: [0.55, 1.45],
     screamer: [0.01, 0.45],
     sprinter: [0.01, 0.45],
     riot: [0.01, 0.45],
     bloated: [0.01, 0.45],
     firefighter: [0.01, 0.45],
     hazmat: [0.01, 0.45],
-    armored: [1.21, 2.45],
-    butcher: [1.21, 2.45],
+    armored: [2.55, 4.45],
+    butcher: [2.55, 4.45],
     nurse: [0.01, 0.45],
     dog: [0.01, 0.45],
     dachshund: [0.01, 0.45],
     k9: [0.01, 0.45],
     cat: [0.01, 0.45],
     crow: [0.01, 0.45],
-    lion: [0.55, 1.45],
-    gorilla: [1.88, 3.45],
+    lion: [1.21, 2.45],
+    gorilla: [3.88, 6.45],
     flamingo: [0.01, 0.45],
   },
   'weapon.molotov': {
