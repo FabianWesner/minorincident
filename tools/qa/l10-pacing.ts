@@ -9,6 +9,9 @@ import { followTenFrustum } from '../sim-runner/l10';
 import { execFileSync } from 'node:child_process';
 import { cornBlocksSight } from '../../src/levels/L10/farm';
 import { createHash } from 'node:crypto';
+import { markerAnchor } from '../../src/sim/missions/markerAnchor';
+import { AcceptanceObserver } from './accept/observer';
+import { ThreatObserver } from './threat/observer';
 
 const output = process.argv.find((arg, i) => process.argv[i - 1] === '--out') ?? 'test-results/l10-pacing/report.json';
 const seed = Number(process.env.L10_PACING_SEED ?? 42);
@@ -24,6 +27,8 @@ const sourceHash = hash.digest('hex');
 
 for (const quality of tiers) {
   const world = await loadLevel('L10', seed, undefined, 0, { quality });
+  const acceptance = process.env.L10_PACING_ACCEPTANCE === '1' ? new AcceptanceObserver(world) : null;
+  const threat = process.env.L10_PACING_ACCEPTANCE === '1' ? new ThreatObserver(world, 'L10') : null;
   const mission = world.missions!, bot = new LevelTenBot(world), beats: Record<string, unknown>[] = [], checkpoints: Record<string, unknown>[] = [];
   const seenVignettes = new Set<string>(), knownInfected = new Set<number>(), trace: Record<string, unknown>[] = [];
   let deaths = 0, fights = 0, finds = 0, scares = 0, megaMoments = 0, fightUntil = 0, lastCombatBeat = -1200, lastMegaBand = -1, routeMetres = 0, lastEncounterBeat = -600;
@@ -40,7 +45,7 @@ for (const quality of tiers) {
     world.events.on('objective.completed', e => { if (e.type === 'objective.completed') addBeat('objective', e.id); }),
     world.events.on('checkpoint.set', e => { if (e.type === 'checkpoint.set') { const p = world.entities.get(1)!.transform; checkpoints.push({ id: e.id, tick: world.tick, seconds: world.tick / 60, routeMetres, x: p.x, z: p.z }); addBeat('checkpoint', e.id); } }),
     world.events.on('checkpoint.restored', e => { if (e.type === 'checkpoint.restored') { const p = world.entities.get(1)!.transform; checkpoints.push({ id: e.id, restored: true, tick: world.tick, seconds: world.tick / 60, routeMetres, x: p.x, z: p.z }); } }),
-    world.events.on('pickup.collected', e => { if (e.type === 'pickup.collected' && 'actionId' in e) { finds++; addBeat('find', e.actionId); } }),
+    world.events.on('pickup.collected', e => { if (e.type === 'pickup.collected' && 'actionId' in e) { if (e.pickupId) finds++; addBeat(e.pickupId ? 'find' : 'handover', e.actionId); } }),
     world.events.on('combat.hit', e => {
       if (e.type !== 'combat.hit' || e.sourceId !== 1) return;
       const target = world.entities.get(e.targetId);
@@ -53,7 +58,7 @@ for (const quality of tiers) {
   ];
   const vignettes = world.districts?.districts.find(d => d.id === 'D-CURE')?.decay.placements.filter(p => p.id.startsWith('decor-cure-vignette-')) ?? [];
   const megaBands = [80, 35, 15];
-  let outcome: string = 'tick-budget', activeAtEnd: string | null = null, elapsedSeconds = 0;
+  let outcome: string = 'tick-budget', activeAtEnd: string | null = null, elapsedSeconds = 0, observation: unknown, threatObservation: unknown;
   try {
     for (let tick = 0; tick < maxSeconds * 60; tick++) {
       if (mission.state.phase === 'result' || mission.state.phase === 'progression') { outcome = 'complete'; break; }
@@ -76,7 +81,7 @@ for (const quality of tiers) {
       }
       if (tick % 600 === 0) {
         const mega = world.megaPursuit?.entity();
-        trace.push({ seconds: world.tick / 60, x: p.x, z: p.z, y: p.y, hp: world.entities.get(1)!.health.current, active: active.id, move: frame.move, waypoint: Reflect.get(bot, 'waypoint'), checkpoint: mission.state.checkpoint, charge: mission.state.counters['charge-ticks'], rack: world.entities.get(1)!.weapons?.RIGHT.rack.map(s => s.id), mega: mega ? { id: mega.id, x: mega.transform.x, z: mega.transform.z, hp: mega.health.current, distance: distance(p, mega.transform), state: mega.infected?.state } : null });
+        trace.push({ seconds: world.tick / 60, x: p.x, z: p.z, y: p.y, hp: world.entities.get(1)!.health.current, active: active.id, move: frame.move, waypoint: Reflect.get(bot, 'waypoint'), marker: markerAnchor(mission), checkpoint: mission.state.checkpoint, charge: mission.state.counters['charge-ticks'], rack: world.entities.get(1)!.weapons?.RIGHT.rack.map(s => s.id), mega: mega ? { id: mega.id, x: mega.transform.x, z: mega.transform.z, hp: mega.health.current, distance: distance(p, mega.transform), state: mega.infected?.state } : null });
       }
       if (tick % 3600 === 0) console.log(`[l10-pacing] ${quality} ${Math.round(world.tick / 60)}s ${active.id} (${p.x.toFixed(1)},${p.z.toFixed(1)}) finds=${finds} deaths=${deaths}`);
       if (tick % 30 === 0) for (const scene of vignettes) {
@@ -98,7 +103,7 @@ for (const quality of tiers) {
       }
     }
     if (mission.state.phase === 'result' || mission.state.phase === 'progression') outcome = 'complete';
-  } finally { elapsedSeconds = world.tick / 60; off.forEach(stop => stop()); world.dispose(); }
+  } finally { elapsedSeconds = world.tick / 60; observation = acceptance?.finish(); threatObservation = threat?.finish(); off.forEach(stop => stop()); world.dispose(); }
   const gameplayBeats = [{ seconds: 0, kind: 'start' }, ...beats.filter(b => Number(b.seconds) <= gameplayEnd), { seconds: gameplayEnd, kind: 'gameplay-end' }];
   const gaps = gameplayBeats.slice(1).map((beat, i) => ({ seconds: Number((Number(beat.seconds) - Number(gameplayBeats[i].seconds)).toFixed(2)), from: gameplayBeats[i], to: beat }));
   const longestGap = gaps.reduce<{ seconds: number; from: Record<string, unknown> | null; to: Record<string, unknown> | null }>((best, gap) => gap.seconds > best.seconds ? gap : best, { seconds: 0, from: null, to: null });
@@ -109,7 +114,7 @@ for (const quality of tiers) {
     return { metres: Number((to.routeMetres - from.routeMetres).toFixed(1)), directMetres: Number(distance(from, to).toFixed(1)), from: from.id, to: to.id };
   });
   const firstRouteCheckpoint = checkpoints.find(cp => (cp as { id: string }).id !== 'cure-crash') as { seconds: number } | undefined;
-  results.push({ quality, seed, outcome, completed: outcome === 'complete', seconds: elapsedSeconds, gameplaySeconds: gameplayEnd, deaths, fights, finds, scares, megaMoments, opening: { peakRegulars: peakOpeningRegulars, peakDogs: peakOpeningDogs, peakAlphas: peakOpeningAlphas }, trace, routeMetresTravelled: routeMetres, canonicalRouteMetres: routeDistances, checkpoints, checkpointGaps, maxCheckpointGapM: Math.max(0, ...checkpointGaps.map(g => g.metres)), timeToFirstCheckpoint: firstRouteCheckpoint?.seconds ?? null, beats, longestBeatGapSeconds: longestGap.seconds, longestGap, activeAtEnd, limits: { beatGapSeconds: 40, checkpointGapMetres: 250, firstCheckpointSeconds: 60 } });
+  results.push({ quality, seed, outcome, completed: outcome === 'complete', seconds: elapsedSeconds, gameplaySeconds: gameplayEnd, deaths, fights, finds, scares, megaMoments, observation, threat: threatObservation, opening: { peakRegulars: peakOpeningRegulars, peakDogs: peakOpeningDogs, peakAlphas: peakOpeningAlphas }, trace, routeMetresTravelled: routeMetres, canonicalRouteMetres: routeDistances, checkpoints, checkpointGaps, maxCheckpointGapM: Math.max(0, ...checkpointGaps.map(g => g.metres)), timeToFirstCheckpoint: firstRouteCheckpoint?.seconds ?? null, beats, longestBeatGapSeconds: longestGap.seconds, longestGap, activeAtEnd, limits: { beatGapSeconds: 40, checkpointGapMetres: 250, firstCheckpointSeconds: 60 } });
 }
 
 mkdirSync(dirname(output), { recursive: true });
