@@ -24,7 +24,7 @@ export function installThreatObserver(frameTiming = true): void {
     const enemies = w.infected?.active.filter(e => e.health.current > 0 && !e.hidden && !e.infected?.hidden) ?? [];
     const step = m.def.steps.find(s => m.state.steps[s.id].status === 'active')?.id;
     const combatPhase = w.scenario === 'L8' && !!m.state.states.breached || w.scenario === 'L10' && !!m.state.states['charge-active']
-      || w.scenario === 'L5' && step === 'look' || w.scenario === 'L7' && step === 'corridor' || w.scenario === 'L9' && step === 'approach';
+      || w.scenario === 'L5' && step === 'look' || w.scenario === 'L7' && step === 'corridor' || w.scenario === 'L9'; // Include crash/crawl frame timings.
     const fight = playing && !!p && (combatPhase || enemies.some(e => Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z) < 20));
     if (frameTiming && fight && wasFight && w.scenario === previousLevel && w.tick > previousTick && previous) fightFrames.push({ level: w.scenario, tick: w.tick, step, ms: now - previous });
     previous = now; previousTick = w.tick; previousLevel = w.scenario; wasFight = fight;
