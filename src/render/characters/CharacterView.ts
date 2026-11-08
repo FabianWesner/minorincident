@@ -1,4 +1,4 @@
-import { Box3, BoxGeometry, Color, Group, Mesh, Quaternion, SkinnedMesh, Uint16BufferAttribute, Vector3, type Material } from 'three/webgpu';
+import { Box3, BoxGeometry, Color, Group, Mesh, Quaternion, SkinnedMesh, Vector3, type Material } from 'three/webgpu';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import manifest from '../../assets/manifest.json' with { type: 'json' };
@@ -10,7 +10,7 @@ import type { GearTier, SurvivorState, SurvivorVariant } from '../../data/surviv
 import type { Materials } from '../Materials';
 import type { PaletteMaterial } from '../PaletteMaterial';
 import { KeyframeAnimator, type RidePose } from './KeyframeAnimator';
-import { disposeCharacter, loadCharacter } from './rig';
+import { disposeCharacter, loadCharacter, loadTierGear } from './rig';
 import { alignSkeleton } from './skin';
 import { skinClips } from './clips';
 import { GunAim, type LongGunHold } from './GunAim';
@@ -159,7 +159,7 @@ export class CharacterView extends Group {
       const body = new Set<Mesh>(); character.model.traverse(node => { if (node instanceof Mesh) body.add(node); });
       let tierGear: LoadedCharacter['tierGear'];
       // Tier gear is ray-fitted to each body's own surface (assets/acc.courier-gear/build.py), the textured female included.
-      if (isSkin) tierGear = await this.loadTierGear(loader, variant, low, body, vertexMaterial, map => {
+      if (isSkin) tierGear = await loadTierGear(loader, variant, low, body, vertexMaterial, map => {
         const textured = materials.fromTexture(`character:${variant}:gear`, map);
         textured.userData.sharedPalette = true; textured.movingFigure.value = 1; textured.heroFigure.value = 1;
         const lift = textured.heroNightLift; if (lift) lift.value = variant === 'female' ? 1 : 0;   // same night read as her body (Q-178)
@@ -385,30 +385,6 @@ export class CharacterView extends Group {
   private readonly scratchB = new Vector3();
   /** Cardboard parcel with the teal depot tape (matches the clerk's hand prop). */
   /** Skinned tier gear: re-binds the gear GLB's vertices to the body's skeleton by bone name. Missing file = no gear, not a failed load. */
-  private async loadTierGear(loader: GLTFLoader, variant: SurvivorVariant, low: boolean, body: Set<Mesh>, material: Material, texture?: (map: import('three/webgpu').Texture) => Material): Promise<LoadedCharacter['tierGear']> {
-    let bodyMesh: SkinnedMesh | undefined;
-    for (const mesh of body) if ((mesh as SkinnedMesh).isSkinnedMesh && (!bodyMesh || mesh.geometry.getAttribute('position').count > bodyMesh.geometry.getAttribute('position').count)) bodyMesh = mesh as SkinnedMesh;
-    if (!bodyMesh) return undefined;
-    try {
-      const scene = (await loader.loadAsync(`/assets/models/acc.courier-gear.${variant}.tiers${low ? '.low' : ''}.glb`)).scene;
-      let source: SkinnedMesh | undefined; scene.traverse(node => { if ((node as SkinnedMesh).isSkinnedMesh) source = node as SkinnedMesh; });
-      if (!source) return undefined;
-      const tierTris = JSON.parse(String(source.userData.tierTris)) as number[];
-      const index = new Map(bodyMesh.skeleton.bones.map((bone, i) => [bone.name, i]));
-      const map = source.skeleton.bones.map(bone => index.get(bone.name) ?? 0);
-      const joints = source.geometry.getAttribute('skinIndex'), remapped = new Uint16Array(joints.count * 4);
-      for (let i = 0; i < remapped.length; i++) remapped[i] = map[joints.array[i]];
-      const geometry = source.geometry; geometry.setAttribute('skinIndex', new Uint16BufferAttribute(remapped, 4));
-      // Q-183: the gear is painted (one map per survivor, textured toy style like the body) and drawn on the shared textured route.
-      const gearMap = (source.material as import('three').MeshStandardMaterial).map as import('three/webgpu').Texture | null;
-      if (gearMap && texture) material = texture(gearMap);
-      const mesh = new SkinnedMesh(geometry, material);
-      mesh.name = 'courier-tier-gear'; mesh.position.copy(bodyMesh.position); mesh.quaternion.copy(bodyMesh.quaternion); mesh.scale.copy(bodyMesh.scale);
-      mesh.frustumCulled = false; mesh.castShadow = true; mesh.visible = false; mesh.userData.tierTris = tierTris;
-      bodyMesh.parent!.add(mesh); mesh.updateMatrixWorld(true); mesh.bind(bodyMesh.skeleton, bodyMesh.bindMatrix);
-      return { mesh, tierTris };
-    } catch { return undefined; }
-  }
   private makeParcel(materials: Materials): void {
     const group = new Group(); group.name = 'carried-parcel'; group.visible = false;
     const box = new Mesh(new BoxGeometry(.3, .24, .26), materials.fromColor('parcel:card', new Color('#b98a55')));

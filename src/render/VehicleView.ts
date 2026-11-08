@@ -72,10 +72,10 @@ export class VehicleView extends Group {
       const copies = await Promise.all([1, ...crew].map(id => {
         const entity = this.world.entities.get(id)!;
         const asset = entity.survivor ? `char.courier-${entity.survivor.variant}` : entity.appearance?.asset ?? entity.civilian?.model ?? 'npc.firefighter-alive';
-        return VehicleOccupant.load(this.registry, id, asset, this.materials);
+        return VehicleOccupant.load(this.registry, id, asset, this.materials, this.low);
       }));
       const seat = record.model.getObjectByName('driverSeat')!;
-      for (const copy of copies) { record.model.add(copy); copy.pose(seat); }
+      for (const copy of copies) { record.model.add(copy); copy.pose(seat, undefined, 1, -.5, .2, this.world.entities.get(copy.actorId)?.survivor?.gearTier ?? 0); }
       let restored = false;
       return () => {
         if (restored) return; restored = true;
@@ -86,11 +86,11 @@ export class VehicleView extends Group {
     const assets = new Set<string>();
     for (const entity of this.world.entities.iterate()) if (entity.civilian && !entity.civilian.pet && entity.health.current > 0) assets.add(entity.appearance?.asset ?? entity.civilian.model ?? 'npc.firefighter-alive');
     const copies = await Promise.all([
-      ...(!this.occupants.has(player.id) ? [VehicleOccupant.load(this.registry, player.id, `char.courier-${player.survivor!.variant}`, this.materials).then(copy => ({ copy, retain: true }))] : []),
-      ...[...assets].map((asset, index) => VehicleOccupant.load(this.registry, -index - 1, asset, this.materials).then(copy => ({ copy, retain: false }))),
+      ...(!this.occupants.has(player.id) ? [VehicleOccupant.load(this.registry, player.id, `char.courier-${player.survivor!.variant}`, this.materials, this.low).then(copy => ({ copy, retain: true }))] : []),
+      ...[...assets].map((asset, index) => VehicleOccupant.load(this.registry, -index - 1, asset, this.materials, this.low).then(copy => ({ copy, retain: false }))),
     ]);
     const seat = record.model.getObjectByName('driverSeat')!;
-    for (const { copy } of copies) { record.model.add(copy); copy.pose(seat); }
+    for (const { copy } of copies) { record.model.add(copy); copy.pose(seat, undefined, 1, -.5, .2, this.world.entities.get(copy.actorId)?.survivor?.gearTier ?? 0); }
     let cleaned = false;
     return () => {
       if (cleaned) return; cleaned = true;
@@ -355,7 +355,7 @@ export class VehicleView extends Group {
       const asset = entity.survivor ? `char.courier-${entity.survivor.variant}` : entity.escort?.child ? 'npc.brother' : entity.appearance?.asset ?? entity.civilian?.model ?? 'npc.firefighter-alive';
       const occupant = this.occupants.get(w.actorId);
       if (!occupant || occupant.asset !== asset) {
-        if (!this.occupantLoads.has(w.actorId)) this.occupantLoads.set(w.actorId, VehicleOccupant.load(this.registry, w.actorId, asset, this.materials).then(copy => {
+        if (!this.occupantLoads.has(w.actorId)) this.occupantLoads.set(w.actorId, VehicleOccupant.load(this.registry, w.actorId, asset, this.materials, this.low).then(copy => {
           if (this.disposed) { copy.dispose(); return; }
           this.occupants.get(w.actorId)?.dispose(); this.occupants.set(w.actorId, copy);
         }).finally(() => this.occupantLoads.delete(w.actorId)));
@@ -386,7 +386,7 @@ export class VehicleView extends Group {
       const fit = car.physics.def.transport && w.driver ? .85 : car.physics.def.id === 'vehicle.police' ? .62 : car.physics.def.id === 'vehicle.fire-engine' ? .72 : car.physics.def.id === 'vehicle.pickup' && asset === 'char.courier-female' ? .95 : ['vehicle.sedan', 'vehicle.pickup', 'vehicle.suv'].includes(car.physics.def.id) ? .85 : 1;
       // The female rig has shorter arms; lean into the pickup's high steering column.
       // The APC's authored seat already fits its narrow cab. The generic 20 cm car-seat slide put her shoes in the firewall.
-      occupant.pose(seat, target, fit, car.physics.def.id === 'vehicle.pickup' && asset === 'char.courier-female' ? -.65 : -.5, car.physics.def.id === 'vehicle.military-apc' ? 0 : .2);
+      occupant.pose(seat, target, fit, car.physics.def.id === 'vehicle.pickup' && asset === 'char.courier-female' ? -.65 : -.5, car.physics.def.id === 'vehicle.military-apc' ? 0 : .2, entity.survivor?.gearTier ?? 0);
     }
   }
   /** E25: the driven car's headlights/brake lights and emergency light bars, from the asset's authored anchors.
