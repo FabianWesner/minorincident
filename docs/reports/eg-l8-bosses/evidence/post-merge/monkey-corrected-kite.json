@@ -1,0 +1,656 @@
+{
+  "revision": "pack-cycle",
+  "sourceHash": "daaee5e9b68eb64c357675da2d8edff6963922b51b25a1bea1faa03b2cf53eef",
+  "observerHash": "7d56698184639dfbf5c990fbd11373924e17575469d4164e37775e5e16499e53",
+  "policy": "kite",
+  "rows": [
+    {
+      "id": "monkey",
+      "tier": "low",
+      "policy": "kite",
+      "measurementEntry": {
+        "x": -5,
+        "z": 15,
+        "y": 0.7
+      },
+      "complete": false,
+      "seconds": 9.416666666666666,
+      "totalSeconds": 9.416666666666666,
+      "hp": 0,
+      "deaths": 1,
+      "damage": 102.23333333333345,
+      "attacks": 14,
+      "phases": 1,
+      "counters": 0,
+      "wallHits": 0,
+      "rocket": 1,
+      "rocketPickups": 0,
+      "bites": [
+        411,
+        412,
+        413,
+        414,
+        415,
+        416,
+        417
+      ],
+      "turns": [
+        411,
+        414,
+        415,
+        412,
+        416,
+        413,
+        417
+      ],
+      "tells": [
+        {
+          "tick": 325,
+          "source": 416,
+          "attack": 20,
+          "move": "monkey.debris",
+          "duration": 0.8,
+          "area": {
+            "x": -11.6175,
+            "z": 15.5,
+            "radius": 1.2,
+            "dx": 0.997157716102973,
+            "dz": -0.07534247949399116
+          }
+        },
+        {
+          "tick": 339,
+          "source": 413,
+          "attack": 21,
+          "move": "monkey.debris",
+          "duration": 0.8,
+          "area": {
+            "x": -11.6175,
+            "z": 12.5,
+            "radius": 1.2,
+            "dx": 0.9354694973034151,
+            "dz": 0.35340744136887614
+          }
+        },
+        {
+          "tick": 347,
+          "source": 411,
+          "attack": 22,
+          "move": "monkey.grab",
+          "duration": 0.8,
+          "area": {
+            "x": -5.855375819704562,
+            "z": 19.008107196918566,
+            "radius": 0.8,
+            "dx": 0.20871150721831372,
+            "dz": -0.9779772526775149
+          }
+        },
+        {
+          "tick": 347,
+          "source": 412,
+          "attack": 23,
+          "move": "monkey.grab",
+          "duration": 0.8333333333333334,
+          "area": {
+            "x": -5.209106935556788,
+            "z": 17.08733735248754,
+            "radius": 0.8,
+            "dx": 0.09967985811145504,
+            "dz": -0.9950195605549071
+          }
+        },
+        {
+          "tick": 347,
+          "source": 414,
+          "attack": 24,
+          "move": "monkey.grab",
+          "duration": 0.9,
+          "area": {
+            "x": -1.9965072829512553,
+            "z": 9.54033844931755,
+            "radius": 0.8,
+            "dx": -0.4820023902230728,
+            "dz": 0.8761699012287768
+          }
+        },
+        {
+          "tick": 347,
+          "source": 415,
+          "attack": 25,
+          "move": "monkey.grab",
+          "duration": 0.9333333333333333,
+          "area": {
+            "x": 1.2611430640742076,
+            "z": 12.005716223886719,
+            "radius": 0.8,
+            "dx": -0.9021440891731103,
+            "dz": 0.43143486457403873
+          }
+        },
+        {
+          "tick": 767,
+          "source": 411,
+          "attack": 35,
+          "move": "monkey.grab",
+          "duration": 0.8,
+          "area": {
+            "x": -2.8771302671564514,
+            "z": 12.700427595259415,
+            "radius": 0.8,
+            "dx": -0.6783124525301965,
+            "dz": 0.7347735819573741
+          }
+        },
+        {
+          "tick": 767,
+          "source": 414,
+          "attack": 36,
+          "move": "monkey.grab",
+          "duration": 0.9,
+          "area": {
+            "x": -7.85876214834308,
+            "z": 14.853507088175355,
+            "radius": 0.8,
+            "dx": 0.9986896331420329,
+            "dz": 0.051176329046072444
+          }
+        },
+        {
+          "tick": 767,
+          "source": 415,
+          "attack": 37,
+          "move": "monkey.debris",
+          "duration": 0.8,
+          "area": {
+            "x": -7.155745506229034,
+            "z": 14.249123322012446,
+            "radius": 1,
+            "dx": 0.9443536928432011,
+            "dz": 0.3289317601166068
+          }
+        },
+        {
+          "tick": 785,
+          "source": 412,
+          "attack": 38,
+          "move": "monkey.debris",
+          "duration": 0.8,
+          "area": {
+            "x": -2.95304408627914,
+            "z": 17.602345404993073,
+            "radius": 1,
+            "dx": -0.6182427495555974,
+            "dz": -0.7859872153043805
+          }
+        }
+      ],
+      "throws": [
+        {
+          "tick": 373,
+          "source": 416,
+          "prop": 1417832575
+        },
+        {
+          "tick": 387,
+          "source": 413,
+          "prop": 1401054956
+        },
+        {
+          "tick": 815,
+          "source": 415,
+          "prop": 1417832575
+        }
+      ],
+      "signals": [
+        {
+          "tick": 214,
+          "name": "l8.arena.monkey.engaged"
+        }
+      ],
+      "stages": [
+        {
+          "tick": 373,
+          "source": 416,
+          "move": "monkey.debris",
+          "stage": "active"
+        },
+        {
+          "tick": 387,
+          "source": 413,
+          "move": "monkey.debris",
+          "stage": "active"
+        },
+        {
+          "tick": 395,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 397,
+          "source": 412,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 401,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 401,
+          "source": 416,
+          "move": "monkey.debris",
+          "stage": "recovery"
+        },
+        {
+          "tick": 403,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 403,
+          "source": 415,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 418,
+          "source": 413,
+          "move": "monkey.debris",
+          "stage": "recovery"
+        },
+        {
+          "tick": 521,
+          "source": 412,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 521,
+          "source": 416,
+          "move": "monkey.debris",
+          "stage": "expiry"
+        },
+        {
+          "tick": 523,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 538,
+          "source": 413,
+          "move": "monkey.debris",
+          "stage": "expiry"
+        },
+        {
+          "tick": 546,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 551,
+          "source": 415,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 641,
+          "source": 412,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 666,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 671,
+          "source": 415,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 815,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 815,
+          "source": 415,
+          "move": "monkey.debris",
+          "stage": "active"
+        },
+        {
+          "tick": 821,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 822,
+          "source": 415,
+          "move": "monkey.debris",
+          "stage": "recovery"
+        }
+      ],
+      "destruction": [
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-0",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-1",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-2",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-3",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        }
+      ],
+      "bosses": [
+        {
+          "id": 411,
+          "hp": 678.7199999999998,
+          "at": {
+            "x": -3.9624301912047657,
+            "z": 13.876065326391215,
+            "y": 0.7,
+            "yaw": -2.3162598290663867
+          },
+          "state": "attack",
+          "boss": {
+            "arena": "monkey",
+            "slot": 0,
+            "engaged": true,
+            "exposedUntil": 523,
+            "readyAt": 523,
+            "shakeHits": 0
+          },
+          "attack": {
+            "move": "monkey.grab",
+            "attackId": 35,
+            "stage": "active",
+            "startTick": 767,
+            "activeTick": 815,
+            "cooldownExpiry": 1187,
+            "recoveryUntil": 0,
+            "target": {
+              "id": 1,
+              "x": -5,
+              "z": 15
+            },
+            "area": {
+              "x": -2.8771302671564514,
+              "z": 12.700427595259415,
+              "radius": 0.8,
+              "dx": -0.6783124525301965,
+              "dz": 0.7347735819573741
+            },
+            "hitIds": [],
+            "destination": {
+              "x": -9.660254792458415,
+              "z": 20.048163414833155
+            }
+          },
+          "held": false
+        },
+        {
+          "id": 412,
+          "hp": 258.24000000000035,
+          "at": {
+            "x": -2.57804408627914,
+            "z": 18.251864457831402,
+            "y": 0.7,
+            "yaw": 2.2373013348612156
+          },
+          "state": "attack",
+          "boss": {
+            "arena": "monkey",
+            "slot": 1,
+            "engaged": true,
+            "exposedUntil": 641,
+            "readyAt": 641,
+            "shakeHits": 0
+          },
+          "attack": {
+            "move": "monkey.debris",
+            "attackId": 38,
+            "stage": "telegraph",
+            "startTick": 785,
+            "activeTick": 833,
+            "cooldownExpiry": 1205,
+            "recoveryUntil": 0,
+            "target": {
+              "id": 1,
+              "x": -5,
+              "z": 15
+            },
+            "area": {
+              "x": -2.95304408627914,
+              "z": 17.602345404993073,
+              "radius": 1,
+              "dx": -0.6182427495555974,
+              "dz": -0.7859872153043805
+            },
+            "hitIds": [],
+            "destination": {
+              "x": -2.95304408627914,
+              "z": 17.602345404993073
+            },
+            "projectile": {
+              "objectId": 1449781463,
+              "corpse": false,
+              "living": false,
+              "started": 833,
+              "x": -2.95304408627914,
+              "z": 17.602345404993073,
+              "dx": -0.6182427495555974,
+              "dz": -0.7859872153043805,
+              "distance": 0,
+              "range": 3.3109258704485316,
+              "speed": 12,
+              "fromY": 1.2999999999999998,
+              "toY": 0
+            }
+          },
+          "held": false
+        },
+        {
+          "id": 413,
+          "hp": 840,
+          "at": {
+            "x": -11.449968147277833,
+            "z": 12.5,
+            "y": 4.8,
+            "yaw": -0.36121110222255054
+          },
+          "state": "chase",
+          "boss": {
+            "arena": "monkey",
+            "slot": 2,
+            "engaged": true,
+            "exposedUntil": 538,
+            "readyAt": 1059,
+            "roof": true,
+            "shakeHits": 0
+          },
+          "held": false
+        },
+        {
+          "id": 414,
+          "hp": 719.3999999999999,
+          "at": {
+            "x": -7.459286295086266,
+            "z": 14.873977619793784,
+            "y": 0.7,
+            "yaw": -0.05119869402420672
+          },
+          "state": "attack",
+          "boss": {
+            "arena": "monkey",
+            "slot": 3,
+            "engaged": true,
+            "exposedUntil": 666,
+            "readyAt": 666,
+            "shakeHits": 0
+          },
+          "attack": {
+            "move": "monkey.grab",
+            "attackId": 36,
+            "stage": "active",
+            "startTick": 767,
+            "activeTick": 821,
+            "cooldownExpiry": 1187,
+            "recoveryUntil": 0,
+            "target": {
+              "id": 1,
+              "x": -5,
+              "z": 15
+            },
+            "area": {
+              "x": -7.85876214834308,
+              "z": 14.853507088175355,
+              "radius": 0.8,
+              "dx": 0.9986896331420329,
+              "dz": 0.051176329046072444
+            },
+            "hitIds": [],
+            "destination": {
+              "x": 2.1281341830772496,
+              "z": 15.36527037863608
+            }
+          },
+          "held": false
+        },
+        {
+          "id": 415,
+          "hp": 686.2800000000002,
+          "at": {
+            "x": -6.776725645284262,
+            "z": 14.249123322012446,
+            "y": 0.7,
+            "yaw": -0.3351721657571713
+          },
+          "state": "chase",
+          "boss": {
+            "arena": "monkey",
+            "slot": 4,
+            "engaged": true,
+            "exposedUntil": 942,
+            "readyAt": 942,
+            "shakeHits": 0
+          },
+          "attack": {
+            "move": "monkey.debris",
+            "attackId": 37,
+            "stage": "recovery",
+            "startTick": 767,
+            "activeTick": 815,
+            "cooldownExpiry": 1187,
+            "recoveryUntil": 942,
+            "target": {
+              "id": 1,
+              "x": -5,
+              "z": 15
+            },
+            "area": {
+              "x": -7.155745506229034,
+              "z": 14.249123322012446,
+              "radius": 1,
+              "dx": 0.9443536928432011,
+              "dz": 0.3289317601166068
+            },
+            "hitIds": [
+              1
+            ],
+            "destination": {
+              "x": -7.155745506229034,
+              "z": 14.249123322012446
+            },
+            "projectile": {
+              "objectId": 1417832575,
+              "corpse": false,
+              "living": false,
+              "started": 815,
+              "x": -7.155745506229034,
+              "z": 14.249123322012446,
+              "dx": 0.9443536928432011,
+              "dz": 0.3289317601166068,
+              "distance": 1.4,
+              "range": 2.2827734169584812,
+              "speed": 12,
+              "fromY": 1.2999999999999998,
+              "toY": 0
+            }
+          },
+          "held": false
+        },
+        {
+          "id": 416,
+          "hp": 840,
+          "at": {
+            "x": -11.235000305175781,
+            "z": 15.5,
+            "y": 4.8,
+            "yaw": 0.07541394231972558
+          },
+          "state": "chase",
+          "boss": {
+            "arena": "monkey",
+            "slot": 5,
+            "engaged": true,
+            "exposedUntil": 521,
+            "readyAt": 1045,
+            "roof": true,
+            "shakeHits": 0
+          },
+          "held": false
+        },
+        {
+          "id": 417,
+          "hp": 1672.44,
+          "at": {
+            "x": -22.037141222116077,
+            "z": 13.955057014815509,
+            "y": 0.7,
+            "yaw": -4.481871150415642
+          },
+          "state": "alerted",
+          "boss": {
+            "arena": "monkey",
+            "slot": 6,
+            "engaged": true,
+            "exposedUntil": 0,
+            "readyAt": 0
+          },
+          "held": false
+        }
+      ]
+    }
+  ]
+}
