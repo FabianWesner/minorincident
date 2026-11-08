@@ -28,7 +28,7 @@ export function installThreatObserver(frameTiming = true): void {
       || w.scenario === 'L5' && step === 'look' || w.scenario === 'L7' && step === 'corridor' || w.scenario === 'L9'; // Include crash/crawl frame timings.
     const fight = playing && !!p && (combatPhase || enemies.some(e => Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z) < 20));
     const captureEpoch = root.__threatPlaytestAudit.captureEpoch;
-    if (frameTiming && captureEpoch === previousCaptureEpoch && fight && wasFight && w.scenario === previousLevel && w.tick > previousTick && previous) fightFrames.push({ level: w.scenario, tick: w.tick, step, ms: now - previous });
+    if (frameTiming && captureEpoch === previousCaptureEpoch && fight && wasFight && w.scenario === previousLevel && w.tick > previousTick && previous) fightFrames.push({ level: w.scenario, tick: w.tick, step, ms: now - previous, simMs: g.simMs, simTickMs: g.simTickMs });
     previousCaptureEpoch = captureEpoch;
     previous = now; previousTick = w.tick; previousLevel = w.scenario; wasFight = fight;
     if (!playing || !p || now - lastSample < 500) return;

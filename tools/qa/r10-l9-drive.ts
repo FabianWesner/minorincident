@@ -22,6 +22,8 @@ if (variant === 'pair') {
   }
   process.exit(0);
 }
+const sampleSeconds = Number(process.env.L9_DRIVE_SAMPLE_SECONDS ?? 280);
+if (!Number.isFinite(sampleSeconds) || sampleSeconds <= 0 || sampleSeconds > 280) throw Error('L9_DRIVE_SAMPLE_SECONDS must be in (0, 280]');
 const tag = `${variant}-${tier}-z${zoom}${route ? `-${route}` : ''}`;
 // Keep the open objective-bearing crossing, with one physical steering bend
 // around the existing bushes at (89, 1.6) and (108, 1.8). Do not move scenery.
@@ -42,10 +44,10 @@ try {
     bundle: /src="([^"]+\.js)"/.exec(html)?.[1], variant, tier, zoom, route: route ?? 'objective bearing with bush-clearance bend', waypoints, backend, input: 'real keyboard/mouse', godMode: true }, null, 2));
   Object.assign(process.env, { PLAYTEST_BACKEND: backend, PLAYTEST_GOD: '1', PLAYTEST_NO_FRAME_TIMING: '0', PLAYTEST_THREAT_AUDIT: '1', PLAYTEST_ACCEPTANCE_LEDGER: '1', PLAYTEST_SHOT_SECONDS: process.env.PLAYTEST_SHOT_SECONDS ?? '45', PLAYTEST_ACCEPTANCE_CAPTURES: '0' });
   const result = await runSession({ origin, out, levels: ['L9'], quality: tier as 'low' | 'high', zoom: Number(zoom), heroine: 'female',
-    entry: 'continue', profile, levelMinutes: 5, sampleSeconds: 280, stopAfterLevel: true, tag, noSkip: true,
+    entry: 'continue', profile, levelMinutes: 5, sampleSeconds, stopAfterLevel: true, tag, noSkip: true,
     l9Route: route as 'road' | 'countryside' | 'dry-shortcut' | undefined, l9Waypoints: waypoints });
   type Sample = { level: string; tick: number; step: string; visibleInfected: number[]; crossingContent?: { practicals: number; fires: number; landmarks: number; kills: number; patrols: number; drawCalls?: number; triangles?: number; simMs?: number; heapMB?: number | null; liveCount?: number } };
-  const audit = JSON.parse(readFileSync(`${out}/${tag}-threat.json`, 'utf8')) as { samples: Sample[]; fightFrames: { level: string; ms: number }[] };
+  const audit = JSON.parse(readFileSync(`${out}/${tag}-threat.json`, 'utf8')) as { samples: Sample[]; fightFrames: { level: string; ms: number; simTickMs?: number }[] };
   const samples = audit.samples.filter(s => s.level === 'L9' && s.step === 'approach');
   const ledger = JSON.parse(readFileSync(`${out}/${tag}-acceptance-ledger.json`, 'utf8')) as { level: string; events: { type: string; tick: number; source?: string; sourceId?: number; downed?: number }[] }[];
   const events = ledger.find(l => l.level === 'L9')?.events.filter(e => e.tick <= (samples.at(-1)?.tick ?? 0)) ?? [];
@@ -60,6 +62,7 @@ try {
     if (empty) { emptySeconds += dt; emptyStreak += dt; longestEmptySeconds = Math.max(longestEmptySeconds, emptyStreak); } else emptyStreak = 0;
   }
   const frames = audit.fightFrames.filter(f => f.level === 'L9').map(f => f.ms).sort((a, b) => a - b);
+  const tickCpu = audit.fightFrames.filter(f => f.level === 'L9' && f.simTickMs !== undefined).map(f => f.simTickMs!).sort((a, b) => a - b);
   const sim = samples.map(s => s.crossingContent?.simMs ?? 0).sort((a, b) => a - b);
   const summary = { tag, finished: result.runs[0]?.finished, driveSeconds: samples.length ? (samples.at(-1)!.tick - samples[0].tick) / 60 : 0,
     kills: Math.max(0, ...samples.map(s => s.crossingContent?.kills ?? 0)), patrols: Math.max(0, ...samples.map(s => s.crossingContent?.patrols ?? 0)),
@@ -68,7 +71,7 @@ try {
     encounters, emptySeconds, longestEmptySeconds, noInfectedSeconds, samples: samples.length,
     frameP95: frames[Math.floor(frames.length * .95)], frameMax: frames.at(-1), framesOver66: frames.filter(ms => ms > 66).length,
     peakDraws: Math.max(0, ...samples.map(s => s.crossingContent?.drawCalls ?? 0)), peakTriangles: Math.max(0, ...samples.map(s => s.crossingContent?.triangles ?? 0)),
-    simP95: sim[Math.floor(sim.length * .95)], peakHeapMB: Math.max(0, ...samples.map(s => s.crossingContent?.heapMB ?? 0)), peakLiving: Math.max(0, ...samples.map(s => s.crossingContent?.liveCount ?? 0)),
+    simP95: sim[Math.floor(sim.length * .95)], simTickP95: tickCpu[Math.floor(tickCpu.length * .95)], peakHeapMB: Math.max(0, ...samples.map(s => s.crossingContent?.heapMB ?? 0)), peakLiving: Math.max(0, ...samples.map(s => s.crossingContent?.liveCount ?? 0)),
     issues: result.issues.map(i => ({ severity: i.severity, kind: i.kind, text: i.text })) };
   writeFileSync(`${out}/summary.json`, JSON.stringify(summary, null, 2)); console.log(JSON.stringify(summary));
   if (!summary.finished) process.exitCode = 1;

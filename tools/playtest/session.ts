@@ -53,6 +53,8 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   if (o.saveOnYield && (o.levels.length !== 1 || o.levels[0] !== 'L10' || !o.sampleSeconds)) throw new Error('Resume batches require one bounded L10 route');
   let yielded = false;
   const visibleOnly = process.env.PLAYTEST_VISIBLE_ONLY === '1';
+  const heapProbe = process.env.PLAYTEST_HEAP_PROBE === '1';
+  if (heapProbe && (process.env.PLAYTEST_THREAT_AUDIT !== '1' || process.env.PLAYTEST_FRAME_GATE === '1')) throw Error('Collected heap probes require paused threat captures and are diagnostic, not frame qualification');
   const l5Order = process.env.PLAYTEST_L5_ORDER?.split(',');
   if (l5Order && (new Set(l5Order).size !== 5 || l5Order.some(key => !l5Survivors.some(s => s.key === key)))) throw new Error('PLAYTEST_L5_ORDER requires all five survivor keys once');
   const plannedL5Search = (process.env.PLAYTEST_L5_TOUR === '1' || !!l5Order) && !visibleOnly;
@@ -111,6 +113,15 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
         if (!g || g.clock.paused || g.world.missions?.state.phase !== 'playing') return false;
         window.__SS__!.pause(); return true;
       });
+      if (heapProbe && resume) {
+        const cdp = await page.context().newCDPSession(page);
+        try {
+          await cdp.send('HeapProfiler.collectGarbage');
+          const heap = await cdp.send('Runtime.getHeapUsage');
+          const at = await page.evaluate(() => { const g = (window.__SCENE__ as unknown as { game: Game }).game; return { level: g.world.scenario, tick: g.world.tick }; });
+          log({ collectedHeap: { ...at, usedMB: heap.usedSize / 1_000_000, backingStorageMB: heap.backingStorageSize / 1_000_000 } });
+        } finally { await cdp.detach(); }
+      }
       await page.screenshot({ path: join(o.out, file), type: 'jpeg', quality: 72 });
       // Reveal diagnostics beside each capture (courier, camera, see-through cut placements, foreground state).
       if (process.env.PLAYTEST_REVEAL_AUDIT === '1') writeFileSync(join(o.out, file.replace(/\.jpg$/, '.json')), JSON.stringify(await page.evaluate(() => {
