@@ -9,6 +9,10 @@ ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT/'docs/reports/eg-l10-vignettes/assets'
 OUT.mkdir(parents=True, exist_ok=True)
 ids = ['prop.l10-grave-cross','decay.body-bag','prop.l10-quarantine-tape','prop.l10-cow-carcass','prop.l10-shovel','prop.l10-corpse-back','prop.l10-corpse-side','prop.l10-corpse-crumple','prop.l10-abandoned-sedan-blue','prop.l10-abandoned-sedan-white','prop.l10-crashed-helicopter']
+if '--asset' in sys.argv:
+    selected=sys.argv[sys.argv.index('--asset')+1]
+    if selected not in ids: raise ValueError(selected)
+    ids=[selected]
 cells = []
 for asset in ids:
     for lod in range(3):
@@ -35,4 +39,4 @@ for asset in ids:
         scene.view_settings.view_transform='Standard'
         path=OUT/f'{asset}-lod{lod}.png'; scene.render.filepath=str(path); bpy.ops.render.render(write_still=True)
         cells.append({'asset':asset,'lod':lod,'path':str(path.relative_to(ROOT))})
-(OUT/'cells.json').write_text(json.dumps(cells,indent=2)+'\n')
+if '--asset' not in sys.argv: (OUT/'cells.json').write_text(json.dumps(cells,indent=2)+'\n')

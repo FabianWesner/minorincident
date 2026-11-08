@@ -53,7 +53,11 @@ for (const [id, base, decay] of reused) for (const [lod,suffix] of [[0,''],[1,'.
     const assembly=doc.createNode('crashTilt').setRotation(new Quaternion().setFromAxisAngle(new Vector3(1,0,0),1.05).toArray());
     for(const child of scene.listChildren())assembly.addChild(child);scene.addChild(assembly);
     const rotor=doc.getRoot().listNodes().find(n=>n.getName()==='mainRotor');
-    if(rotor){const t=rotor.getTranslation();rotor.setTranslation([t[0],t[1]-2.4,t[2]+1.4]).setRotation(new Quaternion().setFromAxisAngle(new Vector3(0,0,1),.8).toArray());}
+    if(rotor){
+      scene.addChild(rotor);rotor.setTranslation([0,.15,3]).setRotation(new Quaternion().setFromAxisAngle(new Vector3(0,1,0),.4).toArray());
+    }
+    // Ground the rolled hull independently: a detached blade must never prop the hull up in mid-air.
+    const hullBounds=getBounds(assembly);assembly.setTranslation([0,-hullBounds.min[1],0]);
     for(const material of doc.getRoot().listMaterials())if(material.getEmissiveFactor().some(v=>v>0))material.setName('pal_uiDark').setEmissiveFactor([0,0,0]).setBaseColorFactor([.025,.03,.025,1]);
   }
   const b=getBounds(scene), shift=doc.createNode('resting').setTranslation([-(b.min[0]+b.max[0])/2,-b.min[1],-(b.min[2]+b.max[2])/2]);

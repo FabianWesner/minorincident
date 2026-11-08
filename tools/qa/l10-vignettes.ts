@@ -1,5 +1,7 @@
 /** Native scope audit and reproducible spatial sweeps. Does not launch a browser or claim GPU/visual acceptance. */
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { gzipSync } from 'node:zlib';
 import { strict as assert } from 'node:assert';
 import { cure } from '../../src/levels/L10/district';
@@ -16,7 +18,7 @@ const directory='docs/reports/eg-l10-vignettes/evidence';mkdirSync(directory,{re
 const layout=JSON.parse(readFileSync('public/assets/layouts/D-CURE.layout.json','utf8')) as DistrictLayout;
 const belt=cureRoadsideBelt(layout.placements),crossings=cureCrossingStories([...layout.placements,...belt]),apron=cureForecourtDecor([...layout.placements,...belt,...crossings]);
 const baseline=[...layout.placements,...belt,...crossings,...apron],start=performance.now(),set=cureVignetteSet(baseline),constructionMs=performance.now()-start;
-writeFileSync('/private/tmp/eg-l10-vignettes-before.json',JSON.stringify([...belt,...crossings,...apron]));
+writeFileSync(join(tmpdir(),'eg-l10-vignettes-before.json'),JSON.stringify([...belt,...crossings,...apron]));
 const all=[...baseline,...set.placements],byId=new Map(all.map(p=>[p.id,p]));
 assert.deepEqual(set.missed,[],'Every station, five messages/region and unique helicopter must be admitted');
 assert(set.scenes.every(s=>s.pieces.length>=3&&s.pieces.length<=8),'Every scene must be a complete 3–8 piece story');
@@ -53,7 +55,7 @@ for(const route of routes){tick+=600;for(let i=1;i<route.line.length;i++){
   const a=route.line[i-1],b=route.line[i],d=Math.hypot(b[0]-a[0],b[1]-a[1]),n=Math.ceil(d/4.5);
   for(let k=0;k<n;k++){const t=k/n;trace.push(JSON.stringify({routeTrace:{level:'L10',step:route.id,tick:tick+=60,x:a[0]+(b[0]-a[0])*t,z:a[1]+(b[1]-a[1])*t,enemies:0}}));}
 }}
-writeFileSync('/private/tmp/eg-l10-vignettes-sweep.jsonl',trace.join('\n')+'\n');
+writeFileSync(join(tmpdir(),'eg-l10-vignettes-sweep.jsonl'),trace.join('\n')+'\n');
 writeFileSync(`${directory}/spatial-sweep.jsonl.gz`,gzipSync(trace.join('\n')+'\n'));
 writeFileSync(`${directory}/scene-catalogue.json.gz`,gzipSync(JSON.stringify(set)));
 const summary={constructionMs:+constructionMs.toFixed(2),scenes:set.scenes.length,newPlacements:set.placements.length,staticBodies:set.placements.filter(p=>p.assetId.startsWith('prop.l10-corpse-')).length,wallMessages:set.decals.filter(d=>!d.ground).length,highScatter:scatter.length,lowScatter:scatter.length/2,highCasings:casings.length,lowCasings:casings.length/2,physicsOnlyColliders:colliders.length,newLights:0,missed:set.missed,regions,

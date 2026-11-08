@@ -1,4 +1,4 @@
-"""One transparent atlas: approved story-script wall messages and one spent-casing patch."""
+"""One transparent atlas: approved story-script wall messages and spent-casing/cold-ash patches."""
 import html
 import math
 from pathlib import Path
@@ -11,7 +11,7 @@ svg=['<svg xmlns="http://www.w3.org/2000/svg" width="2048" height="512" viewBox=
 for i,word in enumerate(WORDS):
     x=(i%4)*512;y=(i//4)*128
     for line,text in enumerate(word.split('|')):
-        size=min(46, int(460 / max(1,len(text)) / .65)); baseline=83 if '|' not in word else 53+line*49
+        size=min(30, int(300 / max(1,len(text)) / .65)); baseline=83 if '|' not in word else 53+line*49
         svg.append(f'<text x="{x+256}" y="{y+baseline}" text-anchor="middle" font-family="Arial" font-weight="bold" font-size="{size}" letter-spacing="1" fill="{["#d6b68a","#cc8c6d","#dfd3ad"][i%3]}" opacity=".9">{html.escape(text)}</text>')
 rng=random.Random(1108)
 for i in range(44):
