@@ -783,6 +783,7 @@ export class Blasts extends Group {
     this.partMatrix.makeTranslation(x, .025, z); this.columnShadows.setMatrixAt(0, this.partMatrix); this.columnShadows.count = 1;
   }
   reset(): void {
+    if (this.cureAmbient) { this.smokeCamera.set(Infinity, Infinity, Infinity); this.flames4Hz = -1; }
     this.poolOverwrites.fireballs = this.poolOverwrites.chunks = 0;
     for (const c of this.fireColumns.values()) c.light?.remove();
     this.fbExpiry.fill(0); this.puffExpiry.fill(0); this.debrisExpiry.fill(0); this.db.dVelocity.array.fill(0); this.db.dVelocity.needsUpdate = true; this.debris.visible = false; this.columns.length = 0; this.fireColumns.clear(); this.cloudColumns.clear(); this.vehicleColumns.clear(); this.glowList.length = 0; this.heatBlasts.length = 0;
