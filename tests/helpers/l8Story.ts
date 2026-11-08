@@ -82,6 +82,10 @@ export async function checkL8Story(): Promise<void> {
     world.tick = Math.max(world.tick, zoo.state.breachedAt + 1800);
     const player = world.entities.get(1)!, carId = zoo.state.carId, car = world.entities.get(carId)!, ids = zoo.passengers();
     Object.assign(player.transform, zoo.door()); player.health.current = player.health.max;
+    // The following isolated controller fixture skips the actual retreat;
+    // story-probe.ts separately checks Hale reaches this post in ordinary play.
+    const hale = world.entities.get(zoo.state.haleId)!, halePost = { x: zoo.door().x - .7, z: zoo.door().z + 1.2 };
+    Object.assign(hale.transform, halePost); hale.civilian!.ally!.run = null; hale.civilian!.ally!.post = halePost;
     mission.state.phase = 'playing'; car.health.current = car.health.max; car.vehicle!.damage = 'normal'; car.vehicle!.driver = null;
     car.vehicle!.passengers = ids.map((id, seat) => ({ id, seat, phase: 'seated' as const, started: world.tick, pauseUntil: 0, from: { ...world.entities.get(id)!.transform } }));
     world.vehicles!.active = null;
@@ -90,6 +94,7 @@ export async function checkL8Story(): Promise<void> {
     expect(zoo.state.megaId).toBeGreaterThan(0);
     expect(world.entities.get(zoo.state.megaId)!.transform.z).toBeLessThan(-86);
     expect(world.entities.get(zoo.state.megaId)!.transform.y).toBeGreaterThan(4);
+    expect(zoo.cameraPose()!.target[2], 'the live reveal camera follows the wall crossing').toBeLessThan(-86);
     expect(zoo.canBoardDriver(), 'the courier covers the scene on foot').toBe(false);
     world.tick = zoo.state.sightingAt + 14 * 60; mission.state.phase = 'playing'; mission.state.cinematic = null; zoo.update();
     expect(mission.state.states['hale-keys']).toBe(true);

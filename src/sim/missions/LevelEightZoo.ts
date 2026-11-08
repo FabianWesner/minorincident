@@ -106,7 +106,11 @@ export class LevelEightZoo {
     s.keeperId = outbreak.spawnPedestrian(keeper, { ...staff, walkSpeed: 4.6, waypoints: tour,
       schedule: [...tour.map(target => ({ activity: 'walk' as const, anchor: 'zoo/tour', target, ticks: 1 })),
         { activity: 'look', anchor: 'zoo/plaza', target: tour.at(-1)!, facing: { x: -4, z: 0 }, ticks: 36_000 }] });
-    s.pondKeeperId = outbreak.spawnPedestrian(this.point({ x: -4, z: -10 }), { ...zooStaffLook(0), waypoints: [{ x: -4, z: -10 }, { x: -2, z: -10 }] });
+    const pondPost = this.point({ x: 1, z: -18 });
+    s.pondKeeperId = outbreak.spawnPedestrian(pondPost, { ...zooStaffLook(0), waypoints: [pondPost, { x: 2, z: -18 }] });
+    // This keeper stays with the birds during the first alarm, still fully
+    // biteable and rescuable through the ordinary shared outbreak rules.
+    w.entities.get(s.pondKeeperId)!.civilian!.l1!.haven = pondPost;
     for (const [key, x] of [['majorHale', -4], ['privateReyes', -2]] as const) {
       const at = this.point({ x, z: 0 });
       const id = outbreak.spawnPedestrian(at, { role: 'soldier', model: 'npc.national-guard', handProp: 'rifle', waypoints: [at, { x, z: 2 }] });
@@ -121,14 +125,14 @@ export class LevelEightZoo {
       const serviceRoutes: [number, number][][] = [
         [[-96, 32]],
         [[80, 78]], // Cross the gate-to-APC road before ordinary pursuit.
-        [[-24, -64], [-24, 0], [0, -10]], // North cohort reaches the flamingo gate without crossing the pond.
+        [[-24, -64], [0, -56], [0, -44], [-11, -40], [-11, -24], [1, -16.2]], // Enter the north gate and walk the dry shore around the pond.
         [[27, 78]], // Clear the bunker onto the gate road before ordinary pursuit.
       ];
       const route = [...exit.route, ...serviceRoutes[index]];
       const last = route.at(-1);
       // Alarm runners clear the entrance briskly; the larger high-tier queue
       // must still contact the courier within twenty seconds.
-      return { ...door, ...exit, route, ox: last?.[0] ?? exit.ox, oz: last?.[1] ?? exit.oz, next: 0, ids: [], speedMs: 4.2 };
+      return { ...door, ...exit, route, ox: last?.[0] ?? exit.ox, oz: last?.[1] ?? exit.oz, next: 0, ids: [], speedMs: index === 2 ? 5.6 : 4.2 };
     });
     if (s.outlets.length < 3) throw new Error('Zoo requires at least three tunnel outlets');
     // The carried group has just unloaded from L7's evacuation bus inside the perimeter.
@@ -209,7 +213,6 @@ export class LevelEightZoo {
       mega.health.current = mega.health.max = 1_000_000;
       mega.emerging = true; mega.contactExempt = s.haleId; mega.combat!.damageMultiplier = 0;
       w.npcs!.civilians.hold(mega.id);
-      this.mission.cinematic('l8-north-wall');
     }
     const mega = w.entities.get(s.megaId);
     if (mega) {
@@ -218,6 +221,7 @@ export class LevelEightZoo {
       // Once over the wall it is a legal target for the defending soldiers.
       // The civilian hold keeps its ordinary attack brain out of this scene.
       mega.emerging = t - s.sightingAt < 60;
+      mega.infected!.perched = mega.emerging; // The authored vault owns height until its feet reach the ground.
       if (!this.mission.state.states['hale-fallen']) {
         const elapsed = t - s.sightingAt, f = Math.min(1, elapsed / (14 * 60));
         const target = hale?.transform ?? { x: 88, z: 70 };
@@ -229,7 +233,12 @@ export class LevelEightZoo {
         if (f === 1 && hale?.civilian) {
           if (!this.mission.state.states['hale-keys']) {
             this.mission.setState('hale-keys', true); this.mission.radio('L8.hale-dying');
-            hale.civilian.story = { clip: 'npc-give', start: t };
+            // The short camera beat freezes simulation: hold the readable
+            // handover pose and face the courier, then let the fatal beat land.
+            hale.civilian.story = { clip: 'npc-give', start: t - 24 };
+            hale.civilian.knockedUntil = t + 60;
+            hale.transform.yaw = -Math.atan2(player.transform.z - hale.transform.z, player.transform.x - hale.transform.x);
+            hale.motion = { velocity: { x: 0, z: 0 }, speed: 0, moving: false, distance: hale.motion?.distance ?? 0 };
             const shot = this.mission.def.cinematics['l8-hale'];
             shot.target = [hale.transform.x, 1, hale.transform.z]; shot.position = [hale.transform.x + 16, 12, hale.transform.z + 18];
             this.mission.cinematic('l8-hale');
@@ -279,6 +288,11 @@ export class LevelEightZoo {
   }
   /** The departure camera retains both the APC and the pursuing silhouette. */
   cameraPose(): { position: [number, number, number]; target: [number, number, number] } | null {
+    // Keep simulation live while the shot follows the actual wall crossing.
+    if (this.state.megaId && this.w.tick - this.state.sightingAt < 90 && !this.state.departureFrom) {
+      const mega = this.w.entities.get(this.state.megaId)!.transform;
+      return { position: [mega.x + 26, 20, mega.z + 26], target: [mega.x, mega.y + 1, mega.z] };
+    }
     if (!this.state.departureFrom) return null;
     const car = this.w.entities.get(this.state.carId)!.transform;
     return { position: [car.x + 10, 12, car.z + 22], target: [car.x - 6, 1, car.z] };

@@ -9,7 +9,6 @@ export function levelEightMission(resolve: (district: DistrictId, name: string) 
     id: 'L8', l8: true, briefing: dialogue['L8.briefing'],
     anchors, actors: {}, groups: {}, gates: {}, items: [], states: ['breached', 'player-boarded', 'aboard', 'apc-destroyed', 'hale-fallen', 'hale-keys', 'elephant-fallen', 'elephant-turning', 'reyes-fallback', 'departed'], counters: [],
     checkpoints: ['sanctuary', 'breach', 'escape-route'], cinematics: {
-      'l8-north-wall': { seconds: 1.5, caption: '', position: [114, 20, -62], target: [88, 4, -86], actions: [] },
       'l8-hale': { seconds: 1.5, caption: dialogue['L8.hale-dying'], position: [108, 12, 89], target: [88, 1, 70], actions: [] },
     },
     steps: [{ id: 'sanctuary', type: 'custom', text: 'Follow Nadia to the central plaza', anchor: 'central-plaza', waypoint: true,
