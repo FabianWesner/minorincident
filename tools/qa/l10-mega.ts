@@ -7,6 +7,8 @@ import { loadLevel } from '../sim-runner/levels';
 import { followTenFrustum } from '../sim-runner/l10';
 import { emptyInput } from '../../src/input/InputFrame';
 import type { EntitySnapshot } from '../../src/sim/world/types';
+import { LevelTenBot } from '../../src/debug/bot/LevelTenBot';
+import { actorRadius } from '../../src/sim/world/SolidRegistry';
 
 const out = process.argv.find((arg, i) => process.argv[i - 1] === '--out') ?? 'test-results/l10-pacing/mega-mechanics.json';
 const checks: { quality: string; name: string; pass: boolean; observed: unknown }[] = [];
@@ -72,6 +74,13 @@ for (const quality of ['low','high'] as const) {
     advance(125);w.combat!.damage.god=true;
     const restored=w.megaPursuit!.entity();
     check('a real death restarts the phase with console charge retained',player.health.current>0&&restored?.infected?.megaPhase===3&&restored.health.current===phaseHp&&m.state.counters['charge-ticks']===1234,{hp:player.health.current,bossHp:restored?.health.current,phaseHp,charge:m.state.counters['charge-ticks'],phase:restored?.infected?.megaPhase});
+    // Reproduce the high-tier native toy-route landing obstruction exactly.
+    const fallen=w.megaPursuit!.entity()!;place(fallen,3995.8188,-33.1420,3.78);place(player,3994.5905,-34.4592,3.785);hit('weapon.army-mg',100000,fallen.id);advance(1);
+    m.state.counters['charge-ticks']=3600;m.state.states['charge-active']=true;
+    while(m.state.steps.release.status!=='active')m.completeObjective();
+    const bot=new LevelTenBot(w);let lowest=player.transform.y;
+    for(let i=0;i<600&&!m.state.states['cure-released'];i++){followTenFrustum(w);w.applyInput(bot.sample(),'keyboard');w.update();lowest=Math.min(lowest,player.transform.y);}
+    check('ordinary inputs descend past a dead Mega on the landing and release the cure',actorRadius(fallen)===1&&lowest<1&&m.state.states['cure-released'],{radius:actorRadius(fallen),lowest,released:m.state.states['cure-released'],at:{...player.transform}});
   } catch(error){check('mechanics fixtures execute',false,String(error));}
   finally{w.dispose();}
 }
