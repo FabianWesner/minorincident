@@ -4,6 +4,7 @@ import { cureCanKill, storyProtected } from '../npc/storyProtection';
 import { Status } from './Status';
 import { l1v2 } from '../../data/l1v2';
 import { l7Encounters } from '../../data/l7';
+import { combatHeightReachable } from './height';
 // Splash falloff/impulse adapted from Bruno Simon folio-2025 Explosions.js (MIT, 41046b5).
 import type { Vec2 } from '../../input/InputFrame';
 import type { EntitySnapshot, GameEvent } from '../world/types';
@@ -80,7 +81,7 @@ export class Damage {
     if (target.id === 1 || !cureCanKill(target) || target.corpse || target.health.current <= 0 && target.infected!.recoverAt < 0) return;
     const amount = Math.max(0, target.health.current), b = target.infected!;
     if (resident) this.world.infected?.down(target, true);
-    if (b.perched || b.special === 'cling') target.transform.y = (this.world.districts?.pavingHeight(target.transform.x, target.transform.z) ?? 0) + .7;
+    if (b.perched || b.special === 'cling') target.transform.y = (this.world.districts?.supportBelow(target.transform.x, target.transform.z, target.transform.y - .7) ?? 0) + .7;
     delete target.hidden; delete target.attachedTo;
     target.health.current = 0; b.recoverAt = -1; b.state = 'dead'; b.deadAt = this.world.tick;
     b.grabUntil = 0; b.until = 0; b.attackId = 0; b.targetId = 0; b.hidden = false; b.perched = false; b.path.length = 0;
@@ -104,6 +105,7 @@ export class Damage {
   apply(hit: DamageEvent): number {
     const target = this.world.entities.get(hit.targetId), source = this.world.entities.get(hit.sourceId);
     if (!target || !source) return 0;
+    if (hit.type === 'melee' && !combatHeightReachable(source, target)) return 0;
     // L7's power weapon opens a route for the column. Civilian splash already
     // deals no HP damage, but its generic reaction knocked the living followers
     // flat for 90 ticks and shoved them into the attackers they were escaping.

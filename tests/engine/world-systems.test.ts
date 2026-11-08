@@ -226,4 +226,12 @@ test('look-l6-l9 decor is render-only: L6 nav hash, colliders and pushables matc
   // Ground under each piece without the scenes (a sandbag pallet carries its own 25 cm walkable deck).
   const bare = new DistrictWorld(compositions.L10, [{ ...cureLayout, placements: [...cureLayout.placements, ...belt] }], 32);
   for (const q of stories) for (const [x, z] of [[q.visualAabb.min[0], q.visualAabb.min[2]], [q.visualAabb.max[0], q.visualAabb.max[2]]]) expect(Math.abs(bare.groundHeight(x, z))).toBeLessThan(.05);
+  const platform = cureLayout.placements.find(q => q.assetId === 'kit.dispersal-platform')!;
+  const [px, , pz] = platform.position;
+  expect(bare.pavingHeight(px, pz)).toBeCloseTo(3.08);
+  expect(bare.supportBelow(px, pz, 0), 'a ground-level infected under the deck stays below it').toBe(0);
+  expect(bare.supportBelow(px + 8.1, pz, 0), 'the lowest stair tread remains a valid first step').toBeCloseTo(.1);
+  const { heightRouteWaypoint } = await import('../../src/sim/ai/InfectedSystem');
+  const waypoint = heightRouteWaypoint(bare, { transform: { x: px + 10, y: .7, z: pz, yaw: 0 } } as never, { x: px, y: 3.78, z: pz });
+  expect(waypoint?.x).toBeCloseTo(px + 8.07, 1);
 }, 60_000);
