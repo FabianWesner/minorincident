@@ -8,6 +8,7 @@ import type { EntitySnapshot, GameEvent } from '../../src/sim/world/types';
 import { clickable } from '../../src/input/ClickPick';
 import { l1v2 } from '../../src/data/l1v2';
 import { l3 } from '../../src/data/l3';
+import { megaAlpha } from '../../src/data/megaAlpha';
 import { SimWorld } from '../../src/sim/world/SimWorld';
 import { missionSandbox } from '../fixtures/scenarios/mission-sandbox';
 import { followFrustum, loadL3 } from '../../tools/sim-runner/l3Bots';
@@ -166,11 +167,12 @@ test('every human and animal role validates and spawns with its catalog health a
 
   // Shared attack families must connect with actual running input. A cue or
   // attempted attack is insufficient: require accepted damage while moving.
-  for (const role of ['runner', 'crawler', 'riot', 'armored', 'butcher', 'alpha', 'dog', 'cat', 'lion', 'gorilla', 'elephant', 'zebra', 'flamingo']) {
+  for (const role of [...infectedDefinitions.filter(def => def.special !== 'scream').map(def => def.id.slice(9)), 'mega-alpha']) {
     const w = await arena(1, false), player = w.entities.get(1)!;
     player.health.current = player.health.max = 10_000;
-    const attacker = spawn(w, role, 1.3);
+    const attacker = spawn(w, role === 'mega-alpha' ? 'alpha' : role, 1.3);
     attacker.infected!.hidden = false; attacker.infected!.perched = false;
+    if (role === 'mega-alpha') { attacker.infected!.pursuit = true; attacker.infected!.speed = megaAlpha.cruiseMs; }
     let movingHits = 0;
     w.events.on('infected.attack', event => {
       if (event.type === 'infected.attack' && event.sourceId === attacker.id && event.targetId === 1 && event.amount > 0 &&

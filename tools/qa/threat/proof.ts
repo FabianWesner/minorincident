@@ -63,7 +63,7 @@ export async function proveThreatAudit(): Promise<void> {
     let clearRetreat = true, device = emptyInput();
     const receipt = { kitingSeconds: 0, attacks: 0, attacksPerMinute: 0, samples: 0 };
     const world = { tick: 0, events,
-      entities: new Map([[1, { transform: { x: 0, z: 0 }, health: { current: 100 }, weapons: { selectedSide: 'RIGHT' } }]]),
+      entities: new Map([[1, { transform: { x: 0, z: 0 }, survivor: { velocity: { x: -2, z: 0 } }, health: { current: 100 }, weapons: { selectedSide: 'RIGHT' } }]]),
       infected: { active: [5, 6, 7].map(x => ({ health: { current: 100 }, infected: { state: 'chase' }, transform: { x, z: 0 } })),
         nav: { visible: (_from: { x: number; z: number }, to: { x: number; z: number }) => clearRetreat || to.x >= -.5 } },
       combat: { query: { visible: () => true }, runner: { loadout: { current: () => ({ id: 'weapon.handgun' }) } } },
@@ -80,8 +80,15 @@ export async function proveThreatAudit(): Promise<void> {
     events.emit({ type: 'combat.attack', tick: 0, sourceId: 1, actionId: 'weapon.handgun', attackId: 1, side: 'LEFT', position: { x: 0, y: 0, z: 0, yaw: 0 }, direction: { x: 1, z: 0 } });
     assert.equal(receipt.attacks, 0, 'courier shots cannot satisfy the threat floor');
     events.emit({ type: 'telegraph', tick: 0, sourceId: 2, attackId: 1, special: 'lunge', duration: .35, target: { id: 1, x: 0, z: 0 } });
-    events.emit({ type: 'civilian.grabbed', tick: 0, sourceId: 3, targetId: 4, variant: '', rescueUntil: 90 });
-    assert.equal(receipt.attacks, 1, 'only infected attempts targeting the kiting courier count');
+    events.emit({ type: 'infected.attack', tick: 0, sourceId: 2, attackId: 1, targetId: 1, special: 'lunge', amount: 10 });
+    events.emit({ type: 'infected.attack', tick: 0, sourceId: 3, attackId: 2, targetId: 4, special: 'bite', amount: 10 });
+    assert.equal(receipt.attacks, 1, 'only infected windups targeting the courier count as attack starts');
+    assert.equal(finishKitingReceipt(receipt).hits, 1, 'landed hits have their own moving-courier counter');
+    world.entities.get(1)!.survivor!.velocity.x = 0;
+    events.emit({ type: 'infected.attack', tick: 0, sourceId: 2, attackId: 3, targetId: 1, special: 'lunge', amount: 10 });
+    world.entities.get(1)!.survivor!.velocity.x = -2;
+    events.emit({ type: 'infected.attack', tick: 0, sourceId: 2, attackId: 4, targetId: 1, special: 'lunge', amount: 0 });
+    assert.equal(finishKitingReceipt(receipt).hits, 1, 'stationary contacts and rejected damage cannot satisfy the moving hit floor');
     world.entities.get(1)!.health.current = 0; world.setInput(emptyInput());
     assert.equal(receipt.samples, 1, 'dead courier frames cannot count as active kiting');
     world.entities.get(1)!.health.current = 100;
@@ -103,6 +110,14 @@ export async function proveThreatAudit(): Promise<void> {
     assert(Math.abs(finishKitingReceipt(receipt).attacksPerMinute - 3) < 1e-8);
     world.clearInput(); world.setInput({ move: { x: 0, z: 0 } });
     assert(!world.deviceInput.mouseAttack && !world.deviceInput.left.held, 'L1 partial inputs do not retain injected fire after the sample');
+    const circleReceipt = { kitingSeconds: 0, attacks: 0, attacksPerMinute: 0, samples: 0 };
+    installKitingPolicy(world, circleReceipt, 'L1', 'circles');
+    world.setInput(emptyInput());
+    assert(Math.abs(frames.at(-1)!.move.x) < .01 && Math.abs(frames.at(-1)!.move.z) > .99 && !frames.at(-1)!.walk, 'circle starts tangent to its fixed centre at running speed');
+    Object.assign(world.entities.get(1)!.transform, { x: 4, z: -4 });
+    world.tick++;
+    world.setInput(emptyInput());
+    assert(frames.at(-1)!.move.x > .99 && Math.abs(frames.at(-1)!.move.z) < .01, 'circle input follows physical position around the same centre');
   }
 
   {

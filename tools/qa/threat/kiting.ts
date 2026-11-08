@@ -2,31 +2,55 @@ import type { InputFrame } from '../../../src/input/InputFrame';
 import { Walker } from '../../../src/debug/bot/Walker';
 import { phases } from './phases';
 import type { RunnerLevel } from '../../sim-runner/levels';
-import { observeAttackStarts } from './attackStarts';
 import type { SimWorld } from '../../../src/sim/world/SimWorld';
+import { observeAttackStarts } from './attackStarts';
+import { SimPhase } from '../../../src/core/EventBus';
+import { Status } from '../../../src/sim/combat/Status';
 
 export interface KitingReceipt {
   kitingSeconds: number;
   attacks: number;
   attacksPerMinute: number;
   samples: number;
-  diagnostics?: { startTick: number | null; endTick: number | null; firingFrames: number; playerAttackStarts: number; framesWithoutThreats: number };
+  /** Positive-damage strikes against a physically moving courier, separate from attack starts. */
+  hits?: number;
+  hitsPerMinute?: number;
+  style?: KitingStyle;
+  diagnostics?: { startTick: number | null; endTick: number | null; firingFrames: number; playerAttackStarts: number; framesWithoutThreats: number; movingSeconds: number; immobilizedSeconds: number; distanceMeters: number; circleRadius?: number };
 }
+export type KitingStyle = 'retreat' | 'circles';
 
 /** Apply player-like backpedal fire only while a dense, nearby horde is pressing. */
-export function installKitingPolicy(world: SimWorld, receipt: KitingReceipt, level: RunnerLevel): () => boolean {
+export function installKitingPolicy(world: SimWorld, receipt: KitingReceipt, level: RunnerLevel, style: KitingStyle = 'retreat'): () => boolean {
   const applyInput = world.applyInput.bind(world);
-  const diagnostics = receipt.diagnostics = { startTick: null as number | null, endTick: null as number | null, firingFrames: 0, playerAttackStarts: 0, framesWithoutThreats: 0 };
+  receipt.style = style;
+  const diagnostics = receipt.diagnostics = { startTick: null as number | null, endTick: null as number | null, firingFrames: 0, playerAttackStarts: 0, framesWithoutThreats: 0, movingSeconds: 0, immobilizedSeconds: 0, distanceMeters: 0, circleRadius: undefined as number | undefined };
   let selectedButtonHeld = false;
   let sampleUntil: number | null = null;
   let sampleOrigin: { x: number; z: number } | null = null;
   let sampleDirection: { x: number; z: number } | null = null;
+  let circle: { x: number; z: number; radius: number } | null = null;
+  let lastSampleTick = -1;
   let nextRocketFireTick = -1;
   const rejoin = new Walker();
   let kitingNow = false;
   observeAttackStarts(world, (_sourceId, targetId) => {
     if (kitingNow && targetId === 1) receipt.attacks++;
   });
+  world.events.on('infected.attack', event => {
+    const step = world.player?.locomotion.displacement;
+    const velocity = world.entities.get(1)?.survivor?.velocity;
+    const speed = step ? Math.hypot(step.x, step.z) * 60 : Math.hypot(velocity?.x ?? 0, velocity?.z ?? 0);
+    if (event.type === 'infected.attack' && kitingNow && event.targetId === 1 && event.amount > 0 && speed > .2) receipt.hits = (receipt.hits ?? 0) + 1;
+  });
+  world.events.on('sim.tick', () => {
+    const player = world.entities.get(1), p = player?.transform, previous = world.previousPlayer;
+    if (!kitingNow || !p || !previous || !player) return;
+    const distance = Math.hypot(p.x - previous.x, p.z - previous.z);
+    if (distance > .2 / 60) diagnostics.movingSeconds += 1 / 60;
+    else if (Status.stunned(player, world.tick) || world.infected?.playerPinned()) diagnostics.immobilizedSeconds += 1 / 60;
+    diagnostics.distanceMeters += distance;
+  }, SimPhase.cleanup + 1);
   world.events.on('combat.attack', event => {
     if (event.type === 'combat.attack' && kitingNow && event.sourceId === 1) diagnostics.playerAttackStarts++;
   });
@@ -97,10 +121,38 @@ export function installKitingPolicy(world: SimWorld, receipt: KitingReceipt, lev
         if (!nav || nav.visible(position, { x: position.x + x * 1.2, z: position.z + z * 1.2 }, .45)) { retreat = { x, z }; break; }
       }
     }
+    if (style === 'circles') {
+      // Pick a complete walkable circle through the encounter point, then keep
+      // its centre fixed. Following a moving horde centroid is not a circle.
+      if (!circle && centre && separation > .01) {
+        const nav = world.infected?.nav;
+        search: for (const radius of [4, 3, 2]) for (const offset of [0, Math.PI / 2, -Math.PI / 2, Math.PI]) {
+          const angle = Math.atan2(-awayZ, -awayX) + offset;
+          const candidate = { x: position.x + Math.cos(angle) * radius, z: position.z + Math.sin(angle) * radius, radius };
+          const start = angle + Math.PI;
+          let previous = { x: position.x, z: position.z }, clear = true;
+          for (let i = 1; i <= 32; i++) {
+            const a = start + i * Math.PI / 16, next = { x: candidate.x + Math.cos(a) * radius, z: candidate.z + Math.sin(a) * radius };
+            if (nav && !nav.visible(previous, next, .45)) { clear = false; break; }
+            previous = next;
+          }
+          if (clear) { circle = candidate; diagnostics.circleRadius = radius; break search; }
+        }
+      }
+      retreat = null;
+      if (circle) {
+        const rx = position.x - circle.x, rz = position.z - circle.z, radius = Math.hypot(rx, rz);
+        // A small radial correction cancels integration drift without stopping
+        // or reversing the constant clockwise movement.
+        const correction = (circle.radius - radius) * 2, length = Math.max(.001, radius);
+        const x = -rz / length + rx / length * correction, z = rx / length + rz / length * correction, speed = Math.hypot(x, z);
+        retreat = { x: x / speed, z: z / speed };
+      }
+    }
     // Once a real pursuer has been selected, keep the 20-second sample going
     // even if it briefly drops out of the crowd query. Otherwise fast retreat
     // turns a nominal 20-second encounter into a sub-second measurement.
-    if (!retreat && sampleUntil !== null && sampleDirection && position) {
+    if (style === 'retreat' && !retreat && sampleUntil !== null && sampleDirection && position) {
       const nav = world.infected?.nav;
       for (const angle of [0, Math.PI / 4, -Math.PI / 4, Math.PI / 2, -Math.PI / 2]) {
         const x = sampleDirection.x * Math.cos(angle) - sampleDirection.z * Math.sin(angle);
@@ -121,8 +173,7 @@ export function installKitingPolicy(world: SimWorld, receipt: KitingReceipt, lev
     }
     const target = threats.reduce((nearest, entity) => !nearest ||
       Math.hypot(entity.transform.x - position!.x, entity.transform.z - position!.z) < Math.hypot(nearest.transform.x - position!.x, nearest.transform.z - position!.z) ? entity : nearest, undefined as typeof threats[number] | undefined);
-    receipt.kitingSeconds += 1 / 60;
-    receipt.samples++;
+    if (lastSampleTick !== world.tick) { receipt.kitingSeconds += 1 / 60; receipt.samples++; lastSampleTick = world.tick; }
     diagnostics.startTick ??= world.tick; diagnostics.endTick = world.tick;
     if (!threats.length) diagnostics.framesWithoutThreats++;
     const selectedSide = player.weapons.selectedSide;
@@ -136,7 +187,7 @@ export function installKitingPolicy(world: SimWorld, receipt: KitingReceipt, lev
     // 20-second window continues. Keep aiming opposite the chosen retreat
     // direction instead of dividing the now-empty horde vector by zero.
     const aim = separation > .01 ? { x: -awayX / separation, z: -awayZ / separation } : { x: -retreat!.x, z: -retreat!.z };
-    return { ...frame, walk: true,
+    return { ...frame, walk: style === 'retreat',
       move: retreat!,
       aim, aimPoint: target ? { x: target.transform.x, z: target.transform.z } : centre ?? { x: position.x + aim.x * 10, z: position.z + aim.z * 10 }, aimSource: 'pointer',
       // Physical mouse fire is LEFT; ControlIntent maps it to selectedSide.
@@ -163,5 +214,6 @@ export function installKitingPolicy(world: SimWorld, receipt: KitingReceipt, lev
 }
 
 export function finishKitingReceipt(receipt: KitingReceipt): KitingReceipt {
-  return { ...receipt, attacksPerMinute: receipt.kitingSeconds > 0 ? receipt.attacks * 60 / receipt.kitingSeconds : 0 };
+  return { ...receipt, hits: receipt.hits ?? 0, hitsPerMinute: receipt.kitingSeconds > 0 ? (receipt.hits ?? 0) * 60 / receipt.kitingSeconds : 0,
+    attacksPerMinute: receipt.kitingSeconds > 0 ? receipt.attacks * 60 / receipt.kitingSeconds : 0 };
 }
