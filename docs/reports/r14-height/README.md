@@ -15,8 +15,8 @@
 - `npm run typecheck`: passed
 - `npm run lint`: passed
 - Focused suites (`combat`, `infected-ai`, `world-systems`, `navigation`): passed (21 tests)
-- `npm run test:unit`: final 150-case run in progress
-- `sh tools/remote/run.sh "$PWD" -- npm run qa:threat`: queued; record flat-ground diff after runner completes
+- `npm run test:unit`: passed (150/150 cases; 27 files, 107 tests)
+- `sh tools/remote/run.sh "$PWD" -- npm run qa:threat`: full audit queued on the committed worktree; record flat-ground diff after runner completes
 
 ## Browser QA needed
 
