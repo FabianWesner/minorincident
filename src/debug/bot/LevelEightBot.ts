@@ -39,7 +39,7 @@ export class LevelEightBot {
       if (this.escapeLeg < road.length) target = road[this.escapeLeg];
     }
     if (!calm) {
-      const enemies = w.infected!.active.filter(e => e.health.current > 0 && !e.hidden && !e.emerging && !e.infectionRise && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < 16 && w.infected!.director.inPlayerView(e.transform, 16, 1, 5) && w.infected!.nav.visible(p, e.transform, 0)).sort((a, b) => Math.hypot(a.transform.x - p.x, a.transform.z - p.z) - Math.hypot(b.transform.x - p.x, b.transform.z - p.z));
+      const enemies = w.infected!.active.filter(e => e.health.current > 0 && (!e.infected!.arenaBoss || e.infected!.arenaBoss.engaged) && !e.hidden && !e.emerging && !e.infectionRise && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < 16 && w.infected!.director.inPlayerView(e.transform, 16, 1, 5) && w.infected!.nav.visible(p, e.transform, 0)).sort((a, b) => Math.hypot(a.transform.x - p.x, a.transform.z - p.z) - Math.hypot(b.transform.x - p.x, b.transform.z - p.z));
       const enemy = enemies[0];
       if (enemy && this.profile !== 'evade-only') {
         const gun = w.combat!.runner.loadout.activeEntries().find(e => e.id === 'weapon.army-mg');
