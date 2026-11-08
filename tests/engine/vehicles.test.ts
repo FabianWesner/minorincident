@@ -6,6 +6,9 @@ import { emptyInput } from '../../src/input/InputFrame';
 import { Physics } from '../../src/physics/Physics';
 import { VehicleBody } from '../../src/sim/vehicles/VehicleBody';
 import { SimWorld } from '../../src/sim/world/SimWorld';
+import { loadLevel } from '../../tools/sim-runner/levels';
+import { missionControls } from '../../src/sim/missions/controls';
+import { preset } from '../../src/sim/progression/Campaign';
 
 async function car(id = 'vehicle.sedan') {
   const physics = new Physics(); await physics.init();
@@ -82,7 +85,53 @@ test('enter, drive and exit: door dwell, input ownership (no attacks while drivi
     world.loadScenario('empty'); expect(world.physics.bodyCount).toBe(2);
   } finally { world.dispose(); }
   await bikeMountIntent();
+  await zooParkedBoarding();
 });
+
+// The zoo's fixed objective must remain at the real doorway while rockets and
+// infected strike the evacuation vehicle. Checkpoint rebuilds need the same hold.
+async function zooParkedBoarding(): Promise<void> {
+  const world = await loadLevel('L8', 1);
+  try {
+    const mission = world.missions!, zoo = mission.l8!, vehicles = world.vehicles!;
+    mission.begin();
+    const advance = (ticks: number) => { for (let i = 0; i < ticks; i++) world.update(); };
+    for (const restored of [false, true]) {
+      if (restored) mission.restore('sanctuary');
+      advance(60);
+      const car = vehicles.cars.get(zoo.state.carId)!, before = { ...car.entity.transform };
+      car.physics.body.applyImpulse({ x: car.physics.def.mass * 2, y: car.physics.def.mass * 4, z: car.physics.def.mass }, true);
+      car.physics.body.applyTorqueImpulse({ x: 0, y: car.physics.def.mass, z: 0 }, true);
+      advance(120);
+      expect(Math.hypot(car.entity.transform.x - before.x, car.entity.transform.z - before.z), `parked APC after restore=${restored}`).toBeLessThan(.01);
+      expect(Math.abs(car.entity.transform.yaw - before.yaw)).toBeLessThan(.001);
+      expect(Math.hypot(zoo.door().x - mission.def.anchors.exit.x, zoo.door().z - mission.def.anchors.exit.z)).toBeLessThan(.3);
+      const health = car.entity.health.current;
+      vehicles.damage(car.entity.id, 10);
+      expect(car.entity.health.current, 'parking does not protect durability').toBe(health - 10);
+    }
+    mission.setState('breached', true); zoo.state.breachedAt = world.tick; zoo.state.nextWave = Number.MAX_SAFE_INTEGER;
+    const car = vehicles.cars.get(zoo.state.carId)!, entry = vehicles.passengerDoor(car.entity.id);
+    for (const id of zoo.passengers()) {
+      missionControls(world).teleport(id, entry);
+      expect(vehicles.boardPassenger(car.entity.id, id)).toBe(true);
+    }
+    advance(60);
+    missionControls(world).teleport(1, zoo.door());
+    world.applyInput({ ...emptyInput(), interact: true }, 'keyboard'); advance(1);
+    world.applyInput(emptyInput(), 'keyboard'); advance(60);
+    expect(zoo.canDrive(), 'complete living group boards at the fixed destination').toBe(true);
+    const save = preset('L9-default'); save.transport = vehicles.transfer(car.entity.id);
+    const next = await loadLevel('L9', 1, save);
+    try {
+      const arrived = next.vehicles!.cars.get(car.entity.id)!, start = { ...arrived.entity.transform };
+      expect(arrived.entity.health.current).toBe(car.entity.health.current);
+      next.applyInput({ ...emptyInput(), drive: { throttle: 1, steer: 0 } }, 'keyboard');
+      for (let i = 0; i < 90; i++) next.update();
+      expect(Math.hypot(arrived.entity.transform.x - start.x, arrived.entity.transform.z - start.z), 'same APC drives after handover').toBeGreaterThan(.5);
+    } finally { next.dispose(); }
+  } finally { world.dispose(); }
+}
 
 // r2-bike (L1 depot): standing still where a story beat left her beside the parked cargo bike never mounts it; walking up
 // to the bike and stopping (stand-to-mount 0.4 s, spec E19 5.10) and E still do.

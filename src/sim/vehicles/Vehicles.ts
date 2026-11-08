@@ -44,7 +44,7 @@ export interface VehicleState {
   braced?: boolean; driver: number | null; attached: number[]; damage: 'normal' | 'smoking' | 'burning' | 'exploded';
   explodeAt: number | null; stuck: boolean; recoveringUntil: number;
 }
-interface Car { entity: EntitySnapshot; physics: VehicleBody; doorTicks: number; noEnterUntil: number; hits: Map<number, number>; crashAt: number }
+interface Car { entity: EntitySnapshot; physics: VehicleBody; doorTicks: number; noEnterUntil: number; hits: Map<number, number>; crashAt: number; zooParked?: boolean }
 export interface CarTransition { carId: number; kind: 'enter' | 'exit'; tick: number; side: number; from: { x: number; y: number; z: number; yaw: number }; }
 /** E09 fixed-phase owner; player movement/combat are suspended only while driving. */
 export class Vehicles {
@@ -136,6 +136,14 @@ export class Vehicles {
       // The floor vehicle has no voluntary exit until the scripted crash.
       if (this.active === car.entity.id && frame.interact && !state.floor && !departingZoo) this.exit(car);
       const waitingForBoarding=zoo?.state.carId===car.entity.id&&!zoo.canDrive();
+      // L8's destination is fixed. Blasts must not slide/rotate its doorway away
+      // from that marker while the group boards. Keep suspension and damage live;
+      // release the parking hold for departure. A rebuilt body reapplies it here.
+      if (zoo?.state.carId === car.entity.id && car.zooParked !== waitingForBoarding) {
+        car.zooParked = waitingForBoarding;
+        car.physics.body.setEnabledTranslations(!waitingForBoarding, true, !waitingForBoarding, true);
+        car.physics.body.setEnabledRotations(!waitingForBoarding, !waitingForBoarding, !waitingForBoarding, true);
+      }
       if (this.operable(car) && this.active === car.entity.id && !waitingForBoarding) {
         if (scheme === 'keyboard' || scheme === 'mouse-keyboard') {
           drive.throttle = frame.drive?.throttle ?? frame.move.x;
