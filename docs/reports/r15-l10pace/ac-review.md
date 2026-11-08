@@ -52,6 +52,12 @@ The script names the following observable beats. “Actual route” means a norm
 | Install cure and hold console | Install, then charge console under attack. | Later low report gets to `hold` by 1500s but has 17 deaths and no completion. | FAIL |
 | Finale arsenal and hazards | Use arsenal/flamethrower against Mega with machinery, fuel tanks and electric gate. | No completed finale in native input evidence. | FAIL |
 | Voss release line and release | On Mega kill, Voss says “Release it. Now!” and console release begins. | No Mega kill/release in native input evidence. | FAIL |
+| Release 0–8 s | Courier operates the lever; green ground dust converts living infected to same-ID people; the dead Mega stays dead; corgi sits nearby and courier can walk among the cured. | Native route does not reach release. | FAIL |
+| Journey wave 8–30 s | Camera follows the cure across corn/farms, river wreck, zoo with Nadia's cap, L7 skyline and the L1 Annex; infected recover along the way. | Native route does not reach the journey shots. | FAIL |
+| Survivors 30–50 s | Mia, Rosa, Dale and Okafor leave army trucks; Voss/Ruiz bring Sam out of the hangar with his delivery line; townspeople and depot workers emerge. | Native route does not reach the survivor sequence. | FAIL |
+| Delivered 50–65 s | Courier and corgi at the platform steps; phone buzzes “Delivered ✓”; sunrise, then a 15 s pullback over the whole L10 route. | Native route does not reach the delivery/panorama beat. | FAIL |
+| Title / credits / menu | Title at ~65 s, readable 60–90 s licensed scrolling credits, skip, Thanks for playing, menu; repeat-view cinematic skipping. | Native route does not reach title or credits. | FAIL |
+| Optional corgi post-credits | Corgi carries its toy to the courier if the L10 toy was found. | Native route does not reach the optional post-credits shot. | FAIL |
 
 ## Mega rules from `boss-and-alpha-moves.md`
 
