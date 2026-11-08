@@ -1,3 +1,5 @@
+import { cureRadius } from '../../data/cureDust';
+import { curedPerson, recoverCuredPeople } from './CuredPeople';
 import { curePursuitRoute } from '../../levels/L10/district';
 import { cureCanKill } from '../npc/storyProtection';
 import type { EntitySnapshot } from '../world/types';
@@ -32,7 +34,8 @@ export class CureFront {
     const front = this.mission.state.cureFront;
     if (!front) { this.release(); return; }
     front.elapsed++;
-    front.radius = front.elapsed * cureSpeed / 60;
+    front.radius = cureRadius(front.elapsed);
+    recoverCuredPeople(this.mission.world, front.affectedIds);
     this.apply();
   }
   /** Reconcile save/retry restores without advancing time or emitting a release cue. */
@@ -40,9 +43,15 @@ export class CureFront {
     const { state, world } = this.mission, front = state.cureFront;
     if (!front) return;
     const affect = (e: EntitySnapshot, resident: boolean): boolean => {
-      if (e.id === 1 || !cureCanKill(e) || e.corpse || e.health.current <= 0 && e.infected!.recoverAt < 0 || !cureReached(front, e.transform)) return false;
-      if (resident) world.combat?.damage.cure(e);
-      else world.combat?.damage.cure(e, false);
+      if (e.id === 1 || !cureCanKill(e) || e.corpse || e.health.current <= 0 || !cureReached(front, e.transform)) return false;
+      const healthy = curedPerson(e, world.tick);
+      if (resident) {
+        world.infected?.release(e);
+        world.entities.replace(healthy); world.spatial.set(healthy.id, healthy.transform.x, healthy.transform.z);
+      } else {
+        for (const key of Object.keys(e)) delete (e as unknown as Record<string, unknown>)[key];
+        Object.assign(e, healthy);
+      }
       if (!front.affectedIds.includes(e.id)) front.affectedIds.push(e.id);
       return true;
     };

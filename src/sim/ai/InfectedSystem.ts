@@ -5,6 +5,7 @@ import { l3BaseCollision } from '../../levels/L3/collision';
 import { dogModel } from '../../data/dogAppearance';
 import { cureAlphaPopulation, cureAlphaCap, cureRegularAlphaCount, type CureRegion } from '../../levels/L10/alphaContracts';
 import { megaAlpha } from '../../data/megaAlpha';
+import { cureHangar, insideCureHangar } from '../../data/l10Story';
 import { leastCrowdedModel, regularInfectedModels } from '../../data/crowdAppearance';
 import { isCorgi, isCorgiModel, storyProtected } from '../npc/storyProtection';
 import { installAgentMotion, moveAgent } from '../locomotion/AgentMotion';
@@ -375,6 +376,7 @@ export class InfectedSystem {
       this.world.solids.wrote(e, 'infected.update');
       const b = e.infected!;
       if (this.heldOrDead(e, b, courier)) continue;
+      if (this.hangarBoundary(e, courier)) continue;
       if (this.pursuitOrVault(e, b)) continue;
       if (this.farCrowdSlot(e, b, courier)) continue;
       if (!b.specialAttack && (this.world.tick + e.id) % 3 === 0 && !e.emerging && !b.perched && !b.hidden && b.grabUntil <= this.world.tick) this.depenetrate(e);
@@ -389,6 +391,27 @@ export class InfectedSystem {
     // The player consumes borrowed transform references, never renderer state.
     for (const e of this.active) if (e.health.current > 0) this.crowd.push(this.obstacle(e));
     if (this.world.player) this.world.player.locomotion.crowd = this.crowd;
+  }
+  private readonly hangarWaypoint = { x: 0, z: 0 };
+  /** Researchers hold the sealed doorway. The hunt walks to the exterior and resumes as soon as the courier leaves. */
+  private hangarBoundary(e: EntitySnapshot, courier: EntitySnapshot): boolean {
+    if (this.world.scenario !== 'L10' || Math.hypot(e.transform.x - cureHangar.centre.x, e.transform.z - cureHangar.centre.z) > 65) return false;
+    const b = e.infected!, target = this.world.entities.get(b.targetId || b.pressureTarget?.id || 1);
+    // Guards/researchers cannot lure hunters through the doorway before the courier arrives.
+    if (!insideCureHangar(courier.transform) && !insideCureHangar(e.transform) && !(target?.civilian && insideCureHangar(target.transform))) return false;
+    const at = { x: cureHangar.outside.x + (e.id % 5 - 2) * 2, z: cureHangar.outside.z };
+    b.hidden = false;
+    if (b.pursuit && this.world.megaPursuit) this.world.megaPursuit.state.mode = 'detailed';
+    if (b.specialAttack) this.cancelSpecial(e.id);
+    b.state = 'wander'; b.grabUntil = 0; e.combat!.attacking = false;
+    const distance = Math.hypot(e.transform.x - at.x, e.transform.z - at.z);
+    let vx = 0, vz = 0;
+    if (!Status.stunned(e, this.world.tick) && distance > 1 && this.nav.steer(e.transform, at, b, e.combat!.radius, this.hangarWaypoint)) {
+      const dx = this.hangarWaypoint.x - e.transform.x, dz = this.hangarWaypoint.z - e.transform.z, d = Math.hypot(dx, dz) || 1;
+      vx = dx / d * b.speed; vz = dz / d * b.speed;
+    }
+    moveAgent(e, vx, vz, this.infectedNav, this.world.tick, e.combat!.radius, true); this.place(e);
+    return true;
   }
   /** Authored travel never disables the ordinary senses. Only the courier's party
    * interrupts a set-piece approach; distant camp defenders keep their authored battle. */

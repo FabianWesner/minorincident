@@ -3,6 +3,7 @@ import { Destruction } from '../destruction/Destruction';
 import { cloneData } from '../../core/clone';
 import { finaleGunPlacement } from '../../data/minigun';
 import { curePursuitRoute } from '../../levels/L10/district';
+import { levelTenLayouts } from '../../levels/L10/layout';
 import { inCorn } from '../../levels/L10/farm';
 import { installMegaPursuit } from '../ai/MegaPursuit';
 import { ChunkResidency } from './ChunkResidency';
@@ -297,7 +298,7 @@ export class SimWorld implements Lifecycle {
   }
   /** E10 composition hook; missions/controllers continue to use their existing scenario lifecycle. */
   loadComposition(composition:LevelComposition, layouts:DistrictLayout[], seed=1, aftermath:L1Aftermath|null=null, carriedSurvivors?: readonly EntitySnapshot[], carriedCompanion?: EntitySnapshot, reservedIds?: readonly number[], prepared?: DistrictWorld):void {
-    const districts=prepared??new DistrictWorld(composition,composition.id==='L7'?levelSevenLayouts(layouts):composition.id==='L5'?levelFiveLayouts(layouts):composition.id==='L4'?levelFourLayouts(layouts):composition.id==='L3'?levelThreeLayouts(layouts):composition.id==='L2'?levelTwoLayouts(layouts,aftermath):composition.id==='L1'?levelOneLayouts(layouts):layouts,seed);
+    const districts=prepared??new DistrictWorld(composition,composition.id==='L10'?levelTenLayouts(layouts):composition.id==='L7'?levelSevenLayouts(layouts):composition.id==='L5'?levelFiveLayouts(layouts):composition.id==='L4'?levelFourLayouts(layouts):composition.id==='L3'?levelThreeLayouts(layouts):composition.id==='L2'?levelTwoLayouts(layouts,aftermath):composition.id==='L1'?levelOneLayouts(layouts):layouts,seed);
     this.loadScenario('survivor',seed);
     if ((composition.id === 'L7' || composition.id === 'L8') && carriedSurvivors) this.entities.reserveIds(carriedSurvivors.map(e => e.id));
     if (carriedCompanion) this.entities.reserveIds([carriedCompanion.id]);

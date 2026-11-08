@@ -18,6 +18,7 @@ export const l4InfectedBarCap = 6;
 export const infectedBarCap = l4InfectedBarCap;
 /** Shielded riot infected, Alphas and the pursuing Mega always keep their bar under the cap. */
 const mandatoryBar = (e: EntitySnapshot) => !!e.combat?.shield || e.archetype === 'infected.alpha' || !!e.infected?.pursuit;
+const megaBarAllowed = (world: SimWorld, e: EntitySnapshot) => !(world.scenario === 'L10' && e.infected?.pursuit) || !!world.missions?.state.states['cure-installed'];
 export const isFollower = (e: EntitySnapshot) => e.civilian?.survivor?.mode === 'follow' && !e.hidden && !e.infection && !['finished', 'infected'].includes(e.civilian?.state ?? '') && e.health.current > 0 && !e.corpse;
 /** `fullFollowers`: the group is small enough that healthy followers keep their bar too. */
 export function barEligible(e: EntitySnapshot, player: { x: number; z: number }, bar: boolean, fullFollowers = true): boolean {
@@ -91,7 +92,7 @@ export class HealthBars extends Group {
     this.l10BarIds.clear();
     if (l10) {
       for (const e of this.world.entities.iterate()) {
-        if (e.faction !== 'infected' || !e.infected || !barEligible(e, player.transform, this.definitions.get(e.archetype)?.bar === true, full)) continue;
+        if (e.faction !== 'infected' || !e.infected || !megaBarAllowed(this.world, e) || !barEligible(e, player.transform, this.definitions.get(e.archetype)?.bar === true, full)) continue;
         this.l10Bars.push({ id: e.id, distance: Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z) });
       }
       // Keep the nearest threats. This also bounds bars when several close
@@ -129,7 +130,7 @@ export class HealthBars extends Group {
     const sheltered = !!this.world.missions?.state.l5?.shutterAt;
     for (const e of this.world.entities.iterate()) {
       if (sheltered && e.civilian?.survivor) continue;
-      if (!barEligible(e, player.transform, this.definitions.get(e.archetype)?.bar === true, full)) continue;
+      if (!megaBarAllowed(this.world, e) || !barEligible(e, player.transform, this.definitions.get(e.archetype)?.bar === true, full)) continue;
       if (l10 && e.faction === 'infected' && !this.l10BarIds.has(e.id)) continue;
       // Riot/Alpha/Mega bars remain mandatory (L4-11/G-24, E32), including healthy threats.
       if (capped && e.faction === 'infected' && !mandatoryBar(e) && !this.l4BarIds.has(e.id)) continue;

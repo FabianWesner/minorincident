@@ -351,6 +351,22 @@ export class Vfx extends Group {
     // Bat/axe roundhouse: a quick ground swoosh at the sweep radius under the spinning trail.
     if (event.style === 'roundhouse') this.waves.spawn(this.time, .32, event.position.x, .03, event.position.z, 0, 0, 0, (def?.roundhouse?.radius ?? 2.2) * 2, 1, 0xfff0ba, 1);
     if (def?.category === 'ranged') {
+      if (event.actionId === 'weapon.flamethrower') {
+        if (!this.enabled) return;
+        const muzzle = this.targets.muzzle?.(event.sourceId, event.direction) ?? { ...event.position, y: event.position.y + .45 };
+        const range = this.world.combat?.query.clearDistance(muzzle, event.direction, def.range) ?? def.range;
+        const count = this.quality === 'high' ? 18 : 8;
+        // Existing fire particles form a short, cover-clipped cone; no additional textures or particle pools.
+        for (let i = 0; i < count; i++) {
+          const t = (i + 1) / count, spread = (this.rng.next() - .5) * t * 2;
+          const x = muzzle.x + event.direction.x * range * t - event.direction.z * spread;
+          const z = muzzle.z + event.direction.z * range * t + event.direction.x * spread;
+          this.particles.spawn(this.time, .38, x, muzzle.y + (this.rng.next() - .5) * t, z,
+            event.direction.x * 3, .6, event.direction.z * 3, .25 + t * .75, particleShape.smoke, i % 3 ? 0xff7027 : 0xffd16a);
+        }
+        this.muzzleLight(muzzle.x, muzzle.z, muzzle.y);
+        return;
+      }
       // Rockets show their moving projectile. Keep the launch flash, without
       // an instant horizontal gun tracer continuing past the clicked endpoint.
       this.gunshot(event.sourceId, event.direction, event.actionId === 'weapon.rocket-launcher' ? 0 : def.range, event.position);

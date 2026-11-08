@@ -250,6 +250,21 @@ export class Lighting {
     if (next === this.gloom) return;
     this.gloom = next; this.applyLook();
   }
+  private readonly dawnColor = new Color();
+  /** Release-relative dawn: uniform/light changes only, retaining the warmed L10 shader and shadow graphs. */
+  cureDawn(amount: number): void {
+    const t = Math.max(0, Math.min(1, amount)), p = timeOfDay[this.preset], dawn = timeOfDay.golden;
+    this.color.value.set(p.sun).lerp(this.dawnColor.set(dawn.sun), t); this.sun.color.copy(this.color.value);
+    this.intensity.value = p.intensity + (dawn.intensity - p.intensity) * t; this.sun.intensity = this.intensity.value;
+    this.shadow.value.set(p.shadow).lerp(this.dawnColor.set(dawn.shadow), t);
+    const s = this.shadow.value; this.shadowHue.value.copy(s).multiplyScalar(1 / Math.max(s.r, s.g, s.b, 1e-3));
+    this.skyAmbient.value.set(this.look.values.skyAmbient).lerp(this.dawnColor.set('#c7d9e3'), t);
+    this.groundAmbient.value.set(this.look.values.groundAmbient).lerp(this.dawnColor.set('#d2bd95'), t);
+    this.fogColor.value.set(p.fog).lerp(this.dawnColor.set(dawn.fog), t);
+    this.fogColorA.value.set(p.sky).lerp(this.dawnColor.set(dawn.sky), t);
+    this.field.strength.value = (p.practical ?? 0) * (1 - t); this.nightThreat.value = 1 - t;
+    this.rim.value = (p.rim ?? 0) * (1 - t); this.roadLift.value = (p.roadLift ?? 0) * (1 - t);
+  }
   /** Reapply authored presets plus explicit live overrides; gameplay never reads these values. */
   applyLook(): void {
     const p = timeOfDay[this.preset], v = this.look.values;

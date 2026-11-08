@@ -1,3 +1,4 @@
+import { cureRadius } from '../../../src/data/cureDust';
 import type { L8PathProof } from './fix55-l8-paths';
 import { createHash } from 'node:crypto';
 import { existsSync, readFileSync } from 'node:fs';
@@ -435,188 +436,34 @@ export function evaluate(receipt: NativeReceipt, path: string): Clause[] {
       break;
     }
     case 'L10': {
-      const cameraPath='docs/reports/fix56-c/L10-camera.json';
-      if(competent&&existsSync(cameraPath)){
-        const proof=JSON.parse(readFileSync(cameraPath,'utf8')) as {sourceHash:string;toolSha256:string;rows:{tier:string;position:{id:string};regionScale:number;playerZoom:number;combined:number;expectedBase:number;basePass:boolean;maxPass:boolean}[]};
-        const rows=proof.rows.filter(row=>row.tier===receipt.tier);
-        if(proof.sourceHash===receipt.sourceHash&&proof.toolSha256===createHash('sha256').update(readFileSync('tools/qa/accept/fix55-l10-camera.ts')).digest('hex')&&rows.length===6){
-          add('L10-08','production road and finale base framing',rows,'road base1.3; corridor/finale base1; actual View rig',rows.every(row=>Math.abs(row.regionScale-(row.position.id==='road'?1.3:1))<1e-8),cameraPath);
-          add('L10-08','production base times maximum user zoom',rows,'every ordinary and rocket-equipped camera combination≤2.0',rows.every(row=>Math.abs(row.combined-row.regionScale*row.playerZoom)<1e-8&&row.combined<=2+1e-8),cameraPath);
-        }
-      }
-      const pursuitPath='docs/reports/fix56-c/L10-pursuit.json';
-      if(competent&&existsSync(pursuitPath)){
-        const proof=JSON.parse(readFileSync(pursuitPath,'utf8')) as {sourceHash:string;observerHash:string;toolSha256:string;rows:{tier:string;controlIdentical:boolean;nativeStateHash:string;persistentIds:number[];maxStepMetres:number;longestFarStallSeconds:number;cruiseMedianRunRatio:number|null;cruiseSamples:number;movingWithoutLosSamples:number;relocations:{writer:string;metres:number}[];cues:{tick:number;kind:string;sourceId:number;distance:number|null}[]}[]};
-        const row=proof.rows.find(row=>row.tier===receipt.tier);
-        if(proof.sourceHash===receipt.sourceHash&&proof.observerHash===receipt.observerHash&&proof.toolSha256===createHash('sha256').update(readFileSync('tools/qa/accept/fix55-l10-pursuit.ts')).digest('hex')&&row&&row.nativeStateHash===receipt.nativeStateHash){
-          add('L10-07','observed ordinary cruise ratio to nominal player run',{ratio:row.cruiseMedianRunRatio,samples:row.cruiseSamples},'0.7× run ±2%; ordinary moving far-pursuit samples exclude specials',row.cruiseMedianRunRatio!==null&&Math.abs(row.cruiseMedianRunRatio-.7)<=.7*.02,pursuitPath);
-          const nonContactRelocations=row.relocations.filter(event=>event.writer!=='special.swept-contact'||event.metres>1);
-          add('L10-07','continuous same-ID pursuit without LOS or teleport',{ids:row.persistentIds,maxStepMetres:row.maxStepMetres,longestFarStallSeconds:row.longestFarStallSeconds,blindMovingSamples:row.movingWithoutLosSamples,relocations:row.relocations,nonContactRelocations},'one persistent actor; no>1m step or non-contact relocation; nonzero movement without LOS; no far stall>20s',row.persistentIds.length===1&&row.maxStepMetres<=1&&!nonContactRelocations.length&&row.movingWithoutLosSamples>0&&row.longestFarStallSeconds<=20,pursuitPath);
-          const roars=row.cues.filter(cue=>cue.kind==='roar'),gaps=roars.slice(1).map((cue,i)=>(cue.tick-roars[i].tick)/60);
-          add('L10-07','actual paired roar/impact intervals',{gaps,events:row.cues.filter(cue=>cue.kind!=='step')},'nonempty intervals20–35s; every roar has same-tick same-ID impact; actual sound gain remains separate',gaps.length>0&&gaps.every(gap=>gap>=20&&gap<=35)&&roars.every(roar=>row.cues.some(cue=>cue.kind==='impact'&&cue.tick===roar.tick&&cue.sourceId===roar.sourceId)),pursuitPath);
-        }
-      }
-
-      const bounds: Record<string, number[]> = {
-        'residential-fringe': low ? [8, 16] : [12, 24], 'industrial-area': low ? [16, 28] : [25, 45],
-        'military-zone': low ? [28, 45] : [45, 75], 'research-campus': low ? [35, 55] : [55, 85],
-        'destroyed-corridor': low ? [50, 75] : [80, 130], 'dispersal-complex': low ? [75, 95] : [140, 190],
-      };
-      for (const [region, [minimum, maximum]] of Object.entries(bounds)) {
-        const census = observation.regions[region];
-        // R2 explicitly adds dogs to its regular-human range. Later-region
-        // totals include specials, with the pursuing Mega measured separately.
-        const peak = region === 'residential-fringe' ? census?.regularPeak : census?.normalPeak;
-        const full = competent && receipt.run?.completed;
-        add('L10-03', `${region} normal local concurrent peak bound`, census ?? null, `${region === 'residential-fringe' ? 'regular human' : 'normal infected'} peak ${minimum}–${maximum}; species/group clauses remain open`, peak === undefined ? undefined : peak > maximum || full && peak < minimum ? false : full && peak >= minimum ? true : undefined);
-      }
-      const composition: Record<string, { dogs: [number, number]; alphas?: [number, number] }> = {
-        'residential-fringe': { dogs: [1, 2] }, 'industrial-area': { dogs: [2, 4], alphas: [1, 1] },
-        'military-zone': { dogs: [2, 4], alphas: [1, 2] }, 'research-campus': { dogs: [2, 4], alphas: [1, 2] },
-        'destroyed-corridor': { dogs: [3, 5], alphas: [2, 3] },
-      };
-      for (const [region, targets] of Object.entries(composition)) {
-        const census = observation.regions[region];
-        number('L10-03', `${region} concurrent dog peak`, census?.dogPeak, ...targets.dogs);
-        if (targets.alphas) number('L10-03', `${region} concurrent Alpha peak`, census?.alphaPeak, ...targets.alphas);
-      }
-      for (const [region, groups, bounds] of [
-        ['military-zone', ['military-breach', 'military-column', 'military-exit'], [10, 20]],
-        ['destroyed-corridor', ['corridor-line', 'corridor-breach', 'corridor-exit'], [20, 35]],
-      ] as const) for (const group of groups) number('L10-03', `${group} regular group size`, observation.regions[region]?.regularGroupPeaks?.[group], bounds[0], bounds[1]);
-      if (competent) {
-        const proofPath = 'docs/reports/fix51-verify/receipts/L10-fringe-dogs.json';
-        if (existsSync(proofPath)) {
-          const proof = JSON.parse(readFileSync(proofPath, 'utf8')) as { sourceHash: string; observerHash: string; toolSha256: string; rows: { tier: string; pickupTick: number | null; firstDogTick: number | null; prematureTicks: number; nativeStateHash: string; controlIdentical: boolean }[] };
-          const result = proof.rows.find(item => item.tier === receipt.tier);
-          const toolSha256 = createHash('sha256').update(readFileSync('tools/qa/accept/l10-fringe-dogs-r10.ts')).digest('hex');
-          const fresh = proof.sourceHash === receipt.sourceHash && proof.observerHash === receipt.observerHash && proof.toolSha256 === toolSha256 && result?.nativeStateHash === receipt.nativeStateHash && result.controlIdentical;
-          if (fresh && result) add('L10-03', 'residential dogs follow actual handgun pickup', result, 'pickup observed; first admitted dog at or after pickup; zero dog ticks before pickup', result.pickupTick !== null && result.firstDogTick !== null ? result.firstDogTick >= result.pickupTick && result.prematureTicks === 0 : undefined, proofPath);
-        }
-      }
-      if (competent) {
-        const proofPath = 'docs/reports/fix51-r10c/L10-pickups-proof.json';
-        if (existsSync(proofPath)) {
-          const proof = JSON.parse(readFileSync(proofPath, 'utf8')) as {
-            sourceHash: string; observerHash: string; toolSha256: string;
-            rows: { tier: string; nativeStateHash: string; controlIdentical: boolean; inventorySeconds: number; inventoryOnlyIdentical: boolean;
-              acquisitions: { weapon: string; tick: number; interact: boolean; checkpoint: string | null; snapshotTick: number | null; snapshotWeapons: string[]; expectedDistance: number | null; expectedRadius: number | null }[];
-              inventoryCases: { weapon: string; identical: boolean; cases: { add: string[]; before: number; births: unknown[]; censusSha256: string; checkpoint: string | null }[] }[] }[];
-          };
-          const result = proof.rows.find(row => row.tier === receipt.tier);
-          const toolSha256 = createHash('sha256').update(readFileSync('tools/qa/accept/l10-pickups-r10.ts')).digest('hex');
-          if (proof.sourceHash === receipt.sourceHash && proof.observerHash === receipt.observerHash && proof.toolSha256 === toolSha256 && result?.nativeStateHash === receipt.nativeStateHash && result.controlIdentical) {
-            const targets = [['weapon.pistol', 'cure-residential'], ['weapon.shotgun', 'cure-industrial'], ['weapon.army-mg', 'cure-military'], ['weapon.rocket-launcher', 'cure-corridor']];
-            const acquisitionsPass = result.acquisitions.length === 4 && targets.every(([weapon, checkpoint]) => {
-              const rows = result.acquisitions.filter(row => row.weapon === weapon);
-              return rows.length === 1 && rows.every(row => row.checkpoint === checkpoint && row.interact && row.snapshotTick === row.tick && row.snapshotWeapons.includes(weapon) && row.expectedDistance !== null && row.expectedDistance <= 2 && row.expectedRadius === 2);
-            });
-            add('L10-05', 'all four named checkpoint pickup and snapshot transactions', result.acquisitions, 'exactly four expected weapons; named anchor distance≤2m; actual approach interaction; same-tick checkpoint includes weapon', acquisitionsPass, proofPath);
-            const inventoryPass = result.inventorySeconds === 4 && result.inventoryOnlyIdentical && result.inventoryCases.length === 4 && targets.every(([weapon]) => {
-              const row = result.inventoryCases.find(row => row.weapon === weapon), baseline = row?.cases[0];
-              return row?.identical && row.cases.length === 3 && baseline?.add.length === 0 && baseline.births.length === 0 && row.cases.every(test => test.births.length === 0 && test.before === baseline.before && test.censusSha256 === baseline.censusSha256 && test.checkpoint === baseline.checkpoint) && row.cases.some(test => test.add.length === 1 && test.add[0] === weapon) && row.cases.some(test => test.add.length === 4);
-            });
-            add('L10-05', 'inventory changes alone spawn zero enemies at every weapon approach', result.inventoryCases, 'four naturally reached pre-pickup Resume snapshots; unchanged baseline vs named/all weapons; zero births and identical every-tick infected census for4s', inventoryPass, proofPath);
-          }
-        }
-      }
-      if (competent) {
-        const proofPath = 'docs/reports/fix51-r10c/L10-cure-proof.json';
-        if (existsSync(proofPath)) {
-          const proof = JSON.parse(readFileSync(proofPath, 'utf8')) as {
-            sourceHash: string; observerHash: string; toolSha256: string;
-            rows: { tier: string; nativeStateHash: string; controlIdentical: boolean;
-              grant: { tick: number; before: unknown; after: unknown; carried: boolean; installed: boolean; item: boolean } | null;
-              movement: unknown; controlledMovement?: { move: { x: number; z: number }; ticks: number; identical: boolean; cases: { carried: boolean; displacement: number; trajectorySha256: string; finalCarried: boolean; finalItem: boolean }[] }[] }[];
-          };
-          const result = proof.rows.find(row => row.tier === receipt.tier);
-          const toolSha256 = createHash('sha256').update(readFileSync('tools/qa/accept/l10-cure-r10.ts')).digest('hex');
-          if (proof.sourceHash === receipt.sourceHash && proof.observerHash === receipt.observerHash && proof.toolSha256 === toolSha256 && result?.nativeStateHash === receipt.nativeStateHash && result.controlIdentical) {
-            const grant = result.grant;
-            add('L10-09', 'actual cure grant preserves both weapon racks', grant, 'actual canister acquisition; carried item true, installed false; exact unchanged LEFT/RIGHT racks', grant ? grant.tick > 0 && grant.carried && grant.item && !grant.installed && JSON.stringify(grant.before) === JSON.stringify(grant.after) : undefined, proofPath);
-            const controls = result.controlledMovement;
-            const directions = [{ x: 1, z: 0 }, { x: -1, z: 0 }, { x: 0, z: 1 }, { x: 0, z: -1 }];
-            const movementPass = controls?.length === 4 && directions.every(move => {
-              const tests = controls.filter(row => row.move.x === move.x && row.move.z === move.z);
-              const test = tests[0], baseline = test?.cases.find(row => !row.carried), carried = test?.cases.find(row => row.carried);
-              return tests.length === 1 && test.ticks === 120 && test.identical && test.cases.length === 2 && baseline && carried && !baseline.finalCarried && !baseline.finalItem && carried.finalCarried && carried.finalItem && /^[a-f0-9]{64}$/.test(baseline.trajectorySha256) && baseline.trajectorySha256 === carried.trajectorySha256;
-            }) && controls.some(test => test.cases.every(row => row.displacement >= 4));
-            add('L10-09', 'canister-only controlled movement trajectories', { routeWindows: result.movement, controls }, 'same production Resume; only canister flag/item differ; four cardinal keyboard inputs for120ticks; identical every-tick XYZ; at least one unblocked ≥4m traversal', controls ? movementPass : undefined, proofPath);
-          }
-        }
-      }
-      const outskirts = observation.regions['crash-outskirts'];
-      number('L10-01', 'R1 concurrent regular peak', competent && receipt.run?.completed ? outskirts?.regularPeak : null, 4, 8);
-      for (const group of ['crash-singletons', 'crash-road-pair', 'crash-bend', 'crash-pair']) number('L10-01', `${group} regular group size`, competent && receipt.run?.completed ? outskirts?.regularGroupPeaks?.[group] : null, 1, 2);
+      // PO 2026-11-08 replaces the old regional hordes, checkpoint weapons,
+      // distant introduction and centered Mega ring. Never score those retired targets.
+      const story = observation.l10Story;
       const first = observation.firstMinute;
       number('L10-01', 'first-minute regular infected peak', first.ticks >= 3599 ? first.regularPeak : null, 0, 8);
       number('L10-01', 'first-minute dog peak', first.ticks >= 3599 ? first.dogPeak : null, 0, 0);
-      number('L10-01', 'first-minute Alpha peak', first.ticks >= 3599 ? first.alphaPeak : null, 0, 0);
-      number('L10-02', 'actual Mega introduction time', observation.megaIntroduction ? observation.megaIntroduction.tick / 60 : null, 0, 120);
-      number('L10-02', 'Mega distance on introduction', observation.megaIntroduction?.distance, 80, Infinity);
-      if (competent) {
-        const proofPath = 'docs/reports/fix51-r10c/L10-introduction-proof.json';
-        if (existsSync(proofPath)) {
-          const proof = JSON.parse(readFileSync(proofPath, 'utf8')) as {
-            sourceHash: string; observerHash: string; toolSha256: string;
-            rows: { tier: string; nativeStateHash: string; controlIdentical: boolean; cues: { tick: number; kind: string; sourceId: number }[]; introduction: { id: number; tick: number; direct: number; pathMetres: number | null; hidden: boolean } | null }[];
-          };
-          const result = proof.rows.find(row => row.tier === receipt.tier);
-          const toolSha256 = createHash('sha256').update(readFileSync('tools/qa/accept/l10-intro-r10.ts')).digest('hex');
-          if (proof.sourceHash === receipt.sourceHash && proof.observerHash === receipt.observerHash && proof.toolSha256 === toolSha256 && result?.nativeStateHash === receipt.nativeStateHash && result.controlIdentical) {
-            const intro = result.introduction;
-            add('L10-02', 'actual Mega roar and impact introduction events', result.cues, 'same persistent Mega emits roar and impact by tick7200', intro ? ['roar', 'impact'].every(kind => result.cues.some(cue => cue.kind === kind && cue.sourceId === intro.id && cue.tick <= 7200 && cue.tick >= intro.tick)) : undefined, proofPath);
-            add('L10-02', 'Mega introduction actual body-clear route', intro, 'reachable own-clearance route; inactive streaming window is inconclusive', intro?.pathMetres !== null && intro?.pathMetres !== undefined ? Number.isFinite(intro.pathMetres) : undefined, proofPath);
-          }
-        }
+      number('L10-01', 'first-minute ordinary Alpha peak', first.ticks >= 3599 ? first.alphaPeak : null, 0, 0);
+      number('L10-02', 'Mega first widest-frame sighting', story?.firstMegaVisibleSeconds, 0, 180);
+      number('L10-02', 'distinct route sections with close Mega encounters', story?.closeSections.length, 3, Infinity);
+      add('L10-03', 'native story route reaches credits', receipt.run, 'unprotected ordinary-input completion', competent ? !!receipt.run?.completed : undefined);
+      number('L10-03', 'route duration near fifteen-minute target', competent && receipt.run?.completed ? receipt.run.time : null, 600, 1200);
+      number('L10-04', 'ordinary route concurrent bound', story?.outsideAssaultPeak, 0, 15);
+      add('L10-04', 'infected move before first widest-frame entry', story, 'nonempty observed census; zero first-entry idle actors', story?.seen ? story.idleEntries.length === 0 : undefined);
+      add('L10-09', 'natural hangar handoff restores full selectable arsenal', story?.fullArsenal, 'every returned weapon plus flamethrower present in LEFT/RIGHT racks', competent && state.states['cure-installed'] ? story?.fullArsenal : undefined);
+      number('L10-07', 'continuous Mega maximum step', observation.maxMegaStep, 0, 1);
+      const hold = phase('step/hold');
+      if (hold && !competent) {
+        number('L10-11', 'hold player windups per minute', hold.attacksPerMinute, 8, Infinity);
+        number('L10-11', 'hold bounded-path reachable share', hold.boundedPaths?.minimumPercent, 90, 100);
       }
-
-      if (competent) for (const [id, region] of Object.entries(observation.regions)) {
-        const minimum = ['crash-outskirts', 'residential-fringe'].includes(id) ? 2 : 4;
-        number('L10-04', `${id} player windups per minute`, region.ticks > 60 ? region.attacks * 3600 / region.ticks : null, minimum, Infinity);
-      }
-      const competentHold = phase('step/hold');
-      if (competent) {
-        number('L10-11', 'competent hold player windups per minute', competentHold?.attacksPerMinute ?? null, 8, Infinity);
-        number('L10-11', 'competent hold bounded-path reachable share', competentHold?.boundedPaths?.minimumPercent ?? null, 90, 100);
-      } else {
-        const proofPath = 'docs/reports/fix51-verify/receipts/L10-hold.json';
-        if (existsSync(proofPath)) {
-          const proof = JSON.parse(readFileSync(proofPath, 'utf8')) as {
-            sourceHash: string; observerHash: string; toolSha256: string; rows: { tier: string; activationTick: number | null; arenaAfterActivationSeconds: number | null; observedSeconds: number; peakAlive: number; nativeStateHash: string; controlIdentical: boolean; persistentMegaIds?: number[]; scheduledRelocations?: { tick: number; id: number; writer: string; metres: number }[]; phases: PhaseReceipt[] }[];
-          };
-          const result = proof.rows.find(item => item.tier === receipt.tier);
-          const expectedToolHash = createHash('sha256').update(readFileSync('tools/qa/accept/l10-hold-r10.ts')).digest('hex');
-          const fresh = proof.sourceHash === receipt.sourceHash && proof.observerHash === receipt.observerHash && proof.toolSha256 === expectedToolHash && result?.nativeStateHash === receipt.nativeStateHash && result.controlIdentical;
-          if (fresh && result) {
-            const mega = result.phases.find(item => item.key === 'step/mega');
-            const peakBounds = receipt.tier === 'low' ? [75, 95] : [140, 190];
-            number('L10-11', 'full active assault hold duration', result.observedSeconds, 240, 240);
-            number('L10-11', 'capped active infected peak', result.peakAlive, peakBounds[0], peakBounds[1]);
-            number('L10-11', 'hold player windups per minute', mega?.attacksPerMinute ?? null, 8, Infinity);
-            number('L10-11', 'hold bounded-path reachable share', mega?.boundedPaths?.minimumPercent ?? null, 90, 100);
-            number('L10-11', 'Mega arena arrival after charge activation', result.arenaAfterActivationSeconds, 120, 160);
-            for (const id of ['L10-07', 'L10-11']) add(id, 'persistent Mega identity without scheduled replacement or teleport', { ids: result.persistentMegaIds, relocations: result.scheduledRelocations }, 'one persistent ID; zero scheduled relocations (E32-AC21)', result.persistentMegaIds && result.scheduledRelocations ? result.persistentMegaIds.length === 1 && result.scheduledRelocations.length === 0 : undefined, proofPath);
-          }
-        }
-      }
-      if (competent) {
-        const proofPath = 'docs/reports/fix51-verify/receipts/L10-regional-reach.json';
-        if (existsSync(proofPath)) {
-          const proof = JSON.parse(readFileSync(proofPath, 'utf8')) as {
-            sourceHash: string; observerHash: string; codeHash: string; results: { tier: string; sourceHash: string; observerHash: string; control: { expected: string; observed: string; identical: boolean }; regions: { region: string; pathSamples: number; minimumPercent: number; status: string }[] }[];
-          };
-          const result = proof.results.find(item => item.tier === receipt.tier);
-          const expectedCodeHash = createHash('sha256').update(readFileSync('tools/qa/accept/l10-region-reach-r10.ts')).digest('hex');
-          const fresh = proof.sourceHash === receipt.sourceHash && proof.observerHash === receipt.observerHash && proof.codeHash === expectedCodeHash && result?.sourceHash === receipt.sourceHash && result.observerHash === receipt.observerHash && result.control.expected === receipt.nativeStateHash && result.control.observed === receipt.nativeStateHash && result.control.identical;
-          if (fresh) for (const region of result.regions) add('L10-04', `${region.region} bounded-path reachability`, { pathSamples: region.pathSamples, minimumPercent: region.minimumPercent }, '≥90%; read-only canonical-state control identical', region.pathSamples > 0 ? region.minimumPercent >= 90 : undefined, proofPath);
-        }
-      }
+      // A moving competent player can clear arrivals before reaching the crowd
+      // cap. Use the separately labelled survival-protected stationary policy for peak coverage.
+      number('L10-11', 'bounded final assault crowd peak', !competent && state.states['charge-active'] ? story?.assaultPeak : null, 1, low ? 14 : 22);
       add('L10-10', 'actual eligible charge ticks and increments', observation.charge, '3600 eligible ticks; 3600 increments; no invalid increment', observation.charge.maximum === 3600 ? observation.charge.eligibleTicks === 3600 && observation.charge.incrementTicks === 3600 && observation.charge.invalidIncrements === 0 : undefined);
       add('L10-13', 'release transaction observed prerequisites', observation.release, 'charge3600 + installed + Mega dead + player at console', observation.release ? observation.release.charge === 3600 && observation.release.installed && observation.release.dead && observation.release.distance <= 2.5 : undefined);
       const front = state.cureFront;
-      add('L10-14', 'native cure radius speed', front ? { elapsed: front.elapsed, radius: front.radius } : null, '10 m/s', front && front.elapsed > 0 ? Math.abs(front.radius / (front.elapsed / 60) - 10) < 1e-6 : undefined);
-      number('L10-14', 'playable epilogue counter duration', state.counters['epilogue-ticks'] ? state.counters['epilogue-ticks'] / 60 : null, 120, 180);
+      add('L10-14', 'native cure radius speed', front ? { elapsed: front.elapsed, radius: front.radius } : null, '10 m/s playable; accelerated journey montage', front && front.elapsed > 0 ? front.radius === cureRadius(front.elapsed) : undefined);
+      number('L10-14', 'release to title duration', state.counters['epilogue-ticks'] ? state.counters['epilogue-ticks'] / 60 : null, 60, 75);
       break;
     }
   }
@@ -625,7 +472,7 @@ export function evaluate(receipt: NativeReceipt, path: string): Clause[] {
 
 /** Only these rows have all clauses covered by the current native checks at both qualities. */
 export const completeNativeRows = new Map<string, { clause: string; policy: string; level?: string }[]>([
-  ['L10-14', ['continuous physical epilogue control and final camera pullback', 'actual cure front mortality immunity and all species fixture', 'reviewed actual mist title credits and menu sequence'].map(clause => ({ clause, policy: 'physical-epilogue' }))],
+  ['L10-14', ['continuous physical epilogue control and final camera pullback', 'actual cure front recovery immunity and all species fixture', 'reviewed actual mist title credits and menu sequence'].map(clause => ({ clause, policy: 'physical-epilogue' }))],
   ['G-10', [{ clause: 'moving approach collection for every pickup class', policy: 'controlled-fixture', level: 'L6' }]],
   ['G-11', [...Array.from({ length: 10 }, (_, i) => ({ clause: 'duplicate pickup transactions since the last restore', policy: 'complete', level: `L${i + 1}` })), { clause: 'pickup remains removed for 120 ticks after transaction', policy: 'controlled-fixture', level: 'L1' }]],
   ['G-12', [{ clause: '35-follower production eligibility and cap', policy: 'controlled-fixture', level: 'L7' }]],
@@ -771,40 +618,46 @@ export const completeNativeRows = new Map<string, { clause: string; policy: stri
     ...['charge inside/outside/dead/resume boundary and pause instruction', 'minigun rounds and heat per full-speed second', 'minigun overheat lock', 'minigun unlock threshold'].map(clause => ({ clause, policy: 'controlled-fixture' })),
   ]],
   ['L10-13', [{ clause: 'release transaction observed prerequisites', policy: 'complete' }, { clause: 'release predicate missing-prerequisite matrix', policy: 'controlled-fixture' }]],
-  ['L10-02', ['actual Mega introduction time', 'Mega distance on introduction', 'actual Mega roar and impact introduction events', 'Mega introduction actual body-clear route'].map(clause => ({ clause, policy: 'complete' }))],
+  // PO 2026-11-08: these compound rows retain explicit visual/controlled
+  // clauses. Native route observations alone cannot close them.
+  ['L10-01', [
+    ...['first-minute regular infected peak', 'first-minute dog peak', 'first-minute ordinary Alpha peak'].map(clause => ({ clause, policy: 'complete' })),
+    { clause: 'reviewed wreck corn farms and livestock', policy: 'real-input-webgl2' },
+  ]],
+  ['L10-02', [
+    ...['Mega first widest-frame sighting', 'distinct route sections with close Mega encounters'].map(clause => ({ clause, policy: 'complete' })),
+    { clause: 'physical gap escape and pre-finale immunity', policy: 'controlled-fixture' },
+    { clause: 'reviewed pre-finale hidden Mega health bar', policy: 'real-input-webgl2' },
+  ]],
   ['L10-03', [
-    { clause: 'same-tick regional count and species composition', policy: 'complete' },
-    { clause: 'residential dogs follow actual handgun pickup', policy: 'complete' },
-    ...['residential-fringe', 'industrial-area', 'military-zone', 'research-campus', 'destroyed-corridor', 'dispersal-complex'].map(region => ({ clause: `${region} normal local concurrent peak bound`, policy: 'complete' })),
-    ...['residential-fringe', 'industrial-area', 'military-zone', 'research-campus', 'destroyed-corridor'].flatMap(region => [
-      { clause: `${region} concurrent dog peak`, policy: 'complete' },
-      ...(['industrial-area', 'military-zone', 'research-campus', 'destroyed-corridor'].includes(region) ? [{ clause: `${region} concurrent Alpha peak`, policy: 'complete' }] : []),
-    ]),
-    ...['military-breach', 'military-column', 'military-exit', 'corridor-line', 'corridor-breach', 'corridor-exit'].map(group => ({ clause: `${group} regular group size`, policy: 'complete' })),
+    ...['native story route reaches credits', 'route duration near fifteen-minute target'].map(clause => ({ clause, policy: 'complete' })),
+    { clause: 'reviewed ordered place-specific story regions', policy: 'real-input-webgl2' },
   ]],
   ['L10-04', [
-    ...['crash-outskirts', 'residential-fringe', 'industrial-area', 'military-zone', 'research-campus', 'destroyed-corridor', 'dispersal-complex'].map(region => ({ clause: `${region} bounded-path reachability`, policy: 'complete' })),
-    ...['crash-outskirts', 'residential-fringe', 'industrial-area', 'military-zone', 'research-campus', 'destroyed-corridor', 'dispersal-complex'].map(region => ({ clause: `${region} player windups per minute`, policy: 'complete' })),
+    ...['ordinary route concurrent bound', 'infected move before first widest-frame entry'].map(clause => ({ clause, policy: 'complete' })),
+    { clause: 'observed quiet stretches and authored scare cadence', policy: 'complete' },
   ]],
-  ['L10-11', [
-    ...['competent hold player windups per minute', 'competent hold bounded-path reachable share'].map(clause => ({ clause, policy: 'complete' })),
-    ...['full active assault hold duration', 'capped active infected peak', 'hold player windups per minute', 'hold bounded-path reachable share', 'Mega arena arrival after charge activation', 'persistent Mega identity without scheduled replacement or teleport'].map(clause => ({ clause, policy: 'stationary' })),
-  ]],
-  ['L10-05', ['all four named checkpoint pickup and snapshot transactions', 'inventory changes alone spawn zero enemies at every weapon approach'].map(clause => ({ clause, policy: 'complete' }))],
-  ['L10-07', [
-    ...['observed ordinary cruise ratio to nominal player run', 'continuous same-ID pursuit without LOS or teleport', 'actual paired roar/impact intervals'].map(clause => ({ clause, policy: 'complete' })),
-    ...['actual centered pulsing band ring without Mega pin', 'actual paired audio gains increase at closer distance'].map(clause => ({ clause, policy: 'real-input-webgl2' })),
-  ]],
+  ['L10-05', ['six retained approach pickups and story-only objectives', 'inventory alone cannot release enemies'].map(clause => ({ clause, policy: 'controlled-fixture' }))],
   ['L10-06', [
     ...['native dog speed ratio', 'actual dog hit damage/reach', 'actual dog telegraph duration', 'dog cooldown between hit and next windup'].map(clause => ({ clause, policy: 'controlled-fixture' })),
     ...[.5, 1.5].map(zoom => ({ clause: `reviewed living infected dog distinct from corgi at zoom${zoom}`, policy: 'real-input-webgl2' })),
   ]],
-  ['L10-09', [
-    ...['actual cure grant preserves both weapon racks', 'canister-only controlled movement trajectories'].map(clause => ({ clause, policy: 'complete' })),
-    { clause: 'reviewed airborne research subtitles and backpack canister', policy: 'real-input-webgl2' },
-    { clause: 'carried canister restored by actual checkpoint death', policy: 'checkpoint-death-fixture' },
+  ['L10-07', [
+    { clause: 'continuous Mega maximum step', policy: 'complete' },
+    { clause: 'body clearance and longer gap detours', policy: 'controlled-fixture' },
+    ...['reviewed real-position pulsing red Mega dot', 'actual paired audio gains increase at closer distance'].map(clause => ({ clause, policy: 'real-input-webgl2' })),
   ]],
-  ['L10-01', ['first-minute regular infected peak', 'first-minute dog peak', 'first-minute Alpha peak', 'R1 concurrent regular peak', ...['crash-singletons', 'crash-road-pair', 'crash-bend', 'crash-pair'].map(group => `${group} regular group size`)].map(clause => ({ clause, policy: 'complete' }))],
+  ['L10-09', [
+    { clause: 'safe indoor cast and exact continuity dialogue', policy: 'controlled-fixture' },
+    { clause: 'reviewed hangar enclosure cast and props', policy: 'real-input-webgl2' },
+    { clause: 'natural hangar handoff restores full selectable arsenal', policy: 'complete' },
+    { clause: 'canister slot movement and checkpoint restoration', policy: 'controlled-fixture' },
+  ]],
+  ['L10-11', [
+    ...['hold player windups per minute', 'hold bounded-path reachable share'].map(clause => ({ clause, policy: 'complete' })),
+    { clause: 'bounded final assault crowd peak', policy: 'stationary' },
+    { clause: 'reinforcements continue after charging', policy: 'controlled-fixture' },
+  ]],
   ['L10-15', ['cure-crash', 'cure-residential', 'cure-industrial', 'cure-military', 'cure-research-entry', 'cure-research', 'cure-corridor', 'cure-complex', 'cure-disperse-ready'].flatMap(checkpoint => [
     { clause: `mortal regional checkpoint ${checkpoint} (cure/boss comparison still partial)`, policy: 'checkpoint-death-fixture' },
     { clause: `cure and boss HP/death snapshot at ${checkpoint}`, policy: 'checkpoint-death-fixture' },

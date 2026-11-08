@@ -286,6 +286,12 @@ export class AudioEventMapper {
             return;
         }
         if (event.type === 'dialogue' || event.type === 'dialogue.line') {
+            if (event.type === 'dialogue.line' && event.id === 'L1.delivered') {
+                // The same short phone vibration closes the first and last delivery.
+                this.host.play('ui.switch', { dry: true, rate: .25, gain: 2.5 });
+                this.host.caption(event.text, undefined, 4);
+                return;
+            }
             if (event.type === 'dialogue' && event.recording === 'cure' || event.type === 'dialogue.line' && event.id === 'L10.research') {
                 this.host.graph.duck('radio', t, 14);
                 this.host.play('cure.recording', { gain: .3, lowpass: 2400, dry: true });

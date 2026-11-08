@@ -40,6 +40,10 @@ export const catalog: Readonly<Record<string, ActionDef>> = Object.fromEntries((
   gun('smg', 18, 20, 8, 30, 1.5, 2),
   { ...gun('hunting-rifle', 90, 32, 1, 5, 2.4, 0), tier: 1 },
   gun('assault-rifle', 26, 28, 7.5, 30, 2, 1, 2),
+  // L10 signature issue from the safe hangar: a short-range, five-ray fire cone.
+  // The machine-gun mesh is a temporary held-model placeholder until the asset lane lands a dedicated model.
+  { ...gun('flamethrower', 4, 6, 3, 60, 3, 32, 3), viewAssetId: 'wpn.machine-gun', iconId: 'icon.machine-gun', pellets: 5, stagger: .15,
+    status: { kind: 'burning', duration: 3, maxStacks: 1, dps: 8, slow: 0 } },
   fixtures['weapon.machine-gun'],
   // E22 §5.3 the army's issue machine gun (the L4-L6 main weapon): 14 per round, 10 rounds per second, 4 degrees of spread, 26 m, pierce 1
   // (a round passes through one infected and hits the next). No ammunition system (00 §6.1): no magazine, reload or overheat.
@@ -65,7 +69,7 @@ export const catalog: Readonly<Record<string, ActionDef>> = Object.fromEntries((
  * live in `src/data/minigun.ts`. Presentation (tracer, muzzle, noise cue) resolves the id through `action()`.
  */
 export const mountedActions: Readonly<Record<string, ActionDef>> = {
-  'weapon.rotary-minigun': validateAction({ ...gun('rotary-minigun', 8, 35, 20, 0, 0, 2.5, 3), viewAssetId: 'wpn.minigun-mounted', iconId: 'icon.machine-gun', stagger: 0.1, upgradeHooks: [] }),
+  'weapon.rotary-minigun': validateAction({ ...gun('rotary-minigun', 18, 35, 20, 0, 0, 2.5, 3), viewAssetId: 'wpn.minigun-mounted', iconId: 'icon.machine-gun', stagger: 0.1, upgradeHooks: [] }),
 };
 /** Fixture-only projectile remains available for E05 regression, outside the player roster. */
 export function action(id: string): ActionDef { const def = catalog[id] ?? mountedActions[id] ?? fixtures[id]; if (!def) throw new Error(`Unknown action: ${id}`); return def; }
