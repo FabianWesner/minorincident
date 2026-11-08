@@ -1,6 +1,6 @@
 # R12 natural group movement
 
-**Status: NOT merged-ready. Correction `ff834fdc` is awaiting its final native audit. L7 pace coverage remains unqualified on both main and lane.**
+**Status: BLOCKED / NOT merged-ready. All native verification is finished. L7 needs a qualifying complete native route; L8 retains additional raw slow-follower rows and increased waiting.**
 
 PO: “Group dynamic in general is strange... They move too parallel...”
 
@@ -8,7 +8,7 @@ PO: “Group dynamic in general is strange... They move too parallel...”
 
 Survivors use deterministic loose slots, independent route-safe lateral sway, staggered starts after resting, and individual ordinary movement response. Settled followers look toward visible threats, the courier, neighbors, or a personal glance. L5 retains its brisk response and authored follow band. Checkpoint restore rebases the new rest/reaction timers; threat glances respect line of sight.
 
-Requested main `08149d1a` was merged as `d11dea91`. R12 variation and R13's L7 companion response share the response selector; R13's distinct bus queue rows and L8 catch-up/boarding remain present. Main `78219de9`, including the current L8 story and Alpha changes, was subsequently merged as `aaa66a18`. Tested runtime source hash: `10b2cc9caaf5de60ac81e25bd1006529ec6e6a924168cd8057b8f0f67a1392f1`. Read-only hashing inside the active remote job confirms this runtime hash, the observer hash, and the audit-tool hash match the local files ([lane fingerprint](remote-runtime.json)). The active clean-main job has its own verified source hash and the identical observer/audit hashes ([main fingerprint](remote-main-runtime.json)).
+Requested main `08149d1a` was merged as `d11dea91`. R12 variation and R13's L7 companion response share the response selector; R13's distinct bus queue rows and L8 catch-up/boarding remain present. Main `78219de9`, including the current L8 story and Alpha changes, was subsequently merged as `aaa66a18`. First-comparison runtime source hash: `10b2cc9caaf5de60ac81e25bd1006529ec6e6a924168cd8057b8f0f67a1392f1`. Read-only hashing inside that remote job confirms this runtime hash, the observer hash, and the audit-tool hash match the local files ([lane fingerprint](remote-runtime.json)). The clean-main comparison job has its own verified source hash and the identical observer/audit hashes ([main fingerprint](remote-main-runtime.json)).
 
 ## Native motion
 
@@ -40,7 +40,7 @@ Same probe on clean `78219de9`, low quality, seed 1 ([main receipts](main-metric
 | L7 | 93.9% | 9.7% |
 | L8 | 42.5% | 3.7% |
 
-The L7 samples stop early on the failed low route; they are not a full departure-route proof. L7 high reaches the simulation limit while clean main dies at 73.5 s. L8 exhausts its native budget on both snapshots and both tiers. These completion failures remain visible; they do not establish a clean campaign gate. A separate ordinary-input, final-state-only L8 observation at 300 s found all current living passengers seated while the escape story remained active ([observation](l8-route-observation.json)). That observation does not replace the pending follower audit.
+The L7 samples stop early on the failed low route; they are not a full departure-route proof. L7 high reaches the simulation limit while clean main dies at 73.5 s. In this first-comparison sample, L8 exhausts its native budget on both snapshots and both tiers. Corrected-source outcomes are recorded below. These completion failures remain visible; they do not establish a clean campaign gate. A separate ordinary-input, final-state-only L8 observation at 300 s found all current living passengers seated while the escape story remained active ([observation](l8-route-observation.json)). That observation does not replace the follower audit.
 
 ## Queue integration and unit gates
 
@@ -91,3 +91,26 @@ L2/L3/L5/L6 response paths are unchanged by `ff834fdc`; the preceding six-level 
 | L8 / low | complete | 0.331 | 0.943 | 5.4% |
 
 L8 low now completes at 213.6 s. L8 high still exhausts its route budget; L7 still fails both mortal routes. Motion samples on incomplete routes do not qualify missing pace votes.
+
+## Completed corrected-source audit (`ff834fdc`)
+
+The final six-level remote audit completed in **487.1 s**, exited 1 with **8 top-level flags**, and retained the diagnostic `PARTIAL_LEVEL_SELECTION` flag. [Full follower comparison](follower-comparison-fixed.json) includes every raw follower phase, waiting row, pace vote, seed validity and input audit SHA256. The source/evaluator fingerprint is linked above. This is not a passing complete threat gate.
+
+| Level | Corrected source versus clean main |
+| --- | --- |
+| L2 | Same follower flags and waiting (0%). |
+| L3 police | Same follower flags and waiting (1.21%). |
+| L5 | No pace failures; skilled waiting falls from 0.62% to 0%. |
+| L6 | Removes five exit slow-follower IDs (16/20/23/30/42). Waiting share rises 53.70% → 70.72%, while stationary-far time falls 535.85 → 516.52 s and the route completes sooner. |
+| L7 | Waiting improves 16.06% → 4.92%, removing the >10% flag. All three skilled seeds still fail; required IDs 60/63 remain unobserved under the unchanged validity rule. New departure-only raw samples cannot be compared to main's absent phase. |
+| L8 | Completes at 213.63 s; required-ID pace flags match main (354). Raw breached/escape rows add slow IDs 355/361 (main already flags 354/356). Skilled waiting rises 1.86% → 9.44% (1.80 → 11.33 stationary-far seconds). |
+
+Remaining top-level flags are L3 competent rate, L6/L7 kiting rate, L7 required-ID coverage (60/63), L8 late first attack and slow companion 354, plus partial selection. L6 entry-wave count mismatches and changed L8 outlet/attack flags remain in the full raw phase comparison even when they are not top-level failures.
+
+**Acceptance remains unresolved:** L7 needs a native route that completes and qualifies the required pace votes. Shared main failure is not passing evidence. L8's additional raw slow rows and increased stationary time also prevent a broad no-lag-regression claim. Quiet boarding passes cannot substitute for those mortal-route checks. No criteria, validity rules or follower IDs were relaxed.
+
+### Rejected follow-up trials and handoff
+
+Two local diagnostics tested a smaller L8 sway amplitude and suppressing sway while an ally attacks/tracks an enemy. Both added required-ID pace failures; combat-only sway also exceeded the 10% skilled waiting bound. Both changes were reverted. [Diagnostic summaries](rejected-trials.json) are explicitly not full threat audits. Final runtime remains the fully audited `ff834fdc` source; later commits contain reports only.
+
+Required follow-up: provide/fix a complete ordinary-input L7 native route that preserves current seed qualification, then rerun required follower votes. Resolve L8 raw slow IDs 355/361 and stationary-far increase before claiming broad no-regression acceptance. The current implementation and receipts are committed for review, but the goal **Natural group movement merged-ready** is not achieved. No browser QA, push or deploy was performed.
