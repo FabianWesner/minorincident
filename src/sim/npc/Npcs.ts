@@ -7,7 +7,7 @@ import { Companion } from './Companion';
 import { Escorts } from './Escorts';
 import { populateMorning } from './MorningRoutines';
 import { Civilians } from './Civilians';
-import { l5FollowerTracking, moveAgent } from '../locomotion/AgentMotion';
+import { followerTracking, l5FollowerTracking, moveAgent } from '../locomotion/AgentMotion';
 import type { Point } from './types';
 /** E08 composition and reused E07 navigation. Public authoring hooks are also headless test hooks. */
 export class Npcs {
@@ -133,7 +133,7 @@ export class Npcs {
     // Calm L3 personal-space corrections already track her swept step; motor
     // lag must not let the accelerating courier overtake that correction.
     moveAgent(e, dx * 60, dz * 60, nav, this.world.tick, actorRadius(e), e.civilian?.ally?.follow?.spacingAt === this.world.tick,
-      this.world.scenario === 'L5' && (e.companion || e.civilian?.survivor?.briskAt === this.world.tick) ? l5FollowerTracking : undefined);
+      this.world.scenario === 'L7' && e.companion ? followerTracking : this.world.scenario === 'L5' && (e.companion || e.civilian?.survivor?.briskAt === this.world.tick) ? l5FollowerTracking : undefined);
     if ((e.civilian || e.escort) && this.traffic.overlaps(e.transform)) { e.transform.x = x; e.transform.z = z; }
   }
   /** Place collision-safe rectangular routines from authored navigation, never inside buildings. */
