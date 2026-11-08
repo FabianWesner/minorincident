@@ -18,5 +18,5 @@ try {
     }
   }
   writeFileSync('docs/reports/eg-l10-story/evidence/route-diagnostic.json', JSON.stringify(rows, null, 2));
-  console.log(JSON.stringify(rows.slice(-4)));
+  console.log('route diagnostic captured', rows.length, 'samples');
 } finally { w.dispose(); }
