@@ -474,13 +474,25 @@ export class LevelSixSubway {
     return {rescued:out.length,survivors:out.map(r=>r.key),survivorsIn:s.survivors.length,survivorsLost:s.survivors.filter(r=>r.status==='dead'||r.status==='turned').length,escapedSurvivors};
   }
   /** PO 10-20 #65: objective text while the courier is away from the retreating group. */
+  static regroupTarget(mission: Mission | null | undefined): EntitySnapshot | undefined {
+    const s=mission?.state.l6;
+    if(!mission||!s?.strayed||(s.phase!=='retreat'&&s.phase!=='exit'))return;
+    const p=mission.world.entities.get(1)!.transform;
+    let nearest:EntitySnapshot|undefined;
+    for(const r of s.survivors){
+      const e=mission.world.entities.get(r.id);
+      if(r.status!=='following'||!e||e.hidden||e.health.current<=0)continue;
+      if(e.id===s.alarm?.id)return e;
+      if(!nearest||distance(e.transform,p)<distance(nearest.transform,p))nearest=e;
+    }
+    return nearest;
+  }
   static text(mission: Mission | null | undefined): string | null {
     const s=mission?.state.l6;
     if(!s||(s.phase!=='retreat'&&s.phase!=='exit'))return null;
     if(s.strayed){
       const p=mission.world.entities.get(1)!.transform;
-      const living=s.survivors.filter(r=>r.status==='following').map(r=>mission.world.entities.get(r.id)).filter((e):e is NonNullable<typeof e>=>!!e&&!e.hidden&&e.health.current>0);
-      const target=living.find(e=>e.id===s.alarm?.id)??living.sort((a,b)=>distance(a.transform,p)-distance(b.transform,p))[0];
+      const target=LevelSixSubway.regroupTarget(mission);
       return target?`Rejoin ${survivorName(target)} · ${Math.ceil(distance(target.transform,p))} m`:'Stay with the group';
     }
     const wait=s.phase==='retreat'?s.waitFor:undefined;

@@ -253,6 +253,13 @@ test('interactions: only the open L6 gate the group is heading for offers its pr
       Object.assign(courier.transform, { x: 400, z: 200 });
       l6.strayed = true;
       expect(LevelSixSubway.text(m)).toMatch(/^Rejoin .+ · \d+ m$/);
+      const follower = LevelSixSubway.regroupTarget(m)!;
+      const alarm = l6.alarm;
+      l6.alarm = { key: 'regroup-test', id: follower.id, x: -1, z: -1, kind: 'attack', text: 'Survivor under attack!', until: w.tick - 1 };
+      expect(LevelSixSubway.regroupTarget(m)?.id, 'regroup keeps locating the live survivor after the attack banner expires').toBe(follower.id);
+      follower.hidden = true;
+      expect(LevelSixSubway.regroupTarget(m)?.id, 'escaped or hidden survivors cannot keep a rescue cue').not.toBe(follower.id);
+      follower.hidden = false; l6.alarm = alarm;
       l6.strayed = false;
       for (let i = 0; i < 5400; i++) {
         w.update();
