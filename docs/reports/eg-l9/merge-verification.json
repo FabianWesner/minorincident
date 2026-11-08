@@ -2,8 +2,7 @@
   "mainRevision": "78219de9",
   "mergeRevision": "4ca5ee13",
   "firstCheckedRevision": "27727701",
-  "latestRevisionAwaitingChecks": "fabcef57",
-  "status": "Fresh rerun pending",
+  "status": "Incomplete: main merged; fresh unit budget and native evacuation gates fail",
   "firstBatch": {
     "checks": {
       "typecheck": 0,
@@ -45,5 +44,112 @@
     "Have the ordinary input bot defend exposed survivors, discard its obsolete camp-approach waypoint after evacuation, and steer around the stopped bus.",
     "Extend the existing vehicle test with actual ground-target hatch damage; no additional test cases."
   ],
-  "browser": "Not run, as instructed"
+  "browser": "Not run, as instructed",
+  "latestImplementationRevision": "21cacbee",
+  "latestImplementationVerification": "Unverified three-line goodbye-exit fix after the completed fabcef57 batch; no new check left running.",
+  "secondBatch": {
+    "checkedRevision": "fabcef57",
+    "checks": {
+      "typecheck": 0,
+      "lint": 0,
+      "unit": 1,
+      "road-low": 1
+    },
+    "unit": {
+      "status": "Timed out before suite completion; no assertion failure reported",
+      "vehicleFile": "Passed, including merged API and ground-target hatch damage assertions",
+      "wallSeconds": 245.1,
+      "budgetSeconds": 240,
+      "underlyingExitCode": 124
+    },
+    "route": {
+      "sourceHash": "19f970a707106ee2889cece514770b170e7318a022b531a5e7b012375bbdb766",
+      "observerHash": "2df26dc77eb78530c9820e18bde4f658fa978a05f70510f79415499d8ba6d7c0",
+      "revision": "a3161a42c16841c42823bc61a22b9982e59184d6",
+      "route": "road",
+      "tier": "low",
+      "method": "Production LevelNineBot inputs, native Rapier/AI and normal campaign state. --zero is one explicit initial damage fixture; no immortality, teleports, actor writes or objective skips.",
+      "completed": false,
+      "seconds": 600,
+      "hp": 100,
+      "durability": 360,
+      "peakAlive": 92,
+      "peakChunks": 9,
+      "grabs": 3,
+      "shakes": 3,
+      "playerHits": 0
+    },
+    "collisionFailures": 0,
+    "admissionViolations": [],
+    "evacuated": [
+      671
+    ],
+    "survivors": [
+      {
+        "id": 669,
+        "key": "dale",
+        "position": {
+          "x": 460.8880871569004,
+          "z": -17.267559754378816,
+          "y": 0.7,
+          "yaw": -3.1635826529673627
+        },
+        "hp": 100
+      },
+      {
+        "id": 670,
+        "key": "rosa",
+        "position": {
+          "x": 464.09477054335633,
+          "z": -5.6658668471159235,
+          "y": 0.7,
+          "yaw": 2.0088321696666442
+        },
+        "hp": 100
+      },
+      {
+        "id": 671,
+        "key": "okafor",
+        "position": {
+          "x": 478.84896860702537,
+          "z": -15.195755097039052,
+          "y": 0.7,
+          "yaw": -1.7845384606049113
+        },
+        "hp": 100,
+        "passengerOf": 684
+      },
+      {
+        "id": 672,
+        "key": "mia",
+        "position": {
+          "x": 461.42063977827286,
+          "z": -16.791302626843628,
+          "y": 0.7,
+          "yaw": 1.0205267185049496
+        },
+        "hp": 100
+      },
+      {
+        "id": 673,
+        "key": "sam",
+        "position": {
+          "x": 461.3092612689409,
+          "z": -7.8174718380981005,
+          "y": 1.7954347610473633,
+          "yaw": 2.0087337811811072
+        },
+        "hp": 100,
+        "passengerOf": 667
+      }
+    ],
+    "roadReceiptSha256": "795d0a6eacb2e2ceb18d8c2498ee9a012d0f51a18bcfdfb95f1bef350345baf1",
+    "rawReceipt": "merged-road-low.json"
+  },
+  "followUps": [
+    "Qualify 21cacbee: corgi paired-contact exemption now starts before disembarking beside Rosa.",
+    "Resolve remaining truck approaches: Dale and Mia stopped near the first truck; only Mr. Okafor arrived in the final ordinary run.",
+    "Complete the unprotected native road route and rerun the complete unit suite using remote timing isolation.",
+    "Browser QA remains with the QA lane."
+  ]
 }

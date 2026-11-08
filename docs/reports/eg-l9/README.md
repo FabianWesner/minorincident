@@ -15,7 +15,18 @@ Main `78219de9` is merged at `4ca5ee13`; the merged API assertions are committed
 
 The first remote batch on `27727701` passed typecheck, lint and the full unit suite (106 passed, one skipped, 27 files; 190.2 seconds within the 240-second budget). The unprotected low-tier road run failed at 211.98 seconds: the courier died after evacuation, pinned near the stopped bus. Collision invariants and admission checks had zero violations. This is a failing completion result.
 
-`fabcef57` addresses the observed causes: carried hatch rounds now pitch down to visible ground enemies using the existing deck-gun pattern, and that pitch is retained through projectile motion and destruction rays. The ordinary input bot defends exposed civilians, leaves camp toward the bridge rather than returning to the old approach bend, and reads the stopped bus as an obstacle. The existing vehicle test now asserts actual hatch damage as well as the merged speed/roll API. A fresh remote rerun of the same four checks is queued. See [merge-verification.json](merge-verification.json). No browser is used. The earlier build qualification below remains historical evidence, not qualification of this merge.
+`fabcef57` addresses the observed causes: carried hatch rounds now pitch down to visible ground enemies using the existing deck-gun pattern, and that pitch is retained through projectile motion and destruction rays. The ordinary input bot defends exposed civilians, leaves camp toward the bridge rather than returning to the old approach bend, and reads the stopped bus as an obstacle. The existing vehicle test now asserts actual hatch damage as well as the merged speed/roll API. The fresh remote rerun is complete, with failures recorded below. See [merge-verification.json](merge-verification.json). No browser was used. The earlier build qualification below remains historical evidence, not qualification of this merge.
+
+| Check on `fabcef57` | Result |
+| --- | --- |
+| `npm run typecheck` | PASS |
+| `npm run lint` | PASS |
+| `npm test -- --maxWorkers=1` | FAIL: budget timeout, 245.1 s versus 240 s; underlying exit 124. No assertion failure was reported before termination. Vehicle tests passed. |
+| Native low-tier road, seed 1, ordinary inputs | FAIL: evacuation did not complete within 600 simulation seconds. Courier and all five carried survivors stayed at 100 HP; durability 360; 3 grabs / 3 shakes; zero collision or admission violations. Mr. Okafor reached a truck; Dale, Mia and Rosa remained outside. |
+
+Raw evidence: [road receipt](merged-road-low.json), [unit output](merged-unit.txt). The first merged suite passed in 190.2 s; this later timeout does not qualify the final code. Retry the full suite with the existing remote `timing-isolated.sh --all` helper, retaining the 240-second limit.
+
+The final trace showed the corgi repeatedly exiting and reseating beside Rosa: the paired-contact exemption was applied only after it had exited. `21cacbee` moves that exemption before disembarking. **This three-line follow-up is committed but unverified.** Dale/Mia truck approach and full evacuation completion remain open. No further check was started because the 45-minute integration timebox was nearly exhausted; no check is left running. The requested “merged with main, checks green” goal is **not met**; the merge is complete and the remaining gates are explicit.
 
 ## Done: implementation
 
@@ -45,7 +56,7 @@ The final gameplay pin is `3d1785b2`; the sequential remote harness is `e8720e57
 
 ## Open / follow-up lanes
 
-1. **Native completion gate:** obtain passing unprotected low-tier runs on all three routes, high-tier road, and initial-zero-durability road. Previous runs that reached camp but timed out are failures. Rerun the native story fixture and ordinary route matrix before claiming the `3d1785b2` goodbye/boarding fix works.
+1. **Native completion gate:** first fix and qualify the remaining evacuation transfers described above; then obtain passing unprotected low-tier runs on all three routes, high-tier road, and initial-zero-durability road. Previous runs that reached camp but timed out are failures. Rerun the native story fixture and ordinary route matrix before claiming the `3d1785b2` goodbye/boarding fix works.
 2. **Fresh required checks:** resolve every fresh unit, acceptance or threat failure against the pinned source. Acceptance rows with rendered, device-performance or manual conditions must retain their unqualified status until QA supplies that evidence.
 3. **Browser QA:** inspect the full level in both quality tiers, including the visual crash and handover, with the checklist below. This lane was explicitly forbidden to open a browser.
 4. **Cross-level continuity:** the L10 story lane and its `crossingHandover.researchCompanion` consumer are now merged. Verify living Sam and fallback Private Reyes campaigns separately. The producer retains actual evacuated identities separately from the research companion.
