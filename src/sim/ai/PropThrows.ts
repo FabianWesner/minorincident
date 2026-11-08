@@ -118,8 +118,8 @@ export class PropThrows {
     if (this.reserved(id) || (source.infected?.arenaBoss?.roof ? !this.world.combat!.query.visible(source.transform, { x: p.x, y: (p.y ?? 0) + .5, z: p.z }) : !this.world.infected!.hearing.lineOfSight(source.transform, p))) return;
     this.object.id = id; this.object.corpse = corpse; this.object.living = living; this.objectDistanceSquared = squared;
   }
-  launchSpecial(source: EntitySnapshot, a: InfectedSpecialAttack, radius: number, range = 15, speed = 12, lift = false): boolean {
-    if (source.infected?.arenaBoss) return this.launchArenaSpecial(source, a, radius, range, speed, lift);
+  launchSpecial(source: EntitySnapshot, a: InfectedSpecialAttack, radius: number, arenaRange = 15, speed = 12, lift = false): boolean {
+    if (source.infected?.arenaBoss) return this.launchArenaSpecial(source, a, radius, arenaRange, speed, lift);
     if (!a.pickup && !this.pickupSpecial(source, a, radius)) return false;
     const object = a.pickup!;
     const entity = this.world.entities.get(object.objectId);
