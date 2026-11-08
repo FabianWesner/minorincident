@@ -163,3 +163,98 @@ The six points now lie on the opening road and measured direct field crossings. 
 | Phase 3 last stand | FAIL | Not reached in this prefix. |
 | Downed failure | FAIL | No finale death in this prefix. |
 | Pre-finale invulnerability / stagger / no bar | FAIL | Mega remains 3000 HP while following; stagger duration and bar presentation need direct observation. |
+
+## Step 5 re-review — full production-input route
+
+Receipt: [`evidence/after-step5-native.json`](evidence/after-step5-native.json), seed 42, low and high, gameplay snapshot `2e181f80`. This replaces the 650 s prefix as the route-delivery proof. Both runs use ordinary movement, aim, weapon selection and interaction; no health, position, inventory, mission or boss writes. The separately labelled [`evidence/finale-input.json`](evidence/finale-input.json) starts with an explicit arena setup and then uses ordinary inputs. Controlled mechanics receipts establish exact rules only after the full native route has demonstrated delivery.
+
+### Before / after pacing
+
+| Measure | Baseline low / high | After step 5 low / high | Result |
+|---|---|---|---|
+| Route completion | Low stalls at 36 s; high prefix misses 5 finds | Both reach credits, zero deaths | PASS |
+| Physical weapon finds | 0 / 1 of 6 in 180 s | **6 / 6**, first rifle at **37.40 s** on both | PASS |
+| First checkpoint | None / 45.65 s | **26.78 / 26.78 s** | PASS |
+| Maximum checkpoint spacing along walking route | Unbounded low stall / 572 m | **200.0 / 200.2 m**, including bends | PASS |
+| Longest gap without content | Baseline did not establish a cadence | **23.52 / 24.52 s** | PASS |
+| Fights / scares / Mega moments | No viable low route | **4 / 2 / 5** low; **4 / 2 / 4** high | PASS |
+| Installation / release | No completed finale | Install **879.0 / 883.0 s**; release **944.2 / 954.4 s** | PASS — walking/fighting reaches installation in ~14:40 |
+| Credits completed | Not reached | **1110.2 / 1120.4 s** (18:30 / 18:40, includes epilogue and 90 s credits) | PASS |
+
+“Fight” groups continuous combat until 20 s without a hit. “Mega moment” requires a visible proximity-band entry after a genuine >50 m separation; it is not a periodic proximity counter. Every beat records player position, subject position, simulation time and cumulative route metres. **Checkpoint and objective notifications do not count as content beats.** Start and the trailing gameplay interval are included in gap measurement; epilogue/credits have their own authored timeline.
+
+The walking-route distance ends at installation. Arena loops and the mounted gun's forced operator-position corrections are recorded separately as `arenaMetres`; they do not add hundreds of metres to a compact, 40 m radius arena. The earlier [`evidence/after-step5-first.json`](evidence/after-step5-first.json) exposes this audit defect as 578–803 m between two same-arena checkpoints. Its actual maximum route gap before installation is ~200 m. That first pass also caught an authored `decor-*` ID suppressing generated scenery, and a high-tier release-return stall; neither receipt is substituted for a successful final run.
+
+### Every L10 acceptance row
+
+Whole-row verdicts stay strict. A missing renderer/performance observation remains FAIL even when the native functional clauses pass. No browser was launched, as required by the brief.
+
+| Row | Before | After step 5 | Native route evidence / remaining criterion |
+|---|---|---|---|
+| L10-01 | FAIL | PASS | Both opening peaks are 7 regulars, 0 dogs, 0 ordinary Alphas. Start `(547,0)` has axe and safe same-ID corgi. The rebuilt base GLB at the PO's exact `(858.66,-93.68)` is `pal_gloveKhaki` (linear RGB `.3095,.2789,.1441`), replacing green; southern crop blocks and remnants cover that approach. Production assembly retains >100 corn blocks; the scenery-suppression regression has an assembly assertion. |
+| L10-02 | FAIL | PASS | Mega first visible **72.73 / 102.03 s**, same ID throughout. At the low farm crossing, `(923.4,-10.8)` at 93.2 s, separation grows **26.5→57.4 m**; military and corridor gaps similarly create real escapes. Full native HP stays 3000 before installation while weapons stagger it. Controlled repeated direct rockets do zero pre-finale damage; bar eligibility reads the installed flag. |
+| L10-03 | FAIL | PASS | All 15 story objectives complete, in the intended region/story order. Installation at 879.0/883.0 s meets the ~15 min walking/fighting target. The 56 s hangar conversation is authored dialogue, not idle timing padding. Release/credits timing is separated above. |
+| L10-04 | FAIL | PASS | Longest content gaps 23.52/24.52 s; two actual corn scare stingers on each tier. Ordinary population peaks outside assault **11 low /14 high**, during assault **12 /20**. Small admission groups are retained; finale alone admits escort waves. The latest user requirement of 20–40 s supersedes the older quiet-stretch wording. |
+| L10-05 | FAIL | PASS | Six retained physical pickups, including first rifle at 37.40 s `(694.4,22.4)`. The shared world/minimap marker points to the next find, a larger visible ground ring marks it, and the 4.5 m pickup trigger exceeds waypoint tolerance. Open farmhouse/barn/workshop/shed structures and tower/checkpoint props now sit beside the finds. Objectives remain story goals. |
+| L10-06 | FAIL | FAIL | Dogs are actually delivered along the route (seven dog births on high), with a separate safe corgi. The exact 1.1× speed, 0.65 s telegraph, ≤2 m reach, 2 s cooldown and 10 HP bite need the refreshed exact-mechanics receipt before this whole row passes. |
+| L10-07 | FAIL | PASS | The same actor follows without LOS, takes the long way round courier-width gaps, and reaches the arena continuously. Native gap receipts show ~50 m regained separation, not a cosmetic hint. The hide line now triggers within 5 m of an actual gap. Live actor coordinates feed the red pulsing HUD pin; step/roar cues remain attached to that actor. Deliberate native idle deaths in all seven regions prove stillness draws real attackers in. |
+| L10-08 | FAIL | FAIL | Production input uses `followTenFrustum` and the actual ×1.3 road framing; framing tests cover the ≤2.0 zoom bound and normal finale lens. **Night readability and rendered ground-slam visibility are not visually approved by a native sim run. Browser QA remains required under the brief's separate visual-QA section.** |
+| L10-09 | FAIL | PASS | At 520.02 s low `(2699.5,65.5)` / high `(2703.7,60.7)`, native census records all six living cast members, two guards, injured continuity speaker, **zero infected inside**. All ten Voss/Ruiz/Reyes lines run in order. Cure collection indoors grants the entire selectable arsenal plus flamethrower. The canister is a mission/backpack item, outside weapon slots; native exit speed remains normal. Controlled save/resume restores cast, conversation, cure and racks; living-Sam continuity also passes separately. |
+| L10-10 | FAIL | FAIL | Native charge has **exactly 3600 eligible and increment ticks**, zero invalid increments on both tiers. Exact outside/dead/pause boundaries and minigun 20 rounds/s, +12.5% heat/s, 100% lock / <40% unlock await the refreshed contract receipt. |
+| L10-11 | FAIL | FAIL | Ordinary assault peaks **12 low /20 high**, below 14/22; same stalker arrives with no teleport. Three-direction bounded waves and breathers remain. Skilled mounted runs have 100% bounded reachability but ~1.92 attacks/min because they shred arrivals. This is **not** the required stationary ground policy; its independent native receipt is pending. |
+| L10-12 | FAIL | PASS | Both ordinary-input runs finish with zero deaths and kill the same Mega. Native phase-3 samples show it on the platform at **y=3.78** after using the real stair. Shield/front-ground protection and rear stair pressure pass controlled capability checks; native completion uses the mounted gun and returned arsenal. No close-ground rocket exploit is used. Bar is enabled only after installation. |
+| L10-13 | FAIL | PASS | Native release receipts require charge 3600, cure installed, Mega dead and player within console radius. Release occurs at 944.22/954.35 s; controlled predicate checks cover attempts with missing prerequisites. |
+| L10-14 | FAIL | FAIL | Native release reaches cured healthy people, keeps the dead Mega dead and the same safe corgi, then Delivered at +50 s, title +65 s, full 90 s credits and completion. Same-ID conversion, initial playable movement and repeat-view skipping pass mechanics fixtures. **Shot continuity, hymn/credits readability, full-map panorama draw/performance and the rendered survivor scenes require visual review; sim events cannot establish those pixels.** |
+| L10-15 | FAIL | PASS | [`evidence/recovery-native.json`](evidence/recovery-native.json): 14 deliberate idle deaths, one in every region on both tiers, restore within 0.04 m of the reached local checkpoint, with identical rack IDs, cure flags, Mega ID and HP. None returns to level start. Phase-specific retry/retained-charge checks are separate below. |
+
+### Every L10 story-script beat, after step 5
+
+Demands are unchanged from the complete baseline story table above. Timed delivery comes from the full input-only receipt, not from placing the courier at a scene.
+
+| Story beat | Before → after step 5 | Route evidence / remaining check |
+|---|---|---|
+| Wake at wrong bank with corgi and axe | FAIL → PASS | Native start `(547,0)`, axe-only rack and same corgi ID 99, never harmed. |
+| Sam opening radio | FAIL → PASS | `L10.farmstead.reyes` at 0.02 s; standalone save has no living Sam. Living-Sam fixture preserves his model/lines. |
+| Mega climbs from wreck / hunts her | FAIL → FAIL | One persistent actor introduced at 45 s, first visible by 102.03 s, follows throughout. A literal animated climb from the river wreck is not established by the native receipt. |
+| River exit → farms | FAIL → PASS | River exit at 23.97 s `(645,-12.4)`; route now crosses dry farm ground, actual standing corn, ruins and dead livestock. |
+| Sam hiding-gap line | FAIL → PASS | Real gap trigger and traversed escape, rather than old X-only subtitle trigger; low farm escape gives 30.9 m additional separation. |
+| Hunting rifle farmhouse find | FAIL → PASS | 37.40 s `(694.4,22.4)`, physical pickup beside the open farmhouse. |
+| Machete barn find | FAIL → PASS | ~96–97 s `(935.6,-12)`, physical pickup beside the open barn. |
+| Nail gun workshop find | FAIL → PASS | ~198–200 s `(1392.6,15.5)`, physical pickup beside the workshop shell. |
+| Molotovs shed find | FAIL → PASS | ~146–148 s `(1160.5,-11.9)`, physical pickup beside the smaller shed shell. |
+| Barn roof HELP / three inside / graves | FAIL → FAIL | Retained roof panel carries the correct atlas text above three graves at `(942–946,-26)` beside the machete crossing. Exact layout/route proximity is fixed; rendered legibility has not been visually approved. |
+| First Mega field crossing | FAIL → PASS | Visible at 72.73/102.03 s, before 3:00. |
+| Restricted zone / warning sign | FAIL → FAIL | Native restricted-zone traversal and stronger infected/dogs are delivered; actual rendered warning wording/searchlight/quarantine composition needs visual review. |
+| Assault rifle with flashlight | FAIL → PASS | ~330 s `(1955.5,16.4)`, retained physical rifle beside the guard tower; its equipment light binding follows the selected rifle. |
+| Flashbangs | FAIL → PASS | ~356–358 s `(2072.6,-1.3)`, retained physical pickup beside checkpoint storage. |
+| Sam broken radio / hangar direction | FAIL → PASS | `L10.armory.reyes` during the restricted-zone crossing, before the hangar. |
+| Hangar safe-space arrival | FAIL → PASS | Full native arrival, six living cast members and zero infected inside; open door leads to indoor handoff. |
+| Voss dialogue and cure handover | FAIL → PASS | All ten ordered line IDs and real cure collection; courier says `I carried it`, Voss explains return to humanity. |
+| Ruiz arsenal return | FAIL → PASS | Native `L10.ruiz`, then cure transaction adds all campaign weapons to selectable racks. |
+| Voss flamethrower handover | FAIL → PASS | Native `L10.voss-prototype`; actual flamethrower in carried rack after handoff. |
+| Sam / Voss goodbye | FAIL → PASS | Coming / stay / delivery lines, with Reyes fallback where Sam is absent. |
+| Delivery route / Mega waiting outside | FAIL → PASS | Native exit, corridor fight and courier-width escape; same Mega follows and walks into the final complex. |
+| Install cure and hold console | FAIL → PASS | Install 879.0/883.0 s; exactly 3600 eligible charge ticks under real assault. |
+| Finale arsenal and hazards | FAIL → PASS | Native complete fight uses returned weapons/mounted gun; accessible fuel hazards and powered gate are verified separately. |
+| Voss release line and release | FAIL → PASS | `L10.release` after Mega/charge conditions, followed by real console release. |
+| Release 0–8 s | FAIL → PASS | Native cure front converts living actors, preserves dead Mega, leaves courier/corgi healthy. Ordinary movement remains enabled during initial 8 s; controlled same-ID conversion also passes. |
+| Journey wave 8–30 s | FAIL → FAIL | Native timeline reaches journey segment; rendered journey landmarks and curing continuity require visual review. |
+| Survivors 30–50 s | FAIL → FAIL | Native survivor/reyes radio segment is reached; rendered saved-survivor identities and staging require visual review. |
+| Delivered 50–65 s | FAIL → FAIL | Exact +50 s Delivered and +65 s title trigger are native; sunrise, phone framing and full-map pullback require visual approval. |
+| Title / credits / menu | FAIL → FAIL | Native title/90 s credits/thanks/completion and skip contracts are reached; readability/licence presentation and final menu rendering need visual approval. |
+| Optional corgi post-credits | FAIL → FAIL | Optional toy collection and thanks-phase mouth attachment are implemented and mechanics-tested. The canonical walking route does not detour to the optional porch toy, so this receipt cannot claim the conditional shot was received. |
+
+### Every Mega rule, after step 5
+
+| Rule | Before → after step 5 | Evidence / remaining requirement |
+|---|---|---|
+| Final arena | FAIL → PASS | Both full routes reach the machinery yard; real fuel hazards, console, mounted platform and one-use electric gate are reachable. |
+| Phase 1 arrival | FAIL → FAIL | Full native phase 1 begins 879.03/883.03 s with 3000 HP and escort waves. Charge-into-machinery 120-tick stun and glowing back counter need the targeted fixture to pass; it is being corrected rather than inferred from a method existing. |
+| Phase 2 rage | FAIL → FAIL | Native phase 2 at 892.00/904.47 s, ~2085/2089 HP; both Megas actually climb to y=3.78. Armour/flame, roar-wave and real corpse-throw fixtures are being refreshed; the first throw setup failed. |
+| Phase 3 last stand | FAIL → FAIL | Native phase 3 at 917.12/922.50 s, ~1016/1003 HP; gate deals 900 and stuns for 180 ticks in controlled production mechanics. Console-directed movement and retained full damage have targeted checks; final receipt pending. |
+| Downed failure | FAIL → FAIL | All-region native deaths restore checkpoint state. New phase checkpoints and retained charge pass the initial targeted real-death fixture, but the complete refreshed receipt is pending. |
+| Pre-finale Mega rule | FAIL → PASS | Full native HP remains 3000; repeated direct-rocket fixture confirms zero HP loss. Hit stagger is 30 ticks with bounded cooldown; renderer bar eligibility follows the installed flag. |
+
+### Remaining visual QA
+
+No browser was used. The FAILs above that explicitly name rendered appearance, shot continuity, audio/credits readability or panorama performance need the PO/visual-QA lane. Native route delivery is now established; those verdicts are not silently converted to PASS by source inspection. The literal river-wreck climb and optional-toy route also remain called out, rather than being hidden behind completion metrics.
