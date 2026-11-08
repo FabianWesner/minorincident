@@ -18,9 +18,9 @@ git add --renormalize -u
 git -c user.name='Remote validation' -c user.email=validation@localhost commit -qm 'Remote validation source snapshot' || exit 1
 run typecheck npm run typecheck
 run lint npm run lint
-run unit npm test -- --maxWorkers=1
 run story node --import tsx/esm tools/qa/l9-story-proof.ts
 run course node --import tsx/esm tools/qa/l9-course-proof.ts
+awk -F '\t' '$2 != 0 { bad=1 } END { exit bad }' "$root/checks.tsv" || exit 1
 if [ "${1:-}" = --quick ]; then
   run road-low node --import tsx/esm tools/qa/l9-driving-proof.ts --route road --tier low
   run road-low-zero node --import tsx/esm tools/qa/l9-driving-proof.ts --route road --tier low --zero
@@ -32,6 +32,8 @@ for route in road countryside dry-shortcut; do
 done
 run road-high node --import tsx/esm tools/qa/l9-driving-proof.ts --route road --tier high
 run road-low-zero node --import tsx/esm tools/qa/l9-driving-proof.ts --route road --tier low --zero
+awk -F '\t' '$2 != 0 { bad=1 } END { exit bad }' "$root/checks.tsv" || exit 1
+run unit npm test -- --maxWorkers=1
 export QA_ACCEPT_ROOT="$root/accept"
 run acceptance npm run qa:accept -- --level L9 --skip-browser
 run threat npm run qa:threat -- --levels L9 --maxWorkers 1 --out "$root/threat"
