@@ -1,4 +1,5 @@
 /** Physical tools/playtest run from a versioned L10 checkpoint, against a pinned QA build.
+ * Shared browser pool via runSession -> launchProfile (one migrated context).
  * E2E_PORT=3897 sh tools/e2e-lock.sh node --import tsx tools/qa/r10-l10-route.ts after low 1 corridor label 360
  * PLAYTEST_NO_FRAME_TIMING=0 enables ordinary render-frame timings for quiet A/B runs. */
 import { execFileSync } from 'node:child_process';
