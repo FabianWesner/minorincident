@@ -223,7 +223,7 @@ export class Vehicles {
     }
     this.world.spatial.set(id, pose.x, pose.z);
     if (this.active === id) {
-      const player = this.world.entities.get(1)!; Object.assign(player.transform, pose);
+      const player = this.world.entities.get(1)!; player.hidden = true; if (player.passengerOf === id) delete player.passengerOf; Object.assign(player.transform, pose);
       this.world.physics.playerBody!.setTranslation(pose, true); this.world.physics.playerBody!.setNextKinematicTranslation(pose);
     }
   }

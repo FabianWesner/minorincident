@@ -262,7 +262,7 @@ export class LevelNineCrash {
   rebuild(): void {
     const s = this.state, car = this.w.entities.get(s.carId)!;
     if (s.driving) this.driving.rebuild();
-    if (s.phase === 'driving') { this.w.storyLock = null; this.w.vehicles!.setFloorPolicy(s.carId); return; }
+    if (s.phase === 'driving') { this.w.storyLock = null; this.w.vehicles!.setFloorPolicy(s.carId); this.driving.poseHatch(); return; }
     const roll = s.phase === 'fall' ? Math.min(1, (this.w.tick - s.startedAt - (s.approachTicks ?? 180)) / FALL) * Math.PI / 2 : s.phase === 'approach' ? 0 : Math.PI / 2;
     const yaw = car.transform.yaw;
     this.w.vehicles!.scriptPose(s.carId, car.transform, { x: Math.cos(yaw / 2) * Math.sin(roll / 2), y: Math.sin(yaw / 2) * Math.cos(roll / 2), z: -Math.sin(yaw / 2) * Math.sin(roll / 2), w: Math.cos(yaw / 2) * Math.cos(roll / 2) });
