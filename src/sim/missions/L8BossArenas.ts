@@ -137,7 +137,8 @@ export class L8BossArenas {
     }
     if (b.specialAttack?.move === 'gorilla.roar' && b.specialAttack.stage === 'telegraph' && b.grabHits > 0) { arena.counters++; this.recover(e, 120); return true; }
     if (b.specialAttack) { this.advanceMove(e, arena); return true; }
-    if (w.tick < boss.readyAt || Status.stunned(e, w.tick)) return true;
+    if (Status.stunned(e, w.tick)) return true;
+    if (w.tick < boss.readyAt) { if (arena.id === 'elephant') this.walk(e, this.predict(e, .8, arena), arena.phase === 2 ? 6 : 5); return true; }
     if (boss.followUpThrow) { delete boss.followUpThrow; this.scavenge(e); }
     if (boss.approach) {
       const move = boss.approach, radius = move === 'gorilla.roar' ? 8 : 5;
@@ -187,7 +188,8 @@ export class L8BossArenas {
       this.hunt(e, true); boss.readyAt = w.tick + 360;
     } else if (arena.id === 'elephant' && distance(e.transform, p.transform) < 3) {
       this.start(e, 'elephant.swipe', 42, 0, 3); boss.readyAt = w.tick + 420;
-    } else this.orbit(e, arena, p.transform, arena.id === 'flamingo' ? 6 : arena.id === 'elephant' ? 5 : 4);
+    } else if (arena.id === 'elephant') this.walk(e, this.predict(e, .8, arena), arena.phase === 2 ? 6 : 5);
+    else this.orbit(e, arena, p.transform, arena.id === 'flamingo' ? 6 : 4);
     return true;
   }
   /** Lead uses resolved past movement, including a sustained turn. Changing direction after the cue beats it. */

@@ -99,6 +99,8 @@ try {
     w.solids.relocate(e, { x: -60, z: 25, y: .7 }, 'qa.elephant.lure-source', 2);
     w.solids.relocate(p, { x: -44, z: 25, y: .7 }, 'qa.elephant.lure-target', 2);
     arena.phase = 1; arena.nextAt = w.tick + 30; arena.cycle = 0;
+    const charges: unknown[] = [];
+    w.events.on('infected.special', event => { if (event.type === 'infected.special' && event.sourceId === e.id && event.move === 'elephant.charge' && event.stage === 'recovery') charges.push({ tick: w.tick, a: structuredClone(e.infected!.specialAttack), boss: { ...e.transform }, courier: { ...p.transform } }); });
     const generic = new L8ArenaBot(w), walker = new Walker(), contacts: unknown[] = []; let previous = 0, side = 1;
     for (let n = 0; n < 120 * 60 && e.health.current > 0 && p.health.current > 0; n++) {
       const a = e.infected!.specialAttack, f = emptyInput();
@@ -117,7 +119,7 @@ try {
       w.applyInput(f, 'keyboard'); step(w);
       if (arena.wallHits > previous) { previous = arena.wallHits; side = e.transform.x < -60 ? 1 : -1; contacts.push({ tick: w.tick, hits: previous, boss: { ...e.transform }, courier: { ...p.transform }, hp: e.health.current }); }
     }
-    check('three real sidestepped wall charges kill without firing', arena.wallHits === 3 && e.health.current === 0, { contacts, wallHits: arena.wallHits, hp: e.health.current, courierHP: p.health.current, finalBoss: e.transform, finalCourier: p.transform, finalAttack: e.infected!.specialAttack });
+    check('three real sidestepped wall charges kill without firing', arena.wallHits === 3 && e.health.current === 0, { contacts, wallHits: arena.wallHits, hp: e.health.current, courierHP: p.health.current, finalBoss: e.transform, finalCourier: p.transform, finalAttack: e.infected!.specialAttack, phase: arena.phase, current: zoo.state.arenas.find(a => a.id === arena.id), tick: w.tick, missionPhase: w.missions!.state.phase, charges });
   } finally { w.dispose(); }
 } catch (error) { errors.push(`elephant wall tactic: ${String(error)}`); }
 
