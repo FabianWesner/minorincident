@@ -41,14 +41,15 @@ export class L8ArenaBot {
       const a = e!.infected!.specialAttack!;
       if (a.stage === 'recovery') return false;
       const dx = p.transform.x - a.area.x, dz = p.transform.z - a.area.z, cross = Math.abs(dx * a.area.dz - dz * a.area.dx), along = dx * a.area.dx + dz * a.area.dz;
-      return ['gorilla.roar', 'gorilla.pound', 'elephant.swipe'].includes(a.move) ? Math.hypot(dx, dz) < a.area.radius + 1 : cross < a.area.radius + 1.2 && along > -2;
+      return ['gorilla.roar', 'gorilla.pound', 'elephant.swipe'].includes(a.move) ? Math.hypot(dx, dz) < a.area.radius + 1 : cross < a.area.radius + (id === 'elephant' ? 2.5 : 1.2) && along > -2;
     });
     if (dangerous) {
       const a = dangerous.infected!.specialAttack!, dx = p.transform.x - a.area.x, dz = p.transform.z - a.area.z;
       if (['gorilla.roar', 'gorilla.pound', 'elephant.swipe'].includes(a.move)) { const d = Math.hypot(dx, dz) || 1; f.move = { x: dx / d, z: dz / d }; }
       else {
         const sign = dx * -a.area.dz + dz * a.area.dx >= 0 ? 1 : -1, first = { x: -a.area.dz * sign, z: a.area.dx * sign }, other = { x: -first.x, z: -first.z };
-        f.move = w.solids.sweep(p, first, 3) >= w.solids.sweep(p, other, 3) ? first : other;
+        const room = id === 'elephant' ? 6 : 3;
+        f.move = w.solids.sweep(p, first, room) >= w.solids.sweep(p, other, room) ? first : other;
       }
     } else if (Math.hypot(p.transform.x - def.centre.x, p.transform.z - def.centre.z) > def.radius - 5) {
       f.move = this.walker.step(w, def.centre, def.radius - 6, `arena-${id}-inside`) ?? f.move;
