@@ -1,16 +1,25 @@
-/** Exhaustive shipped-GLB light inventory, including decay and native LOD variants. */
-import { existsSync, readdirSync, writeFileSync } from 'node:fs';
-import { decorativeEmissive, extractLights, readGltfJson } from '../assets/lights';
-const rows: { path: string; sourcePath: string; sourceAvailable: boolean; named: number; metadata: number; anchors: number; errors: string[]; uncertainReferences: string[]; uncoveredEmissive: string[] }[] = [];
-for (const filename of readdirSync('public/assets/models').filter(n => n.endsWith('.glb')).sort()) {
-  const id = filename.slice(0, -4), suffix = id.match(/((?:\.(?:w\d+|lod[12]|wrecked|burned))+)$/)?.[0] ?? '', base = suffix ? id.slice(0, -suffix.length) : id;
-  const path = `public/assets/models/${filename}`, sourcePath = `assets/${base}/model${suffix}.glb`, sourceAvailable = existsSync(sourcePath);
-  const json = readGltfJson(path), result = extractLights(json, sourceAvailable ? readGltfJson(sourcePath) : undefined);
-  // Optimized nodes lose authored names. Keep such reference errors separate, not factual failures.
-  const uncertain = sourceAvailable ? [] : result.errors.filter(e => e.includes('emissive node '));
-  rows.push({ path, sourcePath, sourceAvailable, named: json.nodes?.filter(n => n.name?.startsWith('light:')).length ?? 0, metadata: json.nodes?.filter(n => n.extras?.ss_light !== undefined).length ?? 0, anchors: result.anchors.length, errors: result.errors.filter(e => !uncertain.includes(e)), uncertainReferences: uncertain, uncoveredEmissive: result.unreferencedEmissive.filter(n => !decorativeEmissive[base]?.includes(n)) });
+/** Exhaustive AC02 audit: validate shipped nodes directly, and each available authored variant independently. */
+import { mkdirSync, readdirSync, writeFileSync } from 'node:fs';
+import { dirname } from 'node:path';
+import { extractLights, lightSourcePath, readGltfJson } from '../assets/lights';
+
+function inspect(path: string) {
+  const json = readGltfJson(path), result = extractLights(json);
+  return { path, named: json.nodes?.filter(n => n.name?.startsWith('light:')).length ?? 0, metadata: json.nodes?.filter(n => n.extras?.ss_light !== undefined).length ?? 0, anchors: result.anchors.length, errors: result.errors, uncoveredEmissive: result.unreferencedEmissive,
+    decorative: json.nodes?.flatMap((n, i) => n.extras?.decorativeEmissive ? [{ name: n.name ?? `node${i}`, reason: n.extras.decorativeEmissive }] : []) ?? [] };
 }
-const total = (key: 'named' | 'metadata' | 'anchors') => rows.reduce((n, r) => n + r[key], 0);
-const otherExports = readdirSync('public/assets', { recursive: true }).map(String).filter(p => p.endsWith('.glb') && !p.startsWith('models/')).map(p => { const json = readGltfJson(`public/assets/${p}`); return { path: `public/assets/${p}`, named: json.nodes?.filter(n => n.name?.startsWith('light:')).length ?? 0, metadata: json.nodes?.filter(n => n.extras?.ss_light !== undefined).length ?? 0 }; });
-const report = { otherExports, at: new Date().toISOString(), method: 'Every public/assets/models GLB; matching authored decay/LOD source, never hero-source substitution. Missing authored sources are explicitly unresolved.', checked: rows.length, named: total('named'), metadata: total('metadata'), anchors: total('anchors'), errors: rows.flatMap(r => r.errors).length, uncoveredEmissive: rows.flatMap(r => r.uncoveredEmissive).length, missingAuthored: rows.filter(r => !r.sourceAvailable).map(r => r.path), issues: rows.filter(r => r.errors.length || r.uncertainReferences.length || r.uncoveredEmissive.length) };
-writeFileSync('docs/reports/e25-verify/evidence/inventory-final.json', JSON.stringify(report, null, 2) + '\n'); console.log({ ...report, otherExports: otherExports.length, issues: report.issues.length, missingAuthored: report.missingAuthored.length });
+const rows = readdirSync('public/assets/models').filter(n => n.endsWith('.glb')).sort().map(filename => {
+  const sourcePath = lightSourcePath(filename);
+  return { ...inspect(`public/assets/models/${filename}`), sourcePath: sourcePath ?? null, source: sourcePath ? inspect(sourcePath) : null };
+});
+const otherExports = readdirSync('public/assets', { recursive: true }).map(String).filter(p => p.endsWith('.glb') && !p.startsWith('models/')).sort().map(p => inspect(`public/assets/${p}`));
+const all = [...rows, ...otherExports], sources = rows.flatMap(r => r.source ? [r.source] : []);
+const report = { at: new Date().toISOString(), method: 'Every exported GLB validates against its own active-scene nodes, including unnamed emissive meshes. Every available matching authored variant is independently validated. No authored substitution or uncertain-reference suppression.',
+  checked: rows.length, otherChecked: otherExports.length, named: all.reduce((n, r) => n + r.named, 0), metadata: all.reduce((n, r) => n + r.metadata, 0), anchors: all.reduce((n, r) => n + r.anchors, 0),
+  errors: all.flatMap(r => r.errors).length, missingEmitterReferences: all.flatMap(r => r.errors).filter(e => e.includes('emissive node ')).length, uncoveredEmissive: all.flatMap(r => r.uncoveredEmissive).length,
+  sourceErrors: sources.flatMap(r => r.errors).length, sourceUncoveredEmissive: sources.flatMap(r => r.uncoveredEmissive).length,
+  missingAuthored: rows.filter(r => !r.source).map(r => r.path), issues: rows.filter(r => r.errors.length || r.uncoveredEmissive.length || r.source?.errors.length || r.source?.uncoveredEmissive.length), rows, otherExports };
+const out = process.env.E25_INVENTORY_OUT ?? 'docs/reports/e25-emitters/evidence/inventory-final.json';
+mkdirSync(dirname(out), { recursive: true }); writeFileSync(out, JSON.stringify(report, null, 2) + '\n');
+console.log({ ...report, missingAuthored: report.missingAuthored.length, issues: report.issues.length, rows: report.rows.length, otherExports: report.otherExports.length, out });
+if (process.argv.includes('--check') && (report.errors || report.uncoveredEmissive || report.sourceErrors || report.sourceUncoveredEmissive || otherExports.some(r => r.errors.length || r.uncoveredEmissive.length))) process.exitCode = 1;

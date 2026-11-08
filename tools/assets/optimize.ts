@@ -248,6 +248,16 @@ export async function optimizeDocument(document: Document, def: AssetDef, ratio 
     skin.setInverseBindMatrices(document.createAccessor().setType('MAT4').setArray(matrices).setBuffer(document.getRoot().listBuffers()[0]));
   }
   const protectedNames = new Set([...semanticNodeNames(document), ...def.requiredNodes, ...def.animatedNodes, ...def.sockets, ...def.frontNodes]);
+  // Emitter names are runtime bindings, just like sockets and animation pivots.
+  // Joining them into anonymous material batches loses per-light power ownership.
+  for (const node of document.getRoot().listNodes()) {
+    const raw = node.getExtras().ss_light;
+    if (raw !== undefined) {
+      const light = typeof raw === 'string' ? JSON.parse(raw) : raw;
+      for (const name of light.emissiveNodes ?? []) protectedNames.add(name);
+    }
+    if (node.getExtras().decorativeEmissive) protectedNames.add(node.getName());
+  }
   for (const node of document.getRoot().listNodes()) if (node.getName().includes('stump_')) protectedNames.add(node.getName().replace('stump_', ''));
   for (const animation of document.getRoot().listAnimations()) for (const channel of animation.listChannels()) {
     const target = channel.getTargetNode(); if (target) protectedNames.add(target.getName());

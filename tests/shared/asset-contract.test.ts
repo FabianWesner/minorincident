@@ -9,6 +9,7 @@ import manifest from '../../src/assets/manifest.json';
 import type { AssetDef } from '../../src/assets/types';
 import { validateAssets, validateDocument } from '../../tools/assets/validate';
 import { extractLights } from '../../tools/assets/lights';
+import { optimizeDocument } from '../../tools/assets/optimize';
 import { PNG } from 'pngjs';
 import { adoptStandingBind } from '../../tools/assets/skin-crowd-standing';
 import { classifyCrowdAtlas } from '../../tools/assets/skin-crowd-regions';
@@ -145,6 +146,18 @@ test('the asset validator rejects every contract violation, and every production
   const lightFixture = { nodes: [{ name: 'light:headlight' }], scenes: [{ nodes: [0] }] };
   expect(extractLights(lightFixture).errors).toEqual(['light:headlight: light anchor is missing ss_light']);
   expect(extractLights({ ...lightFixture, nodes: [{ name: 'disabled:headlight' }] }).errors).toEqual([]);
+  // A named owner is a valid binding; an anonymous emitter must still be counted.
+  const grouped = { nodes: [{ name: 'lamps', children: [1] }, { mesh: 0 }, { name: 'light:lamp', extras: { ss_light: { type: 'point', color: 'light_led_white', intensity: 1, range: 5, emissiveNodes: ['lamps'] } } }], scenes: [{ nodes: [0, 2] }], meshes: [{ primitives: [{ material: 0 }] }], materials: [{ name: 'emi_windowGlow' }] };
+  expect(extractLights(grouped).errors).toEqual([]);
+  expect(extractLights(grouped).unreferencedEmissive).toEqual([]);
+  expect(extractLights({ ...grouped, nodes: grouped.nodes.slice(0, 2), scenes: [{ nodes: [0] }] }, { ...grouped, nodes: grouped.nodes.slice(0, 2) }).unreferencedEmissive).toEqual(['node1']);
+  const binding = fixture(), scene = binding.doc.getRoot().listScenes()[0], emitter = binding.doc.getRoot().listNodes()[0];
+  emitter.setName('lampLens'); scene.addChild(binding.doc.createNode('body').addChild(emitter));
+  binding.doc.getRoot().listMaterials()[0].setName('emi_windowGlow');
+  scene.addChild(binding.doc.createNode('light:lamp').setExtras({ ss_light: { type: 'point', color: 'light_led_white', intensity: 1, range: 5, emissiveNodes: ['lampLens'] } }));
+  await optimizeDocument(binding.doc, binding.def);
+  expect(binding.doc.getRoot().listNodes().some(n => n.getName() === 'lampLens')).toBe(true);
+  expect(validateDocument(binding.doc, { ...binding.def, budget: { ...binding.def.budget, fileKB: Infinity } }, 1024).errors).toEqual([]);
   // A fitted template can carry its uniform scale on a parent rather than the
   // story rig's root. The copied standing reset must not apply that scale twice.
   const template = new Document(), parent = template.createNode('assetScale').setScale([1.25, 1.25, 1.25]);
