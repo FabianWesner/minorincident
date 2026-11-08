@@ -2,7 +2,9 @@ import { expect, test, vi } from 'vitest';
 import { emptyInput } from '../../src/input/InputFrame';
 import { Box3, PerspectiveCamera, Vector3 } from 'three/webgpu';
 import { ColliderDesc, Ray, ShapeType } from '@dimforge/rapier3d-compat';
-import { l4InfectedArchetypes } from '../../src/data/l4';
+import { l4, l4InfectedArchetypes, l4Route, l4RoutePose, l4ConvoyStations } from '../../src/data/l4';
+import physicsAssets from '../../src/data/physicsAssets';
+import { l4PerimeterWalls } from '../../src/data/l4Perimeter';
 import { infectedDef } from '../../src/data/infected';
 import { barEligible, followerBarsAlwaysMax, followerPipSize, HealthBars } from '../../src/render/HealthBars';
 import { pickBodies } from '../../src/render/characters/PickBodies';
@@ -13,6 +15,7 @@ import { loadLevel } from '../../tools/sim-runner/levels';
 import type { SimWorld } from '../../src/sim/world/SimWorld';
 import type { EntitySnapshot } from '../../src/sim/world/types';
 import type { Refuge } from '../../src/sim/outbreak/Outbreak';
+import { obbHitsAabb } from '../qa/invariants/oracles';
 
 type RefugeInternals = {
   refugeSpot: (person: EntitySnapshot, door: Refuge) => { x: number; z: number } | null;
@@ -238,6 +241,21 @@ async function scriptedPartyEngagement() {
 }
 
 test('L4: every contact archetype interrupts approach/lure and attacks within 3 s; soldiers remain biteable and corgi protected', async () => {
+  const cameraCheck = await loadLevel('L4', 1);
+  try {
+    expect(Object.keys(cameraCheck.missions!.def.cinematics).filter(id => id.startsWith('l4-'))).toEqual([]);
+    expect(cameraCheck.missions!.def.anchors['l4-breach-west']).toBeDefined();
+  } finally { cameraCheck.dispose(); }
+  const route = l4Route(), stations = l4ConvoyStations(route.length), violations: string[] = [];
+  for (const [index, vehicle] of l4.convoy.vehicles.entries()) {
+    if (vehicle.asset !== 'veh.military-truck') continue;
+    const pose = l4RoutePose(route, stations.end[index]);
+    for (const [boxIndex, box] of physicsAssets['veh.military-truck'].boxes.entries()) for (const wall of l4PerimeterWalls) {
+      const aabb = { min: [wall.x - wall.halfX, wall.y - wall.halfY, wall.z - wall.halfZ], max: [wall.x + wall.halfX, wall.y + wall.halfY, wall.z + wall.halfZ] };
+      if (obbHitsAabb(pose.x, pose.z, pose.yaw, (box.max[0] - box.min[0]) / 2, (box.max[2] - box.min[2]) / 2, box.min[1] + .7, box.max[1] + .7, aabb)) violations.push(`${vehicle.id} collider ${boxIndex} overlaps ${wall.id}`);
+    }
+  }
+  expect(violations, 'PO 2026-11-08: parked army cargo trucks do not cross the perimeter').toEqual([]);
   checkCompactFollowerOverlap();
   expect(followerBarsAlwaysMax, 'five-person groups retain full bars').toBe(5);
   expect(followerPipSize, 'larger groups use thin, short pips').toEqual({ width: 18, height: 3 });
