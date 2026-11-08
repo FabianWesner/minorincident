@@ -104,7 +104,10 @@ try {
       if (a?.move === 'elephant.charge' && a.stage !== 'recovery') {
         const direction = { x: -a.area.dz, z: a.area.dx };
         const other = { x: -direction.x, z: -direction.z };
-        f.move = w.solids.sweep(p, direction, 4) >= w.solids.sweep(p, other, 4) ? direction : other;
+        const cross = Math.abs((p.transform.x - a.area.x) * a.area.dz - (p.transform.z - a.area.z) * a.area.dx);
+        if (cross < 3.2) f.move = w.solids.sweep(p, direction, 4) >= w.solids.sweep(p, other, 4) ? direction : other;
+      } else if (a?.move === 'elephant.swipe' && a.stage !== 'recovery' || Math.hypot(p.transform.x - e.transform.x, p.transform.z - e.transform.z) < 4.5 && a?.stage !== 'recovery') {
+        const dx = p.transform.x - e.transform.x, dz = p.transform.z - e.transform.z, d = Math.hypot(dx, dz) || 1; f.move = { x: dx / d, z: dz / d };
       } else {
         const x = side === 1 ? -44 : -76, z = Math.abs(p.transform.x - x) > 3 ? 17 : 25;
         f.move = walker.step(w, { x, z }, 1, `lure-${side}-${z}`) ?? f.move;

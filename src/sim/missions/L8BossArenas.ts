@@ -138,6 +138,7 @@ export class L8BossArenas {
     if (b.specialAttack?.move === 'gorilla.roar' && b.specialAttack.stage === 'telegraph' && b.grabHits > 0) { arena.counters++; this.recover(e, 120); return true; }
     if (b.specialAttack) { this.advanceMove(e, arena); return true; }
     if (w.tick < boss.readyAt || Status.stunned(e, w.tick)) return true;
+    if (boss.followUpThrow) { delete boss.followUpThrow; this.scavenge(e); }
     if (boss.approach) {
       const move = boss.approach, radius = move === 'gorilla.roar' ? 8 : 5;
       if (distance(e.transform, p.transform) > radius - .8) { this.walk(e, this.predict(e, .8, arena), arena.phase === 2 ? 6.5 : 5.5); return true; }
@@ -186,7 +187,7 @@ export class L8BossArenas {
       this.hunt(e, true); boss.readyAt = w.tick + 360;
     } else if (arena.id === 'elephant' && distance(e.transform, p.transform) < 3) {
       this.start(e, 'elephant.swipe', 42, 0, 3); boss.readyAt = w.tick + 420;
-    } else this.orbit(e, arena, p.transform, arena.id === 'flamingo' ? 6 : 4);
+    } else this.orbit(e, arena, p.transform, arena.id === 'flamingo' ? 6 : arena.id === 'elephant' ? 5 : 4);
     return true;
   }
   /** Lead uses resolved past movement, including a sustained turn. Changing direction after the cue beats it. */
@@ -295,7 +296,7 @@ export class L8BossArenas {
     if (['gorilla.roar', 'gorilla.pound', 'elephant.swipe', 'zebra.kick'].includes(a.move)) {
       if (a.move === 'gorilla.pound' && boss.smashId) {
         const object = w.destruction?.objects.find(o => o.id === boss.smashId);
-        if (object && distance(e.transform, { x: object.home.p[0], z: object.home.p[2] }) <= 1.8 && w.destruction!.impact(object.id, 'boss.gorilla.smash', 300)) arena.counters++;
+        if (object && distance(e.transform, { x: object.home.p[0], z: object.home.p[2] }) <= 1.8 && w.destruction!.impact(object.id, 'boss.gorilla.smash', 300)) { arena.counters++; boss.followUpThrow = true; }
         delete boss.smashId;
       }
       const dx = p.transform.x - e.transform.x, dz = p.transform.z - e.transform.z, d = Math.hypot(dx, dz);
@@ -317,7 +318,7 @@ export class L8BossArenas {
     w.spatial.set(e.id, e.transform.x, e.transform.z);
     if (distance(e.transform, p.transform) <= a.area.radius + .35) {
       const firstContact = !a.hitIds.includes(1);
-      this.hit(e, arena.id === 'elephant' ? 60 : arena.id === 'monkey' ? 12 : arena.id === 'flamingo' ? 30 : arena.id === 'lion' ? 45 : 35, arena.id === 'elephant' ? 60 : 0);
+      this.hit(e, arena.id === 'elephant' ? 60 : arena.id === 'monkey' ? 35 : arena.id === 'flamingo' ? 30 : arena.id === 'lion' ? 50 : 35, arena.id === 'elephant' ? 60 : 0);
       if (firstContact && (arena.id === 'lion' || arena.id === 'monkey')) { b.grabUntil = w.tick + 120; b.grabHits = 0; b.heardTargetId = 1; arena.grabs++; }
     }
     if (clear + .001 < step || travelled + step >= range || w.tick - a.activeTick > (range / speed + 1) * 60) {
