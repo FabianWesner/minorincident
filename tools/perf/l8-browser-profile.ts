@@ -1,5 +1,6 @@
 /** Whole L8 real-clock matrix, one headless browser at a time. No screenshots or raw traces. */
 import assert from 'node:assert/strict';
+import { execFileSync } from 'node:child_process';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname } from 'node:path';
 import type { Game } from '../../src/Game';
@@ -11,6 +12,7 @@ const campaign = JSON.parse(await readFile(process.env.L8_PROFILE_CAMPAIGN!, 'ut
 const out = process.argv[2] ?? 'docs/reports/r12-l8perf/browser.json';
 await mkdir(dirname(out), { recursive: true });
 const results = [];
+const sourceCommit = execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
 try {
   for (const tier of ['low', 'high'] as const) {
     const session = new SceneSession({ backend: 'webgpu', tier, query: { crowdProbe: 'drawn' } });
@@ -45,14 +47,14 @@ try {
         };
         a.resume();
         while (g.world.missions!.state.phase === 'playing' && performance.now() < deadline) {
-          const now = await new Promise<number>(requestAnimationFrame), p = a.perf();
-          frames.push(now - previous); previous = now; ticks.push(p.simTickMs); sims.push(p.simMs); updates.push(p.updateCpuMs); renders.push(p.renderCpuMs);
+          const now = await new Promise<number>(requestAnimationFrame);
+          frames.push(now - previous); previous = now; ticks.push(g.simTickMs); sims.push(g.simMs); updates.push(g.view.updateCpuMs); renders.push(g.view.renderCpuMs);
           if (g.world.tick >= nextTick) { capture(now); nextTick += 3600; }
         }
         if (frames.length) capture(performance.now()); a.pause(); a.bot.stop();
         return { complete: g.world.missions!.state.phase === 'progression', tick: g.world.tick, windows };
       });
-      results.push({ tier, seed: 1, zoom: 1.5, buildMode: process.env.SCENE_SERVER === 'preview' ? 'preview' : 'dev', ...result, errors: session.errors });
+      results.push({ tier, seed: 1, zoom: 1.5, sourceCommit, at: new Date().toISOString(), buildMode: process.env.SCENE_SERVER === 'preview' ? 'preview' : 'dev', ...result, errors: session.errors });
       await writeFile(out, JSON.stringify(results, null, 2));
       assert.deepEqual(session.errors, []);
     } finally { await session.close(); }

@@ -1,5 +1,6 @@
 /** Full L8 route/density matrix. Native timings are diagnostics, never render-FPS evidence. */
 import { createHash } from 'node:crypto';
+import { execFileSync } from 'node:child_process';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname } from 'node:path';
 import { loadavg } from 'node:os';
@@ -39,7 +40,8 @@ catch {
 }
 const files = ['lighting/LightPower.ts', 'missions/LevelEightZoo.ts', 'npc/Npcs.ts', 'outbreak/humans.ts', 'ai/CharacterSeparation.ts'];
 const sourceHash = createHash('sha256');
-for (const file of files) sourceHash.update(file).update(await readFile(`src/sim/${file}`));
+for (const file of files) sourceHash.update(file).update(process.env.L8_REFERENCE_REV
+  ? execFileSync('git', ['show', `${process.env.L8_REFERENCE_REV}:src/sim/${file}`]) : await readFile(`src/sim/${file}`));
 const percentile = (values: number[]) => {
   const a = values.slice().sort((x, y) => x - y);
   return { samples: a.length, p50: a[Math.floor(a.length * .5)] ?? 0, p95: a[Math.ceil(a.length * .95) - 1] ?? 0, max: a.at(-1) ?? 0 };
@@ -78,6 +80,15 @@ for (const tier of values.tier === 'both' ? ['low', 'high'] as const : [values.t
       if (!wallTicks.length) return;
       const now = performance.now(), entities = [...world.entities.iterate()];
       const systems = Object.fromEntries([...costs].map(([name, a]) => [name, { ...percentile(a), calls: calls.get(name) }]));
+      const humans = world.infected!.hearing.humans, snapshot = humans.all().slice();
+      let humanQueryChecks = 0;
+      for (const infected of world.infected!.active) if (infected.health.current > 0) {
+        const p = infected.transform;
+        const expected = snapshot.filter(h => humans.get(h.id) && (h.position.x - p.x) ** 2 + (h.position.z - p.z) ** 2 <= 256).map(h => h.id).sort((a, b) => a - b);
+        const actual = humans.within(p, 16).map(h => h.id);
+        if (JSON.stringify(actual) !== JSON.stringify(expected)) throw new Error(`Human query mismatch at ${world.tick}/${infected.id}`);
+        humanQueryChecks++;
+      }
       const digest = createHash('sha256').update(JSON.stringify(entities)).update(JSON.stringify(world.missions!.state)).digest('hex');
       windows.push({ tick: world.tick, simSeconds: world.tick / 60, wallSeconds: (now - windowStarted) / 1000,
         nativeSimSecondsPerWallSecond: (world.tick - windowTick) / 60 / ((now - windowStarted) / 1000),
@@ -85,7 +96,7 @@ for (const tier of values.tier === 'both' ? ['low', 'high'] as const : [values.t
         livingInfected: world.infected!.director.count, peakInfected, corpses: entities.filter(e => !!e.corpse).length,
         downed: entities.filter(e => e.civilian?.state === 'down' || e.civilian?.state === 'rising' || (e.infected && e.health.current <= 0 && !e.corpse)).length,
         followers: world.missions!.l8!.roster().length, animals: entities.filter(e => e.civilian?.zooAnimal || /infected\.(elephant|gorilla|lion|zebra|flamingo)$/.test(e.archetype)).length,
-        heapBytes: process.memoryUsage().heapUsed, listeners: world.events.listenerCount, stateHash: digest,
+        heapBytes: process.memoryUsage().heapUsed, listeners: world.events.listenerCount, stateHash: digest, humanQueryChecks,
         player: { x: world.entities.get(1)!.transform.x, z: world.entities.get(1)!.transform.z },
         checkpoint: world.missions!.state.checkpoint, phase: world.missions!.state.phase,
         objectives: world.missions!.def.steps.filter(s => world.missions!.state.steps[s.id]?.status === 'active').map(s => s.id), load: loadavg() });
@@ -130,5 +141,5 @@ for (const tier of values.tier === 'both' ? ['low', 'high'] as const : [values.t
 let prior: Record<string, unknown>;
 try { const old = await readJson(out); prior = Array.isArray(old) ? { preRestart: old } : old as Record<string, unknown>; }
 catch { prior = {}; }
-prior[values.label!] = { at: new Date().toISOString(), sourceHash: sourceHash.digest('hex'), node: process.version, instrumented: true, cpuProfiled: !!values.profile, results };
+prior[values.label!] = { at: new Date().toISOString(), sourceHash: sourceHash.digest('hex'), referenceRevision: process.env.L8_REFERENCE_REV ?? null, node: process.version, instrumented: true, cpuProfiled: !!values.profile, results };
 await writeFile(out, JSON.stringify(prior, null, 2));
