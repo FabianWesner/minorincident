@@ -23,12 +23,23 @@ One pooled headless native Metal WebGL2 Chrome context, exclusive pool admission
 
 No foreign build, Blender, test or browser work was detected at sample boundaries. Admission passed the load gate; load during the browser's own measurement was 3.6–4.0 and is retained in the receipt. These are local isolated-scene costs, not whole-campaign performance claims. Frame-45 draw calls change from 55 to 59 on high and 48 to 52 on low; the added field/fire/glow passes and shared pools stay bounded. Console errors: zero.
 
+## Verification
+
+`npm run verify -- E27` passes: typecheck, lint and all 107 tests in 27 files. The fuel checks extend the existing weapons battery, retaining the 150-case repository budget. [Gate receipt](checks.json).
+
+Automated moving/turning and night-light checks pass. Across 65 successive moving/turning frames per tier the jet-to-drawn-nozzle gap is zero. Night checks observe exactly one transient source and changing uploaded light radiance. Frozen on/off body rectangles brighten by 3.5–5.2/255 mean luminance; [runtime receipt](runtime.json), [spill measurements](light-spill.json), and [night/motion sheet](runtime.jpg).
+
+Visual review of the captured WebGL2 frames:
+
+- **PASS:** one connected stream at both zooms and tiers; low uses half the jet cards.
+- **PASS:** bright nozzle core, orange widening body, curled red/sooty tip (clearest in the night turn); courier and targets remain identifiable.
+- **PASS:** fuel burns after release on both tiers, with stream and its transient light removed.
+
 ## Open / Browser QA needed
 
-- Browser QA needed: independent visual review and manual WebGPU look check are still useful before merge.
-- Automated moving/turning and night-light checks pass. Across 65 successive moving/turning frames per tier the jet-to-drawn-nozzle gap is zero. Night checks observe exactly one transient source and changing uploaded light radiance. Frozen on/off body rectangles brighten by 3.5–5.2/255 mean luminance; [runtime receipt](runtime.json), [spill measurements](light-spill.json), and [night/motion sheet](runtime.jpg).
-- The main matched captures/native timing receipt are being regenerated after the final render-phase attachment correction.
-- `npm run verify -- E27` passes: typecheck, lint and all 107 tests in 27 files. The fuel checks extend the existing weapons battery, retaining the 150-case repository budget. [Gate receipt](checks.json).
+- Browser QA needed: independent visual review and manual WebGPU look check before merge.
+- Final native receipt refresh is pending after the render-phase attachment fix. The previous complete run is reported above; a refresh was discarded when another lane started a typecheck during admission.
+- The optimized QA build and WebGL2 smoke check are running.
 
 No deploy or push has been performed.
 

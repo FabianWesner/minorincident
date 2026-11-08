@@ -61,9 +61,17 @@ try {
     }
     // A fresh identical scene for a sustained production-input native cadence sample.
     const spec = structuredClone(base); spec.camera = { mode: 'game', target: 'courier', zoom: 1 };
+    let measured = false;
+    for (let attempt = 0; attempt < 3 && !measured; attempt++) {
     await session.load(spec); await session.step(45); await session.ready();
-    const condition = await quietConditions(owned); conditions.push({ side, tier, phase: 'start', ...condition });
-    assert.deepEqual(condition.busy, [], 'Foreign work overlapped native timing');
+    let condition = await quietConditions(owned);
+    for (let wait = 0; condition.busy.length && wait < 60; wait++) {
+      if (wait % 10 === 0) console.log(JSON.stringify({ side, tier, waitingFor: condition.busy }));
+      await session.page.evaluate(() => window.__SS__!.perf()); // Keep this paused browser lease alive while foreign work drains.
+      await new Promise(resolve => setTimeout(resolve, 1000)); condition = await quietConditions(owned);
+    }
+    conditions.push({ side, tier, attempt, phase: 'start', ...condition });
+    assert.deepEqual(condition.busy, [], 'Foreign work did not drain before native timing');
     const timing = await session.page.evaluate(async () => {
       const api = window.__SS__!, gl = document.querySelector('canvas')!.getContext('webgl2')!, ext = gl.getExtension('WEBGL_debug_renderer_info');
       api.cheats.infiniteCharges(true); api.cheats.god(true);
@@ -80,9 +88,12 @@ try {
         discharges: api.events(0).filter(e => e.type === 'combat.attack').length - attacksAtStart, perf, vfx: api.getState().render.vfx };
     });
     assert(timing.discharges > 5, 'Native sample must contain sustained fire');
-    timings.push({ side, tier, ...timing });
-    conditions.push({ side, tier, phase: 'end', ...await quietConditions(owned) }); save();
+    const end = await quietConditions(owned); conditions.push({ side, tier, attempt, phase: 'end', ...end });
+    if (end.busy.length) { console.log(JSON.stringify({ side, tier, discarded: 'foreign work overlapped timing', busy: end.busy })); continue; }
+    timings.push({ side, tier, ...timing }); measured = true; save();
     console.log(JSON.stringify({ side, tier, p50: timing.p50, p95: timing.p95, discharges: timing.discharges }));
+    }
+    assert(measured, `No uncontended native sample for ${side}/${tier}`);
   }
   assert.deepEqual(session.errors, []); save();
 } finally { await session.close(); stopServer(); await beforeServer.close(); }
