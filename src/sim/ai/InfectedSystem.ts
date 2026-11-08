@@ -200,7 +200,9 @@ export class InfectedSystem {
     delete entity.infected!.roar; delete entity.corpseThrown; delete entity.corpseBlast; delete entity.infected!.pursuit; delete entity.infected!.megaStaggerReady; delete entity.infected!.megaRocketIds; delete entity.infected!.proximityNotice; delete entity.infected!.provoked; delete entity.infected!.pressureTarget;
     if (entity.infected!.l1) { delete entity.infected!.l1.focusId; delete entity.infected!.l1.focusUntil; }
     delete entity.infected!.knockdowns; delete entity.infected!.cureRegion; delete entity.infected!.territory; delete entity.infected!.vault; delete entity.infected!.specialAttack; delete entity.infected!.specialCooldowns; delete entity.infected!.specialRecoveryUntil;
-    entity.archetype = id; entity.health.current = entity.health.max = def.hp * INFECTED_TOUGHNESS;
+    entity.archetype = id;
+    const hp = def.hp * INFECTED_TOUGHNESS * (this.world.scenario === 'L7' && id === 'infected.alpha' ? 1.5 : 1);
+    entity.health.current = entity.health.max = hp;
     Object.assign(entity.transform, position); entity.transform.y = perch?.y ?? .7 + (this.world.districts?.pavingHeight(position.x, position.z) ?? 0); entity.transform.yaw = opts.yaw ?? 0;
     Object.assign(entity.combat!, { radius: def.radius, armor: 0, shield: def.special === 'shield', staggerUntil: 0, attacking: false, damageMultiplier: 1 }); entity.combat!.statuses.length = 0; delete entity.combat!.reaction;
     delete entity.combat!.shieldStress; delete entity.combat!.shieldBrokenAt; delete entity.combat!.shieldBrokenUntil;
@@ -366,10 +368,11 @@ export class InfectedSystem {
       brain.pauseUntil = 0; brain.looking = false; brain.distractionId = 0; brain.ignoreId = 0; brain.ignoreUntil = 0;
       brain.hasGoal = false; brain.search.completeApproach = false;
       // An old army pressure assignment must not immediately steal this sighting.
-      // Metro arrivals keep their focus on this same person; an L7 opening press
-      // keeps its player focus while the infected passes nearby survivors.
+      // Metro arrivals keep their focus on this same person; L7 opening presses
+      // and L8's explicit gate-side press keep their courier focus past survivors.
+      const retainsCourierFocus = this.world.scenario === 'L7' || this.world.scenario === 'L8' && brain.focusBiasM === 30;
       if (!['L3', 'L4', 'L6', 'L7', 'L8'].includes(this.world.scenario ?? '') ||
-          (this.world.scenario !== 'L7' && brain.focusId !== target.id)) {
+          (!retainsCourierFocus && brain.focusId !== target.id)) {
         delete brain.focusId; delete brain.focusUntil; delete brain.focusBiasM;
       }
     }

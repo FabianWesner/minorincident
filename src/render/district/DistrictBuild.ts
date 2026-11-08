@@ -1,3 +1,4 @@
+import { groundDepth, groundLayers } from '../GroundLayers';
 import { worldTiers } from '../../levels/districts/types';
 // Assembly/reference pattern adapted from folio-2025 World.js / References.js (Bruno Simon, MIT).
 import { BoxGeometry, CircleGeometry, FrontSide, PlaneGeometry, Path, Shape, ShapeGeometry, Sprite, SpriteMaterial, Box3, CanvasTexture, ConeGeometry, Group, Sphere, Vector2, Vector3, InstancedMesh, Mesh, MeshBasicNodeMaterial, Object3D, SphereGeometry, type BufferGeometry, type Material } from 'three/webgpu';
@@ -128,8 +129,8 @@ export async function buildDistrict(parts: DistrictParts, deps: DistrictBuildDep
     }
   }
   const posts = new Map<number, [number, number, number][]>();
-  const rails = new Map<PaletteToken, PerimeterBox[]>();
-  const rail = (token: PaletteToken, size: [number, number, number], p: [number, number, number]) => { let row = rails.get(token); if (!row) { row = []; rails.set(token, row); } row.push([...p, size]); };
+  const rails = new Map<string, {token: PaletteToken; layer: number; row: PerimeterBox[]}>();
+  const rail = (token: PaletteToken, size: [number, number, number], p: [number, number, number], layer = 0) => { const key = `${token}:${layer}`; let batch = rails.get(key); if (!batch) { batch = {token,layer,row:[]}; rails.set(key,batch); } batch.row.push([...p,size]); };
   for (const fence of lab && !lab.perimeter ? [] : deps.world.boundaries) {
     const x = (fence.min[0] + fence.max[0]) / 2, z = (fence.min[2] + fence.max[2]) / 2;
     const width = fence.max[0] - fence.min[0], depth = fence.max[2] - fence.min[2];
@@ -146,9 +147,10 @@ export async function buildDistrict(parts: DistrictParts, deps: DistrictBuildDep
   }
   for (const district of deps.world.districts.filter(d => d.id === 'D-CURE')) {
     const [ox, oz] = district.origin;
-    for (const [x, y, z, size] of [...cureAprons.paving, ...cureAprons.kerbs]) rail('sidewalk', size, [x + ox, y, z + oz]);
+    for (const [x, y, z, size] of [...cureAprons.paving, ...cureAprons.kerbs]) rail('sidewalk', size, [x + ox, y, z + oz], groundLayers.paving);
     const geometry = new CircleGeometry(1, 9); geometry.rotateX(-Math.PI / 2); parts.ownedGeometry.push(geometry);
-    const puddles = batchPerimeterPosts(cureAprons.puddles.map(([x, y, z, size]) => [x + ox, y, z + oz, size]), geometry, deps.materials.world('tealDark', 0, false, FrontSide, 1));
+    const puddleMaterial = groundDepth(deps.materials.world('tealDark', 0, false, FrontSide, 1).frozenCopy(), groundLayers.puddle); parts.ownedMaterials.push(puddleMaterial);
+    const puddles = batchPerimeterPosts(cureAprons.puddles.map(([x, y, z, size]) => [x + ox, y, z + oz, size]), geometry, puddleMaterial);
     parts.perimeterPosts.push(...puddles); perimeter.add(...puddles);
   }
   for (const [height, row] of posts) {
@@ -156,9 +158,11 @@ export async function buildDistrict(parts: DistrictParts, deps: DistrictBuildDep
     const batches = batchPerimeterPosts(row, geometry, deps.materials.get('woodWarm'));
     parts.perimeterPosts.push(...batches); perimeter.add(...batches);
   }
-  for (const [token, row] of rails) {
+  for (const {token, layer, row} of rails.values()) {
     const geometry = new BoxGeometry(1, 1, 1); parts.ownedGeometry.push(geometry);
-    const batches = batchPerimeterPosts(row, geometry, deps.materials.get(token));
+    const material = layer ? groundDepth(deps.materials.get(token).frozenCopy(), layer) : deps.materials.get(token);
+    if (layer) parts.ownedMaterials.push(material);
+    const batches = batchPerimeterPosts(row, geometry, material);
     parts.perimeterPosts.push(...batches); perimeter.add(...batches);
   }
   // Placement asset ids are known from the layout JSON: start their downloads now instead of

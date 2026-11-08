@@ -79,9 +79,9 @@ export class LevelEightZoo {
       const exit = doorExit(w, door, start); if (!exit) throw new Error(`Disconnected zoo outlet ${door.house}`);
       const serviceRoutes: [number, number][][] = [
         [[-96, 32]],
-        [[80, 70]], // Route the east-tunnel cohort across the courier's last on-foot approach to the APC.
+        [[80, 78]], // Cross the gate-to-APC road before ordinary pursuit.
         [[-30, -64]],
-        [[32, 64]], // Intercept the south-plaza exit before ordinary pursuit.
+        [[27, 78]], // Clear the bunker onto the gate road before ordinary pursuit.
       ];
       const route = [...exit.route, ...serviceRoutes[index]];
       const last = route.at(-1);
@@ -130,12 +130,16 @@ export class LevelEightZoo {
       // point once; minor physics impulses must not steer the objective ring.
       Object.assign(this.mission.def.anchors.exit, this.boardingRing());
       this.mission.setState('breached', true); this.mission.checkpoint('breach');
-      w.events.emit({ type: 'story.say', tick: t, id: 1, text: 'They are coming from the tunnels! Get to the armored vehicle!', position: w.entities.get(1)!.transform });
+      const gate = this.mission.def.anchors['zoo-gate'], player = w.entities.get(1)!;
+      const text = distance(player.transform, gate) <= gate.radius
+        ? 'They are coming from the tunnels! Get to the armored vehicle!'
+        : 'They are coming from the tunnels! Regroup at the zoo gate!';
+      w.events.emit({ type: 'story.say', tick: t, id: 1, text, position: player.transform });
     }
     this.mission.setState('apc-destroyed', w.entities.get(s.carId)!.health.current <= 0);
     const seated=this.w.vehicles!.active===s.carId;
     this.mission.setState('player-boarded',seated);
-    if(seated || !this.breached)this.mission.state.marker=null;
+    if(seated)this.mission.state.marker=null;
     else if(this.mission.state.steps.escape.status==='active'||this.mission.state.steps.depart.status==='active')this.mission.state.marker='exit';
     if (!this.breached) return;
     if (t >= s.nextWave) {
@@ -149,6 +153,9 @@ export class LevelEightZoo {
     }
     for (const [index, outlet] of s.outlets.entries()) for (const id of walkResidents(w, outlet, t)) {
       ai.pursueTarget(id, 1);
+      // This gate-side cohort pressures the courier; the other outlets still attack the sanctuary population.
+      // Releasing on the apron and retaining that focus avoids spending the whole encounter walking a scripted road.
+      if (index === 3) ai.press(id, 1, t + 3600, 30);
       if (index === 1) {
         // The east cohort intercepts the evacuation at its parked APC. Native
         // navigation and ordinary senses own this approach; party contact can
@@ -158,7 +165,7 @@ export class LevelEightZoo {
       }
     }
     const player = w.entities.get(1)!;
-    if (!s.escapeCheckpoint && distance(player.transform, this.door()) < 12) { s.escapeCheckpoint = true; this.mission.checkpoint('escape-route'); }
+    if (!s.escapeCheckpoint && this.mission.state.steps.escape.status === 'active' && distance(player.transform, this.door()) < 12) { s.escapeCheckpoint = true; this.mission.checkpoint('escape-route'); }
     if (w.vehicles!.groupBoarded(s.carId, this.passengers())) this.mission.setState('aboard', true);
   }
   /** Complete living boarding group, including companions shown in the HUD. */
@@ -168,17 +175,17 @@ export class LevelEightZoo {
   /** The unarmed cab would remove the courier's cover fire before the queue is safe. */
   canBoardDriver(): boolean {
     const car = this.w.entities.get(this.state.carId)?.vehicle;
-    return this.breached && this.passengers().every(id => car?.passengers?.some(p => p.id === id && p.phase === 'seated'));
+    return this.breached && this.mission.state.steps.escape.status === 'active' && this.passengers().every(id => car?.passengers?.some(p => p.id === id && p.phase === 'seated'));
   }
   /** E30 departure starts only after the breach and the complete group has boarded. */
-  canDrive(): boolean { return this.breached && this.w.vehicles!.groupBoarded(this.state.carId,this.passengers()); }
+  canDrive(): boolean { return this.breached && this.mission.state.steps.sanctuary.status === 'completed' && this.w.vehicles!.groupBoarded(this.state.carId,this.passengers()); }
   /** The completed boarding group shares the courier's run-out protection until handover. */
   departing(): boolean { return this.mission.state.runOutUntil !== undefined || this.mission.state.phase !== 'playing'; }
   /** At the pickup, the evacuation queue owns movement instead of civilian flee/defence. */
   boarding(): boolean {
-    return this.breached && (this.w.vehicles!.active === this.state.carId || distance(this.w.entities.get(1)!.transform, this.door()) < 12);
+    return this.breached && (this.mission.state.steps.escape.status === 'active' || this.mission.state.steps.depart.status === 'active') && (this.w.vehicles!.active === this.state.carId || distance(this.w.entities.get(1)!.transform, this.door()) < 12);
   }
-  /** Cheat/test path (`completeObjective` before the breach): call the tunnel breach now so the escape objective becomes active. */
+  /** Cheat/test path (`completeObjective` before the breach): call the real tunnel breach; ordinary completion still requires the gate rendezvous. */
   advance(): boolean {
     if (this.mission.state.states.breached) return false;
     this.state.startedAt = this.w.tick - 3600; this.update();
