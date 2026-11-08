@@ -2,6 +2,7 @@
 // every level from the same catalogs. Each test drives the real system through a scenario.
 import { afterEach, expect, test } from 'vitest';
 import { blastDamage, explosionDef } from '../../src/data/explosions';
+import { destructionDamage, destructionMaterial } from '../../src/data/destruction';
 import type { Pickup } from '../../src/sim/interact/Pickups';
 import { NavGrid } from '../../src/sim/world/NavGrid';
 import type { GameEvent } from '../../src/sim/world/types';
@@ -96,6 +97,14 @@ test('pickups: exact one-time effects with caps, rack join/replacement, dead pla
 });
 
 test('explosions: every class follows its damage curve, full cover shields, rails take damage, chains are paced and capped, fires burn out', async () => {
+  expect(destructionDamage('weapon.fire-axe', 'wood', 10)).toBe(8);
+  expect(destructionDamage('weapon.handgun', 'wood', 10)).toBe(.8);
+  expect(destructionDamage('weapon.shotgun', 'glass', 10)).toBe(12);
+  expect(destructionDamage('weapon.rocket-launcher', 'concrete', 10)).toBe(15);
+  expect(destructionDamage('weapon.unlisted', 'brick', 10)).toBeCloseTo(.12);
+  expect(destructionMaterial('prop.fence')).toBe('wood');
+  expect(destructionMaterial('veh.sedan-blue')).toBe('metal');
+  expect(destructionMaterial('bld.farmhouse')).toBe('brick');
   for (const id of ['explosion.pipe-bomb', 'explosion.propane', 'explosion.car', 'explosion.gas-tanks', 'explosion.molotov', 'explosion.toxic']) {
     const w = await world('blast-lab', true), d = explosionDef(id), at = { x: 0, z: -18 };
     const ids = [0, .5, 1].map(f => w.spawnDummy('infected.dummy', { x: at.x + d.radius * f * (f === 1 ? .999 : 1), z: at.z }, { hp: 5000 }));

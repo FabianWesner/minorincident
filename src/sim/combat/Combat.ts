@@ -11,6 +11,7 @@ import { AimAssist } from './AimAssist';
 import { Status } from './Status';
 import { ticks } from '../../data/actions/schema';
 import { actionExplosions } from '../../data/explosions';
+import { destructionDamage, destructionMaterial } from '../../data/destruction';
 import { weaponKey } from '../../data/weaponKeys';
 import type { InputFrame, Vec2 } from '../../input/InputFrame';
 import type { EntitySnapshot } from '../world/types';
@@ -128,7 +129,9 @@ export class Combat {
     const def = attack.def, distanceFalloff = def.distanceFalloff;
     if (distanceFalloff) falloff *= 1 - (1 - distanceFalloff.minimum) * Math.max(0, Math.min(1, (distance - distanceFalloff.start) / (distanceFalloff.end - distanceFalloff.start)));
     const alive = target.health.current > 0;
-    const amount = this.damage.apply({ attackId: attack.id, actionId: def.id, sourceId: attack.sourceId, targetId: target.id, origin, ...(shotOrigin ? { shotOrigin } : {}), direction: this.direction, base: def.damage * falloff, multiplier: this.world.entities.get(attack.sourceId)?.combat?.damageMultiplier ?? 1, type, radius: def.splash?.radius ?? def.range, spread: def.spread, knockback: def.knockback * falloff, stagger: def.stagger, knockdown: def.knockdown, ...(attack.style ? { sweep: true } : {}), ...(def.hitStopMs === undefined ? {} : { hitStopMs: def.hitStopMs }) });
+    const worldTarget = target.faction === 'environment' && (!!target.destructible || !!target.hazard || target.kind === 'physics-prop');
+    const base = def.damage * falloff;
+    const amount = this.damage.apply({ attackId: attack.id, actionId: def.id, sourceId: attack.sourceId, targetId: target.id, origin, ...(shotOrigin ? { shotOrigin } : {}), direction: this.direction, base: worldTarget ? destructionDamage(def.id, destructionMaterial(target.archetype), base) : base, multiplier: this.world.entities.get(attack.sourceId)?.combat?.damageMultiplier ?? 1, type, radius: def.splash?.radius ?? def.range, spread: def.spread, knockback: def.knockback * falloff, stagger: def.stagger, knockdown: def.knockdown, ...(attack.style ? { sweep: true } : {}), ...(def.hitStopMs === undefined ? {} : { hitStopMs: def.hitStopMs }) });
     if (alive && target.health.current === 0 && def.category === 'melee') this.effects.noise(origin, def.noiseRadius, def.id);
     if (alive && target.faction === 'infected' && (amount || def.damage === 0) && def.status) this.status.apply(target, def.status, attack.sourceId, def.id, attack.id);
   }

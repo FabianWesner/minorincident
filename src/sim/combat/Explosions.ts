@@ -3,6 +3,7 @@
 import { downed } from './Damage';
 import * as RAPIER from '@dimforge/rapier3d-compat';
 import { SimPhase } from '../../core/EventBus';
+import { destructionDamage, destructionMaterial } from '../../data/destruction';
 import { blastDamage, explosionDef, type BlastClass, type ExplosionDef } from '../../data/explosions';
 import type { ExplosionBeat } from '../../data/audioEvents';
 import type { SimWorld } from '../world/SimWorld';
@@ -86,13 +87,17 @@ export class Explosions {
       // ensuring a boarding-ring salvo can never fail the run.
       if (target.vehicle) {
         const ownRocket = target.archetype === 'vehicle.military-apc' && sourceId === 1 && opts.actionId === 'weapon.rocket-launcher';
-        if (!ownRocket) world.vehicles?.damage(id, apply ? amount * d.vehicle : 0);
+        const vehicleDamage = destructionDamage(opts.actionId ?? d.id, 'metal', amount * d.vehicle);
+        if (!ownRocket) world.vehicles?.damage(id, apply ? vehicleDamage : 0);
         continue;
       }
       // Unbreakable movable props (cones, carts, benches) are launched by the impulse instead of vanishing at 0 HP.
       if (target.kind === 'physics-prop' && !world.props?.items.find(i => i.entityId === id)?.metadata.breakable) continue;
       if (!apply || !damage || amount <= 0) continue;
-      damage.apply({ attackId: opts.attackId ?? 0, actionId: opts.actionId ?? d.id, sourceId: world.entities.get(sourceId) ? sourceId : 1, targetId: id, origin: at, direction: { x: distance ? dx / distance : 1, z: distance ? dz / distance : 0 }, base: amount, direct: id === opts.directTargetId, multiplier: opts.multiplier ?? 1, type: 'explosive', radius: r, knockback: d.knockback * scale, stagger: d.stagger });
+      const actionId = opts.actionId ?? d.id;
+      const worldDamage = target.faction === 'environment' && (target.destructible || target.hazard || target.kind === 'physics-prop')
+        ? destructionDamage(actionId, destructionMaterial(target.archetype), amount) : amount;
+      damage.apply({ attackId: opts.attackId ?? 0, actionId, sourceId: world.entities.get(sourceId) ? sourceId : 1, targetId: id, origin: at, direction: { x: distance ? dx / distance : 1, z: distance ? dz / distance : 0 }, base: worldDamage, direct: id === opts.directTargetId, multiplier: opts.multiplier ?? 1, type: 'explosive', radius: r, knockback: d.knockback * scale, stagger: d.stagger });
     }
     // Barricade rails are not in the spatial hash: distance to the rail segment (spec 07 §5 barricade damage).
     if (!damage || d.barricade <= 0) return;
