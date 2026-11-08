@@ -39,7 +39,7 @@ try {
             simSecondsPerWallSecond: (g.world.tick - startTick) / 60 / ((now - start) / 1000),
             frames: stats(frames), simTickMs: stats(ticks), simFrameMs: stats(sims), updateCpuMs: stats(updates), renderCpuMs: stats(renders),
             drawCalls: p.drawCalls, triangles: p.triangles, backend: p.backend, quality: p.quality,
-            liveInfected: g.world.infected!.director.count, corpses: entities.filter(e => !!e.corpse).length,
+            liveInfected: g.world.infected!.active.filter(e => e.health.current > 0).length, directorSlots: g.world.infected!.director.count, corpses: entities.filter(e => !!e.corpse).length,
             followers: g.world.missions!.l8!.roster().length, drawnCharacters: a.crowdFigures().filter(f => f.drawn).length,
             bars: (g.view as unknown as { healthBars?: { count: number } }).healthBars?.count ?? 0,
             heapBytes: p.heapBytes, phase: g.world.missions!.state.phase, checkpoint: g.world.missions!.state.checkpoint });

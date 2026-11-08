@@ -102,7 +102,7 @@ for (const tier of values.tier === 'both' ? ['low', 'high'] as const : [values.t
       windows.push({ tick: world.tick, simSeconds: world.tick / 60, wallSeconds: (now - windowStarted) / 1000,
         nativeSimSecondsPerWallSecond: (world.tick - windowTick) / 60 / ((now - windowStarted) / 1000),
         tickWallMs: percentile(wallTicks), tickCpuMs: percentile(cpuTicks), systems, entities: entities.length,
-        livingInfected: world.infected!.director.count, peakInfected, corpses: entities.filter(e => !!e.corpse).length,
+        livingInfected: humanQueryChecks, directorSlots: world.infected!.director.count, peakInfected, corpses: entities.filter(e => !!e.corpse).length,
         downed: entities.filter(e => e.civilian?.state === 'down' || e.civilian?.state === 'rising' || (e.infected && e.health.current <= 0 && !e.corpse)).length,
         followers: world.missions!.l8!.roster().length, animals: entities.filter(e => e.civilian?.zooAnimal || /infected\.(elephant|gorilla|lion|zebra|flamingo)$/.test(e.archetype)).length,
         heapBytes: process.memoryUsage().heapUsed, listeners: world.events.listenerCount, stateHash: digest, humanQueryChecks, lightCounts: { ...lightCounts },
@@ -135,7 +135,8 @@ for (const tier of values.tier === 'both' ? ['low', 'high'] as const : [values.t
       if (world.tick === before) break;
       wallTicks.push(elapsed); cpuTicks.push((used.user + used.system) / 1000);
       for (const [name, total] of totals) costs.get(name)!.push(total);
-      peakInfected = Math.max(peakInfected, world.infected!.director.count);
+      let living = 0; for (const e of world.infected!.active) if (e.health.current > 0) living++;
+      peakInfected = Math.max(peakInfected, living);
       if (inspector && profiling && [5722, 9051].includes(world.tick)) {
         const { profile } = await inspector.post('Profiler.stop'); profiling = false;
         const nodes = new Map(profile.nodes.map(n => [n.id, n.callFrame]));
@@ -154,6 +155,6 @@ for (const tier of values.tier === 'both' ? ['low', 'high'] as const : [values.t
 let prior: Record<string, unknown>;
 try { const old = await readJson(out); prior = Array.isArray(old) ? { preRestart: old } : old as Record<string, unknown>; }
 catch { prior = {}; }
-prior[values.label!] = { at: new Date().toISOString(), sourceHash: sourceHash.digest('hex'), referenceRevision: process.env.L8_REFERENCE_REV ?? null, node: process.version, instrumented: true, cpuProfiled: !!values.profile, results };
+prior[values.label!] = { at: new Date().toISOString(), populationMetricVersion: 2, sourceHash: sourceHash.digest('hex'), referenceRevision: process.env.L8_REFERENCE_REV ?? null, node: process.version, instrumented: true, cpuProfiled: !!values.profile, results };
 await writeFile(out, JSON.stringify(prior, null, 2));
 if (process.env.L8_STATE_OUT) await writeFile(process.env.L8_STATE_OUT, JSON.stringify({ campaign, snapshots }));

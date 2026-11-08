@@ -1391,7 +1391,8 @@
           }
         ]
       }
-    ]
+    ],
+    "populationMetricVersion": 1
   },
   "final": {
     "at": "2026-11-08T16:05:10.685Z",
@@ -1540,7 +1541,8 @@
               24.0048828125,
               28.25537109375,
               30.45458984375
-            ]
+            ],
+            "livingInfectedActors": 12
           },
           {
             "tick": 5602,
@@ -1673,7 +1675,8 @@
               24.33056640625,
               28.181640625,
               30.40234375
-            ]
+            ],
+            "livingInfectedActors": 79
           },
           {
             "tick": 5722,
@@ -1806,7 +1809,8 @@
               24.6240234375,
               28.17822265625,
               30.38818359375
-            ]
+            ],
+            "livingInfectedActors": 81
           },
           {
             "tick": 7200,
@@ -1939,7 +1943,8 @@
               25.685546875,
               28.23486328125,
               30.369140625
-            ]
+            ],
+            "livingInfectedActors": 73
           },
           {
             "tick": 8931,
@@ -2072,7 +2077,8 @@
               25.90185546875,
               28.15771484375,
               30.3037109375
-            ]
+            ],
+            "livingInfectedActors": 71
           },
           {
             "tick": 9051,
@@ -2205,7 +2211,8 @@
               25.90185546875,
               28.15771484375,
               30.3037109375
-            ]
+            ],
+            "livingInfectedActors": 72
           },
           {
             "tick": 10190,
@@ -2336,7 +2343,8 @@
               25.98974609375,
               28.13818359375,
               30.2841796875
-            ]
+            ],
+            "livingInfectedActors": 67
           }
         ],
         "cpuProfiles": []
@@ -2480,7 +2488,8 @@
               26.1923828125,
               28.11572265625,
               30.2509765625
-            ]
+            ],
+            "livingInfectedActors": 24
           },
           {
             "tick": 5602,
@@ -2613,7 +2622,8 @@
               25.7666015625,
               27.92919921875,
               30.146484375
-            ]
+            ],
+            "livingInfectedActors": 104
           },
           {
             "tick": 5722,
@@ -2746,7 +2756,8 @@
               25.7666015625,
               27.92919921875,
               30.146484375
-            ]
+            ],
+            "livingInfectedActors": 122
           },
           {
             "tick": 7200,
@@ -2879,7 +2890,8 @@
               25.43603515625,
               27.7392578125,
               30.0390625
-            ]
+            ],
+            "livingInfectedActors": 173
           },
           {
             "tick": 7513,
@@ -3010,12 +3022,14 @@
               25.72119140625,
               27.759765625,
               30.03271484375
-            ]
+            ],
+            "livingInfectedActors": 176
           }
         ],
         "cpuProfiles": []
       }
-    ]
+    ],
+    "populationMetricVersion": 1
   },
   "holdFinal": {
     "at": "2026-11-08T16:06:11.171Z",
@@ -3173,7 +3187,8 @@
               26.2236328125,
               27.830078125,
               30.0439453125
-            ]
+            ],
+            "livingInfectedActors": 24
           },
           {
             "tick": 5602,
@@ -3306,7 +3321,8 @@
               27.189453125,
               27.97998046875,
               30.05908203125
-            ]
+            ],
+            "livingInfectedActors": 98
           },
           {
             "tick": 5722,
@@ -3439,7 +3455,8 @@
               27.189453125,
               27.97998046875,
               30.05908203125
-            ]
+            ],
+            "livingInfectedActors": 113
           },
           {
             "tick": 7200,
@@ -3572,7 +3589,8 @@
               27.7314453125,
               28.04833984375,
               30.0458984375
-            ]
+            ],
+            "livingInfectedActors": 174
           },
           {
             "tick": 8931,
@@ -3705,7 +3723,8 @@
               26.302734375,
               27.70361328125,
               29.87548828125
-            ]
+            ],
+            "livingInfectedActors": 173
           },
           {
             "tick": 9051,
@@ -3838,12 +3857,14 @@
               26.0380859375,
               27.62548828125,
               29.8349609375
-            ]
+            ],
+            "livingInfectedActors": 173
           }
         ],
         "cpuProfiles": []
       }
-    ]
+    ],
+    "populationMetricVersion": 1
   },
   "equivalence": {
     "fullRouteCutpoints": [
@@ -3928,5 +3949,10 @@
         "sightQueries": 137776
       }
     ]
+  },
+  "populationMetrics": {
+    "version1": "Recorded livingInfected/peakInfected fields are director slot counts, including recoverable downed actors under strict L8 admission. They are not actual alive actor counts.",
+    "derivedLivingInfectedActors": "Exactly the number of health-positive active infected: the original humanQueryChecks loop visits each such actor once. Present for final/hold; unavailable in older baseline captures.",
+    "version2": "Updated producer separates actual livingInfected/peakInfected from directorSlots."
   }
 }

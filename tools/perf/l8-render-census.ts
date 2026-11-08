@@ -29,7 +29,7 @@ try {
         largestAssets: Object.entries(p.profileAssets ?? {}).sort((a, b) => b[1].triangles - a[1].triangles).slice(0, 15),
         drawnCharacters: a.crowdFigures().filter(f => f.drawn).length,
         bars: (g.view as unknown as { healthBars?: { count: number } }).healthBars?.count ?? 0,
-        livingInfected: g.world.infected!.director.count, corpses: entities.filter(e => !!e.corpse).length,
+        livingInfected: g.world.infected!.active.filter(e => e.health.current > 0).length, directorSlots: g.world.infected!.director.count, corpses: entities.filter(e => !!e.corpse).length,
         followers: g.world.missions!.l8!.roster().length, nodeBuilds: p.nodeBuilds, heapBytes: p.heapBytes };
     }, snapshot);
     assert.equal(row.backend, 'webgpu'); rows.push(row);
