@@ -177,7 +177,8 @@ export const musicLayers = ['base', 'pulse', 'drive', 'peak'] as const;
 for (const [level, bpm] of Object.entries(musicLevels))
     for (const [i, layer] of musicLayers.entries())
         cue(`music.${level}.${layer}`, 'music', 'music', 960 / bpm, 130 + i * 90, { category: `music-${level}`, loop: true, gain: 0.35, rateSpread: 0, antiSpam: 0 });
-for (let i = 0; i < 5; i++) cue(`l10.scare.${i}`, 'telegraph', 'noise', .8, 100 + i * 110, { category: 'music-L10-fx', gain: .6, rateSpread: 0, antiSpam: 1, initial: false, caption: ['Corn cracking nearby', 'Something moving in the corn', 'A sudden rush through dry stalks', 'A metallic crash in the dark', 'A sharp cry from the field'][i] });
+// Caption copied from docs/design/story-script.md, L10 chapter 1.
+for (let i = 0; i < 5; i++) cue(`l10.scare.${i}`, 'telegraph', 'noise', .8, 100 + i * 110, { category: 'music-L10-fx', gain: .6, rateSpread: 0, antiSpam: 1, initial: false, caption: 'Things move in the rows.' });
 cue('l10.heartbeat', 'music', 'tone', 2, 56, { category: 'music-L10-fx', gain: .25, rateSpread: 0, antiSpam: 0, initial: false, loop: true });
 for (const id of ['objective', 'weapon', 'elite', 'low-hp', 'twist', 'complete', 'dawn'])
     cue(`stinger.${id}`, 'music', 'music', id === 'dawn' ? 4 : 1, 200, { gain: 0.5, rateSpread: 0, antiSpam: 0 });
