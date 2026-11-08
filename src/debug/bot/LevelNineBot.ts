@@ -8,6 +8,7 @@ import { l9Course } from '../../data/l9';
  * It never fights, leaves the car or loosens anything; the crash sequence takes over by itself at the outskirts. */
 export class LevelNineBot {
   private index = 1;
+  private avoid: { x: number; z: number; until: number } | null = null;
   readonly path: readonly Point[];
   readonly length: number;
   constructor(private readonly w: SimWorld, routeId = 'road', detour = false, private readonly throttle = .7, readonly profile = 'complete') {
@@ -73,6 +74,22 @@ export class LevelNineBot {
       else target = [l9Course.evacuation.x, l9Course.evacuation.z];
       if (Math.hypot(target[0] - p.x, target[1] - p.z) < 5 && target[0] === l9Course.evacuation.x) { f.brake = true; return f; }
     }
+    // Read nearby moving heavy bodies, just as the driver reads solid road
+    // furniture. Ploughing into the same brute after every restart is not a
+    // completion policy for the revised stop-on-impact mechanic.
+    if (this.avoid && (w.tick >= this.avoid.until || Math.hypot(this.avoid.x - p.x, this.avoid.z - p.z) < 4)) this.avoid = null;
+    if (p.x < 405 && !this.avoid) {
+      const c = Math.cos(p.yaw), s = Math.sin(p.yaw);
+      const heavy = w.infected!.active.find(e => {
+        const dx = e.transform.x - p.x, dz = e.transform.z - p.z, ahead = dx * c - dz * s;
+        return !e.hidden && !e.infected?.hidden && e.health.current > 0 && ['infected.brute', 'infected.armored', 'infected.riot', 'infected.elephant'].includes(e.archetype) && ahead > 4 && ahead < 25 && Math.abs(dx * s + dz * c) < 6;
+      });
+      if (heavy) {
+        const side = (heavy.transform.x - p.x) * s + (heavy.transform.z - p.z) * c >= 0 ? -1 : 1;
+        this.avoid = { x: heavy.transform.x + s * side * 9, z: heavy.transform.z + c * side * 9, until: w.tick + 240 };
+      }
+    }
+    if (this.avoid) target = [this.avoid.x, this.avoid.z];
     const dx = target[0] - p.x, dz = target[1] - p.z, want = -Math.atan2(dz, dx);
     const delta = Math.atan2(Math.sin(want - p.yaw), Math.cos(want - p.yaw));
     f.drive = { throttle: this.throttle, steer: Math.max(-1, Math.min(1, delta * 2)) };

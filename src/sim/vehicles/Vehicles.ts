@@ -577,7 +577,7 @@ export class Vehicles {
     const bloated = special && actor?.archetype === 'infected.bloated';
     const amount = source === 'attack' ? apcDurability.attackDamage : heavy ? actor?.archetype === 'infected.elephant' ? 80 : 40 : bloated ? 60 : apcDurability.contactDamage;
     this.damage(car.entity.id, amount);
-    if (heavy) {
+    if (heavy && actor!.health.current > 0) {
       const velocity = car.physics.body.linvel(); car.physics.body.setLinvel({ x: 0, y: velocity.y, z: 0 }, true);
       car.entity.vehicle!.impactStallUntil = this.world.tick + 60;
     }
