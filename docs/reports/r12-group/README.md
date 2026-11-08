@@ -1,6 +1,6 @@
 # R12 natural group movement
 
-**Status: NOT merged-ready. Final candidate `601d18df` is under native verification. L7 still needs a qualifying complete native route.**
+**Status: BLOCKED / NOT merged-ready. Final source `601d18df` is verified natively; L8 adds no human slow-follower rows. L7 required pace coverage remains unqualified and prevents acceptance.**
 
 PO: “Group dynamic in general is strange... They move too parallel...”
 
@@ -113,14 +113,26 @@ Remaining top-level flags are L3 competent rate, L6/L7 kiting rate, L7 required-
 
 Two local diagnostics tested a smaller L8 sway amplitude and suppressing sway while an ally attacks/tracks an enemy. Both added required-ID pace failures; combat-only sway also exceeded the 10% skilled waiting bound. Both changes were reverted. [Diagnostic summaries](rejected-trials.json) are explicitly not full threat audits. Final runtime remains the fully audited `ff834fdc` source; later commits contain reports only.
 
-Required follow-up: provide/fix a complete ordinary-input L7 native route that preserves current seed qualification, then rerun required follower votes. Resolve L8 raw slow IDs 355/361 and stationary-far increase before claiming broad no-regression acceptance. The current implementation and receipts are committed for review, but the goal **Natural group movement merged-ready** is not achieved. No browser QA, push or deploy was performed.
+At the `ff834fdc` stage, required follow-up was to provide/fix a complete ordinary-input L7 native route that preserves current seed qualification, then rerun required follower votes. Resolve L8 raw slow IDs 355/361 and stationary-far increase before claiming broad no-regression acceptance. The current implementation and receipts are committed for review, but the goal **Natural group movement merged-ready** is not achieved. No browser QA, push or deploy was performed.
 
 ## Nearby evacuation pacing (`601d18df`)
 
 A read-only trace of the qualified L8 samples found no recorded body blocker or slowing status for IDs 355/361. Their low-speed samples matched the courier's speed (median ratio ≈1.0), while their median courier distances improved against clean main: 355 from 4.42 m to 3.17 m; 361 from 6.77 m to 5.81 m. [Trace comparison](l8-pace-trace-comparison.json). This explains the investigation direction; it does not waive the every-follower group-median rule.
 
-`601d18df` gives followers within 10 m of a moving courier the same modest 1.05× pace headroom used by calm L5 travel. R13's distant catch-up and boarding approach retain their existing limits. Loose slots, sway and individual starts remain. In the local diagnostic, L8 completes in 314.1 s, skilled waiting is 7.19%, and the only raw slow follower is main's existing companion 354. Final six-level verification is pending; the remote runtime is independently hashed in [this receipt](remote-paced-runtime.json).
+`601d18df` gives followers within 10 m of a moving courier the same modest 1.05× pace headroom used by calm L5 travel. R13's distant catch-up and boarding approach retain their existing limits. Loose slots, sway and individual starts remain. In the local diagnostic, L8 completes in 314.1 s, skilled waiting is 7.19%, and the only raw slow follower is main's existing companion 354. Final six-level verification is recorded below; the remote runtime is independently hashed in [this receipt](remote-paced-runtime.json).
 
 The paced source passes typecheck, lint and all **107 tests / 27 files** ([checks](paced-checks.json)). Its [quiet boarding receipts](paced-boarding.json) remain unchanged: L7 24/24 in 8.18 s, L8 13/13 in 21.38 s, both tiers, zero collision failures.
 
 [Paced L8 motion receipts](paced-native-metrics.json): low completes at 314.1 s; high reaches its route budget at 190.9 s. NN CV is 0.324/0.277, moving facing R 0.950/0.931, and rails 6.4%/6.1%. The low route includes three player deaths/retries; completion time is not a deathless-run claim. These are ordinary input runs, not quiet-fixture outcomes. L2/L3/L5/L6 and L7 are unchanged by the final L8-only cap.
+
+## Final result and remaining blocker
+
+The `601d18df` six-level remote audit completed in **756.2 s** (764.3 s including the budget wrapper), exited 1, and retained **8 top-level flags**. [Final comparison against clean main](follower-comparison-paced.json) includes all follower rows, waits, seed validity and raw audit hashes. No evaluator, validity rule or threshold changed.
+
+- **L8 correction verified:** complete at 314.1 s; skilled waiting 7.19%; raw escape/breached slow rows contain only companion 354, already failing on main. New human slow rows 355/361 are removed. Passive adds no raw slow rows. Boarding and natural spacing/heading variation remain verified by the linked receipts.
+- **L7 remains unqualified:** skilled waiting improves to 4.92%, but all three mortal seeds fail, so required IDs 60/63 have no valid pace votes. Departure samples additionally flag IDs 51/52/58/60/67/69/71; main never reaches that phase, so these cannot establish no regression. Quiet 24/24 boarding is not a substitute for qualified mortal-route coverage. The bus reaches HP 0 on both main and lane ([route blocker](l7-route-blocker.json)).
+- L2/L3 follower rows remain unchanged; L5 has no pace failures; L6 removes the five exit slow IDs, with both its increased waiting share and reduced absolute stationary-far time retained above. Other inherited threat/kiting flags remain in the complete comparison.
+
+The two-hour work box is exhausted. **BLOCKED:** a complete native L7 route or upstream bus/route fix is needed, followed by qualified follower verification. The goal is not marked achieved. The final runtime, comparisons and reports are committed; no browser, push or deploy was used.
+
+Browser QA needed
