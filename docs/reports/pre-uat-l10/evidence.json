@@ -1,0 +1,4003 @@
+{
+  "implementation": {
+    "sourceHash": "cf10ea2a984d5b4a713c66c6638e09aefccaae3e262eedbdd391e56327be506b",
+    "observerHash": "b10d522b89f546909b8c2a36fa52d134f6660cac4c1f3ce2ff8382d19a8c8ad2",
+    "revision": "395b493fe4f05787fd535e5bc18b7437db2be988"
+  },
+  "base": "f4bba5cf9bb269d288dfcb31687bc86e4031f9aa",
+  "checks": {
+    "verify": {
+      "exit": 0,
+      "unitCases": 107,
+      "unitFiles": 27,
+      "registeredBudget": 150
+    },
+    "acceptance": {
+      "exit": 1,
+      "freshFailingRows": 0,
+      "incompleteRows": 11,
+      "rows": [
+        {
+          "id": "L10-01",
+          "status": "PASS",
+          "currentStatus": "PASS"
+        },
+        {
+          "id": "L10-02",
+          "status": "NOT CHECKED",
+          "currentStatus": "NOT CHECKED"
+        },
+        {
+          "id": "L10-03",
+          "status": "NOT CHECKED",
+          "currentStatus": "NOT CHECKED"
+        },
+        {
+          "id": "L10-04",
+          "status": "FAIL",
+          "currentStatus": "NOT CHECKED"
+        },
+        {
+          "id": "L10-05",
+          "status": "NOT CHECKED",
+          "currentStatus": "NOT CHECKED"
+        },
+        {
+          "id": "L10-06",
+          "status": "NOT CHECKED",
+          "currentStatus": "NOT CHECKED"
+        },
+        {
+          "id": "L10-07",
+          "status": "NOT CHECKED",
+          "currentStatus": "NOT CHECKED"
+        },
+        {
+          "id": "L10-08",
+          "status": "NOT CHECKED",
+          "currentStatus": "NOT CHECKED"
+        },
+        {
+          "id": "L10-09",
+          "status": "NOT CHECKED",
+          "currentStatus": "NOT CHECKED"
+        },
+        {
+          "id": "L10-10",
+          "status": "PASS",
+          "currentStatus": "PASS"
+        },
+        {
+          "id": "L10-11",
+          "status": "FAIL",
+          "currentStatus": "NOT CHECKED"
+        },
+        {
+          "id": "L10-12",
+          "status": "NOT CHECKED",
+          "currentStatus": "NOT CHECKED"
+        },
+        {
+          "id": "L10-13",
+          "status": "PASS",
+          "currentStatus": "PASS"
+        },
+        {
+          "id": "L10-14",
+          "status": "NOT CHECKED",
+          "currentStatus": "NOT CHECKED"
+        },
+        {
+          "id": "L10-15",
+          "status": "PASS",
+          "currentStatus": "PASS"
+        }
+      ]
+    },
+    "threat": {
+      "exit": 1,
+      "levelFlags": 0,
+      "globalFlags": [
+        "PARTIAL_LEVEL_SELECTION"
+      ],
+      "revision": "b563fc52",
+      "finalSimulationIdentical": true
+    }
+  },
+  "performance": {
+    "originalPerf11MaxMs": 83.4,
+    "originalCause": "UNPROVEN",
+    "cpuDiagnostic": [
+      {
+        "side": "before",
+        "compiled": {
+          "dist": "test-results/pre-uat-l10/before-dist",
+          "bundleHash": "3eb8ad4afd2cb5949dfeccfda868e5805ca3824639ca08ee8d1c33b44fe51937",
+          "sourceHash": "2ad0fd51ba9762aaf0806eda589e30b2f1f2f6b4bdba9d9691db99f6ff848fff",
+          "revision": "f4bba5cf9bb269d288dfcb31687bc86e4031f9aa",
+          "scope": "original unchanged baseline"
+        },
+        "profiled": false,
+        "exclusive": "f284201c-7a95-4ccf-bdc6-f318bc7881d3",
+        "p95": 16.70000000001164,
+        "max": 16.80000000000291,
+        "completionWindowMax": 16.80000000000291,
+        "operations": [
+          {
+            "key": "saveResume",
+            "start": 67674.5,
+            "ms": 7.200000762939453,
+            "tick": 3600,
+            "charge": 3600,
+            "alias": false,
+            "entities": 574
+          },
+          {
+            "key": "setItem",
+            "start": 67690.4000005722,
+            "ms": 1.1999998092651367,
+            "tick": 3600,
+            "charge": 3600,
+            "bytes": 1900964,
+            "format": "minor-incident.checkpoint1:"
+          },
+          {
+            "key": "write",
+            "start": 67684.9000005722,
+            "ms": 6.899999618530273,
+            "tick": 3600,
+            "charge": 3600
+          },
+          {
+            "key": "saveCampaign",
+            "start": 67674.4000005722,
+            "ms": 17.399999618530273,
+            "tick": 3600,
+            "charge": 3600
+          },
+          {
+            "key": "checkpoint",
+            "start": 67670.20000076294,
+            "ms": 21.59999942779541,
+            "tick": 3600,
+            "charge": 3600
+          }
+        ],
+        "end": {
+          "tick": 4019,
+          "charge": 3600,
+          "marker": "cure-mega",
+          "markerAt": {
+            "x": 3529.4669848885633,
+            "z": 27.90516266661992,
+            "y": 0.7,
+            "radius": 2
+          },
+          "bossAt": {
+            "x": 3529.4669848885633,
+            "y": 0.7,
+            "z": 27.90516266661992,
+            "yaw": 0.30587887140508424
+          },
+          "markerDOM": {
+            "hidden": false,
+            "anchor": "cure-mega",
+            "offscreen": "true"
+          },
+          "entities": 574,
+          "dead": 568,
+          "step": [
+            "mega"
+          ]
+        },
+        "frames": 4020,
+        "errors": [],
+        "seedSha256": "b9210452ac7b5a885f59e89b63c13d6c74fa6cf6472e2a98d319fcf6a4929075"
+      },
+      {
+        "side": "after",
+        "compiled": {
+          "dist": "test-results/pre-uat-l10/accepted-dist",
+          "bundleHash": "d966616a1a3ca525d03aed2472e5656efafab21148a4787586ece22204cd9e75",
+          "sourceHash": "cf10ea2a984d5b4a713c66c6638e09aefccaae3e262eedbdd391e56327be506b",
+          "observerHash": "b10d522b89f546909b8c2a36fa52d134f6660cac4c1f3ce2ff8382d19a8c8ad2",
+          "revision": "395b493fe4f05787fd535e5bc18b7437db2be988",
+          "scope": "395b493f final runtime"
+        },
+        "profiled": false,
+        "exclusive": "f284201c-7a95-4ccf-bdc6-f318bc7881d3",
+        "p95": 16.70000000001164,
+        "max": 16.80000000000291,
+        "completionWindowMax": 16.80000000000291,
+        "operations": [
+          {
+            "key": "saveResume",
+            "start": 67509.69999980927,
+            "ms": 1.6999998092651367,
+            "tick": 3600,
+            "charge": 3600,
+            "alias": true,
+            "entities": 574
+          },
+          {
+            "key": "setItem",
+            "start": 67515.5,
+            "ms": 1.3000001907348633,
+            "tick": 3600,
+            "charge": 3600,
+            "bytes": 1914687,
+            "format": "minor-incident.checkpoint1:"
+          },
+          {
+            "key": "write",
+            "start": 67512.89999961853,
+            "ms": 4.100000381469727,
+            "tick": 3600,
+            "charge": 3600
+          },
+          {
+            "key": "saveCampaign",
+            "start": 67509.5999994278,
+            "ms": 7.5,
+            "tick": 3600,
+            "charge": 3600
+          },
+          {
+            "key": "checkpoint",
+            "start": 67505.0999994278,
+            "ms": 12,
+            "tick": 3600,
+            "charge": 3600
+          }
+        ],
+        "end": {
+          "tick": 4019,
+          "charge": 3600,
+          "marker": null,
+          "bossAt": {
+            "x": 3529.4669848885633,
+            "y": 0.7,
+            "z": 27.90516266661992,
+            "yaw": 0.30587887140508424
+          },
+          "markerDOM": {
+            "hidden": true,
+            "anchor": "cure-console",
+            "offscreen": "false"
+          },
+          "entities": 574,
+          "dead": 568,
+          "step": [
+            "mega"
+          ]
+        },
+        "frames": 4020,
+        "errors": [],
+        "seedSha256": "b9210452ac7b5a885f59e89b63c13d6c74fa6cf6472e2a98d319fcf6a4929075"
+      }
+    ],
+    "productionComparison": [
+      {
+        "side": "before",
+        "compiled": {
+          "dist": "test-results/pre-uat-l10/before-dist",
+          "bundleHash": "3eb8ad4afd2cb5949dfeccfda868e5805ca3824639ca08ee8d1c33b44fe51937",
+          "sourceHash": "2ad0fd51ba9762aaf0806eda589e30b2f1f2f6b4bdba9d9691db99f6ff848fff",
+          "revision": "f4bba5cf9bb269d288dfcb31687bc86e4031f9aa",
+          "scope": "original unchanged baseline"
+        },
+        "profiled": false,
+        "exclusive": "272cb0a1-1734-4c34-8117-7770eaf4bfed",
+        "method": "Actual recorded charge Resume; physical mouse fires only at currently drawn living enemies. Stationary protected courier; visible HUD and test=poses production warm-up. No actor/phase/charge edits. No CPU profiler; exclusive admission recorded separately.",
+        "frames": 4017,
+        "p95": 16.799999999995634,
+        "max": 33.30000000000291,
+        "completionWindowMax": 33.30000000000291,
+        "completionWindowCovered": true,
+        "operations": [
+          {
+            "key": "saveResume",
+            "start": 64275.5,
+            "ms": 6.699999809265137,
+            "tick": 3600,
+            "charge": 3600,
+            "alias": false,
+            "entities": 574
+          },
+          {
+            "key": "setItem",
+            "start": 64290.699999809265,
+            "ms": 1.5,
+            "tick": 3600,
+            "charge": 3600,
+            "bytes": 1907744,
+            "format": "minor-incident.checkpoint1:"
+          },
+          {
+            "key": "write",
+            "start": 64285.29999923706,
+            "ms": 7.100000381469727,
+            "tick": 3600,
+            "charge": 3600
+          },
+          {
+            "key": "saveCampaign",
+            "start": 64275.39999961853,
+            "ms": 17,
+            "tick": 3600,
+            "charge": 3600
+          },
+          {
+            "key": "checkpoint",
+            "start": 64271.89999961853,
+            "ms": 20.5,
+            "tick": 3600,
+            "charge": 3600
+          }
+        ],
+        "end": {
+          "tick": 4019,
+          "charge": 3600,
+          "marker": "cure-mega",
+          "markerAt": {
+            "x": 3529.4669848885633,
+            "z": 27.90516266661992,
+            "y": 0.7,
+            "radius": 2
+          },
+          "bossAt": {
+            "x": 3529.4669848885633,
+            "y": 0.7,
+            "z": 27.90516266661992,
+            "yaw": 0.30587887140508424
+          },
+          "markerDOM": {
+            "hidden": false,
+            "anchor": "cure-mega",
+            "offscreen": "true"
+          },
+          "entities": 574,
+          "dead": 569,
+          "step": [
+            "mega"
+          ]
+        },
+        "errors": [],
+        "seedSha256": "b9210452ac7b5a885f59e89b63c13d6c74fa6cf6472e2a98d319fcf6a4929075"
+      },
+      {
+        "side": "after",
+        "compiled": {
+          "dist": "test-results/pre-uat-l10/accepted-dist",
+          "bundleHash": "d966616a1a3ca525d03aed2472e5656efafab21148a4787586ece22204cd9e75",
+          "sourceHash": "cf10ea2a984d5b4a713c66c6638e09aefccaae3e262eedbdd391e56327be506b",
+          "observerHash": "b10d522b89f546909b8c2a36fa52d134f6660cac4c1f3ce2ff8382d19a8c8ad2",
+          "revision": "395b493fe4f05787fd535e5bc18b7437db2be988",
+          "scope": "395b493f final runtime"
+        },
+        "profiled": false,
+        "exclusive": "272cb0a1-1734-4c34-8117-7770eaf4bfed",
+        "method": "Actual recorded charge Resume; physical mouse fires only at currently drawn living enemies. Stationary protected courier; visible HUD and test=poses production warm-up. No actor/phase/charge edits. No CPU profiler; exclusive admission recorded separately.",
+        "frames": 4018,
+        "p95": 16.799999999995634,
+        "max": 33.30000000000109,
+        "completionWindowMax": 16.80000000000291,
+        "completionWindowCovered": true,
+        "operations": [
+          {
+            "key": "saveResume",
+            "start": 64358.5,
+            "ms": 1.6000003814697266,
+            "tick": 3600,
+            "charge": 3600,
+            "alias": true,
+            "entities": 574
+          },
+          {
+            "key": "setItem",
+            "start": 64365,
+            "ms": 1.1999998092651367,
+            "tick": 3600,
+            "charge": 3600,
+            "bytes": 1906517,
+            "format": "minor-incident.checkpoint1:"
+          },
+          {
+            "key": "write",
+            "start": 64361.699999809265,
+            "ms": 4.800000190734863,
+            "tick": 3600,
+            "charge": 3600
+          },
+          {
+            "key": "saveCampaign",
+            "start": 64358.5,
+            "ms": 8,
+            "tick": 3600,
+            "charge": 3600
+          },
+          {
+            "key": "checkpoint",
+            "start": 64354.699999809265,
+            "ms": 11.800000190734863,
+            "tick": 3600,
+            "charge": 3600
+          }
+        ],
+        "end": {
+          "tick": 4019,
+          "charge": 3600,
+          "marker": null,
+          "bossAt": {
+            "x": 3529.4669848885633,
+            "y": 0.7,
+            "z": 27.90516266661992,
+            "yaw": 0.30587887140508424
+          },
+          "markerDOM": {
+            "hidden": true,
+            "anchor": "cure-console",
+            "offscreen": "false"
+          },
+          "entities": 574,
+          "dead": 569,
+          "step": [
+            "mega"
+          ]
+        },
+        "errors": [],
+        "seedSha256": "b9210452ac7b5a885f59e89b63c13d6c74fa6cf6472e2a98d319fcf6a4929075"
+      }
+    ],
+    "originalWorkloadReplay": [
+      {
+        "side": "prod",
+        "max": 33.40000000000873,
+        "p95": 16.70000000001164,
+        "frames": 4023,
+        "peak": {
+          "at": 59106.40000038147,
+          "tick": 64459,
+          "charge": 3582
+        },
+        "completionAtMs": 59956.30000038147,
+        "completionWindowMax": 16.80000000000291,
+        "completionWindowCovered": true,
+        "start": {
+          "tick": 60913,
+          "alive": 94,
+          "drawn": 26,
+          "backend": "webgpu",
+          "quality": "low"
+        },
+        "end": {
+          "tick": 64964,
+          "alive": 45,
+          "drawn": 2,
+          "backend": "webgpu",
+          "quality": "low"
+        },
+        "attacks": 2,
+        "failure": null,
+        "errors": []
+      },
+      {
+        "side": "candidate",
+        "max": 50.099999999998545,
+        "p95": 16.70000000001164,
+        "frames": 4025,
+        "peak": {
+          "at": 5308.999999618529,
+          "tick": 61231,
+          "charge": 438
+        },
+        "completionAtMs": 59956.799999618524,
+        "completionWindowMax": 16.80000000000291,
+        "completionWindowCovered": true,
+        "start": {
+          "tick": 60913,
+          "alive": 94,
+          "drawn": 26,
+          "backend": "webgpu",
+          "quality": "low"
+        },
+        "end": {
+          "tick": 64962,
+          "alive": 45,
+          "drawn": 2,
+          "backend": "webgpu",
+          "quality": "low"
+        },
+        "attacks": 2,
+        "failure": null,
+        "errors": []
+      }
+    ],
+    "cpuOriginalWorkloadDiagnostic": {
+      "method": "Separate profiled original-workload baseline; diagnostic only, not the original 83.4 ms frame. CPU samples use time relative to profiler start, approximately aligned to gameplay capture.",
+      "maxMs": 49.900000000001455,
+      "peak": {
+        "at": 5354.39999961853,
+        "tick": 61234,
+        "charge": 441
+      },
+      "completionAtMs": 59952.19999961853,
+      "newBakesNearCompletion": [],
+      "newBuildsNearCompletion": [],
+      "longestNavCallNearCompletionMs": 0.3000001907348633,
+      "gcSamplesNearCompletion": [
+        {
+          "atMs": 59111.896999998586,
+          "sampleMs": 1.379
+        },
+        {
+          "atMs": 59479.32999999855,
+          "sampleMs": 1.502
+        },
+        {
+          "atMs": 59843.26399999849,
+          "sampleMs": 1.511
+        },
+        {
+          "atMs": 60177.525999998434,
+          "sampleMs": 1.509
+        },
+        {
+          "atMs": 60379.50899999847,
+          "sampleMs": 1.508
+        },
+        {
+          "atMs": 60677.89999999841,
+          "sampleMs": 1.51
+        }
+      ],
+      "errors": [],
+      "originalCause": "UNPROVEN"
+    },
+    "original60SecondDuration": {
+      "method": "Original 60-second unprofiled complete-bot duration, baseline; includes its ordinary stop commands. Matching duration experiment, not full completion+2s qualification.",
+      "maxMs": 33.400000000001455,
+      "p95Ms": 16.799999999995634,
+      "durationMs": 60105.800000190735,
+      "peak": {
+        "at": 5258.200000000001,
+        "tick": 61228,
+        "charge": 435
+      },
+      "completionAtMs": 59955.899999999994,
+      "completionWindowCovered": false,
+      "errors": [],
+      "failure": null,
+      "originalCause": "UNPROVEN"
+    }
+  },
+  "physical": {
+    "progressed-root-ending": {
+      "runs": [
+        {
+          "level": "L10",
+          "entry": "continue",
+          "heroine": "female",
+          "finished": true,
+          "skipped": [],
+          "wallSeconds": 290,
+          "simSeconds": 259,
+          "maxNoProgressSeconds": 37.983333333333334,
+          "deaths": 0,
+          "assists": 1,
+          "attacks": {
+            "weapon.rocket-launcher": 14
+          },
+          "weaponsStart": [
+            "weapon.fire-axe",
+            "weapon.pistol",
+            "weapon.shotgun",
+            "weapon.army-mg",
+            "weapon.rocket-launcher"
+          ],
+          "weaponsEnd": [
+            "weapon.fire-axe",
+            "weapon.pistol",
+            "weapon.shotgun",
+            "weapon.army-mg",
+            "weapon.rocket-launcher"
+          ],
+          "steps": [
+            {
+              "id": "mega",
+              "text": "Kill the Mega Alpha",
+              "tick": 10,
+              "marker": {
+                "anchor": null,
+                "ring": null,
+                "drawn": null,
+                "playerY": 0.7049999833106995,
+                "pinVisible": false
+              }
+            },
+            {
+              "id": "release",
+              "text": "Release the cure at the console \u00b7 6\u00a0m",
+              "tick": 5333,
+              "marker": {
+                "anchor": "cure-console",
+                "ring": {
+                  "x": 4002,
+                  "y": 0,
+                  "z": -27
+                },
+                "drawn": [
+                  4002,
+                  0,
+                  -27
+                ],
+                "playerY": 0.7049999833106995,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "epilogue",
+              "text": "Watch the cure spread \u00b7 1/150 s",
+              "tick": 5623,
+              "marker": {
+                "anchor": "cure-console",
+                "ring": null,
+                "drawn": null,
+                "playerY": 0.7049999833106995,
+                "pinVisible": false
+              }
+            },
+            {
+              "id": "credits",
+              "text": "Minor Incident",
+              "tick": 14546,
+              "marker": {
+                "anchor": "cure-console",
+                "ring": null,
+                "drawn": null,
+                "playerY": 0.7049999833106995,
+                "pinVisible": false
+              }
+            }
+          ]
+        }
+      ],
+      "corpseLife": {
+        "tracked": 757,
+        "missing": 0,
+        "revivals": 0
+      },
+      "audio": {
+        "state": "running",
+        "errors": [],
+        "music": "aftermath",
+        "cues": {
+          "mega.roar": 7,
+          "mega.impact": 3,
+          "mega.step": 23,
+          "mega.charge": 1
+        }
+      },
+      "markers": [
+        {
+          "id": "mega",
+          "spatial": false,
+          "views": [
+            {
+              "zoom": 1,
+              "firstObservedTick": 0,
+              "firstVisibleTick": 340,
+              "hud": "Kill the Mega Alpha",
+              "hudVisible": true,
+              "pinVisible": false,
+              "worldMarkerVisible": false,
+              "pickupMarkerIds": []
+            },
+            {
+              "zoom": 1.5000000000000002,
+              "firstObservedTick": 21,
+              "firstVisibleTick": 21,
+              "hud": "Kill the Mega Alpha",
+              "hudVisible": true,
+              "pinVisible": false,
+              "worldMarkerVisible": false,
+              "pickupMarkerIds": []
+            }
+          ]
+        },
+        {
+          "id": "release",
+          "spatial": true,
+          "views": [
+            {
+              "zoom": 1.5000000000000002,
+              "firstObservedTick": 5325,
+              "firstVisibleTick": 5325,
+              "hud": "Release the cure at the console \u00b7 6\u00a0m",
+              "hudVisible": true,
+              "pinVisible": true,
+              "worldMarkerVisible": true,
+              "pickupMarkerIds": []
+            },
+            {
+              "zoom": 1,
+              "firstObservedTick": 5332,
+              "firstVisibleTick": 5332,
+              "hud": "Release the cure at the console \u00b7 6\u00a0m",
+              "hudVisible": true,
+              "pinVisible": true,
+              "worldMarkerVisible": true,
+              "pickupMarkerIds": []
+            }
+          ]
+        },
+        {
+          "id": "epilogue",
+          "spatial": false,
+          "views": [
+            {
+              "zoom": 1.5000000000000002,
+              "firstObservedTick": 5538,
+              "firstVisibleTick": 5538,
+              "hud": "Watch the cure spread \u00b7 0/150 s",
+              "hudVisible": true,
+              "pinVisible": false,
+              "worldMarkerVisible": false,
+              "pickupMarkerIds": []
+            },
+            {
+              "zoom": 1,
+              "firstObservedTick": 5623,
+              "firstVisibleTick": 5623,
+              "hud": "Watch the cure spread \u00b7 1/150 s",
+              "hudVisible": true,
+              "pinVisible": false,
+              "worldMarkerVisible": false,
+              "pickupMarkerIds": []
+            }
+          ]
+        },
+        {
+          "id": "credits",
+          "spatial": false,
+          "views": [
+            {
+              "zoom": 1.5000000000000002,
+              "firstObservedTick": 14538,
+              "firstVisibleTick": 14538,
+              "hud": "Minor Incident",
+              "hudVisible": true,
+              "pinVisible": false,
+              "worldMarkerVisible": false,
+              "pickupMarkerIds": []
+            },
+            {
+              "zoom": 1,
+              "firstObservedTick": 14546,
+              "firstVisibleTick": null,
+              "hud": "Minor Incident",
+              "hudVisible": false,
+              "pinVisible": false,
+              "worldMarkerVisible": false,
+              "pickupMarkerIds": []
+            }
+          ]
+        }
+      ]
+    },
+    "fresh-root-ending": {
+      "runs": [
+        {
+          "level": "L10",
+          "entry": "continue",
+          "heroine": "female",
+          "finished": true,
+          "skipped": [],
+          "wallSeconds": 226,
+          "simSeconds": 196,
+          "maxNoProgressSeconds": 16.546,
+          "deaths": 0,
+          "assists": 1,
+          "attacks": {
+            "weapon.rocket-launcher": 15
+          },
+          "weaponsStart": [
+            "weapon.fire-axe",
+            "weapon.pistol",
+            "weapon.shotgun",
+            "weapon.army-mg",
+            "weapon.rocket-launcher"
+          ],
+          "weaponsEnd": [
+            "weapon.fire-axe",
+            "weapon.pistol",
+            "weapon.shotgun",
+            "weapon.army-mg",
+            "weapon.rocket-launcher"
+          ],
+          "steps": [
+            {
+              "id": "mega",
+              "text": "Kill the Mega Alpha",
+              "tick": 15,
+              "marker": {
+                "anchor": null,
+                "ring": null,
+                "drawn": null,
+                "playerY": 0.7049999833106995,
+                "pinVisible": false
+              }
+            },
+            {
+              "id": "release",
+              "text": "Release the cure at the console \u00b7 26\u00a0m",
+              "tick": 1296,
+              "marker": {
+                "anchor": "cure-console",
+                "ring": {
+                  "x": 4002,
+                  "y": 0,
+                  "z": -27
+                },
+                "drawn": [
+                  4002,
+                  0,
+                  -27
+                ],
+                "playerY": 0.7099999785423279,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "epilogue",
+              "text": "Watch the cure spread \u00b7 1/150 s",
+              "tick": 1834,
+              "marker": {
+                "anchor": "cure-console",
+                "ring": null,
+                "drawn": null,
+                "playerY": 0.7049999833106995,
+                "pinVisible": false
+              }
+            },
+            {
+              "id": "credits",
+              "text": "Minor Incident",
+              "tick": 10763,
+              "marker": {
+                "anchor": "cure-console",
+                "ring": null,
+                "drawn": null,
+                "playerY": 0.7049999833106995,
+                "pinVisible": false
+              }
+            }
+          ]
+        }
+      ],
+      "corpseLife": {
+        "tracked": 1369,
+        "missing": 0,
+        "revivals": 0
+      },
+      "audio": {
+        "state": "running",
+        "errors": [],
+        "music": "aftermath",
+        "cues": {
+          "mega.step": 19,
+          "mega.roar": 3,
+          "mega.impact": 1,
+          "mega.charge": 2,
+          "mega.slam": 1
+        }
+      },
+      "markers": [
+        {
+          "id": "mega",
+          "spatial": false,
+          "views": [
+            {
+              "zoom": 1,
+              "firstObservedTick": 0,
+              "firstVisibleTick": 0,
+              "hud": "Kill the Mega Alpha",
+              "hudVisible": true,
+              "pinVisible": false,
+              "worldMarkerVisible": false,
+              "pickupMarkerIds": []
+            },
+            {
+              "zoom": 1.5,
+              "firstObservedTick": 323,
+              "firstVisibleTick": 323,
+              "hud": "Kill the Mega Alpha",
+              "hudVisible": true,
+              "pinVisible": false,
+              "worldMarkerVisible": false,
+              "pickupMarkerIds": []
+            }
+          ]
+        },
+        {
+          "id": "release",
+          "spatial": true,
+          "views": [
+            {
+              "zoom": 1,
+              "firstObservedTick": 1291,
+              "firstVisibleTick": 1291,
+              "hud": "Release the cure at the console \u00b7 26\u00a0m",
+              "hudVisible": true,
+              "pinVisible": true,
+              "worldMarkerVisible": true,
+              "pickupMarkerIds": []
+            },
+            {
+              "zoom": 1.5,
+              "firstObservedTick": 1296,
+              "firstVisibleTick": 1296,
+              "hud": "Release the cure at the console \u00b7 26\u00a0m",
+              "hudVisible": true,
+              "pinVisible": true,
+              "worldMarkerVisible": true,
+              "pickupMarkerIds": []
+            }
+          ]
+        },
+        {
+          "id": "epilogue",
+          "spatial": false,
+          "views": [
+            {
+              "zoom": 1,
+              "firstObservedTick": 1753,
+              "firstVisibleTick": 1753,
+              "hud": "Watch the cure spread \u00b7 0/150 s",
+              "hudVisible": true,
+              "pinVisible": false,
+              "worldMarkerVisible": false,
+              "pickupMarkerIds": []
+            },
+            {
+              "zoom": 1.5,
+              "firstObservedTick": 1834,
+              "firstVisibleTick": 1834,
+              "hud": "Watch the cure spread \u00b7 1/150 s",
+              "hudVisible": true,
+              "pinVisible": false,
+              "worldMarkerVisible": false,
+              "pickupMarkerIds": []
+            }
+          ]
+        },
+        {
+          "id": "credits",
+          "spatial": false,
+          "views": [
+            {
+              "zoom": 1,
+              "firstObservedTick": 10753,
+              "firstVisibleTick": 10753,
+              "hud": "Minor Incident",
+              "hudVisible": true,
+              "pinVisible": false,
+              "worldMarkerVisible": false,
+              "pickupMarkerIds": []
+            },
+            {
+              "zoom": 1.5,
+              "firstObservedTick": 10762,
+              "firstVisibleTick": null,
+              "hud": "Minor Incident",
+              "hudVisible": false,
+              "pinVisible": false,
+              "worldMarkerVisible": false,
+              "pickupMarkerIds": []
+            }
+          ]
+        }
+      ]
+    },
+    "unprotected": [
+      {
+        "label": "mortal-fresh",
+        "identity": {
+          "sourceHash": "cf10ea2a984d5b4a713c66c6638e09aefccaae3e262eedbdd391e56327be506b",
+          "observerHash": "b10d522b89f546909b8c2a36fa52d134f6660cac4c1f3ce2ff8382d19a8c8ad2",
+          "revision": "395b493fe4f05787fd535e5bc18b7437db2be988",
+          "scope": "395b493f final runtime",
+          "backend": "webgpu",
+          "quality": "low",
+          "source": "fresh",
+          "seconds": 420,
+          "zoom": 1.5,
+          "dist": "test-results/pre-uat-l10/accepted-dist",
+          "method": "Physical WASD/mouse/E through tools/playtest/session; survival protection disclosed; no objective skips, actor repositioning, or story-state edits."
+        },
+        "runs": [
+          {
+            "level": "L10",
+            "entry": "debug",
+            "heroine": "female",
+            "finished": false,
+            "skipped": [],
+            "wallSeconds": 420,
+            "simSeconds": 391,
+            "maxNoProgressSeconds": 5.633333333333334,
+            "deaths": 0,
+            "assists": 0,
+            "attacks": {
+              "weapon.fire-axe": 15,
+              "weapon.pistol": 50,
+              "weapon.shotgun": 88,
+              "weapon.army-mg": 169
+            },
+            "weaponsStart": [
+              "weapon.fire-axe",
+              "weapon.fire-axe"
+            ],
+            "weaponsEnd": [
+              "weapon.fire-axe",
+              "weapon.fire-axe",
+              "weapon.pistol",
+              "weapon.shotgun",
+              "weapon.army-mg"
+            ],
+            "steps": [
+              {
+                "id": "crash",
+                "text": "Leave the wreck on foot \u00b7 0\u00a0m",
+                "tick": 0,
+                "marker": {
+                  "anchor": "cure-crash",
+                  "ring": {
+                    "x": 767,
+                    "y": 0,
+                    "z": 25
+                  },
+                  "drawn": [
+                    767,
+                    0,
+                    25
+                  ],
+                  "playerY": 0.705,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "residential-fringe",
+                "text": "Recover the handgun at the checkpoint \u00b7 220\u00a0m",
+                "tick": 43,
+                "marker": {
+                  "anchor": "cure-residential",
+                  "ring": {
+                    "x": 767,
+                    "y": 0,
+                    "z": 25
+                  },
+                  "drawn": [
+                    767,
+                    0,
+                    25
+                  ],
+                  "playerY": 0.7099999785423279,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "industrial-area",
+                "text": "Recover the shotgun at the checkpoint \u00b7 491\u00a0m",
+                "tick": 3942,
+                "marker": {
+                  "anchor": "cure-industrial",
+                  "ring": {
+                    "x": 1257,
+                    "y": 0,
+                    "z": 25
+                  },
+                  "drawn": [
+                    1257,
+                    0,
+                    25
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "military-zone",
+                "text": "Recover the machine gun at the checkpoint \u00b7 601\u00a0m",
+                "tick": 11266,
+                "marker": {
+                  "anchor": "cure-military",
+                  "ring": {
+                    "x": 1857,
+                    "y": 0,
+                    "z": 25
+                  },
+                  "drawn": [
+                    1857,
+                    0,
+                    25
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "research-campus",
+                "text": "Reach the research campus \u00b7 612\u00a0m",
+                "tick": 20542,
+                "marker": {
+                  "anchor": "cure-research-entry",
+                  "ring": {
+                    "x": 2467,
+                    "y": 0,
+                    "z": -5
+                  },
+                  "drawn": [
+                    2467,
+                    0,
+                    -5
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              }
+            ]
+          }
+        ],
+        "lastObservation": {
+          "tick": 23408,
+          "step": "research-campus",
+          "checkpoint": "cure-military",
+          "menu": null,
+          "text": "Reach the research campus \u00b7 407\u00a0m",
+          "player": {
+            "x": 2059.869384765625,
+            "z": 2.698045015335083,
+            "hp": 95.26666666666637,
+            "weapon": "weapon.army-mg"
+          },
+          "driving": null,
+          "enemies": [],
+          "marker": {
+            "x": 2467,
+            "y": 0,
+            "z": -5
+          },
+          "noProgressSeconds": 0
+        },
+        "minimumObservedHP": 80,
+        "corpseLife": {
+          "tracked": 0,
+          "missing": 0,
+          "revivals": 0
+        },
+        "audio": {
+          "state": "running",
+          "errors": [],
+          "music": "combat"
+        }
+      },
+      {
+        "label": "mortal-middle",
+        "identity": {
+          "sourceHash": "cf10ea2a984d5b4a713c66c6638e09aefccaae3e262eedbdd391e56327be506b",
+          "observerHash": "b10d522b89f546909b8c2a36fa52d134f6660cac4c1f3ce2ff8382d19a8c8ad2",
+          "revision": "395b493fe4f05787fd535e5bc18b7437db2be988",
+          "scope": "395b493f final runtime",
+          "backend": "webgpu",
+          "quality": "low",
+          "source": "test-results/pre-uat-l10/mortal-fresh/profile",
+          "seconds": 420,
+          "zoom": 1.5,
+          "dist": "test-results/pre-uat-l10/accepted-dist",
+          "method": "Physical WASD/mouse/E through tools/playtest/session; survival protection disclosed; no objective skips, actor repositioning, or story-state edits."
+        },
+        "runs": [
+          {
+            "level": "L10",
+            "entry": "continue",
+            "heroine": "female",
+            "finished": false,
+            "skipped": [],
+            "wallSeconds": 420,
+            "simSeconds": 395,
+            "maxNoProgressSeconds": 3.049,
+            "deaths": 0,
+            "assists": 0,
+            "attacks": {
+              "weapon.army-mg": 493,
+              "weapon.rocket-launcher": 39
+            },
+            "weaponsStart": [
+              "weapon.fire-axe",
+              "weapon.fire-axe",
+              "weapon.pistol",
+              "weapon.shotgun",
+              "weapon.army-mg"
+            ],
+            "weaponsEnd": [
+              "weapon.fire-axe",
+              "weapon.pistol",
+              "weapon.shotgun",
+              "weapon.army-mg",
+              "weapon.rocket-launcher"
+            ],
+            "steps": [
+              {
+                "id": "research-campus",
+                "text": "Reach the research campus \u00b7 406\u00a0m",
+                "tick": 4,
+                "marker": {
+                  "anchor": "cure-research-entry",
+                  "ring": {
+                    "x": 2467,
+                    "y": 0,
+                    "z": -5
+                  },
+                  "drawn": [
+                    2467,
+                    0,
+                    -5
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "research",
+                "text": "Play the research recording \u00b7 244\u00a0m",
+                "tick": 6536,
+                "marker": {
+                  "anchor": "cure-terminal",
+                  "ring": {
+                    "x": 2707,
+                    "y": 0,
+                    "z": 41.25
+                  },
+                  "drawn": [
+                    2707,
+                    0,
+                    41.25
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "cure",
+                "text": "Pack the cure canister \u00b7 7\u00a0m",
+                "tick": 10718,
+                "marker": {
+                  "anchor": "cure-canister",
+                  "ring": {
+                    "x": 2713,
+                    "y": 0,
+                    "z": 41
+                  },
+                  "drawn": [
+                    2713,
+                    0,
+                    41
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "research-exit",
+                "text": "Get the cure out of the laboratory \u00b7 95\u00a0m",
+                "tick": 10841,
+                "marker": {
+                  "anchor": "cure-research",
+                  "ring": {
+                    "x": 2807,
+                    "y": 0,
+                    "z": 45
+                  },
+                  "drawn": [
+                    2807,
+                    0,
+                    45
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "destroyed-corridor",
+                "text": "Carry the cure down the corridor and grab the rocket launcher \u00b7 139\u00a0m",
+                "tick": 12949,
+                "marker": {
+                  "anchor": "cure-corridor",
+                  "ring": {
+                    "x": 2937,
+                    "y": 0,
+                    "z": -5
+                  },
+                  "drawn": [
+                    2937,
+                    0,
+                    -5
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "dispersal-complex",
+                "text": "Bring the cure to the dispersal complex \u00b7 760\u00a0m",
+                "tick": 15372,
+                "marker": {
+                  "anchor": "cure-complex",
+                  "ring": {
+                    "x": 3697,
+                    "y": 0,
+                    "z": -25
+                  },
+                  "drawn": [
+                    3697,
+                    0,
+                    -25
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              }
+            ]
+          }
+        ],
+        "lastObservation": {
+          "tick": 23660,
+          "step": "dispersal-complex",
+          "checkpoint": "cure-corridor",
+          "menu": null,
+          "text": "Bring the cure to the dispersal complex \u00b7 222\u00a0m",
+          "player": {
+            "x": 3486.68408203125,
+            "z": -94.6217269897461,
+            "hp": 100,
+            "weapon": "weapon.rocket-launcher"
+          },
+          "driving": null,
+          "enemies": [],
+          "marker": {
+            "x": 3697,
+            "y": 0,
+            "z": -25
+          },
+          "noProgressSeconds": 0.364
+        },
+        "minimumObservedHP": 79.33333333333223,
+        "corpseLife": {
+          "tracked": 145,
+          "missing": 0,
+          "revivals": 0
+        },
+        "audio": {
+          "state": "running",
+          "errors": [],
+          "music": "combat"
+        }
+      },
+      {
+        "label": "mortal-finale",
+        "identity": {
+          "sourceHash": "cf10ea2a984d5b4a713c66c6638e09aefccaae3e262eedbdd391e56327be506b",
+          "observerHash": "b10d522b89f546909b8c2a36fa52d134f6660cac4c1f3ce2ff8382d19a8c8ad2",
+          "revision": "395b493fe4f05787fd535e5bc18b7437db2be988",
+          "scope": "395b493f final runtime",
+          "backend": "webgpu",
+          "quality": "low",
+          "source": "test-results/pre-uat-l10/mortal-middle/profile",
+          "seconds": 540,
+          "zoom": 1.5,
+          "dist": "test-results/pre-uat-l10/accepted-dist",
+          "method": "Physical WASD/mouse/E through tools/playtest/session; survival protection disclosed; no objective skips, actor repositioning, or story-state edits."
+        },
+        "runs": [
+          {
+            "level": "L10",
+            "entry": "continue",
+            "heroine": "female",
+            "finished": false,
+            "skipped": [],
+            "wallSeconds": 540,
+            "simSeconds": 502,
+            "maxNoProgressSeconds": 80.63333333333334,
+            "deaths": 0,
+            "assists": 0,
+            "attacks": {
+              "weapon.rocket-launcher": 181
+            },
+            "weaponsStart": [
+              "weapon.fire-axe",
+              "weapon.pistol",
+              "weapon.shotgun",
+              "weapon.army-mg",
+              "weapon.rocket-launcher"
+            ],
+            "weaponsEnd": [
+              "weapon.fire-axe",
+              "weapon.pistol",
+              "weapon.shotgun",
+              "weapon.army-mg",
+              "weapon.rocket-launcher"
+            ],
+            "steps": [
+              {
+                "id": "dispersal-complex",
+                "text": "Bring the cure to the dispersal complex \u00b7 218\u00a0m",
+                "tick": 0,
+                "marker": {
+                  "anchor": "cure-complex",
+                  "ring": {
+                    "x": 3697,
+                    "y": 0,
+                    "z": -25
+                  },
+                  "drawn": [
+                    3697,
+                    0,
+                    -25
+                  ],
+                  "playerY": 0.7099999785423279,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "install",
+                "text": "Install the cure in the dispersal device \u00b7 310\u00a0m",
+                "tick": 3778,
+                "marker": {
+                  "anchor": "cure-install",
+                  "ring": {
+                    "x": 4006.5,
+                    "y": 0,
+                    "z": -39
+                  },
+                  "drawn": [
+                    4006.5,
+                    0,
+                    -39
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "hold",
+                "text": "Activate the dispersal console \u00b7 12\u00a0m",
+                "tick": 8571,
+                "marker": {
+                  "anchor": "cure-console",
+                  "ring": {
+                    "x": 4002,
+                    "y": 0,
+                    "z": -27
+                  },
+                  "drawn": [
+                    4002,
+                    0,
+                    -27
+                  ],
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "mega",
+                "text": "Kill the Mega Alpha",
+                "tick": 12523,
+                "marker": {
+                  "anchor": "cure-console",
+                  "ring": null,
+                  "drawn": null,
+                  "playerY": 0.7070000171661377,
+                  "pinVisible": false
+                }
+              },
+              {
+                "id": "release",
+                "text": "Release the cure at the console \u00b7 16\u00a0m",
+                "tick": 22336,
+                "marker": {
+                  "anchor": "cure-console",
+                  "ring": {
+                    "x": 4002,
+                    "y": 0,
+                    "z": -27
+                  },
+                  "drawn": [
+                    4002,
+                    0,
+                    -27
+                  ],
+                  "playerY": 0.7080000042915344,
+                  "pinVisible": true
+                }
+              },
+              {
+                "id": "epilogue",
+                "text": "Watch the cure spread \u00b7 1/150 s",
+                "tick": 22870,
+                "marker": {
+                  "anchor": "cure-console",
+                  "ring": null,
+                  "drawn": null,
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": false
+                }
+              }
+            ]
+          }
+        ],
+        "lastObservation": {
+          "tick": 30088,
+          "step": "epilogue",
+          "checkpoint": "cure-disperse-ready",
+          "menu": null,
+          "text": "Watch the cure spread \u00b7 121/150 s",
+          "player": {
+            "x": 4001.171630859375,
+            "z": -27.021677017211914,
+            "hp": 100,
+            "weapon": "weapon.rocket-launcher"
+          },
+          "driving": null,
+          "enemies": [],
+          "marker": null,
+          "noProgressSeconds": 0.6833333333333333
+        },
+        "minimumObservedHP": 49.76666666666611,
+        "corpseLife": {
+          "tracked": 752,
+          "missing": 0,
+          "revivals": 0
+        },
+        "audio": {
+          "state": "running",
+          "errors": [],
+          "music": "aftermath"
+        }
+      },
+      {
+        "label": "mortal-credits",
+        "identity": {
+          "sourceHash": "cf10ea2a984d5b4a713c66c6638e09aefccaae3e262eedbdd391e56327be506b",
+          "observerHash": "b10d522b89f546909b8c2a36fa52d134f6660cac4c1f3ce2ff8382d19a8c8ad2",
+          "revision": "395b493fe4f05787fd535e5bc18b7437db2be988",
+          "scope": "395b493f final runtime",
+          "backend": "webgpu",
+          "quality": "low",
+          "source": "test-results/pre-uat-l10/mortal-finale/profile",
+          "seconds": 90,
+          "zoom": 1.5,
+          "dist": "test-results/pre-uat-l10/accepted-dist",
+          "method": "Physical WASD/mouse/E through tools/playtest/session; survival protection disclosed; no objective skips, actor repositioning, or story-state edits."
+        },
+        "runs": [
+          {
+            "level": "L10",
+            "entry": "continue",
+            "heroine": "female",
+            "finished": true,
+            "skipped": [],
+            "wallSeconds": 56,
+            "simSeconds": 45,
+            "maxNoProgressSeconds": 16.43,
+            "deaths": 0,
+            "assists": 0,
+            "attacks": {},
+            "weaponsStart": [
+              "weapon.fire-axe",
+              "weapon.pistol",
+              "weapon.shotgun",
+              "weapon.army-mg",
+              "weapon.rocket-launcher"
+            ],
+            "weaponsEnd": [
+              "weapon.fire-axe",
+              "weapon.pistol",
+              "weapon.shotgun",
+              "weapon.army-mg",
+              "weapon.rocket-launcher"
+            ],
+            "steps": [
+              {
+                "id": "epilogue",
+                "text": "Watch the cure spread \u00b7 122/150 s",
+                "tick": 10,
+                "marker": {
+                  "anchor": null,
+                  "ring": null,
+                  "drawn": null,
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": false
+                }
+              },
+              {
+                "id": "credits",
+                "text": "Minor Incident",
+                "tick": 1682,
+                "marker": {
+                  "anchor": null,
+                  "ring": null,
+                  "drawn": null,
+                  "playerY": 0.7049999833106995,
+                  "pinVisible": false
+                }
+              }
+            ]
+          }
+        ],
+        "lastObservation": {
+          "tick": 2650,
+          "step": "credits",
+          "checkpoint": "cure-disperse-ready",
+          "menu": null,
+          "text": "Minor Incident",
+          "player": {
+            "x": 4001.171630859375,
+            "z": -27.021677017211914,
+            "hp": 100,
+            "weapon": "weapon.rocket-launcher"
+          },
+          "driving": null,
+          "enemies": [],
+          "marker": null,
+          "noProgressSeconds": 15.954
+        },
+        "minimumObservedHP": 100,
+        "corpseLife": {
+          "tracked": 794,
+          "missing": 0,
+          "revivals": 0
+        },
+        "audio": {
+          "state": "running",
+          "errors": [],
+          "music": "aftermath"
+        }
+      }
+    ],
+    "unprotectedCompletion": {
+      "campaignCompletedLevels": 10,
+      "mission": {
+        "id": "L10",
+        "phase": "progression",
+        "completedObjectives": [
+          "crash",
+          "residential-fringe",
+          "industrial-area",
+          "military-zone",
+          "research-campus",
+          "research",
+          "cure",
+          "research-exit",
+          "destroyed-corridor",
+          "dispersal-complex",
+          "install",
+          "hold",
+          "mega",
+          "release",
+          "epilogue",
+          "credits"
+        ],
+        "volumes": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "killedBosses": [],
+        "deadlineTicks": null,
+        "steps": {
+          "crash": {
+            "status": "completed",
+            "started": 0,
+            "kills": [],
+            "events": {},
+            "interaction": 1
+          },
+          "residential-fringe": {
+            "status": "completed",
+            "started": 1,
+            "kills": [
+              101,
+              100,
+              102,
+              103,
+              107,
+              106,
+              108,
+              109
+            ],
+            "events": {
+              "combat.kill:*": 8,
+              "player.damaged:*": 4
+            },
+            "interaction": 36
+          },
+          "industrial-area": {
+            "status": "completed",
+            "started": 3936,
+            "kills": [
+              110,
+              112,
+              114,
+              113,
+              116,
+              117,
+              119,
+              118,
+              121,
+              120,
+              125,
+              128,
+              127,
+              126
+            ],
+            "events": {
+              "combat.kill:*": 15,
+              "player.damaged:*": 1
+            },
+            "interaction": 36
+          },
+          "military-zone": {
+            "status": "completed",
+            "started": 11264,
+            "kills": [
+              135,
+              132,
+              130,
+              131,
+              134,
+              129,
+              133,
+              136,
+              143,
+              140,
+              139,
+              144,
+              142,
+              141,
+              137,
+              138,
+              149,
+              147,
+              150,
+              146,
+              148,
+              145,
+              161,
+              166,
+              154,
+              164,
+              167,
+              163,
+              165,
+              162,
+              155,
+              157,
+              156,
+              172,
+              160,
+              173,
+              169,
+              171,
+              1176065737,
+              168,
+              170,
+              178,
+              158,
+              176,
+              175,
+              179,
+              177,
+              174,
+              159
+            ],
+            "events": {
+              "combat.kill:*": 49,
+              "player.damaged:*": 5,
+              "prop.broken:*": 1
+            },
+            "interaction": 36
+          },
+          "research-campus": {
+            "status": "completed",
+            "started": -2893,
+            "kills": [
+              182,
+              187,
+              185,
+              188,
+              184,
+              186,
+              189,
+              183,
+              195,
+              196,
+              194,
+              192,
+              191,
+              193,
+              181,
+              201,
+              199,
+              198,
+              197,
+              202,
+              200,
+              204,
+              212,
+              205,
+              207,
+              206,
+              209,
+              208,
+              210,
+              213,
+              217,
+              229,
+              228,
+              227,
+              225,
+              231,
+              230,
+              243,
+              237,
+              235,
+              240,
+              242,
+              234,
+              239,
+              236,
+              241,
+              238,
+              220,
+              223
+            ],
+            "events": {
+              "combat.kill:*": 50,
+              "player.damaged:*": 4
+            },
+            "interaction": 1
+          },
+          "research": {
+            "status": "completed",
+            "started": 6503,
+            "kills": [
+              215,
+              259,
+              260,
+              256,
+              258,
+              257,
+              255,
+              265,
+              263,
+              266,
+              264,
+              262,
+              261,
+              273,
+              271,
+              274,
+              272,
+              270,
+              269,
+              279
+            ],
+            "events": {
+              "combat.kill:*": 21,
+              "player.damaged:*": 4
+            },
+            "interaction": 36
+          },
+          "cure": {
+            "status": "completed",
+            "started": 10713,
+            "kills": [],
+            "events": {},
+            "interaction": 36
+          },
+          "research-exit": {
+            "status": "completed",
+            "started": 10840,
+            "kills": [
+              268,
+              280,
+              278,
+              246,
+              245,
+              275,
+              276,
+              277,
+              266,
+              281
+            ],
+            "events": {
+              "combat.kill:*": 10
+            },
+            "interaction": 1
+          },
+          "destroyed-corridor": {
+            "status": "completed",
+            "started": 12916,
+            "kills": [
+              285,
+              286,
+              283,
+              287
+            ],
+            "events": {
+              "combat.kill:*": 4
+            },
+            "interaction": 36
+          },
+          "dispersal-complex": {
+            "status": "completed",
+            "started": -8337,
+            "kills": [
+              291,
+              294,
+              297,
+              299,
+              302,
+              304,
+              305,
+              307,
+              310,
+              312,
+              316,
+              317,
+              318,
+              320,
+              321,
+              322,
+              323,
+              325,
+              326,
+              327,
+              328,
+              330,
+              331,
+              332,
+              333,
+              335,
+              336,
+              342,
+              345,
+              350,
+              319,
+              338,
+              339,
+              340,
+              343,
+              344,
+              347,
+              348,
+              349,
+              352,
+              353,
+              355,
+              293,
+              295,
+              296,
+              298,
+              300,
+              301,
+              303,
+              306,
+              308,
+              309,
+              311,
+              313,
+              314,
+              324,
+              329,
+              334,
+              292,
+              341,
+              346,
+              351,
+              354,
+              356,
+              357,
+              315,
+              358,
+              360,
+              359,
+              289,
+              290,
+              337,
+              361,
+              362,
+              363,
+              369,
+              364,
+              365,
+              366,
+              367,
+              368,
+              370,
+              371,
+              374,
+              375,
+              376,
+              372,
+              373,
+              377,
+              378,
+              379,
+              380,
+              384,
+              385,
+              386,
+              387,
+              381,
+              383,
+              388,
+              389,
+              382,
+              390,
+              391,
+              392,
+              393,
+              394,
+              395,
+              396,
+              397,
+              398,
+              399,
+              400,
+              401,
+              402
+            ],
+            "events": {
+              "combat.kill:*": 114
+            },
+            "interaction": 1
+          },
+          "install": {
+            "status": "completed",
+            "started": 3747,
+            "kills": [
+              406,
+              403,
+              405,
+              404,
+              411,
+              410,
+              407,
+              408,
+              409,
+              415,
+              412,
+              413,
+              414,
+              419,
+              416,
+              417,
+              418,
+              423,
+              420,
+              422,
+              421,
+              425,
+              424,
+              426,
+              427
+            ],
+            "events": {
+              "combat.kill:*": 25
+            },
+            "interaction": 36
+          },
+          "hold": {
+            "status": "completed",
+            "started": 8569,
+            "kills": [
+              431,
+              436,
+              449,
+              457,
+              470,
+              478,
+              491,
+              444,
+              452,
+              483,
+              504,
+              512,
+              429,
+              434,
+              442,
+              447,
+              455,
+              502,
+              468,
+              437,
+              440,
+              445,
+              450,
+              453,
+              458,
+              463,
+              466,
+              471,
+              474,
+              479,
+              487,
+              492,
+              500,
+              428,
+              441,
+              446,
+              454,
+              459,
+              462,
+              475,
+              439,
+              476,
+              484,
+              489,
+              497,
+              510,
+              518,
+              481,
+              513,
+              438,
+              472,
+              493,
+              496,
+              499,
+              430,
+              435,
+              443,
+              448,
+              451,
+              456,
+              461,
+              464,
+              482,
+              485,
+              495,
+              498,
+              505,
+              506,
+              508,
+              519,
+              460,
+              465,
+              467,
+              480,
+              486,
+              488,
+              494,
+              509,
+              514,
+              517,
+              473,
+              515,
+              477,
+              507,
+              469,
+              490,
+              503,
+              511,
+              516,
+              521,
+              432,
+              501,
+              520,
+              284,
+              288,
+              525,
+              529,
+              542,
+              563,
+              584,
+              537,
+              550,
+              555,
+              571,
+              576,
+              597,
+              605,
+              433,
+              540,
+              531,
+              544,
+              552,
+              565,
+              599,
+              607,
+              522,
+              534,
+              539,
+              545,
+              547,
+              558,
+              560,
+              568,
+              573,
+              579,
+              589,
+              592,
+              594,
+              610,
+              523,
+              527,
+              535,
+              586,
+              581,
+              595,
+              602,
+              613,
+              530,
+              532,
+              546,
+              548,
+              556,
+              561,
+              569,
+              574,
+              577,
+              578,
+              582,
+              587,
+              590,
+              603,
+              543,
+              551,
+              553,
+              564,
+              566,
+              585,
+              600,
+              606,
+              608,
+              611,
+              528,
+              549,
+              557,
+              570,
+              580,
+              583,
+              604,
+              612,
+              536,
+              572,
+              598,
+              524,
+              533,
+              559,
+              567,
+              588,
+              593,
+              614,
+              538,
+              554,
+              591,
+              596,
+              609,
+              575,
+              541,
+              562,
+              616,
+              615,
+              622,
+              627,
+              526,
+              601,
+              630,
+              619,
+              635,
+              638,
+              643,
+              664,
+              672,
+              677,
+              685,
+              690,
+              698,
+              632,
+              640,
+              648,
+              653,
+              661,
+              674,
+              682,
+              695,
+              703,
+              651,
+              656,
+              633,
+              688,
+              624,
+              637,
+              645,
+              666,
+              687,
+              700,
+              679,
+              628,
+              631,
+              644,
+              649,
+              652,
+              665,
+              678,
+              686,
+              650,
+              658,
+              659,
+              662,
+              671,
+              673,
+              683,
+              693,
+              696,
+              699,
+              706,
+              629,
+              641,
+              684,
+              705,
+              617,
+              620,
+              639,
+              646,
+              654,
+              660,
+              667,
+              669,
+              675,
+              680,
+              701,
+              707,
+              625,
+              626,
+              647,
+              692,
+              694,
+              670,
+              681,
+              702,
+              704,
+              623,
+              657,
+              709,
+              715,
+              720,
+              723,
+              728,
+              736,
+              741,
+              749,
+              757,
+              668,
+              726,
+              708,
+              781,
+              710,
+              717,
+              725,
+              731,
+              733,
+              744,
+              746,
+              754,
+              762,
+              765,
+              767,
+              770,
+              775,
+              778,
+              738,
+              759,
+              780,
+              711,
+              713,
+              721,
+              724,
+              734,
+              737,
+              742,
+              745,
+              758,
+              760,
+              773,
+              718,
+              732,
+              739,
+              747,
+              752,
+              753,
+              755,
+              766,
+              768,
+              771,
+              776,
+              779,
+              751,
+              772,
+              777,
+              785,
+              743,
+              786,
+              783,
+              788,
+              792,
+              719,
+              774,
+              787,
+              795,
+              636,
+              730,
+              764,
+              794,
+              689,
+              763,
+              789,
+              618,
+              634,
+              691,
+              716,
+              729,
+              740,
+              793,
+              798,
+              802,
+              697,
+              750,
+              712,
+              722,
+              784,
+              797,
+              800,
+              621,
+              655,
+              727,
+              748,
+              761,
+              782,
+              791,
+              796,
+              803,
+              841,
+              863,
+              801,
+              805,
+              790,
+              813,
+              815,
+              826,
+              846,
+              807,
+              820,
+              833,
+              850,
+              855,
+              810,
+              811,
+              816,
+              818,
+              829,
+              831,
+              834,
+              837,
+              839,
+              848,
+              851,
+              861,
+              875,
+              804,
+              809,
+              817,
+              822,
+              825,
+              838,
+              844,
+              860,
+              828,
+              836,
+              847,
+              858,
+              871,
+              877,
+              873,
+              663,
+              823,
+              824,
+              845,
+              853,
+              856,
+              859,
+              864,
+              869,
+              872,
+              857,
+              865,
+              870,
+              808,
+              867,
+              830,
+              852,
+              866,
+              880,
+              885,
+              887,
+              893,
+              812,
+              835,
+              843,
+              868,
+              882,
+              888,
+              879,
+              896,
+              799,
+              881,
+              883,
+              889,
+              642,
+              676,
+              714,
+              735,
+              756,
+              769,
+              895,
+              897,
+              821,
+              832,
+              891,
+              898,
+              908,
+              913,
+              916,
+              921,
+              929,
+              934,
+              955,
+              905,
+              903,
+              911,
+              937,
+              945,
+              950,
+              958,
+              814,
+              918,
+              926,
+              939,
+              947,
+              952,
+              960,
+              942,
+              963,
+              924,
+              966,
+              909,
+              922,
+              953,
+              975,
+              907,
+              930,
+              941,
+              943,
+              932,
+              977,
+              980,
+              982,
+              985,
+              854,
+              920,
+              949,
+              954,
+              962,
+              890,
+              956,
+              819,
+              827,
+              842,
+              849,
+              862,
+              886,
+              910,
+              931,
+              944,
+              965,
+              968,
+              973,
+              987,
+              928,
+              964,
+              969
+            ],
+            "events": {
+              "cure-assault-started:*": 1,
+              "combat.kill:*": 517,
+              "player.damaged:*": 5
+            },
+            "interaction": 0
+          },
+          "mega": {
+            "status": "completed",
+            "started": 12519,
+            "kills": [
+              876,
+              884,
+              899,
+              923,
+              976,
+              901,
+              935,
+              978,
+              892,
+              904,
+              974,
+              988,
+              933,
+              984,
+              806,
+              902,
+              915,
+              957,
+              979,
+              906,
+              927,
+              874,
+              940,
+              970,
+              840,
+              900,
+              936,
+              989,
+              959,
+              961,
+              919,
+              971,
+              925,
+              946,
+              967,
+              981,
+              912,
+              894,
+              948,
+              983,
+              878,
+              938,
+              990,
+              115
+            ],
+            "events": {
+              "combat.kill:*": 44
+            },
+            "interaction": 0
+          },
+          "release": {
+            "status": "completed",
+            "started": 22328,
+            "kills": [
+              917,
+              951,
+              972,
+              986
+            ],
+            "events": {
+              "combat.kill:*": 4,
+              "cure-released:*": 1
+            },
+            "interaction": 34
+          },
+          "epilogue": {
+            "status": "completed",
+            "started": -7332,
+            "kills": [
+              914,
+              991,
+              992,
+              993
+            ],
+            "events": {
+              "combat.kill:*": 4,
+              "epilogue-title:*": 1
+            },
+            "interaction": 9000
+          },
+          "credits": {
+            "status": "completed",
+            "started": 1668,
+            "kills": [],
+            "events": {
+              "epilogue-credits:*": 1,
+              "epilogue-done:*": 1
+            },
+            "interaction": 1020
+          }
+        },
+        "actors": {},
+        "items": [
+          "cure-canister"
+        ],
+        "states": {
+          "charge-active": true,
+          "console-held": true,
+          "terminal-read": true,
+          "cure-carried": false,
+          "cure-installed": true,
+          "charge-ready": true,
+          "mega-dead": true,
+          "cure-released": true,
+          "epilogue-finished": true,
+          "credits-finished": true,
+          "anchor-unavailable": false
+        },
+        "counters": {
+          "charge-ticks": 3600,
+          "epilogue-ticks": 9000
+        },
+        "gates": {},
+        "marker": null,
+        "checkpoint": "cure-disperse-ready",
+        "tier": 0,
+        "timeOfDay": null,
+        "subtitle": null,
+        "cinematic": null,
+        "failure": null,
+        "stats": {
+          "time": 1315.3166666666666,
+          "kills": 748,
+          "knockdowns": 116,
+          "damage": 250,
+          "deaths": 0,
+          "rescued": 0,
+          "optionalObjectives": []
+        },
+        "result": {
+          "time": 1315.3166666666666,
+          "kills": 748,
+          "knockdowns": 116,
+          "damage": 250,
+          "deaths": 0,
+          "rescued": 0,
+          "optionalObjectives": []
+        },
+        "cureFront": {
+          "releasedAt": 22785,
+          "elapsed": 10020,
+          "radius": 1670,
+          "fronts": [
+            {
+              "x": 4002,
+              "z": -27,
+              "distance": 0
+            },
+            {
+              "x": 4002,
+              "z": -27,
+              "distance": 0
+            },
+            {
+              "x": 4004.5,
+              "z": -27,
+              "distance": 2.5
+            },
+            {
+              "x": 4004.5,
+              "z": -21,
+              "distance": 8.5
+            },
+            {
+              "x": 3978,
+              "z": -25,
+              "distance": 35.300186566514796
+            },
+            {
+              "x": 3968,
+              "z": -23,
+              "distance": 45.49822559370037
+            },
+            {
+              "x": 3955,
+              "z": -25,
+              "distance": 58.65117203166627
+            },
+            {
+              "x": 3940,
+              "z": -25,
+              "distance": 73.65117203166628
+            },
+            {
+              "x": 3897,
+              "z": -25,
+              "distance": 116.65117203166628
+            },
+            {
+              "x": 3897,
+              "z": -41,
+              "distance": 132.65117203166628
+            },
+            {
+              "x": 3797,
+              "z": -41,
+              "distance": 232.65117203166628
+            },
+            {
+              "x": 3797,
+              "z": -25,
+              "distance": 248.65117203166628
+            },
+            {
+              "x": 3697,
+              "z": -25,
+              "distance": 348.6511720316663
+            },
+            {
+              "x": 3577,
+              "z": -25,
+              "distance": 468.6511720316663
+            },
+            {
+              "x": 3577,
+              "z": 95,
+              "distance": 588.6511720316663
+            },
+            {
+              "x": 3317,
+              "z": 95,
+              "distance": 848.6511720316663
+            },
+            {
+              "x": 2977,
+              "z": 95,
+              "distance": 1188.6511720316662
+            },
+            {
+              "x": 2977,
+              "z": -5,
+              "distance": 1288.6511720316662
+            },
+            {
+              "x": 2917,
+              "z": -5,
+              "distance": 1348.6511720316662
+            },
+            {
+              "x": 2807,
+              "z": -5,
+              "distance": 1458.6511720316662
+            },
+            {
+              "x": 2807,
+              "z": 45,
+              "distance": 1508.6511720316662
+            },
+            {
+              "x": 2527,
+              "z": 45,
+              "distance": 1788.6511720316662
+            },
+            {
+              "x": 2527,
+              "z": -5,
+              "distance": 1838.6511720316662
+            },
+            {
+              "x": 2467,
+              "z": -5,
+              "distance": 1898.6511720316662
+            },
+            {
+              "x": 2397,
+              "z": -5,
+              "distance": 1968.6511720316662
+            },
+            {
+              "x": 2397,
+              "z": -75,
+              "distance": 2038.6511720316662
+            },
+            {
+              "x": 2137,
+              "z": -75,
+              "distance": 2298.651172031666
+            },
+            {
+              "x": 1897,
+              "z": -75,
+              "distance": 2538.651172031666
+            },
+            {
+              "x": 1897,
+              "z": 25,
+              "distance": 2638.651172031666
+            },
+            {
+              "x": 1837,
+              "z": 25,
+              "distance": 2698.651172031666
+            },
+            {
+              "x": 1747,
+              "z": 25,
+              "distance": 2788.651172031666
+            },
+            {
+              "x": 1747,
+              "z": 100,
+              "distance": 2863.651172031666
+            },
+            {
+              "x": 1517,
+              "z": 100,
+              "distance": 3093.651172031666
+            },
+            {
+              "x": 1297,
+              "z": 100,
+              "distance": 3313.651172031666
+            },
+            {
+              "x": 1297,
+              "z": 25,
+              "distance": 3388.651172031666
+            },
+            {
+              "x": 1237,
+              "z": 25,
+              "distance": 3448.651172031666
+            },
+            {
+              "x": 1057,
+              "z": 25,
+              "distance": 3628.651172031666
+            },
+            {
+              "x": 1057,
+              "z": 80,
+              "distance": 3683.651172031666
+            },
+            {
+              "x": 807,
+              "z": 80,
+              "distance": 3933.651172031666
+            },
+            {
+              "x": 807,
+              "z": 25,
+              "distance": 3988.651172031666
+            },
+            {
+              "x": 747,
+              "z": 25,
+              "distance": 4048.651172031666
+            },
+            {
+              "x": 647,
+              "z": 25,
+              "distance": 4148.651172031667
+            },
+            {
+              "x": 647,
+              "z": -12.5,
+              "distance": 4186.151172031667
+            },
+            {
+              "x": 622,
+              "z": -12.5,
+              "distance": 4211.151172031667
+            },
+            {
+              "x": 622,
+              "z": 0,
+              "distance": 4223.651172031667
+            },
+            {
+              "x": 547,
+              "z": 0,
+              "distance": 4298.651172031667
+            }
+          ],
+          "affectedIds": [
+            914,
+            991,
+            992,
+            993,
+            287,
+            283,
+            286,
+            285,
+            281,
+            277,
+            266,
+            278,
+            275,
+            280,
+            245,
+            268,
+            246,
+            276,
+            279,
+            269,
+            274,
+            270,
+            272,
+            273,
+            271,
+            264,
+            261,
+            265,
+            262,
+            263,
+            267,
+            255,
+            259,
+            258,
+            256,
+            257,
+            260,
+            253,
+            249,
+            254,
+            248,
+            252,
+            251,
+            250,
+            247,
+            215,
+            223,
+            220,
+            210,
+            233
+          ]
+        },
+        "epilogue": {
+          "phase": "done",
+          "phaseTicks": 0,
+          "survivors": [
+            994,
+            995,
+            996
+          ],
+          "approaching": [
+            991,
+            992,
+            993
+          ],
+          "groupsAuthored": true
+        }
+      }
+    },
+    "pacing": {
+      "megaObjectiveFirstObservedTick": 12523,
+      "firstDrawnMegaTick": 22008,
+      "secondsBetween": 158.08333333333334,
+      "maxNoProgressSeconds": 80.63333333333334,
+      "scope": "Actual shortcut/Resume route, not canonical stationary arrival predicate."
+    },
+    "arrivalFailure": {
+      "criterion": "L10-11",
+      "status": "FAIL in actual physical shortcut/Resume route",
+      "targetSeconds": [
+        120,
+        160
+      ],
+      "sourceIdentity": {
+        "sourceHash": "cf10ea2a984d5b4a713c66c6638e09aefccaae3e262eedbdd391e56327be506b",
+        "observerHash": "b10d522b89f546909b8c2a36fa52d134f6660cac4c1f3ce2ff8382d19a8c8ad2",
+        "revision": "395b493fe4f05787fd535e5bc18b7437db2be988"
+      },
+      "producerArtifact": "test-results/pre-uat-l10/mortal-finale/mortal-finale-acceptance-ledger.json",
+      "producerSha256": "ff6b60a61c8fa5c950eb1d3924b35a6c5a7c9ac76081a63bba59571b8dbdc3f8",
+      "method": "Read-only playtest acceptance ledger, 30-tick samples; same persistent actor 115; unprotected physical route with ordinary Resumes. Arena distance is to the console anchor, same 25m predicate as canonical hold proof.",
+      "chargeActiveSample": {
+        "tick": 8940,
+        "step": "hold",
+        "alive": 24,
+        "player": {
+          "x": 4001.974853515625,
+          "y": 0.7049999833106995,
+          "z": -27.96624755859375,
+          "yaw": -3.141592653589794
+        },
+        "hp": 100,
+        "marker": "cure-console",
+        "playerSpeed": 0,
+        "finale": {
+          "charge": 21,
+          "active": true,
+          "mega": {
+            "id": 115,
+            "mode": "coarse",
+            "x": 3215.584966348895,
+            "y": 0.7,
+            "z": 65.17204892624778,
+            "yaw": -0.28605144171711455,
+            "arenaDistance": 791.798138262355
+          }
+        },
+        "nearbyInfected": [
+          {
+            "id": 284,
+            "archetype": "infected.firefighter",
+            "x": 3966.0337963469583,
+            "z": -33.07358138170825,
+            "onScreen": false
+          },
+          {
+            "id": 288,
+            "archetype": "infected.firefighter",
+            "x": 3967.287435667458,
+            "z": -33.05866368523461,
+            "onScreen": false
+          },
+          {
+            "id": 428,
+            "archetype": "infected.dog",
+            "x": 3981.9118882883427,
+            "z": -44.269993475082984,
+            "onScreen": false
+          },
+          {
+            "id": 429,
+            "archetype": "infected.dog",
+            "x": 4029.147410080018,
+            "z": -26.422157536253806,
+            "onScreen": false
+          },
+          {
+            "id": 430,
+            "archetype": "infected.dog",
+            "x": 3983.0234757237367,
+            "z": -6.383362578880851,
+            "onScreen": false
+          },
+          {
+            "id": 431,
+            "archetype": "infected.dog",
+            "x": 4006.8562162407507,
+            "z": -52.49785839680054,
+            "onScreen": false
+          },
+          {
+            "id": 432,
+            "archetype": "infected.alpha",
+            "x": 4018.7794771284853,
+            "z": -6.489048113394755,
+            "onScreen": false
+          },
+          {
+            "id": 433,
+            "archetype": "infected.alpha",
+            "x": 3974.957610177016,
+            "z": -30.837474832875582,
+            "onScreen": false
+          },
+          {
+            "id": 434,
+            "archetype": "infected.runner",
+            "x": 4029.8524413009113,
+            "z": -25.90872829482245,
+            "onScreen": false
+          },
+          {
+            "id": 435,
+            "archetype": "infected.runner",
+            "x": 3980.406698072366,
+            "z": -8.592889481373476,
+            "onScreen": false
+          },
+          {
+            "id": 436,
+            "archetype": "infected.runner",
+            "x": 4006.0359774514445,
+            "z": -52.78295366365776,
+            "onScreen": false
+          },
+          {
+            "id": 437,
+            "archetype": "infected.runner",
+            "x": 4019.4926172531423,
+            "z": -4.183978400363742,
+            "onScreen": false
+          },
+          {
+            "id": 438,
+            "archetype": "infected.runner",
+            "x": 3975.941335506304,
+            "z": -31.645594818273274,
+            "onScreen": false
+          },
+          {
+            "id": 439,
+            "archetype": "infected.runner",
+            "x": 4024.992331783638,
+            "z": -41.625839434067295,
+            "onScreen": false
+          },
+          {
+            "id": 440,
+            "archetype": "infected.runner",
+            "x": 3994.7310794627583,
+            "z": 0.04002208252179429,
+            "onScreen": false
+          },
+          {
+            "id": 441,
+            "archetype": "infected.runner",
+            "x": 3988.748923039491,
+            "z": -52.51414234080107,
+            "onScreen": false
+          },
+          {
+            "id": 442,
+            "archetype": "infected.runner",
+            "x": 4026.8920143525893,
+            "z": -17.909476281836298,
+            "onScreen": false
+          },
+          {
+            "id": 443,
+            "archetype": "infected.runner",
+            "x": 3976.811583595245,
+            "z": -16.602587869057984,
+            "onScreen": false
+          },
+          {
+            "id": 444,
+            "archetype": "infected.runner",
+            "x": 4013.8676878613414,
+            "z": -52.36055963155718,
+            "onScreen": false
+          },
+          {
+            "id": 445,
+            "archetype": "infected.runner",
+            "x": 4010.60441110279,
+            "z": 0.4322184588520379,
+            "onScreen": false
+          },
+          {
+            "id": 446,
+            "archetype": "infected.runner",
+            "x": 3979.0719029415395,
+            "z": -40.2873009026593,
+            "onScreen": false
+          },
+          {
+            "id": 447,
+            "archetype": "infected.runner",
+            "x": 4025.614414831368,
+            "z": -32.851104441374275,
+            "onScreen": false
+          },
+          {
+            "id": 448,
+            "archetype": "infected.runner",
+            "x": 3985.896375984087,
+            "z": -4.0942519538409385,
+            "onScreen": false
+          }
+        ],
+        "director": {
+          "count": 24,
+          "cap": 95,
+          "reserved": 0,
+          "pending": 0
+        },
+        "followers": []
+      },
+      "beforeArena": {
+        "tick": 22020,
+        "step": "mega",
+        "alive": 6,
+        "player": {
+          "x": 3992.830322265625,
+          "y": 0.7049999833106995,
+          "z": -38.95848083496094,
+          "yaw": -3.0153075485794396
+        },
+        "hp": 100,
+        "marker": null,
+        "playerSpeed": 0,
+        "finale": {
+          "charge": 3600,
+          "active": true,
+          "mega": {
+            "id": 115,
+            "mode": "detailed",
+            "x": 3978.3412437993775,
+            "y": 0.7,
+            "z": -35.31508240191728,
+            "yaw": 0.24635062643376157,
+            "arenaDistance": 25.07742690770265
+          }
+        },
+        "nearbyInfected": [
+          {
+            "id": 115,
+            "archetype": "infected.alpha",
+            "x": 3978.3412437993775,
+            "z": -35.31508240191728,
+            "onScreen": true
+          },
+          {
+            "id": 914,
+            "archetype": "infected.runner",
+            "x": 4012.2403148733483,
+            "z": -32.73205624919183,
+            "onScreen": false
+          },
+          {
+            "id": 917,
+            "archetype": "infected.runner",
+            "x": 4001.974458439276,
+            "z": -22.144922452686018,
+            "onScreen": false
+          },
+          {
+            "id": 951,
+            "archetype": "infected.runner",
+            "x": 4002.563227410704,
+            "z": -22.776726787073684,
+            "onScreen": false
+          },
+          {
+            "id": 972,
+            "archetype": "infected.runner",
+            "x": 4001.5358364773897,
+            "z": -21.274240191559386,
+            "onScreen": false
+          },
+          {
+            "id": 986,
+            "archetype": "infected.runner",
+            "x": 4001.7837583744417,
+            "z": -22.979136209904627,
+            "onScreen": false
+          }
+        ],
+        "director": {
+          "count": 6,
+          "cap": 95,
+          "reserved": 0,
+          "pending": 0
+        },
+        "followers": []
+      },
+      "firstInsideArena": {
+        "tick": 22050,
+        "step": "mega",
+        "alive": 6,
+        "player": {
+          "x": 3992.830322265625,
+          "y": 0.7049999833106995,
+          "z": -38.95848083496094,
+          "yaw": -2.895241982644849
+        },
+        "hp": 100,
+        "marker": null,
+        "playerSpeed": 0,
+        "finale": {
+          "charge": 3600,
+          "active": true,
+          "mega": {
+            "id": 115,
+            "mode": "detailed",
+            "x": 3979.8686927053113,
+            "y": 0.7,
+            "z": -35.69917202645273,
+            "yaw": 0.24635066549451326,
+            "arenaDistance": 23.77962061341092
+          }
+        },
+        "nearbyInfected": [
+          {
+            "id": 115,
+            "archetype": "infected.alpha",
+            "x": 3979.8686927053113,
+            "z": -35.69917202645273,
+            "onScreen": true
+          },
+          {
+            "id": 914,
+            "archetype": "infected.runner",
+            "x": 4012.2403148733483,
+            "z": -32.73205624919183,
+            "onScreen": false
+          },
+          {
+            "id": 917,
+            "archetype": "infected.runner",
+            "x": 4001.9744584392756,
+            "z": -22.144922452685904,
+            "onScreen": false
+          },
+          {
+            "id": 951,
+            "archetype": "infected.runner",
+            "x": 4002.563227410704,
+            "z": -22.776726787073684,
+            "onScreen": false
+          },
+          {
+            "id": 972,
+            "archetype": "infected.runner",
+            "x": 4001.5358364773897,
+            "z": -21.274240191559354,
+            "onScreen": false
+          },
+          {
+            "id": 986,
+            "archetype": "infected.runner",
+            "x": 4001.7837583744417,
+            "z": -22.979136209904627,
+            "onScreen": false
+          }
+        ],
+        "director": {
+          "count": 6,
+          "cap": 95,
+          "reserved": 0,
+          "pending": 0
+        },
+        "followers": []
+      },
+      "arrivalSecondsConservativeBounds": [
+        218.0,
+        219.0
+      ],
+      "canonicalLowActivationGapMetres": 530.717402342116,
+      "physicalActivationGapMetres": 791.798138262355,
+      "explanation": "Physical field route leaves a larger persistent-pursuit gap (about792m vs531m canonical). Existing low offscreen finale pace is 1.2 x 0.7 run speed, still slower than a continuously running courier; route-dependent lateness needs correction and fresh calibration. No pursuit tuning changed in this lane.",
+      "lastInactiveSample": {
+        "tick": 8910,
+        "step": "hold",
+        "alive": 3,
+        "player": {
+          "x": 4002.064697265625,
+          "y": 0.7089999914169312,
+          "z": -27.96624755859375,
+          "yaw": -3.141592653589794
+        },
+        "hp": 100,
+        "marker": "cure-console",
+        "playerSpeed": 3.6,
+        "finale": {
+          "charge": 0,
+          "active": false,
+          "mega": {
+            "id": 115,
+            "mode": "coarse",
+            "x": 3213.77176555093,
+            "y": 0.7,
+            "z": 64.6387545739056,
+            "yaw": -0.28605144171711455,
+            "arenaDistance": 793.5372775884915
+          }
+        },
+        "nearbyInfected": [
+          {
+            "id": 284,
+            "archetype": "infected.firefighter",
+            "x": 3964.1372659825934,
+            "z": -33.1423536889285,
+            "onScreen": false
+          },
+          {
+            "id": 288,
+            "archetype": "infected.firefighter",
+            "x": 3965.390965742506,
+            "z": -33.12907974071394,
+            "onScreen": false
+          }
+        ],
+        "director": {
+          "count": 3,
+          "cap": 95,
+          "reserved": 0,
+          "pending": 0
+        },
+        "followers": []
+      }
+    }
+  },
+  "reviewSheet": [
+    {
+      "label": "Platform before: foreground deck erased",
+      "path": "test-results/pre-uat-l10/progressed-finale/captures/progressed-finale-L10-t6165.jpg",
+      "sha256": "c9a84807ca7d9528176b610d4f2f8e22af66ccc85877de8253f9b6d016bd507e"
+    },
+    {
+      "label": "Platform after: deck, legs and stairs retained",
+      "path": "test-results/pre-uat-l10/progressed-fixed-finale/captures/progressed-fixed-finale-L10-t5962.jpg",
+      "sha256": "5fda25effcda793ce4851d7632200c2b1733087ce61611039334d891d4c63609"
+    },
+    {
+      "label": "Final build, God off: bodies retained, still dense",
+      "path": "test-results/pre-uat-l10/mortal-finale/captures/mortal-finale-L10-epilogue-t22868-high-z1-5.jpg",
+      "sha256": "a2b8baa9faa9a1dfacbbcd5d60427bb691dd99299dd5925167b3188083cdff0c"
+    },
+    {
+      "label": "Final build, God off: credits reached",
+      "path": "test-results/pre-uat-l10/mortal-credits/captures/mortal-credits-L10-credits-t1681-high-z1.jpg",
+      "sha256": "c43cae38a733bd9cef0e6344c6860015182405d0463c828892b05ed69e1236b9"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "docs/reports/pre-uat-l10/proofs/acceptance.json.gz",
+      "bytes": 92591,
+      "sha256": "102546d1531d5c7110a951a4940ed4e8218fd23e2dd9c2d731a821c546aae162"
+    },
+    {
+      "path": "docs/reports/pre-uat-l10/proofs/checks.json.gz",
+      "bytes": 11477,
+      "sha256": "4053fd75fec898decdaf3b110c1e8f4a5048fbd5ccfc82c9ebb5f7db9d39d2b6"
+    },
+    {
+      "path": "docs/reports/pre-uat-l10/proofs/native-proofs.json.gz",
+      "bytes": 161244,
+      "sha256": "9675bc1cc2523d5461704e20c83b4e3a82ab6de1496985659ce9ea9906a1c645"
+    },
+    {
+      "path": "docs/reports/pre-uat-l10/proofs/performance.json.gz",
+      "bytes": 747590,
+      "sha256": "9595bca6209ae7b046298fef4091caa1529827c648d0fb7ff004dfa04fd91140"
+    },
+    {
+      "path": "docs/reports/pre-uat-l10/proofs/physical.json.gz",
+      "bytes": 24246,
+      "sha256": "6f56979b87b551612f465c4c8433169ce96a482fec6165402143768d35ddb128"
+    },
+    {
+      "path": "test-results/pre-uat-l10/accept-adapter-after.log",
+      "bytes": 3,
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    {
+      "path": "test-results/pre-uat-l10/accept-adapter-before.log",
+      "bytes": 57,
+      "sha256": "91e8073b6d3302b7773ced94965173248e4557dd3892932a863de77af993777c"
+    },
+    {
+      "path": "test-results/pre-uat-l10/accepted-accept.log",
+      "bytes": 654,
+      "sha256": "b8880e52ad2db1622aa1ce3357e1c84513cf53615d942e2c67a5084dc6ab1bfe"
+    },
+    {
+      "path": "test-results/pre-uat-l10/accepted-acceptance/L10.json",
+      "bytes": 727910,
+      "sha256": "5d51552e50fba268e8e1574d9accd6fa54c64b1397a759db461bd0e45854ec69"
+    },
+    {
+      "path": "test-results/pre-uat-l10/accepted-acceptance/README.md",
+      "bytes": 63794,
+      "sha256": "969cd8434cd94f9e5ccd450a3558f01872f47073a236b8dc20e1bccc7ebafd9c"
+    },
+    {
+      "path": "test-results/pre-uat-l10/accepted-acceptance/acceptance-status.md",
+      "bytes": 384368,
+      "sha256": "d8d2f45cd0507efeba3194ba16c72dd79d5ac051e71384cc46546b4f9d10216e"
+    },
+    {
+      "path": "test-results/pre-uat-l10/accepted-acceptance/global.json",
+      "bytes": 179651,
+      "sha256": "4eb641110d99f0057bce1a5669a6641db9d2cac0b40af161d83d089d67b57593"
+    },
+    {
+      "path": "test-results/pre-uat-l10/accepted-build.log",
+      "bytes": 5967,
+      "sha256": "ed1b8332f48208b14a226ea9e8a96d907c1df3e23efa2a0e5cfbbad35359ad30"
+    },
+    {
+      "path": "test-results/pre-uat-l10/accepted-verify.log",
+      "bytes": 779,
+      "sha256": "da8bd3985e086e5c7ba98d43d46e3728b1e6ddbf06994f7548e43af855b3ffdf"
+    },
+    {
+      "path": "test-results/pre-uat-l10/active-summary.json",
+      "bytes": 4319,
+      "sha256": "f00348a10f3053810779bbd0155b6aaed8a2242c24835a6d3254604dc5097857"
+    },
+    {
+      "path": "test-results/pre-uat-l10/after-direct-patrols.json",
+      "bytes": 1493,
+      "sha256": "37f8cc846275ba0964f4457fe78e44c0d72a3ec8f9ef60d422b2cd59675d7a52"
+    },
+    {
+      "path": "test-results/pre-uat-l10/airborne-after.log",
+      "bytes": 229,
+      "sha256": "f1f6dc0a2bbc47e8d3c0a85db465dd70973d510f67c0d77d658be0773aa4de1d"
+    },
+    {
+      "path": "test-results/pre-uat-l10/airborne-before.log",
+      "bytes": 1372,
+      "sha256": "86a2739f57ab3dc0cf2967687ebeff1f11acf9af7caff6b1f60dffdfbc226ead"
+    },
+    {
+      "path": "test-results/pre-uat-l10/airborne-terminal-after.log",
+      "bytes": 229,
+      "sha256": "4f5f9680e4d3390a84a1f25b089893aae24a63fde268bedb58cf72ab48e68ac7"
+    },
+    {
+      "path": "test-results/pre-uat-l10/airborne-terminal-before.log",
+      "bytes": 1372,
+      "sha256": "a1917717b9c7ee47c7850c46dacbe4845978fdcb8ec057d9f7637e468177c7dd"
+    },
+    {
+      "path": "test-results/pre-uat-l10/before-direct-patrols.json",
+      "bytes": 656,
+      "sha256": "33d894fb3b620b1aa2018fec2339217c9daa37ffa6351011b573de526412906f"
+    },
+    {
+      "path": "test-results/pre-uat-l10/charge-production.mjs",
+      "bytes": 6468,
+      "sha256": "7b624230fabb19ec1e11ad581f3af77a5448f4ca2f4de919120e8756b4e218a2"
+    },
+    {
+      "path": "test-results/pre-uat-l10/checkpoint-equivalence.json",
+      "bytes": 5319,
+      "sha256": "eb6eac94ab65730b44c332b8ec7825c398bf5902ee0fff9684456f95cc4bb38d"
+    },
+    {
+      "path": "test-results/pre-uat-l10/corpse-support-after.log",
+      "bytes": 229,
+      "sha256": "ac59afc3d0d2578ee432486321ea04a53fdb140144d67d56a36d612b98df2247"
+    },
+    {
+      "path": "test-results/pre-uat-l10/corpse-support-before.log",
+      "bytes": 1326,
+      "sha256": "b9ed8f35bf308be87c78d88579e7019c651929a5aeff30376acfc9dc05d7a227"
+    },
+    {
+      "path": "test-results/pre-uat-l10/corpse-support-final.log",
+      "bytes": 229,
+      "sha256": "32e5971aea6402186498434d6a7c06147314f8a2ba182a85782adee040488f27"
+    },
+    {
+      "path": "test-results/pre-uat-l10/mortal-credits/captures/mortal-credits-L10-credits-t1681-high-z1.jpg",
+      "bytes": 46531,
+      "sha256": "c43cae38a733bd9cef0e6344c6860015182405d0463c828892b05ed69e1236b9"
+    },
+    {
+      "path": "test-results/pre-uat-l10/mortal-credits/log-mortal-credits.jsonl",
+      "bytes": 26820,
+      "sha256": "3ac7d12162890d15ca3dbc4f44298d3962c19fb5522f4b445720d8c340d27553"
+    },
+    {
+      "path": "test-results/pre-uat-l10/mortal-credits/mortal-credits-acceptance-ledger.json",
+      "bytes": 331126,
+      "sha256": "c634bb418ea108f4013b1731903134bd6261110e39b68b6bb5a9d104d3dad043"
+    },
+    {
+      "path": "test-results/pre-uat-l10/mortal-credits/mortal-credits-audio.json",
+      "bytes": 8511,
+      "sha256": "3f68aad81e822c5f4ad1200a00064064ea24d09e7bfd54946ad1b2e6f00d10b7"
+    },
+    {
+      "path": "test-results/pre-uat-l10/mortal-credits/mortal-credits-completion.json",
+      "bytes": 6728918,
+      "sha256": "88c3368bed3f6434a6f19c2f21f55c22f99145c72e95344dc3ecd04f47e6d743"
+    },
+    {
+      "path": "test-results/pre-uat-l10/mortal-credits/receipt.json",
+      "bytes": 1970,
+      "sha256": "bd994401f5e3640a46082d9c15359dd567971589e97e7d216fa53a51f5edf9ab"
+    },
+    {
+      "path": "test-results/pre-uat-l10/mortal-finale/captures/mortal-finale-L10-epilogue-t22868-high-z1-5.jpg",
+      "bytes": 134883,
+      "sha256": "a2b8baa9faa9a1dfacbbcd5d60427bb691dd99299dd5925167b3188083cdff0c"
+    },
+    {
+      "path": "test-results/pre-uat-l10/mortal-finale/captures/mortal-finale-L10-mega-t12519-high-z1-5.jpg",
+      "bytes": 137320,
+      "sha256": "4df882e2dce0418b726c6185a75664622a2780f99d2006719c67b4f26e934bf3"
+    },
+    {
+      "path": "test-results/pre-uat-l10/mortal-finale/log-mortal-finale.jsonl",
+      "bytes": 352598,
+      "sha256": "6944b2b7455b79053f24efbfdf577c52e2bd853d6e7b67fe241a0f4050e5f521"
+    },
+    {
+      "path": "test-results/pre-uat-l10/mortal-finale/mortal-finale-acceptance-ledger.json",
+      "bytes": 5548687,
+      "sha256": "ff6b60a61c8fa5c950eb1d3924b35a6c5a7c9ac76081a63bba59571b8dbdc3f8"
+    },
+    {
+      "path": "test-results/pre-uat-l10/mortal-finale/mortal-finale-audio.json",
+      "bytes": 1742741,
+      "sha256": "3f507b26fb587e39c7ffbee52d9b9c9adb843cda17529367f548a7564c41bd57"
+    },
+    {
+      "path": "test-results/pre-uat-l10/mortal-finale/mortal-finale-completion.json",
+      "bytes": 6723049,
+      "sha256": "965ccf14f5ca4970ef73692d4fa42cc87c49cc32df645568bdc6d49ab02364ed"
+    },
+    {
+      "path": "test-results/pre-uat-l10/mortal-finale/receipt.json",
+      "bytes": 4422,
+      "sha256": "a1bcf665ffe79e69483fce789b722b7e27645adc4bfaf6a02edcbe84412f52fd"
+    },
+    {
+      "path": "test-results/pre-uat-l10/mortal-fresh/log-mortal-fresh.jsonl",
+      "bytes": 372154,
+      "sha256": "3c9eaa3815bcb4468ecead05f8218faddc86918ca240418858e92125e42a83cb"
+    },
+    {
+      "path": "test-results/pre-uat-l10/mortal-fresh/mortal-fresh-acceptance-ledger.json",
+      "bytes": 3057122,
+      "sha256": "26e77f5f1c49a6ac9076e08cd26a5f964c22439362cdc3dbae59a4aeed9d2164"
+    },
+    {
+      "path": "test-results/pre-uat-l10/mortal-fresh/mortal-fresh-audio.json",
+      "bytes": 1709276,
+      "sha256": "22163bd2e6232f8b001876180cae1640a2fe7d18a785b0c9ce1557e5cbc844bb"
+    },
+    {
+      "path": "test-results/pre-uat-l10/mortal-fresh/mortal-fresh-completion.json",
+      "bytes": 722418,
+      "sha256": "5198e460a2da975d9d48066c8d695904525225fff5b2155585a0e069939a4b33"
+    },
+    {
+      "path": "test-results/pre-uat-l10/mortal-fresh/receipt.json",
+      "bytes": 3787,
+      "sha256": "146dbd6f6612eb6457c12a3d9baf6e15ff17c707956f13f5933a6c7748f63e55"
+    },
+    {
+      "path": "test-results/pre-uat-l10/mortal-middle/log-mortal-middle.jsonl",
+      "bytes": 369857,
+      "sha256": "d5cd6975b6c726bf922afc75834d9ed7e5a6186c2f35d6577e16b61bb04d1aaa"
+    },
+    {
+      "path": "test-results/pre-uat-l10/mortal-middle/mortal-middle-acceptance-ledger.json",
+      "bytes": 3625919,
+      "sha256": "f3fced263d971913bf397d9b07cc87ef5b1d677dd2ea5e0018146f952a8e08a0"
+    },
+    {
+      "path": "test-results/pre-uat-l10/mortal-middle/mortal-middle-audio.json",
+      "bytes": 1994914,
+      "sha256": "ea9a325a4e253369b0ed2a1767327e93fe39dc9c4cac2e203c83a9ef3f30e2f3"
+    },
+    {
+      "path": "test-results/pre-uat-l10/mortal-middle/mortal-middle-completion.json",
+      "bytes": 1349851,
+      "sha256": "42b4bfe37e00278223cf08af6ddb40f4bad677cf6b84f3db758e37642901c0a8"
+    },
+    {
+      "path": "test-results/pre-uat-l10/mortal-middle/receipt.json",
+      "bytes": 4371,
+      "sha256": "08cbb1ed1e2bc35ffabb549220ec6f9fedb008f882341ecadd9696a8ae3f07a1"
+    },
+    {
+      "path": "test-results/pre-uat-l10/mortal-summary.json",
+      "bytes": 491282,
+      "sha256": "3080541cac46b49e669c5f3a5c7c6b044ea182a7ec9aa91445c49b18dd5371bd"
+    },
+    {
+      "path": "test-results/pre-uat-l10/native-verified/L10-fringe-dogs.json",
+      "bytes": 920,
+      "sha256": "d2b1a58f5dafa6241f60263e24130753566bdc660b0afc1154f6744e0970deb7"
+    },
+    {
+      "path": "test-results/pre-uat-l10/native-verified/L10-high-checkpoints.json",
+      "bytes": 56167,
+      "sha256": "b4947bb5db0de99364bf0575e84666c7110535eccc55477fea8845cfedc25e00"
+    },
+    {
+      "path": "test-results/pre-uat-l10/native-verified/L10-high-complete.json",
+      "bytes": 533197,
+      "sha256": "0ed5555a9bc1074055c15044fcee0a02620419e45de697dc9ad7b4d81d424b6f"
+    },
+    {
+      "path": "test-results/pre-uat-l10/native-verified/L10-high-fixtures.json",
+      "bytes": 12492,
+      "sha256": "6d705eef2d2cfd1cea66c192e2ab5461f0dc560a65ffb7a2173ceb325b6902b3"
+    },
+    {
+      "path": "test-results/pre-uat-l10/native-verified/L10-high-stationary.json",
+      "bytes": 129661,
+      "sha256": "9c19e3753345be305f53a0b073eae89dec8374f0880291f848981cb1e6d1f3fe"
+    },
+    {
+      "path": "test-results/pre-uat-l10/native-verified/L10-low-checkpoints.json",
+      "bytes": 56001,
+      "sha256": "809b90164f84a76a16de50e1d7ecb7264de95aa4332490862eb6b6972a8f474e"
+    },
+    {
+      "path": "test-results/pre-uat-l10/native-verified/L10-low-complete.json",
+      "bytes": 311427,
+      "sha256": "61b852751624871b4df7070055376a8eb34e451a6a634579192e0945b50c0d90"
+    },
+    {
+      "path": "test-results/pre-uat-l10/native-verified/L10-low-fixtures.json",
+      "bytes": 12459,
+      "sha256": "7f259cb7ed535460d43e5f9988b6ca206ad267f44d9ba4eb4900318de3266f06"
+    },
+    {
+      "path": "test-results/pre-uat-l10/native-verified/L10-low-stationary.json",
+      "bytes": 93106,
+      "sha256": "d9a97200bb9cba1cceac956bb162918d198fa437ba122d2c38e8da4b56c23d44"
+    },
+    {
+      "path": "test-results/pre-uat-l10/native-verified/complete.json",
+      "bytes": 273,
+      "sha256": "0b203a73cb1ff3343a488040e9143708532edd685086197fd9850e9dd9b300df"
+    },
+    {
+      "path": "test-results/pre-uat-l10/native-verified/identity.json",
+      "bytes": 263,
+      "sha256": "a6af2e97042ccac3ef425efb4021ccba2bb04b12c80caaaad75e9dad3068ca10"
+    },
+    {
+      "path": "test-results/pre-uat-l10/native-verified/l10-hold-proof.json",
+      "bytes": 163317,
+      "sha256": "0baf795048017d15a1aa7c374ebb2ea454c538268d2cefec93ca8b2db818a1c6"
+    },
+    {
+      "path": "test-results/pre-uat-l10/native-verified/simultaneous-census.json",
+      "bytes": 676300,
+      "sha256": "5bb2be9b32361f0b228bd574bf4e7d55828722491def794d9850f272854af57b"
+    },
+    {
+      "path": "test-results/pre-uat-l10/perf11-exact-summary.json",
+      "bytes": 1292,
+      "sha256": "dbf1aaf76622223b6e3c2787f6de66d4ec489bf507292dafcb2ff12d70fd1697"
+    },
+    {
+      "path": "test-results/pre-uat-l10/perf11-exact/strips/webgpu/L10.json",
+      "bytes": 7554620,
+      "sha256": "c4eb0e2a130c13aaae15365dc89cc76db9bce67e23612f4316c6532ca29dc4b4"
+    },
+    {
+      "path": "test-results/pre-uat-l10/perf11-native-adapted.mjs",
+      "bytes": 26139,
+      "sha256": "f9746bbdfb789adff9d9e7c48df952d7deefa3c91bd43c4096a16d5577fee5a4"
+    },
+    {
+      "path": "test-results/pre-uat-l10/perf11-profile-summary.json",
+      "bytes": 981,
+      "sha256": "5fd2c3d699f14cd6a4abce93298401dcd250c97d8f51c6e7b923d3a96cbf35d1"
+    },
+    {
+      "path": "test-results/pre-uat-l10/perf11-profile.log",
+      "bytes": 98,
+      "sha256": "840cfe872a982c7fbf90dc7258ea0ed56386e17e7b1ec6db51a965a3316c45cf"
+    },
+    {
+      "path": "test-results/pre-uat-l10/perf11-profile/strips/webgpu/L10-prod.cpuprofile.gz",
+      "bytes": 209527,
+      "sha256": "d9301ac7cda02db1d2e8d40471754234522c476c9584830e0fa692a20a106f5f"
+    },
+    {
+      "path": "test-results/pre-uat-l10/perf11-profile/strips/webgpu/L10.json",
+      "bytes": 5745735,
+      "sha256": "08c5f897c9ae24a3c639b848449b0c3ed5c07e7682ea26d98fb484668b29343f"
+    },
+    {
+      "path": "test-results/pre-uat-l10/perf11-replay.log",
+      "bytes": 200,
+      "sha256": "be91a446f260a7eea55c301d8d6940808a453609ee3a3de2b085731589a15234"
+    },
+    {
+      "path": "test-results/pre-uat-l10/perf11-replay.mjs",
+      "bytes": 1267,
+      "sha256": "14d44378b7af44629e1ead0f95ea3b19aad606c98321e12b28fae83bf886df98"
+    },
+    {
+      "path": "test-results/pre-uat-l10/perf11-tail60-summary.json",
+      "bytes": 509,
+      "sha256": "5de045fcd1fd8ee1d94190f6f25584201ed73d936b911121a23a29a404eb24f0"
+    },
+    {
+      "path": "test-results/pre-uat-l10/perf11-tail60.log",
+      "bytes": 98,
+      "sha256": "2c0426db9296369439c9b2f0d95bd7e7d5ada865ffeceef33b6317f0f0ee31a1"
+    },
+    {
+      "path": "test-results/pre-uat-l10/perf11-tail60/strips/webgpu/L10.json",
+      "bytes": 3625014,
+      "sha256": "77e05781733ce5455204ca5ebe40811cc1991f9ac860fd9f6dfa6299cc7da34d"
+    },
+    {
+      "path": "test-results/pre-uat-l10/physical-arrival-failure.json",
+      "bytes": 10492,
+      "sha256": "819800abe01defdc09a172b622e84a8adaec0c5d31f76725343e2706be06f9e5"
+    },
+    {
+      "path": "test-results/pre-uat-l10/physical-final-summary.json",
+      "bytes": 11279,
+      "sha256": "7be6819b9490fded58b3394633d0562cc98a3f082b33983d39036ab79b7d39a9"
+    },
+    {
+      "path": "test-results/pre-uat-l10/production-charge-after/after.jpg",
+      "bytes": 136114,
+      "sha256": "dd9076a90e5d2ba841125e3f52b29327ad246db6d193f4826606b5dea4db7043"
+    },
+    {
+      "path": "test-results/pre-uat-l10/production-charge-after/receipt.json",
+      "bytes": 428119,
+      "sha256": "0fa55cb857c24c5e3bb89873190b95ac6c464c7df14d470ec4d40eddb155c8d2"
+    },
+    {
+      "path": "test-results/pre-uat-l10/production-charge-before/after.jpg",
+      "bytes": 139316,
+      "sha256": "bc3621fc89c3fb6da91d907695fe5546653c426ea774a332a5fc604927748f1a"
+    },
+    {
+      "path": "test-results/pre-uat-l10/production-charge-before/receipt.json",
+      "bytes": 428056,
+      "sha256": "1441492cc14f7b2615e56b84decbf4cc2b79e21bba0acabad860e3bc0cec0696"
+    },
+    {
+      "path": "test-results/pre-uat-l10/production-quiet.sh",
+      "bytes": 921,
+      "sha256": "81297aee0fb31a44f14e9e99c73d53d398c325e43a61f4ea9bfeb55fa3745c9a"
+    },
+    {
+      "path": "test-results/pre-uat-l10/production-retry-batch.log",
+      "bytes": 2388,
+      "sha256": "fc8cef011b6232e08696316d60363c3cec888f810191424af178f2f405910935"
+    },
+    {
+      "path": "test-results/pre-uat-l10/production-startup-timeout.log",
+      "bytes": 506,
+      "sha256": "2d14ffa450271580cd60e67f5fb834a7951efe3dc10142de5a1236891c58447e"
+    },
+    {
+      "path": "test-results/pre-uat-l10/production-summary.json",
+      "bytes": 4897,
+      "sha256": "2430463f480919dcb2036981c506d8379a2cce36cc187388f06ab45a7abc3a49"
+    },
+    {
+      "path": "test-results/pre-uat-l10/progressed-finale/captures/progressed-finale-L10-t6165.jpg",
+      "bytes": 53586,
+      "sha256": "c9a84807ca7d9528176b610d4f2f8e22af66ccc85877de8253f9b6d016bd507e"
+    },
+    {
+      "path": "test-results/pre-uat-l10/progressed-fixed-finale/captures/progressed-fixed-finale-L10-t5962.jpg",
+      "bytes": 65779,
+      "sha256": "5fda25effcda793ce4851d7632200c2b1733087ce61611039334d891d4c63609"
+    },
+    {
+      "path": "test-results/pre-uat-l10/review-sheet.jpg",
+      "bytes": 101589,
+      "sha256": "48759bd3a52c60a26dd8fa2281a5a06503c5cf9edff3f7215759b4985c48c3e0"
+    },
+    {
+      "path": "test-results/pre-uat-l10/review-sheet.json",
+      "bytes": 1033,
+      "sha256": "a948b315aee9c83a3a589a99e2b2214d6759f927e8c44e8a46f1e190eb3561b3"
+    },
+    {
+      "path": "test-results/pre-uat-l10/root-threat-remote.log",
+      "bytes": 1282,
+      "sha256": "6c005365b2fe30f2f5d1ddbadaf2f048dc6cf6c50858bc4e8c4bfa32c6074188"
+    },
+    {
+      "path": "test-results/pre-uat-l10/support-search-after.log",
+      "bytes": 229,
+      "sha256": "5917a4a1d9e24c9e78cf7962ce1d873f5401c3eaffeb003e5408f05cef6b06d7"
+    },
+    {
+      "path": "test-results/pre-uat-l10/support-search-before.log",
+      "bytes": 1250,
+      "sha256": "15333174e0fb801341094d2961dcae965a6c3fba24e708f0130ba0b3b4f503ae"
+    },
+    {
+      "path": "test-results/qa-threat/audit.json",
+      "bytes": 77884,
+      "sha256": "7c887e7a02ca0b792f1ed3ab7e2a38446fe9363b32b93f1c698d8e12b46f0bd7"
+    }
+  ],
+  "status": "TIMEBOX_REPORT: original perf11 attribution unresolved; physical shortcut/Resume L10-11 arrival FAIL; native acceptance incomplete."
+}
