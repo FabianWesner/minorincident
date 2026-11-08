@@ -186,8 +186,8 @@ export class L8BossArenas {
       arena.cycle++; arena.nextAt = w.tick + (arena.id === 'elephant' ? arena.phase === 2 && arena.wallHits === 0 ? 1080 : 1320 : arena.phase === 2 ? 300 : 420); this.beginCycle(e, arena);
     } else if (arena.id === 'lion' && arena.phase === 2 && boss.slot === 1 && w.tick >= boss.readyAt) {
       this.hunt(e, true); boss.readyAt = w.tick + 360;
-    } else if (arena.id === 'elephant' && distance(e.transform, p.transform) < 3) {
-      this.start(e, 'elephant.swipe', 42, 0, 3); boss.readyAt = w.tick + 420;
+    } else if (arena.id === 'elephant' && distance(e.transform, p.transform) < 4) {
+      this.start(e, 'elephant.swipe', 42, 0, 5.5); boss.readyAt = w.tick + 420;
     } else if (arena.id === 'elephant') this.walk(e, this.predict(e, .8, arena), arena.phase === 2 ? 6 : 5);
     else this.orbit(e, arena, p.transform, arena.id === 'flamingo' ? 6 : 4);
     return true;
@@ -229,7 +229,7 @@ export class L8BossArenas {
         if (lioness && !lioness.infected!.specialAttack) this.hunt(lioness, true);
       } else this.hunt(e, false);
     }
-    else if (arena.id === 'elephant') this.start(e, distance(e.transform, this.w.entities.get(1)!.transform) < 3 ? 'elephant.swipe' : 'elephant.charge', 54, 44, 1.75);
+    else if (arena.id === 'elephant') this.start(e, 'elephant.charge', 54, 44, 1.75);
     else if (arena.id === 'gorilla') {
       const pillar = arena.phase === 2 && arena.cycle % 2 === 0 ? this.w.destruction?.objects.filter(o => o.id.includes('l8-gorilla-pillar') && !o.state.collapsed).sort((a, b) => distance(e.transform, { x: a.home.p[0], z: a.home.p[2] }) - distance(e.transform, { x: b.home.p[0], z: b.home.p[2] }))[0] : undefined;
       if (distance(e.transform, this.w.entities.get(1)!.transform) < 5 && this.w.infected!.props.nearestObject(e, 25, true)) { e.infected!.arenaBoss!.barrage = 3; this.scavenge(e); }
@@ -352,7 +352,7 @@ export class L8BossArenas {
     const target = { x: at.x + Math.cos(angle) * r, z: at.z + Math.sin(angle) * r };
     this.walk(e, distance(e.transform, def.centre) > def.radius ? def.centre : target, speed);
   }
-  private walk(e: EntitySnapshot, at: { x: number; z: number }, speed: number): void { this.w.npcs!.move(e, at, speed, e.infected!, .2); }
+  private walk(e: EntitySnapshot, at: { x: number; z: number }, speed: number): void { this.w.npcs!.move(e, at, speed, e.infected!, .2, e.infected!.arenaBoss!.arena === 'elephant' ? 48000 : 3200); }
   private announce(text: string): void { this.mission.state.subtitle = { id: 'L8.arena', text, until: this.w.tick + 300 }; }
   private signal(arena: L8ArenaState, name: string): void { this.w.events.emit({ type: 'mission.signal', tick: this.w.tick, name: `l8.arena.${arena.id}.${name}` }); }
   statusText(): string | null {

@@ -112,7 +112,7 @@ try {
       } else if (a?.move === 'elephant.swipe' && a.stage !== 'recovery' || Math.hypot(p.transform.x - e.transform.x, p.transform.z - e.transform.z) < 4.5 && a?.stage !== 'recovery') {
         const dx = p.transform.x - e.transform.x, dz = p.transform.z - e.transform.z, d = Math.hypot(dx, dz) || 1; f.move = { x: dx / d, z: dz / d };
       } else {
-        const candidates = [[-44,20],[-44,44],[-76,20],[-76,44],[-52,18],[-52,46],[-64,18],[-64,46]].map(([x,z]) => ({x,z}));
+        const candidates = [[-44,25],[-44,39],[-76,25],[-76,39],[-52,24],[-52,40],[-64,24],[-64,40]].map(([x,z]) => ({x,z}));
         const laneClear = (at: {x:number;z:number}) => {
           const dx=at.x-e.transform.x,dz=at.z-e.transform.z,d=Math.hypot(dx,dz);
           return d >= 7 && d <= 30 && w.solids.clear({ ...at, y:.7 }, .35, 1, false) && w.solids.sweep(e,{x:dx/d,z:dz/d},Math.max(0,d-1),e.combat!.radius,false,false) >= d-1-.01;
