@@ -405,6 +405,7 @@ async function northgateSurvivorsStayVisible(): Promise<void> {
     w.solids.relocate(w.entities.get(1)!, { x: 269, y: 4.62, z: 19 }, 'test.northgate-courier', 0, false);
     w.update();
     expect(s.survivors.every(row => row.status === 'out')).toBe(true);
+    expect(m.state.subtitle?.text).toBe('The survivors are safe.');
     const before = s.survivors.map(row => w.entities.get(row.id)!.transform.x);
     for (let i = 0; i < 120; i++) w.update();
     expect(s.survivors.every(row => !w.entities.get(row.id)!.hidden), 'rescued actors remain visible through the end shot').toBe(true);
