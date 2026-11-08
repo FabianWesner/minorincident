@@ -64,14 +64,15 @@ export async function proveThreatAudit(): Promise<void> {
     const receipt = { kitingSeconds: 0, attacks: 0, attacksPerMinute: 0, samples: 0 };
     const world = { tick: 0, events,
       entities: new Map([[1, { transform: { x: 0, z: 0 }, health: { current: 100 }, weapons: { selectedSide: 'RIGHT' } }]]),
-      infected: { active: [5, 6, 7].map(x => ({ health: { current: 100 }, infected: {}, transform: { x, z: 0 } })),
+      infected: { active: [5, 6, 7].map(x => ({ health: { current: 100 }, infected: { state: 'chase' }, transform: { x, z: 0 } })),
         nav: { visible: (_from: { x: number; z: number }, to: { x: number; z: number }) => clearRetreat || to.x >= -.5 } },
+      combat: { query: { visible: () => true }, runner: { loadout: { current: () => ({ id: 'weapon.handgun' }) } } },
       get deviceInput() { return device; },
       setInput: (patch: Partial<InputFrame>) => { device = { ...device, ...patch }; frames.push(device); },
       clearInput: () => { device = emptyInput(); },
       applyInput: (frame: InputFrame) => { device = frame; frames.push(frame); },
     } as unknown as SimWorld;
-    installKitingPolicy(world, receipt, 'L1');
+    const kitingComplete = installKitingPolicy(world, receipt, 'L1');
     world.setInput(emptyInput());
     assert(frames[0].move.x < 0 && frames[0].aim!.x > 0 && frames[0].left.held, 'retreat while aiming and firing back');
     const resolved = new ControlIntent(world).resolve(frames[0]);
@@ -86,9 +87,17 @@ export async function proveThreatAudit(): Promise<void> {
     world.entities.get(1)!.health.current = 100;
     for (world.tick = 1; world.tick <= 1200; world.tick++) {
       clearRetreat = world.tick !== 1;
+      const pursuers = world.tick === 2 ? world.infected!.active.splice(0) : [];
       world.applyInput(emptyInput(), 'mouse-keyboard');
+      if (world.tick === 2) {
+        const frame = frames.at(-1)!;
+        assert(Number.isFinite(frame.aim!.x) && Number.isFinite(frame.aim!.z) && Number.isFinite(frame.aimPoint!.x) && Number.isFinite(frame.aimPoint!.z), 'losing the live pursuer query keeps fallback aim finite');
+        world.infected!.active.push(...pursuers);
+      }
+      if (world.tick === 1199) assert(!kitingComplete(), '1,200 input frames cannot end the encounter clock early');
       if (world.tick === 1) assert(Math.abs(frames.at(-1)!.move.x) < .01 && Math.abs(frames.at(-1)!.move.z) > .9, 'a blocked backpedal stays on clear ground along a tangent');
     }
+    assert(kitingComplete(), 'the elapsed encounter clock ends the disposable route');
     assert(Math.abs(receipt.kitingSeconds - 20) < 1e-8, 'sustain a full twenty-second chase');
     assert.equal(frames.at(-1)!.left.held, false, 'native route resumes after the sample');
     assert(Math.abs(finishKitingReceipt(receipt).attacksPerMinute - 3) < 1e-8);

@@ -49,7 +49,13 @@ export interface LevelRunHooks {
   /** QA observation window after native L10 charge activation; not a gameplay timer. */
   passiveHoldSeconds?: number;
   beforeBegin?: (world: SimWorld) => void;
+  /** Stop a disposable QA route after an observer has captured its required sample. */
+  stopWhen?: (world: SimWorld) => boolean;
   beforeDispose?: (world: SimWorld) => void;
+}
+/** Internal signal used to end an intentionally partial observer route. */
+export class LevelRunStopped extends Error {
+  constructor() { super('Level run stopped by observer'); this.name = 'LevelRunStopped'; }
 }
 export async function loadLevel(level: RunnerLevel, seed: number, campaign?: CampaignSave, props: -4 | 0 | 4 = 0, hooks?: LevelRunHooks): Promise<SimWorld> {
   const world = new SimWorld();
@@ -100,6 +106,13 @@ export async function runLevel(level: RunnerLevel, policy: CompletionPolicy, see
   try { world = await loadLevel(level, seed, campaign, props, hooks); }
   catch (error) { report.outcome = 'load-error'; report.failures['load-error'] = 1; report.blocker = { objective: null, detail: String(error) }; return report; }
   try {
+    if (hooks?.stopWhen) {
+      const update = world.update.bind(world);
+      world.update = (...args: Parameters<typeof world.update>) => {
+        if (hooks.stopWhen!(world)) throw new LevelRunStopped();
+        return update(...args);
+      };
+    }
     if (level === 'L7') return runSeven(world, report, maxSeconds, onComplete);
     const mission = world.missions!, walker = new Walker(), rng = new Rng(seed, `campaign-${policy}`);
     const stops = [world.events.on('mission.failed', e => { if (e.type === 'mission.failed') report.failures[e.reason] = (report.failures[e.reason] ?? 0) + 1; }), world.events.on('player.died', () => { report.failures['player-died'] = (report.failures['player-died'] ?? 0) + 1; }), world.events.on('objective.completed', e => { if (e.type === 'objective.completed') report.objectiveTimeline.push({ id: e.id, t: world.tick / 60 }); })];

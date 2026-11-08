@@ -46,11 +46,13 @@ export async function l3SharedSeeds(tier: 'low' | 'high', seedOneCampaign: Retur
       const observation = observer?.finish() ?? null, hash = stateHash(world.getState());
       if (seed === 1) {
         const kiteCampaign = preset('L3-default'); kiteCampaign.seed = seed; kiteCampaign.settings.quality = tier;
+        let kitingComplete = () => false;
         const kiteWorld = await loadLevel('L3', seed, kiteCampaign, 0, {
-          quality: tier, beforeBegin: value => installKitingPolicy(value, kiting, 'L3'),
+          quality: tier, beforeBegin: value => { kitingComplete = installKitingPolicy(value, kiting, 'L3'); },
         });
         try {
-          runL3(kiteWorld, kiteWorld.missions!, 'complete', { seed, maxSeconds: 1200, street: 'auto', stopWhen: () => false });
+          // This disposable route contributes only the kiting receipt.
+          runL3(kiteWorld, kiteWorld.missions!, 'complete', { seed, maxSeconds: 1200, street: 'auto', stopWhen: kitingComplete });
         } finally { kiteWorld.dispose(); }
       }
       const collision = world.solids.snapshot();

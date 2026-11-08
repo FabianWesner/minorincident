@@ -1,0 +1,42 @@
+{
+  "revision": "b73b32822a5d710d0e263dc52a551f21c5938daa",
+  "checks": [
+    {
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0,
+      "seconds": 15.872561791999999
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "exitCode": 0,
+      "seconds": 11.037482209
+    },
+    {
+      "command": [
+        "node",
+        "--import",
+        "tsx/esm",
+        "tools/qa/threat-audit.ts",
+        "--proof"
+      ],
+      "exitCode": 0,
+      "seconds": 1.068358
+    }
+  ],
+  "7326320f": {
+    "src": "72b99d764ce4ea7c9239537d837382b299fca359",
+    "public": "1a1a5f59d8d423b827f34058472aa4b3ebc16a8c"
+  },
+  "HEAD": {
+    "src": "72b99d764ce4ea7c9239537d837382b299fca359",
+    "public": "1a1a5f59d8d423b827f34058472aa4b3ebc16a8c"
+  }
+}

@@ -35,7 +35,7 @@ export interface AuditReceipt {
   passivity?: { seconds: number; levels: number; matches: boolean };
 }
 const { values } = parseArgs({ options: {
-  maxWorkers: { type: 'string', default: process.platform === 'linux' ? '4' : '2' }, levels: { type: 'string' },
+  maxWorkers: { type: 'string', default: '4' }, levels: { type: 'string' },
   out: { type: 'string', default: 'test-results/qa-threat' }, report: { type: 'string' }, proof: { type: 'boolean' },
   'passive-from': { type: 'string' },
 } });
