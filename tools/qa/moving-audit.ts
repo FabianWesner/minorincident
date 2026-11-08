@@ -8,6 +8,7 @@ import { newCampaign, preset, type ProgressionPreset } from '../../src/sim/progr
 import { LevelRunStopped, runLevel, runnerLevels, type RunnerLevel, type LevelReport } from '../sim-runner/levels';
 import { ThreatObserver } from './threat/observer';
 import { installKitingPolicy, finishKitingReceipt, type KitingReceipt } from './threat/kiting';
+import { phases } from './threat/phases';
 
 /** One bounded native or moving encounter, using the same input policy as qa:threat.
  * Split level/policy commands so the remote watchdog cannot discard an entire campaign audit. */
@@ -24,12 +25,25 @@ let observer: ThreatObserver | undefined, done = () => false;
 let kiting: KitingReceipt = { kitingSeconds: 0, attacks: 0, attacksPerMinute: 0, samples: 0 };
 const flags: string[] = [], start = performance.now();
 const stops: { tick: number; position: { x: number; y: number; z: number }; input: { x: number; z: number }; wantedSpeed: number; pendingAdmission: boolean; blocker: string | null; mounted: boolean; hp: number }[] = [];
+const damageBuckets: Record<string, { hits: number; damage: number; minDistance: number; maxDistance: number }> = {};
+const firstHits: { tick: number; source: string; amount: number; distance: number; speed: number; hidden: boolean; seated: boolean; phase: string }[] = [];
 try {
   run = await runLevel(level, 'complete', 1, undefined, 'auto', campaign, undefined, 0, {
     quality: 'low',
     beforeBegin: world => {
       if (policy === 'native') observer = new ThreatObserver(world, level);
       else done = installKitingPolicy(world, kiting, level, policy === 'circles' ? 'circles' : 'retreat');
+      if (values.trace) world.events.on('combat.hit', event => {
+        if (event.type !== 'combat.hit' || event.targetId !== 1 || event.amount <= 0) return;
+        const p = world.entities.get(1)!, source = world.entities.get(event.sourceId), velocity = p.survivor?.velocity;
+        const speed = Math.hypot(velocity?.x ?? 0, velocity?.z ?? 0), distance = source ? Math.hypot(p.transform.x - source.transform.x, p.transform.z - source.transform.z) : 0;
+        const phase = world.missions ? phases(world, level).map(p => p.key).join(',') : '';
+        const hidden = !!p.hidden, seated = !!world.missions?.state.l2?.seated || world.vehicles?.active != null;
+        const archetype = source?.archetype ?? event.actionId, key = `${phase}|${archetype}|${speed > .2 ? 'moving' : 'still'}|${hidden ? 'hidden' : 'visible'}|${seated ? 'seated' : 'on-foot'}`;
+        const bucket = damageBuckets[key] ??= { hits: 0, damage: 0, minDistance: distance, maxDistance: distance };
+        bucket.hits++; bucket.damage += event.amount; bucket.minDistance = Math.min(bucket.minDistance, distance); bucket.maxDistance = Math.max(bucket.maxDistance, distance);
+        if (firstHits.length < 96) firstHits.push({ tick: event.tick, source: archetype, amount: event.amount, distance, speed, hidden, seated, phase });
+      });
       if (values.trace) world.events.on('sim.tick', () => {
         const p = world.entities.get(1)!, previous = world.previousPlayer;
         if (kiting.diagnostics?.endTick !== world.tick - 1 || !previous || stops.length >= 32 || (stops.length && world.tick - stops.at(-1)!.tick < 15) || Math.hypot(p.transform.x - previous.x, p.transform.z - previous.z) * 60 > .05) return;
@@ -50,7 +64,7 @@ else if (level !== 'L9') {
 }
 const receipt = { level, policy, seed: 1, quality: 'low', revision: process.env.QA_THREAT_REVISION ?? 'worktree',
   runtimeSha256, policySha256, driverSha256,
-  seconds: (performance.now() - start) / 1000, run, observation, kiting: policy === 'native' ? null : kiting, ...(values.trace ? { stops } : {}), flags };
+  seconds: (performance.now() - start) / 1000, run, observation, kiting: policy === 'native' ? null : kiting, ...(values.trace ? { stops, damageBuckets, firstHits } : {}), flags };
 await mkdir(dirname(values.out), { recursive: true });
 await writeFile(values.out, JSON.stringify(receipt, null, 2) + '\n');
 console.log(`[moving-audit] ${level}/${policy}: ${receipt.seconds.toFixed(1)}s; ${policy === 'native' ? `${run?.outcome}, ${run?.damageTaken} HP` : `${kiting.hits ?? 0} hits / ${kiting.kitingSeconds.toFixed(2)}s`}; ${flags.join(', ') || 'PASS'}`);
