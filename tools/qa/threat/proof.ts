@@ -64,8 +64,9 @@ export async function proveThreatAudit(): Promise<void> {
     const receipt = { kitingSeconds: 0, attacks: 0, attacksPerMinute: 0, samples: 0 };
     const world = { tick: 0, events,
       entities: new Map([[1, { transform: { x: 0, z: 0 }, health: { current: 100 }, weapons: { selectedSide: 'RIGHT' } }]]),
-      infected: { active: [5, 6, 7].map(x => ({ health: { current: 100 }, infected: {}, transform: { x, z: 0 } })),
+      infected: { active: [5, 6, 7].map(x => ({ health: { current: 100 }, infected: { state: 'chase' }, transform: { x, z: 0 } })),
         nav: { visible: (_from: { x: number; z: number }, to: { x: number; z: number }) => clearRetreat || to.x >= -.5 } },
+      combat: { query: { visible: () => true }, runner: { loadout: { current: () => ({ id: 'weapon.handgun' }) } } },
       get deviceInput() { return device; },
       setInput: (patch: Partial<InputFrame>) => { device = { ...device, ...patch }; frames.push(device); },
       clearInput: () => { device = emptyInput(); },
@@ -86,7 +87,14 @@ export async function proveThreatAudit(): Promise<void> {
     world.entities.get(1)!.health.current = 100;
     for (world.tick = 1; world.tick <= 1200; world.tick++) {
       clearRetreat = world.tick !== 1;
+      const pursuers = world.infected!.active;
+      if (world.tick === 2) world.infected!.active = [];
       world.applyInput(emptyInput(), 'mouse-keyboard');
+      if (world.tick === 2) {
+        const frame = frames.at(-1)!;
+        assert(Number.isFinite(frame.aim!.x) && Number.isFinite(frame.aim!.z) && Number.isFinite(frame.aimPoint!.x) && Number.isFinite(frame.aimPoint!.z), 'losing the live pursuer query keeps fallback aim finite');
+        world.infected!.active = pursuers;
+      }
       if (world.tick === 1) assert(Math.abs(frames.at(-1)!.move.x) < .01 && Math.abs(frames.at(-1)!.move.z) > .9, 'a blocked backpedal stays on clear ground along a tangent');
     }
     assert(Math.abs(receipt.kitingSeconds - 20) < 1e-8, 'sustain a full twenty-second chase');

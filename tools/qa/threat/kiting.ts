@@ -10,11 +10,13 @@ export interface KitingReceipt {
   attacks: number;
   attacksPerMinute: number;
   samples: number;
+  diagnostics?: { startTick: number | null; endTick: number | null; firingFrames: number; playerAttackStarts: number; framesWithoutThreats: number };
 }
 
 /** Apply player-like backpedal fire only while a dense, nearby horde is pressing. */
 export function installKitingPolicy(world: SimWorld, receipt: KitingReceipt, level: RunnerLevel): void {
   const applyInput = world.applyInput.bind(world);
+  const diagnostics = receipt.diagnostics = { startTick: null as number | null, endTick: null as number | null, firingFrames: 0, playerAttackStarts: 0, framesWithoutThreats: 0 };
   let selectedButtonHeld = false;
   let sampleUntil: number | null = null;
   let sampleOrigin: { x: number; z: number } | null = null;
@@ -24,6 +26,9 @@ export function installKitingPolicy(world: SimWorld, receipt: KitingReceipt, lev
   let kitingNow = false;
   observeAttackStarts(world, (_sourceId, targetId) => {
     if (kitingNow && targetId === 1) receipt.attacks++;
+  });
+  world.events.on('combat.attack', event => {
+    if (event.type === 'combat.attack' && kitingNow && event.sourceId === 1) diagnostics.playerAttackStarts++;
   });
   const kite = (frame: InputFrame): InputFrame => {
     const player = world.entities.get(1), position = player?.transform;
@@ -43,7 +48,9 @@ export function installKitingPolicy(world: SimWorld, receipt: KitingReceipt, lev
       sampleDirection = null;
       return frame;
     }
-    if (sampleUntil === null && world.missions && !phases(world, level).some(phase => phase.threat)) return frame;
+    // L5's opening street encounter precedes activation of the look objective.
+    const l5Encounter = level === 'L5' && ['emerged', 'search'].includes(world.missions?.state.l5?.phase ?? '');
+    if (sampleUntil === null && world.missions && !l5Encounter && !phases(world, level).some(phase => phase.threat)) return frame;
     if (world.storyLock) { kitingNow = false; return frame; }
     const threats = world.infected?.active.filter(entity => {
       if (entity.health.current <= 0 || !entity.infected || entity.hidden || !position || Math.hypot(entity.transform.x - position.x, entity.transform.z - position.z) > 30) return false;
@@ -74,7 +81,10 @@ export function installKitingPolicy(world: SimWorld, receipt: KitingReceipt, lev
     const awayX = centre && position ? position.x - centre.x : 0, awayZ = centre && position ? position.z - centre.z : 0;
     const separation = Math.hypot(awayX, awayZ);
     const denseHorde = !frame.drive && player?.passengerOf === undefined && !!position && !!centre && density >= (level === 'L8' ? 3 : 1) && separation > 0.01 && separation <= 30;
-    const closePursuer = level === 'L8' ? denseHorde : threats.some(entity => Math.hypot(entity.transform.x - position!.x, entity.transform.z - position!.z) <= 12);
+    // L2/L5's first distant chaser is an approach, not yet a close encounter.
+    const pursuitRange = level === 'L2' || level === 'L5' ? 6 : 12;
+    const closePursuer = level === 'L8' ? denseHorde : level === 'L1' ? threats.length > 0
+      : threats.some(entity => Math.hypot(entity.transform.x - position!.x, entity.transform.z - position!.z) <= pursuitRange);
     if (sampleUntil === null && !closePursuer) { selectedButtonHeld = false; return frame; }
     let retreat: { x: number; z: number } | null = null;
     if (denseHorde && position) {
@@ -113,16 +123,22 @@ export function installKitingPolicy(world: SimWorld, receipt: KitingReceipt, lev
       Math.hypot(entity.transform.x - position!.x, entity.transform.z - position!.z) < Math.hypot(nearest.transform.x - position!.x, nearest.transform.z - position!.z) ? entity : nearest, undefined as typeof threats[number] | undefined);
     receipt.kitingSeconds += 1 / 60;
     receipt.samples++;
+    diagnostics.startTick ??= world.tick; diagnostics.endTick = world.tick;
+    if (!threats.length) diagnostics.framesWithoutThreats++;
     const selectedSide = player.weapons.selectedSide;
     const rocket = world.combat?.runner.loadout.current(selectedSide).id === 'weapon.rocket-launcher';
     if (rocket && nextRocketFireTick < 0) nextRocketFireTick = world.tick + (level === 'L8' ? 600 : 300);
     const fire = rocket ? { down: world.tick >= nextRocketFireTick, held: false, up: false } : { down: !selectedButtonHeld, held: true, up: false };
+    if (fire.down || fire.held) diagnostics.firingFrames++;
     if (rocket && fire.down) nextRocketFireTick = Number.POSITIVE_INFINITY;
     selectedButtonHeld = !rocket;
-    const towardX = -awayX / separation, towardZ = -awayZ / separation;
+    // The sampled pursuer can leave the live visibility/range query while the
+    // 20-second window continues. Keep aiming opposite the chosen retreat
+    // direction instead of dividing the now-empty horde vector by zero.
+    const aim = separation > .01 ? { x: -awayX / separation, z: -awayZ / separation } : { x: -retreat!.x, z: -retreat!.z };
     return { ...frame, walk: true,
       move: retreat!,
-      aim: { x: towardX, z: towardZ }, aimPoint: target ? { x: target.transform.x, z: target.transform.z } : centre, aimSource: 'pointer',
+      aim, aimPoint: target ? { x: target.transform.x, z: target.transform.z } : centre ?? { x: position.x + aim.x * 10, z: position.z + aim.z * 10 }, aimSource: 'pointer',
       // Physical mouse fire is LEFT; ControlIntent maps it to selectedSide.
       left: fire, right: { down: false, held: false, up: false },
       mouseAttack: rocket ? fire.down : true,
