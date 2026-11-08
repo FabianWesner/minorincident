@@ -36,7 +36,10 @@ export class HumanTargets implements HumanTargetQuery {
       if (!target) {
         target = { id: e.id, kind: e.id === 1 ? 'player' : e.civilian?.zooAnimal ? 'animal' : 'civilian', position: { x: e.transform.x, z: e.transform.z }, facing: e.transform.yaw };
         this.records.set(e, target);
-      } else { target.position.x = e.transform.x; target.position.z = e.transform.z; target.facing = e.transform.yaw; }
+      } else {
+        target.id = e.id; target.kind = e.id === 1 ? 'player' : e.civilian?.zooAnimal ? 'animal' : 'civilian';
+        target.position.x = e.transform.x; target.position.z = e.transform.z; target.facing = e.transform.yaw;
+      }
       this.list.push(target);
       this.indexedIds.add(e.id); this.index.set(e.id, target.position.x, target.position.z);
     }
