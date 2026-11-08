@@ -28,11 +28,13 @@ export class LevelEightZoo {
   private rosterCacheRevision = -1;
   private rosterCache: number[] = [];
   private passengersCache: number[] = [];
+  private readonly cacheStops: (() => void)[] = [];
   constructor(private readonly mission: Mission) {
     const invalidate = () => { this.rosterCacheTick = -1; this.rosterCacheRevision = -1; };
     for (const type of ['entity.spawned', 'civilian.state', 'civilian.finished', 'combat.kill'] as const)
-      mission.world.events.on(type, invalidate);
+      this.cacheStops.push(mission.world.events.on(type, invalidate));
   }
+  dispose(): void { this.cacheStops.splice(0).forEach(stop => stop()); }
   private get w() { return this.mission.world; }
   private get breached() { return !!this.mission.state.states.breached; }
   private point(at: Point, radius = .4): Point {

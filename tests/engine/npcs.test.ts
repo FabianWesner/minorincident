@@ -101,6 +101,9 @@ test('civilians: seeded grab → bite → down → glowing eyes → rising → i
     expect(power.sightMultiplier(b)).toBe(firstB);
     w.tick++; power.sightMultiplier(a); expect(reads).toBeGreaterThan(afterB);
     const afterNextTick = reads; power.revision++; power.sightMultiplier(a); expect(reads).toBeGreaterThan(afterNextTick);
+    const listeners = w.events.listenerCount;
+    w.loadMission(w.missions!.def);
+    expect(w.events.listenerCount).toBe(listeners);
   }
 });
 
