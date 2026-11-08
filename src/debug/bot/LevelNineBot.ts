@@ -59,8 +59,11 @@ export class LevelNineBot {
     const driving = l9.driving.state;
     if (l9.driving.hatch) {
       f.brake = true; f.selectedWeaponKey = 5;
-      const target = w.infected!.active.filter(e => !e.hidden && !e.infected?.hidden && e.health.current > 0 && e.id !== driving.megaId).sort((a, b) => Math.hypot(a.transform.x - car.transform.x, a.transform.z - car.transform.z) - Math.hypot(b.transform.x - car.transform.x, b.transform.z - car.transform.z))[0];
-      if (target && Math.hypot(target.transform.x - car.transform.x, target.transform.z - car.transform.z) < 30) { const dx = target.transform.x - car.transform.x, dz = target.transform.z - car.transform.z, length = Math.hypot(dx, dz) || 1; f.aim = { x: dx / length, z: dz / length }; f.aimSource = 'keyboard'; f.activeAttack = true; f.left = { down: true, held: true, up: false }; }
+      const origin = w.entities.get(1)!.transform;
+      const humans = [origin, ...driving.roster.map(id => w.entities.get(id)).filter(e => e?.civilian && !e.hidden && !e.passengerOf && e.health.current > 0 && !e.infected).map(e => e!.transform)];
+      const risk = (p: { x: number; z: number }) => Math.min(...humans.map(h => Math.hypot(p.x - h.x, p.z - h.z)));
+      const target = w.infected!.active.filter(e => !e.hidden && !e.infected?.hidden && e.health.current > 0 && e.id !== driving.megaId && Math.hypot(e.transform.x - origin.x, e.transform.z - origin.z) < 30).sort((a, b) => risk(a.transform) - risk(b.transform))[0];
+      if (target) { const dx = target.transform.x - origin.x, dz = target.transform.z - origin.z, length = Math.hypot(dx, dz) || 1; f.aim = { x: dx / length, z: dz / length }; f.aimSource = 'keyboard'; f.activeAttack = true; f.left = { down: true, held: true, up: false }; }
       return f;
     }
     if (!l9.driving.holding(car.id) && car.vehicle!.speed < 1) this.blockedAt ??= w.tick; else this.blockedAt = null;
@@ -73,7 +76,10 @@ export class LevelNineBot {
     // Switch to the next waypoint earlier before a sharp bend: the 6 t APC's turning circle otherwise overshoots the corner by
     // ~8 m and wedges it against the dressed verge (fork corner (-450, 0) of the road detour: utility pole + bush, T-E31-20).
     while (this.index < this.path.length - 1 && Math.hypot(this.path[this.index][0] - p.x, this.path[this.index][1] - p.z) < this.switchRadius(this.index)) this.index++;
-    let target: Point = this.path[this.index];
+    // Camp is beyond the final bend; never turn back into the horde to visit
+    // that approach waypoint after the evacuation has already completed.
+    if (driving.evacuationDone) this.index = this.path.length - 1;
+    let target: Point = driving.evacuationDone ? [l9Course.bridge.x + 4, 0] : this.path[this.index];
     if (p.x > 405 && Math.abs(p.z) < 35 && !driving.evacuationDone) {
       if (driving.gateClosed && p.x < l9Course.gate.x + 4) target = [l9Course.gate.x + 6, l9Course.gate.sideZ];
       else target = [l9Course.evacuation.x, l9Course.evacuation.z];
@@ -84,15 +90,19 @@ export class LevelNineBot {
     // furniture. Ploughing into the same brute after every restart is not a
     // completion policy for the revised stop-on-impact mechanic.
     if (this.avoid && (w.tick >= this.avoid.until || Math.hypot(this.avoid.x - p.x, this.avoid.z - p.z) < 4)) this.avoid = null;
-    if (p.x < 405 && !this.avoid) {
+    if (!this.avoid) {
       const c = Math.cos(p.yaw), s = Math.sin(p.yaw);
-      const heavy = w.infected!.active.find(e => {
+      const heavy = p.x < 405 ? w.infected!.active.find(e => {
         const dx = e.transform.x - p.x, dz = e.transform.z - p.z, ahead = dx * c - dz * s;
         return !e.hidden && !e.infected?.hidden && e.health.current > 0 && ['infected.brute', 'infected.armored', 'infected.riot', 'infected.elephant'].includes(e.archetype) && ahead > 4 && ahead < 25 && Math.abs(dx * s + dz * c) < 6;
-      });
-      if (heavy) {
-        const side = (heavy.transform.x - p.x) * s + (heavy.transform.z - p.z) * c >= 0 ? -1 : 1;
-        this.avoid = { x: heavy.transform.x + s * side * 4.5, z: heavy.transform.z + c * side * 4.5, until: w.tick + 240 };
+      }) : undefined;
+      const bus = driving.busStoppedAt !== null ? w.entities.get(driving.busId) : undefined;
+      const dx = (bus?.transform.x ?? p.x) - p.x, dz = (bus?.transform.z ?? p.z) - p.z;
+      const ahead = dx * c - dz * s;
+      const blocker = heavy ?? (bus && ahead > 3 && ahead < 24 && Math.abs(dx * s + dz * c) < 6 ? bus : undefined);
+      if (blocker) {
+        const side = (blocker.transform.x - p.x) * s + (blocker.transform.z - p.z) * c >= 0 ? -1 : 1, clearance = blocker === bus ? 6 : 4.5;
+        this.avoid = { x: blocker.transform.x + s * side * clearance, z: blocker.transform.z + c * side * clearance, until: w.tick + 240 };
       }
     }
     if (this.avoid) target = [this.avoid.x, this.avoid.z];

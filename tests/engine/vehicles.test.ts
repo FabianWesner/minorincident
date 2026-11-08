@@ -116,6 +116,15 @@ async function apcBoarders(): Promise<void> {
     world.applyInput(turn, 'keyboard'); world.update();
     expect(car.entity.vehicle!.attached, 'a sharp turn shakes the dog off').not.toContain(dogId);
     expect(dog.attachedTo).toBeUndefined();
+    car.physics.body.setLinvel({ x: 0, y: 0, z: 0 }, true); car.physics.body.setAngvel({ x: 0, y: 0, z: 0 }, true); car.physics.postPhysics();
+    world.missions!.l9!.driving.state.stallAt = world.tick;
+    const targetId = world.infected!.spawn('infected.runner', { x: car.entity.transform.x + 12, z: car.entity.transform.z }, { state: 'chase' });
+    const target = world.entities.get(targetId)!;
+    for (let i = 0; i < 120 && target.health.current === target.health.max; i++) {
+      const origin = world.entities.get(1)!.transform, dx = target.transform.x - origin.x, dz = target.transform.z - origin.z, length = Math.hypot(dx, dz) || 1;
+      world.applyInput({ ...emptyInput(), brake: true, selectedWeaponKey: 5, aim: { x: dx / length, z: dz / length }, aimSource: 'keyboard', activeAttack: true, left: { down: true, held: true, up: false } }, 'keyboard'); world.update();
+    }
+    expect(target.health.current, 'carried hatch fire actually reaches ground enemies').toBeLessThan(target.health.max);
     const wheelRotation = car.physics.wheels[0].rotation;
     const roll = { x: Math.SQRT1_2, y: 0, z: 0, w: Math.SQRT1_2 };
     world.vehicles!.scriptPose(id, { ...car.entity.transform, yaw: 0 }, 3, roll);
