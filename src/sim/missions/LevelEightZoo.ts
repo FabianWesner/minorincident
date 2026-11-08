@@ -28,6 +28,7 @@ export class LevelEightZoo {
   private rosterCacheRevision = -1;
   private rosterCache: number[] = [];
   private passengersCache: number[] = [];
+  private readonly seatedPassengers = new Set<number>();
   private readonly cacheStops: (() => void)[] = [];
   constructor(private readonly mission: Mission) {
     const invalidate = () => { this.rosterCacheTick = -1; this.rosterCacheRevision = -1; };
@@ -279,8 +280,16 @@ export class LevelEightZoo {
       const vehicle = w.vehicles!.cars.get(s.carId)!.entity.vehicle!;
       this.refreshRoster();
       const passengers = this.passengersCache;
-      const waiting = passengers.filter(id => !vehicle.passengers?.some(passenger => passenger.id === id && passenger.phase === 'seated'));
-      queueIndex = Math.max(0, waiting.indexOf(e.id));
+      // Build the seated lookup once for this call, rather than scanning every
+      // vehicle seat for every group member, once again for every follower.
+      const seated = this.seatedPassengers; seated.clear();
+      for (const passenger of vehicle.passengers ?? []) if (passenger.phase === 'seated') seated.add(passenger.id);
+      let ahead = 0;
+      for (const id of passengers) {
+        if (seated.has(id)) continue;
+        if (id === e.id) { queueIndex = ahead; break; }
+        ahead++;
+      }
       if (queueIndex) {
         const car = w.entities.get(s.carId)!, dx = door.x - car.transform.x, dz = door.z - car.transform.z, length = Math.hypot(dx, dz) || 1;
         // Keep the complete roster near the APC instead of stretching a
