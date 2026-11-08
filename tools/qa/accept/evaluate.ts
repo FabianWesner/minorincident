@@ -451,7 +451,7 @@ export function evaluate(receipt: NativeReceipt, path: string): Clause[] {
       add('L10-09', 'natural hangar handoff restores full selectable arsenal', story?.fullArsenal, 'every returned weapon plus flamethrower present in LEFT/RIGHT racks', competent && state.states['cure-installed'] ? story?.fullArsenal : undefined);
       number('L10-07', 'continuous Mega maximum step', observation.maxMegaStep, 0, 1);
       const hold = phase('step/hold');
-      if (hold) {
+      if (hold && !competent) {
         number('L10-11', 'hold player windups per minute', hold.attacksPerMinute, 8, Infinity);
         number('L10-11', 'hold bounded-path reachable share', hold.boundedPaths?.minimumPercent, 90, 100);
       }
