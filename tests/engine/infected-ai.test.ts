@@ -181,15 +181,17 @@ test('every human and animal role validates and spawns with its catalog health a
     const attacker = spawn(w, role === 'mega-alpha' ? 'alpha' : role, 1.3);
     attacker.infected!.hidden = false; attacker.infected!.perched = false;
     if (role === 'mega-alpha') { attacker.infected!.pursuit = true; attacker.infected!.speed = megaAlpha.cruiseMs; }
-    let movingHits = 0;
+    let movingHits = 0, pendingHits = 0;
     w.events.on('infected.attack', event => {
-      if (event.type === 'infected.attack' && event.sourceId === attacker.id && event.targetId === 1 && event.amount > 0 &&
-          Math.hypot(w.player!.locomotion.displacement.x, w.player!.locomotion.displacement.z) * 60 > .2) movingHits++;
+      if (event.type === 'infected.attack' && event.sourceId === attacker.id && event.targetId === 1 && event.amount > 0) pendingHits++;
     });
     for (let i = 0; i < 600; i++) {
       const dx = player.transform.x + 3, dz = player.transform.z, radius = Math.hypot(dx, dz), correction = (3 - radius) * 2;
       const x = -dz + dx * correction, z = dx + dz * correction, length = Math.hypot(x, z);
+      const before = { x: player.transform.x, z: player.transform.z };
       w.setInput({ move: { x: x / length, z: z / length } }); w.update();
+      if (Math.hypot(player.transform.x - before.x, player.transform.z - before.z) * 60 > .2) movingHits += pendingHits;
+      pendingHits = 0;
     }
     expect(movingHits, `${role}: a running circle cannot suppress every attack`).toBeGreaterThan(0);
     w.dispose(); worlds.pop();
