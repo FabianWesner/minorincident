@@ -26,7 +26,7 @@ export function k9VestModel(source: Object3D, width: number, materials?: Materia
     const index = node.geometry.index, size = index?.count ?? node.geometry.getAttribute('position').count;
     const groups = node.geometry.groups.length ? node.geometry.groups : [{ start: 0, count: size, materialIndex: 0 }];
     for (const group of groups) {
-      const material = palette[group.materialIndex ?? 0];
+      const material = palette[Array.isArray(node.material) ? group.materialIndex ?? 0 : 0];
       const token = (material as Material & { token?: string }).token ?? material.name.replace(/^pal_/, '');
       if (!clothing.has(token)) continue;
       const indexed = node.geometry.clone(); indexed.clearGroups();
