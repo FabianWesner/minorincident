@@ -160,7 +160,7 @@ function checkpointRecord(save: CampaignSave): string | undefined {
   const { cureResume, ...campaign } = save;
   const { current, checkpoint, ...view } = cureResume;
   const snapshot = JSON.stringify(current);
-  if (snapshot.length < 32768 || snapshot !== JSON.stringify(checkpoint)) return;
+  if (snapshot.length < 32768 || current !== checkpoint && snapshot !== JSON.stringify(checkpoint)) return;
   return `${checkpointPrefix}[${JSON.stringify(campaign)},${JSON.stringify(view)},${snapshot}]`;
 }
 /** Keep small/legacy saves readable; full finale snapshots need lossless storage compression.

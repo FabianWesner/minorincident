@@ -151,6 +151,15 @@ test('static placement batches reuse their graph and narrow barriers keep the fo
   expect(vehiclePolicy.courierOccluded).toBe(false);
   expect(fence.userData.occluder).toBe(true); // rider/driver retains the placement cut
 
+  // An open raised gun platform keeps the bounded cut, never the enclosing-prop
+  // lens cut that erases its entire supporting deck beside the courier.
+  const platform = { ...hull, id: 'kit.dispersal-platform', height: 4.165, foot: { cx: 0, cz: 0, hx: 5, hz: 4 } };
+  const platformPolicy = new DistrictOcclusion({ ...parts, lodBatches: [platform] } as unknown as PolicyArgs[0], {} as PolicyArgs[1], () => {}, () => {});
+  platformPolicy.update(vehicleView, true, { x: 0, y: .7, z: 0 }, subject);
+  expect(fence.userData.occluder).toBe(true);
+  expect(platformPolicy.courierTucked).toBe(false);
+  expect(platformPolicy.seeThroughAudit().lensPlacements).toEqual([]);
+
   const lighting = new Lighting(new Scene()), shading = new Materials(lighting), material = shading.fromColor('joint', new Color('#999996'), 0, true);
   const root = new Group(), geometries = addHighwayRailJoints(root, material);
   const a = new InstancedGroup(root, [new Object3D()]), b = new InstancedGroup(root, [new Object3D()]);
@@ -378,6 +387,56 @@ test('corpse pages: bodies persist past the old cap, bounds stay conservative, c
     infected: { nav: { clear: () => true, move: () => {} } } } as unknown as SimWorld;
   const pinnedBody = { id: 901, health: { current: 0 }, transform: { x: 0, y: .7, z: -.05, yaw: 0 }, combat: { radius: .35 } } as EntitySnapshot;
   expect(new CorpseLayout(pinnedWorld).place(pinnedBody).y).toBe(.35);
+  // A rocket can launch a body while its ground pose is still deferred.
+  // Readiness must drain that entry without waiting for a paused flight to land.
+  const airborne = { ...pinnedBody, id: 902, transform: { ...pinnedBody.transform } };
+  const flightWorld = { ...pinnedWorld, entities: { revision: 0, get: () => airborne, *iterate() {} } } as unknown as SimWorld;
+  const flightLayout = new CorpseLayout(flightWorld);
+  flightLayout.beginFrame(0); flightLayout.place(airborne);
+  airborne.corpseThrown = true; airborne.corpseBlast = { delay: 0, x: 1, y: 2, z: 1 };
+  const placeFlight = flightLayout.place.bind(flightLayout); let flightCalls = 0;
+  flightLayout.place = (...args) => {
+    if (++flightCalls > 2) throw new Error('airborne deferred pose never drains');
+    return placeFlight(...args);
+  };
+  flightLayout.settleAll();
+  expect(flightCalls).toBe(1);
+  airborne.corpseBlast = undefined;
+  // A legacy flight or unloaded support can return an airborne pose from the
+  // search itself, rather than the active-blast shortcut above.
+  airborne.transform.y = 2;
+  flightLayout.beginFrame(0); placeFlight(airborne); flightCalls = 0;
+  flightLayout.settleAll();
+  expect(flightCalls).toBe(1);
+  airborne.transform.y = .7;
+  flightLayout.beginFrame(Infinity);
+  expect('ax' in flightLayout.place(airborne)).toBe(true);
+  // A body resting on another must fall when a blast removes that support.
+  const lower = { ...pinnedBody, id: 910, transform: { x: 0, y: .7, z: 0, yaw: 0 } };
+  const upper = { ...pinnedBody, id: 911, transform: { ...lower.transform } };
+  const top = { ...pinnedBody, id: 912, transform: { ...lower.transform } };
+  const supportBodies = new Map([[lower.id, lower], [upper.id, upper], [top.id, top]]);
+  const supportWorld = { ...pinnedWorld, districts: { districts: [], supportBelow: () => 0 },
+    entities: { revision: 0, get: (id: number) => supportBodies.get(id), *iterate() {} } } as unknown as SimWorld;
+  const supportLayout = new CorpseLayout(supportWorld); supportLayout.beginFrame(Infinity);
+  supportLayout.place(lower);
+  expect(supportLayout.place(upper).y).toBeCloseTo(.22);
+  expect(supportLayout.place(top).y).toBeCloseTo(.44);
+  // Suspend a search on the old support before it gets thrown away.
+  upper.transform.x = .1;
+  let searchClock = 0;
+  const searchNow = vi.spyOn(performance, 'now').mockImplementation(() => searchClock++);
+  try { supportLayout.beginFrame(.5); supportLayout.place(upper); }
+  finally { searchNow.mockRestore(); }
+  lower.corpseThrown = true; lower.corpseBlast = { delay: 0, x: 0, y: 2, z: 0 };
+  supportLayout.beginFrame(Infinity);
+  supportLayout.place(lower);
+  expect(supportLayout.place(upper).y).toBe(0);
+  expect(supportLayout.place(top).y).toBeCloseTo(.22);
+  upper.transform.x = 10;
+  supportLayout.place(upper);
+  expect(supportLayout.place(top).y).toBe(0);
+  expect(supportLayout.audit().count).toBe(2);
   const baked = bakeInfected(createSkinnedCrowdFixture()); packCrowdParts(baked.geometry);
   const pool = new StaticCorpses(), material = new MeshLambertNodeMaterial(), records = new Map<number, EntitySnapshot>();
   try {

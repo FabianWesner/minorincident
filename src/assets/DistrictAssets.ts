@@ -288,7 +288,7 @@ export class DistrictAssets {
     // fix68-a (L3-13): the raised ramp is a deck the courier walks ON: the full courier hole dissolved the near jersey rail into a sawtooth
     // fan, cut the inner edge away and left a lighter slab beside her. Its materials keep everything within 1.6 m of her feet; only the
     // gantry sign above her head still dissolves (it did hide her at x 150).
-    const deck = id === 'kit.highway-onramp';
+    const deck = id === 'kit.highway-onramp' || id === 'kit.dispersal-platform';
     root.traverse(node => { if (node instanceof Mesh) {
       // A shut metro leaf must read as a solid barrier even with the courier behind it.
       if (node.material instanceof PaletteMaterial) {

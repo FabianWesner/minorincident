@@ -12,6 +12,7 @@ export interface Eyes {
   tick: number; level: string | null; phase: string | null; step: string | null; checkpoint: string | null; completed: number;
   ending: boolean;
   objective: string; tracker: string; distance: number | null;
+  megaBand?: 'distant' | 'approaching' | 'near' | null;
   marker: { visible: boolean; offscreen: boolean; x: number; y: number; anchor: string | null; guidance?: string } | null;
   route: { dx: number; dz: number } | null;
   cue?: { x: number; z: number; text: string } | null;
@@ -145,6 +146,7 @@ export function look(): Eyes {
     menu, loading: shown(q('menu-loading')) || !!q('level-transition') && !q('level-transition')!.hidden,
     prompt: ringPrompt || (trackerPrompt.includes('Press E or tap the console action') ? trackerPrompt : ''),
     subtitle: shown(q('mission-subtitle')) ? q('mission-subtitle')!.textContent ?? '' : '',
+    megaBand: shown(q('mega-distance-label')) ? q('mega-distance-ring')?.dataset.band as Eyes['megaBand'] ?? null : null,
     player: p ? { x: p.transform.x, y: p.transform.y, z: p.transform.z, hp: p.health.current, max: p.health.max, riding: !!p.riding || !!p.passengerOf, weapons, emptyWeapons, current } : null,
     driving: car ? { id: car.id, x: car.transform.x, z: car.transform.z, yaw: car.transform.yaw } : null,
     healthKits: p ? a.query({ within: { x: p.transform.x, z: p.transform.z, r: 12 } }).filter(e => e.pickup && 'kind' in e.pickup && e.pickup.kind === 'medkit' && !e.pickup.collected && !e.hidden && a.input.visible(e.transform)).map(e => ({ x: e.transform.x, z: e.transform.z, d: Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z), screen: a.input.project(e.transform, 'player') })).filter(k => k.screen.x >= 0 && k.screen.x < view.w && k.screen.y >= 44 && k.screen.y < view.h && !document.elementFromPoint(k.screen.x, k.screen.y)?.closest('button, input, select, textarea, [role="button"], [role="dialog"]')) : [],

@@ -381,7 +381,7 @@ export class Game {
     this.view.settings(settings);
   }
   applyCampaign():void {if(this.campaign&&this.world.player){applyCampaign(this.world,this.campaign);this.appliedCampaign=this.campaign;this.view.update(1);}}
-  saveCampaign():boolean {
+  saveCampaign(atCheckpoint = false):boolean {
     if(!this.campaign)return false;
     const liveCampaign = this.appliedCampaign === this.campaign && !!this.world.progression?.campaign;
     const held = this.world.entities.get(1)?.weapons, phase = this.world.missions?.state.phase;
@@ -395,7 +395,7 @@ export class Game {
     if (liveCampaign && this.world.scenario === 'L10' && this.campaign.unlockedLevel === 10 && this.campaign.crossingHandover && this.world.missions?.state.checkpoint) {
       const live = this.world.progression?.campaign;
       if (live) { this.campaign.ownedActions = [...live.ownedActions]; this.campaign.racks = structuredClone(live.racks); this.campaign.world = structuredClone(live.world); }
-      this.campaign.cureResume = { ...this.world.missions.saveResume(), cameraZoom: this.view.view.getState().targetZoom };
+      this.campaign.cureResume = { ...this.world.missions.saveResume(atCheckpoint), cameraZoom: this.view.view.getState().targetZoom };
     }
     if(liveCampaign){this.world.progression!.campaign=cloneData(this.campaign);}
     return this.saves.write(this.campaign);
@@ -412,7 +412,7 @@ export class Game {
       this.completedAt = compositions[`L${next}`] ? { target: `L${next}`, at: performance.now() } : null;
       if (compositions[`L${next}`]) void prefetchLevel(`L${next}`, 4, this.quality.tier);
     });
-    this.world.events.on('checkpoint.set', () => { if (this.world.scenario === 'L10') this.saveCampaign(); });
+    this.world.events.on('checkpoint.set', () => { if (this.world.scenario === 'L10') this.saveCampaign(true); });
     this.world.events.on('checkpoint.restored', () => {
       if (this.world.scenario === 'L7' && this.world.progression?.campaign) {
         const live = this.world.progression.campaign;

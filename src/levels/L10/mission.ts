@@ -48,6 +48,8 @@ export function levelTenMission(resolve: (name: string) => Anchor | undefined): 
   step('install', 'Install the cure in the dispersal device', 'cure-install', { kind: 'all', triggers: [flag('cure-carried'), spatial('cure-install', true)] }, [{ kind: 'state', key: 'cure-installed', value: true }, { kind: 'state', key: 'cure-carried', value: false }, { kind: 'checkpoint', id: 'cure-disperse-ready' }], 'interact');
   step('hold', 'Charge the dispersal system', 'cure-console', { kind: 'all', triggers: [flag('charge-active'), { kind: 'count', key: 'charge-ticks', atLeast: 3600 }, flag('charge-ready'), flag('cure-installed')] });
   step('mega', 'Kill the Mega Alpha', 'cure-mega', flag('mega-dead'));
+  // Pursuit position is AI-only; the player gets the distance ring and text.
+  def.steps.at(-1)!.waypoint = false;
   step('release', 'Release the cure at the console', 'cure-console', flag('cure-released'), [], 'interact');
   step('epilogue', 'Watch the cure spread', 'cure-console', flag('epilogue-finished'));
   step('credits', 'Minor Incident', 'cure-console', flag('credits-finished'));

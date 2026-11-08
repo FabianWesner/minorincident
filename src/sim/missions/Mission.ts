@@ -409,9 +409,16 @@ export class Mission {
     return { tick: this.world.tick, state: cloneData(this.state), entities: cloneData(this.world.entities.values()), ...(arsenal ? { combatSequence: this.world.combat?.runner.lastAttackId ?? 0, arsenal } : {}), seams: captureSeams(this.world) };
   }
   /** Serializable live progress plus the last reached retry checkpoint, for the existing SaveStore. */
-  saveResume(): { current: MissionCheckpoint; checkpoint: MissionCheckpoint } {
+  saveResume(atCheckpoint = false): { current: MissionCheckpoint; checkpoint: MissionCheckpoint } {
     const checkpoint = this.checkpoints.get(this.state.checkpoint ?? 'start');
     if (!checkpoint) throw new Error('Mission has no reached checkpoint');
+    // The synchronous checkpoint event already owns this exact world snapshot.
+    // Copy it once for persistence rather than capturing the world again and
+    // cloning a second identical retry record in the same gameplay frame.
+    if (atCheckpoint && checkpoint.tick === this.world.tick) {
+      const snapshot = cloneData(checkpoint);
+      return { current: snapshot, checkpoint: snapshot };
+    }
     return { current: this.capture(), checkpoint: structuredClone(checkpoint) };
   }
   /** Called after region/AI services are installed; restores their normal snapshot seams. */

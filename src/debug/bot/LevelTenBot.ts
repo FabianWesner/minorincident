@@ -36,7 +36,7 @@ export class LevelTenBot {
     const released = !!mission.state.states['cure-released'];
     while (this.waypoint < this.route.length && distance({ x: this.route[this.waypoint][0], z: this.route[this.waypoint][1] }) < 2) this.waypoint++;
     let goal = anchor;
-    // Once the boss reaches the apron, follow its ordinary objective marker
+    // Once the boss reaches the apron, follow its private pursuit anchor
     // around console cover. Waiting at the console cannot acquire a boss on
     // its far side; distant pursuit still stays anchored to the arena.
     const bossMarker = mission.def.anchors['cure-mega'];
