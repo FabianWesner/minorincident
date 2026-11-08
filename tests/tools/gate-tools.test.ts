@@ -84,9 +84,9 @@ test('browser pool admission backs off under WindowServer pressure, keeps a one-
   expect(evidenceIsArchivedOrMatches(evidenceFile, digest)).toBe(true);
   writeFileSync(evidenceFile, 'changed capture');
   expect(evidenceIsArchivedOrMatches(evidenceFile, digest)).toBe(false);
-  // L3-06 army line (fix66-a/fix67-a): one rule over seeds 1-3 for the battery fixture, qa:accept and qa:threat.
+  // L3-06 army line (PO 2026-11-07, r6-l3): at least 2 officers reach the line on 2 of 3 seeds; one rule for the battery fixture, qa:accept and qa:threat.
   const seeds = (...army: (number | null)[]) => army.map((n, i) => ({ seed: i + 1, valid: n !== null, army: n }));
-  for (const [label, army, pass] of [['lane 3/0/0', [3, 0, 0], true], ['two over', [3, 3, 0], false], ['one valid', [1, null, null], undefined], ['two valid, one over', [3, null, 2], false], ['all within', [2, 2, 1], true]] as const)
+  for (const [label, army, pass] of [['one seed survives', [3, 0, 0], false], ['two survive', [4, 2, 0], true], ['one valid', [4, null, null], undefined], ['two valid, one short', [4, null, 1], false], ['all survive', [4, 4, 2], true]] as const)
     expect(armyLineVerdict(seeds(...army)).pass, label).toBe(pass);
   for (const [votes, expected] of [
     [[true, false, true], true], [[true, false, false], false], [[true, null, null], undefined],
