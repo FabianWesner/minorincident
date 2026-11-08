@@ -1,0 +1,49 @@
+{
+  "mainRevision": "78219de9",
+  "mergeRevision": "4ca5ee13",
+  "firstCheckedRevision": "27727701",
+  "latestRevisionAwaitingChecks": "fabcef57",
+  "status": "Fresh rerun pending",
+  "firstBatch": {
+    "checks": {
+      "typecheck": 0,
+      "lint": 0,
+      "unit": 0,
+      "road-low": 1
+    },
+    "unit": {
+      "passed": 106,
+      "skipped": 1,
+      "filesPassed": 27,
+      "wallSeconds": 190.2,
+      "budgetSeconds": 240
+    },
+    "route": {
+      "sourceHash": "8cf441fa36fc909a69354a3a7c4edc0c44dba8477006adc4b37cee98cd5a9801",
+      "observerHash": "2df26dc77eb78530c9820e18bde4f658fa978a05f70510f79415499d8ba6d7c0",
+      "revision": "b5dca14184c18ae56a6f22763cba1c8000b3a2cd",
+      "route": "road",
+      "tier": "low",
+      "method": "Production LevelNineBot inputs, native Rapier/AI and normal campaign state. --zero is one explicit initial damage fixture; no immortality, teleports, actor writes or objective skips.",
+      "completed": false,
+      "seconds": 211.98333333333332,
+      "hp": 0,
+      "durability": 0,
+      "peakAlive": 92,
+      "peakChunks": 9,
+      "grabs": 48,
+      "shakes": 27,
+      "playerHits": 10
+    },
+    "collisionFailures": 0,
+    "admissionViolations": [],
+    "evacuated": [],
+    "roadReceiptSha256": "b82a76eefa79147def889e18dc94bcec18cd5a0f2f1e2c17abcbadbf6f1e6701"
+  },
+  "fixesAfterFirstBatch": [
+    "Pitch actual carried hatch shots down to visible enemies, using the existing deck-gun pattern; preserve pitch in projectile motion and destruction rays.",
+    "Have the ordinary input bot defend exposed survivors, discard its obsolete camp-approach waypoint after evacuation, and steer around the stopped bus.",
+    "Extend the existing vehicle test with actual ground-target hatch damage; no additional test cases."
+  ],
+  "browser": "Not run, as instructed"
+}

@@ -2,6 +2,21 @@
 
 Lane: `eg-l9` · PO 2026-11-08. Timeboxed implementation handoff; full native and browser qualification is not yet complete.
 
+## Main integration — eg-l9-m
+
+Main `78219de9` is merged at `4ca5ee13`; the merged API assertions are committed at `27727701`.
+
+- Dialogue retains every key from both parents, with no duplicate keys. L8/L10 follow their story reconception, and L9 retains the exact script lines; the unused old roar caption now uses the script’s “Something is following you.”
+- Actor protection combines L8 Private Reyes / Major Hale, L9 armored crew and the thrown research companion, and L10 hangar actors.
+- `Vehicles.scriptPose` retains departure speed and wheel rotation alongside the full crash quaternion and attached actors. L8 passes speed; L9 passes the crash rotation explicitly. Existing unit coverage now asserts both features together without adding a test case.
+- SimWorld retains L9 hatch weapons and controlled crawl, L10 corn slowdown and destruction, and both levels’ lifecycle behavior.
+- Native receipt provenance retains the revision override and manifest-only fallback through main’s existing `sourceRevision` helper.
+- L10’s saved-Sam lookup now consumes L9’s separate `researchCompanion`; evacuated survivors retain their separate northbound-truck roster.
+
+The first remote batch on `27727701` passed typecheck, lint and the full unit suite (106 passed, one skipped, 27 files; 190.2 seconds within the 240-second budget). The unprotected low-tier road run failed at 211.98 seconds: the courier died after evacuation, pinned near the stopped bus. Collision invariants and admission checks had zero violations. This is a failing completion result.
+
+`fabcef57` addresses the observed causes: carried hatch rounds now pitch down to visible ground enemies using the existing deck-gun pattern, and that pitch is retained through projectile motion and destruction rays. The ordinary input bot defends exposed civilians, leaves camp toward the bridge rather than returning to the old approach bend, and reads the stopped bus as an obstacle. The existing vehicle test now asserts actual hatch damage as well as the merged speed/roll API. A fresh remote rerun of the same four checks is queued. See [merge-verification.json](merge-verification.json). No browser is used. The earlier build qualification below remains historical evidence, not qualification of this merge.
+
 ## Done: implementation
 
 - Mixed route packs and patrols enter more than 100 m from the APC, then move toward its engine while the driver is hidden. This uses authored scripted travel rather than human targeting, which correctly excludes a seated courier.
@@ -33,7 +48,7 @@ The final gameplay pin is `3d1785b2`; the sequential remote harness is `e8720e57
 1. **Native completion gate:** obtain passing unprotected low-tier runs on all three routes, high-tier road, and initial-zero-durability road. Previous runs that reached camp but timed out are failures. Rerun the native story fixture and ordinary route matrix before claiming the `3d1785b2` goodbye/boarding fix works.
 2. **Fresh required checks:** resolve every fresh unit, acceptance or threat failure against the pinned source. Acceptance rows with rendered, device-performance or manual conditions must retain their unqualified status until QA supplies that evidence.
 3. **Browser QA:** inspect the full level in both quality tiers, including the visual crash and handover, with the checklist below. This lane was explicitly forbidden to open a browser.
-4. **Integration:** merge the L10 story lane's consumer of `crossingHandover.researchCompanion`, then verify living Sam and fallback Private Reyes campaigns separately. The producer retains actual evacuated identities separately from the research companion.
+4. **Cross-level continuity:** the L10 story lane and its `crossingHandover.researchCompanion` consumer are now merged. Verify living Sam and fallback Private Reyes campaigns separately. The producer retains actual evacuated identities separately from the research companion.
 
 The original “real driving level, verified” goal is not closed by this handoff. The orchestrator requested wrap-up after the three-hour timebox; remaining qualification and any failures belong to follow-up lanes.
 
