@@ -50,7 +50,7 @@ try {
     const gpu = await s.page.evaluate(async scenario => {
       const g = (window.__SCENE__ as unknown as { game: Game }).game, r = g.view.renderer;
       type Context = { textures: { name: string }[] | null; depthTexture?: { name: string }; width: number; height: number };
-      const backend = r.backend as unknown as { trackTimestamp: boolean; disjoint?: unknown; beginRender(context: Context): void; getTimestampUID(context: Context): string; getTimestamp(uid: string): number };
+      const backend = r.backend as unknown as { trackTimestamp: boolean; disjoint?: unknown; beginRender(context: Context): void; getTimestampUID(context: Context): string; getTimestamp(uid: string): number; hasTimestampQuery(uid: string): boolean };
       if (!backend.disjoint) return { available: false, reason: 'EXT_disjoint_timer_query_webgl2 unavailable', groups: [] };
       const begin = backend.beginRender.bind(backend), render = r.render.bind(r);
       let label = '', contexts: { uid: string; label: string; width: number; height: number }[] = [];
@@ -71,7 +71,7 @@ try {
             const f = (r as unknown as { _nodes: { nodeFrame: { time: number; deltaTime: number } } })._nodes.nodeFrame;
             f.time = f.deltaTime = 0; g.view.update(1);
             const total = await r.resolveTimestampsAsync('render');
-            const passes = contexts.map(c => ({ ...c, ms: backend.getTimestamp(c.uid) ?? null }));
+            const passes = contexts.map(c => ({ ...c, ms: backend.hasTimestampQuery(c.uid) ? backend.getTimestamp(c.uid) : null }));
             if (i >= 5) samples.push({ backendReportedMs: total, totalMs: passes.reduce((sum, p) => sum + (p.ms ?? 0), 0), passes });
           }
           groups.push({ ssrEnabled: enabled, samples });
