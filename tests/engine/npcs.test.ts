@@ -249,6 +249,19 @@ test('corgi: warns of an offscreen threat within 18 m with a unit direction', as
       steer.mockRestore();
     } finally { w.dispose(); }
   }
+  // A companion that remains far away without closing the gap rejoins from a hidden point behind the courier.
+  {
+    const w = await world(), dog = w.entities.get(w.npcs!.companion.spawn())!;
+    dog.transform.x = 45; dog.transform.z = 0; w.spatial.set(dog.id, 45, 0);
+    const move = vi.spyOn(w.npcs!, 'move').mockReturnValue(false);
+    for (let tick = 1; tick <= 360; tick++) { w.tick = tick; w.npcs!.companion.update(); }
+    expect(dog.transform.x).toBe(45); expect(dog.hidden).not.toBe(true);
+    w.tick = 361; w.npcs!.companion.update();
+    expect(dog.hidden).toBe(true);
+    expect(Math.hypot(dog.transform.x - w.entities.get(1)!.transform.x, dog.transform.z - w.entities.get(1)!.transform.z)).toBeLessThan(20);
+    expect(dog.companion!.rejoinUntil).toBe(961);
+    move.mockRestore();
+  }
   // G-27: the Oak sedan's rotated nav footprint must leave a route through the gate beside the wreck.
   {
     const w = await loadRunnerLevel('L3', 1, preset('L3-default'), 0, { quality: 'low' });

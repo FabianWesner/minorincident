@@ -13,6 +13,7 @@ export class Companion {
   private readonly courierProgress = { x: NaN, z: NaN, tick: 0 };
   private yieldUntil = 0;
   private readonly idleNearby: number[] = [];
+  private readonly progress = new WeakMap<EntitySnapshot, { distance: number; tick: number }>();
   constructor(readonly world: SimWorld) {
     world.events.on('combat.effect', event => {
       if (event.type !== 'combat.effect' || event.actionId !== 'ability.corgi-lure') return;
@@ -45,14 +46,16 @@ export class Companion {
    */
   respawnNear(): void {
     this.courierProgress.x = NaN; this.yieldUntil = 0;
-    const player = this.world.entities.get(1)!.transform, nav = this.world.infected!.nav;
+    const player = this.world.entities.get(1)!.transform;
     for (const e of this.world.entities.iterate()) {
       const c = e.companion; if (e.passengerOf !== undefined) continue; if (!c) continue;
-      let spot: { x: number; z: number } | null = null;
-      for (const [dx, dz] of [[0, 2], [2, 0], [-2, 0], [0, -2], [1.4, 1.4], [-1.4, -1.4], [0, 1], [0, 0]]) if (nav.clear(player.x + dx, player.z + dz, .35)) { spot = { x: player.x + dx, z: player.z + dz }; break; }
-      spot ??= { x: player.x, z: player.z };
-      this.world.solids.relocate(e, { ...spot, y: .3 + (this.world.districts?.groundBelow(spot.x, spot.z, player.y - .7) ?? 0) }, 'companion.respawn'); e.transform.yaw = -Math.atan2(player.z - spot.z, player.x - spot.x);
+      // Navigation clearance alone does not account for actors or solid hulls. Find
+      // a physically clear point near the courier, then commit that exact point.
+      const spot = this.world.solids.find(player, .35, e.id, 4);
+      if (!spot || !this.world.solids.relocate(e, { ...spot, y: .3 + (this.world.districts?.groundBelow(spot.x, spot.z, player.y - .7) ?? 0) }, 'companion.respawn', 0)) continue;
+      e.transform.yaw = -Math.atan2(player.z - spot.z, player.x - spot.x);
       delete c.contactYield; delete c.contactFrom; delete c.contactRejected;
+      delete c.rejoinUntil; e.hidden = false;
       delete e.locomotion; c.velocity = { x: 0, z: 0 }; c.path.length = 0; c.goal = -1; c.pathIndex = 0; c.following = false; c.pickup = null;
       if (e.motion) { e.motion.velocity.x = e.motion.velocity.z = 0; e.motion.speed = 0; e.motion.moving = false; }
       this.world.spatial.set(e.id, e.transform.x, e.transform.z);
@@ -143,6 +146,27 @@ export class Companion {
     }
     for (const e of this.world.entities.iterate()) {
       const c = e.companion; if (e.passengerOf !== undefined) continue; if (!c) continue;
+      const distance = Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z);
+      let progress = this.progress.get(e);
+      if (!progress || distance < progress.distance - .5) {
+        progress = { distance, tick: this.world.tick }; this.progress.set(e, progress);
+      }
+      if (!c.rejoinUntil && distance > 35 && this.world.tick - progress.tick >= 360 && player.health.current > 0 && !player.hidden) {
+        const speed = Math.hypot(player.survivor?.velocity.x ?? 0, player.survivor?.velocity.z ?? 0);
+        const hx = speed > .5 ? player.survivor!.velocity.x / speed : Math.cos(-player.transform.yaw);
+        const hz = speed > .5 ? player.survivor!.velocity.z / speed : Math.sin(-player.transform.yaw);
+        const behind = { x: player.transform.x - hx * 15, z: player.transform.z - hz * 15 };
+        const arrival = this.world.solids.find(behind, .35, e.id, 8);
+        if (arrival && this.world.solids.relocate(e, { ...arrival, y: .3 + (this.world.districts?.groundBelow(arrival.x, arrival.z, player.transform.y - .7) ?? 0) }, 'companion.rejoin', 0)) {
+          e.hidden = true; c.rejoinUntil = this.world.tick + 600; c.following = true; c.path.length = 0; c.goal = -1; c.pathIndex = 0;
+          delete e.locomotion; c.velocity = { x: 0, z: 0 }; this.progress.set(e, { distance: 15, tick: this.world.tick });
+        }
+      }
+      if (c.rejoinUntil !== undefined) {
+        if (distance <= 8) { delete c.rejoinUntil; e.hidden = false; }
+        else if (this.world.tick >= c.rejoinUntil) { delete c.rejoinUntil; e.hidden = false; }
+        else { e.hidden = true; this.world.npcs!.move(e, player.transform, 8, c, 1); continue; }
+      }
       if (c.transitionUntil !== undefined) {
         if (this.world.tick < c.transitionUntil) continue;
         delete c.transitionUntil; e.hidden = false; this.world.solids.admit(e, 'companion.door-arrival', 1, false);

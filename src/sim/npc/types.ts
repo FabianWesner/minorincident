@@ -92,7 +92,7 @@ export interface AllyState {
 export interface Companion {
   /** Rejected L5 pair steps without meaningful progress, and the bounded yielding leg. */
   contactRejected?: number; contactFrom?: Point & { at: number; blocker: number }; contactYield?: Point & { until: number };
-  transitionUntil?: number; following?: boolean; velocity?: Point; state: 'follow' | 'fetch' | 'hide'; courage: number; until: number; barkAt: number; hurtAt: number; pickup: number | null; path: number[]; goal: number; pathIndex: number;
+  transitionUntil?: number; rejoinUntil?: number; following?: boolean; velocity?: Point; state: 'follow' | 'fetch' | 'hide'; courage: number; until: number; barkAt: number; hurtAt: number; pickup: number | null; path: number[]; goal: number; pathIndex: number;
   /** L1 v2 warning state (spec 5.8): highest stage reached for the current threat, and the nervous-idle end tick. */
   warn?: { stage: CorgiWarnStage; threat: number; nervousUntil: number } }
 export type CorgiWarnStage = 'none' | 'stiffen' | 'growl' | 'bark' | 'nervous';

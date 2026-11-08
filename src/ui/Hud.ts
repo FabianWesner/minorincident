@@ -311,8 +311,6 @@ export class Hud {
     }
     for (let i = pinCount; i < this.threatCount; i++) setHidden(this.threats[i], true);
     this.threatCount = pinCount;
-    const absentCompanion = !corgi && (world.scenario === 'L8' || world.scenario === 'L9');
-    setHidden(this.companion.parentElement!, absentCompanion); setHidden(this.corgiBadge, absentCompanion);
     const corgiHiding = corgi?.hidden || corgi?.companion?.state === 'hide';
     const corgiStatus = corgi ? corgiHiding ? 'Corgi · hiding' : 'Corgi · following' : 'Corgi · awaiting rescue';
     text(this.companion, corgiStatus); attribute(this.corgiBadge, 'title', corgiStatus); attribute(this.corgiBadge, 'aria-label', corgiStatus);
