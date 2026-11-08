@@ -154,6 +154,16 @@ export async function proveThreatAudit(): Promise<void> {
     active[0].infected.heardTargetId = 1;
     world.applyInput(emptyInput(), 'mouse-keyboard');
     assert.equal(receipt.samples, 1, 'one courier pursuer among a nearby mixed-target horde starts the same moving sample');
+    const policeReceipt = { kitingSeconds: 0, attacks: 0, attacksPerMinute: 0, samples: 0 };
+    const policeWorld = { ...world, events: new EventBus<GameEvent>(), applyInput: () => {},
+      missions: { def: { steps: [{ id: 'defend', text: 'Police hold' }] }, state: { steps: { defend: { status: 'active' } }, l3: { phase: 'attack' } } },
+    } as unknown as SimWorld;
+    installKitingPolicy(policeWorld, policeReceipt, 'L3');
+    policeWorld.applyInput(emptyInput(), 'mouse-keyboard');
+    assert.equal(policeReceipt.samples, 0, 'police-focused attackers in the protected L3 hold cannot fill the courier horde');
+    for (const e of active) e.infected.heardTargetId = 1;
+    policeWorld.applyInput(emptyInput(), 'mouse-keyboard');
+    assert.equal(policeReceipt.samples, 1, 'a courier-directed L3 horde starts the same complete encounter window');
   }
   {
     const events = new EventBus<GameEvent>(), starts: number[] = [];

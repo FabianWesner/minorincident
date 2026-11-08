@@ -6,6 +6,7 @@ import type { SimWorld } from '../../../src/sim/world/SimWorld';
 import { observeAttackStarts } from './attackStarts';
 import { SimPhase } from '../../../src/core/EventBus';
 import { Status } from '../../../src/sim/combat/Status';
+import type { EntitySnapshot } from '../../../src/sim/world/types';
 
 export interface KitingReceipt {
   kitingSeconds: number;
@@ -44,6 +45,10 @@ export function installKitingPolicy(world: SimWorld, receipt: KitingReceipt, lev
   let nextRocketFireTick = -1;
   const rejoin = new Walker();
   let kitingNow = false;
+  const targetsCourier = (entity: EntitySnapshot): boolean => {
+    const brain = entity.infected!, pressure = brain.pressureTarget;
+    return (pressure && world.tick < pressure.until ? pressure.id : brain.l1?.targetId || brain.heardTargetId || 1) === 1;
+  };
   observeAttackStarts(world, (_sourceId, targetId) => {
     if (kitingNow && targetId === 1) receipt.attacks++;
   });
@@ -99,6 +104,9 @@ export function installKitingPolicy(world: SimWorld, receipt: KitingReceipt, lev
       if (entity.infected.special !== 'dive' && Math.abs(entity.transform.y - position.y) > 2) return false;
       const brain = entity.infected.l1;
       const pressing = entity.infected.state === 'chase' || entity.infected.state === 'attack' || !!entity.infected.specialAttack || brain?.mode === 'chase' || brain?.mode === 'bite';
+      // L3's protected station fight explicitly biases infected toward police.
+      // Those attacks cannot supply the courier's pressing-horde denominator.
+      if (level === 'L3' && world.missions?.state.l3?.phase === 'attack' && !targetsCourier(entity)) return false;
       return pressing && !!world.combat?.query.visible(entity.transform, position);
     }) ?? [];
     const buckets = new Map<string, { x: number; z: number; count: number }>(), cell = 7;
@@ -126,11 +134,9 @@ export function installKitingPolicy(world: SimWorld, receipt: KitingReceipt, lev
     // L2/L5's first distant chaser is an approach, not yet a close encounter.
     const pursuitRange = level === 'L2' || level === 'L5' ? 6 : 12;
     const closePursuer = threats.some(entity => {
-      const brain = entity.infected!, pressure = brain.pressureTarget;
-      const targetId = pressure && world.tick < pressure.until ? pressure.id : brain.l1?.targetId || brain.heardTargetId || 1;
       // The horde can also threaten followers, but at least one nearby attacker
       // must pursue the courier before replacing her input for this encounter.
-      return targetId === 1 && (level === 'L1' || Math.hypot(entity.transform.x - position!.x, entity.transform.z - position!.z) <= pursuitRange);
+      return targetsCourier(entity) && (level === 'L1' || Math.hypot(entity.transform.x - position!.x, entity.transform.z - position!.z) <= pursuitRange);
     });
     // A lone opening enemy killed before reaching the courier is successful
     // combat, not evidence of a moving-target miss. Sample a pressing horde;
