@@ -14,7 +14,7 @@ import { Rng } from '../../core/Rng';
  * Tall pieces are ordinary solids (static collider + nav footprint, so infected walk round them); small pieces are
  * render-only decor. Every footprint stays >= 7.5 m from the crossing line and >= 8 m from any road, detour or pursuit
  * shortcut centre line, 4 m from every encounter slot (both tiers), 8 m from medkits and anchors, 1 m from existing
- * placements, and out of the last 160 m before the console (calibrated finale approach).
+ * placements, and out of the last 100 m before the console (the arena and its finale props).
  */
 export const cureCrossingLines: { theme: Theme; line: Point[] }[] = [
   // R2: round the blocked residential street on its south side.
@@ -28,6 +28,8 @@ export const cureCrossingLines: { theme: Theme; line: Point[] }[] = [
   { theme: 'campus', line: [[2810, 45], [2910, 45], [2929, 30], [2932, -4]] },
   // R6: the destroyed corridor's southern forecourts, round the blocked road at x 3313, to the complex seam.
   { theme: 'corridor', line: [[2940, -4], [3296, -16], [3312, -29], [3315, -91], [3643, -98], [3666, -80], [3690, -30]] },
+  // R7: the complex approach (north of the Mega's pursuit shortcut; nothing inside the last 100 m to the console).
+  { theme: 'military', line: [[3698, -25], [3944, -28]] },
 ];
 type Theme = 'fringe' | 'depot' | 'military' | 'campus' | 'corridor';
 
@@ -110,7 +112,7 @@ export function cureCrossingStories(placements: readonly Placement[]): Placement
   const fits = (p: Placement, line: readonly Point[], taken: readonly Placement[], own: readonly Placement[], keep: { slots: Point[]; anchors: Point[]; roads: Point[][] }) => {
     const pts = corners(p);
     if (pts.some(q => lineDistance(q, line) < 3.2 || keep.roads.some(r => lineDistance(q, r) < 8))) return false;
-    if (Math.hypot(p.position[0] - consoleAt[0], p.position[2] - consoleAt[1]) < 160) return false;
+    if (Math.hypot(p.position[0] - consoleAt[0], p.position[2] - consoleAt[1]) < 100) return false;
     const { min: a, max: b } = p.visualAabb;
     const near = (q: Point, r: number) => q[0] > a[0] - r && q[0] < b[0] + r && q[1] > a[2] - r && q[1] < b[2] + r;
     if (keep.slots.some(q => near(q, 4)) || keep.anchors.some(q => near(q, 8))) return false;

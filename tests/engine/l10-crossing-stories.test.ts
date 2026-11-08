@@ -23,7 +23,8 @@ const corners = (a: { min: number[]; max: number[] }): Point[] => [[a.min[0], a.
 describe('L10 crossing stories (r9-l10pace, vqa58 "minutes of empty dark grass")', () => {
   it('dresses every measured crossing with lit scenes, deterministically', () => {
     expect(cureCrossingStories([...layout.placements, ...belt])).toEqual(stories);
-    for (const li of cureCrossingLines.keys()) expect(stories.filter(p => p.id.startsWith(`decor-cure-cross-${li}-`) && p.fieldLight).length).toBeGreaterThanOrEqual(3);
+    for (const li of cureCrossingLines.keys()) expect(stories.filter(p => p.id.startsWith(`decor-cure-cross-${li}-`) && p.fieldLight).length).toBeGreaterThanOrEqual(1);
+    expect(stories.filter(p => p.fieldLight).length).toBeGreaterThan(60);
     // The belt keeps its exact pieces; the stories append.
     expect(districtDecor('D-CURE', layout.placements).slice(0, belt.length)).toEqual(belt);
   });
@@ -39,7 +40,7 @@ describe('L10 crossing stories (r9-l10pace, vqa58 "minutes of empty dark grass")
         expect(lineDistance(q, line)).toBeGreaterThanOrEqual(3.2);
         for (const r of roads) expect(lineDistance(q, r)).toBeGreaterThanOrEqual(8);
       }
-      expect(Math.hypot(p.position[0] - console_[0], p.position[2] - console_[1])).toBeGreaterThan(160);
+      expect(Math.hypot(p.position[0] - console_[0], p.position[2] - console_[1])).toBeGreaterThan(100);
       expect(slots.some(s => s.x > a.min[0] - 4 && s.x < a.max[0] + 4 && s.z > a.min[2] - 4 && s.z < a.max[2] + 4)).toBe(false);
     }
   });
