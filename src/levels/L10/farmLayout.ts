@@ -79,7 +79,8 @@ export function cureFarmDecor(placements: readonly Placement[]): Placement[] {
 
 /** L10-only copy: leave the source layouts and the L1–L5 asset palette intact. */
 export function applyFarmLandscape(layout: DistrictLayout): void {
-  layout.colliders = [...layout.colliders];
+  // Re-preparing an assembled layout replaces our generated solids instead of doubling them.
+  layout.colliders = layout.colliders.filter(c => !c.id.includes('/farm-wood-') && !c.id.endsWith('/farm-chassis'));
   for (const p of layout.placements) if (p.id.startsWith('decor-cure-farm-') && p.assetId.startsWith('bld.farm-')) {
     const house = p.assetId === 'bld.farm-house-ruin', w = house ? 8 : 10, d = house ? 7 : 8, h = house ? 2.8 : 4.2;
     const boxes = [-1, 1].flatMap(x => [-1, 1].map(z => ({ x: x * w / 2, z: z * d / 2, hx: .12, hz: .12, h })));

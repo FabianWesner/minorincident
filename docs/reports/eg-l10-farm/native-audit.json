@@ -1,0 +1,36 @@
+{
+  "status": "PASS",
+  "cropTiles": 208,
+  "farmPieces": 35,
+  "bareTrees": 292,
+  "checks": [
+    "walkable corn without colliders",
+    "14/16m perception capped at 3m in crop",
+    "crop crossing breaks sight and tracking; close hearing retained",
+    "courier and shared NPC/sprinter locomotion 0.85 speed; mown lane 1.0",
+    "A* terrain cost 1/0.85",
+    "corgi warns about an on-screen crop-concealed threat",
+    "four checkpointed fair scare telegraphs",
+    "five distinct synthesized stingers",
+    "rock only during finale",
+    "all source LOD caps"
+  ],
+  "scares": {
+    "corn-scare-0": {
+      "due": 92,
+      "actor": 101
+    },
+    "corn-scare-1": {
+      "due": 92,
+      "actor": 102
+    },
+    "corn-scare-2": {
+      "due": 92,
+      "actor": 103
+    },
+    "corn-scare-3": {
+      "due": 92,
+      "actor": 104
+    }
+  }
+}
