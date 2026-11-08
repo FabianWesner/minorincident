@@ -217,7 +217,6 @@ export class Npcs {
       if (e.infected && e.infected.recoverAt >= 0) { e.infected.recoverAt += delta; e.infected.deadAt += delta; }
     }
     this.civilians.restore(); this.civilians.outbreak?.restore(delta);
-    this.companion.respawnNear();
   }
   /** Stop density maintenance (L1 v2 owns its population through the outbreak layer). */
   setAmbient(count: number): void { this.ambientTarget = count; }
