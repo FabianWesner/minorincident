@@ -8,6 +8,7 @@ import { expect, test } from 'vitest';
 import manifest from '../../src/assets/manifest.json';
 import type { AssetDef } from '../../src/assets/types';
 import { validateAssets, validateDocument } from '../../tools/assets/validate';
+import { extractLights } from '../../tools/assets/lights';
 import { PNG } from 'pngjs';
 import { adoptStandingBind } from '../../tools/assets/skin-crowd-standing';
 import { classifyCrowdAtlas } from '../../tools/assets/skin-crowd-regions';
@@ -140,6 +141,10 @@ test('uniform and civilian faces and yellow bare arms share the per-person skin 
 });
 
 test('the asset validator rejects every contract violation, and every production asset passes it', async () => {
+  // Disabled sockets must not masquerade as authored lights after wreck exports strip their metadata.
+  const lightFixture = { nodes: [{ name: 'light:headlight' }], scenes: [{ nodes: [0] }] };
+  expect(extractLights(lightFixture).errors).toEqual(['light:headlight: light anchor is missing ss_light']);
+  expect(extractLights({ ...lightFixture, nodes: [{ name: 'disabled:headlight' }] }).errors).toEqual([]);
   // A fitted template can carry its uniform scale on a parent rather than the
   // story rig's root. The copied standing reset must not apply that scale twice.
   const template = new Document(), parent = template.createNode('assetScale').setScale([1.25, 1.25, 1.25]);
@@ -161,6 +166,12 @@ test('the asset validator rejects every contract violation, and every production
     ['fileKB', (_d, a) => { a.budget.fileKB = 0; }],
     ['material: unknown', (d) => { d.getRoot().listMaterials()[0].setName('pal_unknown'); }],
     ['non-finite', (d) => { d.getRoot().listAccessors()[0].setArray(new Float32Array([NaN, 0, 0, 1, 0, 0, 0, 1, 1])); }],
+    ['missing ss_light', (d) => { d.getRoot().listScenes()[0].addChild(d.createNode('light:headlight')); }],
+    ['palette token', (d) => { d.getRoot().listScenes()[0].addChild(d.createNode('light:headlight').setExtras({ ss_light: { type: 'point', color: '#ffffff', intensity: 1, range: 5 } })); }],
+    ['outside 0..10', (d) => { d.getRoot().listScenes()[0].addChild(d.createNode('light:headlight').setExtras({ ss_light: { type: 'point', color: 'light_led_white', intensity: 11, range: 5 } })); }],
+    ['does not reach the ground', (d) => { d.getRoot().listScenes()[0].addChild(d.createNode('light:headlight').setTranslation([0, 10, 0]).setExtras({ ss_light: { type: 'spot', color: 'light_led_white', intensity: 1, range: 1, angle: 45 } })); }],
+    ['emissive node missing', (d) => { d.getRoot().listScenes()[0].addChild(d.createNode('light:headlight').setExtras({ ss_light: { type: 'point', color: 'light_led_white', intensity: 1, range: 5, emissiveNodes: ['missing'] } })); }],
+    ['has no light anchor', (d) => { d.getRoot().listMaterials()[0].setName('emi_windowGlow'); }],
     ['degenerate', (d) => { d.getRoot().listAccessors()[0].setArray(new Float32Array(9)); }],
   ];
   for (const [error, mutate] of cases) {

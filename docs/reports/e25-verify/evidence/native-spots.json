@@ -1,0 +1,102 @@
+[
+  {
+    "level": "L1",
+    "key": "entry",
+    "stagedFailure": false,
+    "errors": [],
+    "lighting": {
+      "preset": "L1",
+      "heroLights": 0,
+      "heroShadowMaps": 0,
+      "practicalEffects": {
+        "beams": 0,
+        "reflections": 0,
+        "motes": 0
+      }
+    }
+  },
+  {
+    "level": "L2",
+    "key": "D-GROVE/W0/l2-streets-w1",
+    "stagedFailure": false,
+    "errors": [],
+    "lighting": {
+      "preset": "L2",
+      "heroLights": 0,
+      "heroShadowMaps": 0,
+      "practicalEffects": {
+        "beams": 0,
+        "reflections": 0,
+        "motes": 0
+      }
+    }
+  },
+  {
+    "level": "L3",
+    "key": "D-CORRIDOR/W0/l3-grove-boulevard",
+    "stagedFailure": false,
+    "errors": [],
+    "lighting": {
+      "preset": "L3",
+      "heroLights": 0,
+      "heroShadowMaps": 0,
+      "practicalEffects": {
+        "beams": 0,
+        "reflections": 0,
+        "motes": 0
+      }
+    }
+  },
+  {
+    "level": "L4",
+    "key": "D-FAIR/W0/l4-plaza-safe",
+    "stagedFailure": false,
+    "errors": [],
+    "lighting": {
+      "preset": "L4",
+      "heroLights": 0,
+      "heroShadowMaps": 0,
+      "practicalEffects": {
+        "beams": 6,
+        "reflections": 42,
+        "motes": 0
+      }
+    }
+  },
+  {
+    "level": "L5",
+    "key": "D-FAIR/W0/pair-plaza",
+    "stagedFailure": false,
+    "errors": [],
+    "lighting": {
+      "preset": "L5",
+      "heroLights": 0,
+      "heroShadowMaps": 0,
+      "practicalEffects": {
+        "beams": 0,
+        "reflections": 0,
+        "motes": 0
+      }
+    }
+  },
+  {
+    "level": "L6",
+    "key": "D-SUBWAY/W0/l6-shelter-fails",
+    "stagedFailure": true,
+    "errors": [],
+    "lighting": {
+      "preset": "L6-subway",
+      "heroLights": 1,
+      "heroShadowMaps": 1,
+      "practicalEffects": {
+        "beams": 0,
+        "reflections": 12,
+        "motes": 0
+      }
+    }
+  },
+  {
+    "level": "mall-floor",
+    "error": "Error: page.evaluate: Error: Unknown composition: mall-floor\n    at loadLayouts (http://127.0.0.1:4405/src/levels/layouts.ts:8:27)\n    at http://127.0.0.1:4405/src/Game.ts:333:84"
+  }
+]

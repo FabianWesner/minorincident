@@ -11,6 +11,8 @@ import { assetIO } from './io';
 import { reviewErrors } from './review';
 import { requiredLods, semanticNodeNames, lodTriangleLimit } from './delivery';
 import { zfightErrors } from './zfight';
+import { parseLight } from '../../src/data/lights';
+import { decorativeEmissive } from './lights';
 
 export interface Validation { id: string; errors: string[]; triangles: number; materials: number; drawCalls: number; animatedDrawCalls?: number; fileKB: number; dimensions: number[]; hash: string }
 export function geometryHash(document: Document): string {
@@ -79,10 +81,31 @@ function visibleBounds(scene: Scene): ReturnType<typeof getBounds> {
 }
 
 /** No renderer needed: validate actual geometry, hierarchy and export contracts. */
-export function validateDocument(document: Document, def: AssetDef, bytes: number, lod = 0, source?: Document, label = `${def.id}:lod${lod}`): Validation {
+export function validateDocument(document: Document, def: AssetDef, bytes: number, lod = 0, source?: Document, label = `${def.id}:lod${lod}`, lightingSource = source): Validation {
   const errors: string[] = [];
   const root = document.getRoot(), nodes = root.listNodes();
   const byName = new Map(nodes.map((n) => [n.getName(), n]));
+  // The general asset gate must enforce the same light contract as assets:lights.
+  // Optimized exports merge mesh names, so resolve emitter references in the authored source.
+  const authored = lightingSource?.getRoot().listNodes() ?? nodes;
+  const names = new Set(authored.map(n => n.getName())), referenced = new Set<string>();
+  for (const node of nodes) {
+    const raw = node.getExtras().ss_light, name = node.getName();
+    if (name.startsWith('light:') && raw === undefined) errors.push(`${name}: light anchor is missing ss_light`);
+    if (raw === undefined) continue;
+    const m = node.getWorldMatrix(), parsed = parseLight(name, raw, node.getWorldTranslation(), [-m[4], -m[5], -m[6]]);
+    errors.push(...parsed.errors);
+    for (const target of parsed.anchor.emissiveNodes ?? []) {
+      referenced.add(target);
+      if (!names.has(target)) errors.push(`${name}: emissive node ${target} is missing`);
+    }
+  }
+  for (const node of authored) {
+    if (!node.getMesh()?.listPrimitives().some(p => p.getMaterial()?.getName().startsWith('emi_'))) continue;
+    let covered = decorativeEmissive[def.id]?.includes(node.getName()) ?? false;
+    for (let parent: Node | null = node; parent && !covered; parent = parent.getParentNode()) covered = referenced.has(parent.getName()) || !!parent.getExtras().decorativeEmissive;
+    if (!covered) errors.push(`emissive mesh ${node.getName()} has no light anchor (reference it or flag decorativeEmissive)`);
+  }
   const skinJoints = new Set(root.listSkins().flatMap(skin => skin.listJoints()));
   const weighted = new Set<Node>();
   for (const skin of root.listSkins()) {
@@ -269,7 +292,9 @@ export async function validateAssets(manifest: AssetDef[], production = true): P
       if (!existsSync(path)) { results.push({ id: def.id, errors: [`missing GLB ${path}`], triangles: 0, materials: 0, drawCalls: 0, fileKB: 0, dimensions: [], hash: '' }); continue; }
       try {
         const document = await io.read(path);
-        const validation = { ...validateDocument(document, def, statSync(path).size, lod, source), id: `${def.id}:lod${lod}` };
+        const lightSourcePath = lod && sourcePath ? sourcePath.replace(/\.glb$/, `.lod${lod}.glb`) : undefined;
+        const lightingSource = lightSourcePath && existsSync(lightSourcePath) ? await io.read(lightSourcePath) : source;
+        const validation = { ...validateDocument(document, def, statSync(path).size, lod, source, `${def.id}:lod${lod}`, lightingSource), id: `${def.id}:lod${lod}` };
         if (def.rigidDrawBase) {
           // Read the shipped baseline, including for --ids selections. Compare
           // the same distance tier; a declared budget cannot widen this limit.

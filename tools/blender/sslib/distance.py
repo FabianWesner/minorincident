@@ -214,6 +214,18 @@ def export_variant(directory, tier, omit=(), far_omit=(), owners=None, flat_part
             resolved.extend(o.name for o in (scoped or candidates))
         light['emissiveNodes'] = sorted(set(resolved))
         obj['ss_light'] = json.dumps(light)
+    if directory.name == 'veh.school-bus':
+        # Native palette batches can merge running lamps with the surviving lens.
+        # Both head/brake anchors must cover all of their matching emitter batches.
+        for obj in bpy.context.scene.objects:
+            if 'ss_light' not in obj: continue
+            light = json.loads(obj['ss_light'])
+            token = 'emi_windowGlow' if light['type'] == 'spot' else 'emi_sirenRed'
+            light['emissiveNodes'] = sorted(o.name for o in meshes if any(m and m.name == token for m in o.data.materials))
+            obj['ss_light'] = json.dumps(light)
+    if directory.name == 'veh.fire-engine':
+        from .fire_engine_lights import install
+        install(root)
     if fold_palette:
         # Preserve palette-separated authored geometry for later damage recipes.
         bpy.ops.object.select_all(action='SELECT')

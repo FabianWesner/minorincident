@@ -63,6 +63,12 @@ def merge_by_material(root, protected, preserve_vertex_colors=False):
 
 def glb(root, path):
     objects = [root, *root.children_recursive]
+    # Decay builders deliberately strip ss_light from dead lamps. Keep their
+    # sockets without advertising malformed light anchors in the exported GLB.
+    if root.get('decay'):
+        for obj in objects:
+            if obj.name.startswith('light:') and 'ss_light' not in obj:
+                obj.name = 'disabled:' + obj.name[6:]
     naming.validate(objects)
     for obj in bpy.context.view_layer.objects:
         obj.select_set(obj in objects)

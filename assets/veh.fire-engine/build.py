@@ -16,6 +16,7 @@ import bmesh
 import bpy
 from mathutils import Matrix, Vector
 from sslib import palette, pivots, sockets, colliders, export
+from sslib.fire_engine_lights import install as install_lights
 ASSET = {'id': 'veh.fire-engine', 'category': 'vehicle'}
 
 def build(ctx):
@@ -647,6 +648,7 @@ def build(ctx):
     if DISTANCE:
         export_variant(Path(__file__).parent, DISTANCE, omit=('rivet','tread_block','lug','pump_hose','gauge','coupling','pump_valve','pump_fan','arch_trim','cab_door_seam','body_reflector','rear_door_frame','body_door_frame','cab_text','rear_text','grille','body_door_seam'), flat_parts=('wheel*_rim',), far_omit=('shutter_rail', 'shutter_bar', 'shutter_lip', 'shutter_post', 'pump_panel_ledge', 'roof_grab', 'gantry_base', 'side_marker', 'cab_marker', 'cab_roof_marker', 'rear_ladder_step', 'pump_bay_step', 'cab_step', 'front_bumper_step', 'rear_step', 'cab_light', 'reflector', 'roof_rail', 'rail_support', 'gauge','hose','handle','step_grip','bolt','wiper','seat','fire_text','cab_text','flame','mirror_arm','slat','pump_bay_rail','body_sill','body_roof_trim','rim','hub','ladder_turntable','front_text','body_roof_trim','cab_sill','body_sill','mirror_glass','ladder0_upright','ladder1_upright'), anchors=tuple(name for name,x,y in cab_seats)+('steeringWheel',))
     export.merge_by_material(root, {'body','wheelFL','wheelFR','wheelRL','wheelRR','ladder','sirenL','sirenR','lightsFront','lightsBrake','doorL','doorR'})
+    install_lights(root)
     return root
 
 
