@@ -365,10 +365,11 @@ export class InfectedSystem {
       brain.pauseUntil = 0; brain.looking = false; brain.distractionId = 0; brain.ignoreId = 0; brain.ignoreUntil = 0;
       brain.hasGoal = false; brain.search.completeApproach = false;
       // An old army pressure assignment must not immediately steal this sighting.
-      // Metro arrivals keep their focus on this same person; L7/L8 opening presses
-      // keep their courier focus while the infected passes nearby survivors.
+      // Metro arrivals keep their focus on this same person; L7 opening presses
+      // and L8's explicit gate-side press keep their courier focus past survivors.
+      const retainsCourierFocus = this.world.scenario === 'L7' || this.world.scenario === 'L8' && brain.focusBiasM === 30;
       if (!['L3', 'L4', 'L6', 'L7', 'L8'].includes(this.world.scenario ?? '') ||
-          (!['L7', 'L8'].includes(this.world.scenario ?? '') && brain.focusId !== target.id)) {
+          (!retainsCourierFocus && brain.focusId !== target.id)) {
         delete brain.focusId; delete brain.focusUntil; delete brain.focusBiasM;
       }
     }
