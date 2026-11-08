@@ -132,6 +132,11 @@ export class LevelNineDriving {
     if (bridgeGate) bridgeGate.health.current = s.evacuationDone ? 0 : 1;
     if (s.gateClosed) w.interactables!.block(s.gateId, { x: cfg.gate.x, y: .8, z: 0, halfX: .25, halfY: .8, halfZ: cfg.gate.halfZ });
     if (!s.evacuationDone) w.interactables!.block(s.bridgeGateId, { x: 472, y: 1, z: 0, halfX: .35, halfY: 1, halfZ: 13 });
+    for (const id of s.trucks) {
+      w.interactables!.unblock(id);
+      const truck = w.entities.get(id);
+      if (truck && !s.evacuationDone) w.interactables!.block(id, { ...truck.transform, y: .9, halfX: 1.429, halfY: .9, halfZ: 3.464 });
+    }
     w.interactables!.unblock(s.tankerId);
     if (!s.tankerExploded) w.interactables!.block(s.tankerId, { ...cfg.tanker, y: 1, halfX: 1.4, halfY: 1, halfZ: 4, entityId: s.tankerId });
     if (s.busId && s.busLineAt === null) { const bus = w.vehicles!.cars.get(s.busId); if (bus) { bus.physics.body.setEnabled(false); bus.entity.hidden = true; } }
