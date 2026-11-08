@@ -59,7 +59,7 @@ The L7 samples stop early on the failed low route; they are not a full departure
 
 The requested full `sh tools/remote/run.sh "$PWD" -- npm run qa:threat` ran on the merged source and stopped at **600.8 s**, child exit 124, before aggregate receipts were written ([timeout receipt](standard-audit-timeout.json)). Existing local `test-results/qa-threat/audit.json` belongs to old revision `8f83d2eb` and is explicitly excluded from current evidence.
 
-A dedicated remote batch now covers **all six requested levels: L2, L3, L5, L6, L7, L8**, using the same evaluator, native policies, pace seeds and thresholds, with 1200 s of wall time for observation. A separate clean-main comparison covers those same six levels. Their pace, waiting, coverage and stranding rows must be reviewed before claiming no regression. Logs: `test-results/r12-group/focused-threat.log` and `current-main-threat.log`. No gameplay criterion or checked-in timing budget was changed.
+A dedicated remote batch now covers **all six requested levels: L2, L3, L5, L6, L7, L8**, using the same evaluator, native policies, pace seeds and thresholds, with 1200 s of wall time for observation. The first clean-main six-level comparison also timed out at 600.7 s before aggregation ([receipt](main-audit-timeout.json)); its replacement has the same 1200 s allowance and covers those same six levels. Their pace, waiting, coverage and stranding rows must be reviewed before claiming no regression. Live batch logs: `test-results/r12-group/focused-threat.log` and `current-main-focused.log`. The original clean-main timeout log is `current-main-threat.log`. No gameplay criterion or checked-in timing budget was changed.
 
 Browser QA needed
 
