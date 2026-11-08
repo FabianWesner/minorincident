@@ -10,9 +10,9 @@ import { provenance } from './probe';
 import type { EntitySnapshot } from '../../../src/sim/world/types';
 const layout=JSON.parse(readFileSync('public/assets/layouts/D-SUBWAY.layout.json','utf8')) as {surfaces:{surface:string;height:number;polygon:number[][]}[]};
 const shelter=layout.surfaces.find(s=>s.surface==='tile')!,tracks=layout.surfaces.find(s=>s.surface==='gravel'&&s.polygon[0][0]===30)!;
-const inside=(surface:typeof shelter,e:EntitySnapshot)=>{
+const inside=(surface:typeof shelter,e:EntitySnapshot,height=surface.height)=>{
  const radius=e.combat?.radius??.35, xs=surface.polygon.map(p=>p[0]),zs=surface.polygon.map(p=>p[1]);
- return e.transform.x-radius>=Math.min(...xs)&&e.transform.x+radius<=Math.max(...xs)&&e.transform.z-radius>=Math.min(...zs)&&e.transform.z+radius<=Math.max(...zs)&&Math.abs(e.transform.y-.7-surface.height)<=.1;
+ return e.transform.x-radius>=Math.min(...xs)&&e.transform.x+radius<=Math.max(...xs)&&e.transform.z-radius>=Math.min(...zs)&&e.transform.z+radius<=Math.max(...zs)&&Math.abs(e.transform.y-.7-height)<=.1;
 };
 export async function l6Trajectories(tier: 'low'|'high') {
  const campaign=preset('L6-default');campaign.settings.quality=tier;
@@ -32,7 +32,7 @@ export async function l6Trajectories(tier: 'low'|'high') {
     const e=world.entities.get(actor.id);
     if(!e||e.health.current<=0||e.hidden){actor.end??=!e?'removed':e.health.current<=0?'downed':'hidden';continue;}
     if(inside(shelter,e))actor.firstShelterFloor??=world.tick;
-    if(inside(tracks,e))actor.firstTrack??=world.tick;
+    if(inside(tracks,e,world.districts!.groundHeight(e.transform.x,e.transform.z)))actor.firstTrack??=world.tick;
     if(world.tick%30===0&&Math.hypot(e.transform.x-player.transform.x,e.transform.z-player.transform.z)<=30){actor.pathSamples++;if(!paths.query(world.infected!.nav,e,player.transform,2.5))actor.pathFailures++;}
    }
    if(state.phase==='fails'&&power.length<2)power.push({tick:world.tick,main:state.mainPower,emergency:state.emergency,lightGroups:[...world.districts!.districts[0].decay.lights]});

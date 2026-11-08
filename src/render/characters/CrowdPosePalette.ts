@@ -113,13 +113,19 @@ export class CrowdPosePalette {
     const e = out.elements, base = part * 16;
     const low = Math.floor(frame), alpha = frame - low, from = low * this.width + base, to = Math.ceil(frame) * this.width + base;
     if (alpha === 0 && weight === 1) return out.fromArray(this.rows, from);
+    // An unblended draw may pass its fractional current frame as outgoing.
+    // That unused array address is not an atlas row: undefined * 0 is NaN.
+    if (weight === 1) {
+      for (let i = 0; i < 16; i++) e[i] = this.rows[from + i] * (1 - alpha) + this.rows[to + i] * alpha;
+      return out;
+    }
     for (let i = 0; i < 16; i++) e[i] = (this.rows[from + i] * (1 - alpha) + this.rows[to + i] * alpha) * weight + this.rows[outgoing * this.width + base + i] * (1 - weight);
     return out;
   }
   /** CPU counterpart of the shader for regression probes. */
   pose(frame: number, outgoing: number, weight: number): Float32Array {
     const result = new Float32Array(this.width);
-    for (let i = 0; i < this.width; i++) result[i] = this.component(frame, i) * weight + this.rows[outgoing * this.width + i] * (1 - weight);
+    for (let i = 0; i < this.width; i++) result[i] = weight === 1 ? this.component(frame, i) : this.component(frame, i) * weight + this.rows[outgoing * this.width + i] * (1 - weight);
     return result;
   }
 }

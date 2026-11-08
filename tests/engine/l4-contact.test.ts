@@ -10,6 +10,7 @@ import { updateAlly } from '../../src/sim/outbreak/Allies';
 import { respawnAtCheckpoint } from '../../src/sim/missions/Respawn';
 import { loadL4 } from '../../tools/sim-runner/l4Bots';
 import { loadLevel } from '../../tools/sim-runner/levels';
+import type { SimWorld } from '../../src/sim/world/SimWorld';
 import type { EntitySnapshot } from '../../src/sim/world/types';
 import type { Refuge } from '../../src/sim/outbreak/Outbreak';
 
@@ -17,6 +18,29 @@ type RefugeInternals = {
   refugeSpot: (person: EntitySnapshot, door: Refuge) => { x: number; z: number } | null;
   flee: (person: EntitySnapshot) => void;
 };
+
+function checkCompactFollowerOverlap(): void {
+  const followers = Array.from({ length: 6 }, (_, i) => ({ id: 16 + i, faction: 'civilian', health: { current: 60, max: 60 }, transform: { x: 500, y: .7, z: 500 }, civilian: { state: 'calm', survivor: { mode: 'follow' } } }));
+  const player = { id: 1, transform: { x: 500, y: .7, z: 500 } };
+  const all = [player, ...followers];
+  const world = { scenario: 'L6', entities: { iterate: () => all.values(), get: (id: number) => all.find(e => e.id === id) }, physics: { world: null } } as unknown as SimWorld;
+  const camera = new PerspectiveCamera(25, 1280 / 720, .1, 600);
+  camera.position.set(500, 4, 510); camera.lookAt(500, .8, 500); camera.updateMatrixWorld();
+  const body = new Box3(new Vector3(499.7, 0, 499.7), new Vector3(500.3, 1, 500.3));
+  const hero = new Box3(new Vector3(499.3, 0, 499.3), new Vector3(500.7, 2, 500.7));
+  const bounds = vi.spyOn(pickBodies, 'bounds').mockImplementation((id, out) => id === 16 ? out.copy(body) : null);
+  const top = vi.spyOn(pickBodies, 'top').mockImplementation(id => id === 16 ? new Vector3(500, 1, 500).project(camera).y : null);
+  vi.stubGlobal('location', { search: '?test=1' });
+  const bars = new HealthBars(world, out => { out.copy(hero); return true; });
+  try {
+    bars.update(camera, 1280, 720);
+    expect(bars.count).toBe(1);
+    const bar = bars.snapshot().bars[0];
+    expect(bar).toMatchObject({ id: 16, width: 18, height: 3 });
+    const heroTop = Math.min(...[hero.min.x, hero.max.x].flatMap(x => [hero.min.y, hero.max.y].flatMap(y => [hero.min.z, hero.max.z].map(z => (1 - new Vector3(x, y, z).project(camera).y) * 360))));
+    expect(bar.y + bar.height / 2).toBeLessThan(heroTop);
+  } finally { bars.dispose(); bounds.mockRestore(); top.mockRestore(); vi.unstubAllGlobals(); }
+}
 
 async function scriptedPartyEngagement() {
   for (const level of ['L3', 'L4', 'L5', 'L6', 'L7'] as const) {
@@ -214,6 +238,7 @@ async function scriptedPartyEngagement() {
 }
 
 test('L4: every contact archetype interrupts approach/lure and attacks within 3 s; soldiers remain biteable and corgi protected', async () => {
+  checkCompactFollowerOverlap();
   expect(followerBarsAlwaysMax, 'five-person groups retain full bars').toBe(5);
   expect(followerPipSize, 'larger groups use thin, short pips').toEqual({ width: 18, height: 3 });
   await scriptedPartyEngagement();

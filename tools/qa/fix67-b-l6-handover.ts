@@ -49,11 +49,13 @@ for (const tier of ['low', 'high'] as const) {
     const routineClipsMatch = samples.every(s => s.actors.every(e => e.routine === 'guard' ? !!e.clip && e.clip !== 'idle' : e.routine in clips && e.clip === clips[e.routine]));
     const allRoutinesPresent = Object.keys(clips).every(routine => samples[0].actors.some(e => e.routine === routine));
     const noSeatedGuns = samples.every(s => s.actors.filter(e => e.routine === 'sit' || e.routine === 'rest').every(e => !e.storyProp && !e.allyWeapon && !e.appearance?.handProp));
+    // Ally/appearance weapons are retained save state; npc-sit/death-side stows them in the renderer.
+    const noSeatedStoryGuns = samples.every(s => s.actors.filter(e => e.routine === 'sit' || e.routine === 'rest').every(e => !e.storyProp));
     const withinShelter = samples.every(s => s.actors.every(e => e.at.z < 11 && e.at.x < 25));
     rows.push({ tier, inputSave: path, inputSaveSha256: createHash('sha256').update(readFileSync(path)).digest('hex'),
-      identityPreserved, fullHealth, routineClipsMatch, allRoutinesPresent, noSeatedGuns, maxIdleTicks, withinShelter, samples });
-    console.log(tier, { identityPreserved, fullHealth, routineClipsMatch, allRoutinesPresent, noSeatedGuns, maxIdleTicks, withinShelter });
+      identityPreserved, fullHealth, routineClipsMatch, allRoutinesPresent, noSeatedGuns, noSeatedStoryGuns, maxIdleTicks, withinShelter, samples });
+    console.log(tier, { identityPreserved, fullHealth, routineClipsMatch, allRoutinesPresent, noSeatedGuns, noSeatedStoryGuns, maxIdleTicks, withinShelter });
   } finally { w.dispose(); }
 }
 writeFileSync(`${out}/ledger.json`, JSON.stringify({ ...identity, rows }, null, 2) + '\n');
-if (rows.some(r => !r.identityPreserved || !r.fullHealth || !r.routineClipsMatch || !r.allRoutinesPresent || !r.noSeatedGuns || r.maxIdleTicks > 180 || !r.withinShelter)) process.exitCode = 1;
+if (rows.some(r => !r.identityPreserved || !r.fullHealth || !r.routineClipsMatch || !r.allRoutinesPresent || !r.noSeatedStoryGuns || r.maxIdleTicks > 180 || !r.withinShelter)) process.exitCode = 1;

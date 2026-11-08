@@ -1,6 +1,6 @@
 // Shared render contracts: every crowd figure, corpse and prop in all levels goes through these paths. The compiled-program
 // GPU-limit ground truth is tests/e2e/crowd-gpu-limits.spec.ts; these node tests pin the CPU-side layouts and math it relies on.
-import { BufferAttribute, BufferGeometry, BoxGeometry, Group, Mesh, MeshBasicMaterial, Object3D, Color, DataTexture, FloatType, Frustum, InstancedBufferAttribute, InstancedInterleavedBuffer, InterleavedBufferAttribute, Matrix4, OrthographicCamera, Quaternion, RGBAFormat, Vector3 } from 'three';
+import { BufferAttribute, Float32BufferAttribute, BufferGeometry, BoxGeometry, Group, Mesh, MeshBasicMaterial, Object3D, Color, DataTexture, FloatType, Frustum, InstancedBufferAttribute, InstancedInterleavedBuffer, InterleavedBufferAttribute, Matrix4, OrthographicCamera, Quaternion, RGBAFormat, Vector3 } from 'three';
 import { Box3, MeshLambertNodeMaterial, NodeFrame, PerspectiveCamera, Scene, TextureNode, type InstancedMesh } from 'three/webgpu';
 import { float, vec3 } from 'three/tsl';
 import { expect, test, vi } from 'vitest';
@@ -14,6 +14,8 @@ import { crowdVertexLayout, resolveCrowdAppearance, markCrowdAppearance } from '
 import { createSkinnedCrowdFixture } from '../fixtures/skinnedCrowd';
 import { packSkin, premultiplyRow, restInverses, skinnedVertexMatrix } from '../../src/render/characters/skinnedCrowd';
 import { StaticCorpses } from '../../src/render/characters/StaticCorpses';
+import { CrowdPosePalette } from '../../src/render/characters/CrowdPosePalette';
+import { PickBodies } from '../../src/render/characters/PickBodies';
 import { CrowdView } from '../../src/render/CrowdView';
 import type { SimWorld } from '../../src/sim/world/SimWorld';
 import { Lighting } from '../../src/render/Lighting';
@@ -34,6 +36,7 @@ import { crowdSurfaceBindings, crowdTextureForDraw } from '../../src/render/char
 import { addHighwayRailJoints } from '../../src/assets/highwayRailJoints';
 import { InstancedGroup } from '../../src/render/InstancedGroup';
 import { batchPerimeterPosts } from '../../src/render/PerimeterPosts';
+import { CrowdAccessories } from '../../src/render/characters/CrowdAccessories';
 import { skinnedBrow } from '../../src/render/characters/headMeasurements';
 import { characterNodes } from '../../src/data/survivor';
 import { courierForegroundWanted, crowdSurroundsCourier } from '../../src/render/courierForeground';
@@ -51,6 +54,32 @@ import { resolveRig, disposeCharacter } from '../../src/render/characters/rig';
 import { heroineStandingHeight } from '../../src/render/npc/figureHeight';
 import { CorpseLayout } from '../../src/render/characters/CorpseLayout';
 import { Vfx } from '../../src/render/vfx/Vfx';
+
+function checkFractionalCrowdPicking(): void {
+  const matrices = new Float32Array(32);
+  new Matrix4().toArray(matrices, 0);
+  new Matrix4().makeTranslation(4, 2, 0).toArray(matrices, 16);
+  const palette = new CrowdPosePalette({ parts: ['root'], frames: 2, duration: 1, matrices, binds: new Float32Array(new Matrix4().elements) }, 1);
+  const geometry = new BufferGeometry();
+  geometry.setAttribute('position', new Float32BufferAttribute([0, 0, 0, 1, 0, 0, 0, 1, 0], 3));
+  geometry.setAttribute('_parts', new Float32BufferAttribute(new Float32Array(12), 4));
+  geometry.setAttribute('_skin', new Float32BufferAttribute(new Float32Array(12), 4));
+  const bodies = new PickBodies();
+  try {
+    for (const frame of [0, .3, .7, 1]) {
+      bodies.begin(); bodies.add(16, new Matrix4(), palette, frame, frame, 1, geometry);
+      const box = bodies.bounds(16, new Box3());
+      expect(box).not.toBeNull();
+      expect(box!.min.toArray()).toEqual([expect.closeTo(4 * frame, 5), expect.closeTo(2 * frame, 5), 0]);
+      expect(box!.max.toArray()).toEqual([expect.closeTo(4 * frame + 1, 5), expect.closeTo(2 * frame + 1, 5), 0]);
+      expect(bodies.top(16, new Matrix4())).toBeCloseTo(2 * frame + 1, 5);
+      const pose = palette.pose(frame, frame, 1);
+      expect([...pose].every(Number.isFinite)).toBe(true);
+      expect(pose[12]).toBeCloseTo(4 * frame, 5);
+      expect(pose[13]).toBeCloseTo(2 * frame, 5);
+    }
+  } finally { geometry.dispose(); palette.texture.dispose(); }
+}
 
 function checkChangingSupport(): void {
   const model = createSurvivorPlaceholder('female'), rig = resolveRig(model);
@@ -205,7 +234,29 @@ test('a held cane reaches the floor across rig scales without moving its fitted 
   props.dispose();
 });
 
-test('authored aftermath and skinned infected headwear survives variation and accepts explicit accessories', () => {
+test('authored aftermath and skinned infected headwear survives variation and accepts explicit accessories', async () => {
+  const shaded = vi.fn((...args: unknown[]) => {
+    expect(args[5], 'headwear declares no emissive eye surface').toBeDefined();
+    expect(args[8], 'headwear reads each instance’s infected flag').toBeDefined();
+    return new MeshLambertNodeMaterial();
+  });
+  const accessories = new CrowdAccessories({ shaded } as unknown as Materials);
+  accessories.ids.splice(0, accessories.ids.length, 'acc.placeholder-hair');
+  const poses = new CrowdPosePalette({ parts: ['head'], frames: 1, duration: 1, matrices: new Float32Array(new Matrix4().elements) }, 2);
+  try {
+    await accessories.init(); accessories.begin();
+    const person = { id: 100, faction: 'civilian', archetype: 'civilian.cashier', appearance: { entityId: 100, asset: 'npc.person.aftermath', accessories: ['acc.placeholder-hair'], tint: '#888888' } } as unknown as EntitySnapshot;
+    accessories.place(person, 'lod0', poses, 0, [0, 1], new Matrix4());
+    accessories.place({ ...person, id: 101, faction: 'infected' }, 'lod0', poses, 0, [0, 1], new Matrix4());
+    accessories.finish();
+    const mesh = accessories.children.find(m => (m as InstancedMesh).count === 2) as InstancedMesh;
+    const threat = mesh.geometry.getAttribute('_crowdThreat') as InstancedBufferAttribute;
+    expect(threat, 'separate headwear must inherit the underground body highlight limit').toBeDefined();
+    expect([threat.getX(0), threat.getX(1)]).toEqual([0, 1]);
+    expect(threat.updateRanges).toEqual([{ start: 0, count: 2 }]);
+    expect(accessories.snapshot().every(s => s.layout.webgpu && s.layout.webgl2)).toBe(true);
+    expect(shaded.mock.calls.every(args => args.length === 9 && args[5] && args[8])).toBe(true);
+  } finally { accessories.dispose(); poses.texture.dispose(); }
   for (let id = 1; id <= 32; id++) {
     const entity = { id, archetype: 'civilian.cashier', appearance: { entityId: id, asset: 'npc.person.aftermath', accessories: [], tint: '#888888' } } as unknown as EntitySnapshot;
     expect(resolveCrowdAppearance(entity, ['acc.test']).accessory, `authored headwear, entity ${id}`).toBeNull();
@@ -328,6 +379,7 @@ test('textured corpse draws bind their surface and upload placements added after
 });
 
 test('skinned crowd: four-influence packing, joint·bind⁻¹ atlas rows, and corpse freezing with the shader blend', () => {
+  checkFractionalCrowdPicking();
   const pose = (x: number, angle: number) => new Matrix4().compose(new Vector3(x, 1, 0), new Quaternion().setFromAxisAngle(new Vector3(0, 0, 1), angle), new Vector3(1, 1, 1));
   const { dominant, skin } = packSkin([3, 7, 12, 0], [.2, .5, .3, 0], 1);
   expect(dominant[0]).toBe(7);

@@ -36,6 +36,6 @@ for (const tier of ['low', 'high'] as const) for (const policy of ['complete', '
     console.log(tier, policy, JSON.stringify({ completed: !!result, rescued: result?.rescued, in: result?.survivorsIn, lost: result?.survivorsLost, deaths: m.state.stats.deaths }));
   } finally { world.dispose(); }
 }
-writeFileSync('docs/reports/sweep-b/L6-11-protection.json', JSON.stringify({ ...identity,
+writeFileSync(process.env.L6_VISUAL_NATIVE_OUT ?? 'docs/reports/sweep-b/L6-11-protection.json', JSON.stringify({ ...identity,
   producerSha256: createHash('sha256').update(readFileSync('tools/qa/sweep-b-l6-protection.ts')).digest('hex'),
   method: 'Current-source production loadLevel, seed1 progressed L6 campaign, matched low/high quality and ordinary mortal input. Complete final-state hashes must equal current canonical receipts; evade-only is the actual moving no-attack policy. Full result, survivor roster, bite and death ledgers are retained. No protected-courier benchmark is inferred.', rows }, null, 2) + '\n');

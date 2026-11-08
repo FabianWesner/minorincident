@@ -1,0 +1,199 @@
+{
+  "version": 1,
+  "level": "L6",
+  "tier": "high",
+  "sourceHash": "b4a871065668926e305cab6da2ee36990a9a49e1783fe17bb86e8686d1273711",
+  "fixtureHash": "8e27448743262084bea7d7367f34b32a0aa2ca369004b4e343d681df6675a272",
+  "checks": [
+    {
+      "id": "L6-01",
+      "clause": "actual carried shelter identities routines and stowed guns",
+      "value": {
+        "cells": 4,
+        "identities": 29,
+        "snapshotsPerCell": [
+          5,
+          5,
+          5,
+          5
+        ],
+        "routines": [
+          "guard",
+          "rest",
+          "share",
+          "sit",
+          "talk",
+          "treat"
+        ]
+      },
+      "target": "carried 24+5 identities, full HP, active routines, no seated/lying visible gun; reviewed pixels",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L6-high-visual-browser.json"
+    },
+    {
+      "id": "L6-02",
+      "clause": "actual headlamp approach persistence head-following beam and no new weapons",
+      "value": {
+        "cells": 4,
+        "beamOpposedX": [
+          -1,
+          -1,
+          -1,
+          -1
+        ]
+      },
+      "target": "unchanged pickup before approach, collected without E, beam follows head against movement",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L6-high-visual-browser.json"
+    },
+    {
+      "id": "L6-04",
+      "clause": "actual second breach arrivals power and abandon condition",
+      "value": {
+        "delayS": 21.016666666666666,
+        "arrivals": 10,
+        "accesses": 2,
+        "powerDeltaTicks": 0,
+        "emergency": true,
+        "abandonTick": 3253
+      },
+      "target": "20–30s; >=10 from>=2 accesses; power same frame; emergency; first-of abandon verified native fixtures",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L6-high-visual-browser.json"
+    },
+    {
+      "id": "L6-06",
+      "clause": "six alternating entries and all admitted bodies on reachable tracks",
+      "value": {
+        "doors": [
+          2,
+          2,
+          5,
+          5,
+          3,
+          3,
+          6,
+          6,
+          4,
+          4,
+          7,
+          7
+        ],
+        "trackArrivals": 12,
+        "pathSamples": 617,
+        "pathFailures": 4
+      },
+      "target": "12 admitted bodies, two each six entries alternating, >=95% reachable, actual track support",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L6-high-visual-browser.json"
+    },
+    {
+      "id": "L6-08",
+      "clause": "all original follower settled speed and per-ID visible bars",
+      "value": {
+        "identities": 29,
+        "barCases": 116,
+        "minSpeed": 2.199515698416391,
+        "maxSpeed": 2.1999999413204994,
+        "minCyanPixels": 54,
+        "overlapCases": 4
+      },
+      "target": "29 original including injured at2.2m/s, every bar drawn in all four tier matrix cells, compact overlap retained",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L6-high-visual-browser.json"
+    },
+    {
+      "id": "L6-09",
+      "clause": "actual gates width collision endurance refusal and persistent prompt",
+      "value": {
+        "widthM": [
+          2.200000000000001,
+          2.200000000000001,
+          2.200000000000001
+        ],
+        "holdSeconds": [
+          9.816666666666666,
+          9.816666666666666,
+          9.816666666666666
+        ],
+        "browserCases": 6,
+        "boundaries": [
+          -1.99,
+          0,
+          1.8,
+          2,
+          2.01
+        ]
+      },
+      "target": ">=3 gates <=2.5m, 8–12sec vs5, movement/sight blocked, <=2m refusal, prompt/ring fixed E/click",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L6-high-visual-browser.json"
+    },
+    {
+      "id": "L6-11",
+      "clause": "ordinary complete and evade-only rescue outcome",
+      "value": {
+        "complete": 0.6206896551724138,
+        "evadeOnly": 0.034482758620689655
+      },
+      "target": "complete>=60%; evade-only<=30%, ordinary mortal policies",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L6-high-visual-browser.json"
+    },
+    {
+      "id": "L6-12",
+      "clause": "drawn and solid Northgate caption framing and exact counts",
+      "value": {
+        "cells": 4,
+        "controlledOut": [
+          29,
+          29,
+          29,
+          29
+        ]
+      },
+      "target": "open/closed actual gate, cinematic caption/end framing personally reviewed; exact result accounting",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L6-high-visual-browser.json"
+    },
+    {
+      "id": "L6-14",
+      "clause": "measured underground contrast and brightest infected eyes matrix",
+      "value": {
+        "cells": 8,
+        "minContrast": 8.594072005304179
+      },
+      "target": ">=3:1 contrast, infected eyes brighter than full-coverage body, unchanged restored native pixels",
+      "status": "PASS",
+      "tier": "high",
+      "policy": "controlled-fixture",
+      "receipt": "docs/reports/fix51-verify/receipts/L6-high-visual-browser.json"
+    }
+  ],
+  "errors": [],
+  "observations": {
+    "proof": "docs/reports/l6-visual/acceptance-fixtures.json",
+    "captureReview": {
+      "file": "docs/reports/l6-visual/capture-review.json",
+      "sha256": "506141c011ceff9b795219ba789c5177bb2d1b9cf1df2265f3ba2a4c16acc0b3"
+    },
+    "frameTiming": false,
+    "scope": "Controlled native/browser fixtures and the exact full-row manual reviews; no full physical route or global performance signoff."
+  }
+}

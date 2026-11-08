@@ -1,3 +1,4 @@
+import { l6VisualReceipts } from './accept/l6-visual-receipts';
 import { l10EpilogueReceipts } from './accept/l10-epilogue-receipts';
 import { l10FramingReceipts } from './accept/l10-framing-receipts';
 import { l7RouteReceipts } from './accept/l7-route-receipts';
@@ -91,6 +92,7 @@ for (const level of selected) {
     const receipt = JSON.parse(readFileSync(path, 'utf8')) as FixtureReceipt & { browserHash: string };
     if (receipt.sourceHash === identity.sourceHash && receipt.browserHash === browserHash()) fixtures.push({ path, receipt });
   }
+  if (level === 'L6') fixtures.push(...l6VisualReceipts(identity.sourceHash, browserHash()));
   if (level === 'L10') fixtures.push(...l10CompositionReceipts(identity.sourceHash, identity.observerHash), ...l10FramingReceipts(identity.sourceHash, browserHash()), ...l10EpilogueReceipts(identity.sourceHash, browserHash()));
   if (level === 'L8') fixtures.push(...l8AnimalReceipts(identity.sourceHash, browserHash()), ...l8BreachReceipts(identity.sourceHash, browserHash()), ...l8PopulationReceipts(identity.sourceHash, browserHash()), ...l8HandoverReceipts(identity.sourceHash, browserHash()), ...l8BoardingReceipts(identity.sourceHash, identity.observerHash, browserHash()), ...l8CalmReceipts(identity.sourceHash, browserHash()), ...l8ArrivalReceipts(identity.sourceHash, browserHash()));
   if (level === 'L7') fixtures.push(...l7PickupReceipts(identity.sourceHash, browserHash()), ...l7CorridorReceipts(identity.sourceHash, identity.observerHash, browserHash()), ...l7DepartureReceipts(identity.sourceHash, browserHash()), ...l7RouteReceipts(identity.sourceHash, browserHash()), ...l7ReadabilityReceipts(identity.sourceHash, browserHash()), ...fix55RocketReceipts(identity.sourceHash, browserHash()));

@@ -44,6 +44,6 @@ for (const tier of ['low', 'high'] as const) for (const gateX of [90, 150, 210])
     console.log(tier, gateX, rows.at(-1)!.heldSeconds, attacks.length);
   } finally { w.dispose(); }
 }
-writeFileSync('docs/reports/sweep-b/L6-gates.json', JSON.stringify({ ...identity,
+writeFileSync(process.env.L6_VISUAL_NATIVE_OUT ?? 'docs/reports/sweep-b/L6-gates.json', JSON.stringify({ ...identity,
   producerSha256: createHash('sha256').update(readFileSync('tools/qa/sweep-b-gates.ts')).digest('hex'),
   method: 'Controlled fixture, not a route: fresh production L6 world for each gate/tier, player placed beyond actual gate, production closeServiceGate uses unchanged dps×5×10 HP; exactly five ordinary runners admitted west of gate and production director press/rush toward courier. No actor stats, caps, timers or target reductions. Native actual damage events and closed/open navigation sight/clearance retained. Refusal and prompt clauses remain separate.', rows }, null, 2) + '\n');

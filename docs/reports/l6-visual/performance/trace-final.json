@@ -1,0 +1,21 @@
+{
+  "sourceHash": "b4a871065668926e305cab6da2ee36990a9a49e1783fe17bb86e8686d1273711",
+  "wallStartedAt": "2026-11-08T05:44:01.314Z",
+  "elapsedMs": 60007.400000572205,
+  "frames": 3598,
+  "maxFrameMs": 33.30000000000018,
+  "over100": 0,
+  "admissionLoad": [
+    2.96923828125,
+    5.8828125,
+    6.06591796875
+  ],
+  "maximumSampledOneMinuteLoad": 3.64208984375,
+  "status": "Partial two-tier pass: low completed and sampled load stayed below4 throughout (maximum3.6421); high rejected before timing after host load rose between tiers. This clean low repeat does not replace or explain the original failure.",
+  "attribution": "No recurrence. Does not explain or withdraw the original five low-tier gaps.",
+  "rawTrace": {
+    "path": "test-results/l6-visual/perf-trace-final/low.trace.json.gz",
+    "sha256": "d018e556c60898ae91c80993aad8e58b80bad502cfe4095a9977dfb9f1c3adba",
+    "bytes": 54922142
+  }
+}

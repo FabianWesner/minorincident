@@ -7,28 +7,48 @@ import type { CharacterView } from '../../src/render/characters/CharacterView';
 import { preset } from '../../src/sim/progression/Campaign';
 import { SceneSession, stopServer } from '../scenelab/session';
 import { provenance } from './accept/probe';
-const out = 'test-results/sweep-b/L6-render'; mkdirSync(`${out}/captures`, { recursive: true });
+const backend = process.env.L6_VISUAL_BACKEND === 'webgpu' ? 'webgpu' : 'webgl2';
+const zoom = Number(process.env.L6_VISUAL_ZOOM ?? '1.5');
+if (![1, 1.5].includes(zoom)) throw new Error('Expected zoom 1 or 1.5');
+const out = process.env.L6_VISUAL_OUT ?? 'test-results/sweep-b/L6-render'; mkdirSync(`${out}/captures`, { recursive: true });
 const rows = [];
 try {
   for (const tier of ['low', 'high'] as const) {
-    const session = new SceneSession({ tier, backend: 'webgl2', query: { profile: '0', ui: '1' } });
+    const session = new SceneSession({ tier, backend, query: { profile: '0', ui: '1' } });
     try {
       await session.open();
-      const save = preset('L6-default'); save.settings.quality = tier;
-      await session.page.evaluate(async ({ tier, save }) => {
+      const save = process.env.L6_VISUAL_SAVE_DIR ? JSON.parse(readFileSync(`${process.env.L6_VISUAL_SAVE_DIR}/${tier}-L5-save.json`, 'utf8')) as ReturnType<typeof preset> : preset('L6-default'); save.settings.quality = tier;
+      await session.page.evaluate(async ({ tier, save, zoom }) => {
         const a = window.__SS__!; a.settings.set({ quality: tier }); a.campaign.restore(save); await a.loadLevel('L6', { seed: 1 });
-        a.pause(); a.missions.begin(); a.cheats.god(false); a.camera.follow(); a.camera.zoom(1.5);
+        a.pause(); a.missions.begin(); a.cheats.god(false); a.camera.follow(); a.camera.zoom(zoom);
         document.documentElement.setAttribute('data-scene-hud', '');
         for (const style of document.querySelectorAll('style')) if (style.textContent?.includes('#hud:not([data-scene-hud])')) style.remove();
-      }, { tier, save });
+      }, { tier, save, zoom });
       const captures: string[] = [];
       const capture = async (name: string) => { const p = `${out}/captures/${tier}-${name}.jpg`; await session.ready(); await session.page.screenshot({ path: p, type: 'jpeg', quality: 92 }); captures.push(p); };
+      const shelter = [];
+      for (let second = 0; second <= 4; second++) {
+        if (second) await session.page.evaluate(async () => { await window.__SS__!.step(60); });
+        shelter.push(await session.page.evaluate(() => {
+          const g = (window.__SCENE__ as unknown as { game: Game }).game, w = g.world;
+          return { tick: w.tick, roster: w.missions!.state.l6!.survivors.map(r => {
+            const e = w.entities.get(r.id)!;
+            return { ...r, at: { ...e.transform }, health: e.health, story: e.civilian?.story, activity: e.civilian?.schedule?.[e.civilian?.scheduleStep ?? 0]?.activity, weapons: e.weapons };
+          }), figures: window.__SS__!.crowdFigures() };
+        }));
+        if (second === 0 || second === 4) await capture(`shelter-${second}`);
+      }
+      for (const spot of [{ name: 'seats', x: 0, z: -10 }, { name: 'care', x: 15, z: 3 }]) {
+        await session.page.evaluate(async at => { const a = window.__SS__!; a.teleport(1, { x: at.x, z: at.z }); a.camera.follow(); await a.step(0); }, spot);
+        await capture(`shelter-${spot.name}`);
+      }
+      await session.page.evaluate(async () => { const a = window.__SS__!; a.teleport(1, { x: 3, z: 0 }); a.camera.follow(); await a.step(0); });
       const lampState = () => session.page.evaluate(() => {
         const g = (window.__SCENE__ as unknown as { game: Game }).game, w = g.world;
         const lighting = (g.view as unknown as { lighting: Lighting }).lighting;
         const character = (g.view as unknown as { character: CharacterView }).character;
         const lamp = [...w.entities.iterate()].find(e => e.archetype === 'pickup.headlamp');
-        return { tick: w.tick, tier: w.infected!.director.tier, renderTier: g.view.getState().quality, player: { ...w.entities.get(1)!.transform }, flashlight: w.missions!.state.l6!.flashlight,
+        return { backend: window.__SS__!.perf().backend, camera: g.view.getState().camera, tick: w.tick, tier: w.infected!.director.tier, renderTier: g.view.getState().quality, player: { ...w.entities.get(1)!.transform }, flashlight: w.missions!.state.l6!.flashlight,
           lamp: lamp ? { id: lamp.id, at: { ...lamp.transform }, hidden: lamp.hidden, pickup: lamp.pickup } : null,
           newWeaponIds: [...w.entities.iterate()].filter(e => e.pickup && 'actionId' in e.pickup).map(e => e.id),
           headYaw: character.headYaw(), headlampOn: lighting.headlampOn.value, beam: [lighting.headlampAim.value.x, lighting.headlampAim.value.y], input: w.inputFrame };
@@ -41,6 +61,11 @@ try {
       await session.page.evaluate(async () => { const a = window.__SS__!; a.teleport(1, { x: 40, z: 15 }); a.camera.follow(); a.input.set({ move: { x: 1, z: 0 }, aim: { x: -1, z: 0 }, aimSource: 'pointer', strafe: true }); await a.step(60); });
       const opposed = await lampState(); await capture('lamp-opposed');
       await session.page.evaluate(() => window.__SS__!.input.clear());
+      if (process.env.L6_VISUAL_PREFIX_ONLY === '1') {
+        rows.push({ tier, backend, zoom, shelter, headlamp: { before, afterIdle, afterApproach, opposed }, bars: [], open: null, night: [], captures, errors: session.errors });
+        writeFileSync(`${out}/proof.json`, JSON.stringify({ ...provenance(), producerSha256: createHash('sha256').update(readFileSync('tools/qa/sweep-b-l6-render.ts')).digest('hex'), method: 'Carried shelter and actual headlamp presentation prefix only; follower and ending fixtures are separate. Original health/speeds/counts retained; no performance claim.', rows }, null, 2) + '\n');
+        console.log(tier, 'shelter/headlamp prefix done', captures.length); continue;
+      }
       const bars = [];
       for (let batch = 0; batch < 6; batch++) {
         const row = await session.page.evaluate(async batch => {
@@ -78,16 +103,16 @@ try {
         s.survivors.forEach((r, i) => { const e = w.entities.get(r.id)!; r.status = 'following'; w.solids.relocate(e, { x: 265 + Math.floor(i / 3), z: 15 + (i % 3) * .8, y: 3.9 }, 'probe.northgate-roster', 0, false); });
         a.teleport(1, { x: 264, z: 15.9 }); await a.step(1);
       });
-      for (let second = 0; second < 6; second++) {
+      for (let second = 0; second < 8; second++) {
         const state = await session.page.evaluate(() => {
           const g = (window.__SCENE__ as unknown as { game: Game }).game, w = g.world, m = w.missions!, s = m.state.l6;
           return { level: w.scenario, tick: w.tick, gateAt: s?.gateAt, closed: !w.solids.clear({ x: 258, z: 15.9, y: 3.9 }, .35, 1, false), cinematic: m.state.cinematic, result: m.state.result,
             caption: document.body.innerText.includes('Night. Still alive.'), camera: g.view.getState().camera, player: w.entities.get(1)?.transform, roster: s?.survivors.map(r => ({ id: r.id, status: r.status })) };
         });
-        night.push(state); await capture(`night-${second}`);
-        if (second < 5) await session.page.evaluate(async () => { await window.__SS__!.step(60); });
+        night.push(state); if ([0, 3, 6, 7].includes(second)) await capture(`night-${second}`);
+        if (second < 7) await session.page.evaluate(async () => { await window.__SS__!.step(60); });
       }
-      rows.push({ tier, headlamp: { before, afterIdle, afterApproach, opposed }, bars, open, night, captures, errors: session.errors });
+      rows.push({ tier, backend, zoom, shelter, headlamp: { before, afterIdle, afterApproach, opposed }, bars, open, night, captures, errors: session.errors });
       writeFileSync(`${out}/proof.json`, JSON.stringify({ ...provenance(), producerSha256: createHash('sha256').update(readFileSync('tools/qa/sweep-b-l6-render.ts')).digest('hex'), method: 'Explicit controlled presentation fixtures, not a full route. Initial ordinary directional input approaches the existing headlamp without E, then moves opposite pointer aim. Bar batches relocate five existing identities at a time, retaining the original29-person roster. Northgate first receives ordinary input while open, then original29-person roster is staged beyond the exit and the production controller closes the gate and starts its actual night shot. No speeds, health, counts, timers or targets changed; no performance timing.', rows }, null, 2) + '\n');
       console.log(tier, 'done', captures.length);
     } finally { await session.close(); }
