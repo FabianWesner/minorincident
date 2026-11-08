@@ -53,7 +53,11 @@ export class Destruction {
   /** Rebind after checkpoints or physics/tier replacement. Interactables rebuild their own wall list. */
   rebuild(worldReset = false): void {
     const present=new Set(this.world.districts?.districts.flatMap(d=>d.decay.placements.map(p=>`${d.id}/${p.id}`)));
-    for(const o of this.objects) o.present=present.has(o.id);
+    for(const o of this.objects) {
+      o.present=present.has(o.id);
+      const fire=this.world.entities.get(o.state.fireEntity??-1);
+      if(o.state.burning&&fire?.hazard?.kind==='fire') fire.hazard.activeUntil=this.world.tick+(o.present?o.state.burning+120:0);
+    }
     for (const b of this.blockers) {
       if (b.active && !worldReset) this.world.physics.removeBlocker(b.handle);
       const walls = this.world.interactables!.walls, index = walls.indexOf(b.wall);
@@ -214,7 +218,7 @@ export class Destruction {
       const entry=saved.find(s=>s.id===o.id); if(!entry) continue;
       o.state=structuredClone(entry.state);
       const fire=this.world.entities.get(o.state.fireEntity??-1);
-      if(o.state.burning&&fire?.hazard?.kind==='fire') fire.hazard.activeUntil=this.world.tick+o.state.burning+120;
+      if(o.state.burning&&fire?.hazard?.kind==='fire') fire.hazard.activeUntil=this.world.tick+(o.present?o.state.burning+120:0);
     }
     this.reconcile();
   }

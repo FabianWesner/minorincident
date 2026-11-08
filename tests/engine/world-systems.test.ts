@@ -235,10 +235,14 @@ test('explosions: every class follows its damage curve, full cover shields, rail
   destruction.restore(pristine);
   expect(fuelBody.body.isEnabled(),'checkpoint restores the tank body').toBe(true);
   car.placement.destruction=vehiclePolicy;
+  destruction.blast('weapon.molotov',{x:car.home.p[0],z:car.home.p[2]},4,10);
+  const tierFire=street.entities.get(car.state.fireEntity!)!;
   const state=destruction.snapshot(); street.setTier(street.districts!.composition.tier===6?5:6);expect(destruction.snapshot()).toEqual(state);
   expect(car.present,'tier 6 removes this authored car placement').toBe(false);
+  expect(tierFire.hazard!.activeUntil).toBe(street.tick);
   expect(destruction.impact(car.id,'boss.mega.charge',10000),'inactive tiers cannot take damage').toBe(false);
   expect(destruction.snapshot()).toEqual(state);
+  street.setTier(5);expect(car.present).toBe(true);expect(tierFire.hazard!.activeUntil).toBeGreaterThan(street.tick);
 
 
 });
