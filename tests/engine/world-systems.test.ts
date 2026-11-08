@@ -234,4 +234,15 @@ test('look-l6-l9 decor is render-only: L6 nav hash, colliders and pushables matc
   const { heightRouteWaypoint } = await import('../../src/sim/ai/InfectedSystem');
   const waypoint = heightRouteWaypoint(bare, { transform: { x: px + 10, y: .7, z: pz, yaw: 0 } } as never, { x: px, y: 3.78, z: pz });
   expect(waypoint?.x).toBeCloseTo(px + 8.07, 1);
+  const chase = await world('survivor', true);
+  chase.districts = bare;
+  chase.enableInfected();
+  const infected = chase.infected!, walker = chase.entities.get(infected.spawn('infected.walker', { x: px + 10, z: pz }, { state: 'chase' }))!;
+  const seek = infected as unknown as { seek(e: typeof walker, goal: { x: number; y: number; z: number }): void };
+  for (let tick = 0; tick < 2400; tick++) {
+    seek.seek(walker, { x: px, y: 3.78, z: pz });
+    walker.transform.y = .7 + bare.supportBelow(walker.transform.x, walker.transform.z, walker.transform.y - .7);
+    chase.tick++;
+  }
+  expect(walker.transform.y, 'a pursuer must walk all the way up the stairs onto the deck').toBeCloseTo(3.78);
 }, 60_000);

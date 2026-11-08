@@ -61,7 +61,7 @@ function heightSupportIndex(districts: DistrictSet) {
 export function heightRouteWaypoint(districts: NonNullable<SimWorld['districts']>, actor: EntitySnapshot, goal: { x: number; y?: number; z: number }): { x: number; z: number } | undefined {
   if (goal.y === undefined) return undefined;
   const feet = actor.transform.y - .7, goalFeet = goal.y - .7, delta = goalFeet - feet;
-  if (Math.abs(delta) <= .9) return undefined;
+  if (Math.abs(delta) <= .6) return undefined;
   const ascending = delta > 0, nextLimit = feet + Math.sign(delta) * .6;
   const index = heightSupportIndex(districts);
   const groupAt = (x: number, y: number, z: number): string | undefined => {
@@ -634,7 +634,7 @@ export class InfectedSystem {
   private chase(e: EntitySnapshot, b: InfectedState, player: EntitySnapshot, dx: number, dz: number, distance: number): void {
     if (this.nativeCivilianContact(e, player, distance)) return;
     if (!this.world.inspectionGhost && combatHeightReachable(e, player) && (this.alphaSupport.tryStart(e, player) || this.tryZooSpecial(e, player))) return;
-    if (e.archetype === 'infected.alpha' && !this.world.inspectionGhost && this.world.tick >= b.cooldown && this.world.tick >= (b.specialRecoveryUntil ?? 0)) {
+    if (e.archetype === 'infected.alpha' && combatHeightReachable(e, player) && !this.world.inspectionGhost && this.world.tick >= b.cooldown && this.world.tick >= (b.specialRecoveryUntil ?? 0)) {
       const move = b.pursuit && distance <= 2 ? 'alpha.grab-throw' : distance <= 4 ? 'alpha.ground-slam' : distance <= 12 ? 'alpha.charge' : undefined;
       if (move && this.world.tick + infectedSpecialMoves[move].windup >= (b.specialCooldowns?.[move] ?? 0) && this.world.combat!.query.visible(e.transform, player.transform) && this.startSpecial(e.id, move, { id: player.id, x: player.transform.x, z: player.transform.z }, { x: e.transform.x, z: e.transform.z, radius: move === 'alpha.charge' ? 1 : 4, dx: dx / Math.max(.001, distance), dz: dz / Math.max(.001, distance) })) return;
     }
@@ -669,7 +669,7 @@ export class InfectedSystem {
     const packAngle = b.packIndex * Math.PI / 2;
     const packReady = !b.pack || b.special !== 'pounce' || (-dx * Math.cos(packAngle) - dz * Math.sin(packAngle)) / Math.max(0.01, distance) >= 0.85;
     if (packReady && distance <= range && combatHeightReachable(e, player) && this.world.tick >= b.cooldown && this.world.combat!.query.visible(e.transform, player.transform)) { b.combo = 0; this.windup(e); return; }
-    if (b.special === 'pounce' && b.pack && (!packReady || distance > 4)) {
+    if (b.special === 'pounce' && b.pack && combatHeightReachable(e, player) && (!packReady || distance > 4)) {
       this.waypoint.x = player.transform.x + Math.cos(packAngle) * 3; this.waypoint.z = player.transform.z + Math.sin(packAngle) * 3;
       this.seek(e, this.waypoint);
     } else this.seek(e, player.transform); this.place(e);
@@ -1269,6 +1269,8 @@ export class InfectedSystem {
     if (!target) { this.startSearch(b, brain, { x: brain.seenX, z: brain.seenZ }, { x: brain.headingX, z: brain.headingZ }); return; }
     if (this.world.tick < brain.pauseUntil) { this.look(e, brain); return; }
     brain.looking = false;
+    const victim = this.world.entities.get(target.id);
+    if (victim && !combatHeightReachable(e, victim)) { this.seek(e, victim.transform, brain.runSpeed); return; }
     const distance = Math.hypot(target.position.x - e.transform.x, target.position.z - e.transform.z);
     let lunge = this.lungeRangeM(target.kind === 'player');
     if (this.world.scenario === 'L5' && target.kind === 'player') {
@@ -1928,7 +1930,7 @@ export class InfectedSystem {
     // shared flow. Making each compete for an individual A* search can leave
     // the new cohort waiting behind the rest of the horde for its whole cue.
     const courierApproach = b.breachApproach === 'inside' && b.pressureTarget?.id === 1 && b.pressureTarget.until > this.world.tick;
-    const useFlow = this.active.length > 20 && !b.roar && !b.specialAttack && (!b.scripted || courierApproach) && !b.investigate && (courierApproach || (b.heardTargetId ?? 1) <= 1);
+    const useFlow = !heightGoal && this.active.length > 20 && !b.roar && !b.specialAttack && (!b.scripted || courierApproach) && !b.investigate && (courierApproach || (b.heardTargetId ?? 1) <= 1);
     if (!nav.visible(e.transform, target, e.combat!.radius)) {
       // Clear paths steer directly; cell searches are needed only around cover.
       // The nearest cell can lie across a thin doorway wall. Start on a
@@ -1964,7 +1966,7 @@ export class InfectedSystem {
     const dx = x - e.transform.x, dz = z - e.transform.z, distance = Math.hypot(dx, dz);
     // Scripted staging is a walking waypoint, not a melee target. Applying
     // attack clearance left Alphas outside the director's 1.2 m charge gate.
-    const remaining = !(this.world.scenario === 'L4' && b.scripted) && x === target.x && z === target.z ? distance - e.combat!.radius - 0.36 : distance;
+    const remaining = !heightGoal && !(this.world.scenario === 'L4' && b.scripted) && x === target.x && z === target.z ? distance - e.combat!.radius - 0.36 : distance;
     if (remaining < 0.02) return;
     const pursuit = specialSpeed === undefined && b.state === 'chase' && e.archetype === 'infected.runner' && armedCampaigns.has(this.world.scenario ?? '') ? 1.25 : 1;
     const speed = Math.min((specialSpeed ?? b.speed) * pursuit * (b.roar && this.world.tick < b.roar.until ? (b.roar.speedUntil === undefined || this.world.tick < b.roar.speedUntil ? b.roar.speedScale ?? 1.25 : 1) : 1), remaining * (specialSpeed === undefined ? 2 : 60)); moveAgent(e, dx / distance * speed, dz / distance * speed, this.infectedNav, this.world.tick, e.combat!.radius, specialSpeed !== undefined);
