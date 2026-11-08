@@ -292,9 +292,12 @@ test('L4: every contact archetype interrupts approach/lure and attacks within 3 
     expect(distantRiot.combat?.shield, 'riot actor carries its authored shield').toBeTruthy();
     expect(barEligible(distantRiot, courier.transform, infectedDef(distantRiot.archetype).bar === true), 'healthy riot at 16 m keeps its health bar').toBe(true);
     ai.release(distantRiot);
+    const contactOrigin = { ...courier.transform };
     for (const archetype of [...l4InfectedArchetypes, 'infected.alpha']) for (const state of ['attracted', 'attack', 'stagger'] as const) {
+      // New Alpha grabs throw the courier. Each independent contact probe starts at the same position.
+      world.solids.relocate(courier, contactOrigin, 'scripted.teleport');
       courier.health.current = courier.health.max;
-      const e = world.entities.get(ai.spawn(archetype, { x: -17, z: 3.8 }, { yaw: Math.PI }))!;
+      const e = world.entities.get(ai.spawn(archetype, { x: -17, z: 3.8 }, { yaw: Math.PI, ...(archetype === 'infected.alpha' ? { alphaType: 'brute' as const } : {}) }))!;
       expect(barEligible(e, courier.transform, infectedDef(archetype).bar === true), `${archetype}: hostile live L4 spawn has a bar`).toBe(true);
       expect(e.health.max, `${archetype}: positive health`).toBeGreaterThan(0);
       const flankDamage = world.combat!.damage.apply({ attackId: world.tick + e.id, actionId: 'weapon.army-mg', sourceId: 1, targetId: e.id,

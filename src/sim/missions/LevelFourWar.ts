@@ -975,7 +975,7 @@ export class LevelFourWar {
       if (!spot) continue;
       const at = this.snap(spot, radius);
       if (!ai.nav.clear(at.x, at.z, radius)) continue;
-      const id = ai.spawn('infected.alpha', at, { state: 'idle', yaw: -Math.atan2(l4.map.centre.z - at.z, l4.map.centre.x - at.x) });
+      const id = ai.spawn('infected.alpha', at, { state: 'idle', alphaType: entry.job === 'armor' ? 'armoured' : entry.job === 'line' ? 'thrower' : 'brute', yaw: -Math.atan2(l4.map.centre.z - at.z, l4.map.centre.x - at.x) });
       const e = world.entities.get(id)!;
       if (!this.outsidePerimeter(e.transform) || !ok(e.transform)) { ai.release(e); continue; }
       if (e.combat) e.combat.allyResist = l4.alphas.allyResist;

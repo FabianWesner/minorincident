@@ -1,13 +1,16 @@
 // Infected AI core: the shared state machine (idle → chase → attack → down/dead), perception, telegraphs and body
 // separation drive every enemy role in every level.
 import { afterEach, expect, test } from 'vitest';
-import { animalInfected, humanInfected, infectedDefinitions, infectedRecovery, INFECTED_TOUGHNESS, validateInfected } from '../../src/data/infected';
+import { animalInfected, humanInfected, infectedDefinitions, infectedRecovery, INFECTED_TOUGHNESS, validateInfected, infectedSpecialMoves } from '../../src/data/infected';
 import { infectedContactDistance, meleeRing } from '../../src/sim/ai/CharacterSeparation';
 import type { DamageEvent } from '../../src/sim/combat/Damage';
 import type { EntitySnapshot, GameEvent } from '../../src/sim/world/types';
 import { clickable } from '../../src/input/ClickPick';
 import { l1v2 } from '../../src/data/l1v2';
 import { l3 } from '../../src/data/l3';
+import { alphaTypeFor, alphaTypes } from '../../src/data/alphaTypes';
+import { PropSystem } from '../../src/sim/interact/PropSystem';
+import { damageAmount } from '../../src/sim/combat/Damage';
 import { SimWorld } from '../../src/sim/world/SimWorld';
 import { missionSandbox } from '../fixtures/scenarios/mission-sandbox';
 import { followFrustum, loadL3 } from '../../tools/sim-runner/l3Bots';
@@ -22,7 +25,126 @@ function hit(w: SimWorld, e: EntitySnapshot, type: DamageEvent['type'] = 'melee'
 }
 const [lowS, highS] = infectedRecovery.downS;
 
+async function alphaTypeContracts() {
+  const firstWorld = worlds.length;
+  try {
+    expect(alphaTypeFor('L1', 18)).toBe('brute'); expect(alphaTypeFor('L2', 18)).toBe('brute');
+    for (const level of ['L3', 'L4', 'L5', 'L6', 'L7', 'L9', 'L10']) {
+      const present = new Set(Array.from({ length: 80 }, (_, id) => alphaTypeFor(level, id)));
+      expect(present.size, level).toBeGreaterThan(1);
+    }
+    expect(alphaTypes.brute.moves).toEqual(expect.arrayContaining(['alpha.charge', 'alpha.ground-slam', 'alpha.grab-human']));
+    expect(alphaTypes.thrower.moves).toEqual(expect.arrayContaining(['alpha.grab-throw', 'alpha.living-missile', 'alpha.barrage']));
+    expect(alphaTypes.screamer.moves).toContain('alpha.roar'); expect(alphaTypes.leaper.moves).toContain('alpha.pounce');
+    expect(alphaTypes.armoured.moves).toContain('alpha.shield-bash');
+    for (const [type, definition] of Object.entries(alphaTypes)) for (const move of definition.moves) {
+      const moveWorld = await arena(), alpha = moveWorld.entities.get(moveWorld.infected!.spawn('infected.alpha', { x: 8, z: 0 }, { alphaType: type as keyof typeof alphaTypes, state: 'chase' }))!;
+      const target = { id: 1, x: 0, z: 0 }, area = { x: 8, z: 0, radius: 2, dx: -1, dz: 0 };
+      expect(moveWorld.infected!.startSpecial(alpha.id, move, target, area), `${type}.${move}`).toBe(true);
+      expect(moveWorld.infected!.startSpecial(alpha.id, move, target, area), `${type}.${move}: overlap`).toBe(false);
+      expect(moveWorld.events.events().some(event => event.type === 'telegraph' && event.sourceId === alpha.id && event.special === move), `${type}.${move}`).toBe(true);
+      moveWorld.dispose(); worlds.splice(worlds.indexOf(moveWorld), 1);
+    }
+    // Each move resolves a real effect after its tell, then exposes a punish/cooldown window.
+    for (const [type, definition] of Object.entries(alphaTypes)) for (const move of definition.moves) {
+      const w = await arena(1, false), ai = w.infected!, player = w.entities.get(1)!;
+      player.health.current = player.health.max = 1000;
+      const x = move === 'alpha.ground-slam' ? 3.5 : move === 'alpha.grab-human' || move === 'alpha.shield-bash' ? 1.8 : move === 'alpha.roar' ? 4 : move === 'alpha.barrage' ? 7 : 10;
+      const alpha = w.entities.get(ai.spawn('infected.alpha', { x, z: 0 }, { alphaType: type as keyof typeof alphaTypes, state: 'chase' }))!;
+      const addProp = (i: number) => {
+        w.props ??= new PropSystem(w);
+        return w.props.spawn({ id: `alpha-debris-${i}`, assetId: 'prop.traffic-cone', position: [x + .8, 0, i * .55 - .55], yaw: 0, scale: [1, 1, 1], minTier: 0, maxTier: 5, allowRoad: true, lightGroup: '', visualAabb: { min: [x, 0, -1], max: [x + 1, 1, 1] } });
+      };
+      let missile: EntitySnapshot | undefined;
+      if (move === 'alpha.grab-throw') {
+        const id = w.spawnDummy('corpse.fixture', { x: x + .8, z: 0 });
+        missile = w.entities.get(id)!; missile.health.current = 0; missile.corpse = true;
+      }
+      if (move === 'alpha.living-missile') missile = spawn(w, 'runner', x + .8, 0, 'idle');
+      if (move === 'alpha.barrage') for (let i = 0; i < 3; i++) addProp(i);
+      if (move === 'alpha.roar') for (let i = 0; i < 12; i++) spawn(w, 'runner', 4 + i % 3, 3 + Math.floor(i / 3), 'idle');
+      const advance = (n: number) => { for (let i = 0; i < n; i++) { w.props?.prePhysics(); step(w, 1); w.props?.postPhysics(); } };
+      expect(ai.startSpecial(alpha.id, move, { id: 1, x: 0, z: 0 }, { x, z: 0, radius: move === 'alpha.roar' ? 8 : 1, dx: -1, dz: 0 }), move).toBe(true);
+      const attackId = alpha.infected!.specialAttack!.attackId;
+      if (missile) expect(missile.transform.y, `${move}: visible overhead pickup`).toBeGreaterThan(2);
+      advance(infectedSpecialMoves[move].windup - 1);
+      expect(w.events.events().filter(e => e.type === 'combat.hit' && e.attackId === attackId && e.sourceId === alpha.id), `${move}: no early damage`).toHaveLength(0);
+      for (let i = 0; i < 240 && alpha.infected!.specialAttack?.stage !== 'recovery'; i++) advance(1);
+      expect(alpha.infected!.specialAttack?.stage, `${move}: finishes`).toBe('recovery');
+      expect(alpha.infected!.specialAttack!.recoveryUntil - w.tick, `${move}: punish duration`).toBeGreaterThanOrEqual(48);
+      expect(ai.startSpecial(alpha.id, move, { id: 1, x: 0, z: 0 }, { x, z: 0, radius: 1, dx: -1, dz: 0 }), `${move}: cooldown`).toBe(false);
+      if (move === 'alpha.roar') {
+        const calls = w.events.events().filter(e => e.type === 'infected.roar-buff' && e.sourceId === alpha.id && e.stage === 'active');
+        expect(calls.length).toBeGreaterThanOrEqual(6); expect(calls.length).toBeLessThanOrEqual(10);
+        expect(player.combat!.statuses.some(e => e.kind === 'stunned')).toBe(true);
+      } else if (move === 'alpha.living-missile') {
+        expect(missile!.health.current).toBeGreaterThan(0); expect(missile!.attachedTo).toBeUndefined();
+        expect(missile!.combat!.staggerUntil - w.tick).toBeGreaterThanOrEqual(35);
+      } else if (move === 'alpha.barrage') {
+        expect(w.events.events().filter(e => e.type === 'infected.prop-thrown' && e.attackId === attackId)).toHaveLength(3);
+        expect(w.props!.items.every(p => p.body.translation().x < x - 1)).toBe(true);
+      } else {
+        expect(w.events.events().some(e => e.type === 'infected.attack' && e.sourceId === alpha.id && e.targetId === 1 && e.amount > 0), `${move}: real contact`).toBe(true);
+        if (move === 'alpha.grab-human') expect(Math.hypot(player.transform.x, player.transform.z)).toBeGreaterThan(5);
+        if (move === 'alpha.pounce') expect(ai.playerPinned()).toBe(true);
+      }
+      w.dispose(); worlds.splice(worlds.indexOf(w), 1);
+    }
+    // Interrupt/counter controls use the same resolver, including a zero-stagger hit during the inhale.
+    for (const type of ['brute', 'screamer', 'leaper', 'armoured'] as const) {
+      const w = await arena(1, false), ai = w.infected!, x = type === 'armoured' ? 1.8 : 6, alpha = w.entities.get(ai.spawn('infected.alpha', { x, z: 0 }, { alphaType: type, state: 'chase' }))!;
+      const move = type === 'brute' ? 'alpha.charge' : alphaTypes[type].moves[0];
+      ai.startSpecial(alpha.id, move, { id: 1, x: 0, z: 0 }, { x, z: 0, radius: 1, dx: -1, dz: 0 });
+      if (type === 'screamer') {
+        hit(w, alpha, 'melee', .01);
+        expect(alpha.infected!.specialAttack?.stage).toBe('recovery');
+      } else w.solids.relocate(w.entities.get(1)!, { x: 0, y: .7, z: 6 }, 'scripted.teleport');
+      step(w, 150);
+      expect(w.events.events().filter(e => e.type === 'infected.attack' && e.sourceId === alpha.id && e.amount > 0), `${type}: counter avoids special`).toHaveLength(0);
+      w.dispose(); worlds.splice(worlds.indexOf(w), 1);
+    }
+    {
+      const w = await arena(), armour = w.entities.get(w.infected!.spawn('infected.alpha', { x: 8, z: 0 }, { alphaType: 'armoured' }))!;
+      const bullet: DamageEvent = { attackId: 8, actionId: 'weapon.handgun', sourceId: 1, targetId: armour.id, origin: { x: 10, z: 0 }, direction: { x: -1, z: 0 }, base: 100, multiplier: 1, type: 'bullet', knockback: 0, stagger: 0 };
+      expect(damageAmount(bullet, armour)).toBe(25);
+      expect(damageAmount({ ...bullet, origin: { x: 6, z: 0 } }, armour)).toBe(50);
+      expect(damageAmount({ ...bullet, type: 'explosive' }, armour)).toBe(100);
+    }
+    {
+      const rateWorld = await arena(1, false), alphas = [0, 1, 2].map(i => rateWorld.entities.get(rateWorld.infected!.spawn('infected.alpha', { x: 12 + i * 2, z: 0 }, { alphaType: 'brute', state: 'chase' }))!);
+      const start = (alpha: EntitySnapshot) => rateWorld.infected!.startSpecial(alpha.id, 'alpha.charge', { id: 1, x: 0, z: 0 }, { x: alpha.transform.x, z: 0, radius: 1, dx: -1, dz: 0 });
+      expect(start(alphas[0]!)).toBe(true); expect(start(alphas[1]!)).toBe(true); expect(start(alphas[2]!)).toBe(false);
+      step(rateWorld, 60); expect(start(alphas[2]!)).toBe(true);
+    }
+    {
+      const effectWorld = await arena(1, false), player = effectWorld.entities.get(1)!;
+      const screamer = effectWorld.entities.get(effectWorld.infected!.spawn('infected.alpha', { x: 4, z: 0 }, { alphaType: 'screamer', state: 'chase' }))!;
+      expect(effectWorld.infected!.startSpecial(screamer.id, 'alpha.roar', { id: 1, x: 0, z: 0 }, { x: 4, z: 0, radius: 8, dx: -1, dz: 0 })).toBe(true);
+      step(effectWorld, 60);
+      expect(player.combat!.statuses.some(status => status.kind === 'stunned' && status.expires > effectWorld.tick)).toBe(true);
+      const brute = effectWorld.entities.get(effectWorld.infected!.spawn('infected.alpha', { x: 8, z: 0 }, { alphaType: 'brute', state: 'chase' }))!;
+      expect(effectWorld.infected!.startSpecial(brute.id, 'alpha.ground-slam', { id: 1, x: 0, z: 0 }, { x: 8, z: 0, radius: 4, dx: -1, dz: 0 })).toBe(true);
+      step(effectWorld, 61); expect(brute.infected!.specialAttack?.stage).toBe('recovery');
+      const amount = effectWorld.combat!.damage.apply({ attackId: 88, actionId: 'weapon.bat', sourceId: 1, targetId: brute.id, origin: { x: 0, z: 0 }, direction: { x: 1, z: 0 }, base: 10, multiplier: 1, type: 'melee', knockback: 0, stagger: 0 });
+      expect(amount).toBe(15);
+    }
+    {
+      const missileWorld = await arena(1, false);
+      const thrower = missileWorld.entities.get(missileWorld.infected!.spawn('infected.alpha', { x: 10, z: 0 }, { alphaType: 'thrower', state: 'chase' }))!;
+      const missile = missileWorld.entities.get(missileWorld.infected!.spawn('infected.runner', { x: 9, z: 0 }, { state: 'idle' }))!;
+      expect(missileWorld.infected!.startSpecial(thrower.id, 'alpha.living-missile', { id: 1, x: 0, z: 0 }, { x: 10, z: 0, radius: 1, dx: -1, dz: 0 })).toBe(true);
+      for (let i = 0; i < 100 && thrower.infected!.specialAttack?.stage !== 'recovery'; i++) step(missileWorld, 1);
+      expect(missile.health.current).toBeGreaterThan(0);
+      expect(missile.combat!.staggerUntil - missileWorld.tick).toBeGreaterThanOrEqual(35);
+      expect(Math.hypot(missile.transform.x, missile.transform.z)).toBeGreaterThanOrEqual(1.5);
+      expect(Math.hypot(missile.transform.x, missile.transform.z)).toBeLessThanOrEqual(3);
+      step(missileWorld, 37); expect(['chase', 'attack']).toContain(missile.infected!.state);
+    }
+  } finally { for (const world of worlds.splice(firstWorld)) world.dispose(); }
+}
+
 test('every human and animal role validates and spawns with its catalog health and speed; every attack is telegraphed', async () => {
+  await alphaTypeContracts();
   for (const tier of ['low', 'high'] as const) {
     const w = await arena(); w.scenario = 'L3'; w.infected!.configureL1v2(); w.infected!.director.setTier(tier);
     // Isolate the retreat AI from the level's population and objective graph.
@@ -131,7 +253,7 @@ test('every human and animal role validates and spawns with its catalog health a
   for (const def of infectedDefinitions) {
     const t = await arena(1, false), e = spawn(t, def.id.slice(9), 0.9); if (def.special === 'explode') e.health.current = 0;
     step(t, 130);
-    const log = t.events.events(), hits = log.filter(event => event.type === 'combat.hit' && event.actionId.startsWith('infected.') && event.amount > 0);
+    const log = t.events.events(), hits = log.filter(event => event.type === 'combat.hit' && (event.actionId.startsWith('infected.') || event.actionId.startsWith('alpha.')) && event.amount > 0);
     if (def.special !== 'scream') expect(hits.length, def.id).toBeGreaterThan(0);
     for (const event of hits) {
       if (event.type !== 'combat.hit') continue;

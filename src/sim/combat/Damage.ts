@@ -41,7 +41,16 @@ export function damageAmount(hit: DamageEvent, target: EntitySnapshot, shieldOpe
     if (hit.actionId === 'weapon.rocket-launcher' && hit.type === 'explosive') return target.health.max * (hit.direct ? megaAlpha.directRocketFraction : megaAlpha.splashRocketFraction);
     return Math.min(Math.max(0, amount), Math.max(0, target.health.current - target.health.max * megaAlpha.conventionalFloor));
   }
-  if (target.archetype === 'infected.alpha') return Math.max(0, amount * alphaDamageMultiplier(hit.actionId, hit.type));
+  if (target.archetype === 'infected.alpha') {
+    let multiplier = alphaDamageMultiplier(hit.actionId, hit.type);
+    if (target.infected?.alphaType === 'armoured' && hit.type === 'bullet') {
+      const dx = hit.origin.x - target.transform.x, dz = hit.origin.z - target.transform.z, distance = Math.hypot(dx, dz);
+      const front = distance ? (dx * Math.cos(target.transform.yaw) - dz * Math.sin(target.transform.yaw)) / distance : 1;
+      if (front >= .5) multiplier = .25;
+    }
+    if (target.infected?.specialAttack?.stage === 'recovery') multiplier *= 1.5;
+    return Math.max(0, amount * multiplier);
+  }
   if (target.infected?.special === 'armor' && hit.type !== 'explosive' && hit.type !== 'status') {
     const dx = hit.origin.x - target.transform.x, dz = hit.origin.z - target.transform.z, distance = Math.hypot(dx, dz);
     if (!distance || (dx * Math.cos(target.transform.yaw) - dz * Math.sin(target.transform.yaw)) / distance >= 0.5) amount *= 0.25;
