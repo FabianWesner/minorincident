@@ -1,6 +1,8 @@
 # R12 natural group movement
 
-**Status: BLOCKED / NOT merged-ready. Final source `601d18df` is verified natively; L8 adds no human slow-follower rows. L7 required pace coverage remains unqualified and prevents acceptance.**
+**Status: active L7 correction (r12-group-d). Main `eb835fc1` merged as `b3382b53`; regression isolation is in progress. Earlier comparisons below used older main and do not establish current-main equivalence.**
+
+**Correction (r12-group-d):** prior `busHp` diagnosis was wrong: the runner records courier HP, not bus HP. Current main `eb835fc1` completes seeds 1/3 but fails seed 2 in the unchanged seed runner; the merged lane initially fails seeds 1/2 and completes seed 3. L7 regression diagnosis is active.
 
 PO: “Group dynamic in general is strange... They move too parallel...”
 
@@ -130,9 +132,17 @@ The paced source passes typecheck, lint and all **107 tests / 27 files** ([check
 The `601d18df` six-level remote audit completed in **756.2 s** (764.3 s including the budget wrapper), exited 1, and retained **8 top-level flags**. [Final comparison against clean main](follower-comparison-paced.json) includes all follower rows, waits, seed validity and raw audit hashes. No evaluator, validity rule or threshold changed.
 
 - **L8 correction verified:** complete at 314.1 s; skilled waiting 7.19%; raw escape/breached slow rows contain only companion 354, already failing on main. New human slow rows 355/361 are removed. Passive adds no raw slow rows. Boarding and natural spacing/heading variation remain verified by the linked receipts.
-- **L7 remains unqualified:** skilled waiting improves to 4.92%, but all three mortal seeds fail, so required IDs 60/63 have no valid pace votes. Departure samples additionally flag IDs 51/52/58/60/67/69/71; main never reaches that phase, so these cannot establish no regression. Quiet 24/24 boarding is not a substitute for qualified mortal-route coverage. The bus reaches HP 0 on both main and lane ([route blocker](l7-route-blocker.json)).
+- **L7 remains unqualified:** skilled waiting improves to 4.92%, but all three mortal seeds fail, so required IDs 60/63 have no valid pace votes. Departure samples additionally flag IDs 51/52/58/60/67/69/71; main never reaches that phase, so these cannot establish no regression. Quiet 24/24 boarding is not a substitute for qualified mortal-route coverage. The courier reaches HP 0 on both compared snapshots ([route blocker](l7-route-blocker.json)).
 - L2/L3 follower rows remain unchanged; L5 has no pace failures; L6 removes the five exit slow IDs, with both its increased waiting share and reduced absolute stationary-far time retained above. Other inherited threat/kiting flags remain in the complete comparison.
 
-The two-hour work box is exhausted. **BLOCKED:** a complete native L7 route or upstream bus/route fix is needed, followed by qualified follower verification. The goal is not marked achieved. The final runtime, comparisons and reports are committed; no browser, push or deploy was used.
+The two-hour work box is exhausted. **BLOCKED:** a complete native L7 route or upstream route fix is needed, followed by qualified follower verification. The goal is not marked achieved. The final runtime, comparisons and reports are committed; no browser, push or deploy was used.
 
 Browser QA needed
+
+## r12-group-d: current-main regression isolation
+
+The orchestrator supplied a fresh 40-minute work box and authorized gating R12 off for L7 if it cannot pass. Main `eb835fc1` was merged first (`b3382b53`). The unchanged `runSeed` helper measures clean current main as complete / mission-failed / complete on low skilled seeds 1/2/3 ([receipts](d-main-seeds.json)); the merged lane initially measures failed / failed / complete ([receipts](d-merged-seeds.json)). The previous older-main failures did not excuse the current lane's seed-1 regression.
+
+**Diagnosis correction:** runner blocker `hp` is explicitly `world.entities.get(1).health.current`, the courier's HP. It never measured bus HP. The prior bus-destruction diagnosis was incorrect and has been corrected in the retained summary.
+
+Authored entry positions alone restore seed 1 but lose seed 3. Authored entry plus disabling generic L7 sway restores seeds 1/3, matching current main's completion pattern. Limiting sway only to pre-departure travel still loses seed 1. These results point to perturbing authored route targets as a regression source; further tracing is in progress. No policy, enemy, damage, validity rule or acceptance threshold has been changed.

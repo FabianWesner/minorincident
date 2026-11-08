@@ -9,7 +9,6 @@
     },
     "blockerObjective": "bus-departure",
     "busPhase": "waiting",
-    "busHp": 0,
     "followingRoster": 24,
     "seedOutcomes": [
       {
@@ -27,7 +26,9 @@
         "valid": false,
         "outcome": "mission-failed"
       }
-    ]
+    ],
+    "courierHp": 0,
+    "hpSource": "tools/sim-runner/levels.ts:280, world.entities.get(1).health.current"
   },
   {
     "audit": "threat-followers-fixed",
@@ -39,7 +40,6 @@
     },
     "blockerObjective": "bus-departure",
     "busPhase": "boarding",
-    "busHp": 0,
     "followingRoster": 24,
     "seedOutcomes": [
       {
@@ -57,6 +57,8 @@
         "valid": false,
         "outcome": "mission-failed"
       }
-    ]
+    ],
+    "courierHp": 0,
+    "hpSource": "tools/sim-runner/levels.ts:280, world.entities.get(1).health.current"
   }
 ]
