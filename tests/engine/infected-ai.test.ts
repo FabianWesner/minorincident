@@ -104,18 +104,23 @@ test('every human and animal role validates and spawns with its catalog health a
       step(w, 59);
       const damage = w.events.events().filter(event => event.type === 'combat.hit' && event.targetId === 1 && event.amount > 0);
       expect(damage.length > 0, 'an out-of-reach runner can still be outrun').toBe(!moving);
+      if (!moving) expect(damage[0]).toMatchObject({ amount: 10 });
     }
     const close = await arena(1, false); close.scenario = 'L6';
     const reaching = spawn(close, 'runner', 1.3);
     close.setInput({ move: { x: -1, z: 0 } }); step(close, 20);
     expect(close.events.events().some(event => event.type === 'combat.hit' && event.sourceId === reaching.id), 'windup stays readable').toBe(false);
     step(close, 40);
-    expect(close.events.events().some(event => event.type === 'combat.hit' && event.sourceId === reaching.id && event.amount > 0), 'movement cannot invalidate an in-reach strike').toBe(true);
+    expect(close.events.events().find(event => event.type === 'combat.hit' && event.sourceId === reaching.id && event.amount > 0), 'movement connects with a glancing hit').toMatchObject({ amount: 1 });
 
     const closing = await arena(1, false), pursuer = spawn(closing, 'runner', 8);
     let warningDistance = 0;
     closing.events.on('telegraph', event => {
-      if (event.type === 'telegraph' && event.sourceId === pursuer.id) warningDistance = Math.hypot(pursuer.transform.x - closing.entities.get(1)!.transform.x, pursuer.transform.z);
+      if (event.type === 'telegraph' && event.sourceId === pursuer.id) {
+        const player = closing.entities.get(1)!.transform;
+        warningDistance = Math.hypot(pursuer.transform.x - player.x, pursuer.transform.z);
+        expect(Math.hypot(event.target!.x - player.x, event.target!.z - player.z), 'ordinary lunge lead is bounded').toBeLessThanOrEqual(1.600001);
+      }
     });
     for (let i = 0; i < 240 && !warningDistance; i++) { closing.setInput({ move: { x: -1, z: 0 }, walk: true }); closing.update(); }
     expect(warningDistance, 'a closing pursuer must warn before entering the old contact-only start ring').toBeGreaterThan(l1v2.infected.lungeRangeM);
