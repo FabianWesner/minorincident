@@ -4,8 +4,8 @@ import type { Point } from '../../levels/districts/types';
 import type { SimWorld } from '../../sim/world/SimWorld';
 import { l9Course } from '../../data/l9';
 
-/** One-seed can-it-be-finished driver for L9: real keyboard drive frames along a route (or its detour) with pure pursuit.
- * It never fights, leaves the car or loosens anything; the crash sequence takes over by itself at the outskirts. */
+/** Ordinary keyboard policy: follow a route, avoid heavy bodies, shake boarders,
+ * defend stopped hatches and supply the controlled crawl. No simulation writes. */
 export class LevelNineBot {
   private index = 1;
   private avoid: { x: number; z: number; until: number } | null = null;

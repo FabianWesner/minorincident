@@ -1,4 +1,4 @@
-import { BoxGeometry, CanvasTexture, Color, Group, InstancedMesh, Matrix4, Mesh, MeshBasicNodeMaterial, PlaneGeometry, Quaternion, Vector3, type Material, type Object3D } from 'three/webgpu';
+import { BoxGeometry, CapsuleGeometry, CanvasTexture, Color, Group, InstancedMesh, Matrix4, Mesh, MeshBasicNodeMaterial, PlaneGeometry, Quaternion, TorusGeometry, Vector3, type Material, type Object3D } from 'three/webgpu';
 import { AssetRegistry } from '../assets/registry';
 import { catalog } from '../data/actions/catalog';
 import { l9Course as cfg } from '../data/l9';
@@ -16,6 +16,8 @@ export class L9Props extends Group {
   private readonly ownedMaterials: Material[] = [];
   private readonly textures: CanvasTexture[] = [];
   private readonly signGeometry = new PlaneGeometry(1, 1);
+  private readonly bagGeometry = new CapsuleGeometry(.22, .7, 3, 8);
+  private readonly handleGeometry = new TorusGeometry(.14, .025, 4, 8, Math.PI);
   private rocket?: Object3D;
   private readonly poseMatrix = new Matrix4();
   private readonly positionV = new Vector3();
@@ -31,6 +33,7 @@ export class L9Props extends Group {
     const wood = materials.fromColor('l9-course-wood', new Color('#70543b'), 0, true);
     const river = materials.fromColor('l9-hollow-creek', new Color('#233e4a'), .08, true);
     const fuel = materials.fromColor('l9-leaking-fuel', new Color('#191d1b'), 0, true);
+    const canvas = materials.fromColor('l9-weapon-duffel', new Color('#4b5943'), 0, true);
     const staticBoxes = new Map<Material, { p: number[]; s: number[]; angle: number }[]>();
     const box = (parent: Group, mat: Material, p: number[], s: number[], angle = 0) => {
       const mesh = new Mesh(this.geometry, mat); mesh.position.set(p[0], p[1], p[2]); mesh.scale.set(s[0], s[1], s[2]); mesh.rotation.z = angle; mesh.castShadow = mesh.receiveShadow = true; parent.add(mesh); return mesh;
@@ -81,7 +84,12 @@ export class L9Props extends Group {
     // The same rack stays on the hull before the impact, then tumbles out.
     for (const z of [-.65, .65]) box(this.rack, metal, [0, .4, z], [.15, 1.2, .12]);
     for (const y of [0, .8]) box(this.rack, metal, [0, y, 0], [.15, .12, 1.5]);
-    box(this.rack, wood, [-.3, -.25, 0], [.65, .45, 1.2]); this.add(this.rack);
+    const duffel = new Mesh(this.bagGeometry, canvas); duffel.position.set(-.3, -.2, 0); duffel.rotation.x = Math.PI / 2; duffel.castShadow = true; this.rack.add(duffel);
+    for (const z of [-.22, .22]) {
+      box(this.rack, metal, [-.3, -.19, z], [.47, .45, .07]);
+      const handle = new Mesh(this.handleGeometry, metal); handle.rotation.y = Math.PI / 2; handle.position.set(-.3, .02, z); this.rack.add(handle);
+    }
+    this.add(this.rack);
     for (const [mat, boxes] of staticBoxes) {
       const mesh = new InstancedMesh(this.geometry, mat, boxes.length);
       boxes.forEach((b, i) => { this.poseMatrix.compose(this.positionV.set(b.p[0], b.p[1], b.p[2]), this.rotationQ.setFromAxisAngle(this.scaleV.set(0, 0, 1), b.angle), this.scaleV.set(b.s[0], b.s[1], b.s[2])); mesh.setMatrixAt(i, this.poseMatrix); });
@@ -121,5 +129,5 @@ export class L9Props extends Group {
       if (this.rocket) { const slide = Math.max(0, fall - 1.8); this.rocket.position.y = Math.max(-4, -slide * 2.5); this.rocket.position.x = .15 + Math.min(3, slide * 1.5); }
     }
   }
-  dispose(): void { this.registry.dispose(); this.geometry.dispose(); this.signGeometry.dispose(); for (const m of this.ownedMaterials) m.dispose(); for (const t of this.textures) t.dispose(); }
+  dispose(): void { this.registry.dispose(); this.geometry.dispose(); this.signGeometry.dispose(); this.bagGeometry.dispose(); this.handleGeometry.dispose(); for (const m of this.ownedMaterials) m.dispose(); for (const t of this.textures) t.dispose(); }
 }
