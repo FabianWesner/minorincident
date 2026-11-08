@@ -67,7 +67,7 @@ Climax: the bridge collapse caused by the Mega, the enemy introduced in L8. The 
 
 ## L10 The Cure — "alone, hunted, rebuild, deliver" (~35–40 min competent, 45–50 newbie)
 
-The level keeps its size and the long walks (PO). Its tone is survival horror, not crowds: quiet dark stretches with dread cues (sounds in the dark, lights flickering out, the corgi growling, the distant Mega), rare jump scares by stronger and faster infected and small hunting groups, continuous sparse scenery across corn fields and dead farms (corn hides the scares), an apocalypse dressing pass on the houses, and a dark ambient score with silence before each scare (rock only for the Mega climax). The only crowd fight is a smaller console assault around the Mega fight. Every weapon comes from a scene with a reason:
+The level keeps its size and the long walks (PO). Its tone is survival horror, not crowds: quiet dark stretches with dread cues (sounds in the dark, lights flickering out, the corgi growling, the distant Mega), rare jump scares by stronger and faster infected and small hunting groups, continuous sparse scenery across dry corn fields and dead farms under a dark, desaturated late-autumn look (bare trees, brown stubble, mud, fog banks, no green) (corn hides the scares), an apocalypse dressing pass on the houses, and a dark ambient score with silence before each scare (rock only for the Mega climax). The only crowd fight is a smaller console assault around the Mega fight. Every weapon comes from a scene with a reason:
 
 | Region | Story goal (objective) | Weapon and its story | Climax / threat |
 |---|---|---|---|

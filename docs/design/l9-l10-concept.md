@@ -151,6 +151,21 @@ Corn cuts the sight lines, which suits the survival-horror tone, and it is the m
 
 **Perf:** a new instanced crop asset (`veg.corn-block`: crossed alpha-tested cards, wind sway in the vertex shader; LOD1 sparser cards; LOD2 one billboard slab per row). Indicative caps: LOD0 ≤ 6,000 / LOD1 ≤ 1,500 / LOD2 ≤ 200 triangles per 10 × 10 m tile. It uses the existing DistrictView instanced batches and chunk residency (25 / 9 detailed chunks), with low tier at half density. Corn has **no physics colliders** (nav cost only). Gate: E18 draws/triangles at the densest corn chunk, high and low.
 
+## L10 art direction: dead late-autumn land (PO: "also scenery needs to look darker. Not green healthy trees on grass.")
+
+Target: bare and dead trees, dry brown/grey grass and stubble, burned patches, dry broken corn, mud tracks, low fog banks, and a desaturated night grade. No lush green anywhere in L10.
+
+| Change | Delivered by (what exists) | Cost |
+|---|---|---|
+| Dead and bare trees | Only `prop.tree`, `prop.street-tree` and `prop.street-tree-blossom` exist, all with green crowns (D-CURE places `prop.tree` in `layouts/D-CURE/layout.py`). **New variant `prop.tree.dead`** derived from `prop.tree` in Blender: crown removed, trunk and branches kept, plus a charred version (`.burned`). Same collider (trunk only). LOD caps at or below the base tree's. | M (Sonnet asset lane, ~1.5 h, plus asset QA) |
+| Remaining crowns brown/ochre | Palette tint per district through `PaletteMaterial` / the `look.leaf` uniform (already `#7b838d` in `L10-night`). Shift crowns toward dry ochre/grey-brown and thin them. | S |
+| Dry ground instead of green grass | D-CURE surfaces are `grass`/`soil` (`layout.py` lines 139–144). Add `dry-grass`, `stubble` and `mud` surface colours (palette entries) and repaint the field polygons. Burned patches reuse `decay.crater`/scorch decals; tractor ruts become mud strips. `groundBreakup` goes up for patchiness. | S–M |
+| Corn dry and broken | The corn asset (section above) is authored in straw/grey-brown with broken, leaning stalks and gaps. | Inside the corn lane |
+| Fog banks | Low ground-fog cards in hollows and over fields, reusing the E27 smoke pool (grey, slow), clearly unlike the white cure mist. Keep `fogNear`/`fogFar`. | S–M (within the smoke particle budget) |
+| Darker, desaturated night | `L10-night` look: `gradeSaturation` .8 → about .55, a colder `gradeShadow`, a slightly lower `groundAmbient`. **Constraint:** road vs verge contrast must stay ≥ 2.5:1 (the E31-AC16 gate the comment in `timeOfDay.ts` warns about). Re-measure it, and keep the warm practical lights as the only saturated colour. | S (plus a capture check at low/high, zoom 0.5/1/1.5) |
+
+Goes into lane L10-farm (assets, ground, corn, fog) and L10-B (grade). Opus visual QA verdict: "dead land, never green".
+
 ## Music direction (PO: "This also means another music. Our rock music for Zombies wouldn't [fit].")
 
 Today L10 has no level stream: it falls back to the generic `calm`/`tension`/`combat` streams (*Running free* / *Blinding Lights*, synth-rock). L8 uses *Chee Zee Jungle* / *Freddy's Menagerie*, L9 *Limit 70* / *Hot Pursuit* (all MacLeod, CC-BY 4.0, `assets/audio/imports.json`). New picks below come from the CC0/CC-BY sources already vetted in `specs/10-music-sources.md` (licence and attribution are checked per track at import).
