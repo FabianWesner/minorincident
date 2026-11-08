@@ -324,10 +324,9 @@ export class L8BossArenas {
       if (firstContact && (arena.id === 'lion' || arena.id === 'monkey')) { b.grabUntil = w.tick + 120; b.grabHits = 0; b.heardTargetId = 1; arena.grabs++; }
     }
     if (clear + .001 < step || travelled + step >= range || w.tick - a.activeTick > (range / speed + 1) * 60) {
-      const bait = a.bait ?? a.target, baitX = bait.x - a.area.x, baitZ = bait.z - a.area.z;
-      const baitSide = Math.abs(baitX * a.area.dz - baitZ * a.area.dx), side = Math.abs((p.transform.x - a.area.x) * a.area.dz - (p.transform.z - a.area.z) * a.area.dx);
+      const side = Math.abs((p.transform.x - a.area.x) * a.area.dz - (p.transform.z - a.area.z) * a.area.dx);
       // A near wall/truck still counts after a real lured run and sidestep; the elephant need not pass the old bait pose.
-      if (arena.id === 'elephant' && staticClear + .001 < step && baitSide <= a.area.radius + .35 && travelled >= 1 && side > a.area.radius + .35) {
+      if (arena.id === 'elephant' && staticClear + .001 < step && distance(e.transform, a.area) >= 1 && side > a.area.radius + .35) {
         arena.wallHits++; arena.counters++; this.announce('Elephant staggered — fire now!');
         if (arena.wallHits >= 3) w.combat!.damage.apply({ sourceId: 1, targetId: e.id, attackId: a.attackId, actionId: 'arena.elephant.wall', origin: p.transform, direction: { x: a.area.dx, z: a.area.dz }, base: e.health.max * 10, multiplier: 1, type: 'status', knockback: 0, stagger: 0, permanent: true });
       }
