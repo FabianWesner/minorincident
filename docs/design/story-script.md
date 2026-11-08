@@ -130,7 +130,7 @@ triumphant hymn (build from the finale theme: brass/choir swell, then a warm res
    - People come out of houses and basements across the town (depot workers among them), blinking at the sun.
 4. **Back to her (50–65 s).** Sunrise over the complex. The courier sits on the platform steps, the corgi's head on her knee.
    Her phone buzzes — the same sound as the first minute of the game: **"Delivered ✓"**. She almost smiles.
-5. **Title and credits (65 s+).** PO 2026-11-08: "final zoom out is amazing, but we don't need to wait 120 s for this" — keep the existing slow zoom-out over the complex, but start it right after the 'Delivered ✓' beat and let it run ~15 s, not 120 s. Pull out, title **Minor Incident**, credits over the hymn; a final post-credits shot: the corgi
+5. **Title and credits (65 s+).** PO 2026-11-08: "final zoom out is amazing, but we don't need to wait 120 s for this" — keep the existing slow zoom-out over the complex, but start it right after the 'Delivered ✓' beat and let it run ~15 s, not 120 s, and pull out much higher — until the whole of L10 is visible (corn, farms, restricted zone, hangar, complex) under the spreading green dust (PO: "could even zoom higher, so the entire level can be overseen"); distant terrain at low LOD is fine. Pull out, title **Minor Incident**, credits over the hymn; a final post-credits shot: the corgi
    carrying its toy (if found in L10) up to her.
 
 ---
