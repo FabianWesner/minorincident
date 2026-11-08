@@ -68,13 +68,18 @@ for (const tier of values.tier === 'both' ? ['low', 'high'] as const : [values.t
     };
     wrap(world.infected, 'update', 'ai'); wrap(world.npcs, 'update', 'npcs');
     wrap(world.physics, 'update', 'physics'); wrap(world.combat, 'update', 'combat');
-    wrap(world.solids, 'commit', 'contactCommit'); wrap(world.vehicles, 'update', 'vehicles');
+    wrap(world.solids, 'commit', 'contactCommit');
+    wrap(world.vehicles, 'prePhysics', 'vehicleInput'); wrap(world.vehicles, 'postPhysics', 'vehicleContactsAndPassengers');
     wrap(world.npcs!.civilians.outbreak, 'update', 'outbreak');
     wrap(world.missions!.l8, 'update', 'zooMission'); wrap(world.missions!.l8, 'follower', 'zooFollowers');
     wrap(world.npcs, 'move', 'npcNavigation'); wrap(world.infected!.nav, 'path', 'pathfinding');
+    if (values.profile) {
+      wrap(world.infected, 'updateSpecial', 'specialMoves');
+      wrap(world.lightPower, 'sightMultiplier', 'sightQueries'); wrap(world.lightPower, 'isOn', 'lampChecks');
+    }
     const wallTicks: number[] = [], cpuTicks: number[] = [], windows: object[] = [];
     let windowStarted = performance.now(), windowTick = world.tick, peakInfected = 0;
-    let profiling = false; let cpuProfile: unknown;
+    let profiling = false; const cpuProfiles: object[] = [];
     if (inspector) { inspector.connect(); await inspector.post('Profiler.enable'); await inspector.post('Profiler.setSamplingInterval', { interval: 500 }); }
     const capture = () => {
       if (!wallTicks.length) return;
@@ -113,29 +118,31 @@ for (const tier of values.tier === 'both' ? ['low', 'high'] as const : [values.t
         if (world.tick === 3600) {
           const p = world.entities.get(1)!; Object.assign(p.transform, { x: 27.14, z: 58.57 });
           world.physics.playerBody!.setTranslation(p.transform, true); world.spatial.set(1, p.transform.x, p.transform.z);
+          world.missions!.completeObjective('escape');
         }
         frame.move = { x: 0, z: 0 }; frame.interact = false;
       }
       world.applyInput(frame, 'keyboard'); for (const name of totals.keys()) totals.set(name, 0);
-      if (inspector && world.tick === 5602) { await inspector.post('Profiler.start'); profiling = true; }
+      if (inspector && [5602, 8931].includes(world.tick)) { await inspector.post('Profiler.start'); profiling = true; }
       const cpu = process.cpuUsage(), start = performance.now(), before = world.tick;
       world.update(); const elapsed = performance.now() - start, used = process.cpuUsage(cpu);
       if (world.tick === before) break;
       wallTicks.push(elapsed); cpuTicks.push((used.user + used.system) / 1000);
       for (const [name, total] of totals) costs.get(name)!.push(total);
       peakInfected = Math.max(peakInfected, world.infected!.director.count);
-      if (inspector && profiling && world.tick === 5722) {
+      if (inspector && profiling && [5722, 9051].includes(world.tick)) {
         const { profile } = await inspector.post('Profiler.stop'); profiling = false;
         const nodes = new Map(profile.nodes.map(n => [n.id, n.callFrame]));
         const self = new Map<string, number>();
         profile.samples?.forEach((id, i) => { const f = nodes.get(id)!; const key = `${f.url.split('/').slice(-3).join('/')}:${f.functionName}`; self.set(key, (self.get(key) ?? 0) + (profile.timeDeltas?.[i] ?? 0) / 1000); });
-        cpuProfile = [...self].sort((a, b) => b[1] - a[1]).slice(0, 25).map(([functionName, selfMs]) => ({ functionName, selfMs }));
+        cpuProfiles.push({ tick: world.tick, functions: [...self].sort((a, b) => b[1] - a[1]).slice(0, 25).map(([functionName, selfMs]) => ({ functionName, selfMs })) });
       }
       if (world.tick % 3600 === 0 || [5602, 5722, 8931, 9051].includes(world.tick)) capture();
     }
     capture();
     results.push({ tier, seed: 1, policy: values.policy, initialSurvivors: campaign.results!.L7!.escapedSurvivors!.length,
-      complete: world.missions!.state.phase === 'progression', tick: world.tick, windows, cpuProfile });
+      fixture: values.policy === 'hold' ? { god: true, completedEscapeObjective: true, breachPosition: { x: 27.14, z: 58.57 }, movementWithheld: true } : undefined,
+      complete: world.missions!.state.phase === 'progression', tick: world.tick, windows, cpuProfiles });
   } finally { if (inspector) inspector.disconnect(); world.dispose(); }
 }
 let prior: Record<string, unknown>;
