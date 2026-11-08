@@ -39,9 +39,10 @@ export const megaAlpha = {
   directM: 160,
   /** A node counts as passed inside this radius. */
   nodeReachM: 3,
-  /** Introduction: first field crossing at 0:45, 24 m behind on a reachable route (PO 2026-11-08). */
+  /** Introduction: begin walking outside the widest view at 0:45; the first sighting follows physical travel. */
   introduceS: 45,
   startBehindM: 24,
+  walkStartBehindM: 60,
   /** Checkpoint/respawn fairness: a restored Mega stands at least this far from the restored player. */
   respawnGapM: 60,
   /** Stuck detection: less than `progressM` of travel over `windowS` while free to move escalates one recovery level. */

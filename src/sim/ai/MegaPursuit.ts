@@ -129,7 +129,17 @@ export class MegaPursuit {
   /** Spawn the one Mega Alpha (idempotent: a second call returns the same entity id). */
   introduce(at?: { x: number; z: number }): number {
     if (this.state.id) return this.state.id;
-    const ai = this.world.infected!, spot = at ?? this.options.spawn ?? this.behind();
+    const ai = this.world.infected!;
+    let spot = at ?? this.options.spawn ?? this.behind();
+    if (this.world.scenario === 'L10' && !at && !this.options.spawn && ai.director.inFrame(spot, 1, true)) {
+      const player = this.world.entities.get(1)!.transform;
+      // An idle courier may still be at the trail origin. Enter from clear offscreen ground, never materialize beside her.
+      for (let i = 0; i < 16; i++) {
+        const angle = player.yaw + Math.PI + i * Math.PI / 8;
+        const candidate = { x: player.x + Math.cos(angle) * 75, z: player.z + Math.sin(angle) * 75 };
+        if (this.resident(candidate.x, candidate.z) && this.grid.clear(candidate.x, candidate.z, this.radius) && !ai.director.inFrame(candidate, 1, true)) { spot = candidate; break; }
+      }
+    }
     if (this.reservation) { ai.director.reserved = Math.max(0, ai.director.reserved - 1); this.reservation = false; }
     const resident = this.resident(spot.x, spot.z);
     const place = resident ? this.clearNear(spot) ?? spot : spot;
@@ -419,11 +429,11 @@ export class MegaPursuit {
   }
   /** Introduction point: the route node closest to `startBehindM` route-metres from the player's node; else straight behind her. */
   private behind(): { x: number; z: number } {
-    const player = this.world.entities.get(1)!.transform, want = megaAlpha.startBehindM;
+    const player = this.world.entities.get(1)!.transform, want = this.world.scenario === 'L10' ? megaAlpha.walkStartBehindM : megaAlpha.startBehindM;
     if (this.nodes.size) {
       if (this.world.scenario === 'L10') {
         // Sample the ordered eastbound trail behind the courier. Choosing an
-        // arbitrary graph node at least24m away could select a future node ahead.
+        // arbitrary graph node at least60m away could select a future node ahead.
         const trail = [...this.nodes.values()];
         let segment = 0, progress = 0, nearest = Infinity;
         for (let i = 1; i < trail.length; i++) {
