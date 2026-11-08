@@ -4,6 +4,7 @@ import os
 from pathlib import Path
 import socket
 import subprocess
+import sys
 import time
 
 if os.environ.get('MI_REMOTE') != '1' or not Path('.git').is_dir():
@@ -16,7 +17,8 @@ subprocess.run(['git', 'add', '-f', '--pathspec-from-file=.mi-manifest', '--path
 subprocess.run(['git', '-c', 'user.name=Remote validation', '-c', 'user.email=runner@example.invalid',
                 '-c', 'core.hooksPath=/dev/null', 'commit', '--allow-empty', '-qm', f'Validation snapshot of {origin}'], check=True)
 snapshot = subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip()
-root = Path('test-results/eg-l10-farm')
+review_only = '--review-only' in sys.argv
+root = Path('test-results/eg-l10-farm-review' if review_only else 'test-results/eg-l10-farm')
 root.mkdir(parents=True, exist_ok=True)
 env = {**os.environ, 'QA_ACCEPT_ROOT': 'docs/reports/eg-l10-farm/acceptance'}
 checks = [
@@ -26,6 +28,12 @@ checks = [
     ('farm-native', ['node', '--import', 'tsx/esm', 'tools/qa/eg-l10-farm.ts']),
     ('acceptance', ['npm', 'run', 'qa:accept', '--', '--level', 'L10', '--skip-browser']),
 ]
+if review_only:
+    checks = [
+        ('typecheck', ['npm', 'run', 'typecheck']),
+        ('lint', ['npm', 'run', 'lint']),
+        ('unit', ['npm', 'test', '--', '--maxWorkers=1']),
+    ]
 receipt = {'sourceRevision': origin, 'remoteSnapshot': snapshot, 'host': socket.gethostname(), 'checks': []}
 for name, command in checks:
     print(f'[farm-check] {name}: starting', flush=True)
