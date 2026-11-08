@@ -1,0 +1,259 @@
+[
+  {
+    "id": "G-13",
+    "clause": "each observed follower median versus its phase group median",
+    "level": "L8",
+    "tier": "low",
+    "policy": "complete",
+    "status": "PASS",
+    "value": [
+      {
+        "phase": "step/escape",
+        "id": 355,
+        "samples": 75,
+        "median": 4.4999999999998685,
+        "groupMedian": 4.500181917098216,
+        "ratio": 0.9999595756123423
+      },
+      {
+        "phase": "step/escape",
+        "id": 356,
+        "samples": 78,
+        "median": 4.499991541287677,
+        "groupMedian": 4.500181917098216,
+        "ratio": 0.9999576959745083
+      },
+      {
+        "phase": "step/escape",
+        "id": 357,
+        "samples": 78,
+        "median": 4.501632305488448,
+        "groupMedian": 4.500181917098216,
+        "ratio": 1.0003222955020377
+      },
+      {
+        "phase": "step/escape",
+        "id": 358,
+        "samples": 76,
+        "median": 4.509882419941119,
+        "groupMedian": 4.500181917098216,
+        "ratio": 1.0021555801568927
+      },
+      {
+        "phase": "step/escape",
+        "id": 359,
+        "samples": 75,
+        "median": 4.499999999999325,
+        "groupMedian": 4.500181917098216,
+        "ratio": 0.9999595756122215
+      },
+      {
+        "phase": "step/escape",
+        "id": 360,
+        "samples": 79,
+        "median": 4.499999822594715,
+        "groupMedian": 4.500181917098216,
+        "ratio": 0.9999595361905684
+      },
+      {
+        "phase": "step/escape",
+        "id": 361,
+        "samples": 79,
+        "median": 4.525129389043618,
+        "groupMedian": 4.500181917098216,
+        "ratio": 1.0055436585464725
+      },
+      {
+        "phase": "step/escape",
+        "id": 362,
+        "samples": 79,
+        "median": 4.5008899618043285,
+        "groupMedian": 4.500181917098216,
+        "ratio": 1.0001573369075198
+      },
+      {
+        "phase": "step/escape",
+        "id": 363,
+        "samples": 78,
+        "median": 4.499999999999671,
+        "groupMedian": 4.500181917098216,
+        "ratio": 0.9999595756122984
+      },
+      {
+        "phase": "step/escape",
+        "id": 364,
+        "samples": 81,
+        "median": 4.519155455504929,
+        "groupMedian": 4.500181917098216,
+        "ratio": 1.0042161714251205
+      },
+      {
+        "phase": "step/escape",
+        "id": 365,
+        "samples": 82,
+        "median": 4.499999999999753,
+        "groupMedian": 4.500181917098216,
+        "ratio": 0.9999595756123166
+      },
+      {
+        "phase": "step/escape",
+        "id": 366,
+        "samples": 80,
+        "median": 4.500181917098216,
+        "groupMedian": 4.500181917098216,
+        "ratio": 1
+      },
+      {
+        "phase": "step/escape",
+        "id": 422,
+        "samples": 82,
+        "median": 4.521438096940725,
+        "groupMedian": 4.500181917098216,
+        "ratio": 1.0047234045721012
+      }
+    ],
+    "target": "every ratio ≥0.95; ≥10 walking samples/follower",
+    "receipt": "test-results/l8-route/final-scoped/low-complete.json"
+  },
+  {
+    "id": "G-13",
+    "clause": "stationary far-follower time upper bound",
+    "level": "L8",
+    "tier": "low",
+    "policy": "complete",
+    "status": "NOT CHECKED",
+    "value": {
+      "escortTicks": 4997,
+      "stationaryFarTicks": 728,
+      "upperBoundPercent": 14.568741244746848,
+      "followers": [
+        {
+          "id": 354,
+          "escortTicks": 3762,
+          "stationaryFarTicks": 0
+        },
+        {
+          "id": 355,
+          "escortTicks": 3838,
+          "stationaryFarTicks": 0
+        },
+        {
+          "id": 356,
+          "escortTicks": 3946,
+          "stationaryFarTicks": 0
+        },
+        {
+          "id": 357,
+          "escortTicks": 4040,
+          "stationaryFarTicks": 32
+        },
+        {
+          "id": 358,
+          "escortTicks": 4138,
+          "stationaryFarTicks": 12
+        },
+        {
+          "id": 359,
+          "escortTicks": 4234,
+          "stationaryFarTicks": 104
+        },
+        {
+          "id": 360,
+          "escortTicks": 4328,
+          "stationaryFarTicks": 104
+        },
+        {
+          "id": 361,
+          "escortTicks": 4428,
+          "stationaryFarTicks": 117
+        },
+        {
+          "id": 362,
+          "escortTicks": 4522,
+          "stationaryFarTicks": 207
+        },
+        {
+          "id": 363,
+          "escortTicks": 4612,
+          "stationaryFarTicks": 337
+        },
+        {
+          "id": 364,
+          "escortTicks": 4703,
+          "stationaryFarTicks": 337
+        },
+        {
+          "id": 365,
+          "escortTicks": 4808,
+          "stationaryFarTicks": 518
+        },
+        {
+          "id": 366,
+          "escortTicks": 4905,
+          "stationaryFarTicks": 597
+        },
+        {
+          "id": 422,
+          "escortTicks": 4997,
+          "stationaryFarTicks": 713
+        }
+      ]
+    },
+    "target": "actual waiting ≤10%; a bound above 10% is inconclusive",
+    "receipt": "test-results/l8-route/final-scoped/low-complete.json"
+  },
+  {
+    "id": "G-22",
+    "clause": "announcement cohort tunnel-breach",
+    "level": "L8",
+    "tier": "low",
+    "policy": "complete",
+    "status": "PASS",
+    "value": {
+      "seconds": 116.9,
+      "spawned": 13,
+      "firstAttackSeconds": 18.933333333333334,
+      "flags": []
+    },
+    "target": "≥3 admitted cohort members; real player windup within20 s",
+    "receipt": "test-results/l8-route/final-scoped/low-complete.json"
+  },
+  {
+    "id": "L8-06",
+    "clause": "combat hard rule on actual player windups",
+    "level": "L8",
+    "tier": "low",
+    "policy": "complete",
+    "status": "PASS",
+    "value": {
+      "seconds": 102.9,
+      "playerWindups": 43,
+      "groupWindups": 0,
+      "attacksPerMinute": 25.072886297376094
+    },
+    "target": "nonzero player windups in each combat policy",
+    "receipt": "test-results/l8-route/final-scoped/low-complete.json"
+  },
+  {
+    "id": "L8-06",
+    "clause": "real player/group windups per minute",
+    "level": "L8",
+    "tier": "low",
+    "policy": "complete",
+    "status": "PASS",
+    "value": 25.072886297376094,
+    "target": "4 ≤ value ≤ Infinity",
+    "receipt": "test-results/l8-route/final-scoped/low-complete.json"
+  },
+  {
+    "id": "L8-06",
+    "clause": "minimum bounded-path reachable share within30m (path≤2.5×direct)",
+    "level": "L8",
+    "tier": "low",
+    "policy": "complete",
+    "status": "PASS",
+    "value": 100,
+    "target": "90 ≤ value ≤ 100",
+    "receipt": "test-results/l8-route/final-scoped/low-complete.json"
+  }
+]
