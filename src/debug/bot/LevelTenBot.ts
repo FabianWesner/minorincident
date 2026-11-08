@@ -84,7 +84,8 @@ export class LevelTenBot {
         }
         return f;
       }
-      const foot = { x: anchor.x + arena.platformStair.at[0], z: anchor.z + arena.platformStair.at[1] };
+      const [footX, footZ] = cure.anchors['dispersal-stair-foot'];
+      const foot = { x: footX, z: footZ };
       const pivot = gun.placement;
       if (p.y < arena.gun.deckHeight + .2) {
         f.move = distance(foot) > 1 && p.x > foot.x - 1
@@ -99,9 +100,10 @@ export class LevelTenBot {
     if (active.id !== 'hold' && gun?.mounted) { f.interact = true; return f; }
     const rack = player.weapons!.RIGHT.rack, target = active.id === 'mega' ? threats.find(isMega) ?? threats[0] : threats[0];
     if (['mega', 'release'].includes(active.id) && p.y > 2) {
-      const console = mission.def.anchors['cure-console'];
-      const top = { x: console.x + arena.platformStair.top[0], z: console.z + arena.platformStair.top[1] };
-      const foot = { x: console.x + arena.platformStair.at[0], z: console.z + arena.platformStair.at[1] };
+      // Interaction console is 2 m east of the assembly origin. Use the
+      // shipped stair anchors, rather than translating them from that marker.
+      const [topX, topZ] = cure.anchors['dispersal-stair-top'], [footX, footZ] = cure.anchors['dispersal-stair-foot'];
+      const top = { x: topX, z: topZ }, foot = { x: footX, z: footZ };
       if (p.x < top.x - .25 || Math.abs(p.z - top.z) > .25) f.move = this.walker.step(w, top, .2, 'descend-landing', true) ?? { x: 0, z: 0 };
       else {
         const dx = foot.x - p.x, dz = foot.z - p.z, d = Math.hypot(dx, dz) || 1;
