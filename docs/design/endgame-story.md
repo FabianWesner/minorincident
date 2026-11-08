@@ -130,3 +130,13 @@ PO: "Which [weapons] are not used yet? (maybe a fire thrower...). How could we m
 ## PO direction 2026-11-08 — the Mega must be present (binding)
 
 PO: "More than 1000s in L10 and I didn't see the mega alpha yet." → The Mega stalks the whole of L10, not only the finale: a first sighting within the first 2–3 minutes (on a ridge / crossing the road ahead / smashing through a barn in the corn), 2–3 close encounters along the way that force the player to hide or flee (it cannot be killed before the finale; set pieces like it tearing a farmhouse apart or throwing a car), the red pulsing minimap dot when it's near, audio tells (footsteps, roars) between sightings, and it arrives at the hangar/dispersal complex for the final fight. Target L10 length ~15 min.
+
+## PO direction 2026-11-08 — Mega and final fight (binding)
+
+PO: "No way to kill without the rocket launcher, so fight is pointless. The mega alpha shouldn't be slow, but there must be a reason why the user can escape (maybe the way is too tight, so the mega needs to find another longer way). The idea is the constant threat for the user and reason to not camp anywhere. The final fight is at the end then." and "More than 1000 s in L10 and I didn't see the mega alpha yet."
+- The Mega is a fast stalker through the whole of L10: first sighting within 2–3 min, recurring close encounters; staying put draws it in (no camping). Red pulsing minimap dot, audio tells.
+- Escape by terrain, not speed: gaps it cannot fit (alleys between farm buildings, fence gaps, culverts, doorways, corn rows where it loses sight, low walls it must go around); it then takes the long way, smashing what it can.
+- It cannot be killed during the walk (weapons only stagger it briefly; no HP bar until the finale).
+- Final fight at the dispersal complex, winnable with any loadout (environment weak points: machinery, fuel tanks, electrified gate; flamethrower burns armour; pillars to dodge charges; cure release as finishing blow).
+
+PO on the current final fight: "Make the place into which the user needs to survive larger, because in this yellow circle the user cannot do anything (nothing to hide)... But generally this final fight is quite nice! We can keep it as a story element. I will fine-tune it later, so it's fun." → keep its structure; enlarge the survive zone and add cover inside it.
