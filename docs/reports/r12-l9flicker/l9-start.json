@@ -1,0 +1,19 @@
+{
+  "name": "r12-l9flicker-start",
+  "seed": 1,
+  "ground": "district",
+  "time": "L9-crossing",
+  "dof": false,
+  "layout": {
+    "district": "D-CROSSING",
+    "bbox": [[-600, -400], [600, 400]]
+  },
+  "actors": [
+    { "id": "courier", "kind": "courier", "at": [-550, 0] }
+  ],
+  "camera": { "mode": "game", "target": "courier", "zoom": 1.14 },
+  "frames": 24,
+  "shots": [0, 23],
+  "sheet": 1,
+  "note": "PO report: L9 seed 1, player at (-550, 0), on foot, WebGPU high, zoom 1.14. Repeated first-start-frame capture to inspect the reported pavement/road corner."
+}
