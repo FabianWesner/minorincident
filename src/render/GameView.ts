@@ -1,3 +1,4 @@
+import { updateCorn } from './Corn';
 import { solidLargeCorpse } from '../sim/world/SolidRegistry';
 import { l6Doors, l6Entries } from '../data/l6';
 import { l5 as l5Config } from '../data/l5';
@@ -423,7 +424,7 @@ export class GameView implements Lifecycle {
     this.renderer.shadowMap.enabled=true;
     if(!this.districtResources){
       const lighting=new Lighting(this.scene, this.look, this.renderer, this.environment ??= new Environment(this.renderer), this.world.scenario === 'L7'),materials=new Materials(lighting, this.renderer),registry=new DistrictAssets(materials,this.renderer),phase=materials.wind;
-      this.districtResources={lighting,materials,registry,phase,grassMaterial:Grass.material(materials,phase,this.world.scenario === 'L10')};
+      this.districtResources={lighting,materials,registry,phase,grassMaterial:Grass.material(materials,phase)};
     }
     const shared=this.districtResources;this.lighting=shared.lighting;this.materials=shared.materials;this.scene.add(this.lighting.sun,this.lighting.sun.target,this.lighting.hemisphere,this.lighting.spot,this.lighting.spot.target,this.lighting.practicalEffects);this.lighting.set(this.world.districts!.composition.timeOfDay); this.lighting.lamps.state = this.world.lightPower; this.lighting.lamps.update();
     // L1 and L2 share D-GROVE (E20), L3 plays the same outbreak town style on D-CORRIDOR (E21): the same instancing
@@ -1104,6 +1105,7 @@ export class GameView implements Lifecycle {
     projectHullReveal(this.camera, subject && this.revealCourier);
     this.vehicles?.updateReveal(subject, subject && this.revealCourier);
     this.entityAssets?.updateReveal(subject, subject && this.revealCourier);
+    updateCorn(this.world);
     this.districts?.updateFoliage(this.view, current, undefined, subject, !this.world.entities.get(1)?.hidden);
     // Scenes without a DistrictView (Scene Lab asphalt scenes with asset occluders) open the same bounded, immediate reveal.
     if (!this.districts) {

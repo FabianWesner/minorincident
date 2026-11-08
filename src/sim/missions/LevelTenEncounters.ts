@@ -1,9 +1,10 @@
+import { updateFarmScares, type FarmScareState } from './FarmScares';
 import { cure } from '../../levels/L10/district';
 import { cureEncounters, cureEncounterSlots, cureEncounterSpot, cureMedkits } from '../../levels/L10/encounters';
 import { cureAlphaCap } from '../../levels/L10/alphaContracts';
 import type { SimWorld } from '../world/SimWorld';
 
-export interface CureEncounterState { spawned: Record<string, number>; medkits: Record<string, number>; released?: string[]; laneOffsets?: Record<string, number>; patrol?: { nextSeconds: number; serial: number } }
+export interface CureEncounterState { farmScares?: FarmScareState; spawned: Record<string, number>; medkits: Record<string, number>; released?: string[]; laneOffsets?: Record<string, number>; patrol?: { nextSeconds: number; serial: number } }
 /** Existing director owns cap/pool/safe placement; existing chunks own actor/pickup sleep and wake.
  * Road groups are once-only. The charging console draws fresh assault ranks every ten charge seconds. */
 export class LevelTenEncounters {
@@ -30,6 +31,7 @@ export class LevelTenEncounters {
     const resident = depth.resident[low ? 'low' : 'high'][1];
     const cap = resident + (current.id === 'residential-fringe' ? depth.dogs?.[1] ?? 0 : 0);
     ai.director.levelCap = low ? cap * 2 : cap;
+    if (directorTick) updateFarmScares(w, this.state.farmScares ??= {});
 
     for (const kit of cureMedkits) {
       if (this.state.medkits[kit.id] || !chunks.resident(...kit.at)) continue;

@@ -11,11 +11,9 @@ import type { Materials } from './Materials';
 export class Grass extends Mesh {
   private readonly fullCount: number;
   private readonly sparseCount: number;
-  static material(materials: Materials, phase: ReturnType<typeof windPhase>, dryCrop = false) {
+  static material(materials: Materials, phase: ReturnType<typeof windPhase>) {
     const tip = attribute('tip', 'float'), weight = tip.mul(tip).mul(.08).mul(materials.look.nodes.windStrength).mul(weatherSurface.windStrength);
-    const root = dryCrop ? vec3(.22, .19, .105) : materials.look.nodes.grassRoot;
-    const crown = dryCrop ? vec3(.43, .36, .19) : materials.look.nodes.grassTip;
-    const material = materials.shaded(mix(root, crown, tip)); material.side = DoubleSide;
+    const material = materials.shaded(mix(materials.look.nodes.grassRoot, materials.look.nodes.grassTip, tip)); material.side = DoubleSide;
     material.normalNode = vec3(0, 1, 0).transformDirection(cameraViewMatrix);
     const gust = sin(positionLocal.x.mul(.8).add(positionLocal.z.mul(.35)).add(phase.mul(1.6)))
       .add(sin(positionLocal.z.mul(1.7).sub(phase.mul(.9))).mul(.35));
@@ -25,14 +23,14 @@ export class Grass extends Mesh {
   /** Lawns longer than this are cut into tiles, so frustum culling drops the grass far from the camera (one district-wide mesh drew every blade, ~200k triangles on L10). */
   static readonly tileM = 40;
   /** One mesh per lawn tile; the blade-validity grid (footprints, paving) is built once and shared. */
-  static tiles(layout: DistrictLayout, material: ReturnType<typeof Grass.material>, seed: number, dryCrop = false): Grass[] {
+  static tiles(layout: DistrictLayout, material: ReturnType<typeof Grass.material>, seed: number): Grass[] {
     const valid = Grass.validity(layout), out: Grass[] = [];
     for (const [index, lawn] of layout.lawns.entries()) {
       const w = lawn.max[0] - lawn.min[0], d = lawn.max[1] - lawn.min[1];
       const nx = Math.max(1, Math.ceil(w / Grass.tileM)), nz = Math.max(1, Math.ceil(d / Grass.tileM));
       for (let i = 0; i < nx; i++) for (let j = 0; j < nz; j++) {
         const piece = { min: [lawn.min[0] + w * i / nx, lawn.min[1] + d * j / nz] as [number, number], max: [lawn.min[0] + w * (i + 1) / nx, lawn.min[1] + d * (j + 1) / nz] as [number, number] };
-        out.push(new Grass(layout, material, seed, [piece], valid, `${index}:${i}:${j}`, dryCrop));
+        out.push(new Grass(layout, material, seed, [piece], valid, `${index}:${i}:${j}`));
       }
     }
     return out;
@@ -59,7 +57,7 @@ export class Grass extends Mesh {
     }
     return (x: number, z: number) => !(grid.get(key(Math.floor(x / cell), Math.floor(z / cell))) ?? []).some(test => test(x, z));
   }
-  constructor(layout: DistrictLayout, material: ReturnType<typeof Grass.material>, seed: number, lawns: DistrictLayout['lawns'] = layout.lawns, valid: (x: number, z: number) => boolean = Grass.validity(layout), tile = '', dryCrop = false) {
+  constructor(layout: DistrictLayout, material: ReturnType<typeof Grass.material>, seed: number, lawns: DistrictLayout['lawns'] = layout.lawns, valid: (x: number, z: number) => boolean = Grass.validity(layout), tile = '') {
     const rng = new Rng(seed, `grass:${layout.district}${tile ? ':' + tile : ''}`), positions: number[] = [], tips: number[] = [];
     const blade = (x: number, z: number, angle: number, height: number, width: number) => {
       const dx = Math.cos(angle) * width, dz = Math.sin(angle) * width;
@@ -73,7 +71,7 @@ export class Grass extends Mesh {
         for (let i = 0; i < count; i++) {
           const x = lawn.min[0] + rng.next() * (lawn.max[0] - lawn.min[0]), z = lawn.min[1] + rng.next() * (lawn.max[1] - lawn.min[1]);
           if (!valid(x, z)) continue;
-          const height = dryCrop ? .9 + rng.next() * 1.55 : .15 + rng.next() ** 2 * .26, angle = rng.next() * Math.PI, width = dryCrop ? .06 + rng.next() * .04 : .045 + rng.next() * .035;
+          const height = .15 + rng.next() ** 2 * .26, angle = rng.next() * Math.PI, width = .045 + rng.next() * .035;
           blade(x, z, angle, height, width); blade(x, z, angle + Math.PI / 2, height * .85, width);
         }
       }

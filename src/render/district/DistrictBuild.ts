@@ -322,6 +322,7 @@ export async function buildDistrict(parts: DistrictParts, deps: DistrictBuildDep
           const first = anchorsFor(p.assetId)[0];
           if (first) reference.userData.lightBase = deps.materials.lamps.base(placedLightId(d.id, d.origin, p.id, first.name), anchorsFor(p.assetId));
           if (p.tint) reference.userData.tint = p.tint;
+          if (p.id.startsWith('decor-cure-farm-field-')) reference.userData.farmScatter = Number(p.id.split('-').at(-1));
           if (!references.has(key)) references.set(key, []);
           references.get(key)!.push(reference);
         }
@@ -383,7 +384,7 @@ export async function buildDistrict(parts: DistrictParts, deps: DistrictBuildDep
           p as [number, number, number],
         );
       }
-      for (const grass of Grass.tiles(d.layout, deps.grassMaterial, seed, d.id === 'D-CURE')) { parts.grass.push(grass); root.add(grass); }
+      for (const grass of Grass.tiles(d.layout, deps.grassMaterial, seed)) { parts.grass.push(grass); root.add(grass); }
       for (const b of d.layout.buildings) {
         const p = d.layout.placements.find((p) => p.id === b.id)!;
         tag(parts, root, b.label, [p.position[0], 2.8, b.aabb.max[2] + .6]);
