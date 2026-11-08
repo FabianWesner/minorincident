@@ -18,15 +18,18 @@ function intersection(a: number[][], b: number[][]): number[][] {
   return out;
 }
 export function groundConflicts(triangles: readonly GroundTriangle[], maxGap = unsafeGroundGap): GroundConflict[] {
-  const cells=new Map<string,number[]>(), seen=new Set<string>(), conflicts:GroundConflict[]=[];
+  const cells=new Map<string,number[]>(), conflicts:GroundConflict[]=[];
+  const bounds=triangles.map(t=>{const xs=t.points.map(p=>p[0]),zs=t.points.map(p=>p[1]);return [Math.min(...xs),Math.max(...xs),Math.min(...zs),Math.max(...zs)];});
   for(const [index,a] of triangles.entries()) {
-    const xs=a.points.map(p=>p[0]),zs=a.points.map(p=>p[1]);
+    const [x0,x1,z0,z1]=bounds[index], seen=new Set<number>();
     const keys:string[]=[];
-    for(let x=Math.floor(Math.min(...xs)/20);x<=Math.floor(Math.max(...xs)/20);x++) for(let z=Math.floor(Math.min(...zs)/20);z<=Math.floor(Math.max(...zs)/20);z++)keys.push(`${x}:${z}`);
+    for(let x=Math.floor(x0/20);x<=Math.floor(x1/20);x++) for(let z=Math.floor(z0/20);z<=Math.floor(z1/20);z++)keys.push(`${x}:${z}`);
     for(const key of keys)for(const other of cells.get(key)??[]) {
-      const pair=`${other}:${index}`;if(seen.has(pair))continue;seen.add(pair);
+      if(seen.has(other))continue;seen.add(other);
       const b=triangles[other],gap=Math.abs(a.y-b.y);
       if(a.material===b.material||gap>maxGap+1e-6)continue;
+      const [bx0,bx1,bz0,bz1]=bounds[other];
+      if(x0>=bx1||x1<=bx0||z0>=bz1||z1<=bz0)continue;
       const p=intersection(a.points,b.points);if(p.length<3)continue;
       const area=Math.abs(signedArea(p)),perimeter=p.reduce((s,a,i)=>{const b=p[(i+1)%p.length];return s+Math.hypot(a[0]-b[0],a[1]-b[1]);},0);
       if(area<.01||2*area/perimeter<=.005)continue;

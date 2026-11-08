@@ -140,7 +140,7 @@ test('look-l6-l9 decor is render-only: L6 nav hash, colliders and pushables matc
   expect(groundConflicts([triangles[0],{...triangles[1],points:[[3,0],[3,2],[5,0]]}])).toHaveLength(0);
   const { auditGround } = await import('../../tools/layouts/audit-ground');
   const { readdirSync } = await import('node:fs');
-  const ground = await auditGround(readdirSync('public/assets/layouts').filter(p=>/\.(base|w[1-5])\.glb$/.test(p)).map(p=>`public/assets/layouts/${p}`), true);
+  const ground = await auditGround(readdirSync('public/assets/layouts').filter(p=>/\.(base|w\d+)\.glb$/.test(p)).map(p=>`public/assets/layouts/${p}`), true);
   expect(ground.flatMap(r=>r.conflicts.map(c=>({path:r.path,...c})))).toEqual([]);
   const { groundDepth, groundLayers } = await import('../../src/render/GroundLayers');
   const { MeshBasicNodeMaterial } = await import('three/webgpu');

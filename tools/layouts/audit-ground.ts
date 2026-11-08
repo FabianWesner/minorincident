@@ -28,7 +28,7 @@ export async function auditGround(paths: string[], together = false) {
   const io=new NodeIO().registerExtensions(ALL_EXTENSIONS).registerDependencies({'meshopt.decoder':MeshoptDecoder});
   const reports=[];
   const groups = new Map<string,string[]>();
-  for (const path of paths) { const key=together?path.replace(/\.(base|w[1-5])\.glb$/, ''):path; const row=groups.get(key)??[];row.push(path);groups.set(key,row); }
+  for (const path of paths) { const key=together?path.replace(/\.(base|w\d+)\.glb$/, ''):path; const row=groups.get(key)??[];row.push(path);groups.set(key,row); }
   for(const [path,files] of groups) {
     const triangles=[];
     for (const file of files) { const doc=await io.read(file);triangles.push(...groundTriangles(doc).map(t=>({...t,id:`${file}:${t.id}`}))); }
