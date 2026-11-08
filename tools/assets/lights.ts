@@ -25,7 +25,7 @@ export function lightSourcePath(filename: string): string | undefined {
 const round = (v: number) => Math.round(v * 1000) / 1000 || 0;
 
 /** Anchors in the asset frame plus semantic errors. Unreferenced emi_* meshes are reported separately. */
-export function extractLights(json: Gltf, source?: Gltf): { anchors: LightAnchor[]; errors: string[]; unreferencedEmissive: string[] } {
+export function extractLights(json: Gltf): { anchors: LightAnchor[]; errors: string[]; unreferencedEmissive: string[] } {
   const nodes = json.nodes ?? [], anchors: LightAnchor[] = [], errors: string[] = [];
   const meshNames = new Set<string>(), emissiveMeshes = new Set<string>();
   const local = (n: GltfNode) => n.matrix ? new Matrix4().fromArray(n.matrix) : new Matrix4().compose(new Vector3(...(n.translation ?? [0, 0, 0])), new Quaternion(...(n.rotation ?? [0, 0, 0, 1])), new Vector3(...(n.scale ?? [1, 1, 1])));
@@ -47,23 +47,12 @@ export function extractLights(json: Gltf, source?: Gltf): { anchors: LightAnchor
     for (const child of node.children ?? []) visit(child, world);
   };
   for (const root of json.scenes?.[json.scene ?? 0]?.nodes ?? []) visit(root, new Matrix4());
-  // Optimized runtime exports drop mesh node names: check emissive references against the authored source.
-  if (source) {
-    meshNames.clear(); emissiveMeshes.clear();
-    // A reference may name an emissive mesh or the group that holds it (e.g. `lightsBrake`).
-    for (const [index, node] of (source.nodes ?? []).entries()) {
-      const name = node.name ?? `node${index}`;
-      if (node.name) meshNames.add(name);
-      if (node.mesh === undefined) continue;
-      if (source.meshes?.[node.mesh]?.primitives.some(p => p.material !== undefined && source.materials?.[p.material]?.name?.startsWith('emi_'))) emissiveMeshes.add(name);
-    }
-  }
   const referenced = new Set(anchors.flatMap(a => a.emissiveNodes ?? []));
   for (const a of anchors) for (const target of a.emissiveNodes ?? []) if (!meshNames.has(target)) errors.push(`${a.name}: emissive node ${target} is missing`);
-  const graph = source ?? json, parents = new Map<string, string>();
+  const graph = json, parents = new Map<string, string>();
   for (const [index, node] of (graph.nodes ?? []).entries()) for (const child of node.children ?? []) parents.set(graph.nodes![child].name ?? `node${child}`, node.name ?? `node${index}`);
   const covered = (name: string): boolean => {
-    for (let at: string | undefined = name; at; at = parents.get(at)) if (referenced.has(at) || graph.nodes!.some(n => n.name === at && n.extras?.decorativeEmissive)) return true;
+    for (let at: string | undefined = name; at; at = parents.get(at)) if (referenced.has(at) || graph.nodes!.some((n, i) => (n.name ?? `node${i}`) === at && n.extras?.decorativeEmissive)) return true;
     return false;
   };
   return { anchors, errors, unreferencedEmissive: [...emissiveMeshes].filter(name => !covered(name)).sort() };
@@ -86,8 +75,7 @@ export function buildLightTable(manifestPath = 'src/assets/manifest.json') {
     try { json = readGltfJson(glb); } catch { continue; }
     const result = extractLights(json);
     errors.push(...result.errors.map(e => `${id} ${e}`));
-    if (!result.anchors.length) continue;
-    table[id] = result.anchors.map(anchor => { const shipped = { ...anchor }; delete shipped.emissiveNodes; return shipped; });
+    if (result.anchors.length) table[id] = result.anchors.map(anchor => { const shipped = { ...anchor }; delete shipped.emissiveNodes; return shipped; });
     const missing = result.unreferencedEmissive.filter(name => !decorativeEmissive[id]?.includes(name));
     if (missing.length) { unreferenced[id] = missing; errors.push(...missing.map(name => `${id} emissive mesh ${name} has no light anchor (reference it or flag decorativeEmissive)`)); }
   }

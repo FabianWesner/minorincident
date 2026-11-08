@@ -5,14 +5,17 @@ import { extractLights, lightSourcePath, readGltfJson } from '../assets/lights';
 
 function inspect(path: string) {
   const json = readGltfJson(path), result = extractLights(json);
-  return { path, named: json.nodes?.filter(n => n.name?.startsWith('light:')).length ?? 0, metadata: json.nodes?.filter(n => n.extras?.ss_light !== undefined).length ?? 0, anchors: result.anchors.length, errors: result.errors, uncoveredEmissive: result.unreferencedEmissive,
+  const named = json.nodes?.filter(n => n.name?.startsWith('light:')).length ?? 0, metadata = json.nodes?.filter(n => n.extras?.ss_light !== undefined).length ?? 0;
+  const errors = [...result.errors];
+  if (named !== result.anchors.length || metadata !== result.anchors.length) errors.push(`anchor traversal mismatch: ${named} named / ${metadata} metadata / ${result.anchors.length} parsed`);
+  return { path, named, metadata, anchors: result.anchors.length, errors, uncoveredEmissive: result.unreferencedEmissive,
     decorative: json.nodes?.flatMap((n, i) => n.extras?.decorativeEmissive ? [{ name: n.name ?? `node${i}`, reason: n.extras.decorativeEmissive }] : []) ?? [] };
 }
 const rows = readdirSync('public/assets/models').filter(n => n.endsWith('.glb')).sort().map(filename => {
   const sourcePath = lightSourcePath(filename);
   return { ...inspect(`public/assets/models/${filename}`), sourcePath: sourcePath ?? null, source: sourcePath ? inspect(sourcePath) : null };
 });
-const otherExports = readdirSync('public/assets', { recursive: true }).map(String).filter(p => p.endsWith('.glb') && !p.startsWith('models/')).sort().map(p => inspect(`public/assets/${p}`));
+const otherExports = readdirSync('public/assets', { recursive: true }).map(String).filter(p => p.endsWith('.glb') && !/^models\/[^/]+\.glb$/.test(p)).sort().map(p => inspect(`public/assets/${p}`));
 const all = [...rows, ...otherExports], sources = rows.flatMap(r => r.source ? [r.source] : []);
 const report = { at: new Date().toISOString(), method: 'Every exported GLB validates against its own active-scene nodes, including unnamed emissive meshes. Every available matching authored variant is independently validated. No authored substitution or uncertain-reference suppression.',
   checked: rows.length, otherChecked: otherExports.length, named: all.reduce((n, r) => n + r.named, 0), metadata: all.reduce((n, r) => n + r.metadata, 0), anchors: all.reduce((n, r) => n + r.anchors, 0),

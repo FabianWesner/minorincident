@@ -1,0 +1,102 @@
+/** Accepted-level prop and native-view A/B matrix: real authored placements, both tiers, zoom 1/1.5. */
+import { execFileSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { SceneSession, stopServer } from '../scenelab/session';
+import { productionIds } from '../../src/assets/productionIds';
+import { variantPath, type AssetDef } from '../../src/assets/types';
+import { levelOneLayouts } from '../../src/levels/L1/layout';
+import { levelTwoLayouts } from '../../src/levels/L2/layout';
+import { levelFourLayouts } from '../../src/levels/L4/layout';
+import { levelFiveLayouts } from '../../src/levels/L5/layout';
+import type { DistrictLayout, DistrictId } from '../../src/levels/districts/types';
+import type { SceneSpec } from '../../src/debug/scenelab/spec';
+import type { Game } from '../../src/Game';
+import type { DistrictView } from '../../src/render/DistrictView';
+import equipment from '../assets/equipment-lights.json';
+
+const tier = process.argv.includes('--low') ? 'low' : 'high', out = `${process.env.E25_OUT ?? 'test-results/epics/E25/emitters-visual'}/${tier}`;
+mkdirSync(out, { recursive: true });
+const manifest = JSON.parse(readFileSync('src/assets/manifest.json', 'utf8')) as AssetDef[];
+const changed = new Set(execFileSync('git', ['diff', '--name-only', process.env.E25_BEFORE_REF ?? 'ac0a9e26', '--', 'public/assets/models'], { encoding: 'utf8' }).trim().split('\n'));
+const levels = [['L1', 'D-GROVE', 0, levelOneLayouts], ['L2', 'D-GROVE', 1, levelTwoLayouts], ['L4', 'D-FAIR', 0, levelFourLayouts], ['L5', 'D-FAIR', 5, levelFiveLayouts]] as const;
+const fixtures: { name: string; level: string; asset: string; decay?: string; placement?: string; spec: SceneSpec }[] = [];
+for (const [level, district, worldTier, prepare] of levels) {
+  const source = JSON.parse(readFileSync(`public/assets/layouts/${district}.layout.json`, 'utf8')) as DistrictLayout;
+  const [layout] = prepare([source]), seen = new Set<string>();
+  for (const p of layout.placements) {
+    if (p.minTier > worldTier || p.maxTier < worldTier) continue;
+    const def = manifest.find(d => d.id === (productionIds[p.assetId] ?? p.assetId)); if (!def?.glb) continue;
+    const key = `${p.assetId}:${p.decay ?? ''}`; if (seen.has(key)) continue;
+    if (![def.glb, def.lods?.lod1, def.lods?.lod2].some(path => path && changed.has(variantPath(path, p.decay)))) continue;
+    seen.add(key);
+    const box = p.visualAabb, target = [(box.min[0] + box.max[0]) / 2, (box.min[1] + box.max[1]) / 2, (box.min[2] + box.max[2]) / 2] as [number, number, number];
+    fixtures.push({ name: `${level}-${p.assetId}${p.decay ? '.' + p.decay : ''}`, level, asset: p.assetId, decay: p.decay, placement: p.id,
+      spec: { name: `emitter-${level}-${key}`, seed: 1, ground: 'district', time: level, tier: worldTier, dof: false,
+        layout: { level, district: district as DistrictId, ids: [p.id], bbox: [[box.min[0] - 3, box.min[2] - 3], [box.max[0] + 3, box.max[2] + 3]] },
+        camera: { mode: 'orbit', target, radius: 32, azimuth: 45, polar: 54 } } });
+  }
+}
+for (const def of equipment) fixtures.push({ name: `equipment-${def.id}`, level: 'equipment-night', asset: def.id, spec: { name: `emitter-${def.id}`, seed: 1, time: 'night', ground: 'asphalt', dof: false, size: 60,
+  props: [{ asset: def.id, at: [0, 0] }], camera: { mode: 'orbit', target: [0, (manifest.find(d => d.id === def.id)?.dimensions.y ?? 2) / 2, 0], radius: 32, azimuth: 45, polar: 54 } } });
+if (process.argv.includes('--list')) { console.log(JSON.stringify(fixtures, null, 2)); process.exit(0); }
+// The before phase runs with baseline GLBs restored; preserve the originally selected matrix in a separate file.
+const fixturePath = process.env.E25_FIXTURE_FILE;
+const rows = fixturePath ? JSON.parse(readFileSync(fixturePath, 'utf8')) as typeof fixtures : fixtures;
+const s = new SceneSession({ backend: 'webgl2', tier }), results: unknown[] = [];
+async function capture(name: string, zoom: number, detail: object) {
+  await s.page.evaluate(zoom => window.__SS__!.camera.zoom(zoom), zoom);
+  await s.ready();
+  const state = await s.page.evaluate(async () => {
+    const game = (window.__SCENE__ as unknown as { game: Game }).game;
+    // Content and world transforms, rather than asynchronous allocation IDs or repaired node names, break depth ties.
+    const keys = new WeakMap<import('three').Object3D, string>();
+    const key = (o: import('three').Object3D | null) => {
+      if (!o) return ''; const cached = keys.get(o); if (cached) return cached;
+      const mesh = o as import('three').Mesh, geometry = mesh.geometry; let hash = 2166136261;
+      for (const a of [geometry?.getAttribute('position')?.array, geometry?.index?.array]) if (a) for (const v of a) hash = Math.imul(hash ^ Math.round(v * 1e5), 16777619);
+      const material = mesh.material, materials = Array.isArray(material) ? material.map(m => m.name) : material?.name;
+      const value = JSON.stringify([o.matrixWorld.elements, hash >>> 0, materials]); keys.set(o, value); return value;
+    };
+    game.view.renderer.setOpaqueSort((a, b) => (a.groupOrder ?? 0) - (b.groupOrder ?? 0) || (a.renderOrder ?? 0) - (b.renderOrder ?? 0) || (a.z ?? 0) - (b.z ?? 0) || key(a.object).localeCompare(key(b.object)));
+    game.view.renderer.setTransparentSort((a, b) => (a.groupOrder ?? 0) - (b.groupOrder ?? 0) || (a.renderOrder ?? 0) - (b.renderOrder ?? 0) || (b.z ?? 0) - (a.z ?? 0) || key(a.object).localeCompare(key(b.object)));
+    const frame = (game.view.renderer as unknown as { _nodes: { nodeFrame: { time: number; deltaTime: number } } })._nodes.nodeFrame;
+    for (let i = 0; i < 4; i++) { game.view.renderer.nextNodeFrame(); frame.time = frame.deltaTime = 0; game.view.update(1); await new Promise<void>(resolve => requestAnimationFrame(() => resolve())); }
+    game.view.renderer.nextNodeFrame(); frame.time = frame.deltaTime = 0; game.view.update(1);
+    const districts = (game.view as unknown as { districts: DistrictView }).districts;
+    return { tick: game.world.tick, tier: game.view.getState().quality, lods: districts.lodState(), png: game.view.renderer.domElement.toDataURL('image/png').split(',')[1] };
+  });
+  const path = `${out}/${name}-z${zoom}.png`, bytes = Buffer.from(state.png, 'base64'); writeFileSync(path, bytes);
+  const metrics = { tick: state.tick, tier: state.tier, lods: state.lods }; results.push({ name, zoom, ...detail, ...metrics, path, sha256: createHash('sha256').update(bytes).digest('hex'), errors: [...s.errors] });
+}
+try {
+  await s.open(); await s.page.evaluate('globalThis.__name = (fn) => fn');
+  await s.page.evaluate(() => {
+    const game = (window.__SCENE__ as unknown as { game: Game }).game, reset = game.clock.reset.bind(game.clock);
+    game.clock.reset = () => { reset(); game.clock.pause(); }; game.clock.resume = () => {}; game.clock.pause();
+  });
+  for (const row of rows) {
+    await s.load(row.spec); await s.ready(); await s.step(1);
+    for (const zoom of [1, 1.5]) await capture(row.name, zoom, { level: row.level, asset: row.asset, decay: row.decay, placement: row.placement, kind: 'prop' });
+    console.log(`${tier} ${row.name}`);
+  }
+  for (const [level, suffix] of [['L1', ''], ['L2', 'l2-streets-w1'], ['L4', 'l4-plaza-safe'], ['L5', 'pair-plaza']]) {
+    await s.close(); await s.open(); await s.page.evaluate('globalThis.__name = (fn) => fn');
+    await s.page.evaluate(async ({ level, tier }: { level: string; tier: 'high' | 'low' }) => {
+      window.__SS__!.settings.set({ quality: tier });
+      const game = (window.__SCENE__ as unknown as { game: Game }).game, reset = game.clock.reset.bind(game.clock);
+      game.clock.reset = () => { reset(); game.clock.pause(); }; game.clock.resume = () => {}; game.clock.pause();
+      await window.__SS__!.loadLevel(level, { seed: 1 }); window.__SS__!.pause();
+    }, { level, tier } as const);
+    const pose = await s.page.evaluate(async suffix => {
+      const game = (window.__SCENE__ as unknown as { game: Game }).game, districts = (game.view as unknown as { districts: DistrictView }).districts;
+      const key = [...districts.spots.keys()].find(k => k.endsWith(`/${suffix}`) || k === suffix);
+      if (suffix && !key) throw Error(`Missing accepted photo spot ${suffix}`);
+      if (key) { const pose = districts.spots.get(key)!; window.__SS__!.teleport('player', { x: pose.target[0], z: pose.target[2] }); window.__SS__!.camera.preset(key); }
+      window.__SS__!.cheats.god(true); await window.__SS__!.step(120); if (key) window.__SS__!.camera.preset(key);
+      return key ?? 'entry';
+    }, suffix);
+    for (const zoom of [1, 1.5]) await capture(`native-${level}`, zoom, { level, kind: 'native', pose });
+    console.log(`${tier} native ${level}`);
+  }
+} finally { writeFileSync(`${out}/captures.json`, JSON.stringify(results, null, 2) + '\n'); await s.close(); stopServer(); }
