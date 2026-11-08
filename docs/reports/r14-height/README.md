@@ -3,7 +3,7 @@
 ## Changes
 
 - Added a shared combat-level comparison for body-centre transforms (the feet/support estimate preserves same-floor behavior).
-- Player melee queries, infected windups/final bite damage, L1 civilian bites, Alpha/zoo special hits, civilian grabs, allied NPC target selection, and character separation now reject targets more than 0.9 m apart vertically.
+- Player melee queries, infected windups/final bite damage, L1/outbreak bites and grabs, Alpha/zoo special hits, allied NPC attacks and target selection, corgi contact damage, escort defense, and character separation now reject targets more than 0.9 m apart vertically.
 - Infected spawn, movement grounding, and recovery grounding now use `DistrictWorld.supportBelow` instead of the highest surface in the X/Z column. This prevents an infected below the L10 dispersal deck from being lifted onto its 3 m top; the existing 0.2 m stair treads remain climbable.
 - Infected spawns can carry an optional Y support hint for intentionally elevated placements; ordinary X/Z-only spawns start on ground-level support.
 - Infected pursuing a target on another floor follow the next walkable support in that structure's collider group, so the L10 platform chase uses its stair treads one level at a time.
@@ -14,9 +14,9 @@
 
 - `npm run typecheck`: passed
 - `npm run lint`: passed
-- Focused suites (`combat`, `infected-ai`, `world-systems`, `navigation`): passed (21 tests)
+- Focused suites (`combat`, `infected-ai`, `world-systems`, `navigation`, `npcs`): passed (24 tests)
 - `npm run test:unit`: passed (150/150 cases; 27 files, 107 tests)
-- `sh tools/remote/run.sh "$PWD" -- npm run qa:threat`: full audit queued on the committed worktree; record flat-ground diff after runner completes
+- `sh tools/remote/run.sh "$PWD" -- npm run qa:threat`: audit queued; pull the receipt and record flat-ground diff after runner completes
 
 ## Browser QA needed
 

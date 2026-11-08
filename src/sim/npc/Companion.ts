@@ -1,4 +1,5 @@
 import { actorRadius } from '../world/SolidRegistry';
+import { combatHeightReachable } from '../combat/height';
 import { infectedDef } from '../../data/infected';
 import { l1v2 } from '../../data/l1v2';
 import { npcs } from '../../data/npcs';
@@ -149,7 +150,7 @@ export class Companion {
       }
       const mission = this.world.missions;
       if (mission?.l8?.companion(e)) continue;
-      if (!this.safe && c.state !== 'hide' && this.world.tick >= c.hurtAt) for (const enemy of ai.active) if (enemy.health.current > 0 && Math.hypot(enemy.transform.x - e.transform.x, enemy.transform.z - e.transform.z) < 1.2) { c.hurtAt = this.world.tick + 60; this.hit(e, infectedDef(enemy.archetype).damage); this.world.events.emit({ type: 'corgi.sound', tick: this.world.tick, sourceId: e.id, position: { ...e.transform }, kind: 'hurt' }); break; }
+      if (!this.safe && c.state !== 'hide' && this.world.tick >= c.hurtAt) for (const enemy of ai.active) if (enemy.health.current > 0 && combatHeightReachable(enemy, e) && Math.hypot(enemy.transform.x - e.transform.x, enemy.transform.z - e.transform.z) < 1.2) { c.hurtAt = this.world.tick + 60; this.hit(e, infectedDef(enemy.archetype).damage); this.world.events.emit({ type: 'corgi.sound', tick: this.world.tick, sourceId: e.id, position: { ...e.transform }, kind: 'hurt' }); break; }
       if (c.state === 'hide') {
         // Hiding follows at the player's heels without collision; recovery uses sim time.
         this.world.npcs!.move(e, player.transform, 9, c, 1.5);

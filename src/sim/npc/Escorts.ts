@@ -4,6 +4,7 @@ import { infectedDef } from '../../data/infected';
 import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
 import type { Point } from './types';
+import { combatHeightReachable } from '../combat/height';
 /** Hero followers share E07 pathing. Only these entities use the 20s downed/revive lifecycle. */
 export class Escorts {
   private readonly target = { x: 0, z: 0 };
@@ -60,7 +61,7 @@ export class Escorts {
         if (c.cover) this.world.npcs!.move(e, c.cover, 5, c, .2);
         else { const dx = e.transform.x - threat.transform.x, dz = e.transform.z - threat.transform.z, d = Math.hypot(dx, dz) || 1; this.world.npcs!.moveStep(e, dx / d * .06, dz / d * .06); }
         // Children are knocked down, never infected/bitten or recorded as infected attack targets.
-        if (!threat.infected?.specialAttack && tick >= (threat.infected?.specialRecoveryUntil ?? 0) && Math.hypot(threat.transform.x - e.transform.x, threat.transform.z - e.transform.z) < 1.3 && tick >= c.attackAt && ai.nav.visible(threat.transform, e.transform, .1)) {
+        if (!threat.infected?.specialAttack && combatHeightReachable(threat, e) && tick >= (threat.infected?.specialRecoveryUntil ?? 0) && Math.hypot(threat.transform.x - e.transform.x, threat.transform.z - e.transform.z) < 1.3 && tick >= c.attackAt && ai.nav.visible(threat.transform, e.transform, .1)) {
           c.attackAt = tick + 60; e.health.current = Math.max(0, e.health.current - infectedDef(threat.archetype).damage);
           if (!c.child) this.world.events.emit({ type: 'infected.attack', tick, sourceId: threat.id, targetId: e.id, attackId: 0, special: 'escort-hit', amount: infectedDef(threat.archetype).damage });
           if (e.health.current <= 0) this.down(e);
