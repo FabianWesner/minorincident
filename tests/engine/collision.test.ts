@@ -1,6 +1,6 @@
 // Physics/collision core: the solid registry admits, commits and repairs every body against walls, vehicle hulls and
 // other bodies; corpse footprints and blast flights use the same solids. Mission checkpoints snapshot all of it.
-import { afterEach, expect, test } from 'vitest';
+import { afterEach, expect, test, vi } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { l4Dressing, levelFourLayouts } from '../../src/levels/L4/layout';
 import type { DistrictLayout } from '../../src/levels/districts/types';
@@ -11,6 +11,7 @@ import { compositions } from '../../src/levels/compositions';
 import { spawnSetPiece } from '../../src/sim/missions/L4Spectacle';
 import type { MissionDef } from '../../src/sim/missions/types';
 import { SimWorld } from '../../src/sim/world/SimWorld';
+import { allyState } from '../../src/sim/outbreak/Allies';
 
 const worlds: SimWorld[] = [];
 afterEach(() => { for (const w of worlds.splice(0)) w.dispose(); });
@@ -101,6 +102,7 @@ test('an unsafe spawn keeps its identity and director slot, then admits once the
 });
 
 test('the courier: knockback and post-physics writes never cross a thin solid; she can push out of eight bodies', async () => {
+  await assertFriendlyColumn();
   const w = await arena(), player = w.entities.get(1)!;
   expect(w.solids.relocate(player, { x: 10.8, z: 0, y: .705 }, 'test.before-wall', 0, false)).toBe(true);
   const wall = { x: 12, z: 0, y: .7, halfX: .1, halfZ: 3, halfY: .7 };
@@ -153,6 +155,43 @@ test('the courier: knockback and post-physics writes never cross a thin solid; s
   p.setInput({ move: { x: 1, z: 0 } }); tick(p, 120);
   expect(courier.transform.x - start.x).toBeGreaterThan(1.5);
 });
+
+async function assertFriendlyColumn() {
+  const w = await arena(), player = w.entities.get(1)!;
+  // A one-person-wide passage has no spare side lane for a yield heuristic.
+  // Hold voluntary follower orders to exercise contact even with a stalled group.
+  vi.spyOn(w.npcs!, 'update').mockImplementation(() => {});
+  for (const z of [-.51, .51]) {
+    const wall = { x: 4, z, y: .7, halfX: 7, halfZ: .1, halfY: 1 };
+    w.physics.addBlocker(wall); w.infected!.nav.setBlocker(z < 0 ? 987660 : 987661, wall, true);
+  }
+  const column = Array.from({ length: 8 }, (_, slot) => {
+    const e = w.entities.get(w.npcs!.civilians.spawn('office', { x: 1 + slot * .74, z: 0 }))!;
+    e.civilian!.survivor = { key: `packed-${slot}`, slot, leader: 1, mode: 'follow', cover: false, waitAt: 0, foundAt: 0 };
+    if (slot === 1) { delete e.civilian!.survivor; e.civilian!.ally = allyState('firefighter'); }
+    if (slot === 2) { delete e.civilian!.survivor; w.npcs!.escorts.attach(e); e.escort!.order = 'wait'; e.escort!.state = 'wait'; }
+    w.solids.remember(e, 'test.packed-column');
+    return e;
+  });
+  w.physics.update(); w.solids.commit();
+  const start = { ...player.transform };
+  tick(w, 30);
+  expect(Math.hypot(player.transform.x - start.x, player.transform.z - start.z), 'friendly contact cannot displace a stationary courier').toBeLessThan(.01);
+  w.setInput({ move: { x: 1, z: 0 } });
+  for (let frame = 0; frame < 120; frame++) {
+    const before = column.map(e => ({ ...e.transform })); tick(w);
+    column.forEach((e, i) => expect(Math.hypot(e.transform.x - before[i].x, e.transform.z - before[i].z), 'contact plus unchanged neighbour spacing stays continuous').toBeLessThanOrEqual(.2));
+  }
+  expect(player.transform.x - start.x, 'evacuees, allies and waiting escorts cannot seal a narrow lane').toBeGreaterThan(7);
+  expect(Math.abs(player.transform.z)).toBeLessThan(.07);
+  // Ordinary panic civilians and turned followers retain their body contact.
+  const panic = column[0]; delete panic.civilian!.survivor; panic.civilian!.state = 'flee';
+  expect(w.solids.clear(panic.transform, .35, 1)).toBe(false);
+  const turned = column[4]; turned.infection = { entityId: turned.id, progress: .5, phase: 'stagger', tier: 'average', startedTick: 0, endsTick: 180, biteSourceId: 1 };
+  expect(w.solids.clear(turned.transform, .35, 1)).toBe(false);
+  const companion = w.entities.get(w.npcs!.companion.spawn())!;
+  expect(w.solids.clear(companion.transform, .35, 1), 'a waiting companion is also soft contact').toBe(true);
+}
 
 test('corpses: a blast flight stops before a thin wall and lands with its identity; cover protects bodies; checkpoints restore mid-flight exactly', async () => {
   const w = await arena(27); w.combat!.damage.god = true;

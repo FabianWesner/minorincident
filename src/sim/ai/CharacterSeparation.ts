@@ -1,4 +1,4 @@
-import { actorRadius } from '../world/SolidRegistry';
+import { actorRadius, courierFollower } from '../world/SolidRegistry';
 import { storyProtected } from '../npc/storyProtection';
 import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
@@ -37,10 +37,12 @@ export function installCharacterSeparation(world: SimWorld): void {
     return dx * dx + dz * dz < reach * reach;
   } };
   const settled = new WeakMap<EntitySnapshot, { district: NonNullable<SimWorld['districts']>; x: number; z: number; y: number }>();
+  const courierShifts = new Map<number, number>();
   const ground = new WeakMap<EntitySnapshot, { district: NonNullable<SimWorld['districts']>; x: number; z: number; y: number }>();
   world.events.on('sim.tick', () => {
     const nav = world.infected?.nav; if (!nav) return;
     narrowQueue = !!world.missions?.state.l5?.metroAt;
+    courierShifts.clear();
     // Reuse the numeric-ID lookup without clearing sparse carried-survivor ID ranges.
     for (const id of radiusIds) radii[id] = undefined; radiusIds.length = 0;
     let bodyCount = 0, maximumRadius = 0;
@@ -104,6 +106,7 @@ export function installCharacterSeparation(world: SimWorld): void {
       const body = active!, { entity: e, point: p } = body;
       const neighbor = radii[id]; if (!neighbor || neighbor.entity === e) return;
       const other = neighbor.entity;
+      if (body.courier && courierFollower(other)) return;
       if (body.courier && !other.civilian?.survivor && !(narrowQueue && other.companion)) return;
       let dx = body.x - neighbor.x, dz = body.z - neighbor.z;
       if (narrowQueue && !body.infected && !neighbor.infected && (e.companion || other.companion)) {
@@ -120,7 +123,15 @@ export function installCharacterSeparation(world: SimWorld): void {
       // A protected story actor holding a post is authoritative like the courier;
       // crowd overlap cannot push the invitation away from its interaction. Damage may still shove it.
       const angle = e.id * 2.399963, scale = neighbor.fixed ? 1 : .5;
-      (body.infected ? world.infected!.infectedNav : nav).move(p, (distance ? dx / distance : Math.cos(angle)) * overlap * scale, (distance ? dz / distance : Math.sin(angle)) * overlap * scale, body.physical, true);
+      let shift = overlap * scale;
+      if (neighbor.courier && courierFollower(e)) {
+        // Soft contact may leave the courier inside a confined column for a
+        // few ticks. Ease its members aside instead of snapping a full overlap.
+        const used = courierShifts.get(e.id) ?? 0;
+        shift = Math.min(shift, Math.max(0, 6 * FIXED_DT - used));
+        courierShifts.set(e.id, used + shift);
+      }
+      (body.infected ? world.infected!.infectedNav : nav).move(p, (distance ? dx / distance : Math.cos(angle)) * shift, (distance ? dz / distance : Math.sin(angle)) * shift, body.physical, true);
       body.x = p.x; body.z = p.z;
     };
     // Keep the authored three passes for ordinary groups, friendly queues and
