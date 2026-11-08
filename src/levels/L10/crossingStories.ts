@@ -107,7 +107,7 @@ const r6Triage: Story = () => [
   { asset: 'prop.cure-iso-tent', along: 0, out: 3, yaw: -.12, solid: true },
   { asset: 'veh.ambulance', along: -8.1, out: 1.2, yaw: .38, decay: 'wrecked', solid: true },
   { asset: 'prop.cure-generator', along: 5.7, out: -.4, yaw: .08, solid: true, light: 'camp', fire: [1.7, 1.4] },
-  { asset: 'prop.medical-cooler', along: -3.3, out: -1, yaw: .2, solid: false },
+  { asset: 'prop.medical-cooler', along: -3.3, out: -2, yaw: .2, solid: false },
   { asset: 'decay.dropped-belongings', along: 4.8, out: 1.4, yaw: 2.1, solid: false },
 ];
 const themes: Record<Theme, [Story, number][]> = {
@@ -188,7 +188,9 @@ export function cureCrossingStories(placements: readonly Placement[]): Placement
       // Never the same scene twice in a row.
       if (!hero && story === previous) story = stories[(stories.findIndex(([fn]) => fn === story) + 1) % stories.length][0];
       const pieces = story(style);
-      const preferred = n % 2 ? -1 : 1;
+      // The tall triage canopy belongs on the far side of the close R6 camera;
+      // on the near bank its roof filled the bottom edge and hid the scene.
+      const preferred = hero?.[0] === 'r6-triage' ? -1 : n % 2 ? -1 : 1;
       let placed = null as Placement[] | null;
       for (const lit of [true, false]) for (const side of [preferred, -preferred]) {
         for (const shift of [0, -3, 3, -6, 6, -9, 9]) for (const lateral of [6, 7, 8, 9.5]) {
