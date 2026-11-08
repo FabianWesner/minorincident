@@ -42,7 +42,9 @@ export function updateEncounters(w: SimWorld, state: L9EncounterState): void {
       for (let d = 0; d <= 4; d += .5) for (let i = 0; i < (d ? 12 : 1); i++) {
         const px = x + Math.cos(i * Math.PI / 6) * d, pz = z + Math.sin(i * Math.PI / 6) * d;
         const at = { x: px, z: pz };
-        if (Math.hypot(px - car.transform.x, pz - car.transform.z) < 100 || !ai.director.safe(archetype, at) || ai.director.count + 1 > ai.director.cap) continue;
+        // Admission can move a capsule up to four metres to clear a body;
+        // leave that margin outside the binding 100 m arrival distance.
+        if (Math.hypot(px - car.transform.x, pz - car.transform.z) < 105 || !ai.director.safe(archetype, at) || ai.director.count + 1 > ai.director.cap) continue;
         const id = ai.spawn(archetype, at, { state: 'chase', yaw: Math.atan2(car.transform.z - pz, car.transform.x - px) });
         ai.pursueTarget(id, 1); pursueCrossingVehicle(w, id);
         ids.push(id); return true;
@@ -84,14 +86,14 @@ export function updateEncounters(w: SimWorld, state: L9EncounterState): void {
   if (!car?.vehicle) return;
   if (ai.active.some(e => e.health.current > 0 && !e.hidden && !e.infected?.hidden && Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z) < 40 && ai.director.inFrame(e.transform))) return;
   const heading = -car.transform.yaw + (car.vehicle.forwardSpeed < -.5 ? Math.PI : 0);
-  for (const distance of [105, 120, 135]) for (const offset of [0, .25, -.25, .6, -.6, 1, -1]) {
+  for (const distance of [110, 120, 135]) for (const offset of [0, .25, -.25, .6, -.6, 1, -1]) {
     const centre = { x: car.transform.x + Math.cos(heading + offset) * distance, z: car.transform.z + Math.sin(heading + offset) * distance };
     const side = heading + offset + Math.PI / 2;
     const group = [0, 1].flatMap(row => [-1, 0, 1].map(slot => ({
       x: centre.x + Math.cos(side) * slot * 1.4 + Math.cos(heading + offset) * row * 2.2,
       z: centre.z + Math.sin(side) * slot * 1.4 + Math.sin(heading + offset) * row * 2.2,
     })));
-    if (group.some((at, index) => Math.hypot(at.x - car.transform.x, at.z - car.transform.z) < 100 || !chunks.resident(at.x, at.z) || !ai.director.safe(patrolTypes[index], at))) continue;
+    if (group.some((at, index) => Math.hypot(at.x - car.transform.x, at.z - car.transform.z) < 105 || !chunks.resident(at.x, at.z) || !ai.director.safe(patrolTypes[index], at))) continue;
     const ids = group.map((at, index) => ai.spawn(patrolTypes[index], at, { state: 'chase' }));
     for (const id of ids) { ai.pursueTarget(id, 1); pursueCrossingVehicle(w, id); }
     state.ids[`crossing-patrol-${patrol.serial++}`] = ids;

@@ -234,7 +234,7 @@ export class LevelNineDriving {
       if (distance(at, p) >= 105 && w.chunks?.resident(at.x, at.z)) {
         for (let i = 0; i < 5 && w.infected!.director.count < w.infected!.director.cap && w.infected!.pool.length; i++) {
           const start = { x: at.x + (i - 2) * 4, z: at.z - i % 2 * 5 };
-          if (distance(start, p) < 100 || !w.infected!.director.safe('infected.zebra', start)) continue;
+          if (distance(start, p) < 105 || !w.infected!.director.safe('infected.zebra', start)) continue;
           const id = w.infected!.spawn('infected.zebra', start, { state: 'chase', yaw: -Math.PI / 2 });
           w.entities.get(id)!.infected!.scripted = { x: start.x, z: 100 }; s.stampede.push(id);
         }
