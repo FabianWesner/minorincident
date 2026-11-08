@@ -39,6 +39,7 @@ const files = (path: string): string[] =>
 export function layoutSourceHash(id: string): string {
   if (!districts.includes(id)) throw new Error(`Unknown district: ${id}`);
   const hash = createHash("sha256");
+  for (const path of ['tools/layouts/layer-ground.ts','tools/layouts/ground-layers.ts','tools/layouts/audit-ground.ts','src/render/GroundLayers.ts']) hash.update(readFileSync(path));
   for (const path of [
     `layouts/${id}/layout.py`,
     "tools/blender/build_layout.py",
@@ -90,7 +91,8 @@ export function buildLayout(
     "w4.glb",
     "w5.glb",
   ].map((suffix) => `public/assets/layouts/${id}.${suffix}`);
-  if (id === 'D-CURE') outputs.push(`public/assets/layouts/${id}.horizon.glb`, `public/assets/layouts/${id}.chunks/manifest.json`);
+  const streamed = id === 'D-CROSSING' || id === 'D-CURE';
+  if (streamed) outputs.push(`public/assets/layouts/${id}.horizon.glb`, `public/assets/layouts/${id}.chunks/manifest.json`);
   if (
     !force &&
     existsSync(cache) &&
@@ -112,9 +114,11 @@ export function buildLayout(
       `${result.error ?? ""}\n${result.stdout}\n${result.stderr}`,
     );
   // Blender exports float32 attributes; meshopt + quantization cuts L1 district GLBs ~4x (load lane).
+  const layered = spawnSync(process.execPath, ['--import', 'tsx', 'tools/layouts/layer-ground.ts', outputs.find(p => p.endsWith('.base.glb'))!], { encoding: 'utf8' });
+  if (layered.status !== 0) throw new Error(`ground layering failed\n${layered.stdout}\n${layered.stderr}`);
   const compressed = spawnSync(process.execPath, ["--import", "tsx", "tools/layouts/compress.ts", ...outputs.filter((path) => path.endsWith(".glb") && !path.endsWith("horizon.glb"))], { encoding: "utf8" });
   if (compressed.status !== 0) throw new Error(`layout GLB compression failed\n${compressed.stdout}\n${compressed.stderr}`);
-  if (id === 'D-CURE') {
+  if (streamed) {
     const streamed = spawnSync(process.execPath, ['--import', 'tsx', 'tools/l9/build-terrain.ts', id], { encoding: 'utf8' });
     if (streamed.status !== 0) throw new Error(`terrain split failed\n${streamed.stdout}\n${streamed.stderr}`);
   }

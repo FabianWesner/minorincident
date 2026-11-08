@@ -1,3 +1,4 @@
+import { groundDepth, groundLayers } from '../GroundLayers';
 import { cureReached } from '../../sim/missions/CureFront';
 import { epiloguePull } from '../../sim/missions/LevelTenEpilogue';
 // Fireball: TSL noise-dissolved spheres with a fire gradient, adapted from Bruno Simon folio-2025 World/Fireballs.js (MIT, 41046b5).
@@ -261,6 +262,7 @@ export class Blasts extends Group {
     }
     // Ground light pools (fake fire/flash light on the stylised, custom-lit town): origin(x,y,z,radius), color(r,g,b,intensity).
     const glowMaterial = new MeshBasicNodeMaterial({ transparent: true, depthWrite: false, blending: AdditiveBlending });
+    groundDepth(glowMaterial, groundLayers.lightPool);
     const glowGeometry = new PlaneGeometry(2, 2); glowGeometry.rotateX(-Math.PI / 2);
     ({ mesh: this.glows, attrs: this.gl } = instanced(glowGeometry, glowMaterial, GLOWS, { gOrigin: 4, gColor: 4 }));
     {
@@ -308,6 +310,7 @@ export class Blasts extends Group {
     this.parts.count = 0; this.parts.frustumCulled = false; this.parts.castShadow = true;
     const shadowGeometry = new PlaneGeometry(1, 1); shadowGeometry.rotateX(-Math.PI / 2);
     const shadowMaterial = new MeshBasicNodeMaterial({ transparent: true, depthWrite: false });
+    groundDepth(shadowMaterial, groundLayers.footprint);
     const q = uv().sub(.5).mul(2);
     // Q-132: a fixed lavender tint is lighter than a night ground, so the 10-30 m moon-cast strip read as a pale streak. Scale it by the scene ambient like the smoke itself.
     shadowMaterial.outputNode = vec4(vec3(.16, .12, .25).mul(host.ambient ? host.ambient.clamp(.12, 1) : float(1)), q.x.abs().smoothstep(1, .3).mul(q.y.abs().smoothstep(1, .5)).mul(.24));
