@@ -12,7 +12,11 @@ export class LevelTenEncounters {
   private assaultSlots: { key: string; slots: ReturnType<typeof cureEncounterSlots> } | null = null;
   constructor(private readonly world: SimWorld) {}
   snapshot(): CureEncounterState { return structuredClone(this.state); }
-  restore(value: unknown): void { this.state = structuredClone(value as CureEncounterState); }
+  restore(value: unknown): void {
+    this.state = structuredClone(value as CureEncounterState);
+    // Retries retain the live clock. Replay pending telegraphs instead of restoring an expired deadline.
+    for (const [id, scare] of Object.entries(this.state.farmScares ?? {})) if (scare.actor === undefined) delete this.state.farmScares![id];
+  }
   update(): void {
     const w = this.world, ai = w.infected, chunks = w.chunks;
     if (!ai || !chunks || w.missions?.state.phase !== 'playing' || w.missions.state.states['cure-released']) return;

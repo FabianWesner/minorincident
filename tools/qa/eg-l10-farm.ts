@@ -86,6 +86,15 @@ try {
   world.l10Encounters!.state.farmScares = checkpoint;
   const saved = world.l10Encounters!.snapshot(); world.l10Encounters!.restore(saved);
   assert.deepEqual(world.l10Encounters!.state.farmScares, checkpoint);
+  // A live-clock retry must replay a full cue, rather than immediately emerge from an old due tick.
+  world.tick += 600;
+  world.l10Encounters!.restore({ ...saved, farmScares: structuredClone(ledger) });
+  assert.deepEqual(world.l10Encounters!.state.farmScares, {});
+  let replayed = 0;
+  const stopReplay = world.events.on('music.stinger', e => { if (e.type === 'music.stinger' && e.kind === 'scare') replayed++; });
+  updateFarmScares(world, world.l10Encounters!.state.farmScares!); stopReplay();
+  assert.equal(replayed, 1);
+  assert(Object.values(world.l10Encounters!.state.farmScares!).every(s => s.actor === undefined && s.due === world.tick + 90));
   assert.equal(stemBank('L10'), null);
   assert.equal(scoreFile('L10', 'combat'), 'combat-L10');
   assert.equal(scoreFile('L10', 'combat', true), 'tension-L7');
@@ -104,6 +113,6 @@ try {
   const source = JSON.parse(readFileSync('docs/reports/eg-l10-farm/asset-budgets.json', 'utf8'));
   assert(source.every((s: {triangles:number;cap:number}) => s.triangles <= s.cap));
   const result = { status: 'PASS', audioPcmHash, cropTiles: crops.length, farmPieces: d.layout.placements.filter(p => p.id.startsWith('decor-cure-farm')).length, bareTrees: d.layout.placements.filter(p => p.assetId === 'prop.tree.dead').length,
-    checks: ['walkable corn without colliders', '14/16m perception capped at 3m in crop', 'crop crossing breaks sight and tracking; close hearing retained', 'courier and shared NPC/sprinter locomotion 0.85 speed; mown lane 1.0', 'A* terrain cost 1/0.85', 'corgi warns about an on-screen crop-concealed threat', 'four checkpointed fair scare telegraphs', 'five distinct synthesized stingers', 'rock only during finale', 'all source LOD caps'], scares: checkpoint };
+    checks: ['walkable corn without colliders', '14/16m perception capped at 3m in crop', 'crop crossing breaks sight and tracking; close hearing retained', 'courier and shared NPC/sprinter locomotion 0.85 speed; mown lane 1.0', 'A* terrain cost 1/0.85', 'corgi warns about an on-screen crop-concealed threat', 'four checkpointed fair scare telegraphs', 'live-clock retry replays pending telegraphs', 'five distinct synthesized stingers', 'rock only during finale', 'all source LOD caps'], scares: checkpoint };
   writeFileSync('docs/reports/eg-l10-farm/native-audit.json', JSON.stringify(result, null, 2) + '\n'); console.log(JSON.stringify(result));
 } finally { world.dispose(); }
