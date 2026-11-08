@@ -1,4 +1,5 @@
 import { emptyInput, type InputFrame } from '../../input/InputFrame';
+import { cornBlocksSight } from '../../levels/L10/farm';
 import { cure } from '../../levels/L10/district';
 import type { SimWorld } from '../../sim/world/SimWorld';
 import { Walker } from './Walker';
@@ -78,7 +79,7 @@ export class LevelTenBot {
     // Bots share the documented camera + 5 m perception contract. A 30 m
     // omnidirectional scan shot unseen arrivals before they could enter view,
     // making the native route incomparable to real-input play.
-    const threats = w.infected!.active.filter(e => e.health.current > 0 && !e.hidden && !e.emerging && !e.infectionRise && distance(e.transform) < 30 && w.infected!.director.inPlayerView(e.transform, 30, 1, 5) && (p.y > 2 ? w.combat!.query.visible({ ...p, y: p.y + .45 }, e.transform) : w.infected!.nav.visible(p, e.transform, 0))).sort((a, b) => distance(a.transform) - distance(b.transform));
+    const threats = w.infected!.active.filter(e => e.health.current > 0 && !e.hidden && !e.emerging && !e.infectionRise && distance(e.transform) < 30 && (isMega(e) || !cornBlocksSight(w, [p.x, p.z], [e.transform.x, e.transform.z])) && w.infected!.director.inPlayerView(e.transform, 30, 1, 5) && (p.y > 2 ? w.combat!.query.visible({ ...p, y: p.y + .45 }, e.transform) : w.infected!.nav.visible(p, e.transform, 0))).sort((a, b) => distance(a.transform) - distance(b.transform));
     const gun = w.mountedGun;
     if (active.id === 'hold' && mission.state.states['charge-active'] && gun && w.tick >= this.clearStairsUntil) {
       if (gun.mounted && threats.some(e => !isMega(e) && e.transform.y > arena.gun.deckHeight && distance(e.transform) < 6)) {

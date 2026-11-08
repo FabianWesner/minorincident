@@ -22,7 +22,7 @@ export function recoverCuredPeople(w: SimWorld, ids: readonly number[]): void {
   for (const id of ids) {
     const e = w.entities.get(id), c = e?.civilian;
     if (!e || !c || w.tick < c.pauseUntil || !c.story) continue;
-    c.story = id % 3 === 0 ? { clip: 'npc-cower', start: w.tick } : null;
+    c.story = id % 3 === 0 ? { clip: 'npc-sit', start: w.tick } : id % 3 === 2 ? { clip: 'npc-look-around', start: w.tick } : null;
     c.pauseUntil = w.tick + 3600;
     if (id % 3 === 1) {
       const p = w.entities.get(1)!.transform, nav = w.infected!.nav;
