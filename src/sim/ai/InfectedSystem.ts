@@ -38,6 +38,7 @@ const l1Ticks = (seconds: number) => Math.round(seconds * 60);
 const provokeTicks = 12 * 60;
 const hearingReactionTicks = 15, hearingTurnRadS = 14;
 const armedCampaigns = new Set(['L4', 'L5', 'L6', 'L7', 'L8', 'L10']);
+const lungeActiveTicks = (scenario: string | null | undefined) => armedCampaigns.has(scenario ?? '') ? 30 : 20;
 /** Fixed-step infected brain. Entities and path storage are prewarmed and reused, without Rapier bodies. */
 export class InfectedSystem {
   gore: 'Full' | 'Reduced' | 'Off' = 'Full';
@@ -607,7 +608,7 @@ export class InfectedSystem {
     // indefinitely. The active approach below keeps their ordinary crawl pace
     // and still requires the original strike distance before applying damage.
     if (b.special === 'grab') range += b.speed;
-    if (b.special === 'lunge') range = Math.max(range, this.lungeRangeM());
+    if (b.special === 'lunge') range = this.lungeStartRange(e, player, this.lungeRangeM());
     if (b.special === 'aura') range = 3;
     if (b.special === 'charge') range = 8;
     if (b.special === 'pin' && e.archetype !== 'infected.lion') range = 10;
@@ -714,7 +715,7 @@ export class InfectedSystem {
     b.until = this.world.tick + Math.ceil(def.windup * 60); e.combat!.attacking = true;
     // A runner's lunge is a short homing burst; charges, pounces and leaps keep
     // their committed line. Turning out of that line can still avoid a strike.
-    b.activeUntil = b.until + (b.special === 'lunge' ? armedCampaigns.has(this.world.scenario ?? '') ? 30 : 20 : 120);
+    b.activeUntil = b.until + (b.special === 'lunge' ? lungeActiveTicks(this.world.scenario) : 120);
     const player = target;
     // Telegraph and commit to where a moving victim will be at the strike
     // frame. The strike still checks live position and obstruction at impact.
@@ -737,6 +738,20 @@ export class InfectedSystem {
     // Reach covers the distance a target can travel during the visible windup.
     // This same envelope drives approach/ring decisions and the live strike check.
     return def.range + speed * def.windup + (target.survivor ? Math.max(0, e.combat!.radius - .35) : 0);
+  }
+  /** Start a warning while closing on a moving courier, bounded by the existing burst travel. */
+  private lungeStartRange(e: EntitySnapshot, target: EntitySnapshot, base: number): number {
+    const velocity = target.survivor?.velocity;
+    if (!velocity || Math.hypot(velocity.x, velocity.z) < .2) return base;
+    const dx = target.transform.x - e.transform.x, dz = target.transform.z - e.transform.z, distance = Math.max(.001, Math.hypot(dx, dz));
+    const closing = Math.max(0, ((e.locomotion?.vx ?? 0) * dx + (e.locomotion?.vz ?? 0) * dz) / distance);
+    const away = (velocity.x * dx + velocity.z * dz) / distance, windup = infectedDef(e.archetype).windup;
+    const reach = this.strikeRange(e, target), burst = lungeActiveTicks(this.world.scenario) / 60;
+    // Bound the extra approach by the existing burst's travel; an early cue
+    // must still leave enough active time to catch the target at live reach.
+    const reachable = reach + (closing - away) * windup + (7 - away) * burst;
+    const approach = base + Math.max(0, closing - away) * windup;
+    return Math.max(base, Math.min(Math.max(reach, approach), reachable));
   }
   private resolve(e: EntitySnapshot): boolean {
     const b = e.infected!, player = this.victim(e), def = infectedDef(e.archetype);
@@ -1232,7 +1247,6 @@ export class InfectedSystem {
     brain.looking = false;
     const distance = Math.hypot(target.position.x - e.transform.x, target.position.z - e.transform.z);
     let lunge = this.lungeRangeM(target.kind === 'player');
-    if (target.kind === 'player') lunge = Math.max(lunge, this.strikeRange(e, this.world.entities.get(target.id)!));
     if (this.world.scenario === 'L5' && target.kind === 'player') {
       // Only a moving pursuer can cover this extra approach during its warning.
       // A stopped infected retains the ordinary reachable 4.4 m start range.
@@ -1241,6 +1255,7 @@ export class InfectedSystem {
       lunge += Math.min(1.6, speed * infectedDef(e.archetype).windup);
     }
     if (target.kind === 'player') {
+      lunge = this.lungeStartRange(e, this.world.entities.get(target.id)!, lunge);
       // Strike with clear sight, or at arm's reach even past a thin post/lamp (PO-QA #13: no frozen stand-off).
       const strikable = this.l1!.lineOfSight(e.transform, target.position) || distance <= 1.6;
       if (distance <= lunge && this.world.tick >= b.cooldown && strikable) { b.combo = 0; this.windup(e); return; }

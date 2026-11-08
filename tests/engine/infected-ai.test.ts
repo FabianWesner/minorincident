@@ -111,6 +111,14 @@ test('every human and animal role validates and spawns with its catalog health a
     expect(close.events.events().some(event => event.type === 'combat.hit' && event.sourceId === reaching.id), 'windup stays readable').toBe(false);
     step(close, 40);
     expect(close.events.events().some(event => event.type === 'combat.hit' && event.sourceId === reaching.id && event.amount > 0), 'movement cannot invalidate an in-reach strike').toBe(true);
+
+    const closing = await arena(1, false), pursuer = spawn(closing, 'runner', 8);
+    let warningDistance = 0;
+    closing.events.on('telegraph', event => {
+      if (event.type === 'telegraph' && event.sourceId === pursuer.id) warningDistance = Math.hypot(pursuer.transform.x - closing.entities.get(1)!.transform.x, pursuer.transform.z);
+    });
+    for (let i = 0; i < 240 && !warningDistance; i++) { closing.setInput({ move: { x: -1, z: 0 }, walk: true }); closing.update(); }
+    expect(warningDistance, 'a closing pursuer must warn before entering the old contact-only start ring').toBeGreaterThan(l1v2.infected.lungeRangeM);
   }
 
   {
