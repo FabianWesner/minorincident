@@ -81,7 +81,7 @@ export class LevelEightZoo {
         [[-96, 32]],
         [[80, 78]], // Cross the gate-to-APC road before ordinary pursuit.
         [[-30, -64]],
-        [[27, 66.5], [27, 78]], // Round the bunker on its west side, then intercept the gate departure.
+        [[24, 66.5]], // Clear the west side of the bunker, then let native pursuit intercept the gate road.
       ];
       const route = [...exit.route, ...serviceRoutes[index]];
       const last = route.at(-1);
@@ -149,6 +149,9 @@ export class LevelEightZoo {
     }
     for (const [index, outlet] of s.outlets.entries()) for (const id of walkResidents(w, outlet, t)) {
       ai.pursueTarget(id, 1);
+      // This gate-side cohort pressures the courier; the other outlets still attack the sanctuary population.
+      // Releasing on the apron and retaining that focus avoids spending the whole encounter walking a scripted road.
+      if (index === 3) ai.press(id, 1, t + 3600, 30);
       if (index === 1) {
         // The east cohort intercepts the evacuation at its parked APC. Native
         // navigation and ordinary senses own this approach; party contact can

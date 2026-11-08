@@ -144,6 +144,12 @@ test('interactions: ring, input and view predicates agree for every interact ste
         expect(mission.state.states.breached, 'debug graph advancement still reconstructs the real breach checkpoint').toBe(true);
         mission.restore('sanctuary');
         expect(mission.state.states.breached).toBe(false);
+        const interceptor = levelWorld.infected!.spawn('infected.runner', { x: 12, z: 68 });
+        levelWorld.infected!.pursueTarget(interceptor, 1);
+        levelWorld.infected!.press(interceptor, 1, levelWorld.tick + 600, 30);
+        levelWorld.update();
+        expect(levelWorld.entities.get(interceptor)!.infected!.l1!.focusId, 'an authored courier press survives noticing a nearer follower').toBe(1);
+        mission.restore('sanctuary');
         const source = mission.l8!.state.outlets[2];
         const house = { ...source, ids: [] as number[], walking: [], route: [], ox: source.sx, oz: source.sz, speedMs: emergeSpeedMs };
         const first = new Map<number, number>();
