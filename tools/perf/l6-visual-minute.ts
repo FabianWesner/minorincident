@@ -31,7 +31,7 @@ try {
       const save = preset('L6-default'); save.settings.quality = tier;
       await session.page.evaluate(async ({ tier, save }) => {
         const a = window.__SS__!; a.settings.set({ quality: tier }); a.campaign.restore(save); await a.loadLevel('L6', { seed: 1 });
-        a.pause(); a.camera.follow(); a.camera.zoom(1.5); a.cheats.god(false); a.input.clear();
+        a.pause(); a.setTimeScale(1); a.camera.follow(); a.camera.zoom(1.5); a.cheats.god(false); a.input.clear();
       }, { tier, save });
       const cdp = await session.page.context().newCDPSession(session.page);
       await cdp.send('Profiler.enable'); await cdp.send('Profiler.setSamplingInterval', { interval: 1000 });
@@ -56,7 +56,7 @@ try {
         let previous = p.start;
         const frame = (now: number) => {
           if (p.done) return;
-          frames.push({ at: now, ms: now - previous, tick: a.tick(), phase: a.missions.state()?.phase, sim: g.simMs, update: g.view.updateCpuMs, render: g.view.renderCpuMs, costs: a.debug.cpuProfile() });
+          frames.push({ at: now, ms: now - previous, tick: a.tick(), phase: g.world.missions?.state.phase, sim: g.simMs, update: g.view.updateCpuMs, render: g.view.renderCpuMs, costs: a.debug.cpuProfile() });
           previous = now; requestAnimationFrame(frame);
         };
         a.debug.cpuProfile(); a.missions.begin(); a.bot.start('complete'); a.resume(); requestAnimationFrame(frame);

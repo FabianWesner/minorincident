@@ -1,0 +1,68 @@
+{
+  "sourceHash": "b4a871065668926e305cab6da2ee36990a9a49e1783fe17bb86e8686d1273711",
+  "gateRevision": "60a76b3a2f2b905b66e567d25621860a942c6eed",
+  "gateCommand": "VITEST_MAX_WORKERS=2 npm run verify -- E24",
+  "gateExitCode": 0,
+  "gate": {
+    "target": "E24",
+    "epics": [
+      "E24"
+    ],
+    "checks": [
+      {
+        "command": "npm run typecheck",
+        "status": 0,
+        "seconds": 13.357
+      },
+      {
+        "command": "npm run lint",
+        "status": 0,
+        "seconds": 9.398
+      },
+      {
+        "command": "npm test",
+        "status": 0,
+        "seconds": 45.48
+      }
+    ]
+  },
+  "defaultUnitTests": {
+    "passed": 107,
+    "files": 27
+  },
+  "registeredBudget": {
+    "cases": 150,
+    "maxCases": 150,
+    "files": 43,
+    "maxFiles": 45
+  },
+  "qaBuildExitCode": 0,
+  "finalProbeChecks": {
+    "commands": [
+      "npm run typecheck",
+      "npm run lint"
+    ],
+    "exitCodes": [
+      0,
+      0
+    ],
+    "reason": "After replacing the phase deep clone with a direct read and explicitly setting time scale1 in the measurement observer."
+  },
+  "regressions": [
+    {
+      "name": "fractional unblended crowd bounds",
+      "before": "NaN bounds and omitted visible follower bar",
+      "after": "finite body bounds and drawn bars"
+    },
+    {
+      "name": "compact follower overlap",
+      "before": "8/8 matrix cells omit the eligible pip",
+      "after": "8/8 draw the pip above courier"
+    },
+    {
+      "name": "separate infected headwear",
+      "before": "non-eye0.30215554 > eye0.26155986; missing per-instance threat attribute",
+      "after": "all16 cells eye0.23187807 > non-eye maximum0.04726314; healthy/infected instance flags0/1"
+    }
+  ]
+}
