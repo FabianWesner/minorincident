@@ -121,6 +121,9 @@ try {
         if (goal) f.move=walker.step(w,goal, .6,`lure-${goal.x}-${goal.z}`) ?? f.move;
       }
       if (process.env.L8_ELEPHANT_LURE === 'generic') f.move = generic.sample('elephant').move;
+      // Keep the bait inside the yard; walking through a gate is an escape, not the wall-counter tactic.
+      if (p.transform.x + f.move.x * 2 < -80 || p.transform.x + f.move.x * 2 > -40) f.move.x = 0;
+      if (p.transform.z + f.move.z * 2 < 14 || p.transform.z + f.move.z * 2 > 50) f.move.z = 0;
       w.applyInput(f, 'keyboard'); step(w);
       if (arena.wallHits > previous) { previous = arena.wallHits; goal = undefined; contacts.push({ tick: w.tick, hits: previous, boss: { ...e.transform }, courier: { ...p.transform }, hp: e.health.current }); }
     }
