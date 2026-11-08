@@ -254,8 +254,8 @@ export class LevelSevenEncounters {
   follower(e: EntitySnapshot): boolean {
     const r = this.state.roster.find(r => r.id === e.id);
     if (!r || r.status !== 'following') return false;
-    if (e.passengerOf === undefined && this.yieldToCourier(e)) return true;
     if (this.world.l7Departure?.claims(e)) return true;
+    if (e.passengerOf === undefined && this.yieldToCourier(e)) return true;
     const w = this.world, p = w.entities.get(1)!, c = e.civilian!, s = c.survivor!;
     s.briskAt = w.tick;
     c.state = 'calm'; c.story = null; s.cover = false;
@@ -336,7 +336,7 @@ export class LevelSevenEncounters {
    * Step sideways using ordinary swept walking; stationary players stay put. */
   private yieldToCourier(e: EntitySnapshot): boolean {
     const w = this.world, move = w.inputFrame.move, speed = Math.hypot(move.x, move.z);
-    if (speed < .1) return false;
+    if (speed < .1 || !w.solids.blockingBody(1)?.civilian?.survivor) return false;
     const p = w.entities.get(1)!.transform, dx = e.transform.x - p.x, dz = e.transform.z - p.z;
     if (Math.abs(e.transform.y - p.y) >= 1.2) return false;
     const hx = move.x / speed, hz = move.z / speed, along = dx * hx + dz * hz, lateral = dz * hx - dx * hz;
