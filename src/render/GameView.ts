@@ -674,7 +674,7 @@ export class GameView implements Lifecycle {
     if (front) cureDust.origin.value.set(front.fronts[0].x, front.fronts[0].z);
     this.endingView?.update(this.view);
     if (this.districts) this.districts.overview = !!front && front.elapsed >= 52 * 60;
-    if (front && this.lighting) { this.lighting.fogNear.value = 5000; this.lighting.fogFar.value = 15000; }
+    if (front && this.lighting) { this.lighting.fogNear.value = 100000; this.lighting.fogFar.value = 200000; }
 
     const mission = this.world.missions, door = mission?.def.anchors['fire-bay-door'];
     const closed = mission?.def.l1 && mission.state.gates['fire-shutter'] === false;
@@ -1166,6 +1166,7 @@ export class GameView implements Lifecycle {
     const renderStart = profileStart ? performance.now() : 0;
     if (profileStart) this.updateCpuMs = renderStart - profileStart;
     this.probes?.applyVisibility();
+    this.endingView?.mask();
     // A QA probe pass (id/mask/weather) replaces the production frame.
     if (!this.probes?.render()) {
       if (this.postFx) { this.updateHeatHaze(this.postFx); this.postFx.render(); } else this.renderer.render(this.scene, this.camera);

@@ -16,6 +16,7 @@ import type { SimWorld } from '../../src/sim/world/SimWorld';
 
 const outputIndex = process.argv.indexOf('--out');
 const out = outputIndex >= 0 ? process.argv[outputIndex + 1] : 'docs/reports/eg-l10-story/evidence/story-probe.json';
+const finaleOnly = process.env.L10_STORY_FINAL_ONLY === '1';
 const tiers = (process.env.L10_STORY_TIERS ?? 'low,high').split(',') as ('low' | 'high')[];
 const rows: unknown[] = [], checks: { tier: string; name: string; pass: boolean; observed?: unknown }[] = [];
 const check = (tier: string, name: string, pass: boolean, observed?: unknown) => { checks.push({ tier, name, pass, observed }); };
@@ -167,16 +168,32 @@ for (const tier of tiers) {
   if (process.env.L10_STORY_SKIP_ROUTE === '1') continue;
   try {
   const sightings: { tick: number; region: string; distance: number }[] = [], moved = new Set<number>(), firstSeen = new Set<number>(), idleEntries: number[] = [];
+  let mounts = 0, minigunKills = 0, shortestRocket = Infinity;
   const trace: unknown[] = [], deaths: unknown[] = [], recentHits: unknown[] = [];
   let finalState: unknown;
   let lastRegion = '', firstMegaSeen: number | null = null, fullArsenal = false;
-  const run = await runLevel('L10', 'complete', 1, 1500, 'auto', undefined, undefined, 0, {
+  const run = await runLevel('L10', 'complete', 1, finaleOnly ? 360 : 1500, 'auto', undefined, undefined, 0, {
     quality: tier,
     beforeBegin: world => {
+      world.events.on('mounted-gun.mounted', () => mounts++);
+      world.events.on('combat.kill', e => { if (e.type === 'combat.kill' && e.actionId === 'weapon.rotary-minigun') minigunKills++; });
+      world.events.on('combat.attack', e => {
+        if (e.type !== 'combat.attack' || e.actionId !== 'weapon.rocket-launcher') return;
+        const boss = world.megaPursuit?.entity();
+        if (boss) shortestRocket = Math.min(shortestRocket, Math.hypot(boss.transform.x - e.position.x, boss.transform.z - e.position.z));
+      });
       world.events.on('combat.hit', e => { if (e.type === 'combat.hit' && e.targetId === 1) { recentHits.push({ tick: e.tick, action: e.actionId, amount: e.amount }); if (recentHits.length > 8) recentHits.shift(); } });
       world.events.on('player.died', () => deaths.push({ tick: world.tick, hits: [...recentHits] }));
       const update = world.update.bind(world);
+      let finalePrepared = false;
       world.update = () => {
+        if (finaleOnly && !finalePrepared && world.missions!.state.phase === 'playing') {
+          finalePrepared = true;
+          place(world, 4002, -20);
+          while (world.missions!.state.steps.install.status !== 'active') world.missions!.completeObjective();
+          world.player!.restoreVitals(world.tick);
+          world.megaPursuit!.introduce({ x: 3945, z: -25 });
+        }
         update(); const p = world.entities.get(1)!;
         for (const e of world.infected!.active) {
           if ((e.motion?.speed ?? 0) > .1) moved.add(e.id);
@@ -197,11 +214,14 @@ for (const tier of tiers) {
     beforeDispose: world => { finalState = { mission: world.missions!.state, gun: world.mountedGun?.snapshot(), mega: world.megaPursuit?.snapshot(), player: world.entities.get(1)!.transform }; },
   });
   check(tier, 'native ordinary-input route reaches credits', run.completed, { outcome: run.outcome, blocker: run.blocker, time: run.time, deaths: run.deaths });
-  check(tier, 'Mega visibly enters widest frame within three minutes', firstMegaSeen !== null && firstMegaSeen <= 180, firstMegaSeen);
-  check(tier, 'persistent Mega produces recurring close encounters in distinct route sections', sightings.length >= 3, sightings);
-  check(tier, 'no ordinary infected first enters the widest frame standing idle', idleEntries.length === 0 && firstSeen.size > 0, { idleEntries, seen: firstSeen.size });
-  check(tier, 'natural handoff gives the whole selectable arsenal', fullArsenal);
-  rows.push({ tier, method: 'Unprotected production LevelTenBot; ordinary keyboard movement, aim, selection and interaction only.', run, sightings, firstMegaSeen, idleEntries, trace, deaths, finalState });
+  if (!finaleOnly) check(tier, 'Mega visibly enters widest frame within three minutes', firstMegaSeen !== null && firstMegaSeen <= 180, firstMegaSeen);
+  if (!finaleOnly) check(tier, 'persistent Mega produces recurring close encounters in distinct route sections', sightings.length >= 3, sightings);
+  if (!finaleOnly) check(tier, 'no ordinary infected first enters the widest frame standing idle', idleEntries.length === 0 && firstSeen.size > 0, { idleEntries, seen: firstSeen.size });
+  if (!finaleOnly) check(tier, 'natural handoff gives the whole selectable arsenal', fullArsenal);
+  check(tier, 'competent finale uses mounted gun to shred crowds', mounts > 0 && minigunKills > 0, { mounts, minigunKills });
+  check(tier, 'no close-range ground rocket exploit', shortestRocket >= 10, Number.isFinite(shortestRocket) ? shortestRocket : 'no rockets');
+  if (finaleOnly) check(tier, 'competent final fight wins without deaths', run.completed && run.deaths === 0, { deaths: run.deaths, outcome: run.outcome });
+  rows.push({ tier, method: finaleOnly ? 'Explicit healthy full-arsenal arena setup; all subsequent fighting/movement/interaction uses ordinary inputs, no god mode or teleport.' : 'Unprotected production LevelTenBot; ordinary keyboard movement, aim, selection and interaction only.', run, mounts, minigunKills, shortestRocket, sightings, firstMegaSeen, idleEntries, trace, deaths, finalState });
   console.log(`[l10-story] ${tier}: ${run.outcome}, ${Math.round(run.time)}s, ${run.deaths} deaths; close sightings=${sightings.length}`);
   } catch (error) { check(tier, 'native route executes', false, String(error)); rows.push({ tier, routeError: String(error) }); }
 }

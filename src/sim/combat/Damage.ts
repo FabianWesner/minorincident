@@ -126,7 +126,7 @@ export class Damage {
       const distance = Math.hypot(dx, dz) || 1;
       // The raised deck blocks ground melee; the rotating shield covers the forward hemisphere.
       if (hit.type === 'melee' && source.transform.y < target.transform.y - 1.2) return 0;
-      if ((dx * gun.aim.x + dz * gun.aim.z) / distance >= 0) return 0;
+      if ((dx * gun.aim.x + dz * gun.aim.z) / distance >= 0 && (hit.type !== 'melee' || distance > 2.2)) return 0;
       // An infected which climbed the stair can reach the gunner from behind. Leave and clear the stairs.
       hit = { ...hit, base: hit.base * .25, knockback: 0, stagger: 0, knockdown: false, knockdownTicks: 0 };
     }

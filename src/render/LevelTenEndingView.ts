@@ -42,7 +42,7 @@ export class LevelTenEndingView extends Group {
     if (this.disposed) return;
     root.position.set(x, 0, z); root.rotation.y = yaw;
     if (id.startsWith('npc.')) {
-      const mixer = new AnimationMixer(root); mixer.clipAction(retargetClip(root, cured ? 'cower' : 'idle')).play();
+      const mixer = new AnimationMixer(root); mixer.clipAction(retargetClip(root, cured ? 'npc-cower' : shot >= 5 ? 'npc-walk' : 'idle')).play();
       this.actors.push({ root, mixer, shot, cured, stood: false, x, z });
     }
     await this.warm(root); if (!this.disposed) group.add(root);
@@ -67,6 +67,7 @@ export class LevelTenEndingView extends Group {
       if (i === 6) for (const [id, x] of [['npc.lab-tech-b', -2], ['npc.national-guard', 2], [this.world.missions!.state.states['sam-alive'] ? 'npc.sam.aftermath' : 'npc.lab-guard', 0]] as const) await this.item(group, [id, x, 3], i);
       if (i === 7) for (let n = 0; n < 6; n++) await this.item(group, [n % 2 ? 'npc.depot-clerk' : 'npc.civilian-woman-a', n * 2 - 5, 3], i);
     }
+    for (const group of this.shots) await this.warm(group);
     this.ready = true;
   }
   update(view: View): void {
@@ -81,7 +82,7 @@ export class LevelTenEndingView extends Group {
       if (shot !== this.lastShot) { for (const a of this.actors.filter(a => a.shot === shot)) a.stood = false; this.lastShot = shot; }
       for (const a of this.actors.filter(a => a.shot === shot)) {
         if (a.cured && age >= 1.4 && !a.stood) { a.mixer.stopAllAction(); a.mixer.clipAction(retargetClip(a.root, 'idle')).play(); a.stood = true; }
-        a.mixer.setTime(age); a.root.position.set(a.x, 0, a.z);
+        a.mixer.setTime(age); a.root.position.set(a.x, 0, a.z + (shot >= 5 ? Math.min(age, 4) * .55 : 0));
       }
       this.dust.position.x = -28 + age * 16; this.dust.scale.setScalar(30);
       view.cinematic({ position: [this.position.x + 27 - age * .7, 21, this.position.z + 30], target: [this.position.x, 2, this.position.z - 2] });
@@ -101,6 +102,7 @@ export class LevelTenEndingView extends Group {
       }
     }
   }
+  mask(): void { if (this.visible) for (const child of this.hidden.keys()) child.visible = false; }
   dispose(): void {
     this.disposed = true; for (const [child, visible] of this.hidden) child.visible = visible;
     for (const actor of this.actors) { actor.mixer.stopAllAction(); actor.mixer.uncacheRoot(actor.root); }

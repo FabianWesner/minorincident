@@ -57,7 +57,7 @@ export class LevelTenStory {
       const e = world.entities.get(id)!;
       if (key === 'sam') e.health.current = Math.max(1, Math.round(e.health.max * .4));
       e.civilian!.pauseUntil = world.tick + 216000;
-      e.civilian!.story = { clip: key === 'sam' ? 'cower' : 'idle', start: world.tick };
+      e.civilian!.story = { clip: key === 'sam' ? 'npc-cower' : 'idle', start: world.tick };
       if (key.startsWith('guard')) e.civilian!.ally = { ...allyState('soldier'), post: at, hold: true, engaged: true, weapon: 'rifle', gun: { ...l4.soldiers.rifle }, range: 20 };
     }
     state.states['hangar-cast'] = true;

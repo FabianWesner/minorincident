@@ -15,14 +15,14 @@ export function curedPerson(source: EntitySnapshot, tick: number): EntitySnapsho
   e.civilian = { state: 'calm', ambient: false, adult: true, pet: kind === 'dog' || kind === 'cat' ? kind : null, owner: null,
     model, variant: model, routine: animal ? 'pet' : 'resident', waypoints: [at], waypoint: 0, pauseUntil: tick + 120,
     entered: tick, until: 0, downTicks: 0, eyesGlow: false, veins: 0, attacker: 0, threat: at, path: [], goal: -1, pathIndex: 0, gore: false, knockedUntil: 0,
-    story: { clip: 'cower', start: tick } };
+    story: { clip: 'npc-cower', start: tick } };
   return e;
 }
 export function recoverCuredPeople(w: SimWorld, ids: readonly number[]): void {
   for (const id of ids) {
     const e = w.entities.get(id), c = e?.civilian;
     if (!e || !c || w.tick < c.pauseUntil || !c.story) continue;
-    c.story = id % 3 === 0 ? { clip: 'cower', start: w.tick } : null;
+    c.story = id % 3 === 0 ? { clip: 'npc-cower', start: w.tick } : null;
     c.pauseUntil = w.tick + 3600;
     if (id % 3 === 1) {
       const p = w.entities.get(1)!.transform, nav = w.infected!.nav;
