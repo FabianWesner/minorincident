@@ -147,10 +147,23 @@ export class Vehicles {
         car.physics.body.setEnabledRotations(!waitingForBoarding, !waitingForBoarding, !waitingForBoarding, true);
       }
       if (this.operable(car) && this.active === car.entity.id && !waitingForBoarding) {
-        if (scheme === 'keyboard' || scheme === 'mouse-keyboard') {
-          drive.throttle = frame.drive?.throttle ?? frame.move.x;
-          drive.steer = frame.drive?.steer ?? -frame.move.z;
-          drive.brake = frame.brake ?? false;
+        if ((scheme === 'keyboard' || scheme === 'mouse-keyboard') && Math.hypot(frame.move.x, frame.move.z) > .05) {
+          // Keyboard vehicle directions match walking: they point where the player
+          // wants to travel on screen. Turn toward that world heading, naturally
+          // steering while moving forward and reversing when the target is behind.
+          const wanted = Math.atan2(-frame.move.z, frame.move.x);
+          const delta = Math.atan2(Math.sin(wanted - car.entity.transform.yaw), Math.cos(wanted - car.entity.transform.yaw));
+          const reverse = Math.abs(delta) > Math.PI / 2;
+          const error = reverse ? delta - Math.sign(delta) * Math.PI : delta;
+          drive.throttle = reverse ? -.75 : Math.max(.35, Math.cos(delta));
+          drive.steer = Math.max(-1, Math.min(1, error / (Math.PI / 2))) * (reverse ? -1 : 1);
+          drive.brake = !!frame.brake;
+        } else if (scheme === 'keyboard' || scheme === 'mouse-keyboard') {
+          // Logical drive frames (bots/recordings) may carry local axes without
+          // a device-space movement vector; keep that explicit contract intact.
+          drive.throttle = frame.drive?.throttle ?? 0;
+          drive.steer = frame.drive?.steer ?? 0;
+          drive.brake = frame.brake ?? drive.throttle === 0;
         } else {
           const dx = scheme === 'mouse-only' ? (frame.aimPoint?.x ?? player.transform.x) - player.transform.x : frame.move.x;
           const dz = scheme === 'mouse-only' ? (frame.aimPoint?.z ?? player.transform.z) - player.transform.z : frame.move.z;
