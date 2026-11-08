@@ -12,7 +12,8 @@ try {
       const contacts = Array.from({ length: controller.numComputedCollisions() }, (_, n) => {
         const c = controller.computedCollision(n); return c ? { normal: c.normal1, collider: c.collider?.handle, position: c.collider?.translation() } : null;
       });
-      rows.push({ seconds: w.tick / 60, player: { ...p.transform, hp: p.health.current }, move: frame.move, waypoint: Reflect.get(bot, 'waypoint'), walker: Reflect.get(Reflect.get(bot, 'walker'), 'route'), active: w.missions!.def.steps.find(s => w.missions!.state.steps[s.id].status === 'active')?.id,
+      const route = Reflect.get(Reflect.get(bot, 'walker'), 'route') as { goal: number; pathIndex: number; path: number[] };
+      rows.push({ seconds: w.tick / 60, player: { ...p.transform, hp: p.health.current }, move: frame.move, waypoint: Reflect.get(bot, 'waypoint'), walker: { goal: route.goal, pathIndex: route.pathIndex, nodes: route.path.length }, active: w.missions!.def.steps.find(s => w.missions!.state.steps[s.id].status === 'active')?.id,
         contacts, body: w.solids.blockingBody(1)?.id, walls: w.infected!.nav.walls.filter(a => Math.abs(a.x - p.transform.x) < a.halfX + 3 && Math.abs(a.z - p.transform.z) < a.halfZ + 3) });
       if (p.health.current <= 0) break;
     }

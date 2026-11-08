@@ -1,6 +1,6 @@
 # L10 story and stalker lane
 
-Status: implementation committed; remote native validation in progress. No browser, push or deploy.
+Status: committed implementation and passing isolated finale/ending proof; timeboxed handoff in progress. Full-route acceptance is open. No browser, push or deploy.
 
 ## Source and commits
 
@@ -37,10 +37,24 @@ All heavy checks run remotely with `MI_LOCAL_FALLBACK=0 sh tools/remote/run.sh "
 - Initial ordinary-input route before defence changes: reached the hold but failed with 17 deaths; see evidence/native-low-initial.json. This failure prompted the PO defence revision, shield and bot fixes. It is not a completion proof.
 - Final native proof: **70/70 checks pass**, low and high. Explicit one-time healthy arena setup is labelled separately from the full route; subsequent play uses ordinary inputs, no God mode, teleport or health resets. Both runs complete: low mounts 4 times, earns 9 mounted-gun kills; high mounts 2 times, earns 16. Both have zero deaths, zero damage taken and zero close rocket explosions; neither needs a rocket. Charge completes at 66.28 s; release at 68.62/69.13 s; title follows exactly 65 s later. Credits complete after the separate 5 s title, 90 s roll and 6 s Thanks phase. See `evidence/finale-proof.json`.
 - The first finale fixture wrongly followed stale approach waypoints; corrected in `d9321a67`. The next run exposed actual Mega resurrection after conventional lethal hits and a bot stair approach overwritten by dodging. `387a8fa9` makes the installed-phase boss permanently mortal with all weapons and fixes the ordinary-input gun approach. Earlier failed receipts remain in Git history and `finale-proof-initial.json`.
-- Bounded full unit suite, full-route L10 acceptance and L10 threat audit: current remote batch still running; results will be recorded below.
+- Full default unit suite: stopped by the required 150 s cap (150.7 s, exit 124; wrapper exit 1). No assertion failure appears before the timeout. This is incomplete, not a suite pass.
+- Full-route acceptance: low/complete exhausts its 3,600 s simulation budget before the first farmhouse find (54 deaths, zero kills), while the early Mega appears at 51.92 s and ordinary idle arrivals remain zero. The other variants were stopped after that reproducible blocker; acceptance exit 143. Its receipt is preserved under `evidence/acceptance/receipts/L10-low-complete.json`.
+- Threat audit was started remotely, then stopped after 179 s because its skilled/kiting policies repeat the same blocked approach. Exit 143; no valid final threat receipt is claimed.
+- Short ordinary-input diagnostic on merged main confirms the stalled bot sends zero movement with no physical collision. `04548493` changes Walker to explicitly use the player navigation workspace; its targeted route check is the current pending check. The merged vignette/farm source has not yet received a final green full-route acceptance receipt.
 - `tools/qa/l10-story.ts` labels injected fixtures separately from the ordinary-input route. It checks six actual pickups, gap clearance, exact Reyes dialogue, cast, indoor navigation, arsenal/save restoration, immunity, every damaging returned weapon, post-charge reinforcements and living-Sam continuity. The natural route separately measures completion, first widest-frame sighting, recurring close encounters and idle arrivals.
 
 Remote infrastructure: newly created runners initially lacked `/srv/mi/locks` and `/srv/mi/queue`, so the pool treated idle runners as occupied. Those directories were created on runners 2 and 3, restoring dispatch. Earlier sandbox Git/network restrictions are resolved; they are not current blockers.
+
+## Done and open at handoff
+
+**Done:** source-script hangar story/continuity, six retained finds and complete arsenal, flamethrower combat/VFX, early immortal stalker and narrow escapes, revised bounded defence and protected crowd-clearing gun, permanent finale Mega mortality, green-dust healthy recovery, 65 s release-to-title sequence, bounded whole-map pullback, procedural hymn, optional corgi toy and 90 s pausable/skippable licensed credits/Thanks/menu. The isolated low/high finale proof is green; it is not a full campaign completion claim.
+
+**Open / follow-up lanes:**
+
+1. Resolve and verify the full-route navigation stall, then rerun L10 acceptance and threat policies on the integrated source. Preserve the honest failing receipts. The older threat audit still imposes a competent-policy hold attack floor; review that against the new protected gun/breather design before treating it as a balance target. Passive threat potential and stair reachability must remain checked.
+2. Complete the default unit suite in bounded batches; the mandated 150 s whole-suite run timed out. Recheck typecheck/lint after the final main merge and route-policy changes.
+3. Browser QA below owns actual visual/audio/performance approval. No GPU performance, first-view cinematography or hymn audition is claimed by this native lane.
+4. Asset lane: replace the allowed machine-gun model/icon placeholder for the flamethrower. Farm/destruction lane: connect dry-corn ignition and removal of its sight/movement cover to the flamethrower; this lane did not edit farm dressing ownership.
 
 ## Browser QA needed
 
