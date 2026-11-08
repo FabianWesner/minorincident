@@ -1,0 +1,128 @@
+{
+  "codeRevision": "b73b32822a5d710d0e263dc52a551f21c5938daa",
+  "checks": [
+    {
+      "requirement": "Mac <= 420 seconds",
+      "passed": true,
+      "evidence": 186.30312666700002
+    },
+    {
+      "requirement": "Linux <= 600 seconds",
+      "passed": true,
+      "evidence": 585.4364431910001
+    },
+    {
+      "requirement": "Exact corrected before/after receipt parity",
+      "passed": true,
+      "evidence": {
+        "leaves": 31113,
+        "differences": 0,
+        "floatsWithinNoise": 0
+      }
+    },
+    {
+      "requirement": "Cross-platform acceptance verdicts",
+      "passed": true,
+      "evidence": {
+        "tableVerdicts": 38,
+        "nativeDiagnosticDifferences": 1
+      }
+    },
+    {
+      "requirement": "Full level and worker coverage",
+      "passed": true,
+      "evidence": "10 levels; 4 workers on both platforms"
+    },
+    {
+      "requirement": "stages-before.json complete",
+      "passed": true,
+      "evidence": "31 stages, no stage errors"
+    },
+    {
+      "requirement": "stages-after.json complete",
+      "passed": true,
+      "evidence": "31 stages, no stage errors"
+    },
+    {
+      "requirement": "stages-runner.json complete",
+      "passed": true,
+      "evidence": "31 stages, no stage errors"
+    },
+    {
+      "requirement": "Unchanged clauses/seeds/stage inventory",
+      "passed": true,
+      "evidence": "Identical 31 stage IDs, levels, kinds, seeds and policies"
+    },
+    {
+      "requirement": "Continuous-fire L5 zero explained",
+      "passed": true,
+      "evidence": {
+        "kitingSeconds": 20.000000000000146,
+        "attacks": 0,
+        "attacksPerMinute": 0,
+        "samples": 1200,
+        "diagnostics": {
+          "startTick": 249,
+          "endTick": 1448,
+          "firingFrames": 1200,
+          "playerAttackStarts": 40,
+          "framesWithoutThreats": 1133
+        }
+      }
+    },
+    {
+      "requirement": "L4 cinematic input receipt retained",
+      "passed": true,
+      "evidence": {
+        "stopped": true,
+        "identical": true,
+        "receipt": {
+          "kitingSeconds": 20.45000000000012,
+          "attacks": 20,
+          "attacksPerMinute": 58.67970660146665,
+          "samples": 1227,
+          "diagnostics": {
+            "startTick": 2304,
+            "endTick": 3503,
+            "firingFrames": 1227,
+            "playerAttackStarts": 164,
+            "framesWithoutThreats": 0
+          }
+        }
+      }
+    },
+    {
+      "requirement": "Managed quiet Mac admission",
+      "passed": true,
+      "evidence": "quiet-conditions.jsonl"
+    },
+    {
+      "requirement": "Typecheck, lint and probe proof",
+      "passed": true,
+      "evidence": "b73b32822a5d710d0e263dc52a551f21c5938daa"
+    },
+    {
+      "requirement": "No game source/public changes",
+      "passed": true,
+      "evidence": {
+        "HEAD": {
+          "src": "72b99d764ce4ea7c9239537d837382b299fca359",
+          "public": "1a1a5f59d8d423b827f34058472aa4b3ebc16a8c"
+        },
+        "7326320f": {
+          "src": "72b99d764ce4ea7c9239537d837382b299fca359",
+          "public": "1a1a5f59d8d423b827f34058472aa4b3ebc16a8c"
+        }
+      }
+    },
+    {
+      "requirement": "Full runs preserve acceptance failures",
+      "passed": true,
+      "evidence": [
+        "L3/criterion/L3-11 native competent rate:FAIL",
+        "L5/KITING_BELOW_ATTACKS_PER_MINUTE_2:0.00",
+        "L8/KITING_BELOW_ATTACKS_PER_MINUTE_2:0.00"
+      ]
+    }
+  ]
+}
