@@ -30,7 +30,8 @@ function hashFiles(paths: string[]): string {
   for (const path of [...new Set(paths)].sort()) { hash.update(path); hash.update('\0'); hash.update(readFileSync(path)); }
   return hash.digest('hex');
 }
-export function provenance(revision = execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim()) {
+// Remote runner jobs have an index without commits; transport the source worktree's revision as the threat audit does.
+export function provenance(revision = process.env.QA_ACCEPT_REVISION ?? execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim()) {
   const files = execFileSync('git', ['ls-files', '-z', '--', 'src', 'layouts', 'public/assets/layouts'], { encoding: 'utf8' }).split('\0').filter(Boolean);
   const toolFiles = ['tools/qa/accept/observer.ts', 'tools/qa/accept/probe.ts', 'tools/qa/accept/l5-formation.ts', ...['tools/qa/threat', 'tools/sim-runner'].flatMap(dir => readdirSync(dir).filter(file => file.endsWith('.ts')).map(file => join(dir, file)))];
   return { sourceHash: hashFiles(files), observerHash: hashFiles(toolFiles), revision };
