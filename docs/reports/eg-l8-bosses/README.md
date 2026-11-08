@@ -6,7 +6,7 @@ Original pre-merge runtime source: `dea0efbb`. The original results are retained
 
 ## Main integration — in progress
 
-Current gameplay source: `63e60096`. **18/18 native controls pass.** Corrected monkey: skilled 57.55 s / zero deaths; passive 9.40 s, standing and circle 9.42 s / one death each. Full final-source low/high matrices, route, tour and repository gates are running. One earlier high-tier route still had an ordinary infected without a bounded path near (70.27, 54.25); final-source route recheck remains open.
+Current source: `877d7e1d`. **19/19 native controls pass**, including physical path entry and closed-pocket rejection. Corrected gorilla: skilled **88.60 s / zero deaths**; passive, standing and circle controls all die. Corrected monkey: skilled 57.55 s / zero deaths; passive 9.40 s, standing and circle 9.42 s / one death each. Full final-source low/high matrices, route, tour and repository gates are running. One earlier high-tier route still had an ordinary infected without a bounded path near (70.27, 54.25); final-source route recheck remains open.
 
 Merged main `1141d078` into the L8 arena branch. Conflict resolution preserves Alpha type moves and Rapier throws, moving-hit lead/glancing and height guards, Mega lope and animal gaits, Alpha range eligibility and engaged arena bars, L10 layout/story changes, and paced zoo evacuees alongside the arena story actors. L8 elevated throws retain their trajectory/landing owner while Alpha throws retain Rapier and object reservation. Nearby evacuees use courier-relative pacing; distant catch-up retains the arena branch's 6.4 m/s cap.
 
@@ -18,7 +18,7 @@ The merged high-tier escape exposed one rooftop monkey without a ground return r
 
 The control matrix also exposed [stationary-fire](evidence/post-merge/monkey-grip-first-standing.json)/[circle](evidence/post-merge/monkey-grip-first-kite.json) monkey wins after main integration. Its ground leader could also stall scavenging, suppressing the entire pack cycle; the same movement-progress fallback now returns monkeys to their grab. A held monkey now continues close, visible contact bites every 0.5 s during its existing two-second grip; the melee shake-off stops them. This uses normal damage/height guards and does not change the grab duration or weapon rules.
 
-The full matrix found a gorilla circle-kiting win at 67.72 s. Rage throw lead now uses its actual 18 m/s flight speed (previously 12 m/s), retaining the locked tell and physical projectile. Ordinary gorilla throws/pounds now recover for one second; interrupted chest beats retain their two-second punish window, within the binding 0.8–2 s range.
+The full matrix found a [gorilla circle-kiting win](evidence/post-merge/gorilla-kite-regression.json) at 67.72 s. Rage throw lead now uses its actual 18 m/s flight speed (previously 12 m/s), retaining the locked tell and physical projectile. Ordinary gorilla throws/pounds now recover for one second; interrupted chest beats retain their two-second punish window, within the binding 0.8–2 s range.
 
 The ordinary high-tier path flag is a conservative dynamic-fence AABB at a physically clear source. The observer now proves a ≤4 m entry with the canonical full-radius static sweep, then includes that distance in the unchanged 2.5× bound. A closed-pocket negative control must reject every entry. No actor is excluded or moved.
 

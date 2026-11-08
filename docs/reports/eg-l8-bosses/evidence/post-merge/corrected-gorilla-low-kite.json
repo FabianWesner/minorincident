@@ -1,0 +1,709 @@
+{
+  "revision": "gorilla-recovery",
+  "sourceHash": "7f95466d5f9da534f9e1b28fbbb3feea530a5d1d03dd2a2eed37d499a88f58f5",
+  "observerHash": "7d56698184639dfbf5c990fbd11373924e17575469d4164e37775e5e16499e53",
+  "policy": "kite",
+  "rows": [
+    {
+      "id": "gorilla",
+      "tier": "low",
+      "policy": "kite",
+      "measurementEntry": {
+        "x": 60,
+        "z": -16,
+        "y": 0.7
+      },
+      "complete": false,
+      "seconds": 88.85,
+      "totalSeconds": 88.85,
+      "hp": 0,
+      "deaths": 1,
+      "damage": 219.4333333333282,
+      "attacks": 6,
+      "phases": 2,
+      "counters": 5,
+      "wallHits": 0,
+      "rocket": 0,
+      "rocketPickups": 0,
+      "bites": [
+        398
+      ],
+      "turns": [
+        398
+      ],
+      "tells": [
+        {
+          "tick": 322,
+          "source": 398,
+          "attack": 1,
+          "move": "gorilla.roar",
+          "duration": 1,
+          "area": {
+            "x": 48.99921456116177,
+            "z": -15.85952249287281,
+            "radius": 8,
+            "dx": 0.10469179918779467,
+            "dz": -0.9945047145101037
+          }
+        },
+        {
+          "tick": 757,
+          "source": 398,
+          "attack": 2,
+          "move": "gorilla.grab-throw",
+          "duration": 0.8,
+          "area": {
+            "x": 55.17160655701183,
+            "z": -31.628719869061623,
+            "radius": 1,
+            "dx": 0.9549470346006312,
+            "dz": -0.2967762812413771
+          }
+        },
+        {
+          "tick": 1308,
+          "source": 398,
+          "attack": 3,
+          "move": "gorilla.pound",
+          "duration": 1,
+          "area": {
+            "x": 56.23197572517453,
+            "z": -26.534596337848647,
+            "radius": 5,
+            "dx": -0.7841097552165738,
+            "dz": -0.6206221811812762
+          }
+        },
+        {
+          "tick": 1663,
+          "source": 398,
+          "attack": 4,
+          "move": "gorilla.roar",
+          "duration": 1,
+          "area": {
+            "x": 58.964748347228074,
+            "z": -36.1467573399017,
+            "radius": 8,
+            "dx": 0.9999999937925866,
+            "dz": -0.00011142184136359428
+          }
+        },
+        {
+          "tick": 1995,
+          "source": 398,
+          "attack": 5,
+          "move": "gorilla.grab-throw",
+          "duration": 0.8,
+          "area": {
+            "x": 65.06590959230469,
+            "z": -29.992371074164463,
+            "radius": 1,
+            "dx": -0.7545734829334664,
+            "dz": 0.6562155582227974
+          }
+        },
+        {
+          "tick": 2533,
+          "source": 398,
+          "attack": 6,
+          "move": "gorilla.grab-throw",
+          "duration": 0.8,
+          "area": {
+            "x": 57.80655523228686,
+            "z": -33.35598377382245,
+            "radius": 1,
+            "dx": 0.9993814335405486,
+            "dz": -0.035167460733443574
+          }
+        },
+        {
+          "tick": 2735,
+          "source": 398,
+          "attack": 7,
+          "move": "gorilla.grab-throw",
+          "duration": 0.8,
+          "area": {
+            "x": 58.929536410012915,
+            "z": -33.13275007842303,
+            "radius": 1,
+            "dx": 0.5716197933028615,
+            "dz": 0.8205186237401281
+          }
+        },
+        {
+          "tick": 2923,
+          "source": 398,
+          "attack": 8,
+          "move": "gorilla.grab-throw",
+          "duration": 0.8,
+          "area": {
+            "x": 59.94473778017047,
+            "z": -32.184554936923924,
+            "radius": 1,
+            "dx": -0.35788129702825106,
+            "dz": 0.9337670893950893
+          }
+        },
+        {
+          "tick": 3138,
+          "source": 398,
+          "attack": 9,
+          "move": "gorilla.roar",
+          "duration": 1,
+          "area": {
+            "x": 57.45683574297542,
+            "z": -30.559633863470197,
+            "radius": 8,
+            "dx": -0.6146241261826251,
+            "dz": 0.7888201211393157
+          }
+        },
+        {
+          "tick": 3728,
+          "source": 398,
+          "attack": 10,
+          "move": "gorilla.grab-throw",
+          "duration": 0.8,
+          "area": {
+            "x": 66.97448650082431,
+            "z": -35.00419659939631,
+            "radius": 1,
+            "dx": -0.12507224839660425,
+            "dz": 0.992147636534512
+          }
+        },
+        {
+          "tick": 4047,
+          "source": 398,
+          "attack": 11,
+          "move": "gorilla.pound",
+          "duration": 1,
+          "area": {
+            "x": 54.214868738343846,
+            "z": -30.908237079044408,
+            "radius": 5,
+            "dx": -0.5518525500060146,
+            "dz": -0.8339417024300075
+          }
+        },
+        {
+          "tick": 4335,
+          "source": 398,
+          "attack": 12,
+          "move": "gorilla.pound",
+          "duration": 1,
+          "area": {
+            "x": 61.21436366766912,
+            "z": -38.01866301161847,
+            "radius": 5,
+            "dx": 0.9966391085688181,
+            "dz": 0.08191756387461584
+          }
+        },
+        {
+          "tick": 4516,
+          "source": 398,
+          "attack": 13,
+          "move": "gorilla.pound",
+          "duration": 1,
+          "area": {
+            "x": 63.513634923459634,
+            "z": -38.545058686680406,
+            "radius": 5,
+            "dx": 0.11602243664543214,
+            "dz": 0.9932465928433164
+          }
+        },
+        {
+          "tick": 4663,
+          "source": 398,
+          "attack": 14,
+          "move": "gorilla.grab-throw",
+          "duration": 0.6,
+          "area": {
+            "x": 63.32823657958285,
+            "z": -38.958991164342,
+            "radius": 1,
+            "dx": -0.38885125303152585,
+            "dz": 0.9213005497750516
+          }
+        },
+        {
+          "tick": 4867,
+          "source": 398,
+          "attack": 15,
+          "move": "gorilla.grab-throw",
+          "duration": 0.6,
+          "area": {
+            "x": 64.93421344995599,
+            "z": -37.19842841692906,
+            "radius": 1,
+            "dx": -0.6939716350517143,
+            "dz": 0.7200023400959544
+          }
+        },
+        {
+          "tick": 5245,
+          "source": 398,
+          "attack": 16,
+          "move": "gorilla.pound",
+          "duration": 1,
+          "area": {
+            "x": 56.28136990558594,
+            "z": -38.927844203720966,
+            "radius": 5,
+            "dx": 0.947480662639236,
+            "dz": 0.31981306090388845
+          }
+        },
+        {
+          "tick": 5491,
+          "source": 398,
+          "attack": 17,
+          "move": "gorilla.grab-throw",
+          "duration": 0.6,
+          "area": {
+            "x": 59.818376285940985,
+            "z": -31.19379250676634,
+            "radius": 1,
+            "dx": 0.3268134930982429,
+            "dz": 0.9450888533513264
+          }
+        }
+      ],
+      "throws": [
+        {
+          "tick": 805,
+          "source": 398,
+          "prop": 1178886957
+        },
+        {
+          "tick": 2043,
+          "source": 398,
+          "prop": 1823699267
+        },
+        {
+          "tick": 2581,
+          "source": 398,
+          "prop": 1936487251
+        },
+        {
+          "tick": 2783,
+          "source": 398,
+          "prop": 1919709632
+        },
+        {
+          "tick": 2971,
+          "source": 398,
+          "prop": 1970042489
+        },
+        {
+          "tick": 3776,
+          "source": 398,
+          "prop": 1936487251
+        },
+        {
+          "tick": 4699,
+          "source": 398,
+          "prop": 1162109338
+        },
+        {
+          "tick": 4903,
+          "source": 398,
+          "prop": 1128554100
+        },
+        {
+          "tick": 5527,
+          "source": 398,
+          "prop": 1145331719
+        }
+      ],
+      "signals": [
+        {
+          "tick": 3895,
+          "name": "l8.arena.gorilla.phase-2"
+        }
+      ],
+      "stages": [
+        {
+          "tick": 324,
+          "source": 398,
+          "move": "gorilla.roar",
+          "stage": "recovery"
+        },
+        {
+          "tick": 444,
+          "source": 398,
+          "move": "gorilla.roar",
+          "stage": "expiry"
+        },
+        {
+          "tick": 805,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "active"
+        },
+        {
+          "tick": 875,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "recovery"
+        },
+        {
+          "tick": 935,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1368,
+          "source": 398,
+          "move": "gorilla.pound",
+          "stage": "active"
+        },
+        {
+          "tick": 1368,
+          "source": 398,
+          "move": "gorilla.pound",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1428,
+          "source": 398,
+          "move": "gorilla.pound",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1665,
+          "source": 398,
+          "move": "gorilla.roar",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1785,
+          "source": 398,
+          "move": "gorilla.roar",
+          "stage": "expiry"
+        },
+        {
+          "tick": 2043,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "active"
+        },
+        {
+          "tick": 2104,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "recovery"
+        },
+        {
+          "tick": 2164,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "expiry"
+        },
+        {
+          "tick": 2581,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "active"
+        },
+        {
+          "tick": 2637,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "recovery"
+        },
+        {
+          "tick": 2685,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "expiry"
+        },
+        {
+          "tick": 2783,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "active"
+        },
+        {
+          "tick": 2836,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "recovery"
+        },
+        {
+          "tick": 2884,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "expiry"
+        },
+        {
+          "tick": 2971,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "active"
+        },
+        {
+          "tick": 3017,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "recovery"
+        },
+        {
+          "tick": 3077,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "expiry"
+        },
+        {
+          "tick": 3161,
+          "source": 398,
+          "move": "gorilla.roar",
+          "stage": "recovery"
+        },
+        {
+          "tick": 3281,
+          "source": 398,
+          "move": "gorilla.roar",
+          "stage": "expiry"
+        },
+        {
+          "tick": 3776,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "active"
+        },
+        {
+          "tick": 3817,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "recovery"
+        },
+        {
+          "tick": 3865,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "expiry"
+        },
+        {
+          "tick": 4107,
+          "source": 398,
+          "move": "gorilla.pound",
+          "stage": "active"
+        },
+        {
+          "tick": 4107,
+          "source": 398,
+          "move": "gorilla.pound",
+          "stage": "recovery"
+        },
+        {
+          "tick": 4167,
+          "source": 398,
+          "move": "gorilla.pound",
+          "stage": "expiry"
+        },
+        {
+          "tick": 4395,
+          "source": 398,
+          "move": "gorilla.pound",
+          "stage": "active"
+        },
+        {
+          "tick": 4395,
+          "source": 398,
+          "move": "gorilla.pound",
+          "stage": "recovery"
+        },
+        {
+          "tick": 4455,
+          "source": 398,
+          "move": "gorilla.pound",
+          "stage": "expiry"
+        },
+        {
+          "tick": 4576,
+          "source": 398,
+          "move": "gorilla.pound",
+          "stage": "active"
+        },
+        {
+          "tick": 4576,
+          "source": 398,
+          "move": "gorilla.pound",
+          "stage": "recovery"
+        },
+        {
+          "tick": 4636,
+          "source": 398,
+          "move": "gorilla.pound",
+          "stage": "expiry"
+        },
+        {
+          "tick": 4699,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "active"
+        },
+        {
+          "tick": 4755,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "recovery"
+        },
+        {
+          "tick": 4815,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "expiry"
+        },
+        {
+          "tick": 4903,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "active"
+        },
+        {
+          "tick": 4959,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "recovery"
+        },
+        {
+          "tick": 5019,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "expiry"
+        },
+        {
+          "tick": 5305,
+          "source": 398,
+          "move": "gorilla.pound",
+          "stage": "active"
+        },
+        {
+          "tick": 5305,
+          "source": 398,
+          "move": "gorilla.pound",
+          "stage": "recovery"
+        },
+        {
+          "tick": 5365,
+          "source": 398,
+          "move": "gorilla.pound",
+          "stage": "expiry"
+        },
+        {
+          "tick": 5527,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "active"
+        },
+        {
+          "tick": 5555,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "recovery"
+        }
+      ],
+      "destruction": [
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-0",
+          "hp": [
+            258.1800000000002
+          ],
+          "collapsed": false
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-1",
+          "hp": [
+            258.8800000000001
+          ],
+          "collapsed": false
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-2",
+          "hp": [
+            0
+          ],
+          "collapsed": true
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-3",
+          "hp": [
+            0
+          ],
+          "collapsed": true
+        }
+      ],
+      "bosses": [
+        {
+          "id": 398,
+          "hp": 1378.6799999999125,
+          "at": {
+            "x": 60.848374633789064,
+            "z": -31.19379250676634,
+            "y": 0.7,
+            "yaw": -1.2378663738376448
+          },
+          "state": "chase",
+          "boss": {
+            "arena": "gorilla",
+            "slot": 0,
+            "engaged": true,
+            "exposedUntil": 5615,
+            "readyAt": 5615,
+            "shakeHits": 0,
+            "barrage": 0
+          },
+          "attack": {
+            "move": "gorilla.grab-throw",
+            "attackId": 17,
+            "stage": "recovery",
+            "startTick": 5491,
+            "activeTick": 5527,
+            "cooldownExpiry": 5911,
+            "recoveryUntil": 5615,
+            "target": {
+              "id": 1,
+              "x": 62.885926940824376,
+              "z": -22.32295947127304
+            },
+            "area": {
+              "x": 59.818376285940985,
+              "z": -31.19379250676634,
+              "radius": 1,
+              "dx": 0.3268134930982429,
+              "dz": 0.9450888533513264
+            },
+            "hitIds": [
+              1
+            ],
+            "destination": {
+              "x": 59.818376285940985,
+              "z": -31.19379250676634
+            },
+            "projectile": {
+              "objectId": 1145331719,
+              "corpse": false,
+              "living": false,
+              "started": 5527,
+              "x": 59.818376285940985,
+              "z": -31.19379250676634,
+              "dx": 0.3268134930982429,
+              "dz": 0.9450888533513264,
+              "distance": 8.4,
+              "range": 9.38624236656367,
+              "speed": 18,
+              "fromY": 1.2999999999999998,
+              "toY": 0
+            }
+          },
+          "held": false
+        }
+      ]
+    }
+  ]
+}

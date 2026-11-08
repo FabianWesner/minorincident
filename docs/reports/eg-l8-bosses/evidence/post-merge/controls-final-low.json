@@ -1,10 +1,24 @@
 {
-  "sourceHash": "07ab00212f282bf9e6e48dbf97ebfe3a3315767da77598f3bee447892e8b9966",
-  "observerHash": "b8603781e9e5cbc16eb2b5bd76f63217a34d01f3c8fae3779409b9ce92ef0327",
-  "revision": "63e60096",
+  "sourceHash": "ffb8ec8b181303abf9c542e13315175cb66a41ca4236ec83aa98c9cef072ebe8",
+  "observerHash": "f9c75d530f326f9ad963db732502c5709b32ae288eb0d507e04558ccded4db27",
+  "revision": "877d7e1d",
   "tier": "low",
   "method": "Controlled native lifecycle, mortal checkpoint, input, damage, bar and dialogue checks; setup mutations are explicit and do not certify arena combat completion.",
   "checks": [
+    {
+      "name": "bounded path entry uses the actual body sweep and rejects a closed physical pocket",
+      "pass": true,
+      "value": {
+        "entry": {
+          "x": 2.75,
+          "z": -0.25
+        },
+        "radius": 0.35,
+        "unchangedStretch": 2.5,
+        "bounded": true,
+        "closedPocketRejected": true
+      }
+    },
     {
       "name": "healthy animal has no enemy bar",
       "pass": true,

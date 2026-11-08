@@ -1,0 +1,419 @@
+{
+  "revision": "gorilla-recovery",
+  "sourceHash": "7f95466d5f9da534f9e1b28fbbb3feea530a5d1d03dd2a2eed37d499a88f58f5",
+  "observerHash": "7d56698184639dfbf5c990fbd11373924e17575469d4164e37775e5e16499e53",
+  "policy": "passive",
+  "rows": [
+    {
+      "id": "gorilla",
+      "tier": "low",
+      "policy": "passive",
+      "measurementEntry": {
+        "x": 60,
+        "z": -16,
+        "y": 0.7
+      },
+      "complete": false,
+      "seconds": 34.233333333333334,
+      "totalSeconds": 34.233333333333334,
+      "hp": 0,
+      "deaths": 1,
+      "damage": 115.36666666666696,
+      "attacks": 7,
+      "phases": 1,
+      "counters": 0,
+      "wallHits": 0,
+      "rocket": 0,
+      "rocketPickups": 0,
+      "bites": [
+        398
+      ],
+      "turns": [
+        398
+      ],
+      "tells": [
+        {
+          "tick": 367,
+          "source": 398,
+          "attack": 1,
+          "move": "gorilla.roar",
+          "duration": 1,
+          "area": {
+            "x": 52.8475118670017,
+            "z": -15.342967954875064,
+            "radius": 8,
+            "dx": 0.9958073285150391,
+            "dz": -0.09147548565457933
+          }
+        },
+        {
+          "tick": 914,
+          "source": 398,
+          "attack": 2,
+          "move": "gorilla.grab-throw",
+          "duration": 0.8,
+          "area": {
+            "x": 63.627064322588026,
+            "z": -27.09766939340217,
+            "radius": 1,
+            "dx": -0.3106599349813996,
+            "dz": 0.9505211227518052
+          }
+        },
+        {
+          "tick": 1136,
+          "source": 398,
+          "attack": 3,
+          "move": "gorilla.grab-throw",
+          "duration": 0.8,
+          "area": {
+            "x": 63.44175114850004,
+            "z": -29.098428371124808,
+            "radius": 1,
+            "dx": -0.2541339345852137,
+            "dz": 0.9671690355321753
+          }
+        },
+        {
+          "tick": 1358,
+          "source": 398,
+          "attack": 4,
+          "move": "gorilla.grab-throw",
+          "duration": 0.8,
+          "area": {
+            "x": 62.28704722565578,
+            "z": -30.292743234713758,
+            "radius": 1,
+            "dx": -0.15800453318724375,
+            "dz": 0.9874383866815596
+          }
+        },
+        {
+          "tick": 1674,
+          "source": 398,
+          "attack": 5,
+          "move": "gorilla.pound",
+          "duration": 1,
+          "area": {
+            "x": 61.903259872393754,
+            "z": -19.61904161779345,
+            "radius": 5,
+            "dx": -0.4620052711601114,
+            "dz": 0.8868771783174216
+          }
+        },
+        {
+          "tick": 2022,
+          "source": 398,
+          "attack": 6,
+          "move": "gorilla.grab-throw",
+          "duration": 0.8,
+          "area": {
+            "x": 58.498624442979335,
+            "z": -14.917972841313995,
+            "radius": 1,
+            "dx": 0.8201138942189071,
+            "dz": -0.572200315020098
+          }
+        },
+        {
+          "tick": 2120,
+          "source": 398,
+          "attack": 7,
+          "move": "gorilla.grab-throw",
+          "duration": 0.8,
+          "area": {
+            "x": 58.7242791965384,
+            "z": -16.668637173095107,
+            "radius": 1,
+            "dx": 0.8757819962185468,
+            "dz": 0.4827068417781726
+          }
+        },
+        {
+          "tick": 2222,
+          "source": 398,
+          "attack": 8,
+          "move": "gorilla.grab-throw",
+          "duration": 0.8,
+          "area": {
+            "x": 58.7242791965384,
+            "z": -17.72091736743282,
+            "radius": 1,
+            "dx": 0.4929482898996237,
+            "dz": 0.8700586092241354
+          }
+        }
+      ],
+      "throws": [
+        {
+          "tick": 962,
+          "source": 398,
+          "prop": 1823699267
+        },
+        {
+          "tick": 1184,
+          "source": 398,
+          "prop": 1970042489
+        },
+        {
+          "tick": 1406,
+          "source": 398,
+          "prop": 1919709632
+        },
+        {
+          "tick": 2070,
+          "source": 398,
+          "prop": 1919709632
+        },
+        {
+          "tick": 2168,
+          "source": 398,
+          "prop": 1823699267
+        },
+        {
+          "tick": 2270,
+          "source": 398,
+          "prop": 1970042489
+        }
+      ],
+      "signals": [],
+      "stages": [
+        {
+          "tick": 427,
+          "source": 398,
+          "move": "gorilla.roar",
+          "stage": "active"
+        },
+        {
+          "tick": 427,
+          "source": 398,
+          "move": "gorilla.roar",
+          "stage": "recovery"
+        },
+        {
+          "tick": 547,
+          "source": 398,
+          "move": "gorilla.roar",
+          "stage": "expiry"
+        },
+        {
+          "tick": 962,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "active"
+        },
+        {
+          "tick": 1016,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1064,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1184,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "active"
+        },
+        {
+          "tick": 1247,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1295,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1406,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "active"
+        },
+        {
+          "tick": 1474,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1534,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1734,
+          "source": 398,
+          "move": "gorilla.pound",
+          "stage": "active"
+        },
+        {
+          "tick": 1734,
+          "source": 398,
+          "move": "gorilla.pound",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1794,
+          "source": 398,
+          "move": "gorilla.pound",
+          "stage": "expiry"
+        },
+        {
+          "tick": 2070,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "active"
+        },
+        {
+          "tick": 2071,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "recovery"
+        },
+        {
+          "tick": 2119,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "expiry"
+        },
+        {
+          "tick": 2168,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "active"
+        },
+        {
+          "tick": 2173,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "recovery"
+        },
+        {
+          "tick": 2221,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "expiry"
+        },
+        {
+          "tick": 2270,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "active"
+        },
+        {
+          "tick": 2278,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "recovery"
+        }
+      ],
+      "destruction": [
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-0",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-1",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-2",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-3",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        }
+      ],
+      "bosses": [
+        {
+          "id": 398,
+          "hp": 6000,
+          "at": {
+            "x": 57.80039966402711,
+            "z": -17.338233935067727,
+            "y": 0.7,
+            "yaw": -1.0553212033548773
+          },
+          "state": "chase",
+          "boss": {
+            "arena": "gorilla",
+            "slot": 0,
+            "engaged": true,
+            "exposedUntil": 2338,
+            "readyAt": 2338,
+            "shakeHits": 0,
+            "barrage": 0
+          },
+          "attack": {
+            "move": "gorilla.grab-throw",
+            "attackId": 8,
+            "stage": "recovery",
+            "startTick": 2222,
+            "activeTick": 2270,
+            "cooldownExpiry": 2642,
+            "recoveryUntil": 2338,
+            "target": {
+              "id": 1,
+              "x": 60.0000114440918,
+              "z": -15.469237327575684
+            },
+            "area": {
+              "x": 58.7242791965384,
+              "z": -17.72091736743282,
+              "radius": 1,
+              "dx": 0.4929482898996237,
+              "dz": 0.8700586092241354
+            },
+            "hitIds": [
+              1
+            ],
+            "destination": {
+              "x": 58.7242791965384,
+              "z": -17.72091736743282
+            },
+            "projectile": {
+              "objectId": 1970042489,
+              "corpse": false,
+              "living": false,
+              "started": 2270,
+              "x": 58.7242791965384,
+              "z": -17.72091736743282,
+              "dx": 0.4929482898996237,
+              "dz": 0.8700586092241354,
+              "distance": 1.6,
+              "range": 2.587963633697096,
+              "speed": 12,
+              "fromY": 1.2999999999999998,
+              "toY": 0
+            }
+          },
+          "held": false
+        }
+      ]
+    }
+  ]
+}
