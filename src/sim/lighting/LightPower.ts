@@ -118,16 +118,45 @@ export class LightPower {
     // It must not shorten sight to the full-night 9.6 m range.
     return !!preset && preset !== 'L5' && (timeOfDay[preset].practical ?? 0) > .5;
   }
-  /** perf-w6: every infected asks about the same courier position each tick. Lamp state only changes with `revision`
-   * (power, breakage, install, checkpoint rebind) and the tick (startup flicker), so one answer per tick, spot and revision. */
-  private readonly sight = { tick: -1, revision: -1, x: NaN, z: NaN, value: 1 };
+  /** Sight results are stable for every target position during one tick. In a large crowd many infected ask about the same
+   * survivor positions, interleaved by actor; cache all positions for the tick instead of only the last one. */
+  private sightTick = -1;
+  private sightRevision = -1;
+  private readonly sightByX = new Map<number, Map<number, number>>();
+  private sightCellsRevision = -1;
+  private readonly sightCells = new Map<number, Map<number, LampState[]>>();
+  private readonly unindexedSight: LampState[] = [];
+  /** Geometry is authored and only changes when lamps are registered/rebound. Power/startup is still checked live. */
+  private indexSight(): void {
+    if (this.sightCellsRevision === this.revision) return;
+    this.sightCells.clear(); this.unindexedSight.length = 0;
+    for (const lamp of this.lamps.values()) {
+      // Keep unusual fixture ranges exact without expanding an unbounded grid.
+      if (!Number.isFinite(lamp.x) || !Number.isFinite(lamp.z) || !Number.isFinite(lamp.range) || lamp.range < 0 || lamp.range > 256) { this.unindexedSight.push(lamp); continue; }
+      for (let x = Math.floor((lamp.x - lamp.range) / 16); x <= Math.floor((lamp.x + lamp.range) / 16); x++) {
+        let row = this.sightCells.get(x); if (!row) this.sightCells.set(x, row = new Map());
+        for (let z = Math.floor((lamp.z - lamp.range) / 16); z <= Math.floor((lamp.z + lamp.range) / 16); z++) {
+          let cell = row.get(z); if (!cell) row.set(z, cell = []); cell.push(lamp);
+        }
+      }
+    }
+    this.sightCellsRevision = this.revision;
+  }
   sightMultiplier(target: { x: number; z: number }, night = this.night): number {
     if (!night) return 1;
-    const memo = this.sight;
-    if (memo.tick === this.world.tick && memo.revision === this.revision && memo.x === target.x && memo.z === target.z) return memo.value;
+    if (this.sightTick !== this.world.tick || this.sightRevision !== this.revision) {
+      this.sightTick = this.world.tick; this.sightRevision = this.revision; this.sightByX.clear();
+    }
+    let row = this.sightByX.get(target.x);
+    const cached = row?.get(target.z);
+    if (cached !== undefined) return cached;
+    this.indexSight();
     let value = .6;
-    for (const lamp of this.lamps.values()) if (this.isOn(lamp.id) && Math.hypot(target.x - lamp.x, target.z - lamp.z) <= lamp.range) { value = 1; break; }
-    memo.tick = this.world.tick; memo.revision = this.revision; memo.x = target.x; memo.z = target.z; memo.value = value;
+    const nearby = this.sightCells.get(Math.floor(target.x / 16))?.get(Math.floor(target.z / 16));
+    if (nearby) for (const lamp of nearby) if (Math.hypot(target.x - lamp.x, target.z - lamp.z) <= lamp.range && this.isOn(lamp.id)) { value = 1; break; }
+    if (value < 1) for (const lamp of this.unindexedSight) if (Math.hypot(target.x - lamp.x, target.z - lamp.z) <= lamp.range && this.isOn(lamp.id)) { value = 1; break; }
+    if (!row) this.sightByX.set(target.x, row = new Map());
+    row.set(target.z, value);
     return value;
   }
 }

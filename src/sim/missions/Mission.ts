@@ -533,5 +533,5 @@ export class Mission {
     this.world.solids.restore();
     this.world.solids.reservePlayerStart();
   }
-  dispose(): void { this.l2?.dispose(); this.l3?.dispose(); this.stops.forEach(stop => stop()); for(const handle of this.gateHandles.values()) {const collider=this.world.physics.world?.getCollider(handle);if(collider)this.world.physics.world!.removeCollider(collider,true);} this.gateHandles.clear(); }
+  dispose(): void { this.l2?.dispose(); this.l3?.dispose(); this.l8?.dispose(); this.stops.forEach(stop => stop()); for(const handle of this.gateHandles.values()) {const collider=this.world.physics.world?.getCollider(handle);if(collider)this.world.physics.world!.removeCollider(collider,true);} this.gateHandles.clear(); }
 }

@@ -24,7 +24,18 @@ const distance = (a: Point, b: Point) => Math.hypot(a.x - b.x, a.z - b.z);
 export class LevelEightZoo {
   state: L8ZooState = { startedAt: 0, breachedAt: 0, nextWave: 0, alphas: 0, carId: 0, busId: 0, roster: [], animals: [], outlets: [], arrivals: [], escapeCheckpoint: false };
   private prepared = false;
-  constructor(private readonly mission: Mission) {}
+  private rosterCacheTick = -1;
+  private rosterCacheRevision = -1;
+  private rosterCache: number[] = [];
+  private passengersCache: number[] = [];
+  private readonly seatedPassengers = new Set<number>();
+  private readonly cacheStops: (() => void)[] = [];
+  constructor(private readonly mission: Mission) {
+    const invalidate = () => { this.rosterCacheTick = -1; this.rosterCacheRevision = -1; };
+    for (const type of ['entity.spawned', 'civilian.state', 'civilian.finished', 'combat.kill'] as const)
+      this.cacheStops.push(mission.world.events.on(type, invalidate));
+  }
+  dispose(): void { this.cacheStops.splice(0).forEach(stop => stop()); }
   private get w() { return this.mission.world; }
   private get breached() { return !!this.mission.state.states.breached; }
   private point(at: Point, radius = .4): Point {
@@ -169,8 +180,16 @@ export class LevelEightZoo {
     if (w.vehicles!.groupBoarded(s.carId, this.passengers())) this.mission.setState('aboard', true);
   }
   /** Complete living boarding group, including companions shown in the HUD. */
+  private refreshRoster(): void {
+    if (this.rosterCacheTick === this.w.tick && this.rosterCacheRevision === this.w.entities.revision) return;
+    this.rosterCache = [...new Set([...this.state.roster, ...[...this.w.entities.iterate()].filter(e=>e.civilian?.survivor?.mode === 'follow' && !e.civilian.zooAnimal).map(e=>e.id)])]
+      .filter(id => { const e = this.w.entities.get(id); return e && e.health.current > 0 && !e.infected && e.civilian?.state !== 'finished'; });
+    this.passengersCache = [...[...this.w.entities.iterate()].filter(e=>e.companion&&e.health.current>0).map(e=>e.id), ...this.rosterCache];
+    this.rosterCacheTick = this.w.tick; this.rosterCacheRevision = this.w.entities.revision;
+  }
   passengers(): number[] {
-    return [...[...this.w.entities.iterate()].filter(e=>e.companion&&e.health.current>0).map(e=>e.id), ...this.roster()];
+    this.refreshRoster();
+    return [...this.passengersCache];
   }
   /** The unarmed cab would remove the courier's cover fire before the queue is safe. */
   canBoardDriver(): boolean {
@@ -201,8 +220,8 @@ export class LevelEightZoo {
   }
   /** Newly rescued zoo residents also belong to the complete living group. */
   roster(): number[] {
-    const ids = [...new Set([...this.state.roster, ...[...this.w.entities.iterate()].filter(e => e.civilian?.survivor?.mode === 'follow' && !e.civilian.zooAnimal).map(e => e.id)])];
-    return ids.filter(id => { const e = this.w.entities.get(id); return e && e.health.current > 0 && !e.infected && e.civilian?.state !== 'finished'; });
+    this.refreshRoster();
+    return [...this.rosterCache];
   }
   /** The parked nav AABB encloses free space beside a rotated hull. Use the
    * canonical physical sweep for the final clear approach, without changing
@@ -266,9 +285,18 @@ export class LevelEightZoo {
     let queueIndex = 0;
     if (boarding) {
       const vehicle = w.vehicles!.cars.get(s.carId)!.entity.vehicle!;
-      const passengers = this.passengers();
-      const waiting = passengers.filter(id => !vehicle.passengers?.some(passenger => passenger.id === id && passenger.phase === 'seated'));
-      queueIndex = Math.max(0, waiting.indexOf(e.id));
+      this.refreshRoster();
+      const passengers = this.passengersCache;
+      // Build the seated lookup once for this call, rather than scanning every
+      // vehicle seat for every group member, once again for every follower.
+      const seated = this.seatedPassengers; seated.clear();
+      for (const passenger of vehicle.passengers ?? []) if (passenger.phase === 'seated') seated.add(passenger.id);
+      let ahead = 0;
+      for (const id of passengers) {
+        if (seated.has(id)) continue;
+        if (id === e.id) { queueIndex = ahead; break; }
+        ahead++;
+      }
       if (queueIndex) {
         const car = w.entities.get(s.carId)!, dx = door.x - car.transform.x, dz = door.z - car.transform.z, length = Math.hypot(dx, dz) || 1;
         // Keep the complete roster near the APC instead of stretching a
