@@ -16,10 +16,28 @@ for tier in ('high', 'low'):
     assert len(before) == len(after) == expected, (tier, len(before), len(after), expected)
     prior = {(r['name'], r['zoom']): r for r in before}
     assert len(prior) == expected
+    assert len({(r['name'], r['zoom']) for r in after}) == expected
+    assert {(r['name'], r['zoom']) for r in after} == set(prior)
+    for phase in (before, after):
+        zooms = {(r['name'], r['zoom']): r for r in phase}
+        for name in {r['name'] for r in phase}:
+            assert zooms[(name, 1)]['sha256'] != zooms[(name, 1.5)]['sha256'], (name, tier, 'duplicate zoom frames')
+            assert abs(zooms[(name, 1.5)]['actualRadius'] / zooms[(name, 1)]['actualRadius'] - 1.5) < 1e-6
+
     for current in after:
         old = prior[(current['name'], current['zoom'])]
         assert old['tier'] == current['tier'] == tier
         assert old['tick'] == current['tick'], (current['name'], old['tick'], current['tick'])
+        assert abs(old['camera']['zoom'] - current['zoom']) < 1e-6
+        assert abs(current['camera']['zoom'] - current['zoom']) < 1e-6
+        assert abs(old['calibratedZoom'] - current['zoom']) < 1e-6
+        assert abs(current['calibratedZoom'] - current['zoom']) < 1e-6
+        assert np.allclose(old['camera']['position'], current['camera']['position'], atol=1e-6)
+        assert np.allclose(old['camera']['target'], current['camera']['target'], atol=1e-6)
+        assert old['camera']['fov'] == current['camera']['fov']
+        if current['kind'] == 'prop':
+            assert abs(current['actualRadius'] - 19 * current['zoom']) < 1e-6
+            assert abs(old['actualRadius'] - 19 * old['zoom']) < 1e-6
         assert not old['errors'] and not current['errors'], (current['name'], old['errors'], current['errors'])
         for capture in (old, current):
             assert hashlib.sha256(Path(capture['path']).read_bytes()).hexdigest() == capture['sha256']
@@ -33,7 +51,7 @@ for tier in ('high', 'low'):
         delta = np.abs(left[:, :, :3].astype(np.int16) - right[:, :, :3].astype(np.int16))
         ys, xs = np.where(mask)
         row = {k: current[k] for k in ('name', 'zoom', 'level', 'kind', 'tick')}
-        row.update(tier=tier, before=old['path'], after=current['path'],
+        row.update(tier=tier, camera=current['camera'], actualRadius=current['actualRadius'], calibratedZoom=current['calibratedZoom'], before=old['path'], after=current['path'],
                    beforeSHA256=hashlib.sha256(Path(old['path']).read_bytes()).hexdigest(),
                    afterSHA256=hashlib.sha256(Path(current['path']).read_bytes()).hexdigest(),
                    changedPixels=count, pixels=int(mask.size), meanChannelDelta=float(delta.mean()), maxChannelDelta=int(delta.max()),
