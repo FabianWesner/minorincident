@@ -1,15 +1,16 @@
 /** Retains full beauty and beams-disabled intersection samples without changing the 25% limit. */
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { PNG } from 'pngjs';
-import { SceneSession, stopServer } from '../scenelab/session';
+import { SceneSession, stopServer, type Backend } from '../scenelab/session';
 import type { Game } from '../../src/Game';
 import type { Lighting } from '../../src/render/Lighting';
 import type { PlacedLight } from '../../src/data/placedLights';
 import type { SceneSpec } from '../../src/debug/scenelab/spec';
 const tier = process.argv.includes('--low') ? 'low' : 'high', out = process.env.E25_OUT ?? `test-results/epics/E25/final/beams-${tier}`;
+const backend = (process.env.E25_BACKEND ?? 'webgl2') as Backend;
 mkdirSync(out, { recursive: true });
-const s = new SceneSession({ tier, backend: 'webgl2' });
-const result: Record<string, unknown> = { tier };
+const s = new SceneSession({ tier, backend });
+const result: Record<string, unknown> = { tier, backend };
 const lin = (v: number) => v <= 10.31475 ? v / 3294.6 : ((v / 255 + .055) / 1.055) ** 2.4;
 function luminance(p: PNG, x: number, y: number) { const i = (Math.round(y) * p.width + Math.round(x)) * 4; return .2126 * lin(p.data[i]) + .7152 * lin(p.data[i + 1]) + .0722 * lin(p.data[i + 2]); }
 async function shot(name: string) {
@@ -24,6 +25,8 @@ async function shot(name: string) {
 }
 try {
   await s.open(); await s.page.evaluate('globalThis.__name = (fn) => fn');
+  const actualBackend = await s.page.evaluate(() => window.__SS__!.perf().backend);
+  if (actualBackend !== (backend === 'webgpu' ? 'webgpu' : 'webgl')) throw Error(`Backend fallback: ${actualBackend}`);
   const spec: SceneSpec = { name: 'light-lab', ground: 'asphalt', size: 60, time: 'night', dof: false, props: [{ asset: 'prop.light-tower-trailer', at: [-10, 0], powerGroup: 'trailer' }, { asset: 'prop.privacy-fence', at: [8, 0], scale: [1, 1, 4] }], actors: [{ id: 'courier', kind: 'courier', at: [0, 0] }], camera: { mode: 'pose', position: [24, 32, 36], target: [0, 0, 0] } };
   await s.load(spec); await s.step(120);
   if (process.env.E25_NO_VISIBILITY === '1') await s.page.evaluate(() => {
@@ -40,7 +43,8 @@ try {
     const project = (p: number[]) => window.__SCENE__!.project(p as [number, number, number]);
     const original = fields.map(f => ({ field: f, a: project([f.x + f.aimX, .02, f.z + f.aimZ]), b: project([f.x + f.aimX * (1 - .8 / f.y), .8, f.z + f.aimZ * (1 - .8 / f.y)]) }));
     const actual = effects.lights.filter(l => l.anchor.type === 'spot' && l.anchor.beam !== 'none').flatMap(light => {
-      const [x, y, z] = light.position, [dx, dy, dz] = light.direction;
+      const [x, y, z] = light.position, directionLength = Math.hypot(...light.direction);
+      const [dx, dy, dz] = light.direction.map(v => v / directionLength);
       const h = Math.hypot(dx, dz), c = Math.cos((light.anchor.angle ?? 45) * Math.PI / 360), t = Math.sin((light.anchor.angle ?? 45) * Math.PI / 360);
       // Every azimuth on the actual cone surface: axis +/- two perpendicular basis vectors.
       const u = h > 1e-5 ? [dz / h, 0, -dx / h] : [1, 0, 0];
