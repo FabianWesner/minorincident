@@ -1,6 +1,6 @@
 /** L8 encounter tuning in metres, HP and fixed ticks. Entries sit on connected public paths. */
 export const l8BossArenas = [
-  { id: 'flamingo', name: 'Flamingo flock', count: 7, hp: 700, centre: { x: -6, z: -27 }, entry: { x: 0, z: -9 }, radius: 17, counter: 'Step sideways out of the shadow lane; sweep the birds as they land.' },
+  { id: 'flamingo', name: 'Flamingo flock', count: 7, hp: 780, centre: { x: -6, z: -27 }, entry: { x: 0, z: -9 }, radius: 17, counter: 'Step sideways out of the shadow lane; sweep the birds as they land.' },
   { id: 'zebra', name: 'Zebra herd', count: 4, hp: 1250, centre: { x: 60, z: 32 }, entry: { x: 60, z: 8 }, radius: 23, counter: 'Leave the dust lane. The fence turns the herd; shoot the stragglers.' },
   { id: 'monkey', name: 'Monkey pack', count: 7, hp: 840, centre: { x: -5, z: 15 }, entry: { x: 1, z: 14 }, radius: 13, counter: 'Use the doorway to stop the pack surrounding you. Melee shakes off a grab.' },
   { id: 'lion', name: 'Lion and lioness', count: 2, hp: 3200, centre: { x: -60, z: -32 }, entry: { x: -60, z: -8 }, radius: 23, counter: 'Keep your back to the rocks. Dodge sideways at the glint and fire after the landing.' },
