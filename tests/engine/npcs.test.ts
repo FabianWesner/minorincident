@@ -107,9 +107,9 @@ test('civilians: seeded grab → bite → down → glowing eyes → rising → i
 test('escort: shared combat pace, follows through a maze, a 2 s stand revives to 50 %, unattended 20 s down fails the mission', async () => {
   {
   // r12-group: the follower formation is a loose, persistent cluster (not the 1.2 m parade lattice) with body room between slots.
-  const heading = { x: 1, z: 0 }, slots = Array.from({ length: 24 }, (_, i) => formationSlot({ x: 0, z: 0 }, heading, i));
-  expect(slots).toEqual(Array.from({ length: 24 }, (_, i) => formationSlot({ x: 0, z: 0 }, heading, i)));
-  for (let i = 0; i < 24; i++) for (let j = i + 1; j < 24; j++) expect(Math.hypot(slots[i].x - slots[j].x, slots[i].z - slots[j].z)).toBeGreaterThan(.89);
+  const heading = { x: 1, z: 0 }, slots = Array.from({ length: 48 }, (_, i) => formationSlot({ x: 0, z: 0 }, heading, i));
+  expect(slots).toEqual(Array.from({ length: 48 }, (_, i) => formationSlot({ x: 0, z: 0 }, heading, i)));
+  for (let i = 0; i < slots.length; i++) for (let j = i + 1; j < slots.length; j++) expect(Math.hypot(slots[i].x - slots[j].x, slots[i].z - slots[j].z)).toBeGreaterThan(.89);
   expect(slots.filter((s, i) => Math.hypot(s.x + formationBack(i), s.z - (i % 3 - 1) * 1.2) > .12).length).toBeGreaterThan(16);
   expect(Math.max(...slots.slice(0, 3).map(s => s.x))).toBeLessThan(-2.2);
   const w = await world(), p = w.entities.get(1)!;
@@ -134,6 +134,10 @@ test('escort: shared combat pace, follows through a maze, a 2 s stand revives to
   const enemy = w.entities.get(w.infected!.spawn('infected.runner', { x: follower.transform.x, z: follower.transform.z + 6 }))!;
   expect(idleEligible(follower)).toBe(true);
   expect(idleLookYaw(w, follower)).toBeCloseTo(-Math.atan2(enemy.transform.z - follower.transform.z, enemy.transform.x - follower.transform.x));
+  // A nearby infected behind a wall must not synchronize the group's gaze through it.
+  const visible = vi.spyOn(w.infected!.nav, 'visible').mockReturnValue(false);
+  expect(idleLookYaw(w, follower)).not.toBeCloseTo(-Math.atan2(enemy.transform.z - follower.transform.z, enemy.transform.x - follower.transform.x));
+  visible.mockRestore();
   }
   {
   const w = await world(), p = w.entities.get(1)!;

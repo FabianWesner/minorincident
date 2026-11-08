@@ -95,7 +95,7 @@ export function idleLookYaw(world: SimWorld, e: EntitySnapshot): number | undefi
   for (const o of world.infected?.active ?? []) {
     if (o.health.current <= 0 || o.hidden || o.infected?.hidden) continue;
     const d = Math.hypot(o.transform.x - me.x, o.transform.z - me.z);
-    if (d < best) { best = d; threat = o; }
+    if (d < best && world.infected!.nav.visible(me, o.transform, 0)) { best = d; threat = o; }
   }
   if (threat) return face(threat.transform);
   const period = 150 + Math.floor(personal(e.id, 41) * 180), window = Math.floor((world.tick + personal(e.id, 42) * period) / period);
