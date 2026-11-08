@@ -19,8 +19,10 @@ Lane: `eg-l9` · PO 2026-11-08. Work in progress; native validation is pending.
 
 - Earlier local typecheck and lint passed before the remote-only direction.
 - Earlier full unit suite: 106 passed, one `gate-tools.test.ts` freshness assertion failed (`FRESH` versus `STALE`). The working source tree was dirty; a clean committed rerun is required before assigning a cause.
-- Current remote typecheck and lint passed. The native vehicle test caught an evacuation guard spawned on blocked navigation; guard posts now snap to clear body-sized cells. The rerun is queued. Earlier typecheck findings (event guards, render matrix field and model typing) are fixed.
+- Remote typecheck and lint passed before the latest integration fixes; a full fresh batch is queued. Native tests exposed startup guard navigation, a full carried APC seat overflow, independent sleeping of seated civilians, and competing corgi controllers. Those causes are fixed. Earlier typecheck findings (event guards, render matrix field and model typing) are fixed.
 - New native assertions extend the existing vehicle case: climb timer/unique slots, cab versus hatch fire, timed restart, held repair/release, actual truck arrival, Sam staying, checkpoint restore, no crash transform jump, no automatic crawl, one post-escape explosion, and axe-only handover.
+- First unprotected low-tier road probe (before the latest fixes): courier died at 56.47 s after getting repeatedly stopped near the first road bend; 8 grabs / 3 shake-offs; peak 52 infected / 9 detailed chunks; zero collision invariant failures and zero admission violations. This is a failing completion run, not qualification. Downed heavy bodies now stop resetting the engine stall, and the ordinary input policy steers around nearby living heavies.
+- The remote pool had free slots while an older FIFO head ticket could not dispatch; the lane preserved FIFO and reported the blockage. No heavy work fell back to the Mac.
 - Required final remote checks: typecheck, lint, full `npm test -- --maxWorkers=1`, `qa:accept --level L9 --skip-browser`, `qa:threat --levels L9`. Results are not claimed until run against the current files.
 
 ## Browser QA needed
@@ -38,7 +40,7 @@ No browser was opened in this lane, as instructed. QA should inspect both qualit
 
 ## Integration
 
-The earlier sandbox prevented Git metadata writes. Permissions are now fixed: the initial progress is committed as `9f79fedd`, and `main` through `a7b70c78` is merged. Its story script is authoritative. The main implementation is committed as `74cd1db6`; subsequent native integration fixes are being validated. No deploy or push was performed.
+The earlier sandbox prevented Git metadata writes. Permissions are now fixed: the initial progress is committed as `9f79fedd`, and `main` through `a7b70c78` is merged. Its story script is authoritative. The main implementation is committed as `74cd1db6`; subsequent native integration fixes are being validated. Native follow-up fixes and an isolated remote validation batch are committed. No deploy or push was performed.
 
 ## Criterion corrections
 
