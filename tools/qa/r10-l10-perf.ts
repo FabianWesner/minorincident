@@ -16,11 +16,14 @@ assert.ok(!selectedSide || selectedSide === 'before' || selectedSide === 'after'
 const out = `test-results/r10-l10/perf${selectedSide ? `-${selectedSide}` : ''}`; mkdirSync(out, { recursive: true });
 const sides = (['before', 'after'] as const).filter(side => !selectedSide || side === selectedSide);
 const servers = await Promise.all(sides.map((side, i) => preview({ configFile: false, build: { outDir: resolve(`test-results/r10-l10/${side === 'after' ? 'final' : 'before'}-dist`) }, preview: { host: '127.0.0.1', port: 3901 + i, strictPort: true } })));
-const rows: unknown[] = [];
+// Resume cold profiles separately when admission consumed a bounded reservation.
+const coldOnly = process.env.R10_PERF_COLD_ONLY === '1';
+const rows: unknown[] = coldOnly ? JSON.parse(readFileSync(`${out}/frames.json`, 'utf8')).filter((r: { kind?: string }) => r.kind !== 'cold-load') : [];
+if (coldOnly) assert.equal(rows.filter(r => !!(r as { name?: string }).name).length, sides.length * 16, 'All movement legs must exist before cold-only resume');
 type TraversalSample = { frames: number[]; end: { x: number; z: number }; perf: unknown };
 const browser = await launchBrowser({ headless: true, args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist', ...uncappedArgs()] });
 try {
-  for (const tier of ['low', 'high'] as const) for (const [i, side] of sides.entries()) {
+  for (const tier of (coldOnly ? [] : ['low', 'high']) as ('low' | 'high')[]) for (const [i, side] of sides.entries()) {
     const context = await browser.newContext({ viewport: { width: 1280, height: 720 }, deviceScaleFactor: 1 });
     const page = await context.newPage(); page.setDefaultTimeout(180_000);
     const errors: string[] = []; page.on('pageerror', e => errors.push(String(e))); page.on('console', m => { if (m.type() === 'error') errors.push(m.text()); });
