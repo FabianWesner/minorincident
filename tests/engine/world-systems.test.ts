@@ -177,10 +177,13 @@ test('look-l6-l9 decor is render-only: L6 nav hash, colliders and pushables matc
     expect(laneSlots.some(s => s.x > a.min[0] - 4 && s.x < a.max[0] + 4)).toBe(false);
     expect(cureLayout.colliders.some(c => !c.walkable && c.aabb.max[1] > .05 && a.min[0] < c.aabb.max[0] && a.max[0] > c.aabb.min[0] && a.min[2] < c.aabb.max[2] && a.max[2] > c.aabb.min[2])).toBe(false);
   }
-  const solids = stories.filter(q => !q.decor);
+  const solids = stories.filter(q => q.decorSolid);
+  expect(stories.every(q => q.decor)).toBe(true);
   expect(solids.length).toBeGreaterThan(40);
-  expect(placementColliders(stories.filter(q => q.decor), [])).toEqual([]);
-  const solidIds = new Set(placementColliders(solids, []).map(c => c.id.split('/')[0]));
+  expect(placementColliders(stories.filter(q => !q.decorSolid), [])).toEqual([]);
+  const solidColliders = placementColliders(solids, []), solidIds = new Set(solidColliders.map(c => c.id.split('/')[0]));
+  // Physics-only: they stop the courier but are no AI nav wall (qa:accept L10-03: nav solids starved the corridor-breach group).
+  expect(solidColliders.every(c => c.aabb.physicsOnly)).toBe(true);
   expect(solids.every(q => solidIds.has(q.id))).toBe(true);
   // Ground under each piece without the scenes (a sandbag pallet carries its own 25 cm walkable deck).
   const bare = new DistrictWorld(compositions.L10, [{ ...cureLayout, placements: [...cureLayout.placements, ...belt] }], 32);
