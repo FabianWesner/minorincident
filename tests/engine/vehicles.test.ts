@@ -148,6 +148,8 @@ async function crossingStorySequence(): Promise<void> {
     expect(driving.restarted, 'Sam restarts after thirty simulation seconds').toBe(true);
     expect(car.entity.vehicle!.damage).not.toBe('exploded');
     place(423, 18); car.entity.health.current = 500;
+    let repairDamage = 0;
+    w.events.on('vehicle.durability-hit', e => { if (e.type === 'vehicle.durability-hit' && e.sourceId === car.entity.id) repairDamage += e.before - e.after; });
     const repair = emptyInput(); repair.interactHeld = true; w.applyInput(repair, 'keyboard');
     for (let i = 0; i < 120; i++) w.update();
     expect(driving.repairTicks, 'two seconds of held repair').toBe(120);
@@ -155,6 +157,10 @@ async function crossingStorySequence(): Promise<void> {
     w.applyInput(emptyInput(), 'keyboard'); for (let i = 0; i < 60; i++) w.update();
     expect(driving.repairTicks, 'release pauses the crank').toBe(120);
     expect(car.entity.health.current).toBeLessThanOrEqual(530);
+    w.applyInput({ ...fire, interactHeld: true }, 'keyboard');
+    for (let i = 0; i < 1320; i++) { w.update(); player.health.current = player.health.max; }
+    expect(driving.repairTicks, 'the bay has a finite twenty-second repair budget').toBe(1200);
+    expect(car.entity.health.current + repairDamage - 500, 'exactly 300 durability is restored across hold, pause and resume').toBeCloseTo(300, 3);
     place(457, 0); w.applyInput(fire, 'keyboard');
     for (let i = 0; i < 3000 && !driving.evacuationDone; i++) { w.update(); player.health.current = player.health.max; }
     expect(driving.evacuationDone, 'the living civilians actually reach the trucks').toBe(true);
@@ -174,6 +180,8 @@ async function crossingStorySequence(): Promise<void> {
     expect(explosions, 'the wreck has not exploded while she is still inside').toBe(0);
     const start = { ...player.transform }; for (let i = 0; i < 60; i++) w.update();
     expect(player.transform, 'no movement input means no automatic crawl').toEqual(start);
+    const resume = l9.snapshot(); l9.restore(resume); l9.rebuild();
+    expect(w.storyLock, 'a restored crawl accepts movement input').toBeNull();
     for (let i = 0; i < 600 && !l9.state.finished; i++) {
       const end = mission.def.anchors['crawl-end'], dx = end.x - player.transform.x, dz = end.z - player.transform.z, length = Math.hypot(dx, dz) || 1;
       const frame = emptyInput(); frame.move = { x: dx / length, z: dz / length }; w.applyInput(frame, 'keyboard'); w.update();

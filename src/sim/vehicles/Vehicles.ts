@@ -215,6 +215,12 @@ export class Vehicles {
     b.body.setTranslation(pose, true); b.body.setNextKinematicTranslation(pose);
     b.body.setRotation(b.rotation, true); b.body.setNextKinematicRotation(b.rotation);
     b.speed = b.forwardSpeed = 0; car.entity.vehicle!.speed = car.entity.vehicle!.forwardSpeed = 0;
+    for (const [slot, actorId] of car.entity.vehicle!.attached.entries()) {
+      const e = this.world.entities.get(actorId); if (!e) continue;
+      const side = car.entity.vehicle!.apcBoarders?.[actorId]?.side ?? (actorId % 2 ? 1 : -1), along = -car.physics.def.length * .25 + Math.floor(slot / 2) * .65;
+      Object.assign(e.transform, { x: pose.x + Math.cos(pose.yaw) * along + Math.sin(pose.yaw) * side * car.physics.def.width / 2, y: pose.y + .8, z: pose.z - Math.sin(pose.yaw) * along + Math.cos(pose.yaw) * side * car.physics.def.width / 2, yaw: pose.yaw });
+      this.world.spatial.set(e.id, e.transform.x, e.transform.z);
+    }
     this.world.spatial.set(id, pose.x, pose.z);
     if (this.active === id) {
       const player = this.world.entities.get(1)!; Object.assign(player.transform, pose);
@@ -228,6 +234,13 @@ export class Vehicles {
     Object.assign(this.position, safe); this.transition = null;
     if (this.active === id) this.leave(car);
     state.floor = false; state.damage = 'exploded'; state.decay = 'wrecked'; state.explodeAt = null;
+    if (deferExplosion) {
+      for (const actorId of state.attached) {
+        const e = this.world.entities.get(actorId); if (!e) continue;
+        delete e.attachedTo; e.hidden = true; e.health.current = 0; e.corpse = true; if (e.infected) e.infected.hidden = true; this.world.spatial.delete(e.id);
+      }
+      state.attached = []; state.apcBoarders = {};
+    }
     car.entity.health.current = 0;
     if (!deferExplosion) this.explodeScripted(id);
   }
@@ -267,6 +280,7 @@ export class Vehicles {
   }
   private leave(car: Car): void {
     const player = this.world.entities.get(1)!;
+    delete player.passengerOf;
     Object.assign(player.transform, this.position); player.hidden = false; Object.assign(this.world.previousPlayer!, player.transform);
     this.world.physics.playerBody!.setTranslation(player.transform, true); this.world.physics.playerBody!.setNextKinematicTranslation(player.transform);
     this.world.physics.playerCollider!.setEnabled(true); this.world.player!.locomotion.reset(); this.world.spatial.set(1, player.transform.x, player.transform.z);
@@ -363,7 +377,12 @@ export class Vehicles {
     const state = car.entity.vehicle!, p = car.entity.transform;
     for (const id of state.attached) {
       const target = this.world.entities.get(id);
-      if (target) { delete target.attachedTo; const side = id % 2 ? 1 : -1; target.transform.x = p.x + Math.sin(p.yaw) * side * 2; target.transform.z = p.z + Math.cos(p.yaw) * side * 2; this.world.spatial.set(id, target.transform.x, target.transform.z); }
+      if (target) {
+        delete target.attachedTo; const boarder = state.apcBoarders?.[id], side = boarder?.side ?? (id % 2 ? 1 : -1);
+        target.transform.x = boarder ? target.transform.x + Math.sin(p.yaw) * side * .9 : p.x + Math.sin(p.yaw) * side * 2;
+        target.transform.z = boarder ? target.transform.z + Math.cos(p.yaw) * side * .9 : p.z + Math.cos(p.yaw) * side * 2;
+        this.world.spatial.set(id, target.transform.x, target.transform.z);
+      }
       this.world.events.emit({ type: 'vehicle.shaken', tick: this.world.tick, sourceId: car.entity.id, targetId: id });
     }
     state.attached.length = 0;
@@ -421,11 +440,13 @@ export class Vehicles {
       const target = this.world.entities.get(id)!;
       if (target.kind !== 'infected' || target.hidden || target.infected?.hidden || (target.health.current <= 0 && (target.infected?.recoverAt ?? -1) < 0)) continue;
       const distance = car.physics.hullDistance(target.transform.x, target.transform.z), radius = target.combat?.radius ?? .4;
-      if (state.floor && occupied && !target.attachedTo && target.health.current > 0 && !throwingBoarders && boarderTypes.includes(target.archetype) && distance <= radius + .2 && state.attached.length < boarderLimit) {
+      const dx = target.transform.x - p.x, dz = target.transform.z - p.z;
+      const alongside = Math.abs(dx * s + dz * c) >= car.physics.def.width / 2 - .2 && Math.abs(dx * c - dz * s) < car.physics.def.length / 2 - .4;
+      if (state.floor && occupied && alongside && !target.attachedTo && target.health.current > 0 && !Status.stunned(target, tick) && !throwingBoarders && boarderTypes.includes(target.archetype) && distance <= radius + .2 && state.attached.length < boarderLimit) {
         state.attached.push(target.id); target.attachedTo = car.entity.id;
-        const dx = target.transform.x - p.x, dz = target.transform.z - p.z;
         boarders[target.id] = { startedAt: tick, nextHit: tick + 180, side: dx * s + dz * c >= 0 ? 1 : -1 };
-        this.apcHit(car, target, 'contact', ++ledger.sequence, null);
+        const contact = ledger.infected[id] ??= { contactId: null, separatedAt: null, windupAt: null, attackId: null, cooldownUntil: 0 };
+        if (contact.contactId === null) { contact.contactId = ++ledger.sequence; this.apcHit(car, target, 'contact', contact.contactId, null); }
         this.world.events.emit({ type: 'vehicle.grabbed', tick, sourceId: car.entity.id, targetId: target.id });
       }
       if (target.attachedTo === car.entity.id) continue;
@@ -450,7 +471,6 @@ export class Vehicles {
       // Keep contact damage, but direct attacks pursue the vehicle's occupants.
       if (!occupied || target.health.current <= 0 || !aware || Status.stunned(target, tick) || distance > tuning.surroundReach || !this.world.combat?.query.visible(target.transform, p)) continue;
       this.hullAttackers.push(target);
-      const dx = target.transform.x - p.x, dz = target.transform.z - p.z;
       quadrants |= 1 << ((dx * c - dz * s >= 0 ? 1 : 0) + (dx * s + dz * c >= 0 ? 2 : 0));
     }
     for (let i = state.attached.length - 1; i >= 0; i--) {
@@ -570,7 +590,7 @@ export class Vehicles {
   postPhysics(): void {
     this.bicycle.postPhysics();
     for (const car of this.cars.values()) {
-      if (car.entity.vehicle!.scripted) continue;
+      if (car.entity.vehicle!.scripted || car.entity.hidden) continue;
       const beforeSpeed = car.physics.speed;
       car.physics.postPhysics();
       if (beforeSpeed >= 3 && this.world.tick - car.crashAt >= 60) {

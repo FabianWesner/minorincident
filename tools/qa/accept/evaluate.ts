@@ -425,7 +425,13 @@ export function evaluate(receipt: NativeReceipt, path: string): Clause[] {
     }
     case 'L9': {
       const hits = observation.ledger.filter(event => event.type === 'vehicle.durability-hit');
-      add('L9-04', 'actual contact/attack durability transactions', hits, 'after = max(0, before−10) for contact and attack', hits.length ? hits.every(event => event.type !== 'vehicle.durability-hit' || event.source === 'obstacle' || event.after === Math.max(0, event.before - 10)) : undefined);
+      const archetypes = new Map(observation.final.census.map(e => [e.id, e.archetype]));
+      add('L9-04', 'actual contact/attack durability transactions', hits, 'PO 2026-11-08: attack/regular contact 10; heavy contact 40; elephant 80; bloated 60; each clamped at zero', hits.length ? hits.every(event => {
+        if (event.type !== 'vehicle.durability-hit' || event.source === 'obstacle') return true;
+        const archetype = archetypes.get(event.targetId), heavy = ['infected.brute', 'infected.armored', 'infected.riot'].includes(archetype ?? '');
+        const amount = event.source === 'attack' ? 10 : archetype === 'infected.elephant' ? 80 : archetype === 'infected.bloated' ? 60 : heavy ? 40 : 10;
+        return event.after === Math.max(0, event.before - amount);
+      }) : undefined);
       const signals = observation.ledger.filter(event => event.type === 'mission.signal');
       number('L9-07', 'crash impact count on ordinary route', signals.filter(event => event.type === 'mission.signal' && event.name === 'l9.crash-impact').length, 1, 1);
       const wreckObjective = observation.ledger.find(event => event.type === 'objective.started' && event.id === 'reach-outskirts'), impact = signals.find(event => event.type === 'mission.signal' && event.name === 'l9.crash-impact');

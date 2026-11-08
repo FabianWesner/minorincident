@@ -12,7 +12,7 @@ export class Obstacles {
   private nextDebris = 0;
   constructor(private readonly world: SimWorld) {}
   private bind(entity: EntitySnapshot, kind: ObstacleKind): void {
-    const light = (lightObstacles as readonly string[]).includes(kind), halfX = kind === 'truck' ? 3 : kind === 'jersey-barrier' ? 1.5 : kind === 'wall' ? .3 : .35, halfZ = kind === 'wall' ? 4 : kind === 'fence' || kind === 'barricade' ? 1.2 : .35;
+    const light = (lightObstacles as readonly string[]).includes(kind), halfX = kind === 'truck' ? 3 : kind === 'jersey-barrier' ? 1.5 : kind === 'wall' ? .3 : .35, halfZ = kind === 'wall' ? 4 : kind === 'truck' || kind === 'fence' || kind === 'barricade' ? 1.2 : .35;
     const collider = this.world.physics.world!.createCollider(RAPIER.ColliderDesc.cuboid(halfX, .5, halfZ).setTranslation(entity.transform.x, .5, entity.transform.z));
     const broken = entity.health.current <= 0; collider.setEnabled(!broken);
     this.items.push({ entity, collider, halfX, halfZ, light, broken });

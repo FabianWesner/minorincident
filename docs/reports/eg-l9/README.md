@@ -18,8 +18,8 @@ Lane: `eg-l9` · PO 2026-11-08. Work in progress; native validation is pending.
 ## Verification
 
 - Earlier local typecheck and lint passed before the remote-only direction.
-- Earlier full unit suite: 106 passed, one unrelated `gate-tools.test.ts` freshness assertion failed (`FRESH` versus `STALE`).
-- First remote typecheck reached runner-3 after FIFO admission. It found two missing event type guards, now fixed, and a missing new file because the runner's file list predated its creation. A fresh remote typecheck is queued.
+- Earlier full unit suite: 106 passed, one `gate-tools.test.ts` freshness assertion failed (`FRESH` versus `STALE`). The working source tree was dirty; a clean committed rerun is required before assigning a cause.
+- Current remote typecheck and lint passed. The native vehicle test caught an evacuation guard spawned on blocked navigation; guard posts now snap to clear body-sized cells. The rerun is queued. Earlier typecheck findings (event guards, render matrix field and model typing) are fixed.
 - New native assertions extend the existing vehicle case: climb timer/unique slots, cab versus hatch fire, timed restart, held repair/release, actual truck arrival, Sam staying, checkpoint restore, no crash transform jump, no automatic crawl, one post-escape explosion, and axe-only handover.
 - Required final remote checks: typecheck, lint, full `npm test -- --maxWorkers=1`, `qa:accept --level L9 --skip-browser`, `qa:threat --levels L9`. Results are not claimed until run against the current files.
 
@@ -38,4 +38,8 @@ No browser was opened in this lane, as instructed. QA should inspect both qualit
 
 ## Integration
 
-The earlier sandbox prevented Git metadata writes. Permissions are now fixed: the initial progress is committed as `9f79fedd`, and `main` through `a7b70c78` is merged. Its story script is authoritative. Further implementation is still awaiting its validation commit. No deploy or push was performed.
+The earlier sandbox prevented Git metadata writes. Permissions are now fixed: the initial progress is committed as `9f79fedd`, and `main` through `a7b70c78` is merged. Its story script is authoritative. The main implementation is committed as `74cd1db6`; subsequent native integration fixes are being validated. No deploy or push was performed.
+
+## Criterion corrections
+
+The explicitly authorized 2026-11-08 lane brief and concept require hatch fire, repair and differentiated heavy contacts. The earlier E31 AC01/03/06/08 prohibited those behaviors, so those four wrong criteria were corrected and dated to the PO direction. Their old prose defaults are superseded by the dated rows. The 2026-10-13 permanent 0-HP driveable floor is retained. The acceptance damage checker now checks the exact new archetype costs instead of rejecting every heavy contact as a ten-point billing regression.

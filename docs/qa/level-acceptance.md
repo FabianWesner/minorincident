@@ -312,7 +312,7 @@ Feel: "open-country drive: read the road, choose a route, shake off boarders, an
 | L9-01 | approach | Driving control ≤ 0.5 s after load; roster + durability carried; corgi never inside the hull; rider's legs inside the cab. | E31-AC02, Q-137, Q-316 | S, O |
 | L9-02 | approach | Groups on routes: road 2 × 6, countryside 3 × 6, shortcut 6 × 8 incl. 2 Alphas; each avoidable by a detour ≥ 20 m. | l9Groups, E31-AC05 | S |
 | L9-03 | approach | Threat present: on every route ≥ 1 group or wanderer in the camera frame per 60 s of driving (tune; 11-01 strip showed 0 in frame for 30 s). | orch. | S, O |
-| L9-04 | approach | Every contact onset −10 durability (no per-tick billing); stopped/surrounded attacks 10 dmg, ≥ 0.6 s windup; safe route ends with more HP than the shortcut. | E31-AC06/07/11 | S |
+| L9-04 | approach | PO 2026-11-08: regular contact onsets cost 10 durability, brute/armored/riot 40, elephant 80, bloated 60 (no per-tick billing); stopped/surrounded attacks cost 10, ≥ 0.6 s windup; safe driving preserves more durability. | l9-l10-concept §core verbs; E31-AC06/07/11 | S |
 | L9-05 | approach | **0 HP never breaks down:** speed 60 % ± 2 %, heavy smoke, still drivable. | PO 10-13, E31-AC09 | S |
 | | | **Conflict:** PO 10-11 / epic-31 breakdown + on-foot → PO 10-13 "survives until the final scripted crash" wins. | | |
 | L9-06 | approach | APC cannot wedge off-road before the bridge; no giant flat arrow over it; HUD bar matches durability. | Q-139, Q-146, E31-AC08 | S, O |

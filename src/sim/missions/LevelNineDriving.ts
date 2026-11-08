@@ -14,9 +14,10 @@ export interface L9DrivingState {
   prepared: boolean; roster: number[]; samId: number; megaId: number; soldiers: number[]; trucks: number[];
   boardersCalled: boolean; route: string | null; checkpoints: string[];
   stallAt: number | null; restarted: boolean; repairTicks: number; repairActive: boolean;
-  gateAt: number | null; gateClosed: boolean; fenceBroken: boolean;
+  gateAt: number | null; gateClosed: boolean; gateId: number; bridgeGateId: number; fenceBroken: boolean;
   evacuationAt: number | null; evacuated: number[]; evacuating: number[]; evacuationDone: boolean;
   hugAt: number | null; hugDone: boolean;
+  truckEntering: Record<number, number>;
   busId: number; busPassengers: number[]; busReleased: number; busHitAt: number; busStoppedAt: number | null; busLineAt: number | null;
   tankerId: number; tankerWreckId: number; tankerFuseAt: number | null; tankerExploded: boolean; stampede: number[];
   fireAt: number | null; fireIds: number[]; jumped: string[]; jump: { id: string; airborne: boolean } | null;
@@ -24,9 +25,10 @@ export interface L9DrivingState {
 }
 export const emptyDriving = (): L9DrivingState => ({
   prepared: false, roster: [], samId: 0, megaId: 0, soldiers: [], trucks: [], boardersCalled: false, route: null, checkpoints: [],
-  stallAt: null, restarted: false, repairTicks: 0, repairActive: false, gateAt: null, gateClosed: false, fenceBroken: false,
+  stallAt: null, restarted: false, repairTicks: 0, repairActive: false, gateAt: null, gateClosed: false, gateId: 0, bridgeGateId: 0, fenceBroken: false,
   evacuationAt: null, evacuated: [], evacuating: [], evacuationDone: false,
   hugAt: null, hugDone: false,
+  truckEntering: {},
   busId: 0, busPassengers: [], busReleased: 0, busHitAt: -1000, busStoppedAt: null, busLineAt: null,
   tankerId: 0, tankerWreckId: 0, tankerFuseAt: null, tankerExploded: false, stampede: [], fireAt: null, fireIds: [], jumped: [], jump: null,
   obstacleIds: [], waves: [], nextWave: 0, lines: [],
@@ -37,8 +39,6 @@ const alive = (e: EntitySnapshot | undefined): e is EntitySnapshot => !!e && e.h
 /** L9's physical road challenges, exposed hatch defense and visible bridgehead handoff. */
 export class LevelNineDriving {
   private readonly rampHandles: number[] = [];
-  private gateHandle: number | null = null;
-  private bridgeHandle: number | null = null;
   constructor(private readonly mission: Mission) {}
   private get w() { return this.mission.world; }
   get state(): L9DrivingState { return this.mission.l9!.state.driving ??= emptyDriving(); }
@@ -76,7 +76,7 @@ export class LevelNineDriving {
     s.megaId = w.infected!.spawn('infected.alpha', { x: -430, z: 0 }, { state: 'chase', variant: 'inf.mega-alpha' });
     const mega = w.entities.get(s.megaId)!; mega.hidden = true; mega.infected!.hidden = true; mega.attachedTo = this.car.entity.id; mega.health.current = mega.health.max = 3000; w.spatial.delete(mega.id);
     // Warm the bus with the starting scene, before its offscreen road entry.
-    const busAt = { x: -580, z: -80 };
+    const busAt = { x: -570, z: -120 };
     s.busId = w.vehicles!.spawn('vehicle.school-bus', busAt); const bus = w.vehicles!.cars.get(s.busId)!;
     bus.entity.hidden = true; bus.entity.vehicle!.braced = true; bus.physics.body.setEnabled(false);
     for (let i = 0; i < 6; i++) {
@@ -87,7 +87,9 @@ export class LevelNineDriving {
       const truck = spawnSetPiece(w, 'veh.military-truck', { x: cfg.evacuation.truckX + i * 9, z: cfg.evacuation.truckZ, yaw: Math.PI / 2 }); s.trucks.push(truck.id);
     }
     for (let i = 0; i < 4; i++) {
-      const at = { x: 447 + i * 4, z: -7 }, id = outbreak.spawnPedestrian(at, { role: 'soldier', model: 'npc.national-guard', waypoints: [at] }, false), e = w.entities.get(id)!;
+      const nav = w.infected!.nav, cell = nav.nearestCell(447 + i * 4, -7, .35);
+      if (cell < 0) throw new Error('L9 evacuation guard needs a clear post');
+      const at = { x: nav.x(cell), z: nav.z(cell) }, id = outbreak.spawnPedestrian(at, { role: 'soldier', model: 'npc.national-guard', waypoints: [at] }), e = w.entities.get(id)!;
       e.civilian!.ally = { ...allyState('soldier', null), post: at, hold: true, range: 35, gun: { damage: 20, shotS: .7, rangeM: 35, nearM: 12, hitNear: .75, hitFar: .3 } };
       s.soldiers.push(id);
     }
@@ -95,6 +97,8 @@ export class LevelNineDriving {
     spawnSetPiece(w, 'kit.rail-crossing', { x: cfg.railX, z: 0, yaw: Math.PI / 2 });
     s.tankerId = spawnSetPiece(w, 'veh.fuel-truck', { ...cfg.tanker, yaw: Math.PI / 2 }).id;
     const crater = spawnSetPiece(w, 'decay.fuel-truck-crater', cfg.tanker); crater.hidden = true; s.tankerWreckId = crater.id;
+    s.gateId = spawnSetPiece(w, 'l9.evac-gate', cfg.gate).id;
+    s.bridgeGateId = spawnSetPiece(w, 'l9.bridge-gate', { x: 472, z: 0 }).id;
     // The reusable obstacle owner handles native collision, fracture and debris.
     for (const [x, z, kind] of [
       [-468, -4, 'barricade'], [-468, -1.5, 'barricade'], [-468, 1, 'barricade'], [-468, 3.5, 'barricade'],
@@ -114,15 +118,18 @@ export class LevelNineDriving {
   rebuild(): void {
     const w = this.w, s = this.state;
     for (const handle of this.rampHandles) w.physics.removeBlocker(handle); this.rampHandles.length = 0;
-    for (const ramp of cfg.ramps) {
+    for (const [i, ramp] of cfg.ramps.entries()) {
       const angle = .18;
       this.rampHandles.push(w.physics.world!.createCollider(RAPIER.ColliderDesc.cuboid(6, .16, 3.3).setTranslation(ramp.x, 1.23, ramp.z).setRotation({ x: 0, y: 0, z: Math.sin(angle / 2), w: Math.cos(angle / 2) })).handle);
       this.rampHandles.push(w.physics.addBlocker({ x: ramp.x + 12, y: .5, z: ramp.z, halfX: 3, halfY: .5, halfZ: 3.2 }));
+      w.events.emit({ type: 'world.blocker.changed', tick: w.tick, id: -900_900 - i, blocked: true, wall: { x: ramp.x + 6, y: 1, z: ramp.z, halfX: 12, halfY: 1, halfZ: 3.3 } });
     }
-    if (this.gateHandle !== null) w.physics.removeBlocker(this.gateHandle); this.gateHandle = null;
-    if (this.bridgeHandle !== null) w.physics.removeBlocker(this.bridgeHandle); this.bridgeHandle = null;
-    if (s.gateClosed) this.gateHandle = w.physics.addBlocker({ x: cfg.gate.x, y: .8, z: 0, halfX: .25, halfY: .8, halfZ: cfg.gate.halfZ });
-    if (!s.evacuationDone) this.bridgeHandle = w.physics.addBlocker({ x: 472, y: 1, z: 0, halfX: .35, halfY: 1, halfZ: 13 });
+    w.interactables!.unblock(s.gateId); w.interactables!.unblock(s.bridgeGateId);
+    const gate = w.entities.get(s.gateId), bridgeGate = w.entities.get(s.bridgeGateId);
+    if (gate) gate.health.current = s.gateClosed ? 1 : 0;
+    if (bridgeGate) bridgeGate.health.current = s.evacuationDone ? 0 : 1;
+    if (s.gateClosed) w.interactables!.block(s.gateId, { x: cfg.gate.x, y: .8, z: 0, halfX: .25, halfY: .8, halfZ: cfg.gate.halfZ });
+    if (!s.evacuationDone) w.interactables!.block(s.bridgeGateId, { x: 472, y: 1, z: 0, halfX: .35, halfY: 1, halfZ: 13 });
     w.interactables!.unblock(s.tankerId);
     if (!s.tankerExploded) w.interactables!.block(s.tankerId, { ...cfg.tanker, y: 1, halfX: 1.4, halfY: 1, halfZ: 4, entityId: s.tankerId });
     if (s.busId && s.busLineAt === null) { const bus = w.vehicles!.cars.get(s.busId); if (bus) { bus.physics.body.setEnabled(false); bus.entity.hidden = true; } }
@@ -175,10 +182,10 @@ export class LevelNineDriving {
   }
   poseHatch(): void {
     const player = this.w.entities.get(1)!;
-    if (!this.hatch) { if (this.w.vehicles!.active === this.car.entity.id) player.hidden = true; return; }
+    if (!this.hatch) { if (this.w.vehicles!.active === this.car.entity.id) { player.hidden = true; if (player.passengerOf === this.car.entity.id) delete player.passengerOf; } return; }
     const p = this.car.entity.transform, aim = this.w.inputFrame.aim;
     Object.assign(player.transform, { x: p.x - Math.cos(p.yaw) * .5, z: p.z + Math.sin(p.yaw) * .5, y: p.y + .8, yaw: aim ? -Math.atan2(aim.z, aim.x) : p.yaw });
-    player.hidden = false;
+    player.hidden = false; player.passengerOf = this.car.entity.id;
     this.w.physics.playerBody!.setTranslation(player.transform, true); this.w.physics.playerBody!.setNextKinematicTranslation(player.transform);
     for (const [i, id] of this.state.roster.entries()) {
       const e = this.w.entities.get(id);
@@ -207,7 +214,7 @@ export class LevelNineDriving {
       if (distance(at, p) >= 105 && w.chunks?.resident(at.x, at.z)) {
         for (let i = 0; i < 5 && w.infected!.director.count < w.infected!.director.cap && w.infected!.pool.length; i++) {
           const start = { x: at.x + (i - 2) * 4, z: at.z - i % 2 * 5 };
-          if (!w.infected!.director.safe('infected.zebra', start)) continue;
+          if (distance(start, p) < 100 || !w.infected!.director.safe('infected.zebra', start)) continue;
           const id = w.infected!.spawn('infected.zebra', start, { state: 'chase', yaw: -Math.PI / 2 });
           w.entities.get(id)!.infected!.scripted = { x: start.x, z: 100 }; s.stampede.push(id);
         }
@@ -295,11 +302,15 @@ export class LevelNineDriving {
     for (const id of s.evacuating) {
       const e = w.entities.get(id); if (!alive(e) || e.passengerOf || s.evacuated.includes(id)) continue;
       if (e.civilian?.survivor?.key === 'rosa' && !s.hugDone && !this.hugCorgi(e)) continue;
-      const target = { x: cfg.evacuation.truckX + s.evacuated.length % 3 * 9, z: cfg.evacuation.truckZ + 2 };
+      const slot = s.roster.filter(other => other !== s.samId).indexOf(id);
+      const target = { x: cfg.evacuation.truckX + slot % 3 * 9 + 1.8, z: cfg.evacuation.truckZ + 1 + Math.floor(slot / 3) * 1.1 };
       e.civilian!.pauseUntil = Number.MAX_SAFE_INTEGER; if (e.civilian!.survivor) e.civilian!.survivor!.mode = 'hidden';
-      w.npcs!.move(e, target, 3, e.civilian!, .6, 1600); w.spatial.set(id, e.transform.x, e.transform.z);
+      if (s.truckEntering[id] === undefined) w.npcs!.move(e, target, 3, e.civilian!, .6, 1600);
+      w.spatial.set(id, e.transform.x, e.transform.z);
       if (distance(e.transform, target) < 1.2) {
-        s.evacuated.push(id); e.hidden = true; w.spatial.delete(id);
+        s.truckEntering[id] ??= w.tick; e.civilian!.story = { clip: 'npc-sit-down', start: s.truckEntering[id] };
+        if (w.tick - s.truckEntering[id] < 45) continue;
+        s.evacuated.push(id); e.hidden = true; e.passengerOf = s.trucks[slot % 3]; w.spatial.delete(id);
         this.signal('survivor-evacuated', id);
         if (e.civilian?.survivor?.key === 'okafor') this.line('L9.okafor');
       }
@@ -308,6 +319,7 @@ export class LevelNineDriving {
     const corgi = [...w.entities.iterate()].find(e => e.companion);
     const rosaWaiting = s.roster.some(id => { const e = w.entities.get(id); return alive(e) && e.civilian?.survivor?.key === 'rosa' && !s.hugDone; });
     if (corgi && corgi.passengerOf === undefined && !rosaWaiting) {
+      if (corgi.contactExempt !== undefined) { delete corgi.contactExempt; delete corgi.companion!.transitionUntil; corgi.transform.y = .3; }
       const door = w.vehicles!.passengerDoor(this.car.entity.id);
       w.npcs!.move(corgi, door, 2.5, corgi.companion!, .15);
       w.vehicles!.boardPassenger(this.car.entity.id, corgi.id);
@@ -325,11 +337,13 @@ export class LevelNineDriving {
     w.npcs!.move(rosa, spot, 2, rosa.civilian!, .4);
     if (distance(rosa.transform, spot) > .8) return false;
     s.hugAt ??= w.tick; rosa.civilian!.pauseUntil = Number.MAX_SAFE_INTEGER; rosa.civilian!.story = { clip: 'npc-hug', start: s.hugAt };
+    corgi.contactExempt = rosa.id; corgi.companion!.transitionUntil = w.tick + 2;
+    w.solids.wrote(corgi, 'l9.corgi-goodbye');
     const facing = rosa.transform.yaw;
     Object.assign(corgi.transform, { x: rosa.transform.x + Math.cos(facing) * .3, y: 1.05, z: rosa.transform.z - Math.sin(facing) * .3, yaw: facing + Math.PI / 2 });
     w.spatial.set(corgi.id, corgi.transform.x, corgi.transform.z);
     if (w.tick - s.hugAt < 120) return false;
-    s.hugDone = true; rosa.civilian!.story = null; corgi.transform.y = .3; this.signal('corgi-goodbye', rosa.id); return true;
+    s.hugDone = true; rosa.civilian!.story = null; corgi.transform.y = .3; delete corgi.contactExempt; delete corgi.companion!.transitionUntil; this.signal('corgi-goodbye', rosa.id); return true;
   }
   /** Reinforcements enter from beyond the largest driving frame, then run in. */
   private waves(): void {
@@ -359,5 +373,6 @@ export class LevelNineDriving {
     const s = this.state;
     for (const key of ['stallAt', 'gateAt', 'evacuationAt', 'busStoppedAt', 'busLineAt', 'tankerFuseAt', 'fireAt', 'hugAt'] as const) if (s[key] !== null) s[key]! += delta;
     s.busHitAt += delta; s.nextWave += delta; for (const l of s.lines) l.at += delta;
+    for (const id of Object.keys(s.truckEntering)) s.truckEntering[Number(id)] += delta;
   }
 }

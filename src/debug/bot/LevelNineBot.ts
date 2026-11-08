@@ -60,6 +60,9 @@ export class LevelNineBot {
       if (target && Math.hypot(target.transform.x - car.transform.x, target.transform.z - car.transform.z) < 30) { const dx = target.transform.x - car.transform.x, dz = target.transform.z - car.transform.z, length = Math.hypot(dx, dz) || 1; f.aim = { x: dx / length, z: dz / length }; f.aimSource = 'keyboard'; f.activeAttack = true; f.left = { down: true, held: true, up: false }; }
       return f;
     }
+    if (car.vehicle!.attached.length && car.vehicle!.speed > 4) {
+      f.drive = { throttle: .4, steer: w.tick % 120 < 60 ? 1 : -1 }; f.handbrake = true; return f;
+    }
     const p = car.transform;
     // Switch to the next waypoint earlier before a sharp bend: the 6 t APC's turning circle otherwise overshoots the corner by
     // ~8 m and wedges it against the dressed verge (fork corner (-450, 0) of the road detour: utility pole + bush, T-E31-20).

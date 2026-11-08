@@ -107,6 +107,10 @@ export function validateSave(raw:unknown):raw is CampaignSave {
   if (raw.crossingHandover !== undefined) {
     const h = raw.crossingHandover;
     if (record(h) && h.corgi !== undefined && !validCorgi(h.corgi)) return false;
+    if (record(h) && h.researchCompanion !== undefined) {
+      const e = h.researchCompanion;
+      if (!record(e) || !record(e.civilian) || !record(e.civilian.survivor) || !['sam', 'reyes'].includes(String(e.civilian.survivor.key)) || !record(e.health) || Number(e.health.current) <= 0 || Number(e.health.current) > Number(e.health.max) || !record(e.transform) || !['x', 'y', 'z', 'yaw'].every(k => Number.isFinite((e.transform as Record<string, unknown>)[k]))) return false;
+    }
     if (!record(h) || h.applied !== true || h.checkpoint !== 'cure-crash' || !record(h.anchor) || !['x','y','z','yaw'].every(k => Number.isFinite((h.anchor as Record<string, unknown>)[k])) || !Number.isFinite(h.preCrashDurability) || Number(h.preCrashDurability) < 0 || !strings(h.lostWeapons) || h.lostWeapons.some(id => !Object.hasOwn(catalog,id) || catalog[id].category === 'ability' || id === 'weapon.fire-axe') || !Array.isArray(h.shelteredPassengers) || !h.shelteredPassengers.every(e => record(e) && Number.isSafeInteger(e.id) && Number(e.id) > 1 && ['civilian','escort'].includes(String(e.kind)) && record(e.health) && Number(e.health.current) > 0 && Number(e.health.current) <= Number(e.health.max) && record(e.transform) && ['x','y','z','yaw'].every(k => Number.isFinite((e.transform as Record<string, unknown>)[k]))) || new Set(h.shelteredPassengers.map(e => e.id)).size !== h.shelteredPassengers.length || save.completedLevels < 9 || save.unlockedLevel !== 10 || save.l9Crash || save.transport || save.pending || !save.ownedActions.includes('weapon.fire-axe')) return false;
   }
 

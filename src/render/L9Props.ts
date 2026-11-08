@@ -1,4 +1,4 @@
-import { BoxGeometry, CanvasTexture, Color, Group, InstancedMesh, Matrix4, Mesh, MeshBasicNodeMaterial, PlaneGeometry, Quaternion, Vector3, type Material } from 'three/webgpu';
+import { BoxGeometry, CanvasTexture, Color, Group, InstancedMesh, Matrix4, Mesh, MeshBasicNodeMaterial, PlaneGeometry, Quaternion, Vector3, type Material, type Object3D } from 'three/webgpu';
 import { AssetRegistry } from '../assets/registry';
 import { catalog } from '../data/actions/catalog';
 import { l9Course as cfg } from '../data/l9';
@@ -16,8 +16,8 @@ export class L9Props extends Group {
   private readonly ownedMaterials: Material[] = [];
   private readonly textures: CanvasTexture[] = [];
   private readonly signGeometry = new PlaneGeometry(1, 1);
-  private rocket?: Group;
-  private readonly matrix = new Matrix4();
+  private rocket?: Object3D;
+  private readonly poseMatrix = new Matrix4();
   private readonly positionV = new Vector3();
   private readonly rotationQ = new Quaternion();
   private readonly scaleV = new Vector3();
@@ -64,9 +64,10 @@ export class L9Props extends Group {
       fixed(wood, [x, .4, -8], [1.7, .8, .9]); fixed(wood, [x, .4, 8], [1.7, .8, .9]);
     }
     for (const x of [446, 466]) for (const z of [-12, 12]) { fixed(metal, [x, 3.5, z], [.18, 7, .18]); fixed(white, [x, 6.8, z], [1.3, .35, .4]); }
-    for (let i = 0; i < 14; i++) {
-      box(this.gate, i % 2 ? red : white, [0, 1.1, (i - 6.5)], [.3, 1.4, 1]);
-      box(this.bridgeGate, i % 2 ? red : white, [0, .9, (i - 6.5) * 1.8], [.5, 1.8, 1.8]);
+    for (const [parent, spacing, y, sx, sy] of [[this.gate, 1, 1.1, .3, 1.4], [this.bridgeGate, 1.8, .9, .5, 1.8]] as const) for (let parity = 0; parity < 2; parity++) {
+      const stripes = new InstancedMesh(this.geometry, parity ? red : white, 7);
+      for (let i = 0; i < 7; i++) { this.poseMatrix.compose(this.positionV.set(0, y, (i * 2 + parity - 6.5) * spacing), this.rotationQ.identity(), this.scaleV.set(sx, sy, spacing)); stripes.setMatrixAt(i, this.poseMatrix); }
+      stripes.instanceMatrix.needsUpdate = true; stripes.castShadow = stripes.receiveShadow = true; parent.add(stripes);
     }
     this.gate.position.x = cfg.gate.x; this.bridgeGate.position.x = 472; this.add(this.gate, this.bridgeGate);
     // Six independently dropping spans show the break advancing under and
@@ -83,7 +84,7 @@ export class L9Props extends Group {
     box(this.rack, wood, [-.3, -.25, 0], [.65, .45, 1.2]); this.add(this.rack);
     for (const [mat, boxes] of staticBoxes) {
       const mesh = new InstancedMesh(this.geometry, mat, boxes.length);
-      boxes.forEach((b, i) => { this.matrix.compose(this.positionV.set(b.p[0], b.p[1], b.p[2]), this.rotationQ.setFromAxisAngle(this.scaleV.set(0, 0, 1), b.angle), this.scaleV.set(b.s[0], b.s[1], b.s[2])); mesh.setMatrixAt(i, this.matrix); });
+      boxes.forEach((b, i) => { this.poseMatrix.compose(this.positionV.set(b.p[0], b.p[1], b.p[2]), this.rotationQ.setFromAxisAngle(this.scaleV.set(0, 0, 1), b.angle), this.scaleV.set(b.s[0], b.s[1], b.s[2])); mesh.setMatrixAt(i, this.poseMatrix); });
       mesh.instanceMatrix.needsUpdate = true; mesh.castShadow = mesh.receiveShadow = true; this.add(mesh);
     }
   }
