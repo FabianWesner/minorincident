@@ -33,6 +33,7 @@ export class Destruction {
   private readonly blockers: Blocker[] = [];
   private readonly kicks: { id: string; at: number; strength: number }[] = [];
   private readonly propLinks = new Map<string, PushProp>();
+  private readonly disabledProps = new Set<string>();
   constructor(private readonly world: SimWorld) {
     for (const d of world.districts?.districts ?? []) for (const p of d.decay.placements) {
       if (!p.destruction) continue;
@@ -72,6 +73,18 @@ export class Destruction {
     return { x: wx, z: wz, y: o.home.p[1] + (box.min[1] + box.max[1]) * .5 * p.scale[1], halfX: Math.abs(c) * hx + Math.abs(s) * hz, halfZ: Math.abs(s) * hx + Math.abs(c) * hz, halfY: (box.max[1] - box.min[1]) * .5 * p.scale[1], navFootprint: { x: wx, z: wz, halfX: hx, halfZ: hz, yaw: p.yaw } };
   }
   private reconcile(): void {
+    let propsChanged=false;
+    for(const o of this.objects) {
+      const prop=this.propLinks.get(o.id); if(!prop) continue;
+      const gone=!o.protected&&o.placement.destruction!.class!=='vehicle'&&o.state.collapsed;
+      if(gone) {
+        this.disabledProps.add(o.id);
+        if(prop.body.isEnabled()) {prop.body.setEnabled(false);prop.awake=false;this.world.spatial.delete(prop.entityId);propsChanged=true;}
+      } else if(this.disabledProps.delete(o.id)) {
+        prop.body.setEnabled(true);this.world.spatial.set(prop.entityId,prop.pose.p[0],prop.pose.p[2]);propsChanged=true;
+      }
+    }
+    if(propsChanged) this.world.props?.updateNavigation();
     for (const b of this.blockers) {
       const active = b.object.state.hp[b.part] > 0; if (active === b.active) continue;
       b.active = active;

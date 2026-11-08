@@ -230,6 +230,10 @@ test('explosions: every class follows its damage curve, full cover shields, rail
   const explosionRevision=car.state.revision;
   for(let tick=0;tick<60;tick++){street.tick++;destruction.update();}
   expect(car.state.revision).toBe(explosionRevision);
+  const fuelBody=street.props!.items.find(p=>p.id===car.id)!;
+  expect(fuelBody.body.isEnabled(),'exploded movable tank relinquishes its collider').toBe(false);
+  destruction.restore(pristine);
+  expect(fuelBody.body.isEnabled(),'checkpoint restores the tank body').toBe(true);
   car.placement.destruction=vehiclePolicy;
 
 
