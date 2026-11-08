@@ -386,6 +386,7 @@ export class L8BossArenas {
   }
   private recover(e: EntitySnapshot, ticks: number): void {
     const w = this.w, b = e.infected!, a = b.specialAttack;
+    if (b.arenaBoss?.arena === 'gorilla' && a?.move !== 'gorilla.roar') ticks = Math.min(ticks, 60);
     b.arenaBoss!.exposedUntil = w.tick + ticks; b.arenaBoss!.readyAt = Math.max(b.arenaBoss!.readyAt, w.tick + ticks);
     if (a) { a.stage = 'recovery'; a.recoveryUntil = w.tick + ticks; w.events.emit({ type: 'infected.special', tick: w.tick, sourceId: e.id, attackId: a.attackId, move: a.move, stage: 'recovery' }); }
     b.state = 'chase'; e.combat!.attacking = false; if (e.locomotion) resetResponse(e.locomotion);
