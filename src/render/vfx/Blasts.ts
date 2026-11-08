@@ -17,7 +17,7 @@ import { nightAccents, type AccentFire } from '../NightAccents';
 import { l3SmokePlumes } from '../../data/l3';
 
 type Blast = Extract<GameEvent, { type: 'explosion' }>;
-interface Column { /** Moving source (L9 floor APC): extra puffs per metre driven, short-lived low trail puffs. */ trail?: number; /** Blast plume: buoyant, front-loaded, dense dark column. */ plume?: boolean; street?: boolean; ground?: number; born: number; x: number; z: number; until: number; rate: number; size: number; heat: number; acc: number; shade: number; cloud: number; light?: { remove(): void } | null; /** Render-only accent fire (L9 night accents): no entity behind it. */ ambient?: AccentFire }
+interface Column { visible?: boolean; /** Moving source (L9 floor APC): extra puffs per metre driven, short-lived low trail puffs. */ trail?: number; /** Blast plume: buoyant, front-loaded, dense dark column. */ plume?: boolean; street?: boolean; ground?: number; born: number; x: number; z: number; until: number; rate: number; size: number; heat: number; acc: number; shade: number; cloud: number; light?: { remove(): void } | null; /** Render-only accent fire (L9 night accents): no entity behind it. */ ambient?: AccentFire }
 interface Glow { ground?: number; x: number; z: number; radius: number; color: number; intensity: number; born: number; life: number }
 /** E25 light-field pool (LightField.addTransient): intensity on the §6 0..10 scale; ttl seconds (Infinity until removed). */
 export type BlastLight = (x: number, z: number, hex: string, intensity: number, radius: number, ttl: number, flicker: boolean) => { remove(): void } | null;
@@ -91,6 +91,7 @@ export class Blasts extends Group {
   }
   private bullet = { scale: 1, remaining: 0, progress: 0 };
   private flames4Hz = -1;
+  private readonly cureAmbient: boolean;
   private readonly smokeCamera = new Vector3(Infinity, Infinity, Infinity);
   private glowCount = 0;
   quality: 'high' | 'low' = 'high';
@@ -98,7 +99,8 @@ export class Blasts extends Group {
   slowMotion = true;
   blasts = 0;
   constructor(private readonly world: SimWorld, private readonly host: BlastHost) {
-    super(); this.name = 'e27-blasts'; this.rng = new Rng(world.seed, 'blasts'); this.mistRng = new Rng(world.seed, 'blasts-cure-mist');
+    super();
+    this.cureAmbient = !!world.districts?.districts.some(d => d.id === 'D-CURE'); this.name = 'e27-blasts'; this.rng = new Rng(world.seed, 'blasts'); this.mistRng = new Rng(world.seed, 'blasts-cure-mist');
     const clock = this.clock, heat = this.heat;
     // Fireballs: origin(x,y,z,birth), params(size, life, delay, rise), style(drift x, drift z, kind, unused).
     // Kind 0 fire: hot noise-eroded lobes that spread outward, cool to red and break apart.
@@ -444,13 +446,20 @@ export class Blasts extends Group {
     if (this.glowList.length >= 12) this.glowList.shift();
     this.glowList.push({ ground, x, z, radius, color, intensity, born: this.time, life });
   }
-  /** A zoom snap must reframe street smoke before the first presented image. */
+  /** A zoom/camera snap must reframe persistent smoke and fire before the first presented image. */
   refreshStreetCamera(): void {
-    if (this.world.scenario !== 'L3') return;
+    if (this.world.scenario !== 'L3' && !this.cureAmbient) return;
     const camera = this.host.camera?.();
     if (!camera || camera.position.distanceToSquared(this.smokeCamera) < 1) return;
     this.smokeCamera.copy(camera.position);
     camera.updateMatrixWorld();
+    if (this.cureAmbient) {
+      this.frustum.setFromProjectionMatrix(this.projection.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse));
+      if (!this.fireColumns.size) this.syncSources(this.time);
+      for (const column of this.fireColumns.values()) if (column.ambient?.car) this.emit(column, 0);
+      this.writeFlamesAndGlows(this.time);
+      return;
+    }
     this.flames4Hz = -1;
     this.advance(this.time, 0);
   }
@@ -497,7 +506,11 @@ export class Blasts extends Group {
   private emit(c: Column, seconds: number): void {
     // Keep the emitter alive in the sim; distant columns must not consume the
     // shared puff pool. Include their full rise and wind drift at screen edges.
-    if (!this.sourceVisible(c.x, c.z, c.size + (c.street ? 7 : 32))) { c.acc = 0; return; }
+    if (!this.sourceVisible(c.x, c.z, c.size + (c.street ? 7 : 32))) { c.acc = 0; c.visible = false; return; }
+    // The wreck was already burning off camera: show smoke on its first visible
+    // frame instead of waiting for the next emission interval. Pool caps stay fixed.
+    if (this.cureAmbient && c.ambient?.car && !c.visible) c.acc = Math.max(2, c.acc);
+    c.visible = true;
     c.acc += c.rate * seconds;
     for (; c.acc >= 1; c.acc--) {
       // Keep a cohort spread over the elapsed render interval when QA advances
@@ -647,7 +660,7 @@ export class Blasts extends Group {
       let c = this.fireColumns.get(key);
       // look-l9b: columns scale with the authored radius (brush 1.1-1.8 m, city 2.4-3.8 m), so the fires read at the game camera.
       // l9-night-look: small verge/deck debris fires (life, < 1 m) trail a thin wisp of small puffs, not one big pale ball.
-      if (!c) { const landmark = f.radius >= 2, debris = !!f.life && !f.car && f.radius < 1; c = { born: now, x: f.x, z: f.z, ground: this.world.districts?.groundHeight(f.x, f.z) ?? 0, until: Infinity, rate: (f.car || landmark ? 3 : debris ? 1 : 1.8) * (low ? .5 : 1), size: f.car ? 1.8 : debris ? .65 : Math.max(1.2, f.radius * 1.15), heat: 1, acc: this.rng.next(), shade: f.car ? .07 : .1, cloud: 0, ambient: f }; c.light = this.host.light?.(c.x, c.z, '#ff8a3a', f.car ? 5 : 3 + f.radius, f.radius * 4, Infinity, true) ?? null; this.fireColumns.set(key, c); }
+      if (!c) { const landmark = f.radius >= 2, debris = !!f.life && !f.car && f.radius < 1; c = { born: this.cureAmbient && f.car ? now - 2 : now, x: f.x, z: f.z, ground: this.world.districts?.groundHeight(f.x, f.z) ?? 0, until: Infinity, rate: (f.car || landmark ? 3 : debris ? 1 : 1.8) * (low ? .5 : 1), size: f.car ? 1.8 : debris ? .65 : Math.max(1.2, f.radius * 1.15), heat: 1, acc: this.cureAmbient ? 1 : this.rng.next(), shade: f.car ? .07 : .1, cloud: 0, ambient: f }; c.light = this.host.light?.(c.x, c.z, '#ff8a3a', f.car ? 5 : 3 + f.radius, f.radius * 4, Infinity, true) ?? null; this.fireColumns.set(key, c); }
       // Debris fires (life) skip embers on low: the flame cards and pool carry them, the particle budget stays for combat.
       if (this.sourceVisible(c.x, c.z, c.size + 4) && (!low || !f.life && Math.floor(now * 4) % 2 === 0)) this.embers(now, c, f.radius, low);
     }
