@@ -30,6 +30,8 @@ export const cureCrossingLines: { theme: Theme; line: Point[] }[] = [
   { theme: 'corridor', line: [[2940, -4], [3296, -16], [3312, -29], [3315, -91], [3643, -98], [3666, -80], [3690, -30]] },
   // R7: the complex approach (north of the Mega's pursuit shortcut; nothing inside the last 100 m to the console).
   { theme: 'military', line: [[3698, -25], [3944, -28]] },
+  // R7: a second measured approach south of the service road.
+  { theme: 'military', line: [[3750, -29], [3784, -48], [3826, -48], [3848, -68], [3960, -69]] },
 ];
 type Theme = 'fringe' | 'depot' | 'military' | 'campus' | 'corridor';
 
