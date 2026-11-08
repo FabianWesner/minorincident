@@ -1,0 +1,53 @@
+{
+ "samples": 272,
+ "zoom": 1,
+ "crossings": true,
+ "emptySeconds": 147,
+ "longestEmpty": [
+  "22 s install (3902,-32)→(3983,-35)",
+  "10 s dispersal-complex (3692,-32)→(3720,-26)",
+  "8 s install (3788,-28)→(3824,-28)",
+  "7 s dispersal-complex (3573,-98)→(3603,-98)",
+  "7 s install (3862,-30)→(3892,-30)"
+ ],
+ "longestNoScenery": [
+  "47 s install (3788,-28)→(3983,-35)",
+  "14 s dispersal-complex (3047,-8)→(3109,-14)",
+  "14 s dispersal-complex (3692,-32)→(3738,-28)",
+  "12 s dispersal-complex (3156,-14)→(3209,-16)",
+  "8 s dispersal-complex (3314,-82)→(3341,-91)"
+ ],
+ "longestNoEnemies": [
+  "42 s install (3902,-32)→(4003,-24)",
+  "34 s dispersal-complex (3658,-84)→(3720,-26)",
+  "21 s dispersal-complex (3300,-19)→(3332,-91)",
+  "18 s destroyed-corridor (2934,-5)→(3005,-5)",
+  "15 s dispersal-complex (3226,-17)→(3294,-17)"
+ ],
+ "byStep": {
+  "destroyed-corridor": {
+   "seconds": 1,
+   "enemySeconds": 0,
+   "sceneryless": 1,
+   "empty": 1
+  },
+  "dispersal-complex": {
+   "seconds": 171,
+   "enemySeconds": 22,
+   "sceneryless": 115,
+   "empty": 99
+  },
+  "install": {
+   "seconds": 67,
+   "enemySeconds": 11,
+   "sceneryless": 58,
+   "empty": 47
+  },
+  "hold": {
+   "seconds": 33,
+   "enemySeconds": 23,
+   "sceneryless": 0,
+   "empty": 0
+  }
+ }
+}
