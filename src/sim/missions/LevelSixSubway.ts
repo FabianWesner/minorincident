@@ -302,7 +302,13 @@ export class LevelSixSubway {
   /** Called by the shared follower before its L5 rules. Calm routines and group movement own live civilians only. */
   follower(e:EntitySnapshot):boolean {
     const s=this.s,r=s.survivors.find(r=>r.id===e.id);if(!r)return false;
-    if(r.status==='out'){this.w.spatial.delete(e.id);return true;}
+    if(r.status==='out'){
+      // Stay visible after crossing Northgate: walk clear of the mouth into
+      // the night street, then remain with the rescued group for the end shot.
+      const slot=e.civilian!.survivor!.slot;
+      this.w.npcs!.move(e,{x:270+Math.floor(slot/6)*1.2,z:12+(slot%6)*1.2},l6.follow.speed,e.civilian!,.4,1600);
+      this.w.spatial.delete(e.id);return true;
+    }
     // The former shelter guard is now part of the moving column. Re-engaging its
     // stationary ally post here made it leave formation to fight tunnel infected.
     if(r.status==='shelter')return true;
@@ -407,7 +413,7 @@ export class LevelSixSubway {
       // Inside the real column counts too. Combat can displace its head beyond a leader held at the gate:
       // using that scripted leader as the upper bound kept a returned survivor attached for the next fetch.
       if(r.collected&&e.transform.x>tail-l6.follow.rejoinM&&e.transform.x<head+l6.follow.rejoinM){r.collected=false;r.rejoined=true;w.events.emit({type:'l6.rejoined',tick:t,id:r.id});}
-      if(e.transform.x>=263){r.status='out';e.civilian!.survivor!.mode='hidden';e.hidden=true;w.spatial.delete(e.id);}
+      if(e.transform.x>=263){r.status='out';w.spatial.delete(e.id);}
     }
     this.guide(p);
     // Telegraph a fixed entrance before the courier reaches it. Two arrivals together,
@@ -428,8 +434,7 @@ export class LevelSixSubway {
     }
     if(t>=s.nextWave){
       const groupIndex=Math.floor(s.spawnLog.filter(entry=>entry.wave===3).length/l6.pressure.group);
-      const cadence=l6.pressure.cadenceS[groupIndex%l6.pressure.cadenceS.length];
-      s.nextWave=t+ticks(cadence);
+      s.nextWave=t+ticks(l6.pressure.intervalS);
       const ahead=l6Doors.map((d,i)=>({d,i})).filter(({d,i})=>i>1&&d.x>=s.leaderX+l6.pressure.aheadM).sort((a,b)=>a.d.x-b.d.x)[0];
       const behind=l6Doors.map((d,i)=>({d,i})).filter(({d})=>d.x<=tail-l6.pressure.behindM).sort((a,b)=>b.d.x-a.d.x)[0];
       const fallback=l6Doors.map((d,i)=>({d,i})).filter(({i})=>i>1).sort((a,b)=>Math.abs(a.d.x-s.leaderX)-Math.abs(b.d.x-s.leaderX))[0];

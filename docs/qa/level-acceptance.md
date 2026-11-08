@@ -242,7 +242,7 @@ Feel: "calm shelter → **a defence: waves pour in through the breaches** → fi
 | L6-09 | retreat | Gates: ≥ 3 chokepoints ≤ 2.5 m; a closed gate blocks movement + sight and holds 8–12 s vs 5 infected; refuses to close with a survivor ≤ 2 m; when everyone is through, its prompt and ring stay at the gate until closed (E or click). | E24-AC11, Q-305 | S |
 | L6-10 | retreat | Markers fixed at the gate / exit platform; never walking ahead of the group. | Q-306 | S |
 | L6-11 | retreat | PO 2026-11-08: covering matters: `evade-only` ≤ 30 % out; `complete` exits with **≥ 22/29 (76 %) survivors** and ≤ 3 courier deaths on seeds 1–3, low + high. Measured: 22–26/29 out, 1–3 deaths. | E24-AC09, PO 2026-11-08; `docs/reports/r12-l6/evidence/pressure-matrix.json` | S |
-| L6-12 | exit | Northgate is solid when closed and drawn open when passable; night caption "Night. Still alive."; end shot frames the scene; result counts match the objective. | Q-307, Q-144, E24-AC14 | S, O |
+| L6-12 | exit | PO 2026-11-08: survivors visibly pass Northgate into the night street, with "The survivors are safe." while they leave; rescued bodies remain visible in the end shot, never disappear on the platform. Northgate is solid when closed and drawn open when passable; night caption "Night. Still alive."; end shot frames the scene; result counts match the objective. | Q-307, Q-144, E24-AC14, PO 2026-11-08 | S, O |
 | L6-13 | all | Fists-only run finishable (no soft-lock). | PO 10-22 | S |
 | L6-14 | all | Underground readability: player contrast ≥ 3:1; infected eyes brightest pixels. | E24-AC15 | O |
 

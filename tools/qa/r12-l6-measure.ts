@@ -3,12 +3,13 @@ import { dirname } from 'node:path';
 import { preset } from '../../src/sim/progression/Campaign';
 import { runLevel } from '../sim-runner/levels';
 import { ThreatObserver } from './threat/observer';
+import { l6 } from '../../src/data/l6';
 
 const output = process.argv[2] ?? 'test-results/r12-l6/pressure-matrix.json';
 const runs = [];
 const tiers = (process.argv[3]?.split(',') ?? ['low', 'high']) as ('low' | 'high')[];
 const seeds = (process.argv[4]?.split(',').map(Number) ?? [1, 2, 3]);
-const pressureIntervalSeconds = Number(process.argv[5] ?? 35);
+const pressureIntervalSeconds = Number(process.argv[5] ?? l6.pressure.intervalS);
 for (const tier of tiers) for (const seed of seeds) {
   const campaign = preset('L6-default'); campaign.seed = seed; campaign.settings.quality = tier;
   let observer: ThreatObserver | undefined;
