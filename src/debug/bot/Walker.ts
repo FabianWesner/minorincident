@@ -36,22 +36,31 @@ export class Walker {
     // a short, straight intermediate point until the next chunk streams in.
     let nav = world.infected!.nav;
     if (avoidCorpses) {
-      const source = nav.forPlayer(.45), bodies = [...world.entities.iterate()].filter(e => solidLargeCorpse(e) && !e.hidden && Math.abs(e.transform.y - p.y) < 1.2 && dist(p, e.transform) < 35);
+      const source = nav, bodies = [...world.entities.iterate()].filter(e => solidLargeCorpse(e) && !e.hidden && Math.abs(e.transform.y - p.y) < 1.2 && dist(p, e.transform) < 35);
       const signature = bodies.map(e => `${e.id}:${e.transform.x.toFixed(2)}:${e.transform.z.toFixed(2)}`).join('|');
       if (!this.bodyGrid || this.bodyGrid.source !== source || this.bodyGrid.revision !== source.revision || this.bodyGrid.signature !== signature) {
         // Private planning data only. Production nav, bodies and collision are untouched.
-        const grid = source.withClearance(.45);
-        for (const body of bodies) grid.setBlocker(-body.id, { x: body.transform.x, y: .7, z: body.transform.z, halfX: actorRadius(body), halfY: 1, halfZ: actorRadius(body) }, true);
+        const grid = source.forPlayer(.35).withClearance(.35);
+        // A square around a round corpse falsely sealed the narrow return
+        // beside the platform. Short inscribed strips follow its real disc.
+        for (const body of bodies) {
+          const r = actorRadius(body), halfZ = r / 16;
+          for (let i = 0; i < 16; i++) {
+            const z = -r + (i + .5) * r / 8, edge = Math.abs(z) + halfZ, halfX = Math.sqrt(Math.max(0, r * r - edge * edge));
+            if (halfX > .01) grid.setBlocker(-1000000 - body.id * 32 - i, { x: body.transform.x, y: .7, z: body.transform.z + z, halfX, halfY: 1, halfZ }, true);
+          }
+        }
         this.bodyGrid = { source, revision: source.revision, signature, grid }; this.reset();
       }
       nav = this.bodyGrid.grid;
     }
-    if (nav.nearestCell(target.x, target.z, .45) < 0) {
+    const clearance = avoidCorpses ? .35 : .45;
+    if (nav.nearestCell(target.x, target.z, clearance) < 0) {
       const d = dist(p, target), leg = Math.min(55, d - stop);
       if (leg > 0) target = { x: p.x + (target.x - p.x) / d * leg, z: p.z + (target.z - p.z) / d * leg };
     }
     // Use the player flood's separate workspace: crowd A* cannot starve a re-plan.
-    const ok = nav.steer(p, target, this.route, .45, this.wp, Infinity, true);
+    const ok = nav.steer(p, target, this.route, clearance, this.wp, Infinity, true);
     // A failed search is not permission to walk straight through its obstacle.
     if (!ok) return null;
     const dx = this.wp.x - p.x, dz = this.wp.z - p.z, d = Math.hypot(dx, dz) || 1;
