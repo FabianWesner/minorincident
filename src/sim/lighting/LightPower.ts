@@ -132,7 +132,7 @@ export class LightPower {
     this.sightCells.clear(); this.unindexedSight.length = 0;
     for (const lamp of this.lamps.values()) {
       // Keep unusual fixture ranges exact without expanding an unbounded grid.
-      if (!Number.isFinite(lamp.range) || lamp.range < 0 || lamp.range > 256) { this.unindexedSight.push(lamp); continue; }
+      if (!Number.isFinite(lamp.x) || !Number.isFinite(lamp.z) || !Number.isFinite(lamp.range) || lamp.range < 0 || lamp.range > 256) { this.unindexedSight.push(lamp); continue; }
       for (let x = Math.floor((lamp.x - lamp.range) / 16); x <= Math.floor((lamp.x + lamp.range) / 16); x++) {
         let row = this.sightCells.get(x); if (!row) this.sightCells.set(x, row = new Map());
         for (let z = Math.floor((lamp.z - lamp.range) / 16); z <= Math.floor((lamp.z + lamp.range) / 16); z++) {

@@ -15,7 +15,7 @@ import { cloneData } from '../../src/core/clone';
 const { values } = parseArgs({ options: {
   out: { type: 'string', default: 'docs/reports/r12-l8perf/native/summary.json' },
   label: { type: 'string', default: 'candidate' }, tier: { type: 'string', default: 'both' },
-  campaign: { type: 'string' }, policy: { type: 'string', default: 'complete' }, profile: { type: 'boolean' },
+  campaign: { type: 'string' }, policy: { type: 'string', default: 'complete' }, profile: { type: 'boolean' }, counts: { type: 'boolean' },
 } });
 if (!['low', 'high', 'both'].includes(values.tier!) || !['complete', 'hold'].includes(values.policy!)) throw new Error('Invalid tier/policy');
 const out = values.out!;
@@ -47,6 +47,7 @@ const percentile = (values: number[]) => {
   return { samples: a.length, p50: a[Math.floor(a.length * .5)] ?? 0, p95: a[Math.ceil(a.length * .95) - 1] ?? 0, max: a.at(-1) ?? 0 };
 };
 const results = [];
+const snapshots: unknown[] = [];
 for (const tier of values.tier === 'both' ? ['low', 'high'] as const : [values.tier as 'low' | 'high']) {
   campaign.settings.quality = tier;
   const world = await loadLevel('L8', 1, cloneData(campaign), 0, { quality: tier });
@@ -73,10 +74,13 @@ for (const tier of values.tier === 'both' ? ['low', 'high'] as const : [values.t
     wrap(world.npcs!.civilians.outbreak, 'update', 'outbreak');
     wrap(world.missions!.l8, 'update', 'zooMission'); wrap(world.missions!.l8, 'follower', 'zooFollowers');
     wrap(world.npcs, 'move', 'npcNavigation'); wrap(world.infected!.nav, 'path', 'pathfinding');
-    if (values.profile) {
-      wrap(world.infected, 'updateSpecial', 'specialMoves');
-      wrap(world.lightPower, 'sightMultiplier', 'sightQueries'); wrap(world.lightPower, 'isOn', 'lampChecks');
+    const lightCounts = { sightQueries: 0, lampChecks: 0 };
+    if (values.profile || values.counts) {
+      const power = world.lightPower!, sight = power.sightMultiplier.bind(power), isOn = power.isOn.bind(power);
+      power.sightMultiplier = (target, night) => { lightCounts.sightQueries++; return sight(target, night); };
+      power.isOn = id => { lightCounts.lampChecks++; return isOn(id); };
     }
+    if (values.profile) wrap(world.infected, 'updateSpecial', 'specialMoves');
     const wallTicks: number[] = [], cpuTicks: number[] = [], windows: object[] = [];
     let windowStarted = performance.now(), windowTick = world.tick, peakInfected = 0;
     let profiling = false; const cpuProfiles: object[] = [];
@@ -101,11 +105,13 @@ for (const tier of values.tier === 'both' ? ['low', 'high'] as const : [values.t
         livingInfected: world.infected!.director.count, peakInfected, corpses: entities.filter(e => !!e.corpse).length,
         downed: entities.filter(e => e.civilian?.state === 'down' || e.civilian?.state === 'rising' || (e.infected && e.health.current <= 0 && !e.corpse)).length,
         followers: world.missions!.l8!.roster().length, animals: entities.filter(e => e.civilian?.zooAnimal || /infected\.(elephant|gorilla|lion|zebra|flamingo)$/.test(e.archetype)).length,
-        heapBytes: process.memoryUsage().heapUsed, listeners: world.events.listenerCount, stateHash: digest, humanQueryChecks,
+        heapBytes: process.memoryUsage().heapUsed, listeners: world.events.listenerCount, stateHash: digest, humanQueryChecks, lightCounts: { ...lightCounts },
         player: { x: world.entities.get(1)!.transform.x, z: world.entities.get(1)!.transform.z },
         checkpoint: world.missions!.state.checkpoint, phase: world.missions!.state.phase,
         objectives: world.missions!.def.steps.filter(s => world.missions!.state.steps[s.id]?.status === 'active').map(s => s.id), load: loadavg() });
+      if (process.env.L8_STATE_OUT && [5722, 9051].includes(world.tick)) snapshots.push({ tick: world.tick, saved: world.missions!.saveResume() });
       wallTicks.length = cpuTicks.length = 0; for (const [name, a] of costs) { a.length = 0; calls.set(name, 0); }
+      lightCounts.sightQueries = lightCounts.lampChecks = 0;
       windowStarted = performance.now(); windowTick = world.tick; peakInfected = 0;
       const last = windows.at(-1) as { tick: number; tickCpuMs: { p95: number }; tickWallMs: { p95: number } };
       console.log(JSON.stringify({ tier, policy: values.policy, tick: last.tick, wallP95: last.tickWallMs.p95, cpuP95: last.tickCpuMs.p95 }));
@@ -150,3 +156,4 @@ try { const old = await readJson(out); prior = Array.isArray(old) ? { preRestart
 catch { prior = {}; }
 prior[values.label!] = { at: new Date().toISOString(), sourceHash: sourceHash.digest('hex'), referenceRevision: process.env.L8_REFERENCE_REV ?? null, node: process.version, instrumented: true, cpuProfiled: !!values.profile, results };
 await writeFile(out, JSON.stringify(prior, null, 2));
+if (process.env.L8_STATE_OUT) await writeFile(process.env.L8_STATE_OUT, JSON.stringify({ campaign, snapshots }));
