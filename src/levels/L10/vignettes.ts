@@ -1,5 +1,5 @@
 import { worldAssets } from '../../assets/worldDefinitions';
-import type { Placement, Point } from '../districts/types';
+import type { DistrictLayout, Placement, Point } from '../districts/types';
 import { cure } from './district';
 import { cureCrossingLines } from './crossingStories';
 import { cureEncounters, cureEncounterSlots, cureMedkits } from './encounters';
@@ -193,6 +193,20 @@ export function cureVignetteSet(occupied:readonly Placement[]):CureVignetteSet {
   return out;
 }
 export function cureVignettes(occupied:readonly Placement[]):Placement[]{return cureVignetteSet(occupied).placements;}
+/** A paved evacuation service lane, with two turnouts back to the existing road.
+ * Render and grass-mask data only; the walking line and collision stay authored. */
+export function cureEvacuationLane(placements:readonly Placement[]):DistrictLayout['surfaces']{
+  const cars=placements.filter(p=>p.id.startsWith('decor-cure-vignette-evacuation-jam-')&&(p.assetId.startsWith('prop.l10-abandoned-sedan-')||p.assetId==='veh.evac-bus'));
+  if(!cars.length)return [];
+  const minX=Math.min(...cars.map(p=>p.visualAabb.min[0]))-20,maxX=Math.max(...cars.map(p=>p.visualAabb.max[0]))+20;
+  const minZ=Math.min(...cars.map(p=>p.visualAabb.min[2]))-1,maxZ=Math.max(...cars.map(p=>p.visualAabb.max[2]))+1;
+  const road=cure.regions[1].route;
+  const nearest=(x:number,z:number)=>road.slice(1).map((b,i)=>{const a=road[i],dx=b[0]-a[0],dz=b[1]-a[1],t=Math.max(0,Math.min(1,((x-a[0])*dx+(z-a[1])*dz)/(dx*dx+dz*dz)));return [a[0]+dx*t,a[1]+dz*t] as Point;}).sort((a,b)=>Math.hypot(a[0]-x,a[1]-z)-Math.hypot(b[0]-x,b[1]-z))[0];
+  const rect=(x0:number,z0:number,x1:number,z1:number):DistrictLayout['surfaces'][number]=>({surface:'asphalt',polygon:[[x0,z0],[x1,z0],[x1,z1],[x0,z1]],height:.004});
+  const out=[rect(minX,minZ,maxX,maxZ)];
+  for(const x of [minX+3,maxX-3]){const z=(minZ+maxZ)/2,q=nearest(x,z);out.push(rect(Math.min(x,q[0])-3,Math.min(z,q[1])-3,Math.max(x,q[0])+3,Math.max(z,q[1])+3));}
+  return out;
+}
 export function cureVignetteDecals(placements:readonly Placement[]):CureVignetteDecal[]{
   const out:CureVignetteDecal[]=[];
   for(const p of placements){

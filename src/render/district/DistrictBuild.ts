@@ -29,7 +29,7 @@ import { NightAccents, nightAccents } from '../NightAccents';
 import { fairhavenDressing } from './FairhavenDressing';
 import { removeL7LakeWall } from './l7LakeWall';
 import { cureAprons } from '../../levels/L10/forecourts';
-import { cureVignetteDecals } from '../../levels/L10/vignettes';
+import { cureEvacuationLane, cureVignetteDecals } from '../../levels/L10/vignettes';
 import { CureVignetteDecals } from './CureVignetteDecals';
 
 const crownTokens = new Map<string, [PaletteToken, PaletteToken]>(Object.values(worldAssets).flatMap(asset => asset.foliage ? [[asset.foliage.colors.join(':'), asset.foliage.tokens ?? ['foliageDark', 'foliageLight']]] : []));
@@ -156,6 +156,10 @@ export async function buildDistrict(parts: DistrictParts, deps: DistrictBuildDep
   for (const district of deps.world.districts.filter(d => d.id === 'D-CURE')) {
     const [ox, oz] = district.origin;
     for (const [x, y, z, size] of [...cureAprons.paving, ...cureAprons.kerbs]) rail('sidewalk', size, [x + ox, y, z + oz], groundLayers.paving);
+    for(const surface of cureEvacuationLane(district.decay.placements)){
+      const xs=surface.polygon.map(p=>p[0]),zs=surface.polygon.map(p=>p[1]),minX=Math.min(...xs),maxX=Math.max(...xs),minZ=Math.min(...zs),maxZ=Math.max(...zs);
+      rail('asphalt',[maxX-minX,.008,maxZ-minZ],[(minX+maxX)/2+ox,0,(minZ+maxZ)/2+oz],groundLayers.paving);
+    }
     const geometry = new CircleGeometry(1, 9); geometry.rotateX(-Math.PI / 2); parts.ownedGeometry.push(geometry);
     const puddleMaterial = groundDepth(deps.materials.world('tealDark', 0, false, FrontSide, 1).frozenCopy(), groundLayers.puddle); parts.ownedMaterials.push(puddleMaterial);
     const puddles = batchPerimeterPosts(cureAprons.puddles.map(([x, y, z, size]) => [x + ox, y, z + oz, size]), geometry, puddleMaterial);
@@ -392,7 +396,8 @@ export async function buildDistrict(parts: DistrictParts, deps: DistrictBuildDep
           p as [number, number, number],
         );
       }
-      for (const grass of Grass.tiles(d.layout, deps.grassMaterial, seed)) { parts.grass.push(grass); root.add(grass); }
+      const grassLayout=d.id==='D-CURE'?{...d.layout,surfaces:[...d.layout.surfaces,...cureEvacuationLane(d.decay.placements)]}:d.layout;
+      for (const grass of Grass.tiles(grassLayout, deps.grassMaterial, seed)) { parts.grass.push(grass); root.add(grass); }
       for (const b of d.layout.buildings) {
         const p = d.layout.placements.find((p) => p.id === b.id)!;
         tag(parts, root, b.label, [p.position[0], 2.8, b.aabb.max[2] + .6]);

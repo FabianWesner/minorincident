@@ -5,7 +5,7 @@ import { join } from 'node:path';
 import { gzipSync } from 'node:zlib';
 import { strict as assert } from 'node:assert';
 import { cure } from '../../src/levels/L10/district';
-import { cureVignetteSet, cureVignetteRoutes, cureLineLength, cureLineDistance, cureWallMessages } from '../../src/levels/L10/vignettes';
+import { cureEvacuationLane, cureVignetteSet, cureVignetteRoutes, cureLineLength, cureLineDistance, cureWallMessages } from '../../src/levels/L10/vignettes';
 import { cureRoadsideBelt } from '../../src/levels/L10/roadsideBelt';
 import { cureCrossingStories } from '../../src/levels/L10/crossingStories';
 import { cureForecourtDecor } from '../../src/levels/L10/forecourts';
@@ -48,6 +48,9 @@ assert(set.placements.some(p=>p.id.endsWith('-broken-door')),'The residential re
 const jam=set.scenes.find(s=>s.theme==='evacuation-jam')!;assert(jam);
 const jamVehicles=jam.pieces.map(id=>byId.get(id)!).filter(p=>!p.assetId.startsWith('prop.l10-corpse-'));
 assert(Math.max(...jamVehicles.map(p=>p.position[0]))-Math.min(...jamVehicles.map(p=>p.position[0]))>=100,'Jam must span at least 100 m');
+const serviceLane=cureEvacuationLane(set.placements);assert.equal(serviceLane.length,3,'Jam road and two connections');
+const lane=serviceLane[0].polygon;
+assert(jamVehicles.every(p=>p.visualAabb.min[0]>=lane[0][0]&&p.visualAabb.max[0]<=lane[2][0]&&p.visualAabb.min[2]>=lane[0][1]&&p.visualAabb.max[2]<=lane[2][1]),'Every jam vehicle must sit on the paved lane');
 // Sweep both the canonical route and measured physical crossings at the normal 4.5 m/s movement speed.
 // These are geometric coverage inputs; fresh real-input browser traces remain a separate QA item.
 let tick=0;const trace:string[]=[];
@@ -58,7 +61,7 @@ for(const route of routes){tick+=600;for(let i=1;i<route.line.length;i++){
 writeFileSync(join(tmpdir(),'eg-l10-vignettes-sweep.jsonl'),trace.join('\n')+'\n');
 writeFileSync(`${directory}/spatial-sweep.jsonl.gz`,gzipSync(trace.join('\n')+'\n'));
 writeFileSync(`${directory}/scene-catalogue.json.gz`,gzipSync(JSON.stringify(set)));
-const summary={constructionMs:+constructionMs.toFixed(2),scenes:set.scenes.length,newPlacements:set.placements.length,staticBodies:set.placements.filter(p=>p.assetId.startsWith('prop.l10-corpse-')).length,wallMessages:set.decals.filter(d=>!d.ground).length,highScatter:scatter.length,lowScatter:scatter.length/2,highCasings:casings.length,lowCasings:casings.length/2,physicsOnlyColliders:colliders.length,newLights:0,missed:set.missed,regions,
+const summary={constructionMs:+constructionMs.toFixed(2),scenes:set.scenes.length,newPlacements:set.placements.length,staticBodies:set.placements.filter(p=>p.assetId.startsWith('prop.l10-corpse-')).length,wallMessages:set.decals.filter(d=>!d.ground).length,highScatter:scatter.length,lowScatter:scatter.length/2,highCasings:casings.length,lowCasings:casings.length/2,physicsOnlyColliders:colliders.length,newLights:0,missed:set.missed,regions,serviceLane,
   routeCoverage:routes.map(r=>({id:r.id,length:cureLineLength(r.line),nearBodies:set.placements.filter(p=>p.assetId.startsWith('prop.l10-corpse-')&&cureLineDistance([p.position[0],p.position[2]] as Point,r.line)<=20).length})),
   validation:'Native data/asset/clearance audit; GPU timing and gameplay visual captures are pending under the no-browser rule.'};
 writeFileSync(`${directory}/scope-audit.json`,JSON.stringify(summary,null,2)+'\n');
