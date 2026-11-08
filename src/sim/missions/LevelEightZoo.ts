@@ -1,3 +1,4 @@
+import { l8BossArenas } from '../../data/l8Bosses';
 import type { Mission } from './Mission';
 import { FIXED_DT } from '../../core/Clock';
 import { vehicleDef } from '../../data/vehicles';
@@ -497,6 +498,11 @@ export class LevelEightZoo {
     // response: civilian steering overshoots these changing targets.
     if (this.breached) c.survivor!.briskAt = w.tick;
     const goal = formationSlot(p.transform, leaderHeading(p.transform.yaw, velocity), slot);
+    // Keep the evacuees outside the charging yard; a packed escort must not become an elephant-proof wall.
+    const elephant = s.arenas.find(a => a.id === 'elephant' && a.phase > 0 && a.phase < 3);
+    const yard = l8BossArenas.find(a => a.id === 'elephant')!;
+    if (!boarding && elephant && distance(p.transform, yard.centre) < yard.radius)
+      Object.assign(goal, formationSlot(yard.entry, { x: 0, z: 1 }, slot));
     let target = boarding ? door : w.infected!.nav.clear(goal.x, goal.z, .35) ? goal : p.transform;
     let queueIndex = 0;
     if (boarding) {
