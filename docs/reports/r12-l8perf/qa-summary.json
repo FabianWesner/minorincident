@@ -1,8 +1,8 @@
 {
   "accept": {
-    "exitCode": 1,
-    "generatedAt": "2026-11-08T16:03:28.782Z",
-    "sourceHash": "5520a22d136e41a2a43829c418c49b1b956f8664c19a13e3ef6b475863493c4d",
+    "sourceHash": "c42a86e9cb7754a9940e72e8a7ca82ddc5176f85b474dac4e549114a65f5ae16",
+    "observerHash": "2c536930d36d27fb546ce2f0ae4431df5913b794c1ea3ae24e355d457f7c11db",
+    "generatedAt": "2026-11-08T16:48:08.566Z",
     "policies": [
       {
         "tier": "low",
@@ -60,10 +60,72 @@
         "currentStatus": "NOT CHECKED",
         "automatedComplete": false,
         "expected": "L7 roster and arsenal arrive exactly; companions at full health; no weapon pickup in L8; start weapon = last weapon (not the bat).",
-        "remaining": "NEXT: Run the real L7-to-L8 handover from the carried campaign save; compare roster IDs, HP, rack and selected weapon, and census L8 pickups.",
-        "currentCheckCounts": {
-          "PASS": 8
-        }
+        "checks": [
+          {
+            "clause": "observed route weapon pickup transactions",
+            "tier": "low",
+            "policy": "complete",
+            "status": "PASS",
+            "value": 0,
+            "target": "0 \u2264 value \u2264 0"
+          },
+          {
+            "clause": "new weapon pickup census",
+            "tier": "low",
+            "policy": "complete",
+            "status": "PASS",
+            "value": 0,
+            "target": "0 \u2264 value \u2264 0"
+          },
+          {
+            "clause": "observed route weapon pickup transactions",
+            "tier": "low",
+            "policy": "stationary",
+            "status": "PASS",
+            "value": 0,
+            "target": "0 \u2264 value \u2264 0"
+          },
+          {
+            "clause": "new weapon pickup census",
+            "tier": "low",
+            "policy": "stationary",
+            "status": "PASS",
+            "value": 0,
+            "target": "0 \u2264 value \u2264 0"
+          },
+          {
+            "clause": "observed route weapon pickup transactions",
+            "tier": "high",
+            "policy": "complete",
+            "status": "PASS",
+            "value": 0,
+            "target": "0 \u2264 value \u2264 0"
+          },
+          {
+            "clause": "new weapon pickup census",
+            "tier": "high",
+            "policy": "complete",
+            "status": "PASS",
+            "value": 0,
+            "target": "0 \u2264 value \u2264 0"
+          },
+          {
+            "clause": "observed route weapon pickup transactions",
+            "tier": "high",
+            "policy": "stationary",
+            "status": "PASS",
+            "value": 0,
+            "target": "0 \u2264 value \u2264 0"
+          },
+          {
+            "clause": "new weapon pickup census",
+            "tier": "high",
+            "policy": "stationary",
+            "status": "PASS",
+            "value": 0,
+            "target": "0 \u2264 value \u2264 0"
+          }
+        ]
       },
       {
         "id": "L8-02",
@@ -71,10 +133,60 @@
         "currentStatus": "NOT CHECKED",
         "automatedComplete": false,
         "expected": "Exactly 60 active sim seconds with the opening objective visible, without waypoint or scripted attack.",
-        "remaining": "NEXT: Use the real-input threat/handover observer for 60 active seconds: require no objective text, tracker, world/HUD/minimap marker or scripted attack.",
-        "currentCheckCounts": {
-          "PASS": 4
-        }
+        "checks": [
+          {
+            "clause": "native calm marker and infected attack event state (HUD text requires browser)",
+            "tier": "low",
+            "policy": "complete",
+            "status": "PASS",
+            "value": {
+              "ticks": 3599,
+              "maxAlive": 0,
+              "combatEvents": 0,
+              "markerTicks": 0
+            },
+            "target": "3600 ticks \u00b11; no marker; zero combat events"
+          },
+          {
+            "clause": "native calm marker and infected attack event state (HUD text requires browser)",
+            "tier": "low",
+            "policy": "stationary",
+            "status": "PASS",
+            "value": {
+              "ticks": 3599,
+              "maxAlive": 0,
+              "combatEvents": 0,
+              "markerTicks": 0
+            },
+            "target": "3600 ticks \u00b11; no marker; zero combat events"
+          },
+          {
+            "clause": "native calm marker and infected attack event state (HUD text requires browser)",
+            "tier": "high",
+            "policy": "complete",
+            "status": "PASS",
+            "value": {
+              "ticks": 3599,
+              "maxAlive": 0,
+              "combatEvents": 0,
+              "markerTicks": 0
+            },
+            "target": "3600 ticks \u00b11; no marker; zero combat events"
+          },
+          {
+            "clause": "native calm marker and infected attack event state (HUD text requires browser)",
+            "tier": "high",
+            "policy": "stationary",
+            "status": "PASS",
+            "value": {
+              "ticks": 3599,
+              "maxAlive": 0,
+              "combatEvents": 0,
+              "markerTicks": 0
+            },
+            "target": "3600 ticks \u00b11; no marker; zero combat events"
+          }
+        ]
       },
       {
         "id": "L8-03",
@@ -82,10 +194,200 @@
         "currentStatus": "NOT CHECKED",
         "automatedComplete": false,
         "expected": "\u2265 20 civilians, \u2265 6 soldiers, \u2265 4 staff, \u2265 8 animals (all 5 species, \u2265 2 zebras, \u2265 3 flamingos); outside-wall infected cannot cross; nobody idle > 3 s.",
-        "remaining": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L8 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: \u2265 20 civilians, \u2265 6 soldiers, \u2265 4 staff, \u2265 8 animals (all 5 species, \u2265 2 zebras, \u2265 3 flamingos); outside-wall infected cannot cross; nobody idle > 3 s.",
-        "currentCheckCounts": {
-          "PASS": 24
-        }
+        "checks": [
+          {
+            "clause": "initial human civilians excluding soldiers and animals",
+            "tier": "low",
+            "policy": "complete",
+            "status": "PASS",
+            "value": 36,
+            "target": "20 \u2264 value \u2264 Infinity"
+          },
+          {
+            "clause": "initial soldiers",
+            "tier": "low",
+            "policy": "complete",
+            "status": "PASS",
+            "value": 6,
+            "target": "6 \u2264 value \u2264 Infinity"
+          },
+          {
+            "clause": "initial zoo animals",
+            "tier": "low",
+            "policy": "complete",
+            "status": "PASS",
+            "value": 8,
+            "target": "8 \u2264 value \u2264 Infinity"
+          },
+          {
+            "clause": "initial animal species",
+            "tier": "low",
+            "policy": "complete",
+            "status": "PASS",
+            "value": 5,
+            "target": "5 \u2264 value \u2264 5"
+          },
+          {
+            "clause": "initial zebras",
+            "tier": "low",
+            "policy": "complete",
+            "status": "PASS",
+            "value": 2,
+            "target": "2 \u2264 value \u2264 Infinity"
+          },
+          {
+            "clause": "initial flamingos",
+            "tier": "low",
+            "policy": "complete",
+            "status": "PASS",
+            "value": 3,
+            "target": "3 \u2264 value \u2264 Infinity"
+          },
+          {
+            "clause": "initial human civilians excluding soldiers and animals",
+            "tier": "low",
+            "policy": "stationary",
+            "status": "PASS",
+            "value": 36,
+            "target": "20 \u2264 value \u2264 Infinity"
+          },
+          {
+            "clause": "initial soldiers",
+            "tier": "low",
+            "policy": "stationary",
+            "status": "PASS",
+            "value": 6,
+            "target": "6 \u2264 value \u2264 Infinity"
+          },
+          {
+            "clause": "initial zoo animals",
+            "tier": "low",
+            "policy": "stationary",
+            "status": "PASS",
+            "value": 8,
+            "target": "8 \u2264 value \u2264 Infinity"
+          },
+          {
+            "clause": "initial animal species",
+            "tier": "low",
+            "policy": "stationary",
+            "status": "PASS",
+            "value": 5,
+            "target": "5 \u2264 value \u2264 5"
+          },
+          {
+            "clause": "initial zebras",
+            "tier": "low",
+            "policy": "stationary",
+            "status": "PASS",
+            "value": 2,
+            "target": "2 \u2264 value \u2264 Infinity"
+          },
+          {
+            "clause": "initial flamingos",
+            "tier": "low",
+            "policy": "stationary",
+            "status": "PASS",
+            "value": 3,
+            "target": "3 \u2264 value \u2264 Infinity"
+          },
+          {
+            "clause": "initial human civilians excluding soldiers and animals",
+            "tier": "high",
+            "policy": "complete",
+            "status": "PASS",
+            "value": 36,
+            "target": "20 \u2264 value \u2264 Infinity"
+          },
+          {
+            "clause": "initial soldiers",
+            "tier": "high",
+            "policy": "complete",
+            "status": "PASS",
+            "value": 6,
+            "target": "6 \u2264 value \u2264 Infinity"
+          },
+          {
+            "clause": "initial zoo animals",
+            "tier": "high",
+            "policy": "complete",
+            "status": "PASS",
+            "value": 8,
+            "target": "8 \u2264 value \u2264 Infinity"
+          },
+          {
+            "clause": "initial animal species",
+            "tier": "high",
+            "policy": "complete",
+            "status": "PASS",
+            "value": 5,
+            "target": "5 \u2264 value \u2264 5"
+          },
+          {
+            "clause": "initial zebras",
+            "tier": "high",
+            "policy": "complete",
+            "status": "PASS",
+            "value": 2,
+            "target": "2 \u2264 value \u2264 Infinity"
+          },
+          {
+            "clause": "initial flamingos",
+            "tier": "high",
+            "policy": "complete",
+            "status": "PASS",
+            "value": 3,
+            "target": "3 \u2264 value \u2264 Infinity"
+          },
+          {
+            "clause": "initial human civilians excluding soldiers and animals",
+            "tier": "high",
+            "policy": "stationary",
+            "status": "PASS",
+            "value": 36,
+            "target": "20 \u2264 value \u2264 Infinity"
+          },
+          {
+            "clause": "initial soldiers",
+            "tier": "high",
+            "policy": "stationary",
+            "status": "PASS",
+            "value": 6,
+            "target": "6 \u2264 value \u2264 Infinity"
+          },
+          {
+            "clause": "initial zoo animals",
+            "tier": "high",
+            "policy": "stationary",
+            "status": "PASS",
+            "value": 8,
+            "target": "8 \u2264 value \u2264 Infinity"
+          },
+          {
+            "clause": "initial animal species",
+            "tier": "high",
+            "policy": "stationary",
+            "status": "PASS",
+            "value": 5,
+            "target": "5 \u2264 value \u2264 5"
+          },
+          {
+            "clause": "initial zebras",
+            "tier": "high",
+            "policy": "stationary",
+            "status": "PASS",
+            "value": 2,
+            "target": "2 \u2264 value \u2264 Infinity"
+          },
+          {
+            "clause": "initial flamingos",
+            "tier": "high",
+            "policy": "stationary",
+            "status": "PASS",
+            "value": 3,
+            "target": "3 \u2264 value \u2264 Infinity"
+          }
+        ]
       },
       {
         "id": "L8-04",
@@ -93,10 +395,72 @@
         "currentStatus": "NOT CHECKED",
         "automatedComplete": false,
         "expected": "Breach at 60 s \u00b1 1 tick at \u2265 3 tunnel outlets \u2265 20 m apart within 1 s; **6 / 3 per point** (\u2265 18 / \u2265 9); no pop-in.",
-        "remaining": "Current native admitted-cohort ledger. NEXT: current-source low/high entrance frame strips and event timestamps for all spacing/opening/visibility clauses.",
-        "currentCheckCounts": {
-          "PASS": 8
-        }
+        "checks": [
+          {
+            "clause": "breach active-sim clock",
+            "tier": "low",
+            "policy": "complete",
+            "status": "PASS",
+            "value": 3600,
+            "target": "3599 \u2264 value \u2264 3601"
+          },
+          {
+            "clause": "distinct tunnel outlets",
+            "tier": "low",
+            "policy": "complete",
+            "status": "PASS",
+            "value": 4,
+            "target": "3 \u2264 value \u2264 Infinity"
+          },
+          {
+            "clause": "breach active-sim clock",
+            "tier": "low",
+            "policy": "stationary",
+            "status": "PASS",
+            "value": 3600,
+            "target": "3599 \u2264 value \u2264 3601"
+          },
+          {
+            "clause": "distinct tunnel outlets",
+            "tier": "low",
+            "policy": "stationary",
+            "status": "PASS",
+            "value": 4,
+            "target": "3 \u2264 value \u2264 Infinity"
+          },
+          {
+            "clause": "breach active-sim clock",
+            "tier": "high",
+            "policy": "complete",
+            "status": "PASS",
+            "value": 3600,
+            "target": "3599 \u2264 value \u2264 3601"
+          },
+          {
+            "clause": "distinct tunnel outlets",
+            "tier": "high",
+            "policy": "complete",
+            "status": "PASS",
+            "value": 4,
+            "target": "3 \u2264 value \u2264 Infinity"
+          },
+          {
+            "clause": "breach active-sim clock",
+            "tier": "high",
+            "policy": "stationary",
+            "status": "PASS",
+            "value": 3600,
+            "target": "3599 \u2264 value \u2264 3601"
+          },
+          {
+            "clause": "distinct tunnel outlets",
+            "tier": "high",
+            "policy": "stationary",
+            "status": "PASS",
+            "value": 4,
+            "target": "3 \u2264 value \u2264 Infinity"
+          }
+        ]
       },
       {
         "id": "L8-05",
@@ -104,10 +468,56 @@
         "currentStatus": "NOT CHECKED",
         "automatedComplete": false,
         "expected": "Attacks hit civilians, soldiers, staff and animals; animals turn in 2.5\u20133.5 s keeping id/species; 3\u20135 Alphas over the run; concurrent \u2264 200 / 100.",
-        "remaining": "NEXT: Track same-ID/species animal turns at 2.5-3.5 seconds, all four victim classes, Alpha admissions and concurrent caps through a full native/real-input outbreak.",
-        "currentCheckCounts": {
-          "PASS": 6
-        }
+        "checks": [
+          {
+            "clause": "actual admitted Alphas over observed route",
+            "tier": "low",
+            "policy": "complete",
+            "status": "PASS",
+            "value": 5,
+            "target": "3 \u2264 value \u2264 5"
+          },
+          {
+            "clause": "concurrent cap",
+            "tier": "low",
+            "policy": "complete",
+            "status": "PASS",
+            "value": 77,
+            "target": "0 \u2264 value \u2264 100"
+          },
+          {
+            "clause": "concurrent cap",
+            "tier": "low",
+            "policy": "stationary",
+            "status": "PASS",
+            "value": 93,
+            "target": "0 \u2264 value \u2264 100"
+          },
+          {
+            "clause": "actual admitted Alphas over observed route",
+            "tier": "high",
+            "policy": "complete",
+            "status": "PASS",
+            "value": 5,
+            "target": "3 \u2264 value \u2264 5"
+          },
+          {
+            "clause": "concurrent cap",
+            "tier": "high",
+            "policy": "complete",
+            "status": "PASS",
+            "value": 126,
+            "target": "0 \u2264 value \u2264 200"
+          },
+          {
+            "clause": "concurrent cap",
+            "tier": "high",
+            "policy": "stationary",
+            "status": "PASS",
+            "value": 194,
+            "target": "0 \u2264 value \u2264 200"
+          }
+        ]
       },
       {
         "id": "L8-06",
@@ -115,10 +525,146 @@
         "currentStatus": "PASS",
         "automatedComplete": true,
         "expected": "combat: reachable \u2265 90 %; passive first attack \u2264 20 s after the breach (measured 15.7 s from level start sample); attacks on player + group \u2265 4/min (tune).",
-        "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure.",
-        "currentCheckCounts": {
-          "PASS": 14
-        }
+        "checks": [
+          {
+            "clause": "combat hard rule on actual player windups",
+            "tier": "low",
+            "policy": "complete",
+            "status": "PASS",
+            "value": {
+              "seconds": 34.38333333333333,
+              "playerWindups": 3,
+              "groupWindups": 0,
+              "attacksPerMinute": 5.23509452253999
+            },
+            "target": "nonzero player windups in each combat policy"
+          },
+          {
+            "clause": "real player/group windups per minute",
+            "tier": "low",
+            "policy": "complete",
+            "status": "PASS",
+            "value": 5.23509452253999,
+            "target": "4 \u2264 value \u2264 Infinity"
+          },
+          {
+            "clause": "minimum bounded-path reachable share within30m (path\u22642.5\u00d7direct)",
+            "tier": "low",
+            "policy": "complete",
+            "status": "PASS",
+            "value": 100,
+            "target": "90 \u2264 value \u2264 100"
+          },
+          {
+            "clause": "combat hard rule on actual player windups",
+            "tier": "low",
+            "policy": "stationary",
+            "status": "PASS",
+            "value": {
+              "seconds": 120,
+              "playerWindups": 1013,
+              "groupWindups": 19,
+              "attacksPerMinute": 506.5
+            },
+            "target": "nonzero player windups in each combat policy"
+          },
+          {
+            "clause": "stationary first real player attack (phase clock)",
+            "tier": "low",
+            "policy": "stationary",
+            "status": "PASS",
+            "value": {
+              "seconds": 2.5166666666666666,
+              "windowSeconds": 120
+            },
+            "target": "\u226420 s"
+          },
+          {
+            "clause": "real player/group windups per minute",
+            "tier": "low",
+            "policy": "stationary",
+            "status": "PASS",
+            "value": 516,
+            "target": "4 \u2264 value \u2264 Infinity"
+          },
+          {
+            "clause": "minimum bounded-path reachable share within30m (path\u22642.5\u00d7direct)",
+            "tier": "low",
+            "policy": "stationary",
+            "status": "PASS",
+            "value": 100,
+            "target": "90 \u2264 value \u2264 100"
+          },
+          {
+            "clause": "combat hard rule on actual player windups",
+            "tier": "high",
+            "policy": "complete",
+            "status": "PASS",
+            "value": {
+              "seconds": 37.416666666666664,
+              "playerWindups": 4,
+              "groupWindups": 0,
+              "attacksPerMinute": 6.414253897550111
+            },
+            "target": "nonzero player windups in each combat policy"
+          },
+          {
+            "clause": "real player/group windups per minute",
+            "tier": "high",
+            "policy": "complete",
+            "status": "PASS",
+            "value": 6.414253897550111,
+            "target": "4 \u2264 value \u2264 Infinity"
+          },
+          {
+            "clause": "minimum bounded-path reachable share within30m (path\u22642.5\u00d7direct)",
+            "tier": "high",
+            "policy": "complete",
+            "status": "PASS",
+            "value": 100,
+            "target": "90 \u2264 value \u2264 100"
+          },
+          {
+            "clause": "combat hard rule on actual player windups",
+            "tier": "high",
+            "policy": "stationary",
+            "status": "PASS",
+            "value": {
+              "seconds": 120,
+              "playerWindups": 3619,
+              "groupWindups": 16,
+              "attacksPerMinute": 1809.5
+            },
+            "target": "nonzero player windups in each combat policy"
+          },
+          {
+            "clause": "stationary first real player attack (phase clock)",
+            "tier": "high",
+            "policy": "stationary",
+            "status": "PASS",
+            "value": {
+              "seconds": 2.533333333333333,
+              "windowSeconds": 120
+            },
+            "target": "\u226420 s"
+          },
+          {
+            "clause": "real player/group windups per minute",
+            "tier": "high",
+            "policy": "stationary",
+            "status": "PASS",
+            "value": 1817.5,
+            "target": "4 \u2264 value \u2264 Infinity"
+          },
+          {
+            "clause": "minimum bounded-path reachable share within30m (path\u22642.5\u00d7direct)",
+            "tier": "high",
+            "policy": "stationary",
+            "status": "PASS",
+            "value": 100,
+            "target": "90 \u2264 value \u2264 100"
+          }
+        ]
       },
       {
         "id": "L8-07",
@@ -126,8 +672,7 @@
         "currentStatus": "NOT CHECKED",
         "automatedComplete": false,
         "expected": "\u2265 2 escape paths \u2265 2.5 m wide from each enclosure; marker points at the APC (fixed).",
-        "remaining": "NEXT: Physically walk both >=2.5 m escape paths from every enclosure and log the fixed APC marker, including a screenshot-only route review.",
-        "currentCheckCounts": {}
+        "checks": []
       },
       {
         "id": "L8-08",
@@ -135,8 +680,7 @@
         "currentStatus": "NOT CHECKED",
         "automatedComplete": false,
         "expected": "Infected animals read as enemies (lion snarl, wounds visible from the iso camera); zebra legs clean at PO zooms; player readable at night (rim/accents).",
-        "remaining": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L8 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Infected animals read as enemies (lion snarl, wounds visible from the iso camera); zebra legs clean at PO zooms; player readable at night (rim/accents).",
-        "currentCheckCounts": {}
+        "checks": []
       },
       {
         "id": "L8-09",
@@ -144,8 +688,7 @@
         "currentStatus": "NOT CHECKED",
         "automatedComplete": false,
         "expected": "Every living group member boards; missing survivors visible or marked during the wait; APC has no gun.",
-        "remaining": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Record actual boarding of every living follower, late/missing-member guidance and APC weapon inventory through real-input departure.",
-        "currentCheckCounts": {}
+        "checks": []
       },
       {
         "id": "L8-10",
@@ -153,8 +696,7 @@
         "currentStatus": "NOT CHECKED",
         "automatedComplete": false,
         "expected": "L8 \u2192 L9 handover \u2264 6 s inside the same APC (durability kept).",
-        "remaining": "NEXT: Time the actual saved APC L8-to-L9 handover with tools/qa/release-ab-handover.mjs; compare durability and vehicle identity, requiring <=6 seconds.",
-        "currentCheckCounts": {}
+        "checks": []
       },
       {
         "id": "L8-11",
@@ -162,21 +704,25 @@
         "currentStatus": "NOT CHECKED",
         "automatedComplete": false,
         "expected": "Frames: strong sanctuary, then mixed battle; Opus \"is it stunning?\" pass.",
-        "remaining": "Manual full-size sheet review alongside the real-input receipt. Remaining timing/census/trajectory clauses are not established by still images. NEXT: Run tools/playtest/session.ts on L8 from its progressed save with physical WASD/mouse, low/high and zoom 0.5/1.5; record a frame burst and read-only timing/count ledger for the complete row, then review the frames. Required: Frames: strong sanctuary, then mixed battle; Opus \"is it stunning?\" pass.",
-        "currentCheckCounts": {}
+        "checks": []
       }
     ],
-    "note": "0 fresh failing rows; 10 incomplete. Historical L8-06 FAIL remains in aggregate status, current automated checks PASS. Historical/manual reviews were not refreshed by this job."
+    "exitCode": 1,
+    "note": "0 fresh failing rows; 10 incomplete. Historical aggregate status can remain FAIL while current automated L8-06 is PASS. Browser/manual coverage is not refreshed by this native run."
   },
   "threat": {
-    "exitCode": 1,
+    "revision": "ed4aad7709cf973541f5454e00a20d56c7335dc2",
+    "mainRevision": "8db1ce18ce071f43fb719b5cd4183828c8c1e255",
+    "sourceMatchesMain": false,
     "flags": [
       "PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate"
     ],
-    "seconds": 46.67440812499999,
+    "seconds": 67.046055607,
     "levels": [
       {
         "level": "L8",
+        "quality": "low",
+        "flags": [],
         "passiveFlags": [],
         "kiting": {
           "kitingSeconds": 20.000000000000146,
@@ -191,12 +737,11 @@
             "framesWithoutThreats": 0
           }
         },
-        "wallSeconds": 45.935,
+        "wallSeconds": 67.036,
         "skilledOutcome": "complete",
-        "passiveOutcome": "complete",
-        "flags": [],
-        "quality": "low"
+        "passiveOutcome": "complete"
       }
-    ]
+    ],
+    "exitCode": 1
   }
 }
