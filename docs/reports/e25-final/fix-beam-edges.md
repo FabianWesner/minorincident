@@ -10,6 +10,8 @@ The **same four original raw-image bands**, unaltered 25% limit, now measure **1
 
 The lossless before/after images were opened and compared (`test-results/epics/E25/final/beams-before-after.png`): the blue-purple shadow remains visible, stipple and the bright hard wedge are removed, and the pools still stop at the fence. The final report records the accepted L1/L2/L4/L5 matrix separately.
 
-## Wider audit limitation
+## Wider audit: fracture antialiasing
 
-The audit additionally samples 28 azimuth rays on the actual cone surfaces. Its maximum full-image gradient is **32.83% at pixel (500,338)** on an existing asphalt crack; the beam contribution there is **0.25%**. The crop was opened and identifies the crack, rather than a cone or shadow edge. The literal all-background reading of AC09 therefore still has a counterexample. This repair does **not** claim full AC09 closure or waive that counterexample. The ground artwork and the 25% threshold are unchanged. Resolving that literal scope requires a contract decision about background texture edges; the original reported beam-edge failures themselves are repaired.
+The additional 28 cone-surface rays initially found a **32.83%** raw-image edge at an existing asphalt fracture (pixel 500,338). Its beam contribution was only 0.25%, but the raw-image criterion still failed. The procedural fracture shader point-sampled a subpixel line, darkening an entire pixel by 38%. It now analytically integrates the existing stroke area over the pixel footprint. Stroke opacity, spacing and effective area remain unchanged. This fixes the actual aliasing cause without masking the failing pixels or changing the 25% limit.
+
+The expanded audit now measures **19.36% maximum high**, with the exact low-tier result in [the follow-up proof](evidence/beam-aa-followup.json); all 28 rays pass on both tiers, as do the unchanged original four. Zero browser errors. The raw beauty image remains the acceptance signal.

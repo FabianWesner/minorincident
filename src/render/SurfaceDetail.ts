@@ -1,5 +1,5 @@
 import type { Node } from 'three/webgpu';
-import { Fn, If, cos, float, max, mix, positionWorld, sin, vec2 } from 'three/tsl';
+import { Fn, If, cos, float, max, min, mix, positionWorld, sin, vec2 } from 'three/tsl';
 import type { PaletteToken } from '../data/palette';
 import type { LookUniforms } from './LookUniforms';
 
@@ -50,7 +50,13 @@ export function surfaceDetail(token: PaletteToken, base: Node<'vec3'>, look: Loo
     const cell = p.div(3.2).floor(), local = p.div(3.2).fract().sub(.5), angle = hash(cell).mul(Math.PI);
     const along = local.dot(vec2(cos(angle), sin(angle))), across = local.dot(vec2(sin(angle).negate(), cos(angle)));
     const jagged = sin(along.mul(48)).mul(.009).add(sin(along.mul(23)).mul(.015));
-    const crack = across.add(jagged).abs().smoothstep(.002, .006).oneMinus()
+    // Integrate the thin stroke over a two-pixel footprint. Point sampling a
+    // 6–19 mm fracture let a subpixel line darken a whole pixel by 38%, creating
+    // a false hard edge in bright practical pools. The effective stroke area
+    // stays .008 in these coordinates (the original smooth .002..006 profile).
+    const distance = across.add(jagged), pixel = distance.fwidth().mul(2).max(.0001);
+    const coverage = min(distance.add(pixel.mul(.5)), float(.004)).sub(max(distance.sub(pixel.mul(.5)), float(-.004))).max(0).div(pixel);
+    const crack = coverage
       .mul(along.abs().smoothstep(.28, .42).oneMinus()).mul(hash(cell.add(7)).smoothstep(.4, .6));
     return mix(base, look.asphalt, .7).mul(float(1).add(grain).add(patch).add(repair.mul(repairShade)).sub(seal.mul(.13)).sub(crack.mul(.38)));
   }
