@@ -353,7 +353,7 @@ export class L8BossArenas {
     const target = { x: at.x + Math.cos(angle) * r, z: at.z + Math.sin(angle) * r };
     this.walk(e, distance(e.transform, def.centre) > def.radius ? def.centre : target, speed);
   }
-  private walk(e: EntitySnapshot, at: { x: number; z: number }, speed: number): void { this.w.npcs!.move(e, at, speed, e.infected!, .2, e.infected!.arenaBoss!.arena === 'elephant' ? 48000 : 3200); }
+  private walk(e: EntitySnapshot, at: { x: number; z: number }, speed: number): void { this.w.npcs!.move(e, at, speed, e.infected!, .2, e.infected!.arenaBoss!.arena === 'elephant' && e.infected!.arenaBoss!.engaged ? 48000 : 1600); }
   private announce(text: string): void { this.mission.state.subtitle = { id: 'L8.arena', text, until: this.w.tick + 300 }; }
   private signal(arena: L8ArenaState, name: string): void { this.w.events.emit({ type: 'mission.signal', tick: this.w.tick, name: `l8.arena.${arena.id}.${name}` }); }
   statusText(): string | null {
