@@ -5,6 +5,7 @@ set -u
 root=docs/reports/eg-l10-story/evidence
 mkdir -p "$root"
 : > "$root/checks.jsonl"
+failed=0
 run_check() {
   name=$1
   shift
@@ -16,7 +17,15 @@ run_check() {
   echo "[l10-check] $name exit=$result seconds=$elapsed"
   [ "$result" = 0 ] || tail -n 12 "$root/$name.log"
 }
+run_check typecheck npm run typecheck
+[ "$result" = 0 ] || failed=1
+run_check lint npm run lint
+[ "$result" = 0 ] || failed=1
 run_check unit node tools/qa/test-budget.mjs --name test-l10-story --max-seconds 150 -- node node_modules/vitest/vitest.mjs run --project default --configLoader runner --maxWorkers=1
+[ "$result" = 0 ] || failed=1
 run_check acceptance env QA_ACCEPT_ROOT="$root/acceptance" npm run qa:accept -- --level L10 --skip-browser
+[ "$result" = 0 ] || [ "$result" = 2 ] || failed=1
 run_check threat npm run qa:threat -- --levels L10 --maxWorkers=1 --out "$root/threat" --report "$root/threat.md"
+[ "$result" = 0 ] || failed=1
 echo '[l10-check] receipts written; inspect checks.jsonl and acceptance native clauses separately from browser clauses.'
+exit "$failed"
