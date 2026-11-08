@@ -1,0 +1,42 @@
+{
+  "name": "l10-crossing-r5",
+  "note": "R5 campus forecourt: a fallen quarantine post (iso tent, generator work light). (r9-l10pace). Review both tiers and zooms: pieces stand on the ground, the walked line stays clear, fires lit, no floating or clipped geometry.",
+  "seed": 32,
+  "ground": "district",
+  "layout": {
+    "district": "D-CURE",
+    "bbox": [
+      [
+        2475,
+        -48
+      ],
+      [
+        2565,
+        32
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        2520,
+        -8
+      ]
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      2520,
+      -8
+    ],
+    "zoom": 1
+  },
+  "frames": 1,
+  "expect": {
+    "consoleErrors": 0
+  },
+  "time": "L10-night"
+}

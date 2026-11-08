@@ -1,12 +1,42 @@
 {
   "name": "l10-crossing-r4",
-  "note": "R4 military crossing (r9-l10pace): an abandoned camp with its fire and a stalled army truck behind blown sandbags beside the walked line. Review both tiers and zooms: pieces stand on the ground, nothing on the walked line, fires lit, no floating or clipped geometry.",
+  "note": "R4 military crossing: a stalled tank and a sandbag stop with its fire. (r9-l10pace). Review both tiers and zooms: pieces stand on the ground, the walked line stays clear, fires lit, no floating or clipped geometry.",
   "seed": 32,
   "ground": "district",
-  "layout": { "district": "D-CURE", "bbox": [[2015, -28], [2105, 52]] },
-  "actors": [{ "id": "courier", "kind": "courier", "at": [2060, 12] }],
-  "camera": { "mode": "game", "target": [2060, 12], "zoom": 1 },
+  "layout": {
+    "district": "D-CURE",
+    "bbox": [
+      [
+        1971,
+        -29
+      ],
+      [
+        2061,
+        51
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        2016,
+        11
+      ]
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      2016,
+      11
+    ],
+    "zoom": 1
+  },
   "frames": 1,
-  "expect": { "consoleErrors": 0 },
+  "expect": {
+    "consoleErrors": 0
+  },
   "time": "L10-night"
 }

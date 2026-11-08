@@ -1,0 +1,42 @@
+{
+  "name": "l10-crossing-r2",
+  "note": "R2 fringe crossing south of the blocked street: an abandoned camp with its fire beside the walked line. (r9-l10pace). Review both tiers and zooms: pieces stand on the ground, the walked line stays clear, fires lit, no floating or clipped geometry.",
+  "seed": 32,
+  "ground": "district",
+  "layout": {
+    "district": "D-CURE",
+    "bbox": [
+      [
+        855,
+        -19
+      ],
+      [
+        945,
+        61
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        900,
+        21
+      ]
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      900,
+      21
+    ],
+    "zoom": 1
+  },
+  "frames": 1,
+  "expect": {
+    "consoleErrors": 0
+  },
+  "time": "L10-night"
+}

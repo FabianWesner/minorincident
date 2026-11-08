@@ -1,0 +1,42 @@
+{
+  "name": "l10-crossing-r6",
+  "note": "R6 corridor forecourt: a burned evac bus and a burning pickup. (r9-l10pace). Review both tiers and zooms: pieces stand on the ground, the walked line stays clear, fires lit, no floating or clipped geometry.",
+  "seed": 32,
+  "ground": "district",
+  "layout": {
+    "district": "D-CURE",
+    "bbox": [
+      [
+        3015,
+        -48
+      ],
+      [
+        3105,
+        32
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        3060,
+        -8
+      ]
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      3060,
+      -8
+    ],
+    "zoom": 1
+  },
+  "frames": 1,
+  "expect": {
+    "consoleErrors": 0
+  },
+  "time": "L10-night"
+}
