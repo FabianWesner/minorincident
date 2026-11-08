@@ -303,6 +303,14 @@ test('look-l6-l9 decor is render-only: L6 nav hash, colliders and pushables matc
   const { placementColliders } = await import('../../src/levels/districts/staticCollision');
   type P = [number, number];
   const cureLayout = (await import('../../public/assets/layouts/D-CURE.layout.json')).default as unknown as import('../../src/levels/districts/types').DistrictLayout;
+  const { levelTenLayouts } = await import('../../src/levels/L10/layout');
+  const assembled = new DistrictWorld(compositions.L10, levelTenLayouts([cureLayout]), 42);
+  const actualFarm = assembled.districts[0].layout.placements;
+  expect(actualFarm.filter(p => p.assetId === 'veg.corn-block').length).toBeGreaterThan(100);
+  expect(actualFarm.some(p => p.id.startsWith('decor-cure-vignette-'))).toBe(true);
+  expect(actualFarm.filter(p => p.id.startsWith('l10-barn-grave-'))).toHaveLength(3);
+  expect(actualFarm.some(p => p.id === 'l10-find-farm-barn')).toBe(true);
+  expect(new DistrictWorld(compositions.L10, assembled.districts.map(d => d.layout), 42).districts[0].layout.placements).toHaveLength(actualFarm.length);
   const belt = cureRoadsideBelt(cureLayout.placements), stories = cureCrossingStories([...cureLayout.placements, ...belt]);
   expect(cureCrossingStories([...cureLayout.placements, ...belt])).toEqual(stories);
   const { cureForecourtDecor } = await import('../../src/levels/L10/forecourts');

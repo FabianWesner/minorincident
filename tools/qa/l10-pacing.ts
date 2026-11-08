@@ -60,7 +60,7 @@ for (const quality of tiers) {
     world.events.on('music.stinger', e => { if (e.type === 'music.stinger' && e.kind === 'scare') { scares++; addBeat('scare', 'corn-emergence'); } }),
     world.events.on('infected.special', e => { if (e.type === 'infected.special' && e.sourceId === world.megaPursuit?.state.id) megaActions.push({ seconds: world.tick / 60, ...e }); }),
   ];
-  const vignettes = world.districts?.districts.find(d => d.id === 'D-CURE')?.decay.placements.filter(p => p.id.startsWith('decor-cure-vignette-')) ?? [];
+  const vignettes = world.districts?.districts.find(d => d.id === 'D-CURE')?.decay.placements.filter(p => p.id.startsWith('decor-cure-vignette-') || p.id.startsWith('l10-pace-vignette-')) ?? [];
   const megaBands = [80, 35, 15];
   let outcome: string = 'tick-budget', activeAtEnd: string | null = null, elapsedSeconds = 0, observation: unknown, threatObservation: unknown;
   try {

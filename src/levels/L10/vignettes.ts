@@ -212,7 +212,7 @@ export function cureVignetteDecals(placements:readonly Placement[]):CureVignette
   const out:CureVignetteDecal[]=[];
   for(const p of placements){
     const [x,y,z]=p.position;
-    if(p.id==='decor-cure-farm-route-barn')out.push({id:'l10-barn-help-roof',scene:p.id,cell:0,position:[x,y+4.22,z],yaw:0,ground:true,size:[7,3.8],roof:true});
+    if(p.id==='l10-find-farm-barn')out.push({id:'l10-barn-help-roof',scene:p.id,cell:0,position:[x,y+4.22,z],yaw:0,ground:true,size:[7,3.8],roof:true});
     if(p.paintedMessage!==undefined)out.push({id:`${p.id}-paint`,scene:p.id,cell:p.paintedMessage,position:[x+Math.cos(p.yaw)*.151,y+1.05,z-Math.sin(p.yaw)*.151],yaw:Math.PI/2+p.yaw,ground:false,size:[2.35,.58]});
     if(p.shellCasings)for(let i=0;i<2;i++)out.push({id:`${p.id}-casings-${i}`,scene:p.id,cell:12,position:[x-1.2+i*1.5,y+.025,z+.7],yaw:p.yaw+i,ground:true,size:[1.2,.75],...(i?{highOnly:true}:{})});
     if(p.coldCampfire)out.push({id:`${p.id}-cold-fire`,scene:p.id,cell:13,position:[x-1.5,y+.025,z-1.4],yaw:p.yaw,ground:true,size:[1.2,1.2]});

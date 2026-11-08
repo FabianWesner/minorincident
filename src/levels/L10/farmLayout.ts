@@ -117,7 +117,7 @@ export function clearFarmFromSurfaces(placements: readonly Placement[], surfaces
 export function applyFarmLandscape(layout: DistrictLayout): void {
   // Re-preparing an assembled layout replaces our generated solids instead of doubling them.
   layout.colliders = layout.colliders.filter(c => !c.id.includes('/farm-wood-') && !c.id.endsWith('/farm-chassis'));
-  for (const p of layout.placements) if (p.id.startsWith('decor-cure-farm-') && p.assetId.startsWith('bld.farm-')) {
+  for (const p of layout.placements) if ((p.id.startsWith('decor-cure-farm-') || p.id.startsWith('l10-find-farm-')) && p.assetId.startsWith('bld.farm-')) {
     const house = p.assetId === 'bld.farm-house-ruin', w = house ? 8 : 10, d = house ? 7 : 8, h = house ? 2.8 : 4.2;
     const boxes = [-1, 1].flatMap(x => [-1, 1].map(z => ({ x: x * w / 2, z: z * d / 2, hx: .12, hz: .12, h })));
     // Low side sills are physical wood, but the open front and central escape gap stay passable.
