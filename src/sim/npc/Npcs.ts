@@ -205,7 +205,7 @@ export class Npcs {
         if (a.still) a.still.tick += delta;
         if (a.follow?.breakoutUntil) a.follow.breakoutUntil += delta;
       }
-      if (e.companion) { if (e.companion.until) e.companion.until += delta; if (e.companion.barkAt) e.companion.barkAt += delta; if (e.companion.hurtAt) e.companion.hurtAt += delta; if (e.companion.transitionUntil) e.companion.transitionUntil += delta; if (e.companion.rejoinUntil) e.companion.rejoinUntil += delta; }
+      if (e.companion) { if (e.companion.until) e.companion.until += delta; if (e.companion.barkAt) e.companion.barkAt += delta; if (e.companion.hurtAt) e.companion.hurtAt += delta; if (e.companion.transitionUntil) e.companion.transitionUntil += delta; }
       if (e.escort) { e.escort.downedAt += delta; if (e.escort.attackAt) e.escort.attackAt += delta; if (e.escort.knockedUntil) e.escort.knockedUntil += delta; }
       if (e.infectionRise) { e.infectionRise.started += delta; e.infectionRise.until += delta; }
       if (c?.survivor?.waitAt) c.survivor.waitAt += delta;
@@ -217,7 +217,6 @@ export class Npcs {
       if (e.infected && e.infected.recoverAt >= 0) { e.infected.recoverAt += delta; e.infected.deadAt += delta; }
     }
     this.civilians.restore(); this.civilians.outbreak?.restore(delta);
-    this.companion.respawnNear();
   }
   /** Stop density maintenance (L1 v2 owns its population through the outbreak layer). */
   setAmbient(count: number): void { this.ambientTarget = count; }

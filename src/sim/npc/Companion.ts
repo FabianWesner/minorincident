@@ -13,8 +13,11 @@ export class Companion {
   private readonly courierProgress = { x: NaN, z: NaN, tick: 0 };
   private yieldUntil = 0;
   private readonly idleNearby: number[] = [];
-  private readonly progress = new WeakMap<EntitySnapshot, { distance: number; tick: number }>();
+  private readonly rejoinProgress = new WeakMap<EntitySnapshot, { x: number; z: number; distance: number; tick: number; attempt: number }>();
   constructor(readonly world: SimWorld) {
+    world.events.on('cinematic.completed', () => {
+      if (!world.entities.get(1)?.hidden) this.respawnNear();
+    });
     world.events.on('combat.effect', event => {
       if (event.type !== 'combat.effect' || event.actionId !== 'ability.corgi-lure') return;
       for (const e of world.entities.iterate()) if (e.companion && e.companion.state !== 'hide') {
@@ -49,13 +52,22 @@ export class Companion {
     const player = this.world.entities.get(1)!.transform;
     for (const e of this.world.entities.iterate()) {
       const c = e.companion; if (e.passengerOf !== undefined) continue; if (!c) continue;
+      delete c.rejoining; delete c.transitionUntil; e.hidden = false; this.rejoinProgress.delete(e);
+      c.state = 'follow'; c.courage = 100;
       // Navigation clearance alone does not account for actors or solid hulls. Find
       // a physically clear point near the courier, then commit that exact point.
-      const spot = this.world.solids.find(player, .35, e.id, 4);
-      if (!spot || !this.world.solids.relocate(e, { ...spot, y: .3 + (this.world.districts?.groundBelow(spot.x, spot.z, player.y - .7) ?? 0) }, 'companion.respawn', 0)) continue;
-      e.transform.yaw = -Math.atan2(player.z - spot.z, player.x - spot.x);
+      const at = { x: player.x, z: player.z, y: player.y - .4 };
+      const spot = this.world.solids.find({ ...at, z: at.z + 2 }, actorRadius(e), e.id, 1.5, true, .8)
+        ?? this.world.solids.find(at, actorRadius(e), e.id, 4, true, .8);
+      if (!spot || !this.world.solids.relocate(e, spot, 'companion.respawn', 0)) {
+        // If a crowd fills every nearby point, wait for admission here instead
+        // of preserving a remote pose from the discarded checkpoint timeline.
+        Object.assign(e.transform, at); this.world.solids.admit(e, 'companion.respawn', 4);
+      }
+      const yaw = e.transform.yaw;
+      e.transform.yaw = -Math.atan2(player.z - e.transform.z, player.x - e.transform.x);
+      if (!this.world.solids.clear(e.transform, actorRadius(e), e.id)) e.transform.yaw = yaw;
       delete c.contactYield; delete c.contactFrom; delete c.contactRejected;
-      delete c.rejoinUntil; e.hidden = false;
       delete e.locomotion; c.velocity = { x: 0, z: 0 }; c.path.length = 0; c.goal = -1; c.pathIndex = 0; c.following = false; c.pickup = null;
       if (e.motion) { e.motion.velocity.x = e.motion.velocity.z = 0; e.motion.speed = 0; e.motion.moving = false; }
       this.world.spatial.set(e.id, e.transform.x, e.transform.z);
@@ -146,33 +158,13 @@ export class Companion {
     }
     for (const e of this.world.entities.iterate()) {
       const c = e.companion; if (e.passengerOf !== undefined) continue; if (!c) continue;
-      const distance = Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z);
-      let progress = this.progress.get(e);
-      if (!progress || distance < progress.distance - .5) {
-        progress = { distance, tick: this.world.tick }; this.progress.set(e, progress);
-      }
-      if (!c.rejoinUntil && distance > 35 && this.world.tick - progress.tick >= 360 && player.health.current > 0 && !player.hidden) {
-        const speed = Math.hypot(player.survivor?.velocity.x ?? 0, player.survivor?.velocity.z ?? 0);
-        const hx = speed > .5 ? player.survivor!.velocity.x / speed : Math.cos(-player.transform.yaw);
-        const hz = speed > .5 ? player.survivor!.velocity.z / speed : Math.sin(-player.transform.yaw);
-        const behind = { x: player.transform.x - hx * 15, z: player.transform.z - hz * 15 };
-        const arrival = this.world.solids.find(behind, .35, e.id, 8);
-        if (arrival && this.world.solids.relocate(e, { ...arrival, y: .3 + (this.world.districts?.groundBelow(arrival.x, arrival.z, player.transform.y - .7) ?? 0) }, 'companion.rejoin', 0)) {
-          e.hidden = true; c.rejoinUntil = this.world.tick + 600; c.following = true; c.path.length = 0; c.goal = -1; c.pathIndex = 0;
-          delete e.locomotion; c.velocity = { x: 0, z: 0 }; this.progress.set(e, { distance: 15, tick: this.world.tick });
-        }
-      }
-      if (c.rejoinUntil !== undefined) {
-        if (distance <= 8) { delete c.rejoinUntil; e.hidden = false; }
-        else if (this.world.tick >= c.rejoinUntil) { delete c.rejoinUntil; e.hidden = false; }
-        else { e.hidden = true; this.world.npcs!.move(e, player.transform, 8, c, 1); continue; }
-      }
       if (c.transitionUntil !== undefined) {
         if (this.world.tick < c.transitionUntil) continue;
         delete c.transitionUntil; e.hidden = false; this.world.solids.admit(e, 'companion.door-arrival', 1, false);
       }
       const mission = this.world.missions;
       if (mission?.l8?.companion(e)) continue;
+      this.rejoin(e, player);
       if (!this.safe && c.state !== 'hide' && this.world.tick >= c.hurtAt) for (const enemy of ai.active) if (enemy.health.current > 0 && Math.hypot(enemy.transform.x - e.transform.x, enemy.transform.z - e.transform.z) < 1.2) { c.hurtAt = this.world.tick + 60; this.hit(e, infectedDef(enemy.archetype).damage); this.world.events.emit({ type: 'corgi.sound', tick: this.world.tick, sourceId: e.id, position: { ...e.transform }, kind: 'hurt' }); break; }
       if (c.state === 'hide') {
         // Hiding follows at the player's heels without collision; recovery uses sim time.
@@ -274,6 +266,45 @@ export class Companion {
         e.transform.yaw += Math.sign(delta) * Math.min(Math.abs(delta), 12 / 60); if (e.locomotion) e.locomotion.omega = 0;
       }
       this.world.spatial.set(e.id, e.transform.x, e.transform.z);
+    }
+  }
+  /** Reposition only unseen silhouettes, then let ordinary visible movement bring the companion back. */
+  private rejoin(e: EntitySnapshot, player: EntitySnapshot): void {
+    const w = this.world, c = e.companion!, ai = w.infected!;
+    if (player.hidden || player.health.current <= 0 || w.missions && w.missions.state.phase !== 'playing') {
+      this.rejoinProgress.delete(e); return;
+    }
+    const gap = Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z);
+    if (gap <= 6) { this.rejoinProgress.delete(e); delete c.rejoining; return; }
+    let progress = this.rejoinProgress.get(e);
+    const moved = progress ? Math.hypot(e.transform.x - progress.x, e.transform.z - progress.z) : 0;
+    if (!progress || w.tick < progress.tick || gap < progress.distance - .5 || gap <= 35 && moved >= .5) {
+      progress = { x: e.transform.x, z: e.transform.z, distance: gap, tick: w.tick, attempt: 0 }; this.rejoinProgress.set(e, progress);
+    }
+    if (w.tick - progress.tick < 360 || w.tick < progress.attempt || !ai.director.offscreen(e.transform, e.transform.y - .3)) return;
+    progress.attempt = w.tick + 60;
+    const v = player.survivor?.velocity, speed = Math.hypot(v?.x ?? 0, v?.z ?? 0);
+    const heading = speed > .5 ? Math.atan2(v!.z, v!.x) : -player.transform.yaw;
+    const radius = actorRadius(e), goal = ai.nav.nearestCell(player.transform.x, player.transform.z, radius);
+    // Search just beyond the camera edge behind her. Verify a full route so a
+    // rescue cannot put the dog in a different fence/building pocket.
+    for (let distance = 6; distance <= 80; distance += 2) for (const turn of [0, .35, -.35, .7, -.7, 1.05, -1.05, 1.4, -1.4]) {
+      const angle = heading + Math.PI + turn;
+      const at = { x: player.transform.x + Math.cos(angle) * distance, z: player.transform.z + Math.sin(angle) * distance, y: .3 };
+      at.y += w.districts?.groundBelow(at.x, at.z, player.transform.y - .7) ?? 0;
+      if (!ai.nav.clear(at.x, at.z, radius) || !ai.director.offscreen(at, at.y - .3)) continue;
+      const path: number[] = [], from = ai.nav.nearestCell(at.x, at.z, radius);
+      if (!ai.nav.visible(at, player.transform, radius) && !ai.nav.path(from, goal, path, 16000)) continue;
+      const yaw = e.transform.yaw;
+      e.transform.yaw = -Math.atan2(player.transform.z - at.z, player.transform.x - at.x);
+      if (!w.solids.clear(at, radius, e.id) || !w.solids.relocate(e, at, 'companion.rejoin', 0)) { e.transform.yaw = yaw; continue; }
+      e.hidden = false;
+      c.pickup = null; c.state = 'follow'; c.courage = 100; c.following = true; c.path.length = 0; c.goal = -1; c.pathIndex = 0;
+      delete c.contactYield; delete c.contactFrom; delete c.contactRejected; delete e.locomotion; delete e.motion;
+      c.velocity = { x: 0, z: 0 };
+      c.rejoining = true;
+      this.rejoinProgress.set(e, { x: at.x, z: at.z, distance, tick: w.tick, attempt: w.tick + 360 });
+      return;
     }
   }
   private faceTravel(e: EntitySnapshot, vx: number, vz: number): void {
