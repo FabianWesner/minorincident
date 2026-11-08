@@ -1,0 +1,2367 @@
+{
+  "method": "Nearest-pixel readback of fixed projected world masks in the full beauty frame; linear sRGB luminance (0.2126,0.7152,0.0722). Pool x=-1..5 step .25, z=-2..2 step .25, excluding radius <=1 m around the courier; y=.05. Shadow x=1+.2*i for i=0..14, z=-.25+.125*j for j=0..4; beside the same x at z=+-1. Hue is HSV of mean sRGB in shadow samples darkened >=35% against the same scene with only the caster hidden. All masks/thresholds are identical before/after.",
+  "parityTolerancePercent": 10,
+  "hueRangeDegrees": [
+    230,
+    290
+  ],
+  "minDarkness": 0.35,
+  "inputs": [
+    {
+      "path": "test-results/epics/E25/rest/before/webgl2-high/measurements.json",
+      "sha256": "0d45f6943bbee49489e9b9cf7e8ba753f03c5b141123c1c00503835686cbe5dc"
+    },
+    {
+      "path": "test-results/epics/E25/rest/before/webgpu-high/measurements.json",
+      "sha256": "428bfe2615585cf02726e8b13080e791d08ef02f67aabe060309f0fbbad01854"
+    },
+    {
+      "path": "test-results/epics/E25/rest/before/webgl2-low/measurements.json",
+      "sha256": "cc207d32b4c0336415278df33b502c92f4501adbd9fff674db6a776674b61d3e"
+    },
+    {
+      "path": "test-results/epics/E25/rest/before/webgpu-low/measurements.json",
+      "sha256": "02b4b6178a6d450ac031a2db8ea2324904e29b0dca0a60cd128949952b7bebbf"
+    },
+    {
+      "path": "test-results/epics/E25/rest/after/webgl2-high/measurements.json",
+      "sha256": "ace8b9b4baa225d8e35952bb29be9aa4a405676e62e0eafeb6a4df043f49adb9"
+    },
+    {
+      "path": "test-results/epics/E25/rest/after/webgpu-high/measurements.json",
+      "sha256": "8a538a82df0899e015b989f80cbe55615e2f221c27701c1d316c26803f6e27d2"
+    },
+    {
+      "path": "test-results/epics/E25/rest/after/webgl2-low/measurements.json",
+      "sha256": "1ecf72be34bddcb6a88ee2e14bec5df20d3b1eae09f325a8c410db04864e40c0"
+    },
+    {
+      "path": "test-results/epics/E25/rest/after/webgpu-low/measurements.json",
+      "sha256": "30b1d95feeb053c9d60acd20a3803445281620a29833f4f74c6fac1951d9c75b"
+    }
+  ],
+  "parity": [
+    {
+      "phase": "before",
+      "tier": "high",
+      "zoom": 1,
+      "webgl2": 0.5987398862486678,
+      "webgpu": 0.598776174874071,
+      "percentDifference": 0.0060608331324818465,
+      "samples": 376,
+      "pass": true,
+      "camera": {
+        "zoom": 1,
+        "targetZoom": 1,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 19,
+        "regionScale": 1,
+        "focus": [
+          0,
+          0,
+          0
+        ],
+        "target": [
+          0,
+          0,
+          0
+        ],
+        "position": [
+          24,
+          32,
+          36
+        ],
+        "spot": "e25-zoom"
+      },
+      "tick": 120,
+      "captures": [
+        {
+          "path": "test-results/epics/E25/rest/before/webgl2-high/light-lab-z1.png",
+          "sha256": "30621ac248cedea00a6fe4562c7039831ac3ae6528c0c4ac233d12de96135560",
+          "state": {
+            "quality": "high",
+            "pixelRatio": 1,
+            "backend": "webgl",
+            "camera": {
+              "zoom": 1,
+              "targetZoom": 1,
+              "zoomLimits": [
+                0.5,
+                1.5
+              ],
+              "fov": 25,
+              "azimuth": 0.7853981633974483,
+              "polar": 0.9424777960769379,
+              "radius": 19,
+              "regionScale": 1,
+              "focus": [
+                0,
+                0,
+                0
+              ],
+              "target": [
+                0,
+                0,
+                0
+              ],
+              "position": [
+                24,
+                32,
+                36
+              ],
+              "spot": "e25-zoom"
+            },
+            "lighting": {
+              "promotionBlend": 1,
+              "heroLight": "D-GROVE@0,0/trailer/light:lamp0_L",
+              "heroLights": 1,
+              "heroShadowMaps": 1,
+              "promotionChanges": 1,
+              "shadowSize": 2048,
+              "preset": "night",
+              "shadowColor": "2f2d55",
+              "fieldShadow": 1,
+              "lightField": {
+                "strength": 1,
+                "resolution": 1024,
+                "size": 80,
+                "statics": 4,
+                "litStatics": 4,
+                "candidates": 5,
+                "drawn": 5,
+                "transients": 0,
+                "capacity": 512,
+                "ms": 0.3000001907348633,
+                "center": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "perf": {
+            "nodeBuilds": 245,
+            "drawCalls": 34,
+            "triangles": 51659,
+            "geometries": 330,
+            "textures": 200,
+            "backend": "webgl",
+            "quality": {
+              "setting": "high",
+              "tier": "high",
+              "p90Ms": 0,
+              "slowSeconds": 0,
+              "budgets": {
+                "frameMs": 16.7,
+                "infected": 200,
+                "drawCalls": 600,
+                "triangles": 1500000,
+                "simMs": 4,
+                "heapMB": 400,
+                "pixelRatio": 2,
+                "shadowSize": 2048,
+                "bloomMips": 5,
+                "cullDistance": 60
+              }
+            },
+            "contextLost": false,
+            "paused": true,
+            "heapBytes": 703000000,
+            "lighting": {
+              "lightFieldMs": 0.3000001907348633,
+              "lightPools": 5,
+              "lightCandidates": 5,
+              "shadowMaps": 1,
+              "heroLights": 1,
+              "heroShadow": 1,
+              "preset": "night"
+            }
+          }
+        },
+        {
+          "path": "test-results/epics/E25/rest/before/webgpu-high/light-lab-z1.png",
+          "sha256": "b4b6193066cd835c7f174aa892673ee4c75935bff21198c72dc8769965647ce4",
+          "state": {
+            "quality": "high",
+            "pixelRatio": 1,
+            "backend": "webgpu",
+            "camera": {
+              "zoom": 1,
+              "targetZoom": 1,
+              "zoomLimits": [
+                0.5,
+                1.5
+              ],
+              "fov": 25,
+              "azimuth": 0.7853981633974483,
+              "polar": 0.9424777960769379,
+              "radius": 19,
+              "regionScale": 1,
+              "focus": [
+                0,
+                0,
+                0
+              ],
+              "target": [
+                0,
+                0,
+                0
+              ],
+              "position": [
+                24,
+                32,
+                36
+              ],
+              "spot": "e25-zoom"
+            },
+            "lighting": {
+              "promotionBlend": 1,
+              "heroLight": "D-GROVE@0,0/trailer/light:lamp0_L",
+              "heroLights": 1,
+              "heroShadowMaps": 1,
+              "promotionChanges": 1,
+              "shadowSize": 2048,
+              "preset": "night",
+              "shadowColor": "2f2d55",
+              "fieldShadow": 1,
+              "lightField": {
+                "strength": 1,
+                "resolution": 1024,
+                "size": 80,
+                "statics": 4,
+                "litStatics": 4,
+                "candidates": 5,
+                "drawn": 5,
+                "transients": 0,
+                "capacity": 512,
+                "ms": 0.19999980926513672,
+                "center": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "perf": {
+            "nodeBuilds": 246,
+            "drawCalls": 34,
+            "triangles": 51659,
+            "geometries": 330,
+            "textures": 200,
+            "backend": "webgpu",
+            "quality": {
+              "setting": "high",
+              "tier": "high",
+              "p90Ms": 0,
+              "slowSeconds": 0,
+              "budgets": {
+                "frameMs": 16.7,
+                "infected": 200,
+                "drawCalls": 600,
+                "triangles": 1500000,
+                "simMs": 4,
+                "heapMB": 400,
+                "pixelRatio": 2,
+                "shadowSize": 2048,
+                "bloomMips": 5,
+                "cullDistance": 60
+              }
+            },
+            "contextLost": false,
+            "paused": true,
+            "heapBytes": 793000000,
+            "lighting": {
+              "lightFieldMs": 0.19999980926513672,
+              "lightPools": 5,
+              "lightCandidates": 5,
+              "shadowMaps": 1,
+              "heroLights": 1,
+              "heroShadow": 1,
+              "preset": "night"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "phase": "before",
+      "tier": "high",
+      "zoom": 1.5,
+      "webgl2": 0.4464316632890885,
+      "webgpu": 0.44670086337375153,
+      "percentDifference": 0.06030040133795378,
+      "samples": 376,
+      "pass": true,
+      "camera": {
+        "zoom": 1.5,
+        "targetZoom": 1.5,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 28.5,
+        "regionScale": 1,
+        "focus": [
+          0,
+          0,
+          0
+        ],
+        "target": [
+          0,
+          0,
+          0
+        ],
+        "position": [
+          36,
+          48,
+          54
+        ],
+        "spot": "e25-zoom"
+      },
+      "tick": 120,
+      "captures": [
+        {
+          "path": "test-results/epics/E25/rest/before/webgl2-high/light-lab-z1.5.png",
+          "sha256": "f32d3fc8d3edacc48136850ee331e0c4041d6b79b7293b58c895d7573fbb5794",
+          "state": {
+            "quality": "high",
+            "pixelRatio": 1,
+            "backend": "webgl",
+            "camera": {
+              "zoom": 1.5,
+              "targetZoom": 1.5,
+              "zoomLimits": [
+                0.5,
+                1.5
+              ],
+              "fov": 25,
+              "azimuth": 0.7853981633974483,
+              "polar": 0.9424777960769379,
+              "radius": 28.5,
+              "regionScale": 1,
+              "focus": [
+                0,
+                0,
+                0
+              ],
+              "target": [
+                0,
+                0,
+                0
+              ],
+              "position": [
+                36,
+                48,
+                54
+              ],
+              "spot": "e25-zoom"
+            },
+            "lighting": {
+              "promotionBlend": 1,
+              "heroLight": "D-GROVE@0,0/trailer/light:lamp0_L",
+              "heroLights": 1,
+              "heroShadowMaps": 1,
+              "promotionChanges": 1,
+              "shadowSize": 2048,
+              "preset": "night",
+              "shadowColor": "2f2d55",
+              "fieldShadow": 1,
+              "lightField": {
+                "strength": 1,
+                "resolution": 1024,
+                "size": 80,
+                "statics": 4,
+                "litStatics": 4,
+                "candidates": 5,
+                "drawn": 5,
+                "transients": 0,
+                "capacity": 512,
+                "ms": 0.19999980926513672,
+                "center": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "perf": {
+            "nodeBuilds": 245,
+            "drawCalls": 34,
+            "triangles": 51659,
+            "geometries": 330,
+            "textures": 200,
+            "backend": "webgl",
+            "quality": {
+              "setting": "high",
+              "tier": "high",
+              "p90Ms": 0,
+              "slowSeconds": 0,
+              "budgets": {
+                "frameMs": 16.7,
+                "infected": 200,
+                "drawCalls": 600,
+                "triangles": 1500000,
+                "simMs": 4,
+                "heapMB": 400,
+                "pixelRatio": 2,
+                "shadowSize": 2048,
+                "bloomMips": 5,
+                "cullDistance": 60
+              }
+            },
+            "contextLost": false,
+            "paused": true,
+            "heapBytes": 703000000,
+            "lighting": {
+              "lightFieldMs": 0.19999980926513672,
+              "lightPools": 5,
+              "lightCandidates": 5,
+              "shadowMaps": 1,
+              "heroLights": 1,
+              "heroShadow": 1,
+              "preset": "night"
+            }
+          }
+        },
+        {
+          "path": "test-results/epics/E25/rest/before/webgpu-high/light-lab-z1.5.png",
+          "sha256": "26947ca97869a09b16bfee4102573adcd7c35235886271f7caa73f652773f7ae",
+          "state": {
+            "quality": "high",
+            "pixelRatio": 1,
+            "backend": "webgpu",
+            "camera": {
+              "zoom": 1.5,
+              "targetZoom": 1.5,
+              "zoomLimits": [
+                0.5,
+                1.5
+              ],
+              "fov": 25,
+              "azimuth": 0.7853981633974483,
+              "polar": 0.9424777960769379,
+              "radius": 28.5,
+              "regionScale": 1,
+              "focus": [
+                0,
+                0,
+                0
+              ],
+              "target": [
+                0,
+                0,
+                0
+              ],
+              "position": [
+                36,
+                48,
+                54
+              ],
+              "spot": "e25-zoom"
+            },
+            "lighting": {
+              "promotionBlend": 1,
+              "heroLight": "D-GROVE@0,0/trailer/light:lamp0_L",
+              "heroLights": 1,
+              "heroShadowMaps": 1,
+              "promotionChanges": 1,
+              "shadowSize": 2048,
+              "preset": "night",
+              "shadowColor": "2f2d55",
+              "fieldShadow": 1,
+              "lightField": {
+                "strength": 1,
+                "resolution": 1024,
+                "size": 80,
+                "statics": 4,
+                "litStatics": 4,
+                "candidates": 5,
+                "drawn": 5,
+                "transients": 0,
+                "capacity": 512,
+                "ms": 0.3000001907348633,
+                "center": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "perf": {
+            "nodeBuilds": 246,
+            "drawCalls": 34,
+            "triangles": 51659,
+            "geometries": 330,
+            "textures": 200,
+            "backend": "webgpu",
+            "quality": {
+              "setting": "high",
+              "tier": "high",
+              "p90Ms": 0,
+              "slowSeconds": 0,
+              "budgets": {
+                "frameMs": 16.7,
+                "infected": 200,
+                "drawCalls": 600,
+                "triangles": 1500000,
+                "simMs": 4,
+                "heapMB": 400,
+                "pixelRatio": 2,
+                "shadowSize": 2048,
+                "bloomMips": 5,
+                "cullDistance": 60
+              }
+            },
+            "contextLost": false,
+            "paused": true,
+            "heapBytes": 793000000,
+            "lighting": {
+              "lightFieldMs": 0.3000001907348633,
+              "lightPools": 5,
+              "lightCandidates": 5,
+              "shadowMaps": 1,
+              "heroLights": 1,
+              "heroShadow": 1,
+              "preset": "night"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "phase": "before",
+      "tier": "low",
+      "zoom": 1,
+      "webgl2": 0.5994900746103137,
+      "webgpu": 0.5995266722150662,
+      "percentDifference": 0.0061047891036780655,
+      "samples": 376,
+      "pass": true,
+      "camera": {
+        "zoom": 1,
+        "targetZoom": 1,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 19,
+        "regionScale": 1,
+        "focus": [
+          0,
+          0,
+          0
+        ],
+        "target": [
+          0,
+          0,
+          0
+        ],
+        "position": [
+          24,
+          32,
+          36
+        ],
+        "spot": "e25-zoom"
+      },
+      "tick": 120,
+      "captures": [
+        {
+          "path": "test-results/epics/E25/rest/before/webgl2-low/light-lab-z1.png",
+          "sha256": "0221f4f839fc88c546c57f23c4509b4344d96e1c8a31ea0143488ec56bef1836",
+          "state": {
+            "quality": "low",
+            "pixelRatio": 1,
+            "backend": "webgl",
+            "camera": {
+              "zoom": 1,
+              "targetZoom": 1,
+              "zoomLimits": [
+                0.5,
+                1.5
+              ],
+              "fov": 25,
+              "azimuth": 0.7853981633974483,
+              "polar": 0.9424777960769379,
+              "radius": 19,
+              "regionScale": 1,
+              "focus": [
+                0,
+                0,
+                0
+              ],
+              "target": [
+                0,
+                0,
+                0
+              ],
+              "position": [
+                24,
+                32,
+                36
+              ],
+              "spot": "e25-zoom"
+            },
+            "lighting": {
+              "promotionBlend": 1,
+              "heroLight": "D-GROVE@0,0/trailer/light:lamp0_L",
+              "heroLights": 1,
+              "heroShadowMaps": 1,
+              "promotionChanges": 1,
+              "shadowSize": 1024,
+              "preset": "night",
+              "shadowColor": "2f2d55",
+              "fieldShadow": 1,
+              "lightField": {
+                "strength": 1,
+                "resolution": 512,
+                "size": 60,
+                "statics": 4,
+                "litStatics": 4,
+                "candidates": 5,
+                "drawn": 5,
+                "transients": 0,
+                "capacity": 256,
+                "ms": 0.19999980926513672,
+                "center": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "perf": {
+            "nodeBuilds": 230,
+            "drawCalls": 27,
+            "triangles": 32161,
+            "geometries": 330,
+            "textures": 197,
+            "backend": "webgl",
+            "quality": {
+              "setting": "low",
+              "tier": "low",
+              "p90Ms": 0,
+              "slowSeconds": 0,
+              "budgets": {
+                "frameMs": 33.333333333333336,
+                "infected": 100,
+                "drawCalls": 300,
+                "triangles": 500000,
+                "simMs": 6,
+                "heapMB": 250,
+                "pixelRatio": 1.5,
+                "shadowSize": 1024,
+                "bloomMips": 2,
+                "cullDistance": 45
+              }
+            },
+            "contextLost": false,
+            "paused": true,
+            "heapBytes": 624000000,
+            "lighting": {
+              "lightFieldMs": 0.19999980926513672,
+              "lightPools": 5,
+              "lightCandidates": 5,
+              "shadowMaps": 1,
+              "heroLights": 1,
+              "heroShadow": 1,
+              "preset": "night"
+            }
+          }
+        },
+        {
+          "path": "test-results/epics/E25/rest/before/webgpu-low/light-lab-z1.png",
+          "sha256": "006ade4e18f9d08e0fc2123a0aca9fa6d67a0ba49444cd6aa3a99b717eee9c40",
+          "state": {
+            "quality": "low",
+            "pixelRatio": 1,
+            "backend": "webgpu",
+            "camera": {
+              "zoom": 1,
+              "targetZoom": 1,
+              "zoomLimits": [
+                0.5,
+                1.5
+              ],
+              "fov": 25,
+              "azimuth": 0.7853981633974483,
+              "polar": 0.9424777960769379,
+              "radius": 19,
+              "regionScale": 1,
+              "focus": [
+                0,
+                0,
+                0
+              ],
+              "target": [
+                0,
+                0,
+                0
+              ],
+              "position": [
+                24,
+                32,
+                36
+              ],
+              "spot": "e25-zoom"
+            },
+            "lighting": {
+              "promotionBlend": 1,
+              "heroLight": "D-GROVE@0,0/trailer/light:lamp0_L",
+              "heroLights": 1,
+              "heroShadowMaps": 1,
+              "promotionChanges": 1,
+              "shadowSize": 1024,
+              "preset": "night",
+              "shadowColor": "2f2d55",
+              "fieldShadow": 1,
+              "lightField": {
+                "strength": 1,
+                "resolution": 512,
+                "size": 60,
+                "statics": 4,
+                "litStatics": 4,
+                "candidates": 5,
+                "drawn": 5,
+                "transients": 0,
+                "capacity": 256,
+                "ms": 0.19999980926513672,
+                "center": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "perf": {
+            "nodeBuilds": 231,
+            "drawCalls": 27,
+            "triangles": 32161,
+            "geometries": 330,
+            "textures": 197,
+            "backend": "webgpu",
+            "quality": {
+              "setting": "low",
+              "tier": "low",
+              "p90Ms": 0,
+              "slowSeconds": 0,
+              "budgets": {
+                "frameMs": 33.333333333333336,
+                "infected": 100,
+                "drawCalls": 300,
+                "triangles": 500000,
+                "simMs": 6,
+                "heapMB": 250,
+                "pixelRatio": 1.5,
+                "shadowSize": 1024,
+                "bloomMips": 2,
+                "cullDistance": 45
+              }
+            },
+            "contextLost": false,
+            "paused": true,
+            "heapBytes": 662000000,
+            "lighting": {
+              "lightFieldMs": 0.19999980926513672,
+              "lightPools": 5,
+              "lightCandidates": 5,
+              "shadowMaps": 1,
+              "heroLights": 1,
+              "heroShadow": 1,
+              "preset": "night"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "phase": "before",
+      "tier": "low",
+      "zoom": 1.5,
+      "webgl2": 0.4462429625425335,
+      "webgpu": 0.4465018456759805,
+      "percentDifference": 0.05801394199518306,
+      "samples": 376,
+      "pass": true,
+      "camera": {
+        "zoom": 1.5,
+        "targetZoom": 1.5,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 28.5,
+        "regionScale": 1,
+        "focus": [
+          0,
+          0,
+          0
+        ],
+        "target": [
+          0,
+          0,
+          0
+        ],
+        "position": [
+          36,
+          48,
+          54
+        ],
+        "spot": "e25-zoom"
+      },
+      "tick": 120,
+      "captures": [
+        {
+          "path": "test-results/epics/E25/rest/before/webgl2-low/light-lab-z1.5.png",
+          "sha256": "ff8fe220a7cbb0cd87c5277bfede69e7d23691e233f40e7c1468d542cf0749e2",
+          "state": {
+            "quality": "low",
+            "pixelRatio": 1,
+            "backend": "webgl",
+            "camera": {
+              "zoom": 1.5,
+              "targetZoom": 1.5,
+              "zoomLimits": [
+                0.5,
+                1.5
+              ],
+              "fov": 25,
+              "azimuth": 0.7853981633974483,
+              "polar": 0.9424777960769379,
+              "radius": 28.5,
+              "regionScale": 1,
+              "focus": [
+                0,
+                0,
+                0
+              ],
+              "target": [
+                0,
+                0,
+                0
+              ],
+              "position": [
+                36,
+                48,
+                54
+              ],
+              "spot": "e25-zoom"
+            },
+            "lighting": {
+              "promotionBlend": 1,
+              "heroLight": "D-GROVE@0,0/trailer/light:lamp0_L",
+              "heroLights": 1,
+              "heroShadowMaps": 1,
+              "promotionChanges": 1,
+              "shadowSize": 1024,
+              "preset": "night",
+              "shadowColor": "2f2d55",
+              "fieldShadow": 1,
+              "lightField": {
+                "strength": 1,
+                "resolution": 512,
+                "size": 60,
+                "statics": 4,
+                "litStatics": 4,
+                "candidates": 5,
+                "drawn": 5,
+                "transients": 0,
+                "capacity": 256,
+                "ms": 0.3000001907348633,
+                "center": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "perf": {
+            "nodeBuilds": 230,
+            "drawCalls": 27,
+            "triangles": 32161,
+            "geometries": 330,
+            "textures": 197,
+            "backend": "webgl",
+            "quality": {
+              "setting": "low",
+              "tier": "low",
+              "p90Ms": 0,
+              "slowSeconds": 0,
+              "budgets": {
+                "frameMs": 33.333333333333336,
+                "infected": 100,
+                "drawCalls": 300,
+                "triangles": 500000,
+                "simMs": 6,
+                "heapMB": 250,
+                "pixelRatio": 1.5,
+                "shadowSize": 1024,
+                "bloomMips": 2,
+                "cullDistance": 45
+              }
+            },
+            "contextLost": false,
+            "paused": true,
+            "heapBytes": 624000000,
+            "lighting": {
+              "lightFieldMs": 0.3000001907348633,
+              "lightPools": 5,
+              "lightCandidates": 5,
+              "shadowMaps": 1,
+              "heroLights": 1,
+              "heroShadow": 1,
+              "preset": "night"
+            }
+          }
+        },
+        {
+          "path": "test-results/epics/E25/rest/before/webgpu-low/light-lab-z1.5.png",
+          "sha256": "5f926fc375f0acc4482ec69674f1bd39eabc5ba71bd09ff2ea884ed4aa72398a",
+          "state": {
+            "quality": "low",
+            "pixelRatio": 1,
+            "backend": "webgpu",
+            "camera": {
+              "zoom": 1.5,
+              "targetZoom": 1.5,
+              "zoomLimits": [
+                0.5,
+                1.5
+              ],
+              "fov": 25,
+              "azimuth": 0.7853981633974483,
+              "polar": 0.9424777960769379,
+              "radius": 28.5,
+              "regionScale": 1,
+              "focus": [
+                0,
+                0,
+                0
+              ],
+              "target": [
+                0,
+                0,
+                0
+              ],
+              "position": [
+                36,
+                48,
+                54
+              ],
+              "spot": "e25-zoom"
+            },
+            "lighting": {
+              "promotionBlend": 1,
+              "heroLight": "D-GROVE@0,0/trailer/light:lamp0_L",
+              "heroLights": 1,
+              "heroShadowMaps": 1,
+              "promotionChanges": 1,
+              "shadowSize": 1024,
+              "preset": "night",
+              "shadowColor": "2f2d55",
+              "fieldShadow": 1,
+              "lightField": {
+                "strength": 1,
+                "resolution": 512,
+                "size": 60,
+                "statics": 4,
+                "litStatics": 4,
+                "candidates": 5,
+                "drawn": 5,
+                "transients": 0,
+                "capacity": 256,
+                "ms": 0.09999942779541016,
+                "center": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "perf": {
+            "nodeBuilds": 231,
+            "drawCalls": 27,
+            "triangles": 32161,
+            "geometries": 330,
+            "textures": 197,
+            "backend": "webgpu",
+            "quality": {
+              "setting": "low",
+              "tier": "low",
+              "p90Ms": 0,
+              "slowSeconds": 0,
+              "budgets": {
+                "frameMs": 33.333333333333336,
+                "infected": 100,
+                "drawCalls": 300,
+                "triangles": 500000,
+                "simMs": 6,
+                "heapMB": 250,
+                "pixelRatio": 1.5,
+                "shadowSize": 1024,
+                "bloomMips": 2,
+                "cullDistance": 45
+              }
+            },
+            "contextLost": false,
+            "paused": true,
+            "heapBytes": 662000000,
+            "lighting": {
+              "lightFieldMs": 0.09999942779541016,
+              "lightPools": 5,
+              "lightCandidates": 5,
+              "shadowMaps": 1,
+              "heroLights": 1,
+              "heroShadow": 1,
+              "preset": "night"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "phase": "after",
+      "tier": "high",
+      "zoom": 1,
+      "webgl2": 0.5574573883174195,
+      "webgpu": 0.5574059712059856,
+      "percentDifference": -0.009223505242106356,
+      "samples": 376,
+      "pass": true,
+      "camera": {
+        "zoom": 1,
+        "targetZoom": 1,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 19,
+        "regionScale": 1,
+        "focus": [
+          0,
+          0,
+          0
+        ],
+        "target": [
+          0,
+          0,
+          0
+        ],
+        "position": [
+          24,
+          32,
+          36
+        ],
+        "spot": "e25-zoom"
+      },
+      "tick": 120,
+      "captures": [
+        {
+          "path": "test-results/epics/E25/rest/after/webgl2-high/light-lab-z1.png",
+          "sha256": "b429866aa4fd3b2ba8d6ead7add2ee650152776acd7d1079eb985c6050d8aa0a",
+          "state": {
+            "quality": "high",
+            "pixelRatio": 1,
+            "backend": "webgl",
+            "camera": {
+              "zoom": 1,
+              "targetZoom": 1,
+              "zoomLimits": [
+                0.5,
+                1.5
+              ],
+              "fov": 25,
+              "azimuth": 0.7853981633974483,
+              "polar": 0.9424777960769379,
+              "radius": 19,
+              "regionScale": 1,
+              "focus": [
+                0,
+                0,
+                0
+              ],
+              "target": [
+                0,
+                0,
+                0
+              ],
+              "position": [
+                24,
+                32,
+                36
+              ],
+              "spot": "e25-zoom"
+            },
+            "lighting": {
+              "promotionBlend": 1,
+              "heroLight": "D-GROVE@0,0/trailer/light:lamp0_L",
+              "heroLights": 1,
+              "heroShadowMaps": 1,
+              "promotionChanges": 1,
+              "shadowSize": 2048,
+              "preset": "night",
+              "shadowColor": "2f2d55",
+              "fieldShadow": 1,
+              "lightField": {
+                "strength": 1,
+                "resolution": 1024,
+                "size": 80,
+                "statics": 4,
+                "litStatics": 4,
+                "candidates": 5,
+                "drawn": 5,
+                "transients": 0,
+                "capacity": 512,
+                "ms": 0.39999961853027344,
+                "center": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "perf": {
+            "nodeBuilds": 245,
+            "drawCalls": 34,
+            "triangles": 51659,
+            "geometries": 330,
+            "textures": 200,
+            "backend": "webgl",
+            "quality": {
+              "setting": "high",
+              "tier": "high",
+              "p90Ms": 0,
+              "slowSeconds": 0,
+              "budgets": {
+                "frameMs": 16.7,
+                "infected": 200,
+                "drawCalls": 600,
+                "triangles": 1500000,
+                "simMs": 4,
+                "heapMB": 400,
+                "pixelRatio": 2,
+                "shadowSize": 2048,
+                "bloomMips": 5,
+                "cullDistance": 60
+              }
+            },
+            "contextLost": false,
+            "paused": true,
+            "heapBytes": 747000000,
+            "lighting": {
+              "lightFieldMs": 0.39999961853027344,
+              "lightPools": 5,
+              "lightCandidates": 5,
+              "shadowMaps": 1,
+              "heroLights": 1,
+              "heroShadow": 1,
+              "preset": "night"
+            }
+          }
+        },
+        {
+          "path": "test-results/epics/E25/rest/after/webgpu-high/light-lab-z1.png",
+          "sha256": "3fe2ead9fa324f7f10740d5b9449da6dce94fdc67397a0d5e78abbc2d8441097",
+          "state": {
+            "quality": "high",
+            "pixelRatio": 1,
+            "backend": "webgpu",
+            "camera": {
+              "zoom": 1,
+              "targetZoom": 1,
+              "zoomLimits": [
+                0.5,
+                1.5
+              ],
+              "fov": 25,
+              "azimuth": 0.7853981633974483,
+              "polar": 0.9424777960769379,
+              "radius": 19,
+              "regionScale": 1,
+              "focus": [
+                0,
+                0,
+                0
+              ],
+              "target": [
+                0,
+                0,
+                0
+              ],
+              "position": [
+                24,
+                32,
+                36
+              ],
+              "spot": "e25-zoom"
+            },
+            "lighting": {
+              "promotionBlend": 1,
+              "heroLight": "D-GROVE@0,0/trailer/light:lamp0_L",
+              "heroLights": 1,
+              "heroShadowMaps": 1,
+              "promotionChanges": 1,
+              "shadowSize": 2048,
+              "preset": "night",
+              "shadowColor": "2f2d55",
+              "fieldShadow": 1,
+              "lightField": {
+                "strength": 1,
+                "resolution": 1024,
+                "size": 80,
+                "statics": 4,
+                "litStatics": 4,
+                "candidates": 5,
+                "drawn": 5,
+                "transients": 0,
+                "capacity": 512,
+                "ms": 0.19999980926513672,
+                "center": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "perf": {
+            "nodeBuilds": 246,
+            "drawCalls": 34,
+            "triangles": 51659,
+            "geometries": 330,
+            "textures": 200,
+            "backend": "webgpu",
+            "quality": {
+              "setting": "high",
+              "tier": "high",
+              "p90Ms": 0,
+              "slowSeconds": 0,
+              "budgets": {
+                "frameMs": 16.7,
+                "infected": 200,
+                "drawCalls": 600,
+                "triangles": 1500000,
+                "simMs": 4,
+                "heapMB": 400,
+                "pixelRatio": 2,
+                "shadowSize": 2048,
+                "bloomMips": 5,
+                "cullDistance": 60
+              }
+            },
+            "contextLost": false,
+            "paused": true,
+            "heapBytes": 949000000,
+            "lighting": {
+              "lightFieldMs": 0.19999980926513672,
+              "lightPools": 5,
+              "lightCandidates": 5,
+              "shadowMaps": 1,
+              "heroLights": 1,
+              "heroShadow": 1,
+              "preset": "night"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "phase": "after",
+      "tier": "high",
+      "zoom": 1.5,
+      "webgl2": 0.41559064079569347,
+      "webgpu": 0.4158502044790707,
+      "percentDifference": 0.06245657574970309,
+      "samples": 376,
+      "pass": true,
+      "camera": {
+        "zoom": 1.5,
+        "targetZoom": 1.5,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 28.5,
+        "regionScale": 1,
+        "focus": [
+          0,
+          0,
+          0
+        ],
+        "target": [
+          0,
+          0,
+          0
+        ],
+        "position": [
+          36,
+          48,
+          54
+        ],
+        "spot": "e25-zoom"
+      },
+      "tick": 120,
+      "captures": [
+        {
+          "path": "test-results/epics/E25/rest/after/webgl2-high/light-lab-z1.5.png",
+          "sha256": "417248f3f99fe6855c33d03ccc490309465c39154006aaa4a2cbf1f80d006eef",
+          "state": {
+            "quality": "high",
+            "pixelRatio": 1,
+            "backend": "webgl",
+            "camera": {
+              "zoom": 1.5,
+              "targetZoom": 1.5,
+              "zoomLimits": [
+                0.5,
+                1.5
+              ],
+              "fov": 25,
+              "azimuth": 0.7853981633974483,
+              "polar": 0.9424777960769379,
+              "radius": 28.5,
+              "regionScale": 1,
+              "focus": [
+                0,
+                0,
+                0
+              ],
+              "target": [
+                0,
+                0,
+                0
+              ],
+              "position": [
+                36,
+                48,
+                54
+              ],
+              "spot": "e25-zoom"
+            },
+            "lighting": {
+              "promotionBlend": 1,
+              "heroLight": "D-GROVE@0,0/trailer/light:lamp0_L",
+              "heroLights": 1,
+              "heroShadowMaps": 1,
+              "promotionChanges": 1,
+              "shadowSize": 2048,
+              "preset": "night",
+              "shadowColor": "2f2d55",
+              "fieldShadow": 1,
+              "lightField": {
+                "strength": 1,
+                "resolution": 1024,
+                "size": 80,
+                "statics": 4,
+                "litStatics": 4,
+                "candidates": 5,
+                "drawn": 5,
+                "transients": 0,
+                "capacity": 512,
+                "ms": 0.40000057220458984,
+                "center": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "perf": {
+            "nodeBuilds": 245,
+            "drawCalls": 34,
+            "triangles": 51659,
+            "geometries": 330,
+            "textures": 200,
+            "backend": "webgl",
+            "quality": {
+              "setting": "high",
+              "tier": "high",
+              "p90Ms": 0,
+              "slowSeconds": 0,
+              "budgets": {
+                "frameMs": 16.7,
+                "infected": 200,
+                "drawCalls": 600,
+                "triangles": 1500000,
+                "simMs": 4,
+                "heapMB": 400,
+                "pixelRatio": 2,
+                "shadowSize": 2048,
+                "bloomMips": 5,
+                "cullDistance": 60
+              }
+            },
+            "contextLost": false,
+            "paused": true,
+            "heapBytes": 747000000,
+            "lighting": {
+              "lightFieldMs": 0.40000057220458984,
+              "lightPools": 5,
+              "lightCandidates": 5,
+              "shadowMaps": 1,
+              "heroLights": 1,
+              "heroShadow": 1,
+              "preset": "night"
+            }
+          }
+        },
+        {
+          "path": "test-results/epics/E25/rest/after/webgpu-high/light-lab-z1.5.png",
+          "sha256": "646d55982bed73930671c39f5ca0d78a38da19bf44a785ebc8dc31c1f5b7c225",
+          "state": {
+            "quality": "high",
+            "pixelRatio": 1,
+            "backend": "webgpu",
+            "camera": {
+              "zoom": 1.5,
+              "targetZoom": 1.5,
+              "zoomLimits": [
+                0.5,
+                1.5
+              ],
+              "fov": 25,
+              "azimuth": 0.7853981633974483,
+              "polar": 0.9424777960769379,
+              "radius": 28.5,
+              "regionScale": 1,
+              "focus": [
+                0,
+                0,
+                0
+              ],
+              "target": [
+                0,
+                0,
+                0
+              ],
+              "position": [
+                36,
+                48,
+                54
+              ],
+              "spot": "e25-zoom"
+            },
+            "lighting": {
+              "promotionBlend": 1,
+              "heroLight": "D-GROVE@0,0/trailer/light:lamp0_L",
+              "heroLights": 1,
+              "heroShadowMaps": 1,
+              "promotionChanges": 1,
+              "shadowSize": 2048,
+              "preset": "night",
+              "shadowColor": "2f2d55",
+              "fieldShadow": 1,
+              "lightField": {
+                "strength": 1,
+                "resolution": 1024,
+                "size": 80,
+                "statics": 4,
+                "litStatics": 4,
+                "candidates": 5,
+                "drawn": 5,
+                "transients": 0,
+                "capacity": 512,
+                "ms": 0.10000038146972656,
+                "center": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "perf": {
+            "nodeBuilds": 246,
+            "drawCalls": 34,
+            "triangles": 51659,
+            "geometries": 330,
+            "textures": 200,
+            "backend": "webgpu",
+            "quality": {
+              "setting": "high",
+              "tier": "high",
+              "p90Ms": 0,
+              "slowSeconds": 0,
+              "budgets": {
+                "frameMs": 16.7,
+                "infected": 200,
+                "drawCalls": 600,
+                "triangles": 1500000,
+                "simMs": 4,
+                "heapMB": 400,
+                "pixelRatio": 2,
+                "shadowSize": 2048,
+                "bloomMips": 5,
+                "cullDistance": 60
+              }
+            },
+            "contextLost": false,
+            "paused": true,
+            "heapBytes": 949000000,
+            "lighting": {
+              "lightFieldMs": 0.10000038146972656,
+              "lightPools": 5,
+              "lightCandidates": 5,
+              "shadowMaps": 1,
+              "heroLights": 1,
+              "heroShadow": 1,
+              "preset": "night"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "phase": "after",
+      "tier": "low",
+      "zoom": 1,
+      "webgl2": 0.5582454166897178,
+      "webgpu": 0.5582047769888535,
+      "percentDifference": -0.007279898705714327,
+      "samples": 376,
+      "pass": true,
+      "camera": {
+        "zoom": 1,
+        "targetZoom": 1,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 19,
+        "regionScale": 1,
+        "focus": [
+          0,
+          0,
+          0
+        ],
+        "target": [
+          0,
+          0,
+          0
+        ],
+        "position": [
+          24,
+          32,
+          36
+        ],
+        "spot": "e25-zoom"
+      },
+      "tick": 120,
+      "captures": [
+        {
+          "path": "test-results/epics/E25/rest/after/webgl2-low/light-lab-z1.png",
+          "sha256": "961b0fb1e815088e414e8587f963c3008681cb947aad320b58543e0623feeb5f",
+          "state": {
+            "quality": "low",
+            "pixelRatio": 1,
+            "backend": "webgl",
+            "camera": {
+              "zoom": 1,
+              "targetZoom": 1,
+              "zoomLimits": [
+                0.5,
+                1.5
+              ],
+              "fov": 25,
+              "azimuth": 0.7853981633974483,
+              "polar": 0.9424777960769379,
+              "radius": 19,
+              "regionScale": 1,
+              "focus": [
+                0,
+                0,
+                0
+              ],
+              "target": [
+                0,
+                0,
+                0
+              ],
+              "position": [
+                24,
+                32,
+                36
+              ],
+              "spot": "e25-zoom"
+            },
+            "lighting": {
+              "promotionBlend": 1,
+              "heroLight": "D-GROVE@0,0/trailer/light:lamp0_L",
+              "heroLights": 1,
+              "heroShadowMaps": 1,
+              "promotionChanges": 1,
+              "shadowSize": 1024,
+              "preset": "night",
+              "shadowColor": "2f2d55",
+              "fieldShadow": 1,
+              "lightField": {
+                "strength": 1,
+                "resolution": 512,
+                "size": 60,
+                "statics": 4,
+                "litStatics": 4,
+                "candidates": 5,
+                "drawn": 5,
+                "transients": 0,
+                "capacity": 256,
+                "ms": 0.19999980926513672,
+                "center": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "perf": {
+            "nodeBuilds": 230,
+            "drawCalls": 27,
+            "triangles": 32161,
+            "geometries": 330,
+            "textures": 197,
+            "backend": "webgl",
+            "quality": {
+              "setting": "low",
+              "tier": "low",
+              "p90Ms": 0,
+              "slowSeconds": 0,
+              "budgets": {
+                "frameMs": 33.333333333333336,
+                "infected": 100,
+                "drawCalls": 300,
+                "triangles": 500000,
+                "simMs": 6,
+                "heapMB": 250,
+                "pixelRatio": 1.5,
+                "shadowSize": 1024,
+                "bloomMips": 2,
+                "cullDistance": 45
+              }
+            },
+            "contextLost": false,
+            "paused": true,
+            "heapBytes": 842000000,
+            "lighting": {
+              "lightFieldMs": 0.19999980926513672,
+              "lightPools": 5,
+              "lightCandidates": 5,
+              "shadowMaps": 1,
+              "heroLights": 1,
+              "heroShadow": 1,
+              "preset": "night"
+            }
+          }
+        },
+        {
+          "path": "test-results/epics/E25/rest/after/webgpu-low/light-lab-z1.png",
+          "sha256": "ea6f5e961572791940bcfb7d01f5fcd11f312cecfb5f30dd758a4eb4d635b3ec",
+          "state": {
+            "quality": "low",
+            "pixelRatio": 1,
+            "backend": "webgpu",
+            "camera": {
+              "zoom": 1,
+              "targetZoom": 1,
+              "zoomLimits": [
+                0.5,
+                1.5
+              ],
+              "fov": 25,
+              "azimuth": 0.7853981633974483,
+              "polar": 0.9424777960769379,
+              "radius": 19,
+              "regionScale": 1,
+              "focus": [
+                0,
+                0,
+                0
+              ],
+              "target": [
+                0,
+                0,
+                0
+              ],
+              "position": [
+                24,
+                32,
+                36
+              ],
+              "spot": "e25-zoom"
+            },
+            "lighting": {
+              "promotionBlend": 1,
+              "heroLight": "D-GROVE@0,0/trailer/light:lamp0_L",
+              "heroLights": 1,
+              "heroShadowMaps": 1,
+              "promotionChanges": 1,
+              "shadowSize": 1024,
+              "preset": "night",
+              "shadowColor": "2f2d55",
+              "fieldShadow": 1,
+              "lightField": {
+                "strength": 1,
+                "resolution": 512,
+                "size": 60,
+                "statics": 4,
+                "litStatics": 4,
+                "candidates": 5,
+                "drawn": 5,
+                "transients": 0,
+                "capacity": 256,
+                "ms": 0.19999980926513672,
+                "center": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "perf": {
+            "nodeBuilds": 231,
+            "drawCalls": 27,
+            "triangles": 32161,
+            "geometries": 330,
+            "textures": 197,
+            "backend": "webgpu",
+            "quality": {
+              "setting": "low",
+              "tier": "low",
+              "p90Ms": 0,
+              "slowSeconds": 0,
+              "budgets": {
+                "frameMs": 33.333333333333336,
+                "infected": 100,
+                "drawCalls": 300,
+                "triangles": 500000,
+                "simMs": 6,
+                "heapMB": 250,
+                "pixelRatio": 1.5,
+                "shadowSize": 1024,
+                "bloomMips": 2,
+                "cullDistance": 45
+              }
+            },
+            "contextLost": false,
+            "paused": true,
+            "heapBytes": 662000000,
+            "lighting": {
+              "lightFieldMs": 0.19999980926513672,
+              "lightPools": 5,
+              "lightCandidates": 5,
+              "shadowMaps": 1,
+              "heroLights": 1,
+              "heroShadow": 1,
+              "preset": "night"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "phase": "after",
+      "tier": "low",
+      "zoom": 1.5,
+      "webgl2": 0.41541086993150156,
+      "webgpu": 0.41566087648379374,
+      "percentDifference": 0.060182958701449074,
+      "samples": 376,
+      "pass": true,
+      "camera": {
+        "zoom": 1.5,
+        "targetZoom": 1.5,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 28.5,
+        "regionScale": 1,
+        "focus": [
+          0,
+          0,
+          0
+        ],
+        "target": [
+          0,
+          0,
+          0
+        ],
+        "position": [
+          36,
+          48,
+          54
+        ],
+        "spot": "e25-zoom"
+      },
+      "tick": 120,
+      "captures": [
+        {
+          "path": "test-results/epics/E25/rest/after/webgl2-low/light-lab-z1.5.png",
+          "sha256": "dfcea56fddbda6b4536f5435674ac827487ab9d65cb26fed22bc75bdead6853c",
+          "state": {
+            "quality": "low",
+            "pixelRatio": 1,
+            "backend": "webgl",
+            "camera": {
+              "zoom": 1.5,
+              "targetZoom": 1.5,
+              "zoomLimits": [
+                0.5,
+                1.5
+              ],
+              "fov": 25,
+              "azimuth": 0.7853981633974483,
+              "polar": 0.9424777960769379,
+              "radius": 28.5,
+              "regionScale": 1,
+              "focus": [
+                0,
+                0,
+                0
+              ],
+              "target": [
+                0,
+                0,
+                0
+              ],
+              "position": [
+                36,
+                48,
+                54
+              ],
+              "spot": "e25-zoom"
+            },
+            "lighting": {
+              "promotionBlend": 1,
+              "heroLight": "D-GROVE@0,0/trailer/light:lamp0_L",
+              "heroLights": 1,
+              "heroShadowMaps": 1,
+              "promotionChanges": 1,
+              "shadowSize": 1024,
+              "preset": "night",
+              "shadowColor": "2f2d55",
+              "fieldShadow": 1,
+              "lightField": {
+                "strength": 1,
+                "resolution": 512,
+                "size": 60,
+                "statics": 4,
+                "litStatics": 4,
+                "candidates": 5,
+                "drawn": 5,
+                "transients": 0,
+                "capacity": 256,
+                "ms": 0.19999980926513672,
+                "center": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "perf": {
+            "nodeBuilds": 230,
+            "drawCalls": 27,
+            "triangles": 32161,
+            "geometries": 330,
+            "textures": 197,
+            "backend": "webgl",
+            "quality": {
+              "setting": "low",
+              "tier": "low",
+              "p90Ms": 0,
+              "slowSeconds": 0,
+              "budgets": {
+                "frameMs": 33.333333333333336,
+                "infected": 100,
+                "drawCalls": 300,
+                "triangles": 500000,
+                "simMs": 6,
+                "heapMB": 250,
+                "pixelRatio": 1.5,
+                "shadowSize": 1024,
+                "bloomMips": 2,
+                "cullDistance": 45
+              }
+            },
+            "contextLost": false,
+            "paused": true,
+            "heapBytes": 842000000,
+            "lighting": {
+              "lightFieldMs": 0.19999980926513672,
+              "lightPools": 5,
+              "lightCandidates": 5,
+              "shadowMaps": 1,
+              "heroLights": 1,
+              "heroShadow": 1,
+              "preset": "night"
+            }
+          }
+        },
+        {
+          "path": "test-results/epics/E25/rest/after/webgpu-low/light-lab-z1.5.png",
+          "sha256": "6367d7af6a4da5ef0178d5d8b50e217be436e727d9a2f0b2adc99ad6dfae0589",
+          "state": {
+            "quality": "low",
+            "pixelRatio": 1,
+            "backend": "webgpu",
+            "camera": {
+              "zoom": 1.5,
+              "targetZoom": 1.5,
+              "zoomLimits": [
+                0.5,
+                1.5
+              ],
+              "fov": 25,
+              "azimuth": 0.7853981633974483,
+              "polar": 0.9424777960769379,
+              "radius": 28.5,
+              "regionScale": 1,
+              "focus": [
+                0,
+                0,
+                0
+              ],
+              "target": [
+                0,
+                0,
+                0
+              ],
+              "position": [
+                36,
+                48,
+                54
+              ],
+              "spot": "e25-zoom"
+            },
+            "lighting": {
+              "promotionBlend": 1,
+              "heroLight": "D-GROVE@0,0/trailer/light:lamp0_L",
+              "heroLights": 1,
+              "heroShadowMaps": 1,
+              "promotionChanges": 1,
+              "shadowSize": 1024,
+              "preset": "night",
+              "shadowColor": "2f2d55",
+              "fieldShadow": 1,
+              "lightField": {
+                "strength": 1,
+                "resolution": 512,
+                "size": 60,
+                "statics": 4,
+                "litStatics": 4,
+                "candidates": 5,
+                "drawn": 5,
+                "transients": 0,
+                "capacity": 256,
+                "ms": 0.09999942779541016,
+                "center": [
+                  0,
+                  0
+                ]
+              }
+            }
+          },
+          "perf": {
+            "nodeBuilds": 231,
+            "drawCalls": 27,
+            "triangles": 32161,
+            "geometries": 330,
+            "textures": 197,
+            "backend": "webgpu",
+            "quality": {
+              "setting": "low",
+              "tier": "low",
+              "p90Ms": 0,
+              "slowSeconds": 0,
+              "budgets": {
+                "frameMs": 33.333333333333336,
+                "infected": 100,
+                "drawCalls": 300,
+                "triangles": 500000,
+                "simMs": 6,
+                "heapMB": 250,
+                "pixelRatio": 1.5,
+                "shadowSize": 1024,
+                "bloomMips": 2,
+                "cullDistance": 45
+              }
+            },
+            "contextLost": false,
+            "paused": true,
+            "heapBytes": 662000000,
+            "lighting": {
+              "lightFieldMs": 0.09999942779541016,
+              "lightPools": 5,
+              "lightCandidates": 5,
+              "shadowMaps": 1,
+              "heroLights": 1,
+              "heroShadow": 1,
+              "preset": "night"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "shadow": [
+    {
+      "phase": "before",
+      "tier": "high",
+      "backend": "webgl2",
+      "zoom": 1,
+      "shadow": {
+        "behindMean": 0.43512438555301514,
+        "besideMean": 0.8389575857213146,
+        "darkness": 0.48135115176423826,
+        "qualifyingPixels": 60,
+        "sampleCount": 75,
+        "meanDarkness": 0.5576200703735793,
+        "rgb": [
+          188.16666666666666,
+          154.71666666666667,
+          179.38333333333333
+        ],
+        "hue": 315.75485799701045
+      },
+      "pass": false
+    },
+    {
+      "phase": "before",
+      "tier": "high",
+      "backend": "webgl2",
+      "zoom": 1.5,
+      "shadow": {
+        "behindMean": 0.3181424292464506,
+        "besideMean": 0.6407934800932797,
+        "darkness": 0.5035179989656904,
+        "qualifyingPixels": 62,
+        "sampleCount": 75,
+        "meanDarkness": 0.5704464379708383,
+        "rgb": [
+          164.4516129032258,
+          135.6451612903226,
+          157.3709677419355
+        ],
+        "hue": 314.74804031354984
+      },
+      "pass": false
+    },
+    {
+      "phase": "before",
+      "tier": "high",
+      "backend": "webgpu",
+      "zoom": 1,
+      "shadow": {
+        "behindMean": 0.43512438555301514,
+        "besideMean": 0.8389575857213146,
+        "darkness": 0.48135115176423826,
+        "qualifyingPixels": 60,
+        "sampleCount": 75,
+        "meanDarkness": 0.5576200703735793,
+        "rgb": [
+          188.16666666666666,
+          154.71666666666667,
+          179.38333333333333
+        ],
+        "hue": 315.75485799701045
+      },
+      "pass": false
+    },
+    {
+      "phase": "before",
+      "tier": "high",
+      "backend": "webgpu",
+      "zoom": 1.5,
+      "shadow": {
+        "behindMean": 0.318101858554225,
+        "besideMean": 0.6407934800932797,
+        "darkness": 0.5035813121757743,
+        "qualifyingPixels": 62,
+        "sampleCount": 75,
+        "meanDarkness": 0.5705164927924095,
+        "rgb": [
+          164.4516129032258,
+          135.6290322580645,
+          157.3709677419355
+        ],
+        "hue": 314.7397873531057
+      },
+      "pass": false
+    },
+    {
+      "phase": "before",
+      "tier": "low",
+      "backend": "webgl2",
+      "zoom": 1,
+      "shadow": {
+        "behindMean": 0.43513348881251923,
+        "besideMean": 0.8321420302274714,
+        "darkness": 0.47709228352091204,
+        "qualifyingPixels": 59,
+        "sampleCount": 75,
+        "meanDarkness": 0.5605380542918436,
+        "rgb": [
+          187.40677966101694,
+          154.11864406779662,
+          179.01694915254237
+        ],
+        "hue": 315.12219959266804
+      },
+      "pass": false
+    },
+    {
+      "phase": "before",
+      "tier": "low",
+      "backend": "webgl2",
+      "zoom": 1.5,
+      "shadow": {
+        "behindMean": 0.3181086368688384,
+        "besideMean": 0.6343259130163117,
+        "darkness": 0.49850915697864884,
+        "qualifyingPixels": 61,
+        "sampleCount": 75,
+        "meanDarkness": 0.5741354556841392,
+        "rgb": [
+          163.7377049180328,
+          135.08196721311475,
+          157.04918032786884
+        ],
+        "hue": 314.00457665903895
+      },
+      "pass": false
+    },
+    {
+      "phase": "before",
+      "tier": "low",
+      "backend": "webgpu",
+      "zoom": 1,
+      "shadow": {
+        "behindMean": 0.43511969094596414,
+        "besideMean": 0.8321420302274714,
+        "darkness": 0.4771088646645797,
+        "qualifyingPixels": 59,
+        "sampleCount": 75,
+        "meanDarkness": 0.5605578395505442,
+        "rgb": [
+          187.38983050847457,
+          154.11864406779662,
+          179.01694915254237
+        ],
+        "hue": 315.0993377483444
+      },
+      "pass": false
+    },
+    {
+      "phase": "before",
+      "tier": "low",
+      "backend": "webgpu",
+      "zoom": 1.5,
+      "shadow": {
+        "behindMean": 0.3181086368688384,
+        "besideMean": 0.6343259130163117,
+        "darkness": 0.49850915697864884,
+        "qualifyingPixels": 61,
+        "sampleCount": 75,
+        "meanDarkness": 0.5741354556841392,
+        "rgb": [
+          163.7377049180328,
+          135.08196721311475,
+          157.04918032786884
+        ],
+        "hue": 314.00457665903895
+      },
+      "pass": false
+    },
+    {
+      "phase": "after",
+      "tier": "high",
+      "backend": "webgl2",
+      "zoom": 1,
+      "shadow": {
+        "behindMean": 0.2229559842720714,
+        "besideMean": 0.8389575857213146,
+        "darkness": 0.7342464171411247,
+        "qualifyingPixels": 73,
+        "sampleCount": 75,
+        "meanDarkness": 0.7537184587142074,
+        "rgb": [
+          133.72602739726028,
+          112.64383561643835,
+          188.4794520547945
+        ],
+        "hue": 256.67991329479764
+      },
+      "pass": true
+    },
+    {
+      "phase": "after",
+      "tier": "high",
+      "backend": "webgl2",
+      "zoom": 1.5,
+      "shadow": {
+        "behindMean": 0.16382211045180264,
+        "besideMean": 0.6407934800932797,
+        "darkness": 0.74434491682413,
+        "qualifyingPixels": 75,
+        "sampleCount": 75,
+        "meanDarkness": 0.7522950485929072,
+        "rgb": [
+          118.17333333333333,
+          100.02666666666667,
+          165.65333333333334
+        ],
+        "hue": 256.59081674116214
+      },
+      "pass": true
+    },
+    {
+      "phase": "after",
+      "tier": "high",
+      "backend": "webgpu",
+      "zoom": 1,
+      "shadow": {
+        "behindMean": 0.2229559842720714,
+        "besideMean": 0.8389575857213146,
+        "darkness": 0.7342464171411247,
+        "qualifyingPixels": 73,
+        "sampleCount": 75,
+        "meanDarkness": 0.7537184587142074,
+        "rgb": [
+          133.72602739726028,
+          112.64383561643835,
+          188.4794520547945
+        ],
+        "hue": 256.67991329479764
+      },
+      "pass": true
+    },
+    {
+      "phase": "after",
+      "tier": "high",
+      "backend": "webgpu",
+      "zoom": 1.5,
+      "shadow": {
+        "behindMean": 0.16382211045180264,
+        "besideMean": 0.6407934800932797,
+        "darkness": 0.74434491682413,
+        "qualifyingPixels": 75,
+        "sampleCount": 75,
+        "meanDarkness": 0.7522950485929072,
+        "rgb": [
+          118.17333333333333,
+          100.02666666666667,
+          165.65333333333334
+        ],
+        "hue": 256.59081674116214
+      },
+      "pass": true
+    },
+    {
+      "phase": "after",
+      "tier": "low",
+      "backend": "webgl2",
+      "zoom": 1,
+      "shadow": {
+        "behindMean": 0.22293874034151784,
+        "besideMean": 0.8321420302274714,
+        "darkness": 0.7320905179124577,
+        "qualifyingPixels": 73,
+        "sampleCount": 75,
+        "meanDarkness": 0.7534560717423248,
+        "rgb": [
+          133.7123287671233,
+          112.64383561643835,
+          188.46575342465752
+        ],
+        "hue": 256.6720867208671
+      },
+      "pass": true
+    },
+    {
+      "phase": "after",
+      "tier": "low",
+      "backend": "webgl2",
+      "zoom": 1.5,
+      "shadow": {
+        "behindMean": 0.16380139272531644,
+        "besideMean": 0.6343259130163117,
+        "darkness": 0.7417709266417682,
+        "qualifyingPixels": 75,
+        "sampleCount": 75,
+        "meanDarkness": 0.7523317963994653,
+        "rgb": [
+          118.14666666666666,
+          100.02666666666667,
+          165.65333333333334
+        ],
+        "hue": 256.56643640796426
+      },
+      "pass": true
+    },
+    {
+      "phase": "after",
+      "tier": "low",
+      "backend": "webgpu",
+      "zoom": 1,
+      "shadow": {
+        "behindMean": 0.22293874034151784,
+        "besideMean": 0.8321420302274714,
+        "darkness": 0.7320905179124577,
+        "qualifyingPixels": 73,
+        "sampleCount": 75,
+        "meanDarkness": 0.7534560717423248,
+        "rgb": [
+          133.7123287671233,
+          112.64383561643835,
+          188.46575342465752
+        ],
+        "hue": 256.6720867208671
+      },
+      "pass": true
+    },
+    {
+      "phase": "after",
+      "tier": "low",
+      "backend": "webgpu",
+      "zoom": 1.5,
+      "shadow": {
+        "behindMean": 0.16380139272531644,
+        "besideMean": 0.6343259130163117,
+        "darkness": 0.7417709266417682,
+        "qualifyingPixels": 75,
+        "sampleCount": 75,
+        "meanDarkness": 0.7523317963994653,
+        "rgb": [
+          118.14666666666666,
+          100.02666666666667,
+          165.65333333333334
+        ],
+        "hue": 256.56643640796426
+      },
+      "pass": true
+    }
+  ]
+}

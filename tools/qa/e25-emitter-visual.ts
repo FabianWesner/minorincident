@@ -18,6 +18,8 @@ import { cameraFraming } from '../../src/data/cameraFraming';
 import equipment from '../assets/equipment-lights.json';
 
 const tier = process.argv.includes('--low') ? 'low' : 'high', out = `${process.env.E25_OUT ?? 'test-results/epics/E25/emitters-visual'}/${tier}`;
+const settleRounds = Number(process.env.E25_SETTLE_ROUNDS ?? 4);
+const resetPoseHistory = process.env.E25_RESET_POSE_HISTORY === '1';
 mkdirSync(out, { recursive: true });
 const manifest = JSON.parse(readFileSync('src/assets/manifest.json', 'utf8')) as AssetDef[];
 const changed = new Set(execFileSync('git', ['diff', '--name-only', process.env.E25_BEFORE_REF ?? 'ac0a9e26', '--', 'public/assets/models'], { encoding: 'utf8' }).trim().split('\n'));
@@ -83,7 +85,7 @@ async function capture(name: string, zoom: number, detail: object) {
     game.view.update(1);
   }, { base: cameraBase, zoom });
   await s.ready();
-  const state = await s.page.evaluate(async () => {
+  const state = await s.page.evaluate(async ({ rounds, resetPoseHistory }) => {
     const game = (window.__SCENE__ as unknown as { game: Game }).game;
     // Content and world transforms, rather than asynchronous allocation IDs or repaired node names, break depth ties.
     const keys = new WeakMap<import('three').Object3D, string>();
@@ -97,17 +99,43 @@ async function capture(name: string, zoom: number, detail: object) {
     game.view.renderer.setOpaqueSort((a, b) => (a.groupOrder ?? 0) - (b.groupOrder ?? 0) || (a.renderOrder ?? 0) - (b.renderOrder ?? 0) || (a.z ?? 0) - (b.z ?? 0) || key(a.object).localeCompare(key(b.object)));
     game.view.renderer.setTransparentSort((a, b) => (a.groupOrder ?? 0) - (b.groupOrder ?? 0) || (a.renderOrder ?? 0) - (b.renderOrder ?? 0) || (b.z ?? 0) - (a.z ?? 0) || key(a.object).localeCompare(key(b.object)));
     const frame = (game.view.renderer as unknown as { _nodes: { nodeFrame: { time: number; deltaTime: number } } })._nodes.nodeFrame;
-    for (let i = 0; i < 4; i++) { game.view.renderer.nextNodeFrame(); frame.time = frame.deltaTime = 0; game.view.update(1); await new Promise<void>(resolve => requestAnimationFrame(() => resolve())); }
+    for (let i = 0; i < rounds; i++) { game.view.renderer.nextNodeFrame(); frame.time = frame.deltaTime = 0; game.view.update(1); await game.view.ready(); await new Promise<void>(resolve => requestAnimationFrame(() => resolve())); }
+    // A paused tick cannot finish a prewarm pose crossfade. Compare the current
+    // authored clip on both sides, rather than an allocation-dependent outgoing pose.
+    // No actor, material, shadow or pixel region is removed by this QA-only reset.
+    let poseHistories = 0;
+    if (resetPoseHistory) {
+      type Presentation = { states: Map<number, unknown> };
+      type Batch = { model?: string; lod?: string; poses?: Presentation; locomotion?: { contacts: Map<number, unknown>; paws: Map<number, unknown>; heldPoses: Map<number, unknown> } };
+      type Cohort = { presentation: Presentation; gait?: Presentation; footwork: Presentation & { far: Map<number, unknown>; animalContacts: Map<number, unknown> }; visibility?: { bands: Map<number, unknown>; heroes: Set<number>; demoted: Set<number> }; batches: Map<string, Batch> | Batch[] };
+      const view = game.view as unknown as { crowd?: Cohort; npcs?: { presentation: Presentation; civilians: Cohort } };
+      const reset = () => {
+        view.npcs?.presentation.states.clear();
+        for (const cohort of [view.crowd, view.npcs?.civilians]) if (cohort) {
+          cohort.presentation.states.clear(); cohort.gait?.states.clear();
+          cohort.footwork.states.clear(); cohort.footwork.far.clear(); cohort.footwork.animalContacts.clear();
+          cohort.visibility?.bands.clear(); cohort.visibility?.heroes.clear(); cohort.visibility?.demoted.clear();
+          // Async model completion must not decide who receives the same IK budget.
+          if (Array.isArray(cohort.batches)) cohort.batches.sort((a, b) => `${a.model}/${a.lod}`.localeCompare(`${b.model}/${b.lod}`));
+          for (const batch of cohort.batches.values()) {
+            if (batch.poses) { poseHistories += batch.poses.states.size; batch.poses.states.clear(); }
+            batch.locomotion?.contacts.clear(); batch.locomotion?.paws.clear(); batch.locomotion?.heldPoses.clear();
+          }
+        }
+      };
+      for (let i = 0; i < 2; i++) { reset(); game.view.renderer.nextNodeFrame(); frame.time = frame.deltaTime = 0; game.view.update(1); await game.view.ready(); }
+      reset();
+    }
     game.view.renderer.nextNodeFrame(); frame.time = frame.deltaTime = 0; game.view.update(1);
     const districts = (game.view as unknown as { districts: DistrictView }).districts;
-    return { camera: game.view.view.getState(), tick: game.world.tick, tier: game.view.getState().quality, lods: districts.lodState(), png: game.view.renderer.domElement.toDataURL('image/png').split(',')[1] };
-  });
+    return { camera: game.view.view.getState(), tick: game.world.tick, tier: game.view.getState().quality, lighting: game.view.getState().lighting, poseHistories, lods: districts.lodState(), png: game.view.renderer.domElement.toDataURL('image/png').split(',')[1] };
+  }, { rounds: settleRounds, resetPoseHistory });
   const path = `${out}/${name}-z${zoom}.png`, bytes = Buffer.from(state.png, 'base64'); writeFileSync(path, bytes);
   const distance = (a: number[], b: number[]) => Math.hypot(...a.map((v, i) => v - b[i]!));
   const actualRadius = distance(state.camera.position, state.camera.target), baseRadius = distance(cameraBase.position, cameraBase.target);
   if ('kind' in detail && detail.kind === 'prop' && Math.abs(baseRadius - cameraFraming.radiusM) > 1e-6) throw Error(`Nonproduction radius: ${name} ${baseRadius}`);
   if (Math.abs(actualRadius / baseRadius - zoom) > 1e-6 || Math.abs(state.camera.zoom - zoom) > 1e-6) throw Error(`Camera zoom mismatch: ${name} ${zoom}`);
-  const metrics = { tick: state.tick, tier: state.tier, lods: state.lods, camera: state.camera, baseRadius, actualRadius, calibratedZoom: actualRadius / baseRadius }; results.push({ name, zoom, ...detail, ...metrics, path, sha256: createHash('sha256').update(bytes).digest('hex'), errors: [...s.errors] });
+  const metrics = { tick: state.tick, tier: state.tier, lighting: state.lighting, settleRounds, resetPoseHistory, poseHistories: state.poseHistories, lods: state.lods, camera: state.camera, baseRadius, actualRadius, calibratedZoom: actualRadius / baseRadius }; results.push({ name, zoom, ...detail, ...metrics, path, sha256: createHash('sha256').update(bytes).digest('hex'), errors: [...s.errors] });
 }
 try {
   await openFrozen(); let batchRows = 0;

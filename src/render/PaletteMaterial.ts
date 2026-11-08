@@ -100,7 +100,14 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
       if (mode & flags.field) {
         const pool = lighting.field.sample().mul(normalWorld.y.mul(.35).add(.65));
         const shadowedPool = mix(vec3(luminance(pool)).mul(lighting.shadowHue).mul(.3), pool, caughtShadow);
-        field.assign(mix(pool, shadowedPool, lighting.fieldShadow));
+        // PCF penumbrae must keep the shadow tint too. Mixing the warm pool straight
+        // back into a blue bounce made half-shadowed asphalt pink. Separate hue from
+        // attenuation. Preserve peak strength (and the fully shadowed bounce),
+        // rather than boosting blue to match the warm pool's luminance.
+        const peak = max(max(shadowedPool.r, shadowedPool.g), shadowedPool.b);
+        const tintedPool = vec3(peak).mul(lighting.shadowHue);
+        const tintedShadow = mix(shadowedPool, tintedPool, caughtShadow.oneMinus().smoothstep(0, .5));
+        field.assign(mix(pool, tintedShadow, lighting.fieldShadow));
       }
       // Night rim: the survivor (a world-space capsule around the feet) and flagged crowd figures.
       const facing = normalView.dot(positionViewDirection).clamp(0, 1);

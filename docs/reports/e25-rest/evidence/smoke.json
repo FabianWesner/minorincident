@@ -1,0 +1,85 @@
+{
+  "smoke-remaining": {
+    "stats": {
+      "startTime": "2026-11-08T07:43:57.664Z",
+      "duration": 77638.435,
+      "expected": 1,
+      "skipped": 0,
+      "unexpected": 1,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "L1 handover + outbreak: no shader builds after warm-up and no frame over 200 ms @smoke",
+        "status": "failed",
+        "durationMs": 61227,
+        "error": "Error: L8 APC boarding exercised after warm-up\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m"
+      },
+      {
+        "title": "menu \u2192 L1 start on unflagged WebGPU compiles every render pipeline with suit zombies drawn (low tier) @smoke",
+        "status": "passed",
+        "durationMs": 10924,
+        "error": null
+      }
+    ],
+    "raw": "test-results/epics/E25/rest/smoke-remaining/results.json",
+    "sha256": "56631e508c9a1bd595cce64bd4656936e4467041041ad4c7d6465babb128d73e"
+  },
+  "smoke-baseline": {
+    "stats": {
+      "startTime": "2026-11-08T07:48:33.082Z",
+      "duration": 200319.968,
+      "expected": 0,
+      "skipped": 0,
+      "unexpected": 1,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "L1 handover + outbreak: no shader builds after warm-up and no frame over 200 ms @smoke",
+        "status": "failed",
+        "durationMs": 183634,
+        "error": "Error: L8 APC boarding exercised after warm-up\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m"
+      }
+    ],
+    "raw": "test-results/epics/E25/rest/smoke-baseline/results.json",
+    "sha256": "03ae04d9ab69174453aae125ff7817f1a8eb7f47b364b98cf12fbe942f94688c"
+  },
+  "public-smoke": {
+    "stats": {
+      "startTime": "2026-11-08T08:03:11.080Z",
+      "duration": 22502.432999999997,
+      "expected": 1,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "tests": [
+      {
+        "title": "public build: menu start draws L1, debug info is query-gated, and no QA globals escape @public-smoke",
+        "status": "passed",
+        "durationMs": 20852,
+        "error": null
+      }
+    ],
+    "raw": "test-results/epics/E25/rest/public-smoke/results.json",
+    "sha256": "5edd5c60e9c2423978af858edf1203e35abb59c34f85c51da27ccfbc7e2abf0c"
+  },
+  "wholeCommand": {
+    "command": "E2E_PORT=4337 BROWSER_POOL_BACKEND=gpu npm run test:smoke",
+    "exitCode": 1,
+    "durationSeconds": 245.3,
+    "budgetSeconds": 240,
+    "outcome": "Browser batch expired after four passing checks; remaining checks were run separately.",
+    "log": "test-results/epics/E25/rest/logs/e25-rest-smoke.log"
+  },
+  "baselineArtifact": {
+    "baseline": "63814503",
+    "shaderAtBuildSHA256": "14cc729a218e67c5856b2befdd5ed1361244241765dacb596ec648b97bfbd606",
+    "indexSHA256": "4c5e51b7406ecb3d81d84ba7bf49d62231683dcbfac9e6257d0c6b1b8cdff9bc",
+    "index": "<!doctype html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, viewport-fit=cover\">\n    <title>Minor Incident</title>\n    <meta name=\"description\" content=\"One parcel, one bad morning, one corgi. Ride, fight and rescue your way through a zombie outbreak in this isometric browser game.\">\n    <link rel=\"icon\" href=\"/favicon.ico\" sizes=\"16x16 32x32 48x48\">\n    <link rel=\"icon\" href=\"/favicon.svg\" type=\"image/svg+xml\" sizes=\"any\">\n    <link rel=\"apple-touch-icon\" href=\"/apple-touch-icon.png\" sizes=\"180x180\">\n    <link rel=\"manifest\" href=\"/site.webmanifest\">\n    <meta name=\"theme-color\" content=\"#293447\">\n    <script type=\"module\" crossorigin src=\"/build/index-B0CBNsuI.js\"></script>\n    <link rel=\"modulepreload\" crossorigin href=\"/build/modulepreload-polyfill-B5Qt9EMX.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/build/preload-helper-BlTxHScW.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/build/three-core-CzPK-9TN.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/build/three.module-DRBnV6Mu.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/build/survivor-DjMktlck.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/build/infected-BnuB5v8h.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/build/LevelSixSubway-DMP1NHvd.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/build/three-webgpu-B5ei5MQw.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/build/worldLook-o3T_90Bf.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/build/WeatherView-C9F6QpoN.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/build/footSoles-D3xlsFEg.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/build/install-BqKnPRt0.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/build/rapier-ykuY6d4E.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/build/PropSystem-DJzTMp9l.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/build/Pickups-CbS4JVk0.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/build/lookPatch-BJ2Iw5hk.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/build/light-anchors-BElMGkSS.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/build/registry-CkjlNx2G.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/build/crowd-DIYEurdl.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/build/character-clips-CGKWtM3S.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/build/Physics-C5OtFCEN.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/build/lookViewpoints-BX-OEann.js\">\n    <link rel=\"modulepreload\" crossorigin href=\"/build/wreck-roofs-GAckelu8.js\">\n    <link rel=\"stylesheet\" crossorigin href=\"/build/index-IOL21Ibl.css\">\n    <link rel=\"preload\" href=\"/build/rapier-C6GCbKVJ.wasm\" as=\"fetch\" type=\"application/wasm\" crossorigin=\"\">\n  </head>\n  <body style=\"margin:0;overflow:hidden;background:#293447\"><div id=\"game\"></div></body>\n</html>\n",
+    "buildLog": "/tmp/e25-rest-settled-before.log",
+    "sourceRestoredSHA256": "747681790328f892eee90def1b16fc680133ecdfa54cee34d14eab64d2715c35"
+  },
+  "note": "The initial Playwright JSON was a stale test-collection receipt and is excluded as run evidence. The complete terminal log proves the four completed initial cases. The same unchanged extended smoke test then fails the same L8 APC boarding assertion on corrected and 63814503 baseline artifacts. The whole smoke command remains red; it is not waived."
+}
