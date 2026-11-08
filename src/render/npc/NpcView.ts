@@ -5,7 +5,7 @@ import { clone as cloneSkeleton } from 'three/addons/utils/SkeletonUtils.js';
 import { dogCoat, dogCoats } from '../../data/dogAppearance';
 import type { CrowdAccessories } from '../characters/CrowdAccessories';
 // World-anchored badges and transient bark messages adapt Bruno InteractivePoints.js/Bubble.js (MIT).
-import { BoxGeometry, Color, Group, InstancedMesh, Matrix4, Mesh, MeshLambertNodeMaterial, Vector3, type Camera, type Object3D, type Material } from 'three/webgpu';
+import { BoxGeometry, SphereGeometry, Color, Group, InstancedMesh, Matrix4, Mesh, MeshLambertNodeMaterial, Vector3, type Camera, type Object3D, type Material } from 'three/webgpu';
 import { batchRigidParts } from '../characters/batchRigidParts';
 import { AssetRegistry } from '../../assets/registry';
 import type { SimWorld } from '../../sim/world/SimWorld';
@@ -37,6 +37,8 @@ export class NpcView extends Group {
   private dogSource = 'placeholder';
   private readonly placeholders: Group[] = [];
   private readonly cars: InstancedMesh;
+  private readonly toyGeometry = new SphereGeometry(.11, 10, 6);
+  private toyBall: Mesh | null = null;
   private readonly transform = new Matrix4();
   private readonly presentation = new MotionPresentation();
   private readonly motion = new MotionPhase();
@@ -174,16 +176,22 @@ export class NpcView extends Group {
       if (hero.tick !== this.world.tick) { hero.moving = e.motion?.moving ?? Math.hypot(hero.x - e.transform.x, hero.z - e.transform.z) > .001; hero.x = e.transform.x; hero.z = e.transform.z; hero.tick = this.world.tick; }
       const presented = this.presentation.sample(e.id, e.transform, this.world.tick, alpha);
       hero.root.visible = !e.hidden && e.companion?.state !== 'hide'; hero.root.position.set(presented.x, presented.y - (e.escort || e.civilian?.pet === 'dog' ? .7 : .3), presented.z); hero.root.rotation.set(0, presented.yaw, 0);
+      if (e.companion && hero.head && this.world.missions?.state.items.includes('corgi-toy')) {
+        this.toyBall ??= new Mesh(this.toyGeometry, this.materials.get('backpackTeal'));
+        if (this.toyBall.parent !== hero.head) { hero.head.add(this.toyBall); this.toyBall.position.set(.28, -.08, 0); }
+        this.toyBall.visible = !this.world.missions.state.epilogue || this.world.missions.state.epilogue.phase === 'thanks';
+      }
       const closing = e.companion && this.world.missions?.state.epilogue && this.world.missions.state.counters['epilogue-ticks'] >= 45 * 60;
       if (closing) {
-        const console = this.world.missions!.def.anchors['cure-console']; hero.root.position.set(console.x + .3, .08, console.z - 6); hero.root.rotation.y = Math.PI;
+        const console = this.world.missions!.def.anchors['cure-console']; const returnTime = this.world.missions!.state.epilogue!.phase === 'thanks' ? this.world.missions!.state.epilogue!.phaseTicks / 60 : 6;
+        hero.root.position.set(console.x + .3 + Math.max(0, 4.5 - returnTime * 1.5), .08, console.z - 6); hero.root.rotation.y = Math.PI;
       }
       const down = e.escort?.state === 'downed' || e.escort?.state === 'dead' || this.world.tick < (e.escort?.knockedUntil ?? 0) || e.civilian?.state === 'down' || e.civilian?.state === 'rising';
       if (down && hero.animator) { hero.root.rotation.z = Math.PI / 2; hero.root.position.y = .25; }
       const motion = e.motion ?? this.motion.sample(e.id, this.world.tick, e.transform.x, e.transform.z);
       const time = Math.max(0, this.world.tick + alpha - 1) / 60, distance = Math.max(0, motion.distance - motion.speed * (1 - alpha) / 60);
       const warn = e.companion?.warn;
-      if (hero.animator) hero.animator.update(time, closing ? 0 : motion.speed, distance, warn && { stage: warn.stage, toward: this.world.entities.get(warn.threat)?.transform ?? null });
+      if (hero.animator) hero.animator.update(time, closing ? this.world.missions!.state.epilogue!.phase === 'thanks' && this.world.missions!.state.epilogue!.phaseTicks < 180 ? 1.5 : 0 : motion.speed, closing ? this.world.missions!.state.epilogue!.phaseTicks / 40 : distance, warn && { stage: warn.stage, toward: this.world.entities.get(warn.threat)?.transform ?? null });
       else hero.humanAnimator!.update(time, motion.speed, distance, down);
       hero.tongue?.update(time, motion.speed);
       if (hero.badge && e.escort) {
@@ -219,5 +227,5 @@ export class NpcView extends Group {
     h.root.updateWorldMatrix(true, true); const head = h.head.getWorldPosition(new Vector3()), tail = h.tail.getWorldPosition(new Vector3());
     return -Math.atan2(head.z - tail.z, head.x - tail.x);
   }
-  dispose(): void { this.off(); this.bark.remove(); for (const h of this.heroes.values()) { h.humanAnimator?.dispose(); h.badge?.remove(); } this.heroes.clear(); for (const material of this.companionMaterials) material.dispose(); this.companionMaterials.clear(); this.civilians.dispose(); for (const root of this.placeholders) disposeCharacter(root); this.cars.geometry.dispose(); (this.cars.material as MeshLambertNodeMaterial).dispose(); this.cars.dispose(); void this.registry.dispose(); this.clear(); }
+  dispose(): void { this.toyGeometry.dispose(); this.toyBall = null; this.off(); this.bark.remove(); for (const h of this.heroes.values()) { h.humanAnimator?.dispose(); h.badge?.remove(); } this.heroes.clear(); for (const material of this.companionMaterials) material.dispose(); this.companionMaterials.clear(); this.civilians.dispose(); for (const root of this.placeholders) disposeCharacter(root); this.cars.geometry.dispose(); (this.cars.material as MeshLambertNodeMaterial).dispose(); this.cars.dispose(); void this.registry.dispose(); this.clear(); }
 }

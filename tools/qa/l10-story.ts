@@ -3,7 +3,7 @@ import { dirname } from 'node:path';
 import { loadLevel, runLevel } from '../sim-runner/levels';
 import { followTenFrustum } from '../sim-runner/l10';
 import { provenance } from './accept/probe';
-import { cureEscapeGaps, cureHangar, cureHangarConversation } from '../../src/data/l10Story';
+import { cureCorgiToy, cureEscapeGaps, cureHangar, cureHangarConversation } from '../../src/data/l10Story';
 import { cureHangarWeapons } from '../../src/levels/L10/mission';
 import { cureWeaponPickups } from '../../src/levels/L10/encounters';
 import { cure } from '../../src/levels/L10/district';
@@ -33,6 +33,10 @@ for (const tier of tiers) {
   try {
     w = await loadLevel('L10', 1, undefined, 0, { quality: tier });
     w.combat!.damage.god = true;
+    place(w, cureCorgiToy.x - 4, cureCorgiToy.z); advance(w, 10);
+    const toy = w.entities.get(w.l10Encounters!.state.toy ?? 0);
+    if (toy) { place(w, toy.transform.x, toy.transform.z); advance(w, 1); }
+    check(tier, 'optional house toy is collected once without a weapon slot', !!toy?.pickup && 'collected' in toy.pickup && toy.pickup.collected && w.missions!.state.items.includes('corgi-toy'));
     const found = [];
     for (const pickup of cureWeaponPickups) {
       const [x, z] = cure.anchors[pickup.anchor];

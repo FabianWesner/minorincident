@@ -1,4 +1,4 @@
-import { AnimationMixer, BoxGeometry, CircleGeometry, Color, Group, Mesh, MeshBasicNodeMaterial, type Object3D, type Scene } from 'three/webgpu';
+import { AnimationMixer, BoxGeometry, CircleGeometry, Group, Mesh, MeshBasicNodeMaterial, type Object3D, type Scene } from 'three/webgpu';
 import { AssetRegistry } from '../assets/registry';
 import { retargetClip } from './characters/clips';
 import { epiloguePull } from '../sim/missions/LevelTenEpilogue';
@@ -91,7 +91,9 @@ export class LevelTenEndingView extends Group {
       if (this.hidden.size) { for (const [child, visible] of this.hidden) child.visible = visible; this.hidden.clear(); view.follow(); }
       this.visible = false;
       const pull = epiloguePull(ticks), console = this.world.missions?.def.anchors['cure-console'];
-      if (console && pull > 0) {
+      if (console && state?.epilogue?.phase === 'thanks') {
+        view.cinematic({ position: [console.x + 6, 4, console.z + 1], target: [console.x, .7, console.z - 6] });
+      } else if (console && pull > 0) {
         // Fit the complete long L10 rectangle at every aspect ratio, with a generous margin.
         const bounds = this.world.districts!.nav, centreX = (bounds.min[0] + bounds.max[0]) / 2, centreZ = (bounds.min[1] + bounds.max[1]) / 2;
         const halfX = (bounds.max[0] - bounds.min[0]) / 2, halfZ = (bounds.max[1] - bounds.min[1]) / 2;

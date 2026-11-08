@@ -23,3 +23,6 @@ export const cureHangarConversation = [
   ['L10.voss-cure', 210], ['L10.voss-delivery', 780], ['L10.ruiz', 450],
   ['L10.voss-prototype', 240], ['L10.sam-coming', 150], ['L10.voss-stay', 240], ['L10.sam-delivery', 240],
 ] as const;
+
+/** Optional porch find in the dead R2 house; never an objective or weapon slot. */
+export const cureCorgiToy = { x: 1013, z: 83 };

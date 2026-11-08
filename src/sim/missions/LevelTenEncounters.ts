@@ -2,11 +2,11 @@ import { updateFarmScares, type FarmScareState } from './FarmScares';
 import { cure } from '../../levels/L10/district';
 import { cureEncounters, cureEncounterSlots, cureEncounterSpot, cureMedkits, cureWeaponPickups } from '../../levels/L10/encounters';
 import { cureAlphaCap } from '../../levels/L10/alphaContracts';
-import { insideCureHangar } from '../../data/l10Story';
+import { cureCorgiToy, insideCureHangar } from '../../data/l10Story';
 import type { SimWorld } from '../world/SimWorld';
 
 export interface CureEncounterState {
-  farmScares?: FarmScareState;
+  farmScares?: FarmScareState; toy?: number;
   spawned: Record<string, number>; medkits: Record<string, number>; weapons?: Record<string, number>;
   released?: string[]; laneOffsets?: Record<string, number>; assaultTicks?: number; assaultWave?: number; nextAssaultAt?: number;
 }
@@ -30,6 +30,7 @@ export class LevelTenEncounters {
     const low = ai.director.tier === 'low', depth = cure.threatDepth.find(r => r.region === current.id)!;
     const cap = assaultActive ? low ? 14 : 22 : depth.resident[low ? 'low' : 'high'][1];
     ai.director.levelCap = low ? cap * 2 : cap;
+    if (!this.state.toy && !mission.state.items.includes('corgi-toy') && chunks.resident(cureCorgiToy.x, cureCorgiToy.z)) this.state.toy = w.pickups!.spawn('item', cureCorgiToy, 'corgi-toy');
     const weapons = this.state.weapons ??= {};
     for (const pickup of cureWeaponPickups) {
       const at = cure.anchors[pickup.anchor];
