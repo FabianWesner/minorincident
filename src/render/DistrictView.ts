@@ -276,6 +276,7 @@ export class DistrictView extends Group {
   overview = false;
   /** Static matrices are repartitioned only when the camera moves; far props use LOD2. */
   updateLods(view: View, velocity: { x: number; z: number } = { x: 0, z: 0 }): void {
+    this.parts.cureDecals?.update(view.cameraTarget,this.low);
     this.lodPrefetchMetres = Math.hypot(velocity.x, velocity.z) * terrainPrefetchSeconds;
     if (this.parts.terrain) {
       this.parts.terrain.warm = this.warmHero; this.parts.terrain.swap = this.swapSlot;
@@ -306,7 +307,7 @@ export class DistrictView extends Group {
     const { batch, refs, origin, center, radius } = entry, next: Object3D[] = [];
     for (const ref of refs) {
       if (this.overview) continue;
-      if (ref.userData.interiorHidden || ref.userData.destructed) continue;
+      if (ref.userData.interiorHidden || ref.userData.destructed || this.low && ref.userData.highOnly) continue;
       if (this.low && ref.userData.farmScatter !== undefined && ref.userData.farmScatter % 2) continue;
       this.bounds.center.copy(center).applyMatrix4(ref.matrix); this.bounds.center.x += origin[0]; this.bounds.center.z += origin[1];
       this.bounds.radius = radius * Math.max(ref.scale.x, ref.scale.y, ref.scale.z);
@@ -327,7 +328,7 @@ export class DistrictView extends Group {
         const asset = worldAssets[entry.id], size = asset.dimensions;
         if (asset.category === 'prop' && Math.max(size.x, size.y, size.z) < 6 || index % Math.max(1, Math.ceil(refs.length / (this.low ? 8 : 24))) !== 0) continue;
       }
-      if (ref.userData.interiorHidden || ref.userData.destructed) continue;
+      if (ref.userData.interiorHidden || ref.userData.destructed || this.low && ref.userData.highOnly) continue;
       if (this.low && ref.userData.farmScatter !== undefined && ref.userData.farmScatter % 2) continue;
       if (entry.id === 'prop.cure-canister-pedestal' && this.cureCollected) continue;
       if (foliage && index >= Math.ceil(refs.length * this.materials.look.values.foliageDensity)) continue;

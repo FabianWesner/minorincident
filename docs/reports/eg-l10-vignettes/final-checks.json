@@ -1,0 +1,82 @@
+{
+  "sourceCommit": "893bf22029eabcde250436ed9a2f4e4e283329ba",
+  "runnerSnapshotHead": "9eb70eb1f16288249cfaba5140604bcc6edc2f9f",
+  "host": "mi-runner-1",
+  "browsersLaunched": 0,
+  "checks": [
+    {
+      "name": "asset-scripts",
+      "command": [
+        "python3",
+        "-m",
+        "py_compile",
+        "assets/l10-vignettes/build.py",
+        "assets/l10-vignettes/atlas.py",
+        "assets/l10-vignettes/render.py",
+        "tools/qa/l10-vignettes-baseline.py",
+        "tools/qa/l10-vignettes-verify.py"
+      ],
+      "exitCode": 0,
+      "seconds": 0.1,
+      "log": "test-results/eg-l10-vignettes-checks-final/asset-scripts.log"
+    },
+    {
+      "name": "typecheck",
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0,
+      "seconds": 112.07,
+      "log": "test-results/eg-l10-vignettes-checks-final/typecheck.log"
+    },
+    {
+      "name": "lint",
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "exitCode": 0,
+      "seconds": 54.09,
+      "log": "test-results/eg-l10-vignettes-checks-final/lint.log"
+    },
+    {
+      "name": "unit",
+      "command": [
+        "npm",
+        "test",
+        "--",
+        "--maxWorkers=1"
+      ],
+      "exitCode": 0,
+      "seconds": 212.82,
+      "log": "test-results/eg-l10-vignettes-checks-final/unit.log"
+    },
+    {
+      "name": "scope",
+      "command": [
+        "node",
+        "--import",
+        "tsx/esm",
+        "tools/qa/l10-vignettes.ts"
+      ],
+      "exitCode": 0,
+      "seconds": 1.89,
+      "log": "test-results/eg-l10-vignettes-checks-final/scope.log"
+    },
+    {
+      "name": "baseline",
+      "command": [
+        "python3",
+        "tools/qa/l10-vignettes-baseline.py",
+        "--revision",
+        "893bf22029eabcde250436ed9a2f4e4e283329ba"
+      ],
+      "exitCode": 0,
+      "seconds": 605.7,
+      "log": "test-results/eg-l10-vignettes-checks-final/baseline.log"
+    }
+  ]
+}

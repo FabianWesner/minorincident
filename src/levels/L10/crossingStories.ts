@@ -142,7 +142,7 @@ export function cureCrossingStories(placements: readonly Placement[]): Placement
     const { dimensions: d } = worldAssets[piece.asset], c = Math.abs(Math.cos(yaw)), s = Math.abs(Math.sin(yaw));
     const hx = (d.x * c + d.z * s) / 2, hz = (d.x * s + d.z * c) / 2;
     return { id, assetId: piece.asset, position: [x, 0, z], yaw, scale: [1, 1, 1], minTier: 0, maxTier: 6, allowRoad: false,
-      lightGroup: 'decor', decor: true, ...(piece.solid && crossingScenesBlock ? { decorSolid: true } : {}), ...(piece.decay ? { decay: piece.decay } : {}),
+      lightGroup: 'decor', decor: true, fixed: true, ...(piece.solid && crossingScenesBlock ? { decorSolid: true } : {}), ...(piece.decay ? { decay: piece.decay } : {}),
       visualAabb: { min: [x - hx, 0, z - hz], max: [x + hx, d.y, z + hz] } };
   };
   const corners = (p: Placement): Point[] => { const { min: a, max: b } = p.visualAabb; return [[a[0], a[2]], [a[0], b[2]], [b[0], a[2]], [b[0], b[2]], [p.position[0], p.position[2]]]; };

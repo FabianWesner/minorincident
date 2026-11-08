@@ -8991,31 +8991,48 @@
   {
     "id": "decay.body-bag",
     "category": "prop",
-    "status": "reference",
+    "status": "integrated",
     "tier": "side",
     "glb": "public/assets/models/decay.body-bag.glb",
+    "sourceGlb": "assets/decay.body-bag/model.glb",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/decay.body-bag.lod1.glb",
+      "lod2": "public/assets/models/decay.body-bag.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 300,
+      "lod2": 60
+    },
     "dimensions": {
-      "x": 1,
-      "y": 1,
-      "z": 1,
-      "tolerance": 0.1
+      "x": 2.1,
+      "y": 0.31917,
+      "z": 0.76,
+      "tolerance": 0.15
     },
     "forward": "+X",
     "frontNodes": [
       "front"
     ],
     "requiredNodes": [
-      "root"
+      "root",
+      "body",
+      "front"
     ],
     "animatedNodes": [],
     "sockets": [],
     "budget": {
-      "triangles": 12000,
-      "materials": 12,
-      "fileKB": 1200,
-      "drawCalls": 30
+      "triangles": 800,
+      "materials": 8,
+      "fileKB": 120,
+      "drawCalls": 8
     },
-    "decayVariants": []
+    "world": {
+      "token": "olive",
+      "solid": false
+    },
+    "decayVariants": [],
+    "script": "assets/l10-vignettes/build.py"
   },
   {
     "id": "decay.abandoned-checkpoint",
@@ -23747,5 +23764,483 @@
       "token": "woodWarm",
       "solid": false
     }
+  },
+  {
+    "id": "prop.l10-grave-cross",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "glb": "public/assets/models/prop.l10-grave-cross.glb",
+    "sourceGlb": "assets/prop.l10-grave-cross/model.glb",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/prop.l10-grave-cross.lod1.glb",
+      "lod2": "public/assets/models/prop.l10-grave-cross.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 300,
+      "lod2": 60
+    },
+    "dimensions": {
+      "x": 0.56,
+      "y": 0.96,
+      "z": 0.134,
+      "tolerance": 0.15
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body",
+      "front"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 800,
+      "materials": 8,
+      "fileKB": 120,
+      "drawCalls": 8
+    },
+    "world": {
+      "token": "woodWarm",
+      "solid": false
+    },
+    "decayVariants": [],
+    "script": "assets/l10-vignettes/build.py"
+  },
+  {
+    "id": "prop.l10-quarantine-tape",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "glb": "public/assets/models/prop.l10-quarantine-tape.glb",
+    "sourceGlb": "assets/prop.l10-quarantine-tape/model.glb",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/prop.l10-quarantine-tape.lod1.glb",
+      "lod2": "public/assets/models/prop.l10-quarantine-tape.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 300,
+      "lod2": 60
+    },
+    "dimensions": {
+      "x": 2.85,
+      "y": 1.3,
+      "z": 0.05,
+      "tolerance": 0.15
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body",
+      "front"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 800,
+      "materials": 8,
+      "fileKB": 120,
+      "drawCalls": 8
+    },
+    "world": {
+      "token": "woodWarm",
+      "solid": false
+    },
+    "decayVariants": [],
+    "script": "assets/l10-vignettes/build.py"
+  },
+  {
+    "id": "prop.l10-cow-carcass",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "glb": "public/assets/models/prop.l10-cow-carcass.glb",
+    "sourceGlb": "assets/prop.l10-cow-carcass/model.glb",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/prop.l10-cow-carcass.lod1.glb",
+      "lod2": "public/assets/models/prop.l10-cow-carcass.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 300,
+      "lod2": 60
+    },
+    "dimensions": {
+      "x": 2.44682,
+      "y": 0.9072,
+      "z": 2.02259,
+      "tolerance": 0.15
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body",
+      "front"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 800,
+      "materials": 8,
+      "fileKB": 120,
+      "drawCalls": 8
+    },
+    "world": {
+      "token": "woodWarm",
+      "solid": false
+    },
+    "decayVariants": [],
+    "script": "assets/l10-vignettes/build.py"
+  },
+  {
+    "id": "prop.l10-corpse-back",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "glb": "public/assets/models/prop.l10-corpse-back.glb",
+    "sourceGlb": "assets/prop.l10-corpse-back/model.glb",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/prop.l10-corpse-back.lod1.glb",
+      "lod2": "public/assets/models/prop.l10-corpse-back.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 840,
+      "lod2": 840
+    },
+    "dimensions": {
+      "x": 1.73285,
+      "y": 0.52704,
+      "z": 1.09693,
+      "tolerance": 0.15
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body",
+      "front"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 1000,
+      "materials": 8,
+      "fileKB": 120,
+      "drawCalls": 8
+    },
+    "world": {
+      "token": "woodWarm",
+      "solid": false
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "prop.l10-corpse-side",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "glb": "public/assets/models/prop.l10-corpse-side.glb",
+    "sourceGlb": "assets/prop.l10-corpse-side/model.glb",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/prop.l10-corpse-side.lod1.glb",
+      "lod2": "public/assets/models/prop.l10-corpse-side.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 840,
+      "lod2": 840
+    },
+    "dimensions": {
+      "x": 1.70652,
+      "y": 0.52603,
+      "z": 1.25292,
+      "tolerance": 0.15
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body",
+      "front"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 1000,
+      "materials": 8,
+      "fileKB": 120,
+      "drawCalls": 8
+    },
+    "world": {
+      "token": "woodWarm",
+      "solid": false
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "prop.l10-corpse-crumple",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "glb": "public/assets/models/prop.l10-corpse-crumple.glb",
+    "sourceGlb": "assets/prop.l10-corpse-crumple/model.glb",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/prop.l10-corpse-crumple.lod1.glb",
+      "lod2": "public/assets/models/prop.l10-corpse-crumple.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 840,
+      "lod2": 840
+    },
+    "dimensions": {
+      "x": 1.70698,
+      "y": 0.51053,
+      "z": 1.38208,
+      "tolerance": 0.15
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body",
+      "front"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 1000,
+      "materials": 8,
+      "fileKB": 120,
+      "drawCalls": 8
+    },
+    "world": {
+      "token": "woodWarm",
+      "solid": false
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "prop.l10-abandoned-sedan-blue",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "glb": "public/assets/models/prop.l10-abandoned-sedan-blue.glb",
+    "sourceGlb": "assets/prop.l10-abandoned-sedan-blue/model.glb",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/prop.l10-abandoned-sedan-blue.lod1.glb",
+      "lod2": "public/assets/models/prop.l10-abandoned-sedan-blue.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    },
+    "dimensions": {
+      "x": 4.4562,
+      "y": 1.64321,
+      "z": 2.75453,
+      "tolerance": 0.3
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "front"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 80000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "world": {
+      "token": "olive",
+      "solid": false
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "prop.l10-abandoned-sedan-white",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "glb": "public/assets/models/prop.l10-abandoned-sedan-white.glb",
+    "sourceGlb": "assets/prop.l10-abandoned-sedan-white/model.glb",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/prop.l10-abandoned-sedan-white.lod1.glb",
+      "lod2": "public/assets/models/prop.l10-abandoned-sedan-white.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    },
+    "dimensions": {
+      "x": 4.64731,
+      "y": 1.79414,
+      "z": 2.46712,
+      "tolerance": 0.3
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "front"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 80000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "world": {
+      "token": "olive",
+      "solid": false
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "prop.l10-crashed-helicopter",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "glb": "public/assets/models/prop.l10-crashed-helicopter.glb",
+    "sourceGlb": "assets/prop.l10-crashed-helicopter/model.glb",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/prop.l10-crashed-helicopter.lod1.glb",
+      "lod2": "public/assets/models/prop.l10-crashed-helicopter.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    },
+    "dimensions": {
+      "x": 10.3563,
+      "y": 3.5493,
+      "z": 7.5547,
+      "tolerance": 0.3
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "front"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 15000,
+      "materials": 8,
+      "fileKB": 1500,
+      "drawCalls": 8
+    },
+    "world": {
+      "token": "olive",
+      "solid": false
+    },
+    "decayVariants": []
+  },
+  {
+    "id": "decal.l10-stories",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "glb": "",
+    "dimensions": {
+      "x": 1,
+      "y": 0.015,
+      "z": 1,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 2,
+      "materials": 1,
+      "fileKB": 120,
+      "drawCalls": 1
+    },
+    "decayVariants": [],
+    "decalTexture": "public/assets/decals/l10-stories.png"
+  },
+  {
+    "id": "prop.l10-shovel",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "glb": "public/assets/models/prop.l10-shovel.glb",
+    "sourceGlb": "assets/prop.l10-shovel/model.glb",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/prop.l10-shovel.lod1.glb",
+      "lod2": "public/assets/models/prop.l10-shovel.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 300,
+      "lod2": 60
+    },
+    "dimensions": {
+      "x": 1.1825,
+      "y": 0.0525,
+      "z": 0.24,
+      "tolerance": 0.15
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body",
+      "front"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 800,
+      "materials": 8,
+      "fileKB": 120,
+      "drawCalls": 8
+    },
+    "world": {
+      "token": "woodWarm",
+      "solid": false
+    },
+    "decayVariants": [],
+    "script": "assets/l10-vignettes/build.py"
   }
 ]
