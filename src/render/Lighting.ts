@@ -315,7 +315,8 @@ export class Lighting {
     // can replace the current lamp before the player leaves its pool.
     const strength = current ? this.field.heroStrength(current, focus.x, focus.z) : 0;
     const retain = current?.on && light && strength > .02 && strength >= this.field.heroStrength(light, focus.x, focus.z) * .8;
-    if (!sameSource && (retain || current?.on && light && time - this.promotedAt < .5)) light = current;
+    // Count moon handoffs and power loss too: neither may bypass the 2/s cap.
+    if (!sameSource && (retain || time - this.promotedAt < .5)) light = current;
     const changed = light !== current && !(current?.id && light?.id === current.id);
     if (changed) { this.promotedAt = time; this.promotionChanges++; }
     this.promoted = light;

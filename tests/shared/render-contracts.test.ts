@@ -713,6 +713,18 @@ test('materials: palette program keys match Three through weather and node chang
     lighting.setHeroLight(null, focus, 11); lighting.setHeroLight(null, focus, 11.3);
     expect(lighting.sun.shadow.intensity).toBe(1); expect(lighting.spot.shadow.intensity).toBe(0);
     expect(lighting.sun.shadow.autoUpdate).toBe(true); expect(lighting.getState().fieldShadow).toBe(0);
+    // Moon/local handoffs and power loss share the same promotion cooldown.
+    lighting.setHeroLight(brighter, focus, 11.4);
+    expect(lighting.getState().heroLight).toBeNull();
+    lighting.setHeroLight(brighter, focus, 11.5);
+    const changes = lighting.getState().promotionChanges;
+    brighter.on = false;
+    lighting.setHeroLight(moving, focus, 11.6);
+    expect(lighting.getState().promotionChanges).toBe(changes);
+    lighting.setHeroLight(moving, focus, 11.8);
+    expect(lighting.spot.shadow.intensity).toBe(0);
+    lighting.setHeroLight(moving, focus, 12);
+    expect(lighting.getState().promotionChanges).toBe(changes + 1);
     // Subway headlamps keep their forward target; the low underground tier
     // still has no spot shadow, while outdoor L6 practicals retain theirs.
     lighting.set('L6-subway'); lighting.setQuality('low');
