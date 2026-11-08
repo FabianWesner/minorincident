@@ -49,6 +49,10 @@ export class LevelEightBot {
       if (Math.hypot(p.x - target.x, p.z - target.z) > 10 && live.some(e => Math.hypot(e!.transform.x - p.x, e!.transform.z - p.z) > Math.max(12, Math.ceil(live.length / 3) * 1.2 + 5))) return f;
     }
     f.move = this.walker.step(w, target, calm ? 1 : .35, calm ? 'explore' : `apc-${this.escapeLeg}`) ?? f.move;
+    if (!calm) {
+      const cue = w.infected!.active.find(e => e.health.current > 0 && e.infected!.state === 'attack' && (e.infected!.heardTargetId ?? e.infected!.l1?.targetId ?? 1) === 1 && Math.hypot(e.transform.x-p.x,e.transform.z-p.z) < 4);
+      if (cue) { const b=cue.infected!, a={x:-b.dz,z:b.dx}, other={x:b.dz,z:-b.dx}; f.move=w.solids.sweep(player,a,2) >= w.solids.sweep(player,other,2) ? a : other; }
+    }
     if (!calm && boarded && Math.hypot(p.x - door.x, p.z - door.z) < .6) { f.move = { x: 0, z: 0 }; f.interact = true; }
     return f;
   }

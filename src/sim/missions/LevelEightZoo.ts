@@ -173,7 +173,8 @@ export class LevelEightZoo {
     const healthy = [...w.entities.iterate()].filter(e => e.civilian && e.civilian.state !== 'finished' && e.health.current > 0 && !e.hidden && !e.infection);
     const conversionRoom = healthy.filter(e => e.civilian!.zooAnimal).length + Math.min(12, healthy.filter(e => !e.civilian!.zooAnimal).length);
     if (ai.director.count + ai.director.pendingTurns >= ai.director.cap - conversionRoom - 1) return;
-    const id = emergeResident(w, outlet, w.tick, alpha ? { archetype: 'infected.alpha' } : { ...(index === 3 ? { archetype: 'infected.sprinter' } : {}), look: { role: 'cashier' } });
+    const spearhead = index === 3 && !this.state.arrivals.some(q => q.outlet === 3);
+    const id = emergeResident(w, outlet, w.tick, alpha ? { archetype: 'infected.alpha' } : { ...(index === 3 ? { archetype: spearhead ? 'infected.armored' : 'infected.sprinter' } : {}), look: { role: 'cashier' } });
     if (id) {
       this.state.arrivals.push({ id, outlet: index, tick: w.tick, alpha }); if (alpha) this.state.alphas++;
       // The K9 follows the same hidden vestibule/door walk as the human cohort.
@@ -326,8 +327,8 @@ export class LevelEightZoo {
     ai.director.pendingTurns = pending;
     if (!this.breached && t - s.startedAt >= 3600) {
       s.breachedAt = t; s.nextWave = t + 600;
-      // The southern gate sends a compact five-member low-tier assault; the other mouths retain their three/six-member opening.
-      s.outlets.forEach((outlet, i) => { const count = ai.director.tier === 'low' ? i === 3 ? 5 : 3 : 6; for (let n = 0; n < count; n++) this.release(outlet, i); });
+      // One ordinary armoured infected leads the southern approach; the authored three/six-member cohorts stay bounded.
+      s.outlets.forEach((outlet, i) => { for (let n = 0; n < (ai.director.tier === 'low' ? 3 : 6); n++) this.release(outlet, i); });
       // The parked hull has settled by the alarm. Capture its boarding action
       // point once; minor physics impulses must not steer the objective ring.
       Object.assign(this.mission.def.anchors.exit, this.boardingRing());
