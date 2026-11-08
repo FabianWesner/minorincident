@@ -312,9 +312,10 @@ export class Hud {
     for (let i = pinCount; i < this.threatCount; i++) setHidden(this.threats[i], true);
     this.threatCount = pinCount;
     const corgiHiding = corgi?.hidden || corgi?.companion?.state === 'hide';
-    const corgiStatus = corgi ? corgiHiding ? 'Corgi · hiding' : 'Corgi · following' : 'Corgi · awaiting rescue';
+    const rejoining = !!corgi?.companion?.rejoining;
+    const corgiStatus = corgi ? rejoining ? 'Corgi · rejoining' : corgiHiding ? 'Corgi · hiding' : corgi.companion?.state === 'fetch' ? 'Corgi · fetching' : 'Corgi · following' : 'Corgi · awaiting rescue';
     text(this.companion, corgiStatus); attribute(this.corgiBadge, 'title', corgiStatus); attribute(this.corgiBadge, 'aria-label', corgiStatus);
-    attribute(this.corgiBadge, 'data-state', corgi ? corgiHiding ? 'hiding' : 'following' : 'awaiting-rescue');
+    attribute(this.corgiBadge, 'data-state', corgi ? rejoining ? 'rejoining' : corgiHiding ? 'hiding' : 'following' : 'awaiting-rescue');
     this.place(this.playerPin, px, pz, px, pz); style(this.playerPin, 'rotate', `${-player.transform.yaw + Math.PI / 2}rad`);
     const anchor = markerAnchor(mission);
     // Show the destination, leaving route discovery to the player (G-08 / Q-277).
