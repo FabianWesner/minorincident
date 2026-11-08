@@ -1,4 +1,4 @@
-/** r12-group: read-only group-naturalness metrics for every follower level.
+/** r12-group: human group-naturalness metrics for every follower level.
  * `node --import tsx/esm tools/qa/r12-group-probe.ts <L2|L3|L5|L6|L7|L8> <low|high> <seed> [tag]`
  * Samples every 15 ticks while a follower group exists and prints one JSON line:
  * - standR: mean resultant length of standing followers' yaws (1 = everyone faces the same way)
@@ -24,7 +24,6 @@ const identity = { ...provenance(), toolHash: createHash('sha256').update(readFi
 const campaign = preset(`${level}-default` as never); campaign.settings.quality = tier;
 const resultant = (angles: number[]) => angles.length < 2 ? NaN : Math.hypot(angles.reduce((s, a) => s + Math.cos(a), 0), angles.reduce((s, a) => s + Math.sin(a), 0)) / angles.length;
 const mean = (v: number[]) => v.length ? v.reduce((a, b) => a + b, 0) / v.length : NaN;
-const footY = (e: EntitySnapshot) => e.transform.y - (e.companion ? .3 : .7);
 const std = (v: number[]) => { const m = mean(v); return Math.sqrt(mean(v.map(x => (x - m) ** 2))); };
 const standR: number[] = [], moveR: number[] = [], moveYawR: number[] = [], nnCv: number[] = [], nnCvStanding: number[] = [];
 let nnMin = Infinity, groupSamples = 0, groupMax = 0;
@@ -37,7 +36,7 @@ const observe = (world: SimWorld) => {
     const tick = world.tick; update(...args); if (world.tick === tick) return;
     const player = world.entities.get(1)!, v = player.survivor?.velocity ?? { x: 0, z: 0 }, ls = Math.hypot(v.x, v.z);
     const group: EntitySnapshot[] = [];
-    for (const e of world.entities.iterate()) if ((e.civilian?.survivor?.mode === 'follow' || e.civilian?.ally?.follow?.targetId === player.id || e.escort?.state === 'follow' || e.companion?.state === 'follow' || level === 'L2' && world.missions!.state.l2!.crewIds.includes(e.id)) && !e.hidden && e.health.current > 0 && e.passengerOf === undefined && !e.corpse && !e.infected && !e.infection
+    for (const e of world.entities.iterate()) if ((e.civilian?.survivor?.mode === 'follow' || e.civilian?.ally?.follow?.targetId === player.id || e.escort?.state === 'follow' || level === 'L2' && world.missions!.state.l2!.crewIds.includes(e.id)) && !e.hidden && e.health.current > 0 && e.passengerOf === undefined && !e.corpse && !e.infected && !e.infection
       && Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z) < 14) group.push(e);
     groupMax = Math.max(groupMax, group.length);
     // Start reaction: courier rested ≥ 1 s, then moves.
@@ -61,7 +60,7 @@ const observe = (world: SimWorld) => {
         if (row.length === 9) { railSamples++; if (Math.max(...row) - Math.min(...row) < .1) rails++; }
       }
     } else lateral.clear();
-    const nn = group.map(a => Math.min(...group.filter(b => b !== a).map(b => Math.hypot(a.transform.x - b.transform.x, a.transform.z - b.transform.z, footY(a) - footY(b)))));
+    const nn = group.map(a => Math.min(...group.filter(b => b !== a).map(b => Math.hypot(a.transform.x - b.transform.x, a.transform.z - b.transform.z, a.transform.y - b.transform.y))));
     nnMin = Math.min(nnMin, ...nn);
     nnCv.push(std(nn) / mean(nn));
     if (standing.length === group.length) nnCvStanding.push(std(nn) / mean(nn));
@@ -78,7 +77,7 @@ if (level === 'L2') {
   outcome = run.outcome; time = run.time;
   if (process.env.TIMELINE) timeline = run.objectiveTimeline.map(o => `${o.id}@${o.t.toFixed(0)}`);
 }
-const out = { ...identity, generatedAt: new Date().toISOString(), level, tier, seed, tag, outcome, time: +time.toFixed(1), groupSamples,
+const out = { ...identity, generatedAt: new Date().toISOString(), level, tier, seed, tag, scope: level === 'L2' ? 'scripted firefighter crew' : 'human followers', outcome, time: +time.toFixed(1), groupSamples,
   groupMax, standR: +mean(standR).toFixed(3), standN: standR.length, moveR: +mean(moveR).toFixed(3), moveYawR: +mean(moveYawR).toFixed(3), moveN: moveR.length,
   nnCv: +mean(nnCv).toFixed(3), nnCvStanding: +mean(nnCvStanding).toFixed(3), nnMin: +nnMin.toFixed(3), startSpread: +mean(startDelays).toFixed(3), startN: startDelays.length,
   rails: +(rails / Math.max(1, railSamples)).toFixed(3), railSamples, timeline: timeline.length ? timeline.join(' ') : undefined };
