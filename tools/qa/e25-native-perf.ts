@@ -18,7 +18,7 @@ try {
   await s.page.waitForFunction(() => !!window.__SS__ && !!window.__SCENE__, null, { timeout: 120_000 });
   await s.page.evaluate(async () => { await window.__SS__!.ready; window.__SS__!.pause(); });
   await s.page.evaluate('globalThis.__name = (fn) => fn');
-  for (const scenario of ['light-lab', 'night-street', ...(tier === 'high' ? ['reflection-lab'] : [])]) {
+  for (const scenario of [...(tier === 'high' ? ['reflection-lab'] : []), 'light-lab', 'night-street']) {
     if (scenario === 'night-street') {
       await s.page.evaluate(async () => { await window.__SS__!.loadLevel('night-street', { seed: 1 }); window.__SS__!.pause(); });
     } else {
