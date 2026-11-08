@@ -148,7 +148,7 @@ export class LevelEightZoo {
     const wall = { x: bus.transform.x, y: 1.5, z: bus.transform.z, halfX: 4.68, halfY: 1.5, halfZ: 1.48 };
     w.physics.addBlocker(wall);
     w.events.emit({ type: 'world.blocker.changed', tick: w.tick, id: bus.id, blocked: true, wall });
-    s.carId = w.vehicles!.spawn('vehicle.military-apc', this.point({ x: 96, z: 74 }, 3.5));
+    s.carId = w.vehicles!.spawn('vehicle.military-apc', this.point({ x: 96, z: 74 }, 3.5), -Math.PI / 2);
     Object.assign(this.mission.def.anchors.exit, this.boardingRing(), { radius: 2 });
     this.mission.state.actors.apc = s.carId;
   }
@@ -281,9 +281,13 @@ export class LevelEightZoo {
         this.mission.radio('L8.following');
       }
       const elapsed = t - s.chaseAt, from = s.departureFrom, lead = Math.min(1, elapsed / 120), run = Math.max(0, Math.min(1, (elapsed - 120) / 360));
-      const x = elapsed <= 120 ? from.x + (104 - from.x) * lead : 104 + 42 * run;
-      const z = elapsed <= 120 ? from.z + (80 - from.z) * lead * lead * (3 - 2 * lead) : 80;
-      const yaw = elapsed <= 120 ? -Math.atan2((80 - from.z) * 6 * lead * (1 - lead), 104 - from.x) : 0;
+      // The courtyard-facing door keeps the approach clear. Depart along the parked heading, then turn toward the exit.
+      const c1 = { x: from.x + Math.cos(from.yaw) * 6, z: from.z - Math.sin(from.yaw) * 6 }, c2 = { x: 100, z: 80 }, u = 1 - lead;
+      const x = elapsed <= 120 ? u ** 3 * from.x + 3 * u * u * lead * c1.x + 3 * u * lead * lead * c2.x + lead ** 3 * 104 : 104 + 42 * run;
+      const z = elapsed <= 120 ? u ** 3 * from.z + 3 * u * u * lead * c1.z + 3 * u * lead * lead * c2.z + lead ** 3 * 80 : 80;
+      const vx = 3 * u * u * (c1.x - from.x) + 6 * u * lead * (c2.x - c1.x) + 3 * lead * lead * (104 - c2.x);
+      const vz = 3 * u * u * (c1.z - from.z) + 6 * u * lead * (c2.z - c1.z) + 3 * lead * lead * (80 - c2.z);
+      const yaw = elapsed <= 120 ? -Math.atan2(vz, vx) : 0;
       const previous = w.entities.get(s.carId)!.transform;
       const speed = Math.hypot(x - previous.x, z - previous.z) * 60;
       w.vehicles!.scriptPose(s.carId, { x, y: from.y, z, yaw }, speed);
@@ -331,7 +335,8 @@ export class LevelEightZoo {
       const door = this.door();
       for (const [i, id] of [s.haleId, s.reyesId, ...s.guards].entries()) {
         const guard = w.entities.get(id); if (!guard?.civilian?.ally || guard.health.current <= 0) continue;
-        const at = this.point(i === 0 ? { x: door.x - .7, z: door.z + 1.2 } : { x: door.x - 5 - i * 1.5, z: door.z + 5.5 });
+        const yaw = w.entities.get(s.carId)!.transform.yaw, dx = i === 0 ? -.7 : -5 - i * 1.5, dz = i === 0 ? 1.2 : 5.5;
+        const at = this.point({ x: door.x + Math.cos(yaw) * dx + Math.sin(yaw) * dz, z: door.z - Math.sin(yaw) * dx + Math.cos(yaw) * dz });
         guard.civilian.ally.run = at; guard.civilian.ally.post = at; guard.civilian.ally.runSpeed = 6; guard.civilian.ally.hold = true;
       }
       this.reyesFallback();
