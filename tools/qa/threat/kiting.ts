@@ -15,10 +15,11 @@ export interface KitingReceipt {
   /** Positive-damage strikes against a physically moving courier, separate from attack starts. */
   hits?: number;
   hitsPerMinute?: number;
+  stationaryHits?: number;
   style?: KitingStyle;
   minimumHordeSize?: number;
   minimumMoveSpeedMps?: number;
-  diagnostics?: { startTick: number | null; endTick: number | null; firingFrames: number; playerAttackStarts: number; framesWithoutThreats: number; movingSeconds: number; immobilizedSeconds: number; distanceMeters: number; circleRadius?: number };
+  diagnostics?: { startTick: number | null; endTick: number | null; firingFrames: number; playerAttackStarts: number; framesWithoutThreats: number; movingSeconds: number; immobilizedSeconds: number; distanceMeters: number; circleRadius?: number; bodyAvoidanceFrames?: number; phases?: string[] };
 }
 export type KitingStyle = 'retreat' | 'circles';
 const minimumHordeSize = 3;
@@ -32,13 +33,14 @@ export function installKitingPolicy(world: SimWorld, receipt: KitingReceipt, lev
   receipt.style = style;
   receipt.minimumHordeSize = minimumHordeSize;
   receipt.minimumMoveSpeedMps = movingSpeedThreshold;
-  const diagnostics = receipt.diagnostics = { startTick: null as number | null, endTick: null as number | null, firingFrames: 0, playerAttackStarts: 0, framesWithoutThreats: 0, movingSeconds: 0, immobilizedSeconds: 0, distanceMeters: 0, circleRadius: undefined as number | undefined };
+  const diagnostics = receipt.diagnostics = { startTick: null as number | null, endTick: null as number | null, firingFrames: 0, playerAttackStarts: 0, framesWithoutThreats: 0, movingSeconds: 0, immobilizedSeconds: 0, distanceMeters: 0, circleRadius: undefined as number | undefined, bodyAvoidanceFrames: 0, phases: [] as string[] };
   let selectedButtonHeld = false;
   let sampleUntil: number | null = null;
   let sampleOrigin: { x: number; z: number } | null = null;
   let sampleDirection: { x: number; z: number } | null = null;
   let circle: { x: number; z: number; radius: number } | null = null;
   let lastSampleTick = -1;
+  let pendingHits = 0;
   let nextRocketFireTick = -1;
   const rejoin = new Walker();
   let kitingNow = false;
@@ -46,17 +48,21 @@ export function installKitingPolicy(world: SimWorld, receipt: KitingReceipt, lev
     if (kitingNow && targetId === 1) receipt.attacks++;
   });
   world.events.on('infected.attack', event => {
-    const step = world.player?.locomotion.displacement;
-    const velocity = world.entities.get(1)?.survivor?.velocity;
-    const speed = step ? Math.hypot(step.x, step.z) * 60 : Math.hypot(velocity?.x ?? 0, velocity?.z ?? 0);
-    if (event.type === 'infected.attack' && kitingNow && event.targetId === 1 && event.amount > 0 && speed > movingSpeedThreshold) receipt.hits = (receipt.hits ?? 0) + 1;
+    if (event.type === 'infected.attack' && lastSampleTick === event.tick - 1 && event.targetId === 1 && event.amount > 0) pendingHits++;
   });
-  world.events.on('sim.tick', () => {
+  world.events.on('sim.tick', event => {
+    if (event.type !== 'sim.tick') return;
     const player = world.entities.get(1), p = player?.transform, previous = world.previousPlayer;
-    if (!kitingNow || !p || !previous || !player) return;
+    if (lastSampleTick !== event.tick - 1 || !p || !previous || !player) { pendingHits = 0; return; }
     const distance = Math.hypot(p.x - previous.x, p.z - previous.z);
-    if (distance > movingSpeedThreshold / 60) diagnostics.movingSeconds += 1 / 60;
-    else if (Status.stunned(player, world.tick) || world.infected?.playerPinned()) diagnostics.immobilizedSeconds += 1 / 60;
+    // AI strikes before physics. Classify hits only after the final collision
+    // commit, so a requested run into a body or wall cannot count as movement.
+    if (distance > movingSpeedThreshold / 60) { diagnostics.movingSeconds += 1 / 60; receipt.hits = (receipt.hits ?? 0) + pendingHits; }
+    else {
+      receipt.stationaryHits = (receipt.stationaryHits ?? 0) + pendingHits;
+      if (Status.stunned(player, event.tick) || world.infected?.playerPinned?.()) diagnostics.immobilizedSeconds += 1 / 60;
+    }
+    pendingHits = 0;
     diagnostics.distanceMeters += distance;
   }, SimPhase.cleanup + 1);
   world.events.on('combat.attack', event => {
@@ -82,7 +88,11 @@ export function installKitingPolicy(world: SimWorld, receipt: KitingReceipt, lev
     }
     // L5's opening street encounter precedes activation of the look objective.
     const l5Encounter = level === 'L5' && ['emerged', 'search'].includes(world.missions?.state.l5?.phase ?? '');
-    if (sampleUntil === null && world.missions && !l5Encounter && !phases(world, level).some(phase => phase.threat)) return frame;
+    // L10 has street combat in all seven regions, before its final hold step.
+    // Requiring that late objective can hide a real early encounter behind a
+    // native route failure; cured/epilogue actors are never combat samples.
+    const l10Encounter = level === 'L10' && !world.missions?.state.states['cure-released'];
+    if (sampleUntil === null && world.missions && !l5Encounter && !l10Encounter && !phases(world, level).some(phase => phase.threat)) return frame;
     if (world.storyLock) { kitingNow = false; return frame; }
     const threats = world.infected?.active.filter(entity => {
       if (entity.health.current <= 0 || !entity.infected || entity.hidden || !position || Math.hypot(entity.transform.x - position.x, entity.transform.z - position.z) > 30) return false;
@@ -165,6 +175,19 @@ export function installKitingPolicy(world: SimWorld, receipt: KitingReceipt, lev
         const correction = (circle.radius - radius) * 2, length = Math.max(.001, radius);
         const x = -rz / length + rx / length * correction, z = rx / length + rz / length * correction, speed = Math.hypot(x, z);
         retreat = { x: x / speed, z: z / speed };
+        // Keep following the circle around bodies that cross it. The live solid
+        // query includes crowds/corpses, which the static nav grid cannot see.
+        const desired = retreat, nav = world.infected?.nav, floor = world.districts?.groundBelow(position.x, position.z, position.y - .7) ?? 0;
+        let best = -1;
+        for (const angle of [0, Math.PI / 6, -Math.PI / 6, Math.PI / 3, -Math.PI / 3, Math.PI / 2, -Math.PI / 2, Math.PI]) {
+          const move = { x: desired.x * Math.cos(angle) - desired.z * Math.sin(angle), z: desired.x * Math.sin(angle) + desired.z * Math.cos(angle) };
+          const next = { x: position.x + move.x * .7, z: position.z + move.z * .7 };
+          if (nav && !nav.visible(position, next, .45) || Math.abs((world.districts?.groundBelow(next.x, next.z, floor) ?? floor) - floor) > .4) continue;
+          const clear = world.solids?.sweep(player, move, .7, player.combat?.radius ?? .35, false, true) ?? .7;
+          if (clear > best) { best = clear; retreat = move; }
+          if (clear >= .65) break;
+        }
+        if (Math.abs(retreat.x - desired.x) + Math.abs(retreat.z - desired.z) > .01) diagnostics.bodyAvoidanceFrames++;
       }
     }
     // Once a real pursuer has been selected, keep the 20-second sample going
@@ -182,6 +205,7 @@ export function installKitingPolicy(world: SimWorld, receipt: KitingReceipt, lev
     // by a physical return to the route so escort waits remain recoverable.
     if (retreat && sampleUntil === null) {
       sampleUntil = world.tick + 1200; sampleOrigin = { x: position!.x, z: position!.z }; sampleDirection = retreat;
+      diagnostics.phases = world.missions ? phases(world, level).map(phase => phase.key) : [];
     }
     kitingNow = !!retreat && sampleUntil !== null && world.tick < sampleUntil;
     if (kitingNow) sampleDirection = retreat;
@@ -232,6 +256,6 @@ export function installKitingPolicy(world: SimWorld, receipt: KitingReceipt, lev
 }
 
 export function finishKitingReceipt(receipt: KitingReceipt): KitingReceipt {
-  return { ...receipt, hits: receipt.hits ?? 0, hitsPerMinute: receipt.kitingSeconds > 0 ? (receipt.hits ?? 0) * 60 / receipt.kitingSeconds : 0,
+  return { ...receipt, hits: receipt.hits ?? 0, stationaryHits: receipt.stationaryHits ?? 0, hitsPerMinute: receipt.kitingSeconds > 0 ? (receipt.hits ?? 0) * 60 / receipt.kitingSeconds : 0,
     attacksPerMinute: receipt.kitingSeconds > 0 ? receipt.attacks * 60 / receipt.kitingSeconds : 0 };
 }

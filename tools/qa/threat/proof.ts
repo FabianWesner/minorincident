@@ -86,29 +86,33 @@ export async function proveThreatAudit(): Promise<void> {
     events.emit({ type: 'combat.attack', tick: 0, sourceId: 1, actionId: 'weapon.handgun', attackId: 1, side: 'LEFT', position: { x: 0, y: 0, z: 0, yaw: 0 }, direction: { x: 1, z: 0 } });
     assert.equal(receipt.attacks, 0, 'courier shots cannot satisfy the threat floor');
     events.emit({ type: 'telegraph', tick: 0, sourceId: 2, attackId: 1, special: 'lunge', duration: .35, target: { id: 1, x: 0, z: 0 } });
-    events.emit({ type: 'infected.attack', tick: 0, sourceId: 2, attackId: 1, targetId: 1, special: 'lunge', amount: 10 });
-    events.emit({ type: 'infected.attack', tick: 0, sourceId: 3, attackId: 2, targetId: 4, special: 'bite', amount: 10 });
+    events.emit({ type: 'infected.attack', tick: 1, sourceId: 2, attackId: 1, targetId: 1, special: 'lunge', amount: 10 });
+    events.emit({ type: 'infected.attack', tick: 1, sourceId: 3, attackId: 2, targetId: 4, special: 'bite', amount: 10 });
+    events.emit({ type: 'infected.attack', tick: 1, sourceId: 2, attackId: 4, targetId: 1, special: 'lunge', amount: 0 });
+    world.previousPlayer = { ...world.entities.get(1)!.transform };
+    world.entities.get(1)!.transform.x -= 2 / 60; events.emit({ type: 'sim.tick', tick: 1 });
     assert.equal(receipt.attacks, 1, 'only infected windups targeting the courier count as attack starts');
     assert.equal(finishKitingReceipt(receipt).hits, 1, 'landed hits have their own moving-courier counter');
-    world.entities.get(1)!.survivor!.velocity.x = 0;
-    events.emit({ type: 'infected.attack', tick: 0, sourceId: 2, attackId: 3, targetId: 1, special: 'lunge', amount: 10 });
-    world.entities.get(1)!.survivor!.velocity.x = -2;
-    events.emit({ type: 'infected.attack', tick: 0, sourceId: 2, attackId: 4, targetId: 1, special: 'lunge', amount: 0 });
-    assert.equal(finishKitingReceipt(receipt).hits, 1, 'stationary contacts and rejected damage cannot satisfy the moving hit floor');
+    world.tick = 1; world.previousPlayer = { ...world.entities.get(1)!.transform }; world.setInput(emptyInput());
+    events.emit({ type: 'infected.attack', tick: 2, sourceId: 2, attackId: 3, targetId: 1, special: 'lunge', amount: 10 });
+    events.emit({ type: 'sim.tick', tick: 2 });
+    assert.equal(finishKitingReceipt(receipt).hits, 1, 'blocked movement intent and rejected damage cannot satisfy the moving hit floor');
+    assert.equal(finishKitingReceipt(receipt).stationaryHits, 1);
+    world.entities.get(1)!.transform.x = 0;
     world.entities.get(1)!.health.current = 0; world.setInput(emptyInput());
-    assert.equal(receipt.samples, 1, 'dead courier frames cannot count as active kiting');
+    assert.equal(receipt.samples, 2, 'dead courier frames cannot count as active kiting');
     world.entities.get(1)!.health.current = 100;
-    for (world.tick = 1; world.tick <= 1200; world.tick++) {
-      clearRetreat = world.tick !== 1;
-      const pursuers = world.tick === 2 ? world.infected!.active.splice(0) : [];
+    for (world.tick = 2; world.tick <= 1200; world.tick++) {
+      clearRetreat = world.tick !== 2;
+      const pursuers = world.tick === 3 ? world.infected!.active.splice(0) : [];
       world.applyInput(emptyInput(), 'mouse-keyboard');
-      if (world.tick === 2) {
+      if (world.tick === 3) {
         const frame = frames.at(-1)!;
         assert(Number.isFinite(frame.aim!.x) && Number.isFinite(frame.aim!.z) && Number.isFinite(frame.aimPoint!.x) && Number.isFinite(frame.aimPoint!.z), 'losing the live pursuer query keeps fallback aim finite');
         world.infected!.active.push(...pursuers);
       }
       if (world.tick === 1199) assert(!kitingComplete(), '1,200 input frames cannot end the encounter clock early');
-      if (world.tick === 1) assert(Math.abs(frames.at(-1)!.move.x) < .01 && Math.abs(frames.at(-1)!.move.z) > .9, 'a blocked backpedal stays on clear ground along a tangent');
+      if (world.tick === 2) assert(Math.abs(frames.at(-1)!.move.x) < .01 && Math.abs(frames.at(-1)!.move.z) > .9, 'a blocked backpedal stays on clear ground along a tangent');
     }
     assert(kitingComplete(), 'the elapsed encounter clock ends the disposable route');
     assert(Math.abs(receipt.kitingSeconds - 20) < 1e-8, 'sustain a full twenty-second chase');
