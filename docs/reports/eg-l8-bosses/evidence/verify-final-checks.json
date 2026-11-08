@@ -1,0 +1,23 @@
+{
+  "target": "E30",
+  "epics": [
+    "E30"
+  ],
+  "checks": [
+    {
+      "command": "npm run typecheck",
+      "status": 0,
+      "seconds": 48.528
+    },
+    {
+      "command": "npm run lint",
+      "status": 0,
+      "seconds": 26.385
+    },
+    {
+      "command": "npm test",
+      "status": 0,
+      "seconds": 84.703
+    }
+  ]
+}

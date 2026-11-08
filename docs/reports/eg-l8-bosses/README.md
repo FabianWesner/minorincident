@@ -1,6 +1,6 @@
 # eg-l8-bosses — L8 animal arenas
 
-Status (2026-11-08, 23:29 CET): all six arenas and required native combat/route controls pass; production tour reaches APC departure with zero courier deaths. The final repository-gate and final-source tour refresh are running. Everything is committed and mergeable; the goal is not declared complete until those runs finish. The goal is not yet declared complete. This is a merge handoff checkpoint; the done/open list below is authoritative over historical calibrations.
+Status (2026-11-08, 23:29 CET): all six arenas and required native combat/route controls pass; production tour reaches APC departure with zero courier deaths. The final repository gate and production-tour refresh have passed; a final single-source matrix receipt is being consolidated. Everything is committed and mergeable; the goal is not declared complete until those runs finish. The goal is not yet declared complete. This is a merge handoff checkpoint; the done/open list below is authoritative over historical calibrations.
 
 The binding design is `docs/design/boss-and-alpha-moves.md` (L8 table and common special rules), `docs/design/story-script.md` L8 beat 3, and the lane brief. The PO's 2026-11-08 animal-boss direction supersedes the older endless mixed-horde/regular-Alpha L8 composition. The sanctuary, keeper/K9/flamingo opening, named survivor continuity and APC escape remain required.
 
@@ -43,7 +43,7 @@ All 15 [final controls](evidence/controls-final-low.json) pass. The no-fire elep
 
 ### Open before native completion
 
-- Final repository-gate refresh after the last wall-classification correction, plus a final-source production-tour rerun. The preceding full gate passed (106 passed / 1 skipped); tests and timeouts were not changed. Earlier shared-runner timeout evidence is retained.
+- Final single-source matrix receipt consolidation. The final runtime `f20b187b` passes [all repository gate commands](evidence/verify-final-checks.json), with [106 passed / 1 skipped](evidence/verify-final.log). The final-source production tour again reaches progression with zero deaths, 12 rescued and zero collision failures. Tests and timeouts were not changed; earlier shared-runner timeout evidence is retained.
 - Browser QA below remains deliberately unrun by this lane.
 
 ## Requirement evidence map
