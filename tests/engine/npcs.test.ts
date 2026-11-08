@@ -120,8 +120,14 @@ test('escort: shared combat pace, follows through a maze, a 2 s stand revives to
   // A rested follower sets off a personal beat after it is asked, then walks.
   const delay = startDelayTicks(follower, 'L7'), start = { ...follower.transform }, goal = { x: start.x - 4, z: start.z };
   expect(delay).toBeGreaterThan(4);
-  for (let i = 0; i < delay - 1; i++) { w.npcs!.move(follower, goal, 3, c, 0); w.tick++; }
-  expect(Math.hypot(follower.transform.x - start.x, follower.transform.z - start.z)).toBe(0);
+  for (let i = 0; i < delay; i++) {
+    // Restoring onto a later world clock preserves the reaction time still owed.
+    if (i === 2) { w.tick += 600; w.npcs!.restore(600); }
+    w.npcs!.move(follower, goal, 3, c, 0); w.tick++;
+    expect(Math.hypot(follower.transform.x - start.x, follower.transform.z - start.z)).toBe(0);
+  }
+  w.npcs!.move(follower, goal, 3, c, 0); w.tick++;
+  expect(follower.transform.x).toBeLessThan(start.x);
   for (let i = 0; i < 20; i++) { w.npcs!.move(follower, goal, 3, c, 0); w.tick++; }
   expect(follower.transform.x).toBeLessThan(start.x - .05);
   // Standing, it looks toward a nearby infected before anything else.
