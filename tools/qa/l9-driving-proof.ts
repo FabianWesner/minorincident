@@ -23,6 +23,13 @@ try {
   world.events.on('vehicle.durability-hit', e => { if (e.type === 'vehicle.durability-hit') hits.push(e); });
   world.events.on('vehicle.grabbed', () => grabs++); world.events.on('vehicle.shaken', () => shakes++);
   world.events.on('player.damaged', () => playerHits++);
+  const admissions: { tick: number; id: number; archetype: string; distance: number; state: string; hidden: boolean }[] = [];
+  const spawn = world.infected!.spawn.bind(world.infected);
+  world.infected!.spawn = (...args) => {
+    const id = spawn(...args), e = world.entities.get(id)!;
+    admissions.push({ tick: world.tick, id, archetype: e.archetype, distance: Math.hypot(e.transform.x - car.entity.transform.x, e.transform.z - car.entity.transform.z), state: e.infected!.state, hidden: !!(e.hidden || e.infected!.hidden) });
+    return id;
+  };
   const seen = new Set<number>(), firstNear: { id: number; archetype: string; state: string; distance: number }[] = [], durations: number[] = [];
   for (let i = 0; i < maxSeconds * 60 && !l9.state.finished && world.entities.get(1)!.health.current > 0; i++) {
     world.applyInput(bot.sample(), 'keyboard'); const start = performance.now(); world.update(); durations.push(performance.now() - start);
@@ -43,6 +50,7 @@ try {
     ...provenance(), route, tier, zero, risky, seed: 1, method: 'Production LevelNineBot inputs, native Rapier/AI and normal campaign state. --zero is one explicit initial damage fixture; no immortality, teleports, actor writes or objective skips.',
     completed: state.finished, seconds: world.tick / 60, hp: world.entities.get(1)!.health.current, durability: car.entity.health.current,
     peakAlive, peakChunks, grabs, shakes, playerHits, signals, hits, samples, collision, finalStateHash: stateHash(final), driving: state.driving,
+    admissions: { actors: admissions, violations: admissions.filter(e => !e.hidden && (e.distance < 100 || e.state === 'idle')) },
     firstNear: { method: 'First shown native actor within a conservative 45 m radius; this is a headless proxy, not a rendered max-zoom frustum.', actors: firstNear, idle: firstNear.filter(e => e.state === 'idle') },
     cpu: { p95: durations[Math.floor(durations.length * .95)], max: durations[durations.length - 1], note: 'Shared runner diagnostic; rendering and device performance are not measured.' },
     handover: world.progression?.campaign?.crossingHandover,

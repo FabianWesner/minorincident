@@ -54,6 +54,7 @@ function stepSupport(world: SimWorld, e: EntitySnapshot): number {
 }
 /** Feet support is resolved before the final collision commit, and again after a contact correction. */
 export function groundAgent(world: SimWorld, e: EntitySnapshot): void {
+  if (world.scenario === 'L9' && world.missions?.l9?.driving.ownsPose(e)) return;
   if (world.districts && !e.infected && !e.survivor) e.transform.y = (e.companion ? .3 : .7) + (e.civilian?.floorY ?? ((e.companion || e.civilian?.story || e.civilian?.supportFeet) ? stepSupport(world, e) : world.districts.groundHeight(e.transform.x, e.transform.z)));
 }
 function actor(e: EntitySnapshot): boolean { return !e.corpse && !!(e.infected || e.civilian || e.companion || e.escort); }

@@ -141,6 +141,10 @@ export class LevelNineDriving {
     return s.stallAt !== null && !s.restarted || s.repairActive || s.evacuationAt !== null && !s.evacuationDone;
   }
   claims(e: EntitySnapshot): boolean { return this.state.roster.includes(e.id) && (e.passengerOf !== undefined || this.state.evacuationAt !== null); }
+  ownsPose(e: EntitySnapshot): boolean {
+    return e.passengerOf !== undefined || !!e.companion && e.contactExempt !== undefined
+      || e.id === this.state.samId && this.mission.l9!.state.phase !== 'driving';
+  }
   /** The cab stays occupied; only the stopped, open hatch exposes the courier and her carried arsenal. */
   get hatch(): boolean { return this.mission.l9?.state.phase === 'driving' && this.holding(this.car.entity.id); }
   canRepair(): boolean { return distance(this.car.entity.transform, cfg.repair) < cfg.repair.radius && this.car.physics.speed < 1 && this.state.restarted && this.state.evacuationAt === null && this.state.repairTicks < cfg.repair.ticks; }
@@ -338,9 +342,9 @@ export class LevelNineDriving {
     if (distance(rosa.transform, spot) > .8) return false;
     s.hugAt ??= w.tick; rosa.civilian!.pauseUntil = Number.MAX_SAFE_INTEGER; rosa.civilian!.story = { clip: 'npc-hug', start: s.hugAt };
     corgi.contactExempt = rosa.id; corgi.companion!.transitionUntil = w.tick + 2;
-    w.solids.wrote(corgi, 'l9.corgi-goodbye');
     const facing = rosa.transform.yaw;
     Object.assign(corgi.transform, { x: rosa.transform.x + Math.cos(facing) * .3, y: 1.05, z: rosa.transform.z - Math.sin(facing) * .3, yaw: facing + Math.PI / 2 });
+    w.solids.wrote(corgi, 'l9.corgi-goodbye');
     w.spatial.set(corgi.id, corgi.transform.x, corgi.transform.z);
     if (w.tick - s.hugAt < 120) return false;
     s.hugDone = true; rosa.civilian!.story = null; corgi.transform.y = .3; delete corgi.contactExempt; delete corgi.companion!.transitionUntil; this.signal('corgi-goodbye', rosa.id); return true;
