@@ -1418,7 +1418,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
       // group instead means the courier strayed; the column keeps walking.
       const rememberedRear = l6GroupMemory.rear && { x: Math.min(263, l6GroupMemory.rear.x + (/group waits|Bring the injured/i.test(e.objective) ? 0 : 2.2 * Math.max(0, e.tick - l6GroupMemory.rear.tick) / 60)), z: l6GroupMemory.rear.z };
       const groupTarget = coverRear && rememberedRear ? { x: rememberedRear.x + 3, z: rememberedRear.z }
-        : e.level === 'L7' && e.followerWarning && e.cue ? e.cue : visibleGroupTarget(e.level, e.player, e.allies, 8, e.step);
+        : e.level === 'L7' && e.step !== 'departure' && e.followerWarning && e.cue ? e.cue : visibleGroupTarget(e.level, e.player, e.allies, 8, e.step);
       if (e.level === 'L6' && e.step === 'exit' && ring && !e.enemies.some(b => b.d < 3)
         && (!groupTarget || Math.hypot(groupTarget.x - ring.x, groupTarget.z - ring.z) < ringDist!)) {
         // The exit is above two visible stair runs. Clipped ground clicks can
