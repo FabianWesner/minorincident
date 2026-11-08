@@ -7708,6 +7708,30 @@
     "sourceForward": "+X"
   },
   {
+    "id": "wpn.flamethrower",
+    "category": "weapon",
+    "status": "integrated",
+    "tier": "side",
+    "glb": "public/assets/models/wpn.flamethrower.glb",
+    "dimensions": { "x": 1.1625, "y": 0.422119, "z": 0.355, "tolerance": 0.1 },
+    "forward": "+X",
+    "frontNodes": ["front"],
+    "requiredNodes": ["grip", "muzzle", "flameOrigin", "pilot_light"],
+    "animatedNodes": [],
+    "sockets": ["grip", "muzzle", "flameOrigin"],
+    "budget": { "triangles": 1800, "materials": 8, "fileKB": 300, "drawCalls": 30 },
+    "decayVariants": [],
+    "actionCategory": "ranged",
+    "lods": {
+      "lod1": "public/assets/models/wpn.flamethrower.lod1.glb",
+      "lod2": "public/assets/models/wpn.flamethrower.lod2.glb"
+    },
+    "authoredLodTriangles": { "lod1": 700, "lod2": 200 },
+    "sourceGlb": "assets/wpn.flamethrower/model.glb",
+    "script": "assets/wpn.flamethrower/build.py",
+    "sourceForward": "+X"
+  },
+  {
     "id": "wpn.rocket-launcher",
     "category": "weapon",
     "status": "integrated",
@@ -13285,6 +13309,23 @@
       "fileKB": 2,
       "drawCalls": 1
     },
+    "decayVariants": [],
+    "nonModel": "ui"
+  },
+  {
+    "id": "icon.flamethrower",
+    "category": "ui",
+    "status": "integrated",
+    "tier": "side",
+    "glb": "",
+    "icon": "src/assets/icons/flamethrower.svg",
+    "dimensions": { "x": 0.1, "y": 0.1, "z": 0.1, "tolerance": 0.01 },
+    "forward": "+X",
+    "frontNodes": [],
+    "requiredNodes": [],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": { "triangles": 12, "materials": 1, "fileKB": 2, "drawCalls": 1 },
     "decayVariants": [],
     "nonModel": "ui"
   },

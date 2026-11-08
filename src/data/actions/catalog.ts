@@ -41,8 +41,7 @@ export const catalog: Readonly<Record<string, ActionDef>> = Object.fromEntries((
   { ...gun('hunting-rifle', 90, 32, 1, 5, 2.4, 0), tier: 1 },
   gun('assault-rifle', 26, 28, 7.5, 30, 2, 1, 2),
   // L10 signature issue from the safe hangar: a short-range, five-ray fire cone.
-  // The machine-gun mesh is a temporary held-model placeholder until the asset lane lands a dedicated model.
-  { ...gun('flamethrower', 4, 6, 3, 60, 3, 32, 3), viewAssetId: 'wpn.machine-gun', iconId: 'icon.machine-gun', pellets: 5, stagger: .15,
+  { ...gun('flamethrower', 4, 6, 3, 60, 3, 32, 3), pellets: 5, stagger: .15,
     status: { kind: 'burning', duration: 3, maxStacks: 1, dps: 8, slow: 0 } },
   fixtures['weapon.machine-gun'],
   // E22 §5.3 the army's issue machine gun (the L4-L6 main weapon): 14 per round, 10 rounds per second, 4 degrees of spread, 26 m, pierce 1
