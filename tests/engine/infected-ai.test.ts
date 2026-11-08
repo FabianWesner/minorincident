@@ -100,7 +100,7 @@ async function alphaTypeContracts() {
     }
     // Interrupt/counter controls use the same resolver, including a zero-stagger hit during the inhale.
     for (const type of ['brute', 'screamer', 'leaper', 'armoured'] as const) {
-      const w = await arena(1, false), ai = w.infected!, x = type === 'armoured' ? 1.8 : 6, alpha = w.entities.get(ai.spawn('infected.alpha', { x, z: 0 }, { alphaType: type, state: 'chase' }))!;
+      const w = await arena(1, false), ai = w.infected!, x = type === 'armoured' ? 1.8 : type === 'leaper' ? 10 : 6, alpha = w.entities.get(ai.spawn('infected.alpha', { x, z: 0 }, { alphaType: type, state: 'chase' }))!;
       const move = type === 'brute' ? 'alpha.charge' : alphaTypes[type].moves[0];
       ai.startSpecial(alpha.id, move, { id: 1, x: 0, z: 0 }, { x, z: 0, radius: 1, dx: -1, dz: 0 });
       if (type === 'screamer') {
@@ -154,8 +154,9 @@ async function alphaTypeContracts() {
     }
     {
       const rateWorld = await arena(1, false), alphas = [0, 1, 2].map(i => rateWorld.entities.get(rateWorld.infected!.spawn('infected.alpha', { x: 12 + i * 2, z: 0 }, { alphaType: 'brute', state: 'chase' }))!);
-      const start = (alpha: EntitySnapshot) => rateWorld.infected!.startSpecial(alpha.id, 'alpha.charge', { id: 1, x: 0, z: 0 }, { x: alpha.transform.x, z: 0, radius: 1, dx: -1, dz: 0 });
-      expect(start(alphas[0]!)).toBe(true); expect(start(alphas[1]!)).toBe(true); expect(start(alphas[2]!)).toBe(false);
+      alphas[1]!.infected!.pursuit = true; alphas[1]!.transform.x = 2; // The Mega shares the same admission slots.
+      const start = (alpha: EntitySnapshot, follower = false) => rateWorld.infected!.startSpecial(alpha.id, 'alpha.charge', { id: 1, x: 0, z: 0 }, { x: alpha.transform.x, z: 0, radius: 1, dx: -1, dz: 0 }, follower);
+      expect(start(alphas[0]!)).toBe(true); expect(start(alphas[1]!)).toBe(true); expect(start(alphas[2]!)).toBe(false); expect(start(alphas[2]!, true)).toBe(false);
       step(rateWorld, 60); expect(start(alphas[2]!)).toBe(true);
     }
     {

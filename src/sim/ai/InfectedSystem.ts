@@ -608,7 +608,7 @@ export class InfectedSystem {
         if (move === 'alpha.living-missile') return distance >= 4 && distance <= 25 && !!this.props.nearestLiving(e, 2);
         if (move === 'alpha.barrage') return distance <= 8 && !!this.props.nearestLight(e, 2);
         if (move === 'alpha.roar') return distance <= 8;
-        if (move === 'alpha.pounce') return distance >= 4 && distance <= 12;
+        if (move === 'alpha.pounce') return distance >= 8 && distance <= 12;
         return move === 'alpha.shield-bash' && distance <= 2.5;
       });
       // Rotate through the available set so a ready special does not starve every other move.
@@ -1494,7 +1494,7 @@ export class InfectedSystem {
     if (e.archetype === 'infected.alpha' && !b.pursuit && b.alphaType && !alphaTypes[b.alphaType].moves.includes(move)) return false;
     if (![target.x, target.z, area.x, area.z, area.radius, area.dx, area.dz].every(Number.isFinite) || area.radius < 0) return false;
     if (b.pursuit && (!(move in megaAlpha.moves) || Math.hypot(target.x - e.transform.x, target.z - e.transform.z) > megaAlpha.closeM || !this.megaSpecialClear(e))) return false;
-    if (e.archetype === 'infected.alpha' && !b.pursuit && !follower) {
+    if (e.archetype === 'infected.alpha') {
       if (!this.director.inPlayerView(e.transform, 32)) return false;
       let starts = 0;
       for (const other of this.world.entities.iterate()) if ((other.infected?.alphaSpecialStarted ?? -Infinity) > tick - 60 && ++starts >= 2) return false;
@@ -1537,7 +1537,7 @@ export class InfectedSystem {
       e.transform.yaw = -Math.atan2(area.dz, area.dx);
     }
     b.specialAttack = { move, attackId, stage: 'telegraph', startTick: tick, activeTick, cooldownExpiry: activeTick + timing.cooldown, recoveryUntil: 0, target: { ...target }, area: { ...area }, hitIds: [], ...(destination ? { destination } : {}) };
-    if (e.archetype === 'infected.alpha' && !b.pursuit && !follower) b.alphaSpecialStarted = tick;
+    if (e.archetype === 'infected.alpha') b.alphaSpecialStarted = tick;
     if ((!b.pursuit && move === 'alpha.grab-throw') || move === 'alpha.living-missile' || move === 'alpha.barrage' || move === 'gorilla.grab-throw') this.props.pickupSpecial(e, b.specialAttack);
     e.combat!.attacking = true;
     this.world.events.emit({ type: 'telegraph', tick, sourceId, attackId, special: move, move, duration: timing.windup / 60, startTick: tick, activeTick, cooldownExpiry: activeTick + timing.cooldown, target: { ...target }, area: { ...area } });
