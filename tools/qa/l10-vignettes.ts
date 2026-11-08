@@ -48,7 +48,7 @@ const routes=cureVignetteRoutes(),regions=cure.regions.map((r,i)=>{
 assert.equal(set.scenes.filter(s=>s.theme==='helicopter-crash').length,1);
 assert(set.placements.some(p=>p.id.endsWith('-broken-door')),'The residential refuge needs its broken furniture/door barricade');
 const jam=set.scenes.find(s=>s.theme==='evacuation-jam')!;assert(jam);
-const jamVehicles=jam.pieces.map(id=>byId.get(id)!).filter(p=>!p.assetId.startsWith('prop.l10-corpse-'));
+const jamVehicles=jam.pieces.map(id=>byId.get(id)!).filter(p=>p.assetId.startsWith('prop.l10-abandoned-sedan-')||p.assetId==='veh.evac-bus');
 assert(Math.max(...jamVehicles.map(p=>p.position[0]))-Math.min(...jamVehicles.map(p=>p.position[0]))>=100,'Jam must span at least 100 m');
 const serviceLane=cureEvacuationLane(set.placements);assert.equal(serviceLane.length,3,'Jam road and two connections');
 const lane=serviceLane[0].polygon;

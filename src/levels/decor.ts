@@ -6,11 +6,11 @@
 import { Rng } from '../core/Rng';
 import { worldAssets } from '../assets/worldDefinitions';
 import { l6, l6Doors } from '../data/l6';
-import { cureFarmDecor } from './L10/farmLayout';
+import { clearCornFromSurfaces, cureFarmDecor } from './L10/farmLayout';
 import { cureRoadsideBelt } from './L10/roadsideBelt';
 import { cureCrossingStories } from './L10/crossingStories';
 import { cureForecourtDecor } from './L10/forecourts';
-import { cureVignettes } from './L10/vignettes';
+import { cureEvacuationLane, cureVignettes } from './L10/vignettes';
 import type { DistrictId, Placement } from './districts/types';
 
 type Spot = { id?: string; asset: string; x: number; z: number; y?: number; yaw?: number; scale?: number };
@@ -98,7 +98,7 @@ export function districtDecor(district: DistrictId, placements: readonly Placeme
     const forecourts = cureForecourtDecor([...placements, ...belt, ...stories]);
     const farm = cureFarmDecor([...placements, ...belt, ...stories, ...forecourts]);
     const vignettes = cureVignettes([...placements, ...belt, ...stories, ...forecourts, ...farm]);
-    const list = [...belt, ...stories, ...forecourts, ...farm, ...vignettes];
+    const list = [...belt, ...stories, ...forecourts, ...clearCornFromSurfaces(farm, cureEvacuationLane(vignettes)), ...vignettes];
     cache.set(key, list); return list;
   }
   if (l7) {

@@ -77,6 +77,12 @@ export function cureFarmDecor(placements: readonly Placement[]): Placement[] {
   return out;
 }
 
+/** The vignette service road is added after crop admission. Clear its full pavement, retaining farm landmarks/scares. */
+export function clearCornFromSurfaces(placements: readonly Placement[], surfaces: DistrictLayout['surfaces']): Placement[] {
+  const bounds = surfaces.map(s => ({ minX: Math.min(...s.polygon.map(p => p[0])), maxX: Math.max(...s.polygon.map(p => p[0])), minZ: Math.min(...s.polygon.map(p => p[1])), maxZ: Math.max(...s.polygon.map(p => p[1])) }));
+  return placements.filter(p => p.assetId !== 'veg.corn-block' || !bounds.some(b => p.visualAabb.min[0] < b.maxX && p.visualAabb.max[0] > b.minX && p.visualAabb.min[2] < b.maxZ && p.visualAabb.max[2] > b.minZ));
+}
+
 /** L10-only copy: leave the source layouts and the L1–L5 asset palette intact. */
 export function applyFarmLandscape(layout: DistrictLayout): void {
   // Re-preparing an assembled layout replaces our generated solids instead of doubling them.

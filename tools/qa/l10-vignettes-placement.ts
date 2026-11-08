@@ -4,7 +4,7 @@ import { mkdirSync, writeFileSync } from 'node:fs';
 import { loadLevel } from '../sim-runner/levels';
 import { cure } from '../../src/levels/L10/district';
 import { farmLanes } from '../../src/levels/L10/farmLayout';
-import { cureVignetteRoutes, cureLineDistance } from '../../src/levels/L10/vignettes';
+import { cureEvacuationLane, cureVignetteRoutes, cureLineDistance } from '../../src/levels/L10/vignettes';
 import type { Placement, Point } from '../../src/levels/districts/types';
 
 function segmentBoxDistance(a: Point, b: Point, p: Placement): number {
@@ -33,6 +33,12 @@ try {
   }
   assert.deepEqual(overlaps, [], 'Vignette footprints must not overlap corn tiles or farm pieces');
   assert(vignettes.every(p => p.fixed && p.decor), 'Story key pieces must remain fixed');
+  const serviceLane = cureEvacuationLane(vignettes);
+  const farmOnPavement = farm.filter(p => serviceLane.some(s => {
+    const x = s.polygon.map(q => q[0]), z = s.polygon.map(q => q[1]);
+    return p.visualAabb.min[0] < Math.max(...x) && p.visualAabb.max[0] > Math.min(...x) && p.visualAabb.min[2] < Math.max(...z) && p.visualAabb.max[2] > Math.min(...z);
+  })).map(p => p.id);
+  assert.deepEqual(farmOnPavement, [], 'The jam service road and turnouts must clear corn and farm pieces');
   const routes = [...cureVignetteRoutes().map(r => r.line), ...cure.detours.map(r => r.route), ...farmLanes];
   let minimumClearance = Infinity;
   const blocked: { id: string; route: number; metres: number }[] = [];
@@ -42,7 +48,7 @@ try {
     if (metres < 5.4 - 1e-6) blocked.push({ id: p.id, route, metres });
   }
   assert.deepEqual(blocked, [], 'Roads, crossings, detours and farm mown routes must retain 5.4 m clearance');
-  const result = { status: 'PASS', seed: 32, vignettePlacements: vignettes.length, cornTiles: farm.filter(p => p.assetId === 'veg.corn-block').length, farmPieces: farm.filter(p => p.assetId !== 'veg.corn-block').length, overlaps, blocked, minimumClearance, routeLines: routes.length, fixed: true, browsersLaunched: 0 };
+  const result = { status: 'PASS', seed: 32, vignettePlacements: vignettes.length, cornTiles: farm.filter(p => p.assetId === 'veg.corn-block').length, farmPieces: farm.filter(p => p.assetId !== 'veg.corn-block').length, overlaps, farmOnPavement, blocked, minimumClearance, routeLines: routes.length, fixed: true, browsersLaunched: 0 };
   mkdirSync('docs/reports/eg-l10-vignettes/evidence', { recursive: true });
   writeFileSync('docs/reports/eg-l10-vignettes/evidence/merge-placement.json', JSON.stringify(result, null, 2) + '\n');
   console.log(JSON.stringify(result));

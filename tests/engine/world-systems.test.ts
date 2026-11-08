@@ -190,12 +190,16 @@ test('look-l6-l9 decor is render-only: L6 nav hash, colliders and pushables matc
   expect(cureCrossingStories([...cureLayout.placements, ...belt])).toEqual(stories);
   const { cureForecourtDecor } = await import('../../src/levels/L10/forecourts');
   const apron = cureForecourtDecor([...cureLayout.placements, ...belt, ...stories]);
-  const { cureFarmDecor } = await import('../../src/levels/L10/farmLayout');
+  const { clearCornFromSurfaces, cureFarmDecor } = await import('../../src/levels/L10/farmLayout');
   const farm = cureFarmDecor([...cureLayout.placements, ...belt, ...stories, ...apron]);
   expect(farm.filter(p => p.assetId === 'veg.corn-block').length).toBeGreaterThan(100);
   const { cureVignetteCatalogue, cureVignettes } = await import('../../src/levels/L10/vignettes');
   const vignettes = cureVignettes([...cureLayout.placements, ...belt, ...stories, ...apron, ...farm]);
-  expect(districtDecor('D-CURE', cureLayout.placements)).toEqual([...belt, ...stories, ...apron, ...farm, ...vignettes]);
+  const { cureEvacuationLane } = await import('../../src/levels/L10/vignettes');
+  const clearedFarm = clearCornFromSurfaces(farm, cureEvacuationLane(vignettes));
+  expect(clearedFarm.filter(p => p.assetId === 'veg.corn-block').length).toBeGreaterThan(100);
+  expect(clearedFarm.filter(p => p.assetId !== 'veg.corn-block')).toEqual(farm.filter(p => p.assetId !== 'veg.corn-block'));
+  expect(districtDecor('D-CURE', cureLayout.placements)).toEqual([...belt, ...stories, ...apron, ...clearedFarm, ...vignettes]);
   expect(cureVignettes([...cureLayout.placements, ...belt, ...stories, ...apron, ...farm])).toEqual(vignettes);
   expect(cureVignetteCatalogue.every(v => v.pieces.length >= 3 && v.pieces.length <= 8)).toBe(true);
   const vignetteGroups = new Set(vignettes.map(p => p.id.replace(/-\d+$/, '')));
@@ -204,7 +208,7 @@ test('look-l6-l9 decor is render-only: L6 nav hash, colliders and pushables matc
   const farmOverlaps = vignettes.flatMap(p => farm.filter(q => p.visualAabb.min[0] < q.visualAabb.max[0] && p.visualAabb.max[0] > q.visualAabb.min[0] && p.visualAabb.min[2] < q.visualAabb.max[2] && p.visualAabb.max[2] > q.visualAabb.min[2]).map(q => [p.id, q.id]));
   expect(farmOverlaps, 'vignette footprints must clear corn and farm structures').toEqual([]);
   expect(placementColliders(vignettes, []).every(c => c.aabb.physicsOnly)).toBe(true);
-  const { cureEvacuationLane, cureVignetteDecals, cureWallMessages } = await import('../../src/levels/L10/vignettes');
+  const { cureVignetteDecals, cureWallMessages } = await import('../../src/levels/L10/vignettes');
   const { CureVignetteDecals } = await import('../../src/render/district/CureVignetteDecals');
   const { DataTexture } = await import('three/webgpu');
   const rows = cureVignetteDecals(vignettes), paint = rows.filter(r=>!r.ground), casings = rows.filter(r=>r.cell===12);
