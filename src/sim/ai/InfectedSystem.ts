@@ -378,6 +378,7 @@ export class InfectedSystem {
       this.world.solids.wrote(e, 'infected.update');
       const b = e.infected!;
       if (this.heldOrDead(e, b, courier)) continue;
+      if (b.arenaCarrier && this.world.missions?.l8?.bosses.controlCarrier(e)) continue;
       if (b.arenaBoss && this.world.missions?.l8?.bosses.control(e)) continue;
       if (this.pursuitOrVault(e, b)) continue;
       if (this.farCrowdSlot(e, b, courier)) continue;

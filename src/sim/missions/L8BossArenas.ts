@@ -8,7 +8,7 @@ import { requireClearPoint } from './missionHelpers';
 
 export interface L8ArenaState {
   id: L8BossId; ids: number[]; carrier: number; phase: 0 | 1 | 2 | 3; startedAt: number; endedAt: number;
-  nextAt: number; cycle: number; wallHits: number; rocket: number; grabs: number; counters: number;
+  nextAt: number; cycle: number; wallHits: number; carrierRetryAt?: number; rocket: number; grabs: number; counters: number;
   lane?: { x: number; side: 1 | -1; staging: boolean };
   track?: { x: number; z: number; vx: number; vz: number; turn: number; at: number };
 }
@@ -52,7 +52,8 @@ export class L8BossArenas {
       this.observeMotion(arena, player);
       const healthy = arena.ids.map(id => w.entities.get(id)).filter(e => e?.civilian && !e.infection && e.health.current > 0);
       // Residents physically walk from real tunnels to animals; a player can interrupt every grab.
-      if (!arena.carrier && healthy.length) arena.carrier = arena.id === 'flamingo' ? this.mission.l8!.state.animalBiteStarted ? this.mission.l8!.state.animalInterceptionId : 0 : this.mission.l8!.arenaCarrier(healthy[0]!.id);
+      if (arena.carrier && (w.entities.get(arena.carrier)?.health.current ?? 0) <= 0) { arena.carrier = 0; arena.carrierRetryAt = w.tick + 300; }
+      if (!arena.carrier && healthy.length && w.tick >= (arena.carrierRetryAt ?? 0)) arena.carrier = arena.id === 'flamingo' ? this.mission.l8!.state.animalBiteStarted ? this.mission.l8!.state.animalInterceptionId : 0 : this.mission.l8!.arenaCarrier(healthy[0]!.id);
       const carrier = w.entities.get(arena.carrier), victim = healthy[0];
       if (carrier?.infected && carrier.health.current > 0 && !carrier.emerging && victim) {
         if (carrier.infected.arenaCarrier !== victim.id) { w.infected!.pursueTarget(carrier.id, victim.id); carrier.infected.arenaCarrier = victim.id; }
@@ -82,6 +83,15 @@ export class L8BossArenas {
         this.signal(arena, 'cleared');
       }
     }
+  }
+  /** Finite, physical animal-contact leg. Ordinary damage/grab interruption still owns its failure. */
+  controlCarrier(e: EntitySnapshot): boolean {
+    const b = e.infected!, target = this.w.entities.get(b.arenaCarrier ?? 0);
+    if (!target?.civilian || target.health.current <= 0 || target.infection) { delete b.arenaCarrier; return false; }
+    if (e.emerging) return false;
+    b.state = 'chase'; e.combat!.attacking = false;
+    this.w.npcs!.move(e, target.transform, 4.8, b, .8, 3200);
+    return true;
   }
   /** Intent runs in the normal infected phase; static sweeps and Damage remain authoritative. */
   control(e: EntitySnapshot): boolean {
@@ -128,6 +138,11 @@ export class L8BossArenas {
     if (b.specialAttack?.move === 'gorilla.roar' && b.specialAttack.stage === 'telegraph' && b.grabHits > 0) { arena.counters++; this.recover(e, 120); return true; }
     if (b.specialAttack) { this.advanceMove(e, arena); return true; }
     if (w.tick < boss.readyAt || Status.stunned(e, w.tick)) return true;
+    if (boss.approach) {
+      const move = boss.approach, radius = move === 'gorilla.roar' ? 8 : 5;
+      if (distance(e.transform, p.transform) > radius - .8) { this.walk(e, this.predict(e, .8, arena), arena.phase === 2 ? 6.5 : 5.5); return true; }
+      delete boss.approach; this.start(e, move, 60, 0, radius); return true;
+    }
     if (boss.hunt) {
       const hunt = boss.hunt;
       if (distance(e.transform, hunt) > 1.2 && w.tick < hunt.until) { this.walk(e, hunt, hunt.flank ? 7 : 4); return true; }
@@ -217,7 +232,7 @@ export class L8BossArenas {
       if (distance(e.transform, this.w.entities.get(1)!.transform) < 5 && this.w.infected!.props.nearestObject(e, 25, true)) { e.infected!.arenaBoss!.barrage = 3; this.scavenge(e); }
       else if (pillar) e.infected!.arenaBoss!.smashId = pillar.id;
       else if (arena.cycle % 3 === 2) this.scavenge(e);
-      else this.start(e, arena.cycle % 3 === 1 ? 'gorilla.roar' : 'gorilla.pound', 60, 0, arena.cycle % 3 === 0 ? 5 : 8);
+      else e.infected!.arenaBoss!.approach = arena.cycle % 3 === 1 ? 'gorilla.roar' : 'gorilla.pound';
     } else for (const member of live) {
       if (member.infected!.arenaBoss!.roof || member.infected!.arenaBoss!.traversal || member.infected!.arenaBoss!.slot === 6 && arena.phase < 2) continue;
       if ((arena.cycle + member.id) % 3 === 0) this.scavenge(member);
@@ -250,7 +265,7 @@ export class L8BossArenas {
   private scavenge(e: EntitySnapshot): void {
     const object = this.w.infected!.props.nearestObject(e, 25, (e.infected!.arenaBoss!.barrage ?? 0) > 0);
     if (object) e.infected!.arenaBoss!.scavengeId = object.id;
-    else { e.infected!.arenaBoss!.barrage = 0; this.start(e, e.archetype === 'infected.monkey' ? 'monkey.grab' : 'gorilla.pound', 60, 10, e.archetype === 'infected.monkey' ? .8 : 5); }
+    else { e.infected!.arenaBoss!.barrage = 0; if (e.archetype === 'infected.monkey') this.start(e, 'monkey.grab', 60, 10, .8); else e.infected!.arenaBoss!.approach = 'gorilla.pound'; }
   }
   private start(e: EntitySnapshot, move: InfectedSpecialMove, windup: number, range: number, radius: number, axis?: { x: number; z: number }): void {
     const w = this.w, p = w.entities.get(1)!, arena = this.state.find(a => a.id === e.infected!.arenaBoss!.arena)!;
@@ -347,5 +362,5 @@ export class L8BossArenas {
     arena.rocket--; return true;
   }
   swapBlocked(): boolean { return this.w.infected!.active.some(e => e.health.current > 0 && e.infected!.arenaBoss?.arena === 'monkey' && e.infected!.grabUntil > this.w.tick); }
-  restore(delta: number): void { for (const a of this.state) { if (a.startedAt) a.startedAt += delta; if (a.endedAt) a.endedAt += delta; if (a.nextAt) a.nextAt += delta; if (a.track) a.track.at += delta; } }
+  restore(delta: number): void { for (const a of this.state) { if (a.startedAt) a.startedAt += delta; if (a.endedAt) a.endedAt += delta; if (a.nextAt) a.nextAt += delta; if (a.track) a.track.at += delta; if (a.carrierRetryAt) a.carrierRetryAt += delta; } }
 }
