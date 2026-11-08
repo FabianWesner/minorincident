@@ -97,6 +97,36 @@ async function zooParkedBoarding(): Promise<void> {
     const mission = world.missions!, zoo = mission.l8!, vehicles = world.vehicles!;
     mission.begin();
     const advance = (ticks: number) => { for (let i = 0; i < ticks; i++) world.update(); };
+    expect(mission.state.steps.sanctuary.status).toBe('active');
+    expect(mission.state.steps.escape.status).toBe('pending');
+    const preBreachDoor = vehicles.passengerDoor(zoo.state.carId);
+    missionControls(world).teleport(1, preBreachDoor);
+    world.applyInput({ ...emptyInput(), interact: true }, 'keyboard'); advance(1);
+    expect(vehicles.active, 'APC cannot be entered during the sanctuary objective').toBeNull();
+    expect(vehicles.canInteract(), 'APC offers no enter prompt before the breach').toBe(false);
+    expect(zoo.canDrive(), 'APC cannot be driven before the breach').toBe(false);
+    expect(zoo.boarding(), 'survivors cannot queue at the APC before the breach').toBe(false);
+    expect(mission.state.steps.depart.status).toBe('pending');
+    world.tick = 3124; advance(1);
+    expect(mission.state.steps.sanctuary.status).toBe('active');
+    expect(mission.state.steps.escape.status).toBe('pending');
+    expect(mission.state.marker).toBe('zoo-gate');
+    expect(mission.state.steps.depart.status).toBe('pending');
+    mission.restore('sanctuary');
+    expect(mission.state.marker).toBe('zoo-gate');
+    expect(mission.state.steps.escape.status).toBe('pending');
+    missionControls(world).teleport(1, zoo.door());
+    world.tick = zoo.state.startedAt + 3599; advance(1);
+    expect(mission.state.states.breached).toBe(true);
+    expect(mission.state.steps.sanctuary.status, 'camping the APC does not skip the gate after the breach').toBe('active');
+    expect(mission.state.checkpoint, 'APC camping must not award the escape-route checkpoint').toBe('breach');
+    expect(zoo.boarding()).toBe(false);
+    expect(zoo.canBoardDriver()).toBe(false);
+    expect(mission.state.steps.escape.status).toBe('pending');
+    missionControls(world).teleport(1, mission.def.anchors['zoo-gate']); advance(1);
+    expect(mission.state.steps.sanctuary.status).toBe('completed');
+    expect(mission.state.steps.escape.status).toBe('active');
+    expect(mission.state.marker).toBe('exit');
     for (const restored of [false, true]) {
       if (restored) mission.restore('sanctuary');
       advance(60);
@@ -111,7 +141,9 @@ async function zooParkedBoarding(): Promise<void> {
       vehicles.damage(car.entity.id, 10);
       expect(car.entity.health.current, 'parking does not protect durability').toBe(health - 10);
     }
+    const car = vehicles.cars.get(zoo.state.carId)!;
     mission.setState('breached', true); zoo.state.breachedAt = world.tick; zoo.state.nextWave = Number.MAX_SAFE_INTEGER;
+    missionControls(world).teleport(1, mission.def.anchors['zoo-gate']); advance(1);
     missionControls(world).teleport(1, zoo.door());
     world.applyInput({ ...emptyInput(), interact: true }, 'keyboard'); advance(1);
     expect(vehicles.active, 'courier can keep covering passengers instead of boarding early').toBeNull();
@@ -119,7 +151,7 @@ async function zooParkedBoarding(): Promise<void> {
     world.applyInput(emptyInput(), 'keyboard'); advance(60);
     expect(vehicles.active, 'standing at the door does not remove cover fire either').toBeNull();
     missionControls(world).teleport(1, { x: zoo.door().x - 4, z: zoo.door().z + 2 });
-    const car = vehicles.cars.get(zoo.state.carId)!, entry = vehicles.passengerDoor(car.entity.id);
+    const entry = vehicles.passengerDoor(car.entity.id);
     for (const id of zoo.passengers()) {
       missionControls(world).teleport(id, entry);
       expect(vehicles.boardPassenger(car.entity.id, id)).toBe(true);

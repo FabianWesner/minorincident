@@ -1,0 +1,24 @@
+{
+  "revision": "ae818a71917c982b2413fa587f248055afcc52d2",
+  "workerLimit": 1,
+  "checks": [
+    {
+      "command": "npm run typecheck",
+      "status": 0,
+      "seconds": 12.227,
+      "output": "> typecheck\n> tsc --noEmit && tsc --noEmit -p tsconfig.sim.json"
+    },
+    {
+      "command": "npm run lint",
+      "status": 0,
+      "seconds": 8.193,
+      "output": "> lint\n> eslint src tests tools functions *.config.ts eslint.config.js"
+    },
+    {
+      "command": "npm exec -- vitest run tests/engine/missions.test.ts tests/engine/vehicles.test.ts --maxWorkers=1",
+      "status": 0,
+      "seconds": 13.409,
+      "output": "RUN  v5.0.3 /Users/wesner/Workspace/minorincident/.claude/worktrees/r12-l8\n\n\n Test Files  2 passed (2)\n      Tests  8 passed (8)\n   Start at  17:18:19\n   Duration  12.82s (tests 90%, transform 8%, import 3%)"
+    }
+  ]
+}
