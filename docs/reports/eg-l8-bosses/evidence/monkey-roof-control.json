@@ -1,0 +1,212 @@
+{
+  "method": "Controlled native roof traversal/prop-arc observation; player protection applies only to this non-completion fixture.",
+  "maxStep": 0.6086927758003499,
+  "throws": [
+    {
+      "tick": 649,
+      "source": 413,
+      "prop": 1401054956,
+      "pose": {
+        "x": -11.6175,
+        "z": 12.5,
+        "y": 4.8,
+        "yaw": -0.11832714877320402
+      },
+      "flight": {
+        "objectId": 1401054956,
+        "corpse": false,
+        "started": 649,
+        "x": -11.6175,
+        "z": 12.5,
+        "dx": 0.9930075073202689,
+        "dz": 0.11805121941592259,
+        "distance": 0,
+        "range": 12.706349052737375,
+        "speed": 12,
+        "fromY": 5.3999999999999995,
+        "toY": 0
+      }
+    },
+    {
+      "tick": 649,
+      "source": 416,
+      "prop": 1417832575,
+      "pose": {
+        "x": -11.6175,
+        "z": 15.5,
+        "y": 4.8,
+        "yaw": 0.11832714877320402
+      },
+      "flight": {
+        "objectId": 1417832575,
+        "corpse": false,
+        "started": 649,
+        "x": -11.6175,
+        "z": 15.5,
+        "dx": 0.9930075073202689,
+        "dz": -0.11805121941592259,
+        "distance": 0,
+        "range": 12.706349052737375,
+        "speed": 12,
+        "fromY": 5.3999999999999995,
+        "toY": 0
+      }
+    },
+    {
+      "tick": 1200,
+      "source": 412,
+      "prop": 1382670987,
+      "pose": {
+        "x": 2.5098726619482483,
+        "z": 21.926873416208874,
+        "y": 0.7,
+        "yaw": 1.7600052245193438
+      },
+      "flight": {
+        "objectId": 1382670987,
+        "corpse": false,
+        "started": 1200,
+        "x": 2.5098726619482483,
+        "z": 21.926873416208874,
+        "dx": -0.18808197017454173,
+        "dz": -0.9821533345131314,
+        "distance": 0,
+        "range": 8.086463879896597,
+        "speed": 12,
+        "fromY": 1.2999999999999998,
+        "toY": 0
+      }
+    }
+  ],
+  "monkeys": [
+    {
+      "id": 411,
+      "pose": {
+        "x": 0.23810815828303838,
+        "z": 13.543942490694679,
+        "y": 0.7,
+        "yaw": -0.5308420845241033
+      },
+      "boss": {
+        "arena": "monkey",
+        "slot": 0,
+        "engaged": true,
+        "exposedUntil": 859,
+        "readyAt": 859,
+        "shakeHits": 0
+      }
+    },
+    {
+      "id": 412,
+      "pose": {
+        "x": 2.925372674942017,
+        "z": 21.926873416208874,
+        "y": 0.7,
+        "yaw": 1.7600052245193438
+      },
+      "boss": {
+        "arena": "monkey",
+        "slot": 1,
+        "engaged": true,
+        "exposedUntil": 1151,
+        "readyAt": 1151,
+        "shakeHits": 0
+      }
+    },
+    {
+      "id": 413,
+      "pose": {
+        "x": -11.6175,
+        "z": 12.5,
+        "y": 4.8,
+        "yaw": -0.11832714877320402
+      },
+      "boss": {
+        "arena": "monkey",
+        "slot": 2,
+        "engaged": false,
+        "exposedUntil": 828,
+        "readyAt": 1321,
+        "roof": true,
+        "shakeHits": 0
+      }
+    },
+    {
+      "id": 414,
+      "pose": {
+        "x": 0.9767211114061243,
+        "z": 13.00431427799463,
+        "y": 0.7,
+        "yaw": -1.5583190606257369
+      },
+      "boss": {
+        "arena": "monkey",
+        "slot": 3,
+        "engaged": true,
+        "exposedUntil": 1094,
+        "readyAt": 1094,
+        "shakeHits": 0
+      }
+    },
+    {
+      "id": 415,
+      "pose": {
+        "x": 1.8851370720144258,
+        "z": 13.382017910526521,
+        "y": 0.7,
+        "yaw": -3.0390440025472283
+      },
+      "boss": {
+        "arena": "monkey",
+        "slot": 4,
+        "engaged": true,
+        "exposedUntil": 1096,
+        "readyAt": 1096,
+        "shakeHits": 0,
+        "scavengeId": 1417832575
+      }
+    },
+    {
+      "id": 416,
+      "pose": {
+        "x": -11.6175,
+        "z": 15.5,
+        "y": 4.8,
+        "yaw": 0.11832714877320402
+      },
+      "boss": {
+        "arena": "monkey",
+        "slot": 5,
+        "engaged": false,
+        "exposedUntil": 828,
+        "readyAt": 1321,
+        "roof": true,
+        "shakeHits": 0
+      }
+    },
+    {
+      "id": 417,
+      "pose": {
+        "x": -22.01443636747453,
+        "z": 13.925022918277667,
+        "y": 0.7,
+        "yaw": -7.616202444059698
+      },
+      "boss": {
+        "arena": "monkey",
+        "slot": 6,
+        "engaged": true,
+        "exposedUntil": 0,
+        "readyAt": 0
+      }
+    }
+  ],
+  "solids": {
+    "failures": 0,
+    "pending": 0,
+    "admitted": 88,
+    "deferred": 0,
+    "requests": [],
+    "offenders": []
+  }
+}

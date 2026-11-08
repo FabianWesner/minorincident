@@ -1,3 +1,4 @@
+import { levelEightLayouts } from './levels/L8/layout';
 import { cloneData } from './core/clone';
 import { LevelEightBot } from './debug/bot/LevelEightBot';
 import type { LevelSevenBot } from './debug/bot/LevelSevenBot';
@@ -323,7 +324,7 @@ export class Game {
         if (id === 'L7' && !opts?.source) {
           try {
             const source = await loadLayouts('L8', undefined, async url => { const response = await fetch(assetUrl(url)); if (!response.ok) throw new Error(`Layout request failed: ${url}`); return response.json(); });
-            this.preparedL8 = { source, district: new DistrictWorld(source.composition, source.layouts, 1) };
+            this.preparedL8 = { source, district: new DistrictWorld(source.composition, levelEightLayouts(source.layouts), 1) };
           } catch { /* Best effort: a later handover can use the normal loading path. */ }
         }
         if (performanceScenario && performanceLevels[performanceScenario].spot) this.view.preset(performanceLevels[performanceScenario].spot);

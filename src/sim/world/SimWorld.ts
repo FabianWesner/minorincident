@@ -17,6 +17,7 @@ import { WeatherSystem } from '../weather/WeatherSystem';
 import { LightPower } from '../lighting/LightPower';
 import { levelFourLayouts } from '../../levels/L4/layout';
 import { installL7Dressing } from '../../levels/L7/dressing';
+import { levelEightLayouts } from '../../levels/L8/layout';
 import { levelSevenLayouts } from '../../levels/L7/layout';
 import { levelFiveLayouts } from '../../levels/L5/layout';
 import { levelThreeLayouts } from '../../levels/L3/layout';
@@ -298,7 +299,7 @@ export class SimWorld implements Lifecycle {
   }
   /** E10 composition hook; missions/controllers continue to use their existing scenario lifecycle. */
   loadComposition(composition:LevelComposition, layouts:DistrictLayout[], seed=1, aftermath:L1Aftermath|null=null, carriedSurvivors?: readonly EntitySnapshot[], carriedCompanion?: EntitySnapshot, reservedIds?: readonly number[], prepared?: DistrictWorld):void {
-    const districts=prepared??new DistrictWorld(composition,composition.id==='L10'?levelTenLayouts(layouts):composition.id==='L7'?levelSevenLayouts(layouts):composition.id==='L5'?levelFiveLayouts(layouts):composition.id==='L4'?levelFourLayouts(layouts):composition.id==='L3'?levelThreeLayouts(layouts):composition.id==='L2'?levelTwoLayouts(layouts,aftermath):composition.id==='L1'?levelOneLayouts(layouts):layouts,seed);
+    const districts=prepared??new DistrictWorld(composition,composition.id==='L8'?levelEightLayouts(layouts):composition.id==='L10'?levelTenLayouts(layouts):composition.id==='L7'?levelSevenLayouts(layouts):composition.id==='L5'?levelFiveLayouts(layouts):composition.id==='L4'?levelFourLayouts(layouts):composition.id==='L3'?levelThreeLayouts(layouts):composition.id==='L2'?levelTwoLayouts(layouts,aftermath):composition.id==='L1'?levelOneLayouts(layouts):layouts,seed);
     this.loadScenario('survivor',seed);
     if ((composition.id === 'L7' || composition.id === 'L8') && carriedSurvivors) this.entities.reserveIds(carriedSurvivors.map(e => e.id));
     if (carriedCompanion) this.entities.reserveIds([carriedCompanion.id]);

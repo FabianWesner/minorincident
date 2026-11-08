@@ -8,7 +8,7 @@ import type { SimWorld } from '../world/SimWorld';
 /** Level-owned pickup entity. A dropped item arms only after the player leaves it, preventing swap loops. */
 export class Pickups {
   constructor(private readonly world: SimWorld) {}
-  spawn(actionId: string, position: Vec2, dropped = false, options: { retain?: boolean; interactTicks?: number; surfaceY?: number; survivorOnly?: boolean; reachM?: number } = {}): number {
+  spawn(actionId: string, position: Vec2, dropped = false, options: { arenaAmmo?: import('../../data/l8Bosses').L8BossId; retain?: boolean; interactTicks?: number; surfaceY?: number; survivorOnly?: boolean; reachM?: number } = {}): number {
     action(actionId);
     if (!Number.isFinite(position.x) || !Number.isFinite(position.z)) throw new RangeError('Invalid pickup position');
     const support = this.world.districts?.groundHeight(position.x, position.z) ?? 0;
@@ -49,6 +49,13 @@ export class Pickups {
       // close to it"): authored weapon pickups are taken on approach, no E, click or standing still needed.
       const reach = pickup.reachM ?? (!pickup.interactTicks ? 0.6 : (pickup.surfaceY ?? 0) > 0 ? 2.2 : 1.5);
       if (distance > reach) { if (pickup.interactTicks) pickup.progress = 0; continue; }
+      if (pickup.arenaAmmo) {
+        const arena = this.world.missions?.l8?.state.arenas.find(a => a.id === pickup.arenaAmmo);
+        if (arena) arena.rocket = Math.min(1, arena.rocket + 1);
+        this.world.entities.remove(entity.id); this.world.spatial.delete(entity.id);
+        this.world.events.emit({ type: 'pickup.collected', tick: this.world.tick, sourceId: 1, pickupId: entity.id, side: 'RIGHT', actionId: pickup.actionId, replaced: null });
+        continue;
+      }
       const combat = this.world.combat!, side = pickup.retain ? 'RIGHT' : combat.runner.loadout.state.selectedSide;
       const loadout = combat.runner.loadout;
       let replaced: string | null = null;

@@ -24291,5 +24291,315 @@
     },
     "decayVariants": [],
     "script": "assets/l10-vignettes/build.py"
+  },
+  {
+    "id": "amb.monkey",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "hero",
+    "glb": "public/assets/models/skinned/amb.monkey.lod0.glb",
+    "dimensions": {
+      "x": 1.95,
+      "y": 1.2,
+      "z": 1.1,
+      "tolerance": 0.35
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [],
+    "budget": {
+      "triangles": 8250,
+      "materials": 4,
+      "fileKB": 1000,
+      "drawCalls": 40
+    },
+    "decayVariants": [],
+    "sourceForward": "+X",
+    "sourceScale": 0.83209854,
+    "lods": {
+      "lod1": "public/assets/models/skinned/amb.monkey.lod1.glb",
+      "lod2": "public/assets/models/skinned/amb.monkey.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 3160,
+      "lod2": 1100
+    },
+    "crowdSkin": true,
+    "textureMode": "baseColor"
+  },
+  {
+    "id": "inf.monkey",
+    "category": "infected",
+    "status": "integrated",
+    "tier": "hero",
+    "glb": "public/assets/models/skinned/inf.monkey.lod0.glb",
+    "dimensions": {
+      "x": 1.95,
+      "y": 1.2,
+      "z": 1.1,
+      "tolerance": 0.35
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR",
+      "stump_head",
+      "stump_armL",
+      "stump_armR",
+      "stump_foreArmL",
+      "stump_foreArmR",
+      "stump_legL",
+      "stump_legR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [],
+    "budget": {
+      "triangles": 8250,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": [],
+    "sourceForward": "+X",
+    "sourceScale": 0.83209854,
+    "lods": {
+      "lod1": "public/assets/models/skinned/inf.monkey.lod1.glb",
+      "lod2": "public/assets/models/skinned/inf.monkey.lod2.glb"
+    },
+    "generatedLodRatios": {
+      "lod1": 0.1,
+      "lod2": 0.08
+    },
+    "authoredLodTriangles": {
+      "lod1": 3160,
+      "lod2": 1100
+    },
+    "crowdSkin": true,
+    "textureMode": "baseColor"
+  },
+  {
+    "id": "amb.lioness",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "hero",
+    "glb": "public/assets/models/skinned/amb.lioness.lod0.glb",
+    "dimensions": {
+      "x": 1.8891475796699524,
+      "y": 1.3039316808471995,
+      "z": 1.0769121050834656,
+      "tolerance": 0.15
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR",
+      "jaw",
+      "tail"
+    ],
+    "sockets": [],
+    "budget": {
+      "triangles": 8000,
+      "materials": 4,
+      "fileKB": 1000,
+      "drawCalls": 40
+    },
+    "decayVariants": [],
+    "sourceForward": "+X",
+    "sourceScale": 0.7807986,
+    "lods": {
+      "lod1": "public/assets/models/skinned/amb.lioness.lod1.glb",
+      "lod2": "public/assets/models/skinned/amb.lioness.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 3000,
+      "lod2": 1000
+    },
+    "crowdSkin": true,
+    "textureMode": "baseColor"
+  },
+  {
+    "id": "inf.lioness",
+    "category": "infected",
+    "status": "integrated",
+    "tier": "hero",
+    "glb": "public/assets/models/skinned/inf.lioness.lod0.glb",
+    "dimensions": {
+      "x": 1.921461284160614,
+      "y": 1.3039316808471995,
+      "z": 1.0769121050834656,
+      "tolerance": 0.15
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR",
+      "stump_head",
+      "stump_armL",
+      "stump_armR",
+      "stump_foreArmL",
+      "stump_foreArmR",
+      "stump_legL",
+      "stump_legR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR",
+      "jaw",
+      "tail"
+    ],
+    "sockets": [],
+    "budget": {
+      "triangles": 8000,
+      "materials": 32,
+      "fileKB": 6000,
+      "drawCalls": 40
+    },
+    "decayVariants": [],
+    "sourceForward": "+X",
+    "sourceScale": 0.7807986,
+    "lods": {
+      "lod1": "public/assets/models/skinned/inf.lioness.lod1.glb",
+      "lod2": "public/assets/models/skinned/inf.lioness.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 3000,
+      "lod2": 1000
+    },
+    "crowdSkin": true,
+    "textureMode": "baseColor"
   }
 ]

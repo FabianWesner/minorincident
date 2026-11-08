@@ -33,10 +33,11 @@ function dogDef(): InfectedDef {
 export const animalInfected: readonly InfectedDef[] = [
   dogDef(), role('cat', 15, 6, 'cling', 0.2, 0.4),
   { ...role('crow', 20, 9, 'dive', 1, 0.6), weight: 5 },
-  { ...role('lion', 400, 7.5, 'pin', 0.6, 0.6), bar: true }, { ...role('gorilla', 1200, 4.5, 'prop-throw', 0.7, 0.8), bar: true },
+  { ...role('lion', 400, 7.5, 'pin', 0.6, 0.6), bar: true }, { ...role('lioness', 400, 7.5, 'pin', .55, .6), asset: 'inf.lioness', bar: true }, { ...role('gorilla', 1200, 4.5, 'prop-throw', 0.7, 0.8), bar: true },
   { ...role('elephant', 800, 3.5, 'elephant', 1.2, .7), bar: true },
   { ...role('zebra', 120, 6, 'zebra', .45, .6), bar: true },
   { ...role('flamingo', 10, 5, 'peck', 0.25), bar: true },
+  { ...role('monkey', 45, 6, 'cling', .3, .6), asset: 'inf.monkey', bar: true },
 ];
 export const infectedDefinitions = [...humanInfected, ...animalInfected];
 export function infectedDef(id: string): InfectedDef {
@@ -89,6 +90,9 @@ export function alphaDamageMultiplier(actionId: string, type: string): number {
 }
 /** Shared physical-special timing; effects are implemented by the per-move lanes. */
 export const infectedSpecialMoves = {
+  'monkey.grab': { archetype: 'infected.monkey', windup: 48, cooldown: 420 },
+  'monkey.debris': { archetype: 'infected.monkey', windup: 48, cooldown: 420 },
+  'lion.roar': { archetype: 'infected.lion', windup: 36, cooldown: 600 },
   'alpha.charge': { archetype: 'infected.alpha', windup: 48, cooldown: 480 },
   'alpha.ground-slam': { archetype: 'infected.alpha', windup: 60, cooldown: 600 },
   'alpha.grab-throw': { archetype: 'infected.alpha', windup: 48, cooldown: 720 },

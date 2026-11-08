@@ -1,0 +1,3259 @@
+{
+  "revision": "877d7e1d",
+  "sourceHash": "7f95466d5f9da534f9e1b28fbbb3feea530a5d1d03dd2a2eed37d499a88f58f5",
+  "observerHash": "7d56698184639dfbf5c990fbd11373924e17575469d4164e37775e5e16499e53",
+  "policy": "kite",
+  "rows": [
+    {
+      "id": "flamingo",
+      "tier": "low",
+      "policy": "kite",
+      "measurementEntry": {
+        "x": -2.5298221281347035,
+        "z": -16.589466384404112,
+        "y": 0.7
+      },
+      "complete": false,
+      "seconds": 23.1,
+      "totalSeconds": 23.1,
+      "hp": 0,
+      "deaths": 1,
+      "damage": 117.16666666666625,
+      "attacks": 4,
+      "phases": 1,
+      "counters": 0,
+      "wallHits": 0,
+      "rocket": 0,
+      "rocketPickups": 0,
+      "bites": [
+        402,
+        403,
+        404,
+        405,
+        406,
+        407,
+        408
+      ],
+      "turns": [
+        406,
+        407,
+        403,
+        408,
+        402,
+        405,
+        404
+      ],
+      "tells": [
+        {
+          "tick": 354,
+          "source": 405,
+          "attack": 11,
+          "move": "flamingo.dive",
+          "duration": 0.6,
+          "area": {
+            "x": -3.3666508239570443,
+            "z": -20.420181511058967,
+            "radius": 1.1,
+            "dx": -0.9905862038110788,
+            "dz": 0.1368903678830467
+          }
+        },
+        {
+          "tick": 354,
+          "source": 406,
+          "attack": 12,
+          "move": "flamingo.dive",
+          "duration": 0.6,
+          "area": {
+            "x": -2.057451460734321,
+            "z": -18.001632710320763,
+            "radius": 1.1,
+            "dx": -0.9937847564948851,
+            "dz": -0.11131872150901566
+          }
+        },
+        {
+          "tick": 354,
+          "source": 407,
+          "attack": 13,
+          "move": "flamingo.dive",
+          "duration": 0.6,
+          "area": {
+            "x": -0.4420914090317938,
+            "z": -15.20856081119988,
+            "radius": 1.1,
+            "dx": -0.9467827226543725,
+            "dz": -0.32187338517369474
+          }
+        },
+        {
+          "tick": 774,
+          "source": 408,
+          "attack": 17,
+          "move": "flamingo.dive",
+          "duration": 0.6,
+          "area": {
+            "x": -19.63195095995483,
+            "z": -25.291642911305324,
+            "radius": 1.1,
+            "dx": 0.7728588326890268,
+            "dz": -0.6345779894816357
+          }
+        },
+        {
+          "tick": 774,
+          "source": 402,
+          "attack": 18,
+          "move": "flamingo.dive",
+          "duration": 0.6,
+          "area": {
+            "x": -7.8738844634450045,
+            "z": -37.25109419898366,
+            "radius": 1.1,
+            "dx": 0.12474653559806664,
+            "dz": 0.9921886422733734
+          }
+        },
+        {
+          "tick": 774,
+          "source": 403,
+          "attack": 19,
+          "move": "flamingo.dive",
+          "duration": 0.6,
+          "area": {
+            "x": -7.9216955018905315,
+            "z": -32.99053224413238,
+            "radius": 1.1,
+            "dx": 0.05110643466620789,
+            "dz": -0.9986932123208351
+          }
+        },
+        {
+          "tick": 1194,
+          "source": 404,
+          "attack": 22,
+          "move": "flamingo.dive",
+          "duration": 0.6,
+          "area": {
+            "x": -0.23814938421716225,
+            "z": -24.20896896686671,
+            "radius": 1.1,
+            "dx": -0.5266000550786929,
+            "dz": 0.8501131583448864
+          }
+        },
+        {
+          "tick": 1194,
+          "source": 405,
+          "attack": 23,
+          "move": "flamingo.dive",
+          "duration": 0.6,
+          "area": {
+            "x": 3.9742057971897764,
+            "z": -22.802643639061962,
+            "radius": 1.1,
+            "dx": -0.836246291729159,
+            "dz": 0.5483540275854916
+          }
+        },
+        {
+          "tick": 1194,
+          "source": 406,
+          "attack": 24,
+          "move": "flamingo.dive",
+          "duration": 0.6,
+          "area": {
+            "x": 5.81868966856477,
+            "z": -24.707509102212327,
+            "radius": 1.1,
+            "dx": -0.8262421440818809,
+            "dz": 0.5633151154930748
+          }
+        },
+        {
+          "tick": 1614,
+          "source": 407,
+          "attack": 25,
+          "move": "flamingo.dive",
+          "duration": 0.6,
+          "area": {
+            "x": -18.65341714285481,
+            "z": -31.33870267019111,
+            "radius": 1.1,
+            "dx": 0.8695910780319375,
+            "dz": -0.493772576200069
+          }
+        },
+        {
+          "tick": 1614,
+          "source": 408,
+          "attack": 26,
+          "move": "flamingo.dive",
+          "duration": 0.6,
+          "area": {
+            "x": -14.236543916447424,
+            "z": -35.15721022573987,
+            "radius": 1.1,
+            "dx": 0.9901479095225354,
+            "dz": -0.1400254165076943
+          }
+        },
+        {
+          "tick": 1614,
+          "source": 402,
+          "attack": 27,
+          "move": "flamingo.dive",
+          "duration": 0.6,
+          "area": {
+            "x": -10.858035873458327,
+            "z": -34.21733190891768,
+            "radius": 1.1,
+            "dx": -0.06763458168501038,
+            "dz": -0.9977101599965259
+          }
+        }
+      ],
+      "throws": [],
+      "signals": [],
+      "stages": [
+        {
+          "tick": 390,
+          "source": 406,
+          "move": "flamingo.dive",
+          "stage": "active"
+        },
+        {
+          "tick": 390,
+          "source": 407,
+          "move": "flamingo.dive",
+          "stage": "active"
+        },
+        {
+          "tick": 390,
+          "source": 405,
+          "move": "flamingo.dive",
+          "stage": "active"
+        },
+        {
+          "tick": 421,
+          "source": 405,
+          "move": "flamingo.dive",
+          "stage": "recovery"
+        },
+        {
+          "tick": 423,
+          "source": 406,
+          "move": "flamingo.dive",
+          "stage": "recovery"
+        },
+        {
+          "tick": 429,
+          "source": 407,
+          "move": "flamingo.dive",
+          "stage": "recovery"
+        },
+        {
+          "tick": 541,
+          "source": 405,
+          "move": "flamingo.dive",
+          "stage": "expiry"
+        },
+        {
+          "tick": 543,
+          "source": 406,
+          "move": "flamingo.dive",
+          "stage": "expiry"
+        },
+        {
+          "tick": 549,
+          "source": 407,
+          "move": "flamingo.dive",
+          "stage": "expiry"
+        },
+        {
+          "tick": 810,
+          "source": 403,
+          "move": "flamingo.dive",
+          "stage": "active"
+        },
+        {
+          "tick": 810,
+          "source": 408,
+          "move": "flamingo.dive",
+          "stage": "active"
+        },
+        {
+          "tick": 810,
+          "source": 402,
+          "move": "flamingo.dive",
+          "stage": "active"
+        },
+        {
+          "tick": 816,
+          "source": 402,
+          "move": "flamingo.dive",
+          "stage": "recovery"
+        },
+        {
+          "tick": 817,
+          "source": 403,
+          "move": "flamingo.dive",
+          "stage": "recovery"
+        },
+        {
+          "tick": 862,
+          "source": 408,
+          "move": "flamingo.dive",
+          "stage": "recovery"
+        },
+        {
+          "tick": 936,
+          "source": 402,
+          "move": "flamingo.dive",
+          "stage": "expiry"
+        },
+        {
+          "tick": 937,
+          "source": 403,
+          "move": "flamingo.dive",
+          "stage": "expiry"
+        },
+        {
+          "tick": 982,
+          "source": 408,
+          "move": "flamingo.dive",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1230,
+          "source": 406,
+          "move": "flamingo.dive",
+          "stage": "active"
+        },
+        {
+          "tick": 1230,
+          "source": 405,
+          "move": "flamingo.dive",
+          "stage": "active"
+        },
+        {
+          "tick": 1230,
+          "source": 404,
+          "move": "flamingo.dive",
+          "stage": "active"
+        },
+        {
+          "tick": 1238,
+          "source": 406,
+          "move": "flamingo.dive",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1247,
+          "source": 405,
+          "move": "flamingo.dive",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1260,
+          "source": 404,
+          "move": "flamingo.dive",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1358,
+          "source": 406,
+          "move": "flamingo.dive",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1367,
+          "source": 405,
+          "move": "flamingo.dive",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1380,
+          "source": 404,
+          "move": "flamingo.dive",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1650,
+          "source": 407,
+          "move": "flamingo.dive",
+          "stage": "active"
+        },
+        {
+          "tick": 1650,
+          "source": 408,
+          "move": "flamingo.dive",
+          "stage": "active"
+        },
+        {
+          "tick": 1650,
+          "source": 402,
+          "move": "flamingo.dive",
+          "stage": "active"
+        }
+      ],
+      "destruction": [
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-0",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-1",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-2",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-3",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        }
+      ],
+      "bosses": [
+        {
+          "id": 402,
+          "hp": 132.36000000000038,
+          "at": {
+            "x": -10.877199004935747,
+            "z": -34.50001645425003,
+            "y": 0.7,
+            "yaw": 1.6384825799343377
+          },
+          "state": "attack",
+          "boss": {
+            "arena": "flamingo",
+            "slot": 0,
+            "engaged": true,
+            "exposedUntil": 936,
+            "readyAt": 936,
+            "shakeHits": 0
+          },
+          "attack": {
+            "move": "flamingo.dive",
+            "attackId": 27,
+            "stage": "active",
+            "startTick": 1614,
+            "activeTick": 1650,
+            "cooldownExpiry": 2034,
+            "recoveryUntil": 0,
+            "target": {
+              "id": 1,
+              "x": -10.960749970288497,
+              "z": -35.73251682511328
+            },
+            "area": {
+              "x": -10.858035873458327,
+              "z": -34.21733190891768,
+              "radius": 1.1,
+              "dx": -0.06763458168501038,
+              "dz": -0.9977101599965259
+            },
+            "hitIds": [
+              1
+            ],
+            "destination": {
+              "x": -11.872554598733483,
+              "z": -49.18298430886557
+            }
+          },
+          "held": false
+        },
+        {
+          "id": 403,
+          "hp": 633.8400000000006,
+          "at": {
+            "x": -13.630454678204043,
+            "z": -28.742194155073392,
+            "y": 0.7,
+            "yaw": -4.771466214876958
+          },
+          "state": "chase",
+          "boss": {
+            "arena": "flamingo",
+            "slot": 1,
+            "engaged": true,
+            "exposedUntil": 937,
+            "readyAt": 937,
+            "shakeHits": 0
+          },
+          "held": false
+        },
+        {
+          "id": 404,
+          "hp": 265.9200000000002,
+          "at": {
+            "x": -13.769842903809355,
+            "z": -29.637737332208424,
+            "y": 0.7,
+            "yaw": -5.0018282428483225
+          },
+          "state": "chase",
+          "boss": {
+            "arena": "flamingo",
+            "slot": 2,
+            "engaged": true,
+            "exposedUntil": 1380,
+            "readyAt": 1380,
+            "shakeHits": 0
+          },
+          "held": false
+        },
+        {
+          "id": 405,
+          "hp": 288.81599999999963,
+          "at": {
+            "x": -17.066242567686874,
+            "z": -29.058228535754083,
+            "y": 0.7,
+            "yaw": -4.659923166320765
+          },
+          "state": "chase",
+          "boss": {
+            "arena": "flamingo",
+            "slot": 3,
+            "engaged": true,
+            "exposedUntil": 1367,
+            "readyAt": 1367,
+            "shakeHits": 1
+          },
+          "held": false
+        },
+        {
+          "id": 406,
+          "hp": 762.5759999999998,
+          "at": {
+            "x": -16.373876350154426,
+            "z": -29.249750877811575,
+            "y": 0.7,
+            "yaw": -4.537149059305728
+          },
+          "state": "chase",
+          "boss": {
+            "arena": "flamingo",
+            "slot": 4,
+            "engaged": true,
+            "exposedUntil": 1358,
+            "readyAt": 1358,
+            "shakeHits": 0
+          },
+          "held": false
+        },
+        {
+          "id": 407,
+          "hp": 750.1200000000001,
+          "at": {
+            "x": -18.407033004079093,
+            "z": -31.478604900114465,
+            "y": 0.7,
+            "yaw": 0.5164227696756922
+          },
+          "state": "attack",
+          "boss": {
+            "arena": "flamingo",
+            "slot": 5,
+            "engaged": true,
+            "exposedUntil": 549,
+            "readyAt": 549,
+            "shakeHits": 0
+          },
+          "attack": {
+            "move": "flamingo.dive",
+            "attackId": 25,
+            "stage": "active",
+            "startTick": 1614,
+            "activeTick": 1650,
+            "cooldownExpiry": 2034,
+            "recoveryUntil": 0,
+            "target": {
+              "id": 1,
+              "x": -10.332012624707389,
+              "z": -36.06377569627112
+            },
+            "area": {
+              "x": -18.65341714285481,
+              "z": -31.33870267019111,
+              "radius": 1.1,
+              "dx": 0.8695910780319375,
+              "dz": -0.493772576200069
+            },
+            "hitIds": [],
+            "destination": {
+              "x": -5.609550972375748,
+              "z": -38.74529131319215
+            }
+          },
+          "held": false
+        },
+        {
+          "id": 408,
+          "hp": 621.960000000001,
+          "at": {
+            "x": -13.956002008749373,
+            "z": -35.19688409375038,
+            "y": 0.7,
+            "yaw": 0.1404870840682619
+          },
+          "state": "attack",
+          "boss": {
+            "arena": "flamingo",
+            "slot": 6,
+            "engaged": true,
+            "exposedUntil": 982,
+            "readyAt": 982,
+            "shakeHits": 0
+          },
+          "attack": {
+            "move": "flamingo.dive",
+            "attackId": 26,
+            "stage": "active",
+            "startTick": 1614,
+            "activeTick": 1650,
+            "cooldownExpiry": 2034,
+            "recoveryUntil": 0,
+            "target": {
+              "id": 1,
+              "x": -11.209263256839025,
+              "z": -35.58532427937834
+            },
+            "area": {
+              "x": -14.236543916447424,
+              "z": -35.15721022573987,
+              "radius": 1.1,
+              "dx": 0.9901479095225354,
+              "dz": -0.1400254165076943
+            },
+            "hitIds": [],
+            "destination": {
+              "x": 0.6156747263906066,
+              "z": -37.25759147335528
+            }
+          },
+          "held": false
+        }
+      ]
+    },
+    {
+      "id": "zebra",
+      "tier": "low",
+      "policy": "kite",
+      "measurementEntry": {
+        "x": 60,
+        "z": 16,
+        "y": 0.7
+      },
+      "complete": false,
+      "seconds": 74.7,
+      "totalSeconds": 74.7,
+      "hp": 0,
+      "deaths": 1,
+      "damage": 190.16666666666555,
+      "attacks": 6,
+      "phases": 2,
+      "counters": 0,
+      "wallHits": 0,
+      "rocket": 0,
+      "rocketPickups": 0,
+      "bites": [
+        400,
+        409,
+        410,
+        401
+      ],
+      "turns": [
+        410,
+        409,
+        400,
+        401
+      ],
+      "tells": [
+        {
+          "tick": 555,
+          "source": 400,
+          "attack": 7,
+          "move": "zebra.stampede",
+          "duration": 1,
+          "area": {
+            "x": 66.02441778884666,
+            "z": 16.353793884551173,
+            "radius": 0.9,
+            "dx": 0,
+            "dz": 1
+          }
+        },
+        {
+          "tick": 555,
+          "source": 401,
+          "attack": 8,
+          "move": "zebra.stampede",
+          "duration": 1,
+          "area": {
+            "x": 67.12533805825312,
+            "z": 15.494227370131487,
+            "radius": 0.9,
+            "dx": 0,
+            "dz": 1
+          }
+        },
+        {
+          "tick": 555,
+          "source": 409,
+          "attack": 9,
+          "move": "zebra.stampede",
+          "duration": 1,
+          "area": {
+            "x": 68.39288843167749,
+            "z": 15.886645778409644,
+            "radius": 0.9,
+            "dx": 0,
+            "dz": 1
+          }
+        },
+        {
+          "tick": 555,
+          "source": 410,
+          "attack": 10,
+          "move": "zebra.stampede",
+          "duration": 1,
+          "area": {
+            "x": 69.08866918602932,
+            "z": 16.534251279206416,
+            "radius": 0.9,
+            "dx": 0,
+            "dz": 1
+          }
+        },
+        {
+          "tick": 1433,
+          "source": 400,
+          "attack": 11,
+          "move": "zebra.stampede",
+          "duration": 1,
+          "area": {
+            "x": 65.8832014176553,
+            "z": 47.36033592537134,
+            "radius": 0.9,
+            "dx": 0,
+            "dz": -1
+          }
+        },
+        {
+          "tick": 1433,
+          "source": 401,
+          "attack": 12,
+          "move": "zebra.stampede",
+          "duration": 1,
+          "area": {
+            "x": 66.95099857346284,
+            "z": 47.93511803804098,
+            "radius": 0.9,
+            "dx": 0,
+            "dz": -1
+          }
+        },
+        {
+          "tick": 1433,
+          "source": 409,
+          "attack": 13,
+          "move": "zebra.stampede",
+          "duration": 1,
+          "area": {
+            "x": 69.04066781958169,
+            "z": 48.475333855666655,
+            "radius": 0.9,
+            "dx": 0,
+            "dz": -1
+          }
+        },
+        {
+          "tick": 1433,
+          "source": 410,
+          "attack": 14,
+          "move": "zebra.stampede",
+          "duration": 1,
+          "area": {
+            "x": 70.11267986968974,
+            "z": 48.15456229230952,
+            "radius": 0.9,
+            "dx": 0,
+            "dz": -1
+          }
+        },
+        {
+          "tick": 2525,
+          "source": 400,
+          "attack": 15,
+          "move": "zebra.stampede",
+          "duration": 1,
+          "area": {
+            "x": 49.092829908617965,
+            "z": 16.08920446746583,
+            "radius": 0.9,
+            "dx": 0,
+            "dz": 1
+          }
+        },
+        {
+          "tick": 2525,
+          "source": 401,
+          "attack": 16,
+          "move": "zebra.stampede",
+          "duration": 1,
+          "area": {
+            "x": 50.7604117150243,
+            "z": 15.55950637981263,
+            "radius": 0.9,
+            "dx": 0,
+            "dz": 1
+          }
+        },
+        {
+          "tick": 2525,
+          "source": 409,
+          "attack": 17,
+          "move": "zebra.stampede",
+          "duration": 1,
+          "area": {
+            "x": 52.353600758404845,
+            "z": 15.425003152334558,
+            "radius": 0.9,
+            "dx": 0,
+            "dz": 1
+          }
+        },
+        {
+          "tick": 2525,
+          "source": 410,
+          "attack": 18,
+          "move": "zebra.stampede",
+          "duration": 1,
+          "area": {
+            "x": 51.99144226624993,
+            "z": 16.50054647882724,
+            "radius": 0.9,
+            "dx": 0,
+            "dz": 1
+          }
+        },
+        {
+          "tick": 3375,
+          "source": 400,
+          "attack": 19,
+          "move": "zebra.stampede",
+          "duration": 1,
+          "area": {
+            "x": 52.42645810354739,
+            "z": 48.034195831484816,
+            "radius": 0.9,
+            "dx": 0,
+            "dz": -1
+          }
+        },
+        {
+          "tick": 3375,
+          "source": 401,
+          "attack": 20,
+          "move": "zebra.stampede",
+          "duration": 1,
+          "area": {
+            "x": 54.13309838755332,
+            "z": 48.30524598392669,
+            "radius": 0.9,
+            "dx": 0,
+            "dz": -1
+          }
+        },
+        {
+          "tick": 3375,
+          "source": 409,
+          "attack": 21,
+          "move": "zebra.stampede",
+          "duration": 1,
+          "area": {
+            "x": 53.65819151528191,
+            "z": 47.27861074330032,
+            "radius": 0.9,
+            "dx": 0,
+            "dz": -1
+          }
+        },
+        {
+          "tick": 3375,
+          "source": 410,
+          "attack": 22,
+          "move": "zebra.stampede",
+          "duration": 1,
+          "area": {
+            "x": 55.4519443967734,
+            "z": 48.05263415162045,
+            "radius": 0.9,
+            "dx": 0,
+            "dz": -1
+          }
+        },
+        {
+          "tick": 3873,
+          "source": 400,
+          "attack": 23,
+          "move": "zebra.stampede",
+          "duration": 1,
+          "area": {
+            "x": 67.05093872263261,
+            "z": 15.964925815890535,
+            "radius": 0.9,
+            "dx": 0,
+            "dz": 1
+          }
+        },
+        {
+          "tick": 3873,
+          "source": 410,
+          "attack": 24,
+          "move": "zebra.stampede",
+          "duration": 1,
+          "area": {
+            "x": 69.79386759446001,
+            "z": 16.009338644232866,
+            "radius": 0.9,
+            "dx": 0,
+            "dz": 1
+          }
+        },
+        {
+          "tick": 4669,
+          "source": 400,
+          "attack": 25,
+          "move": "zebra.stampede",
+          "duration": 1,
+          "area": {
+            "x": 69.85485924933272,
+            "z": 48.634117960399735,
+            "radius": 0.9,
+            "dx": 0,
+            "dz": -1
+          }
+        },
+        {
+          "tick": 4669,
+          "source": 410,
+          "attack": 26,
+          "move": "zebra.stampede",
+          "duration": 1,
+          "area": {
+            "x": 70.08529077884148,
+            "z": 47.45619799645096,
+            "radius": 0.9,
+            "dx": 0,
+            "dz": -1
+          }
+        }
+      ],
+      "throws": [],
+      "signals": [
+        {
+          "tick": 3627,
+          "name": "l8.arena.zebra.phase-2"
+        }
+      ],
+      "stages": [
+        {
+          "tick": 615,
+          "source": 410,
+          "move": "zebra.stampede",
+          "stage": "active"
+        },
+        {
+          "tick": 615,
+          "source": 409,
+          "move": "zebra.stampede",
+          "stage": "active"
+        },
+        {
+          "tick": 615,
+          "source": 400,
+          "move": "zebra.stampede",
+          "stage": "active"
+        },
+        {
+          "tick": 615,
+          "source": 401,
+          "move": "zebra.stampede",
+          "stage": "active"
+        },
+        {
+          "tick": 693,
+          "source": 410,
+          "move": "zebra.stampede",
+          "stage": "recovery"
+        },
+        {
+          "tick": 696,
+          "source": 409,
+          "move": "zebra.stampede",
+          "stage": "recovery"
+        },
+        {
+          "tick": 721,
+          "source": 401,
+          "move": "zebra.stampede",
+          "stage": "recovery"
+        },
+        {
+          "tick": 754,
+          "source": 400,
+          "move": "zebra.stampede",
+          "stage": "recovery"
+        },
+        {
+          "tick": 813,
+          "source": 410,
+          "move": "zebra.stampede",
+          "stage": "expiry"
+        },
+        {
+          "tick": 816,
+          "source": 409,
+          "move": "zebra.stampede",
+          "stage": "expiry"
+        },
+        {
+          "tick": 841,
+          "source": 401,
+          "move": "zebra.stampede",
+          "stage": "expiry"
+        },
+        {
+          "tick": 874,
+          "source": 400,
+          "move": "zebra.stampede",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1493,
+          "source": 410,
+          "move": "zebra.stampede",
+          "stage": "active"
+        },
+        {
+          "tick": 1493,
+          "source": 409,
+          "move": "zebra.stampede",
+          "stage": "active"
+        },
+        {
+          "tick": 1493,
+          "source": 400,
+          "move": "zebra.stampede",
+          "stage": "active"
+        },
+        {
+          "tick": 1493,
+          "source": 401,
+          "move": "zebra.stampede",
+          "stage": "active"
+        },
+        {
+          "tick": 1535,
+          "source": 409,
+          "move": "zebra.stampede",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1556,
+          "source": 410,
+          "move": "zebra.stampede",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1636,
+          "source": 400,
+          "move": "zebra.stampede",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1636,
+          "source": 401,
+          "move": "zebra.stampede",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1655,
+          "source": 409,
+          "move": "zebra.stampede",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1676,
+          "source": 410,
+          "move": "zebra.stampede",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1756,
+          "source": 400,
+          "move": "zebra.stampede",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1756,
+          "source": 401,
+          "move": "zebra.stampede",
+          "stage": "expiry"
+        },
+        {
+          "tick": 2585,
+          "source": 410,
+          "move": "zebra.stampede",
+          "stage": "active"
+        },
+        {
+          "tick": 2585,
+          "source": 409,
+          "move": "zebra.stampede",
+          "stage": "active"
+        },
+        {
+          "tick": 2585,
+          "source": 400,
+          "move": "zebra.stampede",
+          "stage": "active"
+        },
+        {
+          "tick": 2585,
+          "source": 401,
+          "move": "zebra.stampede",
+          "stage": "active"
+        },
+        {
+          "tick": 2665,
+          "source": 401,
+          "move": "zebra.stampede",
+          "stage": "recovery"
+        },
+        {
+          "tick": 2679,
+          "source": 410,
+          "move": "zebra.stampede",
+          "stage": "recovery"
+        },
+        {
+          "tick": 2679,
+          "source": 409,
+          "move": "zebra.stampede",
+          "stage": "recovery"
+        },
+        {
+          "tick": 2725,
+          "source": 400,
+          "move": "zebra.stampede",
+          "stage": "recovery"
+        },
+        {
+          "tick": 2785,
+          "source": 401,
+          "move": "zebra.stampede",
+          "stage": "expiry"
+        },
+        {
+          "tick": 2799,
+          "source": 410,
+          "move": "zebra.stampede",
+          "stage": "expiry"
+        },
+        {
+          "tick": 2799,
+          "source": 409,
+          "move": "zebra.stampede",
+          "stage": "expiry"
+        },
+        {
+          "tick": 2845,
+          "source": 400,
+          "move": "zebra.stampede",
+          "stage": "expiry"
+        },
+        {
+          "tick": 3435,
+          "source": 410,
+          "move": "zebra.stampede",
+          "stage": "active"
+        },
+        {
+          "tick": 3435,
+          "source": 409,
+          "move": "zebra.stampede",
+          "stage": "active"
+        },
+        {
+          "tick": 3435,
+          "source": 400,
+          "move": "zebra.stampede",
+          "stage": "active"
+        },
+        {
+          "tick": 3435,
+          "source": 401,
+          "move": "zebra.stampede",
+          "stage": "active"
+        },
+        {
+          "tick": 3463,
+          "source": 409,
+          "move": "zebra.stampede",
+          "stage": "recovery"
+        },
+        {
+          "tick": 3486,
+          "source": 409,
+          "move": "zebra.stampede",
+          "stage": "cancelled"
+        },
+        {
+          "tick": 3578,
+          "source": 400,
+          "move": "zebra.stampede",
+          "stage": "recovery"
+        },
+        {
+          "tick": 3582,
+          "source": 410,
+          "move": "zebra.stampede",
+          "stage": "recovery"
+        },
+        {
+          "tick": 3597,
+          "source": 401,
+          "move": "zebra.stampede",
+          "stage": "recovery"
+        },
+        {
+          "tick": 3627,
+          "source": 401,
+          "move": "zebra.stampede",
+          "stage": "cancelled"
+        },
+        {
+          "tick": 3698,
+          "source": 400,
+          "move": "zebra.stampede",
+          "stage": "expiry"
+        },
+        {
+          "tick": 3702,
+          "source": 410,
+          "move": "zebra.stampede",
+          "stage": "expiry"
+        },
+        {
+          "tick": 3933,
+          "source": 410,
+          "move": "zebra.stampede",
+          "stage": "active"
+        },
+        {
+          "tick": 3933,
+          "source": 400,
+          "move": "zebra.stampede",
+          "stage": "active"
+        },
+        {
+          "tick": 3973,
+          "source": 400,
+          "move": "zebra.stampede",
+          "stage": "recovery"
+        },
+        {
+          "tick": 4093,
+          "source": 400,
+          "move": "zebra.stampede",
+          "stage": "expiry"
+        },
+        {
+          "tick": 4138,
+          "source": 410,
+          "move": "zebra.stampede",
+          "stage": "recovery"
+        },
+        {
+          "tick": 4258,
+          "source": 410,
+          "move": "zebra.stampede",
+          "stage": "expiry"
+        },
+        {
+          "tick": 4729,
+          "source": 410,
+          "move": "zebra.stampede",
+          "stage": "active"
+        },
+        {
+          "tick": 4729,
+          "source": 400,
+          "move": "zebra.stampede",
+          "stage": "active"
+        }
+      ],
+      "destruction": [
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-0",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-1",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-2",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-3",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        }
+      ],
+      "bosses": [
+        {
+          "id": 400,
+          "hp": 98.35999999999981,
+          "at": {
+            "x": 69.85485924933272,
+            "z": 30.634117960399735,
+            "y": 0.7,
+            "yaw": 1.5707963267948966
+          },
+          "state": "attack",
+          "boss": {
+            "arena": "zebra",
+            "slot": 0,
+            "engaged": true,
+            "exposedUntil": 4093,
+            "readyAt": 4093,
+            "shakeHits": 0
+          },
+          "attack": {
+            "move": "zebra.stampede",
+            "attackId": 25,
+            "stage": "active",
+            "startTick": 4669,
+            "activeTick": 4729,
+            "cooldownExpiry": 5089,
+            "recoveryUntil": 0,
+            "target": {
+              "id": 1,
+              "x": 70.01987267066428,
+              "z": 31.070992863579214
+            },
+            "area": {
+              "x": 69.85485924933272,
+              "z": 48.634117960399735,
+              "radius": 0.9,
+              "dx": 0,
+              "dz": -1
+            },
+            "hitIds": [
+              1
+            ],
+            "destination": {
+              "x": 69.85485924933272,
+              "z": 12.634117960399735
+            }
+          },
+          "held": false
+        },
+        {
+          "id": 401,
+          "hp": 0,
+          "at": {
+            "x": 54.28664701994901,
+            "z": 12.319102367550153,
+            "y": 0.7,
+            "yaw": 1.5707963267948966
+          },
+          "state": "dead",
+          "boss": {
+            "arena": "zebra",
+            "slot": 1,
+            "engaged": true,
+            "exposedUntil": 3717,
+            "readyAt": 3717,
+            "shakeHits": 0
+          },
+          "held": false
+        },
+        {
+          "id": 409,
+          "hp": 0,
+          "at": {
+            "x": 53.394674819937,
+            "z": 40.85466146306311,
+            "y": 0.7,
+            "yaw": 1.5707963267948966
+          },
+          "state": "dead",
+          "boss": {
+            "arena": "zebra",
+            "slot": 2,
+            "engaged": true,
+            "exposedUntil": 3583,
+            "readyAt": 3583,
+            "shakeHits": 0
+          },
+          "held": false
+        },
+        {
+          "id": 410,
+          "hp": 207.4400000000021,
+          "at": {
+            "x": 70.10769260061801,
+            "z": 29.49740776974835,
+            "y": 0.7,
+            "yaw": 1.5707963267948966
+          },
+          "state": "attack",
+          "boss": {
+            "arena": "zebra",
+            "slot": 3,
+            "engaged": true,
+            "exposedUntil": 4258,
+            "readyAt": 4258,
+            "shakeHits": 0
+          },
+          "attack": {
+            "move": "zebra.stampede",
+            "attackId": 26,
+            "stage": "active",
+            "startTick": 4669,
+            "activeTick": 4729,
+            "cooldownExpiry": 5089,
+            "recoveryUntil": 0,
+            "target": {
+              "id": 1,
+              "x": 70.01987267066428,
+              "z": 31.070992863579214
+            },
+            "area": {
+              "x": 70.08529077884148,
+              "z": 47.45619799645096,
+              "radius": 0.9,
+              "dx": 0,
+              "dz": -1
+            },
+            "hitIds": [
+              1
+            ],
+            "destination": {
+              "x": 70.08529077884148,
+              "z": 11.45619799645096
+            }
+          },
+          "held": false
+        }
+      ]
+    },
+    {
+      "id": "monkey",
+      "tier": "low",
+      "policy": "kite",
+      "measurementEntry": {
+        "x": -5,
+        "z": 15,
+        "y": 0.7
+      },
+      "complete": false,
+      "seconds": 9.416666666666666,
+      "totalSeconds": 9.416666666666666,
+      "hp": 0,
+      "deaths": 1,
+      "damage": 102.23333333333345,
+      "attacks": 14,
+      "phases": 1,
+      "counters": 0,
+      "wallHits": 0,
+      "rocket": 1,
+      "rocketPickups": 0,
+      "bites": [
+        411,
+        412,
+        413,
+        414,
+        415,
+        416,
+        417
+      ],
+      "turns": [
+        411,
+        414,
+        415,
+        412,
+        416,
+        413,
+        417
+      ],
+      "tells": [
+        {
+          "tick": 325,
+          "source": 416,
+          "attack": 20,
+          "move": "monkey.debris",
+          "duration": 0.8,
+          "area": {
+            "x": -11.6175,
+            "z": 15.5,
+            "radius": 1.2,
+            "dx": 0.997157716102973,
+            "dz": -0.07534247949399116
+          }
+        },
+        {
+          "tick": 339,
+          "source": 413,
+          "attack": 21,
+          "move": "monkey.debris",
+          "duration": 0.8,
+          "area": {
+            "x": -11.6175,
+            "z": 12.5,
+            "radius": 1.2,
+            "dx": 0.9354694973034151,
+            "dz": 0.35340744136887614
+          }
+        },
+        {
+          "tick": 347,
+          "source": 411,
+          "attack": 22,
+          "move": "monkey.grab",
+          "duration": 0.8,
+          "area": {
+            "x": -5.855375819704562,
+            "z": 19.008107196918566,
+            "radius": 0.8,
+            "dx": 0.20871150721831372,
+            "dz": -0.9779772526775149
+          }
+        },
+        {
+          "tick": 347,
+          "source": 412,
+          "attack": 23,
+          "move": "monkey.grab",
+          "duration": 0.8333333333333334,
+          "area": {
+            "x": -5.209106935556788,
+            "z": 17.08733735248754,
+            "radius": 0.8,
+            "dx": 0.09967985811145504,
+            "dz": -0.9950195605549071
+          }
+        },
+        {
+          "tick": 347,
+          "source": 414,
+          "attack": 24,
+          "move": "monkey.grab",
+          "duration": 0.9,
+          "area": {
+            "x": -1.9965072829512553,
+            "z": 9.54033844931755,
+            "radius": 0.8,
+            "dx": -0.4820023902230728,
+            "dz": 0.8761699012287768
+          }
+        },
+        {
+          "tick": 347,
+          "source": 415,
+          "attack": 25,
+          "move": "monkey.grab",
+          "duration": 0.9333333333333333,
+          "area": {
+            "x": 1.2611430640742076,
+            "z": 12.005716223886719,
+            "radius": 0.8,
+            "dx": -0.9021440891731103,
+            "dz": 0.43143486457403873
+          }
+        },
+        {
+          "tick": 767,
+          "source": 411,
+          "attack": 35,
+          "move": "monkey.grab",
+          "duration": 0.8,
+          "area": {
+            "x": -2.8771302671564514,
+            "z": 12.700427595259415,
+            "radius": 0.8,
+            "dx": -0.6783124525301965,
+            "dz": 0.7347735819573741
+          }
+        },
+        {
+          "tick": 767,
+          "source": 414,
+          "attack": 36,
+          "move": "monkey.grab",
+          "duration": 0.9,
+          "area": {
+            "x": -7.85876214834308,
+            "z": 14.853507088175355,
+            "radius": 0.8,
+            "dx": 0.9986896331420329,
+            "dz": 0.051176329046072444
+          }
+        },
+        {
+          "tick": 767,
+          "source": 415,
+          "attack": 37,
+          "move": "monkey.debris",
+          "duration": 0.8,
+          "area": {
+            "x": -7.155745506229034,
+            "z": 14.249123322012446,
+            "radius": 1,
+            "dx": 0.9443536928432011,
+            "dz": 0.3289317601166068
+          }
+        },
+        {
+          "tick": 785,
+          "source": 412,
+          "attack": 38,
+          "move": "monkey.debris",
+          "duration": 0.8,
+          "area": {
+            "x": -2.95304408627914,
+            "z": 17.602345404993073,
+            "radius": 1,
+            "dx": -0.6182427495555974,
+            "dz": -0.7859872153043805
+          }
+        }
+      ],
+      "throws": [
+        {
+          "tick": 373,
+          "source": 416,
+          "prop": 1417832575
+        },
+        {
+          "tick": 387,
+          "source": 413,
+          "prop": 1401054956
+        },
+        {
+          "tick": 815,
+          "source": 415,
+          "prop": 1417832575
+        }
+      ],
+      "signals": [
+        {
+          "tick": 214,
+          "name": "l8.arena.monkey.engaged"
+        }
+      ],
+      "stages": [
+        {
+          "tick": 373,
+          "source": 416,
+          "move": "monkey.debris",
+          "stage": "active"
+        },
+        {
+          "tick": 387,
+          "source": 413,
+          "move": "monkey.debris",
+          "stage": "active"
+        },
+        {
+          "tick": 395,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 397,
+          "source": 412,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 401,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 401,
+          "source": 416,
+          "move": "monkey.debris",
+          "stage": "recovery"
+        },
+        {
+          "tick": 403,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 403,
+          "source": 415,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 418,
+          "source": 413,
+          "move": "monkey.debris",
+          "stage": "recovery"
+        },
+        {
+          "tick": 521,
+          "source": 412,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 521,
+          "source": 416,
+          "move": "monkey.debris",
+          "stage": "expiry"
+        },
+        {
+          "tick": 523,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 538,
+          "source": 413,
+          "move": "monkey.debris",
+          "stage": "expiry"
+        },
+        {
+          "tick": 546,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 551,
+          "source": 415,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 641,
+          "source": 412,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 666,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 671,
+          "source": 415,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 815,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 815,
+          "source": 415,
+          "move": "monkey.debris",
+          "stage": "active"
+        },
+        {
+          "tick": 821,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 822,
+          "source": 415,
+          "move": "monkey.debris",
+          "stage": "recovery"
+        }
+      ],
+      "destruction": [
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-0",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-1",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-2",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-3",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        }
+      ],
+      "bosses": [
+        {
+          "id": 411,
+          "hp": 678.7199999999998,
+          "at": {
+            "x": -3.9624301912047657,
+            "z": 13.876065326391215,
+            "y": 0.7,
+            "yaw": -2.3162598290663867
+          },
+          "state": "attack",
+          "boss": {
+            "arena": "monkey",
+            "slot": 0,
+            "engaged": true,
+            "exposedUntil": 523,
+            "readyAt": 523,
+            "shakeHits": 0
+          },
+          "attack": {
+            "move": "monkey.grab",
+            "attackId": 35,
+            "stage": "active",
+            "startTick": 767,
+            "activeTick": 815,
+            "cooldownExpiry": 1187,
+            "recoveryUntil": 0,
+            "target": {
+              "id": 1,
+              "x": -5,
+              "z": 15
+            },
+            "area": {
+              "x": -2.8771302671564514,
+              "z": 12.700427595259415,
+              "radius": 0.8,
+              "dx": -0.6783124525301965,
+              "dz": 0.7347735819573741
+            },
+            "hitIds": [],
+            "destination": {
+              "x": -9.660254792458415,
+              "z": 20.048163414833155
+            }
+          },
+          "held": false
+        },
+        {
+          "id": 412,
+          "hp": 258.24000000000035,
+          "at": {
+            "x": -2.57804408627914,
+            "z": 18.251864457831402,
+            "y": 0.7,
+            "yaw": 2.2373013348612156
+          },
+          "state": "attack",
+          "boss": {
+            "arena": "monkey",
+            "slot": 1,
+            "engaged": true,
+            "exposedUntil": 641,
+            "readyAt": 641,
+            "shakeHits": 0
+          },
+          "attack": {
+            "move": "monkey.debris",
+            "attackId": 38,
+            "stage": "telegraph",
+            "startTick": 785,
+            "activeTick": 833,
+            "cooldownExpiry": 1205,
+            "recoveryUntil": 0,
+            "target": {
+              "id": 1,
+              "x": -5,
+              "z": 15
+            },
+            "area": {
+              "x": -2.95304408627914,
+              "z": 17.602345404993073,
+              "radius": 1,
+              "dx": -0.6182427495555974,
+              "dz": -0.7859872153043805
+            },
+            "hitIds": [],
+            "destination": {
+              "x": -2.95304408627914,
+              "z": 17.602345404993073
+            },
+            "projectile": {
+              "objectId": 1449781463,
+              "corpse": false,
+              "living": false,
+              "started": 833,
+              "x": -2.95304408627914,
+              "z": 17.602345404993073,
+              "dx": -0.6182427495555974,
+              "dz": -0.7859872153043805,
+              "distance": 0,
+              "range": 3.3109258704485316,
+              "speed": 12,
+              "fromY": 1.2999999999999998,
+              "toY": 0
+            }
+          },
+          "held": false
+        },
+        {
+          "id": 413,
+          "hp": 840,
+          "at": {
+            "x": -11.449968147277833,
+            "z": 12.5,
+            "y": 4.8,
+            "yaw": -0.36121110222255054
+          },
+          "state": "chase",
+          "boss": {
+            "arena": "monkey",
+            "slot": 2,
+            "engaged": true,
+            "exposedUntil": 538,
+            "readyAt": 1059,
+            "roof": true,
+            "shakeHits": 0
+          },
+          "held": false
+        },
+        {
+          "id": 414,
+          "hp": 719.3999999999999,
+          "at": {
+            "x": -7.459286295086266,
+            "z": 14.873977619793784,
+            "y": 0.7,
+            "yaw": -0.05119869402420672
+          },
+          "state": "attack",
+          "boss": {
+            "arena": "monkey",
+            "slot": 3,
+            "engaged": true,
+            "exposedUntil": 666,
+            "readyAt": 666,
+            "shakeHits": 0
+          },
+          "attack": {
+            "move": "monkey.grab",
+            "attackId": 36,
+            "stage": "active",
+            "startTick": 767,
+            "activeTick": 821,
+            "cooldownExpiry": 1187,
+            "recoveryUntil": 0,
+            "target": {
+              "id": 1,
+              "x": -5,
+              "z": 15
+            },
+            "area": {
+              "x": -7.85876214834308,
+              "z": 14.853507088175355,
+              "radius": 0.8,
+              "dx": 0.9986896331420329,
+              "dz": 0.051176329046072444
+            },
+            "hitIds": [],
+            "destination": {
+              "x": 2.1281341830772496,
+              "z": 15.36527037863608
+            }
+          },
+          "held": false
+        },
+        {
+          "id": 415,
+          "hp": 686.2800000000002,
+          "at": {
+            "x": -6.776725645284262,
+            "z": 14.249123322012446,
+            "y": 0.7,
+            "yaw": -0.3351721657571713
+          },
+          "state": "chase",
+          "boss": {
+            "arena": "monkey",
+            "slot": 4,
+            "engaged": true,
+            "exposedUntil": 942,
+            "readyAt": 942,
+            "shakeHits": 0
+          },
+          "attack": {
+            "move": "monkey.debris",
+            "attackId": 37,
+            "stage": "recovery",
+            "startTick": 767,
+            "activeTick": 815,
+            "cooldownExpiry": 1187,
+            "recoveryUntil": 942,
+            "target": {
+              "id": 1,
+              "x": -5,
+              "z": 15
+            },
+            "area": {
+              "x": -7.155745506229034,
+              "z": 14.249123322012446,
+              "radius": 1,
+              "dx": 0.9443536928432011,
+              "dz": 0.3289317601166068
+            },
+            "hitIds": [
+              1
+            ],
+            "destination": {
+              "x": -7.155745506229034,
+              "z": 14.249123322012446
+            },
+            "projectile": {
+              "objectId": 1417832575,
+              "corpse": false,
+              "living": false,
+              "started": 815,
+              "x": -7.155745506229034,
+              "z": 14.249123322012446,
+              "dx": 0.9443536928432011,
+              "dz": 0.3289317601166068,
+              "distance": 1.4,
+              "range": 2.2827734169584812,
+              "speed": 12,
+              "fromY": 1.2999999999999998,
+              "toY": 0
+            }
+          },
+          "held": false
+        },
+        {
+          "id": 416,
+          "hp": 840,
+          "at": {
+            "x": -11.235000305175781,
+            "z": 15.5,
+            "y": 4.8,
+            "yaw": 0.07541394231972558
+          },
+          "state": "chase",
+          "boss": {
+            "arena": "monkey",
+            "slot": 5,
+            "engaged": true,
+            "exposedUntil": 521,
+            "readyAt": 1045,
+            "roof": true,
+            "shakeHits": 0
+          },
+          "held": false
+        },
+        {
+          "id": 417,
+          "hp": 1672.44,
+          "at": {
+            "x": -22.037141222116077,
+            "z": 13.955057014815509,
+            "y": 0.7,
+            "yaw": -4.481871150415642
+          },
+          "state": "alerted",
+          "boss": {
+            "arena": "monkey",
+            "slot": 6,
+            "engaged": true,
+            "exposedUntil": 0,
+            "readyAt": 0
+          },
+          "held": false
+        }
+      ]
+    },
+    {
+      "id": "lion",
+      "tier": "low",
+      "policy": "kite",
+      "measurementEntry": {
+        "x": -60,
+        "z": -16,
+        "y": 0.7
+      },
+      "complete": false,
+      "seconds": 31.25,
+      "totalSeconds": 31.25,
+      "hp": 0,
+      "deaths": 1,
+      "damage": 127.29999999999866,
+      "attacks": 2,
+      "phases": 1,
+      "counters": 0,
+      "wallHits": 0,
+      "rocket": 0,
+      "rocketPickups": 0,
+      "bites": [
+        397,
+        418
+      ],
+      "turns": [
+        397,
+        418
+      ],
+      "tells": [
+        {
+          "tick": 612,
+          "source": 397,
+          "attack": 1,
+          "move": "lion.pounce",
+          "duration": 0.6,
+          "area": {
+            "x": -66.46898955875254,
+            "z": -28.94006930866072,
+            "radius": 1,
+            "dx": 0.19678690263480048,
+            "dz": -0.9804462835624406
+          }
+        },
+        {
+          "tick": 999,
+          "source": 397,
+          "attack": 2,
+          "move": "lion.pounce",
+          "duration": 0.6,
+          "area": {
+            "x": -58.83503550442768,
+            "z": -32.63975876274148,
+            "radius": 1,
+            "dx": 0.8368623959047061,
+            "dz": 0.5474133084979163
+          }
+        },
+        {
+          "tick": 1543,
+          "source": 397,
+          "attack": 3,
+          "move": "lion.pounce",
+          "duration": 0.6,
+          "area": {
+            "x": -60.560100580302894,
+            "z": -33.2202661272613,
+            "radius": 1,
+            "dx": -0.7999108522620438,
+            "dz": -0.6001188452576796
+          }
+        },
+        {
+          "tick": 2054,
+          "source": 397,
+          "attack": 4,
+          "move": "lion.pounce",
+          "duration": 0.6,
+          "area": {
+            "x": -58.301045323835275,
+            "z": -32.23973869302817,
+            "radius": 1,
+            "dx": -0.08368341243575003,
+            "dz": 0.9964923915831511
+          }
+        }
+      ],
+      "throws": [],
+      "signals": [],
+      "stages": [
+        {
+          "tick": 648,
+          "source": 397,
+          "move": "lion.pounce",
+          "stage": "active"
+        },
+        {
+          "tick": 653,
+          "source": 397,
+          "move": "lion.pounce",
+          "stage": "recovery"
+        },
+        {
+          "tick": 773,
+          "source": 397,
+          "move": "lion.pounce",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1035,
+          "source": 397,
+          "move": "lion.pounce",
+          "stage": "active"
+        },
+        {
+          "tick": 1079,
+          "source": 397,
+          "move": "lion.pounce",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1199,
+          "source": 397,
+          "move": "lion.pounce",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1579,
+          "source": 397,
+          "move": "lion.pounce",
+          "stage": "active"
+        },
+        {
+          "tick": 1616,
+          "source": 397,
+          "move": "lion.pounce",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1736,
+          "source": 397,
+          "move": "lion.pounce",
+          "stage": "expiry"
+        },
+        {
+          "tick": 2090,
+          "source": 397,
+          "move": "lion.pounce",
+          "stage": "active"
+        }
+      ],
+      "destruction": [
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-0",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-1",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-2",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-3",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        }
+      ],
+      "bosses": [
+        {
+          "id": 397,
+          "hp": 2149.1600000000076,
+          "at": {
+            "x": -59.037459353269846,
+            "z": -23.470605647096395,
+            "y": 0.7,
+            "yaw": -1.6545777195957414
+          },
+          "state": "attack",
+          "boss": {
+            "arena": "lion",
+            "slot": 0,
+            "engaged": true,
+            "exposedUntil": 1736,
+            "readyAt": 1736,
+            "shakeHits": 0
+          },
+          "attack": {
+            "move": "lion.pounce",
+            "attackId": 4,
+            "stage": "active",
+            "startTick": 2054,
+            "activeTick": 2090,
+            "cooldownExpiry": 2474,
+            "recoveryUntil": 0,
+            "target": {
+              "id": 1,
+              "x": -59.147093385957426,
+              "z": -22.16509627251637
+            },
+            "area": {
+              "x": -58.301045323835275,
+              "z": -32.23973869302817,
+              "radius": 1,
+              "dx": -0.08368341243575003,
+              "dz": 0.9964923915831511
+            },
+            "hitIds": [
+              1
+            ],
+            "destination": {
+              "x": -59.13787944819278,
+              "z": -22.27481477719666
+            }
+          },
+          "held": false
+        },
+        {
+          "id": 418,
+          "hp": 3166.880000000001,
+          "at": {
+            "x": -66.24798397798867,
+            "z": -42.749250563663104,
+            "y": 0.7,
+            "yaw": 4.216932668874322
+          },
+          "state": "alerted",
+          "boss": {
+            "arena": "lion",
+            "slot": 1,
+            "engaged": true,
+            "exposedUntil": 0,
+            "readyAt": 0
+          },
+          "held": false
+        }
+      ]
+    },
+    {
+      "id": "gorilla",
+      "tier": "low",
+      "policy": "kite",
+      "measurementEntry": {
+        "x": 60,
+        "z": -16,
+        "y": 0.7
+      },
+      "complete": false,
+      "seconds": 88.85,
+      "totalSeconds": 88.85,
+      "hp": 0,
+      "deaths": 1,
+      "damage": 219.4333333333282,
+      "attacks": 6,
+      "phases": 2,
+      "counters": 5,
+      "wallHits": 0,
+      "rocket": 0,
+      "rocketPickups": 0,
+      "bites": [
+        398
+      ],
+      "turns": [
+        398
+      ],
+      "tells": [
+        {
+          "tick": 322,
+          "source": 398,
+          "attack": 1,
+          "move": "gorilla.roar",
+          "duration": 1,
+          "area": {
+            "x": 48.99921456116177,
+            "z": -15.85952249287281,
+            "radius": 8,
+            "dx": 0.10469179918779467,
+            "dz": -0.9945047145101037
+          }
+        },
+        {
+          "tick": 757,
+          "source": 398,
+          "attack": 2,
+          "move": "gorilla.grab-throw",
+          "duration": 0.8,
+          "area": {
+            "x": 55.17160655701183,
+            "z": -31.628719869061623,
+            "radius": 1,
+            "dx": 0.9549470346006312,
+            "dz": -0.2967762812413771
+          }
+        },
+        {
+          "tick": 1308,
+          "source": 398,
+          "attack": 3,
+          "move": "gorilla.pound",
+          "duration": 1,
+          "area": {
+            "x": 56.23197572517453,
+            "z": -26.534596337848647,
+            "radius": 5,
+            "dx": -0.7841097552165738,
+            "dz": -0.6206221811812762
+          }
+        },
+        {
+          "tick": 1663,
+          "source": 398,
+          "attack": 4,
+          "move": "gorilla.roar",
+          "duration": 1,
+          "area": {
+            "x": 58.964748347228074,
+            "z": -36.1467573399017,
+            "radius": 8,
+            "dx": 0.9999999937925866,
+            "dz": -0.00011142184136359428
+          }
+        },
+        {
+          "tick": 1995,
+          "source": 398,
+          "attack": 5,
+          "move": "gorilla.grab-throw",
+          "duration": 0.8,
+          "area": {
+            "x": 65.06590959230469,
+            "z": -29.992371074164463,
+            "radius": 1,
+            "dx": -0.7545734829334664,
+            "dz": 0.6562155582227974
+          }
+        },
+        {
+          "tick": 2533,
+          "source": 398,
+          "attack": 6,
+          "move": "gorilla.grab-throw",
+          "duration": 0.8,
+          "area": {
+            "x": 57.80655523228686,
+            "z": -33.35598377382245,
+            "radius": 1,
+            "dx": 0.9993814335405486,
+            "dz": -0.035167460733443574
+          }
+        },
+        {
+          "tick": 2735,
+          "source": 398,
+          "attack": 7,
+          "move": "gorilla.grab-throw",
+          "duration": 0.8,
+          "area": {
+            "x": 58.929536410012915,
+            "z": -33.13275007842303,
+            "radius": 1,
+            "dx": 0.5716197933028615,
+            "dz": 0.8205186237401281
+          }
+        },
+        {
+          "tick": 2923,
+          "source": 398,
+          "attack": 8,
+          "move": "gorilla.grab-throw",
+          "duration": 0.8,
+          "area": {
+            "x": 59.94473778017047,
+            "z": -32.184554936923924,
+            "radius": 1,
+            "dx": -0.35788129702825106,
+            "dz": 0.9337670893950893
+          }
+        },
+        {
+          "tick": 3138,
+          "source": 398,
+          "attack": 9,
+          "move": "gorilla.roar",
+          "duration": 1,
+          "area": {
+            "x": 57.45683574297542,
+            "z": -30.559633863470197,
+            "radius": 8,
+            "dx": -0.6146241261826251,
+            "dz": 0.7888201211393157
+          }
+        },
+        {
+          "tick": 3728,
+          "source": 398,
+          "attack": 10,
+          "move": "gorilla.grab-throw",
+          "duration": 0.8,
+          "area": {
+            "x": 66.97448650082431,
+            "z": -35.00419659939631,
+            "radius": 1,
+            "dx": -0.12507224839660425,
+            "dz": 0.992147636534512
+          }
+        },
+        {
+          "tick": 4047,
+          "source": 398,
+          "attack": 11,
+          "move": "gorilla.pound",
+          "duration": 1,
+          "area": {
+            "x": 54.214868738343846,
+            "z": -30.908237079044408,
+            "radius": 5,
+            "dx": -0.5518525500060146,
+            "dz": -0.8339417024300075
+          }
+        },
+        {
+          "tick": 4335,
+          "source": 398,
+          "attack": 12,
+          "move": "gorilla.pound",
+          "duration": 1,
+          "area": {
+            "x": 61.21436366766912,
+            "z": -38.01866301161847,
+            "radius": 5,
+            "dx": 0.9966391085688181,
+            "dz": 0.08191756387461584
+          }
+        },
+        {
+          "tick": 4516,
+          "source": 398,
+          "attack": 13,
+          "move": "gorilla.pound",
+          "duration": 1,
+          "area": {
+            "x": 63.513634923459634,
+            "z": -38.545058686680406,
+            "radius": 5,
+            "dx": 0.11602243664543214,
+            "dz": 0.9932465928433164
+          }
+        },
+        {
+          "tick": 4663,
+          "source": 398,
+          "attack": 14,
+          "move": "gorilla.grab-throw",
+          "duration": 0.6,
+          "area": {
+            "x": 63.32823657958285,
+            "z": -38.958991164342,
+            "radius": 1,
+            "dx": -0.38885125303152585,
+            "dz": 0.9213005497750516
+          }
+        },
+        {
+          "tick": 4867,
+          "source": 398,
+          "attack": 15,
+          "move": "gorilla.grab-throw",
+          "duration": 0.6,
+          "area": {
+            "x": 64.93421344995599,
+            "z": -37.19842841692906,
+            "radius": 1,
+            "dx": -0.6939716350517143,
+            "dz": 0.7200023400959544
+          }
+        },
+        {
+          "tick": 5245,
+          "source": 398,
+          "attack": 16,
+          "move": "gorilla.pound",
+          "duration": 1,
+          "area": {
+            "x": 56.28136990558594,
+            "z": -38.927844203720966,
+            "radius": 5,
+            "dx": 0.947480662639236,
+            "dz": 0.31981306090388845
+          }
+        },
+        {
+          "tick": 5491,
+          "source": 398,
+          "attack": 17,
+          "move": "gorilla.grab-throw",
+          "duration": 0.6,
+          "area": {
+            "x": 59.818376285940985,
+            "z": -31.19379250676634,
+            "radius": 1,
+            "dx": 0.3268134930982429,
+            "dz": 0.9450888533513264
+          }
+        }
+      ],
+      "throws": [
+        {
+          "tick": 805,
+          "source": 398,
+          "prop": 1178886957
+        },
+        {
+          "tick": 2043,
+          "source": 398,
+          "prop": 1823699267
+        },
+        {
+          "tick": 2581,
+          "source": 398,
+          "prop": 1936487251
+        },
+        {
+          "tick": 2783,
+          "source": 398,
+          "prop": 1919709632
+        },
+        {
+          "tick": 2971,
+          "source": 398,
+          "prop": 1970042489
+        },
+        {
+          "tick": 3776,
+          "source": 398,
+          "prop": 1936487251
+        },
+        {
+          "tick": 4699,
+          "source": 398,
+          "prop": 1162109338
+        },
+        {
+          "tick": 4903,
+          "source": 398,
+          "prop": 1128554100
+        },
+        {
+          "tick": 5527,
+          "source": 398,
+          "prop": 1145331719
+        }
+      ],
+      "signals": [
+        {
+          "tick": 3895,
+          "name": "l8.arena.gorilla.phase-2"
+        }
+      ],
+      "stages": [
+        {
+          "tick": 324,
+          "source": 398,
+          "move": "gorilla.roar",
+          "stage": "recovery"
+        },
+        {
+          "tick": 444,
+          "source": 398,
+          "move": "gorilla.roar",
+          "stage": "expiry"
+        },
+        {
+          "tick": 805,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "active"
+        },
+        {
+          "tick": 875,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "recovery"
+        },
+        {
+          "tick": 935,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1368,
+          "source": 398,
+          "move": "gorilla.pound",
+          "stage": "active"
+        },
+        {
+          "tick": 1368,
+          "source": 398,
+          "move": "gorilla.pound",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1428,
+          "source": 398,
+          "move": "gorilla.pound",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1665,
+          "source": 398,
+          "move": "gorilla.roar",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1785,
+          "source": 398,
+          "move": "gorilla.roar",
+          "stage": "expiry"
+        },
+        {
+          "tick": 2043,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "active"
+        },
+        {
+          "tick": 2104,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "recovery"
+        },
+        {
+          "tick": 2164,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "expiry"
+        },
+        {
+          "tick": 2581,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "active"
+        },
+        {
+          "tick": 2637,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "recovery"
+        },
+        {
+          "tick": 2685,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "expiry"
+        },
+        {
+          "tick": 2783,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "active"
+        },
+        {
+          "tick": 2836,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "recovery"
+        },
+        {
+          "tick": 2884,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "expiry"
+        },
+        {
+          "tick": 2971,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "active"
+        },
+        {
+          "tick": 3017,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "recovery"
+        },
+        {
+          "tick": 3077,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "expiry"
+        },
+        {
+          "tick": 3161,
+          "source": 398,
+          "move": "gorilla.roar",
+          "stage": "recovery"
+        },
+        {
+          "tick": 3281,
+          "source": 398,
+          "move": "gorilla.roar",
+          "stage": "expiry"
+        },
+        {
+          "tick": 3776,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "active"
+        },
+        {
+          "tick": 3817,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "recovery"
+        },
+        {
+          "tick": 3865,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "expiry"
+        },
+        {
+          "tick": 4107,
+          "source": 398,
+          "move": "gorilla.pound",
+          "stage": "active"
+        },
+        {
+          "tick": 4107,
+          "source": 398,
+          "move": "gorilla.pound",
+          "stage": "recovery"
+        },
+        {
+          "tick": 4167,
+          "source": 398,
+          "move": "gorilla.pound",
+          "stage": "expiry"
+        },
+        {
+          "tick": 4395,
+          "source": 398,
+          "move": "gorilla.pound",
+          "stage": "active"
+        },
+        {
+          "tick": 4395,
+          "source": 398,
+          "move": "gorilla.pound",
+          "stage": "recovery"
+        },
+        {
+          "tick": 4455,
+          "source": 398,
+          "move": "gorilla.pound",
+          "stage": "expiry"
+        },
+        {
+          "tick": 4576,
+          "source": 398,
+          "move": "gorilla.pound",
+          "stage": "active"
+        },
+        {
+          "tick": 4576,
+          "source": 398,
+          "move": "gorilla.pound",
+          "stage": "recovery"
+        },
+        {
+          "tick": 4636,
+          "source": 398,
+          "move": "gorilla.pound",
+          "stage": "expiry"
+        },
+        {
+          "tick": 4699,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "active"
+        },
+        {
+          "tick": 4755,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "recovery"
+        },
+        {
+          "tick": 4815,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "expiry"
+        },
+        {
+          "tick": 4903,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "active"
+        },
+        {
+          "tick": 4959,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "recovery"
+        },
+        {
+          "tick": 5019,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "expiry"
+        },
+        {
+          "tick": 5305,
+          "source": 398,
+          "move": "gorilla.pound",
+          "stage": "active"
+        },
+        {
+          "tick": 5305,
+          "source": 398,
+          "move": "gorilla.pound",
+          "stage": "recovery"
+        },
+        {
+          "tick": 5365,
+          "source": 398,
+          "move": "gorilla.pound",
+          "stage": "expiry"
+        },
+        {
+          "tick": 5527,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "active"
+        },
+        {
+          "tick": 5555,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "recovery"
+        }
+      ],
+      "destruction": [
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-0",
+          "hp": [
+            258.1800000000002
+          ],
+          "collapsed": false
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-1",
+          "hp": [
+            258.8800000000001
+          ],
+          "collapsed": false
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-2",
+          "hp": [
+            0
+          ],
+          "collapsed": true
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-3",
+          "hp": [
+            0
+          ],
+          "collapsed": true
+        }
+      ],
+      "bosses": [
+        {
+          "id": 398,
+          "hp": 1378.6799999999125,
+          "at": {
+            "x": 60.848374633789064,
+            "z": -31.19379250676634,
+            "y": 0.7,
+            "yaw": -1.2378663738376448
+          },
+          "state": "chase",
+          "boss": {
+            "arena": "gorilla",
+            "slot": 0,
+            "engaged": true,
+            "exposedUntil": 5615,
+            "readyAt": 5615,
+            "shakeHits": 0,
+            "barrage": 0
+          },
+          "attack": {
+            "move": "gorilla.grab-throw",
+            "attackId": 17,
+            "stage": "recovery",
+            "startTick": 5491,
+            "activeTick": 5527,
+            "cooldownExpiry": 5911,
+            "recoveryUntil": 5615,
+            "target": {
+              "id": 1,
+              "x": 62.885926940824376,
+              "z": -22.32295947127304
+            },
+            "area": {
+              "x": 59.818376285940985,
+              "z": -31.19379250676634,
+              "radius": 1,
+              "dx": 0.3268134930982429,
+              "dz": 0.9450888533513264
+            },
+            "hitIds": [
+              1
+            ],
+            "destination": {
+              "x": 59.818376285940985,
+              "z": -31.19379250676634
+            },
+            "projectile": {
+              "objectId": 1145331719,
+              "corpse": false,
+              "living": false,
+              "started": 5527,
+              "x": 59.818376285940985,
+              "z": -31.19379250676634,
+              "dx": 0.3268134930982429,
+              "dz": 0.9450888533513264,
+              "distance": 8.4,
+              "range": 9.38624236656367,
+              "speed": 18,
+              "fromY": 1.2999999999999998,
+              "toY": 0
+            }
+          },
+          "held": false
+        }
+      ]
+    },
+    {
+      "id": "elephant",
+      "tier": "low",
+      "policy": "kite",
+      "measurementEntry": {
+        "x": -60,
+        "z": 16,
+        "y": 0.7
+      },
+      "complete": false,
+      "seconds": 9.233333333333333,
+      "totalSeconds": 9.233333333333333,
+      "hp": 0,
+      "deaths": 1,
+      "damage": 104.83333333333327,
+      "attacks": 2,
+      "phases": 1,
+      "counters": 0,
+      "wallHits": 0,
+      "rocket": 0,
+      "rocketPickups": 0,
+      "bites": [
+        399
+      ],
+      "turns": [
+        399
+      ],
+      "tells": [
+        {
+          "tick": 314,
+          "source": 399,
+          "attack": 1,
+          "move": "elephant.charge",
+          "duration": 0.9,
+          "area": {
+            "x": -49.216152815341445,
+            "z": 16.63034413458253,
+            "radius": 1.75,
+            "dx": -0.1727872501391444,
+            "dz": 0.9849591698082477
+          }
+        },
+        {
+          "tick": 736,
+          "source": 399,
+          "attack": 2,
+          "move": "elephant.swipe",
+          "duration": 0.7,
+          "area": {
+            "x": -55.74111064331016,
+            "z": 44.89926049208292,
+            "radius": 5.5,
+            "dx": -0.8411257701595433,
+            "dz": -0.5408395684244219
+          }
+        }
+      ],
+      "throws": [],
+      "signals": [],
+      "stages": [
+        {
+          "tick": 368,
+          "source": 399,
+          "move": "elephant.charge",
+          "stage": "active"
+        },
+        {
+          "tick": 515,
+          "source": 399,
+          "move": "elephant.charge",
+          "stage": "recovery"
+        },
+        {
+          "tick": 635,
+          "source": 399,
+          "move": "elephant.charge",
+          "stage": "expiry"
+        },
+        {
+          "tick": 778,
+          "source": 399,
+          "move": "elephant.swipe",
+          "stage": "active"
+        },
+        {
+          "tick": 778,
+          "source": 399,
+          "move": "elephant.swipe",
+          "stage": "recovery"
+        }
+      ],
+      "destruction": [
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-0",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-1",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-2",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-3",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        }
+      ],
+      "bosses": [
+        {
+          "id": 399,
+          "hp": 4591.759999999979,
+          "at": {
+            "x": -55.74111064331016,
+            "z": 44.89926049208292,
+            "y": 0.7,
+            "yaw": 2.5701577156286297
+          },
+          "state": "chase",
+          "boss": {
+            "arena": "elephant",
+            "slot": 0,
+            "engaged": true,
+            "exposedUntil": 898,
+            "readyAt": 1156,
+            "shakeHits": 0
+          },
+          "attack": {
+            "move": "elephant.swipe",
+            "attackId": 2,
+            "stage": "recovery",
+            "startTick": 736,
+            "activeTick": 778,
+            "cooldownExpiry": 1156,
+            "recoveryUntil": 898,
+            "target": {
+              "id": 1,
+              "x": -60.40551621664785,
+              "z": 41.90007156369956
+            },
+            "area": {
+              "x": -55.74111064331016,
+              "z": 44.89926049208292,
+              "radius": 5.5,
+              "dx": -0.8411257701595433,
+              "dz": -0.5408395684244219
+            },
+            "hitIds": [
+              1
+            ],
+            "bait": {
+              "x": -55.9132080078125,
+              "z": 40.91584777832031
+            },
+            "destination": {
+              "x": -55.74111064331016,
+              "z": 44.89926049208292
+            }
+          },
+          "held": false
+        }
+      ]
+    }
+  ]
+}

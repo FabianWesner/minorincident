@@ -1,4 +1,4 @@
-export type ZooSpecies = 'lion' | 'gorilla' | 'elephant' | 'zebra' | 'flamingo';
+export type ZooSpecies = 'lion' | 'gorilla' | 'elephant' | 'zebra' | 'flamingo' | 'monkey' | 'lioness';
 export interface Point { x: number; z: number }
 export type CivilianState = 'calm' | 'annoyed' | 'alarmed' | 'flee' | 'hide' | 'grabbed' | 'bitten' | 'down' | 'rising' | 'infected' | 'finished';
 export type CivilianProp = 'coffee' | 'bag' | 'phone' | 'cane' | 'watering-can' | 'parcel'

@@ -10,7 +10,7 @@ interface Flight { prop: ThrowableProp; sourceId: number; attackId: number; expi
 export class PropThrows {
   readonly props: ThrowableProp[] = [];
   readonly flights: Flight[] = [];
-  private readonly object = { id: 0, corpse: false };
+  private readonly object = { id: 0, corpse: false, living: false };
   private objectDistanceSquared = 0;
   constructor(private readonly world: SimWorld) {}
   nearestMedium(source: EntitySnapshot): ThrowableProp | undefined {
@@ -43,11 +43,21 @@ export class PropThrows {
     this.world.events.emit({ type: 'infected.prop-thrown', tick: this.world.tick, sourceId: source.id, propId: prop.id, attackId }); return true;
   }
   /** Nearest available retained corpse or movable E26 medium prop, with stable id ties. */
-  nearestObject(source: EntitySnapshot, radius: number): { id: number; corpse: boolean } | undefined {
+  nearestObject(source: EntitySnapshot, radius: number, lightOnly = false): { id: number; corpse: boolean; living: boolean } | undefined {
+    if (source.infected?.arenaBoss) return this.nearestArenaObject(source, radius, lightOnly);
     this.object.id = 0; this.objectDistanceSquared = (radius + 1e-9) ** 2;
     for (const e of this.world.entities.iterate()) if (e.corpse && e.health.current <= 0 && e.id !== source.id) this.considerObject(source, e.id, true, e.transform);
     for (const p of this.world.props?.items ?? []) if (p.mass < 1500 && !p.fixed && !p.braced && p.body.isEnabled()) this.considerObject(source, p.entityId, false, p.body.translation(), p.radius);
     for (const p of this.props) if (p.mass < 1500 && p.body.isEnabled()) this.considerObject(source, p.id, false, p.body.translation(), p.radius);
+    return this.object.id ? this.object : undefined;
+  }
+  private nearestArenaObject(source: EntitySnapshot, radius: number, lightOnly = false): { id: number; corpse: boolean; living: boolean } | undefined {
+    const gorilla = source.infected?.arenaBoss?.arena === 'gorilla';
+    this.object.id = 0; this.objectDistanceSquared = (radius + 1e-9) ** 2;
+    for (const e of this.world.entities.iterate()) if (!lightOnly && e.corpse && e.infected && e.health.current <= 0) this.considerObject(source, e.id, true, e.transform);
+    for (const p of this.world.props?.items ?? []) if ((lightOnly ? p.metadata.class === 'light' : gorilla ? p.metadata.mass <= 1500 : p.metadata.class === 'medium') && !p.fixed && !p.braced && p.body.isEnabled()) this.considerObject(source, p.entityId, false, p.body.translation());
+    for (const p of this.props) if ((lightOnly ? p.class === 'light' : gorilla ? p.mass <= 1500 : p.class === 'medium') && p.body.isEnabled()) this.considerObject(source, p.id, false, p.body.translation());
+    if (gorilla && !lightOnly) for (const e of this.world.infected!.active) if (e.id !== source.id && e.health.current > 0 && !e.infected!.arenaBoss && !e.infected!.pursuit && !e.infected!.thrownBy && !e.emerging && !e.hidden && !e.infected!.hidden && e.attachedTo === undefined && !e.infectionRise) this.considerObject(source, e.id, false, e.transform, 0, true);
     return this.object.id ? this.object : undefined;
   }
   objectPosition(id: number): { x: number; z: number } | undefined {
@@ -63,7 +73,7 @@ export class PropThrows {
   nearestLiving(source: EntitySnapshot, radius: number): EntitySnapshot | undefined {
     let found: EntitySnapshot | undefined, best = radius * radius;
     for (const e of this.world.infected!.active) {
-      if (e.id === source.id || e.archetype === 'infected.alpha' || e.attachedTo !== undefined || this.reserved(e.id) || !e.infected || e.health.current <= 0 || e.corpse || e.infected.hidden || e.infected.specialAttack || e.infected.pursuit || e.infectionRise) continue;
+      if (e.id === source.id || e.archetype === 'infected.alpha' || e.infected?.arenaBoss || e.infected?.arenaCarrier || e.attachedTo !== undefined || this.reserved(e.id) || !e.infected || e.health.current <= 0 || e.corpse || e.infected.hidden || e.infected.specialAttack || e.infected.pursuit || e.infectionRise) continue;
       const dx = e.transform.x - source.transform.x, dz = e.transform.z - source.transform.z, d = dx * dx + dz * dz;
       if (d > best || !this.world.infected!.hearing.lineOfSight(source.transform, e.transform)) continue;
       if (d < best || d === best && e.id < (found?.id ?? Infinity)) { found = e; best = d; }
@@ -83,7 +93,7 @@ export class PropThrows {
     const light = a.move === 'alpha.barrage' ? this.nearestLight(source, radius) : undefined;
     const object = living ? { id: living.id, corpse: false, living: true } : light ? { id: light.id, corpse: false } : a.move === 'alpha.living-missile' || a.move === 'alpha.barrage' ? undefined : this.nearestObject(source, radius);
     if (!object) return false;
-    a.pickup = { objectId: object.id, corpse: object.corpse, ...('living' in object ? { living: true } : {}) };
+    a.pickup = { objectId: object.id, corpse: object.corpse, ...('living' in object && object.living ? { living: true } : {}) };
     const entity = this.world.entities.get(object.id);
     if (entity) {
       entity.attachedTo = source.id;
@@ -92,6 +102,7 @@ export class PropThrows {
     this.holdSpecial(source, a); return true;
   }
   holdSpecial(source: EntitySnapshot, a: InfectedSpecialAttack): void {
+    if (source.infected?.arenaBoss && a.projectile) { this.positionSpecial(a, false); return; }
     const held = a.pickup; if (!held) return;
     const p = { x: source.transform.x, y: source.transform.y + 1.8, z: source.transform.z };
     const body = this.body(held.objectId);
@@ -99,15 +110,16 @@ export class PropThrows {
     const entity = this.world.entities.get(held.objectId); if (entity) Object.assign(entity.transform, p);
     this.world.spatial.set(held.objectId, p.x, p.z);
   }
-  private considerObject(source: EntitySnapshot, id: number, corpse: boolean, p: { x: number; z: number }, radius = 0): void {
+  private considerObject(source: EntitySnapshot, id: number, corpse: boolean, p: { x: number; y?: number; z: number }, radius = 0, living = false): void {
     const dx = p.x - source.transform.x, dz = p.z - source.transform.z, squared = Math.max(0, Math.hypot(dx, dz) - radius) ** 2;
     if (squared > this.objectDistanceSquared || squared === this.objectDistanceSquared && id >= (this.object.id || Infinity)) return;
-    for (const e of this.world.infected!.active) if (e.infected!.specialAttack?.projectile?.objectId === id && e.infected!.specialAttack.stage === 'active') return;
+    for (const e of this.world.infected!.active) if (e.infected!.specialAttack?.projectile?.objectId === id && e.infected!.specialAttack.stage !== 'recovery') return;
     for (const flight of this.flights) if (flight.prop.id === id) return;
-    if (this.reserved(id) || !this.world.infected!.hearing.lineOfSight(source.transform, p)) return;
-    this.object.id = id; this.object.corpse = corpse; this.objectDistanceSquared = squared;
+    if (this.reserved(id) || (source.infected?.arenaBoss?.roof ? !this.world.combat!.query.visible(source.transform, { x: p.x, y: (p.y ?? 0) + .5, z: p.z }) : !this.world.infected!.hearing.lineOfSight(source.transform, p))) return;
+    this.object.id = id; this.object.corpse = corpse; this.object.living = living; this.objectDistanceSquared = squared;
   }
-  launchSpecial(source: EntitySnapshot, a: InfectedSpecialAttack, radius: number): boolean {
+  launchSpecial(source: EntitySnapshot, a: InfectedSpecialAttack, radius: number, arenaRange = 15, speed = 12, lift = false): boolean {
+    if (source.infected?.arenaBoss) return this.launchArenaSpecial(source, a, radius, arenaRange, speed, lift);
     if (!a.pickup && !this.pickupSpecial(source, a, radius)) return false;
     const object = a.pickup!;
     const entity = this.world.entities.get(object.objectId);
@@ -132,6 +144,7 @@ export class PropThrows {
   }
   /** A 12 m/s swept flight, bounded to 25 m. Its scalar progress survives restore without a WASM handle. */
   updateSpecial(source: EntitySnapshot, a: InfectedSpecialAttack): boolean {
+    if (a.projectile?.fromY !== undefined) return this.updateArenaSpecial(source, a);
     const f = a.projectile!;
     if (this.world.tick === f.started) return false;
     const old = { x: f.lastX ?? f.x + f.dx * f.distance, z: f.lastZ ?? f.z + f.dz * f.distance };
@@ -166,6 +179,7 @@ export class PropThrows {
     return false;
   }
   private positionSpecial(a: InfectedSpecialAttack, settled: boolean): void {
+    if (a.projectile?.fromY !== undefined) { this.positionArenaSpecial(a, settled); return; }
     const f = a.projectile!;
     if (f.physics) { if (settled) this.body(f.objectId)?.setLinearDamping(f.damping ?? 1.2); return; } // Rapier owns the arc, collision and final resting pose.
     const x = f.x + f.dx * f.distance, z = f.z + f.dz * f.distance;
@@ -193,6 +207,71 @@ export class PropThrows {
           e.combat!.reaction = { index: 0, started: this.world.tick, until: this.world.tick + 36, direction: { x: f.dx, z: f.dz }, from: { x, z }, to: { x, z }, heavy: true };
         }
       }
+    }
+    this.world.spatial.set(f.objectId, x, z);
+  }
+  private launchArenaSpecial(source: EntitySnapshot, a: InfectedSpecialAttack, radius: number, range = 15, speed = 12, lift = false): boolean {
+    const object = this.nearestObject(source, radius, (source.infected?.arenaBoss?.barrage ?? 0) > 0); if (!object) return false;
+    const dx = a.target.x - source.transform.x, dz = a.target.z - source.transform.z, distance = Math.hypot(dx, dz);
+    if (distance < .01) return false;
+    a.projectile = { objectId: object.id, corpse: object.corpse, living: object.living, started: lift ? a.activeTick : this.world.tick, x: source.transform.x, z: source.transform.z, dx: dx / distance, dz: dz / distance, distance: 0, range: Math.max(.1, Math.min(range, distance - (object.living ? 2 : 0))), speed, ...(source.infected?.arenaBoss ? { fromY: source.transform.y + .6, toY: this.world.districts?.groundHeight(a.target.x, a.target.z) ?? 0 } : {}) };
+    const body = this.world.entities.get(object.id); if (object.corpse && body) { body.corpseThrown = true; delete body.corpseBlast; }
+    if (object.living && body?.infected) { body.infected.thrownBy = source.id; body.infected.perched = true; this.world.infected!.cancelSpecial(body.id); }
+    if (!lift) this.world.events.emit({ type: 'infected.prop-thrown', tick: this.world.tick, sourceId: source.id, propId: object.id, attackId: a.attackId });
+    this.positionSpecial(a, false); return true;
+  }
+  /** A 12 m/s swept flight, bounded to 15 m. Its scalar progress survives restore without a WASM handle. */
+  private updateArenaSpecial(source: EntitySnapshot, a: InfectedSpecialAttack): boolean {
+    const f = a.projectile!;
+    if (this.world.tick === f.started) return false;
+    const old = { x: f.x + f.dx * f.distance, y: this.flightY(a, f.distance), z: f.z + f.dz * f.distance };
+    const next = Math.min(f.range, (this.world.tick - f.started) * (f.speed ?? 12) / 60), p = { x: f.x + f.dx * next, y: this.flightY(a, next), z: f.z + f.dz * next };
+    // Full solid cover wins over a human behind it, including thin dynamic LOS blockers.
+    if (f.fromY !== undefined ? !this.world.combat!.query.visible(old, p) : !this.world.infected!.hearing.lineOfSight(old, p)) { this.positionSpecial(a, true); return true; }
+    f.distance = next; this.positionSpecial(a, false);
+    let victim: EntitySnapshot | undefined, along = Infinity;
+    for (const human of this.world.infected!.hearing.humans.within(p, 1.2)) {
+      const e = this.world.entities.get(human.id);
+      if (!e || e.health.current <= 0 || e.companion || e.escort?.child || storyProtected(this.world, e)) continue;
+      const vx = e.transform.x - old.x, vz = e.transform.z - old.z, t = Math.max(0, Math.min(Math.hypot(p.x - old.x, p.z - old.z), vx * f.dx + vz * f.dz));
+      if (f.fromY !== undefined && Math.abs(old.y + (p.y - old.y) * t / (Math.hypot(p.x - old.x, p.z - old.z) || 1) - e.transform.y) > 1) continue;
+      if (Math.hypot(old.x + f.dx * t - e.transform.x, old.z + f.dz * t - e.transform.z) > 1 || (f.fromY !== undefined ? !this.world.combat!.query.visible(old, e.transform) : !this.world.infected!.hearing.lineOfSight(old, e.transform))) continue;
+      if (t < along || t === along && e.id < (victim?.id ?? Infinity)) { victim = e; along = t; }
+    }
+    if (victim && this.world.infected!.specialHit(source.id, victim.id)) {
+      const amount = this.world.combat!.damage.apply({ sourceId: source.id, targetId: victim.id, attackId: a.attackId, actionId: `infected.${a.move}`, origin: old, direction: { x: f.dx, z: f.dz }, base: source.infected?.arenaBoss?.arena === 'gorilla' ? (source.infected.arenaBoss.barrage ? 18 : 65) : 30, multiplier: 1, type: 'projectile', knockback: 0, stagger: .8, knockdownTicks: 48 });
+      this.world.events.emit({ type: 'infected.attack', tick: this.world.tick, sourceId: source.id, targetId: victim.id, attackId: a.attackId, special: a.move, amount });
+      this.positionSpecial(a, true); return true;
+    }
+    if (next >= f.range) { this.positionSpecial(a, true); return true; }
+    return false;
+  }
+  private flightY(a: InfectedSpecialAttack, distance: number): number {
+    const f = a.projectile!, t = distance / f.range, floor = this.world.districts?.groundHeight(f.x + f.dx * distance, f.z + f.dz * distance) ?? 0;
+    return f.fromY === undefined ? floor + 1.3 * (1 - t) + Math.sin(Math.PI * t) * .6 : f.fromY * (1 - t) + (f.toY ?? floor) * t + Math.sin(Math.PI * t) * 1.2;
+  }
+  private positionArenaSpecial(a: InfectedSpecialAttack, settled: boolean): void {
+    const f = a.projectile!, x = f.x + f.dx * f.distance, z = f.z + f.dz * f.distance;
+    const floor = this.world.districts?.groundHeight(x, z) ?? 0;
+    const height = settled ? 0 : this.flightY(a, f.distance) - floor;
+    const e = this.world.entities.get(f.objectId);
+    if (f.corpse || f.living) { if (e) {
+      this.world.solids.wrote(e, 'infected.thrown-body'); Object.assign(e.transform, { x, y: floor + .7 + height, z });
+      if (settled && f.living && e.infected) {
+        delete e.infected.thrownBy; e.infected.perched = false;
+        if (e.health.current > 0) {
+          this.world.infected!.pursueTarget(e.id, 1);
+          e.combat!.staggerUntil = this.world.tick + 36; e.infected.state = 'stagger'; e.infected.until = this.world.tick + 36;
+          e.combat!.reaction = { index: 0, started: this.world.tick, until: this.world.tick + 36, direction: { x: f.dx, z: f.dz }, from: { x, z }, to: { x, z }, heavy: true };
+        }
+        this.world.solids.admit(e, 'infected.thrown-landing', 3);
+      }
+    } }
+    else {
+      const prop = this.world.props?.items.find(p => p.entityId === f.objectId), body = prop?.body ?? this.props.find(p => p.id === f.objectId)?.body;
+      if (body) { body.setTranslation({ x, y: floor + height, z }, true); body.setLinvel({ x: 0, y: 0, z: 0 }, true); }
+      if (prop) { prop.pose.p = [x, floor + height, z]; prop.awake = true; }
+      if (e) Object.assign(e.transform, { x, y: floor + height, z });
     }
     this.world.spatial.set(f.objectId, x, z);
   }

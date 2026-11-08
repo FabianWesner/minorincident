@@ -46,7 +46,7 @@ export function isWalkingSample(speed: number, leaderSpeed: number, lagging: boo
 }
 interface Row extends BlockedWindow {
   legalPaths?: { firstTick: number; lastTick: number; samples: number; minimumPercent: number; worstTick: number; blockedIds: number[] };
-  boundedPaths?: { samples: number; minimumPercent: number; worstTick: number; nearby: number; reachable: number; blockedIds: number[] };
+  boundedPaths?: { samples: number; minimumPercent: number; worstTick: number; nearby: number; reachable: number; blockedIds: number[]; blockedPositions?: Position[] };
   key: string; label: string; threat: boolean; start: number; ticks: number; lastActive: number;
   spawned: number; initial: number; seen: Set<string>; reachable: Set<string>; near: Set<string>;
   attacks: number; groupAttacks: number; firstAttack: number | null; firstGroupAttack: number | null; followers: Map<number, number[]>;
@@ -166,6 +166,25 @@ export class PathProbe {
     this.lastLength = length + Math.hypot(goal.x - position.x, goal.z - position.z);
     return this.lastLength <= limit;
   }
+}
+
+/** Prove a short entry into the baked grid using the canonical full-radius static sweep.
+ * Dynamic/rotated prop AABBs can cover a physically clear start; no actor is moved. */
+export function physicalPathEntry(world: SimWorld, entity: EntitySnapshot, grid: NavGrid): { x: number; z: number } | undefined {
+  const p = entity.transform, radius = entity.combat?.radius ?? .35;
+  if (entity.pendingAdmission || entity.infected?.perched || entity.infected?.arenaBoss?.traversal || grid.clear(p.x, p.z, radius) ||
+      Math.abs(p.y - .7 - (world.districts?.groundHeight(p.x, p.z) ?? 0)) > .2 || !world.solids.clear(p, radius, entity.id, false, .02)) return undefined;
+  let best: { x: number; z: number } | undefined, length = 4;
+  for (let dz = -8; dz <= 8; dz++) for (let dx = -8; dx <= 8; dx++) {
+    const cell = grid.cell(p.x + dx * .5, p.z + dz * .5);
+    if (cell < 0 || grid.blocked[cell]) continue;
+    const x = grid.x(cell), z = grid.z(cell), distance = Math.hypot(x - p.x, z - p.z);
+    if (distance < .001 || distance >= length || Math.abs((world.districts?.groundHeight(x, z) ?? 0) + .7 - p.y) > .2 ||
+        !world.solids.clear({ x, z, y: p.y }, radius, entity.id, false, .02) ||
+        world.solids.sweep(entity, { x: (x - p.x) / distance, z: (z - p.z) / distance }, distance, radius, false, false) < distance - .001) continue;
+    best = { x, z }; length = distance;
+  }
+  return best;
 }
 
 export class ThreatObserver {
@@ -412,6 +431,7 @@ export class ThreatObserver {
     const reachable = new Set<string>();
     let nearby = 0, boundedReachable = 0;
     const boundedBlockedIds: number[] = [];
+    const boundedBlockedPositions: Position[] = [];
     for (const e of alive) {
       const token = this.identity(e), native = w.infected!.navigation;
       // Annex/house actors own a real indoor/porch walk before ordinary nav
@@ -440,6 +460,14 @@ export class ThreatObserver {
       // full body-clear ground route from its actual landing, without moving it.
       const vault = e.infected?.vault;
       if (this.level === 'L4' && vault) authored.push(vault.to);
+      // L8 monkeys physically drop back to the public doorway when the courier leaves.
+      // Count only the descent currently owned by the live controller, including its full remaining leg.
+      const descent = this.level === 'L8' ? e.infected?.arenaBoss?.traversal : undefined;
+      if (descent && !descent.roof) authored.push(descent.to);
+      if (this.level === 'L8' && !authored.length && !entrance) {
+        const entry = physicalPathEntry(w, e, native.grid(e.transform));
+        if (entry) authored.push(entry);
+      }
       const at = authored.at(-1) ?? routed.transform;
       const goal = e.infected?.pursuit ? player.transform : native.target(at, player.transform);
       const source = e.infected?.pursuit && w.megaPursuit ? w.megaPursuit.grid : native.grid(at);
@@ -449,7 +477,7 @@ export class ThreatObserver {
       if (Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z) <= 30) {
         nearby++;
         if ((!e.pendingAdmission || entrance || authored.length) && !disconnected && this.paths.query(source, routed, player.transform, 2.5, authored) || legalBarrierPath(2.5)) boundedReachable++;
-        else boundedBlockedIds.push(e.id);
+        else { boundedBlockedIds.push(e.id); boundedBlockedPositions.push({ identity: token, id: e.id, x: e.transform.x, z: e.transform.z, playerX: player.transform.x, playerZ: player.transform.z }); }
       }
       // L4's every-infected clause needs a continuous path at the actual body
       // radius too, rather than only A* connectivity on the narrower AI bake.
@@ -470,7 +498,7 @@ export class ThreatObserver {
         const bounded = row.boundedPaths ??= { samples: 0, minimumPercent: 100, worstTick: w.tick, nearby, reachable: boundedReachable, blockedIds: [] };
         bounded.samples++;
         const percent = boundedReachable / nearby * 100;
-        if (percent <= bounded.minimumPercent) Object.assign(bounded, { minimumPercent: percent, worstTick: w.tick, nearby, reachable: boundedReachable, blockedIds: boundedBlockedIds });
+        if (percent <= bounded.minimumPercent) Object.assign(bounded, { minimumPercent: percent, worstTick: w.tick, nearby, reachable: boundedReachable, blockedIds: boundedBlockedIds, blockedPositions: boundedBlockedPositions });
       }
       for (const token of reachable) row.reachable.add(token);
       const snapshot = { tick: w.tick, alive: alive.length, reachable: reachable.size, playerX: player.transform.x, playerZ: player.transform.z, positions };

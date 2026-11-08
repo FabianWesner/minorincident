@@ -82,6 +82,8 @@ export class Damage {
       const back = (dx * Math.cos(target.transform.yaw) - dz * Math.sin(target.transform.yaw)) / d < -.3;
       if (!(back && (target.infected.megaWeakTicks ?? 0) > 0)) amount *= .35;
     }
+    const arena = target.infected?.arenaBoss;
+    if (arena && hit.actionId !== 'arena.elephant.wall') amount *= this.world.tick < arena.exposedUntil ? 1.8 : .18;
     return glance ? amount * riotShieldResponse.chipFraction : amount;
   }
   /** True only for an actual frontal L4/L6 riot shield firearm hit outside contact and break windows. */
@@ -123,6 +125,7 @@ export class Damage {
     const target = this.world.entities.get(hit.targetId), source = this.world.entities.get(hit.sourceId);
     if (!target || !source) return 0;
     if (target.environmentObject) return 0; // placement parts own this prop's durability
+    if (target.infected?.arenaBoss) hit = { ...hit, permanent: true, knockback: 0, stagger: 0, knockdown: false, knockdownTicks: 0, part: undefined };
     if (hit.type === 'melee' && !combatHeightReachable(source, target)) return 0;
     // L7's power weapon opens a route for the column. Civilian splash already
     // deals no HP damage, but its generic reaction knocked the living followers

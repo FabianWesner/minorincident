@@ -54,6 +54,7 @@ export async function probeLevel(level: RunnerLevel, tier: Tier, policy: NativeR
     receipt.run = await runLevel(level, 'complete', 1, policy === 'stationary' ? maxSeconds[level] : undefined, 'auto', campaign, undefined, 0, {
       quality: tier, passive: policy === 'stationary', passiveHoldSeconds: level === 'L10' ? 240 : undefined,
       beforeBegin: world => {
+        if (level === 'L8' && process.env.L8_NATIVE_PROGRESS) world.events.on('sim.tick', () => { if (world.tick % 1800 === 0) console.log(JSON.stringify({ nativeProgress: policy, tier, tick: world.tick, at: world.entities.get(1)!.transform, hp: world.entities.get(1)!.health.current, arenas: world.missions!.l8!.state.arenas.map(a => ({ id: a.id, phase: a.phase, turned: a.ids.filter(id => !!world.entities.get(id)?.infected).length, living: a.ids.filter(id => (world.entities.get(id)?.health.current ?? 0) > 0).length })) })); });
         threat = new ThreatObserver(world, level); acceptance = new AcceptanceObserver(world);
         if (level === 'L4' && policy === 'stationary') hold = new L4HoldCensus(world);
         if (policy === 'stationary' && level !== 'L9') {

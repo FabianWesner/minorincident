@@ -188,6 +188,7 @@ export class InfectedSystem {
       if (target?.infected) {
         this.provoke(target, event.sourceId);
         target.infected.grabHits++;
+        if (target.infected.arenaBoss && event.damageType === 'melee') target.infected.arenaBoss.shakeHits = (target.infected.arenaBoss.shakeHits ?? 0) + 1;
         const special = target.infected.specialAttack;
         if (target.infected.alphaType && special && ((special.move === 'alpha.roar' && special.stage === 'telegraph') || (special.move === 'alpha.grab-human' && special.stage !== 'recovery' && event.damageType === 'bullet'))) this.cancelSpecial(target.id);
         if ((target.infected.special === 'pin' || target.infected.alphaType === 'leaper') && target.infected.grabHits >= 2) this.releasePin(target);
@@ -200,6 +201,7 @@ export class InfectedSystem {
       if (event.type !== 'combat.attack' || event.sourceId !== 1) return;
       if ((actionCatalog[event.actionId] ?? mountedActions[event.actionId])?.category === 'ranged') this.hearing.shot();
       for (const e of this.active) if (e.infected!.grabUntil > world.tick) {
+        if (e.infected!.arenaBoss?.arena === 'monkey') continue;
         if (e.infected!.special === 'cling') e.infected!.grabUntil = 0;
         else if ((e.infected!.special === 'pin' || e.infected!.alphaType === 'leaper') && ++e.infected!.grabHits >= 2) this.releasePin(e);
       }
@@ -261,6 +263,7 @@ export class InfectedSystem {
     delete entity.infected!.scripted; delete entity.infected!.clearingStreet; delete entity.infected!.breachApproach; delete entity.infected!.l4FlankTarget;
     delete entity.infected!.investigate; delete entity.infected!.model; delete entity.infected!.birdDeadMask; delete entity.infectionRise; delete entity.appearance; delete entity.noiseTarget; delete entity.attachedTo; delete entity.hidden; delete entity.corpse;
     delete entity.infected!.roar; delete entity.corpseThrown; delete entity.corpseBlast; delete entity.infected!.pursuit; delete entity.infected!.megaStaggerReady; delete entity.infected!.megaRocketIds; delete entity.infected!.proximityNotice; delete entity.infected!.provoked; delete entity.infected!.pressureTarget;
+    delete entity.infected!.arenaBoss; delete entity.infected!.arenaCarrier;
     delete entity.infected!.megaPhase; delete entity.infected!.megaWeakTicks; delete entity.infected!.megaBurnTicks; delete entity.infected!.megaArmourBroken;
     if (entity.infected!.l1) { delete entity.infected!.l1.focusId; delete entity.infected!.l1.focusUntil; }
     delete entity.infected!.knockdowns; delete entity.infected!.cureRegion; delete entity.infected!.territory; delete entity.infected!.vault; delete entity.infected!.specialAttack; delete entity.infected!.specialCooldowns; delete entity.infected!.specialRecoveryUntil;
@@ -390,6 +393,8 @@ export class InfectedSystem {
       this.world.solids.wrote(e, 'infected.update');
       const b = e.infected!;
       if (this.heldOrDead(e, b, courier)) continue;
+      if (b.arenaCarrier && this.world.missions?.l8?.bosses.controlCarrier(e)) continue;
+      if (b.arenaBoss && this.world.missions?.l8?.bosses.control(e)) continue;
       if (this.hangarBoundary(e, courier)) continue;
       if (this.pursuitOrVault(e, b)) continue;
       if (this.farCrowdSlot(e, b, courier)) continue;
@@ -444,6 +449,9 @@ export class InfectedSystem {
     let target: EntitySnapshot | undefined, nearest = Infinity;
     for (const candidate of this.approachParty) {
       const distance = Math.hypot(candidate.transform.x - e.transform.x, candidate.transform.z - e.transform.z);
+      // L8's gate-side sprinters retain their announced courier approach. A person at actual grab contact still interrupts it.
+      const gateFocus = b.pressureTarget && this.world.tick < b.pressureTarget.until ? b.pressureTarget.id : brain?.focusBiasM === 30 && this.world.tick < (brain.focusUntil ?? 0) ? brain.focusId : 0;
+      if (this.world.scenario === 'L8' && gateFocus && candidate.id !== gateFocus && distance > 1.5) continue;
       if (distance >= nearest || !this.hearing.notices(e, candidate.transform, candidate.id)) continue;
       // The corgi can alert an approaching group, but remains outside every bite
       // and damage target query. Its courier becomes the ordinary chase target.
@@ -480,7 +488,7 @@ export class InfectedSystem {
     if (this.world.npcs?.civilians.holds(e.id)) { e.combat!.attacking = false; return true; }
     if (e.health.current <= 0) { this.dead(e); return true; }
     if (e.infectionRise && this.world.tick < e.infectionRise.until) { e.combat!.attacking = false; return true; }
-    if (e.attachedTo !== undefined) { e.combat!.attacking = false; return true; }
+    if (e.attachedTo !== undefined || b.thrownBy !== undefined) { e.combat!.attacking = false; return true; }
     if (this.world.missions?.state.states['cure-released']) {
       this.cancelSpecial(e.id); if (b.special === 'pin' || b.alphaType === 'leaper') this.releasePin(e);
       e.combat!.attacking = false; b.grabUntil = 0; b.state = 'chase';
@@ -536,7 +544,10 @@ export class InfectedSystem {
   private perceiveTargets(e: EntitySnapshot, b: InfectedState): boolean {
     if (this.world.scenario === 'L8' && this.hearing.courierShotNearby(e) && !b.pursuit && !b.specialAttack && !e.emerging) {
       delete b.pressureTarget;
-      if (b.l1) this.rush(e.id, this.world.entities.get(1)!.transform, this.world.tick + provokeTicks);
+      if (b.l1) {
+        const gateApproach = b.l1.focusId === 1 && b.l1.focusBiasM === 30 && this.world.tick < (b.l1.focusUntil ?? 0);
+        this.rush(e.id, this.world.entities.get(1)!.transform, this.world.tick + provokeTicks, gateApproach);
+      }
       else { b.heardTargetId = 1; delete b.investigate; }
     }
     const provoker = this.provoker(b);
@@ -1132,7 +1143,7 @@ export class InfectedSystem {
       // than the pedestrian search brain. Without a target they wander at distant mouths.
       if (state.state === 'attack' || state.specialAttack || state.grabUntil > this.world.tick) return false;
       state.heardTargetId = targetId;
-      if (this.world.scenario === 'L3' || this.world.scenario === 'L4' || this.world.scenario === 'L6') state.pressureTarget = { id: targetId, until: untilTick };
+      if (this.world.scenario === 'L3' || this.world.scenario === 'L4' || this.world.scenario === 'L6' || this.world.scenario === 'L8') state.pressureTarget = { id: targetId, until: untilTick };
       if (this.world.scenario === 'L4') state.l4ArmyApproach = targetId !== 1;
       if (state.state === 'idle' || state.state === 'wander' || state.state === 'attracted') {
         state.state = 'alerted'; state.until = this.world.tick + hearingReactionTicks;
@@ -1302,7 +1313,7 @@ export class InfectedSystem {
     // Metro arrivals must enter the defence before selecting seated bystanders.
     // The courier and following party can still interrupt via noticeDuringApproach.
     if (brain.mode === 'attracted' && brain.search.completeApproach && (this.world.scenario === 'L6' ||
-        (this.world.scenario === 'L3' || this.world.scenario === 'L4') && brain.focusId === 1 && this.world.tick < (brain.focusUntil ?? 0))) return;
+        (this.world.scenario === 'L3' || this.world.scenario === 'L4' || this.world.scenario === 'L8' && brain.focusBiasM === 30) && brain.focusId === 1 && this.world.tick < (brain.focusUntil ?? 0))) return;
     const seen = this.l1!.closest(e, brain.mode === 'chase' ? brain.targetId : 0, this.world.tick < brain.ignoreUntil ? brain.ignoreId : 0);
     if (seen && this.sight(e, b, brain, seen)) return;
     if (brain.mode === 'chase') this.startSearch(b, brain, { x: brain.seenX, z: brain.seenZ }, { x: brain.headingX, z: brain.headingZ });
@@ -1593,8 +1604,14 @@ export class InfectedSystem {
   private nextAttackId(): number {
     return ++this.sequence;
   }
+  /** L8 telegraphs share the monotonic infected attack identity and normal VFX event contract. */
+  arenaAttackId(): number { return this.nextAttackId(); }
   /** Rebase serialized timers when a checkpoint is restored at a later world tick. */
   restoreSpecialTimers(b: InfectedState, delta: number): void {
+    if (b.arenaBoss?.scavengeProgress) b.arenaBoss.scavengeProgress.at += delta;
+    if (b.arenaBoss?.hunt) b.arenaBoss.hunt.until += delta;
+    if (b.arenaBoss?.traversal) b.arenaBoss.traversal.start += delta;
+    if (b.arenaBoss) { b.arenaBoss.exposedUntil += delta; b.arenaBoss.readyAt += delta; }
     this.sequence = Math.max(this.sequence, b.attackId, b.specialAttack?.attackId ?? 0, b.roar?.attackId ?? 0);
     if (b.proximityNotice) b.proximityNotice.until += delta;
     if (b.alphaSpecialStarted !== undefined) b.alphaSpecialStarted += delta;

@@ -104,6 +104,7 @@ export class CrowdView extends Group {
   private readonly roleLods = new Map<string, 'lod1' | 'lod2'>();
   private readonly frustum = new Frustum();
   private readonly projection = new Matrix4();
+  private readonly arenaScale = new Vector3(1.4, 1.4, 1.4);
   private readonly bounds = new Sphere(new Vector3(), 1);
   private disposed = false;
   private readonly batches = new Map<string, Batch>();
@@ -230,7 +231,7 @@ export class CrowdView extends Group {
       const warmHero = !this.low && !grove && residents.has(this.modelAliases.get(def.id)!);
       // A zoo turn can put the infected body in the close band immediately.
       // Prepare both forms behind the loading card, including their LOD0 material.
-      const zooHero = !this.low && this.world.scenario === 'L8' && /^(infected|healthy)\.(lion|gorilla|elephant|zebra|flamingo)$/.test(def.id);
+      const zooHero = !this.low && this.world.scenario === 'L8' && /^(infected|healthy)\.(lion|gorilla|elephant|zebra|flamingo|monkey|lioness)$/.test(def.id);
       // perf-w6: Alpha bodies draw LOD0 (heroes, and their corpses on both tiers). In L4/L5/L7 the Alphas arrive during play
       // (the L4 waves); the first death baked that batch synchronously (~200 ms at low/4x CPU). Bake it while loading there too.
       const alpha = (alphaLooks['inf.alpha'].includes(def.asset) || alphaLooks['inf.mega-alpha'].includes(def.asset)) && (residents.has(this.modelAliases.get(def.id)!) || alphaLevel);
@@ -322,7 +323,7 @@ export class CrowdView extends Group {
       if (loaded.userData.placeholder) throw new Error(`${asset} is required for the skinned crowd`);
       const model = loaded;
       const atlas = model.userData.assetTextureMode === 'baseColor' ? crowdTexture(model) : undefined;
-      const healthy = def.id.startsWith('healthy.'), human = !dogCoat(def.id) && !/^(infected|healthy)\.(dog|cat|crow|lion|gorilla|elephant|zebra|flamingo)$/.test(def.id);
+      const healthy = def.id.startsWith('healthy.'), human = !dogCoat(def.id) && !/^(infected|healthy)\.(dog|cat|crow|lion|gorilla|elephant|zebra|flamingo|monkey|lioness)$/.test(def.id);
       const alpha = alphaLookAssets.includes(asset), regularAlpha = alphaLooks['inf.alpha'].includes(asset), capacity = role === 'crow' ? 800 : 350;
       // The retained Alpha corpse is LOD0. Establish its own atlas binding before
       // a far batch prepares pages from that source, regardless of arrival order.
@@ -445,7 +446,7 @@ export class CrowdView extends Group {
       // L10 Alpha looks/LODs use the same shader layout and bind their own atlas
       // per draw. A new hero look must not build this graph during the charge.
       // L8 keeps its existing intermediate-band sharing policy.
-      const zooSurface = this.world.scenario === 'L8' && /^(infected|healthy)\.(lion|gorilla|elephant|zebra|flamingo)$/.test(def.id);
+      const zooSurface = this.world.scenario === 'L8' && /^(infected|healthy)\.(lion|gorilla|elephant|zebra|flamingo|monkey|lioness)$/.test(def.id);
       const ordinarySurface = regularInfectedModels.some(model => model === asset);
       const sharedAlpha = (this.world.scenario === 'L8' || this.world.scenario === 'L10') && alpha;
       const sharedSurface = (this.world.scenario === 'L4' || ordinarySurface) && infectedAtlas || zooSurface || sharedAlpha && (this.world.scenario === 'L10' || lod === 'lod1');
@@ -714,7 +715,7 @@ export class CrowdView extends Group {
       if (!batch) continue;
       const b = e.infected ?? { state: e.health.current <= 0 || e.civilian?.state === 'finished' ? 'dead' : e.combat.attacking ? 'attack' : 'idle', until: 0, deadAt: e.civilian?.entered ?? 0, legLost: false, special: '', detached: false, variant: '', birdAlive: [], birdPositions: [], dx: 0, dz: 0 };
       const specialAttack = e.infected?.specialAttack;
-      const physical = specialAttack && (e.infected?.pursuit && specialAttack.move === 'alpha.grab-throw' || ['alpha.charge', 'alpha.ground-slam', 'alpha.pounce', 'alpha.grab-human', 'alpha.shield-bash', 'lion.pounce', 'lion.flank', 'gorilla.pound', 'gorilla.roar', 'elephant.charge', 'elephant.swipe', 'zebra.stampede'].includes(specialAttack.move)) ? specialAttack : undefined;
+      const physical = specialAttack && (e.infected?.arenaBoss || e.infected?.pursuit && specialAttack.move === 'alpha.grab-throw' || ['alpha.charge', 'alpha.ground-slam', 'alpha.pounce', 'alpha.grab-human', 'alpha.shield-bash', 'lion.pounce', 'lion.flank', 'gorilla.pound', 'gorilla.roar', 'elephant.charge', 'elephant.swipe', 'zebra.stampede'].includes(specialAttack.move)) ? specialAttack : undefined;
       const feedback = this.feedback.get(e.id);
       const renderTick = Math.max(0, this.world.tick + alpha - 1);
       const tick = distance > 35 ? Math.floor(this.world.tick / 2) * 2 : this.world.tick;
@@ -770,6 +771,7 @@ export class CrowdView extends Group {
         for (let bird = 0; bird < 20; bird++) if (b.birdAlive[bird]) { this.transform.makeTranslation(b.birdPositions[bird * 3], b.birdPositions[bird * 3 + 1], b.birdPositions[bird * 3 + 2]); batch.mesh.setMatrixAt(batch.count, this.transform); writeCrowdAppearance(batch.tint, batch.count, e.id, tint, blend[0] * 2 + blend[1], this.accessories?.slot(e), this.accessories?.hidesHair(e, batch.lod)); batch.state.setXYZW(batch.count++, frame, 0, 0, this.flashStrength(e, feedback)); }
       } else {
         this.transform.makeRotationY((b.state === 'dead' ? resting.yaw : presented.yaw) + (e.civilian?.zooAnimal && e.infection ? Math.sin(renderTick * .5 + e.id) * .018 * e.infection.progress : 0)); this.transform.setPosition(x, (b.state === 'dead' ? (presented.y - .7) * (1 - settle) + resting.y * settle : Math.max(presented.y - 0.7, this.world.districts?.pavingHeight(x, z) ?? 0)) + (reaction?.heavy && age < .48 ? Math.max(0, .16 * (1 - Math.abs(age / .24 - 1))) : 0), z);
+        if (e.infected?.arenaBoss?.arena === 'monkey' && e.infected.arenaBoss.slot === 6) this.transform.scale(this.arenaScale);
         if (b.state === 'dead') this.deadFeet.set(e.id, { id: e.id, x, y: this.transform.elements[13], z });
         if (e.corpse) {
           // Start with the intact corpse source; ordinary limb severance is

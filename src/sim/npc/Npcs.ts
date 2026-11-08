@@ -79,12 +79,13 @@ export class Npcs {
     // L5's corgi uses the same body-clear corner routing and waypoint braking:
     // extra padding/full-speed tiny waypoints left it circling plaza wreckage
     // while the courier moved nearly twenty metres away.
-    const routeFollower = !!(e.civilian?.ally?.follow || e.companion) && !!this.world.missions?.def.l3
+    const routeFollower = !!e.infected?.arenaBoss || !!e.infected?.arenaCarrier || !!(e.civilian?.ally?.follow || e.companion) && !!this.world.missions?.def.l3
       || this.world.scenario === 'L5' && !!e.companion
       || this.world.scenario === 'L9' && !!e.companion
-      || this.world.scenario === 'L7' && (!!e.companion || e.civilian?.survivor?.mode === 'follow');
+      || ['L7', 'L8'].includes(this.world.scenario ?? '') && (!!e.companion || e.civilian?.survivor?.mode === 'follow');
     const cell = routeFollower ? nav.nearestCell(e.transform.x, e.transform.z, footprint) : -1;
-    const flowNext = routeFollower && distance > 30 ? nav.flowNext(cell) : -1;
+    // Animal encounter goals are independent of the courier's reverse field.
+    const flowNext = routeFollower && !e.infected?.arenaBoss && !e.infected?.arenaCarrier && distance > 30 ? nav.flowNext(cell) : -1;
     if (routeFollower && cell < 0) {
       // Rounded bodies can enter an alley narrower than the baked crowd grid. Walk out; never teleport.
       const last = this.escapes.get(e.id), tick = this.world.tick;
