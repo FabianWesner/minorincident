@@ -99,7 +99,7 @@ try {
     w.solids.relocate(p, { x: -44, z: 25, y: .7 }, 'qa.elephant.lure-target', 2);
     arena.phase = 1; arena.nextAt = w.tick + 30; arena.cycle = 0;
     const charges: unknown[] = [];
-    w.events.on('infected.special', event => { if (event.type === 'infected.special' && event.sourceId === e.id && event.move === 'elephant.charge' && event.stage === 'recovery') charges.push({ tick: w.tick, a: structuredClone(e.infected!.specialAttack), boss: { ...e.transform }, courier: { ...p.transform }, staticAhead: w.solids.sweep(e, { x: e.infected!.specialAttack!.area.dx, z: e.infected!.specialAttack!.area.dz }, 14 / 60, e.combat!.radius, false, false) }); });
+    w.events.on('infected.special', event => { if (event.type === 'infected.special' && event.sourceId === e.id && event.move === 'elephant.charge' && event.stage === 'recovery') charges.push({ tick: w.tick, a: structuredClone(e.infected!.specialAttack), boss: { ...e.transform }, courier: { ...p.transform }, neighbors: w.entities.values().filter(v => v.id !== e.id && v.health.current > 0 && Math.hypot(v.transform.x-e.transform.x,v.transform.z-e.transform.z)<6).map(v=>({id:v.id,role:v.archetype,at:{...v.transform},radius:v.combat?.radius})), staticAhead: w.solids.sweep(e, { x: e.infected!.specialAttack!.area.dx, z: e.infected!.specialAttack!.area.dz }, 14 / 60, e.combat!.radius, false, false) }); });
     const bot = new L8ArenaBot(w), contacts: unknown[] = []; let previous = 0;
     for (let n = 0; n < 300 * 60 && e.health.current > 0 && p.health.current > 0; n++) {
       const f = emptyInput();
