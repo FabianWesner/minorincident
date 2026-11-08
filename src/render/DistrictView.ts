@@ -312,7 +312,10 @@ export class DistrictView extends Group {
     const foliage = (!!worldAssets[entry.id].foliage || /^prop\.(tree|bush|hedge)/.test(entry.id));
     let prefetchNear = false, prefetchHero = false;
     for (const [index, ref] of refs.entries()) {
-      if (this.overview && (worldAssets[entry.id].category === 'prop' || index % Math.max(1, Math.ceil(refs.length / 24)) !== 0)) continue;
+      if (this.overview) {
+        const asset = worldAssets[entry.id], size = asset.dimensions;
+        if (asset.category === 'prop' && Math.max(size.x, size.y, size.z) < 6 || index % Math.max(1, Math.ceil(refs.length / (this.low ? 8 : 24))) !== 0) continue;
+      }
       if (ref.userData.interiorHidden) continue;
       if (this.low && ref.userData.farmScatter !== undefined && ref.userData.farmScatter % 2) continue;
       if (entry.id === 'prop.cure-canister-pedestal' && this.cureCollected) continue;
