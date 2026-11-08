@@ -1,0 +1,27 @@
+{
+  "target": "E08",
+  "epics": [
+    "E08"
+  ],
+  "checks": [
+    {
+      "command": "npm run typecheck",
+      "status": 0,
+      "seconds": 13.057
+    },
+    {
+      "command": "npm run lint",
+      "status": 0,
+      "seconds": 8.474
+    },
+    {
+      "command": "npm test",
+      "status": 0,
+      "seconds": 28.621
+    }
+  ],
+  "revision": "6fc09518",
+  "sourceHash": "5ddd64e4b422716a8917531826b43007f9e9e2f938be10e8f586a9000774a880",
+  "tests": 107,
+  "testFiles": 27
+}
