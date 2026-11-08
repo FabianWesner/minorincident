@@ -1,0 +1,871 @@
+{
+  "sourceRevision": "763b9ce1c5865e78defc3ba562c994a384354f0a",
+  "acceptSourceHash": "baea69554489835932c6a2573aea575420689c6de72b2060d8b54b451561b3aa",
+  "buildLog": {
+    "path": "test-results/pre-uat-l9/build-after-gear.log",
+    "sha256": "4fa485bc36ab0fc71c6ae4a67b2ec7eb10fa888203fe7ceab96585736a36def1"
+  },
+  "harness": {
+    "path": "test-results/pre-uat-l9/matrix.ts",
+    "sha256": "c74e9f38893f4e3fd9ba11af3d66e8db88f539d6e8844c3d1fddee0ddc4212f7"
+  },
+  "scope": "Manual production-clock samples; these measurements do not claim complete formal acceptance rows or quiet-host performance. The final matrix uses the build bytes subsequently committed as 763b9ce1.",
+  "matrix": [
+    {
+      "inputTapWindow": [
+        22,
+        9465
+      ],
+      "inputTapMissingTicks": 0,
+      "inputTapTicks": 9444,
+      "simChunkPeak": 25,
+      "handover": {
+        "variant": "female",
+        "health": 100,
+        "ownedWeapons": [
+          "weapon.fire-axe"
+        ],
+        "racks": {
+          "LEFT": [
+            "weapon.fire-axe"
+          ],
+          "RIGHT": [
+            "weapon.fire-axe"
+          ]
+        },
+        "shelteredHumans": 12,
+        "corgiHP": 100
+      },
+      "receipt": "test-results/pre-uat-l9/realtime-webgl-pair-countryside-high-final/countryside-high-z1-gear4-female/receipt.json",
+      "run": "realtime-webgl-pair-countryside-high-final",
+      "route": "countryside",
+      "quality": "high",
+      "zoom": 1,
+      "tier": 4,
+      "character": "female",
+      "backend": "webgl",
+      "finished": true,
+      "scope": "full handover",
+      "errors": [],
+      "error": null,
+      "seconds": 171.58,
+      "clockAbsenceUpperBound": 27.25,
+      "maxMovingEmptySeconds": 27.017,
+      "maxClockEmptySeconds": 27.017,
+      "maxDrivingSampleGap": 0.917,
+      "terrainPeak": 25,
+      "terrainLimit": 25,
+      "terrainUnloaded": 147,
+      "startHP": 1000,
+      "endHP": 870,
+      "crawlSamples": 38,
+      "crawlVisibleProps": 0,
+      "captures": 15,
+      "crashSignals": [
+        "l9.crash-approach",
+        "l9.bridge-collapse",
+        "l9.crash-impact",
+        "l9.crawl-finished"
+      ],
+      "receiptSha256": "424608d4e8ec15ba268796e9894750d2598fc6ac2de35c9897173c1814f94af1"
+    },
+    {
+      "inputTapWindow": [
+        84,
+        11175
+      ],
+      "inputTapMissingTicks": 0,
+      "inputTapTicks": 11092,
+      "simChunkPeak": 25,
+      "handover": {
+        "variant": "female",
+        "health": 100,
+        "ownedWeapons": [
+          "weapon.fire-axe"
+        ],
+        "racks": {
+          "LEFT": [
+            "weapon.fire-axe"
+          ],
+          "RIGHT": [
+            "weapon.fire-axe"
+          ]
+        },
+        "shelteredHumans": 12,
+        "corgiHP": 100
+      },
+      "receipt": "test-results/pre-uat-l9/realtime-webgl-pair-countryside-high-final/countryside-high-z1.5-gear4-female/receipt.json",
+      "run": "realtime-webgl-pair-countryside-high-final",
+      "route": "countryside",
+      "quality": "high",
+      "zoom": 1.5,
+      "tier": 4,
+      "character": "female",
+      "backend": "webgl",
+      "finished": true,
+      "scope": "full handover",
+      "errors": [],
+      "error": null,
+      "seconds": 199.88,
+      "clockAbsenceUpperBound": 13.567,
+      "maxMovingEmptySeconds": 12.417,
+      "maxClockEmptySeconds": 13.4,
+      "maxDrivingSampleGap": 3.433,
+      "terrainPeak": 25,
+      "terrainLimit": 25,
+      "terrainUnloaded": 180,
+      "startHP": 1000,
+      "endHP": 840,
+      "crawlSamples": 9,
+      "crawlVisibleProps": 0,
+      "captures": 17,
+      "crashSignals": [
+        "l9.crash-approach",
+        "l9.bridge-collapse",
+        "l9.crash-impact",
+        "l9.crawl-finished"
+      ],
+      "receiptSha256": "fcc8e70bdeedffbec7f49d8b5a5885852c861825e48cd814168d0ce319f8bc26"
+    },
+    {
+      "inputTapWindow": [
+        31,
+        7633
+      ],
+      "inputTapMissingTicks": 0,
+      "inputTapTicks": 7603,
+      "simChunkPeak": 9,
+      "handover": {
+        "variant": "female",
+        "health": 100,
+        "ownedWeapons": [
+          "weapon.fire-axe"
+        ],
+        "racks": {
+          "LEFT": [
+            "weapon.fire-axe"
+          ],
+          "RIGHT": [
+            "weapon.fire-axe"
+          ]
+        },
+        "shelteredHumans": 12,
+        "corgiHP": 100
+      },
+      "receipt": "test-results/pre-uat-l9/realtime-webgl-pair-countryside-low-final/countryside-low-z1-gear4-female/receipt.json",
+      "run": "realtime-webgl-pair-countryside-low-final",
+      "route": "countryside",
+      "quality": "low",
+      "zoom": 1,
+      "tier": 4,
+      "character": "female",
+      "backend": "webgl",
+      "finished": true,
+      "scope": "full handover",
+      "errors": [],
+      "error": null,
+      "seconds": 140.93,
+      "clockAbsenceUpperBound": 12.633,
+      "maxMovingEmptySeconds": 12.5,
+      "maxClockEmptySeconds": 12.5,
+      "maxDrivingSampleGap": 0.417,
+      "terrainPeak": 9,
+      "terrainLimit": 9,
+      "terrainUnloaded": 69,
+      "startHP": 1000,
+      "endHP": 880,
+      "crawlSamples": 25,
+      "crawlVisibleProps": 0,
+      "captures": 15,
+      "crashSignals": [
+        "l9.crash-approach",
+        "l9.bridge-collapse",
+        "l9.crash-impact",
+        "l9.crawl-finished"
+      ],
+      "receiptSha256": "d940d4483b4834852e180521db03d07d3dbe839d0af0b9a26e0c1e0e3f76b289"
+    },
+    {
+      "inputTapWindow": [
+        44,
+        8691
+      ],
+      "inputTapMissingTicks": 0,
+      "inputTapTicks": 8648,
+      "simChunkPeak": 9,
+      "handover": {
+        "variant": "female",
+        "health": 100,
+        "ownedWeapons": [
+          "weapon.fire-axe"
+        ],
+        "racks": {
+          "LEFT": [
+            "weapon.fire-axe"
+          ],
+          "RIGHT": [
+            "weapon.fire-axe"
+          ]
+        },
+        "shelteredHumans": 12,
+        "corgiHP": 100
+      },
+      "receipt": "test-results/pre-uat-l9/realtime-webgl-pair-countryside-low-final/countryside-low-z1.5-gear4-female/receipt.json",
+      "run": "realtime-webgl-pair-countryside-low-final",
+      "route": "countryside",
+      "quality": "low",
+      "zoom": 1.5,
+      "tier": 4,
+      "character": "female",
+      "backend": "webgl",
+      "finished": true,
+      "scope": "full handover",
+      "errors": [],
+      "error": null,
+      "seconds": 158.5,
+      "clockAbsenceUpperBound": 12.2,
+      "maxMovingEmptySeconds": 11.733,
+      "maxClockEmptySeconds": 11.733,
+      "maxDrivingSampleGap": 1.083,
+      "terrainPeak": 9,
+      "terrainLimit": 9,
+      "terrainUnloaded": 119,
+      "startHP": 1000,
+      "endHP": 880,
+      "crawlSamples": 28,
+      "crawlVisibleProps": 0,
+      "captures": 16,
+      "crashSignals": [
+        "l9.crash-approach",
+        "l9.bridge-collapse",
+        "l9.crash-impact",
+        "l9.crawl-finished"
+      ],
+      "receiptSha256": "799afdd6f7cd44befca0f16d4454fd50bde15bc05b639fca3b911efdb68b0308"
+    },
+    {
+      "inputTapWindow": [
+        60,
+        8628
+      ],
+      "inputTapMissingTicks": 0,
+      "inputTapTicks": 8569,
+      "simChunkPeak": 25,
+      "handover": {
+        "variant": "female",
+        "health": 100,
+        "ownedWeapons": [
+          "weapon.fire-axe"
+        ],
+        "racks": {
+          "LEFT": [
+            "weapon.fire-axe"
+          ],
+          "RIGHT": [
+            "weapon.fire-axe"
+          ]
+        },
+        "shelteredHumans": 12,
+        "corgiHP": 100
+      },
+      "receipt": "test-results/pre-uat-l9/realtime-webgl-pair-dry-shortcut-high-final/dry-shortcut-high-z1-gear4-female/receipt.json",
+      "run": "realtime-webgl-pair-dry-shortcut-high-final",
+      "route": "dry-shortcut",
+      "quality": "high",
+      "zoom": 1,
+      "tier": 4,
+      "character": "female",
+      "backend": "webgl",
+      "finished": true,
+      "scope": "full handover",
+      "errors": [],
+      "error": null,
+      "seconds": 157.45,
+      "clockAbsenceUpperBound": 21.333,
+      "maxMovingEmptySeconds": 21.183,
+      "maxClockEmptySeconds": 21.183,
+      "maxDrivingSampleGap": 4.417,
+      "terrainPeak": 25,
+      "terrainLimit": 25,
+      "terrainUnloaded": 444,
+      "startHP": 1000,
+      "endHP": 870,
+      "crawlSamples": 29,
+      "crawlVisibleProps": 0,
+      "captures": 15,
+      "crashSignals": [
+        "l9.crash-approach",
+        "l9.bridge-collapse",
+        "l9.crash-impact",
+        "l9.crawl-finished"
+      ],
+      "receiptSha256": "72e07b6d1e591f5f203c00b59b07549745f7216e69421d7870d419227e1b7a47"
+    },
+    {
+      "inputTapWindow": [
+        10,
+        9275
+      ],
+      "inputTapMissingTicks": 0,
+      "inputTapTicks": 9266,
+      "simChunkPeak": 25,
+      "handover": {
+        "variant": "female",
+        "health": 100,
+        "ownedWeapons": [
+          "weapon.fire-axe"
+        ],
+        "racks": {
+          "LEFT": [
+            "weapon.fire-axe"
+          ],
+          "RIGHT": [
+            "weapon.fire-axe"
+          ]
+        },
+        "shelteredHumans": 12,
+        "corgiHP": 100
+      },
+      "receipt": "test-results/pre-uat-l9/realtime-webgl-pair-dry-shortcut-high-final/dry-shortcut-high-z1.5-gear4-female/receipt.json",
+      "run": "realtime-webgl-pair-dry-shortcut-high-final",
+      "route": "dry-shortcut",
+      "quality": "high",
+      "zoom": 1.5,
+      "tier": 4,
+      "character": "female",
+      "backend": "webgl",
+      "finished": true,
+      "scope": "full handover",
+      "errors": [],
+      "error": null,
+      "seconds": 168.6,
+      "clockAbsenceUpperBound": 22.783,
+      "maxMovingEmptySeconds": 20.517,
+      "maxClockEmptySeconds": 22.15,
+      "maxDrivingSampleGap": 14.75,
+      "terrainPeak": 25,
+      "terrainLimit": 25,
+      "terrainUnloaded": 389,
+      "startHP": 1000,
+      "endHP": 880,
+      "crawlSamples": 27,
+      "crawlVisibleProps": 0,
+      "captures": 16,
+      "crashSignals": [
+        "l9.crash-approach",
+        "l9.bridge-collapse",
+        "l9.crash-impact",
+        "l9.crawl-finished"
+      ],
+      "receiptSha256": "8b8b90763bd2b84091c459d2a3b13a766c73af1c32629c513eec3708ee145eb9"
+    },
+    {
+      "inputTapWindow": [
+        76,
+        8030
+      ],
+      "inputTapMissingTicks": 0,
+      "inputTapTicks": 7955,
+      "simChunkPeak": 9,
+      "handover": {
+        "variant": "female",
+        "health": 100,
+        "ownedWeapons": [
+          "weapon.fire-axe"
+        ],
+        "racks": {
+          "LEFT": [
+            "weapon.fire-axe"
+          ],
+          "RIGHT": [
+            "weapon.fire-axe"
+          ]
+        },
+        "shelteredHumans": 12,
+        "corgiHP": 100
+      },
+      "receipt": "test-results/pre-uat-l9/realtime-webgl-pair-dry-shortcut-low-final/dry-shortcut-low-z1-gear4-female/receipt.json",
+      "run": "realtime-webgl-pair-dry-shortcut-low-final",
+      "route": "dry-shortcut",
+      "quality": "low",
+      "zoom": 1,
+      "tier": 4,
+      "character": "female",
+      "backend": "webgl",
+      "finished": true,
+      "scope": "full handover",
+      "errors": [],
+      "error": null,
+      "seconds": 147.2,
+      "clockAbsenceUpperBound": 20.933,
+      "maxMovingEmptySeconds": 20.5,
+      "maxClockEmptySeconds": 20.5,
+      "maxDrivingSampleGap": 2.033,
+      "terrainPeak": 9,
+      "terrainLimit": 9,
+      "terrainUnloaded": 246,
+      "startHP": 1000,
+      "endHP": 860,
+      "crawlSamples": 12,
+      "crawlVisibleProps": 0,
+      "captures": 15,
+      "crashSignals": [
+        "l9.crash-approach",
+        "l9.bridge-collapse",
+        "l9.crash-impact",
+        "l9.crawl-finished"
+      ],
+      "receiptSha256": "652ef5b87127bf51778a4aa27f82681f13d59cbf0a15b0f0053ed8392980221c"
+    },
+    {
+      "inputTapWindow": [
+        183,
+        7436
+      ],
+      "inputTapMissingTicks": 0,
+      "inputTapTicks": 7254,
+      "simChunkPeak": 9,
+      "handover": {
+        "variant": "female",
+        "health": 100,
+        "ownedWeapons": [
+          "weapon.fire-axe"
+        ],
+        "racks": {
+          "LEFT": [
+            "weapon.fire-axe"
+          ],
+          "RIGHT": [
+            "weapon.fire-axe"
+          ]
+        },
+        "shelteredHumans": 12,
+        "corgiHP": 100
+      },
+      "receipt": "test-results/pre-uat-l9/realtime-webgl-pair-dry-shortcut-low-final/dry-shortcut-low-z1.5-gear4-female/receipt.json",
+      "run": "realtime-webgl-pair-dry-shortcut-low-final",
+      "route": "dry-shortcut",
+      "quality": "low",
+      "zoom": 1.5,
+      "tier": 4,
+      "character": "female",
+      "backend": "webgl",
+      "finished": true,
+      "scope": "full handover",
+      "errors": [],
+      "error": null,
+      "seconds": 136.18,
+      "clockAbsenceUpperBound": 42.45,
+      "maxMovingEmptySeconds": 27.95,
+      "maxClockEmptySeconds": 40.683,
+      "maxDrivingSampleGap": 3.783,
+      "terrainPeak": 9,
+      "terrainLimit": 9,
+      "terrainUnloaded": 205,
+      "startHP": 1000,
+      "endHP": 930,
+      "crawlSamples": 43,
+      "crawlVisibleProps": 0,
+      "captures": 15,
+      "crashSignals": [
+        "l9.crash-approach",
+        "l9.bridge-collapse",
+        "l9.crash-impact",
+        "l9.crawl-finished"
+      ],
+      "receiptSha256": "f6859488e0e51efa9bf203614761d8d6059a87fc51a85c33336d0d053c385bd8"
+    },
+    {
+      "inputTapWindow": [
+        186,
+        15422
+      ],
+      "inputTapMissingTicks": 0,
+      "inputTapTicks": 15237,
+      "simChunkPeak": 25,
+      "handover": {
+        "variant": "female",
+        "health": 100,
+        "ownedWeapons": [
+          "weapon.fire-axe"
+        ],
+        "racks": {
+          "LEFT": [
+            "weapon.fire-axe"
+          ],
+          "RIGHT": [
+            "weapon.fire-axe"
+          ]
+        },
+        "shelteredHumans": 12,
+        "corgiHP": 100
+      },
+      "receipt": "test-results/pre-uat-l9/realtime-webgl-pair-road-high-final/road-high-z1-gear4-female/receipt.json",
+      "run": "realtime-webgl-pair-road-high-final",
+      "route": "road",
+      "quality": "high",
+      "zoom": 1,
+      "tier": 4,
+      "character": "female",
+      "backend": "webgl",
+      "finished": true,
+      "scope": "full handover",
+      "errors": [],
+      "error": null,
+      "seconds": 269.38,
+      "clockAbsenceUpperBound": 32.167,
+      "maxMovingEmptySeconds": 28.883,
+      "maxClockEmptySeconds": 30.5,
+      "maxDrivingSampleGap": 6.4,
+      "terrainPeak": 25,
+      "terrainLimit": 25,
+      "terrainUnloaded": 285,
+      "startHP": 1000,
+      "endHP": 760,
+      "crawlSamples": 19,
+      "crawlVisibleProps": 0,
+      "captures": 21,
+      "crashSignals": [
+        "l9.crash-approach",
+        "l9.bridge-collapse",
+        "l9.crash-impact",
+        "l9.crawl-finished"
+      ],
+      "receiptSha256": "9c3028a250bfc67d097e1b74f91c3897019dcc0eaa5c059a3f8e8a87d99c3df4"
+    },
+    {
+      "inputTapWindow": [
+        104,
+        12648
+      ],
+      "inputTapMissingTicks": 0,
+      "inputTapTicks": 12545,
+      "simChunkPeak": 25,
+      "handover": {
+        "variant": "female",
+        "health": 100,
+        "ownedWeapons": [
+          "weapon.fire-axe"
+        ],
+        "racks": {
+          "LEFT": [
+            "weapon.fire-axe"
+          ],
+          "RIGHT": [
+            "weapon.fire-axe"
+          ]
+        },
+        "shelteredHumans": 12,
+        "corgiHP": 100
+      },
+      "receipt": "test-results/pre-uat-l9/realtime-webgl-pair-road-high-final/road-high-z1.5-gear4-female/receipt.json",
+      "run": "realtime-webgl-pair-road-high-final",
+      "route": "road",
+      "quality": "high",
+      "zoom": 1.5,
+      "tier": 4,
+      "character": "female",
+      "backend": "webgl",
+      "finished": true,
+      "scope": "full handover",
+      "errors": [],
+      "error": null,
+      "seconds": 224.02,
+      "clockAbsenceUpperBound": 17.85,
+      "maxMovingEmptySeconds": 17.167,
+      "maxClockEmptySeconds": 17.467,
+      "maxDrivingSampleGap": 2.883,
+      "terrainPeak": 25,
+      "terrainLimit": 25,
+      "terrainUnloaded": 355,
+      "startHP": 1000,
+      "endHP": 830,
+      "crawlSamples": 39,
+      "crawlVisibleProps": 0,
+      "captures": 19,
+      "crashSignals": [
+        "l9.crash-approach",
+        "l9.bridge-collapse",
+        "l9.crash-impact",
+        "l9.crawl-finished"
+      ],
+      "receiptSha256": "df04c1dd9d686180d135d6362736e9b04e13579102da4c39a1e6131437077b8f"
+    },
+    {
+      "inputTapWindow": [
+        56,
+        14230
+      ],
+      "inputTapMissingTicks": 0,
+      "inputTapTicks": 14175,
+      "simChunkPeak": 9,
+      "handover": {
+        "variant": "female",
+        "health": 100,
+        "ownedWeapons": [
+          "weapon.fire-axe"
+        ],
+        "racks": {
+          "LEFT": [
+            "weapon.fire-axe"
+          ],
+          "RIGHT": [
+            "weapon.fire-axe"
+          ]
+        },
+        "shelteredHumans": 12,
+        "corgiHP": 100
+      },
+      "receipt": "test-results/pre-uat-l9/realtime-webgl-pair-road-low-final/road-low-z1-gear4-female/receipt.json",
+      "run": "realtime-webgl-pair-road-low-final",
+      "route": "road",
+      "quality": "low",
+      "zoom": 1,
+      "tier": 4,
+      "character": "female",
+      "backend": "webgl",
+      "finished": true,
+      "scope": "full handover",
+      "errors": [],
+      "error": null,
+      "seconds": 250.53,
+      "clockAbsenceUpperBound": 55.75,
+      "maxMovingEmptySeconds": 47.6,
+      "maxClockEmptySeconds": 55.1,
+      "maxDrivingSampleGap": 2.933,
+      "terrainPeak": 9,
+      "terrainLimit": 9,
+      "terrainUnloaded": 327,
+      "startHP": 1000,
+      "endHP": 890,
+      "crawlSamples": 14,
+      "crawlVisibleProps": 0,
+      "captures": 20,
+      "crashSignals": [
+        "l9.crash-approach",
+        "l9.bridge-collapse",
+        "l9.crash-impact",
+        "l9.crawl-finished"
+      ],
+      "receiptSha256": "b7a9454a9a9d511fb2b05d39885ecb829e2a64b842477f6d0b1f7857d1ee8eac"
+    },
+    {
+      "inputTapWindow": [
+        73,
+        12772
+      ],
+      "inputTapMissingTicks": 0,
+      "inputTapTicks": 12700,
+      "simChunkPeak": 9,
+      "handover": {
+        "variant": "female",
+        "health": 100,
+        "ownedWeapons": [
+          "weapon.fire-axe"
+        ],
+        "racks": {
+          "LEFT": [
+            "weapon.fire-axe"
+          ],
+          "RIGHT": [
+            "weapon.fire-axe"
+          ]
+        },
+        "shelteredHumans": 12,
+        "corgiHP": 100
+      },
+      "receipt": "test-results/pre-uat-l9/realtime-webgl-pair-road-low-final/road-low-z1.5-gear4-female/receipt.json",
+      "run": "realtime-webgl-pair-road-low-final",
+      "route": "road",
+      "quality": "low",
+      "zoom": 1.5,
+      "tier": 4,
+      "character": "female",
+      "backend": "webgl",
+      "finished": true,
+      "scope": "full handover",
+      "errors": [],
+      "error": null,
+      "seconds": 226.27,
+      "clockAbsenceUpperBound": 11.6,
+      "maxMovingEmptySeconds": 11.4,
+      "maxClockEmptySeconds": 11.4,
+      "maxDrivingSampleGap": 6.517,
+      "terrainPeak": 9,
+      "terrainLimit": 9,
+      "terrainUnloaded": 301,
+      "startHP": 1000,
+      "endHP": 750,
+      "crawlSamples": 17,
+      "crawlVisibleProps": 0,
+      "captures": 19,
+      "crashSignals": [
+        "l9.crash-approach",
+        "l9.bridge-collapse",
+        "l9.crash-impact",
+        "l9.crawl-finished"
+      ],
+      "receiptSha256": "9c71f9895b0527e87493da4efffef8b834113a3458b13490610b96db3238fb12"
+    }
+  ],
+  "backendSpots": [
+    {
+      "inputTapWindow": [
+        16,
+        9987
+      ],
+      "inputTapMissingTicks": 0,
+      "inputTapTicks": 9972,
+      "simChunkPeak": 9,
+      "handover": {
+        "variant": "female",
+        "health": 100,
+        "ownedWeapons": [
+          "weapon.fire-axe"
+        ],
+        "racks": {
+          "LEFT": [
+            "weapon.fire-axe"
+          ],
+          "RIGHT": [
+            "weapon.fire-axe"
+          ]
+        },
+        "shelteredHumans": 12,
+        "corgiHP": 100
+      },
+      "receipt": "test-results/pre-uat-l9/realtime-webgpu-dry-shortcut-low-1.5-final-risk/dry-shortcut-low-z1.5-gear4-female/receipt.json",
+      "run": "realtime-webgpu-dry-shortcut-low-1.5-final-risk",
+      "route": "dry-shortcut",
+      "quality": "low",
+      "zoom": 1.5,
+      "tier": 4,
+      "character": "female",
+      "backend": "webgpu",
+      "finished": true,
+      "scope": "full handover",
+      "errors": [],
+      "error": null,
+      "seconds": 180.37,
+      "clockAbsenceUpperBound": 17.467,
+      "maxMovingEmptySeconds": 9.567,
+      "maxClockEmptySeconds": 16.75,
+      "maxDrivingSampleGap": 15.15,
+      "terrainPeak": 9,
+      "terrainLimit": 9,
+      "terrainUnloaded": 219,
+      "startHP": 1000,
+      "endHP": 480,
+      "crawlSamples": 38,
+      "crawlVisibleProps": 0,
+      "captures": 17
+    },
+    {
+      "inputTapWindow": null,
+      "inputTapMissingTicks": null,
+      "inputTapTicks": 0,
+      "simChunkPeak": 20,
+      "handover": {
+        "variant": null,
+        "health": null,
+        "ownedWeapons": [],
+        "racks": null,
+        "shelteredHumans": 0,
+        "corgiHP": null
+      },
+      "receipt": "test-results/pre-uat-l9/realtime-webgpu-road-high-1.5-final-gpu-gear/road-high-z1.5-gear4-female/receipt.json",
+      "run": "realtime-webgpu-road-high-1.5-final-gpu-gear",
+      "route": "road",
+      "quality": "high",
+      "zoom": 1.5,
+      "tier": 4,
+      "character": "female",
+      "backend": "webgpu",
+      "finished": true,
+      "scope": "Physical driving visual sample only",
+      "errors": [],
+      "error": null,
+      "seconds": 5.78,
+      "clockAbsenceUpperBound": 5.45,
+      "maxMovingEmptySeconds": 2.867,
+      "maxClockEmptySeconds": 4.283,
+      "maxDrivingSampleGap": 1.5,
+      "terrainPeak": 20,
+      "terrainLimit": 25,
+      "terrainUnloaded": 0,
+      "startHP": 1000,
+      "endHP": 970,
+      "crawlSamples": 0,
+      "crawlVisibleProps": 0,
+      "captures": 5
+    }
+  ],
+  "absenceBoundMethod": "Simulation seconds from the last sampled drawn living infected through the first sampled visible endpoint, or through the driving/approach boundary. Includes both sampling edges and the complete final driving tail; no arbitrary 10-second tail is needed. Max raw gap and sample spacing are retained separately. No moving-only reduction is used for the stated 60-second comparison.",
+  "seams": {
+    "receipt": "test-results/pre-uat-l9/seams-final/seams.json",
+    "sha256": "2f1d75d98cca55cd5d4aea5d4d197eb3cd4c3b512fcfa8baff7b11c93a71c057",
+    "summary": {
+      "pairs": 172,
+      "samples": 43140,
+      "maxMismatch": 0.01000000024214387,
+      "maxHorizonMismatch": 0.37309024026401827,
+      "missing": 0
+    },
+    "assetCount": 97,
+    "layout": {
+      "file": "public/assets/layouts/D-CROSSING.layout.json",
+      "sha256": "b393b8ef7203f4647ed7dd2c3525756d2deb25d25c83bd0e6790835a3d065f07"
+    },
+    "toolSha256": "5b8daaf71053c662697bca7e16f8dd6d70e87e7c8d24dc95f36f788bad9f9df4"
+  },
+  "acceptance": {
+    "receipt": "test-results/pre-uat-l9/accept-final/L9.json",
+    "sha256": "27c9f0f9f3012ece51114ed39b6daec50c87416b8de4aeb56905ac35cac05150",
+    "rows": [
+      {
+        "id": "L9-01",
+        "status": "NOT CHECKED"
+      },
+      {
+        "id": "L9-02",
+        "status": "NOT CHECKED"
+      },
+      {
+        "id": "L9-03",
+        "status": "NOT CHECKED"
+      },
+      {
+        "id": "L9-04",
+        "status": "NOT CHECKED"
+      },
+      {
+        "id": "L9-05",
+        "status": "NOT CHECKED"
+      },
+      {
+        "id": "L9-06",
+        "status": "NOT CHECKED"
+      },
+      {
+        "id": "L9-07",
+        "status": "NOT CHECKED"
+      },
+      {
+        "id": "L9-08",
+        "status": "PASS"
+      },
+      {
+        "id": "L9-09",
+        "status": "NOT CHECKED"
+      }
+    ]
+  },
+  "threat": {
+    "receipt": "test-results/pre-uat-l9/threat-final/audit.json",
+    "sha256": "31233a218f8b6b6fdd1c51b5b2ff76812110318c7c005a53f33fbcb3866768dd",
+    "revision": "763b9ce1",
+    "flags": [
+      "PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate"
+    ]
+  }
+}

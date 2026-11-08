@@ -200,8 +200,10 @@ export class ActionView extends Group {
       this.offset = 0; this.geometry.setDrawRange(0, 0); this.trailGeometry.setDrawRange(0, 0); return;
     }
     const loadout = combat.runner.loadout;
+    // The crash crawl owns both hands until the atomic L10 arsenal handover.
+    const crawling = player.survivor?.scriptedClip === 'crawl';
     // Draw the selected weapon in the dominant hand and hide the other slot.
-    const selectedSide = loadout.state.selectedSide, aiming = selectedSide === this.gunSide && loadout.current(selectedSide).id === this.gunId && this.world.tick <= this.gunUntil && action(loadout.current(selectedSide).id).category === 'ranged' && !player.riding && player.health.current > 0;
+    const selectedSide = loadout.state.selectedSide, aiming = !crawling && selectedSide === this.gunSide && loadout.current(selectedSide).id === this.gunId && this.world.tick <= this.gunUntil && action(loadout.current(selectedSide).id).category === 'ranged' && !player.riding && player.health.current > 0;
     const selectedId = loadout.current(selectedSide).id;
     if (this.held[selectedSide]?.id !== selectedId || selectedSide !== this.selected) {
       this.readyTick = -1;
@@ -213,7 +215,7 @@ export class ActionView extends Group {
     if (gunner) {
       this.readyTick = -1; this.gunUntil = -1;
       this.character.aimGun(this.world.mountedGun!.aim, 0, .995, true, 0, mountedGunHold);
-    } else if (gun && !player.riding && this.character.rideWeight === 0 && player.health.current > 0) {
+    } else if (gun && !crawling && !player.riding && this.character.rideWeight === 0 && player.health.current > 0) {
       const age = this.gunUntil < 0 ? Infinity : this.world.tick - (this.gunUntil - 24);
       const input = this.world.inputFrame;
       const fire = selectedSide === 'LEFT' ? input.left : input.right;
@@ -268,7 +270,7 @@ export class ActionView extends Group {
         held.holder.rotation.set(0, 0, held.tilt); held.holder.position.set(0, 0, 0);
       }
       held.holder.scale.setScalar(inHand ? (longGunHolds[def.viewAssetId]?.scale ?? heldActionScale(def.id)) : 1);
-      held.holder.visible = !gunner && inHand && !!mount && prop && !player.riding && this.character.rideWeight === 0 && !['weapon.fists', 'weapon.kick'].includes(def.id) && !(held.model.userData.placeholder === true && def.category === 'ability');
+      held.holder.visible = !crawling && !gunner && inHand && !!mount && prop && !player.riding && this.character.rideWeight === 0 && !['weapon.fists', 'weapon.kick'].includes(def.id) && !(held.model.userData.placeholder === true && def.category === 'ability');
     }
     this.selected = loadout.state.selectedSide; const state = loadout.state[this.selected], def = action(loadout.current(this.selected).id), origin = player.transform;
     this.cue = null; this.shape = def.aimIndicator; this.offset = 0; this.maxHeight = 0; this.material.color.set(this.selected === 'LEFT' ? '#ffd166' : '#44ffe0'); this.material.transparent = true; this.material.opacity = def.aimIndicator === 'line' ? .18 * Math.max(0, (this.gunUntil - this.world.tick) / 24) : 1;

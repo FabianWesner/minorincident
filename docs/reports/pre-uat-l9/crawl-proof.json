@@ -1,0 +1,45 @@
+{
+  "finding": "P2: selected rocket launcher and gun-arm overlay persist during the scripted crash crawl",
+  "source": "src/render/ActionView.ts",
+  "before": {
+    "revision": "2741447027b1073e6ee581d03a6ee60feaa6e113",
+    "sourceSha256": "15b3c9710ec039a31ff09e414b6c7d798993d4cbabc478bf32b6d0ccd0ba7fe1",
+    "capture": "test-results/pre-uat-l9/realtime-webgl-zero-low-corrected/dry-shortcut-low-z1.5-gear4-male/phase-crawl-t15472.jpg",
+    "sha256": "4e57ffede57e330b6e738925e46fe9875eca4d6964b4a58a6df6e385bbb56c6b",
+    "review": "Long green launcher crosses the prone courier and the arms remain in the carry pose."
+  },
+  "after": {
+    "sourceSha256": "869fafcaa809272774f270c824bc2b69b2b153adcd848adfa3a87341559bc47f",
+    "capture": "test-results/pre-uat-l9/realtime-webgl-dry-shortcut-low-1.5/dry-shortcut-low-z1.5-gear4-male/phase-crawl-t6204.jpg",
+    "sha256": "f5322cd122ecc123bb04b1bdafe081f942c2abad5086c4fd23b301a5133999aa",
+    "review": "Launcher is absent and the native crawl pose has both hands free.",
+    "crawlSamples": 39,
+    "clips": [
+      "crawl"
+    ],
+    "visibleHeld": [],
+    "handOverCombatWeapons": [
+      "weapon.fire-axe"
+    ],
+    "handOverRacks": {
+      "LEFT": [
+        "weapon.fire-axe"
+      ],
+      "RIGHT": [
+        "weapon.fire-axe"
+      ]
+    },
+    "handOverAttachments": [
+      {
+        "id": "weapon.fire-axe",
+        "visible": true
+      },
+      {
+        "id": "weapon.fire-axe",
+        "visible": false
+      }
+    ],
+    "errors": []
+  },
+  "method": "Both runs use normal unpaused production-clock play with actual keyboard input from the crossing start. Save/scenario initialization is disclosed in the lane report. The comparison is at the first crawl frame and same zoom, not a pixel-identical HP/damage-state A/B. The before run reached zero by ordinary infected attacks; the after run retained durability. Inventory/HP/AI were not edited during either drive."
+}
