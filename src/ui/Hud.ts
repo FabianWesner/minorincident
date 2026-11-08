@@ -328,15 +328,14 @@ export class Hud {
     const home = mission?.def.anchors.home ?? player.survivor?.checkpoint;
     setHidden(this.homePin, !home || !!mission?.def.l8); if (home) this.place(this.homePin, home.x, home.z, px, pz, true);
     const objective = mission?.def.steps.find(step => mission.state.steps[step.id].status === 'active');
-    const l8Calm = !!mission?.def.l8 && !mission.state.states.breached;
     // L1 v2 beat 5: after the hand-over the panel shows the completed tick and no new objective.
     const done = !objective && mission?.def.l1 ? [...mission.def.steps].reverse().find(step => mission.state.steps[step.id].status === 'completed') : undefined;
-    setHidden(this.tracker, l8Calm || !objective && !done); if (done) text(this.trackerText, `✓ ${done.text}`);
+    setHidden(this.tracker, !objective && !done); if (done) text(this.trackerText, `✓ ${done.text}`);
     const remaining = mission?.def.id === 'L3' && mission.state.deadlineTicks !== null ? Math.ceil(mission.state.deadlineTicks / 60) : null;
     const deadline = remaining === null ? '' : `Gates close in ${Math.floor(remaining / 60)}:${String(remaining % 60).padStart(2, '0')} · `;
-    if (l8Calm || !objective && !done) text(this.trackerText, '');
+    if (!objective && !done) text(this.trackerText, '');
     const distanceAnchor = LevelSixSubway.regroupTarget(mission) ? null : mission?.def.l3 && objective ? mission.def.anchors[objective.anchor] : anchor;
-    if (objective && !l8Calm) text(this.trackerText, `${deadline}${objectiveText(mission!, objective.text)}${distanceAnchor ? ` · ${Math.round(cellarDistance ?? Math.hypot(distanceAnchor.x - px, distanceAnchor.z - pz))}\u00a0m` : ''}`);
+    if (objective) text(this.trackerText, `${deadline}${objectiveText(mission!, objective.text)}${distanceAnchor ? ` · ${Math.round(cellarDistance ?? Math.hypot(distanceAnchor.x - px, distanceAnchor.z - pz))}\u00a0m` : ''}`);
     const finaleStep = mission?.def.id === 'L10' ? mission.interactStepInRange() : null;
     const finaleAction = !!finaleStep && ['install', 'hold', 'release'].includes(finaleStep.id);
     setHidden(this.finaleAction, !finaleAction);

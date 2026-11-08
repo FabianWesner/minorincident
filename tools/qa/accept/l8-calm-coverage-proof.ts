@@ -20,7 +20,7 @@ const baseline = checks();
 assert.deepEqual(baseline, [{ tier: 'low', status: 'PASS' }, { tier: 'high', status: 'PASS' }]);
 const cases: { fault: string; results: ReturnType<typeof checks> }[] = [];
 try {
-  for (const fault of ['missing-tick-zero', 'calm-objective', 'calm-pin', 'calm-world-marker', 'early-breach', 'late-breach', 'sampling-gap', 'missing-high']) {
+  for (const fault of ['missing-tick-zero', 'missing-calm-objective', 'calm-pin', 'calm-world-marker', 'early-breach', 'late-breach', 'sampling-gap', 'missing-high']) {
     restore();
     if (fault === 'missing-high') {
       const input = JSON.parse(readFileSync(inputPath('high'), 'utf8')); input.sourceHash = '0'.repeat(64);
@@ -28,7 +28,7 @@ try {
     } else {
       let audit = JSON.parse(gunzipSync(readFileSync(auditPath('low'))).toString());
       if (fault === 'missing-tick-zero') audit.shift();
-      if (fault === 'calm-objective') audit[10].text = 'An early objective';
+      if (fault === 'missing-calm-objective') audit[10].text = '';
       if (fault === 'calm-pin') audit[10].pin = true;
       if (fault === 'calm-world-marker') audit[10].marker = true;
       if (fault === 'early-breach') audit.find((sample: { breached: boolean }) => sample.breached).tick = 3599;
@@ -47,5 +47,5 @@ assert(paths.every(path => readFileSync(path).equals(originals.get(path)!)));
 assert.deepEqual(checks(), baseline);
 atomicJson('docs/reports/sweep-c/L8-02-coverage-proof.json', { ...identity, browserHash: hash,
   toolSha256: sha(readFileSync(new URL(import.meta.url))), baseline, cases, originalBytesRestored: true,
-  method: 'Actual production calm receipt consumer, eight temporary counterexamples with transport hashes rebound only for these declared negative controls. Missing tick0, early objective/pin/world-marker, breach3599/3601, >60tick observation gap and missing high coverage must reject. Exact original physical run artifacts and metadata restored in finally. Native everytick combat/marker coverage remains a separate required clause.' });
+  method: 'Actual production calm receipt consumer, eight temporary counterexamples with transport hashes rebound only for these declared negative controls. Missing tick0, missing opening objective, early pin/world-marker, breach3599/3601, >60tick observation gap and missing high coverage must reject. Exact original physical run artifacts and metadata restored in finally. Native everytick combat/marker coverage remains a separate required clause.' });
 console.log(cases);

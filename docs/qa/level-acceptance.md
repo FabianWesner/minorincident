@@ -283,7 +283,7 @@ Feel: "false sanctuary → internal mass outbreak with infected animals; fight t
 | ID | Step | Criterion (expected value) | Source | Check |
 |---|---|---|---|---|
 | L8-01 | escape (calm) | L7 roster and arsenal arrive exactly; companions at full health; no weapon pickup in L8; start weapon = last weapon (not the bat). | E30-AC03, Q-198 | S |
-| L8-02 | escape (calm) | Exactly 60 active sim seconds without objective/waypoint/scripted attack. | E30-AC04 | S |
+| L8-02 | escape (calm) | Exactly 60 active sim seconds with the opening objective visible, without waypoint or scripted attack. | E30-AC04 | S |
 | | | **Check:** the code starts `escape` (waypoint on) at level start; verify the marker/text stay hidden for the 60 s calm, else FAIL. | | |
 | L8-03 | escape (calm) | ≥ 20 civilians, ≥ 6 soldiers, ≥ 4 staff, ≥ 8 animals (all 5 species, ≥ 2 zebras, ≥ 3 flamingos); outside-wall infected cannot cross; nobody idle > 3 s. | E30-AC05/06 | S, O |
 | L8-04 | escape (breach) | Breach at 60 s ± 1 tick at ≥ 3 tunnel outlets ≥ 20 m apart within 1 s; **6 / 3 per point** (≥ 18 / ≥ 9); no pop-in. | E30-AC07 | S |

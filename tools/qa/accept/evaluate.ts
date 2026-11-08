@@ -824,7 +824,7 @@ export const completeNativeRows = new Map<string, { clause: string; policy: stri
   ]],
   ['L8-02', [
     { clause: 'native calm marker and infected attack event state (HUD text requires browser)', policy: 'complete' },
-    { clause: 'carried real-input 60-second objective-free DOM and marker audit', policy: 'real-input-webgl2' },
+    { clause: 'carried real-input 60-second opening objective and marker audit', policy: 'real-input-webgl2' },
   ]],
   ['L9-03', ['road', 'countryside', 'dry-shortcut'].map(route => ({ clause: `${route} full driving camera visibility`, policy: 'real-input-webgl2' }))],
   ['L9-05', [{ clause: 'physical zero-HP speed smoke and continued driving', policy: 'controlled-physical' }]],
