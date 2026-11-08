@@ -318,6 +318,22 @@ test('L4: every contact archetype interrupts approach/lure and attacks within 3 
       expect(courier.health.current).toBeLessThan(courier.health.max);
       ai.release(e);
     }
+    // The L4 job director must hand non-Brutes to their own brains instead of requesting rejected charge/slam moves.
+    {
+      const state = mission.state.l4!, savedIds = state.alphaIds, savedJobs = state.director.alphaJobs;
+      const controller = (mission.l4! as unknown as { director: { alphaJobs(): void } }).director;
+      const orders = vi.spyOn(ai, 'startSpecial'), pressure = vi.spyOn(ai, 'press');
+      try {
+        for (const alphaType of ['thrower', 'armoured'] as const) {
+          const alpha = world.entities.get(ai.spawn('infected.alpha', { x: 0, z: 0 }, { alphaType }))!;
+          state.alphaIds = [alpha.id]; state.director.alphaJobs = [{ alphaId: alpha.id, job: 'line', stage: 'charge', startedAt: world.tick }];
+          controller.alphaJobs();
+          expect(pressure.mock.calls.some(call => call[0] === alpha.id), alphaType).toBe(true);
+          expect(orders.mock.calls.some(call => call[0] === alpha.id && (call[1] === 'alpha.charge' || call[1] === 'alpha.ground-slam')), alphaType).toBe(false);
+          ai.release(alpha);
+        }
+      } finally { state.alphaIds = savedIds; state.director.alphaJobs = savedJobs; orders.mockRestore(); pressure.mockRestore(); }
+    }
     for (const actor of world.entities.iterate()) if (actor.companion) actor.hidden = true;
     Object.assign(courier.transform, { x: -25, z: 3 });
     Object.assign(soldier.transform, { x: -17, z: 3 });

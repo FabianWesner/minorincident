@@ -251,6 +251,12 @@ export class L4Collapse {
       if (job.breach && !this.h.breachOpen(job.breach) && !this.inside(e.transform)) {
         const site = l4BreachSite(job.breach), out = l4Breaches[job.breach].out, stage = this.h.snap(site.stage, .55);
         this.h.announceBreach(job.breach, e.id);
+        if (b.alphaType && b.alphaType !== 'brute') {
+          const segment = this.h.breachSegments(job.breach).find(seg => world.barricades!.withinReach(e, seg));
+          if (segment) { delete b.scripted; ai.attackObstacle(e.id, segment.id); }
+          else b.scripted = this.h.snap({ x: site.centre.x + out.x * 1.2, z: site.centre.z + out.z * 1.2 }, .55);
+          continue;
+        }
         // Back off to the run-up point (unless already at the wire), then charge straight at the breach.
         const atWire = Math.abs((e.transform.x - site.centre.x) * out.x + (e.transform.z - site.centre.z) * out.z) < 1.8;
         if (!atWire && dist(e.transform, stage) > 1.2) { b.scripted = stage; continue; }
@@ -266,6 +272,16 @@ export class L4Collapse {
       if (job.breach && this.h.breachOpen(job.breach) && !this.inside(e.transform)) {
         const { centre } = l4BreachSite(job.breach), out = l4Breaches[job.breach].out;
         b.scripted = this.h.snap({ x: centre.x - out.x * 3, z: centre.z - out.z * 3 }, .55);
+        continue;
+      }
+      // The authored entrance/beat still owns staging. Inside, each other type uses its own move set against the crew.
+      if (b.alphaType && b.alphaType !== 'brute') {
+        if (Object.keys(b.specialCooldowns ?? {}).length) { job.stage = 'tank'; delete b.scripted; }
+        else {
+          ai.press(e.id, nearest.id, tick + ticks(20));
+          if (dist(e.transform, nearest.transform) > 11 || !world.combat!.query.visible(e.transform, nearest.transform)) b.scripted = this.h.snap(nearest.transform, .55);
+          else delete b.scripted;
+        }
         continue;
       }
       // On a move cooldown it keeps closing in; at arm's length its own brain swipes at the crew in reach.

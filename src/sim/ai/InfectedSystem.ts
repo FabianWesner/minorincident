@@ -623,7 +623,7 @@ export class InfectedSystem {
     if (obstacle) {
       if (this.world.barricades!.vault(e, obstacle)) return;
       if (!this.world.barricades!.withinReach(e, obstacle)) { this.seek(e, this.world.barricades!.approach(e, obstacle)); this.place(e); }
-      else if (this.world.tick >= b.cooldown) { this.windup(e, obstacle); b.targetId = obstacle.id; }
+      else this.attackObstacle(e.id, obstacle.id);
       return;
     }
     let range = this.strikeRange(e, player);
@@ -651,6 +651,12 @@ export class InfectedSystem {
       this.waypoint.x = player.transform.x + Math.cos(packAngle) * 3; this.waypoint.z = player.transform.z + Math.sin(packAngle) * 3;
       this.seek(e, this.waypoint);
     } else this.seek(e, player.transform); this.place(e);
+  }
+  /** Authored Alpha jobs reuse the ordinary, telegraphed E26 strike rather than forcing another type's special. */
+  attackObstacle(sourceId: number, targetId: number): boolean {
+    const e = this.world.entities.get(sourceId), b = e?.infected, target = this.world.entities.get(targetId);
+    if (!e || !b || !target || e.health.current <= 0 || target.health.current <= 0 || (!target.barricade && target.kind !== 'physics-prop' && target.kind !== 'barricade') || b.state === 'attack' || b.specialAttack || this.world.tick < b.cooldown || this.world.tick < (b.specialRecoveryUntil ?? 0) || Status.stunned(e, this.world.tick) || !this.world.barricades?.withinReach(e, target)) return false;
+    this.windup(e, target); b.targetId = target.id; return true;
   }
   /** Once the death/explosion animation settles, keep a static identity record
    * and return the costly brain to the warm pool. Bodies live until level unload. */

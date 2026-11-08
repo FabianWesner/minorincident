@@ -112,6 +112,13 @@ async function alphaTypeContracts() {
       expect(damageAmount({ ...bullet, origin: { x: 6, z: 0 } }, armour)).toBe(50);
       expect(damageAmount({ ...bullet, type: 'explosive' }, armour)).toBe(100);
     }
+    {
+      const w = await arena(), ai = w.infected!, alpha = w.entities.get(ai.spawn('infected.alpha', { x: 10, z: 0 }, { alphaType: 'armoured' }))!;
+      const target = w.entities.get(w.spawnDummy('test.brace', { x: 11, z: 0 }, { hp: 300, faction: 'environment' }))!;
+      target.kind = 'physics-prop';
+      expect(ai.attackObstacle(alpha.id, target.id)).toBe(true); expect(ai.attackObstacle(alpha.id, target.id)).toBe(false);
+      step(w, 31); expect(target.health.current).toBe(200);
+    }
     // Big wrecks are reached at their surface; the actor cannot stand inside their hull to pick them up.
     {
       const w = await arena(), ai = w.infected!, alpha = w.entities.get(ai.spawn('infected.alpha', { x: 10, z: 0 }, { alphaType: 'thrower', state: 'chase' }))!;
