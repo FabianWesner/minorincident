@@ -9,7 +9,7 @@ import type { SimWorld } from '../world/SimWorld';
 
 /** Plain pose mirror of a body: render sync and snapshots never touch WASM. Quaternion is x, y, z, w. */
 export interface PropPose { p: [number, number, number]; q: [number, number, number, number] }
-export interface PushProp { entityId: number; half: number[]; center: number[]; metadata: import('../../data/pushableProps').PhysicsAsset; braced: boolean; id: string; assetId: string; mass: number; radius: number; home: PropPose; pose: PropPose; body: RAPIER.RigidBody; collider: RAPIER.Collider; awake: boolean; fixed: boolean }
+export interface PushProp { entityId: number; half: number[]; center: number[]; metadata: import('../../data/pushableProps').PhysicsAsset; orientedFootprint: boolean; braced: boolean; id: string; assetId: string; mass: number; radius: number; home: PropPose; pose: PropPose; body: RAPIER.RigidBody; collider: RAPIER.Collider; awake: boolean; fixed: boolean }
 export type PropSnapshot = { id: string; p: [number, number, number]; q: [number, number, number, number] }[];
 
 /** Simultaneously simulated props; the farthest settle first beyond this (Bruno keeps most asleep). */
@@ -87,7 +87,7 @@ export class PropSystem {
       const entityId = this.rebuildingIds.get(id) ?? this.world.entities.createAuxiliary({ kind: 'physics-prop', archetype: placement.assetId, faction: 'environment', transform: { x: pose.p[0], y: pose.p[1], z: pose.p[2], yaw: placement.yaw }, health: { current: hp, max: hp }, combat: { radius: Math.max(half[0], half[2]), armor: 0, shield: false, staggerUntil: 0, attacking: false, damageMultiplier: 1, statuses: [] } }, `prop:${id}`).id;
       this.world.spatial.set(entityId, pose.p[0], pose.p[2]);
       if (placement.fixed) body.setBodyType(RAPIER.RigidBodyType.Fixed, false);
-      const item = { entityId, half, center, metadata, braced: false, id, assetId: placement.assetId, mass, radius: Math.hypot(half[0], half[2]), home, pose, body, collider, awake: false, fixed: !!placement.fixed };
+      const item = { entityId, half, center, metadata, orientedFootprint: !!placement.orientedFootprint, braced: false, id, assetId: placement.assetId, mass, radius: Math.hypot(half[0], half[2]), home, pose, body, collider, awake: false, fixed: !!placement.fixed };
       this.items.push(item); return item;
   }
   settle(poses = new Map<string, PropSnapshot[number]>()): void {
@@ -230,7 +230,7 @@ export class PropSystem {
         && Math.hypot(p.body.linvel().x, p.body.linvel().z) < .5;
       const previous = this.navWalls.get(p.entityId);
       const wall = propFootprint(p);
-      if (blocked && (!previous || Math.abs(previous.x - wall.x) + Math.abs(previous.z - wall.z) + Math.abs(previous.halfX - wall.halfX) + Math.abs(previous.halfZ - wall.halfZ) > .05)) {
+      if (blocked && (!previous || Math.abs(previous.x - wall.x) + Math.abs(previous.z - wall.z) + Math.abs(previous.halfX - wall.halfX) + Math.abs(previous.halfZ - wall.halfZ) > .05 || Math.abs((previous.navFootprint?.yaw ?? 0) - (wall.navFootprint?.yaw ?? 0)) > .01)) {
         this.navWalls.set(p.entityId, wall); this.world.events.emit({ type: 'world.blocker.changed', tick: this.world.tick, id: p.entityId, wall, blocked: true });
       } else if (!blocked && previous) {
         this.navWalls.delete(p.entityId); this.world.events.emit({ type: 'world.blocker.changed', tick: this.world.tick, id: p.entityId, wall: previous, blocked: false });
@@ -346,8 +346,12 @@ export function propFootprint(p: PushProp): import('../combat/HitQuery').CoverWa
   const xx = 1 - 2 * (q.y * q.y + q.z * q.z), xy = 2 * (q.x * q.y - q.z * q.w), xz = 2 * (q.x * q.z + q.y * q.w);
   const yx = 2 * (q.x * q.y + q.z * q.w), yy = 1 - 2 * (q.x * q.x + q.z * q.z), yz = 2 * (q.y * q.z - q.x * q.w);
   const zx = 2 * (q.x * q.z - q.y * q.w), zy = 2 * (q.y * q.z + q.x * q.w), zz = 1 - 2 * (q.x * q.x + q.y * q.y);
-  return { x: t.x + xx * cx + xy * cy + xz * cz, y: t.y + yx * cx + yy * cy + yz * cz, z: t.z + zx * cx + zy * cy + zz * cz, entityId: p.entityId,
+  const wall: import('../combat/HitQuery').CoverWall = { x: t.x + xx * cx + xy * cy + xz * cz, y: t.y + yx * cx + yy * cy + yz * cz, z: t.z + zx * cx + zy * cy + zz * cz, entityId: p.entityId,
     halfX: Math.abs(xx) * hx + Math.abs(xy) * hy + Math.abs(xz) * hz,
     halfY: Math.abs(yx) * hx + Math.abs(yy) * hy + Math.abs(yz) * hz,
     halfZ: Math.abs(zx) * hx + Math.abs(zy) * hy + Math.abs(zz) * hz };
+  // Preserve reviewed narrow passages around angled parked cars. Their old
+  // static OBB must follow the body now that vehicle impacts can move it.
+  if (p.orientedFootprint && Math.abs(q.x) + Math.abs(q.z) < .05) wall.navFootprint = { x: wall.x, z: wall.z, halfX: hx, halfZ: hz, yaw: Math.atan2(xz, xx) };
+  return wall;
 }
