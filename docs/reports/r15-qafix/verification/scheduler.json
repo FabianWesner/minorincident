@@ -1,0 +1,13 @@
+{
+  "command": "python3 tools/remote/check.py --unit",
+  "status": 0,
+  "passed": 16,
+  "skipped": 3,
+  "logSha256": "e1e5d0d5ece27a9e12e4b81324e3c45fac3a78e96d0afd5998680faa9125b884",
+  "sourceSha256": {
+    "tools/remote/run.sh": "a1dd5aeeb46dda7b555ee85df44d2368536e793892b54053799eb94585a69606",
+    "tools/remote/local-slot.py": "2ae83cb31316b7a6291918396d1bd0e9bc8c1e3b57670ccbac83b70032b0476c",
+    "tools/remote/check.py": "299cc1aff77db1642f1ed0baf55893bff0caa0b08dcfac1b168c3ad2a4b470df"
+  },
+  "scope": "No real browser or Vitest workers started; includes fake busy-host detached launch, doubled separator, empty command, 60-second head rotation and 45-second probe timeout controls"
+}

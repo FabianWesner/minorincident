@@ -312,6 +312,13 @@ test('L4: every contact archetype interrupts approach/lure and attacks within 3 
     expect(barEligible(distantRiot, courier.transform, infectedDef(distantRiot.archetype).bar === true), 'healthy riot at 16 m keeps its health bar').toBe(true);
     ai.release(distantRiot);
     const contactOrigin = { ...courier.transform };
+    const distantAlpha = world.entities.get(ai.spawn('infected.alpha', { x: courier.transform.x + 16, z: courier.transform.z }))!;
+    const distantRunner = world.entities.get(ai.spawn('infected.runner', { x: courier.transform.x + 16, z: courier.transform.z }))!;
+    expect(barEligible(distantAlpha, courier.transform, infectedDef(distantAlpha.archetype).bar === true), 'healthy Alpha follows the shared 15 m cutoff').toBe(false);
+    distantAlpha.health.current--;
+    expect(barEligible(distantAlpha, courier.transform, infectedDef(distantAlpha.archetype).bar === true), 'damaged Alpha keeps its bar beyond 15 m').toBe(true);
+    expect(barEligible(distantRunner, courier.transform, infectedDef(distantRunner.archetype).bar === true), 'healthy ordinary infected follows the 15 m cutoff').toBe(false);
+    ai.release(distantAlpha); ai.release(distantRunner);
     for (const archetype of [...l4InfectedArchetypes, 'infected.alpha']) for (const state of ['attracted', 'attack', 'stagger'] as const) {
       // New Alpha grabs throw the courier. Each independent contact probe starts at the same position.
       world.solids.relocate(courier, contactOrigin, 'scripted.teleport');

@@ -166,8 +166,10 @@ export class HitQuery {
     }
     return this.hits;
   }
-  ray(sourceId: number, origin: RayPoint, direction: RayPoint, range: number, excluded?: ReadonlySet<number>): EntitySnapshot | null {
-    const wallDistance = this.clearDistance(origin, direction, range);
+  /** A mounted turret may track target elevation along its player-aimed yaw.
+   * Its pitched shot still intersects the same XYZ cover slabs. */
+  ray(sourceId: number, origin: RayPoint, direction: RayPoint, range: number, excluded?: ReadonlySet<number>, trackElevation = false): EntitySnapshot | null {
+    const wallDistance = trackElevation ? range : this.clearDistance(origin, direction, range);
     let nearest = wallDistance, hit: EntitySnapshot | null = null;
     for (const id of this.nearby(origin, range + 0.5)) {
       const target = this.entities.get(id)!;
@@ -177,8 +179,10 @@ export class HitQuery {
       const radius = target.combat?.radius ?? 0.4;
       if (perpendicular > radius * radius || along + radius < 0) continue;
       const entry = Math.max(0, along - Math.sqrt(Math.max(0, radius * radius - perpendicular)));
-      const shotY = (origin.y ?? .7) + (direction.y ?? 0) * entry;
+      const pitch = trackElevation ? (target.transform.y - (origin.y ?? .7)) / Math.max(.01, along) : direction.y ?? 0;
+      const shotY = (origin.y ?? .7) + pitch * entry;
       if (shotY < target.transform.y - .7 || shotY > target.transform.y + 1.1) continue;
+      if (trackElevation && this.clearDistance(origin, { ...direction, y: pitch }, entry, target.id) < entry) continue;
       if (entry < nearest || (entry === nearest && (!hit || id < hit.id))) { nearest = entry; hit = target; }
     }
     return hit;

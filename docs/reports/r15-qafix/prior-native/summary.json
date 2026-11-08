@@ -1,0 +1,173 @@
+{
+  "scope": "Pre-final-bar-correction native results; not final-source qualification",
+  "rows": [
+    {
+      "tier": "low",
+      "sourceHash": "6b940d0cac5241427169490a1a1167281338ba0bd21a56ab426a456b0929a208",
+      "revision": "5a71d435171b91cdd7959b27718754d52aa06b87",
+      "error": null,
+      "nativeStateHash": "f1183b5a",
+      "run": {
+        "completed": true,
+        "time": 1290.5833333333333,
+        "deaths": 0,
+        "outcome": "complete",
+        "cureReleases": 1,
+        "furthestObjective": "credits",
+        "activeObjectives": [],
+        "objectiveTimeline": [
+          {
+            "id": "crash",
+            "t": 0.016666666666666666
+          },
+          {
+            "id": "residential-fringe",
+            "t": 58.28333333333333
+          },
+          {
+            "id": "industrial-area",
+            "t": 191.01666666666668
+          },
+          {
+            "id": "military-zone",
+            "t": 356.15
+          },
+          {
+            "id": "research-campus",
+            "t": 528.4666666666667
+          },
+          {
+            "id": "research",
+            "t": 592.2666666666667
+          },
+          {
+            "id": "cure",
+            "t": 593.6
+          },
+          {
+            "id": "research-exit",
+            "t": 614.5
+          },
+          {
+            "id": "destroyed-corridor",
+            "t": 654.0166666666667
+          },
+          {
+            "id": "dispersal-complex",
+            "t": 870.75
+          },
+          {
+            "id": "install",
+            "t": 946.1166666666667
+          },
+          {
+            "id": "hold",
+            "t": 1008.4333333333333
+          },
+          {
+            "id": "mega",
+            "t": 1138.2333333333333
+          },
+          {
+            "id": "release",
+            "t": 1140.5833333333333
+          },
+          {
+            "id": "epilogue",
+            "t": 1290.5833333333333
+          },
+          {
+            "id": "credits",
+            "t": 1307.5833333333333
+          }
+        ]
+      },
+      "receipt": "prior-native/L10-low-complete.json",
+      "sha256": "e2d43ba2a8848bfbdcf1872c2aa358e155e73186cb2826e66dcc6f6776ea5da5"
+    },
+    {
+      "tier": "high",
+      "sourceHash": "6b940d0cac5241427169490a1a1167281338ba0bd21a56ab426a456b0929a208",
+      "revision": "5a71d435171b91cdd7959b27718754d52aa06b87",
+      "error": null,
+      "nativeStateHash": "93a535bb",
+      "run": {
+        "completed": true,
+        "time": 1442.5333333333333,
+        "deaths": 4,
+        "outcome": "complete",
+        "cureReleases": 1,
+        "furthestObjective": "credits",
+        "activeObjectives": [],
+        "objectiveTimeline": [
+          {
+            "id": "crash",
+            "t": 0.016666666666666666
+          },
+          {
+            "id": "residential-fringe",
+            "t": 58.28333333333333
+          },
+          {
+            "id": "industrial-area",
+            "t": 191.01666666666668
+          },
+          {
+            "id": "military-zone",
+            "t": 357.5
+          },
+          {
+            "id": "research-campus",
+            "t": 529.4833333333333
+          },
+          {
+            "id": "research",
+            "t": 594.0166666666667
+          },
+          {
+            "id": "cure",
+            "t": 595.2666666666667
+          },
+          {
+            "id": "research-exit",
+            "t": 616.15
+          },
+          {
+            "id": "destroyed-corridor",
+            "t": 656.0166666666667
+          },
+          {
+            "id": "dispersal-complex",
+            "t": 873.4833333333333
+          },
+          {
+            "id": "install",
+            "t": 949.0166666666667
+          },
+          {
+            "id": "hold",
+            "t": 1145.7166666666667
+          },
+          {
+            "id": "mega",
+            "t": 1281.3833333333334
+          },
+          {
+            "id": "release",
+            "t": 1292.5333333333333
+          },
+          {
+            "id": "epilogue",
+            "t": 1442.5333333333333
+          },
+          {
+            "id": "credits",
+            "t": 1459.5333333333333
+          }
+        ]
+      },
+      "receipt": "prior-native/L10-high-complete.json",
+      "sha256": "816d92833c3879c10492ce8965dbdaa952b83ddba34a9068b06722d64ebfde3d"
+    }
+  ]
+}

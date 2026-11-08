@@ -474,10 +474,17 @@ export function evaluate(receipt: NativeReceipt, path: string): Clause[] {
         number('L10-11', 'hold player windups per minute', hold.attacksPerMinute, 8, Infinity);
         number('L10-11', 'hold bounded-path reachable share', hold.boundedPaths?.minimumPercent, 90, 100);
       }
+<<<<<<< ours
       // A moving competent player can clear arrivals before reaching the crowd
       // cap. Use the separately labelled survival-protected stationary policy for peak coverage.
       number('L10-11', 'bounded final assault crowd peak', !competent && state.states['charge-active'] ? story?.assaultPeak : null, 1, low ? 14 : 22);
       add('L10-10', 'actual eligible charge ticks and increments', observation.charge, '3600 eligible ticks; 3600 increments; no invalid increment', observation.charge.maximum === 3600 ? observation.charge.eligibleTicks === 3600 && observation.charge.incrementTicks === 3600 && observation.charge.invalidIncrements === 0 : undefined);
+=======
+      // Observer totals span retries; E32 resets the device counter on death.
+      // Every eligible tick must still advance once, and a completed charge caps at 3600.
+      const charge = observation.charge;
+      add('L10-10', 'actual eligible charge ticks and increments', charge, 'charge reaches3600; one increment per eligible tick across attempts; no invalid increment', charge.maximum < 3600 ? undefined : charge.maximum === 3600 && charge.eligibleTicks >= 3600 && charge.incrementTicks === charge.eligibleTicks && charge.invalidIncrements === 0);
+>>>>>>> theirs
       add('L10-13', 'release transaction observed prerequisites', observation.release, 'charge3600 + installed + Mega dead + player at console', observation.release ? observation.release.charge === 3600 && observation.release.installed && observation.release.dead && observation.release.distance <= 2.5 : undefined);
       const front = state.cureFront;
       add('L10-14', 'native cure radius speed', front ? { elapsed: front.elapsed, radius: front.radius } : null, '10 m/s playable; accelerated journey montage', front && front.elapsed > 0 ? front.radius === cureRadius(front.elapsed) : undefined);

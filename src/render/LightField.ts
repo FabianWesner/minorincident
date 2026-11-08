@@ -20,6 +20,8 @@ export interface FieldLight {
   on: boolean;
   /** Source height and `shadow: hero` eligibility (the night hero-shadow selection). */
   y?: number; hero?: boolean;
+  /** Active driven headlamps cover the road ahead even when the follow focus leaves their pool. */
+  drivenHeadlight?: boolean;
   /** Transient radiance multiplier, including its remaining lifetime. */
   shadowGain?: number;
   /** Window spill stays on the outward side of its source facade. */
@@ -209,7 +211,12 @@ export class LightField {
     if (this.strength.value <= 0) return null;
     let best: FieldLight | null = null, score = .02;
     const consider = (l: FieldLight) => {
-      const s = this.heroStrength(l, x, z);
+      const strength = this.heroStrength(l, x, z);
+      // A driven headlamp moves with the camera, so the camera can leave the
+      // brightest part of its pool while the beam still illuminates the view.
+      // Keep its shadow map eligible for that active vehicle instead of
+      // dropping to the moon between adjacent road tiles.
+      const s = l.on && l.hero && l.drivenHeadlight ? Math.max(strength, .025) : strength;
       if (s > score) { score = s; best = l; }
     };
     for (const l of this.statics) consider(l);
