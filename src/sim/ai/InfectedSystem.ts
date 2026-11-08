@@ -411,6 +411,8 @@ export class InfectedSystem {
     let target: EntitySnapshot | undefined, nearest = Infinity;
     for (const candidate of this.approachParty) {
       const distance = Math.hypot(candidate.transform.x - e.transform.x, candidate.transform.z - e.transform.z);
+      // L8's gate-side sprinters retain their announced courier approach. A person at actual grab contact still interrupts it.
+      if (this.world.scenario === 'L8' && b.pressureTarget && this.world.tick < b.pressureTarget.until && candidate.id !== b.pressureTarget.id && distance > 1.5) continue;
       if (distance >= nearest || !this.hearing.notices(e, candidate.transform, candidate.id)) continue;
       // The corgi can alert an approaching group, but remains outside every bite
       // and damage target query. Its courier becomes the ordinary chase target.
@@ -1039,7 +1041,7 @@ export class InfectedSystem {
       // than the pedestrian search brain. Without a target they wander at distant mouths.
       if (state.state === 'attack' || state.specialAttack || state.grabUntil > this.world.tick) return false;
       state.heardTargetId = targetId;
-      if (this.world.scenario === 'L3' || this.world.scenario === 'L4' || this.world.scenario === 'L6') state.pressureTarget = { id: targetId, until: untilTick };
+      if (this.world.scenario === 'L3' || this.world.scenario === 'L4' || this.world.scenario === 'L6' || this.world.scenario === 'L8') state.pressureTarget = { id: targetId, until: untilTick };
       if (this.world.scenario === 'L4') state.l4ArmyApproach = targetId !== 1;
       if (state.state === 'idle' || state.state === 'wander' || state.state === 'attracted') {
         state.state = 'alerted'; state.until = this.world.tick + hearingReactionTicks;

@@ -10,7 +10,7 @@ import type { EntitySnapshot, Transform } from '../world/types';
 import type { Point, ZooSpecies } from '../npc/types';
 import { Outbreak } from '../outbreak/Outbreak';
 import { zooStaffLook } from '../../data/zooStaff';
-import { readyCarriedAlly, allyState } from '../outbreak/Allies';
+import { readyCarriedAlly, allyState, updateAlly } from '../outbreak/Allies';
 import { layoutHouseDoors, doorExit, emergeResident, walkResidents, type HouseEmergence } from '../outbreak/HouseEmergence';
 import { formationSlot, leaderHeading, requireClearPoint } from './missionHelpers';
 import { L8BossArenas, type L8ArenaState } from './L8BossArenas';
@@ -526,6 +526,10 @@ export class LevelEightZoo {
       const speed = Math.min(6.4, 4.5 + Math.max(0, distance(e.transform, target) - 2) * .6);
       if (!boarding || !this.approachBoardingSpot(e, target, speed)) w.npcs!.move(e, target, speed, c, boarding ? .2 : 0, 2400);
     }
+    if (c.ally && !boarding) {
+      c.ally.run = null; c.ally.post = null; c.ally.hold = true;
+      updateAlly(w, e, (a, b) => w.infected!.nav.visible(a, b, 0));
+    }
     return true;
   }
   /** The seated group as a transfer payload; null when nobody is seated (only the debug objective cheat completes the escape unboarded). */
@@ -555,6 +559,7 @@ export class LevelEightZoo {
     if (this.state.departureFrom) this.state.chaseAt += delta;
     this.w.storyLock = this.state.departureFrom && !this.mission.state.states.departed ? { scripted: null, skip: false } : null;
     if (this.state.megaId) this.w.npcs!.civilians.hold(this.state.megaId);
+    for (const arrival of this.state.arrivals) arrival.tick += delta;
     for (const outlet of this.state.outlets) { outlet.next += delta; for (const walk of outlet.walking ?? []) walk.until += delta; }
     this.w.infected!.director.levelCap = 200; this.w.infected!.director.strict = true; this.w.infected!.director.reserved = 1;
   }

@@ -23,7 +23,7 @@ export class LevelEightBot {
     }
     if (!calm && !zoo.protecting()) {
       const arena = zoo.state.arenas.find(a => a.phase !== 3);
-      if (arena && this.profile !== 'story-only') return this.arenas.sample(arena.id);
+      if (arena && this.profile === 'arena-tour') return this.arenas.sample(arena.id);
     }
     const door = zoo.door(), car = w.vehicles!.cars.get(zoo.state.carId)!.entity.vehicle!;
     const boarded = zoo.passengers().every(id => car.passengers?.some(p => p.id === id && p.phase === 'seated'));

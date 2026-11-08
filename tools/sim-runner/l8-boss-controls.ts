@@ -106,11 +106,11 @@ try {
         const other = { x: -direction.x, z: -direction.z };
         f.move = w.solids.sweep(p, direction, 4) >= w.solids.sweep(p, other, 4) ? direction : other;
       } else {
-        if (a?.stage === 'recovery') side = e.transform.x < -60 ? 1 : -1;
-        f.move = walker.step(w, { x: side === 1 ? -44 : -76, z: 25 }, 1, `lure-${side}`) ?? f.move;
+        const x = side === 1 ? -44 : -76, z = Math.abs(p.transform.x - x) > 3 ? 17 : 25;
+        f.move = walker.step(w, { x, z }, 1, `lure-${side}-${z}`) ?? f.move;
       }
       w.applyInput(f, 'keyboard'); step(w);
-      if (arena.wallHits > previous) { previous = arena.wallHits; contacts.push({ tick: w.tick, hits: previous, boss: { ...e.transform }, courier: { ...p.transform }, hp: e.health.current }); }
+      if (arena.wallHits > previous) { previous = arena.wallHits; side = e.transform.x < -60 ? 1 : -1; contacts.push({ tick: w.tick, hits: previous, boss: { ...e.transform }, courier: { ...p.transform }, hp: e.health.current }); }
     }
     check('three real sidestepped wall charges kill without firing', arena.wallHits === 3 && e.health.current === 0, { contacts, wallHits: arena.wallHits, hp: e.health.current, courierHP: p.health.current });
   } finally { w.dispose(); }
