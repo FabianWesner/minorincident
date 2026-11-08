@@ -56,6 +56,7 @@ for (const tier of tiers) for (const seed of seeds) {
         tier, actualTier, infectedLimit, activeCap, seed, completed: world.missions?.state.phase === 'result' || world.missions?.state.phase === 'progression', outcome: world.missions?.state.phase, simSeconds: missionTime,
         deaths: world.missions?.state.stats.deaths ?? 0, damageTaken: world.missions?.state.stats.damage ?? 0, survivorsOut: out,
         survivorLosses: lost, survivorRoster: state?.survivors.length ?? 0,
+        escapedVisible: state?.survivors.filter(row => row.status === 'out' && !world.entities.get(row.id)?.hidden).length ?? 0,
         maxConcurrentInfected: maxInfected,
         pressureArrivals: directions.length,
         pressureArrivalsPerMinute: pressureSeconds ? directions.length * 60 / pressureSeconds : 0,
