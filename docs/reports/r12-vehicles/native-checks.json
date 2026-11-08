@@ -1,0 +1,144 @@
+{
+  "accept": {
+    "command": "npm run qa:accept -- --level L9 --skip-browser",
+    "generatedAt": "2026-11-08T15:41:41.469Z",
+    "sourceHash": "dbcdf76bfe30cd48b02044132978eda427d223c42e2e0785362f95c6b356a52b",
+    "policies": [
+      {
+        "tier": "low",
+        "policy": "complete",
+        "outcome": "complete",
+        "error": null
+      },
+      {
+        "tier": "low",
+        "policy": "stationary",
+        "outcome": "complete",
+        "error": null
+      },
+      {
+        "tier": "high",
+        "policy": "complete",
+        "outcome": "complete",
+        "error": null
+      },
+      {
+        "tier": "high",
+        "policy": "stationary",
+        "outcome": "complete",
+        "error": null
+      },
+      {
+        "tier": "low",
+        "policy": "controlled-fixtures",
+        "outcome": "complete",
+        "error": null
+      },
+      {
+        "tier": "high",
+        "policy": "controlled-fixtures",
+        "outcome": "complete",
+        "error": null
+      },
+      {
+        "tier": "low",
+        "policy": "checkpoint-death-control",
+        "outcome": "complete",
+        "error": null
+      },
+      {
+        "tier": "high",
+        "policy": "checkpoint-death-control",
+        "outcome": "complete",
+        "error": null
+      }
+    ],
+    "rows": [
+      {
+        "id": "L9-01",
+        "status": "NOT CHECKED",
+        "currentStatus": "NOT CHECKED"
+      },
+      {
+        "id": "L9-02",
+        "status": "NOT CHECKED",
+        "currentStatus": "NOT CHECKED"
+      },
+      {
+        "id": "L9-03",
+        "status": "FAIL",
+        "currentStatus": "NOT CHECKED"
+      },
+      {
+        "id": "L9-04",
+        "status": "NOT CHECKED",
+        "currentStatus": "NOT CHECKED"
+      },
+      {
+        "id": "L9-05",
+        "status": "NOT CHECKED",
+        "currentStatus": "NOT CHECKED"
+      },
+      {
+        "id": "L9-06",
+        "status": "NOT CHECKED",
+        "currentStatus": "NOT CHECKED"
+      },
+      {
+        "id": "L9-07",
+        "status": "NOT CHECKED",
+        "currentStatus": "NOT CHECKED"
+      },
+      {
+        "id": "L9-08",
+        "status": "PASS",
+        "currentStatus": "PASS"
+      },
+      {
+        "id": "L9-09",
+        "status": "NOT CHECKED",
+        "currentStatus": "NOT CHECKED"
+      }
+    ]
+  },
+  "threat": {
+    "command": "npm run qa:threat -- --levels L9",
+    "revision": "e0127c110881ad64f2e661fa41847fb569a6b234",
+    "flags": [
+      "PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate"
+    ],
+    "levels": [
+      {
+        "level": "L9",
+        "quality": "low",
+        "flags": [],
+        "passiveFlags": [],
+        "nativeStateHash": "f35614e0",
+        "run": {
+          "completed": true,
+          "time": 128.13333333333333,
+          "deaths": 0,
+          "failures": {}
+        }
+      }
+    ]
+  },
+  "nativeParkedCarAudit": {
+    "seed": 1,
+    "L1": {
+      "props": 102,
+      "cars": 24,
+      "fixedCars": 0
+    },
+    "L2": {
+      "props": 143,
+      "cars": 41,
+      "fixedCars": 0
+    },
+    "L9": {
+      "props": 757,
+      "cars": 92,
+      "fixedCars": 0
+    }
+  }
+}
