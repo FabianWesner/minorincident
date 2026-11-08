@@ -74,7 +74,10 @@ export class CampaignUI {
   credits(save:CampaignSave, ending = false):void {
     clearTimeout(this.creditsTimer);
     this.screen('Credits');const credits=document.createElement('div');credits.className='credits-roll';this.content.append(credits);
-    for(const line of ['Minor Incident',...(ending?epilogueSurvivorLines(save.results?.L8?.survivors):[]),madeBy.headline,`${madeBy.author.name}: ${madeBy.author.role.toLowerCase()}`,...madeBy.groups.map(g=>`${g.heading}: ${g.names.join(', ')}`),'Built with three.js and Rapier. Technology reference: Bruno Simon (MIT).','Fonts: system UI fonts supplied by your device.',madeBy.thanks]){const p=document.createElement('p');p.textContent=line;credits.append(p);}
+    const survivors = save.crossingHandover && save.results?.L8?.survivors !== undefined
+      ? save.crossingHandover.shelteredPassengers.filter(e => e.health.current > 0 && !e.infected && !e.infection).flatMap(e => e.civilian?.survivor?.key ? [e.civilian.survivor.key] : [])
+      : save.results?.L8?.survivors;
+    for(const line of ['Minor Incident',...(ending?epilogueSurvivorLines(survivors):[]),madeBy.headline,`${madeBy.author.name}: ${madeBy.author.role.toLowerCase()}`,...madeBy.groups.map(g=>`${g.heading}: ${g.names.join(', ')}`),'Built with three.js and Rapier. Technology reference: Bruno Simon (MIT).','Fonts: system UI fonts supplied by your device.',madeBy.thanks]){const p=document.createElement('p');p.textContent=line;credits.append(p);}
     if (ending) {
       this.root.classList.add('ending-credits');
       const groups = new Map<string, string[]>();
