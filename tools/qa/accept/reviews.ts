@@ -55,11 +55,7 @@ export function validateReviewDirectory(): void {
 }
 export function latestRelevantCommit(level: string): string {
   const paths = [`src/levels/${level}`, 'src/data', 'src/render', 'src/ui', 'src/assets', 'public'];
-  try { return execFileSync('git', ['log', '-1', '--format=%H', '--', ...paths], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }).trim(); }
-  catch (error) {
-    if (process.env.QA_ACCEPT_REVISION) return 'unavailable: remote runner has no Git history';
-    throw error;
-  }
+  return execFileSync('git', ['log', '-1', '--format=%H', '--', ...paths], { encoding: 'utf8' }).trim();
 }
 const digestCache = new Map<string, string>();
 function relevantPaths(level: string): string[] {
