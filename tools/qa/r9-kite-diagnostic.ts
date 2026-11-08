@@ -25,13 +25,13 @@ try {
         if (receipt.samples > 0 && (lastSnapshot < 0 || world.tick - lastSnapshot >= 30)) {
           lastSnapshot = world.tick;
           const player = world.entities.get(1)!;
-          snapshots.push({ tick: world.tick, player: { position: { ...player.transform }, velocity: player.survivor?.velocity,
+          snapshots.push({ tick: world.tick, player: { position: { ...player.transform }, velocity: structuredClone(player.survivor?.velocity),
             action: world.combat!.runner.loadout.current(player.weapons!.selectedSide).id },
           infected: world.infected!.active.map(e => ({ id: e.id, archetype: e.archetype, position: { ...e.transform },
             distance: Math.hypot(e.transform.x-player.transform.x,e.transform.z-player.transform.z), hp: e.health.current,
             state: e.infected!.state, speed: e.infected!.speed, heard: e.infected!.heardTargetId,
             brain: e.infected!.l1 ? structuredClone(e.infected!.l1) : undefined,
-            reaction: e.combat?.reaction, statuses: e.combat?.statuses, visible: world.combat!.query.visible(e.transform,player.transform)
+            reaction: structuredClone(e.combat?.reaction), statuses: structuredClone(e.combat?.statuses), visible: world.combat!.query.visible(e.transform,player.transform)
           })).filter(e => e.distance <= 40).sort((a,b)=>a.distance-b.distance) });
         }
         return result;
