@@ -169,6 +169,48 @@ Corn cuts the sight lines, which suits the survival-horror tone, and it is the m
 
 **Perf:** a new instanced crop asset (`veg.corn-block`: crossed alpha-tested cards, wind sway in the vertex shader; LOD1 sparser cards; LOD2 one billboard slab per row). Indicative caps: LOD0 ≤ 6,000 / LOD1 ≤ 1,500 / LOD2 ≤ 200 triangles per 10 × 10 m tile. It uses the existing DistrictView instanced batches and chunk residency (25 / 9 detailed chunks), with low tier at half density. Corn has **no physics colliders** (nav cost only). Gate: E18 draws/triangles at the densest corn chunk, high and low.
 
+## L10 environmental storytelling: total apocalypse (PO: "L10 should be full of little details, like former fight scenes, dead bodies, etc. Like the [end credits] of a Fallout episode. Total apocalypse.")
+
+**Core pillar:** the walk tells what happened here through what was left behind. This is where most of L10's "never alone" comes from; the scares are rare.
+
+**Vignette catalogue** (each is a small authored composition of 3–8 pieces with one readable story):
+- **Last stand:** a sandbag or furniture barricade with dead defenders behind it, spent casings, and the dead infected piled in front.
+- **Evacuation jam:** a 100–200 m traffic jam on a road: doors open, luggage on the asphalt, bodies in some cars, one burned bus.
+- **Crashed army helicopter** in a field, with its crew dead around it (one hero vignette, R4).
+- **Messages on walls and roofs:** "HELP", "NO ROOM", "WE WENT NORTH", "DON'T DRINK THE WATER", "SAM WAS HERE" (a trail hint).
+- **Makeshift graves** (crosses, a shovel, a name board), and **body bags** in rows at the triage points.
+- **Quarantine tape** around a house or a car, with a hazmat suit on the ground.
+- **Abandoned camps:** tent, cold fire, a child's backpack, a radio, family photos.
+- **Dead livestock** in the corn and fields (cows near a broken fence), with crows. Crows exist as an infected archetype; ambient ones would be new.
+- **Execution / quarantine-gone-wrong scene** at the military zone fence (bodies along a wire, a dropped megaphone).
+- **Home last refuge:** boarded doors, "WE'RE INSIDE" paint, the door broken in (at most one per region).
+
+**Reuse (all existing):** `inf.corpse-poses` and the persistent corpse layout (`CorpseLayout.ts`, under the PO rule that corpses persist); `veh.*.burned` / `.wrecked` (sedans, SUV, pickup, police, ambulance, school bus, military truck, APC, tank); `veh.helicopter-military`; `decay.makeshift-barricade`, `decay.blown-sandbags`, `decay.dropped-belongings`, `decay.broken-glass`, `decay.crater`; `kit.evac-camp`, `kit.shelter-camp`, `kit.campground`, `prop.tent`, `prop.cure-iso-tent`, `prop.sandbag-pallet`, `prop.trash-bags`; the L10 crossing-scene and forecourt generators already on main.
+
+**New (small):**
+- a wall-message decal set: about 12 painted words as one texture atlas, projected decals;
+- grave cross and name board;
+- body bag;
+- quarantine tape strip;
+- shell-casing scatter decal;
+- a cow carcass derived from the existing animal pipeline.
+
+Each new item carries LOD0/1/2 triangle caps (≤ 800 / 300 / 60 for the small props) and goes through asset QA.
+
+**Density targets** (along the walked line, either side within 6–20 m):
+- **Small vignettes:** one every 40–60 m on the walking line, roughly 20 per km. One is in the zoom-1 frame almost all the time, at walking speed about every 8–12 s.
+- **Large set pieces** (jam, helicopter, last stand at a checkpoint): 2–3 per region.
+- **Wall messages:** at least 5 per region.
+- **Dressing:** dead bodies (static corpse poses) average 15–25 per km in the overland regions, more at the set pieces.
+- **Clearance:** the existing L10 dressing clearance rules apply (≥ 5.4–8.5 m off route centrelines, clear of encounter and anchor spots, nothing within 60 m of the console).
+
+**Performance:**
+- **Batching:** all pieces go through the existing instanced DistrictView batches with LOD swap. Corpses use the static corpse pose instancing (one draw per pose set), not live actors, and they are no sim entities.
+- **Decals:** messages and casings are batched decals from one atlas.
+- **Tiers:** low tier keeps every story vignette but halves the scatter (casings, belongings, extra bodies) and drops LOD1 earlier.
+- **Lights:** stay inside the NightAccents capacity (a vignette may own one light point at most).
+- **Gate:** E18 draws/triangles at the densest set piece (the evacuation jam) at high and low, and the r9-l10pace empty-stretch meter reaches "no 10 s window without a vignette" on the walked line.
+
 ## L10 art direction: dead late-autumn land (PO: "also scenery needs to look darker. Not green healthy trees on grass.")
 
 Target: bare and dead trees, dry brown/grey grass and stubble, burned patches, dry broken corn, mud tracks, low fog banks, and a desaturated night grade. No lush green anywhere in L10.
@@ -283,6 +325,7 @@ Current conflicts (`src/ui/Hud.ts`):
 | L9-A systems | Opus, ~3 h | Boarding plus shake-off plus driver damage. Heavy-ram and bloated costs. Pit-stop repair plus hatch fire. Shared "no idle in the zoom-0.5 frame" admission helper. | Unit/sim fixtures (board → shaken off by swerve; 4 boarders kill an idle courier; repair pauses when released); Scene Lab `qa-l9-boarders`, `qa-l9-pitstop`. |
 | L9-C driving set pieces | Sonnet, ~3 h (after A) | Ranks 2, 4, 6, 7 and 9: barricade language, tanker, bus chase, wheat-field fire wall, evac gate timer, swerving cars. Ranks 8 and 10 (jumps) are a separate Opus spike of about 2 h, done only if the PO wants jumps. | Real-input run per set piece with captures, low/high. |
 | L9-B content + ending | Opus, ~3 h (after A's helper) | Route mixes, roadblocks, zoo chasers, migration streams, level crossing, evac point drop-off, bridge collapse from the real transform, visible weapon loss, crawl with the axe on her back, wreck explosion. Also the L10 creek-bed start and caption. | One real-input run per route (low/high, zoom 1/1.5) with captures of every beat and the ending; idle-spawn probe = 0; L9 6–8 min. |
+| L10-vignettes | Sonnet, ~3 h (+ small asset batch ~1.5 h) | Vignette catalogue placed along every walked line, wall-message decals, graves/body bags/tape/casings/cow assets, density and clearance checks. | Empty-stretch meter (no 10 s window without a vignette), contact sheets per region at low/high, zoom 1/1.5; perf at the evacuation jam. |
 | L10-farm (corn) | Sonnet asset + Opus systems, ~3 h | `veg.corn-block` with LOD budgets, farm dressing, sight/speed/sway/camera-fade rules, corn scare triggers. | Scene Lab corn sheets at low/high, zoom 0.5/1/1.5; perf counters at the densest chunk. |
 | L10-A regions | Opus, ~3 h | Remove the checkpoint-x release gate. Weapons mid-region with guards. Scare catalogue triggers and dread cues along every walking line (no field streams). Region peaks of 8–15. Per-region strong archetypes. R3 survivors and gate hold, R4 armory, jeep mounted gun and the survivor-grab sighting. | Scare log: one scare every 60–120 s on the walked line, none visible before it fires; scenery meter: never 10 s without a lit silhouette; `qa:threat` L10; one unprotected real-input run R1–R5. |
 | L10-B Mega + finale + dressing + HUD | Sonnet, ~3 h | Minimap icon language (table above, all levels) including the Mega red dot and ring (remove the band label). Dog superpowers (leap over low cover, pack flank, corgi dog-bark). Sightings 1 and 3 plus the corridor stagger-retreat. Assault continues until `mega-dead`. Apocalypse dressing pass on D-CURE houses (decay variants, at most one lit refuge per region). L10 music streams and the scare duck-and-sting cue. | Finale run: no 10 s window without an attack after `charge-ready`; minimap captures; R2/R3 house sheets at low/high, zoom 1/1.5. |

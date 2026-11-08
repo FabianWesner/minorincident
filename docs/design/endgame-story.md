@@ -67,7 +67,7 @@ Climax: the bridge collapse caused by the Mega, the enemy introduced in L8. The 
 
 ## L10 The Cure — "alone, hunted, rebuild, deliver" (~35–40 min competent, 45–50 newbie)
 
-The level keeps its size and the long walks (PO). Its tone is survival horror, not crowds: quiet dark stretches with dread cues (sounds in the dark, lights flickering out, the corgi growling, the distant Mega), rare jump scares by stronger and faster infected and small hunting groups, continuous sparse scenery across dry corn fields and dead farms under a dark, desaturated late-autumn look (bare trees, brown stubble, mud, fog banks, no green) (corn hides the scares), an apocalypse dressing pass on the houses, and a dark ambient score with silence before each scare (rock only for the Mega climax). The only crowd fight is a smaller console assault around the Mega fight. The objectives are story goals (find Sam, get through the army base, reach the campus, deliver the cure), never "recover weapon X". Weapons arrive inside story scenes. The walk is filled with **optional discoveries**: a flashlight whose battery dies, flares, noise lures and car alarms, a molotov to burn a blocked shortcut, medkits, an ammo crate behind a scare, a radio part that unlocks army chatter, five research notes that tell the cure story ahead of the reveal, the corgi's lost toy, and keys plus fuel for an optional pickup-truck ride. The full list is in l9-l10-concept.md.
+The level keeps its size and the long walks (PO). Its tone is survival horror, not crowds: quiet dark stretches with dread cues (sounds in the dark, lights flickering out, the corgi growling, the distant Mega), rare jump scares by stronger and faster infected and small hunting groups, continuous sparse scenery across dry corn fields and dead farms under a dark, desaturated late-autumn look (bare trees, brown stubble, mud, fog banks, no green) (corn hides the scares), an apocalypse dressing pass on the houses, **environmental storytelling everywhere** (former fight scenes, dead defenders and spent casings, evacuation traffic jams, a crashed helicopter, graves, body bags, painted "HELP" / "NO ROOM" messages, abandoned camps, dead livestock: a small story every 40–60 m), and a dark ambient score with silence before each scare (rock only for the Mega climax). The only crowd fight is a smaller console assault around the Mega fight. The objectives are story goals (find Sam, get through the army base, reach the campus, deliver the cure), never "recover weapon X". Weapons arrive inside story scenes. The walk is filled with **optional discoveries**: a flashlight whose battery dies, flares, noise lures and car alarms, a molotov to burn a blocked shortcut, medkits, an ammo crate behind a scare, a radio part that unlocks army chatter, five research notes that tell the cure story ahead of the reveal, the corgi's lost toy, and keys plus fuel for an optional pickup-truck ride. The full list is in l9-l10-concept.md.
 
 | Region | Story goal (objective) | Weapon and its story | Climax / threat |
 |---|---|---|---|
@@ -86,7 +86,7 @@ Pay-off check: the delivery (L1) matches the delivery (L10), the commander's bro
 
 ---
 
-## Implementation plan (7 lanes, after PO approval)
+## Implementation plan (8 lanes, after PO approval)
 
 | Lane | Model, time | Scope |
 |---|---|---|
@@ -97,6 +97,7 @@ Pay-off check: the delivery (L1) matches the delivery (L10), the commander's bro
 | L10-A regions + story | Opus, ~3 h | Story objectives (no weapon checklist), weapon scenes (roadblock, depot rescue, armory with Sam's death, escort convoy), optional discoveries (flashlight battery, flares, lures, molotov path, radio part, notes, corgi toy, optional truck), Sam radio and follower, moving encounters, release gate removed. |
 | L10-B Mega/HUD/dogs/dressing | Sonnet, ~3 h | Minimap icon language, Mega red dot, sightings 1/3 plus the corridor stagger, assault until `mega-dead`, dog superpowers, apocalypse house dressing. |
 | L10-farm + audio | Sonnet/Opus, ~3 h | Corn fields and farm dressing with their sight and nav rules; L10 dark-ambient music streams and scare stingers (details in l9-l10-concept.md). |
+| L10-vignettes | Sonnet, ~3 h + small asset batch | Total-apocalypse environmental storytelling along the whole walk (catalogue, densities, budgets in l9-l10-concept.md). |
 | Story text | Haiku, ~0.5 h | `dialogue.ts` lines (L8 broadcast, Hale, Sam, L10 briefing/crash, new recording, "Delivered ✓" epilogue toast), checked against the save roster fallback (Sam → Reyes). |
 
 Order: L8-story and L9-A in parallel → L9-B → L10-A and L10-B → story text → Opus visual QA and a playtest of L8–L10 before any PROD deploy. Every lane runs focused checks and one real-input run of its level. Perf runs in the orchestrator's quiet window.
