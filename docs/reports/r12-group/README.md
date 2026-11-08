@@ -8,7 +8,7 @@ PO: “Group dynamic in general is strange... They move too parallel...”
 
 Survivors use deterministic loose slots, independent route-safe lateral sway, staggered starts after resting, and individual ordinary movement response. Settled followers look toward visible threats, the courier, neighbors, or a personal glance. L5 retains its brisk response and authored follow band. Checkpoint restore rebases the new rest/reaction timers; threat glances respect line of sight.
 
-Requested main `08149d1a` was merged as `d11dea91`. R12 variation and R13's L7 companion response share the response selector; R13's distinct bus queue rows and L8 catch-up/boarding remain present. Main `78219de9`, including the current L8 story and Alpha changes, was subsequently merged as `aaa66a18`. Tested runtime source hash: `10b2cc9caaf5de60ac81e25bd1006529ec6e6a924168cd8057b8f0f67a1392f1`.
+Requested main `08149d1a` was merged as `d11dea91`. R12 variation and R13's L7 companion response share the response selector; R13's distinct bus queue rows and L8 catch-up/boarding remain present. Main `78219de9`, including the current L8 story and Alpha changes, was subsequently merged as `aaa66a18`. Tested runtime source hash: `10b2cc9caaf5de60ac81e25bd1006529ec6e6a924168cd8057b8f0f67a1392f1`. Read-only hashing inside the active remote job confirms this runtime hash, the observer hash, and the audit-tool hash match the local files ([remote fingerprint](remote-runtime.json)).
 
 ## Native motion
 
