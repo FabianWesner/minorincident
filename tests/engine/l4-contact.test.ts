@@ -292,6 +292,13 @@ test('L4: every contact archetype interrupts approach/lure and attacks within 3 
     expect(distantRiot.combat?.shield, 'riot actor carries its authored shield').toBeTruthy();
     expect(barEligible(distantRiot, courier.transform, infectedDef(distantRiot.archetype).bar === true), 'healthy riot at 16 m keeps its health bar').toBe(true);
     ai.release(distantRiot);
+    const distantAlpha = world.entities.get(ai.spawn('infected.alpha', { x: courier.transform.x + 16, z: courier.transform.z }))!;
+    const distantRunner = world.entities.get(ai.spawn('infected.runner', { x: courier.transform.x + 16, z: courier.transform.z }))!;
+    expect(barEligible(distantAlpha, courier.transform, infectedDef(distantAlpha.archetype).bar === true), 'healthy Alpha follows the shared 15 m cutoff').toBe(false);
+    distantAlpha.health.current--;
+    expect(barEligible(distantAlpha, courier.transform, infectedDef(distantAlpha.archetype).bar === true), 'damaged Alpha keeps its bar beyond 15 m').toBe(true);
+    expect(barEligible(distantRunner, courier.transform, infectedDef(distantRunner.archetype).bar === true), 'healthy ordinary infected follows the 15 m cutoff').toBe(false);
+    ai.release(distantAlpha); ai.release(distantRunner);
     for (const archetype of [...l4InfectedArchetypes, 'infected.alpha']) for (const state of ['attracted', 'attack', 'stagger'] as const) {
       courier.health.current = courier.health.max;
       const e = world.entities.get(ai.spawn(archetype, { x: -17, z: 3.8 }, { yaw: Math.PI }))!;
