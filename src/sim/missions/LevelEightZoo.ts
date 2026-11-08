@@ -262,6 +262,9 @@ export class LevelEightZoo {
     c.state = 'calm'; c.story = null; c.survivor!.cover = false;
     const door = w.vehicles!.passengerDoor(s.carId), boarding = this.boarding();
     const slot = c.survivor!.slot, velocity = p.survivor!.velocity;
+    // Catch-up and the tightly spaced APC queue need the shared follower
+    // response: civilian steering overshoots these changing targets.
+    if (this.breached && (boarding || distance(e.transform, p.transform) > 10)) c.survivor!.briskAt = w.tick;
     const goal = formationSlot(p.transform, leaderHeading(p.transform.yaw, velocity), slot);
     let target = boarding ? door : w.infected!.nav.clear(goal.x, goal.z, .35) ? goal : p.transform;
     let queueIndex = 0;
@@ -287,7 +290,7 @@ export class LevelEightZoo {
       // board-up; a stale carried injury flag must not leave passengers behind.
       // A follower displaced from its assigned slot catches up, then settles
       // back to courier pace. This avoids making the courier stop for it.
-      const speed = Math.min(4.7, 4.5 + Math.max(0, distance(e.transform, target) - 4) * .35);
+      const speed = Math.min(5.2, 4.5 + Math.max(0, distance(e.transform, target) - 4) * .35);
       if (!boarding || !this.approachBoardingSpot(e, target, speed)) w.npcs!.move(e, target, speed, c, boarding ? .2 : 0, 2400);
     }
     return true;
