@@ -164,7 +164,7 @@ async function crossingStorySequence(): Promise<void> {
     expect(car.entity.health.current + repairDamage - 500, 'exactly 300 durability is restored across hold, pause and resume').toBeCloseTo(300, 3);
     place(457, 0); w.applyInput(fire, 'keyboard');
     for (let i = 0; i < 3000 && !driving.evacuationDone; i++) { w.update(); player.health.current = player.health.max; }
-    expect(driving.evacuationDone, `the living civilians actually reach the trucks: ${JSON.stringify({ evacuated: driving.evacuated, entering: driving.truckEntering, hugAt: driving.hugAt, hugDone: driving.hugDone, roster: driving.roster.map(id => { const e = w.entities.get(id)!; return { id, key: e.civilian?.survivor?.key, p: e.transform, health: e.health.current, passengerOf: e.passengerOf, state: e.civilian?.state }; }), dog: [...w.entities.iterate()].find(e => e.companion) })}`).toBe(true);
+    expect(driving.evacuationDone, `the living civilians actually reach the trucks: ${JSON.stringify({ evacuated: driving.evacuated, entering: driving.truckEntering, hugAt: driving.hugAt, hugDone: driving.hugDone, roster: driving.roster.map(id => { const e = w.entities.get(id); return { id, key: e?.civilian?.survivor?.key, p: e?.transform, health: e?.health.current, passengerOf: e?.passengerOf, state: e?.civilian?.state }; }), dog: [...w.entities.iterate()].find(e => e.companion) })}`).toBe(true);
     expect(driving.evacuated).toHaveLength(4);
     expect(car.entity.vehicle!.passengers?.filter(p => w.entities.get(p.id)?.civilian).map(p => p.id), 'Sam stays aboard').toEqual([driving.samId]);
     mission.restore('bridge');

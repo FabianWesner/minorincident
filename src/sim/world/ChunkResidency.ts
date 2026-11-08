@@ -99,7 +99,7 @@ export class ChunkResidency {
     w.megaPursuit?.invalidateNavigation();
   }
   private managed(e: EntitySnapshot): boolean {
-    return e.id !== 1 && !e.infected?.pursuit && !e.companion && e.attachedTo === undefined && !e.vehicle && !!(e.infected || e.corpse || e.pickup || e.civilian || e.escort || e.kind === 'physics-prop');
+    return e.id !== 1 && !e.infected?.pursuit && !e.companion && e.attachedTo === undefined && e.passengerOf === undefined && !e.vehicle && !!(e.infected || e.corpse || e.pickup || e.civilian || e.escort || e.kind === 'physics-prop');
   }
   private sleepOutside(): void {
     const batches = new Map<string, SleepingEntity[]>();
