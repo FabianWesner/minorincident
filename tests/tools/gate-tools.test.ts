@@ -112,8 +112,8 @@ test('browser pool admission backs off under WindowServer pressure, keeps a one-
   expect(followerPaceVerdict(boundary).pass).toBe(true);
   expect(followerPaceVerdict([one, one, three]).pass).toBeUndefined(); // a duplicate cannot vote twice
   const l3 = (army: (number | null)[]) => ({ level: 'L3', observation: { phases: [], waves: [], l3Squad: { initial: 4, army: army[0], losses: [{ id: 30, cause: 'bite', tick: 1 }] } }, passiveObservation: { phases: [], waves: [] }, l3Army: armyLineVerdict(seeds(...army)) }) as unknown as LevelReceipt;
-  expect(focusedCriteria([l3([3, 0, 0])]).find(r => r.id === 'L3-06 squad counts/losses')?.verdict).toBe('PASS');
-  expect(focusedCriteria([l3([3, 3, 0])]).find(r => r.id === 'L3-06 squad counts/losses')?.verdict).toBe('FAIL');
+  expect(focusedCriteria([l3([4, 2, 0])]).find(r => r.id === 'L3-06 squad counts/losses')?.verdict).toBe('PASS');
+  expect(focusedCriteria([l3([3, 0, 0])]).find(r => r.id === 'L3-06 squad counts/losses')?.verdict).toBe('FAIL');
   const seeded = l3([3, 0, 0]);
   seeded.l3Army!.seeds.forEach((row, i) => { row.attacksPerMinute = [30, 5, 6][i]; });
   seeded.l3SurvivalSeeds = [1, 2, 3].map(seed => ({ seed, valid: true,
