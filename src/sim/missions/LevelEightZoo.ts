@@ -52,7 +52,8 @@ export class LevelEightZoo {
       e.health.current = e.health.max;
       c.state = 'calm'; c.entered = w.tick; c.until = 0; c.knockedUntil = 0;
       if (c.l1) c.l1.target = null;
-      if (e.combat) { e.combat.staggerUntil = 0; e.combat.attacking = false; delete e.combat.reaction; }
+      // Recovery also expires effects whose timestamps belong to L7's clock.
+      if (e.combat) { e.combat.staggerUntil = 0; e.combat.attacking = false; e.combat.statuses.length = 0; delete e.combat.reaction; }
       readyCarriedAlly(e, w.tick);
       c.survivor = { key: c.survivor?.key ?? `zoo-carried-${i}`, slot: i, leader: 1, mode: 'follow', cover: false, injured: c.survivor?.injured ?? c.l1?.walkSpeed === 1.4, waitAt: 0, foundAt: w.tick };
       s.roster.push(e.id); w.solids.admit(e, 'l8.roster.arrival');
