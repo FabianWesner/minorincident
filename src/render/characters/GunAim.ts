@@ -11,6 +11,7 @@ export const longGunHolds: Record<string, LongGunHold> = {
   'wpn.hunting-rifle': { scale: .65, support: [.34, .015, -.04], stance: .3, protract: 1.2, reach: .55, drop: 0, lateral: .05 },
   'wpn.shotgun': { scale: .65, support: [.38, .05, -.04], stance: .3, protract: 1.2, reach: .45, drop: .03, lateral: .05 },
   'wpn.machine-gun': { scale: .55, support: [.485, .09, -.04], stance: .3, protract: 1.2, reach: .45, drop: 0, lateral: .05 },
+  'wpn.flamethrower': { scale: .65, support: [.42, 0, 0], stance: .3, protract: 1.2, reach: .45, drop: 0, lateral: .05 },
   'wpn.rocket-launcher': { scale: .80, support: [.31, -.02, -.045], stance: .8, protract: 1.2, reach: .5, drop: .05, lateral: .18 },
   'wpn.smg': { scale: .65, support: [.34, .13, -.04], stance: .4, protract: 1.2, reach: .65, drop: .09, lateral: .05 },
 };

@@ -1,0 +1,33 @@
+{
+  "target": "E06",
+  "epics": [
+    "E06"
+  ],
+  "checks": [
+    {
+      "command": "npm run typecheck",
+      "status": 0,
+      "seconds": 16.054
+    },
+    {
+      "command": "npm run lint",
+      "status": 0,
+      "seconds": 9.471
+    },
+    {
+      "command": "npm test",
+      "status": 0,
+      "seconds": 33.568
+    }
+  ],
+  "unitTests": {
+    "passed": 107,
+    "total": 107,
+    "files": 27
+  },
+  "sourceTrees": {
+    "src": "6595a8ba8e170b98be54817bf3d8dc0511bd7826",
+    "public": "283915b45afe35ce4c82a7c1337af65b6350e267",
+    "assets/wpn.flamethrower": "b2c1875f401ee81234f503f1e857f69abeb032f0"
+  }
+}

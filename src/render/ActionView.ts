@@ -79,7 +79,7 @@ export class ActionView extends Group {
   }
   muzzle(out: Vector3): Vector3 | null {
     const held = this.held[this.world.combat?.runner.loadout.state.selectedSide ?? this.selected];
-    const muzzle = held?.model.getObjectByName('muzzle');
+    const muzzle = held?.model.getObjectByName(held.id === 'weapon.flamethrower' ? 'flameOrigin' : 'muzzle');
     if (!muzzle || !held?.holder.visible) return null;
     muzzle.updateWorldMatrix(true, false); return muzzle.getWorldPosition(out);
   }
