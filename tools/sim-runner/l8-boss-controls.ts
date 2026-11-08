@@ -109,16 +109,20 @@ try {
         const other = { x: -direction.x, z: -direction.z };
         const cross = Math.abs((p.transform.x - a.area.x) * a.area.dz - (p.transform.z - a.area.z) * a.area.dx);
         if (cross < 3.2) f.move = w.solids.sweep(p, direction, 4) >= w.solids.sweep(p, other, 4) ? direction : other;
-      } else if (a?.move === 'elephant.swipe' && a.stage !== 'recovery' || Math.hypot(p.transform.x - e.transform.x, p.transform.z - e.transform.z) < 4.5 && a?.stage !== 'recovery') {
+      } else if (a?.move === 'elephant.swipe' && a.stage !== 'recovery' || Math.hypot(p.transform.x - e.transform.x, p.transform.z - e.transform.z) < 7 && a?.stage !== 'recovery') {
         const dx = p.transform.x - e.transform.x, dz = p.transform.z - e.transform.z, d = Math.hypot(dx, dz) || 1; f.move = { x: dx / d, z: dz / d };
       } else {
         const candidates = [[-44,25],[-44,39],[-76,25],[-76,39],[-52,24],[-52,40],[-64,24],[-64,40]].map(([x,z]) => ({x,z}));
         const laneClear = (at: {x:number;z:number}) => {
           const dx=at.x-e.transform.x,dz=at.z-e.transform.z,d=Math.hypot(dx,dz);
-          return d >= 7 && d <= 30 && w.solids.clear({ ...at, y:.7 }, .35, 1, false) && w.solids.sweep(e,{x:dx/d,z:dz/d},Math.max(0,d-1),e.combat!.radius,false,false) >= d-1-.01;
+          return d >= 7 && d <= 40 && w.solids.clear({ ...at, y:.7 }, .35, 1, false) && w.solids.sweep(e,{x:dx/d,z:dz/d},Math.max(0,d-1),e.combat!.radius,false,false) >= d-1-.01;
         };
         if (!goal || !laneClear(goal)) goal = candidates.filter(laneClear).sort((a,b) => Math.hypot(a.x-p.transform.x,a.z-p.transform.z)-Math.hypot(b.x-p.transform.x,b.z-p.transform.z))[0];
-        if (goal) f.move=walker.step(w,goal, .6,`lure-${goal.x}-${goal.z}`) ?? f.move;
+        if (goal) {
+          const dx = goal.x - p.transform.x, dz = goal.z - p.transform.z, d = Math.hypot(dx, dz);
+          f.move = d > .6 && w.solids.sweep(p, { x: dx / d, z: dz / d }, d, .35, false, false) >= d - .01 ? { x: dx / d, z: dz / d } : walker.step(w,goal, .6,`lure-${goal.x}-${goal.z}`) ?? f.move;
+          const length = Math.hypot(f.move.x, f.move.z); if (length > 0) { f.move.x /= length; f.move.z /= length; }
+        }
       }
       if (process.env.L8_ELEPHANT_LURE === 'generic') f.move = generic.sample('elephant').move;
       // Keep the bait inside the yard; walking through a gate is an escape, not the wall-counter tactic.
