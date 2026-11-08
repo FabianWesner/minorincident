@@ -373,6 +373,9 @@ export class LevelNineDriving {
   private hugCorgi(rosa: EntitySnapshot): boolean {
     const w = this.w, s = this.state, corgi = [...w.entities.iterate()].find(e => e.companion);
     if (!corgi) { s.hugDone = true; return true; }
+    // Rosa can already be beside the rear entry when the dog's exit ends.
+    // Their shared embrace space must be exempt during disembarking too.
+    corgi.contactExempt = rosa.id;
     if (corgi.passengerOf) { w.vehicles!.disembarkPassenger(this.car.entity.id, corgi.id); return false; }
     const p = this.car.entity.transform, c = Math.cos(p.yaw), side = Math.sin(p.yaw), nav = w.infected!.nav;
     const clear = (spot: NonNullable<L9DrivingState['hugSpot']>) => nav.clear(spot.x, spot.z, .35) && nav.clear(spot.dogX, spot.dogZ, .9)
