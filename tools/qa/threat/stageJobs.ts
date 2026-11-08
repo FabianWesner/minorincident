@@ -56,7 +56,7 @@ async function execute(job: StageJob): Promise<StageResult> {
           quality: 'low', beforeBegin: world => { kitingComplete = installKitingPolicy(world, kiting, job.level); },
           // Cinematic inputs can repeat at one sim tick (L4 has 1,227 inputs
           // in its 1,200-tick window). Preserve the whole clock, not a frame cap.
-          stopWhen: kitingComplete,
+          stopWhen: () => kitingComplete(),
           beforeDispose: () => { native.kiting = finishKitingReceipt(kiting); },
         }); } catch (error) { if (!(error instanceof LevelRunStopped)) throw error; }
       }
