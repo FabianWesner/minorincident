@@ -9,7 +9,7 @@ await MeshoptDecoder.ready;
 const io=new NodeIO().registerExtensions(ALL_EXTENSIONS).registerDependencies({'meshopt.decoder':MeshoptDecoder}),reports=[];
 for(const base of readdirSync('public/assets/layouts').filter(p=>p.endsWith('.base.glb'))){
  const district=base.split('.')[0],triangles=[];
- for(const name of readdirSync('public/assets/layouts').filter(p=>p.startsWith(`${district}.`) && /\.(base|w[1-5])\.glb$/.test(p))){
+ for(const name of readdirSync('public/assets/layouts').filter(p=>p.startsWith(`${district}.`) && /\.(base|w\d+)\.glb$/.test(p))){
  const doc=await io.readBinary(execFileSync('git',['show',`9c35d409:public/assets/layouts/${name}`],{maxBuffer:32*1024*1024}));
  triangles.push(...groundTriangles(doc).map(t=>({...t,id:`${name}:${t.id}`})));
  }
