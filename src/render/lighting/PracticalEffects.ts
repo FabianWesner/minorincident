@@ -1,3 +1,4 @@
+import { groundDepth, groundLayers } from '../GroundLayers';
 import { AdditiveBlending, BufferGeometry, Color, ConeGeometry, DepthStencilFormat, DepthTexture, DoubleSide, Float32BufferAttribute, Group, InstancedMesh, Matrix4, Mesh, MeshBasicNodeMaterial, PlaneGeometry, Quaternion, UnsignedInt248Type, Vector3, ViewportDepthTextureNode } from 'three/webgpu';
 import { attribute, cameraFar, cameraNear, cos, fract, linearDepth, nodeObject, normalView, positionGeometry, positionViewDirection, positionWorld, screenUV, sin, uniform, uv, vec3 } from 'three/tsl';
 import { Rng } from '../../core/Rng';
@@ -50,6 +51,7 @@ export class PracticalEffects extends Group {
     const pattern = positionWorld.x.mul(.65).sin().mul(positionWorld.z.mul(.5).sin()).mul(.5).add(.5);
     const wet = pattern.smoothstep(weatherSurface.wetness.oneMinus(), weatherSurface.wetness.oneMinus().add(.15));
     const ripple = positionWorld.x.mul(5).add(positionWorld.z.mul(.7).sin()).sin().mul(.25).add(.75);
+    groundDepth(streak, groundLayers.lightPool);
     streak.colorNode = vec3(1); streak.opacityNode = local.x.abs().oneMinus().pow(2).mul(local.y.abs().oneMinus()).mul(wet).mul(ripple).mul(.7);
     const plane = new PlaneGeometry(1, 1); plane.rotateX(-Math.PI / 2);
     this.streaks = new InstancedMesh(plane, streak, 128); this.streaks.count = 0; this.streaks.frustumCulled = false;
