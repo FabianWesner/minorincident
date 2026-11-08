@@ -1,11 +1,12 @@
+import { cureRadius } from '../../data/cureDust';
 import { cureReached } from './CureFront';
 import { cureAlphaCap, cureAlphaPopulation, cureRegularAlphaCount } from '../../levels/L10/alphaContracts';
 import type { Mission } from './Mission';
 
-export const epilogueTicks = 150 * 60;
-export const pulloutTicks = 36 * 60;
+export const epilogueTicks = 65 * 60;
+export const pulloutTicks = 15 * 60;
 export const titleTicks = 5 * 60;
-export const creditsTicks = 12 * 60;
+export const creditsTicks = 75 * 60;
 // Give residents individual walking routes and room to pause at each end,
 // rather than keeping the small epilogue cast in a tight formation.
 const survivorSpread = [
@@ -28,7 +29,21 @@ export class LevelTenEpilogue {
     state.counters['epilogue-ticks'] = Math.min(epilogueTicks, front.elapsed);
     if (ending.phase === 'playable') {
       this.cast();
-      if (front.elapsed >= 120 * 60 && !state.states['delivery-notified']) {
+      const elapsed = front.elapsed;
+      if (elapsed >= 8 * 60) {
+        this.mission.world.storyLock ??= { scripted: null, skip: false };
+        if (this.mission.world.storyLock.skip && this.canSkip) { front.elapsed = epilogueTicks; front.radius = cureRadius(front.elapsed); }
+      }
+      if (elapsed >= 30 * 60 && !state.states['epilogue-rosa']) {
+        state.states['epilogue-rosa'] = true;
+        const roster = this.mission.world.progression?.campaign?.crossingHandover?.shelteredPassengers ?? [];
+        if (roster.some(e => e.civilian?.survivor?.key === 'rosa' && e.health.current > 0)) this.mission.radio('L10.epilogue-rosa');
+      }
+      if (elapsed >= 37 * 60 && !state.states['epilogue-sam']) {
+        state.states['epilogue-sam'] = true;
+        this.mission.radio(state.states['sam-alive'] ? 'L10.epilogue-sam' : 'L10.epilogue-sam.reyes');
+      }
+      if (front.elapsed >= 50 * 60 && !state.states['delivery-notified']) {
         state.states['delivery-notified'] = true;
         this.mission.radio('L1.delivered');
         const corgi = this.mission.world.entities.values().find(e => !!e.companion);
@@ -39,21 +54,29 @@ export class LevelTenEpilogue {
         this.phase('title');
       }
     } else if (ending.phase === 'title' && ++ending.phaseTicks >= titleTicks) this.phase('credits');
-    else if (ending.phase === 'credits' && ++ending.phaseTicks >= creditsTicks) this.finish();
+    else if (ending.phase === 'credits' && ++ending.phaseTicks >= creditsTicks) this.phase('thanks');
+    else if (ending.phase === 'thanks' && ++ending.phaseTicks >= 6 * 60) this.finish();
   }
-  private phase(phase: 'title' | 'credits' | 'done'): void {
+  get canSkip(): boolean { return !!this.mission.world.progression?.campaign?.world?.infectionCleared?.epilogueSeen; }
+  private phase(phase: 'title' | 'credits' | 'thanks' | 'done'): void {
     const { state, world } = this.mission;
     state.epilogue!.phase = phase; state.epilogue!.phaseTicks = 0;
     world.events.emit({ type: 'mission.signal', tick: world.tick, name: `epilogue-${phase}` });
   }
   /** Existing credits skip/return controls complete the same once-only mission transaction. */
   finish(): void {
-    if (this.mission.state.epilogue?.phase !== 'credits') return;
+    if (!['credits', 'thanks'].includes(this.mission.state.epilogue?.phase ?? '')) return;
+    const cleared = this.mission.world.progression?.campaign?.world?.infectionCleared;
+    if (cleared) cleared.epilogueSeen = true;
+    this.mission.world.storyLock = null;
     this.mission.state.states['credits-finished'] = true;
     this.phase('done');
   }
   skip(): void {
     if (this.mission.state.epilogue?.phase === 'credits') this.mission.state.epilogue.phaseTicks = creditsTicks;
+    else if (this.canSkip && this.mission.state.epilogue?.phase === 'playable') {
+      this.mission.state.cureFront!.elapsed = epilogueTicks; this.mission.state.cureFront!.radius = cureRadius(epilogueTicks);
+    }
   }
   private cast(): void {
     const { world: w, state, def } = this.mission;

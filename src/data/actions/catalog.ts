@@ -69,7 +69,7 @@ export const catalog: Readonly<Record<string, ActionDef>> = Object.fromEntries((
  * live in `src/data/minigun.ts`. Presentation (tracer, muzzle, noise cue) resolves the id through `action()`.
  */
 export const mountedActions: Readonly<Record<string, ActionDef>> = {
-  'weapon.rotary-minigun': validateAction({ ...gun('rotary-minigun', 8, 35, 20, 0, 0, 2.5, 3), viewAssetId: 'wpn.minigun-mounted', iconId: 'icon.machine-gun', stagger: 0.1, upgradeHooks: [] }),
+  'weapon.rotary-minigun': validateAction({ ...gun('rotary-minigun', 18, 35, 20, 0, 0, 2.5, 3), viewAssetId: 'wpn.minigun-mounted', iconId: 'icon.machine-gun', stagger: 0.1, upgradeHooks: [] }),
 };
 /** Fixture-only projectile remains available for E05 regression, outside the player roster. */
 export function action(id: string): ActionDef { const def = catalog[id] ?? mountedActions[id] ?? fixtures[id]; if (!def) throw new Error(`Unknown action: ${id}`); return def; }

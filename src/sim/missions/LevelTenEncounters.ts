@@ -8,7 +8,7 @@ import type { SimWorld } from '../world/SimWorld';
 export interface CureEncounterState {
   farmScares?: FarmScareState;
   spawned: Record<string, number>; medkits: Record<string, number>; weapons?: Record<string, number>;
-  released?: string[]; laneOffsets?: Record<string, number>; assaultTicks?: number;
+  released?: string[]; laneOffsets?: Record<string, number>; assaultTicks?: number; assaultWave?: number; nextAssaultAt?: number;
 }
 /** Once-only moving hunters; bounded finale waves leave time to clear stairs and cool the gun. */
 export class LevelTenEncounters {
@@ -28,7 +28,7 @@ export class LevelTenEncounters {
     const player = w.entities.get(1)!;
     const current = cure.regions.find(r => player.transform.x >= r.envelope[0][0] && player.transform.x <= r.envelope[1][0]) ?? cure.regions.at(-1)!;
     const low = ai.director.tier === 'low', depth = cure.threatDepth.find(r => r.region === current.id)!;
-    const cap = assaultActive ? low ? 35 : 60 : depth.resident[low ? 'low' : 'high'][1];
+    const cap = assaultActive ? low ? 14 : 22 : depth.resident[low ? 'low' : 'high'][1];
     ai.director.levelCap = low ? cap * 2 : cap;
     const weapons = this.state.weapons ??= {};
     for (const pickup of cureWeaponPickups) {
@@ -56,7 +56,17 @@ export class LevelTenEncounters {
         // A field crossing meets the same once-only hunting group on its own lane. No group relocates after admission.
         lanes[group.id] = Math.abs(player.transform.z - group.at[1]) > 40 ? player.transform.z - group.at[1] : 0;
       }
-      const wave = assault ? Math.floor((this.state.assaultTicks ?? 0) / 600) : 0;
+      // A 30 s wave period, at most 5 s of admission, then 25 s with no new arrivals.
+      // If a wave is still alive, postpone the next one until it has been cleared plus an 8 s breather.
+      const clock = this.state.assaultTicks ?? 0;
+      if (assault && clock >= (this.state.nextAssaultAt ?? 0)) {
+        const living = Object.entries(this.state.spawned).filter(([key, id]) => key.startsWith('dispersal-assault:') && (w.entities.get(id)?.health.current ?? 0) > 0);
+        if (living.length) this.state.nextAssaultAt = clock + 480;
+        else { this.state.assaultWave = (this.state.assaultWave ?? -1) + 1; this.state.nextAssaultAt = clock + 1800; }
+      }
+      if (assault && clock < (this.state.nextAssaultAt ?? 1800) - 1800) continue;
+      if (assault && clock - ((this.state.nextAssaultAt ?? 1800) - 1800) >= 300) continue;
+      const wave = assault ? this.state.assaultWave ?? 0 : 0;
       const slots = cureEncounterSlots(group, ai.director.tier);
       for (const slot of slots) {
         const key = `${slot.key}:${wave}`;

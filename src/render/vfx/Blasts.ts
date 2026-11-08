@@ -190,7 +190,7 @@ export class Blasts extends Group {
         // Lit from below by the fire: low, young puffs glow orange on their undersides (spec 07 §6).
         // Round 3: the glow hugs the flames (below 3 m) so the column above them stays dark instead of peach.
         const ember = st.z.mul(float(1).sub(progress).pow(2.5)).mul(smoothstep(3, .5, positionWorld.y)).mul(normalWorld.y.negate().mul(.35).add(.75)).mul(streetSmoke.select(0, 1));
-        const smokeColor = st.z.lessThan(-2.5).select(vec3(.3, .32, .34).mul(ambient.max(.4)), st.z.lessThan(-1.5).select(vec3(.55, .82, .8).mul(mix(.75, 1.12, sun)).mul(ambient.max(.6)), st.z.lessThan(0).select(vec3(.2, .48, .09).mul(mix(.62, 1.12, sun)).mul(ambient), base)));
+        const smokeColor = st.z.lessThan(-2.5).select(vec3(.3, .32, .34).mul(ambient.max(.4)), st.z.lessThan(-1.5).select(vec3(.25, 1, .14).mul(mix(.75, 1.12, sun)).mul(ambient.max(.6)), st.z.lessThan(0).select(vec3(.2, .48, .09).mul(mix(.62, 1.12, sun)).mul(ambient), base)));
         // Practical radiance lights the cloud; damp the player-ray contribution so
         // the readability aura does not turn the foreground smoke into a bright veil.
         // Practical light scales with the smoke's albedo: dark soot reflects little of the fire's light.

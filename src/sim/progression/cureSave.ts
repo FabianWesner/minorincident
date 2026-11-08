@@ -1,3 +1,4 @@
+import { cureRadius } from '../../data/cureDust';
 import { catalog } from '../../data/actions/catalog';
 import { cureRackCapacity } from '../../data/l10Story';
 import { cureCheckpoints, levelTenMission } from '../../levels/L10/mission';
@@ -13,11 +14,11 @@ export function validCureCheckpoint(v: unknown): v is MissionCheckpoint {
   if (s.id !== 'L10' || !['playing','retry','result','progression'].includes(String(s.phase)) || !cureCheckpoints.includes(s.checkpoint as typeof cureCheckpoints[number]) || !record(s.steps) || !record(s.states) || !record(s.stats) || !record(s.actors) || !record(s.counters) || !record(s.gates) || !strings(s.items) || s.items.some(id => !definition.items.includes(id)) || !strings(s.killedBosses) || !strings(s.completedObjectives) || s.completedObjectives.some(id => !definition.steps.some(step => step.id === id)) || !Array.isArray(s.volumes) || s.volumes.some(x => typeof x !== 'boolean')) return false;
   if (s.cureFront !== undefined) {
     const f = s.cureFront;
-    if (!record(f) || !Number.isSafeInteger(f.releasedAt) || Number(f.releasedAt) < 0 || !Number.isSafeInteger(f.elapsed) || Number(f.elapsed) < 0 || f.radius !== Number(f.elapsed) / 6 || !Array.isArray(f.fronts) || !f.fronts.length || f.fronts.some(x => !record(x) || !['x','z','distance'].every(k => Number.isFinite(x[k])) || Number(x.distance) < 0) || !Array.isArray(f.affectedIds) || f.affectedIds.some(id => !Number.isSafeInteger(id) || Number(id) < 2) || new Set(f.affectedIds).size !== f.affectedIds.length || !s.states['cure-released']) return false;
+    if (!record(f) || !Number.isSafeInteger(f.releasedAt) || Number(f.releasedAt) < 0 || !Number.isSafeInteger(f.elapsed) || Number(f.elapsed) < 0 || f.radius !== cureRadius(Number(f.elapsed)) || !Array.isArray(f.fronts) || !f.fronts.length || f.fronts.some(x => !record(x) || !['x','z','distance'].every(k => Number.isFinite(x[k])) || Number(x.distance) < 0) || !Array.isArray(f.affectedIds) || f.affectedIds.some(id => !Number.isSafeInteger(id) || Number(id) < 2) || new Set(f.affectedIds).size !== f.affectedIds.length || !s.states['cure-released']) return false;
   }
   if (s.epilogue !== undefined) {
     const e = s.epilogue;
-    if (!record(e) || !['playable', 'title', 'credits', 'done'].includes(String(e.phase)) || !Number.isSafeInteger(e.phaseTicks) || Number(e.phaseTicks) < 0 || typeof e.groupsAuthored !== 'boolean' || !s.cureFront) return false;
+    if (!record(e) || !['playable', 'title', 'credits', 'thanks', 'done'].includes(String(e.phase)) || !Number.isSafeInteger(e.phaseTicks) || Number(e.phaseTicks) < 0 || typeof e.groupsAuthored !== 'boolean' || !s.cureFront) return false;
     for (const key of ['survivors', 'approaching']) if (!Array.isArray(e[key]) || e[key].length > 6 || e[key].some(id => !Number.isSafeInteger(id) || id < 2) || new Set(e[key]).size !== e[key].length) return false;
   }
   if (!definition.states.every(key => typeof (s.states as Record<string, unknown>)[key] === 'boolean') || !['time','kills','knockdowns','damage','deaths','rescued'].every(key => Number.isFinite((s.stats as Record<string, unknown>)[key]))) return false;

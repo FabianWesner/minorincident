@@ -30,7 +30,7 @@ export const cureEncounters: readonly CureEncounter[] = [
   { id: 'corridor-line', region: 'destroyed-corridor', at: [3180, 95], regular: [6, 4], dogs: 2, alphas: 1, roles: ['infected.bloated', 'infected.riot'] },
   { id: 'corridor-exit', region: 'destroyed-corridor', at: [3510, 95], regular: [5, 3], dogs: 1, alphas: 1, roles: ['infected.sprinter', 'infected.firefighter'] },
   { id: 'complex-approach-0', region: 'dispersal-complex', at: [3820, -41], regular: [7, 5], dogs: 1, alphas: 0 },
-  { id: 'dispersal-assault', assault: true, region: 'dispersal-complex', at: cure.anchors['cure-console'], regular: [44, 26], dogs: 4, alphas: 3, alphasLow: 2, roles: ['infected.riot', 'infected.bloated', 'infected.armored'] },
+  { id: 'dispersal-assault', assault: true, region: 'dispersal-complex', at: cure.anchors['cure-console'], regular: [8, 5], dogs: 1, alphas: 0, roles: ['infected.runner', 'infected.runner', 'infected.firefighter'] },
 ];
 export const cureMedkits = [
   { id: 'crash-approach', at: [732, 29] as Point },
@@ -60,7 +60,7 @@ export function cureEncounterSlots(group: CureEncounter, tier: 'high' | 'low') {
   const indices = new Map<string, number>();
   return roles.map((archetype, i) => {
     const index = indices.get(archetype) ?? 0; indices.set(archetype, index + 1);
-    // The finale approaches in four staggered ranks outside the enlarged hold disc.
+    // Each small finale wave approaches from three directions outside the hold disc.
     // Road arrivals scatter around their fixed authored anchors.
     const assault = group.assault === true, roadFight = group.region === 'crash-outskirts' || group.region === 'destroyed-corridor';
     const angle = assault ? [Math.PI, -Math.PI / 2, Math.PI / 2][i % 3] : i * 2.399963229728653;

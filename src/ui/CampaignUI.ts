@@ -2,6 +2,8 @@ import type { Game } from '../Game';
 import { revealCards,pickUpgrades,finishRewards,rackSize,nextLevelAfter,lastLevel,powerScore,type CampaignSave,type Level } from '../sim/progression/Campaign';
 import { SAVE_ERROR,type SaveResult } from '../sim/progression/Save';
 import { upgrades } from '../data/upgrades';
+import { audioCredits, codeCredits, technologyCredits, toolchainCredits, originalCredit } from '../data/credits';
+import { creditsTicks } from '../sim/missions/LevelTenEpilogue';
 import { madeBy } from '../data/madeBy';
 import { epilogueSurvivorLines } from '../data/epilogueSurvivors';
 import './campaign.css';
@@ -20,7 +22,7 @@ export class CampaignUI {
     this.root.addEventListener('keydown',event=>{if(event.key!=='Tab')return;const buttons=[...this.root.querySelectorAll<HTMLButtonElement>('button:not(:disabled)')];const first=buttons[0],last=buttons.at(-1);if(event.shiftKey&&document.activeElement===first){event.preventDefault();last?.focus();}else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first?.focus();}});
     this.root.className='campaign-ui';this.root.hidden=true;this.root.setAttribute('role','dialog');this.root.setAttribute('aria-modal','true');this.heading.id='campaign-title';this.root.setAttribute('aria-labelledby',this.heading.id);this.message.setAttribute('role','status');this.root.append(this.heading,this.content,this.message);document.querySelector('#game')!.append(this.root);
   }
-  private screen(title:string):void {this.game.ui.show(null);this.game.clock.pause();this.game.input.clear();this.game.world.clearInput();this.root.hidden=false;document.body.dataset.campaign='open';this.heading.textContent=title;this.content.replaceChildren();this.message.textContent='';}
+  private screen(title:string):void {this.game.ui.show(null);this.game.clock.pause();this.game.input.clear();this.game.world.clearInput();this.root.hidden=false;document.body.dataset.campaign='open';this.root.classList.remove('ending-credits');this.heading.textContent=title;this.content.replaceChildren();this.message.textContent='';}
   private button(text:string,run:()=>void|Promise<void>,parent:HTMLElement=this.content):HTMLButtonElement {
     const b=document.createElement('button');b.type='button';b.textContent=text;b.addEventListener('click',()=>{void Promise.resolve().then(run).catch(()=>{this.message.textContent='Could not start the level. Try again.';});});parent.append(b);return b;
   }
@@ -50,10 +52,10 @@ export class CampaignUI {
       this.endingPhase = ending.phase;
       if (ending.phase === 'done') { this.offeredMission = mission; this.showMenu({ status: 'ok', save }); return; }
       const paused = this.game.clock.paused;
-      if (ending.phase === 'title') {
-        this.screen('Minor Incident'); this.root.classList.add('epilogue-title');
+      if (ending.phase === 'title' || ending.phase === 'thanks') {
+        this.screen(ending.phase === 'thanks' ? 'Thanks for playing' : 'Minor Incident'); this.root.classList.add('epilogue-title');
         this.heading.dataset.testid = 'epilogue-title';
-        const line = document.createElement('p'); line.textContent = 'It began with one delivery. Now the outbreak is over.'; this.content.append(line);
+
       } else { this.root.classList.remove('epilogue-title'); delete this.heading.dataset.testid; this.credits(save, true); }
       // Title/credits use the saved simulation phase clock; focus/menu still pause normally.
       if (!paused) this.game.clock.resume();
@@ -73,7 +75,18 @@ export class CampaignUI {
     clearTimeout(this.creditsTimer);
     this.screen('Credits');const credits=document.createElement('div');credits.className='credits-roll';this.content.append(credits);
     for(const line of ['Minor Incident',...(ending?epilogueSurvivorLines(save.results?.L8?.survivors):[]),madeBy.headline,`${madeBy.author.name}: ${madeBy.author.role.toLowerCase()}`,...madeBy.groups.map(g=>`${g.heading}: ${g.names.join(', ')}`),'Built with three.js and Rapier. Technology reference: Bruno Simon (MIT).',madeBy.thanks]){const p=document.createElement('p');p.textContent=line;credits.append(p);}
-    if (ending) { credits.style.animationPlayState = 'paused'; credits.style.animationDelay = `-${(this.game.world.missions?.state.epilogue?.phaseTicks ?? 0) / 60}s`; }
+    if (ending) {
+      this.root.classList.add('ending-credits');
+      const groups = new Map<string, string[]>();
+      for (const row of [...audioCredits, ...codeCredits, ...technologyCredits, ...toolchainCredits, originalCredit]) {
+        const key = `${row.author} · ${row.license}`;
+        const titles = groups.get(key) ?? []; if (!titles.includes(row.title)) titles.push(row.title); groups.set(key, titles);
+      }
+      for (const [source, titles] of groups) { const p = document.createElement('p'); p.textContent = `${source} — ${titles.join(', ')}`; credits.append(p); }
+      const viewport = document.createElement('div'); viewport.className = 'credits-viewport'; credits.replaceWith(viewport); viewport.append(credits);
+      credits.style.setProperty('--credits-travel', `${credits.scrollHeight + viewport.clientHeight}px`);
+      credits.style.animationDuration = `${creditsTicks / 60}s`;
+      credits.style.animationPlayState = 'paused'; credits.style.animationDelay = `-${(this.game.world.missions?.state.epilogue?.phaseTicks ?? 0) / 60}s`; }
     else this.creditsTimer=setTimeout(()=>{if(!this.root.hidden)this.showMenu({status:'ok',save});},12000);
     const back = this.button(ending ? 'Skip / Main menu' : 'Main menu',()=>{
       if (ending) { this.game.world.missions?.l10?.epilogue.skip(); this.game.clock.resume(); }

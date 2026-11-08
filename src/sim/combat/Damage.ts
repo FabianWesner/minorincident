@@ -121,6 +121,15 @@ export class Damage {
     }
     if (this.world.missions?.state.states['cure-released'] && (source.infected || target.id === 1 || target.companion)) return 0;
     if (this.world.scenario === 'L10' && target.id === 1 && insideCureHangar(target.transform)) return 0;
+    if (this.world.scenario === 'L10' && target.id === 1 && source.infected && this.world.mountedGun?.mounted) {
+      const gun = this.world.mountedGun, dx = source.transform.x - target.transform.x, dz = source.transform.z - target.transform.z;
+      const distance = Math.hypot(dx, dz) || 1;
+      // The raised deck blocks ground melee; the rotating shield covers the forward hemisphere.
+      if (hit.type === 'melee' && source.transform.y < target.transform.y - 1.2) return 0;
+      if ((dx * gun.aim.x + dz * gun.aim.z) / distance >= 0) return 0;
+      // An infected which climbed the stair can reach the gunner from behind. Leave and clear the stairs.
+      hit = { ...hit, base: hit.base * .25, knockback: 0, stagger: 0, knockdown: false, knockdownTicks: 0 };
+    }
     // E31 hull attacks own infected melee against the APC; seated people are inside its armor.
     const transportId = target.id === 1 ? this.world.vehicles?.active : target.passengerOf;
     if (target.hidden && transportId != null && source.kind === 'infected' && hit.type === 'melee' && this.world.entities.get(transportId)?.archetype === 'vehicle.military-apc') return 0;

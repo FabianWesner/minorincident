@@ -1,3 +1,5 @@
+import { LevelTenEndingView } from './LevelTenEndingView';
+import { cureDust } from './CureDust';
 import { updateCorn } from './Corn';
 import { solidLargeCorpse } from '../sim/world/SolidRegistry';
 import { l6Doors, l6Entries } from '../data/l6';
@@ -129,6 +131,7 @@ export class GameView implements Lifecycle {
   private pendingPreparation: { shared: NonNullable<GameView['districtResources']>; instanceCapacity?: number } | null = null;
   private preparation: Promise<void> | null = null;
   private epiloguePrepared: object | null = null;
+  private endingView: LevelTenEndingView | null = null;
   /** Pending L1 shader warm-up while the briefing is shown (see load()). */
   warming: Promise<void> | null = null;
   loadProgress?: (completed: number, total: number) => void;
@@ -663,6 +666,16 @@ export class GameView implements Lifecycle {
   }
   /** Close the bay only after the player enters. No ending camera, fade or scripted movement. */
   private updateEnding(): void {
+    if (this.world.scenario === 'L10' && this.world.missions?.state.states['cure-installed'] && this.materials && !this.endingView) {
+      this.endingView = new LevelTenEndingView(this.world, this.scene, this.materials, model => this.warmHidden(model)); this.scene.add(this.endingView);
+    }
+    const front = this.world.missions?.state.cureFront;
+    cureDust.radius.value = front?.radius ?? -1;
+    if (front) cureDust.origin.value.set(front.fronts[0].x, front.fronts[0].z);
+    this.endingView?.update(this.view);
+    if (this.districts) this.districts.overview = !!front && front.elapsed >= 52 * 60;
+    if (front && this.lighting) { this.lighting.fogNear.value = 5000; this.lighting.fogFar.value = 15000; }
+
     const mission = this.world.missions, door = mission?.def.anchors['fire-bay-door'];
     const closed = mission?.def.l1 && mission.state.gates['fire-shutter'] === false;
     if (mission?.def.l1 && door && this.materials) {
@@ -759,7 +772,7 @@ export class GameView implements Lifecycle {
       this.view.zoomFloor = this.world.scenario === 'L2' ? l2RescueView(this.world, this.view.playerZoom, this.view.zoomFloor, seconds) : 0;
       const ending = this.world.missions?.state.epilogue;
       const pull = ending ? epiloguePull(this.world.missions!.state.counters['epilogue-ticks']) : 0;
-      this.view.epilogueScale = 1 + 6 * pull;
+      this.view.epilogueScale = 1;
       if (this.world.missions?.l10) {
         const target = this.world.missions.def.anchors['epilogue-camera-target'] ?? player.transform;
         this.view.pull(target.x, target.z, .4 * pull);
@@ -1289,6 +1302,7 @@ export class GameView implements Lifecycle {
     pickBodies.reset();
     if (this.healthBars) { this.healthBars.removeFromParent(); this.healthBars.dispose(); this.healthBars = null; }
     if (this.accessories) { this.scene.remove(this.accessories); this.accessories.dispose(); this.accessories = null; }
+    this.endingView?.dispose(); this.endingView = null;
     if (this.crowd) { this.scene.remove(this.crowd); this.crowd.dispose(); this.crowd = null; }
     if (this.crowdRegistry) { void this.crowdRegistry.dispose(); this.crowdRegistry = null; }
     if (this.actions) { this.scene.remove(this.actions); this.actions.dispose(); this.actions = null; }

@@ -85,7 +85,7 @@ export function cureFinaleText(mission: Mission | null): string | null {
   if (!mission) return null;
   const { state, world, def } = mission;
   if (def.id !== 'L10') return null;
-  if (state.steps.epilogue?.status === 'active' && state.cureFront) return `Watch the cure spread · ${Math.min(150, Math.floor(state.cureFront.elapsed / 60))}/150 s`;
+  if (state.steps.epilogue?.status === 'active' && state.cureFront) return state.cureFront.elapsed < 8 * 60 ? 'Release the cure' : 'Minor Incident';
   if (state.steps.mega.status === 'active' && !state.states['mega-dead']) {
     const at = def.anchors['cure-console'], p = world.entities.get(1)!.transform;
     return at && Math.hypot(p.x - at.x, p.z - at.z) > finale.fightRadius ? 'Back to the dispersal arena · Kill the Mega Alpha' : 'Kill the Mega Alpha';

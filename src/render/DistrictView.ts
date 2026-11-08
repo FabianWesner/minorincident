@@ -261,6 +261,8 @@ export class DistrictView extends Group {
     }
   }
   private lodPrefetchMetres = 0;
+  /** Ending panorama: retain the coarse whole-level terrain and a bounded set of LOD2 landmarks. */
+  overview = false;
   /** Static matrices are repartitioned only when the camera moves; far props use LOD2. */
   updateLods(view: View, velocity: { x: number; z: number } = { x: 0, z: 0 }): void {
     this.lodPrefetchMetres = Math.hypot(velocity.x, velocity.z) * terrainPrefetchSeconds;
@@ -292,6 +294,7 @@ export class DistrictView extends Group {
   private partitionDressing(entry: DressingEntry): void {
     const { batch, refs, origin, center, radius } = entry, next: Object3D[] = [];
     for (const ref of refs) {
+      if (this.overview) continue;
       if (ref.userData.interiorHidden) continue;
       if (this.low && ref.userData.farmScatter !== undefined && ref.userData.farmScatter % 2) continue;
       this.bounds.center.copy(center).applyMatrix4(ref.matrix); this.bounds.center.x += origin[0]; this.bounds.center.z += origin[1];
@@ -309,6 +312,7 @@ export class DistrictView extends Group {
     const foliage = (!!worldAssets[entry.id].foliage || /^prop\.(tree|bush|hedge)/.test(entry.id));
     let prefetchNear = false, prefetchHero = false;
     for (const [index, ref] of refs.entries()) {
+      if (this.overview && (worldAssets[entry.id].category === 'prop' || index % Math.max(1, Math.ceil(refs.length / 24)) !== 0)) continue;
       if (ref.userData.interiorHidden) continue;
       if (this.low && ref.userData.farmScatter !== undefined && ref.userData.farmScatter % 2) continue;
       if (entry.id === 'prop.cure-canister-pedestal' && this.cureCollected) continue;
@@ -343,6 +347,7 @@ export class DistrictView extends Group {
           : propLod(pixels, entry.bands[index]);
         if (screenBand > band) band = screenBand;
       }
+      if (this.overview) band = 'lod2';
       entry.bands[index] = band;
       const selected = band === 'lod2' ? far : band === 'lod1' ? near : hero;
       if (ref.userData.propEnabled && (ref.userData.propContactDirty || ref.userData.propContactBatch !== selected)) {
