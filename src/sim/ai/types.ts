@@ -79,7 +79,7 @@ export interface InfectedSpecialAttack {
   members?: number[]; leaderId?: number; impactTick?: number; obstructionUntil?: number;
   grabbedId?: number; grabReleaseTick?: number;
   destination?: { x: number; z: number };
-  projectile?: { objectId: number; corpse: boolean; living?: boolean; physics?: boolean; restoreVelocity?: boolean; y?: number; damping?: number; lastX?: number; lastZ?: number; started: number; x: number; z: number; dx: number; dz: number; distance: number; range: number };
+  projectile?: { objectId: number; corpse: boolean; living?: boolean; physics?: boolean; radius?: number; restoreVelocity?: boolean; y?: number; damping?: number; lastX?: number; lastZ?: number; started: number; x: number; z: number; dx: number; dz: number; distance: number; range: number };
   pickup?: { objectId: number; corpse: boolean; living?: boolean };
   barrageProjectiles?: NonNullable<InfectedSpecialAttack['projectile']>[];
   barrageRemaining?: number; barrageNextTick?: number;

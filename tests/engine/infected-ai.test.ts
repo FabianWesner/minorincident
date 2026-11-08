@@ -4,6 +4,7 @@ import { afterEach, expect, test } from 'vitest';
 import { animalInfected, humanInfected, infectedDefinitions, infectedRecovery, INFECTED_TOUGHNESS, validateInfected, infectedSpecialMoves } from '../../src/data/infected';
 import { infectedContactDistance, meleeRing } from '../../src/sim/ai/CharacterSeparation';
 import type { DamageEvent } from '../../src/sim/combat/Damage';
+import type { CoverWall } from '../../src/sim/combat/HitQuery';
 import type { EntitySnapshot, GameEvent } from '../../src/sim/world/types';
 import { clickable } from '../../src/input/ClickPick';
 import { l1v2 } from '../../src/data/l1v2';
@@ -110,6 +111,33 @@ async function alphaTypeContracts() {
       expect(damageAmount({ ...bullet, origin: { x: 6, z: 0 } }, armour)).toBe(50);
       expect(damageAmount({ ...bullet, type: 'explosive' }, armour)).toBe(100);
     }
+    // Big wrecks are reached at their surface; the actor cannot stand inside their hull to pick them up.
+    {
+      const w = await arena(), ai = w.infected!, alpha = w.entities.get(ai.spawn('infected.alpha', { x: 10, z: 0 }, { alphaType: 'thrower', state: 'chase' }))!;
+      w.props = new PropSystem(w);
+      const wreck = w.props.spawn({ id: 'alpha-wreck', assetId: 'veh.wreck', position: [14, 0, 0], yaw: 0, scale: [1, 1, 1], minTier: 0, maxTier: 5, allowRoad: true, lightGroup: '', visualAabb: { min: [11, 0, -1], max: [17, 2, 1] } });
+      expect(wreck.mass).toBeLessThan(1500);
+      expect(ai.props.nearestObject(alpha, 2)?.id).toBe(wreck.entityId);
+      wreck.braced = true; expect(ai.props.nearestObject(alpha, 2)).toBeUndefined(); wreck.braced = false;
+      expect(ai.startSpecial(alpha.id, 'alpha.grab-throw', { id: 1, x: -10, z: 0 }, { x: 10, z: 0, radius: 1, dx: -1, dz: 0 })).toBe(true);
+      step(w, 48);
+      expect(alpha.infected!.specialAttack!.projectile).toMatchObject({ objectId: wreck.entityId, physics: true, range: 20 });
+      expect(wreck.body.linvel().x).toBeLessThan(-10);
+      const before = structuredClone(alpha.infected!); ai.restoreSpecialTimers(before, 120);
+      expect(before.alphaSpecialStarted).toBe(alpha.infected!.alphaSpecialStarted! + 120);
+      expect(before.specialAttack!.projectile!.started).toBe(alpha.infected!.specialAttack!.projectile!.started + 120);
+      expect(before.specialAttack!.projectile!.restoreVelocity).toBe(true);
+    }
+    {
+      const w = await arena(1, false), ai = w.infected!, brute = w.entities.get(ai.spawn('infected.alpha', { x: 8, z: 0 }, { alphaType: 'brute', state: 'chase' }))!;
+      ai.startSpecial(brute.id, 'alpha.charge', { id: 1, x: 0, z: 0 }, { x: 8, z: 0, radius: 1, dx: -1, dz: 0 });
+      (w.combat!.query.dynamicWalls as CoverWall[]).push({ x: 5, z: 0, y: 1, halfX: .2, halfY: 2, halfZ: 3 }); w.combat!.query.invalidate();
+      for (let i = 0; i < 120 && brute.infected!.specialAttack?.stage !== 'recovery'; i++) step(w, 1);
+      expect(brute.infected!.specialAttack?.stage).toBe('recovery');
+      expect(brute.combat!.staggerUntil - w.tick).toBe(90);
+      expect(brute.infected!.specialAttack!.recoveryUntil - w.tick).toBe(90);
+      expect(w.entities.get(1)!.health.current).toBe(w.entities.get(1)!.health.max);
+    }
     {
       const rateWorld = await arena(1, false), alphas = [0, 1, 2].map(i => rateWorld.entities.get(rateWorld.infected!.spawn('infected.alpha', { x: 12 + i * 2, z: 0 }, { alphaType: 'brute', state: 'chase' }))!);
       const start = (alpha: EntitySnapshot) => rateWorld.infected!.startSpecial(alpha.id, 'alpha.charge', { id: 1, x: 0, z: 0 }, { x: alpha.transform.x, z: 0, radius: 1, dx: -1, dz: 0 });
@@ -129,12 +157,13 @@ async function alphaTypeContracts() {
       expect(amount).toBe(15);
     }
     {
-      const missileWorld = await arena(1, false);
+      const missileWorld = await arena(1, false); missileWorld.infected!.configureL1v2();
       const thrower = missileWorld.entities.get(missileWorld.infected!.spawn('infected.alpha', { x: 10, z: 0 }, { alphaType: 'thrower', state: 'chase' }))!;
       const missile = missileWorld.entities.get(missileWorld.infected!.spawn('infected.runner', { x: 9, z: 0 }, { state: 'idle' }))!;
       expect(missileWorld.infected!.startSpecial(thrower.id, 'alpha.living-missile', { id: 1, x: 0, z: 0 }, { x: 10, z: 0, radius: 1, dx: -1, dz: 0 })).toBe(true);
       for (let i = 0; i < 100 && thrower.infected!.specialAttack?.stage !== 'recovery'; i++) step(missileWorld, 1);
       expect(missile.health.current).toBeGreaterThan(0);
+      expect(missile.infected!.l1!.targetId).toBe(1); expect(missile.infected!.l1!.mode).toBe('chase');
       expect(missile.combat!.staggerUntil - missileWorld.tick).toBeGreaterThanOrEqual(35);
       expect(Math.hypot(missile.transform.x, missile.transform.z)).toBeGreaterThanOrEqual(1.5);
       expect(Math.hypot(missile.transform.x, missile.transform.z)).toBeLessThanOrEqual(3);

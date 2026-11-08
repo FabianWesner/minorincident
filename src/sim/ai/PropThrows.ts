@@ -27,7 +27,7 @@ export class PropThrows {
     const consider = (candidate: ThrowableProp) => {
       if (candidate.class !== 'light' || this.reserved(candidate.id) || this.flights.some(flight => flight.prop.id === candidate.id)) return;
       const p = candidate.body.translation(), d = Math.hypot(p.x - source.transform.x, p.z - source.transform.z);
-      if (d < distance) { distance = d; nearest = candidate; }
+      if (d - candidate.radius < distance) { distance = Math.max(0, d - candidate.radius); nearest = candidate; }
     };
     for (const prop of this.props) consider(prop);
     for (const item of this.world.props?.items ?? []) if (!item.fixed && !item.braced && item.metadata.class !== 'fixed' && item.body.isEnabled()) consider({ id: item.entityId, body: item.body, mass: item.mass, class: item.metadata.class, radius: item.radius });
@@ -46,8 +46,8 @@ export class PropThrows {
   nearestObject(source: EntitySnapshot, radius: number): { id: number; corpse: boolean } | undefined {
     this.object.id = 0; this.objectDistanceSquared = (radius + 1e-9) ** 2;
     for (const e of this.world.entities.iterate()) if (e.corpse && e.health.current <= 0 && e.id !== source.id) this.considerObject(source, e.id, true, e.transform);
-    for (const p of this.world.props?.items ?? []) if (p.mass < 1500 && !p.fixed && !p.braced && p.body.isEnabled()) this.considerObject(source, p.entityId, false, p.body.translation());
-    for (const p of this.props) if (p.mass < 1500 && p.body.isEnabled()) this.considerObject(source, p.id, false, p.body.translation());
+    for (const p of this.world.props?.items ?? []) if (p.mass < 1500 && !p.fixed && !p.braced && p.body.isEnabled()) this.considerObject(source, p.entityId, false, p.body.translation(), p.radius);
+    for (const p of this.props) if (p.mass < 1500 && p.body.isEnabled()) this.considerObject(source, p.id, false, p.body.translation(), p.radius);
     return this.object.id ? this.object : undefined;
   }
   objectPosition(id: number): { x: number; z: number } | undefined {
@@ -99,8 +99,8 @@ export class PropThrows {
     const entity = this.world.entities.get(held.objectId); if (entity) Object.assign(entity.transform, p);
     this.world.spatial.set(held.objectId, p.x, p.z);
   }
-  private considerObject(source: EntitySnapshot, id: number, corpse: boolean, p: { x: number; z: number }): void {
-    const dx = p.x - source.transform.x, dz = p.z - source.transform.z, squared = dx * dx + dz * dz;
+  private considerObject(source: EntitySnapshot, id: number, corpse: boolean, p: { x: number; z: number }, radius = 0): void {
+    const dx = p.x - source.transform.x, dz = p.z - source.transform.z, squared = Math.max(0, Math.hypot(dx, dz) - radius) ** 2;
     if (squared > this.objectDistanceSquared || squared === this.objectDistanceSquared && id >= (this.object.id || Infinity)) return;
     for (const e of this.world.infected!.active) if (e.infected!.specialAttack?.projectile?.objectId === id && e.infected!.specialAttack.stage === 'active') return;
     for (const flight of this.flights) if (flight.prop.id === id) return;
@@ -116,10 +116,11 @@ export class PropThrows {
     if (distance < .01) return false;
     const range = object.living ? Math.max(.1, Math.min(25, distance - 1.8)) : Math.min(25, distance);
     const body = !object.corpse && !object.living ? this.body(object.objectId) : undefined;
-    a.projectile = { ...object, physics: !!body, y: source.transform.y + 1.8, ...(body ? { damping: body.linearDamping() } : {}), started: this.world.tick, x: source.transform.x, z: source.transform.z, dx: dx / distance, dz: dz / distance, distance: 0, range };
+    a.projectile = { ...object, physics: !!body, radius: this.world.props?.items.find(p => p.entityId === object.objectId)?.radius ?? this.props.find(p => p.id === object.objectId)?.radius ?? 1, y: source.transform.y + 1.8, ...(body ? { damping: body.linearDamping() } : {}), started: this.world.tick, x: source.transform.x, z: source.transform.z, dx: dx / distance, dz: dz / distance, distance: 0, range };
     if (body) {
       body.setLinearDamping(0);
       const time = Math.max(.25, range / 12), y = source.transform.y + 1.8;
+      this.world.props?.burst(this.world.tick + Math.ceil((time + 1) * 60));
       const floor = this.world.districts?.groundHeight(a.target.x, a.target.z) ?? 0;
       body.setTranslation({ x: source.transform.x, y, z: source.transform.z }, true);
       body.setLinvel({ x: dx / distance * range / time, y: (floor + .5 - y + .5 * 9.81 * time * time) / time, z: dz / distance * range / time }, true);
@@ -148,11 +149,12 @@ export class PropThrows {
     if (!this.world.infected!.hearing.lineOfSight(old, p)) { this.positionSpecial(a, true); return true; }
     f.distance = next; this.positionSpecial(a, false);
     let victim: EntitySnapshot | undefined, along = Infinity;
-    for (const human of this.world.infected!.hearing.humans.within(p, 1.2)) {
+    const hitRadius = Math.max(1, f.radius ?? 1);
+    for (const human of this.world.infected!.hearing.humans.within(p, hitRadius + .2)) {
       const e = this.world.entities.get(human.id);
       if (!e || e.health.current <= 0 || e.companion || e.escort?.child || storyProtected(this.world, e)) continue;
       const vx = e.transform.x - old.x, vz = e.transform.z - old.z, t = Math.max(0, Math.min(Math.hypot(p.x - old.x, p.z - old.z), vx * f.dx + vz * f.dz));
-      if (Math.hypot(old.x + f.dx * t - e.transform.x, old.z + f.dz * t - e.transform.z) > 1 || !this.world.infected!.hearing.lineOfSight(old, e.transform)) continue;
+      if (Math.hypot(old.x + f.dx * t - e.transform.x, old.z + f.dz * t - e.transform.z) > hitRadius || !this.world.infected!.hearing.lineOfSight(old, e.transform)) continue;
       if (t < along || t === along && e.id < (victim?.id ?? Infinity)) { victim = e; along = t; }
     }
     if (victim && this.world.infected!.specialHit(source.id, victim.id)) {
@@ -180,6 +182,13 @@ export class PropThrows {
         delete e.attachedTo; e.transform.y = floor + .7;
         if (e.health.current > 0) {
           e.infected.state = 'chase'; e.infected.heardTargetId = a.target.id; e.infected.targetId = 0; e.infected.path.length = 0;
+          delete e.infected.scripted; delete e.noiseTarget; delete e.infected.roar;
+          if (e.infected.l1) {
+            const brain = e.infected.l1;
+            brain.mode = 'chase'; brain.targetId = a.target.id; brain.pauseUntil = 0; brain.hasGoal = false;
+            brain.distractionId = 0; brain.ignoreId = 0; brain.ignoreUntil = 0;
+            brain.seenX = a.target.x; brain.seenZ = a.target.z; brain.seenTick = this.world.tick;
+          }
           e.combat!.staggerUntil = this.world.tick + 36;
           e.combat!.reaction = { index: 0, started: this.world.tick, until: this.world.tick + 36, direction: { x: f.dx, z: f.dz }, from: { x, z }, to: { x, z }, heavy: true };
         }

@@ -214,7 +214,7 @@ export class InfectedSystem {
     if (id === 'infected.crow') entity.health.current = entity.health.max = entity.infected!.birds * INFECTED_TOUGHNESS;
     if (this.l1 && def.special === 'lunge') this.initL1(entity, opts.tier ?? l1SpeedTier(entity.infected!.variant)); else delete entity.infected!.l1;
     this.world.entities.adopt(entity);
-    if (id === 'infected.alpha' && opts.variant !== megaAlpha.asset && (opts.alphaType || !['L1', 'L2', 'L8'].includes(this.world.scenario ?? ''))) {
+    if (id === 'infected.alpha' && opts.variant !== megaAlpha.asset && (opts.alphaType || ['L3', 'L4', 'L5', 'L6', 'L7', 'L9', 'L10'].includes(this.world.scenario ?? ''))) {
       const alphaType = opts.alphaType ?? alphaTypeFor(this.world.scenario ?? undefined, entity.id);
       entity.infected!.alphaType = alphaType;
       if (!opts.variant) entity.infected!.variant = alphaTypes[alphaType].look;
@@ -1666,6 +1666,7 @@ export class InfectedSystem {
       const along = Math.max(0, Math.min(distance, dx * a.area.dx + dz * a.area.dz));
       if (Math.hypot(dx - along * a.area.dx, dz - along * a.area.dz) <= hitRadius + 1e-8 && q.visible(this.physicalOrigin, target.transform) && this.physicalPropVisible(this.physicalOrigin, target.transform)) this.physicalHit(e, target, mega ? megaAlpha.moves['alpha.charge'].damage : zebra ? 25 : elephant ? 40 : 30);
     }
+    const hitWall = distance < step;
     distance = Math.min(distance, this.world.solids.sweep(e, direction, distance, e.combat!.radius, zebra ? 'side' : !pounce, true, zebra ? target => {
       if (this.physicalHuman(target) && q.visible(this.physicalOrigin, target.transform) && this.physicalPropVisible(this.physicalOrigin, target.transform)) this.physicalHit(e, target, 25);
     } : undefined));
@@ -1679,7 +1680,7 @@ export class InfectedSystem {
       this.finishSpecial(e.id); return;
     }
     if (distance < step || travelled + step >= range - 1e-8) {
-      if (distance < step && a.move === 'alpha.charge' && !mega) {
+      if (hitWall && a.move === 'alpha.charge' && !mega) {
         a.obstructionUntil = this.world.tick + 90;
         e.combat!.staggerUntil = Math.max(e.combat!.staggerUntil, a.obstructionUntil);
       }
