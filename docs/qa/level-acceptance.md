@@ -260,8 +260,8 @@ Feel: "power fantasy: rockets blow gaps into enormous crowds while the group esc
 |---|---|---|---|---|
 | L7-01 | rocket | Launcher ≤ 5 m from the exit, taken on approach, no hitch (max frame ≤ 50 ms at pickup and first shot). | E29-AC04, Q-309, G-10 | S |
 | L7-02 | rocket | All six weapons selectable; L6 roster arrives with same ids at full health in formation (no convergence through the courier). | E29-AC03/04/11 | S |
-| L7-03 | corridor | Rocket: cadence **2.4/s**, no wait for impact; detonates at the clicked ground point (or first hit / max range); visible in the dark; one rocket kills ≥ 20/24 regulars within 3 m and opens a ≥ 3 m gap; no white-out at point blank. | E29-AC05/06, F-290, F-290b, Q-311, Q-148 | S, O |
-| L7-04 | corridor | Over the run ≥ 400 / 200 regulars and **4–6 Alphas** arrive; concurrent ≤ 200 / 100. | E29-AC08 | S |
+| L7-03 | corridor | Rocket: cadence **1.2/s** (PO 2026-11-08; half rate), no wait for impact; detonates at the clicked ground point (or first hit / max range); visible in the dark; one rocket kills ≥ 20/24 regulars within 3 m and opens a ≥ 3 m gap; no white-out at point blank. | E29-AC05/06, F-290b, Q-311, Q-148 | S, O |
+| L7-04 | corridor | Over the run ≥ 400 / 200 regulars and **4–6 Alphas** arrive at **450 HP each in L7**; high and low tiers enter the route/corridor from the street and both flanks, with arrivals separated so one rocket cannot clear all approaches; concurrent ≤ 200 / 100. | E29-AC08, PO 2026-11-08 | S |
 | L7-05 | corridor | combat: reachable ≥ 90 %; passive first attack ≤ 10 s (measured 4.6 s); attacks on player + group ≥ 6/min (tune). | orch. | S |
 | L7-06 | corridor | ≥ 2 connected routes reach the corridor; no dead-end street that looks like the route; no meaningless walk-through wall/slab. PO: "This street feels like a trap". | E29-AC10, Q-291, Q-289 | L, O |
 | L7-07 | corridor | Corridor ring fixed (not the nearest of several moving entrances); group counter "Group n/n" correct. | Q-306 | S |

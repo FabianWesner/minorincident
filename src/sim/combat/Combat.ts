@@ -85,6 +85,22 @@ export class Combat {
       this.world.controls.reset();
       frame = { ...frame, left: { down: false, held: false, up: false }, right: { down: false, held: false, up: false } };
     }
+    const blocked = new Set<'LEFT' | 'RIGHT'>();
+    for (const side of ['LEFT', 'RIGHT'] as const) {
+      const button = frame[side === 'LEFT' ? 'left' : 'right'], slot = loadout.current(side);
+      if (slot.id !== 'weapon.rocket-launcher' || !(button.down || button.held) || this.runner.running[side] || !loadout.usable(side, this.world.tick)) continue;
+      const aimPoint = frame.aimPoint, pointDistance = aimPoint ? Math.hypot(aimPoint.x - player.transform.x, aimPoint.z - player.transform.z) : Infinity;
+      const aim = frame.aim ?? loadout.state[side].aim;
+      const closeEnemy = this.query.melee(1, player.transform, aim, 5, 30, 1000).some(target => target.faction === 'infected'
+        && Math.hypot(target.transform.x - player.transform.x, target.transform.z - player.transform.z) <= 5);
+      if (pointDistance >= 5 && !closeEnemy) continue;
+      blocked.add(side);
+      this.world.events.emit({ type: 'combat.empty', tick: this.world.tick, sourceId: 1, actionId: slot.id, position: { ...player.transform }, reason: 'too-close' });
+    }
+    if (blocked.size) frame = { ...frame,
+      ...(blocked.has('LEFT') ? { left: { down: false, held: false, up: frame.left.up } } : {}),
+      ...(blocked.has('RIGHT') ? { right: { down: false, held: false, up: frame.right.up } } : {}),
+    };
     this.runner.update(frame, this.world.tick, player.health.current > 0 && !this.world.missions?.state.states['cure-released'] && this.world.vehicles?.active == null && !this.world.mountedGun?.mounted && !Status.stunned(player, this.world.tick), this.started, this.resolve, this.crowd);
     this.updateProjectiles();
     this.effects.update(); this.pickups.update();
@@ -229,8 +245,22 @@ export class Combat {
           const along = tx * direction.x + tz * direction.z, radius = target.combat?.radius ?? .4;
           travel = Math.max(0, along - Math.sqrt(Math.max(0, radius * radius - (tx * tx + tz * tz - along * along))));
         }
+        const impact = !!target || wall < step || arrived;
+        if (impact) {
+          if (p.travelled + travel < 5) {
+            if (target) {
+              // The nose is still unarmed: pass through nearby infected without
+              // damage, then arm only after a full five metres of flight.
+              p.attack.hit.add(target.id);
+              const through = Math.min(step, wall);
+              p.x += direction.x * through; p.y += direction.y * through; p.z += direction.z * through; p.travelled += through;
+              if (wall < step || arrived) this.projectiles.splice(i, 1);
+            } else this.projectiles.splice(i, 1);
+            continue;
+          }
+        }
         p.x += direction.x * travel; p.y += direction.y * travel; p.z += direction.z * travel; p.travelled += travel;
-        if (target || wall < step || arrived) {
+        if (impact) {
           if (!target && wall === step) Object.assign(p, p.destination);
           this.splash(p.attack, p, target?.id); this.blast(p.attack, p);
           // Impact alerts use an explosion cue, rather than replaying the launch

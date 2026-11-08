@@ -153,11 +153,15 @@ export class LevelSevenEncounters {
         const close = ai.director.tier === 'low' ? 4 : 5, j = i - close;
         p = j < 0 ? { x: centre.x + 14 - (i >> 1) * 1.4, z: centre.z + (i % 2 ? 1 : -1) * 5.5 }
           : { x: centre.x - Math.floor(j / 10) * 1.6, z: centre.z + (j % 2 ? 1 : -1) * (5 + (j % 10 >> 1) * 1.8) };
-      } else if (ai.director.tier === 'low' && group !== l7Encounters.finalGroup && centre.x > 90) {
+      } else {
         const row = Math.floor(i / 10);
-        // The broad Northgate road has two clear verges. Keep the existing
-        // low roster on three approaches rather than one rocket-sized lane.
-        p.z = centre.z + [-.8, -6.5, 6.5, .8][row];
+        // High and low tiers both enter through the road and its two verges.
+        // Separate rows laterally and stagger their fronts so one rocket hit
+        // cannot clear a single packed arrival stream.
+        const flank = [-1, 0, 1, 0][row % 4];
+        const spacing = group === l7Encounters.finalGroup ? 10 : 6.5;
+        p.z = centre.z + flank * spacing;
+        p.x += (row % 2 ? 1 : -1) * (group === l7Encounters.finalGroup ? 3.5 : 1.5);
       }
       // A ruined frontage may hide a cell; search locally rather than putting a figure in its mesh.
       admit('infected.runner', this.clearPoint(p, .35), { pack: group, state: 'idle', yaw: Math.PI });

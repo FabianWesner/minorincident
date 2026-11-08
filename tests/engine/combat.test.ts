@@ -319,6 +319,27 @@ test('every weapon category fires and hits; swept projectiles never tunnel; full
   }
 });
 
+test('rocket launcher refuses close shots and stays unarmed for its first five metres', async () => {
+  const close = await arena(); equip(close, ['weapon.rocket-launcher']);
+  const closeId = dummy(close, 4);
+  fire(close, 'LEFT', { x: 1, z: 0 }, { x: 4, z: 0 });
+  expect(attacks(close)).toHaveLength(0);
+  expect(health(close, closeId)).toBe(100);
+  expect(close.events.events()).toContainEqual(expect.objectContaining({ type: 'combat.empty', reason: 'too-close' }));
+
+  const armed = await arena(); equip(armed, ['weapon.rocket-launcher']);
+  fire(armed, 'LEFT', { x: 1, z: 0 }, { x: 10, z: 0 });
+  const near = dummy(armed, 3), far = dummy(armed, 7);
+  step(armed, 12);
+  expect(health(armed, near)).toBe(100);
+  expect(armed.events.events().filter(e => e.type === 'combat.exploded' && e.sourceId === 1)).toHaveLength(0);
+  step(armed, 40);
+  expect(health(armed, far)).toBeLessThan(100);
+  const blasts = armed.events.events().filter(e => e.type === 'combat.exploded' && e.sourceId === 1);
+  expect(blasts).toHaveLength(1);
+  expect(blasts[0].position.x).toBeGreaterThanOrEqual(5);
+});
+
 test('attack lifetime: ids survive re-equipping, dead sources cannot attack, snapshots cannot mutate live attacks', async () => {
   const w = await arena(); equip(w, ['weapon.pistol']); dummy(w, 5);
   fire(w); equip(w, ['weapon.pistol']); fire(w);
