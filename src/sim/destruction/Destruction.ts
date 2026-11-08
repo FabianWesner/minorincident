@@ -85,9 +85,10 @@ export class Destruction {
       }
     }
     if(propsChanged) this.world.props?.updateNavigation();
+    let blockersChanged=false;
     for (const b of this.blockers) {
       const active = b.object.state.hp[b.part] > 0; if (active === b.active) continue;
-      b.active = active;
+      b.active = active; blockersChanged=true;
       if (active) {
         const w = b.wall;
         b.handle = this.world.physics.addStatic({ min: [w.x-w.halfX,w.y-w.halfY,w.z-w.halfZ], max: [w.x+w.halfX,w.y+w.halfY,w.z+w.halfZ], navFootprint: w.navFootprint }, [0,0]);
@@ -95,6 +96,7 @@ export class Destruction {
       } else { this.world.physics.removeBlocker(b.handle); const walls = this.world.interactables!.walls, index = walls.indexOf(b.wall); if (index >= 0) walls.splice(index, 1); this.world.districts!.nav.unblock(b.id); }
       if (b.wall.y-b.wall.halfY < 1.6) this.world.events.emit({ type: 'world.blocker.changed', tick: this.world.tick, id: b.id, wall: b.wall, blocked: active });
     }
+    if(blockersChanged) this.world.combat?.query.invalidate();
   }
   /** Nearest intact part, including moving/rotating parked vehicles. Query has no side effects. */
   trace(origin: Point, direction: Point, range: number): WorldHit | null {
