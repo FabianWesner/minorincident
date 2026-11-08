@@ -104,6 +104,11 @@ export class Damage {
   apply(hit: DamageEvent): number {
     const target = this.world.entities.get(hit.targetId), source = this.world.entities.get(hit.sourceId);
     if (!target || !source) return 0;
+    // L7's power weapon opens a route for the column. Civilian splash already
+    // deals no HP damage, but its generic reaction knocked the living followers
+    // flat for 90 ticks and shoved them into the attackers they were escaping.
+    if (this.world.scenario === 'L7' && source.id === 1 && hit.actionId === 'weapon.rocket-launcher' && hit.type === 'explosive' &&
+        !target.infected && !target.infection && this.world.l7Encounters?.state.roster.some(r => r.id === target.id && r.status === 'following')) return 0;
     // L1's authored combat target is 6–7 strikes unarmed and two bat hits against its 60 HP
     // regular. Keep those level-specific values at the damage seam so later levels retain the
     // shared weapon roster and their own melee caps.

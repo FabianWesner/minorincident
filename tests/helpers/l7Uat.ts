@@ -108,6 +108,21 @@ export async function checkL7Navigation() {
   } finally { w.dispose(); }
 }
 
+/** Opening a rocket gap must not fling the escorted humans into that gap. */
+function checkFriendlyRocketReaction(w: SimWorld) {
+  const follower = w.entities.get(w.l7Encounters!.state.roster[0].id)!, before = { ...follower.transform }, health = follower.health.current;
+  const enemy = w.infected!.active.find(e => e.archetype === 'infected.runner')!;
+  const point = w.solids.find({ x: before.x + 1.3, z: before.z, y: before.y }, .35, enemy.id, 2, true)!;
+  expect(point).not.toBeNull();
+  expect(w.solids.relocate(enemy, point, 'test.rocket-target', 0)).toBe(true);
+  const enemyHealth = enemy.health.current;
+  w.explosions!.blast('explosion.rocket', before, { sourceId: 1, actionId: 'weapon.rocket-launcher', fires: false });
+  expect(follower.health.current).toBe(health);
+  expect(follower.civilian!.knockedUntil, 'friendly rocket splash keeps living followers upright').toBeLessThanOrEqual(w.tick);
+  expect(follower.transform).toEqual(before);
+  expect(enemy.health.current, 'the same rocket still damages infected').toBeLessThan(enemyHealth);
+}
+
 /** A dense L7 column cannot hold the courier inside its own body ring. */
 async function checkL7CourierYield() {
   const w = await loadLevel('L7', 1, undefined, 0, { quality: 'low' });
@@ -140,6 +155,7 @@ async function checkL7CourierYield() {
 async function checkFollowerBites() {
   const w = await loadLevel('L7', 3, undefined, 0, { quality: 'low' });
   try {
+    checkFriendlyRocketReaction(w);
     for (const e of [...w.infected!.active]) { w.solids.forget(e); w.infected!.release(e); }
     const roster = w.l7Encounters!.state.roster, follower = w.entities.get(roster[0].id)!;
     const runner = w.entities.get(w.infected!.spawn('infected.runner', { x: follower.transform.x + 1.2, z: follower.transform.z }, { state: 'chase' }))!;
