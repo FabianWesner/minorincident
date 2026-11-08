@@ -38,7 +38,7 @@ The initial complete audit also reported L3 competent attack-band coverage at 1/
 ## Validation and delivery
 
 - Initial complete `npm run qa:threat`: 9 flags before the harness split and L8 response changes.
-- A later `npm run qa:threat` passed the 150-case budget check but hit the 600-second execution limit (exit 124) before the full matrix completed. This is not a complete gate result. An uncapped full audit is queued through the remote runner.
+- A later `npm run qa:threat` passed the 150-case budget check but hit the 600-second execution limit (exit 124) before the full matrix completed. This is not a complete gate result. The uncapped full audit was accepted by the remote runner, but had not returned output by the end of the three-hour lane window; the complete gate remains unverified.
 - `npm run lint`: passed.
 - `npm run typecheck`: passed after the final L8 courier-only range guard.
 - Test budget run with Vitest capped at 4 workers and 150 seconds: **107/107 tests passed**, 27 files, 35.7 seconds. The 150-case inventory check passed (129 Vitest + 9 E2E + 12 browser invariants; 43/45 files).
