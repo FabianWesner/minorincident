@@ -14,7 +14,7 @@ Focused corrected runs pass: flamingo **47.47 s**, gorilla **72.02 s**, both zer
 
 The merged high-tier escape exposed one rooftop monkey without a ground return route (88.89% bounded reach). Monkeys now physically descend to the doorway when the courier leaves their arena; the unchanged path bound counts that real, currently active descent, as it already counts native vault/tunnel legs. A new native control covers the descent and retained melee height guard.
 
-The control matrix also exposed a stationary-fire monkey win after main integration. A held monkey now continues close, visible contact bites every 0.5 s during its existing two-second grip; the melee shake-off stops them. This uses normal damage/height guards and does not change the grab duration or weapon rules.
+The control matrix also exposed stationary-fire/circle monkey wins after main integration. Its ground leader could also stall scavenging, suppressing the entire pack cycle; the same movement-progress fallback now returns monkeys to their grab. A held monkey now continues close, visible contact bites every 0.5 s during its existing two-second grip; the melee shake-off stops them. This uses normal damage/height guards and does not change the grab duration or weapon rules.
 
 **Open:** post-merge typecheck, lint, unit tests and corrected six-arena matrix on runners. The receipts below describe the original lane source until the post-merge results are committed. **Browser QA needed** remains open; no browsers are launched.
 

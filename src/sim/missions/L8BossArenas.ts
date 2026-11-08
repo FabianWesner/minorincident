@@ -143,7 +143,7 @@ export class L8BossArenas {
         if (arena.id === 'monkey' && w.tick >= b.grabNextTick && distance(e.transform, p.transform) < 1.8 && w.combat!.query.visible(e.transform, p.transform)) {
           b.grabNextTick = w.tick + 30;
           const attackId = w.infected!.arenaAttackId();
-          const amount = w.combat!.damage.apply({ sourceId: e.id, targetId: 1, attackId, actionId: 'infected.monkey.grab', origin: e.transform, direction: { x: b.dx, z: b.dz }, base: 12, multiplier: 1, type: 'melee', knockback: 0, stagger: 0 });
+          const amount = w.combat!.damage.apply({ sourceId: e.id, targetId: 1, attackId, actionId: 'infected.monkey.grab', origin: e.transform, direction: { x: b.dx, z: b.dz }, base: 20, multiplier: 1, type: 'melee', knockback: 0, stagger: 0 });
           w.events.emit({ type: 'infected.attack', tick: w.tick, sourceId: e.id, targetId: 1, attackId, special: 'monkey.grab', amount });
         }
         this.walk(e, p.transform, 2); return true;
@@ -167,14 +167,16 @@ export class L8BossArenas {
     }
     if (arena.id === 'gorilla' && boss.barrage && !boss.scavengeId) this.scavenge(e);
     if (boss.scavengeId) {
-      if (arena.id === 'gorilla') {
+      if (arena.id === 'gorilla' || arena.id === 'monkey') {
         const progress = boss.scavengeProgress;
         if (!progress || distance(e.transform, progress) > .25) boss.scavengeProgress = { x: e.transform.x, z: e.transform.z, at: w.tick };
         else if (w.tick - progress.at >= 120) {
           // A displaced prop can leave a locally blocked route. Resume the fight
           // rather than spending the whole phase trying to walk through cover.
           delete boss.scavengeId; delete boss.scavengeProgress; boss.barrage = 0;
-          boss.approach = 'gorilla.pound'; b.path.length = 0; b.goal = -1;
+          b.path.length = 0; b.goal = -1;
+          if (arena.id === 'gorilla') boss.approach = 'gorilla.pound';
+          else this.start(e, 'monkey.grab', 48, 10, .8);
           return true;
         }
       }
