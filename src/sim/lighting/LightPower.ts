@@ -132,7 +132,7 @@ export class LightPower {
     const cached = row?.get(target.z);
     if (cached !== undefined) return cached;
     let value = .6;
-    for (const lamp of this.lamps.values()) if (this.isOn(lamp.id) && Math.hypot(target.x - lamp.x, target.z - lamp.z) <= lamp.range) { value = 1; break; }
+    for (const lamp of this.lamps.values()) if (Math.hypot(target.x - lamp.x, target.z - lamp.z) <= lamp.range && this.isOn(lamp.id)) { value = 1; break; }
     if (!row) this.sightByX.set(target.x, row = new Map());
     row.set(target.z, value);
     return value;

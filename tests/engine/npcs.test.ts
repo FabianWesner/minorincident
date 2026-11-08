@@ -81,12 +81,14 @@ test('civilians: seeded grab → bite → down → glowing eyes → rising → i
     expect(humans.get(person.id)).toBeUndefined();
     expect(humans.within(target.position, 1).some(h => h.id === person.id)).toBe(false);
     person.health.current = hp;
+    const lamp = [...power.lamps.values()].find(l => power.isOn(l.id))!;
     let reads = 0; const isOn = power.isOn.bind(power); power.isOn = (id: string) => { reads++; return isOn(id); };
-    const a = { x: 23, z: 59 }, b = { x: 31, z: 61 }, firstA = power.sightMultiplier(a), afterA = reads;
+    const a = { x: lamp.x, z: lamp.z }, b = { x: lamp.x + .1, z: lamp.z + .1 }, firstA = power.sightMultiplier(a), afterA = reads;
     const firstB = power.sightMultiplier(b), afterB = reads;
     expect(power.sightMultiplier(a)).toBe(firstA); expect(reads).toBe(afterB);
     expect(afterA).toBeGreaterThan(0); expect(afterB).toBeGreaterThan(afterA);
     expect(power.sightMultiplier(b)).toBe(firstB);
+    expect(power.sightMultiplier({ x: 100000, z: 100000 })).toBe(.6); expect(reads).toBe(afterB);
     w.tick++; power.sightMultiplier(a); expect(reads).toBeGreaterThan(afterB);
     const afterNextTick = reads; power.revision++; power.sightMultiplier(a); expect(reads).toBeGreaterThan(afterNextTick);
     const listeners = w.events.listenerCount;
