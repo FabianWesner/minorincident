@@ -1,3 +1,4 @@
+import { Explosions } from '../combat/Explosions';
 import { worldAssets } from '../../assets/worldDefinitions';
 import { destructionDamage } from '../../data/destruction';
 import { destructionClasses, destructionParts, partColliders, type DestructionPart } from '../../data/destructionModel';
@@ -6,7 +7,7 @@ import type { SimWorld } from '../world/SimWorld';
 import type { CoverWall } from '../combat/HitQuery';
 import type { PushProp, PropPose } from '../interact/PropSystem';
 export interface DamageMark { part: number; at: [number, number, number]; normal: [number, number, number]; kind: 'hole' | 'chip' | 'scorch' }
-export interface ObjectDamage { hp: number[]; burning: number; fireClock: number; exploded: boolean; collapsed: boolean; revision: number; marks: DamageMark[] }
+export interface ObjectDamage { hp: number[]; burning: number; fireClock: number; fireEntity?: number; exploded: boolean; collapsed: boolean; revision: number; marks: DamageMark[] }
 export interface DestructionObject { id: string; placement: Placement; parts: DestructionPart[]; state: ObjectDamage; home: PropPose; query: { part: number; box: Aabb }[]; protected: boolean }
 interface Blocker { object: DestructionObject; part: number; box: Aabb; id: number; handle: number; wall: CoverWall; active: boolean }
 export interface WorldHit { object: DestructionObject; part: number; distance: number; local: [number, number, number]; normal: [number, number, number] }
@@ -132,7 +133,8 @@ export class Destruction {
     o.state.burning=destructionClasses[o.placement.destruction!.class].burnTicks; if (!o.state.burning) return;
     o.state.revision++;
     const p=this.pose(o).p;
-    this.world.hazards?.spawn('fire',{x:p[0],z:p[2]},{radius:o.placement.destruction!.class==='vehicle'?1.8:3,duration:o.state.burning/60+2});
+    const activeFires=this.world.entities.values().filter(e=>e.hazard?.kind==='fire'&&e.hazard.activeUntil>this.world.tick).length;
+    if(activeFires<Explosions.maxFires) o.state.fireEntity=this.world.hazards?.spawn('fire',{x:p[0],z:p[2]},{radius:o.placement.destruction!.class==='vehicle'?1.8:3,duration:o.state.burning/60+2});
   }
   /** Blast falloff measures to each part's closest point, so large buildings are hit at their facade. */
   blast(actionId:string, at: {x:number;z:number}, radius:number, damage:number, impulse=0): void {
@@ -163,6 +165,8 @@ export class Destruction {
         if(this.world.tick%30===0) for(const fire of this.world.entities.iterate()) if(fire.hazard?.kind==='fire'&&fire.hazard.activeUntil>this.world.tick&&Math.hypot(fire.transform.x-p[0],fire.transform.z-p[2])<fire.hazard.radius+1) {this.ignite(o);break;}
       }
       if(!s.burning) continue;
+      const fire=this.world.entities.get(s.fireEntity??-1);
+      if(fire?.hazard?.kind==='fire') {const p=this.pose(o).p;fire.transform.x=p[0];fire.transform.z=p[2];this.world.spatial.set(fire.id,p[0],p[2]);}
       s.burning--; s.fireClock++;
       if(s.fireClock%30===0) for(const [part,p] of o.parts.entries()) if(s.hp[part]>0) this.damage({object:o,part,distance:0,local:p.bounds.min,normal:[0,1,0]},'environment.fire',8);
       if(s.burning===0&&o.placement.destruction!.class==='vehicle'&&!s.exploded) {
@@ -177,7 +181,12 @@ export class Destruction {
   snapshot() { return this.objects.filter(o=>!o.protected).map(o=>({id:o.id,state:structuredClone(o.state)})); }
   restore(snapshot:unknown):void {
     const saved=snapshot as ReturnType<Destruction['snapshot']>;
-    for(const o of this.objects) {const entry=saved.find(s=>s.id===o.id); if(entry) o.state=structuredClone(entry.state);}
+    for(const o of this.objects) {
+      const entry=saved.find(s=>s.id===o.id); if(!entry) continue;
+      o.state=structuredClone(entry.state);
+      const fire=this.world.entities.get(o.state.fireEntity??-1);
+      if(o.state.burning&&fire?.hazard?.kind==='fire') fire.hazard.activeUntil=this.world.tick+o.state.burning+120;
+    }
     this.reconcile();
   }
 }

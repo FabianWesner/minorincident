@@ -16,7 +16,7 @@ The r12 `PropSystem` owns parked-car rigid bodies, movement, settling, and navig
 
 Combat compares environmental hits with actor and cover distances. Projectiles, shotgun pellets, melee strikes, explosions, and the mounted gun share the same placement damage owner. Entity damage skips placement-owned cars to prevent double damage. Environmental chain blasts retain their existing authored damage curves.
 
-Breaking a structural part removes its Rapier collider and navigation/visibility blocker in the same tick. Lost structural support drops the roof. Fire runs on fixed ticks: timber burns through, a car burns for five seconds and explodes once, and nearby existing fire zones can ignite other opted-in objects. Explosion impulses use the existing r12 body and pooled debris; detached door panels have their own larger collision shape.
+Breaking a structural part removes its Rapier collider and navigation/visibility blocker in the same tick. Lost structural support drops the roof. Fire runs on fixed ticks: timber burns through, a car burns for five seconds and explodes once, and nearby existing fire zones can ignite other opted-in objects. The owned fire follows a moving car and uses the existing 24-fire cap. Explosion impulses use the existing r12 body and pooled debris; detached door panels have their own larger collision shape.
 
 ## Presentation and budgets
 
@@ -26,7 +26,7 @@ The district preloads only its opted-in prototypes and burned-car variants. The 
 
 ## Persistence and extension
 
-Per-part HP, burn clock, collapse/explosion state and marks are copied into mission checkpoint seams and game-state hashes. Restore rebinds props and rebuilds only surviving blockers, including after physics-world/tier replacement. Cosmetic debris and pending cosmetic kicks are discarded on rebuild, as with the existing explosion system.
+Per-part HP, burn clock, collapse/explosion state and marks are copied into mission checkpoint seams and game-state hashes. Restore rebinds props, rebases owned-fire expiry to the restored burn clock, and rebuilds only surviving blockers, including after physics-world/tier replacement. Cosmetic debris and pending cosmetic kicks are discarded on rebuild, as with the existing explosion system.
 
 To extend the rollout:
 

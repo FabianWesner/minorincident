@@ -194,7 +194,10 @@ test('explosions: every class follows its damage curve, full cover shields, rail
   expect(protectedObject.state.revision).toBe(0);
   const car=destruction.objects.find(o=>!o.protected&&o.placement.destruction!.class==='vehicle')!;
   destruction.blast('weapon.molotov',{x:car.home.p[0],z:car.home.p[2]},4,10);
-  expect(car.state.burning).toBeGreaterThan(0);
+  expect(car.state.burning).toBeGreaterThan(0);expect(car.state.fireEntity).toBeDefined();
+  const remainingBurn=car.state.burning; mission.checkpoint(checkpoint);street.tick+=600;mission.restore(checkpoint);
+  expect(car.state.burning).toBe(remainingBurn);
+  expect(street.entities.get(car.state.fireEntity!)!.hazard!.activeUntil, 'restored fire survives the shifted checkpoint clock').toBeGreaterThan(street.tick);
   // Isolate fixed-tick fire from the mission director; no rendering or wall-clock timer participates.
   for(let tick=0;tick<310;tick++){street.tick++;destruction.update();}
   expect(car.state.exploded).toBe(true);expect(car.state.burning).toBe(0);
