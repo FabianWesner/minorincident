@@ -75,7 +75,11 @@
           "longTasks": [],
           "nodeBuilderNotifications": [],
           "resourcesStartedInGap": [],
-          "attribution": "Unresolved off-main-thread/scheduling gap. Idle CPU samples and no matching long task or node-builder notification do not establish a GPU, streaming or host cause."
+          "attribution": "Unresolved off-main-thread/scheduling gap. Idle CPU samples and no matching long task or node-builder notification do not establish a GPU, streaming or host cause.",
+          "mainThreadSampleCount": 216,
+          "idleSampleCount": 213,
+          "idleSamplePercent": 98.61111111111111,
+          "garbageCollectorSamples": 0
         },
         {
           "at": 11033,
@@ -123,7 +127,11 @@
           "longTasks": [],
           "nodeBuilderNotifications": [],
           "resourcesStartedInGap": [],
-          "attribution": "Unresolved off-main-thread/scheduling gap. Idle CPU samples and no matching long task or node-builder notification do not establish a GPU, streaming or host cause."
+          "attribution": "Unresolved off-main-thread/scheduling gap. Idle CPU samples and no matching long task or node-builder notification do not establish a GPU, streaming or host cause.",
+          "mainThreadSampleCount": 123,
+          "idleSampleCount": 122,
+          "idleSamplePercent": 99.1869918699187,
+          "garbageCollectorSamples": 0
         },
         {
           "at": 43798.4,
@@ -212,7 +220,11 @@
               "serverTiming": []
             }
           ],
-          "attribution": "Unresolved off-main-thread/scheduling gap. Idle CPU samples and no matching long task or node-builder notification do not establish a GPU, streaming or host cause."
+          "attribution": "Unresolved off-main-thread/scheduling gap. Idle CPU samples and no matching long task or node-builder notification do not establish a GPU, streaming or host cause.",
+          "mainThreadSampleCount": 77,
+          "idleSampleCount": 74,
+          "idleSamplePercent": 96.1038961038961,
+          "garbageCollectorSamples": 0
         },
         {
           "at": 43998.4,
@@ -357,7 +369,11 @@
               "serverTiming": []
             }
           ],
-          "attribution": "Unresolved off-main-thread/scheduling gap. Idle CPU samples and no matching long task or node-builder notification do not establish a GPU, streaming or host cause."
+          "attribution": "Unresolved off-main-thread/scheduling gap. Idle CPU samples and no matching long task or node-builder notification do not establish a GPU, streaming or host cause.",
+          "mainThreadSampleCount": 79,
+          "idleSampleCount": 72,
+          "idleSamplePercent": 91.13924050632912,
+          "garbageCollectorSamples": 0
         },
         {
           "at": 48364.9,
@@ -405,7 +421,11 @@
           "longTasks": [],
           "nodeBuilderNotifications": [],
           "resourcesStartedInGap": [],
-          "attribution": "Unresolved off-main-thread/scheduling gap. Idle CPU samples and no matching long task or node-builder notification do not establish a GPU, streaming or host cause."
+          "attribution": "Unresolved off-main-thread/scheduling gap. Idle CPU samples and no matching long task or node-builder notification do not establish a GPU, streaming or host cause.",
+          "mainThreadSampleCount": 100,
+          "idleSampleCount": 99,
+          "idleSamplePercent": 99.0,
+          "garbageCollectorSamples": 0
         }
       ],
       "adapter": {
@@ -1096,6 +1116,11 @@
             "nextAt": 3613
           }
         }
+      },
+      "maximumRecordedGameSectionMs": {
+        "sim": 15.5,
+        "update": 14.59999942779541,
+        "render": 10
       }
     },
     {
@@ -1804,7 +1829,13 @@
             "nextAt": 3613
           }
         }
+      },
+      "maximumRecordedGameSectionMs": {
+        "sim": 23.100000381469727,
+        "update": 11.199999809265137,
+        "render": 6.300000190734863
       }
     }
-  ]
+  ],
+  "sampleInterpretation": "One-millisecond main-thread CPU sampling: counts are sample observations, not exact wall-time attribution. Alignment uses performance.now immediately before Profiler.start plus cumulative timeDeltas; a small CDP handoff offset remains. The high idle share, absent GC samples, no long tasks, and low recorded game-section costs strongly argue against a sustained main-thread JS/GC stall. Off-main-thread streaming/driver work and browser/OS scheduling remain unresolved; sampled inactivity does not identify one of those causes."
 }
