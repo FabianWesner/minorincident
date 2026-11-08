@@ -22,6 +22,7 @@ export class LevelTenBot {
   private waypoint = 0;
   private releaseAttempt = 0;
   private clearStairsUntil = 0;
+  private coolingGun = false;
   private releaseSidestepUntil = 0;
   private releaseBlockedAt = 0;
   private readonly startTick: number;
@@ -89,7 +90,9 @@ export class LevelTenBot {
         if (target) {
           const dx = target.transform.x - p.x, dz = target.transform.z - p.z, d = Math.hypot(dx, dz) || 1;
           f.aim = { x: dx / d, z: dz / d }; f.aimSource = 'keyboard';
-          f.right.held = !gun.locked && gun.heat < .85;
+          if (gun.locked || gun.heat >= .92) this.coolingGun = true;
+          if (gun.heat <= .35) this.coolingGun = false;
+          f.right.held = !this.coolingGun;
         }
         return f;
       }
