@@ -1,0 +1,6258 @@
+{
+  "sourceHash": "19f970a707106ee2889cece514770b170e7318a022b531a5e7b012375bbdb766",
+  "observerHash": "2df26dc77eb78530c9820e18bde4f658fa978a05f70510f79415499d8ba6d7c0",
+  "revision": "a3161a42c16841c42823bc61a22b9982e59184d6",
+  "route": "road",
+  "tier": "low",
+  "zero": false,
+  "risky": false,
+  "seed": 1,
+  "method": "Production LevelNineBot inputs, native Rapier/AI and normal campaign state. --zero is one explicit initial damage fixture; no immortality, teleports, actor writes or objective skips.",
+  "completed": false,
+  "seconds": 600,
+  "hp": 100,
+  "durability": 360,
+  "peakAlive": 92,
+  "peakChunks": 9,
+  "grabs": 3,
+  "shakes": 3,
+  "playerHits": 0,
+  "signals": [
+    {
+      "tick": 1907,
+      "name": "l9.route.road"
+    },
+    {
+      "tick": 4390,
+      "name": "l9.bus-chase",
+      "actorId": 675
+    },
+    {
+      "tick": 4410,
+      "name": "l9.bus-spill",
+      "actorId": 676
+    },
+    {
+      "tick": 5086,
+      "name": "l9.gate-countdown"
+    },
+    {
+      "tick": 6191,
+      "name": "l9.rail-stall"
+    },
+    {
+      "tick": 6492,
+      "name": "l9.bus-ram",
+      "actorId": 675
+    },
+    {
+      "tick": 6570,
+      "name": "l9.bus-spill",
+      "actorId": 677
+    },
+    {
+      "tick": 6660,
+      "name": "l9.bus-spill",
+      "actorId": 678
+    },
+    {
+      "tick": 6750,
+      "name": "l9.bus-spill",
+      "actorId": 679
+    },
+    {
+      "tick": 6840,
+      "name": "l9.bus-spill",
+      "actorId": 680
+    },
+    {
+      "tick": 6930,
+      "name": "l9.bus-spill",
+      "actorId": 681
+    },
+    {
+      "tick": 7991,
+      "name": "l9.engine-restarted"
+    },
+    {
+      "tick": 8006,
+      "name": "l9.bus-ram",
+      "actorId": 675
+    },
+    {
+      "tick": 8686,
+      "name": "l9.gate-closed"
+    },
+    {
+      "tick": 9166,
+      "name": "l9.bus-ram",
+      "actorId": 675
+    },
+    {
+      "tick": 9286,
+      "name": "l9.bus-ram",
+      "actorId": 675
+    },
+    {
+      "tick": 9406,
+      "name": "l9.bus-ram",
+      "actorId": 675
+    },
+    {
+      "tick": 9583,
+      "name": "l9.evacuation-started"
+    },
+    {
+      "tick": 9675,
+      "name": "l9.bus-ram",
+      "actorId": 675
+    },
+    {
+      "tick": 10041,
+      "name": "l9.bus-stopped",
+      "actorId": 675
+    },
+    {
+      "tick": 10778,
+      "name": "l9.survivor-evacuated",
+      "actorId": 671
+    }
+  ],
+  "hits": [
+    {
+      "type": "vehicle.durability-hit",
+      "tick": 385,
+      "sourceId": 667,
+      "targetId": 696,
+      "source": "obstacle",
+      "contactId": 1,
+      "attackId": null,
+      "before": 1000,
+      "after": 990
+    },
+    {
+      "type": "vehicle.durability-hit",
+      "tick": 385,
+      "sourceId": 667,
+      "targetId": 697,
+      "source": "obstacle",
+      "contactId": 2,
+      "attackId": null,
+      "before": 990,
+      "after": 980
+    },
+    {
+      "type": "vehicle.durability-hit",
+      "tick": 1181,
+      "sourceId": 667,
+      "targetId": 720,
+      "source": "contact",
+      "contactId": 3,
+      "attackId": null,
+      "before": 980,
+      "after": 970
+    },
+    {
+      "type": "vehicle.durability-hit",
+      "tick": 1182,
+      "sourceId": 667,
+      "targetId": 721,
+      "source": "contact",
+      "contactId": 4,
+      "attackId": null,
+      "before": 970,
+      "after": 960
+    },
+    {
+      "type": "vehicle.durability-hit",
+      "tick": 1185,
+      "sourceId": 667,
+      "targetId": 724,
+      "source": "contact",
+      "contactId": 5,
+      "attackId": null,
+      "before": 960,
+      "after": 950
+    },
+    {
+      "type": "vehicle.durability-hit",
+      "tick": 1186,
+      "sourceId": 667,
+      "targetId": 719,
+      "source": "contact",
+      "contactId": 6,
+      "attackId": null,
+      "before": 950,
+      "after": 940
+    },
+    {
+      "type": "vehicle.durability-hit",
+      "tick": 2628,
+      "sourceId": 667,
+      "targetId": 754,
+      "source": "contact",
+      "contactId": 7,
+      "attackId": null,
+      "before": 940,
+      "after": 930
+    },
+    {
+      "type": "vehicle.durability-hit",
+      "tick": 2630,
+      "sourceId": 667,
+      "targetId": 753,
+      "source": "contact",
+      "contactId": 8,
+      "attackId": null,
+      "before": 930,
+      "after": 920
+    },
+    {
+      "type": "vehicle.durability-hit",
+      "tick": 2634,
+      "sourceId": 667,
+      "targetId": 757,
+      "source": "contact",
+      "contactId": 9,
+      "attackId": null,
+      "before": 920,
+      "after": 910
+    },
+    {
+      "type": "vehicle.durability-hit",
+      "tick": 2638,
+      "sourceId": 667,
+      "targetId": 752,
+      "source": "contact",
+      "contactId": 10,
+      "attackId": null,
+      "before": 910,
+      "after": 900
+    },
+    {
+      "type": "vehicle.durability-hit",
+      "tick": 3580,
+      "sourceId": 667,
+      "targetId": 765,
+      "source": "contact",
+      "contactId": 11,
+      "attackId": null,
+      "before": 900,
+      "after": 890
+    },
+    {
+      "type": "vehicle.durability-hit",
+      "tick": 3592,
+      "sourceId": 667,
+      "targetId": 767,
+      "source": "contact",
+      "contactId": 12,
+      "attackId": null,
+      "before": 890,
+      "after": 880
+    },
+    {
+      "type": "vehicle.durability-hit",
+      "tick": 3601,
+      "sourceId": 667,
+      "targetId": 770,
+      "source": "contact",
+      "contactId": 13,
+      "attackId": null,
+      "before": 880,
+      "after": 870
+    },
+    {
+      "type": "vehicle.durability-hit",
+      "tick": 3604,
+      "sourceId": 667,
+      "targetId": 766,
+      "source": "contact",
+      "contactId": 14,
+      "attackId": null,
+      "before": 870,
+      "after": 860
+    },
+    {
+      "type": "vehicle.durability-hit",
+      "tick": 4556,
+      "sourceId": 667,
+      "targetId": 786,
+      "source": "contact",
+      "contactId": 15,
+      "attackId": null,
+      "before": 860,
+      "after": 850
+    },
+    {
+      "type": "vehicle.durability-hit",
+      "tick": 4559,
+      "sourceId": 667,
+      "targetId": 789,
+      "source": "contact",
+      "contactId": 16,
+      "attackId": null,
+      "before": 850,
+      "after": 840
+    },
+    {
+      "type": "vehicle.durability-hit",
+      "tick": 4560,
+      "sourceId": 667,
+      "targetId": 784,
+      "source": "contact",
+      "contactId": 17,
+      "attackId": null,
+      "before": 840,
+      "after": 830
+    },
+    {
+      "type": "vehicle.durability-hit",
+      "tick": 4562,
+      "sourceId": 667,
+      "targetId": 785,
+      "source": "contact",
+      "contactId": 18,
+      "attackId": null,
+      "before": 830,
+      "after": 820
+    },
+    {
+      "type": "vehicle.durability-hit",
+      "tick": 5504,
+      "sourceId": 667,
+      "targetId": 797,
+      "source": "contact",
+      "contactId": 19,
+      "attackId": null,
+      "before": 820,
+      "after": 810
+    },
+    {
+      "type": "vehicle.durability-hit",
+      "tick": 5512,
+      "sourceId": 667,
+      "targetId": 796,
+      "source": "contact",
+      "contactId": 20,
+      "attackId": null,
+      "before": 810,
+      "after": 800
+    },
+    {
+      "type": "vehicle.durability-hit",
+      "tick": 5522,
+      "sourceId": 667,
+      "targetId": 798,
+      "source": "contact",
+      "contactId": 21,
+      "attackId": null,
+      "before": 800,
+      "after": 790
+    },
+    {
+      "type": "vehicle.durability-hit",
+      "tick": 5536,
+      "sourceId": 667,
+      "targetId": 801,
+      "source": "contact",
+      "contactId": 22,
+      "attackId": null,
+      "before": 790,
+      "after": 780
+    },
+    {
+      "type": "vehicle.durability-hit",
+      "tick": 8198,
+      "sourceId": 667,
+      "targetId": 834,
+      "source": "contact",
+      "contactId": 23,
+      "attackId": null,
+      "before": 700,
+      "after": 690
+    },
+    {
+      "type": "vehicle.durability-hit",
+      "tick": 8233,
+      "sourceId": 667,
+      "targetId": 843,
+      "source": "contact",
+      "contactId": 24,
+      "attackId": null,
+      "before": 690,
+      "after": 680
+    },
+    {
+      "type": "vehicle.durability-hit",
+      "tick": 8272,
+      "sourceId": 667,
+      "targetId": 838,
+      "source": "contact",
+      "contactId": 25,
+      "attackId": null,
+      "before": 680,
+      "after": 670
+    },
+    {
+      "type": "vehicle.durability-hit",
+      "tick": 8309,
+      "sourceId": 667,
+      "targetId": 845,
+      "source": "contact",
+      "contactId": 26,
+      "attackId": null,
+      "before": 670,
+      "after": 660
+    },
+    {
+      "type": "vehicle.durability-hit",
+      "tick": 8786,
+      "sourceId": 667,
+      "targetId": 857,
+      "source": "contact",
+      "contactId": 27,
+      "attackId": null,
+      "before": 660,
+      "after": 650
+    },
+    {
+      "type": "vehicle.durability-hit",
+      "tick": 8794,
+      "sourceId": 667,
+      "targetId": 856,
+      "source": "contact",
+      "contactId": 28,
+      "attackId": null,
+      "before": 650,
+      "after": 640
+    },
+    {
+      "type": "vehicle.durability-hit",
+      "tick": 8794,
+      "sourceId": 667,
+      "targetId": 858,
+      "source": "contact",
+      "contactId": 29,
+      "attackId": null,
+      "before": 640,
+      "after": 630
+    },
+    {
+      "type": "vehicle.durability-hit",
+      "tick": 8796,
+      "sourceId": 667,
+      "targetId": 861,
+      "source": "contact",
+      "contactId": 30,
+      "attackId": null,
+      "before": 630,
+      "after": 620
+    },
+    {
+      "type": "vehicle.durability-hit",
+      "tick": 8823,
+      "sourceId": 667,
+      "targetId": 859,
+      "source": "contact",
+      "contactId": 31,
+      "attackId": null,
+      "before": 620,
+      "after": 610
+    },
+    {
+      "type": "vehicle.durability-hit",
+      "tick": 8831,
+      "sourceId": 667,
+      "targetId": 860,
+      "source": "contact",
+      "contactId": 32,
+      "attackId": null,
+      "before": 610,
+      "after": 570
+    },
+    {
+      "type": "vehicle.durability-hit",
+      "tick": 8947,
+      "sourceId": 667,
+      "targetId": 860,
+      "source": "contact",
+      "contactId": 33,
+      "attackId": null,
+      "before": 570,
+      "after": 530
+    },
+    {
+      "type": "vehicle.durability-hit",
+      "tick": 13963,
+      "sourceId": 667,
+      "targetId": 857,
+      "source": "attack",
+      "contactId": null,
+      "attackId": 36,
+      "before": 370,
+      "after": 360
+    }
+  ],
+  "samples": [
+    {
+      "tick": 1,
+      "phase": "driving",
+      "position": {
+        "x": -550,
+        "y": 1.0482969284057617,
+        "z": 0,
+        "yaw": 0
+      },
+      "speed": 9.535154958939529e-7,
+      "durability": 1000,
+      "hp": 100,
+      "restart": false,
+      "evacuation": 0,
+      "gate": false,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": null
+    },
+    {
+      "tick": 301,
+      "phase": "driving",
+      "position": {
+        "x": -494.4433288574219,
+        "y": 0.9954336881637573,
+        "z": 0,
+        "yaw": 0
+      },
+      "speed": 16.41270637512207,
+      "durability": 1000,
+      "hp": 100,
+      "restart": false,
+      "evacuation": 0,
+      "gate": false,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": null
+    },
+    {
+      "tick": 601,
+      "phase": "driving",
+      "position": {
+        "x": -434.7624206542969,
+        "y": 0.9954339265823364,
+        "z": -34.24092483520508,
+        "yaw": 1.20023774706569
+      },
+      "speed": 16.401913784578166,
+      "durability": 980,
+      "hp": 100,
+      "restart": false,
+      "evacuation": 0,
+      "gate": false,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": null
+    },
+    {
+      "tick": 901,
+      "phase": "driving",
+      "position": {
+        "x": -411.1014099121094,
+        "y": 0.9954344630241394,
+        "z": -95.37645721435547,
+        "yaw": 1.2016371232761776
+      },
+      "speed": 11.78603297841769,
+      "durability": 980,
+      "hp": 100,
+      "restart": false,
+      "evacuation": 0,
+      "gate": false,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": null
+    },
+    {
+      "tick": 1201,
+      "phase": "driving",
+      "position": {
+        "x": -388.986328125,
+        "y": 0.9954344630241394,
+        "z": -149.80633544921875,
+        "yaw": 1.0324721953777283
+      },
+      "speed": 11.678533041874026,
+      "durability": 940,
+      "hp": 100,
+      "restart": false,
+      "evacuation": 0,
+      "gate": false,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": null
+    },
+    {
+      "tick": 1501,
+      "phase": "driving",
+      "position": {
+        "x": -365.7913513183594,
+        "y": 0.9954344630241394,
+        "z": -202.45751953125,
+        "yaw": 1.234950535479122
+      },
+      "speed": 11.568605073526017,
+      "durability": 940,
+      "hp": 100,
+      "restart": false,
+      "evacuation": 0,
+      "gate": false,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": null
+    },
+    {
+      "tick": 1801,
+      "phase": "driving",
+      "position": {
+        "x": -346.7117614746094,
+        "y": 0.9954344630241394,
+        "z": -257.0933532714844,
+        "yaw": 1.235119253000922
+      },
+      "speed": 11.572128349101009,
+      "durability": 940,
+      "hp": 100,
+      "restart": false,
+      "evacuation": 0,
+      "gate": false,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": null
+    },
+    {
+      "tick": 2101,
+      "phase": "driving",
+      "position": {
+        "x": -319.8299560546875,
+        "y": 0.9954313635826111,
+        "z": -304.7043762207031,
+        "yaw": 0.291334945564174
+      },
+      "speed": 11.008650341960323,
+      "durability": 940,
+      "hp": 100,
+      "restart": false,
+      "evacuation": 0,
+      "gate": false,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": null
+    },
+    {
+      "tick": 2401,
+      "phase": "driving",
+      "position": {
+        "x": -262.7444152832031,
+        "y": 0.9954345226287842,
+        "z": -305.6832275390625,
+        "yaw": -0.0011163975605866065
+      },
+      "speed": 11.56279139858639,
+      "durability": 940,
+      "hp": 100,
+      "restart": false,
+      "evacuation": 0,
+      "gate": false,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": null
+    },
+    {
+      "tick": 2701,
+      "phase": "driving",
+      "position": {
+        "x": -205.31478881835938,
+        "y": 0.9954345226287842,
+        "z": -302.46685791015625,
+        "yaw": -0.23452948864361836
+      },
+      "speed": 11.434799956335569,
+      "durability": 900,
+      "hp": 100,
+      "restart": false,
+      "evacuation": 0,
+      "gate": false,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": null
+    },
+    {
+      "tick": 3001,
+      "phase": "driving",
+      "position": {
+        "x": -148.5528564453125,
+        "y": 0.9954346418380737,
+        "z": -301.2056884765625,
+        "yaw": 0.007611225915540236
+      },
+      "speed": 11.383616200991534,
+      "durability": 900,
+      "hp": 100,
+      "restart": false,
+      "evacuation": 0,
+      "gate": false,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": null
+    },
+    {
+      "tick": 3301,
+      "phase": "driving",
+      "position": {
+        "x": -91.6253662109375,
+        "y": 0.9954346418380737,
+        "z": -301.6451416015625,
+        "yaw": 0.007598317510661554
+      },
+      "speed": 11.384656508198377,
+      "durability": 900,
+      "hp": 100,
+      "restart": false,
+      "evacuation": 0,
+      "gate": false,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": null
+    },
+    {
+      "tick": 3601,
+      "phase": "driving",
+      "position": {
+        "x": -34.7486686706543,
+        "y": 0.9954345226287842,
+        "z": -301.4433288574219,
+        "yaw": -0.13280256144566394
+      },
+      "speed": 11.325633384617596,
+      "durability": 870,
+      "hp": 100,
+      "restart": false,
+      "evacuation": 0,
+      "gate": false,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": null
+    },
+    {
+      "tick": 3901,
+      "phase": "driving",
+      "position": {
+        "x": 20.905202865600586,
+        "y": 0.9954344630241394,
+        "z": -298.1318359375,
+        "yaw": 0.020848767122650373
+      },
+      "speed": 11.194097315986292,
+      "durability": 860,
+      "hp": 100,
+      "restart": false,
+      "evacuation": 0,
+      "gate": false,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": null
+    },
+    {
+      "tick": 4201,
+      "phase": "driving",
+      "position": {
+        "x": 76.88452911376953,
+        "y": 0.9954344630241394,
+        "z": -299.3037109375,
+        "yaw": 0.020855443897587388
+      },
+      "speed": 11.197027408160098,
+      "durability": 860,
+      "hp": 100,
+      "restart": false,
+      "evacuation": 0,
+      "gate": false,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": null
+    },
+    {
+      "tick": 4501,
+      "phase": "driving",
+      "position": {
+        "x": 132.86822509765625,
+        "y": 0.9954344630241394,
+        "z": -300.4755859375,
+        "yaw": 0.020837042318482164
+      },
+      "speed": 11.197026881309334,
+      "durability": 860,
+      "hp": 100,
+      "restart": false,
+      "evacuation": 0,
+      "gate": false,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": null
+    },
+    {
+      "tick": 4801,
+      "phase": "driving",
+      "position": {
+        "x": 187.78985595703125,
+        "y": 0.9954345226287842,
+        "z": -297.3861083984375,
+        "yaw": 0.04639234061336993
+      },
+      "speed": 11.001068924994296,
+      "durability": 820,
+      "hp": 100,
+      "restart": false,
+      "evacuation": 0,
+      "gate": false,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": null
+    },
+    {
+      "tick": 5101,
+      "phase": "driving",
+      "position": {
+        "x": 242.772705078125,
+        "y": 0.9954345226287842,
+        "z": -299.9658203125,
+        "yaw": 0.046907781627865894
+      },
+      "speed": 11.00936345048946,
+      "durability": 820,
+      "hp": 100,
+      "restart": false,
+      "evacuation": 0,
+      "gate": false,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": null
+    },
+    {
+      "tick": 5401,
+      "phase": "driving",
+      "position": {
+        "x": 297.7757568359375,
+        "y": 0.9954345226287842,
+        "z": -302.5482177734375,
+        "yaw": 0.0469053041271106
+      },
+      "speed": 11.009503125482135,
+      "durability": 820,
+      "hp": 100,
+      "restart": false,
+      "evacuation": 0,
+      "gate": false,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": null
+    },
+    {
+      "tick": 5701,
+      "phase": "driving",
+      "position": {
+        "x": 348.4136962890625,
+        "y": 0.9954328536987305,
+        "z": -292.7969970703125,
+        "yaw": -1.0242546075005743
+      },
+      "speed": 10.234706997190935,
+      "durability": 780,
+      "hp": 100,
+      "restart": false,
+      "evacuation": 0,
+      "gate": false,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": null
+    },
+    {
+      "tick": 6001,
+      "phase": "driving",
+      "position": {
+        "x": 365.9510192871094,
+        "y": 1.054610013961792,
+        "z": -244.22833251953125,
+        "yaw": -1.2216178937599174
+      },
+      "speed": 10.714772541678045,
+      "durability": 780,
+      "hp": 100,
+      "restart": false,
+      "evacuation": 0,
+      "gate": false,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": null
+    },
+    {
+      "tick": 6301,
+      "phase": "driving",
+      "position": {
+        "x": 377.8118896484375,
+        "y": 0.9954348206520081,
+        "z": -210.06114196777344,
+        "yaw": -1.239784095373002
+      },
+      "speed": 1.0025800773616021e-7,
+      "durability": 780,
+      "hp": 100,
+      "restart": false,
+      "evacuation": 0,
+      "gate": false,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": null
+    },
+    {
+      "tick": 6601,
+      "phase": "driving",
+      "position": {
+        "x": 379.44970703125,
+        "y": 0.9937082529067993,
+        "z": -208.2741241455078,
+        "yaw": -1.0003079406431803
+      },
+      "speed": 0.2701747353006674,
+      "durability": 740,
+      "hp": 100,
+      "restart": false,
+      "evacuation": 0,
+      "gate": false,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": null
+    },
+    {
+      "tick": 6901,
+      "phase": "driving",
+      "position": {
+        "x": 380.6178894042969,
+        "y": 0.993833065032959,
+        "z": -207.7124786376953,
+        "yaw": -0.9175833377831651
+      },
+      "speed": 0.27244555755939803,
+      "durability": 740,
+      "hp": 100,
+      "restart": false,
+      "evacuation": 0,
+      "gate": false,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": null
+    },
+    {
+      "tick": 7201,
+      "phase": "driving",
+      "position": {
+        "x": 381.8281555175781,
+        "y": 0.9942051768302917,
+        "z": -207.1895294189453,
+        "yaw": -0.8541513755345134
+      },
+      "speed": 0.2839541669215735,
+      "durability": 740,
+      "hp": 100,
+      "restart": false,
+      "evacuation": 0,
+      "gate": false,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": null
+    },
+    {
+      "tick": 7501,
+      "phase": "driving",
+      "position": {
+        "x": 383.0523986816406,
+        "y": 0.9946786165237427,
+        "z": -206.74258422851562,
+        "yaw": -0.7950372572288247
+      },
+      "speed": 0.22728751485955292,
+      "durability": 740,
+      "hp": 100,
+      "restart": false,
+      "evacuation": 0,
+      "gate": false,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": null
+    },
+    {
+      "tick": 7801,
+      "phase": "driving",
+      "position": {
+        "x": 384.05712890625,
+        "y": 0.995137095451355,
+        "z": -206.2168426513672,
+        "yaw": -0.7756798520185602
+      },
+      "speed": 0.26076360988170266,
+      "durability": 740,
+      "hp": 100,
+      "restart": false,
+      "evacuation": 0,
+      "gate": false,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": null
+    },
+    {
+      "tick": 8101,
+      "phase": "driving",
+      "position": {
+        "x": 389.349609375,
+        "y": 0.9954253435134888,
+        "z": -195.5620574951172,
+        "yaw": -1.239797018963062
+      },
+      "speed": 10.536309425705143,
+      "durability": 700,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 0,
+      "gate": false,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": null
+    },
+    {
+      "tick": 8401,
+      "phase": "driving",
+      "position": {
+        "x": 411.0831604003906,
+        "y": 0.995434582233429,
+        "z": -129.59144592285156,
+        "yaw": -1.277796035323675
+      },
+      "speed": 15.062015729681292,
+      "durability": 660,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 0,
+      "gate": false,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": null
+    },
+    {
+      "tick": 8701,
+      "phase": "driving",
+      "position": {
+        "x": 432.9964904785156,
+        "y": 0.995434582233429,
+        "z": -56.63239669799805,
+        "yaw": -1.2791028144104877
+      },
+      "speed": 15.296251241230252,
+      "durability": 660,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 0,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": null
+    },
+    {
+      "tick": 9001,
+      "phase": "driving",
+      "position": {
+        "x": 443.18865966796875,
+        "y": 0.9954255223274231,
+        "z": -14.682320594787598,
+        "yaw": -1.4557739317012781
+      },
+      "speed": 9.793472799609352,
+      "durability": 530,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 0,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": null
+    },
+    {
+      "tick": 9301,
+      "phase": "driving",
+      "position": {
+        "x": 458.4983215332031,
+        "y": 0.9966909885406494,
+        "z": 5.36097526550293,
+        "yaw": 0.3363078267797995
+      },
+      "speed": 3.0786002922678644,
+      "durability": 450,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 0,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": null
+    },
+    {
+      "tick": 9601,
+      "phase": "driving",
+      "position": {
+        "x": 461.2095642089844,
+        "y": 0.9977854490280151,
+        "z": -9.757987976074219,
+        "yaw": 2.0127043472834143
+      },
+      "speed": 0.1898805977652662,
+      "durability": 410,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 0,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": null
+    },
+    {
+      "tick": 9901,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 2.709564799526238e-9,
+      "durability": 370,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 0,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": null
+    },
+    {
+      "tick": 10201,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 1.3368762311692429e-8,
+      "durability": 370,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 0,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 10501,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 7.624832104694945e-9,
+      "durability": 370,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 0,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 10801,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 1.3660297266599172e-8,
+      "durability": 370,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 11101,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 7.618080984258445e-9,
+      "durability": 370,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 11401,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 1.1591033819240613e-8,
+      "durability": 370,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 11701,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 7.615011086659919e-9,
+      "durability": 370,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 12001,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 1.0638913139788224e-8,
+      "durability": 370,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 12301,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 2.3561116866664626e-8,
+      "durability": 370,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 12601,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 6.7080067555509445e-9,
+      "durability": 370,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 12901,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 1.2146765609249657e-8,
+      "durability": 370,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 13201,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 3.23143727211171e-8,
+      "durability": 370,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 13501,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 1.221699986234298e-8,
+      "durability": 370,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 13801,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 2.0071527019790055e-8,
+      "durability": 370,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 14101,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 7.174055127826607e-9,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 14401,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 1.62408437512101e-8,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 14701,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 2.85479126878475e-9,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 15001,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 1.3333274635943427e-8,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 15301,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 2.8634188658896276e-9,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 15601,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 1.141452829453852e-8,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 15901,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 3.6239010010292374e-9,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 16201,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 6.774876554751211e-9,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 16501,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 8.834479598701423e-9,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 16801,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 2.6554288373181146e-9,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 17101,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 1.3995129803494223e-8,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 17401,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 3.4970751010429576e-8,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 17701,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 1.331499354254274e-8,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 18001,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 8.479163759270932e-9,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 18301,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 1.5763277771399575e-8,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 18601,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 9.265228324706843e-9,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 18901,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 1.365693524830321e-8,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 19201,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 1.1005325846974389e-8,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 19501,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 1.1585568836739057e-8,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 19801,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 6.562060529774612e-9,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 20101,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 6.861568264439841e-9,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 20401,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 2.548334980229545e-9,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 20701,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 2.698890718628061e-9,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 21001,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 3.621334941916526e-9,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 21301,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 2.809012092536547e-9,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 21601,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 3.415440513276417e-9,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 21901,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 3.626021352517349e-9,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 22201,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 6.949930760663327e-9,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 22501,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 8.838971077889459e-9,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 22801,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 9.09350585488055e-9,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 23101,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 1.3997621516664057e-8,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 23401,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 6.157217401686022e-9,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 23701,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 1.3316314357121582e-8,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 24001,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 7.332899713613972e-9,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 24301,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 1.3413739700797394e-8,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 24601,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 2.372571386821493e-9,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 24901,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 1.4209933204182283e-8,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 25201,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 3.6257552353663278e-9,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 25501,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 3.907678132358921e-9,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 25801,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 6.945026539753112e-9,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 26101,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 3.6151184304545763e-9,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 26401,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 4.878042800583383e-9,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 26701,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 1.3819513813735798e-8,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 27001,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 1.7883416007551347e-8,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 27301,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 1.3921015089234715e-8,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 27601,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 1.7621450524949977e-8,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 27901,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 4.050385342361647e-9,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 28201,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 1.9716604350150907e-8,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 28501,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 2.4011873334668777e-9,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 28801,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 1.9763002315921383e-8,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 29101,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 2.2789655798601413e-9,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 29401,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 1.976770024192185e-8,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 29701,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 3.7121324706064732e-9,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 30001,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 1.976991286933854e-8,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 30301,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 8.910785928070241e-9,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 30601,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 1.9770942618827617e-8,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 30901,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 1.4035562873061572e-8,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 31201,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 1.977141180697961e-8,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 31501,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 1.3336275844734589e-8,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 31801,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 2.354326376742468e-8,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 32101,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 1.3423363324155038e-8,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 32401,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 1.3611236029326234e-8,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 32701,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 1.3729798798763304e-8,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 33001,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 1.3672616868248482e-8,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 33301,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 1.3730378855626162e-8,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 33601,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 1.315315434527856e-8,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 33901,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 9.283976349265843e-9,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 34201,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 1.3952677409758672e-8,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 34501,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 9.063952533657606e-9,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 34801,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 1.0451022224041923e-8,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 35101,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 1.4149862875670918e-8,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 35401,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 1.1528082256134439e-8,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    },
+    {
+      "tick": 35701,
+      "phase": "driving",
+      "position": {
+        "x": 461.17987060546875,
+        "y": 0.9954347610473633,
+        "z": -9.744453430175781,
+        "yaw": 2.0087337811811072
+      },
+      "speed": 1.3394630284213273e-8,
+      "durability": 360,
+      "hp": 100,
+      "restart": true,
+      "evacuation": 1,
+      "gate": true,
+      "boarders": 0,
+      "bus": {
+        "x": 466.6748352050781,
+        "z": -8.531874656677246,
+        "y": 0.7354346513748169,
+        "yaw": 1.5524867924755645
+      },
+      "busStopped": 10041
+    }
+  ],
+  "collision": {
+    "failures": 0,
+    "pending": 0,
+    "admitted": 211,
+    "deferred": 0,
+    "requests": [],
+    "offenders": []
+  },
+  "finalStateHash": "066f2cb4",
+  "driving": {
+    "prepared": true,
+    "roster": [
+      669,
+      670,
+      671,
+      672,
+      673
+    ],
+    "samId": 673,
+    "megaId": 674,
+    "soldiers": [
+      685,
+      686,
+      687,
+      688
+    ],
+    "trucks": [
+      682,
+      683,
+      684
+    ],
+    "boardersCalled": true,
+    "route": "road",
+    "checkpoints": [
+      "mid-crossing",
+      "evac-point"
+    ],
+    "stallAt": 6191,
+    "restarted": true,
+    "repairTicks": 0,
+    "repairActive": false,
+    "gateAt": 5086,
+    "gateClosed": true,
+    "gateId": 693,
+    "bridgeGateId": 694,
+    "fenceBroken": true,
+    "evacuationAt": 9583,
+    "evacuated": [
+      671
+    ],
+    "evacuating": [
+      669,
+      670,
+      671,
+      672
+    ],
+    "evacuationDone": false,
+    "hugAt": null,
+    "hugDone": false,
+    "truckEntering": {
+      "671": 10733
+    },
+    "busId": 675,
+    "busPassengers": [
+      676,
+      677,
+      678,
+      679,
+      680,
+      681
+    ],
+    "busReleased": 6,
+    "busHitAt": 9675,
+    "busStoppedAt": 10041,
+    "busLineAt": 4390,
+    "tankerId": 691,
+    "tankerWreckId": 692,
+    "tankerFuseAt": null,
+    "tankerExploded": false,
+    "stampede": [],
+    "fireAt": null,
+    "fireIds": [],
+    "jumped": [],
+    "jump": null,
+    "obstacleIds": [
+      695,
+      696,
+      697,
+      698,
+      699,
+      700,
+      701,
+      702,
+      703,
+      704,
+      705,
+      706,
+      707,
+      708
+    ],
+    "waves": [
+      824,
+      825,
+      826,
+      827,
+      828,
+      829,
+      830,
+      831,
+      876,
+      877,
+      878,
+      879,
+      880,
+      881,
+      882,
+      883,
+      890,
+      891,
+      892,
+      893,
+      894,
+      895,
+      896,
+      897,
+      898,
+      899,
+      900,
+      901,
+      902,
+      903,
+      904,
+      905
+    ],
+    "nextWave": 36223,
+    "lines": [],
+    "hatchOpen": true
+  },
+  "admissions": {
+    "actors": [
+      {
+        "tick": 140,
+        "id": 709,
+        "archetype": "infected.runner",
+        "distance": 153.27932531114797,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 310,
+        "id": 710,
+        "archetype": "infected.runner",
+        "distance": 110.00890873015695,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 310,
+        "id": 711,
+        "archetype": "infected.sprinter",
+        "distance": 110,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 310,
+        "id": 712,
+        "archetype": "infected.dog",
+        "distance": 110.00890873015695,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 310,
+        "id": 713,
+        "archetype": "infected.screamer",
+        "distance": 112.20873406290615,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 310,
+        "id": 714,
+        "archetype": "infected.brute",
+        "distance": 112.19999999999999,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 310,
+        "id": 715,
+        "archetype": "infected.runner",
+        "distance": 112.20873406290615,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 420,
+        "id": 716,
+        "archetype": "infected.runner",
+        "distance": 141.07255133900918,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 420,
+        "id": 717,
+        "archetype": "infected.runner",
+        "distance": 209.9326211701383,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 750,
+        "id": 718,
+        "archetype": "infected.runner",
+        "distance": 202.6785465225349,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 790,
+        "id": 719,
+        "archetype": "infected.runner",
+        "distance": 110.00890873015695,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 790,
+        "id": 720,
+        "archetype": "infected.sprinter",
+        "distance": 110.00000000000001,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 790,
+        "id": 721,
+        "archetype": "infected.dog",
+        "distance": 110.00890873015696,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 790,
+        "id": 722,
+        "archetype": "infected.screamer",
+        "distance": 112.20873406290619,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 790,
+        "id": 723,
+        "archetype": "infected.brute",
+        "distance": 112.20000000000002,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 790,
+        "id": 724,
+        "archetype": "infected.runner",
+        "distance": 112.20873406290619,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 880,
+        "id": 725,
+        "archetype": "infected.runner",
+        "distance": 130.06477025464793,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 880,
+        "id": 726,
+        "archetype": "infected.zebra",
+        "distance": 131.17240759725783,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 880,
+        "id": 727,
+        "archetype": "infected.dog",
+        "distance": 132.28354609825038,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 880,
+        "id": 728,
+        "archetype": "infected.sprinter",
+        "distance": 133.39809826903357,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 880,
+        "id": 729,
+        "archetype": "infected.elephant",
+        "distance": 130.88627393034088,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 880,
+        "id": 730,
+        "archetype": "infected.runner",
+        "distance": 132.06704541130682,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 880,
+        "id": 731,
+        "archetype": "infected.zebra",
+        "distance": 132.9601731430939,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 880,
+        "id": 732,
+        "archetype": "infected.dog",
+        "distance": 134.0691004508806,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 1270,
+        "id": 733,
+        "archetype": "infected.runner",
+        "distance": 110.00890873015693,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 1270,
+        "id": 734,
+        "archetype": "infected.sprinter",
+        "distance": 109.99999999999997,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 1270,
+        "id": 735,
+        "archetype": "infected.dog",
+        "distance": 110.0089087301569,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 1270,
+        "id": 736,
+        "archetype": "infected.screamer",
+        "distance": 112.20873406290616,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 1270,
+        "id": 737,
+        "archetype": "infected.brute",
+        "distance": 112.19999999999999,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 1270,
+        "id": 738,
+        "archetype": "infected.runner",
+        "distance": 112.20873406290613,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 1310,
+        "id": 739,
+        "archetype": "infected.runner",
+        "distance": 179.78665732420717,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 1310,
+        "id": 740,
+        "archetype": "infected.sprinter",
+        "distance": 180.34139758677202,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 1310,
+        "id": 741,
+        "archetype": "infected.brute",
+        "distance": 180.90377888614833,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 1310,
+        "id": 742,
+        "archetype": "infected.dog",
+        "distance": 181.47373018436235,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 1310,
+        "id": 743,
+        "archetype": "infected.armored",
+        "distance": 178.61000382539936,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 1310,
+        "id": 744,
+        "archetype": "infected.screamer",
+        "distance": 179.16838727366908,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 1750,
+        "id": 745,
+        "archetype": "infected.runner",
+        "distance": 110.00890873015688,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 1750,
+        "id": 746,
+        "archetype": "infected.sprinter",
+        "distance": 109.99999999999997,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 1750,
+        "id": 747,
+        "archetype": "infected.dog",
+        "distance": 110.00890873015693,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 1750,
+        "id": 748,
+        "archetype": "infected.screamer",
+        "distance": 112.20873406290613,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 1750,
+        "id": 749,
+        "archetype": "infected.brute",
+        "distance": 112.19999999999996,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 1750,
+        "id": 750,
+        "archetype": "infected.runner",
+        "distance": 112.20873406290616,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 2050,
+        "id": 751,
+        "archetype": "infected.runner",
+        "distance": 158.26845025699197,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 2230,
+        "id": 752,
+        "archetype": "infected.runner",
+        "distance": 110.00890873015693,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 2230,
+        "id": 753,
+        "archetype": "infected.sprinter",
+        "distance": 110,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 2230,
+        "id": 754,
+        "archetype": "infected.dog",
+        "distance": 110.00890873015692,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 2230,
+        "id": 755,
+        "archetype": "infected.screamer",
+        "distance": 112.20873406290615,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 2230,
+        "id": 756,
+        "archetype": "infected.brute",
+        "distance": 112.19999999999999,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 2230,
+        "id": 757,
+        "archetype": "infected.runner",
+        "distance": 112.20873406290617,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 2710,
+        "id": 758,
+        "archetype": "infected.runner",
+        "distance": 110.00890873015696,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 2710,
+        "id": 759,
+        "archetype": "infected.sprinter",
+        "distance": 110,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 2710,
+        "id": 760,
+        "archetype": "infected.dog",
+        "distance": 110.00890873015695,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 2710,
+        "id": 761,
+        "archetype": "infected.screamer",
+        "distance": 112.2087340629062,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 2710,
+        "id": 762,
+        "archetype": "infected.brute",
+        "distance": 112.2,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 2710,
+        "id": 763,
+        "archetype": "infected.runner",
+        "distance": 112.20873406290617,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 3070,
+        "id": 764,
+        "archetype": "infected.runner",
+        "distance": 147.18639212164103,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 3190,
+        "id": 765,
+        "archetype": "infected.runner",
+        "distance": 110.00890873015695,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 3190,
+        "id": 766,
+        "archetype": "infected.sprinter",
+        "distance": 110,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 3190,
+        "id": 767,
+        "archetype": "infected.dog",
+        "distance": 110.00890873015695,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 3190,
+        "id": 768,
+        "archetype": "infected.screamer",
+        "distance": 112.20873406290617,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 3190,
+        "id": 769,
+        "archetype": "infected.brute",
+        "distance": 112.2,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 3190,
+        "id": 770,
+        "archetype": "infected.runner",
+        "distance": 112.20873406290617,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 3600,
+        "id": 771,
+        "archetype": "infected.runner",
+        "distance": 164.14095471478996,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 3670,
+        "id": 772,
+        "archetype": "infected.runner",
+        "distance": 110.00890873015695,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 3670,
+        "id": 773,
+        "archetype": "infected.sprinter",
+        "distance": 109.99999999999999,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 3670,
+        "id": 774,
+        "archetype": "infected.dog",
+        "distance": 110.00890873015693,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 3670,
+        "id": 775,
+        "archetype": "infected.screamer",
+        "distance": 112.20873406290616,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 3670,
+        "id": 776,
+        "archetype": "infected.brute",
+        "distance": 112.19999999999999,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 3670,
+        "id": 777,
+        "archetype": "infected.runner",
+        "distance": 112.20873406290617,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 4140,
+        "id": 778,
+        "archetype": "infected.runner",
+        "distance": 175.415898386138,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 4140,
+        "id": 779,
+        "archetype": "infected.sprinter",
+        "distance": 176.69480685173303,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 4140,
+        "id": 780,
+        "archetype": "infected.brute",
+        "distance": 177.97402094161555,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 4140,
+        "id": 781,
+        "archetype": "infected.dog",
+        "distance": 179.25353411266954,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 4140,
+        "id": 782,
+        "archetype": "infected.armored",
+        "distance": 175.18649355416468,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 4140,
+        "id": 783,
+        "archetype": "infected.screamer",
+        "distance": 176.46706459155132,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 4150,
+        "id": 784,
+        "archetype": "infected.runner",
+        "distance": 110.00890873015693,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 4150,
+        "id": 785,
+        "archetype": "infected.sprinter",
+        "distance": 110,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 4150,
+        "id": 786,
+        "archetype": "infected.dog",
+        "distance": 110.00890873015693,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 4150,
+        "id": 787,
+        "archetype": "infected.screamer",
+        "distance": 112.20873406290619,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 4150,
+        "id": 788,
+        "archetype": "infected.brute",
+        "distance": 112.2,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 4150,
+        "id": 789,
+        "archetype": "infected.runner",
+        "distance": 112.20873406290616,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 4630,
+        "id": 790,
+        "archetype": "infected.runner",
+        "distance": 110.00890873015696,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 4630,
+        "id": 791,
+        "archetype": "infected.sprinter",
+        "distance": 110.00000000000001,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 4630,
+        "id": 792,
+        "archetype": "infected.dog",
+        "distance": 110.00890873015696,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 4630,
+        "id": 793,
+        "archetype": "infected.screamer",
+        "distance": 112.20873406290623,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 4630,
+        "id": 794,
+        "archetype": "infected.brute",
+        "distance": 112.20000000000003,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 4630,
+        "id": 795,
+        "archetype": "infected.runner",
+        "distance": 112.20873406290622,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 5110,
+        "id": 796,
+        "archetype": "infected.runner",
+        "distance": 110.00890873015695,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 5110,
+        "id": 797,
+        "archetype": "infected.sprinter",
+        "distance": 110.00000000000001,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 5110,
+        "id": 798,
+        "archetype": "infected.dog",
+        "distance": 110.00890873015696,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 5110,
+        "id": 799,
+        "archetype": "infected.screamer",
+        "distance": 112.20873406290617,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 5110,
+        "id": 800,
+        "archetype": "infected.brute",
+        "distance": 112.2,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 5110,
+        "id": 801,
+        "archetype": "infected.runner",
+        "distance": 112.20873406290617,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 5530,
+        "id": 802,
+        "archetype": "infected.runner",
+        "distance": 191.73946021845202,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 5590,
+        "id": 803,
+        "archetype": "infected.runner",
+        "distance": 110.00890873015693,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 5590,
+        "id": 804,
+        "archetype": "infected.sprinter",
+        "distance": 109.99999999999999,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 5590,
+        "id": 805,
+        "archetype": "infected.dog",
+        "distance": 110.00890873015693,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 5590,
+        "id": 806,
+        "archetype": "infected.screamer",
+        "distance": 112.20873406290615,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 5590,
+        "id": 807,
+        "archetype": "infected.brute",
+        "distance": 112.19999999999996,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 5590,
+        "id": 808,
+        "archetype": "infected.runner",
+        "distance": 112.20873406290613,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 6070,
+        "id": 809,
+        "archetype": "infected.alpha",
+        "distance": 238.36007694139633,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 6070,
+        "id": 810,
+        "archetype": "infected.runner",
+        "distance": 241.39355947863987,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 6070,
+        "id": 811,
+        "archetype": "infected.zebra",
+        "distance": 240.68546720448552,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 6070,
+        "id": 812,
+        "archetype": "infected.dog",
+        "distance": 239.98232786835635,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 6070,
+        "id": 813,
+        "archetype": "infected.sprinter",
+        "distance": 239.2841851330529,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 6070,
+        "id": 814,
+        "archetype": "infected.elephant",
+        "distance": 242.69301869281895,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 6070,
+        "id": 815,
+        "archetype": "infected.runner",
+        "distance": 241.64333659144614,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 6070,
+        "id": 816,
+        "archetype": "infected.zebra",
+        "distance": 241.07837657670677,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 6070,
+        "id": 817,
+        "archetype": "infected.runner",
+        "distance": 215.36923495613343,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 6070,
+        "id": 818,
+        "archetype": "infected.runner",
+        "distance": 110.00890873015693,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 6070,
+        "id": 819,
+        "archetype": "infected.sprinter",
+        "distance": 110.00000000000001,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 6070,
+        "id": 820,
+        "archetype": "infected.dog",
+        "distance": 110.00890873015696,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 6070,
+        "id": 821,
+        "archetype": "infected.screamer",
+        "distance": 112.20873406290616,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 6070,
+        "id": 822,
+        "archetype": "infected.brute",
+        "distance": 112.20000000000002,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 6070,
+        "id": 823,
+        "archetype": "infected.runner",
+        "distance": 112.20873406290619,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 6191,
+        "id": 824,
+        "archetype": "infected.sprinter",
+        "distance": 104.99999999999999,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 6191,
+        "id": 825,
+        "archetype": "infected.dog",
+        "distance": 105.00000000000003,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 6191,
+        "id": 826,
+        "archetype": "infected.runner",
+        "distance": 105.00000000000001,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 6191,
+        "id": 827,
+        "archetype": "infected.armored",
+        "distance": 105.00000000000001,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 6191,
+        "id": 828,
+        "archetype": "infected.sprinter",
+        "distance": 105.00000000000001,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 6191,
+        "id": 829,
+        "archetype": "infected.dog",
+        "distance": 105.00000000000001,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 6191,
+        "id": 830,
+        "archetype": "infected.runner",
+        "distance": 105.00000000000003,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 6191,
+        "id": 831,
+        "archetype": "infected.armored",
+        "distance": 104.99999999999997,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 6550,
+        "id": 832,
+        "archetype": "infected.runner",
+        "distance": 110.00890873015693,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 6550,
+        "id": 833,
+        "archetype": "infected.sprinter",
+        "distance": 110,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 6550,
+        "id": 834,
+        "archetype": "infected.dog",
+        "distance": 110.00890873015695,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 6550,
+        "id": 835,
+        "archetype": "infected.screamer",
+        "distance": 112.20873406290616,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 6550,
+        "id": 836,
+        "archetype": "infected.brute",
+        "distance": 112.19999999999999,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 6550,
+        "id": 837,
+        "archetype": "infected.runner",
+        "distance": 112.20873406290616,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 7030,
+        "id": 838,
+        "archetype": "infected.runner",
+        "distance": 110.00890873015692,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 7030,
+        "id": 839,
+        "archetype": "infected.sprinter",
+        "distance": 109.99999999999999,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 7030,
+        "id": 840,
+        "archetype": "infected.dog",
+        "distance": 110.00890873015696,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 7030,
+        "id": 841,
+        "archetype": "infected.screamer",
+        "distance": 112.20873406290615,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 7030,
+        "id": 842,
+        "archetype": "infected.brute",
+        "distance": 112.19999999999999,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 7030,
+        "id": 843,
+        "archetype": "infected.runner",
+        "distance": 112.20873406290619,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 7510,
+        "id": 844,
+        "archetype": "infected.runner",
+        "distance": 110.00890873015696,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 7510,
+        "id": 845,
+        "archetype": "infected.sprinter",
+        "distance": 110.00000000000003,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 7510,
+        "id": 846,
+        "archetype": "infected.dog",
+        "distance": 110.00890873015697,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 7510,
+        "id": 847,
+        "archetype": "infected.screamer",
+        "distance": 112.20873406290619,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 7510,
+        "id": 848,
+        "archetype": "infected.brute",
+        "distance": 112.2,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 7510,
+        "id": 849,
+        "archetype": "infected.runner",
+        "distance": 112.2087340629062,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 7990,
+        "id": 850,
+        "archetype": "infected.runner",
+        "distance": 110.00890873015697,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 7990,
+        "id": 851,
+        "archetype": "infected.sprinter",
+        "distance": 110.00000000000003,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 7990,
+        "id": 852,
+        "archetype": "infected.dog",
+        "distance": 110.00890873015696,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 7990,
+        "id": 853,
+        "archetype": "infected.screamer",
+        "distance": 112.20873406290619,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 7990,
+        "id": 854,
+        "archetype": "infected.brute",
+        "distance": 112.2,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 7990,
+        "id": 855,
+        "archetype": "infected.runner",
+        "distance": 112.20873406290617,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 8470,
+        "id": 856,
+        "archetype": "infected.runner",
+        "distance": 110.00890873015695,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 8470,
+        "id": 857,
+        "archetype": "infected.sprinter",
+        "distance": 109.99999999999999,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 8470,
+        "id": 858,
+        "archetype": "infected.dog",
+        "distance": 110.0089087301569,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 8470,
+        "id": 859,
+        "archetype": "infected.screamer",
+        "distance": 112.20873406290615,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 8470,
+        "id": 860,
+        "archetype": "infected.brute",
+        "distance": 112.19999999999999,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 8470,
+        "id": 861,
+        "archetype": "infected.runner",
+        "distance": 112.20873406290616,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 8800,
+        "id": 862,
+        "archetype": "infected.runner",
+        "distance": 194.64369066158585,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 8800,
+        "id": 863,
+        "archetype": "infected.runner",
+        "distance": 140.18782760183748,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 8950,
+        "id": 864,
+        "archetype": "infected.runner",
+        "distance": 110.00890873015693,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 8950,
+        "id": 865,
+        "archetype": "infected.sprinter",
+        "distance": 109.99999999999999,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 8950,
+        "id": 866,
+        "archetype": "infected.dog",
+        "distance": 110.00890873015693,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 8950,
+        "id": 867,
+        "archetype": "infected.screamer",
+        "distance": 112.20873406290617,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 8950,
+        "id": 868,
+        "archetype": "infected.brute",
+        "distance": 112.19999999999999,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 8950,
+        "id": 869,
+        "archetype": "infected.runner",
+        "distance": 112.20873406290616,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 9430,
+        "id": 870,
+        "archetype": "infected.runner",
+        "distance": 110.00890873015692,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 9430,
+        "id": 871,
+        "archetype": "infected.sprinter",
+        "distance": 109.99999999999997,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 9430,
+        "id": 872,
+        "archetype": "infected.dog",
+        "distance": 110.00890873015693,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 9430,
+        "id": 873,
+        "archetype": "infected.screamer",
+        "distance": 112.20873406290616,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 9430,
+        "id": 874,
+        "archetype": "infected.brute",
+        "distance": 112.19999999999999,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 9430,
+        "id": 875,
+        "archetype": "infected.runner",
+        "distance": 112.20873406290619,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 9583,
+        "id": 876,
+        "archetype": "infected.sprinter",
+        "distance": 104.99999999999999,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 9583,
+        "id": 877,
+        "archetype": "infected.dog",
+        "distance": 105.00000000000003,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 9583,
+        "id": 878,
+        "archetype": "infected.runner",
+        "distance": 105.00000000000001,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 9583,
+        "id": 879,
+        "archetype": "infected.armored",
+        "distance": 105.00000000000001,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 9583,
+        "id": 880,
+        "archetype": "infected.sprinter",
+        "distance": 105.00000000000001,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 9583,
+        "id": 881,
+        "archetype": "infected.dog",
+        "distance": 105.00000000000001,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 9583,
+        "id": 882,
+        "archetype": "infected.runner",
+        "distance": 105.00000000000001,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 9583,
+        "id": 883,
+        "archetype": "infected.armored",
+        "distance": 104.99999999999997,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 9910,
+        "id": 884,
+        "archetype": "infected.runner",
+        "distance": 110.00890873015693,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 9910,
+        "id": 885,
+        "archetype": "infected.sprinter",
+        "distance": 110.00000000000001,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 9910,
+        "id": 886,
+        "archetype": "infected.dog",
+        "distance": 110.00890873015695,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 9910,
+        "id": 887,
+        "archetype": "infected.screamer",
+        "distance": 112.20873406290617,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 9910,
+        "id": 888,
+        "archetype": "infected.brute",
+        "distance": 112.19999999999999,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 9910,
+        "id": 889,
+        "archetype": "infected.runner",
+        "distance": 112.20873406290616,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 9943,
+        "id": 890,
+        "archetype": "infected.sprinter",
+        "distance": 104.99999999999999,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 9943,
+        "id": 891,
+        "archetype": "infected.dog",
+        "distance": 105.00000000000003,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 9943,
+        "id": 892,
+        "archetype": "infected.runner",
+        "distance": 105.00000000000001,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 9943,
+        "id": 893,
+        "archetype": "infected.armored",
+        "distance": 105.00000000000001,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 9943,
+        "id": 894,
+        "archetype": "infected.sprinter",
+        "distance": 105.00000000000001,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 9943,
+        "id": 895,
+        "archetype": "infected.dog",
+        "distance": 105.00000000000001,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 9943,
+        "id": 896,
+        "archetype": "infected.runner",
+        "distance": 105.00000000000001,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 9943,
+        "id": 897,
+        "archetype": "infected.armored",
+        "distance": 104.99999999999997,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 10303,
+        "id": 898,
+        "archetype": "infected.sprinter",
+        "distance": 104.99999999999999,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 10303,
+        "id": 899,
+        "archetype": "infected.dog",
+        "distance": 104.85460602532885,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 10303,
+        "id": 900,
+        "archetype": "infected.runner",
+        "distance": 105.00000000000001,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 10303,
+        "id": 901,
+        "archetype": "infected.armored",
+        "distance": 104.34302261360806,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 10303,
+        "id": 902,
+        "archetype": "infected.sprinter",
+        "distance": 105.00000000000001,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 10303,
+        "id": 903,
+        "archetype": "infected.dog",
+        "distance": 104.29040925807867,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 10303,
+        "id": 904,
+        "archetype": "infected.runner",
+        "distance": 105.00000000000001,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 10303,
+        "id": 905,
+        "archetype": "infected.armored",
+        "distance": 104.25234017231327,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 10390,
+        "id": 906,
+        "archetype": "infected.runner",
+        "distance": 110.00890873015693,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 10390,
+        "id": 907,
+        "archetype": "infected.sprinter",
+        "distance": 110.00000000000001,
+        "state": "wander",
+        "hidden": false
+      },
+      {
+        "tick": 10390,
+        "id": 908,
+        "archetype": "infected.dog",
+        "distance": 110.00890873015695,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 10390,
+        "id": 909,
+        "archetype": "infected.screamer",
+        "distance": 111.58916924086778,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 10390,
+        "id": 910,
+        "archetype": "infected.brute",
+        "distance": 111.67564717741983,
+        "state": "chase",
+        "hidden": false
+      },
+      {
+        "tick": 10390,
+        "id": 911,
+        "archetype": "infected.runner",
+        "distance": 112.67683105700074,
+        "state": "wander",
+        "hidden": false
+      }
+    ],
+    "violations": []
+  },
+  "firstNear": {
+    "method": "First shown native actor within a conservative 45 m radius; this is a headless proxy, not a rendered max-zoom frustum.",
+    "actors": [
+      {
+        "id": 709,
+        "archetype": "infected.runner",
+        "state": "chase",
+        "distance": 44.77979323734895
+      },
+      {
+        "id": 711,
+        "archetype": "infected.sprinter",
+        "state": "chase",
+        "distance": 44.91394531222677
+      },
+      {
+        "id": 710,
+        "archetype": "infected.runner",
+        "state": "chase",
+        "distance": 44.956729486563916
+      },
+      {
+        "id": 716,
+        "archetype": "infected.runner",
+        "state": "chase",
+        "distance": 44.869753230107534
+      },
+      {
+        "id": 717,
+        "archetype": "infected.runner",
+        "state": "chase",
+        "distance": 44.76232560132949
+      },
+      {
+        "id": 720,
+        "archetype": "infected.sprinter",
+        "state": "chase",
+        "distance": 44.99244092191376
+      },
+      {
+        "id": 721,
+        "archetype": "infected.dog",
+        "state": "chase",
+        "distance": 44.9205372101247
+      },
+      {
+        "id": 719,
+        "archetype": "infected.runner",
+        "state": "chase",
+        "distance": 44.97914815773292
+      },
+      {
+        "id": 724,
+        "archetype": "infected.runner",
+        "state": "chase",
+        "distance": 44.825964837989645
+      },
+      {
+        "id": 722,
+        "archetype": "infected.screamer",
+        "state": "chase",
+        "distance": 44.75863112230758
+      },
+      {
+        "id": 723,
+        "archetype": "infected.brute",
+        "state": "chase",
+        "distance": 44.97556980725513
+      },
+      {
+        "id": 718,
+        "archetype": "infected.runner",
+        "state": "chase",
+        "distance": 44.87025405542738
+      },
+      {
+        "id": 733,
+        "archetype": "infected.runner",
+        "state": "chase",
+        "distance": 44.77387871971151
+      },
+      {
+        "id": 735,
+        "archetype": "infected.dog",
+        "state": "chase",
+        "distance": 44.864613823565506
+      },
+      {
+        "id": 734,
+        "archetype": "infected.sprinter",
+        "state": "chase",
+        "distance": 44.83454831627531
+      },
+      {
+        "id": 738,
+        "archetype": "infected.runner",
+        "state": "chase",
+        "distance": 44.891904419181444
+      },
+      {
+        "id": 736,
+        "archetype": "infected.screamer",
+        "state": "chase",
+        "distance": 44.82639223186356
+      },
+      {
+        "id": 737,
+        "archetype": "infected.brute",
+        "state": "chase",
+        "distance": 44.99929868987601
+      },
+      {
+        "id": 739,
+        "archetype": "infected.runner",
+        "state": "chase",
+        "distance": 44.874999379259044
+      },
+      {
+        "id": 740,
+        "archetype": "infected.sprinter",
+        "state": "chase",
+        "distance": 44.965548934399315
+      },
+      {
+        "id": 743,
+        "archetype": "infected.armored",
+        "state": "chase",
+        "distance": 44.873519913321914
+      },
+      {
+        "id": 742,
+        "archetype": "infected.dog",
+        "state": "chase",
+        "distance": 44.90612077573881
+      },
+      {
+        "id": 744,
+        "archetype": "infected.screamer",
+        "state": "chase",
+        "distance": 44.93826039553777
+      },
+      {
+        "id": 741,
+        "archetype": "infected.brute",
+        "state": "chase",
+        "distance": 44.809347194331814
+      },
+      {
+        "id": 745,
+        "archetype": "infected.runner",
+        "state": "chase",
+        "distance": 44.80299766015927
+      },
+      {
+        "id": 746,
+        "archetype": "infected.sprinter",
+        "state": "chase",
+        "distance": 44.8751204807274
+      },
+      {
+        "id": 747,
+        "archetype": "infected.dog",
+        "state": "chase",
+        "distance": 44.92471852051495
+      },
+      {
+        "id": 750,
+        "archetype": "infected.runner",
+        "state": "chase",
+        "distance": 44.908855310595094
+      },
+      {
+        "id": 748,
+        "archetype": "infected.screamer",
+        "state": "chase",
+        "distance": 44.91614635106965
+      },
+      {
+        "id": 749,
+        "archetype": "infected.brute",
+        "state": "chase",
+        "distance": 44.90265588848371
+      },
+      {
+        "id": 754,
+        "archetype": "infected.dog",
+        "state": "chase",
+        "distance": 44.83488510783278
+      },
+      {
+        "id": 753,
+        "archetype": "infected.sprinter",
+        "state": "chase",
+        "distance": 44.85849268358364
+      },
+      {
+        "id": 751,
+        "archetype": "infected.runner",
+        "state": "chase",
+        "distance": 44.877849736640385
+      },
+      {
+        "id": 752,
+        "archetype": "infected.runner",
+        "state": "chase",
+        "distance": 44.98285942811913
+      },
+      {
+        "id": 757,
+        "archetype": "infected.runner",
+        "state": "chase",
+        "distance": 44.86263730544532
+      },
+      {
+        "id": 755,
+        "archetype": "infected.screamer",
+        "state": "chase",
+        "distance": 44.862436553384725
+      },
+      {
+        "id": 756,
+        "archetype": "infected.brute",
+        "state": "chase",
+        "distance": 44.89118486026138
+      },
+      {
+        "id": 758,
+        "archetype": "infected.runner",
+        "state": "chase",
+        "distance": 44.8882074509037
+      },
+      {
+        "id": 759,
+        "archetype": "infected.sprinter",
+        "state": "chase",
+        "distance": 44.98183435090368
+      },
+      {
+        "id": 760,
+        "archetype": "infected.dog",
+        "state": "chase",
+        "distance": 44.84357895512717
+      },
+      {
+        "id": 763,
+        "archetype": "infected.runner",
+        "state": "chase",
+        "distance": 44.86436755927752
+      },
+      {
+        "id": 761,
+        "archetype": "infected.screamer",
+        "state": "chase",
+        "distance": 44.924368855212194
+      },
+      {
+        "id": 762,
+        "archetype": "infected.brute",
+        "state": "chase",
+        "distance": 44.92062227148109
+      },
+      {
+        "id": 765,
+        "archetype": "infected.runner",
+        "state": "chase",
+        "distance": 44.84944142507979
+      },
+      {
+        "id": 767,
+        "archetype": "infected.dog",
+        "state": "chase",
+        "distance": 44.94437973792679
+      },
+      {
+        "id": 766,
+        "archetype": "infected.sprinter",
+        "state": "chase",
+        "distance": 44.88181573228026
+      },
+      {
+        "id": 770,
+        "archetype": "infected.runner",
+        "state": "chase",
+        "distance": 44.83482928718905
+      },
+      {
+        "id": 764,
+        "archetype": "infected.runner",
+        "state": "chase",
+        "distance": 44.878680882748824
+      },
+      {
+        "id": 768,
+        "archetype": "infected.screamer",
+        "state": "chase",
+        "distance": 44.85617925769334
+      },
+      {
+        "id": 769,
+        "archetype": "infected.brute",
+        "state": "chase",
+        "distance": 44.9361189822243
+      },
+      {
+        "id": 773,
+        "archetype": "infected.sprinter",
+        "state": "chase",
+        "distance": 44.85698485873244
+      },
+      {
+        "id": 774,
+        "archetype": "infected.dog",
+        "state": "chase",
+        "distance": 44.8966642423437
+      },
+      {
+        "id": 772,
+        "archetype": "infected.runner",
+        "state": "chase",
+        "distance": 44.94609998580122
+      },
+      {
+        "id": 777,
+        "archetype": "infected.runner",
+        "state": "chase",
+        "distance": 44.81737141125526
+      },
+      {
+        "id": 775,
+        "archetype": "infected.screamer",
+        "state": "chase",
+        "distance": 44.92621565480472
+      },
+      {
+        "id": 776,
+        "archetype": "infected.brute",
+        "state": "chase",
+        "distance": 44.96638547866312
+      },
+      {
+        "id": 771,
+        "archetype": "infected.runner",
+        "state": "chase",
+        "distance": 44.96771627383347
+      },
+      {
+        "id": 786,
+        "archetype": "infected.dog",
+        "state": "chase",
+        "distance": 44.907613678483024
+      },
+      {
+        "id": 784,
+        "archetype": "infected.runner",
+        "state": "chase",
+        "distance": 44.91417633108789
+      },
+      {
+        "id": 785,
+        "archetype": "infected.sprinter",
+        "state": "chase",
+        "distance": 44.96843516224202
+      },
+      {
+        "id": 789,
+        "archetype": "infected.runner",
+        "state": "chase",
+        "distance": 44.74414129453579
+      },
+      {
+        "id": 787,
+        "archetype": "infected.screamer",
+        "state": "chase",
+        "distance": 44.98243019641726
+      },
+      {
+        "id": 788,
+        "archetype": "infected.brute",
+        "state": "chase",
+        "distance": 44.87573498463604
+      },
+      {
+        "id": 778,
+        "archetype": "infected.runner",
+        "state": "chase",
+        "distance": 44.84941607256481
+      },
+      {
+        "id": 779,
+        "archetype": "infected.sprinter",
+        "state": "chase",
+        "distance": 44.859745508059895
+      },
+      {
+        "id": 782,
+        "archetype": "infected.armored",
+        "state": "chase",
+        "distance": 44.94899198258695
+      },
+      {
+        "id": 781,
+        "archetype": "infected.dog",
+        "state": "chase",
+        "distance": 44.875602919058935
+      },
+      {
+        "id": 783,
+        "archetype": "infected.screamer",
+        "state": "chase",
+        "distance": 44.9329741381473
+      },
+      {
+        "id": 780,
+        "archetype": "infected.brute",
+        "state": "chase",
+        "distance": 44.87871086457949
+      },
+      {
+        "id": 791,
+        "archetype": "infected.sprinter",
+        "state": "chase",
+        "distance": 44.79807670821025
+      },
+      {
+        "id": 792,
+        "archetype": "infected.dog",
+        "state": "chase",
+        "distance": 44.86242971857618
+      },
+      {
+        "id": 790,
+        "archetype": "infected.runner",
+        "state": "chase",
+        "distance": 44.96429886746475
+      },
+      {
+        "id": 795,
+        "archetype": "infected.runner",
+        "state": "chase",
+        "distance": 44.94913549616608
+      },
+      {
+        "id": 793,
+        "archetype": "infected.screamer",
+        "state": "chase",
+        "distance": 44.84332841209791
+      },
+      {
+        "id": 794,
+        "archetype": "infected.brute",
+        "state": "chase",
+        "distance": 44.9441617104731
+      },
+      {
+        "id": 797,
+        "archetype": "infected.sprinter",
+        "state": "chase",
+        "distance": 44.94668260980104
+      },
+      {
+        "id": 796,
+        "archetype": "infected.runner",
+        "state": "chase",
+        "distance": 44.798551811071135
+      },
+      {
+        "id": 798,
+        "archetype": "infected.dog",
+        "state": "chase",
+        "distance": 44.889769744338025
+      },
+      {
+        "id": 801,
+        "archetype": "infected.runner",
+        "state": "chase",
+        "distance": 44.93532705754447
+      },
+      {
+        "id": 799,
+        "archetype": "infected.screamer",
+        "state": "chase",
+        "distance": 44.88523919778874
+      },
+      {
+        "id": 800,
+        "archetype": "infected.brute",
+        "state": "chase",
+        "distance": 44.8399403706191
+      },
+      {
+        "id": 802,
+        "archetype": "infected.runner",
+        "state": "chase",
+        "distance": 44.844866738998626
+      },
+      {
+        "id": 677,
+        "archetype": "infected.sprinter",
+        "state": "attracted",
+        "distance": 6.918657033076117
+      },
+      {
+        "id": 818,
+        "archetype": "infected.runner",
+        "state": "chase",
+        "distance": 44.989696400816314
+      },
+      {
+        "id": 820,
+        "archetype": "infected.dog",
+        "state": "chase",
+        "distance": 44.98457876445815
+      },
+      {
+        "id": 678,
+        "archetype": "infected.runner",
+        "state": "attracted",
+        "distance": 6.954739437572895
+      },
+      {
+        "id": 804,
+        "archetype": "infected.sprinter",
+        "state": "chase",
+        "distance": 44.973732348600436
+      },
+      {
+        "id": 819,
+        "archetype": "infected.sprinter",
+        "state": "chase",
+        "distance": 44.95551577249777
+      },
+      {
+        "id": 808,
+        "archetype": "infected.runner",
+        "state": "chase",
+        "distance": 44.94152399929706
+      },
+      {
+        "id": 823,
+        "archetype": "infected.runner",
+        "state": "chase",
+        "distance": 44.99250582106037
+      },
+      {
+        "id": 679,
+        "archetype": "infected.sprinter",
+        "state": "attracted",
+        "distance": 7.028090338201563
+      },
+      {
+        "id": 805,
+        "archetype": "infected.dog",
+        "state": "chase",
+        "distance": 44.96408411690316
+      },
+      {
+        "id": 803,
+        "archetype": "infected.runner",
+        "state": "chase",
+        "distance": 44.99984262988626
+      },
+      {
+        "id": 680,
+        "archetype": "infected.runner",
+        "state": "attracted",
+        "distance": 7.0947438956553714
+      },
+      {
+        "id": 806,
+        "archetype": "infected.screamer",
+        "state": "chase",
+        "distance": 44.96078460103365
+      },
+      {
+        "id": 681,
+        "archetype": "infected.sprinter",
+        "state": "attracted",
+        "distance": 7.152589216369108
+      },
+      {
+        "id": 821,
+        "archetype": "infected.screamer",
+        "state": "chase",
+        "distance": 44.99132730479078
+      },
+      {
+        "id": 822,
+        "archetype": "infected.brute",
+        "state": "chase",
+        "distance": 44.98571262392924
+      },
+      {
+        "id": 825,
+        "archetype": "infected.dog",
+        "state": "chase",
+        "distance": 44.95684903801136
+      },
+      {
+        "id": 824,
+        "archetype": "infected.sprinter",
+        "state": "chase",
+        "distance": 44.93137065872103
+      },
+      {
+        "id": 807,
+        "archetype": "infected.brute",
+        "state": "chase",
+        "distance": 44.98004536849862
+      },
+      {
+        "id": 831,
+        "archetype": "infected.armored",
+        "state": "chase",
+        "distance": 44.99530676362513
+      },
+      {
+        "id": 837,
+        "archetype": "infected.runner",
+        "state": "attracted",
+        "distance": 44.99566518762112
+      },
+      {
+        "id": 832,
+        "archetype": "infected.runner",
+        "state": "attracted",
+        "distance": 44.97230411583564
+      },
+      {
+        "id": 833,
+        "archetype": "infected.sprinter",
+        "state": "chase",
+        "distance": 44.96534960125214
+      },
+      {
+        "id": 834,
+        "archetype": "infected.dog",
+        "state": "chase",
+        "distance": 44.89915535852275
+      },
+      {
+        "id": 817,
+        "archetype": "infected.runner",
+        "state": "chase",
+        "distance": 44.867294561928695
+      },
+      {
+        "id": 843,
+        "archetype": "infected.runner",
+        "state": "chase",
+        "distance": 44.909835092272495
+      },
+      {
+        "id": 839,
+        "archetype": "infected.sprinter",
+        "state": "chase",
+        "distance": 44.96469191549841
+      },
+      {
+        "id": 840,
+        "archetype": "infected.dog",
+        "state": "chase",
+        "distance": 44.970136967645864
+      },
+      {
+        "id": 836,
+        "archetype": "infected.brute",
+        "state": "chase",
+        "distance": 44.79909330376107
+      },
+      {
+        "id": 838,
+        "archetype": "infected.runner",
+        "state": "chase",
+        "distance": 44.883608913652225
+      },
+      {
+        "id": 841,
+        "archetype": "infected.screamer",
+        "state": "chase",
+        "distance": 44.99755458036752
+      },
+      {
+        "id": 835,
+        "archetype": "infected.screamer",
+        "state": "chase",
+        "distance": 44.83683910141904
+      },
+      {
+        "id": 849,
+        "archetype": "infected.runner",
+        "state": "chase",
+        "distance": 44.992730324435904
+      },
+      {
+        "id": 845,
+        "archetype": "infected.sprinter",
+        "state": "chase",
+        "distance": 44.72598606895382
+      },
+      {
+        "id": 844,
+        "archetype": "infected.runner",
+        "state": "chase",
+        "distance": 44.80528246221796
+      },
+      {
+        "id": 842,
+        "archetype": "infected.brute",
+        "state": "chase",
+        "distance": 44.853622336194825
+      },
+      {
+        "id": 846,
+        "archetype": "infected.dog",
+        "state": "chase",
+        "distance": 44.77179485978604
+      },
+      {
+        "id": 850,
+        "archetype": "infected.runner",
+        "state": "chase",
+        "distance": 44.76540445011124
+      },
+      {
+        "id": 851,
+        "archetype": "infected.sprinter",
+        "state": "chase",
+        "distance": 44.77201125550121
+      },
+      {
+        "id": 852,
+        "archetype": "infected.dog",
+        "state": "chase",
+        "distance": 44.88497626227233
+      },
+      {
+        "id": 847,
+        "archetype": "infected.screamer",
+        "state": "chase",
+        "distance": 44.93439067855242
+      },
+      {
+        "id": 855,
+        "archetype": "infected.runner",
+        "state": "chase",
+        "distance": 44.80823392911004
+      },
+      {
+        "id": 848,
+        "archetype": "infected.brute",
+        "state": "chase",
+        "distance": 44.83539563051064
+      },
+      {
+        "id": 853,
+        "archetype": "infected.screamer",
+        "state": "chase",
+        "distance": 44.90977785330733
+      },
+      {
+        "id": 854,
+        "archetype": "infected.brute",
+        "state": "chase",
+        "distance": 44.87814099994088
+      },
+      {
+        "id": 857,
+        "archetype": "infected.sprinter",
+        "state": "chase",
+        "distance": 44.91008843868049
+      },
+      {
+        "id": 856,
+        "archetype": "infected.runner",
+        "state": "chase",
+        "distance": 44.95882989811997
+      },
+      {
+        "id": 858,
+        "archetype": "infected.dog",
+        "state": "chase",
+        "distance": 44.761433643404786
+      },
+      {
+        "id": 861,
+        "archetype": "infected.runner",
+        "state": "chase",
+        "distance": 44.81446492960715
+      },
+      {
+        "id": 859,
+        "archetype": "infected.screamer",
+        "state": "chase",
+        "distance": 44.780015122755245
+      },
+      {
+        "id": 860,
+        "archetype": "infected.brute",
+        "state": "chase",
+        "distance": 44.77752960364246
+      },
+      {
+        "id": 864,
+        "archetype": "infected.runner",
+        "state": "chase",
+        "distance": 44.98344722357647
+      },
+      {
+        "id": 866,
+        "archetype": "infected.dog",
+        "state": "chase",
+        "distance": 44.95985057442387
+      },
+      {
+        "id": 894,
+        "archetype": "infected.sprinter",
+        "state": "attracted",
+        "distance": 44.97773564956152
+      },
+      {
+        "id": 896,
+        "archetype": "infected.runner",
+        "state": "attracted",
+        "distance": 44.99471979781185
+      },
+      {
+        "id": 892,
+        "archetype": "infected.runner",
+        "state": "attracted",
+        "distance": 44.95891158827117
+      },
+      {
+        "id": 900,
+        "archetype": "infected.runner",
+        "state": "attracted",
+        "distance": 44.98756521015993
+      },
+      {
+        "id": 885,
+        "archetype": "infected.sprinter",
+        "state": "attracted",
+        "distance": 44.97549829288923
+      },
+      {
+        "id": 898,
+        "archetype": "infected.sprinter",
+        "state": "attracted",
+        "distance": 44.95656223388971
+      },
+      {
+        "id": 890,
+        "archetype": "infected.sprinter",
+        "state": "attracted",
+        "distance": 44.98289090659579
+      },
+      {
+        "id": 889,
+        "archetype": "infected.runner",
+        "state": "attracted",
+        "distance": 44.983010150590054
+      },
+      {
+        "id": 884,
+        "archetype": "infected.runner",
+        "state": "attracted",
+        "distance": 44.99869720873221
+      },
+      {
+        "id": 904,
+        "archetype": "infected.runner",
+        "state": "attracted",
+        "distance": 44.99507962465578
+      },
+      {
+        "id": 902,
+        "archetype": "infected.sprinter",
+        "state": "attracted",
+        "distance": 44.978781662244366
+      },
+      {
+        "id": 906,
+        "archetype": "infected.runner",
+        "state": "attracted",
+        "distance": 44.97557156201722
+      },
+      {
+        "id": 911,
+        "archetype": "infected.runner",
+        "state": "attracted",
+        "distance": 44.97403983476414
+      },
+      {
+        "id": 907,
+        "archetype": "infected.sprinter",
+        "state": "attracted",
+        "distance": 44.98977667208082
+      }
+    ],
+    "idle": []
+  },
+  "cpu": {
+    "p95": 3.8561480000062147,
+    "max": 617.4911360000006,
+    "note": "Shared runner diagnostic; rendering and device performance are not measured."
+  },
+  "passengers": [
+    {
+      "id": 668,
+      "seat": 0,
+      "phase": "exit",
+      "started": 35970,
+      "from": {
+        "x": 464.4333527331438,
+        "z": -4.918756170204002,
+        "y": 0.30000000000000004,
+        "yaw": 0.4379374543862107
+      },
+      "pauseUntil": 0,
+      "side": 1,
+      "to": {
+        "x": 464.4333527331438,
+        "y": 0.3,
+        "z": -4.918756170204002,
+        "yaw": 2.0087337811811072
+      }
+    },
+    {
+      "id": 673,
+      "seat": 5,
+      "phase": "seated",
+      "started": 0,
+      "from": {
+        "x": -549.75,
+        "z": 0.25,
+        "y": 0.7,
+        "yaw": 4.580907557598533
+      },
+      "pauseUntil": 0
+    }
+  ],
+  "companion": {
+    "kind": "companion",
+    "archetype": "char.corgi",
+    "faction": "survivor",
+    "transform": {
+      "x": 463.78819327943654,
+      "z": -5.5494847642063085,
+      "y": 0.51824,
+      "yaw": -0.4740882021380261
+    },
+    "health": {
+      "current": 100,
+      "max": 100
+    },
+    "companion": {
+      "state": "follow",
+      "courage": 100,
+      "until": 0,
+      "barkAt": 0,
+      "hurtAt": 0,
+      "pickup": null,
+      "path": [],
+      "goal": -1,
+      "pathIndex": 0
+    },
+    "id": 668,
+    "passengerOf": 667,
+    "hidden": false,
+    "motion": {
+      "velocity": {
+        "x": 5.343744970101625,
+        "z": 5.2242166371908105
+      },
+      "speed": 7.4731552759050635,
+      "moving": true,
+      "distance": 3798.1034363634426
+    }
+  },
+  "researchCompanion": {
+    "kind": "civilian",
+    "archetype": "npc.cashier",
+    "faction": "civilian",
+    "transform": {
+      "x": 461.3092612689409,
+      "z": -7.8174718380981005,
+      "y": 1.7954347610473633,
+      "yaw": 2.0087337811811072
+    },
+    "health": {
+      "current": 100,
+      "max": 100
+    },
+    "civilian": {
+      "state": "calm",
+      "ambient": false,
+      "adult": true,
+      "pet": null,
+      "owner": null,
+      "model": "npc.sam.aftermath",
+      "variant": "inf.cashier",
+      "schedule": [
+        {
+          "activity": "walk",
+          "anchor": "l1/walk",
+          "target": {
+            "x": -549.75,
+            "z": 0.25
+          },
+          "ticks": 1
+        }
+      ],
+      "scheduleStep": 0,
+      "activityUntil": 0,
+      "activityStarted": 0,
+      "lastTravelProgress": 0,
+      "routine": "shop",
+      "waypoints": [
+        {
+          "x": -549.75,
+          "z": 0.25
+        }
+      ],
+      "waypoint": 0,
+      "pauseUntil": 9007199254740991,
+      "entered": 0,
+      "until": 0,
+      "downTicks": 0,
+      "eyesGlow": false,
+      "veins": 0,
+      "attacker": 0,
+      "threat": {
+        "x": -549.75,
+        "z": 0.25
+      },
+      "path": [],
+      "goal": -1,
+      "pathIndex": 0,
+      "gore": false,
+      "knockedUntil": 0,
+      "l1": {
+        "walkSpeed": 1.3167227876605465,
+        "fleeSpeed": 3.4004204167053107,
+        "startleTicks": 25,
+        "refuge": null,
+        "target": null,
+        "repickAt": 0,
+        "noticed": -1
+      },
+      "survivor": {
+        "key": "sam",
+        "mode": "follow",
+        "slot": 4,
+        "leader": 1,
+        "cover": false,
+        "waitAt": 0,
+        "foundAt": 0
+      },
+      "ally": {
+        "role": "civilian",
+        "engaged": false,
+        "run": null,
+        "runSpeed": 3.8,
+        "post": null,
+        "hold": true,
+        "targetId": 0,
+        "nextAttack": 0,
+        "hits": 0,
+        "forceUntil": 0,
+        "weapon": "hunting-rifle",
+        "gun": {
+          "damage": 40,
+          "shotS": 1.5,
+          "rangeM": 35,
+          "nearM": 12,
+          "hitNear": 0.8,
+          "hitFar": 0.3
+        },
+        "lastHp": 100,
+        "strikeAt": 0,
+        "baton": false
+      }
+    },
+    "combat": {
+      "radius": 0.35,
+      "armor": 0,
+      "shield": false,
+      "staggerUntil": 0,
+      "attacking": false,
+      "damageMultiplier": 1,
+      "statuses": []
+    },
+    "id": 673,
+    "appearance": {
+      "entityId": 673,
+      "asset": "npc.sam.aftermath",
+      "tint": "#a86645",
+      "accessories": [],
+      "handProp": null,
+      "tier": "average"
+    },
+    "passengerOf": 667,
+    "hidden": false,
+    "motion": {
+      "velocity": {
+        "x": 0,
+        "z": 0
+      },
+      "speed": 0,
+      "moving": false,
+      "distance": 1543.0991726783882
+    }
+  }
+}

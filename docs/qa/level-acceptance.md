@@ -296,25 +296,38 @@ Feel: "false sanctuary → internal mass outbreak with infected animals; fight t
 
 ## L9 · The Crossing (D-CROSSING, dry night, driving the APC)
 
-Feel: "open-country drive: smash through or steer around; the APC survives until the forced crash". Competent **2–5 min** (tune; measured 128 s), deaths **0**.
+Feel: "open-country drive: read the road, choose a route, shake off boarders, and reach the evacuation bridge before the horde". Competent **6–8 min** (PO 2026-11-08), deaths **0–1** (tune).
 
 | Step | Objective text | Player does |
 |---|---|---|
 | `approach` | Drive toward the city | drives road / countryside / dry shortcut |
-| `reach-outskirts` | Get clear of the wreck | crash at the collapsed bridge, crawls away |
+| `route` | Choose a crossing | drives through the authored road / countryside / shortcut set piece |
+| `pit-stop` | Repair under attack (optional) | holds E in the gas-station bay while defending from the hatch |
+| `evacuation` | Get the survivors to the bridgehead | pulls into the timed gate; passengers run to the trucks, Sam stays aboard |
+| `bridge` | Shake off the Mega Alpha | drives the bridge deck as the horde and Mega board |
+| `reach-outskirts` | Crawl clear of the wreck | survives the moving bridge collapse, loses the arsenal, crawls out with the axe |
 
 | ID | Step | Criterion (expected value) | Source | Check |
 |---|---|---|---|---|
 | L9-01 | approach | Driving control ≤ 0.5 s after load; roster + durability carried; corgi never inside the hull; rider's legs inside the cab. | E31-AC02, Q-137, Q-316 | S, O |
 | L9-02 | approach | Groups on routes: road 2 × 6, countryside 3 × 6, shortcut 6 × 8 incl. 2 Alphas; each avoidable by a detour ≥ 20 m. | l9Groups, E31-AC05 | S |
 | L9-03 | approach | Threat present: on every route ≥ 1 group or wanderer in the camera frame per 60 s of driving (tune; 11-01 strip showed 0 in frame for 30 s). | orch. | S, O |
-| L9-04 | approach | Every contact onset −10 durability (no per-tick billing); stopped/surrounded attacks 10 dmg, ≥ 0.6 s windup; safe route ends with more HP than the shortcut. | E31-AC06/07/11 | S |
+| L9-04 | approach | PO 2026-11-08: regular contact onsets cost 10 durability, brute/armored/riot 40, elephant 80, bloated 60 (no per-tick billing); stopped/surrounded attacks cost 10, ≥ 0.6 s windup; safe driving preserves more durability. | l9-l10-concept §core verbs; E31-AC06/07/11 | S |
 | L9-05 | approach | **0 HP never breaks down:** speed 60 % ± 2 %, heavy smoke, still drivable. | PO 10-13, E31-AC09 | S |
 | | | **Conflict:** PO 10-11 / epic-31 breakdown + on-foot → PO 10-13 "survives until the final scripted crash" wins. | | |
 | L9-06 | approach | APC cannot wedge off-road before the bridge; no giant flat arrow over it; HUD bar matches durability. | Q-139, Q-146, E31-AC08 | S, O |
-| L9-07 | reach-outskirts | Crash exactly once (full or 0 HP); APC falls whole (no floating wheels/vanishing hull); "Get clear of the wreck" appears only after the crash. | E31-AC15, Q-136, Q-273 | S, O |
+| L9-07 | reach-outskirts | Crash exactly once (full or 0 HP); APC falls whole (no floating wheels/vanishing hull); the crawl objective appears before the player-controlled crawl. | E31-AC15, Q-136, Q-273 | S, O |
 | L9-08 | reach-outskirts | L10 starts on foot with exactly [axe], ordinary health, corgi safe. | E31-AC15 | S |
 | L9-09 | all | Terrain seams ≤ 2 cm, ≤ 25 / 9 detailed chunks, no input freeze on streaming. | E31-AC12/13 | S |
+| L9-10 | approach | PO 2026-11-08: moving mixed infected (travellers, soldiers, walkers, runners, dogs and shortcut zoo infected) are admitted ≥ 100 m from the APC, outside the zoom-0.5 frame, and never first appear idle in that frame. | l9-l10-concept §shared rule; PO 2026-11-08 | S |
+| L9-11 | approach | PO 2026-11-08: hull boarders use a 3 s climb, then damage the courier for 10 HP at 1 s intervals; sharp steering, scraping a solid edge, or a handbrake turn shakes them off. Low durability opens two extra hull slots. | l9-l10-concept §L9-A; PO 2026-11-08 | S, O |
+| L9-12 | route | PO 2026-11-08: light barricades visibly break/push aside and solid concrete/wreck barriers stop the APC; road offers tanker + overpass choice, countryside has a closing fire line, shortcut has a zebra stampede and ditch jump. Each route resolves to the same bridgehead. | l9-l10-concept §driving challenges; PO 2026-11-08 | S, O |
+| L9-13 | pit-stop | PO 2026-11-08: repair only progresses while E is held in the marked bay, adds up to 300 durability over 20 s, pauses on release, and attracts a defendable hatch fight using the current weapon. A healthy APC can skip it. | l9-l10-concept §L9 sequence; PO 2026-11-08 | S |
+| L9-14 | route | PO 2026-11-08: an infected school bus pursues the APC, rams for 40 durability and spills infected when slowed; stopping it against a wreck/tanker ends the chase. | l9-l10-concept §driving challenges; PO 2026-11-08 | S, O |
+| L9-15 | evacuation | PO 2026-11-08: the bridgehead gate closes after 60 s; late arrival can break the side fence at a durability cost. Living passengers visibly disembark and reach the trucks; Sam and the corgi remain with the courier. | docs/design/story-script.md §L9; l9-l10-concept §L9 sequence; PO 2026-11-08 | S, O |
+| L9-16 | bridge | PO 2026-11-08: Mega Alpha boards mid-span and cannot be shaken off; the bridge collapses section by section behind the moving APC, then tilts under the APC's actual heading/velocity. No cross-map trigger or positional lerp. | l9-l10-concept §L9 ending; PO 2026-11-08 | S, O |
+| L9-17 | reach-outskirts | PO 2026-11-08: rear weapon rack and duffel visibly fall into the river; objective text appears before the player-controlled 5–8 s crawl; axe is visible on her back and all other weapons are absent. Wreck explodes after she clears it. | docs/design/story-script.md §L9; PO 2026-11-08 | S, O |
+| L9-18 | handover | PO 2026-11-08: evacuation passengers are already accounted for at the bridgehead (no off-screen shelter); L10 begins with the courier alone except the safe corgi and axe, while Sam's radio establishes the research-site trail. | docs/design/story-script.md §L10; PO 2026-11-08 | S |
 
 ## L10 · The Cure (D-CURE, farms → restricted zone → safe hangar → dispersal)
 
@@ -371,7 +384,7 @@ Feel: "open-country drive: smash through or steer around; the APC survives until
 | L6 | 14 |
 | L7 | 12 |
 | L8 | 11 |
-| L9 | 9 |
+| L9 | 18 |
 | L10 | 15 |
 
 ## How to use

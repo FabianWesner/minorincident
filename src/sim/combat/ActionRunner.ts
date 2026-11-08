@@ -7,7 +7,7 @@ import { catalog } from '../../data/actions/catalog';
 export interface Attack {
   /** Facing-cone aim was already resolved; do not apply a second snap outside that cone. */
   autoAim?: boolean;
-  id: number; sourceId: number; side: Side; def: ActionDef; aim: Vec2; aimPoint: Vec2 | null;
+  id: number; sourceId: number; side: Side; def: ActionDef; aim: Vec2 & { y?: number }; aimPoint: Vec2 | null;
   started: number; activeAt: number; recoveryAt: number; endsAt: number; resolved: boolean; hit: Set<number>;
   combo: number; inPlace: boolean;
   /** 'roundhouse': the def is the weapon's crowd sweep (360°, resolved tick by tick through the active window). */

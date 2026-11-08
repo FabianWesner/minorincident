@@ -16,6 +16,7 @@ export class Touch {
   aiming = false;
   get holdingLeft(): boolean { for (const c of this.contacts.values()) if (c.action === 'left') return true; return false; }
   get holdingRight(): boolean { for (const c of this.contacts.values()) if (c.action === 'right') return true; return false; }
+  get holdingInteract(): boolean { for (const c of this.contacts.values()) if (c.action === 'interact') return true; return false; }
   private readonly interactButton = document.createElement('button');
   setInteractable(on: boolean): void { if (this.interactButton.disabled === on) this.interactButton.disabled = !on; }
   private readonly slots = new Map<'left' | 'right', { button: HTMLButtonElement; icon: HTMLImageElement; hint: HTMLSpanElement }>();

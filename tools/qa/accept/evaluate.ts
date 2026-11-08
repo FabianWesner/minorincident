@@ -427,12 +427,30 @@ export function evaluate(receipt: NativeReceipt, path: string): Clause[] {
     }
     case 'L9': {
       const hits = observation.ledger.filter(event => event.type === 'vehicle.durability-hit');
-      add('L9-04', 'actual contact/attack durability transactions', hits, 'after = max(0, before−10) for contact and attack', hits.length ? hits.every(event => event.type !== 'vehicle.durability-hit' || event.source === 'obstacle' || event.after === Math.max(0, event.before - 10)) : undefined);
+      const archetypes = new Map(observation.final.census.map(e => [e.id, e.archetype]));
+      add('L9-04', 'actual contact/attack durability transactions', hits, 'PO 2026-11-08: attack/regular contact 10; heavy contact 40; elephant 80; bloated 60; each clamped at zero', hits.length ? hits.every(event => {
+        if (event.type !== 'vehicle.durability-hit' || event.source === 'obstacle') return true;
+        const archetype = archetypes.get(event.targetId), heavy = ['infected.brute', 'infected.armored', 'infected.riot'].includes(archetype ?? '');
+        const amount = event.source === 'attack' ? 10 : archetype === 'infected.elephant' ? 80 : archetype === 'infected.bloated' ? 60 : heavy ? 40 : 10;
+        return event.after === Math.max(0, event.before - amount);
+      }) : undefined);
       const signals = observation.ledger.filter(event => event.type === 'mission.signal');
       number('L9-07', 'crash impact count on ordinary route', signals.filter(event => event.type === 'mission.signal' && event.name === 'l9.crash-impact').length, 1, 1);
       const wreckObjective = observation.ledger.find(event => event.type === 'objective.started' && event.id === 'reach-outskirts'), impact = signals.find(event => event.type === 'mission.signal' && event.name === 'l9.crash-impact');
       add('L9-07', 'wreck objective starts after crash impact', { objectiveTick: wreckObjective?.tick, impactTick: impact?.tick }, 'objectiveTick ≥ impactTick', wreckObjective && impact ? wreckObjective.tick >= impact.tick : undefined);
       number('L9-09', 'detailed resident chunk peak', observation.maxDetailedChunks, 0, low ? 9 : 25);
+      const driving = final.l9?.driving;
+      const signalTick = (name: string) => signals.find(event => event.type === 'mission.signal' && event.name === `l9.${name}`)?.tick;
+      if (competent && receipt.run?.completed) {
+        add('L9-14', 'ordinary route activates native school-bus pursuit', { bus: driving?.busId, tick: signalTick('bus-chase') }, 'one existing bus enters pursuit; ram/spill/collision termination require separate coverage', !!driving?.busId && signalTick('bus-chase') !== undefined);
+        const evacuated = signals.filter(event => event.type === 'mission.signal' && event.name === 'l9.survivor-evacuated').map(event => event.type === 'mission.signal' ? event.actorId : undefined);
+        add('L9-15', 'completed evacuation ledger matches actual truck arrival signals', { evacuated, ledger: driving?.evacuated, sam: driving?.samId, completeAt: signalTick('evacuation-complete') }, 'all ledger IDs have one truck arrival; companion excluded; visual transfer and late fence remain open', !!driving?.evacuationDone && evacuated.length === driving.evacuated.length && driving.evacuated.every(id => id !== driving.samId && evacuated.filter(other => other === id).length === 1));
+        const mega = signalTick('mega-boarded'), collapse = signalTick('bridge-collapse'), impact = signalTick('crash-impact');
+        add('L9-16', 'Mega landing precedes deck collapse and impact', { mega, collapse, impact }, 'landing < collapse < impact; physical motion and span readability remain open', mega !== undefined && collapse !== undefined && impact !== undefined && mega < collapse && collapse < impact);
+        const weapons = [...new Set([...(final.racks?.LEFT ?? []), ...(final.racks?.RIGHT ?? [])])];
+        add('L9-17', 'completed crossing retains only the axe in carried racks', { weapons, lostAt: signalTick('weapons-lost'), clearAt: signalTick('crawl-finished') }, 'exactly [axe], with loss before clearance; rendered rack and input causality remain open', weapons.length === 1 && weapons[0] === 'weapon.fire-axe' && (signalTick('weapons-lost') ?? Infinity) < (signalTick('crawl-finished') ?? -Infinity));
+      }
+      add('L9-13', 'ordinary optional repair stays within its finite tick budget', driving?.repairTicks ?? null, '1..1200 held ticks; zero means the optional bay was skipped', driving?.repairTicks ? driving.repairTicks <= 1200 : undefined);
       break;
     }
     case 'L10': {

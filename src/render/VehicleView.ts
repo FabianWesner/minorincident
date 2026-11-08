@@ -230,6 +230,7 @@ export class VehicleView extends Group {
       const decay = car.entity.vehicle!.decay;
       if (!record || record.lod !== lod || record.decay !== decay) { if (!this.pending.has(id)) { this.pending.set(id, this.addCar(id).finally(() => { this.pending.delete(id); })); } record = this.records.get(id); if (!record) continue; }
       const body = car.physics, p = body.transform, prev = body.previous, state = car.entity.vehicle!;
+      record.parent.visible = !car.entity.hidden;
       if (body.body.isKinematic()) {
         const feel = record.feel, elapsed = (this.world.tick - feel.tick) / 60;
         if (elapsed > 0) { feel.accel = (state.speed - feel.speed) / elapsed; feel.speed = state.speed; feel.tick = this.world.tick; }

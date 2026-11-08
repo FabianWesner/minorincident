@@ -221,6 +221,7 @@ export class Outbreak {
         continue;
       }
       if (c.vehicleYield && c.vehicleYield.until <= tick) delete c.vehicleYield;
+      if (world.missions?.l9?.driving.claims(e)) continue;
       if (world.scenario === 'L5') world.combat?.pickups.armSurvivor(e);
       // Metro ingress, L6 evacuation and L8 boarding own the following column. Self-defence
       // otherwise holds armed walkers back or scatters unarmed evacuees before

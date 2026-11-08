@@ -23,7 +23,7 @@ export interface CampaignSave {
   /** L9 authored crash resume payload; the S7 handover clears this after committing L10. */
   l9Crash?: ReturnType<import('../missions/LevelNineCrash').LevelNineCrash['save']>;
   /** Committed crash transaction: history only; never usable equipment or L10 followers. */
-  crossingHandover?: { applied: true; checkpoint: 'cure-crash'; anchor: import('../world/types').Transform; corgi?: import('../world/types').EntitySnapshot; preCrashDurability: number; lostWeapons: string[]; shelteredPassengers: import('../world/types').EntitySnapshot[] };
+  crossingHandover?: { applied: true; checkpoint: 'cure-crash'; anchor: import('../world/types').Transform; corgi?: import('../world/types').EntitySnapshot; researchCompanion?: import('../world/types').EntitySnapshot; preCrashDurability: number; lostWeapons: string[]; shelteredPassengers: import('../world/types').EntitySnapshot[] };
   /** Latest live L10 state and last reached retry snapshot; uses the existing mission/chunk seams. */
   cureResume?: { current: import('../missions/types').MissionCheckpoint; checkpoint: import('../missions/types').MissionCheckpoint; cameraZoom?: number };
   transport?:import('../vehicles/Vehicles').VehicleTransfer;

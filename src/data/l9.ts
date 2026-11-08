@@ -2,7 +2,7 @@ import { crossing } from '../levels/L9/district';
 import type { Point } from '../levels/districts/types';
 
 /**
- * L9-E1 encounters. One infected group stands on every authored risk anchor of every route (`layouts/D-CROSSING/routes.json`),
+ * L9 encounters. Mixed infected enter around the authored risk anchors and follow the APC's engine (`layouts/D-CROSSING/routes.json`),
  * so the road has 2 risk groups (plus roadside wanderers), the countryside 3 and the dry shortcut 6: the shortcut is shorter and has 3x the opportunities.
  * Every route also has an authored detour at least `avoidM` from each of its groups (infected sight is 14 m), so any
  * group can be driven around without contact. Groups are not a gate: ramming is optional and costs durability.
@@ -53,3 +53,15 @@ export const l9Encounters = {
   /** Authored fixture progress for the zero-HP tests (share of the route length driven). */
   fixtures: { earlyZero: .15, lateZero: .85 },
 };
+
+/** Shared by the native mission, the presentation and the real-input driver. */
+export const l9Course = {
+  railX: 380,
+  repair: { x: 423, z: 18, radius: 8, ticks: 1200, durability: 300 },
+  gate: { x: 440, z: 0, halfZ: 7, seconds: 60, announceX: 240, sideZ: 11 },
+  evacuation: { x: 457, z: 0, radius: 11, defendTicks: 1800, truckX: 459, truckZ: -16 },
+  bridge: { x: 482, z: 0, halfZ: 6, endX: 508 },
+  ramps: [{ id: 'overpass', x: -65, z: -330 }, { id: 'ditch', x: 80, z: -30 }],
+  tanker: { x: -25, z: -330 },
+  fire: { x: -20, z: 240, closeTicks: 900 },
+} as const;
