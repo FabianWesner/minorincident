@@ -164,9 +164,8 @@ INNER="cd $JOB && MI_SLUG=$SLUG MI_QUEUE_ID=$MI_QUEUE_ID MI_SLOT_ACK=$RUN/slot R
 LAUNCH="mkdir -p $RUN && { [ -f $RUN/pid ] || { nohup setsid sh -c $(sq "$INNER") > $RUN/log 2>&1 < /dev/null & echo \$! > $RUN/pid.tmp && mv $RUN/pid.tmp $RUN/pid; }; } && echo started"
 retry ssh $SSHO -T "$HOST" "$LAUNCH" >/dev/null || { echo "run.sh: could not start remote job" >&2; exit 70; }
 LAUNCHED=1
-# Admission acknowledgement persists even for a command that exits immediately.
-# Keep FIFO order through sync and actual remote slot acquisition.
-retry ssh $SSHO "$HOST" "while [ ! -f $RUN/slot ] && [ ! -f $RUN/exit ]; do sleep 1; done" || { kill_remote; exit 69; }
+# Once the detached job exists, the host owns admission order through exec.sh's
+# per-host FIFO. Release the Mac ticket now so a busy host cannot block the pool.
 python3 -I "$D/local-slot.py" record "$TICKET" remote
 python3 -I "$D/local-slot.py" remove "$TICKET"
 TICKET=""
