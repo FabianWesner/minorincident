@@ -1,3 +1,5 @@
 Post-restart exclusive capture: Chromium failed before opening a page.
 [pid=92163][err] [1108/170134.497393:FATAL:base/apple/mach_port_rendezvous_mac.cc:159] Check failed: kr == KERN_SUCCESS. bootstrap_check_in org.chromium.Chromium.MachPortRendezvousServer.92163: unknown error code (141)
 Batch exit: 1. No post-fix visual capture produced.
+Shared-pool retry also failed at 2026-11-08T16:10:22.115Z:
+[pid=32791][err] [1108/171022.110565:FATAL:base/apple/mach_port_rendezvous_mac.cc:159] Check failed: kr == KERN_SUCCESS. bootstrap_check_in org.chromium.Chromium.MachPortRendezvousServer.32791: unknown error code (141)
