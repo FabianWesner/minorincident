@@ -12,15 +12,16 @@
 - Added Mega phases, machinery stun/back weak point, flame armour counter, real corpse throws, console pressure and phase retry/charge retention. Latest targeted production-mechanics run passes **20/20 checks**: [receipt](evidence/mega-mechanics.json).
 - Verified 14 deliberate native checkpoint deaths across all seven regions and both tiers, retaining inventory/cure/Mega continuity: [recovery receipt](evidence/recovery-native.json).
 
-## Open / validation in progress
+- Latest full native low/high runs pass with **zero deaths**, 9/8 actual scares and content gaps 25.75/24.25 s. The platform exit uses the shipped stair anchors; a raised dead Mega cannot seal the stair.
+- Final E32 verification on the current gameplay source passed with two Vitest workers: typecheck, lint, **106 unit tests passed, one skipped**. [Receipt](evidence/e32-checks.json).
+- Exact dog/minigun contracts and stationary-ground pressure checks pass; all **20 Mega mechanics checks** pass.
 
-- Latest full native low/high runs pass with **zero deaths**, 9/8 actual scares and content gaps 25.75/24.25 s. Correcting the 2 m stair-anchor offset and making the raised finale corpse traversable removes the earlier exit obstruction.
-- E32 verification passed with two Vitest workers: typecheck, lint, 106 unit tests passed and one skipped. Earlier four-worker runs hit timing limits; the passing runner used a real manifest Git snapshot for tools freshness checks.
-- Optional porch-toy route: actual pickup and a complete high-tier ending are recorded, but the low-tier bot can still stall behind the dead Mega at the platform exit. A controlled landing-corpse case now passes after making the raised corpse traversable and correcting the 2 m stair-anchor offset; the complete optional route is being rerun.
+## Open / final check in progress
+
+- Optional porch-toy route: the corrected low-tier route has completed with zero deaths; the high-tier route is still running. The final two-tier receipt will replace the historical stalled optional receipt when it finishes.
 - The literal animated Mega climb from the river wreck remains unverified/unimplemented as a presentation beat. Persistent pursuit and the later real platform climb are verified separately.
 - The older scare-only 60–120 s interval is not uniformly met (including safe-hangar time); the required overall content cadence passes. L10-04 remains a strict whole-row FAIL in the review.
 - Existing global fixture G-24 fails because healthy distant Alphas receive a mandatory bar. All L10-specific contract checks pass; this broader bar policy remains open.
-- Dog/minigun boundaries, stationary-ground pressure and all 20 Mega mechanics checks now pass; see the final closure section of the acceptance review.
 
 ## Browser QA needed
 
