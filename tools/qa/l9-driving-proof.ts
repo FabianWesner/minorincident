@@ -56,6 +56,6 @@ try {
     handover: world.progression?.campaign?.crossingHandover,
   };
   mkdirSync(dirname(output), { recursive: true }); writeFileSync(output, `${JSON.stringify(result, null, 2)}\n`);
-  console.log(JSON.stringify({ output, completed: result.completed, seconds: result.seconds, hp: result.hp, peakAlive, peakChunks, grabs, shakes, collisionFailures: collision.failures, last: samples[samples.length - 1] }));
+  console.log(JSON.stringify({ output, completed: result.completed, seconds: result.seconds, hp: result.hp, peakAlive, peakChunks, grabs, shakes, collisionFailures: collision.failures, admissionViolations: result.admissions.violations, signals, last: samples[samples.length - 1], roster: l9.driving.state.roster.map(id => { const e = world.entities.get(id)!; return { id, key: e.civilian?.survivor?.key, position: e.transform, hp: e.health.current, passengerOf: e.passengerOf }; }) }));
   if (!result.completed || collision.failures) process.exitCode = 1;
 } finally { world.dispose(); }

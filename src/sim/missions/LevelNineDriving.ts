@@ -87,10 +87,11 @@ export class LevelNineDriving {
       const truck = spawnSetPiece(w, 'veh.military-truck', { x: cfg.evacuation.truckX + i * 9, z: cfg.evacuation.truckZ, yaw: Math.PI / 2 }); s.trucks.push(truck.id);
     }
     for (let i = 0; i < 4; i++) {
-      const nav = w.infected!.nav, cell = nav.nearestCell(447 + i * 4, -7, .35);
-      if (cell < 0) throw new Error('L9 evacuation guard needs a clear post');
-      const at = { x: nav.x(cell), z: nav.z(cell) }, id = outbreak.spawnPedestrian(at, { role: 'soldier', model: 'npc.national-guard', waypoints: [at] }), e = w.entities.get(id)!;
-      e.civilian!.ally = { ...allyState('soldier', null), post: at, hold: true, range: 35, gun: { damage: 20, shotS: .7, rangeM: 35, nearM: 12, hitNear: .75, hitFar: .3 } };
+      // Prewarm the cast in resident navigation; the bridgehead is streamed
+      // later. Hidden truck occupants are deployed before that camp is visible.
+      const at = { x: -550, z: 3 + i }, id = outbreak.spawnPedestrian(at, { role: 'soldier', model: 'npc.national-guard', waypoints: [at] }, false), e = w.entities.get(id)!;
+      e.hidden = true; e.passengerOf = s.trucks[i % 3]; w.spatial.delete(id);
+      e.civilian!.ally = { ...allyState('soldier', null), post: { x: 447 + i * 4, z: -7 }, hold: true, range: 35, gun: { damage: 20, shotS: .7, rangeM: 35, nearM: 12, hitNear: .75, hitFar: .3 } };
       s.soldiers.push(id);
     }
     spawnSetPiece(w, 'bld.gas-station', { x: 418, z: 41 });
@@ -150,6 +151,15 @@ export class LevelNineDriving {
   canRepair(): boolean { return distance(this.car.entity.transform, cfg.repair) < cfg.repair.radius && this.car.physics.speed < 1 && this.state.restarted && this.state.evacuationAt === null && this.state.repairTicks < cfg.repair.ticks; }
   update(): void {
     const s = this.state, w = this.w, car = this.car, p = car.entity.transform, tick = w.tick;
+    for (const id of s.soldiers) {
+      const e = w.entities.get(id); if (!e?.hidden || !e.passengerOf || !e.civilian?.ally?.post) continue;
+      const nav = w.infected!.nav, post = e.civilian.ally.post;
+      if (!w.chunks?.resident(post.x, post.z)) continue;
+      const cell = nav.nearestCell(post.x, post.z, .35); if (cell < 0) continue;
+      Object.assign(e.transform, { x: nav.x(cell), z: nav.z(cell), y: .7 });
+      e.civilian.ally.post = { x: e.transform.x, z: e.transform.z }; e.hidden = false; delete e.passengerOf;
+      w.solids.admit(e, 'l9.guard-post'); w.spatial.set(id, e.transform.x, e.transform.z);
+    }
     if (!s.boardersCalled && car.entity.vehicle!.attached.length) {
       s.boardersCalled = true;
       if (s.roster.some(id => alive(w.entities.get(id)) && w.entities.get(id)!.civilian?.survivor?.key === 'mia')) this.line('L9.clingers');
