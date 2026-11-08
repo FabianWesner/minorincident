@@ -100,7 +100,7 @@ export class DestructionView extends Group {
       const o=destruction.objects.find(o=>o.id===e.object.id); if(!o) {e.root.visible=false;continue;}
       e.object=o; const pose=destruction.pose(o), s=o.state;
       if(e.state!==s){e.state=s;e.revision=-1;}
-      e.root.visible=s.revision>0; if(!e.root.visible){e.revision=-1;continue;}
+      e.root.visible=o.present&&s.revision>0; if(!e.root.visible){e.revision=-1;continue;}
       e.root.position.fromArray(pose.p);e.root.quaternion.fromArray(pose.q);e.root.scale.fromArray(o.placement.scale);
       e.batch.visible=!s.exploded || !e.wreck; if(e.wreck)e.wreck.visible=s.exploded;
       if(e.revision===s.revision) continue; e.revision=s.revision;

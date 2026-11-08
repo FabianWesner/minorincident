@@ -215,7 +215,7 @@ test('explosions: every class follows its damage curve, full cover shields, rail
   expect(car.state.exploded).toBe(true);expect(car.state.burning).toBe(0);
   expect(street.hazards!.debris.pieces.length).toBeLessThanOrEqual(32);
   street.hazards!.debris.update(street.tick+481);expect(street.hazards!.debris.snapshot()).toHaveLength(0);
-  const state=destruction.snapshot(); street.setTier(street.districts!.composition.tier===6?5:6);expect(destruction.snapshot()).toEqual(state);
+
   destruction.restore(pristine);
   expect(destruction.impact(protectedObject.id,'boss.gorilla.smash',10000)).toBe(false);
   expect(destruction.impact(house.id,'boss.gorilla.smash',150)).toBe(true);
@@ -235,6 +235,10 @@ test('explosions: every class follows its damage curve, full cover shields, rail
   destruction.restore(pristine);
   expect(fuelBody.body.isEnabled(),'checkpoint restores the tank body').toBe(true);
   car.placement.destruction=vehiclePolicy;
+  const state=destruction.snapshot(); street.setTier(street.districts!.composition.tier===6?5:6);expect(destruction.snapshot()).toEqual(state);
+  expect(car.present,'tier 6 removes this authored car placement').toBe(false);
+  expect(destruction.impact(car.id,'boss.mega.charge',10000),'inactive tiers cannot take damage').toBe(false);
+  expect(destruction.snapshot()).toEqual(state);
 
 
 });

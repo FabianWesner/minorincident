@@ -26,7 +26,7 @@ The district preloads only its opted-in prototypes and burned-car variants. The 
 
 ## Persistence and extension
 
-Per-part HP, burn clock, collapse/explosion state and marks are copied into mission checkpoint seams and game-state hashes. Restore rebinds props, rebases owned-fire expiry to the restored burn clock, and rebuilds only surviving blockers, including after physics-world/tier replacement. Cosmetic debris and pending cosmetic kicks are discarded on rebuild, as with the existing explosion system.
+Per-part HP, burn clock, collapse/explosion state and marks are copied into mission checkpoint seams and game-state hashes. Restore rebinds props, rebases owned-fire expiry to the restored burn clock, and rebuilds only surviving blockers, including after physics-world/tier replacement. Placements absent at the current decay tier retain their saved damage but stop rendering, blocking, burning and receiving damage. Cosmetic debris and pending cosmetic kicks are discarded on rebuild, as with the existing explosion system.
 
 To extend the rollout:
 

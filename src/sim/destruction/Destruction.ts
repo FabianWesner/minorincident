@@ -8,7 +8,7 @@ import type { CoverWall } from '../combat/HitQuery';
 import type { PushProp, PropPose } from '../interact/PropSystem';
 export interface DamageMark { part: number; at: [number, number, number]; normal: [number, number, number]; kind: 'hole' | 'chip' | 'scorch' }
 export interface ObjectDamage { hp: number[]; burning: number; fireClock: number; fireEntity?: number; exploded: boolean; collapsed: boolean; revision: number; marks: DamageMark[] }
-export interface DestructionObject { id: string; placement: Placement; parts: DestructionPart[]; state: ObjectDamage; home: PropPose; query: { part: number; box: Aabb }[]; protected: boolean }
+export interface DestructionObject { id: string; placement: Placement; parts: DestructionPart[]; state: ObjectDamage; home: PropPose; query: { part: number; box: Aabb }[]; protected: boolean; present: boolean }
 interface Blocker { object: DestructionObject; part: number; box: Aabb; id: number; handle: number; wall: CoverWall; active: boolean }
 export interface WorldHit { object: DestructionObject; part: number; distance: number; local: [number, number, number]; normal: [number, number, number] }
 type Point = { x: number; y: number; z: number };
@@ -41,7 +41,7 @@ export class Destruction {
       const parts: DestructionPart[] = p.destruction.indestructible ? [{ id: 'protected', role: 'structure', material: 'concrete', hp: 1,
         bounds: { min: [-dims.x/2,0,-dims.z/2], max: [dims.x/2,dims.y,dims.z/2] } }] : destructionParts(p);
       const id = `${d.id}/${p.id}`, query = p.destruction.indestructible ? [{part:0,box:parts[0].bounds}] : partColliders(p.assetId, parts);
-      const object: DestructionObject = { id, placement: p, parts, query: [...query, ...parts.flatMap((part,i)=>part.role === 'structure' ? [] : [{part:i,box:part.bounds}])], protected: !!p.destruction.indestructible,
+      const object: DestructionObject = { id, placement: p, parts, query: [...query, ...parts.flatMap((part,i)=>part.role === 'structure' ? [] : [{part:i,box:part.bounds}])], protected: !!p.destruction.indestructible, present: true,
         home: { p: [p.position[0] + d.origin[0], p.position[1], p.position[2] + d.origin[1]], q: [0, Math.sin(p.yaw / 2), 0, Math.cos(p.yaw / 2)] }, state: { hp: parts.map(p => p.hp), burning: 0, fireClock: 0, exploded: false, collapsed: false, revision: 0, marks: [] } };
       this.objects.push(object);
       const prop = world.props?.items.find(item => item.id === id);
@@ -52,12 +52,15 @@ export class Destruction {
   }
   /** Rebind after checkpoints or physics/tier replacement. Interactables rebuild their own wall list. */
   rebuild(worldReset = false): void {
+    const present=new Set(this.world.districts?.districts.flatMap(d=>d.decay.placements.map(p=>`${d.id}/${p.id}`)));
+    for(const o of this.objects) o.present=present.has(o.id);
     for (const b of this.blockers) {
       if (b.active && !worldReset) this.world.physics.removeBlocker(b.handle);
       const walls = this.world.interactables!.walls, index = walls.indexOf(b.wall);
       if (index >= 0) walls.splice(index, 1);
       this.world.districts!.nav.unblock(b.id); b.active = false;
     }
+    this.world.combat?.query.invalidate();
     this.propLinks.clear(); this.kicks.length=0;
     for (const o of this.objects) {
       const prop = this.world.props?.items.find(item => item.id === o.id);
@@ -87,7 +90,7 @@ export class Destruction {
     if(propsChanged) this.world.props?.updateNavigation();
     let blockersChanged=false;
     for (const b of this.blockers) {
-      const active = b.object.state.hp[b.part] > 0; if (active === b.active) continue;
+      const active = b.object.present && b.object.state.hp[b.part] > 0; if (active === b.active) continue;
       b.active = active; blockersChanged=true;
       if (active) {
         const w = b.wall;
@@ -102,7 +105,7 @@ export class Destruction {
   trace(origin: Point, direction: Point, range: number): WorldHit | null {
     let nearest: WorldHit | null = null;
     for (const object of this.objects) {
-      if (object.protected && !this.propLinks.has(object.id)) continue;
+      if (!object.present || object.protected && !this.propLinks.has(object.id)) continue;
       const pose = this.pose(object), q = pose.q, inverse = [-q[0],-q[1],-q[2],q[3]], scale = object.placement.scale;
       const at = rotate([origin.x-pose.p[0],origin.y-pose.p[1],origin.z-pose.p[2]], inverse).map((v,i)=>v/scale[i]);
       const way = rotate([direction.x,direction.y,direction.z], inverse).map((v,i)=>v/scale[i]);
@@ -124,7 +127,7 @@ export class Destruction {
   }
   damage(hit: WorldHit, actionId: string, amount: number): void {
     const o = hit.object, state = o.state, part = o.parts[hit.part];
-    if (o.protected || state.hp[hit.part] <= 0 || !Number.isFinite(amount) || amount <= 0) return;
+    if (!o.present || o.protected || state.hp[hit.part] <= 0 || !Number.isFinite(amount) || amount <= 0) return;
     const fire = actionId === 'weapon.molotov' || actionId === 'weapon.flamethrower' || actionId === 'environment.fire';
     const value = fire ? part.material === 'wood' ? amount : part.material === 'metal' && destructionClasses[o.placement.destruction!.class].explosion ? amount * .3 : 0 : destructionDamage(actionId, part.material, amount);
     state.hp[hit.part] = Math.max(0, state.hp[hit.part] - value); state.revision++;
@@ -141,7 +144,7 @@ export class Destruction {
   }
   /** Boss lane calls after its telegraph/contact resolves; returns whether this contact broke cover. */
   impact(id: string, actionId: 'boss.gorilla.smash' | 'boss.mega.charge', amount: number): boolean {
-    const object=this.objects.find(o=>o.id===id); if(!object||object.protected) return false;
+    const object=this.objects.find(o=>o.id===id); if(!object||!object.present||object.protected) return false;
     let broke=false;
     for(const [part,p] of object.parts.entries()) {
       const before=object.state.hp[part];
@@ -165,7 +168,7 @@ export class Destruction {
   /** Blast falloff measures to each part's closest point, so large buildings are hit at their facade. */
   blast(actionId:string, at: {x:number;z:number}, radius:number, damage:number, impulse=0): void {
     for (const o of this.objects) {
-      if(o.protected) continue;
+      if(!o.present||o.protected) continue;
       const pose=this.pose(o),q=pose.q, local=rotate([at.x-pose.p[0],1-pose.p[1],at.z-pose.p[2]],[-q[0],-q[1],-q[2],q[3]]).map((v,i)=>v/o.placement.scale[i]);
       for(const [part,p] of o.parts.entries()) {
         if(o.state.hp[part]<=0) continue;
@@ -183,7 +186,7 @@ export class Destruction {
       const prop=this.propLinks.get(k.id); prop?.body.applyTorqueImpulse({x:k.strength*.5,y:0,z:k.strength*.7},true); this.kicks.splice(i,1);
     }
     for(const o of this.objects) {
-      if(o.protected) continue;
+      if(!o.present||o.protected) continue;
       const s=o.state;
       if(!s.burning) {
         const p=this.pose(o).p;
