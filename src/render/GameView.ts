@@ -1224,7 +1224,8 @@ export class GameView implements Lifecycle {
       // Pickups keep a small cool glint pool so loot stays findable in the dark.
       for (const entity of this.world.entities.iterate()) if (entity.pickup && !entity.hidden && !('collected' in entity.pickup && entity.pickup.collected)) field.push(pickupLight(entity.transform.x, entity.transform.z));
     }
-    lighting.setHeroLight(hero && field.active ? field.heroAt(hero.x, hero.z) ?? flashlight : null, hero ?? this.view.focus, this.world.tick / 60);
+    const shadowFocus = hero ?? this.view.focus;
+    lighting.setHeroLight(field.active ? field.heroAt(shadowFocus.x, shadowFocus.z) ?? flashlight : null, shadowFocus, this.world.tick / 60);
     this.districts?.accents?.update(this.world.tick / 60);
     field.update(this.view.focus.x, this.view.focus.z, this.world.tick / 60);
     field.render(this.renderer);
