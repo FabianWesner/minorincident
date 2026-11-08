@@ -74,6 +74,7 @@ export class DistrictView extends Group {
   }
   private readonly lodBatches = this.parts.lodBatches;
   private readonly destructionView = new DestructionView();
+  private readonly destructionActive = new Map<string, boolean>();
   private readonly destructionSources = new Map<string, Group>();
   private readonly pending = new Map<LodBatch, Promise<void>>();
   private disposed = false;
@@ -412,7 +413,7 @@ export class DistrictView extends Group {
   }
   syncDestruction(destruction: Destruction): void {
     for (const o of destruction.objects) {
-      if (o.protected) continue;
+      if (o.protected || this.destructionActive.get(o.id) === (o.state.revision > 0)) continue;
       const entry = this.lodBatches.find(e => e.refs.some(r => r.userData.placementId === o.id));
       const ref = entry?.refs.find(r => r.userData.placementId === o.id);
       if (!entry || !ref) continue;
@@ -423,6 +424,7 @@ export class DistrictView extends Group {
       }
       const destructed = o.state.revision > 0 && this.destructionView.has(o.id);
       if (ref.userData.destructed !== destructed) { ref.userData.destructed = destructed; this.dirtyEntries.add(entry); }
+      this.destructionActive.set(o.id, destructed);
     }
     this.destructionView.update(destruction);
   }
@@ -645,7 +647,7 @@ export class DistrictView extends Group {
     this.disposed = true;
     for (const { material } of this.metroMaterials.values()) material.dispose(); this.metroMaterials.clear();
     this.foliage.dispose();
-    this.destructionView.dispose(); this.destructionSources.clear();
+    this.destructionView.dispose(); this.destructionSources.clear(); this.destructionActive.clear();
     this.parts.dispose();
     this.windowMask.dispose();
     this.black.dispose();
