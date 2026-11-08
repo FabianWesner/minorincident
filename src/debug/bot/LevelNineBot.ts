@@ -77,7 +77,7 @@ export class LevelNineBot {
     // ~8 m and wedges it against the dressed verge (fork corner (-450, 0) of the road detour: utility pole + bush, T-E31-20).
     while (this.index < this.path.length - 1 && Math.hypot(this.path[this.index][0] - p.x, this.path[this.index][1] - p.z) < this.switchRadius(this.index)) this.index++;
     let target: Point = this.path[this.index];
-    if (p.x > 405 && !driving.evacuationDone) {
+    if (p.x > 405 && Math.abs(p.z) < 35 && !driving.evacuationDone) {
       if (driving.gateClosed && p.x < l9Course.gate.x + 4) target = [l9Course.gate.x + 6, l9Course.gate.sideZ];
       else target = [l9Course.evacuation.x, l9Course.evacuation.z];
       if (Math.hypot(target[0] - p.x, target[1] - p.z) < 5 && target[0] === l9Course.evacuation.x) { f.brake = true; return f; }
