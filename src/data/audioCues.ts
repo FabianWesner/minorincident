@@ -171,12 +171,14 @@ for (const [i, id] of [...new Set(ambienceTiers.flatMap(t => [...t.oneShots]))].
 export const musicLevels = { L1: 120, L2: 120, L3: 128, L4: 96, L5: 120, L6: 120 } as const;
 /** Levels whose layered stems (`music-<level>` bank) exist. L7-L9 play only their streamed score (no stems exist for them). */
 export const stemLevels: ReadonlySet<string> = new Set(Object.keys(musicLevels));
-/** Stem bank a level plays: L10 reuses the L6 stems. */
-export const stemBank = (level: string): string | null => stemLevels.has(level === 'L10' ? 'L6' : level) ? `music-${level === 'L10' ? 'L6' : level}` : null;
+/** Stem bank a level plays. L10 uses its streamed dark score and synthesized heartbeat. */
+export const stemBank = (level: string): string | null => stemLevels.has(level) ? `music-${level}` : null;
 export const musicLayers = ['base', 'pulse', 'drive', 'peak'] as const;
 for (const [level, bpm] of Object.entries(musicLevels))
     for (const [i, layer] of musicLayers.entries())
         cue(`music.${level}.${layer}`, 'music', 'music', 960 / bpm, 130 + i * 90, { category: `music-${level}`, loop: true, gain: 0.35, rateSpread: 0, antiSpam: 0 });
+for (let i = 0; i < 5; i++) cue(`l10.scare.${i}`, 'telegraph', 'noise', .8, 100 + i * 110, { category: 'music-L10-fx', gain: .6, rateSpread: 0, antiSpam: 1, initial: false, caption: ['Corn cracking nearby', 'Something moving in the corn', 'A sudden rush through dry stalks', 'A metallic crash in the dark', 'A sharp cry from the field'][i] });
+cue('l10.heartbeat', 'music', 'tone', 2, 56, { category: 'music-L10-fx', gain: .25, rateSpread: 0, antiSpam: 0, initial: false, loop: true });
 for (const id of ['objective', 'weapon', 'elite', 'low-hp', 'twist', 'complete', 'dawn'])
     cue(`stinger.${id}`, 'music', 'music', id === 'dawn' ? 4 : 1, 200, { gain: 0.5, rateSpread: 0, antiSpam: 0 });
 for (const kind of ['jukebox', 'ice-cream', 'car-radio', 'school-bell', 'pa', 'megaphone']) {

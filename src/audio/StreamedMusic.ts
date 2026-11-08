@@ -8,11 +8,11 @@ interface Deck { media: HTMLAudioElement; source: MediaElementAudioSourceNode; g
 export const levelStreams: Record<string, Partial<Record<MusicState, string>>> = Object.fromEntries(
     Array.from({ length: 9 }, (_, i) => `L${i + 1}`).map(level => [level, { calm: `calm-${level}`, tension: `tension-${level}` }]));
 /** L10 uses the licensed Zombie Hoodoo recording (already imported for L5 tension) as its sparse ambient bed. */
-levelStreams.L10 = { calm: 'tension-L5', tension: 'tension-L5', combat: 'tension-L5' };
+levelStreams.L10 = { calm: 'calm-L10', tension: 'tension-L10', combat: 'combat-L10' };
 /** Levels with their own streamed score (L1-L9 and the L10 finale). Single source for AudioService's level gate. */
 export const scoredLevels: ReadonlySet<string> = new Set(Object.keys(levelStreams));
 /** Score file stem (without `score-` and extension) a level plays in a state. */
-export const scoreFile = (level: string, state: MusicState): string => levelStreams[level]?.[state] ?? state;
+export const scoreFile = (level: string, state: MusicState, finale = false): string => level === 'L10' && state === 'combat' && finale ? 'tension-L7' : levelStreams[level]?.[state] ?? state;
 /** Long recordings stay in the browser's streaming media cache, never decodeAudioData at boot.
  * All decks feed the existing music bus, so twist silence, ducking, mono and limiting still apply.
  * Keep the outgoing recording audible until its replacement actually starts, then fade on a bar.
@@ -28,11 +28,16 @@ export class StreamedMusic {
     peak = false;
     /** Mission level; set before the first transition of a world. */
     level = '';
+    private finale = false;
+    setFinale(value: boolean): boolean {
+        if (value === this.finale) return false;
+        this.finale = value; this.requested = null; return true;
+    }
     readonly errors: string[] = [];
     readonly transitions: { state: MusicState; requested: number; time: number }[] = [];
     constructor(private readonly context: AudioContext, private readonly bus: AudioNode) {}
     private deck(state: MusicState): Deck {
-        const file = scoreFile(this.level, state);
+        const file = scoreFile(this.level, state, this.finale);
         const format = (media: HTMLAudioElement) => media.canPlayType('audio/webm; codecs="opus"') ? 'webm' : 'm4a';
         let deck = this.decks.get(state);
         // One deck per state: a level switch (only after reset, all decks paused) repoints its source.
@@ -136,7 +141,7 @@ export class StreamedMusic {
             deck.media.pause(); deck.media.currentTime = 0; deck.retire = Infinity;
             deck.gain.gain.cancelScheduledValues(0); deck.gain.gain.value = 0;
         }
-        this.state = null; this.peak = false; this.requested = null; this.target = null; this.errors.length = 0; this.transitions.length = 0;
+        this.finale = false; this.state = null; this.peak = false; this.requested = null; this.target = null; this.errors.length = 0; this.transitions.length = 0;
     }
     dispose(): void {
         this.reset();
