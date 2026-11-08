@@ -9,7 +9,7 @@ export function levelEightMission(resolve: (district: DistrictId, name: string) 
     anchors, actors: {}, groups: {}, gates: {}, items: [], states: ['breached', 'player-boarded', 'aboard', 'apc-destroyed'], counters: [],
     checkpoints: ['sanctuary', 'breach', 'escape-route'], cinematics: {},
     steps: [{ id: 'sanctuary', type: 'custom', text: 'Lead the group to the zoo gate', anchor: 'zoo-gate', waypoint: true,
-      start: { kind: 'start' }, complete: { kind: 'state', key: 'breached', equals: true }, fail: [] },
+      start: { kind: 'start' }, complete: { kind: 'all', triggers: [{ kind: 'state', key: 'breached', equals: true }, { kind: 'volume', anchor: 'zoo-gate', edge: 'inside' }] }, fail: [] },
     { id: 'escape', type: 'custom', text: 'Lead the group to the armored vehicle', anchor: 'exit', waypoint: true,
       start: { kind: 'objectives', ids: ['sanctuary'], mode: 'all' }, complete: { kind: 'state', key: 'player-boarded', equals: true }, fail: [{ trigger: { kind: 'state', key: 'apc-destroyed', equals: true }, reason: 'target-destroyed' }] },
     { id: 'depart', type: 'custom', text: 'Wait for everyone to board the armored vehicle', anchor: 'exit', waypoint: false,

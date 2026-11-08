@@ -345,7 +345,7 @@ export function evaluate(receipt: NativeReceipt, path: string): Clause[] {
       const gate = markerChanges.find(change => change.step === 'sanctuary' && change.marker === 'zoo-gate');
       const apc = markerChanges.find(change => change.step === 'escape' && change.marker === 'exit');
       const noEarlyExit = markerChanges.every(change => change.marker !== 'exit' || change.tick >= 3600);
-      add('L8-02', 'opening objective advances from zoo gate to APC at breach', { gate, apc, noEarlyExit }, 'zoo-gate active from first tick; APC marker only after the tick-3600 breach', !!gate && gate.tick <= 1 && !!apc && apc.tick >= 3600 && noEarlyExit);
+      add('L8-02', 'opening objective advances from zoo gate to APC after breach', { gate, apc, noEarlyExit }, 'zoo-gate active from first tick; APC marker only after the tick-3600 breach and the gate rendezvous', !!gate && gate.tick <= 1 && !!apc && apc.tick >= 3600 && noEarlyExit);
       number('L8-03', 'initial human civilians excluding soldiers and animals', initial.census.filter(e => e.civilian && !e.animal && e.role !== 'soldier').length, 20, Infinity);
       number('L8-03', 'initial soldiers', initial.census.filter(e => e.role === 'soldier').length, 6, Infinity);
       number('L8-03', 'initial zoo animals', initial.census.filter(e => e.animal).length, 8, Infinity);

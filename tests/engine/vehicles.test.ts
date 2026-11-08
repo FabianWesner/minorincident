@@ -107,7 +107,6 @@ async function zooParkedBoarding(): Promise<void> {
     expect(zoo.canDrive(), 'APC cannot be driven before the breach').toBe(false);
     expect(zoo.boarding(), 'survivors cannot queue at the APC before the breach').toBe(false);
     expect(mission.state.steps.depart.status).toBe('pending');
-    missionControls(world).teleport(1, mission.def.anchors['zoo-gate']);
     world.tick = 3124; advance(1);
     expect(mission.state.steps.sanctuary.status).toBe('active');
     expect(mission.state.steps.escape.status).toBe('pending');
@@ -116,7 +115,14 @@ async function zooParkedBoarding(): Promise<void> {
     mission.restore('sanctuary');
     expect(mission.state.marker).toBe('zoo-gate');
     expect(mission.state.steps.escape.status).toBe('pending');
+    missionControls(world).teleport(1, zoo.door());
     world.tick = zoo.state.startedAt + 3599; advance(1);
+    expect(mission.state.states.breached).toBe(true);
+    expect(mission.state.steps.sanctuary.status, 'camping the APC does not skip the gate after the breach').toBe('active');
+    expect(zoo.boarding()).toBe(false);
+    expect(zoo.canBoardDriver()).toBe(false);
+    expect(mission.state.steps.escape.status).toBe('pending');
+    missionControls(world).teleport(1, mission.def.anchors['zoo-gate']); advance(1);
     expect(mission.state.steps.sanctuary.status).toBe('completed');
     expect(mission.state.steps.escape.status).toBe('active');
     expect(mission.state.marker).toBe('exit');
@@ -136,6 +142,7 @@ async function zooParkedBoarding(): Promise<void> {
     }
     const car = vehicles.cars.get(zoo.state.carId)!;
     mission.setState('breached', true); zoo.state.breachedAt = world.tick; zoo.state.nextWave = Number.MAX_SAFE_INTEGER;
+    missionControls(world).teleport(1, mission.def.anchors['zoo-gate']); advance(1);
     missionControls(world).teleport(1, zoo.door());
     world.applyInput({ ...emptyInput(), interact: true }, 'keyboard'); advance(1);
     expect(vehicles.active, 'courier can keep covering passengers instead of boarding early').toBeNull();
@@ -152,7 +159,7 @@ async function zooParkedBoarding(): Promise<void> {
     missionControls(world).teleport(1, zoo.door());
     world.applyInput({ ...emptyInput(), interact: true }, 'keyboard'); advance(1);
     world.applyInput(emptyInput(), 'keyboard'); advance(60);
-    expect(zoo.canDrive(), `complete living group boards at the fixed destination: ${JSON.stringify({ breach: mission.state.states.breached, escape: mission.state.steps.escape.status, depart: mission.state.steps.depart.status, group: zoo.passengers().map(id => [id, vehicles.cars.get(zoo.state.carId)!.entity.vehicle!.passengers?.find(p => p.id === id)?.phase]) })}`).toBe(true);
+    expect(zoo.canDrive(), 'complete living group boards at the fixed destination').toBe(true);
     const save = preset('L9-default'); save.transport = vehicles.transfer(car.entity.id);
     const next = await loadLevel('L9', 1, save);
     try {

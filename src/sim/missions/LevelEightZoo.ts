@@ -171,7 +171,7 @@ export class LevelEightZoo {
     return this.breached && this.mission.state.steps.escape.status === 'active' && this.passengers().every(id => car?.passengers?.some(p => p.id === id && p.phase === 'seated'));
   }
   /** E30 departure starts only after the breach and the complete group has boarded. */
-  canDrive(): boolean { return this.breached && this.w.vehicles!.groupBoarded(this.state.carId,this.passengers()); }
+  canDrive(): boolean { return this.breached && this.mission.state.steps.sanctuary.status === 'completed' && this.w.vehicles!.groupBoarded(this.state.carId,this.passengers()); }
   /** The completed boarding group shares the courier's run-out protection until handover. */
   departing(): boolean { return this.mission.state.runOutUntil !== undefined || this.mission.state.phase !== 'playing'; }
   /** At the pickup, the evacuation queue owns movement instead of civilian flee/defence. */

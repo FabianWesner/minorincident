@@ -51,6 +51,8 @@ export function objectiveText(mission: Mission, fallback: string): string {
   }
   if (mission.def.l8) {
     const zoo=mission.l8!, seated=w.vehicles!.active===zoo.state.carId;
+    const gate = mission.def.anchors['zoo-gate'], player = w.entities.get(1)!.transform;
+    if (s.steps.sanctuary.status === 'active' && !s.states.breached && Math.hypot(player.x - gate.x, player.z - gate.z) <= gate.radius) return 'Wait with the group at the zoo gate';
     if (!seated && zoo.boarding() && !zoo.canBoardDriver()) {
       const ids = zoo.passengers(), car = w.vehicles!.cars.get(zoo.state.carId)!.entity.vehicle!;
       const aboard = ids.filter(id => car.passengers?.some(p => p.id === id && p.phase === 'seated')).length;
