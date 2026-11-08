@@ -138,6 +138,11 @@ test('look-l6-l9 decor is render-only: L6 nav hash, colliders and pushables matc
   expect(triangles.map(t=>ranks.get(groundGroup(t)))).toEqual([0,1,2]);
   expect(groundConflicts(triangles)).toHaveLength(3);
   expect(groundConflicts([triangles[0],{...triangles[1],points:[[3,0],[3,2],[5,0]]}])).toHaveLength(0);
+  const ramps=triangles.map(t=>({...t,slope:[.15,-.05] as [number,number]}));
+  expect(groundConflicts(ramps)).toHaveLength(3);
+  const rampRanks=groundPriorities(ramps);
+  expect(ramps.map(t=>rampRanks.get(groundGroup(t)))).toEqual([0,1,2]);
+  expect(groundConflicts([ramps[0],{...ramps[1],slope:[.25,-.05]}])).toHaveLength(0);
   const { readdirSync } = await import('node:fs');
   const { execFileSync } = await import('node:child_process');
   // Decode the real GLBs outside Vitest's module transformer. The same CLI is

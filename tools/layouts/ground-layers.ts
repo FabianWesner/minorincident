@@ -1,8 +1,10 @@
 /** Reject broad, parallel faces within 2 mm (the observed unstable range at
  * the game camera), excluding authored edge aprons narrower than 5 mm. */
 export const unsafeGroundGap = .002;
-export interface GroundTriangle { id: string; material: string; layer?: number; y: number; points: [number, number][] }
+export interface GroundTriangle { id: string; material: string; layer?: number; y: number; slope?: [number, number]; points: [number, number][] }
 export interface GroundConflict { first: string; second: string; gap: number; area: number; at: [number, number] }
+/** Height of the supporting plane, including inclined ground. `y` is its intercept. */
+export const groundHeight = (t: GroundTriangle, p: readonly number[]): number => t.y + (t.slope?.[0] ?? 0) * p[0] + (t.slope?.[1] ?? 0) * p[1];
 const signedArea = (p: readonly number[][]) => p.reduce((s,a,i)=>{ const b=p[(i+1)%p.length]; return s+a[0]*b[1]-a[1]*b[0]; },0)/2;
 function intersection(a: number[][], b: number[][]): number[][] {
   const sign=Math.sign(signedArea(b)); let out=a;
@@ -26,11 +28,18 @@ export function groundConflicts(triangles: readonly GroundTriangle[], maxGap = u
     for(let x=Math.floor(x0/20);x<=Math.floor(x1/20);x++) for(let z=Math.floor(z0/20);z<=Math.floor(z1/20);z++)keys.push(`${x}:${z}`);
     for(const key of keys)for(const other of cells.get(key)??[]) {
       if(seen.has(other))continue;seen.add(other);
-      const b=triangles[other],gap=Math.abs(a.y-b.y);
-      if(a.material===b.material||gap>maxGap+1e-6)continue;
+      const b=triangles[other];
+      if(a.material===b.material)continue;
+      const dx=(a.slope?.[0]??0)-(b.slope?.[0]??0),dz=(a.slope?.[1]??0)-(b.slope?.[1]??0);
+      if(Math.abs(dx)>1e-6||Math.abs(dz)>1e-6)continue; // intersecting slopes are not parallel ground layers
       const [bx0,bx1,bz0,bz1]=bounds[other];
       if(x0>=bx1||x1<=bx0||z0>=bz1||z1<=bz0)continue;
+      const center=[(Math.max(x0,bx0)+Math.min(x1,bx1))/2,(Math.max(z0,bz0)+Math.min(z1,bz1))/2];
+      const variation=Math.abs(dx)*(Math.min(x1,bx1)-Math.max(x0,bx0))/2+Math.abs(dz)*(Math.min(z1,bz1)-Math.max(z0,bz0))/2;
+      if(Math.abs(groundHeight(a,center)-groundHeight(b,center))>maxGap+variation+1e-6)continue;
       const p=intersection(a.points,b.points);if(p.length<3)continue;
+      const gap=Math.max(...p.map(v=>Math.abs(groundHeight(a,v)-groundHeight(b,v))));
+      if(gap>maxGap+1e-6)continue;
       const area=Math.abs(signedArea(p)),perimeter=p.reduce((s,a,i)=>{const b=p[(i+1)%p.length];return s+Math.hypot(a[0]-b[0],a[1]-b[1]);},0);
       if(area<.01||2*area/perimeter<=.005)continue;
       conflicts.push({first:a.id,second:b.id,gap,area,at:p.reduce<[number,number]>((s,v)=>[s[0]+v[0]/p.length,s[1]+v[1]/p.length],[0,0])});
@@ -41,7 +50,7 @@ export function groundConflicts(triangles: readonly GroundTriangle[], maxGap = u
 }
 
 /** Equal heights use palette-name order, making priorities stable across cells and rebuilds. */
-export const groundGroup = (t: GroundTriangle): string => `${t.y.toFixed(5)}:${t.material}`;
+export const groundGroup = (t: GroundTriangle): string => `${t.y.toFixed(5)}:${t.material}:${(t.slope?.[0]??0).toFixed(6)}:${(t.slope?.[1]??0).toFixed(6)}`;
 export function groundPriorities(triangles: readonly GroundTriangle[]): Map<string, number> {
   const groups = new Map(triangles.map(t => [groundGroup(t), t]));
   const ordered = [...groups.keys()].sort((a,b) => groups.get(a)!.y - groups.get(b)!.y || a.localeCompare(b));

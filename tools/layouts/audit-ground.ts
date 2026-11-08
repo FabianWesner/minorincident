@@ -1,7 +1,7 @@
 import { type Document, type Primitive, NodeIO } from '@gltf-transform/core';
 import { ALL_EXTENSIONS } from '@gltf-transform/extensions';
 import { MeshoptDecoder } from 'meshoptimizer';
-import { groundConflicts, type GroundTriangle } from './ground-layers';
+import { groundConflicts, groundHeight, type GroundTriangle } from './ground-layers';
 import { writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { resolve } from 'node:path';
@@ -15,9 +15,11 @@ export function groundTriangles(doc: Document): (GroundTriangle & {primitive: Pr
         const point=(index:number)=>{const v=pos.getElement(index,[]);return [matrix[0]*v[0]+matrix[4]*v[1]+matrix[8]*v[2]+matrix[12],matrix[1]*v[0]+matrix[5]*v[1]+matrix[9]*v[2]+matrix[13],matrix[2]*v[0]+matrix[6]*v[1]+matrix[10]*v[2]+matrix[14]];};
         for(let i=0;i<ids.length;i+=3) {
           const p=[point(ids[i]),point(ids[i+1]),point(ids[i+2])],y=p[0][1];
-          if(!p.every(v=>Math.abs(v[1]-y)<1e-5))continue;
           const normalY=(p[1][2]-p[0][2])*(p[2][0]-p[0][0])-(p[1][0]-p[0][0])*(p[2][2]-p[0][2]);if(normalY<=0)continue;
-          triangles.push({primitive, indices: [ids[i],ids[i+1],ids[i+2]], layer: Number(primitive.getMaterial()?.getExtras().groundLayer ?? 0), id:`${nodeIndex}:${primitiveIndex}:${i/3}`,material,y,points:p.map(v=>[v[0],v[2]])});
+          const ax=p[1][0]-p[0][0],ay=p[1][1]-y,az=p[1][2]-p[0][2],bx=p[2][0]-p[0][0],by=p[2][1]-y,bz=p[2][2]-p[0][2];
+          const slope: [number,number]=[-(ay*bz-az*by)/normalY,-(ax*by-ay*bx)/normalY];
+          const intercept=y-slope[0]*p[0][0]-slope[1]*p[0][2];
+          triangles.push({primitive, indices: [ids[i],ids[i+1],ids[i+2]], layer: Number(primitive.getMaterial()?.getExtras().groundLayer ?? 0), id:`${nodeIndex}:${primitiveIndex}:${i/3}`,material,y:intercept,slope,points:p.map(v=>[v[0],v[2]])});
         }
       }
     }
@@ -33,7 +35,7 @@ export async function auditGround(paths: string[], together = false) {
     const triangles=[];
     for (const file of files) { const doc=await io.read(file);triangles.push(...groundTriangles(doc).map(t=>({...t,id:`${file}:${t.id}`}))); }
     const byId = new Map(triangles.map(t=>[t.id,t]));
-    const conflicts=groundConflicts(triangles).filter(c => { const a=byId.get(c.first)!,b=byId.get(c.second)!; return a.layer===b.layer || (a.y>b.y && a.layer<b.layer) || (b.y>a.y && b.layer<a.layer); });reports.push({path,triangles:triangles.length,conflicts});
+    const conflicts=groundConflicts(triangles).filter(c => { const a=byId.get(c.first)!,b=byId.get(c.second)!; const delta=groundHeight(a,c.at)-groundHeight(b,c.at); return a.layer===b.layer || (delta>1e-6 && a.layer<b.layer) || (delta < -1e-6 && b.layer<a.layer); });reports.push({path,triangles:triangles.length,conflicts});
   }
   return reports;
 }
