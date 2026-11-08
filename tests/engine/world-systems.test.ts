@@ -9,7 +9,7 @@ import { SimWorld } from '../../src/sim/world/SimWorld';
 
 const worlds: SimWorld[] = [];
 afterEach(() => { for (const w of worlds.splice(0)) w.dispose(); });
-async function world(name = 'combat-arena', god = false) { const w = new SimWorld(); worlds.push(w); await w.init(); w.loadScenario(name, 1); w.combat!.damage.god = god; return w; }
+async function world(name = 'combat-arena', god = false) { const w = new SimWorld(); worlds.push(w); await w.init(); w.loadScenario(name, 1); if (w.combat) w.combat.damage.god = god; return w; }
 const step = (w: SimWorld, n: number) => { for (let i = 0; i < n; i++) w.update(); };
 const events = <T extends GameEvent['type']>(w: SimWorld, type: T) => w.events.events().filter((e): e is Extract<GameEvent, { type: T }> => e.type === type);
 function move(w: SimWorld, x: number, z = 0) { const p = w.entities.get(1)!; Object.assign(p.transform, { x, z }); w.physics.playerBody!.setTranslation(p.transform, true); w.spatial.set(1, x, z); }
@@ -240,7 +240,7 @@ test('look-l6-l9 decor is render-only: L6 nav hash, colliders and pushables matc
   const chase = await world('survivor', true);
   chase.districts = bare;
   chase.enableInfected();
-  const infected = chase.infected!, walker = chase.entities.get(infected.spawn('infected.walker', { x: px + 10, z: pz }, { state: 'chase' }))!;
+  const infected = chase.infected!, walker = chase.entities.get(infected.spawn('infected.runner', { x: px + 10, z: pz }, { state: 'chase' }))!;
   const seek = infected as unknown as { seek(e: typeof walker, goal: { x: number; y: number; z: number }): void };
   for (let tick = 0; tick < 2400; tick++) {
     seek.seek(walker, { x: px, y: 3.78, z: pz });
