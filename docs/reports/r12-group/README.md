@@ -1,6 +1,6 @@
 # R12 natural group movement
 
-**Status: active L7 correction (r12-group-d). Main `eb835fc1` merged as `b3382b53`; regression isolation is in progress. Earlier comparisons below used older main and do not establish current-main equivalence.**
+**Status: authorized L7 fallback implemented (`88b8e6b3`); final six-level verification running. All three L7 native final hashes match current main. Natural movement remains enabled elsewhere. Earlier comparisons below used older main.**
 
 **Correction (r12-group-d):** prior `busHp` diagnosis was wrong: the runner records courier HP, not bus HP. Current main `eb835fc1` completes seeds 1/3 but fails seed 2 in the unchanged seed runner; the merged lane initially fails seeds 1/2 and completes seed 3. L7 regression diagnosis is active.
 
@@ -146,3 +146,17 @@ The orchestrator supplied a fresh 40-minute work box and authorized gating R12 o
 **Diagnosis correction:** runner blocker `hp` is explicitly `world.entities.get(1).health.current`, the courier's HP. It never measured bus HP. The prior bus-destruction diagnosis was incorrect and has been corrected in the retained summary.
 
 Authored entry positions alone restore seed 1 but lose seed 3. Authored entry plus disabling generic L7 sway restores seeds 1/3, matching current main's completion pattern. Limiting sway only to pre-departure travel still loses seed 1. These results point to perturbing authored route targets as a regression source; further tracing is in progress. No policy, enemy, damage, validity rule or acceptance threshold has been changed.
+
+### Authorized L7 fallback
+
+`88b8e6b3` gates R12 off for **L7 only**: authored entry/pickup/travel slots, original response and braking, no R12 start delay/sway/idle bookkeeping. R13 queue rows, physical avoidance and boarding recovery remain. Natural movement in L2/L3/L5/L6/L8 is retained. Partial restrictions were not reliable across all seeds, so the authorized fallback was selected rather than changing combat or test policy. [Isolation trials](d-trials.json).
+
+The final gated source matches clean `eb835fc1` in all three low skilled final native state hashes ([equivalence receipt](d-gate-equivalence.json), [full follower samples](d-final-gated-seeds.json)):
+
+| Seed | Lane and main outcome | Lane and main time | Matching native hash |
+| --- | --- | ---: | --- |
+| 1 | complete | 116.37 s | `7531f27e` |
+| 2 | mission-failed | 74.78 s | `02602b10` |
+| 3 | complete | 120.12 s | `66622d3c` |
+
+**Open baseline issue:** seed 2 does not pass on current main either. This lane cannot truthfully claim three completed seeds; it has removed its additional L7 failure and matches main's complete runtime state for every tested seed. Final lane/main six-level audits are running on independently fingerprinted sources ([lane](d-remote-runtime.json), [main](d-remote-main-runtime.json)).
