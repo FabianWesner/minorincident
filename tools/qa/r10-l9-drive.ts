@@ -40,7 +40,7 @@ try {
   const html = await (await fetch(origin)).text();
   writeFileSync(`${out}/source.json`, JSON.stringify({ revision: execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(), origin,
     bundle: /src="([^"]+\.js)"/.exec(html)?.[1], variant, tier, zoom, route: route ?? 'objective bearing with bush-clearance bend', waypoints, backend, input: 'real keyboard/mouse', godMode: true }, null, 2));
-  Object.assign(process.env, { PLAYTEST_BACKEND: backend, PLAYTEST_GOD: '1', PLAYTEST_NO_FRAME_TIMING: '0', PLAYTEST_THREAT_AUDIT: '1', PLAYTEST_ACCEPTANCE_LEDGER: '1', PLAYTEST_SHOT_SECONDS: '10', PLAYTEST_ACCEPTANCE_CAPTURES: '0' });
+  Object.assign(process.env, { PLAYTEST_BACKEND: backend, PLAYTEST_GOD: '1', PLAYTEST_NO_FRAME_TIMING: '0', PLAYTEST_THREAT_AUDIT: '1', PLAYTEST_ACCEPTANCE_LEDGER: '1', PLAYTEST_SHOT_SECONDS: process.env.PLAYTEST_SHOT_SECONDS ?? '45', PLAYTEST_ACCEPTANCE_CAPTURES: '0' });
   const result = await runSession({ origin, out, levels: ['L9'], quality: tier as 'low' | 'high', zoom: Number(zoom), heroine: 'female',
     entry: 'continue', profile, levelMinutes: 5, sampleSeconds: 280, stopAfterLevel: true, tag, noSkip: true,
     l9Route: route as 'road' | 'countryside' | 'dry-shortcut' | undefined, l9Waypoints: waypoints });
