@@ -2,8 +2,8 @@
   "version": 1,
   "level": "L10",
   "tier": "low",
-  "sourceHash": "32ccf2e60acb8ed36e50d395a2e29088d9d3fd8e868ea9ec3bbb85c91b75a789",
-  "fixtureHash": "e368a1e86ff1794579f1bff9d79f08268b0debe503d330ffcfd031bfbc745730",
+  "sourceHash": "eca9e19daf62c6c77c7372ea033a7412de5c62074e9838cc9a2a24fa26f22261",
+  "fixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4",
   "checks": [
     {
       "id": "G-24",
@@ -12,7 +12,7 @@
         {
           "archetype": "infected.alpha",
           "near": true,
-          "farHealthy": true,
+          "farHealthy": false,
           "farDamaged": true,
           "dead": false,
           "healthyAnimal": false
@@ -59,7 +59,7 @@
         }
       ],
       "target": "near/full and far/damaged true; far/full, dead and healthy animals false",
-      "status": "FAIL",
+      "status": "PASS",
       "tier": "low",
       "policy": "controlled-fixture",
       "receipt": "docs/reports/fix51-verify/receipts/L10-low-fixtures.json"
