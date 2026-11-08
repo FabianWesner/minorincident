@@ -1,14 +1,16 @@
 /** QA route: native policy supplies advice; only physical device events reach gameplay. */
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { mkdirSync, writeFileSync, readFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { SceneSession, stopServer } from '../../../tools/scenelab/session';
 import { weaponKey } from '../../../src/data/weaponKeys';
 
 const [level = 'L6', quality = 'low', checkpoint, backend = 'webgl2'] = process.argv.slice(2);
-const out = `docs/reports/qa-browser/${level.toLowerCase()}-${quality}${checkpoint==='cure-military'?'-campus':''}${process.env.QA_RUN_SUFFIX?`-${process.env.QA_RUN_SUFFIX}`:''}`;
+const out = process.env.QA_OUT ?? `docs/reports/qa-browser/${level.toLowerCase()}-${quality}${checkpoint==='cure-military'?'-campus':''}${process.env.QA_RUN_SUFFIX?`-${process.env.QA_RUN_SUFFIX}`:''}`;
 mkdirSync(out, { recursive: true });
 const session = new SceneSession({ backend: backend as 'webgl2'|'webgpu', tier: quality as 'low' | 'high', viewport: { width: 1280, height: 800 }, seed: 1, query: { ui: '1' } });
-const receipt: Record<string, unknown> = { revision: execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(), level, quality, checkpoint, method: 'Planner advice translated to physical WASD, number keys, E and mouse; no injected driver, teleport, god mode, objective skip or time scaling during route.' };
+const receipt: Record<string, unknown> = { revision: process.env.QA_SOURCE_COMMIT??execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(), level, quality, checkpoint, producerSha256:createHash('sha256').update(readFileSync(new URL(import.meta.url))).digest('hex'),sourceGameTree:process.env.QA_SOURCE_TREE??execFileSync('git',['rev-parse','HEAD:src'],{encoding:'utf8'}).trim(), method: 'Planner advice translated to physical WASD, number keys, E and mouse with paused-world tick stepping; no injected driver, teleport, god mode, objective skip or external time-scale override during route.' };
+const maxWallMs=Number(process.env.QA_WALL_SECONDS??(process.env.QA_FARM==='1'||process.env.QA_L8_EARLY==='0'?240:510))*1000;
 const captures: unknown[] = [], timeline: unknown[] = [], seen = new Set<string>();
 let held: string[] = [], firing = false;
 async function keys(next: string[]) {
@@ -23,7 +25,7 @@ async function capture(stage: string, state: unknown, zooms = [1.5]) {
     await session.page.evaluate(async z => { window.__SS__!.camera.zoom(z); await window.__SS__!.screenshotReady(); }, zoom);
     const file = `${stage}-z${zoom}.jpg`;
     await session.page.screenshot({ path: `${out}/${file}`, type: 'jpeg', quality: 75 });
-    captures.push({ stage, file, zoom, state });
+    captures.push({ stage, file, zoom, state, captureCamera:await session.page.evaluate(()=>window.__SS__!.getState().render.camera),captureLevel:await session.page.evaluate(()=>window.__SCENE__.game.world.scenario) });
   }
   await session.page.evaluate(() => window.__SS__!.camera.zoom(1.5));
 }
@@ -34,17 +36,18 @@ try {
     await a.loadLevel(level, { seed: 1, progression: `${level}-default`, ...(checkpoint ? { checkpoint } : {}) });
     a.settings.set({quality});await a.screenshotReady();a.pause(); a.bot.stop(); a.camera.follow(); a.camera.zoom(1.5);
     a.bot.start('complete'); window.qaPlanner = g.driver; a.bot.stop();
-    window.qaCheckpoint=checkpoint;
+    window.qaCheckpoint=checkpoint;window.qaEarlyL8=true;
     window.qaEvents = [];
-    for (const name of ['combat.attack', 'combat.hit', 'combat.kill', 'combat.empty', 'player.died', 'l6.collected', 'l6.rejoined', 'l6.gate-closed', 'l6.exit']) g.world.events.on(name, e => { window.qaEvents.push({...e,...('targetId' in e?{targetHp:g.world.entities.get(e.targetId)?.health.current,targetType:g.world.entities.get(e.targetId)?.archetype}: {})}); });
+    for (const name of ['combat.attack', 'combat.hit', 'combat.kill', 'combat.empty', 'player.died', 'music.stinger', 'l6.collected', 'l6.rejoined', 'l6.gate-closed', 'l6.exit']) g.world.events.on(name, e => { window.qaEvents.push({...e,...('targetId' in e?{targetHp:g.world.entities.get(e.targetId)?.health.current,targetType:g.world.entities.get(e.targetId)?.archetype}: {})}); });
   }, { level, checkpoint, quality });
+  await session.page.evaluate(early=>{window.qaEarlyL8=early;},process.env.QA_L8_EARLY!=='0');
   await session.page.addStyleTag({ content: '#hud,.hud,.story-bubble,.mission-subtitle,[data-testid=mission-button]{visibility:visible!important}' });
   await session.page.evaluate(()=>{document.documentElement.dataset.sceneHud='1';document.querySelectorAll('#hud,.hud').forEach(n=>n.setAttribute('data-scene-hud',''));});
   if (await session.page.evaluate(() => window.__SS__!.missions.state()?.phase === 'briefing')) await session.page.getByTestId('mission-button').click({ force: true });
   await session.page.mouse.up();await session.page.evaluate(() => {window.__SS__!.pause();window.__SS__!.input.clear();});
   let end, lastStep = '', lastLog = -1, nightAt = 0, lastMoveTick = 0, lastAt = { x: 0, z: 0 };
   const wallStart = Date.now();
-  for (let i = 0; i < 12000 && Date.now() - wallStart < 510000; i++) {
+  for (let i = 0; i < 12000 && Date.now() - wallStart < maxWallMs; i++) {
     const state = await session.page.evaluate(() => {
       const a = window.__SS__!, g = window.__SCENE__.game, w = g.world, p = w.entities.get(1)!, m = w.missions!.state;
       const active = Object.entries(m.steps).filter(([, s]) => s.status === 'active').map(([id]) => id);
@@ -53,10 +56,16 @@ try {
         weapons: p.weapons, mountedGun: w.mountedGun && { mounted: w.mountedGun.mounted, heat: w.mountedGun.heat },
         l6: s && { phase: s.phase, gateAt: s.gateAt, survivors: s.survivors.map(r => { const e = w.entities.get(r.id)!; return { ...r, hidden: !!e.hidden, transform: { ...e.transform }, hp: e.health.current }; }), spawns: s.spawnLog.filter(q => q.wave === 3) },
         l7: w.l7Departure && { ...w.l7Departure.state }, marker:m.marker, states:m.states,
-        l8: car && { driver:car.vehicle.driver, passengers:car.vehicle.passengers, ring:a.getState().render.vehicles.find(v=>v.id===car.id)?.entryRingVisible, roster:w.missions.l8.roster().map(id=>{const e=w.entities.get(id);return {id,hp:e?.health.current,passengerOf:e?.passengerOf,at:e?.transform};}) },
+        l8: car && {carId:car.id, driver:car.vehicle.driver, passengers:car.vehicle.passengers, ring:a.getState().render.vehicles.find(v=>v.id===car.id)?.entryRingVisible, roster:w.missions.l8.roster().map(id=>{const e=w.entities.get(id);return {id,hp:e?.health.current,passengerOf:e?.passengerOf,at:e?.transform};}) },
+        farm: w.scenario==='L10'?{scares:w.l10Encounters?.state.farmScares??{},corn:w.districts.districts.find(d=>d.id==='D-CURE')?.layout.placements.filter(q=>q.assetId==='veg.corn-block').map(q=>({id:q.id,at:q.position,near:Math.hypot(q.position[0]-p.transform.x,q.position[2]-p.transform.z)<40})).filter(q=>q.near),preset:a.perf().lighting.preset}:undefined,
         enemies: w.infected!.active.filter(e => e.health.current > 0 && !e.hidden && Math.hypot(e.transform.x-p.transform.x,e.transform.z-p.transform.z)<20).map(e => ({ id:e.id, type:e.archetype, hp:e.health.current, at:{...e.transform}, state:e.infected?.state })) };
     });
     end = state;
+    if(process.env.QA_FARM==='1'){
+      for(const [id,entry] of Object.entries(state.farm?.scares??{}))await capture(`scare-${id}-${entry.actor===undefined?'warning':'actor'}`,state,[1.5]);
+      for(const x of [550,650,750,850,950,1050,1150,1230])if(state.position.x>=x&&!seen.has(`farm-${x}`))await capture(`farm-${x}`,state,[.5,1,1.5]);
+      if(state.position.x>1300){receipt.finished=true;receipt.scope='Physical opening farm traverse only; no full-L10 verdict';break;}
+    }
     if (state.driver || state.god) throw Error('Route purity violation');
     if(state.quality!==quality)throw Error(`Quality changed to ${state.quality}; requested ${quality}`);
     if(level==='L10'&&checkpoint==='cure-military'&&Math.hypot(state.position.x-2363.99,state.position.z+75.39)<.45){await capture('native-campus',state,[1.3]);receipt.finished=true;break;}
@@ -82,9 +91,18 @@ try {
       if((receipt.deaths as number)>10){receipt.failure='More than ten ordinary mortal deaths';break;}
       if(state.phase==='retry') await session.page.getByTestId('mission-button').click({force:true});
       else await session.page.evaluate(async()=>{for(let i=0;i<240&&window.__SS__!.getEntity(1)!.health.current<=0;i++)await window.__SS__!.step(1);});
-      await session.page.evaluate(async quality=>{const a=window.__SS__!,g=window.__SCENE__.game;a.pause();a.settings.set({quality});await a.screenshotReady();window.qaL8ReturnIndex=0;a.bot.start('complete');window.qaPlanner=g.driver;a.bot.stop();a.input.clear();},quality);continue;
+      await session.page.evaluate(async quality=>{const a=window.__SS__!,g=window.__SCENE__.game;a.pause();a.settings.set({quality});await a.screenshotReady();window.qaL8ReturnIndex=0;window.qaRoadRoute=null;a.bot.start('complete');window.qaPlanner=g.driver;a.bot.stop();a.input.clear();},quality);continue;
     }
-    if (state.phase === 'result' || state.phase === 'progression' || state.level !== level) { await capture('result',state,[1,1.5]); receipt.finished=true; break; }
+    if (state.phase === 'result' || state.phase === 'progression' || state.level !== level) {
+      await keys([]);await fire(false);await capture('result',state,[1,1.5]);
+      if(level==='L8'&&state.phase==='progression'&&process.env.QA_L8_EARLY==='0'){
+        if(await session.page.evaluate(()=>window.__SCENE__.game.world.scenario!=='L9')){const next=session.page.getByTestId('mission-button');if(await next.isVisible())await next.click({force:true});}
+        await session.page.waitForFunction(()=>window.__SCENE__.game.world.scenario==='L9');
+        await session.page.evaluate(async()=>{window.__SS__!.pause();await window.__SS__!.screenshotReady();});
+        const handover=await session.page.evaluate(()=>({tick:window.__SS__!.tick(),level:window.__SCENE__.game.world.scenario,quality:window.__SS__!.getState().render.quality,backend:window.__SS__!.getState().render.backend,phase:window.__SS__!.missions.state()?.phase,camera:window.__SS__!.getState().render.camera}));receipt.handover=handover;await capture('l9-handover',handover,[1,1.5]);
+      }
+      receipt.finished=true; break;
+    }
     if (level === 'L6' && state.l6) {
       const people=state.l6.survivors, live=people.filter(r=>!['out','dead','turned'].includes(r.status)), out=people.filter(r=>r.status==='out');
       if (state.position.x>95 && state.position.x<140 && state.enemies.length) await capture('rail',state,[1,1.5]);
@@ -106,44 +124,46 @@ try {
     if (level==='L10' && state.active.includes('mega')) await capture('moving-mega',state);
     if (level==='L8') {
       if(state.tick<3600&&Math.hypot(state.position.x-7,state.position.z-78)<1) await capture('gate-before-breach',state,[1,1.5]);
-      if(state.tick>=3125&&state.tick<3600) await capture('early-apc-52s',state,[1,1.5]);
-      if(state.tick>=3660) await capture('apc-breach-61s',state,[1,1.5]);
+      if(state.tick>=3125&&state.tick<3600&&Math.hypot(state.position.x-96.5,state.position.z-76.5)<1) await capture('early-apc-52s',state,[1,1.5]);
+      if(state.tick>=3660&&state.tick<=3690&&Math.hypot(state.position.x-96.5,state.position.z-76.5)<1) await capture('apc-breach-61s',state,[1,1.5]);
       if(state.tick>=3660&&state.marker!=='zoo-gate') await capture('gate-rendezvous',state,[1,1.5]);
       if(state.l8?.driver===1) await capture('driver-boarded',state,[1,1.5]);
-      if(state.l8?.passengers?.length&&state.l8.passengers.every(p=>p.phase==='seated')) await capture('passengers-seated',state,[1,1.5]);
+      if(state.l8?.passengers?.length&&state.l8.passengers.every(p=>p.phase==='seated')&&state.l8.roster.filter(p=>p.hp>0).every(p=>p.passengerOf===state.l8.carId)) await capture('passengers-seated',state,[1,1.5]);
     }
     if (state.tick-lastMoveTick>7200) { receipt.failure='No movement for 120 simulation seconds'; await capture('stalled',state); break; }
     const plan = await session.page.evaluate(() => {
       const g=window.__SCENE__.game,w=g.world,p=w.entities.get(1)!;
       let f;
-      if(w.scenario==='L8'&&(w.tick<3660||w.missions.state.steps.sanctuary.status==='active')){
+      if(w.scenario==='L8'&&window.qaEarlyL8&&(w.tick<3660||w.missions.state.steps.sanctuary.status==='active')){
         const returning=w.tick>=3660,route=returning?[[96.5,78.5],[90,78.5],[66,78],[24,78],[7,78]]:[[7,78],[24,78],[66,78],[90,78],[96.5,76.5]],key=returning?'qaL8ReturnIndex':'qaL8Index';
         window[key]??=0;
         let goal=route[window[key]],dx=goal[0]-p.transform.x,dz=goal[1]-p.transform.z,d=Math.hypot(dx,dz);
-        if(d<.5&&window[key]<route.length-1){window[key]++;goal=route[window[key]];dx=goal[0]-p.transform.x;dz=goal[1]-p.transform.z;d=Math.hypot(dx,dz);}
+        if(d<1&&window[key]<route.length-1){window[key]++;goal=route[window[key]];dx=goal[0]-p.transform.x;dz=goal[1]-p.transform.z;d=Math.hypot(dx,dz);}
         f=returning?window.qaPlanner.sample():{left:{},right:{}};
         const live=w.missions.l8.roster().map(id=>w.entities.get(id)).filter(e=>e&&e.health.current>0&&!e.infected&&e.passengerOf===undefined),wait=returning&&live.some(e=>Math.hypot(e.transform.x-p.transform.x,e.transform.z-p.transform.z)>Math.max(12,Math.ceil(live.length/3)*1.2+5));
-        f.move=d>.4&&!wait?{x:dx/d,z:dz/d}:{x:0,z:0};f.interact=!returning&&window[key]===4&&d<.6;
+        const roadKey=key+':'+window[key];if(window.qaRoadKey!==roadKey){window.qaRoadKey=roadKey;window.qaRoadRoute={path:[],goal:-1,pathIndex:0};}
+        const toward={x:goal[0],z:goal[1]},ok=w.infected.nav.forPlayer(.45).steer(p.transform,{x:goal[0],z:goal[1]},window.qaRoadRoute,.45,toward,Infinity,true),vx=toward.x-p.transform.x,vz=toward.z-p.transform.z,vd=Math.hypot(vx,vz),speed=Math.min(1,vd/1.2);
+        f.move=d>(window[key] === route.length - 1 ? .5 : 1)&&!wait&&ok&&vd>1e-5?{x:vx/vd*speed,z:vz/vd*speed}:{x:0,z:0};f.interact=!returning&&window[key]===4&&d<.7;
       }else if(w.scenario==='L10'&&window.qaCheckpoint==='cure-military'&&p.transform.x>2300){
         const dx=2363.99-p.transform.x,dz=-75.39-p.transform.z,d=Math.hypot(dx,dz);f={move:{x:dx/d,z:dz/d},left:{},right:{},interact:false};
       }else f=window.qaPlanner.sample();
       const az=g.view.view.azimuth;
       const x=Math.cos(az)*f.move.x-Math.sin(az)*f.move.z,y=Math.sin(az)*f.move.x+Math.cos(az)*f.move.z, keys=[];
-      if(Math.abs(x)>.35)keys.push(x>0?'KeyD':'KeyA');if(Math.abs(y)>.35)keys.push(y>0?'KeyS':'KeyW');
+      const largest=Math.max(Math.abs(x),Math.abs(y));if(largest>1e-5){if(Math.abs(x)>largest*.35)keys.push(x>0?'KeyD':'KeyA');if(Math.abs(y)>largest*.35)keys.push(y>0?'KeyS':'KeyW');}
       const point=f.aimPoint??(f.aim?{x:p.transform.x+f.aim.x*10,z:p.transform.z+f.aim.z*10}:null);
       const q=point?g.view.project(point.x,w.districts!.groundHeight(point.x,point.z),point.z):null;
       const attack=f.left.held||f.left.down||f.right.held||f.right.down;
       const side=f.left.held||f.left.down?'LEFT':'RIGHT';
       let wanted=f.selectedSlot?p.weapons[f.selectedSlot.side].rack[f.selectedSlot.index].id:attack?w.combat.runner.loadout.current(side).id:null;
       if(w.scenario==='L8'&&attack){const near=w.infected.active.filter(e=>e.health.current>0&&!e.hidden).reduce((best,e)=>Math.min(best,Math.hypot(e.transform.x-p.transform.x,e.transform.z-p.transform.z)),Infinity),rack=p.weapons.RIGHT.rack;const choice=near<6?'weapon.shotgun':near>=8?'weapon.rocket-launcher':null;if(choice&&rack.some(s=>s.id===choice))wanted=choice;}
-      return {keys,interact:f.interact,attack,wanted,current:w.combat.runner.loadout.current(p.weapons.selectedSide).id,projected:q&&Math.abs(q[0])<.98&&Math.abs(q[1])<.95?{x:(q[0]+1)*640,y:(1-q[1])*400}:null};
+      return {keys,moveMagnitude:Math.hypot(f.move.x,f.move.z),interact:f.interact,attack,wanted,current:w.combat.runner.loadout.current(p.weapons.selectedSide).id,projected:q&&Math.abs(q[0])<.98&&Math.abs(q[1])<.95?{x:(q[0]+1)*640,y:(1-q[1])*400}:null};
     });
     if(plan.wanted&&plan.wanted!==plan.current) { const shortcut=weaponKey(plan.wanted);if(shortcut) await session.page.keyboard.press(`Digit${shortcut}`); }
     await keys(plan.keys);
     if(plan.interact) await session.page.keyboard.press('KeyE');
     if(plan.projected) await session.page.mouse.move(plan.projected.x,plan.projected.y);
     await fire(!!plan.projected&&plan.attack&&!(level==='L7'&&process.env.QA_PICKUP_PROBE_ONLY==='1'&&!seen.has('launcher-safety')));
-    const ticks=level==='L6'&&state.position.x>255?1:level==='L10'&&checkpoint==='cure-military'&&state.position.x>2350?1:level==='L10'&&state.enemies.length===0&&!state.active.some(a=>['hold','mega'].includes(a))?30:6;
+    const ticks=plan.moveMagnitude>0&&plan.moveMagnitude<.5?1:level==='L6'&&state.position.x>255?1:level==='L10'&&checkpoint==='cure-military'&&state.position.x>2350?1:level==='L10'&&state.enemies.length===0&&!state.active.some(a=>['hold','mega'].includes(a))?30:6;
     await session.page.evaluate(n => window.__SS__!.step(n),ticks);
   }
   receipt.end=end; receipt.wallSeconds=(Date.now()-wallStart)/1000;

@@ -141,7 +141,7 @@ try {
       }
       if (phase === 'before') await s.page.evaluate(() => { const l = ((window.__SCENE__ as unknown as { game: Game }).game.view as unknown as { lighting: Lighting }).lighting as unknown as Record<string, unknown>; Object.assign(l, l.qaRestore); delete l.qaRestore; });
     }
-    if (backend === 'webgl2' && process.env.R12_MATRIX !== '0') {
+    if ((backend === 'webgl2' && process.env.R12_MATRIX !== '0') || process.env.R12_WALK_ALL === '1') {
       await s.load({ name: 'forty-lights', size: 300, ground: 'asphalt', time: 'night', dof: false, actors: [{ id: 'courier', kind: 'courier', at: [0, 0] }], camera: { mode: 'follow', actor: 'courier', zoom: 1 } });
       await s.ready();
       const walk = await s.page.evaluate(async () => {
@@ -151,11 +151,15 @@ try {
         l.field.setStatic(fields); l.set('night');
         const gl = (g.view.renderer.backend as unknown as { gl: WebGL2RenderingContext }).gl, pixel = new Uint8Array(16);
         const width = g.view.renderer.domElement.width, height = g.view.renderer.domElement.height;
+        const sampleCanvas=document.createElement('canvas');sampleCanvas.width=width;sampleCanvas.height=height;
+        const sampleContext=!gl?sampleCanvas.getContext('2d',{willReadFrequently:true})!:null;
         const linear = (v: number) => v <= 10 ? v / 3294.6 : ((v / 255 + .055) / 1.055) ** 2.4;
         const previous = new Map<number, { frame: number; value: number }>(), changes: number[] = [], fades: number[] = [];
+        let sampleCount=0,litSamples=0,peakLum=0;
         let maxDelta = 0, maps = 0, lastId: string | null = null, fadeAt = -1, maxChangesPerSecond = 0;
         for (let frame = 0; frame < 3600; frame++) {
           g.world.setInput({ move: { x: 1, z: 0 }, walk: true }); g.world.update(); g.view.advance(1 / 60); g.view.renderer.nextNodeFrame(); g.view.update(1);
+          if(sampleContext){await new Promise<void>(r=>requestAnimationFrame(()=>r()));sampleContext.drawImage(g.view.renderer.domElement,0,0);}
           const state = l.getState();
           maps = Math.max(maps, Number(l.sun.visible && l.sun.shadow.autoUpdate) + Number(l.spot.visible && l.spot.shadow.autoUpdate));
           if (state.heroLight !== lastId) { if (lastId !== null) fadeAt = frame; lastId = state.heroLight; changes.push(frame); }
@@ -165,20 +169,22 @@ try {
             const q = g.view.project(f.x, .05, f.z), sx = (q[0] + 1) * width / 2 - .5, sy = (1 - q[1]) * height / 2 - .5;
             const x = Math.floor(sx), y = Math.floor(sy), tx = sx - x, ty = sy - y;
             if (x < 4 || y < 4 || x >= width - 4 || y >= height - 4 || q[2] < -1 || q[2] > 1) continue;
-            gl.readPixels(x, height - 2 - y, 2, 2, gl.RGBA, gl.UNSIGNED_BYTE, pixel);
+            if(gl)gl.readPixels(x, height - 2 - y, 2, 2, gl.RGBA, gl.UNSIGNED_BYTE, pixel);
+            else{const rgba=sampleContext!.getImageData(x,y,2,2).data;pixel.set(rgba.subarray(8,16),0);pixel.set(rgba.subarray(0,8),8);}
             const v = [0, 4, 8, 12].map(j => .2126 * linear(pixel[j]) + .7152 * linear(pixel[j + 1]) + .0722 * linear(pixel[j + 2]));
             const value = (v[2] * (1 - tx) + v[3] * tx) * (1 - ty) + (v[0] * (1 - tx) + v[1] * tx) * ty;
+            sampleCount++;if(value>.001)litSamples++;peakLum=Math.max(peakLum,value);
             const before = previous.get(i);
             if (before?.frame === frame - 1 && before.value > .001) maxDelta = Math.max(maxDelta, Math.abs(value - before.value) / before.value);
             previous.set(i, { frame, value });
           }
-          if (frame % 60 === 0) await new Promise<void>(r => requestAnimationFrame(() => r()));
+          if (!sampleContext && frame % 60 === 0) await new Promise<void>(r => requestAnimationFrame(() => r()));
         }
         g.world.setInput({ move: { x: 0, z: 0 } });
-        return { distance: g.world.entities.get(1)!.transform.x, maps, changes: changes.length, maxChangesPerSecond, fadeMs: fades, maxPoolFrameDelta: maxDelta };
+        return { sampleCount,litSamples,peakLum,sampler:gl?'webgl-readPixels':'canvas-2d-after-RAF', renderedFrames:3600, distance: g.world.entities.get(1)!.transform.x, maps, changes: changes.length, maxChangesPerSecond, fadeMs: fades, maxPoolFrameDelta: maxDelta };
       });
       rows.push({ label: `60s forty-lamp walk ${backend}/${tier}`, ...walk });
-      if (walk.distance < 119 || walk.maps > 1 || walk.changes !== 40 || walk.maxChangesPerSecond > 2 || walk.fadeMs.length !== 39 || walk.fadeMs.some(ms => ms < 299 || ms > 318) || walk.maxPoolFrameDelta > .15) failures.push(`${backend}/${tier}: E25 walk/crossfade gate failed`);
+      if (walk.litSamples < 1000 || walk.distance < 119 || walk.maps > 1 || walk.changes !== 40 || walk.maxChangesPerSecond > 2 || walk.fadeMs.length !== 39 || walk.fadeMs.some(ms => ms < 299 || ms > 318) || walk.maxPoolFrameDelta > .15) failures.push(`${backend}/${tier}: E25 walk/crossfade gate failed`);
     }
     if (process.env.R12_MATRIX !== '0') {
       const scenes = ['catalog/atmosphere-l5', 'catalog/qa-l6-po-headlamp', 'catalog/qa-l6-exit-approach', 'catalog/qa-l7-entry-night-exit', 'l8-district/walk', 'catalog/night-read-l9-road', 'catalog/night-read-l10-r1', 'catalog/world-fill-l8-driveout'];
