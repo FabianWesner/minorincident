@@ -674,7 +674,7 @@ export class GameView implements Lifecycle {
     if (front) cureDust.origin.value.set(front.fronts[0].x, front.fronts[0].z);
     this.endingView?.update(this.view);
     if (this.districts) this.districts.overview = !!front && front.elapsed >= 52 * 60;
-    if (front && this.lighting) { this.lighting.fogNear.value = 100000; this.lighting.fogFar.value = 200000; }
+    if (front && this.lighting) { this.lighting.cureDawn(front.elapsed / (8 * 60)); this.lighting.fogNear.value = 100000; this.lighting.fogFar.value = 200000; }
 
     const mission = this.world.missions, door = mission?.def.anchors['fire-bay-door'];
     const closed = mission?.def.l1 && mission.state.gates['fire-shutter'] === false;

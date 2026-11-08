@@ -78,7 +78,7 @@ export const dialogue: Record<string, string> = {
   'L10.voss-sample': `Voss: "The sample you carried that morning came from here. We sent it to the Annex for testing. The container failed. That's on us. Not on you."`,
   'L10.courier-carried': `Courier: "I carried it."`,
   'L10.voss-cure': `Voss: "Then carry this one."`,
-  'L10.epilogue-rosa': 'Rosa: "Look — it’s over."',
+  'L10.epilogue-rosa': `Rosa: "Look — it's over."`,
   'L10.epilogue-sam': 'Sam (radio): "Delivery confirmed. …Show-off."',
   'L10.epilogue-sam.reyes': 'Private Reyes (radio): "Delivery confirmed. …Show-off."',
   'L10.voss-delivery': `Voss: "It's airborne. It doesn't kill them — it brings them back. Whoever is still in there. The dispersal complex is two kilometres east. Plug it into the main console, hold it while it charges, and release it."`,

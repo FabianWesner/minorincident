@@ -74,7 +74,7 @@ export class CampaignUI {
   credits(save:CampaignSave, ending = false):void {
     clearTimeout(this.creditsTimer);
     this.screen('Credits');const credits=document.createElement('div');credits.className='credits-roll';this.content.append(credits);
-    for(const line of ['Minor Incident',...(ending?epilogueSurvivorLines(save.results?.L8?.survivors):[]),madeBy.headline,`${madeBy.author.name}: ${madeBy.author.role.toLowerCase()}`,...madeBy.groups.map(g=>`${g.heading}: ${g.names.join(', ')}`),'Built with three.js and Rapier. Technology reference: Bruno Simon (MIT).',madeBy.thanks]){const p=document.createElement('p');p.textContent=line;credits.append(p);}
+    for(const line of ['Minor Incident',...(ending?epilogueSurvivorLines(save.results?.L8?.survivors):[]),madeBy.headline,`${madeBy.author.name}: ${madeBy.author.role.toLowerCase()}`,...madeBy.groups.map(g=>`${g.heading}: ${g.names.join(', ')}`),'Built with three.js and Rapier. Technology reference: Bruno Simon (MIT).','Fonts: system UI fonts supplied by your device.',madeBy.thanks]){const p=document.createElement('p');p.textContent=line;credits.append(p);}
     if (ending) {
       this.root.classList.add('ending-credits');
       const groups = new Map<string, string[]>();
@@ -84,11 +84,12 @@ export class CampaignUI {
       }
       for (const [source, titles] of groups) { const p = document.createElement('p'); p.textContent = `${source} — ${titles.join(', ')}`; credits.append(p); }
       const viewport = document.createElement('div'); viewport.className = 'credits-viewport'; credits.replaceWith(viewport); viewport.append(credits);
+      credits.style.setProperty('--credits-start', `${viewport.clientHeight}px`);
       credits.style.setProperty('--credits-travel', `${credits.scrollHeight + viewport.clientHeight}px`);
       credits.style.animationDuration = `${creditsTicks / 60}s`;
       credits.style.animationPlayState = 'paused'; credits.style.animationDelay = `-${(this.game.world.missions?.state.epilogue?.phaseTicks ?? 0) / 60}s`; }
     else this.creditsTimer=setTimeout(()=>{if(!this.root.hidden)this.showMenu({status:'ok',save});},12000);
-    const back = this.button(ending ? 'Skip / Main menu' : 'Main menu',()=>{
+    const back = this.button(ending ? 'Skip credits' : 'Main menu',()=>{
       if (ending) { this.game.world.missions?.l10?.epilogue.skip(); this.game.clock.resume(); }
       else this.showMenu({status:'ok',save});
     }); back.dataset.testid = 'ending-credits-back'; this.focus();

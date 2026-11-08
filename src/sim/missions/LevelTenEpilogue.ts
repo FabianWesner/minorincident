@@ -60,6 +60,7 @@ export class LevelTenEpilogue {
   get canSkip(): boolean { return !!this.mission.world.progression?.campaign?.world?.infectionCleared?.epilogueSeen; }
   private phase(phase: 'title' | 'credits' | 'thanks' | 'done'): void {
     const { state, world } = this.mission;
+    if (phase === 'title') { const cleared = world.progression?.campaign?.world?.infectionCleared; if (cleared) cleared.epilogueSeen = true; }
     state.epilogue!.phase = phase; state.epilogue!.phaseTicks = 0;
     world.events.emit({ type: 'mission.signal', tick: world.tick, name: `epilogue-${phase}` });
   }

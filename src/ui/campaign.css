@@ -13,7 +13,7 @@ body[data-campaign=open] .hud { visibility: hidden; }
 @keyframes credits-roll { from { transform: translateY(40px); opacity: 0; } 15% { opacity: 1; } 85% { opacity: 1; } to { transform: translateY(-40px); opacity: 0; } }
 
 .campaign-ui.ending-credits { inset: 3vh max(3vw, calc((100vw - 900px)/2)); background: #101721dd; }
-.ending-credits .credits-viewport { height: 62vh; overflow: hidden; position: relative; }
+.ending-credits .credits-viewport { height: max(25vh, calc(100dvh - 260px)); overflow: hidden; position: relative; }
 .ending-credits .credits-roll { margin: 0; animation-name: ending-credits-roll; }
 .ending-credits .credits-roll p { font-size: 18px; line-height: 1.5; margin-bottom: 22px; }
-@keyframes ending-credits-roll { from { transform: translateY(62vh); } to { transform: translateY(calc(62vh - var(--credits-travel))); } }
+@keyframes ending-credits-roll { from { transform: translateY(var(--credits-start)); } to { transform: translateY(calc(var(--credits-start) - var(--credits-travel))); } }
