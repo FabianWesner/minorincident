@@ -1,5 +1,8 @@
 import { expect } from 'vitest';
+import { readFile } from 'node:fs/promises';
 import { Box3, BoxGeometry, Group, Mesh, Vector3 } from 'three/webgpu';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { emptyInput } from '../../src/input/InputFrame';
 import { LevelEightBot } from '../../src/debug/bot/LevelEightBot';
 import { zooExitGate, poseZooExitGate } from '../../src/render/district/zooExitGate';
@@ -34,6 +37,12 @@ function gateGeometry(): void {
 /** Real input for the tour/breach, then isolated boarding to exercise the story controller without another full combat run. */
 export async function checkL8Story(): Promise<void> {
   gateGeometry();
+  const bytes = await readFile('public/assets/models/inf.dog-k9.lod1.glb');
+  const dogModel = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(new Uint8Array(bytes).buffer, '');
+  const vest = k9VestModel(dogModel.scene, .47), vestSize = new Box3().setFromObject(vest).getSize(new Vector3());
+  expect(vest.children.length, 'the shipped police vest has drawable palette primitives').toBeGreaterThan(0);
+  expect(vestSize.z).toBeCloseTo(.47); expect(vestSize.x).toBeGreaterThan(.4); expect(vestSize.y).toBeGreaterThan(.15);
+  for (const model of [vest, dogModel.scene]) model.traverse(node => { if (node instanceof Mesh) { node.geometry.dispose(); for (const material of Array.isArray(node.material) ? node.material : [node.material]) material.dispose(); } });
   const world = await loadLevel('L8', 1808), mission = world.missions!, zoo = mission.l8!, lines: string[] = [];
   const watchedAnimalId = zoo.state.animals[5], bites: { tick: number }[] = [], turns: { tick: number; infectedId: number }[] = [];
   let biteDistance = Infinity;

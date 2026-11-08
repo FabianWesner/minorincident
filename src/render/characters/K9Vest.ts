@@ -32,14 +32,14 @@ export function k9VestModel(source: Object3D, width: number, materials?: Materia
       const indexed = node.geometry.clone(); indexed.clearGroups();
       indexed.setIndex(Array.from({ length: group.count }, (_, i) => index ? index.getX(group.start + i) : group.start + i));
       const geometry = indexed.toNonIndexed(); indexed.dispose();
-      geometry.applyMatrix4(new Matrix4().multiplyMatrices(inverse, node.matrixWorld));
-      parts.add(new Mesh(geometry, material));
+      const mesh = new Mesh(geometry, material);
+      mesh.applyMatrix4(new Matrix4().multiplyMatrices(inverse, node.matrixWorld)); parts.add(mesh);
     }
   });
   if (!parts.children.length) throw new Error('K9 vest has no authored clothing');
   const size = new Box3().setFromObject(parts).getSize(new Vector3());
   const fit = width / size.z;
-  parts.traverse(node => { if (node instanceof Mesh) node.geometry.scale(fit, fit, fit); });
+  parts.scale.setScalar(fit); parts.updateMatrixWorld(true);
   const model = staticBatch(parts, true, materials);
   parts.traverse(node => { if (node instanceof Mesh) node.geometry.dispose(); });
   return model;
