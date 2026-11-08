@@ -110,7 +110,7 @@ export class LevelEightZoo {
     s.pondKeeperId = outbreak.spawnPedestrian(pondPost, { ...zooStaffLook(0), waypoints: [pondPost, { x: 2, z: -18 }] });
     // This keeper stays with the birds during the first alarm, still fully
     // biteable and rescuable through the ordinary shared outbreak rules.
-    w.entities.get(s.pondKeeperId)!.civilian!.l1!.haven = pondPost;
+    w.entities.get(s.pondKeeperId)!.civilian!.l1!.haven = { ...pondPost, route: [], leg: 0 };
     for (const [key, x] of [['majorHale', -4], ['privateReyes', -2]] as const) {
       const at = this.point({ x, z: 0 });
       const id = outbreak.spawnPedestrian(at, { role: 'soldier', model: 'npc.national-guard', handProp: 'rifle', waypoints: [at, { x, z: 2 }] });

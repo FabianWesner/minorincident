@@ -1,8 +1,9 @@
 import { expect } from 'vitest';
-import { Box3, BoxGeometry, Group, Mesh } from 'three/webgpu';
+import { Box3, BoxGeometry, Group, Mesh, Vector3 } from 'three/webgpu';
 import { emptyInput } from '../../src/input/InputFrame';
 import { LevelEightBot } from '../../src/debug/bot/LevelEightBot';
 import { zooExitGate, poseZooExitGate } from '../../src/render/district/zooExitGate';
+import { k9VestModel } from '../../src/render/characters/K9Vest';
 import { survivorName } from '../../src/sim/missions/survivorName';
 import { loadLevel } from '../qa/invariants/world';
 
@@ -20,6 +21,14 @@ function gateGeometry(): void {
   expect(new Box3().setFromObject(split.leaves[0]).max.z).toBeLessThan(78);
   expect(new Box3().setFromObject(split.leaves[1]).min.z).toBeGreaterThan(82);
   split.geometry.forEach(geometry => geometry.dispose()); source.dispose(); lintelGeometry.dispose();
+  const dog = new Group(), body = new Group(), clothGeometry = new BoxGeometry(.6, .3, .5);
+  body.name = 'body'; body.position.y = .6; dog.add(body);
+  const cloth = new Mesh(clothGeometry); cloth.name = 'vest_shell'; body.add(cloth);
+  const vest = k9VestModel(dog, .47);
+  expect(new Box3().setFromObject(vest).getSize(new Vector3()).z).toBeCloseTo(.47);
+  expect(cloth.geometry).toBe(clothGeometry);
+  vest.traverse(node => { if (node instanceof Mesh) { node.geometry.dispose(); for (const material of Array.isArray(node.material) ? node.material : [node.material]) material.dispose(); } });
+  clothGeometry.dispose();
 }
 
 /** Real input for the tour/breach, then isolated boarding to exercise the story controller without another full combat run. */
