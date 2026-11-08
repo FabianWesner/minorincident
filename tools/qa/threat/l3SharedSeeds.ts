@@ -50,7 +50,8 @@ export async function l3SharedSeeds(tier: 'low' | 'high', seedOneCampaign: Retur
           quality: tier, beforeBegin: value => installKitingPolicy(value, kiting, 'L3'),
         });
         try {
-          runL3(kiteWorld, kiteWorld.missions!, 'complete', { seed, maxSeconds: 1200, street: 'auto', stopWhen: () => false });
+          // This disposable route contributes only the kiting receipt.
+          runL3(kiteWorld, kiteWorld.missions!, 'complete', { seed, maxSeconds: 1200, street: 'auto', stopWhen: () => kiting.samples >= 1200 });
         } finally { kiteWorld.dispose(); }
       }
       const collision = world.solids.snapshot();
