@@ -45,7 +45,7 @@ function pairExempt(a: EntitySnapshot | undefined, b: EntitySnapshot): boolean {
   return passenger !== undefined && passenger === b.passengerOf || owner !== undefined && (owner === b.id || owner === other) || other !== undefined && other === a.id;
 }
 function layers(a: Point, b: Point): boolean { return Math.abs(a.y - b.y) < 1.2; }
-function exemption(e: EntitySnapshot): number | string | undefined { return e.passengerOf ?? e.attachedTo ?? e.civilian?.schedule?.[e.civilian.scheduleStep ?? 0]?.seatProp; }
+function exemption(e: EntitySnapshot): number | string | undefined { return e.passengerOf ?? e.attachedTo ?? e.civilian?.schedule?.[e.civilian.scheduleStep ?? 0]?.seatProp ?? (courierFollower(e) ? 'courier-follower' : undefined); }
 
 /** Simulation contact/admission owner. Static queries extend NavGrid's existing compound bake;
  * dynamic hulls use the existing SpatialHash and the APC's exact circle/OBB projection. */

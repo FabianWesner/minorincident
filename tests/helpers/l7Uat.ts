@@ -247,6 +247,8 @@ async function checkPharmacyCourier() {
       w.solids.remember(e, 'test.pharmacy-column'); w.spatial.set(e.id, e.transform.x, e.transform.z);
     }
     w.missions!.state.steps.rocket.status = 'completed'; w.missions!.state.steps.corridor.status = 'active'; w.l7Encounters!.state.started = true;
+    // Recorded east input hits the pharmacy face even without followers.
+    // North is the physical exit that the surrounding friendly column sealed.
     for (let tick = 0; tick < 300; tick++) {
       for (const e of w.entities.iterate()) if (e.id !== 1 && !live.has(e.id)) e.hidden = true;
       const input = emptyInput(); input.move.z = -1; w.applyInput(input, 'keyboard'); w.update();

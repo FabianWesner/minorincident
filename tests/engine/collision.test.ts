@@ -189,6 +189,13 @@ async function assertFriendlyColumn() {
   expect(w.solids.clear(panic.transform, .35, 1)).toBe(false);
   const turned = column[4]; turned.infection = { entityId: turned.id, progress: .5, phase: 'stagger', tier: 'average', startedTick: 0, endsTick: 180, biteSourceId: 1 };
   expect(w.solids.clear(turned.transform, .35, 1)).toBe(false);
+  // A stationary follower can turn while soft contact overlaps the courier.
+  // Its cached proof must lose that exemption immediately, between full audits.
+  delete turned.infection; Object.assign(turned.transform, player.transform);
+  w.solids.remember(turned, 'test.turning-contact'); w.solids.commit();
+  turned.infection = { entityId: turned.id, progress: .5, phase: 'stagger', tier: 'average', startedTick: 0, endsTick: 180, biteSourceId: 1 };
+  w.tick++; w.solids.commit();
+  expect(Math.hypot(turned.transform.x - player.transform.x, turned.transform.z - player.transform.z), 'turning immediately restores hard body contact').toBeGreaterThanOrEqual(.68);
   const companion = w.entities.get(w.npcs!.companion.spawn())!;
   expect(w.solids.clear(companion.transform, .35, 1), 'a waiting companion is also soft contact').toBe(true);
 }
