@@ -1,6 +1,6 @@
 # eg-l8-bosses — L8 animal arenas
 
-Status (2026-11-08, 23:27 CET): all six arenas clear in the mortal production tour, zero courier deaths, APC departure reached. A final stricter elephant wall-counter check and gate refresh are in progress. The goal is not yet declared complete. This is a merge handoff checkpoint; the done/open list below is authoritative over historical calibrations.
+Status (2026-11-08, 23:29 CET): all six arenas and required native combat/route controls pass; production tour reaches APC departure with zero courier deaths. The final repository-gate and final-source tour refresh are running. Everything is committed and mergeable; the goal is not declared complete until those runs finish. The goal is not yet declared complete. This is a merge handoff checkpoint; the done/open list below is authoritative over historical calibrations.
 
 The binding design is `docs/design/boss-and-alpha-moves.md` (L8 table and common special rules), `docs/design/story-script.md` L8 beat 3, and the lane brief. The PO's 2026-11-08 animal-boss direction supersedes the older endless mixed-horde/regular-Alpha L8 composition. The sanctuary, keeper/K9/flamingo opening, named survivor continuity and APC escape remain required.
 
@@ -26,10 +26,24 @@ The [interrupted-carrier proof](evidence/carrier-retry-low.json) kills the openi
 
 The latest [low/high route receipts](evidence/route-final/) pass every requested clause: minimum bounded-path reachability 100%, courier contact by 17.88/18.93 s low and 19.35 s high, all follower speed ratios ≥0.9996. G-13's separate waiting-time bound remains NOT CHECKED and is not claimed passed.
 
+### Final arena calibration
+
+The first five rows use the [final matrix](evidence/arena-final/); its older elephant row is superseded by the [final elephant receipts](evidence/elephant-final/) after the strict wall/fence/truck qualification. Low and high skilled results agree. Measurements use actual same-ID infection pre-roll, then normal courier damage and ordinary inputs, with no fixture assistance during combat. Skilled uses MG sweeps, melee to shake a grab, and the campaign shotgun for a close tunnel intruder.
+
+| Arena | Skilled seconds, low / high | Courier deaths | Passive death (s) | Standing death (s) | Circle-kiting death (s) |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Flamingo | 49.98 / 49.98 | 0 / 0 | 9.30 | 16.30 | 23.48 |
+| Zebra | 58.83 / 58.83 | 0 / 0 | 20.92 | 41.05 | 41.57 |
+| Monkey | 56.03 / 56.03 | 0 / 0 | 142.50 | 16.97 | 66.33 |
+| Lion/lioness | 69.58 / 69.58 | 0 / 0 | 11.57 | 27.92 | 100.73 |
+| Gorilla | 66.62 / 66.62 | 0 / 0 | 38.75 | 49.42 | 73.00 |
+| Elephant | 76.10 / 76.10 | 0 / 0 | 9.55 | 9.55 | 9.23 |
+
+All 15 [final controls](evidence/controls-final-low.json) pass. The no-fire elephant counter now records three actual fence IDs (`189`, `207`, `179`) and ends with 97 courier HP. Decorative bushes and hose reels do not earn counter credit. The gorilla matrix collapses a real pillar and throws real world objects; the controlled living missile retains its identity and HP through its landing roll.
+
 ### Open before native completion
 
-- The final audit identified a decorative bush being credited as an elephant wall impact. A committed correction now accepts only authored walls/fences or the yard truck and retains the actual obstacle IDs in checkpointed arena state. Pursuit is 5 m/s so the courier can set up the next lure. Recheck three qualified no-fire impacts, skilled duration and passive/standing/kiting pressure. Earlier elephant counter receipts are superseded for obstacle qualification.
-- Refresh the repository gates after that final correction. The full gate on the preceding runtime passed (106 passed / 1 skipped); two earlier shared-runner navigation timeouts are preserved in the evidence archive. Tests and their timeouts were not changed.
+- Final repository-gate refresh after the last wall-classification correction, plus a final-source production-tour rerun. The preceding full gate passed (106 passed / 1 skipped); tests and timeouts were not changed. Earlier shared-runner timeout evidence is retained.
 - Browser QA below remains deliberately unrun by this lane.
 
 ## Requirement evidence map
