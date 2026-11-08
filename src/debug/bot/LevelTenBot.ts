@@ -35,6 +35,7 @@ export class LevelTenBot {
     const active = mission.def.steps.find(s => mission.state.steps[s.id].status === 'active');
     if (this.finished || this.profile === 'idle' || !active || player.health.current <= 0 || mission.state.phase === 'retry') return f;
     const tick = w.tick - this.startTick, p = player.transform;
+    if (['install', 'hold', 'mega', 'release', 'epilogue', 'credits'].includes(active.id)) this.waypoint = this.route.length;
     const finale = active.id === 'hold' || active.id === 'mega';
     const anchor = mission.def.anchors[active.id === 'mega' ? 'cure-console' : active.anchor];
     const distance = (a: { x: number; z: number }) => Math.hypot(a.x - p.x, a.z - p.z);

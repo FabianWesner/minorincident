@@ -19,7 +19,7 @@ const out = outputIndex >= 0 ? process.argv[outputIndex + 1] : 'docs/reports/eg-
 const finaleOnly = process.env.L10_STORY_FINAL_ONLY === '1';
 const tiers = (process.env.L10_STORY_TIERS ?? 'low,high').split(',') as ('low' | 'high')[];
 const rows: unknown[] = [], checks: { tier: string; name: string; pass: boolean; observed?: unknown }[] = [];
-const check = (tier: string, name: string, pass: boolean, observed?: unknown) => { checks.push({ tier, name, pass, observed }); };
+const check = (tier: string, name: string, pass: boolean, observed?: unknown) => { checks.push({ tier, name, pass, observed: observed === undefined ? undefined : structuredClone(observed) }); };
 function place(w: SimWorld, x: number, z: number): void {
   const at = { x, y: .705 + (w.districts?.groundHeight(x, z) ?? 0), z };
   Object.assign(w.entities.get(1)!.transform, at); w.physics.playerBody!.setTranslation(at, true);
