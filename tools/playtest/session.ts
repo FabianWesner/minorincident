@@ -467,7 +467,7 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
   let escortClearance = new EscortClearance();
   let marketWaypoint = 0, marketWalkLogged = false;
   let marketLastPosition: { x: number; z: number } | null = null;
-  let navPos = { x: 0, z: 0, wall: Date.now() }, sideStep = 0, navAssist = false, navUntil = 0, navEpisodes = 0, navLog = 0, lastPos = { x: 0, z: 0, wall: Date.now() }, lastShot = -1e9, lastHp = 0, prevWeapons: string[] | null = null, frameCursor = 0, unstickDir = 0, stairFrame = 0;
+  let navPos = { x: 0, z: 0, wall: Date.now() }, sideStep = 0, navAssist = false, navUntil = 0, navEpisodes = 0, navLog = 0, lastPos = { x: 0, z: 0, wall: Date.now() }, lastShot = -1e9, lastTrace = -1e9, lastHp = 0, prevWeapons: string[] | null = null, frameCursor = 0, unstickDir = 0, stairFrame = 0;
   const allyWatch = new Map<number, { still: number; hits: number; backwards: number; lastHp: number; reported: Set<string> }>();
   const enemyWatch = new Map<number, { still: number; reported: boolean }>();
   const levelDeadline = () => wallStart + o.levelMinutes * 60_000;
@@ -1077,6 +1077,11 @@ export async function runSession(o: SessionOptions): Promise<{ runs: LevelRun[];
     if (e.loading) { await press([]); await releaseAim(); await hold(200); continue; }
 
     // Playing.
+    // Opt-in 1 Hz route trace (r9-l10pace): position plus on-screen living infected, for empty-stretch timing.
+    if (process.env.PLAYTEST_ROUTE_TRACE === '1' && e.player && e.tick - lastTrace >= 60) {
+      lastTrace = e.tick;
+      log({ routeTrace: { level: e.level, step: e.step, tick: e.tick, x: +e.player.x.toFixed(1), z: +e.player.z.toFixed(1), hp: Math.round(e.player.hp), enemies: e.enemies.length, nearest: e.enemies[0] ? +e.enemies[0].d.toFixed(1) : null } });
+    }
     if (e.tick - lastShot > Number(process.env.PLAYTEST_SHOT_SECONDS ?? 45) * 60) { lastShot = e.tick; await capture(`${e.level}-t${e.tick}`); }
     if (!zoomed) {
       const quality = await page.evaluate(() => window.__SS__!.getState().render.quality);
