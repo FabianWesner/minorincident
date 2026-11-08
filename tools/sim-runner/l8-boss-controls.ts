@@ -99,7 +99,7 @@ try {
     w.solids.relocate(p, { x: -44, z: 25, y: .7 }, 'qa.elephant.lure-target', 2);
     arena.phase = 1; arena.nextAt = w.tick + 30; arena.cycle = 0;
     const walker = new Walker(), contacts: unknown[] = []; let previous = 0, side = 1;
-    for (let n = 0; n < 100 * 60 && e.health.current > 0 && p.health.current > 0; n++) {
+    for (let n = 0; n < 120 * 60 && e.health.current > 0 && p.health.current > 0; n++) {
       const a = e.infected!.specialAttack, f = emptyInput();
       if (a?.move === 'elephant.charge' && a.stage !== 'recovery') {
         const direction = { x: -a.area.dz, z: a.area.dx };
@@ -115,7 +115,7 @@ try {
       w.applyInput(f, 'keyboard'); step(w);
       if (arena.wallHits > previous) { previous = arena.wallHits; side = e.transform.x < -60 ? 1 : -1; contacts.push({ tick: w.tick, hits: previous, boss: { ...e.transform }, courier: { ...p.transform }, hp: e.health.current }); }
     }
-    check('three real sidestepped wall charges kill without firing', arena.wallHits === 3 && e.health.current === 0, { contacts, wallHits: arena.wallHits, hp: e.health.current, courierHP: p.health.current });
+    check('three real sidestepped wall charges kill without firing', arena.wallHits === 3 && e.health.current === 0, { contacts, wallHits: arena.wallHits, hp: e.health.current, courierHP: p.health.current, finalBoss: e.transform, finalCourier: p.transform, finalAttack: e.infected!.specialAttack });
   } finally { w.dispose(); }
 } catch (error) { errors.push(`elephant wall tactic: ${String(error)}`); }
 

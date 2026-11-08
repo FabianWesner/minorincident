@@ -90,7 +90,7 @@ export class L8BossArenas {
     if (!target?.civilian || target.health.current <= 0 || target.infection) { delete b.arenaCarrier; return false; }
     if (e.emerging) return false;
     b.state = 'chase'; e.combat!.attacking = false;
-    this.w.npcs!.move(e, target.transform, 4.8, b, .8, 3200);
+    this.w.npcs!.move(e, target.transform, 4.8, b, .8, 48000);
     return true;
   }
   /** Intent runs in the normal infected phase; static sweeps and Damage remain authoritative. */
@@ -275,7 +275,7 @@ export class L8BossArenas {
     const target = { id: 1, ...predicted };
     const dx = target.x - e.transform.x, dz = target.z - e.transform.z, d = Math.hypot(dx, dz) || 1;
     const attackId = w.infected!.arenaAttackId();
-    const a = e.infected!.specialAttack = { move, attackId, stage: 'telegraph', startTick: w.tick, activeTick: w.tick + windup, cooldownExpiry: w.tick + 420, recoveryUntil: 0, target, area: { x: e.transform.x, z: e.transform.z, radius, dx: axis?.x ?? dx / d, dz: axis?.z ?? dz / d }, hitIds: [], destination: { x: e.transform.x + (axis?.x ?? dx / d) * range, z: e.transform.z + (axis?.z ?? dz / d) * range } };
+    const a = e.infected!.specialAttack = { move, attackId, stage: 'telegraph', startTick: w.tick, activeTick: w.tick + windup, cooldownExpiry: w.tick + 420, recoveryUntil: 0, target, area: { x: e.transform.x, z: e.transform.z, radius, dx: axis?.x ?? dx / d, dz: axis?.z ?? dz / d }, hitIds: [], ...(arena.id === 'elephant' ? { bait: { x: p.transform.x, z: p.transform.z } } : {}), destination: { x: e.transform.x + (axis?.x ?? dx / d) * range, z: e.transform.z + (axis?.z ?? dz / d) * range } };
     if (move === 'gorilla.roar') e.infected!.arenaBoss!.exposedUntil = a.activeTick;
     if (move === 'gorilla.grab-throw' || move === 'monkey.debris') w.infected!.props.launchSpecial(e, a, 3, 25, arena.phase === 2 ? 18 : 12, true);
     e.infected!.attackId = attackId; e.infected!.state = 'attack'; e.infected!.until = a.activeTick; e.infected!.grabHits = 0; e.infected!.arenaBoss!.shakeHits = 0; e.combat!.attacking = true;
@@ -322,8 +322,9 @@ export class L8BossArenas {
       if (firstContact && (arena.id === 'lion' || arena.id === 'monkey')) { b.grabUntil = w.tick + 120; b.grabHits = 0; b.heardTargetId = 1; arena.grabs++; }
     }
     if (clear + .001 < step || travelled + step >= range || w.tick - a.activeTick > (range / speed + 1) * 60) {
-      const lockedDistance = distance(a.area, a.target), side = Math.abs((p.transform.x - a.area.x) * a.area.dz - (p.transform.z - a.area.z) * a.area.dx);
-      if (arena.id === 'elephant' && staticClear + .001 < step && travelled >= Math.max(3, lockedDistance - 1) && side > a.area.radius + .35) {
+      const bait = a.bait ?? a.target, baitX = bait.x - a.area.x, baitZ = bait.z - a.area.z;
+      const lockedDistance = baitX * a.area.dx + baitZ * a.area.dz, baitSide = Math.abs(baitX * a.area.dz - baitZ * a.area.dx), side = Math.abs((p.transform.x - a.area.x) * a.area.dz - (p.transform.z - a.area.z) * a.area.dx);
+      if (arena.id === 'elephant' && staticClear + .001 < step && baitSide <= a.area.radius + .35 && travelled >= Math.max(3, lockedDistance - 1) && side > a.area.radius + .35) {
         arena.wallHits++; arena.counters++; this.announce('Elephant staggered — fire now!');
         if (arena.wallHits >= 3) w.combat!.damage.apply({ sourceId: 1, targetId: e.id, attackId: a.attackId, actionId: 'arena.elephant.wall', origin: p.transform, direction: { x: a.area.dx, z: a.area.dz }, base: e.health.max * 10, multiplier: 1, type: 'status', knockback: 0, stagger: 0, permanent: true });
       }

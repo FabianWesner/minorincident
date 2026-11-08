@@ -15,7 +15,7 @@ w.events.on('civilian.turned', e => { if (e.type === 'civilian.turned' && zoo.st
 w.combat!.damage.god = true;
 for (let n = 0; n < 300 * 60 && zoo.state.animals.some(id => !w.entities.get(id)?.infected); n++) {
  w.applyInput(zoo.state.breachedAt ? emptyInput() : bot.sample(), 'keyboard'); w.update();
- if (w.tick % 1800 === 0) console.log(JSON.stringify({ tick: w.tick, arenas: zoo.state.arenas.map(a => ({ id: a.id, turned: a.ids.filter(id => !!w.entities.get(id)?.infected).length, carrier: a.carrier, carrierAt: w.entities.get(a.carrier)?.transform })) }));
+ if (w.tick % 1800 === 0) console.log(JSON.stringify({ tick: w.tick, arenas: zoo.state.arenas.map(a => ({ id: a.id, turned: a.ids.filter(id => !!w.entities.get(id)?.infected).length, carrier: a.carrier, carrierAt: w.entities.get(a.carrier)?.transform, brain: w.entities.get(a.carrier)?.infected?.arenaCarrier })) }));
 }
 const arenas = zoo.state.arenas.map(a => ({ id: a.id, ids: a.ids, animals: a.ids.map(id => { const e=w.entities.get(id)!; return { id, infected: !!e.infected, archetype: e.archetype, at: e.transform, hp: e.health, pending: e.pendingAdmission }; }) }));
 const pass = arenas.every(a => a.animals.every(e => e.infected));

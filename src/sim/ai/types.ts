@@ -79,5 +79,6 @@ export interface InfectedSpecialAttack {
   members?: number[]; leaderId?: number; impactTick?: number; obstructionUntil?: number;
   grabbedId?: number; grabReleaseTick?: number;
   destination?: { x: number; z: number };
+  bait?: { x: number; z: number };
   projectile?: { objectId: number; corpse: boolean; living?: boolean; started: number; x: number; z: number; dx: number; dz: number; distance: number; range: number; speed?: number; fromY?: number; toY?: number };
 }
