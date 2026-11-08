@@ -174,6 +174,26 @@ function smoothLodNormals(document: Document): void {
   }
 }
 
+/** The military truck's folded canvas is one connected cloth shell; merge split flat-face normals at shared cloth vertices. */
+function smoothMilitaryTruckCanvasNormals(document: Document): void {
+  for (const node of document.getRoot().listNodes().filter(node => node.getName() === 'body_pal_khakiSeam')) {
+    for (const primitive of node.getMesh()?.listPrimitives() ?? []) {
+      const positions = primitive.getAttribute('POSITION')!, normals = primitive.getAttribute('NORMAL');
+      if (!normals) continue;
+      const sums = new Map<string, Vector3>(), keys: (string | null)[] = [], point: number[] = [], normal: number[] = [];
+      for (let i = 0; i < positions.getCount(); i++) {
+        positions.getElement(i, point); normals.getElement(i, normal);
+        const [x, y, z] = point;
+        const canvas = x >= -3.36 && x <= .04 && y >= 1.88 && y <= 3.61 && Math.abs(z) <= 1.25;
+        if (!canvas) { keys.push(null); continue; }
+        const key = point.map(value => Math.round(value * 1e5)).join('|'); keys.push(key);
+        const sum = sums.get(key) ?? new Vector3(); sum.add(new Vector3().fromArray(normal)); sums.set(key, sum);
+      }
+      for (let i = 0; i < keys.length; i++) if (keys[i]) normals.setElement(i, sums.get(keys[i]!)!.clone().normalize().toArray());
+    }
+  }
+}
+
 /** A rigid pivot can own one mesh with several material primitives. */
 function bundleStaticSiblings(document: Document): void {
   for (const parent of [...document.getRoot().listNodes(), ...document.getRoot().listScenes()]) {
@@ -239,6 +259,7 @@ export async function optimizeDocument(document: Document, def: AssetDef, ratio 
   }
   normalizeForward(document, def);
   normalizeScale(document, def);
+  if (def.id === 'veh.military-truck' || def.id.startsWith('veh.military-truck.')) smoothMilitaryTruckCanvasNormals(document);
   removeDegenerateTriangles(document);
   compressTextures(document, undefined, def.tier === 'side' ? 512 : 1024);
   await Promise.all([MeshoptEncoder.ready, MeshoptSimplifier.ready]);
