@@ -1,0 +1,4945 @@
+{
+  "revision": "final-candidate",
+  "sourceHash": "217dd5476023f84f370607fdd31ab1330662eb48847da4a278b3148adba74485",
+  "observerHash": "091ae2a63e858c27858594bbe7f5344a1a80f4d546bb739dcf34eb3f053bd2e4",
+  "policy": "passive",
+  "rows": [
+    {
+      "id": "flamingo",
+      "tier": "low",
+      "policy": "passive",
+      "measurementEntry": {
+        "x": -2.5298221281347035,
+        "z": -16.589466384404112,
+        "y": 0.7
+      },
+      "complete": false,
+      "seconds": 9.3,
+      "totalSeconds": 9.3,
+      "hp": 0,
+      "deaths": 1,
+      "damage": 50,
+      "attacks": 4,
+      "phases": 1,
+      "counters": 0,
+      "wallHits": 0,
+      "rocket": 0,
+      "rocketPickups": 0,
+      "bites": [
+        402,
+        403,
+        404,
+        405,
+        406,
+        407,
+        408
+      ],
+      "turns": [
+        406,
+        407,
+        403,
+        408,
+        402,
+        405,
+        404
+      ],
+      "tells": [
+        {
+          "tick": 354,
+          "source": 405,
+          "attack": 11,
+          "move": "flamingo.dive",
+          "duration": 0.6,
+          "area": {
+            "x": -0.6348475090345312,
+            "z": -21.81960947136921,
+            "radius": 1.1,
+            "dx": -0.34064800126442935,
+            "dz": 0.9401909057391212
+          }
+        },
+        {
+          "tick": 354,
+          "source": 406,
+          "attack": 12,
+          "move": "flamingo.dive",
+          "duration": 0.6,
+          "area": {
+            "x": 2.208266906057349,
+            "z": -18.049261881773766,
+            "radius": 1.1,
+            "dx": -0.9556699636409854,
+            "dz": 0.2944400118775258
+          }
+        },
+        {
+          "tick": 354,
+          "source": 407,
+          "attack": 13,
+          "move": "flamingo.dive",
+          "duration": 0.6,
+          "area": {
+            "x": 1.3650096019258648,
+            "z": -14.152025323970024,
+            "radius": 1.1,
+            "dx": -0.8476879838101101,
+            "dz": -0.5304951291990819
+          }
+        },
+        {
+          "tick": 774,
+          "source": 408,
+          "attack": 20,
+          "move": "flamingo.dive",
+          "duration": 0.6,
+          "area": {
+            "x": -1.528452775656453,
+            "z": -21.55052277779667,
+            "radius": 1.1,
+            "dx": -0.19785571549354983,
+            "dz": 0.9802311542929736
+          }
+        },
+        {
+          "tick": 774,
+          "source": 402,
+          "attack": 21,
+          "move": "flamingo.dive",
+          "duration": 0.6,
+          "area": {
+            "x": 1.9425468002805653,
+            "z": -18.950889425228958,
+            "radius": 1.1,
+            "dx": -0.8843025963392175,
+            "dz": 0.4669142513435625
+          }
+        },
+        {
+          "tick": 774,
+          "source": 403,
+          "attack": 22,
+          "move": "flamingo.dive",
+          "duration": 0.6,
+          "area": {
+            "x": 2.0898336664199997,
+            "z": -14.529163035060087,
+            "radius": 1.1,
+            "dx": -0.9132881859372451,
+            "dz": -0.4073139936553322
+          }
+        }
+      ],
+      "throws": [],
+      "signals": [],
+      "stages": [
+        {
+          "tick": 390,
+          "source": 406,
+          "move": "flamingo.dive",
+          "stage": "active"
+        },
+        {
+          "tick": 390,
+          "source": 407,
+          "move": "flamingo.dive",
+          "stage": "active"
+        },
+        {
+          "tick": 390,
+          "source": 405,
+          "move": "flamingo.dive",
+          "stage": "active"
+        },
+        {
+          "tick": 404,
+          "source": 407,
+          "move": "flamingo.dive",
+          "stage": "recovery"
+        },
+        {
+          "tick": 405,
+          "source": 406,
+          "move": "flamingo.dive",
+          "stage": "recovery"
+        },
+        {
+          "tick": 407,
+          "source": 405,
+          "move": "flamingo.dive",
+          "stage": "recovery"
+        },
+        {
+          "tick": 524,
+          "source": 407,
+          "move": "flamingo.dive",
+          "stage": "expiry"
+        },
+        {
+          "tick": 525,
+          "source": 406,
+          "move": "flamingo.dive",
+          "stage": "expiry"
+        },
+        {
+          "tick": 527,
+          "source": 405,
+          "move": "flamingo.dive",
+          "stage": "expiry"
+        },
+        {
+          "tick": 810,
+          "source": 403,
+          "move": "flamingo.dive",
+          "stage": "active"
+        },
+        {
+          "tick": 810,
+          "source": 408,
+          "move": "flamingo.dive",
+          "stage": "active"
+        },
+        {
+          "tick": 810,
+          "source": 402,
+          "move": "flamingo.dive",
+          "stage": "active"
+        }
+      ],
+      "destruction": [
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-0",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-1",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-2",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-3",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        }
+      ],
+      "bosses": [
+        {
+          "id": 402,
+          "hp": 699.856,
+          "at": {
+            "x": -1.0640820272727742,
+            "z": -17.363380970660835,
+            "y": 0.7,
+            "yaw": -2.655794574655169
+          },
+          "state": "attack",
+          "boss": {
+            "arena": "flamingo",
+            "slot": 0,
+            "engaged": true,
+            "exposedUntil": 0,
+            "readyAt": 0,
+            "shakeHits": 0
+          },
+          "attack": {
+            "move": "flamingo.dive",
+            "attackId": 21,
+            "stage": "active",
+            "startTick": 774,
+            "activeTick": 810,
+            "cooldownExpiry": 1194,
+            "recoveryUntil": 0,
+            "target": {
+              "id": 1,
+              "x": -2.5298221111297607,
+              "z": -16.589466094970703
+            },
+            "area": {
+              "x": 1.9425468002805653,
+              "z": -18.950889425228958,
+              "radius": 1.1,
+              "dx": -0.8843025963392175,
+              "dz": 0.4669142513435625
+            },
+            "hitIds": [],
+            "destination": {
+              "x": -11.321992144807696,
+              "z": -11.94717565507552
+            }
+          },
+          "held": false
+        },
+        {
+          "id": 403,
+          "hp": 700,
+          "at": {
+            "x": -1.2741111517821864,
+            "z": -16.0294362450239,
+            "y": 0.7,
+            "yaw": 2.7220815552398725
+          },
+          "state": "attack",
+          "boss": {
+            "arena": "flamingo",
+            "slot": 1,
+            "engaged": true,
+            "exposedUntil": 0,
+            "readyAt": 0,
+            "shakeHits": 0
+          },
+          "attack": {
+            "move": "flamingo.dive",
+            "attackId": 22,
+            "stage": "active",
+            "startTick": 774,
+            "activeTick": 810,
+            "cooldownExpiry": 1194,
+            "recoveryUntil": 0,
+            "target": {
+              "id": 1,
+              "x": -2.5298221111297607,
+              "z": -16.589466094970703
+            },
+            "area": {
+              "x": 2.0898336664199997,
+              "z": -14.529163035060087,
+              "radius": 1.1,
+              "dx": -0.9132881859372451,
+              "dz": -0.4073139936553322
+            },
+            "hitIds": [
+              1
+            ],
+            "destination": {
+              "x": -11.609489122638678,
+              "z": -20.63887293989007
+            }
+          },
+          "held": false
+        },
+        {
+          "id": 404,
+          "hp": 700,
+          "at": {
+            "x": -2.8196602837402955,
+            "z": -11.782834920527343,
+            "y": 0.7,
+            "yaw": -3.1731921526508895
+          },
+          "state": "alerted",
+          "boss": {
+            "arena": "flamingo",
+            "slot": 2,
+            "engaged": true,
+            "exposedUntil": 0,
+            "readyAt": 0
+          },
+          "held": false
+        },
+        {
+          "id": 405,
+          "hp": 700,
+          "at": {
+            "x": -5.501742122432563,
+            "z": -14.499906161498426,
+            "y": 0.7,
+            "yaw": -2.978818076463361
+          },
+          "state": "chase",
+          "boss": {
+            "arena": "flamingo",
+            "slot": 3,
+            "engaged": true,
+            "exposedUntil": 527,
+            "readyAt": 527,
+            "shakeHits": 0
+          },
+          "held": false
+        },
+        {
+          "id": 406,
+          "hp": 700,
+          "at": {
+            "x": -6.469254375972973,
+            "z": -17.87412677263108,
+            "y": 0.7,
+            "yaw": -3.7356856756629324
+          },
+          "state": "chase",
+          "boss": {
+            "arena": "flamingo",
+            "slot": 4,
+            "engaged": true,
+            "exposedUntil": 525,
+            "readyAt": 525,
+            "shakeHits": 0
+          },
+          "held": false
+        },
+        {
+          "id": 407,
+          "hp": 697.8399999999999,
+          "at": {
+            "x": -4.224224975997699,
+            "z": -21.36978048489094,
+            "y": 0.7,
+            "yaw": 0.42281903719140507
+          },
+          "state": "chase",
+          "boss": {
+            "arena": "flamingo",
+            "slot": 5,
+            "engaged": true,
+            "exposedUntil": 524,
+            "readyAt": 524,
+            "shakeHits": 0
+          },
+          "held": false
+        },
+        {
+          "id": 408,
+          "hp": 696.3999999999999,
+          "at": {
+            "x": -2.2011622083345235,
+            "z": -18.217736853200545,
+            "y": 0.7,
+            "yaw": -1.769966233241805
+          },
+          "state": "attack",
+          "boss": {
+            "arena": "flamingo",
+            "slot": 6,
+            "engaged": true,
+            "exposedUntil": 0,
+            "readyAt": 0,
+            "shakeHits": 0
+          },
+          "attack": {
+            "move": "flamingo.dive",
+            "attackId": 20,
+            "stage": "active",
+            "startTick": 774,
+            "activeTick": 810,
+            "cooldownExpiry": 1194,
+            "recoveryUntil": 0,
+            "target": {
+              "id": 1,
+              "x": -2.5298221111297607,
+              "z": -16.589466094970703
+            },
+            "area": {
+              "x": -1.528452775656453,
+              "z": -21.55052277779667,
+              "radius": 1.1,
+              "dx": -0.19785571549354983,
+              "dz": 0.9802311542929736
+            },
+            "hitIds": [],
+            "destination": {
+              "x": -4.496288508059701,
+              "z": -6.847055463402064
+            }
+          },
+          "held": false
+        }
+      ]
+    },
+    {
+      "id": "zebra",
+      "tier": "low",
+      "policy": "passive",
+      "measurementEntry": {
+        "x": 60,
+        "z": 16,
+        "y": 0.7
+      },
+      "complete": false,
+      "seconds": 20.916666666666668,
+      "totalSeconds": 20.916666666666668,
+      "hp": 0,
+      "deaths": 1,
+      "damage": 112.13333333333297,
+      "attacks": 5,
+      "phases": 1,
+      "counters": 0,
+      "wallHits": 0,
+      "rocket": 0,
+      "rocketPickups": 0,
+      "bites": [
+        400,
+        409,
+        410,
+        401
+      ],
+      "turns": [
+        410,
+        409,
+        400,
+        401
+      ],
+      "tells": [
+        {
+          "tick": 468,
+          "source": 409,
+          "attack": 7,
+          "move": "zebra.kick",
+          "duration": 0.6,
+          "area": {
+            "x": 58.10934036871337,
+            "z": 15.46518959840808,
+            "radius": 2,
+            "dx": 0.9622436368868256,
+            "dz": 0.2721896090426948
+          }
+        },
+        {
+          "tick": 473,
+          "source": 410,
+          "attack": 8,
+          "move": "zebra.kick",
+          "duration": 0.6,
+          "area": {
+            "x": 59.1062120661231,
+            "z": 17.762188660357943,
+            "radius": 2,
+            "dx": 0.45234559352919956,
+            "dz": -0.8918427350237912
+          }
+        },
+        {
+          "tick": 490,
+          "source": 400,
+          "attack": 9,
+          "move": "zebra.kick",
+          "duration": 0.6,
+          "area": {
+            "x": 58.185346827358416,
+            "z": 16.660494848541454,
+            "radius": 2,
+            "dx": 0.9396901063234768,
+            "dz": -0.3420270516754087
+          }
+        },
+        {
+          "tick": 496,
+          "source": 401,
+          "attack": 10,
+          "move": "zebra.kick",
+          "duration": 0.6,
+          "area": {
+            "x": 58.8110298100557,
+            "z": 14.493057469065247,
+            "radius": 2,
+            "dx": 0.6194127761359142,
+            "dz": 0.7850654831029062
+          }
+        },
+        {
+          "tick": 884,
+          "source": 410,
+          "attack": 11,
+          "move": "zebra.kick",
+          "duration": 0.6,
+          "area": {
+            "x": 60.94609200870443,
+            "z": 17.139346612451742,
+            "radius": 2,
+            "dx": 0.9864483929602463,
+            "dz": -0.16407183800441644
+          }
+        },
+        {
+          "tick": 893,
+          "source": 409,
+          "attack": 12,
+          "move": "zebra.kick",
+          "duration": 0.6,
+          "area": {
+            "x": 61.220417538696076,
+            "z": 15.796533063863532,
+            "radius": 2,
+            "dx": 0.8528868848847957,
+            "dz": 0.5220957398710598
+          }
+        },
+        {
+          "tick": 950,
+          "source": 401,
+          "attack": 13,
+          "move": "zebra.kick",
+          "duration": 0.6,
+          "area": {
+            "x": 64.03004473506772,
+            "z": 15.74239863991891,
+            "radius": 2,
+            "dx": 0.9522975009883565,
+            "dz": 0.3051712136020225
+          }
+        },
+        {
+          "tick": 1111,
+          "source": 400,
+          "attack": 14,
+          "move": "zebra.kick",
+          "duration": 0.6,
+          "area": {
+            "x": 68.72439883927161,
+            "z": 15.253928382543595,
+            "radius": 2,
+            "dx": -0.010792254281277924,
+            "dz": 0.9999417619279277
+          }
+        },
+        {
+          "tick": 1499,
+          "source": 400,
+          "attack": 15,
+          "move": "zebra.stampede",
+          "duration": 1,
+          "area": {
+            "x": 68.45805943485908,
+            "z": 14.992638483129372,
+            "radius": 0.9,
+            "dx": 0,
+            "dz": 1
+          }
+        },
+        {
+          "tick": 1499,
+          "source": 401,
+          "attack": 16,
+          "move": "zebra.stampede",
+          "duration": 1,
+          "area": {
+            "x": 67.38056855918545,
+            "z": 15.803159664514954,
+            "radius": 0.9,
+            "dx": 0,
+            "dz": 1
+          }
+        },
+        {
+          "tick": 1499,
+          "source": 409,
+          "attack": 17,
+          "move": "zebra.stampede",
+          "duration": 1,
+          "area": {
+            "x": 68.52763869881872,
+            "z": 16.17876436738315,
+            "radius": 0.9,
+            "dx": 0,
+            "dz": 1
+          }
+        },
+        {
+          "tick": 1499,
+          "source": 410,
+          "attack": 18,
+          "move": "zebra.stampede",
+          "duration": 1,
+          "area": {
+            "x": 69.71229497895708,
+            "z": 16.020862067581835,
+            "radius": 0.9,
+            "dx": 0,
+            "dz": 1
+          }
+        }
+      ],
+      "throws": [],
+      "signals": [],
+      "stages": [
+        {
+          "tick": 504,
+          "source": 409,
+          "move": "zebra.kick",
+          "stage": "active"
+        },
+        {
+          "tick": 504,
+          "source": 409,
+          "move": "zebra.kick",
+          "stage": "recovery"
+        },
+        {
+          "tick": 509,
+          "source": 410,
+          "move": "zebra.kick",
+          "stage": "active"
+        },
+        {
+          "tick": 509,
+          "source": 410,
+          "move": "zebra.kick",
+          "stage": "recovery"
+        },
+        {
+          "tick": 526,
+          "source": 400,
+          "move": "zebra.kick",
+          "stage": "active"
+        },
+        {
+          "tick": 526,
+          "source": 400,
+          "move": "zebra.kick",
+          "stage": "recovery"
+        },
+        {
+          "tick": 532,
+          "source": 401,
+          "move": "zebra.kick",
+          "stage": "active"
+        },
+        {
+          "tick": 532,
+          "source": 401,
+          "move": "zebra.kick",
+          "stage": "recovery"
+        },
+        {
+          "tick": 624,
+          "source": 409,
+          "move": "zebra.kick",
+          "stage": "expiry"
+        },
+        {
+          "tick": 629,
+          "source": 410,
+          "move": "zebra.kick",
+          "stage": "expiry"
+        },
+        {
+          "tick": 646,
+          "source": 400,
+          "move": "zebra.kick",
+          "stage": "expiry"
+        },
+        {
+          "tick": 652,
+          "source": 401,
+          "move": "zebra.kick",
+          "stage": "expiry"
+        },
+        {
+          "tick": 920,
+          "source": 410,
+          "move": "zebra.kick",
+          "stage": "active"
+        },
+        {
+          "tick": 920,
+          "source": 410,
+          "move": "zebra.kick",
+          "stage": "recovery"
+        },
+        {
+          "tick": 929,
+          "source": 409,
+          "move": "zebra.kick",
+          "stage": "active"
+        },
+        {
+          "tick": 929,
+          "source": 409,
+          "move": "zebra.kick",
+          "stage": "recovery"
+        },
+        {
+          "tick": 986,
+          "source": 401,
+          "move": "zebra.kick",
+          "stage": "active"
+        },
+        {
+          "tick": 986,
+          "source": 401,
+          "move": "zebra.kick",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1040,
+          "source": 410,
+          "move": "zebra.kick",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1049,
+          "source": 409,
+          "move": "zebra.kick",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1106,
+          "source": 401,
+          "move": "zebra.kick",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1147,
+          "source": 400,
+          "move": "zebra.kick",
+          "stage": "active"
+        },
+        {
+          "tick": 1147,
+          "source": 400,
+          "move": "zebra.kick",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1267,
+          "source": 400,
+          "move": "zebra.kick",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1559,
+          "source": 410,
+          "move": "zebra.stampede",
+          "stage": "active"
+        },
+        {
+          "tick": 1559,
+          "source": 409,
+          "move": "zebra.stampede",
+          "stage": "active"
+        },
+        {
+          "tick": 1559,
+          "source": 400,
+          "move": "zebra.stampede",
+          "stage": "active"
+        },
+        {
+          "tick": 1559,
+          "source": 401,
+          "move": "zebra.stampede",
+          "stage": "active"
+        }
+      ],
+      "destruction": [
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-0",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-1",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-2",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-3",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        }
+      ],
+      "bosses": [
+        {
+          "id": 400,
+          "hp": 1250,
+          "at": {
+            "x": 67.96694109268532,
+            "z": 16.973484852243036,
+            "y": 0.7,
+            "yaw": -1.5707963267948966
+          },
+          "state": "attack",
+          "boss": {
+            "arena": "zebra",
+            "slot": 0,
+            "engaged": true,
+            "exposedUntil": 1267,
+            "readyAt": 1471,
+            "shakeHits": 0
+          },
+          "attack": {
+            "move": "zebra.stampede",
+            "attackId": 15,
+            "stage": "active",
+            "startTick": 1499,
+            "activeTick": 1559,
+            "cooldownExpiry": 1919,
+            "recoveryUntil": 0,
+            "target": {
+              "id": 1,
+              "x": 68.67057800292969,
+              "z": 20.239696502685547
+            },
+            "area": {
+              "x": 68.45805943485908,
+              "z": 14.992638483129372,
+              "radius": 0.9,
+              "dx": 0,
+              "dz": 1
+            },
+            "hitIds": [],
+            "destination": {
+              "x": 68.45805943485908,
+              "z": 50.99263848312937
+            }
+          },
+          "held": false
+        },
+        {
+          "id": 401,
+          "hp": 1250,
+          "at": {
+            "x": 67.38056855918545,
+            "z": 17.803159664514954,
+            "y": 0.7,
+            "yaw": -1.5707963267948966
+          },
+          "state": "attack",
+          "boss": {
+            "arena": "zebra",
+            "slot": 1,
+            "engaged": true,
+            "exposedUntil": 1106,
+            "readyAt": 1310,
+            "shakeHits": 0
+          },
+          "attack": {
+            "move": "zebra.stampede",
+            "attackId": 16,
+            "stage": "active",
+            "startTick": 1499,
+            "activeTick": 1559,
+            "cooldownExpiry": 1919,
+            "recoveryUntil": 0,
+            "target": {
+              "id": 1,
+              "x": 68.67057800292969,
+              "z": 20.239696502685547
+            },
+            "area": {
+              "x": 67.38056855918545,
+              "z": 15.803159664514954,
+              "radius": 0.9,
+              "dx": 0,
+              "dz": 1
+            },
+            "hitIds": [],
+            "destination": {
+              "x": 67.38056855918545,
+              "z": 51.80315966451495
+            }
+          },
+          "held": false
+        },
+        {
+          "id": 409,
+          "hp": 1247.84,
+          "at": {
+            "x": 68.52763869881872,
+            "z": 17.67876436738315,
+            "y": 0.7,
+            "yaw": -1.5707963267948966
+          },
+          "state": "attack",
+          "boss": {
+            "arena": "zebra",
+            "slot": 2,
+            "engaged": true,
+            "exposedUntil": 1049,
+            "readyAt": 1253,
+            "shakeHits": 0
+          },
+          "attack": {
+            "move": "zebra.stampede",
+            "attackId": 17,
+            "stage": "active",
+            "startTick": 1499,
+            "activeTick": 1559,
+            "cooldownExpiry": 1919,
+            "recoveryUntil": 0,
+            "target": {
+              "id": 1,
+              "x": 68.67057800292969,
+              "z": 20.239696502685547
+            },
+            "area": {
+              "x": 68.52763869881872,
+              "z": 16.17876436738315,
+              "radius": 0.9,
+              "dx": 0,
+              "dz": 1
+            },
+            "hitIds": [],
+            "destination": {
+              "x": 68.52763869881872,
+              "z": 52.17876436738315
+            }
+          },
+          "held": false
+        },
+        {
+          "id": 410,
+          "hp": 1250,
+          "at": {
+            "x": 69.71229497895708,
+            "z": 19.770862067581835,
+            "y": 0.7,
+            "yaw": -1.5707963267948966
+          },
+          "state": "attack",
+          "boss": {
+            "arena": "zebra",
+            "slot": 3,
+            "engaged": true,
+            "exposedUntil": 1040,
+            "readyAt": 1244,
+            "shakeHits": 0
+          },
+          "attack": {
+            "move": "zebra.stampede",
+            "attackId": 18,
+            "stage": "active",
+            "startTick": 1499,
+            "activeTick": 1559,
+            "cooldownExpiry": 1919,
+            "recoveryUntil": 0,
+            "target": {
+              "id": 1,
+              "x": 68.67057800292969,
+              "z": 20.239696502685547
+            },
+            "area": {
+              "x": 69.71229497895708,
+              "z": 16.020862067581835,
+              "radius": 0.9,
+              "dx": 0,
+              "dz": 1
+            },
+            "hitIds": [
+              1
+            ],
+            "destination": {
+              "x": 69.71229497895708,
+              "z": 52.02086206758183
+            }
+          },
+          "held": false
+        }
+      ]
+    },
+    {
+      "id": "monkey",
+      "tier": "low",
+      "policy": "passive",
+      "measurementEntry": {
+        "x": -5,
+        "z": 15,
+        "y": 0.7
+      },
+      "complete": false,
+      "seconds": 142.5,
+      "totalSeconds": 142.5,
+      "hp": 0,
+      "deaths": 1,
+      "damage": 302.3999999999931,
+      "attacks": 12,
+      "phases": 1,
+      "counters": 5,
+      "wallHits": 0,
+      "rocket": 1,
+      "rocketPickups": 0,
+      "bites": [
+        411,
+        412,
+        413,
+        414,
+        415,
+        416,
+        417
+      ],
+      "turns": [
+        411,
+        414,
+        415,
+        412,
+        416,
+        413,
+        417
+      ],
+      "tells": [
+        {
+          "tick": 325,
+          "source": 416,
+          "attack": 20,
+          "move": "monkey.debris",
+          "duration": 0.8,
+          "area": {
+            "x": -11.6175,
+            "z": 15.5,
+            "radius": 1.2,
+            "dx": 0.997157716102973,
+            "dz": -0.07534247949399116
+          }
+        },
+        {
+          "tick": 339,
+          "source": 413,
+          "attack": 21,
+          "move": "monkey.debris",
+          "duration": 0.8,
+          "area": {
+            "x": -11.6175,
+            "z": 12.5,
+            "radius": 1.2,
+            "dx": 0.9354694973034151,
+            "dz": 0.35340744136887614
+          }
+        },
+        {
+          "tick": 347,
+          "source": 411,
+          "attack": 22,
+          "move": "monkey.grab",
+          "duration": 0.8,
+          "area": {
+            "x": -5.855375819704562,
+            "z": 19.008107196918566,
+            "radius": 0.8,
+            "dx": 0.20871150721831372,
+            "dz": -0.9779772526775149
+          }
+        },
+        {
+          "tick": 347,
+          "source": 412,
+          "attack": 23,
+          "move": "monkey.grab",
+          "duration": 0.8333333333333334,
+          "area": {
+            "x": -5.209106935556788,
+            "z": 17.08733735248754,
+            "radius": 0.8,
+            "dx": 0.09967985811145504,
+            "dz": -0.9950195605549071
+          }
+        },
+        {
+          "tick": 347,
+          "source": 414,
+          "attack": 24,
+          "move": "monkey.grab",
+          "duration": 0.9,
+          "area": {
+            "x": -1.9964118711058398,
+            "z": 9.542792643062668,
+            "radius": 0.8,
+            "dx": -0.4821805242279994,
+            "dz": 0.876071881785514
+          }
+        },
+        {
+          "tick": 347,
+          "source": 415,
+          "attack": 25,
+          "move": "monkey.grab",
+          "duration": 0.9333333333333333,
+          "area": {
+            "x": 1.2627084075854875,
+            "z": 12.016401668260118,
+            "radius": 0.8,
+            "dx": -0.9027846158583728,
+            "dz": 0.4300929403855059
+          }
+        },
+        {
+          "tick": 767,
+          "source": 411,
+          "attack": 26,
+          "move": "monkey.grab",
+          "duration": 0.8,
+          "area": {
+            "x": -3.1557853196235834,
+            "z": 15.5281176339881,
+            "radius": 0.8,
+            "dx": -0.9613586534412271,
+            "dz": -0.2752990000956607
+          }
+        },
+        {
+          "tick": 767,
+          "source": 414,
+          "attack": 27,
+          "move": "monkey.grab",
+          "duration": 0.9,
+          "area": {
+            "x": -7.041522496039486,
+            "z": 14.920708339806946,
+            "radius": 0.8,
+            "dx": 0.9992465998978824,
+            "dz": 0.03881021247714655
+          }
+        },
+        {
+          "tick": 767,
+          "source": 415,
+          "attack": 28,
+          "move": "monkey.debris",
+          "duration": 0.8,
+          "area": {
+            "x": -5.388253122656352,
+            "z": 13.215520098192279,
+            "radius": 1,
+            "dx": 0.21259837503281423,
+            "dz": 0.9771396680789329
+          }
+        },
+        {
+          "tick": 803,
+          "source": 412,
+          "attack": 29,
+          "move": "monkey.debris",
+          "duration": 0.8,
+          "area": {
+            "x": -0.6741759511603412,
+            "z": 17.754872238486037,
+            "radius": 1,
+            "dx": -0.8434781694617517,
+            "dz": -0.5371634552363482
+          }
+        },
+        {
+          "tick": 1187,
+          "source": 412,
+          "attack": 30,
+          "move": "monkey.grab",
+          "duration": 0.8333333333333334,
+          "area": {
+            "x": -7.575637908393224,
+            "z": 17.93137431879687,
+            "radius": 0.8,
+            "dx": 0.6600541182112452,
+            "dz": -0.7512180515884689
+          }
+        },
+        {
+          "tick": 1187,
+          "source": 415,
+          "attack": 31,
+          "move": "monkey.grab",
+          "duration": 0.9333333333333333,
+          "area": {
+            "x": 2.5377480994060053,
+            "z": 12.955132677829717,
+            "radius": 0.8,
+            "dx": -0.9651166404695525,
+            "dz": 0.2618203015214151
+          }
+        },
+        {
+          "tick": 1280,
+          "source": 414,
+          "attack": 32,
+          "move": "monkey.debris",
+          "duration": 0.8,
+          "area": {
+            "x": -3.622657721437281,
+            "z": 12.560280038949628,
+            "radius": 1,
+            "dx": -0.49161629519117794,
+            "dz": 0.870811930500783
+          }
+        },
+        {
+          "tick": 1354,
+          "source": 411,
+          "attack": 33,
+          "move": "monkey.debris",
+          "duration": 0.8,
+          "area": {
+            "x": -5.160633225753184,
+            "z": 18.999927014408936,
+            "radius": 1,
+            "dx": 0.040126695099323983,
+            "dz": -0.9991945998354905
+          }
+        },
+        {
+          "tick": 1607,
+          "source": 411,
+          "attack": 34,
+          "move": "monkey.grab",
+          "duration": 0.8,
+          "area": {
+            "x": -3.061012303625598,
+            "z": 17.193575201685697,
+            "radius": 0.8,
+            "dx": -0.662289729856478,
+            "dz": -0.749247831979935
+          }
+        },
+        {
+          "tick": 1607,
+          "source": 412,
+          "attack": 35,
+          "move": "monkey.grab",
+          "duration": 0.8333333333333334,
+          "area": {
+            "x": 1.8405161152090703,
+            "z": 17.688786707546107,
+            "radius": 0.8,
+            "dx": -0.9306847500774662,
+            "dz": -0.3658222190808595
+          }
+        },
+        {
+          "tick": 1607,
+          "source": 414,
+          "attack": 36,
+          "move": "monkey.grab",
+          "duration": 0.9,
+          "area": {
+            "x": -2.9105699421257807,
+            "z": 16.43044130448194,
+            "radius": 0.8,
+            "dx": -0.8251542392784776,
+            "dz": -0.5649074980921719
+          }
+        },
+        {
+          "tick": 1607,
+          "source": 415,
+          "attack": 37,
+          "move": "monkey.grab",
+          "duration": 0.9333333333333333,
+          "area": {
+            "x": -5.783954103066616,
+            "z": 17.88268436298412,
+            "radius": 0.8,
+            "dx": 0.262421751570798,
+            "dz": -0.9649532757095104
+          }
+        },
+        {
+          "tick": 2027,
+          "source": 411,
+          "attack": 38,
+          "move": "monkey.grab",
+          "duration": 0.8,
+          "area": {
+            "x": -12.132896481104915,
+            "z": 18.337173601152703,
+            "radius": 0.8,
+            "dx": 0.9057696359845345,
+            "dz": -0.4237704172408025
+          }
+        },
+        {
+          "tick": 2027,
+          "source": 414,
+          "attack": 39,
+          "move": "monkey.grab",
+          "duration": 0.9,
+          "area": {
+            "x": -0.3199300349540313,
+            "z": 9.14154826296234,
+            "radius": 0.8,
+            "dx": -0.6241507543269751,
+            "dz": 0.781303933097145
+          }
+        },
+        {
+          "tick": 2053,
+          "source": 412,
+          "attack": 40,
+          "move": "monkey.debris",
+          "duration": 0.8,
+          "area": {
+            "x": -7.587461367455375,
+            "z": 16.662466411576396,
+            "radius": 1,
+            "dx": 0.8413117997249505,
+            "dz": -0.5405501416552997
+          }
+        },
+        {
+          "tick": 2070,
+          "source": 415,
+          "attack": 41,
+          "move": "monkey.debris",
+          "duration": 0.8,
+          "area": {
+            "x": 2.8559360504853992,
+            "z": 17.650223956485156,
+            "radius": 1,
+            "dx": -0.9475344599428573,
+            "dz": -0.3196536363328245
+          }
+        },
+        {
+          "tick": 2447,
+          "source": 412,
+          "attack": 42,
+          "move": "monkey.grab",
+          "duration": 0.8333333333333334,
+          "area": {
+            "x": 1.4314488075866234,
+            "z": 18.88526018946761,
+            "radius": 0.8,
+            "dx": -0.8559395035269401,
+            "dz": -0.5170759773012622
+          }
+        },
+        {
+          "tick": 2447,
+          "source": 415,
+          "attack": 43,
+          "move": "monkey.grab",
+          "duration": 0.9333333333333333,
+          "area": {
+            "x": -4.070072632088336,
+            "z": 18.30867627640963,
+            "radius": 0.8,
+            "dx": -0.27057359087889027,
+            "dz": -0.9626992946496341
+          }
+        },
+        {
+          "tick": 2557,
+          "source": 411,
+          "attack": 44,
+          "move": "monkey.debris",
+          "duration": 0.8,
+          "area": {
+            "x": -1.7605031563322873,
+            "z": 15.39943691008889,
+            "radius": 1,
+            "dx": -0.9924838857107304,
+            "dz": -0.12237539215271181
+          }
+        },
+        {
+          "tick": 2563,
+          "source": 414,
+          "attack": 45,
+          "move": "monkey.debris",
+          "duration": 0.8,
+          "area": {
+            "x": -8.841588610681505,
+            "z": 18.4305880467521,
+            "radius": 1,
+            "dx": 0.7458799552144398,
+            "dz": -0.6660803948543337
+          }
+        },
+        {
+          "tick": 2867,
+          "source": 411,
+          "attack": 46,
+          "move": "monkey.grab",
+          "duration": 0.8,
+          "area": {
+            "x": -3.35140900697794,
+            "z": 17.53608323021337,
+            "radius": 0.8,
+            "dx": -0.5450201650494397,
+            "dz": -0.8384229360468866
+          }
+        },
+        {
+          "tick": 2867,
+          "source": 412,
+          "attack": 47,
+          "move": "monkey.grab",
+          "duration": 0.8333333333333334,
+          "area": {
+            "x": -6.725906095233143,
+            "z": 16.90890244263697,
+            "radius": 0.8,
+            "dx": 0.6706577076708793,
+            "dz": -0.7417669709158269
+          }
+        },
+        {
+          "tick": 2867,
+          "source": 414,
+          "attack": 48,
+          "move": "monkey.grab",
+          "duration": 0.9,
+          "area": {
+            "x": -4.129164831439523,
+            "z": 17.666483660387392,
+            "radius": 0.8,
+            "dx": -0.3104490166725331,
+            "dz": -0.9505900315314995
+          }
+        },
+        {
+          "tick": 2867,
+          "source": 415,
+          "attack": 49,
+          "move": "monkey.grab",
+          "duration": 0.9333333333333333,
+          "area": {
+            "x": 2.101306770542357,
+            "z": 16.522249752832796,
+            "radius": 0.8,
+            "dx": -0.9777871454391454,
+            "dz": -0.2096003297086327
+          }
+        },
+        {
+          "tick": 3287,
+          "source": 411,
+          "attack": 50,
+          "move": "monkey.grab",
+          "duration": 0.8,
+          "area": {
+            "x": -3.1915993365753295,
+            "z": 17.86370992206675,
+            "radius": 0.8,
+            "dx": -0.558089306638509,
+            "dz": -0.8297808902449779
+          }
+        },
+        {
+          "tick": 3287,
+          "source": 414,
+          "attack": 51,
+          "move": "monkey.grab",
+          "duration": 0.9,
+          "area": {
+            "x": -11.55455332703992,
+            "z": 18.575545525184022,
+            "radius": 0.8,
+            "dx": 0.8687073458608601,
+            "dz": -0.4953256981495914
+          }
+        },
+        {
+          "tick": 3287,
+          "source": 415,
+          "attack": 52,
+          "move": "monkey.debris",
+          "duration": 0.8,
+          "area": {
+            "x": -6.428436154439758,
+            "z": 17.87110528747795,
+            "radius": 1,
+            "dx": 0.39522318023620334,
+            "dz": -0.9185851282292683
+          }
+        },
+        {
+          "tick": 3404,
+          "source": 412,
+          "attack": 53,
+          "move": "monkey.debris",
+          "duration": 0.8,
+          "area": {
+            "x": -4.034846787944075,
+            "z": 17.20914813848094,
+            "radius": 1,
+            "dx": -0.4440786859630829,
+            "dz": -0.8959877904711099
+          }
+        },
+        {
+          "tick": 3707,
+          "source": 412,
+          "attack": 54,
+          "move": "monkey.grab",
+          "duration": 0.8333333333333334,
+          "area": {
+            "x": -3.315445246874031,
+            "z": 14.719715089976999,
+            "radius": 0.8,
+            "dx": -0.9934953471951357,
+            "dz": 0.11387271447373647
+          }
+        },
+        {
+          "tick": 3707,
+          "source": 415,
+          "attack": 55,
+          "move": "monkey.grab",
+          "duration": 0.9333333333333333,
+          "area": {
+            "x": 1.4312154671836224,
+            "z": 17.58584752958421,
+            "radius": 0.8,
+            "dx": -0.9276825861620688,
+            "dz": -0.37336981577473
+          }
+        },
+        {
+          "tick": 3760,
+          "source": 411,
+          "attack": 56,
+          "move": "monkey.debris",
+          "duration": 0.8,
+          "area": {
+            "x": -8.302324676727336,
+            "z": 18.799328461938384,
+            "radius": 1,
+            "dx": 0.6301174097827562,
+            "dz": -0.7764998711453017
+          }
+        },
+        {
+          "tick": 3835,
+          "source": 414,
+          "attack": 57,
+          "move": "monkey.debris",
+          "duration": 0.8,
+          "area": {
+            "x": -4.223754865013131,
+            "z": 12.036848929005599,
+            "radius": 1,
+            "dx": -0.3088347691767989,
+            "dz": 0.951115705551913
+          }
+        },
+        {
+          "tick": 4127,
+          "source": 411,
+          "attack": 58,
+          "move": "monkey.grab",
+          "duration": 0.8,
+          "area": {
+            "x": 0.8538201128545556,
+            "z": 15.429202144562385,
+            "radius": 0.8,
+            "dx": -0.9966145945827559,
+            "dz": -0.08221526539912986
+          }
+        },
+        {
+          "tick": 4127,
+          "source": 412,
+          "attack": 59,
+          "move": "monkey.grab",
+          "duration": 0.8333333333333334,
+          "area": {
+            "x": 0.5782057740221079,
+            "z": 19.911843834355068,
+            "radius": 0.8,
+            "dx": -0.7565780440240444,
+            "dz": -0.6539034051759871
+          }
+        },
+        {
+          "tick": 4127,
+          "source": 414,
+          "attack": 60,
+          "move": "monkey.grab",
+          "duration": 0.9,
+          "area": {
+            "x": -4.107937804906262,
+            "z": 14.71488409270915,
+            "radius": 0.8,
+            "dx": -0.9803040627626818,
+            "dz": 0.19749416328332256
+          }
+        },
+        {
+          "tick": 4127,
+          "source": 415,
+          "attack": 61,
+          "move": "monkey.grab",
+          "duration": 0.9333333333333333,
+          "area": {
+            "x": -7.989150862133439,
+            "z": 16.858350593531636,
+            "radius": 0.8,
+            "dx": 0.8243202070874115,
+            "dz": -0.5661238346752122
+          }
+        },
+        {
+          "tick": 4547,
+          "source": 411,
+          "attack": 62,
+          "move": "monkey.grab",
+          "duration": 0.8,
+          "area": {
+            "x": -9.506088968457284,
+            "z": 18.507482351085294,
+            "radius": 0.8,
+            "dx": 0.7362259883288786,
+            "dz": -0.6767357638762457
+          }
+        },
+        {
+          "tick": 4547,
+          "source": 414,
+          "attack": 63,
+          "move": "monkey.grab",
+          "duration": 0.9,
+          "area": {
+            "x": 1.9695627931103832,
+            "z": 10.412170168515562,
+            "radius": 0.8,
+            "dx": -0.8622369544891637,
+            "dz": 0.5065051177562293
+          }
+        },
+        {
+          "tick": 4547,
+          "source": 415,
+          "attack": 64,
+          "move": "monkey.debris",
+          "duration": 0.8,
+          "area": {
+            "x": -6.406748540784235,
+            "z": 13.777534430047766,
+            "radius": 1,
+            "dx": 0.7086350489472415,
+            "dz": 0.7055752032232573
+          }
+        },
+        {
+          "tick": 4824,
+          "source": 412,
+          "attack": 65,
+          "move": "monkey.debris",
+          "duration": 0.8,
+          "area": {
+            "x": -3.992550381129049,
+            "z": 13.725154731581153,
+            "radius": 1,
+            "dx": -0.8116611810843244,
+            "dz": 0.5841285193523765
+          }
+        },
+        {
+          "tick": 4967,
+          "source": 412,
+          "attack": 66,
+          "move": "monkey.grab",
+          "duration": 0.8333333333333334,
+          "area": {
+            "x": -3.63806378039199,
+            "z": 13.700264946763856,
+            "radius": 0.8,
+            "dx": -0.860971011746878,
+            "dz": 0.5086540247865512
+          }
+        },
+        {
+          "tick": 4967,
+          "source": 415,
+          "attack": 67,
+          "move": "monkey.grab",
+          "duration": 0.9333333333333333,
+          "area": {
+            "x": -8.248428104413122,
+            "z": 16.91680825796216,
+            "radius": 0.8,
+            "dx": 0.7941347627389104,
+            "dz": -0.6077417038591433
+          }
+        },
+        {
+          "tick": 4967,
+          "source": 414,
+          "attack": 68,
+          "move": "monkey.debris",
+          "duration": 0.8,
+          "area": {
+            "x": -5.415196508006581,
+            "z": 17.922708165306418,
+            "radius": 1,
+            "dx": -0.002910894012822638,
+            "dz": -0.9999957633390486
+          }
+        },
+        {
+          "tick": 4993,
+          "source": 411,
+          "attack": 69,
+          "move": "monkey.debris",
+          "duration": 0.8,
+          "area": {
+            "x": 1.7698198995385783,
+            "z": 17.653411378304604,
+            "radius": 1,
+            "dx": -0.927580739839291,
+            "dz": -0.3736227657399819
+          }
+        },
+        {
+          "tick": 5387,
+          "source": 411,
+          "attack": 70,
+          "move": "monkey.grab",
+          "duration": 0.8,
+          "area": {
+            "x": -5.760324176760111,
+            "z": 18.3009191682759,
+            "radius": 0.8,
+            "dx": 0.094325313586843,
+            "dz": -0.9955414281770214
+          }
+        },
+        {
+          "tick": 5387,
+          "source": 412,
+          "attack": 71,
+          "move": "monkey.grab",
+          "duration": 0.8333333333333334,
+          "area": {
+            "x": -8.011896969171348,
+            "z": 7.835720165512373,
+            "radius": 0.8,
+            "dx": 0.3502352543189868,
+            "dz": 0.9366617674657776
+          }
+        },
+        {
+          "tick": 5387,
+          "source": 414,
+          "attack": 72,
+          "move": "monkey.grab",
+          "duration": 0.9,
+          "area": {
+            "x": 0.9615415501390926,
+            "z": 13.734948523981592,
+            "radius": 0.8,
+            "dx": -0.9874665739465693,
+            "dz": 0.1578282780056373
+          }
+        },
+        {
+          "tick": 5387,
+          "source": 415,
+          "attack": 73,
+          "move": "monkey.grab",
+          "duration": 0.9333333333333333,
+          "area": {
+            "x": -3.4428539861618646,
+            "z": 11.780191187840071,
+            "radius": 0.8,
+            "dx": -0.5543009198403431,
+            "dz": 0.83231634026021
+          }
+        },
+        {
+          "tick": 5807,
+          "source": 411,
+          "attack": 74,
+          "move": "monkey.grab",
+          "duration": 0.8,
+          "area": {
+            "x": 1.1854197499637809,
+            "z": 17.184347272040498,
+            "radius": 0.8,
+            "dx": -0.9372800014325494,
+            "dz": -0.3485773930056287
+          }
+        },
+        {
+          "tick": 5807,
+          "source": 414,
+          "attack": 75,
+          "move": "monkey.grab",
+          "duration": 0.9,
+          "area": {
+            "x": -8.58618872106898,
+            "z": 18.634281915838248,
+            "radius": 0.8,
+            "dx": 0.6287865351802635,
+            "dz": -0.7775779659789746
+          }
+        },
+        {
+          "tick": 5807,
+          "source": 412,
+          "attack": 76,
+          "move": "monkey.debris",
+          "duration": 0.8,
+          "area": {
+            "x": -2.771727841851883,
+            "z": 13.874294849148095,
+            "radius": 1,
+            "dx": -0.9521947406663918,
+            "dz": 0.30549169521815656
+          }
+        },
+        {
+          "tick": 6065,
+          "source": 415,
+          "attack": 77,
+          "move": "monkey.debris",
+          "duration": 0.8,
+          "area": {
+            "x": -7.579823534139174,
+            "z": 14.27898458098077,
+            "radius": 1,
+            "dx": 0.9863073434710918,
+            "dz": 0.16491762857559483
+          }
+        },
+        {
+          "tick": 6227,
+          "source": 412,
+          "attack": 78,
+          "move": "monkey.grab",
+          "duration": 0.8333333333333334,
+          "area": {
+            "x": -7.840004059367058,
+            "z": 7.012705330601375,
+            "radius": 0.8,
+            "dx": 0.24434577995331183,
+            "dz": 0.9696881662776997
+          }
+        },
+        {
+          "tick": 6227,
+          "source": 415,
+          "attack": 79,
+          "move": "monkey.grab",
+          "duration": 0.9333333333333333,
+          "area": {
+            "x": -7.435776274159272,
+            "z": 13.998681815662609,
+            "radius": 0.8,
+            "dx": 0.9321015514160101,
+            "dz": 0.3621970428480423
+          }
+        },
+        {
+          "tick": 6228,
+          "source": 411,
+          "attack": 80,
+          "move": "monkey.debris",
+          "duration": 0.8,
+          "area": {
+            "x": -4.856244433891801,
+            "z": 16.320301706554666,
+            "radius": 1,
+            "dx": -0.5265803941862791,
+            "dz": -0.8501253369113422
+          }
+        },
+        {
+          "tick": 6286,
+          "source": 414,
+          "attack": 81,
+          "move": "monkey.debris",
+          "duration": 0.8,
+          "area": {
+            "x": -3.009226598074934,
+            "z": 14.127723066576372,
+            "radius": 1,
+            "dx": -0.9880959834665547,
+            "dz": 0.1538386409757379
+          }
+        },
+        {
+          "tick": 6647,
+          "source": 411,
+          "attack": 82,
+          "move": "monkey.grab",
+          "duration": 0.8,
+          "area": {
+            "x": 0.3624268951073049,
+            "z": 17.91189966501707,
+            "radius": 0.8,
+            "dx": -0.8839927206274534,
+            "dz": -0.4675006629703035
+          }
+        },
+        {
+          "tick": 6647,
+          "source": 412,
+          "attack": 83,
+          "move": "monkey.grab",
+          "duration": 0.8333333333333334,
+          "area": {
+            "x": -4.1530647824915645,
+            "z": 16.430087042781743,
+            "radius": 0.8,
+            "dx": -0.693755162541192,
+            "dz": -0.7202109235824212
+          }
+        },
+        {
+          "tick": 6647,
+          "source": 414,
+          "attack": 84,
+          "move": "monkey.grab",
+          "duration": 0.9,
+          "area": {
+            "x": -7.188556794876125,
+            "z": 18.6171110832818,
+            "radius": 0.8,
+            "dx": 0.29728259548576574,
+            "dz": -0.9547895361917446
+          }
+        },
+        {
+          "tick": 6647,
+          "source": 415,
+          "attack": 85,
+          "move": "monkey.grab",
+          "duration": 0.9333333333333333,
+          "area": {
+            "x": -8.714161842370345,
+            "z": 8.425347075544217,
+            "radius": 0.8,
+            "dx": 0.4116980009783184,
+            "dz": 0.911320336649225
+          }
+        },
+        {
+          "tick": 7067,
+          "source": 411,
+          "attack": 86,
+          "move": "monkey.grab",
+          "duration": 0.8,
+          "area": {
+            "x": -8.045069885438583,
+            "z": 17.288886632138112,
+            "radius": 0.8,
+            "dx": 0.6153771356198989,
+            "dz": -0.788232821542118
+          }
+        },
+        {
+          "tick": 7067,
+          "source": 414,
+          "attack": 87,
+          "move": "monkey.grab",
+          "duration": 0.9,
+          "area": {
+            "x": -7.925443865778099,
+            "z": 15.639388884199901,
+            "radius": 0.8,
+            "dx": 0.8835257799480358,
+            "dz": -0.46838253187668594
+          }
+        },
+        {
+          "tick": 7081,
+          "source": 415,
+          "attack": 88,
+          "move": "monkey.debris",
+          "duration": 0.8,
+          "area": {
+            "x": -3.2870047798143185,
+            "z": 17.15304313532537,
+            "radius": 1,
+            "dx": -0.717233900789558,
+            "dz": -0.6968324989250964
+          }
+        },
+        {
+          "tick": 7195,
+          "source": 412,
+          "attack": 89,
+          "move": "monkey.debris",
+          "duration": 0.8,
+          "area": {
+            "x": -4.364042677557176,
+            "z": 12.037413699429926,
+            "radius": 1,
+            "dx": -0.5245784039671932,
+            "dz": 0.8513621427402279
+          }
+        },
+        {
+          "tick": 7487,
+          "source": 412,
+          "attack": 90,
+          "move": "monkey.grab",
+          "duration": 0.8333333333333334,
+          "area": {
+            "x": -4.883056459020617,
+            "z": 17.56444744330696,
+            "radius": 0.8,
+            "dx": -0.33199413308250314,
+            "dz": -0.9432814508929969
+          }
+        },
+        {
+          "tick": 7487,
+          "source": 415,
+          "attack": 91,
+          "move": "monkey.grab",
+          "duration": 0.9333333333333333,
+          "area": {
+            "x": -5.736556073150256,
+            "z": 9.413789014065973,
+            "radius": 0.8,
+            "dx": -0.037869976617998326,
+            "dz": 0.9992826751580116
+          }
+        },
+        {
+          "tick": 7496,
+          "source": 414,
+          "attack": 92,
+          "move": "monkey.debris",
+          "duration": 0.8,
+          "area": {
+            "x": -8.416565649521901,
+            "z": 18.07568858129671,
+            "radius": 1,
+            "dx": 0.5795735975182547,
+            "dz": -0.8149199010085275
+          }
+        },
+        {
+          "tick": 7627,
+          "source": 411,
+          "attack": 93,
+          "move": "monkey.debris",
+          "duration": 0.8,
+          "area": {
+            "x": -5.921907283648304,
+            "z": 18.091146043454728,
+            "radius": 1,
+            "dx": -0.0030047455668769474,
+            "dz": -0.9999954857418499
+          }
+        },
+        {
+          "tick": 7907,
+          "source": 411,
+          "attack": 94,
+          "move": "monkey.grab",
+          "duration": 0.8,
+          "area": {
+            "x": -7.087408788152838,
+            "z": 15.943420918857607,
+            "radius": 0.8,
+            "dx": 0.6471524783390683,
+            "dz": -0.762360590389877
+          }
+        },
+        {
+          "tick": 7907,
+          "source": 412,
+          "attack": 95,
+          "move": "monkey.grab",
+          "duration": 0.8333333333333334,
+          "area": {
+            "x": -5.153357748298527,
+            "z": 6.723542834962108,
+            "radius": 0.8,
+            "dx": -0.0986462285939237,
+            "dz": 0.995122566111429
+          }
+        },
+        {
+          "tick": 7907,
+          "source": 414,
+          "attack": 96,
+          "move": "monkey.grab",
+          "duration": 0.9,
+          "area": {
+            "x": 1.3375195425846116,
+            "z": 17.049230395350826,
+            "radius": 0.8,
+            "dx": -0.9469873177169987,
+            "dz": -0.32127094497194103
+          }
+        },
+        {
+          "tick": 7907,
+          "source": 415,
+          "attack": 97,
+          "move": "monkey.grab",
+          "duration": 0.9333333333333333,
+          "area": {
+            "x": -3.3338040642637363,
+            "z": 20.52996490227743,
+            "radius": 0.8,
+            "dx": -0.40040270108706494,
+            "dz": -0.9163392804863177
+          }
+        },
+        {
+          "tick": 8327,
+          "source": 411,
+          "attack": 98,
+          "move": "monkey.grab",
+          "duration": 0.8,
+          "area": {
+            "x": -3.509069459555546,
+            "z": 19.709365166171782,
+            "radius": 0.8,
+            "dx": -0.48377657129512147,
+            "dz": -0.8751915385022507
+          }
+        },
+        {
+          "tick": 8327,
+          "source": 414,
+          "attack": 99,
+          "move": "monkey.grab",
+          "duration": 0.9,
+          "area": {
+            "x": -4.589891876569687,
+            "z": 11.38209870634273,
+            "radius": 0.8,
+            "dx": -0.4799181594066387,
+            "dz": 0.8773132623366321
+          }
+        },
+        {
+          "tick": 8420,
+          "source": 412,
+          "attack": 100,
+          "move": "monkey.debris",
+          "duration": 0.8,
+          "area": {
+            "x": -8.245000772006799,
+            "z": 17.665446346438298,
+            "radius": 1,
+            "dx": 0.5255669072554173,
+            "dz": -0.85075227063933
+          }
+        },
+        {
+          "tick": 8466,
+          "source": 415,
+          "attack": 101,
+          "move": "monkey.debris",
+          "duration": 0.8,
+          "area": {
+            "x": -7.486279494331805,
+            "z": 12.402145883731764,
+            "radius": 1,
+            "dx": 0.464396697053307,
+            "dz": 0.8856272961951768
+          }
+        },
+        {
+          "tick": 8747,
+          "source": 412,
+          "attack": 102,
+          "move": "monkey.grab",
+          "duration": 0.8333333333333334,
+          "area": {
+            "x": -3.8207767821162855,
+            "z": 12.991478333465663,
+            "radius": 0.8,
+            "dx": -0.8453398913300151,
+            "dz": 0.5342288537005078
+          }
+        },
+        {
+          "tick": 8747,
+          "source": 415,
+          "attack": 103,
+          "move": "monkey.grab",
+          "duration": 0.9333333333333333,
+          "area": {
+            "x": -5.191268787762108,
+            "z": 9.771191396667746,
+            "radius": 0.8,
+            "dx": -0.2324757556058012,
+            "dz": 0.9726021915744955
+          }
+        }
+      ],
+      "throws": [
+        {
+          "tick": 373,
+          "source": 416,
+          "prop": 1417832575
+        },
+        {
+          "tick": 387,
+          "source": 413,
+          "prop": 1401054956
+        },
+        {
+          "tick": 815,
+          "source": 415,
+          "prop": 1401054956
+        },
+        {
+          "tick": 851,
+          "source": 412,
+          "prop": 1433003844
+        },
+        {
+          "tick": 1328,
+          "source": 414,
+          "prop": 1401054956
+        },
+        {
+          "tick": 1402,
+          "source": 411,
+          "prop": 1449781463
+        },
+        {
+          "tick": 2101,
+          "source": 412,
+          "prop": 1417832575
+        },
+        {
+          "tick": 2118,
+          "source": 415,
+          "prop": 1382670987
+        },
+        {
+          "tick": 2605,
+          "source": 411,
+          "prop": 1382670987
+        },
+        {
+          "tick": 2611,
+          "source": 414,
+          "prop": 1417832575
+        },
+        {
+          "tick": 3335,
+          "source": 415,
+          "prop": 1417832575
+        },
+        {
+          "tick": 3452,
+          "source": 412,
+          "prop": 1449781463
+        },
+        {
+          "tick": 3808,
+          "source": 411,
+          "prop": 1417832575
+        },
+        {
+          "tick": 3883,
+          "source": 414,
+          "prop": 1401054956
+        },
+        {
+          "tick": 4595,
+          "source": 415,
+          "prop": 1382670987
+        },
+        {
+          "tick": 4872,
+          "source": 412,
+          "prop": 1401054956
+        },
+        {
+          "tick": 5015,
+          "source": 414,
+          "prop": 1449781463
+        },
+        {
+          "tick": 5041,
+          "source": 411,
+          "prop": 1466559082
+        },
+        {
+          "tick": 5855,
+          "source": 412,
+          "prop": 1401054956
+        },
+        {
+          "tick": 6113,
+          "source": 415,
+          "prop": 1382670987
+        },
+        {
+          "tick": 6276,
+          "source": 411,
+          "prop": 1433003844
+        },
+        {
+          "tick": 6334,
+          "source": 414,
+          "prop": 1466559082
+        },
+        {
+          "tick": 7129,
+          "source": 415,
+          "prop": 1433003844
+        },
+        {
+          "tick": 7243,
+          "source": 412,
+          "prop": 1466559082
+        },
+        {
+          "tick": 7544,
+          "source": 414,
+          "prop": 1449781463
+        },
+        {
+          "tick": 7675,
+          "source": 411,
+          "prop": 1449781463
+        },
+        {
+          "tick": 8468,
+          "source": 412,
+          "prop": 1417832575
+        },
+        {
+          "tick": 8514,
+          "source": 415,
+          "prop": 1466559082
+        }
+      ],
+      "signals": [
+        {
+          "tick": 214,
+          "name": "l8.arena.monkey.engaged"
+        }
+      ],
+      "stages": [
+        {
+          "tick": 373,
+          "source": 416,
+          "move": "monkey.debris",
+          "stage": "active"
+        },
+        {
+          "tick": 387,
+          "source": 413,
+          "move": "monkey.debris",
+          "stage": "active"
+        },
+        {
+          "tick": 395,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 397,
+          "source": 412,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 401,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 401,
+          "source": 416,
+          "move": "monkey.debris",
+          "stage": "recovery"
+        },
+        {
+          "tick": 403,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 403,
+          "source": 415,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 418,
+          "source": 413,
+          "move": "monkey.debris",
+          "stage": "recovery"
+        },
+        {
+          "tick": 465,
+          "source": 412,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 521,
+          "source": 416,
+          "move": "monkey.debris",
+          "stage": "expiry"
+        },
+        {
+          "tick": 523,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 538,
+          "source": 413,
+          "move": "monkey.debris",
+          "stage": "expiry"
+        },
+        {
+          "tick": 546,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 551,
+          "source": 415,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 585,
+          "source": 412,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 666,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 671,
+          "source": 415,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 815,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 815,
+          "source": 415,
+          "move": "monkey.debris",
+          "stage": "active"
+        },
+        {
+          "tick": 816,
+          "source": 415,
+          "move": "monkey.debris",
+          "stage": "recovery"
+        },
+        {
+          "tick": 818,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 821,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 851,
+          "source": 412,
+          "move": "monkey.debris",
+          "stage": "active"
+        },
+        {
+          "tick": 869,
+          "source": 412,
+          "move": "monkey.debris",
+          "stage": "recovery"
+        },
+        {
+          "tick": 876,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 936,
+          "source": 415,
+          "move": "monkey.debris",
+          "stage": "expiry"
+        },
+        {
+          "tick": 938,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 989,
+          "source": 412,
+          "move": "monkey.debris",
+          "stage": "expiry"
+        },
+        {
+          "tick": 996,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1237,
+          "source": 412,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 1243,
+          "source": 415,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 1244,
+          "source": 412,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1328,
+          "source": 414,
+          "move": "monkey.debris",
+          "stage": "active"
+        },
+        {
+          "tick": 1337,
+          "source": 414,
+          "move": "monkey.debris",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1354,
+          "source": 415,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1364,
+          "source": 412,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1402,
+          "source": 411,
+          "move": "monkey.debris",
+          "stage": "active"
+        },
+        {
+          "tick": 1414,
+          "source": 411,
+          "move": "monkey.debris",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1457,
+          "source": 414,
+          "move": "monkey.debris",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1474,
+          "source": 415,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1534,
+          "source": 411,
+          "move": "monkey.debris",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1655,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 1657,
+          "source": 412,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 1661,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 1662,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1663,
+          "source": 415,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 1665,
+          "source": 415,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1666,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1679,
+          "source": 412,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1782,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1785,
+          "source": 415,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1786,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1799,
+          "source": 412,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 2075,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 2075,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 2081,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 2101,
+          "source": 412,
+          "move": "monkey.debris",
+          "stage": "active"
+        },
+        {
+          "tick": 2102,
+          "source": 412,
+          "move": "monkey.debris",
+          "stage": "recovery"
+        },
+        {
+          "tick": 2118,
+          "source": 415,
+          "move": "monkey.debris",
+          "stage": "active"
+        },
+        {
+          "tick": 2132,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 2151,
+          "source": 415,
+          "move": "monkey.debris",
+          "stage": "recovery"
+        },
+        {
+          "tick": 2195,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 2222,
+          "source": 412,
+          "move": "monkey.debris",
+          "stage": "expiry"
+        },
+        {
+          "tick": 2252,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 2271,
+          "source": 415,
+          "move": "monkey.debris",
+          "stage": "expiry"
+        },
+        {
+          "tick": 2497,
+          "source": 412,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 2503,
+          "source": 415,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 2514,
+          "source": 415,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 2527,
+          "source": 412,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 2605,
+          "source": 411,
+          "move": "monkey.debris",
+          "stage": "active"
+        },
+        {
+          "tick": 2611,
+          "source": 414,
+          "move": "monkey.debris",
+          "stage": "active"
+        },
+        {
+          "tick": 2615,
+          "source": 411,
+          "move": "monkey.debris",
+          "stage": "recovery"
+        },
+        {
+          "tick": 2615,
+          "source": 414,
+          "move": "monkey.debris",
+          "stage": "recovery"
+        },
+        {
+          "tick": 2634,
+          "source": 415,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 2647,
+          "source": 412,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 2735,
+          "source": 411,
+          "move": "monkey.debris",
+          "stage": "expiry"
+        },
+        {
+          "tick": 2735,
+          "source": 414,
+          "move": "monkey.debris",
+          "stage": "expiry"
+        },
+        {
+          "tick": 2915,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 2917,
+          "source": 412,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 2918,
+          "source": 412,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 2921,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 2923,
+          "source": 415,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 2967,
+          "source": 415,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 2977,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 3038,
+          "source": 412,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 3087,
+          "source": 415,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 3097,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 3108,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 3228,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 3335,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 3335,
+          "source": 415,
+          "move": "monkey.debris",
+          "stage": "active"
+        },
+        {
+          "tick": 3336,
+          "source": 415,
+          "move": "monkey.debris",
+          "stage": "recovery"
+        },
+        {
+          "tick": 3341,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 3341,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 3343,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 3452,
+          "source": 412,
+          "move": "monkey.debris",
+          "stage": "active"
+        },
+        {
+          "tick": 3453,
+          "source": 412,
+          "move": "monkey.debris",
+          "stage": "recovery"
+        },
+        {
+          "tick": 3456,
+          "source": 415,
+          "move": "monkey.debris",
+          "stage": "expiry"
+        },
+        {
+          "tick": 3461,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 3463,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 3573,
+          "source": 412,
+          "move": "monkey.debris",
+          "stage": "expiry"
+        },
+        {
+          "tick": 3757,
+          "source": 412,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 3758,
+          "source": 412,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 3763,
+          "source": 415,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 3802,
+          "source": 415,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 3808,
+          "source": 411,
+          "move": "monkey.debris",
+          "stage": "active"
+        },
+        {
+          "tick": 3824,
+          "source": 411,
+          "move": "monkey.debris",
+          "stage": "recovery"
+        },
+        {
+          "tick": 3878,
+          "source": 412,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 3883,
+          "source": 414,
+          "move": "monkey.debris",
+          "stage": "active"
+        },
+        {
+          "tick": 3884,
+          "source": 414,
+          "move": "monkey.debris",
+          "stage": "recovery"
+        },
+        {
+          "tick": 3922,
+          "source": 415,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 3944,
+          "source": 411,
+          "move": "monkey.debris",
+          "stage": "expiry"
+        },
+        {
+          "tick": 4004,
+          "source": 414,
+          "move": "monkey.debris",
+          "stage": "expiry"
+        },
+        {
+          "tick": 4175,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 4177,
+          "source": 412,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 4181,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 4183,
+          "source": 415,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 4186,
+          "source": 415,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 4198,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 4205,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 4206,
+          "source": 412,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 4306,
+          "source": 415,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 4318,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 4325,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 4326,
+          "source": 412,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 4595,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 4595,
+          "source": 415,
+          "move": "monkey.debris",
+          "stage": "active"
+        },
+        {
+          "tick": 4596,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 4596,
+          "source": 415,
+          "move": "monkey.debris",
+          "stage": "recovery"
+        },
+        {
+          "tick": 4601,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 4604,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 4716,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 4716,
+          "source": 415,
+          "move": "monkey.debris",
+          "stage": "expiry"
+        },
+        {
+          "tick": 4724,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 4872,
+          "source": 412,
+          "move": "monkey.debris",
+          "stage": "active"
+        },
+        {
+          "tick": 4873,
+          "source": 412,
+          "move": "monkey.debris",
+          "stage": "recovery"
+        },
+        {
+          "tick": 5015,
+          "source": 414,
+          "move": "monkey.debris",
+          "stage": "active"
+        },
+        {
+          "tick": 5016,
+          "source": 414,
+          "move": "monkey.debris",
+          "stage": "recovery"
+        },
+        {
+          "tick": 5017,
+          "source": 412,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 5018,
+          "source": 412,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 5023,
+          "source": 415,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 5027,
+          "source": 415,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 5041,
+          "source": 411,
+          "move": "monkey.debris",
+          "stage": "active"
+        },
+        {
+          "tick": 5066,
+          "source": 411,
+          "move": "monkey.debris",
+          "stage": "recovery"
+        },
+        {
+          "tick": 5136,
+          "source": 414,
+          "move": "monkey.debris",
+          "stage": "expiry"
+        },
+        {
+          "tick": 5138,
+          "source": 412,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 5147,
+          "source": 415,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 5186,
+          "source": 411,
+          "move": "monkey.debris",
+          "stage": "expiry"
+        },
+        {
+          "tick": 5435,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 5437,
+          "source": 412,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 5441,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 5443,
+          "source": 415,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 5447,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 5452,
+          "source": 415,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 5458,
+          "source": 412,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 5464,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 5567,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 5572,
+          "source": 415,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 5578,
+          "source": 412,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 5584,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 5855,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 5855,
+          "source": 412,
+          "move": "monkey.debris",
+          "stage": "active"
+        },
+        {
+          "tick": 5861,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 5864,
+          "source": 412,
+          "move": "monkey.debris",
+          "stage": "recovery"
+        },
+        {
+          "tick": 5880,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 5929,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 5984,
+          "source": 412,
+          "move": "monkey.debris",
+          "stage": "expiry"
+        },
+        {
+          "tick": 6000,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 6049,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 6113,
+          "source": 415,
+          "move": "monkey.debris",
+          "stage": "active"
+        },
+        {
+          "tick": 6114,
+          "source": 415,
+          "move": "monkey.debris",
+          "stage": "recovery"
+        },
+        {
+          "tick": 6276,
+          "source": 411,
+          "move": "monkey.debris",
+          "stage": "active"
+        },
+        {
+          "tick": 6277,
+          "source": 411,
+          "move": "monkey.debris",
+          "stage": "recovery"
+        },
+        {
+          "tick": 6277,
+          "source": 412,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 6283,
+          "source": 415,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 6284,
+          "source": 415,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 6303,
+          "source": 412,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 6334,
+          "source": 414,
+          "move": "monkey.debris",
+          "stage": "active"
+        },
+        {
+          "tick": 6343,
+          "source": 414,
+          "move": "monkey.debris",
+          "stage": "recovery"
+        },
+        {
+          "tick": 6397,
+          "source": 411,
+          "move": "monkey.debris",
+          "stage": "expiry"
+        },
+        {
+          "tick": 6404,
+          "source": 415,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 6423,
+          "source": 412,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 6463,
+          "source": 414,
+          "move": "monkey.debris",
+          "stage": "expiry"
+        },
+        {
+          "tick": 6695,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 6697,
+          "source": 412,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 6701,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 6703,
+          "source": 415,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 6718,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 6722,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 6725,
+          "source": 415,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 6769,
+          "source": 412,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 6838,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 6842,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 6845,
+          "source": 415,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 6889,
+          "source": 412,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 7115,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 7121,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 7122,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 7129,
+          "source": 415,
+          "move": "monkey.debris",
+          "stage": "active"
+        },
+        {
+          "tick": 7143,
+          "source": 415,
+          "move": "monkey.debris",
+          "stage": "recovery"
+        },
+        {
+          "tick": 7226,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 7242,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 7243,
+          "source": 412,
+          "move": "monkey.debris",
+          "stage": "active"
+        },
+        {
+          "tick": 7252,
+          "source": 412,
+          "move": "monkey.debris",
+          "stage": "recovery"
+        },
+        {
+          "tick": 7263,
+          "source": 415,
+          "move": "monkey.debris",
+          "stage": "expiry"
+        },
+        {
+          "tick": 7346,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 7372,
+          "source": 412,
+          "move": "monkey.debris",
+          "stage": "expiry"
+        },
+        {
+          "tick": 7537,
+          "source": 412,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 7543,
+          "source": 415,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 7544,
+          "source": 414,
+          "move": "monkey.debris",
+          "stage": "active"
+        },
+        {
+          "tick": 7545,
+          "source": 412,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 7549,
+          "source": 415,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 7557,
+          "source": 414,
+          "move": "monkey.debris",
+          "stage": "recovery"
+        },
+        {
+          "tick": 7665,
+          "source": 412,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 7669,
+          "source": 415,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 7675,
+          "source": 411,
+          "move": "monkey.debris",
+          "stage": "active"
+        },
+        {
+          "tick": 7677,
+          "source": 414,
+          "move": "monkey.debris",
+          "stage": "expiry"
+        },
+        {
+          "tick": 7686,
+          "source": 411,
+          "move": "monkey.debris",
+          "stage": "recovery"
+        },
+        {
+          "tick": 7806,
+          "source": 411,
+          "move": "monkey.debris",
+          "stage": "expiry"
+        },
+        {
+          "tick": 7955,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 7956,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 7957,
+          "source": 412,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 7961,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 7963,
+          "source": 415,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 7976,
+          "source": 412,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 7989,
+          "source": 415,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 8076,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 8096,
+          "source": 412,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 8109,
+          "source": 415,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 8113,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 8233,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 8375,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 8381,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 8390,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 8395,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        },
+        {
+          "tick": 8468,
+          "source": 412,
+          "move": "monkey.debris",
+          "stage": "active"
+        },
+        {
+          "tick": 8479,
+          "source": 412,
+          "move": "monkey.debris",
+          "stage": "recovery"
+        },
+        {
+          "tick": 8510,
+          "source": 414,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 8514,
+          "source": 415,
+          "move": "monkey.debris",
+          "stage": "active"
+        },
+        {
+          "tick": 8515,
+          "source": 411,
+          "move": "monkey.grab",
+          "stage": "expiry"
+        },
+        {
+          "tick": 8515,
+          "source": 415,
+          "move": "monkey.debris",
+          "stage": "recovery"
+        },
+        {
+          "tick": 8599,
+          "source": 412,
+          "move": "monkey.debris",
+          "stage": "expiry"
+        },
+        {
+          "tick": 8635,
+          "source": 415,
+          "move": "monkey.debris",
+          "stage": "expiry"
+        },
+        {
+          "tick": 8797,
+          "source": 412,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 8803,
+          "source": 415,
+          "move": "monkey.grab",
+          "stage": "active"
+        },
+        {
+          "tick": 8805,
+          "source": 415,
+          "move": "monkey.grab",
+          "stage": "recovery"
+        }
+      ],
+      "destruction": [
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-0",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-1",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-2",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-3",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        }
+      ],
+      "bosses": [
+        {
+          "id": 411,
+          "hp": 831.5039999999997,
+          "at": {
+            "x": -5.3437473457480325,
+            "z": 11.084539792552603,
+            "y": 0.7,
+            "yaw": 2.455961591969308
+          },
+          "state": "chase",
+          "boss": {
+            "arena": "monkey",
+            "slot": 0,
+            "engaged": true,
+            "exposedUntil": 8515,
+            "readyAt": 8515,
+            "shakeHits": 0,
+            "scavengeId": 1401054956
+          },
+          "held": false
+        },
+        {
+          "id": 412,
+          "hp": 833.3759999999997,
+          "at": {
+            "x": -5.123078798887929,
+            "z": 14.166781811606773,
+            "y": 0.7,
+            "yaw": -2.5779974019223766
+          },
+          "state": "attack",
+          "boss": {
+            "arena": "monkey",
+            "slot": 1,
+            "engaged": true,
+            "exposedUntil": 8599,
+            "readyAt": 8599,
+            "shakeHits": 0
+          },
+          "attack": {
+            "move": "monkey.grab",
+            "attackId": 102,
+            "stage": "active",
+            "startTick": 8747,
+            "activeTick": 8797,
+            "cooldownExpiry": 9167,
+            "recoveryUntil": 0,
+            "target": {
+              "id": 1,
+              "x": -6.3418145179748535,
+              "z": 14.584696769714355
+            },
+            "area": {
+              "x": -3.8207767821162855,
+              "z": 12.991478333465663,
+              "radius": 0.8,
+              "dx": -0.8453398913300151,
+              "dz": 0.5342288537005078
+            },
+            "hitIds": [
+              1
+            ],
+            "destination": {
+              "x": -12.274175695416435,
+              "z": 18.33376687047074
+            }
+          },
+          "held": false
+        },
+        {
+          "id": 413,
+          "hp": 840,
+          "at": {
+            "x": -11.449968147277833,
+            "z": 12.5,
+            "y": 4.8,
+            "yaw": -0.36121110222255054
+          },
+          "state": "chase",
+          "boss": {
+            "arena": "monkey",
+            "slot": 2,
+            "engaged": true,
+            "exposedUntil": 538,
+            "readyAt": 8979,
+            "roof": true,
+            "shakeHits": 0
+          },
+          "held": false
+        },
+        {
+          "id": 414,
+          "hp": 822.7199999999998,
+          "at": {
+            "x": -3.416756522019262,
+            "z": 19.330424750995004,
+            "y": 0.7,
+            "yaw": -4.015669041903959
+          },
+          "state": "chase",
+          "boss": {
+            "arena": "monkey",
+            "slot": 3,
+            "engaged": true,
+            "exposedUntil": 8510,
+            "readyAt": 8510,
+            "shakeHits": 0,
+            "scavengeId": 1449781463
+          },
+          "held": false
+        },
+        {
+          "id": 415,
+          "hp": 788.8799999999992,
+          "at": {
+            "x": -5.315844018967881,
+            "z": 10.242919735562733,
+            "y": 0.7,
+            "yaw": -1.8054187351225834
+          },
+          "state": "chase",
+          "boss": {
+            "arena": "monkey",
+            "slot": 4,
+            "engaged": true,
+            "exposedUntil": 8925,
+            "readyAt": 8925,
+            "shakeHits": 0
+          },
+          "attack": {
+            "move": "monkey.grab",
+            "attackId": 103,
+            "stage": "recovery",
+            "startTick": 8747,
+            "activeTick": 8803,
+            "cooldownExpiry": 9167,
+            "recoveryUntil": 8925,
+            "target": {
+              "id": 1,
+              "x": -6.3418145179748535,
+              "z": 14.584696769714355
+            },
+            "area": {
+              "x": -5.191268787762108,
+              "z": 9.771191396667746,
+              "radius": 0.8,
+              "dx": -0.2324757556058012,
+              "dz": 0.9726021915744955
+            },
+            "hitIds": [],
+            "destination": {
+              "x": -7.51602634382012,
+              "z": 19.4972133124127
+            }
+          },
+          "held": false
+        },
+        {
+          "id": 416,
+          "hp": 840,
+          "at": {
+            "x": -11.235000305175781,
+            "z": 15.5,
+            "y": 4.8,
+            "yaw": 0.07541394231972558
+          },
+          "state": "chase",
+          "boss": {
+            "arena": "monkey",
+            "slot": 5,
+            "engaged": true,
+            "exposedUntil": 521,
+            "readyAt": 8965,
+            "roof": true,
+            "shakeHits": 0
+          },
+          "held": false
+        },
+        {
+          "id": 417,
+          "hp": 1680,
+          "at": {
+            "x": -22.01521501943114,
+            "z": 13.925297080683,
+            "y": 0.7,
+            "yaw": -7.6185287646171895
+          },
+          "state": "alerted",
+          "boss": {
+            "arena": "monkey",
+            "slot": 6,
+            "engaged": true,
+            "exposedUntil": 0,
+            "readyAt": 0
+          },
+          "held": false
+        }
+      ]
+    },
+    {
+      "id": "lion",
+      "tier": "low",
+      "policy": "passive",
+      "measurementEntry": {
+        "x": -60,
+        "z": -16,
+        "y": 0.7
+      },
+      "complete": false,
+      "seconds": 11.566666666666666,
+      "totalSeconds": 11.566666666666666,
+      "hp": 0,
+      "deaths": 1,
+      "damage": 106.16666666666653,
+      "attacks": 2,
+      "phases": 1,
+      "counters": 0,
+      "wallHits": 0,
+      "rocket": 0,
+      "rocketPickups": 0,
+      "bites": [
+        397,
+        418
+      ],
+      "turns": [
+        397,
+        418
+      ],
+      "tells": [
+        {
+          "tick": 468,
+          "source": 397,
+          "attack": 1,
+          "move": "lion.pounce",
+          "duration": 0.6,
+          "area": {
+            "x": -54.84203287749832,
+            "z": -19.528414119328936,
+            "radius": 1,
+            "dx": -0.8253610461426298,
+            "dz": 0.5646052988684608
+          }
+        },
+        {
+          "tick": 889,
+          "source": 397,
+          "attack": 2,
+          "move": "lion.pounce",
+          "duration": 0.6,
+          "area": {
+            "x": -60.104185026606146,
+            "z": -22.870415891396657,
+            "radius": 1,
+            "dx": 0.015162553670342685,
+            "dz": 0.9998850418754117
+          }
+        }
+      ],
+      "throws": [],
+      "signals": [],
+      "stages": [
+        {
+          "tick": 504,
+          "source": 397,
+          "move": "lion.pounce",
+          "stage": "active"
+        },
+        {
+          "tick": 648,
+          "source": 397,
+          "move": "lion.pounce",
+          "stage": "recovery"
+        },
+        {
+          "tick": 768,
+          "source": 397,
+          "move": "lion.pounce",
+          "stage": "expiry"
+        },
+        {
+          "tick": 925,
+          "source": 397,
+          "move": "lion.pounce",
+          "stage": "active"
+        }
+      ],
+      "destruction": [
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-0",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-1",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-2",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-3",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        }
+      ],
+      "bosses": [
+        {
+          "id": 397,
+          "hp": 3200,
+          "at": {
+            "x": -60.0192747260523,
+            "z": -17.271059656894348,
+            "y": 0.7,
+            "yaw": -1.5556331920782576
+          },
+          "state": "attack",
+          "boss": {
+            "arena": "lion",
+            "slot": 0,
+            "engaged": true,
+            "exposedUntil": 768,
+            "readyAt": 768,
+            "shakeHits": 0
+          },
+          "attack": {
+            "move": "lion.pounce",
+            "attackId": 2,
+            "stage": "active",
+            "startTick": 889,
+            "activeTick": 925,
+            "cooldownExpiry": 1309,
+            "recoveryUntil": 0,
+            "target": {
+              "id": 1,
+              "x": -60,
+              "z": -16
+            },
+            "area": {
+              "x": -60.104185026606146,
+              "z": -22.870415891396657,
+              "radius": 1,
+              "dx": 0.015162553670342685,
+              "dz": 0.9998850418754117
+            },
+            "hitIds": [
+              1
+            ],
+            "destination": {
+              "x": -59.95255948990272,
+              "z": -12.87156547264254
+            }
+          },
+          "held": false
+        },
+        {
+          "id": 418,
+          "hp": 3200,
+          "at": {
+            "x": -63.166904796575324,
+            "z": -41.140037166846554,
+            "y": 0.7,
+            "yaw": 2.0545008840560968
+          },
+          "state": "alerted",
+          "boss": {
+            "arena": "lion",
+            "slot": 1,
+            "engaged": true,
+            "exposedUntil": 0,
+            "readyAt": 0
+          },
+          "held": false
+        }
+      ]
+    },
+    {
+      "id": "gorilla",
+      "tier": "low",
+      "policy": "passive",
+      "measurementEntry": {
+        "x": 60,
+        "z": -16,
+        "y": 0.7
+      },
+      "complete": false,
+      "seconds": 38.75,
+      "totalSeconds": 38.75,
+      "hp": 0,
+      "deaths": 1,
+      "damage": 120.53333333333367,
+      "attacks": 7,
+      "phases": 1,
+      "counters": 0,
+      "wallHits": 0,
+      "rocket": 0,
+      "rocketPickups": 0,
+      "bites": [
+        398
+      ],
+      "turns": [
+        398
+      ],
+      "tells": [
+        {
+          "tick": 367,
+          "source": 398,
+          "attack": 1,
+          "move": "gorilla.roar",
+          "duration": 1,
+          "area": {
+            "x": 52.8475118670017,
+            "z": -15.342967954875064,
+            "radius": 8,
+            "dx": 0.9958073285150391,
+            "dz": -0.09147548565457933
+          }
+        },
+        {
+          "tick": 914,
+          "source": 398,
+          "attack": 2,
+          "move": "gorilla.grab-throw",
+          "duration": 0.8,
+          "area": {
+            "x": 63.627064322588026,
+            "z": -27.09766939340217,
+            "radius": 1,
+            "dx": -0.3106599349813996,
+            "dz": 0.9505211227518052
+          }
+        },
+        {
+          "tick": 1136,
+          "source": 398,
+          "attack": 3,
+          "move": "gorilla.grab-throw",
+          "duration": 0.8,
+          "area": {
+            "x": 63.44175114850004,
+            "z": -29.098428371124808,
+            "radius": 1,
+            "dx": -0.2541339345852137,
+            "dz": 0.9671690355321753
+          }
+        },
+        {
+          "tick": 1358,
+          "source": 398,
+          "attack": 4,
+          "move": "gorilla.grab-throw",
+          "duration": 0.8,
+          "area": {
+            "x": 62.28704722565578,
+            "z": -30.292743234713758,
+            "radius": 1,
+            "dx": -0.15800453318724375,
+            "dz": 0.9874383866815596
+          }
+        },
+        {
+          "tick": 1734,
+          "source": 398,
+          "attack": 5,
+          "move": "gorilla.pound",
+          "duration": 1,
+          "area": {
+            "x": 61.903259872393754,
+            "z": -19.61904161779345,
+            "radius": 5,
+            "dx": -0.4620052711601114,
+            "dz": 0.8868771783174216
+          }
+        },
+        {
+          "tick": 2043,
+          "source": 398,
+          "attack": 6,
+          "move": "gorilla.grab-throw",
+          "duration": 0.8,
+          "area": {
+            "x": 57.90685870591829,
+            "z": -17.070473928740334,
+            "radius": 1,
+            "dx": 0.8843384692370331,
+            "dz": 0.4668463042881471
+          }
+        },
+        {
+          "tick": 2141,
+          "source": 398,
+          "attack": 7,
+          "move": "gorilla.grab-throw",
+          "duration": 0.8,
+          "area": {
+            "x": 57.90685870591829,
+            "z": -18.09906608652523,
+            "radius": 1,
+            "dx": 0.7003110708186505,
+            "dz": 0.7138377995657244
+          }
+        },
+        {
+          "tick": 2267,
+          "source": 398,
+          "attack": 8,
+          "move": "gorilla.grab-throw",
+          "duration": 0.8,
+          "area": {
+            "x": 58.080901471791684,
+            "z": -18.946489815223764,
+            "radius": 1,
+            "dx": 0.5413052870000677,
+            "dz": 0.8408261331962598
+          }
+        },
+        {
+          "tick": 2488,
+          "source": 398,
+          "attack": 9,
+          "move": "gorilla.grab-throw",
+          "duration": 0.8,
+          "area": {
+            "x": 58.65081477407225,
+            "z": -19.13413682871429,
+            "radius": 1,
+            "dx": 0.391758483365097,
+            "dz": 0.9200680902582588
+          }
+        }
+      ],
+      "throws": [
+        {
+          "tick": 962,
+          "source": 398,
+          "prop": 1823699267
+        },
+        {
+          "tick": 1184,
+          "source": 398,
+          "prop": 1970042489
+        },
+        {
+          "tick": 1406,
+          "source": 398,
+          "prop": 1919709632
+        },
+        {
+          "tick": 2091,
+          "source": 398,
+          "prop": 1919709632
+        },
+        {
+          "tick": 2189,
+          "source": 398,
+          "prop": 1919709632
+        },
+        {
+          "tick": 2315,
+          "source": 398,
+          "prop": 1919709632
+        },
+        {
+          "tick": 2536,
+          "source": 398,
+          "prop": 1970042489
+        }
+      ],
+      "signals": [],
+      "stages": [
+        {
+          "tick": 427,
+          "source": 398,
+          "move": "gorilla.roar",
+          "stage": "active"
+        },
+        {
+          "tick": 427,
+          "source": 398,
+          "move": "gorilla.roar",
+          "stage": "recovery"
+        },
+        {
+          "tick": 547,
+          "source": 398,
+          "move": "gorilla.roar",
+          "stage": "expiry"
+        },
+        {
+          "tick": 962,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "active"
+        },
+        {
+          "tick": 1016,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1064,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1184,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "active"
+        },
+        {
+          "tick": 1247,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1295,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1406,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "active"
+        },
+        {
+          "tick": 1474,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1594,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "expiry"
+        },
+        {
+          "tick": 1794,
+          "source": 398,
+          "move": "gorilla.pound",
+          "stage": "active"
+        },
+        {
+          "tick": 1794,
+          "source": 398,
+          "move": "gorilla.pound",
+          "stage": "recovery"
+        },
+        {
+          "tick": 1914,
+          "source": 398,
+          "move": "gorilla.pound",
+          "stage": "expiry"
+        },
+        {
+          "tick": 2091,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "active"
+        },
+        {
+          "tick": 2092,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "recovery"
+        },
+        {
+          "tick": 2140,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "expiry"
+        },
+        {
+          "tick": 2189,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "active"
+        },
+        {
+          "tick": 2198,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "recovery"
+        },
+        {
+          "tick": 2246,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "expiry"
+        },
+        {
+          "tick": 2315,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "active"
+        },
+        {
+          "tick": 2328,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "recovery"
+        },
+        {
+          "tick": 2448,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "expiry"
+        },
+        {
+          "tick": 2536,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "active"
+        },
+        {
+          "tick": 2549,
+          "source": 398,
+          "move": "gorilla.grab-throw",
+          "stage": "recovery"
+        }
+      ],
+      "destruction": [
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-0",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-1",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-2",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-3",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        }
+      ],
+      "bosses": [
+        {
+          "id": 398,
+          "hp": 6000,
+          "at": {
+            "x": 58.65081477407225,
+            "z": -18.42207013829568,
+            "y": 0.7,
+            "yaw": -1.1682542564791742
+          },
+          "state": "chase",
+          "boss": {
+            "arena": "gorilla",
+            "slot": 0,
+            "engaged": true,
+            "exposedUntil": 2597,
+            "readyAt": 2597,
+            "shakeHits": 0,
+            "barrage": 2
+          },
+          "attack": {
+            "move": "gorilla.grab-throw",
+            "attackId": 9,
+            "stage": "recovery",
+            "startTick": 2488,
+            "activeTick": 2536,
+            "cooldownExpiry": 2908,
+            "recoveryUntil": 2597,
+            "target": {
+              "id": 1,
+              "x": 60,
+              "z": -15.965495109558105
+            },
+            "area": {
+              "x": 58.65081477407225,
+              "z": -19.13413682871429,
+              "radius": 1,
+              "dx": 0.391758483365097,
+              "dz": 0.9200680902582588
+            },
+            "hitIds": [
+              1
+            ],
+            "destination": {
+              "x": 58.65081477407225,
+              "z": -19.13413682871429
+            },
+            "projectile": {
+              "objectId": 1970042489,
+              "corpse": false,
+              "living": false,
+              "started": 2536,
+              "x": 58.65081477407225,
+              "z": -19.13413682871429,
+              "dx": 0.391758483365097,
+              "dz": 0.9200680902582588,
+              "distance": 2.6,
+              "range": 3.4439208931447256,
+              "speed": 12,
+              "fromY": 1.2999999999999998,
+              "toY": 0
+            }
+          },
+          "held": false
+        }
+      ]
+    },
+    {
+      "id": "elephant",
+      "tier": "low",
+      "policy": "passive",
+      "measurementEntry": {
+        "x": -60,
+        "z": 16,
+        "y": 0.7
+      },
+      "complete": false,
+      "seconds": 6.833333333333333,
+      "totalSeconds": 6.833333333333333,
+      "hp": 0,
+      "deaths": 1,
+      "damage": 100,
+      "attacks": 2,
+      "phases": 1,
+      "counters": 0,
+      "wallHits": 0,
+      "rocket": 0,
+      "rocketPickups": 0,
+      "bites": [
+        399
+      ],
+      "turns": [
+        399
+      ],
+      "tells": [
+        {
+          "tick": 314,
+          "source": 399,
+          "attack": 1,
+          "move": "elephant.charge",
+          "duration": 0.9,
+          "area": {
+            "x": -50.04264989984739,
+            "z": 14.655222940195438,
+            "radius": 1.75,
+            "dx": -0.9910031362543634,
+            "dz": 0.13383864887996832
+          }
+        },
+        {
+          "tick": 592,
+          "source": 399,
+          "attack": 2,
+          "move": "elephant.swipe",
+          "duration": 0.7,
+          "area": {
+            "x": -73.4841687075146,
+            "z": 17.821087065297927,
+            "radius": 3,
+            "dx": -0.9910031616869048,
+            "dz": 0.1338384605655582
+          }
+        }
+      ],
+      "throws": [],
+      "signals": [],
+      "stages": [
+        {
+          "tick": 368,
+          "source": 399,
+          "move": "elephant.charge",
+          "stage": "active"
+        },
+        {
+          "tick": 471,
+          "source": 399,
+          "move": "elephant.charge",
+          "stage": "recovery"
+        },
+        {
+          "tick": 591,
+          "source": 399,
+          "move": "elephant.charge",
+          "stage": "expiry"
+        },
+        {
+          "tick": 634,
+          "source": 399,
+          "move": "elephant.swipe",
+          "stage": "active"
+        },
+        {
+          "tick": 634,
+          "source": 399,
+          "move": "elephant.swipe",
+          "stage": "recovery"
+        }
+      ],
+      "destruction": [
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-0",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-1",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-2",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        },
+        {
+          "id": "D-ZOO/l8-gorilla-pillar-3",
+          "hp": [
+            260
+          ],
+          "collapsed": false
+        }
+      ],
+      "bosses": [
+        {
+          "id": 399,
+          "hp": 4300,
+          "at": {
+            "x": -73.4841687075146,
+            "z": 17.821087065297927,
+            "y": 0.7,
+            "yaw": -3.0073513686625124
+          },
+          "state": "chase",
+          "boss": {
+            "arena": "elephant",
+            "slot": 0,
+            "engaged": true,
+            "exposedUntil": 754,
+            "readyAt": 1012,
+            "shakeHits": 0
+          },
+          "attack": {
+            "move": "elephant.swipe",
+            "attackId": 2,
+            "stage": "recovery",
+            "startTick": 592,
+            "activeTick": 634,
+            "cooldownExpiry": 1012,
+            "recoveryUntil": 754,
+            "target": {
+              "id": 1,
+              "x": -75.39680480957031,
+              "z": 18.079395294189453
+            },
+            "area": {
+              "x": -73.4841687075146,
+              "z": 17.821087065297927,
+              "radius": 3,
+              "dx": -0.9910031616869048,
+              "dz": 0.1338384605655582
+            },
+            "hitIds": [
+              1
+            ],
+            "bait": {
+              "x": -75.39680480957031,
+              "z": 18.079395294189453
+            },
+            "destination": {
+              "x": -73.4841687075146,
+              "z": 17.821087065297927
+            }
+          },
+          "held": false
+        }
+      ]
+    }
+  ]
+}

@@ -1,10 +1,29 @@
 # eg-l8-bosses — L8 animal arenas
 
-Status: implementation and native calibration in progress. This report does not declare the goal complete.
+Status (2026-11-08, 22:57 CET): six arenas implemented and committed; final elephant pressure/counter correction in progress. The goal is not yet declared complete. This is a merge handoff checkpoint; the done/open list below is authoritative over historical calibrations.
 
 The binding design is `docs/design/boss-and-alpha-moves.md` (L8 table and common special rules), `docs/design/story-script.md` L8 beat 3, and the lane brief. The PO's 2026-11-08 animal-boss direction supersedes the older endless mixed-horde/regular-Alpha L8 composition. The sanctuary, keeper/K9/flamingo opening, named survivor continuity and APC escape remain required.
 
-## Completion evidence to collect
+
+## Current done/open handoff
+
+### Done
+
+- Six real healthy animal casts (7 flamingos, 4 zebras, 7 monkeys, lion/lioness, gorilla, elephant), same-ID bites/turns and the six specified move sets, phases, counters, entry checkpoints, engaged bars and one local rocket pickup each. Per-arena implementation commits are retained in branch history.
+- [Natural production infection receipt](evidence/natural-infection-low.json): all 22 animals bitten and transformed without changing animal/carrier state in the observer, by tick 5995. The courier alone is protected for this lifecycle observation; this is not combat-victory evidence. The keeper/flamingo opening still uses its original bite owner.
+- [Low/high route candidate](evidence/route-candidate/): all requested L8-06, G-22 and G-13 speed-ratio clauses pass at `9f25be2a`. Both competent evacuation runs complete. Minimum bounded reachability is 100%; first real courier windup is 17.88/18.93 s low stationary/complete and 19.35 s high; every observed follower median ratio is at least 0.9994. The separate G-13 waiting-time upper bound is inconclusive (NOT CHECKED), not claimed passed.
+- [Arena candidate receipts](evidence/arena-candidate/) at `9f25be2a`: all six skilled fights finish in 45–120 s, zero deaths on both tiers. Flamingo 51.93 s, zebra 58.83 s, monkey 56.03 s, lion 69.58 s, gorilla 66.62 s, elephant 52.80 s. All passive/standing policies die; circling policies die in the first five arenas. These receipts precede the current elephant correction.
+- Gorilla native combat collapses a real pillar and follows with scavenged throws. Controlled checks exercise the real live infected missile, airborne identity/HP, landing distance and 0.6 s rolling recovery; monkey melee escape/swap lock, entry retry/cover/ammo restoration and conditional dialogue are covered.
+- Typecheck, lint, unit suite and `verify -- E30` passed on the earlier candidate: [runner log](evidence/verify-candidate.log), 106 passed / 1 skipped, 150 collected cases budget unchanged. A final-source gate rerun is still required. The runner manifest has no HEAD, so an ephemeral runner-only commit was needed by the existing HEAD-dependent tool test.
+
+### Open before native completion
+
+- Elephant: close the simple circle-kiting win (the 4300-HP candidate wins at 54.60 s with 100 courier HP) and remeasure the skilled 45–120 s band. Increasing HP alone to 5000 did not solve it; the current committed correction gives the trunk its full close-range sweep, keeps every scheduled 0.9 s special a charge and allows its large-body navigation to finish searches.
+- Reprove three **actual** sidestepped solid contacts without firing on the final source. Earlier controls proved all three; the current long-cooldown/layout candidate only reaches two in 120 s. The observer is being corrected to bait clear interior lanes, without mutating contact counts or boss health.
+- Refresh the final arena/control receipts and repository gates after that correction; archive explicit source identities and deaths.
+- Browser QA below remains deliberately unrun by this lane.
+
+## Requirement evidence map
 
 | Requirement | Authoritative evidence |
 | --- | --- |
