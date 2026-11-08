@@ -2,14 +2,14 @@
 import * as RAPIER from '@dimforge/rapier3d-compat';
 import type { Physics } from './Physics';
 import type { Vec2 } from '../input/InputFrame';
-interface Piece { body: RAPIER.RigidBody; until: number; sourceId: number }
+interface Piece { body: RAPIER.RigidBody; until: number; sourceId: number; half?: [number, number, number]; material?: import('../data/destruction').DestructionMaterial }
 /** At most 32 reusable physics pieces (below the 60-body low-tier budget); eight per break. */
 export class DebrisPool {
   readonly pieces: Piece[] = [];
   constructor(private readonly physics: Physics) {}
-  spawn(sourceId: number, pos: Vec2, tick: number): number {
+  spawn(sourceId: number, pos: Vec2, tick: number, options: { y?: number; material?: import('../data/destruction').DestructionMaterial; count?: number; half?: [number, number, number] } = {}): number {
     let count = 0;
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < Math.min(8, options.count ?? 8); i++) {
       let piece = this.pieces.find(p => p.until === 0);
       if (!piece && this.pieces.length < 32) {
         const body = this.physics.world!.createRigidBody(RAPIER.RigidBodyDesc.dynamic().setLinearDamping(.8).setAngularDamping(.8));
@@ -18,8 +18,10 @@ export class DebrisPool {
         piece = { body, until: 0, sourceId }; this.pieces.push(piece);
       }
       if (!piece) break;
-      piece.until = tick + 480; piece.sourceId = sourceId; piece.body.setEnabled(true);
-      piece.body.setTranslation({ x: pos.x + (i % 4 - 1.5) * .15, y: .6 + Math.floor(i / 4) * .2, z: pos.z }, true);
+      piece.half = options.half ?? [.12, .1, .22];
+      piece.body.collider(0).setShape(new RAPIER.Cuboid(...piece.half));
+      piece.until = tick + 480; piece.sourceId = sourceId; piece.material = options.material; piece.body.setEnabled(true);
+      piece.body.setTranslation({ x: pos.x + (i % 4 - 1.5) * .15, y: (options.y ?? .6) + Math.floor(i / 4) * .2, z: pos.z }, true);
       piece.body.setRotation({ x: 0, y: 0, z: 0, w: 1 }, true);
       piece.body.setLinvel({ x: (i % 4 - 1.5) * 1.5, y: 2 + i * .15, z: (Math.floor(i / 4) - .5) * 3 }, true);
       piece.body.setAngvel({ x: i * .2, y: .5, z: 1 }, true); count++;

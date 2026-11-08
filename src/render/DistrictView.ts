@@ -12,6 +12,8 @@ import {
   Object3D,
   type Material,
 } from "three/webgpu";
+import { DestructionView } from './DestructionView';
+import type { Destruction } from '../sim/destruction/Destruction';
 import { attribute, luminance, uniform } from 'three/tsl';
 import type { DistrictWorld } from "../sim/world/DistrictWorld";
 import type { PushProp } from "../sim/interact/PropSystem";
@@ -71,6 +73,9 @@ export class DistrictView extends Group {
     nest.root.updateWorldMatrix(true, true); return nest.muzzle.getWorldPosition(new Vector3());
   }
   private readonly lodBatches = this.parts.lodBatches;
+  private readonly destructionView = new DestructionView();
+  private readonly destructionActive = new Map<string, boolean>();
+  private readonly destructionSources = new Map<string, Group>();
   private readonly pending = new Map<LodBatch, Promise<void>>();
   private disposed = false;
   private readonly frustum = new Frustum();
@@ -114,6 +119,7 @@ export class DistrictView extends Group {
     this.occlusion = new DistrictOcclusion(this.parts, world, (entry, view) => { this.dirtyEntries.add(entry); this.partition(entry, view); }, entry => this.partitionDressing(entry));
     // The hole is module-global: a previous district (scene) must not leave it half open.
     seeThrough.strength.value = 0; seeThrough.cover.value = 0;
+    this.add(this.destructionView);
     this.name = "sunset-grove"; this.matrixAutoUpdate = false;
     this.foliage = new Foliage(materials, phase); this.add(this.foliage); this.foliage.setQuality(low);
   }
@@ -121,6 +127,11 @@ export class DistrictView extends Group {
     this.phase.value = 0;
     await buildDistrict(this.parts, { view: this, world: this.world, materials: this.materials, registry: this.registry, grassMaterial: this.grassMaterial, foliage: this.foliage, low: () => this.low, instanceCapacity: this.instanceCapacity }, seed, focus, heroAtSpawn);
     this.occlusion.tagInteriors();
+    await Promise.all(this.world.districts.flatMap(d => d.decay.placements.filter(p => p.destruction && !p.destruction.indestructible).map(async p => {
+      const source = await this.registry.asset(p.assetId, false, 'lod1', p.decay);
+      this.destructionSources.set(`${d.id}/${p.id}`, source);
+      if (p.destruction?.class === 'vehicle') this.destructionSources.set(`${d.id}/${p.id}/wreck`, await this.registry.asset(p.assetId, false, 'lod1', 'burned'));
+    })));
   }
 
   /** Drawn ground at a world point (null outside the baked district ground). */
@@ -293,7 +304,7 @@ export class DistrictView extends Group {
   private partitionDressing(entry: DressingEntry): void {
     const { batch, refs, origin, center, radius } = entry, next: Object3D[] = [];
     for (const ref of refs) {
-      if (ref.userData.interiorHidden || this.low && ref.userData.highOnly) continue;
+      if (ref.userData.interiorHidden || ref.userData.destructed || this.low && ref.userData.highOnly) continue;
       if (this.low && ref.userData.farmScatter !== undefined && ref.userData.farmScatter % 2) continue;
       this.bounds.center.copy(center).applyMatrix4(ref.matrix); this.bounds.center.x += origin[0]; this.bounds.center.z += origin[1];
       this.bounds.radius = radius * Math.max(ref.scale.x, ref.scale.y, ref.scale.z);
@@ -310,7 +321,7 @@ export class DistrictView extends Group {
     const foliage = (!!worldAssets[entry.id].foliage || /^prop\.(tree|bush|hedge)/.test(entry.id));
     let prefetchNear = false, prefetchHero = false;
     for (const [index, ref] of refs.entries()) {
-      if (ref.userData.interiorHidden || this.low && ref.userData.highOnly) continue;
+      if (ref.userData.interiorHidden || ref.userData.destructed || this.low && ref.userData.highOnly) continue;
       if (this.low && ref.userData.farmScatter !== undefined && ref.userData.farmScatter % 2) continue;
       if (entry.id === 'prop.cure-canister-pedestal' && this.cureCollected) continue;
       if (foliage && index >= Math.ceil(refs.length * this.materials.look.values.foliageDensity)) continue;
@@ -402,6 +413,23 @@ export class DistrictView extends Group {
       // Ground contact is resolved in partition against the LOD that will actually be drawn.
       this.dirtyEntries.add(entry);
     }
+  }
+  syncDestruction(destruction: Destruction): void {
+    for (const o of destruction.objects) {
+      if (o.protected || this.destructionActive.get(o.id) === (o.state.revision > 0)) continue;
+      const entry = this.lodBatches.find(e => e.refs.some(r => r.userData.placementId === o.id));
+      const ref = entry?.refs.find(r => r.userData.placementId === o.id);
+      if (!entry || !ref) continue;
+      if (o.state.revision > 0 && !this.destructionView.has(o.id)) {
+        const source = this.destructionSources.get(o.id);
+        if (!source) continue;
+        this.destructionView.extract(o, source, this.destructionSources.get(`${o.id}/wreck`));
+      }
+      const destructed = o.state.revision > 0 && this.destructionView.has(o.id);
+      if (ref.userData.destructed !== destructed) { ref.userData.destructed = destructed; this.dirtyEntries.add(entry); }
+      this.destructionActive.set(o.id, destructed);
+    }
+    this.destructionView.update(destruction);
   }
   private readonly propPoint = new Vector3();
   private propGap(entry: LodBatch, ref: Object3D, batch: InstancedGroup): number {
@@ -622,6 +650,7 @@ export class DistrictView extends Group {
     this.disposed = true;
     for (const { material } of this.metroMaterials.values()) material.dispose(); this.metroMaterials.clear();
     this.foliage.dispose();
+    this.destructionView.dispose(); this.destructionSources.clear(); this.destructionActive.clear();
     this.parts.dispose();
     this.windowMask.dispose();
     this.black.dispose();
