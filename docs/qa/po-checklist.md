@@ -48,3 +48,4 @@ Check each item at low quality, zoom 1.5, WebGPU, with a progressed save, A/B ag
 - [ ] F-322 (PO 11-01): street levels have many scattered single infected ("like in L3"), not a near-empty map.
 - [ ] Q-328 (PO 11-01): no single survivor is slower than the group; escorting never means babysitting one straggler.
 - [ ] Q-323 (PO 11-01): every following survivor shows its health bar.
+- Every map/HUD icon keeps one meaning across levels (♪ = survivor call only); objectives use the objective marker. (PO 2026-11-08)
