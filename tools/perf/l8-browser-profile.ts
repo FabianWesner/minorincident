@@ -28,7 +28,8 @@ try {
       }, { campaign, tier });
       const result = await session.page.evaluate(async () => {
         const a = window.__SS__!, g = (window.__SCENE__ as unknown as { game: Game }).game;
-        const windows = [], frames: number[] = [], ticks: number[] = [], sims: number[] = [], updates: number[] = [], renders: number[] = [];
+        const windows: Record<string, unknown>[] = [];
+        const frames: number[] = [], ticks: number[] = [], sims: number[] = [], updates: number[] = [], renders: number[] = [];
         let start = performance.now(), startTick = g.world.tick, nextTick = 3600, previous = start;
         const deadline = start + 260_000;
         const stats = (v: number[]) => { const x = v.slice().sort((a, b) => a - b); return { count: x.length, p50: x[Math.floor(x.length * .5)] ?? 0, p95: x[Math.ceil(x.length * .95) - 1] ?? 0, max: x.at(-1) ?? 0 }; };
