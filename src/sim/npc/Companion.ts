@@ -13,7 +13,7 @@ export class Companion {
   private readonly courierProgress = { x: NaN, z: NaN, tick: 0 };
   private yieldUntil = 0;
   private readonly idleNearby: number[] = [];
-  private readonly rejoinProgress = new WeakMap<EntitySnapshot, { x: number; z: number; distance: number; tick: number; attempt: number }>();
+  private readonly rejoinProgress = new WeakMap<EntitySnapshot, { distance: number; tick: number; attempt: number }>();
   constructor(readonly world: SimWorld) {
     world.events.on('cinematic.completed', () => {
       if (!world.entities.get(1)?.hidden) this.respawnNear();
@@ -214,7 +214,7 @@ export class Companion {
         if (beside && Math.hypot(beside.x - e.transform.x, beside.z - e.transform.z) > .6) c.following = true;
         const riding = this.world.vehicles?.bicycle.riding === true, warning = this.safe && this.warn(e, c, player.transform);
         // A warning may hold a standing companion; a departing courier takes priority over the warning.
-        const frozen = warning && playerSpeed < .5 && distance < 6;
+        const frozen = warning && !c.rejoining && playerSpeed < .5 && distance < 6;
         if (!riding && playerSpeed < .5 && this.clearRestingSpot(e, player)) {
           // Ordinary swept movement keeps the full dog capsule clear of fences.
         } else if (frozen) {
@@ -277,12 +277,13 @@ export class Companion {
     }
     const gap = Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z);
     if (gap <= 3.2) { this.rejoinProgress.delete(e); delete c.rejoining; return; }
+    const unseen = ai.director.offscreen(e.transform, e.transform.y - .3);
+    if (gap <= 35 && !unseen) { this.rejoinProgress.delete(e); return; }
     let progress = this.rejoinProgress.get(e);
-    const moved = progress ? Math.hypot(e.transform.x - progress.x, e.transform.z - progress.z) : 0;
-    if (!progress || w.tick < progress.tick || gap < progress.distance - .5 || gap <= 35 && moved >= .5) {
-      progress = { x: e.transform.x, z: e.transform.z, distance: gap, tick: w.tick, attempt: 0 }; this.rejoinProgress.set(e, progress);
+    if (!progress || w.tick < progress.tick || gap < progress.distance - .5) {
+      progress = { distance: gap, tick: w.tick, attempt: 0 }; this.rejoinProgress.set(e, progress);
     }
-    if (w.tick - progress.tick < 360 || w.tick < progress.attempt || !ai.director.offscreen(e.transform, e.transform.y - .3)) return;
+    if (w.tick - progress.tick < 360 || w.tick < progress.attempt || !unseen) return;
     progress.attempt = w.tick + 60;
     const v = player.survivor?.velocity, speed = Math.hypot(v?.x ?? 0, v?.z ?? 0);
     const heading = speed > .5 ? Math.atan2(v!.z, v!.x) : -player.transform.yaw;
@@ -304,7 +305,7 @@ export class Companion {
       delete c.contactYield; delete c.contactFrom; delete c.contactRejected; delete e.locomotion; delete e.motion;
       c.velocity = { x: 0, z: 0 };
       c.rejoining = true;
-      this.rejoinProgress.set(e, { x: at.x, z: at.z, distance, tick: w.tick, attempt: w.tick + 360 });
+      this.rejoinProgress.set(e, { distance, tick: w.tick, attempt: w.tick + 360 });
       return;
     }
   }

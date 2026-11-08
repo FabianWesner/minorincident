@@ -259,7 +259,11 @@ test('corgi: warns of an offscreen threat within 18 m with a unit direction', as
       Object.assign(w.infected!.director.camera, { halfWidth: gap > 6 ? 6 : 2, halfDepth: gap > 6 ? 6 : 2 });
       Object.assign(dog.transform, { x: p.transform.x + gap, z: p.transform.z }); w.spatial.set(dog.id, dog.transform.x, dog.transform.z);
       const move = vi.spyOn(w.npcs!, 'move').mockReturnValue(false), start = w.tick;
-      for (let tick = 1; tick <= 360; tick++) { w.tick = start + tick; w.npcs!.companion.update(); }
+      for (let tick = 1; tick <= 360; tick++) {
+        // Side-to-side escape attempts must not count as closing the gap.
+        if (gap === 20) dog.transform.z = p.transform.z + (tick % 2 ? .6 : -.6);
+        w.tick = start + tick; w.npcs!.companion.update();
+      }
       expect(dog.transform.x).toBe(p.transform.x + gap);
       expect(w.infected!.director.offscreen(dog.transform, dog.transform.y - .3)).toBe(true);
       w.update();
