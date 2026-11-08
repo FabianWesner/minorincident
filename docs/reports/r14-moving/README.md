@@ -1,5 +1,7 @@
 # R14: infected hit a moving courier
 
+> Historical first-pass report. The [balanced follow-up](../r14-moving-b/README.md) preserves moving-hit coverage and meets the accepted-level normal-route limits; its measurements supersede the balance results below.
+
 ## Result
 
 Both retreat kiting and running circles meet **≥2 accepted moving hits/minute in every on-foot level** (L1–L8, L10). L9 is the existing driving-policy N/A. All circle samples also meet **≥95% physical movement on controllable ticks**. This proves sampled encounters and attacker coverage; it does not establish campaign completion or unchanged difficulty.
