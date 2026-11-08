@@ -108,7 +108,7 @@ try {
       if (p.transform.x + f.move.x * 2 < -80 || p.transform.x + f.move.x * 2 > -40) f.move.x = 0;
       if (p.transform.z + f.move.z * 2 < 14 || p.transform.z + f.move.z * 2 > 50) f.move.z = 0;
       w.applyInput(f, 'keyboard'); step(w);
-      if (arena.wallHits > previous) { previous = arena.wallHits; goal = undefined; contacts.push({ tick: w.tick, hits: previous, boss: { ...e.transform }, courier: { ...p.transform }, hp: e.health.current }); }
+      if (arena.wallHits > previous) { previous = arena.wallHits; contacts.push({ tick: w.tick, hits: previous, boss: { ...e.transform }, courier: { ...p.transform }, hp: e.health.current }); }
     }
     check('three real sidestepped wall charges kill without firing', arena.wallHits === 3 && e.health.current === 0, { contacts, wallHits: arena.wallHits, hp: e.health.current, courierHP: p.health.current, finalBoss: e.transform, finalCourier: p.transform, finalAttack: e.infected!.specialAttack, phase: arena.phase, current: zoo.state.arenas.find(a => a.id === arena.id), tick: w.tick, missionPhase: w.missions!.state.phase, charges });
   } finally { w.dispose(); }
