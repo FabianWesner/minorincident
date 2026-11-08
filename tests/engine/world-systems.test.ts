@@ -138,10 +138,12 @@ test('look-l6-l9 decor is render-only: L6 nav hash, colliders and pushables matc
   expect(triangles.map(t=>ranks.get(groundGroup(t)))).toEqual([0,1,2]);
   expect(groundConflicts(triangles)).toHaveLength(3);
   expect(groundConflicts([triangles[0],{...triangles[1],points:[[3,0],[3,2],[5,0]]}])).toHaveLength(0);
-  const { auditGround } = await import('../../tools/layouts/audit-ground');
   const { readdirSync } = await import('node:fs');
-  const ground = await auditGround(readdirSync('public/assets/layouts').filter(p=>/\.(base|w\d+)\.glb$/.test(p)).map(p=>`public/assets/layouts/${p}`), true);
-  expect(ground.flatMap(r=>r.conflicts.map(c=>({path:r.path,...c})))).toEqual([]);
+  const { execFileSync } = await import('node:child_process');
+  // Decode the real GLBs outside Vitest's module transformer. The same CLI is
+  // usable after any authoring tool, including the separately generated W6.
+  const paths = readdirSync('public/assets/layouts').filter(p=>/\.(base|w\d+)\.glb$/.test(p)).map(p=>`public/assets/layouts/${p}`);
+  expect(() => execFileSync(process.execPath,['--import','tsx','tools/layouts/audit-ground.ts',...paths,'--together','--check'],{timeout:45_000,stdio:'pipe'})).not.toThrow();
   const { groundDepth, groundLayers } = await import('../../src/render/GroundLayers');
   const { MeshBasicNodeMaterial } = await import('three/webgpu');
   const depth = groundDepth(new MeshBasicNodeMaterial(),groundLayers.puddle);
@@ -219,4 +221,4 @@ test('look-l6-l9 decor is render-only: L6 nav hash, colliders and pushables matc
   // Ground under each piece without the scenes (a sandbag pallet carries its own 25 cm walkable deck).
   const bare = new DistrictWorld(compositions.L10, [{ ...cureLayout, placements: [...cureLayout.placements, ...belt] }], 32);
   for (const q of stories) for (const [x, z] of [[q.visualAabb.min[0], q.visualAabb.min[2]], [q.visualAabb.max[0], q.visualAabb.max[2]]]) expect(Math.abs(bare.groundHeight(x, z))).toBeLessThan(.05);
-});
+}, 60_000);
