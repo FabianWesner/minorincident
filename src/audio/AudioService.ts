@@ -1,5 +1,6 @@
 import { AudioEventMapper } from './AudioEventMapper';
 import { isMega } from '../data/megaPresentation';
+import { insideCureHangar } from '../data/l10Story';
 import type { Lifecycle } from '../core/Lifecycle';
 import type { SimWorld } from '../sim/world/SimWorld';
 import type { GameEvent } from '../sim/world/types';
@@ -538,9 +539,10 @@ export class AudioService implements Lifecycle {
         const t = this.context.currentTime;
         this.score.update();
         const story = storyMusic(this.level, this.world.missions?.state);
-        const band = this.world.megaPursuit?.band();
+        const sanctuary = this.level === 'L10' && insideCureHangar(this.world.entities.get(1)!.transform);
+        const band = sanctuary ? null : this.world.megaPursuit?.band();
         const minimum = Math.max(story.minimum, input.minimum ?? 0, band === 'near' ? .5 : band ? .25 : 0, input.phase === 'boss' ? .5 : input.phase === 'defend' || input.phase === 'timer' ? .25 : 0);
-        this.music.update(t, { ...input, ...(input.danger !== undefined || story.minimum > 0 || band ? { minimum } : {}), incident: this.eventMapper.incident, complete: this.eventMapper.complete || input.complete || this.world.l7Departure?.cinematic || !!this.world.missions?.state.states['cure-released'] });
+        this.music.update(t, { ...input, ...(input.danger !== undefined || story.minimum > 0 || band ? { minimum } : {}), ...(sanctuary ? { alerted: 0, danger: false, minimum: 0 } : {}), incident: !sanctuary && this.eventMapper.incident, complete: sanctuary || this.eventMapper.complete || input.complete || this.world.l7Departure?.cinematic || !!this.world.missions?.state.states['cure-released'] });
         // A dense fight escalates within the combat state (also when a story floor already holds it there).
         if (this.music.peak !== this.score.peak) {
             this.score.setPeak(this.music.peak);

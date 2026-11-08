@@ -97,7 +97,8 @@ export class LevelTenBot {
 
     // Moving targets need room for the rocket to arm before contact. Keep the
     // launcher for distant packs/Mega and the carried shotgun for close defence.
-    const wanted = !finale ? 'weapon.army-mg' : target && distance(target.transform) >= 8 ? 'weapon.rocket-launcher' : 'weapon.shotgun';
+    const travelWeapon = ['weapon.army-mg', 'weapon.assault-rifle', 'weapon.nail-gun', 'weapon.hunting-rifle', 'weapon.machete', 'weapon.fire-axe'].find(id => rack.some(slot => slot.id === id));
+    const wanted = !finale ? travelWeapon : target && distance(target.transform) >= 8 ? 'weapon.rocket-launcher' : 'weapon.shotgun';
     const choice = rack.findIndex(slot => slot.id === wanted);
     const index = choice >= 0 ? choice : rack.length - 1, weapon = rack[index]?.id;
     if (!released && target && this.profile !== 'evade-only' && weapon && (weapon !== 'weapon.fire-axe' || distance(target.transform) < 2.5)) {

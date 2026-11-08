@@ -27,9 +27,9 @@ export const megaAlpha = {
     'alpha.ground-slam': { windup: 60, cooldown: 480, damage: 35, radius: 3 },
     'alpha.grab-throw': { windup: 48, cooldown: 600, damage: 30, radius: 1.5, holdTicks: 60 },
   },
-  /** Body, hit and nav footprint (the Alpha's 0.55 m since PO 10-15; was 1.1 for the 2x body). Its own nav grid is baked at this clearance, so it plans only routes its
+  /** Body, hit and nav footprint for the 2026-11-08 terrain-escape stalker. Its own nav grid is baked at this clearance, so it plans only routes its
    * legs and shoulders fit through; on a grid larger than `ownGridMaxCells` it shares the 0.65 m crowd grid instead. */
-  radius: .55,
+  radius: 1.05,
   ownGridMaxCells: 2_000_000,
   /** Coarse route refresh: the "approximate" player position and the off-region advance run at 2 Hz. */
   routeTicks: 30,
@@ -39,9 +39,9 @@ export const megaAlpha = {
   directM: 60,
   /** A node counts as passed inside this radius. */
   nodeReachM: 3,
-  /** Introduction: first R1 viewpoint at 1:30, ≥ 80 m behind along a reachable route (E32 §5.4). */
-  introduceS: 90,
-  startBehindM: 80,
+  /** Introduction: first field crossing at 0:45, 24 m behind on a reachable route (PO 2026-11-08). */
+  introduceS: 45,
+  startBehindM: 24,
   /** Checkpoint/respawn fairness: a restored Mega stands at least this far from the restored player. */
   respawnGapM: 60,
   /** Stuck detection: less than `progressM` of travel over `windowS` while free to move escalates one recovery level. */
@@ -49,6 +49,6 @@ export const megaAlpha = {
   /** An authored link reported blocked stays avoided this long; with no alternate the Mega breaches it after `breachS`. */
   blockedLinkS: 20,
   breachS: 4,
-  /** E32 §5.5 proximity bands (audio and minimap ring read these; no bearing). */
+  /** E32 §5.5 proximity audio bands; the PO 2026-11-08 minimap uses the real actor position. */
   bands: { distantM: 200, nearM: 80 },
 } as const;

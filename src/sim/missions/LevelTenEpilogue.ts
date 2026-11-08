@@ -28,6 +28,12 @@ export class LevelTenEpilogue {
     state.counters['epilogue-ticks'] = Math.min(epilogueTicks, front.elapsed);
     if (ending.phase === 'playable') {
       this.cast();
+      if (front.elapsed >= 120 * 60 && !state.states['delivery-notified']) {
+        state.states['delivery-notified'] = true;
+        this.mission.radio('L1.delivered');
+        const corgi = this.mission.world.entities.values().find(e => !!e.companion);
+        if (corgi) this.mission.world.events.emit({ type: 'corgi.bark', tick: this.mission.world.tick, id: corgi.id, threatId: 0, direction: { x: 1, z: 0 } });
+      }
       if (front.elapsed >= epilogueTicks) {
         state.states['epilogue-finished'] = true;
         this.phase('title');

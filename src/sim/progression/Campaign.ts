@@ -4,6 +4,7 @@ import { upgrades, type Modifiers, type UpgradeDef } from '../../data/upgrades';
 import type { GearTier, SurvivorVariant } from '../../data/survivor';
 import type { L1Aftermath } from '../../levels/continuity';
 import { l7DefaultArsenal } from '../../data/l7';
+import { cureRackCapacity } from '../../data/l10Story';
 /** Campaign through L10 The Cure (specs/po-levels-9-10-2026-10-13.md). */
 export type Level = 1|2|3|4|5|6|7|8|9|10;
 export type ProgressionPreset = `L${2|3|4|5|6|7|8|9|10}-default`;
@@ -50,7 +51,7 @@ export function newCampaign(character:SurvivorVariant='female',seed=1):CampaignS
   if(!Number.isSafeInteger(seed)||!['female','male'].includes(character))throw new RangeError('Invalid campaign');
   return {version:2,seed,character,unlockedLevel:1,completedLevels:0,ownedActions:['weapon.fists','weapon.kick'],upgrades:[],racks:{LEFT:['weapon.fists'],RIGHT:['weapon.kick']},settings:{},usage:{}};
 }
-export function rackSize(level:number):number {return level<2?1:level<4?2:level<7?3:4;}
+export function rackSize(level:number):number {return level===10?cureRackCapacity:level<2?1:level<4?2:level<7?3:4;}
 /** A carried rack may exceed the level's size by the weapons picked up on the way (Pickups adds a slot per pickup); bounded for saves. */
 export const carriedRackMax=6;
 export function validRacks(save:CampaignSave,racks:CampaignSave['racks'],level=save.unlockedLevel,carried=false):boolean {

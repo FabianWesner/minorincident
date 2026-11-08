@@ -1,4 +1,5 @@
 import { catalog } from '../../data/actions/catalog';
+import { cureRackCapacity } from '../../data/l10Story';
 import { cureCheckpoints, levelTenMission } from '../../levels/L10/mission';
 import type { MissionCheckpoint } from '../missions/types';
 const record = (v: unknown): v is Record<string, unknown> => !!v && typeof v === 'object' && !Array.isArray(v);
@@ -25,7 +26,7 @@ export function validCureCheckpoint(v: unknown): v is MissionCheckpoint {
     if (!record(value) || !['pending','active','completed','cancelled'].includes(String(value.status)) || !Number.isSafeInteger(value.started) || !Number.isFinite(value.interaction) || !Array.isArray(value.kills) || !record(value.events)) return false;
   }
   if (!strings(a.ownedActions) || !a.ownedActions.includes('weapon.fire-axe') || a.ownedActions.some(id => !catalog[id]) || !record(a.racks)) return false;
-  if (!['LEFT','RIGHT'].every(side => { const rack = (a.racks as Record<string, unknown>)[side]; return strings(rack) && rack.length > 0 && rack.length <= 4 && rack.every(id => (a.ownedActions as string[]).includes(id)); })) return false;
+  if (!['LEFT','RIGHT'].every(side => { const rack = (a.racks as Record<string, unknown>)[side]; return strings(rack) && rack.length > 0 && rack.length <= cureRackCapacity && rack.every(id => (a.ownedActions as string[]).includes(id)); })) return false;
   const ids = new Set<number>();
   for (const e of v.entities) {
     if (!record(e) || !Number.isSafeInteger(e.id) || Number(e.id) < 1 || ids.has(Number(e.id)) || !record(e.transform) || !['x','y','z','yaw'].every(key => Number.isFinite((e.transform as Record<string, unknown>)[key])) || !record(e.health) || !Number.isFinite(e.health.current) || !Number.isFinite(e.health.max)) return false;

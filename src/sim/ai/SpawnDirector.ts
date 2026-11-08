@@ -66,6 +66,8 @@ export class SpawnDirector {
     return this.visiblePoint(position.x, position.y ?? .7, position.z);
   }
   private visiblePoint(x: number, y: number, z: number): boolean {
+    // L10 hunters are admitted before they can enter even the widest zoom (0.5 vs 1.5).
+    const frameScale = this.ai.world.scenario === 'L10' ? 3 : 1;
     if (this.hasFrustum) {
       const m = this.frustum;
       const cx = m[0] * x + m[4] * y + m[8] * z + m[12], cy = m[1] * x + m[5] * y + m[9] * z + m[13];
@@ -76,11 +78,11 @@ export class SpawnDirector {
       const marginM = this.ai.world.scenario === 'L4' ? 6 : 0;
       const marginX = marginM * Math.hypot(m[0], m[4], m[8]);
       const marginY = marginM * Math.hypot(m[1], m[5], m[9]);
-      return w > 0 && Math.abs(cx) <= w * 1.1 + marginX && Math.abs(cy) <= w * 1.1 + marginY && Math.abs(cz) <= w;
+      return w > 0 && Math.abs(cx) <= w * 1.1 * frameScale + marginX && Math.abs(cy) <= w * 1.1 * frameScale + marginY && Math.abs(cz) <= w;
     }
     const c = this.camera, dx = x - c.x, dz = z - c.z;
     const marginM = this.ai.world.scenario === 'L4' ? 6 : 0;
-    return Math.abs(dx * Math.cos(c.yaw) + dz * Math.sin(c.yaw)) <= c.halfWidth * 1.1 + marginM && Math.abs(-dx * Math.sin(c.yaw) + dz * Math.cos(c.yaw)) <= c.halfDepth * 1.1 + marginM;
+    return Math.abs(dx * Math.cos(c.yaw) + dz * Math.sin(c.yaw)) <= c.halfWidth * 1.1 * frameScale + marginM && Math.abs(-dx * Math.sin(c.yaw) + dz * Math.cos(c.yaw)) <= c.halfDepth * 1.1 * frameScale + marginM;
   }
   /**
    * Ally fire rule (PO 2026-10-13: "visibility range of soldiers is so high, that they kill all Zombies before i see them myself"):

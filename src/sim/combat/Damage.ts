@@ -1,4 +1,5 @@
 import { megaAlpha } from '../../data/megaAlpha';
+import { insideCureHangar } from '../../data/l10Story';
 import { alphaDamageMultiplier, humanInfected, riotShieldResponse } from '../../data/infected';
 import { cureCanKill, storyProtected } from '../npc/storyProtection';
 import { Status } from './Status';
@@ -28,7 +29,7 @@ export interface DamageEvent {
 export function downed(e: EntitySnapshot): boolean { return e.health.current <= 0 && (e.infected?.recoverAt ?? -1) >= 0; }
 const lethal = (hit: DamageEvent) => hit.type === 'explosive' || !!hit.permanent;
 /** Directional shields only stop front bullets; splash is radial and ignores shields. */
-export function damageAmount(hit: DamageEvent, target: EntitySnapshot, shieldOpen = false, shieldFaceDot = 0.5): number {
+export function damageAmount(hit: DamageEvent, target: EntitySnapshot, shieldOpen = false, shieldFaceDot = 0.5, megaVulnerable = false): number {
   let amount = hit.base * hit.multiplier;
   // E11 environmental blasts retain 30% player damage; E07 enemy bursts keep their authored damage.
   if (hit.type === 'explosive' && target.kind === 'player' && (target.id === hit.sourceId || !hit.actionId.startsWith('infected.'))) amount *= 0.3;
@@ -39,6 +40,7 @@ export function damageAmount(hit: DamageEvent, target: EntitySnapshot, shieldOpe
   }
   if (target.infected?.pursuit) {
     if (hit.actionId === 'weapon.rocket-launcher' && hit.type === 'explosive') return target.health.max * (hit.direct ? megaAlpha.directRocketFraction : megaAlpha.splashRocketFraction);
+    if (megaVulnerable) return Math.max(0, amount);
     return Math.min(Math.max(0, amount), Math.max(0, target.health.current - target.health.max * megaAlpha.conventionalFloor));
   }
   if (target.archetype === 'infected.alpha') return Math.max(0, amount * alphaDamageMultiplier(hit.actionId, hit.type));
@@ -63,7 +65,8 @@ export class Damage {
     // Retain other levels' authored segment-origin shield behavior, especially
     // the frozen L5 balance. Shield counters use the original launch point only.
     const directionalHit = (this.world.scenario === 'L4' || this.world.scenario === 'L6') && target.combat?.shield && hit.shotOrigin ? { ...hit, origin } : hit;
-    const amount = damageAmount(directionalHit, target, open, faceDot);
+    if (target.infected?.pursuit && this.world.scenario === 'L10' && !this.world.missions?.state.states['cure-installed']) return 0;
+    const amount = damageAmount(directionalHit, target, open, faceDot, this.world.scenario === 'L10' && !!this.world.missions?.state.states['cure-installed']);
     return glance ? amount * riotShieldResponse.chipFraction : amount;
   }
   /** True only for an actual frontal L4/L6 riot shield firearm hit outside contact and break windows. */
@@ -117,6 +120,7 @@ export class Damage {
       else if (hit.actionId === 'weapon.bat') hit = { ...hit, base: hit.base >= 30 ? l1v2.combat.batFinisherDamage : l1v2.combat.batDamage };
     }
     if (this.world.missions?.state.states['cure-released'] && (source.infected || target.id === 1 || target.companion)) return 0;
+    if (this.world.scenario === 'L10' && target.id === 1 && insideCureHangar(target.transform)) return 0;
     // E31 hull attacks own infected melee against the APC; seated people are inside its armor.
     const transportId = target.id === 1 ? this.world.vehicles?.active : target.passengerOf;
     if (target.hidden && transportId != null && source.kind === 'infected' && hit.type === 'melee' && this.world.entities.get(transportId)?.archetype === 'vehicle.military-apc') return 0;
@@ -166,13 +170,13 @@ export class Damage {
       }
     }
     let megaReact = false;
-    if (mega && hit.base * hit.multiplier > 0 && (hit.stagger > 0 || hit.knockback > 0 || hit.knockdown || hit.knockdownTicks) && this.world.tick >= (target.infected!.megaStaggerReady ?? 0)) {
+    if (mega && hit.base * hit.multiplier > 0 && (hit.stagger > 0 || hit.knockback > 0 || hit.knockdown || hit.knockdownTicks || this.world.scenario === 'L10') && this.world.tick >= (target.infected!.megaStaggerReady ?? 0)) {
       megaReact = true; target.infected!.megaStaggerReady = this.world.tick + megaAlpha.staggerCooldownTicks;
       const recovery = target.infected!.specialRecoveryUntil ?? 0;
       this.world.infected?.cancelSpecial(target.id);
       // An interrupt must not turn a 0.5 s stagger into the completed move's 1.2 s immobilization.
       target.infected!.specialRecoveryUntil = Math.max(recovery, this.world.tick + megaAlpha.staggerTicks);
-      target.combat!.staggerUntil = this.world.tick + Math.min(megaAlpha.staggerTicks, Math.max(1, Math.ceil(hit.stagger * 60)));
+      target.combat!.staggerUntil = this.world.tick + Math.min(megaAlpha.staggerTicks, Math.max(this.world.scenario === 'L10' ? 30 : 1, Math.ceil(hit.stagger * 60)));
     }
     if (mega) hit = { ...hit, knockback: megaReact ? Math.min(.4, hit.knockback) : 0, stagger: 0, knockdown: false, knockdownTicks: 0, part: undefined };
     const wasAlive = target.health.current > 0;

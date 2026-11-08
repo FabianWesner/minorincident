@@ -68,11 +68,22 @@ export const dialogue: Record<string, string> = {
   'L9.briefing': 'The zoo is lost behind you. The armored vehicle’s radio loops one army broadcast: the research campus past the next city has a cure. Cross the countryside toward it; every hit costs armor.',
   'L7.start': 'Night. While you were underground, Fairhaven was overrun. The rocket launcher in the wrecked army truck by the exit is your way through.',
   'L10.crash': 'Get away from the river. Find a way through the farms.',
-  'L10.mega-roar': 'That roar. Whatever it is, it is following you.',
   'L10.briefing': 'Get away from the river. Find a way through the farms.',
   'L10.farmstead': 'Sam (radio): “You alive? …Good. Don\'t stop moving. That thing doesn\'t sleep.”',
   'L10.hide-gap': 'Sam (radio): “It can\'t fit where you fit. Use that.”',
   'L10.armory': 'Sam (radio, breaking up): “…the hangar… they\'re still there… lights on…”',
   'L10.hangar-handover': 'Sergeant Ruiz: “Your weapons came off the bridge wreck this morning. Cleaned them. Took the liberty.” Dr. Voss: “Prototype. Burns hot. Don\'t use it in the corn.” Sam: “I\'m coming.” Dr. Voss: “You\'re bleeding into my floor. You\'re staying.” Sam: “Go finish your delivery.”',
   'L10.release': 'Dr. Voss (radio): “Release it. Now.”',
+  'L10.voss-intro': `Dr. Elena Voss: "You're the courier. The one from the Annex."`,
+  'L10.voss-sample': `Voss: "The sample you carried that morning came from here. We sent it to the Annex for testing. The container failed. That's on us. Not on you."`,
+  'L10.courier-carried': `Courier: "I carried it."`,
+  'L10.voss-cure': `Voss: "Then carry this one."`,
+  'L10.voss-delivery': `Voss: "It's airborne. It only kills the infected. The dispersal complex is two kilometres east. Plug it into the main console, hold it while it charges, and release it."`,
+  'L10.ruiz': `Sergeant Ruiz: "Your weapons came off the bridge wreck this morning. Cleaned them. Took the liberty."`,
+  'L10.voss-prototype': `Voss: "Prototype. Burns hot. Don't use it in the corn."`,
+  'L10.sam-coming': `Sam: "I'm coming."`,
+  'L10.voss-stay': `Voss: "You're bleeding into my floor. You're staying."`,
+  'L10.sam-delivery': `Sam: "Go finish your delivery."`,
 };
+// The script's continuity rule changes the speaker, preserving every spoken line.
+for (const id of ['L10.farmstead', 'L10.hide-gap', 'L10.armory', 'L10.sam-coming', 'L10.sam-delivery']) dialogue[`${id}.reyes`] = dialogue[id].replace(/^Sam/, 'Private Reyes');

@@ -14,9 +14,9 @@ export interface Box { min: [number, number]; max: [number, number] }
 
 export const finale = {
   /** E32 §5.7: charge only advances while the player is within this planar distance of the console. */
-  holdRadius: 25,
+  holdRadius: 40,
   /** The completed-charge fight stays on the plant apron, with room beyond the charge disc to dodge. */
-  fightRadius: 35,
+  fightRadius: 55,
   /** E32 §5.7: the mounted gun stands at most this far from the console. */
   gunMaxDistance: 20,
   console: { id: 'console', asset: 'kit.dispersal-console', at: [0, 0] as [number, number], yaw: 0 as const, operator: [1, 0] as [number, number] },

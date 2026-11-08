@@ -1,4 +1,3 @@
-import { dialogue } from '../../data/dialogue';
 import { megaCueInterval } from '../../data/megaPresentation';
 import { SimPhase } from '../../core/EventBus';
 import { megaAlpha } from '../../data/megaAlpha';
@@ -14,7 +13,7 @@ import type { EntitySnapshot } from '../world/types';
  * E32 §5.4 / AC10 (lane L10-S3): the one persistent Mega Alpha and its global pursuit.
  *
  * - It reads the player's position (sampled at 2 Hz: "approximately") with no sight, hearing or lure checks.
- * - Normal pursuit cruises at 0.7 × the nominal run. Where detailed collision/nav is resident it steers on the shared nav grid
+ * - Normal pursuit keeps pace with a runner. Where detailed collision/nav is resident it steers on the shared nav grid
  *   (towards the next authored route node while far, towards the player while near); inside `closeM` the shared Alpha chase brain
  *   (contact, barricade breach, special scheduler) runs it. Off-region it walks the authored route graph every tick
  *   (route planning remains 2 Hz), with hidden catch-up on the final delivery approach, without a mesh or collider.
@@ -169,13 +168,7 @@ export class MegaPursuit {
     const emit = (kind: 'roar' | 'impact' | 'step') => this.world.events.emit({ type: 'mega.cue', tick, sourceId: e.id, kind, band });
     if (tick >= audio.next) {
       emit('roar'); emit('impact');
-      // First audible roar, once the opening line is gone: say what it is (story audit, finding 11).
-      const m = this.world.mission && 'subtitle' in this.world.mission ? this.world.mission : null;
-      if (!this.state.introduced && m && (!m.subtitle || m.subtitle.until <= tick)) {
-        this.state.introduced = true;
-        m.subtitle = { id: 'L10.mega-roar', text: dialogue['L10.mega-roar'], until: tick + 300 };
-        this.world.events.emit({ type: 'dialogue.line', tick, id: 'L10.mega-roar', text: m.subtitle.text });
-      } audio.next = tick + megaCueInterval(this.world.seed, audio.index++);
+      audio.next = tick + megaCueInterval(this.world.seed, audio.index++);
     }
     if (tick >= audio.step) {
       audio.step = tick + 48;

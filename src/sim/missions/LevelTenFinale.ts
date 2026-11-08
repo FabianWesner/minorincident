@@ -1,6 +1,7 @@
 import { CureFront } from './CureFront';
 import { LevelTenEpilogue } from './LevelTenEpilogue';
 import { finale } from '../../data/l10Finale';
+import { LevelTenStory } from './LevelTenStory';
 import type { Mission } from './Mission';
 
 export const cureChargeTicks = 3600;
@@ -10,20 +11,42 @@ export const cureChargeRadius = finale.holdRadius;
 export class LevelTenFinale {
   readonly cure: CureFront;
   readonly epilogue: LevelTenEpilogue;
+  readonly story: LevelTenStory;
   constructor(private readonly mission: Mission) {
     this.cure = new CureFront(mission); this.epilogue = new LevelTenEpilogue(mission);
+    this.story = new LevelTenStory(mission);
     const console = mission.def.anchors['cure-console'];
     if (console) mission.def.anchors['cure-mega'] = { ...console };
   }
   update(): void {
+    this.story.update();
     const { world, state, def } = this.mission;
     if (state.states['cure-released']) { this.cure.update(); this.epilogue.update(); return; }
     const player = world.entities.get(1)!, console = def.anchors['cure-console'];
+    if (console && !state.states['arena-equipped'] && player.transform.x > console.x - 200 && world.chunks?.resident(console.x, console.z)) {
+      for (const [i, [dx, dz]] of [[24, -4], [-18, 10]].entries()) state.actors[`arena-fuel-${i}`] = world.hazards!.spawn('propane', { x: console.x + dx, z: console.z + dz });
+      state.actors['arena-gate-switch'] = world.interactables!.spawn('switch', { x: console.x + 10, z: console.z + 28 }, { label: 'Electrify the gate', radius: 2 });
+      state.states['arena-equipped'] = true;
+    }
     const pressed = world.inputFrame.interact && !state.states['console-held'];
     state.states['console-held'] = world.inputFrame.interact;
     const boss = world.megaPursuit;
-    if (boss) state.states['mega-dead'] = boss.state.id !== 0 && boss.state.mode === 'dead';
+    if (boss) {
+      const wasDead = state.states['mega-dead'];
+      state.states['mega-dead'] = boss.state.id !== 0 && boss.state.mode === 'dead';
+      if (!wasDead && state.states['mega-dead']) this.mission.radio('L10.release');
+    }
     if (!console || player.health.current <= 0 || !state.states['cure-installed'] || state.states['cure-released']) return;
+    const gate = { x: console.x, z: console.z + 28 }, switchOn = world.entities.get(state.actors['arena-gate-switch'])?.interactable?.completed;
+    if (switchOn && !state.states['gate-spent']) {
+      if (world.tick % 60 === 0) world.events.emit({ type: 'vfx.effect', tick: world.tick, kind: 'electric', position: gate, radius: 4 });
+      const entity = boss?.entity();
+      if (entity && entity.health.current > 0 && Math.hypot(entity.transform.x - gate.x, entity.transform.z - gate.z) <= 4) {
+        state.states['gate-spent'] = true;
+        world.combat!.damage.apply({ attackId: 0, actionId: 'environment.electric-gate', sourceId: 1, targetId: entity.id, origin: gate, direction: { x: 0, z: 0 }, base: 900, multiplier: 1, type: 'status', stagger: 0, knockback: 0 });
+        world.infected!.cancelSpecial(entity.id); entity.combat!.staggerUntil = world.tick + 180;
+      }
+    }
     const distance = Math.hypot(player.transform.x - console.x, player.transform.z - console.z);
     if (state.steps.hold.status === 'active') {
       const wasReady = state.states['charge-ready'];
@@ -37,12 +60,7 @@ export class LevelTenFinale {
       }
       state.states['charge-ready'] = state.counters['charge-ticks'] === cureChargeTicks;
       if (state.states['charge-ready'] && !wasReady) {
-        // A boss retry keeps the completed charge and restores the pursuing boss at full health.
-        const entity = boss?.entity();
-        if (entity && entity.health.current > 0) {
-          entity.health.current = entity.health.max;
-          if (boss) boss.state.hp = boss.state.maxHp = entity.health.max;
-        }
+        // Preserve damage dealt while defending. The checkpoint captures the same stalker's actual state.
         this.mission.checkpoint('cure-disperse-ready', console);
       }
     }

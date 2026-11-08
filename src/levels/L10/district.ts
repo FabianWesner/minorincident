@@ -1,5 +1,6 @@
 import authored from '../../../layouts/D-CURE/routes.json' with { type: 'json' };
 import type { Point } from '../districts/types';
+import { cureEscapeGaps } from '../../data/l10Story';
 
 /** D1–D3 own R1–R6. D4 appends to the same authored route/cell contract. */
 export const cure = authored as unknown as {
@@ -10,7 +11,14 @@ export const cure = authored as unknown as {
   detours: { id: string; region: string; route: Point[] }[];
 };
 /** Global coarse pursuit follows the same reachable turn anchors as the detailed route. */
-const pursuitPoints = cure.regions.flatMap((r, i) => i ? r.route.slice(1) : r.route);
+const walkedPoints = cure.regions.flatMap((r, i) => i ? r.route.slice(1) : r.route);
+const pursuitPoints: Point[] = [];
+for (let i = 0; i < walkedPoints.length; i++) {
+  const p = walkedPoints[i], previous = walkedPoints[i - 1];
+  const gap = previous && cureEscapeGaps.find(g => previous[1] === g.z && p[1] === g.z && previous[0] < g.x && p[0] >= g.x);
+  if (gap) pursuitPoints.push([gap.x - 5, gap.z], [gap.x - 5, gap.detourZ], [gap.x + 5, gap.detourZ], [gap.x + 5, gap.z]);
+  if (!gap || p[0] !== gap.x) pursuitPoints.push(p);
+}
 const pursuitNodeId = ([x, z]: Point) => `cure-route-${pursuitPoints.findIndex(p => p[0] === x && p[1] === z)}`;
 // Open ground beside the winding road: enter through the existing northern
 // rubble breach, cross the clear eastern verge, then take the straight R7 apron.
