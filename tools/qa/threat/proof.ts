@@ -87,13 +87,12 @@ export async function proveThreatAudit(): Promise<void> {
     world.entities.get(1)!.health.current = 100;
     for (world.tick = 1; world.tick <= 1200; world.tick++) {
       clearRetreat = world.tick !== 1;
-      const pursuers = world.infected!.active;
-      if (world.tick === 2) world.infected!.active = [];
+      const pursuers = world.tick === 2 ? world.infected!.active.splice(0) : [];
       world.applyInput(emptyInput(), 'mouse-keyboard');
       if (world.tick === 2) {
         const frame = frames.at(-1)!;
         assert(Number.isFinite(frame.aim!.x) && Number.isFinite(frame.aim!.z) && Number.isFinite(frame.aimPoint!.x) && Number.isFinite(frame.aimPoint!.z), 'losing the live pursuer query keeps fallback aim finite');
-        world.infected!.active = pursuers;
+        world.infected!.active.push(...pursuers);
       }
       if (world.tick === 1) assert(Math.abs(frames.at(-1)!.move.x) < .01 && Math.abs(frames.at(-1)!.move.z) > .9, 'a blocked backpedal stays on clear ground along a tangent');
     }
