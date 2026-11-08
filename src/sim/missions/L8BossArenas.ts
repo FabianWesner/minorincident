@@ -53,7 +53,7 @@ export class L8BossArenas {
       const healthy = arena.ids.map(id => w.entities.get(id)).filter(e => e?.civilian && !e.infection && e.health.current > 0);
       // Residents physically walk from real tunnels to animals; a player can interrupt every grab.
       if (arena.carrier && (w.entities.get(arena.carrier)?.health.current ?? 0) <= 0) { arena.carrier = 0; arena.carrierRetryAt = w.tick + 300; }
-      if (!arena.carrier && healthy.length && w.tick >= (arena.carrierRetryAt ?? 0)) arena.carrier = arena.id === 'flamingo' ? this.mission.l8!.state.animalBiteStarted ? this.mission.l8!.state.animalInterceptionId : 0 : this.mission.l8!.arenaCarrier(healthy[0]!.id);
+      if (!arena.carrier && healthy.length && w.tick >= (arena.carrierRetryAt ?? 0)) arena.carrier = arena.id === 'flamingo' && !this.mission.l8!.state.animalBiteStarted ? 0 : arena.id === 'flamingo' && (w.entities.get(this.mission.l8!.state.animalInterceptionId)?.health.current ?? 0) > 0 ? this.mission.l8!.state.animalInterceptionId : this.mission.l8!.arenaCarrier(healthy[0]!.id);
       const carrier = w.entities.get(arena.carrier), victim = healthy[0];
       if (carrier?.infected && carrier.health.current > 0 && !carrier.emerging && victim) {
         if (carrier.infected.arenaCarrier !== victim.id) { w.infected!.pursueTarget(carrier.id, victim.id); carrier.infected.arenaCarrier = victim.id; }
@@ -352,7 +352,7 @@ export class L8BossArenas {
     const target = { x: at.x + Math.cos(angle) * r, z: at.z + Math.sin(angle) * r };
     this.walk(e, distance(e.transform, def.centre) > def.radius ? def.centre : target, speed);
   }
-  private walk(e: EntitySnapshot, at: { x: number; z: number }, speed: number): void { this.w.npcs!.move(e, at, speed, e.infected!, .2, e.infected!.arenaBoss!.arena === 'elephant' && e.infected!.arenaBoss!.engaged ? 48000 : 1600); }
+  private walk(e: EntitySnapshot, at: { x: number; z: number }, speed: number): void { this.w.npcs!.move(e, at, speed, e.infected!, .2, ['elephant', 'gorilla'].includes(e.infected!.arenaBoss!.arena) && e.infected!.arenaBoss!.engaged ? 48000 : 1600); }
   private announce(text: string): void { this.mission.state.subtitle = { id: 'L8.arena', text, until: this.w.tick + 300 }; }
   private signal(arena: L8ArenaState, name: string): void { this.w.events.emit({ type: 'mission.signal', tick: this.w.tick, name: `l8.arena.${arena.id}.${name}` }); }
   statusText(): string | null {
