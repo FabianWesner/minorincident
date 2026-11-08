@@ -138,6 +138,9 @@ def emit_surfaces():
 
 surface('soil',source['bounds'][:-1],'grass',-.006)
 surface('crash-dry',[[500,-125],[740,-125],[740,125],[500,125]],'gloveKhaki',-.004)  # look-l10: dimmer than khaki so the moonlit scar keeps the route read
+# Keep the farm route's streamed ground in the dry harvested-field palette,
+# including the PO's observed `(858,-93)` walking line south of the crop rows.
+surface('farm-dry',[[740,-165],[1837,-165],[1837,165],[740,165]],'gloveKhaki',-.004)
 # look-l9b: the destroyed corridor (R6) is scorched ground, not a lawn: an ash sheet (pantsDark) under its burned fronts. The moonlit
 # grass there read at .03 luminance (no building shadows from the collapsed w3 fronts) and broke the E31-AC16 verge gate.
 surface('corridor-ash',[[2917,-140],[3697,-140],[3697,140],[2917,140]],'pantsDark',-.005)

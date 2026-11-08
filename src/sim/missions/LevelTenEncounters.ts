@@ -1,6 +1,6 @@
 import { updateFarmScares, type FarmScareState } from './FarmScares';
 import { cure } from '../../levels/L10/district';
-import { cureEncounters, cureEncounterSlots, cureEncounterSpot, cureMedkits, cureWeaponPickups } from '../../levels/L10/encounters';
+import { cureEncounters, curePaceEncounters, cureEncounterSlots, cureEncounterSpot, cureMedkits, cureWeaponPickups } from '../../levels/L10/encounters';
 import { cureAlphaCap } from '../../levels/L10/alphaContracts';
 import { cureCorgiToy, insideCureHangar } from '../../data/l10Story';
 import type { SimWorld } from '../world/SimWorld';
@@ -35,7 +35,9 @@ export class LevelTenEncounters {
     for (const pickup of cureWeaponPickups) {
       const at = cure.anchors[pickup.anchor];
       if (weapons[pickup.id] || !at || !chunks.resident(...at)) continue;
-      weapons[pickup.id] = w.combat!.pickups.spawn(pickup.action, { x: at[0], z: at[1] }, false, { retain: true });
+      // Roadline story finds must survive ordinary walking past the prop; the
+      // old 0.6 m trigger was narrower than the bot's 2 m waypoint tolerance.
+      weapons[pickup.id] = w.combat!.pickups.spawn(pickup.action, { x: at[0], z: at[1] }, false, { retain: true, reachM: 4.5 });
     }
     updateFarmScares(w, this.state.farmScares ??= {});
 
@@ -48,7 +50,7 @@ export class LevelTenEncounters {
       ['idle', 'wander'].includes(e.infected.state) && (e.infected.pressureTarget?.until ?? 0) <= w.tick &&
       Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z) < 160) ai.pursueTarget(e.id, 1);
     const released = this.state.released ??= [], lanes = this.state.laneOffsets ??= {};
-    for (const group of cureEncounters) {
+    for (const group of [...cureEncounters, ...curePaceEncounters]) {
       const assault = !!group.assault;
       if (assault && !assaultActive) continue;
       if (!assault && !released.includes(group.id)) {

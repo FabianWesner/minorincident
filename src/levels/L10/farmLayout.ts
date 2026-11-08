@@ -77,6 +77,23 @@ export function cureFarmDecor(placements: readonly Placement[]): Placement[] {
   return out;
 }
 
+/** Render-only southern field detail for the off-road farm approach shown in the PO's QA capture. */
+export function cureSouthernFieldDecor(occupied: readonly Placement[]): Placement[] {
+  const out: Placement[] = [];
+  for (let x = 820; x <= 1210; x += 30) for (const z of [-145, -125, -105]) {
+    const crop = piece(`decor-cure-south-corn-${x}-${z}`, 'veg.corn-block', x, z, (x / 30) % 2 ? 0 : Math.PI);
+    if (occupied.some(p => overlaps(crop, p, .5)) || out.some(p => overlaps(crop, p, .5))) continue;
+    out.push(crop);
+  }
+  for (const [i, [asset, x, z]] of ([
+    ['prop.farm-carcass', 850, -122], ['prop.farm-scarecrow', 1025, -122], ['prop.crates', 1160, -122],
+  ] as const).entries()) {
+    const remnant = piece(`decor-cure-south-remnant-${i}`, asset, x, z);
+    if (!occupied.some(p => overlaps(remnant, p, .5)) && !out.some(p => overlaps(remnant, p, .5))) out.push(remnant);
+  }
+  return out;
+}
+
 /** Clear the later vignette pavement, retaining landmarks and moving displaced field details into surviving crops. */
 export function clearFarmFromSurfaces(placements: readonly Placement[], surfaces: DistrictLayout['surfaces']): Placement[] {
   const bounds = surfaces.map(s => ({ minX: Math.min(...s.polygon.map(p => p[0])), maxX: Math.max(...s.polygon.map(p => p[0])), minZ: Math.min(...s.polygon.map(p => p[1])), maxZ: Math.max(...s.polygon.map(p => p[1])) }));

@@ -11,12 +11,15 @@ export const cureRegions = [
   { id: 'destroyed-corridor', chapter: 'Dispersal route', checkpoint: 'cure-corridor', minutes: 1, routeMetres: 1000 },
   { id: 'dispersal-complex', chapter: 'Dispersal complex', checkpoint: 'cure-complex', minutes: 1, routeMetres: 350 },
 ] as const;
-export const cureCheckpoints = [...cureRegions.map(r => r.checkpoint), 'cure-research', 'cure-disperse-ready'];
+// Frequent regional recovery points keep a failed walk from replaying a long
+// empty stretch. The story controller records these at each crossed marker.
+export const curePaceCheckpoints = Array.from({ length: 17 }, (_, i) => `cure-pace-${i + 1}`);
+export const cureCheckpoints = [...cureRegions.map(r => r.checkpoint), ...curePaceCheckpoints, 'cure-research', 'cure-disperse-ready'];
 export const cureAnchorNames = [...cureCheckpoints, 'cure-terminal', 'cure-canister', 'cure-install', 'cure-console', 'river-exit', 'r4-r5-seam'] as const;
 
 /** Finale controllers own these booleans. Charge-ready means 3,600 eligible ticks; credits-finished follows the playable epilogue. */
 /** Elapsed eligible simulation ticks (durations, not absolute timestamps), available to S7/S9. */
-export const cureCounters = ['charge-ticks', 'epilogue-ticks', 'story-region', 'hangar-line', 'hangar-line-ticks'];
+export const cureCounters = ['charge-ticks', 'epilogue-ticks', 'story-region', 'pace-checkpoint', 'hangar-line', 'hangar-line-ticks'];
 export const cureStates = ['charge-active', 'console-held', 'terminal-read', 'cure-carried', 'cure-installed', 'charge-ready', 'mega-dead', 'cure-released', 'epilogue-finished', 'credits-finished', 'story-initialized', 'sam-alive', 'gap-hint', 'hangar-radio', 'hangar-cast', 'hangar-dialogue-done', 'arena-equipped', 'gate-spent', 'delivery-notified', 'epilogue-rosa', 'epilogue-sam'];
 /** The safe hangar returns the whole pre-crash arsenal and issues the experimental final weapon. */
 export const cureHangarWeapons = ['weapon.bat', 'weapon.fire-axe', 'weapon.handgun', 'weapon.army-mg', 'weapon.shotgun', 'weapon.rocket-launcher', 'weapon.pipe-bomb', 'weapon.hunting-rifle', 'weapon.nail-gun', 'weapon.machete', 'weapon.molotov', 'weapon.assault-rifle', 'weapon.flashbang', 'weapon.flamethrower'];

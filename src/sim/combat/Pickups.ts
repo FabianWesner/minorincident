@@ -8,7 +8,7 @@ import type { SimWorld } from '../world/SimWorld';
 /** Level-owned pickup entity. A dropped item arms only after the player leaves it, preventing swap loops. */
 export class Pickups {
   constructor(private readonly world: SimWorld) {}
-  spawn(actionId: string, position: Vec2, dropped = false, options: { retain?: boolean; interactTicks?: number; surfaceY?: number; survivorOnly?: boolean } = {}): number {
+  spawn(actionId: string, position: Vec2, dropped = false, options: { retain?: boolean; interactTicks?: number; surfaceY?: number; survivorOnly?: boolean; reachM?: number } = {}): number {
     action(actionId);
     if (!Number.isFinite(position.x) || !Number.isFinite(position.z)) throw new RangeError('Invalid pickup position');
     const support = this.world.districts?.groundHeight(position.x, position.z) ?? 0;
@@ -47,7 +47,7 @@ export class Pickups {
       // A shelf behind a rail can't be stood next to: a clicked shelf pickup is reachable from 2.2 m (PO 10-15 L5 shotgun).
       // PO 10-31 ("It worked when I pressed E, but this is a surprise for the user. You should just take it when I come
       // close to it"): authored weapon pickups are taken on approach, no E, click or standing still needed.
-      const reach = !pickup.interactTicks ? 0.6 : (pickup.surfaceY ?? 0) > 0 ? 2.2 : 1.5;
+      const reach = pickup.reachM ?? (!pickup.interactTicks ? 0.6 : (pickup.surfaceY ?? 0) > 0 ? 2.2 : 1.5);
       if (distance > reach) { if (pickup.interactTicks) pickup.progress = 0; continue; }
       const combat = this.world.combat!, side = pickup.retain ? 'RIGHT' : combat.runner.loadout.state.selectedSide;
       const loadout = combat.runner.loadout;

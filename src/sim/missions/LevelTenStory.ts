@@ -4,6 +4,7 @@ import { allyState } from '../outbreak/Allies';
 import { l4 } from '../../data/l4';
 import type { EntitySnapshot } from '../world/types';
 import type { Mission } from './Mission';
+import { curePaceCheckpoints } from '../../levels/L10/mission';
 
 /** Exact scripted dialogue, continuity and the safe-hangar cast. All progress lives in the mission snapshot. */
 export class LevelTenStory {
@@ -30,6 +31,13 @@ export class LevelTenStory {
     for (let i = 1; i <= 4; i++) if (state.counters['story-region'] < i && p.transform.x >= cure.regions[i].envelope[0][0]) {
       state.counters['story-region'] = i;
       this.mission.requestCheckpoint(cure.regions[i].checkpoint);
+    }
+    // The first recovery point is 120 m from the crash; subsequent points are
+    // 200 m apart along this eastbound route (well inside the 250 m limit).
+    const paceIndex = p.transform.x < 667 ? 0 : Math.min(curePaceCheckpoints.length, 1 + Math.floor((p.transform.x - 667) / 200));
+    if (paceIndex > (state.counters['pace-checkpoint'] ?? 0)) {
+      state.counters['pace-checkpoint'] = paceIndex;
+      this.mission.requestCheckpoint(curePaceCheckpoints[paceIndex - 1]);
     }
     if (!state.states['gap-hint'] && p.transform.x >= 937) { state.states['gap-hint'] = true; this.say('L10.hide-gap'); }
     if (!state.states['hangar-radio'] && p.transform.x >= 2300) { state.states['hangar-radio'] = true; this.say('L10.armory'); }

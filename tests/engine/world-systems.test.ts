@@ -307,7 +307,7 @@ test('look-l6-l9 decor is render-only: L6 nav hash, colliders and pushables matc
   expect(cureCrossingStories([...cureLayout.placements, ...belt])).toEqual(stories);
   const { cureForecourtDecor } = await import('../../src/levels/L10/forecourts');
   const apron = cureForecourtDecor([...cureLayout.placements, ...belt, ...stories]);
-  const { clearFarmFromSurfaces, cureFarmDecor } = await import('../../src/levels/L10/farmLayout');
+  const { clearFarmFromSurfaces, cureFarmDecor, cureSouthernFieldDecor } = await import('../../src/levels/L10/farmLayout');
   const farm = cureFarmDecor([...cureLayout.placements, ...belt, ...stories, ...apron]);
   expect(farm.filter(p => p.assetId === 'veg.corn-block').length).toBeGreaterThan(100);
   const { cureVignetteCatalogue, cureVignettes } = await import('../../src/levels/L10/vignettes');
@@ -317,7 +317,9 @@ test('look-l6-l9 decor is render-only: L6 nav hash, colliders and pushables matc
   expect(clearedFarm.filter(p => p.assetId === 'veg.corn-block').length).toBeGreaterThan(100);
   expect(clearedFarm.filter(p => p.assetId !== 'veg.corn-block').map(p => [p.id, p.assetId])).toEqual(farm.filter(p => p.assetId !== 'veg.corn-block').map(p => [p.id, p.assetId]));
   expect(clearedFarm.filter(p => p.assetId !== 'veg.corn-block' && !p.id.startsWith('decor-cure-farm-field-'))).toEqual(farm.filter(p => p.assetId !== 'veg.corn-block' && !p.id.startsWith('decor-cure-farm-field-')));
-  expect(districtDecor('D-CURE', cureLayout.placements)).toEqual([...belt, ...stories, ...apron, ...clearedFarm, ...vignettes]);
+  const southernField = cureSouthernFieldDecor([...cureLayout.placements, ...belt, ...stories, ...apron, ...farm, ...vignettes]);
+  expect(southernField.some(p => p.assetId === 'veg.corn-block' && p.position[2] < -100)).toBe(true);
+  expect(districtDecor('D-CURE', cureLayout.placements)).toEqual([...belt, ...stories, ...apron, ...clearedFarm, ...vignettes, ...southernField]);
   expect(cureVignettes([...cureLayout.placements, ...belt, ...stories, ...apron, ...farm])).toEqual(vignettes);
   expect(cureVignetteCatalogue.every(v => v.pieces.length >= 3 && v.pieces.length <= 8)).toBe(true);
   const vignetteGroups = new Set(vignettes.map(p => p.id.replace(/-\d+$/, '')));

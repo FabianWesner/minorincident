@@ -28,8 +28,16 @@ export class Walker {
     const p = world.entities.get(1)!.transform;
     if (dist(p, target) <= stop) return null;
     if (key !== this.key) { this.key = key; this.reset(); }
+    // Player navigation is streamed around the courier. Story waypoints can be
+    // several hundred metres away and therefore have no cell yet. Walk toward
+    // a short, straight intermediate point until the next chunk streams in.
+    const nav = world.infected!.nav;
+    if (nav.nearestCell(target.x, target.z, .45) < 0) {
+      const d = dist(p, target), leg = Math.min(55, d - stop);
+      if (leg > 0) target = { x: p.x + (target.x - p.x) / d * leg, z: p.z + (target.z - p.z) / d * leg };
+    }
     // Use the player flood's separate workspace: crowd A* cannot starve a re-plan.
-    const ok = world.infected!.nav.steer(p, target, this.route, .45, this.wp, Infinity, true);
+    const ok = nav.steer(p, target, this.route, .45, this.wp, Infinity, true);
     // A failed search is not permission to walk straight through its obstacle.
     if (!ok) return null;
     const dx = this.wp.x - p.x, dz = this.wp.z - p.z, d = Math.hypot(dx, dz) || 1;
