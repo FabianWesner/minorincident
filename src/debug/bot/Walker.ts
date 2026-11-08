@@ -29,7 +29,7 @@ export class Walker {
     if (dist(p, target) <= stop) return null;
     if (key !== this.key) { this.key = key; this.reset(); }
     // Use the player flood's separate workspace: crowd A* cannot starve a re-plan.
-    const ok = world.infected!.nav.steer(p, target, this.route, .45, this.wp, Infinity, true);
+    const ok = world.infected!.nav.forPlayer(.45).steer(p, target, this.route, .45, this.wp, Infinity, true);
     // A failed search is not permission to walk straight through its obstacle.
     if (!ok) return null;
     const dx = this.wp.x - p.x, dz = this.wp.z - p.z, d = Math.hypot(dx, dz) || 1;
