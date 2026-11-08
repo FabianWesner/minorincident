@@ -34,7 +34,7 @@ export class LevelTenFinale {
     if (boss) {
       const wasDead = state.states['mega-dead'];
       state.states['mega-dead'] = boss.state.id !== 0 && boss.state.mode === 'dead';
-      if (!wasDead && state.states['mega-dead']) this.mission.radio('L10.release');
+      if (!wasDead && state.states['mega-dead'] && state.states['charge-ready']) this.mission.radio('L10.release');
     }
     if (!console || player.health.current <= 0 || !state.states['cure-installed'] || state.states['cure-released']) return;
     const gate = { x: console.x, z: console.z + 28 }, switchOn = world.entities.get(state.actors['arena-gate-switch'])?.interactable?.completed;
@@ -61,6 +61,7 @@ export class LevelTenFinale {
       state.states['charge-ready'] = state.counters['charge-ticks'] === cureChargeTicks;
       if (state.states['charge-ready'] && !wasReady) {
         // Preserve damage dealt while defending. The checkpoint captures the same stalker's actual state.
+        if (state.states['mega-dead']) this.mission.radio('L10.release');
         this.mission.checkpoint('cure-disperse-ready', console);
       }
     }

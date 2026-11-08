@@ -22,14 +22,14 @@ export const cureEncounters: readonly CureEncounter[] = [
   { id: 'crash-bend', region: 'crash-outskirts', at: [652, 33], regular: [2, 2], dogs: 0, alphas: 0 },
   { id: 'crash-road-pair', region: 'crash-outskirts', at: [622, -12.5], regular: [2, 2], dogs: 0, alphas: 0, roles: ['infected.crawler'] },
   { id: 'crash-pair', region: 'crash-outskirts', at: [712, 33], regular: [2, 2], dogs: 0, alphas: 0 },
-  { id: 'fringe-patrol', region: 'residential-fringe', at: [982, 80], regular: [4, 3], dogs: 1, alphas: 0, roles: ['infected.screamer'] },
-  { id: 'depot-alpha', region: 'industrial-area', at: [1517, 100], regular: [5, 4], dogs: 0, alphas: 1, roles: ['infected.bloated', 'infected.firefighter'] },
+  { id: 'fringe-patrol', region: 'residential-fringe', at: [982, 80], regular: [7, 5], dogs: 1, alphas: 0, roles: ['infected.screamer'] },
+  { id: 'depot-alpha', region: 'industrial-area', at: [1517, 100], regular: [7, 5], dogs: 0, alphas: 1, roles: ['infected.bloated', 'infected.firefighter'] },
   { id: 'military-breach', region: 'military-zone', at: [2012, -75], regular: [6, 4], dogs: 2, alphas: 1, roles: ['infected.riot', 'infected.armored', 'infected.sprinter'] },
   { id: 'military-exit', region: 'military-zone', at: [2327, -75], regular: [5, 3], dogs: 2, alphas: 1, roles: ['infected.riot', 'infected.armored'] },
-  { id: 'research-quarantine', region: 'research-campus', at: [2857, -5], regular: [3, 2], dogs: 1, alphas: 1, roles: ['infected.hazmat', 'infected.nurse'] },
+  { id: 'research-quarantine', region: 'research-campus', at: [2857, -5], regular: [6, 4], dogs: 1, alphas: 1, roles: ['infected.hazmat', 'infected.nurse'] },
   { id: 'corridor-line', region: 'destroyed-corridor', at: [3180, 95], regular: [6, 4], dogs: 2, alphas: 1, roles: ['infected.bloated', 'infected.riot'] },
   { id: 'corridor-exit', region: 'destroyed-corridor', at: [3510, 95], regular: [5, 3], dogs: 1, alphas: 1, roles: ['infected.sprinter', 'infected.firefighter'] },
-  { id: 'complex-approach-0', region: 'dispersal-complex', at: [3820, -41], regular: [5, 3], dogs: 1, alphas: 0 },
+  { id: 'complex-approach-0', region: 'dispersal-complex', at: [3820, -41], regular: [7, 5], dogs: 1, alphas: 0 },
   { id: 'dispersal-assault', assault: true, region: 'dispersal-complex', at: cure.anchors['cure-console'], regular: [44, 26], dogs: 4, alphas: 3, alphasLow: 2, roles: ['infected.riot', 'infected.bloated', 'infected.armored'] },
 ];
 export const cureMedkits = [
@@ -54,7 +54,8 @@ export const cureWeaponPickups = [
 export function cureEncounterSlots(group: CureEncounter, tier: 'high' | 'low') {
   const at = tier === 'low' ? group.atLow ?? group.at : group.at;
   const regular = group.regular[tier === 'high' ? 0 : 1];
-  const roles = [...Array.from({ length: regular }, (_, i) => group.roles?.[i] ?? (i < (group.tough ?? 0) ? 'infected.firefighter' : 'infected.runner')),
+  const hunters = ['infected.sprinter', 'infected.firefighter', 'infected.armored', 'infected.runner'];
+  const roles = [...Array.from({ length: regular }, (_, i) => group.roles?.[i] ?? (i < (group.tough ?? 0) ? 'infected.firefighter' : group.region === 'crash-outskirts' ? 'infected.runner' : hunters[i % hunters.length])),
     ...Array<string>(group.dogs).fill('infected.dog'), ...Array<string>(tier === 'low' ? group.alphasLow ?? group.alphas : group.alphas).fill('infected.alpha')];
   const indices = new Map<string, number>();
   return roles.map((archetype, i) => {
@@ -63,7 +64,7 @@ export function cureEncounterSlots(group: CureEncounter, tier: 'high' | 'low') {
     // Road arrivals scatter around their fixed authored anchors.
     const assault = group.assault === true, roadFight = group.region === 'crash-outskirts' || group.region === 'destroyed-corridor';
     const angle = assault ? [Math.PI, -Math.PI / 2, Math.PI / 2][i % 3] : i * 2.399963229728653;
-    const radius = assault ? finale.holdRadius + 90 + Math.floor(i / 3) % 4 * 2 : roadFight ? 2 + i % 5 : 5 + (i % 5) * 2;
+    const radius = assault ? finale.holdRadius + 20 + Math.floor(i / 3) % 4 * 2 : roadFight ? 2 + i % 5 : 5 + (i % 5) * 2;
     // The checkpoint-bearing patrols approach from the military road side.
     // A circle on the bearing sent bodies around both flanks and funnelled
     // a retreat into the full road groups. Staggered rows retain every slot

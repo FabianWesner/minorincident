@@ -324,16 +324,15 @@ Feel: "open-country drive: smash through or steer around; the APC survives until
 |---|---|---|
 | `crash` | Get away from the river | R1 wreck and corn fields, axe only |
 | `farmstead` | Find a way through the farms | farmhouses, barns, workshops and town edge; Sam checks in over radio |
-| `farm-route` | Cross the broken farms | place-specific farm weapon finds; use a tight gap to escape the Mega |
 | `restricted-zone` | Get through the restricted zone | Area 51-style perimeter, guard tower and checkpoint locker |
 | `research-hangar` | Enter the hangar | sealed safe space, Dr. Voss, Sam and guards; no infected inside |
-| `research` | Hear the researchers’ account | Voss explains the failed sample and hands over the cure |
-| `cure` | Take the cure and re-equip for the delivery | Ruiz returns the bridge arsenal; Voss issues the experimental flamethrower |
-| `research-exit` | Carry the cure out of the hangar | hangar exit |
-| `delivery-corridor` | Carry the cure to the dispersal complex | wrecked delivery route; the Mega is waiting outside |
+| `research` | Enter the hangar | Voss explains the failed sample and hands over the cure |
+| `cure` | Bring the cure to the dispersal complex | Ruiz returns the bridge arsenal; Voss issues the experimental flamethrower |
+| `research-exit` | Bring the cure to the dispersal complex | hangar exit |
+| `delivery-corridor` | Bring the cure to the dispersal complex | wrecked delivery route; the Mega is waiting outside |
 | `dispersal-complex` | Bring the cure to the dispersal complex | R7 |
-| `install` | Install the cure in the dispersal device | install point |
-| `hold` | Charge the dispersal system | 60 s within 25 m, minigun |
+| `install` | Install the cure | install point |
+| `hold` | Hold the console | 60 s within 40 m, minigun |
 | `mega` | Kill the Mega Alpha | ~10 direct rockets |
 | `release` | Release the cure at the console | interaction |
 | `epilogue` | Watch the cure spread | free walk 120–180 s |
@@ -349,11 +348,9 @@ Feel: "open-country drive: smash through or steer around; the APC survives until
 | L10-06 | regions | Dogs: 1.1× run, ≥ 0.6 s telegraph, ≤ 2 m reach, ≥ 2 s cooldown, 10 HP/bite; low, distinct from the corgi. | E32-AC07 | S, O |
 | L10-07 | regions | Mega pursues without LOS and takes longer routes around tight alleys, fence gaps, culverts and doorways; staying still draws it in. A red pulsing minimap dot shows its real position while near, with footsteps/roars between sightings. | E32-AC10/13/14, PO 2026-11-08 | S, O |
 | L10-08 | regions | Road regions framed ×1.3 (verges/fields in frame), base × max zoom ≤ 2.0; not in the finale. Suit crowds readable at night, slam telegraph is a ground effect. | lessons 10-30, Q-179, Q-147 | O |
-| L10-09 | hangar | Sealed hangar is a safe space with Dr. Elena Voss, Sam and two guards; lab containers, quarantine tents, generators and emergency lights. Cure handoff is indoors. Voss explains that the sample came from the campus, the container failed, and the dispersal complex is two kilometres east. No infected spawn inside. | story-script.md, PO 2026-11-08 | S, O |
-| L10-09b | hangar → dispersal | Sergeant Ruiz returns the bridge arsenal; Voss adds the experimental flamethrower. The canister stays a visible zero-slot backpack item with no movement penalty. | story-script.md, PO 2026-11-08 | S |
-| L10-10 | hold | Charge = exactly 3,600 ticks while alive within 25 m; pauses outside with an instruction; minigun 20 rounds/s, heat +12.5 %/s, lock at 100 %, unlock < 40 %. | E32-AC19/20 | S |
-| L10-11 | hold | Assault: infected at the capped peak (140–190 / 75–95), reachable ≥ 90 %, attacks on player ≥ 8/min (tune); Mega reaches the arena ~140 s after activation (orchestrator 2026-11-04: "~140 s" = 120–160 s, by walking; no relocation). | E32-AC21, PO 10-16 | S |
-| | | **Conflict:** E32 §5.7 "Mega arrives 10–40 s after activation" → PO 10-16 "keep the current ~143 s build-up" wins. | | |
+| L10-09 | hangar | Sealed hangar is a safe space with Dr. Elena Voss, Sgt. Ruiz, researchers, Sam (Private Reyes if Sam died) and two guards; lab containers, quarantine tents, generators and emergency lights. Cure handoff is indoors. Voss explains that the sample came from the campus, the container failed, and the dispersal complex is two kilometres east. No infected spawn inside. Sergeant Ruiz returns the bridge arsenal; Voss adds the experimental flamethrower. The canister stays a visible zero-slot backpack item with no movement penalty. | story-script.md, PO 2026-11-08 | S, O |
+| L10-10 | hold | Charge = exactly 3,600 ticks while alive within **40 m**; pauses outside with an instruction; minigun 20 rounds/s, heat +12.5 %/s, lock at 100 %, unlock < 40 %. | E32-AC19/20 | S |
+| L10-11 | hold | Final assault only: **40–60 high / 25–35 low** living ordinary infected, reachable ≥ 90 %, player attacks ≥ 8/min. Reinforcements continue through charging and the Mega fight. The same stalker walks into the arena; no replacement or teleport. | PO 2026-11-08 | S |
 | L10-12 | mega | Mega health bar appears only for the finale. Returned arsenal and final fight cover make the encounter survivable; it is killable at the dispersal complex. | E32-AC11/12, PO 2026-11-08 | S, O |
 | L10-13 | release | Release only with charge 60 + Mega dead + cure installed, player at the console. | E32-AC22 | S |
 | L10-14 | epilogue | Mist front ~10 m/s; every touched infected dies within 1 tick (dogs, Alphas, zoo species); no harm to healthy/player/corgi; player keeps control 120–180 s; camera pulls out in the last 30–45 s; then title and credits. | E32-AC23/25/26 | S, O, P |

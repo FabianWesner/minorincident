@@ -1,6 +1,7 @@
 import { megaAlpha } from '../../data/megaAlpha';
 import { l4 } from '../../data/l4';
 import { l3 } from '../../data/l3';
+import { cameraFraming, rocketZoomLimit } from '../../data/cameraFraming';
 import { cureAlphaPopulation, cureAlphaCap, cureRegularAlphaCount } from '../../levels/L10/alphaContracts';
 import { moveAgent } from '../locomotion/AgentMotion';
 import { infectedDef } from '../../data/infected';
@@ -66,8 +67,10 @@ export class SpawnDirector {
     return this.visiblePoint(position.x, position.y ?? .7, position.z);
   }
   private visiblePoint(x: number, y: number, z: number): boolean {
-    // L10 hunters are admitted before they can enter even the widest zoom (0.5 vs 1.5).
-    const frameScale = this.ai.world.scenario === 'L10' ? 3 : 1;
+    // Dilate the follow frustum about its focus to the widest legal radius.
+    // Scaling clip X/Y alone misses bodies behind a zoomed-in camera eye.
+    const frameScale = this.widestScale(), p = this.ai.world.entities.get(1)?.transform;
+    if (p && frameScale > 1) { x = p.x + (x - p.x) / frameScale; y = p.y - .72 + (y - p.y + .72) / frameScale; z = p.z + (z - p.z) / frameScale; }
     if (this.hasFrustum) {
       const m = this.frustum;
       const cx = m[0] * x + m[4] * y + m[8] * z + m[12], cy = m[1] * x + m[5] * y + m[9] * z + m[13];
@@ -78,11 +81,16 @@ export class SpawnDirector {
       const marginM = this.ai.world.scenario === 'L4' ? 6 : 0;
       const marginX = marginM * Math.hypot(m[0], m[4], m[8]);
       const marginY = marginM * Math.hypot(m[1], m[5], m[9]);
-      return w > 0 && Math.abs(cx) <= w * 1.1 * frameScale + marginX && Math.abs(cy) <= w * 1.1 * frameScale + marginY && Math.abs(cz) <= w;
+      return w > 0 && Math.abs(cx) <= w * 1.1 + marginX && Math.abs(cy) <= w * 1.1 + marginY && Math.abs(cz) <= w;
     }
     const c = this.camera, dx = x - c.x, dz = z - c.z;
     const marginM = this.ai.world.scenario === 'L4' ? 6 : 0;
-    return Math.abs(dx * Math.cos(c.yaw) + dz * Math.sin(c.yaw)) <= c.halfWidth * 1.1 * frameScale + marginM && Math.abs(-dx * Math.sin(c.yaw) + dz * Math.cos(c.yaw)) <= c.halfDepth * 1.1 * frameScale + marginM;
+    return Math.abs(dx * Math.cos(c.yaw) + dz * Math.sin(c.yaw)) <= c.halfWidth * 1.1 + marginM && Math.abs(-dx * Math.sin(c.yaw) + dz * Math.cos(c.yaw)) <= c.halfDepth * 1.1 + marginM;
+  }
+  private widestScale(): number {
+    if (this.ai.world.scenario !== 'L10') return 1;
+    const p = this.ai.world.entities.get(1)?.transform, c = this.cameraPosition;
+    return p && c ? Math.max(1, cameraFraming.radiusM * rocketZoomLimit / Math.hypot(c.x - p.x, c.y - p.y + .72, c.z - p.z)) : 3;
   }
   /**
    * Ally fire rule (PO 2026-10-13: "visibility range of soldiers is so high, that they kill all Zombies before i see them myself"):
@@ -99,9 +107,12 @@ export class SpawnDirector {
     return w > 0 && Math.abs(cx) <= w * inset + padX && Math.abs(cy) <= w * inset + padY;
   }
   /** True only with a camera volume and `position` inside its frame (no distance cap); headless worlds without a frustum: false. */
-  inFrame(position: { x: number; z: number; y?: number }, inset = 1): boolean {
+  inFrame(position: { x: number; z: number; y?: number }, inset = 1, widest = false): boolean {
     if (!this.hasFrustum) return false;
-    const m = this.frustum, x = position.x, y = (position.y ?? .7) + .35, z = position.z;
+    const m = this.frustum, scale = widest ? this.widestScale() : 1, p = this.ai.world.entities.get(1)?.transform;
+    const x = p && scale > 1 ? p.x + (position.x - p.x) / scale : position.x;
+    const y = p && scale > 1 ? p.y - .72 + ((position.y ?? .7) + .35 - p.y + .72) / scale : (position.y ?? .7) + .35;
+    const z = p && scale > 1 ? p.z + (position.z - p.z) / scale : position.z;
     const cx = m[0] * x + m[4] * y + m[8] * z + m[12], cy = m[1] * x + m[5] * y + m[9] * z + m[13], w = m[3] * x + m[7] * y + m[11] * z + m[15];
     return w > 0 && Math.abs(cx) <= w * inset && Math.abs(cy) <= w * inset;
   }

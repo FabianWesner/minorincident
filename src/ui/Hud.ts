@@ -303,7 +303,7 @@ export class Hud {
     const px = player.transform.x, pz = player.transform.z;
     for (const entity of world.entities.iterate()) {
       if (entity.archetype.includes('corgi')) corgi = entity;
-      if (world.scenario === 'L10' && entity.pickup && Math.hypot(entity.transform.x - px, entity.transform.z - pz) <= 25 && discoveryCount < this.discoveries.length) {
+      if (world.scenario === 'L10' && entity.pickup && !entity.hidden && !('collected' in entity.pickup && entity.pickup.collected) && Math.hypot(entity.transform.x - px, entity.transform.z - pz) <= 25 && discoveryCount < this.discoveries.length) {
         const pin = this.discoveries[discoveryCount++]; setHidden(pin, false);
         attribute(pin, 'aria-label', 'Optional discovery'); this.place(pin, entity.transform.x, entity.transform.z, px, pz);
       }

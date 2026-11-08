@@ -24,9 +24,11 @@ function validCivilian(e: unknown): e is EntitySnapshot {
 const legacyL3=new Set(['weapon.smg','weapon.hunting-rifle']);
 function dropLegacyL3Weapons(raw:unknown):unknown {
   if(!record(raw)||!Array.isArray(raw.ownedActions))return raw;
-  const swap=(ids:unknown):unknown=>Array.isArray(ids)?[...new Set(ids.map(id=>legacyL3.has(id)?'weapon.handgun':id))]:ids;
+  // The hunting rifle is a legitimate farm discovery in L10 (PO 2026-11-08).
+  const retired=(id:unknown)=>legacyL3.has(String(id))&&!(id==='weapon.hunting-rifle'&&Number(raw.unlockedLevel)>=10);
+  const swap=(ids:unknown):unknown=>Array.isArray(ids)?[...new Set(ids.map(id=>retired(id)?'weapon.handgun':id))]:ids;
   const owned=swap(raw.ownedActions) as string[],out:Record<string,unknown>={...raw,ownedActions:owned};
-  if(typeof raw.selectedAction==='string'&&legacyL3.has(raw.selectedAction))out.selectedAction='weapon.handgun';
+  if(typeof raw.selectedAction==='string'&&retired(raw.selectedAction))out.selectedAction='weapon.handgun';
   if(record(raw.racks))out.racks={...raw.racks,LEFT:swap(raw.racks.LEFT),RIGHT:swap(raw.racks.RIGHT)};
   if(record(raw.pending)){const pending={...raw.pending};delete pending.weaponChosen;out.pending=pending;}
   return out;

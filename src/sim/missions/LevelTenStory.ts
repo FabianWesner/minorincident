@@ -27,7 +27,7 @@ export class LevelTenStory {
       this.say('L10.farmstead', 360);
     }
     // Checkpoints follow the region crossed, independently of the story objective and optional weapon finds.
-    for (let i = 1; i <= 3; i++) if (state.counters['story-region'] < i && p.transform.x >= cure.anchors[cure.regions[i].checkpoint][0]) {
+    for (let i = 1; i <= 4; i++) if (state.counters['story-region'] < i && p.transform.x >= cure.regions[i].envelope[0][0]) {
       state.counters['story-region'] = i;
       this.mission.requestCheckpoint(cure.regions[i].checkpoint);
     }
@@ -55,6 +55,7 @@ export class LevelTenStory {
       const id = world.npcs.civilians.spawn('resident', at, { model, waypoints: [at] });
       state.actors[`hangar-${key}`] = id;
       const e = world.entities.get(id)!;
+      if (key === 'sam') e.health.current = Math.max(1, Math.round(e.health.max * .4));
       e.civilian!.pauseUntil = world.tick + 216000;
       e.civilian!.story = { clip: key === 'sam' ? 'cower' : 'idle', start: world.tick };
       if (key.startsWith('guard')) e.civilian!.ally = { ...allyState('soldier'), post: at, hold: true, engaged: true, weapon: 'rifle', gun: { ...l4.soldiers.rifle }, range: 20 };

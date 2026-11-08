@@ -5,11 +5,20 @@ import { Walker } from './Walker';
 import { solidLargeCorpse } from '../../sim/world/SolidRegistry';
 import { isMega } from '../../data/megaPresentation';
 import { finale as arena } from '../../data/l10Finale';
+import { cureEscapeGaps } from '../../data/l10Story';
 
 /** The existing L10 sim policy, available to browser diagnostics through bot.start. */
 export class LevelTenBot {
   private readonly walker = new Walker();
-  private readonly route = cure.regions.flatMap((r, i) => i ? r.route.slice(1) : r.route);
+  // Ordinary exploration inputs: visit the six placed finds and the escape gaps,
+  // taking the field crossings instead of every ninety-degree road bend.
+  private readonly route = [
+    ...cure.regions[0].route.slice(0, 4), cure.anchors['farmhouse-rifle'], [cureEscapeGaps[0].x, cureEscapeGaps[0].z],
+    cure.anchors['barn-machete'], cure.anchors['shed-molotov'], cure.anchors['workshop-nailgun'], cure.anchors['cure-military'],
+    cure.anchors['guard-tower-rifle'], cure.anchors['checkpoint-flashbang'], [cureEscapeGaps[1].x, cureEscapeGaps[1].z], cure.anchors['r4-r5-seam'],
+    cure.anchors['cure-research-entry'], cure.anchors['cure-terminal'], cure.anchors['cure-canister'], cure.anchors['cure-research'], cure.anchors['cure-corridor'],
+    [cureEscapeGaps[2].x, cureEscapeGaps[2].z], cure.anchors['cure-complex'], ...cure.regions[6].route.slice(5),
+  ];
   private waypoint = 0;
   private releaseAttempt = 0;
   private releaseSidestepUntil = 0;
@@ -69,7 +78,7 @@ export class LevelTenBot {
     // making the native route incomparable to real-input play.
     const threats = w.infected!.active.filter(e => e.health.current > 0 && !e.hidden && !e.emerging && !e.infectionRise && distance(e.transform) < 30 && w.infected!.director.inPlayerView(e.transform, 30, 1, 5) && (p.y > 2 ? w.combat!.query.visible({ ...p, y: p.y + .45 }, e.transform) : w.infected!.nav.visible(p, e.transform, 0))).sort((a, b) => distance(a.transform) - distance(b.transform));
     const gun = w.mountedGun;
-    if (active.id === 'hold' && mission.state.states['charge-active'] && gun) {
+    if (active.id === 'hold' && mission.state.states['charge-active'] && gun && (gun.mounted || mission.state.counters['charge-ticks'] < 480)) {
       if (gun.mounted) {
         f.move = { x: 0, z: 0 }; f.interact = false;
         const target = threats[0];
@@ -98,14 +107,17 @@ export class LevelTenBot {
     // Moving targets need room for the rocket to arm before contact. Keep the
     // launcher for distant packs/Mega and the carried shotgun for close defence.
     const travelWeapon = ['weapon.army-mg', 'weapon.assault-rifle', 'weapon.nail-gun', 'weapon.hunting-rifle', 'weapon.machete', 'weapon.fire-axe'].find(id => rack.some(slot => slot.id === id));
-    const wanted = !finale ? travelWeapon : target && distance(target.transform) >= 8 ? 'weapon.rocket-launcher' : 'weapon.shotgun';
+    const targetDistance = target ? distance(target.transform) : 0;
+    const rocket = target && isMega(target) && targetDistance >= 12 && w.combat!.query.clearDistance({ ...p, y: p.y + .45 },
+      { x: (target.transform.x - p.x) / targetDistance, z: (target.transform.z - p.z) / targetDistance }, 10) >= 10;
+    const wanted = !finale ? travelWeapon : rocket ? 'weapon.rocket-launcher' : targetDistance < 8 ? 'weapon.shotgun' : 'weapon.army-mg';
     const choice = rack.findIndex(slot => slot.id === wanted);
     const index = choice >= 0 ? choice : rack.length - 1, weapon = rack[index]?.id;
     if (!released && target && this.profile !== 'evade-only' && weapon && (weapon !== 'weapon.fire-axe' || distance(target.transform) < 2.5)) {
       f.selectedSlot = { side: 'RIGHT', index }; f.aimSource = 'keyboard';
       const dx = target.transform.x - p.x, dz = target.transform.z - p.z, d = Math.hypot(dx, dz) || 1;
       f.aim = { x: dx / d, z: dz / d }; f.aimPoint = { x: target.transform.x, z: target.transform.z }; f.right.held = true;
-      if (finale && d < 10 && !(active.id === 'hold' && gun)) {
+      if (finale && d < 10 && !gun?.mounted) {
         const angle = Math.atan2(p.z - anchor.z, p.x - anchor.x) + Math.PI / 4;
         f.move = this.walker.step(w, { x: anchor.x + Math.cos(angle) * 18, z: anchor.z + Math.sin(angle) * 18 }, 1, 'dodge') ?? f.move;
         if (d < 8) {

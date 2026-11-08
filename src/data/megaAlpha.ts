@@ -10,7 +10,7 @@ export const megaAlpha = {
   archetype: 'infected.alpha',
   asset: 'inf.mega-alpha',
   /** Fast enough to keep pace with a nominal uninjured run; terrain gaps create the escape window. */
-  cruiseFactor: 1.05,
+  cruiseFactor: 1.2,
   get cruiseMs(): number { return survivor.speed * this.cruiseFactor; },
   /** E32-AC12: ten direct rockets, independent of stock Alpha resistance/upgrades. */
   hp: 3000,
@@ -36,7 +36,7 @@ export const megaAlpha = {
   /** Inside this the shared Alpha chase brain (contact, barricade breach, special scheduler) takes the ticks. */
   closeM: 12,
   /** Beyond this, detailed steering heads for the next authored route node instead of the player (bounded A*). */
-  directM: 60,
+  directM: 160,
   /** A node counts as passed inside this radius. */
   nodeReachM: 3,
   /** Introduction: first field crossing at 0:45, 24 m behind on a reachable route (PO 2026-11-08). */

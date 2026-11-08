@@ -24,8 +24,8 @@ const pursuitNodeId = ([x, z]: Point) => `cure-route-${pursuitPoints.findIndex(p
 // rubble breach, cross the clear eastern verge, then take the straight R7 apron.
 // These links retain the road graph (including saved node IDs) and its obstacles.
 const pursuitShortcuts: [Point, Point][] = [
-  [cure.regions[5].route[1], cure.anchors['corridor-breach']],
-  [cure.anchors['corridor-breach'], cure.anchors['r6-r7-seam']],
+  [cure.regions[5].route[1], [cureEscapeGaps[2].x - 5, cureEscapeGaps[2].z]],
+  [[cureEscapeGaps[2].x + 5, cureEscapeGaps[2].z], cure.anchors['r6-r7-seam']],
   [cure.anchors['r6-r7-seam'], cure.regions[6].route[5]],
 ];
 export const curePursuitRoute = {

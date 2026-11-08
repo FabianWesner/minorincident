@@ -339,8 +339,13 @@ export class InfectedSystem {
   private readonly hangarWaypoint = { x: 0, z: 0 };
   /** Researchers hold the sealed doorway. The hunt walks to the exterior and resumes as soon as the courier leaves. */
   private hangarBoundary(e: EntitySnapshot, courier: EntitySnapshot): boolean {
-    if (this.world.scenario !== 'L10' || !insideCureHangar(courier.transform) || Math.hypot(e.transform.x - cureHangar.centre.x, e.transform.z - cureHangar.centre.z) > 65) return false;
-    const b = e.infected!, at = { x: cureHangar.outside.x + (e.id % 5 - 2) * 2, z: cureHangar.outside.z };
+    if (this.world.scenario !== 'L10' || Math.hypot(e.transform.x - cureHangar.centre.x, e.transform.z - cureHangar.centre.z) > 65) return false;
+    const b = e.infected!, target = this.world.entities.get(b.targetId || b.pressureTarget?.id || 1);
+    // Guards/researchers cannot lure hunters through the doorway before the courier arrives.
+    if (!insideCureHangar(courier.transform) && !insideCureHangar(e.transform) && !(target?.civilian && insideCureHangar(target.transform))) return false;
+    const at = { x: cureHangar.outside.x + (e.id % 5 - 2) * 2, z: cureHangar.outside.z };
+    b.hidden = false;
+    if (b.pursuit && this.world.megaPursuit) this.world.megaPursuit.state.mode = 'detailed';
     if (b.specialAttack) this.cancelSpecial(e.id);
     b.state = 'wander'; b.grabUntil = 0; e.combat!.attacking = false;
     const distance = Math.hypot(e.transform.x - at.x, e.transform.z - at.z);

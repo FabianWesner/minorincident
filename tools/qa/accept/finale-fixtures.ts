@@ -6,6 +6,7 @@ import { cureFinaleText } from '../../../src/sim/missions/LevelTenFinale';
 import { CureFront, cureReached } from '../../../src/sim/missions/CureFront';
 import type { Mission } from '../../../src/sim/missions/Mission';
 import { SimWorld } from '../../../src/sim/world/SimWorld';
+import { finale } from '../../../src/data/l10Finale';
 
 type Add = (id: string, clause: string, value: unknown, target: string, pass: boolean | undefined) => void;
 /** Explicit state fixtures call the production finale predicate; these are not play-throughs. */
@@ -38,7 +39,7 @@ export async function finaleFixtures(tier: Tier, add: Add): Promise<void> {
     for (const step of Object.values(s.steps)) step.status = 'completed'; s.steps.hold.status = 'active';
     Object.assign(player.transform, { x: console.x, z: console.z }); mission.l10!.update(); input.interact = false;
     mission.l10!.update(); const inside = s.counters['charge-ticks'];
-    player.transform.x = console.x + 25.01; mission.l10!.update(); const outside = s.counters['charge-ticks'], instruction = cureFinaleText(mission);
+    player.transform.x = console.x + finale.holdRadius + .01; mission.l10!.update(); const outside = s.counters['charge-ticks'], instruction = cureFinaleText(mission);
     player.transform.x = console.x; player.health.current = 0; mission.l10!.update(); const dead = s.counters['charge-ticks'];
     player.health.current = player.health.max; mission.l10!.update(); const resumed = s.counters['charge-ticks'];
     add('L10-10', 'charge inside/outside/dead/resume boundary and pause instruction', { inside, outside, dead, resumed, instruction }, '1/1/1/2 ticks; outside instruction says Charge paused', inside === 1 && outside === 1 && dead === 1 && resumed === 2 && !!instruction?.includes('Charge paused'));

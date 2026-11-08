@@ -1,7 +1,7 @@
 /**
  * E32 §5.7 / L10-A7: finale assembly anchors of the R7 dispersal complex, authored for the L10-D4 district lane.
  * Local frame in metres, ground plane [x, z] like every layout and scene spec; the console is the origin and the whole hold
- * zone is the 25 m disc around it. D4 maps the frame to the world with one offset (console world position). `yaw` is the
+ * zone is the 40 m disc around it (PO 2026-11-08). D4 maps the frame to the world with one offset (console world position). `yaw` is the
  * placement yaw in degrees (scene-spec convention, 0 = the asset's +X front towards +x); only 0 and 180 are used so the
  * footprint stays an exact axis-aligned box even for the off-centre assets (platform stair, tank outlets).
  * Orchestrator defaults, changeable after measurement. tests/unit/data/l10-finale-anchors.test.ts and the arena Scene Lab

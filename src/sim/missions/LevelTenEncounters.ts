@@ -8,7 +8,7 @@ export interface CureEncounterState {
   spawned: Record<string, number>; medkits: Record<string, number>; weapons?: Record<string, number>;
   released?: string[]; laneOffsets?: Record<string, number>; assaultTicks?: number;
 }
-/** Once-only moving hunters on the route; ten-second reinforcement ranks continue until the Mega dies. */
+/** Once-only moving hunters on the route; reinforcement ranks continue until charging and the Mega fight are finished. */
 export class LevelTenEncounters {
   state: CureEncounterState = { spawned: {}, medkits: {}, weapons: {}, assaultTicks: 0 };
   constructor(private readonly world: SimWorld) {}
@@ -17,7 +17,7 @@ export class LevelTenEncounters {
   update(): void {
     const w = this.world, ai = w.infected, chunks = w.chunks, mission = w.missions;
     if (!ai || !chunks || mission?.state.phase !== 'playing' || mission.state.states['cure-released']) return;
-    const assaultActive = !!mission.state.states['charge-active'] && !mission.state.states['mega-dead'];
+    const assaultActive = !!mission.state.states['charge-active'] && !(mission.state.states['charge-ready'] && mission.state.states['mega-dead']);
     if (assaultActive) this.state.assaultTicks = (this.state.assaultTicks ?? 0) + 1;
     if (w.tick % 10 !== 0) return;
     const player = w.entities.get(1)!;
