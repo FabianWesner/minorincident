@@ -9,6 +9,7 @@ import fair from '../../public/assets/layouts/D-FAIR.layout.json';
 import type { DistrictLayout } from '../../src/levels/districts/types';
 import { goalReach } from '../../src/sim/world/TrapRescue';
 import { emptyInput } from '../../src/input/InputFrame';
+import { actorRadius } from '../../src/sim/world/SolidRegistry';
 
 function checkWallGeometry() {
   const geometry = new BoxGeometry(170, .9, .5), wall = new Mesh(geometry), neighbour = new Mesh(geometry), root = new Group();
@@ -134,19 +135,31 @@ async function checkL7CourierYield() {
     w.solids.remember(player, 'test.l7-courier-yield'); w.spatial.set(1, -30, 50);
     Object.assign(player.survivor!.velocity, { x: 0, z: 0 });
     roster.forEach((row, slot) => {
-      const e = w.entities.get(row.id)!, inner = slot < 8, count = inner ? 8 : 16, angle = (inner ? slot : slot - 8) * Math.PI * 2 / count, radius = inner ? .9 : 1.8;
+      const e = w.entities.get(row.id)!, inner = slot < 8, count = inner ? 8 : 16, angle = (inner ? slot : slot - 8) * Math.PI * 2 / count, radius = inner ? .92 : 1.84;
       Object.assign(e.transform, { x: -30 + Math.cos(angle) * radius, z: 50 + Math.sin(angle) * radius, y: .7 });
       w.solids.remember(e, 'test.l7-courier-yield'); w.spatial.set(e.id, e.transform.x, e.transform.z);
       delete e.locomotion; e.civilian!.path.length = 0; e.civilian!.goal = -1; e.civilian!.l1!.target = null;
     });
+    const bodies = [player, ...roster.map(row => w.entities.get(row.id)!)];
+    for (let i = 0; i < bodies.length; i++) for (let j = i + 1; j < bodies.length; j++) {
+      expect(Math.hypot(bodies[i].transform.x - bodies[j].transform.x, bodies[i].transform.z - bodies[j].transform.z), 'the packed fixture starts without overlapping bodies').toBeGreaterThanOrEqual(actorRadius(bodies[i]) + actorRadius(bodies[j]));
+    }
     const start = { x: player.transform.x, z: player.transform.z };
     for (let tick = 0; tick < 60; tick++) { w.applyInput(emptyInput(), 'keyboard'); w.update(); }
     expect(Math.hypot(player.transform.x - start.x, player.transform.z - start.z), 'followers yield without moving a stationary courier').toBeLessThan(.01);
+    const yielded = new Set<number>();
     for (let tick = 0; tick < 180; tick++) {
+      const before = new Map(roster.map(row => [row.id, w.entities.get(row.id)!.transform.z]));
       const input = emptyInput(); input.move.x = 1;
       w.applyInput(input, 'keyboard'); w.update();
+      for (const row of roster) {
+        const e = w.entities.get(row.id)!;
+        if ((e.civilian!.vehicleYield?.until ?? -1) >= w.tick && Math.abs(e.transform.z - before.get(e.id)!) > .001) yielded.add(e.id);
+      }
     }
+    expect(yielded.size, 'blocking followers physically step sideways through ordinary swept walking').toBeGreaterThan(0);
     expect(Math.hypot(player.transform.x - start.x, player.transform.z - start.z), 'the courier walks through the follower column instead of remaining boxed in').toBeGreaterThan(9);
+    expect(w.solids.offenders).toEqual([]);
   } finally { w.dispose(); }
 }
 
