@@ -140,6 +140,30 @@ test('escort: shared combat pace, follows through a maze, a 2 s stand revives to
   visible.mockRestore();
   }
   {
+    const w = await world(); w.scenario = 'L8';
+    const group = [-3, 3].map((z, slot) => {
+      const e = w.entities.get(w.npcs!.civilians.spawn('cashier', { x: -10, z }))!;
+      e.civilian!.survivor = { key: `urgent-${slot}`, mode: 'follow', leader: 1, slot, cover: false, foundAt: 0, waitAt: 9999, injured: !!slot };
+      return e;
+    });
+    // Distinct temperaments/injury must track the same urgent evacuation intent equally.
+    const urgent: number[] = [];
+    for (let i = 0; i < 20; i++) {
+      w.tick++;
+      for (const e of group) { e.civilian!.survivor!.briskAt = w.tick; w.npcs!.moveStep(e, .05, 0); }
+      expect(group[0].locomotion!.vx).toBeCloseTo(group[1].locomotion!.vx, 10);
+      urgent.push(group[0].locomotion!.vx);
+    }
+    for (const e of group) { delete e.locomotion; delete e.civilian!.survivor!.briskAt; }
+    for (let i = 0; i < 12; i++) { w.tick++; for (const e of group) w.npcs!.moveStep(e, .05, 0); }
+    expect(group[0].locomotion!.vx).toBeCloseTo(group[1].locomotion!.vx, 10);
+    expect(group[0].locomotion!.vx).toBeCloseTo(urgent[11], 10);
+    // The subway's ordinary following still carries each person's temperament.
+    w.scenario = 'L6'; for (const e of group) delete e.locomotion;
+    for (let i = 0; i < 12; i++) { w.tick++; for (const e of group) w.npcs!.moveStep(e, .05, 0); }
+    expect(group[0].locomotion!.vx).not.toBeCloseTo(group[1].locomotion!.vx, 6);
+  }
+  {
   const w = await world(), p = w.entities.get(1)!;
   for (const e of [...w.infected!.active]) w.infected!.release(e);
   w.scenario = 'L5'; p.survivor!.velocity = { x: 4.5, z: 0 };

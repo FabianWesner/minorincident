@@ -17,15 +17,17 @@ import { followerInCombat } from '../outbreak/Survivors';
 export const followerTracking = { acceleration: 12, jerk: 300, omega: 20 } as const;
 // Keep the calm party responsive without overshooting its moving slots.
 export const l5FollowerTracking = { ...followerTracking, omega: 22 } as const;
-/** Response limits of one actor this tick: L5's brisk calm followers, otherwise a following survivor's own
- * temperament (r12-group: people react a little apart; the injured lag), otherwise the shared defaults. */
+/** Mission catch-up/boarding keeps its authored response. Ordinary following retains
+ * individual temperament; it must not dilute an urgent controller's steering limits. */
 export function trackingFor(world: SimWorld, e: EntitySnapshot): Parameters<typeof respond>[3] {
   const s = e.civilian?.survivor;
   if (world.scenario === 'L7' && e.companion) return followerTracking;
   if (world.scenario === 'L5' && (e.companion || s?.briskAt === world.tick)) return l5FollowerTracking;
   if (s?.mode !== 'follow' || world.scenario === 'L5') return undefined;
-  const limits = s.briskAt === world.tick ? followerTracking : motionLimits;
-  return { ...limits, acceleration: limits.acceleration * responseScale(e, world.scenario) };
+  // L8's moving loose slots need the same response as catch-up and boarding.
+  // Arrival heals the roster, so carried injury/temperament must not dilute that response.
+  if (s.briskAt === world.tick || world.scenario === 'L8') return followerTracking;
+  return { ...motionLimits, acceleration: motionLimits.acceleration * responseScale(e, world.scenario) };
 }
 export function moveAgent(e: EntitySnapshot, vx: number, vz: number, nav: NavGrid, tick: number, radius = actorRadius(e), impulse = false, tracking?: Parameters<typeof respond>[3]): void {
   const state = e.locomotion ??= motionResponse();
