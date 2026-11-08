@@ -6,10 +6,12 @@ import { L8ArenaBot } from '../../src/debug/bot/L8ArenaBot';
 import { emptyInput } from '../../src/input/InputFrame';
 import { barEligible } from '../../src/render/HealthBars';
 import { l8BossArenas, type L8BossId } from '../../src/data/l8Bosses';
-import type { SimWorld } from '../../src/sim/world/SimWorld';
+import { SimWorld } from '../../src/sim/world/SimWorld';
 import type { EntitySnapshot } from '../../src/sim/world/types';
 import { loadLevel } from './levels';
 import { provenance } from '../qa/accept/probe';
+import { NavGrid } from '../../src/sim/ai/NavGrid';
+import { PathProbe, physicalPathEntry } from '../qa/threat/observer';
 const out = process.env.L8_BOSS_OUT ?? 'test-results/l8-boss-controls', tier = (process.env.L8_BOSS_TIER ?? 'low') as 'low' | 'high';
 mkdirSync(out, { recursive: true });
 const checks: { name: string; pass: boolean; value: unknown }[] = [], errors: string[] = [];
@@ -28,6 +30,19 @@ async function fixture(id: L8BossId, nadiaAlive = true) {
   return { w, zoo, m: w.missions!, p: w.entities.get(1)!, arena, e, lines };
 }
 const hit = (w: SimWorld, e: EntitySnapshot, base: number, type: 'bullet' | 'melee' = 'bullet') => w.combat!.damage.apply({ sourceId: 1, targetId: e.id, attackId: w.infected!.arenaAttackId(), actionId: type === 'melee' ? 'weapon.fire-axe' : 'weapon.handgun', origin: w.entities.get(1)!.transform, direction: { x: 1, z: 0 }, base, multiplier: 1, type, knockback: 0, stagger: 0 });
+try {
+  const w = new SimWorld(); await w.init(); w.loadScenario('horde-arena', 1808);
+  try {
+    const e = w.entities.get(w.infected!.spawn('infected.runner', { x: 1.6, z: 0 }))!;
+    const nav = new NavGrid({ width: 20, depth: 20 }, [{ x: 0, z: 0, y: 1, halfX: 2, halfZ: 2, halfY: 1 }]);
+    w.solids.setBarrier('qa.diagonal', { x: 0, z: 0, y: 1, halfX: 2.5, halfZ: .2, halfY: 1, yaw: Math.PI / 4 });
+    const entry = physicalPathEntry(w, e, nav), radius = e.combat!.radius;
+    const bounded = !!entry && new PathProbe().query(nav, e, { x: 5, z: 0 }, 2.5, [entry]);
+    for (const [i, wall] of [{ x: .8, z: 0, halfX: .1, halfZ: 1 }, { x: 2.4, z: 0, halfX: .1, halfZ: 1 }, { x: 1.6, z: -.8, halfX: 1, halfZ: .1 }, { x: 1.6, z: .8, halfX: 1, halfZ: .1 }].entries()) w.solids.setBarrier(`qa.closed-${i}`, { ...wall, y: 1, halfY: 1 });
+    const rejected = physicalPathEntry(w, e, nav) === undefined;
+    check('bounded path entry uses the actual body sweep and rejects a closed physical pocket', bounded && rejected, { entry, radius, unchangedStretch: 2.5, bounded, closedPocketRejected: rejected });
+  } finally { w.dispose(); }
+} catch (error) { errors.push(`physical path prefix: ${String(error)}`); }
 try {
   const { w, m, zoo, p, arena, e } = await fixture('gorilla');
   try {

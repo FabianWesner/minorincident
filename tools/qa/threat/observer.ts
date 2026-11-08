@@ -168,6 +168,25 @@ export class PathProbe {
   }
 }
 
+/** Prove a short entry into the baked grid using the canonical full-radius static sweep.
+ * Dynamic/rotated prop AABBs can cover a physically clear start; no actor is moved. */
+export function physicalPathEntry(world: SimWorld, entity: EntitySnapshot, grid: NavGrid): { x: number; z: number } | undefined {
+  const p = entity.transform, radius = entity.combat?.radius ?? .35;
+  if (entity.pendingAdmission || entity.infected?.perched || entity.infected?.arenaBoss?.traversal || grid.clear(p.x, p.z, radius) ||
+      Math.abs(p.y - .7 - (world.districts?.groundHeight(p.x, p.z) ?? 0)) > .2 || !world.solids.clear(p, radius, entity.id, false, .02)) return undefined;
+  let best: { x: number; z: number } | undefined, length = 4;
+  for (let dz = -8; dz <= 8; dz++) for (let dx = -8; dx <= 8; dx++) {
+    const cell = grid.cell(p.x + dx * .5, p.z + dz * .5);
+    if (cell < 0 || grid.blocked[cell]) continue;
+    const x = grid.x(cell), z = grid.z(cell), distance = Math.hypot(x - p.x, z - p.z);
+    if (distance < .001 || distance >= length || Math.abs((world.districts?.groundHeight(x, z) ?? 0) + .7 - p.y) > .2 ||
+        !world.solids.clear({ x, z, y: p.y }, radius, entity.id, false, .02) ||
+        world.solids.sweep(entity, { x: (x - p.x) / distance, z: (z - p.z) / distance }, distance, radius, false, false) < distance - .001) continue;
+    best = { x, z }; length = distance;
+  }
+  return best;
+}
+
 export class ThreatObserver {
   private readonly followerWait = { escortTicks: 0, stationaryFarTicks: 0, followers: new Map<number, { escortTicks: number; stationaryFarTicks: number }>() };
   private readonly rows = new Map<string, Row>();
@@ -445,6 +464,10 @@ export class ThreatObserver {
       // Count only the descent currently owned by the live controller, including its full remaining leg.
       const descent = this.level === 'L8' ? e.infected?.arenaBoss?.traversal : undefined;
       if (descent && !descent.roof) authored.push(descent.to);
+      if (this.level === 'L8' && !authored.length && !entrance) {
+        const entry = physicalPathEntry(w, e, native.grid(e.transform));
+        if (entry) authored.push(entry);
+      }
       const at = authored.at(-1) ?? routed.transform;
       const goal = e.infected?.pursuit ? player.transform : native.target(at, player.transform);
       const source = e.infected?.pursuit && w.megaPursuit ? w.megaPursuit.grid : native.grid(at);

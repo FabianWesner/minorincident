@@ -20,6 +20,8 @@ The control matrix also exposed [stationary-fire](evidence/post-merge/monkey-gri
 
 The full matrix found a gorilla circle-kiting win at 67.72 s. Rage throw lead now uses its actual 18 m/s flight speed (previously 12 m/s), retaining the locked tell and physical projectile. Ordinary gorilla throws/pounds now recover for one second; interrupted chest beats retain their two-second punish window, within the binding 0.8–2 s range.
 
+The ordinary high-tier path flag is a conservative dynamic-fence AABB at a physically clear source. The observer now proves a ≤4 m entry with the canonical full-radius static sweep, then includes that distance in the unchanged 2.5× bound. A closed-pocket negative control must reject every entry. No actor is excluded or moved.
+
 **Open:** post-merge typecheck, lint, unit tests and corrected six-arena matrix on runners. The receipts below describe the original lane source until the post-merge results are committed. **Browser QA needed** remains open; no browsers are launched.
 
 ## Done and open items
