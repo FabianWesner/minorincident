@@ -26,7 +26,7 @@ export class AlphaSupportMoves {
       const object = ready('alpha.grab-throw') ? this.ai.props.nearestObject(e, 6) : undefined;
       const position = object ? this.ai.props.objectPosition(object.id) : ready('alpha.living-missile') ? this.ai.props.nearestLiving(e, 6)?.transform : undefined;
       if (position && Math.hypot(position.x - p.x, position.z - p.z) > 1.25) {
-        this.ai.seek(e, position); e.combat!.attacking = false; return true;
+        this.ai.seek(e, position); this.ai.world.spatial.set(e.id, p.x, p.z); e.combat!.attacking = false; return true;
       }
     }
     if (distance <= (b.alphaType === 'screamer' ? 8 : 15) && ready('alpha.roar') && start('alpha.roar', b.alphaType === 'screamer' ? 8 : 18)) return true;

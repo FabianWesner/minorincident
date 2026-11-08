@@ -42,6 +42,7 @@ async function alphaTypeContracts() {
       const moveWorld = await arena(), alpha = moveWorld.entities.get(moveWorld.infected!.spawn('infected.alpha', { x: 8, z: 0 }, { alphaType: type as keyof typeof alphaTypes, state: 'chase' }))!;
       const target = { id: 1, x: 0, z: 0 }, area = { x: 8, z: 0, radius: 2, dx: -1, dz: 0 };
       expect(moveWorld.infected!.startSpecial(alpha.id, move, target, area), `${type}.${move}`).toBe(true);
+      if (move === 'alpha.roar' || move === 'alpha.grab-human') expect(alpha.infected!.specialAttack!.area.radius).toBe(move === 'alpha.roar' ? 8 : 2.5);
       expect(moveWorld.infected!.startSpecial(alpha.id, move, target, area), `${type}.${move}: overlap`).toBe(false);
       expect(moveWorld.events.events().some(event => event.type === 'telegraph' && event.sourceId === alpha.id && event.special === move), `${type}.${move}`).toBe(true);
       moveWorld.dispose(); worlds.splice(worlds.indexOf(moveWorld), 1);

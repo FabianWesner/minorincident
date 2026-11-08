@@ -1507,6 +1507,7 @@ export class InfectedSystem {
     const attackId = this.nextAttackId(), activeTick = tick + timing.windup;
     let destination: { x: number; z: number } | undefined;
     b.attackId = attackId;
+    if (move === 'alpha.roar' || move === 'alpha.grab-human') area = { ...area, x: e.transform.x, z: e.transform.z, radius: move === 'alpha.grab-human' ? 2.5 : b.alphaType === 'screamer' ? 8 : 18 };
     if (move === 'alpha.grab-throw' || move === 'alpha.grab-human' || move === 'gorilla.grab-throw' || move === 'alpha.roar') { if (e.locomotion) resetResponse(e.locomotion); b.dx = area.dx; b.dz = area.dz; }
     if (!follower && ['zebra.kick', 'zebra.stampede', 'flamingo.dive', 'alpha.charge', 'alpha.ground-slam', 'alpha.pounce', 'alpha.shield-bash', 'lion.pounce', 'lion.flank', 'gorilla.pound', 'gorilla.roar', 'elephant.charge', 'elephant.swipe', 'gorilla.grab-throw'].includes(move)) {
       const dx = target.x - e.transform.x, dz = target.z - e.transform.z, length = Math.hypot(dx, dz);
