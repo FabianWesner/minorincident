@@ -102,8 +102,14 @@ test('every human and animal role validates and spawns with its catalog health a
       expect(cue).toMatchObject({ target: { id: 1 }, duration: .35 });
       step(w, 59);
       const damage = w.events.events().filter(event => event.type === 'combat.hit' && event.targetId === 1 && event.amount > 0);
-      expect(damage.length > 0).toBe(!moving);
+      expect(damage.length > 0, 'an out-of-reach runner can still be outrun').toBe(!moving);
     }
+    const close = await arena(1, false); close.scenario = 'L6';
+    const reaching = spawn(close, 'runner', 1.3);
+    close.setInput({ move: { x: -1, z: 0 } }); step(close, 20);
+    expect(close.events.events().some(event => event.type === 'combat.hit' && event.sourceId === reaching.id), 'windup stays readable').toBe(false);
+    step(close, 40);
+    expect(close.events.events().some(event => event.type === 'combat.hit' && event.sourceId === reaching.id && event.amount > 0), 'movement cannot invalidate an in-reach strike').toBe(true);
   }
 
   {
@@ -156,6 +162,27 @@ test('every human and animal role validates and spawns with its catalog health a
     expect(contacts[i].distance, 'actual bite reach').toBeLessThanOrEqual(2);
     expect(contacts[i].amount, 'unarmored bite damage').toBe(10);
     if (i) expect(contacts[i].tick - contacts[i - 1].tick, 'bite cooldown').toBeGreaterThanOrEqual(120);
+  }
+
+  // Shared attack families must connect with actual running input. A cue or
+  // attempted attack is insufficient: require accepted damage while moving.
+  for (const role of ['runner', 'crawler', 'riot', 'armored', 'butcher', 'alpha', 'dog', 'cat', 'lion', 'gorilla', 'elephant', 'zebra', 'flamingo']) {
+    const w = await arena(1, false), player = w.entities.get(1)!;
+    player.health.current = player.health.max = 10_000;
+    const attacker = spawn(w, role, 1.3);
+    attacker.infected!.hidden = false; attacker.infected!.perched = false;
+    let movingHits = 0;
+    w.events.on('infected.attack', event => {
+      if (event.type === 'infected.attack' && event.sourceId === attacker.id && event.targetId === 1 && event.amount > 0 &&
+          Math.hypot(w.player!.locomotion.displacement.x, w.player!.locomotion.displacement.z) * 60 > .2) movingHits++;
+    });
+    for (let i = 0; i < 600; i++) {
+      const dx = player.transform.x + 3, dz = player.transform.z, radius = Math.hypot(dx, dz), correction = (3 - radius) * 2;
+      const x = -dz + dx * correction, z = dx + dz * correction, length = Math.hypot(x, z);
+      w.setInput({ move: { x: x / length, z: z / length } }); w.update();
+    }
+    expect(movingHits, `${role}: a running circle cannot suppress every attack`).toBeGreaterThan(0);
+    w.dispose(); worlds.pop();
   }
 });
 

@@ -569,6 +569,9 @@ export class InfectedSystem {
     if (Status.stunned(e, this.world.tick)) { b.state = 'stagger'; return; }
     if (b.state === 'stagger') b.state = 'chase';
     if (b.state === 'attack') {
+      if (this.world.tick < b.until && b.special === 'lunge' && !b.targetId && this.world.combat!.query.visible(e.transform, player.transform)) {
+        this.seek(e, player.transform); this.place(e);
+      }
       if (this.world.tick >= b.until && this.resolve(e)) {
         if (b.special === 'combo-grab' && b.combo < 2) { b.combo++; this.windup(e); return; }
         const def = infectedDef(e.archetype);
@@ -604,7 +607,7 @@ export class InfectedSystem {
     // indefinitely. The active approach below keeps their ordinary crawl pace
     // and still requires the original strike distance before applying damage.
     if (b.special === 'grab') range += b.speed;
-    if (b.special === 'lunge') range = this.lungeRangeM();
+    if (b.special === 'lunge') range = Math.max(range, this.lungeRangeM());
     if (b.special === 'aura') range = 3;
     if (b.special === 'charge') range = 8;
     if (b.special === 'pin' && e.archetype !== 'infected.lion') range = 10;
@@ -617,7 +620,7 @@ export class InfectedSystem {
     if (b.special === 'scream') range = 20;
     if (b.special === 'revive' && this.revivable(e)) range = 20;
     const packAngle = b.packIndex * Math.PI / 2;
-    const packReady = !b.pack || b.special !== 'pounce' || (-dx * Math.cos(packAngle) - dz * Math.sin(packAngle)) / Math.max(0.01, distance) >= 0.85;
+    const packReady = !b.pack || b.special !== 'pounce' || distance <= this.strikeRange(e, player) || (-dx * Math.cos(packAngle) - dz * Math.sin(packAngle)) / Math.max(0.01, distance) >= 0.85;
     if (packReady && distance <= range && this.world.tick >= b.cooldown && this.world.combat!.query.visible(e.transform, player.transform)) { b.combo = 0; this.windup(e); return; }
     if (b.special === 'pounce' && b.pack && (!packReady || distance > 4)) {
       this.waypoint.x = player.transform.x + Math.cos(packAngle) * 3; this.waypoint.z = player.transform.z + Math.sin(packAngle) * 3;
@@ -709,22 +712,31 @@ export class InfectedSystem {
     // the windup. Otherwise a short flinch grants another immediate attempt.
     if (b.l1) b.cooldown = this.world.tick + l1Ticks(l1v2.infected.attackCycleS);
     b.until = this.world.tick + Math.ceil(def.windup * 60); e.combat!.attacking = true;
-    // A runner's lunge is a short homing burst (0.33 s; 0.5 s in armed campaigns): it strikes a courier who stands or turns into it, a courier
-    // running flat out escapes it (E19-AC14 evade battery). Charges, pounces and leaps keep their 2 s committed line.
+    // A runner's lunge is a short homing burst; charges, pounces and leaps keep
+    // their committed line. Turning out of that line can still avoid a strike.
     b.activeUntil = b.until + (b.special === 'lunge' ? armedCampaigns.has(this.world.scenario ?? '') ? 30 : 20 : 120);
-    const player = target; const dx = player.transform.x - e.transform.x, dz = player.transform.z - e.transform.z, distance = Math.hypot(dx, dz);
+    const player = target;
+    // Telegraph and commit to where a moving victim will be at the strike
+    // frame. The strike still checks live position and obstruction at impact.
+    const velocity = player.survivor?.velocity ?? player.motion?.velocity;
+    const lead = Math.ceil(def.windup * 60), vx = velocity?.x ?? 0, vz = velocity?.z ?? 0;
+    const dx = player.transform.x + vx * def.windup - e.transform.x, dz = player.transform.z + vz * def.windup - e.transform.z, distance = Math.hypot(dx, dz);
     b.dx = distance ? dx / distance : 1; b.dz = distance ? dz / distance : 0;
     if (distance > .001) e.transform.yaw = -Math.atan2(dz, dx);
     if (target.id === 1) delete b.spearheadUntil;
-    this.world.events.emit({ type: 'telegraph', tick: this.world.tick, sourceId: e.id, attackId: b.attackId, special: b.special, duration: def.windup, target: { id: target.id, x: target.transform.x, z: target.transform.z } });
+    this.world.events.emit({ type: 'telegraph', tick: this.world.tick, sourceId: e.id, attackId: b.attackId, special: b.special, duration: def.windup, target: { id: target.id, x: target.transform.x + vx * lead / 60, z: target.transform.z + vz * lead / 60 } });
   }
   private revivable(e: EntitySnapshot): EntitySnapshot | undefined {
     for (const other of this.world.entities.iterate()) if (other.archetype === 'infected.runner' && other.health.current <= 0 && !other.infected!.revived && this.world.tick - other.infected!.deadAt <= 2700 && Math.hypot(e.transform.x - other.transform.x, e.transform.z - other.transform.z) <= 6) return other;
     return undefined;
   }
-  /** Match strike reach to the larger attacker's body without extending the ordinary runner's reach. */
+  /** Include attacker body size and the courier's reachable windup displacement in live strike distance. */
   private strikeRange(e: EntitySnapshot, target: EntitySnapshot): number {
-    return infectedDef(e.archetype).range + (target.survivor ? Math.max(0, e.combat!.radius - .35) : 0);
+    const def = infectedDef(e.archetype), velocity = target.survivor?.velocity ?? target.motion?.velocity;
+    const speed = Math.hypot(velocity?.x ?? 0, velocity?.z ?? 0);
+    // Reach covers the distance a target can travel during the visible windup.
+    // This same envelope drives approach/ring decisions and the live strike check.
+    return def.range + speed * def.windup + (target.survivor ? Math.max(0, e.combat!.radius - .35) : 0);
   }
   private resolve(e: EntitySnapshot): boolean {
     const b = e.infected!, player = this.victim(e), def = infectedDef(e.archetype);
@@ -775,7 +787,8 @@ export class InfectedSystem {
       moveAgent(e, b.dx * step * 60, b.dz * step * 60, this.infectedNav, this.world.tick, e.combat!.radius, true); this.place(e);
       if (distance > this.strikeRange(e, player) + 0.15) return this.world.tick >= b.activeUntil;
     }
-    if (Math.hypot(player.transform.x - e.transform.x, player.transform.z - e.transform.z) > (b.special === 'aura' ? 3 : this.strikeRange(e, player)) + 0.15) return true;
+    if (Math.hypot(player.transform.x - e.transform.x, player.transform.z - e.transform.z) > (b.special === 'aura' ? 3 : this.strikeRange(e, player)) + 0.15 ||
+        !this.world.combat!.query.visible(e.transform, player.transform) || !this.physicalPropVisible(e.transform, player.transform)) return true;
     this.attackVictim(e, def.damage);
     if (b.special === 'aura') this.world.combat!.status.apply(player, { kind: 'toxic', duration: 2, dps: 3, maxStacks: 1, slow: 0.25 }, e.id, e.archetype, b.attackId);
     if (b.special === 'grab' || b.special === 'combo-grab' || b.special === 'cling' || b.special === 'pounce' || b.special === 'pin' && e.archetype !== 'infected.lion') {
@@ -1035,10 +1048,9 @@ export class InfectedSystem {
     if (this.world.scenario === 'L1' && brain.ignoreId === 1 && tick < brain.ignoreUntil && tick < brain.pauseUntil) { this.look(e, brain); return; }
     if (this.divertFromForecourt(e, b, brain)) return;
     if (b.state === 'attack') {
-      // L5's shotgun kills close pursuers before a stationary 4.4 m windup.
-      // Telegraph the approach at six metres and keep ordinary chase motion
-      // during the warning; damage still waits for windup and physical reach.
-      if (this.world.scenario === 'L5' && b.special === 'lunge' && !b.targetId && brain.targetId === 1 && tick < b.until) {
+      // Keep the approach moving during a visible warning. Planted windups
+      // give a moving courier a free head start on every attack cycle.
+      if (b.special === 'lunge' && !b.targetId && brain.targetId === 1 && tick < b.until) {
         const target = this.world.entities.get(1)!;
         if (this.l1!.lineOfSight(e.transform, target.transform)) {
           this.steerL1(e, brain, target.transform, brain.runSpeed, true, true); this.place(e);
@@ -1220,6 +1232,7 @@ export class InfectedSystem {
     brain.looking = false;
     const distance = Math.hypot(target.position.x - e.transform.x, target.position.z - e.transform.z);
     let lunge = this.lungeRangeM(target.kind === 'player');
+    if (target.kind === 'player') lunge = Math.max(lunge, this.strikeRange(e, this.world.entities.get(target.id)!));
     if (this.world.scenario === 'L5' && target.kind === 'player') {
       // Only a moving pursuer can cover this extra approach during its warning.
       // A stopped infected retains the ordinary reachable 4.4 m start range.
@@ -1456,6 +1469,12 @@ export class InfectedSystem {
     if (!e || !b || e.archetype !== infectedSpecialMoves[move].archetype || e.health.current <= 0 || b.specialAttack || b.state === 'attack' || tick < b.cooldown || tick < (b.specialRecoveryUntil ?? 0) || tick + timing.windup < (b.specialCooldowns?.[move] ?? 0) || Status.stunned(e, tick)) return false;
     if (![target.x, target.z, area.x, area.z, area.radius, area.dx, area.dz].every(Number.isFinite) || area.radius < 0) return false;
     if (b.pursuit && (!(move in megaAlpha.moves) || Math.hypot(target.x - e.transform.x, target.z - e.transform.z) > megaAlpha.closeM || !this.megaSpecialClear(e))) return false;
+    if (!follower) {
+      const victim = this.world.entities.get(target.id), velocity = victim?.survivor?.velocity ?? victim?.motion?.velocity;
+      if (velocity && victim && !victim.hidden && Math.hypot(target.x - victim.transform.x, target.z - victim.transform.z) < .05 && this.world.combat!.query.visible(e.transform, victim.transform)) {
+        target = { id: target.id, x: target.x + velocity.x * timing.windup / 60, z: target.z + velocity.z * timing.windup / 60 };
+      }
+    }
     let members: EntitySnapshot[] | undefined;
     if (!follower && (move === 'zebra.stampede' || move === 'flamingo.dive')) {
       const limit = move === 'zebra.stampede' ? 4 : 8;
@@ -1740,7 +1759,13 @@ export class InfectedSystem {
    */
   private readonly ringPoint = { x: 0, z: 0 };
   /** The courier moved less than 1 m/s this tick. */
-  private courierStill(): boolean { const p = this.world.entities.get(1)?.transform, q = this.world.previousPlayer; return !!p && !!q && Math.hypot(p.x - q.x, p.z - q.z) * 60 < 1; }
+  private courierStill(): boolean {
+    // AI runs before physics, after previousPlayer has been reset to the current
+    // pose. Compare the collision-resolved step prepared by the controller;
+    // comparing those two poses here labels every moving courier stationary.
+    const step = this.world.player?.locomotion.displacement;
+    return !!step && Math.hypot(step.x, step.z) * 60 < 1;
+  }
   private steerL1(e: EntitySnapshot, brain: L1Brain, goal: { x: number; z: number }, speed: number, survivor = false, pursue = false): void {
     // Later armed encounters need a closing advantage, including while an
     // attacker rounds cover. L1 and L3 retain their explicit speed contracts.
