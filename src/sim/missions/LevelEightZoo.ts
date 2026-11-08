@@ -285,7 +285,8 @@ export class LevelEightZoo {
     const mega = this.w.entities.get(this.state.megaId)!, dx = x - mega.transform.x, dz = z - mega.transform.z;
     Object.assign(mega.transform, { x, y, z });
     if (Math.hypot(dx, dz) > .001) mega.transform.yaw = -Math.atan2(dz, dx);
-    mega.motion = { velocity: { x: dx / FIXED_DT, z: dz / FIXED_DT }, speed: Math.hypot(dx, dz) / FIXED_DT, moving: Math.hypot(dx, dz) > .001, distance: (mega.motion?.distance ?? 0) + Math.hypot(dx, dz) };
+    // AgentMotion publishes the resolved displacement in cleanup. Incrementing
+    // gait distance here as well doubled the Mega's scripted running cadence.
     this.w.spatial.set(mega.id, x, z);
   }
   /** The departure camera retains both the APC and the pursuing silhouette. */

@@ -1,0 +1,1179 @@
+{
+  "baselineRevision": "78219de9",
+  "implementationRevision": "034f80bcaa4b83feb32c6139349deb24d1db2103",
+  "sourceSha256": {
+    "src/debug/testApi.ts": "2a3804a2a9608c0c08c15ff46304c2cdf84a38806e33acb33a9b42ad40c176dd",
+    "src/render/CrowdView.ts": "9c8515f07a06210522fd0c5c2e94c7b3ca6a3272681b9fc37deac8ae770bbea7",
+    "src/render/characters/CourierGroundContacts.ts": "423c5fd13976f211296f1b1bbce74833e2877a5cb8c219eab65e1af0b743dc30",
+    "src/render/characters/CrowdFigureProbe.ts": "4a6407dba7acc7eb676a3d2467f873c2b9a288ced2a0ce6d5864f87cfb9937d4",
+    "src/render/characters/CrowdLocomotion.ts": "f2fa6b096018d06646de39bda1f98c8cd3822380d2777310acd544519ceb2561",
+    "src/render/characters/GaitPhase.ts": "7f063aad53b310cea33c6ee586c8ccdc0435c4f4707d784ae76f36b5d999c644",
+    "src/render/characters/GroundContacts.ts": "e1cb45b1f4031803e05e4b10d554b2266b176e360bc4611d1b7c86417ef3a13d",
+    "src/render/characters/InfectedMoves.ts": "315a50c48ee749e2854ce9393b552e4c27ebe18481583b77c4ac65a456236539",
+    "src/render/characters/MotionPresentation.ts": "1ba604e024743c6b3041c12bde89501f2145ff83a23098317c415d13cf7a41f3",
+    "src/render/characters/clips.ts": "cc91035c6c7fe35ffa5c001a0c9769aa99b24624f3faf404f0ac443e59984808",
+    "src/sim/missions/LevelEightZoo.ts": "ed25cd7b1f17d59fec71f1ee96dbb5b55532da6d9be80719a4b07efbceed26d3",
+    "tests/e2e/smoke.spec.ts": "a21781dd578fe16f77477fdfa89f2cb2ea149a08df02d3e305f11d0fa966be55",
+    "tests/helpers/l8Story.ts": "321e45fe8f5248c2a5e51817635f4cad02fe1d65edbf0041a7c3f9e25d1747ab",
+    "tests/scenes/catalog/r15-megarun.json": "a7bea557b4106205088ce12fac20abc9b9ff161f0bd89d9fab2d8e0eddd32021"
+  },
+  "unchangedMegaLodSha256": {
+    "public/assets/models/skinned/inf.mega-alpha-ashen.lod0.glb": "da2e67ecc6113d082abf1403d76f10c3bb5edb31f94742022b6ff5e2121786f0",
+    "public/assets/models/skinned/inf.mega-alpha-ashen.lod0.low.glb": "da2e67ecc6113d082abf1403d76f10c3bb5edb31f94742022b6ff5e2121786f0",
+    "public/assets/models/skinned/inf.mega-alpha-ashen.lod1.glb": "04617e8da5355d610d3bb7f59d8645f89dc2d778a33cf69c364d9f99a8ea32b1",
+    "public/assets/models/skinned/inf.mega-alpha-ashen.lod1.low.glb": "04617e8da5355d610d3bb7f59d8645f89dc2d778a33cf69c364d9f99a8ea32b1",
+    "public/assets/models/skinned/inf.mega-alpha-ashen.lod2.glb": "6acb57eb2caaec9a71d55fb402fa9c68ff3bc80f8f9a226a210d1b46647f0684",
+    "public/assets/models/skinned/inf.mega-alpha-ashen.lod2.low.glb": "6acb57eb2caaec9a71d55fb402fa9c68ff3bc80f8f9a226a210d1b46647f0684",
+    "public/assets/models/skinned/inf.mega-alpha-ember.lod0.glb": "8da1989cbdef4f20c2cd491f171c9572bbd002797ccd9e610f681cee007d3827",
+    "public/assets/models/skinned/inf.mega-alpha-ember.lod0.low.glb": "8da1989cbdef4f20c2cd491f171c9572bbd002797ccd9e610f681cee007d3827",
+    "public/assets/models/skinned/inf.mega-alpha-ember.lod1.glb": "cf28a09e2d137c94f29b6130608c2a51cd56f065384ad4d088e8754d35807766",
+    "public/assets/models/skinned/inf.mega-alpha-ember.lod1.low.glb": "cf28a09e2d137c94f29b6130608c2a51cd56f065384ad4d088e8754d35807766",
+    "public/assets/models/skinned/inf.mega-alpha-ember.lod2.glb": "07ff563a4001e271b97ef3fc0de92a2742e0816641053eb63a940a2910f8c774",
+    "public/assets/models/skinned/inf.mega-alpha-ember.lod2.low.glb": "07ff563a4001e271b97ef3fc0de92a2742e0816641053eb63a940a2910f8c774",
+    "public/assets/models/skinned/inf.mega-alpha.lod0.glb": "c409d821f7f4efff854754da865826d376319eebb2516d10cbb9c3e38a6c6cc2",
+    "public/assets/models/skinned/inf.mega-alpha.lod0.low.glb": "c409d821f7f4efff854754da865826d376319eebb2516d10cbb9c3e38a6c6cc2",
+    "public/assets/models/skinned/inf.mega-alpha.lod1.glb": "8b938e9738d08efc106d05ade85ecf2822e502f9dc70c8d9e464fbe7f47a1315",
+    "public/assets/models/skinned/inf.mega-alpha.lod1.low.glb": "8b938e9738d08efc106d05ade85ecf2822e502f9dc70c8d9e464fbe7f47a1315",
+    "public/assets/models/skinned/inf.mega-alpha.lod2.glb": "203a41712436f3fe7cce99759de39882b13146d1184a09a792658f5b3e670511",
+    "public/assets/models/skinned/inf.mega-alpha.lod2.low.glb": "203a41712436f3fe7cce99759de39882b13146d1184a09a792658f5b3e670511"
+  },
+  "unchangedClipLibrarySha256": {
+    "src/render/characters/library.json": "ff7f78fb99aa45d0a732ec4d841dc39d84fae921b70a08bc11ea826e490d24eb",
+    "src/render/characters/library.skin.json": "7c0de9c76f806842ded57f5d7887553fbf7c4f37c9cad1d4e9198bfbc67e41d7"
+  },
+  "runningViews": [
+    {
+      "side": "before",
+      "view": "high-z1-toward",
+      "slip": {
+        "metric": "rendered sole speed / Mega ground speed during sole contact",
+        "contactSamples": 52,
+        "p50": 0.0714,
+        "p95": 1.4057,
+        "limit": 0.1,
+        "pass": false
+      },
+      "motion": {
+        "frames": 120,
+        "torsoPitchMinDeg": 20,
+        "torsoPitchMaxDeg": 21.6,
+        "contacts": 11,
+        "slideMaxCm": 46.1,
+        "slideP95Cm": 38.8,
+        "yawDriftMaxDeg": 4.6,
+        "liftMaxCm": 43.3,
+        "sinkMaxCm": 0,
+        "jitterRunMax": 1,
+        "worstSlideFrame": 15
+      },
+      "sampledHeadBobCm": 16.28,
+      "consoleErrors": [],
+      "lod": {
+        "lod0": 120
+      },
+      "drawCallsMax": 19,
+      "trianglesMax": 32048
+    },
+    {
+      "side": "after",
+      "view": "high-z1-toward",
+      "slip": {
+        "metric": "rendered sole speed / Mega ground speed during sole contact",
+        "contactSamples": 58,
+        "p50": 0,
+        "p95": 0.0162,
+        "limit": 0.1,
+        "pass": true
+      },
+      "motion": {
+        "frames": 120,
+        "torsoPitchMinDeg": 28,
+        "torsoPitchMaxDeg": 32,
+        "contacts": 10,
+        "slideMaxCm": 1.1,
+        "slideP95Cm": 0.7,
+        "yawDriftMaxDeg": 0,
+        "liftMaxCm": 14.1,
+        "sinkMaxCm": 0,
+        "jitterRunMax": 1,
+        "worstSlideFrame": 14
+      },
+      "sampledHeadBobCm": 0.19,
+      "consoleErrors": [],
+      "lod": {
+        "lod0": 120
+      },
+      "drawCallsMax": 19,
+      "trianglesMax": 32048
+    },
+    {
+      "side": "before",
+      "view": "high-z1-away",
+      "slip": {
+        "metric": "rendered sole speed / Mega ground speed during sole contact",
+        "contactSamples": 52,
+        "p50": 0.0714,
+        "p95": 1.3742,
+        "limit": 0.1,
+        "pass": false
+      },
+      "motion": {
+        "frames": 120,
+        "torsoPitchMinDeg": 20,
+        "torsoPitchMaxDeg": 21.6,
+        "contacts": 11,
+        "slideMaxCm": 45.9,
+        "slideP95Cm": 38.8,
+        "yawDriftMaxDeg": 4.6,
+        "liftMaxCm": 43.2,
+        "sinkMaxCm": 0,
+        "jitterRunMax": 1,
+        "worstSlideFrame": 15
+      },
+      "sampledHeadBobCm": 16.18,
+      "consoleErrors": [],
+      "lod": {
+        "lod0": 120
+      },
+      "drawCallsMax": 19,
+      "trianglesMax": 32048
+    },
+    {
+      "side": "after",
+      "view": "high-z1-away",
+      "slip": {
+        "metric": "rendered sole speed / Mega ground speed during sole contact",
+        "contactSamples": 58,
+        "p50": 0,
+        "p95": 0.0157,
+        "limit": 0.1,
+        "pass": true
+      },
+      "motion": {
+        "frames": 120,
+        "torsoPitchMinDeg": 28,
+        "torsoPitchMaxDeg": 32,
+        "contacts": 10,
+        "slideMaxCm": 1.1,
+        "slideP95Cm": 0.7,
+        "yawDriftMaxDeg": 0,
+        "liftMaxCm": 14.1,
+        "sinkMaxCm": 0,
+        "jitterRunMax": 1,
+        "worstSlideFrame": 14
+      },
+      "sampledHeadBobCm": 0.19,
+      "consoleErrors": [],
+      "lod": {
+        "lod0": 120
+      },
+      "drawCallsMax": 19,
+      "trianglesMax": 32048
+    },
+    {
+      "side": "before",
+      "view": "high-z1-across",
+      "slip": {
+        "metric": "rendered sole speed / Mega ground speed during sole contact",
+        "contactSamples": 53,
+        "p50": 0.0874,
+        "p95": 1.433,
+        "limit": 0.1,
+        "pass": false
+      },
+      "motion": {
+        "frames": 120,
+        "torsoPitchMinDeg": 20,
+        "torsoPitchMaxDeg": 21.6,
+        "contacts": 11,
+        "slideMaxCm": 51,
+        "slideP95Cm": 36.3,
+        "yawDriftMaxDeg": 5.3,
+        "liftMaxCm": 43.3,
+        "sinkMaxCm": 0,
+        "jitterRunMax": 1,
+        "worstSlideFrame": 15
+      },
+      "sampledHeadBobCm": 16.23,
+      "consoleErrors": [],
+      "lod": {
+        "lod0": 120
+      },
+      "drawCallsMax": 19,
+      "trianglesMax": 32048
+    },
+    {
+      "side": "after",
+      "view": "high-z1-across",
+      "slip": {
+        "metric": "rendered sole speed / Mega ground speed during sole contact",
+        "contactSamples": 58,
+        "p50": 0,
+        "p95": 0.0175,
+        "limit": 0.1,
+        "pass": true
+      },
+      "motion": {
+        "frames": 120,
+        "torsoPitchMinDeg": 28,
+        "torsoPitchMaxDeg": 32,
+        "contacts": 10,
+        "slideMaxCm": 0.7,
+        "slideP95Cm": 0.7,
+        "yawDriftMaxDeg": 0,
+        "liftMaxCm": 10,
+        "sinkMaxCm": 0,
+        "jitterRunMax": 0,
+        "worstSlideFrame": 14
+      },
+      "sampledHeadBobCm": 0.19,
+      "consoleErrors": [],
+      "lod": {
+        "lod0": 120
+      },
+      "drawCallsMax": 19,
+      "trianglesMax": 32048
+    },
+    {
+      "side": "before",
+      "view": "high-z1.5-toward",
+      "slip": {
+        "metric": "rendered sole speed / Mega ground speed during sole contact",
+        "contactSamples": 52,
+        "p50": 0.0771,
+        "p95": 1.3899,
+        "limit": 0.1,
+        "pass": false
+      },
+      "motion": {
+        "frames": 120,
+        "torsoPitchMinDeg": 20,
+        "torsoPitchMaxDeg": 21.6,
+        "contacts": 11,
+        "slideMaxCm": 46.3,
+        "slideP95Cm": 39,
+        "yawDriftMaxDeg": 4.6,
+        "liftMaxCm": 43.8,
+        "sinkMaxCm": 0,
+        "jitterRunMax": 1,
+        "worstSlideFrame": 15
+      },
+      "sampledHeadBobCm": 16.62,
+      "consoleErrors": [],
+      "lod": {
+        "lod1": 120
+      },
+      "drawCallsMax": 19,
+      "trianglesMax": 21889
+    },
+    {
+      "side": "after",
+      "view": "high-z1.5-toward",
+      "slip": {
+        "metric": "rendered sole speed / Mega ground speed during sole contact",
+        "contactSamples": 58,
+        "p50": 0,
+        "p95": 0.0157,
+        "limit": 0.1,
+        "pass": true
+      },
+      "motion": {
+        "frames": 120,
+        "torsoPitchMinDeg": 28,
+        "torsoPitchMaxDeg": 32,
+        "contacts": 10,
+        "slideMaxCm": 1.1,
+        "slideP95Cm": 0.4,
+        "yawDriftMaxDeg": 0,
+        "liftMaxCm": 14.3,
+        "sinkMaxCm": 0,
+        "jitterRunMax": 1,
+        "worstSlideFrame": 14
+      },
+      "sampledHeadBobCm": 0.19,
+      "consoleErrors": [],
+      "lod": {
+        "lod1": 120
+      },
+      "drawCallsMax": 19,
+      "trianglesMax": 21889
+    },
+    {
+      "side": "before",
+      "view": "high-z1.5-away",
+      "slip": {
+        "metric": "rendered sole speed / Mega ground speed during sole contact",
+        "contactSamples": 52,
+        "p50": 0.0791,
+        "p95": 1.3742,
+        "limit": 0.1,
+        "pass": false
+      },
+      "motion": {
+        "frames": 120,
+        "torsoPitchMinDeg": 20,
+        "torsoPitchMaxDeg": 21.6,
+        "contacts": 11,
+        "slideMaxCm": 46.1,
+        "slideP95Cm": 39,
+        "yawDriftMaxDeg": 4.6,
+        "liftMaxCm": 43.7,
+        "sinkMaxCm": 0,
+        "jitterRunMax": 1,
+        "worstSlideFrame": 15
+      },
+      "sampledHeadBobCm": 16.53,
+      "consoleErrors": [],
+      "lod": {
+        "lod1": 120
+      },
+      "drawCallsMax": 19,
+      "trianglesMax": 21889
+    },
+    {
+      "side": "after",
+      "view": "high-z1.5-away",
+      "slip": {
+        "metric": "rendered sole speed / Mega ground speed during sole contact",
+        "contactSamples": 57,
+        "p50": 0,
+        "p95": 0.0132,
+        "limit": 0.1,
+        "pass": true
+      },
+      "motion": {
+        "frames": 120,
+        "torsoPitchMinDeg": 28,
+        "torsoPitchMaxDeg": 32,
+        "contacts": 10,
+        "slideMaxCm": 1.1,
+        "slideP95Cm": 0.4,
+        "yawDriftMaxDeg": 0,
+        "liftMaxCm": 14.3,
+        "sinkMaxCm": 0,
+        "jitterRunMax": 1,
+        "worstSlideFrame": 14
+      },
+      "sampledHeadBobCm": 0.19,
+      "consoleErrors": [],
+      "lod": {
+        "lod1": 120
+      },
+      "drawCallsMax": 19,
+      "trianglesMax": 21889
+    },
+    {
+      "side": "before",
+      "view": "high-z1.5-across",
+      "slip": {
+        "metric": "rendered sole speed / Mega ground speed during sole contact",
+        "contactSamples": 53,
+        "p50": 0.0788,
+        "p95": 1.4327,
+        "limit": 0.1,
+        "pass": false
+      },
+      "motion": {
+        "frames": 120,
+        "torsoPitchMinDeg": 20,
+        "torsoPitchMaxDeg": 21.6,
+        "contacts": 11,
+        "slideMaxCm": 51.2,
+        "slideP95Cm": 36.4,
+        "yawDriftMaxDeg": 5.3,
+        "liftMaxCm": 43.8,
+        "sinkMaxCm": 0,
+        "jitterRunMax": 1,
+        "worstSlideFrame": 15
+      },
+      "sampledHeadBobCm": 16.58,
+      "consoleErrors": [],
+      "lod": {
+        "lod1": 120
+      },
+      "drawCallsMax": 19,
+      "trianglesMax": 21889
+    },
+    {
+      "side": "after",
+      "view": "high-z1.5-across",
+      "slip": {
+        "metric": "rendered sole speed / Mega ground speed during sole contact",
+        "contactSamples": 58,
+        "p50": 0,
+        "p95": 0.0157,
+        "limit": 0.1,
+        "pass": true
+      },
+      "motion": {
+        "frames": 120,
+        "torsoPitchMinDeg": 28,
+        "torsoPitchMaxDeg": 32,
+        "contacts": 10,
+        "slideMaxCm": 0.7,
+        "slideP95Cm": 0.7,
+        "yawDriftMaxDeg": 0,
+        "liftMaxCm": 10.1,
+        "sinkMaxCm": 0,
+        "jitterRunMax": 0,
+        "worstSlideFrame": 14
+      },
+      "sampledHeadBobCm": 0.19,
+      "consoleErrors": [],
+      "lod": {
+        "lod1": 120
+      },
+      "drawCallsMax": 19,
+      "trianglesMax": 21889
+    },
+    {
+      "side": "before",
+      "view": "low-z1-toward",
+      "slip": {
+        "metric": "rendered sole speed / Mega ground speed during sole contact",
+        "contactSamples": 52,
+        "p50": 0.0714,
+        "p95": 1.4057,
+        "limit": 0.1,
+        "pass": false
+      },
+      "motion": {
+        "frames": 120,
+        "torsoPitchMinDeg": 20,
+        "torsoPitchMaxDeg": 21.6,
+        "contacts": 11,
+        "slideMaxCm": 46.1,
+        "slideP95Cm": 38.8,
+        "yawDriftMaxDeg": 4.6,
+        "liftMaxCm": 43.3,
+        "sinkMaxCm": 0,
+        "jitterRunMax": 1,
+        "worstSlideFrame": 15
+      },
+      "sampledHeadBobCm": 16.28,
+      "consoleErrors": [],
+      "lod": {
+        "lod0": 120
+      },
+      "drawCallsMax": 19,
+      "trianglesMax": 27038
+    },
+    {
+      "side": "after",
+      "view": "low-z1-toward",
+      "slip": {
+        "metric": "rendered sole speed / Mega ground speed during sole contact",
+        "contactSamples": 58,
+        "p50": 0,
+        "p95": 0.0162,
+        "limit": 0.1,
+        "pass": true
+      },
+      "motion": {
+        "frames": 120,
+        "torsoPitchMinDeg": 28,
+        "torsoPitchMaxDeg": 32,
+        "contacts": 10,
+        "slideMaxCm": 1.1,
+        "slideP95Cm": 0.7,
+        "yawDriftMaxDeg": 0,
+        "liftMaxCm": 14.1,
+        "sinkMaxCm": 0,
+        "jitterRunMax": 1,
+        "worstSlideFrame": 14
+      },
+      "sampledHeadBobCm": 0.19,
+      "consoleErrors": [],
+      "lod": {
+        "lod0": 120
+      },
+      "drawCallsMax": 19,
+      "trianglesMax": 27038
+    },
+    {
+      "side": "before",
+      "view": "low-z1-away",
+      "slip": {
+        "metric": "rendered sole speed / Mega ground speed during sole contact",
+        "contactSamples": 52,
+        "p50": 0.0714,
+        "p95": 1.3742,
+        "limit": 0.1,
+        "pass": false
+      },
+      "motion": {
+        "frames": 120,
+        "torsoPitchMinDeg": 20,
+        "torsoPitchMaxDeg": 21.6,
+        "contacts": 11,
+        "slideMaxCm": 45.9,
+        "slideP95Cm": 38.8,
+        "yawDriftMaxDeg": 4.6,
+        "liftMaxCm": 43.2,
+        "sinkMaxCm": 0,
+        "jitterRunMax": 1,
+        "worstSlideFrame": 15
+      },
+      "sampledHeadBobCm": 16.18,
+      "consoleErrors": [],
+      "lod": {
+        "lod0": 120
+      },
+      "drawCallsMax": 19,
+      "trianglesMax": 27038
+    },
+    {
+      "side": "after",
+      "view": "low-z1-away",
+      "slip": {
+        "metric": "rendered sole speed / Mega ground speed during sole contact",
+        "contactSamples": 58,
+        "p50": 0,
+        "p95": 0.0157,
+        "limit": 0.1,
+        "pass": true
+      },
+      "motion": {
+        "frames": 120,
+        "torsoPitchMinDeg": 28,
+        "torsoPitchMaxDeg": 32,
+        "contacts": 10,
+        "slideMaxCm": 1.1,
+        "slideP95Cm": 0.7,
+        "yawDriftMaxDeg": 0,
+        "liftMaxCm": 14.1,
+        "sinkMaxCm": 0,
+        "jitterRunMax": 1,
+        "worstSlideFrame": 14
+      },
+      "sampledHeadBobCm": 0.19,
+      "consoleErrors": [],
+      "lod": {
+        "lod0": 120
+      },
+      "drawCallsMax": 19,
+      "trianglesMax": 27038
+    },
+    {
+      "side": "before",
+      "view": "low-z1-across",
+      "slip": {
+        "metric": "rendered sole speed / Mega ground speed during sole contact",
+        "contactSamples": 53,
+        "p50": 0.0874,
+        "p95": 1.433,
+        "limit": 0.1,
+        "pass": false
+      },
+      "motion": {
+        "frames": 120,
+        "torsoPitchMinDeg": 20,
+        "torsoPitchMaxDeg": 21.6,
+        "contacts": 11,
+        "slideMaxCm": 51,
+        "slideP95Cm": 36.3,
+        "yawDriftMaxDeg": 5.3,
+        "liftMaxCm": 43.3,
+        "sinkMaxCm": 0,
+        "jitterRunMax": 1,
+        "worstSlideFrame": 15
+      },
+      "sampledHeadBobCm": 16.23,
+      "consoleErrors": [],
+      "lod": {
+        "lod0": 120
+      },
+      "drawCallsMax": 19,
+      "trianglesMax": 27038
+    },
+    {
+      "side": "after",
+      "view": "low-z1-across",
+      "slip": {
+        "metric": "rendered sole speed / Mega ground speed during sole contact",
+        "contactSamples": 58,
+        "p50": 0,
+        "p95": 0.0175,
+        "limit": 0.1,
+        "pass": true
+      },
+      "motion": {
+        "frames": 120,
+        "torsoPitchMinDeg": 28,
+        "torsoPitchMaxDeg": 32,
+        "contacts": 10,
+        "slideMaxCm": 0.7,
+        "slideP95Cm": 0.7,
+        "yawDriftMaxDeg": 0,
+        "liftMaxCm": 10,
+        "sinkMaxCm": 0,
+        "jitterRunMax": 0,
+        "worstSlideFrame": 14
+      },
+      "sampledHeadBobCm": 0.19,
+      "consoleErrors": [],
+      "lod": {
+        "lod0": 120
+      },
+      "drawCallsMax": 19,
+      "trianglesMax": 27038
+    },
+    {
+      "side": "before",
+      "view": "low-z1.5-toward",
+      "slip": {
+        "metric": "rendered sole speed / Mega ground speed during sole contact",
+        "contactSamples": 52,
+        "p50": 0.0771,
+        "p95": 1.3899,
+        "limit": 0.1,
+        "pass": false
+      },
+      "motion": {
+        "frames": 120,
+        "torsoPitchMinDeg": 20,
+        "torsoPitchMaxDeg": 21.6,
+        "contacts": 11,
+        "slideMaxCm": 46.3,
+        "slideP95Cm": 39,
+        "yawDriftMaxDeg": 4.6,
+        "liftMaxCm": 43.8,
+        "sinkMaxCm": 0,
+        "jitterRunMax": 1,
+        "worstSlideFrame": 15
+      },
+      "sampledHeadBobCm": 16.62,
+      "consoleErrors": [],
+      "lod": {
+        "lod1": 120
+      },
+      "drawCallsMax": 19,
+      "trianglesMax": 16879
+    },
+    {
+      "side": "after",
+      "view": "low-z1.5-toward",
+      "slip": {
+        "metric": "rendered sole speed / Mega ground speed during sole contact",
+        "contactSamples": 58,
+        "p50": 0,
+        "p95": 0.0157,
+        "limit": 0.1,
+        "pass": true
+      },
+      "motion": {
+        "frames": 120,
+        "torsoPitchMinDeg": 28,
+        "torsoPitchMaxDeg": 32,
+        "contacts": 10,
+        "slideMaxCm": 1.1,
+        "slideP95Cm": 0.4,
+        "yawDriftMaxDeg": 0,
+        "liftMaxCm": 14.3,
+        "sinkMaxCm": 0,
+        "jitterRunMax": 1,
+        "worstSlideFrame": 14
+      },
+      "sampledHeadBobCm": 0.19,
+      "consoleErrors": [],
+      "lod": {
+        "lod1": 120
+      },
+      "drawCallsMax": 19,
+      "trianglesMax": 16879
+    },
+    {
+      "side": "before",
+      "view": "low-z1.5-away",
+      "slip": {
+        "metric": "rendered sole speed / Mega ground speed during sole contact",
+        "contactSamples": 52,
+        "p50": 0.0791,
+        "p95": 1.3742,
+        "limit": 0.1,
+        "pass": false
+      },
+      "motion": {
+        "frames": 120,
+        "torsoPitchMinDeg": 20,
+        "torsoPitchMaxDeg": 21.6,
+        "contacts": 11,
+        "slideMaxCm": 46.1,
+        "slideP95Cm": 39,
+        "yawDriftMaxDeg": 4.6,
+        "liftMaxCm": 43.7,
+        "sinkMaxCm": 0,
+        "jitterRunMax": 1,
+        "worstSlideFrame": 15
+      },
+      "sampledHeadBobCm": 16.53,
+      "consoleErrors": [],
+      "lod": {
+        "lod1": 120
+      },
+      "drawCallsMax": 19,
+      "trianglesMax": 16879
+    },
+    {
+      "side": "after",
+      "view": "low-z1.5-away",
+      "slip": {
+        "metric": "rendered sole speed / Mega ground speed during sole contact",
+        "contactSamples": 57,
+        "p50": 0,
+        "p95": 0.0132,
+        "limit": 0.1,
+        "pass": true
+      },
+      "motion": {
+        "frames": 120,
+        "torsoPitchMinDeg": 28,
+        "torsoPitchMaxDeg": 32,
+        "contacts": 10,
+        "slideMaxCm": 1.1,
+        "slideP95Cm": 0.4,
+        "yawDriftMaxDeg": 0,
+        "liftMaxCm": 14.3,
+        "sinkMaxCm": 0,
+        "jitterRunMax": 1,
+        "worstSlideFrame": 14
+      },
+      "sampledHeadBobCm": 0.19,
+      "consoleErrors": [],
+      "lod": {
+        "lod1": 120
+      },
+      "drawCallsMax": 19,
+      "trianglesMax": 16879
+    },
+    {
+      "side": "before",
+      "view": "low-z1.5-across",
+      "slip": {
+        "metric": "rendered sole speed / Mega ground speed during sole contact",
+        "contactSamples": 53,
+        "p50": 0.0788,
+        "p95": 1.4327,
+        "limit": 0.1,
+        "pass": false
+      },
+      "motion": {
+        "frames": 120,
+        "torsoPitchMinDeg": 20,
+        "torsoPitchMaxDeg": 21.6,
+        "contacts": 11,
+        "slideMaxCm": 51.2,
+        "slideP95Cm": 36.4,
+        "yawDriftMaxDeg": 5.3,
+        "liftMaxCm": 43.8,
+        "sinkMaxCm": 0,
+        "jitterRunMax": 1,
+        "worstSlideFrame": 15
+      },
+      "sampledHeadBobCm": 16.58,
+      "consoleErrors": [],
+      "lod": {
+        "lod1": 120
+      },
+      "drawCallsMax": 19,
+      "trianglesMax": 16879
+    },
+    {
+      "side": "after",
+      "view": "low-z1.5-across",
+      "slip": {
+        "metric": "rendered sole speed / Mega ground speed during sole contact",
+        "contactSamples": 58,
+        "p50": 0,
+        "p95": 0.0157,
+        "limit": 0.1,
+        "pass": true
+      },
+      "motion": {
+        "frames": 120,
+        "torsoPitchMinDeg": 28,
+        "torsoPitchMaxDeg": 32,
+        "contacts": 10,
+        "slideMaxCm": 0.7,
+        "slideP95Cm": 0.7,
+        "yawDriftMaxDeg": 0,
+        "liftMaxCm": 10.1,
+        "sinkMaxCm": 0,
+        "jitterRunMax": 0,
+        "worstSlideFrame": 14
+      },
+      "sampledHeadBobCm": 0.19,
+      "consoleErrors": [],
+      "lod": {
+        "lod1": 120
+      },
+      "drawCallsMax": 19,
+      "trianglesMax": 16879
+    }
+  ],
+  "nativeCases": [
+    {
+      "case": "after-speed1.2",
+      "slip": {
+        "metric": "rendered sole speed / Mega ground speed during sole contact",
+        "contactSamples": 102,
+        "p50": 0,
+        "p95": 0.0505,
+        "limit": 0.1,
+        "pass": true
+      },
+      "phaseCyclesPerS": 1.05,
+      "actualSpeedMaxMs": 1.1997,
+      "steadySwingMaxCm": 4.8,
+      "headingSamplesDeg": [
+        45.00000000000001,
+        45.00000000000001,
+        45.00000000000001,
+        45.00000000000001,
+        45.00000000000001,
+        45.00000000000001
+      ],
+      "bankSamplesDeg": [
+        -14.366981820050848,
+        -8.436502100709895,
+        1.6250933987320846,
+        13.242377963484106,
+        16.915269016695753,
+        13.867926700858193
+      ],
+      "consoleErrors": [],
+      "lod": {
+        "lod0": 120
+      }
+    },
+    {
+      "case": "after-speed6.48",
+      "slip": {
+        "metric": "rendered sole speed / Mega ground speed during sole contact",
+        "contactSamples": 53,
+        "p50": 0,
+        "p95": 0.0169,
+        "limit": 0.1,
+        "pass": true
+      },
+      "phaseCyclesPerS": 2.2,
+      "actualSpeedMaxMs": 6.4656,
+      "steadySwingMaxCm": 12.7,
+      "headingSamplesDeg": [
+        41.76696360353842,
+        42.96391856966023,
+        43.74941003942947,
+        44.25549892771027,
+        44.579545975269276,
+        44.78700548711772
+      ],
+      "bankSamplesDeg": [
+        3.3163886563146647,
+        3.9429083517801913,
+        -3.730690251970891,
+        -4.367003984440736,
+        2.647816535850577,
+        4.679727006530568
+      ],
+      "consoleErrors": [],
+      "lod": {
+        "lod0": 120
+      }
+    },
+    {
+      "case": "after-speed11",
+      "slip": {
+        "metric": "rendered sole speed / Mega ground speed during sole contact",
+        "contactSamples": 33,
+        "p50": 0.0055,
+        "p95": 0.0055,
+        "limit": 0.1,
+        "pass": true
+      },
+      "phaseCyclesPerS": 2.2,
+      "actualSpeedMaxMs": 11.0,
+      "steadySwingMaxCm": 14.2,
+      "headingSamplesDeg": [
+        45.00000000000001,
+        45.00000000000001,
+        45.00000000000001,
+        45.00000000000001,
+        45.00000000000001,
+        45.00000000000001
+      ],
+      "bankSamplesDeg": [
+        -2.721741026384302,
+        3.3619627660147247,
+        5.156892244500439,
+        -2.151686316116268,
+        -4.757868153125045,
+        0.9881064233389724
+      ],
+      "consoleErrors": [],
+      "lod": {
+        "lod0": 120
+      }
+    },
+    {
+      "case": "after-speed14",
+      "slip": {
+        "metric": "rendered sole speed / Mega ground speed during sole contact",
+        "contactSamples": 23,
+        "p50": 0.0043,
+        "p95": 0.0043,
+        "limit": 0.1,
+        "pass": true
+      },
+      "phaseCyclesPerS": 2.2,
+      "actualSpeedMaxMs": 14.0,
+      "steadySwingMaxCm": 14.2,
+      "headingSamplesDeg": [
+        45.00000000000001,
+        45.00000000000001,
+        45.00000000000001,
+        45.00000000000001,
+        45.00000000000001,
+        45.00000000000001
+      ],
+      "bankSamplesDeg": [
+        -2.7217410263843007,
+        3.3619627660147247,
+        5.156892244500439,
+        -2.151686316116268,
+        -4.757868153125045,
+        0.9881064233389724
+      ],
+      "consoleErrors": [],
+      "lod": {
+        "lod0": 120
+      }
+    },
+    {
+      "case": "after-turn",
+      "slip": {
+        "metric": "rendered sole speed / Mega ground speed during sole contact",
+        "contactSamples": 60,
+        "p50": 0,
+        "p95": 0.024,
+        "limit": 0.1,
+        "pass": true
+      },
+      "phaseCyclesPerS": 1.982,
+      "actualSpeedMaxMs": 4.8917,
+      "steadySwingMaxCm": 8.7,
+      "headingSamplesDeg": [
+        43.303802621104005,
+        46.844769209137304,
+        57.677300611986226,
+        74.36381425516946,
+        93.97979936004973,
+        112.50208573723258
+      ],
+      "bankSamplesDeg": [
+        3.5261652383935504,
+        -4.3963159109600936,
+        0.5660499959535892,
+        1.5527107087136176,
+        -7.200831780450426,
+        1.5615944090561942
+      ],
+      "consoleErrors": [],
+      "lod": {
+        "lod0": 120
+      }
+    },
+    {
+      "case": "after-zoom3-modelinf.mega-alpha",
+      "slip": {
+        "metric": "rendered sole speed / Mega ground speed during sole contact",
+        "contactSamples": 58,
+        "p50": 0,
+        "p95": 0.0161,
+        "limit": 0.1,
+        "pass": true
+      },
+      "phaseCyclesPerS": 2.2,
+      "actualSpeedMaxMs": 5.3937,
+      "steadySwingMaxCm": 9.9,
+      "headingSamplesDeg": [
+        43.303802621104005,
+        43.83039496787275,
+        44.23994256968432,
+        44.52445952006124,
+        44.71362945487205,
+        44.83713486977997
+      ],
+      "bankSamplesDeg": [
+        3.5261712188134378,
+        4.280317323732174,
+        -3.6529845000413634,
+        -4.492864940512151,
+        2.5874022994787844,
+        4.635329086761421
+      ],
+      "consoleErrors": [],
+      "lod": {
+        "lod2": 120
+      }
+    }
+  ],
+  "specialMoves": [
+    {
+      "scene": "l10-mega-charge",
+      "pass": true,
+      "consoleErrors": [],
+      "stages": [
+        {
+          "frame": 47,
+          "sourceId": 3,
+          "move": "alpha.charge",
+          "stage": "active"
+        },
+        {
+          "frame": 106,
+          "sourceId": 3,
+          "move": "alpha.charge",
+          "stage": "recovery"
+        }
+      ],
+      "clipping": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 0,
+        "actorHits": 0,
+        "piercing": 0
+      }
+    },
+    {
+      "scene": "l10-mega-slam",
+      "pass": true,
+      "consoleErrors": [],
+      "stages": [
+        {
+          "frame": 59,
+          "sourceId": 3,
+          "move": "alpha.ground-slam",
+          "stage": "active"
+        },
+        {
+          "frame": 59,
+          "sourceId": 3,
+          "move": "alpha.ground-slam",
+          "stage": "recovery"
+        },
+        {
+          "frame": 131,
+          "sourceId": 3,
+          "move": "alpha.ground-slam",
+          "stage": "expiry"
+        }
+      ],
+      "clipping": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 0,
+        "actorHits": 0,
+        "piercing": 0
+      }
+    },
+    {
+      "scene": "l10-mega-grab",
+      "pass": true,
+      "consoleErrors": [],
+      "stages": [
+        {
+          "frame": 47,
+          "sourceId": 3,
+          "move": "alpha.grab-throw",
+          "stage": "active"
+        },
+        {
+          "frame": 47,
+          "sourceId": 3,
+          "move": "alpha.grab-throw",
+          "stage": "recovery"
+        },
+        {
+          "frame": 119,
+          "sourceId": 3,
+          "move": "alpha.grab-throw",
+          "stage": "expiry"
+        }
+      ],
+      "clipping": {
+        "gunBodyHits": 0,
+        "staticPairs": 0,
+        "heldPropHits": 0,
+        "actorHits": 0,
+        "piercing": 0
+      }
+    }
+  ],
+  "epicGate": {
+    "target": "E07",
+    "epics": [
+      "E07"
+    ],
+    "checks": [
+      {
+        "command": "npm run typecheck",
+        "status": 0,
+        "seconds": 20.221
+      },
+      {
+        "command": "npm run lint",
+        "status": 0,
+        "seconds": 8.795
+      },
+      {
+        "command": "npm test",
+        "status": 0,
+        "seconds": 30.17
+      }
+    ]
+  },
+  "webgl2Smoke": [
+    {
+      "file": "e2e/crowd-gpu-limits.spec.ts",
+      "title": "every crowd, corpse and accessory program compiles within the portable GPU limits on webgl @smoke",
+      "status": "passed",
+      "receipt": "test-results/r15-megarun/smoke.json"
+    },
+    {
+      "file": "e2e/smoke.spec.ts",
+      "title": "L1 handover + outbreak: no shader builds after warm-up and no frame over 200 ms @smoke",
+      "status": "passed",
+      "receipt": "test-results/r15-megarun/smoke-rerun.json"
+    },
+    {
+      "file": "e2e/smoke.spec.ts",
+      "title": "L1 start: pedestrians are drawn on screen (webgl), not only their props @smoke",
+      "status": "passed",
+      "receipt": "test-results/r15-megarun/smoke.json"
+    }
+  ],
+  "boardingFixtureAudit": {
+    "baseline": {
+      "count": 14,
+      "seated": 14,
+      "megaId": 0,
+      "boardable": false,
+      "haleFallen": false,
+      "haleKeys": false,
+      "departureAt": 0,
+      "phase": "playing",
+      "escape": "active"
+    },
+    "after": {
+      "count": 14,
+      "seated": 14,
+      "megaId": 0,
+      "boardable": true,
+      "haleFallen": true,
+      "haleKeys": true,
+      "departureAt": 0,
+      "phase": "playing",
+      "escape": "active"
+    }
+  }
+}

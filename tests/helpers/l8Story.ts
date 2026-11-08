@@ -129,7 +129,16 @@ export async function checkL8Story(): Promise<void> {
     expect(lines).toContain('L8.following'); expect(zoo.cameraPose()).not.toBeNull();
     const megaFrom = { ...world.entities.get(zoo.state.megaId)!.transform };
     const wheelFrom = world.vehicles!.cars.get(carId)!.physics.wheels[0].rotation;
-    for (let i = 0; i < 480; i++) { world.tick++; zoo.update(); }
+    // Exercise the story and AgentMotion together: scripted displacement must
+    // enter the distance-driven gait once, not once in each publisher.
+    mission.state.phase = 'playing'; mission.state.cinematic = null;
+    world.applyInput(emptyInput(), 'keyboard'); world.update();
+    const movingMega = world.entities.get(zoo.state.megaId)!, beforeMotion = movingMega.motion!.distance, beforePosition = { ...movingMega.transform };
+    world.update();
+    const travelled = Math.hypot(movingMega.transform.x - beforePosition.x, movingMega.transform.z - beforePosition.z);
+    expect(travelled, 'the scripted Mega actually moves during the measured tick').toBeGreaterThan(.05);
+    expect(movingMega.motion!.distance - beforeMotion, 'Mega gait distance equals resolved story displacement').toBeCloseTo(travelled, 6);
+    for (let i = 2; i < 480; i++) { world.tick++; zoo.update(); }
     expect(car.transform.x, 'the APC physically exits through the east gate').toBeGreaterThan(116);
     expect(car.transform.z).toBe(80); expect(mission.state.states.departed).toBe(true);
     expect(world.vehicles!.cars.get(carId)!.physics.wheels[0].rotation).toBeGreaterThan(wheelFrom + 1);

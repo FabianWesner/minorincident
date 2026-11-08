@@ -65,6 +65,7 @@ export const hitFlashTicks = 8;
  * else the brain's jittered run speed (frail 4.7, average 5.1, athletic 5.6 m/s). */
 /** Upright human archetypes: their LOD band uses at least the standing height (crawlers stay low to the ground). */
 const standingHumans = new Set(humanInfected.filter(def => def.id !== 'infected.crawler').map(def => def.id));
+const megaCycleRate = 2.2;
 function tierGait(b: { speed?: number; tier?: string; l1?: { tier: string } }): 'infected-frail' | 'infected-lurch' | 'infected-sprint' {
   const tier = b.l1?.tier ?? b.tier, speed = b.speed ?? 5;
   if (tier === 'frail' || tier === 'athletic' || tier === 'average') return tier === 'frail' ? 'infected-frail' : tier === 'athletic' ? 'infected-sprint' : 'infected-lurch';
@@ -418,7 +419,7 @@ export class CrowdView extends Group {
       }
       baked.geometry.userData.crowdLod = lod;
       const locomotion = new CrowdLocomotion(model, baked.clip, this.footwork);
-      const probe = new CrowdFigureProbe(); probe.lod = lod; probe.sole = locomotion.sole; if (model.getObjectByName('legFL') || model.getObjectByName('root')?.userData.crowdQuadruped === true) probe.animal(model);
+      const probe = new CrowdFigureProbe(); probe.lod = lod; probe.sole = locomotion.sole; if (model.getObjectByName('legFL') || model.getObjectByName('root')?.userData.crowdQuadruped === true || alphaLooks['inf.mega-alpha'].includes(asset)) probe.animal(model);
       if (!baked.clip.binds || !baked.geometry.hasAttribute('_skin')) throw new Error(`${asset} is missing the v2 skinned crowd contract`);
       this.accessories?.registerSkull(asset, baked.geometry);
       const poses = new CrowdPosePalette(baked.clip, capacity), texture = poses.texture;
@@ -723,7 +724,14 @@ export class CrowdView extends Group {
         ? 'death-back'
         : e.archetype === 'infected.crawler' ? 'death-side' : corpsePose(e.id);
       // Q-292 sweep: a moving crawler (or legless body) crawls too; the upright shamble on a prone body slid 30 cm per step.
-      let clip: typeof infectedClips[number] = b.state === 'dead' ? death : b.legLost || e.archetype === 'infected.crawler' ? 'crawl' : b.state === 'attack' && motion.speed <= .06 ? this.world.tick < b.until ? 'windup' : 'swing' : motion.speed > 2 ? tierGait(b as { speed?: number; tier?: string; l1?: { tier: string } }) : motion.speed > .06 ? 'shamble' : (b.state as string) === 'search' || (b.state as string) === 'attracted' ? 'infected-search' : 'infected-idle';
+      const mega = isMega(e) || alphaLooks['inf.mega-alpha'].includes(def.asset);
+      const movingClip = motion.speed > 2
+        ? mega ? 'infected-sprint' : tierGait(b as { speed?: number; tier?: string; l1?: { tier: string } })
+        : motion.speed > .06 ? mega ? 'infected-lurch' : 'shamble' : null;
+      let clip: typeof infectedClips[number] = b.state === 'dead' ? death
+        : b.legLost || e.archetype === 'infected.crawler' ? 'crawl'
+          : b.state === 'attack' && motion.speed <= .06 ? this.world.tick < b.until ? 'windup' : 'swing'
+            : movingClip ?? ((b.state as string) === 'search' || (b.state as string) === 'attracted' ? 'infected-search' : 'infected-idle');
       // Heavy reactions (deaths, finishers, kicks, blasts) knock down and get up, also while knocked back; light hits only flinch (InfectedMoves).
       const heavy = !!reaction?.heavy && tick < reaction.until && b.state !== 'dead';
       if (heavy) clip = age < .48 ? reaction!.index % 2 ? 'knockdown' : 'flung' : age < .7 ? 'knockdown' : 'get-up';
@@ -740,9 +748,12 @@ export class CrowdView extends Group {
       if (specialAttack?.move === 'zebra.kick') clip = 'zebra-rear-kick';
       if (specialAttack?.move === 'zebra.stampede' && specialAttack.stage === 'active') clip = 'zebra-stampede';
       if (specialAttack?.move === 'flamingo.dive' && specialAttack.stage === 'active') clip = 'run';
+      const heavyGait = mega && !heavy && !specialAttack && b.state !== 'attack' && b.state !== 'dead';
+      const megaRun = Math.max(0, Math.min(1, (motion.speed - 1.5) / 1.5));
+      const megaRate = 1.05 + (megaCycleRate - 1.05) * megaRun;
       const duration = authoredClips.get(clip)?.duration ?? 1;
       const dogWindupTicks = Math.ceil(batch.windup * 60), dogBiteT = renderTick - (b.until - dogWindupTicks);
-      const phase = clip === 'dog-lunge-bite' ? Math.max(0, Math.min(1, dogBiteT < dogWindupTicks ? .4 * dogBiteT / dogWindupTicks : .4 + .6 * (dogBiteT - dogWindupTicks) / 24)) : clip === 'zebra-rear-kick' && specialAttack ? Math.min(1, (renderTick - specialAttack.startTick) / (specialAttack.activeTick - specialAttack.startTick + 36)) : clip === 'zebra-stampede' && specialAttack ? .5 + ((renderTick - specialAttack.activeTick) / 32 % 1) / 3 : e.infectionRise ? Math.min(1, (this.world.tick - e.infectionRise.started) / (e.infectionRise.until - e.infectionRise.started)) : b.state === 'dead' ? (reaction?.groundDeath ? 1 : Math.min(1, (this.world.tick - b.deadAt) / 60 / duration)) - InfectedMoves.stir(e, renderTick, duration) : clip === 'windup' ? e.infected?.specialAttack ? Math.min(1, (renderTick - e.infected.specialAttack.startTick) / (e.infected.specialAttack.activeTick - e.infected.specialAttack.startTick)) : Math.max(0, Math.min(1, 1 - (b.until - this.world.tick) / (batch.windup * 60))) : reaction && clip === 'get-up' ? Math.min(1, (age - .7) / getUpSpan(reaction)) : reaction && ['flung', 'knockdown', 'stagger-left', 'stagger-right'].includes(clip) ? Math.min(1, age / (reaction.heavy ? .48 : (reaction.until - reaction.started) / 60)) : strides[clip] ? this.gait.sample(e.id, gaitDistance, batch.animal ? clip === 'dog-gallop' ? 'corgi-gallop' : 'corgi-trot' : clip, batch.strideScale, motion.speed) : (renderTick / 60 + e.id * .137) / duration % 1;
+      const phase = clip === 'dog-lunge-bite' ? Math.max(0, Math.min(1, dogBiteT < dogWindupTicks ? .4 * dogBiteT / dogWindupTicks : .4 + .6 * (dogBiteT - dogWindupTicks) / 24)) : clip === 'zebra-rear-kick' && specialAttack ? Math.min(1, (renderTick - specialAttack.startTick) / (specialAttack.activeTick - specialAttack.startTick + 36)) : clip === 'zebra-stampede' && specialAttack ? .5 + ((renderTick - specialAttack.activeTick) / 32 % 1) / 3 : e.infectionRise ? Math.min(1, (this.world.tick - e.infectionRise.started) / (e.infectionRise.until - e.infectionRise.started)) : b.state === 'dead' ? (reaction?.groundDeath ? 1 : Math.min(1, (this.world.tick - b.deadAt) / 60 / duration)) - InfectedMoves.stir(e, renderTick, duration) : clip === 'windup' ? e.infected?.specialAttack ? Math.min(1, (renderTick - e.infected.specialAttack.startTick) / (e.infected.specialAttack.activeTick - e.infected.specialAttack.startTick)) : Math.max(0, Math.min(1, 1 - (b.until - this.world.tick) / (batch.windup * 60))) : reaction && clip === 'get-up' ? Math.min(1, (age - .7) / getUpSpan(reaction)) : reaction && ['flung', 'knockdown', 'stagger-left', 'stagger-right'].includes(clip) ? Math.min(1, age / (reaction.heavy ? .48 : (reaction.until - reaction.started) / 60)) : strides[clip] ? this.gait.sample(e.id, gaitDistance, batch.animal ? clip === 'dog-gallop' ? 'corgi-gallop' : 'corgi-trot' : clip, batch.strideScale, motion.speed, heavyGait ? megaRate : undefined) : (renderTick / 60 + e.id * .137) / duration % 1;
       let frame = infectedClips.indexOf(clip) * framesPerClip + phase * (framesPerClip - 1);
       const tint = batch.animal ? batch.role === 'inf.dog' && batch.lod === 'lod1' ? this.dogCoatTints[Number(key === 'inf.dog.cream')] : batch.shirt : crowdShirt(e.id);
       const presented = this.presentation.sample(e.id, e.transform, this.world.tick, alpha);
@@ -781,6 +792,21 @@ export class CrowdView extends Group {
         const crawling = b.legLost || e.archetype === 'infected.crawler' || clip === 'crawl', moving = !!strides[clip] && motion.speed > .06;
         const lurchScale = this.world.scenario === 'L10' && e.archetype === 'infected.runner' ? .35 : 1;
         const { layers, style } = this.moves.sample(e, b.state, b.until, batch.windup, renderTick, presented.yaw, motion.speed, moving ? clip : undefined, lurchScale);
+        if (heavyGait) {
+          // Refit the existing zombie clips to the broad Mega: long low steps,
+          // calm shoulders, and flat shoe plants about a steady crouched hip.
+          layers.bodyLean = (28 + 4 * megaRun) * Math.PI / 180;
+          layers.heavyGait = 1;
+          layers.lurch = moving ? .18 : 0;
+          layers.roll = Math.max(-.2, Math.min(.2, -this.presentation.turnRate(e.id) * .025));
+          style.drag = 0;
+          style.stance = Math.min(.56 - .24 * megaRun, .8 * megaRate / Math.max(1, motion.speed));
+          style.knee = .55 + .13 * megaRun;
+          style.stepRate = megaRate;
+          style.maxLift = .08 + .06 * megaRun;
+          style.pelvisHeight = 1.15;
+          style.footRoll = 0;
+        }
         if (this.world.scenario === 'L10' && e.archetype === 'infected.runner' && moving && !heavy) layers.maxBodyLean = 38 * Math.PI / 180;
         // G-17: standing and walking infected never lean past the 42 degree acceptance limit (idle hunch read 45-52 degrees on the womanB/manB rigs); attacks and crawlers keep their authored reach.
         if (!heavy && !specialAttack && !crawling && b.state !== 'dead' && b.state !== 'attack') layers.maxBodyLean = Math.min(layers.maxBodyLean ?? Infinity, 40 * Math.PI / 180);
@@ -793,7 +819,7 @@ export class CrowdView extends Group {
           // Combat reach is unchanged; only the added forward body throw yields.
           layers.lunge = Math.min(layers.lunge ?? 0, 0); layers.lean = -.25; layers.lurch = 0;
         }
-        const layered = !crawling && (layers.maxBodyLean || layers.lean || layers.lunge || layers.flinch || layers.lurch || layers.chestBeat || layers.trunkSwipe || layers.throwPose || layers.shieldBreak) ? layers : undefined;
+        const layered = !crawling && (layers.maxBodyLean || layers.lean || layers.lunge || layers.flinch || layers.lurch || layers.chestBeat || layers.trunkSwipe || layers.throwPose || layers.shieldBreak || layers.heavyGait) ? layers : undefined;
         // Match the low L4 gait budget to its sixteen closest detailed bodies.
         // Contact-range actors and action poses keep the full leg solve; other
         // moving runners retain the existing procedural ground-contact solver.

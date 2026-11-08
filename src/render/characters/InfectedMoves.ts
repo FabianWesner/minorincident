@@ -40,7 +40,9 @@ export class InfectedMoves {
   sample(e: EntitySnapshot, state: string, until: number, windup: number, renderTick: number, yaw: number, speed: number, gait: string | undefined, lurchScale = 1): { layers: CrowdLayers; style: GaitStyle } {
     const layers = this.layers, style = this.style;
     layers.maxBodyLean = undefined;
-    layers.lean = layers.roll = layers.lunge = layers.lurch = layers.flinch = layers.chestBeat = layers.trunkSwipe = layers.throwPose = layers.shieldBreak = 0; style.drag = 0; style.dragFoot = e.id % 2;
+    layers.bodyLean = undefined;
+    layers.lean = layers.roll = layers.lunge = layers.lurch = layers.flinch = layers.chestBeat = layers.trunkSwipe = layers.throwPose = layers.shieldBreak = layers.heavyGait = 0;
+    style.drag = 0; style.dragFoot = e.id % 2; style.stance = style.knee = style.maxSwing = style.stepRate = style.maxLift = style.pelvisHeight = style.footRoll = undefined;
     if (e.archetype === 'infected.riot' && (e.combat?.shieldBrokenUntil ?? 0) > renderTick) {
       const age = renderTick - (e.combat?.shieldBrokenAt ?? renderTick), remain = (e.combat?.shieldBrokenUntil ?? renderTick) - renderTick;
       layers.shieldBreak = ease(Math.min(1, age / 10, remain / 10));
