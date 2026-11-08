@@ -19,6 +19,7 @@ import { PickBodies } from '../../src/render/characters/PickBodies';
 import { CrowdView } from '../../src/render/CrowdView';
 import type { SimWorld } from '../../src/sim/world/SimWorld';
 import { Lighting } from '../../src/render/Lighting';
+import { LightField } from '../../src/render/LightField';
 import { corpseLod, crowdLod, pickLod, propLod } from '../../src/render/lodPolicy';
 import { Materials } from '../../src/render/Materials';
 import type { PaletteMaterial } from '../../src/render/PaletteMaterial';
@@ -31,7 +32,7 @@ import { crowdGunHolds, longGunHolds } from '../../src/render/characters/GunAim'
 import type { EntitySnapshot } from '../../src/sim/world/types';
 import { crowdWeaponGeometry, crowdWeaponAssets } from '../../src/render/npc/crowdWeapons';
 import { isCrowdVariant, registerCrowdModel } from '../../src/render/crowdModels';
-import { installTextureBindingIdentity } from '../../src/render/Renderer';
+import { Renderer, installTextureBindingIdentity } from '../../src/render/Renderer';
 import { crowdSurfaceBindings, crowdTextureForDraw } from '../../src/render/characters/crowdTexture';
 import { addHighwayRailJoints } from '../../src/assets/highwayRailJoints';
 import { InstancedGroup } from '../../src/render/InstancedGroup';
@@ -54,6 +55,39 @@ import { resolveRig, disposeCharacter } from '../../src/render/characters/rig';
 import { heroineStandingHeight } from '../../src/render/npc/figureHeight';
 import { CorpseLayout } from '../../src/render/characters/CorpseLayout';
 import { Vfx } from '../../src/render/vfx/Vfx';
+
+async function checkWarmPipelineDraws(): Promise<void> {
+  {
+
+  const object = { pipeline: {} }, submitted: typeof object[] = [];
+  let created = false, linked = false, release!: () => void;
+  const link = new Promise<void>(resolve => { release = () => { linked = true; resolve(); }; });
+  const backend = {
+    createRenderPipeline(_object: typeof object, promises: Promise<unknown>[] | null) {
+      expect(promises).not.toBeNull(); created = true; promises!.push(link);
+    },
+    draw(value: typeof object) { expect(linked).toBe(true); submitted.push(value); },
+  };
+  const create = backend.createRenderPipeline, draw = backend.draw, nextNodeFrame = vi.fn();
+  const renderer = { backend, nextNodeFrame } as unknown as Renderer;
+  const warming = Renderer.prototype.prepareWarmRender.call(renderer, () => {
+    if (!created) backend.createRenderPipeline(object, null);
+    backend.draw(object);
+  });
+  expect(submitted).toEqual([]);
+  expect(backend.createRenderPipeline).toBe(create); expect(backend.draw).toBe(draw);
+  release(); await warming;
+  expect(submitted).toEqual([object]); expect(nextNodeFrame).toHaveBeenCalledTimes(2);
+  expect(backend.createRenderPipeline).toBe(create); expect(backend.draw).toBe(draw);
+  }
+  {
+
+  const backend = { createRenderPipeline: vi.fn(), draw: vi.fn() }, create = backend.createRenderPipeline, draw = backend.draw;
+  const renderer = { backend, nextNodeFrame: vi.fn() } as unknown as Renderer;
+  await expect(Renderer.prototype.prepareWarmRender.call(renderer, () => { throw new Error('failed draw'); })).rejects.toThrow('failed draw');
+  expect(backend.createRenderPipeline).toBe(create); expect(backend.draw).toBe(draw);
+  }
+}
 
 function checkFractionalCrowdPicking(): void {
   const matrices = new Float32Array(32);
@@ -655,10 +689,67 @@ test('materials: palette program keys match Three through weather and node chang
       expect(lighting.sun.shadow.intensity).toBe(Number(!spot)); expect(lighting.spot.shadow.intensity).toBe(Number(spot));
       expect([lighting.sun.shadow, lighting.spot.shadow].map(shadow => (shadow as typeof shadow & { filterNode: unknown }).filterNode)).toEqual(filters);
     });
+    lighting.set('night'); lighting.field.strength.value = 1;
+    const focus = { x: 4, y: 0, z: -2 };
+    lighting.setHeroLight({ x: 0, z: 0, id: 'moving-headlight', y: 5, radius: 6, aimX: 0, aimZ: 0, stretch: 1, r: 1, g: 1, b: 1, flicker: 0, strobe: false, seed: 0, on: true, hero: true }, focus, 3);
+    expect(lighting.spot.target.position.toArray()).toEqual([focus.x, focus.y, focus.z]);
+    expect(lighting.spot.angle).toBeCloseTo(Math.atan2(6, Math.hypot(4, 5, 2)));
+    expect(lighting.spot.distance).toBeGreaterThan(10);
+    const moving = { x: 1, z: 0, id: 'moving-headlight', y: 5, radius: 6, aimX: 0, aimZ: 0, stretch: 1, r: 1, g: 1, b: 1, flicker: 0 as const, strobe: false, seed: 0, on: true, hero: true };
+    lighting.setHeroLight(moving, focus, 3.3);
+    expect(lighting.spot.position.x).toBeCloseTo(1);
+    expect(lighting.getState().promotionChanges).toBe(1);
+    // A brighter overlapping lamp replaces a weaker one while still inside its
+    // pool. Fade through zero before changing direction: only one map refreshes.
+    const brighter = { ...moving, id: 'brighter', x: 8, z: -4, r: 8, g: 8, b: 8 };
+    for (const [time, fade] of [[10, 1], [10.075, .5], [10.15, 0], [10.225, .5], [10.3, 1]]) {
+      lighting.setHeroLight(brighter, focus, time);
+      expect(lighting.getState().heroLight).toBe('brighter');
+      expect(lighting.spot.shadow.intensity).toBeCloseTo(fade);
+      expect(Number(lighting.sun.shadow.autoUpdate) + Number(lighting.spot.shadow.autoUpdate)).toBe(1);
+      if (time === 10) expect(lighting.spot.position.x).toBe(1);
+    }
+    expect(lighting.spot.position.x).toBe(8); expect(lighting.getState().promotionChanges).toBe(2);
+    lighting.setHeroLight(null, focus, 11); lighting.setHeroLight(null, focus, 11.3);
+    expect(lighting.sun.shadow.intensity).toBe(1); expect(lighting.spot.shadow.intensity).toBe(0);
+    expect(lighting.sun.shadow.autoUpdate).toBe(true); expect(lighting.getState().fieldShadow).toBe(0);
+    // Moon/local handoffs and power loss share the same promotion cooldown.
+    lighting.setHeroLight(brighter, focus, 11.4);
+    expect(lighting.getState().heroLight).toBeNull();
+    lighting.setHeroLight(brighter, focus, 11.5);
+    const changes = lighting.getState().promotionChanges;
+    brighter.on = false;
+    lighting.setHeroLight(moving, focus, 11.6);
+    expect(lighting.getState().promotionChanges).toBe(changes);
+    lighting.setHeroLight(moving, focus, 11.8);
+    expect(lighting.spot.shadow.intensity).toBe(0);
+    lighting.setHeroLight(moving, focus, 12);
+    expect(lighting.getState().promotionChanges).toBe(changes + 1);
+    // Subway headlamps keep their forward target; the low underground tier
+    // still has no spot shadow, while outdoor L6 practicals retain theirs.
+    lighting.set('L6-subway'); lighting.setQuality('low');
+    const headlamp = { ...moving, id: 'headlamp', x: focus.x, z: focus.z, y: 1, aimX: 6 };
+    lighting.setHeroLight(headlamp, focus, 0);
+    expect(lighting.spot.target.position.x).toBe(focus.x + 6); expect(lighting.spot.shadow.intensity).toBe(0);
+    lighting.set('L6'); lighting.setHeroLight(moving, focus, 0);
+    expect(lighting.spot.shadow.intensity).toBe(1);
+    const field = new LightField();
+    try {
+      field.strength.value = 1; field.push(moving); expect(field.heroAt(focus.x, focus.z)).toBe(moving);
+      const beam = { ...moving, x: 0, z: 0, aimX: 6, radius: 3, stretch: 3 };
+      expect(field.heroStrength(beam, 0, 0)).toBeGreaterThan(.02);
+      expect(field.heroStrength({ ...beam, stretch: 1 }, 0, 0)).toBe(0);
+      const blocked = { ...moving, visibility: [[moving.x, moving.z], ...Array.from({ length: 65 }, (_, i) => [moving.x + Math.cos(i / 64 * Math.PI * 2), moving.z + Math.sin(i / 64 * Math.PI * 2)])] as [number, number][] };
+      expect(field.heroStrength(blocked, focus.x, focus.z)).toBe(0);
+      const fire = field.addTransient(focus, '#ffbb55', 10, 4, 10, true);
+      expect(field.heroAt(focus.x, focus.z)?.id).toMatch(/^transient-/);
+      fire.remove(); expect(field.heroAt(focus.x, focus.z)).toBe(moving);
+    }
+    finally { field.dispose(); }
   } finally { materials.dispose(); lighting.dispose(); }
 });
 
-test('texture route: lossless 256-byte-aligned float uploads; cold WebGPU atlases map, warm ones reuse Three, ranges write rows', () => {
+test('texture route: lossless 256-byte-aligned float uploads; cold WebGPU atlases map, warm ones reuse Three, ranges write rows', async () => {
   let bytes = new ArrayBuffer(0);
   const buffer = { getMappedRange: () => bytes, unmap: vi.fn(), destroy: vi.fn() };
   const command = {}, encoder = { copyBufferToTexture: vi.fn(), finish: () => command };
@@ -678,6 +769,7 @@ test('texture route: lossless 256-byte-aligned float uploads; cold WebGPU atlase
   backend.updateTexture(texture, {}); expect(original).toHaveBeenCalledOnce();
   texture.addUpdateRange(96, 32); backend.updateTexture(texture, {}); expect(write).toHaveBeenCalledOnce();
   texture.dispose();
+  await checkWarmPipelineDraws();
 });
 
 test('switching equal-version colour and pose textures refreshes the GPU binding, including cloned render bindings', () => {

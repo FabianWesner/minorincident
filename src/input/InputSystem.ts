@@ -130,7 +130,7 @@ export class InputSystem implements Lifecycle {
     this.scheme = scheme; this.hint.dataset.scheme = scheme;
     this.hint.textContent = this.drivingContext && scheme !== 'touch' ? scheme === 'mouse-only'
       ? 'Hold LMB and steer toward the cursor · release to brake · E / F exit'
-      : 'WASD drive · LEFT to horn / boost · E / F exit' : {
+      : 'WASD / arrows choose screen direction · LEFT to horn / boost · E / F exit' : {
       'mouse-only': 'WASD / arrows move · mouse aims · LMB shoots · Space aim assist · Q / RMB switch · E / F interact · 1–9 slots',
       'mouse-keyboard': 'WASD / arrows move · mouse aims · LMB shoots · Space aim assist · Q / RMB switch · E / F interact · 1–9 slots',
       keyboard: 'WASD / arrows move · J / K / Space aim assist · 1–9 slots · Q · E / F interact',
@@ -142,6 +142,11 @@ export class InputSystem implements Lifecycle {
   };
   /** Explicit HUD/device action, shared by pointer buttons and the keyboard/touch frame. */
   interactOnce(): void { this.interact = true; }
+  /** HUD weapon-slot click/tap: exactly the number-key path (same frame field, so replays and telemetry see the same event). */
+  selectWeaponKey(key: number): boolean {
+    if (!Number.isInteger(key) || key < 1 || key > 9 || this.drivingContext || this.mountedGunContext) return false;
+    this.selectedWeaponKey = key; return true;
+  }
   private moving(): boolean { return this.active.has('moveUp') || this.active.has('moveDown') || this.active.has('moveLeft') || this.active.has('moveRight'); }
   private keyboardAttackHeld(): boolean {
     for (const [code, action] of this.heldTokens) if (!code.startsWith('Mouse') && (action === 'left' || action === 'right')) return true;
@@ -218,7 +223,7 @@ export class InputSystem implements Lifecycle {
     const driveY = this.drivingContext && this.aiming() ? this.axis('aimDown', 'aimUp') : y;
     this.driving.throttle = driveY ? -driveY : 0; this.driving.steer = driveX; if (this.scheme === 'keyboard' || this.scheme === 'mouse-keyboard') frame.drive = this.driving; else delete frame.drive; frame.brake = false;
     if (this.scheme === 'keyboard' || this.scheme === 'mouse-keyboard') {
-      this.screenVector(x, y, frame.move); const length = Math.hypot(frame.move.x, frame.move.z);
+      this.screenVector(this.drivingContext ? driveX : x, this.drivingContext ? driveY : y, frame.move); const length = Math.hypot(frame.move.x, frame.move.z);
       if (length > 1) { frame.move.x /= length; frame.move.z /= length; }
     }
     const keyboardFireOwnsAim = mouseAim && this.keyboardAttackHeld() && !this.pointer.isHeld(0);

@@ -1,0 +1,930 @@
+{
+  "method": "Real-clock mortal physical input L7-default seed1, Metal WebGL2 1280x800, shotgun selected below6m, captions/HUD, no skip/God/teleport/injected driver; read-only steering advice",
+  "rows": [
+    {
+      "tier": "low",
+      "source": {
+        "revision": "2c178f951289f28cb33180137bcae18446c630fb",
+        "sourceGameTree": "320a2d457e9a124fa3ee97daa2da6ef73356ce62",
+        "producerSha256": "31a75b80834968322d632d30b5b12864d4eb1eb76166d61457c53451252d1897"
+      },
+      "result": {
+        "time": 125.68333333333334,
+        "kills": 248,
+        "knockdowns": 1,
+        "damage": 160,
+        "deaths": 1,
+        "rescued": 21,
+        "optionalObjectives": [],
+        "survivors": [
+          "shelter-16",
+          "shelter-10",
+          "shelter-3",
+          "shelter-4",
+          "shelter-5",
+          "shelter-0",
+          "shelter-1",
+          "shelter-2",
+          "shelter-7",
+          "shelter-8",
+          "shelter-9",
+          "shelter-6",
+          "shelter-11",
+          "shelter-12",
+          "shelter-13",
+          "shelter-14",
+          "shelter-15",
+          "shelter-17",
+          "shelter-18",
+          "shelter-19",
+          "shelter-20"
+        ]
+      },
+      "boardedIds": [
+        67,
+        61,
+        54,
+        55,
+        56,
+        51,
+        52,
+        53,
+        58,
+        59,
+        60,
+        57,
+        62,
+        63,
+        64,
+        65,
+        66,
+        68,
+        69,
+        70,
+        71
+      ],
+      "driverSummary": [
+        {
+          "level": "L7",
+          "entry": "debug",
+          "heroine": "female",
+          "finished": true,
+          "skipped": [],
+          "wallSeconds": 129,
+          "simSeconds": 0,
+          "maxNoProgressSeconds": 8.85,
+          "deaths": 1,
+          "assists": 0,
+          "attacks": {
+            "weapon.shotgun": 46,
+            "weapon.rocket-launcher": 37
+          },
+          "weaponsStart": [
+            "weapon.bat",
+            "weapon.fire-axe",
+            "weapon.handgun",
+            "weapon.army-mg",
+            "weapon.shotgun"
+          ],
+          "weaponsEnd": [
+            "weapon.bat",
+            "weapon.fire-axe",
+            "weapon.handgun",
+            "weapon.army-mg",
+            "weapon.shotgun",
+            "weapon.rocket-launcher"
+          ],
+          "steps": [
+            {
+              "id": "rocket",
+              "text": "Recover the rocket launcher beside the exit \u00b7 3\u00a0m",
+              "tick": 7,
+              "marker": {
+                "anchor": "l7-rocket",
+                "ring": {
+                  "x": 276,
+                  "y": 3.9,
+                  "z": 15
+                },
+                "drawn": [
+                  276,
+                  3.9,
+                  15
+                ],
+                "playerY": 4.619999885559082,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "corridor",
+              "text": "Bring the group to the evacuation corridor \u00b7 Group 24/24 nearby \u00b7 306\u00a0m",
+              "tick": 50,
+              "marker": {
+                "anchor": "l7-corridor-east",
+                "ring": {
+                  "x": -30,
+                  "y": 0,
+                  "z": 50
+                },
+                "drawn": [
+                  -30,
+                  0.13,
+                  50
+                ],
+                "playerY": 4.619999885559082,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "departure",
+              "text": "Get everyone aboard the bus \u00b7 46\u00a0m",
+              "tick": 4722,
+              "marker": {
+                "anchor": "l7-bus-boarding",
+                "ring": {
+                  "x": -70.5,
+                  "y": 0,
+                  "z": 47.5
+                },
+                "drawn": [
+                  -70.5,
+                  0,
+                  47.5
+                ],
+                "playerY": 0.8500000238418579,
+                "pinVisible": true
+              }
+            }
+          ]
+        }
+      ],
+      "backend": "webgl",
+      "quality": "low",
+      "routePhotos": [
+        {
+          "file": "captures/L7-low-L7-opening-low-z1-5.jpg",
+          "stage": "opening",
+          "tick": 233,
+          "position": {
+            "x": 267.57129776105285,
+            "z": 16.989737309515476
+          },
+          "quality": "low",
+          "zoom": 1.5
+        },
+        {
+          "file": "captures/L7-low-L7-corridor-low-z1-5.jpg",
+          "stage": "corridor",
+          "tick": 3368,
+          "position": {
+            "x": 52.437843322753906,
+            "z": 43.40402603149414
+          },
+          "quality": "low",
+          "zoom": 1.5
+        },
+        {
+          "file": "captures/L7-low-L7-bus-low-z1-5.jpg",
+          "stage": "bus",
+          "tick": 5173,
+          "position": {
+            "x": -46.41102600097656,
+            "z": 49.544776916503906
+          },
+          "quality": "low",
+          "zoom": 1.5
+        },
+        {
+          "file": "captures/L7-low-L7-bus-low-z0-8.jpg",
+          "stage": "bus",
+          "tick": 5173,
+          "position": {
+            "x": -46.41102600097656,
+            "z": 49.544776916503906
+          },
+          "quality": "low",
+          "zoom": 0.8
+        }
+      ],
+      "departurePhotos": [
+        {
+          "file": "captures/L7-low-L7-departure-0-5.jpg",
+          "requestedSeconds": 0.5,
+          "tick": 7094,
+          "seconds": 1.55,
+          "bus": {
+            "x": -69.16633693415638,
+            "y": 0.7,
+            "z": 47,
+            "yaw": 0
+          },
+          "boarded": [
+            67,
+            61,
+            54,
+            55,
+            56,
+            51,
+            52,
+            53,
+            58,
+            59,
+            60,
+            57,
+            62,
+            63,
+            64,
+            65,
+            66,
+            68,
+            69,
+            70,
+            71
+          ],
+          "captureTick": 7098,
+          "actualZoom": 1.5,
+          "targetZoom": 1.5,
+          "actualQuality": "low",
+          "survivor": {
+            "variant": "female",
+            "gearTier": 4
+          },
+          "healthBars": {
+            "count": 0,
+            "draws": 0,
+            "bars": []
+          },
+          "followedActors": []
+        },
+        {
+          "file": "captures/L7-low-L7-departure-wide-z0-8.jpg",
+          "requestedSeconds": 0.5,
+          "tick": 7094,
+          "seconds": 1.55,
+          "bus": {
+            "x": -69.16633693415638,
+            "y": 0.7,
+            "z": 47,
+            "yaw": 0
+          },
+          "boarded": [
+            67,
+            61,
+            54,
+            55,
+            56,
+            51,
+            52,
+            53,
+            58,
+            59,
+            60,
+            57,
+            62,
+            63,
+            64,
+            65,
+            66,
+            68,
+            69,
+            70,
+            71
+          ],
+          "captureTick": 7103,
+          "actualZoom": 1.5,
+          "targetZoom": 1.5,
+          "actualQuality": "low",
+          "survivor": {
+            "variant": "female",
+            "gearTier": 4
+          },
+          "healthBars": {
+            "count": 0,
+            "draws": 0,
+            "bars": []
+          },
+          "followedActors": []
+        },
+        {
+          "file": "captures/L7-low-L7-departure-3.jpg",
+          "requestedSeconds": 3,
+          "tick": 7246,
+          "seconds": 4.083333333333333,
+          "bus": {
+            "x": -27.45564938652644,
+            "y": 0.7,
+            "z": 47,
+            "yaw": 0
+          },
+          "boarded": [
+            67,
+            61,
+            54,
+            55,
+            56,
+            51,
+            52,
+            53,
+            58,
+            59,
+            60,
+            57,
+            62,
+            63,
+            64,
+            65,
+            66,
+            68,
+            69,
+            70,
+            71
+          ],
+          "captureTick": 7249,
+          "actualZoom": 1.5,
+          "targetZoom": 1.5,
+          "actualQuality": "low",
+          "survivor": {
+            "variant": "female",
+            "gearTier": 4
+          },
+          "healthBars": {
+            "count": 0,
+            "draws": 0,
+            "bars": []
+          },
+          "followedActors": []
+        },
+        {
+          "file": "captures/L7-low-L7-departure-8.jpg",
+          "requestedSeconds": 8,
+          "tick": 7493,
+          "seconds": 8.2,
+          "bus": {
+            "x": 37.35756378600823,
+            "y": 0.7,
+            "z": 47,
+            "yaw": 0
+          },
+          "boarded": [
+            67,
+            61,
+            54,
+            55,
+            56,
+            51,
+            52,
+            53,
+            58,
+            59,
+            60,
+            57,
+            62,
+            63,
+            64,
+            65,
+            66,
+            68,
+            69,
+            70,
+            71
+          ],
+          "captureTick": 7496,
+          "actualZoom": 1.5,
+          "targetZoom": 1.5,
+          "actualQuality": "low",
+          "survivor": {
+            "variant": "female",
+            "gearTier": 4
+          },
+          "healthBars": {
+            "count": 0,
+            "draws": 0,
+            "bars": []
+          },
+          "followedActors": []
+        }
+      ],
+      "handover": [
+        {
+          "t": "2026-11-08T18:48:17.177Z",
+          "handover": "L7",
+          "to": "L8",
+          "firstPlayableTick": 5,
+          "objective": "Lead the group to the zoo gate \u00b7 11\u00a0m"
+        }
+      ],
+      "shotTicks": [
+        399,
+        1217,
+        1293,
+        1343,
+        1393,
+        1578,
+        1917,
+        1967,
+        2170,
+        2237,
+        2287,
+        2337,
+        2387,
+        2437,
+        3193,
+        3243,
+        3293,
+        3358,
+        3408,
+        3458,
+        3511,
+        4695,
+        4745,
+        4840,
+        4901,
+        4969,
+        5019,
+        5756,
+        5806,
+        5908,
+        5958,
+        6008,
+        6058,
+        6111,
+        6457,
+        6682,
+        6915
+      ],
+      "minCadence": 50,
+      "alphaMaxHP": [
+        450
+      ],
+      "injuredLaterBoarded": {
+        "59": 7,
+        "53": 7,
+        "56": 15,
+        "67": 36,
+        "69": 2,
+        "51": 11,
+        "65": 66,
+        "52": 41,
+        "54": 7,
+        "55": 45,
+        "57": 66,
+        "58": 75,
+        "60": 75,
+        "61": 41,
+        "62": 66,
+        "63": 41,
+        "70": 2,
+        "66": 66,
+        "64": 32,
+        "68": 66,
+        "71": 66
+      },
+      "deathEvents": [
+        {
+          "type": "player.died",
+          "tick": 5610,
+          "id": 1,
+          "source": null,
+          "victim": null,
+          "courier": {
+            "id": 1,
+            "kind": "player",
+            "archetype": "player.survivor",
+            "hp": 0,
+            "max": 100,
+            "at": {
+              "x": -69.98619079589844,
+              "y": 0.7049999833106995,
+              "z": 47.90077590942383,
+              "yaw": 0.039961978583630625
+            },
+            "hidden": false
+          }
+        }
+      ],
+      "rawAuditSha256": "9aa8365166bde6024850d86fd2bd58a9a6219ef9a01d93db52618f4536513b43",
+      "rawCompletionSha256": "c085501cb212e3507472842c05f5622aed4c19cde8425cd7c7565cf93e15d68c"
+    },
+    {
+      "tier": "high",
+      "source": {
+        "revision": "2c178f951289f28cb33180137bcae18446c630fb",
+        "sourceGameTree": "320a2d457e9a124fa3ee97daa2da6ef73356ce62",
+        "producerSha256": "31a75b80834968322d632d30b5b12864d4eb1eb76166d61457c53451252d1897"
+      },
+      "result": {
+        "time": 175.23333333333332,
+        "kills": 334,
+        "knockdowns": 1,
+        "damage": 350,
+        "deaths": 2,
+        "rescued": 8,
+        "optionalObjectives": [],
+        "survivors": [
+          "shelter-14",
+          "shelter-13",
+          "shelter-16",
+          "shelter-17",
+          "shelter-4",
+          "shelter-3",
+          "shelter-12",
+          "shelter-9"
+        ]
+      },
+      "boardedIds": [
+        65,
+        64,
+        67,
+        68,
+        55,
+        54,
+        63,
+        60
+      ],
+      "driverSummary": [
+        {
+          "level": "L7",
+          "entry": "debug",
+          "heroine": "female",
+          "finished": true,
+          "skipped": [],
+          "wallSeconds": 179,
+          "simSeconds": 0,
+          "maxNoProgressSeconds": 8.766666666666667,
+          "deaths": 2,
+          "assists": 0,
+          "attacks": {
+            "weapon.shotgun": 84,
+            "weapon.rocket-launcher": 24
+          },
+          "weaponsStart": [
+            "weapon.bat",
+            "weapon.fire-axe",
+            "weapon.handgun",
+            "weapon.army-mg",
+            "weapon.shotgun"
+          ],
+          "weaponsEnd": [
+            "weapon.bat",
+            "weapon.fire-axe",
+            "weapon.handgun",
+            "weapon.army-mg",
+            "weapon.shotgun",
+            "weapon.rocket-launcher"
+          ],
+          "steps": [
+            {
+              "id": "rocket",
+              "text": "Recover the rocket launcher beside the exit \u00b7 3\u00a0m",
+              "tick": 8,
+              "marker": {
+                "anchor": "l7-rocket",
+                "ring": {
+                  "x": 276,
+                  "y": 3.9,
+                  "z": 15
+                },
+                "drawn": [
+                  276,
+                  3.9,
+                  15
+                ],
+                "playerY": 4.619999885559082,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "corridor",
+              "text": "Bring the group to the evacuation corridor \u00b7 Group 24/24 nearby \u00b7 306\u00a0m",
+              "tick": 52,
+              "marker": {
+                "anchor": "l7-corridor-east",
+                "ring": {
+                  "x": -30,
+                  "y": 0,
+                  "z": 50
+                },
+                "drawn": [
+                  -30,
+                  0.13,
+                  50
+                ],
+                "playerY": 4.619999885559082,
+                "pinVisible": true
+              }
+            },
+            {
+              "id": "departure",
+              "text": "Get everyone aboard the bus \u00b7 45\u00a0m",
+              "tick": 6352,
+              "marker": {
+                "anchor": "l7-bus-boarding",
+                "ring": {
+                  "x": -70.5,
+                  "y": 0,
+                  "z": 47.5
+                },
+                "drawn": [
+                  -70.5,
+                  0,
+                  47.5
+                ],
+                "playerY": 0.7099999785423279,
+                "pinVisible": true
+              }
+            }
+          ]
+        }
+      ],
+      "backend": "webgl",
+      "quality": "high",
+      "routePhotos": [
+        {
+          "file": "captures/L7-high-L7-opening-high-z1-5.jpg",
+          "stage": "opening",
+          "tick": 399,
+          "position": {
+            "x": 265.2771911621094,
+            "z": 20.241283416748047
+          },
+          "quality": "high",
+          "zoom": 1.5
+        },
+        {
+          "file": "captures/L7-high-L7-corridor-high-z1-5.jpg",
+          "stage": "corridor",
+          "tick": 4233,
+          "position": {
+            "x": 49.3986701965332,
+            "z": 40.967655181884766
+          },
+          "quality": "high",
+          "zoom": 1.5
+        },
+        {
+          "file": "captures/L7-high-L7-bus-high-z1-5.jpg",
+          "stage": "bus",
+          "tick": 6688,
+          "position": {
+            "x": -47.11847113445401,
+            "z": 49.784643867984414
+          },
+          "quality": "high",
+          "zoom": 1.5
+        },
+        {
+          "file": "captures/L7-high-L7-bus-high-z0-8.jpg",
+          "stage": "bus",
+          "tick": 6688,
+          "position": {
+            "x": -47.11847113445401,
+            "z": 49.784643867984414
+          },
+          "quality": "high",
+          "zoom": 0.8
+        }
+      ],
+      "departurePhotos": [
+        {
+          "file": "captures/L7-high-L7-departure-0-5.jpg",
+          "requestedSeconds": 0.5,
+          "tick": 9767,
+          "seconds": 1.55,
+          "bus": {
+            "x": -69.16633693415638,
+            "y": 0.7,
+            "z": 47,
+            "yaw": 0
+          },
+          "boarded": [
+            65,
+            64,
+            67,
+            68,
+            55,
+            54,
+            63,
+            60
+          ],
+          "captureTick": 9771,
+          "actualZoom": 1.5,
+          "targetZoom": 1.5,
+          "actualQuality": "high",
+          "survivor": {
+            "variant": "female",
+            "gearTier": 4
+          },
+          "healthBars": {
+            "count": 0,
+            "draws": 0,
+            "bars": []
+          },
+          "followedActors": []
+        },
+        {
+          "file": "captures/L7-high-L7-departure-wide-z0-8.jpg",
+          "requestedSeconds": 0.5,
+          "tick": 9767,
+          "seconds": 1.55,
+          "bus": {
+            "x": -69.16633693415638,
+            "y": 0.7,
+            "z": 47,
+            "yaw": 0
+          },
+          "boarded": [
+            65,
+            64,
+            67,
+            68,
+            55,
+            54,
+            63,
+            60
+          ],
+          "captureTick": 9777,
+          "actualZoom": 1.5,
+          "targetZoom": 1.5,
+          "actualQuality": "high",
+          "survivor": {
+            "variant": "female",
+            "gearTier": 4
+          },
+          "healthBars": {
+            "count": 0,
+            "draws": 0,
+            "bars": []
+          },
+          "followedActors": []
+        },
+        {
+          "file": "captures/L7-high-L7-departure-3.jpg",
+          "requestedSeconds": 3,
+          "tick": 9926,
+          "seconds": 4.2,
+          "bus": {
+            "x": -25.166222222222224,
+            "y": 0.7,
+            "z": 47,
+            "yaw": 0
+          },
+          "boarded": [
+            65,
+            64,
+            67,
+            68,
+            55,
+            54,
+            63,
+            60
+          ],
+          "captureTick": 9929,
+          "actualZoom": 1.5,
+          "targetZoom": 1.5,
+          "actualQuality": "high",
+          "survivor": {
+            "variant": "female",
+            "gearTier": 4
+          },
+          "healthBars": {
+            "count": 0,
+            "draws": 0,
+            "bars": []
+          },
+          "followedActors": []
+        },
+        {
+          "file": "captures/L7-high-L7-departure-8.jpg",
+          "requestedSeconds": 8,
+          "tick": 10164,
+          "seconds": 8.166666666666666,
+          "bus": {
+            "x": 37.14029873494894,
+            "y": 0.7,
+            "z": 47,
+            "yaw": 0
+          },
+          "boarded": [
+            65,
+            64,
+            67,
+            68,
+            55,
+            54,
+            63,
+            60
+          ],
+          "captureTick": 10168,
+          "actualZoom": 1.5,
+          "targetZoom": 1.5,
+          "actualQuality": "high",
+          "survivor": {
+            "variant": "female",
+            "gearTier": 4
+          },
+          "healthBars": {
+            "count": 0,
+            "draws": 0,
+            "bars": []
+          },
+          "followedActors": []
+        }
+      ],
+      "handover": [
+        {
+          "t": "2026-11-08T18:54:09.535Z",
+          "handover": "L7",
+          "to": "L8",
+          "firstPlayableTick": 5,
+          "objective": "Lead the group to the zoo gate \u00b7 11\u00a0m"
+        }
+      ],
+      "shotTicks": [
+        517,
+        980,
+        1538,
+        1597,
+        1666,
+        2186,
+        2309,
+        6469,
+        6519,
+        7329,
+        7379,
+        7429,
+        7479,
+        7529,
+        8403,
+        8453,
+        8503,
+        8567,
+        8653,
+        8734,
+        9363,
+        9413,
+        9543,
+        9663
+      ],
+      "minCadence": 50,
+      "alphaMaxHP": [
+        450
+      ],
+      "injuredLaterBoarded": {
+        "68": 11,
+        "54": 11,
+        "65": 32,
+        "55": 7,
+        "64": 75,
+        "63": 41,
+        "67": 66,
+        "60": 66
+      },
+      "deathEvents": [
+        {
+          "type": "player.died",
+          "tick": 7081,
+          "id": 1,
+          "source": null,
+          "victim": null,
+          "courier": {
+            "id": 1,
+            "kind": "player",
+            "archetype": "player.survivor",
+            "hp": 0,
+            "max": 100,
+            "at": {
+              "x": -70.31330108642578,
+              "y": 0.7049999833106995,
+              "z": 47.969356536865234,
+              "yaw": 0.11953370341623525
+            },
+            "hidden": false
+          }
+        },
+        {
+          "type": "player.died",
+          "tick": 8140,
+          "id": 1,
+          "source": null,
+          "victim": null,
+          "courier": {
+            "id": 1,
+            "kind": "player",
+            "archetype": "player.survivor",
+            "hp": 0,
+            "max": 100,
+            "at": {
+              "x": -70.0276870727539,
+              "y": 0.7049999833106995,
+              "z": 47.50957489013672,
+              "yaw": 2.9711829641592864
+            },
+            "hidden": false
+          }
+        }
+      ],
+      "rawAuditSha256": "1de9147907592aa30f84e71c60ffb9b687ea076190e924f9c6e0dd7c489d7d7f",
+      "rawCompletionSha256": "de482239b517520a3bd26339ac87e6272db38a499aa8d8fc2edcd41255de9c98"
+    }
+  ]
+}

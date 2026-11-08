@@ -85,10 +85,21 @@ export class Combat {
       this.world.controls.reset();
       frame = { ...frame, left: { down: false, held: false, up: false }, right: { down: false, held: false, up: false } };
     }
-    this.runner.update(frame, this.world.tick, player.health.current > 0 && !this.world.missions?.state.states['cure-released'] && this.world.vehicles?.active == null && !this.world.mountedGun?.mounted && !Status.stunned(player, this.world.tick), this.started, this.resolve, this.crowd);
+    this.runner.update(frame, this.world.tick, player.health.current > 0 && !this.world.missions?.state.states['cure-released'] && this.world.vehicles?.active == null && !this.world.mountedGun?.mounted && !Status.stunned(player, this.world.tick), this.started, this.resolve, this.crowd, this.canFire);
     this.updateProjectiles();
     this.effects.update(); this.pickups.update();
   }
+  /** Check at discharge, after aim assist and the raise: a close enemy may move into the shot. */
+  private readonly canFire = (attack: Attack): boolean => {
+    if (attack.def.id !== 'weapon.rocket-launcher') return true;
+    const source = this.world.entities.get(attack.sourceId)!, point = attack.aimPoint;
+    const closePoint = !!point && Math.hypot(point.x - source.transform.x, point.z - source.transform.z) < 5;
+    const closeEnemy = this.query.melee(source.id, source.transform, attack.aim, 5, 30, 1000).some(target => target.faction === 'infected'
+      && !target.hidden && !target.infected?.hidden && Math.hypot(target.transform.x - source.transform.x, target.transform.z - source.transform.z) < 5);
+    if (!closePoint && !closeEnemy) return true;
+    this.world.events.emit({ type: 'combat.empty', tick: this.world.tick, sourceId: source.id, actionId: attack.def.id, position: { ...source.transform }, reason: 'too-close' });
+    return false;
+  };
   /** Living infected a sweep of `radius` reaches from the player now (cover blocks; civilians never count). */
   private readonly crowd = (radius: number): number => {
     const player = this.world.entities.get(1)!;
@@ -148,7 +159,14 @@ export class Combat {
   /** E27: physics impulses, props/barricades/vehicles, fx and chains for an already-resolved splash (damage stays here). */
   private blast(attack: Attack, at: Vec2): void {
     const id = actionExplosions[attack.def.id];
-    if (id && attack.def.id !== 'weapon.rocket-launcher') this.world.explosions?.blast(id, at, { sourceId: attack.sourceId, radius: attack.def.splash!.radius, damage: false });
+    if (id && attack.def.id !== 'weapon.rocket-launcher') this.world.explosions?.blast(id, at, { sourceId: attack.sourceId, actionId: attack.def.id, radius: attack.def.splash!.radius, damage: false });
+  }
+  private environment(attack: Attack, origin: Vec2 & { y: number }, direction: Vec2, range: number, target: EntitySnapshot | null = null, scale = 1): boolean {
+    if (target) {
+      const dx = target.transform.x-origin.x, dz = target.transform.z-origin.z, along = dx*direction.x+dz*direction.z;
+      range = Math.min(range, Math.max(0, along-Math.sqrt(Math.max(0,(target.combat?.radius??.4)**2-(dx*dx+dz*dz-along*along)))));
+    }
+    return this.world.destruction?.strike(attack.def.id, attack.def.damage*scale*(this.world.entities.get(attack.sourceId)?.combat?.damageMultiplier??1), origin, { ...direction, y: 0 }, range) ?? false;
   }
   private readonly resolve = (attack: Attack): void => {
     const source = this.world.entities.get(attack.sourceId)!, def = attack.def;
@@ -178,6 +196,7 @@ export class Combat {
     } else if (def.splash) this.splash(attack, source.transform);
     else if (attack.style === 'roundhouse') this.sweep(attack, source);
     else if (def.category === 'melee' || def.category === 'ability') {
+      this.environment(attack, { ...source.transform, y: source.transform.y+.3 }, attack.aim, def.range);
       for (const target of this.query.melee(source.id, source.transform, attack.aim, def.range, def.arc, def.maxTargets, attack.inPlace, attack.target)) this.hit(attack, target, source.transform, 'melee');
     } else if ((def.pellets ?? 1) > 1) {
       this.pelletHits.clear();
@@ -186,12 +205,14 @@ export class Combat {
         const direction = angle + (i / (count - 1) - 0.5) * def.spread * Math.PI / 180;
         this.pelletDirection.x = Math.cos(direction); this.pelletDirection.z = Math.sin(direction);
         const target = this.query.ray(source.id, { ...source.transform, y: source.transform.y + .45 }, this.pelletDirection, def.range);
-        if (target) this.pelletHits.set(target, (this.pelletHits.get(target) ?? 0) + 1);
+        const blocked = this.environment(attack, { ...source.transform, y: source.transform.y+.45 }, this.pelletDirection, def.range, target, 1/count);
+        if (target && !blocked) this.pelletHits.set(target, (this.pelletHits.get(target) ?? 0) + 1);
       }
       for (const [target, hits] of this.pelletHits) this.hit(attack, target, source.transform, 'bullet', hits / count);
     } else {
       const target = this.query.ray(source.id, { ...source.transform, y: source.transform.y + .45 }, attack.aim, def.range);
-      if (target) this.hit(attack, target, source.transform, 'bullet');
+      const blocked = this.environment(attack, { ...source.transform, y: source.transform.y+.45 }, attack.aim, def.range, target);
+      if (target && !blocked) this.hit(attack, target, source.transform, 'bullet');
     }
   };
   /** Roundhouse: the bat turns a full circle over the active window (the facing yaw grows from the aim, so the
@@ -221,16 +242,19 @@ export class Combat {
         const arrived = distance <= def.projectile!.speed / 60;
         const step = arrived ? horizontal : def.projectile!.speed / 60 * horizontal / distance;
         const direction = { x: horizontal ? dx / horizontal : 0, y: horizontal ? dy / horizontal : 0, z: horizontal ? dz / horizontal : 0 };
-        const wall = this.query.clearDistance(p, direction, step);
-        const target = this.query.ray(p.attack.sourceId, p, direction, step, p.attack.hit);
+        const wall = Math.min(this.query.clearDistance(p, direction, step), this.world.destruction?.trace(p, direction, step)?.distance ?? step);
+        const target = this.query.ray(p.attack.sourceId, p, direction, wall, p.attack.hit);
         let travel = wall;
         if (target) {
           const tx = target.transform.x - p.x, tz = target.transform.z - p.z;
           const along = tx * direction.x + tz * direction.z, radius = target.combat?.radius ?? .4;
           travel = Math.max(0, along - Math.sqrt(Math.max(0, radius * radius - (tx * tx + tz * tz - along * along))));
         }
+        const impact = !!target || wall < step || arrived;
+        // An impact before arming is a harmless dud, including cover impacts.
+        if (impact && p.travelled + travel < 5) { this.projectiles.splice(i, 1); continue; }
         p.x += direction.x * travel; p.y += direction.y * travel; p.z += direction.z * travel; p.travelled += travel;
-        if (target || wall < step || arrived) {
+        if (impact) {
           if (!target && wall === step) Object.assign(p, p.destination);
           this.splash(p.attack, p, target?.id); this.blast(p.attack, p);
           // Impact alerts use an explosion cue, rather than replaying the launch
@@ -256,6 +280,7 @@ export class Combat {
         this.origin.x = p.x; this.origin.y = p.y; this.origin.z = p.z;
         let target = this.query.ray(p.attack.sourceId, this.origin, p.attack.aim, step, p.attack.hit);
         const wall = this.query.clearDistance(this.origin, p.attack.aim, step);
+        if (!def.splash && this.environment(p.attack, this.origin, p.attack.aim, step, target)) { this.projectiles.splice(i, 1); continue; }
         if (def.splash && (target || wall < step || p.travelled + wall >= def.range)) {
           if (target) { p.x = target.transform.x; p.z = target.transform.z; }
           else { p.x += p.attack.aim.x * wall; p.z += p.attack.aim.z * wall; }

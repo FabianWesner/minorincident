@@ -94,3 +94,9 @@ Before dispatching, classify the task: judgement/hard bug → Opus; crisp goal +
 - 11-02 (PO: "Quality is more important to me than speed of deployments. Make sure the game is actually working as defined in acceptance criterias. I can wait a few more days."): PROD deploy only when every S/L/O row in docs/qa/level-acceptance.md is PASS in docs/qa/acceptance-status.md (NOT CHECKED = not done) and no P1/P2 is open. Overrides the older "deploy after each green batch" rule. PO 11-03 relaxed: "You can do deploymentsv here and there" → interim PROD deploys OK when gate + qa:threat + perf are green and the batch beats PROD with no new P1.
 - 11-05 (PO: "Archive + stop committing"): lanes commit only JSON/README and at most one small contact sheet per fix; raw captures never enter git. After the release, old docs/reports images move to an archive outside git (history rewrite approved).
 - 11-05 (PO: "run Codex in fast mode all the time ... it terminates 9.11, so let's use all tokens, but wisely"): every scheduler submit uses `--fast`; keep 3–4 Sol lanes busy until 2026-11-09; Codex is unavailable after that, so the routing must switch to Claude agents then.
+
+## Routing after Codex stops (PO 2026-11-08, binding)
+"Use codex until it stops working" and "When switching to Claude, only use Sonnet for development and Haiku for testing. 5.5 each" → after Codex: Sonnet 5.5 (claude-sonnet-5-5) for every development lane, Haiku 5.5 (claude-haiku-5-5) for every testing/QA lane; no Opus agents.
+
+## Lane layout (PO 2026-11-08, binding)
+Coding lanes never start browsers: native/sim checks + unit tests only, and a README section 'Browser QA needed' (level, tick/position, quality, zoom, what to check). Exactly one QA lane owns the browser and runs those checks after merges (Haiku 5.5 after Codex ends). Lane count: start at 3, raise to 4/5 only while load < 15 and memory > 40 % free; after any scheduler daemon restart re-run `config --parallel N`.

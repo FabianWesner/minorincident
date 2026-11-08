@@ -64,6 +64,8 @@ export class NavGrid {
   private readonly queue: Int32Array;
   private readonly parent: Int32Array;
   private readonly cost: Float64Array;
+  /** Optional walkable terrain cost (L10 dry crop); absent on existing campaign grids. */
+  movementCost?: (x: number, z: number) => number;
   private readonly open: Uint8Array;
   private readonly pathSeen: Uint32Array;
   private pathStamp = 0;
@@ -104,7 +106,7 @@ export class NavGrid {
     if (radius >= this.clearance - 1e-6 && !this.playerMask) return this;
     if (!this.playerRoutes || Math.abs(this.playerRoutes.clearance - radius) > 1e-6 || this.playerRoutes.cellSize !== cellSize) {
       // Crowd-only lane edges (navOnly) never become player walls (PO 10-20 #63).
-      this.playerRoutes = new NavGrid(this.ground, this.walls.filter(w => !(w as { navOnly?: boolean }).navOnly), radius, this.center, this.playerMask ?? this.mask, cellSize); this.playerRoutes.exactPlayerDestination = true;
+      this.playerRoutes = new NavGrid(this.ground, this.walls.filter(w => !(w as { navOnly?: boolean }).navOnly), radius, this.center, this.playerMask ?? this.mask, cellSize); this.playerRoutes.exactPlayerDestination = true; this.playerRoutes.movementCost = this.movementCost;
       for (const [id, wall] of this.blockers) this.playerRoutes.setBlocker(id, this.playerWall(wall), true);
       this.playerRoutes.setPlayerBounds(this.playerBounds);
     }
@@ -264,6 +266,7 @@ export class NavGrid {
   /** The same walls, live blockers and mask baked for a wider body (E32 Mega Alpha); the caller forwards later blocker changes. */
   withClearance(clearance: number): NavGrid {
     const grid = new NavGrid(this.ground, this.walls, clearance, this.center, this.mask, this.cellSize);
+    grid.movementCost = this.movementCost;
     for (const [id, wall] of this.blockers) grid.setBlocker(id, wall, true);
     return grid;
   }
@@ -804,7 +807,9 @@ export class NavGrid {
         const nx = x + (d === 0 ? -1 : d === 1 ? 1 : 0), nz = z + (d === 2 ? -1 : d === 3 ? 1 : 0);
         if (nx < 0 || nx >= this.width || nz < 0 || nz >= this.depth) continue;
         const n = nz * this.width + nx;
-        if (!this.blocked[n] && (this.pathSeen[n] !== this.pathStamp || this.open[n] !== 2 && this.cost[best] + 1 < this.cost[n])) { this.pathSeen[n] = this.pathStamp; this.cost[n] = this.cost[best] + 1; this.parent[n] = best; this.open[n] = 1; this.push(n, this.cost[n] + (Math.abs(nx - tx) + Math.abs(nz - tz)) * 1.00001); }
+        if (this.blocked[n]) continue;
+        const cost = this.cost[best] + (this.movementCost?.(this.x(n), this.z(n)) ?? 1);
+        if (this.pathSeen[n] !== this.pathStamp || this.open[n] !== 2 && cost < this.cost[n]) { this.pathSeen[n] = this.pathStamp; this.cost[n] = cost; this.parent[n] = best; this.open[n] = 1; this.push(n, cost + (Math.abs(nx - tx) + Math.abs(nz - tz)) * 1.00001); }
       }
     }
     return false;

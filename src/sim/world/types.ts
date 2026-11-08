@@ -4,6 +4,8 @@ export { emptyInput, type InputFrame } from '../../input/InputFrame';
 export interface Transform { x: number; y: number; z: number; yaw: number }
 /** Plain components only; physics handles and render objects are never serialized. */
 export interface EntitySnapshot {
+  /** A placement-owned destruction model owns HP/parts; the existing prop body still owns motion. */
+  environmentObject?: string;
   id: number;
   /** Unsafe admission retains its identity and slot until a radius-aware placement succeeds. */
   pendingAdmission?: Transform & { writer: string; hidden?: boolean; range?: number; navigation?: boolean; colliderEnabled?: boolean; graceTicks?: number };
@@ -136,7 +138,7 @@ export type GameEvent = import('../lighting/LightPower').LightPowerEvent | impor
   | { tick: number; type: 'combat.hit' | 'combat.kill'; attackId: number; actionId: string; sourceId: number; targetId: number; position: Transform; amount: number; direction?: { x: number; z: number }; knockback?: number; cause?: 'vehicle' | 'prop'; damageType?: import('../combat/Damage').DamageEvent['type']; blocked?: boolean; shieldGlance?: boolean; shieldBreak?: boolean; /** combat.kill of an infected that only went down (PO "Infected recover"): it gets up at this tick. */ downed?: number }
   | { tick: number; type: 'combat.hit-stop'; sourceId: number; durationMs: number }
   | { tick: number; type: 'loadout.switched'; sourceId: number; side: import('../../data/actions/schema').Side; actionId: string }
-  | { tick: number; type: 'combat.empty'; sourceId: number; actionId: string; position: Transform }
+  | { tick: number; type: 'combat.empty'; sourceId: number; actionId: string; position: Transform; reason?: 'too-close' }
   | { tick: number; type: 'combat.landed'; sourceId: number; attackId: number; position: { x: number; y: number; z: number } }
   | { tick: number; type: 'combat.exploded'; sourceId: number; attackId: number; position: { x: number; y: number; z: number }; radius: number }
   | { tick: number; type: 'player.died' | 'player.respawned'; id: number }
@@ -160,6 +162,7 @@ export interface GameStateSnapshot {
   combat?: ReturnType<import('../combat/Combat').Combat['snapshot']>;
   /** Displaced pushable props (PO #15), placement order. */
   props?: import('../interact/PropSystem').PropSnapshot;
+  destruction?: ReturnType<import('../destruction/Destruction').Destruction['snapshot']>;
   input: { scheme: Scheme; frame: InputFrame };
   seed: number;
   scenario: string | null;

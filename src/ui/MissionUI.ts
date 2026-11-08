@@ -104,14 +104,13 @@ export class MissionUI {
       this.text(element,value===undefined?'':Array.isArray(value)?value.join(', ')||'None':typeof value==='boolean'?value?'✓':'✗':String(Math.round(value*100)/100));
     }
     const objective=mission.def.steps.find(s=>state.steps[s.id].status==='active');
-    const l8Calm = mission.def.l8 && !state.states.breached;
-    if (mission.def.l8 && playing && (!objective || l8Calm)) this.tracker.hidden = this.map.hidden = true;
+    if (mission.def.l8 && playing && !objective) this.tracker.hidden = this.map.hidden = true;
     const anchor=markerAnchor(mission),player=this.world.entities.get(1);
     // No turn-by-turn street route (PO 10-31: "You just show the final checkpoint and the user will figure out the way").
     const cellarDistance: number | null = null;
     setHidden(this.routePin, cellarDistance === null || !!anchor && Math.hypot(this.cellarTurn.x - anchor.x, this.cellarTurn.z - anchor.z) < 2);
-    setHidden(this.marker,l8Calm||storyShot||!!this.world.storyLock||!!this.world.l7Departure?.cinematic||!playing||!anchor||!player);
-    if(player&&objective&&playing&&!l8Calm){
+    setHidden(this.marker,storyShot||!!this.world.storyLock||!!this.world.l7Departure?.cinematic||!playing||!anchor||!player);
+    if(player&&objective&&playing){
       // L3's route marker follows the next walkable waypoint, while the HUD
       // distance remains measured to the active mission objective.
       const distanceAnchor = mission.def.l3 ? mission.def.anchors[objective.anchor] : anchor;

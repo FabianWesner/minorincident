@@ -169,6 +169,17 @@ test('weapon selection: one fixed order drives number keys, cycling and touch sl
   expect(loadout.current('LEFT').id).toBe('weapon.bat');
   const rebuilt = new Loadout(loadout.state.LEFT.rack.map(s => s.id), loadout.state.RIGHT.rack.map(s => s.id));
   expect(rebuilt.activeEntries().map(e => e.id)).toEqual(expected);
+  // HUD slot click: same frame field as the number key, only where number keys work, never a shot, move or aim.
+  const c = setup(0);
+  c.key('Digit2', true); c.key('Digit2', false);
+  const viaKey = c.sample();
+  expect(c.input.selectWeaponKey(2)).toBe(true);
+  const viaClick = c.sample();
+  expect(viaClick.selectedWeaponKey).toBe(2); expect(viaClick.selectedWeaponKey).toBe(viaKey.selectedWeaponKey);
+  expect(viaClick.left.down || viaClick.right.down || viaClick.moveTarget || viaClick.mouseAttack || viaClick.aimPoint).toBeFalsy();
+  expect(c.sample().selectedWeaponKey).toBeUndefined();
+  expect(c.input.selectWeaponKey(0)).toBe(false); expect(c.input.selectWeaponKey(10)).toBe(false);
+  c.input.setDriving(true); expect(c.input.selectWeaponKey(3)).toBe(false); expect(c.sample().selectedWeaponKey).toBeUndefined();
 });
 
 test('click pick: head-to-feet body capsule picks the infected; downed stay pickable; corpses, hidden and civilians never', () => {

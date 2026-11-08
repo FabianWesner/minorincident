@@ -62,7 +62,7 @@ export class Hud {
   private weaponRackSignature = '';
   private readonly weaponRackItems = new Map<string, HTMLElement>();
   private weaponHintUntil = -1;
-  private emptyWeapon: { id: string; until: number } | null = null;
+  private emptyWeapon: { id: string; until: number; tooClose?: boolean } | null = null;
   private readonly vignette = node('div', 'low-health-vignette');
   private readonly damage = node('div', 'damage-direction', '▼');
   private readonly shieldBlock = node('div', 'shield-block', 'SHIELD STRAIN · CHIP');
@@ -217,7 +217,7 @@ export class Hud {
       return;
     }
     if (event.type === 'combat.empty' && event.sourceId === 1) {
-      this.emptyWeapon = { id: event.actionId, until: this.game.world.tick + 120 };
+      this.emptyWeapon = { id: event.actionId, until: this.game.world.tick + 120, ...(event.reason === 'too-close' ? { tooClose: true } : {}) };
       return;
     }
     if (event.type === 'civilian.bark' || event.type === 'ally.callout') {
@@ -311,12 +311,11 @@ export class Hud {
     }
     for (let i = pinCount; i < this.threatCount; i++) setHidden(this.threats[i], true);
     this.threatCount = pinCount;
-    const absentCompanion = !corgi && (world.scenario === 'L8' || world.scenario === 'L9');
-    setHidden(this.companion.parentElement!, absentCompanion); setHidden(this.corgiBadge, absentCompanion);
     const corgiHiding = corgi?.hidden || corgi?.companion?.state === 'hide';
-    const corgiStatus = corgi ? corgiHiding ? 'Corgi · hiding' : 'Corgi · following' : 'Corgi · awaiting rescue';
+    const rejoining = !!corgi?.companion?.rejoining;
+    const corgiStatus = corgi ? rejoining ? 'Corgi · rejoining' : corgiHiding ? 'Corgi · hiding' : corgi.companion?.state === 'fetch' ? 'Corgi · fetching' : 'Corgi · following' : 'Corgi · awaiting rescue';
     text(this.companion, corgiStatus); attribute(this.corgiBadge, 'title', corgiStatus); attribute(this.corgiBadge, 'aria-label', corgiStatus);
-    attribute(this.corgiBadge, 'data-state', corgi ? corgiHiding ? 'hiding' : 'following' : 'awaiting-rescue');
+    attribute(this.corgiBadge, 'data-state', corgi ? rejoining ? 'rejoining' : corgiHiding ? 'hiding' : 'following' : 'awaiting-rescue');
     this.place(this.playerPin, px, pz, px, pz); style(this.playerPin, 'rotate', `${-player.transform.yaw + Math.PI / 2}rad`);
     const anchor = markerAnchor(mission);
     // Show the destination, leaving route discovery to the player (G-08 / Q-277).
@@ -386,10 +385,14 @@ export class Hud {
     if (signature !== this.weaponRackSignature) {
       this.weaponRackSignature = signature; this.weaponRack.replaceChildren(); this.weaponRackItems.clear();
       for (const entry of entries) {
-        const item = node('span', `weapon-rack-${entry.id}`), icon = document.createElement('img'), key = weaponKey(entry.id);
+        const item = node('button', `weapon-rack-${entry.id}`), icon = document.createElement('img'), key = weaponKey(entry.id);
         item.className = 'hud-weapon-choice'; item.dataset.weapon = entry.id;
         icon.src = actionIconUrl(action(entry.id).iconId); icon.alt = '';
         item.title = `${label(entry.id)}${key === undefined ? '' : ` · ${key}`}`; item.setAttribute('aria-label', item.title);
+        item.type = 'button'; item.tabIndex = -1; item.disabled = key === undefined;
+        // Same input path as the number key. mousedown/pointerdown never reach the canvas (HUD is a sibling), so no shot, move or aim.
+        item.addEventListener('mousedown', event => event.preventDefault()); // keep keyboard focus on the canvas so Space/Enter never re-click a slot
+        item.addEventListener('click', event => { event.preventDefault(); event.stopPropagation(); if (key !== undefined) this.game.input.selectWeaponKey(key); });
         item.append(icon);
         if (key !== undefined) { const badge = node('span', `weapon-key-${key}`, String(key)); badge.className = 'hud-weapon-key'; item.append(badge); }
         this.weaponRackItems.set(entry.id, item); this.weaponRack.append(item);
@@ -407,7 +410,9 @@ export class Hud {
         if (this.weaponActionId) this.weaponHintUntil = world.tick + 120;
         this.weaponActionId = shown.id; this.weapon.icon.src = actionIconUrl(action(shown.id).iconId);
       }
-      const emptyCue = this.emptyWeapon && world.tick <= this.emptyWeapon.until ? `${label(this.emptyWeapon.id)} · Empty` : null;
+      const emptyCue = this.emptyWeapon && world.tick <= this.emptyWeapon.until
+        ? this.emptyWeapon.tooClose ? 'Too close!' : `${label(this.emptyWeapon.id)} · Empty`
+        : null;
       text(this.weapon.hint, emptyCue ?? shown.name); setHidden(this.weapon.hint, !emptyCue && world.tick > this.weaponHintUntil);
       const description = `${shown.name}, ${shown.stats}`;
       attribute(w, 'title', `${description} · ${this.game.input.scheme === 'touch' ? 'swipe up LEFT / RIGHT to switch' : 'weapon slot, RMB or Q to switch'}`); attribute(w, 'aria-label', `Active weapon: ${description}`);

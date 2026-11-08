@@ -1,0 +1,15 @@
+{
+  "nativeStepCompleted": true,
+  "nativeCommand": [
+    "node",
+    "--import",
+    "tsx",
+    "test-results/perf12/extra-native.mjs",
+    "strips",
+    "L1",
+    "webgpu"
+  ],
+  "rawSource": "test-results/perf12/extras/wet-high/strips/webgpu/L1.json",
+  "rawSha256": "7d3b53edbf7e3d74e9816a4b2e413b8260258babfe2110b5058dd2dc8b59ad36",
+  "laterDiagnosticFailure": "ssr-cost.mjs required a pause after loadLevel; fixed and rerun under final-loads. The preceding native step returned zero, as required by wet-first.mjs before spawning the diagnostic."
+}

@@ -1,0 +1,72 @@
+{
+  "sourceCommit": "25d8db51",
+  "mergedMain": "2c178f95",
+  "runner": "2.31.170.171",
+  "typecheck": "pass",
+  "lint": "pass",
+  "unit": {
+    "passed": 106,
+    "skipped": 1,
+    "filesPassed": 27,
+    "budgetSeconds": 240,
+    "elapsedSeconds": 210.7
+  },
+  "caseBudget": {
+    "cases": 150,
+    "limit": 150,
+    "files": 43,
+    "fileLimit": 45
+  },
+  "browser": "not run: user instruction",
+  "fullThreat": {
+    "status": "timeout",
+    "elapsedSeconds": 600.2,
+    "budgetSeconds": 600
+  },
+  "L4L6L8Batch": {
+    "status": "timeout",
+    "elapsedSeconds": 601.2,
+    "lastPendingStage": "L8/skilled/1",
+    "receipt": "discarded: shared temporary path contained another batch"
+  },
+  "L7L9L10Batch": {
+    "status": "timeout",
+    "elapsedSeconds": 600.9,
+    "lastPendingStage": "L10/skilled/1",
+    "receipt": "discarded: shared temporary path contained another batch"
+  },
+  "l3Comparison": {
+    "main": "a7b70c78",
+    "branch": "cd84315b",
+    "newFlags": [],
+    "removedFlags": [
+      "criterion/L3-08 segment density and concurrent cap:FAIL"
+    ]
+  },
+  "lifecycleCoverage": [
+    "destroyed movable fixture releases body",
+    "checkpoint restores fixture body",
+    "tier removal suspends collision and damage",
+    "tier removal and return suspend/resume owned fire",
+    "LOS cache invalidated on blocker mutation"
+  ],
+  "routeComparison": {
+    "sourceCommit": "5fbd7b2f",
+    "main": "a7b70c78",
+    "simulationSeconds": 180,
+    "levels": [
+      "L8",
+      "L10"
+    ],
+    "identicalNativeReports": true,
+    "scope": "bounded diagnostic, not full gate"
+  },
+  "latestFullThreat": {
+    "sourceCommit": "25d8db51",
+    "mainSource": "2c178f95",
+    "status": "timeout",
+    "elapsedSeconds": 600.6,
+    "budgetSeconds": 600,
+    "receipt": "full-threat-final.json"
+  }
+}

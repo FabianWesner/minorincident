@@ -238,6 +238,8 @@ export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
       const zoo = game.world.missions?.l8, vehicles = game.world.vehicles;
       if (!zoo || !vehicles) throw new Error('Load L8 before preparing its boarding fixture');
       if (!zoo.advance()) throw new Error('Could not advance L8 to the breach');
+      // This isolated boarding fixture skips the gate walk; ordinary play must reach it after the breach.
+      game.world.missions!.completeObjective('sanctuary');
       const entry = vehicles.passengerDoor(zoo.state.carId), passengers = zoo.passengers();
       for (const id of passengers) {
         const actor = game.world.entities.get(id);

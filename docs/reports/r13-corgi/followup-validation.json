@@ -1,0 +1,72 @@
+{
+  "runtimeRevision": "602835dd3b69d5f0a40215df4c1ffc54dc807d8a",
+  "snapshotHead": "5c3f4f7c289066b572148a06f7cf795683d87ff6",
+  "currentSourceHashes": {
+    "src/sim/missions/Mission.ts": "7c79a984985f294e761f59bb30e98aa59f30214ab0fc12a5ebf29b50e0a74ba6",
+    "src/sim/npc/Companion.ts": "2cd66b2d9dce6e44534b3c50d952d2362ba6ee9455b6b0d90eaffde14997bab7",
+    "src/sim/npc/Npcs.ts": "45d12e3095917049f34520c976870d2c7bb735a4e1b6db836cf61ed9f78ed1bf",
+    "src/sim/npc/types.ts": "b5c957fa67b4d2884cfe6dfae6a69cb92989b423410c21bd5db11d7e1a8504cd",
+    "src/ui/Hud.ts": "631709788c7eded0c0bdcdca69b4179aade573bd9a42bee9d37730dcb632aee1",
+    "src/ui/ui.css": "726cb1dab04ccc5f343402ed05a00c5fd7c6c4241a33cdc89c3ff00222e35e42"
+  },
+  "baselineRevision": "c92a03b2",
+  "baselineInstalledSourceHashes": {
+    "src/sim/missions/Mission.ts": "5a6eee93b88c1e9fa2554d4394a88a0e28b8040e392e4ec3745e74b1028efdd5",
+    "src/sim/npc/Companion.ts": "93741b1f8a443b8e7ba840bd125bca06a7854cf422c15c05085921b0917a0415",
+    "src/sim/npc/Npcs.ts": "c3f51899594fe6e7510c502acc857b57bdba1fbf0c13d90fdefaf18954839378",
+    "src/sim/npc/types.ts": "0db82e3163be03ed1b6aba83d43e6f58d9d3bbc728a7b1a102c202572c27ee2f",
+    "src/ui/Hud.ts": "43c0ea7613eb133e2e52280dcbf8b0cad43ce4479943134aa38259a9ffe41c0d",
+    "src/ui/ui.css": "fb45637286b4a8517e056c812c72c53662a59ef5c086499c54aa8cf47058b3fb"
+  },
+  "checks": [
+    {
+      "name": "unit-retry",
+      "command": [
+        "npm",
+        "test",
+        "--",
+        "--maxWorkers=1"
+      ],
+      "exit": 0,
+      "seconds": 214.63
+    },
+    {
+      "name": "accept-retry",
+      "command": [
+        "npm",
+        "run",
+        "qa:accept",
+        "--",
+        "--level",
+        "L10",
+        "--skip-browser"
+      ],
+      "exit": 1,
+      "seconds": 1144.39
+    },
+    {
+      "name": "baseline-L4",
+      "command": [
+        "node",
+        "--import",
+        "tsx/esm",
+        "tools/qa/r13-l4-baseline.ts"
+      ],
+      "exit": 0,
+      "seconds": 335.86
+    }
+  ],
+  "currentSourcesMatchCommittedRuntime": true,
+  "unitResult": {
+    "passed": 106,
+    "skipped": 1,
+    "failed": 0,
+    "caseBudget": "150/150"
+  },
+  "stoppedFollowup": {
+    "purpose": "Same-runner L4 comparison and conditional scene-gather experiment",
+    "exit": 130,
+    "state": "Cancelled while queued; neither probe nor candidate executed",
+    "reason": "Orchestrator instructed closeout at time box"
+  }
+}

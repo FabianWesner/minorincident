@@ -6,9 +6,11 @@
 import { Rng } from '../core/Rng';
 import { worldAssets } from '../assets/worldDefinitions';
 import { l6, l6Doors } from '../data/l6';
+import { clearFarmFromSurfaces, cureFarmDecor } from './L10/farmLayout';
 import { cureRoadsideBelt } from './L10/roadsideBelt';
 import { cureCrossingStories } from './L10/crossingStories';
 import { cureForecourtDecor } from './L10/forecourts';
+import { cureEvacuationLane, cureVignettes } from './L10/vignettes';
 import type { DistrictId, Placement } from './districts/types';
 
 type Spot = { id?: string; asset: string; x: number; z: number; y?: number; yaw?: number; scale?: number };
@@ -93,7 +95,10 @@ export function districtDecor(district: DistrictId, placements: readonly Placeme
   if (district === 'D-CURE') {
     // The belt keeps its exact pieces; the crossing stories (r9-l10pace) fit round it.
     const belt = cureRoadsideBelt(placements), stories = cureCrossingStories([...placements, ...belt]);
-    const list = [...belt, ...stories, ...cureForecourtDecor([...placements, ...belt, ...stories])];
+    const forecourts = cureForecourtDecor([...placements, ...belt, ...stories]);
+    const farm = cureFarmDecor([...placements, ...belt, ...stories, ...forecourts]);
+    const vignettes = cureVignettes([...placements, ...belt, ...stories, ...forecourts, ...farm]);
+    const list = [...belt, ...stories, ...forecourts, ...clearFarmFromSurfaces(farm, cureEvacuationLane(vignettes)), ...vignettes];
     cache.set(key, list); return list;
   }
   if (l7) {

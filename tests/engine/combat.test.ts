@@ -62,10 +62,12 @@ test('melee: the swing hits inside its arc/range once per target and respects ma
   const rad = (d: number) => d * Math.PI / 180;
   const inside = [dummy(w, 1), dummy(w, 1.9 * Math.cos(rad(49)), 1.9 * Math.sin(rad(49))), dummy(w, 1.9 * Math.cos(rad(-50)), 1.9 * Math.sin(rad(-50)))];
   const outside = [dummy(w, 1.91), dummy(w, Math.cos(rad(51)), Math.sin(rad(51))), dummy(w, -1)];
+  const raised = dummy(w, 1.2); w.entities.get(raised)!.transform.y += 1.2;
   const capped = dummy(w, 1.1);
   fire(w); step(w, 29);
   for (const id of inside) expect(health(w, id)).toBe(100 - forehand().damage);
   for (const id of [...outside, capped]) expect(health(w, id)).toBe(100);
+  expect(health(w, raised), 'a nearby enemy on a raised support is outside reach').toBe(100);
   const hits = w.events.events().filter(e => e.type === 'combat.hit');
   expect(hits).toHaveLength(3);
   for (const id of inside) expect(hits.filter(e => e.type === 'combat.hit' && e.targetId === id)).toHaveLength(1);
@@ -281,6 +283,7 @@ test('damage modifiers: front shield ±60°, armor and multipliers, stun/slow/to
 
 test('every weapon category fires and hits; swept projectiles never tunnel; full cover stops melee, hitscan and projectiles', async () => {
   await checkRocketEndpoints();
+  await checkRocketSafety();
   {
     const w = await arena(), query = w.combat!.query;
     const wall: CoverWall = { x: 0, y: 1, z: 0, halfX: 2.5, halfY: 1, halfZ: 2.5,
@@ -318,6 +321,39 @@ test('every weapon category fires and hits; swept projectiles never tunnel; full
     expect(health(w, id), `raised-floor MG over ${top} m cover`).toBe(top === 1.2 ? 86 : 100);
   }
 });
+
+/** Shared launcher safety, exercised by the existing weapons battery. */
+async function checkRocketSafety() {
+  for (const reason of ['aim-point', 'enemy-cone'] as const) {
+    const w = await arena(); equip(w, ['weapon.rocket-launcher']);
+    if (reason === 'enemy-cone') dummy(w, 4, .5);
+    fire(w, 'LEFT', { x: 1, z: 0 }, { x: reason === 'aim-point' ? 4 : 10, z: 0 });
+    expect(attacks(w), reason).toHaveLength(0);
+    expect(w.combat!.projectiles, reason).toHaveLength(0);
+    expect(w.events.events()).toContainEqual(expect.objectContaining({ type: 'combat.empty', reason: 'too-close' }));
+    expect(w.combat!.runner.loadout.current('LEFT').readyAt).toBeLessThan(w.tick + 50);
+  }
+  // A close enemy behind the courier does not block a distant forward shot.
+  const armed = await arena(); equip(armed, ['weapon.rocket-launcher']); dummy(armed, -3);
+  const far = dummy(armed, 7);
+  fire(armed, 'LEFT', { x: 1, z: 0 }, { x: 10, z: 0 }); step(armed, 40);
+  expect(health(armed, far)).toBeLessThan(100);
+  const blasts = armed.events.events().filter(e => e.type === 'combat.exploded' && e.sourceId === 1);
+  expect(blasts).toHaveLength(1);
+  if (blasts[0].type === 'combat.exploded') expect(blasts[0].position.x).toBeGreaterThanOrEqual(5);
+  // Cover and a zombie entering an already-fired rocket's path before arming
+  // stop it without any blast or damage.
+  for (const obstacle of ['wall', 'infected'] as const) {
+    const w = await arena(); equip(w, ['weapon.rocket-launcher']);
+    fire(w, 'LEFT', { x: 1, z: 0 }, { x: 10, z: 0 });
+    const near = obstacle === 'infected' ? dummy(w, 3) : null;
+    if (obstacle === 'wall') walls(w).push({ x: 3, y: 1, z: 0, halfX: .1, halfY: 1, halfZ: 1 });
+    step(w, 40);
+    expect(w.combat!.projectiles).toHaveLength(0);
+    expect(w.events.events().some(e => e.type === 'combat.exploded')).toBe(false);
+    if (near) expect(health(w, near)).toBe(100);
+  }
+}
 
 test('attack lifetime: ids survive re-equipping, dead sources cannot attack, snapshots cannot mutate live attacks', async () => {
   const w = await arena(); equip(w, ['weapon.pistol']); dummy(w, 5);

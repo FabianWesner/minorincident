@@ -53,6 +53,11 @@ export async function checkL7Navigation() {
     const residents = w.infected!.active.filter(e => e.archetype === 'infected.runner');
     expect(residents.length).toBeGreaterThan(0);
     expect(residents.every(e => e.appearance?.entityId === e.id && e.appearance.asset.startsWith('npc.'))).toBe(true);
+    const alphas = w.infected!.active.filter(e => e.archetype === 'infected.alpha');
+    expect(alphas.length).toBeGreaterThanOrEqual(2);
+    expect(alphas.every(e => e.health.max === 450 && e.health.current === 450), 'L7 Alpha toughness is level-local').toBe(true);
+    const finalMouths = new Set(w.infected!.active.filter(e => e.infected?.pack === 700 && e.archetype === 'infected.runner').map(e => Math.round(e.transform.z)));
+    expect(finalMouths.size).toBeGreaterThanOrEqual(3);
     const district = w.districts!;
     const destinations = Object.entries(w.missions!.def.anchors);
     const heightReach = new Map(destinations.map(([name, at]) => {
@@ -271,7 +276,7 @@ async function checkFollowerBites() {
     checkFriendlyRocketReaction(w);
     for (const e of [...w.infected!.active]) { w.solids.forget(e); w.infected!.release(e); }
     const roster = w.l7Encounters!.state.roster, follower = w.entities.get(roster[0].id)!;
-    const runner = w.entities.get(w.infected!.spawn('infected.runner', { x: follower.transform.x + 1.2, z: follower.transform.z }, { state: 'chase' }))!;
+    const runner = w.entities.get(w.infected!.spawn('infected.runner', { x: follower.transform.x + 1.2, y: follower.transform.y, z: follower.transform.z }, { state: 'chase' }))!;
     const wounds = new Map<number, number[]>(), alarms: string[] = [];
     w.events.on('infected.attack', e => { if (e.type === 'infected.attack' && e.special === 'bite') wounds.set(e.targetId, [...wounds.get(e.targetId) ?? [], w.entities.get(e.targetId)!.health.current]); });
     w.events.on('l7.follower-alarm', e => { if (e.type === 'l7.follower-alarm') alarms.push(e.kind); });
@@ -477,7 +482,7 @@ async function rockets() {
 
 /** Ground targets (including beyond the legacy 35 m ray) and first-hit termination. */
 export async function checkRocketEndpoints() {
-  for (const distance of [4, 8, 15, 40]) {
+  for (const distance of [8, 15, 40]) {
   const w = await rockets();
   try {
     // The arena's boundary is 15 m away; the long-range case needs open sky.
@@ -544,23 +549,23 @@ export async function checkRocketEndpoints() {
   } finally { maxRange.dispose(); }
 }
 
-/** Five overlapping rockets at 25-tick cadence, with unchanged payload and derived TTK bands. */
+/** Five overlapping rockets at 50-tick cadence, with unchanged payload and derived TTK bands. */
 export async function checkRocketCadence() {
   const w = await rockets();
   try {
     const p = w.entities.get(1)!.transform;
     w.setInput({ aim: { x: 1, z: 0 }, aimPoint: { x: p.x + 30, z: p.z }, left: { down: true, held: true, up: false } });
     let peak = 0;
-    for (let i = 0; i < 110; i++) { w.update(); peak = Math.max(peak, w.combat!.projectiles.length); }
+    for (let i = 0; i < 210; i++) { w.update(); peak = Math.max(peak, w.combat!.projectiles.length); }
     const shots = w.events.events().filter(e => e.type === 'combat.attack');
     expect(shots).toHaveLength(5);
-    for (let i = 1; i < shots.length; i++) expect(shots[i].tick - shots[i - 1].tick).toBe(25);
-    expect(peak).toBeGreaterThanOrEqual(3);
+    for (let i = 1; i < shots.length; i++) expect(shots[i].tick - shots[i - 1].tick).toBe(50);
+    expect(peak).toBeGreaterThanOrEqual(2);
     const def = action('weapon.rocket-launcher');
     expect([def.damage, def.splash!.radius, def.splash!.falloff]).toEqual([180, 6, .6]);
     expect(def.fireRate).toBeLessThan(action('weapon.handgun').fireRate);
     for (const [kind, profile] of Object.entries(combatArchetypes)) {
-      const n = Math.ceil(profile.hp / (180 * (1 - profile.armor))), t = 1 / 6 + (n - 1) / 2.4;
+      const n = Math.ceil(profile.hp / (180 * (1 - profile.armor))), t = 1 / 6 + (n - 1) / 1.2;
       const band = ttkBands[def.id][kind as keyof typeof combatArchetypes];
       expect(band[0]).toBeCloseTo(Math.max(.01, Math.floor((.8 * t - .25 + 1e-8) * 100) / 100), 2);
       expect(band[1]).toBeCloseTo(Math.ceil((1.2 * t + .25 - 1e-8) * 100) / 100, 2);
@@ -572,14 +577,14 @@ async function checkEarlierImpact(obstacle: 'wall' | 'infected') {
   const w = await rockets();
   try {
     const p = w.entities.get(1)!.transform;
-    if (obstacle === 'wall') (w.combat!.query.walls as { x: number; y: number; z: number; halfX: number; halfY: number; halfZ: number }[]).push({ x: p.x + 3, y: 1, z: p.z, halfX: .1, halfY: 1, halfZ: 1 });
-    const direct = obstacle === 'infected' ? w.spawnDummy('infected.dummy', { x: p.x + 3, z: p.z }, { hp: 100 }) : undefined;
-    const splash = obstacle === 'infected' ? w.spawnDummy('infected.dummy', { x: p.x + 4, z: p.z + 2.5 }, { hp: 1000 }) : undefined;
+    if (obstacle === 'wall') (w.combat!.query.walls as { x: number; y: number; z: number; halfX: number; halfY: number; halfZ: number }[]).push({ x: p.x + 6, y: 1, z: p.z, halfX: .1, halfY: 1, halfZ: 1 });
+    const direct = obstacle === 'infected' ? w.spawnDummy('infected.dummy', { x: p.x + 6, z: p.z }, { hp: 100 }) : undefined;
+    const splash = obstacle === 'infected' ? w.spawnDummy('infected.dummy', { x: p.x + 7, z: p.z + 2.5 }, { hp: 1000 }) : undefined;
     w.setInput({ aim: { x: 1, z: 0 }, aimPoint: { x: p.x + 8, z: p.z }, left: { down: true, held: false, up: false } });
     w.update(); w.clearInput(); for (let i = 0; i < 120; i++) w.update();
     const e = w.events.events().find(e => e.type === 'combat.exploded');
     expect(e?.type).toBe('combat.exploded');
-    if (e?.type === 'combat.exploded') expect(e.position.x).toBeLessThanOrEqual(p.x + 3);
+    if (e?.type === 'combat.exploded') expect(e.position.x).toBeLessThanOrEqual(p.x + 6);
     if (direct) expect(w.entities.get(direct)!.health.current).toBeLessThan(100);
     if (splash) expect(w.entities.get(splash)!.health.current, `${obstacle} first-contact splash`).toBeLessThan(1000);
   } finally { w.dispose(); }

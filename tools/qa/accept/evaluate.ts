@@ -264,11 +264,15 @@ export function evaluate(receipt: NativeReceipt, path: string): Clause[] {
       number('L6-01', 'initial shelter occupant identities', initial.mission.l6?.survivors.length, 24, 29);
       add('L6-01', 'initial shelter roster full health', initial.census.filter(e => initial.mission.l6?.survivors.some(survivor => survivor.id === e.id)).map(e => ({ id: e.id, hp: e.hp, maxHp: e.maxHp })), 'every resident starts full health', initial.mission.l6?.survivors.length ? initial.mission.l6.survivors.every(survivor => { const entity = initial.census.find(e => e.id === survivor.id); return !!entity && entity.hp === entity.maxHp; }) : undefined);
       number('L6-02', 'new weapon pickup census', initial.census.filter(e => e.pickup && 'actionId' in e.pickup).length, 0, 0);
-      number('L6-03', 'first breach level clock', s6?.breach1At ? (s6.breach1At - s6.startAt) / 60 : null, 30, 40);
+      // Use the committed breach event: checkpoint restore shifts future mission
+      // timers, so the final scheduled deadline can be later than the actual breach.
+      const breach1 = observation.ledger.find(event => event.type === 'l6.breach1');
+      const breach2 = observation.ledger.find(event => event.type === 'l6.breach2');
       const bang = observation.ledger.find(event => event.type === 'l6.bang' && event.breach === 1);
-      number('L6-03', 'first breach bang lead', s6?.breach1At && bang ? (s6.breach1At - bang.tick) / 60 : null, 1.5, Infinity);
+      number('L6-03', 'first breach level clock', breach1 ? breach1.tick / 60 : null, 30, 40);
+      number('L6-03', 'first breach bang lead', breach1 && bang ? (breach1.tick - bang.tick) / 60 : null, 1.5, Infinity);
       number('L6-03', 'actual first-wave spawn admissions (floor traversal still open)', s6?.spawnLog.filter(entry => entry.wave === 1).length, 6, Infinity);
-      number('L6-04', 'second breach delay', s6?.breach1At && s6.breach2At ? (s6.breach2At - s6.breach1At) / 60 : null, 20, 30);
+      number('L6-04', 'second breach delay', breach1 && breach2 ? (breach2.tick - breach1.tick) / 60 : null, 20, 30);
       number('L6-04', 'second-wave admitted identities', s6?.spawnLog.filter(entry => entry.wave === 2).length, 10, Infinity);
       number('L6-04', 'second-wave source accesses', s6 ? new Set(s6.spawnLog.filter(entry => entry.wave === 2).map(entry => entry.door)).size : null, 2, Infinity);
       if (!competent) for (const name of ['l6.breach1', 'l6.breach2']) {
@@ -340,7 +344,12 @@ export function evaluate(receipt: NativeReceipt, path: string): Clause[] {
     case 'L8': {
       number('L8-01', 'observed route weapon pickup transactions', observation.pickups.filter(pickup => pickup.item?.startsWith('weapon.')).length, 0, 0);
       number('L8-01', 'new weapon pickup census', initial.census.filter(e => e.pickup && 'actionId' in e.pickup).length, 0, 0);
-      add('L8-02', 'native calm marker and infected attack event state (HUD text requires browser)', observation.calm, '3600 ticks ±1; no marker; zero combat events', Math.abs(observation.calm.ticks - 3600) <= 1 && observation.calm.markerTicks === 0 && observation.calm.combatEvents === 0);
+      add('L8-02', 'native calm marker and infected attack event state (HUD text requires browser)', observation.calm, '3600 ticks ±1; destination marker present for the 3599 observable calm ticks; zero combat events', Math.abs(observation.calm.ticks - 3600) <= 1 && observation.calm.markerTicks >= 3599 && observation.calm.combatEvents === 0);
+      const markerChanges = observation.markerChanges as { tick: number; step: string; marker: string | null }[];
+      const gate = markerChanges.find(change => change.step === 'sanctuary' && change.marker === 'zoo-gate');
+      const apc = markerChanges.find(change => change.step === 'escape' && change.marker === 'exit');
+      const noEarlyExit = markerChanges.every(change => change.marker !== 'exit' || change.tick >= 3600);
+      add('L8-02', 'opening objective advances from zoo gate to APC after breach', { gate, apc, noEarlyExit }, 'zoo-gate active from first tick; APC marker only after the tick-3600 breach and the gate rendezvous', !!gate && gate.tick <= 1 && !!apc && apc.tick >= 3600 && noEarlyExit);
       number('L8-03', 'initial human civilians excluding soldiers and animals', initial.census.filter(e => e.civilian && !e.animal && e.role !== 'soldier').length, 20, Infinity);
       number('L8-03', 'initial soldiers', initial.census.filter(e => e.role === 'soldier').length, 6, Infinity);
       number('L8-03', 'initial zoo animals', initial.census.filter(e => e.animal).length, 8, Infinity);
@@ -389,7 +398,7 @@ export function evaluate(receipt: NativeReceipt, path: string): Clause[] {
           if(competent&&receipt.run?.completed){
             const boarding=result.finalBoarding, living=boarding.roster.filter(actor=>actor.hp>0&&!actor.infected);
             add('L8-09','every living native group identity seated',living,'nonempty living group; each passengerOf is the departure APC',living.length>0&&living.every(actor=>actor.passengerOf===boarding.carId),outbreakProofPath);
-            const marked=result.markers.filter(marker=>marker.marker!==null);
+            const marked=result.markers.filter(marker=>marker.marker==='exit');
             add('L8-07','native escape marker remains fixed at APC',marked,'every nonempty marker is exit at the unchanged APC anchor',marked.length>0&&marked.every(marker=>marker.marker==='exit'&&marker.anchor?.x===marked[0].anchor?.x&&marker.anchor?.z===marked[0].anchor?.z),outbreakProofPath);
           }
           for (const kind of ['civilian','soldier','staff','animal']) {

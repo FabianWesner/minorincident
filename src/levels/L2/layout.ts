@@ -103,6 +103,9 @@ const truckLaneClear = (p: Placement, x: number, z: number, margin: number) => {
   return l2TruckPath.every((q, i) => i % 10 !== 0 || !truckWallOverlap(q, 7.4, 2.1, wall, margin));
 };
 const looseProp = (assetId: string) => assetId.startsWith('prop.') && !assetId.includes('fence');
+// Parked cars can now be shoved by vehicles, but are still authored road
+// dressing. The pavement-only rule belongs to loose furniture.
+const roadsideProp = (assetId: string) => !assetId.startsWith('veh.') && !!pushableProps[assetId];
 /** The supermarket (Grove Market) replaces the eastern Main Row shop: its open east and south sides are the front and loading doors. */
 const MARKET: Placement = { id: 'l2-market', assetId: 'bld.supermarket', position: [-55.6, 0, -42.2], yaw: 0, scale: [1, 1, 1], minTier: 0, maxTier: 5, allowRoad: false, lightGroup: 'block-2', visualAabb: { min: [-59.8, 0, -46.7], max: [-51.4, 3.5, -37.7] } };
 
@@ -137,7 +140,7 @@ export function levelTwoLayouts(layouts: DistrictLayout[], aftermath: L1Aftermat
     layout.placements = layout.placements.filter(p => !blocking.has(p.id));
     layout.colliders = layout.colliders.filter(c => !blocking.has(c.id));
     // Loose inherited furniture cannot start in a driving lane. Check the whole footprint.
-    const onRoad = new Set(layout.placements.filter(p => pushableProps[p.assetId] && overlapsRoad(layout, p.visualAabb)).map(p => p.id));
+    const onRoad = new Set(layout.placements.filter(p => roadsideProp(p.assetId) && overlapsRoad(layout, p.visualAabb)).map(p => p.id));
     layout.placements = layout.placements.filter(p => !onRoad.has(p.id));
     layout.colliders = layout.colliders.filter(c => !onRoad.has(c.id.split('/')[0]));
     // The market is a fixed building: loose street furniture of the base layout that it swallows goes.
@@ -166,7 +169,7 @@ export function levelTwoLayouts(layouts: DistrictLayout[], aftermath: L1Aftermat
       if (d.orientedFootprint) placement.orientedFootprint = true;
       if (d.kind === 'station' && d.assetId === 'prop.bench') placement.fixed = true;
       // Checkpoint barriers are intentional; belongings and bins belong beside the road.
-      if (pushableProps[d.assetId] && d.kind !== 'checkpoint') {
+      if (roadsideProp(d.assetId) && d.kind !== 'checkpoint') {
         placement.allowRoad = false;
         if (overlapsRoad(layout, placement.visualAabb)) {
           let found = false;
@@ -180,7 +183,7 @@ export function levelTwoLayouts(layouts: DistrictLayout[], aftermath: L1Aftermat
       }
       // The bridge is a fixed set piece. Apron benches retain the civilians' seat anchors and sit on the apron slab (top .4 m).
       if (!decal && d.kind !== 'station' && d.kind !== 'river' && footprints(placement, 0, true).length) {
-        const roadside = pushableProps[d.assetId] && d.kind !== 'checkpoint', half = [(placement.visualAabb.max[0] - placement.visualAabb.min[0]) / 2, (placement.visualAabb.max[2] - placement.visualAabb.min[2]) / 2];
+        const roadside = roadsideProp(d.assetId) && d.kind !== 'checkpoint', half = [(placement.visualAabb.max[0] - placement.visualAabb.min[0]) / 2, (placement.visualAabb.max[2] - placement.visualAabb.min[2]) / 2];
         // The rescue fire truck's lane stays free: a piece that stood off the lane is never slid onto it (T-E20-20: a crashed sedan moved onto the Juniper/Main Row junction).
         const keepLane = truckLaneClear(placement, d.x, d.z, .125);
         const spot = findClearSpot(layout, placement, obstacles, { index,

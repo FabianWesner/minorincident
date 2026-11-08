@@ -24,7 +24,18 @@ const distance = (a: Point, b: Point) => Math.hypot(a.x - b.x, a.z - b.z);
 export class LevelEightZoo {
   state: L8ZooState = { startedAt: 0, breachedAt: 0, nextWave: 0, alphas: 0, carId: 0, busId: 0, roster: [], animals: [], outlets: [], arrivals: [], escapeCheckpoint: false };
   private prepared = false;
-  constructor(private readonly mission: Mission) {}
+  private rosterCacheTick = -1;
+  private rosterCacheRevision = -1;
+  private rosterCache: number[] = [];
+  private passengersCache: number[] = [];
+  private readonly seatedPassengers = new Set<number>();
+  private readonly cacheStops: (() => void)[] = [];
+  constructor(private readonly mission: Mission) {
+    const invalidate = () => { this.rosterCacheTick = -1; this.rosterCacheRevision = -1; };
+    for (const type of ['entity.spawned', 'civilian.state', 'civilian.finished', 'combat.kill'] as const)
+      this.cacheStops.push(mission.world.events.on(type, invalidate));
+  }
+  dispose(): void { this.cacheStops.splice(0).forEach(stop => stop()); }
   private get w() { return this.mission.world; }
   private get breached() { return !!this.mission.state.states.breached; }
   private point(at: Point, radius = .4): Point {
@@ -52,7 +63,8 @@ export class LevelEightZoo {
       e.health.current = e.health.max;
       c.state = 'calm'; c.entered = w.tick; c.until = 0; c.knockedUntil = 0;
       if (c.l1) c.l1.target = null;
-      if (e.combat) { e.combat.staggerUntil = 0; e.combat.attacking = false; delete e.combat.reaction; }
+      // Recovery also expires effects whose timestamps belong to L7's clock.
+      if (e.combat) { e.combat.staggerUntil = 0; e.combat.attacking = false; e.combat.statuses.length = 0; delete e.combat.reaction; }
       readyCarriedAlly(e, w.tick);
       c.survivor = { key: c.survivor?.key ?? `zoo-carried-${i}`, slot: i, leader: 1, mode: 'follow', cover: false, injured: c.survivor?.injured ?? c.l1?.walkSpeed === 1.4, waitAt: 0, foundAt: w.tick };
       s.roster.push(e.id); w.solids.admit(e, 'l8.roster.arrival');
@@ -79,9 +91,9 @@ export class LevelEightZoo {
       const exit = doorExit(w, door, start); if (!exit) throw new Error(`Disconnected zoo outlet ${door.house}`);
       const serviceRoutes: [number, number][][] = [
         [[-96, 32]],
-        [[80, 70]], // Route the east-tunnel cohort across the courier's last on-foot approach to the APC.
+        [[80, 78]], // Cross the gate-to-APC road before ordinary pursuit.
         [[-30, -64]],
-        [[32, 64]], // Intercept the south-plaza exit before ordinary pursuit.
+        [[27, 78]], // Clear the bunker onto the gate road before ordinary pursuit.
       ];
       const route = [...exit.route, ...serviceRoutes[index]];
       const last = route.at(-1);
@@ -130,12 +142,16 @@ export class LevelEightZoo {
       // point once; minor physics impulses must not steer the objective ring.
       Object.assign(this.mission.def.anchors.exit, this.boardingRing());
       this.mission.setState('breached', true); this.mission.checkpoint('breach');
-      w.events.emit({ type: 'story.say', tick: t, id: 1, text: 'They are coming from the tunnels! Get to the armored vehicle!', position: w.entities.get(1)!.transform });
+      const gate = this.mission.def.anchors['zoo-gate'], player = w.entities.get(1)!;
+      const text = distance(player.transform, gate) <= gate.radius
+        ? 'They are coming from the tunnels! Get to the armored vehicle!'
+        : 'They are coming from the tunnels! Regroup at the zoo gate!';
+      w.events.emit({ type: 'story.say', tick: t, id: 1, text, position: player.transform });
     }
     this.mission.setState('apc-destroyed', w.entities.get(s.carId)!.health.current <= 0);
     const seated=this.w.vehicles!.active===s.carId;
     this.mission.setState('player-boarded',seated);
-    if(seated || !this.breached)this.mission.state.marker=null;
+    if(seated)this.mission.state.marker=null;
     else if(this.mission.state.steps.escape.status==='active'||this.mission.state.steps.depart.status==='active')this.mission.state.marker='exit';
     if (!this.breached) return;
     if (t >= s.nextWave) {
@@ -149,6 +165,9 @@ export class LevelEightZoo {
     }
     for (const [index, outlet] of s.outlets.entries()) for (const id of walkResidents(w, outlet, t)) {
       ai.pursueTarget(id, 1);
+      // This gate-side cohort pressures the courier; the other outlets still attack the sanctuary population.
+      // Releasing on the apron and retaining that focus avoids spending the whole encounter walking a scripted road.
+      if (index === 3) ai.press(id, 1, t + 3600, 30);
       if (index === 1) {
         // The east cohort intercepts the evacuation at its parked APC. Native
         // navigation and ordinary senses own this approach; party contact can
@@ -158,27 +177,35 @@ export class LevelEightZoo {
       }
     }
     const player = w.entities.get(1)!;
-    if (!s.escapeCheckpoint && distance(player.transform, this.door()) < 12) { s.escapeCheckpoint = true; this.mission.checkpoint('escape-route'); }
+    if (!s.escapeCheckpoint && this.mission.state.steps.escape.status === 'active' && distance(player.transform, this.door()) < 12) { s.escapeCheckpoint = true; this.mission.checkpoint('escape-route'); }
     if (w.vehicles!.groupBoarded(s.carId, this.passengers())) this.mission.setState('aboard', true);
   }
   /** Complete living boarding group, including companions shown in the HUD. */
+  private refreshRoster(): void {
+    if (this.rosterCacheTick === this.w.tick && this.rosterCacheRevision === this.w.entities.revision) return;
+    this.rosterCache = [...new Set([...this.state.roster, ...[...this.w.entities.iterate()].filter(e=>e.civilian?.survivor?.mode === 'follow' && !e.civilian.zooAnimal).map(e=>e.id)])]
+      .filter(id => { const e = this.w.entities.get(id); return e && e.health.current > 0 && !e.infected && e.civilian?.state !== 'finished'; });
+    this.passengersCache = [...[...this.w.entities.iterate()].filter(e=>e.companion&&e.health.current>0).map(e=>e.id), ...this.rosterCache];
+    this.rosterCacheTick = this.w.tick; this.rosterCacheRevision = this.w.entities.revision;
+  }
   passengers(): number[] {
-    return [...[...this.w.entities.iterate()].filter(e=>e.companion&&e.health.current>0).map(e=>e.id), ...this.roster()];
+    this.refreshRoster();
+    return [...this.passengersCache];
   }
   /** The unarmed cab would remove the courier's cover fire before the queue is safe. */
   canBoardDriver(): boolean {
     const car = this.w.entities.get(this.state.carId)?.vehicle;
-    return this.breached && this.passengers().every(id => car?.passengers?.some(p => p.id === id && p.phase === 'seated'));
+    return this.breached && this.mission.state.steps.escape.status === 'active' && this.passengers().every(id => car?.passengers?.some(p => p.id === id && p.phase === 'seated'));
   }
   /** E30 departure starts only after the breach and the complete group has boarded. */
-  canDrive(): boolean { return this.breached && this.w.vehicles!.groupBoarded(this.state.carId,this.passengers()); }
+  canDrive(): boolean { return this.breached && this.mission.state.steps.sanctuary.status === 'completed' && this.w.vehicles!.groupBoarded(this.state.carId,this.passengers()); }
   /** The completed boarding group shares the courier's run-out protection until handover. */
   departing(): boolean { return this.mission.state.runOutUntil !== undefined || this.mission.state.phase !== 'playing'; }
   /** At the pickup, the evacuation queue owns movement instead of civilian flee/defence. */
   boarding(): boolean {
-    return this.breached && (this.w.vehicles!.active === this.state.carId || distance(this.w.entities.get(1)!.transform, this.door()) < 12);
+    return this.breached && (this.mission.state.steps.escape.status === 'active' || this.mission.state.steps.depart.status === 'active') && (this.w.vehicles!.active === this.state.carId || distance(this.w.entities.get(1)!.transform, this.door()) < 12);
   }
-  /** Cheat/test path (`completeObjective` before the breach): call the tunnel breach now so the escape objective becomes active. */
+  /** Cheat/test path (`completeObjective` before the breach): call the real tunnel breach; ordinary completion still requires the gate rendezvous. */
   advance(): boolean {
     if (this.mission.state.states.breached) return false;
     this.state.startedAt = this.w.tick - 3600; this.update();
@@ -194,8 +221,8 @@ export class LevelEightZoo {
   }
   /** Newly rescued zoo residents also belong to the complete living group. */
   roster(): number[] {
-    const ids = [...new Set([...this.state.roster, ...[...this.w.entities.iterate()].filter(e => e.civilian?.survivor?.mode === 'follow' && !e.civilian.zooAnimal).map(e => e.id)])];
-    return ids.filter(id => { const e = this.w.entities.get(id); return e && e.health.current > 0 && !e.infected && e.civilian?.state !== 'finished'; });
+    this.refreshRoster();
+    return [...this.rosterCache];
   }
   /** The parked nav AABB encloses free space beside a rotated hull. Use the
    * canonical physical sweep for the final clear approach, without changing
@@ -254,14 +281,26 @@ export class LevelEightZoo {
     c.state = 'calm'; c.story = null; c.survivor!.cover = false;
     const door = w.vehicles!.passengerDoor(s.carId), boarding = this.boarding();
     const slot = c.survivor!.slot, velocity = p.survivor!.velocity;
+    // Catch-up and the tightly spaced APC queue need the shared follower
+    // response: civilian steering overshoots these changing targets.
+    if (this.breached && (boarding || distance(e.transform, p.transform) > 10)) c.survivor!.briskAt = w.tick;
     const goal = formationSlot(p.transform, leaderHeading(p.transform.yaw, velocity), slot);
     let target = boarding ? door : w.infected!.nav.clear(goal.x, goal.z, .35) ? goal : p.transform;
     let queueIndex = 0;
     if (boarding) {
       const vehicle = w.vehicles!.cars.get(s.carId)!.entity.vehicle!;
-      const passengers = this.passengers();
-      const waiting = passengers.filter(id => !vehicle.passengers?.some(passenger => passenger.id === id && passenger.phase === 'seated'));
-      queueIndex = Math.max(0, waiting.indexOf(e.id));
+      this.refreshRoster();
+      const passengers = this.passengersCache;
+      // Build the seated lookup once for this call, rather than scanning every
+      // vehicle seat for every group member, once again for every follower.
+      const seated = this.seatedPassengers; seated.clear();
+      for (const passenger of vehicle.passengers ?? []) if (passenger.phase === 'seated') seated.add(passenger.id);
+      let ahead = 0;
+      for (const id of passengers) {
+        if (seated.has(id)) continue;
+        if (id === e.id) { queueIndex = ahead; break; }
+        ahead++;
+      }
       if (queueIndex) {
         const car = w.entities.get(s.carId)!, dx = door.x - car.transform.x, dz = door.z - car.transform.z, length = Math.hypot(dx, dz) || 1;
         // Keep the complete roster near the APC instead of stretching a
@@ -279,7 +318,7 @@ export class LevelEightZoo {
       // board-up; a stale carried injury flag must not leave passengers behind.
       // A follower displaced from its assigned slot catches up, then settles
       // back to courier pace. This avoids making the courier stop for it.
-      const speed = Math.min(4.7, 4.5 + Math.max(0, distance(e.transform, target) - 4) * .35);
+      const speed = Math.min(5.2, 4.5 + Math.max(0, distance(e.transform, target) - 4) * .35);
       if (!boarding || !this.approachBoardingSpot(e, target, speed)) w.npcs!.move(e, target, speed, c, boarding ? .2 : 0, 2400);
     }
     return true;

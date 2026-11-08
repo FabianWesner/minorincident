@@ -1,0 +1,27 @@
+{
+  "baseline": "c92a03b2",
+  "unchangedSources": [
+    {
+      "path": "src/render/HealthBars.ts",
+      "identicalToBriefBaseline": true,
+      "sha256": "4f63f5e241e4a86f53f583e0ac1c3e3445236de90250a82077ea010fb0071006"
+    },
+    {
+      "path": "tools/qa/accept/fixtures.ts",
+      "identicalToBriefBaseline": true,
+      "sha256": "cc03ea88e47314617c9dd7b146e4bf705e5ec6bc04139d6ca7845c0a34722371"
+    },
+    {
+      "path": "src/levels/L10/encounters.ts",
+      "identicalToBriefBaseline": true,
+      "sha256": "95508bbe09fcd57693f279411423635904b4daea6211d7f33e83eace643f24b3"
+    },
+    {
+      "path": "src/levels/L10/crossingStories.ts",
+      "identicalToBriefBaseline": true,
+      "sha256": "2a25d142c395f749683789474245b31fc9be189b4a4ef8088ecd79def8e34060"
+    }
+  ],
+  "G-24": "HealthBars.mandatoryBar intentionally includes healthy Alphas at every distance; fixture still requires farHealthy=false for every species. Identical pure function and fixture at baseline.",
+  "L10-03": "crossingStories.ts already records low/stationary military-column=2 as a baseline failure (base29dbfed0); current recorded value is2."
+}

@@ -1,0 +1,35 @@
+
+> qa:accept
+> node --import tsx/esm tools/qa/accept.ts --level L10 --skip-browser
+
+[qa:accept] L10 low/complete: native global and level observation
+[qa:accept] L10 low/complete: tick-budget
+[qa:accept] L10 low/stationary: native global and level observation
+[qa:accept] L10 low/stationary: tick-budget
+[qa:accept] L10 high/complete: native global and level observation
+[qa:accept] L10 high/complete: tick-budget
+[qa:accept] L10 high/stationary: native global and level observation
+[qa:accept] L10 high/stationary: tick-budget
+[qa:accept] L10 low/fixtures: 16 clauses, 0 errors
+[qa:accept] L10 high/fixtures: 16 clauses, 0 errors
+[qa:accept:checkpoint] L10 low/cure-crash: PASS
+[qa:accept:checkpoint] L10 low/cure-residential: PASS
+[qa:accept:checkpoint] L10 low/cure-industrial: PASS
+[qa:accept:checkpoint] L10 low/cure-military: PASS
+[qa:accept:checkpoint] L10 low/cure-research-entry: PASS
+[qa:accept:checkpoint] L10 low/cure-research: PASS
+[qa:accept:checkpoint] L10 low/cure-corridor: PASS
+[qa:accept:checkpoint] L10 low/cure-complex: PASS
+[qa:accept:checkpoint] L10 low/cure-disperse-ready: PASS
+[qa:accept] L10 low/checkpoints: 27 clauses; control identical; 0 errors
+[qa:accept:checkpoint] L10 high/cure-crash: PASS
+[qa:accept:checkpoint] L10 high/cure-residential: PASS
+[qa:accept:checkpoint] L10 high/cure-industrial: PASS
+[qa:accept:checkpoint] L10 high/cure-military: PASS
+[qa:accept:checkpoint] L10 high/cure-research-entry: PASS
+[qa:accept:checkpoint] L10 high/cure-research: PASS
+[qa:accept:checkpoint] L10 high/cure-corridor: PASS
+[qa:accept:checkpoint] L10 high/cure-complex: PASS
+[qa:accept:checkpoint] L10 high/cure-disperse-ready: PASS
+[qa:accept] L10 high/checkpoints: 27 clauses; control identical; 0 errors
+[qa:accept] L10: 1 fresh failing rows; 13 incomplete rows; docs/reports/qa-browser/l10-native/L10.json

@@ -1,0 +1,50 @@
+{
+  "commit": "1b4e89b11c7f82dd72850e4f9bf1d1118c9cb64f",
+  "source": "docs/reports/fix51-verify/L7.json",
+  "checks": [
+    {
+      "id": "L7-05",
+      "clause": "minimum bounded-path reachable share within30m (path\u22642.5\u00d7direct)",
+      "level": "L7",
+      "tier": "low",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 100,
+      "target": "90 \u2264 value \u2264 100",
+      "receipt": "docs/reports/fix51-verify/receipts/L7-low-complete.json"
+    },
+    {
+      "id": "L7-05",
+      "clause": "minimum bounded-path reachable share within30m (path\u22642.5\u00d7direct)",
+      "level": "L7",
+      "tier": "low",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 100,
+      "target": "90 \u2264 value \u2264 100",
+      "receipt": "docs/reports/fix51-verify/receipts/L7-low-stationary.json"
+    },
+    {
+      "id": "L7-05",
+      "clause": "minimum bounded-path reachable share within30m (path\u22642.5\u00d7direct)",
+      "level": "L7",
+      "tier": "high",
+      "policy": "complete",
+      "status": "PASS",
+      "value": 100,
+      "target": "90 \u2264 value \u2264 100",
+      "receipt": "docs/reports/fix51-verify/receipts/L7-high-complete.json"
+    },
+    {
+      "id": "L7-05",
+      "clause": "minimum bounded-path reachable share within30m (path\u22642.5\u00d7direct)",
+      "level": "L7",
+      "tier": "high",
+      "policy": "stationary",
+      "status": "PASS",
+      "value": 98.57142857142858,
+      "target": "90 \u2264 value \u2264 100",
+      "receipt": "docs/reports/fix51-verify/receipts/L7-high-stationary.json"
+    }
+  ]
+}

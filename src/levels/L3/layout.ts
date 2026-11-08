@@ -239,6 +239,13 @@ export function levelThreeLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     layout.placements.push({id:'l3-highway-train',assetId:'veh.train-freight',position:[175,0,17],yaw:0,scale:[1,1,1],minTier:0,maxTier:5,allowRoad:true,lightGroup:'l3',visualAabb:{min:[162.6,0,15],max:[187.4,4.9,19]}});
     layout.placements.push({id:'l3-highway-car',navBlocker:true,assetId:'veh.sedan-blue',position:[173,5.7,1.1],yaw:0,scale:[1,1,1],decay:'wrecked',minTier:0,maxTier:5,allowRoad:true,lightGroup:'l3',visualAabb:{min:[170.7,5.7,0],max:[175.3,7.4,2.2]}});
     layout.lightGroups.push({ id: 'l3-highway', offAt: 5 }, { id: 'l3', offAt: 5 });
+    for (const p of layout.placements) {
+      if (p.assetId.startsWith('bld.')) p.destruction = { class: 'masonry', indestructible: true };
+      if (p.assetId.startsWith('veh.')) p.destruction = { class: 'vehicle', indestructible: true };
+      // Oak Avenue's ordinary houses and nearby abandoned cars: no mission actor, gate or support route.
+      if (['bld.house-a:407', 'bld.house-a:457'].includes(p.id)) p.destruction = { class: 'timber' };
+      if (p.id.startsWith('l3-abandoned-') && ['veh.sedan-blue', 'veh.sedan-green'].includes(p.assetId)) p.destruction = { class: 'vehicle' };
+    }
     return layout;
   });
 }

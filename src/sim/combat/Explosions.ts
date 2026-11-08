@@ -61,6 +61,7 @@ export class Explosions {
     this.world.events.emit({ type: 'explosion.beat', tick, sourceId, position: { x: at.x, y: .7, z: at.z }, beat: 'crack', size });
     this.scheduled.push({ at: tick + 4, kind: 'beat', beat: 'debris', size, x: at.x, z: at.z, sourceId }, { at: tick + 15, kind: 'beat', beat: 'roar', size, x: at.x, z: at.z, sourceId });
     this.damage(d, at, r, sourceId, opts.damage !== false, opts);
+    if (opts.damage !== false || opts.actionId) this.world.destruction?.blast(opts.actionId ?? id, at, r, d.damage * (opts.multiplier ?? 1), d.impulse);
     this.queueImpulses(d, at, r);
     if (d.class === 'large' && this.world.vehicles?.cars.has(sourceId)) this.detachParts(sourceId);
     if (opts.fires !== false) this.ignite(d, at, r);

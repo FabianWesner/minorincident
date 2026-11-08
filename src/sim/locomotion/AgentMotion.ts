@@ -21,6 +21,7 @@ export const l5FollowerTracking = { ...followerTracking, omega: 22 } as const;
  * temperament (r12-group: people react a little apart; the injured lag), otherwise the shared defaults. */
 export function trackingFor(world: SimWorld, e: EntitySnapshot): Parameters<typeof respond>[3] {
   const s = e.civilian?.survivor;
+  if (world.scenario === 'L7' && e.companion) return followerTracking;
   if (world.scenario === 'L5' && (e.companion || s?.briskAt === world.tick)) return l5FollowerTracking;
   if (s?.mode !== 'follow' || world.scenario === 'L5') return undefined;
   const limits = s.briskAt === world.tick ? followerTracking : motionLimits;
@@ -31,7 +32,7 @@ export function moveAgent(e: EntitySnapshot, vx: number, vz: number, nav: NavGri
   if (state.updatedAt === tick) return;
   if (impulse) { state.vx = vx; state.vz = vz; state.ax = state.az = 0; }
   else {
-    const speed = Status.speed(e), ally = e.civilian?.ally;
+    const speed = Status.speed(e) / (nav.movementCost?.(e.transform.x, e.transform.z) ?? 1), ally = e.civilian?.ally;
     const following = e.civilian?.survivor?.briskAt === tick || ally?.follow && !ally.targetId && !ally.strikeAt;
     respond(state, vx * speed, vz * speed, tracking ?? (following ? followerTracking : undefined));
   }
