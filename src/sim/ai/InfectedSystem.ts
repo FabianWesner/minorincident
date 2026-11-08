@@ -505,7 +505,10 @@ export class InfectedSystem {
   private perceiveTargets(e: EntitySnapshot, b: InfectedState): boolean {
     if (this.world.scenario === 'L8' && this.hearing.courierShotNearby(e) && !b.pursuit && !b.specialAttack && !e.emerging) {
       delete b.pressureTarget;
-      if (b.l1) this.rush(e.id, this.world.entities.get(1)!.transform, this.world.tick + provokeTicks);
+      if (b.l1) {
+        const gateApproach = b.l1.focusId === 1 && b.l1.focusBiasM === 30 && this.world.tick < (b.l1.focusUntil ?? 0);
+        this.rush(e.id, this.world.entities.get(1)!.transform, this.world.tick + provokeTicks, gateApproach);
+      }
       else { b.heardTargetId = 1; delete b.investigate; }
     }
     const provoker = this.provoker(b);
