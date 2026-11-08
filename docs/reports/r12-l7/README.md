@@ -44,7 +44,7 @@ The cardinal attack counts span all four bearings in both variants. The `simulta
 - Focused combat/navigation tests: 11/11 passed; safety assertions folded into the existing weapons test, with no new test case count. Close aim, forward enemy, enemy behind, armed hit, and pre-arm enemy/cover collisions are covered.
 - Full unit suite: 107/107 passed in 65.2 s within the requested 150 s cap. This predates the newest one-worker rule; any rerun must use one worker.
 - Final typecheck and lint passed, including the added crossfire helper. An earlier lint failure for an unused physical-helper local was corrected; both the failure and the later passes remain in the command receipts.
-- L7 acceptance completed: low seed 1 completes with zero deaths; high seed 1 fails at 89.98 s during bus departure. Fixtures: eight clauses per quality, zero errors. All three checkpoints pass per quality. The overall report has two failing rows: L7-01 uses a stale physical pickup receipt (browser skipped), and L7-05 reports reachable-share zero. Neither failure has been waived. [Archived acceptance](acceptance.json.gz).
+- L7 acceptance completed: low seed 1 completes with zero deaths; high seed 1 fails at 89.98 s during bus departure. Fixtures: eight clauses per quality, zero errors. All three checkpoints pass per quality. The overall report has two failing rows: L7-01 uses a stale physical pickup receipt (browser skipped), and L7-05 reports reachable-share zero. Neither failure has been waived. The [historical baseline path clauses](baseline-path-checks.json) passed at 98.6–100% across both qualities and both policies; the current moving-route zero therefore requires a fresh path diagnosis, rather than dismissal as an inherited failing row. [Archived acceptance](acceptance.json.gz).
 - Baseline threat L1–L5 has zero per-level/passive flags; its only global flag is the deliberate partial-level selection. [Baseline audit](threat-before.json.gz). Full final threat audit and exact L1–L5 hash/run/phase equality checks are still pending.
 - [Command receipts](commands.json), [interrupted earlier diagnostics](interrupted.json), and [browser startup diagnostics](browser.json) retain failures as well as passes. Generated canonical reports were restored rather than published as passing results.
 
@@ -54,10 +54,10 @@ Resume with the supported remote runner after host services are restored:
 
 ```sh
 MI_LOCAL_FALLBACK=0 sh tools/remote/run.sh "$PWD" \
-  --pull docs/reports/r12-l7 -- python3 tools/qa/r12-l7-native.py
+  --pull docs/reports/r12-l7 -- python3 tools/qa/r12-l7-native.py --remaining
 ```
 
-The batch executes measurements serially, acceptance one level at a time, and unit/threat commands with one worker. It reruns the baseline and final measurements, then typecheck, lint, unit, L7/L10 acceptance and full threat comparison. No heavy commands may overlap on this Mac. A fresh native pass must resolve or explicitly investigate the L7 failures and establish full L10 completion before calling the brief verified.
+The batch executes measurements serially, acceptance one level at a time, and unit/threat commands with one worker. With `--remaining`, it reuses the archived before/after measurements and baseline threat audit, then runs typecheck, lint, unit, L7/L10 acceptance and full threat comparison. Omit that flag for a full comparison rerun. Complete-route acceptance archives now retain threat phases and worst-path diagnostics for investigation. No heavy commands may overlap on this Mac. A fresh native pass must resolve or explicitly investigate the L7 failures and establish full L10 completion before calling the brief verified.
 
 ## Browser QA needed
 
