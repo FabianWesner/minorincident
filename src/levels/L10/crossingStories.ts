@@ -99,7 +99,12 @@ export function cureCrossingStories(placements: readonly Placement[]): Placement
   const out: Placement[] = [];
   const roads: Point[][] = [...cure.regions.map(r => r.route), ...cure.detours.map(d => d.route),
     [cure.regions[5].route[1], cure.anchors['corridor-breach'], cure.anchors['r6-r7-seam'], cure.regions[6].route[5]]];
-  const slots: Point[] = cureEncounters.filter(e => !e.assault).flatMap(e => (['high', 'low'] as const).flatMap(t => cureEncounterSlots(e, t).map(s => [s.x, s.z] as Point)));
+  // Field-crossing patrols and the corridor groups are released into the lane the courier actually walks (their slots
+  // shift in z to her position, LevelTenEncounters laneOffsets): keep every scene out of their x bands at any z.
+  const shifts = (e: { id: string }) => e.id.includes('-direct-') || e.id.startsWith('corridor-');
+  const slotsOf = (e: (typeof cureEncounters)[number]) => (['high', 'low'] as const).flatMap(t => cureEncounterSlots(e, t).map(s => [s.x, s.z] as Point));
+  const slots: Point[] = cureEncounters.filter(e => !e.assault && !shifts(e)).flatMap(slotsOf);
+  const laneSlotX: number[] = cureEncounters.filter(shifts).flatMap(slotsOf).map(([x]) => x);
   const stations: Point[] = cureEncounters.map(e => e.at);
   const anchors: Point[] = [...Object.values(cure.anchors), ...cureMedkits.map(m => m.at)];
   const consoleAt = cure.anchors['cure-console'];
@@ -118,6 +123,7 @@ export function cureCrossingStories(placements: readonly Placement[]): Placement
     const { min: a, max: b } = p.visualAabb;
     const near = (q: Point, r: number) => q[0] > a[0] - r && q[0] < b[0] + r && q[1] > a[2] - r && q[1] < b[2] + r;
     if (keep.slots.some(q => near(q, 4)) || keep.anchors.some(q => near(q, 8))) return false;
+    if (laneSlotX.some(x => x > a[0] - 4 && x < b[0] + 4)) return false;
     // Pieces of one scene may stand close together; foreign placements keep a 1 m gap.
     const apart = (q: Placement, m: number) => { const { min: c, max: d } = q.visualAabb; return a[0] >= d[0] + m || b[0] <= c[0] - m || a[2] >= d[2] + m || b[2] <= c[2] - m; };
     return taken.every(q => apart(q, 1)) && own.every(q => apart(q, .15));

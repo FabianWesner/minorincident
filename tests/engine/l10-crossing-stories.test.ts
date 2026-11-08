@@ -33,6 +33,7 @@ describe('L10 crossing stories (r9-l10pace, vqa58 "minutes of empty dark grass")
     const roads: Point[][] = [...cure.regions.map(r => r.route), ...cure.detours.map(d => d.route),
       [cure.regions[5].route[1], cure.anchors['corridor-breach'], cure.anchors['r6-r7-seam'], cure.regions[6].route[5]]];
     const slots = cureEncounters.filter(e => !e.assault).flatMap(e => (['high', 'low'] as const).flatMap(t => cureEncounterSlots(e, t)));
+    const laneSlots = cureEncounters.filter(e => e.id.includes('-direct-') || e.id.startsWith('corridor-')).flatMap(e => (['high', 'low'] as const).flatMap(t => cureEncounterSlots(e, t)));
     const console_ = cure.anchors['cure-console'];
     for (const p of stories) {
       const li = Number(p.id.split('-')[3]), line = cureCrossingLines[li].line, a = p.visualAabb;
@@ -42,6 +43,8 @@ describe('L10 crossing stories (r9-l10pace, vqa58 "minutes of empty dark grass")
       }
       expect(Math.hypot(p.position[0] - console_[0], p.position[2] - console_[1])).toBeGreaterThan(100);
       expect(slots.some(s => s.x > a.min[0] - 4 && s.x < a.max[0] + 4 && s.z > a.min[2] - 4 && s.z < a.max[2] + 4)).toBe(false);
+      // Lane-shifted groups (field-crossing patrols, corridor groups) spawn at the courier's z: no scene in their x band.
+      expect(laneSlots.some(s => s.x > a.min[0] - 4 && s.x < a.max[0] + 4)).toBe(false);
     }
   });
 
