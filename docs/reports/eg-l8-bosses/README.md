@@ -10,6 +10,8 @@ Merged main `1141d078` into the L8 arena branch. Conflict resolution preserves A
 
 First [merged skilled matrix](evidence/post-merge/initial-low-skilled.json) at `16fa7889`: flamingo 42.82 s, zebra 48.83 s, monkey 57.55 s, lion 73.52 s, gorilla 161.90 s, elephant 60.68 s; all zero deaths. Flamingo and gorilla miss the 45–120 s band. All 16 [merged lifecycle controls](evidence/post-merge/initial-low-controls.json) pass. Flamingo HP is now 780 (was 700); gorilla now abandons an immobile scavenging route after two seconds and returns to its pound/chest-beat cycle. The trace showed it stuck at (57.24, -30.25) pursuing a hose reel at (79, -32).
 
+Focused corrected runs pass: flamingo **47.47 s**, gorilla **72.02 s**, both zero deaths. The production-tour bot also now returns to the public elephant entry before regrouping with the followers waiting outside the yard; the tour verifier requires actual APC completion.
+
 **Open:** post-merge typecheck, lint, unit tests and corrected six-arena matrix on runners. The receipts below describe the original lane source until the post-merge results are committed. **Browser QA needed** remains open; no browsers are launched.
 
 ## Done and open items

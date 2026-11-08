@@ -1,4 +1,5 @@
 import { L8ArenaBot } from './L8ArenaBot';
+import { l8BossArenas } from '../../data/l8Bosses';
 import { strikeAt } from './helpers';
 import { emptyInput, type InputFrame } from '../../input/InputFrame';
 import type { SimWorld } from '../../sim/world/SimWorld';
@@ -9,6 +10,7 @@ export class LevelEightBot {
   private readonly walker = new Walker();
   private breachHoldStarted = 0;
   private escapeLeg = 0;
+  private tourReturned = false;
   private readonly arenas: L8ArenaBot;
   constructor(private readonly w: SimWorld, readonly profile = 'complete') { this.arenas = new L8ArenaBot(w); }
   sample(): InputFrame {
@@ -38,6 +40,12 @@ export class LevelEightBot {
       while (this.escapeLeg < road.length && Math.hypot(p.x - road[this.escapeLeg].x, p.z - road[this.escapeLeg].z) < 2) this.escapeLeg++;
       if (this.escapeLeg < road.length) target = road[this.escapeLeg];
     }
+    // The final kill can leave the courier on the far side of the paddock.
+    // Rejoin its public entry before waiting for followers held outside the yard.
+    const arenaExit = l8BossArenas.at(-1)!.entry;
+    if (this.profile === 'arena-tour' && zoo.state.arenas.every(a => a.phase === 3) && Math.hypot(p.x - arenaExit.x, p.z - arenaExit.z) < 2) this.tourReturned = true;
+    const returning = this.profile === 'arena-tour' && zoo.state.arenas.every(a => a.phase === 3) && !this.tourReturned;
+    if (returning) target = arenaExit;
     if (!calm) {
       const enemies = w.infected!.active.filter(e => e.health.current > 0 && (!e.infected!.arenaBoss || e.infected!.arenaBoss.engaged) && !e.hidden && !e.emerging && !e.infectionRise && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < 16 && w.infected!.director.inPlayerView(e.transform, 16, 1, 5) && w.infected!.nav.visible(p, e.transform, 0)).sort((a, b) => Math.hypot(a.transform.x - p.x, a.transform.z - p.z) - Math.hypot(b.transform.x - p.x, b.transform.z - p.z));
       const enemy = enemies[0];
@@ -46,7 +54,7 @@ export class LevelEightBot {
         if (gun) { f.selectedSlot = { side: gun.side, index: gun.index }; strikeAt(f, enemy, gun.side, p, false); }
       }
       const live = zoo.roster().map(id => w.entities.get(id)).filter(e => e && e.health.current > 0 && !e.infected && e.passengerOf === undefined);
-      if (Math.hypot(p.x - target.x, p.z - target.z) > 10 && live.some(e => Math.hypot(e!.transform.x - p.x, e!.transform.z - p.z) > Math.max(12, Math.ceil(live.length / 3) * 1.2 + 5))) return f;
+      if (!returning && Math.hypot(p.x - target.x, p.z - target.z) > 10 && live.some(e => Math.hypot(e!.transform.x - p.x, e!.transform.z - p.z) > Math.max(12, Math.ceil(live.length / 3) * 1.2 + 5))) return f;
     }
     f.move = this.walker.step(w, target, calm ? 1 : .35, calm ? 'explore' : `apc-${this.escapeLeg}`) ?? f.move;
     if (!calm) {
