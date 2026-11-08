@@ -31,11 +31,12 @@ try {
     await page.evaluate(async spec => { await window.__SCENE__!.load(spec); }, spec);
     const fires = [];
     for (let frame = 0; frame <= 60; frame++) {
-      if (frame) await page.evaluate(async () => { await window.__SS__!.step(1); });
+      if (frame) await page.evaluate(async () => { await window.__SCENE__!.step(1); });
       fires.push(await page.evaluate(() => window.__SS__!.getState().render.vfx));
       if ([0, 1, 15, 60].includes(frame)) { await page.evaluate(() => window.__SS__!.screenshotReady()); await page.screenshot({ path: `${out}/fire-${tier}-f${frame}.jpg`, type: 'jpeg', quality: 88 }); }
     }
     rows.push({ side, tier, kind: 'police-fire-frames', fires });
+    if (process.env.R10_FIRE_ONLY !== '1') {
     await page.evaluate(async () => { const a = window.__SS__!; await a.loadLevel('L10', { seed: 32, progression: 'L10-default' } as never); a.missions.begin(); a.pause(); a.cheats.god(true); });
     for (const [name, x, z] of spots) {
       await page.evaluate(async ({ x, z }) => { const a = window.__SS__!; a.cheats.killAll(); a.teleport(1, { x, z }); a.camera.follow(); await a.step(180); a.cheats.killAll(); }, { x, z });
@@ -45,6 +46,7 @@ try {
         await page.screenshot({ path: file, type: 'jpeg', quality: 88 });
         rows.push({ side, tier, name, zoom, file, state: await page.evaluate(() => ({ vfx: window.__SS__!.getState().render.vfx, perf: window.__SS__!.perf() })) });
       }
+    }
     }
     rows.push({ tier, errors });
     writeFileSync(`${out}/receipt.json`, JSON.stringify(rows, null, 1));
