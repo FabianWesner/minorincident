@@ -11,6 +11,13 @@ use it for hearing radii; the sim emits one `noise` event and AI/audio subscribe
 that event. World producers use the same data for horns, alarms, glass, and blasts.
 Do not play the weapon transient again from `combat.attack` when its `noise` does so.
 
+The graph rejects continuous ambience loops (including rain, horde, zoo, wind,
+fire and L1 chatter/hush) and recurring generic scenery noise puffs such as
+`weather.gust`. Damaged-vehicle fire/sputter noise loops are also silent. Cue
+declarations remain intact to preserve every sprite offset. Recorded one-shots,
+telegraphs and short action effects still play. Measurements and the complete
+source inventory are in `docs/reports/r15-hiss/`.
+
 `src/data/audioEvents.ts` documents adapter events for E08/E09/E12/E25/E26/E27.
 Generator/lamp/vehicle/prop events use stable `sourceId`s so loops update in place;
 stop/off/break events release them. `music.intensity` is an authoritative producer
@@ -66,19 +73,18 @@ every recorded sprite slice. The builder rejects changed, silent or truncated
 masters and writes both license ledgers. `--score-only` rebuilds streamed music;
 category arguments rebuild selected sprites while preserving all provenance.
 
-The headless live capture runs with:
-`E2E_PORT=3351 sh tools/e2e-lock.sh npx playwright test tests/e2e/audio/preview.spec.ts --project=chromium --workers=1`.
-It taps the final production PCM into WAVs without audible OS output, exercises
-the authored diner incident and store fight, and exports loudness/peak/gap/log
-measurements alongside three previews. `AUDIO_PREVIEW_DIR` overrides their location.
+The R15 headless production capture runs with:
+`sh tools/e2e-lock.sh npx tsx tools/audio/hiss-capture.ts after`.
+It records synchronized master/music/ambience/SFX/voice PCM without audible OS
+output. See `docs/reports/r15-hiss/README.md` for source analysis and spectra.
 
-Streams start only in L1–L6 missions, with at most four cached, lazily created
+Streams start in L1–L10 missions, with at most four cached, lazily created
 decks (one per state). A level can replace a state's recording (`levelStreams` in
 `StreamedMusic.ts`): L1's calm morning streams `score-calm-L1`, a 192 s (80-bar)
 excerpt of Kevin MacLeod's "Jazz Brunch" (CC-BY 4.0) whose tail is crossfaded into
-the bars before its start, so the media loop has no seam. The bird/traffic/chatter
-calm ambience stays on its own bus underneath; the accident hands over to tension
-exactly as in other levels. Acoustic tier refreshes preserve the score and cue history. Four reserved
+the bars before its start, so the media loop has no seam. Continuous ambience beds
+are silent; the accident hands over to tension exactly as in other levels.
+Acoustic tier refreshes preserve the score and cue history. Four reserved
 slots keep combined sprite/media voices within 32 high / 16 low. Music files
 measure approximately −18 LUFS; SFX and voice bus trims are −2 and −1.5 dB.
 Per-file grants, authors and provenance are in `assets/audio/LICENSES.md` and
@@ -87,12 +93,11 @@ Per-file grants, authors and provenance are in `assets/audio/LICENSES.md` and
 
 ## L1 v2 sound arc (lane H)
 
-`L1Arc.ts` (`L1ArcDirector`) is pure logic on audio time: calm layer until the `l1.flicker`/`l1.blast` events, accident cues
-(buzz, muffled blast, glass rattle, ~1.2 s ringing + the tinnitus low-pass, bell, screams), calm beds -12 dB within 3 s then
-faded out, and a chaos layer whose intensity follows the live infected count (cap `l1v2.sound.chaosMaxInfected`).
+`L1Arc.ts` (`L1ArcDirector`) is pure logic on audio time: calm state until the `l1.flicker`/`l1.blast` events, accident cues
+(buzz, muffled blast, glass rattle, ~1.2 s ringing + the tinnitus low-pass, bell, screams), a chaos state whose intensity follows the live infected count (cap `l1v2.sound.chaosMaxInfected`).
 `AudioService` feeds it the `l1.*` events and applies the frame. Cues live in sprite `l1arc` (recordings plus residual MIT system effects, ledger
 in `public/assets/audio/LICENSES.md`). The fire-station interior is any `interior-*` acoustic zone during chaos (muffles the
-ambience bus, adds a hush bed); `level.completed` plays `l1.outro.sting`.
+ambience bus; the old hush/chatter/panic beds remain silent); `level.completed` plays `l1.outro.sting`.
 
 Event stingers use recorded acoustic guitar, with one completion cue in L1.
 Low HP loops a recorded soft impact rather than a fast melody. Audible UI cues
@@ -105,8 +110,10 @@ and per-event replacements.
 
 The lazy `infected` bank holds recorded humanoid voices: `infected.alert` (shared anti-spam key on `ai.alerted`),
 `infected.hurt` / `infected.death` (melee/ranged hits and kills on human archetypes), and `infected.bite` (a landed
-infected melee attack). Idle groans (`infected.vocal`, max four nearby via `HordeClusters`) and the clustered
-`horde.loop.*` beds stay in the initial banks. Telegraph wind-ups for human archetypes share one CC0 performer with
+infected melee attack). Idle groans (`infected.vocal`, max four nearby via
+`HordeClusters`) remain in the initial banks. Legacy clustered `horde.loop.*`
+slices are retained for offset compatibility and do not play. Telegraph wind-ups
+for human archetypes share one CC0 performer with
 per-archetype pitch/colour. Voice recipes set `level` in `imports.json`: the builder compresses gently and matches the
 active-part RMS (−21 dBFS) under the sprite ceiling, so variants in a pool sit within about 1.5 dB.
 The in-game Credits & Licenses screen and the generated block in `THIRD_PARTY_NOTICES.md` come from

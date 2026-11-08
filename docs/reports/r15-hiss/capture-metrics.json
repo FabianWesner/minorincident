@@ -1,0 +1,1130 @@
+{
+  "measurement": "48 kHz live AudioContext PCM; 4-16 kHz sixth-order Butterworth RMS; stereo channel mean-square; dBFS; master after limiter, others pre master",
+  "captures": {
+    "L1-before": {
+      "durationS": 29.994666666666667,
+      "sampleRate": 48000,
+      "frames": 1439744,
+      "rawSha256": "e9b977323081057ef79e595de9223021223abb57f8b39437b66b698d8a91527d",
+      "startTick": 0,
+      "endTick": 1800,
+      "playerStart": {
+        "x": -66.4,
+        "y": 0.705,
+        "z": 9,
+        "yaw": 0.3205919885488634
+      },
+      "playerEnd": {
+        "x": -69.5754623413086,
+        "y": 0.7049999833106995,
+        "z": 9.000041961669922,
+        "yaw": -3.141592653589793
+      },
+      "buses": {
+        "master": {
+          "rmsDbfs": -16.331343560528182,
+          "bandRmsDbfs": -33.23900423891627
+        },
+        "music": {
+          "rmsDbfs": -25.415896184217903,
+          "bandRmsDbfs": -51.11647789583297
+        },
+        "ambience": {
+          "rmsDbfs": -31.785286880793528,
+          "bandRmsDbfs": -43.84372658643458
+        },
+        "sfx": {
+          "rmsDbfs": -60.001804361709475,
+          "bandRmsDbfs": -79.5274554405954
+        },
+        "voice": {
+          "rmsDbfs": -38.75763460079657,
+          "bandRmsDbfs": -51.98770927530548
+        }
+      },
+      "peakDbfs": -1.262227822274368,
+      "truePeakDbtp": -0.8147614815074371,
+      "clippedSamples": 0,
+      "compressorMinDb": -1.8509793281555176,
+      "cueCounts": {
+        "l1.calm.chatter": 14,
+        "l1.calm.traffic": 1,
+        "ambient.dog": 2,
+        "weather.gust": 5,
+        "l1.calm.talk": 1,
+        "footstep.survivor.grass": 19,
+        "l1.calm.birds": 3,
+        "ambient.lawnmower": 2,
+        "corgi.warning": 9,
+        "horde.loop.grass": 21,
+        "infected.vocal": 6,
+        "infected.alert": 16,
+        "telegraph.civilian": 9,
+        "civilian.scream": 9,
+        "bark.female.hurt": 9,
+        "civilian.transform": 23,
+        "corgi.pant": 1
+      },
+      "errors": [],
+      "musicStart": {
+        "state": "calm",
+        "peak": false,
+        "transitions": [
+          {
+            "state": "calm",
+            "requested": 0.084,
+            "time": 0.084
+          }
+        ],
+        "decks": [
+          {
+            "state": "combat",
+            "file": "combat",
+            "paused": false,
+            "position": 1.508517,
+            "gain": 0
+          },
+          {
+            "state": "calm",
+            "file": "calm-L1",
+            "paused": false,
+            "position": 1.705856,
+            "gain": 0.42299479246139526
+          }
+        ]
+      },
+      "musicEnd": {
+        "state": "combat",
+        "peak": false,
+        "transitions": [
+          {
+            "state": "calm",
+            "requested": 0.084,
+            "time": 0.084
+          },
+          {
+            "state": "combat",
+            "requested": 17.984,
+            "time": 17.989333333333335
+          }
+        ],
+        "decks": [
+          {
+            "state": "combat",
+            "file": "combat",
+            "paused": false,
+            "position": 15.709547,
+            "gain": 0.6000000238418579
+          },
+          {
+            "state": "calm",
+            "file": "calm-L1",
+            "paused": true,
+            "position": 18.912,
+            "gain": 0
+          }
+        ]
+      }
+    },
+    "L1-after": {
+      "durationS": 29.994666666666667,
+      "sampleRate": 48000,
+      "frames": 1439744,
+      "rawSha256": "10626470d31a2023be2eca85054e3bc7f72cee0451a65fefd3533add370de4af",
+      "startTick": 0,
+      "endTick": 1800,
+      "playerStart": {
+        "x": -66.4,
+        "y": 0.705,
+        "z": 9,
+        "yaw": 0.3205919885488634
+      },
+      "playerEnd": {
+        "x": -69.5754623413086,
+        "y": 0.7049999833106995,
+        "z": 9.000041961669922,
+        "yaw": -3.141592653589793
+      },
+      "buses": {
+        "master": {
+          "rmsDbfs": -17.368098274122687,
+          "bandRmsDbfs": -40.55683442656695
+        },
+        "music": {
+          "rmsDbfs": -25.41433325623728,
+          "bandRmsDbfs": -51.01758965101599
+        },
+        "ambience": {
+          "rmsDbfs": -55.63384762971809,
+          "bandRmsDbfs": -67.50883740705223
+        },
+        "sfx": {
+          "rmsDbfs": -60.262425745847395,
+          "bandRmsDbfs": -79.16483408338077
+        },
+        "voice": {
+          "rmsDbfs": -38.9919809853352,
+          "bandRmsDbfs": -52.1573546560939
+        }
+      },
+      "peakDbfs": -1.373286313170592,
+      "truePeakDbtp": -1.3632622952244593,
+      "clippedSamples": 0,
+      "compressorMinDb": -0.3146114647388458,
+      "cueCounts": {
+        "l1.calm.traffic": 1,
+        "ambient.dog": 3,
+        "l1.calm.talk": 3,
+        "footstep.survivor.grass": 19,
+        "l1.calm.birds": 4,
+        "corgi.warning": 7,
+        "infected.vocal": 13,
+        "infected.alert": 16,
+        "telegraph.civilian": 9,
+        "civilian.scream": 9,
+        "bark.female.hurt": 8,
+        "civilian.transform": 18,
+        "telegraph.runner": 3,
+        "l1.calm.bike-tick": 1
+      },
+      "errors": [],
+      "musicStart": {
+        "state": "calm",
+        "peak": false,
+        "transitions": [
+          {
+            "state": "calm",
+            "requested": 0.07333333333333333,
+            "time": 0.07333333333333333
+          }
+        ],
+        "decks": [
+          {
+            "state": "combat",
+            "file": "combat",
+            "paused": false,
+            "position": 1.504,
+            "gain": 0
+          },
+          {
+            "state": "calm",
+            "file": "calm-L1",
+            "paused": false,
+            "position": 1.690667,
+            "gain": 0.4189947843551636
+          }
+        ]
+      },
+      "musicEnd": {
+        "state": "combat",
+        "peak": false,
+        "transitions": [
+          {
+            "state": "calm",
+            "requested": 0.07333333333333333,
+            "time": 0.07333333333333333
+          },
+          {
+            "state": "combat",
+            "requested": 17.957333333333334,
+            "time": 17.962666666666667
+          }
+        ],
+        "decks": [
+          {
+            "state": "combat",
+            "file": "combat",
+            "paused": false,
+            "position": 15.7297,
+            "gain": 0.6000000238418579
+          },
+          {
+            "state": "calm",
+            "file": "calm-L1",
+            "paused": true,
+            "position": 18.895201,
+            "gain": 0
+          }
+        ]
+      }
+    },
+    "L4-before": {
+      "durationS": 29.994666666666667,
+      "sampleRate": 48000,
+      "frames": 1439744,
+      "rawSha256": "bcc096cd5d967225dc6c53e820c19847170256b7ec2bc2adea06b622786da16b",
+      "startTick": 0,
+      "endTick": 1801,
+      "playerStart": {
+        "x": -57.51318469372172,
+        "y": 0.705,
+        "z": 43.895870222922596,
+        "yaw": 0.3205919885488634
+      },
+      "playerEnd": {
+        "x": -12.479264259338379,
+        "y": 0.7049999833106995,
+        "z": -38.25,
+        "yaw": 0.3205919885488634
+      },
+      "buses": {
+        "master": {
+          "rmsDbfs": -19.76879568669506,
+          "bandRmsDbfs": -43.4417718028546
+        },
+        "music": {
+          "rmsDbfs": -36.56485223219337,
+          "bandRmsDbfs": -58.89049113224014
+        },
+        "ambience": {
+          "rmsDbfs": -50.00358364851918,
+          "bandRmsDbfs": -54.28378194873214
+        },
+        "sfx": {
+          "rmsDbfs": -29.583375424835904,
+          "bandRmsDbfs": -61.93845789924215
+        },
+        "voice": {
+          "rmsDbfs": -36.93898247739636,
+          "bandRmsDbfs": -62.182012019839945
+        }
+      },
+      "peakDbfs": -1.80059691749543,
+      "truePeakDbtp": -1.7950695424643603,
+      "clippedSamples": 0,
+      "compressorMinDb": -0.0001342038594884798,
+      "cueCounts": {
+        "vehicle.engine-low": 40,
+        "vehicle.engine-high": 37,
+        "footstep.tires.grass": 5,
+        "footstep.survivor.grass": 81,
+        "weather.gust": 2,
+        "horde.loop.grass": 6,
+        "infected.vocal": 6,
+        "ambient.lawnmower": 1
+      },
+      "errors": [],
+      "musicStart": {
+        "state": "calm",
+        "peak": false,
+        "transitions": [
+          {
+            "state": "calm",
+            "requested": 42.37733333333334,
+            "time": 42.37733333333334
+          }
+        ],
+        "decks": [
+          {
+            "state": "combat",
+            "file": "combat",
+            "paused": true,
+            "position": 0,
+            "gain": 0
+          },
+          {
+            "state": "calm",
+            "file": "calm-L4",
+            "paused": false,
+            "position": 1.470611,
+            "gain": 0.3629947900772095
+          }
+        ]
+      },
+      "musicEnd": {
+        "state": "combat",
+        "peak": false,
+        "transitions": [
+          {
+            "state": "calm",
+            "requested": 42.37733333333334,
+            "time": 42.37733333333334
+          },
+          {
+            "state": "combat",
+            "requested": 60.032,
+            "time": 60.037333333333336
+          }
+        ],
+        "decks": [
+          {
+            "state": "combat",
+            "file": "combat",
+            "paused": false,
+            "position": 13.832013,
+            "gain": 0.6000000238418579
+          },
+          {
+            "state": "calm",
+            "file": "calm-L4",
+            "paused": true,
+            "position": 18.675885,
+            "gain": 0
+          }
+        ]
+      }
+    },
+    "L4-after": {
+      "durationS": 29.994666666666667,
+      "sampleRate": 48000,
+      "frames": 1439744,
+      "rawSha256": "6d51b7f970430b9eb4f24ed98e2fbb3aab84558baf6c2bb626a169722ae69990",
+      "startTick": 0,
+      "endTick": 1801,
+      "playerStart": {
+        "x": -57.51318469372172,
+        "y": 0.705,
+        "z": 43.895870222922596,
+        "yaw": 0.3205919885488634
+      },
+      "playerEnd": {
+        "x": -12.23047924041748,
+        "y": 0.7049999833106995,
+        "z": -38.25,
+        "yaw": 0.3205919885488634
+      },
+      "buses": {
+        "master": {
+          "rmsDbfs": -20.316972668620885,
+          "bandRmsDbfs": -47.45826877206844
+        },
+        "music": {
+          "rmsDbfs": -36.56201482424143,
+          "bandRmsDbfs": -58.893967628043946
+        },
+        "ambience": {
+          "rmsDbfs": -80.87384270841608,
+          "bandRmsDbfs": -84.512792383711
+        },
+        "sfx": {
+          "rmsDbfs": -30.316463189005887,
+          "bandRmsDbfs": -61.894986149089576
+        },
+        "voice": {
+          "rmsDbfs": -36.93585877087618,
+          "bandRmsDbfs": -62.78371022108715
+        }
+      },
+      "peakDbfs": -1.953256155284533,
+      "truePeakDbtp": -1.9477287802534637,
+      "clippedSamples": 0,
+      "compressorMinDb": -0.0001342038594884798,
+      "cueCounts": {
+        "vehicle.engine-low": 38,
+        "vehicle.engine-high": 37,
+        "footstep.tires.grass": 5,
+        "footstep.survivor.grass": 83,
+        "ambient.dog": 2,
+        "infected.vocal": 8
+      },
+      "errors": [],
+      "musicStart": {
+        "state": "calm",
+        "peak": false,
+        "transitions": [
+          {
+            "state": "calm",
+            "requested": 37.321333333333335,
+            "time": 37.321333333333335
+          }
+        ],
+        "decks": [
+          {
+            "state": "combat",
+            "file": "combat",
+            "paused": true,
+            "position": 0,
+            "gain": 0
+          },
+          {
+            "state": "calm",
+            "file": "calm-L4",
+            "paused": false,
+            "position": 1.465067,
+            "gain": 0.3629947900772095
+          }
+        ]
+      },
+      "musicEnd": {
+        "state": "combat",
+        "peak": false,
+        "transitions": [
+          {
+            "state": "calm",
+            "requested": 37.321333333333335,
+            "time": 37.321333333333335
+          },
+          {
+            "state": "combat",
+            "requested": 54.976,
+            "time": 54.98133333333333
+          }
+        ],
+        "decks": [
+          {
+            "state": "combat",
+            "file": "combat",
+            "paused": false,
+            "position": 13.81798,
+            "gain": 0.6000000238418579
+          },
+          {
+            "state": "calm",
+            "file": "calm-L4",
+            "paused": true,
+            "position": 18.666667,
+            "gain": 0
+          }
+        ]
+      }
+    },
+    "L7-before": {
+      "durationS": 29.994666666666667,
+      "sampleRate": 48000,
+      "frames": 1439744,
+      "rawSha256": "8718d1cfa58234164b495be44dc91e73927e58da1df1785d1e77e368f8a36427",
+      "startTick": 0,
+      "endTick": 1800,
+      "playerStart": {
+        "x": 273,
+        "y": 4.6049999999999995,
+        "z": 15,
+        "yaw": 0.3205919885488634
+      },
+      "playerEnd": {
+        "x": 271.1954650878906,
+        "y": 4.619999885559082,
+        "z": 15,
+        "yaw": -3.141592653589793
+      },
+      "buses": {
+        "master": {
+          "rmsDbfs": -15.773414049535091,
+          "bandRmsDbfs": -37.499304005595455
+        },
+        "music": {
+          "rmsDbfs": -23.770157337048992,
+          "bandRmsDbfs": -46.95482574304783
+        },
+        "ambience": {
+          "rmsDbfs": -36.33627440910041,
+          "bandRmsDbfs": -50.66212334478517
+        },
+        "sfx": {
+          "rmsDbfs": -41.631842516060225,
+          "bandRmsDbfs": -69.3750826508402
+        },
+        "voice": {
+          "rmsDbfs": -35.32257481698914,
+          "bandRmsDbfs": -51.12611544355714
+        }
+      },
+      "peakDbfs": -1.3450788063730075,
+      "truePeakDbtp": -1.3395514313419379,
+      "clippedSamples": 0,
+      "compressorMinDb": -1.6821433305740356,
+      "cueCounts": {
+        "horde.loop.tile": 9,
+        "infected.vocal": 75,
+        "infected.alert": 115,
+        "corgi.warning": 9,
+        "infected.hurt": 17,
+        "gore.squelch": 17,
+        "ambient.scream": 2,
+        "pickup.fanfare.rocket": 1,
+        "stinger.objective": 1,
+        "footstep.survivor.tile": 21,
+        "ambient.explosion": 1,
+        "stinger.elite": 1,
+        "ambient.collapse": 2,
+        "infected.death": 1,
+        "gore.bone": 1
+      },
+      "errors": [],
+      "musicStart": {
+        "state": "calm",
+        "peak": false,
+        "transitions": [
+          {
+            "state": "calm",
+            "requested": 0.07333333333333333,
+            "time": 0.07333333333333333
+          }
+        ],
+        "decks": [
+          {
+            "state": "combat",
+            "file": "combat",
+            "paused": false,
+            "position": 1.509333,
+            "gain": 0
+          },
+          {
+            "state": "calm",
+            "file": "calm-L7",
+            "paused": false,
+            "position": 1.605333,
+            "gain": 0.3976614475250244
+          }
+        ]
+      },
+      "musicEnd": {
+        "state": "combat",
+        "peak": true,
+        "transitions": [
+          {
+            "state": "calm",
+            "requested": 0.07333333333333333,
+            "time": 0.07333333333333333
+          },
+          {
+            "state": "combat",
+            "requested": 1.8773333333333333,
+            "time": 1.8826666666666667
+          },
+          {
+            "state": "tension",
+            "requested": 8.073333333333334,
+            "time": 8.073333333333334
+          },
+          {
+            "state": "combat",
+            "requested": 1.8773333333333333,
+            "time": 7.28
+          }
+        ],
+        "decks": [
+          {
+            "state": "combat",
+            "file": "combat",
+            "paused": false,
+            "position": 31.53055,
+            "gain": 0.7799999713897705
+          },
+          {
+            "state": "calm",
+            "file": "calm-L7",
+            "paused": true,
+            "position": 2.8,
+            "gain": 0
+          },
+          {
+            "state": "tension",
+            "file": "tension-L7",
+            "paused": true,
+            "position": 1.171608,
+            "gain": 0
+          }
+        ]
+      }
+    },
+    "L7-after": {
+      "durationS": 29.994666666666667,
+      "sampleRate": 48000,
+      "frames": 1439744,
+      "rawSha256": "11abd12675a47b8b6a96e731efa2349a8b4d67675c3b3fadddd042597c3cd8e5",
+      "startTick": 0,
+      "endTick": 1800,
+      "playerStart": {
+        "x": 273,
+        "y": 4.6049999999999995,
+        "z": 15,
+        "yaw": 0.3205919885488634
+      },
+      "playerEnd": {
+        "x": 271.1288146972656,
+        "y": 4.619999885559082,
+        "z": 15,
+        "yaw": -3.141592653589793
+      },
+      "buses": {
+        "master": {
+          "rmsDbfs": -15.954400952602048,
+          "bandRmsDbfs": -38.07061686391315
+        },
+        "music": {
+          "rmsDbfs": -23.662973070140936,
+          "bandRmsDbfs": -47.47825297245723
+        },
+        "ambience": {
+          "rmsDbfs": -56.50016449292224,
+          "bandRmsDbfs": -68.9112212929028
+        },
+        "sfx": {
+          "rmsDbfs": -41.14581097456126,
+          "bandRmsDbfs": -69.15671387643899
+        },
+        "voice": {
+          "rmsDbfs": -35.23712561263014,
+          "bandRmsDbfs": -50.98677564907391
+        }
+      },
+      "peakDbfs": -1.3212822569266378,
+      "truePeakDbtp": -1.3157548818955689,
+      "clippedSamples": 0,
+      "compressorMinDb": -2.0265867710113525,
+      "cueCounts": {
+        "infected.vocal": 74,
+        "infected.alert": 115,
+        "corgi.warning": 9,
+        "infected.hurt": 18,
+        "gore.squelch": 17,
+        "ambient.scream": 3,
+        "pickup.fanfare.rocket": 1,
+        "stinger.objective": 1,
+        "footstep.survivor.tile": 21,
+        "ambient.explosion": 1,
+        "stinger.elite": 1,
+        "infected.death": 1,
+        "gore.bone": 1
+      },
+      "errors": [],
+      "musicStart": {
+        "state": "calm",
+        "peak": false,
+        "transitions": [
+          {
+            "state": "calm",
+            "requested": 73.96133333333333,
+            "time": 73.96133333333333
+          }
+        ],
+        "decks": [
+          {
+            "state": "combat",
+            "file": "combat",
+            "paused": true,
+            "position": 0,
+            "gain": 0
+          },
+          {
+            "state": "calm",
+            "file": "calm-L7",
+            "paused": false,
+            "position": 1.498667,
+            "gain": 0.37232813239097595
+          }
+        ]
+      },
+      "musicEnd": {
+        "state": "combat",
+        "peak": true,
+        "transitions": [
+          {
+            "state": "calm",
+            "requested": 73.96133333333333,
+            "time": 73.96133333333333
+          },
+          {
+            "state": "combat",
+            "requested": 75.64266666666667,
+            "time": 75.648
+          },
+          {
+            "state": "tension",
+            "requested": 81.96133333333333,
+            "time": 81.96133333333333
+          },
+          {
+            "state": "combat",
+            "requested": 75.64266666666667,
+            "time": 81.06666666666666
+          }
+        ],
+        "decks": [
+          {
+            "state": "combat",
+            "file": "combat",
+            "paused": false,
+            "position": 29.818667,
+            "gain": 0.7799999713897705
+          },
+          {
+            "state": "calm",
+            "file": "calm-L7",
+            "paused": true,
+            "position": 2.506104,
+            "gain": 0
+          },
+          {
+            "state": "tension",
+            "file": "tension-L7",
+            "paused": true,
+            "position": 1.140879,
+            "gain": 0
+          }
+        ]
+      }
+    },
+    "L10-before": {
+      "durationS": 29.994666666666667,
+      "sampleRate": 48000,
+      "frames": 1439744,
+      "rawSha256": "801b8eaaf1be96e1754ae9a81630ebc3af98676b44ac2dbf7b741e798d7b761e",
+      "startTick": 0,
+      "endTick": 1800,
+      "playerStart": {
+        "x": 547,
+        "y": 0.705,
+        "z": 0,
+        "yaw": 0.3205919885488634
+      },
+      "playerEnd": {
+        "x": 545.1954956054688,
+        "y": 0.7049999833106995,
+        "z": 0,
+        "yaw": 0
+      },
+      "buses": {
+        "master": {
+          "rmsDbfs": -17.658167804320737,
+          "bandRmsDbfs": -31.59466023112012
+        },
+        "music": {
+          "rmsDbfs": -34.1450304190711,
+          "bandRmsDbfs": -76.38689979737457
+        },
+        "ambience": {
+          "rmsDbfs": -36.19608805826182,
+          "bandRmsDbfs": -43.73670328760515
+        },
+        "sfx": {
+          "rmsDbfs": -32.82306888937625,
+          "bandRmsDbfs": -42.793875287353146
+        },
+        "voice": {
+          "rmsDbfs": -31.73982043373631,
+          "bandRmsDbfs": -50.623665078815904
+        }
+      },
+      "peakDbfs": -1.0162275172937008,
+      "truePeakDbtp": -0.8607790149485104,
+      "clippedSamples": 0,
+      "compressorMinDb": -1.174065351486206,
+      "cueCounts": {
+        "dialogue.radio": 1,
+        "ambient.dog": 1,
+        "weather.gust": 5,
+        "horde.loop.grass": 72,
+        "corgi.pant": 9,
+        "footstep.survivor.grass": 21,
+        "corgi.warning": 3,
+        "infected.alert": 104,
+        "infected.vocal": 35,
+        "l10.heartbeat": 9,
+        "telegraph.runner": 40,
+        "gore.squelch": 38,
+        "ambient.lawnmower": 2,
+        "action.weapon.handgun": 28,
+        "tail.open": 28,
+        "infected.hurt": 2,
+        "infected.death": 1
+      },
+      "errors": [],
+      "musicStart": {
+        "state": "calm",
+        "peak": false,
+        "transitions": [
+          {
+            "state": "calm",
+            "requested": 0.07866666666666666,
+            "time": 0.07866666666666666
+          }
+        ],
+        "decks": [
+          {
+            "state": "combat",
+            "file": "combat-L10",
+            "paused": false,
+            "position": 1.508203,
+            "gain": 0
+          },
+          {
+            "state": "calm",
+            "file": "calm-L10",
+            "paused": false,
+            "position": 1.620209,
+            "gain": 0.4016614556312561
+          }
+        ]
+      },
+      "musicEnd": {
+        "state": "combat",
+        "peak": false,
+        "transitions": [
+          {
+            "state": "calm",
+            "requested": 0.07866666666666666,
+            "time": 0.07866666666666666
+          },
+          {
+            "state": "combat",
+            "requested": 8.890666666666666,
+            "time": 8.906666666666666
+          }
+        ],
+        "decks": [
+          {
+            "state": "combat",
+            "file": "combat-L10",
+            "paused": false,
+            "position": 24.736,
+            "gain": 0.6000000238418579
+          },
+          {
+            "state": "calm",
+            "file": "calm-L10",
+            "paused": true,
+            "position": 9.829219,
+            "gain": 0
+          }
+        ]
+      }
+    },
+    "L10-after": {
+      "durationS": 29.994666666666667,
+      "sampleRate": 48000,
+      "frames": 1439744,
+      "rawSha256": "93e48026d48aecffacd0a08b27d6d94aabfc06b13b9ea86792386c3d5c303d26",
+      "startTick": 0,
+      "endTick": 1800,
+      "playerStart": {
+        "x": 547,
+        "y": 0.705,
+        "z": 0,
+        "yaw": 0.3205919885488634
+      },
+      "playerEnd": {
+        "x": 545.1621704101562,
+        "y": 0.7049999833106995,
+        "z": 0,
+        "yaw": 0
+      },
+      "buses": {
+        "master": {
+          "rmsDbfs": -18.36241225880283,
+          "bandRmsDbfs": -34.25493103281888
+        },
+        "music": {
+          "rmsDbfs": -34.81125740323074,
+          "bandRmsDbfs": -76.81188382838742
+        },
+        "ambience": {
+          "rmsDbfs": -70.71562540079591,
+          "bandRmsDbfs": -74.2426815431983
+        },
+        "sfx": {
+          "rmsDbfs": -33.265331361861364,
+          "bandRmsDbfs": -42.83120254355783
+        },
+        "voice": {
+          "rmsDbfs": -31.90289257363487,
+          "bandRmsDbfs": -51.38333360262411
+        }
+      },
+      "peakDbfs": -1.0439832313388333,
+      "truePeakDbtp": -0.654994337991202,
+      "clippedSamples": 0,
+      "compressorMinDb": -1.8489124774932861,
+      "cueCounts": {
+        "dialogue.radio": 1,
+        "ambient.dog": 3,
+        "corgi.pant": 9,
+        "footstep.survivor.grass": 21,
+        "corgi.warning": 3,
+        "infected.alert": 96,
+        "infected.vocal": 36,
+        "l10.heartbeat": 9,
+        "telegraph.runner": 40,
+        "gore.squelch": 36,
+        "action.weapon.handgun": 28,
+        "tail.open": 28,
+        "infected.hurt": 2,
+        "infected.death": 1,
+        "gore.bone": 1
+      },
+      "errors": [],
+      "musicStart": {
+        "state": "calm",
+        "peak": false,
+        "transitions": [
+          {
+            "state": "calm",
+            "requested": 111.204,
+            "time": 111.204
+          }
+        ],
+        "decks": [
+          {
+            "state": "combat",
+            "file": "combat-L10",
+            "paused": true,
+            "position": 0,
+            "gain": 0
+          },
+          {
+            "state": "calm",
+            "file": "calm-L10",
+            "paused": false,
+            "position": 1.504,
+            "gain": 0.37499478459358215
+          },
+          {
+            "state": "tension",
+            "file": "tension-L7",
+            "paused": true,
+            "position": 0,
+            "gain": 0
+          }
+        ]
+      },
+      "musicEnd": {
+        "state": "combat",
+        "peak": false,
+        "transitions": [
+          {
+            "state": "calm",
+            "requested": 111.204,
+            "time": 111.204
+          },
+          {
+            "state": "combat",
+            "requested": 119.92,
+            "time": 119.93066666666667
+          }
+        ],
+        "decks": [
+          {
+            "state": "combat",
+            "file": "combat-L10",
+            "paused": false,
+            "position": 22.8,
+            "gain": 0.6000000238418579
+          },
+          {
+            "state": "calm",
+            "file": "calm-L10",
+            "paused": true,
+            "position": 9.715367,
+            "gain": 0
+          },
+          {
+            "state": "tension",
+            "file": "tension-L7",
+            "paused": true,
+            "position": 0,
+            "gain": 0
+          }
+        ]
+      }
+    }
+  },
+  "quietPassages": [
+    {
+      "level": "L1",
+      "quietHalfSecondWindows": [
+        8,
+        0,
+        3,
+        5,
+        1,
+        2
+      ],
+      "quietTotalSeconds": 3.0,
+      "selection": "same 0.5-second windows in both modes, outside movement/combat, lowest music-bus energy with voice/SFX below -40 dBFS when available",
+      "before": {
+        "master": -41.31564874697307,
+        "music": -57.37244341650787,
+        "ambience": -52.4565442927142,
+        "sfx": null,
+        "voice": null
+      },
+      "after": {
+        "master": -48.732489632019586,
+        "music": -57.1561208031127,
+        "ambience": -69.1609708097113,
+        "sfx": null,
+        "voice": null
+      }
+    },
+    {
+      "level": "L4",
+      "quietHalfSecondWindows": [
+        1,
+        2,
+        0,
+        4,
+        52,
+        54
+      ],
+      "quietTotalSeconds": 3.0,
+      "selection": "same 0.5-second windows in both modes, outside movement/combat, lowest music-bus energy with voice/SFX below -40 dBFS when available",
+      "before": {
+        "master": -41.36805214907091,
+        "music": -64.75786391808224,
+        "ambience": -54.82604307360894,
+        "sfx": -67.36902800674935,
+        "voice": -53.89686009596076
+      },
+      "after": {
+        "master": -43.12889972882624,
+        "music": -64.81476603189952,
+        "ambience": null,
+        "sfx": -67.13216809225904,
+        "voice": -54.172500779975586
+      }
+    },
+    {
+      "level": "L7",
+      "quietHalfSecondWindows": [
+        4,
+        8,
+        5,
+        6,
+        3,
+        7
+      ],
+      "quietTotalSeconds": 3.0,
+      "selection": "same 0.5-second windows in both modes, outside movement/combat, lowest music-bus energy with voice/SFX below -40 dBFS when available",
+      "before": {
+        "master": -40.24764293160708,
+        "music": -52.0828983314003,
+        "ambience": -43.905238006602694,
+        "sfx": -111.24072179408418,
+        "voice": -54.168405647945164
+      },
+      "after": {
+        "master": -42.64625991285955,
+        "music": -53.92594960603604,
+        "ambience": null,
+        "sfx": -111.42113215933725,
+        "voice": -53.191272707469714
+      }
+    },
+    {
+      "level": "L10",
+      "quietHalfSecondWindows": [
+        9,
+        7,
+        8,
+        6
+      ],
+      "quietTotalSeconds": 2.0,
+      "selection": "same 0.5-second windows in both modes, outside movement/combat, lowest music-bus energy with voice/SFX below -40 dBFS when available",
+      "before": {
+        "master": -46.356872230737416,
+        "music": -85.41915542603101,
+        "ambience": -55.19028214378395,
+        "sfx": null,
+        "voice": -78.18970610853538
+      },
+      "after": {
+        "master": -58.64273080731293,
+        "music": -85.42246870670034,
+        "ambience": null,
+        "sfx": null,
+        "voice": -71.15008273557054
+      }
+    }
+  ]
+}
