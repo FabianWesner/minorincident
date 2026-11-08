@@ -1,0 +1,83 @@
+{
+  "formula": "(larger mean per-pixel linear sRGB luminance+.05)/(smaller+.05)",
+  "samples": [
+    {
+      "tier": "low",
+      "file": "farm-low/farm-750-z1.5.jpg",
+      "sha256": "c2a430750aa4fb44495634902bb19bca01c0e52ebc0b58256539d27b5a4ccf4f",
+      "samples": {
+        "road": {
+          "box": [
+            688,
+            488,
+            713,
+            513
+          ],
+          "meanRGB": [
+            69.6016,
+            74.6016,
+            94.6016
+          ],
+          "meanLinearLuminance": 0.07098258883836621
+        },
+        "verge": {
+          "box": [
+            1028,
+            338,
+            1053,
+            363
+          ],
+          "meanRGB": [
+            81.5536,
+            68.0544,
+            50.312
+          ],
+          "meanLinearLuminance": 0.06166801302411836
+        }
+      },
+      "ratio": 1.0834131060632024,
+      "target": 2.5,
+      "result": "FAIL",
+      "scope": "These two displayed25x25 ground patches at this actual route view only; no claim of global minimum."
+    },
+    {
+      "tier": "high",
+      "file": "farm-high/farm-750-z1.5.jpg",
+      "sha256": "3e45c6dbaa5666d7620c335f4f8a744fd309d9df2045766789ee2511b093fba4",
+      "samples": {
+        "road": {
+          "box": [
+            688,
+            488,
+            713,
+            513
+          ],
+          "meanRGB": [
+            70.0,
+            75.0,
+            95.0
+          ],
+          "meanLinearLuminance": 0.0716096552720263
+        },
+        "verge": {
+          "box": [
+            1028,
+            338,
+            1053,
+            363
+          ],
+          "meanRGB": [
+            95.5488,
+            77.3824,
+            48.9344
+          ],
+          "meanLinearLuminance": 0.0805475456378564
+        }
+      },
+      "ratio": 1.0734965521104154,
+      "target": 2.5,
+      "result": "FAIL",
+      "scope": "These two displayed25x25 ground patches at this actual route view only; no claim of global minimum."
+    }
+  ]
+}

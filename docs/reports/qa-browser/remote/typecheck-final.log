@@ -1,0 +1,10 @@
+[runner] queued FIFO 01794160246183059000-53701.json; remote preferred, eligible Mac CPU fallback
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/qa-browser -> 94.130.181.173:/srv/mi/ws/qa-browser-6677ac
+[remote] cache-gc deleted:none
+[remote] sync 791s, 12313 files; job /srv/mi/jobs/qa-browser-6677ac-53701-1794160245; queueing for a slot
+[runner] slot 1 acquired; load 2.89 3.60 2.88
+
+> typecheck
+> tsc --noEmit && tsc --noEmit -p tsconfig.sim.json
+
+[remote] done exit=0 (runner 94.130.181.173, sync 791s, remote total 53s)

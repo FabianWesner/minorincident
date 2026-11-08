@@ -1,0 +1,1728 @@
+[
+  {
+    "revision": "4e59b762d0e14d5b8bb29c04b7da9cd76005cc1c",
+    "producerSha256": null,
+    "sourceGameTree": null,
+    "level": "L10",
+    "quality": "low",
+    "checkpoint": "cure-disperse-ready",
+    "method": "Planner advice translated to physical WASD, number keys, E and mouse; no injected driver, teleport, god mode, objective skip or time scaling during route.",
+    "deaths": 1,
+    "failure": "No movement for 120 simulation seconds",
+    "finished": null,
+    "end": {
+      "tick": 14654,
+      "level": "L10",
+      "phase": "playing",
+      "active": [
+        "hold"
+      ],
+      "hp": 100,
+      "position": {
+        "x": 547,
+        "y": 0.7049999833106995,
+        "z": 0,
+        "yaw": 0.017247551157834183
+      },
+      "driver": false,
+      "god": false,
+      "backend": "webgl",
+      "quality": "low",
+      "zoom": 1.5,
+      "checkpoint": "cure-disperse-ready",
+      "objective": "Activate the dispersal console \u00b7 3455\u00a0m",
+      "weapons": {
+        "selectedSide": "RIGHT",
+        "LEFT": {
+          "rack": [
+            {
+              "id": "weapon.fire-axe",
+              "magazine": 0,
+              "reserve": "infinite",
+              "charges": 0,
+              "nextCharge": 0,
+              "reloadUntil": 0,
+              "readyAt": 0
+            }
+          ],
+          "index": 0,
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "aimPoint": null,
+          "swapUntil": 0
+        },
+        "RIGHT": {
+          "rack": [
+            {
+              "id": "weapon.pistol",
+              "magazine": 0,
+              "reserve": "infinite",
+              "charges": 0,
+              "nextCharge": 0,
+              "reloadUntil": 0,
+              "readyAt": 0
+            },
+            {
+              "id": "weapon.shotgun",
+              "magazine": 0,
+              "reserve": "infinite",
+              "charges": 0,
+              "nextCharge": 0,
+              "reloadUntil": 0,
+              "readyAt": 14682
+            },
+            {
+              "id": "weapon.army-mg",
+              "magazine": 0,
+              "reserve": "infinite",
+              "charges": 0,
+              "nextCharge": 0,
+              "reloadUntil": 0,
+              "readyAt": 0
+            },
+            {
+              "id": "weapon.rocket-launcher",
+              "magazine": 0,
+              "reserve": "infinite",
+              "charges": 0,
+              "nextCharge": 0,
+              "reloadUntil": 0,
+              "readyAt": 14399
+            }
+          ],
+          "index": 1,
+          "aim": {
+            "x": 0.9998512646767079,
+            "z": -0.01724669604265576
+          },
+          "aimPoint": {
+            "x": 549.3659991220281,
+            "z": -0.040811737841831786
+          },
+          "swapUntil": 0
+        }
+      },
+      "mountedGun": {
+        "mounted": false,
+        "heat": 0
+      },
+      "l7": null,
+      "marker": "cure-console",
+      "states": {
+        "charge-active": false,
+        "console-held": false,
+        "terminal-read": true,
+        "cure-carried": false,
+        "cure-installed": true,
+        "charge-ready": false,
+        "mega-dead": false,
+        "cure-released": false,
+        "epilogue-finished": false,
+        "credits-finished": false,
+        "anchor-unavailable": false
+      },
+      "enemies": [
+        {
+          "id": 100,
+          "type": "infected.alpha",
+          "hp": 2700,
+          "at": {
+            "x": 549.3681887305917,
+            "y": 0.702,
+            "z": -0.036564571433325366,
+            "yaw": -3.126153991192728
+          },
+          "state": "chase"
+        }
+      ]
+    },
+    "wallSeconds": 31.115,
+    "captures": [
+      {
+        "stage": "step-hold",
+        "file": "step-hold-z1.5.jpg",
+        "zoom": 1.5,
+        "state": {
+          "tick": 244,
+          "level": "L10",
+          "phase": "playing",
+          "active": [
+            "hold"
+          ],
+          "hp": 100,
+          "position": {
+            "x": 547,
+            "y": 0.7049999833106995,
+            "z": 0,
+            "yaw": 0.3205919885488634
+          },
+          "driver": false,
+          "god": false,
+          "backend": "webgl",
+          "quality": "low",
+          "zoom": 1.5,
+          "caption": "Research recording: The cure is an airborne agent, not a vaccine. It is harmless to healthy humans and animals, but immediately kills infected humans and animals. It never reverses infection. Carry the canister to the regional dispersal complex to release it.",
+          "checkpoint": "cure-disperse-ready",
+          "objective": "Activate the dispersal console \u00b7 3455\u00a0m",
+          "weapons": {
+            "selectedSide": "RIGHT",
+            "LEFT": {
+              "rack": [
+                {
+                  "id": "weapon.fire-axe",
+                  "magazine": 0,
+                  "reserve": "infinite",
+                  "charges": 0,
+                  "nextCharge": 0,
+                  "reloadUntil": 0,
+                  "readyAt": 0
+                }
+              ],
+              "index": 0,
+              "aim": {
+                "x": 1,
+                "z": 0
+              },
+              "aimPoint": null,
+              "swapUntil": 0
+            },
+            "RIGHT": {
+              "rack": [
+                {
+                  "id": "weapon.pistol",
+                  "magazine": 0,
+                  "reserve": "infinite",
+                  "charges": 0,
+                  "nextCharge": 0,
+                  "reloadUntil": 0,
+                  "readyAt": 0
+                },
+                {
+                  "id": "weapon.shotgun",
+                  "magazine": 0,
+                  "reserve": "infinite",
+                  "charges": 0,
+                  "nextCharge": 0,
+                  "reloadUntil": 0,
+                  "readyAt": 0
+                },
+                {
+                  "id": "weapon.army-mg",
+                  "magazine": 0,
+                  "reserve": "infinite",
+                  "charges": 0,
+                  "nextCharge": 0,
+                  "reloadUntil": 0,
+                  "readyAt": 0
+                },
+                {
+                  "id": "weapon.rocket-launcher",
+                  "magazine": 0,
+                  "reserve": "infinite",
+                  "charges": 0,
+                  "nextCharge": 0,
+                  "reloadUntil": 0,
+                  "readyAt": 0
+                }
+              ],
+              "index": 3,
+              "aim": {
+                "x": 1,
+                "z": 0
+              },
+              "aimPoint": null,
+              "swapUntil": 0
+            }
+          },
+          "mountedGun": {
+            "mounted": false,
+            "heat": 0
+          },
+          "l7": null,
+          "marker": "cure-console",
+          "states": {
+            "charge-active": false,
+            "console-held": false,
+            "terminal-read": true,
+            "cure-carried": false,
+            "cure-installed": true,
+            "charge-ready": false,
+            "mega-dead": false,
+            "cure-released": false,
+            "epilogue-finished": false,
+            "credits-finished": false,
+            "anchor-unavailable": false
+          },
+          "enemies": []
+        }
+      },
+      {
+        "stage": "death-1",
+        "file": "death-1-z1.jpg",
+        "zoom": 1,
+        "state": {
+          "tick": 7330,
+          "level": "L10",
+          "phase": "playing",
+          "active": [
+            "hold"
+          ],
+          "hp": 0,
+          "position": {
+            "x": 554.5562133789062,
+            "y": 0.6998102068901062,
+            "z": 0.0001416603772668168,
+            "yaw": 0.018750217834431093
+          },
+          "driver": false,
+          "god": false,
+          "backend": "webgl",
+          "quality": "low",
+          "zoom": 1.5,
+          "checkpoint": "cure-disperse-ready",
+          "objective": "Activate the dispersal console \u00b7 3448\u00a0m",
+          "weapons": {
+            "selectedSide": "RIGHT",
+            "LEFT": {
+              "rack": [
+                {
+                  "id": "weapon.fire-axe",
+                  "magazine": 0,
+                  "reserve": "infinite",
+                  "charges": 0,
+                  "nextCharge": 0,
+                  "reloadUntil": 0,
+                  "readyAt": 0
+                }
+              ],
+              "index": 0,
+              "aim": {
+                "x": 1,
+                "z": 0
+              },
+              "aimPoint": null,
+              "swapUntil": 0
+            },
+            "RIGHT": {
+              "rack": [
+                {
+                  "id": "weapon.pistol",
+                  "magazine": 0,
+                  "reserve": "infinite",
+                  "charges": 0,
+                  "nextCharge": 0,
+                  "reloadUntil": 0,
+                  "readyAt": 0
+                },
+                {
+                  "id": "weapon.shotgun",
+                  "magazine": 0,
+                  "reserve": "infinite",
+                  "charges": 0,
+                  "nextCharge": 0,
+                  "reloadUntil": 0,
+                  "readyAt": 7328
+                },
+                {
+                  "id": "weapon.army-mg",
+                  "magazine": 0,
+                  "reserve": "infinite",
+                  "charges": 0,
+                  "nextCharge": 0,
+                  "reloadUntil": 0,
+                  "readyAt": 0
+                },
+                {
+                  "id": "weapon.rocket-launcher",
+                  "magazine": 0,
+                  "reserve": "infinite",
+                  "charges": 0,
+                  "nextCharge": 0,
+                  "reloadUntil": 0,
+                  "readyAt": 6805
+                }
+              ],
+              "index": 1,
+              "aim": {
+                "x": 0.9998226353760454,
+                "z": -0.018833422145195275
+              },
+              "aimPoint": {
+                "x": 556.2356958850368,
+                "z": -0.031494353755909775
+              },
+              "swapUntil": 0
+            }
+          },
+          "mountedGun": {
+            "mounted": false,
+            "heat": 0
+          },
+          "l7": null,
+          "marker": "cure-console",
+          "states": {
+            "charge-active": false,
+            "console-held": false,
+            "terminal-read": true,
+            "cure-carried": false,
+            "cure-installed": true,
+            "charge-ready": false,
+            "mega-dead": false,
+            "cure-released": false,
+            "epilogue-finished": false,
+            "credits-finished": false,
+            "anchor-unavailable": false
+          },
+          "enemies": [
+            {
+              "id": 102,
+              "type": "infected.alpha",
+              "hp": 2700,
+              "at": {
+                "x": 556.2350416292111,
+                "y": 0.702,
+                "z": -0.031482063239618996,
+                "yaw": -3.122836925272406
+              },
+              "state": "chase"
+            }
+          ]
+        }
+      },
+      {
+        "stage": "death-1",
+        "file": "death-1-z1.5.jpg",
+        "zoom": 1.5,
+        "state": {
+          "tick": 7330,
+          "level": "L10",
+          "phase": "playing",
+          "active": [
+            "hold"
+          ],
+          "hp": 0,
+          "position": {
+            "x": 554.5562133789062,
+            "y": 0.6998102068901062,
+            "z": 0.0001416603772668168,
+            "yaw": 0.018750217834431093
+          },
+          "driver": false,
+          "god": false,
+          "backend": "webgl",
+          "quality": "low",
+          "zoom": 1.5,
+          "checkpoint": "cure-disperse-ready",
+          "objective": "Activate the dispersal console \u00b7 3448\u00a0m",
+          "weapons": {
+            "selectedSide": "RIGHT",
+            "LEFT": {
+              "rack": [
+                {
+                  "id": "weapon.fire-axe",
+                  "magazine": 0,
+                  "reserve": "infinite",
+                  "charges": 0,
+                  "nextCharge": 0,
+                  "reloadUntil": 0,
+                  "readyAt": 0
+                }
+              ],
+              "index": 0,
+              "aim": {
+                "x": 1,
+                "z": 0
+              },
+              "aimPoint": null,
+              "swapUntil": 0
+            },
+            "RIGHT": {
+              "rack": [
+                {
+                  "id": "weapon.pistol",
+                  "magazine": 0,
+                  "reserve": "infinite",
+                  "charges": 0,
+                  "nextCharge": 0,
+                  "reloadUntil": 0,
+                  "readyAt": 0
+                },
+                {
+                  "id": "weapon.shotgun",
+                  "magazine": 0,
+                  "reserve": "infinite",
+                  "charges": 0,
+                  "nextCharge": 0,
+                  "reloadUntil": 0,
+                  "readyAt": 7328
+                },
+                {
+                  "id": "weapon.army-mg",
+                  "magazine": 0,
+                  "reserve": "infinite",
+                  "charges": 0,
+                  "nextCharge": 0,
+                  "reloadUntil": 0,
+                  "readyAt": 0
+                },
+                {
+                  "id": "weapon.rocket-launcher",
+                  "magazine": 0,
+                  "reserve": "infinite",
+                  "charges": 0,
+                  "nextCharge": 0,
+                  "reloadUntil": 0,
+                  "readyAt": 6805
+                }
+              ],
+              "index": 1,
+              "aim": {
+                "x": 0.9998226353760454,
+                "z": -0.018833422145195275
+              },
+              "aimPoint": {
+                "x": 556.2356958850368,
+                "z": -0.031494353755909775
+              },
+              "swapUntil": 0
+            }
+          },
+          "mountedGun": {
+            "mounted": false,
+            "heat": 0
+          },
+          "l7": null,
+          "marker": "cure-console",
+          "states": {
+            "charge-active": false,
+            "console-held": false,
+            "terminal-read": true,
+            "cure-carried": false,
+            "cure-installed": true,
+            "charge-ready": false,
+            "mega-dead": false,
+            "cure-released": false,
+            "epilogue-finished": false,
+            "credits-finished": false,
+            "anchor-unavailable": false
+          },
+          "enemies": [
+            {
+              "id": 102,
+              "type": "infected.alpha",
+              "hp": 2700,
+              "at": {
+                "x": 556.2350416292111,
+                "y": 0.702,
+                "z": -0.031482063239618996,
+                "yaw": -3.122836925272406
+              },
+              "state": "chase"
+            }
+          ]
+        }
+      },
+      {
+        "stage": "stalled",
+        "file": "stalled-z1.5.jpg",
+        "zoom": 1.5,
+        "state": {
+          "tick": 14654,
+          "level": "L10",
+          "phase": "playing",
+          "active": [
+            "hold"
+          ],
+          "hp": 100,
+          "position": {
+            "x": 547,
+            "y": 0.7049999833106995,
+            "z": 0,
+            "yaw": 0.017247551157834183
+          },
+          "driver": false,
+          "god": false,
+          "backend": "webgl",
+          "quality": "low",
+          "zoom": 1.5,
+          "checkpoint": "cure-disperse-ready",
+          "objective": "Activate the dispersal console \u00b7 3455\u00a0m",
+          "weapons": {
+            "selectedSide": "RIGHT",
+            "LEFT": {
+              "rack": [
+                {
+                  "id": "weapon.fire-axe",
+                  "magazine": 0,
+                  "reserve": "infinite",
+                  "charges": 0,
+                  "nextCharge": 0,
+                  "reloadUntil": 0,
+                  "readyAt": 0
+                }
+              ],
+              "index": 0,
+              "aim": {
+                "x": 1,
+                "z": 0
+              },
+              "aimPoint": null,
+              "swapUntil": 0
+            },
+            "RIGHT": {
+              "rack": [
+                {
+                  "id": "weapon.pistol",
+                  "magazine": 0,
+                  "reserve": "infinite",
+                  "charges": 0,
+                  "nextCharge": 0,
+                  "reloadUntil": 0,
+                  "readyAt": 0
+                },
+                {
+                  "id": "weapon.shotgun",
+                  "magazine": 0,
+                  "reserve": "infinite",
+                  "charges": 0,
+                  "nextCharge": 0,
+                  "reloadUntil": 0,
+                  "readyAt": 14682
+                },
+                {
+                  "id": "weapon.army-mg",
+                  "magazine": 0,
+                  "reserve": "infinite",
+                  "charges": 0,
+                  "nextCharge": 0,
+                  "reloadUntil": 0,
+                  "readyAt": 0
+                },
+                {
+                  "id": "weapon.rocket-launcher",
+                  "magazine": 0,
+                  "reserve": "infinite",
+                  "charges": 0,
+                  "nextCharge": 0,
+                  "reloadUntil": 0,
+                  "readyAt": 14399
+                }
+              ],
+              "index": 1,
+              "aim": {
+                "x": 0.9998512646767079,
+                "z": -0.01724669604265576
+              },
+              "aimPoint": {
+                "x": 549.3659991220281,
+                "z": -0.040811737841831786
+              },
+              "swapUntil": 0
+            }
+          },
+          "mountedGun": {
+            "mounted": false,
+            "heat": 0
+          },
+          "l7": null,
+          "marker": "cure-console",
+          "states": {
+            "charge-active": false,
+            "console-held": false,
+            "terminal-read": true,
+            "cure-carried": false,
+            "cure-installed": true,
+            "charge-ready": false,
+            "mega-dead": false,
+            "cure-released": false,
+            "epilogue-finished": false,
+            "credits-finished": false,
+            "anchor-unavailable": false
+          },
+          "enemies": [
+            {
+              "id": 100,
+              "type": "infected.alpha",
+              "hp": 2700,
+              "at": {
+                "x": 549.3681887305917,
+                "y": 0.702,
+                "z": -0.036564571433325366,
+                "yaw": -3.126153991192728
+              },
+              "state": "chase"
+            }
+          ]
+        }
+      }
+    ],
+    "errors": [],
+    "shotTicks": [
+      677,
+      6755,
+      14349
+    ],
+    "megaHits": [
+      {
+        "tick": 6777,
+        "attackId": 2,
+        "actionId": "weapon.rocket-launcher",
+        "sourceId": 1,
+        "targetId": 102,
+        "position": {
+          "x": 561.4974647763038,
+          "y": 0.702,
+          "z": -0.1293289579914257,
+          "yaw": -3.122962872268179
+        },
+        "direction": {
+          "x": 0.9997828439652868,
+          "z": -0.020839023793906338
+        },
+        "knockback": 0.4,
+        "amount": 300,
+        "damageType": "explosive",
+        "type": "combat.hit",
+        "targetHp": 2700,
+        "targetType": "infected.alpha"
+      },
+      {
+        "tick": 6788,
+        "attackId": 3,
+        "actionId": "weapon.shotgun",
+        "sourceId": 1,
+        "targetId": 102,
+        "position": {
+          "x": 561.8973779138898,
+          "y": 0.702,
+          "z": -0.13766456750898823,
+          "yaw": -3.122962872268179
+        },
+        "direction": {
+          "x": 0.9998242198156004,
+          "z": -0.018749119182660364
+        },
+        "knockback": 0,
+        "amount": 0,
+        "damageType": "bullet",
+        "type": "combat.hit",
+        "targetHp": 2700,
+        "targetType": "infected.alpha"
+      },
+      {
+        "tick": 6818,
+        "attackId": 4,
+        "actionId": "weapon.shotgun",
+        "sourceId": 1,
+        "targetId": 102,
+        "position": {
+          "x": 561.8226766027641,
+          "y": 0.702,
+          "z": -0.13626373748543302,
+          "yaw": -3.122858645063057
+        },
+        "direction": {
+          "x": 0.9998242198156004,
+          "z": -0.018749119182660687
+        },
+        "knockback": 0,
+        "amount": 0,
+        "damageType": "bullet",
+        "type": "combat.hit",
+        "targetHp": 2700,
+        "targetType": "infected.alpha"
+      },
+      {
+        "tick": 6848,
+        "attackId": 5,
+        "actionId": "weapon.shotgun",
+        "sourceId": 1,
+        "targetId": 102,
+        "position": {
+          "x": 560.7727840386711,
+          "y": 0.702,
+          "z": -0.11657571590820996,
+          "yaw": -3.1228425040406242
+        },
+        "direction": {
+          "x": 0.9998242198156005,
+          "z": -0.018749119182661984
+        },
+        "knockback": 0,
+        "amount": 0,
+        "damageType": "bullet",
+        "type": "combat.hit",
+        "targetHp": 2700,
+        "targetType": "infected.alpha"
+      },
+      {
+        "tick": 6878,
+        "attackId": 6,
+        "actionId": "weapon.shotgun",
+        "sourceId": 1,
+        "targetId": 102,
+        "position": {
+          "x": 559.2622923941097,
+          "y": 0.702,
+          "z": -0.0882503490016959,
+          "yaw": -3.1228424360430043
+        },
+        "direction": {
+          "x": 0.9998242198156004,
+          "z": -0.018749119182662134
+        },
+        "knockback": 0,
+        "amount": 0,
+        "damageType": "bullet",
+        "type": "combat.hit",
+        "targetHp": 2700,
+        "targetType": "infected.alpha"
+      },
+      {
+        "tick": 6908,
+        "attackId": 7,
+        "actionId": "weapon.shotgun",
+        "sourceId": 1,
+        "targetId": 102,
+        "position": {
+          "x": 558.5323284842119,
+          "y": 0.702,
+          "z": -0.07456176247371664,
+          "yaw": -3.1228424357553393
+        },
+        "direction": {
+          "x": 0.9998242198156004,
+          "z": -0.018749119182662463
+        },
+        "knockback": 0.4,
+        "amount": 0,
+        "damageType": "bullet",
+        "type": "combat.hit",
+        "targetHp": 2700,
+        "targetType": "infected.alpha"
+      },
+      {
+        "tick": 6938,
+        "attackId": 8,
+        "actionId": "weapon.shotgun",
+        "sourceId": 1,
+        "targetId": 102,
+        "position": {
+          "x": 558.9320359889784,
+          "y": 0.702,
+          "z": -0.08205724367585215,
+          "yaw": -3.1228424357553393
+        },
+        "direction": {
+          "x": 0.9998242198156005,
+          "z": -0.018749119182661422
+        },
+        "knockback": 0,
+        "amount": 0,
+        "damageType": "bullet",
+        "type": "combat.hit",
+        "targetHp": 2700,
+        "targetType": "infected.alpha"
+      },
+      {
+        "tick": 6968,
+        "attackId": 9,
+        "actionId": "weapon.shotgun",
+        "sourceId": 1,
+        "targetId": 102,
+        "position": {
+          "x": 558.2954444791325,
+          "y": 0.702,
+          "z": -0.07011961518854999,
+          "yaw": -3.1228424357553553
+        },
+        "direction": {
+          "x": 0.9998242198156005,
+          "z": -0.018749119182663327
+        },
+        "knockback": 0,
+        "amount": 0,
+        "damageType": "bullet",
+        "type": "combat.hit",
+        "targetHp": 2700,
+        "targetType": "infected.alpha"
+      },
+      {
+        "tick": 6998,
+        "attackId": 10,
+        "actionId": "weapon.shotgun",
+        "sourceId": 1,
+        "targetId": 102,
+        "position": {
+          "x": 556.8649910024452,
+          "y": 0.702,
+          "z": -0.043295157260729154,
+          "yaw": -3.122842435755342
+        },
+        "direction": {
+          "x": 0.9998242198156004,
+          "z": -0.018749119182665367
+        },
+        "knockback": 0,
+        "amount": 0,
+        "damageType": "bullet",
+        "type": "combat.hit",
+        "targetHp": 2700,
+        "targetType": "infected.alpha"
+      },
+      {
+        "tick": 7028,
+        "attackId": 11,
+        "actionId": "weapon.shotgun",
+        "sourceId": 1,
+        "targetId": 102,
+        "position": {
+          "x": 556.5115962480777,
+          "y": 0.702,
+          "z": -0.03666815199635858,
+          "yaw": -3.1228424357553357
+        },
+        "direction": {
+          "x": 0.9998242198156004,
+          "z": -0.018749119182666436
+        },
+        "knockback": 0.4,
+        "amount": 0,
+        "damageType": "bullet",
+        "type": "combat.hit",
+        "targetHp": 2700,
+        "targetType": "infected.alpha"
+      },
+      {
+        "tick": 7058,
+        "attackId": 12,
+        "actionId": "weapon.shotgun",
+        "sourceId": 1,
+        "targetId": 102,
+        "position": {
+          "x": 556.9113037528442,
+          "y": 0.702,
+          "z": -0.0441636331984957,
+          "yaw": -3.1228424357553357
+        },
+        "direction": {
+          "x": 0.9998242198156005,
+          "z": -0.018749119182664507
+        },
+        "knockback": 0,
+        "amount": 0,
+        "damageType": "bullet",
+        "type": "combat.hit",
+        "targetHp": 2700,
+        "targetType": "infected.alpha"
+      },
+      {
+        "tick": 7088,
+        "attackId": 13,
+        "actionId": "weapon.shotgun",
+        "sourceId": 1,
+        "targetId": 102,
+        "position": {
+          "x": 556.3317056411506,
+          "y": 0.702,
+          "z": -0.0332947685932901,
+          "yaw": -3.122842435755348
+        },
+        "direction": {
+          "x": 0.9998242198156005,
+          "z": -0.01874911918266986
+        },
+        "knockback": 0,
+        "amount": 0,
+        "damageType": "bullet",
+        "type": "combat.hit",
+        "targetHp": 2700,
+        "targetType": "infected.alpha"
+      },
+      {
+        "tick": 7118,
+        "attackId": 14,
+        "actionId": "weapon.shotgun",
+        "sourceId": 1,
+        "targetId": 102,
+        "position": {
+          "x": 555.8359883802702,
+          "y": 0.702,
+          "z": -0.023998872553813194,
+          "yaw": -3.122842435755332
+        },
+        "direction": {
+          "x": 0.9998242198156004,
+          "z": -0.01874911918266675
+        },
+        "knockback": 0,
+        "amount": 0,
+        "damageType": "bullet",
+        "type": "combat.hit",
+        "targetHp": 2700,
+        "targetType": "infected.alpha"
+      },
+      {
+        "tick": 7148,
+        "attackId": 15,
+        "actionId": "weapon.shotgun",
+        "sourceId": 1,
+        "targetId": 102,
+        "position": {
+          "x": 555.8259172179606,
+          "y": 0.702,
+          "z": -0.023810013933743348,
+          "yaw": -3.1228424357553264
+        },
+        "direction": {
+          "x": 0.9998242198156008,
+          "z": -0.01874911918265407
+        },
+        "knockback": 0.4,
+        "amount": 0,
+        "damageType": "bullet",
+        "type": "combat.hit",
+        "targetHp": 2700,
+        "targetType": "infected.alpha"
+      },
+      {
+        "tick": 7178,
+        "attackId": 16,
+        "actionId": "weapon.shotgun",
+        "sourceId": 1,
+        "targetId": 102,
+        "position": {
+          "x": 556.2258469058871,
+          "y": 0.702,
+          "z": -0.03130966160680498,
+          "yaw": -3.122842435755351
+        },
+        "direction": {
+          "x": 0.9998242198156008,
+          "z": -0.018749119182651295
+        },
+        "knockback": 0,
+        "amount": 0,
+        "damageType": "bullet",
+        "type": "combat.hit",
+        "targetHp": 2700,
+        "targetType": "infected.alpha"
+      },
+      {
+        "tick": 7208,
+        "attackId": 17,
+        "actionId": "weapon.shotgun",
+        "sourceId": 1,
+        "targetId": 102,
+        "position": {
+          "x": 556.2258469058871,
+          "y": 0.702,
+          "z": -0.03130966160680498,
+          "yaw": -3.122842435755351
+        },
+        "direction": {
+          "x": 0.9998242198156008,
+          "z": -0.018749119182651295
+        },
+        "knockback": 0,
+        "amount": 0,
+        "damageType": "bullet",
+        "type": "combat.hit",
+        "targetHp": 2700,
+        "targetType": "infected.alpha"
+      },
+      {
+        "tick": 7238,
+        "attackId": 18,
+        "actionId": "weapon.shotgun",
+        "sourceId": 1,
+        "targetId": 102,
+        "position": {
+          "x": 555.9261946684624,
+          "y": 0.702,
+          "z": -0.02569045834939802,
+          "yaw": -3.1228424357553486
+        },
+        "direction": {
+          "x": 0.9998242198156008,
+          "z": -0.01874911918265339
+        },
+        "knockback": 0,
+        "amount": 0,
+        "damageType": "bullet",
+        "type": "combat.hit",
+        "targetHp": 2700,
+        "targetType": "infected.alpha"
+      },
+      {
+        "tick": 7268,
+        "attackId": 19,
+        "actionId": "weapon.shotgun",
+        "sourceId": 1,
+        "targetId": 102,
+        "position": {
+          "x": 555.8359883802702,
+          "y": 0.702,
+          "z": -0.023998872553782226,
+          "yaw": -3.1228424357553486
+        },
+        "direction": {
+          "x": 0.999824219815601,
+          "z": -0.018749119182642566
+        },
+        "knockback": 0.4,
+        "amount": 0,
+        "damageType": "bullet",
+        "type": "combat.hit",
+        "targetHp": 2700,
+        "targetType": "infected.alpha"
+      },
+      {
+        "tick": 7298,
+        "attackId": 20,
+        "actionId": "weapon.shotgun",
+        "sourceId": 1,
+        "targetId": 102,
+        "position": {
+          "x": 556.2359180681967,
+          "y": 0.702,
+          "z": -0.03149852022683925,
+          "yaw": -3.1228424357553624
+        },
+        "direction": {
+          "x": 0.9998242198156009,
+          "z": -0.018749119182639804
+        },
+        "knockback": 0,
+        "amount": 0,
+        "damageType": "bullet",
+        "type": "combat.hit",
+        "targetHp": 2700,
+        "targetType": "infected.alpha"
+      },
+      {
+        "tick": 14371,
+        "attackId": 21,
+        "actionId": "weapon.rocket-launcher",
+        "sourceId": 1,
+        "targetId": 100,
+        "position": {
+          "x": 553.6960625453387,
+          "y": 0.702,
+          "z": -0.10233609553899062,
+          "yaw": -3.1263108176771985
+        },
+        "direction": {
+          "x": 0.9998368454779782,
+          "z": -0.018063289419299296
+        },
+        "knockback": 0.4,
+        "amount": 300,
+        "damageType": "explosive",
+        "type": "combat.hit",
+        "targetHp": 2700,
+        "targetType": "infected.alpha"
+      },
+      {
+        "tick": 14382,
+        "attackId": 22,
+        "actionId": "weapon.shotgun",
+        "sourceId": 1,
+        "targetId": 100,
+        "position": {
+          "x": 554.0959972835299,
+          "y": 0.702,
+          "z": -0.10956141130671035,
+          "yaw": -3.1263108176771985
+        },
+        "direction": {
+          "x": 0.9998808262188362,
+          "z": -0.015438049097527417
+        },
+        "knockback": 0,
+        "amount": 0,
+        "damageType": "bullet",
+        "type": "combat.hit",
+        "targetHp": 2700,
+        "targetType": "infected.alpha"
+      },
+      {
+        "tick": 14412,
+        "attackId": 23,
+        "actionId": "weapon.shotgun",
+        "sourceId": 1,
+        "targetId": 100,
+        "position": {
+          "x": 554.0212917430883,
+          "y": 0.702,
+          "z": -0.10840796604508253,
+          "yaw": -3.126175098153425
+        },
+        "direction": {
+          "x": 0.9998808262188361,
+          "z": -0.015438049097527273
+        },
+        "knockback": 0,
+        "amount": 0,
+        "damageType": "bullet",
+        "type": "combat.hit",
+        "targetHp": 2700,
+        "targetType": "infected.alpha"
+      },
+      {
+        "tick": 14442,
+        "attackId": 24,
+        "actionId": "weapon.shotgun",
+        "sourceId": 1,
+        "targetId": 100,
+        "position": {
+          "x": 552.9713397379053,
+          "y": 0.702,
+          "z": -0.09219682349586666,
+          "yaw": -3.1261540801105205
+        },
+        "direction": {
+          "x": 0.9998808262188361,
+          "z": -0.015438049097527605
+        },
+        "knockback": 0,
+        "amount": 0,
+        "damageType": "bullet",
+        "type": "combat.hit",
+        "targetHp": 2700,
+        "targetType": "infected.alpha"
+      },
+      {
+        "tick": 14472,
+        "attackId": 25,
+        "actionId": "weapon.shotgun",
+        "sourceId": 1,
+        "targetId": 100,
+        "position": {
+          "x": 551.4607625748122,
+          "y": 0.702,
+          "z": -0.06887367957918403,
+          "yaw": -3.126153991567382
+        },
+        "direction": {
+          "x": 0.9998808262188359,
+          "z": -0.015438049097528012
+        },
+        "knockback": 0,
+        "amount": 0,
+        "damageType": "bullet",
+        "type": "combat.hit",
+        "targetHp": 2700,
+        "targetType": "infected.alpha"
+      },
+      {
+        "tick": 14502,
+        "attackId": 26,
+        "actionId": "weapon.shotgun",
+        "sourceId": 1,
+        "targetId": 100,
+        "position": {
+          "x": 550.9920281521257,
+          "y": 0.702,
+          "z": -0.0616364720626646,
+          "yaw": -3.126153991192801
+        },
+        "direction": {
+          "x": 0.999880826218836,
+          "z": -0.015438049097528085
+        },
+        "knockback": 0.4,
+        "amount": 0,
+        "damageType": "bullet",
+        "type": "combat.hit",
+        "targetHp": 2700,
+        "targetType": "infected.alpha"
+      },
+      {
+        "tick": 14532,
+        "attackId": 27,
+        "actionId": "weapon.shotgun",
+        "sourceId": 1,
+        "targetId": 100,
+        "position": {
+          "x": 551.3917582868739,
+          "y": 0.702,
+          "z": -0.0678082610240986,
+          "yaw": -3.126153991192801
+        },
+        "direction": {
+          "x": 0.9998808262188359,
+          "z": -0.015438049097528661
+        },
+        "knockback": 0,
+        "amount": 0,
+        "damageType": "bullet",
+        "type": "combat.hit",
+        "targetHp": 2700,
+        "targetType": "infected.alpha"
+      },
+      {
+        "tick": 14562,
+        "attackId": 28,
+        "actionId": "weapon.shotgun",
+        "sourceId": 1,
+        "targetId": 100,
+        "position": {
+          "x": 550.7551307355371,
+          "y": 0.702,
+          "z": -0.057978802215950816,
+          "yaw": -3.1261539911928025
+        },
+        "direction": {
+          "x": 0.999880826218836,
+          "z": -0.015438049097529235
+        },
+        "knockback": 0,
+        "amount": 0,
+        "damageType": "bullet",
+        "type": "combat.hit",
+        "targetHp": 2700,
+        "targetType": "infected.alpha"
+      },
+      {
+        "tick": 14592,
+        "attackId": 29,
+        "actionId": "weapon.shotgun",
+        "sourceId": 1,
+        "targetId": 100,
+        "position": {
+          "x": 549.3245493026019,
+          "y": 0.702,
+          "z": -0.035890783503575635,
+          "yaw": -3.1261539911927985
+        },
+        "direction": {
+          "x": 0.9998808262188359,
+          "z": -0.015438049097529742
+        },
+        "knockback": 0,
+        "amount": 0,
+        "damageType": "bullet",
+        "type": "combat.hit",
+        "targetHp": 2700,
+        "targetType": "infected.alpha"
+      },
+      {
+        "tick": 14622,
+        "attackId": 30,
+        "actionId": "weapon.shotgun",
+        "sourceId": 1,
+        "targetId": 100,
+        "position": {
+          "x": 548.9704583574959,
+          "y": 0.702,
+          "z": -0.030423658570086134,
+          "yaw": -3.1261539911928002
+        },
+        "direction": {
+          "x": 0.999880826218836,
+          "z": -0.015438049097528824
+        },
+        "knockback": 0.4,
+        "amount": 0,
+        "damageType": "bullet",
+        "type": "combat.hit",
+        "targetHp": 2700,
+        "targetType": "infected.alpha"
+      },
+      {
+        "tick": 14652,
+        "attackId": 31,
+        "actionId": "weapon.shotgun",
+        "sourceId": 1,
+        "targetId": 100,
+        "position": {
+          "x": 549.3701884922441,
+          "y": 0.702,
+          "z": -0.03659544753152043,
+          "yaw": -3.1261539911928002
+        },
+        "direction": {
+          "x": 0.9998808262188359,
+          "z": -0.01543804909752989
+        },
+        "knockback": 0,
+        "amount": 0,
+        "damageType": "bullet",
+        "type": "combat.hit",
+        "targetHp": 2700,
+        "targetType": "infected.alpha"
+      }
+    ]
+  },
+  {
+    "revision": "4e59b762d0e14d5b8bb29c04b7da9cd76005cc1c",
+    "producerSha256": "801eb799f65ca9592a0f015f04a2b10c5963f1c10092992044c61cfd727e0c35",
+    "sourceGameTree": "25413d0f8ea70a436fccf9c8616914c2b0e97570",
+    "level": "L10",
+    "quality": "high",
+    "checkpoint": "cure-disperse-ready",
+    "method": "Planner advice translated to physical WASD, number keys, E and mouse; no injected driver, teleport, god mode, objective skip or time scaling during route.",
+    "deaths": null,
+    "failure": "No movement for 120 simulation seconds",
+    "finished": null,
+    "end": {
+      "tick": 8017,
+      "level": "L10",
+      "phase": "playing",
+      "active": [
+        "hold"
+      ],
+      "hp": 100,
+      "position": {
+        "x": 588.7617797851562,
+        "y": 0.7049999833106995,
+        "z": 3.2779808716991736e-15,
+        "yaw": 0.5080698322865128
+      },
+      "driver": false,
+      "god": false,
+      "backend": "webgl",
+      "quality": "high",
+      "zoom": 1.5,
+      "checkpoint": "cure-disperse-ready",
+      "objective": "Activate the dispersal console \u00b7 3413\u00a0m",
+      "weapons": {
+        "selectedSide": "RIGHT",
+        "LEFT": {
+          "rack": [
+            {
+              "id": "weapon.fire-axe",
+              "magazine": 0,
+              "reserve": "infinite",
+              "charges": 0,
+              "nextCharge": 0,
+              "reloadUntil": 0,
+              "readyAt": 0
+            }
+          ],
+          "index": 0,
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "aimPoint": null,
+          "swapUntil": 0
+        },
+        "RIGHT": {
+          "rack": [
+            {
+              "id": "weapon.pistol",
+              "magazine": 0,
+              "reserve": "infinite",
+              "charges": 0,
+              "nextCharge": 0,
+              "reloadUntil": 0,
+              "readyAt": 0
+            },
+            {
+              "id": "weapon.shotgun",
+              "magazine": 0,
+              "reserve": "infinite",
+              "charges": 0,
+              "nextCharge": 0,
+              "reloadUntil": 0,
+              "readyAt": 629
+            },
+            {
+              "id": "weapon.army-mg",
+              "magazine": 0,
+              "reserve": "infinite",
+              "charges": 0,
+              "nextCharge": 0,
+              "reloadUntil": 0,
+              "readyAt": 0
+            },
+            {
+              "id": "weapon.rocket-launcher",
+              "magazine": 0,
+              "reserve": "infinite",
+              "charges": 0,
+              "nextCharge": 0,
+              "reloadUntil": 0,
+              "readyAt": 1126
+            }
+          ],
+          "index": 1,
+          "aim": {
+            "x": 0.8736851452960571,
+            "z": -0.48649179529464587
+          },
+          "aimPoint": null,
+          "swapUntil": 0
+        }
+      },
+      "mountedGun": {
+        "mounted": false,
+        "heat": 0
+      },
+      "l7": null,
+      "marker": "cure-console",
+      "states": {
+        "charge-active": false,
+        "console-held": false,
+        "terminal-read": true,
+        "cure-carried": false,
+        "cure-installed": true,
+        "charge-ready": false,
+        "mega-dead": false,
+        "cure-released": false,
+        "epilogue-finished": false,
+        "credits-finished": false,
+        "anchor-unavailable": false
+      },
+      "enemies": []
+    },
+    "wallSeconds": 29.195,
+    "captures": [
+      {
+        "stage": "step-hold",
+        "file": "step-hold-z1.5.jpg",
+        "zoom": 1.5,
+        "state": {
+          "tick": 253,
+          "level": "L10",
+          "phase": "playing",
+          "active": [
+            "hold"
+          ],
+          "hp": 100,
+          "position": {
+            "x": 547,
+            "y": 0.7049999833106995,
+            "z": 0,
+            "yaw": 0.3205919885488634
+          },
+          "driver": false,
+          "god": false,
+          "backend": "webgl",
+          "quality": "high",
+          "zoom": 1.5,
+          "caption": "Research recording: The cure is an airborne agent, not a vaccine. It is harmless to healthy humans and animals, but immediately kills infected humans and animals. It never reverses infection. Carry the canister to the regional dispersal complex to release it.",
+          "checkpoint": "cure-disperse-ready",
+          "objective": "Activate the dispersal console \u00b7 3455\u00a0m",
+          "weapons": {
+            "selectedSide": "RIGHT",
+            "LEFT": {
+              "rack": [
+                {
+                  "id": "weapon.fire-axe",
+                  "magazine": 0,
+                  "reserve": "infinite",
+                  "charges": 0,
+                  "nextCharge": 0,
+                  "reloadUntil": 0,
+                  "readyAt": 0
+                }
+              ],
+              "index": 0,
+              "aim": {
+                "x": 1,
+                "z": 0
+              },
+              "aimPoint": null,
+              "swapUntil": 0
+            },
+            "RIGHT": {
+              "rack": [
+                {
+                  "id": "weapon.pistol",
+                  "magazine": 0,
+                  "reserve": "infinite",
+                  "charges": 0,
+                  "nextCharge": 0,
+                  "reloadUntil": 0,
+                  "readyAt": 0
+                },
+                {
+                  "id": "weapon.shotgun",
+                  "magazine": 0,
+                  "reserve": "infinite",
+                  "charges": 0,
+                  "nextCharge": 0,
+                  "reloadUntil": 0,
+                  "readyAt": 0
+                },
+                {
+                  "id": "weapon.army-mg",
+                  "magazine": 0,
+                  "reserve": "infinite",
+                  "charges": 0,
+                  "nextCharge": 0,
+                  "reloadUntil": 0,
+                  "readyAt": 0
+                },
+                {
+                  "id": "weapon.rocket-launcher",
+                  "magazine": 0,
+                  "reserve": "infinite",
+                  "charges": 0,
+                  "nextCharge": 0,
+                  "reloadUntil": 0,
+                  "readyAt": 0
+                }
+              ],
+              "index": 3,
+              "aim": {
+                "x": 1,
+                "z": 0
+              },
+              "aimPoint": null,
+              "swapUntil": 0
+            }
+          },
+          "mountedGun": {
+            "mounted": false,
+            "heat": 0
+          },
+          "l7": null,
+          "marker": "cure-console",
+          "states": {
+            "charge-active": false,
+            "console-held": false,
+            "terminal-read": true,
+            "cure-carried": false,
+            "cure-installed": true,
+            "charge-ready": false,
+            "mega-dead": false,
+            "cure-released": false,
+            "epilogue-finished": false,
+            "credits-finished": false,
+            "anchor-unavailable": false
+          },
+          "enemies": []
+        }
+      },
+      {
+        "stage": "stalled",
+        "file": "stalled-z1.5.jpg",
+        "zoom": 1.5,
+        "state": {
+          "tick": 8017,
+          "level": "L10",
+          "phase": "playing",
+          "active": [
+            "hold"
+          ],
+          "hp": 100,
+          "position": {
+            "x": 588.7617797851562,
+            "y": 0.7049999833106995,
+            "z": 3.2779808716991736e-15,
+            "yaw": 0.5080698322865128
+          },
+          "driver": false,
+          "god": false,
+          "backend": "webgl",
+          "quality": "high",
+          "zoom": 1.5,
+          "checkpoint": "cure-disperse-ready",
+          "objective": "Activate the dispersal console \u00b7 3413\u00a0m",
+          "weapons": {
+            "selectedSide": "RIGHT",
+            "LEFT": {
+              "rack": [
+                {
+                  "id": "weapon.fire-axe",
+                  "magazine": 0,
+                  "reserve": "infinite",
+                  "charges": 0,
+                  "nextCharge": 0,
+                  "reloadUntil": 0,
+                  "readyAt": 0
+                }
+              ],
+              "index": 0,
+              "aim": {
+                "x": 1,
+                "z": 0
+              },
+              "aimPoint": null,
+              "swapUntil": 0
+            },
+            "RIGHT": {
+              "rack": [
+                {
+                  "id": "weapon.pistol",
+                  "magazine": 0,
+                  "reserve": "infinite",
+                  "charges": 0,
+                  "nextCharge": 0,
+                  "reloadUntil": 0,
+                  "readyAt": 0
+                },
+                {
+                  "id": "weapon.shotgun",
+                  "magazine": 0,
+                  "reserve": "infinite",
+                  "charges": 0,
+                  "nextCharge": 0,
+                  "reloadUntil": 0,
+                  "readyAt": 629
+                },
+                {
+                  "id": "weapon.army-mg",
+                  "magazine": 0,
+                  "reserve": "infinite",
+                  "charges": 0,
+                  "nextCharge": 0,
+                  "reloadUntil": 0,
+                  "readyAt": 0
+                },
+                {
+                  "id": "weapon.rocket-launcher",
+                  "magazine": 0,
+                  "reserve": "infinite",
+                  "charges": 0,
+                  "nextCharge": 0,
+                  "reloadUntil": 0,
+                  "readyAt": 1126
+                }
+              ],
+              "index": 1,
+              "aim": {
+                "x": 0.8736851452960571,
+                "z": -0.48649179529464587
+              },
+              "aimPoint": null,
+              "swapUntil": 0
+            }
+          },
+          "mountedGun": {
+            "mounted": false,
+            "heat": 0
+          },
+          "l7": null,
+          "marker": "cure-console",
+          "states": {
+            "charge-active": false,
+            "console-held": false,
+            "terminal-read": true,
+            "cure-carried": false,
+            "cure-installed": true,
+            "charge-ready": false,
+            "mega-dead": false,
+            "cure-released": false,
+            "epilogue-finished": false,
+            "credits-finished": false,
+            "anchor-unavailable": false
+          },
+          "enemies": []
+        }
+      }
+    ],
+    "errors": [],
+    "shotTicks": [
+      581,
+      1076
+    ],
+    "megaHits": []
+  }
+]

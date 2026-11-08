@@ -1,0 +1,61 @@
+
+> build:qa
+> NODE_ENV=production VITE_QA_HOOKS=1 sh tools/build-cached.sh
+
+[36mvite v6.4.3 [32mbuilding for production...[36m[39m
+transforming...
+[32m✓[39m 661 modules transformed.
+rendering chunks...
+computing gzip size...
+[2mdist/[22m[32mpreview/index.html                         [39m[1m[2m    1.81 kB[22m[1m[22m[2m │ gzip:     0.75 kB[22m
+[2mdist/[22m[2mbuild/[22m[32mskinnedCrowd-D3M5tKq9.js             [39m[1m[2m    2.88 kB[22m[1m[22m
+[2mdist/[22m[32mindex.html                                 [39m[1m[2m    2.91 kB[22m[1m[22m[2m │ gzip:     0.95 kB[22m
+[2mdist/[22m[2mbuild/[22m[32mcivilianBakeData-DodFhdro.js         [39m[1m[2m    4.05 kB[22m[1m[22m
+[2mdist/[22m[2mbuild/[22m[32mdeathPose-BH9ouT0s.js                [39m[1m[2m    5.79 kB[22m[1m[22m
+[2mdist/[22m[2mbuild/[22m[32mBufferGeometryUtils-BsKHv_Up.js      [39m[1m[2m    6.88 kB[22m[1m[22m
+[2mdist/[22m[2mbuild/[22m[32mcivilianBake.worker-_pYKOTSp.js      [39m[1m[2m   29.19 kB[22m[1m[22m
+[2mdist/[22m[2mbuild/[22m[32mbasis_transcoder-o4Hde_L7.js         [39m[1m[2m   57.53 kB[22m[1m[22m
+[2mdist/[22m[2mbuild/[22m[32mthree.module--FhUTY-k.js             [39m[1m[2m  206.13 kB[22m[1m[22m
+[2mdist/[22m[2mbuild/[22m[32mcivilianSource-C-NynhlA.js           [39m[1m[2m  410.03 kB[22m[1m[22m
+[2mdist/[22m[2mbuild/[22m[32mbasis_transcoder-VXdx5NbI.wasm       [39m[1m[2m  527.33 kB[22m[1m[22m[2m │ gzip:   247.62 kB[22m
+[2mdist/[22m[2mbuild/[22m[32mprefetch.worker-7Jk9xIuS.js          [39m[1m[2m1,064.86 kB[22m[1m[22m
+[2mdist/[22m[2mbuild/[22m[32mprepareCivilianGeometry-BtnVNVPA.js  [39m[1m[2m1,969.86 kB[22m[1m[22m
+[2mdist/[22m[2mbuild/[22m[32mrapier-C6GCbKVJ.wasm                 [39m[1m[2m3,082.10 kB[22m[1m[22m[2m │ gzip: 1,176.71 kB[22m
+[2mdist/[22m[2mbuild/[22m[35mindex-IOL21Ibl.css                   [39m[1m[2m   42.33 kB[22m[1m[22m[2m │ gzip:     9.00 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mlookViewpoints-BX-OEann.js           [39m[1m[2m    0.23 kB[22m[1m[22m[2m │ gzip:     0.16 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mmodulepreload-polyfill-B5Qt9EMX.js   [39m[1m[2m    0.71 kB[22m[1m[22m[2m │ gzip:     0.40 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mthree.module-KnJ4A_3u.js             [39m[1m[2m    1.10 kB[22m[1m[22m[2m │ gzip:     0.64 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mpreload-helper-BlTxHScW.js           [39m[1m[2m    1.11 kB[22m[1m[22m[2m │ gzip:     0.65 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mcontrols-BD2KGrGS.js                 [39m[1m[2m    1.40 kB[22m[1m[22m[2m │ gzip:     0.75 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mcrowdProbe-DvPBfiPi.js               [39m[1m[2m    1.53 kB[22m[1m[22m[2m │ gzip:     0.88 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mworldLook-o3T_90Bf.js                [39m[1m[2m    1.96 kB[22m[1m[22m[2m │ gzip:     0.90 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mDebugInfo-BzryyAh4.js                [39m[1m[2m    2.70 kB[22m[1m[22m[2m │ gzip:     1.19 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mcrowd-C2C9mOd6.js                    [39m[1m[2m    3.10 kB[22m[1m[22m[2m │ gzip:     1.58 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mlookPatch-BJ2Iw5hk.js                [39m[1m[2m    5.68 kB[22m[1m[22m[2m │ gzip:     2.88 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mprobe-DKgptAsS.js                    [39m[1m[2m    7.52 kB[22m[1m[22m[2m │ gzip:     3.08 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mfootSoles-CRk60Ybj.js                [39m[1m[2m   10.41 kB[22m[1m[22m[2m │ gzip:     3.53 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mindex-C0pqdfy7.js                    [39m[1m[2m   12.43 kB[22m[1m[22m[2m │ gzip:     4.49 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mInspection-DTwJtpM-.js               [39m[1m[2m   12.86 kB[22m[1m[22m[2m │ gzip:     4.41 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mMotionLab-Czft_cWq.js                [39m[1m[2m   18.38 kB[22m[1m[22m[2m │ gzip:     7.96 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mLevelFiveBot-BpowNQn0.js             [39m[1m[2m   23.12 kB[22m[1m[22m[2m │ gzip:     6.86 kB[22m
+[2mdist/[22m[2mbuild/[22m[36msurvivor-DjMktlck.js                 [39m[1m[2m   24.62 kB[22m[1m[22m[2m │ gzip:    10.09 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mindex-BppICMFq.js                    [39m[1m[2m   28.31 kB[22m[1m[22m[2m │ gzip:     7.75 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mLevelSixSubway-GLuoOkxa.js           [39m[1m[2m   31.15 kB[22m[1m[22m[2m │ gzip:    11.65 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mtestApi-1yoxCwPF.js                  [39m[1m[2m   39.25 kB[22m[1m[22m[2m │ gzip:    14.29 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mPhysics-DBXz6YAx.js                  [39m[1m[2m   83.59 kB[22m[1m[22m[2m │ gzip:    29.25 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mlight-anchors-BElMGkSS.js            [39m[1m[2m   94.19 kB[22m[1m[22m[2m │ gzip:     7.13 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mSceneLab-DjtnVW4X.js                 [39m[1m[2m  105.02 kB[22m[1m[22m[2m │ gzip:    36.18 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mPickups-DysnG1u3.js                  [39m[1m[2m  105.62 kB[22m[1m[22m[2m │ gzip:    36.37 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mPropSystem-CUyf7FlX.js               [39m[1m[2m  154.05 kB[22m[1m[22m[2m │ gzip:    52.23 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mDebug-C5mqunPp.js                    [39m[1m[2m  155.77 kB[22m[1m[22m[2m │ gzip:    33.05 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mrapier-ykuY6d4E.js                   [39m[1m[2m  212.13 kB[22m[1m[22m[2m │ gzip:    36.16 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mregistry-BRTAVsgv.js                 [39m[1m[2m  212.95 kB[22m[1m[22m[2m │ gzip:    73.02 kB[22m
+[2mdist/[22m[2mbuild/[22m[36minfected-DCIvp1k5.js                 [39m[1m[2m  288.63 kB[22m[1m[22m[2m │ gzip:    89.60 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mthree-core-CRIfo7il.js               [39m[1m[2m  307.47 kB[22m[1m[22m[2m │ gzip:    82.87 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mWeatherView-Cd33dw15.js              [39m[1m[2m  364.76 kB[22m[1m[22m[2m │ gzip:    42.44 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mthree-webgpu-Dm7bMjwu.js             [39m[1m[2m  688.68 kB[22m[1m[22m[2m │ gzip:   192.65 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mwreck-roofs-GAckelu8.js              [39m[1m[2m  755.61 kB[22m[1m[22m[2m │ gzip:   251.68 kB[22m
+[2mdist/[22m[2mbuild/[22m[36minstall-BIGjWWZg.js                  [39m[1m[2m1,071.56 kB[22m[1m[22m[2m │ gzip:   202.10 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mindex-Cgpd82hp.js                    [39m[1m[2m1,408.33 kB[22m[1m[22m[2m │ gzip:   441.81 kB[22m
+[2mdist/[22m[2mbuild/[22m[36mcharacter-clips-CGKWtM3S.js          [39m[1m[2m1,939.70 kB[22m[1m[22m[2m │ gzip:   336.59 kB[22m
+[32m✓ built in 17.39s[39m
