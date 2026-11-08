@@ -114,3 +114,15 @@ L10 is one continuous journey with escalating places, each a chapter:
 5. **Delivery** — out of the hangar to the dispersal complex: console defence, Mega fight, cure release, ending.
 
 Every story-relevant object (terminal, cure, weapons, radio) sits in a place that explains why it is there.
+
+## PO direction 2026-11-08 — L10 weapons (binding)
+
+PO: "Which [weapons] are not used yet? (maybe a fire thrower...). How could we make L10 special, instead of picking up the already known weapons again." and "Just for the final fight with the mega alpha, the player gets all their weapons back (maybe when picking up the cure the player gets equipped again)."
+
+- During the L10 walk the courier does NOT re-collect the known arsenal. She keeps the axe from the crash and finds place-specific, so-far-unused weapons that fit where she is:
+  - corn fields / farms: hunting rifle (farmhouse), nail gun (farm workshop), machete (cutting through corn), Molotov (burn a field to stop a pack — risky);
+  - restricted military zone: assault rifle (with flashlight), flashbangs (stun dogs and fast infected).
+  (All modelled except the throwables; throwables need small models.)
+- In the hangar, when the researchers hand over the cure, the army re-equips her: **all her weapons come back** (the full campaign arsenal plus what she found) for the delivery and the Mega fight.
+- Optional, awaiting PO: an experimental flamethrower from the researchers as the signature weapon of the final push (new model + fire VFX; not usable in the corn).
+- This replaces the earlier "weapons from story scenes (dead officer, Sam, armory, convoy)" sequence for the known arsenal.
