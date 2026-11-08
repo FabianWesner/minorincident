@@ -333,10 +333,10 @@ Feel: "open-country drive: smash through or steer around; the APC survives until
 | `dispersal-complex` | Bring the cure to the dispersal complex | R7 |
 | `install` | Install the cure | install point |
 | `hold` | Hold the console | 60 s within 40 m, minigun |
-| `mega` | Kill the Mega Alpha | ~10 direct rockets |
-| `release` | Release the cure at the console | interaction |
-| `epilogue` | Watch the cure spread | free walk 60–90 s |
-| `credits` | Minor Incident | title + credits |
+| `mega` | Kill the Mega Alpha | whole arsenal, mounted gun, fuel tanks and electric gate |
+| `release` | Release the cure | console interaction |
+| `epilogue` | Release the cure | 8 s control among recovering people; journey/survivor shots; Delivered ✓ and 15 s map pullback; title at 65 s |
+| `credits` | Minor Incident | title, 90 s scrolling credits with pause/skip, Thanks for playing and menu |
 
 | ID | Step | Criterion (expected value) | Source | Check |
 |---|---|---|---|---|
