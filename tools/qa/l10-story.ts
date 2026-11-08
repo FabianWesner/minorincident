@@ -133,6 +133,17 @@ for (const tier of tiers) {
     const rear = shieldHit();
     check(tier, 'stair climber can contest the gun from behind with reduced damage', rear > 0 && rear <= 35 * .25 && player.combat!.staggerUntil <= w.tick, rear);
     gun.mounted = false; Object.assign(boss.transform, bossPose); w.combat!.damage.god = true;
+    // A labelled stationary capability fixture: production AI must climb the real stair, never acquire deck support below it.
+    const foot = { x: 4002.2, z: -33 }, climber = w.infected!.spawn('infected.runner', foot, { state: 'chase' });
+    const mountedAt = { x: gun.placement.x - .78, y: gun.placement.y + .78, z: gun.placement.z };
+    Object.assign(player.transform, mountedAt); w.physics.playerBody!.setTranslation(mountedAt, true); w.spatial.set(1, mountedAt.x, mountedAt.z);
+    gun.mounted = true; w.infected!.pursueTarget(climber, 1);
+    const climb: { x: number; y: number; z: number }[] = [];
+    for (let tick = 0; tick < 600; tick++) { advance(w, 1); if (tick % 10 === 0) climb.push({ ...w.entities.get(climber)!.transform }); }
+    const entered = climb.find(at => at.y > 1.5), reachedDeck = climb.some(at => at.y >= 3.6);
+    check(tier, 'infected reaches the manned raised platform by its stair', reachedDeck && !!entered && Math.abs(entered.z + 33) < 2.5 && entered.x >= 3995 && entered.x <= 4004, { entered, reachedDeck, climb });
+    gun.mounted = false;
+
     m.loadResume(resume);
     const restored = w.entities.get(1)!;
     check(tier, 'production resume restores indoor cast, completed dialogue, cure and every selectable weapon', m.state.states['cure-carried'] &&
@@ -172,7 +183,7 @@ for (const tier of tiers) {
   if (process.env.L10_STORY_SKIP_ROUTE === '1') continue;
   try {
   const sightings: { tick: number; region: string; distance: number }[] = [], moved = new Set<number>(), firstSeen = new Set<number>(), idleEntries: number[] = [];
-  let mounts = 0, minigunKills = 0, shortestRocket = Infinity;
+  let mounts = 0, minigunKills = 0, shortestRocket = Infinity, closeRocketBlasts = 0, mannedDamage = 0;
   const trace: unknown[] = [], deaths: unknown[] = [], recentHits: unknown[] = [];
   let finalState: unknown;
   let lastRegion = '', firstMegaSeen: number | null = null, fullArsenal = false;
@@ -186,7 +197,8 @@ for (const tier of tiers) {
         const boss = world.megaPursuit?.entity();
         if (boss) shortestRocket = Math.min(shortestRocket, Math.hypot(boss.transform.x - e.position.x, boss.transform.z - e.position.z));
       });
-      world.events.on('combat.hit', e => { if (e.type === 'combat.hit' && e.targetId === 1) { recentHits.push({ tick: e.tick, action: e.actionId, amount: e.amount }); if (recentHits.length > 8) recentHits.shift(); } });
+      world.events.on('explosion', e => { if (e.type === 'explosion' && e.sourceId === 1 && /rocket/.test(e.defId) && Math.hypot(e.position.x - world.entities.get(1)!.transform.x, e.position.z - world.entities.get(1)!.transform.z) < 6) closeRocketBlasts++; });
+      world.events.on('combat.hit', e => { if (e.type === 'combat.hit' && e.targetId === 1) { if (world.mountedGun?.mounted) mannedDamage += e.amount; recentHits.push({ tick: e.tick, action: e.actionId, amount: e.amount }); if (recentHits.length > 8) recentHits.shift(); } });
       world.events.on('player.died', () => deaths.push({ tick: world.tick, hits: [...recentHits] }));
       const update = world.update.bind(world);
       let finalePrepared = false;
@@ -223,9 +235,9 @@ for (const tier of tiers) {
   if (!finaleOnly) check(tier, 'no ordinary infected first enters the widest frame standing idle', idleEntries.length === 0 && firstSeen.size > 0, { idleEntries, seen: firstSeen.size });
   if (!finaleOnly) check(tier, 'natural handoff gives the whole selectable arsenal', fullArsenal);
   check(tier, 'competent finale uses mounted gun to shred crowds', mounts > 0 && minigunKills > 0, { mounts, minigunKills });
-  check(tier, 'no close-range ground rocket exploit', shortestRocket >= 10, Number.isFinite(shortestRocket) ? shortestRocket : 'no rockets');
+  check(tier, 'no close-range ground rocket exploit', shortestRocket >= 10 && closeRocketBlasts === 0, { shortestTarget: Number.isFinite(shortestRocket) ? shortestRocket : 'no rockets', closeRocketBlasts });
   if (finaleOnly) check(tier, 'competent final fight wins without deaths', run.completed && run.deaths === 0, { deaths: run.deaths, outcome: run.outcome });
-  rows.push({ tier, method: finaleOnly ? 'Explicit healthy full-arsenal arena setup; all subsequent fighting/movement/interaction uses ordinary inputs, no god mode or teleport.' : 'Unprotected production LevelTenBot; ordinary keyboard movement, aim, selection and interaction only.', run, mounts, minigunKills, shortestRocket, sightings, firstMegaSeen, idleEntries, trace, deaths, finalState });
+  rows.push({ tier, method: finaleOnly ? 'Explicit healthy full-arsenal arena setup; all subsequent fighting/movement/interaction uses ordinary inputs, no god mode or teleport.' : 'Unprotected production LevelTenBot; ordinary keyboard movement, aim, selection and interaction only.', run, mounts, minigunKills, shortestRocket, closeRocketBlasts, mannedDamage, sightings, firstMegaSeen, idleEntries, trace, deaths, finalState });
   console.log(`[l10-story] ${tier}: ${run.outcome}, ${Math.round(run.time)}s, ${run.deaths} deaths; close sightings=${sightings.length}`);
   } catch (error) { check(tier, 'native route executes', false, String(error)); rows.push({ tier, routeError: String(error) }); }
 }
