@@ -14,9 +14,9 @@ export class LevelTenBot {
   // Ordinary exploration inputs: visit the six placed finds and the escape gaps,
   // taking the field crossings instead of every ninety-degree road bend.
   private readonly route = [
-    ...cure.regions[0].route.slice(0, 4), cure.anchors['farmhouse-rifle'], [cureEscapeGaps[0].x, cureEscapeGaps[0].z],
+    ...cure.regions[0].route.slice(0, 4), cure.anchors['farmhouse-rifle'],
     cure.anchors['barn-machete'], cure.anchors['shed-molotov'], cure.anchors['workshop-nailgun'], cure.anchors['cure-military'],
-    cure.anchors['guard-tower-rifle'], cure.anchors['checkpoint-flashbang'], [cureEscapeGaps[1].x, cureEscapeGaps[1].z], cure.anchors['r4-r5-seam'],
+    cure.anchors['guard-tower-rifle'], cure.anchors['checkpoint-flashbang'], cure.anchors['r4-r5-seam'],
     cure.anchors['cure-research-entry'], cure.anchors['cure-terminal'], cure.anchors['cure-canister'], cure.anchors['cure-research'], cure.anchors['cure-corridor'],
     [cureEscapeGaps[2].x, cureEscapeGaps[2].z], cure.anchors['cure-complex'], ...cure.regions[6].route.slice(5),
   ];

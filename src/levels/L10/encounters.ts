@@ -63,8 +63,8 @@ export const cureMedkits = [
 export const cureWeaponPickups = [
   { id: 'farmhouse-rifle', action: 'weapon.hunting-rifle', anchor: 'farmhouse-rifle' },
   { id: 'barn-machete', action: 'weapon.machete', anchor: 'barn-machete' },
-  { id: 'workshop-nailgun', action: 'weapon.nail-gun', anchor: 'workshop-nailgun' },
   { id: 'shed-molotov', action: 'weapon.molotov', anchor: 'shed-molotov' },
+  { id: 'workshop-nailgun', action: 'weapon.nail-gun', anchor: 'workshop-nailgun' },
   { id: 'guard-tower-rifle', action: 'weapon.assault-rifle', anchor: 'guard-tower-rifle' },
   { id: 'checkpoint-flashbang', action: 'weapon.flashbang', anchor: 'checkpoint-flashbang' },
 ] as const;

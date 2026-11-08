@@ -5,6 +5,7 @@ import { l4 } from '../../data/l4';
 import type { EntitySnapshot } from '../world/types';
 import type { Mission } from './Mission';
 import { curePaceCheckpoints } from '../../levels/L10/mission';
+import { cureWeaponPickups } from '../../levels/L10/encounters';
 
 /** Exact scripted dialogue, continuity and the safe-hangar cast. All progress lives in the mission snapshot. */
 export class LevelTenStory {
@@ -27,6 +28,7 @@ export class LevelTenStory {
       state.states['sam-alive'] = !!this.savedSam();
       this.say('L10.farmstead', 360);
     }
+    for (const find of cureWeaponPickups) if (p.weapons?.RIGHT.rack.some(slot => slot.id === find.action)) state.states[`found-${find.id}`] = true;
     // Checkpoints follow the region crossed, independently of the story objective and optional weapon finds.
     for (let i = 1; i <= 4; i++) if (state.counters['story-region'] < i && p.transform.x >= cure.regions[i].envelope[0][0]) {
       state.counters['story-region'] = i;
