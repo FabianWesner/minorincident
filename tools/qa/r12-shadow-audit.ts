@@ -5,6 +5,7 @@ import ts from 'typescript';
 import { PNG } from 'pngjs';
 import { SceneSession, readSpec, stopServer, type Backend } from '../scenelab/session';
 import { timeOfDay } from '../../src/data/timeOfDay';
+import { launchBrowser } from '../browser-pool/client';
 import type { Game } from '../../src/Game';
 import type { Lighting } from '../../src/render/Lighting';
 import type { FieldLight } from '../../src/render/LightField';
@@ -37,6 +38,7 @@ const hue = (c: number[]) => {
 };
 const failures: string[] = previous?.failures ?? [];
 let session: SceneSession | undefined;
+let alternateBrowser: import('@playwright/test').Browser | undefined;
 async function capture(s: SceneSession, label: string, sheet = true) {
   await s.ready();
   const r = await s.page.evaluate(() => {
@@ -50,7 +52,7 @@ async function capture(s: SceneSession, label: string, sheet = true) {
       draws: profile.reduce((sum, [, v]) => sum + v.drawCalls, 0), triangles: profile.reduce((sum, [, v]) => sum + v.triangles, 0),
       selected: l.heroLight, position: l.spot.position.toArray(), target: l.spot.target.position.toArray(), sunWeight: l.sun.shadow.intensity, spotWeight: l.spot.shadow.intensity,
       refreshed: Number(l.sun.visible && l.sun.shadow.autoUpdate) + Number(l.spot.visible && l.spot.shadow.autoUpdate), backend: g.view.renderer.selectedBackend,
-      preset: l.preset, quality: window.__SS__!.getState().render.quality, zoom: g.view.view.getState().targetZoom };
+      level: g.world.scenario, preset: l.preset, quality: window.__SS__!.getState().render.quality, zoom: g.view.view.getState().targetZoom };
   });
   const { png, thumbnail, ...receipt } = r;
   rows.push({ label, ...receipt });
@@ -82,7 +84,9 @@ async function writeSheet(s: SceneSession) {
 }
 try {
   for (const backend of (process.env.R12_BACKENDS ?? 'webgl2,webgpu').split(',') as Backend[]) for (const tier of (process.env.R12_TIERS ?? 'high,low').split(',') as ('high' | 'low')[]) {
-    const s = session = new SceneSession({ backend, tier }); await s.open();
+    const s = session = new SceneSession({ backend, tier });
+    if (process.env.R12_CHROME === '1') alternateBrowser = await launchBrowser({ headless: true, channel: 'chrome', args: ['--use-angle=metal', '--enable-gpu', '--enable-unsafe-webgpu', '--ignore-gpu-blocklist'] });
+    await s.open(alternateBrowser);
     await s.page.evaluate('globalThis.__name = fn => fn');
     await s.page.evaluate(() => { const g = (window.__SCENE__ as unknown as { game: Game }).game, reset = g.clock.reset.bind(g.clock); g.clock.reset = () => { reset(); g.clock.pause(); }; g.clock.resume = () => {}; g.clock.pause(); });
     for (const phase of backend === 'webgl2' && tier === 'high' ? ['before', 'after'] : ['after']) {
@@ -197,17 +201,36 @@ try {
           if (!(rows.at(-1) as { selected: string | null }).selected) failures.push(`${spec.name} ${backend}/${tier}: practical shadow missing`);
         }
       }
+      if (tier === 'low') {
+        await s.page.evaluate(async () => {
+          await window.__SS__!.loadLevel('L7', { seed: 1 }); window.__SS__!.pause(); window.__SS__!.cheats.god(true);
+          const g = (window.__SCENE__ as unknown as { game: Game }).game, l = (g.view as unknown as { lighting: Lighting }).lighting;
+          const origin = g.world.entities.get(1)!.transform, nav = g.world.infected!.nav;
+          let dark: { x: number; z: number } | null = null;
+          for (let radius = 0; radius <= 40 && !dark; radius += 5) for (let i = 0; i < 16 && !dark; i++) {
+            const p = { x: origin.x + Math.cos(i / 8 * Math.PI) * radius, z: origin.z + Math.sin(i / 8 * Math.PI) * radius };
+            if (nav.clear(p.x, p.z, .5, true) && !l.field.heroAt(p.x, p.z)) dark = p;
+          }
+          if (!dark) throw Error('No open dark native L7 probe spot');
+          window.__SS__!.teleport('player', dark); g.view.unfreeze(); g.view.view.follow(); await window.__SS__!.step(60);
+        });
+        for (const zoom of [1, 1.5]) {
+          await s.page.evaluate(zoom => window.__SS__!.camera.zoom(zoom), zoom); await capture(s, `native L7 moon ${backend}/${tier} z${zoom}`, zoom === 1.5);
+          const r = rows.at(-1) as { selected: string | null; sunWeight: number; refreshed: number };
+          if (r.selected || r.sunWeight !== 1 || r.refreshed !== 1) failures.push(`${backend}/${tier}: native L7 moon fallback missing`);
+        }
+      }
     }
     if (s.errors.length) failures.push(...s.errors);
-    await writeSheet(s); await s.close(); session = undefined; stopServer();
+    await writeSheet(s); await s.close(); await alternateBrowser?.close(); alternateBrowser = undefined; session = undefined; stopServer();
     completed.push(`${backend}/${tier}`);
     console.log(`${backend}/${tier}: ${rows.length} receipts, ${failures.length} failures`);
   }
 } catch (error) {
   failures.push(String(error).split('\n')[0]); throw error;
 } finally {
-  writeFileSync(`${out}/measurements.json`, JSON.stringify({ baselineRef, completed, rows, failures }, null, 2) + '\n');
+  writeFileSync(`${out}/measurements.json`, JSON.stringify({ baselineRef, browser: process.env.R12_CHROME === '1' ? 'chrome' : 'headless-shell', matrix: process.env.R12_MATRIX !== '0', completed, rows, failures }, null, 2) + '\n');
   mkdirSync('test-results', { recursive: true }); writeFileSync(scratchPath, JSON.stringify(cells));
-  await session?.close(); stopServer();
+  await session?.close(); await alternateBrowser?.close(); stopServer();
 }
 if (failures.length) throw Error(failures.join('\n'));
