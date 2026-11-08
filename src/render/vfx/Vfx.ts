@@ -100,15 +100,15 @@ export class Vfx extends Group {
   lastExplosionRadius = 0;
   private readonly tracerRounds = new WeakMap<object, number>();
   readonly shots: { sourceId: number; tick: number; muzzle: number[]; tracerStart: number[]; end: number[] }[] = [];
-  private gunshot(sourceId: number, direction: { x: number; z: number }, range: number, fallback: { x: number; z: number }, targetId?: number, dust?: 'hit' | 'miss'): void {
+  private gunshot(sourceId: number, direction: { x: number; y?: number; z: number }, range: number, fallback: { x: number; z: number }, targetId?: number, dust?: 'hit' | 'miss'): void {
     const source = this.world.entities.get(sourceId), target = targetId === undefined ? undefined : this.world.entities.get(targetId);
-    const muzzle = this.targets.muzzle?.(sourceId, { ...direction, y: target && source ? (target.transform.y - source.transform.y) / range : 0 }) ?? { x: fallback.x, y: (source?.transform.y ?? .7) + .45, z: fallback.z };
+    const muzzle = this.targets.muzzle?.(sourceId, { ...direction, y: target && source ? (target.transform.y - source.transform.y) / range : direction.y ?? 0 }) ?? { x: fallback.x, y: (source?.transform.y ?? .7) + .45, z: fallback.z };
     // Descend from the actual rifle tip to the victim's torso, using the same 3D cover slabs as damage.
     if (target) {
       const dx = target.transform.x - muzzle.x, dz = target.transform.z - muzzle.z;
       range = Math.hypot(dx, dz) || 1; direction = { x: dx / range, z: dz / range };
     }
-    const slope = target ? (target.transform.y + .45 - muzzle.y) / range : 0;
+    const slope = target ? (target.transform.y + .45 - muzzle.y) / range : direction.y ?? 0;
     const ray = { ...direction, y: slope };
     if (!this.enabled) return; // The firing pose is independent of the user's particle preference.
     let distance = this.world.combat?.query.clearDistance(muzzle, ray, range) ?? range;
