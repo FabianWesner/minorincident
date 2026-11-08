@@ -12,6 +12,7 @@ import type { DistrictLayout } from '../../src/levels/districts/types';
 import { goalReach } from '../../src/sim/world/TrapRescue';
 import { emptyInput } from '../../src/input/InputFrame';
 import { actorRadius } from '../../src/sim/world/SolidRegistry';
+import pharmacyColumn from '../fixtures/l7-pharmacy-column.json';
 
 function checkWallGeometry() {
   const geometry = new BoxGeometry(170, .9, .5), wall = new Mesh(geometry), neighbour = new Mesh(geometry), root = new Group();
@@ -30,6 +31,7 @@ export async function checkL7Navigation() {
   await checkCorpseCatchup();
   await checkPharmacyCatchup();
   await checkL7CourierYield();
+  await checkPharmacyCourier();
   const w = await loadLevel('L7', 29);
   try {
     const launcher = [...w.entities.iterate()].find(e => e.pickup && 'actionId' in e.pickup && e.pickup.actionId === 'weapon.rocket-launcher');
@@ -187,12 +189,30 @@ async function checkL7CourierYield() {
       w.applyInput(input, 'keyboard'); w.update();
       for (const row of roster) {
         const e = w.entities.get(row.id)!;
-        if ((e.civilian!.vehicleYield?.until ?? -1) >= w.tick && Math.abs(e.transform.z - before.get(e.id)!) > .001) yielded.add(e.id);
+        if (Math.abs(e.transform.z - before.get(e.id)!) > .001) yielded.add(e.id);
       }
     }
-    expect(yielded.size, 'blocking followers physically step sideways through ordinary swept walking').toBeGreaterThan(0);
+    expect(yielded.size, 'followers still separate while the courier walks through the group').toBeGreaterThan(0);
     expect(Math.hypot(player.transform.x - start.x, player.transform.z - start.z), 'the courier walks through the follower column instead of remaining boxed in').toBeGreaterThan(9);
     expect(w.solids.offenders).toEqual([]);
+    // A column, unlike the disjoint ring above, puts an unbroken front rank in
+    // the courier's walking lane. This exercises the shared solid transaction
+    // that used to roll her capsule back against a friendly body.
+    Object.assign(player.transform, { x: -32.5, z: 50, y: .7 });
+    w.physics.playerBody!.setTranslation(player.transform, true); w.physics.playerBody!.setNextKinematicTranslation(player.transform);
+    w.solids.remember(player, 'test.l7-packed-column'); w.spatial.set(1, -32.5, 50);
+    roster.forEach((row, slot) => {
+      const e = w.entities.get(row.id)!, col = slot % 3, rowIndex = Math.floor(slot / 3);
+      Object.assign(e.transform, { x: -31.5 + rowIndex * .82, z: 50 + (col - 1) * .78, y: .7 });
+      w.solids.remember(e, 'test.l7-packed-column'); w.spatial.set(e.id, e.transform.x, e.transform.z);
+      delete e.locomotion; e.civilian!.vehicleYield = undefined; e.civilian!.path.length = 0; e.civilian!.goal = -1; e.civilian!.l1!.target = null;
+    });
+    const columnStart = player.transform.x;
+    for (let tick = 0; tick < 240; tick++) {
+      const input = emptyInput(); input.move.x = 1; w.applyInput(input, 'keyboard'); w.update();
+    }
+    expect(player.transform.x - columnStart, 'a packed column of friendly followers cannot roll back the courier').toBeGreaterThan(5);
+    expect(w.solids.offenders, 'friendly overlap resolution remains collision-clean').toEqual([]);
     // A legitimate enemy/environment knockdown also owns an already-issued
     // kerb-yield order. Only forced impact motion may continue during the fall.
     const knocked = w.entities.get(roster[0].id)!, c = knocked.civilian!;
@@ -206,6 +226,40 @@ async function checkL7CourierYield() {
       w.npcs!.civilians.outbreak!.update();
       expect(move.mock.calls.some(([e]) => e.id === knocked.id), 'ordinary walking resumes when the existing timer expires').toBe(true);
     } finally { move.mockRestore(); }
+  } finally { w.dispose(); }
+}
+
+/** Recorded confined pharmacy column: open-layout yield tests missed this jam. */
+async function checkPharmacyCourier() {
+  const w = await loadLevel('L7', 1, undefined, 0, { quality: 'low' });
+  try {
+    const p = w.entities.get(1)!, live = new Set(pharmacyColumn.followers.map(e => e.id));
+    for (const e of w.entities.iterate()) if (e.id !== 1 && !live.has(e.id)) e.hidden = true;
+    for (const row of w.l7Encounters!.state.roster) if (!live.has(row.id)) row.status = 'dead';
+    Object.assign(p.transform, pharmacyColumn.player);
+    w.physics.playerBody!.setTranslation(p.transform, true); w.physics.playerBody!.setNextKinematicTranslation(p.transform);
+    Object.assign(p.survivor!.velocity, { x: 0, z: 0 });
+    w.solids.remember(p, 'test.pharmacy-courier'); w.spatial.set(1, p.transform.x, p.transform.z);
+    for (const row of pharmacyColumn.followers) {
+      const e = w.entities.get(row.id)!;
+      Object.assign(e.transform, row.at); e.health.current = row.hp; delete e.locomotion;
+      Object.assign(e.civilian!, { path: [], pathIndex: 0, goal: -1, knockedUntil: 0 }); e.civilian!.l1!.target = null;
+      w.solids.remember(e, 'test.pharmacy-column'); w.spatial.set(e.id, e.transform.x, e.transform.z);
+    }
+    w.missions!.state.steps.rocket.status = 'completed'; w.missions!.state.steps.corridor.status = 'active'; w.l7Encounters!.state.started = true;
+    // Recorded east input hits the pharmacy face even without followers.
+    // North is the physical exit that the surrounding friendly column sealed.
+    for (let tick = 0; tick < 300; tick++) {
+      for (const e of w.entities.iterate()) if (e.id !== 1 && !live.has(e.id)) e.hidden = true;
+      const before = new Map([...live].map(id => [id, { ...w.entities.get(id)!.transform }]));
+      const input = emptyInput(); input.move.z = -1; w.applyInput(input, 'keyboard'); w.update();
+      for (const [id, old] of before) {
+        const at = w.entities.get(id)!.transform;
+        expect(Math.hypot(at.x - old.x, at.z - old.z), 'pharmacy followers leave continuously without popping').toBeLessThanOrEqual(.1);
+      }
+    }
+    expect(pharmacyColumn.player.z - p.transform.z, 'the recorded pharmacy body jam clears along its open north side').toBeGreaterThan(3);
+    expect(w.solids.offenders).toEqual([]);
   } finally { w.dispose(); }
 }
 

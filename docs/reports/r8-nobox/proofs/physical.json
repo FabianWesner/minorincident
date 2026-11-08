@@ -1,0 +1,673 @@
+[
+  {
+    "case": "gear3-low-gpu",
+    "root": "test-results/r8-nobox/physical-final/gear3-low-gpu",
+    "identity": {
+      "sourceHash": "ae3460f112fae48cbd80d877cd24d8e99acf1c41c5d0b8edbb5a7fca004e1111",
+      "observerHash": "a27b03de053463dd691a9291fd562743d196c7f9ee5c63423c979b10e8bbd458",
+      "revision": "bde97d0b3ec1983011c5f422a74167f55b9af6b6",
+      "indexSha256": "d4f10f6d67d71edad9973219f5a15e5d1b0ca677d05f37d4503b66810b967c9c",
+      "cell": {
+        "name": "gear3-low-gpu",
+        "quality": "low",
+        "backend": "webgpu",
+        "zoom": 1,
+        "character": "male",
+        "gear": 3
+      },
+      "gear": 3,
+      "power": 600,
+      "ordinaryDamage": true,
+      "input": "physical WASD/mouse; no skips",
+      "headless": true
+    },
+    "renderer": [
+      "webgpu"
+    ],
+    "completion": {
+      "level": "L7",
+      "tick": 7829,
+      "result": {
+        "time": 130.48333333333332,
+        "kills": 204,
+        "knockdowns": 0,
+        "damage": 20,
+        "deaths": 0,
+        "rescued": 24,
+        "optionalObjectives": [],
+        "survivors": [
+          "shelter-1",
+          "shelter-0",
+          "shelter-2",
+          "shelter-3",
+          "shelter-4",
+          "shelter-5",
+          "shelter-6",
+          "shelter-7",
+          "shelter-8",
+          "shelter-9",
+          "shelter-10",
+          "shelter-11",
+          "shelter-12",
+          "shelter-13",
+          "shelter-14",
+          "shelter-15",
+          "shelter-16",
+          "shelter-17",
+          "shelter-18",
+          "shelter-19",
+          "shelter-20",
+          "shelter-21",
+          "shelter-22",
+          "shelter-23"
+        ]
+      },
+      "steps": [
+        {
+          "id": "rocket",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "corridor",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "departure",
+          "optional": false,
+          "status": "completed"
+        }
+      ]
+    },
+    "run": {
+      "level": "L7",
+      "entry": "continue",
+      "heroine": "male",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 135,
+      "simSeconds": 0,
+      "maxNoProgressSeconds": 12.415,
+      "deaths": 0,
+      "assists": 1,
+      "attacks": {
+        "weapon.rocket-launcher": 44
+      },
+      "weaponsStart": [
+        "weapon.bat",
+        "weapon.kick"
+      ],
+      "weaponsEnd": [
+        "weapon.bat",
+        "weapon.kick",
+        "weapon.rocket-launcher"
+      ],
+      "steps": [
+        {
+          "id": "rocket",
+          "text": "Recover the rocket launcher beside the exit \u00b7 3\u00a0m",
+          "tick": 10,
+          "marker": {
+            "anchor": "l7-rocket",
+            "ring": {
+              "x": 276,
+              "y": 3.9,
+              "z": 15
+            },
+            "drawn": [
+              276,
+              3.9,
+              15
+            ],
+            "playerY": 4.619999885559082,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "corridor",
+          "text": "Bring the group to the evacuation corridor \u00b7 Group 24/24 nearby \u00b7 307\u00a0m",
+          "tick": 70,
+          "marker": {
+            "anchor": "l7-corridor-east",
+            "ring": {
+              "x": -30,
+              "y": 0,
+              "z": 50
+            },
+            "drawn": [
+              -30,
+              0.13,
+              50
+            ],
+            "playerY": 4.619999885559082,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "departure",
+          "text": "Get everyone aboard the bus \u00b7 45\u00a0m",
+          "tick": 5848,
+          "marker": {
+            "anchor": "l7-bus-boarding",
+            "ring": {
+              "x": -70.5,
+              "y": 0,
+              "z": 47.5
+            },
+            "drawn": [
+              -70.5,
+              0,
+              47.5
+            ],
+            "playerY": 0.7099999785423279,
+            "pinVisible": true
+          }
+        }
+      ]
+    },
+    "issues": [],
+    "rosterSamples": 108,
+    "friendlyBlockerSamples": 0,
+    "departurePhotos": [
+      {
+        "file": "captures/gear3-low-gpu-L7-departure-0-5.jpg",
+        "requestedSeconds": 0.5,
+        "tick": 7383,
+        "seconds": 1.5666666666666667,
+        "bus": {
+          "x": -68.97783295229385,
+          "y": 0.7,
+          "z": 47,
+          "yaw": 0
+        },
+        "boarded": [
+          52,
+          51,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          62,
+          63,
+          64,
+          65,
+          66,
+          67,
+          68,
+          69,
+          70,
+          71,
+          72,
+          73,
+          74
+        ],
+        "captureTick": 7389,
+        "actualZoom": 1,
+        "targetZoom": 1,
+        "actualQuality": "low",
+        "survivor": {
+          "variant": "male",
+          "gearTier": 3
+        },
+        "healthBars": {
+          "count": 0,
+          "draws": 0,
+          "bars": []
+        },
+        "followedActors": []
+      },
+      {
+        "file": "captures/gear3-low-gpu-L7-departure-3.jpg",
+        "requestedSeconds": 3,
+        "tick": 7520,
+        "seconds": 3.85,
+        "bus": {
+          "x": -31.998218621399182,
+          "y": 0.7,
+          "z": 47,
+          "yaw": 0
+        },
+        "boarded": [
+          52,
+          51,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          62,
+          63,
+          64,
+          65,
+          66,
+          67,
+          68,
+          69,
+          70,
+          71,
+          72,
+          73,
+          74
+        ],
+        "captureTick": 7524,
+        "actualZoom": 1,
+        "targetZoom": 1,
+        "actualQuality": "low",
+        "survivor": {
+          "variant": "male",
+          "gearTier": 3
+        },
+        "healthBars": {
+          "count": 0,
+          "draws": 0,
+          "bars": []
+        },
+        "followedActors": []
+      },
+      {
+        "file": "captures/gear3-low-gpu-L7-departure-8.jpg",
+        "requestedSeconds": 8,
+        "tick": 7790,
+        "seconds": 8.35,
+        "bus": {
+          "x": 38.23497582304526,
+          "y": 0.7,
+          "z": 47,
+          "yaw": 0
+        },
+        "boarded": [
+          52,
+          51,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          62,
+          63,
+          64,
+          65,
+          66,
+          67,
+          68,
+          69,
+          70,
+          71,
+          72,
+          73,
+          74
+        ],
+        "captureTick": 7796,
+        "actualZoom": 1,
+        "targetZoom": 1,
+        "actualQuality": "low",
+        "survivor": {
+          "variant": "male",
+          "gearTier": 3
+        },
+        "healthBars": {
+          "count": 0,
+          "draws": 0,
+          "bars": []
+        },
+        "followedActors": []
+      }
+    ],
+    "sourceReceiptSha256": {
+      "gear3-low-gpu-completion.json": "b334a94ca09f9e7ab049a00c0c28faf4721234aabfd5deece243dd5ba5897806",
+      "runs-gear3-low-gpu.json": "2c8afa67e81e872a9484247b502fb32531664d42cad1d7dc09212c155eceae26",
+      "log-gear3-low-gpu.jsonl": "4265192df9c9f713d5c93d6ce2856d3a0a900838bc3b4be227043395f00e32e0"
+    }
+  },
+  {
+    "case": "r8-nobox-bus-final",
+    "root": "test-results/vqa59/r8-nobox-bus-final",
+    "identity": {
+      "sourceHash": "ae3460f112fae48cbd80d877cd24d8e99acf1c41c5d0b8edbb5a7fca004e1111",
+      "observerHash": "a27b03de053463dd691a9291fd562743d196c7f9ee5c63423c979b10e8bbd458",
+      "revision": "bde97d0b3ec1983011c5f422a74167f55b9af6b6",
+      "input": {
+        "level": "L7",
+        "tier": "low",
+        "backend": "webgpu",
+        "zoom": 1.5,
+        "source": "preset",
+        "courierGodMode": true,
+        "movingCoverRoute": false,
+        "noSkip": true,
+        "frameTiming": false
+      }
+    },
+    "renderer": [
+      "webgpu"
+    ],
+    "completion": {
+      "level": "L7",
+      "tick": 7875,
+      "result": {
+        "time": 131.25,
+        "kills": 205,
+        "knockdowns": 0,
+        "damage": 0,
+        "deaths": 0,
+        "rescued": 24,
+        "optionalObjectives": [],
+        "survivors": [
+          "shelter-1",
+          "shelter-0",
+          "shelter-2",
+          "shelter-3",
+          "shelter-4",
+          "shelter-5",
+          "shelter-6",
+          "shelter-7",
+          "shelter-8",
+          "shelter-9",
+          "shelter-10",
+          "shelter-11",
+          "shelter-12",
+          "shelter-13",
+          "shelter-14",
+          "shelter-15",
+          "shelter-16",
+          "shelter-17",
+          "shelter-18",
+          "shelter-19",
+          "shelter-20",
+          "shelter-21",
+          "shelter-22",
+          "shelter-23"
+        ]
+      },
+      "steps": [
+        {
+          "id": "rocket",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "corridor",
+          "optional": false,
+          "status": "completed"
+        },
+        {
+          "id": "departure",
+          "optional": false,
+          "status": "completed"
+        }
+      ]
+    },
+    "run": {
+      "level": "L7",
+      "entry": "continue",
+      "heroine": "male",
+      "finished": true,
+      "skipped": [],
+      "wallSeconds": 142,
+      "simSeconds": 0,
+      "maxNoProgressSeconds": 8.9,
+      "deaths": 0,
+      "assists": 0,
+      "attacks": {
+        "weapon.rocket-launcher": 71
+      },
+      "weaponsStart": [
+        "weapon.bat",
+        "weapon.fire-axe",
+        "weapon.handgun",
+        "weapon.army-mg",
+        "weapon.shotgun"
+      ],
+      "weaponsEnd": [
+        "weapon.bat",
+        "weapon.fire-axe",
+        "weapon.handgun",
+        "weapon.army-mg",
+        "weapon.shotgun",
+        "weapon.rocket-launcher"
+      ],
+      "steps": [
+        {
+          "id": "rocket",
+          "text": "Recover the rocket launcher beside the exit \u00b7 3\u00a0m",
+          "tick": 1,
+          "marker": {
+            "anchor": "l7-rocket",
+            "ring": {
+              "x": 276,
+              "y": 3.9,
+              "z": 15
+            },
+            "drawn": [
+              276,
+              3.9,
+              15
+            ],
+            "playerY": 4.619999885559082,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "corridor",
+          "text": "Bring the group to the evacuation corridor \u00b7 Group 24/24 nearby \u00b7 306\u00a0m",
+          "tick": 73,
+          "marker": {
+            "anchor": "l7-corridor-east",
+            "ring": {
+              "x": -30,
+              "y": 0,
+              "z": 50
+            },
+            "drawn": [
+              -30,
+              0.13,
+              50
+            ],
+            "playerY": 4.619999885559082,
+            "pinVisible": true
+          }
+        },
+        {
+          "id": "departure",
+          "text": "Get everyone aboard the bus \u00b7 46\u00a0m",
+          "tick": 5641,
+          "marker": {
+            "anchor": "l7-bus-boarding",
+            "ring": {
+              "x": -70.5,
+              "y": 0,
+              "z": 47.5
+            },
+            "drawn": [
+              -70.5,
+              0,
+              47.5
+            ],
+            "playerY": 0.7089999914169312,
+            "pinVisible": true
+          }
+        }
+      ]
+    },
+    "issues": [],
+    "rosterSamples": 115,
+    "friendlyBlockerSamples": 0,
+    "departurePhotos": [
+      {
+        "file": "captures/r8-nobox-bus-final-L7-departure-0-5.jpg",
+        "requestedSeconds": 0.5,
+        "tick": 7439,
+        "seconds": 1.7333333333333334,
+        "bus": {
+          "x": -67.0068666361835,
+          "y": 0.7,
+          "z": 47,
+          "yaw": 0
+        },
+        "boarded": [
+          52,
+          51,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          62,
+          63,
+          64,
+          65,
+          66,
+          67,
+          68,
+          69,
+          70,
+          71,
+          72,
+          73,
+          74
+        ],
+        "captureTick": 7443,
+        "actualZoom": 1.5000000000000002,
+        "targetZoom": 1.5000000000000002,
+        "actualQuality": "low",
+        "survivor": {
+          "variant": "male",
+          "gearTier": 4
+        },
+        "healthBars": {
+          "count": 0,
+          "draws": 0,
+          "bars": []
+        },
+        "followedActors": []
+      },
+      {
+        "file": "captures/r8-nobox-bus-final-L7-departure-3.jpg",
+        "requestedSeconds": 3,
+        "tick": 7593,
+        "seconds": 4.3,
+        "bus": {
+          "x": -23.197399176954733,
+          "y": 0.7,
+          "z": 47,
+          "yaw": 0
+        },
+        "boarded": [
+          52,
+          51,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          62,
+          63,
+          64,
+          65,
+          66,
+          67,
+          68,
+          69,
+          70,
+          71,
+          72,
+          73,
+          74
+        ],
+        "captureTick": 7597,
+        "actualZoom": 1.5000000000000002,
+        "targetZoom": 1.5000000000000002,
+        "actualQuality": "low",
+        "survivor": {
+          "variant": "male",
+          "gearTier": 4
+        },
+        "healthBars": {
+          "count": 0,
+          "draws": 0,
+          "bars": []
+        },
+        "followedActors": []
+      },
+      {
+        "file": "captures/r8-nobox-bus-final-L7-departure-8.jpg",
+        "requestedSeconds": 8,
+        "tick": 7822,
+        "seconds": 8.116666666666667,
+        "bus": {
+          "x": 36.7995231862521,
+          "y": 0.7,
+          "z": 47,
+          "yaw": 0
+        },
+        "boarded": [
+          52,
+          51,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          62,
+          63,
+          64,
+          65,
+          66,
+          67,
+          68,
+          69,
+          70,
+          71,
+          72,
+          73,
+          74
+        ],
+        "captureTick": 7826,
+        "actualZoom": 1.5000000000000002,
+        "targetZoom": 1.5000000000000002,
+        "actualQuality": "low",
+        "survivor": {
+          "variant": "male",
+          "gearTier": 4
+        },
+        "healthBars": {
+          "count": 0,
+          "draws": 0,
+          "bars": []
+        },
+        "followedActors": []
+      }
+    ],
+    "sourceReceiptSha256": {
+      "r8-nobox-bus-final-completion.json": "5d0931a678b4d81312d6b1706ec947896cd0de66dd41c2d8fe71d980dd9caffe",
+      "runs-r8-nobox-bus-final.json": "827c04c34a60643c59e4a538f2abcc176f1684c50d11b800f523b45476ea9499",
+      "log-r8-nobox-bus-final.jsonl": "f52afc3a613c19366c7c57b01d3c6b1b61fd8faa20bce1af569f179dd22cb422"
+    }
+  }
+]

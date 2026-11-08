@@ -26,15 +26,26 @@ export function solidLargeCorpse(e: EntitySnapshot): boolean {
 function actor(e: EntitySnapshot): boolean {
   return !!(e.survivor || e.infected || e.civilian || e.companion || e.escort) && (e.health.current > 0 && !e.corpse && e.civilian?.state !== 'finished' || solidLargeCorpse(e)) && !e.hidden && e.companion?.state !== 'hide' && !e.infected?.hidden && !e.pendingAdmission && e.passengerOf === undefined;
 }
+/** Living members of the courier's group are soft contact for her capsule.
+ * Character separation still gives the follower room; physical admission and
+ * the final transaction must not turn a packed group into a movement wall. */
+export function courierFollower(e: EntitySnapshot): boolean {
+  return e.health.current > 0 && !e.hidden && !e.infected && !e.infection && !e.infectionRise && (e.civilian?.survivor?.mode === 'follow'
+    || e.civilian?.ally?.follow?.targetId === 1
+    || e.civilian?.ally?.role === 'firefighter' && !e.civilian.ally.hold
+    || e.escort && e.escort.state !== 'dead'
+    || !!e.companion);
+}
 /** Passengers and clingers have an explicit owner. Cosmetics (dead bodies, debris) have no actor mask. */
 function pairExempt(a: EntitySnapshot | undefined, b: EntitySnapshot): boolean {
   if (!a) return false;
   if (a.contactExempt === b.id || b.contactExempt === a.id) return true;
+  if (a.id === 1 && courierFollower(b) || b.id === 1 && courierFollower(a)) return true;
   const passenger = a.passengerOf, owner = a.attachedTo, other = b.attachedTo;
   return passenger !== undefined && passenger === b.passengerOf || owner !== undefined && (owner === b.id || owner === other) || other !== undefined && other === a.id;
 }
 function layers(a: Point, b: Point): boolean { return Math.abs(a.y - b.y) < 1.2; }
-function exemption(e: EntitySnapshot): number | string | undefined { return e.passengerOf ?? e.attachedTo ?? e.civilian?.schedule?.[e.civilian.scheduleStep ?? 0]?.seatProp; }
+function exemption(e: EntitySnapshot): number | string | undefined { return e.passengerOf ?? e.attachedTo ?? e.civilian?.schedule?.[e.civilian.scheduleStep ?? 0]?.seatProp ?? (courierFollower(e) ? 'courier-follower' : undefined); }
 
 /** Simulation contact/admission owner. Static queries extend NavGrid's existing compound bake;
  * dynamic hulls use the existing SpatialHash and the APC's exact circle/OBB projection. */
@@ -514,7 +525,7 @@ export class SolidRegistry {
       const radius = actorRadius(e);
       // Shapes and eligibility are stable during this final transaction. Reuse
       // their snapshot in the correction loops; full audits still read actors.
-      this.bodyRadii[e.id] = radius; this.bodyPoints[e.id] = e.transform; this.hasPairExemptions ||= e.attachedTo !== undefined || e.contactExempt !== undefined; this.committedPoses[e.id] = this.committed.get(e); this.contactProofs[e.id] = this.validated.get(e);
+      this.bodyRadii[e.id] = radius; this.bodyPoints[e.id] = e.transform; this.hasPairExemptions ||= e.attachedTo !== undefined || e.contactExempt !== undefined || courierFollower(e); this.committedPoses[e.id] = this.committed.get(e); this.contactProofs[e.id] = this.validated.get(e);
       this.maxActor = Math.max(this.maxActor, e.companion ? radius + .4 : radius); this.bodies.push(e); this.live[e.id] = e;
       this.bodyIds.push(e.id);
       this.bodyIndex.set(e.id, e.transform.x, e.transform.z);
