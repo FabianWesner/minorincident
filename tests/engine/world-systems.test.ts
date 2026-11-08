@@ -156,9 +156,15 @@ test('look-l6-l9 decor is render-only: L6 nav hash, colliders and pushables matc
   const cureLayout = (await import('../../public/assets/layouts/D-CURE.layout.json')).default as unknown as import('../../src/levels/districts/types').DistrictLayout;
   const belt = cureRoadsideBelt(cureLayout.placements), stories = cureCrossingStories([...cureLayout.placements, ...belt]);
   expect(cureCrossingStories([...cureLayout.placements, ...belt])).toEqual(stories);
-  expect(districtDecor('D-CURE', cureLayout.placements)).toEqual([...belt, ...stories]);
+  const { cureForecourtDecor } = await import('../../src/levels/L10/forecourts');
+  const apron = cureForecourtDecor([...cureLayout.placements, ...belt, ...stories]);
+  expect(districtDecor('D-CURE', cureLayout.placements)).toEqual([...belt, ...stories, ...apron]);
+  expect(apron.some(p => p.position[0] > 3900 && p.roadLife)).toBe(true);
   expect(stories.filter(q => q.fieldLight).length).toBeGreaterThan(60);
   for (const li of cureCrossingLines.keys()) expect(stories.some(q => q.id.startsWith(`decor-cure-cross-${li}-`) && q.fieldLight)).toBe(true);
+  expect(stories.some(q => q.id.includes('-hero-r4-command'))).toBe(true);
+  expect(stories.some(q => q.id.includes('-hero-r4-evac'))).toBe(true);
+  expect(stories.some(q => q.id.includes('-hero-r6-triage'))).toBe(true);
   const seg = (q: P, a: P, b: P) => { const dx = b[0] - a[0], dz = b[1] - a[1], l = dx * dx + dz * dz, t = l ? Math.max(0, Math.min(1, ((q[0] - a[0]) * dx + (q[1] - a[1]) * dz) / l)) : 0; return Math.hypot(q[0] - a[0] - t * dx, q[1] - a[1] - t * dz); };
   const dist = (q: P, line: readonly P[]) => Math.min(...line.slice(1).map((b, i) => seg(q, line[i], b)));
   const roads: P[][] = [...cure.regions.map(r => r.route), ...cure.detours.map(r => r.route), [cure.regions[5].route[1], cure.anchors['corridor-breach'], cure.anchors['r6-r7-seam'], cure.regions[6].route[5]]];

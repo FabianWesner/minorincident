@@ -2,7 +2,7 @@
  * r9-l10pace: time the longest L10 stretch with nothing to look at or do, from a real-input playtest route trace
  * (PLAYTEST_ROUTE_TRACE=1 → log-*.jsonl `routeTrace` rows at 1 Hz: position + drawn living infected on screen).
  *
- *   node --import tsx/esm tools/qa/r9-l10pace-empty.ts <log.jsonl> [--without-crossings] [--zoom 1|1.5]
+ *   node --import tsx/esm tools/qa/r9-l10pace-empty.ts <log.jsonl> [--without-crossings] [--zoom 1|1.5] [--decor-json snapshot.json]
  *
  * A second is "empty" when the frame holds no living infected (trace) and no story element: a solid placement at least
  * 1.4 m tall (building, vehicle, tent, tower, stack; fences and low decay excluded) or a night-accent fire. The frame is
@@ -17,9 +17,12 @@ import { cureAccents } from '../../src/render/NightAccents';
 import { l10RoadWeight } from '../../src/levels/L10/cameraFraming';
 import type { DistrictLayout, Placement } from '../../src/levels/districts/types';
 
-const { values, positionals } = parseArgs({ allowPositionals: true, options: { 'without-crossings': { type: 'boolean', default: false }, zoom: { type: 'string', default: '1' }, json: { type: 'boolean', default: false } } });
+const { values, positionals } = parseArgs({ allowPositionals: true, options: { 'without-crossings': { type: 'boolean', default: false }, zoom: { type: 'string', default: '1' }, json: { type: 'boolean', default: false }, 'decor-json': { type: 'string' } } });
 const layout = JSON.parse(readFileSync('public/assets/layouts/D-CURE.layout.json', 'utf8')) as DistrictLayout;
-const decor = districtDecor('D-CURE', layout.placements).filter(p => !(values['without-crossings'] && p.id.startsWith('decor-cure-cross-')));
+// A saved decor snapshot lets later lanes replay the same physical trace on
+// their exact baseline, without a second checkout or changing this metric.
+const source: Placement[] = values['decor-json'] ? JSON.parse(readFileSync(values['decor-json'], 'utf8')) : districtDecor('D-CURE', layout.placements);
+const decor = source.filter(p => !(values['without-crossings'] && p.id.startsWith('decor-cure-cross-')));
 const all: Placement[] = [...layout.placements, ...decor];
 const fires = cureAccents(all).fires;
 const story = all.filter(p => p.visualAabb.max[1] - p.visualAabb.min[1] >= 1.4 && !p.assetId.startsWith('decay.') && !/fence|hedge|lamp|pole|barrier|wall/.test(p.assetId))
