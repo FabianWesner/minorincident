@@ -1,36 +1,14 @@
 # eg-l8-bosses — L8 animal arenas
 
-Status (2026-11-08, 23:29 CET): all six arenas and required native combat/route controls pass; production tour reaches APC departure with zero courier deaths. The final repository gate and production-tour refresh have passed; a final single-source matrix receipt is being consolidated. Everything is committed and mergeable; the goal is not declared complete until those runs finish. The goal is not yet declared complete. This is a merge handoff checkpoint; the done/open list below is authoritative over historical calibrations.
+**Native gameplay is verified. Final presentation-gate and source-matched receipt refreshes are running.**
 
-The binding design is `docs/design/boss-and-alpha-moves.md` (L8 table and common special rules), `docs/design/story-script.md` L8 beat 3, and the lane brief. The PO's 2026-11-08 animal-boss direction supersedes the older endless mixed-horde/regular-Alpha L8 composition. The sanctuary, keeper/K9/flamingo opening, named survivor continuity and APC escape remain required.
+Gameplay snapshot: `f20b187b`. Presentation follow-up `dea0efbb` aligns the landing marker with the real projectile endpoint and passes the added native pool-geometry contract. Its repository gate and refreshed matrix/route/tour receipts are running. The goal will be marked complete when these finish. The binding design is `docs/design/boss-and-alpha-moves.md` (L8 table/common rules), `docs/design/story-script.md` L8 beat 3, and the lane brief.
 
+## Final combat results
 
-## Current done/open handoff
+[Final matrix receipts](evidence/arena-final/) use the same gameplay snapshot for every row. Low and high skilled results agree; each fight is within 45–120 s. All passive, standing-fire and constant-circle policies die without clearing their arena.
 
-### Done
-
-- Six real healthy animal casts (7 flamingos, 4 zebras, 7 monkeys, lion/lioness, gorilla, elephant), same-ID bites/turns and the six specified move sets, phases, counters, entry checkpoints, engaged bars and one local rocket pickup each. Per-arena implementation commits are retained in branch history.
-- [Natural production infection receipt](evidence/natural-infection-final-low.json): all 22 animals bitten and transformed without changing animal/carrier state in the observer, by tick 6053. The courier alone is protected for this lifecycle observation; this is not combat-victory evidence. The keeper/flamingo opening still uses its original bite owner.
-- [Final scoped low/high route receipts](evidence/route-final/): all requested L8-06, G-22 and G-13 speed-ratio clauses pass at `e4dafff2`. Both competent evacuation runs complete with zero deaths. Minimum bounded reachability is 100%; first real courier windup is 17.88/18.93 s low stationary/complete and 19.35 s high; every observed follower median ratio is at least 0.9994. The separate G-13 waiting-time upper bound is inconclusive (NOT CHECKED), not claimed passed.
-- [Arena candidate receipts](evidence/arena-candidate/) at `9f25be2a`: all six skilled fights finish in 45–120 s, zero deaths on both tiers. Flamingo 51.93 s, zebra 58.83 s, monkey 56.03 s, lion 69.58 s, gorilla 66.62 s, elephant 52.80 s. All passive/standing policies die; circling policies die in the first five arenas. These receipts precede the current elephant correction.
-- [All 15 final native controls pass](evidence/controls-final-low.json), including three physical sidestepped wall/truck contacts without firing, mortal entry retry/cover/ammo restoration, real monkey melee shake-off and swap lock, chest-beat interruption, live infected landing roll, bars and conditional dialogue. The no-fire elephant control ends at tick 4243 with courier HP 100; no health/counter assistance is used after its explicit setup placement.
-- [Both shipped audio codecs pass](evidence/audio-final.json): all 13 L8 special cues and their four variants (52 slices per codec) are present and non-silent at their catalog offsets. The rebuilt bank includes the trumpet/foot stamp and herd rumble; listening quality remains Browser QA.
-- Gorilla native combat collapses a real pillar and follows with scavenged throws. Controlled checks exercise the real live infected missile, airborne identity/HP, landing distance and 0.6 s rolling recovery; monkey melee escape/swap lock, entry retry/cover/ammo restoration and conditional dialogue are covered.
-- Typecheck, lint, unit suite and `verify -- E30` passed on the earlier candidate: [runner log](evidence/verify-candidate.log), 106 passed / 1 skipped, 150 collected cases budget unchanged. A final-source gate rerun is still required. The runner manifest has no HEAD, so an ephemeral runner-only commit was needed by the existing HEAD-dependent tool test.
-
-### Latest integration evidence
-
-The [production tour](evidence/production-tour-low.json) clears all six arenas and reaches campaign progression in 699.87 s, with normal damage, zero courier deaths, 12 rescued and zero collision failures. Arena engagement durations are 52.55 / 56.78 / 51.10 / 61.75 / 64.15 / 105.05 s (flamingo through elephant), all within 45–120 s. Two monkeys scatter alive after their leader dies.
-
-The [interrupted-carrier proof](evidence/carrier-retry-low.json) kills the opening carrier through the damage owner after its first flock bite. A distinct carrier physically leaves a real tunnel; all 22 animals still receive real bites and same-ID transformations, by tick 6066. The keeper opening is retained.
-
-The latest [low/high route receipts](evidence/route-final/) pass every requested clause: minimum bounded-path reachability 100%, courier contact by 17.88/18.93 s low and 19.35 s high, all follower speed ratios ≥0.9996. G-13's separate waiting-time bound remains NOT CHECKED and is not claimed passed.
-
-### Final arena calibration
-
-The first five rows use the [final matrix](evidence/arena-final/); its older elephant row is superseded by the [final elephant receipts](evidence/elephant-final/) after the strict wall/fence/truck qualification. Low and high skilled results agree. Measurements use actual same-ID infection pre-roll, then normal courier damage and ordinary inputs, with no fixture assistance during combat. Skilled uses MG sweeps, melee to shake a grab, and the campaign shotgun for a close tunnel intruder.
-
-| Arena | Skilled seconds, low / high | Courier deaths | Passive death (s) | Standing death (s) | Circle-kiting death (s) |
+| Arena | Skilled seconds, low / high | Courier deaths, low / high | Passive death (s) | Standing death (s) | Circle-kiting death (s) |
 | --- | ---: | ---: | ---: | ---: | ---: |
 | Flamingo | 49.98 / 49.98 | 0 / 0 | 9.30 | 16.30 | 23.48 |
 | Zebra | 58.83 / 58.83 | 0 / 0 | 20.92 | 41.05 | 41.57 |
@@ -39,65 +17,65 @@ The first five rows use the [final matrix](evidence/arena-final/); its older ele
 | Gorilla | 66.62 / 66.62 | 0 / 0 | 38.75 | 49.42 | 73.00 |
 | Elephant | 76.10 / 76.10 | 0 / 0 | 9.55 | 9.55 | 9.23 |
 
-All 15 [final controls](evidence/controls-final-low.json) pass. The no-fire elephant counter now records three actual fence IDs (`189`, `207`, `179`) and ends with 97 courier HP. Decorative bushes and hose reels do not earn counter credit. The gorilla matrix collapses a real pillar and throws real world objects; the controlled living missile retains its identity and HP through its landing roll.
+The [production tour](evidence/production-tour-low.json) clears all six arenas and reaches APC departure/campaign progression in **699.87 s**, with **zero courier deaths, 12 rescued and zero collision failures**. No setup mutations or protected combat are used. Its engagement durations are 52.55 / 56.78 / 51.10 / 61.75 / 64.15 / 105.05 s, also all in band. Two monkeys scatter alive after their leader dies.
 
-### Open before native completion
+## Implemented and verified
 
-- Final single-source matrix receipt consolidation. The final runtime `f20b187b` passes [all repository gate commands](evidence/verify-final-checks.json), with [106 passed / 1 skipped](evidence/verify-final.log). The final-source production tour again reaches progression with zero deaths, 12 rescued and zero collision failures. Tests and timeouts were not changed; earlier shared-runner timeout evidence is retained.
-- Browser QA below remains deliberately unrun by this lane.
-
-## Requirement evidence map
-
-| Requirement | Authoritative evidence |
+| Requirement | Result / evidence |
 | --- | --- |
-| Flamingo flock: 6–8 animals, circling, 0.6 s marked line dive, faster half-flock phase, sweep counter and landing recovery | Actual same-ID transformations, native special-stage ledger, skilled/passive/standing/kite runs |
-| Zebra herd: 4–5 animals, 1 s lane cue, rear kick, fences turn herd, opposite second stampede and straggler recovery | Native lane direction/impact ledger and control runs |
-| Monkey pack: 6–10 monkeys, roof/doorway harassment, debris, 2 s swap-blocking grab, melee escape, larger half-pack leader and scatter | Healthy/infected model contract, native grab/weapon-input/leader/scatter controls |
-| Lion: stalk/growl, 0.6 s pounce and pin, side dodge/recovery counter, lioness flank while lion roars | Native phase, pounce/pin and recovery ledger |
-| Gorilla: interruptible 1 s/8 m chest beat, real scavenged throws, ground-pound ring, half-HP rage/faster throws and real pillar destruction | Real prop IDs/poses, windups/interrupts, destruction HP/collider/nav and checkpoint controls |
-| Elephant: 0.9 s charge, close trunk swipe, sidestep-to-wall/truck counter, 2 s exposure, three successful impacts or damage victory | Native charge/contact/counter ledger and mortal runs |
-| Every arena: engaged health bars, entry checkpoint, bounded rocket stock/pickups, phases and punish windows | Production bar predicate, mortal checkpoint/stock controls, native event ledger |
-| Six skilled native fights, deaths reported, each 45–120 s; passive pressured/fails; standing/kiting cannot trivially win | Current-source native receipts, all six arenas and control policies |
-| Nadia line only while alive; courier “I'm sorry.” after elephant death | Native dialogue/continuity controls |
-| L8-06: ≥90% bounded reachability, initial attack ≤20 s, opening preserved | Fresh low/high native acceptance and opening story audit |
-| G-22: announced cohort attacks courier within 20 s and required real outlet cohorts admitted | Fresh low/high native cohort ledgers |
-| G-13: every follower ≥0.95× individual/group median ratio | Fresh low/high native resolved-motion samples, retaining roster caches |
-| Repository gates | Typecheck, lint, unit suite and `npm run verify -- E30` |
+| Flamingo flock | Seven real animals; circling, rotating three-bird 0.6 s marked dives, faster half-flock phase and landing recovery. |
+| Zebra herd | Four animals; full one-second dust/rumble cue, staged lanes from opposite sides, close rear kick, physical fence/body contact and recovery. |
+| Monkey pack | Seven healthy/infected monkeys; actual roof climbs/drops, roof/world debris, ropes and doorway choke, two-second swap lock, real melee shake-off, larger half-pack leader and scatter. |
+| Lion/lioness | Real cover-stalking/growl, 0.6 s pounce and pin, recovery, and phase-two lioness flank while the lion roars. |
+| Gorilla | Interruptible exposed one-second/8 m chest beat, real scavenged props/corpses/live infected, three-light-throw barrage, pound, faster rage throws and real destructible pillars. The matrix collapses a pillar during combat and follows with throws. |
+| Elephant | 0.9 s charge, close trunk sweep, two-second exposure and damage victory or three actual wall/fence/truck impacts. Bushes and hose reels cannot earn counter credit. |
+| Shared arena contract | Engaged bars, entry checkpoints, checkpointed phases/timers/cover and at most one local rocket pickup/stock. Ordinary weapons can finish bosses permanently. |
+| Story continuity | Original sanctuary/keeper/K9/flamingo opening and APC escape retained. Nadia's elephant line requires a living, uninfected Nadia; the courier's “I'm sorry.” follows permanent elephant death. |
+| Healthy → infected continuity | Real bites and the shared 2.5–3.5 s same-ID turn owner; no replacement boss spawn. Healthy animals have no enemy bars. |
+| Runtime lifecycle | All 16 [final controls](evidence/controls-final-low.json) pass, including real death/retry, cover/ammo restoration, bars, grab/swap/melee inputs, chest interruption, permanent kills and conditional dialogue. |
 
-## Implementation notes
+The no-fire elephant control records three actual fence IDs (`189`, `207`, `179`) and ends with 97 courier HP. The native pool-geometry contract places its circular landing marker at the actual shortened endpoint. The gorilla's living missile retains the actual infected ID and HP, lands 2 m from the locked target, receives a 36-tick rolling/down recovery and resumes its ordinary pursuit.
 
-- The arena controller and attack/recovery timers use fixed ticks. Arena state lives in the existing L8 checkpoint seam; infected actors carry their arena ID and punish-window clock.
-- Extra normal flock/herd/pack members join the real zoo cast. The existing shared bite/turn owner retains IDs and changes their appearance; boss HP is assigned when the turn event occurs.
-- The monkey derivative uses the shipped healthy/infected gorilla skins, reduced to 55% scale with a long hip-skinned tail. It retains the current primate joints, animation clips and healthy/infected eye distinction. `tools/assets/build-l8-monkeys.ts` is its reproducible authoring step. The former cat stand-in is removed.
-- Arena cover is added through the existing level layout adaptation before physics/destruction assembly. Gorilla pillars opt into the shared `pillar` destruction policy; benches use the existing movable prop owner.
-- Elephant evacuees wait at the entry while the courier is inside its active yard, then resume following. This keeps the column out of the charge lanes. Elephant windups/active moves retain their marked line while nearby bodies yield through the shared separation owner.
-- No browser, deployment or push is part of this lane.
+The [natural lifecycle observation](evidence/natural-infection-final-low.json) transforms all 22 animals through real tunnel walks, grabs and timers. The [interrupted-carrier proof](evidence/carrier-retry-low.json) kills the opening carrier after its first flock bite through the damage owner; a distinct replacement walks out of a real tunnel, and all 22 animals still turn by tick 6066. The keeper opening is retained. Only the courier is protected in these lifecycle observations; they are not combat-victory receipts.
 
-## Native calibration 01
+## Closed L8 acceptance items
 
-The first low-tier native fixture pass completes all six arenas with zero courier deaths. Five fights miss the minimum duration; passive/standing/kiting controls are not yet measured. This is diagnostic evidence, not completion evidence. Each fixture uses the production composition and actual same-ID bites/turns during a labelled protected setup; the measured fight uses ordinary weapon/movement input and normal courier damage.
+[Final low/high route receipts](evidence/route-final/) retain the original observer thresholds and denominators.
 
-| Arena | Seconds | Courier HP at finish | Recorded incoming attack damage | Result against 45–120 s |
-| --- | ---: | ---: | ---: | --- |
-| Flamingo | 35.08 | 38.1 | 96 | Too short |
-| Zebra | 44.15 | 100 | 24 | Too short |
-| Monkey | 27.32 | 100 | 0 | Too short |
-| Lion/lioness | 43.10 | 100 | 0 | Too short |
-| Gorilla | 41.67 | 100 | 0 | Too short |
-| Elephant | 56.40 | 100 | 0 | In band |
+| Check | Low stationary / complete | High stationary / complete |
+| --- | --- | --- |
+| L8-06 bounded-path reachable share | 100% / 100% | 100% / 100% |
+| G-22 first real courier windup | 17.88 s / 18.93 s | 19.35 s / 19.35 s |
+| G-22 real outlet cohorts | 3 / 3 / 4 / 3 | 6 / 6 / 7 / 6 |
+| G-13 every follower median / phase-group median | Minimum 0.999958 | Minimum 0.999613 |
 
-Source and observer hashes and raw stages/poses are retained in [calibration 01](evidence/calibration-01-low-skilled.json). Subsequent tuning increases HP and gives the flock rotating three-bird dive lines, preserving room to counter. Twelve new healthy/infected monkey/lioness model tiers pass the shared validator with zero errors: [asset receipt](evidence/animal-assets.json).
+Both competent escape policies complete with zero courier deaths. G-13's separate far-follower waiting-time upper bound remains **NOT CHECKED**; the bound is inconclusive and is not claimed passed. The brief's requested speed-ratio item is closed.
+
+## Assets, audio and integration
+
+- Twelve healthy/infected monkey/lioness model tiers pass the [asset validator](evidence/animal-assets.json) with zero errors. The monkey derivative uses the shipped gorilla skins at 55% scale with a hip-skinned tail; lioness removes the mane. Rigs, animation clips and healthy/infected eye distinctions are retained. `tools/assets/build-l8-monkeys.ts` reproduces them.
+- Arena cover is installed through the existing L8 layout adapter before physics/destruction and rendering assembly. Pillars use the shared destruction owner; throws borrow actual world bodies and leave them where they land. [Roof control](evidence/monkey-roof-control.json) records continuous climbs and real elevated throws.
+- The rebuilt telegraph sprites pass [both-codec audits](evidence/audio-final.json): 13 cue pools with four takes each, 52 non-silent slices per codec at their catalog offsets. Elephant charge has an original synthesized trumpet/foot stamp; zebra stampede has a full one-second rumble. Existing source licenses remain recorded in the audio license files.
+- Elephant evacuees wait in formation outside its entry while the courier is inside the active yard, then resume following. The elephant's special spacing preserves its marked line while other bodies yield. Large scavenging/charge actors receive enough navigation budget to finish their routes.
+- Initial tunnel pressure is bounded; the animal encounters carry the level after the opening. The southern cohort is led by an ordinary armored infected; the Mega retains its scripted sighting. The APC door faces the courtyard and its departure turns continuously.
+
+## Validation and reproduction
+
+The gameplay snapshot passes [typecheck, lint and the unit suite through `verify -- E30`](evidence/verify-final-checks.json): **106 passed, one skipped**, with the 150-case budget unchanged. [Full final log](evidence/verify-final.log).
+
+Two shared-runner attempts hit the existing navigation test's 30-second timeout; [one failure is retained](evidence/verify-shared-timeout.log). The successful gate held both runner slots. Tests and their timeouts were not changed. The runner's synced Git manifest has no HEAD, so an ephemeral runner-only commit was required by the existing HEAD-dependent tool test; native receipts retain explicit source/observer hashes.
+
+Native matrices, tours, lifecycle checks, audio builds/audits and full repository gates ran through `MI_LOCAL_FALLBACK=0 sh tools/remote/run.sh`. Native entrypoints:
+
+- `tools/sim-runner/l8-bosses.ts all skilled|passive|standing|kite` (`L8_BOSS_TIER=low|high`).
+- `tools/sim-runner/l8-boss-controls.ts`.
+- `tools/sim-runner/l8-boss-tour.ts`.
+- `tools/sim-runner/l8-route-check.ts`.
+- `tools/sim-runner/l8-infection-route.ts` (also `L8_KILL_FLOCK_CARRIER=1`).
+- `tools/audio/l8-cue-audit.ts`.
+
+Arena matrix setup uses the production composition, explicit entry placement and real bites/turns during a labelled protected pre-roll. The measured fights use normal damage and ordinary movement/weapon input. The skilled policy uses MG sweeps, melee to shake a grab, and the campaign shotgun for close tunnel intruders. No new registered level tests, dependencies, spec edits, reference edits, push or deployment were added.
 
 ## Browser QA needed
 
-Inspect all six enclosures at the PO zooms and both quality tiers. Check monkey silhouette/tail and leader scale, healthy-to-infected continuity, ground telegraph alignment and visibility, readable windup poses/sounds, engaged pack bars, cover/prop throwing/pillar destruction, elephant wall/truck stun, doorway crowding, checkpoint return and the complete APC escape. Rendered frame time and visual quality are unproven by native combat receipts.
-
-## Calibration 02 and lifecycle controls
-
-All six skilled low-tier fights first entered the requested band at revision `1a476640`: 60.93 / 51.40 / 52.87 / 52.13 / 63.00 / 75.58 seconds, with zero deaths. These are superseded diagnostic runs: stationary and circling policies exposed contact stalls and low pressure. Raw [skilled](evidence/calibration-02-low-skilled.json), [passive](evidence/calibration-02-low-passive.json), [standing](evidence/calibration-02-low-standing.json), and [circling](evidence/calibration-02-low-kite.json) receipts remain available. The old observer double-counted a death when both the mission counter and zero courier HP were present; current receipts use the mission counter once.
-
-Revision `b8ff592f` passes all 14 [low-tier lifecycle controls](evidence/controls-03-low.json), including actual damage death and checkpoint restoration of boss HP, phase, destructible cover and exactly one rocket across world pickup plus arena stock. A respawn can immediately collect its entry pickup, so checking only ground-pickup presence would be incorrect. Other controls cover healthy/engaged health-bar eligibility, ordinary melee shake-off, two-second weapon selection lock, one-second exposed chest-beat interruption, permanent firearm kills and Nadia's alive/dead elephant dialogue.
-
-The elephant control uses ordinary movement after an explicit setup placement and never fires. Three actual solid contacts (east yard wall, truck, west yard wall) kill it through the normal damage owner; courier HP remains 87.77. This is a controlled counter proof, separate from complete-route evidence. Subsequent spacing preserves the normal charge cooldown across the first wall-hit phase transition.
-
-The first cover-stalking lion revision exposed a bot search stall after the male died. Arena movement now brakes at path corners, and the skilled bot routes toward a hidden surviving target to reacquire sight. The focused correction completes in 76.92 seconds with zero deaths; all other arenas are rerun after the shared routing adjustment.
+No browser was launched, as requested. Inspect all six enclosures at the PO zooms and both quality tiers/backends: monkey silhouette/tail and leader scale, healthy-to-infected continuity, ground marker alignment and visibility, windup poses/sounds, pack bars, prop/corpse/live-infected throws, landing roll, pillar destruction, elephant wall/truck stun, doorway crowding, checkpoint return and the complete APC escape. Rendered performance and visual quality require this manual review.

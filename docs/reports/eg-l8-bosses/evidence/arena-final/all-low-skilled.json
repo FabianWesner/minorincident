@@ -1,7 +1,7 @@
 {
-  "revision": "scoped-heavy-routes",
-  "sourceHash": "e1a6691389d774dafb0fd424403819730724da6d2c9ab10dba4a31833cf9efe8",
-  "observerHash": "ea79c693ab65599b1e5693bd074bf48139a64bb08bbe20f362195d02e2713cfc",
+  "revision": "f20b187b",
+  "sourceHash": "9b3fd310dae73eb106c791f14159d298a35e3efc557471c4fda92233b6a8c304",
+  "observerHash": "0047d1f1c517e01cc3bc77515daf12588a3904199513aed0e3ae62bc54cb33c3",
   "policy": "skilled",
   "rows": [
     {
@@ -3710,15 +3710,15 @@
         "y": 0.7
       },
       "complete": true,
-      "seconds": 57.31666666666667,
-      "totalSeconds": 82.43333333333334,
-      "hp": 100,
-      "deaths": 1,
-      "damage": 161.033333333333,
-      "attacks": 3,
+      "seconds": 76.1,
+      "totalSeconds": 76.1,
+      "hp": 65.96666666666547,
+      "deaths": 0,
+      "damage": 55,
+      "attacks": 1,
       "phases": 3,
-      "counters": 2,
-      "wallHits": 2,
+      "counters": 0,
+      "wallHits": 0,
       "rocket": 0,
       "rocketPickups": 0,
       "bites": [
@@ -3743,186 +3743,112 @@
           }
         },
         {
-          "tick": 729,
+          "tick": 783,
           "source": 399,
           "attack": 2,
           "move": "elephant.swipe",
           "duration": 0.7,
           "area": {
-            "x": -64.91276657276258,
-            "z": 15.735968086804972,
+            "x": -61.86506973263444,
+            "z": 15.34321665615319,
             "radius": 5.5,
-            "dx": 0.9743895565512672,
-            "dz": -0.22486660953513066
+            "dx": 0.9998782428475743,
+            "dz": -0.015604469873966393
           }
         },
         {
-          "tick": 1149,
+          "tick": 1634,
           "source": 399,
           "attack": 3,
-          "move": "elephant.swipe",
-          "duration": 0.7,
-          "area": {
-            "x": -48.7761513403611,
-            "z": 17.903484290566436,
-            "radius": 5.5,
-            "dx": 0.5917850995487857,
-            "dz": 0.8060957734364036
-          }
-        },
-        {
-          "tick": 1569,
-          "source": 399,
-          "attack": 4,
-          "move": "elephant.swipe",
-          "duration": 0.7,
-          "area": {
-            "x": -42.886400609074705,
-            "z": 32.84814731565417,
-            "radius": 5.5,
-            "dx": 0.05861953973592529,
-            "dz": 0.9982803962620664
-          }
-        },
-        {
-          "tick": 1821,
-          "source": 399,
-          "attack": 5,
           "move": "elephant.charge",
           "duration": 0.9,
           "area": {
-            "x": -50.13822024510487,
-            "z": 14.312031360615055,
+            "x": -58.255879624822704,
+            "z": 11.756125628055988,
             "radius": 1.75,
-            "dx": -0.9999410950099142,
-            "dz": -0.010853870755337315
+            "dx": 0.7921296778996986,
+            "dz": 0.610352826970204
           }
         },
         {
-          "tick": 2280,
+          "tick": 2954,
+          "source": 399,
+          "attack": 4,
+          "move": "elephant.charge",
+          "duration": 0.9,
+          "area": {
+            "x": -58.257109744513244,
+            "z": 11.744186401245898,
+            "radius": 1.75,
+            "dx": 0.2665802789204364,
+            "dz": 0.9638127177469191
+          }
+        },
+        {
+          "tick": 3460,
+          "source": 399,
+          "attack": 5,
+          "move": "elephant.swipe",
+          "duration": 0.7,
+          "area": {
+            "x": -59.965377962522226,
+            "z": 21.733132421510604,
+            "radius": 5.5,
+            "dx": -0.5545785855931836,
+            "dz": -0.832131355256767
+          }
+        },
+        {
+          "tick": 3880,
           "source": 399,
           "attack": 6,
           "move": "elephant.swipe",
           "duration": 0.7,
           "area": {
-            "x": -68.60100328859949,
-            "z": 15.12386145510121,
+            "x": -65.10694206701727,
+            "z": 15.702181037379528,
             "radius": 5.5,
-            "dx": 0.996864381902616,
-            "dz": 0.07912903445585179
+            "dx": 0.9975831167817103,
+            "dz": -0.06948327217459556
           }
         },
         {
-          "tick": 2700,
+          "tick": 4300,
           "source": 399,
           "attack": 7,
-          "move": "elephant.swipe",
-          "duration": 0.7,
+          "move": "elephant.charge",
+          "duration": 0.9,
           "area": {
-            "x": -51.415336451515515,
-            "z": 17.90291436577983,
-            "radius": 5.5,
-            "dx": 0.973900506284119,
-            "dz": 0.22697533755793103
+            "x": -51.60468962477212,
+            "z": 18.136940922501513,
+            "radius": 1.75,
+            "dx": 0.998652820874641,
+            "dz": 0.05188972305883177
           }
         },
         {
-          "tick": 3120,
+          "tick": 4740,
           "source": 399,
           "attack": 8,
           "move": "elephant.swipe",
           "duration": 0.7,
           "area": {
-            "x": -45.54159109441995,
-            "z": 31.30058380923485,
+            "x": -54.45938991820848,
+            "z": 16.501392976098753,
             "radius": 5.5,
-            "dx": -0.27183955632895623,
-            "dz": 0.9623425874473582
-          }
-        },
-        {
-          "tick": 3540,
-          "source": 399,
-          "attack": 9,
-          "move": "elephant.charge",
-          "duration": 0.9,
-          "area": {
-            "x": -52.393934686284666,
-            "z": 46.521081911748844,
-            "radius": 1.75,
-            "dx": -0.3256721264580355,
-            "dz": 0.9454827687738688
-          }
-        },
-        {
-          "tick": 3843,
-          "source": 399,
-          "attack": 10,
-          "move": "elephant.swipe",
-          "duration": 0.7,
-          "area": {
-            "x": -48.94642880540176,
-            "z": 44.81154432822893,
-            "radius": 5.5,
-            "dx": 0.6278189546645929,
-            "dz": -0.778359402952041
-          }
-        },
-        {
-          "tick": 4263,
-          "source": 399,
-          "attack": 11,
-          "move": "elephant.swipe",
-          "duration": 0.7,
-          "area": {
-            "x": -42.705139121227866,
-            "z": 30.41547997259104,
-            "radius": 5.5,
-            "dx": 0.36280128957674,
-            "dz": 0.9318665270742663
-          }
-        },
-        {
-          "tick": 4683,
-          "source": 399,
-          "attack": 12,
-          "move": "elephant.swipe",
-          "duration": 0.7,
-          "area": {
-            "x": -47.45071317068057,
-            "z": 45.06685709702381,
-            "radius": 5.5,
-            "dx": 0.49824577520502006,
-            "dz": -0.8670358397957656
-          }
-        },
-        {
-          "tick": 5103,
-          "source": 399,
-          "attack": 13,
-          "move": "elephant.charge",
-          "duration": 0.9,
-          "area": {
-            "x": -42.667522805923475,
-            "z": 30.743009387474654,
-            "radius": 1.75,
-            "dx": 0.46033292304795387,
-            "dz": 0.887746360149185
+            "dx": -0.9824249380988047,
+            "dz": -0.18665808581885682
           }
         }
       ],
       "throws": [],
       "signals": [
         {
-          "tick": 474,
+          "tick": 2956,
           "name": "l8.arena.elephant.phase-2"
         },
         {
-          "tick": 2005,
-          "name": "l8.arena.elephant.phase-2"
-        },
-        {
-          "tick": 5170,
+          "tick": 4790,
           "name": "l8.arena.elephant.cleared"
         }
       ],
@@ -3946,213 +3872,129 @@
           "stage": "expiry"
         },
         {
-          "tick": 771,
+          "tick": 825,
           "source": 399,
           "move": "elephant.swipe",
           "stage": "active"
         },
         {
-          "tick": 771,
+          "tick": 825,
           "source": 399,
           "move": "elephant.swipe",
           "stage": "recovery"
         },
         {
-          "tick": 891,
+          "tick": 945,
           "source": 399,
           "move": "elephant.swipe",
           "stage": "expiry"
         },
         {
-          "tick": 1191,
-          "source": 399,
-          "move": "elephant.swipe",
-          "stage": "active"
-        },
-        {
-          "tick": 1191,
-          "source": 399,
-          "move": "elephant.swipe",
-          "stage": "recovery"
-        },
-        {
-          "tick": 1311,
-          "source": 399,
-          "move": "elephant.swipe",
-          "stage": "expiry"
-        },
-        {
-          "tick": 1611,
-          "source": 399,
-          "move": "elephant.swipe",
-          "stage": "active"
-        },
-        {
-          "tick": 1611,
-          "source": 399,
-          "move": "elephant.swipe",
-          "stage": "recovery"
-        },
-        {
-          "tick": 1875,
+          "tick": 1688,
           "source": 399,
           "move": "elephant.charge",
           "stage": "active"
         },
         {
-          "tick": 2005,
+          "tick": 1689,
           "source": 399,
           "move": "elephant.charge",
           "stage": "recovery"
         },
         {
-          "tick": 2125,
+          "tick": 1809,
           "source": 399,
           "move": "elephant.charge",
           "stage": "expiry"
         },
         {
-          "tick": 2322,
-          "source": 399,
-          "move": "elephant.swipe",
-          "stage": "active"
-        },
-        {
-          "tick": 2322,
-          "source": 399,
-          "move": "elephant.swipe",
-          "stage": "recovery"
-        },
-        {
-          "tick": 2442,
-          "source": 399,
-          "move": "elephant.swipe",
-          "stage": "expiry"
-        },
-        {
-          "tick": 2742,
-          "source": 399,
-          "move": "elephant.swipe",
-          "stage": "active"
-        },
-        {
-          "tick": 2742,
-          "source": 399,
-          "move": "elephant.swipe",
-          "stage": "recovery"
-        },
-        {
-          "tick": 2862,
-          "source": 399,
-          "move": "elephant.swipe",
-          "stage": "expiry"
-        },
-        {
-          "tick": 3162,
-          "source": 399,
-          "move": "elephant.swipe",
-          "stage": "active"
-        },
-        {
-          "tick": 3162,
-          "source": 399,
-          "move": "elephant.swipe",
-          "stage": "recovery"
-        },
-        {
-          "tick": 3282,
-          "source": 399,
-          "move": "elephant.swipe",
-          "stage": "expiry"
-        },
-        {
-          "tick": 3594,
+          "tick": 3008,
           "source": 399,
           "move": "elephant.charge",
           "stage": "active"
         },
         {
-          "tick": 3611,
+          "tick": 3113,
           "source": 399,
           "move": "elephant.charge",
           "stage": "recovery"
         },
         {
-          "tick": 3731,
+          "tick": 3233,
           "source": 399,
           "move": "elephant.charge",
           "stage": "expiry"
         },
         {
-          "tick": 3885,
+          "tick": 3502,
           "source": 399,
           "move": "elephant.swipe",
           "stage": "active"
         },
         {
-          "tick": 3885,
+          "tick": 3502,
           "source": 399,
           "move": "elephant.swipe",
           "stage": "recovery"
         },
         {
-          "tick": 4005,
+          "tick": 3622,
           "source": 399,
           "move": "elephant.swipe",
           "stage": "expiry"
         },
         {
-          "tick": 4305,
+          "tick": 3922,
           "source": 399,
           "move": "elephant.swipe",
           "stage": "active"
         },
         {
-          "tick": 4305,
+          "tick": 3922,
           "source": 399,
           "move": "elephant.swipe",
           "stage": "recovery"
         },
         {
-          "tick": 4425,
+          "tick": 4042,
           "source": 399,
           "move": "elephant.swipe",
           "stage": "expiry"
         },
         {
-          "tick": 4725,
+          "tick": 4354,
           "source": 399,
-          "move": "elephant.swipe",
+          "move": "elephant.charge",
           "stage": "active"
         },
         {
-          "tick": 4725,
+          "tick": 4405,
           "source": 399,
-          "move": "elephant.swipe",
+          "move": "elephant.charge",
           "stage": "recovery"
         },
         {
-          "tick": 4845,
+          "tick": 4525,
           "source": 399,
-          "move": "elephant.swipe",
+          "move": "elephant.charge",
           "stage": "expiry"
         },
         {
-          "tick": 5157,
+          "tick": 4782,
           "source": 399,
-          "move": "elephant.charge",
+          "move": "elephant.swipe",
           "stage": "active"
         },
         {
-          "tick": 5157,
+          "tick": 4782,
           "source": 399,
-          "move": "elephant.charge",
+          "move": "elephant.swipe",
           "stage": "recovery"
         },
         {
-          "tick": 5170,
+          "tick": 4790,
           "source": 399,
-          "move": "elephant.charge",
+          "move": "elephant.swipe",
           "stage": "cancelled"
         }
       ],
@@ -4191,18 +4033,18 @@
           "id": 399,
           "hp": 0,
           "at": {
-            "x": -42.658317011594775,
-            "z": 30.760762648209248,
+            "x": -54.45938991820848,
+            "z": 16.501392976098753,
             "y": 0.7,
-            "yaw": -1.092426144264406
+            "yaw": 2.9538333128783814
           },
           "state": "chase",
           "boss": {
             "arena": "elephant",
             "slot": 0,
             "engaged": true,
-            "exposedUntil": 5277,
-            "readyAt": 5277,
+            "exposedUntil": 4902,
+            "readyAt": 5160,
             "shakeHits": 0
           },
           "held": false
