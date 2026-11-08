@@ -1,0 +1,42 @@
+{
+  "name": "r12-l10-flicker-campus",
+  "seed": 1,
+  "ground": "district",
+  "time": "L10-night",
+  "dof": false,
+  "layout": {
+    "district": "D-CURE",
+    "bbox": [
+      [
+        500,
+        -300
+      ],
+      [
+        4200,
+        300
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        2363.99,
+        -75.39
+      ]
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": "courier",
+    "zoom": 1.3
+  },
+  "frames": 24,
+  "shots": [
+    0,
+    23
+  ],
+  "sheet": 1,
+  "note": "PO L10 seed1 research-campus/cure-military at (2363.99,-75.39), street-lamp:1533, WebGPU high zoom1.3. Geometry repro."
+}

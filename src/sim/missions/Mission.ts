@@ -199,11 +199,12 @@ export class Mission {
     const current = this.def.steps.find(s => this.state.steps[s.id].status === 'active');
     if(this.markerObjective!==(current?.id??null)){
       this.markerObjective=current?.id??null;
-      this.state.marker=this.def.l8&&!this.state.states.breached||current?.waypoint===false?null:current?.anchor??null;
+      this.state.marker=current?.waypoint===false?null:current?.anchor??null;
     }
-    if(this.pendingMarker){this.state.marker=this.def.l8&&!this.state.states.breached?null:this.pendingMarker;this.pendingMarker=null;}
+    if(this.pendingMarker){this.state.marker=this.pendingMarker;this.pendingMarker=null;}
   }
   private complete(def: ObjectiveDef, cheat = false): void {
+    if (cheat && this.l8 && def.id === 'sanctuary') this.l8.advance();
     this.state.steps[def.id].status = 'completed'; this.state.completedObjectives.push(def.id);
     this.l1?.completed(def.id); this.l2?.completed(def.id); this.l3?.completed(def.id); this.l4?.completed(def.id); this.l5?.completed(def.id, cheat); this.l6?.completed(def.id);
     if (def.optional && !this.state.stats.optionalObjectives.includes(def.id)) this.state.stats.optionalObjectives.push(def.id);
@@ -532,5 +533,5 @@ export class Mission {
     this.world.solids.restore();
     this.world.solids.reservePlayerStart();
   }
-  dispose(): void { this.l2?.dispose(); this.l3?.dispose(); this.stops.forEach(stop => stop()); for(const handle of this.gateHandles.values()) {const collider=this.world.physics.world?.getCollider(handle);if(collider)this.world.physics.world!.removeCollider(collider,true);} this.gateHandles.clear(); }
+  dispose(): void { this.l2?.dispose(); this.l3?.dispose(); this.l8?.dispose(); this.stops.forEach(stop => stop()); for(const handle of this.gateHandles.values()) {const collider=this.world.physics.world?.getCollider(handle);if(collider)this.world.physics.world!.removeCollider(collider,true);} this.gateHandles.clear(); }
 }

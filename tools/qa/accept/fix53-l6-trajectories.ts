@@ -41,7 +41,9 @@ export async function l6Trajectories(tier: 'low'|'high') {
  },beforeDispose:world=>{observedHash=stateHash(world.getState());}});
  const control=JSON.parse(readFileSync(`${reportRoot}/receipts/L6-${tier}-complete.json`,'utf8'));
  assert.equal(control.sourceHash,provenance().sourceHash);
- assert.equal(observedHash,control.nativeStateHash,'Read-only trajectory observer must leave canonical final state unchanged');assert.equal(run.deaths,0);
+ assert.equal(observedHash,control.nativeStateHash,'Read-only trajectory observer must leave canonical final state unchanged');
+ assert.equal(run.completed,control.run.completed,'Read-only trajectory observer must preserve completion');
+ assert.equal(run.deaths,control.run.deaths,'Read-only trajectory observer must preserve canonical deaths');
  return {tier,run,samples,observedHash,canonicalHash:control.nativeStateHash,events:events as {type:string;tick:number;breach?:number}[],power,actors:[...actors.values()]};
 }
 export function firstBreachPass(row: Awaited<ReturnType<typeof l6Trajectories>>) {

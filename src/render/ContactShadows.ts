@@ -1,3 +1,4 @@
+import { groundDepth, groundLayers } from './GroundLayers';
 import { InstancedMesh, Matrix4, MeshBasicNodeMaterial, PlaneGeometry } from 'three/webgpu';
 import { color, uv, vec4 } from 'three/tsl';
 import type { SimWorld } from '../sim/world/SimWorld';
@@ -6,6 +7,7 @@ import { MotionPresentation } from './characters/MotionPresentation';
 /** A smooth radial footprint, shared by all figure types; one draw for companions and humans. */
 export function contactShadowMaterial(): MeshBasicNodeMaterial {
   const material = new MeshBasicNodeMaterial({ transparent: true, depthWrite: false });
+  groundDepth(material, groundLayers.footprint);
   material.name = 'keep_contactShadow';
   const opacity = uv().sub(.5).length().mul(2).smoothstep(.12, 1).oneMinus().pow(2).mul(.3);
   material.outputNode = vec4(color('#50375f'), opacity);

@@ -1,0 +1,123 @@
+{
+  "revision": "ae818a71917c982b2413fa587f248055afcc52d2",
+  "command": "npm run qa:threat -- --levels=L8 --maxWorkers=1 --out=test-results/r12-l8-threat",
+  "exitCode": 1,
+  "note": "L8-only diagnostic: PARTIAL_LEVEL_SELECTION is the sole audit flag; no gameplay flags.",
+  "audit": {
+    "revision": "ae818a71917c982b2413fa587f248055afcc52d2",
+    "mainRevision": "4679f0c4c92aa5ee9aac0770cc28da79ed3647c9",
+    "sourceMatchesMain": false,
+    "seed": 1,
+    "policy": "kiting + passive",
+    "tier": "low",
+    "workers": 1,
+    "seconds": 28.060873708000003,
+    "flags": [
+      "PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate"
+    ]
+  },
+  "run": {
+    "level": "L8",
+    "policy": "complete",
+    "seed": 1,
+    "completed": true,
+    "time": 104.91666666666667,
+    "deaths": 0,
+    "kills": 26,
+    "damageTaken": 0,
+    "failures": {},
+    "objectiveTimeline": [
+      {
+        "id": "sanctuary",
+        "t": 60
+      },
+      {
+        "id": "escape",
+        "t": 98.91666666666667
+      },
+      {
+        "id": "depart",
+        "t": 99.91666666666667
+      }
+    ],
+    "furthestObjective": "depart",
+    "activeObjectives": [],
+    "outcome": "complete",
+    "blocker": null,
+    "collision": {
+      "failures": 0,
+      "pending": 0,
+      "admitted": 369,
+      "deferred": 73,
+      "requests": [],
+      "offenders": []
+    }
+  },
+  "passiveRun": {
+    "level": "L8",
+    "policy": "complete",
+    "seed": 1,
+    "completed": false,
+    "time": 150,
+    "deaths": 0,
+    "kills": 0,
+    "damageTaken": 0,
+    "failures": {
+      "tick-budget": 1
+    },
+    "objectiveTimeline": [
+      {
+        "id": "sanctuary",
+        "t": 60
+      }
+    ],
+    "furthestObjective": "escape",
+    "activeObjectives": [
+      "escape"
+    ],
+    "outcome": "tick-budget",
+    "blocker": {
+      "objective": "escape",
+      "detail": "tick-budget: Lead the group to the armored vehicle",
+      "player": {
+        "x": 73.18887329101562,
+        "z": 76.54619598388672
+      },
+      "distance": 23.522690086845387,
+      "actors": {
+        "apc": {
+          "x": 96,
+          "z": 74,
+          "hp": 970,
+          "state": "normal",
+          "driver": null,
+          "speed": 0,
+          "yaw": 0
+        }
+      }
+    },
+    "collision": {
+      "failures": 0,
+      "pending": 0,
+      "admitted": 308,
+      "deferred": 55,
+      "requests": [],
+      "offenders": []
+    }
+  },
+  "kiting": {
+    "kitingSeconds": 20.000000000000146,
+    "attacks": 6,
+    "attacksPerMinute": 17.99999999999987,
+    "samples": 1200,
+    "diagnostics": {
+      "startTick": 3646,
+      "endTick": 4845,
+      "firingFrames": 1,
+      "playerAttackStarts": 1,
+      "framesWithoutThreats": 0
+    }
+  },
+  "flags": [],
+  "passiveFlags": []
+}

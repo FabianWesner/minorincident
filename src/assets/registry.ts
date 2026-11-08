@@ -1,3 +1,4 @@
+import { groundDepth, groundLayers } from '../render/GroundLayers';
 // Adapted from Bruno Simon's ResourcesLoader (MIT): loaders + promise cache.
 import { Box3, Group, Mesh, MeshBasicNodeMaterial, PlaneGeometry, SRGBColorSpace, TextureLoader, Vector3, type Object3D, type WebGPURenderer } from 'three/webgpu';
 import { clone as cloneSkeleton } from 'three/addons/utils/SkeletonUtils.js';
@@ -74,6 +75,7 @@ export class AssetRegistry {
         const texture = await new TextureLoader().loadAsync('/' + def.decalTexture.replace(/^public\//, ''));
         texture.colorSpace = SRGBColorSpace; this.decalTextures.add(texture);
         const material = new MeshBasicNodeMaterial({ map: texture, transparent: true, depthWrite: false });
+        groundDepth(material, groundLayers.footprint);
         const geometry = new PlaneGeometry(def.dimensions.x, def.dimensions.z); geometry.rotateX(-Math.PI / 2);
         const mesh = new Mesh(geometry, material); mesh.name = 'root'; mesh.position.y = .015;
         const root = new Group(); root.add(mesh); return root;

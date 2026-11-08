@@ -10,6 +10,7 @@ import { loadLevel } from '../../tools/sim-runner/levels';
 import { missionControls } from '../../src/sim/missions/controls';
 import { preset } from '../../src/sim/progression/Campaign';
 import { objectiveText } from '../../src/sim/missions/objectiveText';
+import type { PropSnapshot } from '../../src/sim/interact/PropSystem';
 
 async function car(id = 'vehicle.sedan') {
   const physics = new Physics(); await physics.init();
@@ -85,9 +86,96 @@ test('enter, drive and exit: door dwell, input ownership (no attacks while drivi
     expect(world.physics.world!.intersectionWithShape(exit.transform, { x: 0, y: 0, z: 0, w: 1 }, new RAPIER.Capsule(.35, .35), undefined, undefined, world.physics.playerCollider!)).toBeNull();
     world.loadScenario('empty'); expect(world.physics.bodyCount).toBe(2);
   } finally { world.dispose(); }
+  await screenRelativeSteering();
+  const shoved = await vehicleShovesProps();
+  expect(await vehicleShovesProps(), 'vehicle-to-prop simulation repeats exactly').toEqual(shoved);
   await bikeMountIntent();
   await zooParkedBoarding();
 });
+
+async function screenRelativeSteering(): Promise<void> {
+  const world = new SimWorld(); await world.init(); world.loadScenario('drive-course');
+  try {
+    for (let i = 0; i < 36; i++) world.update();
+    const car = world.vehicles!.cars.get(2)!;
+    const start = { ...car.entity.transform };
+    // Screen-up is world -Z in the drive-course camera. A local drive intent
+    // pointing right/back must not override the requested screen direction.
+    const frame = emptyInput(); frame.move.z = -1; frame.drive = { throttle: -1, steer: -1 };
+    world.applyInput(frame, 'keyboard');
+    for (let i = 0; i < 120; i++) world.update();
+    expect(car.entity.transform.z).toBeLessThan(start.z - 1);
+    expect(car.entity.transform.yaw).toBeGreaterThan(.1);
+    const yaw = 2;
+    car.physics.body.setRotation({ x: 0, y: Math.sin(yaw / 2), z: 0, w: Math.cos(yaw / 2) }, true);
+    car.physics.body.setLinvel({ x: Math.cos(yaw) * 5, y: 0, z: -Math.sin(yaw) * 5 }, true); car.physics.postPhysics();
+    const left = emptyInput(); left.move = { x: -Math.SQRT1_2, z: Math.SQRT1_2 };
+    world.applyInput(left, 'keyboard'); world.update();
+    expect(car.physics.intent.throttle, 'lateral request before full screen-up alignment stays a forward turn').toBeGreaterThan(0);
+    expect(car.physics.intent.steer).toBeGreaterThan(0);
+    const behind = emptyInput(), heading = car.entity.transform.yaw;
+    behind.move = { x: -Math.cos(heading), z: Math.sin(heading) };
+    world.applyInput(behind, 'keyboard'); world.update();
+    expect(car.physics.intent.throttle, 'a request behind selects reverse').toBeLessThan(0);
+    expect(car.physics.braking, 'forward momentum brakes before reversing').toBe(true);
+  } finally { world.dispose(); }
+}
+
+async function vehicleShovesProps(): Promise<PropSnapshot> {
+  const world = new SimWorld(); await world.init(); world.loadScenario('prop-yard');
+  try {
+    const prop = world.props!.spawn({ id: 'ram-test-wreck', assetId: 'veh.wreck', position: [0, 0, 0], yaw: 0, scale: [1, 1, 1], minTier: 0, maxTier: 5, allowRoad: true, lightGroup: '', visualAabb: { min: [-2.2, 0, -.9], max: [2.2, 1.8, .9] } });
+    world.props!.updateNavigation();
+    const id = world.vehicles!.spawn('vehicle.military-apc', { x: -4.9, z: 0 });
+    const car = world.vehicles!.cars.get(id)!; world.vehicles!.active = id;
+    car.physics.body.setLinvel({ x: 18, y: 0, z: 0 }, true); car.physics.postPhysics();
+    world.props!.prePhysics();
+    expect(prop.body.isSleeping()).toBe(false);
+    expect(prop.body.linvel().x).toBeGreaterThan(0);
+    expect(world.props!.navWalls.has(prop.entityId)).toBe(false);
+    prop.body.setLinvel({ x: 30, y: 0, z: 0 }, true);
+    world.props!.prePhysics();
+    expect(prop.body.linvel().x, 'a prop already escaping the bumper gets no additional impulse').toBe(30);
+    const drums = world.props!.spawn({ id: 'ram-test-drum-stack', assetId: 'prop.cure-drum-stack', position: [10, 0, 0], yaw: 0, scale: [1, 1, 1], minTier: 0, maxTier: 5, allowRoad: true, lightGroup: '', visualAabb: { min: [-.65, 0, -.55], max: [.65, 2.2, .55] } });
+    world.props!.updateNavigation();
+    const secondId = world.vehicles!.spawn('vehicle.military-apc', { x: 6.5, z: 0 });
+    const secondCar = world.vehicles!.cars.get(secondId)!; world.vehicles!.active = secondId;
+    secondCar.physics.body.setLinvel({ x: 18, y: 0, z: 0 }, true); secondCar.physics.postPhysics();
+    world.props!.prePhysics();
+    expect(drums.body.isSleeping()).toBe(false);
+    expect(drums.body.linvel().x).toBeGreaterThan(0);
+    expect(world.props!.navWalls.has(drums.entityId)).toBe(false);
+    const reverseProp = world.props!.spawn({ id: 'ram-test-parked-sedan', assetId: 'veh.sedan-blue', position: [20, 0, 0], yaw: 0, scale: [1, 1, 1], minTier: 0, maxTier: 5, allowRoad: true, lightGroup: '', visualAabb: { min: [-2.2, 0, -.9], max: [2.2, 1.8, .9] } });
+    const player = world.entities.get(1)!, playerPose = { ...player.transform };
+    world.vehicles!.active = null; world.props!.shoulderPush = true;
+    Object.assign(player.transform, { x: 18, z: 0 });
+    world.props!.pushSpeed({ ...emptyInput(), move: { x: 1, z: 0 } });
+    expect(reverseProp.body.isFixed(), 'vehicle-only props retain their authored on-foot restriction').toBe(true);
+    Object.assign(player.transform, playerPose); world.props!.shoulderPush = false;
+    const reverseId = world.vehicles!.spawn('vehicle.military-apc', { x: 24.95, z: 0 });
+    const reverseCar = world.vehicles!.cars.get(reverseId)!; world.vehicles!.active = reverseId;
+    reverseCar.physics.body.setLinvel({ x: -18, y: 0, z: 0 }, true); reverseCar.physics.postPhysics();
+    world.props!.prePhysics();
+    expect(reverseProp.body.linvel().x, 'reverse contact pushes a parked car behind the APC').toBeLessThan(0);
+    const near = world.props!.spawn({ id: 'ram-test-nearby', assetId: 'veh.wreck', position: [40, 0, 0], yaw: Math.PI / 2, scale: [1, 1, 1], minTier: 0, maxTier: 5, allowRoad: true, lightGroup: '', visualAabb: { min: [-.9, 0, -2.2], max: [.9, 1.8, 2.2] } });
+    const nearbyId = world.vehicles!.spawn('vehicle.military-apc', { x: 35.5, z: 0 });
+    const nearbyCar = world.vehicles!.cars.get(nearbyId)!; world.vehicles!.active = nearbyId;
+    nearbyCar.physics.body.setLinvel({ x: 18, y: 0, z: 0 }, true); nearbyCar.physics.postPhysics();
+    world.props!.prePhysics();
+    expect(near.body.isSleeping(), 'a nearby elongated prop stays asleep before hull contact').toBe(true);
+    for (const [assetId, x, halfX] of [['prop.traffic-cone', 0, .24], ['prop.folding-chair', 10, .33]] as const) {
+      const small = world.props!.spawn({ id: `ram-test-${assetId}`, assetId, position: [x, 0, 10], yaw: 0, scale: [1, 1, 1], minTier: 0, maxTier: 5, allowRoad: true, lightGroup: '', visualAabb: { min: [x - halfX, 0, 9.5], max: [x + halfX, 1.1, 10.5] } });
+      const sedanId = world.vehicles!.spawn('vehicle.sedan', { x: x - vehicleDef('vehicle.sedan').length / 2 - halfX + .05, z: 10 });
+      const sedan = world.vehicles!.cars.get(sedanId)!; world.vehicles!.active = sedanId;
+      sedan.physics.body.setLinvel({ x: 8, y: 0, z: 0 }, true); sedan.physics.postPhysics();
+      world.props!.prePhysics();
+      expect(small.body.linvel().x, `${assetId} moves when the lower sedan bumper reaches it`).toBeGreaterThan(0);
+    }
+    for (let i = 0; i < 60; i++) world.update();
+    expect(world.props!.items.filter(p => p.awake).length).toBeLessThanOrEqual(world.props!.awakeBudget);
+    return world.props!.snapshot();
+  } finally { world.dispose(); }
+}
 
 // The zoo's fixed objective must remain at the real doorway while rockets and
 // infected strike the evacuation vehicle. Checkpoint rebuilds need the same hold.
@@ -97,6 +185,36 @@ async function zooParkedBoarding(): Promise<void> {
     const mission = world.missions!, zoo = mission.l8!, vehicles = world.vehicles!;
     mission.begin();
     const advance = (ticks: number) => { for (let i = 0; i < ticks; i++) world.update(); };
+    expect(mission.state.steps.sanctuary.status).toBe('active');
+    expect(mission.state.steps.escape.status).toBe('pending');
+    const preBreachDoor = vehicles.passengerDoor(zoo.state.carId);
+    missionControls(world).teleport(1, preBreachDoor);
+    world.applyInput({ ...emptyInput(), interact: true }, 'keyboard'); advance(1);
+    expect(vehicles.active, 'APC cannot be entered during the sanctuary objective').toBeNull();
+    expect(vehicles.canInteract(), 'APC offers no enter prompt before the breach').toBe(false);
+    expect(zoo.canDrive(), 'APC cannot be driven before the breach').toBe(false);
+    expect(zoo.boarding(), 'survivors cannot queue at the APC before the breach').toBe(false);
+    expect(mission.state.steps.depart.status).toBe('pending');
+    world.tick = 3124; advance(1);
+    expect(mission.state.steps.sanctuary.status).toBe('active');
+    expect(mission.state.steps.escape.status).toBe('pending');
+    expect(mission.state.marker).toBe('zoo-gate');
+    expect(mission.state.steps.depart.status).toBe('pending');
+    mission.restore('sanctuary');
+    expect(mission.state.marker).toBe('zoo-gate');
+    expect(mission.state.steps.escape.status).toBe('pending');
+    missionControls(world).teleport(1, zoo.door());
+    world.tick = zoo.state.startedAt + 3599; advance(1);
+    expect(mission.state.states.breached).toBe(true);
+    expect(mission.state.steps.sanctuary.status, 'camping the APC does not skip the gate after the breach').toBe('active');
+    expect(mission.state.checkpoint, 'APC camping must not award the escape-route checkpoint').toBe('breach');
+    expect(zoo.boarding()).toBe(false);
+    expect(zoo.canBoardDriver()).toBe(false);
+    expect(mission.state.steps.escape.status).toBe('pending');
+    missionControls(world).teleport(1, mission.def.anchors['zoo-gate']); advance(1);
+    expect(mission.state.steps.sanctuary.status).toBe('completed');
+    expect(mission.state.steps.escape.status).toBe('active');
+    expect(mission.state.marker).toBe('exit');
     for (const restored of [false, true]) {
       if (restored) mission.restore('sanctuary');
       advance(60);
@@ -111,7 +229,9 @@ async function zooParkedBoarding(): Promise<void> {
       vehicles.damage(car.entity.id, 10);
       expect(car.entity.health.current, 'parking does not protect durability').toBe(health - 10);
     }
+    const car = vehicles.cars.get(zoo.state.carId)!;
     mission.setState('breached', true); zoo.state.breachedAt = world.tick; zoo.state.nextWave = Number.MAX_SAFE_INTEGER;
+    missionControls(world).teleport(1, mission.def.anchors['zoo-gate']); advance(1);
     missionControls(world).teleport(1, zoo.door());
     world.applyInput({ ...emptyInput(), interact: true }, 'keyboard'); advance(1);
     expect(vehicles.active, 'courier can keep covering passengers instead of boarding early').toBeNull();
@@ -119,7 +239,7 @@ async function zooParkedBoarding(): Promise<void> {
     world.applyInput(emptyInput(), 'keyboard'); advance(60);
     expect(vehicles.active, 'standing at the door does not remove cover fire either').toBeNull();
     missionControls(world).teleport(1, { x: zoo.door().x - 4, z: zoo.door().z + 2 });
-    const car = vehicles.cars.get(zoo.state.carId)!, entry = vehicles.passengerDoor(car.entity.id);
+    const entry = vehicles.passengerDoor(car.entity.id);
     for (const id of zoo.passengers()) {
       missionControls(world).teleport(id, entry);
       expect(vehicles.boardPassenger(car.entity.id, id)).toBe(true);

@@ -302,7 +302,13 @@ export class LevelSixSubway {
   /** Called by the shared follower before its L5 rules. Calm routines and group movement own live civilians only. */
   follower(e:EntitySnapshot):boolean {
     const s=this.s,r=s.survivors.find(r=>r.id===e.id);if(!r)return false;
-    if(r.status==='out'){this.w.spatial.delete(e.id);return true;}
+    if(r.status==='out'){
+      // Stay visible after crossing Northgate: walk clear of the mouth into
+      // the night street, then remain with the rescued group for the end shot.
+      const slot=e.civilian!.survivor!.slot;
+      this.w.npcs!.move(e,{x:270+Math.floor(slot/6)*1.2,z:12+(slot%6)*1.2},l6.follow.speed,e.civilian!,.4,1600);
+      this.w.spatial.delete(e.id);return true;
+    }
     // The former shelter guard is now part of the moving column. Re-engaging its
     // stationary ally post here made it leave formation to fight tunnel infected.
     if(r.status==='shelter')return true;
@@ -407,7 +413,7 @@ export class LevelSixSubway {
       // Inside the real column counts too. Combat can displace its head beyond a leader held at the gate:
       // using that scripted leader as the upper bound kept a returned survivor attached for the next fetch.
       if(r.collected&&e.transform.x>tail-l6.follow.rejoinM&&e.transform.x<head+l6.follow.rejoinM){r.collected=false;r.rejoined=true;w.events.emit({type:'l6.rejoined',tick:t,id:r.id});}
-      if(e.transform.x>=263){r.status='out';e.civilian!.survivor!.mode='hidden';e.hidden=true;w.spatial.delete(e.id);}
+      if(e.transform.x>=263){r.status='out';w.spatial.delete(e.id);}
     }
     this.guide(p);
     // Telegraph a fixed entrance before the courier reaches it. Two arrivals together,
@@ -426,7 +432,20 @@ export class LevelSixSubway {
         else { const spawned=this.spawn(entry.remaining,[entry.door],4); if(spawned){entry.remaining-=spawned;entry.nextAt=t+360;}else entry.nextAt=t+15; }
       }
     }
-    if(t>=s.nextWave){s.nextWave=t+600;const sides=l6Doors.map((d,i)=>({d,i})).filter(({d,i})=>i>1&&d.x>tail-35&&d.x<s.leaderX+35).map(x=>x.i);this.spawn(1,[...(tail<80?[0,1]:[]),...sides].length?[...(tail<80?[0,1]:[]),...sides]:[0,1],3);}
+    if(t>=s.nextWave){
+      const groupIndex=Math.floor(s.spawnLog.filter(entry=>entry.wave===3).length/l6.pressure.group);
+      s.nextWave=t+ticks(l6.pressure.intervalS);
+      const ahead=l6Doors.map((d,i)=>({d,i})).filter(({d,i})=>i>1&&d.x>=s.leaderX+l6.pressure.aheadM).sort((a,b)=>a.d.x-b.d.x)[0];
+      const behind=l6Doors.map((d,i)=>({d,i})).filter(({d})=>d.x<=tail-l6.pressure.behindM).sort((a,b)=>b.d.x-a.d.x)[0];
+      const fallback=l6Doors.map((d,i)=>({d,i})).filter(({i})=>i>1).sort((a,b)=>Math.abs(a.d.x-s.leaderX)-Math.abs(b.d.x-s.leaderX))[0];
+      const source=(groupIndex%2===0?ahead:behind)??fallback;
+      const sources=source?Array.from({length:l6.pressure.group},()=>source.i):[];
+      if(sources.length)this.spawn(sources.length,sources,3);
+    }
+    if(s.phase==='exit'&&s.survivors.some(r=>r.status==='out')){
+      // Keep the escape leg legible while the column passes the open gate one by one.
+      this.mission.state.subtitle={id:'l6-survivors-safe',text:'The survivors are safe.',until:t+120};
+    }
     if(!s.pushHintShown&&w.props?.items.some(q=>q.assetId==='prop.crates'&&q.awake&&distance(p,{x:q.pose.p[0],z:q.pose.p[2]})<2)){s.pushHintShown=true;this.say(1,'Push the glowing crates onto the line, then press E to brace the gate.');}
     for(const gate of s.gates){const e=w.entities.get(gate.id)!;const crossed=this.closable(gate);
       // Q-305: a click on the gate (or its wait spot) asks to close it; the courier closes it on arrival from the far side.
@@ -460,7 +479,8 @@ export class LevelSixSubway {
     const exitBehind=live.some(r=>w.entities.get(r.id)!.transform.x<=240+2);
     if(!s.platform&&p.x>=240&&!exitBehind&&exitThrough(240)){s.platform=true;this.mission.requestCheckpoint('exit-platform');this.mission.setState('platform',true);s.phase='exit';}
     if(s.phase==='exit'&&p.x>=263){if(!s.exitAt){s.exitAt=t;this.mission.state.timeOfDay='L6';w.events.emit({type:'l6.exit',tick:t});}
-      if(live.length===0){s.gateAt=t;const gate=w.barricades!.spawn({id:'l6-night-exit',groupId:'l6-exit',a:{x:258,z:l6.exit.centerZ-2.15},b:{x:258,z:l6.exit.centerZ+2.15},height:2.5,initialHp:10000});w.entities.get(gate)!.archetype='l6.service-gate';s.phase='done';this.mission.setState('exited',true);}}
+      const streetClear=s.survivors.filter(r=>r.status==='out').every(r=>w.entities.get(r.id)!.transform.x>=266);
+      if(live.length===0&&streetClear){s.gateAt=t;const gate=w.barricades!.spawn({id:'l6-night-exit',groupId:'l6-exit',a:{x:258,z:l6.exit.centerZ-2.15},b:{x:258,z:l6.exit.centerZ+2.15},height:2.5,initialHp:10000});w.entities.get(gate)!.archetype='l6.service-gate';s.phase='done';this.mission.setState('exited',true);}}
   }
   completed(id:string):void {if(id==='shelter'&&this.s.phase==='shelter')this.breach(false);if(id==='stop'&&!this.s.abandonAt){if(this.s.phase==='first')this.breach(true);this.abandon();}if(id==='retreat'){this.s.platform=true;this.mission.setState('platform',true);if(this.s.phase!=='done')this.s.phase='exit';}if(id==='exit'){this.s.phase='done';this.s.gateAt=this.w.tick;this.mission.state.timeOfDay='L6';}}
   advance():boolean{return false;}

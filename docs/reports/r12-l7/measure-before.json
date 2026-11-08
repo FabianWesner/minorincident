@@ -1,0 +1,362 @@
+{
+  "variant": "before",
+  "method": "Same native completion policy, seeds 1–3 per population tier, 300s route cap. Windup/contact attack starts; cardinal source-to-target bearings. Simultaneous approach sectors sample living visible infected within 18m at 1Hz. Alpha TTK starts at first player hit. Rates use entire route duration.",
+  "rows": [
+    {
+      "tier": "low",
+      "seed": 1,
+      "completed": true,
+      "seconds": 109.6,
+      "shots": 76,
+      "rocketKills": 174,
+      "killsPerRocket": 2.289473684210526,
+      "rejected": 0,
+      "courierAttacks": 76,
+      "groupAttacks": 10,
+      "courierAttacksPerMinute": 41.605839416058394,
+      "groupAttacksPerMinute": 5.474452554744526,
+      "attackDirections": {
+        "north": 14,
+        "west": 15,
+        "south": 17,
+        "east": 40
+      },
+      "simultaneousDirections": 3,
+      "alphas": [
+        {
+          "hp": 300,
+          "firstHit": 786,
+          "kill": 827,
+          "seconds": 0.6833333333333333
+        },
+        {
+          "hp": 300,
+          "firstHit": 1389,
+          "kill": 1430,
+          "seconds": 0.6833333333333333
+        },
+        {
+          "hp": 300,
+          "firstHit": 3715,
+          "kill": 3744,
+          "seconds": 0.48333333333333334
+        },
+        {
+          "hp": 300,
+          "firstHit": 4726,
+          "kill": 4753,
+          "seconds": 0.45
+        },
+        {
+          "hp": 300,
+          "firstHit": 4866,
+          "kill": 4950,
+          "seconds": 1.4
+        }
+      ],
+      "deaths": 0,
+      "boarded": 24,
+      "outcome": "complete"
+    },
+    {
+      "tier": "low",
+      "seed": 2,
+      "completed": true,
+      "seconds": 105.76666666666667,
+      "shots": 62,
+      "rocketKills": 188,
+      "killsPerRocket": 3.032258064516129,
+      "rejected": 0,
+      "courierAttacks": 65,
+      "groupAttacks": 7,
+      "courierAttacksPerMinute": 36.87362117869524,
+      "groupAttacksPerMinute": 3.9710053577056414,
+      "attackDirections": {
+        "west": 27,
+        "north": 19,
+        "south": 14,
+        "east": 12
+      },
+      "simultaneousDirections": 3,
+      "alphas": [
+        {
+          "hp": 300,
+          "firstHit": 218,
+          "kill": 317,
+          "seconds": 1.65
+        },
+        {
+          "hp": 300,
+          "firstHit": 1112,
+          "kill": 1517,
+          "seconds": 6.75
+        },
+        {
+          "hp": 300,
+          "firstHit": 3460,
+          "kill": 3483,
+          "seconds": 0.38333333333333336
+        },
+        {
+          "hp": 300,
+          "firstHit": 4731,
+          "kill": 4841,
+          "seconds": 1.8333333333333333
+        },
+        {
+          "hp": 300,
+          "firstHit": 5353,
+          "kill": 5379,
+          "seconds": 0.43333333333333335
+        }
+      ],
+      "deaths": 0,
+      "boarded": 24,
+      "outcome": "complete"
+    },
+    {
+      "tier": "low",
+      "seed": 3,
+      "completed": false,
+      "seconds": 300,
+      "shots": 72,
+      "rocketKills": 194,
+      "killsPerRocket": 2.6944444444444446,
+      "rejected": 0,
+      "courierAttacks": 42,
+      "groupAttacks": 2,
+      "courierAttacksPerMinute": 8.4,
+      "groupAttacksPerMinute": 0.4,
+      "attackDirections": {
+        "west": 11,
+        "north": 12,
+        "south": 12,
+        "east": 9
+      },
+      "simultaneousDirections": 3,
+      "alphas": [
+        {
+          "hp": 300,
+          "firstHit": 349,
+          "kill": 425,
+          "seconds": 1.2666666666666666
+        },
+        {
+          "hp": 300,
+          "firstHit": 1176,
+          "kill": 1204,
+          "seconds": 0.4666666666666667
+        },
+        {
+          "hp": 300,
+          "firstHit": 3378,
+          "kill": 3415,
+          "seconds": 0.6166666666666667
+        },
+        {
+          "hp": 300,
+          "firstHit": 4586,
+          "kill": 4761,
+          "seconds": 2.9166666666666665
+        },
+        {
+          "hp": 300,
+          "firstHit": 4940,
+          "kill": 5006,
+          "seconds": 1.1
+        }
+      ],
+      "deaths": 0,
+      "boarded": 0,
+      "outcome": "tick-budget",
+      "blocker": {
+        "objective": "bus-departure",
+        "detail": "{\"phase\":\"waiting\",\"hp\":100,\"roster\":[{\"id\":51,\"key\":\"shelter-0\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-49.75866018550902,\"z\":42.10092779015687,\"y\":0.83,\"yaw\":-0.8049887807663482}},{\"id\":52,\"key\":\"shelter-1\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-50.79637684036349,\"z\":42.45968972146668,\"y\":0.83,\"yaw\":-1.3890718183549382}},{\"id\":53,\"key\":\"shelter-2\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-50.099336143320485,\"z\":42.7289207938808,\"y\":0.7,\"yaw\":2.4110885428282667}},{\"id\":54,\"key\":\"shelter-3\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-49.27359369599605,\"z\":41.57639436173468,\"y\":0.83,\"yaw\":1.8767344763920963}},{\"id\":55,\"key\":\"shelter-4\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-49.102701743121635,\"z\":43.07718302091318,\"y\":0.7,\"yaw\":-4.049495798545502}},{\"id\":56,\"key\":\"shelter-5\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-48.919261009068876,\"z\":42.35031140937768,\"y\":0.83,\"yaw\":2.3290223471770344}},{\"id\":57,\"key\":\"shelter-6\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-47.838062956473806,\"z\":43.39289636589741,\"y\":0.7,\"yaw\":-3.354779793695158}},{\"id\":58,\"key\":\"shelter-7\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-47.88893562088592,\"z\":42.68036321639715,\"y\":0.7,\"yaw\":-3.029689285399802}},{\"id\":59,\"key\":\"shelter-8\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-46.7071736461045,\"z\":43.12667349856329,\"y\":0.7,\"yaw\":3.3327536013404453}},{\"id\":60,\"key\":\"shelter-9\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-46.67272655400969,\"z\":42.09898901162181,\"y\":0.83,\"yaw\":3.3454909441610683}},{\"id\":61,\"key\":\"shelter-10\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-45.98829204942602,\"z\":42.97084167874745,\"y\":0.7,\"yaw\":-2.596496924410184}},{\"id\":62,\"key\":\"shelter-11\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-45.816334331987754,\"z\":41.91445661599613,\"y\":0.83,\"yaw\":-2.9262605369833308}},{\"id\":63,\"key\":\"shelter-12\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-44.63670239778376,\"z\":42.96796581934579,\"y\":0.7,\"yaw\":-2.1412840408161657}},{\"id\":64,\"key\":\"shelter-13\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-44.89703843426648,\"z\":41.576722644373135,\"y\":0.83,\"yaw\":-2.6667033521711945}},{\"id\":65,\"key\":\"shelter-14\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-44.217403217773814,\"z\":42.28539045652494,\"y\":0.83,\"yaw\":-2.735751396337556}},{\"id\":66,\"key\":\"shelter-15\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-43.81468685208929,\"z\":41.39174030643176,\"y\":0.83,\"yaw\":3.3017570774505227}},{\"id\":67,\"key\":\"shelter-16\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-43.512318240630506,\"z\":42.17135353653874,\"y\":0.83,\"yaw\":-2.437752788415787}},{\"id\":68,\"key\":\"shelter-17\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-42.16235609062356,\"z\":41.3375694629738,\"y\":0.83,\"yaw\":-0.5225958410276377}},{\"id\":69,\"key\":\"shelter-18\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-42.72332209148984,\"z\":41.79248966207668,\"y\":0.83,\"yaw\":-0.3669651272455237}},{\"id\":70,\"key\":\"shelter-19\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-42.82731709629387,\"z\":41.079377976686224,\"y\":0.83,\"yaw\":-0.0925509312145337}},{\"id\":71,\"key\":\"shelter-20\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-40.84497470823906,\"z\":41.76514663551321,\"y\":0.83,\"yaw\":2.8794505502026957}},{\"id\":72,\"key\":\"shelter-21\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-41.463020017670225,\"z\":41.07501850211724,\"y\":0.83,\"yaw\":-0.04599508590383939}},{\"id\":73,\"key\":\"shelter-22\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-39.97566393810857,\"z\":41.75248860260098,\"y\":0.83,\"yaw\":-3.269488710667847}},{\"id\":74,\"key\":\"shelter-23\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-39.74879018918482,\"z\":41.07512094970846,\"y\":0.83,\"yaw\":3.1799206374259947}}]}",
+        "player": {
+          "x": -49.4027873785235,
+          "y": 0.7049987632781267,
+          "z": 44.24068486341275,
+          "yaw": -2.2797318248640575
+        }
+      }
+    },
+    {
+      "tier": "high",
+      "seed": 1,
+      "completed": false,
+      "seconds": 91.46666666666667,
+      "shots": 64,
+      "rocketKills": 323,
+      "killsPerRocket": 5.046875,
+      "rejected": 0,
+      "courierAttacks": 329,
+      "groupAttacks": 33,
+      "courierAttacksPerMinute": 215.81632653061223,
+      "groupAttacksPerMinute": 21.64723032069971,
+      "attackDirections": {
+        "north": 80,
+        "west": 79,
+        "south": 80,
+        "east": 123
+      },
+      "simultaneousDirections": 4,
+      "alphas": [
+        {
+          "hp": 300,
+          "firstHit": 521,
+          "kill": 621,
+          "seconds": 1.6666666666666667
+        },
+        {
+          "hp": 300,
+          "firstHit": 1142,
+          "kill": 1213,
+          "seconds": 1.1833333333333333
+        },
+        {
+          "hp": 300,
+          "firstHit": 3424,
+          "kill": 3492,
+          "seconds": 1.1333333333333333
+        },
+        {
+          "hp": 300,
+          "firstHit": 4723,
+          "kill": 4749,
+          "seconds": 0.43333333333333335
+        },
+        {
+          "hp": 300,
+          "firstHit": 4808,
+          "kill": 4918,
+          "seconds": 1.8333333333333333
+        }
+      ],
+      "deaths": 1,
+      "boarded": 0,
+      "outcome": "mission-failed",
+      "blocker": {
+        "objective": "bus-departure",
+        "detail": "{\"phase\":\"boarding\",\"hp\":0,\"roster\":[{\"id\":51,\"key\":\"shelter-0\",\"injured\":false,\"status\":\"turned\",\"passed\":false,\"at\":{\"x\":-50.162054845694946,\"z\":42.79081387467714,\"y\":0.7,\"yaw\":-0.24585748337843255}},{\"id\":52,\"key\":\"shelter-1\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-47.27457398340149,\"z\":42.460437973048755,\"y\":0.83,\"yaw\":-1.5307963267948967}},{\"id\":53,\"key\":\"shelter-2\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-49.977536942835094,\"z\":44.54181234245996,\"y\":0.7,\"yaw\":-2.540945528747995}},{\"id\":54,\"key\":\"shelter-3\",\"injured\":false,\"status\":\"turned\",\"passed\":false,\"at\":{\"x\":-50.54315867054632,\"z\":44.922074832777895,\"y\":0.7,\"yaw\":0.7351206443855327}},{\"id\":55,\"key\":\"shelter-4\",\"injured\":false,\"status\":\"turned\",\"passed\":false,\"at\":{\"x\":-49.53948002204041,\"z\":42.49873243340347,\"y\":0.83,\"yaw\":-4.106403202078399}},{\"id\":56,\"key\":\"shelter-5\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-50.64374530181179,\"z\":44.18210954852174,\"y\":0.7,\"yaw\":1.601430411936027}},{\"id\":57,\"key\":\"shelter-6\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-49.663663792248435,\"z\":43.267737711275565,\"y\":0.7,\"yaw\":2.4275736146717746}},{\"id\":58,\"key\":\"shelter-7\",\"injured\":false,\"status\":\"turned\",\"passed\":false,\"at\":{\"x\":-51.3019888210258,\"z\":44.48877036442765,\"y\":0.7,\"yaw\":2.0401508424113763}},{\"id\":59,\"key\":\"shelter-8\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-48.98624627278475,\"z\":43.691496077734804,\"y\":0.7,\"yaw\":2.1835404157246403}},{\"id\":60,\"key\":\"shelter-9\",\"injured\":false,\"status\":\"turned\",\"passed\":false,\"at\":{\"x\":-51.425564553029865,\"z\":43.79874859777122,\"y\":0.7,\"yaw\":-0.07101075435001236}},{\"id\":61,\"key\":\"shelter-10\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-49.02373518519553,\"z\":42.98616056965628,\"y\":0.7,\"yaw\":2.7452873586717486}},{\"id\":62,\"key\":\"shelter-11\",\"injured\":false,\"status\":\"turned\",\"passed\":false,\"at\":{\"x\":-49.1968596160347,\"z\":41.88716701794206,\"y\":0.83,\"yaw\":2.8749308901568273}},{\"id\":63,\"key\":\"shelter-12\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-50.62252120754265,\"z\":46.53217213841308,\"y\":0.7,\"yaw\":-2.885548542070014}},{\"id\":64,\"key\":\"shelter-13\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-48.68605971426686,\"z\":42.371438773012834,\"y\":0.83,\"yaw\":1.6070462902837848}},{\"id\":65,\"key\":\"shelter-14\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-48.69326273483936,\"z\":44.48099883166961,\"y\":0.7,\"yaw\":2.87120298665054}},{\"id\":66,\"key\":\"shelter-15\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-48.03743703411832,\"z\":42.632847162453956,\"y\":0.7,\"yaw\":0.8855930385616586}},{\"id\":67,\"key\":\"shelter-16\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-49.462648258645416,\"z\":44.99317474441351,\"y\":0.7,\"yaw\":-2.430759593215273}},{\"id\":68,\"key\":\"shelter-17\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-48.344161408170656,\"z\":43.24024758155623,\"y\":0.7,\"yaw\":2.6533807136091863}},{\"id\":69,\"key\":\"shelter-18\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-50.03053381089932,\"z\":43.84281854279119,\"y\":0.7,\"yaw\":-0.3246063872561231}},{\"id\":70,\"key\":\"shelter-19\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-47.59621838689038,\"z\":43.15060661663724,\"y\":0.7,\"yaw\":2.9753360831840405}},{\"id\":71,\"key\":\"shelter-20\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-49.34773174168254,\"z\":44.28106413142664,\"y\":0.7,\"yaw\":2.4899565826112964}},{\"id\":72,\"key\":\"shelter-21\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-47.90019143529972,\"z\":44.482095232325044,\"y\":0.7,\"yaw\":-3.1671897611450643}},{\"id\":73,\"key\":\"shelter-22\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-48.2852185156448,\"z\":43.91850362995381,\"y\":0.7,\"yaw\":2.894221103909331}},{\"id\":74,\"key\":\"shelter-23\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-47.60810938293533,\"z\":43.848366904762116,\"y\":0.7,\"yaw\":2.6051261951183577}}]}",
+        "player": {
+          "x": -70.46143341064453,
+          "y": 0.7049999833106995,
+          "z": 47.49925994873047,
+          "yaw": -0.59549722321725
+        }
+      }
+    },
+    {
+      "tier": "high",
+      "seed": 2,
+      "completed": true,
+      "seconds": 118.75,
+      "shots": 71,
+      "rocketKills": 363,
+      "killsPerRocket": 5.112676056338028,
+      "rejected": 0,
+      "courierAttacks": 150,
+      "groupAttacks": 61,
+      "courierAttacksPerMinute": 75.78947368421052,
+      "groupAttacksPerMinute": 30.821052631578947,
+      "attackDirections": {
+        "west": 59,
+        "north": 36,
+        "south": 44,
+        "east": 72
+      },
+      "simultaneousDirections": 4,
+      "alphas": [
+        {
+          "hp": 300,
+          "firstHit": 1017,
+          "kill": 1084,
+          "seconds": 1.1166666666666667
+        },
+        {
+          "hp": 300,
+          "firstHit": 1584,
+          "kill": 1656,
+          "seconds": 1.2
+        },
+        {
+          "hp": 300,
+          "firstHit": 4333,
+          "kill": 4383,
+          "seconds": 0.8333333333333334
+        },
+        {
+          "hp": 300,
+          "firstHit": 5607,
+          "kill": 5690,
+          "seconds": 1.3833333333333333
+        },
+        {
+          "hp": 300,
+          "firstHit": 5829,
+          "kill": 6234,
+          "seconds": 6.75
+        }
+      ],
+      "deaths": 0,
+      "boarded": 13,
+      "outcome": "complete"
+    },
+    {
+      "tier": "high",
+      "seed": 3,
+      "completed": true,
+      "seconds": 116.86666666666666,
+      "shots": 75,
+      "rocketKills": 388,
+      "killsPerRocket": 5.173333333333333,
+      "rejected": 0,
+      "courierAttacks": 86,
+      "groupAttacks": 10,
+      "courierAttacksPerMinute": 44.152880775812896,
+      "groupAttacksPerMinute": 5.13405590416429,
+      "attackDirections": {
+        "north": 25,
+        "west": 25,
+        "south": 24,
+        "east": 22
+      },
+      "simultaneousDirections": 4,
+      "alphas": [
+        {
+          "hp": 300,
+          "firstHit": 569,
+          "kill": 595,
+          "seconds": 0.43333333333333335
+        },
+        {
+          "hp": 300,
+          "firstHit": 1428,
+          "kill": 1496,
+          "seconds": 1.1333333333333333
+        },
+        {
+          "hp": 300,
+          "firstHit": 3545,
+          "kill": 3615,
+          "seconds": 1.1666666666666667
+        },
+        {
+          "hp": 300,
+          "firstHit": 4800,
+          "kill": 4884,
+          "seconds": 1.4
+        },
+        {
+          "hp": 300,
+          "firstHit": 5312,
+          "kill": 5332,
+          "seconds": 0.3333333333333333
+        }
+      ],
+      "deaths": 0,
+      "boarded": 24,
+      "outcome": "complete"
+    }
+  ]
+}

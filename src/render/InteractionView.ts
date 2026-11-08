@@ -1,3 +1,4 @@
+import { groundDepth, groundLayers } from './GroundLayers';
 import { interactionPromptPosition, type PromptRect } from '../ui/promptPosition';
 export { interactionPromptPosition } from '../ui/promptPosition';
 import { LevelSixSubway } from '../sim/missions/LevelSixSubway';
@@ -75,6 +76,7 @@ export class InteractionView extends Group {
   private disposed = false;
   constructor(private readonly world: SimWorld, private readonly materials: Materials, private readonly view: View, private readonly low = false) {
     super(); this.registry = new AssetRegistry(() => {}, { materials: materials }); this.name = 'interactions';
+    groundDepth(this.gasMaterial, groundLayers.footprint);
     this.gasMaterial.outputNode = vec4(.3, .55, .12, uv().sub(.5).mul(2).length().smoothstep(1, .3).mul(.18));
     const outline = new Mesh(this.outlineGeometry, this.black), stroke = new Mesh(this.strokeGeometry, this.white);
     outline.renderOrder = 90; stroke.renderOrder = 91; this.fill.renderOrder = 92;

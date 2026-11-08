@@ -15,9 +15,5 @@ export const physicsAssets = records as unknown as Readonly<Record<string, Physi
  * heavy furniture whose old pushable flag only allowed on-foot pushing. Authored
  * fixed fixtures and concrete barrier walls remain part of the static world.
  * Driven vehicles are spawned separately by Vehicles, never from this table. */
-export const movableProps: Readonly<Record<string, PhysicsAsset>> = Object.fromEntries(Object.entries(physicsAssets)
-  .filter(([id, p]) => (id.startsWith('prop.') || id.startsWith('haz.') || id.startsWith('veh.')) && id !== 'prop.jersey-barrier' && p.class !== 'fixed' && p.mass > 0 && p.boxes.length));
-
-/** Existing district layout/clearance contract. Additional movable classes opt in per placement. */
 export const pushableProps: Readonly<Record<string, PhysicsAsset>> = Object.fromEntries(Object.entries(physicsAssets)
-  .filter(([id, p]) => (id.startsWith('prop.') || id.startsWith('haz.')) && p.pushable && p.class !== 'fixed' && p.mass > 0 && p.boxes.length));
+  .filter(([id, p]) => (id.startsWith('prop.') || id.startsWith('haz.') || id.startsWith('veh.')) && id !== 'prop.jersey-barrier' && p.class !== 'fixed' && p.mass > 0 && p.boxes.length));

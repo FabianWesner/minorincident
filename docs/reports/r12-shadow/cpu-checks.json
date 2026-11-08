@@ -1,0 +1,31 @@
+{
+  "checks": [
+    {
+      "command": "npm run typecheck",
+      "status": 0,
+      "seconds": 51.183
+    },
+    {
+      "command": "npm run lint",
+      "status": 0,
+      "seconds": 32.237
+    },
+    {
+      "command": "npm test -- --maxWorkers=1",
+      "status": 0,
+      "seconds": 188.061
+    }
+  ],
+  "vitestWorkers": 1,
+  "browsers": 0,
+  "builds": 0,
+  "commit": "f3f7ea4f8dc3a7252fad1efaf2c1aa4b84b247e1",
+  "unitPassed": 106,
+  "unitSkipped": 1,
+  "unitFiles": 27,
+  "inventoryCases": 150,
+  "inventoryFiles": 43,
+  "testBudgetSeconds": 240,
+  "testWrapperSeconds": 187.8,
+  "runner": "remote"
+}
