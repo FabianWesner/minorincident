@@ -142,6 +142,7 @@ export class HealthBars extends Group {
       const top = (1 - projectedTop) * height / 2;
       let x = (this.point.x + 1) * width / 2, y = top - 2 - (size.height + 4) / 2;
       const follower = isFollower(e), pip = follower && compactFollowers;
+      const evacuee = follower && this.world.scenario === 'L7';
       const displaySize = pip ? followerPipSize : size;
       if (pip) y = top - 2 - displaySize.height / 2;
       // A visible body can extend above the frame at close zoom. Keep its
@@ -153,7 +154,7 @@ export class HealthBars extends Group {
       // Preserve every enemy bar, but move bars crossing the courier's body
       // above her silhouette. Dense hordes previously painted red bars over it.
       if ((follower || e.faction === 'infected') && x + displaySize.width / 2 >= this.heroScreen.left - 2 && x - displaySize.width / 2 <= this.heroScreen.right + 2 && y + displaySize.height / 2 >= this.heroScreen.top - 2 && y - displaySize.height / 2 <= this.heroScreen.bottom + 2) {
-        if (pip) continue;
+        if (pip && !evacuee) continue;
         y = this.heroScreen.top - 4 - displaySize.height / 2;
       }
       if (x - displaySize.width / 2 - (pip ? 0 : 2) < 0 || x + displaySize.width / 2 + (pip ? 0 : 2) > width || y - displaySize.height / 2 < 0 || y + displaySize.height / 2 > height) continue;
@@ -165,8 +166,10 @@ export class HealthBars extends Group {
       Object.assign(this.ray.origin, camera.position); Object.assign(this.ray.dir, this.direction);
       const physics = this.world.physics.world;
       // Cuboids include solid buildings, doors, vehicles and displaced props; ignore actor capsules and sensors.
-      if (physics?.castRay(this.ray, Math.max(0, distance - .01), true, undefined, undefined, undefined, undefined, this.solidCollider)) continue;
-      if (occluded?.(this.center)) continue;
+      // The known L7 escort keeps its individual health UI through fence/wall
+      // reveals. A static head ray otherwise erases bars above visible bodies.
+      if (!evacuee && physics?.castRay(this.ray, Math.max(0, distance - .01), true, undefined, undefined, undefined, undefined, this.solidCollider)) continue;
+      if (!evacuee && occluded?.(this.center)) continue;
       this.center.copy(this.point);
       this.center.x = x / width * 2 - 1;
       this.center.y = 1 - y / height * 2;

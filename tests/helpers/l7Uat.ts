@@ -1,9 +1,11 @@
-import { expect } from 'vitest';
+import { expect, vi } from 'vitest';
 import { loadLevel } from '../../tools/sim-runner/levels';
 import { SimWorld } from '../../src/sim/world/SimWorld';
 import { action } from '../../src/data/actions/catalog';
 import { combatArchetypes, ttkBands } from '../../src/data/balance';
-import { BoxGeometry, Group, Mesh } from 'three/webgpu';
+import { BoxGeometry, Box3, Group, Mesh, PerspectiveCamera, Vector3 } from 'three/webgpu';
+import { HealthBars } from '../../src/render/HealthBars';
+import { pickBodies } from '../../src/render/characters/PickBodies';
 import { removeL7LakeWall } from '../../src/render/district/l7LakeWall';
 import fair from '../../public/assets/layouts/D-FAIR.layout.json';
 import type { DistrictLayout } from '../../src/levels/districts/types';
@@ -42,6 +44,7 @@ export async function checkL7Navigation() {
         expect(Math.hypot(e.transform.x - launcher!.transform.x, e.transform.z - launcher!.transform.z), `survivor ${row.id} stays outside the 2 m objective ring plus body clearance at tick ${w.tick}`).toBeGreaterThanOrEqual(2.35);
       }
     }
+    checkL7FollowerBars(w);
     // The loading renderer must see the actual resident models at tick zero;
     // discovering their pedestrian looks on the first AI tick builds new
     // living/corpse shaders during the launcher pickup (L7-01).
@@ -122,6 +125,26 @@ function checkFriendlyRocketReaction(w: SimWorld) {
   expect(follower.civilian!.knockedUntil, 'friendly rocket splash keeps living followers upright').toBeLessThanOrEqual(w.tick);
   expect(follower.transform).toEqual(before);
   expect(enemy.health.current, 'the same rocket still damages infected').toBeLessThan(enemyHealth);
+}
+
+/** G-12: known evacuees keep individual bars through the same cut fences
+ * that reveal their bodies; enemy visibility remains covered by its own test. */
+function checkL7FollowerBars(w: SimWorld) {
+  const boxes = new Map(w.l7Encounters!.state.roster.map((r, i) => {
+    const x = (i % 6 - 2.5) * 1.2, z = (Math.floor(i / 6) - 1.5) * 1.2;
+    return [r.id, new Box3(new Vector3(x - .3, 0, z - .3), new Vector3(x + .3, 1.5, z + .3))] as const;
+  }));
+  const camera = new PerspectiveCamera(35, 1280 / 720, .1, 600);
+  camera.position.set(10, 14, 20); camera.lookAt(0, 0, 0); camera.updateMatrixWorld();
+  const bounds = vi.spyOn(pickBodies, 'bounds').mockImplementation((id, out) => boxes.has(id) ? out.copy(boxes.get(id)!) : null);
+  const top = vi.spyOn(pickBodies, 'top').mockImplementation(id => boxes.has(id) ? boxes.get(id)!.max.clone().project(camera).y : null);
+  const ray = vi.spyOn(w.physics.world!, 'castRay').mockReturnValue(null);
+  const bars = new HealthBars(w);
+  try {
+    bars.update(camera, 1280, 720, () => true);
+    expect(bars.count, 'every known evacuee retains a bar through occluders').toBe(boxes.size);
+    expect(ray).not.toHaveBeenCalled();
+  } finally { bars.dispose(); bounds.mockRestore(); top.mockRestore(); ray.mockRestore(); }
 }
 
 /** A dense L7 column cannot hold the courier inside its own body ring. */
