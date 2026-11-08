@@ -262,7 +262,7 @@ test('corgi: warns of an offscreen threat within 18 m with a unit direction', as
       for (let tick = 1; tick <= 360; tick++) { w.tick = start + tick; w.npcs!.companion.update(); }
       expect(dog.transform.x).toBe(p.transform.x + gap);
       expect(w.infected!.director.offscreen(dog.transform, dog.transform.y - .3)).toBe(true);
-      w.tick++; w.npcs!.companion.update();
+      w.update();
       expect(dog.hidden).not.toBe(true);
       expect(dog.transform.x).toBeLessThan(p.transform.x);
       expect(w.infected!.director.offscreen(dog.transform, dog.transform.y - .3)).toBe(true);
