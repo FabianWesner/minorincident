@@ -1,0 +1,1366 @@
+{
+  "method": "Entire RGBA frames; 1280x720, seed1, paused loading clock, fixed node time, geometry-based depth ties; 20 asset-readiness rounds, canonical async civilian-batch traversal and equal resets of transient pose/contact/LOD history. Normal animation, IK budgets, actors, health bars, materials and shadows remain enabled. No regions excluded. Actual zoom/radius asserted; same camera/tick in each pair. QA production builds of baseline and corrected source avoid dev-server HMR.",
+  "pairs": 16,
+  "identical": 14,
+  "rows": [
+    {
+      "name": "native-L1",
+      "level": "L1",
+      "tier": "high",
+      "zoom": 1,
+      "tick": 0,
+      "camera": {
+        "zoom": 1,
+        "targetZoom": 1,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 19,
+        "regionScale": 1,
+        "focus": [
+          -66.4,
+          0,
+          9
+        ],
+        "target": [
+          -66.4,
+          0,
+          9
+        ],
+        "position": [
+          -55.53083334646401,
+          11.16791979355699,
+          19.869166653536006
+        ],
+        "spot": "e25-calibrated-zoom"
+      },
+      "calibratedZoom": 1,
+      "actualRadius": 19,
+      "lighting": {
+        "promotionBlend": 1,
+        "heroLight": null,
+        "heroLights": 0,
+        "heroShadowMaps": 0,
+        "promotionChanges": 0,
+        "shadowSize": 2048,
+        "preset": "L1",
+        "shadowColor": "6c56ac",
+        "fieldShadow": 0,
+        "lightField": {
+          "strength": 0,
+          "resolution": 1024,
+          "size": 80,
+          "statics": 530,
+          "litStatics": 530,
+          "candidates": 0,
+          "drawn": 0,
+          "transients": 0,
+          "capacity": 512,
+          "ms": 0,
+          "center": [
+            -66.40625,
+            8.984375
+          ]
+        }
+      },
+      "resetPoseHistory": true,
+      "poseHistories": 18,
+      "before": "test-results/epics/E25/rest/settled-before/high/native-L1-z1.png",
+      "after": "test-results/epics/E25/rest/settled-after/high/native-L1-z1.png",
+      "beforeSHA256": "9208da06c5363835c57a61e3d0e0714d55d46b30b09cfea13e8dfed70ca1b1e4",
+      "afterSHA256": "9208da06c5363835c57a61e3d0e0714d55d46b30b09cfea13e8dfed70ca1b1e4",
+      "changedPixels": 0,
+      "pixels": 921600,
+      "maxChannelDelta": 0,
+      "meanChannelDelta": 0.0,
+      "bounds": null
+    },
+    {
+      "name": "native-L1",
+      "level": "L1",
+      "tier": "high",
+      "zoom": 1.5,
+      "tick": 0,
+      "camera": {
+        "zoom": 1.5,
+        "targetZoom": 1.5,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 28.5,
+        "regionScale": 1,
+        "focus": [
+          -66.4,
+          0,
+          9
+        ],
+        "target": [
+          -66.4,
+          0,
+          9
+        ],
+        "position": [
+          -50.09625001969601,
+          16.751879690335485,
+          25.30374998030401
+        ],
+        "spot": "e25-calibrated-zoom"
+      },
+      "calibratedZoom": 1.5,
+      "actualRadius": 28.5,
+      "lighting": {
+        "promotionBlend": 1,
+        "heroLight": null,
+        "heroLights": 0,
+        "heroShadowMaps": 0,
+        "promotionChanges": 0,
+        "shadowSize": 2048,
+        "preset": "L1",
+        "shadowColor": "6c56ac",
+        "fieldShadow": 0,
+        "lightField": {
+          "strength": 0,
+          "resolution": 1024,
+          "size": 80,
+          "statics": 530,
+          "litStatics": 530,
+          "candidates": 0,
+          "drawn": 0,
+          "transients": 0,
+          "capacity": 512,
+          "ms": 0,
+          "center": [
+            -66.40625,
+            8.984375
+          ]
+        }
+      },
+      "resetPoseHistory": true,
+      "poseHistories": 46,
+      "before": "test-results/epics/E25/rest/settled-before/high/native-L1-z1.5.png",
+      "after": "test-results/epics/E25/rest/settled-after/high/native-L1-z1.5.png",
+      "beforeSHA256": "e168ed6cca473b358ae6d29ad05758fc2cc02d3fdcb56893d30cf36c8362410a",
+      "afterSHA256": "e168ed6cca473b358ae6d29ad05758fc2cc02d3fdcb56893d30cf36c8362410a",
+      "changedPixels": 0,
+      "pixels": 921600,
+      "maxChannelDelta": 0,
+      "meanChannelDelta": 0.0,
+      "bounds": null
+    },
+    {
+      "name": "native-L2",
+      "level": "L2",
+      "tier": "high",
+      "zoom": 1,
+      "tick": 0,
+      "camera": {
+        "zoom": 1,
+        "targetZoom": 1,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 19,
+        "regionScale": 1,
+        "focus": [
+          -37.8,
+          0.13,
+          -35
+        ],
+        "target": [
+          -37.8,
+          0,
+          -35
+        ],
+        "position": [
+          -19.799999999999997,
+          22,
+          -17
+        ],
+        "spot": "e25-calibrated-zoom"
+      },
+      "calibratedZoom": 1,
+      "actualRadius": 33.64520768252145,
+      "lighting": {
+        "promotionBlend": 1,
+        "heroLight": null,
+        "heroLights": 0,
+        "heroShadowMaps": 0,
+        "promotionChanges": 0,
+        "shadowSize": 2048,
+        "preset": "L2",
+        "shadowColor": "626b8c",
+        "fieldShadow": 0,
+        "lightField": {
+          "strength": 0,
+          "resolution": 1024,
+          "size": 80,
+          "statics": 535,
+          "litStatics": 528,
+          "candidates": 0,
+          "drawn": 0,
+          "transients": 0,
+          "capacity": 512,
+          "ms": 0,
+          "center": [
+            -37.8125,
+            -35
+          ]
+        }
+      },
+      "resetPoseHistory": true,
+      "poseHistories": 54,
+      "before": "test-results/epics/E25/rest/settled-before/high/native-L2-z1.png",
+      "after": "test-results/epics/E25/rest/settled-after/high/native-L2-z1.png",
+      "beforeSHA256": "7fda2d6b514407e5ad564e1f38a455c3c6b11d5393b03d64bcc6e85f89c0b2d3",
+      "afterSHA256": "7fda2d6b514407e5ad564e1f38a455c3c6b11d5393b03d64bcc6e85f89c0b2d3",
+      "changedPixels": 0,
+      "pixels": 921600,
+      "maxChannelDelta": 0,
+      "meanChannelDelta": 0.0,
+      "bounds": null
+    },
+    {
+      "name": "native-L2",
+      "level": "L2",
+      "tier": "high",
+      "zoom": 1.5,
+      "tick": 0,
+      "camera": {
+        "zoom": 1.5,
+        "targetZoom": 1.5,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 28.5,
+        "regionScale": 1,
+        "focus": [
+          -37.8,
+          0.13,
+          -35
+        ],
+        "target": [
+          -37.8,
+          0,
+          -35
+        ],
+        "position": [
+          -10.799999999999997,
+          33,
+          -8
+        ],
+        "spot": "e25-calibrated-zoom"
+      },
+      "calibratedZoom": 1.5,
+      "actualRadius": 50.467811523782174,
+      "lighting": {
+        "promotionBlend": 1,
+        "heroLight": null,
+        "heroLights": 0,
+        "heroShadowMaps": 0,
+        "promotionChanges": 0,
+        "shadowSize": 2048,
+        "preset": "L2",
+        "shadowColor": "626b8c",
+        "fieldShadow": 0,
+        "lightField": {
+          "strength": 0,
+          "resolution": 1024,
+          "size": 80,
+          "statics": 535,
+          "litStatics": 528,
+          "candidates": 0,
+          "drawn": 0,
+          "transients": 0,
+          "capacity": 512,
+          "ms": 0,
+          "center": [
+            -37.8125,
+            -35
+          ]
+        }
+      },
+      "resetPoseHistory": true,
+      "poseHistories": 94,
+      "before": "test-results/epics/E25/rest/settled-before/high/native-L2-z1.5.png",
+      "after": "test-results/epics/E25/rest/settled-after/high/native-L2-z1.5.png",
+      "beforeSHA256": "139e0b2308dcd5ab6d460613fcf1ca53e201983172aa2a5bfda5a8d36d802c58",
+      "afterSHA256": "139e0b2308dcd5ab6d460613fcf1ca53e201983172aa2a5bfda5a8d36d802c58",
+      "changedPixels": 0,
+      "pixels": 921600,
+      "maxChannelDelta": 0,
+      "meanChannelDelta": 0.0,
+      "bounds": null
+    },
+    {
+      "name": "native-L4",
+      "level": "L4",
+      "tier": "high",
+      "zoom": 1,
+      "tick": 0,
+      "camera": {
+        "zoom": 1,
+        "targetZoom": 1,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 21.849999999999998,
+        "regionScale": 1,
+        "focus": [
+          -19.870121199939717,
+          0,
+          4.048220490962349
+        ],
+        "target": [
+          -20,
+          0,
+          4
+        ],
+        "position": [
+          0,
+          24,
+          24
+        ],
+        "spot": "e25-calibrated-zoom"
+      },
+      "calibratedZoom": 1,
+      "actualRadius": 37.094473981982816,
+      "lighting": {
+        "promotionBlend": 1,
+        "heroLight": null,
+        "heroLights": 0,
+        "heroShadowMaps": 0,
+        "promotionChanges": 0,
+        "shadowSize": 2048,
+        "preset": "L4",
+        "shadowColor": "636081",
+        "fieldShadow": 0,
+        "lightField": {
+          "strength": 0.12,
+          "resolution": 1024,
+          "size": 80,
+          "statics": 309,
+          "litStatics": 309,
+          "candidates": 94,
+          "drawn": 94,
+          "transients": 0,
+          "capacity": 512,
+          "ms": 0.20000076293945312,
+          "center": [
+            -19.84375,
+            4.0625
+          ]
+        }
+      },
+      "resetPoseHistory": true,
+      "poseHistories": 67,
+      "before": "test-results/epics/E25/rest/settled-before/high/native-L4-z1.png",
+      "after": "test-results/epics/E25/rest/settled-after/high/native-L4-z1.png",
+      "beforeSHA256": "b20919539500d8fabbdbabc79ff74b7f93a79f1c908503339352b413f4e0b95a",
+      "afterSHA256": "b20919539500d8fabbdbabc79ff74b7f93a79f1c908503339352b413f4e0b95a",
+      "changedPixels": 0,
+      "pixels": 921600,
+      "maxChannelDelta": 0,
+      "meanChannelDelta": 0.0,
+      "bounds": null
+    },
+    {
+      "name": "native-L4",
+      "level": "L4",
+      "tier": "high",
+      "zoom": 1.5,
+      "tick": 0,
+      "camera": {
+        "zoom": 1.5,
+        "targetZoom": 1.5,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 32.775,
+        "regionScale": 1,
+        "focus": [
+          -19.870121199939717,
+          0,
+          4.048220490962349
+        ],
+        "target": [
+          -20,
+          0,
+          4
+        ],
+        "position": [
+          10,
+          36,
+          34
+        ],
+        "spot": "e25-calibrated-zoom"
+      },
+      "calibratedZoom": 1.5000000000000002,
+      "actualRadius": 55.64171097297423,
+      "lighting": {
+        "promotionBlend": 1,
+        "heroLight": null,
+        "heroLights": 0,
+        "heroShadowMaps": 0,
+        "promotionChanges": 0,
+        "shadowSize": 2048,
+        "preset": "L4",
+        "shadowColor": "636081",
+        "fieldShadow": 0,
+        "lightField": {
+          "strength": 0.12,
+          "resolution": 1024,
+          "size": 80,
+          "statics": 309,
+          "litStatics": 309,
+          "candidates": 94,
+          "drawn": 94,
+          "transients": 0,
+          "capacity": 512,
+          "ms": 0,
+          "center": [
+            -19.84375,
+            4.0625
+          ]
+        }
+      },
+      "resetPoseHistory": true,
+      "poseHistories": 78,
+      "before": "test-results/epics/E25/rest/settled-before/high/native-L4-z1.5.png",
+      "after": "test-results/epics/E25/rest/settled-after/high/native-L4-z1.5.png",
+      "beforeSHA256": "9b12d6be0ebecbafd6ce91bb2db0688b5a58c3bb2b43074273e14e6b1b945ef7",
+      "afterSHA256": "9b12d6be0ebecbafd6ce91bb2db0688b5a58c3bb2b43074273e14e6b1b945ef7",
+      "changedPixels": 0,
+      "pixels": 921600,
+      "maxChannelDelta": 0,
+      "meanChannelDelta": 0.0,
+      "bounds": null
+    },
+    {
+      "name": "native-L5",
+      "level": "L5",
+      "tier": "high",
+      "zoom": 1,
+      "tick": 0,
+      "camera": {
+        "zoom": 1,
+        "targetZoom": 1,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 19,
+        "regionScale": 1,
+        "focus": [
+          -17,
+          0,
+          3
+        ],
+        "target": [
+          -17,
+          0,
+          3
+        ],
+        "position": [
+          33,
+          40,
+          53
+        ],
+        "spot": "e25-calibrated-zoom"
+      },
+      "calibratedZoom": 1,
+      "actualRadius": 81.24038404635961,
+      "lighting": {
+        "promotionBlend": 1,
+        "heroLight": null,
+        "heroLights": 0,
+        "heroShadowMaps": 0,
+        "promotionChanges": 0,
+        "shadowSize": 2048,
+        "preset": "L5",
+        "shadowColor": "6e536e",
+        "fieldShadow": 0,
+        "lightField": {
+          "strength": 0.8,
+          "resolution": 1024,
+          "size": 80,
+          "statics": 308,
+          "litStatics": 11,
+          "candidates": 13,
+          "drawn": 13,
+          "transients": 0,
+          "capacity": 512,
+          "ms": 0.09999942779541016,
+          "center": [
+            -17.03125,
+            2.96875
+          ]
+        }
+      },
+      "resetPoseHistory": true,
+      "poseHistories": 297,
+      "before": "test-results/epics/E25/rest/settled-before/high/native-L5-z1.png",
+      "after": "test-results/epics/E25/rest/settled-after/high/native-L5-z1.png",
+      "beforeSHA256": "672e1890a4aaf4419403b25cc84df59fa21955c2dd6fea036906418e17470454",
+      "afterSHA256": "672e1890a4aaf4419403b25cc84df59fa21955c2dd6fea036906418e17470454",
+      "changedPixels": 0,
+      "pixels": 921600,
+      "maxChannelDelta": 0,
+      "meanChannelDelta": 0.0,
+      "bounds": null
+    },
+    {
+      "name": "native-L5",
+      "level": "L5",
+      "tier": "high",
+      "zoom": 1.5,
+      "tick": 0,
+      "camera": {
+        "zoom": 1.5,
+        "targetZoom": 1.5,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 28.5,
+        "regionScale": 1,
+        "focus": [
+          -17,
+          0,
+          3
+        ],
+        "target": [
+          -17,
+          0,
+          3
+        ],
+        "position": [
+          58,
+          60,
+          78
+        ],
+        "spot": "e25-calibrated-zoom"
+      },
+      "calibratedZoom": 1.5,
+      "actualRadius": 121.8605760695394,
+      "lighting": {
+        "promotionBlend": 1,
+        "heroLight": null,
+        "heroLights": 0,
+        "heroShadowMaps": 0,
+        "promotionChanges": 0,
+        "shadowSize": 2048,
+        "preset": "L5",
+        "shadowColor": "6e536e",
+        "fieldShadow": 0,
+        "lightField": {
+          "strength": 0.8,
+          "resolution": 1024,
+          "size": 80,
+          "statics": 308,
+          "litStatics": 11,
+          "candidates": 13,
+          "drawn": 13,
+          "transients": 0,
+          "capacity": 512,
+          "ms": 0,
+          "center": [
+            -17.03125,
+            2.96875
+          ]
+        }
+      },
+      "resetPoseHistory": true,
+      "poseHistories": 369,
+      "before": "test-results/epics/E25/rest/settled-before/high/native-L5-z1.5.png",
+      "after": "test-results/epics/E25/rest/settled-after/high/native-L5-z1.5.png",
+      "beforeSHA256": "4e9cfca4e007ce81204de133658e8bf26d371b6f32dd50a15ee68b252334776e",
+      "afterSHA256": "4e9cfca4e007ce81204de133658e8bf26d371b6f32dd50a15ee68b252334776e",
+      "changedPixels": 0,
+      "pixels": 921600,
+      "maxChannelDelta": 0,
+      "meanChannelDelta": 0.0,
+      "bounds": null
+    },
+    {
+      "name": "native-L1",
+      "level": "L1",
+      "tier": "low",
+      "zoom": 1,
+      "tick": 0,
+      "camera": {
+        "zoom": 1,
+        "targetZoom": 1,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 19,
+        "regionScale": 1,
+        "focus": [
+          -66.4,
+          0,
+          9
+        ],
+        "target": [
+          -66.4,
+          0,
+          9
+        ],
+        "position": [
+          -55.53083334646401,
+          11.16791979355699,
+          19.869166653536006
+        ],
+        "spot": "e25-calibrated-zoom"
+      },
+      "calibratedZoom": 1,
+      "actualRadius": 19,
+      "lighting": {
+        "promotionBlend": 1,
+        "heroLight": null,
+        "heroLights": 0,
+        "heroShadowMaps": 0,
+        "promotionChanges": 0,
+        "shadowSize": 1024,
+        "preset": "L1",
+        "shadowColor": "6c56ac",
+        "fieldShadow": 0,
+        "lightField": {
+          "strength": 0,
+          "resolution": 512,
+          "size": 60,
+          "statics": 530,
+          "litStatics": 530,
+          "candidates": 0,
+          "drawn": 0,
+          "transients": 0,
+          "capacity": 256,
+          "ms": 0,
+          "center": [
+            -66.4453125,
+            9.0234375
+          ]
+        }
+      },
+      "resetPoseHistory": true,
+      "poseHistories": 15,
+      "before": "test-results/epics/E25/rest/settled-before/low/native-L1-z1.png",
+      "after": "test-results/epics/E25/rest/settled-after/low/native-L1-z1.png",
+      "beforeSHA256": "37392a8904a78e55607b1b2c78c113e241fb90258dd0a402635b6fe59cfb3971",
+      "afterSHA256": "37392a8904a78e55607b1b2c78c113e241fb90258dd0a402635b6fe59cfb3971",
+      "changedPixels": 0,
+      "pixels": 921600,
+      "maxChannelDelta": 0,
+      "meanChannelDelta": 0.0,
+      "bounds": null
+    },
+    {
+      "name": "native-L1",
+      "level": "L1",
+      "tier": "low",
+      "zoom": 1.5,
+      "tick": 0,
+      "camera": {
+        "zoom": 1.5,
+        "targetZoom": 1.5,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 28.5,
+        "regionScale": 1,
+        "focus": [
+          -66.4,
+          0,
+          9
+        ],
+        "target": [
+          -66.4,
+          0,
+          9
+        ],
+        "position": [
+          -50.09625001969601,
+          16.751879690335485,
+          25.30374998030401
+        ],
+        "spot": "e25-calibrated-zoom"
+      },
+      "calibratedZoom": 1.5,
+      "actualRadius": 28.5,
+      "lighting": {
+        "promotionBlend": 1,
+        "heroLight": null,
+        "heroLights": 0,
+        "heroShadowMaps": 0,
+        "promotionChanges": 0,
+        "shadowSize": 1024,
+        "preset": "L1",
+        "shadowColor": "6c56ac",
+        "fieldShadow": 0,
+        "lightField": {
+          "strength": 0,
+          "resolution": 512,
+          "size": 60,
+          "statics": 530,
+          "litStatics": 530,
+          "candidates": 0,
+          "drawn": 0,
+          "transients": 0,
+          "capacity": 256,
+          "ms": 0,
+          "center": [
+            -66.4453125,
+            9.0234375
+          ]
+        }
+      },
+      "resetPoseHistory": true,
+      "poseHistories": 35,
+      "before": "test-results/epics/E25/rest/settled-before/low/native-L1-z1.5.png",
+      "after": "test-results/epics/E25/rest/settled-after/low/native-L1-z1.5.png",
+      "beforeSHA256": "d4ec64c8fe53b11a2d0d9dd06e0631c8741ab8e26399ec2c08fd7339342928cd",
+      "afterSHA256": "d4ec64c8fe53b11a2d0d9dd06e0631c8741ab8e26399ec2c08fd7339342928cd",
+      "changedPixels": 0,
+      "pixels": 921600,
+      "maxChannelDelta": 0,
+      "meanChannelDelta": 0.0,
+      "bounds": null
+    },
+    {
+      "name": "native-L2",
+      "level": "L2",
+      "tier": "low",
+      "zoom": 1,
+      "tick": 0,
+      "camera": {
+        "zoom": 1,
+        "targetZoom": 1,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 19,
+        "regionScale": 1,
+        "focus": [
+          -37.8,
+          0.13,
+          -35
+        ],
+        "target": [
+          -37.8,
+          0,
+          -35
+        ],
+        "position": [
+          -19.799999999999997,
+          22,
+          -17
+        ],
+        "spot": "e25-calibrated-zoom"
+      },
+      "calibratedZoom": 1,
+      "actualRadius": 33.64520768252145,
+      "lighting": {
+        "promotionBlend": 1,
+        "heroLight": null,
+        "heroLights": 0,
+        "heroShadowMaps": 0,
+        "promotionChanges": 0,
+        "shadowSize": 1024,
+        "preset": "L2",
+        "shadowColor": "626b8c",
+        "fieldShadow": 0,
+        "lightField": {
+          "strength": 0,
+          "resolution": 512,
+          "size": 60,
+          "statics": 535,
+          "litStatics": 528,
+          "candidates": 0,
+          "drawn": 0,
+          "transients": 0,
+          "capacity": 256,
+          "ms": 0,
+          "center": [
+            -37.8515625,
+            -35.0390625
+          ]
+        }
+      },
+      "resetPoseHistory": true,
+      "poseHistories": 54,
+      "before": "test-results/epics/E25/rest/settled-before/low/native-L2-z1.png",
+      "after": "test-results/epics/E25/rest/settled-after/low/native-L2-z1.png",
+      "beforeSHA256": "def92a772e86df3e502cccb5b337892459cf23da22488423c27329eba2d76325",
+      "afterSHA256": "def92a772e86df3e502cccb5b337892459cf23da22488423c27329eba2d76325",
+      "changedPixels": 0,
+      "pixels": 921600,
+      "maxChannelDelta": 0,
+      "meanChannelDelta": 0.0,
+      "bounds": null
+    },
+    {
+      "name": "native-L2",
+      "level": "L2",
+      "tier": "low",
+      "zoom": 1.5,
+      "tick": 0,
+      "camera": {
+        "zoom": 1.5,
+        "targetZoom": 1.5,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 28.5,
+        "regionScale": 1,
+        "focus": [
+          -37.8,
+          0.13,
+          -35
+        ],
+        "target": [
+          -37.8,
+          0,
+          -35
+        ],
+        "position": [
+          -10.799999999999997,
+          33,
+          -8
+        ],
+        "spot": "e25-calibrated-zoom"
+      },
+      "calibratedZoom": 1.5,
+      "actualRadius": 50.467811523782174,
+      "lighting": {
+        "promotionBlend": 1,
+        "heroLight": null,
+        "heroLights": 0,
+        "heroShadowMaps": 0,
+        "promotionChanges": 0,
+        "shadowSize": 1024,
+        "preset": "L2",
+        "shadowColor": "626b8c",
+        "fieldShadow": 0,
+        "lightField": {
+          "strength": 0,
+          "resolution": 512,
+          "size": 60,
+          "statics": 535,
+          "litStatics": 528,
+          "candidates": 0,
+          "drawn": 0,
+          "transients": 0,
+          "capacity": 256,
+          "ms": 0,
+          "center": [
+            -37.8515625,
+            -35.0390625
+          ]
+        }
+      },
+      "resetPoseHistory": true,
+      "poseHistories": 64,
+      "before": "test-results/epics/E25/rest/settled-before/low/native-L2-z1.5.png",
+      "after": "test-results/epics/E25/rest/settled-after/low/native-L2-z1.5.png",
+      "beforeSHA256": "7fccf3916996c146d5bf78dc4af45dd900b1d2e827906843aa974d0b18c3a815",
+      "afterSHA256": "7fccf3916996c146d5bf78dc4af45dd900b1d2e827906843aa974d0b18c3a815",
+      "changedPixels": 0,
+      "pixels": 921600,
+      "maxChannelDelta": 0,
+      "meanChannelDelta": 0.0,
+      "bounds": null
+    },
+    {
+      "name": "native-L4",
+      "level": "L4",
+      "tier": "low",
+      "zoom": 1,
+      "tick": 0,
+      "camera": {
+        "zoom": 1,
+        "targetZoom": 1,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 21.849999999999998,
+        "regionScale": 1,
+        "focus": [
+          -19.870121199939717,
+          0,
+          4.048220490962349
+        ],
+        "target": [
+          -20,
+          0,
+          4
+        ],
+        "position": [
+          0,
+          24,
+          24
+        ],
+        "spot": "e25-calibrated-zoom"
+      },
+      "calibratedZoom": 1,
+      "actualRadius": 37.094473981982816,
+      "lighting": {
+        "promotionBlend": 1,
+        "heroLight": null,
+        "heroLights": 0,
+        "heroShadowMaps": 0,
+        "promotionChanges": 0,
+        "shadowSize": 1024,
+        "preset": "L4",
+        "shadowColor": "636081",
+        "fieldShadow": 0,
+        "lightField": {
+          "strength": 0.12,
+          "resolution": 512,
+          "size": 60,
+          "statics": 309,
+          "litStatics": 309,
+          "candidates": 56,
+          "drawn": 56,
+          "transients": 0,
+          "capacity": 256,
+          "ms": 0.09999942779541016,
+          "center": [
+            -19.921875,
+            4.1015625
+          ]
+        }
+      },
+      "resetPoseHistory": true,
+      "poseHistories": 47,
+      "before": "test-results/epics/E25/rest/settled-before/low/native-L4-z1.png",
+      "after": "test-results/epics/E25/rest/settled-after/low/native-L4-z1.png",
+      "beforeSHA256": "2c2ca57bd24623f6ae296569ffe2a9d22655b8f0b574b884ba692ed0e89e2922",
+      "afterSHA256": "7344597fda9007124ef1b08e8f63e26311aec89103f47928205f337d6ea6b1da",
+      "changedPixels": 119,
+      "pixels": 921600,
+      "maxChannelDelta": 67,
+      "meanChannelDelta": 0.0006260850694444444,
+      "bounds": [
+        285,
+        245,
+        302,
+        256
+      ],
+      "sameCodeControl": {
+        "path": "test-results/epics/E25/rest/low-l4-control/low/native-L4-z1.png",
+        "sha256": "2c2ca57bd24623f6ae296569ffe2a9d22655b8f0b574b884ba692ed0e89e2922",
+        "camera": {
+          "zoom": 1,
+          "targetZoom": 1,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 21.849999999999998,
+          "regionScale": 1,
+          "focus": [
+            -19.870121199939717,
+            0,
+            4.048220490962349
+          ],
+          "target": [
+            -20,
+            0,
+            4
+          ],
+          "position": [
+            0,
+            24,
+            24
+          ],
+          "spot": "e25-calibrated-zoom"
+        },
+        "tick": 0,
+        "tier": "low",
+        "lighting": {
+          "promotionBlend": 1,
+          "heroLight": null,
+          "heroLights": 0,
+          "heroShadowMaps": 0,
+          "promotionChanges": 0,
+          "shadowSize": 1024,
+          "preset": "L4",
+          "shadowColor": "636081",
+          "fieldShadow": 0,
+          "lightField": {
+            "strength": 0.12,
+            "resolution": 512,
+            "size": 60,
+            "statics": 309,
+            "litStatics": 309,
+            "candidates": 56,
+            "drawn": 56,
+            "transients": 0,
+            "capacity": 256,
+            "ms": 0.09999942779541016,
+            "center": [
+              -19.921875,
+              4.1015625
+            ]
+          }
+        },
+        "resetPoseHistory": true,
+        "poseHistories": 47,
+        "changedPixelsAgainstBaseline": 0,
+        "shaderSHA256": "747681790328f892eee90def1b16fc680133ecdfa54cee34d14eab64d2715c35"
+      }
+    },
+    {
+      "name": "native-L4",
+      "level": "L4",
+      "tier": "low",
+      "zoom": 1.5,
+      "tick": 0,
+      "camera": {
+        "zoom": 1.5,
+        "targetZoom": 1.5,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 32.775,
+        "regionScale": 1,
+        "focus": [
+          -19.870121199939717,
+          0,
+          4.048220490962349
+        ],
+        "target": [
+          -20,
+          0,
+          4
+        ],
+        "position": [
+          10,
+          36,
+          34
+        ],
+        "spot": "e25-calibrated-zoom"
+      },
+      "calibratedZoom": 1.5000000000000002,
+      "actualRadius": 55.64171097297423,
+      "lighting": {
+        "promotionBlend": 1,
+        "heroLight": null,
+        "heroLights": 0,
+        "heroShadowMaps": 0,
+        "promotionChanges": 0,
+        "shadowSize": 1024,
+        "preset": "L4",
+        "shadowColor": "636081",
+        "fieldShadow": 0,
+        "lightField": {
+          "strength": 0.12,
+          "resolution": 512,
+          "size": 60,
+          "statics": 309,
+          "litStatics": 309,
+          "candidates": 56,
+          "drawn": 56,
+          "transients": 0,
+          "capacity": 256,
+          "ms": 0.10000038146972656,
+          "center": [
+            -19.921875,
+            4.1015625
+          ]
+        }
+      },
+      "resetPoseHistory": true,
+      "poseHistories": 47,
+      "before": "test-results/epics/E25/rest/settled-before/low/native-L4-z1.5.png",
+      "after": "test-results/epics/E25/rest/settled-after/low/native-L4-z1.5.png",
+      "beforeSHA256": "59eebc25bdc3139cb5b602ed979e173ec243f6f91a484dd6bf3d3cd64fbf6104",
+      "afterSHA256": "e08a34da9cd054dcd0d073961a63a12e91a2571bc52152d55bceea97b3153817",
+      "changedPixels": 58,
+      "pixels": 921600,
+      "maxChannelDelta": 34,
+      "meanChannelDelta": 0.00022858796296296296,
+      "bounds": [
+        401,
+        282,
+        412,
+        289
+      ],
+      "sameCodeControl": {
+        "path": "test-results/epics/E25/rest/low-l4-control/low/native-L4-z1.5.png",
+        "sha256": "59eebc25bdc3139cb5b602ed979e173ec243f6f91a484dd6bf3d3cd64fbf6104",
+        "camera": {
+          "zoom": 1.5,
+          "targetZoom": 1.5,
+          "zoomLimits": [
+            0.5,
+            1.5
+          ],
+          "fov": 25,
+          "azimuth": 0.7853981633974483,
+          "polar": 0.9424777960769379,
+          "radius": 32.775,
+          "regionScale": 1,
+          "focus": [
+            -19.870121199939717,
+            0,
+            4.048220490962349
+          ],
+          "target": [
+            -20,
+            0,
+            4
+          ],
+          "position": [
+            10,
+            36,
+            34
+          ],
+          "spot": "e25-calibrated-zoom"
+        },
+        "tick": 0,
+        "tier": "low",
+        "lighting": {
+          "promotionBlend": 1,
+          "heroLight": null,
+          "heroLights": 0,
+          "heroShadowMaps": 0,
+          "promotionChanges": 0,
+          "shadowSize": 1024,
+          "preset": "L4",
+          "shadowColor": "636081",
+          "fieldShadow": 0,
+          "lightField": {
+            "strength": 0.12,
+            "resolution": 512,
+            "size": 60,
+            "statics": 309,
+            "litStatics": 309,
+            "candidates": 56,
+            "drawn": 56,
+            "transients": 0,
+            "capacity": 256,
+            "ms": 0.09999942779541016,
+            "center": [
+              -19.921875,
+              4.1015625
+            ]
+          }
+        },
+        "resetPoseHistory": true,
+        "poseHistories": 47,
+        "changedPixelsAgainstBaseline": 0,
+        "shaderSHA256": "747681790328f892eee90def1b16fc680133ecdfa54cee34d14eab64d2715c35"
+      }
+    },
+    {
+      "name": "native-L5",
+      "level": "L5",
+      "tier": "low",
+      "zoom": 1,
+      "tick": 0,
+      "camera": {
+        "zoom": 1,
+        "targetZoom": 1,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 19,
+        "regionScale": 1,
+        "focus": [
+          -17,
+          0,
+          3
+        ],
+        "target": [
+          -17,
+          0,
+          3
+        ],
+        "position": [
+          33,
+          40,
+          53
+        ],
+        "spot": "e25-calibrated-zoom"
+      },
+      "calibratedZoom": 1,
+      "actualRadius": 81.24038404635961,
+      "lighting": {
+        "promotionBlend": 1,
+        "heroLight": null,
+        "heroLights": 0,
+        "heroShadowMaps": 0,
+        "promotionChanges": 0,
+        "shadowSize": 1024,
+        "preset": "L5",
+        "shadowColor": "6e536e",
+        "fieldShadow": 0,
+        "lightField": {
+          "strength": 0.8,
+          "resolution": 512,
+          "size": 60,
+          "statics": 308,
+          "litStatics": 11,
+          "candidates": 10,
+          "drawn": 10,
+          "transients": 0,
+          "capacity": 256,
+          "ms": 0.10000038146972656,
+          "center": [
+            -16.9921875,
+            3.046875
+          ]
+        }
+      },
+      "resetPoseHistory": true,
+      "poseHistories": 231,
+      "before": "test-results/epics/E25/rest/settled-before/low/native-L5-z1.png",
+      "after": "test-results/epics/E25/rest/settled-after/low/native-L5-z1.png",
+      "beforeSHA256": "3a392fa33350544a148d818c70a45b7b6e986d3956c84cc745a24cd2ccecb890",
+      "afterSHA256": "3a392fa33350544a148d818c70a45b7b6e986d3956c84cc745a24cd2ccecb890",
+      "changedPixels": 0,
+      "pixels": 921600,
+      "maxChannelDelta": 0,
+      "meanChannelDelta": 0.0,
+      "bounds": null
+    },
+    {
+      "name": "native-L5",
+      "level": "L5",
+      "tier": "low",
+      "zoom": 1.5,
+      "tick": 0,
+      "camera": {
+        "zoom": 1.5,
+        "targetZoom": 1.5,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 28.5,
+        "regionScale": 1,
+        "focus": [
+          -17,
+          0,
+          3
+        ],
+        "target": [
+          -17,
+          0,
+          3
+        ],
+        "position": [
+          58,
+          60,
+          78
+        ],
+        "spot": "e25-calibrated-zoom"
+      },
+      "calibratedZoom": 1.5,
+      "actualRadius": 121.8605760695394,
+      "lighting": {
+        "promotionBlend": 1,
+        "heroLight": null,
+        "heroLights": 0,
+        "heroShadowMaps": 0,
+        "promotionChanges": 0,
+        "shadowSize": 1024,
+        "preset": "L5",
+        "shadowColor": "6e536e",
+        "fieldShadow": 0,
+        "lightField": {
+          "strength": 0.8,
+          "resolution": 512,
+          "size": 60,
+          "statics": 308,
+          "litStatics": 11,
+          "candidates": 10,
+          "drawn": 10,
+          "transients": 0,
+          "capacity": 256,
+          "ms": 0.19999980926513672,
+          "center": [
+            -16.9921875,
+            3.046875
+          ]
+        }
+      },
+      "resetPoseHistory": true,
+      "poseHistories": 258,
+      "before": "test-results/epics/E25/rest/settled-before/low/native-L5-z1.5.png",
+      "after": "test-results/epics/E25/rest/settled-after/low/native-L5-z1.5.png",
+      "beforeSHA256": "006053d1c4bcb10b17697c947f325ba9634f1e4358c7a1257788a6d9db4ec510",
+      "afterSHA256": "006053d1c4bcb10b17697c947f325ba9634f1e4358c7a1257788a6d9db4ec510",
+      "changedPixels": 0,
+      "pixels": 921600,
+      "maxChannelDelta": 0,
+      "meanChannelDelta": 0.0,
+      "bounds": null
+    }
+  ],
+  "baselineReproducedByCorrectedCode": 16
+}

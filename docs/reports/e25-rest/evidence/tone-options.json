@@ -1,0 +1,243 @@
+{
+  "raw": "test-results/epics/E25/rest/built-after/webgpu-high/measurements.json",
+  "sha256": "61b43a0dba4b521b11cd56e4f9a7d4f09189d6a05b9bef0c36f170c8f396ea08",
+  "backend": "webgpu",
+  "tier": "high",
+  "zoom": 1.5,
+  "tones": [
+    {
+      "name": "shipping",
+      "meanLuminance": 0.030796514927679913
+    },
+    {
+      "name": "aces",
+      "meanLuminance": 0.023723895740153992
+    },
+    {
+      "name": "agx",
+      "meanLuminance": 0.0306607858745643
+    }
+  ],
+  "captures": [
+    {
+      "name": "tone-shipping",
+      "path": "test-results/epics/E25/rest/built-after/webgpu-high/tone-shipping.png",
+      "sha256": "646d55982bed73930671c39f5ca0d78a38da19bf44a785ebc8dc31c1f5b7c225",
+      "perf": {
+        "nodeBuilds": 246,
+        "drawCalls": 34,
+        "triangles": 51659,
+        "geometries": 330,
+        "textures": 200,
+        "backend": "webgpu",
+        "quality": {
+          "setting": "high",
+          "tier": "high",
+          "p90Ms": 0,
+          "slowSeconds": 0,
+          "budgets": {
+            "frameMs": 16.7,
+            "infected": 200,
+            "drawCalls": 600,
+            "triangles": 1500000,
+            "simMs": 4,
+            "heapMB": 400,
+            "pixelRatio": 2,
+            "shadowSize": 2048,
+            "bloomMips": 5,
+            "cullDistance": 60
+          }
+        },
+        "contextLost": false,
+        "paused": true,
+        "heapBytes": 588000000,
+        "lighting": {
+          "lightFieldMs": 0.3000001907348633,
+          "lightPools": 5,
+          "lightCandidates": 5,
+          "shadowMaps": 1,
+          "heroLights": 1,
+          "heroShadow": 1,
+          "preset": "night"
+        }
+      },
+      "camera": {
+        "zoom": 1.5,
+        "targetZoom": 1.5,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 28.5,
+        "regionScale": 1,
+        "focus": [
+          0,
+          0,
+          0
+        ],
+        "target": [
+          0,
+          0,
+          0
+        ],
+        "position": [
+          36,
+          48,
+          54
+        ],
+        "spot": "e25-zoom"
+      },
+      "tick": 120
+    },
+    {
+      "name": "tone-aces",
+      "path": "test-results/epics/E25/rest/built-after/webgpu-high/tone-aces.png",
+      "sha256": "1ac9c9fc6269a59e217da58acf9e80c4dfc0089e1c0141b277c9eab5c1ff3589",
+      "perf": {
+        "nodeBuilds": 249,
+        "drawCalls": 34,
+        "triangles": 51659,
+        "geometries": 330,
+        "textures": 200,
+        "backend": "webgpu",
+        "quality": {
+          "setting": "high",
+          "tier": "high",
+          "p90Ms": 0,
+          "slowSeconds": 0,
+          "budgets": {
+            "frameMs": 16.7,
+            "infected": 200,
+            "drawCalls": 600,
+            "triangles": 1500000,
+            "simMs": 4,
+            "heapMB": 400,
+            "pixelRatio": 2,
+            "shadowSize": 2048,
+            "bloomMips": 5,
+            "cullDistance": 60
+          }
+        },
+        "contextLost": false,
+        "paused": true,
+        "heapBytes": 588000000,
+        "lighting": {
+          "lightFieldMs": 0.10000038146972656,
+          "lightPools": 5,
+          "lightCandidates": 5,
+          "shadowMaps": 1,
+          "heroLights": 1,
+          "heroShadow": 1,
+          "preset": "night"
+        }
+      },
+      "camera": {
+        "zoom": 1.5,
+        "targetZoom": 1.5,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 28.5,
+        "regionScale": 1,
+        "focus": [
+          0,
+          0,
+          0
+        ],
+        "target": [
+          0,
+          0,
+          0
+        ],
+        "position": [
+          36,
+          48,
+          54
+        ],
+        "spot": "e25-zoom"
+      },
+      "tick": 120
+    },
+    {
+      "name": "tone-agx",
+      "path": "test-results/epics/E25/rest/built-after/webgpu-high/tone-agx.png",
+      "sha256": "fddff5ae81b3d145c771c1acfd7cc45cb9816c337115fd3d80b49dff09a01623",
+      "perf": {
+        "nodeBuilds": 252,
+        "drawCalls": 34,
+        "triangles": 51659,
+        "geometries": 330,
+        "textures": 200,
+        "backend": "webgpu",
+        "quality": {
+          "setting": "high",
+          "tier": "high",
+          "p90Ms": 0,
+          "slowSeconds": 0,
+          "budgets": {
+            "frameMs": 16.7,
+            "infected": 200,
+            "drawCalls": 600,
+            "triangles": 1500000,
+            "simMs": 4,
+            "heapMB": 400,
+            "pixelRatio": 2,
+            "shadowSize": 2048,
+            "bloomMips": 5,
+            "cullDistance": 60
+          }
+        },
+        "contextLost": false,
+        "paused": true,
+        "heapBytes": 588000000,
+        "lighting": {
+          "lightFieldMs": 0.19999980926513672,
+          "lightPools": 5,
+          "lightCandidates": 5,
+          "shadowMaps": 1,
+          "heroLights": 1,
+          "heroShadow": 1,
+          "preset": "night"
+        }
+      },
+      "camera": {
+        "zoom": 1.5,
+        "targetZoom": 1.5,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 28.5,
+        "regionScale": 1,
+        "focus": [
+          0,
+          0,
+          0
+        ],
+        "target": [
+          0,
+          0,
+          0
+        ],
+        "position": [
+          36,
+          48,
+          54
+        ],
+        "spot": "e25-zoom"
+      },
+      "tick": 120
+    }
+  ],
+  "errors": []
+}
