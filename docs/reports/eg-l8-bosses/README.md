@@ -22,6 +22,8 @@ The full matrix found a [gorilla circle-kiting win](evidence/post-merge/gorilla-
 
 The ordinary high-tier path flag is a conservative dynamic-fence AABB at a physically clear source. The observer now proves a ≤4 m entry with the canonical full-radius static sweep, then includes that distance in the unchanged 2.5× bound. A closed-pocket negative control must reject every entry. No actor is excluded or moved.
 
+The final-source high-tier complete route passes at **90% reach**, first contact **19.38 s**, minimum follower ratio **0.996781**. All **19 controls** and the existing threat red fixtures pass. The [before/after native hash](evidence/post-merge/physical-prefix-passivity.json) is identical (`b9e96de8`, 182.27 s).
+
 **Open:** post-merge typecheck, lint, unit tests and corrected six-arena matrix on runners. The receipts below describe the original lane source until the post-merge results are committed. **Browser QA needed** remains open; no browsers are launched.
 
 ## Done and open items
