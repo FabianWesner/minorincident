@@ -114,7 +114,7 @@ export class L8BossArenas {
     }
     boss.engaged = arena.phase !== 3;
     if (p.health.current <= 0 || arena.phase === 3) return true;
-    if (arena.id === 'lion' && boss.slot === 1 && arena.phase < 2) { this.orbit(e, arena, def.centre, 2); return true; }
+    if (arena.id === 'lion' && boss.slot === 1 && arena.phase < 2) { this.walk(e, { x: -66, z: -42 }, 3); return true; }
     if (arena.id === 'monkey' && boss.slot === def.count - 1 && arena.phase < 2) { this.walk(e, { x: -22, z: 14 }, 3.5); return true; }
     if (arena.id === 'monkey' && boss.slot === 6 && arena.phase === 2 && !boss.leaderEntered) {
       this.walk(e, { x: -6, z: 14 }, 6);
@@ -128,6 +128,11 @@ export class L8BossArenas {
     if (b.specialAttack?.move === 'gorilla.roar' && b.specialAttack.stage === 'telegraph' && b.grabHits > 0) { arena.counters++; this.recover(e, 120); return true; }
     if (b.specialAttack) { this.advanceMove(e, arena); return true; }
     if (w.tick < boss.readyAt || Status.stunned(e, w.tick)) return true;
+    if (boss.hunt) {
+      const hunt = boss.hunt;
+      if (distance(e.transform, hunt) > 1.2 && w.tick < hunt.until) { this.walk(e, hunt, hunt.flank ? 7 : 4); return true; }
+      delete boss.hunt; this.start(e, hunt.flank ? 'lion.flank' : 'lion.pounce', 36, 10, 1); return true;
+    }
     if (boss.scavengeId) {
       const object = w.entities.get(boss.scavengeId), prop = w.props?.items.find(p => p.entityId === boss.scavengeId);
       const pose = prop?.body.translation() ?? object?.transform;
@@ -158,7 +163,7 @@ export class L8BossArenas {
     if (lead && w.tick >= arena.nextAt) {
       arena.cycle++; arena.nextAt = w.tick + (arena.id === 'elephant' ? 1320 : arena.phase === 2 ? 300 : 420); this.beginCycle(e, arena);
     } else if (arena.id === 'lion' && arena.phase === 2 && boss.slot === 1 && w.tick >= boss.readyAt) {
-      this.start(e, 'lion.flank', 36, 10, 1); boss.readyAt = w.tick + 360;
+      this.hunt(e, true); boss.readyAt = w.tick + 360;
     } else if (arena.id === 'elephant' && distance(e.transform, p.transform) < 3) {
       this.start(e, 'elephant.swipe', 42, 0, 3); boss.readyAt = w.tick + 420;
     } else this.orbit(e, arena, p.transform, arena.id === 'flamingo' ? 6 : 4);
@@ -194,7 +199,13 @@ export class L8BossArenas {
       const side = arena.cycle % 2 ? 1 : -1, predicted = this.predict(e, 2.2, arena);
       arena.lane = { x: Math.max(46, Math.min(74, predicted.x)), side, staging: true };
     }
-    else if (arena.id === 'lion') this.start(e, arena.phase === 2 && arena.cycle % 2 === 0 ? 'lion.roar' : 'lion.pounce', 36, 10, 1);
+    else if (arena.id === 'lion') {
+      if (arena.phase === 2 && arena.cycle % 2 === 0) {
+        this.start(e, 'lion.roar', 36, 0, 8);
+        const lioness = live.find(v => v.infected!.arenaBoss!.slot === 1);
+        if (lioness && !lioness.infected!.specialAttack) this.hunt(lioness, true);
+      } else this.hunt(e, false);
+    }
     else if (arena.id === 'elephant') this.start(e, distance(e.transform, this.w.entities.get(1)!.transform) < 3 ? 'elephant.swipe' : 'elephant.charge', 54, 24, 1.75);
     else if (arena.id === 'gorilla') {
       const pillar = arena.phase === 2 && arena.cycle % 2 === 0 ? this.w.destruction?.objects.filter(o => o.id.includes('l8-gorilla-pillar') && !o.state.collapsed).sort((a, b) => distance(e.transform, { x: a.home.p[0], z: a.home.p[2] }) - distance(e.transform, { x: b.home.p[0], z: b.home.p[2] }))[0] : undefined;
@@ -206,6 +217,16 @@ export class L8BossArenas {
       if ((arena.cycle + member.id) % 3 === 0) this.scavenge(member);
       else this.start(member, 'monkey.grab', 48 + member.infected!.arenaBoss!.slot * 2, 10, .8);
     }
+  }
+  private hunt(e: EntitySnapshot, flank: boolean): void {
+    const p = this.w.entities.get(1)!.transform, dx = e.transform.x - p.x, dz = e.transform.z - p.z, d = Math.hypot(dx, dz) || 1;
+    let at = { x: p.x - dz / d * 7, z: p.z + dx / d * 7 };
+    if (!flank) {
+      const covers = [[-64, -30], [-55, -36], [-66, -40]].map(([x, z]) => { const cx = x - p.x, cz = z - p.z, cd = Math.hypot(cx, cz) || 1; return { x: x + cx / cd * 2, z: z + cz / cd * 2 }; });
+      at = covers.sort((a, b) => distance(e.transform, a) - distance(e.transform, b))[0];
+    }
+    e.infected!.arenaBoss!.hunt = { ...at, until: this.w.tick + (flank ? 150 : 120), flank };
+    if (!flank) this.announce('A low growl behind the rocks — watch for the pounce.');
   }
   /** Existing roof is real cover; the fixed climb/drop arc is body-clear and serialized, with no position jump. */
   private traverse(e: EntitySnapshot, to: { x: number; y: number; z: number }, roof: boolean): void {
