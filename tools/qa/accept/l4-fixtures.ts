@@ -14,29 +14,25 @@ export async function l4TimingFixtures(tier: Tier, add: (id: string, clause: str
     const mission = world.missions!;
     // An uninterrupted ordinary convoy ride, before the isolated timer setup.
     let readyAt: number | null = null;
+    let maxTruckStep = 0;
+    const rearTruck = world.entities.get(mission.state.l4!.convoyIds[l4.convoy.vehicles.findIndex(v => v.id === 'truck-2')])!;
     for (let i = 0; i < 40 * 60 && !mission.state.l4!.arrivedAt; i++) {
+      const { x, z } = rearTruck.transform;
       world.applyInput(emptyInput(), 'keyboard'); world.update();
+      maxTruckStep = Math.max(maxTruckStep, Math.hypot(rearTruck.transform.x - x, rearTruck.transform.z - z));
       if (mission.state.l4!.arrivedAt && !world.storyLock && !world.entities.get(1)!.hidden && !mission.state.l4!.seated && world.physics.playerCollider!.isEnabled()) readyAt = world.tick;
     }
     const arrived = mission.state.l4!.arrivedAt;
     const controlTicks = arrived && readyAt !== null ? readyAt - arrived : null;
     add('L4-01', 'courier control restored after actual convoy stop', { arrivedAt: arrived, readyAt, controlTicks }, 'visible, unseated, collider enabled, no story lock within30ticks of stop', controlTicks !== null ? controlTicks >= 0 && controlTicks <= 30 : undefined);
+    add('L4-18', 'rear cargo truck parks without a position jump', { maxStepM: maxTruckStep, arrivedAt: arrived }, 'arrives normally; every simulation tick moves less than0.25m (15m/s)', !!arrived && maxTruckStep < .25);
     const index = l4.convoy.vehicles.findIndex(v => v.player), spec = l4.convoy.vehicles[index];
     const bus = world.entities.get(mission.state.l4!.convoyIds[index])!.transform, c = Math.abs(Math.cos(bus.yaw)), s = Math.abs(Math.sin(bus.yaw));
     const halfX = (c * spec.len + s * spec.wid) / 2, halfZ = (s * spec.len + c * spec.wid) / 2;
     const bounds = { x0: bus.x - halfX, x1: bus.x + halfX, z0: bus.z - halfZ, z1: bus.z + halfZ }, p = l4.perimeter;
     add('L4-01', 'full passenger bus parks inside the military perimeter', { bus: { ...bus }, bounds, militaryArea: p }, 'all four hull bounds inside the actual military area', arrived ? bounds.x0 >= p.x0 && bounds.x1 <= p.x1 && bounds.z0 >= p.z0 && bounds.z1 <= p.z1 : undefined);
-    const beats: { id: string; inputHeld: boolean; ticks: number; blockedBeforeHalfSecond: boolean }[] = [];
-    for (const id of Object.keys(mission.def.cinematics)) for (const inputHeld of [false, true]) {
-      if (!mission.cinematic(id)) throw new Error(`Could not start ${id}`);
-      let ticks = 0, blockedBeforeHalfSecond = true;
-      while (mission.state.cinematic && ticks < 121) {
-        mission.advanceCinematic({ ...emptyInput(), interact: inputHeld }); ticks++;
-        if (inputHeld && ticks < 30 && !mission.state.cinematic) blockedBeforeHalfSecond = false;
-      }
-      beats.push({ id, inputHeld, ticks, blockedBeforeHalfSecond });
-    }
-    add('L4-09', 'native camera beat duration and half-second input gate', beats, 'every beat≤120ticks; held input blocked for29ticks and skips at30', beats.length > 0 && beats.every(b => b.blockedBeforeHalfSecond && (b.inputHeld ? b.ticks === 30 : b.ticks <= 120)));
+    const cameraTakeovers = Object.keys(mission.def.cinematics);
+    add('L4-09', 'opening-fight has no gameplay camera takeover', cameraTakeovers, 'no L4 mission cinematics; opening-fight reveals remain in radio/HUD', cameraTakeovers.length === 0 && !mission.state.cinematic);
     for (const id of ['ride', 'quartermaster', 'hold', 'hide']) if (!mission.state.completedObjectives.includes(id)) mission.completeObjective(id);
     const brace = mission.def.anchors['l4-brace']; relocatePlayer(world, brace.x, brace.z);
     const started = world.tick;

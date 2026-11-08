@@ -1,0 +1,132 @@
+{
+  "description": "Delivered intact and wrecked truck connected cloth surfaces (excluding separate ties/seams): coincident-position normal continuity, tolerance 0.01 after quantization. Wrecked source repair preserved the geometry hash at every LOD.",
+  "rows": [
+    {
+      "path": "public/assets/models/veh.military-truck.glb",
+      "clothComponents": [
+        {
+          "positions": 327,
+          "min": [
+            -3.2527356796219244,
+            1.908539048748576,
+            -1.2489458458334917
+          ],
+          "max": [
+            0.027221966790997244,
+            3.6184655812695983,
+            1.2260864287834017
+          ],
+          "discontinuousSharedNormals": 0
+        }
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.military-truck.lod1.glb",
+      "clothComponents": [
+        {
+          "positions": 67,
+          "min": [
+            -3.2297344277542237,
+            1.8600068986252718,
+            -1.2246059052227554
+          ],
+          "max": [
+            0.05021704615906909,
+            3.570039343566762,
+            1.2204202916015547
+          ],
+          "discontinuousSharedNormals": 0
+        }
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.military-truck.lod2.glb",
+      "clothComponents": [
+        {
+          "positions": 28,
+          "min": [
+            -3.2297344277542237,
+            1.8599980788886756,
+            -1.1729135770009282
+          ],
+          "max": [
+            0.05021704615906909,
+            3.5700305238301664,
+            1.1669490775907174
+          ],
+          "discontinuousSharedNormals": 0
+        }
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.military-truck.wrecked.glb",
+      "clothComponents": [
+        {
+          "positions": 92,
+          "min": [
+            -3.2297156467557655,
+            1.8599693356831346,
+            -1.314310218673981
+          ],
+          "max": [
+            -1.499987448797448,
+            3.5216650568568086,
+            1.2395319120380504
+          ],
+          "discontinuousSharedNormals": 0
+        }
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.military-truck.wrecked.lod1.glb",
+      "clothComponents": [
+        {
+          "positions": 65,
+          "min": [
+            -3.2297895108936405,
+            1.860009707044739,
+            -1.314423237293463
+          ],
+          "max": [
+            -1.499953509221112,
+            3.521904136683181,
+            1.23952620591789
+          ],
+          "discontinuousSharedNormals": 0
+        }
+      ]
+    },
+    {
+      "path": "public/assets/models/veh.military-truck.wrecked.lod2.glb",
+      "clothComponents": [
+        {
+          "positions": 39,
+          "min": [
+            -3.229740381779282,
+            1.860042175232023,
+            -1.2547623664545438
+          ],
+          "max": [
+            -1.5000142549054682,
+            3.5501939210436815,
+            1.1495046446083792
+          ],
+          "discontinuousSharedNormals": 0
+        }
+      ]
+    }
+  ],
+  "before": {
+    "revision": "485ebce1",
+    "discontinuousClothPositionsByLod": [
+      50,
+      10,
+      4
+    ],
+    "wreckedDiscontinuousClothPositionsByLod": [
+      82,
+      56,
+      31
+    ]
+  }
+}

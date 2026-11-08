@@ -578,7 +578,7 @@ export const completeNativeRows = new Map<string, { clause: string; policy: stri
   ['L4-04', ['complete', 'stationary'].flatMap(policy => ['soldiers at turn', 'civilian census at turn excluding soldiers', 'actual armed civilian share at turn', 'every war tick observed from turn through line break', 'war living infected plus reserved slots and pending turns', 'war living character identity census'].map(clause => ({ clause, policy })))],
   ['L4-09', [
     ...['line1 actual beat after first turn', 'nests actual beat after first turn', 'armor actual beat after first turn', 'fallback after third line break'].map(clause => ({ clause, policy: 'complete' })),
-    { clause: 'native camera beat duration and half-second input gate', policy: 'controlled-fixture' },
+    { clause: 'opening-fight has no gameplay camera takeover', policy: 'controlled-fixture' },
   ]],
   ['L6-05', [
     ...['complete', 'stationary'].flatMap(policy => ['combat hard rule on actual player windups', 'real player/group windups per minute', 'minimum bounded-path reachable share within30m (path≤2.5×direct)'].map(clause => ({ clause, policy }))),

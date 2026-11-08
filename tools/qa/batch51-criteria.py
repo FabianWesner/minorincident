@@ -61,7 +61,7 @@ special_plans = {
  'L4-01': 'Record actual real-input convoy start/stop/control ticks, five vehicle IDs and bus parking bounds at the plaza.',
  'L4-03': 'Add a read-only pickup/alarm/attack tick ledger to the real-input quartermaster pickup, including the actual klaxon event.',
  'L4-06': 'Run the existing high-tier hold census in npm run qa:threat; measure actual first physical breach on the level clock and sustained living plaza population through line break.',
- 'L4-09': 'Retain native line/nest/armour/fallback event ticks in a full L4 hold; exercise real camera-skip input after 0.5 seconds.',
+ 'L4-09': 'Retain native line/nest/armour/fallback event ticks in a full L4 hold; verify opening-fight reveals do not take over the courier-follow camera.',
  'L4-11': 'Run the existing frontal/flank riot fixtures in tools/qa/release-ab-weapons.mjs, including point blank, visible recoil/HP and an ordinary full-HP mortal courier firing continuously.',
  'L4-13': 'Complete real-input cellar escape; census route contacts, forty-second gap and each three-per-nine-second pursuit group with a native event observer.',
  'L4-16': 'Record actual cellar bar timing, entrant IDs/corgi position, battle-audio event duration and L5 same-basement handover.',

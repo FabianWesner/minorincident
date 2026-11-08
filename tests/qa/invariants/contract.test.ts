@@ -3,7 +3,7 @@ import { describe, expect, test, vi } from 'vitest';
 import { missionIds } from '../../../src/levels/missions';
 import { preset, type ProgressionPreset } from '../../../src/sim/progression/Campaign';
 import physicsAssets from '../../../src/data/physicsAssets';
-import { l4, l4Route, l4RoutePose, l4ConvoyStations } from '../../../src/data/l4';
+import { l4, l4Route, l4ConvoyStations, l4ConvoyPose } from '../../../src/data/l4';
 import { l7Departure } from '../../../src/data/l7';
 import { emptyInput } from '../../../src/input/InputFrame';
 import { bicycleGeometry } from '../../../src/data/bicycleGeometry';
@@ -132,7 +132,7 @@ describe('automatic regression invariants', () => {
     } finally { lab.dispose(); }
   }, 480_000);
 
-  test('4 vehicles: scripted route and stop poses have no overlap with registered solids', async () => {
+  test('L4 vehicles: scripted route and stop poses have no overlap with active registered solids', async () => {
     const layout = layouts.get('D-FAIR')!, solids = layout.colliders.filter(c => !c.walkable && /^(bld\.|prop\.(?:.*fence|.*barrier)|l4-)/.test(c.id) && !c.id.includes('hedge')).map(c => ({ id: c.id, aabb: c.aabb }));
     for (const wall of l4PerimeterWalls) solids.push({ id: wall.id, aabb: { min: [wall.x - wall.halfX, wall.y - wall.halfY, wall.z - wall.halfZ], max: [wall.x + wall.halfX, wall.y + wall.halfY, wall.z + wall.halfZ] } });
     const tank = physicsAssets['veh.tank'];
@@ -147,8 +147,9 @@ describe('automatic regression invariants', () => {
     const route = l4Route(), stations = l4ConvoyStations(route.length);
     for (const [i, vehicle] of l4.convoy.vehicles.entries()) {
       for (const box of physicsAssets[vehicle.asset as keyof typeof physicsAssets].boxes) {
-        for (let s = stations.start[i]; s <= stations.end[i]; s += .25) samples.push({ id: `convoy-${vehicle.id}-${s.toFixed(2)}`, ...l4RoutePose(route, s), box, baseY: .7 });
-        samples.push({ id: `convoy-${vehicle.id}-stop`, ...l4RoutePose(route, stations.end[i]), box, baseY: .7 });
+        for (let s = stations.start[i]; s <= stations.end[i]; s += .25) samples.push({ id: `convoy-${vehicle.id}-${s.toFixed(2)}`, ...l4ConvoyPose(route, s, i, stations.end[i]), box, baseY: .7 });
+        const parked = l4ConvoyPose(route, stations.end[i], i, stations.end[i]);
+        samples.push({ id: `convoy-${vehicle.id}-stop`, ...parked, box, baseY: .7 });
       }
     }
     for (const v of layout.placements.filter(p => p.assetId.startsWith('veh.'))) {
@@ -160,6 +161,8 @@ describe('automatic regression invariants', () => {
     }
     const conflicts = new Set<string>();
     for (const pose of samples) for (const solid of solids) for (const box of pose.box ? [pose.box] : tank.boxes) {
+      // The perimeter and its physics wall are created after the convoy parks; the route intentionally crosses the east gate before then.
+      if (pose.id.startsWith('convoy-') && !pose.id.endsWith('-stop') && solid.id.startsWith('l4-perimeter-')) continue;
       if (pose.vehicleId === solid.id) continue;
       // Layout collision boxes are in district-local coordinates; tank route coordinates share D-FAIR origin.
       const isTank = pose.id.startsWith('tank-');
@@ -167,8 +170,10 @@ describe('automatic regression invariants', () => {
       const baseY = pose.baseY ?? (isTank ? .7 : 0), vertical = [box.min[1] + baseY, box.max[1] + baseY];
       const lx = pose.vehicleId ? 0 : (box.min[0] + box.max[0]) / 2, lz = pose.vehicleId ? 0 : (box.min[2] + box.max[2]) / 2;
       const x = pose.x + Math.cos(pose.yaw) * lx + Math.sin(pose.yaw) * lz, z = pose.z - Math.sin(pose.yaw) * lx + Math.cos(pose.yaw) * lz;
-      if (oracle.vehicle(obbHitsAabb(x, z, pose.yaw, halfX, halfZ, vertical[0], vertical[1], solid.aabb))) conflicts.add(`${pose.id.split('-').slice(0, 3).join('-')} overlaps ${solid.id}`);
+      if (oracle.vehicle(obbHitsAabb(x, z, pose.yaw, halfX, halfZ, vertical[0], vertical[1], solid.aabb))) conflicts.add(`${pose.id.startsWith('convoy-truck-2-stop') ? pose.id : pose.id.split('-').slice(0, 3).join('-')} overlaps ${solid.id}`);
     }
+    expect([...conflicts].filter(c => c.startsWith('convoy-truck-2-stop') && c.includes('l4-perimeter')), 'PO 2026-11-08: the parked cargo truck hull and physics collider clear the wall/sign').toEqual([]);
+    expect([...conflicts].filter(c => /^(?:convoy|tank)-/.test(c)), 'L4 scripted truck and tank paths clear their active registered solids').toEqual([]);
     const world = await loadLevel('L1', 1);
     try {
       const bike = world.vehicles!.bicycle.entity!, player = world.entities.get(1)!;

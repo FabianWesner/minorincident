@@ -88,7 +88,7 @@ const remainingChecks: Record<string, string> = {
   'L3-11': 'Fix cited competent attack-rate failure; native medkit census and mortal newbie low-health share are now measured.',
   'L3-12': 'Inspect HUD real-destination distance and route readability; native l3-zone marker coordinates are fixed.',
   'L3-16': 'Review current smoke counterexamples, then recapture all three streets at both zooms/qualities after a game fix. Light and distinct damage remain PO review; smoke count stays objective.',
-  'L4-09': 'Native line/fallback clocks and isolated production camera duration/skip gates are measured at both qualities.',
+  'L4-09': 'Native line/fallback clocks and absence of opening-fight gameplay camera takeovers are measured at both qualities.',
   'L4-11': 'Inspect visible HP chip/recoil and always-shown riot bar; add mortal full-health continuous-fire duel. Isolated frontal/flank TTK is measured.',
   'L4-16': 'Isolated uninterrupted bar timing is measured; inspect entry roster, low-pass audibility and same-basement L5 handover.',
   'L5-05': 'Reachability/contact clauses are measured; qualify competent route density≥1 infected per40m. Perceived rescue pressure is a separate PO question.',
