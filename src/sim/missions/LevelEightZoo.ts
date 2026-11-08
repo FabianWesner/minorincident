@@ -209,6 +209,7 @@ export class LevelEightZoo {
       s.sightingAt = t; s.departureAt = t + 18 * 60;
       s.megaId = w.infected!.spawn('infected.alpha', this.point({ x: 88, z: -80 }), { variant: 'inf.mega-alpha', state: 'chase', perched: false });
       const mega = w.entities.get(s.megaId)!;
+      mega.infected!.model = 'inf.mega-alpha'; // One recurring creature, independent of the pooled entity ID.
       Object.assign(mega.transform, { x: 88, y: 4.7, z: -88, yaw: -Math.PI / 2 });
       mega.health.current = mega.health.max = 1_000_000;
       mega.emerging = true; mega.contactExempt = s.haleId; mega.combat!.damageMultiplier = 0;
