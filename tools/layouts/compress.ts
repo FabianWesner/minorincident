@@ -15,7 +15,10 @@ import { MeshoptDecoder as ThreeMeshoptDecoder } from 'three/examples/jsm/libs/m
 
 async function parse(bytes: Uint8Array): Promise<Object3D> {
   const buffer = bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength) as ArrayBuffer;
-  const { scene } = await new GLTFLoader().setMeshoptDecoder(ThreeMeshoptDecoder).parseAsync(buffer, '');
+  const { scene, parser } = await new GLTFLoader().setMeshoptDecoder(ThreeMeshoptDecoder).parseAsync(buffer, '');
+  // Multi-primitive meshes get generated child names whose suffixes can change
+  // when material primitives are reordered. Compare their union at the glTF node.
+  scene.traverse(node => { const id = parser.associations.get(node)?.nodes; if (id !== undefined) node.userData.compressionNode = id; });
   scene.updateMatrixWorld(true); return scene;
 }
 /** Empties (placement/crown/anchor references) by traversal order; meshes as union world bounds per
@@ -24,7 +27,7 @@ async function parse(bytes: Uint8Array): Promise<Object3D> {
 function signature(scene: Object3D): Map<string, number[]> {
   const out = new Map<string, number[]>(), boxes = new Map<string, Box3>(); let i = 0;
   scene.traverse(node => {
-    if (node instanceof Mesh) { const box = boxes.get(node.name) ?? new Box3(); box.union(new Box3().setFromObject(node)); boxes.set(node.name, box); }
+    if (node instanceof Mesh) { let owner: Object3D = node; while (owner.parent && owner.userData.compressionNode === undefined) owner = owner.parent; const key = `${owner.userData.compressionNode}:${owner.name}`; const box = boxes.get(key) ?? new Box3(); box.union(new Box3().setFromObject(node)); boxes.set(key, box); }
     else if (!node.children.some(child => child instanceof Mesh)) out.set(`${node.name}#${i++}`, node.matrixWorld.toArray());
   });
   for (const [name, box] of [...boxes].sort(([x], [y]) => x.localeCompare(y))) out.set(`mesh:${name}`, [...box.min.toArray(), ...box.max.toArray()]);

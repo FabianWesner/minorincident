@@ -7,7 +7,9 @@ root=$(cd "$(dirname "$0")/.." && pwd)
 if [ "${E2E_LEGACY:-0}" != 1 ]; then
   # An opaque command already admitted by the pool owns the external reservation.
   [ "${MI_BROWSER_POOL_EXTERNAL:-}" != 1 ] || exec "$@"
-  exec node --import tsx "$root/tools/browser-pool/wrapper.ts" shared "$@"
+  pool_mode=shared
+  [ "${E2E_SERIAL:-0}" != 1 ] || pool_mode=serial
+  exec node --import tsx "$root/tools/browser-pool/wrapper.ts" "$pool_mode" "$@"
 fi
 export BROWSER_POOL=off
 slots="${E2E_SLOTS:-2}"

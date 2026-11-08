@@ -1,0 +1,34 @@
+{
+  "completedAt": "2026-11-08T16:33:30.360850+00:00",
+  "sourceRevision": "5b7d38b7d3c8f7d4f564691c8e3fc5c8c68276ef",
+  "execution": "Remote Linux runner; both slots reserved; heavy commands sequential; maxWorkers=1; no browsers",
+  "exitCode": 0,
+  "checks": [
+    {
+      "command": "npm run typecheck",
+      "exitCode": 0
+    },
+    {
+      "command": "npm run lint",
+      "exitCode": 0
+    },
+    {
+      "command": "npm test -- --maxWorkers=1",
+      "exitCode": 0,
+      "filesPassed": 27,
+      "testsPassed": 106,
+      "testsSkipped": 1,
+      "skipReason": "macOS-only e2e-lock legacy fallback test",
+      "durationSeconds": 182.07,
+      "budgetElapsedSeconds": 188.4,
+      "budgetSeconds": 240,
+      "inventoryCases": 150,
+      "inventoryCap": 150
+    }
+  ],
+  "focusedFiles": {
+    "tests/engine/vehicles.test.ts": "passed",
+    "tests/engine/navigation.test.ts": "4 passed"
+  },
+  "browserQA": "Delegated to QA lane under orchestrator no-browser instruction; see README."
+}

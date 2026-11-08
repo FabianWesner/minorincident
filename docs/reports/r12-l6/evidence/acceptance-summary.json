@@ -1,0 +1,883 @@
+{
+  "sourceHash": "d3ae91cee143e58a5e909b96e5de47d261f926e54bb6c2ee3fd7a6dfdff225b2",
+  "generatedAt": "2026-11-08T15:56:15.264Z",
+  "command": "QA_ACCEPT_ROOT=/private/tmp/r12-l6-acceptance npm run qa:accept -- --level L6 --skip-browser",
+  "exitCode": 1,
+  "policies": [
+    {
+      "tier": "low",
+      "policy": "complete",
+      "outcome": "complete",
+      "error": null,
+      "receipt": "receipts/L6-low-complete.json"
+    },
+    {
+      "tier": "low",
+      "policy": "stationary",
+      "outcome": "tick-budget",
+      "error": null,
+      "receipt": "receipts/L6-low-stationary.json"
+    },
+    {
+      "tier": "high",
+      "policy": "complete",
+      "outcome": "complete",
+      "error": null,
+      "receipt": "receipts/L6-high-complete.json"
+    },
+    {
+      "tier": "high",
+      "policy": "stationary",
+      "outcome": "tick-budget",
+      "error": null,
+      "receipt": "receipts/L6-high-stationary.json"
+    },
+    {
+      "tier": "low",
+      "policy": "controlled-fixtures",
+      "outcome": "complete",
+      "error": null,
+      "receipt": "receipts/L6-low-fixtures.json"
+    },
+    {
+      "tier": "high",
+      "policy": "controlled-fixtures",
+      "outcome": "complete",
+      "error": null,
+      "receipt": "receipts/L6-high-fixtures.json"
+    },
+    {
+      "tier": "low",
+      "policy": "checkpoint-death-control",
+      "outcome": "complete",
+      "error": null,
+      "receipt": "receipts/L6-low-checkpoints.json"
+    },
+    {
+      "tier": "high",
+      "policy": "checkpoint-death-control",
+      "outcome": "complete",
+      "error": null,
+      "receipt": "receipts/L6-high-checkpoints.json"
+    }
+  ],
+  "rows": [
+    {
+      "id": "L6-01",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "automatedComplete": false,
+      "checks": [
+        {
+          "clause": "initial shelter occupant identities",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "target": "24 \u2264 value \u2264 29"
+        },
+        {
+          "clause": "initial shelter roster full health",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "target": "every resident starts full health"
+        },
+        {
+          "clause": "initial shelter occupant identities",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "PASS",
+          "target": "24 \u2264 value \u2264 29"
+        },
+        {
+          "clause": "initial shelter roster full health",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "PASS",
+          "target": "every resident starts full health"
+        },
+        {
+          "clause": "initial shelter occupant identities",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "target": "24 \u2264 value \u2264 29"
+        },
+        {
+          "clause": "initial shelter roster full health",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "target": "every resident starts full health"
+        },
+        {
+          "clause": "initial shelter occupant identities",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "PASS",
+          "target": "24 \u2264 value \u2264 29"
+        },
+        {
+          "clause": "initial shelter roster full health",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "PASS",
+          "target": "every resident starts full health"
+        }
+      ]
+    },
+    {
+      "id": "L6-02",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "automatedComplete": false,
+      "checks": [
+        {
+          "clause": "new weapon pickup census",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "target": "0 \u2264 value \u2264 0"
+        },
+        {
+          "clause": "new weapon pickup census",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "PASS",
+          "target": "0 \u2264 value \u2264 0"
+        },
+        {
+          "clause": "new weapon pickup census",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "target": "0 \u2264 value \u2264 0"
+        },
+        {
+          "clause": "new weapon pickup census",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "PASS",
+          "target": "0 \u2264 value \u2264 0"
+        }
+      ]
+    },
+    {
+      "id": "L6-03",
+      "status": "PASS",
+      "currentStatus": "PASS",
+      "automatedComplete": true,
+      "checks": [
+        {
+          "clause": "first breach level clock",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "target": "30 \u2264 value \u2264 40"
+        },
+        {
+          "clause": "first breach bang lead",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "target": "1.5 \u2264 value \u2264 Infinity"
+        },
+        {
+          "clause": "actual first-wave spawn admissions (floor traversal still open)",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "target": "6 \u2264 value \u2264 Infinity"
+        },
+        {
+          "clause": "first breach level clock",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "PASS",
+          "target": "30 \u2264 value \u2264 40"
+        },
+        {
+          "clause": "first breach bang lead",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "PASS",
+          "target": "1.5 \u2264 value \u2264 Infinity"
+        },
+        {
+          "clause": "actual first-wave spawn admissions (floor traversal still open)",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "PASS",
+          "target": "6 \u2264 value \u2264 Infinity"
+        },
+        {
+          "clause": "first breach level clock",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "target": "30 \u2264 value \u2264 40"
+        },
+        {
+          "clause": "first breach bang lead",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "target": "1.5 \u2264 value \u2264 Infinity"
+        },
+        {
+          "clause": "actual first-wave spawn admissions (floor traversal still open)",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "target": "6 \u2264 value \u2264 Infinity"
+        },
+        {
+          "clause": "first breach level clock",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "PASS",
+          "target": "30 \u2264 value \u2264 40"
+        },
+        {
+          "clause": "first breach bang lead",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "PASS",
+          "target": "1.5 \u2264 value \u2264 Infinity"
+        },
+        {
+          "clause": "actual first-wave spawn admissions (floor traversal still open)",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "PASS",
+          "target": "6 \u2264 value \u2264 Infinity"
+        },
+        {
+          "clause": "actual first breach bang clock and six shelter-floor arrivals",
+          "tier": "low",
+          "policy": "controlled-fixture",
+          "status": "PASS",
+          "target": "breach30\u201340s; bang\u22651.5s before; at least6 actual bodies reach authored shelter floor before second breach; canonical control identical"
+        },
+        {
+          "clause": "actual first breach bang clock and six shelter-floor arrivals",
+          "tier": "high",
+          "policy": "controlled-fixture",
+          "status": "PASS",
+          "target": "breach30\u201340s; bang\u22651.5s before; at least6 actual bodies reach authored shelter floor before second breach; canonical control identical"
+        }
+      ]
+    },
+    {
+      "id": "L6-04",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "automatedComplete": false,
+      "checks": [
+        {
+          "clause": "second breach delay",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "target": "20 \u2264 value \u2264 30"
+        },
+        {
+          "clause": "second-wave admitted identities",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "target": "10 \u2264 value \u2264 Infinity"
+        },
+        {
+          "clause": "second-wave source accesses",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "target": "2 \u2264 value \u2264 Infinity"
+        },
+        {
+          "clause": "second breach delay",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "PASS",
+          "target": "20 \u2264 value \u2264 30"
+        },
+        {
+          "clause": "second-wave admitted identities",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "PASS",
+          "target": "10 \u2264 value \u2264 Infinity"
+        },
+        {
+          "clause": "second-wave source accesses",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "PASS",
+          "target": "2 \u2264 value \u2264 Infinity"
+        },
+        {
+          "clause": "second breach delay",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "target": "20 \u2264 value \u2264 30"
+        },
+        {
+          "clause": "second-wave admitted identities",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "target": "10 \u2264 value \u2264 Infinity"
+        },
+        {
+          "clause": "second-wave source accesses",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "target": "2 \u2264 value \u2264 Infinity"
+        },
+        {
+          "clause": "second breach delay",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "PASS",
+          "target": "20 \u2264 value \u2264 30"
+        },
+        {
+          "clause": "second-wave admitted identities",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "PASS",
+          "target": "10 \u2264 value \u2264 Infinity"
+        },
+        {
+          "clause": "second-wave source accesses",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "PASS",
+          "target": "2 \u2264 value \u2264 Infinity"
+        }
+      ]
+    },
+    {
+      "id": "L6-05",
+      "status": "FAIL",
+      "currentStatus": "PASS",
+      "automatedComplete": true,
+      "checks": [
+        {
+          "clause": "combat hard rule on actual player windups",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "target": "nonzero player windups in each combat policy"
+        },
+        {
+          "clause": "real player/group windups per minute",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "target": "4 \u2264 value \u2264 Infinity"
+        },
+        {
+          "clause": "minimum bounded-path reachable share within30m (path\u22642.5\u00d7direct)",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "target": "95 \u2264 value \u2264 100"
+        },
+        {
+          "clause": "combat hard rule on actual player windups",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "PASS",
+          "target": "nonzero player windups in each combat policy"
+        },
+        {
+          "clause": "stationary first real player attack (phase clock)",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "PASS",
+          "target": "\u226415 s"
+        },
+        {
+          "clause": "real player/group windups per minute",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "PASS",
+          "target": "4 \u2264 value \u2264 Infinity"
+        },
+        {
+          "clause": "minimum bounded-path reachable share within30m (path\u22642.5\u00d7direct)",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "PASS",
+          "target": "95 \u2264 value \u2264 100"
+        },
+        {
+          "clause": "stationary first attack after l6.breach1",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "PASS",
+          "target": "player windup\u226415s after this breach caption"
+        },
+        {
+          "clause": "stationary first attack after l6.breach2",
+          "tier": "low",
+          "policy": "stationary",
+          "status": "PASS",
+          "target": "player windup\u226415s after this breach caption"
+        },
+        {
+          "clause": "combat hard rule on actual player windups",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "target": "nonzero player windups in each combat policy"
+        },
+        {
+          "clause": "real player/group windups per minute",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "target": "4 \u2264 value \u2264 Infinity"
+        },
+        {
+          "clause": "minimum bounded-path reachable share within30m (path\u22642.5\u00d7direct)",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "target": "95 \u2264 value \u2264 100"
+        },
+        {
+          "clause": "combat hard rule on actual player windups",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "PASS",
+          "target": "nonzero player windups in each combat policy"
+        },
+        {
+          "clause": "stationary first real player attack (phase clock)",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "PASS",
+          "target": "\u226415 s"
+        },
+        {
+          "clause": "real player/group windups per minute",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "PASS",
+          "target": "4 \u2264 value \u2264 Infinity"
+        },
+        {
+          "clause": "minimum bounded-path reachable share within30m (path\u22642.5\u00d7direct)",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "PASS",
+          "target": "95 \u2264 value \u2264 100"
+        },
+        {
+          "clause": "stationary first attack after l6.breach1",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "PASS",
+          "target": "player windup\u226415s after this breach caption"
+        },
+        {
+          "clause": "stationary first attack after l6.breach2",
+          "tier": "high",
+          "policy": "stationary",
+          "status": "PASS",
+          "target": "player windup\u226415s after this breach caption"
+        }
+      ]
+    },
+    {
+      "id": "L6-06",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "automatedComplete": false,
+      "checks": []
+    },
+    {
+      "id": "L6-07",
+      "status": "PASS",
+      "currentStatus": "PASS",
+      "automatedComplete": true,
+      "checks": [
+        {
+          "clause": "ordinary retreat route completion",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "target": "complete"
+        },
+        {
+          "clause": "retreat player/group windups per minute",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "target": "4 \u2264 value \u2264 Infinity"
+        },
+        {
+          "clause": "actual HP lost during retreat",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "target": "30 \u2264 value \u2264 Infinity"
+        },
+        {
+          "clause": "retreat concurrent infected cap",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "target": "0 \u2264 value \u2264 30"
+        },
+        {
+          "clause": "ordinary retreat route completion",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "target": "complete"
+        },
+        {
+          "clause": "retreat player/group windups per minute",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "target": "4 \u2264 value \u2264 Infinity"
+        },
+        {
+          "clause": "actual HP lost during retreat",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "target": "30 \u2264 value \u2264 Infinity"
+        },
+        {
+          "clause": "retreat concurrent infected cap",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "target": "0 \u2264 value \u2264 60"
+        }
+      ]
+    },
+    {
+      "id": "L6-08",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "automatedComplete": false,
+      "checks": [
+        {
+          "clause": "observed human follower pace versus phase group median",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "target": "every ratio\u22650.95; bar pixels and absolute formation remain open"
+        },
+        {
+          "clause": "observed human follower pace versus phase group median",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "target": "every ratio\u22650.95; bar pixels and absolute formation remain open"
+        }
+      ]
+    },
+    {
+      "id": "L6-09",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "automatedComplete": false,
+      "checks": []
+    },
+    {
+      "id": "L6-10",
+      "status": "PASS",
+      "currentStatus": "PASS",
+      "automatedComplete": true,
+      "checks": [
+        {
+          "clause": "native fixed-gate/platform marker trajectory",
+          "tier": "low",
+          "policy": "controlled-fixture",
+          "status": "PASS",
+          "target": "every active retreat/exit tick at an initial gate wait spot or fixed platform/exit; all3 gate branches at four courier positions"
+        },
+        {
+          "clause": "native fixed-gate/platform marker trajectory",
+          "tier": "high",
+          "policy": "controlled-fixture",
+          "status": "PASS",
+          "target": "every active retreat/exit tick at an initial gate wait spot or fixed platform/exit; all3 gate branches at four courier positions"
+        }
+      ]
+    },
+    {
+      "id": "L6-11",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "automatedComplete": false,
+      "checks": []
+    },
+    {
+      "id": "L6-12",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "automatedComplete": false,
+      "checks": [
+        {
+          "clause": "result roster accounting",
+          "tier": "low",
+          "policy": "complete",
+          "status": "PASS",
+          "target": "in = out + lost"
+        },
+        {
+          "clause": "result roster accounting",
+          "tier": "high",
+          "policy": "complete",
+          "status": "PASS",
+          "target": "in = out + lost"
+        }
+      ]
+    },
+    {
+      "id": "L6-13",
+      "status": "PASS",
+      "currentStatus": "PASS",
+      "automatedComplete": true,
+      "checks": [
+        {
+          "clause": "ordinary fists-only route completion",
+          "tier": "low",
+          "policy": "controlled-fixture",
+          "status": "PASS",
+          "target": "complete;no weapon beyond fists/kick offered or used"
+        },
+        {
+          "clause": "ordinary fists-only route completion",
+          "tier": "high",
+          "policy": "controlled-fixture",
+          "status": "PASS",
+          "target": "complete;no weapon beyond fists/kick offered or used"
+        }
+      ]
+    },
+    {
+      "id": "L6-14",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "automatedComplete": false,
+      "checks": []
+    }
+  ],
+  "globals": [
+    {
+      "id": "G-01",
+      "status": "FAIL",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-02",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-03",
+      "status": "FAIL",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-04",
+      "status": "FAIL",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-05",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-06",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-07",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-08",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-09",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-10",
+      "status": "PASS",
+      "currentStatus": "PASS"
+    },
+    {
+      "id": "G-11",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-12",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-13",
+      "status": "FAIL",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-14",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-15",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-16",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-17",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-18",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-19",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-20",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-21",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-22",
+      "status": "FAIL",
+      "currentStatus": "FAIL"
+    },
+    {
+      "id": "G-23",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-24",
+      "status": "FAIL",
+      "currentStatus": "FAIL"
+    },
+    {
+      "id": "G-25",
+      "status": "FAIL",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-26",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED"
+    },
+    {
+      "id": "G-27",
+      "status": "FAIL",
+      "currentStatus": "NOT CHECKED"
+    }
+  ],
+  "nativeReceipts": [
+    {
+      "file": "L6-high-checkpoints.json",
+      "sha256": "c57092b75585ea136e73489d6abbf4e753d5a7770b7761c6a8afe6dd24be2812",
+      "sourceHash": "d3ae91cee143e58a5e909b96e5de47d261f926e54bb6c2ee3fd7a6dfdff225b2",
+      "errors": [],
+      "control": {
+        "observed": "79c8136e",
+        "control": "79c8136e",
+        "identical": true
+      }
+    },
+    {
+      "file": "L6-high-complete.json",
+      "sha256": "ad2416a6155696424accb2f67fae7ae1f32638a48e455898474a0236e1c7963f",
+      "sourceHash": "d3ae91cee143e58a5e909b96e5de47d261f926e54bb6c2ee3fd7a6dfdff225b2",
+      "errors": [],
+      "control": null
+    },
+    {
+      "file": "L6-high-fixtures.json",
+      "sha256": "bbdd6a87c9a1612e11de988b44f7aa6681466135306c5294340f86345701338d",
+      "sourceHash": "d3ae91cee143e58a5e909b96e5de47d261f926e54bb6c2ee3fd7a6dfdff225b2",
+      "errors": [],
+      "control": null
+    },
+    {
+      "file": "L6-high-stationary.json",
+      "sha256": "03dc97855f6db534589c67203940528f43d0a86c590ce3e371445c196be7d2df",
+      "sourceHash": "d3ae91cee143e58a5e909b96e5de47d261f926e54bb6c2ee3fd7a6dfdff225b2",
+      "errors": [],
+      "control": null
+    },
+    {
+      "file": "L6-low-checkpoints.json",
+      "sha256": "866e15497894e35a5522bca7aa5ddfe9d44a7dc3df849b45eb5afce97156b543",
+      "sourceHash": "d3ae91cee143e58a5e909b96e5de47d261f926e54bb6c2ee3fd7a6dfdff225b2",
+      "errors": [],
+      "control": {
+        "observed": "f5ff97e2",
+        "control": "f5ff97e2",
+        "identical": true
+      }
+    },
+    {
+      "file": "L6-low-complete.json",
+      "sha256": "ca7ea3ba4231696bb3d841de5900eed4945fb1a8ff5e14dde216a4088e8ab2d8",
+      "sourceHash": "d3ae91cee143e58a5e909b96e5de47d261f926e54bb6c2ee3fd7a6dfdff225b2",
+      "errors": [],
+      "control": null
+    },
+    {
+      "file": "L6-low-fixtures.json",
+      "sha256": "1d4e58e3bbfc51cb8928ff4b8ea26fe6b2a5a9da8f00f2f7957fda6dca4e5c76",
+      "sourceHash": "d3ae91cee143e58a5e909b96e5de47d261f926e54bb6c2ee3fd7a6dfdff225b2",
+      "errors": [],
+      "control": null
+    },
+    {
+      "file": "L6-low-stationary.json",
+      "sha256": "811c3f80f0df1302c7634316c2b4b74cd0cb50e8cc6a6d9bd9eb59543eb33ed1",
+      "sourceHash": "d3ae91cee143e58a5e909b96e5de47d261f926e54bb6c2ee3fd7a6dfdff225b2",
+      "errors": [],
+      "control": null
+    }
+  ],
+  "scope": "Native completion, stationary, controlled fixtures and checkpoint controls only. Browser coverage is separate.",
+  "reportRebuild": "npm run qa:accept -- --level L6 --skip-browser --reuse; canonical native receipts reused unchanged after numeric L6-07 review"
+}

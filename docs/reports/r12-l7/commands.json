@@ -1,0 +1,150 @@
+[
+  {
+    "name": "measure-before",
+    "command": [
+      "node",
+      "--import",
+      "tsx/esm",
+      "tools/qa/r12-l7-measure.ts",
+      "before"
+    ],
+    "exitCode": 0,
+    "seconds": 271.59,
+    "tail": "\"shelter-19\\\",\\\"injured\\\":false,\\\"status\\\":\\\"following\\\",\\\"passed\\\":false,\\\"at\\\":{\\\"x\\\":-47.59621838689038,\\\"z\\\":43.15060661663724,\\\"y\\\":0.7,\\\"yaw\\\":2.9753360831840405}},{\\\"id\\\":71,\\\"key\\\":\\\"shelter-20\\\",\\\"injured\\\":false,\\\"status\\\":\\\"following\\\",\\\"passed\\\":false,\\\"at\\\":{\\\"x\\\":-49.34773174168254,\\\"z\\\":44.28106413142664,\\\"y\\\":0.7,\\\"yaw\\\":2.4899565826112964}},{\\\"id\\\":72,\\\"key\\\":\\\"shelter-21\\\",\\\"injured\\\":false,\\\"status\\\":\\\"following\\\",\\\"passed\\\":false,\\\"at\\\":{\\\"x\\\":-47.90019143529972,\\\"z\\\":44.482095232325044,\\\"y\\\":0.7,\\\"yaw\\\":-3.1671897611450643}},{\\\"id\\\":73,\\\"key\\\":\\\"shelter-22\\\",\\\"injured\\\":false,\\\"status\\\":\\\"following\\\",\\\"passed\\\":false,\\\"at\\\":{\\\"x\\\":-48.2852185156448,\\\"z\\\":43.91850362995381,\\\"y\\\":0.7,\\\"yaw\\\":2.894221103909331}},{\\\"id\\\":74,\\\"key\\\":\\\"shelter-23\\\",\\\"injured\\\":false,\\\"status\\\":\\\"following\\\",\\\"passed\\\":false,\\\"at\\\":{\\\"x\\\":-47.60810938293533,\\\"z\\\":43.848366904762116,\\\"y\\\":0.7,\\\"yaw\\\":2.6051261951183577}}]}\",\"player\":{\"x\":-70.46143341064453,\"y\":0.7049999833106995,\"z\":47.49925994873047,\"yaw\":-0.59549722321725}}}\n{\"tier\":\"high\",\"seed\":2,\"completed\":true,\"seconds\":118.75,\"shots\":71,\"rocketKills\":363,\"killsPerRocket\":5.112676056338028,\"rejected\":0,\"courierAttacks\":150,\"groupAttacks\":61,\"courierAttacksPerMinute\":75.78947368421052,\"groupAttacksPerMinute\":30.821052631578947,\"attackDirections\":{\"west\":59,\"north\":36,\"south\":44,\"east\":72},\"simultaneousDirections\":4,\"alphas\":[{\"hp\":300,\"firstHit\":1017,\"kill\":1084,\"seconds\":1.1166666666666667},{\"hp\":300,\"firstHit\":1584,\"kill\":1656,\"seconds\":1.2},{\"hp\":300,\"firstHit\":4333,\"kill\":4383,\"seconds\":0.8333333333333334},{\"hp\":300,\"firstHit\":5607,\"kill\":5690,\"seconds\":1.3833333333333333},{\"hp\":300,\"firstHit\":5829,\"kill\":6234,\"seconds\":6.75}],\"deaths\":0,\"boarded\":13,\"outcome\":\"complete\"}\n{\"tier\":\"high\",\"seed\":3,\"completed\":true,\"seconds\":116.86666666666666,\"shots\":75,\"rocketKills\":388,\"killsPerRocket\":5.173333333333333,\"rejected\":0,\"courierAttacks\":86,\"groupAttacks\":10,\"courierAttacksPerMinute\":44.152880775812896,\"groupAttacksPerMinute\":5.13405590416429,\"attackDirections\":{\"north\":25,\"west\":25,\"south\":24,\"east\":22},\"simultaneousDirections\":4,\"alphas\":[{\"hp\":300,\"firstHit\":569,\"kill\":595,\"seconds\":0.43333333333333335},{\"hp\":300,\"firstHit\":1428,\"kill\":1496,\"seconds\":1.1333333333333333},{\"hp\":300,\"firstHit\":3545,\"kill\":3615,\"seconds\":1.1666666666666667},{\"hp\":300,\"firstHit\":4800,\"kill\":4884,\"seconds\":1.4},{\"hp\":300,\"firstHit\":5312,\"kill\":5332,\"seconds\":0.3333333333333333}],\"deaths\":0,\"boarded\":24,\"outcome\":\"complete\"}\n"
+  },
+  {
+    "name": "mega-before",
+    "command": [
+      "node",
+      "--import",
+      "tsx/esm",
+      "tools/qa/r12-l7-mega.ts",
+      "before"
+    ],
+    "exitCode": 0,
+    "seconds": 0.65,
+    "tail": "{\"method\":\"Stationary 8m Mega, production projectile pipeline; target movement frozen. Full fight separately covered by native acceptance.\",\"shots\":11,\"shotTicks\":[7,32,57,82,107,132,157,182,207,232,257],\"hits\":[{\"tick\":33,\"hp\":2700},{\"tick\":58,\"hp\":2400},{\"tick\":83,\"hp\":2100},{\"tick\":108,\"hp\":1800},{\"tick\":133,\"hp\":1500},{\"tick\":158,\"hp\":1200},{\"tick\":183,\"hp\":900},{\"tick\":208,\"hp\":600},{\"tick\":233,\"hp\":300},{\"tick\":258,\"hp\":0}],\"hitSpanSeconds\":3.75,\"triggerToKillSeconds\":4.3,\"firstShotToKillSeconds\":4.183333333333334}\n"
+  },
+  {
+    "name": "threat-before-L1-L5",
+    "command": [
+      "npm",
+      "run",
+      "qa:threat",
+      "--",
+      "--levels",
+      "L1,L2,L3,L4,L5",
+      "--maxWorkers",
+      "4",
+      "--out",
+      "test-results/r12-l7/native/threat-before"
+    ],
+    "exitCode": 1,
+    "seconds": 461.76,
+    "tail": ",L4,L5 --maxWorkers 4 --out test-results/r12-l7/native/threat-before\n\n[test-budget] 150/150 test cases ({\"vitest\":129,\"e2e\":9,\"invariantsBrowser\":12}), 43/45 files\n[qa:follower-pace] L5 low/passive seed 2\n[qa:follower-pace] L5 low/passive seed 3\n[qa:threat:stage] L4/skilled/1: 233.184s\n[qa:threat:stage] L5/passive/3: 243.041s\n[qa:threat:stage] L5/passive/2: 256.952s\n[qa:threat:stage] L5/passive/1: 292.124s\n[qa:threat:stage] L3/skilled/1: 90.122s\n[qa:threat:stage] L2/skilled/1: 74.414s\n[qa:threat:stage] L3/skilled/2: 49.606s\n[qa:threat:stage] L4/passive/1: 153.955s\n[qa:threat:stage] L3/skilled/3: 48.301s\n[qa:threat:stage] L4/high-hold: 187.405s\n[qa:follower-pace] L5 low/complete seed 2\n[qa:threat:stage] L1/skilled/1: 32.947s\n[qa:follower-pace] L5 low/complete seed 3\n[qa:threat:stage] L5/skilled/1: 41.103s\n[qa:threat:stage] L2/passive/1: 31.514s\n[qa:threat:stage] L5/skilled/2: 28.242s\n[qa:threat:stage] L5/skilled/3: 24.902s\n[qa:threat:stage] L3/passive/1: 8.974s\n[qa:threat:stage] L1/passive/1: 17.426s\n[qa:threat] L1: skilled complete, passive complete, 0 passive flags (58.9s)\n[qa:threat] L2: skilled complete, passive complete, 0 passive flags (154.2s)\n[qa:threat] L3 army line over seeds 1\u20133: {\"seeds\":[{\"seed\":1,\"valid\":true,\"army\":4,\"attacksPerMinute\":30.18935978358882},{\"seed\":2,\"valid\":true,\"army\":4,\"attacksPerMinute\":3.535959838480847},{\"seed\":3,\"valid\":true,\"army\":0,\"attacksPerMinute\":12.112394289351641}],\"measured\":3,\"within\":2,\"pass\":true}\n[qa:threat] L3: skilled complete, passive tick-budget, 0 passive flags (198.4s)\n[qa:threat] L4 high hold: {\"tier\":\"high\",\"holdComplete\":true,\"firstBreachLevelSeconds\":52.71666666666667,\"firstBreachAfterTurnSeconds\":19.9,\"aliveAtFirstBreach\":70,\"peakAlive\":95,\"peakPlazaAlive\":87,\"minPlazaAliveAfter45Seconds\":51,\"samplesAfter45Seconds\":8760,\"arrivalEdges\":[0,1,2,3,4,5],\"threeDirectionsAtLeast60Degrees\":true,\"maxGroupAtOneSourcePerTick\":5,\"firstAttackSeconds\":8.933333333333334,\"lineBreakAfterTurnSeconds\":190}\n[qa:threat] L4: skilled complete, passive tick-budget, 0 passive flags (420.6s)\n[qa:threat] L5 follower pace over seeds 1\u20133: skilled 0, passive 0 flags\n[qa:threat] L5: skilled complete, passive tick-budget, 0 passive flags (454.6s)\n[qa:threat] 456.5s; 1 fail flags; test-results/r12-l7/native/threat-before/README.md\n[test-budget] qa-threat: 461.4 s (budget 600 s)\n[test-budget] FAIL: qa-threat failed (exit 1)\n[test-budget] See docs/qa/test-strategy.md: merge into an existing test or delete one before adding another.\n"
+  },
+  {
+    "name": "measure-after",
+    "command": [
+      "node",
+      "--import",
+      "tsx/esm",
+      "tools/qa/r12-l7-measure.ts",
+      "after"
+    ],
+    "exitCode": 0,
+    "seconds": 180.14,
+    "tail": "e,\\\"status\\\":\\\"following\\\",\\\"passed\\\":false,\\\"at\\\":{\\\"x\\\":-48.72968747216873,\\\"z\\\":42.73266157969715,\\\"y\\\":0.7,\\\"yaw\\\":2.305560880870836}},{\\\"id\\\":67,\\\"key\\\":\\\"shelter-16\\\",\\\"injured\\\":false,\\\"status\\\":\\\"following\\\",\\\"passed\\\":false,\\\"at\\\":{\\\"x\\\":-49.55264543826215,\\\"z\\\":45.591683915529934,\\\"y\\\":0.7,\\\"yaw\\\":-0.8008520123953607}},{\\\"id\\\":68,\\\"key\\\":\\\"shelter-17\\\",\\\"injured\\\":false,\\\"status\\\":\\\"following\\\",\\\"passed\\\":false,\\\"at\\\":{\\\"x\\\":-50.317943699714164,\\\"z\\\":45.41500649079563,\\\"y\\\":0.7,\\\"yaw\\\":-2.827654340190399}},{\\\"id\\\":69,\\\"key\\\":\\\"shelter-18\\\",\\\"injured\\\":false,\\\"status\\\":\\\"following\\\",\\\"passed\\\":false,\\\"at\\\":{\\\"x\\\":-50.43669450866563,\\\"z\\\":43.54239303272951,\\\"y\\\":0.7,\\\"yaw\\\":3.1310888310747487}},{\\\"id\\\":70,\\\"key\\\":\\\"shelter-19\\\",\\\"injured\\\":false,\\\"status\\\":\\\"following\\\",\\\"passed\\\":false,\\\"at\\\":{\\\"x\\\":-49.05626704800654,\\\"z\\\":43.732430278367815,\\\"y\\\":0.7,\\\"yaw\\\":-1.741516485444209}},{\\\"id\\\":71,\\\"key\\\":\\\"shelter-20\\\",\\\"injured\\\":false,\\\"status\\\":\\\"following\\\",\\\"passed\\\":false,\\\"at\\\":{\\\"x\\\":-50.14163162658481,\\\"z\\\":44.20519464219201,\\\"y\\\":0.7,\\\"yaw\\\":1.9894126258032265}},{\\\"id\\\":72,\\\"key\\\":\\\"shelter-21\\\",\\\"injured\\\":false,\\\"status\\\":\\\"following\\\",\\\"passed\\\":false,\\\"at\\\":{\\\"x\\\":-49.80536876239651,\\\"z\\\":44.927847481479226,\\\"y\\\":0.7,\\\"yaw\\\":-0.4809024009726529}},{\\\"id\\\":73,\\\"key\\\":\\\"shelter-22\\\",\\\"injured\\\":false,\\\"status\\\":\\\"following\\\",\\\"passed\\\":false,\\\"at\\\":{\\\"x\\\":-49.74854566747566,\\\"z\\\":43.623766218009244,\\\"y\\\":0.7,\\\"yaw\\\":1.9391288689115365}},{\\\"id\\\":74,\\\"key\\\":\\\"shelter-23\\\",\\\"injured\\\":false,\\\"status\\\":\\\"following\\\",\\\"passed\\\":false,\\\"at\\\":{\\\"x\\\":-49.456097114711746,\\\"z\\\":44.30726252399763,\\\"y\\\":0.7,\\\"yaw\\\":-1.6161643772154588}}]}\",\"player\":{\"x\":-70.450927734375,\"y\":0.7049999833106995,\"z\":47.499168395996094,\"yaw\":0.8800105565761241}}}\n{\"tier\":\"high\",\"seed\":3,\"completed\":true,\"seconds\":112.8,\"shots\":46,\"rocketKills\":354,\"killsPerRocket\":7.695652173913044,\"rejected\":0,\"courierAttacks\":162,\"groupAttacks\":31,\"courierAttacksPerMinute\":86.17021276595744,\"groupAttacksPerMinute\":16.48936170212766,\"attackDirections\":{\"north\":42,\"west\":67,\"south\":45,\"east\":39},\"simultaneousDirections\":4,\"alphas\":[{\"hp\":450,\"firstHit\":606,\"kill\":726,\"seconds\":2},{\"hp\":450,\"firstHit\":1638,\"kill\":1837,\"seconds\":3.316666666666667},{\"hp\":450,\"firstHit\":3722,\"kill\":3805,\"seconds\":1.3833333333333333},{\"hp\":450,\"firstHit\":5207,\"kill\":5613,\"seconds\":6.766666666666667},{\"hp\":450,\"firstHit\":5207,\"kill\":5613,\"seconds\":6.766666666666667}],\"deaths\":0,\"boarded\":21,\"outcome\":\"complete\"}\n"
+  },
+  {
+    "name": "mega-after",
+    "command": [
+      "node",
+      "--import",
+      "tsx/esm",
+      "tools/qa/r12-l7-mega.ts",
+      "after"
+    ],
+    "exitCode": 0,
+    "seconds": 0.6,
+    "tail": "{\"method\":\"Stationary 8m Mega, production projectile pipeline; target movement frozen. Full fight separately covered by native acceptance.\",\"shots\":10,\"shotTicks\":[7,57,107,157,207,257,307,357,407,457],\"hits\":[{\"tick\":33,\"hp\":2700},{\"tick\":83,\"hp\":2400},{\"tick\":133,\"hp\":2100},{\"tick\":183,\"hp\":1800},{\"tick\":233,\"hp\":1500},{\"tick\":283,\"hp\":1200},{\"tick\":333,\"hp\":900},{\"tick\":383,\"hp\":600},{\"tick\":433,\"hp\":300},{\"tick\":483,\"hp\":0}],\"hitSpanSeconds\":7.5,\"triggerToKillSeconds\":8.05,\"firstShotToKillSeconds\":7.933333333333334}\n"
+  },
+  {
+    "name": "typecheck",
+    "command": [
+      "npm",
+      "run",
+      "typecheck"
+    ],
+    "exitCode": 0,
+    "seconds": 33.12,
+    "tail": "\n> typecheck\n> tsc --noEmit && tsc --noEmit -p tsconfig.sim.json\n\n"
+  },
+  {
+    "name": "lint",
+    "command": [
+      "npm",
+      "run",
+      "lint"
+    ],
+    "exitCode": 1,
+    "seconds": 24.98,
+    "tail": "\n> lint\n> eslint src tests tools functions *.config.ts eslint.config.js\n\n\n/Users/wesner/Workspace/minorincident/.claude/worktrees/r12-l7/tools/qa/r12-l7-live.ts\n  49:15  error  'a' is assigned a value but never used  @typescript-eslint/no-unused-vars\n\n\u2716 1 problem (1 error, 0 warnings)\n\n"
+  },
+  {
+    "name": "unit",
+    "command": [
+      "node",
+      "tools/qa/test-budget.mjs",
+      "--name",
+      "r12-l7-final-unit",
+      "--max-seconds",
+      "150",
+      "--",
+      "npm",
+      "test",
+      "--",
+      "--maxWorkers=4"
+    ],
+    "exitCode": 0,
+    "seconds": 65.2,
+    "tail": "[test-budget] 150/150 test cases ({\"vitest\":129,\"e2e\":9,\"invariantsBrowser\":12}), 43/45 files\n\n> test\n> node tools/qa/test-budget.mjs --name test --max-seconds 240 -- node node_modules/vitest/vitest.mjs run --project default --configLoader runner --maxWorkers=4\n\n[test-budget] 150/150 test cases ({\"vitest\":129,\"e2e\":9,\"invariantsBrowser\":12}), 43/45 files\n\n RUN  v5.0.3 /Users/wesner/Workspace/minorincident/.claude/worktrees/r12-l7\n\n\n Test Files  27 passed (27)\n      Tests  107 passed (107)\n   Start at  17:06:58\n   Duration  57.14s (tests 90%, transform 5%, import 4%)\n\n[test-budget] test: 61.4 s (budget 240 s)\n[test-budget] r12-l7-final-unit: 65.1 s (budget 150 s)\n"
+  },
+  {
+    "name": "accept-L7",
+    "command": [
+      "npm",
+      "run",
+      "qa:accept",
+      "--",
+      "--level",
+      "L7",
+      "--tier",
+      "both",
+      "--skip-browser"
+    ],
+    "exitCode": 1,
+    "seconds": 320.47,
+    "tail": "\n> qa:accept\n> node --import tsx/esm tools/qa/accept.ts --level L7 --tier both --skip-browser\n\n[qa:accept] L7 low/complete: native global and level observation\n[qa:follower-pace] L7 low/complete seed 2\n[qa:follower-pace] L7 low/complete seed 3\n[qa:accept] L7 low/complete: complete\n[qa:accept] L7 low/stationary: native global and level observation\n[qa:accept] L7 low/stationary: tick-budget\n[qa:accept] L7 high/complete: native global and level observation\n[qa:follower-pace] L7 high/complete seed 2\n[qa:follower-pace] L7 high/complete seed 3\n[qa:accept] L7 high/complete: mission-failed\n[qa:accept] L7 high/stationary: native global and level observation\n[qa:accept] L7 high/stationary: tick-budget\n[qa:accept] L7 low/fixtures: 8 clauses, 0 errors\n[qa:accept] L7 high/fixtures: 8 clauses, 0 errors\n[qa:accept:checkpoint] L7 low/night-exit: PASS\n[qa:accept:checkpoint] L7 low/rocket: PASS\n[qa:accept:checkpoint] L7 low/corridor: PASS\n[qa:accept] L7 low/checkpoints: 3 clauses; control identical; 0 errors\n[qa:accept:checkpoint] L7 high/night-exit: PASS\n[qa:accept:checkpoint] L7 high/rocket: PASS\n[qa:accept:checkpoint] L7 high/corridor: PASS\n[qa:accept] L7 high/checkpoints: 3 clauses; control identical; 0 errors\n[qa:accept] L7: 2 fresh failing rows; 10 incomplete rows; docs/reports/fix51-verify/L7.json\n"
+  },
+  {
+    "name": "final-typecheck",
+    "command": [
+      "npm",
+      "run",
+      "typecheck"
+    ],
+    "exitCode": 0,
+    "note": "After adding crossfire helper; serial static check."
+  },
+  {
+    "name": "final-lint",
+    "command": [
+      "npm",
+      "run",
+      "lint"
+    ],
+    "exitCode": 0,
+    "note": "After removing unused physical-helper local; serial static check."
+  }
+]

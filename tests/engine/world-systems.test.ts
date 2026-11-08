@@ -131,6 +131,38 @@ test('explosions: every class follows its damage curve, full cover shields, rail
 });
 
 test('look-l6-l9 decor is render-only: L6 nav hash, colliders and pushables match the layout without it, a re-preparation adds none, L9 has none; L10 crossing scenes stay clear and grounded', async () => {
+  // New baked ground overlays must enter the shared layer graph, including exact-height ties.
+  const { groundPriorities, groundConflicts, groundGroup } = await import('../../tools/layouts/ground-layers');
+  const triangles = [0, .0002, .0002].map((y,i) => ({id:String(i),material:`m${i}`,y,points:[[0,0],[0,2],[2,0]] as [number,number][]}));
+  const ranks = groundPriorities(triangles);
+  expect(triangles.map(t=>ranks.get(groundGroup(t)))).toEqual([0,1,2]);
+  expect(groundConflicts(triangles)).toHaveLength(3);
+  expect(groundConflicts([triangles[0],{...triangles[1],points:[[3,0],[3,2],[5,0]]}])).toHaveLength(0);
+  const ramps=triangles.map(t=>({...t,slope:[.15,-.05] as [number,number]}));
+  expect(groundConflicts(ramps)).toHaveLength(3);
+  const rampRanks=groundPriorities(ramps);
+  expect(ramps.map(t=>rampRanks.get(groundGroup(t)))).toEqual([0,1,2]);
+  expect(groundConflicts([ramps[0],{...ramps[1],slope:[.25,-.05]}])).toHaveLength(0);
+  const { readdirSync } = await import('node:fs');
+  const { execFileSync } = await import('node:child_process');
+  // Decode the real GLBs outside Vitest's module transformer. The same CLI is
+  // usable after any authoring tool, including the separately generated W6.
+  const paths = readdirSync('public/assets/layouts').filter(p=>/\.(base|w\d+)\.glb$/.test(p)).map(p=>`public/assets/layouts/${p}`);
+  expect(() => execFileSync(process.execPath,['--import','tsx','tools/layouts/audit-ground.ts',...paths,'--together','--check'],{timeout:45_000,stdio:'pipe'})).not.toThrow();
+  const { groundDepth, groundLayers } = await import('../../src/render/GroundLayers');
+  const { MeshBasicNodeMaterial } = await import('three/webgpu');
+  const depth = groundDepth(new MeshBasicNodeMaterial(),groundLayers.puddle);
+  expect([depth.polygonOffset,depth.polygonOffsetFactor,depth.polygonOffsetUnits]).toEqual([true,0,-56]); 
+  const { staticBatch, staticBatchSharingKey } = await import('../../src/assets/staticBatch');
+  const { Group, Mesh, PlaneGeometry } = await import('three/webgpu');
+  const source = new Group(), a = groundDepth(new MeshBasicNodeMaterial(),0), b = groundDepth(new MeshBasicNodeMaterial(),1);
+  expect(staticBatchSharingKey('static-body',a)).not.toBe(staticBatchSharingKey('static-body',b));
+  const geometry = new PlaneGeometry(2,2);source.add(new Mesh(geometry,a),new Mesh(geometry,b));
+  const batched = staticBatch(source,true);
+  expect(batched.children.map(o=>(o as import('three').Mesh).material).map(m=>(m as import('three').Material).userData.groundLayer)).toEqual([0,1]);
+  for(const o of batched.children){const mesh=o as import('three').Mesh;mesh.geometry.dispose();(mesh.material as import('three').Material).dispose();}
+  geometry.dispose();a.dispose();b.dispose();depth.dispose();
+
   const { DistrictWorld } = await import('../../src/sim/world/DistrictWorld');
   const { compositions } = await import('../../src/levels/compositions');
   const { districtDecor } = await import('../../src/levels/decor');
@@ -201,4 +233,4 @@ test('look-l6-l9 decor is render-only: L6 nav hash, colliders and pushables matc
   // Ground under each piece without the scenes (a sandbag pallet carries its own 25 cm walkable deck).
   const bare = new DistrictWorld(compositions.L10, [{ ...cureLayout, placements: [...cureLayout.placements, ...belt] }], 32);
   for (const q of stories) for (const [x, z] of [[q.visualAabb.min[0], q.visualAabb.min[2]], [q.visualAabb.max[0], q.visualAabb.max[2]]]) expect(Math.abs(bare.groundHeight(x, z))).toBeLessThan(.05);
-});
+}, 60_000);

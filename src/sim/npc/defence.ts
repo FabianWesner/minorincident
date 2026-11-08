@@ -52,7 +52,7 @@ export function defendHuman(world: SimWorld, e: EntitySnapshot): boolean {
   const group = subway && row && !row.collected ? { x: subway.leaderX, z: subway.leaderX < 25 ? subway.leaderZ : 15 } : world.entities.get(1)!.transform;
   // The subway column owns unarmed travel. Generic panic flight can carry
   // a threatened follower beyond the courier's covering fire.
-  if (survivor && row && !a) {
+  if (survivor && row && (!a || row.status === 'out')) {
     c.dangerUntil = 0;
     return world.missions!.l6!.follower(e);
   }

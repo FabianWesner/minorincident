@@ -85,10 +85,21 @@ export class Combat {
       this.world.controls.reset();
       frame = { ...frame, left: { down: false, held: false, up: false }, right: { down: false, held: false, up: false } };
     }
-    this.runner.update(frame, this.world.tick, player.health.current > 0 && !this.world.missions?.state.states['cure-released'] && this.world.vehicles?.active == null && !this.world.mountedGun?.mounted && !Status.stunned(player, this.world.tick), this.started, this.resolve, this.crowd);
+    this.runner.update(frame, this.world.tick, player.health.current > 0 && !this.world.missions?.state.states['cure-released'] && this.world.vehicles?.active == null && !this.world.mountedGun?.mounted && !Status.stunned(player, this.world.tick), this.started, this.resolve, this.crowd, this.canFire);
     this.updateProjectiles();
     this.effects.update(); this.pickups.update();
   }
+  /** Check at discharge, after aim assist and the raise: a close enemy may move into the shot. */
+  private readonly canFire = (attack: Attack): boolean => {
+    if (attack.def.id !== 'weapon.rocket-launcher') return true;
+    const source = this.world.entities.get(attack.sourceId)!, point = attack.aimPoint;
+    const closePoint = !!point && Math.hypot(point.x - source.transform.x, point.z - source.transform.z) < 5;
+    const closeEnemy = this.query.melee(source.id, source.transform, attack.aim, 5, 30, 1000).some(target => target.faction === 'infected'
+      && !target.hidden && !target.infected?.hidden && Math.hypot(target.transform.x - source.transform.x, target.transform.z - source.transform.z) < 5);
+    if (!closePoint && !closeEnemy) return true;
+    this.world.events.emit({ type: 'combat.empty', tick: this.world.tick, sourceId: source.id, actionId: attack.def.id, position: { ...source.transform }, reason: 'too-close' });
+    return false;
+  };
   /** Living infected a sweep of `radius` reaches from the player now (cover blocks; civilians never count). */
   private readonly crowd = (radius: number): number => {
     const player = this.world.entities.get(1)!;
@@ -229,8 +240,11 @@ export class Combat {
           const along = tx * direction.x + tz * direction.z, radius = target.combat?.radius ?? .4;
           travel = Math.max(0, along - Math.sqrt(Math.max(0, radius * radius - (tx * tx + tz * tz - along * along))));
         }
+        const impact = !!target || wall < step || arrived;
+        // An impact before arming is a harmless dud, including cover impacts.
+        if (impact && p.travelled + travel < 5) { this.projectiles.splice(i, 1); continue; }
         p.x += direction.x * travel; p.y += direction.y * travel; p.z += direction.z * travel; p.travelled += travel;
-        if (target || wall < step || arrived) {
+        if (impact) {
           if (!target && wall === step) Object.assign(p, p.destination);
           this.splash(p.attack, p, target?.id); this.blast(p.attack, p);
           // Impact alerts use an explosion cue, rather than replaying the launch

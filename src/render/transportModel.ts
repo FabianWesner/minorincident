@@ -40,12 +40,34 @@ export function openTransportCab(model: Object3D, def: VehicleDef): void {
   });
   // Roof and door glazing share one vertex-opacity material (four APC materials including its lamps).
   const doorMaterial = Object.assign(new MeshLambertNodeMaterial({ vertexColors: true, side: DoubleSide, transparent: true, depthWrite: false, opacityNode: attribute('cabOpacity', 'float') }), { emissiveNode: attribute('cabCrack', 'float').mul(.16) }); doorMaterial.forceSinglePass = true;
-  const roofGeometry = new PlaneGeometry(1.15, 1.96).rotateX(-Math.PI / 2).translate(.725, 2.25, 0);
-  const roofColor = new Color('#568e8d').toArray(), count = roofGeometry.getAttribute('position').count;
+  const apc = def.id === 'vehicle.military-apc';
+  const roofGeometry = new BoxGeometry(1.21, .06, apc ? 2.5 : 1.96).translate(.725, 2.25, 0);
+  const roofColor = new Color(apc ? '#7b8250' : '#568e8d').toArray(), count = roofGeometry.getAttribute('position').count;
   roofGeometry.setAttribute('color', new BufferAttribute(new Float32Array(Array.from({ length: count }, () => roofColor).flat()), 3));
   roofGeometry.setAttribute('cabCrack', new BufferAttribute(new Float32Array(count), 1));
-  roofGeometry.setAttribute('cabOpacity', new BufferAttribute(new Float32Array(count).fill(.22), 1));
+  // The APC roof is a finished armor panel, not a roof-off crew cutaway. Keep
+  // its replacement panel opaque and add glazing at the front so the driver
+  // remains readable through the windshield.
+  roofGeometry.setAttribute('cabOpacity', new BufferAttribute(new Float32Array(count).fill(apc ? 1 : .22), 1));
   const roof = new Mesh(roofGeometry, doorMaterial); roof.name = 'transportRoof'; roof.userData.transportCabPart = true; model.add(roof);
+  if (apc) {
+    const windshield = new PlaneGeometry(2.42, .6).rotateY(Math.PI / 2).translate(1.3, 1.95, 0);
+    const n = windshield.getAttribute('position').count;
+    windshield.setAttribute('color', new BufferAttribute(new Float32Array(Array.from({ length: n }, () => roofColor).flat()), 3));
+    windshield.setAttribute('cabCrack', new BufferAttribute(new Float32Array(n), 1));
+    windshield.setAttribute('cabOpacity', new BufferAttribute(new Float32Array(n).fill(.22), 1));
+    const glass = new Mesh(windshield, doorMaterial); glass.name = 'transportWindshield'; glass.userData.transportCabPart = true; model.add(glass);
+    // Close the window edges against the replacement roof and existing front
+    // armor. A floating pane still reads as a missing cab at close zoom.
+    const posts = [-1.215, 1.215].map(z => new BoxGeometry(.08, .66, .07).translate(1.3, 1.95, z));
+    posts.push(new BoxGeometry(.08, .07, 2.5).translate(1.3, 1.65, 0));
+    const frame = mergeGeometries(posts)!; for (const p of posts) p.dispose();
+    const frameCount = frame.getAttribute('position').count;
+    frame.setAttribute('color', new BufferAttribute(new Float32Array(Array.from({ length: frameCount }, () => roofColor).flat()), 3));
+    frame.setAttribute('cabCrack', new BufferAttribute(new Float32Array(frameCount), 1));
+    frame.setAttribute('cabOpacity', new BufferAttribute(new Float32Array(frameCount).fill(1), 1));
+    const trim = new Mesh(frame, doorMaterial); trim.name = 'transportWindowFrame'; trim.userData.transportCabPart = true; model.add(trim);
+  }
   // Keep the sealed troop compartment separate from the opened driver cab.
   // Without its rear wall, the cab opening exposed disconnected fragments of
   // otherwise correctly seated troops behind the driver.
