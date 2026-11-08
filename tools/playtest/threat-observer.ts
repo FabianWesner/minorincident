@@ -60,7 +60,10 @@ export function installThreatObserver(frameTiming = true): void {
       const fires = accents?.fires.filter(a => inView({ ...a, y: .6 })).length ?? 0;
       const landmarks = w.districts?.districts.flatMap(d => d.decay.placements.filter(a => /^(veh\.|bld\.|kit\.)/.test(a.assetId)
         && !d.decay.removed.includes(a.id) && inView({ x: a.position[0] + d.origin[0], y: (a.visualAabb.min[1] + a.visualAabb.max[1]) / 2, z: a.position[2] + d.origin[1] }))).length ?? 0;
+      const perf = api.perf();
       crossingContent = { practicals, fires, landmarks, kills: m.state.stats.kills,
+        drawCalls: perf.drawCalls, triangles: perf.triangles, simMs: perf.simMs,
+        heapMB: perf.heapBytes === null ? null : perf.heapBytes / 1048576, liveCount: perf.infected?.liveCount ?? 0,
         patrols: Object.keys(m.l9?.state.encounters?.ids ?? {}).filter(k => k.startsWith('crossing-patrol-')).length };
     }
     samples.push({ level: w.scenario, tick: w.tick, seconds: m.state.stats.time, step,

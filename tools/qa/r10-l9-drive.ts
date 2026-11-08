@@ -18,7 +18,7 @@ mkdirSync(profile, { recursive: true });
 const socket = createServer(); await new Promise<void>(done => socket.listen(0, '127.0.0.1', done));
 const address = socket.address(); if (!address || typeof address === 'string') throw Error('port');
 const port = address.port; await new Promise<void>(done => socket.close(() => done()));
-const origin = `http://127.0.0.1:${port}`, save = preset('L9-default');
+const origin = process.env.L9_DRIVE_ORIGIN ?? `http://127.0.0.1:${port}`, save = preset('L9-default');
 save.settings.quality = tier as 'low' | 'high';
 writeFileSync(`${profile}/pool-storage.json`, JSON.stringify({ cookies: [], origins: [{ origin, localStorage: [{ name: SAVE_KEY, value: JSON.stringify(save) }] }] }));
 writeFileSync(`${out}/source.json`, JSON.stringify({ revision: execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim(), bundle: /src="([^"]+\.js)"/.exec(readFileSync('dist/index.html', 'utf8'))?.[1], variant, tier, zoom, route: route ?? 'objective bearing', backend, input: 'real keyboard/mouse', godMode: true }, null, 2));
@@ -29,7 +29,7 @@ try {
   const result = await runSession({ origin, out, levels: ['L9'], quality: tier as 'low' | 'high', zoom: Number(zoom), heroine: 'female',
     entry: 'continue', profile, levelMinutes: 5, sampleSeconds: 280, stopAfterLevel: true, tag, noSkip: true,
     l9Route: route as 'road' | 'countryside' | 'dry-shortcut' | undefined });
-  type Sample = { level: string; tick: number; step: string; visibleInfected: number[]; crossingContent?: { practicals: number; fires: number; landmarks: number; kills: number; patrols: number } };
+  type Sample = { level: string; tick: number; step: string; visibleInfected: number[]; crossingContent?: { practicals: number; fires: number; landmarks: number; kills: number; patrols: number; drawCalls?: number; triangles?: number; simMs?: number; heapMB?: number | null; liveCount?: number } };
   const audit = JSON.parse(readFileSync(`${out}/${tag}-threat.json`, 'utf8')) as { samples: Sample[]; fightFrames: { level: string; ms: number }[] };
   const samples = audit.samples.filter(s => s.level === 'L9' && s.step === 'approach');
   const ledger = JSON.parse(readFileSync(`${out}/${tag}-acceptance-ledger.json`, 'utf8')) as { level: string; events: { type: string; tick: number; source?: string; sourceId?: number; downed?: number }[] }[];
@@ -45,12 +45,15 @@ try {
     if (empty) { emptySeconds += dt; emptyStreak += dt; longestEmptySeconds = Math.max(longestEmptySeconds, emptyStreak); } else emptyStreak = 0;
   }
   const frames = audit.fightFrames.filter(f => f.level === 'L9').map(f => f.ms).sort((a, b) => a - b);
+  const sim = samples.map(s => s.crossingContent?.simMs ?? 0).sort((a, b) => a - b);
   const summary = { tag, finished: result.runs[0]?.finished, driveSeconds: samples.length ? (samples.at(-1)!.tick - samples[0].tick) / 60 : 0,
     kills: Math.max(0, ...samples.map(s => s.crossingContent?.kills ?? 0)), patrols: Math.max(0, ...samples.map(s => s.crossingContent?.patrols ?? 0)),
     ramContacts: events.filter(e => e.type === 'vehicle.durability-hit' && e.source === 'contact').length,
     ramKnockdowns: ramEvents.filter(e => e.downed !== undefined).length, ramKills: ramEvents.filter(e => e.downed === undefined).length,
     encounters, emptySeconds, longestEmptySeconds, noInfectedSeconds, samples: samples.length,
     frameP95: frames[Math.floor(frames.length * .95)], frameMax: frames.at(-1), framesOver66: frames.filter(ms => ms > 66).length,
+    peakDraws: Math.max(0, ...samples.map(s => s.crossingContent?.drawCalls ?? 0)), peakTriangles: Math.max(0, ...samples.map(s => s.crossingContent?.triangles ?? 0)),
+    simP95: sim[Math.floor(sim.length * .95)], peakHeapMB: Math.max(0, ...samples.map(s => s.crossingContent?.heapMB ?? 0)), peakLiving: Math.max(0, ...samples.map(s => s.crossingContent?.liveCount ?? 0)),
     issues: result.issues.map(i => ({ severity: i.severity, kind: i.kind, text: i.text })) };
   writeFileSync(`${out}/summary.json`, JSON.stringify(summary, null, 2)); console.log(JSON.stringify(summary));
   if (!summary.finished) process.exitCode = 1;
