@@ -409,6 +409,9 @@ export class VehicleView extends Group {
         lampPosition.fromArray(a.position).applyMatrix4(record.model.matrixWorld);
         lampDirection.set(a.direction[0], level ? -.12 : a.direction[1], a.direction[2]).normalize().transformDirection(record.model.matrixWorld);
         const light = footprint({ ...a, ...(level ? { color: 'light_led_white' as const } : {}), position: lampPosition.toArray(), direction: lampDirection.toArray() }, this.world.districts?.groundHeight(lampPosition.x, lampPosition.z) ?? 0, id * 3.1);
+        // A moving driven headlight can promote the single nearby shadow map.
+        // Stable ids let Lighting follow its position without counting every frame as a new promotion.
+        if (driven && a.type === 'spot') { light.hero = true; light.id = `vehicle-${id}-${a.name}`; }
         if (level) { light.r *= .6; light.g *= .6; light.b *= .6; }
         if (/brake/i.test(a.name) && !car.entity.vehicle!.braking) { light.r *= .3; light.g *= .3; light.b *= .3; }
         field.push(light);

@@ -312,9 +312,11 @@ export class Lighting {
     // Retain the current lamp until it leaves the pool (or loses power), and
     // never select a replacement within one second of the last promotion.
     const current = this.promoted;
+    const sameSource = !!current?.id && light?.id === current.id;
+    if (sameSource) this.promoted = light;
     const covered = current?.on && Math.hypot(current.x + current.aimX - focus.x, current.z + current.aimZ - focus.z) < current.radius * 1.05;
-    if (covered || (time - this.promotedAt < 1 && current?.on)) light = current;
-    if (light !== current) { this.promotionPosition.copy(this.spot.position); this.promotionTarget.copy(this.spot.target.position); if (this.heroTime < 0 && light) { this.promotionPosition.set(light.x, light.y ?? 3, light.z); this.promotionTarget.set(light.x + light.aimX, focus.y, light.z + light.aimZ); } this.promoted = light; this.promotedAt = time; this.promotionChanges++; }
+    if (!sameSource && (covered || (time - this.promotedAt < 1 && current?.on))) light = current;
+    if (!sameSource && light !== current) { this.promotionPosition.copy(this.spot.position); this.promotionTarget.copy(this.spot.target.position); if (this.heroTime < 0 && light) { this.promotionPosition.set(light.x, light.y ?? 3, light.z); this.promotionTarget.set(focus.x, focus.y, focus.z); } this.promoted = light; this.promotedAt = time; this.promotionChanges++; }
     this.heroLight = light?.id ?? null;
     const seconds = this.heroTime < 0 ? 0 : Math.max(0, Math.min(.1, time - this.heroTime)); this.heroTime = time;
     const night = this.field.strength.value >= .5;
@@ -332,8 +334,14 @@ export class Lighting {
     if (light) {
       const blend = Math.min(1, Math.max(0, (time - this.promotedAt) / .3));
       this.spot.position.copy(this.promotionPosition).lerp(this.heroTarget.set(light.x, light.y ?? 3, light.z), blend);
-      this.spot.target.position.copy(this.promotionTarget).lerp(this.heroTarget.set(light.x + light.aimX, focus.y, light.z + light.aimZ), blend);
-      this.spot.distance = Math.max(10, light.radius * 4); this.spot.angle = Math.atan2(light.radius * light.stretch, Math.max(1, light.y ?? 3));
+      // Aim the single shadow source through the hero/scene focus. A point lamp's
+      // pool center is directly below it, which otherwise makes its shadow map
+      // almost vertical and leaves character shadows following the moon instead.
+      this.spot.target.position.copy(this.promotionTarget).lerp(this.heroTarget.set(focus.x, focus.y, focus.z), blend);
+      const sourceHeight = Math.max(.5, (light.y ?? 3) - focus.y);
+      const sourceToFocus = Math.hypot(light.x - focus.x, sourceHeight, light.z - focus.z);
+      this.spot.distance = Math.max(10, sourceToFocus + light.radius * light.stretch * 2);
+      this.spot.angle = Math.min(1.45, Math.atan2(light.radius * light.stretch, Math.max(1, sourceToFocus)));
       this.spot.intensity = .001 * this.fieldShadow.value;
     } else this.spot.intensity = .001 * this.fieldShadow.value;
     this.setShadowSource(this.preset === 'L6-subway' || (night && !!light));

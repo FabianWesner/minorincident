@@ -19,6 +19,7 @@ import { PickBodies } from '../../src/render/characters/PickBodies';
 import { CrowdView } from '../../src/render/CrowdView';
 import type { SimWorld } from '../../src/sim/world/SimWorld';
 import { Lighting } from '../../src/render/Lighting';
+import { LightField } from '../../src/render/LightField';
 import { corpseLod, crowdLod, pickLod, propLod } from '../../src/render/lodPolicy';
 import { Materials } from '../../src/render/Materials';
 import type { PaletteMaterial } from '../../src/render/PaletteMaterial';
@@ -688,6 +689,19 @@ test('materials: palette program keys match Three through weather and node chang
       expect(lighting.sun.shadow.intensity).toBe(Number(!spot)); expect(lighting.spot.shadow.intensity).toBe(Number(spot));
       expect([lighting.sun.shadow, lighting.spot.shadow].map(shadow => (shadow as typeof shadow & { filterNode: unknown }).filterNode)).toEqual(filters);
     });
+    lighting.set('night'); lighting.field.strength.value = 1;
+    const focus = { x: 4, y: 0, z: -2 };
+    lighting.setHeroLight({ x: 0, z: 0, id: 'moving-headlight', y: 5, radius: 6, aimX: 0, aimZ: 0, stretch: 1, r: 1, g: 1, b: 1, flicker: 0, strobe: false, seed: 0, on: true, hero: true }, focus, 3);
+    expect(lighting.spot.target.position.toArray()).toEqual([focus.x, focus.y, focus.z]);
+    expect(lighting.spot.angle).toBeCloseTo(Math.atan2(6, Math.hypot(4, 5, 2)));
+    expect(lighting.spot.distance).toBeGreaterThan(10);
+    const moving = { x: 1, z: 0, id: 'moving-headlight', y: 5, radius: 6, aimX: 0, aimZ: 0, stretch: 1, r: 1, g: 1, b: 1, flicker: 0 as const, strobe: false, seed: 0, on: true, hero: true };
+    lighting.setHeroLight(moving, focus, 3.3);
+    expect(lighting.spot.position.x).toBeCloseTo(1);
+    expect(lighting.getState().promotionChanges).toBe(1);
+    const field = new LightField();
+    try { field.strength.value = 1; field.push(moving); expect(field.heroAt(focus.x, focus.z)).toBe(moving); }
+    finally { field.dispose(); }
   } finally { materials.dispose(); lighting.dispose(); }
 });
 

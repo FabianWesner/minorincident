@@ -1,0 +1,20 @@
+{
+  "name": "shadow-local-light",
+  "note": "E25 local hero shadow: a powered street lamp below-right of the courier and corgi must cast their shadows away from itself; the moon source must yield while they stand in its pool.",
+  "seed": 1,
+  "time": "night",
+  "dof": false,
+  "ground": "asphalt",
+  "size": 42,
+  "actors": [
+    { "id": "courier", "kind": "courier", "at": [0, 0], "yaw": 135, "loadout": ["weapon.bat", "weapon.handgun"] },
+    { "id": "corgi", "kind": "corgi", "at": [-1, -1] }
+  ],
+  "props": [
+    { "id": "lamp", "asset": "prop.street-lamp", "at": [4, 4] }
+  ],
+  "camera": { "mode": "game", "target": "courier", "zoom": 1 },
+  "frames": 30,
+  "sheet": 15,
+  "expect": { "consoleErrors": 0, "undrawnFramesMax": 0, "drawCallsMax": 300, "trianglesMax": 500000 }
+}

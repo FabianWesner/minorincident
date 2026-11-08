@@ -188,12 +188,14 @@ export class LightField {
   heroAt(x: number, z: number): FieldLight | null {
     if (this.strength.value <= 0) return null;
     let best: FieldLight | null = null, score = 0;
-    for (const l of this.statics) {
-      if (!l.on || !l.hero) continue;
+    const consider = (l: FieldLight) => {
+      if (!l.on || !l.hero) return;
       const d = Math.hypot(l.x + l.aimX - x, l.z + l.aimZ - z) / l.radius;
       const s = d < .85 ? (1 - d) * (l.r + l.g + l.b) : 0;
       if (s > score) { score = s; best = l; }
-    }
+    };
+    for (const l of this.statics) consider(l);
+    for (const l of this.dynamics) consider(l);
     return best;
   }
   /** Fill the instances for the window around the focus (nearest first when over the tier budget).
