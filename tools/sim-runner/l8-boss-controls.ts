@@ -138,7 +138,7 @@ try {
         lifted ||= a.stage === 'telegraph' && payload.infected!.thrownBy === e.id;
         flight ||= a.stage === 'active' && payload.transform.y > 1;
         if (flight && payload.infected!.thrownBy === undefined) {
-          landed = payload.health.current > 0; rolling = payload.combat!.staggerUntil - w.tick === 36;
+          landed = payload.health.current > 0; rolling = payload.combat!.staggerUntil - w.tick === 36 && payload.combat!.reaction?.heavy === true && payload.combat.reaction.until - w.tick === 36;
           landingDistance = Math.hypot(payload.transform.x - a.target.x, payload.transform.z - a.target.z);
         }
       }

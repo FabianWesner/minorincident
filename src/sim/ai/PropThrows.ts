@@ -99,8 +99,11 @@ export class PropThrows {
       this.world.solids.wrote(e, 'infected.thrown-body'); Object.assign(e.transform, { x, y: floor + .7 + height, z });
       if (settled && f.living && e.infected) {
         delete e.infected.thrownBy; e.infected.perched = false;
-        e.combat!.staggerUntil = this.world.tick + 36; e.infected.state = 'stagger'; e.infected.until = this.world.tick + 36;
-        if (e.health.current > 0) this.world.infected!.pursueTarget(e.id, 1);
+        if (e.health.current > 0) {
+          this.world.infected!.pursueTarget(e.id, 1);
+          e.combat!.staggerUntil = this.world.tick + 36; e.infected.state = 'stagger'; e.infected.until = this.world.tick + 36;
+          e.combat!.reaction = { index: 0, started: this.world.tick, until: this.world.tick + 36, direction: { x: f.dx, z: f.dz }, from: { x, z }, to: { x, z }, heavy: true };
+        }
         this.world.solids.admit(e, 'infected.thrown-landing', 3);
       }
     } }
