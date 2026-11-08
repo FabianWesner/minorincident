@@ -107,7 +107,7 @@ export class LevelNineDriving {
     // The reusable obstacle owner handles native collision, fracture and debris.
     for (const [x, z, kind] of [
       [-468, -4, 'barricade'], [-468, -1.5, 'barricade'], [-468, 1, 'barricade'], [-468, 3.5, 'barricade'],
-      [-449, -11, 'jersey-barrier'], [-448, 11, 'jersey-barrier'],
+      [-478, -11, 'jersey-barrier'], [-478, 11, 'jersey-barrier'],
       [-155, -330, 'barricade'], [-155, -327.5, 'barricade'], [-155, -332.5, 'barricade'],
       [-130, 240, 'fence'], [-130, 242.4, 'fence'], [-130, 237.6, 'fence'],
       [cfg.gate.x, cfg.gate.sideZ, 'fence'], [cfg.gate.x, -cfg.gate.sideZ, 'fence'],

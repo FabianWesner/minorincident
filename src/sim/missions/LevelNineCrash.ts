@@ -105,7 +105,7 @@ export class LevelNineCrash {
       updateEncounters(w, s.encounters ??= emptyEncounters());
       // The actual bridge deck owns the finale. Reaching this x elsewhere in
       // the district cannot take the controls or move the vehicle sideways.
-      if (!this.driving.state.evacuationDone || car.transform.x < l9Course.bridge.x || car.transform.x > l9Course.bridge.endX || Math.abs(car.transform.z) > l9Course.bridge.halfZ || car.vehicle!.forwardSpeed < 1 || w.vehicles!.cars.get(s.carId)!.physics.body.linvel().x < 1) return;
+      if (!this.driving.state.evacuationDone || car.transform.x < l9Course.bridge.x || car.transform.x > l9Course.bridge.endX || Math.abs(car.transform.z) > l9Course.bridge.halfZ || w.vehicles!.cars.get(s.carId)!.physics.body.linvel().x < 1) return;
       this.mission.checkpoint('outskirts-approach');
       this.mission.setState('crash-started', true);
       s.phase = 'approach'; s.startedAt = w.tick; s.from = { ...car.transform }; s.preCrashDurability = car.health.current;

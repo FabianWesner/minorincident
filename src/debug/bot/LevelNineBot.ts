@@ -28,10 +28,7 @@ export class LevelNineBot {
     });
     // A completion driver reads the road: it takes the open side of the solid
     // collapsed sections, reserving jump attempts for the dedicated fixture.
-    // Clear the concrete splitter before taking the fork. A zero-HP APC has
-    // a tighter slow turn and otherwise noses straight into its inner edge.
-    const approach = base.map(p => p[0] === -450 && p[1] === 0 ? [-420, 0] as Point : p);
-    this.path = approach.flatMap((a, i, points) => {
+    this.path = base.flatMap((a, i, points) => {
       const b = points[i + 1]; if (!b) return [a];
       const ramps = l9Course.ramps.filter(r => r.x - 18 > a[0] && r.x + 22 < b[0] && Math.abs(r.z - a[1]) < 6);
       return [a, ...ramps.flatMap(r => [[r.x - 18, r.z + 12], [r.x + 22, r.z + 12]] as Point[])];
@@ -66,12 +63,12 @@ export class LevelNineBot {
       if (target && Math.hypot(target.transform.x - car.transform.x, target.transform.z - car.transform.z) < 30) { const dx = target.transform.x - car.transform.x, dz = target.transform.z - car.transform.z, length = Math.hypot(dx, dz) || 1; f.aim = { x: dx / length, z: dz / length }; f.aimSource = 'keyboard'; f.activeAttack = true; f.left = { down: true, held: true, up: false }; }
       return f;
     }
-    if (car.vehicle!.attached.length && car.vehicle!.speed > 2.25) {
-      f.drive = { throttle: .4, steer: w.tick % 120 < 60 ? 1 : -1 }; f.handbrake = true; return f;
-    }
     if (!l9.driving.holding(car.id) && car.vehicle!.speed < 1) this.blockedAt ??= w.tick; else this.blockedAt = null;
     if (this.blockedAt !== null && w.tick - this.blockedAt >= 90) { this.reverseUntil = w.tick + 90; this.blockedAt = null; this.avoid = null; }
     if (w.tick < this.reverseUntil) { f.drive = { throttle: -.8, steer: .6 }; return f; }
+    if (car.vehicle!.attached.length && car.vehicle!.speed > 2.25) {
+      f.drive = { throttle: .4, steer: w.tick % 120 < 60 ? 1 : -1 }; f.handbrake = true; return f;
+    }
     const p = car.transform;
     // Switch to the next waypoint earlier before a sharp bend: the 6 t APC's turning circle otherwise overshoots the corner by
     // ~8 m and wedges it against the dressed verge (fork corner (-450, 0) of the road detour: utility pole + bush, T-E31-20).
@@ -94,7 +91,7 @@ export class LevelNineBot {
       });
       if (heavy) {
         const side = (heavy.transform.x - p.x) * s + (heavy.transform.z - p.z) * c >= 0 ? -1 : 1;
-        this.avoid = { x: heavy.transform.x + s * side * 9, z: heavy.transform.z + c * side * 9, until: w.tick + 240 };
+        this.avoid = { x: heavy.transform.x + s * side * 4.5, z: heavy.transform.z + c * side * 4.5, until: w.tick + 240 };
       }
     }
     if (this.avoid) target = [this.avoid.x, this.avoid.z];
