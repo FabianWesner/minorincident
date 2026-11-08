@@ -108,17 +108,20 @@ test('escort: shared combat pace, follows through a maze, a 2 s stand revives to
   {
   // r12-group: the follower formation is a loose, persistent cluster (not the 1.2 m parade lattice) with body room between slots.
   const heading = { x: 1, z: 0 }, slots = Array.from({ length: 48 }, (_, i) => formationSlot({ x: 0, z: 0 }, heading, i));
+  // L7 keeps its authored targets while the other levels retain loose slots.
+  for (let slot = 0; slot < 48; slot++) expect(formationSlot({ x: 0, z: 0 }, heading, slot, false))
+    .toEqual({ x: -formationBack(slot), z: (slot % 3 - 1) * 1.2 });
   expect(slots).toEqual(Array.from({ length: 48 }, (_, i) => formationSlot({ x: 0, z: 0 }, heading, i)));
   for (let i = 0; i < slots.length; i++) for (let j = i + 1; j < slots.length; j++) expect(Math.hypot(slots[i].x - slots[j].x, slots[i].z - slots[j].z)).toBeGreaterThan(.89);
   expect(slots.filter((s, i) => Math.hypot(s.x + formationBack(i), s.z - (i % 3 - 1) * 1.2) > .12).length).toBeGreaterThan(16);
   expect(Math.max(...slots.slice(0, 3).map(s => s.x))).toBeLessThan(-2.2);
   const w = await world(), p = w.entities.get(1)!;
   for (const e of [...w.infected!.active]) w.infected!.release(e);
-  w.scenario = 'L7';
+  w.scenario = 'L6';
   const follower = w.entities.get(w.npcs!.civilians.spawn('cashier', { x: p.transform.x - 3, z: p.transform.z }))!, c = follower.civilian!;
   c.survivor = { key: 'group-react', mode: 'follow', leader: 1, slot: 0, cover: false, foundAt: 0, waitAt: 9999, restAt: w.tick - 60 };
   // A rested follower sets off a personal beat after it is asked, then walks.
-  const delay = startDelayTicks(follower, 'L7'), start = { ...follower.transform }, goal = { x: start.x - 4, z: start.z };
+  const delay = startDelayTicks(follower, 'L6'), start = { ...follower.transform }, goal = { x: start.x - 4, z: start.z };
   expect(delay).toBeGreaterThan(4);
   for (let i = 0; i < delay; i++) {
     // Restoring onto a later world clock preserves the reaction time still owed.
@@ -130,6 +133,11 @@ test('escort: shared combat pace, follows through a maze, a 2 s stand revives to
   expect(follower.transform.x).toBeLessThan(start.x);
   for (let i = 0; i < 20; i++) { w.npcs!.move(follower, goal, 3, c, 0); w.tick++; }
   expect(follower.transform.x).toBeLessThan(start.x - .05);
+  w.scenario = 'L7'; c.survivor!.restAt = w.tick - 60; delete c.survivor!.stirAt;
+  const beforeL7 = follower.transform.x;
+  w.npcs!.move(follower, { x: beforeL7 - 4, z: follower.transform.z }, 3, c, 0);
+  expect(follower.transform.x).toBeLessThan(beforeL7); // no personal start delay in the gated level
+  w.scenario = 'L6';
   // Standing, it looks toward a nearby infected before anything else.
   const enemy = w.entities.get(w.infected!.spawn('infected.runner', { x: follower.transform.x, z: follower.transform.z + 6 }))!;
   expect(idleEligible(follower)).toBe(true);
