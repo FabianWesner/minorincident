@@ -440,6 +440,16 @@ export class Hud {
     }
     const world = this.game.world;
     this.updateSurvivorCue(mission, px, pz);
+    if (mission?.state.l6?.strayed && (mission.state.l6.phase === 'retreat' || mission.state.l6.phase === 'exit')) {
+      const p = world.entities.get(1)!.transform;
+      const living = mission.state.l6.survivors.filter(r => r.status === 'following').map(r => world.entities.get(r.id)).filter((e): e is NonNullable<typeof e> => !!e && !e.hidden && e.health.current > 0);
+      const target = living.find(e => e.id === mission.state.l6!.alarm?.id) ?? living.sort((a, b) => Math.hypot(a.transform.x-p.x,a.transform.z-p.z)-Math.hypot(b.transform.x-p.x,b.transform.z-p.z))[0];
+      setHidden(this.survivorText, true);
+      setHidden(this.cuePin, true);
+      setHidden(this.cueText, true);
+      this.waitCue(target ? { ...target.transform, name: survivorName(target), id: String(target.id) } : undefined, px, pz);
+      return;
+    }
     if (world.l7Encounters && mission?.state.steps.corridor?.status === 'active') {
       const missing = world.l7Encounters.corridorGroup().missing[0];
       const target = missing && world.entities.get(missing.id);
@@ -467,12 +477,6 @@ export class Hud {
       // passengers are being escorted by the boarding AI, so a nearest-person
       // "Find" cue sends the player away from the APC while they queue there.
       setHidden(this.survivorText, true); text(this.survivorText, '');
-      setHidden(this.cuePin, true); setHidden(this.cueText, true); text(this.cueText, '');
-      return;
-    }
-    if (mission?.def.l8 && !mission.l8!.state.breachedAt && world.vehicles?.active === mission.l8!.state.carId && world.tick - mission.l8!.state.startedAt >= 300) {
-      setHidden(this.tracker, true); text(this.trackerText, '');
-      setHidden(this.survivorText, true);
       setHidden(this.cuePin, true); setHidden(this.cueText, true); text(this.cueText, '');
       return;
     }

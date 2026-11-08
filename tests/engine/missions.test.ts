@@ -131,7 +131,7 @@ test('interactions: ring, input and view predicates agree for every interact ste
         expect(activeInteractions(mission).find(i => i.step.id === 'axe')?.ring, 'optional rack keeps its ground ring').toBe(true);
       }
       if (level === 'L8') {
-        expect(objectiveText(mission, 'Bring the survivors to the armored vehicle and board')).toBe('');
+        expect(objectiveText(mission, 'Bring the survivors to the armored vehicle and board')).toBe('Stay with the group');
         expect(mission.state.marker).toBeNull();
         // The existing outlet scene exposed queued residents first becoming
         // visible on the apron. Exercise its native six-person door queue here,
@@ -251,6 +251,9 @@ test('interactions: only the open L6 gate the group is heading for offers its pr
       const fixedDestination = { ...m.def.anchors['l6-next'] };
       const courier = w.entities.get(1)!;
       Object.assign(courier.transform, { x: 400, z: 200 });
+      l6.strayed = true;
+      expect(LevelSixSubway.text(m)).toMatch(/^Rejoin .+ · \d+ m$/);
+      l6.strayed = false;
       for (let i = 0; i < 5400; i++) {
         w.update();
         expect(m.state.marker).toBe('l6-next');

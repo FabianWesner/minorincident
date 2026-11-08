@@ -12,6 +12,7 @@ import type { EntitySnapshot } from '../world/types';
 import type { Point } from '../npc/types';
 import type { Mission } from './Mission';
 import type { L6State } from './types';
+import { survivorName } from './survivorName';
 const distance = (a: Point, b: Point) => Math.hypot(a.x-b.x,a.z-b.z);
 const ticks = (s: number) => Math.round(s*60);
 /** Beat controller; all mutable state is checkpointed on the mission. Infection remains the shared outbreak system. */
@@ -473,10 +474,15 @@ export class LevelSixSubway {
     return {rescued:out.length,survivors:out.map(r=>r.key),survivorsIn:s.survivors.length,survivorsLost:s.survivors.filter(r=>r.status==='dead'||r.status==='turned').length,escapedSurvivors};
   }
   /** PO 10-20 #65: objective text while the courier is away from the retreating group. */
-  static text(mission: Pick<Mission,'state'> | null | undefined): string | null {
+  static text(mission: Mission | null | undefined): string | null {
     const s=mission?.state.l6;
     if(!s||(s.phase!=='retreat'&&s.phase!=='exit'))return null;
-    if(s.strayed)return 'Stay with the group';
+    if(s.strayed){
+      const p=mission.world.entities.get(1)!.transform;
+      const living=s.survivors.filter(r=>r.status==='following').map(r=>mission.world.entities.get(r.id)).filter((e):e is NonNullable<typeof e>=>!!e&&!e.hidden&&e.health.current>0);
+      const target=living.find(e=>e.id===s.alarm?.id)??living.sort((a,b)=>distance(a.transform,p)-distance(b.transform,p))[0];
+      return target?`Rejoin ${survivorName(target)} · ${Math.ceil(distance(target.transform,p))} m`:'Stay with the group';
+    }
     const wait=s.phase==='retreat'?s.waitFor:undefined;
     return wait?.kind==='fetch'?'The group waits: help the injured survivor who fell behind'
       :wait?.kind==='bring'?'Bring the injured survivor back to the group'
