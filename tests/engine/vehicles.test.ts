@@ -85,9 +85,63 @@ test('enter, drive and exit: door dwell, input ownership (no attacks while drivi
     expect(world.physics.world!.intersectionWithShape(exit.transform, { x: 0, y: 0, z: 0, w: 1 }, new RAPIER.Capsule(.35, .35), undefined, undefined, world.physics.playerCollider!)).toBeNull();
     world.loadScenario('empty'); expect(world.physics.bodyCount).toBe(2);
   } finally { world.dispose(); }
+  await screenRelativeSteering();
+  await vehicleShovesProps();
   await bikeMountIntent();
   await zooParkedBoarding();
 });
+
+async function screenRelativeSteering(): Promise<void> {
+  const world = new SimWorld(); await world.init(); world.loadScenario('drive-course');
+  try {
+    for (let i = 0; i < 36; i++) world.update();
+    const car = world.vehicles!.cars.get(2)!;
+    const start = { ...car.entity.transform };
+    // Screen-up is world -Z in the drive-course camera. A local drive intent
+    // pointing right/back must not override the requested screen direction.
+    const frame = emptyInput(); frame.move.z = -1; frame.drive = { throttle: -1, steer: -1 };
+    world.applyInput(frame, 'keyboard');
+    for (let i = 0; i < 120; i++) world.update();
+    expect(car.entity.transform.z).toBeLessThan(start.z - 1);
+    expect(car.entity.transform.yaw).toBeGreaterThan(.1);
+  } finally { world.dispose(); }
+}
+
+async function vehicleShovesProps(): Promise<void> {
+  const world = new SimWorld(); await world.init(); world.loadScenario('prop-yard');
+  try {
+    const prop = world.props!.spawn({ id: 'ram-test-wreck', assetId: 'veh.wreck', position: [0, 0, 0], yaw: 0, scale: [1, 1, 1], minTier: 0, maxTier: 5, allowRoad: true, lightGroup: '', visualAabb: { min: [-2.2, 0, -.9], max: [2.2, 1.8, .9] } });
+    world.props!.updateNavigation();
+    const id = world.vehicles!.spawn('vehicle.military-apc', { x: -4.9, z: 0 });
+    const car = world.vehicles!.cars.get(id)!; world.vehicles!.active = id;
+    car.physics.body.setLinvel({ x: 18, y: 0, z: 0 }, true); car.physics.postPhysics();
+    world.props!.prePhysics();
+    expect(prop.body.isSleeping()).toBe(false);
+    expect(prop.body.linvel().x).toBeGreaterThan(0);
+    expect(world.props!.navWalls.has(prop.entityId)).toBe(false);
+    const drums = world.props!.spawn({ id: 'ram-test-drum-stack', assetId: 'prop.cure-drum-stack', position: [10, 0, 0], yaw: 0, scale: [1, 1, 1], minTier: 0, maxTier: 5, allowRoad: true, lightGroup: '', visualAabb: { min: [-.65, 0, -.55], max: [.65, 2.2, .55] } });
+    world.props!.updateNavigation();
+    const secondId = world.vehicles!.spawn('vehicle.military-apc', { x: 6.5, z: 0 });
+    const secondCar = world.vehicles!.cars.get(secondId)!; world.vehicles!.active = secondId;
+    secondCar.physics.body.setLinvel({ x: 18, y: 0, z: 0 }, true); secondCar.physics.postPhysics();
+    world.props!.prePhysics();
+    expect(drums.body.isSleeping()).toBe(false);
+    expect(drums.body.linvel().x).toBeGreaterThan(0);
+    expect(world.props!.navWalls.has(drums.entityId)).toBe(false);
+    const reverseProp = world.props!.spawn({ id: 'ram-test-parked-sedan', assetId: 'veh.sedan-blue', position: [20, 0, 0], yaw: 0, scale: [1, 1, 1], minTier: 0, maxTier: 5, allowRoad: true, lightGroup: '', visualAabb: { min: [-2.2, 0, -.9], max: [2.2, 1.8, .9] } });
+    const reverseId = world.vehicles!.spawn('vehicle.military-apc', { x: 24.95, z: 0 });
+    const reverseCar = world.vehicles!.cars.get(reverseId)!; world.vehicles!.active = reverseId;
+    reverseCar.physics.body.setLinvel({ x: -18, y: 0, z: 0 }, true); reverseCar.physics.postPhysics();
+    world.props!.prePhysics();
+    expect(reverseProp.body.linvel().x, 'reverse contact pushes a parked car behind the APC').toBeLessThan(0);
+    const near = world.props!.spawn({ id: 'ram-test-nearby', assetId: 'veh.wreck', position: [40, 0, 0], yaw: Math.PI / 2, scale: [1, 1, 1], minTier: 0, maxTier: 5, allowRoad: true, lightGroup: '', visualAabb: { min: [-.9, 0, -2.2], max: [.9, 1.8, 2.2] } });
+    const nearbyId = world.vehicles!.spawn('vehicle.military-apc', { x: 35.5, z: 0 });
+    const nearbyCar = world.vehicles!.cars.get(nearbyId)!; world.vehicles!.active = nearbyId;
+    nearbyCar.physics.body.setLinvel({ x: 18, y: 0, z: 0 }, true); nearbyCar.physics.postPhysics();
+    world.props!.prePhysics();
+    expect(near.body.isSleeping(), 'a nearby elongated prop stays asleep before hull contact').toBe(true);
+  } finally { world.dispose(); }
+}
 
 // The zoo's fixed objective must remain at the real doorway while rockets and
 // infected strike the evacuation vehicle. Checkpoint rebuilds need the same hold.

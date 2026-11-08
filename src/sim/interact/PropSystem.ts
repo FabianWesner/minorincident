@@ -111,6 +111,29 @@ export class PropSystem {
   }
   /** Before the physics step: infected on contact shove props away from their body (they ignore props on the nav grid). */
   prePhysics(): void {
+    // A driven vehicle wakes and shoves authored non-building props only when
+    // its oriented hull reaches them. Impulse carries vehicle mass and impact
+    // speed, while Rapier and the existing awake cap own the response/cost.
+    const activeId = this.world.vehicles?.active;
+    const car = activeId === null || activeId === undefined ? undefined : this.world.vehicles?.cars.get(activeId);
+    let navChanged = false;
+    if (car && car.physics.speed > .35) for (const item of this.items) {
+      if (item.fixed || item.braced || !item.body.isEnabled() || this.world.entities.get(item.entityId)?.health.current === 0) continue;
+      const gap = car.physics.hullDistance(item.pose.p[0], item.pose.p[2]);
+      if (gap > item.radius + .18 || Math.abs(item.pose.p[1] - .6) > item.half[1] + 1.5) continue;
+      const contact = car.physics.collider.contactCollider(item.collider, .12);
+      if (!contact) continue;
+      const velocity = car.physics.body.linvel();
+      const nx = contact.normal1.x, nz = contact.normal1.z;
+      const speed = Math.min(car.physics.def.topSpeed, velocity.x * nx + velocity.z * nz);
+      if (speed <= .35) continue;
+      item.body.setBodyType(RAPIER.RigidBodyType.Dynamic, false);
+      const impact = Math.min(item.mass * Math.min(12, speed * .7), car.physics.def.mass * speed * .08);
+      const pushX = nx * impact, pushZ = nz * impact;
+      item.body.applyImpulse({ x: pushX, y: 0, z: pushZ }, true);
+      navChanged = true;
+    }
+    if (navChanged) this.updateNavigation();
     // Most zoo props are far from the outbreak. Cull them before crossing into WASM for velocity/enabled reads.
     let minX = Infinity, minZ = Infinity, maxX = -Infinity, maxZ = -Infinity;
     for (const e of this.world.entities.iterate()) if (e.infected && e.health.current > 0) {
