@@ -40,7 +40,7 @@ try {
     const save = cell.gear === null ? null : preset('L7-default');
     if (save) {
       save.character = cell.character; save.settings.quality = cell.quality;
-      if (cell.gear < 4) {
+      if (cell.gear !== null && cell.gear < 4) {
         // Keep ten earned upgrades and both base actions: incomplete upgrade
         // histories are rejected by the production save loader before the menu.
         save.ownedActions = save.ownedActions.slice(0, cell.gear === 1 ? 3 : cell.gear === 2 ? 5 : 9);
