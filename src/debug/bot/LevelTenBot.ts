@@ -83,7 +83,7 @@ export class LevelTenBot {
     const threats = w.infected!.active.filter(e => e.health.current > 0 && !e.hidden && !e.emerging && !e.infectionRise && distance(e.transform) < 30 && (isMega(e) || !cornBlocksSight(w, [p.x, p.z], [e.transform.x, e.transform.z])) && w.infected!.director.inPlayerView(e.transform, 30, 1, 5) && (p.y > 2 ? w.combat!.query.visible({ ...p, y: p.y + .45 }, e.transform) : w.infected!.nav.visible(p, e.transform, 0))).sort((a, b) => distance(a.transform) - distance(b.transform));
     const gun = w.mountedGun;
     if (active.id === 'hold' && mission.state.states['charge-active'] && gun && w.tick >= this.clearStairsUntil) {
-      if (gun.mounted && threats.some(e => !isMega(e) && e.transform.y > arena.gun.deckHeight && distance(e.transform) < 6)) {
+      if (gun.mounted && threats.some(e => e.transform.y > arena.gun.deckHeight && distance(e.transform) < 6)) {
         this.clearStairsUntil = w.tick + 240; f.interact = true; return f;
       }
       if (gun.mounted) {
