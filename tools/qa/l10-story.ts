@@ -162,7 +162,7 @@ for (const tier of tiers) {
       continuity.includes('L10.farmstead') && w.entities.get(m.state.actors['hangar-sam'])?.civilian?.model === sam.civilian!.model, continuity);
     // Explicit release fixture; only the setup injects a position/state. Movement uses ordinary inputs.
     place(w, 4006, -24);
-    for (const step of Object.values(m.state.steps)) step.status = 'completed'; m.state.steps.epilogue.status = 'active';
+    for (const step of Object.values(m.state.steps)) step.status = 'completed'; m.state.steps.epilogue.status = 'active'; m.state.steps.credits.status = 'pending';
     const cell = w.infected!.nav.nearestCell(4008, -22, .4);
     const humanId = w.infected!.spawn('infected.runner', { x: w.infected!.nav.x(cell), z: w.infected!.nav.z(cell) });
     m.state.states['cure-released'] = true; m.l10!.cure.release();
