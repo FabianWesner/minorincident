@@ -1,5 +1,8 @@
 /** No browser. Native crop/perception/scare/save evidence and source/runtime asset contracts. */
 import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
+import { synthesizeL10Farm } from '../audio/l10-farm-synthesis';
+import { wave } from '../../src/audio/synthesis';
 import { readFileSync, writeFileSync } from 'node:fs';
 import { loadLevel } from '../sim-runner/levels';
 import { inCorn, cornBlocksSight } from '../../src/levels/L10/farm';
@@ -7,7 +10,7 @@ import { applyFarmLandscape, farmLaneDistance } from '../../src/levels/L10/farmL
 import { missionControls } from '../../src/sim/missions/controls';
 import { updateFarmScares, farmScareSites, type FarmScareState } from '../../src/sim/missions/FarmScares';
 import { scoreFile } from '../../src/audio/StreamedMusic';
-import { audioCues, stemBank } from '../../src/data/audioCues';
+import { audioCues, categoryDuration, stemBank } from '../../src/data/audioCues';
 import { moveAgent } from '../../src/sim/locomotion/AgentMotion';
 import { emptyInput } from '../../src/input/InputFrame';
 import { timeOfDay } from '../../src/data/timeOfDay';
@@ -87,11 +90,20 @@ try {
   assert.equal(scoreFile('L10', 'combat'), 'combat-L10');
   assert.equal(scoreFile('L10', 'combat', true), 'tension-L7');
   assert.equal(scoreFile('L1', 'combat', true), 'combat');
-  assert.equal(Object.values(audioCues).filter(c => /^l10\.scare\./.test(c.id)).length, 5);
+  const scareCues = Object.values(audioCues).filter(c => /^l10\.scare\./.test(c.id));
+  assert.equal(scareCues.length, 5);
+  const hash = (bytes: Uint8Array) => createHash('sha256').update(bytes).digest('hex');
+  assert.equal(new Set(scareCues.map(c => hash(wave([synthesizeL10Farm(c, 48000)], 48000)))).size, 5);
+  assert(scareCues.every(c => readFileSync('docs/design/story-script.md', 'utf8').includes(c.caption!)));
+  const pcm = new Float32Array(Math.ceil(categoryDuration('music-L10-fx') * 48000));
+  for (const cue of Object.values(audioCues).filter(c => c.category === 'music-L10-fx')) pcm.set(synthesizeL10Farm(cue, 48000), Math.round(cue.offset * 48000));
+  const audioPcmHash = hash(wave([pcm], 48000));
+  // Pinned before the common builder extraction: verifies the delivered waveform is unchanged.
+  assert.equal(audioPcmHash, '454f5b2655b5762515327384485a390d5024bacd5a15d1c28dd49750e5a30b6d');
   assert.equal(timeOfDay['L10-night'].look!.gradeSaturation, .55);
   const source = JSON.parse(readFileSync('docs/reports/eg-l10-farm/asset-budgets.json', 'utf8'));
   assert(source.every((s: {triangles:number;cap:number}) => s.triangles <= s.cap));
-  const result = { status: 'PASS', cropTiles: crops.length, farmPieces: d.layout.placements.filter(p => p.id.startsWith('decor-cure-farm')).length, bareTrees: d.layout.placements.filter(p => p.assetId === 'prop.tree.dead').length,
+  const result = { status: 'PASS', audioPcmHash, cropTiles: crops.length, farmPieces: d.layout.placements.filter(p => p.id.startsWith('decor-cure-farm')).length, bareTrees: d.layout.placements.filter(p => p.assetId === 'prop.tree.dead').length,
     checks: ['walkable corn without colliders', '14/16m perception capped at 3m in crop', 'crop crossing breaks sight and tracking; close hearing retained', 'courier and shared NPC/sprinter locomotion 0.85 speed; mown lane 1.0', 'A* terrain cost 1/0.85', 'corgi warns about an on-screen crop-concealed threat', 'four checkpointed fair scare telegraphs', 'five distinct synthesized stingers', 'rock only during finale', 'all source LOD caps'], scares: checkpoint };
   writeFileSync('docs/reports/eg-l10-farm/native-audit.json', JSON.stringify(result, null, 2) + '\n'); console.log(JSON.stringify(result));
 } finally { world.dispose(); }

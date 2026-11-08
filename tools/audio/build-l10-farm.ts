@@ -4,18 +4,9 @@ import { createHash } from 'node:crypto';
 import { spawnSync } from 'node:child_process';
 import { audioCues, categoryDuration } from '../../src/data/audioCues';
 import { wave } from '../../src/audio/synthesis';
-import { Rng } from '../../src/core/Rng';
+import { synthesizeL10Farm } from './l10-farm-synthesis';
 const rate = 48000, bank = 'music-L10-fx', pcm = new Float32Array(Math.ceil(categoryDuration(bank) * rate));
-for (const cue of Object.values(audioCues).filter(c => c.category === bank)) {
-  const rng = new Rng(1029, cue.id), variant = Number(cue.id.at(-1)) || 0;
-  for (let n = 0; n < cue.duration * rate; n++) {
-    const t = n / rate, env = Math.min(1, t * 250, (cue.duration - t) * 100);
-    const pulse = (a: number) => a < 0 ? 0 : Math.sin(2 * Math.PI * 56 * a) * Math.exp(-a * 40);
-    const hit = cue.loop ? (pulse(t % 1) + pulse((t % 1) - .17) * .65) * .4
-      : ((rng.next() * 2 - 1) * .28 + Math.sin(2 * Math.PI * (85 + variant * 25) * t) * .38 + Math.sin(2 * Math.PI * (480 + variant * 170) * t) * .16) * Math.exp(-t * (5 + variant));
-    pcm[Math.round(cue.offset * rate) + n] = hit * env;
-  }
-}
+for (const cue of Object.values(audioCues).filter(c => c.category === bank)) pcm.set(synthesizeL10Farm(cue, rate), Math.round(cue.offset * rate));
 mkdirSync('.cache/audio', { recursive: true });
 writeFileSync('.cache/audio/l10-fx.wav', wave([pcm], rate));
 for (const ext of ['webm', 'm4a']) {
