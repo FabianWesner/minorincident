@@ -1,4 +1,4 @@
-"""Run the L7 before/after threat comparison and final acceptance in one remote job.
+"""Run the L7 before/after threat comparison, final unit suite and acceptance in one remote job.
 
 run.sh supplies native-input from the local frozen Git tree. Each job has a private
 copy; source restoration is guaranteed before final checks and at process exit.
@@ -41,6 +41,8 @@ finally:
     for name, content in original.items():
         Path(name).write_bytes(content)
 
+run("unit-after", ["node", "tools/qa/test-budget.mjs", "--name", "pre-uat-l7-test", "--max-seconds", "150", "--", "npm", "test", "--", "--maxWorkers=4"], identity["final"])
+shutil.copy2("test-results/timings/pre-uat-l7-test.json", root / "unit-timing.json")
 run("threat-after", ["npm", "run", "qa:threat", "--", "--levels", "L7", "--maxWorkers", "2", "--out", str(root / "threat-after")], identity["final"])
 run("accept-after", ["npm", "run", "qa:accept", "--", "--level", "L7", "--skip-browser"], identity["final"])
 accept = root / "accept"
