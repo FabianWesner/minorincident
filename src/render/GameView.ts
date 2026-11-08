@@ -423,7 +423,7 @@ export class GameView implements Lifecycle {
     this.renderer.shadowMap.enabled=true;
     if(!this.districtResources){
       const lighting=new Lighting(this.scene, this.look, this.renderer, this.environment ??= new Environment(this.renderer), this.world.scenario === 'L7'),materials=new Materials(lighting, this.renderer),registry=new DistrictAssets(materials,this.renderer),phase=materials.wind;
-      this.districtResources={lighting,materials,registry,phase,grassMaterial:Grass.material(materials,phase)};
+      this.districtResources={lighting,materials,registry,phase,grassMaterial:Grass.material(materials,phase,this.world.scenario === 'L10')};
     }
     const shared=this.districtResources;this.lighting=shared.lighting;this.materials=shared.materials;this.scene.add(this.lighting.sun,this.lighting.sun.target,this.lighting.hemisphere,this.lighting.spot,this.lighting.spot.target,this.lighting.practicalEffects);this.lighting.set(this.world.districts!.composition.timeOfDay); this.lighting.lamps.state = this.world.lightPower; this.lighting.lamps.update();
     // L1 and L2 share D-GROVE (E20), L3 plays the same outbreak town style on D-CORRIDOR (E21): the same instancing

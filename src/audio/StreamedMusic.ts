@@ -7,8 +7,8 @@ interface Deck { media: HTMLAudioElement; source: MediaElementAudioSourceNode; g
  * in every level, as do aftermath; each level L1-L9 has its own calm and tension recording. L1 calm is the coffee-shop jazz. */
 export const levelStreams: Record<string, Partial<Record<MusicState, string>>> = Object.fromEntries(
     Array.from({ length: 9 }, (_, i) => `L${i + 1}`).map(level => [level, { calm: `calm-${level}`, tension: `tension-${level}` }]));
-/** Finale reuses the licensed research/subway instrumental palette. */
-levelStreams.L10 = { calm: 'calm-L6', tension: 'tension-L6' };
+/** L10 uses the licensed Zombie Hoodoo recording (already imported for L5 tension) as its sparse ambient bed. */
+levelStreams.L10 = { calm: 'tension-L5', tension: 'tension-L5', combat: 'tension-L5' };
 /** Levels with their own streamed score (L1-L9 and the L10 finale). Single source for AudioService's level gate. */
 export const scoredLevels: ReadonlySet<string> = new Set(Object.keys(levelStreams));
 /** Score file stem (without `score-` and extension) a level plays in a state. */

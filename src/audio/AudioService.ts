@@ -569,6 +569,11 @@ export class AudioService implements Lifecycle {
             this.quietMusicUntil = at;
             this.play('stinger.twist', { time: at });
         }
+        else if (kind === 'scare') {
+            const at = this.graph.twist(t);
+            this.quietMusicUntil = at;
+            this.play('stinger.twist', { time: at });
+        }
         else
             this.play(kind === 'extraction' && level === 'L1' ? 'l1.outro.sting' : kind === 'extraction' && level === 'L6' ? 'stinger.dawn' : `stinger.${kind === 'extraction' ? 'complete' : kind}`);
     }

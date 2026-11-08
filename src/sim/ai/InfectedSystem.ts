@@ -27,6 +27,7 @@ import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
 import type { ScenarioDefinition } from '../../levels/loader';
 import { DistrictNavigation } from './DistrictNavigation';
+import { cornSightRange } from '../../levels/L10/farm';
 import { AlphaSupportMoves } from './AlphaSupportMoves';
 import { PropThrows } from './PropThrows';
 import { steerFlockDive, updateFlock } from './Flock';
@@ -690,7 +691,7 @@ export class InfectedSystem {
   /** Existing archetype vision: 110 degrees / 14 m, weather, light and smoke unchanged. */
   private seesPlayer(e: EntitySnapshot, player: EntitySnapshot): boolean {
     const dx = player.transform.x - e.transform.x, dz = player.transform.z - e.transform.z, distance = Math.hypot(dx, dz);
-    return distance <= 14 * (this.world.weather?.modifiers.infectedSight ?? 1) * (this.world.lightPower?.sightMultiplier(player.transform) ?? 1)
+    return distance <= (this.world.scenario === 'L10' ? cornSightRange(this.world, [e.transform.x, e.transform.z], [player.transform.x, player.transform.z]) : 14) * (this.world.weather?.modifiers.infectedSight ?? 1) * (this.world.lightPower?.sightMultiplier(player.transform) ?? 1)
       && (distance === 0 || (dx * Math.cos(e.transform.yaw) - dz * Math.sin(e.transform.yaw)) / distance >= Math.cos(55 * Math.PI / 180))
       && this.world.combat!.query.visible(e.transform, player.transform) && !this.world.combat!.effects.smokeBlocks(e.transform, player.transform);
   }

@@ -379,7 +379,7 @@ export async function buildDistrict(parts: DistrictParts, deps: DistrictBuildDep
           p as [number, number, number],
         );
       }
-      for (const grass of Grass.tiles(d.layout, deps.grassMaterial, seed)) { parts.grass.push(grass); root.add(grass); }
+      for (const grass of Grass.tiles(d.layout, deps.grassMaterial, seed, d.id === 'D-CURE')) { parts.grass.push(grass); root.add(grass); }
       for (const b of d.layout.buildings) {
         const p = d.layout.placements.find((p) => p.id === b.id)!;
         tag(parts, root, b.label, [p.position[0], 2.8, b.aabb.max[2] + .6]);
