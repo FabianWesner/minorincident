@@ -101,8 +101,11 @@ try {
     w.solids.relocate(e, { x: p.transform.x + 1.2, z: p.transform.z, y: .7 }, 'qa.arena.grab-source', 1);
     const loadout = w.combat!.runner.loadout, axe = loadout.activeEntries().find(x => x.id === 'weapon.fire-axe')!, gun = loadout.activeEntries().find(x => x.id === 'weapon.army-mg')!;
     loadout.state[axe.side].index = axe.index; loadout.state[gun.side].index = gun.index; loadout.state.selectedSide = gun.side;
+    let gripDamage = 0;
+    w.events.on('combat.hit', event => { if (event.type === 'combat.hit' && event.sourceId === e.id && event.targetId === 1 && event.actionId === 'infected.monkey.grab') gripDamage += event.amount; });
     e.infected!.grabUntil = w.tick + 120; e.infected!.grabHits = 0; e.infected!.arenaBoss!.shakeHits = 0;
     w.applyInput({ ...emptyInput(), selectedSlot: { side: axe.side, index: axe.index } }, 'keyboard'); step(w, 60);
+    check('a close monkey grab continues real contact damage until escaped', gripDamage > 0, { gripDamage, hp: p.health.current });
     check('grab blocks weapon selection for two seconds', loadout.state.selectedSide === gun.side && zoo.bosses.swapBlocked(), { selected: loadout.state.selectedSide, gunSide: gun.side, blocked: zoo.bosses.swapBlocked(), remaining: e.infected!.grabUntil - w.tick });
     w.applyInput({ ...emptyInput(), aim: { x: 1, z: 0 }, aimSource: 'keyboard', left: { down: true, held: true, up: false } }, 'keyboard');
     step(w, 45);

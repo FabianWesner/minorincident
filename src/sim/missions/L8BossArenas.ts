@@ -139,7 +139,15 @@ export class L8BossArenas {
     }
     if (b.grabUntil > w.tick) {
       if ((boss.shakeHits ?? 0) > 0 && arena.id === 'monkey' || arena.id === 'lion' && b.grabHits >= 2) { b.grabUntil = 0; arena.counters++; this.recover(e, 120); }
-      else { this.walk(e, p.transform, 2); return true; }
+      else {
+        if (arena.id === 'monkey' && w.tick >= b.grabNextTick && distance(e.transform, p.transform) < 1.8 && w.combat!.query.visible(e.transform, p.transform)) {
+          b.grabNextTick = w.tick + 30;
+          const attackId = w.infected!.arenaAttackId();
+          const amount = w.combat!.damage.apply({ sourceId: e.id, targetId: 1, attackId, actionId: 'infected.monkey.grab', origin: e.transform, direction: { x: b.dx, z: b.dz }, base: 12, multiplier: 1, type: 'melee', knockback: 0, stagger: 0 });
+          w.events.emit({ type: 'infected.attack', tick: w.tick, sourceId: e.id, targetId: 1, attackId, special: 'monkey.grab', amount });
+        }
+        this.walk(e, p.transform, 2); return true;
+      }
     }
     if (b.specialAttack?.move === 'gorilla.roar' && b.specialAttack.stage === 'telegraph' && b.grabHits > 0) { arena.counters++; this.recover(e, 120); return true; }
     if (b.specialAttack) { this.advanceMove(e, arena); return true; }
@@ -338,7 +346,7 @@ export class L8BossArenas {
     if (distance(e.transform, p.transform) <= a.area.radius + .35) {
       const firstContact = !a.hitIds.includes(1);
       this.hit(e, arena.id === 'elephant' ? 70 : arena.id === 'monkey' ? 35 : arena.id === 'flamingo' ? 30 : arena.id === 'lion' ? 70 : 35, arena.id === 'elephant' ? 70 : 0);
-      if (firstContact && (arena.id === 'lion' || arena.id === 'monkey')) { b.grabUntil = w.tick + 120; b.grabHits = 0; b.heardTargetId = 1; arena.grabs++; }
+      if (firstContact && (arena.id === 'lion' || arena.id === 'monkey')) { b.grabUntil = w.tick + 120; b.grabNextTick = w.tick + 30; b.grabHits = 0; b.heardTargetId = 1; arena.grabs++; }
     }
     if (clear + .001 < step || travelled + step >= range || w.tick - a.activeTick > (range / speed + 1) * 60) {
       const side = Math.abs((p.transform.x - a.area.x) * a.area.dz - (p.transform.z - a.area.z) * a.area.dx);
