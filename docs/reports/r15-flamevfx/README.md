@@ -39,7 +39,7 @@ Visual review of the captured WebGL2 frames:
 
 - Browser QA needed: independent visual review and manual WebGPU look check before merge.
 - Final native receipt refresh is pending after the render-phase attachment fix. The previous complete run is reported above; a refresh was discarded when another lane started a typecheck during admission.
-- The optimized QA build and WebGL2 smoke check are running.
+- The optimized QA build and WebGL2 smoke check pass (one pooled headless Metal context, one worker). [Smoke receipt](smoke.json). The WebGPU smoke cases were not run; WebGPU remains a manual check.
 
 No deploy or push has been performed.
 
