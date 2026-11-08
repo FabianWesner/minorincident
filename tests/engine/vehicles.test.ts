@@ -9,6 +9,7 @@ import { SimWorld } from '../../src/sim/world/SimWorld';
 import { loadLevel } from '../../tools/sim-runner/levels';
 import { missionControls } from '../../src/sim/missions/controls';
 import { preset } from '../../src/sim/progression/Campaign';
+import { completeCampaignLevel } from '../../src/sim/progression/carryover';
 import { objectiveText } from '../../src/sim/missions/objectiveText';
 import type { PropSnapshot } from '../../src/sim/interact/PropSystem';
 
@@ -188,6 +189,10 @@ async function crossingStorySequence(): Promise<void> {
     }
     expect(l9.state.finished).toBe(true); expect(explosions).toBe(1);
     expect([...new Set([...player.weapons!.LEFT.rack, ...player.weapons!.RIGHT.rack].map(s => s.id))]).toEqual(['weapon.fire-axe']);
+    w.applyInput(emptyInput(), 'keyboard');
+    for (let i = 0; i < 360 && mission.state.phase === 'playing'; i++) w.update();
+    expect(mission.state.result).not.toBeNull();
+    completeCampaignLevel(w.progression!.campaign!, 9, mission.state.result!, w);
     expect(w.progression!.campaign!.crossingHandover!.shelteredPassengers).toHaveLength(4);
     expect(w.progression!.campaign!.crossingHandover!.researchCompanion?.civilian?.survivor?.key).toBe('sam');
   } finally { w.dispose(); }

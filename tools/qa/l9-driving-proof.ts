@@ -3,6 +3,7 @@ import { dirname } from 'node:path';
 import { loadLevel } from '../sim-runner/levels';
 import { LevelNineBot } from '../../src/debug/bot/LevelNineBot';
 import { preset } from '../../src/sim/progression/Campaign';
+import { completeCampaignLevel } from '../../src/sim/progression/carryover';
 import { provenance } from './accept/probe';
 import { stateHash } from '../../src/sim/world/stateHash';
 
@@ -23,6 +24,7 @@ try {
   world.events.on('vehicle.durability-hit', e => { if (e.type === 'vehicle.durability-hit') hits.push(e); });
   world.events.on('vehicle.grabbed', () => grabs++); world.events.on('vehicle.shaken', () => shakes++);
   world.events.on('player.damaged', () => playerHits++);
+  world.events.on('level.completed', e => { if (e.type === 'level.completed' && e.id === 'L9') completeCampaignLevel(world.progression!.campaign!, 9, e.result, world); });
   const admissions: { tick: number; id: number; archetype: string; distance: number; state: string; hidden: boolean }[] = [];
   const spawn = world.infected!.spawn.bind(world.infected);
   world.infected!.spawn = (...args) => {
@@ -31,7 +33,7 @@ try {
     return id;
   };
   const seen = new Set<number>(), firstNear: { id: number; archetype: string; state: string; distance: number }[] = [], durations: number[] = [];
-  for (let i = 0; i < maxSeconds * 60 && !l9.state.finished && world.entities.get(1)!.health.current > 0; i++) {
+  for (let i = 0; i < maxSeconds * 60 && world.missions!.state.phase !== 'progression' && world.missions!.state.phase !== 'result' && world.entities.get(1)!.health.current > 0; i++) {
     world.applyInput(bot.sample(), 'keyboard'); const start = performance.now(); world.update(); durations.push(performance.now() - start);
     const p = world.entities.get(1)!;
     peakAlive = Math.max(peakAlive, world.infected!.director.count); peakChunks = Math.max(peakChunks, world.chunks!.stats().resident);
@@ -48,7 +50,7 @@ try {
   const collision = world.solids.snapshot(), state = l9.state, final = world.getState();
   const result = {
     ...provenance(), route, tier, zero, risky, seed: 1, method: 'Production LevelNineBot inputs, native Rapier/AI and normal campaign state. --zero is one explicit initial damage fixture; no immortality, teleports, actor writes or objective skips.',
-    completed: state.finished, seconds: world.tick / 60, hp: world.entities.get(1)!.health.current, durability: car.entity.health.current,
+    completed: state.finished && !!world.progression?.campaign?.crossingHandover, seconds: world.tick / 60, hp: world.entities.get(1)!.health.current, durability: car.entity.health.current,
     peakAlive, peakChunks, grabs, shakes, playerHits, signals, hits, samples, collision, finalStateHash: stateHash(final), driving: state.driving,
     admissions: { actors: admissions, violations: admissions.filter(e => !e.hidden && (e.distance < 100 || e.state === 'idle')) },
     firstNear: { method: 'First shown native actor within a conservative 45 m radius; this is a headless proxy, not a rendered max-zoom frustum.', actors: firstNear, idle: firstNear.filter(e => e.state === 'idle') },
