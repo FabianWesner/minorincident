@@ -39,7 +39,8 @@ const provokeTicks = 12 * 60;
 const hearingReactionTicks = 15, hearingTurnRadS = 14;
 const armedCampaigns = new Set(['L4', 'L5', 'L6', 'L7', 'L8', 'L10']);
 const lungeActiveTicks = (scenario: string | null | undefined) => armedCampaigns.has(scenario ?? '') ? 30 : 20;
-/** Ordinary lunges get a short moving margin; running contact deals a glancing wound. */
+const introductoryCampaigns = new Set(['L1', 'L2', 'L3', 'L4', 'L5']);
+/** Introductory campaigns keep moving contacts readable without full contact wounds. */
 const movingReachBudget = 1.6, movingGlanceFraction = .1;
 /** Fixed-step infected brain. Entities and path storage are prewarmed and reused, without Rapier bodies. */
 export class InfectedSystem {
@@ -722,7 +723,7 @@ export class InfectedSystem {
     // Aim ahead of a moving victim, with a bounded ordinary lunge lead.
     // The strike still checks live position and obstruction at impact.
     const velocity = player.survivor?.velocity ?? player.motion?.velocity;
-    const vx = velocity?.x ?? 0, vz = velocity?.z ?? 0, lead = b.special === 'lunge' ? Math.min(def.windup, movingReachBudget / Math.max(.001, Math.hypot(vx, vz))) : def.windup;
+    const vx = velocity?.x ?? 0, vz = velocity?.z ?? 0, lead = this.capsMovingLunge(e) ? Math.min(def.windup, movingReachBudget / Math.max(.001, Math.hypot(vx, vz))) : def.windup;
     const dx = player.transform.x + vx * lead - e.transform.x, dz = player.transform.z + vz * lead - e.transform.z, distance = Math.hypot(dx, dz);
     b.dx = distance ? dx / distance : 1; b.dz = distance ? dz / distance : 0;
     if (distance > .001) e.transform.yaw = -Math.atan2(dz, dx);
@@ -733,14 +734,15 @@ export class InfectedSystem {
     for (const other of this.world.entities.iterate()) if (other.archetype === 'infected.runner' && other.health.current <= 0 && !other.infected!.revived && this.world.tick - other.infected!.deadAt <= 2700 && Math.hypot(e.transform.x - other.transform.x, e.transform.z - other.transform.z) <= 6) return other;
     return undefined;
   }
-  /** Include body size and a moving margin, capped for ordinary lunges. */
+  private capsMovingLunge(e: EntitySnapshot): boolean { return e.infected?.special === 'lunge' && introductoryCampaigns.has(this.world.scenario ?? ''); }
+  /** Include body size and a moving margin, capped for introductory ordinary lunges. */
   private strikeRange(e: EntitySnapshot, target: EntitySnapshot): number {
     const def = infectedDef(e.archetype), velocity = target.survivor?.velocity ?? target.motion?.velocity;
     const speed = Math.hypot(velocity?.x ?? 0, velocity?.z ?? 0);
     // Slow grabs/animal attacks retain their windup travel envelope. Ordinary
     // lunges already approach during the warning and need only a small margin.
     const margin = speed * def.windup;
-    return def.range + (e.infected?.special === 'lunge' ? Math.min(movingReachBudget, margin) : margin) + (target.survivor ? Math.max(0, e.combat!.radius - .35) : 0);
+    return def.range + (this.capsMovingLunge(e) ? Math.min(movingReachBudget, margin) : margin) + (target.survivor ? Math.max(0, e.combat!.radius - .35) : 0);
   }
   /** Start a reachable warning before the pursuer enters a moving courier's weapon ring. */
   private lungeStartRange(e: EntitySnapshot, target: EntitySnapshot, base: number): number {
@@ -823,10 +825,10 @@ export class InfectedSystem {
       this.world.events.emit({ type: 'infected.attack', tick: this.world.tick, sourceId: e.id, attackId: b.attackId, targetId, special: b.special, amount: 0 });
       return;
     }
-    // A moving courier takes a glancing lunge or an extended-reach graze.
-    // Planted bites and committed close special attacks retain full damage.
+    // Introductory moving contacts are glancing lunges or extended-reach grazes.
+    // Keep the later campaigns' reviewed combat balance and progression intact.
     const contact = infectedDef(e.archetype).range + Math.max(0, e.combat!.radius - .35) + .15;
-    const glancing = targetId === 1 && Math.hypot(target.survivor?.velocity.x ?? 0, target.survivor?.velocity.z ?? 0) > .2 && (b.special === 'lunge' || Math.hypot(target.transform.x - e.transform.x, target.transform.z - e.transform.z) > contact);
+    const glancing = introductoryCampaigns.has(this.world.scenario ?? '') && targetId === 1 && Math.hypot(target.survivor?.velocity.x ?? 0, target.survivor?.velocity.z ?? 0) > .2 && (b.special === 'lunge' || Math.hypot(target.transform.x - e.transform.x, target.transform.z - e.transform.z) > contact);
     const amount = this.world.combat!.damage.apply({ attackId: b.attackId, actionId: e.archetype, sourceId: e.id, targetId, origin: e.transform, direction: { x: b.dx, z: b.dz }, base: damage * (glancing ? movingGlanceFraction : 1), multiplier: e.combat!.damageMultiplier, type: 'melee', knockback: b.special === 'charge' ? 3.2 : 0, stagger: 0 });
     this.world.events.emit({ type: 'infected.attack', tick: this.world.tick, sourceId: e.id, attackId: b.attackId, targetId, special: b.special, amount });
   }
