@@ -56,11 +56,14 @@ export class LevelNineDriving {
     s.prepared = true;
     w.npcs!.companion.forceSafe = true;
     const vehicle = this.car.entity.vehicle!;
+    const nav = w.infected!.nav, warmCell = nav.nearestCell(this.car.entity.transform.x, this.car.entity.transform.z, .35);
+    if (warmCell < 0) throw new Error('L9 cast needs resident entry navigation');
+    const warm = { x: nav.x(warmCell), z: nav.z(warmCell) };
     // Standalone level starts use the surviving campaign keys; transferred
     // occupants retain their identities and losses from the zoo.
     if (!w.progression?.campaign?.transport) for (const [slot, def] of l5Survivors.entries()) {
       if (!(w.progression?.campaign?.survivors ?? l5Survivors.map(r => r.key)).includes(def.key)) continue;
-      const id = outbreak.spawnPedestrian({ x: -550, z: 3 + slot }, { role: 'cashier', model: def.model, waypoints: [{ x: -550, z: 3 + slot }] }, false);
+      const id = outbreak.spawnPedestrian(warm, { role: 'cashier', model: def.model, waypoints: [warm] }, false);
       const e = w.entities.get(id)!;
       e.civilian!.survivor = { key: def.key, mode: 'follow', slot, leader: 1, cover: false, waitAt: 0, foundAt: 0 };
       if (def.key === 'sam') e.civilian!.ally = { ...allyState('civilian'), weapon: 'hunting-rifle', gun: { damage: 40, shotS: 1.5, rangeM: 35, nearM: 12, hitNear: .8, hitFar: .3 }, hold: true };
@@ -84,7 +87,7 @@ export class LevelNineDriving {
     for (let i = 0; i < 4; i++) {
       // Prewarm the cast in resident navigation; the bridgehead is streamed
       // later. Hidden truck occupants are deployed before that camp is visible.
-      const at = { x: -550, z: 3 + i }, id = outbreak.spawnPedestrian(at, { role: 'soldier', model: 'npc.national-guard', waypoints: [at] }, false), e = w.entities.get(id)!;
+      const id = outbreak.spawnPedestrian(warm, { role: 'soldier', model: 'npc.national-guard', waypoints: [warm] }, false), e = w.entities.get(id)!;
       e.hidden = true; e.passengerOf = s.trucks[i % 3]; w.spatial.delete(id);
       e.civilian!.ally = { ...allyState('soldier', null), post: { x: 447 + i * 4, z: -7 }, hold: true, range: 35, gun: { damage: 20, shotS: .7, rangeM: 35, nearM: 12, hitNear: .75, hitFar: .3 } };
       s.soldiers.push(id);
