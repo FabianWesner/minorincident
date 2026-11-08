@@ -66,7 +66,13 @@ async function alphaTypeContracts() {
       if (move === 'alpha.barrage') for (let i = 0; i < 3; i++) addProp(i);
       if (move === 'alpha.roar') for (let i = 0; i < 12; i++) spawn(w, 'runner', 4 + i % 3, 3 + Math.floor(i / 3), 'idle');
       const advance = (n: number) => { for (let i = 0; i < n; i++) { w.props?.prePhysics(); step(w, 1); w.props?.postPhysics(); } };
-      expect(ai.startSpecial(alpha.id, move, { id: 1, x: 0, z: 0 }, { x, z: 0, radius: move === 'alpha.roar' ? 8 : 1, dx: -1, dz: 0 }), move).toBe(true);
+      // Close Brute moves overlap: put the other move on cooldown to probe each available AI choice.
+      if (move === 'alpha.ground-slam' || move === 'alpha.grab-human') {
+        alpha.infected!.specialCooldowns = { 'alpha.charge': 1_000_000 };
+        if (move === 'alpha.grab-human') alpha.infected!.specialCooldowns['alpha.ground-slam'] = 1_000_000;
+      }
+      advance(1);
+      expect(alpha.infected!.specialAttack?.move, `${move}: selected by the AI`).toBe(move);
       const attackId = alpha.infected!.specialAttack!.attackId;
       if (missile) expect(missile.transform.y, `${move}: visible overhead pickup`).toBeGreaterThan(2);
       advance(infectedSpecialMoves[move].windup - 1);
