@@ -7,6 +7,7 @@ import type { AssetDef } from '../../src/assets/types';
 import { validateSpec, type SceneSpec } from '../../src/debug/scenelab/spec';
 import { frameInterval, type FrameState } from '../../tools/playtest/frames';
 import { PlaytestProgress, type ProgressSample } from '../../tools/playtest/progress';
+import { visibleGroupTarget } from '../../tools/playtest/eyes';
 import { campaignEndingComplete, campaignEndingWaiting, needsZoomInput, observeWithin } from '../../tools/playtest/startup';
 import { PNG } from 'pngjs';
 import { courierBodyPixels } from '../../tools/scenelab/run';
@@ -16,6 +17,10 @@ import { edgeNoise } from '../../tools/scenelab/edge-noise';
 const sample = (seconds: number, fields: Partial<ProgressSample> = {}): ProgressSample => ({ context: 'L6|retreat', text: 'Cover the retreat · 12 m', distance: 12, player: { x: 0, z: 15 }, marker: { x: 12, z: 15 }, tick: seconds * 60, nowMs: seconds * 1000, ...fields });
 
 test('playtest stuck detection: following a moving ring is progress; a parked courier, a 30 s loop or a static zero-distance objective is not', () => {
+  const group = [{ x: 12, z: 0, hp: 100, drawn: true, corpse: false }];
+  expect(visibleGroupTarget('L7', { x: 0, z: 0 }, group)).toBeNull();
+  expect(visibleGroupTarget('L7', { x: -7, z: 0 }, group)).toEqual({ x: 12, z: 0 });
+  expect(visibleGroupTarget('L6', { x: 0, z: 0 }, group, 8, 'exit')).toEqual({ x: 12, z: 0 });
   const follow = new PlaytestProgress(); follow.update(sample(0));
   for (let t = 1; t <= 45; t++) expect(follow.update(sample(t, { player: { x: t * 2.2, z: 15 }, marker: { x: t * 2.2 + 12, z: 15 } })).seconds).toBeLessThan(2);
   const parked = new PlaytestProgress(); parked.update(sample(0));
