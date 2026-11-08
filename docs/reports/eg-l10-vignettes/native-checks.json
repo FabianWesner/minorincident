@@ -1,0 +1,69 @@
+{
+  "sourceCommit": "3a1092d417f73946c89cfc3ef8e3746aff8d9d3d",
+  "runnerSnapshotHead": "ce40441d79ecff2a1f4cfda31c18775a9370a99a",
+  "host": "mi-runner-1",
+  "browsersLaunched": 0,
+  "checks": [
+    {
+      "name": "typecheck",
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0,
+      "seconds": 61.37,
+      "log": "test-results/eg-l10-vignettes-checks/typecheck.log"
+    },
+    {
+      "name": "lint",
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "exitCode": 0,
+      "seconds": 54.08,
+      "log": "test-results/eg-l10-vignettes-checks/lint.log"
+    },
+    {
+      "name": "unit",
+      "command": [
+        "npm",
+        "test",
+        "--",
+        "--maxWorkers=1"
+      ],
+      "exitCode": 0,
+      "seconds": 209.75,
+      "log": "test-results/eg-l10-vignettes-checks/unit.log"
+    },
+    {
+      "name": "scope",
+      "command": [
+        "node",
+        "--import",
+        "tsx/esm",
+        "tools/qa/l10-vignettes.ts"
+      ],
+      "exitCode": 0,
+      "seconds": 1.27,
+      "log": "test-results/eg-l10-vignettes-checks/scope.log"
+    },
+    {
+      "name": "acceptance",
+      "command": [
+        "npm",
+        "run",
+        "qa:accept",
+        "--",
+        "--level",
+        "L10",
+        "--skip-browser"
+      ],
+      "exitCode": 1,
+      "seconds": 3259.92,
+      "log": "test-results/eg-l10-vignettes-checks/acceptance.log"
+    }
+  ]
+}
