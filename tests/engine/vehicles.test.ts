@@ -116,6 +116,12 @@ async function apcBoarders(): Promise<void> {
     world.applyInput(turn, 'keyboard'); world.update();
     expect(car.entity.vehicle!.attached, 'a sharp turn shakes the dog off').not.toContain(dogId);
     expect(dog.attachedTo).toBeUndefined();
+    const wheelRotation = car.physics.wheels[0].rotation;
+    const roll = { x: Math.SQRT1_2, y: 0, z: 0, w: Math.SQRT1_2 };
+    world.vehicles!.scriptPose(id, { ...car.entity.transform, yaw: 0 }, 3, roll);
+    expect(car.physics.speed, 'scripted departure retains its speed').toBe(3);
+    expect(car.physics.wheels[0].rotation, 'scripted departure turns its wheels').toBeGreaterThan(wheelRotation);
+    expect(car.physics.rotation, 'scripted crash retains the whole-hull roll').toEqual(roll);
   } finally { world.dispose(); }
 }
 
