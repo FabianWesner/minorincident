@@ -19,6 +19,7 @@ git -c user.name='Remote validation' -c user.email=validation@localhost commit -
 run typecheck npm run typecheck
 run lint npm run lint
 run unit npm test -- --maxWorkers=1
+run story node --import tsx/esm tools/qa/l9-story-proof.ts
 run course node --import tsx/esm tools/qa/l9-course-proof.ts
 for route in road countryside dry-shortcut; do
   run "$route-low" node --import tsx/esm tools/qa/l9-driving-proof.ts --route "$route" --tier low
