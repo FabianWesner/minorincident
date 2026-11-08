@@ -58,43 +58,46 @@ try {
   assert.equal(world.player!.locomotion.speedScale, .85);
   missionControls(world).teleport(1, { x: 547, z: 0 }); world.update(); assert.equal(world.player!.locomotion.speedScale, 1);
   // Drive the actual producer at every crop edge until its four authored sites have all sounded and emerged.
-  const ledger: FarmScareState = {}; let stings = 0;
+  const ledger: FarmScareState = {}; let pendingSnapshot: FarmScareState = {}, stings = 0;
   const off = world.events.on('music.stinger', e => { if (e.type === 'music.stinger' && e.kind === 'scare') stings++; });
   const sites = farmScareSites(d.layout.placements);
   assert.equal(sites.length, 4);
-  for (const p of sites) {
+  for (const [i, p] of sites.entries()) {
     world.chunks!.update([p.x, p.z]);
     missionControls(world).teleport(1, { x: p.x + 4, z: p.z });
     updateFarmScares(world, ledger);
-  }
-  assert.equal(stings, 4); assert.equal(Object.keys(ledger).length, 4);
-  assert(Object.values(ledger).every(s => s.actor === undefined && s.due > world.tick));
-  const checkpoint = structuredClone(ledger);
-  // Retry the same ledger before the delay: no duplicate cue or actor.
-  updateFarmScares(world, checkpoint); assert.equal(stings, 4);
-  world.tick += 100;
-  for (const p of sites) {
-    world.chunks!.update([p.x, p.z]);
-    missionControls(world).teleport(1, { x: p.x + 4, z: p.z });
-    updateFarmScares(world, checkpoint);
-    const id = checkpoint[p.id].actor; assert(id);
+    assert.equal(stings, i + 1);
+    assert(ledger[p.id].actor === undefined && ledger[p.id].due > world.tick);
+    pendingSnapshot = structuredClone(ledger);
+    // Retrying before the delay neither duplicates the cue nor creates an actor.
+    updateFarmScares(world, ledger); assert.equal(stings, i + 1);
+    world.tick += 100; updateFarmScares(world, ledger);
+    const id = ledger[p.id].actor; assert(id);
     assert.notEqual(world.entities.get(id)!.infected!.state, 'idle');
     assert.equal(world.infected!.nav.movementCost!(p.x, p.z), 1 / .85);
   }
-  assert.equal(stings, 4);
-  off();
+  assert.equal(stings, 4); assert.equal(Object.keys(ledger).length, 4); off();
+  const checkpoint = structuredClone(ledger), lastSite = sites.at(-1)!.id;
   world.l10Encounters!.state.farmScares = checkpoint;
   const saved = world.l10Encounters!.snapshot(); world.l10Encounters!.restore(saved);
   assert.deepEqual(world.l10Encounters!.state.farmScares, checkpoint);
   // A live-clock retry must replay a full cue, rather than immediately emerge from an old due tick.
   world.tick += 600;
-  world.l10Encounters!.restore({ ...saved, farmScares: structuredClone(ledger) });
-  assert.deepEqual(world.l10Encounters!.state.farmScares, {});
+  world.l10Encounters!.restore({ ...saved, farmScares: pendingSnapshot });
+  assert.equal(world.l10Encounters!.state.farmScares![lastSite], undefined);
+  assert.equal(Object.keys(world.l10Encounters!.state.farmScares!).length, 3);
   let replayed = 0;
   const stopReplay = world.events.on('music.stinger', e => { if (e.type === 'music.stinger' && e.kind === 'scare') replayed++; });
   updateFarmScares(world, world.l10Encounters!.state.farmScares!); stopReplay();
   assert.equal(replayed, 1);
-  assert(Object.values(world.l10Encounters!.state.farmScares!).every(s => s.actor === undefined && s.due === world.tick + 90));
+  const pending = world.l10Encounters!.state.farmScares!, reserved = world.infected!.director.reserved;
+  assert(pending[lastSite].actor === undefined && pending[lastSite].due === world.tick + 90);
+  world.tick += 100; world.infected!.director.reserved = world.infected!.director.cap;
+  updateFarmScares(world, pending); assert.equal(pending[lastSite], undefined);
+  world.infected!.director.reserved = reserved;
+  updateFarmScares(world, pending);
+  assert.equal(Object.keys(pending).length, 4);
+  assert(pending[lastSite].actor === undefined && pending[lastSite].due === world.tick + 90);
   assert.equal(stemBank('L10'), null);
   assert.equal(scoreFile('L10', 'combat'), 'combat-L10');
   assert.equal(scoreFile('L10', 'combat', true), 'tension-L7');
@@ -113,6 +116,6 @@ try {
   const source = JSON.parse(readFileSync('docs/reports/eg-l10-farm/asset-budgets.json', 'utf8'));
   assert(source.every((s: {triangles:number;cap:number}) => s.triangles <= s.cap));
   const result = { status: 'PASS', audioPcmHash, cropTiles: crops.length, farmPieces: d.layout.placements.filter(p => p.id.startsWith('decor-cure-farm')).length, bareTrees: d.layout.placements.filter(p => p.assetId === 'prop.tree.dead').length,
-    checks: ['walkable corn without colliders', '14/16m perception capped at 3m in crop', 'crop crossing breaks sight and tracking; close hearing retained', 'courier and shared NPC/sprinter locomotion 0.85 speed; mown lane 1.0', 'A* terrain cost 1/0.85', 'corgi warns about an on-screen crop-concealed threat', 'four checkpointed fair scare telegraphs', 'live-clock retry replays pending telegraphs', 'five distinct synthesized stingers', 'rock only during finale', 'all source LOD caps'], scares: checkpoint };
+    checks: ['walkable corn without colliders', '14/16m perception capped at 3m in crop', 'crop crossing breaks sight and tracking; close hearing retained', 'courier and shared NPC/sprinter locomotion 0.85 speed; mown lane 1.0', 'A* terrain cost 1/0.85', 'corgi warns about an on-screen crop-concealed threat', 'four checkpointed fair scare telegraphs', 'live-clock retry and delayed admission replay pending telegraphs', 'five distinct synthesized stingers', 'rock only during finale', 'all source LOD caps'], scares: checkpoint };
   writeFileSync('docs/reports/eg-l10-farm/native-audit.json', JSON.stringify(result, null, 2) + '\n'); console.log(JSON.stringify(result));
 } finally { world.dispose(); }

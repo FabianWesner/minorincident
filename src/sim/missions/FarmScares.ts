@@ -30,12 +30,15 @@ export function updateFarmScares(world: SimWorld, ledger: FarmScareState): void 
   for (const site of farmScareSites(layout.placements)) {
     let entry = ledger[site.id];
     if (entry?.actor) continue;
+    const available = ai.pool.length > 0 && ai.director.count < ai.director.cap - ai.director.reserved - ai.director.pendingTurns;
     if (!entry) {
-      if (Math.hypot(hero.transform.x - site.x, hero.transform.z - site.z) > 13 || !ai.nav.clear(site.x, site.z, .65)) continue;
+      if (!available || Math.hypot(hero.transform.x - site.x, hero.transform.z - site.z) > 13 || !ai.nav.clear(site.x, site.z, .65)) continue;
       entry = ledger[site.id] = { due: world.tick + 90 };
       world.events.emit({ type: 'music.stinger', tick: world.tick, kind: 'scare', level: 'L10' });
     }
-    if (world.tick < entry.due || !world.chunks?.resident(site.x, site.z) || !ai.pool.length || ai.director.count >= ai.director.cap - ai.director.reserved - ai.director.pendingTurns) continue;
+    if (world.tick < entry.due) continue;
+    // A delayed admission needs a fresh warning, rather than a burst long after its sting.
+    if (!available || !world.chunks?.resident(site.x, site.z) || !ai.nav.clear(site.x, site.z, .65)) { delete ledger[site.id]; continue; }
     const id = ai.spawn('infected.sprinter', site, { perched: false, birds: 1, cureRegion: site.x < 747 ? 'crash-outskirts' : 'residential-fringe' });
     entry.actor = id;
     if (!ai.rush(id, hero.transform, world.tick + 480)) {
