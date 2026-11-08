@@ -33,10 +33,13 @@ export interface WreckBox { x: number; z: number; halfX: number; halfZ: number }
 export interface VehicleState {
   apcContacts?: { sequence: number; infected: Record<number, APCContact>; obstacles?: Record<number, APCObstacleContact> };
   /** L9 boarders retain their climb and next bite across saves/checkpoints. */
-  apcBoarders?: Record<number, { startedAt: number; nextHit: number }>;
+  apcBoarders?: Record<number, { startedAt: number; nextHit: number; side?: number }>;
+  /** A heavy infected impact briefly kills momentum; this never permanently breaks the engine. */
+  impactStallUntil?: number;
   /** L9 mission policy: durability clamps to 0 but the vehicle stays driveable at a capped speed, cannot be exited and is never destroyed by E09. Persisted with the entity. */
   floor?: boolean;
   scripted?: boolean;
+  scriptedExplosionEmitted?: boolean;
   /** Cumulative damage stage (0 none, 1 <=75%, 2 <=50%, 3 <=25%, 4 = 0%); persisted so a reload restores it without replaying cues. */
   stage?: number;
   passengers?: VehiclePassenger[];
@@ -86,7 +89,7 @@ export class Vehicles {
   }
   /** L9 terrain cap and damage floor compose once, including damage/checkpoint rebuilds. */
   private speedShare(car: Car): number {
-    let share = car.entity.vehicle!.floor && car.entity.health.current <= 0 ? apcFloor.speedShare : 1;
+    let share = car.entity.vehicle!.floor ? apcFloor.speedShare + (1 - apcFloor.speedShare) * car.entity.health.current / car.entity.health.max : 1;
     if (car.entity.vehicle!.floor && this.world.scenario === 'L9') {
       const district = this.world.districts?.districts.find(d => d.id === 'D-CROSSING');
       if (district) {
@@ -190,6 +193,9 @@ export class Vehicles {
         if (near && (car.doorTicks >= 36 || frame.interact)) this.enter(car);
       } else car.doorTicks = 0;
       state.boosting = drive.boost;
+      if (state.impactStallUntil && this.world.tick < state.impactStallUntil || this.world.missions?.l9?.driving.holding(car.entity.id)) {
+        drive.throttle = drive.steer = 0; drive.brake = true;
+      }
       car.physics.speedCap = this.speedShare(car);
       if (state.floor) this.floorContacts(car);
       this.impacts(car);
@@ -198,14 +204,14 @@ export class Vehicles {
     }
   }
   /** Mission-owned fall: suppress ordinary controls/contact destruction and retain the existing vehicle view. */
-  scriptPose(id: number, pose: EntitySnapshot['transform']): void {
+  scriptPose(id: number, pose: EntitySnapshot['transform'], rotation?: { x: number; y: number; z: number; w: number }): void {
     const car = this.cars.get(id)!; car.entity.vehicle!.scripted = true;
     const b = car.physics;
     b.body.setBodyType(RAPIER.RigidBodyType.KinematicPositionBased, true);
     b.collider.setEnabled(false);
     Object.assign(b.previous, b.transform); Object.assign(b.previousRotation, b.rotation);
     Object.assign(b.transform, pose);
-    Object.assign(b.rotation, { x: 0, y: Math.sin(pose.yaw / 2), z: 0, w: Math.cos(pose.yaw / 2) });
+    Object.assign(b.rotation, rotation ?? { x: 0, y: Math.sin(pose.yaw / 2), z: 0, w: Math.cos(pose.yaw / 2) });
     b.body.setTranslation(pose, true); b.body.setNextKinematicTranslation(pose);
     b.body.setRotation(b.rotation, true); b.body.setNextKinematicRotation(b.rotation);
     b.speed = b.forwardSpeed = 0; car.entity.vehicle!.speed = car.entity.vehicle!.forwardSpeed = 0;
@@ -216,13 +222,20 @@ export class Vehicles {
     }
   }
   /** Authored finale only: safe placement was validated by the mission before detaching the driver. */
-  destroyScripted(id: number, safe: EntitySnapshot['transform']): void {
+  destroyScripted(id: number, safe: EntitySnapshot['transform'], deferExplosion = false): void {
     const car = this.cars.get(id)!, state = car.entity.vehicle!;
     if (state.damage === 'exploded') return;
     Object.assign(this.position, safe); this.transition = null;
     if (this.active === id) this.leave(car);
     state.floor = false; state.damage = 'exploded'; state.decay = 'wrecked'; state.explodeAt = null;
     car.entity.health.current = 0;
+    if (!deferExplosion) this.explodeScripted(id);
+  }
+  /** The L9 wreck burns during the escape and bursts only after the courier clears it. */
+  explodeScripted(id: number): void {
+    const car = this.cars.get(id)!, state = car.entity.vehicle!;
+    if (state.scriptedExplosionEmitted) return;
+    state.scriptedExplosionEmitted = true;
     this.world.events.emit({ type: 'vehicle.exploded', tick: this.world.tick, sourceId: id });
     this.world.explosions?.blast(vehicleExplosion, car.entity.transform, { sourceId: id, damage: false, fires: false, height: car.entity.transform.y - (car.physics.def.suspension + car.physics.def.wheelRadius + .15) + .7 });
   }
@@ -391,11 +404,11 @@ export class Vehicles {
     const livingOccupant = (id: number) => { const e = this.world.entities.get(id); return !!e && e.health.current > 0 && !e.infected; };
     const occupied = state.driver !== null && livingOccupant(state.driver) || state.passengers?.some(p => p.phase === 'seated' && livingOccupant(p.id)) === true;
     const boarders = state.apcBoarders ??= {};
-    const boarderTypes = new Set(['infected.runner', 'infected.sprinter', 'infected.crawler', 'infected.dog', 'infected.lion']);
+    const boarderTypes = ['infected.runner', 'infected.sprinter', 'infected.crawler', 'infected.dog', 'infected.lion'];
     const boarderLimit = car.entity.health.current <= car.entity.health.max * .25 ? 8 : 6;
     // A quick steering snap, a hull scrape, or the handbrake throws attackers
     // clear. Boarders stay visibly attached while they climb before biting.
-    const throwingBoarders = speed > 8 || Math.abs(car.physics.intent.steer) > .75 || car.physics.intent.handbrake && speed > 4;
+    const throwingBoarders = speed > 3 && Math.abs(car.physics.body.angvel().y) > .55 || car.physics.intent.handbrake && speed > 4;
     if (throwingBoarders) this.release(car);
     const ledger = car.entity.vehicle!.apcContacts ??= { sequence: 0, infected: {} };
     const c = Math.cos(p.yaw), s = Math.sin(p.yaw);
@@ -408,11 +421,14 @@ export class Vehicles {
       const target = this.world.entities.get(id)!;
       if (target.kind !== 'infected' || target.hidden || target.infected?.hidden || (target.health.current <= 0 && (target.infected?.recoverAt ?? -1) < 0)) continue;
       const distance = car.physics.hullDistance(target.transform.x, target.transform.z), radius = target.combat?.radius ?? .4;
-      if (occupied && !throwingBoarders && boarderTypes.has(target.archetype) && distance <= radius + .2 && state.attached.length < boarderLimit) {
+      if (state.floor && occupied && !target.attachedTo && target.health.current > 0 && !throwingBoarders && boarderTypes.includes(target.archetype) && distance <= radius + .2 && state.attached.length < boarderLimit) {
         state.attached.push(target.id); target.attachedTo = car.entity.id;
-        boarders[target.id] = { startedAt: tick, nextHit: tick + 180 };
+        const dx = target.transform.x - p.x, dz = target.transform.z - p.z;
+        boarders[target.id] = { startedAt: tick, nextHit: tick + 180, side: dx * s + dz * c >= 0 ? 1 : -1 };
+        this.apcHit(car, target, 'contact', ++ledger.sequence, null);
         this.world.events.emit({ type: 'vehicle.grabbed', tick, sourceId: car.entity.id, targetId: target.id });
       }
+      if (target.attachedTo === car.entity.id) continue;
       let contact = ledger.infected[id];
       // Shared hull admission leaves a millimetre of skin at an exact contact.
       if (distance <= radius + .002) {
@@ -439,11 +455,11 @@ export class Vehicles {
     }
     for (let i = state.attached.length - 1; i >= 0; i--) {
       const id = state.attached[i], target = this.world.entities.get(id), climb = boarders[id];
-      if (!target || !climb || target.health.current <= 0) { state.attached.splice(i, 1); delete boarders[id]; continue; }
-      const side = id % 2 ? 1 : -1, slot = Math.floor(i / 2), localX = -car.physics.def.length * .25 + slot * .65;
+      if (!target || !climb || target.health.current <= 0) { if (target) delete target.attachedTo; state.attached.splice(i, 1); delete boarders[id]; continue; }
+      const side = climb.side ?? (id % 2 ? 1 : -1), slot = Math.floor(i / 2), localX = -car.physics.def.length * .25 + slot * .65;
       target.transform.x = p.x + Math.cos(p.yaw) * localX + Math.sin(p.yaw) * side * (car.physics.def.width / 2 + .12);
       target.transform.z = p.z - Math.sin(p.yaw) * localX + Math.cos(p.yaw) * side * (car.physics.def.width / 2 + .12);
-      target.transform.y = p.y + .8; this.world.spatial.set(id, target.transform.x, target.transform.z);
+      target.transform.y = p.y + .1 + .7 * Math.min(1, (tick - climb.startedAt) / 180); this.world.spatial.set(id, target.transform.x, target.transform.z);
       if (occupied && tick >= climb.nextHit) {
         const player = this.world.entities.get(1)!;
         if (player.health.current > 0) this.world.player?.damage(10, tick, true);
@@ -494,7 +510,10 @@ export class Vehicles {
       if (gap <= apcFloor.obstacleContactGap) {
         entry ??= book[id] = { contactId: null, separatedAt: null };
         entry.separatedAt = null;
-        if (entry.contactId === null) { entry.contactId = ++ledger.sequence; this.apcHit(car, { id }, 'obstacle', entry.contactId, null); }
+        if (entry.contactId === null) {
+          entry.contactId = ++ledger.sequence; this.apcHit(car, { id }, 'obstacle', entry.contactId, null);
+          if (car.physics.speed > 3 && car.entity.vehicle!.attached.length) this.release(car);
+        }
       } else if (entry && gap >= apcDurability.separation) {
         entry.separatedAt ??= this.world.tick;
         if (this.world.tick - entry.separatedAt >= apcDurability.separationTicks) delete book[id];
@@ -521,6 +540,7 @@ export class Vehicles {
     // Parked or abandoned cars are wrecks too: sample the hull outline against their chassis.
     for (const other of this.cars.values()) {
       if (other === car) continue;
+      if (this.world.missions?.l9?.driving.state.busId === other.entity.id) continue; // The chase owns its 40-point ram, once.
       let gap = Infinity;
       for (const [lx, lz] of [[0, 0], [1, 0], [-1, 0], [1, 1], [1, -1], [-1, 1], [-1, -1]]) {
         const wx = p.x + c * lx * def.length / 2 + s * lz * def.width / 2, wz = p.z - s * lx * def.length / 2 + c * lz * def.width / 2;
@@ -532,7 +552,19 @@ export class Vehicles {
   }
   private apcHit(car: Car, target: Pick<EntitySnapshot, 'id'>, source: 'contact' | 'attack' | 'obstacle', contactId: number | null, attackId: number | null): void {
     const before = car.entity.health.current;
-    this.damage(car.entity.id, source === 'attack' ? apcDurability.attackDamage : apcDurability.contactDamage);
+    const actor = this.world.entities.get(target.id), special = this.world.scenario === 'L9' && source === 'contact';
+    const heavy = special && ['infected.brute', 'infected.armored', 'infected.riot', 'infected.elephant'].includes(actor?.archetype ?? '');
+    const bloated = special && actor?.archetype === 'infected.bloated';
+    const amount = source === 'attack' ? apcDurability.attackDamage : heavy ? actor?.archetype === 'infected.elephant' ? 80 : 40 : bloated ? 60 : apcDurability.contactDamage;
+    this.damage(car.entity.id, amount);
+    if (heavy) {
+      const velocity = car.physics.body.linvel(); car.physics.body.setLinvel({ x: 0, y: velocity.y, z: 0 }, true);
+      car.entity.vehicle!.impactStallUntil = this.world.tick + 60;
+    }
+    if (bloated) {
+      this.release(car);
+      this.world.combat?.damage.apply({ attackId: this.world.tick, actionId: 'vehicle.military-apc', sourceId: car.entity.id, targetId: target.id, origin: car.entity.transform, direction: { x: 1, z: 0 }, base: actor!.health.max, multiplier: 1, type: 'vehicle', knockback: 0, stagger: 0 });
+    }
     this.world.events.emit({ type: 'vehicle.durability-hit', tick: this.world.tick, sourceId: car.entity.id, targetId: target.id, source, contactId, attackId, before, after: car.entity.health.current });
   }
   postPhysics(): void {
@@ -549,6 +581,7 @@ export class Vehicles {
             if (Math.abs(manifold.normal().y) > .7) return;
             for (let i = 0; i < manifold.numContacts(); i++) impulse += manifold.contactImpulse(i);
           });
+          if (car.entity.vehicle!.floor && car.entity.vehicle!.attached.length && impulse / car.physics.def.mass > .05) this.release(car);
           if (impulse / car.physics.def.mass < 2) return;
           this.crash(car, beforeSpeed);
           // The struck parked car also takes the impact, despite having no incoming speed.
@@ -563,6 +596,7 @@ export class Vehicles {
         this.world.physics.playerBody!.setTranslation(player.transform, true); this.world.physics.playerBody!.setNextKinematicTranslation(player.transform); this.world.spatial.set(1, player.transform.x, player.transform.z);
       }
       this.updatePassengers(car); this.infected(car); this.damageState(car);
+      if (this.active === car.entity.id) this.world.missions?.l9?.driving.poseHatch();
       // The L9 mission APC keeps its staged engine/tyres until the authored impact stops it.
       // Reuse the convoy emitter's bounded cadence and persistent audio loops.
       if (this.world.missions?.l9?.state.carId === car.entity.id && state.driver === 1 && this.operable(car) && this.world.tick % 6 === 0)
@@ -744,6 +778,8 @@ export class Vehicles {
         if (contact.cooldownUntil) contact.cooldownUntil += delta;
       }
       for (const contact of Object.values(state.apcContacts?.obstacles ?? {})) if (contact.separatedAt !== null) contact.separatedAt += delta;
+      for (const boarder of Object.values(state.apcBoarders ?? {})) { boarder.startedAt += delta; boarder.nextHit += delta; }
+      if (state.impactStallUntil) state.impactStallUntil += delta;
       for (const passenger of state.passengers ?? []) { passenger.started += delta; passenger.pauseUntil += delta; if (passenger.story) passenger.story.start += delta; }
       const physics = new VehicleBody(vehicleDef(entity.archetype), this.world.physics.world!, entity.transform, entity.transform.yaw);
       physics.overspeedDamp = apcFloor.overspeedDamp;

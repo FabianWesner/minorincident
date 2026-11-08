@@ -10,7 +10,7 @@ export function levelNineMission(resolve: (district: DistrictId, name: string) =
     id: 'L9', l9: true, briefing: dialogue['L9.briefing'],
     anchors,
     actors: {}, groups: {}, gates: {}, items: [], states: ['crash-started', 'crash-impacted', 'crash-finished'], counters: [],
-    checkpoints: ['crossing-start', 'outskirts-approach'], cinematics: {},
+    checkpoints: ['crossing-start', 'mid-crossing', 'evac-point', 'bridge', 'outskirts-approach'], cinematics: {},
     steps: [
       { id: 'approach', type: 'custom', text: 'Drive toward the city', anchor: 'crash-approach', start: { kind: 'start' },
         complete: { kind: 'state', key: 'crash-started', equals: true }, fail: [] },

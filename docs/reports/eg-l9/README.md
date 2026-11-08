@@ -1,33 +1,41 @@
-# E31 / L9 driving rebuild progress
+# E31 / L9 driving rebuild
 
-Lane: `eg-l9`  
-Date: 2026-11-08  
-Story source: [`docs/design/story-script.md`](../../design/story-script.md), copied verbatim from the current `main` commit `c1af927e` because this worktree cannot update its Git metadata.
+Lane: `eg-l9` · PO 2026-11-08. Work in progress; native validation is pending.
 
-## Implemented in this worktree
+## Implemented
 
-- L9 route encounter admission waits until groups are more than 100 m from the APC and resident, selects mixed route-specific archetypes, and orders them to pursue instead of standing idle.
-- APC hull boarders attach visibly, climb for three seconds, bite at one-second intervals, and release on a sharp turn/handbrake; low durability permits two extra boarders.
-- The forced crash approach now follows the APC's starting forward heading and speed-derived travel duration rather than lerping toward a fixed world-space yaw and lip.
-- The L9 opening and closing caption use the exact story-script lines. The L10 opening radio line replaces the superseded story briefing. The L9 crash objective no longer adds unscripted dialogue.
-- L9 acceptance rows include PO 2026-11-08 and identify the currently unimplemented gameplay expectations.
+- Mixed route packs and patrols enter more than 100 m from the APC, then move toward its engine while the driver is hidden. This uses authored scripted travel rather than human targeting, which correctly excludes a seated courier.
+- Six hull slots (eight at low durability), a three-second climb and 10 HP bites every second. Actual yaw rate, braking or a physical scrape releases boarders. Heavy infected stop momentum and cost 40/80 durability; bloated contacts cost 60 and clear boarders. Damage progressively lowers the speed cap to the existing 60% floor.
+- Reusable light barricades and solid concrete blockers, with matching models and collider sizes. The road has a tanker fuse and optional overpass ramp; the countryside has a timed fire wall and detour; the shortcut has mixed escaped zoo infected and a ditch ramp. The ramps use native Rapier contact and suspension.
+- A thirty-second rail restart with carried-weapon hatch defense, plus an optional marked repair bay. Holding E/ACTION adds up to 300 durability over twenty seconds; releasing it pauses progress. Armed passengers use the existing ally weapon logic from their hatch positions.
+- A native school bus pursues, rams for 40 durability, and releases its pre-existing infected passengers when slowed. Solid collisions or destruction end its pursuit.
+- The sixty-second evacuation gate has a breakable side fence. Survivors visibly leave the APC and walk to the trucks. Rosa holds the corgi; the dog returns aboard, Sam stays, and the trucks receive the actual living roster. Guard fire and reinforcements remain active during the stop.
+- The finale starts on the bridge deck after evacuation. The Mega lands on the hull, spans drop behind the APC, and the scripted fall begins with the vehicle's real transform and velocity heading. The full hull rolls onto its side. The weapon rack and launcher tumble into the river, with a two-second view and burning fuel. Sam is thrown toward the far bank and limps away.
+- The arsenal becomes axe-only at its visible loss. The crawl advances only with movement input, the axe is drawn on her back, the corgi remains safe, and the wreck explodes after she clears it. The exact closing caption plays before completion.
+- Checkpoints retain driving phase, encounters, passengers, timers and native obstacles. The handover stores only visibly evacuated people in `shelteredPassengers`; Sam/Private Reyes is carried separately as `crossingHandover.researchCompanion` for the L10 story lane.
+- L9 acceptance rows are updated and numbered through L9-18. Story lines are copied from `docs/design/story-script.md`.
 
-## Remaining work
+## Verification
 
-This is not yet a complete driving-level rebuild. In particular, implement and verify: damage-induced stall/hatch defense and restart, repair bay, destructible and solid route barriers, the three route set pieces, school-bus chase, timed evacuation and visible passenger transfer with Sam staying, Mega hull landing, sectional bridge collapse and falling weapons, controlled crawl/axe continuity, and complete L9/L10 handover. Extend simulation coverage for these beats and re-run the full required gates. Browser QA is explicitly out of scope for this lane and should be listed under Browser QA needed.
+- Earlier local typecheck and lint passed before the remote-only direction.
+- Earlier full unit suite: 106 passed, one unrelated `gate-tools.test.ts` freshness assertion failed (`FRESH` versus `STALE`).
+- First remote typecheck reached runner-3 after FIFO admission. It found two missing event type guards, now fixed, and a missing new file because the runner's file list predated its creation. A fresh remote typecheck is queued.
+- New native assertions extend the existing vehicle case: climb timer/unique slots, cab versus hatch fire, timed restart, held repair/release, actual truck arrival, Sam staying, checkpoint restore, no crash transform jump, no automatic crawl, one post-escape explosion, and axe-only handover.
+- Required final remote checks: typecheck, lint, full `npm test -- --maxWorkers=1`, `qa:accept --level L9 --skip-browser`, `qa:threat --levels L9`. Results are not claimed until run against the current files.
 
-The current bridge approach still uses the authored x threshold and a straight heading projection; route-aware trigger and crash-motion integration need simulation coverage before calling it final.
+## Browser QA needed
 
-## Verification so far
+No browser was opened in this lane, as instructed. QA should inspect both quality tiers:
 
-- `npm run typecheck` passed locally before the runner instruction arrived; a remote rerun is queued.
-- `npm run lint` passed.
-- Targeted `npm test -- --maxWorkers=1 tests/engine/vehicles.test.ts` passed before the story-alignment edits. The subsequent full local suite had 106 passing tests and one unrelated failure in `tests/tools/gate-tools.test.ts`: `reviewFreshness` expected `FRESH` but returned `STALE`. Remote rerun is pending.
-- Earlier `npm run qa:accept -- --level L9 --skip-browser` reported 0 fresh failing rows and 8 incomplete rows. A rerun was stopped when the PO moved heavy checks to the remote runners; generated report output was restored.
-- `npm run qa:threat -- --levels L9` measured 0 L9-specific passive threats and reported the L9-03 harness gap; the command exits nonzero for partial-level selection and the unrelated L8 matrix row.
-- Browser QA was not run, per lane instructions.
-- After the PO's runner instruction, I stopped the local acceptance run and restored its generated reports. A remote typecheck was queued but cancelled after >4 minutes without admission: six other jobs remained ahead, local admission was held by a GPU/browser reservation, and the status probe could not resolve the Hetzner API hostname in this sandbox. Rerun all heavy checks remotely when admission is available.
+- Max zoom admission: mixed packs already moving, no first-frame idle formations.
+- Boarder climb and real turn/scrape/brake release; driver HP and hatch shooting.
+- Breakable versus solid obstacles; both ramp jumps and low-speed failures/detours; tanker fuse and countryside fire closure.
+- Bus pursuit, wheel motion, ram readability and passenger spill.
+- Gate deadline and late fence entry; truck transfer, Rosa/corgi goodbye, Sam remaining.
+- Mega landing, dropping spans, whole APC roll, readable burning rack/launcher loss, controlled crawl with the axe on her back, safe dog and final explosion.
+- L10 receives four evacuated named survivors when alive, the separate research companion, a safe corgi and exactly the axe.
+- Draws, triangles, frames and streaming budgets from E18/E31; only native CPU counters can be checked by this lane.
 
-## Branch integration constraint
+## Integration
 
-The requested `git merge main` failed when Git attempted to create `.git/worktrees/eg-l9/ORIG_HEAD.lock`; that metadata directory is outside the writable worktree. At inspection, `main` differed from the lane only by `docs/design/story-script.md`, so the exact committed file was copied into the worktree. No other main changes were pending at that point.
+The earlier sandbox prevented Git metadata writes. Permissions are now fixed: the initial progress is committed as `9f79fedd`, and `main` through `a7b70c78` is merged. Its story script is authoritative. Further implementation is still awaiting its validation commit. No deploy or push was performed.

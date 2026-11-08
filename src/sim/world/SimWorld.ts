@@ -233,12 +233,12 @@ export class SimWorld implements Lifecycle {
       const resolved = this.controls.resolve(raw), frame = this.mountedGun?.intent(raw, resolved) ?? resolved; this.effectiveInput = this.vehicles?.bicycle.filter(frame) ?? frame;
     }, SimPhase.input);
     this.events.on('sim.tick', () => this.vehicles?.prePhysics(this.effectiveInput, this.scheme), SimPhase.input);
-    this.events.on('sim.tick', () => { if (this.combat && this.vehicles?.active == null && !this.mountedGun?.mounted) this.combat.intent(this.effectiveInput); }, SimPhase.input);
+    this.events.on('sim.tick', () => { if (this.combat && (this.vehicles?.active == null || this.missions?.l9?.driving.hatch) && !this.mountedGun?.mounted) this.combat.intent(this.effectiveInput); }, SimPhase.input);
     this.events.on('sim.tick', () => {
       const body = this.physics.playerBody!;
       const player = this.entities.get(1)!;
       if (player.pendingAdmission) { body.setLinvel({ x: 0, y: 0, z: 0 }, true); body.setTranslation(player.transform, true); return; }
-      if (this.vehicles?.active != null || this.mountedGun?.mounted) return;
+      if (this.vehicles?.active != null || this.mountedGun?.mounted || this.missions?.l9?.state.phase === 'crawl') return;
       if (this.player) { Object.assign(this.previousPlayer!, player.transform); this.player.locomotion.speedScale = this.player.progressionSpeed * (this.props?.pushSpeed(this.effectiveInput) ?? 1) * (this.vehicles?.bicycle.speedScale ?? 1) * (this.weather?.modifiers.playerSpeed ?? 1) * Status.speed(player) * (this.combat?.effects.speedMultiplier ?? 1) * (this.infected?.playerSpeedScale() ?? 1) * (player.speedBuff && this.tick < player.speedBuff.until ? player.speedBuff.multiplier : 1); this.player.locomotion.cornerSlip = !(this.vehicles?.bicycle.riding ?? false); this.player.prePhysics(this.effectiveInput, this.tick, !Status.stunned(player, this.tick) && !(this.infected?.playerPinned() ?? false)); return; }
       this.previousPlayer = { ...player.transform };
       // Deliberately only a cube input fixture, no survivor controller (E04).
@@ -270,7 +270,7 @@ export class SimWorld implements Lifecycle {
       if (this.combat) {
         if (!this.entities.get(1)!.pendingAdmission) { const position = this.physics.playerBody!.translation(); Object.assign(this.entities.get(1)!.transform, position); this.spatial.set(1, position.x, position.z); }
         this.infected?.props.update();
-        this.combat.update(this.vehicles?.active != null || this.mountedGun?.mounted ? this.drivingCombatInput : this.effectiveInput);
+        this.combat.update(this.vehicles?.active != null && !this.missions?.l9?.driving.hatch || this.mountedGun?.mounted ? this.drivingCombatInput : this.effectiveInput);
         this.mountedGun?.update();
       }
     }, SimPhase.combat);
@@ -279,7 +279,7 @@ export class SimWorld implements Lifecycle {
       this.hazards?.update(); this.pickups?.update(); this.barricades?.update(); this.interactables?.update(this.effectiveInput);
     }, SimPhase.missions);
     this.events.on('sim.tick', () => {
-      if (this.entities.get(1)!.pendingAdmission || this.vehicles?.active != null || this.mountedGun?.mounted) return;
+      if (this.entities.get(1)!.pendingAdmission || this.vehicles?.active != null || this.mountedGun?.mounted || this.missions?.l9?.state.phase === 'crawl') return;
       if (this.player) { this.player.postPhysics(this.tick); this.spatial.set(1, this.player.entity.transform.x, this.player.entity.transform.z); return; }
       const p = this.physics.playerBody!.translation();
       Object.assign(this.entities.get(1)!.transform, p);

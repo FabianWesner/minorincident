@@ -105,13 +105,84 @@ async function apcBoarders(): Promise<void> {
     world.spatial.set(dogId, dog.transform.x, dog.transform.z);
     for (let i = 0; i < 30 && !car.entity.vehicle!.attached.includes(dogId); i++) world.update();
     expect(car.entity.vehicle!.attached, 'a dog that reaches the hull boards it').toContain(dogId);
+    expect(car.entity.vehicle!.attached, 'a hull slot is reserved once').toHaveLength(1);
+    const climbAt = car.entity.vehicle!.apcBoarders![dogId].startedAt;
+    for (let i = 0; i < 90; i++) world.update();
+    expect(car.entity.vehicle!.apcBoarders![dogId].startedAt, 'overlap does not restart the climb').toBe(climbAt);
     for (let i = 0; i < 240 && world.entities.get(1)!.health.current === world.entities.get(1)!.health.max; i++) world.update();
     expect(world.entities.get(1)!.health.current, 'a boarder bites after its climb').toBeLessThan(world.entities.get(1)!.health.max);
-    const turn = emptyInput(); turn.drive = { throttle: 0, steer: 1 };
+    const turn = emptyInput(); turn.drive = { throttle: 1, steer: 1 };
+    car.physics.body.setLinvel({ x: 8, y: 0, z: 0 }, true); car.physics.body.setAngvel({ x: 0, y: 1, z: 0 }, true);
     world.applyInput(turn, 'keyboard'); world.update();
     expect(car.entity.vehicle!.attached, 'a sharp turn shakes the dog off').not.toContain(dogId);
     expect(dog.attachedTo).toBeUndefined();
   } finally { world.dispose(); }
+  await crossingStorySequence();
+}
+
+/** Native state transitions cover the meaningful consequences, including save/retry and the controlled escape. */
+async function crossingStorySequence(): Promise<void> {
+  const w = await loadLevel('L9', 7, preset('L9-default'));
+  try {
+    const mission = w.missions!, l9 = mission.l9!, driving = l9.driving.state, player = w.entities.get(1)!;
+    let car = w.vehicles!.cars.get(l9.state.carId)!;
+    player.survivor!.invulnerableUntil = Number.MAX_SAFE_INTEGER;
+    let shots = 0, explosions = 0;
+    w.events.on('combat.attack', e => { if (e.type === 'combat.attack' && e.sourceId === 1) shots++; });
+    w.events.on('vehicle.exploded', e => { if (e.type === 'vehicle.exploded' && e.sourceId === car.entity.id) explosions++; });
+    const place = (x: number, z: number, speed = 0, yaw = 0) => {
+      const pose = { x, y: car.physics.def.suspension + car.physics.def.wheelRadius + .15, z, yaw };
+      Object.assign(car.entity.transform, pose); Object.assign(car.physics.previous, pose);
+      car.physics.body.setTranslation(pose, true); car.physics.body.setRotation({ x: 0, y: Math.sin(yaw / 2), z: 0, w: Math.cos(yaw / 2) }, true);
+      car.physics.body.setLinvel({ x: Math.cos(yaw) * speed, y: 0, z: -Math.sin(yaw) * speed }, true); car.physics.body.setAngvel({ x: 0, y: 0, z: 0 }, true); car.physics.postPhysics();
+      Object.assign(player.transform, pose); w.physics.playerBody!.setTranslation(pose, true); w.spatial.set(1, x, z); w.spatial.set(car.entity.id, x, z);
+    };
+    const fire = emptyInput(); fire.selectedWeaponKey = 5; fire.aim = { x: -1, z: 0 }; fire.aimSource = 'keyboard'; fire.left = { down: true, held: true, up: false }; fire.activeAttack = true;
+    w.applyInput(fire, 'keyboard'); for (let i = 0; i < 90; i++) w.update();
+    expect(shots, 'the closed driving cab suppresses personal weapons').toBe(0);
+    place(380, 0); l9.update();
+    expect(driving.stallAt, 'the rail stop is checkpointed and exposed').not.toBeNull();
+    expect(mission.state.checkpoint).toBe('mid-crossing');
+    for (let i = 0; i < 1800; i++) { w.update(); player.health.current = player.health.max; }
+    expect(shots, 'the hatch admits the current carried gun').toBeGreaterThan(0);
+    expect(driving.restarted, 'Sam restarts after thirty simulation seconds').toBe(true);
+    expect(car.entity.vehicle!.damage).not.toBe('exploded');
+    place(423, 18); car.entity.health.current = 500;
+    const repair = emptyInput(); repair.interactHeld = true; w.applyInput(repair, 'keyboard');
+    for (let i = 0; i < 120; i++) w.update();
+    expect(driving.repairTicks, 'two seconds of held repair').toBe(120);
+    expect(car.entity.health.current).toBeCloseTo(530, 3);
+    w.applyInput(emptyInput(), 'keyboard'); for (let i = 0; i < 60; i++) w.update();
+    expect(driving.repairTicks, 'release pauses the crank').toBe(120);
+    expect(car.entity.health.current).toBeLessThanOrEqual(530);
+    place(457, 0); w.applyInput(fire, 'keyboard');
+    for (let i = 0; i < 3000 && !driving.evacuationDone; i++) { w.update(); player.health.current = player.health.max; }
+    expect(driving.evacuationDone, 'the living civilians actually reach the trucks').toBe(true);
+    expect(driving.evacuated).toHaveLength(4);
+    expect(car.entity.vehicle!.passengers?.filter(p => w.entities.get(p.id)?.civilian).map(p => p.id), 'Sam stays aboard').toEqual([driving.samId]);
+    mission.restore('bridge');
+    const restored = mission.l9!.driving.state;
+    expect(restored.evacuationDone).toBe(true); expect(restored.evacuated).toHaveLength(4);
+    car = w.vehicles!.cars.get(l9.state.carId)!;
+    place(483, 0, 10, .1); const before = { ...car.entity.transform };
+    l9.update();
+    expect(l9.state.from, 'the crash starts at the actual hull transform').toEqual(before);
+    expect(car.entity.transform.yaw, 'no yaw reset or sideways lerp').toBeCloseTo(.1);
+    w.applyInput(emptyInput(), 'keyboard');
+    for (let i = 0; i < 1200 && l9.state.phase !== 'crawl'; i++) w.update();
+    expect(l9.state.phase).toBe('crawl');
+    expect(explosions, 'the wreck has not exploded while she is still inside').toBe(0);
+    const start = { ...player.transform }; for (let i = 0; i < 60; i++) w.update();
+    expect(player.transform, 'no movement input means no automatic crawl').toEqual(start);
+    for (let i = 0; i < 600 && !l9.state.finished; i++) {
+      const end = mission.def.anchors['crawl-end'], dx = end.x - player.transform.x, dz = end.z - player.transform.z, length = Math.hypot(dx, dz) || 1;
+      const frame = emptyInput(); frame.move = { x: dx / length, z: dz / length }; w.applyInput(frame, 'keyboard'); w.update();
+    }
+    expect(l9.state.finished).toBe(true); expect(explosions).toBe(1);
+    expect([...new Set([...player.weapons!.LEFT.rack, ...player.weapons!.RIGHT.rack].map(s => s.id))]).toEqual(['weapon.fire-axe']);
+    expect(w.progression!.campaign!.crossingHandover!.shelteredPassengers).toHaveLength(4);
+    expect(w.progression!.campaign!.crossingHandover!.researchCompanion?.civilian?.survivor?.key).toBe('sam');
+  } finally { w.dispose(); }
 }
 
 async function screenRelativeSteering(): Promise<void> {

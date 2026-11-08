@@ -2,6 +2,7 @@ import { emptyInput, type InputFrame } from '../../input/InputFrame';
 import { crossing, crossingRouteLength } from '../../levels/L9/district';
 import type { Point } from '../../levels/districts/types';
 import type { SimWorld } from '../../sim/world/SimWorld';
+import { l9Course } from '../../data/l9';
 
 /** One-seed can-it-be-finished driver for L9: real keyboard drive frames along a route (or its detour) with pure pursuit.
  * It never fights, leaves the car or loosens anything; the crash sequence takes over by itself at the outskirts. */
@@ -15,12 +16,19 @@ export class LevelNineBot {
     // A long straight aimed only at its far end can retain a corner-cutting offset
     // for hundreds of metres. Guide the risky route through its authored encounter
     // anchors; the explicitly safe detour keeps its existing trace.
-    this.path = detour ? route.detour : route.points.flatMap((a, i, points) => {
+    const base = detour ? route.detour : route.points.flatMap((a, i, points) => {
       const b = points[i + 1]; if (!b) return [a];
       const dx = b[0] - a[0], dz = b[1] - a[1], length = Math.hypot(dx, dz);
       const along = (p: Point) => ((p[0] - a[0]) * dx + (p[1] - a[1]) * dz) / length;
       return [a, ...route.risks.filter(p => along(p) > 0 && along(p) < length
         && Math.abs((p[0] - a[0]) * dz - (p[1] - a[1]) * dx) / length < 1).sort((p, q) => along(p) - along(q))];
+    });
+    // A completion driver reads the road: it takes the open side of the solid
+    // collapsed sections, reserving jump attempts for the dedicated fixture.
+    this.path = base.flatMap((a, i, points) => {
+      const b = points[i + 1]; if (!b) return [a];
+      const ramps = l9Course.ramps.filter(r => r.x - 18 > a[0] && r.x + 22 < b[0] && Math.abs(r.z - a[1]) < 6);
+      return [a, ...ramps.flatMap(r => [[r.x - 18, r.z + 12], [r.x + 22, r.z + 12]] as Point[])];
     });
     this.length = crossingRouteLength(this.path);
   }
@@ -42,12 +50,27 @@ export class LevelNineBot {
   sample(): InputFrame {
     const w = this.w, f = emptyInput(), l9 = w.missions?.l9;
     const car = l9 && w.entities.get(l9.state.carId);
-    if (!car || this.profile === 'idle' || this.finished || l9.state.phase !== 'driving') return f;
+    if (!car || this.profile === 'idle' || this.finished) return f;
+    if (l9.state.phase === 'crawl') { const end = w.missions!.def.anchors['crawl-end'], dx = end.x - w.entities.get(1)!.transform.x, dz = end.z - w.entities.get(1)!.transform.z, length = Math.hypot(dx, dz) || 1; f.move = { x: dx / length, z: dz / length }; return f; }
+    if (l9.state.phase !== 'driving') return f;
+    const driving = l9.driving.state;
+    if (l9.driving.hatch) {
+      f.brake = true; f.selectedWeaponKey = 5;
+      const target = w.infected!.active.filter(e => !e.hidden && !e.infected?.hidden && e.health.current > 0 && e.id !== driving.megaId).sort((a, b) => Math.hypot(a.transform.x - car.transform.x, a.transform.z - car.transform.z) - Math.hypot(b.transform.x - car.transform.x, b.transform.z - car.transform.z))[0];
+      if (target && Math.hypot(target.transform.x - car.transform.x, target.transform.z - car.transform.z) < 30) { const dx = target.transform.x - car.transform.x, dz = target.transform.z - car.transform.z, length = Math.hypot(dx, dz) || 1; f.aim = { x: dx / length, z: dz / length }; f.aimSource = 'keyboard'; f.activeAttack = true; f.left = { down: true, held: true, up: false }; }
+      return f;
+    }
     const p = car.transform;
     // Switch to the next waypoint earlier before a sharp bend: the 6 t APC's turning circle otherwise overshoots the corner by
     // ~8 m and wedges it against the dressed verge (fork corner (-450, 0) of the road detour: utility pole + bush, T-E31-20).
     while (this.index < this.path.length - 1 && Math.hypot(this.path[this.index][0] - p.x, this.path[this.index][1] - p.z) < this.switchRadius(this.index)) this.index++;
-    const dx = this.path[this.index][0] - p.x, dz = this.path[this.index][1] - p.z, want = -Math.atan2(dz, dx);
+    let target: Point = this.path[this.index];
+    if (p.x > 405 && !driving.evacuationDone) {
+      if (driving.gateClosed && p.x < l9Course.gate.x + 4) target = [l9Course.gate.x + 6, l9Course.gate.sideZ];
+      else target = [l9Course.evacuation.x, l9Course.evacuation.z];
+      if (Math.hypot(target[0] - p.x, target[1] - p.z) < 5 && target[0] === l9Course.evacuation.x) { f.brake = true; return f; }
+    }
+    const dx = target[0] - p.x, dz = target[1] - p.z, want = -Math.atan2(dz, dx);
     const delta = Math.atan2(Math.sin(want - p.yaw), Math.cos(want - p.yaw));
     f.drive = { throttle: this.throttle, steer: Math.max(-1, Math.min(1, delta * 2)) };
     return f;

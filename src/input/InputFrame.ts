@@ -54,6 +54,8 @@ export interface InputFrame {
   /** -1 = previous, +1 = next rack item; Q/HUD/swipe pulses drain one per tick. */
   selector: -1 | 0 | 1;
   interact: boolean;
+  /** Continuous ACTION/E ownership for authored repair cranks; ordinary interaction remains an edge. */
+  interactHeld?: boolean;
   pause: boolean;
 }
 export const emptyInput = (): InputFrame => ({

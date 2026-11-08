@@ -4,6 +4,14 @@ import type { SimWorld } from '../world/SimWorld';
 export interface L9EncounterState { spawned: string[]; ids: Record<string, number[]>; patrol?: { nextAt: number; serial: number } }
 export const emptyEncounters = (): L9EncounterState => ({ spawned: [], ids: {} });
 
+/** The engine is an audible moving destination even while the driver is hidden
+ * inside the cab. Ordinary human targeting deliberately excludes seated people. */
+export function pursueCrossingVehicle(w: SimWorld, id: number): void {
+  const e = w.entities.get(id), car = w.vehicles?.active == null ? undefined : w.entities.get(w.vehicles.active);
+  if (!e?.infected || !car || e.hidden || e.attachedTo !== undefined || e.health.current <= 0 || !w.entities.get(1)?.hidden) return;
+  e.infected.scripted = { x: car.transform.x, z: car.transform.z }; e.infected.state = 'chase'; e.infected.heardTargetId = 0;
+}
+
 /**
  * L9-E1: every authored group is created once, the first time its 100 m chunk becomes resident, using the existing
  * infected director pool/cap and the chunk residency for sleep/wake (ids, HP, corpses and timers survive revisits).
@@ -16,6 +24,7 @@ export function updateEncounters(w: SimWorld, state: L9EncounterState): void {
   // tiers. The generic 15/7 town cap silently discarded later resident groups.
   const authored = l9Groups.reduce((n, g) => n + g.runners + g.alphas, 0);
   ai.director.levelCap = authored * 2;
+  for (const ids of Object.values(state.ids)) for (const id of ids) pursueCrossingVehicle(w, id);
   for (const g of l9Groups) {
     if (!chunks.resident(g.at[0], g.at[1])) continue;
     const ids = state.ids[g.id] ??= [];
@@ -35,15 +44,15 @@ export function updateEncounters(w: SimWorld, state: L9EncounterState): void {
         const at = { x: px, z: pz };
         if (!ai.director.safe(archetype, at) || ai.director.count + 1 > ai.director.cap) continue;
         const id = ai.spawn(archetype, at, { state: 'chase', yaw: Math.atan2(car.transform.z - pz, car.transform.x - px) });
-        ai.pursueTarget(id, 1);
+        ai.pursueTarget(id, 1); pursueCrossingVehicle(w, id);
         ids.push(id); return true;
       }
       return false;
     };
     const cols = l9Encounters.columns, rows = Math.ceil(g.runners / cols);
     const routeMix: Record<string, readonly string[]> = {
-      road: ['infected.runner', 'infected.sprinter', 'infected.brute', 'infected.dog', 'infected.runner', 'infected.screamer'],
-      countryside: ['infected.runner', 'infected.dog', 'infected.screamer', 'infected.firefighter', 'infected.sprinter', 'infected.runner'],
+      road: ['infected.runner', 'infected.sprinter', 'infected.brute', 'infected.dog', 'infected.armored', 'infected.screamer'],
+      countryside: ['infected.runner', 'infected.dog', 'infected.screamer', 'infected.firefighter', 'infected.sprinter', 'infected.bloated'],
       'dry-shortcut': ['infected.runner', 'infected.zebra', 'infected.dog', 'infected.sprinter', 'infected.elephant', 'infected.runner', 'infected.zebra', 'infected.dog'],
     };
     const mix = routeMix[g.route] ?? routeMix.road;
@@ -84,7 +93,7 @@ export function updateEncounters(w: SimWorld, state: L9EncounterState): void {
     })));
     if (Math.hypot(centre.x - car.transform.x, centre.z - car.transform.z) < 100 || group.some((at, index) => !chunks.resident(at.x, at.z) || !ai.director.safe(patrolTypes[index], at))) continue;
     const ids = group.map((at, index) => ai.spawn(patrolTypes[index], at, { state: 'chase' }));
-    for (const id of ids) ai.pursueTarget(id, 1);
+    for (const id of ids) { ai.pursueTarget(id, 1); pursueCrossingVehicle(w, id); }
     state.ids[`crossing-patrol-${patrol.serial++}`] = ids;
     patrol.nextAt = w.tick + 480;
     return;

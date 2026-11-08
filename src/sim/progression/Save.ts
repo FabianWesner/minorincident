@@ -51,6 +51,7 @@ function validCrash(raw: unknown): boolean {
   const s = raw.state, p = raw.player, car = raw.vehicle;
   const pose = (v: unknown): boolean => record(v) && ['x', 'y', 'z', 'yaw'].every(k => Number.isFinite(v[k]));
   const health = (v: unknown, alive: boolean): boolean => record(v) && Number.isFinite(v.current) && Number.isFinite(v.max) && Number(v.max) > 0 && Number(v.current) >= (alive ? 1 : 0) && Number(v.current) <= Number(v.max);
+  if (raw.actors !== undefined && (!Array.isArray(raw.actors) || raw.actors.length > 2000 || !raw.actors.every(e => record(e) && Number.isSafeInteger(e.id) && Number(e.id) > 1 && e.id !== s.carId && pose(e.transform) && health(e.health, false)) || new Set(raw.actors.map(e => (e as Record<string, unknown>).id)).size !== raw.actors.length)) return false;
   return Number.isSafeInteger(raw.tick) && Number(raw.tick) >= 0 && Number.isSafeInteger(s.startedAt) && Number(s.startedAt) <= Number(raw.tick)
     && ['driving', 'approach', 'fall', 'impact', 'crawl', 'done'].includes(String(s.phase)) && Number.isSafeInteger(s.carId) && Number(s.carId) > 1
     && Number.isFinite(s.preCrashDurability) && Number(s.preCrashDurability) >= 0 && pose(s.from)

@@ -76,7 +76,7 @@ export const dialogue: Record<string, string> = {
   'L9.sam-stays': 'Someone has to watch your back. And somebody has to see what\'s on that campus.',
   'L9.end-caption': 'Everything went into the river. Almost everything.',
   'L7.start': 'Night. While you were underground, Fairhaven was overrun. The rocket launcher in the wrecked army truck by the exit is your way through.',
-  'L10.crash': 'The crash took everything but the axe. The others made it to the evacuation point while you fell behind. Find the research campus and the cure.',
+  'L10.crash': 'You alive? …Good. Don\'t stop moving. That thing doesn\'t sleep.',
   'L10.mega-roar': 'That roar. Whatever it is, it is following you.',
   'L10.briefing': 'You alive? …Good. Don\'t stop moving. That thing doesn\'t sleep.',
 };

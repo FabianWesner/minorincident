@@ -27,6 +27,7 @@ import { ObjectiveMarker } from './ObjectiveMarker';
 import { VehicleView } from './VehicleView';
 import { L2Props } from './L2Props';
 import { L3Props } from './L3Props';
+import { L9Props } from './L9Props';
 import { BicycleView } from './BicycleView';
 import { combatPhotoSpots } from '../../tests/fixtures/scenarios/combat-arena';
 import { ActionView } from './ActionView';
@@ -115,6 +116,7 @@ export class GameView implements Lifecycle {
   private vehicles: VehicleView | null = null;
   private l2Props: L2Props | null = null;
   private l3Props: L3Props | null = null;
+  private l9Props: L9Props | null = null;
   private bicycle: BicycleView | null = null;
   private readonly courier: CourierPresenter;
   private actions: ActionView | null = null;
@@ -305,6 +307,7 @@ export class GameView implements Lifecycle {
     if (this.bicycle) this.scene.add(this.bicycle);
     if (this.world.scenario === 'L2' && this.materials) { this.l2Props = new L2Props(this.world, this.materials); this.scene.add(this.l2Props); }
     if (this.world.scenario === 'L3' && this.materials) { this.l3Props = new L3Props(this.world, this.materials); await this.l3Props.load(); this.scene.add(this.l3Props); }
+    if (this.world.scenario === 'L9' && this.materials) { this.l9Props = new L9Props(this.world, this.materials); await this.l9Props.load(); this.scene.add(this.l9Props); }
     t = loadMeasure('view:actors', t);
     if (this.world.combat && this.materials) this.createVfx(this.materials);
     if (this.world.scenario === 'drive-course') this.postFx = new PostFx(this.renderer, this.scene, this.camera, this.quality, this.look);
@@ -1025,7 +1028,7 @@ export class GameView implements Lifecycle {
     if (this.character) this.character.visible = !this.probes?.hide.courier && (carPose ? carPose.visible : !this.world.entities.get(1)?.hidden);
     if (this.crowd) this.crowd.visible = !this.probes?.hide.crowd;
     if (!this.vehicles && this.world.vehicles?.cars.size && this.materials) { this.vehicles = new VehicleView(this.world, this.materials, this.view, this.quality === 'low'); this.vehicles.ground = this.drawnGround; this.scene.add(this.vehicles); }
-    this.vehicles?.update(alpha); this.l2Props?.update(); this.l3Props?.update();
+    this.vehicles?.update(alpha); this.l2Props?.update(); this.l3Props?.update(); this.l9Props?.update(alpha);
     if (this.actions) this.actions.visible = !this.world.entities.get(1)?.hidden;
     // P1-114: L3's pulled-back framing (station attack, army rescue) is gameplay, not a story shot; it used to hide the checkpoint ring
     // and the route diamond for up to a minute ("There is no checkpoint for me to walk to"). The ring grows with the pull-back instead.
@@ -1278,6 +1281,7 @@ export class GameView implements Lifecycle {
     if (this.vehicles) { this.scene.remove(this.vehicles); this.vehicles.dispose(); this.vehicles = null; }
     if (this.l2Props) { this.scene.remove(this.l2Props); this.l2Props.dispose(); this.l2Props = null; }
     if (this.l3Props) { this.scene.remove(this.l3Props); this.l3Props.dispose(); this.l3Props = null; }
+    if (this.l9Props) { this.scene.remove(this.l9Props); this.l9Props.dispose(); this.l9Props = null; }
     if (this.bicycle) { this.scene.remove(this.bicycle); this.bicycle.dispose(); this.bicycle = null; }
     if (this.postFx) { this.postFx.dispose(); this.retiredPostFx = this.postFx.diagnostics(); } this.postFx = null; this.dofEnabled = false;
     for (const district of this.preparedDistrictViews.values()) { this.scene.remove(district); district.dispose(); }

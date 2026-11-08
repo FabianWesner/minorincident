@@ -11,12 +11,17 @@ export class Obstacles {
   readonly debris: { body: RAPIER.RigidBody; expires: number }[] = [];
   private nextDebris = 0;
   constructor(private readonly world: SimWorld) {}
+  private bind(entity: EntitySnapshot, kind: ObstacleKind): void {
+    const light = (lightObstacles as readonly string[]).includes(kind), halfX = kind === 'truck' ? 3 : kind === 'jersey-barrier' ? 1.5 : kind === 'wall' ? .3 : .35, halfZ = kind === 'wall' ? 4 : kind === 'fence' || kind === 'barricade' ? 1.2 : .35;
+    const collider = this.world.physics.world!.createCollider(RAPIER.ColliderDesc.cuboid(halfX, .5, halfZ).setTranslation(entity.transform.x, .5, entity.transform.z));
+    const broken = entity.health.current <= 0; collider.setEnabled(!broken);
+    this.items.push({ entity, collider, halfX, halfZ, light, broken });
+  }
   spawn(kind: ObstacleKind, pos: { x: number; z: number }): number {
     if (![...lightObstacles, ...heavyObstacles].includes(kind) || ![pos.x, pos.z].every(Number.isFinite)) throw new RangeError('Invalid vehicle obstacle');
-    const light = (lightObstacles as readonly string[]).includes(kind), halfX = kind === 'truck' ? 3 : kind === 'wall' ? .3 : .35, halfZ = kind === 'wall' ? 4 : kind === 'fence' || kind === 'barricade' ? 1.2 : .35;
     const entity = this.world.entities.create({ kind: 'obstacle', archetype: `obstacle.${kind}`, transform: { ...pos, y: .5, yaw: 0 }, health: { current: 1, max: 1 }, faction: 'neutral' });
-    const collider = this.world.physics.world!.createCollider(RAPIER.ColliderDesc.cuboid(halfX, .5, halfZ).setTranslation(pos.x, .5, pos.z));
-    this.items.push({ entity, collider, halfX, halfZ, light, broken: false });
+    this.bind(entity, kind);
+    const { halfX, halfZ } = this.items[this.items.length - 1];
     this.world.events.emit({ type: 'world.blocker.changed', tick: this.world.tick, id: entity.id, blocked: true, wall: { ...pos, y: .5, halfX, halfY: .5, halfZ } }); return entity.id;
   }
   break(item: Obstacle, velocity: RAPIER.Vector, tick: number): void {
@@ -39,14 +44,11 @@ export class Obstacles {
   update(tick: number): void { for (const d of this.debris) if (d.expires && tick >= d.expires) { d.body.setEnabled(false); d.expires = 0; } }
   /** Rebind E12-restored records/colliders; tier changes have already freed native handles. */
   rebuild(worldReset = false): void {
-    const items = [...this.items];
     if (!worldReset) this.dispose(); else this.items.length = this.debris.length = 0;
     this.nextDebris = 0;
-    for (const item of items) {
-      const entity = this.world.entities.get(item.entity.id); if (!entity) continue;
-      const collider = this.world.physics.world!.createCollider(RAPIER.ColliderDesc.cuboid(item.halfX, .5, item.halfZ).setTranslation(entity.transform.x, .5, entity.transform.z));
-      const broken = entity.health.current <= 0; collider.setEnabled(!broken);
-      this.items.push({ ...item, entity, collider, broken });
+    for (const entity of this.world.entities.iterate()) if (entity.kind === 'obstacle') {
+      const kind = entity.archetype.replace(/^obstacle\./, '') as ObstacleKind;
+      if ([...lightObstacles, ...heavyObstacles].includes(kind)) this.bind(entity, kind);
     }
   }
   dispose(): void { for (const d of this.debris) this.world.physics.world!.removeRigidBody(d.body); for (const o of this.items) this.world.physics.world!.removeCollider(o.collider, false); this.items.length = this.debris.length = 0; }

@@ -77,7 +77,8 @@ export class Combat {
     if (!player.weapons) return;
     const loadout = this.runner.loadout;
     const emptySide = (['LEFT', 'RIGHT'] as const).find(side => frame[side === 'LEFT' ? 'left' : 'right'].down && !loadout.hasAmmo(loadout.current(side)));
-    if (emptySide && player.health.current > 0 && this.world.vehicles?.active == null && !this.world.mountedGun?.mounted && !Status.stunned(player, this.world.tick)) {
+    const canUseCarriedWeapon = (this.world.vehicles?.active == null || !!this.world.missions?.l9?.driving.hatch) && this.world.missions?.l9?.state.phase !== 'crawl';
+    if (emptySide && player.health.current > 0 && canUseCarriedWeapon && !this.world.mountedGun?.mounted && !Status.stunned(player, this.world.tick)) {
       this.world.events.emit({ type: 'combat.empty', tick: this.world.tick, sourceId: 1, actionId: loadout.current(emptySide).id, position: { ...player.transform } });
       const best = loadout.activeEntries().filter(e => weaponKey(e.id) !== undefined && (e.index === -1 || loadout.hasAmmo(loadout.state[e.side].rack[e.index])))
         .sort((a, b) => weaponKey(b.id)! - weaponKey(a.id)!)[0]!;
@@ -85,7 +86,7 @@ export class Combat {
       this.world.controls.reset();
       frame = { ...frame, left: { down: false, held: false, up: false }, right: { down: false, held: false, up: false } };
     }
-    this.runner.update(frame, this.world.tick, player.health.current > 0 && !this.world.missions?.state.states['cure-released'] && this.world.vehicles?.active == null && !this.world.mountedGun?.mounted && !Status.stunned(player, this.world.tick), this.started, this.resolve, this.crowd, this.canFire);
+    this.runner.update(frame, this.world.tick, player.health.current > 0 && !this.world.missions?.state.states['cure-released'] && canUseCarriedWeapon && !this.world.mountedGun?.mounted && !Status.stunned(player, this.world.tick), this.started, this.resolve, this.crowd, this.canFire);
     this.updateProjectiles();
     this.effects.update(); this.pickups.update();
   }

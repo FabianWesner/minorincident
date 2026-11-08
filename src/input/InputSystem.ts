@@ -294,7 +294,7 @@ export class InputSystem implements Lifecycle {
     const selection = this.selectors.shift();
     frame.selector = selection?.direction ?? 0;
     if (selection?.side) frame.selectorSide = selection.side;
-    if (selection?.active) frame.selectorActive = true; frame.interact = this.interact; frame.pause = this.pause;
+    if (selection?.active) frame.selectorActive = true; frame.interact = this.interact; if (this.active.has('interact') || this.touch.holdingInteract) frame.interactHeld = true; else delete frame.interactHeld; frame.pause = this.pause;
     this.interact = false; this.pause = false; this.updateWalkHint(frame); this.recorder.capture(frame); this.tap?.(frame, this.scheme); return frame;
   }
   private pointAim(point: Vec2, player: Vec2): void {
@@ -321,7 +321,7 @@ export class InputSystem implements Lifecycle {
     delete this.frame.strafe;
     const frame = this.frame; frame.move.x = 0; frame.move.z = 0; frame.aim = null; frame.aimSource = null; delete frame.walk; delete frame.aimPoint; delete frame.drive; delete frame.brake; delete frame.moveTarget; delete frame.attackTarget; delete frame.cancelMove; delete frame.pointerGround; delete frame.selectorSide; delete frame.selectedSlot; delete frame.orderedSelection; delete frame.selectedActiveSlot; delete frame.selectedWeaponKey; delete frame.pointerTarget; delete frame.mouseAttack; delete frame.activeAttack; delete frame.attackInPlace; delete frame.selectorActive;
     frame.left.down = frame.left.held = frame.left.up = false; frame.right.down = frame.right.held = frame.right.up = false;
-    frame.selector = 0; frame.interact = false; frame.pause = false; return frame;
+    frame.selector = 0; frame.interact = false; delete frame.interactHeld; frame.pause = false; return frame;
   }
   /** Logical injection persists until clear(), preserving the E01 harness contract. */
   inject(patch: Partial<InputFrame>): void { this.injected = { ...(this.injected ?? emptyInput()), ...structuredClone(patch) }; }
