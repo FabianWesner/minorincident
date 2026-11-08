@@ -67,6 +67,39 @@ test('civilians: seeded grab → bite → down → glowing eyes → rising → i
     attacker.health.current = 0; step(s, 1);
     expect(s.events.events().some(ev => ev.type === 'civilian.saved'), mode).toBe(mode !== 'late');
   }
+  // Sight caching must retain interleaved survivor answers across a high-tier night crowd and invalidate on tick/power change.
+  {
+    const w = await loadRunnerLevel('L8', 1, undefined, 0, { quality: 'high' }); worlds.push(w);
+    w.missions!.state.timeOfDay = 'night'; const power = w.lightPower!;
+    for (const lamp of power.lamps.values()) for (const point of [{ x: lamp.x, z: lamp.z }, { x: lamp.x + lamp.range, z: lamp.z }, { x: lamp.x, z: lamp.z - lamp.range - .001 }]) {
+      const lit = [...power.lamps.values()].some(l => Math.hypot(point.x - l.x, point.z - l.z) <= l.range && power.isOn(l.id));
+      expect(power.sightMultiplier(point)).toBe(lit ? 1 : .6);
+    }
+    w.tick++;
+    const humans = w.infected!.hearing.humans, at = w.entities.get(1)!.transform;
+    for (const center of [at, { x: at.x + 20, z: at.z - 12 }]) for (const radius of [0, 8, 16, 40]) {
+      const expected = humans.all().filter(h => (h.position.x - center.x) ** 2 + (h.position.z - center.z) ** 2 <= radius * radius).map(h => h.id).sort((a, b) => a - b);
+      expect(humans.within(center, radius).map(h => h.id)).toEqual(expected);
+    }
+    const target = humans.all().find(h => h.id !== 1)!, person = w.entities.get(target.id)!, hp = person.health.current;
+    person.health.current = 0;
+    expect(humans.get(person.id)).toBeUndefined();
+    expect(humans.within(target.position, 1).some(h => h.id === person.id)).toBe(false);
+    person.health.current = hp;
+    const lamp = [...power.lamps.values()].find(l => power.isOn(l.id))!;
+    let reads = 0; const isOn = power.isOn.bind(power); power.isOn = (id: string) => { reads++; return isOn(id); };
+    const a = { x: lamp.x, z: lamp.z }, b = { x: lamp.x + .1, z: lamp.z + .1 }, firstA = power.sightMultiplier(a), afterA = reads;
+    const firstB = power.sightMultiplier(b), afterB = reads;
+    expect(power.sightMultiplier(a)).toBe(firstA); expect(reads).toBe(afterB);
+    expect(afterA).toBeGreaterThan(0); expect(afterB).toBeGreaterThan(afterA);
+    expect(power.sightMultiplier(b)).toBe(firstB);
+    expect(power.sightMultiplier({ x: 100000, z: 100000 })).toBe(.6); expect(reads).toBe(afterB);
+    w.tick++; power.sightMultiplier(a); expect(reads).toBeGreaterThan(afterB);
+    const afterNextTick = reads; power.revision++; power.sightMultiplier(a); expect(reads).toBeGreaterThan(afterNextTick);
+    const listeners = w.events.listenerCount;
+    w.loadMission(w.missions!.def);
+    expect(w.events.listenerCount).toBe(listeners);
+  }
 });
 
 test('escort: shared combat pace, follows through a maze, a 2 s stand revives to 50 %, unattended 20 s down fails the mission', async () => {
