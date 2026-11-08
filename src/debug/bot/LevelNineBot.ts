@@ -79,12 +79,19 @@ export class LevelNineBot {
     // Camp is beyond the final bend; never turn back into the horde to visit
     // that approach waypoint after the evacuation has already completed.
     if (driving.evacuationDone) this.index = this.path.length - 1;
-    let target: Point = driving.evacuationDone ? [l9Course.bridge.x + 4, 0] : this.path[this.index];
-    if (p.x > 405 && Math.abs(p.z) < 35 && !driving.evacuationDone) {
+    const bridgeAlignX = l9Course.bridge.x - 12;
+    let target: Point = driving.evacuationDone
+      ? p.x < bridgeAlignX ? [bridgeAlignX, 0] : [l9Course.bridge.endX + 4, 0]
+      : this.path[this.index];
+    // The APC cannot turn sharply enough from the old x=405 trigger when the
+    // evacuation gate is closed at x=440; it stalls against the barrier first.
+    // Begin the same side approach one vehicle length earlier so every route
+    // can reach the evac point without taking repeated stationary hull attacks.
+    if (p.x > l9Course.gate.x - 55 && Math.abs(p.z) < 35 && !driving.evacuationDone) {
       if (driving.gateClosed && p.x < l9Course.gate.x + 4) target = [l9Course.gate.x + 6, l9Course.gate.sideZ];
       else target = [l9Course.evacuation.x, l9Course.evacuation.z];
       const distance = Math.hypot(target[0] - p.x, target[1] - p.z);
-      if (target[0] === l9Course.evacuation.x && (distance < 5 || car.vehicle!.speed > Math.max(1, distance * .6))) { f.brake = true; return f; }
+      if (target[0] === l9Course.evacuation.x && (distance < l9Course.evacuation.radius - 1 || car.vehicle!.speed > Math.max(1, distance * .6))) { f.brake = true; return f; }
     }
     // Read nearby moving heavy bodies, just as the driver reads solid road
     // furniture. Ploughing into the same brute after every restart is not a
