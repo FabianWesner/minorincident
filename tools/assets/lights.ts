@@ -22,6 +22,7 @@ export function extractLights(json: Gltf, source?: Gltf): { anchors: LightAnchor
   const local = (n: GltfNode) => n.matrix ? new Matrix4().fromArray(n.matrix) : new Matrix4().compose(new Vector3(...(n.translation ?? [0, 0, 0])), new Quaternion(...(n.rotation ?? [0, 0, 0, 1])), new Vector3(...(n.scale ?? [1, 1, 1])));
   const visit = (index: number, parent: Matrix4) => {
     const node = nodes[index], world = parent.clone().multiply(local(node)), name = node.name ?? `node${index}`;
+    if (name.startsWith('light:') && node.extras?.ss_light === undefined) errors.push(`${name}: light anchor is missing ss_light`);
     if (node.mesh !== undefined) {
       meshNames.add(name);
       if (json.meshes?.[node.mesh]?.primitives.some(p => p.material !== undefined && json.materials?.[p.material]?.name?.startsWith('emi_'))) emissiveMeshes.add(name);
@@ -75,9 +76,9 @@ export function buildLightTable(manifestPath = 'src/assets/manifest.json') {
     let source: Gltf | undefined;
     try { source = readGltfJson(manifest.find(asset => asset.id === id)?.sourceGlb ?? `assets/${id}/model.glb`); } catch { source = undefined; }
     const result = extractLights(json, source);
+    errors.push(...result.errors.map(e => `${id} ${e}`));
     if (!result.anchors.length) continue;
     table[id] = result.anchors.map(anchor => { const shipped = { ...anchor }; delete shipped.emissiveNodes; return shipped; });
-    errors.push(...result.errors.map(e => `${id} ${e}`));
     const missing = result.unreferencedEmissive.filter(name => !decorativeEmissive[id]?.includes(name));
     if (missing.length) { unreferenced[id] = missing; errors.push(...missing.map(name => `${id} emissive mesh ${name} has no light anchor (reference it or flag decorativeEmissive)`)); }
   }
