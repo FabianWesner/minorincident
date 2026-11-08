@@ -19,13 +19,13 @@ export interface L8ZooState {
   roster: number[]; guards: number[]; animals: number[]; outlets: HouseEmergence[];
   arrivals: { id: number; outlet: number; tick: number; alpha: boolean }[];
   escapeCheckpoint: boolean;
-  keeperId: number; pondKeeperId: number; haleId: number; reyesId: number; dogId: number; megaId: number; broadcastAt: number; greetingAt: number; lionAt: number; haleGreetingAt: number;
+  keeperId: number; pondKeeperId: number; haleId: number; reyesId: number; dogId: number; megaId: number; broadcastAt: number; greetingAt: number; lionSpoken: boolean; haleGreetingAt: number;
   sightingAt: number; departureAt: number; chaseAt: number; departureFrom: Transform | null; turnedAnimalId: number; animalInterceptionId: number; animalBiteStarted: boolean; keeperAttacked: boolean;
 }
 const distance = (a: Point, b: Point) => Math.hypot(a.x - b.x, a.z - b.z);
 /** Zoo story owns timing/entrances; the shared outbreak owns all bites, rescues and same-id transformations. */
 export class LevelEightZoo {
-  state: L8ZooState = { startedAt: 0, breachedAt: 0, nextWave: 0, alphas: 0, carId: 0, busId: 0, roster: [], guards: [], animals: [], outlets: [], arrivals: [], escapeCheckpoint: false, keeperId: 0, pondKeeperId: 0, haleId: 0, reyesId: 0, dogId: 0, megaId: 0, broadcastAt: 0, greetingAt: 0, lionAt: 0, haleGreetingAt: 0, sightingAt: 0, departureAt: 0, chaseAt: 0, departureFrom: null, turnedAnimalId: 0, animalInterceptionId: 0, animalBiteStarted: false, keeperAttacked: false };
+  state: L8ZooState = { startedAt: 0, breachedAt: 0, nextWave: 0, alphas: 0, carId: 0, busId: 0, roster: [], guards: [], animals: [], outlets: [], arrivals: [], escapeCheckpoint: false, keeperId: 0, pondKeeperId: 0, haleId: 0, reyesId: 0, dogId: 0, megaId: 0, broadcastAt: 0, greetingAt: 0, lionSpoken: false, haleGreetingAt: 0, sightingAt: 0, departureAt: 0, chaseAt: 0, departureFrom: null, turnedAnimalId: 0, animalInterceptionId: 0, animalBiteStarted: false, keeperAttacked: false };
   private prepared = false;
   private rosterCacheTick = -1;
   private rosterCacheRevision = -1;
@@ -143,7 +143,7 @@ export class LevelEightZoo {
   }
   begin(): void {
     const s = this.state, t = this.w.tick;
-    s.startedAt = t; s.greetingAt = t + 3 * 60; s.lionAt = 0;
+    s.startedAt = t; s.greetingAt = t + 3 * 60; s.lionSpoken = false;
     s.broadcastAt = t + 20 * 60; s.haleGreetingAt = t + 38 * 60;
     this.mission.checkpoint('sanctuary');
   }
@@ -183,9 +183,9 @@ export class LevelEightZoo {
   }
   private story(): void {
     const s = this.state, w = this.w, t = w.tick, player = w.entities.get(1)!;
-    const keeper = w.entities.get(s.keeperId), lion = w.entities.get(s.animals[0]);
+    const keeper = w.entities.get(s.keeperId), lion = w.entities.get(s.animals[0]), hale = w.entities.get(s.haleId);
     if (s.greetingAt && t >= s.greetingAt) { s.greetingAt = 0; this.mission.radio('L8.nadia-path'); }
-    if (!s.lionAt && keeper && lion && distance(keeper.transform, lion.transform) <= 18) { s.lionAt = 1; this.mission.radio('L8.nadia-lion'); }
+    if (!s.lionSpoken && keeper && lion && distance(keeper.transform, lion.transform) <= 18) { s.lionSpoken = true; this.mission.radio('L8.nadia-lion'); }
     if (s.broadcastAt && t >= s.broadcastAt && distance(player.transform, this.mission.def.anchors['central-plaza']) < 25) { s.broadcastAt = 0; this.mission.radio('L8.broadcast'); }
     if (s.haleGreetingAt && t >= s.haleGreetingAt && !s.broadcastAt && distance(player.transform, this.mission.def.anchors['central-plaza']) < 18) { s.haleGreetingAt = 0; this.mission.radio('L8.hale-greeting'); }
     const elephant = w.entities.get(s.animals[2]);
@@ -201,20 +201,23 @@ export class LevelEightZoo {
       w.npcs!.civilians.outbreak!.grab(victim, dog); s.keeperAttacked = true;
     }
     // Passenger completion deliberately excludes the driver: she covers this beat on foot, then boards last.
-    if (!s.megaId && this.breached && !this.protecting() && this.mission.state.steps.escape.status === 'active' && this.passengersSeated() && distance(player.transform, this.door()) < 2) {
+    if (!s.megaId && this.breached && !this.protecting() && this.mission.state.steps.escape.status === 'active' && this.passengersSeated() && hale && distance(hale.transform, this.door()) < 4 && distance(player.transform, this.door()) < 2) {
       s.sightingAt = t; s.departureAt = t + 18 * 60;
       s.megaId = w.infected!.spawn('infected.alpha', this.point({ x: 88, z: -80 }), { variant: 'inf.mega-alpha', state: 'chase', perched: false });
       const mega = w.entities.get(s.megaId)!;
       Object.assign(mega.transform, { x: 88, y: 4.7, z: -88, yaw: -Math.PI / 2 });
       mega.health.current = mega.health.max = 1_000_000;
-      mega.emerging = true; mega.combat!.damageMultiplier = 0;
+      mega.emerging = true; mega.contactExempt = s.haleId; mega.combat!.damageMultiplier = 0;
       w.npcs!.civilians.hold(mega.id);
       this.mission.cinematic('l8-north-wall');
     }
-    const mega = w.entities.get(s.megaId), hale = w.entities.get(s.haleId);
+    const mega = w.entities.get(s.megaId);
     if (mega) {
       // Scripted entrance/chase owns this actor, including after a checkpoint rebuild.
       w.npcs!.civilians.hold(mega.id); mega.health.current = mega.health.max;
+      // Once over the wall it is a legal target for the defending soldiers.
+      // The civilian hold keeps its ordinary attack brain out of this scene.
+      mega.emerging = t - s.sightingAt < 60;
       if (!this.mission.state.states['hale-fallen']) {
         const elapsed = t - s.sightingAt, f = Math.min(1, elapsed / (14 * 60));
         const target = hale?.transform ?? { x: 88, z: 70 };

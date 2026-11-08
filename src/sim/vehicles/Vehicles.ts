@@ -672,6 +672,7 @@ export class Vehicles {
     if (vehicle.vehicle.explodeAt !== null) vehicle.vehicle.explodeAt += delta;
     if (vehicle.vehicle.recoveringUntil) vehicle.vehicle.recoveringUntil += delta;
     vehicle.vehicle.attached = [];
+    delete vehicle.vehicle.scripted; // The destination level owns driving after the departure shot.
     // A campaign handover leaves the old district's infected behind, retaining the ID sequence.
     if (vehicle.vehicle.apcContacts) { vehicle.vehicle.apcContacts.infected = {}; delete vehicle.vehicle.apcContacts.obstacles; }
     vehicle.transform.x = position.x; vehicle.transform.z = position.z; vehicle.transform.yaw = yaw;

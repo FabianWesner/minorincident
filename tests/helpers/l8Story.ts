@@ -8,7 +8,8 @@ import { loadLevel } from '../qa/invariants/world';
 
 function gateGeometry(): void {
   const root = new Group(), source = new BoxGeometry(.12, 2.6, 2.7);
-  const left = new Mesh(source), right = new Mesh(source), lintel = new Mesh(source);
+  const lintelGeometry = new BoxGeometry(.35, .3, 6.6);
+  const left = new Mesh(source), right = new Mesh(source), lintel = new Mesh(lintelGeometry);
   left.position.set(116, 1.6, 78.65); right.position.set(116, 1.6, 81.35); lintel.position.set(116, 4.15, 80);
   root.add(left, right, lintel);
   const split = zooExitGate(root);
@@ -18,7 +19,7 @@ function gateGeometry(): void {
   poseZooExitGate(split.leaves, 1);
   expect(new Box3().setFromObject(split.leaves[0]).max.z).toBeLessThan(78);
   expect(new Box3().setFromObject(split.leaves[1]).min.z).toBeGreaterThan(82);
-  split.geometry.forEach(geometry => geometry.dispose()); source.dispose();
+  split.geometry.forEach(geometry => geometry.dispose()); source.dispose(); lintelGeometry.dispose();
 }
 
 /** Real input for the tour/breach, then isolated boarding to exercise the story controller without another full combat run. */
@@ -40,15 +41,17 @@ export async function checkL8Story(): Promise<void> {
   try {
     const bot = new LevelEightBot(world), nearest = new Map(zoo.state.animals.map(id => [id, Infinity]));
     const cast = [zoo.state.keeperId, zoo.state.haleId, zoo.state.reyesId];
+    let calmHealthy = true;
     for (let i = 0; i < 3600; i++) {
       world.applyInput(bot.sample(), 'keyboard'); world.update();
       const player = world.entities.get(1)!.transform;
       for (const id of zoo.state.animals) {
         const animal = world.entities.get(id)!;
         nearest.set(id, Math.min(nearest.get(id)!, Math.hypot(player.x - animal.transform.x, player.z - animal.transform.z)));
-        if (i < 3599) expect(animal.infected).toBeUndefined();
+        if (i < 3599 && (animal.infected || animal.infection || animal.health.current <= 0)) calmHealthy = false;
       }
     }
+    expect(calmHealthy, 'no animal turns or dies before the alarm').toBe(true);
     for (const [id, distance] of nearest) expect(distance, `animal ${id} near the real courier route`).toBeLessThan(18);
     expect(lines).toEqual(expect.arrayContaining(['L8.nadia-path', 'L8.nadia-lion', 'L8.broadcast', 'L8.hale-greeting', 'L8.hale-breach']));
     expect(mission.state.states.breached).toBe(true);

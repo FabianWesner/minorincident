@@ -19,7 +19,14 @@ export function zooExitGate(root: Object3D): { leaves: Group[]; geometry: Buffer
         inside &&= Math.abs(point.x - 116) <= .11 && point.y >= -.01 && point.y <= 3.06 && point.z >= 77.29 && point.z <= 82.71;
         z += point.z;
       }
-      const into = inside ? split[z / 3 < 80 ? 0 : 1] : keep;
+      let side = z / 3 < 80 ? 0 : 1;
+      // At the meeting plane, the outward normal identifies which leaf owns
+      // its end cap; centroids alone would attach both caps to the right leaf.
+      if (inside && Math.abs(z / 3 - 80) < .0001 && geometry.getAttribute('normal')) {
+        point.fromBufferAttribute(geometry.getAttribute('normal'), index ? index.getX(i) : i).transformDirection(node.matrixWorld);
+        side = point.z > 0 ? 0 : 1;
+      }
+      const into = inside ? split[side] : keep;
       for (let j = 0; j < 3; j++) into.push(index ? index.getX(i + j) : i + j);
     }
     if (keep.length === size) continue;
