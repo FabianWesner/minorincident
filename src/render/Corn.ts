@@ -24,7 +24,10 @@ export function updateCorn(world: SimWorld): void {
 }
 export function cornMaterial(materials: Materials) {
   const fade = positionWorld.xz.sub(player.xz).length().smoothstep(1.5, 3);
-  const material = materials.shaded(materials.sample(attribute('_palette', 'float')), undefined, fade);
+  // Retain the authored straw/ochre/soil RGB and root gradients. Interpolating swatch
+  // indices across a curved leaf would sample unrelated palette colours between them.
+  const ground = positionLocal.y.lessThan(.12);
+  const material = materials.shaded(attribute('color', 'vec3'), undefined, ground.select(1, fade));
   const weight = positionLocal.y.smoothstep(.05, 2.3);
   let push: Node<'vec3'> = vec3(0);
   for (const actor of movers) {
