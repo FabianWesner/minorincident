@@ -9,6 +9,7 @@ import { SimWorld } from '../../src/sim/world/SimWorld';
 import { loadLevel } from '../../tools/sim-runner/levels';
 import { missionControls } from '../../src/sim/missions/controls';
 import { preset } from '../../src/sim/progression/Campaign';
+import { objectiveText } from '../../src/sim/missions/objectiveText';
 
 async function car(id = 'vehicle.sedan') {
   const physics = new Physics(); await physics.init();
@@ -111,6 +112,13 @@ async function zooParkedBoarding(): Promise<void> {
       expect(car.entity.health.current, 'parking does not protect durability').toBe(health - 10);
     }
     mission.setState('breached', true); zoo.state.breachedAt = world.tick; zoo.state.nextWave = Number.MAX_SAFE_INTEGER;
+    missionControls(world).teleport(1, zoo.door());
+    world.applyInput({ ...emptyInput(), interact: true }, 'keyboard'); advance(1);
+    expect(vehicles.active, 'courier can keep covering passengers instead of boarding early').toBeNull();
+    expect(objectiveText(mission, mission.def.steps[0].text)).toMatch(/Cover.*aboard/);
+    world.applyInput(emptyInput(), 'keyboard'); advance(60);
+    expect(vehicles.active, 'standing at the door does not remove cover fire either').toBeNull();
+    missionControls(world).teleport(1, { x: zoo.door().x - 4, z: zoo.door().z + 2 });
     const car = vehicles.cars.get(zoo.state.carId)!, entry = vehicles.passengerDoor(car.entity.id);
     for (const id of zoo.passengers()) {
       missionControls(world).teleport(id, entry);

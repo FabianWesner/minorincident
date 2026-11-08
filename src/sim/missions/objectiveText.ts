@@ -53,6 +53,11 @@ export function objectiveText(mission: Mission, fallback: string): string {
     const zoo=mission.l8!, seated=w.vehicles!.active===zoo.state.carId;
     // E30-AC04: no objective or departure countdown during the sanctuary minute.
     if(!zoo.state.breachedAt)return '';
+    if (!seated && zoo.boarding() && !zoo.canBoardDriver()) {
+      const ids = zoo.passengers(), car = w.vehicles!.cars.get(zoo.state.carId)!.entity.vehicle!;
+      const aboard = ids.filter(id => car.passengers?.some(p => p.id === id && p.phase === 'seated')).length;
+      return `Cover the survivors while they board · ${aboard}/${ids.length} aboard · ${ids.length - aboard} still to board`;
+    }
     if(s.steps.depart?.status==='active') {
       const ids=zoo.passengers(),car=w.vehicles!.cars.get(zoo.state.carId)!.entity.vehicle!;
       const missing=ids.filter(id=>!car.passengers?.some(p=>p.id===id&&p.phase==='seated'));
