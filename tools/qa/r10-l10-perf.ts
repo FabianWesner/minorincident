@@ -11,8 +11,10 @@ import { launchBrowser } from '../browser-pool/client';
 import { uncappedArgs } from '../perf/uncapped';
 
 assert.equal(process.env.MI_PERF_LOCK_HELD, '1', 'Use quiet-run');
-const out = 'test-results/r10-l10/perf'; mkdirSync(out, { recursive: true });
-const sides = ['before', 'after'] as const;
+const selectedSide = process.env.R10_PERF_SIDE;
+assert.ok(!selectedSide || selectedSide === 'before' || selectedSide === 'after', 'R10_PERF_SIDE must be before or after');
+const out = `test-results/r10-l10/perf${selectedSide ? `-${selectedSide}` : ''}`; mkdirSync(out, { recursive: true });
+const sides = (['before', 'after'] as const).filter(side => !selectedSide || side === selectedSide);
 const servers = await Promise.all(sides.map((side, i) => preview({ configFile: false, build: { outDir: resolve(`test-results/r10-l10/${side === 'after' ? 'final' : 'before'}-dist`) }, preview: { host: '127.0.0.1', port: 3901 + i, strictPort: true } })));
 const rows: unknown[] = [];
 type TraversalSample = { frames: number[]; end: { x: number; z: number }; perf: unknown };
