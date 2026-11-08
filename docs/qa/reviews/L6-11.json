@@ -1,27 +1,63 @@
 {
   "row": "L6-11",
   "status": "PASS",
-  "reviewer": "Codex/final-b",
-  "date": "2026-11-07",
-  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "reviewer": "Codex/l6-visual",
+  "date": "2026-11-08",
+  "commit": "4874fa1b3d8d82ecc92f1b8621dc7aef5c36a908",
   "clauses": [
     {
       "clause": "Covering matters: `evade-only` ≤ 30 % out, `complete` ≥ 60 %.",
       "verdict": "PASS",
-      "note": "Both tiers: mortal complete saves20/29=68.9655%, loses9, zero deaths,323.067s; evade-only saves1/29=3.4483%, loses28,12 deaths,568.333s. All four native result records balance in=out+lost. Complete hashes equal fresh canonical controls. Thresholds>=60% complete and<=30% evade pass. Native-policy qualification only."
+      "note": "Both ordinary mortal seed1 policies: complete18/29=62.069%, evade-only1/29=3.448%; zero deaths complete,12 evade-only. Full rosters and actual result accounting retained. Controlled29/29 ending pictures demonstrate rendering only, not covering performance.\nlow/controlled-fixture ordinary complete and evade-only rescue outcome: {\"complete\":0.6206896551724138,\"evadeOnly\":0.034482758620689655} (PASS)\nhigh/controlled-fixture ordinary complete and evade-only rescue outcome: {\"complete\":0.6206896551724138,\"evadeOnly\":0.034482758620689655} (PASS)"
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/final-b/L6-11-native.json.gz",
-      "sha256": "9397ed55ceccebf4b3545f9659fdcf30f4c52a662081d3e9b735ae3bf5acb1f7",
-      "what": "Both tiers: mortal complete saves20/29=68.9655%, loses9, zero deaths,323.067s; evade-only saves1/29=3.4483%, loses28,12 deaths,568.333s. All four native result records balance in=out+lost. Complete hashes equal fresh canonical controls. Thresholds>=60% complete and<=30% evade pass. Native-policy qualification only."
+      "file": "docs/reports/l6-visual/acceptance-fixtures.json",
+      "sha256": "2651e0a83ba21f20398d89a5ebeda358d86c67b01e3639e16f17286522cb8198",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
     },
     {
-      "file": "docs/reports/final-b/L6-11-summary.json",
-      "sha256": "58f930bbdf0fc20cc2965a0851d41953225fad3f686a3feb4bdd0b69256c8bf2",
-      "what": "Both tiers: mortal complete saves20/29=68.9655%, loses9, zero deaths,323.067s; evade-only saves1/29=3.4483%, loses28,12 deaths,568.333s. All four native result records balance in=out+lost. Complete hashes equal fresh canonical controls. Thresholds>=60% complete and<=30% evade pass. Native-policy qualification only."
+      "file": "docs/reports/l6-visual/capture-review.json",
+      "sha256": "e7990f6fc80dc6d810e7b3959d71ff5df5b32c2e77b33dd4c53b14a42abe44ca",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
+    },
+    {
+      "file": "docs/reports/l6-visual/readability-analysis.json",
+      "sha256": "21f9acc2556a36bb19d29c015eea5ae6699403c81f075cc9dcd1cdd453519953",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-low-complete.json",
+      "sha256": "c79af258f64fb5f88deedbc0941e0b3a719a20550bf450cebfa82fd6439042db",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-low-stationary.json",
+      "sha256": "3a8d03cafeddbe66167db7bae4f0f8cabd700d7692988b32fb82e7b1f40b60f0",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-low-fixtures.json",
+      "sha256": "3c2fa3c58bcb8131bfb59384cf7a5a73fa97e522f6fbfb971f18d39667a29128",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-high-complete.json",
+      "sha256": "202863ed4f414c7b05cc76bac5ba893d6000d00297d5b06bf7589b0fd1df9edc",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-high-stationary.json",
+      "sha256": "2fd2d5bd4092af61f25259631d27a389273d3d01775b434b1570666e359b81cd",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-high-fixtures.json",
+      "sha256": "f53f3b455d607c80b5541c73953f9f3d994bf4e8befddf03f32638d10441f5f5",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
     }
   ],
-  "sourceDigest": "7fd8f0ebc3d3fcb362d200567b5da5e2e4f5bea018074dcf4fbbfccc06fdf698"
+  "notes": "Fresh low/high × WebGL2/WebGPU × zoom1/1.5 visual review. Capture review uses labeled contact sheets and native actor crops, plus explicitly listed full originals. No performance or full physical-route signoff inferred.",
+  "sourceDigest": "ceb4b4e8f05526ddca246a6d236ccda6bf5533f645882fbc1e6d02d215baf732"
 }

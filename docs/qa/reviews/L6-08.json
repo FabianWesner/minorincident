@@ -1,37 +1,63 @@
 {
   "row": "L6-08",
   "status": "PASS",
-  "reviewer": "Codex/final-b",
-  "date": "2026-11-07",
-  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
-  "sourceDigest": "7fd8f0ebc3d3fcb362d200567b5da5e2e4f5bea018074dcf4fbbfccc06fdf698",
+  "reviewer": "Codex/l6-visual",
+  "date": "2026-11-08",
+  "commit": "4874fa1b3d8d82ecc92f1b8621dc7aef5c36a908",
   "clauses": [
     {
       "clause": "Group walks at 2.2 m/s; **injured survivors at group speed** (no single straggler that needs babysitting); every follower's bar visible.",
       "verdict": "PASS",
-      "note": "Both tiers: all29 original followers, including4 injured, settle2.1995157\u20132.2m/s. Current complete-route group-pace checks pass. All58 selected actors retain original HP, draw a visible body and18x3 pip; each pip measures54 green pixels in original PNG. Both labelled29-cell sheets personally inspected. Controlled staging disclosed; no full29-person mortal escape claim."
+      "note": "Both tiers all29 original identities including injured: settled2.1995157–2.19999994m/s. Personally opened8 native-crop contact sheets with all29 visible pips each;232 originalPNG checks contain54 cyan pip pixels minimum. Two demonstrated causes fixed: unblended fractional pose NaN bounds and compact pip discarded beside courier. Overlap fixture8/8 before missing,8/8 after drawn; opened two original after frames.\nlow/controlled-fixture all original follower settled speed and per-ID visible bars: {\"identities\":29,\"barCases\":116,\"minSpeed\":2.199515698416391,\"maxSpeed\":2.1999999413204994,\"minCyanPixels\":54,\"overlapCases\":4} (PASS)\nhigh/controlled-fixture all original follower settled speed and per-ID visible bars: {\"identities\":29,\"barCases\":116,\"minSpeed\":2.199515698416391,\"maxSpeed\":2.1999999413204994,\"minCyanPixels\":54,\"overlapCases\":4} (PASS)\nlow/complete observed human follower pace versus phase group median: [{\"phase\":\"step/retreat\",\"id\":16,\"samples\":147,\"median\":2.1986260141159164,\"groupMedian\":2.1972987769631698,\"ratio\":1.0006040312617754},{\"phase\":\"step/retreat\",\"id\":17,\"samples\":147,\"median\":2.1997628757224845,\"groupMedian\":2.1972987769631698,\"ratio\":1.0011214218044213},{\"phase\":\"step/retreat\",\"id\":19,\"samples\":109,\"median\":2.191882544284477,\"groupMedian\":2.1972987769631698,\"ratio\":0.9975350495183098},{\"phase\":\"step/retreat\",\"id\":20,\"samples\":109,\"median\":2.199258608976894,\"groupMedian\":2.1972987769631698,\"ratio\":1.000891927868104},{\"phase\":\"step/retreat\",\"id\":22,\"samples\":71,\"median\":2.1865530407245615,\"groupMedian\":2.1972987769631698,\"ratio\":0.9951095698267034},{\"phase\":\"step/retreat\",\"id\":23,\"samples\":109,\"median\":2.198799178096171,\"groupMedian\":2.1972987769631698,\"ratio\":1.000682838924197},{\"phase\":\"step/retreat\",\"id\":24,\"samples\":109,\"median\":2.1967844738546196,\"groupMedian\":2.1972987769631698,\"ratio\":0.9997659384722997},{\"phase\":\"step/retreat\",\"id\":25,\"samples\":109,\"median\":2.184951405743334,\"groupMedian\":2.1972987769631698,\"ratio\":0.9943806589484836},{\"phase\":\"step/retreat\",\"id\":27,\"samples\":148,\"median\":2.19909640620987,\"groupMedian\":2.1972987769631698,\"ratio\":1.0008181087003492},{\"phase\":\"step/retreat\",\"id\":28,\"samples\":104,\"median\":2.1582757947696103,\"groupMedian\":2.1972987769631698,\"ratio\":0.9822404751676547},{\"phase\":\"step/retreat\",\"id\":30,\"samples\":148,\"median\":2.1942166849285534,\"groupMedian\":2.1972987769631698,\"ratio\":0.9985973268328688},{\"phase\":\"step/retreat\",\"id\":32,\"samples\":137,\"median\":2.1775989924777117,\"groupMedian\":2.1972987769631698,\"ratio\":0.991034544463414},{\"phase\":\"step/retreat\",\"id\":33,\"samples\":141,\"median\":2.1848391341217703,\"groupMedian\":2.1972987769631698,\"ratio\":0.9943295636569645},{\"phase\":\"step/retreat\",\"id\":34,\"samples\":64,\"median\":2.16313895261822,\"groupMedian\":2.1972987769631698,\"ratio\":0.9844537189466053},{\"phase\":\"step/retreat\",\"id\":35,\"samples\":138,\"median\":2.1684931452496934,\"groupMedian\":2.1972987769631698,\"ratio\":0.9868904347394722},{\"phase\":\"step/retreat\",\"id\":37,\"samples\":137,\"median\":2.199238181587444,\"groupMedian\":2.1972987769631698,\"ratio\":1.0008826312764596},{\"phase\":\"step/retreat\",\"id\":38,\"samples\":98,\"median\":2.1996001030003525,\"groupMedian\":2.1972987769631698,\"ratio\":1.0010473432476776},{\"phase\":\"step/retreat\",\"id\":42,\"samples\":136,\"median\":2.1995840381490748,\"groupMedian\":2.1972987769631698,\"ratio\":1.0010400320656727},{\"phase\":\"step/retreat\",\"id\":43,\"samples\":34,\"median\":2.19781308007172,\"groupMedian\":2.1972987769631698,\"ratio\":1.0002340615277003},{\"phase\":\"step/retreat\",\"id\":44,\"samples\":104,\"median\":2.198570318728869,\"groupMedian\":2.1972987769631698,\"ratio\":1.0005786840547268},{\"phase\":\"step/exit\",\"id\":33,\"samples\":12,\"median\":2.1871262455412475,\"groupMedian\":2.195628079345058,\"ratio\":0.9961278351812904},{\"phase\":\"step/exit\",\"id\":35,\"samples\":10,\"median\":2.195628079345058,\"groupMedian\":2.195628079345058,\"ratio\":1},{\"phase\":\"step/exit\",\"id\":42,\"samples\":12,\"median\":2.2037790340597425,\"groupMedian\":2.195628079345058,\"ratio\":1.0037123567471935}] (PASS)\nhigh/complete observed human follower pace versus phase group median: [{\"phase\":\"step/retreat\",\"id\":16,\"samples\":147,\"median\":2.1986260141159164,\"groupMedian\":2.1972987769631698,\"ratio\":1.0006040312617754},{\"phase\":\"step/retreat\",\"id\":17,\"samples\":147,\"median\":2.1997628757224845,\"groupMedian\":2.1972987769631698,\"ratio\":1.0011214218044213},{\"phase\":\"step/retreat\",\"id\":19,\"samples\":109,\"median\":2.191882544284477,\"groupMedian\":2.1972987769631698,\"ratio\":0.9975350495183098},{\"phase\":\"step/retreat\",\"id\":20,\"samples\":109,\"median\":2.199258608976894,\"groupMedian\":2.1972987769631698,\"ratio\":1.000891927868104},{\"phase\":\"step/retreat\",\"id\":22,\"samples\":71,\"median\":2.1865530407245615,\"groupMedian\":2.1972987769631698,\"ratio\":0.9951095698267034},{\"phase\":\"step/retreat\",\"id\":23,\"samples\":109,\"median\":2.198799178096171,\"groupMedian\":2.1972987769631698,\"ratio\":1.000682838924197},{\"phase\":\"step/retreat\",\"id\":24,\"samples\":109,\"median\":2.1967844738546196,\"groupMedian\":2.1972987769631698,\"ratio\":0.9997659384722997},{\"phase\":\"step/retreat\",\"id\":25,\"samples\":109,\"median\":2.184951405743334,\"groupMedian\":2.1972987769631698,\"ratio\":0.9943806589484836},{\"phase\":\"step/retreat\",\"id\":27,\"samples\":148,\"median\":2.19909640620987,\"groupMedian\":2.1972987769631698,\"ratio\":1.0008181087003492},{\"phase\":\"step/retreat\",\"id\":28,\"samples\":104,\"median\":2.1582757947696103,\"groupMedian\":2.1972987769631698,\"ratio\":0.9822404751676547},{\"phase\":\"step/retreat\",\"id\":30,\"samples\":148,\"median\":2.1942166849285534,\"groupMedian\":2.1972987769631698,\"ratio\":0.9985973268328688},{\"phase\":\"step/retreat\",\"id\":32,\"samples\":137,\"median\":2.1775989924777117,\"groupMedian\":2.1972987769631698,\"ratio\":0.991034544463414},{\"phase\":\"step/retreat\",\"id\":33,\"samples\":141,\"median\":2.1848391341217703,\"groupMedian\":2.1972987769631698,\"ratio\":0.9943295636569645},{\"phase\":\"step/retreat\",\"id\":34,\"samples\":64,\"median\":2.16313895261822,\"groupMedian\":2.1972987769631698,\"ratio\":0.9844537189466053},{\"phase\":\"step/retreat\",\"id\":35,\"samples\":138,\"median\":2.1684931452496934,\"groupMedian\":2.1972987769631698,\"ratio\":0.9868904347394722},{\"phase\":\"step/retreat\",\"id\":37,\"samples\":137,\"median\":2.199238181587444,\"groupMedian\":2.1972987769631698,\"ratio\":1.0008826312764596},{\"phase\":\"step/retreat\",\"id\":38,\"samples\":98,\"median\":2.1996001030003525,\"groupMedian\":2.1972987769631698,\"ratio\":1.0010473432476776},{\"phase\":\"step/retreat\",\"id\":42,\"samples\":136,\"median\":2.1995840381490748,\"groupMedian\":2.1972987769631698,\"ratio\":1.0010400320656727},{\"phase\":\"step/retreat\",\"id\":43,\"samples\":34,\"median\":2.19781308007172,\"groupMedian\":2.1972987769631698,\"ratio\":1.0002340615277003},{\"phase\":\"step/retreat\",\"id\":44,\"samples\":104,\"median\":2.198570318728869,\"groupMedian\":2.1972987769631698,\"ratio\":1.0005786840547268},{\"phase\":\"step/exit\",\"id\":33,\"samples\":12,\"median\":2.1871262455412475,\"groupMedian\":2.195628079345058,\"ratio\":0.9961278351812904},{\"phase\":\"step/exit\",\"id\":35,\"samples\":10,\"median\":2.195628079345058,\"groupMedian\":2.195628079345058,\"ratio\":1},{\"phase\":\"step/exit\",\"id\":42,\"samples\":12,\"median\":2.2037790340597425,\"groupMedian\":2.195628079345058,\"ratio\":1.0037123567471935}] (PASS)"
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/final-b/L6-08-proof.json",
-      "sha256": "2f679435eb094f6c7baa5774fac6ef44865d5eaf53a38f27926912fb782f1ff1",
-      "what": "Both tiers: all29 original followers, including4 injured, settle2.1995157\u20132.2m/s. Current complete-route group-pace checks pass. All58 selected actors retain original HP, draw a visible body and18x3 pip; each pip measures54 green pixels in original PNG. Both labelled29-cell sheets personally inspected. Controlled staging disclosed; no full29-person mortal escape claim."
+      "file": "docs/reports/l6-visual/acceptance-fixtures.json",
+      "sha256": "2651e0a83ba21f20398d89a5ebeda358d86c67b01e3639e16f17286522cb8198",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
     },
     {
-      "file": "docs/reports/final-b/L6-walk.json.gz",
-      "sha256": "01823b647f5ff1b2e9e282ba32c8e21f44be47550ef4cdcc03a83b65892270cc",
-      "what": "Fresh original per-ID speed/HP/body/pip measurement source."
+      "file": "docs/reports/l6-visual/capture-review.json",
+      "sha256": "e7990f6fc80dc6d810e7b3959d71ff5df5b32c2e77b33dd4c53b14a42abe44ca",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
     },
     {
-      "file": "docs/reports/final-b/L6-bars-low-ledger.json.gz",
-      "sha256": "6d5e9ca888ea6ac04ac0c60cf3591cd6ecd30224a0276fabb6f5decf81c7c55c",
-      "what": "Fresh original per-ID speed/HP/body/pip measurement source."
+      "file": "docs/reports/l6-visual/readability-analysis.json",
+      "sha256": "21f9acc2556a36bb19d29c015eea5ae6699403c81f075cc9dcd1cdd453519953",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
     },
     {
-      "file": "docs/reports/final-b/L6-bars-high-ledger.json.gz",
-      "sha256": "e17ce9396d333624f665ccbdd18ce8f94ce215971c6a81b49ac1ac3613ad43bd",
-      "what": "Fresh original per-ID speed/HP/body/pip measurement source."
+      "file": "docs/reports/fix51-verify/receipts/L6-low-complete.json",
+      "sha256": "c79af258f64fb5f88deedbc0941e0b3a719a20550bf450cebfa82fd6439042db",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-low-stationary.json",
+      "sha256": "3a8d03cafeddbe66167db7bae4f0f8cabd700d7692988b32fb82e7b1f40b60f0",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-low-fixtures.json",
+      "sha256": "3c2fa3c58bcb8131bfb59384cf7a5a73fa97e522f6fbfb971f18d39667a29128",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-high-complete.json",
+      "sha256": "202863ed4f414c7b05cc76bac5ba893d6000d00297d5b06bf7589b0fd1df9edc",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-high-stationary.json",
+      "sha256": "2fd2d5bd4092af61f25259631d27a389273d3d01775b434b1570666e359b81cd",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-high-fixtures.json",
+      "sha256": "f53f3b455d607c80b5541c73953f9f3d994bf4e8befddf03f32638d10441f5f5",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
     }
-  ]
+  ],
+  "notes": "Fresh low/high × WebGL2/WebGPU × zoom1/1.5 visual review. Capture review uses labeled contact sheets and native actor crops, plus explicitly listed full originals. No performance or full physical-route signoff inferred.",
+  "sourceDigest": "ceb4b4e8f05526ddca246a6d236ccda6bf5533f645882fbc1e6d02d215baf732"
 }

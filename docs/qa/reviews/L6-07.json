@@ -1,28 +1,63 @@
 {
   "row": "L6-07",
   "status": "PASS",
-  "reviewer": "Codex/pre-uat-l6",
+  "reviewer": "Codex/l6-visual",
   "date": "2026-11-08",
-  "commit": "db0f6985dce5d08e21a130973745b8cda80320b9",
+  "commit": "4874fa1b3d8d82ecc92f1b8621dc7aef5c36a908",
   "clauses": [
     {
       "clause": "combat: attacks on player + group ≥ 4/min across the retreat (tune); competent damage taken ≥ 30 HP (tune); concurrent infected ≤ 60 / 30.",
       "verdict": "PASS",
-      "note": "low/complete ordinary retreat route completion: \"complete\" (PASS)\nlow/complete retreat player/group windups per minute: 18.999366687777076 (PASS)\nlow/complete actual HP lost during retreat: 160 (PASS)\nlow/complete retreat concurrent infected cap: 19 (PASS)\nhigh/complete ordinary retreat route completion: \"complete\" (PASS)\nhigh/complete retreat player/group windups per minute: 18.999366687777076 (PASS)\nhigh/complete actual HP lost during retreat: 160 (PASS)\nhigh/complete retreat concurrent infected cap: 19 (PASS)"
+      "note": "Fresh ordinary complete retreat ledgers check actual player/group windups>=4/min, damage>=30HP and alive cap low30/high60. No god mode in these native policy receipts. This is a deterministic competent policy, not a claim about human enjoyment.\nlow/complete ordinary retreat route completion: \"complete\" (PASS)\nlow/complete retreat player/group windups per minute: 18.999366687777076 (PASS)\nlow/complete actual HP lost during retreat: 160 (PASS)\nlow/complete retreat concurrent infected cap: 19 (PASS)\nhigh/complete ordinary retreat route completion: \"complete\" (PASS)\nhigh/complete retreat player/group windups per minute: 18.999366687777076 (PASS)\nhigh/complete actual HP lost during retreat: 160 (PASS)\nhigh/complete retreat concurrent infected cap: 19 (PASS)"
     }
   ],
   "evidence": [
     {
+      "file": "docs/reports/l6-visual/acceptance-fixtures.json",
+      "sha256": "2651e0a83ba21f20398d89a5ebeda358d86c67b01e3639e16f17286522cb8198",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
+    },
+    {
+      "file": "docs/reports/l6-visual/capture-review.json",
+      "sha256": "e7990f6fc80dc6d810e7b3959d71ff5df5b32c2e77b33dd4c53b14a42abe44ca",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
+    },
+    {
+      "file": "docs/reports/l6-visual/readability-analysis.json",
+      "sha256": "21f9acc2556a36bb19d29c015eea5ae6699403c81f075cc9dcd1cdd453519953",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
+    },
+    {
       "file": "docs/reports/fix51-verify/receipts/L6-low-complete.json",
-      "sha256": "06a5fb9338378054ed030088670b124fe24e35c32218c461f70db8ee2893a965",
-      "what": "Fresh final-source native numeric receipt; every reviewed clause passes."
+      "sha256": "c79af258f64fb5f88deedbc0941e0b3a719a20550bf450cebfa82fd6439042db",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-low-stationary.json",
+      "sha256": "3a8d03cafeddbe66167db7bae4f0f8cabd700d7692988b32fb82e7b1f40b60f0",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-low-fixtures.json",
+      "sha256": "3c2fa3c58bcb8131bfb59384cf7a5a73fa97e522f6fbfb971f18d39667a29128",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
     },
     {
       "file": "docs/reports/fix51-verify/receipts/L6-high-complete.json",
-      "sha256": "cd29e7b65678cc4e24e6458a71bfe4eb0c1673e48af17b94643e808870c1217e",
-      "what": "Fresh final-source native numeric receipt; every reviewed clause passes."
+      "sha256": "202863ed4f414c7b05cc76bac5ba893d6000d00297d5b06bf7589b0fd1df9edc",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-high-stationary.json",
+      "sha256": "2fd2d5bd4092af61f25259631d27a389273d3d01775b434b1570666e359b81cd",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-high-fixtures.json",
+      "sha256": "f53f3b455d607c80b5541c73953f9f3d994bf4e8befddf03f32638d10441f5f5",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
     }
   ],
-  "notes": "Fresh native current-source numeric review only. This does not qualify real-input presentation, audio audibility, visual polish, or the separate L6-08/09/11/12/14 clauses.",
-  "sourceDigest": "1b708f5da8310a3557e37ce8d4a593f39214a8323c80057f909995be12744738"
+  "notes": "Fresh low/high × WebGL2/WebGPU × zoom1/1.5 visual review. Capture review uses labeled contact sheets and native actor crops, plus explicitly listed full originals. No performance or full physical-route signoff inferred.",
+  "sourceDigest": "ceb4b4e8f05526ddca246a6d236ccda6bf5533f645882fbc1e6d02d215baf732"
 }

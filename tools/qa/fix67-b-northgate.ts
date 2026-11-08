@@ -7,21 +7,29 @@ import { preset } from '../../src/sim/progression/Campaign';
 import { SceneSession, stopServer } from '../scenelab/session';
 import { provenance } from './accept/probe';
 
-const out = 'test-results/fix67-b/northgate-active'; mkdirSync(out, { recursive: true });
+const backend = process.env.L6_VISUAL_BACKEND === 'webgpu' ? 'webgpu' : 'webgl2';
+const zoom = Number(process.env.L6_VISUAL_ZOOM ?? '1.5');
+const out = process.env.L6_VISUAL_OUT ?? 'test-results/fix67-b/northgate-active'; mkdirSync(out, { recursive: true });
 const rows = [];
 try {
   for (const tier of ['low', 'high'] as const) {
-    const session = new SceneSession({ tier, backend: 'webgl2', query: { profile: '0', ui: '1' } });
+    const session = new SceneSession({ tier, backend, query: { profile: '0', ui: '1' } });
     try {
       await session.open();
-      const save = preset('L6-default'); save.settings.quality = tier;
-      await session.page.evaluate(async ({ tier, save }) => {
+      const save = process.env.L6_VISUAL_SAVE_DIR ? JSON.parse(readFileSync(`${process.env.L6_VISUAL_SAVE_DIR}/${tier}-L5-save.json`, 'utf8')) as ReturnType<typeof preset> : preset('L6-default'); save.settings.quality = tier;
+      await session.page.evaluate(async ({ tier, save, zoom }) => {
         const a = window.__SS__!; a.settings.set({ quality: tier, cameraShake: false }); a.campaign.restore(save);
-        await a.loadLevel('L6', { seed: 1 }); a.pause(); a.missions.begin(); a.camera.follow(); a.camera.zoom(1.5);
+        await a.loadLevel('L6', { seed: 1 }); a.pause(); a.missions.begin(); a.camera.follow(); a.camera.zoom(zoom);
         document.documentElement.setAttribute('data-scene-hud', '');
         for (const style of document.querySelectorAll('style')) if (style.textContent?.includes('#hud:not([data-scene-hud])')) style.remove();
+        // Collect the real headlamp during the calm beat before staging the exit.
+        const w = (window.__SCENE__ as unknown as { game: Game }).game.world, p = w.entities.get(1)!.transform;
+        const lamp = [...w.entities.iterate()].find(e => e.archetype === 'pickup.headlamp')!.transform;
+        const distance = Math.hypot(lamp.x - p.x, lamp.z - p.z);
+        a.input.set({ move: { x: (lamp.x - p.x) / distance, z: (lamp.z - p.z) / distance } }); await a.step(45); a.input.clear();
+        if (!w.missions!.state.l6!.flashlight) throw new Error('Exit fixture must retain the collected headlamp');
         a.teleport(1, { x: 255.5, z: 15.9 }); await a.step(2);
-      }, { tier, save });
+      }, { tier, save, zoom });
       const captures: { file: string; sha256: string }[] = [];
       const capture = async (label: string) => {
         await session.ready(); const file = `${out}/${tier}-${label}.png`;
@@ -44,8 +52,8 @@ try {
         const sample = await session.page.evaluate(() => {
           const g = (window.__SCENE__ as unknown as { game: Game }).game, w = g.world, m = w.missions!, s = m.state.l6!;
           return { tick: w.tick, tier: w.infected!.director.tier, renderTier: g.view.getState().quality, gateAt: s.gateAt,
-            phase: m.state.phase, caption: document.body.innerText.includes('Night. Still alive.'),
-            camera: g.view.getState().camera, result: m.state.result,
+            flashlight: s.flashlight, phase: m.state.phase, caption: document.body.innerText.includes('Night. Still alive.'),
+            character: g.view.getState().character, camera: g.view.getState().camera, result: m.state.result,
             roster: s.survivors.map(r => ({ id: r.id, status: r.status })),
             gate: [...w.entities.iterate()].find(e => e.barricade?.slot.id === 'l6-night-exit') };
         });
@@ -55,7 +63,7 @@ try {
       }
       assert.equal(samples[0].tier, tier); assert.ok(samples[0].gateAt);
       assert.ok(samples.some(s => s.caption), 'actual night caption must appear');
-      rows.push({ tier, samples, captures, errors: session.errors });
+      rows.push({ tier, backend, zoom, samples, captures, errors: session.errors });
       writeFileSync(`${out}/ledger.json`, JSON.stringify({ ...provenance(), rows }, null, 2) + '\n');
       console.log(tier, 'night captures', captures.length, 'last phase', samples.at(-1)!.phase);
     } finally { await session.close(); }

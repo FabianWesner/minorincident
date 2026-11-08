@@ -59,6 +59,6 @@ for (const tier of ['low', 'high'] as const) {
   rows.push({ tier, controlledGates: gates, ordinaryProbe: { run, events, powers, observedHash, controlHash } });
   console.log(tier, 'gate boundaries and80s ordinary control identical');
 }
-writeFileSync('docs/reports/sweep-b/L6-controls.json', JSON.stringify({ ...identity,
+writeFileSync(process.env.L6_VISUAL_NATIVE_OUT ?? 'docs/reports/sweep-b/L6-controls.json', JSON.stringify({ ...identity,
   producerSha256: createHash('sha256').update(readFileSync('tools/qa/sweep-b-l6-controls.ts')).digest('hex'),
   method: 'Gate fixture explicitly completes shelter/stop and places the existing roster beyond each gate; production closable/guide/gateStatus methods exercised at the unchanged2m boundary and three courier positions. Separate80s ordinary mortal complete policy observes actual breach/power/abandon events, with an independent no-observer80s final-state control. No full-route claim from this bounded probe.', rows }, null, 2) + '\n');

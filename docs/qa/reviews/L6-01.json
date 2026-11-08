@@ -1,42 +1,63 @@
 {
   "row": "L6-01",
   "status": "PASS",
-  "reviewer": "Codex/final-b",
-  "date": "2026-11-07",
-  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "reviewer": "Codex/l6-visual",
+  "date": "2026-11-08",
+  "commit": "4874fa1b3d8d82ecc92f1b8621dc7aef5c36a908",
   "clauses": [
     {
       "clause": "24 occupants + 0–5 L5 survivors (same ids, full health); routines sit/talk/treat/rest/share; nobody idle > 3 s; no gun on seated/lying people.",
       "verdict": "PASS",
-      "note": "Both tiers: actual mortal canonical L5 route hands24 residents+5 rescued through production completeCampaignLevel into L6. All29 same IDs and full HP in11 half-second samples (319 actor observations per tier); purposeful sit/talk/treat/rest/share/guard story stays active for5s, no idle>3s. Every seated/lying actor uses npc-sit/death-side, which the actual renderer stows. Low Okafor retains stored rifle state, so his exact carried save was rendered after physical W/idle: both detail frames show empty hands, nearby rifle belongs to standing Rosa. Physical preset images at both renderer qualities corroborate routine presentation; IDs come from native ledger."
+      "note": "Personally opened all8 shelter seat/care matrix panels: sitting and lying civilians stow guns; conversation/treatment/food-sharing poses distinct. Same24+5 carried keys, fullHP, five4-second snapshots with active story clips. Stored appearance/ally rifle data is not a visible seated weapon. Native handover max idle0. Includes living rest poses, not deaths.\nlow/controlled-fixture actual carried shelter identities routines and stowed guns: {\"cells\":4,\"identities\":29,\"snapshotsPerCell\":[5,5,5,5],\"routines\":[\"guard\",\"rest\",\"share\",\"sit\",\"talk\",\"treat\"]} (PASS)\nhigh/controlled-fixture actual carried shelter identities routines and stowed guns: {\"cells\":4,\"identities\":29,\"snapshotsPerCell\":[5,5,5,5],\"routines\":[\"guard\",\"rest\",\"share\",\"sit\",\"talk\",\"treat\"]} (PASS)\nlow/complete initial shelter occupant identities: 29 (PASS)\nlow/complete initial shelter roster full health: [{\"id\":16,\"hp\":60,\"maxHp\":60},{\"id\":17,\"hp\":60,\"maxHp\":60},{\"id\":18,\"hp\":60,\"maxHp\":60},{\"id\":19,\"hp\":60,\"maxHp\":60},{\"id\":20,\"hp\":60,\"maxHp\":60},{\"id\":21,\"hp\":60,\"maxHp\":60},{\"id\":22,\"hp\":60,\"maxHp\":60},{\"id\":23,\"hp\":60,\"maxHp\":60},{\"id\":24,\"hp\":60,\"maxHp\":60},{\"id\":25,\"hp\":60,\"maxHp\":60},{\"id\":26,\"hp\":60,\"maxHp\":60},{\"id\":27,\"hp\":60,\"maxHp\":60},{\"id\":28,\"hp\":60,\"maxHp\":60},{\"id\":29,\"hp\":60,\"maxHp\":60},{\"id\":30,\"hp\":60,\"maxHp\":60},{\"id\":31,\"hp\":60,\"maxHp\":60},{\"id\":32,\"hp\":60,\"maxHp\":60},{\"id\":33,\"hp\":60,\"maxHp\":60},{\"id\":34,\"hp\":60,\"maxHp\":60},{\"id\":35,\"hp\":60,\"maxHp\":60},{\"id\":36,\"hp\":60,\"maxHp\":60},{\"id\":37,\"hp\":60,\"maxHp\":60},{\"id\":38,\"hp\":60,\"maxHp\":60},{\"id\":39,\"hp\":60,\"maxHp\":60},{\"id\":40,\"hp\":60,\"maxHp\":60},{\"id\":41,\"hp\":60,\"maxHp\":60},{\"id\":42,\"hp\":60,\"maxHp\":60},{\"id\":43,\"hp\":60,\"maxHp\":60},{\"id\":44,\"hp\":60,\"maxHp\":60}] (PASS)\nlow/stationary initial shelter occupant identities: 29 (PASS)\nlow/stationary initial shelter roster full health: [{\"id\":16,\"hp\":60,\"maxHp\":60},{\"id\":17,\"hp\":60,\"maxHp\":60},{\"id\":18,\"hp\":60,\"maxHp\":60},{\"id\":19,\"hp\":60,\"maxHp\":60},{\"id\":20,\"hp\":60,\"maxHp\":60},{\"id\":21,\"hp\":60,\"maxHp\":60},{\"id\":22,\"hp\":60,\"maxHp\":60},{\"id\":23,\"hp\":60,\"maxHp\":60},{\"id\":24,\"hp\":60,\"maxHp\":60},{\"id\":25,\"hp\":60,\"maxHp\":60},{\"id\":26,\"hp\":60,\"maxHp\":60},{\"id\":27,\"hp\":60,\"maxHp\":60},{\"id\":28,\"hp\":60,\"maxHp\":60},{\"id\":29,\"hp\":60,\"maxHp\":60},{\"id\":30,\"hp\":60,\"maxHp\":60},{\"id\":31,\"hp\":60,\"maxHp\":60},{\"id\":32,\"hp\":60,\"maxHp\":60},{\"id\":33,\"hp\":60,\"maxHp\":60},{\"id\":34,\"hp\":60,\"maxHp\":60},{\"id\":35,\"hp\":60,\"maxHp\":60},{\"id\":36,\"hp\":60,\"maxHp\":60},{\"id\":37,\"hp\":60,\"maxHp\":60},{\"id\":38,\"hp\":60,\"maxHp\":60},{\"id\":39,\"hp\":60,\"maxHp\":60},{\"id\":40,\"hp\":60,\"maxHp\":60},{\"id\":41,\"hp\":60,\"maxHp\":60},{\"id\":42,\"hp\":60,\"maxHp\":60},{\"id\":43,\"hp\":60,\"maxHp\":60},{\"id\":44,\"hp\":60,\"maxHp\":60}] (PASS)\nhigh/complete initial shelter occupant identities: 29 (PASS)\nhigh/complete initial shelter roster full health: [{\"id\":16,\"hp\":60,\"maxHp\":60},{\"id\":17,\"hp\":60,\"maxHp\":60},{\"id\":18,\"hp\":60,\"maxHp\":60},{\"id\":19,\"hp\":60,\"maxHp\":60},{\"id\":20,\"hp\":60,\"maxHp\":60},{\"id\":21,\"hp\":60,\"maxHp\":60},{\"id\":22,\"hp\":60,\"maxHp\":60},{\"id\":23,\"hp\":60,\"maxHp\":60},{\"id\":24,\"hp\":60,\"maxHp\":60},{\"id\":25,\"hp\":60,\"maxHp\":60},{\"id\":26,\"hp\":60,\"maxHp\":60},{\"id\":27,\"hp\":60,\"maxHp\":60},{\"id\":28,\"hp\":60,\"maxHp\":60},{\"id\":29,\"hp\":60,\"maxHp\":60},{\"id\":30,\"hp\":60,\"maxHp\":60},{\"id\":31,\"hp\":60,\"maxHp\":60},{\"id\":32,\"hp\":60,\"maxHp\":60},{\"id\":33,\"hp\":60,\"maxHp\":60},{\"id\":34,\"hp\":60,\"maxHp\":60},{\"id\":35,\"hp\":60,\"maxHp\":60},{\"id\":36,\"hp\":60,\"maxHp\":60},{\"id\":37,\"hp\":60,\"maxHp\":60},{\"id\":38,\"hp\":60,\"maxHp\":60},{\"id\":39,\"hp\":60,\"maxHp\":60},{\"id\":40,\"hp\":60,\"maxHp\":60},{\"id\":41,\"hp\":60,\"maxHp\":60},{\"id\":42,\"hp\":60,\"maxHp\":60},{\"id\":43,\"hp\":60,\"maxHp\":60},{\"id\":44,\"hp\":60,\"maxHp\":60}] (PASS)\nhigh/stationary initial shelter occupant identities: 29 (PASS)\nhigh/stationary initial shelter roster full health: [{\"id\":16,\"hp\":60,\"maxHp\":60},{\"id\":17,\"hp\":60,\"maxHp\":60},{\"id\":18,\"hp\":60,\"maxHp\":60},{\"id\":19,\"hp\":60,\"maxHp\":60},{\"id\":20,\"hp\":60,\"maxHp\":60},{\"id\":21,\"hp\":60,\"maxHp\":60},{\"id\":22,\"hp\":60,\"maxHp\":60},{\"id\":23,\"hp\":60,\"maxHp\":60},{\"id\":24,\"hp\":60,\"maxHp\":60},{\"id\":25,\"hp\":60,\"maxHp\":60},{\"id\":26,\"hp\":60,\"maxHp\":60},{\"id\":27,\"hp\":60,\"maxHp\":60},{\"id\":28,\"hp\":60,\"maxHp\":60},{\"id\":29,\"hp\":60,\"maxHp\":60},{\"id\":30,\"hp\":60,\"maxHp\":60},{\"id\":31,\"hp\":60,\"maxHp\":60},{\"id\":32,\"hp\":60,\"maxHp\":60},{\"id\":33,\"hp\":60,\"maxHp\":60},{\"id\":34,\"hp\":60,\"maxHp\":60},{\"id\":35,\"hp\":60,\"maxHp\":60},{\"id\":36,\"hp\":60,\"maxHp\":60},{\"id\":37,\"hp\":60,\"maxHp\":60},{\"id\":38,\"hp\":60,\"maxHp\":60},{\"id\":39,\"hp\":60,\"maxHp\":60},{\"id\":40,\"hp\":60,\"maxHp\":60},{\"id\":41,\"hp\":60,\"maxHp\":60},{\"id\":42,\"hp\":60,\"maxHp\":60},{\"id\":43,\"hp\":60,\"maxHp\":60},{\"id\":44,\"hp\":60,\"maxHp\":60}] (PASS)"
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/final-b/L6-01-proof.json",
-      "sha256": "babc9bdea2856112af69a59ef3b39e6d6b668991d75a19d4f7082fd8e4b3bc1d",
-      "what": "Both tiers: actual mortal canonical L5 route hands24 residents+5 rescued through production completeCampaignLevel into L6. All29 same IDs and full HP in11 half-second samples (319 actor observations per tier); purposeful sit/talk/treat/rest/share/guard story stays active for5s, no idle>3s. Every seated/lying actor uses npc-sit/death-side, which the actual renderer stows. Low Okafor retains stored rifle state, so his exact carried save was rendered after physical W/idle: both detail frames show empty hands, nearby rifle belongs to standing Rosa. Physical preset images at both renderer qualities corroborate routine presentation; IDs come from native ledger."
+      "file": "docs/reports/l6-visual/acceptance-fixtures.json",
+      "sha256": "2651e0a83ba21f20398d89a5ebeda358d86c67b01e3639e16f17286522cb8198",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
     },
     {
-      "file": "docs/reports/final-b/L6-carry-native.json.gz",
-      "sha256": "cbd3ac97e20835c66764aee7a3f4482161a0686be809b1a048a290dd3e48f333",
-      "what": "Current actual L5 result carried save and L6 half-second census."
+      "file": "docs/reports/l6-visual/capture-review.json",
+      "sha256": "e7990f6fc80dc6d810e7b3959d71ff5df5b32c2e77b33dd4c53b14a42abe44ca",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
     },
     {
-      "file": "docs/reports/final-b/L5-low-completed-save.json.gz",
-      "sha256": "4f804fecd1578eb0a8be88b248148bfff9c3c59cd4b9b5c4e1a06a4c4fb21ae1",
-      "what": "Current actual L5 result carried save and L6 half-second census."
+      "file": "docs/reports/l6-visual/readability-analysis.json",
+      "sha256": "21f9acc2556a36bb19d29c015eea5ae6699403c81f075cc9dcd1cdd453519953",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
     },
     {
-      "file": "docs/reports/final-b/L5-high-completed-save.json.gz",
-      "sha256": "3101d26c60b4ab514a8f0738270bb375c03dee9e4f2ae050253dfbc2d89ec775",
-      "what": "Current actual L5 result carried save and L6 half-second census."
+      "file": "docs/reports/fix51-verify/receipts/L6-low-complete.json",
+      "sha256": "c79af258f64fb5f88deedbc0941e0b3a719a20550bf450cebfa82fd6439042db",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
     },
     {
-      "file": "docs/reports/final-b/L6-carried-okafor-render.json.gz",
-      "sha256": "eb1b20746f6e8a92b47fbfe7d8d2565b842a3a793776e60d0a3762995f96645d",
-      "what": "Current actual L5 result carried save and L6 half-second census."
+      "file": "docs/reports/fix51-verify/receipts/L6-low-stationary.json",
+      "sha256": "3a8d03cafeddbe66167db7bae4f0f8cabd700d7692988b32fb82e7b1f40b60f0",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-low-fixtures.json",
+      "sha256": "3c2fa3c58bcb8131bfb59384cf7a5a73fa97e522f6fbfb971f18d39667a29128",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-high-complete.json",
+      "sha256": "202863ed4f414c7b05cc76bac5ba893d6000d00297d5b06bf7589b0fd1df9edc",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-high-stationary.json",
+      "sha256": "2fd2d5bd4092af61f25259631d27a389273d3d01775b434b1570666e359b81cd",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-high-fixtures.json",
+      "sha256": "f53f3b455d607c80b5541c73953f9f3d994bf4e8befddf03f32638d10441f5f5",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
     }
   ],
-  "sourceDigest": "7fd8f0ebc3d3fcb362d200567b5da5e2e4f5bea018074dcf4fbbfccc06fdf698"
+  "notes": "Fresh low/high × WebGL2/WebGPU × zoom1/1.5 visual review. Capture review uses labeled contact sheets and native actor crops, plus explicitly listed full originals. No performance or full physical-route signoff inferred.",
+  "sourceDigest": "ceb4b4e8f05526ddca246a6d236ccda6bf5533f645882fbc1e6d02d215baf732"
 }

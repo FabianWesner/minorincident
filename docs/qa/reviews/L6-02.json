@@ -1,32 +1,63 @@
 {
   "row": "L6-02",
   "status": "PASS",
-  "reviewer": "Codex/final-b",
-  "date": "2026-11-07",
-  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
-  "sourceDigest": "7fd8f0ebc3d3fcb362d200567b5da5e2e4f5bea018074dcf4fbbfccc06fdf698",
+  "reviewer": "Codex/l6-visual",
+  "date": "2026-11-08",
+  "commit": "4874fa1b3d8d82ecc92f1b8621dc7aef5c36a908",
   "clauses": [
     {
       "clause": "No new weapon anywhere; headlamp taken on approach; uncollected headlamp stays where it lies; beam follows the head (also moving one way, aiming another).",
       "verdict": "PASS",
-      "note": "Both tiers: no new weapon IDs; uncollected headlamp unchanged after120 ticks; actual physical W approach collects without E at tick139. Held physical LMB aim opposes KeyD movement: beam/movement dot -0.97130 low/-0.99572 high, beam matches actual drawn head yaw. Six actual frames personally reviewed: pickup ring disappears after approach, opposing beam lights the left tunnel while movement is right. Clear-tunnel reposition is declared setup; no actor stats changed."
+      "note": "All8 cells: actual headlamp stays at(1.5,-2) through120 idle ticks and collects after45 ordinary approach ticks without E; no new weapon IDs. Movement+X with pointer aim-X produces head yaw pi and beam(-1,~0); opened before/approach/opposed frames and saw cone follow aim.\nlow/controlled-fixture actual headlamp approach persistence head-following beam and no new weapons: {\"cells\":4,\"beamOpposedX\":[-1,-1,-1,-1]} (PASS)\nhigh/controlled-fixture actual headlamp approach persistence head-following beam and no new weapons: {\"cells\":4,\"beamOpposedX\":[-1,-1,-1,-1]} (PASS)\nlow/complete new weapon pickup census: 0 (PASS)\nlow/stationary new weapon pickup census: 0 (PASS)\nhigh/complete new weapon pickup census: 0 (PASS)\nhigh/stationary new weapon pickup census: 0 (PASS)"
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/final-b/L6-02-proof.json",
-      "sha256": "c7293729c16ff5be0943390f6e2f0c9745740f5339510056806a4ad0309d723c",
-      "what": "Both tiers: no new weapon IDs; uncollected headlamp unchanged after120 ticks; actual physical W approach collects without E at tick139. Held physical LMB aim opposes KeyD movement: beam/movement dot -0.97130 low/-0.99572 high, beam matches actual drawn head yaw. Six actual frames personally reviewed: pickup ring disappears after approach, opposing beam lights the left tunnel while movement is right. Clear-tunnel reposition is declared setup; no actor stats changed."
+      "file": "docs/reports/l6-visual/acceptance-fixtures.json",
+      "sha256": "2651e0a83ba21f20398d89a5ebeda358d86c67b01e3639e16f17286522cb8198",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
     },
     {
-      "file": "docs/reports/final-b/L6-last-scenes.json.gz",
-      "sha256": "d1d32c260bee861625faf971316acda8b2f4a170a5867ed64c351ba82eeb1ce5",
-      "what": "Both tiers: no new weapon IDs; uncollected headlamp unchanged after120 ticks; actual physical W approach collects without E at tick139. Held physical LMB aim opposes KeyD movement: beam/movement dot -0.97130 low/-0.99572 high, beam matches actual drawn head yaw. Six actual frames personally reviewed: pickup ring disappears after approach, opposing beam lights the left tunnel while movement is right. Clear-tunnel reposition is declared setup; no actor stats changed."
+      "file": "docs/reports/l6-visual/capture-review.json",
+      "sha256": "e7990f6fc80dc6d810e7b3959d71ff5df5b32c2e77b33dd4c53b14a42abe44ca",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
     },
     {
-      "file": "docs/reports/final-b/last-scenes-executed.ts.gz",
-      "sha256": "b80e831826120b78f7f18c3d127b9eebc18378563f095f2a432e15994246f261",
-      "what": "Both tiers: no new weapon IDs; uncollected headlamp unchanged after120 ticks; actual physical W approach collects without E at tick139. Held physical LMB aim opposes KeyD movement: beam/movement dot -0.97130 low/-0.99572 high, beam matches actual drawn head yaw. Six actual frames personally reviewed: pickup ring disappears after approach, opposing beam lights the left tunnel while movement is right. Clear-tunnel reposition is declared setup; no actor stats changed."
+      "file": "docs/reports/l6-visual/readability-analysis.json",
+      "sha256": "21f9acc2556a36bb19d29c015eea5ae6699403c81f075cc9dcd1cdd453519953",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-low-complete.json",
+      "sha256": "c79af258f64fb5f88deedbc0941e0b3a719a20550bf450cebfa82fd6439042db",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-low-stationary.json",
+      "sha256": "3a8d03cafeddbe66167db7bae4f0f8cabd700d7692988b32fb82e7b1f40b60f0",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-low-fixtures.json",
+      "sha256": "3c2fa3c58bcb8131bfb59384cf7a5a73fa97e522f6fbfb971f18d39667a29128",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-high-complete.json",
+      "sha256": "202863ed4f414c7b05cc76bac5ba893d6000d00297d5b06bf7589b0fd1df9edc",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-high-stationary.json",
+      "sha256": "2fd2d5bd4092af61f25259631d27a389273d3d01775b434b1570666e359b81cd",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-high-fixtures.json",
+      "sha256": "f53f3b455d607c80b5541c73953f9f3d994bf4e8befddf03f32638d10441f5f5",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
     }
-  ]
+  ],
+  "notes": "Fresh low/high × WebGL2/WebGPU × zoom1/1.5 visual review. Capture review uses labeled contact sheets and native actor crops, plus explicitly listed full originals. No performance or full physical-route signoff inferred.",
+  "sourceDigest": "ceb4b4e8f05526ddca246a6d236ccda6bf5533f645882fbc1e6d02d215baf732"
 }

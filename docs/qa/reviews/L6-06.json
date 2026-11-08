@@ -1,27 +1,63 @@
 {
   "row": "L6-06",
   "status": "PASS",
-  "reviewer": "Codex/final-b",
-  "date": "2026-11-07",
-  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+  "reviewer": "Codex/l6-visual",
+  "date": "2026-11-08",
+  "commit": "4874fa1b3d8d82ecc92f1b8621dc7aef5c36a908",
   "clauses": [
     {
       "clause": "Infected enter the tunnel from 6 side entries (2 each, alternating sides) **and reach the tracks**; reachable ≥ 95 %; none stand harmless behind the platform/gate line. PO: \"Just let them enter and it's good.\"",
       "verdict": "PASS",
-      "note": "Both tiers full route: six alternating side entries, exactly2 actual IDs each; bounded paths711/714=99.58%.11/12 reach tracks; remaining ID101 is downed en route rather than harmless/stuck. Fresh passive production controls prove both unchanged bodies from each of all6 doors reach tracks (24/24 across tiers, latest143ticks). All source/geometry/AI retained; no actor removals. Passive courier protected only in the declared control."
+      "note": "Actual12 side-entry actors, two each doors2,5,3,6,4,7 alternating sides, all reach track supports and end downed; bounded-path success>=99%. Observer checks real support height: rail support0.87 is reachable track, not nominal floor0.6. Canonical simulation hash unchanged.\nlow/controlled-fixture six alternating entries and all admitted bodies on reachable tracks: {\"doors\":[2,2,5,5,3,3,6,6,4,4,7,7],\"trackArrivals\":12,\"pathSamples\":617,\"pathFailures\":4} (PASS)\nhigh/controlled-fixture six alternating entries and all admitted bodies on reachable tracks: {\"doors\":[2,2,5,5,3,3,6,6,4,4,7,7],\"trackArrivals\":12,\"pathSamples\":617,\"pathFailures\":4} (PASS)"
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/final-b/L6-06-proof.json",
-      "sha256": "69bd3f355d2e257e5fb7c892fb7a050edc316584512564b333c412167ff7e926",
-      "what": "Both tiers full route: six alternating side entries, exactly2 actual IDs each; bounded paths711/714=99.58%.11/12 reach tracks; remaining ID101 is downed en route rather than harmless/stuck. Fresh passive production controls prove both unchanged bodies from each of all6 doors reach tracks (24/24 across tiers, latest143ticks). All source/geometry/AI retained; no actor removals. Passive courier protected only in the declared control."
+      "file": "docs/reports/l6-visual/acceptance-fixtures.json",
+      "sha256": "2651e0a83ba21f20398d89a5ebeda358d86c67b01e3639e16f17286522cb8198",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
     },
     {
-      "file": "docs/reports/final-b/L6-side-entry-control.json.gz",
-      "sha256": "7c0e510ad64f240472a67ea2ff1eb6cc6e36a4bd8d63378ce1fda61ec7ebf809",
-      "what": "Controlled passive proof for each production side-entry geometry. Fresh L6 world per door/tier; preceding shelter/stop objectives completed for setup, courier moved18m east on existing track and protected. Production LevelSixSubway.spawn(2,[actual entry.door],4) admits real unchanged hatch fronts; then8s ordinary empty-input world updates. No enemy/ally stat, HP, geometry, AI or clock writes after setup. Tracks require actual same IDs to reach authored track band; separate canonical complete ledger supplies full-route count/reachability."
+      "file": "docs/reports/l6-visual/capture-review.json",
+      "sha256": "e7990f6fc80dc6d810e7b3959d71ff5df5b32c2e77b33dd4c53b14a42abe44ca",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
+    },
+    {
+      "file": "docs/reports/l6-visual/readability-analysis.json",
+      "sha256": "21f9acc2556a36bb19d29c015eea5ae6699403c81f075cc9dcd1cdd453519953",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-low-complete.json",
+      "sha256": "c79af258f64fb5f88deedbc0941e0b3a719a20550bf450cebfa82fd6439042db",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-low-stationary.json",
+      "sha256": "3a8d03cafeddbe66167db7bae4f0f8cabd700d7692988b32fb82e7b1f40b60f0",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-low-fixtures.json",
+      "sha256": "3c2fa3c58bcb8131bfb59384cf7a5a73fa97e522f6fbfb971f18d39667a29128",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-high-complete.json",
+      "sha256": "202863ed4f414c7b05cc76bac5ba893d6000d00297d5b06bf7589b0fd1df9edc",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-high-stationary.json",
+      "sha256": "2fd2d5bd4092af61f25259631d27a389273d3d01775b434b1570666e359b81cd",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-high-fixtures.json",
+      "sha256": "f53f3b455d607c80b5541c73953f9f3d994bf4e8befddf03f32638d10441f5f5",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
     }
   ],
-  "sourceDigest": "7fd8f0ebc3d3fcb362d200567b5da5e2e4f5bea018074dcf4fbbfccc06fdf698"
+  "notes": "Fresh low/high × WebGL2/WebGPU × zoom1/1.5 visual review. Capture review uses labeled contact sheets and native actor crops, plus explicitly listed full originals. No performance or full physical-route signoff inferred.",
+  "sourceDigest": "ceb4b4e8f05526ddca246a6d236ccda6bf5533f645882fbc1e6d02d215baf732"
 }

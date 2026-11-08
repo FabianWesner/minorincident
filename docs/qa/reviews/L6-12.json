@@ -1,47 +1,63 @@
 {
   "row": "L6-12",
   "status": "PASS",
-  "reviewer": "Codex/final-b",
-  "date": "2026-11-07",
-  "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
-  "sourceDigest": "7fd8f0ebc3d3fcb362d200567b5da5e2e4f5bea018074dcf4fbbfccc06fdf698",
+  "reviewer": "Codex/l6-visual",
+  "date": "2026-11-08",
+  "commit": "4874fa1b3d8d82ecc92f1b8621dc7aef5c36a908",
   "clauses": [
     {
       "clause": "Northgate is solid when closed and drawn open when passable; night caption \"Night. Still alive.\"; end shot frames the scene; result counts match the objective.",
       "verdict": "PASS",
-      "note": "Both tiers actual mortal reached-exit saves restored through production loadResume, then physical D+S crosses the open Northgate and normal controller closes it. Twelve actual frames personally reviewed: open tunnel gap, closed black gate behind the elevated rooftop scene, heroine/corgi and burning rooftop framed, Night. Still alive. caption and result20 escaped+9 lost=29. Independent actual Rapier capsule sweep crosses open passage at4.62m and is blocked closed. No objective/actor/HP edits in the actual exit continuation."
+      "note": "Personally opened open/night/result panels in all8 matrix cells and exact1280x720 WebGPU high z1.5 night originals. Gate is drawn swung open when passable, closed gate remains in frame with courier on platform, letterbox hides HUD and exact caption Night. Still alive. reads clearly. Rapier at actual4.62m open cross6m, closed stops1.79494m. Controlled result29out+0lost=29in; ordinary result18+11=29.\nlow/controlled-fixture drawn and solid Northgate caption framing and exact counts: {\"cells\":4,\"controlledOut\":[29,29,29,29]} (PASS)\nhigh/controlled-fixture drawn and solid Northgate caption framing and exact counts: {\"cells\":4,\"controlledOut\":[29,29,29,29]} (PASS)\nlow/complete result roster accounting: {\"in\":29,\"out\":18,\"lost\":11} (PASS)\nhigh/complete result roster accounting: {\"in\":29,\"out\":18,\"lost\":11} (PASS)"
     }
   ],
   "evidence": [
     {
-      "file": "docs/reports/final-b/L6-12-proof.json",
-      "sha256": "d1cb7fabaa380b73bff44afbf5c4b80379f94dccbc0f86bdde7ef00c6aeffb27",
-      "what": "Both tiers actual mortal reached-exit saves restored through production loadResume, then physical D+S crosses the open Northgate and normal controller closes it. Twelve actual frames personally reviewed: open tunnel gap, closed black gate behind the elevated rooftop scene, heroine/corgi and burning rooftop framed, Night. Still alive. caption and result20 escaped+9 lost=29. Independent actual Rapier capsule sweep crosses open passage at4.62m and is blocked closed. No objective/actor/HP edits in the actual exit continuation."
+      "file": "docs/reports/l6-visual/acceptance-fixtures.json",
+      "sha256": "2651e0a83ba21f20398d89a5ebeda358d86c67b01e3639e16f17286522cb8198",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
     },
     {
-      "file": "docs/reports/final-b/L6-last-scenes.json.gz",
-      "sha256": "d1d32c260bee861625faf971316acda8b2f4a170a5867ed64c351ba82eeb1ce5",
-      "what": "Both tiers actual mortal reached-exit saves restored through production loadResume, then physical D+S crosses the open Northgate and normal controller closes it. Twelve actual frames personally reviewed: open tunnel gap, closed black gate behind the elevated rooftop scene, heroine/corgi and burning rooftop framed, Night. Still alive. caption and result20 escaped+9 lost=29. Independent actual Rapier capsule sweep crosses open passage at4.62m and is blocked closed. No objective/actor/HP edits in the actual exit continuation."
+      "file": "docs/reports/l6-visual/capture-review.json",
+      "sha256": "e7990f6fc80dc6d810e7b3959d71ff5df5b32c2e77b33dd4c53b14a42abe44ca",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
     },
     {
-      "file": "docs/reports/final-b/last-scenes-executed.ts.gz",
-      "sha256": "b80e831826120b78f7f18c3d127b9eebc18378563f095f2a432e15994246f261",
-      "what": "Both tiers actual mortal reached-exit saves restored through production loadResume, then physical D+S crosses the open Northgate and normal controller closes it. Twelve actual frames personally reviewed: open tunnel gap, closed black gate behind the elevated rooftop scene, heroine/corgi and burning rooftop framed, Night. Still alive. caption and result20 escaped+9 lost=29. Independent actual Rapier capsule sweep crosses open passage at4.62m and is blocked closed. No objective/actor/HP edits in the actual exit continuation."
+      "file": "docs/reports/l6-visual/readability-analysis.json",
+      "sha256": "21f9acc2556a36bb19d29c015eea5ae6699403c81f075cc9dcd1cdd453519953",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
     },
     {
-      "file": "docs/reports/final-b/L6-northgate.json.gz",
-      "sha256": "794eb30f7b832df6becfd0a05fbd68e47177d92e89bc3a3a23ab6d2cb8f34d18",
-      "what": "Both tiers actual mortal reached-exit saves restored through production loadResume, then physical D+S crosses the open Northgate and normal controller closes it. Twelve actual frames personally reviewed: open tunnel gap, closed black gate behind the elevated rooftop scene, heroine/corgi and burning rooftop framed, Night. Still alive. caption and result20 escaped+9 lost=29. Independent actual Rapier capsule sweep crosses open passage at4.62m and is blocked closed. No objective/actor/HP edits in the actual exit continuation."
+      "file": "docs/reports/fix51-verify/receipts/L6-low-complete.json",
+      "sha256": "c79af258f64fb5f88deedbc0941e0b3a719a20550bf450cebfa82fd6439042db",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
     },
     {
-      "file": "docs/reports/final-b/L6-exit-resume-low.json.gz",
-      "sha256": "1330687b71f6347ce72906fd53dcaf3123ed63ebb0f1562a3ef514593ac6bf22",
-      "what": "Both tiers actual mortal reached-exit saves restored through production loadResume, then physical D+S crosses the open Northgate and normal controller closes it. Twelve actual frames personally reviewed: open tunnel gap, closed black gate behind the elevated rooftop scene, heroine/corgi and burning rooftop framed, Night. Still alive. caption and result20 escaped+9 lost=29. Independent actual Rapier capsule sweep crosses open passage at4.62m and is blocked closed. No objective/actor/HP edits in the actual exit continuation."
+      "file": "docs/reports/fix51-verify/receipts/L6-low-stationary.json",
+      "sha256": "3a8d03cafeddbe66167db7bae4f0f8cabd700d7692988b32fb82e7b1f40b60f0",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
     },
     {
-      "file": "docs/reports/final-b/L6-exit-resume-high.json.gz",
-      "sha256": "aaa1b725205dc5d0907bf1ec35ad5d17a2e23cdec48527650f9f63b922dae090",
-      "what": "Both tiers actual mortal reached-exit saves restored through production loadResume, then physical D+S crosses the open Northgate and normal controller closes it. Twelve actual frames personally reviewed: open tunnel gap, closed black gate behind the elevated rooftop scene, heroine/corgi and burning rooftop framed, Night. Still alive. caption and result20 escaped+9 lost=29. Independent actual Rapier capsule sweep crosses open passage at4.62m and is blocked closed. No objective/actor/HP edits in the actual exit continuation."
+      "file": "docs/reports/fix51-verify/receipts/L6-low-fixtures.json",
+      "sha256": "3c2fa3c58bcb8131bfb59384cf7a5a73fa97e522f6fbfb971f18d39667a29128",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-high-complete.json",
+      "sha256": "202863ed4f414c7b05cc76bac5ba893d6000d00297d5b06bf7589b0fd1df9edc",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-high-stationary.json",
+      "sha256": "2fd2d5bd4092af61f25259631d27a389273d3d01775b434b1570666e359b81cd",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-high-fixtures.json",
+      "sha256": "f53f3b455d607c80b5541c73953f9f3d994bf4e8befddf03f32638d10441f5f5",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
     }
-  ]
+  ],
+  "notes": "Fresh low/high × WebGL2/WebGPU × zoom1/1.5 visual review. Capture review uses labeled contact sheets and native actor crops, plus explicitly listed full originals. No performance or full physical-route signoff inferred.",
+  "sourceDigest": "ceb4b4e8f05526ddca246a6d236ccda6bf5533f645882fbc1e6d02d215baf732"
 }

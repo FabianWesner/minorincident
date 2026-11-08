@@ -10,18 +10,21 @@ const requested = process.argv[2]; if (requested !== 'low' && requested !== 'hig
 const tier: 'low' | 'high' = requested;
 const spot = process.argv[3]; if (spot !== 'tunnel' && spot !== 'shelter') throw new Error('Expected tunnel/shelter');
 const actorId = Number(process.argv[4] ?? '57'); if (!Number.isInteger(actorId) || actorId <= 0) throw new Error('Expected original actor ID');
-const out = `test-results/sweep-b/L6-readability-${tier}-${spot}-${actorId}-repeat`;
+const backend = process.env.L6_VISUAL_BACKEND === 'webgpu' ? 'webgpu' : 'webgl2';
+const zoom = Number(process.env.L6_VISUAL_ZOOM ?? '1.5');
+if (![1, 1.5].includes(zoom)) throw new Error('Expected zoom 1 or 1.5');
+const out = process.env.L6_VISUAL_OUT ?? `test-results/sweep-b/L6-readability-${tier}-${spot}-${actorId}-repeat`;
 mkdirSync(`${out}/captures`, { recursive: true });
-const session = new SceneSession({ tier, backend: 'webgl2', query: { profile: '0', ui: '0' } });
+const session = new SceneSession({ tier, backend, query: { profile: '0', ui: '0' } });
 try {
   await session.open(); const save = preset('L6-default'); save.settings.quality = tier;
-  const state = await session.page.evaluate(async ({ tier, save, spot, actorId }) => {
+  const state = await session.page.evaluate(async ({ tier, save, spot, actorId, zoom }) => {
     const a = window.__SS__!; a.settings.set({ quality: tier }); a.campaign.restore(save); await a.loadLevel('L6', { seed: 1 });
     a.pause(); a.missions.begin(); a.cheats.god(false);
     a.teleport(1, { x: 1.5, z: -2 }); await a.step(1);
     a.cheats.completeObjective('shelter'); a.cheats.completeObjective('stop');
     const at = spot === 'tunnel' ? { x: 110, z: 15 } : { x: 0, z: -4 };
-    a.teleport(1, at); a.camera.follow(); a.camera.zoom(1.5);
+    a.teleport(1, at); a.camera.follow(); a.camera.zoom(zoom);
     const g = (window.__SCENE__ as unknown as { game: Game }).game, w = g.world;
     const enemy = w.infected!.active.find(e => e.id === actorId && e.health.current > 0 && !e.hidden && e.infected?.l1)!;
     if (!enemy) throw new Error('No actual breach infected to present');
@@ -31,7 +34,7 @@ try {
     const p = w.entities.get(1)!.transform;
     const ring = Array.from({ length: 64 }, (_, i) => { const angle = i / 64 * Math.PI * 2; const x = p.x + 2 * Math.cos(angle), z = p.z + 2 * Math.sin(angle); const q = a.camera.project(x, p.y - .72, z); return { world: [x, p.y - .72, z], screen: { x: (q[0] + 1) * innerWidth / 2, y: (1 - q[1]) * innerHeight / 2 } }; });
     return { spot, ring, tick: w.tick, tier: w.infected!.director.tier, renderTier: g.view.getState().quality, god: w.combat!.damage.god, player: { ...w.entities.get(1)!.transform }, enemy: { id: enemy.id, archetype: enemy.archetype, at: { ...enemy.transform }, appearance: enemy.appearance, infected: enemy.infected }, figures: a.crowdFigures().filter(f => f.id === enemy.id), lighting: g.view.getState().lighting, camera: g.view.getState().camera, mainPower: w.missions!.state.l6!.mainPower, emergency: w.missions!.state.l6!.emergency, flashlight: w.missions!.state.l6!.flashlight };
-  }, { tier, save, spot, actorId });
+  }, { tier, save, spot, actorId, zoom });
   const captures: { file: string; sha256: string }[] = [];
   const capture = async (name: string) => { const file = `${out}/captures/${name}.png`; await session.ready(); await session.page.screenshot({ path: file }); captures.push({ file, sha256: createHash('sha256').update(readFileSync(file)).digest('hex') }); };
   await capture('native');
@@ -51,6 +54,6 @@ try {
   await capture('actor-eyes');
   await session.page.evaluate(() => (window as unknown as { sweepActor: { restore(): void } }).sweepActor.restore());
   await capture('native-repeat');
-  writeFileSync(`${out}/ledger.json`, JSON.stringify({ ...provenance(), producerSha256: createHash('sha256').update(readFileSync('tools/qa/sweep-b-l6-readability.ts')).digest('hex'), actorMaskHelperSha256: createHash('sha256').update(readFileSync('tools/qa/sweep-b-actor-mask.ts')).digest('hex'), slots, method: 'Explicit underground presentation fixture at authored l6-tunnel-retreat x110/z15 or l6-shelter-fails x0/z-4, actual first-breach infected identity moved nearby, mortal player, actual collected headlamp and production second-breach emergency power. Paused exact pose; native lossless PNG then same-pose courier-hidden background and production courier ID pass plus64 ground samples on the actual2m XZ ring. Actual production instance-slot body/eye masks keep all other geometry black/depth-tested; source position/mask nodes preserved, no actor hidden. Rendered original clothes remain in the body mask. Health bars suppressed for scene luminance. No game changes or performance measurements.', state, captures, errors: session.errors }, null, 2)+'\n');
+  writeFileSync(`${out}/ledger.json`, JSON.stringify({ ...provenance(), producerSha256: createHash('sha256').update(readFileSync('tools/qa/sweep-b-l6-readability.ts')).digest('hex'), actorMaskHelperSha256: createHash('sha256').update(readFileSync('tools/qa/sweep-b-actor-mask.ts')).digest('hex'), slots, method: 'Explicit underground presentation fixture at authored l6-tunnel-retreat x110/z15 or l6-shelter-fails x0/z-4, actual first-breach infected identity moved nearby, mortal player, actual collected headlamp and production second-breach emergency power. Paused exact pose; native lossless PNG then same-pose courier-hidden background and production courier ID pass plus64 ground samples on the actual2m XZ ring. Actual production instance-slot body/eye masks keep all other geometry black/depth-tested; source position/mask nodes preserved, no actor hidden. Rendered original clothes remain in the body mask. Health bars suppressed for scene luminance. No game changes or performance measurements.', backend, zoom, state, captures, errors: session.errors }, null, 2)+'\n');
   console.log(tier, spot, state.tier, state.renderTier, state.mainPower, state.emergency, state.flashlight, state.figures.length);
 } finally { await session.close(); stopServer(); }

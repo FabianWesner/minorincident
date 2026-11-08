@@ -1,33 +1,63 @@
 {
   "row": "L6-14",
   "status": "PASS",
-  "reviewer": "Codex rr-b",
-  "date": "2026-11-07",
-  "commit": "50be7c824705fc3cdbb3a7ab7dd78f72c7bf2001",
+  "reviewer": "Codex/l6-visual",
+  "date": "2026-11-08",
+  "commit": "4874fa1b3d8d82ecc92f1b8621dc7aef5c36a908",
   "clauses": [
     {
       "clause": "Underground readability: player contrast ≥ 3:1; infected eyes brightest pixels.",
       "verdict": "PASS",
-      "note": "Fresh pooled L6 emergency/headlamp tunnel fixture at x110/z15, actual infected62, both render tiers. Opened all14 original1280x720 native/background/ID/body/eye/repeat frames: heroine has a clear bright gold silhouette; infected has separate red eye islands under a warm forehead. Courier/background contrast is21.7842/21.5157 with .02 offset (11.3803/11.2545 with .05), all≥3:1. Linear-sRGB eye maxima low0.24487004/high0.23464440 exceed non-eye body maximum0.23217151. Exact native-repeat body pixels match after mask restoration. Repro: SCENE_PORT=4834 BROWSER_POOL_JOB_ID=rr-b node --import tsx/esm tools/qa/sweep-b-l6-readability.ts low tunnel 62 (repeat high); python3 test-results/rr-b/l6-analyze.py."
+      "note": "Personally opened16 native shelter/tunnel matrix panels plus16 native actor/body/eye crop sets. Linear-sRGB contrast with conservative0.05 offset8.463–11.380>=3. Eye luminance0.231878–0.26156 exceeds full-coverage non-eye body0.046423–0.047263; restored native repeat changed0 body pixels. Full-coverage white body mask>=240 excludes floor-colour mixed antialias edges; all112 original capture digests retained. No brightness product tweak was needed.\nlow/controlled-fixture measured underground contrast and brightest infected eyes matrix: {\"cells\":8,\"minContrast\":8.463384978960415} (PASS)\nhigh/controlled-fixture measured underground contrast and brightest infected eyes matrix: {\"cells\":8,\"minContrast\":8.594072005304179} (PASS)"
     }
   ],
   "evidence": [
     {
-      "file": "test-results/rr-b/L6-14-analysis.json",
-      "sha256": "47f9e8bd5e07e021c6db65d255cbd8661a46b0c6c095020cef7f2f25e86861e5",
-      "what": "Fresh pooled L6 emergency/headlamp tunnel fixture at x110/z15, actual infected62, both render tiers. Opened all14 original1280x720 native/background/ID/body/eye/repeat frames: heroine has a clear bright gold silhouette; infected has separate red eye islands under a warm forehead. Courier/background contrast is21.7842/21.5157 with .02 offset (11.3803/11.2545 with .05), all≥3:1. Linear-sRGB eye maxima low0.24487004/high0.23464440 exceed non-eye body maximum0.23217151. Exact native-repeat body pixels match after mask restoration. Repro: SCENE_PORT=4834 BROWSER_POOL_JOB_ID=rr-b node --import tsx/esm tools/qa/sweep-b-l6-readability.ts low tunnel 62 (repeat high); python3 test-results/rr-b/l6-analyze.py."
+      "file": "docs/reports/l6-visual/acceptance-fixtures.json",
+      "sha256": "2651e0a83ba21f20398d89a5ebeda358d86c67b01e3639e16f17286522cb8198",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
     },
     {
-      "file": "test-results/rr-b/L6-readability-low-tunnel-62-repeat-ledger.json.gz",
-      "sha256": "c5cb86199ce6552e4ebaf33f380b9f5ec0925a876ff5207ef4f22baacde412fd",
-      "what": "Fresh pooled L6 emergency/headlamp tunnel fixture at x110/z15, actual infected62, both render tiers. Opened all14 original1280x720 native/background/ID/body/eye/repeat frames: heroine has a clear bright gold silhouette; infected has separate red eye islands under a warm forehead. Courier/background contrast is21.7842/21.5157 with .02 offset (11.3803/11.2545 with .05), all≥3:1. Linear-sRGB eye maxima low0.24487004/high0.23464440 exceed non-eye body maximum0.23217151. Exact native-repeat body pixels match after mask restoration. Repro: SCENE_PORT=4834 BROWSER_POOL_JOB_ID=rr-b node --import tsx/esm tools/qa/sweep-b-l6-readability.ts low tunnel 62 (repeat high); python3 test-results/rr-b/l6-analyze.py."
+      "file": "docs/reports/l6-visual/capture-review.json",
+      "sha256": "e7990f6fc80dc6d810e7b3959d71ff5df5b32c2e77b33dd4c53b14a42abe44ca",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
     },
     {
-      "file": "test-results/rr-b/L6-readability-high-tunnel-62-repeat-ledger.json.gz",
-      "sha256": "9d17288813f491d52df1fd28abd5f42771a6c8b1908f7796a1967aa1127bfe23",
-      "what": "Fresh pooled L6 emergency/headlamp tunnel fixture at x110/z15, actual infected62, both render tiers. Opened all14 original1280x720 native/background/ID/body/eye/repeat frames: heroine has a clear bright gold silhouette; infected has separate red eye islands under a warm forehead. Courier/background contrast is21.7842/21.5157 with .02 offset (11.3803/11.2545 with .05), all≥3:1. Linear-sRGB eye maxima low0.24487004/high0.23464440 exceed non-eye body maximum0.23217151. Exact native-repeat body pixels match after mask restoration. Repro: SCENE_PORT=4834 BROWSER_POOL_JOB_ID=rr-b node --import tsx/esm tools/qa/sweep-b-l6-readability.ts low tunnel 62 (repeat high); python3 test-results/rr-b/l6-analyze.py."
+      "file": "docs/reports/l6-visual/readability-analysis.json",
+      "sha256": "21f9acc2556a36bb19d29c015eea5ae6699403c81f075cc9dcd1cdd453519953",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-low-complete.json",
+      "sha256": "c79af258f64fb5f88deedbc0941e0b3a719a20550bf450cebfa82fd6439042db",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-low-stationary.json",
+      "sha256": "3a8d03cafeddbe66167db7bae4f0f8cabd700d7692988b32fb82e7b1f40b60f0",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-low-fixtures.json",
+      "sha256": "3c2fa3c58bcb8131bfb59384cf7a5a73fa97e522f6fbfb971f18d39667a29128",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-high-complete.json",
+      "sha256": "202863ed4f414c7b05cc76bac5ba893d6000d00297d5b06bf7589b0fd1df9edc",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-high-stationary.json",
+      "sha256": "2fd2d5bd4092af61f25259631d27a389273d3d01775b434b1570666e359b81cd",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
+    },
+    {
+      "file": "docs/reports/fix51-verify/receipts/L6-high-fixtures.json",
+      "sha256": "f53f3b455d607c80b5541c73953f9f3d994bf4e8befddf03f32638d10441f5f5",
+      "what": "Current-source measured browser/native clauses and personally opened capture review manifest; see README for fixture scope and reproduction."
     }
   ],
-  "notes": "Fresh both-tier measurement of the specified elderly emergency-tunnel readability fixture; not an exhaustive census of every underground pose.",
-  "sourceDigest": "b4451833597c98a85fb013c5efb22325aa654466e8ecccb6e355dc405a1fcfbb"
+  "notes": "Fresh low/high × WebGL2/WebGPU × zoom1/1.5 visual review. Capture review uses labeled contact sheets and native actor crops, plus explicitly listed full originals. No performance or full physical-route signoff inferred.",
+  "sourceDigest": "ceb4b4e8f05526ddca246a6d236ccda6bf5533f645882fbc1e6d02d215baf732"
 }
