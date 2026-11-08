@@ -568,7 +568,9 @@ export class LevelThreeCollapse {
       // A blocked pressure doorway retains its freed slot. Letting an unrelated
       // street/horde entry take it immediately can starve the announced batch.
       if (pressure && q.kind !== 'pressure') continue;
-      if (q.id !== 0 || (yard && q.streetExtra) || (q.horde && p.x < l3.finale.startX + 10) || closed.has(q.door)) continue;
+      // The horde's authored entrance is the finale start. Waiting another
+      // ten metres let a moving courier outrun its admitted pressure curve.
+      if (q.id !== 0 || (yard && q.streetExtra) || (q.horde && p.x < l3.finale.startX) || closed.has(q.door)) continue;
       const a = this.anchor(q.door);
       if (!ai.director.offscreen(a) || Math.hypot(a.x - p.x, a.z - p.z) < (q.kind === 'pressure' ? 15 : 25)) { closed.add(q.door); continue; }
       const id = this.emerge(a, q.home, !!q.horde, false, q.segment === 0 && !q.kind, q.kind === 'pressure');
