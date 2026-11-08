@@ -35,11 +35,11 @@ export const cureCrossingLines: { theme: Theme; line: Point[] }[] = [
 ];
 type Theme = 'fringe' | 'depot' | 'military' | 'campus' | 'corridor';
 /**
- * Off: every scene piece is render-only. Any collider here moved cap-bound L10-03 group-size clauses in qa:accept
- * (r9-l10pace): nav solids → high/stationary corridor-breach 15/32; physics-only solids → low/stationary
- * military-column 2 (base 13). Render-only keeps the native sim identical. Turning this on needs those clauses re-tuned.
+ * On: tall scene pieces stop the courier as physics-only statics (no AI nav wall). As nav solids they cost the
+ * cap-bound qa:accept L10-03 corridor-breach group (high/stationary 15/32); physics-only gives 32/32 like the base.
+ * (The low/stationary military-column 2 FAIL is the base value too: base 29dbfed0 measures 2.) Off = render-only.
  */
-export const crossingScenesBlock = false;
+export const crossingScenesBlock = true;
 
 interface Piece { asset: string; along: number; out: number; yaw: number; decay?: string; solid: boolean; light?: 'camp' | 'wreckfire'; fire?: [number, number] }
 type Story = (rng: Rng) => Piece[];
