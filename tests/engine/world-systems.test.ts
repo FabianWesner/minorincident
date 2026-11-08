@@ -147,7 +147,7 @@ test('look-l6-l9 decor is render-only: L6 nav hash, colliders and pushables matc
   // r9-l10pace (vqa58 "minutes of empty dark grass"): L10 crossing scenes. The belt keeps its pieces; the scenes are
   // deterministic, lit, clear of the walked line, roads, encounter slots (lane-shifted groups: their x band at any z) and the
   // console; tall pieces are solids, small ones render-only; nothing intersects an existing solid; all stand on the ground.
-  const { cureCrossingLines, cureCrossingStories } = await import('../../src/levels/L10/crossingStories');
+  const { cureCrossingLines, cureCrossingStories, crossingScenesBlock } = await import('../../src/levels/L10/crossingStories');
   const { cureRoadsideBelt } = await import('../../src/levels/L10/roadsideBelt');
   const { cure } = await import('../../src/levels/L10/district');
   const { cureEncounters, cureEncounterSlots } = await import('../../src/levels/L10/encounters');
@@ -179,7 +179,7 @@ test('look-l6-l9 decor is render-only: L6 nav hash, colliders and pushables matc
   }
   const solids = stories.filter(q => q.decorSolid);
   expect(stories.every(q => q.decor)).toBe(true);
-  expect(solids.length).toBeGreaterThan(40);
+  expect(solids.length > 40).toBe(crossingScenesBlock);
   expect(placementColliders(stories.filter(q => !q.decorSolid), [])).toEqual([]);
   const solidColliders = placementColliders(solids, []), solidIds = new Set(solidColliders.map(c => c.id.split('/')[0]));
   // Physics-only: they stop the courier but are no AI nav wall (qa:accept L10-03: nav solids starved the corridor-breach group).
