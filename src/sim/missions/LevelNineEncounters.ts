@@ -24,19 +24,32 @@ export function updateEncounters(w: SimWorld, state: L9EncounterState): void {
       // Repair checkpoints written by the earlier partial-admission bug.
       state.spawned = state.spawned.filter(id => id !== g.id);
     }
+    const car = w.vehicles?.active == null ? undefined : w.entities.get(w.vehicles.active);
+    // Chunks load before they enter the camera. Admit a group while it is still
+    // outside the zoomed-out driving view so its first visible pose is already
+    // moving toward the engine noise instead of standing in a formation.
+    if (!car || Math.hypot(g.at[0] - car.transform.x, g.at[1] - car.transform.z) < 105) continue;
     const place = (archetype: string, x: number, z: number): boolean => {
-      const r = archetype === 'infected.alpha' ? .55 : .35;
       for (let d = 0; d <= 4; d += .5) for (let i = 0; i < (d ? 12 : 1); i++) {
         const px = x + Math.cos(i * Math.PI / 6) * d, pz = z + Math.sin(i * Math.PI / 6) * d;
-        if (!ai.nav.clear(px, pz, r) || ai.director.count + 1 > ai.director.cap) continue;
-        ids.push(ai.spawn(archetype, { x: px, z: pz }, { state: 'idle', yaw: Math.PI / 2 })); return true;
+        const at = { x: px, z: pz };
+        if (!ai.director.safe(archetype, at) || ai.director.count + 1 > ai.director.cap) continue;
+        const id = ai.spawn(archetype, at, { state: 'chase', yaw: Math.atan2(car.transform.z - pz, car.transform.x - px) });
+        ai.pursueTarget(id, 1);
+        ids.push(id); return true;
       }
       return false;
     };
     const cols = l9Encounters.columns, rows = Math.ceil(g.runners / cols);
+    const routeMix: Record<string, readonly string[]> = {
+      road: ['infected.runner', 'infected.sprinter', 'infected.brute', 'infected.dog', 'infected.runner', 'infected.screamer'],
+      countryside: ['infected.runner', 'infected.dog', 'infected.screamer', 'infected.firefighter', 'infected.sprinter', 'infected.runner'],
+      'dry-shortcut': ['infected.runner', 'infected.zebra', 'infected.dog', 'infected.sprinter', 'infected.elephant', 'infected.runner', 'infected.zebra', 'infected.dog'],
+    };
+    const mix = routeMix[g.route] ?? routeMix.road;
     const members = [
       ...Array.from({ length: g.alphas }, (_, a) => ({ archetype: 'infected.alpha', x: g.at[0], z: g.at[1] + (a ? 3 : -3) })),
-      ...Array.from({ length: g.runners }, (_, i) => ({ archetype: 'infected.runner',
+      ...Array.from({ length: g.runners }, (_, i) => ({ archetype: mix[i % mix.length],
         x: g.at[0] + (i % cols - (cols - 1) / 2) * l9Encounters.spacing,
         z: g.at[1] + (Math.floor(i / cols) - (rows - 1) / 2) * l9Encounters.spacing })),
     ];
@@ -54,7 +67,8 @@ export function updateEncounters(w: SimWorld, state: L9EncounterState): void {
   const patrol = state.patrol ??= { nextAt: w.tick + 300, serial: 0 };
   // Two staggered rows read as a pack entering the headlights, with room to
   // steer around either side. Reuse the same safe offscreen admission/cap.
-  const patrolSize = 6;
+  const patrolTypes = ['infected.runner', 'infected.sprinter', 'infected.dog', 'infected.screamer', 'infected.brute', 'infected.runner'];
+  const patrolSize = patrolTypes.length;
   if (w.tick < patrol.nextAt || ai.director.count + patrolSize > ai.director.cap || ai.pool.length < patrolSize) return;
   const player = w.entities.get(1)!, active = w.vehicles?.active;
   const car = active == null ? undefined : w.entities.get(active);
@@ -68,8 +82,8 @@ export function updateEncounters(w: SimWorld, state: L9EncounterState): void {
       x: centre.x + Math.cos(side) * slot * 1.4 + Math.cos(heading + offset) * row * 2.2,
       z: centre.z + Math.sin(side) * slot * 1.4 + Math.sin(heading + offset) * row * 2.2,
     })));
-    if (group.some(at => !chunks.resident(at.x, at.z) || !ai.director.safe('infected.runner', at))) continue;
-    const ids = group.map(at => ai.spawn('infected.runner', at, { state: 'chase' }));
+    if (Math.hypot(centre.x - car.transform.x, centre.z - car.transform.z) < 100 || group.some((at, index) => !chunks.resident(at.x, at.z) || !ai.director.safe(patrolTypes[index], at))) continue;
+    const ids = group.map((at, index) => ai.spawn(patrolTypes[index], at, { state: 'chase' }));
     for (const id of ids) ai.pursueTarget(id, 1);
     state.ids[`crossing-patrol-${patrol.serial++}`] = ids;
     patrol.nextAt = w.tick + 480;

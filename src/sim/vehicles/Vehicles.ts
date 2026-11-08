@@ -32,6 +32,8 @@ export interface APCObstacleContact { contactId: number | null; separatedAt: num
 export interface WreckBox { x: number; z: number; halfX: number; halfZ: number }
 export interface VehicleState {
   apcContacts?: { sequence: number; infected: Record<number, APCContact>; obstacles?: Record<number, APCObstacleContact> };
+  /** L9 boarders retain their climb and next bite across saves/checkpoints. */
+  apcBoarders?: Record<number, { startedAt: number; nextHit: number }>;
   /** L9 mission policy: durability clamps to 0 but the vehicle stays driveable at a capped speed, cannot be exited and is never destroyed by E09. Persisted with the entity. */
   floor?: boolean;
   scripted?: boolean;
@@ -352,6 +354,7 @@ export class Vehicles {
       this.world.events.emit({ type: 'vehicle.shaken', tick: this.world.tick, sourceId: car.entity.id, targetId: id });
     }
     state.attached.length = 0;
+    if (state.apcBoarders) state.apcBoarders = {};
   }
   private infected(car: Car): void {
     // Passenger rides resolve their swept contacts in the scripted driver, including at low speed.
@@ -387,6 +390,13 @@ export class Vehicles {
     const state = car.entity.vehicle!;
     const livingOccupant = (id: number) => { const e = this.world.entities.get(id); return !!e && e.health.current > 0 && !e.infected; };
     const occupied = state.driver !== null && livingOccupant(state.driver) || state.passengers?.some(p => p.phase === 'seated' && livingOccupant(p.id)) === true;
+    const boarders = state.apcBoarders ??= {};
+    const boarderTypes = new Set(['infected.runner', 'infected.sprinter', 'infected.crawler', 'infected.dog', 'infected.lion']);
+    const boarderLimit = car.entity.health.current <= car.entity.health.max * .25 ? 8 : 6;
+    // A quick steering snap, a hull scrape, or the handbrake throws attackers
+    // clear. Boarders stay visibly attached while they climb before biting.
+    const throwingBoarders = speed > 8 || Math.abs(car.physics.intent.steer) > .75 || car.physics.intent.handbrake && speed > 4;
+    if (throwingBoarders) this.release(car);
     const ledger = car.entity.vehicle!.apcContacts ??= { sequence: 0, infected: {} };
     const c = Math.cos(p.yaw), s = Math.sin(p.yaw);
     // Spatial broad phase stays local even when the crossing owns many distant entities.
@@ -398,6 +408,11 @@ export class Vehicles {
       const target = this.world.entities.get(id)!;
       if (target.kind !== 'infected' || target.hidden || target.infected?.hidden || (target.health.current <= 0 && (target.infected?.recoverAt ?? -1) < 0)) continue;
       const distance = car.physics.hullDistance(target.transform.x, target.transform.z), radius = target.combat?.radius ?? .4;
+      if (occupied && !throwingBoarders && boarderTypes.has(target.archetype) && distance <= radius + .2 && state.attached.length < boarderLimit) {
+        state.attached.push(target.id); target.attachedTo = car.entity.id;
+        boarders[target.id] = { startedAt: tick, nextHit: tick + 180 };
+        this.world.events.emit({ type: 'vehicle.grabbed', tick, sourceId: car.entity.id, targetId: target.id });
+      }
       let contact = ledger.infected[id];
       // Shared hull admission leaves a millimetre of skin at an exact contact.
       if (distance <= radius + .002) {
@@ -421,6 +436,19 @@ export class Vehicles {
       this.hullAttackers.push(target);
       const dx = target.transform.x - p.x, dz = target.transform.z - p.z;
       quadrants |= 1 << ((dx * c - dz * s >= 0 ? 1 : 0) + (dx * s + dz * c >= 0 ? 2 : 0));
+    }
+    for (let i = state.attached.length - 1; i >= 0; i--) {
+      const id = state.attached[i], target = this.world.entities.get(id), climb = boarders[id];
+      if (!target || !climb || target.health.current <= 0) { state.attached.splice(i, 1); delete boarders[id]; continue; }
+      const side = id % 2 ? 1 : -1, slot = Math.floor(i / 2), localX = -car.physics.def.length * .25 + slot * .65;
+      target.transform.x = p.x + Math.cos(p.yaw) * localX + Math.sin(p.yaw) * side * (car.physics.def.width / 2 + .12);
+      target.transform.z = p.z - Math.sin(p.yaw) * localX + Math.cos(p.yaw) * side * (car.physics.def.width / 2 + .12);
+      target.transform.y = p.y + .8; this.world.spatial.set(id, target.transform.x, target.transform.z);
+      if (occupied && tick >= climb.nextHit) {
+        const player = this.world.entities.get(1)!;
+        if (player.health.current > 0) this.world.player?.damage(10, tick, true);
+        climb.nextHit = tick + 60;
+      }
     }
     let quadrantCount = 0;
     for (let bits = quadrants; bits; bits >>= 1) quadrantCount += bits & 1;
