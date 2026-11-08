@@ -40,11 +40,12 @@ for (const tier of tiers) {
     const found = [];
     for (const pickup of cureWeaponPickups) {
       const [x, z] = cure.anchors[pickup.anchor];
-      place(w, x - 3, z); advance(w, 10);
+      // Stay outside the visible route-find ring until its retained entity is inspected.
+      place(w, x - 8, z); advance(w, 10);
       const entity = w.entities.get(w.l10Encounters!.state.weapons![pickup.id]);
       if (!entity) { check(tier, `placed ${pickup.id} exists`, false); continue; }
       const at = { ...entity.transform }, nav = w.infected!.nav.forPlayer(.35), path: number[] = [];
-      const reachable = nav.path(nav.cell(x - 3, z), nav.cell(at.x, at.z), path, Infinity);
+      const reachable = nav.path(nav.cell(x - 8, z), nav.cell(at.x, at.z), path, Infinity);
       place(w, at.x, at.z); advance(w, 1);
       const retained = w.entities.get(1)!.weapons!.RIGHT.rack.some(slot => slot.id === pickup.action);
       advance(w, 20);

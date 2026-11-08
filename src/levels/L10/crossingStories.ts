@@ -193,7 +193,8 @@ export function cureCrossingStories(placements: readonly Placement[]): Placement
       const preferred = hero?.[0] === 'r6-triage' ? -1 : n % 2 ? -1 : 1;
       let placed = null as Placement[] | null;
       for (const lit of [true, false]) for (const side of [preferred, -preferred]) {
-        for (const shift of [0, -3, 3, -6, 6, -9, 9]) for (const lateral of [6, 7, 8, 9.5]) {
+        const shifts = hero ? [0, -3, 3, -6, 6, -9, 9, -12, 12, -18, 18, -24, 24] : [0, -3, 3, -6, 6, -9, 9];
+        for (const shift of shifts) for (const lateral of [6, 7, 8, 9.5]) {
           if (placed) break;
           const { x, z, ux, uz } = pose(station + shift), base = -Math.atan2(uz, ux);
           const nx = -uz * side, nz = ux * side;   // away from the line

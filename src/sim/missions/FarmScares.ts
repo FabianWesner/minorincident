@@ -36,16 +36,22 @@ export function updateFarmScares(world: SimWorld, ledger: FarmScareState): void 
   for (const site of farmScareSites(layout.placements)) {
     let entry = ledger[site.id];
     if (entry?.actor) continue;
+    // Rebuilt layouts can put a sill or wreck under the nearest crop edge.
+    // Retain the authored crop, choosing a clear emergence point beside it.
+    const cell = ai.nav.nearestCell(site.x, site.z, .65);
+    const at = ai.nav.clear(site.x, site.z, .65) ? site : cell >= 0 && Math.hypot(ai.nav.x(cell) - site.x, ai.nav.z(cell) - site.z) <= 4 ? { x: ai.nav.x(cell), z: ai.nav.z(cell) } : null;
+    if (!at) continue;
     const available = ai.pool.length > 0 && ai.director.count < ai.director.cap - ai.director.reserved - ai.director.pendingTurns;
     if (!entry) {
-      if (!available || Math.hypot(hero.transform.x - site.x, hero.transform.z - site.z) > 26 || !ai.nav.clear(site.x, site.z, .65)) continue;
+      const last = Math.max(0, ...Object.values(ledger).map(s => s.due - 90));
+      if (!available || world.tick < 3600 || world.tick - last < 3600 || Math.hypot(hero.transform.x - at.x, hero.transform.z - at.z) > 30) continue;
       entry = ledger[site.id] = { due: world.tick + 90 };
       world.events.emit({ type: 'music.stinger', tick: world.tick, kind: 'scare', level: 'L10' });
     }
     if (world.tick < entry.due) continue;
     // A delayed admission needs a fresh warning, rather than a burst long after its sting.
-    if (!available || !world.chunks?.resident(site.x, site.z) || !ai.nav.clear(site.x, site.z, .65)) { delete ledger[site.id]; continue; }
-    const id = ai.spawn('infected.sprinter', site, { perched: false, birds: 1, cureRegion: site.x < 747 ? 'crash-outskirts' : 'residential-fringe' });
+    if (!available || !world.chunks?.resident(at.x, at.z) || !ai.nav.clear(at.x, at.z, .65)) { delete ledger[site.id]; continue; }
+    const id = ai.spawn('infected.sprinter', at, { perched: false, birds: 1, cureRegion: site.x < 747 ? 'crash-outskirts' : 'residential-fringe' });
     entry.actor = id;
     if (!ai.rush(id, hero.transform, world.tick + 480)) {
       ai.press(id, 1, world.tick + 480);

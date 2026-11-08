@@ -64,6 +64,12 @@ export function levelTenLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     const tower = place('l10-find-guard-tower', 'kit.guard-tower', 1965, 16, [1.54, 2.45, 1.4], 0, [1, 1, 1], true);
     tower.decorSolid = true;
     place('l10-find-checkpoint-locker', 'prop.crates', 2080, 3, [1, 1, .6], 0, [1, 1, 1], true);
+    for (const [i, [x, z]] of [[3395, 64], [3550, 15]].entries()) {
+      for (const [j, asset] of ['prop.crates', 'prop.l10-corpse-side', 'prop.l10-shovel'].entries()) {
+        const p = place(`decor-cure-vignette-corridor-crossing-${i}-${j}`, asset, x + j * 1.4, z - j, [1, .5, .5], 0, [1, 1, 1], true);
+        p.fixed = true;
+      }
+    }
     place('l10-dispersal-electric-gate', 'prop.cure-mil-fence', 4002, 1, [6.4, 1.24, .21], 0, [12.8 / 3.34, 1, 1], true);
     for (const [i, gap] of cureEscapeGaps.entries()) {
       const low = gap.z - 35, high = gap.z + 35;

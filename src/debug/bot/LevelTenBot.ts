@@ -3,7 +3,6 @@ import { cornBlocksSight } from '../../levels/L10/farm';
 import { cure } from '../../levels/L10/district';
 import type { SimWorld } from '../../sim/world/SimWorld';
 import { Walker } from './Walker';
-import { solidLargeCorpse } from '../../sim/world/SolidRegistry';
 import { isMega } from '../../data/megaPresentation';
 import { finale as arena } from '../../data/l10Finale';
 import { cureEscapeGaps } from '../../data/l10Story';
@@ -21,11 +20,8 @@ export class LevelTenBot {
     [cureEscapeGaps[2].x, cureEscapeGaps[2].z], cure.anchors['cure-complex'], ...cure.regions[6].route.slice(5),
   ];
   private waypoint = 0;
-  private releaseAttempt = 0;
   private clearStairsUntil = 0;
   private coolingGun = false;
-  private releaseSidestepUntil = 0;
-  private releaseBlockedAt = 0;
   private readonly startTick: number;
   finished = false;
   constructor(private readonly w: SimWorld, readonly profile = 'complete') { this.startTick = w.tick; }
@@ -57,25 +53,7 @@ export class LevelTenBot {
     if (active.id === 'mega' && bossMarker && Math.hypot(bossMarker.x - anchor.x, bossMarker.z - anchor.z) <= arena.holdRadius) goal = bossMarker;
     if (!released && !finale && this.waypoint < this.route.length && this.route[this.waypoint][0] < anchor.x - 2) goal = { x: this.route[this.waypoint][0], z: this.route[this.waypoint][1], radius: 2 };
     if (released) goal = { x: anchor.x + (tick % 600 < 300 ? 12 : -12), z: anchor.z, radius: 1 };
-    f.move = this.walker.step(w, goal, .8, `${active.id}-${this.waypoint}`) ?? f.move;
-    // The static grid cannot see the Mega's solid corpse. If the tank and
-    // corpse block the return route, try ordinary directional sidesteps as
-    // the physical-input driver does, then resume walking to the console.
-    if (active.id === 'release') {
-      const blocker = w.solids.blockingBody(1);
-      if (blocker && solidLargeCorpse(blocker) && (player.motion?.speed ?? 0) < .12) {
-        this.releaseBlockedAt ||= w.tick;
-        if (w.tick >= this.releaseSidestepUntil && w.tick - this.releaseBlockedAt >= 30) {
-          this.releaseAttempt++;
-          this.releaseSidestepUntil = w.tick + 90;
-          this.walker.reset();
-        }
-      } else this.releaseBlockedAt = 0;
-      if (w.tick < this.releaseSidestepUntil) {
-        const angle = (this.releaseAttempt % 8) * Math.PI / 4;
-        f.move = { x: Math.cos(angle), z: Math.sin(angle) };
-      }
-    }
+    f.move = this.walker.step(w, goal, .8, `${active.id}-${this.waypoint}`, active.id === 'release') ?? f.move;
     f.interact = !released && tick % 60 < 45 && distance(anchor) <= anchor.radius;
     // Bots share the documented camera + 5 m perception contract. A 30 m
     // omnidirectional scan shot unseen arrivals before they could enter view,
