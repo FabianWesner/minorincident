@@ -1,0 +1,3066 @@
+[
+  {
+    "id": "weather.rain",
+    "category": "weather",
+    "offset": 0,
+    "duration": 4,
+    "bus": "ambience",
+    "shape": "bed",
+    "loop": true,
+    "source": "procedural",
+    "disposition": "silenced background noise"
+  },
+  {
+    "id": "weather.gust",
+    "category": "weather",
+    "offset": 4.08,
+    "duration": 1.5,
+    "bus": "ambience",
+    "shape": "noise",
+    "loop": false,
+    "source": "procedural",
+    "disposition": "silenced background noise"
+  },
+  {
+    "id": "weather.thunder",
+    "category": "weather",
+    "offset": 5.66,
+    "duration": 2,
+    "bus": "ambience",
+    "shape": "noise",
+    "loop": false,
+    "source": "procedural",
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "weather.rain-metal",
+    "category": "weather",
+    "offset": 8.500000000000002,
+    "duration": 4,
+    "bus": "ambience",
+    "shape": "bed",
+    "loop": true,
+    "source": "procedural",
+    "disposition": "silenced background noise"
+  },
+  {
+    "id": "action.weapon.fists",
+    "category": "weapons",
+    "offset": 0,
+    "duration": 0.24,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "swish-0",
+      "start": 0.03
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "action.weapon.kick",
+    "category": "weapons",
+    "offset": 0.32,
+    "duration": 0.24,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "swish-1",
+      "start": 0.014
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "action.weapon.bat",
+    "category": "weapons",
+    "offset": 0.64,
+    "duration": 0.24,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "swish-2",
+      "start": 0.032
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "action.weapon.crowbar",
+    "category": "weapons",
+    "offset": 0.96,
+    "duration": 0.24,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "swish-3",
+      "start": 0.009
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "action.weapon.machete",
+    "category": "weapons",
+    "offset": 1.28,
+    "duration": 0.24,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "swish-0",
+      "start": 0.03
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "action.weapon.knife",
+    "category": "weapons",
+    "offset": 1.6,
+    "duration": 0.24,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "swish-0",
+      "start": 0.03,
+      "filter": "asetrate=64800,aresample=48000",
+      "level": -22
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "action.weapon.nail-bat",
+    "category": "weapons",
+    "offset": 1.9200000000000002,
+    "duration": 0.24,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "swish-2",
+      "start": 0.03,
+      "filter": "asetrate=43200,aresample=48000",
+      "level": -19
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "action.weapon.shovel",
+    "category": "weapons",
+    "offset": 2.24,
+    "duration": 0.3,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "swish-3",
+      "start": 0.03,
+      "filter": "asetrate=37440,aresample=48000",
+      "level": -19
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "action.weapon.police-baton",
+    "category": "weapons",
+    "offset": 2.62,
+    "duration": 0.24,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "swish-1",
+      "start": 0.03,
+      "filter": "asetrate=52800,aresample=48000",
+      "level": -19
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "action.weapon.fire-axe",
+    "category": "weapons",
+    "offset": 2.9400000000000004,
+    "duration": 0.32,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "swish-2",
+      "start": 0.03,
+      "filter": "asetrate=29760,aresample=48000",
+      "level": -17
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "action.weapon.katana",
+    "category": "weapons",
+    "offset": 3.3400000000000003,
+    "duration": 0.24,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "swish-0",
+      "start": 0.03,
+      "filter": "asetrate=72000,aresample=48000",
+      "level": -19
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "action.weapon.grenade",
+    "category": "weapons",
+    "offset": 11.099999999999998,
+    "duration": 0.4,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "swish-0",
+      "start": 0,
+      "filter": "asetrate=33600,aresample=48000,lowpass=f=3200",
+      "level": -21
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "action.weapon.molotov",
+    "category": "weapons",
+    "offset": 11.579999999999998,
+    "duration": 0.4,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "sfx2-r75-bfh1_glass_hit_01",
+      "start": 0,
+      "filter": "highpass=f=1200,asetrate=43200,aresample=48000",
+      "level": -21
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "action.weapon.pipe-bomb",
+    "category": "weapons",
+    "offset": 12.059999999999999,
+    "duration": 0.4,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "swish-2",
+      "start": 0,
+      "filter": "asetrate=29760,aresample=48000,lowpass=f=3200",
+      "level": -21
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "action.weapon.firecracker-lure",
+    "category": "weapons",
+    "offset": 12.54,
+    "duration": 0.3,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "fw-Ruger_Mark_III-R_35P",
+      "start": 0.46,
+      "filter": "highpass=f=900,asetrate=72000,aresample=48000,volume=3dB,asoftclip=type=tanh",
+      "level": -8
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "action.weapon.smoke-grenade",
+    "category": "weapons",
+    "offset": 12.92,
+    "duration": 0.4,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "swish-1",
+      "start": 0,
+      "filter": "asetrate=28800,aresample=48000,lowpass=f=3200",
+      "level": -21
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "action.weapon.flashbang",
+    "category": "weapons",
+    "offset": 13.4,
+    "duration": 0.4,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "swish-3",
+      "start": 0,
+      "filter": "asetrate=38400,aresample=48000,lowpass=f=3200",
+      "level": -21
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "action.ability.corgi-lure",
+    "category": "weapons",
+    "offset": 13.88,
+    "duration": 0.24,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": false,
+    "source": "procedural",
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "action.ability.ground-slam",
+    "category": "weapons",
+    "offset": 14.200000000000001,
+    "duration": 0.45,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "sfx2-k-impactSoft_heavy_000",
+      "start": 0,
+      "filter": "bass=g=6:f=80,asetrate=33600,aresample=48000",
+      "level": -18
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "action.ability.shield-bubble",
+    "category": "weapons",
+    "offset": 14.73,
+    "duration": 0.24,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": false,
+    "source": "procedural",
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "action.ability.adrenaline",
+    "category": "weapons",
+    "offset": 15.05,
+    "duration": 0.24,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": false,
+    "source": "procedural",
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "action.ability.turret",
+    "category": "weapons",
+    "offset": 15.370000000000001,
+    "duration": 0.35,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "fw-PPSh-P_30P",
+      "start": 0.94,
+      "filter": "highpass=f=150,asetrate=52800,aresample=48000,volume=22dB,asoftclip=type=tanh",
+      "level": -8
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "tail.street",
+    "category": "weapons",
+    "offset": 16.4,
+    "duration": 0.25,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "fw-Model_12-K_17P",
+      "start": 1,
+      "filter": "lowpass=f=3200,highpass=f=200",
+      "level": -31
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "tail.interior",
+    "category": "weapons",
+    "offset": 16.729999999999997,
+    "duration": 0.65,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "fw-Model_12-K_17P",
+      "start": 0.98,
+      "filter": "lowpass=f=1800,aecho=0.8:0.6:45|90|140:0.4|0.3|0.2",
+      "level": -27
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "tail.open",
+    "category": "weapons",
+    "offset": 17.459999999999994,
+    "duration": 0.25,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "fw-Model_12-K_17P",
+      "start": 1.05,
+      "filter": "lowpass=f=2200",
+      "level": -34
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "weapon.rocket-whoosh",
+    "category": "weapons",
+    "offset": 17.789999999999992,
+    "duration": 1,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": true,
+    "source": "procedural",
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "weapon.minigun-whir",
+    "category": "weapons",
+    "offset": 22.48999999999998,
+    "duration": 0.48,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": true,
+    "source": {
+      "source": "residue-ventilator.wav",
+      "start": 0,
+      "level": -24,
+      "filter": "lowpass=f=2400,bass=g=4:f=120"
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "prop.brace",
+    "category": "props",
+    "offset": 2.8800000000000003,
+    "duration": 0.4,
+    "bus": "props",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "sfx2-rwm-wood_slam_01",
+      "start": 0
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "prop.break",
+    "category": "props",
+    "offset": 3.8400000000000003,
+    "duration": 0.4,
+    "bus": "props",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "sfx2-r75-bfh1_wood_breaking_01",
+      "start": 0
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "prop.roll",
+    "category": "props",
+    "offset": 4.32,
+    "duration": 1,
+    "bus": "props",
+    "shape": "noise",
+    "loop": true,
+    "source": "procedural",
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "prop.scrape",
+    "category": "props",
+    "offset": 5.4,
+    "duration": 1,
+    "bus": "props",
+    "shape": "noise",
+    "loop": true,
+    "source": "procedural",
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "generator.pull",
+    "category": "props",
+    "offset": 6.48,
+    "duration": 0.4,
+    "bus": "props",
+    "shape": "noise",
+    "loop": false,
+    "source": "procedural",
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "generator.idle",
+    "category": "props",
+    "offset": 7.440000000000001,
+    "duration": 1,
+    "bus": "props",
+    "shape": "tone",
+    "loop": true,
+    "source": "procedural",
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "lamp.hum",
+    "category": "props",
+    "offset": 8.520000000000001,
+    "duration": 1,
+    "bus": "props",
+    "shape": "tone",
+    "loop": true,
+    "source": "procedural",
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "explosion.boom",
+    "category": "impacts",
+    "offset": 16.16000000000001,
+    "duration": 0.9,
+    "bus": "impacts",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "sfx2-k-impactMetal_heavy_000",
+      "start": 0,
+      "filter": "asetrate=29760,aresample=48000,lowpass=f=1100"
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "explosion.debris",
+    "category": "impacts",
+    "offset": 18.020000000000007,
+    "duration": 0.8,
+    "bus": "impacts",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "sfx2-r75-bfh1_rock_falling_01",
+      "start": 0
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "explosion.roar",
+    "category": "impacts",
+    "offset": 18.900000000000006,
+    "duration": 1.5,
+    "bus": "impacts",
+    "shape": "noise",
+    "loop": false,
+    "source": "procedural",
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "explosion.crackle",
+    "category": "impacts",
+    "offset": 20.480000000000004,
+    "duration": 0.4,
+    "bus": "impacts",
+    "shape": "noise",
+    "loop": false,
+    "source": "procedural",
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "vehicle.engine-low",
+    "category": "vehicles",
+    "offset": 0,
+    "duration": 1,
+    "bus": "vehicles",
+    "shape": "tone",
+    "loop": true,
+    "source": "procedural",
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "vehicle.engine-high",
+    "category": "vehicles",
+    "offset": 1.08,
+    "duration": 1,
+    "bus": "vehicles",
+    "shape": "tone",
+    "loop": true,
+    "source": "procedural",
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "vehicle.sputter",
+    "category": "vehicles",
+    "offset": 2.16,
+    "duration": 1,
+    "bus": "vehicles",
+    "shape": "noise",
+    "loop": true,
+    "source": "procedural",
+    "disposition": "silenced background noise"
+  },
+  {
+    "id": "vehicle.fire",
+    "category": "vehicles",
+    "offset": 3.24,
+    "duration": 1,
+    "bus": "vehicles",
+    "shape": "noise",
+    "loop": true,
+    "source": "procedural",
+    "disposition": "silenced background noise"
+  },
+  {
+    "id": "vehicle.skid",
+    "category": "vehicles",
+    "offset": 4.32,
+    "duration": 1,
+    "bus": "vehicles",
+    "shape": "noise",
+    "loop": false,
+    "source": "procedural",
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "vehicle.siren",
+    "category": "vehicles",
+    "offset": 6.48,
+    "duration": 1,
+    "bus": "vehicles",
+    "shape": "tone",
+    "loop": true,
+    "source": {
+      "source": "siren",
+      "start": 4,
+      "filter": "lowpass=f=4000"
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "vehicle.grab",
+    "category": "vehicles",
+    "offset": 8.24,
+    "duration": 1,
+    "bus": "vehicles",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "sfx2-k-impactMetal_light_000",
+      "start": 0
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "gore.squelch",
+    "category": "gore",
+    "offset": 0,
+    "duration": 0.2,
+    "bus": "gore",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "wet-0",
+      "start": 0
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "gore.bone",
+    "category": "gore",
+    "offset": 0.28,
+    "duration": 0.2,
+    "bus": "gore",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "wet-0",
+      "start": 0
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "gore.splat",
+    "category": "gore",
+    "offset": 0.56,
+    "duration": 0.2,
+    "bus": "gore",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "wet-0",
+      "start": 0
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "pickup.fanfare.bat",
+    "category": "pickups",
+    "offset": 0,
+    "duration": 1.6,
+    "bus": "weapons",
+    "shape": "fanfare",
+    "loop": false,
+    "source": "procedural",
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "pickup.fanfare.fire-axe",
+    "category": "pickups",
+    "offset": 1.6800000000000002,
+    "duration": 1.8,
+    "bus": "weapons",
+    "shape": "fanfare",
+    "loop": false,
+    "source": "procedural",
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "pickup.fanfare.handgun",
+    "category": "pickups",
+    "offset": 3.5600000000000005,
+    "duration": 1.3,
+    "bus": "weapons",
+    "shape": "fanfare",
+    "loop": false,
+    "source": "procedural",
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "pickup.fanfare.army-mg",
+    "category": "pickups",
+    "offset": 4.94,
+    "duration": 1.95,
+    "bus": "weapons",
+    "shape": "fanfare",
+    "loop": false,
+    "source": "procedural",
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "pickup.fanfare.shotgun",
+    "category": "pickups",
+    "offset": 6.970000000000001,
+    "duration": 1.8,
+    "bus": "weapons",
+    "shape": "fanfare",
+    "loop": false,
+    "source": "procedural",
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "pickup.fanfare.rocket",
+    "category": "pickups",
+    "offset": 8.850000000000001,
+    "duration": 2,
+    "bus": "weapons",
+    "shape": "fanfare",
+    "loop": false,
+    "source": "procedural",
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "pickup.fanfare.molotov",
+    "category": "pickups",
+    "offset": 10.930000000000001,
+    "duration": 1.1,
+    "bus": "weapons",
+    "shape": "fanfare",
+    "loop": false,
+    "source": "procedural",
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "pickup.fanfare.corgi-lure",
+    "category": "pickups",
+    "offset": 12.110000000000001,
+    "duration": 1.1,
+    "bus": "weapons",
+    "shape": "fanfare",
+    "loop": false,
+    "source": "procedural",
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "pickup.fanfare.throwable",
+    "category": "pickups",
+    "offset": 13.290000000000001,
+    "duration": 0.9,
+    "bus": "weapons",
+    "shape": "fanfare",
+    "loop": false,
+    "source": "procedural",
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "pickup.fanfare.ability",
+    "category": "pickups",
+    "offset": 14.270000000000001,
+    "duration": 1.2,
+    "bus": "weapons",
+    "shape": "fanfare",
+    "loop": false,
+    "source": "procedural",
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "pickup.fanfare.melee",
+    "category": "pickups",
+    "offset": 15.55,
+    "duration": 0.95,
+    "bus": "weapons",
+    "shape": "fanfare",
+    "loop": false,
+    "source": "procedural",
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "pickup.fanfare.gun",
+    "category": "pickups",
+    "offset": 16.58,
+    "duration": 1.1,
+    "bus": "weapons",
+    "shape": "fanfare",
+    "loop": false,
+    "source": "procedural",
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "horde.loop",
+    "category": "ambience",
+    "offset": 0,
+    "duration": 2,
+    "bus": "ambience",
+    "shape": "bed",
+    "loop": true,
+    "source": {
+      "source": "darsycho-moans",
+      "start": 0.5,
+      "filter": "lowpass=f=900,aecho=0.8:0.9:173|389|611|887:0.7|0.6|0.5|0.45"
+    },
+    "disposition": "silenced background noise"
+  },
+  {
+    "id": "bed.zoo-animals",
+    "category": "ambience",
+    "offset": 2.08,
+    "duration": 6,
+    "bus": "ambience",
+    "shape": "chatter",
+    "loop": true,
+    "source": "procedural",
+    "disposition": "silenced background noise"
+  },
+  {
+    "id": "horde.loop.asphalt",
+    "category": "ambience",
+    "offset": 8.16,
+    "duration": 2,
+    "bus": "ambience",
+    "shape": "bed",
+    "loop": true,
+    "source": {
+      "source": "darsycho-moans",
+      "start": 1.6,
+      "filter": "lowpass=f=900,aecho=0.8:0.9:173|389|611|887:0.7|0.6|0.5|0.45"
+    },
+    "disposition": "silenced background noise"
+  },
+  {
+    "id": "horde.loop.sidewalk",
+    "category": "ambience",
+    "offset": 10.24,
+    "duration": 2,
+    "bus": "ambience",
+    "shape": "bed",
+    "loop": true,
+    "source": {
+      "source": "darsycho-moans",
+      "start": 3.9,
+      "filter": "lowpass=f=900,aecho=0.8:0.9:173|389|611|887:0.7|0.6|0.5|0.45"
+    },
+    "disposition": "silenced background noise"
+  },
+  {
+    "id": "horde.loop.grass",
+    "category": "ambience",
+    "offset": 12.32,
+    "duration": 2,
+    "bus": "ambience",
+    "shape": "bed",
+    "loop": true,
+    "source": {
+      "source": "darsycho-moans",
+      "start": 5,
+      "filter": "lowpass=f=900,aecho=0.8:0.9:173|389|611|887:0.7|0.6|0.5|0.45"
+    },
+    "disposition": "silenced background noise"
+  },
+  {
+    "id": "horde.loop.wood",
+    "category": "ambience",
+    "offset": 14.4,
+    "duration": 2,
+    "bus": "ambience",
+    "shape": "bed",
+    "loop": true,
+    "source": {
+      "source": "darsycho-moans",
+      "start": 6.9,
+      "filter": "lowpass=f=900,aecho=0.8:0.9:173|389|611|887:0.7|0.6|0.5|0.45"
+    },
+    "disposition": "silenced background noise"
+  },
+  {
+    "id": "horde.loop.gravel",
+    "category": "ambience",
+    "offset": 16.479999999999997,
+    "duration": 2,
+    "bus": "ambience",
+    "shape": "bed",
+    "loop": true,
+    "source": {
+      "source": "darsycho-moans",
+      "start": 9.4,
+      "filter": "lowpass=f=900,aecho=0.8:0.9:173|389|611|887:0.7|0.6|0.5|0.45"
+    },
+    "disposition": "silenced background noise"
+  },
+  {
+    "id": "horde.loop.tile",
+    "category": "ambience",
+    "offset": 18.559999999999995,
+    "duration": 2,
+    "bus": "ambience",
+    "shape": "bed",
+    "loop": true,
+    "source": {
+      "source": "darsycho-moans",
+      "start": 11.7,
+      "filter": "lowpass=f=900,aecho=0.8:0.9:173|389|611|887:0.7|0.6|0.5|0.45"
+    },
+    "disposition": "silenced background noise"
+  },
+  {
+    "id": "horde.loop.metal",
+    "category": "ambience",
+    "offset": 20.639999999999993,
+    "duration": 2,
+    "bus": "ambience",
+    "shape": "bed",
+    "loop": true,
+    "source": {
+      "source": "darsycho-moans",
+      "start": 12.6,
+      "filter": "lowpass=f=900,aecho=0.8:0.9:173|389|611|887:0.7|0.6|0.5|0.45"
+    },
+    "disposition": "silenced background noise"
+  },
+  {
+    "id": "horde.loop.glass",
+    "category": "ambience",
+    "offset": 22.71999999999999,
+    "duration": 2,
+    "bus": "ambience",
+    "shape": "bed",
+    "loop": true,
+    "source": {
+      "source": "darsycho-moans",
+      "start": 1,
+      "filter": "lowpass=f=900,aecho=0.8:0.9:173|389|611|887:0.7|0.6|0.5|0.45"
+    },
+    "disposition": "silenced background noise"
+  },
+  {
+    "id": "horde.loop.water",
+    "category": "ambience",
+    "offset": 24.79999999999999,
+    "duration": 2,
+    "bus": "ambience",
+    "shape": "bed",
+    "loop": true,
+    "source": {
+      "source": "darsycho-moans",
+      "start": 4.4,
+      "filter": "lowpass=f=900,aecho=0.8:0.9:173|389|611|887:0.7|0.6|0.5|0.45"
+    },
+    "disposition": "silenced background noise"
+  },
+  {
+    "id": "horde.loop.blood",
+    "category": "ambience",
+    "offset": 26.87999999999999,
+    "duration": 2,
+    "bus": "ambience",
+    "shape": "bed",
+    "loop": true,
+    "source": {
+      "source": "darsycho-moans",
+      "start": 7.4,
+      "filter": "lowpass=f=900,aecho=0.8:0.9:173|389|611|887:0.7|0.6|0.5|0.45"
+    },
+    "disposition": "silenced background noise"
+  },
+  {
+    "id": "bed.birds",
+    "category": "ambience",
+    "offset": 28.959999999999987,
+    "duration": 12,
+    "bus": "ambience",
+    "shape": "bed",
+    "loop": true,
+    "source": {
+      "source": "birds",
+      "start": 3
+    },
+    "disposition": "silenced background noise"
+  },
+  {
+    "id": "bed.wind",
+    "category": "ambience",
+    "offset": 41.039999999999985,
+    "duration": 12,
+    "bus": "ambience",
+    "shape": "bed",
+    "loop": true,
+    "source": "procedural",
+    "disposition": "silenced background noise"
+  },
+  {
+    "id": "bed.traffic",
+    "category": "ambience",
+    "offset": 53.11999999999998,
+    "duration": 12,
+    "bus": "ambience",
+    "shape": "bed",
+    "loop": true,
+    "source": {
+      "source": "traffic",
+      "start": 12,
+      "filter": "lowpass=f=1600"
+    },
+    "disposition": "silenced background noise"
+  },
+  {
+    "id": "bed.horns",
+    "category": "ambience",
+    "offset": 65.19999999999997,
+    "duration": 2,
+    "bus": "ambience",
+    "shape": "bed",
+    "loop": true,
+    "source": "procedural",
+    "disposition": "silenced background noise"
+  },
+  {
+    "id": "bed.sirens",
+    "category": "ambience",
+    "offset": 67.27999999999997,
+    "duration": 12,
+    "bus": "ambience",
+    "shape": "bed",
+    "loop": true,
+    "source": {
+      "source": "siren",
+      "start": 4,
+      "filter": "lowpass=f=1400"
+    },
+    "disposition": "silenced background noise"
+  },
+  {
+    "id": "bed.helicopter",
+    "category": "ambience",
+    "offset": 79.35999999999997,
+    "duration": 2,
+    "bus": "ambience",
+    "shape": "bed",
+    "loop": true,
+    "source": "procedural",
+    "disposition": "silenced background noise"
+  },
+  {
+    "id": "bed.fire",
+    "category": "ambience",
+    "offset": 81.43999999999997,
+    "duration": 2,
+    "bus": "ambience",
+    "shape": "bed",
+    "loop": true,
+    "source": "procedural",
+    "disposition": "silenced background noise"
+  },
+  {
+    "id": "bed.hum",
+    "category": "ambience",
+    "offset": 83.51999999999997,
+    "duration": 2,
+    "bus": "ambience",
+    "shape": "bed",
+    "loop": true,
+    "source": "procedural",
+    "disposition": "silenced background noise"
+  },
+  {
+    "id": "bed.fire-roar",
+    "category": "ambience",
+    "offset": 85.59999999999997,
+    "duration": 2,
+    "bus": "ambience",
+    "shape": "bed",
+    "loop": true,
+    "source": "procedural",
+    "disposition": "silenced background noise"
+  },
+  {
+    "id": "bed.moans",
+    "category": "ambience",
+    "offset": 87.67999999999996,
+    "duration": 2,
+    "bus": "ambience",
+    "shape": "bed",
+    "loop": true,
+    "source": {
+      "source": "darsycho-moans",
+      "start": 3.7,
+      "filter": "lowpass=f=750,aecho=0.8:0.9:211|457|733:0.6|0.5|0.4"
+    },
+    "disposition": "silenced background noise"
+  },
+  {
+    "id": "ambient.sprinkler",
+    "category": "ambience",
+    "offset": 89.75999999999996,
+    "duration": 0.6,
+    "bus": "ambience",
+    "shape": "noise",
+    "loop": false,
+    "source": "procedural",
+    "disposition": "silenced background noise"
+  },
+  {
+    "id": "ambient.lawnmower",
+    "category": "ambience",
+    "offset": 91.11999999999995,
+    "duration": 0.6,
+    "bus": "ambience",
+    "shape": "noise",
+    "loop": false,
+    "source": "procedural",
+    "disposition": "silenced background noise"
+  },
+  {
+    "id": "ambient.basketball",
+    "category": "ambience",
+    "offset": 91.79999999999994,
+    "duration": 0.6,
+    "bus": "ambience",
+    "shape": "noise",
+    "loop": false,
+    "source": "procedural",
+    "disposition": "silenced background noise"
+  },
+  {
+    "id": "ambient.siren",
+    "category": "ambience",
+    "offset": 92.47999999999993,
+    "duration": 0.6,
+    "bus": "ambience",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "siren",
+      "start": 4,
+      "filter": "lowpass=f=4000"
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "ambient.alarm",
+    "category": "ambience",
+    "offset": 93.15999999999993,
+    "duration": 0.6,
+    "bus": "ambience",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "siren",
+      "start": 0.5
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "ambient.news",
+    "category": "ambience",
+    "offset": 94.51999999999991,
+    "duration": 0.6,
+    "bus": "ambience",
+    "shape": "noise",
+    "loop": false,
+    "source": "procedural",
+    "disposition": "silenced background noise"
+  },
+  {
+    "id": "ambient.megaphone",
+    "category": "ambience",
+    "offset": 95.1999999999999,
+    "duration": 0.6,
+    "bus": "ambience",
+    "shape": "noise",
+    "loop": false,
+    "source": "procedural",
+    "disposition": "silenced background noise"
+  },
+  {
+    "id": "ambient.radio",
+    "category": "ambience",
+    "offset": 95.8799999999999,
+    "duration": 0.6,
+    "bus": "ambience",
+    "shape": "noise",
+    "loop": false,
+    "source": "procedural",
+    "disposition": "silenced background noise"
+  },
+  {
+    "id": "ambient.glass",
+    "category": "ambience",
+    "offset": 97.23999999999988,
+    "duration": 0.6,
+    "bus": "ambience",
+    "shape": "noise",
+    "loop": false,
+    "source": "procedural",
+    "disposition": "silenced background noise"
+  },
+  {
+    "id": "ambient.power",
+    "category": "ambience",
+    "offset": 98.59999999999987,
+    "duration": 0.6,
+    "bus": "ambience",
+    "shape": "noise",
+    "loop": false,
+    "source": "procedural",
+    "disposition": "silenced background noise"
+  },
+  {
+    "id": "ambient.automatic",
+    "category": "ambience",
+    "offset": 99.95999999999985,
+    "duration": 0.6,
+    "bus": "ambience",
+    "shape": "noise",
+    "loop": false,
+    "source": "procedural",
+    "disposition": "silenced background noise"
+  },
+  {
+    "id": "ambient.collapse",
+    "category": "ambience",
+    "offset": 100.63999999999984,
+    "duration": 0.6,
+    "bus": "ambience",
+    "shape": "noise",
+    "loop": false,
+    "source": "procedural",
+    "disposition": "silenced background noise"
+  },
+  {
+    "id": "ambient.debris",
+    "category": "ambience",
+    "offset": 101.31999999999984,
+    "duration": 0.6,
+    "bus": "ambience",
+    "shape": "noise",
+    "loop": false,
+    "source": "procedural",
+    "disposition": "silenced background noise"
+  },
+  {
+    "id": "music.L1.base",
+    "category": "music-L1",
+    "offset": 0,
+    "duration": 8,
+    "bus": "music",
+    "shape": "music",
+    "loop": true,
+    "source": {
+      "source": "morning",
+      "start": 16
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "music.L1.pulse",
+    "category": "music-L1",
+    "offset": 8.08,
+    "duration": 8,
+    "bus": "music",
+    "shape": "music",
+    "loop": true,
+    "source": {
+      "source": "blinding",
+      "start": 12,
+      "filter": "lowpass=f=180"
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "music.L1.drive",
+    "category": "music-L1",
+    "offset": 16.159999999999997,
+    "duration": 8,
+    "bus": "music",
+    "shape": "music",
+    "loop": true,
+    "source": {
+      "source": "blinding",
+      "start": 40,
+      "filter": "highpass=f=3500"
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "music.L1.peak",
+    "category": "music-L1",
+    "offset": 24.239999999999995,
+    "duration": 8,
+    "bus": "music",
+    "shape": "music",
+    "loop": true,
+    "source": {
+      "source": "blinding",
+      "start": 104,
+      "filter": "highpass=f=5500"
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "music.L2.base",
+    "category": "music-L2",
+    "offset": 0,
+    "duration": 8,
+    "bus": "music",
+    "shape": "music",
+    "loop": true,
+    "source": {
+      "source": "morning",
+      "start": 16
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "music.L2.pulse",
+    "category": "music-L2",
+    "offset": 8.08,
+    "duration": 8,
+    "bus": "music",
+    "shape": "music",
+    "loop": true,
+    "source": {
+      "source": "blinding",
+      "start": 12,
+      "filter": "lowpass=f=180"
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "music.L2.drive",
+    "category": "music-L2",
+    "offset": 16.159999999999997,
+    "duration": 8,
+    "bus": "music",
+    "shape": "music",
+    "loop": true,
+    "source": {
+      "source": "blinding",
+      "start": 40,
+      "filter": "highpass=f=3500"
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "music.L2.peak",
+    "category": "music-L2",
+    "offset": 24.239999999999995,
+    "duration": 8,
+    "bus": "music",
+    "shape": "music",
+    "loop": true,
+    "source": {
+      "source": "blinding",
+      "start": 104,
+      "filter": "highpass=f=5500"
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "music.L3.base",
+    "category": "music-L3",
+    "offset": 0,
+    "duration": 7.5,
+    "bus": "music",
+    "shape": "music",
+    "loop": true,
+    "source": {
+      "source": "morning",
+      "start": 16
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "music.L3.pulse",
+    "category": "music-L3",
+    "offset": 7.58,
+    "duration": 7.5,
+    "bus": "music",
+    "shape": "music",
+    "loop": true,
+    "source": {
+      "source": "blinding",
+      "start": 12,
+      "filter": "lowpass=f=180"
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "music.L3.drive",
+    "category": "music-L3",
+    "offset": 15.16,
+    "duration": 7.5,
+    "bus": "music",
+    "shape": "music",
+    "loop": true,
+    "source": {
+      "source": "blinding",
+      "start": 40,
+      "filter": "highpass=f=3500"
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "music.L3.peak",
+    "category": "music-L3",
+    "offset": 22.74,
+    "duration": 7.5,
+    "bus": "music",
+    "shape": "music",
+    "loop": true,
+    "source": {
+      "source": "blinding",
+      "start": 104,
+      "filter": "highpass=f=5500"
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "music.L4.base",
+    "category": "music-L4",
+    "offset": 0,
+    "duration": 10,
+    "bus": "music",
+    "shape": "music",
+    "loop": true,
+    "source": {
+      "source": "morning",
+      "start": 16
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "music.L4.pulse",
+    "category": "music-L4",
+    "offset": 10.08,
+    "duration": 10,
+    "bus": "music",
+    "shape": "music",
+    "loop": true,
+    "source": {
+      "source": "blinding",
+      "start": 12,
+      "filter": "lowpass=f=180"
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "music.L4.drive",
+    "category": "music-L4",
+    "offset": 20.159999999999997,
+    "duration": 10,
+    "bus": "music",
+    "shape": "music",
+    "loop": true,
+    "source": {
+      "source": "blinding",
+      "start": 40,
+      "filter": "highpass=f=3500"
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "music.L4.peak",
+    "category": "music-L4",
+    "offset": 30.239999999999995,
+    "duration": 10,
+    "bus": "music",
+    "shape": "music",
+    "loop": true,
+    "source": {
+      "source": "blinding",
+      "start": 104,
+      "filter": "highpass=f=5500"
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "music.L5.base",
+    "category": "music-L5",
+    "offset": 0,
+    "duration": 8,
+    "bus": "music",
+    "shape": "music",
+    "loop": true,
+    "source": {
+      "source": "morning",
+      "start": 16
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "music.L5.pulse",
+    "category": "music-L5",
+    "offset": 8.08,
+    "duration": 8,
+    "bus": "music",
+    "shape": "music",
+    "loop": true,
+    "source": {
+      "source": "blinding",
+      "start": 12,
+      "filter": "lowpass=f=180"
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "music.L5.drive",
+    "category": "music-L5",
+    "offset": 16.159999999999997,
+    "duration": 8,
+    "bus": "music",
+    "shape": "music",
+    "loop": true,
+    "source": {
+      "source": "blinding",
+      "start": 40,
+      "filter": "highpass=f=3500"
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "music.L5.peak",
+    "category": "music-L5",
+    "offset": 24.239999999999995,
+    "duration": 8,
+    "bus": "music",
+    "shape": "music",
+    "loop": true,
+    "source": {
+      "source": "blinding",
+      "start": 104,
+      "filter": "highpass=f=5500"
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "music.L6.base",
+    "category": "music-L6",
+    "offset": 0,
+    "duration": 8,
+    "bus": "music",
+    "shape": "music",
+    "loop": true,
+    "source": {
+      "source": "morning",
+      "start": 16
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "music.L6.pulse",
+    "category": "music-L6",
+    "offset": 8.08,
+    "duration": 8,
+    "bus": "music",
+    "shape": "music",
+    "loop": true,
+    "source": {
+      "source": "blinding",
+      "start": 12,
+      "filter": "lowpass=f=180"
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "music.L6.drive",
+    "category": "music-L6",
+    "offset": 16.159999999999997,
+    "duration": 8,
+    "bus": "music",
+    "shape": "music",
+    "loop": true,
+    "source": {
+      "source": "blinding",
+      "start": 40,
+      "filter": "highpass=f=3500"
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "music.L6.peak",
+    "category": "music-L6",
+    "offset": 24.239999999999995,
+    "duration": 8,
+    "bus": "music",
+    "shape": "music",
+    "loop": true,
+    "source": {
+      "source": "blinding",
+      "start": 104,
+      "filter": "highpass=f=5500"
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "l10.scare.0",
+    "category": "music-L10-fx",
+    "offset": 0,
+    "duration": 0.8,
+    "bus": "telegraph",
+    "shape": "noise",
+    "loop": false,
+    "source": "procedural",
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "l10.scare.1",
+    "category": "music-L10-fx",
+    "offset": 0.88,
+    "duration": 0.8,
+    "bus": "telegraph",
+    "shape": "noise",
+    "loop": false,
+    "source": "procedural",
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "l10.scare.2",
+    "category": "music-L10-fx",
+    "offset": 1.7600000000000002,
+    "duration": 0.8,
+    "bus": "telegraph",
+    "shape": "noise",
+    "loop": false,
+    "source": "procedural",
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "l10.scare.3",
+    "category": "music-L10-fx",
+    "offset": 2.6400000000000006,
+    "duration": 0.8,
+    "bus": "telegraph",
+    "shape": "noise",
+    "loop": false,
+    "source": "procedural",
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "l10.scare.4",
+    "category": "music-L10-fx",
+    "offset": 3.5200000000000005,
+    "duration": 0.8,
+    "bus": "telegraph",
+    "shape": "noise",
+    "loop": false,
+    "source": "procedural",
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "l10.heartbeat",
+    "category": "music-L10-fx",
+    "offset": 4.4,
+    "duration": 2,
+    "bus": "music",
+    "shape": "tone",
+    "loop": true,
+    "source": "procedural",
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "diegetic.jukebox",
+    "category": "vehicles",
+    "offset": 9.32,
+    "duration": 2,
+    "bus": "vehicles",
+    "shape": "music",
+    "loop": true,
+    "source": {
+      "source": "morning",
+      "start": 16,
+      "filter": "afade=t=out:st=1.8:d=0.2"
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "diegetic.jukebox.warped",
+    "category": "vehicles",
+    "offset": 11.4,
+    "duration": 2,
+    "bus": "vehicles",
+    "shape": "music",
+    "loop": true,
+    "source": {
+      "source": "morning",
+      "start": 16,
+      "filter": "asetrate=45600,aresample=48000,lowpass=f=1800"
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "diegetic.ice-cream",
+    "category": "vehicles",
+    "offset": 13.48,
+    "duration": 2,
+    "bus": "vehicles",
+    "shape": "music",
+    "loop": true,
+    "source": {
+      "source": "morning",
+      "start": 16,
+      "filter": "afade=t=out:st=1.8:d=0.2"
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "diegetic.ice-cream.warped",
+    "category": "vehicles",
+    "offset": 15.56,
+    "duration": 2,
+    "bus": "vehicles",
+    "shape": "music",
+    "loop": true,
+    "source": {
+      "source": "morning",
+      "start": 16,
+      "filter": "asetrate=45600,aresample=48000,lowpass=f=1800"
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "diegetic.car-radio",
+    "category": "vehicles",
+    "offset": 17.64,
+    "duration": 2,
+    "bus": "vehicles",
+    "shape": "music",
+    "loop": true,
+    "source": {
+      "source": "morning",
+      "start": 16,
+      "filter": "afade=t=out:st=1.8:d=0.2"
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "diegetic.school-bell",
+    "category": "vehicles",
+    "offset": 19.72,
+    "duration": 2,
+    "bus": "vehicles",
+    "shape": "music",
+    "loop": true,
+    "source": {
+      "source": "sfx2-k-impactBell_heavy_001",
+      "start": 0
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "diegetic.pa",
+    "category": "vehicles",
+    "offset": 21.799999999999997,
+    "duration": 2,
+    "bus": "vehicles",
+    "shape": "vocal",
+    "loop": true,
+    "source": {
+      "source": "crowd",
+      "start": 17,
+      "filter": "highpass=f=400,lowpass=f=3000"
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "diegetic.megaphone",
+    "category": "vehicles",
+    "offset": 23.879999999999995,
+    "duration": 2,
+    "bus": "vehicles",
+    "shape": "vocal",
+    "loop": true,
+    "source": {
+      "source": "crowd",
+      "start": 20,
+      "filter": "highpass=f=400,lowpass=f=3000"
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "door.gate",
+    "category": "props",
+    "offset": 10.920000000000002,
+    "duration": 1.1,
+    "bus": "props",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "sfx2-rwm-metal_open_01",
+      "start": 0
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "door.wood",
+    "category": "props",
+    "offset": 12.100000000000001,
+    "duration": 0.6,
+    "bus": "props",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "sfx2-rwm-wood_close_01",
+      "start": 0
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "action.weapon.knife.v1",
+    "category": "weapons",
+    "offset": 23.04999999999998,
+    "duration": 0.24,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "swish-3",
+      "start": 0.03,
+      "filter": "asetrate=62400,aresample=48000",
+      "level": -22
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "action.weapon.knife.v2",
+    "category": "weapons",
+    "offset": 23.369999999999976,
+    "duration": 0.24,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "swish-1",
+      "start": 0.03,
+      "filter": "asetrate=67200,aresample=48000",
+      "level": -22
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "action.weapon.knife.v3",
+    "category": "weapons",
+    "offset": 23.689999999999973,
+    "duration": 0.24,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "swish-2",
+      "start": 0.03,
+      "filter": "asetrate=63360,aresample=48000",
+      "level": -22
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "action.weapon.nail-bat.v1",
+    "category": "weapons",
+    "offset": 24.00999999999997,
+    "duration": 0.24,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "swish-3",
+      "start": 0.03,
+      "filter": "asetrate=42240,aresample=48000",
+      "level": -19
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "action.weapon.nail-bat.v2",
+    "category": "weapons",
+    "offset": 24.329999999999966,
+    "duration": 0.24,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "swish-1",
+      "start": 0.03,
+      "filter": "asetrate=44160,aresample=48000",
+      "level": -19
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "action.weapon.nail-bat.v3",
+    "category": "weapons",
+    "offset": 24.649999999999963,
+    "duration": 0.24,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "swish-0",
+      "start": 0.03,
+      "filter": "asetrate=43200,aresample=48000",
+      "level": -19
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "action.weapon.shovel.v1",
+    "category": "weapons",
+    "offset": 24.96999999999996,
+    "duration": 0.3,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "swish-2",
+      "start": 0.03,
+      "filter": "asetrate=38400,aresample=48000",
+      "level": -19
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "action.weapon.shovel.v2",
+    "category": "weapons",
+    "offset": 25.34999999999996,
+    "duration": 0.3,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "swish-1",
+      "start": 0.03,
+      "filter": "asetrate=36480,aresample=48000",
+      "level": -19
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "action.weapon.shovel.v3",
+    "category": "weapons",
+    "offset": 25.729999999999958,
+    "duration": 0.3,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "swish-0",
+      "start": 0.03,
+      "filter": "asetrate=37440,aresample=48000",
+      "level": -19
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "action.weapon.police-baton.v1",
+    "category": "weapons",
+    "offset": 26.109999999999957,
+    "duration": 0.24,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "swish-0",
+      "start": 0.03,
+      "filter": "asetrate=51840,aresample=48000",
+      "level": -19
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "action.weapon.police-baton.v2",
+    "category": "weapons",
+    "offset": 26.429999999999954,
+    "duration": 0.24,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "swish-3",
+      "start": 0.03,
+      "filter": "asetrate=53760,aresample=48000",
+      "level": -19
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "action.weapon.police-baton.v3",
+    "category": "weapons",
+    "offset": 26.74999999999995,
+    "duration": 0.24,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "swish-2",
+      "start": 0.03,
+      "filter": "asetrate=52800,aresample=48000",
+      "level": -19
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "action.weapon.fire-axe.v1",
+    "category": "weapons",
+    "offset": 27.069999999999947,
+    "duration": 0.32,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "swish-3",
+      "start": 0.03,
+      "filter": "asetrate=28800,aresample=48000",
+      "level": -17
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "action.weapon.fire-axe.v2",
+    "category": "weapons",
+    "offset": 27.469999999999946,
+    "duration": 0.32,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "swish-1",
+      "start": 0.03,
+      "filter": "asetrate=30720,aresample=48000",
+      "level": -17
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "action.weapon.fire-axe.v3",
+    "category": "weapons",
+    "offset": 27.869999999999944,
+    "duration": 0.32,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "swish-0",
+      "start": 0.03,
+      "filter": "asetrate=29760,aresample=48000",
+      "level": -17
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "action.weapon.katana.v1",
+    "category": "weapons",
+    "offset": 28.269999999999943,
+    "duration": 0.24,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "swish-1",
+      "start": 0.03,
+      "filter": "asetrate=69600,aresample=48000",
+      "level": -19
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "action.weapon.katana.v2",
+    "category": "weapons",
+    "offset": 28.58999999999994,
+    "duration": 0.24,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "swish-3",
+      "start": 0.03,
+      "filter": "asetrate=74400,aresample=48000",
+      "level": -19
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "action.weapon.katana.v3",
+    "category": "weapons",
+    "offset": 28.909999999999936,
+    "duration": 0.24,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "swish-2",
+      "start": 0.03,
+      "filter": "asetrate=72000,aresample=48000",
+      "level": -19
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "action.weapon.grenade.v1",
+    "category": "weapons",
+    "offset": 50.8299999999999,
+    "duration": 0.4,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "swish-1",
+      "start": 0,
+      "filter": "asetrate=31680,aresample=48000,lowpass=f=3200",
+      "level": -21
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "action.weapon.grenade.v2",
+    "category": "weapons",
+    "offset": 51.309999999999896,
+    "duration": 0.4,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "swish-2",
+      "start": 0,
+      "filter": "asetrate=34560,aresample=48000,lowpass=f=3200",
+      "level": -21
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "action.weapon.grenade.v3",
+    "category": "weapons",
+    "offset": 51.78999999999989,
+    "duration": 0.4,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "swish-3",
+      "start": 0,
+      "filter": "asetrate=32640,aresample=48000,lowpass=f=3200",
+      "level": -21
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "action.weapon.molotov.v1",
+    "category": "weapons",
+    "offset": 52.26999999999989,
+    "duration": 0.4,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "swish-0",
+      "start": 0,
+      "filter": "asetrate=31680,aresample=48000,lowpass=f=3200",
+      "level": -21
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "action.weapon.molotov.v2",
+    "category": "weapons",
+    "offset": 52.749999999999886,
+    "duration": 0.4,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "sfx2-r75-bfh1_glass_hit_02",
+      "start": 0,
+      "filter": "highpass=f=1200,asetrate=40800,aresample=48000",
+      "level": -21
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "action.weapon.molotov.v3",
+    "category": "weapons",
+    "offset": 53.22999999999988,
+    "duration": 0.4,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "swish-1",
+      "start": 0,
+      "filter": "asetrate=30720,aresample=48000,lowpass=f=3200",
+      "level": -21
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "action.weapon.pipe-bomb.v1",
+    "category": "weapons",
+    "offset": 53.70999999999988,
+    "duration": 0.4,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "swish-3",
+      "start": 0,
+      "filter": "asetrate=28800,aresample=48000,lowpass=f=3200",
+      "level": -21
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "action.weapon.pipe-bomb.v2",
+    "category": "weapons",
+    "offset": 54.18999999999988,
+    "duration": 0.4,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "swish-0",
+      "start": 0,
+      "filter": "asetrate=30720,aresample=48000,lowpass=f=3200",
+      "level": -21
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "action.weapon.pipe-bomb.v3",
+    "category": "weapons",
+    "offset": 54.669999999999874,
+    "duration": 0.4,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "swish-1",
+      "start": 0,
+      "filter": "asetrate=29760,aresample=48000,lowpass=f=3200",
+      "level": -21
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "action.weapon.firecracker-lure.v1",
+    "category": "weapons",
+    "offset": 55.14999999999987,
+    "duration": 0.3,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "fw-Ruger_Mark_III-R_35P",
+      "start": 4.46,
+      "filter": "highpass=f=900,asetrate=72000,aresample=48000,volume=3dB,asoftclip=type=tanh",
+      "level": -8
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "action.weapon.firecracker-lure.v2",
+    "category": "weapons",
+    "offset": 55.529999999999866,
+    "duration": 0.3,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "fw-Ruger_Mark_III-R_35P",
+      "start": 0.46,
+      "filter": "highpass=f=900,asetrate=72000,aresample=48000,volume=3dB,asoftclip=type=tanh",
+      "level": -8
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "action.weapon.firecracker-lure.v3",
+    "category": "weapons",
+    "offset": 55.90999999999986,
+    "duration": 0.3,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "fw-Ruger_Mark_III-R_35P",
+      "start": 4.46,
+      "filter": "highpass=f=900,asetrate=72000,aresample=48000,volume=3dB,asoftclip=type=tanh",
+      "level": -8
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "action.weapon.smoke-grenade.v1",
+    "category": "weapons",
+    "offset": 56.28999999999986,
+    "duration": 0.4,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "swish-0",
+      "start": 0,
+      "filter": "asetrate=29760,aresample=48000,lowpass=f=3200",
+      "level": -21
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "action.weapon.smoke-grenade.v2",
+    "category": "weapons",
+    "offset": 56.769999999999854,
+    "duration": 0.4,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "swish-3",
+      "start": 0,
+      "filter": "asetrate=27839,aresample=48000,lowpass=f=3200",
+      "level": -21
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "action.weapon.smoke-grenade.v3",
+    "category": "weapons",
+    "offset": 57.24999999999985,
+    "duration": 0.4,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "swish-2",
+      "start": 0,
+      "filter": "asetrate=28800,aresample=48000,lowpass=f=3200",
+      "level": -21
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "action.weapon.flashbang.v1",
+    "category": "weapons",
+    "offset": 57.72999999999985,
+    "duration": 0.4,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "swish-2",
+      "start": 0,
+      "filter": "asetrate=37440,aresample=48000,lowpass=f=3200",
+      "level": -21
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "action.weapon.flashbang.v2",
+    "category": "weapons",
+    "offset": 58.209999999999845,
+    "duration": 0.4,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "swish-1",
+      "start": 0,
+      "filter": "asetrate=39360,aresample=48000,lowpass=f=3200",
+      "level": -21
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "action.weapon.flashbang.v3",
+    "category": "weapons",
+    "offset": 58.68999999999984,
+    "duration": 0.4,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "swish-0",
+      "start": 0,
+      "filter": "asetrate=38400,aresample=48000,lowpass=f=3200",
+      "level": -21
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "action.ability.ground-slam.v1",
+    "category": "weapons",
+    "offset": 59.16999999999984,
+    "duration": 0.45,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "sfx2-k-impactSoft_heavy_001",
+      "start": 0,
+      "filter": "bass=g=6:f=80,asetrate=33600,aresample=48000",
+      "level": -18
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "action.ability.ground-slam.v2",
+    "category": "weapons",
+    "offset": 59.69999999999984,
+    "duration": 0.45,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "sfx2-k-impactSoft_heavy_002",
+      "start": 0,
+      "filter": "bass=g=6:f=80,asetrate=33600,aresample=48000",
+      "level": -18
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "action.ability.ground-slam.v3",
+    "category": "weapons",
+    "offset": 60.22999999999984,
+    "duration": 0.45,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "sfx2-k-impactSoft_heavy_003",
+      "start": 0,
+      "filter": "bass=g=6:f=80,asetrate=33600,aresample=48000",
+      "level": -18
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "action.ability.turret.v1",
+    "category": "weapons",
+    "offset": 60.75999999999984,
+    "duration": 0.35,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "fw-PPSh-P_30P",
+      "start": 4.36,
+      "filter": "highpass=f=150,asetrate=52800,aresample=48000,volume=22dB,asoftclip=type=tanh",
+      "level": -8
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "action.ability.turret.v2",
+    "category": "weapons",
+    "offset": 61.18999999999984,
+    "duration": 0.35,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "fw-PPSh-P_30P",
+      "start": 8.22,
+      "filter": "highpass=f=150,asetrate=52800,aresample=48000,volume=22dB,asoftclip=type=tanh",
+      "level": -8
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "action.ability.turret.v3",
+    "category": "weapons",
+    "offset": 61.61999999999984,
+    "duration": 0.35,
+    "bus": "weapons",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "fw-PPSh-P_30P",
+      "start": 11.4,
+      "filter": "highpass=f=150,asetrate=52800,aresample=48000,volume=22dB,asoftclip=type=tanh",
+      "level": -8
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "prop.brace.v1",
+    "category": "props",
+    "offset": 22.39999999999996,
+    "duration": 0.4,
+    "bus": "props",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "sfx2-rwm-wood_slam_02",
+      "start": 0
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "prop.brace.v2",
+    "category": "props",
+    "offset": 22.879999999999956,
+    "duration": 0.4,
+    "bus": "props",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "sfx2-rwm-wood_slam_03",
+      "start": 0
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "prop.brace.v3",
+    "category": "props",
+    "offset": 23.359999999999953,
+    "duration": 0.4,
+    "bus": "props",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "sfx2-rwm-wood_slam_04",
+      "start": 0
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "prop.break.v1",
+    "category": "props",
+    "offset": 25.27999999999994,
+    "duration": 0.4,
+    "bus": "props",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "sfx2-r75-bfh1_wood_breaking_02",
+      "start": 0
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "prop.break.v2",
+    "category": "props",
+    "offset": 25.759999999999938,
+    "duration": 0.4,
+    "bus": "props",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "sfx2-r75-bfh1_wood_breaking_03",
+      "start": 0
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "prop.break.v3",
+    "category": "props",
+    "offset": 26.239999999999934,
+    "duration": 0.4,
+    "bus": "props",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "sfx2-r75-bfh1_wood_breaking_04",
+      "start": 0
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "explosion.boom.v1",
+    "category": "impacts",
+    "offset": 73.89999999999951,
+    "duration": 0.9,
+    "bus": "impacts",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "sfx2-k-impactMetal_heavy_001",
+      "start": 0,
+      "filter": "asetrate=29760,aresample=48000,lowpass=f=1100"
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "explosion.boom.v2",
+    "category": "impacts",
+    "offset": 74.87999999999951,
+    "duration": 0.9,
+    "bus": "impacts",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "sfx2-k-impactMetal_heavy_002",
+      "start": 0,
+      "filter": "asetrate=29760,aresample=48000,lowpass=f=1100"
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "explosion.boom.v3",
+    "category": "impacts",
+    "offset": 75.85999999999952,
+    "duration": 0.9,
+    "bus": "impacts",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "sfx2-k-impactMetal_heavy_003",
+      "start": 0,
+      "filter": "asetrate=29760,aresample=48000,lowpass=f=1100"
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "explosion.debris.v1",
+    "category": "impacts",
+    "offset": 76.83999999999952,
+    "duration": 0.8,
+    "bus": "impacts",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "sfx2-r75-bfh1_rock_falling_02",
+      "start": 0
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "explosion.debris.v2",
+    "category": "impacts",
+    "offset": 77.71999999999952,
+    "duration": 0.8,
+    "bus": "impacts",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "sfx2-r75-bfh1_rock_falling_03",
+      "start": 0
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "explosion.debris.v3",
+    "category": "impacts",
+    "offset": 78.59999999999951,
+    "duration": 0.8,
+    "bus": "impacts",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "sfx2-r75-bfh1_rock_falling_04",
+      "start": 0
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "explosion.crackle.v1",
+    "category": "impacts",
+    "offset": 79.4799999999995,
+    "duration": 0.4,
+    "bus": "impacts",
+    "shape": "noise",
+    "loop": false,
+    "source": "procedural",
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "explosion.crackle.v2",
+    "category": "impacts",
+    "offset": 79.95999999999951,
+    "duration": 0.4,
+    "bus": "impacts",
+    "shape": "noise",
+    "loop": false,
+    "source": "procedural",
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "explosion.crackle.v3",
+    "category": "impacts",
+    "offset": 80.43999999999951,
+    "duration": 0.4,
+    "bus": "impacts",
+    "shape": "noise",
+    "loop": false,
+    "source": "procedural",
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "vehicle.grab.v1",
+    "category": "vehicles",
+    "offset": 27.999999999999993,
+    "duration": 1,
+    "bus": "vehicles",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "sfx2-k-impactMetal_light_001",
+      "start": 0
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "vehicle.grab.v2",
+    "category": "vehicles",
+    "offset": 29.07999999999999,
+    "duration": 1,
+    "bus": "vehicles",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "sfx2-k-impactMetal_light_002",
+      "start": 0
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "vehicle.grab.v3",
+    "category": "vehicles",
+    "offset": 30.15999999999999,
+    "duration": 1,
+    "bus": "vehicles",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "sfx2-k-impactMetal_light_003",
+      "start": 0
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "gore.squelch.v1",
+    "category": "gore",
+    "offset": 0.84,
+    "duration": 0.2,
+    "bus": "gore",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "wet-1",
+      "start": 0
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "gore.squelch.v2",
+    "category": "gore",
+    "offset": 1.12,
+    "duration": 0.2,
+    "bus": "gore",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "wet-2",
+      "start": 0
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "gore.squelch.v3",
+    "category": "gore",
+    "offset": 1.4000000000000001,
+    "duration": 0.2,
+    "bus": "gore",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "wet-3",
+      "start": 0
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "gore.bone.v1",
+    "category": "gore",
+    "offset": 1.6800000000000002,
+    "duration": 0.2,
+    "bus": "gore",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "wet-1",
+      "start": 0
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "gore.bone.v2",
+    "category": "gore",
+    "offset": 1.9600000000000002,
+    "duration": 0.2,
+    "bus": "gore",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "wet-2",
+      "start": 0
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "gore.bone.v3",
+    "category": "gore",
+    "offset": 2.24,
+    "duration": 0.2,
+    "bus": "gore",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "wet-3",
+      "start": 0
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "gore.splat.v1",
+    "category": "gore",
+    "offset": 2.5200000000000005,
+    "duration": 0.2,
+    "bus": "gore",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "wet-1",
+      "start": 0
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "gore.splat.v2",
+    "category": "gore",
+    "offset": 2.8000000000000007,
+    "duration": 0.2,
+    "bus": "gore",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "wet-2",
+      "start": 0
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "gore.splat.v3",
+    "category": "gore",
+    "offset": 3.080000000000001,
+    "duration": 0.2,
+    "bus": "gore",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "wet-3",
+      "start": 0
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "door.gate.v1",
+    "category": "props",
+    "offset": 30.67999999999991,
+    "duration": 1.1,
+    "bus": "props",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "sfx2-rwm-metal_close_01",
+      "start": 0
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "door.gate.v2",
+    "category": "props",
+    "offset": 31.85999999999991,
+    "duration": 1.1,
+    "bus": "props",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "sfx2-r100-sfx100v2_door_01",
+      "start": 0
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "door.gate.v3",
+    "category": "props",
+    "offset": 33.03999999999991,
+    "duration": 1.1,
+    "bus": "props",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "sfx2-r100-sfx100v2_door_02",
+      "start": 0
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "door.wood.v1",
+    "category": "props",
+    "offset": 34.21999999999991,
+    "duration": 0.6,
+    "bus": "props",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "sfx2-rwm-wood_close_02",
+      "start": 0
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "door.wood.v2",
+    "category": "props",
+    "offset": 34.899999999999906,
+    "duration": 0.6,
+    "bus": "props",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "sfx2-r100-sfx100v2_door_03",
+      "start": 0
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "door.wood.v3",
+    "category": "props",
+    "offset": 35.579999999999906,
+    "duration": 0.6,
+    "bus": "props",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "sfx2-r100-sfx100v2_door_04",
+      "start": 0
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "l1.calm.chatter",
+    "category": "l1arc",
+    "offset": 0,
+    "duration": 8,
+    "bus": "ambience",
+    "shape": "chatter",
+    "loop": true,
+    "source": {
+      "source": "crowd",
+      "start": 8,
+      "filter": "lowpass=f=2500,volume=0.5"
+    },
+    "disposition": "silenced background noise"
+  },
+  {
+    "id": "l1.calm.traffic",
+    "category": "l1arc",
+    "offset": 9.06,
+    "duration": 1.2,
+    "bus": "ambience",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "traffic",
+      "start": 6
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "l1.flicker.buzz",
+    "category": "l1arc",
+    "offset": 11.25,
+    "duration": 1.5,
+    "bus": "impacts",
+    "shape": "buzz",
+    "loop": false,
+    "source": "procedural",
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "l1.glass.rattle",
+    "category": "l1arc",
+    "offset": 13.81,
+    "duration": 1,
+    "bus": "props",
+    "shape": "noise",
+    "loop": false,
+    "source": {
+      "source": "sfx2-r75-bfh1_glass_falling_01",
+      "start": 0
+    },
+    "disposition": "retained event effect or music"
+  },
+  {
+    "id": "l1.chaos.panic",
+    "category": "l1arc",
+    "offset": 19.509999999999994,
+    "duration": 2,
+    "bus": "ambience",
+    "shape": "chatter",
+    "loop": true,
+    "source": {
+      "source": "crowd",
+      "start": 18,
+      "filter": "highpass=f=300"
+    },
+    "disposition": "silenced background noise"
+  },
+  {
+    "id": "l1.interior.hush",
+    "category": "l1arc",
+    "offset": 25.289999999999985,
+    "duration": 2,
+    "bus": "ambience",
+    "shape": "bed",
+    "loop": true,
+    "source": "procedural",
+    "disposition": "silenced background noise"
+  }
+]

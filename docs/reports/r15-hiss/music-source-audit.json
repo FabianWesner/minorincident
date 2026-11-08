@@ -1,0 +1,1128 @@
+{
+  "sampleRate": 48000,
+  "windowSeconds": 1,
+  "quietFraction": 0.1,
+  "measurement": "4-16 kHz sixth-order Butterworth band RMS in quietest 10% one-second full-band music windows; dBFS, mono decode",
+  "files": [
+    {
+      "file": "score-aftermath.m4a",
+      "sha256": "915f60457cb92f7c3e7926e372a0b5c7781ba6d768e4f5d8bb3c2f60a33cdf98",
+      "durationS": 96.0,
+      "codec": {
+        "codec_name": "aac",
+        "sample_rate": "48000"
+      },
+      "peakDbfs": -1.0596448183059692,
+      "quietSeconds": [
+        68,
+        75,
+        80,
+        78,
+        82,
+        3,
+        73,
+        45,
+        59
+      ],
+      "quietBandDbfs": -52.436762752891404,
+      "quietFlatness": 0.26160168647766113
+    },
+    {
+      "file": "score-aftermath.webm",
+      "sha256": "a80f9d93ff2465c3870fc7a0674c0186a8705438867d55447ff3545d5f93ff62",
+      "durationS": 96.0,
+      "codec": {
+        "codec_name": "opus",
+        "sample_rate": "48000"
+      },
+      "peakDbfs": -1.0246137380599976,
+      "quietSeconds": [
+        68,
+        75,
+        80,
+        78,
+        82,
+        73,
+        3,
+        45,
+        59
+      ],
+      "quietBandDbfs": -52.05936604676626,
+      "quietFlatness": 0.32513144612312317
+    },
+    {
+      "file": "score-calm-L1.m4a",
+      "sha256": "8fb96119d2f7ae2032bacd0932de4612ac1a58575739527096ee57474b41eae8",
+      "durationS": 192.0,
+      "codec": {
+        "codec_name": "aac",
+        "sample_rate": "48000"
+      },
+      "peakDbfs": -0.11018896102905273,
+      "quietSeconds": [
+        143,
+        9,
+        64,
+        140,
+        141,
+        189,
+        142,
+        154,
+        156,
+        1,
+        152,
+        151,
+        145,
+        153,
+        76,
+        41,
+        161,
+        66,
+        160
+      ],
+      "quietBandDbfs": -49.67469563800358,
+      "quietFlatness": 0.6323885321617126
+    },
+    {
+      "file": "score-calm-L1.webm",
+      "sha256": "448e7b025f4591ac978be6e968bfa6e820f6e1fe15bc024b3da2b4ab78c804aa",
+      "durationS": 192.0,
+      "codec": {
+        "codec_name": "opus",
+        "sample_rate": "48000"
+      },
+      "peakDbfs": -0.03218455985188484,
+      "quietSeconds": [
+        143,
+        9,
+        64,
+        140,
+        141,
+        189,
+        142,
+        156,
+        154,
+        1,
+        152,
+        151,
+        145,
+        76,
+        153,
+        41,
+        161,
+        160,
+        66
+      ],
+      "quietBandDbfs": -49.57753659416816,
+      "quietFlatness": 0.6840718984603882
+    },
+    {
+      "file": "score-calm-L10.m4a",
+      "sha256": "52b19e6a62ba6a0f38c07fe947f86d4d9be5661b9484c06b51764264afc1ca3f",
+      "durationS": 76.0,
+      "codec": {
+        "codec_name": "aac",
+        "sample_rate": "48000"
+      },
+      "peakDbfs": -1.8021259307861328,
+      "quietSeconds": [
+        1,
+        13,
+        2,
+        12,
+        0,
+        20,
+        75
+      ],
+      "quietBandDbfs": -89.16066967446014,
+      "quietFlatness": 0.7563932538032532
+    },
+    {
+      "file": "score-calm-L10.webm",
+      "sha256": "ed9a629f8425068872e25f4739c3aee920efad2d997ea0442e5f7109330d9373",
+      "durationS": 76.0,
+      "codec": {
+        "codec_name": "opus",
+        "sample_rate": "48000"
+      },
+      "peakDbfs": -1.5196833610534668,
+      "quietSeconds": [
+        1,
+        13,
+        2,
+        12,
+        0,
+        20,
+        75
+      ],
+      "quietBandDbfs": -89.23177897243772,
+      "quietFlatness": 0.8838654160499573
+    },
+    {
+      "file": "score-calm-L2.m4a",
+      "sha256": "74cb39abc289cdc176211e5023744c7b3ddbdfe3b98030de0db61ee831735b2a",
+      "durationS": 78.04902083333333,
+      "codec": {
+        "codec_name": "aac",
+        "sample_rate": "48000"
+      },
+      "peakDbfs": -2.3591225147247314,
+      "quietSeconds": [
+        33,
+        63,
+        64,
+        0,
+        1,
+        2,
+        32
+      ],
+      "quietBandDbfs": -50.27037099883003,
+      "quietFlatness": 0.020798442885279655
+    },
+    {
+      "file": "score-calm-L2.webm",
+      "sha256": "00decf0f5cd2f6a8d5b7ea7951d0515b45be5e5054807e54c719d66ae5bb02a7",
+      "durationS": 78.04902083333333,
+      "codec": {
+        "codec_name": "opus",
+        "sample_rate": "48000"
+      },
+      "peakDbfs": -2.5310401916503906,
+      "quietSeconds": [
+        63,
+        33,
+        64,
+        0,
+        1,
+        2,
+        32
+      ],
+      "quietBandDbfs": -51.08971408835714,
+      "quietFlatness": 0.08659214526414871
+    },
+    {
+      "file": "score-calm-L3.m4a",
+      "sha256": "97ab62079ad1fb86a8e41efe0adbc79be943b52fc795f8367573818636316e0c",
+      "durationS": 94.11802083333333,
+      "codec": {
+        "codec_name": "aac",
+        "sample_rate": "48000"
+      },
+      "peakDbfs": -2.7346668243408203,
+      "quietSeconds": [
+        30,
+        29,
+        76,
+        28,
+        78,
+        31,
+        42,
+        35,
+        75
+      ],
+      "quietBandDbfs": -55.67600382341256,
+      "quietFlatness": 0.11573508381843567
+    },
+    {
+      "file": "score-calm-L3.webm",
+      "sha256": "d1f4d6f3fca47c06afa45e7601d66e7377c00a117c3ff53031735f5f2e575f47",
+      "durationS": 94.11802083333333,
+      "codec": {
+        "codec_name": "opus",
+        "sample_rate": "48000"
+      },
+      "peakDbfs": -2.784245252609253,
+      "quietSeconds": [
+        30,
+        29,
+        76,
+        28,
+        78,
+        31,
+        42,
+        35,
+        65
+      ],
+      "quietBandDbfs": -56.41501189725812,
+      "quietFlatness": 0.1458614468574524
+    },
+    {
+      "file": "score-calm-L4.m4a",
+      "sha256": "4e0570f57c46dcbed723019375f4411d1981c8c46ee4dd4ce515986779f8a3b0",
+      "durationS": 74.41902083333333,
+      "codec": {
+        "codec_name": "aac",
+        "sample_rate": "48000"
+      },
+      "peakDbfs": -3.48698091506958,
+      "quietSeconds": [
+        40,
+        42,
+        44,
+        29,
+        27,
+        33,
+        26
+      ],
+      "quietBandDbfs": -54.503244284645774,
+      "quietFlatness": 0.3344954252243042
+    },
+    {
+      "file": "score-calm-L4.webm",
+      "sha256": "02f5c8fa1f61ef4b9ba2471b6bba0fea4dab6870c12e3d703ae93e412f280387",
+      "durationS": 74.41902083333333,
+      "codec": {
+        "codec_name": "opus",
+        "sample_rate": "48000"
+      },
+      "peakDbfs": -3.042269706726074,
+      "quietSeconds": [
+        40,
+        42,
+        44,
+        29,
+        27,
+        33,
+        26
+      ],
+      "quietBandDbfs": -55.05625038655924,
+      "quietFlatness": 0.31453707814216614
+    },
+    {
+      "file": "score-calm-L5.m4a",
+      "sha256": "e77bbc4fc077e42a1510b465c55fcbe276d02c091d1eea58081ba64de3b2b785",
+      "durationS": 101.647,
+      "codec": {
+        "codec_name": "aac",
+        "sample_rate": "48000"
+      },
+      "peakDbfs": -0.6772603988647461,
+      "quietSeconds": [
+        77,
+        99,
+        14,
+        33,
+        4,
+        34,
+        75,
+        3,
+        32,
+        92
+      ],
+      "quietBandDbfs": -51.81552769203396,
+      "quietFlatness": 0.07985461503267288
+    },
+    {
+      "file": "score-calm-L5.webm",
+      "sha256": "fd040d84d503645716b725075ff0ba9169dca212daedc73f4fbdce2a74cdfa45",
+      "durationS": 101.647,
+      "codec": {
+        "codec_name": "opus",
+        "sample_rate": "48000"
+      },
+      "peakDbfs": -0.9047828912734985,
+      "quietSeconds": [
+        77,
+        99,
+        14,
+        33,
+        4,
+        34,
+        75,
+        3,
+        32,
+        92
+      ],
+      "quietBandDbfs": -51.44238793524015,
+      "quietFlatness": 0.11981631070375443
+    },
+    {
+      "file": "score-calm-L6.m4a",
+      "sha256": "f73d0b617bcb18ad1cbbe4bfdb6b75b05d868c461dbd683b92fb33da820e9e9a",
+      "durationS": 96.0,
+      "codec": {
+        "codec_name": "aac",
+        "sample_rate": "48000"
+      },
+      "peakDbfs": -2.7382168769836426,
+      "quietSeconds": [
+        28,
+        23,
+        29,
+        18,
+        83,
+        24,
+        2,
+        34,
+        77
+      ],
+      "quietBandDbfs": -52.6980750920577,
+      "quietFlatness": 0.13500016927719116
+    },
+    {
+      "file": "score-calm-L6.webm",
+      "sha256": "f261920427c4fca8778484b6ce914de33536df82cf45e2576064bd82543dc54c",
+      "durationS": 96.0,
+      "codec": {
+        "codec_name": "opus",
+        "sample_rate": "48000"
+      },
+      "peakDbfs": -2.479154109954834,
+      "quietSeconds": [
+        28,
+        23,
+        29,
+        18,
+        83,
+        2,
+        24,
+        34,
+        77
+      ],
+      "quietBandDbfs": -52.778493043434274,
+      "quietFlatness": 0.11571875959634781
+    },
+    {
+      "file": "score-calm-L7.m4a",
+      "sha256": "d2e9b6b2718eecce75549687fd4cb5852b8d26cbceb1c65132a6e5107759052e",
+      "durationS": 87.273,
+      "codec": {
+        "codec_name": "aac",
+        "sample_rate": "48000"
+      },
+      "peakDbfs": -1.5129187107086182,
+      "quietSeconds": [
+        77,
+        81,
+        79,
+        75,
+        1,
+        80,
+        84,
+        82
+      ],
+      "quietBandDbfs": -50.4562420218869,
+      "quietFlatness": 0.04138729348778725
+    },
+    {
+      "file": "score-calm-L7.webm",
+      "sha256": "42c66eed0cd86726cdf351fece548b9b728d648113418c3536c830477b065cbd",
+      "durationS": 87.273,
+      "codec": {
+        "codec_name": "opus",
+        "sample_rate": "48000"
+      },
+      "peakDbfs": -1.141221046447754,
+      "quietSeconds": [
+        77,
+        81,
+        79,
+        75,
+        1,
+        80,
+        84,
+        82
+      ],
+      "quietBandDbfs": -49.87004780056836,
+      "quietFlatness": 0.05282188951969147
+    },
+    {
+      "file": "score-calm-L8.m4a",
+      "sha256": "9b33496d847c48e3566a192a183ce76686a54c277dccab743008ba13063224ef",
+      "durationS": 91.91502083333333,
+      "codec": {
+        "codec_name": "aac",
+        "sample_rate": "48000"
+      },
+      "peakDbfs": -2.06062912940979,
+      "quietSeconds": [
+        76,
+        36,
+        81,
+        77,
+        16,
+        89,
+        84,
+        20,
+        82
+      ],
+      "quietBandDbfs": -44.51619096431223,
+      "quietFlatness": 0.6809460520744324
+    },
+    {
+      "file": "score-calm-L8.webm",
+      "sha256": "fa7c78ed43bf9f91a577fc8e4af0e0e0946862f9c08907d26d8bbe69f86e369d",
+      "durationS": 91.91502083333333,
+      "codec": {
+        "codec_name": "opus",
+        "sample_rate": "48000"
+      },
+      "peakDbfs": -2.043045997619629,
+      "quietSeconds": [
+        76,
+        36,
+        81,
+        77,
+        89,
+        84,
+        16,
+        82,
+        0
+      ],
+      "quietBandDbfs": -45.59884534061207,
+      "quietFlatness": 0.7139524221420288
+    },
+    {
+      "file": "score-calm-L9.m4a",
+      "sha256": "9dd266143c94e84dc37ad2268d21a8ca9b1bd1dc8250250da3c2618af1de0275",
+      "durationS": 93.204,
+      "codec": {
+        "codec_name": "aac",
+        "sample_rate": "48000"
+      },
+      "peakDbfs": -1.5577316284179688,
+      "quietSeconds": [
+        31,
+        8,
+        6,
+        5,
+        3,
+        10,
+        27,
+        29,
+        12
+      ],
+      "quietBandDbfs": -39.67930336817734,
+      "quietFlatness": 0.09987124800682068
+    },
+    {
+      "file": "score-calm-L9.webm",
+      "sha256": "04f04e0edd088857e972683bdacc9843ed9b4b9b57da31fe8bd90045bba08b74",
+      "durationS": 93.204,
+      "codec": {
+        "codec_name": "opus",
+        "sample_rate": "48000"
+      },
+      "peakDbfs": -1.1346303224563599,
+      "quietSeconds": [
+        31,
+        8,
+        6,
+        5,
+        3,
+        10,
+        29,
+        27,
+        12
+      ],
+      "quietBandDbfs": -39.7732221415609,
+      "quietFlatness": 0.10053195059299469
+    },
+    {
+      "file": "score-calm.m4a",
+      "sha256": "541350e36a1bf9afeb24bdb36bb8618d8560f640ae8499e007b6723e4f20155b",
+      "durationS": 96.0,
+      "codec": {
+        "codec_name": "aac",
+        "sample_rate": "48000"
+      },
+      "peakDbfs": -2.1200661659240723,
+      "quietSeconds": [
+        11,
+        13,
+        57,
+        17,
+        14,
+        73,
+        46,
+        19,
+        51
+      ],
+      "quietBandDbfs": -54.79125437488736,
+      "quietFlatness": 0.0024104658514261246
+    },
+    {
+      "file": "score-calm.webm",
+      "sha256": "5e096b620aa68e8ac2997e175ce7e850207cd598f326579841f96c496c0dbb5e",
+      "durationS": 96.0,
+      "codec": {
+        "codec_name": "opus",
+        "sample_rate": "48000"
+      },
+      "peakDbfs": -1.9688968658447266,
+      "quietSeconds": [
+        11,
+        13,
+        57,
+        17,
+        14,
+        73,
+        46,
+        19,
+        51
+      ],
+      "quietBandDbfs": -54.89855434852948,
+      "quietFlatness": 0.003033726243302226
+    },
+    {
+      "file": "score-combat-L10.m4a",
+      "sha256": "52b19e6a62ba6a0f38c07fe947f86d4d9be5661b9484c06b51764264afc1ca3f",
+      "durationS": 76.0,
+      "codec": {
+        "codec_name": "aac",
+        "sample_rate": "48000"
+      },
+      "peakDbfs": -1.8021259307861328,
+      "quietSeconds": [
+        1,
+        13,
+        2,
+        12,
+        0,
+        20,
+        75
+      ],
+      "quietBandDbfs": -89.16066967446014,
+      "quietFlatness": 0.7563932538032532
+    },
+    {
+      "file": "score-combat-L10.webm",
+      "sha256": "ed9a629f8425068872e25f4739c3aee920efad2d997ea0442e5f7109330d9373",
+      "durationS": 76.0,
+      "codec": {
+        "codec_name": "opus",
+        "sample_rate": "48000"
+      },
+      "peakDbfs": -1.5196833610534668,
+      "quietSeconds": [
+        1,
+        13,
+        2,
+        12,
+        0,
+        20,
+        75
+      ],
+      "quietBandDbfs": -89.23177897243772,
+      "quietFlatness": 0.8838654160499573
+    },
+    {
+      "file": "score-combat.m4a",
+      "sha256": "3748e707c2458a11e57382865943d712aeb309391341ba0476a59c4d04ef78ca",
+      "durationS": 96.0,
+      "codec": {
+        "codec_name": "aac",
+        "sample_rate": "48000"
+      },
+      "peakDbfs": -3.130999803543091,
+      "quietSeconds": [
+        33,
+        34,
+        9,
+        20,
+        3,
+        28,
+        15,
+        10,
+        30
+      ],
+      "quietBandDbfs": -41.44647355016551,
+      "quietFlatness": 0.01671212539076805
+    },
+    {
+      "file": "score-combat.webm",
+      "sha256": "a13f55fa3b76c9ef7ac7cbe944653267b2e8a466c6e0f1544a43123a603ba355",
+      "durationS": 96.0,
+      "codec": {
+        "codec_name": "opus",
+        "sample_rate": "48000"
+      },
+      "peakDbfs": -3.645782947540283,
+      "quietSeconds": [
+        33,
+        34,
+        9,
+        3,
+        20,
+        28,
+        10,
+        15,
+        30
+      ],
+      "quietBandDbfs": -41.387499798262596,
+      "quietFlatness": 0.027944358065724373
+    },
+    {
+      "file": "score-tension-L1.m4a",
+      "sha256": "306310f7795e2dca05ec186df186cdc9cf7b1f31af0b09a11b6dc5caea6f2d99",
+      "durationS": 95.319,
+      "codec": {
+        "codec_name": "aac",
+        "sample_rate": "48000"
+      },
+      "peakDbfs": -2.417119026184082,
+      "quietSeconds": [
+        67,
+        82,
+        81,
+        62,
+        78,
+        64,
+        75,
+        61,
+        65
+      ],
+      "quietBandDbfs": -52.74756168571086,
+      "quietFlatness": 0.7273401618003845
+    },
+    {
+      "file": "score-tension-L1.webm",
+      "sha256": "56cc7b0f461d4fc5192695914e99e50e6c227269b9ef6464dda7d26d411e4cf4",
+      "durationS": 95.319,
+      "codec": {
+        "codec_name": "opus",
+        "sample_rate": "48000"
+      },
+      "peakDbfs": -2.56037974357605,
+      "quietSeconds": [
+        67,
+        82,
+        81,
+        62,
+        64,
+        78,
+        75,
+        61,
+        65
+      ],
+      "quietBandDbfs": -52.57292590344577,
+      "quietFlatness": 0.7344738245010376
+    },
+    {
+      "file": "score-tension-L10.m4a",
+      "sha256": "f73d0b617bcb18ad1cbbe4bfdb6b75b05d868c461dbd683b92fb33da820e9e9a",
+      "durationS": 96.0,
+      "codec": {
+        "codec_name": "aac",
+        "sample_rate": "48000"
+      },
+      "peakDbfs": -2.7382168769836426,
+      "quietSeconds": [
+        28,
+        23,
+        29,
+        18,
+        83,
+        24,
+        2,
+        34,
+        77
+      ],
+      "quietBandDbfs": -52.6980750920577,
+      "quietFlatness": 0.13500016927719116
+    },
+    {
+      "file": "score-tension-L10.webm",
+      "sha256": "f261920427c4fca8778484b6ce914de33536df82cf45e2576064bd82543dc54c",
+      "durationS": 96.0,
+      "codec": {
+        "codec_name": "opus",
+        "sample_rate": "48000"
+      },
+      "peakDbfs": -2.479154109954834,
+      "quietSeconds": [
+        28,
+        23,
+        29,
+        18,
+        83,
+        2,
+        24,
+        34,
+        77
+      ],
+      "quietBandDbfs": -52.778493043434274,
+      "quietFlatness": 0.11571875959634781
+    },
+    {
+      "file": "score-tension-L2.m4a",
+      "sha256": "2db896f7046935d2a528c9a28f51c985834cfb9ac2f59045d9753746a246825a",
+      "durationS": 64.86502083333333,
+      "codec": {
+        "codec_name": "aac",
+        "sample_rate": "48000"
+      },
+      "peakDbfs": -3.8217689990997314,
+      "quietSeconds": [
+        39,
+        40,
+        38,
+        33,
+        15,
+        42
+      ],
+      "quietBandDbfs": -42.50463661229918,
+      "quietFlatness": 0.5606213808059692
+    },
+    {
+      "file": "score-tension-L2.webm",
+      "sha256": "a93bb153ecadee3bb6fa6e21586bd4cdb398cb8a6ecf2f073714b53b287136ae",
+      "durationS": 64.86502083333333,
+      "codec": {
+        "codec_name": "opus",
+        "sample_rate": "48000"
+      },
+      "peakDbfs": -3.339237689971924,
+      "quietSeconds": [
+        39,
+        40,
+        38,
+        33,
+        15,
+        42
+      ],
+      "quietBandDbfs": -42.58910023206575,
+      "quietFlatness": 0.5886812806129456
+    },
+    {
+      "file": "score-tension-L3.m4a",
+      "sha256": "b9ecb4d53015cef6e7e2da96b3082b2e78aa7f99855fea31bde337c40fe25db7",
+      "durationS": 64.39,
+      "codec": {
+        "codec_name": "aac",
+        "sample_rate": "48000"
+      },
+      "peakDbfs": -3.8257410526275635,
+      "quietSeconds": [
+        29,
+        62,
+        42,
+        28,
+        41,
+        4
+      ],
+      "quietBandDbfs": -50.665021397893184,
+      "quietFlatness": 0.0430632159113884
+    },
+    {
+      "file": "score-tension-L3.webm",
+      "sha256": "e17ee0e881ac3c5b88aac6b3733c1a61ca7e57ab645fb0c16cc94b7739c0f915",
+      "durationS": 64.39,
+      "codec": {
+        "codec_name": "opus",
+        "sample_rate": "48000"
+      },
+      "peakDbfs": -4.163956165313721,
+      "quietSeconds": [
+        29,
+        62,
+        42,
+        28,
+        41,
+        4
+      ],
+      "quietBandDbfs": -49.96805367318443,
+      "quietFlatness": 0.09807933866977692
+    },
+    {
+      "file": "score-tension-L4.m4a",
+      "sha256": "c8f8f9071068c8442a6ef2d729bacd280b16f4052f4bdfc587e4db12cef49e9e",
+      "durationS": 82.28602083333334,
+      "codec": {
+        "codec_name": "aac",
+        "sample_rate": "48000"
+      },
+      "peakDbfs": -5.360584735870361,
+      "quietSeconds": [
+        74,
+        77,
+        75,
+        73,
+        76,
+        3,
+        12,
+        7
+      ],
+      "quietBandDbfs": -35.935371712627784,
+      "quietFlatness": 0.6332284808158875
+    },
+    {
+      "file": "score-tension-L4.webm",
+      "sha256": "ed4771da2ed515055760f428fd8da5e049fe5e099a15d02f03159542ae49ed64",
+      "durationS": 82.28602083333334,
+      "codec": {
+        "codec_name": "opus",
+        "sample_rate": "48000"
+      },
+      "peakDbfs": -5.57621955871582,
+      "quietSeconds": [
+        74,
+        77,
+        75,
+        73,
+        76,
+        3,
+        12,
+        7
+      ],
+      "quietBandDbfs": -35.78640675024877,
+      "quietFlatness": 0.6833474040031433
+    },
+    {
+      "file": "score-tension-L5.m4a",
+      "sha256": "52b19e6a62ba6a0f38c07fe947f86d4d9be5661b9484c06b51764264afc1ca3f",
+      "durationS": 76.0,
+      "codec": {
+        "codec_name": "aac",
+        "sample_rate": "48000"
+      },
+      "peakDbfs": -1.8021259307861328,
+      "quietSeconds": [
+        1,
+        13,
+        2,
+        12,
+        0,
+        20,
+        75
+      ],
+      "quietBandDbfs": -89.16066967446014,
+      "quietFlatness": 0.7563932538032532
+    },
+    {
+      "file": "score-tension-L5.webm",
+      "sha256": "ed9a629f8425068872e25f4739c3aee920efad2d997ea0442e5f7109330d9373",
+      "durationS": 76.0,
+      "codec": {
+        "codec_name": "opus",
+        "sample_rate": "48000"
+      },
+      "peakDbfs": -1.5196833610534668,
+      "quietSeconds": [
+        1,
+        13,
+        2,
+        12,
+        0,
+        20,
+        75
+      ],
+      "quietBandDbfs": -89.23177897243772,
+      "quietFlatness": 0.8838654160499573
+    },
+    {
+      "file": "score-tension-L6.m4a",
+      "sha256": "f364e002d42c3c49ed762301760a300f78656541448d7367ccd8c324c68fd5c7",
+      "durationS": 96.0,
+      "codec": {
+        "codec_name": "aac",
+        "sample_rate": "48000"
+      },
+      "peakDbfs": -2.765357494354248,
+      "quietSeconds": [
+        49,
+        52,
+        51,
+        48,
+        54,
+        78,
+        46,
+        63,
+        47
+      ],
+      "quietBandDbfs": -40.434223337856785,
+      "quietFlatness": 0.3076452910900116
+    },
+    {
+      "file": "score-tension-L6.webm",
+      "sha256": "56d561fb9ab40f17b7f317b54c44b8a8ae795669452c031136b869fe2678e623",
+      "durationS": 96.0,
+      "codec": {
+        "codec_name": "opus",
+        "sample_rate": "48000"
+      },
+      "peakDbfs": -2.5996031761169434,
+      "quietSeconds": [
+        49,
+        52,
+        51,
+        48,
+        78,
+        54,
+        46,
+        63,
+        47
+      ],
+      "quietBandDbfs": -40.4714096915903,
+      "quietFlatness": 0.309091717004776
+    },
+    {
+      "file": "score-tension-L7.m4a",
+      "sha256": "54f0f7f7277eaab7353945aac2819c8796a7726d6c1aff11410ada22f0d168fc",
+      "durationS": 89.6,
+      "codec": {
+        "codec_name": "aac",
+        "sample_rate": "48000"
+      },
+      "peakDbfs": -2.0925698280334473,
+      "quietSeconds": [
+        55,
+        61,
+        60,
+        12,
+        62,
+        26,
+        54,
+        24
+      ],
+      "quietBandDbfs": -32.727577455400635,
+      "quietFlatness": 0.3308667838573456
+    },
+    {
+      "file": "score-tension-L7.webm",
+      "sha256": "b2b3664385ef6c64fa67a985e9899aa9c0d27c5aaab0429c8781c9634ed83c99",
+      "durationS": 89.6,
+      "codec": {
+        "codec_name": "opus",
+        "sample_rate": "48000"
+      },
+      "peakDbfs": -4.151238441467285,
+      "quietSeconds": [
+        55,
+        61,
+        60,
+        12,
+        26,
+        62,
+        24,
+        54
+      ],
+      "quietBandDbfs": -32.746643211909614,
+      "quietFlatness": 0.3547552227973938
+    },
+    {
+      "file": "score-tension-L8.m4a",
+      "sha256": "b61ec72fcae66bdc1dd5d54289fd76f2da06edf3dea75ee07ab2b8f30cfb1be1",
+      "durationS": 85.97,
+      "codec": {
+        "codec_name": "aac",
+        "sample_rate": "48000"
+      },
+      "peakDbfs": -1.6908444166183472,
+      "quietSeconds": [
+        76,
+        2,
+        20,
+        27,
+        22,
+        31,
+        29,
+        13
+      ],
+      "quietBandDbfs": -30.72325864292609,
+      "quietFlatness": 0.6827511787414551
+    },
+    {
+      "file": "score-tension-L8.webm",
+      "sha256": "d5da816b3f0eac928c0afd1f4cbd216847bd5be3f26e3d978cff34a9327b9e44",
+      "durationS": 85.97,
+      "codec": {
+        "codec_name": "opus",
+        "sample_rate": "48000"
+      },
+      "peakDbfs": -1.533864974975586,
+      "quietSeconds": [
+        76,
+        2,
+        20,
+        27,
+        22,
+        31,
+        29,
+        13
+      ],
+      "quietBandDbfs": -30.574596575073407,
+      "quietFlatness": 0.7188005447387695
+    },
+    {
+      "file": "score-tension-L9.m4a",
+      "sha256": "39a670bd8ee2f7129c284525f322b514fbef0a8ae9b792a40b8e1a22262e7a7c",
+      "durationS": 94.42602083333334,
+      "codec": {
+        "codec_name": "aac",
+        "sample_rate": "48000"
+      },
+      "peakDbfs": -1.772717833518982,
+      "quietSeconds": [
+        91,
+        90,
+        92,
+        50,
+        46,
+        1,
+        93,
+        2,
+        0
+      ],
+      "quietBandDbfs": -44.97472334252505,
+      "quietFlatness": 0.2818639576435089
+    },
+    {
+      "file": "score-tension-L9.webm",
+      "sha256": "1c0294872126dcb3d68043182f376c434898993d4f57ee89fd79ec7917f51f26",
+      "durationS": 94.42602083333334,
+      "codec": {
+        "codec_name": "opus",
+        "sample_rate": "48000"
+      },
+      "peakDbfs": -1.321359395980835,
+      "quietSeconds": [
+        91,
+        90,
+        92,
+        50,
+        46,
+        1,
+        93,
+        2,
+        0
+      ],
+      "quietBandDbfs": -44.336361284544914,
+      "quietFlatness": 0.36615410447120667
+    },
+    {
+      "file": "score-tension.m4a",
+      "sha256": "bbe8c6e055552863236e434a17bf9dd6a0e5379a8b7d8dba8a05f1f990116cb6",
+      "durationS": 32.0,
+      "codec": {
+        "codec_name": "aac",
+        "sample_rate": "48000"
+      },
+      "peakDbfs": -0.42567408084869385,
+      "quietSeconds": [
+        0,
+        5,
+        4
+      ],
+      "quietBandDbfs": -73.38544310773509,
+      "quietFlatness": 0.8884052634239197
+    },
+    {
+      "file": "score-tension.webm",
+      "sha256": "54d1997888335d69edf49c768ec567cb31e07a77cd5ea49d40c71ea44be28d09",
+      "durationS": 32.0,
+      "codec": {
+        "codec_name": "opus",
+        "sample_rate": "48000"
+      },
+      "peakDbfs": -0.3926226794719696,
+      "quietSeconds": [
+        0,
+        5,
+        4
+      ],
+      "quietBandDbfs": -73.69809715198421,
+      "quietFlatness": 0.9044583439826965
+    }
+  ]
+}
