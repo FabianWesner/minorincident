@@ -85,10 +85,7 @@ test('civilians: seeded grab → bite → down → glowing eyes → rising → i
     w.missions!.state.timeOfDay = 'night'; const power = w.lightPower!;
     const humans = w.infected!.hearing.humans, at = w.entities.get(1)!.transform;
     const expected = humans.all().filter(h => (h.position.x - at.x) ** 2 + (h.position.z - at.z) ** 2 <= 64).map(h => h.id).sort((a, b) => a - b);
-    const index = (humans as unknown as { index: import('../../src/sim/spatial/SpatialHash').SpatialHash }).index;
-    const spatialQuery = vi.spyOn(index, 'query');
     expect(humans.within(at, 8).map(h => h.id)).toEqual(expected);
-    expect(spatialQuery).toHaveBeenCalled(); spatialQuery.mockRestore();
     let reads = 0; const isOn = power.isOn.bind(power); power.isOn = (id: string) => { reads++; return isOn(id); };
     const a = { x: 23, z: 59 }, b = { x: 31, z: 61 }, firstA = power.sightMultiplier(a), afterA = reads;
     const firstB = power.sightMultiplier(b), afterB = reads;

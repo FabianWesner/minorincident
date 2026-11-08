@@ -98,8 +98,7 @@ export class Npcs {
       const failed = this.unreachable.get(e.id), tick = this.world.tick;
       // Formation goals move every tick. Compare the actual navigation goal cell, not floating point
       // coordinates, so sub-cell jitter cannot defeat the retry cooldown and repeat a full A* search.
-      const targetCell = nav.nearestCell(target.x, target.z, footprint);
-      if (failed && tick < failed.until && failed.cell === targetCell) return false;
+      if (failed && tick < failed.until && failed.cell === nav.nearestCell(target.x, target.z, footprint)) return false;
       // Reserve the full body around posts when the actual goal has that room.
       // A goal beside a bench/wall needs the narrow approach, rather than a
       // wider nearest-cell goal on the other side. L3 keeps its shared field's clearance.
@@ -115,7 +114,7 @@ export class Npcs {
         const pocket = !!e.companion;
         if (pocket && !(this.routeless.get(e.id)! <= tick)) this.routeless.set(e.id, tick); // first failure, or a restored earlier tick
         const trail = pocket && tick - this.routeless.get(e.id)! >= 120 ? this.companion.trailPoint(e) : null;
-        if (!trail) { this.unreachable.set(e.id, { cell: targetCell, until: tick + 60 }); return false; }
+        if (!trail) { this.unreachable.set(e.id, { cell: nav.nearestCell(target.x, target.z, footprint), until: tick + 60 }); return false; }
         this.waypoint.x = trail.x; this.waypoint.z = trail.z;
       } else this.routeless.delete(e.id);
       if (failed) this.unreachable.delete(e.id);

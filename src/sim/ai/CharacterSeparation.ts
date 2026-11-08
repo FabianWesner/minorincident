@@ -137,7 +137,7 @@ export function installCharacterSeparation(world: SimWorld): void {
     // Keep the authored three passes for ordinary groups, friendly queues and
     // L1 pursuit trains. Large classic crowds use one (two at a driven hull).
     for (let pass = 0; pass < 3; pass++) for (const body of bodies) {
-      if (pass && bodies.length > 20 && !body.l1 && (!body.hullContact || pass > 1)) continue;
+      if (pass && bodies.length > 20 && body.infected && !body.l1 && (!body.hullContact || pass > 1)) continue;
       const { entity: e, radius: r, point: p } = body; active = body; activeReach = reaches[body.category];
       query.x = p.x; query.z = p.z; query.r = r + maximumRadius + Math.max(.45, .22 + maximumRadius - .35) + (narrowQueue ? .4 : 0); // covers the largest gap below
       // Consume the same unsorted bucket order directly; nav.move does not mutate the spatial index.
