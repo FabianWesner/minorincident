@@ -1,0 +1,7556 @@
+{
+  "omitted": "cureVignettes only",
+  "sourceCommit": "893bf22029eabcde250436ed9a2f4e4e283329ba",
+  "receipt": {
+    "version": 2,
+    "level": "L10",
+    "tier": "low",
+    "policy": "complete",
+    "seed": 1,
+    "sourceHash": "1c0373cddee309c5a58748a6d9beb7f84353582da4c271d944618fc83242a61e",
+    "observerHash": "2c536930d36d27fb546ce2f0ae4431df5913b794c1ea3ae24e355d457f7c11db",
+    "revision": "893bf22029eabcde250436ed9a2f4e4e283329ba",
+    "generatedAt": "2026-11-08T18:49:44.033Z",
+    "run": {
+      "level": "L10",
+      "policy": "complete",
+      "seed": 1,
+      "completed": false,
+      "time": 3600,
+      "deaths": 162,
+      "kills": 2291,
+      "damageTaken": 16565,
+      "failures": {
+        "player-died": 162,
+        "tick-budget": 1
+      },
+      "objectiveTimeline": [
+        {
+          "id": "crash",
+          "t": 0.016666666666666666
+        },
+        {
+          "id": "residential-fringe",
+          "t": 58.28333333333333
+        },
+        {
+          "id": "industrial-area",
+          "t": 191.01666666666668
+        },
+        {
+          "id": "military-zone",
+          "t": 356.15
+        },
+        {
+          "id": "research-campus",
+          "t": 528.4666666666667
+        },
+        {
+          "id": "research",
+          "t": 592.2666666666667
+        },
+        {
+          "id": "cure",
+          "t": 593.6
+        },
+        {
+          "id": "research-exit",
+          "t": 614.5
+        },
+        {
+          "id": "destroyed-corridor",
+          "t": 654.0166666666667
+        },
+        {
+          "id": "dispersal-complex",
+          "t": 873.7333333333333
+        },
+        {
+          "id": "install",
+          "t": 949.1
+        }
+      ],
+      "furthestObjective": "hold",
+      "activeObjectives": [
+        "hold"
+      ],
+      "outcome": "tick-budget",
+      "blocker": {
+        "objective": "hold",
+        "detail": "tick-budget: Charge the dispersal system",
+        "player": {
+          "x": 3989.38525390625,
+          "z": -32.5199089050293
+        },
+        "distance": 13.769575640868624,
+        "actors": {}
+      },
+      "cureReleases": 0,
+      "regions": [
+        {
+          "id": "crash-outskirts",
+          "seconds": 66.04999999999754,
+          "travelSeconds": 62.799999999997716,
+          "combatSeconds": 3.21666666666666,
+          "interactionSeconds": 0.03333333333333333,
+          "holdSeconds": 0,
+          "epilogueSeconds": 0,
+          "otherSeconds": 0,
+          "metres": 296.44077342764035
+        },
+        {
+          "id": "residential-fringe",
+          "seconds": 121.36666666666106,
+          "travelSeconds": 93.88333333332929,
+          "combatSeconds": 27.483333333333054,
+          "interactionSeconds": 0,
+          "holdSeconds": 0,
+          "epilogueSeconds": 0,
+          "otherSeconds": 0,
+          "metres": 543.0703822284006
+        },
+        {
+          "id": "industrial-area",
+          "seconds": 164.7000000000232,
+          "travelSeconds": 48.09999999999855,
+          "combatSeconds": 116.583333333328,
+          "interactionSeconds": 0.016666666666666666,
+          "holdSeconds": 0,
+          "epilogueSeconds": 0,
+          "otherSeconds": 0,
+          "metres": 740.1545552636434
+        },
+        {
+          "id": "military-zone",
+          "seconds": 181.2333333333697,
+          "travelSeconds": 136.45000000000073,
+          "combatSeconds": 44.76666666666541,
+          "interactionSeconds": 0.016666666666666666,
+          "holdSeconds": 0,
+          "epilogueSeconds": 0,
+          "otherSeconds": 0,
+          "metres": 813.0622066026029
+        },
+        {
+          "id": "research-campus",
+          "seconds": 127.58333333332737,
+          "travelSeconds": 83.2333333333299,
+          "combatSeconds": 44.29999999999877,
+          "interactionSeconds": 0.05,
+          "holdSeconds": 0,
+          "epilogueSeconds": 0,
+          "otherSeconds": 0,
+          "metres": 573.3105051192175
+        },
+        {
+          "id": "destroyed-corridor",
+          "seconds": 217.6833333333987,
+          "travelSeconds": 169.08333333336003,
+          "combatSeconds": 48.59999999999852,
+          "interactionSeconds": 0,
+          "holdSeconds": 0,
+          "epilogueSeconds": 0,
+          "otherSeconds": 0,
+          "metres": 964.017180840653
+        },
+        {
+          "id": "dispersal-complex",
+          "seconds": 2721.3833333403736,
+          "travelSeconds": 59.066666666664595,
+          "combatSeconds": 11.400000000000146,
+          "interactionSeconds": 0.016666666666666666,
+          "holdSeconds": 2650.900000006143,
+          "epilogueSeconds": 0,
+          "otherSeconds": 0,
+          "metres": 34733.381044815615
+        }
+      ],
+      "maxConcurrentInfected": 95,
+      "collision": {
+        "failures": 0,
+        "pending": 0,
+        "admitted": 15780,
+        "deferred": 0,
+        "requests": [],
+        "offenders": []
+      }
+    },
+    "observation": {
+      "initial": {
+        "tick": 0,
+        "mission": {
+          "id": "L10",
+          "phase": "playing",
+          "completedObjectives": [],
+          "volumes": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "killedBosses": [],
+          "deadlineTicks": null,
+          "steps": {
+            "crash": {
+              "status": "active",
+              "started": 0,
+              "kills": [],
+              "events": {},
+              "interaction": 0
+            },
+            "residential-fringe": {
+              "status": "pending",
+              "started": 0,
+              "kills": [],
+              "events": {},
+              "interaction": 0
+            },
+            "industrial-area": {
+              "status": "pending",
+              "started": 0,
+              "kills": [],
+              "events": {},
+              "interaction": 0
+            },
+            "military-zone": {
+              "status": "pending",
+              "started": 0,
+              "kills": [],
+              "events": {},
+              "interaction": 0
+            },
+            "research-campus": {
+              "status": "pending",
+              "started": 0,
+              "kills": [],
+              "events": {},
+              "interaction": 0
+            },
+            "research": {
+              "status": "pending",
+              "started": 0,
+              "kills": [],
+              "events": {},
+              "interaction": 0
+            },
+            "cure": {
+              "status": "pending",
+              "started": 0,
+              "kills": [],
+              "events": {},
+              "interaction": 0
+            },
+            "research-exit": {
+              "status": "pending",
+              "started": 0,
+              "kills": [],
+              "events": {},
+              "interaction": 0
+            },
+            "destroyed-corridor": {
+              "status": "pending",
+              "started": 0,
+              "kills": [],
+              "events": {},
+              "interaction": 0
+            },
+            "dispersal-complex": {
+              "status": "pending",
+              "started": 0,
+              "kills": [],
+              "events": {},
+              "interaction": 0
+            },
+            "install": {
+              "status": "pending",
+              "started": 0,
+              "kills": [],
+              "events": {},
+              "interaction": 0
+            },
+            "hold": {
+              "status": "pending",
+              "started": 0,
+              "kills": [],
+              "events": {},
+              "interaction": 0
+            },
+            "mega": {
+              "status": "pending",
+              "started": 0,
+              "kills": [],
+              "events": {},
+              "interaction": 0
+            },
+            "release": {
+              "status": "pending",
+              "started": 0,
+              "kills": [],
+              "events": {},
+              "interaction": 0
+            },
+            "epilogue": {
+              "status": "pending",
+              "started": 0,
+              "kills": [],
+              "events": {},
+              "interaction": 0
+            },
+            "credits": {
+              "status": "pending",
+              "started": 0,
+              "kills": [],
+              "events": {},
+              "interaction": 0
+            }
+          },
+          "actors": {},
+          "items": [],
+          "states": {
+            "charge-active": false,
+            "console-held": false,
+            "terminal-read": false,
+            "cure-carried": false,
+            "cure-installed": false,
+            "charge-ready": false,
+            "mega-dead": false,
+            "cure-released": false,
+            "epilogue-finished": false,
+            "credits-finished": false,
+            "anchor-unavailable": false
+          },
+          "counters": {
+            "charge-ticks": 0,
+            "epilogue-ticks": 0
+          },
+          "gates": {},
+          "marker": "cure-crash",
+          "checkpoint": "cure-crash",
+          "tier": 0,
+          "timeOfDay": null,
+          "subtitle": {
+            "id": "l10.arsenal-lost",
+            "text": "The crash took everything but the axe. The others made it to the evacuation point while you fell behind. Find the research campus and the cure.",
+            "until": 480
+          },
+          "cinematic": null,
+          "failure": null,
+          "stats": {
+            "time": 0,
+            "kills": 0,
+            "knockdowns": 0,
+            "damage": 0,
+            "deaths": 0,
+            "rescued": 0,
+            "optionalObjectives": []
+          },
+          "result": null
+        },
+        "deadline": null,
+        "arsenal": [
+          "weapon.fire-axe",
+          "ability.corgi-lure"
+        ],
+        "racks": {
+          "LEFT": [
+            "weapon.fire-axe"
+          ],
+          "RIGHT": [
+            "weapon.fire-axe"
+          ]
+        },
+        "player": {
+          "kind": "player",
+          "archetype": "player.survivor",
+          "transform": {
+            "x": 547,
+            "y": 0.705,
+            "z": 0,
+            "yaw": 0.3205919885488634
+          },
+          "health": {
+            "current": 100,
+            "max": 100
+          },
+          "faction": "survivor",
+          "id": 1,
+          "locomotion": {
+            "vx": 0,
+            "vz": 0,
+            "ax": 0,
+            "az": 0,
+            "omega": 0,
+            "updatedAt": -1
+          },
+          "survivor": {
+            "variant": "female",
+            "gearTier": 4,
+            "animation": "idle",
+            "animationTick": 0,
+            "velocity": {
+              "x": 0,
+              "z": 0
+            },
+            "grounded": false,
+            "invulnerableUntil": 0,
+            "checkpoint": {
+              "x": 547,
+              "y": 0.705,
+              "z": 0,
+              "yaw": 0.3205919885488634
+            },
+            "diedAt": null
+          },
+          "weapons": {
+            "selectedSide": "LEFT",
+            "LEFT": {
+              "rack": [
+                {
+                  "id": "weapon.fire-axe",
+                  "magazine": 0,
+                  "reserve": "infinite",
+                  "charges": 0,
+                  "nextCharge": 0,
+                  "reloadUntil": 0,
+                  "readyAt": 0
+                }
+              ],
+              "index": 0,
+              "aim": {
+                "x": 1,
+                "z": 0
+              },
+              "aimPoint": null,
+              "swapUntil": 0
+            },
+            "RIGHT": {
+              "rack": [
+                {
+                  "id": "weapon.fire-axe",
+                  "magazine": 0,
+                  "reserve": "infinite",
+                  "charges": 0,
+                  "nextCharge": 0,
+                  "reloadUntil": 0,
+                  "readyAt": 0
+                }
+              ],
+              "index": 0,
+              "aim": {
+                "x": 1,
+                "z": 0
+              },
+              "aimPoint": null,
+              "swapUntil": 0
+            }
+          },
+          "combat": {
+            "radius": 0.3,
+            "armor": 0,
+            "shield": false,
+            "staggerUntil": 0,
+            "attacking": false,
+            "damageMultiplier": 1,
+            "statuses": []
+          }
+        },
+        "census": [
+          {
+            "id": 99,
+            "archetype": "char.corgi",
+            "x": 547,
+            "z": 2,
+            "hp": 100,
+            "maxHp": 100,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": true,
+            "infected": false,
+            "pickup": null
+          }
+        ],
+        "l7": null,
+        "departure": null,
+        "l8": null,
+        "l9": null,
+        "mega": {
+          "tick": 0,
+          "id": 0,
+          "mode": "dormant",
+          "introducedAt": -1,
+          "introduceTick": 5400,
+          "x": 0,
+          "z": 0,
+          "hp": 3000,
+          "maxHp": 3000,
+          "target": {
+            "x": 547,
+            "z": 0
+          },
+          "route": [],
+          "routeAt": null,
+          "passed": null,
+          "blocked": {},
+          "breach": null,
+          "stuck": {
+            "level": 0,
+            "since": -1,
+            "sampleAt": 0,
+            "x": 0,
+            "z": 0,
+            "noPath": 0,
+            "goal": null
+          },
+          "lastDamage": null,
+          "coarseM": 0
+        },
+        "checkpoints": [
+          {
+            "id": "cure-crash",
+            "position": [
+              547,
+              0.705,
+              0
+            ]
+          },
+          {
+            "id": "start",
+            "position": [
+              547,
+              0.705,
+              0
+            ]
+          }
+        ]
+      },
+      "final": {
+        "tick": 216000,
+        "mission": {
+          "id": "L10",
+          "phase": "playing",
+          "completedObjectives": [
+            "crash",
+            "residential-fringe",
+            "industrial-area",
+            "military-zone",
+            "research-campus",
+            "research",
+            "cure",
+            "research-exit",
+            "destroyed-corridor",
+            "dispersal-complex",
+            "install"
+          ],
+          "volumes": [
+            false,
+            false,
+            false,
+            false
+          ],
+          "killedBosses": [],
+          "deadlineTicks": null,
+          "steps": {
+            "crash": {
+              "status": "completed",
+              "started": 0,
+              "kills": [],
+              "events": {},
+              "interaction": 1
+            },
+            "residential-fringe": {
+              "status": "completed",
+              "started": 1,
+              "kills": [
+                101,
+                100,
+                102,
+                103,
+                106,
+                107,
+                108
+              ],
+              "events": {
+                "player.damaged:*": 1,
+                "combat.kill:*": 7
+              },
+              "interaction": 2
+            },
+            "industrial-area": {
+              "status": "completed",
+              "started": 3497,
+              "kills": [
+                109,
+                110,
+                112,
+                115,
+                116,
+                117,
+                118,
+                113,
+                114,
+                122,
+                123,
+                120,
+                121,
+                124,
+                125,
+                127,
+                126,
+                131,
+                128,
+                129,
+                130,
+                134,
+                133
+              ],
+              "events": {
+                "combat.kill:*": 23,
+                "player.damaged:*": 5
+              },
+              "interaction": 16
+            },
+            "military-zone": {
+              "status": "completed",
+              "started": 11461,
+              "kills": [
+                141,
+                137,
+                138,
+                140,
+                146,
+                155,
+                158,
+                150,
+                151,
+                153,
+                143,
+                156,
+                157,
+                160,
+                159,
+                149,
+                161,
+                148,
+                154,
+                144,
+                152,
+                139,
+                142,
+                163,
+                164,
+                165,
+                168,
+                167,
+                166,
+                145,
+                172,
+                175,
+                171,
+                176,
+                173,
+                170,
+                174
+              ],
+              "events": {
+                "combat.kill:*": 37,
+                "player.damaged:*": 4
+              },
+              "interaction": 2
+            },
+            "research-campus": {
+              "status": "completed",
+              "started": 21369,
+              "kills": [
+                183,
+                184,
+                179,
+                182,
+                181,
+                177,
+                180,
+                178,
+                192,
+                186,
+                188,
+                200,
+                197,
+                195,
+                203,
+                198,
+                190,
+                185,
+                201,
+                194,
+                196,
+                189,
+                1631439626,
+                202,
+                191,
+                1784421039,
+                199,
+                193,
+                187,
+                209,
+                217,
+                214,
+                215,
+                210,
+                205,
+                212,
+                206,
+                211,
+                216,
+                213,
+                218,
+                207,
+                204,
+                208,
+                224,
+                229,
+                221,
+                227,
+                226,
+                222,
+                220,
+                228,
+                223,
+                225,
+                219
+              ],
+              "events": {
+                "combat.kill:*": 59,
+                "player.damaged:*": 6,
+                "prop.broken:*": 2
+              },
+              "interaction": 1
+            },
+            "research": {
+              "status": "completed",
+              "started": 31708,
+              "kills": [
+                237,
+                234,
+                236,
+                232,
+                233,
+                238,
+                235,
+                231,
+                246,
+                251,
+                259,
+                1769216764,
+                239,
+                254,
+                262,
+                247,
+                242,
+                263,
+                255,
+                252,
+                243,
+                257,
+                244,
+                250,
+                253,
+                256,
+                245,
+                268,
+                281,
+                265,
+                260,
+                269,
+                277,
+                264,
+                272,
+                248,
+                249,
+                261,
+                285,
+                258,
+                284,
+                276,
+                273,
+                271,
+                1623410318,
+                266,
+                279,
+                274,
+                282,
+                270,
+                275,
+                280,
+                278,
+                267,
+                240,
+                283,
+                241
+              ],
+              "events": {
+                "combat.kill:*": 57,
+                "player.damaged:*": 10,
+                "prop.broken:*": 2
+              },
+              "interaction": 2
+            },
+            "cure": {
+              "status": "completed",
+              "started": 35536,
+              "kills": [],
+              "events": {},
+              "interaction": 2
+            },
+            "research-exit": {
+              "status": "completed",
+              "started": 35616,
+              "kills": [],
+              "events": {},
+              "interaction": 1
+            },
+            "destroyed-corridor": {
+              "status": "completed",
+              "started": 36870,
+              "kills": [
+                293,
+                289,
+                1731971651,
+                1707445508,
+                290,
+                294,
+                291,
+                288,
+                292,
+                287,
+                302,
+                307,
+                299,
+                296,
+                305,
+                300,
+                298,
+                306,
+                304,
+                301,
+                303,
+                297,
+                295
+              ],
+              "events": {
+                "combat.kill:*": 23,
+                "prop.broken:*": 2,
+                "player.damaged:*": 2
+              },
+              "interaction": 13
+            },
+            "dispersal-complex": {
+              "status": "completed",
+              "started": 39241,
+              "kills": [
+                309,
+                308,
+                313,
+                312,
+                342,
+                347,
+                355,
+                350,
+                358,
+                344,
+                349,
+                343,
+                338,
+                331,
+                1882486489,
+                318,
+                379,
+                317,
+                335,
+                346,
+                320,
+                328,
+                314,
+                336,
+                356,
+                365,
+                351,
+                372,
+                360,
+                375,
+                333,
+                367,
+                334,
+                361,
+                337,
+                325,
+                326,
+                362,
+                339,
+                366,
+                357,
+                345,
+                340,
+                327,
+                330,
+                315,
+                353,
+                324,
+                352,
+                354,
+                319,
+                383,
+                382,
+                332,
+                373,
+                329,
+                321,
+                316,
+                376,
+                348,
+                322,
+                341,
+                363,
+                371,
+                359,
+                377,
+                369,
+                374,
+                370,
+                386,
+                378,
+                388,
+                387,
+                323,
+                390,
+                389,
+                381,
+                364,
+                394,
+                393,
+                368,
+                311,
+                310,
+                396,
+                395,
+                399,
+                398,
+                400,
+                402,
+                401,
+                1198774776,
+                384,
+                385,
+                404,
+                403,
+                405,
+                406,
+                391,
+                407,
+                408,
+                392,
+                397,
+                410,
+                409,
+                412,
+                411
+              ],
+              "events": {
+                "combat.kill:*": 111,
+                "player.damaged:*": 5,
+                "prop.broken:*": 2
+              },
+              "interaction": 1
+            },
+            "install": {
+              "status": "completed",
+              "started": 52424,
+              "kills": [
+                414,
+                413,
+                415,
+                416,
+                420,
+                419,
+                417,
+                418,
+                422,
+                421,
+                424,
+                423,
+                426,
+                425,
+                428,
+                427,
+                431,
+                430,
+                429,
+                432
+              ],
+              "events": {
+                "combat.kill:*": 21
+              },
+              "interaction": 2
+            },
+            "hold": {
+              "status": "active",
+              "started": 215504,
+              "kills": [
+                423,
+                450,
+                463,
+                471,
+                484,
+                505,
+                518,
+                439,
+                447,
+                460,
+                468,
+                481,
+                442,
+                455,
+                476,
+                489,
+                497,
+                510,
+                494
+              ],
+              "events": {
+                "combat.kill:*": 19,
+                "cure-assault-started:*": 1,
+                "player.damaged:*": 2
+              },
+              "interaction": 0
+            },
+            "mega": {
+              "status": "pending",
+              "started": 0,
+              "kills": [],
+              "events": {},
+              "interaction": 0
+            },
+            "release": {
+              "status": "pending",
+              "started": 0,
+              "kills": [],
+              "events": {},
+              "interaction": 0
+            },
+            "epilogue": {
+              "status": "pending",
+              "started": 0,
+              "kills": [],
+              "events": {},
+              "interaction": 0
+            },
+            "credits": {
+              "status": "pending",
+              "started": 0,
+              "kills": [],
+              "events": {},
+              "interaction": 0
+            }
+          },
+          "actors": {},
+          "items": [
+            "cure-canister"
+          ],
+          "states": {
+            "charge-active": true,
+            "console-held": false,
+            "terminal-read": true,
+            "cure-carried": false,
+            "cure-installed": true,
+            "charge-ready": false,
+            "mega-dead": false,
+            "cure-released": false,
+            "epilogue-finished": false,
+            "credits-finished": false,
+            "anchor-unavailable": false
+          },
+          "counters": {
+            "charge-ticks": 359,
+            "epilogue-ticks": 0
+          },
+          "gates": {},
+          "marker": "cure-console",
+          "checkpoint": "cure-disperse-ready",
+          "tier": 0,
+          "timeOfDay": null,
+          "subtitle": null,
+          "cinematic": null,
+          "failure": null,
+          "stats": {
+            "time": 3600,
+            "kills": 2291,
+            "knockdowns": 1081,
+            "damage": 16565,
+            "deaths": 162,
+            "rescued": 0,
+            "optionalObjectives": []
+          },
+          "result": null
+        },
+        "deadline": null,
+        "arsenal": [
+          "weapon.fire-axe",
+          "ability.corgi-lure",
+          "weapon.pistol",
+          "weapon.shotgun",
+          "weapon.army-mg",
+          "weapon.rocket-launcher"
+        ],
+        "racks": {
+          "LEFT": [
+            "weapon.fire-axe"
+          ],
+          "RIGHT": [
+            "weapon.pistol",
+            "weapon.shotgun",
+            "weapon.army-mg",
+            "weapon.rocket-launcher"
+          ]
+        },
+        "player": {
+          "kind": "player",
+          "archetype": "player.survivor",
+          "transform": {
+            "x": 3989.38525390625,
+            "y": 3.7799999713897705,
+            "z": -32.5199089050293,
+            "yaw": 0.6630198427571501
+          },
+          "health": {
+            "current": 80,
+            "max": 100
+          },
+          "faction": "survivor",
+          "id": 1,
+          "locomotion": {
+            "vx": 0,
+            "vz": 0,
+            "ax": 0,
+            "az": 0,
+            "omega": 0,
+            "updatedAt": -1
+          },
+          "survivor": {
+            "variant": "female",
+            "gearTier": 4,
+            "animation": "shoot",
+            "animationTick": 216000,
+            "velocity": {
+              "x": 0,
+              "z": 0
+            },
+            "grounded": true,
+            "invulnerableUntil": 216019,
+            "checkpoint": {
+              "x": 4004.769287109375,
+              "y": 0.7099999785423279,
+              "z": -38.18214797973633,
+              "yaw": 0.4414359217520387
+            },
+            "diedAt": null,
+            "attack": {
+              "actionId": "weapon.rocket-launcher",
+              "combo": 0,
+              "started": 215823,
+              "activeAt": 215823,
+              "recoveryAt": 215824,
+              "endsAt": 215824
+            }
+          },
+          "combat": {
+            "radius": 0.3,
+            "armor": 0,
+            "shield": false,
+            "staggerUntil": 215504,
+            "attacking": false,
+            "damageMultiplier": 1,
+            "statuses": []
+          },
+          "weapons": {
+            "selectedSide": "RIGHT",
+            "LEFT": {
+              "rack": [
+                {
+                  "id": "weapon.fire-axe",
+                  "magazine": 0,
+                  "reserve": "infinite",
+                  "charges": 0,
+                  "nextCharge": 0,
+                  "reloadUntil": 0,
+                  "readyAt": 0
+                }
+              ],
+              "index": 0,
+              "aim": {
+                "x": 1,
+                "z": 0
+              },
+              "aimPoint": null,
+              "swapUntil": 0
+            },
+            "RIGHT": {
+              "rack": [
+                {
+                  "id": "weapon.pistol",
+                  "magazine": 0,
+                  "reserve": "infinite",
+                  "charges": 0,
+                  "nextCharge": 0,
+                  "reloadUntil": 0,
+                  "readyAt": 0
+                },
+                {
+                  "id": "weapon.shotgun",
+                  "magazine": 0,
+                  "reserve": "infinite",
+                  "charges": 0,
+                  "nextCharge": 0,
+                  "reloadUntil": 0,
+                  "readyAt": 0
+                },
+                {
+                  "id": "weapon.army-mg",
+                  "magazine": 0,
+                  "reserve": "infinite",
+                  "charges": 0,
+                  "nextCharge": 0,
+                  "reloadUntil": 0,
+                  "readyAt": 214407
+                },
+                {
+                  "id": "weapon.rocket-launcher",
+                  "magazine": 0,
+                  "reserve": "infinite",
+                  "charges": 0,
+                  "nextCharge": 0,
+                  "reloadUntil": 0,
+                  "readyAt": 215873
+                }
+              ],
+              "index": 1,
+              "aim": {
+                "x": -0.7890678758438564,
+                "z": 0.6143060208977803
+              },
+              "aimPoint": {
+                "x": 3985.826513570377,
+                "z": -28.156698838171863
+              },
+              "swapUntil": 215863
+            }
+          },
+          "hidden": false
+        },
+        "census": [
+          {
+            "id": 99,
+            "archetype": "char.corgi",
+            "x": 3992.039784993129,
+            "z": -32.852769365707466,
+            "hp": 100,
+            "maxHp": 100,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": true,
+            "infected": false,
+            "pickup": null
+          },
+          {
+            "id": 119,
+            "archetype": "infected.alpha",
+            "x": 3367.0798432714423,
+            "z": 79.1853126510743,
+            "hp": 3000,
+            "maxHp": 3000,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 425,
+            "archetype": "infected.runner",
+            "x": 3898.161851838145,
+            "z": -33.530229759792,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 427,
+            "archetype": "infected.runner",
+            "x": 3907.4620086725217,
+            "z": -39.71467816984106,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 428,
+            "archetype": "infected.runner",
+            "x": 3909.139743233751,
+            "z": -24.824982251945897,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 429,
+            "archetype": "infected.dog",
+            "x": 3910.6797846048753,
+            "z": -30.547707041229817,
+            "hp": 45,
+            "maxHp": 45,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 430,
+            "archetype": "infected.dog",
+            "x": 3916.867948672457,
+            "z": -38.1009145668597,
+            "hp": 45,
+            "maxHp": 45,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 431,
+            "archetype": "infected.dog",
+            "x": 3919.675458654442,
+            "z": -17.41484285451289,
+            "hp": 45,
+            "maxHp": 45,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 432,
+            "archetype": "infected.dog",
+            "x": 3927.987815377229,
+            "z": -24.03075045592246,
+            "hp": 45,
+            "maxHp": 45,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 433,
+            "archetype": "infected.alpha",
+            "x": 4018.772818171868,
+            "z": -7.010905476911465,
+            "hp": 300,
+            "maxHp": 300,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 434,
+            "archetype": "infected.alpha",
+            "x": 3987.699012719375,
+            "z": -31.604299292984024,
+            "hp": 292,
+            "maxHp": 300,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 435,
+            "archetype": "infected.runner",
+            "x": 4003.917060310038,
+            "z": -30.748897240755856,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 436,
+            "archetype": "infected.runner",
+            "x": 3980.3854274967807,
+            "z": -9.15718572423973,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 437,
+            "archetype": "infected.runner",
+            "x": 3990.9575751420875,
+            "z": -33.77348253137531,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 438,
+            "archetype": "infected.runner",
+            "x": 4012.6336589807393,
+            "z": -11.209349212190515,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 440,
+            "archetype": "infected.runner",
+            "x": 4023.0080674832266,
+            "z": -41.64155232926058,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 441,
+            "archetype": "infected.runner",
+            "x": 3993.672061707552,
+            "z": -16.00808458333506,
+            "hp": 52,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 443,
+            "archetype": "infected.runner",
+            "x": 4013.5467108943694,
+            "z": -23.789465914205326,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 444,
+            "archetype": "infected.runner",
+            "x": 3982.4612958881967,
+            "z": -21.53122156547197,
+            "hp": 44,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 445,
+            "archetype": "infected.runner",
+            "x": 3998.338804753548,
+            "z": -39.74167498114005,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 446,
+            "archetype": "infected.runner",
+            "x": 4001.632711087077,
+            "z": -16.41629161708062,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 448,
+            "archetype": "infected.runner",
+            "x": 3999.8274637952563,
+            "z": -32.95811230918398,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 449,
+            "archetype": "infected.runner",
+            "x": 3986.51750053112,
+            "z": -4.117088158466236,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 451,
+            "archetype": "infected.runner",
+            "x": 4022.3052954137956,
+            "z": -9.914810809811307,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 452,
+            "archetype": "infected.runner",
+            "x": 3990.2321983235793,
+            "z": -32.37235908551076,
+            "hp": 28,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 453,
+            "archetype": "infected.runner",
+            "x": 4020.827748189288,
+            "z": -46.75048911296763,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 454,
+            "archetype": "infected.runner",
+            "x": 3996.0436837197553,
+            "z": -18.902364108813078,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 456,
+            "archetype": "infected.runner",
+            "x": 4007.3686495245006,
+            "z": -29.25833100849407,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 457,
+            "archetype": "infected.runner",
+            "x": 3979.2948639683373,
+            "z": -11.740945896075257,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 458,
+            "archetype": "infected.runner",
+            "x": 3995.720196655462,
+            "z": -38.81654978663485,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 459,
+            "archetype": "infected.runner",
+            "x": 4004.939406179877,
+            "z": -17.412963325896666,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 461,
+            "archetype": "infected.runner",
+            "x": 4025.4390011621645,
+            "z": -38.746431763903345,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 462,
+            "archetype": "infected.runner",
+            "x": 3992.634527322436,
+            "z": -7.749843902850767,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 464,
+            "archetype": "infected.runner",
+            "x": 4016.6582505907486,
+            "z": -20.19067169061432,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 465,
+            "archetype": "infected.runner",
+            "x": 3989.679312528118,
+            "z": -29.96473798507269,
+            "hp": 52,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 466,
+            "archetype": "infected.runner",
+            "x": 4008.1792816835446,
+            "z": -45.34513311684967,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 467,
+            "archetype": "infected.runner",
+            "x": 3999.1388915557604,
+            "z": -16.830993460582985,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 469,
+            "archetype": "infected.runner",
+            "x": 4029.020575745108,
+            "z": -26.41409274501465,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 470,
+            "archetype": "infected.runner",
+            "x": 3982.554058533908,
+            "z": -5.91039613218123,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 472,
+            "archetype": "infected.runner",
+            "x": 4021.326798170521,
+            "z": -5.756414761958587,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 473,
+            "archetype": "infected.runner",
+            "x": 3989.6502103856183,
+            "z": -31.674296654164205,
+            "hp": 36,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 474,
+            "archetype": "infected.runner",
+            "x": 4024.1692544739008,
+            "z": -44.35858094630348,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 475,
+            "archetype": "infected.runner",
+            "x": 3994.025002945622,
+            "z": -19.692473061980124,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 477,
+            "archetype": "infected.runner",
+            "x": 4017.9179407878696,
+            "z": -23.82275126132076,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 478,
+            "archetype": "infected.runner",
+            "x": 3977.18019633797,
+            "z": -13.936969828983136,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 479,
+            "archetype": "infected.runner",
+            "x": 3994.9757117515624,
+            "z": -36.92111097099576,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 480,
+            "archetype": "infected.runner",
+            "x": 4003.475642334517,
+            "z": -15.398776446360763,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 482,
+            "archetype": "infected.runner",
+            "x": 4026.50714922796,
+            "z": -36.3449399787132,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 483,
+            "archetype": "infected.runner",
+            "x": 3989.87771896486,
+            "z": -4.258461495615132,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 485,
+            "archetype": "infected.runner",
+            "x": 4024.789769481239,
+            "z": -10.805948506077176,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 486,
+            "archetype": "infected.runner",
+            "x": 3981.6910287082446,
+            "z": -26.17044238791184,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 487,
+            "archetype": "infected.runner",
+            "x": 4017.668565879559,
+            "z": -47.20337838204344,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 488,
+            "archetype": "infected.runner",
+            "x": 3997.277998161799,
+            "z": -16.056503718425745,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 490,
+            "archetype": "infected.runner",
+            "x": 4012.0873905746457,
+            "z": -28.957770567596782,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 491,
+            "archetype": "infected.runner",
+            "x": 3980.103518322317,
+            "z": -10.903920405953174,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 492,
+            "archetype": "infected.runner",
+            "x": 3992.9616089838923,
+            "z": -35.91137836662469,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 493,
+            "archetype": "infected.runner",
+            "x": 4008.898218083298,
+            "z": -14.181258884198074,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 494,
+            "archetype": "infected.runner",
+            "x": 3987.0827681255278,
+            "z": -33.0927357075457,
+            "hp": 0,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 495,
+            "archetype": "infected.runner",
+            "x": 4023.849936141315,
+            "z": -40.11470643996493,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 496,
+            "archetype": "infected.runner",
+            "x": 3992.5831832133913,
+            "z": -20.01714758080742,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 498,
+            "archetype": "infected.runner",
+            "x": 4020.8275880110714,
+            "z": -19.777504491643658,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 499,
+            "archetype": "infected.runner",
+            "x": 3986.72130689847,
+            "z": -25.671169344415876,
+            "hp": 28,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 500,
+            "archetype": "infected.runner",
+            "x": 4004.036320062124,
+            "z": -43.530176698227955,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 501,
+            "archetype": "infected.runner",
+            "x": 4002.3998841478888,
+            "z": -12.113340930484494,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 502,
+            "archetype": "infected.runner",
+            "x": 3990.4315974031165,
+            "z": -33.338802098831934,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 503,
+            "archetype": "infected.runner",
+            "x": 4004.8969288541175,
+            "z": -31.612904283019898,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 504,
+            "archetype": "infected.runner",
+            "x": 3985.8224635562924,
+            "z": -5.56829955896803,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 506,
+            "archetype": "infected.runner",
+            "x": 4024.0695330236235,
+            "z": -6.313087982922015,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 507,
+            "archetype": "infected.runner",
+            "x": 3990.4515768942933,
+            "z": -31.48182614571283,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 508,
+            "archetype": "infected.runner",
+            "x": 4021.8588877703937,
+            "z": -45.04147704183238,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 509,
+            "archetype": "infected.runner",
+            "x": 3994.7517947536207,
+            "z": -16.07495848423528,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 511,
+            "archetype": "infected.runner",
+            "x": 4013.9946956463114,
+            "z": -26.53667333826365,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 512,
+            "archetype": "infected.runner",
+            "x": 3979.217403578543,
+            "z": -13.382361909405413,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 513,
+            "archetype": "infected.runner",
+            "x": 3996.816264979136,
+            "z": -39.733342941259544,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 514,
+            "archetype": "infected.runner",
+            "x": 4007.094364324891,
+            "z": -11.816476886338423,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 515,
+            "archetype": "infected.runner",
+            "x": 3989.7529274651215,
+            "z": -33.448987467605974,
+            "hp": 52,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 516,
+            "archetype": "infected.runner",
+            "x": 4026.369654475964,
+            "z": -37.25641571015195,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 517,
+            "archetype": "infected.runner",
+            "x": 3990.623742757384,
+            "z": -1.9611238260014983,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 519,
+            "archetype": "infected.runner",
+            "x": 4024.7973690610756,
+            "z": -13.489634945971696,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 520,
+            "archetype": "infected.runner",
+            "x": 3981.3987953055876,
+            "z": -24.967585867448886,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 521,
+            "archetype": "infected.runner",
+            "x": 4018.0883573863994,
+            "z": -49.74768722250109,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 420,
+            "archetype": "infected.runner",
+            "x": 3845.4167553374664,
+            "z": -38.009390418948044,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 421,
+            "archetype": "infected.runner",
+            "x": 3826.051382353125,
+            "z": -37.84310650057868,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 422,
+            "archetype": "infected.runner",
+            "x": 3817.626409843618,
+            "z": -29.318163701052494,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 423,
+            "archetype": "infected.runner",
+            "x": 3989.7508372453945,
+            "z": -29.58691289338592,
+            "hp": 0,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 522,
+            "archetype": "infected.runner",
+            "x": 3999.276977915246,
+            "z": -12.078151903272975,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 424,
+            "archetype": "infected.runner",
+            "x": 3859.9922735106684,
+            "z": -40.98882482222277,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 426,
+            "archetype": "infected.runner",
+            "x": 3889.971729810009,
+            "z": -37.35692576715268,
+            "hp": 60,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 505,
+            "archetype": "infected.runner",
+            "x": 3998.7521730910776,
+            "z": -53.794702128533366,
+            "hp": 0,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 484,
+            "archetype": "infected.runner",
+            "x": 3997.108008198689,
+            "z": -52.61688184833892,
+            "hp": 0,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 471,
+            "archetype": "infected.runner",
+            "x": 4003.6735226098676,
+            "z": -51.22254610593573,
+            "hp": 0,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 463,
+            "archetype": "infected.runner",
+            "x": 3993.2843844157833,
+            "z": -50.148515756503876,
+            "hp": 0,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 450,
+            "archetype": "infected.runner",
+            "x": 3998.6253208301137,
+            "z": -50.58276302672146,
+            "hp": 0,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 518,
+            "archetype": "infected.runner",
+            "x": 3993.377041240096,
+            "z": -51.68008414469334,
+            "hp": 0,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 481,
+            "archetype": "infected.runner",
+            "x": 3982.384939353228,
+            "z": -37.90019877051688,
+            "hp": 0,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 468,
+            "archetype": "infected.runner",
+            "x": 3986.3021018344134,
+            "z": -42.89124610872175,
+            "hp": 0,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 460,
+            "archetype": "infected.runner",
+            "x": 3983.9213369573945,
+            "z": -33.77518335064175,
+            "hp": 0,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 447,
+            "archetype": "infected.runner",
+            "x": 3986.798989667634,
+            "z": -38.682267237388196,
+            "hp": 0,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 439,
+            "archetype": "infected.runner",
+            "x": 3985.8105122864035,
+            "z": -31.487220860308685,
+            "hp": 0,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 510,
+            "archetype": "infected.runner",
+            "x": 3988.7964641412523,
+            "z": -45.55419139682256,
+            "hp": 0,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 497,
+            "archetype": "infected.runner",
+            "x": 3993.6487538905526,
+            "z": -45.53673092232442,
+            "hp": 0,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 489,
+            "archetype": "infected.runner",
+            "x": 3988.270823199524,
+            "z": -41.77341541915826,
+            "hp": 0,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 476,
+            "archetype": "infected.runner",
+            "x": 3994.120661874449,
+            "z": -41.72176719287991,
+            "hp": 0,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 455,
+            "archetype": "infected.runner",
+            "x": 3994.000891751116,
+            "z": -39.135097452725994,
+            "hp": 0,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          },
+          {
+            "id": 442,
+            "archetype": "infected.runner",
+            "x": 3994.9085129466293,
+            "z": -39.93980471153609,
+            "hp": 0,
+            "maxHp": 60,
+            "civilian": false,
+            "role": null,
+            "animal": null,
+            "companion": false,
+            "infected": true,
+            "pickup": null
+          }
+        ],
+        "l7": null,
+        "departure": null,
+        "l8": null,
+        "l9": null,
+        "mega": {
+          "tick": 215504,
+          "id": 119,
+          "mode": "coarse",
+          "introducedAt": 163958,
+          "introduceTick": 163958,
+          "x": 3367.0798432714423,
+          "z": 79.1853126510743,
+          "hp": 3000,
+          "maxHp": 3000,
+          "target": {
+            "x": 3990.2842896440657,
+            "z": -32.273653389711946
+          },
+          "route": [
+            "cure-route-33",
+            "cure-route-38",
+            "cure-route-39",
+            "cure-route-40",
+            "cure-route-41",
+            "cure-route-42",
+            "cure-route-43",
+            "cure-route-44"
+          ],
+          "routeAt": 215979,
+          "passed": "cure-route-30",
+          "blocked": {},
+          "breach": null,
+          "stuck": {
+            "level": 0,
+            "since": -1,
+            "sampleAt": 216000,
+            "x": 3367.019767563539,
+            "z": 79.20428392725432,
+            "noPath": 0,
+            "goal": null
+          },
+          "lastDamage": null,
+          "coarseM": 3080.000418719886,
+          "audio": {
+            "next": 216478,
+            "step": 216039,
+            "index": 33,
+            "last": {
+              "x": 3367.019767563539,
+              "z": 79.20428392725432
+            }
+          },
+          "introduced": true
+        },
+        "checkpoints": [
+          {
+            "id": "cure-crash",
+            "position": [
+              547,
+              0.705,
+              0
+            ]
+          },
+          {
+            "id": "start",
+            "position": [
+              547,
+              0.705,
+              0
+            ]
+          },
+          {
+            "id": "cure-residential",
+            "position": [
+              765.1019897460938,
+              0.7099999785423279,
+              24.9973201751709
+            ]
+          },
+          {
+            "id": "cure-industrial",
+            "position": [
+              1256.1455078125,
+              0.7099999785423279,
+              25.00066375732422
+            ]
+          },
+          {
+            "id": "cure-military",
+            "position": [
+              1855.1417236328125,
+              0.7099999785423279,
+              25.002906799316406
+            ]
+          },
+          {
+            "id": "cure-research-entry",
+            "position": [
+              2465.0400390625,
+              0.7099999785423279,
+              -5.045348167419434
+            ]
+          },
+          {
+            "id": "cure-research",
+            "position": [
+              2805.06982421875,
+              0.7099999785423279,
+              44.92478942871094
+            ]
+          },
+          {
+            "id": "cure-corridor",
+            "position": [
+              2935.95849609375,
+              0.7099999785423279,
+              -4.998665809631348
+            ]
+          },
+          {
+            "id": "cure-complex",
+            "position": [
+              3695.0439453125,
+              0.7099999785423279,
+              -24.97415542602539
+            ]
+          },
+          {
+            "id": "cure-disperse-ready",
+            "position": [
+              4004.769287109375,
+              0.7099999785423279,
+              -38.18214797973633
+            ]
+          }
+        ]
+      },
+      "eventCounts": {
+        "objective.started": 12,
+        "checkpoint.set": 9,
+        "level.started": 1,
+        "sim.tick": 216000,
+        "objective.completed": 11,
+        "weather.gust": 727,
+        "corgi.warn": 11173,
+        "ai.alerted": 1067097,
+        "telegraph": 25143,
+        "combat.attack": 22744,
+        "player.damaged": 1299,
+        "combat.hit": 21934,
+        "combat.hit-stop": 1281,
+        "infected.attack": 6130,
+        "combat.kill": 3542,
+        "noise": 13441,
+        "world.blocker.changed": 813,
+        "infected.groan": 434,
+        "infected.recovered": 298,
+        "pickup.collected": 4,
+        "mega.cue": 222,
+        "dialogue.line": 2,
+        "infected.special": 1889,
+        "prop.broken": 8,
+        "infected.roar-buff": 9292,
+        "item.granted": 1,
+        "loadout.switched": 608,
+        "mission.signal": 163,
+        "explosion": 674,
+        "explosion.beat": 2022,
+        "combat.exploded": 674,
+        "mounted-gun.mounted": 351,
+        "mounted-gun.dismounted": 350,
+        "player.died": 162,
+        "player.respawned": 162,
+        "checkpoint.restored": 162,
+        "infected.prop-thrown": 83
+      },
+      "ledger": [
+        {
+          "type": "objective.started",
+          "id": "crash",
+          "tick": 0
+        },
+        {
+          "type": "checkpoint.set",
+          "id": "cure-crash",
+          "tick": 0
+        },
+        {
+          "type": "objective.completed",
+          "id": "crash",
+          "tick": 1
+        },
+        {
+          "type": "objective.started",
+          "id": "residential-fringe",
+          "tick": 1
+        },
+        {
+          "type": "objective.completed",
+          "id": "residential-fringe",
+          "tick": 3497
+        },
+        {
+          "type": "objective.started",
+          "id": "industrial-area",
+          "tick": 3497
+        },
+        {
+          "type": "checkpoint.set",
+          "id": "cure-residential",
+          "tick": 3497
+        },
+        {
+          "type": "dialogue.line",
+          "tick": 5401,
+          "id": "L10.mega-roar",
+          "text": "That roar. Whatever it is, it is following you."
+        },
+        {
+          "type": "objective.completed",
+          "id": "industrial-area",
+          "tick": 11461
+        },
+        {
+          "type": "objective.started",
+          "id": "military-zone",
+          "tick": 11461
+        },
+        {
+          "type": "checkpoint.set",
+          "id": "cure-industrial",
+          "tick": 11461
+        },
+        {
+          "type": "objective.completed",
+          "id": "military-zone",
+          "tick": 21369
+        },
+        {
+          "type": "objective.started",
+          "id": "research-campus",
+          "tick": 21369
+        },
+        {
+          "type": "checkpoint.set",
+          "id": "cure-military",
+          "tick": 21369
+        },
+        {
+          "type": "objective.completed",
+          "id": "research-campus",
+          "tick": 31708
+        },
+        {
+          "type": "objective.started",
+          "id": "research",
+          "tick": 31708
+        },
+        {
+          "type": "checkpoint.set",
+          "id": "cure-research-entry",
+          "tick": 31708
+        },
+        {
+          "type": "objective.completed",
+          "id": "research",
+          "tick": 35536
+        },
+        {
+          "type": "dialogue.line",
+          "id": "L10.research",
+          "text": "Research recording: The cure is an airborne agent, not a vaccine. It is harmless to healthy humans and animals, but immediately kills infected humans and animals. It never reverses infection. Carry the canister to the regional dispersal complex to release it.",
+          "tick": 35536
+        },
+        {
+          "type": "objective.started",
+          "id": "cure",
+          "tick": 35536
+        },
+        {
+          "type": "objective.completed",
+          "id": "cure",
+          "tick": 35616
+        },
+        {
+          "type": "objective.started",
+          "id": "research-exit",
+          "tick": 35616
+        },
+        {
+          "type": "objective.completed",
+          "id": "research-exit",
+          "tick": 36870
+        },
+        {
+          "type": "objective.started",
+          "id": "destroyed-corridor",
+          "tick": 36870
+        },
+        {
+          "type": "checkpoint.set",
+          "id": "cure-research",
+          "tick": 36870
+        },
+        {
+          "type": "objective.completed",
+          "id": "destroyed-corridor",
+          "tick": 39241
+        },
+        {
+          "type": "objective.started",
+          "id": "dispersal-complex",
+          "tick": 39241
+        },
+        {
+          "type": "checkpoint.set",
+          "id": "cure-corridor",
+          "tick": 39241
+        },
+        {
+          "type": "objective.completed",
+          "id": "dispersal-complex",
+          "tick": 52424
+        },
+        {
+          "type": "objective.started",
+          "id": "install",
+          "tick": 52424
+        },
+        {
+          "type": "checkpoint.set",
+          "id": "cure-complex",
+          "tick": 52424
+        },
+        {
+          "type": "objective.completed",
+          "id": "install",
+          "tick": 56946
+        },
+        {
+          "type": "objective.started",
+          "id": "hold",
+          "tick": 56946
+        },
+        {
+          "type": "checkpoint.set",
+          "id": "cure-disperse-ready",
+          "tick": 56946
+        },
+        {
+          "type": "mission.signal",
+          "tick": 57085,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 57912,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 58032,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 58032
+        },
+        {
+          "type": "mission.signal",
+          "tick": 58164,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 58889,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 59009,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 59009
+        },
+        {
+          "type": "mission.signal",
+          "tick": 59141,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 59962,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 60082,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 60082
+        },
+        {
+          "type": "mission.signal",
+          "tick": 60214,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 60853,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 60973,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 60973
+        },
+        {
+          "type": "mission.signal",
+          "tick": 61105,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 61851,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 61971,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 61971
+        },
+        {
+          "type": "mission.signal",
+          "tick": 62103,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 62836,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 62956,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 62956
+        },
+        {
+          "type": "mission.signal",
+          "tick": 63088,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 63850,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 63970,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 63970
+        },
+        {
+          "type": "mission.signal",
+          "tick": 64102,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 64763,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 64883,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 64883
+        },
+        {
+          "type": "mission.signal",
+          "tick": 65015,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 65668,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 65788,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 65788
+        },
+        {
+          "type": "mission.signal",
+          "tick": 65920,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 66543,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 66663,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 66663
+        },
+        {
+          "type": "mission.signal",
+          "tick": 66795,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 67508,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 67628,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 67628
+        },
+        {
+          "type": "mission.signal",
+          "tick": 67760,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 68577,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 68697,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 68697
+        },
+        {
+          "type": "mission.signal",
+          "tick": 68829,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 69481,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 69601,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 69601
+        },
+        {
+          "type": "mission.signal",
+          "tick": 69733,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 70509,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 70629,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 70629
+        },
+        {
+          "type": "mission.signal",
+          "tick": 70761,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 71486,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 71606,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 71606
+        },
+        {
+          "type": "mission.signal",
+          "tick": 71738,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 72418,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 72538,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 72538
+        },
+        {
+          "type": "mission.signal",
+          "tick": 72670,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 73357,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 73477,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 73477
+        },
+        {
+          "type": "mission.signal",
+          "tick": 73621,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 74313,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 74433,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 74433
+        },
+        {
+          "type": "mission.signal",
+          "tick": 74565,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 75284,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 75404,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 75404
+        },
+        {
+          "type": "mission.signal",
+          "tick": 75541,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 76327,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 76447,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 76447
+        },
+        {
+          "type": "mission.signal",
+          "tick": 76579,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 77245,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 77365,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 77365
+        },
+        {
+          "type": "mission.signal",
+          "tick": 77497,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 78243,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 78363,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 78363
+        },
+        {
+          "type": "mission.signal",
+          "tick": 78495,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 79352,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 79472,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 79472
+        },
+        {
+          "type": "mission.signal",
+          "tick": 79604,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 80256,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 80376,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 80376
+        },
+        {
+          "type": "mission.signal",
+          "tick": 80521,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 81356,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 81476,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 81476
+        },
+        {
+          "type": "mission.signal",
+          "tick": 81608,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 82273,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 82393,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 82393
+        },
+        {
+          "type": "mission.signal",
+          "tick": 82525,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 83233,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 83353,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 83353
+        },
+        {
+          "type": "mission.signal",
+          "tick": 83485,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 84150,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 84270,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 84270
+        },
+        {
+          "type": "mission.signal",
+          "tick": 84402,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 85135,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 85255,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 85255
+        },
+        {
+          "type": "mission.signal",
+          "tick": 85387,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 86241,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 86361,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 86361
+        },
+        {
+          "type": "mission.signal",
+          "tick": 86493,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 87214,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 87334,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 87334
+        },
+        {
+          "type": "mission.signal",
+          "tick": 87481,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 88235,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 88355,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 88355
+        },
+        {
+          "type": "mission.signal",
+          "tick": 88501,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 89244,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 89364,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 89364
+        },
+        {
+          "type": "mission.signal",
+          "tick": 89496,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 90161,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 90281,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 90281
+        },
+        {
+          "type": "mission.signal",
+          "tick": 90421,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 91084,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 91204,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 91204
+        },
+        {
+          "type": "mission.signal",
+          "tick": 91336,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 92039,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 92159,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 92159
+        },
+        {
+          "type": "mission.signal",
+          "tick": 92291,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 93004,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 93124,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 93124
+        },
+        {
+          "type": "mission.signal",
+          "tick": 93256,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 93866,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 93986,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 93986
+        },
+        {
+          "type": "mission.signal",
+          "tick": 94118,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 94746,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 94866,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 94866
+        },
+        {
+          "type": "mission.signal",
+          "tick": 94998,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 95775,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 95895,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 95895
+        },
+        {
+          "type": "mission.signal",
+          "tick": 96027,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 96731,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 96851,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 96851
+        },
+        {
+          "type": "mission.signal",
+          "tick": 96983,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 97729,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 97849,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 97849
+        },
+        {
+          "type": "mission.signal",
+          "tick": 97981,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 98646,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 98766,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 98766
+        },
+        {
+          "type": "mission.signal",
+          "tick": 98898,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 99631,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 99751,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 99751
+        },
+        {
+          "type": "mission.signal",
+          "tick": 99883,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 100589,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 100709,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 100709
+        },
+        {
+          "type": "mission.signal",
+          "tick": 100841,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 101485,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 101605,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 101605
+        },
+        {
+          "type": "mission.signal",
+          "tick": 101737,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 102483,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 102603,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 102603
+        },
+        {
+          "type": "mission.signal",
+          "tick": 102735,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 103496,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 103616,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 103616
+        },
+        {
+          "type": "mission.signal",
+          "tick": 103748,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 104499,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 104619,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 104619
+        },
+        {
+          "type": "mission.signal",
+          "tick": 104761,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 105523,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 105643,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 105643
+        },
+        {
+          "type": "mission.signal",
+          "tick": 105781,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 106502,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 106622,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 106622
+        },
+        {
+          "type": "mission.signal",
+          "tick": 106754,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 107465,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 107585,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 107585
+        },
+        {
+          "type": "mission.signal",
+          "tick": 107717,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 108454,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 108574,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 108574
+        },
+        {
+          "type": "mission.signal",
+          "tick": 108721,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 109630,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 109750,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 109750
+        },
+        {
+          "type": "mission.signal",
+          "tick": 109882,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 110523,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 110643,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 110643
+        },
+        {
+          "type": "mission.signal",
+          "tick": 110775,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 111551,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 111671,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 111671
+        },
+        {
+          "type": "mission.signal",
+          "tick": 111803,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 112549,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 112669,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 112669
+        },
+        {
+          "type": "mission.signal",
+          "tick": 112801,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 113466,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 113586,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 113586
+        },
+        {
+          "type": "mission.signal",
+          "tick": 113718,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 114495,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 114615,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 114615
+        },
+        {
+          "type": "mission.signal",
+          "tick": 114747,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 115412,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 115532,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 115532
+        },
+        {
+          "type": "mission.signal",
+          "tick": 115664,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 116372,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 116492,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 116492
+        },
+        {
+          "type": "mission.signal",
+          "tick": 116624,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 117370,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 117490,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 117490
+        },
+        {
+          "type": "mission.signal",
+          "tick": 117622,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 118347,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 118467,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 118467
+        },
+        {
+          "type": "mission.signal",
+          "tick": 118599,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 119232,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 119352,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 119352
+        },
+        {
+          "type": "mission.signal",
+          "tick": 119484,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 120134,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 120254,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 120254
+        },
+        {
+          "type": "mission.signal",
+          "tick": 120386,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 121102,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 121222,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 121222
+        },
+        {
+          "type": "mission.signal",
+          "tick": 121354,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 122154,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 122274,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 122274
+        },
+        {
+          "type": "mission.signal",
+          "tick": 122406,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 123028,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 123148,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 123148
+        },
+        {
+          "type": "mission.signal",
+          "tick": 123280,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 123929,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 124049,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 124049
+        },
+        {
+          "type": "mission.signal",
+          "tick": 124181,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 125000,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 125120,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 125120
+        },
+        {
+          "type": "mission.signal",
+          "tick": 125252,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 125908,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 126028,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 126028
+        },
+        {
+          "type": "mission.signal",
+          "tick": 126160,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 126906,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 127026,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 127026
+        },
+        {
+          "type": "mission.signal",
+          "tick": 127158,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 127854,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 127974,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 127974
+        },
+        {
+          "type": "mission.signal",
+          "tick": 128106,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 128823,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 128943,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 128943
+        },
+        {
+          "type": "mission.signal",
+          "tick": 129075,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 129806,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 129926,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 129926
+        },
+        {
+          "type": "mission.signal",
+          "tick": 130058,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 130804,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 130924,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 130924
+        },
+        {
+          "type": "mission.signal",
+          "tick": 131056,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 131721,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 131841,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 131841
+        },
+        {
+          "type": "mission.signal",
+          "tick": 131973,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 132622,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 132742,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 132742
+        },
+        {
+          "type": "mission.signal",
+          "tick": 132874,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 133503,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 133623,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 133623
+        },
+        {
+          "type": "mission.signal",
+          "tick": 133755,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 134413,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 134533,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 134533
+        },
+        {
+          "type": "mission.signal",
+          "tick": 134665,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 135312,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 135432,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 135432
+        },
+        {
+          "type": "mission.signal",
+          "tick": 135564,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 136329,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 136449,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 136449
+        },
+        {
+          "type": "mission.signal",
+          "tick": 136581,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 137246,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 137366,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 137366
+        },
+        {
+          "type": "mission.signal",
+          "tick": 137498,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 138244,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 138364,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 138364
+        },
+        {
+          "type": "mission.signal",
+          "tick": 138496,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 139231,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 139351,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 139351
+        },
+        {
+          "type": "mission.signal",
+          "tick": 139483,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 140148,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 140268,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 140268
+        },
+        {
+          "type": "mission.signal",
+          "tick": 140401,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 141228,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 141348,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 141348
+        },
+        {
+          "type": "mission.signal",
+          "tick": 141481,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 142345,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 142465,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 142465
+        },
+        {
+          "type": "mission.signal",
+          "tick": 142597,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 143262,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 143382,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 143382
+        },
+        {
+          "type": "mission.signal",
+          "tick": 143521,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 144200,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 144320,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 144320
+        },
+        {
+          "type": "mission.signal",
+          "tick": 144452,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 145117,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 145237,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 145237
+        },
+        {
+          "type": "mission.signal",
+          "tick": 145381,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 146161,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 146281,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 146281
+        },
+        {
+          "type": "mission.signal",
+          "tick": 146413,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 147246,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 147366,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 147366
+        },
+        {
+          "type": "mission.signal",
+          "tick": 147498,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 148244,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 148364,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 148364
+        },
+        {
+          "type": "mission.signal",
+          "tick": 148501,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 149378,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 149498,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 149498
+        },
+        {
+          "type": "mission.signal",
+          "tick": 149641,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 150301,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 150421,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 150421
+        },
+        {
+          "type": "mission.signal",
+          "tick": 150553,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 151266,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 151386,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 151386
+        },
+        {
+          "type": "mission.signal",
+          "tick": 151518,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 152225,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 152345,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 152345
+        },
+        {
+          "type": "mission.signal",
+          "tick": 152477,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 153253,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 153373,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 153373
+        },
+        {
+          "type": "mission.signal",
+          "tick": 153505,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 154253,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 154373,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 154373
+        },
+        {
+          "type": "mission.signal",
+          "tick": 154505,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 155325,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 155445,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 155445
+        },
+        {
+          "type": "mission.signal",
+          "tick": 155581,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 156524,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 156644,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 156644
+        },
+        {
+          "type": "mission.signal",
+          "tick": 156781,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 157559,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 157679,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 157679
+        },
+        {
+          "type": "mission.signal",
+          "tick": 157811,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 158702,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 158822,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 158822
+        },
+        {
+          "type": "mission.signal",
+          "tick": 158954,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 159781,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 159901,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 159901
+        },
+        {
+          "type": "mission.signal",
+          "tick": 160033,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 160673,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 160793,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 160793
+        },
+        {
+          "type": "mission.signal",
+          "tick": 160925,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 161754,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 161874,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 161874
+        },
+        {
+          "type": "mission.signal",
+          "tick": 162006,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 162833,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 162953,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 162953
+        },
+        {
+          "type": "mission.signal",
+          "tick": 163085,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 163750,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 163870,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 163870
+        },
+        {
+          "type": "mission.signal",
+          "tick": 164002,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 164748,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 164868,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 164868
+        },
+        {
+          "type": "mission.signal",
+          "tick": 165001,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 165694,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 165814,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 165814
+        },
+        {
+          "type": "mission.signal",
+          "tick": 165961,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 166804,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 166924,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 166924
+        },
+        {
+          "type": "mission.signal",
+          "tick": 167056,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 167696,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 167816,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 167816
+        },
+        {
+          "type": "mission.signal",
+          "tick": 167948,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 168571,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 168691,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 168691
+        },
+        {
+          "type": "mission.signal",
+          "tick": 168823,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 169488,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 169608,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 169608
+        },
+        {
+          "type": "mission.signal",
+          "tick": 169741,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 170426,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 170546,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 170546
+        },
+        {
+          "type": "mission.signal",
+          "tick": 170678,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 171370,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 171490,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 171490
+        },
+        {
+          "type": "mission.signal",
+          "tick": 171622,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 172368,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 172488,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 172488
+        },
+        {
+          "type": "mission.signal",
+          "tick": 172621,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 173487,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 173607,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 173607
+        },
+        {
+          "type": "mission.signal",
+          "tick": 173739,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 174378,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 174498,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 174498
+        },
+        {
+          "type": "mission.signal",
+          "tick": 174630,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 175416,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 175536,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 175536
+        },
+        {
+          "type": "mission.signal",
+          "tick": 175681,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 176483,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 176603,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 176603
+        },
+        {
+          "type": "mission.signal",
+          "tick": 176735,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 177474,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 177594,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 177594
+        },
+        {
+          "type": "mission.signal",
+          "tick": 177726,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 178468,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 178588,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 178588
+        },
+        {
+          "type": "mission.signal",
+          "tick": 178720,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 179354,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 179474,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 179474
+        },
+        {
+          "type": "mission.signal",
+          "tick": 179606,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 180295,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 180415,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 180415
+        },
+        {
+          "type": "mission.signal",
+          "tick": 180547,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 181352,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 181472,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 181472
+        },
+        {
+          "type": "mission.signal",
+          "tick": 181604,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 182256,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 182376,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 182376
+        },
+        {
+          "type": "mission.signal",
+          "tick": 182521,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 183402,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 183522,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 183522
+        },
+        {
+          "type": "mission.signal",
+          "tick": 183661,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 184498,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 184618,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 184618
+        },
+        {
+          "type": "mission.signal",
+          "tick": 184750,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 185415,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 185535,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 185535
+        },
+        {
+          "type": "mission.signal",
+          "tick": 185667,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 186326,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 186446,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 186446
+        },
+        {
+          "type": "mission.signal",
+          "tick": 186578,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 187290,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 187410,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 187410
+        },
+        {
+          "type": "mission.signal",
+          "tick": 187542,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 188288,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 188408,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 188408
+        },
+        {
+          "type": "mission.signal",
+          "tick": 188540,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 189348,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 189468,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 189468
+        },
+        {
+          "type": "mission.signal",
+          "tick": 189601,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 190275,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 190395,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 190395
+        },
+        {
+          "type": "mission.signal",
+          "tick": 190527,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 191237,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 191357,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 191357
+        },
+        {
+          "type": "mission.signal",
+          "tick": 191489,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 192190,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 192310,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 192310
+        },
+        {
+          "type": "mission.signal",
+          "tick": 192442,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 193094,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 193214,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 193214
+        },
+        {
+          "type": "mission.signal",
+          "tick": 193346,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 194188,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 194308,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 194308
+        },
+        {
+          "type": "mission.signal",
+          "tick": 194440,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 195058,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 195178,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 195178
+        },
+        {
+          "type": "mission.signal",
+          "tick": 195310,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 195991,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 196111,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 196111
+        },
+        {
+          "type": "mission.signal",
+          "tick": 196243,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 196972,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 197092,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 197092
+        },
+        {
+          "type": "mission.signal",
+          "tick": 197224,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 198016,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 198136,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 198136
+        },
+        {
+          "type": "mission.signal",
+          "tick": 198268,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 199069,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 199189,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 199189
+        },
+        {
+          "type": "mission.signal",
+          "tick": 199321,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 199986,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 200106,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 200106
+        },
+        {
+          "type": "mission.signal",
+          "tick": 200238,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 201011,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 201131,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 201131
+        },
+        {
+          "type": "mission.signal",
+          "tick": 201263,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 201979,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 202099,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 202099
+        },
+        {
+          "type": "mission.signal",
+          "tick": 202231,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 202896,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 203016,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 203016
+        },
+        {
+          "type": "mission.signal",
+          "tick": 203161,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 203893,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 204013,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 204013
+        },
+        {
+          "type": "mission.signal",
+          "tick": 204145,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 204891,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 205011,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 205011
+        },
+        {
+          "type": "mission.signal",
+          "tick": 205143,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 205787,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 205907,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 205907
+        },
+        {
+          "type": "mission.signal",
+          "tick": 206041,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 206673,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 206793,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 206793
+        },
+        {
+          "type": "mission.signal",
+          "tick": 206925,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 207629,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 207749,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 207749
+        },
+        {
+          "type": "mission.signal",
+          "tick": 207881,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 208815,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 208935,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 208935
+        },
+        {
+          "type": "mission.signal",
+          "tick": 209067,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 209732,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 209852,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 209852
+        },
+        {
+          "type": "mission.signal",
+          "tick": 209984,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 210649,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 210769,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 210769
+        },
+        {
+          "type": "mission.signal",
+          "tick": 210901,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 211566,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 211686,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 211686
+        },
+        {
+          "type": "mission.signal",
+          "tick": 211818,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 212483,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 212603,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 212603
+        },
+        {
+          "type": "mission.signal",
+          "tick": 212735,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 213471,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 213591,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 213591
+        },
+        {
+          "type": "mission.signal",
+          "tick": 213723,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 214469,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 214589,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 214589
+        },
+        {
+          "type": "mission.signal",
+          "tick": 214721,
+          "name": "cure-assault-started"
+        },
+        {
+          "type": "player.died",
+          "tick": 215384,
+          "id": 1
+        },
+        {
+          "type": "player.respawned",
+          "tick": 215504,
+          "id": 1
+        },
+        {
+          "type": "checkpoint.restored",
+          "id": "cure-disperse-ready",
+          "tick": 215504
+        },
+        {
+          "type": "mission.signal",
+          "tick": 215641,
+          "name": "cure-assault-started"
+        }
+      ],
+      "pickups": [
+        {
+          "tick": 3497,
+          "id": 0,
+          "item": "weapon.pistol",
+          "collector": 1,
+          "distance": null,
+          "shelf": false,
+          "interact": true,
+          "speed": 0
+        },
+        {
+          "tick": 11461,
+          "id": 0,
+          "item": "weapon.shotgun",
+          "collector": 1,
+          "distance": null,
+          "shelf": false,
+          "interact": true,
+          "speed": 0
+        },
+        {
+          "tick": 21369,
+          "id": 0,
+          "item": "weapon.army-mg",
+          "collector": 1,
+          "distance": null,
+          "shelf": false,
+          "interact": true,
+          "speed": 0
+        },
+        {
+          "tick": 39241,
+          "id": 0,
+          "item": "weapon.rocket-launcher",
+          "collector": 1,
+          "distance": null,
+          "shelf": false,
+          "interact": true,
+          "speed": 0
+        }
+      ],
+      "duplicatePickups": [
+        0,
+        0,
+        0
+      ],
+      "peakAlive": 95,
+      "peakCharacters": 96,
+      "firstMinute": {
+        "ticks": 3600,
+        "regularPeak": 6,
+        "dogPeak": 0,
+        "alphaPeak": 0
+      },
+      "markers": [
+        {
+          "id": "cure-residential",
+          "x": 767,
+          "z": 25,
+          "samples": 3496,
+          "maxDisplacement": 0
+        },
+        {
+          "id": "cure-industrial",
+          "x": 1257,
+          "z": 25,
+          "samples": 7964,
+          "maxDisplacement": 0
+        },
+        {
+          "id": "cure-military",
+          "x": 1857,
+          "z": 25,
+          "samples": 9908,
+          "maxDisplacement": 0
+        },
+        {
+          "id": "cure-research-entry",
+          "x": 2467,
+          "z": -5,
+          "samples": 10339,
+          "maxDisplacement": 0
+        },
+        {
+          "id": "cure-terminal",
+          "x": 2707,
+          "z": 41.25,
+          "samples": 3828,
+          "maxDisplacement": 0
+        },
+        {
+          "id": "cure-canister",
+          "x": 2713,
+          "z": 41,
+          "samples": 80,
+          "maxDisplacement": 0
+        },
+        {
+          "id": "cure-research",
+          "x": 2807,
+          "z": 45,
+          "samples": 1254,
+          "maxDisplacement": 0
+        },
+        {
+          "id": "cure-corridor",
+          "x": 2937,
+          "z": -5,
+          "samples": 2371,
+          "maxDisplacement": 0
+        },
+        {
+          "id": "cure-complex",
+          "x": 3697,
+          "z": -25,
+          "samples": 13183,
+          "maxDisplacement": 0
+        },
+        {
+          "id": "cure-install",
+          "x": 4006.5,
+          "z": -39,
+          "samples": 4522,
+          "maxDisplacement": 0
+        },
+        {
+          "id": "cure-console",
+          "x": 4002,
+          "z": -27,
+          "samples": 159055,
+          "maxDisplacement": 0
+        }
+      ],
+      "markerChanges": [
+        {
+          "tick": 1,
+          "step": "residential-fringe",
+          "marker": "cure-residential",
+          "x": 767,
+          "z": 25
+        },
+        {
+          "tick": 3497,
+          "step": "industrial-area",
+          "marker": "cure-industrial",
+          "x": 1257,
+          "z": 25
+        },
+        {
+          "tick": 11461,
+          "step": "military-zone",
+          "marker": "cure-military",
+          "x": 1857,
+          "z": 25
+        },
+        {
+          "tick": 21369,
+          "step": "research-campus",
+          "marker": "cure-research-entry",
+          "x": 2467,
+          "z": -5
+        },
+        {
+          "tick": 31708,
+          "step": "research",
+          "marker": "cure-terminal",
+          "x": 2707,
+          "z": 41.25
+        },
+        {
+          "tick": 35536,
+          "step": "cure",
+          "marker": "cure-canister",
+          "x": 2713,
+          "z": 41
+        },
+        {
+          "tick": 35616,
+          "step": "research-exit",
+          "marker": "cure-research",
+          "x": 2807,
+          "z": 45
+        },
+        {
+          "tick": 36870,
+          "step": "destroyed-corridor",
+          "marker": "cure-corridor",
+          "x": 2937,
+          "z": -5
+        },
+        {
+          "tick": 39241,
+          "step": "dispersal-complex",
+          "marker": "cure-complex",
+          "x": 3697,
+          "z": -25
+        },
+        {
+          "tick": 52424,
+          "step": "install",
+          "marker": "cure-install",
+          "x": 4006.5,
+          "z": -39
+        },
+        {
+          "tick": 56946,
+          "step": "hold",
+          "marker": "cure-console",
+          "x": 4002,
+          "z": -27
+        }
+      ],
+      "l5Formation": [],
+      "l4Scale": {
+        "turn": null,
+        "ticks": 0,
+        "firstTick": null,
+        "lastTick": null,
+        "peakSlots": null,
+        "peakCharacters": null
+      },
+      "corgi": {
+        "ids": [
+          99
+        ],
+        "targeted": 0,
+        "hit": 0,
+        "minimumHealthFraction": 1,
+        "samples": 216000
+      },
+      "phaseStarts": [
+        {
+          "phase": "playing",
+          "tick": 1,
+          "live": 0,
+          "civilians": 0
+        }
+      ],
+      "phasePeaks": {
+        "playing": {
+          "alive": 95,
+          "characters": 96
+        }
+      },
+      "births": {
+        "infected.runner": 15382,
+        "infected.firefighter": 22,
+        "infected.dog": 40,
+        "infected.alpha": 335
+      },
+      "speed": {
+        "regularMax": 4.2,
+        "fasterThanPlayer": 0,
+        "regularSamples": 385251,
+        "sprinters": 385251
+      },
+      "runOut": null,
+      "regions": {
+        "crash-outskirts": {
+          "ticks": 3962,
+          "attacks": 8,
+          "groupAttacks": 0,
+          "peak": 6,
+          "normalPeak": 6,
+          "regularPeak": 6,
+          "dogPeak": 0,
+          "alphaPeak": 0,
+          "regularGroupPeaks": {
+            "crash-singletons": 2,
+            "crash-road-pair": 2,
+            "crash-bend": 2,
+            "crash-pair": 1
+          }
+        },
+        "residential-fringe": {
+          "ticks": 7282,
+          "attacks": 17,
+          "groupAttacks": 0,
+          "peak": 13,
+          "normalPeak": 12,
+          "regularPeak": 11,
+          "dogPeak": 2,
+          "alphaPeak": 0,
+          "regularGroupPeaks": {
+            "residential-fringe-direct-0": 2,
+            "fringe-patrol": 4,
+            "fringe-hedges": 4,
+            "residential-fringe-direct-3": 2,
+            "residential-fringe-direct-4": 2,
+            "fringe-exit": 4,
+            "residential-fringe-direct-5": 2
+          }
+        },
+        "industrial-area": {
+          "ticks": 9882,
+          "attacks": 22,
+          "groupAttacks": 0,
+          "peak": 24,
+          "normalPeak": 24,
+          "regularPeak": 20,
+          "dogPeak": 4,
+          "alphaPeak": 1,
+          "regularGroupPeaks": {
+            "industrial-area-direct-0": 6,
+            "depot-workers": 16,
+            "depot-alpha": 2,
+            "depot-exit": 3,
+            "industrial-area-direct-6": 6
+          }
+        },
+        "military-zone": {
+          "ticks": 10874,
+          "attacks": 33,
+          "groupAttacks": 0,
+          "peak": 35,
+          "normalPeak": 35,
+          "regularPeak": 31,
+          "dogPeak": 4,
+          "alphaPeak": 2,
+          "regularGroupPeaks": {
+            "military-zone-direct-0": 6,
+            "military-breach": 16,
+            "military-column": 14,
+            "military-exit": 10
+          }
+        },
+        "research-campus": {
+          "ticks": 7655,
+          "attacks": 52,
+          "groupAttacks": 0,
+          "peak": 54,
+          "normalPeak": 54,
+          "regularPeak": 49,
+          "dogPeak": 4,
+          "alphaPeak": 1,
+          "regularGroupPeaks": {
+            "research-campus-direct-0": 6,
+            "research-approach": 22,
+            "research-lab": 22,
+            "research-campus-direct-4": 6,
+            "research-quarantine": 10
+          }
+        },
+        "destroyed-corridor": {
+          "ticks": 13061,
+          "attacks": 114,
+          "groupAttacks": 0,
+          "peak": 71,
+          "normalPeak": 71,
+          "regularPeak": 64,
+          "dogPeak": 5,
+          "alphaPeak": 3,
+          "regularGroupPeaks": {
+            "corridor-line": 20,
+            "corridor-breach": 20,
+            "corridor-exit": 19
+          }
+        },
+        "dispersal-complex": {
+          "ticks": 163284,
+          "attacks": 24706,
+          "groupAttacks": 0,
+          "peak": 94,
+          "normalPeak": 94,
+          "regularPeak": 88,
+          "dogPeak": 4,
+          "alphaPeak": 2,
+          "regularGroupPeaks": {
+            "complex-approach-0": 2,
+            "complex-approach-1": 2,
+            "complex-approach-2": 2,
+            "complex-approach-3": 2,
+            "complex-approach-4": 2,
+            "complex-approach-5": 2,
+            "dispersal-assault": 85
+          }
+        }
+      },
+      "charge": {
+        "eligibleTicks": 117713,
+        "incrementTicks": 117713,
+        "invalidIncrements": 0,
+        "outsideTicks": 0,
+        "deadTicks": 19440,
+        "maximum": 942,
+        "activeTicks": 137153
+      },
+      "megaIntroduction": {
+        "tick": 5400,
+        "distance": 119.37333755479696,
+        "route": []
+      },
+      "maxMegaStep": 75.47399999976892,
+      "release": null,
+      "calm": {
+        "ticks": 0,
+        "maxAlive": 0,
+        "combatEvents": 0,
+        "markerTicks": 0
+      },
+      "l6RetreatDamage": 0,
+      "l2BeforeDoors": {
+        "samples": 0,
+        "nearest": null
+      },
+      "l2Contact": {
+        "ticks": 0,
+        "playerAttacks": 0,
+        "groupAttacks": 0,
+        "firstAttackSeconds": null
+      },
+      "l2Maximum": {
+        "ambush": 0,
+        "cluster": 0
+      },
+      "l2Route": {
+        "metres": 0,
+        "ticks": 0,
+        "discontinuities": 0,
+        "maxEncounterGapM": 0,
+        "encounterIds": []
+      },
+      "releaseFirstTick": null,
+      "maxDetailedChunks": 9,
+      "l5SearchRoute": {
+        "ticks": 0,
+        "metres": 0,
+        "discontinuities": 0,
+        "encounters": []
+      }
+    },
+    "threat": {
+      "ticks": 216000,
+      "followerWait": {
+        "escortTicks": 216000,
+        "stationaryFarTicks": 0,
+        "upperBoundPercent": 0,
+        "followers": [
+          {
+            "id": 99,
+            "escortTicks": 216000,
+            "stationaryFarTicks": 0
+          }
+        ]
+      },
+      "phases": [
+        {
+          "key": "step/crash",
+          "label": "crash: Leave the wreck on foot",
+          "threat": false,
+          "startSeconds": 0,
+          "seconds": 0.016666666666666666,
+          "spawned": 0,
+          "initial": 0,
+          "observed": 0,
+          "reachableEver": 0,
+          "within2_5m": 0,
+          "attacks": 0,
+          "attacksPerMinute": 0,
+          "firstAttackSeconds": null,
+          "groupAttacks": 0,
+          "groupAttacksPerMinute": 0,
+          "firstGroupAttackSeconds": null,
+          "followerSpeeds": [],
+          "followerMin": null,
+          "followerMedian": null,
+          "maxBlockedSeconds": 0,
+          "blockedEvidence": null,
+          "last": null,
+          "flags": []
+        },
+        {
+          "key": "step/residential-fringe",
+          "label": "residential-fringe: Recover the handgun at the checkpoint",
+          "threat": false,
+          "startSeconds": 0.016666666666666666,
+          "seconds": 58.266666666666666,
+          "spawned": 8,
+          "initial": 0,
+          "observed": 8,
+          "reachableEver": 8,
+          "within2_5m": 7,
+          "attacks": 8,
+          "attacksPerMinute": 8.237986270022883,
+          "firstAttackSeconds": 5.316666666666666,
+          "groupAttacks": 0,
+          "groupAttacksPerMinute": 0,
+          "firstGroupAttackSeconds": null,
+          "followerSpeeds": [
+            {
+              "id": 99,
+              "samples": 109,
+              "median": 4.501302418433221
+            }
+          ],
+          "followerMin": 4.501302418433221,
+          "followerMedian": 4.501302418433221,
+          "boundedPaths": {
+            "samples": 14,
+            "minimumPercent": 100,
+            "worstTick": 3481,
+            "nearby": 1,
+            "reachable": 1,
+            "blockedIds": []
+          },
+          "maxBlockedSeconds": 0,
+          "blockedEvidence": null,
+          "last": {
+            "tick": 3481,
+            "alive": 5,
+            "reachable": 5,
+            "playerX": 763.9017944335938,
+            "playerZ": 24.995635986328125,
+            "positions": []
+          },
+          "flags": []
+        },
+        {
+          "key": "step/industrial-area",
+          "label": "industrial-area: Recover the shotgun at the checkpoint",
+          "threat": false,
+          "startSeconds": 58.28333333333333,
+          "seconds": 132.73333333333332,
+          "spawned": 23,
+          "initial": 5,
+          "observed": 29,
+          "reachableEver": 29,
+          "within2_5m": 12,
+          "attacks": 17,
+          "attacksPerMinute": 7.684580612757409,
+          "firstAttackSeconds": 28.433333333333334,
+          "groupAttacks": 0,
+          "groupAttacksPerMinute": 0,
+          "firstGroupAttackSeconds": null,
+          "followerSpeeds": [
+            {
+              "id": 99,
+              "samples": 249,
+              "median": 4.500012446416721
+            }
+          ],
+          "followerMin": 4.500012446416721,
+          "followerMedian": 4.500012446416721,
+          "boundedPaths": {
+            "samples": 20,
+            "minimumPercent": 100,
+            "worstTick": 10337,
+            "nearby": 1,
+            "reachable": 1,
+            "blockedIds": []
+          },
+          "maxBlockedSeconds": 8,
+          "blockedEvidence": {
+            "tick": 7937,
+            "alive": 3,
+            "reachable": 2,
+            "playerX": 1043.8994140625,
+            "playerZ": 79.91937255859375,
+            "positions": [
+              {
+                "identity": "119@17",
+                "id": 119,
+                "x": 828.3555325607648,
+                "z": 80,
+                "playerX": 1043.8994140625,
+                "playerZ": 79.91937255859375
+              }
+            ]
+          },
+          "last": {
+            "tick": 11417,
+            "alive": 8,
+            "reachable": 7,
+            "playerX": 1252.89697265625,
+            "playerZ": 25.003183364868164,
+            "positions": [
+              {
+                "identity": "119@17",
+                "id": 119,
+                "x": 1029.7958468839486,
+                "z": 80.00232966734626,
+                "playerX": 1252.89697265625,
+                "playerZ": 25.003183364868164
+              }
+            ]
+          },
+          "flags": []
+        },
+        {
+          "key": "step/military-zone",
+          "label": "military-zone: Recover the machine gun at the checkpoint",
+          "threat": false,
+          "startSeconds": 191.01666666666668,
+          "seconds": 165.13333333333333,
+          "spawned": 40,
+          "initial": 8,
+          "observed": 49,
+          "reachableEver": 48,
+          "within2_5m": 14,
+          "attacks": 22,
+          "attacksPerMinute": 7.993540573274122,
+          "firstAttackSeconds": 36.583333333333336,
+          "groupAttacks": 0,
+          "groupAttacksPerMinute": 0,
+          "firstGroupAttackSeconds": null,
+          "followerSpeeds": [
+            {
+              "id": 99,
+              "samples": 321,
+              "median": 4.497144104812796
+            }
+          ],
+          "followerMin": 4.497144104812796,
+          "followerMedian": 4.497144104812796,
+          "boundedPaths": {
+            "samples": 64,
+            "minimumPercent": 100,
+            "worstTick": 20101,
+            "nearby": 1,
+            "reachable": 1,
+            "blockedIds": []
+          },
+          "maxBlockedSeconds": 0,
+          "blockedEvidence": null,
+          "last": {
+            "tick": 21301,
+            "alive": 6,
+            "reachable": 5,
+            "playerX": 1850.0450439453125,
+            "playerZ": 25.01087760925293,
+            "positions": [
+              {
+                "identity": "119@17",
+                "id": 119,
+                "x": 1496.5423467843245,
+                "z": 100,
+                "playerX": 1850.0450439453125,
+                "playerZ": 25.01087760925293
+              }
+            ]
+          },
+          "flags": []
+        },
+        {
+          "key": "step/research-campus",
+          "label": "research-campus: Reach the research campus",
+          "threat": false,
+          "startSeconds": 356.15,
+          "seconds": 172.31666666666666,
+          "spawned": 53,
+          "initial": 6,
+          "observed": 59,
+          "reachableEver": 58,
+          "within2_5m": 23,
+          "attacks": 33,
+          "attacksPerMinute": 11.49047296643776,
+          "firstAttackSeconds": 12.083333333333334,
+          "groupAttacks": 0,
+          "groupAttacksPerMinute": 0,
+          "firstGroupAttackSeconds": null,
+          "followerSpeeds": [
+            {
+              "id": 99,
+              "samples": 337,
+              "median": 4.497158797216472
+            }
+          ],
+          "followerMin": 4.497158797216472,
+          "followerMedian": 4.497158797216472,
+          "boundedPaths": {
+            "samples": 29,
+            "minimumPercent": 100,
+            "worstTick": 30249,
+            "nearby": 1,
+            "reachable": 1,
+            "blockedIds": []
+          },
+          "maxBlockedSeconds": 2,
+          "blockedEvidence": {
+            "tick": 30969,
+            "alive": 3,
+            "reachable": 2,
+            "playerX": 2409.651123046875,
+            "playerZ": -6.328544616699219,
+            "positions": [
+              {
+                "identity": "119@17",
+                "id": 119,
+                "x": 1905.247846784468,
+                "z": -75,
+                "playerX": 2409.651123046875,
+                "playerZ": -6.328544616699219
+              }
+            ]
+          },
+          "last": {
+            "tick": 31689,
+            "alive": 4,
+            "reachable": 3,
+            "playerX": 2463.615966796875,
+            "playerZ": -5.078313827514648,
+            "positions": [
+              {
+                "identity": "119@17",
+                "id": 119,
+                "x": 1948.7178467844838,
+                "z": -75,
+                "playerX": 2463.615966796875,
+                "playerZ": -5.078313827514648
+              }
+            ]
+          },
+          "flags": []
+        },
+        {
+          "key": "step/research",
+          "label": "research: Play the research recording",
+          "threat": false,
+          "startSeconds": 528.4666666666667,
+          "seconds": 63.8,
+          "spawned": 55,
+          "initial": 4,
+          "observed": 59,
+          "reachableEver": 58,
+          "within2_5m": 24,
+          "attacks": 41,
+          "attacksPerMinute": 38.557993730407524,
+          "firstAttackSeconds": 9.733333333333333,
+          "groupAttacks": 0,
+          "groupAttacksPerMinute": 0,
+          "firstGroupAttackSeconds": null,
+          "followerSpeeds": [
+            {
+              "id": 99,
+              "samples": 117,
+              "median": 4.497255012882332
+            }
+          ],
+          "followerMin": 4.497255012882332,
+          "followerMedian": 4.497255012882332,
+          "boundedPaths": {
+            "samples": 16,
+            "minimumPercent": 100,
+            "worstTick": 35308,
+            "nearby": 1,
+            "reachable": 1,
+            "blockedIds": []
+          },
+          "maxBlockedSeconds": 10,
+          "blockedEvidence": {
+            "tick": 33028,
+            "alive": 1,
+            "reachable": 0,
+            "playerX": 2526.614013671875,
+            "playerZ": 33.623695373535156,
+            "positions": [
+              {
+                "identity": "119@17",
+                "id": 119,
+                "x": 2029.559971784513,
+                "z": -75,
+                "playerX": 2526.614013671875,
+                "playerZ": 33.623695373535156
+              }
+            ]
+          },
+          "last": {
+            "tick": 35428,
+            "alive": 30,
+            "reachable": 29,
+            "playerX": 2697.03076171875,
+            "playerZ": 41.5627555847168,
+            "positions": [
+              {
+                "identity": "119@17",
+                "id": 119,
+                "x": 2174.4599717845654,
+                "z": -75,
+                "playerX": 2697.03076171875,
+                "playerZ": 41.5627555847168
+              }
+            ]
+          },
+          "flags": []
+        },
+        {
+          "key": "step/cure",
+          "label": "cure: Pack the cure canister",
+          "threat": false,
+          "startSeconds": 592.2666666666667,
+          "seconds": 1.3333333333333333,
+          "spawned": 0,
+          "initial": 23,
+          "observed": 24,
+          "reachableEver": 22,
+          "within2_5m": 0,
+          "attacks": 0,
+          "attacksPerMinute": 0,
+          "firstAttackSeconds": null,
+          "groupAttacks": 0,
+          "groupAttacksPerMinute": 0,
+          "firstGroupAttackSeconds": null,
+          "followerSpeeds": [
+            {
+              "id": 99,
+              "samples": 3,
+              "median": 4.500800983419087
+            }
+          ],
+          "followerMin": null,
+          "followerMedian": null,
+          "maxBlockedSeconds": 0,
+          "blockedEvidence": null,
+          "last": {
+            "tick": 35536,
+            "alive": 23,
+            "reachable": 22,
+            "playerX": 2705.12548828125,
+            "playerZ": 41.308807373046875,
+            "positions": [
+              {
+                "identity": "119@17",
+                "id": 119,
+                "x": 2180.9804717845677,
+                "z": -75,
+                "playerX": 2705.12548828125,
+                "playerZ": 41.308807373046875
+              }
+            ]
+          },
+          "flags": []
+        },
+        {
+          "key": "step/research-exit",
+          "label": "research-exit: Get the cure out of the laboratory",
+          "threat": false,
+          "startSeconds": 593.6,
+          "seconds": 20.9,
+          "spawned": 0,
+          "initial": 24,
+          "observed": 41,
+          "reachableEver": 40,
+          "within2_5m": 0,
+          "attacks": 0,
+          "attacksPerMinute": 0,
+          "firstAttackSeconds": null,
+          "groupAttacks": 0,
+          "groupAttacksPerMinute": 0,
+          "firstGroupAttackSeconds": null,
+          "followerSpeeds": [
+            {
+              "id": 99,
+              "samples": 42,
+              "median": 4.50048169220786
+            }
+          ],
+          "followerMin": 4.50048169220786,
+          "followerMedian": 4.50048169220786,
+          "maxBlockedSeconds": 0,
+          "blockedEvidence": null,
+          "last": {
+            "tick": 36816,
+            "alive": 1,
+            "reachable": 0,
+            "playerX": 2801.0224609375,
+            "playerZ": 44.767086029052734,
+            "positions": [
+              {
+                "identity": "119@17",
+                "id": 119,
+                "x": 2258.2604717845957,
+                "z": -75,
+                "playerX": 2801.0224609375,
+                "playerZ": 44.767086029052734
+              }
+            ]
+          },
+          "flags": []
+        },
+        {
+          "key": "step/destroyed-corridor",
+          "label": "destroyed-corridor: Carry the cure down the corridor and grab the rocket launcher",
+          "threat": false,
+          "startSeconds": 614.5,
+          "seconds": 39.516666666666666,
+          "spawned": 21,
+          "initial": 1,
+          "observed": 22,
+          "reachableEver": 21,
+          "within2_5m": 10,
+          "attacks": 11,
+          "attacksPerMinute": 16.70181358076761,
+          "firstAttackSeconds": 9.466666666666667,
+          "groupAttacks": 0,
+          "groupAttacksPerMinute": 0,
+          "firstGroupAttackSeconds": null,
+          "followerSpeeds": [
+            {
+              "id": 99,
+              "samples": 77,
+              "median": 4.497543367648954
+            }
+          ],
+          "followerMin": 4.497543367648954,
+          "followerMedian": 4.497543367648954,
+          "boundedPaths": {
+            "samples": 16,
+            "minimumPercent": 100,
+            "worstTick": 39150,
+            "nearby": 1,
+            "reachable": 1,
+            "blockedIds": []
+          },
+          "maxBlockedSeconds": 4,
+          "blockedEvidence": {
+            "tick": 37110,
+            "alive": 1,
+            "reachable": 0,
+            "playerX": 2806.000244140625,
+            "playerZ": 27.30961799621582,
+            "positions": [
+              {
+                "identity": "119@17",
+                "id": 119,
+                "x": 2276.010721784602,
+                "z": -75,
+                "playerX": 2806.000244140625,
+                "playerZ": 27.30961799621582
+              }
+            ]
+          },
+          "last": {
+            "tick": 39150,
+            "alive": 21,
+            "reachable": 20,
+            "playerX": 2929.14453125,
+            "playerZ": -4.98992395401001,
+            "positions": [
+              {
+                "identity": "119@17",
+                "id": 119,
+                "x": 2397,
+                "z": -70.54052821529082,
+                "playerX": 2929.14453125,
+                "playerZ": -4.98992395401001
+              }
+            ]
+          },
+          "flags": []
+        },
+        {
+          "key": "step/dispersal-complex",
+          "label": "dispersal-complex: Bring the cure to the dispersal complex",
+          "threat": false,
+          "startSeconds": 654.0166666666667,
+          "seconds": 219.71666666666667,
+          "spawned": 105,
+          "initial": 21,
+          "observed": 127,
+          "reachableEver": 126,
+          "within2_5m": 53,
+          "attacks": 114,
+          "attacksPerMinute": 31.13100204809224,
+          "firstAttackSeconds": 39.15,
+          "groupAttacks": 0,
+          "groupAttacksPerMinute": 0,
+          "firstGroupAttackSeconds": null,
+          "followerSpeeds": [
+            {
+              "id": 99,
+              "samples": 425,
+              "median": 4.497102215183661
+            }
+          ],
+          "followerMin": 4.497102215183661,
+          "followerMedian": 4.497102215183661,
+          "boundedPaths": {
+            "samples": 74,
+            "minimumPercent": 100,
+            "worstTick": 52321,
+            "nearby": 2,
+            "reachable": 2,
+            "blockedIds": []
+          },
+          "maxBlockedSeconds": 0,
+          "blockedEvidence": null,
+          "last": {
+            "tick": 52321,
+            "alive": 16,
+            "reachable": 15,
+            "playerX": 3687.323974609375,
+            "playerZ": -24.872154235839844,
+            "positions": [
+              {
+                "identity": "119@17",
+                "id": 119,
+                "x": 3057.809727543007,
+                "z": 18.767566924470405,
+                "playerX": 3687.323974609375,
+                "playerZ": -24.872154235839844
+              }
+            ]
+          },
+          "flags": []
+        },
+        {
+          "key": "step/install",
+          "label": "install: Install the cure in the dispersal device",
+          "threat": false,
+          "startSeconds": 873.7333333333333,
+          "seconds": 75.36666666666666,
+          "spawned": 20,
+          "initial": 14,
+          "observed": 38,
+          "reachableEver": 37,
+          "within2_5m": 0,
+          "attacks": 4,
+          "attacksPerMinute": 3.184431667403804,
+          "firstAttackSeconds": 6.816666666666666,
+          "groupAttacks": 0,
+          "groupAttacksPerMinute": 0,
+          "firstGroupAttackSeconds": null,
+          "followerSpeeds": [
+            {
+              "id": 99,
+              "samples": 151,
+              "median": 4.497070547102829
+            }
+          ],
+          "followerMin": 4.497070547102829,
+          "followerMedian": 4.497070547102829,
+          "boundedPaths": {
+            "samples": 19,
+            "minimumPercent": 100,
+            "worstTick": 56864,
+            "nearby": 1,
+            "reachable": 1,
+            "blockedIds": []
+          },
+          "maxBlockedSeconds": 0,
+          "blockedEvidence": null,
+          "last": {
+            "tick": 56864,
+            "alive": 14,
+            "reachable": 13,
+            "playerX": 3999.203857421875,
+            "playerZ": -35.55614471435547,
+            "positions": [
+              {
+                "identity": "119@17",
+                "id": 119,
+                "x": 3332.2960083954595,
+                "z": 90.16968155931211,
+                "playerX": 3999.203857421875,
+                "playerZ": -35.55614471435547
+              }
+            ]
+          },
+          "flags": []
+        },
+        {
+          "key": "step/hold",
+          "label": "hold: Charge the dispersal system",
+          "threat": true,
+          "startSeconds": 949.1,
+          "seconds": 2650.9,
+          "spawned": 17727,
+          "initial": 9,
+          "observed": 17736,
+          "reachableEver": 17012,
+          "within2_5m": 8123,
+          "attacks": 24702,
+          "attacksPerMinute": 559.100682786978,
+          "firstAttackSeconds": 5.233333333333333,
+          "groupAttacks": 0,
+          "groupAttacksPerMinute": 0,
+          "firstGroupAttackSeconds": null,
+          "followerSpeeds": [
+            {
+              "id": 99,
+              "samples": 2124,
+              "median": 3.7553022063326154
+            }
+          ],
+          "followerMin": 3.7553022063326154,
+          "followerMedian": 3.7553022063326154,
+          "boundedPaths": {
+            "samples": 1326,
+            "minimumPercent": 98.4126984126984,
+            "worstTick": 125826,
+            "nearby": 63,
+            "reachable": 62,
+            "blockedIds": [
+              434
+            ]
+          },
+          "maxBlockedSeconds": 0,
+          "blockedEvidence": null,
+          "last": {
+            "tick": 215946,
+            "alive": 86,
+            "reachable": 85,
+            "playerX": 3990.363525390625,
+            "playerZ": -33.690162658691406,
+            "positions": [
+              {
+                "identity": "119@17949",
+                "id": 119,
+                "x": 3363.8357550446667,
+                "z": 80.20976156479566,
+                "playerX": 3990.363525390625,
+                "playerZ": -33.690162658691406
+              }
+            ]
+          },
+          "flags": []
+        }
+      ],
+      "waves": [
+        {
+          "key": "dispersal-assault",
+          "source": "L10 charge-active (not first spawn)",
+          "startSeconds": 951.4166666666666,
+          "observedSeconds": 2648.5833333333335,
+          "expected": null,
+          "spawned": 101,
+          "firstAttackSeconds": 2.9166666666666665,
+          "members": [
+            "433@326",
+            "434@327",
+            "435@328",
+            "436@329",
+            "437@330",
+            "438@331",
+            "439@332",
+            "440@333",
+            "441@334",
+            "442@335",
+            "443@336",
+            "444@337",
+            "445@338",
+            "446@339",
+            "447@340",
+            "448@341",
+            "449@342",
+            "450@343",
+            "451@344",
+            "452@345",
+            "453@346",
+            "454@347",
+            "455@348",
+            "456@349",
+            "457@350",
+            "458@351",
+            "459@352",
+            "460@353",
+            "461@354",
+            "462@355",
+            "463@356",
+            "464@357",
+            "465@358",
+            "466@359",
+            "467@360",
+            "468@361",
+            "469@362",
+            "470@363",
+            "471@364",
+            "472@365",
+            "473@366",
+            "474@367",
+            "475@368",
+            "476@369",
+            "477@370",
+            "478@371",
+            "479@372",
+            "480@373",
+            "481@374",
+            "482@375",
+            "483@376",
+            "484@377",
+            "485@378",
+            "486@379",
+            "487@380",
+            "488@381",
+            "489@382",
+            "490@383",
+            "491@384",
+            "492@385",
+            "493@386",
+            "494@387",
+            "495@388",
+            "496@389",
+            "497@390",
+            "498@391",
+            "499@392",
+            "500@393",
+            "501@394",
+            "502@395",
+            "503@396",
+            "504@397",
+            "505@398",
+            "506@399",
+            "507@400",
+            "508@401",
+            "509@402",
+            "510@403",
+            "511@404",
+            "512@405",
+            "513@406",
+            "514@407",
+            "515@408",
+            "516@409",
+            "517@410",
+            "518@411",
+            "519@412",
+            "520@413",
+            "521@418",
+            "522@419",
+            "523@421",
+            "524@422",
+            "525@423",
+            "526@638",
+            "527@2150",
+            "528@2260",
+            "529@2261",
+            "530@2262",
+            "531@2263",
+            "532@2264",
+            "533@3907"
+          ],
+          "flags": [],
+          "scheduledStreamSeconds": 0,
+          "visibleWithinTwoSeconds": 0,
+          "spawnedWithinEighteenSeconds": 93
+        }
+      ]
+    },
+    "nativeStateHash": "707fb2f5",
+    "error": null
+  }
+}
