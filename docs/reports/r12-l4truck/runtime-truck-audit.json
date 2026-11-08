@@ -1,0 +1,72 @@
+{
+  "scope": "Actual convoy simulation through arrival plus 120 ticks; authored physics hulls against perimeter wall/sign solids",
+  "rows": [
+    {
+      "quality": "low",
+      "truck": "truck-1",
+      "arrivedAt": 1829,
+      "tick": 1949,
+      "phase": "plaza",
+      "pose": {
+        "x": -11,
+        "y": 0.7,
+        "z": -11.539501856196576,
+        "yaw": -4.712388980384688
+      },
+      "conflicts": [],
+      "pass": true
+    },
+    {
+      "quality": "low",
+      "truck": "truck-2",
+      "arrivedAt": 1829,
+      "tick": 1949,
+      "phase": "plaza",
+      "pose": {
+        "x": -10.900332221681213,
+        "y": 0.7,
+        "z": 6.45,
+        "yaw": -3.1415926535897922
+      },
+      "conflicts": [],
+      "pass": true
+    },
+    {
+      "quality": "high",
+      "truck": "truck-1",
+      "arrivedAt": 1829,
+      "tick": 1949,
+      "phase": "plaza",
+      "pose": {
+        "x": -11,
+        "y": 0.7,
+        "z": -11.539501856196576,
+        "yaw": -4.712388980384688
+      },
+      "conflicts": [],
+      "pass": true
+    },
+    {
+      "quality": "high",
+      "truck": "truck-2",
+      "arrivedAt": 1829,
+      "tick": 1949,
+      "phase": "plaza",
+      "pose": {
+        "x": -10.900332221681213,
+        "y": 0.7,
+        "z": 6.45,
+        "yaw": -3.1415926535897922
+      },
+      "conflicts": [],
+      "pass": true
+    }
+  ],
+  "revision": "3544bc40c5bef5942e646bdfe4708417ae95f92f",
+  "sourceHashes": {
+    "src/levels/L4/mission.ts": "0236c262494cc0f0d7f5caa8b7cd1caf21e3843637888d034516bffde59152b7",
+    "src/sim/missions/LevelFourWar.ts": "2644d52340c315c615acc198efdf8c9b280f7bf8e265acf9b81bc7ac70bbafec",
+    "src/sim/missions/L4Collapse.ts": "2d80d2ecd421979acc29e921f0afd780210c755306f0e75de261394562e3e72b",
+    "tools/qa/accept/l4-fixtures.ts": "914397004fc79755ea6162d388781f907d70686f0a2e1df0557dce9a7df3e0ac"
+  }
+}

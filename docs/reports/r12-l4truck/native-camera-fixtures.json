@@ -1,0 +1,135 @@
+{
+  "checks": [
+    {
+      "tier": "low",
+      "id": "L4-01",
+      "clause": "courier control restored after actual convoy stop",
+      "value": {
+        "arrivedAt": 1829,
+        "readyAt": 1829,
+        "controlTicks": 0
+      },
+      "target": "visible, unseated, collider enabled, no story lock within30ticks of stop",
+      "pass": true
+    },
+    {
+      "tier": "low",
+      "id": "L4-01",
+      "clause": "full passenger bus parks inside the military perimeter",
+      "value": {
+        "bus": {
+          "x": -11,
+          "y": 0.7,
+          "z": -0.3945018561967264,
+          "yaw": -4.712388965169803
+        },
+        "bounds": {
+          "x0": -12.480000071205668,
+          "x1": -9.519999928794332,
+          "z0": -5.0745018787147576,
+          "z1": 4.285498166321304
+        },
+        "militaryArea": {
+          "x0": -35.6,
+          "x1": -6.7,
+          "z0": -17.4,
+          "z1": 22.5,
+          "barkM": 1.2,
+          "barkEveryS": 12,
+          "barrier": "prop.jersey-barrier"
+        }
+      },
+      "target": "all four hull bounds inside the actual military area",
+      "pass": true
+    },
+    {
+      "tier": "low",
+      "id": "L4-09",
+      "clause": "opening-fight has no gameplay camera takeover",
+      "value": [],
+      "target": "no L4 mission cinematics; opening-fight reveals remain in radio/HUD",
+      "pass": true
+    },
+    {
+      "tier": "low",
+      "id": "L4-16",
+      "clause": "uninterrupted standing bar interaction with E continuously false",
+      "value": {
+        "elapsedTicks": 60,
+        "interact": false,
+        "setup": "completed preceding objectives, then placed at the actual brace for isolated timing"
+      },
+      "target": "exactly60ticks from standing inside the bar anchor",
+      "pass": true
+    },
+    {
+      "tier": "high",
+      "id": "L4-01",
+      "clause": "courier control restored after actual convoy stop",
+      "value": {
+        "arrivedAt": 1829,
+        "readyAt": 1829,
+        "controlTicks": 0
+      },
+      "target": "visible, unseated, collider enabled, no story lock within30ticks of stop",
+      "pass": true
+    },
+    {
+      "tier": "high",
+      "id": "L4-01",
+      "clause": "full passenger bus parks inside the military perimeter",
+      "value": {
+        "bus": {
+          "x": -11,
+          "y": 0.7,
+          "z": -0.3945018561967264,
+          "yaw": -4.712388965169803
+        },
+        "bounds": {
+          "x0": -12.480000071205668,
+          "x1": -9.519999928794332,
+          "z0": -5.0745018787147576,
+          "z1": 4.285498166321304
+        },
+        "militaryArea": {
+          "x0": -35.6,
+          "x1": -6.7,
+          "z0": -17.4,
+          "z1": 22.5,
+          "barkM": 1.2,
+          "barkEveryS": 12,
+          "barrier": "prop.jersey-barrier"
+        }
+      },
+      "target": "all four hull bounds inside the actual military area",
+      "pass": true
+    },
+    {
+      "tier": "high",
+      "id": "L4-09",
+      "clause": "opening-fight has no gameplay camera takeover",
+      "value": [],
+      "target": "no L4 mission cinematics; opening-fight reveals remain in radio/HUD",
+      "pass": true
+    },
+    {
+      "tier": "high",
+      "id": "L4-16",
+      "clause": "uninterrupted standing bar interaction with E continuously false",
+      "value": {
+        "elapsedTicks": 60,
+        "interact": false,
+        "setup": "completed preceding objectives, then placed at the actual brace for isolated timing"
+      },
+      "target": "exactly60ticks from standing inside the bar anchor",
+      "pass": true
+    }
+  ],
+  "revision": "3544bc40c5bef5942e646bdfe4708417ae95f92f",
+  "sourceHashes": {
+    "src/levels/L4/mission.ts": "0236c262494cc0f0d7f5caa8b7cd1caf21e3843637888d034516bffde59152b7",
+    "src/sim/missions/LevelFourWar.ts": "2644d52340c315c615acc198efdf8c9b280f7bf8e265acf9b81bc7ac70bbafec",
+    "src/sim/missions/L4Collapse.ts": "2d80d2ecd421979acc29e921f0afd780210c755306f0e75de261394562e3e72b",
+    "tools/qa/accept/l4-fixtures.ts": "914397004fc79755ea6162d388781f907d70686f0a2e1df0557dce9a7df3e0ac"
+  }
+}

@@ -1,29 +1,33 @@
-# r12-l4truck — L4 army truck and opening fight
+# r12-l4truck — L4 truck and courier-follow camera
 
-PO batch 59 defects, plus the PO's 2026-11-08 camera note. Scope is limited to the truck, its canvas, the opening L4 camera takeover and regression checks.
+PO: “L4 glitch” (truck missing parts), and “While playing L4 and in the initial big fight, the camera is moving to highlight something. Don't do that, it's confusing”. Main `08149d1a` is merged. L4 gameplay tuning is unchanged.
 
-## Findings and fixes
+## Fixes
 
-- **Barrier/sign overlap:** the scripted second cargo truck parked at x = −4.4. Its 6.93 m physics hull extended through the east perimeter at x = −6.7. The route and other convoy stops remain unchanged; only this truck shifts west by 6.5 m and south by 0.75 m after arrival, putting it wholly inside the barrier with clearance from the adjacent bus. The authored vehicle OBB vs. registered-solid invariant now has a named assertion for the parked truck and perimeter.
-- **Canvas shards:** the canvas is one triangulated cloth mesh, authored with flat face normals. The bright triangular patches in the PO image follow those triangles. The source mesh now uses smooth, weighted normals, and the asset optimizer applies matching normals to coincident cloth vertices for every delivered LOD and truck variant. The three intact truck LODs were repacked and validated with zero asset errors; existing triangle budgets pass. Blender regeneration was unavailable here because its Metal backend crashed, so this targeted packer path was used.
-- **Opening fight camera:** L4 previously took over the camera for the first breach, first line collapse and tank/armor line collapse. Those takeovers and their 1.6 s pause were removed. Existing breach/line/armor radio calls and the breach HUD marker remain; the game camera follows the courier.
-
-`docs/qa/level-acceptance.md` L4-09 now requires follow-camera framing, and L4-18 includes the truck placement/collider clearance check (PO 2026-11-08). The named OBB assertions live in `tests/qa/invariants/contract.test.ts` and the L4 contact suite.
-
-## Other levels checked
-
-- **L3:** `l3AttackView` eases the camera to 1.5× scale through attack, fallback and corridor phases while the courier remains near the yard, to keep the station fight and escort in frame (`src/data/l3.ts`, `src/render/GameView.ts`). This is the only other similar mid-combat camera movement found. Left unchanged per PO instruction.
-- **L1:** story beats take the camera for authored narrative moments; not a mid-combat highlight.
-- **L7, L9 and L10:** camera movement is tied to the bus departure, crash handover and cure epilogue respectively; these are ending/transition sequences, not mid-combat highlights. Left unchanged.
-
-## Visual evidence
-
-- **Before:** opened [`1108-l4-truck.webp`](../../../epics-pipeline/po-findings/1108-l4-truck.webp). The truck bumper/wheel cross the perimeter beside the yellow sign; repeated bright triangles line the canvas folds.
-- **After:** not captured. Headless Scene Gate could not start its browser pool: `listen EPERM 127.0.0.1:4329`; direct local fetches also return EPERM. The legacy runner is blocked by the macOS GPU guard failing to spawn `ps` with `Operation not permitted`. No visual comparison sheet is claimed.
-- Native acceptance outputs are in [`qa-accept/README.md`](qa-accept/README.md) and [`qa-accept/L4.json`](qa-accept/L4.json), with the six native receipts linked from that report. The final corrected native rerun is still active; update this report when it exits.
+- **Truck through the perimeter/sign:** move only rear cargo truck `truck-2` west 6.5 m and south 0.75 m at arrival. The route, convoy timing and other stops stay as authored. Both trucks' actual parked physics hulls clear the perimeter at low/high quality; route/stop registered-solid invariants pass.
+- **Canvas appears torn into triangles:** smooth the connected cloth normals in the source builder and asset packer, including all intact/wrecked LODs. Every source model preserves its geometry and winding against main; no part was removed. Native delivered-model inspection confirms body and all six wheels at every LOD, plus intact cab doors, tailgate and canvas. Wrecked doors and canvas are intentionally baked into the damaged body's vertex-color mesh.
+- **Opening fight camera takeover:** remove L4 breach, line-1 and armor cinematics and their pauses. Keep the radio calls, breach anchors and HUD marker. The gameplay camera continues following the courier.
+- **Wrong old QA criterion:** the existing epic and acceptance clauses required short camera cuts, contradicting the newer PO instruction. The epic/acceptance text and native fixture now require no L4 gameplay camera takeover. No other level's camera behavior changed.
 
 ## Verification
 
-Asset validation passed (`tools/assets/validate.ts --ids veh.military-truck`, zero errors). `npm run typecheck` and `npm run lint` passed on the final code. The final `npm test` run stayed within its 150 case cap (150/150): 106 passed; one existing `gate-tools` review freshness case returned `STALE` where it expects `FRESH`. The focused L4 route invariant and L4 contact suite both pass, including the occupied barricade landing check.
+- `npm run typecheck`, `npm run lint`, `npm run test:unit`: PASS on the merged source (107 tests, 27 files, Vitest max 4 workers).
+- `npm run verify -- E22`: PASS; [receipt](verification.json).
+- Focused `L4 vehicles: scripted route and stop poses have no overlap with active registered solids`: PASS (1 test; remaining invariant cases deliberately unselected).
+- Native low/high convoy, camera and brace fixtures: all 8 checks PASS; [receipt](native-camera-fixtures.json).
+- Actual convoy arrival plus 120 ticks: all 4 truck/quality cases clear the perimeter; [receipt](runtime-truck-audit.json).
+- All 6 intact/wrecked GLBs validate with zero errors; [asset validation](asset-validation.json), [LOD geometry/parts](lod-completeness.json), [cloth normals](canvas-audit.json), [measured clearance](clearance-audit.json).
+- Requested runner command: `sh tools/remote/run.sh "$PWD" -- node --import tsx/esm tools/qa/threat-audit.ts --levels L4`. Final receipt pending; `PARTIAL_LEVEL_SELECTION` is expected for this diagnostic selection.
 
-`qa:accept L4 --skip-browser` on the first parking variants exposed two bad approaches: moving the route endpoint made L4-01 convoy arrival 193.15 s (target 20–35), and shifting the whole column west conflicted with the north barricade landing. Both were discarded. Final code preserves route timing and other stop poses, moving only truck-2 west 6.5 m and south 0.75 m on arrival. The corrected native acceptance rerun is pending. `scene:gate` ended with 0/50 rows because the browser pool could not bind port 4329 (EPERM); visual captures remain unavailable in this sandbox. No deploy or push.
+The earlier broad `qa:accept --level L4 --skip-browser` run completed low/high routes and passed both fixture/checkpoint stages; stationary policies hit their tick budget. Its stale copied snapshot was removed because it still required camera cuts. The focused current receipts above replace that snapshot. These native checks do not establish rendered appearance.
+
+## Browser QA needed
+
+No browser was started in this coding lane. The browser QA owner should check WebGL2 and manually check WebGPU:
+
+| Level / state | Quality / zoom | Check |
+| --- | --- | --- |
+| L4 arrival, tick 1949 (32.48 s); rear truck near `(-10.90, 6.45)`, front truck near `(-11, -11.54)` | Low/high; zoom 0.5, 1.0, 1.5 | Complete cab, six wheels, bed and smooth continuous canvas; truck clear of the east perimeter/sign and adjacent bus. Move courier past 8/24 m (high) and 30 m (low) LOD transitions and back; no lost panels or triangular flashes. Repeat wrecked variants in asset/scene review. |
+| L4 opening fight: MG pickup through first breach, line-1, nests and armor (+0–182 s after alarm), then Fall back | Low/high; zoom 0.5, 1.0, 1.5 | Camera stays centered on the moving courier; no highlight pan, cinematic pause or input skip. Breach/line/armor radio messages and breach HUD marker still appear. |
+
+No deploy or push.

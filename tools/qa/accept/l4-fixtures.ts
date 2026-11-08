@@ -26,17 +26,8 @@ export async function l4TimingFixtures(tier: Tier, add: (id: string, clause: str
     const halfX = (c * spec.len + s * spec.wid) / 2, halfZ = (s * spec.len + c * spec.wid) / 2;
     const bounds = { x0: bus.x - halfX, x1: bus.x + halfX, z0: bus.z - halfZ, z1: bus.z + halfZ }, p = l4.perimeter;
     add('L4-01', 'full passenger bus parks inside the military perimeter', { bus: { ...bus }, bounds, militaryArea: p }, 'all four hull bounds inside the actual military area', arrived ? bounds.x0 >= p.x0 && bounds.x1 <= p.x1 && bounds.z0 >= p.z0 && bounds.z1 <= p.z1 : undefined);
-    const beats: { id: string; inputHeld: boolean; ticks: number; blockedBeforeHalfSecond: boolean }[] = [];
-    for (const id of Object.keys(mission.def.cinematics)) for (const inputHeld of [false, true]) {
-      if (!mission.cinematic(id)) throw new Error(`Could not start ${id}`);
-      let ticks = 0, blockedBeforeHalfSecond = true;
-      while (mission.state.cinematic && ticks < 121) {
-        mission.advanceCinematic({ ...emptyInput(), interact: inputHeld }); ticks++;
-        if (inputHeld && ticks < 30 && !mission.state.cinematic) blockedBeforeHalfSecond = false;
-      }
-      beats.push({ id, inputHeld, ticks, blockedBeforeHalfSecond });
-    }
-    add('L4-09', 'native camera beat duration and half-second input gate', beats, 'every beat≤120ticks; held input blocked for29ticks and skips at30', beats.length > 0 && beats.every(b => b.blockedBeforeHalfSecond && (b.inputHeld ? b.ticks === 30 : b.ticks <= 120)));
+    const cameraTakeovers = Object.keys(mission.def.cinematics);
+    add('L4-09', 'opening-fight has no gameplay camera takeover', cameraTakeovers, 'no L4 mission cinematics; opening-fight reveals remain in radio/HUD', cameraTakeovers.length === 0 && !mission.state.cinematic);
     for (const id of ['ride', 'quartermaster', 'hold', 'hide']) if (!mission.state.completedObjectives.includes(id)) mission.completeObjective(id);
     const brace = mission.def.anchors['l4-brace']; relocatePlayer(world, brace.x, brace.z);
     const started = world.tick;
