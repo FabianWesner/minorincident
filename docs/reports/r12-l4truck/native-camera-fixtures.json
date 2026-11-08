@@ -14,6 +14,17 @@
     },
     {
       "tier": "low",
+      "id": "L4-18",
+      "clause": "rear cargo truck parks without a position jump",
+      "value": {
+        "maxStepM": 0.22598168718048045,
+        "arrivedAt": 1829
+      },
+      "target": "arrives normally; every simulation tick moves less than0.25m (15m/s)",
+      "pass": true
+    },
+    {
+      "tier": "low",
       "id": "L4-01",
       "clause": "full passenger bus parks inside the military perimeter",
       "value": {
@@ -76,6 +87,17 @@
     },
     {
       "tier": "high",
+      "id": "L4-18",
+      "clause": "rear cargo truck parks without a position jump",
+      "value": {
+        "maxStepM": 0.22598168718048045,
+        "arrivedAt": 1829
+      },
+      "target": "arrives normally; every simulation tick moves less than0.25m (15m/s)",
+      "pass": true
+    },
+    {
+      "tier": "high",
       "id": "L4-01",
       "clause": "full passenger bus parks inside the military perimeter",
       "value": {
@@ -125,11 +147,14 @@
       "pass": true
     }
   ],
-  "revision": "3544bc40c5bef5942e646bdfe4708417ae95f92f",
+  "revision": "fc9204e1eab1b38ae23d496b3c68d9b630046788",
   "sourceHashes": {
+    "src/data/l4.ts": "3def3d20b3a4722581ddaa67533256ce7f2545c709dfe8c5cbf54d5e8698f912",
     "src/levels/L4/mission.ts": "0236c262494cc0f0d7f5caa8b7cd1caf21e3843637888d034516bffde59152b7",
-    "src/sim/missions/LevelFourWar.ts": "2644d52340c315c615acc198efdf8c9b280f7bf8e265acf9b81bc7ac70bbafec",
+    "src/sim/missions/LevelFourWar.ts": "90bfa95d457a8d7b7240fff0f477fb8d3f309f8c8f44aead977c45ce171fa772",
     "src/sim/missions/L4Collapse.ts": "2d80d2ecd421979acc29e921f0afd780210c755306f0e75de261394562e3e72b",
-    "tools/qa/accept/l4-fixtures.ts": "914397004fc79755ea6162d388781f907d70686f0a2e1df0557dce9a7df3e0ac"
+    "src/sim/missions/L4ConvoyClearance.ts": "ad47cd6dbb2a5d6f74cfba52762e32ed04d6f6e5a251af968954405305d220f9",
+    "src/sim/interact/PickupPlacement.ts": "fe9b1d9a4f10a15de7b4d0e49da8c8f990e966a1f682fa3a58e7117f0b05ed1d",
+    "tools/qa/accept/l4-fixtures.ts": "637c9531112b75fbe003b3376801496ab523f52552b4f717f9bed261f5f5e176"
   }
 }

@@ -1,27 +1,37 @@
 {
-  "description": "Rotated authored physics and delivered lower-hull boxes vs inner face of east perimeter (x1 - 0.2 m). Parked poses remain fixed through plaza, war, collapse and cellar; perimeter is created after convoy parking.",
+  "description": "Actual simulated parked poses; rotated authored physics and delivered lower-hull boxes vs inner face of east perimeter (x1 -0.2m). Both clear the PO minimum0.5m.",
   "rows": [
     {
       "truck": "truck-1",
       "pose": {
         "x": -11,
-        "z": -11.539999999999903,
-        "yaw": 1.5707963267948966,
-        "limit": null
+        "y": 0.7,
+        "z": -11.539501856196576,
+        "yaw": -4.712388980384688
       },
-      "authoredPhysicsHullGapM": 2.3249999999999993,
-      "visibleLowerHullGapM": 2.6709999999999994
+      "authoredPhysicsHullGapM": 2.324999999999992,
+      "visibleLowerHullGapM": 2.6709999999999923
     },
     {
       "truck": "truck-2",
       "pose": {
-        "x": -10.90083036548434,
-        "z": 6.45,
-        "yaw": -3.141592653589793,
-        "limit": null
+        "x": -10.900332028139214,
+        "y": 0.7,
+        "z": 8.199999987076023,
+        "yaw": -3.139129532558316
       },
-      "authoredPhysicsHullGapM": 0.6708303661548927,
-      "visibleLowerHullGapM": 0.53753036548434
+      "authoredPhysicsHullGapM": 0.665970094891704,
+      "visibleLowerHullGapM": 0.5335227375993208
     }
-  ]
+  ],
+  "revision": "fc9204e1eab1b38ae23d496b3c68d9b630046788",
+  "sourceHashes": {
+    "src/data/l4.ts": "3def3d20b3a4722581ddaa67533256ce7f2545c709dfe8c5cbf54d5e8698f912",
+    "src/levels/L4/mission.ts": "0236c262494cc0f0d7f5caa8b7cd1caf21e3843637888d034516bffde59152b7",
+    "src/sim/missions/LevelFourWar.ts": "90bfa95d457a8d7b7240fff0f477fb8d3f309f8c8f44aead977c45ce171fa772",
+    "src/sim/missions/L4Collapse.ts": "2d80d2ecd421979acc29e921f0afd780210c755306f0e75de261394562e3e72b",
+    "src/sim/missions/L4ConvoyClearance.ts": "ad47cd6dbb2a5d6f74cfba52762e32ed04d6f6e5a251af968954405305d220f9",
+    "src/sim/interact/PickupPlacement.ts": "fe9b1d9a4f10a15de7b4d0e49da8c8f990e966a1f682fa3a58e7117f0b05ed1d",
+    "tools/qa/accept/l4-fixtures.ts": "637c9531112b75fbe003b3376801496ab523f52552b4f717f9bed261f5f5e176"
+  }
 }
