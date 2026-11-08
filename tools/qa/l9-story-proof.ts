@@ -69,15 +69,15 @@ async function crossingStorySequence(): Promise<void> {
     const restored = mission.l9!.driving.state;
     assert.equal(restored.evacuationDone, true); assert.equal((restored.evacuated).length, safeCount);
     car = w.vehicles!.cars.get(l9.state.carId)!;
-    place(510, 0, 10); l9.update(); assert.equal(l9.state.phase, 'driving', 'the far bank is not a bridge trigger');
-    place(483, 0, 10, Math.PI); l9.update(); assert.equal(l9.state.phase, 'driving', 'driving back off the deck does not trigger the finale');
+    place(510, 0, 10); l9.update(); assert.equal(String(l9.state.phase), 'driving', 'the far bank is not a bridge trigger');
+    place(483, 0, 10, Math.PI); l9.update(); assert.equal(String(l9.state.phase), 'driving', 'driving back off the deck does not trigger the finale');
     place(483, 0, 10, .1); const before = { ...car.entity.transform };
     l9.update();
     assert.deepEqual(l9.state.from, before, 'the crash starts at the actual hull transform');
     assert.ok(Math.abs((car.entity.transform.yaw) - (.1)) < 10 ** -(2), 'no yaw reset or sideways lerp');
     w.applyInput(emptyInput(), 'keyboard');
     for (let i = 0; i < 1200 && l9.state.phase !== 'crawl'; i++) w.update();
-    assert.equal(l9.state.phase, 'crawl');
+    assert.equal(String(l9.state.phase), 'crawl');
     assert.equal(explosions, 0, 'the wreck has not exploded while she is still inside');
     const start = { ...player.transform }; for (let i = 0; i < 60; i++) w.update();
     assert.deepEqual(player.transform, start, 'no movement input means no automatic crawl');
