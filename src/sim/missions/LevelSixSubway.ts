@@ -426,7 +426,21 @@ export class LevelSixSubway {
         else { const spawned=this.spawn(entry.remaining,[entry.door],4); if(spawned){entry.remaining-=spawned;entry.nextAt=t+360;}else entry.nextAt=t+15; }
       }
     }
-    if(t>=s.nextWave){s.nextWave=t+600;const sides=l6Doors.map((d,i)=>({d,i})).filter(({d,i})=>i>1&&d.x>tail-35&&d.x<s.leaderX+35).map(x=>x.i);this.spawn(1,[...(tail<80?[0,1]:[]),...sides].length?[...(tail<80?[0,1]:[]),...sides]:[0,1],3);}
+    if(t>=s.nextWave){
+      const groupIndex=Math.floor(s.spawnLog.filter(entry=>entry.wave===3).length/l6.pressure.group);
+      const cadence=l6.pressure.cadenceS[groupIndex%l6.pressure.cadenceS.length];
+      s.nextWave=t+ticks(cadence);
+      const ahead=l6Doors.map((d,i)=>({d,i})).filter(({d,i})=>i>1&&d.x>=s.leaderX+l6.pressure.aheadM).sort((a,b)=>a.d.x-b.d.x)[0];
+      const behind=l6Doors.map((d,i)=>({d,i})).filter(({d})=>d.x<=tail-l6.pressure.behindM).sort((a,b)=>b.d.x-a.d.x)[0];
+      const fallback=l6Doors.map((d,i)=>({d,i})).filter(({i})=>i>1).sort((a,b)=>Math.abs(a.d.x-s.leaderX)-Math.abs(b.d.x-s.leaderX))[0];
+      const source=(groupIndex%2===0?ahead:behind)??fallback;
+      const sources=source?Array.from({length:l6.pressure.group},()=>source.i):[];
+      if(sources.length)this.spawn(sources.length,sources,3);
+    }
+    if(s.phase==='exit'&&s.survivors.some(r=>r.status==='out')){
+      // Keep the escape leg legible while the column passes the open gate one by one.
+      this.mission.state.subtitle={id:'l6-survivors-safe',text:'The survivors are safe.',until:t+120};
+    }
     if(!s.pushHintShown&&w.props?.items.some(q=>q.assetId==='prop.crates'&&q.awake&&distance(p,{x:q.pose.p[0],z:q.pose.p[2]})<2)){s.pushHintShown=true;this.say(1,'Push the glowing crates onto the line, then press E to brace the gate.');}
     for(const gate of s.gates){const e=w.entities.get(gate.id)!;const crossed=this.closable(gate);
       // Q-305: a click on the gate (or its wait spot) asks to close it; the courier closes it on arrival from the far side.

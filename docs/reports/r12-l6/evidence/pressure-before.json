@@ -1,0 +1,1377 @@
+{
+  "tuning": "L6 pressure cadence and exit signposting",
+  "runs": [
+    {
+      "tier": "low",
+      "seed": 1,
+      "completed": true,
+      "outcome": "result",
+      "simSeconds": 289.93333333333334,
+      "deaths": 0,
+      "damageTaken": 190,
+      "survivorsOut": 25,
+      "survivorLosses": 4,
+      "survivorRoster": 29,
+      "maxConcurrentInfected": 20,
+      "pressureArrivals": 18,
+      "pressureArrivalsPerMinute": 4.695652173913044,
+      "directionCounts": {
+        "ahead": 3,
+        "behind": 14,
+        "near": 1
+      },
+      "playerAttacks": 48,
+      "playerAttacksPerMinute": 12.482843314310482,
+      "followerAttacks": 14,
+      "followerAttacksPerMinute": 3.640829300007224,
+      "retreatAttackSeconds": 230.71666666666667,
+      "phaseThreat": [
+        {
+          "key": "step/retreat",
+          "label": "retreat: Cover the retreat through the tunnel",
+          "threat": false,
+          "startSeconds": 54.21666666666667,
+          "seconds": 220.96666666666667,
+          "spawned": 38,
+          "initial": 3,
+          "observed": 45,
+          "reachableEver": 0,
+          "within2_5m": 20,
+          "attacks": 48,
+          "attacksPerMinute": 13.03364006637502,
+          "firstAttackSeconds": 8.05,
+          "groupAttacks": 14,
+          "groupAttacksPerMinute": 3.8014783526927136,
+          "firstGroupAttackSeconds": 5.966666666666667,
+          "followerSpeeds": [
+            {
+              "id": 16,
+              "samples": 151,
+              "median": 2.199379768766089
+            },
+            {
+              "id": 17,
+              "samples": 151,
+              "median": 2.199975008749675
+            },
+            {
+              "id": 19,
+              "samples": 151,
+              "median": 2.1991907028950664
+            },
+            {
+              "id": 20,
+              "samples": 151,
+              "median": 2.1999750054277456
+            },
+            {
+              "id": 22,
+              "samples": 150,
+              "median": 2.19914590086667
+            },
+            {
+              "id": 23,
+              "samples": 151,
+              "median": 2.1999392742489126
+            },
+            {
+              "id": 24,
+              "samples": 151,
+              "median": 2.1999084401869595
+            },
+            {
+              "id": 25,
+              "samples": 150,
+              "median": 2.1991539983228847
+            },
+            {
+              "id": 27,
+              "samples": 151,
+              "median": 2.1999099623459983
+            },
+            {
+              "id": 28,
+              "samples": 150,
+              "median": 2.1972188537977684
+            },
+            {
+              "id": 30,
+              "samples": 151,
+              "median": 2.19990194401145
+            },
+            {
+              "id": 32,
+              "samples": 147,
+              "median": 2.1980857549663604
+            },
+            {
+              "id": 33,
+              "samples": 149,
+              "median": 2.199665573081293
+            },
+            {
+              "id": 34,
+              "samples": 31,
+              "median": 2.1687738532330987
+            },
+            {
+              "id": 35,
+              "samples": 147,
+              "median": 2.199229131938757
+            },
+            {
+              "id": 37,
+              "samples": 47,
+              "median": 2.1928079768004034
+            },
+            {
+              "id": 38,
+              "samples": 144,
+              "median": 2.199757921119497
+            },
+            {
+              "id": 42,
+              "samples": 32,
+              "median": 2.1999767045592376
+            },
+            {
+              "id": 43,
+              "samples": 145,
+              "median": 2.1990896036927414
+            },
+            {
+              "id": 44,
+              "samples": 34,
+              "median": 2.1998652686748112
+            },
+            {
+              "id": 15,
+              "samples": 133,
+              "median": 2.590544475745392
+            }
+          ],
+          "followerMin": 2.1687738532330987,
+          "followerMedian": 2.199665573081293,
+          "maxBlockedSeconds": 0,
+          "blockedEvidence": null,
+          "last": null,
+          "flags": []
+        },
+        {
+          "key": "step/exit",
+          "label": "exit: Bring the survivors into the night",
+          "threat": false,
+          "startSeconds": 275.18333333333334,
+          "seconds": 9.75,
+          "spawned": 1,
+          "initial": 18,
+          "observed": 20,
+          "reachableEver": 0,
+          "within2_5m": 0,
+          "attacks": 0,
+          "attacksPerMinute": 0,
+          "firstAttackSeconds": null,
+          "groupAttacks": 0,
+          "groupAttacksPerMinute": 0,
+          "firstGroupAttackSeconds": null,
+          "followerSpeeds": [
+            {
+              "id": 15,
+              "samples": 15,
+              "median": 2.3821903617134477
+            },
+            {
+              "id": 16,
+              "samples": 7,
+              "median": 2.197588239015818
+            },
+            {
+              "id": 17,
+              "samples": 6,
+              "median": 2.1999999943311197
+            },
+            {
+              "id": 19,
+              "samples": 9,
+              "median": 2.199159152393543
+            },
+            {
+              "id": 20,
+              "samples": 8,
+              "median": 2.199995952467494
+            },
+            {
+              "id": 22,
+              "samples": 9,
+              "median": 2.1998722232617944
+            },
+            {
+              "id": 23,
+              "samples": 9,
+              "median": 2.197840605053845
+            },
+            {
+              "id": 24,
+              "samples": 9,
+              "median": 2.19756490331582
+            },
+            {
+              "id": 25,
+              "samples": 10,
+              "median": 2.172078296311173
+            },
+            {
+              "id": 27,
+              "samples": 9,
+              "median": 2.1966584415335735
+            },
+            {
+              "id": 28,
+              "samples": 13,
+              "median": 2.1989045336240074
+            },
+            {
+              "id": 30,
+              "samples": 10,
+              "median": 2.194499524827537
+            },
+            {
+              "id": 32,
+              "samples": 12,
+              "median": 2.2300936785905483
+            },
+            {
+              "id": 33,
+              "samples": 10,
+              "median": 2.1115068267205888
+            },
+            {
+              "id": 35,
+              "samples": 13,
+              "median": 2.2026692225566618
+            },
+            {
+              "id": 38,
+              "samples": 14,
+              "median": 2.1993880525217993
+            },
+            {
+              "id": 43,
+              "samples": 15,
+              "median": 2.1992470447228603
+            }
+          ],
+          "followerMin": 2.1115068267205888,
+          "followerMedian": 2.1992470447228603,
+          "maxBlockedSeconds": 0,
+          "blockedEvidence": null,
+          "last": null,
+          "flags": []
+        }
+      ]
+    },
+    {
+      "tier": "low",
+      "seed": 2,
+      "completed": true,
+      "outcome": "result",
+      "simSeconds": 358.8,
+      "deaths": 1,
+      "damageTaken": 210,
+      "survivorsOut": 25,
+      "survivorLosses": 4,
+      "survivorRoster": 29,
+      "maxConcurrentInfected": 24,
+      "pressureArrivals": 23,
+      "pressureArrivalsPerMinute": 5.095384615384615,
+      "directionCounts": {
+        "ahead": 7,
+        "behind": 10,
+        "near": 6
+      },
+      "playerAttacks": 45,
+      "playerAttacksPerMinute": 9.365244536940686,
+      "followerAttacks": 29,
+      "followerAttacksPerMinute": 6.035379812695109,
+      "retreatAttackSeconds": 288.3,
+      "phaseThreat": [
+        {
+          "key": "step/retreat",
+          "label": "retreat: Cover the retreat through the tunnel",
+          "threat": false,
+          "startSeconds": 70.5,
+          "seconds": 276.3833333333333,
+          "spawned": 54,
+          "initial": 6,
+          "observed": 67,
+          "reachableEver": 0,
+          "within2_5m": 26,
+          "attacks": 45,
+          "attacksPerMinute": 9.769040583730327,
+          "firstAttackSeconds": 1.1666666666666667,
+          "groupAttacks": 29,
+          "groupAttacksPerMinute": 6.295603931737321,
+          "firstGroupAttackSeconds": 0.13333333333333333,
+          "followerSpeeds": [
+            {
+              "id": 15,
+              "samples": 147,
+              "median": 2.8990400972375614
+            },
+            {
+              "id": 16,
+              "samples": 152,
+              "median": 2.1997681025926554
+            },
+            {
+              "id": 22,
+              "samples": 152,
+              "median": 2.1993987234271315
+            },
+            {
+              "id": 24,
+              "samples": 152,
+              "median": 2.1990886668317815
+            },
+            {
+              "id": 25,
+              "samples": 151,
+              "median": 2.199026062058421
+            },
+            {
+              "id": 26,
+              "samples": 152,
+              "median": 2.19966290634514
+            },
+            {
+              "id": 27,
+              "samples": 152,
+              "median": 2.1985016201601173
+            },
+            {
+              "id": 28,
+              "samples": 150,
+              "median": 2.198457660309318
+            },
+            {
+              "id": 30,
+              "samples": 150,
+              "median": 2.197925830633289
+            },
+            {
+              "id": 31,
+              "samples": 119,
+              "median": 2.198492861737568
+            },
+            {
+              "id": 34,
+              "samples": 145,
+              "median": 2.1933208394516464
+            },
+            {
+              "id": 35,
+              "samples": 148,
+              "median": 2.193002850742788
+            },
+            {
+              "id": 36,
+              "samples": 145,
+              "median": 2.178258899422426
+            },
+            {
+              "id": 37,
+              "samples": 145,
+              "median": 2.1876813032201023
+            },
+            {
+              "id": 39,
+              "samples": 145,
+              "median": 2.196595279269031
+            },
+            {
+              "id": 42,
+              "samples": 144,
+              "median": 2.1983800049831084
+            },
+            {
+              "id": 43,
+              "samples": 73,
+              "median": 2.1998725024741033
+            },
+            {
+              "id": 44,
+              "samples": 145,
+              "median": 2.198818614821804
+            }
+          ],
+          "followerMin": 2.178258899422426,
+          "followerMedian": 2.198497240948843,
+          "maxBlockedSeconds": 0,
+          "blockedEvidence": null,
+          "last": null,
+          "flags": []
+        },
+        {
+          "key": "step/exit",
+          "label": "exit: Bring the survivors into the night",
+          "threat": false,
+          "startSeconds": 346.8833333333333,
+          "seconds": 11.916666666666666,
+          "spawned": 0,
+          "initial": 10,
+          "observed": 21,
+          "reachableEver": 0,
+          "within2_5m": 0,
+          "attacks": 0,
+          "attacksPerMinute": 0,
+          "firstAttackSeconds": null,
+          "groupAttacks": 0,
+          "groupAttacksPerMinute": 0,
+          "firstGroupAttackSeconds": null,
+          "followerSpeeds": [
+            {
+              "id": 15,
+              "samples": 10,
+              "median": 4.502366834640236
+            },
+            {
+              "id": 22,
+              "samples": 1,
+              "median": 2.1843365785409836
+            },
+            {
+              "id": 24,
+              "samples": 1,
+              "median": 2.1904306768410207
+            },
+            {
+              "id": 25,
+              "samples": 1,
+              "median": 2.1946873239069427
+            },
+            {
+              "id": 26,
+              "samples": 1,
+              "median": 2.1999182421076777
+            },
+            {
+              "id": 27,
+              "samples": 1,
+              "median": 2.195655103929903
+            },
+            {
+              "id": 28,
+              "samples": 1,
+              "median": 2.148857404026704
+            },
+            {
+              "id": 30,
+              "samples": 1,
+              "median": 2.166604839240901
+            },
+            {
+              "id": 34,
+              "samples": 3,
+              "median": 2.1999883408428498
+            },
+            {
+              "id": 35,
+              "samples": 1,
+              "median": 2.199977135940322
+            },
+            {
+              "id": 36,
+              "samples": 3,
+              "median": 2.199991314177424
+            },
+            {
+              "id": 37,
+              "samples": 4,
+              "median": 2.199973620400192
+            },
+            {
+              "id": 39,
+              "samples": 5,
+              "median": 2.199983785383938
+            },
+            {
+              "id": 42,
+              "samples": 6,
+              "median": 2.1999693839891186
+            },
+            {
+              "id": 44,
+              "samples": 3,
+              "median": 2.199999968626102
+            }
+          ],
+          "followerMin": 4.502366834640236,
+          "followerMedian": 4.502366834640236,
+          "maxBlockedSeconds": 0,
+          "blockedEvidence": null,
+          "last": null,
+          "flags": []
+        }
+      ]
+    },
+    {
+      "tier": "low",
+      "seed": 3,
+      "completed": false,
+      "outcome": "playing",
+      "simSeconds": 1200,
+      "deaths": 14,
+      "damageTaken": 1680.2666666666616,
+      "survivorsOut": 0,
+      "survivorLosses": 9,
+      "survivorRoster": 29,
+      "maxConcurrentInfected": 30,
+      "pressureArrivals": 94,
+      "pressureArrivalsPerMinute": 4.924258960143188,
+      "directionCounts": {
+        "ahead": 35,
+        "behind": 36,
+        "near": 23
+      },
+      "playerAttacks": 613,
+      "playerAttacksPerMinute": 32.16722057022914,
+      "followerAttacks": 344,
+      "followerAttacksPerMinute": 18.051425572852892,
+      "retreatAttackSeconds": 1143.4,
+      "phaseThreat": [
+        {
+          "key": "step/retreat",
+          "label": "retreat: Cover the retreat through the tunnel",
+          "threat": false,
+          "startSeconds": 56.6,
+          "seconds": 1143.4,
+          "spawned": 440,
+          "initial": 1,
+          "observed": 443,
+          "reachableEver": 0,
+          "within2_5m": 189,
+          "attacks": 613,
+          "attacksPerMinute": 32.16722057022914,
+          "firstAttackSeconds": 34.733333333333334,
+          "groupAttacks": 344,
+          "groupAttacksPerMinute": 18.051425572852896,
+          "firstGroupAttackSeconds": 47.4,
+          "followerSpeeds": [
+            {
+              "id": 16,
+              "samples": 306,
+              "median": 2.1943397449223676
+            },
+            {
+              "id": 17,
+              "samples": 91,
+              "median": 2.199050888828824
+            },
+            {
+              "id": 18,
+              "samples": 251,
+              "median": 2.196349626057178
+            },
+            {
+              "id": 19,
+              "samples": 302,
+              "median": 2.1942795240895614
+            },
+            {
+              "id": 20,
+              "samples": 293,
+              "median": 2.1944592393208513
+            },
+            {
+              "id": 22,
+              "samples": 82,
+              "median": 2.199419296907249
+            },
+            {
+              "id": 23,
+              "samples": 306,
+              "median": 2.1939717585232748
+            },
+            {
+              "id": 24,
+              "samples": 306,
+              "median": 2.19340005724382
+            },
+            {
+              "id": 25,
+              "samples": 93,
+              "median": 2.199170957305074
+            },
+            {
+              "id": 26,
+              "samples": 306,
+              "median": 2.155702539236977
+            },
+            {
+              "id": 27,
+              "samples": 305,
+              "median": 2.1932193890717144
+            },
+            {
+              "id": 28,
+              "samples": 280,
+              "median": 2.191099702769029
+            },
+            {
+              "id": 30,
+              "samples": 305,
+              "median": 2.1910352343425443
+            },
+            {
+              "id": 31,
+              "samples": 99,
+              "median": 2.1631878912727105
+            },
+            {
+              "id": 32,
+              "samples": 287,
+              "median": 2.119771703393408
+            },
+            {
+              "id": 34,
+              "samples": 60,
+              "median": 2.166193348551865
+            },
+            {
+              "id": 35,
+              "samples": 100,
+              "median": 2.1599918838354624
+            },
+            {
+              "id": 36,
+              "samples": 101,
+              "median": 2.190950066606056
+            },
+            {
+              "id": 37,
+              "samples": 98,
+              "median": 2.194171572652433
+            },
+            {
+              "id": 39,
+              "samples": 86,
+              "median": 2.197302544313227
+            },
+            {
+              "id": 42,
+              "samples": 86,
+              "median": 2.199204506021192
+            },
+            {
+              "id": 43,
+              "samples": 89,
+              "median": 2.1998570743830257
+            },
+            {
+              "id": 44,
+              "samples": 61,
+              "median": 2.199997649751141
+            },
+            {
+              "id": 15,
+              "samples": 284,
+              "median": 2.5933557898332054
+            }
+          ],
+          "followerMin": 2.119771703393408,
+          "followerMedian": 2.194225548370997,
+          "maxBlockedSeconds": 0,
+          "blockedEvidence": null,
+          "last": null,
+          "flags": []
+        }
+      ]
+    },
+    {
+      "tier": "high",
+      "seed": 1,
+      "completed": true,
+      "outcome": "result",
+      "simSeconds": 289.93333333333334,
+      "deaths": 0,
+      "damageTaken": 190,
+      "survivorsOut": 25,
+      "survivorLosses": 4,
+      "survivorRoster": 29,
+      "maxConcurrentInfected": 20,
+      "pressureArrivals": 18,
+      "pressureArrivalsPerMinute": 4.695652173913044,
+      "directionCounts": {
+        "ahead": 3,
+        "behind": 14,
+        "near": 1
+      },
+      "playerAttacks": 48,
+      "playerAttacksPerMinute": 12.482843314310482,
+      "followerAttacks": 14,
+      "followerAttacksPerMinute": 3.640829300007224,
+      "retreatAttackSeconds": 230.71666666666667,
+      "phaseThreat": [
+        {
+          "key": "step/retreat",
+          "label": "retreat: Cover the retreat through the tunnel",
+          "threat": false,
+          "startSeconds": 54.21666666666667,
+          "seconds": 220.96666666666667,
+          "spawned": 38,
+          "initial": 3,
+          "observed": 45,
+          "reachableEver": 0,
+          "within2_5m": 20,
+          "attacks": 48,
+          "attacksPerMinute": 13.03364006637502,
+          "firstAttackSeconds": 8.05,
+          "groupAttacks": 14,
+          "groupAttacksPerMinute": 3.8014783526927136,
+          "firstGroupAttackSeconds": 5.966666666666667,
+          "followerSpeeds": [
+            {
+              "id": 16,
+              "samples": 151,
+              "median": 2.199379768766089
+            },
+            {
+              "id": 17,
+              "samples": 151,
+              "median": 2.199975008749675
+            },
+            {
+              "id": 19,
+              "samples": 151,
+              "median": 2.1991907028950664
+            },
+            {
+              "id": 20,
+              "samples": 151,
+              "median": 2.1999750054277456
+            },
+            {
+              "id": 22,
+              "samples": 150,
+              "median": 2.19914590086667
+            },
+            {
+              "id": 23,
+              "samples": 151,
+              "median": 2.1999392742489126
+            },
+            {
+              "id": 24,
+              "samples": 151,
+              "median": 2.1999084401869595
+            },
+            {
+              "id": 25,
+              "samples": 150,
+              "median": 2.1991539983228847
+            },
+            {
+              "id": 27,
+              "samples": 151,
+              "median": 2.1999099623459983
+            },
+            {
+              "id": 28,
+              "samples": 150,
+              "median": 2.1972188537977684
+            },
+            {
+              "id": 30,
+              "samples": 151,
+              "median": 2.19990194401145
+            },
+            {
+              "id": 32,
+              "samples": 147,
+              "median": 2.1980857549663604
+            },
+            {
+              "id": 33,
+              "samples": 149,
+              "median": 2.199665573081293
+            },
+            {
+              "id": 34,
+              "samples": 31,
+              "median": 2.1687738532330987
+            },
+            {
+              "id": 35,
+              "samples": 147,
+              "median": 2.199229131938757
+            },
+            {
+              "id": 37,
+              "samples": 47,
+              "median": 2.1928079768004034
+            },
+            {
+              "id": 38,
+              "samples": 144,
+              "median": 2.199757921119497
+            },
+            {
+              "id": 42,
+              "samples": 32,
+              "median": 2.1999767045592376
+            },
+            {
+              "id": 43,
+              "samples": 145,
+              "median": 2.1990896036927414
+            },
+            {
+              "id": 44,
+              "samples": 34,
+              "median": 2.1998652686748112
+            },
+            {
+              "id": 15,
+              "samples": 133,
+              "median": 2.590544475745392
+            }
+          ],
+          "followerMin": 2.1687738532330987,
+          "followerMedian": 2.199665573081293,
+          "maxBlockedSeconds": 0,
+          "blockedEvidence": null,
+          "last": null,
+          "flags": []
+        },
+        {
+          "key": "step/exit",
+          "label": "exit: Bring the survivors into the night",
+          "threat": false,
+          "startSeconds": 275.18333333333334,
+          "seconds": 9.75,
+          "spawned": 1,
+          "initial": 18,
+          "observed": 20,
+          "reachableEver": 0,
+          "within2_5m": 0,
+          "attacks": 0,
+          "attacksPerMinute": 0,
+          "firstAttackSeconds": null,
+          "groupAttacks": 0,
+          "groupAttacksPerMinute": 0,
+          "firstGroupAttackSeconds": null,
+          "followerSpeeds": [
+            {
+              "id": 15,
+              "samples": 15,
+              "median": 2.3821903617134477
+            },
+            {
+              "id": 16,
+              "samples": 7,
+              "median": 2.197588239015818
+            },
+            {
+              "id": 17,
+              "samples": 6,
+              "median": 2.1999999943311197
+            },
+            {
+              "id": 19,
+              "samples": 9,
+              "median": 2.199159152393543
+            },
+            {
+              "id": 20,
+              "samples": 8,
+              "median": 2.199995952467494
+            },
+            {
+              "id": 22,
+              "samples": 9,
+              "median": 2.1998722232617944
+            },
+            {
+              "id": 23,
+              "samples": 9,
+              "median": 2.197840605053845
+            },
+            {
+              "id": 24,
+              "samples": 9,
+              "median": 2.19756490331582
+            },
+            {
+              "id": 25,
+              "samples": 10,
+              "median": 2.172078296311173
+            },
+            {
+              "id": 27,
+              "samples": 9,
+              "median": 2.1966584415335735
+            },
+            {
+              "id": 28,
+              "samples": 13,
+              "median": 2.1989045336240074
+            },
+            {
+              "id": 30,
+              "samples": 10,
+              "median": 2.194499524827537
+            },
+            {
+              "id": 32,
+              "samples": 12,
+              "median": 2.2300936785905483
+            },
+            {
+              "id": 33,
+              "samples": 10,
+              "median": 2.1115068267205888
+            },
+            {
+              "id": 35,
+              "samples": 13,
+              "median": 2.2026692225566618
+            },
+            {
+              "id": 38,
+              "samples": 14,
+              "median": 2.1993880525217993
+            },
+            {
+              "id": 43,
+              "samples": 15,
+              "median": 2.1992470447228603
+            }
+          ],
+          "followerMin": 2.1115068267205888,
+          "followerMedian": 2.1992470447228603,
+          "maxBlockedSeconds": 0,
+          "blockedEvidence": null,
+          "last": null,
+          "flags": []
+        }
+      ]
+    },
+    {
+      "tier": "high",
+      "seed": 2,
+      "completed": true,
+      "outcome": "result",
+      "simSeconds": 358.8,
+      "deaths": 1,
+      "damageTaken": 210,
+      "survivorsOut": 25,
+      "survivorLosses": 4,
+      "survivorRoster": 29,
+      "maxConcurrentInfected": 24,
+      "pressureArrivals": 23,
+      "pressureArrivalsPerMinute": 5.095384615384615,
+      "directionCounts": {
+        "ahead": 7,
+        "behind": 10,
+        "near": 6
+      },
+      "playerAttacks": 45,
+      "playerAttacksPerMinute": 9.365244536940686,
+      "followerAttacks": 29,
+      "followerAttacksPerMinute": 6.035379812695109,
+      "retreatAttackSeconds": 288.3,
+      "phaseThreat": [
+        {
+          "key": "step/retreat",
+          "label": "retreat: Cover the retreat through the tunnel",
+          "threat": false,
+          "startSeconds": 70.5,
+          "seconds": 276.3833333333333,
+          "spawned": 54,
+          "initial": 6,
+          "observed": 67,
+          "reachableEver": 0,
+          "within2_5m": 26,
+          "attacks": 45,
+          "attacksPerMinute": 9.769040583730327,
+          "firstAttackSeconds": 1.1666666666666667,
+          "groupAttacks": 29,
+          "groupAttacksPerMinute": 6.295603931737321,
+          "firstGroupAttackSeconds": 0.13333333333333333,
+          "followerSpeeds": [
+            {
+              "id": 15,
+              "samples": 147,
+              "median": 2.8990400972375614
+            },
+            {
+              "id": 16,
+              "samples": 152,
+              "median": 2.1997681025926554
+            },
+            {
+              "id": 22,
+              "samples": 152,
+              "median": 2.1993987234271315
+            },
+            {
+              "id": 24,
+              "samples": 152,
+              "median": 2.1990886668317815
+            },
+            {
+              "id": 25,
+              "samples": 151,
+              "median": 2.199026062058421
+            },
+            {
+              "id": 26,
+              "samples": 152,
+              "median": 2.19966290634514
+            },
+            {
+              "id": 27,
+              "samples": 152,
+              "median": 2.1985016201601173
+            },
+            {
+              "id": 28,
+              "samples": 150,
+              "median": 2.198457660309318
+            },
+            {
+              "id": 30,
+              "samples": 150,
+              "median": 2.197925830633289
+            },
+            {
+              "id": 31,
+              "samples": 119,
+              "median": 2.198492861737568
+            },
+            {
+              "id": 34,
+              "samples": 145,
+              "median": 2.1933208394516464
+            },
+            {
+              "id": 35,
+              "samples": 148,
+              "median": 2.193002850742788
+            },
+            {
+              "id": 36,
+              "samples": 145,
+              "median": 2.178258899422426
+            },
+            {
+              "id": 37,
+              "samples": 145,
+              "median": 2.1876813032201023
+            },
+            {
+              "id": 39,
+              "samples": 145,
+              "median": 2.196595279269031
+            },
+            {
+              "id": 42,
+              "samples": 144,
+              "median": 2.1983800049831084
+            },
+            {
+              "id": 43,
+              "samples": 73,
+              "median": 2.1998725024741033
+            },
+            {
+              "id": 44,
+              "samples": 145,
+              "median": 2.198818614821804
+            }
+          ],
+          "followerMin": 2.178258899422426,
+          "followerMedian": 2.198497240948843,
+          "maxBlockedSeconds": 0,
+          "blockedEvidence": null,
+          "last": null,
+          "flags": []
+        },
+        {
+          "key": "step/exit",
+          "label": "exit: Bring the survivors into the night",
+          "threat": false,
+          "startSeconds": 346.8833333333333,
+          "seconds": 11.916666666666666,
+          "spawned": 0,
+          "initial": 10,
+          "observed": 21,
+          "reachableEver": 0,
+          "within2_5m": 0,
+          "attacks": 0,
+          "attacksPerMinute": 0,
+          "firstAttackSeconds": null,
+          "groupAttacks": 0,
+          "groupAttacksPerMinute": 0,
+          "firstGroupAttackSeconds": null,
+          "followerSpeeds": [
+            {
+              "id": 15,
+              "samples": 10,
+              "median": 4.502366834640236
+            },
+            {
+              "id": 22,
+              "samples": 1,
+              "median": 2.1843365785409836
+            },
+            {
+              "id": 24,
+              "samples": 1,
+              "median": 2.1904306768410207
+            },
+            {
+              "id": 25,
+              "samples": 1,
+              "median": 2.1946873239069427
+            },
+            {
+              "id": 26,
+              "samples": 1,
+              "median": 2.1999182421076777
+            },
+            {
+              "id": 27,
+              "samples": 1,
+              "median": 2.195655103929903
+            },
+            {
+              "id": 28,
+              "samples": 1,
+              "median": 2.148857404026704
+            },
+            {
+              "id": 30,
+              "samples": 1,
+              "median": 2.166604839240901
+            },
+            {
+              "id": 34,
+              "samples": 3,
+              "median": 2.1999883408428498
+            },
+            {
+              "id": 35,
+              "samples": 1,
+              "median": 2.199977135940322
+            },
+            {
+              "id": 36,
+              "samples": 3,
+              "median": 2.199991314177424
+            },
+            {
+              "id": 37,
+              "samples": 4,
+              "median": 2.199973620400192
+            },
+            {
+              "id": 39,
+              "samples": 5,
+              "median": 2.199983785383938
+            },
+            {
+              "id": 42,
+              "samples": 6,
+              "median": 2.1999693839891186
+            },
+            {
+              "id": 44,
+              "samples": 3,
+              "median": 2.199999968626102
+            }
+          ],
+          "followerMin": 4.502366834640236,
+          "followerMedian": 4.502366834640236,
+          "maxBlockedSeconds": 0,
+          "blockedEvidence": null,
+          "last": null,
+          "flags": []
+        }
+      ]
+    },
+    {
+      "tier": "high",
+      "seed": 3,
+      "completed": false,
+      "outcome": "playing",
+      "simSeconds": 1200,
+      "deaths": 14,
+      "damageTaken": 1680.2666666666616,
+      "survivorsOut": 0,
+      "survivorLosses": 9,
+      "survivorRoster": 29,
+      "maxConcurrentInfected": 30,
+      "pressureArrivals": 94,
+      "pressureArrivalsPerMinute": 4.924258960143188,
+      "directionCounts": {
+        "ahead": 35,
+        "behind": 36,
+        "near": 23
+      },
+      "playerAttacks": 613,
+      "playerAttacksPerMinute": 32.16722057022914,
+      "followerAttacks": 344,
+      "followerAttacksPerMinute": 18.051425572852892,
+      "retreatAttackSeconds": 1143.4,
+      "phaseThreat": [
+        {
+          "key": "step/retreat",
+          "label": "retreat: Cover the retreat through the tunnel",
+          "threat": false,
+          "startSeconds": 56.6,
+          "seconds": 1143.4,
+          "spawned": 440,
+          "initial": 1,
+          "observed": 443,
+          "reachableEver": 0,
+          "within2_5m": 189,
+          "attacks": 613,
+          "attacksPerMinute": 32.16722057022914,
+          "firstAttackSeconds": 34.733333333333334,
+          "groupAttacks": 344,
+          "groupAttacksPerMinute": 18.051425572852896,
+          "firstGroupAttackSeconds": 47.4,
+          "followerSpeeds": [
+            {
+              "id": 16,
+              "samples": 306,
+              "median": 2.1943397449223676
+            },
+            {
+              "id": 17,
+              "samples": 91,
+              "median": 2.199050888828824
+            },
+            {
+              "id": 18,
+              "samples": 251,
+              "median": 2.196349626057178
+            },
+            {
+              "id": 19,
+              "samples": 302,
+              "median": 2.1942795240895614
+            },
+            {
+              "id": 20,
+              "samples": 293,
+              "median": 2.1944592393208513
+            },
+            {
+              "id": 22,
+              "samples": 82,
+              "median": 2.199419296907249
+            },
+            {
+              "id": 23,
+              "samples": 306,
+              "median": 2.1939717585232748
+            },
+            {
+              "id": 24,
+              "samples": 306,
+              "median": 2.19340005724382
+            },
+            {
+              "id": 25,
+              "samples": 93,
+              "median": 2.199170957305074
+            },
+            {
+              "id": 26,
+              "samples": 306,
+              "median": 2.155702539236977
+            },
+            {
+              "id": 27,
+              "samples": 305,
+              "median": 2.1932193890717144
+            },
+            {
+              "id": 28,
+              "samples": 280,
+              "median": 2.191099702769029
+            },
+            {
+              "id": 30,
+              "samples": 305,
+              "median": 2.1910352343425443
+            },
+            {
+              "id": 31,
+              "samples": 99,
+              "median": 2.1631878912727105
+            },
+            {
+              "id": 32,
+              "samples": 287,
+              "median": 2.119771703393408
+            },
+            {
+              "id": 34,
+              "samples": 60,
+              "median": 2.166193348551865
+            },
+            {
+              "id": 35,
+              "samples": 100,
+              "median": 2.1599918838354624
+            },
+            {
+              "id": 36,
+              "samples": 101,
+              "median": 2.190950066606056
+            },
+            {
+              "id": 37,
+              "samples": 98,
+              "median": 2.194171572652433
+            },
+            {
+              "id": 39,
+              "samples": 86,
+              "median": 2.197302544313227
+            },
+            {
+              "id": 42,
+              "samples": 86,
+              "median": 2.199204506021192
+            },
+            {
+              "id": 43,
+              "samples": 89,
+              "median": 2.1998570743830257
+            },
+            {
+              "id": 44,
+              "samples": 61,
+              "median": 2.199997649751141
+            },
+            {
+              "id": 15,
+              "samples": 284,
+              "median": 2.5933557898332054
+            }
+          ],
+          "followerMin": 2.119771703393408,
+          "followerMedian": 2.194225548370997,
+          "maxBlockedSeconds": 0,
+          "blockedEvidence": null,
+          "last": null,
+          "flags": []
+        }
+      ]
+    }
+  ]
+}

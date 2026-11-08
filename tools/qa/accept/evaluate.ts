@@ -264,11 +264,15 @@ export function evaluate(receipt: NativeReceipt, path: string): Clause[] {
       number('L6-01', 'initial shelter occupant identities', initial.mission.l6?.survivors.length, 24, 29);
       add('L6-01', 'initial shelter roster full health', initial.census.filter(e => initial.mission.l6?.survivors.some(survivor => survivor.id === e.id)).map(e => ({ id: e.id, hp: e.hp, maxHp: e.maxHp })), 'every resident starts full health', initial.mission.l6?.survivors.length ? initial.mission.l6.survivors.every(survivor => { const entity = initial.census.find(e => e.id === survivor.id); return !!entity && entity.hp === entity.maxHp; }) : undefined);
       number('L6-02', 'new weapon pickup census', initial.census.filter(e => e.pickup && 'actionId' in e.pickup).length, 0, 0);
-      number('L6-03', 'first breach level clock', s6?.breach1At ? (s6.breach1At - s6.startAt) / 60 : null, 30, 40);
+      // Use the committed breach event: checkpoint restore shifts future mission
+      // timers, so the final scheduled deadline can be later than the actual breach.
+      const breach1 = observation.ledger.find(event => event.type === 'l6.breach1');
+      const breach2 = observation.ledger.find(event => event.type === 'l6.breach2');
       const bang = observation.ledger.find(event => event.type === 'l6.bang' && event.breach === 1);
-      number('L6-03', 'first breach bang lead', s6?.breach1At && bang ? (s6.breach1At - bang.tick) / 60 : null, 1.5, Infinity);
+      number('L6-03', 'first breach level clock', breach1 ? breach1.tick / 60 : null, 30, 40);
+      number('L6-03', 'first breach bang lead', breach1 && bang ? (breach1.tick - bang.tick) / 60 : null, 1.5, Infinity);
       number('L6-03', 'actual first-wave spawn admissions (floor traversal still open)', s6?.spawnLog.filter(entry => entry.wave === 1).length, 6, Infinity);
-      number('L6-04', 'second breach delay', s6?.breach1At && s6.breach2At ? (s6.breach2At - s6.breach1At) / 60 : null, 20, 30);
+      number('L6-04', 'second breach delay', breach1 && breach2 ? (breach2.tick - breach1.tick) / 60 : null, 20, 30);
       number('L6-04', 'second-wave admitted identities', s6?.spawnLog.filter(entry => entry.wave === 2).length, 10, Infinity);
       number('L6-04', 'second-wave source accesses', s6 ? new Set(s6.spawnLog.filter(entry => entry.wave === 2).map(entry => entry.door)).size : null, 2, Infinity);
       if (!competent) for (const name of ['l6.breach1', 'l6.breach2']) {
