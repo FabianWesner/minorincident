@@ -153,7 +153,10 @@ export class Vehicles {
           // steering while moving forward and reversing when the target is behind.
           const wanted = Math.atan2(-frame.move.z, frame.move.x);
           const delta = Math.atan2(Math.sin(wanted - car.entity.transform.yaw), Math.cos(wanted - car.entity.transform.yaw));
-          const reverse = Math.abs(delta) > Math.PI / 2;
+          // Keep lateral requests as forward turns even before the chassis has
+          // fully aligned with screen-up. Reverse only in the rear 90° cone;
+          // switching gear at 90° made a left request back up to screen-right.
+          const reverse = Math.abs(delta) > Math.PI * .75;
           const error = reverse ? delta - Math.sign(delta) * Math.PI : delta;
           drive.throttle = reverse ? -.75 : Math.max(.35, Math.cos(delta));
           drive.steer = Math.max(-1, Math.min(1, error / (Math.PI / 2))) * (reverse ? -1 : 1);

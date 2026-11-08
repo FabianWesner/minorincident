@@ -104,6 +104,18 @@ async function screenRelativeSteering(): Promise<void> {
     for (let i = 0; i < 120; i++) world.update();
     expect(car.entity.transform.z).toBeLessThan(start.z - 1);
     expect(car.entity.transform.yaw).toBeGreaterThan(.1);
+    const yaw = 2;
+    car.physics.body.setRotation({ x: 0, y: Math.sin(yaw / 2), z: 0, w: Math.cos(yaw / 2) }, true);
+    car.physics.body.setLinvel({ x: Math.cos(yaw) * 5, y: 0, z: -Math.sin(yaw) * 5 }, true); car.physics.postPhysics();
+    const left = emptyInput(); left.move = { x: -Math.SQRT1_2, z: Math.SQRT1_2 };
+    world.applyInput(left, 'keyboard'); world.update();
+    expect(car.physics.intent.throttle, 'lateral request before full screen-up alignment stays a forward turn').toBeGreaterThan(0);
+    expect(car.physics.intent.steer).toBeGreaterThan(0);
+    const behind = emptyInput(), heading = car.entity.transform.yaw;
+    behind.move = { x: -Math.cos(heading), z: Math.sin(heading) };
+    world.applyInput(behind, 'keyboard'); world.update();
+    expect(car.physics.intent.throttle, 'a request behind selects reverse').toBeLessThan(0);
+    expect(car.physics.braking, 'forward momentum brakes before reversing').toBe(true);
   } finally { world.dispose(); }
 }
 
