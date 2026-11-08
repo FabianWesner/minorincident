@@ -5,6 +5,12 @@ import type { DistrictLayout, Placement } from '../districts/types';
 export function levelEightLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
   return structuredClone(layouts).map(layout => {
     if (layout.district !== 'D-ZOO' || layout.placements.some(p => p.id === 'l8-gorilla-pillar-0')) return layout;
+    // Keep planted bushes beside the yard, rather than creating elephant-sized charge stops in its wall-bait lanes.
+    for (const [id, x, z] of [['prop.garden-bush:220', -85, 20], ['prop.garden-bush:222', -35, 44]] as const) {
+      const bush = layout.placements.find(p => p.id === id); if (!bush) continue;
+      const dx = x - bush.position[0], dz = z - bush.position[2]; bush.position[0] = x; bush.position[2] = z;
+      bush.visualAabb.min[0] += dx; bush.visualAabb.max[0] += dx; bush.visualAabb.min[2] += dz; bush.visualAabb.max[2] += dz;
+    }
     for (const a of l8BossArenas) layout.anchors[`arena-${a.id}`] = { position: [a.entry.x, 0, a.entry.z], yaw: 0 };
     layout.anchors['animal-monkey'] = { position: [-5, 0, 15], yaw: 0 };
     const house = layout.buildings.find(b => b.assetId === 'bld.reptile-house'); if (house) house.label = 'Primate House';
