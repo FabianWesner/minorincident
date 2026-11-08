@@ -124,7 +124,7 @@ try {
           const length = Math.hypot(f.move.x, f.move.z); if (length > 0) { f.move.x /= length; f.move.z /= length; }
         }
       }
-      if (process.env.L8_ELEPHANT_LURE === 'generic') f.move = generic.sample('elephant').move;
+      if (process.env.L8_ELEPHANT_LURE !== 'wall-points') f.move = generic.sample('elephant').move;
       // Keep the bait inside the yard; walking through a gate is an escape, not the wall-counter tactic.
       if (p.transform.x + f.move.x * 2 < -80 || p.transform.x + f.move.x * 2 > -40) f.move.x = 0;
       if (p.transform.z + f.move.z * 2 < 14 || p.transform.z + f.move.z * 2 > 50) f.move.z = 0;
