@@ -103,8 +103,12 @@ export class L8BossArenas {
     const def = l8BossArenas.find(a => a.id === boss.arena)!, p = w.entities.get(1)!, b = e.infected!;
     const roofHarasser = arena.id === 'monkey' && (boss.slot === 2 || boss.slot === 5);
     if (roofHarasser) {
-      if (arena.phase > 0 && arena.phase < 3 && !boss.roof && !boss.traversal && !boss.scattered) this.traverse(e, { x: -12, y: 4.8, z: boss.slot === 2 ? 12.5 : 15.5 }, true);
-      if (boss.roof && boss.scattered && !boss.traversal) this.traverse(e, { x: -6, y: .7, z: 14 }, false);
+      const inArena = distance(p.transform, def.centre) <= def.radius;
+      if (arena.phase > 0 && arena.phase < 3 && inArena && !boss.roof && !boss.traversal && !boss.scattered) this.traverse(e, { x: -12, y: 4.8, z: boss.slot === 2 ? 12.5 : 15.5 }, true);
+      if ((!inArena || boss.scattered) && (boss.roof || boss.traversal?.roof) && (!boss.traversal || boss.traversal.roof)) {
+        w.infected!.cancelSpecial(e.id);
+        this.traverse(e, { x: -6, y: .7, z: 14 }, false);
+      }
       if (boss.traversal) { this.traverseStep(e); return true; }
       if (boss.roof) {
         if (b.specialAttack) this.advanceMove(e, arena);

@@ -74,6 +74,27 @@ try {
   } finally { w.dispose(); }
 } catch (error) { errors.push(`checkpoint/punish: ${String(error)}`); }
 try {
+  const { w, arena, p } = await fixture('monkey');
+  try {
+    w.combat!.damage.god = true; // Motion/route control only; never counted as a mortal combat victory.
+    arena.phase = 1; arena.nextAt = Number.MAX_SAFE_INTEGER;
+    const climber = w.entities.get(arena.ids[2])!;
+    w.npcs!.civilians.outbreak!.infect(climber, 1);
+    w.solids.relocate(p, { x: -2, z: 14, y: .7 }, 'qa.roof.inside', 2);
+    for (let n = 0; n < 600 && (!climber.infected?.arenaBoss?.roof || climber.infected.arenaBoss.traversal); n++) step(w);
+    const perched = !!climber.infected?.arenaBoss?.roof && climber.transform.y > 4;
+    const guarded = hit(w, climber, 14, 'melee') === 0;
+    w.solids.relocate(p, { x: 12, z: 6, y: .7 }, 'qa.roof.outside', 2); step(w);
+    const descent = structuredClone(climber.infected?.arenaBoss?.traversal);
+    let previous = { ...climber.transform }, maxStep = 0;
+    for (let n = 0; n < 90; n++) {
+      step(w); maxStep = Math.max(maxStep, Math.hypot(climber.transform.x - previous.x, climber.transform.y - previous.y, climber.transform.z - previous.z)); previous = { ...climber.transform };
+    }
+    const grounded = !climber.infected?.arenaBoss?.roof && !climber.infected?.arenaBoss?.traversal && climber.transform.y < 1;
+    check('roof monkey keeps height guards and physically descends when the courier leaves', perched && guarded && descent?.roof === false && grounded && maxStep < .3, { perched, guarded, descent, grounded, maxStep, at: climber.transform });
+  } finally { w.dispose(); }
+} catch (error) { errors.push(`roof route: ${String(error)}`); }
+try {
   const { w, arena, e, p, zoo } = await fixture('monkey');
   try {
     arena.phase = 1; arena.nextAt = w.tick + 10000; e.infected!.arenaBoss!.readyAt = w.tick + 10000;

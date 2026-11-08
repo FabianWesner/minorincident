@@ -441,6 +441,10 @@ export class ThreatObserver {
       // full body-clear ground route from its actual landing, without moving it.
       const vault = e.infected?.vault;
       if (this.level === 'L4' && vault) authored.push(vault.to);
+      // L8 monkeys physically drop back to the public doorway when the courier leaves.
+      // Count only the descent currently owned by the live controller, including its full remaining leg.
+      const descent = this.level === 'L8' ? e.infected?.arenaBoss?.traversal : undefined;
+      if (descent && !descent.roof) authored.push(descent.to);
       const at = authored.at(-1) ?? routed.transform;
       const goal = e.infected?.pursuit ? player.transform : native.target(at, player.transform);
       const source = e.infected?.pursuit && w.megaPursuit ? w.megaPursuit.grid : native.grid(at);

@@ -12,6 +12,8 @@ First [merged skilled matrix](evidence/post-merge/initial-low-skilled.json) at `
 
 Focused corrected runs pass: flamingo **47.47 s**, gorilla **72.02 s**, both zero deaths. The production-tour bot also now returns to the public elephant entry before regrouping with the followers waiting outside the yard; the tour verifier requires actual APC completion.
 
+The merged high-tier escape exposed one rooftop monkey without a ground return route (88.89% bounded reach). Monkeys now physically descend to the doorway when the courier leaves their arena; the unchanged path bound counts that real, currently active descent, as it already counts native vault/tunnel legs. A new native control covers the descent and retained melee height guard.
+
 **Open:** post-merge typecheck, lint, unit tests and corrected six-arena matrix on runners. The receipts below describe the original lane source until the post-merge results are committed. **Browser QA needed** remains open; no browsers are launched.
 
 ## Done and open items
