@@ -101,3 +101,16 @@ Pay-off check: the delivery (L1) matches the delivery (L10), the commander's bro
 | Story text | Haiku, ~0.5 h | `dialogue.ts` lines (L8 broadcast, Hale, Sam, L10 briefing/crash, new recording, "Delivered ✓" epilogue toast), checked against the save roster fallback (Sam → Reyes). |
 
 Order: L8-story and L9-A in parallel → L9-B → L10-A and L10-B → story text → Opus visual QA and a playtest of L8–L10 before any PROD deploy. Every lane runs focused checks and one real-input run of its level. Perf runs in the orchestrator's quiet window.
+
+## PO direction 2026-11-08 — L10 route as a story (binding, supersedes the region beats above where they conflict)
+
+PO, verbatim: "That computer that tells me about the cure is standing on a green close to the street. That doesn't make any sense. L10 needs a storyline, eg walking through Maisfelder [corn fields] and farmer houses (all broken), then entering an Area51 like district, then entering a large hangar, then finding this computer inside... something like this."
+
+L10 is one continuous journey with escalating places, each a chapter:
+1. **Crash site and corn fields** — dry, broken corn, burned-out farm houses and barns (all broken), dead livestock, scarecrows, the first jump scares in the corn; Sam's radio trail.
+2. **Farmstead / small town edge** — overrun farm and roadblock, painted messages, the first weapon scenes (dead officer's handgun, Sam at the depot).
+3. **Restricted zone ("Area 51"-like)** — perimeter fences, warning signs, guard towers, searchlights, abandoned checkpoints, military vehicles, a quarantine gone wrong; stronger infected, dogs; the armory (machine gun, Sam's death).
+4. **The hangar** — entering a large, dark research hangar: lab containers, quarantine tents, generators, emergency lighting; the research terminal that reveals the cure (and the L1 parcel retcon) stands INSIDE, as the reward of the journey — never on a lawn by the street.
+5. **Delivery** — out of the hangar to the dispersal complex: console defence, Mega fight, cure release, ending.
+
+Every story-relevant object (terminal, cure, weapons, radio) sits in a place that explains why it is there.
