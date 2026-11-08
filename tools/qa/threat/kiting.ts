@@ -6,7 +6,6 @@ import type { SimWorld } from '../../../src/sim/world/SimWorld';
 import { observeAttackStarts } from './attackStarts';
 import { SimPhase } from '../../../src/core/EventBus';
 import { Status } from '../../../src/sim/combat/Status';
-import { combatHeightReachable } from '../../../src/sim/combat/height';
 
 export interface KitingReceipt {
   kitingSeconds: number;
@@ -97,12 +96,16 @@ export function installKitingPolicy(world: SimWorld, receipt: KitingReceipt, lev
     if (world.storyLock) { kitingNow = false; return frame; }
     const threats = world.infected?.active.filter(entity => {
       if (entity.health.current <= 0 || !entity.infected || entity.hidden || !position || Math.hypot(entity.transform.x - position.x, entity.transform.z - position.z) > 30) return false;
-      if (entity.infected.special !== 'dive' && !combatHeightReachable(entity, player)) return false;
+      if (entity.infected.special !== 'dive' && Math.abs(entity.transform.y - position.y) > 2) return false;
       const brain = entity.infected.l1;
       const pressing = entity.infected.state === 'chase' || entity.infected.state === 'attack' || !!entity.infected.specialAttack || brain?.mode === 'chase' || brain?.mode === 'bite';
       const pressure = entity.infected.pressureTarget;
       const targetId = pressure && world.tick < pressure.until ? pressure.id : brain?.targetId || entity.infected.heardTargetId || 1;
-      return pressing && targetId === 1 && !!world.combat?.query.visible(entity.transform, position);
+      // L3's police hold and L8's sanctuary arrivals include scripted NPC
+      // fights. Those groups must actually pursue the courier before replacing
+      // her native input; the other levels retain their accepted admission.
+      const courierEncounter = level !== 'L3' && level !== 'L8' || targetId === 1;
+      return pressing && courierEncounter && !!world.combat?.query.visible(entity.transform, position);
     }) ?? [];
     const buckets = new Map<string, { x: number; z: number; count: number }>(), cell = 7;
     for (const threat of threats) {

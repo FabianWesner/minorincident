@@ -76,7 +76,7 @@ export async function proveThreatAudit(): Promise<void> {
     const third = world.infected!.active.pop()!;
     world.setInput(emptyInput());
     assert.equal(receipt.samples, 0, 'a lone/pair opening is not a pressing horde sample');
-    third.transform.y = 1.9; world.infected!.active.push(third); world.setInput(emptyInput());
+    third.transform.y = 4.7; world.infected!.active.push(third); world.setInput(emptyInput());
     assert.equal(receipt.samples, 0, 'an enemy on another floor cannot fill the horde denominator');
     third.transform.y = .7; frames.length = 0;
     world.setInput(emptyInput());
