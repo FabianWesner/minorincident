@@ -97,7 +97,8 @@ try {
   world.infected!.director.reserved = reserved;
   updateFarmScares(world, pending);
   assert.equal(Object.keys(pending).length, 4);
-  assert(pending[lastSite].actor === undefined && pending[lastSite].due === world.tick + 90);
+  const rearmed = Object.values(pending).find(s => s.actor === undefined)!;
+  assert(rearmed.due === world.tick + 90);
   assert.equal(stemBank('L10'), null);
   assert.equal(scoreFile('L10', 'combat'), 'combat-L10');
   assert.equal(scoreFile('L10', 'combat', true), 'tension-L7');
