@@ -2,7 +2,7 @@
   "version": 1,
   "level": "L10",
   "tier": "high",
-  "sourceHash": "4e6773f8c9c351389542f857303dccbef221f18580b5cc85fa74d96dd1986507",
+  "sourceHash": "eca9e19daf62c6c77c7372ea033a7412de5c62074e9838cc9a2a24fa26f22261",
   "fixtureHash": "92c8c4dbd27db2b7dd03df5289fc530a85fd20da6035f4f296a61ec08d88a9e3",
   "errors": [],
   "checks": [
@@ -11,9 +11,9 @@
       "clause": "same-tick regional count and species composition",
       "tier": "high",
       "policy": "complete",
-      "status": "FAIL",
+      "status": "PASS",
       "value": {
-        "fresh": false,
+        "fresh": true,
         "regions": [
           {
             "region": "residential-fringe",
@@ -745,7 +745,7 @@
       "clause": "residential dogs follow actual handgun pickup",
       "tier": "high",
       "policy": "complete",
-      "status": "FAIL",
+      "status": "PASS",
       "value": {
         "tier": "high",
         "pickupTick": 3497,
