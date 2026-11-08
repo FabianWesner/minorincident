@@ -194,16 +194,24 @@ test('L1 handover + outbreak: no shader builds after warm-up and no frame over 2
     const a = window.__SS__!;
     await a.loadLevel('L8', { seed: 1 }); a.pause(); a.missions.begin();
     const loaded = { ...a.perf().nodeBuildMaterials }, state = a.getState(), carId = state.l8!.carId, car = a.getEntity(carId)!;
+    a.cheats.god(true);
+    const passengerCount = a.testFixtures.l8Boarding();
+    // Let the real vehicle passenger-entry animation seat the fixture roster.
+    await a.step(180);
+    const passengers = a.getEntity(carId)!.vehicle!.passengers ?? [];
+    const seated = passengers.filter(passenger => passenger.phase === 'seated').length;
     const yaw = car.transform.yaw, c = Math.cos(yaw), s = Math.sin(yaw);
     a.teleport(1, { x: car.transform.x + c * .71 + s * 2.025, z: car.transform.z - s * .71 + c * 2.025 });
     a.input.set({ interact: true }); await a.step(1); a.input.clear(); a.resume(); await new Promise(resolve => setTimeout(resolve, 1500)); a.pause();
     const boarded = a.events(0).some(event => event.type === 'vehicle.entered' && event.sourceId === carId && event.targetId === 1);
-    return { loaded, after: { ...a.perf().nodeBuildMaterials }, boarded, carId };
+    return { loaded, after: { ...a.perf().nodeBuildMaterials }, boarded, carId, passengerCount, seated };
   });
   const lateVehicleBuilds = Object.entries(l8.after).filter(([key, count]) => count !== l8.loaded[key] && /^(character:|action-held:|vehicle:)/.test(key));
   mkdirSync('test-results/smoke', { recursive: true });
   writeFileSync('test-results/smoke/l8-boarding-builds.json', JSON.stringify({ level: 'L8', vehicle: 'APC', boarded: l8.boarded, before: l8.loaded, after: l8.after, lateVehicleBuilds: Object.fromEntries(lateVehicleBuilds) }, null, 2));
-  test.info().annotations.push({ type: 'L8 boarding shader builds', description: JSON.stringify({ carId: l8.carId, boarded: l8.boarded, builds: Object.fromEntries(lateVehicleBuilds) }) });
+  test.info().annotations.push({ type: 'L8 boarding shader builds', description: JSON.stringify({ carId: l8.carId, boarded: l8.boarded, passengers: `${l8.seated}/${l8.passengerCount}`, builds: Object.fromEntries(lateVehicleBuilds) }) });
+  expect(l8.passengerCount, 'L8 fixture includes the living evacuation group').toBeGreaterThan(0);
+  expect(l8.seated, 'L8 passenger entry seats the evacuation group before the courier boards').toBe(l8.passengerCount);
   expect(l8.boarded, 'L8 APC boarding exercised after warm-up').toBe(true);
   expect(lateVehicleBuilds, 'courier, weapon, or vehicle builds after L8 warm-up and APC boarding').toEqual([]);
   // Q-227: L10 grants its guns through mission arsenal transactions, long after loading, rather than ground entities.

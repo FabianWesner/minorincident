@@ -1,0 +1,63 @@
+{
+  "sourceCommit": "4a9d75bf",
+  "runs": [
+    {
+      "run": 1,
+      "command": "E2E_PORT=4311 npm run test:smoke",
+      "exitCode": 0,
+      "wallSeconds": 148.6,
+      "budgetSeconds": 240,
+      "qa": {
+        "startTime": "2026-11-08T12:06:15.892Z",
+        "duration": 117087.603,
+        "expected": 6,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "public": {
+        "startTime": "2026-11-08T12:08:22.506Z",
+        "duration": 13144.631000000001,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "l8": {
+        "carId": 406,
+        "boarded": true,
+        "passengers": "13/13",
+        "builds": {}
+      }
+    },
+    {
+      "run": 2,
+      "command": "E2E_PORT=4311 npm run test:smoke",
+      "exitCode": 0,
+      "wallSeconds": 146,
+      "budgetSeconds": 240,
+      "qa": {
+        "startTime": "2026-11-08T12:09:13.760Z",
+        "duration": 107170.162,
+        "expected": 6,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "public": {
+        "startTime": "2026-11-08T12:11:13.108Z",
+        "duration": 15383.461000000001,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "l8": {
+        "carId": 406,
+        "boarded": true,
+        "passengers": "13/13",
+        "builds": {}
+      }
+    }
+  ]
+}
