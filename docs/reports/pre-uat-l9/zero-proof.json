@@ -1,0 +1,311 @@
+[
+  {
+    "sameGroundCapRatio": null,
+    "receipt": "test-results/pre-uat-l9/realtime-webgl-zero-low-corrected/dry-shortcut-low-z1.5-gear4-male/receipt.json",
+    "backend": "webgl",
+    "quality": "low",
+    "zeroReachedTick": 7143,
+    "zeroFire": null,
+    "damageAmounts": {
+      "10": 100
+    },
+    "positiveContactHits": 5,
+    "uniqueContactIds": 5,
+    "positiveAttackHits": 95,
+    "minScheduledWindupTicks": 36,
+    "actualAttackWindupMinimum": 36,
+    "crashSignals": [
+      {
+        "type": "mission.signal",
+        "tick": 14990,
+        "name": "l9.crash-approach",
+        "actorId": 406
+      },
+      {
+        "type": "mission.signal",
+        "tick": 15170,
+        "name": "l9.bridge-collapse"
+      },
+      {
+        "type": "mission.signal",
+        "tick": 15290,
+        "name": "l9.crash-impact",
+        "actorId": 406
+      },
+      {
+        "type": "mission.signal",
+        "tick": 15830,
+        "name": "l9.crawl-finished"
+      }
+    ],
+    "objectives": [
+      {
+        "type": "objective.started",
+        "id": "reach-outskirts",
+        "tick": 15290
+      }
+    ],
+    "dialogue": [
+      {
+        "type": "dialogue.line",
+        "tick": 15290,
+        "id": "l9.crash",
+        "text": "The bridge gave way. Crawl clear of the wreck."
+      }
+    ],
+    "audioStageErrors": [
+      [],
+      [],
+      [],
+      [],
+      []
+    ],
+    "audioStageMaxVoices": 13,
+    "finished": true,
+    "browserErrors": [],
+    "caveat": "Low comparison has male campaign/female carried actor fixture mismatch; excluded from cosmetic carry proof.",
+    "receiptSha256": "df44119942ed77f34eed6dc7a751ec117b14010ff6bb2a63654b46990a16da86",
+    "handover": {
+      "character": "male",
+      "renderedVariant": "male",
+      "playerHP": 100,
+      "ownedActions": [
+        "weapon.fire-axe",
+        "ability.corgi-lure"
+      ],
+      "racks": {
+        "LEFT": [
+          "weapon.fire-axe"
+        ],
+        "RIGHT": [
+          "weapon.fire-axe"
+        ]
+      },
+      "selectedAction": "weapon.fire-axe",
+      "unlockedLevel": 10,
+      "completedLevels": 9,
+      "checkpoint": "cure-crash",
+      "preCrashDurability": 0,
+      "corgiHP": 100,
+      "shelteredHumans": [
+        {
+          "id": 355,
+          "archetype": "npc.cashier",
+          "hp": 100
+        },
+        {
+          "id": 356,
+          "archetype": "npc.cashier",
+          "hp": 100
+        },
+        {
+          "id": 357,
+          "archetype": "npc.cashier",
+          "hp": 100
+        },
+        {
+          "id": 358,
+          "archetype": "npc.cashier",
+          "hp": 100
+        },
+        {
+          "id": 359,
+          "archetype": "npc.cashier",
+          "hp": 100
+        },
+        {
+          "id": 360,
+          "archetype": "npc.cashier",
+          "hp": 100
+        },
+        {
+          "id": 361,
+          "archetype": "npc.cashier",
+          "hp": 100
+        },
+        {
+          "id": 362,
+          "archetype": "npc.cashier",
+          "hp": 100
+        },
+        {
+          "id": 363,
+          "archetype": "npc.cashier",
+          "hp": 100
+        },
+        {
+          "id": 364,
+          "archetype": "npc.cashier",
+          "hp": 100
+        },
+        {
+          "id": 365,
+          "archetype": "npc.cashier",
+          "hp": 100
+        },
+        {
+          "id": 366,
+          "archetype": "npc.cashier",
+          "hp": 100
+        }
+      ]
+    }
+  },
+  {
+    "sameGroundCapRatio": 0.6,
+    "receipt": "test-results/pre-uat-l9/realtime-webgpu-zero-high-corrected/dry-shortcut-high-z1.5-gear4-female/receipt.json",
+    "backend": "webgpu",
+    "quality": "high",
+    "zeroReachedTick": 7666,
+    "zeroFire": {
+      "start": 7706,
+      "end": 8013,
+      "active": 406,
+      "events": []
+    },
+    "damageAmounts": {
+      "10": 100
+    },
+    "positiveContactHits": 3,
+    "uniqueContactIds": 3,
+    "positiveAttackHits": 97,
+    "minScheduledWindupTicks": 36,
+    "actualAttackWindupMinimum": 36,
+    "crashSignals": [
+      {
+        "type": "mission.signal",
+        "tick": 20419,
+        "name": "l9.crash-approach",
+        "actorId": 406
+      },
+      {
+        "type": "mission.signal",
+        "tick": 20599,
+        "name": "l9.bridge-collapse"
+      },
+      {
+        "type": "mission.signal",
+        "tick": 20719,
+        "name": "l9.crash-impact",
+        "actorId": 406
+      },
+      {
+        "type": "mission.signal",
+        "tick": 21259,
+        "name": "l9.crawl-finished"
+      }
+    ],
+    "objectives": [
+      {
+        "type": "objective.started",
+        "id": "reach-outskirts",
+        "tick": 20719
+      }
+    ],
+    "dialogue": [
+      {
+        "type": "dialogue.line",
+        "tick": 20719,
+        "id": "l9.crash",
+        "text": "The bridge gave way. Crawl clear of the wreck."
+      }
+    ],
+    "audioStageErrors": [
+      [],
+      [],
+      [],
+      [],
+      []
+    ],
+    "audioStageMaxVoices": 22,
+    "finished": true,
+    "browserErrors": [],
+    "caveat": "Canonical female production-transport carry preserved.",
+    "receiptSha256": "7afcc9e88a561e46d6106201ef6cc78f54c352f690c79591fe0e4a3471358ca8",
+    "handover": {
+      "character": "female",
+      "renderedVariant": "female",
+      "playerHP": 100,
+      "ownedActions": [
+        "weapon.fire-axe",
+        "ability.corgi-lure"
+      ],
+      "racks": {
+        "LEFT": [
+          "weapon.fire-axe"
+        ],
+        "RIGHT": [
+          "weapon.fire-axe"
+        ]
+      },
+      "selectedAction": "weapon.fire-axe",
+      "unlockedLevel": 10,
+      "completedLevels": 9,
+      "checkpoint": "cure-crash",
+      "preCrashDurability": 0,
+      "corgiHP": 100,
+      "shelteredHumans": [
+        {
+          "id": 355,
+          "archetype": "npc.cashier",
+          "hp": 100
+        },
+        {
+          "id": 356,
+          "archetype": "npc.cashier",
+          "hp": 100
+        },
+        {
+          "id": 357,
+          "archetype": "npc.cashier",
+          "hp": 100
+        },
+        {
+          "id": 358,
+          "archetype": "npc.cashier",
+          "hp": 100
+        },
+        {
+          "id": 359,
+          "archetype": "npc.cashier",
+          "hp": 100
+        },
+        {
+          "id": 360,
+          "archetype": "npc.cashier",
+          "hp": 100
+        },
+        {
+          "id": 361,
+          "archetype": "npc.cashier",
+          "hp": 100
+        },
+        {
+          "id": 362,
+          "archetype": "npc.cashier",
+          "hp": 100
+        },
+        {
+          "id": 363,
+          "archetype": "npc.cashier",
+          "hp": 100
+        },
+        {
+          "id": 364,
+          "archetype": "npc.cashier",
+          "hp": 100
+        },
+        {
+          "id": 365,
+          "archetype": "npc.cashier",
+          "hp": 100
+        },
+        {
+          "id": 366,
+          "archetype": "npc.cashier",
+          "hp": 100
+        }
+      ]
+    }
+  }
+]

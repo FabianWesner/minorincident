@@ -1,0 +1,69 @@
+{
+  "codeRevision": "763b9ce1c5865e78defc3ba562c994a384354f0a",
+  "typecheck": {
+    "command": "npm run typecheck",
+    "status": 0,
+    "seconds": 287.637
+  },
+  "lint": {
+    "command": "npm run lint",
+    "status": 0,
+    "seconds": 112.456
+  },
+  "unit": {
+    "command": "npm test -- --maxWorkers=1",
+    "exit": 0,
+    "filesPassed": 27,
+    "testsPassed": 107,
+    "registeredBudget": "150/150 (107 executed in the default project)",
+    "seconds": 95.3,
+    "log": "test-results/pre-uat-l9/unit-final-no-browser.log",
+    "sha256": "e6fdea58a4b21c8133b538848a0a34455e11671f96452dd42cf44424fb3bb82e"
+  },
+  "verifyAttempt": {
+    "command": "npm run verify -- E31",
+    "exit": 1,
+    "reason": "Typecheck and lint passed; initial four-worker suite had explicit 30000ms timeouts in l4-contact and gate-tools (105 passed, 2 timed out).",
+    "log": "test-results/pre-uat-l9/verify-final.log",
+    "sha256": "13c0b6ad3162aa686000f65fb90ef916a645f4b09bc464b8e8d0ed2f698ac2e7"
+  },
+  "serialDuringBrowserAttempt": {
+    "exit": 1,
+    "reason": "One explicit 30000ms navigation timeout (106 passed). Full suite repeated after owned browser work stopped, same source and unchanged timeouts.",
+    "log": "test-results/pre-uat-l9/unit-final-serial.log",
+    "sha256": "e48a29fa106daac40d14f293256779d9f9f1643d41f0d957413c9b63ebda719d"
+  },
+  "earlierDirtyHeadAttempt": {
+    "reason": "Before committing the crawl source change, the legacy HEAD-based review-freshness assertion reported STALE. Committing the source and repeating the full suite passed 107/107. This assertion failure is distinct from the later timeout failures.",
+    "failedLog": "test-results/pre-uat-l9/unit-after.log",
+    "cleanLog": "test-results/pre-uat-l9/unit-clean.log"
+  },
+  "acceptance": {
+    "command": "npm run qa:accept -- --level L9 --skip-browser",
+    "exit": 1,
+    "freshFailures": 0,
+    "incompleteRows": 8,
+    "passedRows": [
+      "L9-08"
+    ],
+    "log": "test-results/pre-uat-l9/accept-final.log",
+    "sourceHash": "baea69554489835932c6a2573aea575420689c6de72b2060d8b54b451561b3aa"
+  },
+  "threat": {
+    "remote": true,
+    "command": "npm run qa:threat -- --levels L9",
+    "exit": 1,
+    "flags": [
+      "PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate"
+    ],
+    "L9Flags": [],
+    "log": "test-results/pre-uat-l9/threat-final-remote.log",
+    "note": "Load was above 6, so tools/remote/run.sh ran this on the remote runner. Single-level audit is diagnostic; no complete global gate PASS is claimed."
+  },
+  "build": {
+    "command": "npm run build:qa",
+    "exit": 0,
+    "log": "test-results/pre-uat-l9/build-after-gear.log"
+  },
+  "reportProbeSyntaxAndImports": "esbuild TypeScript transform and local relative-import resolution passed; report probes add no registered test cases."
+}
