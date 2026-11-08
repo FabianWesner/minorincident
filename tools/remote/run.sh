@@ -26,6 +26,9 @@ $2"; shift 2 ;;
     *) usage ;;
   esac
 done
+# Wrappers sometimes supply their own separator after ours. Normalize before
+# enqueueing so admission and execution see the same actual executable.
+while [ $# -gt 0 ] && [ "$1" = -- ]; do shift; done
 [ $# -ge 1 ] || usage
 git -C "$WT" rev-parse --git-dir >/dev/null 2>&1 || { echo "run.sh: $WT is not a git worktree" >&2; exit 64; }
 
