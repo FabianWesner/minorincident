@@ -251,7 +251,7 @@ export class PropSystem {
       const dx = item.pose.p[0] - p.transform.x, dz = item.pose.p[2] - p.transform.z;
       if (dx * nx + dz * nz <= 0 || Math.hypot(dx, dz) > item.radius + .55) continue;
       if (item.metadata.class === 'heavy') {
-        if (!this.shoulderPush) { item.body.setBodyType(RAPIER.RigidBodyType.Fixed, false); continue; }
+        if (!this.shoulderPush || !item.metadata.pushable) { item.body.setBodyType(RAPIER.RigidBodyType.Fixed, false); continue; }
         item.body.setBodyType(RAPIER.RigidBodyType.Dynamic, false); scale = Math.min(scale, .25);
       } else if (item.metadata.class === 'medium') scale = Math.min(scale, .55);
       if (item.metadata.class !== 'light') {

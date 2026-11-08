@@ -146,6 +146,12 @@ async function vehicleShovesProps(): Promise<PropSnapshot> {
     expect(drums.body.linvel().x).toBeGreaterThan(0);
     expect(world.props!.navWalls.has(drums.entityId)).toBe(false);
     const reverseProp = world.props!.spawn({ id: 'ram-test-parked-sedan', assetId: 'veh.sedan-blue', position: [20, 0, 0], yaw: 0, scale: [1, 1, 1], minTier: 0, maxTier: 5, allowRoad: true, lightGroup: '', visualAabb: { min: [-2.2, 0, -.9], max: [2.2, 1.8, .9] } });
+    const player = world.entities.get(1)!, playerPose = { ...player.transform };
+    world.vehicles!.active = null; world.props!.shoulderPush = true;
+    Object.assign(player.transform, { x: 18, z: 0 });
+    world.props!.pushSpeed({ ...emptyInput(), move: { x: 1, z: 0 } });
+    expect(reverseProp.body.isFixed(), 'vehicle-only props retain their authored on-foot restriction').toBe(true);
+    Object.assign(player.transform, playerPose); world.props!.shoulderPush = false;
     const reverseId = world.vehicles!.spawn('vehicle.military-apc', { x: 24.95, z: 0 });
     const reverseCar = world.vehicles!.cars.get(reverseId)!; world.vehicles!.active = reverseId;
     reverseCar.physics.body.setLinvel({ x: -18, y: 0, z: 0 }, true); reverseCar.physics.postPhysics();
