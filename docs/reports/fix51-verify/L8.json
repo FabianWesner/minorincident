@@ -1,11 +1,11 @@
 {
   "version": 2,
   "level": "L8",
-  "sourceHash": "c19cffe31403b25dc81d307da8947c42c75496e6f5d21ae7a7e77d02a8ad86a1",
-  "observerHash": "999e4c3d08d5ee92813f249c240215e0f7ccc55a486bd2e3adea2b892d04ad82",
-  "fixtureHash": "db1b7fffcb8f3ae508ccdd449b3c7b18d8c4a4e02d6cd2d647058d68cec10ac4",
+  "sourceHash": "2da492ddbc6fe86c57886d1d2b7efa296226de1166b3385e19914a88a183681e",
+  "observerHash": "41aaabb1d7cb661cd4318a0a9b026a885ed999be82913d2b6e47122269a40024",
+  "fixtureHash": "8c27bd3fe2c713592ced67ecf496cc1239ab021f80786154ca3bc3b3f7ecec74",
   "checkpointHash": "8f4e6709c7e62ccd18d725bca5e366e993ffb95d892399507e807bf2f6027077",
-  "generatedAt": "2026-11-07T04:52:40.110Z",
+  "generatedAt": "2026-11-08T02:03:01.243Z",
   "policies": [
     {
       "tier": "low",
@@ -69,9 +69,15 @@
       "id": "G-01",
       "status": "FAIL",
       "currentStatus": "NOT CHECKED",
-      "value": "Open prior FAIL: WebGPU L5 low cold 7.142 s; high cold/warm 6.642/6.723 s, over 6 s. WebGL2 not measured.",
+      "value": "Manual review FAIL (STALE, Codex rr-b): Fresh QA production real L1 menu click to Begin-ready: low Metal WebGL2 cold7773.9000ms (>6000ms), loading card shown0.5ms after click, no browser errors. Quiet exclusive admission11:56:51.714Z at load2.4692,busy[]; first receipt11:57:02.699Z precedes observed foreign Vitest start~11:57:21Z. Later matrix timings are excluded after host contention. Separate sampled confirmation cold2222.6000ms/warm2095ms passes; worst-of-N retains the first miss. Repro: npm run build:qa; serve QA preview4836; RELEASE_QUALITY=low RELEASE_SIDES=candidate RELEASE_CANDIDATE_ORIGIN=http://127.0.0.1:4836 RELEASE_OUT=test-results/rr-b/G01-repro BROWSER_POOL_JOB_ID=rr-b sh tools/perf/quiet-run.sh node --import tsx/esm tools/qa/release-ab-load.mjs L1 webgl2. Scope: one rejecting cell, not a full backend/tier matrix. Open prior FAIL: WebGPU L5 low cold 7.142 s; high cold/warm 6.642/6.723 s, over 6 s. WebGL2 not measured.",
       "automatedComplete": false,
       "receipt": [
+        "test-results/rr-b/G01-first-cold.json",
+        "test-results/rr-b/G01-quiet-admission.jsonl",
+        "test-results/rr-b/G01-midrun-conditions.json",
+        "test-results/rr-b/G01-confirm/loads/L1.json",
+        "test-results/rr-b/G01-confirm-host.json",
+        "test-results/rr-b/G01-confirm-admission.jsonl",
         "docs/reports/batch51-qa/perf/summary.json"
       ],
       "expected": "Cold load, real level click → playable (loading card closed / Begin ready): **≤ 6.0 s worst of N**, every level, WebGPU + WebGL2, low + high.",
@@ -86,7 +92,57 @@
         ],
         "method": "Exclusive quiet real menu-click cold/warm loads, both qualities; failures retain the binding 6 s ceiling. NEXT: repeat the same matrix on WebGL2 after a load fix."
       },
-      "remaining": "Exclusive quiet real menu-click cold/warm loads, both qualities; failures retain the binding 6 s ceiling. NEXT: repeat the same matrix on WebGL2 after a load fix."
+      "remaining": "Exclusive quiet real menu-click cold/warm loads, both qualities; failures retain the binding 6 s ceiling. NEXT: repeat the same matrix on WebGL2 after a load fix.",
+      "reviewDecision": {
+        "row": "G-01",
+        "status": "FAIL",
+        "reviewer": "Codex rr-b",
+        "date": "2026-11-07",
+        "commit": "50be7c824705fc3cdbb3a7ab7dd78f72c7bf2001",
+        "clauses": [
+          {
+            "clause": "Cold load, real level click → playable (loading card closed / Begin ready): **≤ 6.0 s worst of N**, every level, WebGPU + WebGL2, low + high.",
+            "verdict": "FAIL",
+            "note": "Fresh QA production real L1 menu click to Begin-ready: low Metal WebGL2 cold7773.9000ms (>6000ms), loading card shown0.5ms after click, no browser errors. Quiet exclusive admission11:56:51.714Z at load2.4692,busy[]; first receipt11:57:02.699Z precedes observed foreign Vitest start~11:57:21Z. Later matrix timings are excluded after host contention. Separate sampled confirmation cold2222.6000ms/warm2095ms passes; worst-of-N retains the first miss. Repro: npm run build:qa; serve QA preview4836; RELEASE_QUALITY=low RELEASE_SIDES=candidate RELEASE_CANDIDATE_ORIGIN=http://127.0.0.1:4836 RELEASE_OUT=test-results/rr-b/G01-repro BROWSER_POOL_JOB_ID=rr-b sh tools/perf/quiet-run.sh node --import tsx/esm tools/qa/release-ab-load.mjs L1 webgl2. Scope: one rejecting cell, not a full backend/tier matrix."
+          }
+        ],
+        "evidence": [
+          {
+            "file": "test-results/rr-b/G01-first-cold.json",
+            "sha256": "300d2ab208e91638785f40058efde22c04de78e2f7ba08b53c63870be3e6bb06",
+            "what": "Fresh QA production real L1 menu click to Begin-ready: low Metal WebGL2 cold7773.9000ms (>6000ms), loading card shown0.5ms after click, no browser errors. Quiet exclusive admission11:56:51.714Z at load2.4692,busy[]; first receipt11:57:02.699Z precedes observed foreign Vitest start~11:57:21Z. Later matrix timings are excluded after host contention. Separate sampled confirmation cold2222.6000ms/warm2095ms passes; worst-of-N retains the first miss. Repro: npm run build:qa; serve QA preview4836; RELEASE_QUALITY=low RELEASE_SIDES=candidate RELEASE_CANDIDATE_ORIGIN=http://127.0.0.1:4836 RELEASE_OUT=test-results/rr-b/G01-repro BROWSER_POOL_JOB_ID=rr-b sh tools/perf/quiet-run.sh node --import tsx/esm tools/qa/release-ab-load.mjs L1 webgl2. Scope: one rejecting cell, not a full backend/tier matrix."
+          },
+          {
+            "file": "test-results/rr-b/G01-quiet-admission.jsonl",
+            "sha256": "774e2a86a2cbeb217c1138de3651da6e0e3c3bd2b8fcf2237e109e4a64b8133d",
+            "what": "Fresh QA production real L1 menu click to Begin-ready: low Metal WebGL2 cold7773.9000ms (>6000ms), loading card shown0.5ms after click, no browser errors. Quiet exclusive admission11:56:51.714Z at load2.4692,busy[]; first receipt11:57:02.699Z precedes observed foreign Vitest start~11:57:21Z. Later matrix timings are excluded after host contention. Separate sampled confirmation cold2222.6000ms/warm2095ms passes; worst-of-N retains the first miss. Repro: npm run build:qa; serve QA preview4836; RELEASE_QUALITY=low RELEASE_SIDES=candidate RELEASE_CANDIDATE_ORIGIN=http://127.0.0.1:4836 RELEASE_OUT=test-results/rr-b/G01-repro BROWSER_POOL_JOB_ID=rr-b sh tools/perf/quiet-run.sh node --import tsx/esm tools/qa/release-ab-load.mjs L1 webgl2. Scope: one rejecting cell, not a full backend/tier matrix."
+          },
+          {
+            "file": "test-results/rr-b/G01-midrun-conditions.json",
+            "sha256": "f462c6cb95b63ac110c28300456e1a32263250839a5daa2cfb1c3a3af3926519",
+            "what": "Fresh QA production real L1 menu click to Begin-ready: low Metal WebGL2 cold7773.9000ms (>6000ms), loading card shown0.5ms after click, no browser errors. Quiet exclusive admission11:56:51.714Z at load2.4692,busy[]; first receipt11:57:02.699Z precedes observed foreign Vitest start~11:57:21Z. Later matrix timings are excluded after host contention. Separate sampled confirmation cold2222.6000ms/warm2095ms passes; worst-of-N retains the first miss. Repro: npm run build:qa; serve QA preview4836; RELEASE_QUALITY=low RELEASE_SIDES=candidate RELEASE_CANDIDATE_ORIGIN=http://127.0.0.1:4836 RELEASE_OUT=test-results/rr-b/G01-repro BROWSER_POOL_JOB_ID=rr-b sh tools/perf/quiet-run.sh node --import tsx/esm tools/qa/release-ab-load.mjs L1 webgl2. Scope: one rejecting cell, not a full backend/tier matrix."
+          },
+          {
+            "file": "test-results/rr-b/G01-confirm/loads/L1.json",
+            "sha256": "2f4c69dce235b531b1b46ef7e0ccd9a0660ee722ddea3b258e9ebeccd5abbbe0",
+            "what": "Fresh QA production real L1 menu click to Begin-ready: low Metal WebGL2 cold7773.9000ms (>6000ms), loading card shown0.5ms after click, no browser errors. Quiet exclusive admission11:56:51.714Z at load2.4692,busy[]; first receipt11:57:02.699Z precedes observed foreign Vitest start~11:57:21Z. Later matrix timings are excluded after host contention. Separate sampled confirmation cold2222.6000ms/warm2095ms passes; worst-of-N retains the first miss. Repro: npm run build:qa; serve QA preview4836; RELEASE_QUALITY=low RELEASE_SIDES=candidate RELEASE_CANDIDATE_ORIGIN=http://127.0.0.1:4836 RELEASE_OUT=test-results/rr-b/G01-repro BROWSER_POOL_JOB_ID=rr-b sh tools/perf/quiet-run.sh node --import tsx/esm tools/qa/release-ab-load.mjs L1 webgl2. Scope: one rejecting cell, not a full backend/tier matrix."
+          },
+          {
+            "file": "test-results/rr-b/G01-confirm-host.json",
+            "sha256": "e4c2a6a212a410e26932f3d71e3ed92f28a6cad72a1161a2f31f033a23e8051b",
+            "what": "Fresh QA production real L1 menu click to Begin-ready: low Metal WebGL2 cold7773.9000ms (>6000ms), loading card shown0.5ms after click, no browser errors. Quiet exclusive admission11:56:51.714Z at load2.4692,busy[]; first receipt11:57:02.699Z precedes observed foreign Vitest start~11:57:21Z. Later matrix timings are excluded after host contention. Separate sampled confirmation cold2222.6000ms/warm2095ms passes; worst-of-N retains the first miss. Repro: npm run build:qa; serve QA preview4836; RELEASE_QUALITY=low RELEASE_SIDES=candidate RELEASE_CANDIDATE_ORIGIN=http://127.0.0.1:4836 RELEASE_OUT=test-results/rr-b/G01-repro BROWSER_POOL_JOB_ID=rr-b sh tools/perf/quiet-run.sh node --import tsx/esm tools/qa/release-ab-load.mjs L1 webgl2. Scope: one rejecting cell, not a full backend/tier matrix."
+          },
+          {
+            "file": "test-results/rr-b/G01-confirm-admission.jsonl",
+            "sha256": "7291d7c7f01ccaeefc706f5bdadfe086258ccdb180f311186c50fbe31a824eb1",
+            "what": "Fresh QA production real L1 menu click to Begin-ready: low Metal WebGL2 cold7773.9000ms (>6000ms), loading card shown0.5ms after click, no browser errors. Quiet exclusive admission11:56:51.714Z at load2.4692,busy[]; first receipt11:57:02.699Z precedes observed foreign Vitest start~11:57:21Z. Later matrix timings are excluded after host contention. Separate sampled confirmation cold2222.6000ms/warm2095ms passes; worst-of-N retains the first miss. Repro: npm run build:qa; serve QA preview4836; RELEASE_QUALITY=low RELEASE_SIDES=candidate RELEASE_CANDIDATE_ORIGIN=http://127.0.0.1:4836 RELEASE_OUT=test-results/rr-b/G01-repro BROWSER_POOL_JOB_ID=rr-b sh tools/perf/quiet-run.sh node --import tsx/esm tools/qa/release-ab-load.mjs L1 webgl2. Scope: one rejecting cell, not a full backend/tier matrix."
+          }
+        ],
+        "notes": "One valid counterexample rejects the universal six-second gate. No claim that later shared-load slow timings qualify. Confirmation PASS and lack of continuous sampling for initial cell are explicitly disclosed.",
+        "sourceDigest": "826eaf34ba69c9272cce1759bdd1699e67d8e35ebbd3c7d1739661bfaa751923",
+        "freshness": "STALE",
+        "latestRelevantCommit": "c463d5950421d1faca38b90ffdb327d90aa3110e"
+      }
     },
     {
       "id": "G-02",
@@ -295,7 +351,7 @@
         "notes": "PO: inspect low-L7-east-perimeter-z0.5.png at player center and the retained L1 Annex doorstep frame. Decide whether the stride/overlap reads as a coherent body. This is a visual-readability P, not a claim of a measured detached limb.",
         "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186",
         "freshness": "STALE",
-        "latestRelevantCommit": "a921908b852e8f24171b81b826496845e20ddb88"
+        "latestRelevantCommit": "c463d5950421d1faca38b90ffdb327d90aa3110e"
       }
     },
     {
@@ -367,7 +423,7 @@
         "notes": "The silhouette mechanism is directly measured and visibly reviewed. Pose-camera duplicate zoom requests and rejected APC fixture are excluded from additional coverage claims.",
         "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186",
         "freshness": "STALE",
-        "latestRelevantCommit": "a921908b852e8f24171b81b826496845e20ddb88"
+        "latestRelevantCommit": "c463d5950421d1faca38b90ffdb327d90aa3110e"
       }
     },
     {
@@ -578,7 +634,7 @@
         "notes": "PO decision: should the Kill-the-Mega objective ring follow the physically moving boss, or stay at the dispersal arena under the fixed-destination rule? Exact thing: cure-mega in L10/mega, source LevelTenFinale.update;510.898m observed span. L6 handoffs use fixed actionable gate spots, with the exit-platform fallback. This P concerns the moving target design, not missing performance evidence.",
         "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186",
         "freshness": "STALE",
-        "latestRelevantCommit": "a921908b852e8f24171b81b826496845e20ddb88"
+        "latestRelevantCommit": "c463d5950421d1faca38b90ffdb327d90aa3110e"
       }
     },
     {
@@ -636,7 +692,7 @@
         "notes": "PO: approve native story-camera zoom clamping and temporary direction-pin suppression while destination text remains. Retained exact full-size frames: L1-high/captures/accept-L1-deliver-t1030-high-z1.jpg (actual1.5) and accept-L1-escape-t5237-high-z1.jpg (actual1). Original firestation photo was inspected and then archived during raw cleanup; its digest/state remain in the receipt. No full five-step zoom1 PASS is claimed. Additional current-observer complete low repeat retains firestation-t6608-low-z1.jpg: requested zoom1, actual camera zoom/targetZoom1.5 at tick6609, fixed story framing. This supplies a new exact fire-station PO comparison; it does not claim unclamped zoom1 coverage.",
         "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186",
         "freshness": "STALE",
-        "latestRelevantCommit": "a921908b852e8f24171b81b826496845e20ddb88"
+        "latestRelevantCommit": "c463d5950421d1faca38b90ffdb327d90aa3110e"
       }
     },
     {
@@ -785,7 +841,7 @@
         "notes": "Fresh review of frozen source and current receipt values. Source digest is computed from current relevant file bytes; archived prior evidence is not relabelled.",
         "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186",
         "freshness": "STALE",
-        "latestRelevantCommit": "a921908b852e8f24171b81b826496845e20ddb88"
+        "latestRelevantCommit": "c463d5950421d1faca38b90ffdb327d90aa3110e"
       }
     },
     {
@@ -957,7 +1013,7 @@
         "notes": "Controlled production-renderer fixture; every setup, exact actor identity, pixel ROI and negative control is retained. No campaign-route or performance claim is substituted for the rendered clause.",
         "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186",
         "freshness": "STALE",
-        "latestRelevantCommit": "a921908b852e8f24171b81b826496845e20ddb88"
+        "latestRelevantCommit": "c463d5950421d1faca38b90ffdb327d90aa3110e"
       }
     },
     {
@@ -1051,20 +1107,23 @@
         "notes": "Controlled production-renderer fixture; every setup, exact actor identity, pixel ROI and negative control is retained. No campaign-route or performance claim is substituted for the rendered clause.",
         "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186",
         "freshness": "STALE",
-        "latestRelevantCommit": "a921908b852e8f24171b81b826496845e20ddb88"
+        "latestRelevantCommit": "c463d5950421d1faca38b90ffdb327d90aa3110e"
       }
     },
     {
       "id": "G-13",
       "status": "FAIL",
       "currentStatus": "NOT CHECKED",
-      "value": "low/complete each observed follower median versus its phase group median: [{\"phase\":\"step/escape\",\"id\":355,\"samples\":32,\"median\":4.499500272431499,\"groupMedian\":4.499249875103136,\"ratio\":1.0000556531278133},{\"phase\":\"step/escape\",\"id\":356,\"samples\":29,\"median\":4.699992022891085,\"groupMedian\":4.499249875103136,\"ratio\":1.0446168035473575},{\"phase\":\"step/escape\",\"id\":357,\"samples\":29,\"median\":4.583754967693903,\"groupMedian\":4.499249875103136,\"ratio\":1.0187820403259622},{\"p… (full values in JSON) (target every ratio ≥0.95; ≥10 walking samples/follower; PASS); low/complete stationary far-follower time upper bound: {\"escortTicks\":1940,\"stationaryFarTicks\":95,\"upperBoundPercent\":4.896907216494846,\"followers\":[{\"id\":354,\"escortTicks\":987,\"stationaryFarTicks\":0},{\"id\":355,\"escortTicks\":1094,\"stationaryFarTicks\":0},{\"id\":356,\"escortTicks\":1155,\"stationaryFarTicks\":43},{\"id\":357,\"escortTicks\":1216,\"stationaryFarTicks\":1},{\"id\":358,\"escortTicks\":1277,\"stationaryFarTicks\":0},{\"id\":359,\"escortTicks\":1346,\"stationary… (full values in JSON) (target actual waiting ≤10%; a bound above 10% is inconclusive; PASS); high/complete each observed follower median versus its phase group median: [{\"phase\":\"step/escape\",\"id\":355,\"samples\":30,\"median\":4.668403664263435,\"groupMedian\":4.519324061461051,\"ratio\":1.032987146036655},{\"phase\":\"step/escape\",\"id\":356,\"samples\":30,\"median\":4.699852455087711,\"groupMedian\":4.519324061461051,\"ratio\":1.0399458837586206},{\"phase\":\"step/escape\",\"id\":357,\"samples\":30,\"median\":4.538649945387711,\"groupMedian\":4.519324061461051,\"ratio\":1.0042762775281957},{\"ph… (full values in JSON) (target every ratio ≥0.95; ≥10 walking samples/follower; PASS); high/complete stationary far-follower time upper bound: {\"escortTicks\":2223,\"stationaryFarTicks\":76,\"upperBoundPercent\":3.4188034188034186,\"followers\":[{\"id\":354,\"escortTicks\":970,\"stationaryFarTicks\":0},{\"id\":355,\"escortTicks\":1203,\"stationaryFarTicks\":72},{\"id\":356,\"escortTicks\":1291,\"stationaryFarTicks\":19},{\"id\":357,\"escortTicks\":1383,\"stationaryFarTicks\":0},{\"id\":358,\"escortTicks\":1474,\"stationaryFarTicks\":0},{\"id\":359,\"escortTicks\":1564,\"stationa… (full values in JSON) (target actual waiting ≤10%; a bound above 10% is inconclusive; PASS) Manual review FAIL (STALE, final-g/Codex): Fresh ordinary L7 high seed1 completion: departure followers62/65/74 median/group ratios0.9137348293/0.8780749680/0.8707108993, each with>=10 walking samples and a valid completed route; all are below0.95. The existing majority-of-three vote passes these IDs, but does not erase these concrete violations of the unchanged every-follower criterion. L5 high seed3 follower28 also reaches0.8945363771. L6 exact empty-input waiting is39/16082 ticks=0.242507% at both tiers (canonical final hashes identical), so its48.3% stationary upper bound is not classified as an actual wait failure. Open prior FAIL: Native competent L5 survivor28 median pace is94.8% of its phase group median over55 qualified samples, below95%. This survivor alone fails the full row although named gate cohorts pass. L3 actor23 is a companion and is not used as survivor-failure evidence.",
+      "value": "low/complete each observed follower median versus its phase group median: [{\"phase\":\"step/escape\",\"id\":355,\"samples\":32,\"median\":4.499500272431499,\"groupMedian\":4.499249875103136,\"ratio\":1.0000556531278133},{\"phase\":\"step/escape\",\"id\":356,\"samples\":29,\"median\":4.699992022891085,\"groupMedian\":4.499249875103136,\"ratio\":1.0446168035473575},{\"phase\":\"step/escape\",\"id\":357,\"samples\":29,\"median\":4.583754967693903,\"groupMedian\":4.499249875103136,\"ratio\":1.0187820403259622},{\"p… (full values in JSON) (target every ratio ≥0.95; ≥10 walking samples/follower; PASS); low/complete stationary far-follower time upper bound: {\"escortTicks\":1940,\"stationaryFarTicks\":95,\"upperBoundPercent\":4.896907216494846,\"followers\":[{\"id\":354,\"escortTicks\":987,\"stationaryFarTicks\":0},{\"id\":355,\"escortTicks\":1094,\"stationaryFarTicks\":0},{\"id\":356,\"escortTicks\":1155,\"stationaryFarTicks\":43},{\"id\":357,\"escortTicks\":1216,\"stationaryFarTicks\":1},{\"id\":358,\"escortTicks\":1277,\"stationaryFarTicks\":0},{\"id\":359,\"escortTicks\":1346,\"stationary… (full values in JSON) (target actual waiting ≤10%; a bound above 10% is inconclusive; PASS); high/complete each observed follower median versus its phase group median: [{\"phase\":\"step/escape\",\"id\":355,\"samples\":30,\"median\":4.668403664263435,\"groupMedian\":4.519324061461051,\"ratio\":1.032987146036655},{\"phase\":\"step/escape\",\"id\":356,\"samples\":30,\"median\":4.699852455087711,\"groupMedian\":4.519324061461051,\"ratio\":1.0399458837586206},{\"phase\":\"step/escape\",\"id\":357,\"samples\":30,\"median\":4.538649945387711,\"groupMedian\":4.519324061461051,\"ratio\":1.0042762775281957},{\"ph… (full values in JSON) (target every ratio ≥0.95; ≥10 walking samples/follower; PASS); high/complete stationary far-follower time upper bound: {\"escortTicks\":2223,\"stationaryFarTicks\":76,\"upperBoundPercent\":3.4188034188034186,\"followers\":[{\"id\":354,\"escortTicks\":970,\"stationaryFarTicks\":0},{\"id\":355,\"escortTicks\":1203,\"stationaryFarTicks\":72},{\"id\":356,\"escortTicks\":1291,\"stationaryFarTicks\":19},{\"id\":357,\"escortTicks\":1383,\"stationaryFarTicks\":0},{\"id\":358,\"escortTicks\":1474,\"stationaryFarTicks\":0},{\"id\":359,\"escortTicks\":1564,\"stationa… (full values in JSON) (target actual waiting ≤10%; a bound above 10% is inconclusive; PASS) Manual review FAIL (STALE, Codex rr-b): Fresh current-main native L5 high complete seed3: follower28 in step/look has46 qualified walking samples, median3.9477449638m/s versus group4.4131743157m/s, ratio0.8945363771 (<0.95). L7 high complete seed2 departure follower66 additionally has27 samples and ratio0.9492090922. Majority-of-three diagnostics pass these followers, but a vote does not erase valid violations of the unchanged every-follower criterion. L1 stationary-far16.4561%/16.4696% values are upper bounds and are rejected as causal waiting FAIL evidence. Repro: npm run qa:accept -- --level L5 --skip-browser; inspect G-13 high/complete seed3 follower28 step/look; or node --import tsx/esm test-results/rr-b/g13-l5.mjs. Open prior FAIL: Native competent L5 survivor28 median pace is94.8% of its phase group median over55 qualified samples, below95%. This survivor alone fails the full row although named gate cohorts pass. L3 actor23 is a companion and is not used as survivor-failure evidence.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L8-low-complete.json",
         "docs/reports/fix51-verify/receipts/L8-high-complete.json",
-        "docs/reports/final-g/G-13-native.json",
-        "docs/reports/final-g/G-13-L6-wait.json",
+        "test-results/rr-b/G-13-L5-high-native.json",
+        "test-results/rr-b/G-13-L5-high-pace.json",
+        "test-results/rr-b/G-13-L5-low-native.json",
+        "test-results/rr-b/G-13-L5-low-pace.json",
+        "test-results/rr-b/G-13-individual-pace.json",
         "docs/reports/batch51-qa/native-threat.json"
       ],
       "expected": "**No single follower is slower than the group.** While the group moves, every follower's median speed ≥ 0.95× the group median (tune); time the player stands waiting for one follower > 10 m behind ≤ 10 % of escort time (tune). PO: \"let me stay with the crowd for suvivor.\"",
@@ -1464,43 +1523,70 @@
       "reviewDecision": {
         "row": "G-13",
         "status": "FAIL",
-        "reviewer": "final-g/Codex",
+        "reviewer": "Codex rr-b",
         "date": "2026-11-07",
-        "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+        "commit": "50be7c824705fc3cdbb3a7ab7dd78f72c7bf2001",
         "clauses": [
           {
             "clause": "**No single follower is slower than the group.** While the group moves, every follower's median speed ≥ 0.95× the group median (tune); time the player stands waiting for one follower > 10 m behind ≤ 10 % of escort time (tune). PO: \"let me stay with the crowd for suvivor.\"",
             "verdict": "FAIL",
-            "note": "Fresh ordinary L7 high seed1 completion: departure followers62/65/74 median/group ratios0.9137348293/0.8780749680/0.8707108993, each with>=10 walking samples and a valid completed route; all are below0.95. The existing majority-of-three vote passes these IDs, but does not erase these concrete violations of the unchanged every-follower criterion. L5 high seed3 follower28 also reaches0.8945363771. L6 exact empty-input waiting is39/16082 ticks=0.242507% at both tiers (canonical final hashes identical), so its48.3% stationary upper bound is not classified as an actual wait failure."
+            "note": "Fresh current-main native L5 high complete seed3: follower28 in step/look has46 qualified walking samples, median3.9477449638m/s versus group4.4131743157m/s, ratio0.8945363771 (<0.95). L7 high complete seed2 departure follower66 additionally has27 samples and ratio0.9492090922. Majority-of-three diagnostics pass these followers, but a vote does not erase valid violations of the unchanged every-follower criterion. L1 stationary-far16.4561%/16.4696% values are upper bounds and are rejected as causal waiting FAIL evidence. Repro: npm run qa:accept -- --level L5 --skip-browser; inspect G-13 high/complete seed3 follower28 step/look; or node --import tsx/esm test-results/rr-b/g13-l5.mjs."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/final-g/G-13-native.json",
-            "sha256": "455a1d189ace19902b881289b13bcaa26cfb1b963b40caa96247dfbbb429c4cd",
-            "what": "Fresh ordinary L7 high seed1 completion: departure followers62/65/74 median/group ratios0.9137348293/0.8780749680/0.8707108993, each with>=10 walking samples and a valid completed route; all are below0.95. The existing majority-of-three vote passes these IDs, but does not erase these concrete violations of the unchanged every-follower criterion. L5 high seed3 follower28 also reaches0.8945363771. L6 exact empty-input waiting is39/16082 ticks=0.242507% at both tiers (canonical final hashes identical), so its48.3% stationary upper bound is not classified as an actual wait failure."
+            "file": "test-results/rr-b/G-13-L5-high-native.json",
+            "sha256": "3cbdd7df9de8644d9fa8fb301ff2737bc28848d460a3e8781e04a2ff0f3ef010",
+            "what": "Fresh current-main native L5 high complete seed3: follower28 in step/look has46 qualified walking samples, median3.9477449638m/s versus group4.4131743157m/s, ratio0.8945363771 (<0.95). L7 high complete seed2 departure follower66 additionally has27 samples and ratio0.9492090922. Majority-of-three diagnostics pass these followers, but a vote does not erase valid violations of the unchanged every-follower criterion. L1 stationary-far16.4561%/16.4696% values are upper bounds and are rejected as causal waiting FAIL evidence. Repro: npm run qa:accept -- --level L5 --skip-browser; inspect G-13 high/complete seed3 follower28 step/look; or node --import tsx/esm test-results/rr-b/g13-l5.mjs."
           },
           {
-            "file": "docs/reports/final-g/G-13-L6-wait.json",
-            "sha256": "b05dcc36301049094788f05f8057fddd19b86d0ffa3f05613afc03d025486a1a",
-            "what": "Fresh ordinary L7 high seed1 completion: departure followers62/65/74 median/group ratios0.9137348293/0.8780749680/0.8707108993, each with>=10 walking samples and a valid completed route; all are below0.95. The existing majority-of-three vote passes these IDs, but does not erase these concrete violations of the unchanged every-follower criterion. L5 high seed3 follower28 also reaches0.8945363771. L6 exact empty-input waiting is39/16082 ticks=0.242507% at both tiers (canonical final hashes identical), so its48.3% stationary upper bound is not classified as an actual wait failure."
+            "file": "test-results/rr-b/G-13-L5-high-pace.json",
+            "sha256": "36832fdc4149c17d4b6cbfc1a712105264c2da316045a8e25e70263764e32f22",
+            "what": "Fresh current-main native L5 high complete seed3: follower28 in step/look has46 qualified walking samples, median3.9477449638m/s versus group4.4131743157m/s, ratio0.8945363771 (<0.95). L7 high complete seed2 departure follower66 additionally has27 samples and ratio0.9492090922. Majority-of-three diagnostics pass these followers, but a vote does not erase valid violations of the unchanged every-follower criterion. L1 stationary-far16.4561%/16.4696% values are upper bounds and are rejected as causal waiting FAIL evidence. Repro: npm run qa:accept -- --level L5 --skip-browser; inspect G-13 high/complete seed3 follower28 step/look; or node --import tsx/esm test-results/rr-b/g13-l5.mjs."
+          },
+          {
+            "file": "test-results/rr-b/G-13-L5-low-native.json",
+            "sha256": "7e325c4dbb7e2e7a5396b6095985d7785b633d347effb26d29d8f95cd7725861",
+            "what": "Fresh current-main native L5 high complete seed3: follower28 in step/look has46 qualified walking samples, median3.9477449638m/s versus group4.4131743157m/s, ratio0.8945363771 (<0.95). L7 high complete seed2 departure follower66 additionally has27 samples and ratio0.9492090922. Majority-of-three diagnostics pass these followers, but a vote does not erase valid violations of the unchanged every-follower criterion. L1 stationary-far16.4561%/16.4696% values are upper bounds and are rejected as causal waiting FAIL evidence. Repro: npm run qa:accept -- --level L5 --skip-browser; inspect G-13 high/complete seed3 follower28 step/look; or node --import tsx/esm test-results/rr-b/g13-l5.mjs."
+          },
+          {
+            "file": "test-results/rr-b/G-13-L5-low-pace.json",
+            "sha256": "32c97a8a11a751be783cae4ea7dc0b666e5f995d32774c3095f3e6a62b3160f7",
+            "what": "Fresh current-main native L5 high complete seed3: follower28 in step/look has46 qualified walking samples, median3.9477449638m/s versus group4.4131743157m/s, ratio0.8945363771 (<0.95). L7 high complete seed2 departure follower66 additionally has27 samples and ratio0.9492090922. Majority-of-three diagnostics pass these followers, but a vote does not erase valid violations of the unchanged every-follower criterion. L1 stationary-far16.4561%/16.4696% values are upper bounds and are rejected as causal waiting FAIL evidence. Repro: npm run qa:accept -- --level L5 --skip-browser; inspect G-13 high/complete seed3 follower28 step/look; or node --import tsx/esm test-results/rr-b/g13-l5.mjs."
+          },
+          {
+            "file": "test-results/rr-b/G-13-individual-pace.json",
+            "sha256": "f91a069d1f0b5b44dbe13a215c2c4f39ddc1db8f01e4fd23dda30dee9ce36294",
+            "what": "Fresh current-main native L5 high complete seed3: follower28 in step/look has46 qualified walking samples, median3.9477449638m/s versus group4.4131743157m/s, ratio0.8945363771 (<0.95). L7 high complete seed2 departure follower66 additionally has27 samples and ratio0.9492090922. Majority-of-three diagnostics pass these followers, but a vote does not erase valid violations of the unchanged every-follower criterion. L1 stationary-far16.4561%/16.4696% values are upper bounds and are rejected as causal waiting FAIL evidence. Repro: npm run qa:accept -- --level L5 --skip-browser; inspect G-13 high/complete seed3 follower28 step/look; or node --import tsx/esm test-results/rr-b/g13-l5.mjs."
           }
         ],
-        "notes": "Repro: ordinary L7 complete policy at high quality, seed1; inspect step/departure follower medians for IDs62,65,74. No game or seed-vote checker change.",
-        "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186",
+        "notes": "Fresh complete native low/high, seeds1–3. Strict measured individual speed failures establish the global FAIL; no large visible babysitting or causal waiting failure is inferred from pace or stationary upper bounds.",
+        "sourceDigest": "826eaf34ba69c9272cce1759bdd1699e67d8e35ebbd3c7d1739661bfaa751923",
         "freshness": "STALE",
-        "latestRelevantCommit": "a921908b852e8f24171b81b826496845e20ddb88"
+        "latestRelevantCommit": "c463d5950421d1faca38b90ffdb327d90aa3110e"
       }
     },
     {
       "id": "G-14",
-      "status": "FAIL",
-      "currentStatus": "FAIL",
-      "value": "Manual review FAIL (FRESH, Codex/blk-v): Scoped fragment repair: removing the subject-disc corpse cut restores complete dark-clothed bodies, with all10 IDs retained at120/7320ticks, low/high and close/wide. Bulky bodies still show sharply folded/pointed forearm panels, so the unchanged whole row remains FAIL. Corrected ID probe preserves production stencil: all four low/high x zoom cells lose zero courier pixels. Not measured by this batch run.",
+      "status": "NOT CHECKED",
+      "currentStatus": "NOT CHECKED",
+      "value": "Manual review FAIL (STALE, Codex rr-b): Fresh pooled WebGL2 low/high authored ten-corpse fixture: all10 IDs persist at ticks120 and7320 (122s), layout maxLift0.22m and5 heap pairs. Personally opened all12 original1280x720 captures. FAIL: overlap-z0.5 at both tiers shows the center-left dark-clothed corpse with broad pointed stretched skin panels around torso/upper arms; the front dark-clothed corpse also has sharp elongated forearm/hand folds. These remain in tick7320 close views. Persistence passes; the explicit no stretched/spiky limbs clause fails. Repro: SCENE_PORT=4834 BROWSER_POOL_JOB_ID=rr-b node --import tsx/esm tools/qa/blk-v-captures.mjs G14 rr-b low (repeat high). Not measured by this batch run.",
       "automatedComplete": false,
       "receipt": [
-        "docs/reports/blk-v/G14-proof.json",
-        "docs/reports/blk-v/final-visual-proof.json"
+        "test-results/blk-v/rr-b/G14-low/receipt.json",
+        "test-results/blk-v/rr-b/G14-low/tick120-z0.5.png",
+        "test-results/blk-v/rr-b/G14-low/tick120-z1.5.png",
+        "test-results/blk-v/rr-b/G14-low/tick7320-z0.5.png",
+        "test-results/blk-v/rr-b/G14-low/tick7320-z1.5.png",
+        "test-results/blk-v/rr-b/G14-low/overlap-z0.5.png",
+        "test-results/blk-v/rr-b/G14-low/overlap-z1.5.png",
+        "test-results/blk-v/rr-b/G14-high/receipt.json",
+        "test-results/blk-v/rr-b/G14-high/tick120-z0.5.png",
+        "test-results/blk-v/rr-b/G14-high/tick120-z1.5.png",
+        "test-results/blk-v/rr-b/G14-high/tick7320-z0.5.png",
+        "test-results/blk-v/rr-b/G14-high/tick7320-z1.5.png",
+        "test-results/blk-v/rr-b/G14-high/overlap-z0.5.png",
+        "test-results/blk-v/rr-b/G14-high/overlap-z1.5.png"
       ],
       "expected": "Corpses persist for the whole level (no removal for perf). Piles settle on each other: no floating bodies, no stretched/spiky limbs, pile height ≤ ~1 m (orch. default until F-293 \"climbable pile\" is scheduled).",
       "checks": [],
@@ -1516,32 +1602,92 @@
       "reviewDecision": {
         "row": "G-14",
         "status": "FAIL",
-        "reviewer": "Codex/blk-v",
+        "reviewer": "Codex rr-b",
         "date": "2026-11-07",
-        "commit": "7e538b5fe16562431ed4adff532aff41828eee76",
+        "commit": "50be7c824705fc3cdbb3a7ab7dd78f72c7bf2001",
         "clauses": [
           {
             "clause": "Corpses persist for the whole level (no removal for perf). Piles settle on each other: no floating bodies, no stretched/spiky limbs, pile height ≤ ~1 m (orch. default until F-293 \"climbable pile\" is scheduled).",
             "verdict": "FAIL",
-            "note": "Scoped fragment repair: removing the subject-disc corpse cut restores complete dark-clothed bodies, with all10 IDs retained at120/7320ticks, low/high and close/wide. Bulky bodies still show sharply folded/pointed forearm panels, so the unchanged whole row remains FAIL. Corrected ID probe preserves production stencil: all four low/high x zoom cells lose zero courier pixels."
+            "note": "Fresh pooled WebGL2 low/high authored ten-corpse fixture: all10 IDs persist at ticks120 and7320 (122s), layout maxLift0.22m and5 heap pairs. Personally opened all12 original1280x720 captures. FAIL: overlap-z0.5 at both tiers shows the center-left dark-clothed corpse with broad pointed stretched skin panels around torso/upper arms; the front dark-clothed corpse also has sharp elongated forearm/hand folds. These remain in tick7320 close views. Persistence passes; the explicit no stretched/spiky limbs clause fails. Repro: SCENE_PORT=4834 BROWSER_POOL_JOB_ID=rr-b node --import tsx/esm tools/qa/blk-v-captures.mjs G14 rr-b low (repeat high)."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/blk-v/G14-proof.json",
-            "sha256": "36f711da0f0861bc46c1e4cc4c43675708a183f22f67f934df1a6004b33468a1",
-            "what": "All before/after captures personally inspected. Partial mask repair verified; folded forearm geometry remains visibly failing. Exact identity and courier-pixel controls retained in the proof."
+            "file": "test-results/blk-v/rr-b/G14-low/receipt.json",
+            "sha256": "c398b9df4ea7b121d949ed14d942a0421cb4258fa088afb6bf142139a8a16d91",
+            "what": "Fresh pooled WebGL2 low/high authored ten-corpse fixture: all10 IDs persist at ticks120 and7320 (122s), layout maxLift0.22m and5 heap pairs. Personally opened all12 original1280x720 captures. FAIL: overlap-z0.5 at both tiers shows the center-left dark-clothed corpse with broad pointed stretched skin panels around torso/upper arms; the front dark-clothed corpse also has sharp elongated forearm/hand folds. These remain in tick7320 close views. Persistence passes; the explicit no stretched/spiky limbs clause fails. Repro: SCENE_PORT=4834 BROWSER_POOL_JOB_ID=rr-b node --import tsx/esm tools/qa/blk-v-captures.mjs G14 rr-b low (repeat high)."
           },
           {
-            "file": "docs/reports/blk-v/final-visual-proof.json",
-            "sha256": "de8ca90e605c353c146fd2700276bc2005d4e44873693789954cb1dd40adb635",
-            "what": "Personally viewed all final-source captures. Dark-clothed corpses complete, courier ID pixels fully retained in four overlap cells, ten corpse IDs retained to7320ticks. Folded pointed bulky limbs remain FAIL."
+            "file": "test-results/blk-v/rr-b/G14-low/tick120-z0.5.png",
+            "sha256": "f623108ebb4c746fa9cc954da4135003bd6f2cf6feae2459e08322c4cb6049e3",
+            "what": "Fresh pooled WebGL2 low/high authored ten-corpse fixture: all10 IDs persist at ticks120 and7320 (122s), layout maxLift0.22m and5 heap pairs. Personally opened all12 original1280x720 captures. FAIL: overlap-z0.5 at both tiers shows the center-left dark-clothed corpse with broad pointed stretched skin panels around torso/upper arms; the front dark-clothed corpse also has sharp elongated forearm/hand folds. These remain in tick7320 close views. Persistence passes; the explicit no stretched/spiky limbs clause fails. Repro: SCENE_PORT=4834 BROWSER_POOL_JOB_ID=rr-b node --import tsx/esm tools/qa/blk-v-captures.mjs G14 rr-b low (repeat high)."
+          },
+          {
+            "file": "test-results/blk-v/rr-b/G14-low/tick120-z1.5.png",
+            "sha256": "4cd353faa4e3c397e770b7a0a9f0d88749aac62ca6f2923197769fbd7185a0c2",
+            "what": "Fresh pooled WebGL2 low/high authored ten-corpse fixture: all10 IDs persist at ticks120 and7320 (122s), layout maxLift0.22m and5 heap pairs. Personally opened all12 original1280x720 captures. FAIL: overlap-z0.5 at both tiers shows the center-left dark-clothed corpse with broad pointed stretched skin panels around torso/upper arms; the front dark-clothed corpse also has sharp elongated forearm/hand folds. These remain in tick7320 close views. Persistence passes; the explicit no stretched/spiky limbs clause fails. Repro: SCENE_PORT=4834 BROWSER_POOL_JOB_ID=rr-b node --import tsx/esm tools/qa/blk-v-captures.mjs G14 rr-b low (repeat high)."
+          },
+          {
+            "file": "test-results/blk-v/rr-b/G14-low/tick7320-z0.5.png",
+            "sha256": "fa8d033ced8134eedd19a1696f94874c8b36aededc2c479cac4960f87d4dce78",
+            "what": "Fresh pooled WebGL2 low/high authored ten-corpse fixture: all10 IDs persist at ticks120 and7320 (122s), layout maxLift0.22m and5 heap pairs. Personally opened all12 original1280x720 captures. FAIL: overlap-z0.5 at both tiers shows the center-left dark-clothed corpse with broad pointed stretched skin panels around torso/upper arms; the front dark-clothed corpse also has sharp elongated forearm/hand folds. These remain in tick7320 close views. Persistence passes; the explicit no stretched/spiky limbs clause fails. Repro: SCENE_PORT=4834 BROWSER_POOL_JOB_ID=rr-b node --import tsx/esm tools/qa/blk-v-captures.mjs G14 rr-b low (repeat high)."
+          },
+          {
+            "file": "test-results/blk-v/rr-b/G14-low/tick7320-z1.5.png",
+            "sha256": "fa91ef7851e4de4ce1c28de6b322c0d03021f8be4ea14134818fba7e53ed074b",
+            "what": "Fresh pooled WebGL2 low/high authored ten-corpse fixture: all10 IDs persist at ticks120 and7320 (122s), layout maxLift0.22m and5 heap pairs. Personally opened all12 original1280x720 captures. FAIL: overlap-z0.5 at both tiers shows the center-left dark-clothed corpse with broad pointed stretched skin panels around torso/upper arms; the front dark-clothed corpse also has sharp elongated forearm/hand folds. These remain in tick7320 close views. Persistence passes; the explicit no stretched/spiky limbs clause fails. Repro: SCENE_PORT=4834 BROWSER_POOL_JOB_ID=rr-b node --import tsx/esm tools/qa/blk-v-captures.mjs G14 rr-b low (repeat high)."
+          },
+          {
+            "file": "test-results/blk-v/rr-b/G14-low/overlap-z0.5.png",
+            "sha256": "8057ce17b3dabb6a46d8d4ff815718e160fd8771de08182646b071c7481d4ab8",
+            "what": "Fresh pooled WebGL2 low/high authored ten-corpse fixture: all10 IDs persist at ticks120 and7320 (122s), layout maxLift0.22m and5 heap pairs. Personally opened all12 original1280x720 captures. FAIL: overlap-z0.5 at both tiers shows the center-left dark-clothed corpse with broad pointed stretched skin panels around torso/upper arms; the front dark-clothed corpse also has sharp elongated forearm/hand folds. These remain in tick7320 close views. Persistence passes; the explicit no stretched/spiky limbs clause fails. Repro: SCENE_PORT=4834 BROWSER_POOL_JOB_ID=rr-b node --import tsx/esm tools/qa/blk-v-captures.mjs G14 rr-b low (repeat high)."
+          },
+          {
+            "file": "test-results/blk-v/rr-b/G14-low/overlap-z1.5.png",
+            "sha256": "0628ed00139df0d8431c13384f96ac09ec10323d6738416d4f1872ab3844d704",
+            "what": "Fresh pooled WebGL2 low/high authored ten-corpse fixture: all10 IDs persist at ticks120 and7320 (122s), layout maxLift0.22m and5 heap pairs. Personally opened all12 original1280x720 captures. FAIL: overlap-z0.5 at both tiers shows the center-left dark-clothed corpse with broad pointed stretched skin panels around torso/upper arms; the front dark-clothed corpse also has sharp elongated forearm/hand folds. These remain in tick7320 close views. Persistence passes; the explicit no stretched/spiky limbs clause fails. Repro: SCENE_PORT=4834 BROWSER_POOL_JOB_ID=rr-b node --import tsx/esm tools/qa/blk-v-captures.mjs G14 rr-b low (repeat high)."
+          },
+          {
+            "file": "test-results/blk-v/rr-b/G14-high/receipt.json",
+            "sha256": "73c3255d30c3c019beeb0c2db6cd7cbff5b7d81c3dae2f5558c9039ed97e88b7",
+            "what": "Fresh pooled WebGL2 low/high authored ten-corpse fixture: all10 IDs persist at ticks120 and7320 (122s), layout maxLift0.22m and5 heap pairs. Personally opened all12 original1280x720 captures. FAIL: overlap-z0.5 at both tiers shows the center-left dark-clothed corpse with broad pointed stretched skin panels around torso/upper arms; the front dark-clothed corpse also has sharp elongated forearm/hand folds. These remain in tick7320 close views. Persistence passes; the explicit no stretched/spiky limbs clause fails. Repro: SCENE_PORT=4834 BROWSER_POOL_JOB_ID=rr-b node --import tsx/esm tools/qa/blk-v-captures.mjs G14 rr-b low (repeat high)."
+          },
+          {
+            "file": "test-results/blk-v/rr-b/G14-high/tick120-z0.5.png",
+            "sha256": "98d7e11e36cc635cf55b0122784c2c38941b6e92ea0786862a16b5a6b8d34983",
+            "what": "Fresh pooled WebGL2 low/high authored ten-corpse fixture: all10 IDs persist at ticks120 and7320 (122s), layout maxLift0.22m and5 heap pairs. Personally opened all12 original1280x720 captures. FAIL: overlap-z0.5 at both tiers shows the center-left dark-clothed corpse with broad pointed stretched skin panels around torso/upper arms; the front dark-clothed corpse also has sharp elongated forearm/hand folds. These remain in tick7320 close views. Persistence passes; the explicit no stretched/spiky limbs clause fails. Repro: SCENE_PORT=4834 BROWSER_POOL_JOB_ID=rr-b node --import tsx/esm tools/qa/blk-v-captures.mjs G14 rr-b low (repeat high)."
+          },
+          {
+            "file": "test-results/blk-v/rr-b/G14-high/tick120-z1.5.png",
+            "sha256": "4af14c0e4331124d50e2d65a3299e50c3ab19a37ff44aeb39aa80b0d7e584d79",
+            "what": "Fresh pooled WebGL2 low/high authored ten-corpse fixture: all10 IDs persist at ticks120 and7320 (122s), layout maxLift0.22m and5 heap pairs. Personally opened all12 original1280x720 captures. FAIL: overlap-z0.5 at both tiers shows the center-left dark-clothed corpse with broad pointed stretched skin panels around torso/upper arms; the front dark-clothed corpse also has sharp elongated forearm/hand folds. These remain in tick7320 close views. Persistence passes; the explicit no stretched/spiky limbs clause fails. Repro: SCENE_PORT=4834 BROWSER_POOL_JOB_ID=rr-b node --import tsx/esm tools/qa/blk-v-captures.mjs G14 rr-b low (repeat high)."
+          },
+          {
+            "file": "test-results/blk-v/rr-b/G14-high/tick7320-z0.5.png",
+            "sha256": "4694231b9d688ae9ee571f54018866fb8d63dcff49da1cb22a4fbcd11dff9f78",
+            "what": "Fresh pooled WebGL2 low/high authored ten-corpse fixture: all10 IDs persist at ticks120 and7320 (122s), layout maxLift0.22m and5 heap pairs. Personally opened all12 original1280x720 captures. FAIL: overlap-z0.5 at both tiers shows the center-left dark-clothed corpse with broad pointed stretched skin panels around torso/upper arms; the front dark-clothed corpse also has sharp elongated forearm/hand folds. These remain in tick7320 close views. Persistence passes; the explicit no stretched/spiky limbs clause fails. Repro: SCENE_PORT=4834 BROWSER_POOL_JOB_ID=rr-b node --import tsx/esm tools/qa/blk-v-captures.mjs G14 rr-b low (repeat high)."
+          },
+          {
+            "file": "test-results/blk-v/rr-b/G14-high/tick7320-z1.5.png",
+            "sha256": "a627d1d885446929b60243668987053e46cad11d8f6dea65dca5f846191d8814",
+            "what": "Fresh pooled WebGL2 low/high authored ten-corpse fixture: all10 IDs persist at ticks120 and7320 (122s), layout maxLift0.22m and5 heap pairs. Personally opened all12 original1280x720 captures. FAIL: overlap-z0.5 at both tiers shows the center-left dark-clothed corpse with broad pointed stretched skin panels around torso/upper arms; the front dark-clothed corpse also has sharp elongated forearm/hand folds. These remain in tick7320 close views. Persistence passes; the explicit no stretched/spiky limbs clause fails. Repro: SCENE_PORT=4834 BROWSER_POOL_JOB_ID=rr-b node --import tsx/esm tools/qa/blk-v-captures.mjs G14 rr-b low (repeat high)."
+          },
+          {
+            "file": "test-results/blk-v/rr-b/G14-high/overlap-z0.5.png",
+            "sha256": "69397195f625a3db94a3925958b1fe7fb4ce9193ce3899d013f6ed0d238479cd",
+            "what": "Fresh pooled WebGL2 low/high authored ten-corpse fixture: all10 IDs persist at ticks120 and7320 (122s), layout maxLift0.22m and5 heap pairs. Personally opened all12 original1280x720 captures. FAIL: overlap-z0.5 at both tiers shows the center-left dark-clothed corpse with broad pointed stretched skin panels around torso/upper arms; the front dark-clothed corpse also has sharp elongated forearm/hand folds. These remain in tick7320 close views. Persistence passes; the explicit no stretched/spiky limbs clause fails. Repro: SCENE_PORT=4834 BROWSER_POOL_JOB_ID=rr-b node --import tsx/esm tools/qa/blk-v-captures.mjs G14 rr-b low (repeat high)."
+          },
+          {
+            "file": "test-results/blk-v/rr-b/G14-high/overlap-z1.5.png",
+            "sha256": "80ddaa8c918d3b0d7eb875744dc26f32c98be921183ea8861f15597b745f8124",
+            "what": "Fresh pooled WebGL2 low/high authored ten-corpse fixture: all10 IDs persist at ticks120 and7320 (122s), layout maxLift0.22m and5 heap pairs. Personally opened all12 original1280x720 captures. FAIL: overlap-z0.5 at both tiers shows the center-left dark-clothed corpse with broad pointed stretched skin panels around torso/upper arms; the front dark-clothed corpse also has sharp elongated forearm/hand folds. These remain in tick7320 close views. Persistence passes; the explicit no stretched/spiky limbs clause fails. Repro: SCENE_PORT=4834 BROWSER_POOL_JOB_ID=rr-b node --import tsx/esm tools/qa/blk-v-captures.mjs G14 rr-b low (repeat high)."
           }
         ],
-        "notes": "No whole-row closure; continue the remaining pose/skinning repair and L4 pile-height measurement. SourceDigest identifies this exact render source.",
-        "sourceDigest": "b33a0e3ce8ec0fb3d20960af5a6b07561149258fac0493611d3978e90250c577",
-        "freshness": "FRESH",
-        "latestRelevantCommit": "a921908b852e8f24171b81b826496845e20ddb88"
+        "notes": "Fresh visual counterexample, not a PO taste deferral. No pile-height PASS is inferred from placement lift alone.",
+        "sourceDigest": "826eaf34ba69c9272cce1759bdd1699e67d8e35ebbd3c7d1739661bfaa751923",
+        "freshness": "STALE",
+        "latestRelevantCommit": "c463d5950421d1faca38b90ffdb327d90aa3110e"
       }
     },
     {
@@ -1593,7 +1739,7 @@
         "notes": "Production courier/input/attack systems in an explicit isolated presentation fixture. Physical Playwright keys and pointer only; no injected input frames. Aim assist disabled for the test.",
         "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186",
         "freshness": "STALE",
-        "latestRelevantCommit": "a921908b852e8f24171b81b826496845e20ddb88"
+        "latestRelevantCommit": "c463d5950421d1faca38b90ffdb327d90aa3110e"
       }
     },
     {
@@ -1716,7 +1862,7 @@
         "notes": "Fresh review of frozen source and current receipt values. Source digest is computed from current relevant file bytes; archived prior evidence is not relabelled.",
         "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186",
         "freshness": "STALE",
-        "latestRelevantCommit": "a921908b852e8f24171b81b826496845e20ddb88"
+        "latestRelevantCommit": "c463d5950421d1faca38b90ffdb327d90aa3110e"
       }
     },
     {
@@ -1777,7 +1923,7 @@
         "notes": "PO: judge whether woman-B aftermath wander reads as a walking infected or an exaggerated crouch. Exact evidence: test-results/final-g/G-17/body-strips.jpg, wander0–7 against chase0–7; original wander4 retained. The prior setup rejected a high-page→low-tier swap and is excluded from qualification.",
         "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186",
         "freshness": "STALE",
-        "latestRelevantCommit": "a921908b852e8f24171b81b826496845e20ddb88"
+        "latestRelevantCommit": "c463d5950421d1faca38b90ffdb327d90aa3110e"
       }
     },
     {
@@ -1835,7 +1981,7 @@
         "notes": "Explicit isolated perception fixtures, with courier/escort placement and paused director disclosed. Not a damage/difficulty or full-campaign console qualification. Prior finite-focus counterexample is freshly retested.",
         "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186",
         "freshness": "STALE",
-        "latestRelevantCommit": "a921908b852e8f24171b81b826496845e20ddb88"
+        "latestRelevantCommit": "c463d5950421d1faca38b90ffdb327d90aa3110e"
       }
     },
     {
@@ -2004,7 +2150,7 @@
         "notes": "PASS applies to measured health/target/bar/clearance/closure clauses. Hidden seated passengers are intentional and do not render embedded in the hull. No new game code or geometry fixes. Earlier APC setup rejection does not qualify boarding; actual production route provides that evidence. Later low L10 follow lag is separately recorded under G27; exact full-footprint static query remains clear despite nav blockage.",
         "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186",
         "freshness": "STALE",
-        "latestRelevantCommit": "a921908b852e8f24171b81b826496845e20ddb88"
+        "latestRelevantCommit": "c463d5950421d1faca38b90ffdb327d90aa3110e"
       }
     },
     {
@@ -2105,14 +2251,14 @@
         "notes": "Fixture setup is explicit; full campaign routes are separate. The cap-safe L5 producer is retained; the original setup errors remain in the first receipt.",
         "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186",
         "freshness": "STALE",
-        "latestRelevantCommit": "a921908b852e8f24171b81b826496845e20ddb88"
+        "latestRelevantCommit": "c463d5950421d1faca38b90ffdb327d90aa3110e"
       }
     },
     {
       "id": "G-21",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/checkpoint-death-fixture mortal checkpoint restore at L8/sanctuary: {\"checkpoint\":\"sanctuary\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"60fc9192704cfbd6e046c3ec665c2f3a4c815a5612ff90d2e8ac861acd5fdf16\",\"damage\":100,\"expected\":{\"id\":\"sanctuary\",\"anchor\":{\"x\":0,\"y\":0.705,\"z\":70,\"yaw\":0.3205919885488634},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.bat\",\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.rocket-launcher\",\"weapon.army-mg\",\"weapon.shotgun\",\"weapon.handgun\"]},… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L8/breach: {\"checkpoint\":\"breach\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"1ef38e499814cf26978b8109753d54394f2fc0023fbc801fbb8cd6d8d85f2533\",\"damage\":100,\"expected\":{\"id\":\"breach\",\"anchor\":{\"x\":23.140016555786133,\"y\":0.8399999737739563,\"z\":64.14939880371094,\"yaw\":0.17200494458772358},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.bat\",\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.rocket-launcher\",\"weapon.army-… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L8/escape-route: {\"checkpoint\":\"escape-route\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"834e9639f7462ad6b66e6fc4933c0597a40045da072fc2e1c4a4fe181929188d\",\"damage\":100,\"expected\":{\"id\":\"escape-route\",\"anchor\":{\"x\":84.75297546386719,\"y\":0.7099999785423279,\"z\":76.4330825805664,\"yaw\":-0.19745802085049838},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.bat\",\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.rocket-launcher\",\"w… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L8/sanctuary: {\"checkpoint\":\"sanctuary\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"60fc9192704cfbd6e046c3ec665c2f3a4c815a5612ff90d2e8ac861acd5fdf16\",\"damage\":100,\"expected\":{\"id\":\"sanctuary\",\"anchor\":{\"x\":0,\"y\":0.705,\"z\":70,\"yaw\":0.3205919885488634},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.bat\",\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.rocket-launcher\",\"weapon.army-mg\",\"weapon.shotgun\",\"weapon.handgun\"]},… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L8/breach: {\"checkpoint\":\"breach\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"f3a7eafaf5035c9af21a84130b27524475a7300184875bd99b2478aecbdb6b71\",\"damage\":100,\"expected\":{\"id\":\"breach\",\"anchor\":{\"x\":23.140016555786133,\"y\":0.8399999737739563,\"z\":64.14939880371094,\"yaw\":0.17200494458772358},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.bat\",\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.rocket-launcher\",\"weapon.army-… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L8/escape-route: {\"checkpoint\":\"escape-route\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"5127bbfe04248efcfb958c9ef3c0ea8896e808adc807355a4c028cdf99523574\",\"damage\":100,\"expected\":{\"id\":\"escape-route\",\"anchor\":{\"x\":84.75177001953125,\"y\":0.7099999785423279,\"z\":76.43455505371094,\"yaw\":-0.1972499430709006},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.bat\",\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.rocket-launcher\",\"w… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS) Manual review PASS (STALE, final-g/Codex): All95 mortal checkpoint checks at both qualities PASS, across naturally reached L1–L10 checkpoints; independent route controls match. Checkpoint IDs, position, racks, roster HP and pickup/gate membership match the documented contract. L1 and the L4 war/collapse retry preserve live world changes under the stated PO exception; remaining levels restore snapshots. This is a numeric controlled-death review, with no visual claim.",
+      "value": "low/checkpoint-death-fixture mortal checkpoint restore at L8/sanctuary: {\"checkpoint\":\"sanctuary\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"60fc9192704cfbd6e046c3ec665c2f3a4c815a5612ff90d2e8ac861acd5fdf16\",\"damage\":100,\"expected\":{\"id\":\"sanctuary\",\"anchor\":{\"x\":0,\"y\":0.705,\"z\":70,\"yaw\":0.3205919885488634},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.bat\",\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.rocket-launcher\",\"weapon.army-mg\",\"weapon.shotgun\",\"weapon.handgun\"]},… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L8/breach: {\"checkpoint\":\"breach\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"34095db0a80a0cb012d95efb0f574b0379f8dbc52112afc6e4a74c922e817ef8\",\"damage\":100,\"expected\":{\"id\":\"breach\",\"anchor\":{\"x\":23.140016555786133,\"y\":0.8399999737739563,\"z\":64.14939880371094,\"yaw\":0.17200494458772358},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.bat\",\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.rocket-launcher\",\"weapon.army-… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); low/checkpoint-death-fixture mortal checkpoint restore at L8/escape-route: {\"checkpoint\":\"escape-route\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"290192b40b4e49db1ab8865f1a7224e29318ede8060631187c94b4b12d13c777\",\"damage\":100,\"expected\":{\"id\":\"escape-route\",\"anchor\":{\"x\":84.75297546386719,\"y\":0.7099999785423279,\"z\":76.4330825805664,\"yaw\":-0.19745802085049838},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.bat\",\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.rocket-launcher\",\"w… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L8/sanctuary: {\"checkpoint\":\"sanctuary\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"60fc9192704cfbd6e046c3ec665c2f3a4c815a5612ff90d2e8ac861acd5fdf16\",\"damage\":100,\"expected\":{\"id\":\"sanctuary\",\"anchor\":{\"x\":0,\"y\":0.705,\"z\":70,\"yaw\":0.3205919885488634},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.bat\",\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.rocket-launcher\",\"weapon.army-mg\",\"weapon.shotgun\",\"weapon.handgun\"]},… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L8/breach: {\"checkpoint\":\"breach\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"2fe59bb97fb46707e071be6b1dcbf4e86ef78b321866ede6939561756bc3fcd3\",\"damage\":100,\"expected\":{\"id\":\"breach\",\"anchor\":{\"x\":23.140016555786133,\"y\":0.8399999737739563,\"z\":64.14939880371094,\"yaw\":0.17200494458772358},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.bat\",\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.rocket-launcher\",\"weapon.army-… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS); high/checkpoint-death-fixture mortal checkpoint restore at L8/escape-route: {\"checkpoint\":\"escape-route\",\"contract\":\"checkpoint snapshot restored\",\"snapshotSha256\":\"6517104335fa9863dee325d277845e8457f2bbe6c1fcdd2723d87865ad33a240\",\"damage\":100,\"expected\":{\"id\":\"escape-route\",\"anchor\":{\"x\":84.75177001953125,\"y\":0.7099999785423279,\"z\":76.43455505371094,\"yaw\":-0.1972499430709006},\"gates\":{},\"racks\":{\"LEFT\":[\"weapon.bat\",\"weapon.fire-axe\"],\"RIGHT\":[\"weapon.rocket-launcher\",\"w… (full values in JSON) (target last reached ID; position within native support snap≤1.5 m; snapshot racks/gates/follower HP/pickups restored; PASS) Manual review PASS (STALE, final-g/Codex): All95 mortal checkpoint checks at both qualities PASS, across naturally reached L1–L10 checkpoints; independent route controls match. Checkpoint IDs, position, racks, roster HP and pickup/gate membership match the documented contract. L1 and the L4 war/collapse retry preserve live world changes under the stated PO exception; remaining levels restore snapshots. This is a numeric controlled-death review, with no visual claim.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L8-low-checkpoints.json",
@@ -2214,7 +2360,7 @@
           "value": {
             "checkpoint": "breach",
             "contract": "checkpoint snapshot restored",
-            "snapshotSha256": "1ef38e499814cf26978b8109753d54394f2fc0023fbc801fbb8cd6d8d85f2533",
+            "snapshotSha256": "34095db0a80a0cb012d95efb0f574b0379f8dbc52112afc6e4a74c922e817ef8",
             "damage": 100,
             "expected": {
               "id": "breach",
@@ -2298,7 +2444,7 @@
           "value": {
             "checkpoint": "escape-route",
             "contract": "checkpoint snapshot restored",
-            "snapshotSha256": "834e9639f7462ad6b66e6fc4933c0597a40045da072fc2e1c4a4fe181929188d",
+            "snapshotSha256": "290192b40b4e49db1ab8865f1a7224e29318ede8060631187c94b4b12d13c777",
             "damage": 100,
             "expected": {
               "id": "escape-route",
@@ -2466,7 +2612,7 @@
           "value": {
             "checkpoint": "breach",
             "contract": "checkpoint snapshot restored",
-            "snapshotSha256": "f3a7eafaf5035c9af21a84130b27524475a7300184875bd99b2478aecbdb6b71",
+            "snapshotSha256": "2fe59bb97fb46707e071be6b1dcbf4e86ef78b321866ede6939561756bc3fcd3",
             "damage": 100,
             "expected": {
               "id": "breach",
@@ -2550,7 +2696,7 @@
           "value": {
             "checkpoint": "escape-route",
             "contract": "checkpoint snapshot restored",
-            "snapshotSha256": "5127bbfe04248efcfb958c9ef3c0ea8896e808adc807355a4c028cdf99523574",
+            "snapshotSha256": "6517104335fa9863dee325d277845e8457f2bbe6c1fcdd2723d87865ad33a240",
             "damage": 100,
             "expected": {
               "id": "escape-route",
@@ -2658,21 +2804,21 @@
         "notes": "Fresh review of frozen source and current receipt values. Source digest is computed from current relevant file bytes; archived prior evidence is not relabelled.",
         "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186",
         "freshness": "STALE",
-        "latestRelevantCommit": "a921908b852e8f24171b81b826496845e20ddb88"
+        "latestRelevantCommit": "c463d5950421d1faca38b90ffdb327d90aa3110e"
       }
     },
     {
       "id": "G-22",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "low/complete announcement cohort tunnel-breach: {\"seconds\":35.38333333333333,\"spawned\":12,\"firstAttackSeconds\":1.9666666666666666,\"flags\":[]} (target ≥3 admitted cohort members; real player windup within20 s; PASS); low/stationary announcement cohort tunnel-breach: {\"seconds\":120,\"spawned\":12,\"firstAttackSeconds\":3.816666666666667,\"flags\":[]} (target ≥3 admitted cohort members; real player windup within20 s; PASS); high/complete announcement cohort tunnel-breach: {\"seconds\":40.1,\"spawned\":24,\"firstAttackSeconds\":1.9666666666666666,\"flags\":[]} (target ≥3 admitted cohort members; real player windup within20 s; PASS); high/stationary announcement cohort tunnel-breach: {\"seconds\":120,\"spawned\":24,\"firstAttackSeconds\":4.35,\"flags\":[]} (target ≥3 admitted cohort members; real player windup within20 s; PASS) Manual review FAIL (STALE, final-g/Codex): Current frozen-source native counterexample: L4 high complete war-0 cohort (announced at tick1969, not1969seconds) spawns48; first actual player attack occurs20.933333s later, exceeding20s. L6 low/high entry-5 first attack79.8s with2 admitted members; entry-4 first attack87.833333s. No timing/count threshold is changed.",
+      "value": "low/complete announcement cohort tunnel-breach: {\"seconds\":35.38333333333333,\"spawned\":12,\"firstAttackSeconds\":1.9666666666666666,\"flags\":[]} (target ≥3 admitted cohort members; real player windup within20 s; PASS); low/stationary announcement cohort tunnel-breach: {\"seconds\":120,\"spawned\":12,\"firstAttackSeconds\":3.816666666666667,\"flags\":[]} (target ≥3 admitted cohort members; real player windup within20 s; PASS); high/complete announcement cohort tunnel-breach: {\"seconds\":40.1,\"spawned\":24,\"firstAttackSeconds\":1.9666666666666666,\"flags\":[]} (target ≥3 admitted cohort members; real player windup within20 s; PASS); high/stationary announcement cohort tunnel-breach: {\"seconds\":120,\"spawned\":24,\"firstAttackSeconds\":4.35,\"flags\":[]} (target ≥3 admitted cohort members; real player windup within20 s; PASS) Manual review FAIL (STALE, Codex rr-b): Fresh current-main all-level native run. L4 high stationary breach-north announced at phase time167.1s, spawned43, and the first real player attack occurred22.3667s after announcement (>20s). The cohort is large enough to satisfy “several”; the timing threshold alone fails. L6 also has undersized two-member entry cohorts, separately recorded. Repro: npm run qa:accept -- --level L4 --skip-browser; seed1, high tier stationary policy; inspect announcement cohort breach-north at phase time167.1s.",
       "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L8-low-complete.json",
         "docs/reports/fix51-verify/receipts/L8-low-stationary.json",
         "docs/reports/fix51-verify/receipts/L8-high-complete.json",
         "docs/reports/fix51-verify/receipts/L8-high-stationary.json",
-        "docs/reports/final-g/G-22-native.json"
+        "test-results/rr-b/G-22-native-L4.json"
       ],
       "expected": "Every phase announced as a threat (\"Stop the infected\", \"Hold\", \"Cover the retreat\", breach/alarm captions) starts with several infected that can reach the player; first attack ≤ 20 s after the announcement (tune).",
       "checks": [
@@ -2753,27 +2899,27 @@
       "reviewDecision": {
         "row": "G-22",
         "status": "FAIL",
-        "reviewer": "final-g/Codex",
+        "reviewer": "Codex rr-b",
         "date": "2026-11-07",
-        "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+        "commit": "50be7c824705fc3cdbb3a7ab7dd78f72c7bf2001",
         "clauses": [
           {
             "clause": "Every phase announced as a threat (\"Stop the infected\", \"Hold\", \"Cover the retreat\", breach/alarm captions) starts with several infected that can reach the player; first attack ≤ 20 s after the announcement (tune).",
             "verdict": "FAIL",
-            "note": "Current frozen-source native counterexample: L4 high complete war-0 cohort (announced at tick1969, not1969seconds) spawns48; first actual player attack occurs20.933333s later, exceeding20s. L6 low/high entry-5 first attack79.8s with2 admitted members; entry-4 first attack87.833333s. No timing/count threshold is changed."
+            "note": "Fresh current-main all-level native run. L4 high stationary breach-north announced at phase time167.1s, spawned43, and the first real player attack occurred22.3667s after announcement (>20s). The cohort is large enough to satisfy “several”; the timing threshold alone fails. L6 also has undersized two-member entry cohorts, separately recorded. Repro: npm run qa:accept -- --level L4 --skip-browser; seed1, high tier stationary policy; inspect announcement cohort breach-north at phase time167.1s."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/final-g/G-22-native.json",
-            "sha256": "2bf2c4d56c5505b055e5d85b57c04007f017885d4ba610b7077f87e111057835",
-            "what": "Current frozen-source native counterexample: L4 high complete war-0 cohort (announced at tick1969, not1969seconds) spawns48; first actual player attack occurs20.933333s later, exceeding20s. L6 low/high entry-5 first attack79.8s with2 admitted members; entry-4 first attack87.833333s. No timing/count threshold is changed."
+            "file": "test-results/rr-b/G-22-native-L4.json",
+            "sha256": "41791df6506d2f8613a3bd1784b9d7da6bb1d2c1145170ce311d7519f0153293",
+            "what": "Fresh current-main all-level native run. L4 high stationary breach-north announced at phase time167.1s, spawned43, and the first real player attack occurred22.3667s after announcement (>20s). The cohort is large enough to satisfy “several”; the timing threshold alone fails. L6 also has undersized two-member entry cohorts, separately recorded. Repro: npm run qa:accept -- --level L4 --skip-browser; seed1, high tier stationary policy; inspect announcement cohort breach-north at phase time167.1s."
           }
         ],
-        "notes": "Fresh review of frozen source and current receipt values. Source digest is computed from current relevant file bytes; archived prior evidence is not relabelled.",
-        "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186",
+        "notes": "Fresh measured FAIL; exact current native counterexample.",
+        "sourceDigest": "826eaf34ba69c9272cce1759bdd1699e67d8e35ebbd3c7d1739661bfaa751923",
         "freshness": "STALE",
-        "latestRelevantCommit": "a921908b852e8f24171b81b826496845e20ddb88"
+        "latestRelevantCommit": "c463d5950421d1faca38b90ffdb327d90aa3110e"
       }
     },
     {
@@ -2843,15 +2989,15 @@
         "notes": "PO: exact low-L7-east-perimeter-z1.5.png, dark area outside and alongside the raised wall. Judge boundary finish/readability, with its zero-failure physical sweep as context.",
         "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186",
         "freshness": "STALE",
-        "latestRelevantCommit": "a921908b852e8f24171b81b826496845e20ddb88"
+        "latestRelevantCommit": "c463d5950421d1faca38b90ffdb327d90aa3110e"
       }
     },
     {
       "id": "G-24",
-      "status": "NOT CHECKED",
-      "currentStatus": "NOT CHECKED",
-      "value": "low/controlled-fixture production enemy-bar eligibility at distance/health boundaries: [{\"archetype\":\"infected.alpha\",\"near\":true,\"farHealthy\":false,\"farDamaged\":true,\"dead\":false,\"healthyAnimal\":false},{\"archetype\":\"infected.lion\",\"near\":true,\"farHealthy\":false,\"farDamaged\":true,\"dead\":false,\"healthyAnimal\":false},{\"archetype\":\"infected.gorilla\",\"near\":true,\"farHealthy\":false,\"farDamaged\":true,\"dead\":false,\"healthyAnimal\":false},{\"archetype\":\"infected.elephant\",\"near\":true,\"farHeal… (full values in JSON) (target near/full and far/damaged true; far/full, dead and healthy animals false; PASS); high/controlled-fixture production enemy-bar eligibility at distance/health boundaries: [{\"archetype\":\"infected.alpha\",\"near\":true,\"farHealthy\":false,\"farDamaged\":true,\"dead\":false,\"healthyAnimal\":false},{\"archetype\":\"infected.lion\",\"near\":true,\"farHealthy\":false,\"farDamaged\":true,\"dead\":false,\"healthyAnimal\":false},{\"archetype\":\"infected.gorilla\",\"near\":true,\"farHealthy\":false,\"farDamaged\":true,\"dead\":false,\"healthyAnimal\":false},{\"archetype\":\"infected.elephant\",\"near\":true,\"farHeal… (full values in JSON) (target near/full and far/damaged true; far/full, dead and healthy animals false; PASS) Manual review PASS (STALE, final-g/Codex): Fresh five-state matrix at both qualities,10 rendered frames reviewed: counts6/0/6/0/0 for near healthy, far healthy, far damaged, dead near and normal healthy zoo animals. All individual red-fill pixel checks and exact species/HP/distance counts pass. Actual Alpha and lion/gorilla/elephant/zebra/flamingo; native lethal damage removes bars. Shared production eligibility excludes healthy noninfected animals.",
-      "automatedComplete": true,
+      "status": "FAIL",
+      "currentStatus": "FAIL",
+      "value": "low/controlled-fixture production enemy-bar eligibility at distance/health boundaries: [{\"archetype\":\"infected.alpha\",\"near\":true,\"farHealthy\":true,\"farDamaged\":true,\"dead\":false,\"healthyAnimal\":false},{\"archetype\":\"infected.lion\",\"near\":true,\"farHealthy\":false,\"farDamaged\":true,\"dead\":false,\"healthyAnimal\":false},{\"archetype\":\"infected.gorilla\",\"near\":true,\"farHealthy\":false,\"farDamaged\":true,\"dead\":false,\"healthyAnimal\":false},{\"archetype\":\"infected.elephant\",\"near\":true,\"farHealt… (full values in JSON) (target near/full and far/damaged true; far/full, dead and healthy animals false; FAIL); high/controlled-fixture production enemy-bar eligibility at distance/health boundaries: [{\"archetype\":\"infected.alpha\",\"near\":true,\"farHealthy\":true,\"farDamaged\":true,\"dead\":false,\"healthyAnimal\":false},{\"archetype\":\"infected.lion\",\"near\":true,\"farHealthy\":false,\"farDamaged\":true,\"dead\":false,\"healthyAnimal\":false},{\"archetype\":\"infected.gorilla\",\"near\":true,\"farHealthy\":false,\"farDamaged\":true,\"dead\":false,\"healthyAnimal\":false},{\"archetype\":\"infected.elephant\",\"near\":true,\"farHealt… (full values in JSON) (target near/full and far/damaged true; far/full, dead and healthy animals false; FAIL) Manual review PASS (STALE, final-g/Codex): Fresh five-state matrix at both qualities,10 rendered frames reviewed: counts6/0/6/0/0 for near healthy, far healthy, far damaged, dead near and normal healthy zoo animals. All individual red-fill pixel checks and exact species/HP/distance counts pass. Actual Alpha and lion/gorilla/elephant/zebra/flamingo; native lethal damage removes bars. Shared production eligibility excludes healthy noninfected animals.",
+      "automatedComplete": false,
       "receipt": [
         "docs/reports/fix51-verify/receipts/L8-low-fixtures.json",
         "docs/reports/fix51-verify/receipts/L8-high-fixtures.json",
@@ -2868,7 +3014,7 @@
             {
               "archetype": "infected.alpha",
               "near": true,
-              "farHealthy": false,
+              "farHealthy": true,
               "farDamaged": true,
               "dead": false,
               "healthyAnimal": false
@@ -2915,7 +3061,7 @@
             }
           ],
           "target": "near/full and far/damaged true; far/full, dead and healthy animals false",
-          "status": "PASS",
+          "status": "FAIL",
           "tier": "low",
           "policy": "controlled-fixture",
           "receipt": "docs/reports/fix51-verify/receipts/L8-low-fixtures.json",
@@ -2928,7 +3074,7 @@
             {
               "archetype": "infected.alpha",
               "near": true,
-              "farHealthy": false,
+              "farHealthy": true,
               "farDamaged": true,
               "dead": false,
               "healthyAnimal": false
@@ -2975,7 +3121,7 @@
             }
           ],
           "target": "near/full and far/damaged true; far/full, dead and healthy animals false",
-          "status": "PASS",
+          "status": "FAIL",
           "tier": "high",
           "policy": "controlled-fixture",
           "receipt": "docs/reports/fix51-verify/receipts/L8-high-fixtures.json",
@@ -2990,7 +3136,7 @@
         "evidence": [],
         "method": "NEXT: Run Scene Lab current-source Alpha/zoo-species fixtures through healthy-near, healthy-far, hurt and dead states; inspect world bars and normal animals at low/high."
       },
-      "remaining": "All implemented row clauses measured at both qualities; prior PO findings still need PO closure.",
+      "remaining": "Render eligibility transitions for Alpha and all infected zoo species; current fixture qualifies production eligibility, not world-space bar pixels.",
       "review": {
         "tag": "O",
         "instruction": "Health bars: Alphas and infected zoo animals show the world-space bar (damaged or ≤ 15 m); dead ones show none; normal animals none.",
@@ -3029,7 +3175,7 @@
         "notes": "Controlled production-renderer fixture; every setup, exact actor identity, pixel ROI and negative control is retained. No campaign-route or performance claim is substituted for the rendered clause.",
         "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186",
         "freshness": "STALE",
-        "latestRelevantCommit": "a921908b852e8f24171b81b826496845e20ddb88"
+        "latestRelevantCommit": "c463d5950421d1faca38b90ffdb327d90aa3110e"
       }
     },
     {
@@ -3046,12 +3192,12 @@
         "docs/reports/fix51-verify/receipts/L2-high-webgl2-z1.5-browser.json",
         "docs/reports/fix51-verify/receipts/L3-low-webgl2-z1.5-browser.json",
         "docs/reports/fix51-verify/receipts/L3-high-webgl2-z1.5-browser.json",
-        "docs/reports/blk-v/prior-evidence/L4-low-webgl2-z1.5-browser.json",
-        "docs/reports/blk-v/prior-evidence/L4-high-webgl2-z1.5-browser.json",
-        "docs/reports/blk-v/prior-evidence/L5-low-webgl2-z1.5-browser.json",
-        "docs/reports/blk-v/prior-evidence/L5-high-webgl2-z1.5-browser.json",
-        "docs/reports/blk-v/prior-evidence/L6-low-webgl2-z1.5-browser.json",
-        "docs/reports/blk-v/prior-evidence/L6-high-webgl2-z1.5-browser.json",
+        "docs/reports/blk-b/G-25-reviewed-evidence/L4-low-webgl2-z1.5-browser.json",
+        "docs/reports/blk-b/G-25-reviewed-evidence/L4-high-webgl2-z1.5-browser.json",
+        "docs/reports/blk-b/G-25-reviewed-evidence/L5-low-webgl2-z1.5-browser.json",
+        "docs/reports/blk-b/G-25-reviewed-evidence/L5-high-webgl2-z1.5-browser.json",
+        "docs/reports/blk-b/G-25-reviewed-evidence/L6-low-webgl2-z1.5-browser.json",
+        "docs/reports/blk-b/G-25-reviewed-evidence/L6-high-webgl2-z1.5-browser.json",
         "docs/reports/fix51-verify/receipts/L7-low-webgl2-z1.5-browser.json",
         "docs/reports/fix51-verify/receipts/L7-high-webgl2-z1.5-browser.json",
         "docs/reports/fix51-verify/receipts/L8-low-webgl2-z1.5-browser.json",
@@ -3127,32 +3273,32 @@
             "what": "All20 level/quality cells complete by physical keyboard/mouse with zero console/page errors and zero objective skips; source and console observer hashes match. L10 low/high each use validated contiguous actual production Resume saves. High L9 uses the explicitly identified existing countryside route after the original road driver orbited; original incomplete trials remain archived. Protected player mode measures console stability, not mortal combat balance."
           },
           {
-            "file": "docs/reports/blk-v/prior-evidence/L4-low-webgl2-z1.5-browser.json",
+            "file": "docs/reports/blk-b/G-25-reviewed-evidence/L4-low-webgl2-z1.5-browser.json",
             "sha256": "69a83c76615968b7897af68c01e6a982da3ffac33ab68598768d9ae981b66817",
             "what": "All20 level/quality cells complete by physical keyboard/mouse with zero console/page errors and zero objective skips; source and console observer hashes match. L10 low/high each use validated contiguous actual production Resume saves. High L9 uses the explicitly identified existing countryside route after the original road driver orbited; original incomplete trials remain archived. Protected player mode measures console stability, not mortal combat balance."
           },
           {
-            "file": "docs/reports/blk-v/prior-evidence/L4-high-webgl2-z1.5-browser.json",
+            "file": "docs/reports/blk-b/G-25-reviewed-evidence/L4-high-webgl2-z1.5-browser.json",
             "sha256": "1a526511f8eea39189704d0fa8372febeb74c9f536d576e28860119cedc92715",
             "what": "All20 level/quality cells complete by physical keyboard/mouse with zero console/page errors and zero objective skips; source and console observer hashes match. L10 low/high each use validated contiguous actual production Resume saves. High L9 uses the explicitly identified existing countryside route after the original road driver orbited; original incomplete trials remain archived. Protected player mode measures console stability, not mortal combat balance."
           },
           {
-            "file": "docs/reports/blk-v/prior-evidence/L5-low-webgl2-z1.5-browser.json",
+            "file": "docs/reports/blk-b/G-25-reviewed-evidence/L5-low-webgl2-z1.5-browser.json",
             "sha256": "d06729b6371e26722947959036c53354fb2474660746ec5444153d67bd8100f7",
             "what": "All20 level/quality cells complete by physical keyboard/mouse with zero console/page errors and zero objective skips; source and console observer hashes match. L10 low/high each use validated contiguous actual production Resume saves. High L9 uses the explicitly identified existing countryside route after the original road driver orbited; original incomplete trials remain archived. Protected player mode measures console stability, not mortal combat balance."
           },
           {
-            "file": "docs/reports/blk-v/prior-evidence/L5-high-webgl2-z1.5-browser.json",
+            "file": "docs/reports/blk-b/G-25-reviewed-evidence/L5-high-webgl2-z1.5-browser.json",
             "sha256": "25fe9971a36d685390be57671f1b37b12b86a349bb466edf4cf8945a3f8df14c",
             "what": "All20 level/quality cells complete by physical keyboard/mouse with zero console/page errors and zero objective skips; source and console observer hashes match. L10 low/high each use validated contiguous actual production Resume saves. High L9 uses the explicitly identified existing countryside route after the original road driver orbited; original incomplete trials remain archived. Protected player mode measures console stability, not mortal combat balance."
           },
           {
-            "file": "docs/reports/blk-v/prior-evidence/L6-low-webgl2-z1.5-browser.json",
+            "file": "docs/reports/blk-b/G-25-reviewed-evidence/L6-low-webgl2-z1.5-browser.json",
             "sha256": "db18b088c0e44dce7dbacc096c96dca27b9620c84632e9e8359440e671873f09",
             "what": "All20 level/quality cells complete by physical keyboard/mouse with zero console/page errors and zero objective skips; source and console observer hashes match. L10 low/high each use validated contiguous actual production Resume saves. High L9 uses the explicitly identified existing countryside route after the original road driver orbited; original incomplete trials remain archived. Protected player mode measures console stability, not mortal combat balance."
           },
           {
-            "file": "docs/reports/blk-v/prior-evidence/L6-high-webgl2-z1.5-browser.json",
+            "file": "docs/reports/blk-b/G-25-reviewed-evidence/L6-high-webgl2-z1.5-browser.json",
             "sha256": "88040378b1d4d589755fccbc0b5dd818639f19a72827ad0d41fb81ce94b38ebb",
             "what": "All20 level/quality cells complete by physical keyboard/mouse with zero console/page errors and zero objective skips; source and console observer hashes match. L10 low/high each use validated contiguous actual production Resume saves. High L9 uses the explicitly identified existing countryside route after the original road driver orbited; original incomplete trials remain archived. Protected player mode measures console stability, not mortal combat balance."
           },
@@ -3200,18 +3346,22 @@
         "notes": "All20 level/quality cells complete by physical keyboard/mouse with zero console/page errors and zero objective skips; source and console observer hashes match. L10 low/high each use validated contiguous actual production Resume saves. High L9 uses the explicitly identified existing countryside route after the original road driver orbited; original incomplete trials remain archived. Protected player mode measures console stability, not mortal combat balance.",
         "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186",
         "freshness": "STALE",
-        "latestRelevantCommit": "a921908b852e8f24171b81b826496845e20ddb88"
+        "latestRelevantCommit": "c463d5950421d1faca38b90ffdb327d90aa3110e"
       }
     },
     {
       "id": "G-26",
       "status": "NOT CHECKED",
       "currentStatus": "NOT CHECKED",
-      "value": "Manual review PASS (FRESH, Codex/blk-v): All eight final captures inspected. Relaxed waiting arms and a lowered idle phone remove the broad fans; props remain at the hands. Hand/prop nearest surface gaps: bag13.6/14.0mm low/high, phone1.13/1.10mm. This does not qualify every adult/accessory/routine in the full G-26 row. Not measured by this batch run.",
+      "value": "Manual review PASS (STALE, Codex rr-b): Fresh low/high pooled WebGL2 fixtures; opened all22 original1280x720 images. Six zoo-staff/visitor identities retain coherent body proportions and hand-held bag/phone/coffee/watering-can; former bag/phone forearm fans are absent in both close views. Five adult bases beside the heroine at the same ground plane show comparable absolute height and head/body proportions, without miniature adults. Four hat/accessory examples stay on heads. Three seat types plus four named-character sitters (7 seated actors per tier) remain on their bench/chair surfaces; no hovering torso or seat penetration is established in close and wide views. Zero browser errors in all6 receipts. Repro: blk-v-captures.mjs G26 rr-b low/high; test-results/rr-b/g26-complement.mjs low/high; test-results/rr-b/g26-wide.mjs low/high, each with BROWSER_POOL_JOB_ID=rr-b and a private SCENE_PORT. Not measured by this batch run.",
       "automatedComplete": false,
       "receipt": [
-        "docs/reports/blk-v/G26-proof.json",
-        "docs/reports/blk-v/final-visual-proof.json"
+        "test-results/blk-v/rr-b/G26-low/receipt.json",
+        "test-results/rr-b/G26-low/receipt.json",
+        "test-results/rr-b/G26-low/wide-receipt.json",
+        "test-results/blk-v/rr-b/G26-high/receipt.json",
+        "test-results/rr-b/G26-high/receipt.json",
+        "test-results/rr-b/G26-high/wide-receipt.json"
       ],
       "expected": "Figures share the heroine's proportions and absolute height (no shrunken adults), accessories on heads, held props in hands, sitters on seats.",
       "checks": [],
@@ -3227,53 +3377,65 @@
       "reviewDecision": {
         "row": "G-26",
         "status": "PASS",
-        "reviewer": "Codex/blk-v",
+        "reviewer": "Codex rr-b",
         "date": "2026-11-07",
-        "commit": "7e538b5fe16562431ed4adff532aff41828eee76",
+        "commit": "50be7c824705fc3cdbb3a7ab7dd78f72c7bf2001",
         "clauses": [
           {
-            "clause": "Scoped blocker: authored ped-zoo-staff fixture at60ticks, low/high, close bag/phone holders have no broad pointed/stretched forearm skin panels.",
+            "clause": "Figures share the heroine's proportions and absolute height (no shrunken adults), accessories on heads, held props in hands, sitters on seats.",
             "verdict": "PASS",
-            "note": "All eight final captures inspected. Relaxed waiting arms and a lowered idle phone remove the broad fans; props remain at the hands. Hand/prop nearest surface gaps: bag13.6/14.0mm low/high, phone1.13/1.10mm. This does not qualify every adult/accessory/routine in the full G-26 row."
+            "note": "Fresh low/high pooled WebGL2 fixtures; opened all22 original1280x720 images. Six zoo-staff/visitor identities retain coherent body proportions and hand-held bag/phone/coffee/watering-can; former bag/phone forearm fans are absent in both close views. Five adult bases beside the heroine at the same ground plane show comparable absolute height and head/body proportions, without miniature adults. Four hat/accessory examples stay on heads. Three seat types plus four named-character sitters (7 seated actors per tier) remain on their bench/chair surfaces; no hovering torso or seat penetration is established in close and wide views. Zero browser errors in all6 receipts. Repro: blk-v-captures.mjs G26 rr-b low/high; test-results/rr-b/g26-complement.mjs low/high; test-results/rr-b/g26-wide.mjs low/high, each with BROWSER_POOL_JOB_ID=rr-b and a private SCENE_PORT."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/blk-v/G26-proof.json",
-            "sha256": "4d3f18779cd889bf96b59f4791876e838827e0384b8177afebe4ff0d7ce0e990",
-            "what": "Scoped before/control/intermediate/final visual and actual drawn-skin/gap receipts. Both tiers, both zooms and close views personally inspected."
+            "file": "test-results/blk-v/rr-b/G26-low/receipt.json",
+            "sha256": "59ad22886459ffa9a4702a5838c0e8c8265e9fdb1db67a7b3914a9632b50e6a4",
+            "what": "Fresh low/high pooled WebGL2 fixtures; opened all22 original1280x720 images. Six zoo-staff/visitor identities retain coherent body proportions and hand-held bag/phone/coffee/watering-can; former bag/phone forearm fans are absent in both close views. Five adult bases beside the heroine at the same ground plane show comparable absolute height and head/body proportions, without miniature adults. Four hat/accessory examples stay on heads. Three seat types plus four named-character sitters (7 seated actors per tier) remain on their bench/chair surfaces; no hovering torso or seat penetration is established in close and wide views. Zero browser errors in all6 receipts. Repro: blk-v-captures.mjs G26 rr-b low/high; test-results/rr-b/g26-complement.mjs low/high; test-results/rr-b/g26-wide.mjs low/high, each with BROWSER_POOL_JOB_ID=rr-b and a private SCENE_PORT."
           },
           {
-            "file": "docs/reports/blk-v/final-visual-proof.json",
-            "sha256": "de8ca90e605c353c146fd2700276bc2005d4e44873693789954cb1dd40adb635",
-            "what": "Personally viewed all final-source captures. At tick60 relaxed bag/phone forearms lack broad fans, six actors and props retained; phone carried at lowered wrist. Scoped authored-fixture PASS only; other head/torso facets remain."
+            "file": "test-results/rr-b/G26-low/receipt.json",
+            "sha256": "8e47a5dc985b6b54df9358bf54ab0463340f0ebc427d8ec2ee934f44de3fcf62",
+            "what": "Fresh low/high pooled WebGL2 fixtures; opened all22 original1280x720 images. Six zoo-staff/visitor identities retain coherent body proportions and hand-held bag/phone/coffee/watering-can; former bag/phone forearm fans are absent in both close views. Five adult bases beside the heroine at the same ground plane show comparable absolute height and head/body proportions, without miniature adults. Four hat/accessory examples stay on heads. Three seat types plus four named-character sitters (7 seated actors per tier) remain on their bench/chair surfaces; no hovering torso or seat penetration is established in close and wide views. Zero browser errors in all6 receipts. Repro: blk-v-captures.mjs G26 rr-b low/high; test-results/rr-b/g26-complement.mjs low/high; test-results/rr-b/g26-wide.mjs low/high, each with BROWSER_POOL_JOB_ID=rr-b and a private SCENE_PORT."
+          },
+          {
+            "file": "test-results/rr-b/G26-low/wide-receipt.json",
+            "sha256": "3c682c6e96daef9919a99a0863a995e1ab4121b449ebae1a6234a3c85d0ced0b",
+            "what": "Fresh low/high pooled WebGL2 fixtures; opened all22 original1280x720 images. Six zoo-staff/visitor identities retain coherent body proportions and hand-held bag/phone/coffee/watering-can; former bag/phone forearm fans are absent in both close views. Five adult bases beside the heroine at the same ground plane show comparable absolute height and head/body proportions, without miniature adults. Four hat/accessory examples stay on heads. Three seat types plus four named-character sitters (7 seated actors per tier) remain on their bench/chair surfaces; no hovering torso or seat penetration is established in close and wide views. Zero browser errors in all6 receipts. Repro: blk-v-captures.mjs G26 rr-b low/high; test-results/rr-b/g26-complement.mjs low/high; test-results/rr-b/g26-wide.mjs low/high, each with BROWSER_POOL_JOB_ID=rr-b and a private SCENE_PORT."
+          },
+          {
+            "file": "test-results/blk-v/rr-b/G26-high/receipt.json",
+            "sha256": "ba86fdb8b970527bf02c355c8963297a65062c78ac95de6e939b7f26932b4287",
+            "what": "Fresh low/high pooled WebGL2 fixtures; opened all22 original1280x720 images. Six zoo-staff/visitor identities retain coherent body proportions and hand-held bag/phone/coffee/watering-can; former bag/phone forearm fans are absent in both close views. Five adult bases beside the heroine at the same ground plane show comparable absolute height and head/body proportions, without miniature adults. Four hat/accessory examples stay on heads. Three seat types plus four named-character sitters (7 seated actors per tier) remain on their bench/chair surfaces; no hovering torso or seat penetration is established in close and wide views. Zero browser errors in all6 receipts. Repro: blk-v-captures.mjs G26 rr-b low/high; test-results/rr-b/g26-complement.mjs low/high; test-results/rr-b/g26-wide.mjs low/high, each with BROWSER_POOL_JOB_ID=rr-b and a private SCENE_PORT."
+          },
+          {
+            "file": "test-results/rr-b/G26-high/receipt.json",
+            "sha256": "bf3057b9613b4b8e8d81d77140a57295271580daa7f2c29d4ae0cb9275fce381",
+            "what": "Fresh low/high pooled WebGL2 fixtures; opened all22 original1280x720 images. Six zoo-staff/visitor identities retain coherent body proportions and hand-held bag/phone/coffee/watering-can; former bag/phone forearm fans are absent in both close views. Five adult bases beside the heroine at the same ground plane show comparable absolute height and head/body proportions, without miniature adults. Four hat/accessory examples stay on heads. Three seat types plus four named-character sitters (7 seated actors per tier) remain on their bench/chair surfaces; no hovering torso or seat penetration is established in close and wide views. Zero browser errors in all6 receipts. Repro: blk-v-captures.mjs G26 rr-b low/high; test-results/rr-b/g26-complement.mjs low/high; test-results/rr-b/g26-wide.mjs low/high, each with BROWSER_POOL_JOB_ID=rr-b and a private SCENE_PORT."
+          },
+          {
+            "file": "test-results/rr-b/G26-high/wide-receipt.json",
+            "sha256": "e25079f403401e1476220e670003e2071c28bfcd6bf8672efb77c0cd8df8918e",
+            "what": "Fresh low/high pooled WebGL2 fixtures; opened all22 original1280x720 images. Six zoo-staff/visitor identities retain coherent body proportions and hand-held bag/phone/coffee/watering-can; former bag/phone forearm fans are absent in both close views. Five adult bases beside the heroine at the same ground plane show comparable absolute height and head/body proportions, without miniature adults. Four hat/accessory examples stay on heads. Three seat types plus four named-character sitters (7 seated actors per tier) remain on their bench/chair surfaces; no hovering torso or seat penetration is established in close and wide views. Zero browser errors in all6 receipts. Repro: blk-v-captures.mjs G26 rr-b low/high; test-results/rr-b/g26-complement.mjs low/high; test-results/rr-b/g26-wide.mjs low/high, each with BROWSER_POOL_JOB_ID=rr-b and a private SCENE_PORT."
           }
         ],
-        "notes": "Whole G-26 remains unqualified: this clause deliberately names the requested blocker fixture rather than claiming the full adult/accessory catalog. P: PO inspect the relaxed idle phone carry at the side.",
-        "sourceDigest": "b33a0e3ce8ec0fb3d20960af5a6b07561149258fac0493611d3978e90250c577",
-        "freshness": "FRESH",
-        "latestRelevantCommit": "a921908b852e8f24171b81b826496845e20ddb88"
+        "notes": "Current source, both render tiers, native-sized original images opened. Representative authored human/prop/hat/seat fixtures plus the explicit heroine/adult comparison; not an exhaustive census of every campaign frame.",
+        "sourceDigest": "826eaf34ba69c9272cce1759bdd1699e67d8e35ebbd3c7d1739661bfaa751923",
+        "freshness": "STALE",
+        "latestRelevantCommit": "c463d5950421d1faca38b90ffdb327d90aa3110e"
       }
     },
     {
       "id": "G-27",
       "status": "FAIL",
       "currentStatus": "NOT CHECKED",
-      "value": "Manual review FAIL (STALE, final-g/Codex): Blocking babysitting counterexample: low L3 records144 matching waiting-for-squad HUD samples from tick9708 to19976,171.133333seconds; final corgi separation297.816993m. Route cannot finish, no objective skips. High L3 completion does not erase this trial. Ten level files answer glitches, scene quality/missing detail, and boring/harmless/babysitting within their stated observed scope. Low L10 also strands the following corgi1200.4576m behind; static geometry is clear, nav blocked. No mortal harmlessness conclusion is inferred from protected player damage. Open prior FAIL: All ten levels have scoped glitches/stunning/boring-harmless-babysitting judgments in the README. L9 low road has a verified >60 s moving enemy-free interval; native L10 R1/R2 are crossable with zero attack windups. Those harmless/pressure findings block GO.",
+      "value": "Manual review FAIL (STALE, Codex rr-b): Fresh low-tier review answers all3 questions for every level in README and the92-image original-resolution manifest. Blocking L7 babysitting: Aboard21/24 remains unchanged from tick5640 through7560 (32s); empty controls, no story lock, no entering passenger. Target62 remains~2m from the bus. Last28s have0 live infected; assisted recovery appears at7680 and all24 board at7800. Reviewed current bus frames at ticks6000/7200 show the stalled nearby figures. Repro: SCENE_PORT=4834 BROWSER_POOL_JOB_ID=rr-b node --import tsx/esm test-results/rr-b/g27-boarding.mjs 7 7; seed1 low default complete bot; inspect boardingStatus and boarded count. L1 upper-bound waiting and protected zero damage are explicitly excluded as failure evidence. L10 partial-route timeouts and late Resume scope are disclosed. Open prior FAIL: All ten levels have scoped glitches/stunning/boring-harmless-babysitting judgments in the README. L9 low road has a verified >60 s moving enemy-free interval; native L10 R1/R2 are crossable with zero attack windups. Those harmless/pressure findings block GO.",
       "automatedComplete": false,
       "receipt": [
-        "docs/reports/final-g/G-27-L1.json",
-        "docs/reports/final-g/G-27-L2.json",
-        "docs/reports/final-g/G-27-L3.json",
-        "docs/reports/final-g/G-27-L4.json",
-        "docs/reports/final-g/G-27-L5.json",
-        "docs/reports/final-g/G-27-L6.json",
-        "docs/reports/final-g/G-27-L7.json",
-        "docs/reports/final-g/G-27-L8.json",
-        "docs/reports/final-g/G-27-L9.json",
-        "docs/reports/final-g/G-27-L10.json",
-        "docs/reports/final-g/G-27-L3-wait.json",
-        "docs/reports/final-g/G-25-L3-low.json",
+        "test-results/rr-b/G27-review.json",
+        "test-results/rr-b/G27-boarding-proof.json",
+        "test-results/rr-b/G27-boarding/L7/receipt.json",
+        "test-results/rr-b/G27-late/receipt.json",
         "docs/reports/batch51-qa/L10.jpg",
         "docs/reports/batch51-qa/README.md",
         "docs/reports/batch51-qa/l9-road-low-gap.json",
@@ -3302,82 +3464,42 @@
       "reviewDecision": {
         "row": "G-27",
         "status": "FAIL",
-        "reviewer": "final-g/Codex",
+        "reviewer": "Codex rr-b",
         "date": "2026-11-07",
-        "commit": "4e570db8499bd1d76dcc17f9d13d1949d5cf2096",
+        "commit": "50be7c824705fc3cdbb3a7ab7dd78f72c7bf2001",
         "clauses": [
           {
             "clause": "Opus answers three questions per level: glitches (list), stunning (verdict + missing), **boring / harmless / babysitting** (list). Any \"harmless\" or \"babysitting\" finding blocks GO.",
             "verdict": "FAIL",
-            "note": "Blocking babysitting counterexample: low L3 records144 matching waiting-for-squad HUD samples from tick9708 to19976,171.133333seconds; final corgi separation297.816993m. Route cannot finish, no objective skips. High L3 completion does not erase this trial. Ten level files answer glitches, scene quality/missing detail, and boring/harmless/babysitting within their stated observed scope. Low L10 also strands the following corgi1200.4576m behind; static geometry is clear, nav blocked. No mortal harmlessness conclusion is inferred from protected player damage."
+            "note": "Fresh low-tier review answers all3 questions for every level in README and the92-image original-resolution manifest. Blocking L7 babysitting: Aboard21/24 remains unchanged from tick5640 through7560 (32s); empty controls, no story lock, no entering passenger. Target62 remains~2m from the bus. Last28s have0 live infected; assisted recovery appears at7680 and all24 board at7800. Reviewed current bus frames at ticks6000/7200 show the stalled nearby figures. Repro: SCENE_PORT=4834 BROWSER_POOL_JOB_ID=rr-b node --import tsx/esm test-results/rr-b/g27-boarding.mjs 7 7; seed1 low default complete bot; inspect boardingStatus and boarded count. L1 upper-bound waiting and protected zero damage are explicitly excluded as failure evidence. L10 partial-route timeouts and late Resume scope are disclosed."
           }
         ],
         "evidence": [
           {
-            "file": "docs/reports/final-g/G-27-L1.json",
-            "sha256": "2e8387af6536aedf14b90f031c876e911f4b3c14b4d7213c60ddb9e5dc92b16e",
-            "what": "Blocking babysitting counterexample: low L3 records144 matching waiting-for-squad HUD samples from tick9708 to19976,171.133333seconds; final corgi separation297.816993m. Route cannot finish, no objective skips. High L3 completion does not erase this trial. Ten level files answer glitches, scene quality/missing detail, and boring/harmless/babysitting within their stated observed scope. Low L10 also strands the following corgi1200.4576m behind; static geometry is clear, nav blocked. No mortal harmlessness conclusion is inferred from protected player damage."
+            "file": "test-results/rr-b/G27-review.json",
+            "sha256": "33aa8460d528c21995945d1570a2629e540797264f8edf621a663814a6596421",
+            "what": "Fresh low-tier review answers all3 questions for every level in README and the92-image original-resolution manifest. Blocking L7 babysitting: Aboard21/24 remains unchanged from tick5640 through7560 (32s); empty controls, no story lock, no entering passenger. Target62 remains~2m from the bus. Last28s have0 live infected; assisted recovery appears at7680 and all24 board at7800. Reviewed current bus frames at ticks6000/7200 show the stalled nearby figures. Repro: SCENE_PORT=4834 BROWSER_POOL_JOB_ID=rr-b node --import tsx/esm test-results/rr-b/g27-boarding.mjs 7 7; seed1 low default complete bot; inspect boardingStatus and boarded count. L1 upper-bound waiting and protected zero damage are explicitly excluded as failure evidence. L10 partial-route timeouts and late Resume scope are disclosed."
           },
           {
-            "file": "docs/reports/final-g/G-27-L2.json",
-            "sha256": "bdef8bbc61ce822f19574c3baa5de3e497e398dca7d74c51264b91e51576a852",
-            "what": "Blocking babysitting counterexample: low L3 records144 matching waiting-for-squad HUD samples from tick9708 to19976,171.133333seconds; final corgi separation297.816993m. Route cannot finish, no objective skips. High L3 completion does not erase this trial. Ten level files answer glitches, scene quality/missing detail, and boring/harmless/babysitting within their stated observed scope. Low L10 also strands the following corgi1200.4576m behind; static geometry is clear, nav blocked. No mortal harmlessness conclusion is inferred from protected player damage."
+            "file": "test-results/rr-b/G27-boarding-proof.json",
+            "sha256": "b18729359a483ccf2a303524694d8b615393f03cb28ec04f05ac399d998c8c90",
+            "what": "Fresh low-tier review answers all3 questions for every level in README and the92-image original-resolution manifest. Blocking L7 babysitting: Aboard21/24 remains unchanged from tick5640 through7560 (32s); empty controls, no story lock, no entering passenger. Target62 remains~2m from the bus. Last28s have0 live infected; assisted recovery appears at7680 and all24 board at7800. Reviewed current bus frames at ticks6000/7200 show the stalled nearby figures. Repro: SCENE_PORT=4834 BROWSER_POOL_JOB_ID=rr-b node --import tsx/esm test-results/rr-b/g27-boarding.mjs 7 7; seed1 low default complete bot; inspect boardingStatus and boarded count. L1 upper-bound waiting and protected zero damage are explicitly excluded as failure evidence. L10 partial-route timeouts and late Resume scope are disclosed."
           },
           {
-            "file": "docs/reports/final-g/G-27-L3.json",
-            "sha256": "ad28d8cbc2d604fcfd14036f2cd515dfb04688da1788120f8c151679c3ed24d0",
-            "what": "Blocking babysitting counterexample: low L3 records144 matching waiting-for-squad HUD samples from tick9708 to19976,171.133333seconds; final corgi separation297.816993m. Route cannot finish, no objective skips. High L3 completion does not erase this trial. Ten level files answer glitches, scene quality/missing detail, and boring/harmless/babysitting within their stated observed scope. Low L10 also strands the following corgi1200.4576m behind; static geometry is clear, nav blocked. No mortal harmlessness conclusion is inferred from protected player damage."
+            "file": "test-results/rr-b/G27-boarding/L7/receipt.json",
+            "sha256": "10eb0c8d9edd4d4b42dfe8a6657d9282245b26ca53e48d753f2d79b7d699ded9",
+            "what": "Fresh low-tier review answers all3 questions for every level in README and the92-image original-resolution manifest. Blocking L7 babysitting: Aboard21/24 remains unchanged from tick5640 through7560 (32s); empty controls, no story lock, no entering passenger. Target62 remains~2m from the bus. Last28s have0 live infected; assisted recovery appears at7680 and all24 board at7800. Reviewed current bus frames at ticks6000/7200 show the stalled nearby figures. Repro: SCENE_PORT=4834 BROWSER_POOL_JOB_ID=rr-b node --import tsx/esm test-results/rr-b/g27-boarding.mjs 7 7; seed1 low default complete bot; inspect boardingStatus and boarded count. L1 upper-bound waiting and protected zero damage are explicitly excluded as failure evidence. L10 partial-route timeouts and late Resume scope are disclosed."
           },
           {
-            "file": "docs/reports/final-g/G-27-L4.json",
-            "sha256": "742ed8811f5b3151f3355fcdeaa030db19a351659d37dbab61a4f5cc22996bfc",
-            "what": "Blocking babysitting counterexample: low L3 records144 matching waiting-for-squad HUD samples from tick9708 to19976,171.133333seconds; final corgi separation297.816993m. Route cannot finish, no objective skips. High L3 completion does not erase this trial. Ten level files answer glitches, scene quality/missing detail, and boring/harmless/babysitting within their stated observed scope. Low L10 also strands the following corgi1200.4576m behind; static geometry is clear, nav blocked. No mortal harmlessness conclusion is inferred from protected player damage."
-          },
-          {
-            "file": "docs/reports/final-g/G-27-L5.json",
-            "sha256": "f88eb08cfe667f1a002b21927ef1b8f20d8b32010ecc8996e86f8cdec6c147f6",
-            "what": "Blocking babysitting counterexample: low L3 records144 matching waiting-for-squad HUD samples from tick9708 to19976,171.133333seconds; final corgi separation297.816993m. Route cannot finish, no objective skips. High L3 completion does not erase this trial. Ten level files answer glitches, scene quality/missing detail, and boring/harmless/babysitting within their stated observed scope. Low L10 also strands the following corgi1200.4576m behind; static geometry is clear, nav blocked. No mortal harmlessness conclusion is inferred from protected player damage."
-          },
-          {
-            "file": "docs/reports/final-g/G-27-L6.json",
-            "sha256": "785267f1713346d6ba2833d78bd5a804c74b03cb857a7fbe2b3fe0a99ca392b9",
-            "what": "Blocking babysitting counterexample: low L3 records144 matching waiting-for-squad HUD samples from tick9708 to19976,171.133333seconds; final corgi separation297.816993m. Route cannot finish, no objective skips. High L3 completion does not erase this trial. Ten level files answer glitches, scene quality/missing detail, and boring/harmless/babysitting within their stated observed scope. Low L10 also strands the following corgi1200.4576m behind; static geometry is clear, nav blocked. No mortal harmlessness conclusion is inferred from protected player damage."
-          },
-          {
-            "file": "docs/reports/final-g/G-27-L7.json",
-            "sha256": "2c0a5e336ee2873912a8b3d8f6149fad00e73d4e8d0dee917f102edaf7a92ac6",
-            "what": "Blocking babysitting counterexample: low L3 records144 matching waiting-for-squad HUD samples from tick9708 to19976,171.133333seconds; final corgi separation297.816993m. Route cannot finish, no objective skips. High L3 completion does not erase this trial. Ten level files answer glitches, scene quality/missing detail, and boring/harmless/babysitting within their stated observed scope. Low L10 also strands the following corgi1200.4576m behind; static geometry is clear, nav blocked. No mortal harmlessness conclusion is inferred from protected player damage."
-          },
-          {
-            "file": "docs/reports/final-g/G-27-L8.json",
-            "sha256": "6b17d6e7b0c500ec605cb80d4f0c3e972d5ffa2e2a0bc45c23477ef285b34a24",
-            "what": "Blocking babysitting counterexample: low L3 records144 matching waiting-for-squad HUD samples from tick9708 to19976,171.133333seconds; final corgi separation297.816993m. Route cannot finish, no objective skips. High L3 completion does not erase this trial. Ten level files answer glitches, scene quality/missing detail, and boring/harmless/babysitting within their stated observed scope. Low L10 also strands the following corgi1200.4576m behind; static geometry is clear, nav blocked. No mortal harmlessness conclusion is inferred from protected player damage."
-          },
-          {
-            "file": "docs/reports/final-g/G-27-L9.json",
-            "sha256": "d07270223adbe1faadec1a4a362e6c9d302dfabd67863ff817603ea2abdabbfe",
-            "what": "Blocking babysitting counterexample: low L3 records144 matching waiting-for-squad HUD samples from tick9708 to19976,171.133333seconds; final corgi separation297.816993m. Route cannot finish, no objective skips. High L3 completion does not erase this trial. Ten level files answer glitches, scene quality/missing detail, and boring/harmless/babysitting within their stated observed scope. Low L10 also strands the following corgi1200.4576m behind; static geometry is clear, nav blocked. No mortal harmlessness conclusion is inferred from protected player damage."
-          },
-          {
-            "file": "docs/reports/final-g/G-27-L10.json",
-            "sha256": "a47691f3e9c81e7848575ec95b3a4d446b377d23b2d629634558c2ad760b1c1e",
-            "what": "Blocking babysitting counterexample: low L3 records144 matching waiting-for-squad HUD samples from tick9708 to19976,171.133333seconds; final corgi separation297.816993m. Route cannot finish, no objective skips. High L3 completion does not erase this trial. Ten level files answer glitches, scene quality/missing detail, and boring/harmless/babysitting within their stated observed scope. Low L10 also strands the following corgi1200.4576m behind; static geometry is clear, nav blocked. No mortal harmlessness conclusion is inferred from protected player damage."
-          },
-          {
-            "file": "docs/reports/final-g/G-27-L3-wait.json",
-            "sha256": "0518001774a352b94f69e32c6f215f67a5b86365b2bfefd0519b8eadfc2d9833",
-            "what": "Blocking babysitting counterexample: low L3 records144 matching waiting-for-squad HUD samples from tick9708 to19976,171.133333seconds; final corgi separation297.816993m. Route cannot finish, no objective skips. High L3 completion does not erase this trial. Ten level files answer glitches, scene quality/missing detail, and boring/harmless/babysitting within their stated observed scope. Low L10 also strands the following corgi1200.4576m behind; static geometry is clear, nav blocked. No mortal harmlessness conclusion is inferred from protected player damage."
-          },
-          {
-            "file": "docs/reports/final-g/G-25-L3-low.json",
-            "sha256": "b10fb91027693a0b790a61a0c90b0f9bc0cea054202b310b89d848bc8c69f7d0",
-            "what": "Blocking babysitting counterexample: low L3 records144 matching waiting-for-squad HUD samples from tick9708 to19976,171.133333seconds; final corgi separation297.816993m. Route cannot finish, no objective skips. High L3 completion does not erase this trial. Ten level files answer glitches, scene quality/missing detail, and boring/harmless/babysitting within their stated observed scope. Low L10 also strands the following corgi1200.4576m behind; static geometry is clear, nav blocked. No mortal harmlessness conclusion is inferred from protected player damage."
+            "file": "test-results/rr-b/G27-late/receipt.json",
+            "sha256": "0c5095c263231dfd122e988b345e5422a8c2565e10ad0016f2aa78e4edccf139",
+            "what": "Fresh low-tier review answers all3 questions for every level in README and the92-image original-resolution manifest. Blocking L7 babysitting: Aboard21/24 remains unchanged from tick5640 through7560 (32s); empty controls, no story lock, no entering passenger. Target62 remains~2m from the bus. Last28s have0 live infected; assisted recovery appears at7680 and all24 board at7800. Reviewed current bus frames at ticks6000/7200 show the stalled nearby figures. Repro: SCENE_PORT=4834 BROWSER_POOL_JOB_ID=rr-b node --import tsx/esm test-results/rr-b/g27-boarding.mjs 7 7; seed1 low default complete bot; inspect boardingStatus and boarded count. L1 upper-bound waiting and protected zero damage are explicitly excluded as failure evidence. L10 partial-route timeouts and late Resume scope are disclosed."
           }
         ],
-        "notes": "Any babysitting finding blocks GO. These are independent Codex observations and a measured blocking failure; Opus taste/signoff was requested through the scheduler and is not falsely claimed. Each level states its actual run/review scope; G25 separately qualifies completed console coverage. PO presentation questions and exact retained frames are listed in the level files.",
-        "sourceDigest": "ab1b5d70435e9e4a35ba97400dbc92e3e65dbf8ee3e5490fae8bd4a7906a9186",
+        "notes": "Measured Codex blocking babysitting finding; required Opus/PO taste signoff is separate and is not claimed. This is a failure of one ordinary tested boarding position, not a claim that every human route stalls.",
+        "sourceDigest": "826eaf34ba69c9272cce1759bdd1699e67d8e35ebbd3c7d1739661bfaa751923",
         "freshness": "STALE",
-        "latestRelevantCommit": "a921908b852e8f24171b81b826496845e20ddb88"
+        "latestRelevantCommit": "c463d5950421d1faca38b90ffdb327d90aa3110e"
       }
     }
   ],
@@ -3566,7 +3688,7 @@
         "notes": "Frozen-head row review. Current immutable evidence, unchanged criterion and game source.",
         "sourceDigest": "3f346fc1f0af18cb190b29844498febc36a720450de65904caad638582d717b9",
         "freshness": "STALE",
-        "latestRelevantCommit": "a921908b852e8f24171b81b826496845e20ddb88"
+        "latestRelevantCommit": "c463d5950421d1faca38b90ffdb327d90aa3110e"
       }
     },
     {
@@ -3717,7 +3839,7 @@
         "notes": "Frozen-head row review. Current immutable evidence, unchanged criterion and game source.",
         "sourceDigest": "3f346fc1f0af18cb190b29844498febc36a720450de65904caad638582d717b9",
         "freshness": "STALE",
-        "latestRelevantCommit": "a921908b852e8f24171b81b826496845e20ddb88"
+        "latestRelevantCommit": "c463d5950421d1faca38b90ffdb327d90aa3110e"
       }
     },
     {
@@ -4069,7 +4191,7 @@
         "notes": "Frozen-head row review. Current immutable evidence, unchanged criterion and game source.",
         "sourceDigest": "3f346fc1f0af18cb190b29844498febc36a720450de65904caad638582d717b9",
         "freshness": "STALE",
-        "latestRelevantCommit": "a921908b852e8f24171b81b826496845e20ddb88"
+        "latestRelevantCommit": "c463d5950421d1faca38b90ffdb327d90aa3110e"
       }
     },
     {
@@ -4275,7 +4397,7 @@
         "notes": "Frozen-head row review. Current immutable evidence, unchanged criterion and game source.",
         "sourceDigest": "3f346fc1f0af18cb190b29844498febc36a720450de65904caad638582d717b9",
         "freshness": "STALE",
-        "latestRelevantCommit": "a921908b852e8f24171b81b826496845e20ddb88"
+        "latestRelevantCommit": "c463d5950421d1faca38b90ffdb327d90aa3110e"
       }
     },
     {
@@ -4416,7 +4538,7 @@
         "notes": "Frozen-head row review. Current immutable evidence, unchanged criterion and game source.",
         "sourceDigest": "3f346fc1f0af18cb190b29844498febc36a720450de65904caad638582d717b9",
         "freshness": "STALE",
-        "latestRelevantCommit": "a921908b852e8f24171b81b826496845e20ddb88"
+        "latestRelevantCommit": "c463d5950421d1faca38b90ffdb327d90aa3110e"
       }
     },
     {
@@ -4674,7 +4796,7 @@
         "notes": "Frozen-head numeric review. No gameplay source or criterion changed. No browser, performance, or visual evidence is claimed for this numeric-only criterion.",
         "sourceDigest": "3f346fc1f0af18cb190b29844498febc36a720450de65904caad638582d717b9",
         "freshness": "STALE",
-        "latestRelevantCommit": "a921908b852e8f24171b81b826496845e20ddb88"
+        "latestRelevantCommit": "c463d5950421d1faca38b90ffdb327d90aa3110e"
       }
     },
     {
@@ -4749,7 +4871,7 @@
         "notes": "Frozen-head row review. Current immutable evidence, unchanged criterion and game source.",
         "sourceDigest": "3f346fc1f0af18cb190b29844498febc36a720450de65904caad638582d717b9",
         "freshness": "STALE",
-        "latestRelevantCommit": "a921908b852e8f24171b81b826496845e20ddb88"
+        "latestRelevantCommit": "c463d5950421d1faca38b90ffdb327d90aa3110e"
       }
     },
     {
@@ -4868,7 +4990,7 @@
         "notes": "Frozen-head row review. Current immutable evidence, unchanged criterion and game source.",
         "sourceDigest": "3f346fc1f0af18cb190b29844498febc36a720450de65904caad638582d717b9",
         "freshness": "STALE",
-        "latestRelevantCommit": "a921908b852e8f24171b81b826496845e20ddb88"
+        "latestRelevantCommit": "c463d5950421d1faca38b90ffdb327d90aa3110e"
       }
     },
     {
@@ -5005,7 +5127,7 @@
         "notes": "Frozen-head row review. Current immutable evidence, unchanged criterion and game source.",
         "sourceDigest": "3f346fc1f0af18cb190b29844498febc36a720450de65904caad638582d717b9",
         "freshness": "STALE",
-        "latestRelevantCommit": "a921908b852e8f24171b81b826496845e20ddb88"
+        "latestRelevantCommit": "c463d5950421d1faca38b90ffdb327d90aa3110e"
       }
     },
     {
@@ -5104,7 +5226,7 @@
         "notes": "Frozen-head row review. Current immutable evidence, unchanged criterion and game source.",
         "sourceDigest": "3f346fc1f0af18cb190b29844498febc36a720450de65904caad638582d717b9",
         "freshness": "STALE",
-        "latestRelevantCommit": "a921908b852e8f24171b81b826496845e20ddb88"
+        "latestRelevantCommit": "c463d5950421d1faca38b90ffdb327d90aa3110e"
       }
     },
     {
@@ -5174,7 +5296,7 @@
         "notes": "Frozen-head row review. Current immutable evidence, unchanged criterion and game source.",
         "sourceDigest": "3f346fc1f0af18cb190b29844498febc36a720450de65904caad638582d717b9",
         "freshness": "STALE",
-        "latestRelevantCommit": "a921908b852e8f24171b81b826496845e20ddb88"
+        "latestRelevantCommit": "c463d5950421d1faca38b90ffdb327d90aa3110e"
       }
     }
   ]

@@ -1,0 +1,33 @@
+{
+  "command": "sh tools/remote/run.sh \"$PWD\" --pull test-results/qa-threat --env QA_THREAT_REVISION=c463d5950421d1faca38b90ffdb327d90aa3110e --env QA_THREAT_MAIN_REVISION=6bcc03f41fa10a80657f2e44d750cdd7c2e6bfda --env QA_THREAT_SOURCE_MATCHES_MAIN=false -- npm run qa:threat -- --levels L8 --maxWorkers=2",
+  "exitCode": 1,
+  "wallSeconds": 50.061,
+  "flags": [
+    "PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate"
+  ],
+  "passiveFlags": [],
+  "nativeStateHash": "b1b9cd1a",
+  "note": "Zero L8 flags. Tool exits 1 for PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate. Raw audit at test-results/qa-threat/audit.json.",
+  "revision": "c463d5950421d1faca38b90ffdb327d90aa3110e",
+  "mainRevision": "6bcc03f41fa10a80657f2e44d750cdd7c2e6bfda",
+  "sourceMatchesMain": false,
+  "seed": 1,
+  "tier": "low",
+  "workers": 2,
+  "seconds": 50.878253658999995,
+  "levelFlags": [],
+  "skilled": {
+    "completed": true,
+    "time": 95.38333333333334,
+    "deaths": 0,
+    "failures": {},
+    "outcome": "complete"
+  },
+  "passive": {
+    "completed": true,
+    "time": 144.58333333333334,
+    "deaths": 0,
+    "failures": {},
+    "outcome": "complete"
+  }
+}
