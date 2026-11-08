@@ -68,6 +68,31 @@ test('every human and animal role validates and spawns with its catalog health a
     expect(w.events.events().filter(event => event.type === 'telegraph' && event.sourceId === e.id)).toHaveLength(2);
   }
   {
+    const w = await arena(1, false); w.scenario = 'L5'; w.infected!.configureL1v2();
+    const e = spawn(w, 'runner', 9), brain = e.infected!.l1!;
+    brain.mode = 'chase'; brain.targetId = 1; brain.pauseUntil = 0;
+    for (let i = 0; i < 180 && e.infected!.state !== 'attack'; i++) step(w, 1);
+    const start = e.transform.x;
+    expect(start).toBeGreaterThan(4.4); expect(start).toBeLessThanOrEqual(6);
+    const warning = w.events.events().find(event => event.type === 'telegraph' && event.sourceId === e.id);
+    expect(warning).toMatchObject({ target: { id: 1 }, duration: .35 });
+    step(w, 19);
+    expect(e.transform.x, 'the L5 approach keeps moving during its warning').toBeLessThan(start - 1);
+    expect(w.events.events().filter(event => event.type === 'combat.hit' && event.sourceId === e.id), 'no damage before the telegraph finishes').toHaveLength(0);
+    step(w, 45);
+    const hits = w.events.events().filter(event => event.type === 'combat.hit' && event.sourceId === e.id && event.targetId === 1);
+    expect(hits.length, 'the moving approach must physically reach a stationary courier').toBeGreaterThan(0);
+    expect(Math.hypot(e.transform.x, e.transform.z), 'the attack never extends its physical strike reach').toBeLessThanOrEqual(1.25);
+
+    const resting = await arena(); resting.scenario = 'L5'; resting.infected!.configureL1v2();
+    const stopped = spawn(resting, 'runner', 6), stoppedBrain = stopped.infected!.l1!;
+    stoppedBrain.mode = 'chase'; stoppedBrain.targetId = 1; stoppedBrain.pauseUntil = 0;
+    step(resting, 1);
+    expect(resting.events.events().some(event => event.type === 'telegraph' && event.sourceId === stopped.id),
+      'a stopped attacker cannot claim extra approach distance it has not built speed to cover').toBe(false);
+  }
+
+  {
     for (const moving of [false, true]) {
       const w = await arena(1, false); w.scenario = 'L6';
       const e = spawn(w, 'runner', 4.3);
