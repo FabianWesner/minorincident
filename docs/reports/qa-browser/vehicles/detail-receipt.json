@@ -1,0 +1,2362 @@
+{
+  "rows": [
+    {
+      "kind": "front-close",
+      "vehicle": "vehicle.sedan",
+      "file": "detail-vehicle.sedan.jpg",
+      "tick": 61,
+      "car": {
+        "at": {
+          "x": 0,
+          "z": 0,
+          "y": 0.7354336977005005,
+          "yaw": 0
+        },
+        "vehicle": {
+          "speed": 0,
+          "forwardSpeed": 0,
+          "steer": 0,
+          "braking": false,
+          "boosting": false,
+          "driver": 1,
+          "attached": [],
+          "damage": "normal",
+          "explodeAt": null,
+          "stuck": false,
+          "recoveringUntil": 0
+        }
+      },
+      "props": [],
+      "awake": 0,
+      "budget": 12,
+      "view": [
+        {
+          "id": 3,
+          "entryRingVisible": false,
+          "apcDamage": null,
+          "transitionCouriers": [],
+          "doors": [
+            {
+              "name": "doorL",
+              "yaw": 0,
+              "meshes": 4
+            },
+            {
+              "name": "doorR",
+              "yaw": 0,
+              "meshes": 4
+            }
+          ],
+          "decay": null,
+          "bloodCoverage": 0,
+          "windshieldBloodCoverage": 0,
+          "wheels": [
+            {
+              "spin": 0,
+              "steer": 0
+            },
+            {
+              "spin": 0,
+              "steer": 0
+            },
+            {
+              "spin": 0,
+              "steer": 0
+            },
+            {
+              "spin": 0,
+              "steer": 0
+            }
+          ],
+          "brake": 0.15,
+          "sirens": [],
+          "placeholder": false,
+          "occupants": [
+            {
+              "actorId": 1,
+              "asset": "char.courier-female",
+              "seated": true,
+              "position": [
+                0.40000000298023225,
+                0.8700000047683716,
+                0.4000000059604645
+              ],
+              "handGapM": [
+                2.7194799110210365e-16,
+                1.1102230246251565e-16
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "front-close",
+      "vehicle": "vehicle.military-apc",
+      "file": "detail-vehicle.military-apc.jpg",
+      "tick": 61,
+      "car": {
+        "at": {
+          "x": 0,
+          "z": 0,
+          "y": 0.9954336881637573,
+          "yaw": 0
+        },
+        "vehicle": {
+          "speed": 0,
+          "forwardSpeed": 0,
+          "steer": 0,
+          "braking": false,
+          "boosting": false,
+          "driver": 1,
+          "attached": [],
+          "damage": "normal",
+          "explodeAt": null,
+          "stuck": false,
+          "recoveringUntil": 0,
+          "apcContacts": {
+            "sequence": 0,
+            "infected": {}
+          }
+        }
+      },
+      "props": [],
+      "awake": 0,
+      "budget": 12,
+      "view": [
+        {
+          "id": 3,
+          "entryRingVisible": false,
+          "apcDamage": null,
+          "transitionCouriers": [],
+          "doors": [
+            {
+              "name": "doorL",
+              "yaw": 0,
+              "meshes": 1
+            },
+            {
+              "name": "doorR",
+              "yaw": 0,
+              "meshes": 1
+            }
+          ],
+          "decay": null,
+          "bloodCoverage": 0,
+          "windshieldBloodCoverage": 0,
+          "wheels": [
+            {
+              "spin": 0,
+              "steer": 0
+            },
+            {
+              "spin": 0,
+              "steer": 0
+            },
+            {
+              "spin": 0,
+              "steer": 0
+            },
+            {
+              "spin": 0,
+              "steer": 0
+            },
+            {
+              "spin": 0,
+              "steer": 0
+            },
+            {
+              "spin": 0,
+              "steer": 0
+            }
+          ],
+          "brake": 0.15,
+          "sirens": [],
+          "placeholder": false,
+          "occupants": [
+            {
+              "actorId": 1,
+              "asset": "char.courier-female",
+              "seated": true,
+              "position": [
+                0.7099999785423279,
+                1.4600000381469727,
+                0.46000000834465027
+              ],
+              "handGapM": [
+                1.1102230246251565e-16,
+                1.1102230246251565e-16
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "brake-reverse",
+      "forward": {
+        "tick": 301,
+        "car": {
+          "at": {
+            "x": 8.106009483337402,
+            "z": -19.081893920898438,
+            "y": 0.9954202175140381,
+            "yaw": 1.7372985059389308
+          },
+          "vehicle": {
+            "speed": 11.881601358709993,
+            "forwardSpeed": 11.877241465683447,
+            "steer": 0.12506051944344065,
+            "braking": false,
+            "boosting": false,
+            "driver": 1,
+            "attached": [],
+            "damage": "normal",
+            "explodeAt": null,
+            "stuck": false,
+            "recoveringUntil": 0,
+            "apcContacts": {
+              "sequence": 0,
+              "infected": {}
+            }
+          }
+        },
+        "props": [],
+        "awake": 0,
+        "budget": 12
+      },
+      "reverse": [
+        {
+          "tick": 311,
+          "car": {
+            "at": {
+              "x": 7.818021297454834,
+              "z": -20.62278175354004,
+              "y": 1.0062154531478882,
+              "yaw": 1.767841381007109
+            },
+            "vehicle": {
+              "speed": 7.811381638520613,
+              "forwardSpeed": 7.807588656650709,
+              "steer": -0.07979381286315029,
+              "braking": true,
+              "boosting": false,
+              "driver": 1,
+              "attached": [],
+              "damage": "normal",
+              "explodeAt": null,
+              "stuck": false,
+              "recoveringUntil": 0,
+              "apcContacts": {
+                "sequence": 0,
+                "infected": {}
+              }
+            }
+          },
+          "props": [],
+          "awake": 0,
+          "budget": 12
+        },
+        {
+          "tick": 321,
+          "car": {
+            "at": {
+              "x": 7.670709133148193,
+              "z": -21.618019104003906,
+              "y": 1.0035569667816162,
+              "yaw": 1.7736391173252213
+            },
+            "vehicle": {
+              "speed": 4.582838556892051,
+              "forwardSpeed": 4.572665640031322,
+              "steer": -0.13422115401839987,
+              "braking": true,
+              "boosting": false,
+              "driver": 1,
+              "attached": [],
+              "damage": "normal",
+              "explodeAt": null,
+              "stuck": false,
+              "recoveringUntil": 0,
+              "apcContacts": {
+                "sequence": 0,
+                "infected": {}
+              }
+            }
+          },
+          "props": [],
+          "awake": 0,
+          "budget": 12
+        },
+        {
+          "tick": 331,
+          "car": {
+            "at": {
+              "x": 7.608108043670654,
+              "z": -21.999940872192383,
+              "y": 0.9951211810112,
+              "yaw": 1.7607880922701613
+            },
+            "vehicle": {
+              "speed": 0.7350747976409485,
+              "forwardSpeed": 0.7302927416757196,
+              "steer": -0.16569332957467217,
+              "braking": true,
+              "boosting": false,
+              "driver": 1,
+              "attached": [],
+              "damage": "normal",
+              "explodeAt": null,
+              "stuck": false,
+              "recoveringUntil": 0,
+              "apcContacts": {
+                "sequence": 0,
+                "infected": {}
+              }
+            }
+          },
+          "props": [],
+          "awake": 0,
+          "budget": 12
+        },
+        {
+          "tick": 341,
+          "car": {
+            "at": {
+              "x": 7.588602066040039,
+              "z": -22.002260208129883,
+              "y": 0.997407078742981,
+              "yaw": 1.7535475227754649
+            },
+            "vehicle": {
+              "speed": 0.43477729303008666,
+              "forwardSpeed": -0.4253090908661213,
+              "steer": -0.18507437776559504,
+              "braking": false,
+              "boosting": false,
+              "driver": 1,
+              "attached": [],
+              "damage": "normal",
+              "explodeAt": null,
+              "stuck": false,
+              "recoveringUntil": 0,
+              "apcContacts": {
+                "sequence": 0,
+                "infected": {}
+              }
+            }
+          },
+          "props": [],
+          "awake": 0,
+          "budget": 12
+        },
+        {
+          "tick": 351,
+          "car": {
+            "at": {
+              "x": 7.600401878356934,
+              "z": -21.82772445678711,
+              "y": 0.9964604377746582,
+              "yaw": 1.76194805293793
+            },
+            "vehicle": {
+              "speed": 1.5493751880933266,
+              "forwardSpeed": -1.5405513723047644,
+              "steer": -0.1835825657029487,
+              "braking": false,
+              "boosting": false,
+              "driver": 1,
+              "attached": [],
+              "damage": "normal",
+              "explodeAt": null,
+              "stuck": false,
+              "recoveringUntil": 0,
+              "apcContacts": {
+                "sequence": 0,
+                "infected": {}
+              }
+            }
+          },
+          "props": [],
+          "awake": 0,
+          "budget": 12
+        },
+        {
+          "tick": 361,
+          "car": {
+            "at": {
+              "x": 7.635340213775635,
+              "z": -21.469905853271484,
+              "y": 0.9953634738922119,
+              "yaw": 1.7792264816153367
+            },
+            "vehicle": {
+              "speed": 2.634691898711172,
+              "forwardSpeed": -2.6210417157430776,
+              "steer": -0.17390932494651445,
+              "braking": false,
+              "boosting": false,
+              "driver": 1,
+              "attached": [],
+              "damage": "normal",
+              "explodeAt": null,
+              "stuck": false,
+              "recoveringUntil": 0,
+              "apcContacts": {
+                "sequence": 0,
+                "infected": {}
+              }
+            }
+          },
+          "props": [],
+          "awake": 0,
+          "budget": 12
+        },
+        {
+          "tick": 371,
+          "car": {
+            "at": {
+              "x": 7.698095321655273,
+              "z": -20.952852249145508,
+              "y": 0.9953770637512207,
+              "yaw": 1.8022065720871796
+            },
+            "vehicle": {
+              "speed": 3.4831466461011784,
+              "forwardSpeed": -3.4661786292850705,
+              "steer": -0.16216252015879723,
+              "braking": false,
+              "boosting": false,
+              "driver": 1,
+              "attached": [],
+              "damage": "normal",
+              "explodeAt": null,
+              "stuck": false,
+              "recoveringUntil": 0,
+              "apcContacts": {
+                "sequence": 0,
+                "infected": {}
+              }
+            }
+          },
+          "props": [],
+          "awake": 0,
+          "budget": 12
+        },
+        {
+          "tick": 381,
+          "car": {
+            "at": {
+              "x": 7.7934794425964355,
+              "z": -20.31834602355957,
+              "y": 0.9954228401184082,
+              "yaw": 1.8281922501924417
+            },
+            "vehicle": {
+              "speed": 4.115510023649183,
+              "forwardSpeed": -4.097127973908031,
+              "steer": -0.1506817222309874,
+              "braking": false,
+              "boosting": false,
+              "driver": 1,
+              "attached": [],
+              "damage": "normal",
+              "explodeAt": null,
+              "stuck": false,
+              "recoveringUntil": 0,
+              "apcContacts": {
+                "sequence": 0,
+                "infected": {}
+              }
+            }
+          },
+          "props": [],
+          "awake": 0,
+          "budget": 12
+        },
+        {
+          "tick": 391,
+          "car": {
+            "at": {
+              "x": 7.924831867218018,
+              "z": -19.598739624023438,
+              "y": 0.9954291582107544,
+              "yaw": 1.855514311801209
+            },
+            "vehicle": {
+              "speed": 4.58663411460969,
+              "forwardSpeed": -4.568163017311664,
+              "steer": -0.14001271590953793,
+              "braking": false,
+              "boosting": false,
+              "driver": 1,
+              "attached": [],
+              "damage": "normal",
+              "explodeAt": null,
+              "stuck": false,
+              "recoveringUntil": 0,
+              "apcContacts": {
+                "sequence": 0,
+                "infected": {}
+              }
+            }
+          },
+          "props": [],
+          "awake": 0,
+          "budget": 12
+        },
+        {
+          "tick": 401,
+          "car": {
+            "at": {
+              "x": 8.093570709228516,
+              "z": -18.818359375,
+              "y": 0.9954309463500977,
+              "yaw": 1.8831046372933453
+            },
+            "vehicle": {
+              "speed": 4.93757775311371,
+              "forwardSpeed": -4.919832053558773,
+              "steer": -0.13022396364111496,
+              "braking": false,
+              "boosting": false,
+              "driver": 1,
+              "attached": [],
+              "damage": "normal",
+              "explodeAt": null,
+              "stuck": false,
+              "recoveringUntil": 0,
+              "apcContacts": {
+                "sequence": 0,
+                "infected": {}
+              }
+            }
+          },
+          "props": [],
+          "awake": 0,
+          "budget": 12
+        },
+        {
+          "tick": 411,
+          "car": {
+            "at": {
+              "x": 8.299569129943848,
+              "z": -17.99547004699707,
+              "y": 0.9954324960708618,
+              "yaw": 1.9102924787726216
+            },
+            "vehicle": {
+              "speed": 5.198996496225156,
+              "forwardSpeed": -5.182426116901921,
+              "steer": -0.12126104904481846,
+              "braking": false,
+              "boosting": false,
+              "driver": 1,
+              "attached": [],
+              "damage": "normal",
+              "explodeAt": null,
+              "stuck": false,
+              "recoveringUntil": 0,
+              "apcContacts": {
+                "sequence": 0,
+                "infected": {}
+              }
+            }
+          },
+          "props": [],
+          "awake": 0,
+          "budget": 12
+        },
+        {
+          "tick": 421,
+          "car": {
+            "at": {
+              "x": 8.541644096374512,
+              "z": -17.143800735473633,
+              "y": 0.9954334497451782,
+              "yaw": 1.9366682575478058
+            },
+            "vehicle": {
+              "speed": 5.3937416554009365,
+              "forwardSpeed": -5.378556984587923,
+              "steer": -0.11304014908799215,
+              "braking": false,
+              "boosting": false,
+              "driver": 1,
+              "attached": [],
+              "damage": "normal",
+              "explodeAt": null,
+              "stuck": false,
+              "recoveringUntil": 0,
+              "apcContacts": {
+                "sequence": 0,
+                "infected": {}
+              }
+            }
+          },
+          "props": [],
+          "awake": 0,
+          "budget": 12
+        },
+        {
+          "tick": 431,
+          "car": {
+            "at": {
+              "x": 8.817953109741211,
+              "z": -16.273527145385742,
+              "y": 0.9954338073730469,
+              "yaw": 1.961990203497046
+            },
+            "vehicle": {
+              "speed": 5.5388397612889895,
+              "forwardSpeed": -5.525102072717866,
+              "steer": -0.10547743537969523,
+              "braking": false,
+              "boosting": false,
+              "driver": 1,
+              "attached": [],
+              "damage": "normal",
+              "explodeAt": null,
+              "stuck": false,
+              "recoveringUntil": 0,
+              "apcContacts": {
+                "sequence": 0,
+                "infected": {}
+              }
+            }
+          },
+          "props": [],
+          "awake": 0,
+          "budget": 12
+        },
+        {
+          "tick": 441,
+          "car": {
+            "at": {
+              "x": 9.126320838928223,
+              "z": -15.392216682434082,
+              "y": 0.9954339265823364,
+              "yaw": 1.9861284838027622
+            },
+            "vehicle": {
+              "speed": 5.646974166160392,
+              "forwardSpeed": -5.634655173753189,
+              "steer": -0.09849828147763862,
+              "braking": false,
+              "boosting": false,
+              "driver": 1,
+              "attached": [],
+              "damage": "normal",
+              "explodeAt": null,
+              "stuck": false,
+              "recoveringUntil": 0,
+              "apcContacts": {
+                "sequence": 0,
+                "infected": {}
+              }
+            }
+          },
+          "props": [],
+          "awake": 0,
+          "budget": 12
+        },
+        {
+          "tick": 451,
+          "car": {
+            "at": {
+              "x": 9.464456558227539,
+              "z": -14.50542163848877,
+              "y": 0.9954342842102051,
+              "yaw": 2.0090242958791906
+            },
+            "vehicle": {
+              "speed": 5.727582477467901,
+              "forwardSpeed": -5.716604647903063,
+              "steer": -0.09203865474131699,
+              "braking": false,
+              "boosting": false,
+              "driver": 1,
+              "attached": [],
+              "damage": "normal",
+              "explodeAt": null,
+              "stuck": false,
+              "recoveringUntil": 0,
+              "apcContacts": {
+                "sequence": 0,
+                "infected": {}
+              }
+            }
+          },
+          "props": [],
+          "awake": 0,
+          "budget": 12
+        },
+        {
+          "tick": 461,
+          "car": {
+            "at": {
+              "x": 9.830083847045898,
+              "z": -13.617198944091797,
+              "y": 0.9954342842102051,
+              "yaw": 2.0306653053955266
+            },
+            "vehicle": {
+              "speed": 5.787689345877924,
+              "forwardSpeed": -5.7779500876829495,
+              "steer": -0.08604494816210011,
+              "braking": false,
+              "boosting": false,
+              "driver": 1,
+              "attached": [],
+              "damage": "normal",
+              "explodeAt": null,
+              "stuck": false,
+              "recoveringUntil": 0,
+              "apcContacts": {
+                "sequence": 0,
+                "infected": {}
+              }
+            }
+          },
+          "props": [],
+          "awake": 0,
+          "budget": 12
+        },
+        {
+          "tick": 471,
+          "car": {
+            "at": {
+              "x": 10.221004486083984,
+              "z": -12.730464935302734,
+              "y": 0.9954343438148499,
+              "yaw": 2.05106917960702
+            },
+            "vehicle": {
+              "speed": 5.832521644774439,
+              "forwardSpeed": -5.8239089332624445,
+              "steer": -0.08047206869206719,
+              "braking": false,
+              "boosting": false,
+              "driver": 1,
+              "attached": [],
+              "damage": "normal",
+              "explodeAt": null,
+              "stuck": false,
+              "recoveringUntil": 0,
+              "apcContacts": {
+                "sequence": 0,
+                "infected": {}
+              }
+            }
+          },
+          "props": [],
+          "awake": 0,
+          "budget": 12
+        },
+        {
+          "tick": 481,
+          "car": {
+            "at": {
+              "x": 10.635167121887207,
+              "z": -11.847297668457031,
+              "y": 0.9954344630241394,
+              "yaw": 2.070270761801502
+            },
+            "vehicle": {
+              "speed": 5.865975154492983,
+              "forwardSpeed": -5.85837648889728,
+              "steer": -0.07528206958308814,
+              "braking": false,
+              "boosting": false,
+              "driver": 1,
+              "attached": [],
+              "damage": "normal",
+              "explodeAt": null,
+              "stuck": false,
+              "recoveringUntil": 0,
+              "apcContacts": {
+                "sequence": 0,
+                "infected": {}
+              }
+            }
+          },
+          "props": [],
+          "awake": 0,
+          "budget": 12
+        },
+        {
+          "tick": 491,
+          "car": {
+            "at": {
+              "x": 11.070674896240234,
+              "z": -10.969134330749512,
+              "y": 0.9954344034194946,
+              "yaw": 2.0883169395845824
+            },
+            "vehicle": {
+              "speed": 5.890952305152158,
+              "forwardSpeed": -5.884259616908921,
+              "steer": -0.07044238821942495,
+              "braking": false,
+              "boosting": false,
+              "driver": 1,
+              "attached": [],
+              "damage": "normal",
+              "explodeAt": null,
+              "stuck": false,
+              "recoveringUntil": 0,
+              "apcContacts": {
+                "sequence": 0,
+                "infected": {}
+              }
+            }
+          },
+          "props": [],
+          "awake": 0,
+          "budget": 12
+        },
+        {
+          "tick": 501,
+          "car": {
+            "at": {
+              "x": 11.525789260864258,
+              "z": -10.09695816040039,
+              "y": 0.9954345226287842,
+              "yaw": 2.105261462635736
+            },
+            "vehicle": {
+              "speed": 5.909603340208836,
+              "forwardSpeed": -5.903715733119991,
+              "steer": -0.06592490035137528,
+              "braking": false,
+              "boosting": false,
+              "driver": 1,
+              "attached": [],
+              "damage": "normal",
+              "explodeAt": null,
+              "stuck": false,
+              "recoveringUntil": 0,
+              "apcContacts": {
+                "sequence": 0,
+                "infected": {}
+              }
+            }
+          },
+          "props": [],
+          "awake": 0,
+          "budget": 12
+        },
+        {
+          "tick": 511,
+          "car": {
+            "at": {
+              "x": 11.99891185760498,
+              "z": -9.231400489807129,
+              "y": 0.9954344034194946,
+              "yaw": 2.1211592905473275
+            },
+            "vehicle": {
+              "speed": 5.923541689616941,
+              "forwardSpeed": -5.91836710808798,
+              "steer": -0.06170493319935749,
+              "braking": false,
+              "boosting": false,
+              "driver": 1,
+              "attached": [],
+              "damage": "normal",
+              "explodeAt": null,
+              "stuck": false,
+              "recoveringUntil": 0,
+              "apcContacts": {
+                "sequence": 0,
+                "infected": {}
+              }
+            }
+          },
+          "props": [],
+          "awake": 0,
+          "budget": 12
+        },
+        {
+          "tick": 521,
+          "car": {
+            "at": {
+              "x": 12.488595962524414,
+              "z": -8.372811317443848,
+              "y": 0.9954345226287842,
+              "yaw": 2.136067792138646
+            },
+            "vehicle": {
+              "speed": 5.93396426541753,
+              "forwardSpeed": -5.929419375138865,
+              "steer": -0.05776063963061394,
+              "braking": false,
+              "boosting": false,
+              "driver": 1,
+              "attached": [],
+              "damage": "normal",
+              "explodeAt": null,
+              "stuck": false,
+              "recoveringUntil": 0,
+              "apcContacts": {
+                "sequence": 0,
+                "infected": {}
+              }
+            }
+          },
+          "props": [],
+          "awake": 0,
+          "budget": 12
+        },
+        {
+          "tick": 531,
+          "car": {
+            "at": {
+              "x": 12.993526458740234,
+              "z": -7.521368503570557,
+              "y": 0.9954344630241394,
+              "yaw": 2.1500427760406797
+            },
+            "vehicle": {
+              "speed": 5.9417628081110605,
+              "forwardSpeed": -5.937772927500682,
+              "steer": -0.054072374032991165,
+              "braking": false,
+              "boosting": false,
+              "driver": 1,
+              "attached": [],
+              "damage": "normal",
+              "explodeAt": null,
+              "stuck": false,
+              "recoveringUntil": 0,
+              "apcContacts": {
+                "sequence": 0,
+                "infected": {}
+              }
+            }
+          },
+          "props": [],
+          "awake": 0,
+          "budget": 12
+        },
+        {
+          "tick": 541,
+          "car": {
+            "at": {
+              "x": 13.51249885559082,
+              "z": -6.6771135330200195,
+              "y": 0.9954344630241394,
+              "yaw": 2.163139041573692
+            },
+            "vehicle": {
+              "speed": 5.947601654480388,
+              "forwardSpeed": -5.944100282446099,
+              "steer": -0.05062238757688245,
+              "braking": false,
+              "boosting": false,
+              "driver": 1,
+              "attached": [],
+              "damage": "normal",
+              "explodeAt": null,
+              "stuck": false,
+              "recoveringUntil": 0,
+              "apcContacts": {
+                "sequence": 0,
+                "infected": {}
+              }
+            }
+          },
+          "props": [],
+          "awake": 0,
+          "budget": 12
+        }
+      ],
+      "pass": true
+    },
+    {
+      "kind": "front-close",
+      "vehicle": "vehicle.pickup",
+      "file": "detail-vehicle.pickup.jpg",
+      "tick": 61,
+      "car": {
+        "at": {
+          "x": 0,
+          "z": 0,
+          "y": 0.7354336977005005,
+          "yaw": 0
+        },
+        "vehicle": {
+          "speed": 0,
+          "forwardSpeed": 0,
+          "steer": 0,
+          "braking": false,
+          "boosting": false,
+          "driver": 1,
+          "attached": [],
+          "damage": "normal",
+          "explodeAt": null,
+          "stuck": false,
+          "recoveringUntil": 0
+        }
+      },
+      "props": [],
+      "awake": 0,
+      "budget": 12,
+      "view": [
+        {
+          "id": 3,
+          "entryRingVisible": false,
+          "apcDamage": null,
+          "transitionCouriers": [],
+          "doors": [
+            {
+              "name": "doorL",
+              "yaw": 0,
+              "meshes": 5
+            },
+            {
+              "name": "doorR",
+              "yaw": 0,
+              "meshes": 5
+            }
+          ],
+          "decay": null,
+          "bloodCoverage": 0,
+          "windshieldBloodCoverage": 0,
+          "wheels": [
+            {
+              "spin": 0,
+              "steer": 0
+            },
+            {
+              "spin": 0,
+              "steer": 0
+            },
+            {
+              "spin": 0,
+              "steer": 0
+            },
+            {
+              "spin": 0,
+              "steer": 0
+            }
+          ],
+          "brake": 0.15,
+          "sirens": [],
+          "placeholder": false,
+          "occupants": [
+            {
+              "actorId": 1,
+              "asset": "char.courier-female",
+              "seated": true,
+              "position": [
+                -0.11550005078315734,
+                1.1142244338989258,
+                0.4000000059604645
+              ],
+              "handGapM": [
+                1.0007415106216802e-16,
+                2.9504581591051765e-16
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "front-close",
+      "vehicle": "vehicle.suv",
+      "file": "detail-vehicle.suv.jpg",
+      "tick": 61,
+      "car": {
+        "at": {
+          "x": 0,
+          "z": 0,
+          "y": 0.7354336977005005,
+          "yaw": 0
+        },
+        "vehicle": {
+          "speed": 0,
+          "forwardSpeed": 0,
+          "steer": 0,
+          "braking": false,
+          "boosting": false,
+          "driver": 1,
+          "attached": [],
+          "damage": "normal",
+          "explodeAt": null,
+          "stuck": false,
+          "recoveringUntil": 0
+        }
+      },
+      "props": [],
+      "awake": 0,
+      "budget": 12,
+      "view": [
+        {
+          "id": 3,
+          "entryRingVisible": false,
+          "apcDamage": null,
+          "transitionCouriers": [],
+          "doors": [
+            {
+              "name": "doorL",
+              "yaw": 0,
+              "meshes": 3
+            },
+            {
+              "name": "doorR",
+              "yaw": 0,
+              "meshes": 3
+            }
+          ],
+          "decay": null,
+          "bloodCoverage": 0,
+          "windshieldBloodCoverage": 0,
+          "wheels": [
+            {
+              "spin": 0,
+              "steer": 0
+            },
+            {
+              "spin": 0,
+              "steer": 0
+            },
+            {
+              "spin": 0,
+              "steer": 0
+            },
+            {
+              "spin": 0,
+              "steer": 0
+            }
+          ],
+          "brake": 0.15,
+          "sirens": [],
+          "placeholder": false,
+          "occupants": [
+            {
+              "actorId": 1,
+              "asset": "char.courier-female",
+              "seated": true,
+              "position": [
+                0.0624999995529652,
+                1.1399999856948853,
+                0.4699999988079071
+              ],
+              "handGapM": [
+                2.3551386880256624e-16,
+                1.2412670766236366e-16
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "front-close",
+      "vehicle": "vehicle.police",
+      "file": "detail-vehicle.police.jpg",
+      "tick": 61,
+      "car": {
+        "at": {
+          "x": 0,
+          "z": 0,
+          "y": 0.7354336977005005,
+          "yaw": 0
+        },
+        "vehicle": {
+          "speed": 0,
+          "forwardSpeed": 0,
+          "steer": 0,
+          "braking": false,
+          "boosting": false,
+          "driver": 1,
+          "attached": [],
+          "damage": "normal",
+          "explodeAt": null,
+          "stuck": false,
+          "recoveringUntil": 0
+        }
+      },
+      "props": [],
+      "awake": 0,
+      "budget": 12,
+      "view": [
+        {
+          "id": 3,
+          "entryRingVisible": false,
+          "apcDamage": null,
+          "transitionCouriers": [],
+          "doors": [
+            {
+              "name": "doorL",
+              "yaw": 0,
+              "meshes": 5
+            },
+            {
+              "name": "doorR",
+              "yaw": 0,
+              "meshes": 5
+            }
+          ],
+          "decay": null,
+          "bloodCoverage": 0,
+          "windshieldBloodCoverage": 0,
+          "wheels": [
+            {
+              "spin": 0,
+              "steer": 0
+            },
+            {
+              "spin": 0,
+              "steer": 0
+            },
+            {
+              "spin": 0,
+              "steer": 0
+            },
+            {
+              "spin": 0,
+              "steer": 0
+            }
+          ],
+          "brake": 0.15,
+          "sirens": [
+            [
+              4,
+              0.10496488755878539,
+              0.10496488755878539
+            ],
+            [
+              0.002842603949907256,
+              0.014702726648767015,
+              0.1
+            ]
+          ],
+          "placeholder": false,
+          "occupants": [
+            {
+              "actorId": 1,
+              "asset": "char.courier-female",
+              "seated": true,
+              "position": [
+                0.18000000230968,
+                1.100000023841858,
+                0.3799999952316284
+              ],
+              "handGapM": [
+                2.220446049250313e-16,
+                1.1102230246251565e-16
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "front-close",
+      "vehicle": "vehicle.ambulance",
+      "file": "detail-vehicle.ambulance.jpg",
+      "tick": 61,
+      "car": {
+        "at": {
+          "x": 0,
+          "z": 0,
+          "y": 0.7354336977005005,
+          "yaw": 0
+        },
+        "vehicle": {
+          "speed": 0,
+          "forwardSpeed": 0,
+          "steer": 0,
+          "braking": false,
+          "boosting": false,
+          "driver": 1,
+          "attached": [],
+          "damage": "normal",
+          "explodeAt": null,
+          "stuck": false,
+          "recoveringUntil": 0
+        }
+      },
+      "props": [],
+      "awake": 0,
+      "budget": 12,
+      "view": [
+        {
+          "id": 3,
+          "entryRingVisible": false,
+          "apcDamage": null,
+          "transitionCouriers": [],
+          "doors": [
+            {
+              "name": "doorL",
+              "yaw": 0,
+              "meshes": 4
+            },
+            {
+              "name": "doorR",
+              "yaw": 0,
+              "meshes": 4
+            }
+          ],
+          "decay": null,
+          "bloodCoverage": 0,
+          "windshieldBloodCoverage": 0,
+          "wheels": [
+            {
+              "spin": 0,
+              "steer": 0
+            },
+            {
+              "spin": 0,
+              "steer": 0
+            },
+            {
+              "spin": 0,
+              "steer": 0
+            },
+            {
+              "spin": 0,
+              "steer": 0
+            }
+          ],
+          "brake": 0.15,
+          "sirens": [
+            [
+              4,
+              0.10496488755878539,
+              0.10496488755878539
+            ],
+            [
+              0.002842603949907256,
+              0.014702726648767015,
+              0.1
+            ]
+          ],
+          "placeholder": false,
+          "occupants": [
+            {
+              "actorId": 1,
+              "asset": "char.courier-female",
+              "seated": true,
+              "position": [
+                1.1400000000000001,
+                1.6799999475479126,
+                0.4699999988079071
+              ],
+              "handGapM": [
+                4.47545209131181e-16,
+                0
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "front-close",
+      "vehicle": "vehicle.school-bus",
+      "file": "detail-vehicle.school-bus.jpg",
+      "tick": 61,
+      "car": {
+        "at": {
+          "x": 0,
+          "z": 0,
+          "y": 0.7354336977005005,
+          "yaw": 0
+        },
+        "vehicle": {
+          "speed": 0,
+          "forwardSpeed": 0,
+          "steer": 0,
+          "braking": false,
+          "boosting": false,
+          "driver": 1,
+          "attached": [],
+          "damage": "normal",
+          "explodeAt": null,
+          "stuck": false,
+          "recoveringUntil": 0
+        }
+      },
+      "props": [],
+      "awake": 0,
+      "budget": 12,
+      "view": [
+        {
+          "id": 3,
+          "entryRingVisible": false,
+          "apcDamage": null,
+          "transitionCouriers": [],
+          "doors": [
+            {
+              "name": "door_near_0",
+              "yaw": 0,
+              "meshes": 4
+            },
+            {
+              "name": "door_near_1",
+              "yaw": 0,
+              "meshes": 3
+            },
+            {
+              "name": "door_far_0",
+              "yaw": 0,
+              "meshes": 4
+            },
+            {
+              "name": "door_far_1",
+              "yaw": 0,
+              "meshes": 3
+            }
+          ],
+          "decay": null,
+          "bloodCoverage": 0,
+          "windshieldBloodCoverage": 0,
+          "wheels": [
+            {
+              "spin": 0,
+              "steer": 0
+            },
+            {
+              "spin": 0,
+              "steer": 0
+            },
+            {
+              "spin": 0,
+              "steer": 0
+            },
+            {
+              "spin": 0,
+              "steer": 0
+            }
+          ],
+          "brake": 0.15,
+          "sirens": [],
+          "placeholder": false,
+          "occupants": [
+            {
+              "actorId": 1,
+              "asset": "char.courier-female",
+              "seated": true,
+              "position": [
+                1.2541667075,
+                1.5399999911189186,
+                0.623333355756511
+              ],
+              "handGapM": [
+                3.1401849173675503e-16,
+                2.220446049250313e-16
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "front-close",
+      "vehicle": "vehicle.fire-engine",
+      "file": "detail-vehicle.fire-engine.jpg",
+      "tick": 61,
+      "car": {
+        "at": {
+          "x": 0,
+          "z": 0,
+          "y": 0.7354336977005005,
+          "yaw": 0
+        },
+        "vehicle": {
+          "speed": 0,
+          "forwardSpeed": 0,
+          "steer": 0,
+          "braking": false,
+          "boosting": false,
+          "driver": 1,
+          "attached": [],
+          "damage": "normal",
+          "explodeAt": null,
+          "stuck": false,
+          "recoveringUntil": 0
+        }
+      },
+      "props": [],
+      "awake": 0,
+      "budget": 12,
+      "view": [
+        {
+          "id": 3,
+          "entryRingVisible": false,
+          "apcDamage": null,
+          "transitionCouriers": [],
+          "doors": [
+            {
+              "name": "doorL",
+              "yaw": 0,
+              "meshes": 5
+            },
+            {
+              "name": "doorR",
+              "yaw": 0,
+              "meshes": 5
+            }
+          ],
+          "decay": null,
+          "bloodCoverage": 0,
+          "windshieldBloodCoverage": 0,
+          "wheels": [
+            {
+              "spin": 0,
+              "steer": 0
+            },
+            {
+              "spin": 0,
+              "steer": 0
+            },
+            {
+              "spin": 0,
+              "steer": 0
+            },
+            {
+              "spin": 0,
+              "steer": 0
+            }
+          ],
+          "brake": 0.15,
+          "sirens": [
+            [
+              4,
+              0.10496488755878539,
+              0.10496488755878539
+            ],
+            [
+              0.002842603949907256,
+              0.014702726648767015,
+              0.1
+            ]
+          ],
+          "placeholder": false,
+          "occupants": [
+            {
+              "actorId": 1,
+              "asset": "char.courier-female",
+              "seated": true,
+              "position": [
+                2.8251044649297468,
+                1.5725466084083024,
+                0.36627908016360067
+              ],
+              "handGapM": [
+                4.577566798522237e-16,
+                0
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "prop-contact",
+      "asset": "prop.traffic-cone",
+      "movable": true,
+      "file": "contact-prop.traffic-cone.jpg",
+      "before": {
+        "tick": 61,
+        "car": {
+          "at": {
+            "x": 0,
+            "z": 0,
+            "y": 0.9954336881637573,
+            "yaw": 0
+          },
+          "vehicle": {
+            "speed": 0,
+            "forwardSpeed": 0,
+            "steer": 0,
+            "braking": false,
+            "boosting": false,
+            "driver": 1,
+            "attached": [],
+            "damage": "normal",
+            "explodeAt": null,
+            "stuck": false,
+            "recoveringUntil": 0,
+            "apcContacts": {
+              "sequence": 0,
+              "infected": {}
+            }
+          }
+        },
+        "props": [
+          {
+            "id": "D-GROVE/target",
+            "asset": "prop.traffic-cone",
+            "fixed": false,
+            "awake": false,
+            "at": [
+              15,
+              -0.001703113317489624,
+              0
+            ],
+            "nav": {
+              "x": 15,
+              "y": 0.32129690051078796,
+              "z": 0,
+              "entityId": 1766608140,
+              "halfX": 0.24000004079339196,
+              "halfY": 0.3230000138282776,
+              "halfZ": 0.24000004079339196
+            }
+          }
+        ],
+        "awake": 0,
+        "budget": 12
+      },
+      "contact": {
+        "tick": 301,
+        "car": {
+          "at": {
+            "x": 47.4331169128418,
+            "z": 5.005870485857533e-16,
+            "y": 0.9954338073730469,
+            "yaw": -7.825339072857265e-18
+          },
+          "vehicle": {
+            "speed": 16.905027389526367,
+            "forwardSpeed": 16.905027389526367,
+            "steer": -9.067376100795994e-18,
+            "braking": false,
+            "boosting": false,
+            "driver": 1,
+            "attached": [],
+            "damage": "normal",
+            "explodeAt": null,
+            "stuck": false,
+            "recoveringUntil": 0,
+            "apcContacts": {
+              "sequence": 0,
+              "infected": {}
+            }
+          }
+        },
+        "props": [
+          {
+            "id": "D-GROVE/target",
+            "asset": "prop.traffic-cone",
+            "fixed": false,
+            "awake": false,
+            "at": [
+              15.00840950012207,
+              -0.00003133714199066162,
+              0.00008074015931924805
+            ],
+            "nav": {
+              "x": 15,
+              "y": 0.32129690051078796,
+              "z": 0,
+              "entityId": 1766608140,
+              "halfX": 0.24000004079339196,
+              "halfY": 0.3230000138282776,
+              "halfZ": 0.24000004079339196
+            }
+          }
+        ],
+        "awake": 0,
+        "budget": 12
+      },
+      "settled": {
+        "tick": 901,
+        "car": {
+          "at": {
+            "x": 67.05680847167969,
+            "z": -0.04389992356300354,
+            "y": 0.9954344034194946,
+            "yaw": -0.007919567164256748
+          },
+          "vehicle": {
+            "speed": 1.2946513861070346e-9,
+            "forwardSpeed": -1.2946108272131623e-9,
+            "steer": -3.3731327998117964e-61,
+            "braking": false,
+            "boosting": false,
+            "driver": 1,
+            "attached": [],
+            "damage": "normal",
+            "explodeAt": null,
+            "stuck": false,
+            "recoveringUntil": 0,
+            "apcContacts": {
+              "sequence": 0,
+              "infected": {}
+            },
+            "decay": "wrecked"
+          }
+        },
+        "props": [
+          {
+            "id": "D-GROVE/target",
+            "asset": "prop.traffic-cone",
+            "fixed": false,
+            "awake": false,
+            "at": [
+              15.00840950012207,
+              -0.00003133714199066162,
+              0.00008074015931924805
+            ],
+            "nav": {
+              "x": 15,
+              "y": 0.32129690051078796,
+              "z": 0,
+              "entityId": 1766608140,
+              "halfX": 0.24000004079339196,
+              "halfY": 0.3230000138282776,
+              "halfZ": 0.24000004079339196
+            }
+          }
+        ],
+        "awake": 0,
+        "budget": 12
+      },
+      "displacement": 0.008409887708907146,
+      "pass": false
+    },
+    {
+      "kind": "prop-contact",
+      "asset": "prop.folding-chair",
+      "movable": true,
+      "file": "contact-prop.folding-chair.jpg",
+      "before": {
+        "tick": 61,
+        "car": {
+          "at": {
+            "x": 0,
+            "z": 0,
+            "y": 0.9954336881637573,
+            "yaw": 0
+          },
+          "vehicle": {
+            "speed": 0,
+            "forwardSpeed": 0,
+            "steer": 0,
+            "braking": false,
+            "boosting": false,
+            "driver": 1,
+            "attached": [],
+            "damage": "normal",
+            "explodeAt": null,
+            "stuck": false,
+            "recoveringUntil": 0,
+            "apcContacts": {
+              "sequence": 0,
+              "infected": {}
+            }
+          }
+        },
+        "props": [
+          {
+            "id": "D-GROVE/target",
+            "asset": "prop.folding-chair",
+            "fixed": false,
+            "awake": false,
+            "at": [
+              15,
+              -0.001703113317489624,
+              0
+            ],
+            "nav": {
+              "x": 15,
+              "y": 0.511902426481247,
+              "z": 0,
+              "entityId": 1766608140,
+              "halfX": 0.33,
+              "halfY": 0.5136055397987366,
+              "halfZ": 0.285
+            }
+          }
+        ],
+        "awake": 0,
+        "budget": 12
+      },
+      "contact": {
+        "tick": 301,
+        "car": {
+          "at": {
+            "x": 46.94609451293945,
+            "z": 0.0003862109442707151,
+            "y": 0.9954338073730469,
+            "yaw": -0.00000876818663326429
+          },
+          "vehicle": {
+            "speed": 16.89497757021889,
+            "forwardSpeed": 16.894977570218845,
+            "steer": 0.0000012001197292442473,
+            "braking": false,
+            "boosting": false,
+            "driver": 1,
+            "attached": [],
+            "damage": "normal",
+            "explodeAt": null,
+            "stuck": false,
+            "recoveringUntil": 0,
+            "apcContacts": {
+              "sequence": 0,
+              "infected": {}
+            }
+          }
+        },
+        "props": [
+          {
+            "id": "D-GROVE/target",
+            "asset": "prop.folding-chair",
+            "fixed": false,
+            "awake": false,
+            "at": [
+              22.117511749267578,
+              0.3299441933631897,
+              0.19611835479736328
+            ],
+            "nav": {
+              "x": 22.631102742938165,
+              "y": 0.32994663406209307,
+              "z": 0.19224621328122693,
+              "entityId": 1766608140,
+              "halfX": 0.5157405071338751,
+              "halfY": 0.3300038486724068,
+              "halfZ": 0.28886702629746097
+            }
+          }
+        ],
+        "awake": 0,
+        "budget": 12
+      },
+      "settled": {
+        "tick": 901,
+        "car": {
+          "at": {
+            "x": 67.0571517944336,
+            "z": -0.04316459223628044,
+            "y": 0.995434582233429,
+            "yaw": -0.007852792579398277
+          },
+          "vehicle": {
+            "speed": 2.8625153040015506e-9,
+            "forwardSpeed": -5.04459308268895e-10,
+            "steer": 4.464536573110333e-50,
+            "braking": false,
+            "boosting": false,
+            "driver": 1,
+            "attached": [],
+            "damage": "normal",
+            "explodeAt": null,
+            "stuck": false,
+            "recoveringUntil": 0,
+            "apcContacts": {
+              "sequence": 0,
+              "infected": {}
+            },
+            "decay": "wrecked"
+          }
+        },
+        "props": [
+          {
+            "id": "D-GROVE/target",
+            "asset": "prop.folding-chair",
+            "fixed": false,
+            "awake": false,
+            "at": [
+              22.117511749267578,
+              0.3299441933631897,
+              0.19611835479736328
+            ],
+            "nav": {
+              "x": 22.631102742938165,
+              "y": 0.32994663406209307,
+              "z": 0.19224621328122693,
+              "entityId": 1766608140,
+              "halfX": 0.5157405071338751,
+              "halfY": 0.3300038486724068,
+              "halfZ": 0.28886702629746097
+            }
+          }
+        ],
+        "awake": 0,
+        "budget": 12
+      },
+      "displacement": 7.1202131927387144,
+      "pass": true
+    },
+    {
+      "kind": "prop-contact",
+      "asset": "prop.cure-drum-stack",
+      "movable": true,
+      "file": "contact-prop.cure-drum-stack.jpg",
+      "before": {
+        "tick": 61,
+        "car": {
+          "at": {
+            "x": 0,
+            "z": 0,
+            "y": 0.9954336881637573,
+            "yaw": 0
+          },
+          "vehicle": {
+            "speed": 0,
+            "forwardSpeed": 0,
+            "steer": 0,
+            "braking": false,
+            "boosting": false,
+            "driver": 1,
+            "attached": [],
+            "damage": "normal",
+            "explodeAt": null,
+            "stuck": false,
+            "recoveringUntil": 0,
+            "apcContacts": {
+              "sequence": 0,
+              "infected": {}
+            }
+          }
+        },
+        "props": [
+          {
+            "id": "D-GROVE/target",
+            "asset": "prop.cure-drum-stack",
+            "fixed": false,
+            "awake": false,
+            "at": [
+              15,
+              -0.0017031431198120117,
+              0
+            ],
+            "nav": {
+              "x": 15,
+              "y": 1.098296868801117,
+              "z": 0,
+              "entityId": 1766608140,
+              "halfX": 0.65,
+              "halfY": 1.100000011920929,
+              "halfZ": 0.55
+            }
+          }
+        ],
+        "awake": 0,
+        "budget": 12
+      },
+      "contact": {
+        "tick": 301,
+        "car": {
+          "at": {
+            "x": 46.39896011352539,
+            "z": 0.00931145716458559,
+            "y": 0.995501697063446,
+            "yaw": -0.00015516356913903345
+          },
+          "vehicle": {
+            "speed": 16.663309254789876,
+            "forwardSpeed": 16.66330925218775,
+            "steer": 0.000019519278534919146,
+            "braking": false,
+            "boosting": false,
+            "driver": 1,
+            "attached": [],
+            "damage": "normal",
+            "explodeAt": null,
+            "stuck": false,
+            "recoveringUntil": 0,
+            "apcContacts": {
+              "sequence": 0,
+              "infected": {}
+            }
+          }
+        },
+        "props": [
+          {
+            "id": "D-GROVE/target",
+            "asset": "prop.cure-drum-stack",
+            "fixed": false,
+            "awake": true,
+            "at": [
+              49.89949035644531,
+              0.000025510787963867188,
+              -0.018963413313031197
+            ]
+          }
+        ],
+        "awake": 1,
+        "budget": 12
+      },
+      "settled": {
+        "tick": 901,
+        "car": {
+          "at": {
+            "x": 11.033525466918945,
+            "z": -0.32667088508605957,
+            "y": 0.9954338073730469,
+            "yaw": -0.006056521802172583
+          },
+          "vehicle": {
+            "speed": 1.922559355698727,
+            "forwardSpeed": -1.922559355698727,
+            "steer": 7.261319914701482e-49,
+            "braking": false,
+            "boosting": false,
+            "driver": 1,
+            "attached": [],
+            "damage": "normal",
+            "explodeAt": null,
+            "stuck": false,
+            "recoveringUntil": 0,
+            "apcContacts": {
+              "sequence": 0,
+              "infected": {}
+            },
+            "decay": "wrecked"
+          }
+        },
+        "props": [
+          {
+            "id": "D-GROVE/target",
+            "asset": "prop.cure-drum-stack",
+            "fixed": false,
+            "awake": false,
+            "at": [
+              69.26033020019531,
+              -0.000026226043701171875,
+              -0.024212490767240524
+            ],
+            "nav": {
+              "x": 69.25999126435948,
+              "y": 1.1008905864027643,
+              "z": -0.02594269048487658,
+              "entityId": 1766608140,
+              "halfX": 0.6586361356895404,
+              "halfY": 1.1009049716006813,
+              "halfZ": 0.5619808832758618
+            }
+          }
+        ],
+        "awake": 0,
+        "budget": 12
+      },
+      "displacement": 34.89949550854086,
+      "pass": true
+    },
+    {
+      "kind": "prop-contact",
+      "asset": "prop.jersey-barrier",
+      "movable": false,
+      "file": "contact-prop.jersey-barrier.jpg",
+      "before": {
+        "tick": 61,
+        "car": {
+          "at": {
+            "x": 0,
+            "z": 0,
+            "y": 0.9954336881637573,
+            "yaw": 0
+          },
+          "vehicle": {
+            "speed": 0,
+            "forwardSpeed": 0,
+            "steer": 0,
+            "braking": false,
+            "boosting": false,
+            "driver": 1,
+            "attached": [],
+            "damage": "normal",
+            "explodeAt": null,
+            "stuck": false,
+            "recoveringUntil": 0,
+            "apcContacts": {
+              "sequence": 0,
+              "infected": {}
+            }
+          }
+        },
+        "props": [],
+        "awake": 0,
+        "budget": 12
+      },
+      "contact": {
+        "tick": 301,
+        "car": {
+          "at": {
+            "x": 10.654975891113281,
+            "z": -0.004455601796507835,
+            "y": 0.9732775688171387,
+            "yaw": 0.00010506340992093444
+          },
+          "vehicle": {
+            "speed": 0.010597731024786729,
+            "forwardSpeed": -0.010177098753939082,
+            "steer": -0.00003322246662880952,
+            "braking": false,
+            "boosting": false,
+            "driver": 1,
+            "attached": [],
+            "damage": "normal",
+            "explodeAt": null,
+            "stuck": false,
+            "recoveringUntil": 0,
+            "apcContacts": {
+              "sequence": 0,
+              "infected": {}
+            },
+            "decay": "wrecked"
+          }
+        },
+        "props": [],
+        "awake": 0,
+        "budget": 12
+      },
+      "settled": {
+        "tick": 901,
+        "car": {
+          "at": {
+            "x": 10.651655197143555,
+            "z": -0.006242504343390465,
+            "y": 0.9954347014427185,
+            "yaw": 0.00006261246748634289
+          },
+          "vehicle": {
+            "speed": 3.337353754189256e-9,
+            "forwardSpeed": -1.1683530789191259e-9,
+            "steer": -1.2359009996999303e-48,
+            "braking": false,
+            "boosting": false,
+            "driver": 1,
+            "attached": [],
+            "damage": "normal",
+            "explodeAt": null,
+            "stuck": false,
+            "recoveringUntil": 0,
+            "apcContacts": {
+              "sequence": 0,
+              "infected": {}
+            },
+            "decay": "wrecked"
+          }
+        },
+        "props": [],
+        "awake": 0,
+        "budget": 12
+      },
+      "displacement": 0,
+      "pass": true
+    },
+    {
+      "kind": "prop-contact",
+      "asset": "prop.privacy-fence",
+      "movable": false,
+      "file": "contact-prop.privacy-fence.jpg",
+      "before": {
+        "tick": 61,
+        "car": {
+          "at": {
+            "x": 0,
+            "z": 0,
+            "y": 0.9954336881637573,
+            "yaw": 0
+          },
+          "vehicle": {
+            "speed": 0,
+            "forwardSpeed": 0,
+            "steer": 0,
+            "braking": false,
+            "boosting": false,
+            "driver": 1,
+            "attached": [],
+            "damage": "normal",
+            "explodeAt": null,
+            "stuck": false,
+            "recoveringUntil": 0,
+            "apcContacts": {
+              "sequence": 0,
+              "infected": {}
+            }
+          }
+        },
+        "props": [],
+        "awake": 0,
+        "budget": 12
+      },
+      "contact": {
+        "tick": 301,
+        "car": {
+          "at": {
+            "x": 12.029831886291504,
+            "z": -0.023542482405900955,
+            "y": 0.9739820957183838,
+            "yaw": -0.00002873151868738444
+          },
+          "vehicle": {
+            "speed": 0.016341977627737148,
+            "forwardSpeed": -0.015204176151680092,
+            "steer": 0.000009104766561713792,
+            "braking": false,
+            "boosting": false,
+            "driver": 1,
+            "attached": [],
+            "damage": "normal",
+            "explodeAt": null,
+            "stuck": false,
+            "recoveringUntil": 0,
+            "apcContacts": {
+              "sequence": 0,
+              "infected": {}
+            },
+            "decay": "wrecked"
+          }
+        },
+        "props": [],
+        "awake": 0,
+        "budget": 12
+      },
+      "settled": {
+        "tick": 901,
+        "car": {
+          "at": {
+            "x": 12.02888298034668,
+            "z": -0.02415100485086441,
+            "y": 0.9954347014427185,
+            "yaw": -0.00006402244621139211
+          },
+          "vehicle": {
+            "speed": 3.5927111701550944e-9,
+            "forwardSpeed": -1.3579343128215716e-9,
+            "steer": 3.387042335351055e-49,
+            "braking": false,
+            "boosting": false,
+            "driver": 1,
+            "attached": [],
+            "damage": "normal",
+            "explodeAt": null,
+            "stuck": false,
+            "recoveringUntil": 0,
+            "apcContacts": {
+              "sequence": 0,
+              "infected": {}
+            },
+            "decay": "wrecked"
+          }
+        },
+        "props": [],
+        "awake": 0,
+        "budget": 12
+      },
+      "displacement": 0,
+      "pass": true
+    },
+    {
+      "kind": "prop-contact",
+      "asset": "bld.house-a",
+      "movable": false,
+      "file": "contact-bld.house-a.jpg",
+      "before": {
+        "tick": 61,
+        "car": {
+          "at": {
+            "x": 0,
+            "z": 0,
+            "y": 0.9954336881637573,
+            "yaw": 0
+          },
+          "vehicle": {
+            "speed": 0,
+            "forwardSpeed": 0,
+            "steer": 0,
+            "braking": false,
+            "boosting": false,
+            "driver": 1,
+            "attached": [],
+            "damage": "normal",
+            "explodeAt": null,
+            "stuck": false,
+            "recoveringUntil": 0,
+            "apcContacts": {
+              "sequence": 0,
+              "infected": {}
+            }
+          }
+        },
+        "props": [],
+        "awake": 0,
+        "budget": 12
+      },
+      "contact": {
+        "tick": 301,
+        "car": {
+          "at": {
+            "x": 8.668610572814941,
+            "z": -0.020280856639146805,
+            "y": 0.9737048149108887,
+            "yaw": -0.000015988957422042434
+          },
+          "vehicle": {
+            "speed": 0.0153108837299053,
+            "forwardSpeed": -0.014840040065159998,
+            "steer": 0.0000052062418892573905,
+            "braking": false,
+            "boosting": false,
+            "driver": 1,
+            "attached": [],
+            "damage": "normal",
+            "explodeAt": null,
+            "stuck": false,
+            "recoveringUntil": 0,
+            "apcContacts": {
+              "sequence": 0,
+              "infected": {}
+            },
+            "decay": "wrecked"
+          }
+        },
+        "props": [],
+        "awake": 0,
+        "budget": 12
+      },
+      "settled": {
+        "tick": 901,
+        "car": {
+          "at": {
+            "x": 8.667649269104004,
+            "z": -0.0209015142172575,
+            "y": 0.9954347014427185,
+            "yaw": -0.000036952693343890013
+          },
+          "vehicle": {
+            "speed": 5.309150260049917e-9,
+            "forwardSpeed": -2.5654113414859844e-9,
+            "steer": 1.936761537758048e-49,
+            "braking": false,
+            "boosting": false,
+            "driver": 1,
+            "attached": [],
+            "damage": "normal",
+            "explodeAt": null,
+            "stuck": false,
+            "recoveringUntil": 0,
+            "apcContacts": {
+              "sequence": 0,
+              "infected": {}
+            },
+            "decay": "wrecked"
+          }
+        },
+        "props": [],
+        "awake": 0,
+        "budget": 12
+      },
+      "displacement": 0,
+      "pass": true
+    },
+    {
+      "kind": "awake-cap",
+      "peak": 8,
+      "budget": 12,
+      "pass": true
+    }
+  ],
+  "errors": []
+}

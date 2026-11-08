@@ -1,0 +1,1204 @@
+{
+  "method": "Fresh mortal L7-default, seed 1, WebGL2 Metal, 1280x800, physical keyboard/mouse, carried shotgun selected below 6m; no skip/god/teleport/injected driver. Departure photos pause only for screenshots.",
+  "rows": [
+    {
+      "tier": "low",
+      "result": {
+        "time": 131.13333333333333,
+        "kills": 203,
+        "knockdowns": 0,
+        "damage": 169.66666666666498,
+        "deaths": 1,
+        "rescued": 15,
+        "optionalObjectives": [],
+        "survivors": [
+          "shelter-1",
+          "shelter-3",
+          "shelter-0",
+          "shelter-13",
+          "shelter-4",
+          "shelter-6",
+          "shelter-9",
+          "shelter-10",
+          "shelter-11",
+          "shelter-12",
+          "shelter-7",
+          "shelter-14",
+          "shelter-15",
+          "shelter-16",
+          "shelter-17"
+        ]
+      },
+      "boardedIds": [
+        52,
+        54,
+        51,
+        64,
+        55,
+        57,
+        60,
+        61,
+        62,
+        63,
+        58,
+        65,
+        66,
+        67,
+        68
+      ],
+      "driverSummary": {
+        "level": "L7",
+        "entry": "debug",
+        "heroine": "female",
+        "finished": true,
+        "skipped": [],
+        "wallSeconds": 135,
+        "simSeconds": 0,
+        "maxNoProgressSeconds": 8.766666666666667,
+        "deaths": 1,
+        "assists": 0,
+        "attacks": {
+          "weapon.shotgun": 43,
+          "weapon.rocket-launcher": 37
+        },
+        "weaponsStart": [
+          "weapon.bat",
+          "weapon.fire-axe",
+          "weapon.handgun",
+          "weapon.army-mg",
+          "weapon.shotgun"
+        ],
+        "weaponsEnd": [
+          "weapon.bat",
+          "weapon.fire-axe",
+          "weapon.handgun",
+          "weapon.army-mg",
+          "weapon.shotgun",
+          "weapon.rocket-launcher"
+        ],
+        "steps": [
+          {
+            "id": "rocket",
+            "text": "Recover the rocket launcher beside the exit \u00b7 3\u00a0m",
+            "tick": 9,
+            "marker": {
+              "anchor": "l7-rocket",
+              "ring": {
+                "x": 276,
+                "y": 3.9,
+                "z": 15
+              },
+              "drawn": [
+                276,
+                3.9,
+                15
+              ],
+              "playerY": 4.619999885559082,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "corridor",
+            "text": "Bring the group to the evacuation corridor \u00b7 Group 24/24 nearby \u00b7 306\u00a0m",
+            "tick": 51,
+            "marker": {
+              "anchor": "l7-corridor-east",
+              "ring": {
+                "x": -30,
+                "y": 0,
+                "z": 50
+              },
+              "drawn": [
+                -30,
+                0.13,
+                50
+              ],
+              "playerY": 4.619999885559082,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "departure",
+            "text": "Get everyone aboard the bus \u00b7 46\u00a0m",
+            "tick": 4961,
+            "marker": {
+              "anchor": "l7-bus-boarding",
+              "ring": {
+                "x": -70.5,
+                "y": 0,
+                "z": 47.5
+              },
+              "drawn": [
+                -70.5,
+                0,
+                47.5
+              ],
+              "playerY": 0.8299999833106995,
+              "pinVisible": true
+            }
+          }
+        ]
+      },
+      "rocketShotTicks": [
+        399,
+        1187,
+        1237,
+        1287,
+        1337,
+        1401,
+        1685,
+        1735,
+        1976,
+        2074,
+        2187,
+        2256,
+        2306,
+        2378,
+        2820,
+        3158,
+        3338,
+        3388,
+        3438,
+        3500,
+        3999,
+        4449,
+        4520,
+        4570,
+        4793,
+        4860,
+        4920,
+        5460,
+        5521,
+        5624,
+        5674,
+        5738,
+        5788,
+        5865,
+        5954,
+        6318,
+        6420
+      ],
+      "minimumRocketInterval": 50,
+      "alphaHits": {
+        "137": [
+          {
+            "tick": 425,
+            "actionId": "weapon.rocket-launcher",
+            "amount": 163.78200000000024,
+            "hp": 286.21799999999973,
+            "max": 450
+          },
+          {
+            "tick": 6343,
+            "actionId": "weapon.rocket-launcher",
+            "amount": 75.73780741890288,
+            "hp": 210.48019258109684,
+            "max": 450
+          }
+        ],
+        "173": [
+          {
+            "tick": 1312,
+            "actionId": "weapon.rocket-launcher",
+            "amount": 80.54838754634217,
+            "hp": 369.45161245365784,
+            "max": 450
+          },
+          {
+            "tick": 1365,
+            "actionId": "weapon.rocket-launcher",
+            "amount": 73.6256256509535,
+            "hp": 295.82598680270434,
+            "max": 450
+          },
+          {
+            "tick": 1713,
+            "actionId": "weapon.rocket-launcher",
+            "amount": 97.96800235972687,
+            "hp": 197.85798444297745,
+            "max": 450
+          },
+          {
+            "tick": 1763,
+            "actionId": "weapon.rocket-launcher",
+            "amount": 170.10000000000016,
+            "hp": 27.75798444297729,
+            "max": 450
+          }
+        ],
+        "244": [
+          {
+            "tick": 3538,
+            "actionId": "weapon.rocket-launcher",
+            "amount": 110.01486478064567,
+            "hp": 339.98513521935433,
+            "max": 450
+          }
+        ],
+        "76": [
+          {
+            "tick": 4485,
+            "actionId": "weapon.rocket-launcher",
+            "amount": 170.1,
+            "hp": 279.9,
+            "max": 450
+          },
+          {
+            "tick": 4543,
+            "actionId": "weapon.rocket-launcher",
+            "amount": 170.1,
+            "hp": 109.79999999999998,
+            "max": 450
+          },
+          {
+            "tick": 4588,
+            "actionId": "weapon.rocket-launcher",
+            "amount": 109.79999999999998,
+            "hp": 0,
+            "max": 450
+          }
+        ],
+        "75": [
+          {
+            "tick": 5710,
+            "actionId": "weapon.rocket-launcher",
+            "amount": 137.726844376338,
+            "hp": 312.273155623662,
+            "max": 450
+          },
+          {
+            "tick": 5772,
+            "actionId": "weapon.rocket-launcher",
+            "amount": 142.18952764996394,
+            "hp": 170.08362797369804,
+            "max": 450
+          },
+          {
+            "tick": 5812,
+            "actionId": "weapon.rocket-launcher",
+            "amount": 170.08362797369804,
+            "hp": 0,
+            "max": 450
+          }
+        ]
+      },
+      "attackWindupSectors": {
+        "opening": {
+          "south": 9,
+          "west": 21,
+          "north": 11,
+          "east": 5
+        },
+        "corridor": {
+          "west": 23,
+          "north": 33,
+          "east": 21,
+          "south": 2
+        },
+        "bus": {
+          "west": 43,
+          "south": 8,
+          "east": 57,
+          "north": 22
+        }
+      },
+      "woundedCivilianHp": {
+        "59": 45,
+        "51": 36,
+        "58": 36,
+        "53": 2,
+        "56": 6,
+        "69": 2
+      },
+      "photos": [
+        {
+          "file": "captures/L7-low-L7-opening-low-z1-5.jpg",
+          "stage": "opening",
+          "tick": 224,
+          "position": {
+            "x": 267.69818115234375,
+            "z": 17.530569076538086
+          },
+          "quality": "low",
+          "zoom": 1.5
+        },
+        {
+          "file": "captures/L7-low-L7-corridor-low-z1-5.jpg",
+          "stage": "corridor",
+          "tick": 3625,
+          "position": {
+            "x": 53.36842727661133,
+            "z": 46.045711517333984
+          },
+          "quality": "low",
+          "zoom": 1.5
+        },
+        {
+          "file": "captures/L7-low-L7-bus-low-z1-5.jpg",
+          "stage": "bus",
+          "tick": 6309,
+          "position": {
+            "x": -46.00782012939453,
+            "z": 47.81914520263672
+          },
+          "quality": "low",
+          "zoom": 1.5
+        },
+        {
+          "file": "captures/L7-low-L7-bus-low-z0-8.jpg",
+          "stage": "bus",
+          "tick": 6309,
+          "position": {
+            "x": -46.00782012939453,
+            "z": 47.81914520263672
+          },
+          "quality": "low",
+          "zoom": 0.8
+        },
+        {
+          "file": "captures/L7-low-L7-departure-0-5.jpg",
+          "requestedSeconds": 0.5,
+          "tick": 7115,
+          "seconds": 1.45,
+          "bus": {
+            "x": -70.26347788065843,
+            "y": 0.7,
+            "z": 47,
+            "yaw": 0
+          },
+          "boarded": [
+            52,
+            54,
+            51,
+            64,
+            55,
+            57,
+            60,
+            61,
+            62,
+            63,
+            58,
+            65,
+            66,
+            67,
+            68
+          ],
+          "captureTick": 7119,
+          "actualZoom": 1.5,
+          "targetZoom": 1.5,
+          "actualQuality": "low",
+          "survivor": {
+            "variant": "female",
+            "gearTier": 4
+          },
+          "healthBars": {
+            "count": 0,
+            "draws": 0,
+            "bars": []
+          },
+          "followedActors": []
+        },
+        {
+          "file": "captures/L7-low-L7-departure-wide-z0-8.jpg",
+          "requestedSeconds": 0.5,
+          "tick": 7115,
+          "seconds": 1.45,
+          "bus": {
+            "x": -70.26347788065843,
+            "y": 0.7,
+            "z": 47,
+            "yaw": 0
+          },
+          "boarded": [
+            52,
+            54,
+            51,
+            64,
+            55,
+            57,
+            60,
+            61,
+            62,
+            63,
+            58,
+            65,
+            66,
+            67,
+            68
+          ],
+          "captureTick": 7123,
+          "actualZoom": 1.5,
+          "targetZoom": 1.5,
+          "actualQuality": "low",
+          "survivor": {
+            "variant": "female",
+            "gearTier": 4
+          },
+          "healthBars": {
+            "count": 0,
+            "draws": 0,
+            "bars": []
+          },
+          "followedActors": []
+        },
+        {
+          "file": "captures/L7-low-L7-departure-3.jpg",
+          "requestedSeconds": 3,
+          "tick": 7249,
+          "seconds": 3.683333333333333,
+          "bus": {
+            "x": -35.202092459228766,
+            "y": 0.7,
+            "z": 47,
+            "yaw": 0
+          },
+          "boarded": [
+            52,
+            54,
+            51,
+            64,
+            55,
+            57,
+            60,
+            61,
+            62,
+            63,
+            58,
+            65,
+            66,
+            67,
+            68
+          ],
+          "captureTick": 7251,
+          "actualZoom": 1.5,
+          "targetZoom": 1.5,
+          "actualQuality": "low",
+          "survivor": {
+            "variant": "female",
+            "gearTier": 4
+          },
+          "healthBars": {
+            "count": 0,
+            "draws": 0,
+            "bars": []
+          },
+          "followedActors": []
+        },
+        {
+          "file": "captures/L7-low-L7-departure-8.jpg",
+          "requestedSeconds": 8,
+          "tick": 7510,
+          "seconds": 8.033333333333333,
+          "bus": {
+            "x": 36.19249138850785,
+            "y": 0.7,
+            "z": 47,
+            "yaw": 0
+          },
+          "boarded": [
+            52,
+            54,
+            51,
+            64,
+            55,
+            57,
+            60,
+            61,
+            62,
+            63,
+            58,
+            65,
+            66,
+            67,
+            68
+          ],
+          "captureTick": 7512,
+          "actualZoom": 1.5,
+          "targetZoom": 1.5,
+          "actualQuality": "low",
+          "survivor": {
+            "variant": "female",
+            "gearTier": 4
+          },
+          "healthBars": {
+            "count": 0,
+            "draws": 0,
+            "bars": []
+          },
+          "followedActors": []
+        }
+      ],
+      "sourceAuditSha256": "34293142d9d504eed7b9652a523c92184a4dd293a2218d262c51f0ab9544a61f",
+      "note": "Alpha IDs can be reused across checkpoint restores. Mixed splash/shotgun trajectories are not three isolated direct hits. Driver simSeconds=0 after L8 clock reset; result.time is the actual L7 duration."
+    },
+    {
+      "tier": "high",
+      "result": {
+        "time": 181.06666666666666,
+        "kills": 295,
+        "knockdowns": 3,
+        "damage": 308.36666666666497,
+        "deaths": 2,
+        "rescued": 23,
+        "optionalObjectives": [],
+        "survivors": [
+          "shelter-0",
+          "shelter-1",
+          "shelter-2",
+          "shelter-8",
+          "shelter-9",
+          "shelter-6",
+          "shelter-5",
+          "shelter-3",
+          "shelter-4",
+          "shelter-7",
+          "shelter-10",
+          "shelter-11",
+          "shelter-12",
+          "shelter-13",
+          "shelter-14",
+          "shelter-15",
+          "shelter-16",
+          "shelter-17",
+          "shelter-18",
+          "shelter-19",
+          "shelter-21",
+          "shelter-22",
+          "shelter-23"
+        ]
+      },
+      "boardedIds": [
+        51,
+        52,
+        53,
+        59,
+        60,
+        57,
+        56,
+        54,
+        55,
+        58,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        72,
+        73,
+        74
+      ],
+      "driverSummary": {
+        "level": "L7",
+        "entry": "debug",
+        "heroine": "female",
+        "finished": true,
+        "skipped": [],
+        "wallSeconds": 185,
+        "simSeconds": 0,
+        "maxNoProgressSeconds": 8.566666666666666,
+        "deaths": 2,
+        "assists": 0,
+        "attacks": {
+          "weapon.shotgun": 66,
+          "weapon.rocket-launcher": 31
+        },
+        "weaponsStart": [
+          "weapon.bat",
+          "weapon.fire-axe",
+          "weapon.handgun",
+          "weapon.army-mg",
+          "weapon.shotgun"
+        ],
+        "weaponsEnd": [
+          "weapon.bat",
+          "weapon.fire-axe",
+          "weapon.handgun",
+          "weapon.army-mg",
+          "weapon.shotgun",
+          "weapon.rocket-launcher"
+        ],
+        "steps": [
+          {
+            "id": "rocket",
+            "text": "Recover the rocket launcher beside the exit \u00b7 3\u00a0m",
+            "tick": 9,
+            "marker": {
+              "anchor": "l7-rocket",
+              "ring": {
+                "x": 276,
+                "y": 3.9,
+                "z": 15
+              },
+              "drawn": [
+                276,
+                3.9,
+                15
+              ],
+              "playerY": 4.619999885559082,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "corridor",
+            "text": "Bring the group to the evacuation corridor \u00b7 Group 24/24 nearby \u00b7 306\u00a0m",
+            "tick": 53,
+            "marker": {
+              "anchor": "l7-corridor-east",
+              "ring": {
+                "x": -30,
+                "y": 0,
+                "z": 50
+              },
+              "drawn": [
+                -30,
+                0.13,
+                50
+              ],
+              "playerY": 4.619999885559082,
+              "pinVisible": true
+            }
+          },
+          {
+            "id": "departure",
+            "text": "Get everyone aboard the bus \u00b7 45\u00a0m",
+            "tick": 7866,
+            "marker": {
+              "anchor": "l7-bus-boarding",
+              "ring": {
+                "x": -70.5,
+                "y": 0,
+                "z": 47.5
+              },
+              "drawn": [
+                -70.5,
+                0,
+                47.5
+              ],
+              "playerY": 0.7099999785423279,
+              "pinVisible": true
+            }
+          }
+        ]
+      },
+      "rocketShotTicks": [
+        623,
+        835,
+        1052,
+        1872,
+        2421,
+        2471,
+        2879,
+        3667,
+        3717,
+        3767,
+        3817,
+        3867,
+        3917,
+        4275,
+        7866,
+        7916,
+        7966,
+        8016,
+        8093,
+        8161,
+        8705,
+        8755,
+        8877,
+        8927,
+        8977,
+        9027,
+        9115,
+        9481,
+        9800,
+        9967,
+        10017
+      ],
+      "minimumRocketInterval": 50,
+      "alphaHits": {
+        "197": [
+          {
+            "tick": 647,
+            "actionId": "weapon.rocket-launcher",
+            "amount": 125.86712186103382,
+            "hp": 324.1328781389662,
+            "max": 450
+          },
+          {
+            "tick": 957,
+            "actionId": "weapon.shotgun",
+            "amount": 192,
+            "hp": 132.1328781389662,
+            "max": 450
+          },
+          {
+            "tick": 1017,
+            "actionId": "weapon.shotgun",
+            "amount": 132.1328781389662,
+            "hp": 0,
+            "max": 450
+          },
+          {
+            "tick": 2549,
+            "actionId": "weapon.shotgun",
+            "amount": 192,
+            "hp": 258,
+            "max": 450
+          },
+          {
+            "tick": 2579,
+            "actionId": "weapon.shotgun",
+            "amount": 192,
+            "hp": 66,
+            "max": 450
+          }
+        ],
+        "75": [
+          {
+            "tick": 3360,
+            "actionId": "hazard.fire",
+            "amount": 10,
+            "hp": 440,
+            "max": 450
+          },
+          {
+            "tick": 8956,
+            "actionId": "weapon.rocket-launcher",
+            "amount": 77.69048434429179,
+            "hp": 362.3095156557082,
+            "max": 450
+          },
+          {
+            "tick": 9005,
+            "actionId": "weapon.rocket-launcher",
+            "amount": 101.28276926982421,
+            "hp": 261.026746385884,
+            "max": 450
+          },
+          {
+            "tick": 9857,
+            "actionId": "weapon.shotgun",
+            "amount": 192,
+            "hp": 69.026746385884,
+            "max": 450
+          },
+          {
+            "tick": 9887,
+            "actionId": "weapon.shotgun",
+            "amount": 69.026746385884,
+            "hp": 0,
+            "max": 450
+          }
+        ],
+        "275": [
+          {
+            "tick": 3814,
+            "actionId": "weapon.rocket-launcher",
+            "amount": 170.10000000000002,
+            "hp": 279.9,
+            "max": 450
+          },
+          {
+            "tick": 3857,
+            "actionId": "weapon.rocket-launcher",
+            "amount": 102.52698913827885,
+            "hp": 177.37301086172113,
+            "max": 450
+          },
+          {
+            "tick": 4307,
+            "actionId": "weapon.rocket-launcher",
+            "amount": 150.15548844812702,
+            "hp": 27.21752241359411,
+            "max": 450
+          }
+        ],
+        "76": [
+          {
+            "tick": 5700,
+            "actionId": "hazard.fire",
+            "amount": 10,
+            "hp": 440,
+            "max": 450
+          },
+          {
+            "tick": 5760,
+            "actionId": "hazard.fire",
+            "amount": 10,
+            "hp": 430,
+            "max": 450
+          },
+          {
+            "tick": 5820,
+            "actionId": "hazard.fire",
+            "amount": 10,
+            "hp": 420,
+            "max": 450
+          },
+          {
+            "tick": 5880,
+            "actionId": "hazard.fire",
+            "amount": 10,
+            "hp": 410,
+            "max": 450
+          },
+          {
+            "tick": 5940,
+            "actionId": "hazard.fire",
+            "amount": 10,
+            "hp": 400,
+            "max": 450
+          },
+          {
+            "tick": 6000,
+            "actionId": "hazard.fire",
+            "amount": 10,
+            "hp": 390,
+            "max": 450
+          },
+          {
+            "tick": 6060,
+            "actionId": "hazard.fire",
+            "amount": 10,
+            "hp": 380,
+            "max": 450
+          },
+          {
+            "tick": 6120,
+            "actionId": "hazard.fire",
+            "amount": 10,
+            "hp": 370,
+            "max": 450
+          },
+          {
+            "tick": 7904,
+            "actionId": "weapon.rocket-launcher",
+            "amount": 170.10000000000002,
+            "hp": 199.89999999999998,
+            "max": 450
+          },
+          {
+            "tick": 7947,
+            "actionId": "weapon.rocket-launcher",
+            "amount": 170.5971189474914,
+            "hp": 29.30288105250858,
+            "max": 450
+          },
+          {
+            "tick": 7992,
+            "actionId": "weapon.rocket-launcher",
+            "amount": 29.30288105250858,
+            "hp": 0,
+            "max": 450
+          },
+          {
+            "tick": 8736,
+            "actionId": "weapon.rocket-launcher",
+            "amount": 170.09999999999994,
+            "hp": 199.90000000000006,
+            "max": 450
+          },
+          {
+            "tick": 8790,
+            "actionId": "weapon.rocket-launcher",
+            "amount": 118.28431962986481,
+            "hp": 81.61568037013525,
+            "max": 450
+          },
+          {
+            "tick": 8815,
+            "actionId": "weapon.shotgun",
+            "amount": 81.61568037013525,
+            "hp": 0,
+            "max": 450
+          }
+        ]
+      },
+      "attackWindupSectors": {
+        "opening": {
+          "south": 20,
+          "north": 26,
+          "west": 42,
+          "east": 10
+        },
+        "corridor": {
+          "north": 79,
+          "west": 33,
+          "east": 28
+        },
+        "bus": {
+          "west": 121,
+          "east": 98,
+          "north": 109,
+          "south": 40
+        }
+      },
+      "woundedCivilianHp": {
+        "53": 11,
+        "59": 36,
+        "55": 70,
+        "51": 75,
+        "54": 40,
+        "57": 41,
+        "60": 70,
+        "52": 41
+      },
+      "photos": [
+        {
+          "file": "captures/L7-high-L7-opening-high-z1-5.jpg",
+          "stage": "opening",
+          "tick": 284,
+          "position": {
+            "x": 267.98321533203125,
+            "z": 17.15190887451172
+          },
+          "quality": "high",
+          "zoom": 1.5
+        },
+        {
+          "file": "captures/L7-high-L7-corridor-high-z1-5.jpg",
+          "stage": "corridor",
+          "tick": 5753,
+          "position": {
+            "x": 50.47141647338867,
+            "z": 41.098388671875
+          },
+          "quality": "high",
+          "zoom": 1.5
+        },
+        {
+          "file": "captures/L7-high-L7-bus-high-z1-5.jpg",
+          "stage": "bus",
+          "tick": 9116,
+          "position": {
+            "x": -46.211788177490234,
+            "z": 49.14968490600586
+          },
+          "quality": "high",
+          "zoom": 1.5
+        },
+        {
+          "file": "captures/L7-high-L7-bus-high-z0-8.jpg",
+          "stage": "bus",
+          "tick": 9116,
+          "position": {
+            "x": -46.211788177490234,
+            "z": 49.14968490600586
+          },
+          "quality": "high",
+          "zoom": 0.8
+        },
+        {
+          "file": "captures/L7-high-L7-departure-0-5.jpg",
+          "requestedSeconds": 0.5,
+          "tick": 10121,
+          "seconds": 1.6166666666666667,
+          "bus": {
+            "x": -68.4028207780826,
+            "y": 0.7,
+            "z": 47,
+            "yaw": 0
+          },
+          "boarded": [
+            51,
+            52,
+            53,
+            59,
+            60,
+            57,
+            56,
+            54,
+            55,
+            58,
+            61,
+            62,
+            63,
+            64,
+            65,
+            66,
+            67,
+            68,
+            69,
+            70,
+            72,
+            73,
+            74
+          ],
+          "captureTick": 10125,
+          "actualZoom": 1.5,
+          "targetZoom": 1.5,
+          "actualQuality": "high",
+          "survivor": {
+            "variant": "female",
+            "gearTier": 4
+          },
+          "healthBars": {
+            "count": 0,
+            "draws": 0,
+            "bars": []
+          },
+          "followedActors": []
+        },
+        {
+          "file": "captures/L7-high-L7-departure-wide-z0-8.jpg",
+          "requestedSeconds": 0.5,
+          "tick": 10121,
+          "seconds": 1.6166666666666667,
+          "bus": {
+            "x": -68.4028207780826,
+            "y": 0.7,
+            "z": 47,
+            "yaw": 0
+          },
+          "boarded": [
+            51,
+            52,
+            53,
+            59,
+            60,
+            57,
+            56,
+            54,
+            55,
+            58,
+            61,
+            62,
+            63,
+            64,
+            65,
+            66,
+            67,
+            68,
+            69,
+            70,
+            72,
+            73,
+            74
+          ],
+          "captureTick": 10131,
+          "actualZoom": 1.5,
+          "targetZoom": 1.5,
+          "actualQuality": "high",
+          "survivor": {
+            "variant": "female",
+            "gearTier": 4
+          },
+          "healthBars": {
+            "count": 0,
+            "draws": 0,
+            "bars": []
+          },
+          "followedActors": []
+        },
+        {
+          "file": "captures/L7-high-L7-departure-3.jpg",
+          "requestedSeconds": 3,
+          "tick": 10259,
+          "seconds": 3.9166666666666665,
+          "bus": {
+            "x": -30.70630191662856,
+            "y": 0.7,
+            "z": 47,
+            "yaw": 0
+          },
+          "boarded": [
+            51,
+            52,
+            53,
+            59,
+            60,
+            57,
+            56,
+            54,
+            55,
+            58,
+            61,
+            62,
+            63,
+            64,
+            65,
+            66,
+            67,
+            68,
+            69,
+            70,
+            72,
+            73,
+            74
+          ],
+          "captureTick": 10262,
+          "actualZoom": 1.5,
+          "targetZoom": 1.5,
+          "actualQuality": "high",
+          "survivor": {
+            "variant": "female",
+            "gearTier": 4
+          },
+          "healthBars": {
+            "count": 0,
+            "draws": 0,
+            "bars": []
+          },
+          "followedActors": []
+        },
+        {
+          "file": "captures/L7-high-L7-departure-8.jpg",
+          "requestedSeconds": 8,
+          "tick": 10504,
+          "seconds": 8,
+          "bus": {
+            "x": 35.93621399176955,
+            "y": 0.7,
+            "z": 47,
+            "yaw": 0
+          },
+          "boarded": [
+            51,
+            52,
+            53,
+            59,
+            60,
+            57,
+            56,
+            54,
+            55,
+            58,
+            61,
+            62,
+            63,
+            64,
+            65,
+            66,
+            67,
+            68,
+            69,
+            70,
+            72,
+            73,
+            74
+          ],
+          "captureTick": 10507,
+          "actualZoom": 1.5,
+          "targetZoom": 1.5,
+          "actualQuality": "high",
+          "survivor": {
+            "variant": "female",
+            "gearTier": 4
+          },
+          "healthBars": {
+            "count": 0,
+            "draws": 0,
+            "bars": []
+          },
+          "followedActors": []
+        }
+      ],
+      "sourceAuditSha256": "8b2a2c33b63f361918058d7680b4b65f6713e1eecd1d193d9b7fd1389da139e6",
+      "note": "Alpha IDs can be reused across checkpoint restores. Mixed splash/shotgun trajectories are not three isolated direct hits. Driver simSeconds=0 after L8 clock reset; result.time is the actual L7 duration."
+    }
+  ]
+}
