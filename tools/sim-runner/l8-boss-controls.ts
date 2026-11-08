@@ -52,7 +52,8 @@ try {
     for (let n = 0; n < 600 && (m.state.stats.deaths === beforeDeaths || p.health.current <= 0); n++) step(w);
     const restored = zoo.state.arenas.find(a => a.id === 'gorilla')!, restoredBoss = w.entities.get(restored.ids[0])!;
     const restoredPillar = w.destruction!.objects.find(o => o.id === pillar.id)!;
-    check('mortal retry restores entry, phase, boss HP, cover and rocket pickup', m.state.stats.deaths === beforeDeaths + 1 && Math.hypot(p.transform.x - def.entry.x, p.transform.z - def.entry.z) <= 1.5 && restored.phase === 1 && restoredBoss.health.current === restoredBoss.health.max && !restoredPillar.state.collapsed && restored.rocket === 0,
+    const restoredPickups = w.entities.values().filter(e => e.pickup && 'arenaAmmo' in e.pickup && e.pickup.arenaAmmo === 'gorilla').length;
+    check('mortal retry restores entry, phase, boss HP, cover and rocket pickup', m.state.stats.deaths === beforeDeaths + 1 && Math.hypot(p.transform.x - def.entry.x, p.transform.z - def.entry.z) <= 1.5 && restored.phase === 1 && restoredBoss.health.current === restoredBoss.health.max && !restoredPillar.state.collapsed && restored.rocket + restoredPickups === 1,
       { deaths: m.state.stats.deaths - beforeDeaths, at: p.transform, phase: restored.phase, hp: restoredBoss.health, pillarHP: restoredPillar.state.hp, stock: restored.rocket, pickups: w.entities.values().filter(e => e.pickup && 'arenaAmmo' in e.pickup && e.pickup.arenaAmmo === 'gorilla').length });
     // Ordinary firearm hit during the windup interrupts the chest-beat; its recovery must be more vulnerable than its prowl.
     w.solids.relocate(restoredBoss, { x: 60, z: -22, y: .7 }, 'qa.arena.roar-source', 2);
