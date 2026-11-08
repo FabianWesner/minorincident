@@ -96,6 +96,8 @@ export class Lighting {
   /** Night readability (specs/06 §2): the player's feet (xyz) for the hero rim, and the preset rim weight. */
   /** L6 darkness is part of the existing palette output, never an extra pass. */
   readonly subwayDarkness = uniform(0).setGroup(renderGroup);
+  /** Night infected bodies retain their colours below the bounded red eye emitter. */
+  readonly nightThreat = uniform(0).setGroup(renderGroup);
   readonly headlampOn = uniform(0).setGroup(renderGroup);
   /** PO 10-20 #63: dim emergency fill (albedo x colour) so no walkable L6 surface reads pure black outside the headlamp cone. */
   readonly subwayFill = uniform(new Color(.05, .065, .08)).setGroup(renderGroup);
@@ -207,6 +209,7 @@ export class Lighting {
     if (this.scene.fog instanceof Fog) { this.scene.fog.color.set(p.fog); this.scene.fog.near = p.fogNear; this.scene.fog.far = p.fogFar; }
     else this.scene.fog = new Fog(p.fog, p.fogNear, p.fogFar);
     this.subwayDarkness.value = name === 'L6-subway' ? 1 : 0;
+    this.nightThreat.value = ['night', 'L6', 'L6-subway', 'L8-zoo', 'L9-crossing', 'L10-night'].includes(name) ? 1 : 0;
     this.applyLook(); this.setShadowSource(name === 'L6-subway');
   }
   /** Keep both night shadow graphs resident. A light-list change retires Three's render
