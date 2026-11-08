@@ -36,8 +36,9 @@ export class LevelTenEpilogue {
       }
       if (elapsed >= 30 * 60 && !state.states['epilogue-rosa']) {
         state.states['epilogue-rosa'] = true;
-        const roster = this.mission.world.progression?.campaign?.crossingHandover?.shelteredPassengers ?? [];
-        if (roster.some(e => e.civilian?.survivor?.key === 'rosa' && e.health.current > 0)) this.mission.radio('L10.epilogue-rosa');
+        const save = this.mission.world.progression?.campaign;
+        const roster = save?.crossingHandover?.shelteredPassengers ?? save?.results?.L8?.escapedSurvivors ?? [];
+        if (roster.some(e => e.civilian?.survivor?.key === 'rosa' && e.health.current > 0 && !e.infected && !e.infection)) this.mission.radio('L10.epilogue-rosa');
       }
       if (elapsed >= 37 * 60 && !state.states['epilogue-sam']) {
         state.states['epilogue-sam'] = true;
