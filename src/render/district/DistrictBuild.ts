@@ -1,6 +1,6 @@
 import { worldTiers } from '../../levels/districts/types';
 // Assembly/reference pattern adapted from folio-2025 World.js / References.js (Bruno Simon, MIT).
-import { BoxGeometry, PlaneGeometry, Path, Shape, ShapeGeometry, Sprite, SpriteMaterial, Box3, CanvasTexture, ConeGeometry, Group, Sphere, Vector2, Vector3, InstancedMesh, Mesh, MeshBasicNodeMaterial, Object3D, SphereGeometry, type BufferGeometry, type Material } from 'three/webgpu';
+import { BoxGeometry, CircleGeometry, FrontSide, PlaneGeometry, Path, Shape, ShapeGeometry, Sprite, SpriteMaterial, Box3, CanvasTexture, ConeGeometry, Group, Sphere, Vector2, Vector3, InstancedMesh, Mesh, MeshBasicNodeMaterial, Object3D, SphereGeometry, type BufferGeometry, type Material } from 'three/webgpu';
 import type { DistrictWorld } from '../../sim/world/DistrictWorld';
 import type { DistrictAssets } from '../../assets/DistrictAssets';
 import type { Materials } from '../Materials';
@@ -27,6 +27,7 @@ import { batchPerimeterPosts, type PerimeterBox } from '../PerimeterPosts';
 import { NightAccents, nightAccents } from '../NightAccents';
 import { fairhavenDressing } from './FairhavenDressing';
 import { removeL7LakeWall } from './l7LakeWall';
+import { cureAprons } from '../../levels/L10/forecourts';
 
 const crownTokens = new Map<string, [PaletteToken, PaletteToken]>(Object.values(worldAssets).flatMap(asset => asset.foliage ? [[asset.foliage.colors.join(':'), asset.foliage.tokens ?? ['foliageDark', 'foliageLight']]] : []));
 
@@ -142,6 +143,13 @@ export async function buildDistrict(parts: DistrictParts, deps: DistrictBuildDep
     const length = Math.max(width, depth), count = Math.ceil(length / 2);
     let row = posts.get(height); if (!row) { row = []; posts.set(height, row); }
     for (let i = 0; i <= count; i++) row.push([width > depth ? fence.min[0] + length * i / count : x, base + height / 2, depth > width ? fence.min[2] + length * i / count : z]);
+  }
+  for (const district of deps.world.districts.filter(d => d.id === 'D-CURE')) {
+    const [ox, oz] = district.origin;
+    for (const [x, y, z, size] of [...cureAprons.paving, ...cureAprons.kerbs]) rail('sidewalk', size, [x + ox, y, z + oz]);
+    const geometry = new CircleGeometry(1, 9); geometry.rotateX(-Math.PI / 2); parts.ownedGeometry.push(geometry);
+    const puddles = batchPerimeterPosts(cureAprons.puddles.map(([x, y, z, size]) => [x + ox, y, z + oz, size]), geometry, deps.materials.world('tealDark', 0, false, FrontSide, 1));
+    parts.perimeterPosts.push(...puddles); perimeter.add(...puddles);
   }
   for (const [height, row] of posts) {
     const geometry = new BoxGeometry(.16, height, .16); parts.ownedGeometry.push(geometry);
