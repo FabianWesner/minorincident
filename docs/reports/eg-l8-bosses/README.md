@@ -24,6 +24,8 @@ The ordinary high-tier path flag is a conservative dynamic-fence AABB at a physi
 
 The final-source high-tier complete route passes at **90% reach**, first contact **19.38 s**, minimum follower ratio **0.996781**. All **19 controls** and the existing threat red fixtures pass. The [before/after native hash](evidence/post-merge/physical-prefix-passivity.json) is identical (`b9e96de8`, 182.27 s).
 
+[All four final-source route receipts](evidence/post-merge/route-final/) pass the required clauses (the separate G-13 waiting bound remains inconclusive). The [final production tour](evidence/post-merge/production-tour-low.json) reaches campaign progression in **768.25 s**, with **two courier deaths, 14 rescued and zero collision failures**; successful arena durations are 64.37 / 57.65 / 53.05 / 66.35 / 79.72 / 92.23 s.
+
 **Open:** post-merge typecheck, lint, unit tests and corrected six-arena matrix on runners. The receipts below describe the original lane source until the post-merge results are committed. **Browser QA needed** remains open; no browsers are launched.
 
 ## Done and open items
