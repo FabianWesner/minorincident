@@ -1,0 +1,22 @@
+{
+  "sourceCommit": "a7b70c78",
+  "seconds": 66.43437196400001,
+  "flags": [
+    "L3/criterion/L3-08 segment density and concurrent cap:FAIL",
+    "L3/criterion/L3-11 native competent rate:FAIL",
+    "PARTIAL_LEVEL_SELECTION:diagnostic run, not a complete gate"
+  ],
+  "levels": [
+    {
+      "level": "L3",
+      "flags": [
+        "wave/station-0:WAVE_FIRST_ATTACK_OVER_20_SECONDS",
+        "wave/station-2:WAVE_NO_ATTACK_WITHIN_20_SECONDS"
+      ],
+      "passiveFlags": [
+        "criterion/L3-08 segment density and concurrent cap:FAIL",
+        "criterion/L3-11 native competent rate:FAIL"
+      ]
+    }
+  ]
+}

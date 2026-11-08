@@ -1,0 +1,46 @@
+{
+  "sourceCommit": "cd84315b",
+  "mergedMain": "a7b70c78",
+  "runner": "2.31.107.230",
+  "typecheck": "pass",
+  "lint": "pass",
+  "unit": {
+    "passed": 106,
+    "skipped": 1,
+    "filesPassed": 27,
+    "budgetSeconds": 240,
+    "elapsedSeconds": 174.4
+  },
+  "caseBudget": {
+    "cases": 150,
+    "limit": 150,
+    "files": 43,
+    "fileLimit": 45
+  },
+  "browser": "not run: user instruction",
+  "fullThreat": {
+    "status": "timeout",
+    "elapsedSeconds": 600.2,
+    "budgetSeconds": 600
+  },
+  "L4L6L8Batch": {
+    "status": "timeout",
+    "elapsedSeconds": 601.2,
+    "lastPendingStage": "L8/skilled/1",
+    "receipt": "discarded: shared temporary path contained another batch"
+  },
+  "L7L9L10Batch": {
+    "status": "timeout",
+    "elapsedSeconds": 600.9,
+    "lastPendingStage": "L10/skilled/1",
+    "receipt": "discarded: shared temporary path contained another batch"
+  },
+  "l3Comparison": {
+    "main": "a7b70c78",
+    "branch": "cd84315b",
+    "newFlags": [],
+    "removedFlags": [
+      "criterion/L3-08 segment density and concurrent cap:FAIL"
+    ]
+  }
+}

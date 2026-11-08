@@ -1,20 +1,44 @@
-# R13 destruction — progress
+# R13 — generic world destruction
 
-## Implemented in this step
+## Delivered
 
-- Added deterministic per-weapon damage responses for glass, wood, metal, brick, and concrete.
-- Routed direct hits on existing destructible environment entities through the material response table.
-- Routed weapon-attributed explosion damage to destructible props and vehicles through the same table. Environmental chain explosions retain their authored damage curve.
-- Added material inference for existing destructible prop, vehicle, and building archetype IDs.
-- Removed unlinked historical test captures and traces from this worktree to free space.
+- L3: two Oak Street timber houses and two parked sedans opt in; other L3 buildings and cars are protected.
+- Placement-owned part HP and five materials; weapon-specific bullets, pellets, axes, sustained MG fire, explosive breaches and incendiary damage.
+- First-hit instance extraction, clipped parts, bounded impact/scorch marks, detached debris, roof collapse and burned-car variant.
+- Same-tick structural collider/nav/LOS updates; shared r12 movable bodies; fixed-tick fire, chain explosions and vehicle impulses.
+- Checkpoint/tier restoration and deterministic state hashes include damage and fire state.
+- Boss extension: pillar, machinery and fuel-tank policies; gorilla smash and Mega charge entry point. Arena placement/move wiring belongs to the boss lane.
+
+Architecture and extension instructions: [destruction design](../../design/destruction.md).
 
 ## Verification
 
-- `npm run typecheck` — passed.
-- `npm run lint` — passed.
-- `npm run test:unit` — 150-case budget passed; suite failed in two tests. The destruction change initially interrupted the existing propane chain test; that regression was fixed and its containing `tests/engine/world-systems.test.ts` file now passes (5 tests). The other failure is `tests/tools/gate-tools.test.ts` review freshness (`STALE` vs `FRESH`).
-- `git diff --check` — passed.
+Validated source: `cd84315b`, with main `a7b70c78` merged in `5628370e`.
 
-## Remaining
+- Hetzner: typecheck and lint pass; unit suite **106 passed, 1 skipped, 27 files**, 174.4 s within 240 s. The skip is the macOS-only legacy browser-lock test. [Compact checks](checks.json).
+- Case budget: **150/150**, files **43/45**. No browser launched.
+- [L1–L3 threat receipt](threat-1.json): L1/L2 have zero gameplay flags. L3 has the existing competent-survival-rate flag. [Exact merged-main L3 comparison](main-l3.json) reproduces that flag plus a density flag; there are **zero new L3 audit flags**. The comparison reverses the branch's complete `src/` diff in a private remote job; `public/` is unchanged.
+- [L5 threat receipt](threat-3.json): zero gameplay flags across the skilled/passive multi-seed checks.
+- **Full threat gate unresolved:** the full command timed out at 600.2 s before producing a receipt. Smaller L4/L6/L8 and L7/L9/L10 batches also timed out (601.2 s and 600.9 s), waiting on the L8 and L10 skilled stages. Completed stages are not claimed as complete level verdicts. Their temporary output paths collided with a completed batch, so both mismatched receipts were discarded. Future retries must use job-relative output paths.
+- Partial-selection markers remain in the retained diagnostic receipts. These are not a passing full gate. No zero-new-flags claim is made for the entire campaign.
 
-This is an incomplete foundation, not the end-to-end feature. Placement-addressable damage to static buildings and parked vehicles, first-hit static-batch splitting, damage variant swaps, breached collision/nav updates, pooled detachable debris, fire propagation to structures, district gameplay integration, captures, and the required scene/threat gates remain to be implemented and verified. No captures have been generated in this step.
+Commands used the prescribed `sh tools/remote/run.sh "$PWD" -- ...` wrapper with `MI_LOCAL_FALLBACK=0`. The temporary remote Git snapshot enabled tests requiring `HEAD`; no local build or worktree was created.
+
+Existing world-system tests cover real handgun, shotgun, axe and MG input; blocked shots; rocket collapse and nav openings; protected geometry; checkpoint replay; moving-car fire expiry; pool lifetime; tier replacement; rendered-part restoration; boss impacts and one-shot fuel detonation. No test cases added beyond the existing budget.
+
+## Browser QA needed
+
+Per the post-crash instruction, no browsers were launched. These checks remain unverified:
+
+1. Run `npm run scene:gate` on the approved browser runner.
+2. Run `SCENE_PORT=4833 E2E_UNITS=1 sh tools/e2e-lock.sh node --import tsx tools/scenelab/destruction.ts`; inspect its single contact sheet and gameplay assertions.
+3. Inspect L3 glass/door holes, roof collapse, car burn/wreck, debris and impacts on low/high tiers; confirm neighbouring static instances remain intact.
+4. Check extracted geometry/materials, camera occlusion, moving wreck alignment, performance and checkpoint appearance in WebGL2; WebGPU remains manual QA.
+
+No capture or visual pass is claimed. The model uses discrete parts; parked-car hull collision remains with its wreck. The carried flamethrower and L8/L10 boss move state machines are outside this lane; their destruction entry points are supported.
+
+## Status and handoff
+
+Implementation is complete and unit-verified. The brief's full threat-gate requirement remains blocked by the timed-out runs; it needs a successful runner audit before the entire brief can be marked complete. Browser QA is deliberately deferred under the latest instruction. No deploy or push.
+
+Commits since restart: `5628370e` (merge main/shared prop ownership), `cd84315b` (boss policies and impact hook). Earlier commits on this branch contain the L3 sim/render integration and regression coverage.
