@@ -9,7 +9,15 @@ mkdirSync(out, { recursive: true });
 const s = new SceneSession({ tier, backend: 'webgl2', viewport: { width: 1600, height: 900 }, nativeFrameTiming: true, query: { crowdProbe: 'drawn' } });
 const rows: unknown[] = [];
 try {
-  await s.open(); await s.page.evaluate('globalThis.__name = (fn) => fn');
+  await s.open();
+  // SceneSession enables per-draw visual attribution by default. Remove it
+  // before Renderer construction: clearing the live profile would leave its
+  // installed draw wrapper referencing null and stop production rendering.
+  const nativeUrl = new URL(s.page.url()); nativeUrl.searchParams.delete('profile');
+  await s.page.goto(nativeUrl.href);
+  await s.page.waitForFunction(() => !!window.__SS__ && !!window.__SCENE__, null, { timeout: 120_000 });
+  await s.page.evaluate(async () => { await window.__SS__!.ready; window.__SS__!.pause(); });
+  await s.page.evaluate('globalThis.__name = (fn) => fn');
   for (const scenario of ['light-lab', 'night-street', ...(tier === 'high' ? ['reflection-lab'] : [])]) {
     if (scenario === 'night-street') {
       await s.page.evaluate(async () => { await window.__SS__!.loadLevel('night-street', { seed: 1 }); window.__SS__!.pause(); });
@@ -22,7 +30,7 @@ try {
     await s.ready();
     const probeMode = await s.page.evaluate(() => {
       const g = (window.__SCENE__ as unknown as { game: Game }).game;
-      g.view.renderer.profile = null; g.view.renderer.profileAssets = null;
+      if (g.view.renderer.profile !== null) throw Error('Native fixture unexpectedly enabled visual draw attribution');
       // Scene Lab enables full skeleton diagnostic snapshots for visual captures.
       // Native timing keeps submission records and the production renderer, as
       // the existing crowdProbe=drawn timing path intends.
@@ -47,6 +55,7 @@ try {
       return { samples: frames.length, frameP50: frames[149], frameP95: frames[284], simP95: sim[284], maxDraws, maxTriangles,
         ticks: a.tick() - start.tick, renderedFrames: a.perf().renderedFrames - start.frames, frameMs: frames, perf: a.perf() };
     });
+    if (!(native.ticks > 0 && native.renderedFrames >= 290)) throw Error(`Native sample did not advance production simulation/rendering: ${JSON.stringify({ ticks: native.ticks, frames: native.renderedFrames })}`);
     const gpu = await s.page.evaluate(async scenario => {
       const g = (window.__SCENE__ as unknown as { game: Game }).game, r = g.view.renderer;
       type Context = { textures: { name: string }[] | null; depthTexture?: { name: string }; width: number; height: number };
@@ -84,6 +93,7 @@ try {
     const heap = await cdp.send('Runtime.getHeapUsage'); await cdp.detach();
     rows.push({ scenario, tier, viewport: [1600, 900], probeMode, native, gpu, heap,
       budgets: { frame: native.frameP95 <= (tier === 'high' ? 16.7 : 33.3), draws: native.maxDraws <= (tier === 'high' ? 600 : 300), triangles: native.maxTriangles <= (tier === 'high' ? 1500000 : 500000), heap: heap.usedSize <= (tier === 'high' ? 400e6 : 250e6), sim: native.simP95 <= (tier === 'high' ? 4 : 6) } });
+    writeFileSync(`${out}/measurements.json`, JSON.stringify({ tier, partial: true, rows, errors: s.errors }, null, 2) + '\n');
     console.log(`${scenario} ${tier}: native p95 ${native.frameP95.toFixed(3)} ms; GPU queries ${gpu.available}`);
   }
 } finally {
