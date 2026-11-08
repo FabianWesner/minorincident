@@ -3,7 +3,7 @@ import { describe, expect, test, vi } from 'vitest';
 import { missionIds } from '../../../src/levels/missions';
 import { preset, type ProgressionPreset } from '../../../src/sim/progression/Campaign';
 import physicsAssets from '../../../src/data/physicsAssets';
-import { l4, l4Route, l4RoutePose, l4ConvoyStations, l4ConvoyParkOffsetX } from '../../../src/data/l4';
+import { l4, l4Route, l4RoutePose, l4ConvoyStations, l4RearTruckParkOffset } from '../../../src/data/l4';
 import { l7Departure } from '../../../src/data/l7';
 import { emptyInput } from '../../../src/input/InputFrame';
 import { bicycleGeometry } from '../../../src/data/bicycleGeometry';
@@ -149,7 +149,8 @@ describe('automatic regression invariants', () => {
       for (const box of physicsAssets[vehicle.asset as keyof typeof physicsAssets].boxes) {
         for (let s = stations.start[i]; s <= stations.end[i]; s += .25) samples.push({ id: `convoy-${vehicle.id}-${s.toFixed(2)}`, ...l4RoutePose(route, s), box, baseY: .7 });
         const parked = l4RoutePose(route, stations.end[i]);
-        samples.push({ id: `convoy-${vehicle.id}-stop`, ...parked, x: parked.x + l4ConvoyParkOffsetX, box, baseY: .7 });
+        if (vehicle.id === 'truck-2') { parked.x += l4RearTruckParkOffset.x; parked.z += l4RearTruckParkOffset.z; }
+        samples.push({ id: `convoy-${vehicle.id}-stop`, ...parked, box, baseY: .7 });
       }
     }
     for (const v of layout.placements.filter(p => p.assetId.startsWith('veh.'))) {

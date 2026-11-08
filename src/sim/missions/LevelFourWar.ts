@@ -3,7 +3,7 @@ import type { Combat } from '../combat/Combat';
 import { survivor } from '../../data/survivor';
 import { l4PerimeterSegments, l4WallSlots, l4BreachOf, l4Breaches, l4BreachSite, type L4BreachSide } from '../../data/l4Perimeter';
 import { Rng } from '../../core/Rng';
-import { l4, l4InfectedArchetypes, l4InfectedLooks, l4FirefighterLooks, l4Anchors, l4Cars, l4CellarDistance, l4CollapseGroups, l4Crowd, l4Edges, l4Emergence, l4OffscreenMouths, l4BreachApproaches, l4Pockets, l4Posts, l4Route, l4RoutePose, l4ConvoyStations, l4ConvoyGate, l4ConvoyParkOffsetX, type L4Weapon } from '../../data/l4';
+import { l4, l4InfectedArchetypes, l4InfectedLooks, l4FirefighterLooks, l4Anchors, l4Cars, l4CellarDistance, l4CollapseGroups, l4Crowd, l4Edges, l4Emergence, l4OffscreenMouths, l4BreachApproaches, l4Pockets, l4Posts, l4Route, l4RoutePose, l4ConvoyStations, l4ConvoyGate, l4RearTruckParkOffset, type L4Weapon } from '../../data/l4';
 import { balancedCrowdModel } from '../../data/crowdAppearance';
 import { l4AlphaEmergence } from '../../levels/L4/layout';
 import { infectedDef } from '../../data/infected';
@@ -429,10 +429,10 @@ export class LevelFourWar {
   private arrive(): void {
     const { world } = this.mission, tick = world.tick, s = this.s;
     if (s.phase !== 'convoy') return;
-    // Keep the authored route and arrival time; shift the parked column west before the perimeter rises around it.
-    for (const id of s.convoyIds) { const vehicle = world.entities.get(id); if (vehicle) vehicle.transform.x += l4ConvoyParkOffsetX; }
-    const passengerBus = world.entities.get(s.convoyIds[this.playerBus()]);
-    if (passengerBus) this.carry(passengerBus.transform.x, passengerBus.transform.z);
+    // Keep the authored route, arrival time and column stops; park the rear cargo truck clear of the east wall/sign.
+    const truckIndex = l4.convoy.vehicles.findIndex(vehicle => vehicle.id === 'truck-2');
+    const truck = world.entities.get(s.convoyIds[truckIndex]);
+    if (truck) { truck.transform.x += l4RearTruckParkOffset.x; truck.transform.z += l4RearTruckParkOffset.z; }
     s.phase = 'plaza'; s.arrivedAt = tick; s.convoyV = 0; s.turnDueAt = 0;
     this.parkNav(true);
     // PO 10-13 ("Let the user exit the 1st bus which is ON the military area"): she steps off the side of the bus that faces the plaza.
