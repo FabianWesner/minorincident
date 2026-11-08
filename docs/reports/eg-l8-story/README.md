@@ -45,6 +45,8 @@ The first full-suite unit invocation hit the wall-clock watchdog at 246.2 s agai
 
 Native acceptance completes low/high production-input routes, both controlled fixture sets and all six checkpoint/death controls without runtime errors. It exits **1**, reporting one failing level row (`L8-06`) and ten incomplete level rows. Fresh global checks also fail `G-13`, `G-22` and `G-24`; these must not be hidden by the level-row count. Browser clauses remain unchecked. Evidence: [current native clauses and failures](evidence/acceptance-native.json).
 
+The requested L8-only threat audit finishes in **172.1 s** (179.1 s including its wrapper, below 600 s) and exits **1**. Skilled input completes; the passive route ends at its intended 150-second simulation window. Kiting passes at **9 attacks/minute**. The audit records four level flags: the late initial tunnel attack and three follower-pace entries, including a duplicate controller-phase entry. Its fifth flag is `PARTIAL_LEVEL_SELECTION`, because L8 alone is diagnostic rather than an all-level gate. These findings confirm the follow-ups below; no flag is waived. Evidence: [threat receipt](evidence/threat-native.json).
+
 `git diff --check` passes. Early diagnostic failures led to the corrected gate cap extraction, dry-shore staging, vault-height ownership and vehicle handover flag. Raw logs remain under `test-results/eg-l8-story-*`.
 
 ## Done and open follow-ups
@@ -69,5 +71,7 @@ No browsers are run by this lane. The QA lane should inspect low/high at the PO 
 - Cover APC boarding: the north-wall reveal clearly shows the Mega; Hale's keys gesture and death stay brief and avoid close gore; the courier can enter the real cab afterward.
 - During departure, both steel leaves open before the APC reaches them, the vehicle and complete group cross the east gate, the Mega remains visible behind it, and the exact departure caption can be read.
 - Check camera return/skip, checkpoint retry during the story, frame cost at the boarding hold and the unchanged L8→L9 roster/arsenal handover.
+
+The orchestrator ended the lane at the time box: all working changes and receipts are committed, the checks above have finished, and the listed failures remain follow-up work. No check is left running.
 
 No specifications, reference assets or dependencies changed. No deploy or push.
