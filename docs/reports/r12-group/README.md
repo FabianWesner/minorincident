@@ -35,7 +35,7 @@ The final six-level remote audit covers **L2, L3 police, L5, L6, L7 and L8** usi
 - **No added follower flags** in skilled/passive raw phases or aggregate flags. No added qualified seed failures in L5/L7.
 - L7's full native receipt is identical to main, including its known wait/slow/unobserved coverage flags. L2/L3 native state hashes are also identical.
 - L5 has **zero skilled or passive pace-vote flags**; its temporary ID-28 regression is removed.
-- L6 has no slow-follower flags; stationary-far time falls **179.62 → 135.08 s**, and its upper-bound share falls **52.96% → 45.54%**.
+- L6 has no slow-follower flags; stationary-far time falls **179.62 → 135.13 s**, and its upper-bound share falls **52.96% → 45.54%**.
 - L8 removes main's slow-follower flags for **354/359/365**; skilled stationary-far share falls **1.74% → 0.53%**.
 - Every skilled/passive route reports **zero collision invariant failures**.
 
