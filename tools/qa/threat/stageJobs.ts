@@ -1,6 +1,6 @@
 import { fork } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import { runLevel, type LevelReport, type RunnerLevel } from '../../sim-runner/levels';
+import { LevelRunStopped, runLevel, type LevelReport, type RunnerLevel } from '../../sim-runner/levels';
 import { newCampaign, preset, type ProgressionPreset } from '../../../src/sim/progression/Campaign';
 import { stateHash } from '../../../src/sim/world/stateHash';
 import { ThreatObserver } from './observer';
@@ -51,10 +51,13 @@ async function execute(job: StageJob): Promise<StageResult> {
       });
       if (!job.passive) {
         native.kiting = kiting;
-        await runLevel(job.level, 'complete', job.seed, undefined, 'auto', campaignFor(job.level, job.seed), undefined, 0, {
+        try { await runLevel(job.level, 'complete', job.seed, undefined, 'auto', campaignFor(job.level, job.seed), undefined, 0, {
           quality: 'low', beforeBegin: world => installKitingPolicy(world, kiting, job.level),
+          // L4 can start a second short sample after its physical rejoin; let
+          // its route finish so this optimization preserves that receipt.
+          stopWhen: () => job.level !== 'L4' && kiting.samples >= 1200,
           beforeDispose: () => { native.kiting = finishKitingReceipt(kiting); },
-        });
+        }); } catch (error) { if (!(error instanceof LevelRunStopped)) throw error; }
       }
     }
   } catch (error) { result.error = String(error); }
