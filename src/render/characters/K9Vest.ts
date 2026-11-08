@@ -6,7 +6,8 @@ import type { EntitySnapshot } from '../../sim/world/types';
 import type { Materials } from '../Materials';
 import type { CrowdPosePalette } from './CrowdPosePalette';
 
-const clothing = /^(vest_shell|bound_vest_edge|side_patch|POLICE_|girth_strap|strap_buckle|buckle_inner|webbing_stitch|shoulder_strap|shoulder_buckle|chest_bib|chest_patch|carry_handle|top_webbing|top_loop)/i;
+const clothing = new Set(['navy', 'navySeam', 'blueTrim', 'silver', 'uiDark', 'picketWhite']);
+const jointName = /^(root|hip|torso|body|neck|head|jaw|tail|arm[LR]|foreArm[LR]|hand[LR]|leg[BF]?[LR]|shin[LR]|foot[LR]|paw[BF]?[LR])$/;
 /** Reuse the authored police vest on the current skinned dog, keeping the
  * retired rigid dog's body out of the production crowd. Source stays borrowed. */
 export function k9VestModel(source: Object3D, width: number, materials?: Materials): Group {
@@ -15,9 +16,25 @@ export function k9VestModel(source: Object3D, width: number, materials?: Materia
   if (!body) throw new Error('K9 vest requires the authored body pivot');
   const inverse = body.matrixWorld.clone().invert(), parts = new Group();
   source.traverse(node => {
-    if (!(node instanceof Mesh) || !clothing.test(node.name)) return;
-    const geometry = node.geometry.clone().applyMatrix4(new Matrix4().multiplyMatrices(inverse, node.matrixWorld));
-    parts.add(new Mesh(geometry, node.material));
+    if (!(node instanceof Mesh)) return;
+    let joint = node.parent;
+    while (joint && !jointName.test(joint.name)) joint = joint.parent;
+    if (joint?.name !== 'body' && joint?.name !== 'torso') return;
+    // Production LODs merge authored pieces by rigid bone and palette. Their
+    // navy/trim/patch primitives retain the vest without the shepherd's fur.
+    const palette = Array.isArray(node.material) ? node.material : [node.material];
+    const index = node.geometry.index, size = index?.count ?? node.geometry.getAttribute('position').count;
+    const groups = node.geometry.groups.length ? node.geometry.groups : [{ start: 0, count: size, materialIndex: 0 }];
+    for (const group of groups) {
+      const material = palette[group.materialIndex ?? 0];
+      const token = (material as Material & { token?: string }).token ?? material.name.replace(/^pal_/, '');
+      if (!clothing.has(token)) continue;
+      const indexed = node.geometry.clone(); indexed.clearGroups();
+      indexed.setIndex(Array.from({ length: group.count }, (_, i) => index ? index.getX(group.start + i) : group.start + i));
+      const geometry = indexed.toNonIndexed(); indexed.dispose();
+      geometry.applyMatrix4(new Matrix4().multiplyMatrices(inverse, node.matrixWorld));
+      parts.add(new Mesh(geometry, material));
+    }
   });
   if (!parts.children.length) throw new Error('K9 vest has no authored clothing');
   const size = new Box3().setFromObject(parts).getSize(new Vector3());

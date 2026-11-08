@@ -23,12 +23,12 @@ function gateGeometry(): void {
   split.geometry.forEach(geometry => geometry.dispose()); source.dispose(); lintelGeometry.dispose();
   const dog = new Group(), body = new Group(), clothGeometry = new BoxGeometry(.6, .3, .5);
   body.name = 'body'; body.position.y = .6; dog.add(body);
-  const cloth = new Mesh(clothGeometry); cloth.name = 'vest_shell'; body.add(cloth);
+  const cloth = new Mesh(clothGeometry); cloth.material.name = 'pal_navy'; body.add(cloth);
   const vest = k9VestModel(dog, .47);
   expect(new Box3().setFromObject(vest).getSize(new Vector3()).z).toBeCloseTo(.47);
   expect(cloth.geometry).toBe(clothGeometry);
   vest.traverse(node => { if (node instanceof Mesh) { node.geometry.dispose(); for (const material of Array.isArray(node.material) ? node.material : [node.material]) material.dispose(); } });
-  clothGeometry.dispose();
+  clothGeometry.dispose(); cloth.material.dispose();
 }
 
 /** Real input for the tour/breach, then isolated boarding to exercise the story controller without another full combat run. */
