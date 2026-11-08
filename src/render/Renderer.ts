@@ -216,6 +216,33 @@ export class Renderer extends WebGPURenderer {
     };
     return this;
   }
+  /** Discover cold pipelines in their actual nested passes, linking them in
+   * parallel before executing the complete warm-up draw. compileAsync cannot
+   * discover post-processing quads or every first-use transparent variant.
+   * Only the opaque loading card may hide these temporary discovery draws. */
+  async prepareWarmRender(render: () => void): Promise<void> {
+    type Draw = { pipeline: object };
+    const backend = this.backend as unknown as {
+      createRenderPipeline(draw: Draw, promises: Promise<unknown>[] | null): void;
+      draw(draw: Draw, info: Renderer['info']): void;
+    };
+    const create = backend.createRenderPipeline, draw = backend.draw;
+    for (;;) {
+      const pending: Promise<unknown>[] = [], cold = new Set<object>();
+      backend.createRenderPipeline = (object, promises) => {
+        const links: Promise<unknown>[] = [];
+        create.call(backend, object, links);
+        if (links.length) { cold.add(object.pipeline); pending.push(...links); promises?.push(...links); }
+      };
+      backend.draw = (object, info) => { if (!cold.has(object.pipeline)) draw.call(backend, object, info); };
+      try { this.nextNodeFrame(); render(); }
+      finally { backend.createRenderPipeline = create; backend.draw = draw; }
+      if (!pending.length) return;
+      await Promise.all(pending);
+      // Replay the same full draw after every link completes. FRAME-updated
+      // post passes must execute again, including the scene/depth source.
+    }
+  }
   private profileCamera: Camera | null = null;
   beginProfile(camera: Camera): void { if (__QA_HOOKS__ && this.profile) { this.profile = {}; this.profileAssets = {}; this.profileCamera = camera; } }
   constructor(params: URLSearchParams, canvas?: HTMLCanvasElement) {

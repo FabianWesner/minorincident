@@ -244,7 +244,7 @@ export class Game {
         this.view.missionHidden = false;
         await this.view.prepareCharacterVariant();
         await this.warmAlarm();
-        await this.audio.load(); this.ui.loaded(); await this.ui.prepareHud(); this.view.unfreeze(); this.view.update(1);
+        await this.audio.load(); this.ui.loaded(); await this.ui.prepareHud(); await this.view.renderer.prepareWarmRender(() => { this.view.unfreeze(); this.view.update(1); });
         await this.view.renderer.finishWarmUp(); await transitionPaint(); this.firstLevelFrame(id);
         return;
       }
@@ -334,7 +334,7 @@ export class Game {
           this.view.advance(0);
         }
         if (id === 'L10' && this.campaign) { this.watchCampaign(); this.saveCampaign(); }
-        if (!speculative) { this.view.unfreeze(); this.view.update(1); await this.view.renderer.finishWarmUp(); await transitionPaint(); loadMeasure(`transition:${id}:first-frame`, start); this.firstLevelFrame(id); }
+        if (!speculative) { await this.view.renderer.prepareWarmRender(() => { this.view.unfreeze(); this.view.update(1); }); await this.view.renderer.finishWarmUp(); await transitionPaint(); loadMeasure(`transition:${id}:first-frame`, start); this.firstLevelFrame(id); }
       }catch(error){ console.error("Level load failed", error); if (!speculative) this.transition.fail(); this.view.unfreeze(); this.view.missionHidden = false; throw error; }
       finally{this.loading=false;this.ticker.reset();}
     });this.levelQueue=load.catch(()=>{});return load;
