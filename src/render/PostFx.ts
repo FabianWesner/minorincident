@@ -5,6 +5,7 @@ import { pass, uv, uniform, uniformArray, mix, vec2, vec3, vec4, rtt, float, sin
 import { bloom } from 'three/addons/tsl/display/BloomNode.js';
 import { hashBlur } from 'three/addons/tsl/display/hashBlur.js';
 import { LookUniforms } from './LookUniforms';
+import { WetReflections } from './lighting/WetReflections';
 
 let nextDiagnosticId = 0;
 /** Screen-space heat haze slots (vfx-stunning-3): fires and fresh blasts, high tier only. */
@@ -22,6 +23,7 @@ export class PostFx {
   private readonly scenePass;
   private readonly lowBlur;
   private readonly bloomPass;
+  private readonly wetReflections;
   /** Heat haze sources in UV space: x, y (0..1), radius (UV height units), strength 0..1. Empty slots have strength 0. */
   readonly heat = Array.from({ length: HEAT_SOURCES }, () => new Vector4());
   readonly heatTime = uniform(0);
@@ -33,7 +35,9 @@ export class PostFx {
     // Heat haze: one dependent fetch of the scene colour with a small rippling UV offset inside each source's disc.
     // Low tier builds no haze node at all. Bloom keeps reading the undistorted scene.
     this.haze = tier === 'high';
-    const source = this.haze ? scene0.sample(uv().add(this.hazeOffset())) : scene0;
+    this.wetReflections = tier === 'high' ? new WetReflections(scene0, this.scenePass.getTextureNode('depth'), camera) : null;
+    const baseSource = this.haze ? scene0.sample(uv().add(this.hazeOffset())) : scene0;
+    const source = this.wetReflections ? vec4(baseSource.rgb.add(this.wetReflections.contribution), baseSource.a) : baseSource;
     this.bloomPass = bloom(scene0, look.values.bloomStrength, look.values.bloomRadius, look.values.bloomThreshold);
     // Bind level defaults directly so mission lighting changes update the existing pass.
     this.bloomPass.strength = look.nodes.bloomStrength;
@@ -111,7 +115,7 @@ export class PostFx {
   }
   private tier: QualityTier = 'high';
   setDof(enabled: boolean): void { this.pipeline.outputNode = enabled ? this.blurredOutput : this.sharpOutput; this.pipeline.needsUpdate = true; }
-  snapshot() { return { bloomMips: qualityBudgets[this.tier].bloomMips, dof: this.pipeline.outputNode === this.blurredOutput, dofRepeats: this.tier === 'high' ? this.look.nodes.dofRepeats.value : this.look.nodes.dofRepeatsLow.value, dofResolution: this.tier === 'high' ? 1 : .5, bloomStrength: this.bloomPass.strength.value, haze: this.haze, heatSources: this.heat.filter(h => h.w > 0).length }; }
+  snapshot() { return { bloomMips: qualityBudgets[this.tier].bloomMips, dof: this.pipeline.outputNode === this.blurredOutput, dofRepeats: this.tier === 'high' ? this.look.nodes.dofRepeats.value : this.look.nodes.dofRepeatsLow.value, dofResolution: this.tier === 'high' ? 1 : .5, bloomStrength: this.bloomPass.strength.value, haze: this.haze, heatSources: this.heat.filter(h => h.w > 0).length, ssr: this.wetReflections?.snapshot() ?? null }; }
   /** Compile in the gameplay HDR/MSAA target. `root` warms a streamed subtree with the scene's lights. */
   async compile(partitions?: (() => void)[], root?: Object3D): Promise<void> {
     const renderer = this.renderer, target = renderer.getRenderTarget(), mrt = renderer.getMRT();
@@ -145,9 +149,10 @@ export class PostFx {
     }
     finally { renderer.setRenderTarget(target); renderer.setMRT(mrt); renderer.toneMapping = tone; renderer.outputColorSpace = color; }
   }
-  render(): void { this.pipeline.render(); }
+  render(): void { this.wetReflections?.update(); this.pipeline.render(); }
   dispose(): void {
     this.disposed = true;
+    this.wetReflections?.dispose();
     // r186's RTTNode has dispose(), currently missing from @types/three.
     if (this.lowBlur) (this.lowBlur as typeof this.lowBlur & { dispose(): void }).dispose(); this.pipeline.dispose(); this.bloomPass.dispose(); this.scenePass.dispose();
     // Bloom's fixed five-slot composite samples inactive low-tier textures. Those targets
