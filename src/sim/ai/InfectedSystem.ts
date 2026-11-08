@@ -739,7 +739,7 @@ export class InfectedSystem {
     // This same envelope drives approach/ring decisions and the live strike check.
     return def.range + speed * def.windup + (target.survivor ? Math.max(0, e.combat!.radius - .35) : 0);
   }
-  /** Start a warning while closing on a moving courier, bounded by the existing burst travel. */
+  /** Start a reachable warning before the pursuer enters a moving courier's weapon ring. */
   private lungeStartRange(e: EntitySnapshot, target: EntitySnapshot, base: number): number {
     const velocity = target.survivor?.velocity;
     if (!velocity || Math.hypot(velocity.x, velocity.z) < .2) return base;

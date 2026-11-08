@@ -16,14 +16,22 @@ export interface KitingReceipt {
   hits?: number;
   hitsPerMinute?: number;
   style?: KitingStyle;
+  minimumHordeSize?: number;
+  minimumMoveSpeedMps?: number;
   diagnostics?: { startTick: number | null; endTick: number | null; firingFrames: number; playerAttackStarts: number; framesWithoutThreats: number; movingSeconds: number; immobilizedSeconds: number; distanceMeters: number; circleRadius?: number };
 }
 export type KitingStyle = 'retreat' | 'circles';
+const minimumHordeSize = 3;
+// The controller's crowd escape pace is .2 m/s. It is real movement, even when
+// a horde prevents the requested run speed; resting solver noise stays below this.
+const movingSpeedThreshold = .05;
 
 /** Apply player-like backpedal fire only while a dense, nearby horde is pressing. */
 export function installKitingPolicy(world: SimWorld, receipt: KitingReceipt, level: RunnerLevel, style: KitingStyle = 'retreat'): () => boolean {
   const applyInput = world.applyInput.bind(world);
   receipt.style = style;
+  receipt.minimumHordeSize = minimumHordeSize;
+  receipt.minimumMoveSpeedMps = movingSpeedThreshold;
   const diagnostics = receipt.diagnostics = { startTick: null as number | null, endTick: null as number | null, firingFrames: 0, playerAttackStarts: 0, framesWithoutThreats: 0, movingSeconds: 0, immobilizedSeconds: 0, distanceMeters: 0, circleRadius: undefined as number | undefined };
   let selectedButtonHeld = false;
   let sampleUntil: number | null = null;
@@ -41,13 +49,13 @@ export function installKitingPolicy(world: SimWorld, receipt: KitingReceipt, lev
     const step = world.player?.locomotion.displacement;
     const velocity = world.entities.get(1)?.survivor?.velocity;
     const speed = step ? Math.hypot(step.x, step.z) * 60 : Math.hypot(velocity?.x ?? 0, velocity?.z ?? 0);
-    if (event.type === 'infected.attack' && kitingNow && event.targetId === 1 && event.amount > 0 && speed > .2) receipt.hits = (receipt.hits ?? 0) + 1;
+    if (event.type === 'infected.attack' && kitingNow && event.targetId === 1 && event.amount > 0 && speed > movingSpeedThreshold) receipt.hits = (receipt.hits ?? 0) + 1;
   });
   world.events.on('sim.tick', () => {
     const player = world.entities.get(1), p = player?.transform, previous = world.previousPlayer;
     if (!kitingNow || !p || !previous || !player) return;
     const distance = Math.hypot(p.x - previous.x, p.z - previous.z);
-    if (distance > .2 / 60) diagnostics.movingSeconds += 1 / 60;
+    if (distance > movingSpeedThreshold / 60) diagnostics.movingSeconds += 1 / 60;
     else if (Status.stunned(player, world.tick) || world.infected?.playerPinned()) diagnostics.immobilizedSeconds += 1 / 60;
     diagnostics.distanceMeters += distance;
   }, SimPhase.cleanup + 1);
@@ -78,6 +86,7 @@ export function installKitingPolicy(world: SimWorld, receipt: KitingReceipt, lev
     if (world.storyLock) { kitingNow = false; return frame; }
     const threats = world.infected?.active.filter(entity => {
       if (entity.health.current <= 0 || !entity.infected || entity.hidden || !position || Math.hypot(entity.transform.x - position.x, entity.transform.z - position.z) > 30) return false;
+      if (entity.infected.special !== 'dive' && Math.abs(entity.transform.y - position.y) > 2) return false;
       if (level === 'L8') return true;
       const brain = entity.infected.l1;
       const pressing = entity.infected.state === 'chase' || entity.infected.state === 'attack' || !!entity.infected.specialAttack || brain?.mode === 'chase' || brain?.mode === 'bite';
@@ -104,12 +113,15 @@ export function installKitingPolicy(world: SimWorld, receipt: KitingReceipt, lev
     }
     const awayX = centre && position ? position.x - centre.x : 0, awayZ = centre && position ? position.z - centre.z : 0;
     const separation = Math.hypot(awayX, awayZ);
-    const denseHorde = !frame.drive && player?.passengerOf === undefined && !!position && !!centre && density >= (level === 'L8' ? 3 : 1) && separation > 0.01 && separation <= 30;
+    const denseHorde = !frame.drive && player?.passengerOf === undefined && !!position && !!centre && density >= minimumHordeSize && separation > 0.01 && separation <= 30;
     // L2/L5's first distant chaser is an approach, not yet a close encounter.
     const pursuitRange = level === 'L2' || level === 'L5' ? 6 : 12;
     const closePursuer = level === 'L8' ? denseHorde : level === 'L1' ? threats.length > 0
       : threats.some(entity => Math.hypot(entity.transform.x - position!.x, entity.transform.z - position!.z) <= pursuitRange);
-    if (sampleUntil === null && !closePursuer) { selectedButtonHeld = false; return frame; }
+    // A lone opening enemy killed before reaching the courier is successful
+    // combat, not evidence of a moving-target miss. Sample a pressing horde;
+    // this also keeps the existing L8 three-body admission rule for every level.
+    if (sampleUntil === null && (!closePursuer || !denseHorde)) { selectedButtonHeld = false; return frame; }
     let retreat: { x: number; z: number } | null = null;
     if (denseHorde && position) {
       const nav = world.infected?.nav;
@@ -126,14 +138,20 @@ export function installKitingPolicy(world: SimWorld, receipt: KitingReceipt, lev
       // its centre fixed. Following a moving horde centroid is not a circle.
       if (!circle && centre && separation > .01) {
         const nav = world.infected?.nav;
+        const velocity = player.survivor?.velocity;
+        const bearing = velocity && Math.hypot(velocity.x, velocity.z) > .2 ? Math.atan2(velocity.z, velocity.x) + Math.PI / 2 : Math.atan2(-awayZ, -awayX);
         search: for (const radius of [4, 3, 2]) for (const offset of [0, Math.PI / 2, -Math.PI / 2, Math.PI]) {
-          const angle = Math.atan2(-awayZ, -awayX) + offset;
+          const angle = bearing + offset;
           const candidate = { x: position.x + Math.cos(angle) * radius, z: position.z + Math.sin(angle) * radius, radius };
           const start = angle + Math.PI;
           let previous = { x: position.x, z: position.z }, clear = true;
+          let floor = world.districts?.groundBelow(position.x, position.z, position.y - .7) ?? 0;
           for (let i = 1; i <= 32; i++) {
             const a = start + i * Math.PI / 16, next = { x: candidate.x + Math.cos(a) * radius, z: candidate.z + Math.sin(a) * radius };
-            if (nav && !nav.visible(previous, next, .45)) { clear = false; break; }
+            if (nav && !nav.visible(previous, next, .65)) { clear = false; break; }
+            const nextFloor = world.districts?.groundBelow(next.x, next.z, floor) ?? floor;
+            if (Math.abs(nextFloor - floor) > .4) { clear = false; break; }
+            floor = nextFloor;
             previous = next;
           }
           if (clear) { circle = candidate; diagnostics.circleRadius = radius; break search; }
@@ -187,7 +205,7 @@ export function installKitingPolicy(world: SimWorld, receipt: KitingReceipt, lev
     // 20-second window continues. Keep aiming opposite the chosen retreat
     // direction instead of dividing the now-empty horde vector by zero.
     const aim = separation > .01 ? { x: -awayX / separation, z: -awayZ / separation } : { x: -retreat!.x, z: -retreat!.z };
-    return { ...frame, walk: style === 'retreat',
+    return { ...frame, walk: style === 'retreat', ...(style === 'circles' ? { navigation: false } : {}),
       move: retreat!,
       aim, aimPoint: target ? { x: target.transform.x, z: target.transform.z } : centre ?? { x: position.x + aim.x * 10, z: position.z + aim.z * 10 }, aimSource: 'pointer',
       // Physical mouse fire is LEFT; ControlIntent maps it to selectedSide.

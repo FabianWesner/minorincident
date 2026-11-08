@@ -63,8 +63,8 @@ export async function proveThreatAudit(): Promise<void> {
     let clearRetreat = true, device = emptyInput();
     const receipt = { kitingSeconds: 0, attacks: 0, attacksPerMinute: 0, samples: 0 };
     const world = { tick: 0, events,
-      entities: new Map([[1, { transform: { x: 0, z: 0 }, survivor: { velocity: { x: -2, z: 0 } }, health: { current: 100 }, weapons: { selectedSide: 'RIGHT' } }]]),
-      infected: { active: [5, 6, 7].map(x => ({ health: { current: 100 }, infected: { state: 'chase' }, transform: { x, z: 0 } })),
+      entities: new Map([[1, { transform: { x: 0, y: .7, z: 0 }, survivor: { velocity: { x: -2, z: 0 } }, health: { current: 100 }, weapons: { selectedSide: 'RIGHT' } }]]),
+      infected: { active: [5, 6, 7].map(x => ({ health: { current: 100 }, infected: { state: 'chase' }, transform: { x, y: .7, z: 0 } })),
         nav: { visible: (_from: { x: number; z: number }, to: { x: number; z: number }) => clearRetreat || to.x >= -.5 } },
       combat: { query: { visible: () => true }, runner: { loadout: { current: () => ({ id: 'weapon.handgun' }) } } },
       get deviceInput() { return device; },
@@ -73,6 +73,12 @@ export async function proveThreatAudit(): Promise<void> {
       applyInput: (frame: InputFrame) => { device = frame; frames.push(frame); },
     } as unknown as SimWorld;
     const kitingComplete = installKitingPolicy(world, receipt, 'L1');
+    const third = world.infected!.active.pop()!;
+    world.setInput(emptyInput());
+    assert.equal(receipt.samples, 0, 'a lone/pair opening is not a pressing horde sample');
+    third.transform.y = 4.7; world.infected!.active.push(third); world.setInput(emptyInput());
+    assert.equal(receipt.samples, 0, 'an enemy on another floor cannot fill the horde denominator');
+    third.transform.y = .7; frames.length = 0;
     world.setInput(emptyInput());
     assert(frames[0].move.x < 0 && frames[0].aim!.x > 0 && frames[0].left.held, 'retreat while aiming and firing back');
     const resolved = new ControlIntent(world).resolve(frames[0]);
@@ -112,12 +118,16 @@ export async function proveThreatAudit(): Promise<void> {
     assert(!world.deviceInput.mouseAttack && !world.deviceInput.left.held, 'L1 partial inputs do not retain injected fire after the sample');
     const circleReceipt = { kitingSeconds: 0, attacks: 0, attacksPerMinute: 0, samples: 0 };
     installKitingPolicy(world, circleReceipt, 'L1', 'circles');
-    world.setInput(emptyInput());
-    assert(Math.abs(frames.at(-1)!.move.x) < .01 && Math.abs(frames.at(-1)!.move.z) > .99 && !frames.at(-1)!.walk, 'circle starts tangent to its fixed centre at running speed');
-    Object.assign(world.entities.get(1)!.transform, { x: 4, z: -4 });
+    world.setInput({ ...emptyInput(), navigation: true });
+    assert(frames.at(-1)!.move.x < -.99 && Math.abs(frames.at(-1)!.move.z) < .01 && !frames.at(-1)!.walk && frames.at(-1)!.navigation === false, 'circle starts along the current physical heading with direct running input');
+    Object.assign(world.entities.get(1)!.transform, { x: -4, z: -4 });
     world.tick++;
     world.setInput(emptyInput());
-    assert(frames.at(-1)!.move.x > .99 && Math.abs(frames.at(-1)!.move.z) < .01, 'circle input follows physical position around the same centre');
+    assert(Math.abs(frames.at(-1)!.move.x) < .01 && frames.at(-1)!.move.z < -.99, 'circle input follows physical position around the same centre');
+    world.districts = { groundBelow: (x: number, z: number) => Math.abs(x + 4) < .75 && Math.abs(z + 4) < .75 ? 0 : 3 } as unknown as NonNullable<SimWorld['districts']>;
+    const ledgeReceipt = { kitingSeconds: 0, attacks: 0, attacksPerMinute: 0, samples: 0 };
+    installKitingPolicy(world, ledgeReceipt, 'L1', 'circles'); world.setInput(emptyInput());
+    assert.equal(ledgeReceipt.samples, 0, 'a clear 2D circle cannot cross an unwalkable height step');
   }
 
   {

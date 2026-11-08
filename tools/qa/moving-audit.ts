@@ -13,6 +13,8 @@ import { installKitingPolicy, finishKitingReceipt, type KitingReceipt } from './
 const { values } = parseArgs({ options: { level: { type: 'string' }, policy: { type: 'string' }, out: { type: 'string' } } });
 const level = values.level as RunnerLevel, policy = values.policy;
 if (!runnerLevels.includes(level) || !['native', 'retreat', 'circles'].includes(policy ?? '') || !values.out) throw new Error('--level L1–L10 --policy native|retreat|circles --out receipt.json');
+const runtimeSha256 = createHash('sha256').update(readFileSync('src/sim/ai/InfectedSystem.ts')).digest('hex');
+const policySha256 = createHash('sha256').update(readFileSync('tools/qa/threat/kiting.ts')).digest('hex');
 const campaign = level === 'L1' ? newCampaign('female', 1) : preset(`${level}-default` as ProgressionPreset);
 campaign.seed = 1; campaign.settings.quality = 'low';
 let run: LevelReport | null = null, observation: ReturnType<ThreatObserver['finish']> | null = null;
@@ -38,7 +40,7 @@ else if (level !== 'L9') {
   if (policy === 'circles' && moving / Math.max(1 / 60, kiting.kitingSeconds - forced) < .95) flags.push('CONTROLLABLE_MOVEMENT_BELOW_95_PERCENT');
 }
 const receipt = { level, policy, seed: 1, quality: 'low', revision: process.env.QA_THREAT_REVISION ?? 'worktree',
-  runtimeSha256: createHash('sha256').update(readFileSync('src/sim/ai/InfectedSystem.ts')).digest('hex'),
+  runtimeSha256, policySha256,
   seconds: (performance.now() - start) / 1000, run, observation, kiting: policy === 'native' ? null : kiting, flags };
 await mkdir(dirname(values.out), { recursive: true });
 await writeFile(values.out, JSON.stringify(receipt, null, 2) + '\n');
