@@ -116,6 +116,32 @@ try {
   } finally { w.dispose(); }
 } catch (error) { errors.push(`elephant wall tactic: ${String(error)}`); }
 
+
+try {
+  const { w, zoo, p, arena, e } = await fixture('gorilla');
+  try {
+    w.missions!.state.states.breached = true; zoo.state.breachedAt = w.tick; zoo.state.nextWave = Number.MAX_SAFE_INTEGER;
+    w.solids.relocate(e, { x: 60, z: -22, y: .7 }, 'qa.gorilla.missile-source', 2);
+    w.solids.relocate(p, { x: 60, z: -10, y: .7 }, 'qa.gorilla.missile-target', 2);
+    const payloadId = w.infected!.spawn('infected.runner', { x: 58.7, z: -22 }, { state: 'chase' });
+    const payload = w.entities.get(payloadId)!;
+    arena.phase = 1; arena.cycle = 1; arena.nextAt = w.tick;
+    let lifted = false, flight = false, landed = false, rolling = false, landingDistance = 0;
+    for (let n = 0; n < 500 && !landed; n++) {
+      step(w); const a = e.infected!.specialAttack;
+      if (a?.projectile?.objectId === payloadId) {
+        lifted ||= a.stage === 'telegraph' && payload.infected!.thrownBy === e.id;
+        flight ||= a.stage === 'active' && payload.transform.y > 1;
+        if (flight && payload.infected!.thrownBy === undefined) {
+          landed = payload.health.current > 0; rolling = payload.combat!.staggerUntil - w.tick === 36;
+          landingDistance = Math.hypot(payload.transform.x - a.target.x, payload.transform.z - a.target.z);
+        }
+      }
+    }
+    check('gorilla lifts a real living infected, lands it nearby and gives it a 0.6s roll', lifted && flight && landed && rolling && landingDistance >= 1 && landingDistance <= 3, { payloadId, lifted, flight, landed, rolling, landingDistance, hp: payload.health.current, at: payload.transform });
+  } finally { w.dispose(); }
+} catch (error) { errors.push(`gorilla living missile: ${String(error)}`); }
+
 for (const alive of [true, false]) {
   try {
     const { w, e, lines } = await fixture('elephant', alive);

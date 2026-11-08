@@ -73,7 +73,7 @@ export class L8BossArenas {
       const first = w.entities.get(arena.ids[0]);
       const secondPhase = arena.id === 'lion' ? !!first?.infected && first.health.current <= first.health.max / 2 : arena.id === 'elephant' ? arena.wallHits > 0 || total <= def.hp / 2 : ['flamingo', 'zebra', 'monkey'].includes(arena.id) ? halfDown : total <= def.hp * def.count / 2;
       if (arena.phase === 1 && secondPhase) {
-        arena.phase = 2; if (arena.id === 'monkey') this.announce('The leader is coming out — stop him to scatter the pack!'); arena.nextAt = Math.min(arena.nextAt, w.tick + 60); this.signal(arena, 'phase-2');
+        arena.phase = 2; if (arena.id === 'monkey') this.announce('The leader is coming out — stop him to scatter the pack!'); if (arena.id !== 'elephant') arena.nextAt = Math.min(arena.nextAt, w.tick + 60); this.signal(arena, 'phase-2');
       }
       const leader = w.entities.get(arena.ids.at(-1)!);
       if (!unturned && !live.length || arena.id === 'monkey' && arena.phase === 2 && leader?.infected && leader.health.current <= 0) {
@@ -297,7 +297,7 @@ export class L8BossArenas {
     w.spatial.set(e.id, e.transform.x, e.transform.z);
     if (distance(e.transform, p.transform) <= a.area.radius + .35) {
       const firstContact = !a.hitIds.includes(1);
-      this.hit(e, arena.id === 'elephant' ? 40 : arena.id === 'monkey' ? 12 : arena.id === 'flamingo' ? 18 : 24, arena.id === 'elephant' ? 60 : 0);
+      this.hit(e, arena.id === 'elephant' ? 40 : arena.id === 'monkey' ? 12 : arena.id === 'flamingo' ? 30 : 24, arena.id === 'elephant' ? 60 : 0);
       if (firstContact && (arena.id === 'lion' || arena.id === 'monkey')) { b.grabUntil = w.tick + 120; b.grabHits = 0; b.heardTargetId = 1; arena.grabs++; }
     }
     if (clear + .001 < step || travelled + step >= range || w.tick - a.activeTick > (range / speed + 1) * 60) {

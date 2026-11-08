@@ -55,7 +55,10 @@ export class L8ArenaBot {
     } else if (target) {
       const dx = target.transform.x - p.transform.x, dz = target.transform.z - p.transform.z, d = Math.hypot(dx, dz) || 1;
       if (d > 12 || d < 5) f.move = { x: dx / d * (d > 12 ? 1 : -1), z: dz / d * (d > 12 ? 1 : -1) };
-    } else f.move = this.walker.step(w, def.centre, 6, `arena-${id}-inside`) ?? f.move;
+    } else {
+      const hidden = enemies.sort((a, b) => Math.hypot(a!.transform.x - p.transform.x, a!.transform.z - p.transform.z) - Math.hypot(b!.transform.x - p.transform.x, b!.transform.z - p.transform.z))[0];
+      f.move = this.walker.step(w, hidden?.transform ?? def.centre, hidden ? 2 : 6, `arena-${id}-find-${hidden?.id ?? 0}`) ?? f.move;
+    }
     return f;
   }
 }
