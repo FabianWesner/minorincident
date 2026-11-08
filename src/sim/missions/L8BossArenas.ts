@@ -314,7 +314,7 @@ export class L8BossArenas {
     const speed = arena.id === 'elephant' ? 14 : arena.id === 'zebra' ? 15 : arena.id === 'flamingo' ? arena.phase === 2 ? 21 : 17 : 12;
     const step = Math.min(speed / 60, Math.max(0, range - travelled));
     const staticClear = w.solids.sweep(e, { x: a.area.dx, z: a.area.dz }, step, e.combat!.radius, false, false);
-    let clear = w.solids.sweep(e, { x: a.area.dx, z: a.area.dz }, step, e.combat!.radius, arena.id === 'zebra' ? 'side' : arena.id === 'elephant', true);
+    let clear = w.solids.sweep(e, { x: a.area.dx, z: a.area.dz }, step, e.combat!.radius, arena.id === 'zebra' || arena.id === 'elephant' ? 'side' : false, true);
     if (arena.id === 'flamingo' && !w.infected!.nav.clear(e.transform.x + a.area.dx * clear, e.transform.z + a.area.dz * clear, e.combat!.radius)) clear = 0;
     w.solids.wrote(e, 'l8.arena-special'); e.transform.x += a.area.dx * clear; e.transform.z += a.area.dz * clear;
     w.spatial.set(e.id, e.transform.x, e.transform.z);
