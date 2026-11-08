@@ -299,7 +299,7 @@ export class L8BossArenas {
   }
   private start(e: EntitySnapshot, move: InfectedSpecialMove, windup: number, range: number, radius: number, axis?: { x: number; z: number }): void {
     const w = this.w, p = w.entities.get(1)!, arena = this.state.find(a => a.id === e.infected!.arenaBoss!.arena)!;
-    const speed = arena.id === 'flamingo' ? 17 : arena.id === 'zebra' ? 15 : 12;
+    const speed = arena.id === 'flamingo' ? 17 : arena.id === 'zebra' ? 15 : (move === 'gorilla.grab-throw' || move === 'monkey.debris') && arena.phase === 2 ? 18 : 12;
     const predicted = this.predict(e, Math.min(2.5, windup / 60 + distance(e.transform, p.transform) / speed), arena);
     const target = { id: 1, ...predicted };
     const dx = target.x - e.transform.x, dz = target.z - e.transform.z, d = Math.hypot(dx, dz) || 1;

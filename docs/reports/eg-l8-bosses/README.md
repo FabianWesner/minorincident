@@ -18,6 +18,8 @@ The merged high-tier escape exposed one rooftop monkey without a ground return r
 
 The control matrix also exposed [stationary-fire](evidence/post-merge/monkey-grip-first-standing.json)/[circle](evidence/post-merge/monkey-grip-first-kite.json) monkey wins after main integration. Its ground leader could also stall scavenging, suppressing the entire pack cycle; the same movement-progress fallback now returns monkeys to their grab. A held monkey now continues close, visible contact bites every 0.5 s during its existing two-second grip; the melee shake-off stops them. This uses normal damage/height guards and does not change the grab duration or weapon rules.
 
+The full matrix found a gorilla circle-kiting win at 67.72 s. Rage throw lead now uses its actual 18 m/s flight speed (previously 12 m/s), retaining the locked tell and physical projectile.
+
 **Open:** post-merge typecheck, lint, unit tests and corrected six-arena matrix on runners. The receipts below describe the original lane source until the post-merge results are committed. **Browser QA needed** remains open; no browsers are launched.
 
 ## Done and open items
