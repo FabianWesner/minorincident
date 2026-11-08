@@ -275,6 +275,7 @@ export class L8BossArenas {
     const dx = target.x - e.transform.x, dz = target.z - e.transform.z, d = Math.hypot(dx, dz) || 1;
     const attackId = w.infected!.arenaAttackId();
     const a = e.infected!.specialAttack = { move, attackId, stage: 'telegraph', startTick: w.tick, activeTick: w.tick + windup, cooldownExpiry: w.tick + 420, recoveryUntil: 0, target, area: { x: e.transform.x, z: e.transform.z, radius, dx: axis?.x ?? dx / d, dz: axis?.z ?? dz / d }, hitIds: [], destination: { x: e.transform.x + (axis?.x ?? dx / d) * range, z: e.transform.z + (axis?.z ?? dz / d) * range } };
+    if (move === 'gorilla.roar') e.infected!.arenaBoss!.exposedUntil = a.activeTick;
     if (move === 'gorilla.grab-throw' || move === 'monkey.debris') w.infected!.props.launchSpecial(e, a, 3, 25, arena.phase === 2 ? 18 : 12, true);
     e.infected!.attackId = attackId; e.infected!.state = 'attack'; e.infected!.until = a.activeTick; e.infected!.grabHits = 0; e.infected!.arenaBoss!.shakeHits = 0; e.combat!.attacking = true;
     e.transform.yaw = -Math.atan2(a.area.dz, a.area.dx) + (move === 'zebra.kick' ? Math.PI : 0); if (e.locomotion) resetResponse(e.locomotion);

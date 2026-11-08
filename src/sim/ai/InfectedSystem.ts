@@ -413,7 +413,8 @@ export class InfectedSystem {
     for (const candidate of this.approachParty) {
       const distance = Math.hypot(candidate.transform.x - e.transform.x, candidate.transform.z - e.transform.z);
       // L8's gate-side sprinters retain their announced courier approach. A person at actual grab contact still interrupts it.
-      if (this.world.scenario === 'L8' && b.pressureTarget && this.world.tick < b.pressureTarget.until && candidate.id !== b.pressureTarget.id && distance > 1.5) continue;
+      const gateFocus = b.pressureTarget && this.world.tick < b.pressureTarget.until ? b.pressureTarget.id : brain?.focusBiasM === 30 && this.world.tick < (brain.focusUntil ?? 0) ? brain.focusId : 0;
+      if (this.world.scenario === 'L8' && gateFocus && candidate.id !== gateFocus && distance > 1.5) continue;
       if (distance >= nearest || !this.hearing.notices(e, candidate.transform, candidate.id)) continue;
       // The corgi can alert an approaching group, but remains outside every bite
       // and damage target query. Its courier becomes the ordinary chase target.
@@ -1213,7 +1214,7 @@ export class InfectedSystem {
     // Metro arrivals must enter the defence before selecting seated bystanders.
     // The courier and following party can still interrupt via noticeDuringApproach.
     if (brain.mode === 'attracted' && brain.search.completeApproach && (this.world.scenario === 'L6' ||
-        (this.world.scenario === 'L3' || this.world.scenario === 'L4') && brain.focusId === 1 && this.world.tick < (brain.focusUntil ?? 0))) return;
+        (this.world.scenario === 'L3' || this.world.scenario === 'L4' || this.world.scenario === 'L8' && brain.focusBiasM === 30) && brain.focusId === 1 && this.world.tick < (brain.focusUntil ?? 0))) return;
     const seen = this.l1!.closest(e, brain.mode === 'chase' ? brain.targetId : 0, this.world.tick < brain.ignoreUntil ? brain.ignoreId : 0);
     if (seen && this.sight(e, b, brain, seen)) return;
     if (brain.mode === 'chase') this.startSearch(b, brain, { x: brain.seenX, z: brain.seenZ }, { x: brain.headingX, z: brain.headingZ });

@@ -357,7 +357,7 @@ export class LevelEightZoo {
       else ai.pursueTarget(id, 1);
       // This gate-side cohort pressures the courier; the other outlets still attack the sanctuary population.
       // Releasing on the apron and retaining that focus avoids spending the whole encounter walking a scripted road.
-      if (index === 3) ai.press(id, 1, t + 3600, 30);
+      if (index === 3) { ai.press(id, 1, t + 3600, 30); ai.rush(id, w.entities.get(1)!.transform, t + 3600, true); }
       if (index === 1 && !w.entities.get(id)!.infected!.arenaCarrier) {
         // The east cohort intercepts the evacuation at its parked APC. Native
         // navigation and ordinary senses own this approach; party contact can
