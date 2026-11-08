@@ -6,6 +6,8 @@ import { destructionDamage, destructionMaterial } from '../../src/data/destructi
 import type { Pickup } from '../../src/sim/interact/Pickups';
 import { NavGrid } from '../../src/sim/world/NavGrid';
 import type { GameEvent } from '../../src/sim/world/types';
+import { BoxGeometry, Group, Mesh, MeshBasicNodeMaterial } from 'three/webgpu';
+import { DestructionView } from '../../src/render/DestructionView';
 import { loadL3 } from '../../tools/sim-runner/l3Bots';
 import { rotate } from '../../src/sim/destruction/Destruction';
 import { SimWorld } from '../../src/sim/world/SimWorld';
@@ -148,6 +150,16 @@ test('explosions: every class follows its damage curve, full cover shields, rail
   const local=[bounds.max[0]+2,1.2,(bounds.min[2]+bounds.max[2])/2], pos=rotate(local,house.home.q), dir=rotate([-1,0,0],house.home.q);
   move(street,house.home.p[0]+pos[0],house.home.p[2]+pos[2]);street.combat!.damage.god=true;
   const pristine=destruction.snapshot();
+  // A restored timeline can reach the same revision by breaking a different window: invalidate the view cache.
+  const view=new DestructionView(), prototype=new Group(), geometry=new BoxGeometry(6.6,3,7).translate(0,1.5,0), material=new MeshBasicNodeMaterial();
+  prototype.add(new Mesh(geometry,material));view.extract(house,prototype);
+  const indices=()=>{const arrays:number[][]=[];view.traverse(n=>{if(n instanceof Mesh&&n.geometry.index)arrays.push(Array.from(n.geometry.index.array));});return arrays;};
+  const breakWindow=(name:string)=>{const part=house.parts.findIndex(p=>p.id===name);destruction.damage({object:house,part,local:house.parts[part].bounds.min,distance:0,normal:[0,1,0]},'weapon.handgun',20);view.update(destruction);};
+  breakWindow('window_left');const firstIndices=indices();
+  destruction.restore(pristine);view.update(destruction);breakWindow('window_rearL');
+  expect(indices(), 'same revision after restore draws the newly broken part').not.toEqual(firstIndices);
+  view.dispose();geometry.dispose();material.dispose();destruction.restore(pristine);
+
   street.combat!.setLoadout(['weapon.handgun'],['weapon.grenade']);
   street.setInput({aim:{x:dir[0],z:dir[2]},aimSource:'pointer',left:{down:true,held:true,up:false}}); step(street,40);street.clearInput();
   expect(house.state.revision, 'real handgun input reaches the placement').toBeGreaterThan(0);

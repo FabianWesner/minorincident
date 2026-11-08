@@ -72,7 +72,7 @@ function split(source: BufferGeometry, parts: DestructionPart[]): Slice {
   geometry.setIndex(indices); geometry.computeBoundingBox(); geometry.computeBoundingSphere();
   return {geometry,triangles,indices};
 }
-interface Extracted { object: DestructionObject; root: Group; ref: Object3D; batch: InstancedGroup; slices: Slice[]; marks: Mesh[]; revision: number; wreck?: InstancedGroup }
+interface Extracted { object: DestructionObject; root: Group; ref: Object3D; batch: InstancedGroup; slices: Slice[]; marks: Mesh[]; revision: number; state: DestructionObject['state']; wreck?: InstancedGroup }
 export class DestructionView extends Group {
   private readonly entries = new Map<string,Extracted>();
   private readonly markGeometry = new CircleGeometry(1,8);
@@ -92,14 +92,15 @@ export class DestructionView extends Group {
     });
     const ref=new Object3D(), batch=new InstancedGroup(model,[ref],1); root.add(batch); this.add(root);
     const wreck=wreckPrototype?new InstancedGroup(wreckPrototype,[new Object3D()],1):undefined; if(wreck){wreck.visible=false;root.add(wreck);}
-    this.entries.set(object.id,{object,root,ref,batch,slices,marks:[],revision:-1,wreck});
+    this.entries.set(object.id,{object,root,ref,batch,slices,marks:[],revision:-1,state:object.state,wreck});
   }
   has(id:string):boolean {return this.entries.has(id);}
   update(destruction:Destruction):void {
     for(const e of this.entries.values()) {
       const o=destruction.objects.find(o=>o.id===e.object.id); if(!o) {e.root.visible=false;continue;}
       e.object=o; const pose=destruction.pose(o), s=o.state;
-      e.root.visible=s.revision>0; if(!e.root.visible) continue;
+      if(e.state!==s){e.state=s;e.revision=-1;}
+      e.root.visible=s.revision>0; if(!e.root.visible){e.revision=-1;continue;}
       e.root.position.fromArray(pose.p);e.root.quaternion.fromArray(pose.q);e.root.scale.fromArray(o.placement.scale);
       e.batch.visible=!s.exploded || !e.wreck; if(e.wreck)e.wreck.visible=s.exploded;
       if(e.revision===s.revision) continue; e.revision=s.revision;
